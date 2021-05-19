@@ -1,11 +1,11 @@
 %% ¡header!
-PPGroupEnsemble< PlotProp (pl, plot property of group ensemble) is a plot of group ensemble.
+PPAnalyzeGroupGraph< PlotProp (pl, plot property of analyze group graph) is a plot of analyze group graph.
 
 %%% ¡description!
-PPGroupEnsemble plots a Group Ensemble graph table.
+PPAnalyzeGroupGraph plots a Analyze Group graph table.
 
 %%% ¡seealso!
-GUI, PlotElement, PlotProp, GroupEnsemble
+GUI, PlotElement, PlotProp, AnalyzeGroup, AnalyzeGroup_ST_WU, AnalyzeGroup_ST_BUT, AnalyzeGroup_ST_BUD
 
 %% ¡properties!
 pp
@@ -32,7 +32,10 @@ function h_panel = draw(pl, varargin)
     el = pl.get('EL');
     prop = pl.get('PROP');
     pl.selected = [];
-    graph = el.getPropDefault(prop); 
+    graph = el.get(prop); 
+    if isa(graph, 'NoValue')
+        graph = el.getPropDefault(prop);
+    end
     adj_matrix_figure = [];
     handle_plot = [];
 
@@ -60,7 +63,7 @@ function h_panel = draw(pl, varargin)
             'Parent', pl.pp, ...
             'Units', 'normalized', ...
             'Position', [.02 .2 .9 .7], ...
-            'ColumnName', {'', 'ID', 'Shape', 'Scope', 'Notes'}, ...
+            'ColumnName', {'', 'Measure', 'Shape', 'Scope', 'Notes'}, ...
             'ColumnFormat', {'logical', 'char', 'char', 'char', 'char'}, ...
             'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
             'ColumnEditable', [true false false false false], ...
@@ -70,6 +73,7 @@ function h_panel = draw(pl, varargin)
         % get compatible measures for specific graph
         mlist = Graph.getCompatibleMeasureList(graph);
         if ~isa(graph, 'Graph')
+            [parent_position_pixels, normalized] = get_figure_position()
             data = cell(length(mlist), 5);
             for mi = 1:1:length(mlist)
                 if any(pl.selected == mi)
@@ -97,34 +101,33 @@ function h_panel = draw(pl, varargin)
                 data{mi, 5} = eval([mlist{mi} '.getDescription()']);
             end
             set(pl.measure_tbl, 'Data', data)
-            set(pl.measure_tbl, 'ColumnWidth', 'auto')
+            set(pl.measure_tbl, 'ColumnWidth', ['auto' 'auto' 'auto' 'auto' normalized(3)*.9*.2])
         end
     end
     
     ui_button_table_calculate = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
-    ui_button_table_see_adjm = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
+    ui_button_table_see_graph = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
     ui_button_table_selectall = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
     ui_button_table_clearselection = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
     init_buttons()
-        function init_buttons()
-            
-            set(ui_button_table_calculate, 'Position', [.02 .1 .22 .07])
-            set(ui_button_table_calculate, 'String', 'Calculate')
+        function init_buttons()            
+            set(ui_button_table_calculate, 'Position', [.02 .01 .22 .07])
+            set(ui_button_table_calculate, 'String', 'Calculate Measures')
             set(ui_button_table_calculate, 'TooltipString', 'Calculate Selected Measures')
             set(ui_button_table_calculate, 'Callback', {@cb_table_calculate})
             
-            set(ui_button_table_see_adjm, 'Position', [.02 .01 .22 .07])
-            set(ui_button_table_see_adjm, 'String', 'See Graph')
-            set(ui_button_table_see_adjm, 'TooltipString', 'Create a Figure with the adjacency matrix')
-            set(ui_button_table_see_adjm, 'Callback', {@cb_table_adj_matrix})
+            set(ui_button_table_see_graph, 'Position', [.24 .01 .22 .07])
+            set(ui_button_table_see_graph, 'String', 'See Graph')
+            set(ui_button_table_see_graph, 'TooltipString', 'Create a GUI Graph')
+            set(ui_button_table_see_graph, 'Callback', {@cb_table_graph})
             
-            set(ui_button_table_selectall, 'Position', [.24 .1 .22 .07])
+            set(ui_button_table_selectall, 'Position', [.52 .01 .22 .07])
             set(ui_button_table_selectall, 'String', 'Select All')
-            set(ui_button_table_selectall, 'TooltipString', 'Select all brain regions')
+            set(ui_button_table_selectall, 'TooltipString', 'Select all measures')
             set(ui_button_table_selectall, 'Callback', {@cb_table_selectall})
 
-            set(ui_button_table_clearselection, 'Position', [.24 .01 .22 .07])
-            set(ui_button_table_clearselection, 'String', 'Clear')
+            set(ui_button_table_clearselection, 'Position', [.74 .01 .22 .07])
+            set(ui_button_table_clearselection, 'String', 'Clear All')
             set(ui_button_table_clearselection, 'TooltipString', 'Clear selection')
             set(ui_button_table_clearselection, 'Callback', {@cb_table_clearselection})
         end
@@ -156,10 +159,46 @@ function h_panel = draw(pl, varargin)
         function cb_table_calculate(~, ~)
             mlist = Graph.getCompatibleMeasureList(graph);
             calculate_measure_list = mlist(pl.selected);
-            g = el.get('G');
-            cellfun(@(x) g.getMeasure(x).get('M'), calculate_measure_list, 'UniformOutput', false);
+            g = el.memorize('G');
+            f = waitbar(0, ['Calculating ' num2str(length(calculate_measure_list))  ' measures ...'], 'Name', BRAPH2.NAME);
+            set_icon(f)
+            for i = 1:length(calculate_measure_list)
+                progress = (1 / (length(calculate_measure_list) * .9)) * i;   
+                extra = (1 / (length(calculate_measure_list) * .9)) * 1.5;
+                measure = calculate_measure_list{i};
+                waitbar(progress, f, ['Calculating measure: ' measure ' ...']);
+                result_measure = g.getMeasure(measure).memorize('M');
+                waitbar(extra, f, ['Measure: ' measure ' Calculated! ...']);
+            end
+            
+            [parent_position_pixels, normalized] = get_figure_position();
+            % create window for results
+            if w >= screen_size(3)/2
+                x2 = normalized(1) / 2;
+                w2 = normalized(3) / 2 - .01;
+            elseif h == screen_size(4)
+                y2 = normalized(2);
+                h2 = normalized(4)/2;
+            else % golden ratio 
+                % golden ratio is defined as a+b/a = a/b = phi. phi = 1.61
+                x2 = normalized(1)+ normalized(3);
+                h2 = normalized(4);
+                y2 = normalized(2);
+                w2 = normalized(3)* 1.61;               
+            end
+            
+            waitbar(.95, f, 'Plotting the Measures GUI ...')
+            for i = 1:length(result_measure)
+                measure = result_measure{i};
+                GUI(measure, 'CloseRequest', false, 'Position', [x2 y2 w2 h2])
+            end
+            if exist('f', 'var')
+                waitbar(1, f, 'Finishing')
+                pause(.5)
+                close(f)
+            end            
         end
-        function cb_table_adj_matrix(~, ~)
+        function cb_table_graph(~, ~)
             adj_matrix = el.get('G');
             [parent_position_pixels, normalized] = get_figure_position();
             x = parent_position_pixels(1);
@@ -178,45 +217,11 @@ function h_panel = draw(pl, varargin)
             else % golden ratio 
                 % golden ratio is defined as a+b/a = a/b = phi. phi = 1.61
                 x2 = normalized(1)+ normalized(3);
-                h2 = normalized(4) / 1.61;
-                y2 = normalized(2) + h2 - .195;
-                w2 = normalized(3) * 1.61;               
+                h2 = normalized(4);
+                y2 = normalized(2);
+                w2 = normalized(3);               
             end
-            adj_matrix_figure =   figure( ...
-                'Visible', 'on', ...
-                'NumberTitle', 'off', ...
-                'Name', ['Adjacency Matrix - ' BRAPH2.STR], ...
-                'Units', 'normalized', ...
-                'Position', [x2 y2 w2 h2], ...
-                'MenuBar', 'none', ...
-                'Toolbar', 'figure', ...
-                'Color', 'w' ...
-                );
-            ui_toolbar = findall(adj_matrix_figure, 'Tag', 'FigureToolBar');
-            
-            delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.OpenInspector'))
-            delete(findall(ui_toolbar, 'Tag', 'Exploration.Brushing'))
-            delete(findall(ui_toolbar, 'Tag', 'DataManager.Linking'))
-            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertColorbar'))
-            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertLegend'))
-            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
-            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
-            
-            % adjmatrix plot
-            A = cell2mat(el.get('G').get('A'));
-            br_dict = el.get('GR').get('SUB_DICT').getItem(1).get('BA').get('BR_DICT');
-            labels = cellfun(@(x) x.get('ID'), br_dict.getItems(), 'UniformOutput', false);
-            
-            handle_plot = plotw( ...
-                A, ...
-                'xlabels', labels', ...
-                'ylabels', labels ...
-                );
+            GUI(graph, 'CloseRequest', false, 'Position', [x2 y2 w2 h2]);
         end
         function [pixels, normalized] = get_figure_position()
             fig_h = getGUIFigureObj();
