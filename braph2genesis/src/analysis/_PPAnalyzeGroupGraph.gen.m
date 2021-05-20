@@ -165,7 +165,7 @@ function h_panel = draw(pl, varargin)
                 extra = (1 / (length(calculate_measure_list) * .9)) * 1.5;
                 measure = calculate_measure_list{i};
                 waitbar(progress, f, ['Calculating measure: ' measure ' ...']);
-                result_measure{i} = g.getMeasure(measure));
+                result_measure{i} = g.getMeasure(measure);
                 waitbar(extra, f, ['Measure: ' measure ' Calculated! ...']);
             end
             
