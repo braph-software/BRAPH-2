@@ -12,7 +12,7 @@ CLASSNAMES (parameter, cell) is the correlation type.
 %%% ¡prop!
 FILE (metadata, string) is the file path, this has to change to gr eventually.
 %%%% ¡default!
-''
+'mr_adni.csv'
 
 %% ¡props_update!
 
@@ -95,6 +95,12 @@ YTest = y_tblTrain;
 
 accuracy = sum(YPred == YTest)/numel(YTest);
 
+% plot result
+[m,order] = confusionmat(YTest,YPred)
+figureconfusionchart(trueLabels,predictedLabels, ...
+    'Title','AD Classification', ...
+    'RowSummary','row-normalized', ...
+    'ColumnSummary','column-normalized');
 
 % get prediction accuracy on test set
 YPred = classify(net, X_tblTest, 'MiniBatchSize', miniBatchSize);
@@ -103,5 +109,7 @@ YTest = y_tblTest;
 accuracy = sum(YPred == YTest)/numel(YTest);
 
 value = accuracy;
+
+
 
 
