@@ -1182,7 +1182,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 value = el.getr(prop);
                 
                 % \U scape bug - warning fix
-                if isstring(value) && contains(value, '\')
+                if ischar(value) && contains(value, '\')
                     v_array = split(value, '\');
                     tmp_val = v_array{1};
                     for i = 2:length(v_array)
