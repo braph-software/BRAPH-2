@@ -161,7 +161,7 @@ function h_panel = draw(pl, varargin)
             gui_analyze = getGUIFigureObj();
             
             % block analyze window
-            jFigPeer = get(handle(gui_analyze),'JavaFrame')
+            jFigPeer = get(handle(gui_analyze),'JavaFrame');
             jWindow = jFigPeer.fHG2Client.getWindow;
             jWindow.setEnabled(false);
             
@@ -183,7 +183,7 @@ function h_panel = draw(pl, varargin)
             x2 = normalized(1) + normalized(3);
             h2 = normalized(4);
             y2 = normalized(2);
-            w2 = normalized(3) * 1.61;            
+            w2 = normalized(3);            
             
             waitbar(.95, f, 'Plotting the Measures GUI ...')
             for i = 1:length(result_measure)
