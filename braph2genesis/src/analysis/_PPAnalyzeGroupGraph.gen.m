@@ -114,7 +114,7 @@ function h_panel = draw(pl, varargin)
             set(ui_button_table_calculate, 'TooltipString', 'Calculate Selected Measures')
             set(ui_button_table_calculate, 'Callback', {@cb_table_calculate})
             
-            set(ui_button_table_see_graph, 'Position', [.24 .01 .22 .07])
+            set(ui_button_table_see_graph, 'Position', [.26 .01 .22 .07])
             set(ui_button_table_see_graph, 'String', 'See Graph')
             set(ui_button_table_see_graph, 'TooltipString', 'Create a GUI Graph')
             set(ui_button_table_see_graph, 'Callback', {@cb_table_graph})
@@ -124,7 +124,7 @@ function h_panel = draw(pl, varargin)
             set(ui_button_table_selectall, 'TooltipString', 'Select all measures')
             set(ui_button_table_selectall, 'Callback', {@cb_table_selectall})
 
-            set(ui_button_table_clearselection, 'Position', [.74 .01 .22 .07])
+            set(ui_button_table_clearselection, 'Position', [.76 .01 .22 .07])
             set(ui_button_table_clearselection, 'String', 'Clear All')
             set(ui_button_table_clearselection, 'TooltipString', 'Clear selection')
             set(ui_button_table_clearselection, 'Callback', {@cb_table_clearselection})
@@ -158,6 +158,14 @@ function h_panel = draw(pl, varargin)
             mlist = Graph.getCompatibleMeasureList(graph);
             calculate_measure_list = mlist(pl.selected);
             g = el.memorize('G');
+            gui_analyze = getGUIFigureObj();
+            
+            % block analyze window
+            jFigPeer = get(handle(gui_analyze),'JavaFrame')
+            jWindow = jFigPeer.fHG2Client.getWindow;
+            jWindow.setEnabled(false);
+            
+            % calculate
             f = waitbar(0, ['Calculating ' num2str(length(calculate_measure_list))  ' measures ...'], 'Name', BRAPH2.NAME);
             set_icon(f)
             for i = 1:length(calculate_measure_list)
@@ -182,6 +190,11 @@ function h_panel = draw(pl, varargin)
                 measure = result_measure{i};
                 GUI(measure, 'CloseRequest', false, 'Position', [x2 y2 w2 h2])
             end
+            
+            % enable analyze window
+            jWindow.setEnabled(true);
+            
+            % close progress bar
             if exist('f', 'var')
                 waitbar(1, f, 'Finishing')
                 pause(.5)
