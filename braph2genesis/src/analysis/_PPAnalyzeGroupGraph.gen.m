@@ -1,5 +1,5 @@
 %% ¡header!
-PPAnalyzeGroupGraph< PlotProp (pl, plot property of analyze group graph) is a plot of analyze group graph.
+PPAnalyzeGroupGraph < PlotProp (pl, plot property of analyze group graph) is a plot of analyze group graph.
 
 %%% ¡description!
 PPAnalyzeGroupGraph plots a Analyze Group graph table.
@@ -165,25 +165,17 @@ function h_panel = draw(pl, varargin)
                 extra = (1 / (length(calculate_measure_list) * .9)) * 1.5;
                 measure = calculate_measure_list{i};
                 waitbar(progress, f, ['Calculating measure: ' measure ' ...']);
-                result_measure = g.getMeasure(measure).memorize('M');
+                result_measure{i} = g.getMeasure(measure));
                 waitbar(extra, f, ['Measure: ' measure ' Calculated! ...']);
             end
             
-            [parent_position_pixels, normalized] = get_figure_position();
-            % create window for results
-            if w >= screen_size(3)/2
-                x2 = normalized(1) / 2;
-                w2 = normalized(3) / 2 - .01;
-            elseif h == screen_size(4)
-                y2 = normalized(2);
-                h2 = normalized(4)/2;
-            else % golden ratio 
-                % golden ratio is defined as a+b/a = a/b = phi. phi = 1.61
-                x2 = normalized(1)+ normalized(3);
-                h2 = normalized(4);
-                y2 = normalized(2);
-                w2 = normalized(3)* 1.61;               
-            end
+            [~, normalized] = get_figure_position();
+            % create window for results            
+            % golden ratio is defined as a+b/a = a/b = phi. phi = 1.61
+            x2 = normalized(1) + normalized(3);
+            h2 = normalized(4);
+            y2 = normalized(2);
+            w2 = normalized(3) * 1.61;            
             
             waitbar(.95, f, 'Plotting the Measures GUI ...')
             for i = 1:length(result_measure)
@@ -197,24 +189,21 @@ function h_panel = draw(pl, varargin)
             end            
         end
         function cb_table_graph(~, ~)
-            adj_matrix = el.get('G');
-            [parent_position_pixels, normalized] = get_figure_position();
-            x = parent_position_pixels(1);
-            y = parent_position_pixels(2);
+            [parent_position_pixels, normalized] = get_figure_position();            
             w = parent_position_pixels(3);
             h = parent_position_pixels(4);
 
             screen_size = get(0,'screensize');
 
-            if w >= screen_size(3)/2
+            if w >= screen_size(3) / 2
                 x2 = normalized(1) / 2;
                 w2 = normalized(3) / 2 - .01;
             elseif h == screen_size(4)
                 y2 = normalized(2);
-                h2 = normalized(4)/2;
+                h2 = normalized(4) / 2;
             else % golden ratio 
                 % golden ratio is defined as a+b/a = a/b = phi. phi = 1.61
-                x2 = normalized(1)+ normalized(3);
+                x2 = normalized(1) + normalized(3);
                 h2 = normalized(4);
                 y2 = normalized(2);
                 w2 = normalized(3);               
@@ -237,82 +226,7 @@ function h_panel = draw(pl, varargin)
                 end
             end
         end
-        function h = plotw(A, varargin)
-            % PLOTW plots a weighted matrix
-            %
-            % H = PLOTW(A) plots the weighted matrix A and returns the handle to
-            %   the plot H.
-            %
-            % H = PLOTW(A,'PropertyName',PropertyValue) sets the property of the
-            %   matrix plot PropertyName to PropertyValue.
-            %   All standard plot properties of surf can be used.
-            %   Additional admissive properties are:
-            %       xlabels   -   1:1:number of matrix elements (default)
-            %       ylabels   -   1:1:number of matrix elements (default)
-            %
-            % See also Graph, plotb, surf.
 
-            N = length(A);
-
-            % x labels
-            xlabels = (1:1:N);
-            for n = 1:2:length(varargin)
-                if strcmpi(varargin{n}, 'xlabels')
-                    xlabels = varargin{n + 1};
-                end
-            end
-            if ~iscell(xlabels)
-                xlabels = {xlabels};
-            end
-
-            % y labels
-            ylabels = (1:1:N);
-            for n = 1:2:length(varargin)
-                if strcmpi(varargin{n}, 'ylabels')
-                    ylabels = varargin{n + 1};
-                end
-            end
-            if ~iscell(ylabels)
-                ylabels = {ylabels};
-            end
-
-            ht = surf((0:1:N), ...
-                (0:1:N), ...
-                [A, zeros(size(A, 1), 1); zeros(1, size(A, 1) + 1)]);
-            view(2)
-            shading flat
-            axis equal square tight
-            grid off
-            box on
-            set(gca, ...
-                'XAxisLocation', 'top', ...
-                'XTick', (1:1:N) - .5, ...
-                'XTickLabel', {}, ...
-                'YAxisLocation', 'left', ...
-                'YDir', 'Reverse', ...
-                'YTick', (1:1:N) - .5, ...
-                'YTickLabel', ylabels)
-
-            if ~verLessThan('matlab', '8.4.0')
-                set(gca, ...
-                    'XTickLabelRotation', 90, ...
-                    'XTickLabel', xlabels)
-            else
-                t = text((1:1:N) - .5, zeros(1, N), xlabels);
-                set(t, ...
-                    'HorizontalAlignment', 'left', ...
-                    'VerticalAlignment', 'middle', ...
-                    'Rotation', 90);
-            end
-
-            colormap jet
-
-            % output if needed
-            if nargout > 0
-                h = ht;
-            end
-        end
-    
     % output
     if nargout > 0
         h_panel = pl.pp;
