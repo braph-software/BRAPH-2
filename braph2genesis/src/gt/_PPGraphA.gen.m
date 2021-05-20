@@ -121,7 +121,8 @@ function update(pl)
             'MenuBar', 'none', ...
             'Toolbar', 'figure', ...
             'Color', 'w' ...
-            );
+            );        
+        set_icon(adj_matrix_figure);
         
         ui_toolbar = findall(adj_matrix_figure, 'Tag', 'FigureToolBar');
         

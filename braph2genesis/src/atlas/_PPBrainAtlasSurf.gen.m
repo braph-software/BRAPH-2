@@ -95,8 +95,9 @@ function h_panel = draw(pl, varargin)
                 'Color', 'w' ...
                 );
             
-            ui_toolbar = findall(second_figure, 'Tag', 'FigureToolBar');
+            set_icon(second_figure)
             
+            ui_toolbar = findall(second_figure, 'Tag', 'FigureToolBar');            
             delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
             delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
             delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
