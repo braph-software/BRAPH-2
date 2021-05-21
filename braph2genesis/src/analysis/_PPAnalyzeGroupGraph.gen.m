@@ -36,15 +36,27 @@ function h_panel = draw(pl, varargin)
     if isa(graph, 'NoValue')
         graph = el.getPropDefault(prop);
     end
-    adj_matrix_figure = [];
-    handle_plot = [];
+    measures_guis = [];
+    graph_gui = [];
 
     pl.pp = draw@PlotProp(pl, varargin{:});
     set(pl.pp, 'DeleteFcn', {@close_f_settings}, ...
         varargin{:})
     
     function close_f_settings(~,~)
-        
+        if ~isempty(measures_guis)
+            for k = 1:length(measures_guis)                
+                m_gui_h = measures_guis{k};
+                if isgraphics(m_gui_h)
+                    close(m_gui_h)
+                end
+            end
+        end
+        if ~isempty(graph_gui)
+            if isgraphics(graph_gui)
+                close(graph_gui)
+            end
+        end
     end
 
     if isempty(pl.measure_tbl) || ~isgraphics(pl.measure_tbl, 'uitable')
@@ -158,12 +170,6 @@ function h_panel = draw(pl, varargin)
             mlist = Graph.getCompatibleMeasureList(graph);
             calculate_measure_list = mlist(pl.selected);
             g = el.memorize('G');
-            gui_analyze = getGUIFigureObj();
-            
-            % block analyze window
-            jFigPeer = get(handle(gui_analyze),'JavaFrame');
-            jWindow = jFigPeer.fHG2Client.getWindow;
-            jWindow.setEnabled(false);
             
             % calculate
             f = waitbar(0, ['Calculating ' num2str(length(calculate_measure_list))  ' measures ...'], 'Name', BRAPH2.NAME);
@@ -185,21 +191,23 @@ function h_panel = draw(pl, varargin)
             y2 = normalized(2);
             w2 = normalized(3);            
             
-            waitbar(.95, f, 'Plotting the Measures GUI ...')
-            for i = 1:length(result_measure)
+            waitbar(.95, f, 'Plotting the Measures GUI ...')            
+            for i = 1:length(result_measure)                
+                offset = 0.02 * i;
+                if offset > .45
+                    offset = 0;
+                end
                 measure = result_measure{i};
-                GUI(measure, 'CloseRequest', false, 'Position', [x2 y2 w2 h2])
+                GUI(measure, 'CloseRequest', false, 'Position', [x2+offset y2-offset w2 h2])
             end
-            
-            % enable analyze window
-            jWindow.setEnabled(true);
-            
+
             % close progress bar
             if exist('f', 'var')
                 waitbar(1, f, 'Finishing')
                 pause(.5)
                 close(f)
-            end            
+            end       
+            measures_guis = getGUIMeasures();
         end
         function cb_table_graph(~, ~)
             [parent_position_pixels, normalized] = get_figure_position();            
@@ -221,7 +229,8 @@ function h_panel = draw(pl, varargin)
                 y2 = normalized(2);
                 w2 = normalized(3);               
             end
-            GUI(graph, 'CloseRequest', false, 'Position', [x2 y2 w2 h2]);
+            GUI(graph, 'CloseRequest', false, 'Position', [x2 y2 w2 h2]); 
+            graph_gui = getGUIGraph();
         end
         function [pixels, normalized] = get_figure_position()
             fig_h = getGUIFigureObj();
@@ -235,6 +244,27 @@ function h_panel = draw(pl, varargin)
             for i = 1:1:length(figHandles)
                 fig_h = figHandles(i);
                 if contains(fig_h.Name, 'AnalyzeGroup')
+                    obj = fig_h;
+                end
+            end
+        end
+        function objs = getGUIMeasures()
+            figHandles = findobj('Type', 'figure');
+            for k = 1:1:length(figHandles)
+                fig_h = figHandles(k);
+                fig_h_array = split(fig_h.Name, ' ');
+                if ismember(fig_h_array{1}, subclasses('Measure'))
+                    objs{k} = fig_h;
+                end
+            end
+            objs = objs(~cellfun(@isempty, objs));
+        end
+        function obj = getGUIGraph()
+            figHandles = findobj('Type', 'figure');
+            for i = 1:1:length(figHandles)
+                fig_h = figHandles(i);
+                fig_h_array = split(fig_h.Name, ' ');
+                if ismember(fig_h_array{1}, subclasses('Graph'))
                     obj = fig_h;
                 end
             end

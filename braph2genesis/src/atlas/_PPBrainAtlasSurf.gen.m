@@ -95,6 +95,7 @@ function h_panel = draw(pl, varargin)
                 'Color', 'w' ...
                 );
             
+            addlistener(second_figure, 'ObjectBeingDestroyed', @cb_close_atlas_srf);            
             set_icon(second_figure)
             
             ui_toolbar = findall(second_figure, 'Tag', 'FigureToolBar');            
