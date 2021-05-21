@@ -22,7 +22,7 @@ end
 
 close_request = get_from_varargin(true, 'CloseRequest', varargin);
 
-f_position = get_from_varargin([.02 .15 .30 .80], 'Position', varargin);
+f_position = get_from_varargin([.02 .1 .30 .80], 'Position', varargin);
 
 BKGCOLOR = get_from_varargin([.98 .95 .95], 'BackgroundColor', varargin);
 
