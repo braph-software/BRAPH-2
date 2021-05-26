@@ -17,7 +17,7 @@ for i = 1:1:length(figHandles)
     fig_h_array = split(fig_h.Name, ' ');
     if  nargin < 3  &&  contains(fig_h.Name, label)
         single_obj = fig_h;
-    elseif ismember(fig_h_array{1}, subclasses(superclass)) || isequal(fig_h_array{1}, superclass)
+    elseif nargin == 3 && (ismember(fig_h_array{1}, subclasses(superclass)) || isequal(fig_h_array{1}, superclass))
         list_objs{i} = fig_h;
     end
 end
