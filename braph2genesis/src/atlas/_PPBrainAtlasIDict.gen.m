@@ -219,16 +219,11 @@ function h_panel = draw(pl, varargin)
             pl.update()
             update_brain_surface();
         end
-        function update_brain_surface()            
-            figHandles = findobj('Type', 'figure');
-            for i = 1:1:length(figHandles)
-                fig_h = figHandles(i);
-                if contains(fig_h.Name, 'Brain Surface - ')
-                    fig_h_children = get(fig_h, 'Children');
-                    update_btn = fig_h_children(2);
-                    feval(get(update_btn, 'Callback'), update_btn, []);
-                end
-            end
+        function update_brain_surface()  
+            fig_h = get_handle_objs('figure', 'Brain Surface - ');
+            fig_h_children = get(fig_h, 'Children');
+            update_btn = fig_h_children(2);
+            feval(get(update_btn, 'Callback'), update_btn, []);
         end
         function checkIdict()           
             if isa(ba_idict, 'NoValue')

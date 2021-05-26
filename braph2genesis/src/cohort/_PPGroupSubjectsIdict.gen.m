@@ -191,24 +191,11 @@ function h_panel = draw(pl, varargin)
             end
         end
         function obj = getGUIFigureObj()
-            figHandles = findobj('Type', 'figure');
-            for i = 1:1:length(figHandles)
-                fig_h = figHandles(i);
-                if contains(fig_h.Name, 'Group - ')
-                    obj = fig_h;
-                end
-            end
+            figHandles = get_handle_objs('figure', [], 'Group');
+            obj = figHandles{1};
         end
         function objs = getGUISubjects()
-            figHandles = findobj('Type', 'figure');
-            objs = cell(subjects_idict.length(), 1);
-            for k = 1:1:length(figHandles)
-                fig_h = figHandles(k);
-                if contains(fig_h.Name, 'Subject')
-                    objs{k} = fig_h;
-                end
-            end
-            objs = objs(~cellfun(@isempty, objs));
+            objs = get_handle_objs('figure', [], 'Subject');
         end
         function [pixels, normalized] = get_figure_position()
             fig_h = getGUIFigureObj();

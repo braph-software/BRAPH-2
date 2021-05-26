@@ -240,34 +240,14 @@ function h_panel = draw(pl, varargin)
             set(fig_h, 'Units', 'characters'); % go back
         end
         function obj = getGUIFigureObj()
-            figHandles = findobj('Type', 'figure');
-            for i = 1:1:length(figHandles)
-                fig_h = figHandles(i);
-                if contains(fig_h.Name, 'AnalyzeGroup')
-                    obj = fig_h;
-                end
-            end
+            obj = get_handle_objs('figure', 'AnalyzeGroup');
         end
         function objs = getGUIMeasures()
-            figHandles = findobj('Type', 'figure');
-            for k = 1:1:length(figHandles)
-                fig_h = figHandles(k);
-                fig_h_array = split(fig_h.Name, ' ');
-                if ismember(fig_h_array{1}, subclasses('Measure'))
-                    objs{k} = fig_h;
-                end
-            end
-            objs = objs(~cellfun(@isempty, objs));
+            [~, objs] = get_handle_objs('figure', [], 'Measure');            
         end
         function obj = getGUIGraph()
-            figHandles = findobj('Type', 'figure');
-            for i = 1:1:length(figHandles)
-                fig_h = figHandles(i);
-                fig_h_array = split(fig_h.Name, ' ');
-                if ismember(fig_h_array{1}, subclasses('Graph'))
-                    obj = fig_h;
-                end
-            end
+            [~, figHandles] = get_handle_objs('figure', [], 'Graph');
+            obj = figHandles{1};            
         end
 
     % output
@@ -296,13 +276,7 @@ function update(pl)
         set(fig_h, 'Units', 'characters'); % go back
     end
     function obj = getGUIFigureObj()
-        figHandles = findobj('Type', 'figure');
-        for i = 1:1:length(figHandles)
-            fig_h = figHandles(i);
-            if contains(fig_h.Name, 'AnalyzeGroup')
-                obj = fig_h;
-            end
-        end
+        obj = get_handle_objs('figure', 'AnalyzeGroup');
     end
 
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
