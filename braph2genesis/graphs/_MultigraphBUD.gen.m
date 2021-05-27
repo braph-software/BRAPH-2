@@ -28,6 +28,8 @@ negativity = Graph.NONNEGATIVE * ones(layernumber);
 %%% ¡prop!
 DENSITIES (data, rvector) is the vector of densities.
 
+NODELABELS (data, OPTION) is the node labels.
+
 %% ¡props_update!
 
 %%% ¡prop!

@@ -12,7 +12,6 @@ pp
 plot_brain_atlas_btn
 plot_ba
 
-
 %% ¡methods!
 function h_panel = draw(pl, varargin)
     %DRAW draws the idict for brain atlas property graphical panel.
