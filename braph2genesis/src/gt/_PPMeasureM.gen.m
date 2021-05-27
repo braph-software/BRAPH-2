@@ -171,11 +171,19 @@ function update(pl)
         plot_value = value;
         
         if Measure.is_global(el) % global
-            y_ = cell2mat([plot_value{:}]);           
+            y_ = cell2mat([plot_value{:}]);
         elseif Measure.is_nodal(el) % nodal
-            y_ = cell2mat([plot_value{node1_to_plot, :}]);   
+            for l = 1:length(plot_value)
+                tmp = plot_value{l};
+                y_{l} = tmp{node1_to_plot}; %#ok<AGROW>
+            end
+            y_ = cell2mat(y_);
         else  % binodal
-            y_ = cell2mat([plot_value{node1_to_plot, node2_to_plot}]);
+            for l = 1:length(plot_value)
+                tmp = plot_value{l};
+                y_{l} = tmp{node1_to_plot, node2_to_plot}; %#ok<AGROW>
+            end
+            y_ = cell2mat(y_);
         end
         x_ = x_range;
         
@@ -195,7 +203,7 @@ function update(pl)
             'Toolbar', 'figure', ...
             'Color', 'w' ...
             );        
-        
+        h_axes = axes(plot_figure);
         set_icon(plot_figure);        
         ui_toolbar = findall(plot_figure, 'Tag', 'FigureToolBar');        
         delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
@@ -212,7 +220,7 @@ function update(pl)
         delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
         
         handle_plot = plot( ...
-                    plot_figure, ...
+                    h_axes, ...
                     x_, ...
                     y_, ...
                     'Marker', 'o', ...
