@@ -75,7 +75,8 @@ function update(pl)
         end
     else  % multigraph and multigraphbut
         
-        node_labels = graph.get('NODELABELS');
+        node_labels_tmp = graph.get('NODELABELS');
+        node_labels = split(node_labels_tmp, ',');
         if isa(graph, 'MultigraphBUD')
             x_range = graph.get('DENSITIES');
         else

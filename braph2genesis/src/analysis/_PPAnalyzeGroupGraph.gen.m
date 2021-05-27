@@ -119,11 +119,7 @@ function h_panel = draw(pl, varargin)
     ui_button_table_calculate = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
     ui_button_table_see_graph = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
     ui_button_table_selectall = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
-    ui_button_table_clearselection = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
-    % fields: thresholds / densities
-    ui_min_field_edit = uicontrol(pl.pp, 'Style', 'edit', 'Units', 'normalized');
-    ui_max_field_edit = uicontrol(pl.pp, 'Style', 'edit', 'Units', 'normalized');
-    ui_step_field_edit = uicontrol(pl.pp, 'Style', 'edit', 'Units', 'normalized');
+    ui_button_table_clearselection = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');    
     
     init_buttons()
         function init_buttons()            
@@ -151,61 +147,10 @@ function h_panel = draw(pl, varargin)
                 'TooltipString', 'Clear selection', ...
                 'Callback', {@cb_table_clearselection})
             
-            % edit fields
-            set(ui_min_field_edit, ...
-                'Position', [.12 .01 .22 .07], ...
-                'Callback', {@cb_min_edit_field})
-            
-            set(ui_step_field_edit, ...
-                'Position', [.36 .01 .22 .07], ...
-                'Callback', {@cb_step_edit_field})
-            
-            set(ui_max_field_edit, ...
-                'Position', [.62 .01 .22 .07], ...
-                'Callback', {@cb_max_edit_field})
-            
-            edit_field_class_rules()
+           
         end
 
     % callbacks
-        function edit_field_class_rules()
-            if el.existsTag('DENSITIES')
-                
-                set(ui_min_field_edit, ...
-                    'String', 0, ...
-                    'Visible', 'on')
-                set(ui_max_field_edit, ...
-                    'String', 100, ...
-                    'Visible', 'on')
-                set(ui_step_field_edit, ...
-                    'String', 1, ...
-                    'Visible', 'on')
-                
-                analysis_type = 'DENSITIES';
-                
-            elseif el.existsTag('THRESHOLDS')
-                
-                set(ui_min_field_edit, ...
-                    'String', -1, ...
-                    'Visible', 'on')
-                set(ui_max_field_edit, ...
-                    'String', 1, ...
-                    'Visible', 'on')
-                set(ui_step_field_edit, ...
-                    'String', 0.1, ...
-                    'Visible', 'on')
-                
-                analysis_type = 'THRESHOLDS';
-                
-            else  % weigthed
-                set(ui_min_field_edit, ...
-                    'Visible', 'off')
-                set(ui_max_field_edit, ...
-                    'Visible', 'off')
-                set(ui_step_field_edit, ...
-                    'Visible', 'off')                
-            end
-        end
         function cb_measure_selection(~, event)
             i = event.Indices(1);
             col = event.Indices(2);
@@ -232,24 +177,6 @@ function h_panel = draw(pl, varargin)
         function cb_table_calculate(~, ~)
             mlist = Graph.getCompatibleMeasureList(graph);
             calculate_measure_list = mlist(pl.selected);
-            
-            if el.existsTag('DENSITIES')
-                % set densities
-                min = str2double(get(ui_min_field_edit, 'String'));
-                max = str2double(get(ui_max_field_edit, 'String'));
-                step = str2double(get(ui_step_field_edit, 'String'));
-                
-                el.set('DENSITIES', [min:step:max])
-            elseif el.existsTag('THRESHOLDS')
-                min = str2double(get(ui_min_field_edit, 'String'));
-                max = str2double(get(ui_max_field_edit, 'String'));
-                step = str2double(get(ui_step_field_edit, 'String'));
-                
-                el.set('THRESHOLDS', [min:step:max])
-            else
-                % do nothing
-            end  
-            
             g = el.memorize('G');
             
             % calculate
