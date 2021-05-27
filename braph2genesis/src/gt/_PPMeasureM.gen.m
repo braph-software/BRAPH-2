@@ -171,17 +171,29 @@ function update(pl)
         plot_value = value;
         
         if Measure.is_global(el) % global
+            is_inf_vector = cellfun(@(x) isinf(x), plot_value);
+            if any(is_inf_vector)
+                return;
+            end
             y_ = cell2mat([plot_value{:}]);
         elseif Measure.is_nodal(el) % nodal
             for l = 1:length(plot_value)
                 tmp = plot_value{l};
-                y_{l} = tmp{node1_to_plot}; %#ok<AGROW>
+                is_inf_vector = cellfun(@(x) isinf(x), tmp);
+                if any(is_inf_vector)
+                    return;
+                end
+                y_{l} = tmp(node1_to_plot); %#ok<AGROW>
             end
             y_ = cell2mat(y_);
         else  % binodal
             for l = 1:length(plot_value)
                 tmp = plot_value{l};
-                y_{l} = tmp{node1_to_plot, node2_to_plot}; %#ok<AGROW>
+                is_inf_vector = cellfun(@(x) isinf(x), tmp);
+                if any(is_inf_vector)
+                    return;
+                end
+                y_{l} = tmp(node1_to_plot, node2_to_plot); %#ok<AGROW>
             end
             y_ = cell2mat(y_);
         end
