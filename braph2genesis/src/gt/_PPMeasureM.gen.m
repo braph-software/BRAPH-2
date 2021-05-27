@@ -53,10 +53,28 @@ function update(pl)
     node_labels = [];
     x_range = 1:10;
         
-    if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue') || (~isa(graph, 'MultigraphBUD') || ~isa(graph, 'MultigraphBUT'))
-        % if the result has no value or is not a Multigraph BUD or BUT do
-        % nothing.
-    else
+    if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue') 
+        % do nothing
+    elseif ~isa(graph, 'MultigraphBUD') || ~isa(graph, 'MultigraphBUT')
+        % paint a normal cell tables
+        value_cell = el.get(prop);
+        if isempty(pl.table_value_cell)
+            pl.table_value_cell = cell(size(value_cell));
+        end
+        for i = 1:1:size(pl.table_value_cell, 1)
+            for j = 1:1:size(pl.table_value_cell, 2)
+                if isempty(pl.table_value_cell{i, j}) || ~isgraphics(pl.table_value_cell{i, j}, 'uitable')
+                    pl.table_value_cell{i, j} = uitable('Parent', pl.pp);
+                end
+                set(pl.table_value_cell{i, j}, ...
+                    'Data', value_cell{i, j}, ...
+                    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                    'CellEditCallback', {@cb_matrix_value, i, j} ...
+                    )
+            end
+        end
+    else  % multigraph and multigraphbut
+        
         node_labels = graph.get('NODELABELS');
         if isa(graph, 'MultigraphBUD')
             x_range = graph.get('DENSITIES');
