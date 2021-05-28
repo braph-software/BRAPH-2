@@ -53,28 +53,9 @@ function update(pl)
     node_labels = [];
     x_range = 1:10;
         
-    if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue') 
+    if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
         % do nothing
-    elseif ~isa(graph, 'MultigraphBUD') || ~isa(graph, 'MultigraphBUT')
-        % paint a normal cell tables
-        value_cell = el.get(prop);
-        if isempty(pl.table_value_cell)
-            pl.table_value_cell = cell(size(value_cell));
-        end
-        for i = 1:1:size(pl.table_value_cell, 1)
-            for j = 1:1:size(pl.table_value_cell, 2)
-                if isempty(pl.table_value_cell{i, j}) || ~isgraphics(pl.table_value_cell{i, j}, 'uitable')
-                    pl.table_value_cell{i, j} = uitable('Parent', pl.pp);
-                end
-                set(pl.table_value_cell{i, j}, ...
-                    'Data', value_cell{i, j}, ...
-                    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-                    'CellEditCallback', {@cb_matrix_value, i, j} ...
-                    )
-            end
-        end
-    else  % multigraph and multigraphbut
-        
+    elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
         node_labels_tmp = graph.get('NODELABELS');
         node_labels = split(node_labels_tmp, ',');
         if isa(graph, 'MultigraphBUD')
@@ -107,7 +88,26 @@ function update(pl)
         ui_node1_popmenu  = uicontrol('Parent', pl.pp, 'Style', 'popupmenu');
         ui_node2_popmenu  = uicontrol('Parent', pl.pp, 'Style', 'popupmenu');
         ui_measure_plot = uicontrol('Parent', pl.pp, 'Style', 'pushbutton');
-        init_measure_plot_area()           
+        init_measure_plot_area()
+        
+    else
+        % paint a normal cell tables
+        value_cell = el.get(prop);
+        if isempty(pl.table_value_cell)
+            pl.table_value_cell = cell(size(value_cell));
+        end
+        for i = 1:1:size(pl.table_value_cell, 1)
+            for j = 1:1:size(pl.table_value_cell, 2)
+                if isempty(pl.table_value_cell{i, j}) || ~isgraphics(pl.table_value_cell{i, j}, 'uitable')
+                    pl.table_value_cell{i, j} = uitable('Parent', pl.pp);
+                end
+                set(pl.table_value_cell{i, j}, ...
+                    'Data', value_cell{i, j}, ...
+                    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                    'CellEditCallback', {@cb_matrix_value, i, j} ...
+                    )
+            end
+        end
     end
     
     % functions
