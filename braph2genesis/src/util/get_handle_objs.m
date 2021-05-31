@@ -1,11 +1,11 @@
 function [single_obj, list_objs] = get_handle_objs(type, label, superclass)
-%GET_HANDLE_OBJS returns the handle of objects
+%GET_HANDLE_OBJS returns the handle of objects.
 %
 % SINGLE_OBJ = GET_HANDLE_OBJS(TYPE, LABEL) returns the handle of a object of
-% type TYPE.
+%  type TYPE.
 %
 % [~, LIST_OBJS] = GET_HANDLE_OBJS(TYPE, [], SUPERCLASS) returns the handle of a objects of
-% type TYPE who are subclass of SUPERCLASS or share name with SUPERCLASS.
+%  type TYPE who are subclass of SUPERCLASS or share name with SUPERCLASS.
 %
 % See also COPY_VARARGIN, CLEAN_VARARGIN, GET_FROM_VARARGIN.
 
