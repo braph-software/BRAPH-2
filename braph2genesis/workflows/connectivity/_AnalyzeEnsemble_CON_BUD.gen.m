@@ -30,10 +30,11 @@ G_DICT (result, idict) is the graph (MultigraphBUD) ensemble obtained from this 
 IndexedDictionary('IT_CLASS', 'MultigraphBUD')
 %%%% ¡calculate!
 g_dict = IndexedDictionary('IT_CLASS', 'MultigraphBUD');
+gr = a.get('GR');
+densities = a.get('DENSITIES');
 node_labels = '';
 
-if g_dict.length ~= 0
-    gr = g_dict.getItem(1);
+if g_dict.length ~= 0    
     node_dict = gr.get('SUB_DICT').getItem(1).get('BA').get('BR_DICT');
     node_labels_tmp = cellfun(@(x) x.get('ID') , node_dict.getItems(), 'UniformOutput', false);
     % i have to transform the labels to a string because we dont have a format
@@ -43,9 +44,6 @@ if g_dict.length ~= 0
     end
     node_labels = node_labels(2:end);
 end
-
-gr = a.get('GR');
-densities = a.get('DENSITIES');
 
 for i = 1:1:gr.get('SUB_DICT').length()
 	sub = gr.get('SUB_DICT').getItem(i);

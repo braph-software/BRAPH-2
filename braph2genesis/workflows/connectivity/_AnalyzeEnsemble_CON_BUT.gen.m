@@ -31,9 +31,10 @@ IndexedDictionary('IT_CLASS', 'MultigraphBUT')
 %%%% ¡calculate!
 g_dict = IndexedDictionary('IT_CLASS', 'MultigraphBUT');
 node_labels = '';
+gr = a.get('GR');
+thresholds = a.get('THRESHOLDS');
 
 if g_dict.length ~= 0
-    gr = g_dict.getItem(1);
     node_dict = gr.get('SUB_DICT').getItem(1).get('BA').get('BR_DICT');
     node_labels_tmp = cellfun(@(x) x.get('ID') , node_dict.getItems(), 'UniformOutput', false);
     % i have to transform the labels to a string because we dont have a format
