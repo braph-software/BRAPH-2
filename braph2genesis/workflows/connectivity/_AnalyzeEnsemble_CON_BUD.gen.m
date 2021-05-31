@@ -34,7 +34,7 @@ gr = a.get('GR');
 densities = a.get('DENSITIES');
 node_labels = '';
 
-if g_dict.length ~= 0    
+if ~isempty(gr) && ~isa(gr, 'NoValue')   
     node_dict = gr.get('SUB_DICT').getItem(1).get('BA').get('BR_DICT');
     node_labels_tmp = cellfun(@(x) x.get('ID') , node_dict.getItems(), 'UniformOutput', false);
     % i have to transform the labels to a string because we dont have a format
