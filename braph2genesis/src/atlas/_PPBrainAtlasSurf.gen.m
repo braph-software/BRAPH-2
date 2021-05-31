@@ -12,7 +12,6 @@ pp
 plot_brain_atlas_btn
 plot_ba
 
-
 %% ¡methods!
 function h_panel = draw(pl, varargin)
     %DRAW draws the idict for brain atlas property graphical panel.
@@ -81,8 +80,7 @@ function h_panel = draw(pl, varargin)
                 x2 = normalized(1)+ normalized(3);
                 h2 = normalized(4) / 1.61;
                 y2 = normalized(2) + h2 - .195;
-                w2 = normalized(3) * 1.61;
-               
+                w2 = normalized(3) * 1.61;               
             end
             
             second_figure =  figure( ...
@@ -95,10 +93,11 @@ function h_panel = draw(pl, varargin)
                 'Toolbar', 'figure', ...
                 'Color', 'w' ...
                 );
-            addlistener(second_figure, 'ObjectBeingDestroyed', @cb_close_atlas_srf);
             
-            ui_toolbar = findall(second_figure, 'Tag', 'FigureToolBar');
+            addlistener(second_figure, 'ObjectBeingDestroyed', @cb_close_atlas_srf);            
+            set_icon(second_figure)
             
+            ui_toolbar = findall(second_figure, 'Tag', 'FigureToolBar');            
             delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
             delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
             delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
@@ -137,13 +136,8 @@ function h_panel = draw(pl, varargin)
             set(fig_h, 'Units', 'characters'); % go back
         end
         function obj = getGUIFigureObj()
-            figHandles = findobj('Type', 'figure');
-            for i = 1:1:length(figHandles)
-                fig_h = figHandles(i);
-                if contains(fig_h.Name, 'BrainAtlas - ')
-                    obj = fig_h;
-                end
-            end
+            [~, figHandles] = get_handle_objs('figure', [], 'BrainAtlas');
+            obj = figHandles{1};
         end        
         function cb_close_atlas_srf(~, ~)
             set(pl.plot_brain_atlas_btn, 'Enable', 'on');

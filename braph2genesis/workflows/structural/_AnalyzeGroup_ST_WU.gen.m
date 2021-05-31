@@ -71,6 +71,8 @@ g = GraphWU( ...
     );
 
 value = g;
+%%%% ¡gui!
+pl = PPAnalyzeGroupGraph('EL', a, 'PROP', AnalyzeGroup_ST_WU.G, varargin{:});
 
 %% ¡tests!
 

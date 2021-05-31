@@ -1181,6 +1181,16 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 format = el.getPropFormat(prop);
                 value = el.getr(prop);
                 
+                % \U scape bug - warning fix
+                if ischar(value) && contains(value, '\')
+                    v_array = split(value, '\');
+                    tmp_val = v_array{1};
+                    for i = 2:length(v_array)
+                        tmp_val = [tmp_val '\\' v_array{i}]; %#ok<AGROW>
+                    end
+                    value = tmp_val;
+                end
+                
                 if el.isLocked(prop)
                     txt_locked = ['<strong>' char(254) '</strong>'];
                 else

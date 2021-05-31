@@ -22,7 +22,7 @@ end
 
 close_request = get_from_varargin(true, 'CloseRequest', varargin);
 
-f_position = get_from_varargin([.02 .15 .30 .80], 'Position', varargin);
+f_position = get_from_varargin([.02 .1 .30 .80], 'Position', varargin);
 
 BKGCOLOR = get_from_varargin([.98 .95 .95], 'BackgroundColor', varargin);
 
@@ -186,7 +186,7 @@ menu()
     function cb_license(~, ~)
         CreateStruct.WindowStyle = 'modal';
         CreateStruct.Interpreter = 'tex';
-        msgbox({'' ...
+        h = msgbox({'' ...
             ['{\bf\color{orange}' BRAPH2.STR '}'] ...
             ['{\color{gray}version ' BRAPH2.VERSION '}'] ...
             ['{\color{gray}' BRAPH2.WEB '}'] ...
@@ -198,12 +198,13 @@ menu()
             '' ...
             ''}, ...
             [BRAPH2.STR ' License'], ...
-            CreateStruct)
+            CreateStruct);
+        set_icon(h)
     end
     function cb_about(~, ~)
         CreateStruct.WindowStyle = 'modal';
         CreateStruct.Interpreter = 'tex';
-        msgbox({'' ...
+        h = msgbox({'' ...
             ['{\bf\color{orange}' BRAPH2.STR '}'] ...
             ['{\color{gray}version ' BRAPH2.VERSION '}'] ...
             ['{\color{gray}' BRAPH2.WEB '}'] ...
@@ -214,10 +215,24 @@ menu()
             '' ...
             ''}, ...
             ['About ' BRAPH2.STR], ...
-            CreateStruct)
+            CreateStruct);
+        set_icon(h)
     end
     function cb_refresh(~,~)
         sub_menus()
+    end
+    function cb_save_image(~, ~)
+        figHandles = findobj('Type', 'figure');
+        for i = 1:1:length(figHandles)
+            fig_h = figHandles(i);
+            if ~isempty(fig_h.CurrentAxes)
+                h = figure('Name', fig_h.Name);
+                set(gcf, 'Color', 'w')
+                copyobj(fig_h.CurrentAxes, h)
+                set(gca, 'Units', 'normalized')
+                set(gca, 'OuterPosition', [0 0 1 1])
+            end
+        end
     end
 
 %% Toolbar
