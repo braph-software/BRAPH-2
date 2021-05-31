@@ -162,10 +162,10 @@ function update(pl)
         end
     end
     function cb_node_1(source, ~)
-        node1_to_plot = str2double(source.Value);
+        node1_to_plot = double(source.Value);
     end
     function cb_node_2(source, ~)
-        node2_to_plot = str2double(source.Value);
+        node2_to_plot = double(source.Value);
     end
     function cb_plot_m(~, ~)
         plot_value = value;
@@ -175,28 +175,27 @@ function update(pl)
             if any(is_inf_vector)
                 return;
             end
-            y_ = cell2mat([plot_value{:}]);
+            y_ = [plot_value{:}];
         elseif Measure.is_nodal(el) % nodal
             for l = 1:length(plot_value)
                 tmp = plot_value{l};
-                is_inf_vector = cellfun(@(x) isinf(x), tmp);
-                if any(is_inf_vector)
+                tmp_y = tmp(node1_to_plot);
+                if isinf(tmp_y)
                     return;
                 end
-                y_{l} = tmp(node1_to_plot); %#ok<AGROW>
+                y_(l) = tmp_y; %#ok<AGROW>
             end
-            y_ = cell2mat(y_);
         else  % binodal
             for l = 1:length(plot_value)
                 tmp = plot_value{l};
-                is_inf_vector = cellfun(@(x) isinf(x), tmp);
-                if any(is_inf_vector)
+                tmp_y = tmp(node1_to_plot, node2_to_plot);
+                if isinf(tmp_y)
                     return;
                 end
-                y_{l} = tmp(node1_to_plot, node2_to_plot); %#ok<AGROW>
+                y_(l) = tmp_y; %#ok<AGROW>
             end
-            y_ = cell2mat(y_);
         end
+        
         x_ = x_range;
         
         [~, normalized] = get_figure_position();

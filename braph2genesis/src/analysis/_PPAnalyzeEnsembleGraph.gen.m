@@ -183,15 +183,18 @@ function h_panel = draw(pl, varargin)
             f = waitbar(0, ['Calculating ' num2str(length(calculate_measure_list))  ' measures ...'], 'Name', BRAPH2.NAME);
             set_icon(f)
             
+            count = 1;
+            n = length(g_dict) * length(calculate_measure_list);
             for j = 1:length(g_dict)
                 g  = g_dict.getItem(j);
                 for i = 1:length(calculate_measure_list)
-                    progress = (1 / (length(g_dict) * length(calculate_measure_list) * .9)) * i * j;
-                    extra = (1 / (length(g_dict) * length(calculate_measure_list) * .9)) * 1.2 * i * j;
+                    progress = (.85 / n) +  (count / n);
+                    extra = (.85 / n) +  (count / n) + (.05 / n);
                     measure = calculate_measure_list{i};
                     waitbar(progress, f, ['Subject: ' num2str(j) 'measure: ' measure '  ...']);
                     result_measure{j, i} = g.getMeasure(measure); %#ok<AGROW>
                     waitbar(extra, f, ['Measure: ' measure ' Calculated! ...']);
+                    count = count + 1;
                 end
             end
             
@@ -210,7 +213,7 @@ function h_panel = draw(pl, varargin)
                     if offset > .45 || i == 1
                         offset = 0;
                     end
-                    measure = result_measure{i};
+                    measure = result_measure{j, i};
                     GUI(measure, 'CloseRequest', false, 'Position', [x2+offset y2-offset w2 h2])
                 end
             end
