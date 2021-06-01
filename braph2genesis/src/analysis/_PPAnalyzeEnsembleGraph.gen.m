@@ -123,7 +123,7 @@ function h_panel = draw(pl, varargin)
         function list = get_graph_list()
             graphs = graph_dict.getItems();
             list = cellfun(@(x) x.getClass(), graphs, 'UniformOutput', false);
-            list = unique(list);
+            % list = unique(list);
         end
         function updateMeasures()
             control_handles = findobj('Type', 'UIControl');
@@ -192,7 +192,7 @@ function redraw(pl, varargin)
     %
     % See also draw, update, refresh.
 
-    pl.redraw@PlotProp('Height', 20, varargin{:});
+    pl.redraw@PlotProp('Height', 15, varargin{:});
 end
 function selected = getSelected(pl)
     selected = pl.selected;
