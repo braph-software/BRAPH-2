@@ -68,7 +68,7 @@ if isfolder(directory)
             sex = raw_covariates(2:end, 3);
         else
             age = {[0]};
-            age = age(ones(length(files), 1));
+            age = age(ones(length(subject_folders), 1));
             unassigned =  {'unassigned'};
             sex = unassigned(ones(1, length(subject_folders)));
         end

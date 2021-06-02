@@ -102,7 +102,6 @@ if isfolder(directory)
             if i == 1  % just 1 time
                 % info
                 subjects_info(:, :) = raw(2:end, 1:3);
-                % covariates = xlsread(fullfile(directory, files(k).name), 'Sheet', 2, 'ReadVariableNames', 1);
             end
             % multiplex data
             data = raw(2:end, 4: size(raw, 2));  % we remove id, labl, notes (column 1 to 3)
