@@ -37,9 +37,14 @@ function h_panel = draw(pl, varargin)
         graph_dict = el.getPropDefault('G_DICT');
     end
     measures_guis = [];
-    analysis_type = [];
+    analysis_type = [];    
+    case_ = 0;
     
-    x_range = el.get(el.getPropNumber());
+    if isa(el.get(el.getPropNumber()), 'double')
+        x_range = el.get(el.getPropNumber());  % bud, but
+    else
+        case_ = 1; % weighted
+    end
 
     pl.pp = draw@PlotProp(pl, varargin{:});
     set(pl.pp, 'DeleteFcn', {@close_f_settings}, ...
@@ -189,7 +194,11 @@ function h_panel = draw(pl, varargin)
                 end
                 measure = result_measure{j};
                 measure_class = calculate_measure_list{j};
-                measures_guis{j} = GUIEnsembleMeasurePlot(measure, measure_class, [x2+offset y2-offset w2 h2]);
+                if case_
+                    measures_guis{j} = GUIEnsembleWeightedMeasurePlot(measure, measure_class, [x2+offset y2-offset w2 h2]);
+                else
+                    measures_guis{j} = GUIEnsembleMeasurePlot(measure, measure_class, [x2+offset y2-offset w2*1.61 h2]);
+                end
             end
 
             % close progress bar
@@ -367,6 +376,32 @@ function h_panel = draw(pl, varargin)
             end
             
             if nargout > 0 
+                h = f;
+            end
+        end
+        function h = GUIEnsembleWeightedMeasurePlot(measure, measure_class, position)
+            f_title = ['Plot of Measure: ' measure_class];
+
+            f =  figure( ...
+                'Visible', 'on', ...
+                'NumberTitle', 'off', ...
+                'Name', f_title, ...
+                'Units', 'normalized', ...
+                'Position', position, ...
+                'MenuBar', 'none', ...
+                'Toolbar', 'figure', ...
+                'Color', 'w' ...
+                );
+
+            set_icon(f)
+
+            uitable(f, ...
+                'Units', 'normalized', ...
+                'Position', [.02 .02 .98 .98], ...
+                'Data', measure{:} ...
+                );
+
+            if nargout > 0
                 h = f;
             end
         end
