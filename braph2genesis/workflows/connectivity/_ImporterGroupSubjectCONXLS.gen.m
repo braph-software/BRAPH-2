@@ -61,7 +61,7 @@ if isfolder(directory)
     cov_folder = dir(directory);
     cov_folder = cov_folder([cov_folder(:).isdir] == 1);
     cov_folder = cov_folder(~ismember({cov_folder(:).name}, {'.', '..'}));
-    if isfolder([directory filesep() cov_folder.name])
+    if ~isempty(cov_folder)
         file_cov_XLSX = dir(fullfile([directory filesep() cov_folder.name], '*.xlsx'));
         file_cov_XLS = dir(fullfile([directory filesep() cov_folder.name], '*.xls'));
         file_cov = [file_cov_XLSX; file_cov_XLS];

@@ -80,7 +80,7 @@ if isfolder(directory)
         cov_folder = dir(directory);
         cov_folder = cov_folder([cov_folder(:).isdir] == 1);
         cov_folder = cov_folder(~ismember({cov_folder(:).name}, {'.', '..'}));
-        if isfolder([directory filesep() cov_folder.name])
+        if ~isempty(cov_folder)
             raw_covariates = readtable([directory filesep() cov_folder.name filesep() name '_covariates.txt'], 'Delimiter', '\t');
             age = raw_covariates{:, 2};
             sex = raw_covariates{:, 3};
