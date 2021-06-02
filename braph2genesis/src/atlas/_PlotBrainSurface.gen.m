@@ -293,7 +293,8 @@ function f_settings = settings(pl, varargin)
     %
     % See also draw, figure, isgraphics.
 
-    f = settings@Plot(pl, varargin{:});
+    f = settings@Plot(pl, varargin{:});    
+    set_icon(f);
 
     % toolbar
     set(f, 'Toolbar', 'figure')

@@ -50,6 +50,16 @@ MultigraphBUT()
 gr = a.get('GR');
 data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
 data = cat(2, data_list{:})'; % correlation is a column based operation
+node_dict = gr.get('SUB_DICT').getItem(1).get('BA').get('BR_DICT');
+node_labels_tmp = cellfun(@(x) x.get('ID') , node_dict.getItems(), 'UniformOutput', false);
+node_labels = '';
+
+% i have to transform the labels to a string because we dont have a format
+% for a cell of strings. 
+for i = 1:length(node_labels_tmp)
+    node_labels = [node_labels ',' node_labels_tmp{i}];
+end
+node_labels = node_labels(2:end);
 
 if a.get('USE_COVARIATES')
     age_list = cellfun(@(x) x.get('age'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
@@ -76,10 +86,13 @@ thresholds = a.get('THRESHOLDS');
 g = MultigraphBUT( ...
     'ID', ['g ' gr.get('ID')], ...
     'B', A, ...
-    'THRESHOLDS', thresholds ...
+    'THRESHOLDS', thresholds, ...
+    'NODELABELS', node_labels ...
     );
 
 value = g;
+%%%% ¡gui!
+pl = PPAnalyzeGroupGraph('EL', a, 'PROP', AnalyzeGroup_ST_BUT.G, varargin{:});
 
 %% ¡tests!
 

@@ -22,7 +22,7 @@ end
 
 close_request = get_from_varargin(true, 'CloseRequest', varargin);
 
-f_position = get_from_varargin([.02 .30 .30 .80], 'Position', varargin);
+f_position = get_from_varargin([.02 .1 .30 .80], 'Position', varargin);
 
 BKGCOLOR = get_from_varargin([.98 .95 .95], 'BackgroundColor', varargin);
 
@@ -40,6 +40,9 @@ f = init();
             'DockControls', 'off', ...
             'Color', BKGCOLOR ...             
             );
+        
+        set_icon(f)
+        
         if close_request
             set(f, 'CloseRequestFcn', {@cb_close})
         end
@@ -57,8 +60,8 @@ f = init();
     end
 
 %% Plot Element
-plot()
-    function plot()
+pl = plot();
+    function pl = plot()
         el_panel = uipanel( ...
             'Parent', f, ...
             'BorderType', 'none' ...
@@ -73,8 +76,8 @@ plot()
             set(ui_text_filename, 'Position', [0 0 Plot.w(f) 1])
         end
         
-        pl = el.getPlotElement();
-        pl.draw('Parent', el_panel)
+        pl = el.getPlotElement();        
+        pl.draw('Parent', el_panel);
     end
 
 %% Text File Name
@@ -90,6 +93,8 @@ init_filename()
     end
 
 %% Menu
+ui_menu_import = [];
+ui_menu_export = [];
 menu()
     function menu()
         ui_menu_file = uimenu(f, 'Label', 'File');
@@ -110,10 +115,14 @@ menu()
             'Label', 'Close', ...
             'Accelerator', 'C', ...
             'Callback', {@cb_close})
-              
-        ui_menu_import = el.getGUIMenuImport(f); %#ok<NASGU>
-
-        ui_menu_import = el.getGUIMenuExport(f); %#ok<NASGU>
+        
+        ui_menu_import = uimenu(f, ...
+            'Label', 'Import', ...
+            'Callback', {@cb_refresh});
+        
+        ui_menu_export = uimenu(f, ...
+            'Label', 'Export', ...
+            'Callback', {@cb_refresh});        
         
         ui_menu_figure = uimenu(f, 'Label', 'Figure');
         uimenu(ui_menu_figure, ...
@@ -128,6 +137,19 @@ menu()
         uimenu(ui_menu_about, ...
             'Label', 'About ...', ...
             'Callback', {@cb_about})
+    end
+    function sub_menus()
+        imp_sub_menus = get(ui_menu_import, 'Children');
+        for i = 1:length(imp_sub_menus)           
+            delete(imp_sub_menus(i));
+        end
+        eval([el.getClass() '.getGUIMenuImport(el, ui_menu_import, pl)']);
+        
+        exp_sub_menus = get(ui_menu_export, 'Children');
+        for i = 1:length(exp_sub_menus)
+            delete(exp_sub_menus(i));
+        end
+        eval([el.getClass() '.getGUIMenuExport(el, ui_menu_export)']);
     end
     function cb_open(~, ~)
         % select file
@@ -164,7 +186,7 @@ menu()
     function cb_license(~, ~)
         CreateStruct.WindowStyle = 'modal';
         CreateStruct.Interpreter = 'tex';
-        msgbox({'' ...
+        h = msgbox({'' ...
             ['{\bf\color{orange}' BRAPH2.STR '}'] ...
             ['{\color{gray}version ' BRAPH2.VERSION '}'] ...
             ['{\color{gray}' BRAPH2.WEB '}'] ...
@@ -176,12 +198,13 @@ menu()
             '' ...
             ''}, ...
             [BRAPH2.STR ' License'], ...
-            CreateStruct)
+            CreateStruct);
+        set_icon(h)
     end
     function cb_about(~, ~)
         CreateStruct.WindowStyle = 'modal';
         CreateStruct.Interpreter = 'tex';
-        msgbox({'' ...
+        h = msgbox({'' ...
             ['{\bf\color{orange}' BRAPH2.STR '}'] ...
             ['{\color{gray}version ' BRAPH2.VERSION '}'] ...
             ['{\color{gray}' BRAPH2.WEB '}'] ...
@@ -192,7 +215,24 @@ menu()
             '' ...
             ''}, ...
             ['About ' BRAPH2.STR], ...
-            CreateStruct)
+            CreateStruct);
+        set_icon(h)
+    end
+    function cb_refresh(~,~)
+        sub_menus()
+    end
+    function cb_save_image(~, ~)
+        figHandles = findobj('Type', 'figure');
+        for i = 1:1:length(figHandles)
+            fig_h = figHandles(i);
+            if ~isempty(fig_h.CurrentAxes)
+                h = figure('Name', fig_h.Name);
+                set(gcf, 'Color', 'w')
+                copyobj(fig_h.CurrentAxes, h)
+                set(gca, 'Units', 'normalized')
+                set(gca, 'OuterPosition', [0 0 1 1])
+            end
+        end
     end
 
 %% Toolbar

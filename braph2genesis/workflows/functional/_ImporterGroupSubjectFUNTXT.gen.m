@@ -2,11 +2,11 @@
 ImporterGroupSubjectFUNTXT < Importer (im, importer of FUN subject group from TXT) imports a group of subjects with connectivity data from a series of TXT file.
 
 %%% ¡description!
-ImporterGroupSubjectFUNTXT imports a group of subjects with connectivity data from a series of TXT file and their covariates from another TXT file.
+ImporterGroupSubjectFUNTXT imports a group of subjects with connectivity data from a series of TXT file and their covariates (optional) from another TXT file.
 All these files must be in the same folder; also, no other files should be in the folder.
 Each file contains a table with each row correspoding to a time serie and each column to a brain region.
-The TXT file containing the covariates must be inside another folder in the same directory 
-than file with data and consists of of the following columns:
+The TXT file containing the covariates must be inside another folder in the same group directory 
+and consists of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 
@@ -17,11 +17,6 @@ Element, Importer, ExporterGroupSubjectFUNTXT
 
 %%% ¡prop!
 DIRECTORY (data, string) is the directory containing the FUN subject group files from which to load the subject group.
-
-%%% ¡prop!
-FILE_COVARIATES (data, string) is the TXT file from where to load the covariates age and sex of the FUN subject group.
-%%%% ¡default!
-''
 
 %%% ¡prop!
 BA (data, item) is a brain atlas.
@@ -44,9 +39,11 @@ gr = Group( ...
     );
 
 directory = im.get('DIRECTORY');
-file_covariates = im.memorize('FILE_COVARIATES');
+
 if isfolder(directory)
     % sets group props
+    f = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME);
+    set_icon(f)
     [~, name] = fileparts(directory);
     gr.set( ...
         'ID', name, ...
@@ -58,8 +55,12 @@ if isfolder(directory)
     files = dir(fullfile(directory, '*.txt'));
     
     % Check if there are covariates to add (age and sex)
-    if isfile(file_covariates)
-        raw_covariates = readtable(file_covariates, 'Delimiter', '	');
+    cov_folder = dir(directory);
+    cov_folder = cov_folder([cov_folder(:).isdir] == 1);
+    cov_folder = cov_folder(~ismember({cov_folder(:).name}, {'.', '..'}));
+    if ~isempty(cov_folder)
+        file_cov = dir(fullfile([directory filesep() cov_folder.name], '*.txt'));
+        raw_covariates = readtable([directory filesep() cov_folder.name filesep() file_cov.name], 'Delimiter', '	');
         age = raw_covariates{:, 2};
         sex = raw_covariates{:, 3};
     else
@@ -68,7 +69,8 @@ if isfolder(directory)
         sex = unassigned(ones(length(files), 1));
     end
     
-    if length(files) > 0
+    waitbar(.15, f, 'Loading your data ...');
+    if length(files) > 0        
         % brain atlas
         ba = im.get('BA');
         br_number = ba.get('BR_DICT').length;
@@ -76,6 +78,9 @@ if isfolder(directory)
         
         % adds subjects
         for i = 1:1:length(files)
+            if i == floor(length(files)/2)
+                waitbar(.70, f, 'Almost there ...')
+            end
             % read file
             FUN = table2array(readtable(fullfile(directory, files(i).name), 'Delimiter', '	'));
             
@@ -108,7 +113,11 @@ if isfolder(directory)
         gr.set('sub_dict', subdict);
     end
 end
-
+if exist('f', 'var')
+    waitbar(1, f, 'Finishing')
+    pause(.5)
+    close(f)
+end
 value = gr;
 
 %% ¡methods!
@@ -118,15 +127,5 @@ function uigetdir(im)
     directory = uigetdir('Select directory');
     if isfolder(directory)
         im.set('DIRECTORY', directory);
-    end
-end
-
-function uigetfile(im)
-    % UIGETFILE opens a dialog box to set the TXT file from where to load the FUN subject group.
-    
-    [filename, filepath, filterindex] = uigetfile('*.txt', 'Select TXT file');
-    if filterindex
-        file = [filepath filename];
-        im.set('FILE', file);
     end
 end

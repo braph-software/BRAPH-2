@@ -29,9 +29,12 @@ ba = BrainAtlas();
 % analyzes file
 file = im.memorize('FILE');
 if isfile(file)
+    f = waitbar(0, 'Reading File ...', 'Name', BRAPH2.NAME);
+    set_icon(f)
     [~, ~, raw] = xlsread(file);
 
     % adds props
+    waitbar(.15, f, 'Loading your data ...');
     ba.set( ...
         'ID', raw{1, 1}, ...
         'LABEL', raw{2, 1}, ...
@@ -41,7 +44,11 @@ if isfile(file)
      idict = ba.get('BR_DICT');
 
     % adds brain regions
+    waitbar(.45, f, 'Processing your data ...')
     for i = 5:1:size(raw, 1)
+        if i == floor(size(raw, 1)/2)
+            waitbar(.70, f, 'Almost there ...')
+        end
         br = BrainRegion( ...
             'ID', raw{i, 1}, ...
             'LABEL', raw{i, 2}, ...
@@ -54,7 +61,11 @@ if isfile(file)
     end
     ba.set('br_dict', idict);
 end
-
+if exist('f', 'var')
+    waitbar(1, f, 'Finishing')
+    pause(.5)
+    close(f)
+end
 value = ba;
 
 %% ¡methods!

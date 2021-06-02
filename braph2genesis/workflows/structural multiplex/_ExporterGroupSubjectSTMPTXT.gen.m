@@ -8,7 +8,7 @@ Each TXT file consists of the following columns:
 Group ID (column 1), Group LABEL (column 2), Group NOTES (column 3) and
 BrainRegions of that layer (column 4-end; one brainregion value per column).
 The first row contains the headers and each subsequent row the values for each subject.
-The TXT file containing the covariates consists of of the following columns:
+The TXT file containing the covariates consists of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and, Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 
@@ -32,17 +32,13 @@ DIRECTORY (data, string) is the directory name where to save the group of subjec
 fileparts(which('test_braph2'))
 
 %%% ¡prop!
-FILE_COVARIATES (data, string) is the file name where to save the covariates of the group of subjects with structural multiplex data.
-%%%% ¡default!
-[fileparts(which('test_braph2')) filesep 'default_txt_file_to_save_group_ST_MP_covs_most_likely_to_be_erased.txt']
-
-%%% ¡prop!
 SAVE (result, empty) saves the group of subjects with structural multiplex data in TXT files in the selected directory.
 %%%% ¡calculate!
 directory = ex.get('DIRECTORY');
-file_covariates = ex.get('FILE_COVARIATES');
 
 if isfolder(directory)
+    f = waitbar(0, 'Retrieving Path ...', 'Name', BRAPH2.NAME);
+    set_icon(f)
     gr = ex.get('GR');
 
     gr_directory = [directory filesep() gr.get('ID')];
@@ -52,7 +48,7 @@ if isfolder(directory)
 
     sub_dict = gr.get('SUB_DICT');
     sub_number = sub_dict.length();
-
+    waitbar(.15, f, 'Organizing Info ...');
     if sub_number ~= 0
         sub = sub_dict.getItem(1);
         ba = sub.get('BA');
@@ -80,6 +76,8 @@ if isfolder(directory)
             end             
         end
         
+        waitbar(.55, f, 'Saving Info ...');
+
         for j = 1:1:layers_number
             gr_id = gr.get('ID');
             % save id label notes
@@ -95,7 +93,7 @@ if isfolder(directory)
     end
         
     % if covariates save them in another file
-    if isfolder(fileparts(file_covariates)) && sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
+    if sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
         tab2 = cell(1 + sub_number, 3);
         tab2{1, 1} = 'ID';
         tab2{1, 2} = 'Age';
@@ -106,13 +104,22 @@ if isfolder(directory)
         tab2 = table(tab2);
         
         % save
-        writetable(tab2, file_covariates, 'Delimiter', '\t', 'WriteVariableNames', 0);
+        cov_directory = [gr_directory filesep() 'covariates'];
+        if ~exist(cov_directory, 'dir')
+            mkdir(cov_directory)
+        end
+        writetable(tab2, [cov_directory filesep() gr_id '_covariates.txt'], 'Delimiter', '\t', 'WriteVariableNames', 0);
     end
     
     % sets value to empty
     value = [];
 else
     value = ex.getr('SAVE');    
+end
+if exist('f', 'var')
+    waitbar(1, f, 'Finishing')
+    pause(.5)
+    close(f)
 end
 
 %% ¡methods!
@@ -122,16 +129,6 @@ function uigetdir(ex)
     directory = uigetdir('Select directory');
     if isfolder(directory)
         ex.set('DIRECTORY', directory);
-    end
-end
-
-function uiputfile(ex)
-    % UIPUTFILE opens a dialog box to set the TXT file where to save the group of subjects with structural multiplex data.
-
-    [filename, filepath, filterindex] = uiputfile('*.txt', 'Select TXT file');
-    if filterindex
-        file = [filepath filename];
-        ex.set('FILE', file);
     end
 end
 
@@ -233,11 +230,8 @@ if ~exist(directory, 'dir')
     mkdir(directory)
 end
 
-file_covs = [fileparts(which('test_braph2')) filesep 'trial_covariates_group_subjects_ST_MP_to_be_erased.txt'];
-
 ex = ExporterGroupSubjectSTMPTXT( ...
     'DIRECTORY', directory, ...
-    'FILE_COVARIATES', file_covs, ...
     'GR', gr ...
     );
 ex.get('SAVE');
@@ -245,7 +239,6 @@ ex.get('SAVE');
 % import with same brain atlas
 im1 = ImporterGroupSubjectSTMPTXT( ...
     'DIRECTORY', [directory filesep() gr.get(Group.ID)], ...
-    'FILE_COVARIATES', file_covs, ...
     'BA', ba ...
     );
 gr_loaded1 = im1.get('GR');
@@ -271,8 +264,7 @@ end
 
 % import with new brain atlas
 im2 = ImporterGroupSubjectSTMPTXT( ...
-    'DIRECTORY', [directory filesep() gr.get(Group.ID)], ...
-    'FILE_COVARIATES', file_covs ...
+    'DIRECTORY', [directory filesep() gr.get(Group.ID)] ...
     );
 gr_loaded2 = im2.get('GR');
 

@@ -8,8 +8,8 @@ Each TXT file consists of the following columns:
 Group ID (column 1), Group LABEL (column 2), Group NOTES (column 3) and
 BrainRegions of that layer (column 4-end; one brainregion value per column).
 The first row contains the headers and each subsequent row the values for each subject.
-The TXT file containing the covariates must be inside another folder in the same directory 
-than file with data and consists of of the following columns:
+The TXT file containing the covariates must be inside another folder in the same group directory 
+than file with data and consists of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 
@@ -20,11 +20,6 @@ Element, Importer, ExporterGroupSubjectSTMPTXT
 
 %%% ¡prop!
 DIRECTORY (data, string) is the directory containing the ST MP subject group files from which to load the L layers of the subject group.
-
-%%% ¡prop!
-FILE_COVARIATES (data, string) is the TXT file from where to load the covariates age and sex of the ST MP subject group.
-%%%% ¡default!
-''
 
 %%% ¡prop!
 BA (data, item) is a brain atlas.
@@ -47,9 +42,11 @@ gr = Group( ...
     );
 
 directory = im.get('DIRECTORY');
-file_covariates = im.memorize('FILE_COVARIATES');
+
 if isfolder(directory)
     % sets group props
+    f = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME);
+    set_icon(f)
     [~, name] = fileparts(directory);
     gr.set( ...
         'ID', name, ...
@@ -76,12 +73,15 @@ if isfolder(directory)
             end
             ba.set('br_dict', idict);
         end
-
+        waitbar(.15, f, 'Loading your data ...');
         subdict = gr.get('SUB_DICT');
         
         % Check if there are covariates to add (age and sex)
-        if isfile(file_covariates)
-            raw_covariates = readtable(file_covariates, 'Delimiter', '\t');
+        cov_folder = dir(directory);
+        cov_folder = cov_folder([cov_folder(:).isdir] == 1);
+        cov_folder = cov_folder(~ismember({cov_folder(:).name}, {'.', '..'}));
+        if ~isempty(cov_folder)
+            raw_covariates = readtable([directory filesep() cov_folder.name filesep() name '_covariates.txt'], 'Delimiter', '\t');
             age = raw_covariates{:, 2};
             sex = raw_covariates{:, 3};
         else
@@ -91,6 +91,7 @@ if isfolder(directory)
         end
 
         % multiplex data, subjects, number of layers
+        waitbar(.45, f, 'Processing your data ...')
         all_subjects_data = cell(length(files), subjects_number, br_number);
         subjects_info = cell(subjects_number, 3);
         layers_number = length(files);
@@ -108,6 +109,7 @@ if isfolder(directory)
                             
         % cycle over subjects, add subjects
         for i = 1:1:size(all_subjects_data, 2)
+            waitbar(.70, f, 'Almost there ...')
             layer_subject = reshape(all_subjects_data(:, i, :), [layers_number br_number]);
             for l = 1:1:layers_number
                 ST_MP(l) = {cell2mat(layer_subject(l, :)')};
@@ -129,7 +131,11 @@ if isfolder(directory)
         gr.set('sub_dict', subdict);
     end
 end
-
+if exist('f', 'var')
+    waitbar(1, f, 'Finishing')
+    pause(.5)
+    close(f)
+end
 value = gr;
 
 %% ¡methods!

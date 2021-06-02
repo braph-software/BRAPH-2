@@ -89,6 +89,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %  getGUI - returns figure with element GUI
     %  getPlotElement - returns the element plot
     %  getPlotProp - returns a prop plot
+    %
+    % Element methods (GUI, Static):
     %  getGUIMenuImport - returns a basic import menu
     %  getGUIMenuExport - returns a basic export menu
     %
@@ -1179,6 +1181,11 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 format = el.getPropFormat(prop);
                 value = el.getr(prop);
                 
+                % \U scape bug - warning fix
+                if ischar(value) && contains(value, '\')
+                    value = insertAfter(value, '\', '\');                    
+                end
+                
                 if el.isLocked(prop)
                     txt_locked = ['<strong>' char(254) '</strong>'];
                 else
@@ -1701,19 +1708,19 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         varargin{:});
             end
         end
-        function ui_menu_import = getGUIMenuImport(el, f)
-            %GETGUIMENUIMPORT returns the import menu gui.
+    end
+    methods (Static) % GUI Static
+        function getGUIMenuImport(el, ui_menu_import, plot_element)
+            %GETGUIMENUIMPORT sets the import submenu gui json.
             % 
-            % menu = GETGUIMENUIMPORT(EL, FIG) sets and returns the import menu for the
-            %  figure FIG.
+            % GETGUIMENUIMPORT(EL, UI_MENU) sets the import submenu json for the menu UI_MENU.
             % 
             % See also getGUI, getGUIMenuExport.
             
-            ui_menu_import = uimenu(f, 'Label', 'Import');
             uimenu(ui_menu_import, ...
                 'Label', 'Import JSON ...', ...
                 'Callback', {@cb_import_json})
-        
+                 
             function cb_import_json(~,~)
                 [file, path, filterindex] = uigetfile('.json', ['Select ' el.getName() ' file location.']);
                 if filterindex
@@ -1723,24 +1730,22 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     str = char(raw');
                     fclose(fid);
                     tmp_el = Element.decodeJSON(str);
-                    f.el = tmp_el;
-                    f.plot();
+                    plot_element.set('El', tmp_el); 
+                    plot_element.redraw();
                 end
             end
         end
-        function ui_menu_export = getGUIMenuExport(el, f)
-            %GETGUIMENUEXPORT returns the export menu gui.
+        function getGUIMenuExport(el, ui_menu_export)
+            %GETGUIMENUEXPORT sets the export submenu gui json.
             % 
-            % menu = GETGUIMENUEXPORT(EL, FIG) sets and returns the export menu for the 
-            %  figure FIG.
+            % GETGUIMENUEXPORT(EL, UI_MENU) sets the export submenu for the ui menu UI_MENU.
             % 
             % See also getGUI, getGUIMenuImport.
-            
-            ui_menu_export = uimenu(f, 'Label', 'Export');
+                     
             uimenu(ui_menu_export, ...
                 'Label', 'Export JSON ...', ...
                 'Callback', {@cb_export_json})
-            
+          
             function cb_export_json(~,~)
                 [file, path, filterindex] = uiputfile('.json', ['Select ' el.getName  ' file location.']);
                 if filterindex
@@ -1751,7 +1756,6 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     fclose(fid);
                 end
             end
-            
         end
     end
 end

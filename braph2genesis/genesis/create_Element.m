@@ -47,9 +47,9 @@ function create_Element(generator_file, target_dir)
 %  GUI code to represent the panel of the element. 
 %  Can be on multiple lines.
 %  Should return a Plot object in 'pl'
-%  <strong>%%% ¡menu_importer!</strong>
+%  <strong>%%% ¡menu_import!</strong>
 %   Menu Import for the GUI figure. The menus is ui_menu_import.
-%  <strong>%%% ¡menu_exporter!</strong>
+%  <strong>%%% ¡menu_export!</strong>
 %   Menu Export for the GUI figure. The menus is ui_menu_export.
 % 
 %<strong>%% ¡props!</strong>
@@ -146,7 +146,7 @@ txt = fileread(generator_file);
 disp('¡! generator file read')
 
 %% Analysis
-[class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui, gui_import, gui_export] = analyze_header();
+[class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui, gui_menu_import, gui_menu_export] = analyze_header();
     function [class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui, gui_import, gui_export] = analyze_header()
         header = getToken(txt, 'header');
         res = regexp(header, '^\s*(?<class_name>\w*)\s*<\s*(?<superclass_name>\w*)\s*\(\s*(?<moniker>\w*)\s*,\s*(?<descriptive_name>[^)]*)\)\s*(?<header_description>[^.]*)\.', 'names');
@@ -163,6 +163,7 @@ disp('¡! generator file read')
         seealso = getToken(txt, 'header', 'seealso');        
 
         gui = splitlines(getToken(txt, 'header', 'gui'));
+        
         gui_import = splitlines(getToken(txt, 'header', 'gui', 'menu_importer'));        
         gui_export = splitlines(getToken(txt, 'header', 'gui', 'menu_exporter'));
     end
@@ -405,8 +406,10 @@ generate_header()
              '%  getGUI - returns figure with element GUI'
              '%  getPlotElement - returns the element plot'
              '%  getPlotProp - returns a prop plot'
-             '%  getGUIMenuImport - returns an import menu'
-             '%  getGUIMenuExport - returns an export menu'
+             '%'
+            ['% ' class_name ' methods (GUI, Static):']
+             '%  getGUIMenuImport - returns an importer menu'
+             '%  getGUIMenuExport - returns an exporter menu'
             })
         if element_class_created
             gs(1, {'%', ['% ' class_name ' properties (Constant).']})
@@ -1559,8 +1562,8 @@ generate_gui()
         end
         g(1, 'methods % GUI')
             if ~(numel(gui) == 1 && isempty(gui{1})) && ...
-                    any(cellfun(@(x) isempty(x), gui_import)) && ...
-                    any(cellfun(@(x) isempty(x), gui_export))
+                    any(cellfun(@(x) isempty(x), gui_menu_import)) && ...
+                    any(cellfun(@(x) isempty(x), gui_menu_export))
                 g(2, ['function pl = getPlotElement(' moniker ', varargin)'])
                 gs(3, {
                      '%GETPLOTELEMENT returns the element plot.'
@@ -1608,39 +1611,53 @@ generate_gui()
                 gs(5, {['pl = getPlotProp@' superclass_name '(' moniker ', prop, varargin{:});'], ''})
                 g(3, 'end')
                 g(2, 'end')
-            end
-            if any(cellfun(@(x) ~isempty(x), gui_import))
-                g(2, ['function ui_menu_import = getGUIMenuImport(' moniker ', f)'])
+            end            
+        g(1, 'end')
+    end
+
+generate_gui_static()
+    function generate_gui_static()
+        if (numel(gui_menu_import) == 1 && isempty(gui_menu_import{1})) && ...
+                numel(gui_menu_export) == 1 && isempty(gui_menu_export{1})
+            return
+        end
+        g(1, 'methods (Static) % GUI static methods')
+        if any(cellfun(@(x) ~isempty(x), gui_menu_import))
+            g(2, 'function getGUIMenuImport(el, ui_menu_import, plot_element)')
+            gs(3, {
+                '%GETGUIMENUIMPORT sets a figure menu.'
+                '%'
+                '% GETGUIMENUIMPORT(EL, MENU, PLOTELEMENT) sets the figure menu import which operates on the element EL.'
+                '%'
+                '% See also getGUIMenuExporter.'
+                ''
+                })
                 gs(3, {
-                    '%GETGUIMENUIMPORT returns a figure menu.'
-                    '%'
-                    '% menu_import = GETGUIMENUIMPORT(EL) returns the figure menus.'
-                    '%'
-                    '% See also getGUIMenuExporter.'
-                    ''
-                    ['ui_menu_import = getGUIMenuImport@Element(' moniker ', f);']
+                    'Element.getGUIMenuImport(el, ui_menu_import);'
                     ''
                     })
-                gs(3, gui_import)
-                g(3, '')
-                g(2, 'end')
-            end
-            if  any(cellfun(@(x) ~isempty(x), gui_export))
-                g(2, ['function ui_menu_export = getGUIMenuExport(' moniker ', f)'])
+            gs(3, gui_menu_import)
+            g(3, '')
+            g(2, 'end')
+        end
+        if  any(cellfun(@(x) ~isempty(x), gui_menu_export))
+            g(2, 'function getGUIMenuExport(el, ui_menu_export)')
+            gs(3, {
+                '%GETGUIMENUEXPORT sets a figure menu.'
+                '%'
+                '% GETGUIMENUIMPORT(EL, MENU) sets the figure menu export which operates on the element EL.'
+                '%'
+                '% See also getGUIMenuImporter.'
+                ''
+                })
                 gs(3, {
-                    '%GETGUIMENUEXPORT returns a figure menu.'
-                    '%'
-                    '% [exporters, tag] = getGUIMenuExporter(EL) returns the figure menus.'
-                    '%'
-                    '% See also getGUIMenuImporter.'
-                    ''
-                    ['ui_menu_export = getGUIMenuExport@Element(' moniker ', f);']
+                    'Element.getGUIMenuExport(el, ui_menu_export);'
                     ''
                     })
-                gs(3, gui_export)
-                g(3, '')
-                g(2, 'end')
-            end
+            gs(3, gui_menu_export)
+            g(3, '')
+            g(2, 'end')
+        end
         g(1, 'end')
     end
 

@@ -26,8 +26,8 @@ function cb_importers(src, ~)
     imp_el = eval([src_name '()']);
     imp_el.uigetfile();
     tmp_el = imp_el.get('BA');
-    delete(gcf)
-    GUI(tmp_el)
+    plot_element.set('El', tmp_el); 
+    plot_element.reinit();
 end
 
 %%%% ¡menu_exporter!
@@ -40,7 +40,7 @@ for k = 1:length(exporters_names)
 end
 function cb_exporters(src, ~)
     src_name = erase(src.Text, ' ...');
-    exmp_el = eval([src_name '(' '''BA''' ', ba)']);
+    exmp_el = eval([src_name '(' '''BA''' ', el)']);
     exmp_el.uiputfile();
     exmp_el.get('SAVE');
 end

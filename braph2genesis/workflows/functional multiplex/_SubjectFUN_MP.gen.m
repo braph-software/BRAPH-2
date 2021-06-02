@@ -8,6 +8,39 @@ For example, functional multiplex data can be fMRI or EEG.
 %%% ¡seealso!
 Element, Subject
 
+%%% ¡gui!
+%%%% ¡menu_importer!
+importers = {'ImporterGroupSubjectFUNMPTXT', 'ImporterGroupSubjectFUNMPXLS'};
+for k = 1:length(importers)
+    imp = importers{k};
+    uimenu(ui_menu_import, ...
+        'Label', [imp ' ...'], ...
+        'Callback', {@cb_importers});
+end
+function cb_importers(src, ~)
+    src_name = erase(src.Text, ' ...');
+    imp_el = eval([src_name '()']);          
+    imp_el.uigetdir();
+    tmp_el = imp_el.get('GR');
+    plot_element.set('El', tmp_el); 
+    plot_element.reinit();
+end
+
+%%%% ¡menu_exporter!
+exporters = {'ExporterGroupSubjectFUNMPTXT', 'ExporterGroupSubjectFUNMPXLS'};
+for k = 1:length(exporters)
+    exp = exporters{k};
+    uimenu(ui_menu_export, ...
+        'Label', [exp ' ...'], ...
+        'Callback', {@cb_exporters});
+end
+function cb_exporters(src, ~)
+    src_name = erase(src.Text, ' ...');
+    exmp_el = eval([src_name '(' '''GR''' ', el)']); % el is a group passed from Group    
+    exmp_el.uigetdir();
+    exmp_el.get('SAVE');
+end
+
 %% ¡props!
 
 %%% ¡prop!
@@ -31,6 +64,8 @@ if check
 else   
     msg = ['FUN_MP must be a cell with L matrices with the same number of columns as the number of brain regions (' int2str(br_number) ').'];
 end
+%%%% ¡gui!
+pl = PPMultiplexSubjectData('EL', sub, 'PROP', SubjectFUN_MP.FUN_MP, varargin{:});
  
 %%% ¡prop!
 age (data, scalar) is a scalar number containing the age of the subject.
