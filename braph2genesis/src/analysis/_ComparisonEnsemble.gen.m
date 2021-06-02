@@ -29,31 +29,37 @@ C (data, item) is the ensemble-based comparison.
 'CompareEnsemble'
 
 %%% ¡prop!
+DIFF (result, cell) is the ensemble comparison value.
+%%%% ¡calculate!
+[diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp);
+value = diff;
+
+%%% ¡prop!
 P1 (result, cell) is the one-tailed p-value.
 %%%% ¡calculate!
-[p1, p2, ci_lower, ci_upper] = calculate_results(cp);
+[diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp);
 value = p1;
 
 %%% ¡prop!
 P2 (result, cell) is the two-tailed p-value.
 %%%% ¡calculate!
-[p1, p2, ci_lower, ci_upper] = calculate_results(cp);
+[diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp);
 value = p2;
 
 %%% ¡prop!
 CIL (result, cell) is the lower value of the 95%% confidence interval.
 %%%% ¡calculate!
-[p1, p2, ci_lower, ci_upper] = calculate_results(cp);
+[diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp);
 value = ci_lower;
 
 %%% ¡prop!
 CIU (result, cell) is the upper value of the 95%% confidence interval.
 %%%% ¡calculate!
-[p1, p2, ci_lower, ci_upper] = calculate_results(cp);
+[diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp);
 value = ci_upper;
 
 %% ¡methods!
-function [p1, p2, ci_lower, ci_upper] = calculate_results(cp)
+function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     %CALCULATE_RESULTS calculates the comparison results.
     %
     % [P1, P2, CIL, CIU] = CALCULATE_RESULTS(CP) calcultes the one-talied
