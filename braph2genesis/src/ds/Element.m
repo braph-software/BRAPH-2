@@ -1183,12 +1183,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 
                 % \U scape bug - warning fix
                 if ischar(value) && contains(value, '\')
-                    v_array = split(value, '\');
-                    tmp_val = v_array{1};
-                    for i = 2:length(v_array)
-                        tmp_val = [tmp_val '\\' v_array{i}]; %#ok<AGROW>
-                    end
-                    value = tmp_val;
+                    value = insertAfter(value, '\', '\');                    
                 end
                 
                 if el.isLocked(prop)
