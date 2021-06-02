@@ -176,11 +176,11 @@ function h_panel = draw(pl, varargin)
                 measure = calculate_measure_list{i};
                 waitbar(progress, f, ['Calculating comparison: ' measure ' ...']);               
                 
-                result_comparison{i, 1} = el.getComparison(measure).get('DIFF'); %#ok<*AGROW>
-                result_comparison{i, 2} = el.getComparison(measure).get('P1');
-                result_comparison{i, 3} = el.getComparison(measure).get('P2');
-                result_comparison{i, 4} = el.getComparison(measure).get('CIL');
-                result_comparison{i, 5} = el.getComparison(measure).get('CIU');
+                result_comparison{i, 1} = el.getComparison(measure).memorize('DIFF'); %#ok<*AGROW>
+                result_comparison{i, 2} = el.getComparison(measure).memorize('P1');
+                result_comparison{i, 3} = el.getComparison(measure).memorize('P2');
+                result_comparison{i, 4} = el.getComparison(measure).memorize('CIL');
+                result_comparison{i, 5} = el.getComparison(measure).memorize('CIU');
                 waitbar(extra, f, ['Measure: ' measure ' Calculated! ...']);
             end
             
@@ -202,9 +202,9 @@ function h_panel = draw(pl, varargin)
                 comparison = result_comparison(i, :);
                 
                 if case_
-                    comparison_guis{i} = GUIComparisonWeightedPlot(comparison, measure_class, [x2+offset y2-offset w2 h2]);
+                    comparison_guis{i} = GUIComparisonWeightedPlot(comparison, measure_class, [x2+offset y2-offset w2*1.61 h2]);
                 else
-                    comparison_guis{i} = GUIComparisonPlot(comparison, measure_class, [x2+offset y2-offset w2 h2]);
+                    comparison_guis{i} = GUIComparisonPlot(comparison, measure_class, [x2+offset y2-offset w2*1.61 h2]);
                 end
             end
 
@@ -270,14 +270,14 @@ function h_panel = draw(pl, varargin)
                     )
 
                 set(nodes1_popmenu, ...
-                    'Position', [.12 .01 .4 .07], ...
+                    'Position', [.3 .01 .3 .07], ...
                     'Style', 'popupmenu', ...
                     'String', nodes_list, ...
                     'Callback', {@cb_nodes1} ...
                     )
 
                 set(nodes2_popmenu, ...
-                    'Position', [.54 .01 .4 .07], ...
+                    'Position', [.62 .01 .3 .07], ...
                     'Style', 'popupmenu', ...
                     'String', nodes_list, ...
                     'Callback', {@cb_nodes2} ...
@@ -332,7 +332,7 @@ function h_panel = draw(pl, varargin)
                 end
             end
             function update_nodes_list()
-                node_dict = el.get('GR').get('SUB_DICT').getItem(1).get('BA').get('BR_DICT');
+                node_dict = a1.get('GR').get('SUB_DICT').getItem(1).get('BA').get('BR_DICT');
                 nodes_list = cellfun(@(x) x.get('ID') , node_dict.getItems(), 'UniformOutput', false);
             end
             function update_plot()
