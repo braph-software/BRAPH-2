@@ -58,7 +58,7 @@ if isfolder(directory)
     cov_folder = dir(directory);
     cov_folder = cov_folder([cov_folder(:).isdir] == 1);
     cov_folder = cov_folder(~ismember({cov_folder(:).name}, {'.', '..'}));
-    if isfolder([directory filesep() cov_folder.name])
+    if ~isempty(cov_folder)
         file_cov = dir(fullfile([directory filesep() cov_folder.name], '*.txt'));
         raw_covariates = readtable([directory filesep() cov_folder.name filesep() file_cov.name], 'Delimiter', '	');
         age = raw_covariates{:, 2};

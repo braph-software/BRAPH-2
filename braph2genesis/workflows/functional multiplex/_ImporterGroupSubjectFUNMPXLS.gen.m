@@ -68,7 +68,7 @@ if isfolder(directory)
             sex = raw_covariates(2:end, 3);
         else
             age = {[0]};
-            age = age(ones(length(files), 1));
+            age = age(ones(length(subject_folders), 1));
             unassigned =  {'unassigned'};
             sex = unassigned(ones(1, length(subject_folders)));
         end
@@ -76,7 +76,7 @@ if isfolder(directory)
         % get all layers per subject folder
         waitbar(.45, f, 'Processing your data ...')
         for i = 1:1:length(subject_folders)
-            if i == floor(length(subjects_folders)/2)
+            if i == floor(length(subject_folders)/2)
                  waitbar(.70, f, 'Almost there ...')  
             end
             subjects_paths = [directory filesep() subject_folders(i).name];
