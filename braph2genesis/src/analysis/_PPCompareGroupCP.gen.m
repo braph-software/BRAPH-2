@@ -366,7 +366,7 @@ function h_panel = draw(pl, varargin)
 
                 x_ = x_range;
                 
-                if ~isempty(X) && ~isempty(Y)                    
+                if ~isempty(x_) && ~isempty(y_)                    
                     
                     p = plot(h_axes, ...
                         x_, ...
