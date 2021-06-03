@@ -112,12 +112,18 @@ function h_panel = draw(pl, varargin)
         end
     end
     
+    ui_button_table_update = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
     ui_button_table_calculate = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
     ui_button_table_selectall = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
     ui_button_table_clearselection = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');    
     
     init_buttons()
-        function init_buttons()            
+        function init_buttons()         
+            set(ui_button_table_update, ...
+                'Position', [0 0 0 0], ...
+                'Visible', 'off', ...
+                'Callback', {@cb_measures_update})
+            
             set(ui_button_table_calculate, ...
                 'Position', [.02 .01 .3 .07], ...
                 'String', 'Calculate Measures', ...

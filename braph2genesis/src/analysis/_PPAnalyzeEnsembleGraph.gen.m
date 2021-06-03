@@ -122,7 +122,7 @@ function h_panel = draw(pl, varargin)
         end
         function list = get_graph_list()
             graphs = graph_dict.getItems();
-            list = cellfun(@(x) x.getClass(), graphs, 'UniformOutput', false);
+            list = cellfun(@(x) x.tostring(), graphs, 'UniformOutput', false);
             % list = unique(list);
         end
         function updateMeasures()
