@@ -39,6 +39,7 @@ function h_panel = draw(pl, varargin)
     measures_guis = [];
     analysis_type = [];    
     case_ = 0;
+    mlist = [];
     
     if isa(el.get(el.getPropNumber()), 'double')
         x_range = el.get(el.getPropNumber());  % bud, but
@@ -158,7 +159,7 @@ function h_panel = draw(pl, varargin)
             pl.update()            
         end
         function cb_table_selectall(~, ~)  % (src, event)            
-            pl.selected = (1:1:ba_idict.length())';
+            pl.selected = (1:1:length(mlist))';
             pl.update()
         end
         function cb_table_clearselection(~, ~)  % (src, event)            

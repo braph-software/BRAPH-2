@@ -39,7 +39,7 @@ function h_panel = draw(pl, varargin)
     measures_guis = [];
     graph_gui = [];
     analysis_type = [];
-
+    mlist = [];
     pl.pp = draw@PlotProp(pl, varargin{:});
     set(pl.pp, 'DeleteFcn', {@close_f_settings}, ...
         varargin{:})
@@ -167,7 +167,7 @@ function h_panel = draw(pl, varargin)
             pl.update()            
         end
         function cb_table_selectall(~, ~)  % (src, event)            
-            pl.selected = (1:1:ba_idict.length())';
+            pl.selected = (1:1:length(mlist))';
             pl.update()
         end
         function cb_table_clearselection(~, ~)  % (src, event)            
