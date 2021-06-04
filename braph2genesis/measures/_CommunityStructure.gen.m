@@ -24,17 +24,16 @@ GraphWD
 GraphBU
 GraphBD
 
-
 %% ¡props!
 %%% ¡prop! 
 rule (parameter, OPTION) is the community structure algorithm.
 %%%% ¡settings!
-{ 'louvain' 'newman'}
+{ 'louvain' 'newman' 'fixed'}
 %%%% ¡default!
 'louvain'
 
 %%% ¡prop! 
-gamma (parameter, SCALAR) is the resolution parameter.
+GAMMA (parameter, SCALAR) is the resolution parameter.
 %%%% ¡default!
 1
 
@@ -44,12 +43,12 @@ M0 (data, rvector) is the initial community affiliation vector.
 []
 
 %%% ¡prop! 
-OM (data, MATRIX) is the custom objective matrix.
+Louvain_OM (data, MATRIX) is the custom objective matrix (Louvain).
 %%%% ¡default!
 []
 
 %%% ¡prop! 
-OM_TYPE (data, OPTION) is the objective-function type algorithm.
+OM_TYPE (data, OPTION) is the objective-function type algorithm (Louvain).
 %%%% ¡settings!
 {'modularity' 'potts' 'negative_sym' 'negative_asym'}
 %%%% ¡default!
@@ -57,7 +56,6 @@ OM_TYPE (data, OPTION) is the objective-function type algorithm.
 
 %%% ¡prop! 
 quality_function (metadata, SCALAR) 
-
 
 %% ¡props_update!
 
@@ -73,6 +71,14 @@ gamma = m.get('gamma');
 community_structure_algorithm = m.get('rule');
 
 switch lower(community_structure_algorithm)
+    case {'fixed'}
+        M0 = m.get('M0');
+        assert(isequal(size(M0, 2), size(1:N, 2)), ...
+                [BRAPH2.STR ':CommunityStructure:' BRAPH2.WRONG_INPUT], ...
+                ['M0 initial community affiliation vector must have the same length than the number of nodes' ...
+                '(' tostring(size(1:N, 2)) ') while its length is ' tostring(size(M0, 2))])
+        community_structure = {M0'};
+        
     case {'newman'}  % Newman algorithm
         if g.is_directed(g)  % directed graphs
             n_perm = randperm(N);  % randomly permute order of nodes
@@ -336,6 +342,22 @@ B = [1 0 1 1
  
  g = GraphBU('B', B);
  cs = CommunityStructure('G', g).get('M');
+ assert(iscell(cs) && size(cs{1}, 1) == 4,  ... 
+     [BRAPH2.STR ':CommunityStructure:' BRAPH2.BUG_ERR], ...
+    'CommunityStructure is not being calculated correctly for GraphBU.');
+
+%%% ¡test!
+%%%% ¡name!
+GraphBU fixed input
+%%%% ¡code!
+
+B = [1 0 1 1
+     0 0 0 0
+     1 0 1 0
+     1 0 0 1];
+ 
+ g = GraphBU('B', B);
+ cs = CommunityStructure('G', g, 'rule', 'fixed', 'M0', [1 0 1 1]).get('M');
  assert(iscell(cs) && size(cs{1}, 1) == 4,  ... 
      [BRAPH2.STR ':CommunityStructure:' BRAPH2.BUG_ERR], ...
     'CommunityStructure is not being calculated correctly for GraphBU.');
