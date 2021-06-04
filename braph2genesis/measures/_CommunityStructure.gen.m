@@ -24,7 +24,6 @@ GraphWD
 GraphBU
 GraphBD
 
-
 %% ¡props!
 %%% ¡prop! 
 rule (parameter, OPTION) is the community structure algorithm.
@@ -34,7 +33,7 @@ rule (parameter, OPTION) is the community structure algorithm.
 'louvain'
 
 %%% ¡prop! 
-gamma (parameter, SCALAR) is the resolution parameter.
+GAMMA (parameter, SCALAR) is the resolution parameter.
 %%%% ¡default!
 1
 
@@ -44,12 +43,12 @@ M0 (data, rvector) is the initial community affiliation vector.
 []
 
 %%% ¡prop! 
-OM (data, MATRIX) is the custom objective matrix.
+Louvain_OM (data, MATRIX) is the custom objective matrix (Louvain).
 %%%% ¡default!
 []
 
 %%% ¡prop! 
-OM_TYPE (data, OPTION) is the objective-function type algorithm.
+OM_TYPE (data, OPTION) is the objective-function type algorithm (Louvain).
 %%%% ¡settings!
 {'modularity' 'potts' 'negative_sym' 'negative_asym'}
 %%%% ¡default!
@@ -57,7 +56,6 @@ OM_TYPE (data, OPTION) is the objective-function type algorithm.
 
 %%% ¡prop! 
 quality_function (metadata, SCALAR) 
-
 
 %% ¡props_update!
 
