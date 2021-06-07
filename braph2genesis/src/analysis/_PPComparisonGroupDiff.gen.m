@@ -345,7 +345,7 @@ function redraw(pl, varargin)
     %
     % See also draw, update, refresh.
 
-     el = pl.get('EL');
+    el = pl.get('EL');
     prop = pl.get('PROP');
     
     value = el.getr(prop);
