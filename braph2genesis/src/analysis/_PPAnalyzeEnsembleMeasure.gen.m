@@ -37,15 +37,8 @@ function h_panel = draw(pl, varargin)
         graph_dict = el.getPropDefault('G_DICT');
     end
     measures_guis = [];
-    analysis_type = [];    
-    case_ = 0;
+    analysis_type = [];
     mlist = [];
-    
-    if isa(el.get(el.getPropNumber()), 'double')
-        x_range = el.get(el.getPropNumber());  % bud, but
-    else
-        case_ = 1; % weighted
-    end
 
     pl.pp = draw@PlotProp(pl, varargin{:});
     set(pl.pp, 'DeleteFcn', {@close_f_settings}, ...
@@ -181,7 +174,7 @@ function h_panel = draw(pl, varargin)
                 extra = (.85 / n) + (j / n) + (.05 / n);
                 measure = calculate_measure_list{j};
                 waitbar(progress, f, ['Measure: ' measure '  ...']);
-                result_measure{j} = el.getMeasureEnsemble(measure).get('M'); %#ok<AGROW>
+                result_measure{j} = el.getMeasureEnsemble(measure); %#ok<AGROW>
                 waitbar(extra, f, ['Measure: ' measure ' Calculated! ...']);
             end
             
@@ -200,12 +193,7 @@ function h_panel = draw(pl, varargin)
                     offset = 0;
                 end
                 measure = result_measure{j};
-                measure_class = calculate_measure_list{j};
-                if case_
-                    measures_guis{j} = GUIEnsembleWeightedMeasurePlot(measure, measure_class, [x2+offset y2-offset w2 h2]);
-                else
-                    measures_guis{j} = GUIEnsembleMeasurePlot(measure, measure_class, [x2+offset y2-offset w2*1.61 h2]);
-                end
+                GUI(measure, 'POSITION', [x2+offset y2-offset w2 h2]);
             end
 
             % close progress bar
@@ -213,7 +201,8 @@ function h_panel = draw(pl, varargin)
                 waitbar(1, f, 'Finishing')
                 pause(.5)
                 close(f)
-            end       
+            end 
+            measures_guis = get_measure_guis();                   
         end
         function [pixels, normalized] = get_figure_position()
             fig_h = getGUIFigureObj();
@@ -231,188 +220,13 @@ function h_panel = draw(pl, varargin)
             end
             graph = graph_dict.getItem(1);
         end
+        function guis = get_measure_guis()
+            guis = get_handle_objs('figure', [], 'MeasureEnsemble');
+        end
         function cb_measures_update(~, ~)
             pl.update();
         end
-        function h = GUIEnsembleMeasurePlot(measure, measure_class, position)
-            f_title = ['Plot of Measure: ' measure_class];
-            nodes1_selection = 1;
-            nodes2_selection = 1;
-            nodes_list = [];
-
-            f =  figure( ...
-                'Visible', 'on', ...
-                'NumberTitle', 'off', ...
-                'Name', f_title, ...
-                'Units', 'normalized', ...
-                'Position', position, ...
-                'MenuBar', 'none', ...
-                'Toolbar', 'figure', ...
-                'Color', 'w' ...
-                );
-          
-           
-            set_icon(f)
-            
-            % ui objects declaration
-            plot_panel = uipanel(f, 'Units', 'normalized');
-            nodes1_popmenu = uicontrol(f, 'Units', 'normalized');
-            nodes2_popmenu = uicontrol(f, 'Units', 'normalized');
-            
-            % flow
-            update_nodes_list()
-            init_gui_buttons()   
-            h_axes = axes(plot_panel);
-            gui_toolbar()
-            update_plot()
-            
-            % functions
-            function init_gui_buttons()
-                set(plot_panel, ...
-                    'Position', [.02 .1 .98 .88] ...
-                    )
-                
-                set(nodes1_popmenu, ...
-                    'Position', [.12 .01 .4 .07], ...
-                    'Style', 'popupmenu', ...
-                    'String', nodes_list, ...
-                    'Callback', {@cb_nodes1} ...
-                    )
-                
-                set(nodes2_popmenu, ...
-                    'Position', [.54 .01 .4 .07], ...
-                    'Style', 'popupmenu', ...
-                    'String', nodes_list, ...
-                    'Callback', {@cb_nodes2} ...
-                    )
-                rules_node_popmenu_deactivation()
-            end
-            function gui_toolbar()
-                ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
-                delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
-                delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
-                delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
-                delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
-                delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
-                delete(findall(ui_toolbar, 'Tag', 'Standard.OpenInspector'))
-                delete(findall(ui_toolbar, 'Tag', 'Exploration.Brushing'))
-                delete(findall(ui_toolbar, 'Tag', 'DataManager.Linking'))
-                delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertColorbar'))
-                delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertLegend'))
-                delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
-                delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
-            end
-            function cb_nodes1(~, ~)
-                nodes1_selection = get(nodes1_popmenu, 'Value');
-                update_plot();
-            end
-            function cb_nodes2(~, ~)
-                nodes2_selection = get(nodes2_popmenu, 'Value');
-                update_plot();
-            end
-            function rules_node_popmenu_deactivation()
-                if Measure.is_global(measure_class)
-                    set(nodes1_popmenu, ...
-                        'Visible', 'off' ...
-                        )
-                    set(nodes2_popmenu, ...
-                        'Visible', 'off' ...
-                        )
-                elseif Measure.is_nodal(measure_class)
-                    set(nodes1_popmenu, ...
-                        'Visible', 'on' ...
-                        )
-                    set(nodes2_popmenu, ...
-                        'Visible', 'off' ...
-                        )
-                else
-                    set(nodes1_popmenu, ...
-                        'Visible', 'on' ...
-                        )
-                    set(nodes2_popmenu, ...
-                        'Visible', 'on' ...
-                        )
-                end
-            end
-            function update_nodes_list()
-                node_dict = el.get('GR').get('SUB_DICT').getItem(1).get('BA').get('BR_DICT');
-                nodes_list = cellfun(@(x) x.get('ID') , node_dict.getItems(), 'UniformOutput', false);
-            end
-            function update_plot()
-                plot_value = measure;
-                if Measure.is_global(measure_class) % global
-                    is_inf_vector = cellfun(@(x) isinf(x), plot_value);
-                    if any(is_inf_vector)
-                        return;
-                    end
-                    y_ = [plot_value{:}];
-                elseif Measure.is_nodal(measure_class) % nodal
-                    for l = 1:length(plot_value)
-                        tmp = plot_value{l};
-                        tmp_y = tmp(nodes1_selection);
-                        if isinf(tmp_y)
-                            return;
-                        end
-                        y_(l) = tmp_y; %#ok<AGROW>
-                    end
-                else  % binodal
-                    for l = 1:length(plot_value)
-                        tmp = plot_value{l};
-                        tmp_y = tmp(nodes1_selection, nodes2_selection);
-                        if isinf(tmp_y)
-                            return;
-                        end
-                        y_(l) = tmp_y; %#ok<AGROW>
-                    end
-                end
-                
-                x_ = x_range;
-                
-                plot( ...
-                    h_axes, ...
-                    x_, ...
-                    y_, ...
-                    'Marker', 'o', ...
-                    'MarkerSize', 10, ...
-                    'MarkerEdgeColor', [0 0 1], ...
-                    'MarkerFaceColor', [.9 .4 .1], ...
-                    'LineStyle', '-', ...
-                    'LineWidth', 1, ...
-                    'Color', [0 0 1] ...
-                    );
-            end
-            
-            if nargout > 0 
-                h = f;
-            end
-        end
-        function h = GUIEnsembleWeightedMeasurePlot(measure, measure_class, position)
-            f_title = ['Plot of Measure: ' measure_class];
-
-            f =  figure( ...
-                'Visible', 'on', ...
-                'NumberTitle', 'off', ...
-                'Name', f_title, ...
-                'Units', 'normalized', ...
-                'Position', position, ...
-                'MenuBar', 'none', ...
-                'Toolbar', 'figure', ...
-                'Color', 'w' ...
-                );
-
-            set_icon(f)
-
-            uitable(f, ...
-                'Units', 'normalized', ...
-                'Position', [.02 .02 .98 .98], ...
-                'Data', measure{:} ...
-                );
-
-            if nargout > 0
-                h = f;
-            end
-        end
-
+        
     % output
     if nargout > 0
         h_panel = pl.pp;
