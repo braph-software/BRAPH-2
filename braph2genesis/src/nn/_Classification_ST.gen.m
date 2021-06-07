@@ -4,6 +4,9 @@ ClassificationST < ClassificationNN (nn, graph analysis with structural data) is
 %% ¡description!
 This is a classification for structural data
 
+%% ¡properties!
+accuracy
+
 %% ¡props!
 
 %%% ¡prop!
@@ -17,7 +20,7 @@ FILE (metadata, string) is the file path, this has to change to gr eventually.
 %% ¡props_update!
 
 %%% ¡prop!
-A (result, item) is the graph obtained from this analysis.
+Network (result, string) is the graph obtained from this analysis.
 %%%% ¡default!
 0
 %%%% ¡calculate!
@@ -106,9 +109,15 @@ figureconfusionchart(trueLabels,predictedLabels, ...
 YPred = classify(net, X_tblTest, 'MiniBatchSize', miniBatchSize);
 YTest = y_tblTest;
 
-accuracy = sum(YPred == YTest)/numel(YTest);
+nn.accuracy = sum(YPred == YTest)/numel(YTest);
 
-value = accuracy;
+value = net;
+
+%% ¡methods!
+function accuracy = getAccuracy(nn)
+    accuracy = nn.accuracy;
+end
+
 
 
 
