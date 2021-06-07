@@ -168,9 +168,16 @@ for run = 1:1:run_number
         create_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
     end
     
-    nn_gen_list = getGenerators([source_dir fp 'src' fp 'nn']);
-    for i = 1:1:numel(nn_gen_list)
-        create_Element([source_dir fp 'src' fp 'nn' fp nn_gen_list{i}], [target_dir fp 'src' fp 'nn'])
+    v = ver;
+    [installedToolboxes{1:length(v)}] = deal(v.Name);
+    result = all(ismember('Deep Learning Toolbox', installedToolboxes));
+    if result
+        nn_gen_list = getGenerators([source_dir fp 'src' fp 'nn']);
+        for i = 1:1:numel(nn_gen_list)
+            create_Element([source_dir fp 'src' fp 'nn' fp nn_gen_list{i}], [target_dir fp 'src' fp 'nn'])
+        end    
+    else
+        warning('Deep Learning Toolbox is not installed.');
     end
     
     % graphs
@@ -246,9 +253,14 @@ for i = 1:1:numel(analysis_gen_list)
     create_test_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
 end
 
-nn_gen_list = getGenerators([source_dir fp 'src' fp 'nn']);
-for i = 1:1:numel(nn_gen_list)
-    create_test_Element([source_dir fp 'src' fp 'nn' fp nn_gen_list{i}], [target_dir fp 'src' fp 'nn'])
+v = ver;
+[installedToolboxes{1:length(v)}] = deal(v.Name);
+result = all(ismember('Deep Learning Toolbox', installedToolboxes));
+if result
+    nn_gen_list = getGenerators([source_dir fp 'src' fp 'nn']);
+    for i = 1:1:numel(nn_gen_list)
+        create_test_Element([source_dir fp 'src' fp 'nn' fp nn_gen_list{i}], [target_dir fp 'src' fp 'nn'])
+    end
 end
 
 % graphs
