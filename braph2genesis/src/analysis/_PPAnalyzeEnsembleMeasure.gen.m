@@ -170,8 +170,8 @@ function h_panel = draw(pl, varargin)
 
             n = length(calculate_measure_list);
             for j = 1:length(calculate_measure_list)
-                progress = (.85 / n) + (j / n);                
-                extra = (.85 / n) + (j / n) + (.05 / n);
+                progress = (.85 / n) + (.8* j / n);                
+                extra = (.85 / n) + (.8 * j / n) + (.05 / n);
                 measure = calculate_measure_list{j};
                 waitbar(progress, f, ['Measure: ' measure '  ...']);
                 result_measure{j} = el.getMeasureEnsemble(measure); %#ok<AGROW>
@@ -193,7 +193,7 @@ function h_panel = draw(pl, varargin)
                     offset = 0;
                 end
                 measure = result_measure{j};
-                GUI(measure, 'POSITION', [x2+offset y2-offset w2 h2]);
+                GUI(measure, 'CloseRequest', false, 'POSITION', [x2+offset y2-offset w2 h2]);
             end
 
             % close progress bar

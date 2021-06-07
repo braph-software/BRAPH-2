@@ -270,5 +270,34 @@ function redraw(pl, varargin)
     %
     % See also draw, update, refresh.
 
-    pl.redraw@PlotProp('Height', 30, varargin{:});
+    el = pl.get('EL');
+    prop = pl.get('PROP');
+    
+    value = el.getr(prop);
+    if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
+        pl.redraw@PlotProp('Height', 1.8, varargin{:})
+    else
+        value_cell = el.get(prop);
+        
+        if isempty(value_cell)
+            pl.redraw@PlotProp('Height', 1.8, varargin{:})
+        else
+            pl.redraw@PlotProp('Height', 30, varargin{:})
+        end
+        
+        for i = 1:1:size(value_cell, 1)
+            for j = 1:1:size(value_cell, 2)
+                set(pl.measure_tbl{i, j}, ...
+                    'Units', 'character', ...
+                    'Position', ...
+                    [ ...
+                    (0.01 + (i - 1) * 0.98 / size(pl.measure_tbl, 1)) * Plot.w(pl.pp) ...
+                    (0.2 + (j - 1) * 0.8 / size(pl.measure_tbl, 2)) * (Plot.h(pl.pp) - 1.8) ...
+                    0.98 / size(pl.measure_tbl, 1) * Plot.w(pl.pp) ...
+                    0.8 / size(pl.measure_tbl, 2) * (Plot.h(pl.pp) - 1.8) ...
+                    ] ...
+                    )
+            end
+        end
+    end
 end
