@@ -1,15 +1,15 @@
 %% ¡header!
-PPMeasureM < PlotProp (pl, plot property of measure M) is a plot of measure M.
+PPComparisonGroupDiff < PlotProp (pl, plot property of comparison group difference) is a plot of comparison group difference.
 
 %%% ¡description!
-PPMeasureM plots a Measure result table and plot.
+PPComparisonGroupDiff plots a Comparison Group Difference.
 
 %%% ¡seealso!
-GUI, PlotElement, PlotProp, MultigraphBUD, MultigraphBUT.
+GUI, PlotElement, PlotProp, ComparisonGroup.
 
 %% ¡properties!
 pp
-table_value_cell
+comparison_tbl
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
@@ -27,8 +27,8 @@ function h_panel = draw(pl, varargin)
     %  objects from the handle to the brain surface graphical panel H.
     %
     % see also update, redraw, refresh, settings, uipanel, isgraphics.
-    
-    pl.pp = draw@PlotProp(pl, varargin{:});
+
+     pl.pp = draw@PlotProp(pl, varargin{:});
 
     % output
     if nargout > 0
@@ -43,16 +43,21 @@ function update(pl)
     % See also draw, redraw, refresh.
 
     update@PlotProp(pl)
-    
+
     el = pl.get('EL');
     prop = pl.get('PROP');
     value = el.getr(prop);
+    comparison = el.get('C');    
+    graph = comparison.get('A1').get('G');
     node1_to_plot = 1;
     node2_to_plot = 1;
-    graph = el.get('G'); 
     node_labels = [];
     x_range = 1:10;
-        
+    m = el.get('MEASURE');
+    
+    cil = el.memorize('CIL');
+    ciu = el.memorize('CIU');
+    
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
         % do nothing
     elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
@@ -70,15 +75,15 @@ function update(pl)
             end
         end
         value_cell = el.get(prop);
-        if isempty(pl.table_value_cell)
-            pl.table_value_cell = cell(size(value_cell));
+        if isempty(pl.comparison_tbl)
+            pl.comparison_tbl = cell(size(value_cell));
         end
-        for i = 1:1:size(pl.table_value_cell, 1)
-            for j = 1:1:size(pl.table_value_cell, 2)
-                if isempty(pl.table_value_cell{i, j}) || ~isgraphics(pl.table_value_cell{i, j}, 'uitable')
-                    pl.table_value_cell{i, j} = uitable('Parent', pl.pp);
+        for i = 1:1:size(pl.comparison_tbl, 1)
+            for j = 1:1:size(pl.comparison_tbl, 2)
+                if isempty(pl.comparison_tbl{i, j}) || ~isgraphics(pl.comparison_tbl{i, j}, 'uitable')
+                    pl.comparison_tbl{i, j} = uitable('Parent', pl.pp);
                 end
-                set(pl.table_value_cell{i, j}, ...
+                set(pl.comparison_tbl{i, j}, ...
                     'Data', value_cell{i, j}, ...
                     'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)] ...
                     )
@@ -93,15 +98,15 @@ function update(pl)
     else
         % paint a normal cell tables
         value_cell = el.get(prop);
-        if isempty(pl.table_value_cell)
-            pl.table_value_cell = cell(size(value_cell));
+        if isempty(pl.comparison_tbl)
+            pl.comparison_tbl = cell(size(value_cell));
         end
-        for i = 1:1:size(pl.table_value_cell, 1)
-            for j = 1:1:size(pl.table_value_cell, 2)
-                if isempty(pl.table_value_cell{i, j}) || ~isgraphics(pl.table_value_cell{i, j}, 'uitable')
-                    pl.table_value_cell{i, j} = uitable('Parent', pl.pp);
+        for i = 1:1:size(pl.comparison_tbl, 1)
+            for j = 1:1:size(pl.comparison_tbl, 2)
+                if isempty(pl.comparison_tbl{i, j}) || ~isgraphics(pl.comparison_tbl{i, j}, 'uitable')
+                    pl.comparison_tbl{i, j} = uitable('Parent', pl.pp);
                 end
-                set(pl.table_value_cell{i, j}, ...
+                set(pl.comparison_tbl{i, j}, ...
                     'Data', value_cell{i, j}, ...
                     'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
                     'CellEditCallback', {@cb_matrix_value, i, j} ...
@@ -112,14 +117,14 @@ function update(pl)
     
     % functions
     function init_measure_plot_area()
-        set(ui_node1_popmenu, ...            
+        set(ui_node1_popmenu, ...
             'Units', 'normalized', ...
             'Tooltip', 'Select the Node to be Plotted.', ...
             'String', node_labels, ...
             'Position', [.01 .02 .3 .08], ...
             'Callback', {@cb_node_1} ...
             );
-        set(ui_node2_popmenu, ...            
+        set(ui_node2_popmenu, ...
             'Units', 'normalized', ...
             'Tooltip', 'Select the Node to be Plotted.', ...
             'String', node_labels, ...
@@ -127,7 +132,7 @@ function update(pl)
             'Callback', {@cb_node_2} ...
             );
         
-        set(ui_measure_plot, ... 
+        set(ui_measure_plot, ...
             'String', 'Measure Plot', ...
             'Tooltip', 'Plot the Measure. Will plot depending on the node selection.', ...
             'Units', 'normalized', ...
@@ -138,7 +143,7 @@ function update(pl)
         rules_node_popmenu_deactivation()
     end
     function rules_node_popmenu_deactivation()
-        if Measure.is_global(el)
+        if Measure.is_global(m)
             set(ui_node1_popmenu, ...
                 'Visible', 'off', ...
                 'Enable', 'off' ...
@@ -147,7 +152,7 @@ function update(pl)
                 'Visible', 'off', ...
                 'Enable', 'off' ...
                 )
-        elseif Measure.is_nodal(el)
+        elseif Measure.is_nodal(m)
             set(ui_node1_popmenu, ...
                 'Visible', 'on', ...
                 'Enable', 'on' ...
@@ -175,14 +180,15 @@ function update(pl)
     end
     function cb_plot_m(~, ~)
         plot_value = value;
+        x_label = graph.get('NODELABEL');
         
-        if Measure.is_global(el) % global
+        if Measure.is_global(m) % global
             is_inf_vector = cellfun(@(x) isinf(x), plot_value);
             if any(is_inf_vector)
                 return;
             end
             y_ = [plot_value{:}];
-        elseif Measure.is_nodal(el) % nodal
+        elseif Measure.is_nodal(m) % nodal
             for l = 1:length(plot_value)
                 tmp = plot_value{l};
                 tmp_y = tmp(node1_to_plot);
@@ -202,7 +208,7 @@ function update(pl)
             end
         end
         
-        x_ = x_range;
+        x_ = x_range;       
         
         [~, normalized] = get_figure_position();
         x2 = normalized(1) + normalized(3);
@@ -219,10 +225,10 @@ function update(pl)
             'MenuBar', 'none', ...
             'Toolbar', 'figure', ...
             'Color', 'w' ...
-            );        
+            );
         h_axes = axes(plot_figure);
-        set_icon(plot_figure);        
-        ui_toolbar = findall(plot_figure, 'Tag', 'FigureToolBar');        
+        set_icon(plot_figure);
+        ui_toolbar = findall(plot_figure, 'Tag', 'FigureToolBar');
         delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
         delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
         delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
@@ -236,18 +242,82 @@ function update(pl)
         delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
         delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
         
-        handle_plot = plot( ...
-                    h_axes, ...
+        if ~isempty(x_) && ~isempty(y_)
+            
+            handle_plot = plot(h_axes, ...
+                x_, ...
+                y_, ...
+                'Marker', 'o', ...
+                'MarkerSize', 10, ...
+                'MarkerEdgeColor', [0 0 1], ...
+                'MarkerFaceColor', [.9 .4 .1], ...
+                'LineStyle', '-', ...
+                'LineWidth', 1, ...
+                'Color', [0 0 1]);
+        else
+        end
+        
+        hold(h_axes, 'on')
+        xlabel(h_axes, x_label)
+        ylabel(h_axes, measure_class)
+        
+        ui_confidence_interval_min_checkbox = uicontrol(f, 'Style', 'checkbox', 'Units', 'normalized');
+        ui_confidence_interval_max_checkbox = uicontrol(f, 'Style', 'checkbox', 'Units', 'normalized');
+        init_plot_panel()
+        function init_plot_panel()
+            set(ui_confidence_interval_min_checkbox, 'Position', [.02 .06 .25 .05]);
+            set(ui_confidence_interval_min_checkbox, 'String', 'Show Confidence Interval Min');
+            set(ui_confidence_interval_min_checkbox, 'Value', false);
+            set(ui_confidence_interval_min_checkbox, 'Callback', {@cb_show_confidence_interval_min})
+            
+            set(ui_confidence_interval_max_checkbox, 'Position', [.02 .01 .25 .05]);
+            set(ui_confidence_interval_max_checkbox, 'String', 'Show Confidence Interval Max');
+            set(ui_confidence_interval_max_checkbox, 'Value', false);
+            set(ui_confidence_interval_max_checkbox, 'Callback', {@cb_show_confidence_interval_max})
+        end
+        
+        h_p_min = [];
+        h_p_max = [];
+        function cb_show_confidence_interval_min(src, ~)
+            if src.Value == true
+                
+                y_ = cil;
+                x_ = x_range;
+                h_p_min = plot(h_axes, ...
                     x_, ...
                     y_, ...
-                    'Marker', 'o', ...
+                    'Marker', 'x', ...
                     'MarkerSize', 10, ...
                     'MarkerEdgeColor', [0 0 1], ...
-                    'MarkerFaceColor', [.9 .4 .1], ...
+                    'MarkerFaceColor', [.3 .4 .5], ...
                     'LineStyle', '-', ...
                     'LineWidth', 1, ...
-                    'Color', [0 0 1] ...
-                    );
+                    'Color', [0 1 1]);
+                h_p_min.Visible = true;
+            else
+                h_p_min.Visible = false;
+            end
+        end
+        function cb_show_confidence_interval_max(src, ~)
+            if src.Value == true
+                
+                y_ = ciu;
+                x_ = x_range;
+                h_p_max = plot(h_axes, ...
+                    x_, ...
+                    y_, ...
+                    'Marker', 'x', ...
+                    'MarkerSize', 10, ...
+                    'MarkerEdgeColor', [0 0 1], ...
+                    'MarkerFaceColor', [.3 .4 .5], ...
+                    'LineStyle', '-', ...
+                    'LineWidth', 1, ...
+                    'Color', [0 1 1]);
+                h_p_max.Visible = true;
+            else
+                h_p_max.Visible = false;
+            end
+        end
     end
     function [pixels, normalized] = get_figure_position()
         fig_h = getGUIFigureObj();
@@ -265,7 +335,6 @@ function update(pl)
             end
         end
     end
-
 end
 function redraw(pl, varargin)
     %REDRAW redraws the element graphical panel.
@@ -276,7 +345,7 @@ function redraw(pl, varargin)
     %
     % See also draw, update, refresh.
 
-    el = pl.get('EL');
+     el = pl.get('EL');
     prop = pl.get('PROP');
     
     value = el.getr(prop);
@@ -293,14 +362,14 @@ function redraw(pl, varargin)
         
         for i = 1:1:size(value_cell, 1)
             for j = 1:1:size(value_cell, 2)
-                set(pl.table_value_cell{i, j}, ...
+                set(pl.comparison_tbl{i, j}, ...
                     'Units', 'character', ...
                     'Position', ...
                     [ ...
-                    (0.01 + (i - 1) * 0.98 / size(pl.table_value_cell, 1)) * Plot.w(pl.pp) ...
-                    (0.2 + (j - 1) * 0.8 / size(pl.table_value_cell, 2)) * (Plot.h(pl.pp) - 1.8) ...
-                    0.98 / size(pl.table_value_cell, 1) * Plot.w(pl.pp) ...
-                    0.8 / size(pl.table_value_cell, 2) * (Plot.h(pl.pp) - 1.8) ...
+                    (0.01 + (i - 1) * 0.98 / size(pl.comparison_tbl, 1)) * Plot.w(pl.pp) ...
+                    (0.2 + (j - 1) * 0.8 / size(pl.comparison_tbl, 2)) * (Plot.h(pl.pp) - 1.8) ...
+                    0.98 / size(pl.comparison_tbl, 1) * Plot.w(pl.pp) ...
+                    0.8 / size(pl.comparison_tbl, 2) * (Plot.h(pl.pp) - 1.8) ...
                     ] ...
                     )
             end
