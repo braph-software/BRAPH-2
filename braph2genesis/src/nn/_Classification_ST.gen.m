@@ -111,6 +111,8 @@ YTest = y_tblTest;
 
 nn.accuracy = sum(YPred == YTest)/numel(YTest);
 
+net_string = transform (net) to string;
+
 value = net;
 
 %% ¡methods!
