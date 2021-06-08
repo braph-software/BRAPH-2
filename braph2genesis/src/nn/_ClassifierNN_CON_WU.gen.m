@@ -1,10 +1,8 @@
 %% ¡header!
-ClassifierNN_CON_WU < BasedNN (nn, graph analysis with connectivity data) is a graph analysis using connectivity data.
+ClassifierNN_CON_WU < BasedNN (nn, classification with connectivity data) is a classification using neural network with connectivity data.
 
 %% ¡description!
-This graph analysis uses connectivity data and analyzes them using weighted undirected graphs,
-binary undirected multigraphs with fixed thresholds,
-or binary undirected multigraphs with fixed densities.
+This classification uses connectivity data and trains neural network with them using weighted undirected graphs.
 
 %% ¡properties!
 training_accuracy
@@ -34,7 +32,7 @@ G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analys
 IndexedDictionary('IT_CLASS', 'GraphWU')
 
 %%% ¡prop!
-NEURAL_NETWORK (result, string) is the graph obtained from this analysis.
+NEURAL_NETWORK (result, string) is the neural network trained from this analysis.
 %%%% ¡default!
 0
 %%%% ¡calculate!
@@ -175,6 +173,23 @@ function m = getTestConfusionMatrix(nn, net)
         'RowSummary','row-normalized', ...
         'ColumnSummary','column-normalized');
 end
+
+function tbl = getTrainingTable(nn)
+    tbl = nn.X_tblTrain
+end
+
+function tbl = getTrainingLable(nn)
+    tbl = nn.y_tblTrain
+end
+
+function tbl = getTestTable(nn)
+    tbl = nn.X_tblTest
+end
+
+function tbl = getTestLable(nn)
+    tbl = nn.y_tblTest
+end
+
 %% ¡tests!
 
 %%% ¡test!
