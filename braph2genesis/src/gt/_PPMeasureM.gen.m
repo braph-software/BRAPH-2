@@ -60,8 +60,10 @@ function update(pl)
         node_labels = split(node_labels_tmp, ',');
         if isa(graph, 'MultigraphBUD')
             x_range = graph.get('DENSITIES');
+            x_label = 'Densities';
         else
             x_range = graph.get('THRESHOLDS');
+            x_label = 'Thresholds';
         end
         if isempty(node_labels)
             node_labels = cell(1, size(value, 1));
@@ -69,6 +71,7 @@ function update(pl)
                 node_labels{k} = ['node_' num2str(k)];
             end
         end
+        plot_title = [y_label ' vs ' x_label];
         value_cell = el.get(prop);
         if isempty(pl.table_value_cell)
             pl.table_value_cell = cell(size(value_cell));
@@ -248,6 +251,9 @@ function update(pl)
                     'LineWidth', 1, ...
                     'Color', [0 0 1] ...
                     );
+                title(plot_title)
+                xlabel(x_label)
+                ylabel(y_label)
     end
     function [pixels, normalized] = get_figure_position()
         fig_h = getGUIFigureObj();
