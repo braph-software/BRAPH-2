@@ -65,8 +65,10 @@ function update(pl)
         node_labels = split(node_labels_tmp, ',');
         if isa(graph, 'MultigraphBUD')
             x_range = graph.get('DENSITIES');
+            x_name = 'Densities';
         else
             x_range = graph.get('THRESHOLDS');
+            x_name = 'Thresholds';
         end
         if isempty(node_labels)
             node_labels = cell(1, size(value, 1));
@@ -180,7 +182,9 @@ function update(pl)
     end
     function cb_plot_m(~, ~)
         plot_value = value;
-        x_label = graph.get('NODELABEL');
+        x_label = graph.get('NODELABEL');         
+        y_name = m;
+        title_plot = [y_name ' vs ' x_name];
         
         if Measure.is_global(m) % global
             is_inf_vector = cellfun(@(x) isinf(x), plot_value);
@@ -254,6 +258,9 @@ function update(pl)
                 'LineStyle', '-', ...
                 'LineWidth', 1, ...
                 'Color', [0 0 1]);
+            title(title_plot)
+            xlabel(x_name)
+            ylabel(y_name)
         else
         end
         

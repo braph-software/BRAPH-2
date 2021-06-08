@@ -267,7 +267,7 @@ function redraw(pl, varargin)
             pl.redraw@PlotProp('Height', 30, varargin{:})
         end
         
-        for i = 1:1:1
+        for i = 1:1:1  % same as update
             for j = 1:1:size(value_cell, 2)
                 set(pl.table_value_cell{i, j}, ...
                     'Units', 'character', ...
