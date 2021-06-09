@@ -53,9 +53,6 @@ function update(pl)
     x_range = 1:10;
     m = el.get('MEASURE');
     
-    cil = el.memorize('CIL');
-    ciu = el.memorize('CIU');
-    
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
         % do nothing
     elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
@@ -183,6 +180,8 @@ function update(pl)
         x_label = graph.get('NODELABELS');
         y_name = m;
         title_plot = [y_name ' vs ' x_name];
+        cil = el.memorize('CIL');
+        ciu = el.memorize('CIU');
         
         if Measure.is_global(m) % global
             is_inf_vector = cellfun(@(x) isinf(x), plot_value);
