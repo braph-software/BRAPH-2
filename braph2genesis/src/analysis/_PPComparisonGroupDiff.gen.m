@@ -29,6 +29,10 @@ function h_panel = draw(pl, varargin)
     % see also update, redraw, refresh, settings, uipanel, isgraphics.
 
      pl.pp = draw@PlotProp(pl, varargin{:});
+     
+     if isempty(pl.comparison_tbl)
+         pl.comparison_tbl = uitable('Parent', pl.pp);
+     end
 
     % output
     if nargout > 0
@@ -54,12 +58,13 @@ function update(pl)
     node_labels = [];
     x_range = 1:10;
     m = el.get('MEASURE');
+    node_labels_tmp = graph.get('NODELABELS');
+    node_labels = split(node_labels_tmp, ',');
     
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
         % do nothing
     elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
-        node_labels_tmp = graph.get('NODELABELS');
-        node_labels = split(node_labels_tmp, ',');
+        
         if isa(graph, 'MultigraphBUD')
             x_range = graph.get('DENSITIES');
             x_name = 'Densities';
@@ -67,28 +72,41 @@ function update(pl)
             x_range = graph.get('THRESHOLDS');
             x_name = 'Thresholds';
         end
-        if isempty(node_labels)
-            node_labels = cell(1, size(value, 1));
-            for k = 1:length(node_labels)
-                node_labels{k} = ['node_' num2str(k)];
+        
+        if Measure.is_global(m) % global
+            node_labels = 'Global';
+            for k = 1:size(value, 1)
+                row_names{k} = ['Layer ' num2str(k)]; %#ok<AGROW>
             end
-        end
-        value_cell = el.get(prop);
-        if isempty(pl.comparison_tbl)
-            pl.comparison_tbl = cell(size(value_cell));
-        end
-        for i = 1:1:size(pl.comparison_tbl, 1)
-            for j = 1:1:size(pl.comparison_tbl, 2)
-                if isempty(pl.comparison_tbl{i, j}) || ~isgraphics(pl.comparison_tbl{i, j}, 'uitable')
-                    pl.comparison_tbl{i, j} = uitable('Parent', pl.pp);
+        elseif Measure.is_nodal(m) % nodal            
+            for k = 1:size(value, 1)
+                row_names{k} = ['Layer ' num2str(k)]; %#ok<AGROW>
+            end
+            
+        else  % binodal            
+            current_layer = 1;
+            count = 1;
+            for k = 1:size(value{1}, 1)*size(value, 1)
+                if count > size(value{1}, 1)
+                    current_layer = current_layer + 1;
+                    count = 0;
                 end
-                set(pl.comparison_tbl{i, j}, ...
-                    'Data', value_cell{i, j}, ...
-                    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)] ...
-                    )
+                row_names{k} = ['Layer ' num2str(current_layer)]; %#ok<AGROW>
+                count = count + 1;
             end
         end
         
+        value_double =  cell2mat(cellfun(@(x) x', value, 'UniformOutput', false));
+        set(pl.comparison_tbl, ...
+            'Data', value_double, ...
+            'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+            'Units', 'normalized', ...
+            'Position', [.01 .2 .98 .8], ...
+            'ColumnName', node_labels, ...
+            'RowName', row_names, ...
+            'CellEditCallback', {@cb_matrix_value} ...
+            )
+
         ui_node1_popmenu  = uicontrol('Parent', pl.pp, 'Style', 'popupmenu');
         ui_node2_popmenu  = uicontrol('Parent', pl.pp, 'Style', 'popupmenu');
         ui_measure_plot = uicontrol('Parent', pl.pp, 'Style', 'pushbutton');
@@ -97,21 +115,15 @@ function update(pl)
     else
         % paint a normal cell tables
         value_cell = el.get(prop);
-        if isempty(pl.comparison_tbl)
-            pl.comparison_tbl = cell(size(value_cell));
-        end
-        for i = 1:1:size(pl.comparison_tbl, 1)
-            for j = 1:1:size(pl.comparison_tbl, 2)
-                if isempty(pl.comparison_tbl{i, j}) || ~isgraphics(pl.comparison_tbl{i, j}, 'uitable')
-                    pl.comparison_tbl{i, j} = uitable('Parent', pl.pp);
-                end
-                set(pl.comparison_tbl{i, j}, ...
-                    'Data', value_cell{i, j}, ...
-                    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-                    'CellEditCallback', {@cb_matrix_value, i, j} ...
-                    )
-            end
-        end
+        value_double = cell2mat(cellfun(@(x) x', value_cell, 'UniformOutput', false));
+        set(pl.comparison_tbl, ...
+            'Data', value_double, ...
+            'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+            'Units', 'normalized', ...
+            'Position', [.01 .2 .98 .8], ...
+            'ColumnName', node_labels, ...
+            'CellEditCallback', {@cb_matrix_value} ...
+            )
     end
     
     % functions
@@ -365,21 +377,6 @@ function redraw(pl, varargin)
             pl.redraw@PlotProp('Height', 1.8, varargin{:})
         else
             pl.redraw@PlotProp('Height', 30, varargin{:})
-        end
-        
-        for i = 1:1:size(value_cell, 1)
-            for j = 1:1:size(value_cell, 2)
-                set(pl.comparison_tbl{i, j}, ...
-                    'Units', 'character', ...
-                    'Position', ...
-                    [ ...
-                    (0.01 + (i - 1) * 0.98 / size(pl.comparison_tbl, 1)) * Plot.w(pl.pp) ...
-                    (0.2 + (j - 1) * 0.8 / size(pl.comparison_tbl, 2)) * (Plot.h(pl.pp) - 1.8) ...
-                    0.98 / size(pl.comparison_tbl, 1) * Plot.w(pl.pp) ...
-                    0.8 / size(pl.comparison_tbl, 2) * (Plot.h(pl.pp) - 1.8) ...
-                    ] ...
-                    )
-            end
         end
     end
 end
