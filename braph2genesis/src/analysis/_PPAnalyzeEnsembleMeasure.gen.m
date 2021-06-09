@@ -175,6 +175,10 @@ function h_panel = draw(pl, varargin)
                 measure = calculate_measure_list{j};
                 waitbar(progress, f, ['Measure: ' measure '  ...']);
                 result_measure{j} = el.getMeasureEnsemble(measure); %#ok<AGROW>
+                
+                %precalculte
+                el.getMeasureEnsemble(measure).memorize('M');
+                
                 waitbar(extra, f, ['Measure: ' measure ' Calculated! ...']);
             end
             

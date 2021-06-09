@@ -178,6 +178,14 @@ function h_panel = draw(pl, varargin)
                 waitbar(progress, f, ['Calculating comparison: ' measure ' ...']);               
                 
                 result_comparison{i} = el.getComparison(measure)
+                
+                % precalculate
+                el.getComparison(measure).memorize('DIFF');
+                el.getComparison(measure).memorize('P1');
+                el.getComparison(measure).memorize('P2');
+                el.getComparison(measure).memorize('CIU');
+                el.getComparison(measure).memorize('CIL');
+                
                 waitbar(extra, f, ['Measure: ' measure ' Calculated! ...']);
             end
             
