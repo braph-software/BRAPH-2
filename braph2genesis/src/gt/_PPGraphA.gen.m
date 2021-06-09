@@ -139,7 +139,11 @@ function update(pl)
         delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
         delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
         
+        % if ... how to know which plot?
         handle_plot = plotw(A{layer_to_plot});
+        % else
+        % handle_plot = plotb(A{layer_to_plot});
+        % end
     end
     function [pixels, normalized] = get_figure_position()
         fig_h = getGUIFigureObj();
@@ -226,6 +230,92 @@ function update(pl)
         end
         
         colormap jet
+        
+        % output if needed
+        if nargout > 0
+            h = ht;
+        end
+    end
+    function h = plotb(A, varargin)
+        % PLOTB plots a binary matrix
+        %
+        % H = PLOTB(A) plots the binarized version of weighted matrix A and
+        %   returns the handle to the plot H.
+        %   The matrix A can be binarized by fixing the threshold
+        %   (default, threshold = 0.5).
+        %
+        % H = PLOTB(A, 'PropertyName', PropertyValue) sets the property of the
+        %   matrix plot PropertyName to PropertyValue.
+        %   All standard plot properties of surf can be used.
+        %   Additional admissive properties are:
+        %       threshold   -   0.5 (default)
+        %       xlabels     -   1:1:number of matrix elements (default)
+        %       ylabels     -   1:1:number of matrix elements (default)
+        %
+        % See also Graph, binarize, plotw, surf.
+        
+        N = length(A);
+        
+        % threshold
+        threshold = get_from_varargin(0, 'threshold', varargin{:});
+        
+        % density
+        density = get_from_varargin([], 'density', varargin{:});
+        
+        % x labels
+        xlabels = (1:1:N);
+        for n = 1:2:length(varargin)
+            if strcmpi(varargin{n}, 'xlabels')
+                xlabels = varargin{n + 1};
+            end
+        end
+        if ~iscell(xlabels)
+            xlabels = {xlabels};
+        end
+        
+        % y labels
+        ylabels = (1:1:N);
+        for n = 1:2:length(varargin)
+            if strcmpi(varargin{n}, 'ylabels')
+                ylabels = varargin{n + 1};
+            end
+        end
+        if ~iscell(ylabels)
+            ylabels = {ylabels};
+        end
+        
+        B = binarize(A, 'threshold', threshold, 'density', density);
+        
+        ht = surf((0:1:N), ...
+            (0:1:N), ...
+            [B, zeros(size(B, 1), 1); zeros(1, size(B, 1) + 1)]);
+        view(2)
+        shading flat
+        axis equal square tight
+        grid off
+        box on
+        set(gca, ...
+            'XAxisLocation', 'top',  ...
+            'XTick', (1:1:N) - .5, ...
+            'XTickLabel', {},  ...
+            'YAxisLocation', 'left',  ...
+            'YDir', 'Reverse',  ...
+            'YTick', (1:1:N) - .5, ...
+            'YTickLabel', ylabels)
+        
+        if ~verLessThan('matlab',  '8.4.0')
+            set(gca, ...
+                'XTickLabelRotation',90, ...
+                'XTickLabel', xlabels)
+        else
+            t = text((1:1:N) - .5, zeros(1,N), xlabels);
+            set(t, ...
+                'HorizontalAlignment', 'left',  ...
+                'VerticalAlignment', 'middle',  ...
+                'Rotation',90);
+        end
+        
+        colormap bone
         
         % output if needed
         if nargout > 0

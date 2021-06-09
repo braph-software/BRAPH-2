@@ -127,7 +127,7 @@ menu()
         ui_menu_figure = uimenu(f, 'Label', 'Figure');
         uimenu(ui_menu_figure, ...
             'Label', 'Save figures ...', ...
-            'Accelerator', 'M', ...
+            'Accelerator', 'F', ...
             'Callback', {@cb_save_image})
 
         ui_menu_about = uimenu(f, 'Label', 'About');
@@ -231,6 +231,7 @@ menu()
                 copyobj(fig_h.CurrentAxes, h)
                 set(gca, 'Units', 'normalized')
                 set(gca, 'OuterPosition', [0 0 1 1])
+                colormap jet
             end
         end
     end
