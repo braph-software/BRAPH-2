@@ -52,7 +52,6 @@ gr = a.get('GR');
 data_list = cellfun(@(x) x.get('ST_MP'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
 atlas = gr.get('SUB_DICT').getItem(1).get('BA');
 
-
 if a.get('USE_COVARIATES')
     age_list = cellfun(@(x) x.get('age'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
     age = cat(2, age_list{:})';
