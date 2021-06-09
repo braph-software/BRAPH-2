@@ -182,7 +182,7 @@ function update(pl)
     end
     function cb_plot_m(~, ~)
         plot_value = value;
-        x_label = graph.get('NODELABEL');         
+        x_label = graph.get('NODELABELS');         
         y_name = m;
         title_plot = [y_name ' vs ' x_name];
         
