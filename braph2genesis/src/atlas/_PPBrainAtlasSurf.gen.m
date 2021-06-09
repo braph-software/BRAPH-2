@@ -93,6 +93,12 @@ function h_panel = draw(pl, varargin)
                 'Color', 'w' ...
                 );
             
+            figure_menu = uimenu(second_figure, 'Label', 'File');
+            uimenu(figure_menu, ...
+                'Label', 'Save Figure ...', ...
+                'Accelerator', 'F', ...
+                'Callback', {@cb_save_figure})
+
             addlistener(second_figure, 'ObjectBeingDestroyed', @cb_close_atlas_srf);            
             set_icon(second_figure)
             
@@ -113,6 +119,16 @@ function h_panel = draw(pl, varargin)
             plba.set('SETPOS', [x2 normalized(2) w2 h2*1.61-h2-.065]); % height has to be correcter for the toolbar and menu
             plba.settings();
             set(pl.plot_brain_atlas_btn, 'Enable', 'off');
+            
+            function cb_save_figure(~, ~)
+                % select file
+                [file, path, filterindex] = uiputfile('.jpg', ['Select the ' second_figure.Name ' file.']);
+                % save file
+                if filterindex
+                    filename = fullfile(path, file);
+                    saveas(gcf, filename, 'jpg');
+                end
+            end
         end
         function cb_pushbutton_update(~, ~)
             plba.draw('Parent', second_figure);
