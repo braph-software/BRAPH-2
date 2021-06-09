@@ -190,7 +190,7 @@ function h_panel = draw(pl, varargin)
                 result_measure{i} = g.getMeasure(measure);
                 
                 % precalculate
-                el.getMeasure(measure).memorize('M');
+                g.getMeasure(measure).memorize('M');
                 
                 waitbar(extra, f, ['Measure: ' measure ' Calculated! ...']);
             end

@@ -58,7 +58,7 @@ function update(pl)
     x_range = 1:10;
     y_label = el.getClass();
     node_labels_tmp = graph.get('BRAINATLAS').get('BR_DICT');
-    node_labels = cellfun(@(x) x.get('ID') , node_dict.getItems(), 'UniformOutput', false);    
+    node_labels = cellfun(@(x) x.get('ID') , node_labels_tmp.getItems(), 'UniformOutput', false);    
 
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
         % do nothing
