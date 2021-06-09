@@ -77,19 +77,18 @@ function h_panel = draw(pl, varargin)
                 h2 = normalized(4)/2;
             else % golden ratio 
                 % golden ratio is defined as a+b/a = a/b = phi. phi = 1.61
-                x2 = normalized(1)+ normalized(3);
+                x2 = normalized(1) + normalized(3);
                 h2 = normalized(4) / 1.61;
-                y2 = normalized(2) + h2 - .195;
+                y2 = normalized(2) + normalized(4) - h2;
                 w2 = normalized(3) * 1.61;               
             end
             
             second_figure =  figure( ...
                 'Visible', 'on', ...
                 'NumberTitle', 'off', ...
-                'Name', ['Brain Surface - ' BRAPH2.STR], ...
+                'Name', el.get('ID'), ...
                 'Units', 'normalized', ...
                 'Position', [x2 y2 w2 h2], ...
-                'MenuBar', 'none', ...
                 'Toolbar', 'figure', ...
                 'Color', 'w' ...
                 );
@@ -100,16 +99,6 @@ function h_panel = draw(pl, varargin)
             ui_toolbar = findall(second_figure, 'Tag', 'FigureToolBar');            
             delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
             delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.OpenInspector'))
-            delete(findall(ui_toolbar, 'Tag', 'Exploration.Brushing'))
-            delete(findall(ui_toolbar, 'Tag', 'DataManager.Linking'))
-            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertColorbar'))
-            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertLegend'))
-            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
-            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
 
             update_tbn = uicontrol('Style', 'pushbutton', ...
                 'Parent', second_figure, ...
