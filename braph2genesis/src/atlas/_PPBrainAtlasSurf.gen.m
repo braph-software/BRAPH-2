@@ -60,7 +60,7 @@ function h_panel = draw(pl, varargin)
     end
     
         function cb_pushbutton_brain_atlas(~, ~)
-
+            update_plba()
             [parent_position_pixels, normalized] = get_figure_position();
             x = parent_position_pixels(1);
             y = parent_position_pixels(2);
@@ -77,39 +77,34 @@ function h_panel = draw(pl, varargin)
                 h2 = normalized(4)/2;
             else % golden ratio 
                 % golden ratio is defined as a+b/a = a/b = phi. phi = 1.61
-                x2 = normalized(1)+ normalized(3);
+                x2 = normalized(1) + normalized(3);
                 h2 = normalized(4) / 1.61;
-                y2 = normalized(2) + h2 - .195;
+                y2 = normalized(2) + normalized(4) - h2;
                 w2 = normalized(3) * 1.61;               
             end
             
             second_figure =  figure( ...
                 'Visible', 'on', ...
                 'NumberTitle', 'off', ...
-                'Name', ['Brain Surface - ' BRAPH2.STR], ...
+                'Name', el.get('ID'), ...
                 'Units', 'normalized', ...
                 'Position', [x2 y2 w2 h2], ...
-                'MenuBar', 'none', ...
                 'Toolbar', 'figure', ...
                 'Color', 'w' ...
                 );
             
+            figure_menu = uimenu(second_figure, 'Label', 'File');
+            uimenu(figure_menu, ...
+                'Label', 'Save Figure ...', ...
+                'Accelerator', 'F', ...
+                'Callback', {@cb_save_figure})
+
             addlistener(second_figure, 'ObjectBeingDestroyed', @cb_close_atlas_srf);            
             set_icon(second_figure)
             
             ui_toolbar = findall(second_figure, 'Tag', 'FigureToolBar');            
             delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
             delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.OpenInspector'))
-            delete(findall(ui_toolbar, 'Tag', 'Exploration.Brushing'))
-            delete(findall(ui_toolbar, 'Tag', 'DataManager.Linking'))
-            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertColorbar'))
-            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertLegend'))
-            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
-            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
 
             update_tbn = uicontrol('Style', 'pushbutton', ...
                 'Parent', second_figure, ...
@@ -124,8 +119,19 @@ function h_panel = draw(pl, varargin)
             plba.set('SETPOS', [x2 normalized(2) w2 h2*1.61-h2-.065]); % height has to be correcter for the toolbar and menu
             plba.settings();
             set(pl.plot_brain_atlas_btn, 'Enable', 'off');
+            
+            function cb_save_figure(~, ~)
+                % select file
+                [file, path, filterindex] = uiputfile('.jpg', ['Select the ' second_figure.Name ' file.']);
+                % save file
+                if filterindex
+                    filename = fullfile(path, file);
+                    saveas(gcf, filename, 'jpg');
+                end
+            end
         end
         function cb_pushbutton_update(~, ~)
+            update_plba()
             plba.draw('Parent', second_figure);
         end
         function [pixels, normalized] = get_figure_position()
@@ -141,6 +147,10 @@ function h_panel = draw(pl, varargin)
         end        
         function cb_close_atlas_srf(~, ~)
             set(pl.plot_brain_atlas_btn, 'Enable', 'on');
+        end
+        function update_plba()
+            el = pl.get('EL');
+            plba.set('ATLAS', el);
         end
 
     % output

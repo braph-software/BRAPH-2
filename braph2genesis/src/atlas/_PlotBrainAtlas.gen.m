@@ -533,11 +533,11 @@ function f_settings = settings(pl, varargin)
     %
     % See also draw, figure, isgraphics.
 
-    f_settings = settings@PlotBrainSurface(pl, varargin{:}); 
-    pl.f_settings = f_settings;
+    f_settings = settings@PlotBrainSurface(pl, varargin{:});     
 
     ui_toolbar = findall(f_settings, 'Tag', 'FigureToolBar');
     
+    ui_toolbar_separator = uipushtool(ui_toolbar, 'Separator', 'on', 'Visible', 'off');
     ui_toolbar_separator = uipushtool(ui_toolbar, 'Separator', 'on', 'Visible', 'off');
 
     ui_toolbar_symbols = uipushtool(ui_toolbar, ...
@@ -563,7 +563,9 @@ function f_settings = settings(pl, varargin)
         'TooltipString', 'Ids Panel', ...
         'CData', imread('icon_id.png'), ...
         'ClickedCallback', {@cb_ids_figure_settings});
-
+    
+    pl.f_settings = f_settings;
+    set(pl.f_settings, 'NAME', [pl.get('ATLAS').get('ID') ' - Plot Settings'])
 
     % callback functions
         function cb_syms_figure_settings(~, ~) % (src, event)

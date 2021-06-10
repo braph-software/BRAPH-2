@@ -123,12 +123,6 @@ menu()
         ui_menu_export = uimenu(f, ...
             'Label', 'Export', ...
             'Callback', {@cb_refresh});        
-        
-        ui_menu_figure = uimenu(f, 'Label', 'Figure');
-        uimenu(ui_menu_figure, ...
-            'Label', 'Save figures ...', ...
-            'Accelerator', 'M', ...
-            'Callback', {@cb_save_image})
 
         ui_menu_about = uimenu(f, 'Label', 'About');
         uimenu(ui_menu_about, ...
@@ -221,19 +215,7 @@ menu()
     function cb_refresh(~,~)
         sub_menus()
     end
-    function cb_save_image(~, ~)
-        figHandles = findobj('Type', 'figure');
-        for i = 1:1:length(figHandles)
-            fig_h = figHandles(i);
-            if ~isempty(fig_h.CurrentAxes)
-                h = figure('Name', fig_h.Name);
-                set(gcf, 'Color', 'w')
-                copyobj(fig_h.CurrentAxes, h)
-                set(gca, 'Units', 'normalized')
-                set(gca, 'OuterPosition', [0 0 1 1])
-            end
-        end
-    end
+    
 
 %% Toolbar
 toolbar()
