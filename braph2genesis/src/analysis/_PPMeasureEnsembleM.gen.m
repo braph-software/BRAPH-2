@@ -1,15 +1,15 @@
 %% ¡header!
-PPMeasureM < PlotProp (pl, plot property of measure M) is a plot of measure M.
+PPMeasureEnsembleM < PlotProp (pl, plot property of measure ensemble) is a plot of measure ensemble.
 
 %%% ¡description!
-PPMeasureM plots a Measure result table and plot.
+PPMeasureEnsembleM plots a Measure Ensemble measures table.
 
 %%% ¡seealso!
-GUI, PlotElement, PlotProp, MultigraphBUD, MultigraphBUT.
+GUI, PlotElement, PlotProp, MeasureEnsemble.
 
 %% ¡properties!
 pp
-table_value_cell
+measure_tbl
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
@@ -27,8 +27,8 @@ function h_panel = draw(pl, varargin)
     %  objects from the handle to the brain surface graphical panel H.
     %
     % see also update, redraw, refresh, settings, uipanel, isgraphics.
-    
-    pl.pp = draw@PlotProp(pl, varargin{:});
+
+     pl.pp = draw@PlotProp(pl, varargin{:});
 
     % output
     if nargout > 0
@@ -43,16 +43,18 @@ function update(pl)
     % See also draw, redraw, refresh.
 
     update@PlotProp(pl)
-    
+
     el = pl.get('EL');
     prop = pl.get('PROP');
+    graph_dict = el.get('A').get('G_DICT');
+    graph = graph_dict.getItem(1);
     value = el.getr(prop);
     node1_to_plot = 1;
     node2_to_plot = 1;
-    graph = el.get('G'); 
     node_labels = [];
     x_range = 1:10;
-        
+    m = el.get('MEASURE');
+    
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
         % do nothing
     elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
@@ -70,15 +72,15 @@ function update(pl)
             end
         end
         value_cell = el.get(prop);
-        if isempty(pl.table_value_cell)
-            pl.table_value_cell = cell(size(value_cell));
+        if isempty(pl.measure_tbl)
+            pl.measure_tbl = cell(size(value_cell));
         end
-        for i = 1:1:size(pl.table_value_cell, 1)
-            for j = 1:1:size(pl.table_value_cell, 2)
-                if isempty(pl.table_value_cell{i, j}) || ~isgraphics(pl.table_value_cell{i, j}, 'uitable')
-                    pl.table_value_cell{i, j} = uitable('Parent', pl.pp);
+        for i = 1:1:size(pl.measure_tbl, 1)
+            for j = 1:1:size(pl.measure_tbl, 2)
+                if isempty(pl.measure_tbl{i, j}) || ~isgraphics(pl.measure_tbl{i, j}, 'uitable')
+                    pl.measure_tbl{i, j} = uitable('Parent', pl.pp);
                 end
-                set(pl.table_value_cell{i, j}, ...
+                set(pl.measure_tbl{i, j}, ...
                     'Data', value_cell{i, j}, ...
                     'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)] ...
                     )
@@ -93,15 +95,15 @@ function update(pl)
     else
         % paint a normal cell tables
         value_cell = el.get(prop);
-        if isempty(pl.table_value_cell)
-            pl.table_value_cell = cell(size(value_cell));
+        if isempty(pl.measure_tbl)
+            pl.measure_tbl = cell(size(value_cell));
         end
-        for i = 1:1:size(pl.table_value_cell, 1)
-            for j = 1:1:size(pl.table_value_cell, 2)
-                if isempty(pl.table_value_cell{i, j}) || ~isgraphics(pl.table_value_cell{i, j}, 'uitable')
-                    pl.table_value_cell{i, j} = uitable('Parent', pl.pp);
+        for i = 1:1:size(pl.measure_tbl, 1)
+            for j = 1:1:size(pl.measure_tbl, 2)
+                if isempty(pl.measure_tbl{i, j}) || ~isgraphics(pl.measure_tbl{i, j}, 'uitable')
+                    pl.measure_tbl{i, j} = uitable('Parent', pl.pp);
                 end
-                set(pl.table_value_cell{i, j}, ...
+                set(pl.measure_tbl{i, j}, ...
                     'Data', value_cell{i, j}, ...
                     'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
                     'CellEditCallback', {@cb_matrix_value, i, j} ...
@@ -110,7 +112,6 @@ function update(pl)
         end
     end
     
-    % functions
     function init_measure_plot_area()
         set(ui_node1_popmenu, ...            
             'Units', 'normalized', ...
@@ -138,7 +139,7 @@ function update(pl)
         rules_node_popmenu_deactivation()
     end
     function rules_node_popmenu_deactivation()
-        if Measure.is_global(el)
+        if Measure.is_global(m)
             set(ui_node1_popmenu, ...
                 'Visible', 'off', ...
                 'Enable', 'off' ...
@@ -147,7 +148,7 @@ function update(pl)
                 'Visible', 'off', ...
                 'Enable', 'off' ...
                 )
-        elseif Measure.is_nodal(el)
+        elseif Measure.is_nodal(m)
             set(ui_node1_popmenu, ...
                 'Visible', 'on', ...
                 'Enable', 'on' ...
@@ -176,13 +177,13 @@ function update(pl)
     function cb_plot_m(~, ~)
         plot_value = value;
         
-        if Measure.is_global(el) % global
+        if Measure.is_global(m) % global
             is_inf_vector = cellfun(@(x) isinf(x), plot_value);
             if any(is_inf_vector)
                 return;
             end
             y_ = [plot_value{:}];
-        elseif Measure.is_nodal(el) % nodal
+        elseif Measure.is_nodal(m) % nodal
             for l = 1:length(plot_value)
                 tmp = plot_value{l};
                 tmp_y = tmp(node1_to_plot);
@@ -213,16 +214,16 @@ function update(pl)
         plot_figure = figure( ...
             'Visible', 'on', ...
             'NumberTitle', 'off', ...
-            'Name', ['Plot of Measure - ' BRAPH2.STR], ...
+            'Name', ['Plot of Measure Ensemble - ' BRAPH2.STR], ...
             'Units', 'normalized', ...
             'Position', [x2 y2 w2 h2], ...
             'MenuBar', 'none', ...
             'Toolbar', 'figure', ...
             'Color', 'w' ...
-            );        
+            );
         h_axes = axes(plot_figure);
-        set_icon(plot_figure);        
-        ui_toolbar = findall(plot_figure, 'Tag', 'FigureToolBar');        
+        set_icon(plot_figure);
+        ui_toolbar = findall(plot_figure, 'Tag', 'FigureToolBar');
         delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
         delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
         delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
@@ -237,17 +238,17 @@ function update(pl)
         delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
         
         handle_plot = plot( ...
-                    h_axes, ...
-                    x_, ...
-                    y_, ...
-                    'Marker', 'o', ...
-                    'MarkerSize', 10, ...
-                    'MarkerEdgeColor', [0 0 1], ...
-                    'MarkerFaceColor', [.9 .4 .1], ...
-                    'LineStyle', '-', ...
-                    'LineWidth', 1, ...
-                    'Color', [0 0 1] ...
-                    );
+            h_axes, ...
+            x_, ...
+            y_, ...
+            'Marker', 'o', ...
+            'MarkerSize', 10, ...
+            'MarkerEdgeColor', [0 0 1], ...
+            'MarkerFaceColor', [.9 .4 .1], ...
+            'LineStyle', '-', ...
+            'LineWidth', 1, ...
+            'Color', [0 0 1] ...
+            );
     end
     function [pixels, normalized] = get_figure_position()
         fig_h = getGUIFigureObj();
@@ -257,15 +258,8 @@ function update(pl)
         set(fig_h, 'Units', 'characters'); % go back
     end
     function obj = getGUIFigureObj()
-        figHandles = findobj('Type', 'figure');
-        for i = 1:1:length(figHandles)
-            fig_h = figHandles(i);
-            if contains(fig_h.Name, el.getClass())
-                obj = fig_h;
-            end
-        end
+        obj = get_handle_objs('figure', 'AnalyzeEnsemble');
     end
-
 end
 function redraw(pl, varargin)
     %REDRAW redraws the element graphical panel.
@@ -293,14 +287,14 @@ function redraw(pl, varargin)
         
         for i = 1:1:size(value_cell, 1)
             for j = 1:1:size(value_cell, 2)
-                set(pl.table_value_cell{i, j}, ...
+                set(pl.measure_tbl{i, j}, ...
                     'Units', 'character', ...
                     'Position', ...
                     [ ...
-                    (0.01 + (i - 1) * 0.98 / size(pl.table_value_cell, 1)) * Plot.w(pl.pp) ...
-                    (0.2 + (j - 1) * 0.8 / size(pl.table_value_cell, 2)) * (Plot.h(pl.pp) - 1.8) ...
-                    0.98 / size(pl.table_value_cell, 1) * Plot.w(pl.pp) ...
-                    0.8 / size(pl.table_value_cell, 2) * (Plot.h(pl.pp) - 1.8) ...
+                    (0.01 + (i - 1) * 0.98 / size(pl.measure_tbl, 1)) * Plot.w(pl.pp) ...
+                    (0.2 + (j - 1) * 0.8 / size(pl.measure_tbl, 2)) * (Plot.h(pl.pp) - 1.8) ...
+                    0.98 / size(pl.measure_tbl, 1) * Plot.w(pl.pp) ...
+                    0.8 / size(pl.measure_tbl, 2) * (Plot.h(pl.pp) - 1.8) ...
                     ] ...
                     )
             end
