@@ -231,9 +231,11 @@ function h_panel = draw(pl, varargin)
         end
         function update_brain_surface()  
             fig_h = get_handle_objs('figure', 'Brain Surface - ');
-            fig_h_children = get(fig_h, 'Children');
-            update_btn = fig_h_children(2);
-            feval(get(update_btn, 'Callback'), update_btn, []);
+            fig_h_children = get(fig_h, 'Children'); 
+            if ~isempty(fig_h_children)
+                update_btn = fig_h_children(2);
+                feval(get(update_btn, 'Callback'), update_btn, []);
+            end
         end
         function checkIdict()     
             update_el()
