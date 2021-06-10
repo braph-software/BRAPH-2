@@ -538,6 +538,7 @@ function f_settings = settings(pl, varargin)
     ui_toolbar = findall(f_settings, 'Tag', 'FigureToolBar');
     
     ui_toolbar_separator = uipushtool(ui_toolbar, 'Separator', 'on', 'Visible', 'off');
+    ui_toolbar_separator = uipushtool(ui_toolbar, 'Separator', 'on', 'Visible', 'off');
 
     ui_toolbar_symbols = uipushtool(ui_toolbar, ...
         'Separator', 'off', ...

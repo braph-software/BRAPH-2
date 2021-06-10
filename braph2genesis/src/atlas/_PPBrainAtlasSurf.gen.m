@@ -60,7 +60,7 @@ function h_panel = draw(pl, varargin)
     end
     
         function cb_pushbutton_brain_atlas(~, ~)
-
+            update_plba()
             [parent_position_pixels, normalized] = get_figure_position();
             x = parent_position_pixels(1);
             y = parent_position_pixels(2);
@@ -131,6 +131,7 @@ function h_panel = draw(pl, varargin)
             end
         end
         function cb_pushbutton_update(~, ~)
+            update_plba()
             plba.draw('Parent', second_figure);
         end
         function [pixels, normalized] = get_figure_position()
@@ -146,6 +147,10 @@ function h_panel = draw(pl, varargin)
         end        
         function cb_close_atlas_srf(~, ~)
             set(pl.plot_brain_atlas_btn, 'Enable', 'on');
+        end
+        function update_plba()
+            el = pl.get('EL');
+            plba.set('ATLAS', el);
         end
 
     % output
