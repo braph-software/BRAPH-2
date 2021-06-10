@@ -36,11 +36,16 @@ G_DICT (result, idict) is the graph enemble obtained from this analysis.
 value = IndexedDictionary('IT_CLASS', 'Graph');
 
 %%% ¡prop!
-NEURAL_NETWORK (result, string) is the neural network trained from this analysis.
+NEURAL_NETWORK (result, CVECTOR) is the neural network trained from this analysis.
 
 %% ¡methods!
-function transformed_net = net_transformer(net)
-    % output path should be specified
-    transformed_net = [fileparts(which('example_CON_WU')) filesep 'trained_net.onnx']
-    exportONNXNetwork(net,filename)
+function nn_binary_format = net_binary_transformer(nn, net)
+    filename = 'nn.bin';
+    exportONNXNetwork(net,filename);
+    fileID = fopen(filename);
+    nn_binary_format = fread(fileID);
+    fclose(fileID);
+    delete nn.bin
 end
+
+

@@ -11,6 +11,7 @@ y_tblTrain
 X_tblTrain
 y_tblTest
 X_tblTest
+class_name
 
 %% ¡props_update!
 
@@ -32,7 +33,7 @@ G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analys
 IndexedDictionary('IT_CLASS', 'GraphWU')
 
 %%% ¡prop!
-NEURAL_NETWORK (result, string) is the neural network trained from this analysis.
+NEURAL_NETWORK (result, CVECTOR) is the neural network trained from this analysis.
 %%%% ¡default!
 0
 %%%% ¡calculate!
@@ -73,7 +74,7 @@ dataset = [dataset label];
 % get classes
 dataset = convertvars(dataset,'DX', 'categorical');
 classNames = categories(dataset{:,end})
-
+nn.class_name = classNames;
 % split the datset into training and test set
 numObservations = size(dataset, 1);
 numObservationsTrain = floor(0.9*numObservations);
@@ -127,8 +128,8 @@ options = trainingOptions('sgdm', ...
 net = trainNetwork(X_tblTrain, y_tblTrain, layers, options);
 
 % save the trained net
-%NEURAL_NETWORK = net_transformer(net);
-value = net;
+nn_binary_format = nn.net_binary_transformer(net);
+value = nn_binary_format;
 
 % get prediction accuracy on training set
 YPred = classify(net, nn.X_tblTrain);
@@ -148,6 +149,10 @@ end
 
 function accuracy = getTestAccuracy(nn)
     accuracy = nn.test_accuracy
+end
+
+function class_name = getClassName(nn)
+    class_name = nn.class_name
 end
 
 function m = getTrainingConfusionMatrix(nn, net)
@@ -190,6 +195,14 @@ function tbl = getTestLable(nn)
     tbl = nn.y_tblTest
 end
 
+function nn_obj_format = net_obj_transformer(nn, nn_binary_format)
+    filename = 'nn.onnx';
+    fileID = fopen(filename,'w');
+    fwrite(fileID,nn_binary_format);
+    fclose(fileID);
+    nn_obj_format = importONNXNetwork(filename,'OutputLayerType','classification','Classes',string(nn.class_name));
+    delete nn.onnx
+end
 %% ¡tests!
 
 %%% ¡test!
