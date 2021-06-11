@@ -63,10 +63,11 @@ function h_panel = draw(pl, varargin)
 
     % callbacks
         function cb_table_values(~, event)
+            el = pl.get('EL');
             m = event.Indices(1);
             col = event.Indices(2);
             sub_data(m, col) = event.NewData;
-            el.set('sub_data_tag');
+            el.set('sub_data_tag', sub_data);
             pl.update()
         end        
 
