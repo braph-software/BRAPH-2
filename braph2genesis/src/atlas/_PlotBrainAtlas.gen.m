@@ -832,14 +832,14 @@ function f_out = syms_settings(pl)
                 if length(all_brs_sizes) == 1
                     all_brs_sizes = repmat(all_brs_sizes, pl.get('ATLAS').get('BR_DICT').length, 1);
                 end
-                if length(syms_modified) ~= pl.get('ATLAS').get('BR_DICT').length
-                    syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
+                syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
+                if length(syms_modified) ~= pl.get('ATLAS').get('BR_DICT').length                    
                     for i = 1:1:length(syms_modified)
                         syms_to_(syms_modified(i)) = syms_modified(i);
                     end
                 end
                 for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
-                    if i == syms_to_(i)
+                    if size ~= syms_to_(i)
                         all_brs_sizes(i) = size;
                     end
                 end
@@ -894,7 +894,7 @@ function f_out = syms_settings(pl)
             end
             function bri = get_br_list()
                 if pl.get('ATLAS').get('BR_DICT').length()>0
-                    bri = get(ui_list, 'Value');
+                    bri = get(ui_list, 'String');
                 else
                     bri = [];
                 end
@@ -1348,7 +1348,7 @@ function f_out = sphs_settings(pl)
         end
         function bri = get_br_list()
             if pl.get('atlas').get('BR_DICT').length() > 0
-                bri = get(ui_list, 'Value');
+                bri = get(ui_list, 'String');
             else
                 bri = [];
             end
@@ -1636,7 +1636,7 @@ function f_out = ids_settings(pl)
         end
         function bri = get_br_list()
             if pl.get('atlas').get('BR_DICT').length() > 0
-                bri = get(ui_list, 'Value');
+                bri = get(ui_list, 'String');
             else
                 bri = [];
             end
@@ -1923,7 +1923,7 @@ function f_out = labs_settings(pl)
         end
         function bri = get_br_list()
             if pl.get('atlas').get('BR_DICT').length() > 0
-                bri = get(ui_list, 'Value');
+                bri = get(ui_list, 'String');
             else
                 bri = [];
             end
