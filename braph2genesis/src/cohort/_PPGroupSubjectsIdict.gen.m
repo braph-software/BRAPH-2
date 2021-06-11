@@ -140,6 +140,7 @@ function h_panel = draw(pl, varargin)
             end
         end        
         function cb_table_add(~, ~)  % (src, event)
+            update_el()
             checkIdict();
             sub_id = 1;
             while subjects_idict.containsKey(num2str(sub_id))
@@ -156,26 +157,31 @@ function h_panel = draw(pl, varargin)
             pl.update();
         end
         function cb_table_remove(~, ~)  % (src, event)
+            update_el()
             checkIdict();
             pl.selected = subjects_idict.remove_all(index);
             pl.update();           
         end
         function cb_table_moveup(~, ~)  % (src, event)
+            update_el()
             checkIdict();
             pl.selected = subjects_idict.move_up(index);
             pl.update();           
         end
         function cb_table_movedown(~, ~)  % (src, event)
+            update_el()
             checkIdict();
             pl.selected = subjects_idict.move_down(index);
             pl.update();           
         end
         function cb_table_move2top(~, ~)  % (src, event)
+            update_el()
             checkIdict();
             pl.selected = subjects_idict.move_to_top(index);
             pl.update();           
         end
         function cb_table_move2bottom(~, ~)  % (src, event)
+            update_el()
             checkIdict();
             pl.selected = subjects_idict.move_to_bottom(index);
             pl.update();           
@@ -191,11 +197,11 @@ function h_panel = draw(pl, varargin)
             end
         end
         function obj = getGUIFigureObj()
-            figHandles = get_handle_objs('figure', [], 'Group');
+            [~, figHandles] = get_handle_objs('figure', [], 'Group');
             obj = figHandles{1};
         end
         function objs = getGUISubjects()
-            objs = get_handle_objs('figure', [], 'Subject');
+            [~, objs] = get_handle_objs('figure', [], 'Subject');
         end
         function [pixels, normalized] = get_figure_position()
             fig_h = getGUIFigureObj();
@@ -243,6 +249,9 @@ function h_panel = draw(pl, varargin)
             end
 
             subjects_gui_h = getGUISubjects();
+        end
+        function update_el()
+            el = pl.get('EL');
         end
 
     % output
