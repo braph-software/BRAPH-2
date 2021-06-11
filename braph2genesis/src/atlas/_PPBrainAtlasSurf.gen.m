@@ -93,11 +93,19 @@ function h_panel = draw(pl, varargin)
                 'Color', 'w' ...
                 );
             
-            figure_menu = uimenu(second_figure, 'Label', 'File');
+            figure_menu = uimenu(second_figure, 'Label', 'Figure');
             uimenu(figure_menu, ...
                 'Label', 'Save Figure ...', ...
                 'Accelerator', 'F', ...
                 'Callback', {@cb_save_figure})
+            
+            ui_menu_about = uimenu(second_figure, 'Label', 'About BRAPH 2');
+            uimenu(ui_menu_about, ...
+                'Label', 'License ...', ...
+                'Callback', {@cb_license})
+            uimenu(ui_menu_about, ...
+                'Label', 'About ...', ...
+                'Callback', {@cb_about})
 
             addlistener(second_figure, 'ObjectBeingDestroyed', @cb_close_atlas_srf);            
             set_icon(second_figure)
@@ -128,6 +136,12 @@ function h_panel = draw(pl, varargin)
                     filename = fullfile(path, file);
                     saveas(gcf, filename, 'jpg');
                 end
+            end
+            function cb_license(~, ~)
+                BRAPH2_LICENSE()
+            end
+            function cb_about(~, ~)
+                BRAPH2_ABOUT()
             end
         end
         function cb_pushbutton_update(~, ~)

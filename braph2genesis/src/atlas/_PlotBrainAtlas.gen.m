@@ -605,7 +605,7 @@ function f_out = syms_settings(pl)
 
         set(f, 'units', 'normalized', ...
             'Position', [.60 .50 .30 .30], ...
-            'Color', [.95 .95 .95], ...
+            'Color', [1 0.9725 0.929], ...
             'Name','Brain Region Symbol Settings', ...
             'MenuBar', 'none', ...
             'Toolbar', 'none', ...
@@ -625,7 +625,7 @@ function f_out = syms_settings(pl)
 
         ui_checkbox_id = uicontrol(f, 'Style', 'checkbox');
         set(ui_checkbox_id, 'Units', 'normalized')
-        set(ui_checkbox_id, 'BackgroundColor', [.95 .95 .95])
+        set(ui_checkbox_id, 'BackgroundColor', [1 0.9725 0.929])
         set(ui_checkbox_id, 'Position', [.05 .05 .20 .10])
         set(ui_checkbox_id, 'String', 'id')
         set(ui_checkbox_id, 'Value', true)
@@ -635,7 +635,7 @@ function f_out = syms_settings(pl)
 
         ui_checkbox_label = uicontrol(f, 'Style', 'checkbox');
         set(ui_checkbox_label, 'Units', 'normalized')
-        set(ui_checkbox_label, 'BackgroundColor', [.95 .95 .95])
+        set(ui_checkbox_label, 'BackgroundColor', [1 0.9725 0.929])
         set(ui_checkbox_label, 'Position', [.20 .05 .15 .10])
         set(ui_checkbox_label, 'String', 'label')
         set(ui_checkbox_label, 'Value', false)
@@ -644,7 +644,7 @@ function f_out = syms_settings(pl)
 
         ui_checkbox_xyz = uicontrol(f, 'Style', 'checkbox');
         set(ui_checkbox_xyz, 'Units', 'normalized')
-        set(ui_checkbox_xyz, 'BackgroundColor', [.95 .95 .95])
+        set(ui_checkbox_xyz, 'BackgroundColor', [1 0.9725 0.929])
         set(ui_checkbox_xyz, 'Position', [.35 .05 .15 .10])
         set(ui_checkbox_xyz, 'String', 'xyz')
         set(ui_checkbox_xyz, 'Value', false)
@@ -667,7 +667,7 @@ function f_out = syms_settings(pl)
 
         ui_popup_marker = uicontrol(f, 'Style', 'popup', 'String', {''});
         set(ui_popup_marker, 'Units', 'normalized')
-        set(ui_popup_marker, 'BackgroundColor', [.95 .95 .95])
+        set(ui_popup_marker, 'BackgroundColor', [1 0.9725 0.929])
         set(ui_popup_marker, 'Position', [.50 .50 .45 .10])
         set(ui_popup_marker, 'String', PlotBrainAtlas.PLOT_SYMBOL_NAME)
         set(ui_popup_marker, 'Value', 2)
@@ -676,7 +676,7 @@ function f_out = syms_settings(pl)
 
         ui_text_size = uicontrol(f, 'Style', 'text');
         set(ui_text_size, 'Units', 'normalized')
-        set(ui_text_size, 'BackgroundColor', [.95 .95 .95])
+        set(ui_text_size, 'BackgroundColor', [1 0.9725 0.929])
         set(ui_text_size, 'Position', [.50 .375 .20 .10])
         set(ui_text_size, 'String', 'symbol size ')
         set(ui_text_size, 'HorizontalAlignment', 'left')
@@ -684,7 +684,7 @@ function f_out = syms_settings(pl)
 
         ui_edit_size = uicontrol(f, 'Style', 'edit');
         set(ui_edit_size, 'Units','normalized')
-        set(ui_edit_size, 'BackgroundColor', [.95 .95 .95])
+        set(ui_edit_size, 'BackgroundColor', [1 0.9725 0.929])
         set(ui_edit_size, 'Position', [.70 .40 .25 .10])
         set(ui_edit_size, 'HorizontalAlignment', 'center')
         set(ui_edit_size, 'FontWeight', 'bold')
@@ -928,7 +928,7 @@ function f_out = sphs_settings(pl)
 
     set(f, 'units', 'normalized', ...
         'Position', [.60 .45 .30 .30], ...
-        'Color', [.95 .95 .95], ...
+        'Color', [1 0.9725 0.929], ...
         'Name','Brain Region Sphere Settings', ...
         'MenuBar', 'none', ...
         'Toolbar', 'none', ...
@@ -948,7 +948,7 @@ function f_out = sphs_settings(pl)
 
     ui_checkbox_id = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_id, 'Units','normalized')
-    set(ui_checkbox_id, 'BackgroundColor', [.95 .95 .95])
+    set(ui_checkbox_id, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_checkbox_id, 'Position', [.05 .05 .20 .10])
     set(ui_checkbox_id, 'String', 'id')
     set(ui_checkbox_id, 'Value', true)
@@ -958,7 +958,7 @@ function f_out = sphs_settings(pl)
 
     ui_checkbox_label = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_label, 'Units','normalized')
-    set(ui_checkbox_label, 'BackgroundColor', [.95 .95 .95])
+    set(ui_checkbox_label, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_checkbox_label, 'Position', [.20 .05 .15 .10])
     set(ui_checkbox_label, 'String', 'label')
     set(ui_checkbox_label, 'Value', false)
@@ -967,7 +967,7 @@ function f_out = sphs_settings(pl)
 
     ui_checkbox_xyz = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_xyz, 'Units','normalized')
-    set(ui_checkbox_xyz, 'BackgroundColor', [.95 .95 .95])
+    set(ui_checkbox_xyz, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_checkbox_xyz, 'Position', [.35 .05 .15 .10])
     set(ui_checkbox_xyz, 'String', 'xyz')
     set(ui_checkbox_xyz, 'Value', false)
@@ -990,7 +990,7 @@ function f_out = sphs_settings(pl)
 
     ui_text = uicontrol(f, 'Style', 'text');
     set(ui_text, 'Units','normalized')
-    set(ui_text, 'BackgroundColor', [.95 .95 .95])
+    set(ui_text, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_text, 'String', 'transparency')
     set(ui_text, 'Position', [.70 .60 .25 .10])
     set(ui_text, 'HorizontalAlignment', 'center')
@@ -1006,7 +1006,7 @@ function f_out = sphs_settings(pl)
 
     ui_slider_alpha = uicontrol(f, 'Style', 'slider');
     set(ui_slider_alpha, 'Units','normalized')
-    set(ui_slider_alpha, 'BackgroundColor', [.95 .95 .95])
+    set(ui_slider_alpha, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_slider_alpha, 'Position', [.70 .475 .25 .10])
     set(ui_slider_alpha, 'String', 'Brain region transparency')
     set(ui_slider_alpha, 'Min', 0, 'Max',1, 'Value',.5);
@@ -1023,7 +1023,7 @@ function f_out = sphs_settings(pl)
 
     ui_slider_facealpha = uicontrol(f, 'Style', 'slider');
     set(ui_slider_facealpha, 'Units', 'normalized')
-    set(ui_slider_facealpha, 'BackgroundColor', [.95 .95 .95])
+    set(ui_slider_facealpha, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_slider_facealpha, 'Position', [.70 .325 .25 .10])
     set(ui_slider_facealpha, 'String', 'Brain region transparency')
     set(ui_slider_facealpha, 'Min', 0, 'Max', 1, 'Value', .5)
@@ -1040,7 +1040,7 @@ function f_out = sphs_settings(pl)
 
     ui_slider_edgealpha = uicontrol(f, 'Style', 'slider');
     set(ui_slider_edgealpha, 'Units', 'normalized')
-    set(ui_slider_edgealpha, 'BackgroundColor', [.95 .95 .95])
+    set(ui_slider_edgealpha, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_slider_edgealpha, 'Position', [.70 .175 .25 .10])
     set(ui_slider_edgealpha, 'String', 'Brain transparency')
     set(ui_slider_edgealpha, 'Min', 0, 'Max', 1, 'Value', .5)
@@ -1049,7 +1049,7 @@ function f_out = sphs_settings(pl)
 
     ui_text_radius = uicontrol(f, 'Style', 'text');
     set(ui_text_radius, 'Units', 'normalized')
-    set(ui_text_radius, 'BackgroundColor', [.95 .95 .95])
+    set(ui_text_radius, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_text_radius, 'Position', [.50 .025 .20 .10])
     set(ui_text_radius, 'String', 'sphere radius ')
     set(ui_text_radius, 'HorizontalAlignment', 'left')
@@ -1057,7 +1057,7 @@ function f_out = sphs_settings(pl)
 
     ui_edit_radius = uicontrol(f, 'Style', 'edit');
     set(ui_edit_radius, 'Units', 'normalized')
-    set(ui_edit_radius, 'BackgroundColor', [.95 .95 .95])
+    set(ui_edit_radius, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_edit_radius, 'Position', [.70 .05 .25 .10])
     set(ui_edit_radius, 'HorizontalAlignment', 'center')
     set(ui_edit_radius, 'FontWeight', 'bold')
@@ -1381,7 +1381,7 @@ function f_out = ids_settings(pl)
 
     set(f, 'units', 'normalized', ...
         'Position', [.60 .35 .30 .30], ...
-        'Color', [.95 .95 .95], ...
+        'Color', [1 0.9725 0.929], ...
         'Name','Brain Region Ids Settings', ...
         'MenuBar', 'none', ...
         'Toolbar', 'none', ...
@@ -1401,7 +1401,7 @@ function f_out = ids_settings(pl)
 
     ui_checkbox_id = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_id, 'Units', 'normalized')
-    set(ui_checkbox_id, 'BackgroundColor', [.95 .95 .95])
+    set(ui_checkbox_id, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_checkbox_id, 'Position', [.05 .05 .20 .10])
     set(ui_checkbox_id, 'String', 'id')
     set(ui_checkbox_id, 'Value', true)
@@ -1411,7 +1411,7 @@ function f_out = ids_settings(pl)
 
     ui_checkbox_label = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_label, 'Units', 'normalized')
-    set(ui_checkbox_label, 'BackgroundColor', [.95 .95 .95])
+    set(ui_checkbox_label, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_checkbox_label, 'Position', [.20 .05 .15 .10])
     set(ui_checkbox_label, 'String', 'label')
     set(ui_checkbox_label, 'Value', false)
@@ -1420,7 +1420,7 @@ function f_out = ids_settings(pl)
 
     ui_checkbox_xyz = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_xyz, 'Units', 'normalized')
-    set(ui_checkbox_xyz, 'BackgroundColor', [.95 .95 .95])
+    set(ui_checkbox_xyz, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_checkbox_xyz, 'Position', [.35 .05 .15 .10])
     set(ui_checkbox_xyz, 'String', 'xyz')
     set(ui_checkbox_xyz, 'Value', false)
@@ -1457,7 +1457,7 @@ function f_out = ids_settings(pl)
 
     ui_text_interpreter = uicontrol(f, 'Style', 'text');
     set(ui_text_interpreter, 'Units', 'normalized')
-    set(ui_text_interpreter, 'BackgroundColor', [.95 .95 .95])
+    set(ui_text_interpreter, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_text_interpreter, 'Position', [.50 .175 .20 .10])
     set(ui_text_interpreter, 'String', 'interpreter')
     set(ui_text_interpreter, 'HorizontalAlignment', 'left')
@@ -1465,7 +1465,7 @@ function f_out = ids_settings(pl)
 
     ui_popup_interpreter = uicontrol(f, 'Style', 'popup', 'String', {''});
     set(ui_popup_interpreter, 'Units', 'normalized')
-    set(ui_popup_interpreter, 'BackgroundColor', [.95 .95 .95])
+    set(ui_popup_interpreter, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_popup_interpreter, 'Position', [.75 .20 .20 .10])
     set(ui_popup_interpreter, 'String', {'none', 'tex', 'latex'})
     set(ui_popup_interpreter, 'Value', 2)
@@ -1669,7 +1669,7 @@ function f_out = labs_settings(pl)
 
     set(f, 'units', 'normalized', ...
         'Position', [.60 .40 .30 .30], ...
-        'Color', [.95 .95 .95], ...
+        'Color', [1 0.9725 0.929], ...
         'Name','Brain Region Labels Settings', ...
         'MenuBar', 'none', ...
         'Toolbar', 'none', ...
@@ -1689,7 +1689,7 @@ function f_out = labs_settings(pl)
 
     ui_checkbox_id = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_id, 'Units', 'normalized')
-    set(ui_checkbox_id, 'BackgroundColor', [.95 .95 .95])
+    set(ui_checkbox_id, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_checkbox_id, 'Position', [.05 .05 .20 .10])
     set(ui_checkbox_id, 'String', 'id')
     set(ui_checkbox_id, 'Value', true)
@@ -1699,7 +1699,7 @@ function f_out = labs_settings(pl)
 
     ui_checkbox_label = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_label, 'Units', 'normalized')
-    set(ui_checkbox_label, 'BackgroundColor', [.95 .95 .95])
+    set(ui_checkbox_label, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_checkbox_label, 'Position', [.20 .05 .15 .10])
     set(ui_checkbox_label, 'String', 'label')
     set(ui_checkbox_label, 'Value', false)
@@ -1708,7 +1708,7 @@ function f_out = labs_settings(pl)
 
     ui_checkbox_xyz = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_xyz, 'Units', 'normalized')
-    set(ui_checkbox_xyz, 'BackgroundColor', [.95 .95 .95])
+    set(ui_checkbox_xyz, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_checkbox_xyz, 'Position', [.35 .05 .15 .10])
     set(ui_checkbox_xyz, 'String', 'xyz')
     set(ui_checkbox_xyz, 'Value', false)
@@ -1745,7 +1745,7 @@ function f_out = labs_settings(pl)
 
     ui_text_interpreter = uicontrol(f, 'Style', 'text');
     set(ui_text_interpreter, 'Units', 'normalized')
-    set(ui_text_interpreter, 'BackgroundColor', [.95 .95 .95])
+    set(ui_text_interpreter, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_text_interpreter, 'Position', [.50 .175 .20 .10])
     set(ui_text_interpreter, 'String', 'interpreter')
     set(ui_text_interpreter, 'HorizontalAlignment', 'left')
@@ -1753,7 +1753,7 @@ function f_out = labs_settings(pl)
 
     ui_popup_interpreter = uicontrol(f, 'Style', 'popup', 'String', {''});
     set(ui_popup_interpreter, 'Units', 'normalized')
-    set(ui_popup_interpreter, 'BackgroundColor', [.95 .95 .95])
+    set(ui_popup_interpreter, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_popup_interpreter, 'Position', [.75 .20 .20 .10])
     set(ui_popup_interpreter, 'String', {'none', 'tex', 'latex'})
     set(ui_popup_interpreter, 'Value', 2)
