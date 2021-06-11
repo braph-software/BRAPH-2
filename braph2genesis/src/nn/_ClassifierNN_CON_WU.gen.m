@@ -29,13 +29,11 @@ Group('SUB_CLASS', 'SubjectCON')
 G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analysis.
 %%%% ¡settings!
 'GraphWU'
-%%%% ¡default!
-IndexedDictionary('IT_CLASS', 'GraphWU')
+%%%% ¡calculate!
+value = IndexedDictionary('IT_CLASS', 'GraphWU');
 
 %%% ¡prop!
-NEURAL_NETWORK (result, CVECTOR) is the neural network trained from this analysis.
-%%%% ¡default!
-0
+NEURAL_NETWORK (result, cvector) is the neural network trained from this analysis.
 %%%% ¡calculate!
 % import the data
 g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
@@ -129,7 +127,6 @@ net = trainNetwork(X_tblTrain, y_tblTrain, layers, options);
 
 % save the trained net
 nn_binary_format = nn.net_binary_transformer(net);
-value = nn_binary_format;
 
 % get prediction accuracy on training set
 YPred = classify(net, nn.X_tblTrain);
@@ -141,6 +138,7 @@ YPred = classify(net, X_tblTest);
 YTest = y_tblTest;
 nn.test_accuracy = sum(YPred == YTest)/numel(YTest);
 
+value = nn_binary_format;
 
 %% ¡methods!
 function accuracy = getTrainingAccuracy(nn)
