@@ -26,17 +26,17 @@ GR2 (data, item) is the subject group, which also defines the subject class Subj
 Group('SUB_CLASS', 'SubjectCON')
 
 %%% ¡prop!
-G_DICT (data, idict) is the graph (GraphWU) ensemble obtained from this analysis.
+G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analysis.
 %%%% ¡settings!
 'GraphWU'
 %%%% ¡calculate!
 value = IndexedDictionary('IT_CLASS', 'GraphWU');
 
 %%% ¡prop!
-NEURAL_NETWORK (result, cvector) is the neural network trained from this analysis.
+NEURAL_NETWORK (result, cell) is the neural network trained from this analysis.
 %%%% ¡calculate!
 % import the data
-g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
+g_dict = nn.get('G_DICT');
 
 gr1 = nn.get('GR1');
 label = [];
@@ -138,7 +138,7 @@ YPred = classify(net, X_tblTest);
 YTest = y_tblTest;
 nn.test_accuracy = sum(YPred == YTest)/numel(YTest);
 
-value = nn_binary_format;
+value = num2cell(nn_binary_format);
 
 %% ¡methods!
 function accuracy = getTrainingAccuracy(nn)
@@ -153,8 +153,8 @@ function class_name = getClassName(nn)
     class_name = nn.class_name
 end
 
-function m = getTrainingConfusionMatrix(nn, net)
-    YPred = classify(net, nn.X_tblTrain);
+function m = getTrainingConfusionMatrix(nn)
+    YPred = classify(cell2mat(nn.get('NEURAL_NETWORK')), nn.X_tblTrain);
 	YTest = nn.y_tblTrain;
     % plot result
     [m,order] = confusionmat(YTest,YPred)
@@ -165,8 +165,8 @@ function m = getTrainingConfusionMatrix(nn, net)
         'ColumnSummary','column-normalized');
 end
 
-function m = getTestConfusionMatrix(nn, net)
-    YPred = classify(net, nn.X_tblTest);
+function m = getTestConfusionMatrix(nn)
+    YPred = classify(cell2mat(nn.get('NEURAL_NETWORK')), nn.X_tblTest);
 	YTest = nn.y_tblTest;
     % plot result
     [m,order] = confusionmat(YTest,YPred)
@@ -193,10 +193,10 @@ function tbl = getTestLable(nn)
     tbl = nn.y_tblTest
 end
 
-function nn_obj_format = net_obj_transformer(nn, nn_binary_format)
+function nn_obj_format = net_obj_transformer(nn)
     filename = 'nn.onnx';
     fileID = fopen(filename,'w');
-    fwrite(fileID,nn_binary_format);
+    fwrite(fileID, cell2mat(nn.get('NEURAL_NETWORK')));
     fclose(fileID);
     nn_obj_format = importONNXNetwork(filename,'OutputLayerType','classification','Classes',string(nn.class_name));
     delete nn.onnx

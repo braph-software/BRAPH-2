@@ -29,19 +29,19 @@ GR2 (data, item) is the subject group, which also defines the subject class.
 'Group'
 
 %%% ¡prop!
-G_DICT (data, idict) is the graph enemble obtained from this analysis.
+G_DICT (result, idict) is the graph enemble obtained from this analysis.
 %%%% ¡settings!
 'Graph'
 %%%% ¡calculate!
 value = IndexedDictionary('IT_CLASS', 'Graph');
 
 %%% ¡prop!
-NEURAL_NETWORK (result, CVECTOR) is the neural network trained from this analysis.
+NEURAL_NETWORK (result, cell) is the neural network trained from this analysis.
 
 %% ¡methods!
-function nn_binary_format = net_binary_transformer(nn, net)
+function nn_binary_format = net_binary_transformer(nn)
     filename = 'nn.bin';
-    exportONNXNetwork(net,filename);
+    exportONNXNetwork(net,cell2mat(nn.get('NEURAL_NETWORK')));
     fileID = fopen(filename);
     nn_binary_format = fread(fileID);
     fclose(fileID);
