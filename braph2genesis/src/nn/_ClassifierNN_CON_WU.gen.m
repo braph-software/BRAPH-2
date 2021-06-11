@@ -1,5 +1,5 @@
 %% ¡header!
-ClassifierNN_CON_WU < BasedNN (nn, classification with connectivity data) is a classification using neural network with connectivity data.
+ClassifierNN_CON_WU < BaseNN (nn, classification with connectivity data) is a classification using neural network with connectivity data.
 
 %% ¡description!
 This classification uses connectivity data and trains neural network with them using weighted undirected graphs.
@@ -26,7 +26,7 @@ GR2 (data, item) is the subject group, which also defines the subject class Subj
 Group('SUB_CLASS', 'SubjectCON')
 
 %%% ¡prop!
-G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analysis.
+G_DICT (data, idict) is the graph (GraphWU) ensemble obtained from this analysis.
 %%%% ¡settings!
 'GraphWU'
 %%%% ¡calculate!

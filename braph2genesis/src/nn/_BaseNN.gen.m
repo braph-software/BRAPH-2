@@ -1,5 +1,5 @@
 %% ¡header!
-BasedNN < Element (nn, based neural network) is a based neural network.
+BaseNN < Element (nn, based neural network) is a based neural network.
 
 %%% ¡description!
 basedNN provides the methods necessary for setting up neural networks.
@@ -29,7 +29,7 @@ GR2 (data, item) is the subject group, which also defines the subject class.
 'Group'
 
 %%% ¡prop!
-G_DICT (result, idict) is the graph enemble obtained from this analysis.
+G_DICT (data, idict) is the graph enemble obtained from this analysis.
 %%%% ¡settings!
 'Graph'
 %%%% ¡calculate!
