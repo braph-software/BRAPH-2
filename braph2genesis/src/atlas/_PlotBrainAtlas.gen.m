@@ -832,16 +832,9 @@ function f_out = syms_settings(pl)
                 if length(all_brs_sizes) == 1
                     all_brs_sizes = repmat(all_brs_sizes, pl.get('ATLAS').get('BR_DICT').length, 1);
                 end
-                syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
-                if length(syms_modified) ~= pl.get('ATLAS').get('BR_DICT').length                    
-                    for i = 1:1:length(syms_modified)
-                        syms_to_(syms_modified(i)) = syms_modified(i);
-                    end
-                end
-                for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
-                    if size ~= syms_to_(i)
-                        all_brs_sizes(i) = size;
-                    end
+                for i = 1:length(syms_modified)
+                    s_m = syms_modified(i);
+                    all_brs_sizes(s_m) = size;
                 end
                 pl.set('SYMS_SIZE', all_brs_sizes);
                 pl.draw();
@@ -894,7 +887,7 @@ function f_out = syms_settings(pl)
             end
             function bri = get_br_list()
                 if pl.get('ATLAS').get('BR_DICT').length()>0
-                    bri = get(ui_list, 'String');
+                    bri = get(ui_list, 'Value');
                 else
                     bri = [];
                 end
