@@ -216,9 +216,9 @@ function h_panel = draw(pl, varargin)
                 coordinates(:, 3), ...
                 'Parent', pl.h_axes ...
                 );
-            xlabel('Sagital')
-            ylabel('Axial')
-            zlabel('Coronal')
+            xlabel(pl.h_axes, 'Sagital')
+            ylabel(pl.h_axes, 'Axial')
+            zlabel(pl.h_axes, 'Coronal')
         end
         set(pl.pp, 'Backgroundcolor', 'w');
         set(pl.h_brain, ...
