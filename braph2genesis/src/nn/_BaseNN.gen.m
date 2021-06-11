@@ -32,8 +32,6 @@ GR2 (data, item) is the subject group, which also defines the subject class.
 G_DICT (result, idict) is the graph enemble obtained from this analysis.
 %%%% ¡settings!
 'Graph'
-%%%% ¡calculate!
-value = IndexedDictionary('IT_CLASS', 'Graph');
 
 %%% ¡prop!
 NEURAL_NETWORK (result, cell) is the neural network trained from this analysis.
