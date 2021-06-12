@@ -206,7 +206,7 @@ function h_panel = draw(pl, varargin)
     
     % brain
     if pl.get('BRAIN')
-        if isempty(pl.h_brain) || ~isgraphics(pl.pp, 'patch')
+        if isempty(pl.h_brain) || ~isgraphics(pl.h_brain, 'patch')
             triangles = pl.get('SURF').get('TRIANGLES');
             coordinates = pl.get('SURF').get('COORDINATES');
             pl.h_brain = trisurf( ...
