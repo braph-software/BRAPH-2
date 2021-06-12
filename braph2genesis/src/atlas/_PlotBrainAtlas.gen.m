@@ -63,6 +63,7 @@ f_ids_settings
 f_labs_settings
 
 pp
+h_axes
 %% ¡props!
 
 %%% ¡prop!
@@ -274,9 +275,8 @@ function h_panel = draw(pl, varargin)
 
 pl.pp = draw@PlotBrainSurface(pl, varargin{:});
 
-h_axes = [];
-if isempty(h_axes) || ~isgraphics(h_axes, 'axes')
-    h_axes =  get(pl.pp, 'Children');
+if isempty(pl.h_axes) || ~isgraphics(pl.h_axes, 'axes')
+    pl.h_axes =  get(pl.pp, 'Children');
 end
 
 % close function
@@ -331,91 +331,117 @@ LABS = cellfun(@(x) x.get('LABEL'), pl.get('ATLAS').get('BR_DICT').get('IT_LIST'
 % get values & complete vector size
 % symbols
 SYMS_SHOW = pl.get('SYMS');
-if SYMS_SHOW
+if any(SYMS_SHOW) && length(SYMS_SHOW) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     SYMS_SHOW = repmat(SYMS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 SYMS_SIZE = pl.get('SYMS_SIZE');
-if length(SYMS_SIZE) == 1
+if any(SYMS_SIZE) && length(SYMS_SIZE) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     SYMS_SIZE = repmat(SYMS_SIZE, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 SYMS_FACE_COLOR = pl.get('SYMS_FACE_COLOR');
-if  size(SYMS_FACE_COLOR, 1) == 1
+if any(SYMS_FACE_COLOR) && length(SYMS_FACE_COLOR) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     SYMS_FACE_COLOR = repmat(SYMS_FACE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 SYMS_EDGE_COLOR = pl.get('SYMS_EDGE_COLOR');
-if  size(SYMS_EDGE_COLOR, 1) == 1
+if any(SYMS_EDGE_COLOR) && length(SYMS_EDGE_COLOR) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     SYMS_EDGE_COLOR = repmat(SYMS_EDGE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 % spheres
 SPHS_SHOW = pl.get('SPHS');
-if SPHS_SHOW
-    SPHS_SHOW = repmat(SPHS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
+if any(SPHS_SHOW) && length(SPHS_SHOW) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
 else
-    SPHS_SHOW = zeros(pl.get('ATLAS').get('BR_DICT').length, 1);
+    SPHS_SHOW = repmat(SPHS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 SPHS_SIZE = pl.get('SPHS_SIZE');
-if length(SPHS_SIZE) == 1
+if any(SPHS_SIZE) && length(SPHS_SIZE) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     SPHS_SIZE = repmat(SPHS_SIZE, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 SPHS_FACE_COLOR = pl.get('SPHS_FACE_COLOR');
-if  size(SPHS_FACE_COLOR, 1) == 1
+if any(SPHS_FACE_COLOR) && length(SPHS_FACE_COLOR) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     SPHS_FACE_COLOR = repmat(SPHS_FACE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 SPHS_EDGE_COLOR = pl.get('SPHS_FACE_COLOR');
-if  size(SPHS_EDGE_COLOR, 1) == 1
+if any(SPHS_EDGE_COLOR) && length(SPHS_EDGE_COLOR) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     SPHS_EDGE_COLOR = repmat(SPHS_EDGE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 SPHS_EDGE_ALPHA = pl.get('SPHS_EDGE_ALPHA');
-if length(SPHS_EDGE_ALPHA) == 1
+if any(SPHS_EDGE_ALPHA) && length(SPHS_EDGE_ALPHA) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     SPHS_EDGE_ALPHA = repmat(SPHS_EDGE_ALPHA, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 SPHS_FACE_ALPHA = pl.get('SPHS_FACE_ALPHA');
-if length(SPHS_FACE_ALPHA) == 1
+if any(SPHS_FACE_ALPHA) && length(SPHS_FACE_ALPHA) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     SPHS_FACE_ALPHA = repmat(SPHS_FACE_ALPHA, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 % ids
 IDS_SHOW = pl.get('IDS');
-if IDS_SHOW
-    IDS_SHOW = repmat(IDS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
+if any(IDS_SHOW) && length(IDS_SHOW) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
 else
-    IDS_SHOW = zeros(pl.get('ATLAS').get('BR_DICT').length, 1);
+    IDS_SHOW = repmat(IDS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 IDS_SIZE = pl.get('IDS_SIZE');
-if length(IDS_SIZE) == 1
+if any(IDS_SIZE) && length(IDS_SIZE) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     IDS_SIZE = repmat(IDS_SIZE, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 IDS_FONT_COLOR = pl.get('IDS_FONT_COLOR');
-if  size(IDS_FONT_COLOR, 1) == 1
+if any(IDS_FONT_COLOR) && length(IDS_FONT_COLOR) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     IDS_FONT_COLOR = repmat(IDS_FONT_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 % labs
 LABS_SHOW = pl.get('LABS');
-if LABS_SHOW
-    LABS_SHOW = repmat(LABS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
+if any(LABS_SHOW) && length(LABS_SHOW) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
 else
-    LABS_SHOW = zeros(pl.get('ATLAS').get('BR_DICT').length, 1);
+    LABS_SHOW = repmat(LABS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 LABS_SIZE = pl.get('LABS_SIZE');
-if length(LABS_SIZE) == 1
+if any(LABS_SIZE) && length(LABS_SIZE) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     LABS_SIZE = repmat(LABS_SIZE, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 LABS_FONT_COLOR = pl.get('LABS_FONT_COLOR');
-if  size(LABS_FONT_COLOR, 1) == 1
+if any(LABS_FONT_COLOR) && length(LABS_FONT_COLOR) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     LABS_FONT_COLOR = repmat(LABS_FONT_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
@@ -425,7 +451,7 @@ for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
     if SYMS_SHOW(i)
         % plotting
         if ~ishandle(pl.h_syms.h(i))
-            pl.h_syms.h(i) = plot3(h_axes, X{i}, Y{i}, Z{i});
+            pl.h_syms.h(i) = plot3(pl.h_axes, X{i}, Y{i}, Z{i});
         else
             set(pl.h_syms.h(i), 'Xdata',X{i}, 'Ydata', Y{i}, 'Zdata', Z{i})
         end
@@ -450,7 +476,7 @@ for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
         % plotting
         if ~ishandle(pl.h_sphs.h(i))
             [sx, sy, sz] = sphere();
-            pl.h_sphs.h(i) = surf(h_axes, X{i} * SPHS_SIZE(i) *sx, Y{i} * SPHS_SIZE(i) * sy, ...
+            pl.h_sphs.h(i) = surf(pl.h_axes, X{i} * SPHS_SIZE(i) *sx, Y{i} * SPHS_SIZE(i) * sy, ...
                 Z{i} * SPHS_SIZE(i) * sz);
         end
         % set
@@ -472,7 +498,7 @@ for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
     if IDS_SHOW(i)
         % plotting
         if ~ishandle(pl.h_ids.h(i))
-            pl.h_ids.h(i) = text(h_axes, X{i}, Y{i}, Z{i}, ID{i});
+            pl.h_ids.h(i) = text(pl.h_axes, X{i}, Y{i}, Z{i}, ID{i});
         end
         % set
         int_ids = PlotBrainAtlas.PLOT_ID_FONT_INTREPETER(pl.get('IDS_FONT_INTERPRETER'));
@@ -494,7 +520,7 @@ for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
     if LABS_SHOW(i)
         % plotting
         if ~ishandle(pl.h_labs.h(i))
-            pl.h_labs.h(i) = text(h_axes, X{i}, Y{i}, Z{i}, LABS{i});
+            pl.h_labs.h(i) = text(pl.h_axes, X{i}, Y{i}, Z{i}, LABS{i});
         end
         % set
         int_labs = PlotBrainAtlas.PLOT_ID_FONT_INTREPETER(pl.get('LABS_FONT_INTERPRETER'));
@@ -1467,19 +1493,9 @@ function f_out = ids_settings(pl)
             pl.draw();
         end
         function cb_interpreter(~,~)  %  (src,event)
-            string = get(ui_popup_interpreter, 'Value');
+            value = get(ui_popup_interpreter, 'Value');
 
-            ids_to_show = get_br_list();
-            all_ints = pl.get('IDS_FONT_INTERPRETER');
-            if length(all_ints) == 1
-                all_ints = repmat(all_ints, pl.get('ATLAS').get('BR_DICT').length, 1);
-            end
-            for i = 1:length(ids_to_show)
-                s_m = ids_to_show(i);
-                all_ints(s_m) = string;
-            end
-
-            pl.set('IDS_FONT_INTERPRETER', all_ints)
+            pl.set('LABS_FONT_INTERPRETER', value)
             pl.draw();
         end
         function bri = get_br_list()
@@ -1722,18 +1738,9 @@ function f_out = labs_settings(pl)
             pl.draw();
         end
         function cb_interpreter(~,~)  %  (src,event)
-            string = get(ui_popup_interpreter, 'String');
-            ids_to_show = get_br_list();
-            all_ints = pl.get('LABS_FONT_INTERPRETER');
-            if length(all_ints) == 1
-                all_ints = repmat(all_ints, pl.get('ATLAS').get('BR_DICT').length, 1);
-            end
-            for i = 1:length(ids_to_show)
-                s_m = ids_to_show(i);
-                all_ints(s_m, :) = string;
-            end
-
-            pl.set('LABS_FONT_INTERPRETER', all_ints)
+            value = get(ui_popup_interpreter, 'Value');
+            
+            pl.set('LABS_FONT_INTERPRETER', value)
             pl.draw();
         end
         function bri = get_br_list()
