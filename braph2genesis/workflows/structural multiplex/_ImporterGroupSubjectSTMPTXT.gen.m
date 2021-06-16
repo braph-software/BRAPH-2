@@ -41,6 +41,8 @@ gr = Group( ...
     'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST_MP') ...
     );
 
+gr.lock('SUB_CLASS');
+
 directory = im.get('DIRECTORY');
 
 if isfolder(directory)

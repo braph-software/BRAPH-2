@@ -152,7 +152,12 @@ function h_panel = draw(pl, varargin)
                 el.lock('SUB_CLASS');
                 disableSubClassObj()
             end
-            sub = eval([subject_class '('  '''ID''' ', ' '''' num2str(sub_id) '''' ',' '''Label''' ',' '''''' ',' '''Notes''' ',' '''''' ')']);
+            if el.get('SUB_DICT').length() > 0
+                ba = el.get('SUB_DICT').getItem(1).get('BA');
+            else
+                ba = BrainAtlas();
+            end
+            sub = eval([subject_class '('  '''ID''' ', ' '''' num2str(sub_id) '''' ',' '''Label''' ',' '''''' ',' '''Notes''' ',' '''''' ',' '''BA''' ', ba)']);
             subjects_idict.add(sub);
             pl.update();
         end

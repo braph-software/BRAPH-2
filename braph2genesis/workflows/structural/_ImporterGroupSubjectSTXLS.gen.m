@@ -41,6 +41,8 @@ gr = Group( ...
     'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST') ...
     );
 
+gr.lock('SUB_CLASS');
+
 % analyzes file
 file = im.memorize('FILE');
 

@@ -54,6 +54,8 @@ function h_panel = draw(pl, varargin)
         else
             GUI(el.get(prop))
         end
+        pl.set('EL', el);
+        pl.update()
     end
 
     % output
