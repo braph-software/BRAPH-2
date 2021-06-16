@@ -80,7 +80,6 @@ function h_panel = draw(pl, varargin)
         end
     end
 
-    ui_button_table_add = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
     ui_button_table_remove = uicontrol(pl.pp,'Style', 'pushbutton', 'Units', 'normalized');
     ui_button_table_moveup = uicontrol(pl.pp,'Style', 'pushbutton', 'Units', 'normalized');
     ui_button_table_movedown = uicontrol(pl.pp,'Style', 'pushbutton', 'Units', 'normalized');
@@ -88,15 +87,9 @@ function h_panel = draw(pl, varargin)
     ui_button_table_move2bottom = uicontrol(pl.pp,'Style', 'pushbutton', 'Units', 'normalized');
     index = [];
     init_buttons()
-        function init_buttons()            
-            set(ui_button_table_add, ...
-                'Position', [.02 .1 .22 .07], ...
-                'String', 'Add', ...
-                'TooltipString', 'Add brain region at the end of table.', ...
-                'Callback', {@cb_table_add})
-            
+        function init_buttons()                     
             set(ui_button_table_remove, ...
-                'Position', [.02 .02 .22 .07], ...
+                'Position', [.02 .1 .22 .07], ...
                 'String', 'Remove', ...
                 'TooltipString', 'Remove selected brain regions.', ...
                 'Callback', {@cb_table_remove})
@@ -139,28 +132,6 @@ function h_panel = draw(pl, varargin)
                 end
             end
         end        
-        function cb_table_add(~, ~)  % (src, event)
-            update_el()
-            checkIdict();
-            sub_id = 1;
-            while subjects_idict.containsKey(num2str(sub_id))
-                sub_id = sub_id + 1;
-            end
-            % lock subject_class
-            subject_class = el.get('SUB_CLASS');
-            if ~el.isLocked('SUB_CLASS')
-                el.lock('SUB_CLASS');
-                disableSubClassObj()
-            end
-            if el.get('SUB_DICT').length() > 0
-                ba = el.get('SUB_DICT').getItem(1).get('BA');
-            else
-                ba = BrainAtlas();
-            end
-            sub = eval([subject_class '('  '''ID''' ', ' '''' num2str(sub_id) '''' ',' '''Label''' ',' '''''' ',' '''Notes''' ',' '''''' ',' '''BA''' ', ba)']);
-            subjects_idict.add(sub);
-            pl.update();
-        end
         function cb_table_remove(~, ~)  % (src, event)
             update_el()
             checkIdict();
