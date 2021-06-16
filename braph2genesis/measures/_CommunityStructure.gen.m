@@ -221,7 +221,7 @@ switch lower(community_structure_algorithm)
     otherwise  % {'Louvain'}  % Louvain algorithm
         
         M0 = m.get('M0');  % initial community affiliation vector
-        OM = m.get('OM');  % custom objective matrix
+        OM = m.get('Louvain_OM');  % custom objective matrix
         type_OM =  m.get('OM_TYPE');  % objective-function type
         W = double(A);  % convert to double format
         s = sum(sum(W));  % get sum of edges
@@ -238,7 +238,7 @@ switch lower(community_structure_algorithm)
         M = Mb;
         
         if isempty(OM)
-            % calculaye OM according to type_B
+            % calculate OM according to type_B
             
             switch lower(type_OM)
                 case {'potts'}
