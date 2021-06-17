@@ -15,6 +15,7 @@ f = init();
             'Units', 'normalized', ...
             'Position', f_position, ...
             'Units', 'character', ...
+            'MenuBar', 'none', ...
             'DockControls', 'off', ...
             'Color', BKGCOLOR ...
             );
@@ -35,19 +36,65 @@ f = init();
                 return
         end
     end
-% sections
-s1 = section1();
-    function s1 = section1()
-        if nargout > 0 
-            s1 = panel_ba;
+% main
+% search
+search_box = uicontrol( ...
+    'Parent', f, ...
+    'Style', 'edit', ...
+    'Units', 'normalized', ...
+    'Position', [.02 .7 .3 .07], ...
+    'Callback', {@cb_search_box});
+
+    function cb_search_box(~, ~)
+        update_listbox()
+    end
+
+% list
+workflow_list = uicontrol( ...
+    'Parent', f, ...
+    'Style', 'listbox', ...
+    'Units', 'normalized', ...
+    'Position', [.02 .1 .3 .5], ...
+    'String', '', ...
+    'Callback', {@cb_wf_list_box});
+
+    function cb_wf_list_box(~, ~)
+        % select the wf and plot the next window
+    end
+    function update_listbox()
+        workflows_path = [fileparts(which('braph2.m')) filesep 'workflows'];
+        files = subdir(fullfile(workflows_path, '*.m'));
+        files_array = struct2cell(files);
+        files_names = files_array(1, :); 
+        files_paths = files_array(2, :);
+        
+        workflow_indices = cell2mat(cellfun(@(x) contains(x, 'workflow_'), files_names, 'UniformOutput', false));
+        
+        workflow_names = files_names(workflow_indices);
+        paths = files_paths(workflow_indices);
+        
+        if ~isequal(get(search_box, 'String'), '')
+            filter = get(search_box, 'String');
+            workflow_filter_index = cell2mat(cellfun(@(x) contains(x, filter), workflow_names, 'UniformOutput', false));
+            workflow_names = workflow_names(workflow_filter_index);
+            paths = paths(workflow_filter_index);
         end
+        
+        workflow_names = cellfun(@(x, y) erase(x, [y filesep()]), workflow_names, paths, 'UniformOutput', false);
+        set(workflow_list, 'String', workflow_names)        
     end
-s2 = section2();
-    function s2 = section2()
-    end
-s3 = section2();
-    function s3 = section3()
-    end
+
+% logo
+panel_logo = uipanel( ...
+    'Parent', f, ...
+    'Units', 'normalized', ...
+    'Position', [.52 .1 .48 .8], ...
+    'BackgroundColor', [0 0 0],...
+    'BorderType', 'none');
+logo = imread([fileparts(which('braph2')) filesep 'src' filesep 'util' filesep 'braph2icon.png']);
+pax = axes(panel_logo);
+image(pax, logo);
+axis off
 
 % menu
 menu()
@@ -56,8 +103,23 @@ menu()
 % toolbar
 toolbar()
     function toolbar()
+        set(f, 'Toolbar', 'figure')
+
+        ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
+
+        delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))        
+        delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
+        delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
+        delete(findall(ui_toolbar, 'Tag', 'Standard.OpenInspector'))
+        delete(findall(ui_toolbar, 'Tag', 'Exploration.Brushing'))
+        delete(findall(ui_toolbar, 'Tag', 'DataManager.Linking'))
+        delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertColorbar'))
+        delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertLegend'))
+        delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
+        delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
     end
 % auxiliary
+update_listbox()
 set(f, 'Visible', 'on')
 
 end
