@@ -49,17 +49,20 @@ G (result, item) is the graph obtained from this analysis.
 MultiplexBUD()
 %%%% ¡calculate!
 gr = a.get('GR');
-data_list = cellfun(@(x) x.get('ST_MP'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
-node_dict = gr.get('SUB_DICT').getItem(1).get('BA').get('BR_DICT');
-node_labels_tmp = cellfun(@(x) x.get('ID') , node_dict.getItems(), 'UniformOutput', false);
 node_labels = '';
+data_list = cellfun(@(x) x.get('ST_MP'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
 
-% i have to transform the labels to a string because we dont have a format
-% for a cell of strings. 
-for i = 1:length(node_labels_tmp)
-    node_labels = [node_labels ',' node_labels_tmp{i}];
+if ~isempty(gr.get('ID')) && ~isa(gr, 'NoValue')
+    node_dict = gr.get('SUB_DICT').getItem(1).get('BA').get('BR_DICT');
+    node_labels_tmp = cellfun(@(x) x.get('ID') , node_dict.getItems(), 'UniformOutput', false);
+    node_labels = '';
+    % i have to transform the labels to a string because we dont have a format
+    % for a cell of strings.
+    for i = 1:length(node_labels_tmp)
+        node_labels = [node_labels ',' node_labels_tmp{i}];
+    end
+    node_labels = node_labels(2:end);
 end
-node_labels = node_labels(2:end);
 
 if a.get('USE_COVARIATES')
     age_list = cellfun(@(x) x.get('age'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
