@@ -1,4 +1,4 @@
-function var = braph2_workflow_gui(file, section)
+function var = get_braph2_workflow(file, section)
 
 if ~isfile(file)
     return;
