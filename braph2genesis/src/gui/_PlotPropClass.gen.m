@@ -49,6 +49,7 @@ function h_panel = draw(pl, varargin)
 
     % callback
     function cb_popupmenu_value(src, ~)
+        el = pl.get('EL');
         options = subclasses(el.getPropSettings(prop), [], [], true);
         el.set(prop, options{get(src, 'Value')})
    

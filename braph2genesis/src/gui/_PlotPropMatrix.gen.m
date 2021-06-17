@@ -45,6 +45,7 @@ function h_panel = draw(pl, varargin)
 
     % callback
     function cb_matrix_value(src, event)
+        el = pl.get('EL');
         value = el.get(prop);
         value(event.Indices(1), event.Indices(2)) = event.NewData;
         el.set(prop, value)

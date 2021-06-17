@@ -48,6 +48,7 @@ function h_panel = draw(pl, varargin)
 
     % callback
     function cb_checkbox_value(src, ~)
+        el = pl.get('EL');
         el.set(prop, logical(get(src, 'Value')))
    
         pl.update()

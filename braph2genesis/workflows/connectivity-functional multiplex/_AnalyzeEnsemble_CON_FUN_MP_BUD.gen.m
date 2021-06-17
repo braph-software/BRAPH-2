@@ -56,8 +56,20 @@ G_DICT (result, idict) is the multiplex (MultiplexBUD) ensemble obtained from th
 IndexedDictionary('IT_CLASS', 'MultiplexBUD')
 %%%% ¡calculate!
 g_dict = IndexedDictionary('IT_CLASS', 'MultiplexBUD');
-
+node_labels = '';
 gr = a.get('GR');
+
+if ~isempty(gr) && ~isa(gr, 'NoValue')   
+    node_dict = gr.get('SUB_DICT').getItem(1).get('BA').get('BR_DICT');
+    node_labels_tmp = cellfun(@(x) x.get('ID') , node_dict.getItems(), 'UniformOutput', false);
+    % i have to transform the labels to a string because we dont have a format
+    % for a cell of strings.
+    for i = 1:length(node_labels_tmp)
+        node_labels = [node_labels ',' node_labels_tmp{i}];
+    end
+    node_labels = node_labels(2:end);
+end
+
 T = a.get('REPETITION');
 fmin = a.get('FREQUENCYRULEMIN');
 fmax = a.get('FREQUENCYRULEMAX');
@@ -87,12 +99,15 @@ for i = 1:1:gr.get('SUB_DICT').length()
     g = MultiplexBUD( ...
         'ID', ['g ' sub.get('ID')], ...
         'B', A, ...
-        'DENSITIES', densities ...
+        'DENSITIES', densities, ...
+        'NODELABELS', node_labels ...
         );
     g_dict.add(g)
 end
 
 value = g_dict;
+%%%% ¡gui!
+pl = PPAnalyzeEnsembleGraph('EL', a, 'PROP', AnalyzeEnsemble_CON_FUN_MP_BUD.G_DICT, varargin{:});
 
 %% ¡tests!
 

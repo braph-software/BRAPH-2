@@ -48,6 +48,7 @@ function h_panel = draw(pl, varargin)
 
     % callback
     function cb_edit_value(src, ~)
+        el = pl.get('EL');
         el.set(prop, str2double(get(src, 'String')))
    
         pl.update()

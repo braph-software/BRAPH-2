@@ -129,6 +129,7 @@ function h_panel = draw(pl, varargin)
             i = event.Indices(1);
             col = event.Indices(2);
             newdata = event.NewData;
+            update_el()
             switch col
                 case 1
                     if newdata == 1
@@ -162,20 +163,24 @@ function h_panel = draw(pl, varargin)
             pl.update()            
         end
         function cb_table_selectall(~, ~)  % (src, event)
-            checkIdict();
+            update_el()
+            checkIdict()
             pl.selected = (1:1:ba_idict.length())';
             pl.update()
             update_brain_surface();
         end
         function cb_table_clearselection(~, ~)  % (src, event)
+            update_el()
             checkIdict();
             pl.selected = [];
             pl.update()
             update_brain_surface();
         end
         function cb_table_add(~, ~)  % (src, event)
+            update_el()
             checkIdict();
             br_id = 1;
+            update_el()
             while ba_idict.containsKey(num2str(br_id))
                 br_id = br_id + 1;
             end
@@ -190,30 +195,35 @@ function h_panel = draw(pl, varargin)
             update_brain_surface();
         end
         function cb_table_remove(~, ~)  % (src, event)
-            checkIdict();
+            update_el()
+            checkIdict()
             pl.selected = ba_idict.remove_all(pl.selected);
             pl.update()
             update_brain_surface();
         end
         function cb_table_moveup(~, ~)  % (src, event)
+            update_el()
             checkIdict();
             pl.selected = ba_idict.move_up(pl.selected);
             pl.update()
             update_brain_surface();
         end
         function cb_table_movedown(~, ~)  % (src, event)
+            update_el()
             checkIdict();
             pl.selected = ba_idict.move_down(pl.selected);
             pl.update()
             update_brain_surface();
         end
         function cb_table_move2top(~, ~)  % (src, event)
+            update_el()
             checkIdict();
             pl.selected = ba_idict.move_to_top(pl.selected);
             pl.update()
             update_brain_surface();
         end
         function cb_table_move2bottom(~, ~)  % (src, event)
+            update_el()
             checkIdict();
             pl.selected = ba_idict.move_to_bottom(pl.selected);
             pl.update()
@@ -221,11 +231,14 @@ function h_panel = draw(pl, varargin)
         end
         function update_brain_surface()  
             fig_h = get_handle_objs('figure', 'Brain Surface - ');
-            fig_h_children = get(fig_h, 'Children');
-            update_btn = fig_h_children(2);
-            feval(get(update_btn, 'Callback'), update_btn, []);
+            fig_h_children = get(fig_h, 'Children'); 
+            if ~isempty(fig_h_children)
+                update_btn = fig_h_children(2);
+                feval(get(update_btn, 'Callback'), update_btn, []);
+            end
         end
-        function checkIdict()           
+        function checkIdict()     
+            update_el()
             if isa(ba_idict, 'NoValue')
                 ba_idict = IndexedDictionary( ...
                     'id', 'idict', ...
@@ -234,6 +247,10 @@ function h_panel = draw(pl, varargin)
                     );
                 el.set('BR_DICT', ba_idict);
             end
+        end
+        function update_el()
+            el = pl.get('EL');
+            ba_idict = el.getr(prop);
         end
 
     % output
