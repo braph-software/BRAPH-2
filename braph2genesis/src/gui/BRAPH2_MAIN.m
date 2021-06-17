@@ -38,14 +38,15 @@ f = init();
     end
 % main
 % search
-search_box = uicontrol( ...
-    'Parent', f, ...
-    'Style', 'edit', ...
-    'Units', 'normalized', ...
-    'Position', [.02 .7 .3 .07], ...
-    'Callback', {@cb_search_box});
+warnings('off')
+hContainer = handle(uipanel('BorderType','none', 'Parent', f)); 
+jPanelObj = com.mathworks.widgets.SearchTextField('Enter search filter:');
+jAssetComponent = jPanelObj.getComponent;
+[jhPanel,hContainer] = javacomponent(jAssetComponent, [10,500,200,25], f);
+hjSearchField = handle(jAssetComponent.getComponent(0), 'CallbackProperties');
+set(hjSearchField, 'KeyPressedCallback', {@updateSearch, jPanelObj});
 
-    function cb_search_box(~, ~)
+    function updateSearch(~, ~, ~)  
         update_listbox()
     end
 
@@ -73,15 +74,15 @@ workflow_list = uicontrol( ...
         workflow_names = files_names(workflow_indices);
         paths = files_paths(workflow_indices);
         
-        if ~isequal(get(search_box, 'String'), '')
-            filter = get(search_box, 'String');
+        workflow_names = cellfun(@(x, y) erase(x, [y filesep()]), workflow_names, paths, 'UniformOutput', false);
+        
+        if ~isempty(jPanelObj.getSearchText.toCharArray')
+            filter = jPanelObj.getSearchText.toCharArray';
             workflow_filter_index = cell2mat(cellfun(@(x) contains(x, filter), workflow_names, 'UniformOutput', false));
             workflow_names = workflow_names(workflow_filter_index);
-            paths = paths(workflow_filter_index);
         end
         
-        workflow_names = cellfun(@(x, y) erase(x, [y filesep()]), workflow_names, paths, 'UniformOutput', false);
-        set(workflow_list, 'String', workflow_names)        
+        set(workflow_list, 'String', workflow_names)
     end
 
 % logo
@@ -121,5 +122,5 @@ toolbar()
 % auxiliary
 update_listbox()
 set(f, 'Visible', 'on')
-
+warnings('on')
 end
