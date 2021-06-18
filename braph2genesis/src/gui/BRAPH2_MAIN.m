@@ -1,6 +1,7 @@
 function BRAPH2_MAIN(varargin)
 % constants
 f_position = get_from_varargin([.02 .1 .6 .80], 'Position', varargin);
+name = BRAPH2.STR;
 BKGCOLOR = get_from_varargin([.98 .95 .95], 'BackgroundColor', varargin);
 close_request = 1; % true
 
@@ -10,7 +11,7 @@ f = init();
         f = figure(...
             'Visible', 'off', ...
             'NumberTitle', 'off', ...
-            'Name', [BRAPH2.STR], ...
+            'Name', name, ...
             'Units', 'normalized', ...
             'Position', f_position, ...
             'Units', 'character', ...
@@ -37,7 +38,7 @@ f = init();
     end
 % main
 % search
-warnings('off')
+warning('off', 'all')
 hContainer = handle(uipanel('BorderType','none', 'Parent', f)); 
 jPanelObj = com.mathworks.widgets.SearchTextField('Enter search filter:');
 jAssetComponent = jPanelObj.getComponent;
@@ -83,6 +84,75 @@ workflow_list = uicontrol( ...
         
         set(workflow_list, 'String', workflow_names)
     end
+    function varargout = subdir(varargin)
+        % Function based on Kelly Kearney subdir function.
+        [folder, name, ext] = fileparts(varargin{1});
+        if isempty(folder)
+            folder = pwd;
+        end
+        if isempty(ext)
+            if isdir(fullfile(folder, name))
+                folder = fullfile(folder, name);
+                filter = '*';
+            else
+                filter = [name ext];
+            end
+        else
+            filter = [name ext];
+        end
+        if ~isdir(folder)
+            error('Folder (%s) not found', folder);
+        end
+        pathstr = genpath_local(folder);
+        pathfolders = regexp(pathstr, pathsep, 'split');  % Same as strsplit without the error checking
+        pathfolders = pathfolders(~cellfun('isempty', pathfolders));  % Remove any empty cells
+        Files = [];
+        pathandfilt = fullfile(pathfolders, filter);
+        for ifolder = 1:length(pathandfilt)
+            NewFiles = dir(pathandfilt{ifolder});
+            if ~isempty(NewFiles)
+                fullnames = cellfun(@(a) fullfile(pathfolders{ifolder}, a), {NewFiles.name}, 'UniformOutput', false);
+                [NewFiles.name] = deal(fullnames{:});
+                Files = [Files; NewFiles];
+            end
+        end
+        if ~isempty(Files)
+            [~, ~, tail] = cellfun(@fileparts, {Files(:).name}, 'UniformOutput', false);
+            dottest = cellfun(@(x) isempty(regexp(x, '\.+(\w+$)', 'once')), tail);
+            Files(dottest & [Files(:).isdir]) = [];
+        end
+        if nargout == 0
+            if ~isempty(Files)
+                fprintf('\n');
+                fprintf('%s\n', Files.name);
+                fprintf('\n');
+            end
+        elseif nargout == 1
+            varargout{1} = Files;
+        end
+        function [p] = genpath_local(d)
+            % Modified genpath that doesn't ignore:
+            %     - Folders named 'private'
+            %     - MATLAB class folders (folder name starts with '@')
+            %     - MATLAB package folders (folder name starts with '+')
+            files = dir(d);
+            if isempty(files)
+                return
+            end
+            p = '';  % Initialize output
+            % Add d to the path even if it is empty.
+            p = [p d pathsep];
+            % Set logical vector for subdirectory entries in d
+            isdir = logical(cat(1,files.isdir));
+            dirs = files(isdir);  % Select only directory entries from the current listing
+            for i=1:length(dirs)
+                dirname = dirs(i).name;
+                if    ~strcmp( dirname,'.') && ~strcmp( dirname,'..')
+                    p = [p genpath(fullfile(d,dirname))];  % Recursive calling of this function.
+                end
+            end
+        end
+    end
 
 % logo
 panel_logo = uipanel( ...
@@ -121,5 +191,5 @@ toolbar()
 % auxiliary
 update_listbox()
 set(f, 'Visible', 'on')
-warnings('on')
+warning('on', 'all')
 end
