@@ -36,6 +36,7 @@ f = init();
                 return
         end
     end
+
 % main
 % search
 warning('off', 'all')
@@ -62,6 +63,12 @@ workflow_list = uicontrol( ...
     'String', '', ...
     'Callback', {@cb_wf_list_box});
 
+jScrollPane = findjobj(workflow_list);
+jListbox = jScrollPane.getViewport.getComponent(0);
+jListbox = handle(jListbox, 'CallbackProperties');
+set(jListbox, 'MouseMovedCallback', {@mouseMovedCallback, workflow_list});
+descriptions = [];
+
     function cb_wf_list_box(~, ~)
         % select the wf and plot the next window
     end
@@ -84,6 +91,15 @@ workflow_list = uicontrol( ...
             filter = jPanelObj.getSearchText.toCharArray';
             workflow_filter_index = cell2mat(cellfun(@(x) contains(x, filter), workflow_names, 'UniformOutput', false));
             workflow_names = workflow_names(workflow_filter_index);
+        end
+        
+        % open and find name and description
+        
+        for i = 1: length(workflow_names)
+            file_path = paths{i};
+            txt = fileread([file_path filesep workflow_names{i} '.m']);
+            workflow_names{i} = getToken(txt, 'Name');
+            descriptions{i} = getToken(txt, 'Description', 'Short');
         end
         
         set(workflow_list, 'String', workflow_names)
@@ -157,12 +173,21 @@ workflow_list = uicontrol( ...
             end
         end
     end
+    function mouseMovedCallback(jListbox, jEventData, hListbox)
+        % Get the currently-hovered list-item
+        mousePos = java.awt.Point(jEventData.getX, jEventData.getY);
+        hoverIndex = jListbox.locationToIndex(mousePos) + 1;
+        hoverValue = descriptions{hoverIndex};
+        % Modify the tooltip based on the hovered item
+        msgStr = sprintf('<html><b>%s</b></html>', hoverValue);
+        set(hListbox, 'Tooltip',msgStr);
+    end  
 
 % logo
 panel_logo = uipanel( ...
     'Parent', f, ...
     'Units', 'normalized', ...
-    'Position', [.02 .75 .6 .25], ...
+    'Position', [.2 .75 .6 .25], ...
     'BackgroundColor', BKGCOLOR,...
     'BorderType', 'none');
 logo = imread([fileparts(which('braph2')) filesep 'src' filesep 'util' filesep 'head_main.png']);
@@ -192,12 +217,19 @@ a = get(h_panel, 'Children');
 pl_axes = a;
 axis off
 pl.set('axis', false);
+count = 0;
+direction = 1;
     function rotate()        
         try        
             while get(ui_checkbox_bottom_animation, 'Value')
-                camorbit(pl_axes, 2, 2, 'camera')                
+                if count > 100 % every 10s change direction
+                    direction  = direction * -1;
+                    count = 0;
+                end                
+                camorbit(pl_axes, 3 * direction, 3 * direction, 'camera')                
                 drawnow
                 pause(0.1)
+                count = count + 1;
             end
         catch
             % nothing
@@ -207,24 +239,48 @@ pl.set('axis', false);
 % menu
 menu()
     function menu()
-        ui_menu_about = uimenu(f, 'Label', 'About');
-        uimenu(ui_menu_about, ...
-            'Label', 'License ...', ...
-            'Callback', {@cb_license})
-        uimenu(ui_menu_about, ...
-            'Label', 'About ...', ...
-            'Callback', {@cb_about})
-        function cb_license(~, ~)
-            BRAPH2_LICENSE()
-        end
-        function cb_about(~, ~)
-            BRAPH2_ABOUT();
-        end
+        % nothing        
     end
 % toolbar
 toolbar()
     function toolbar()
         set(f, 'Toolbar', 'none')
+    end
+% linkbar
+license_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
+about_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
+website_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
+linkbar()
+    function linkbar()
+        set(website_btn, ...
+            'Position', [.415 0 .05 .07], ...
+            'Tooltip', 'Click to visit BRAPH 2.0 website', ...
+            'Cdata', imread('webicon.png'), ...
+            'BackgroundColor', [1 1 1], ...
+            'Callback', {@cb_website_btn});
+        set(license_btn, ...
+            'Position', [.475 0 .05 .07], ...
+            'Cdata', imread('licenseicon.png'), ...
+            'BackgroundColor', [1 1 1], ...
+            'Tooltip', 'Click to open BRAPH 2.0 License', ...
+            'Callback', {@cb_license});
+        set(about_btn, ...
+            'Position', [.535 0 .05 .07], ...
+            'Cdata', imread('abouticon.png'), ...
+            'BackgroundColor', [1 1 1], ...
+            'Tooltip', 'Click to open BRAPH 2.0 information', ...
+            'Callback', {@cb_about});
+        
+    end
+    function cb_website_btn(~, ~)
+        url = 'http://braph.org/';
+        web(url);
+    end
+    function cb_license(~, ~)
+        BRAPH2_LICENSE()
+    end
+    function cb_about(~, ~)
+        BRAPH2_ABOUT();
     end
 % auxiliary
 update_listbox()
