@@ -47,20 +47,37 @@ function h_panel = draw(pl, varargin)
             surf = ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF');
         end
         plba =  PlotBrainAtlas('ATLAS', el, 'Surf', surf);
+        surfs = get_surfs();
+        
+        if plba.isLocked('SURF')
+            activation = 'off';
+        else
+            activation = 'on';
+        end
+        
+        surf_selector_popup = uicontrol( ...
+            'Parent', pl.pp, ...
+            'Style', 'popupmenu', ...            
+            'Units', 'normalized', ...
+            'Position', [.02 .1 .46 .5], ...
+            'String', surfs, ...
+            'Enable', activation, ...
+            'Callback', {@cb_surf_selector_popupmenu} ...
+            );
 
         pl.plot_brain_atlas_btn = uicontrol(...
             'Style', 'pushbutton', ...
             'Parent', pl.pp, ...
             'Units', 'normalized', ...
             'String', 'Plot Brain Atlas', ...
-            'Position', [.05 .1 .9 .65], ...
+            'Position', [.52 .1 .46 .65], ...
             'Callback', {@cb_pushbutton_brain_atlas} ...
             );
         
     end
     
         function cb_pushbutton_brain_atlas(~, ~)
-
+            update_plba()
             [parent_position_pixels, normalized] = get_figure_position();
             x = parent_position_pixels(1);
             y = parent_position_pixels(2);
@@ -77,39 +94,42 @@ function h_panel = draw(pl, varargin)
                 h2 = normalized(4)/2;
             else % golden ratio 
                 % golden ratio is defined as a+b/a = a/b = phi. phi = 1.61
-                x2 = normalized(1)+ normalized(3);
+                x2 = normalized(1) + normalized(3);
                 h2 = normalized(4) / 1.61;
-                y2 = normalized(2) + h2 - .195;
+                y2 = normalized(2) + normalized(4) - h2;
                 w2 = normalized(3) * 1.61;               
             end
             
             second_figure =  figure( ...
                 'Visible', 'on', ...
                 'NumberTitle', 'off', ...
-                'Name', ['Brain Surface - ' BRAPH2.STR], ...
+                'Name', el.get('ID'), ...
                 'Units', 'normalized', ...
                 'Position', [x2 y2 w2 h2], ...
-                'MenuBar', 'none', ...
                 'Toolbar', 'figure', ...
                 'Color', 'w' ...
                 );
             
+            figure_menu = uimenu(second_figure, 'Label', 'Figure');
+            uimenu(figure_menu, ...
+                'Label', 'Save Figure ...', ...
+                'Accelerator', 'F', ...
+                'Callback', {@cb_save_figure})
+            
+            ui_menu_about = uimenu(second_figure, 'Label', 'About BRAPH 2');
+            uimenu(ui_menu_about, ...
+                'Label', 'License ...', ...
+                'Callback', {@cb_license})
+            uimenu(ui_menu_about, ...
+                'Label', 'About ...', ...
+                'Callback', {@cb_about})
+
             addlistener(second_figure, 'ObjectBeingDestroyed', @cb_close_atlas_srf);            
             set_icon(second_figure)
             
             ui_toolbar = findall(second_figure, 'Tag', 'FigureToolBar');            
             delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
             delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.OpenInspector'))
-            delete(findall(ui_toolbar, 'Tag', 'Exploration.Brushing'))
-            delete(findall(ui_toolbar, 'Tag', 'DataManager.Linking'))
-            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertColorbar'))
-            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertLegend'))
-            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
-            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
 
             update_tbn = uicontrol('Style', 'pushbutton', ...
                 'Parent', second_figure, ...
@@ -124,8 +144,25 @@ function h_panel = draw(pl, varargin)
             plba.set('SETPOS', [x2 normalized(2) w2 h2*1.61-h2-.065]); % height has to be correcter for the toolbar and menu
             plba.settings();
             set(pl.plot_brain_atlas_btn, 'Enable', 'off');
+            
+            function cb_save_figure(~, ~)
+                % select file
+                [file, path, filterindex] = uiputfile('.jpg', ['Select the ' second_figure.Name ' file.']);
+                % save file
+                if filterindex
+                    filename = fullfile(path, file);
+                    saveas(gcf, filename, 'jpg');
+                end
+            end
+            function cb_license(~, ~)
+                BRAPH2_LICENSE()
+            end
+            function cb_about(~, ~)
+                BRAPH2_ABOUT()
+            end
         end
         function cb_pushbutton_update(~, ~)
+            update_plba()
             plba.draw('Parent', second_figure);
         end
         function [pixels, normalized] = get_figure_position()
@@ -141,6 +178,20 @@ function h_panel = draw(pl, varargin)
         end        
         function cb_close_atlas_srf(~, ~)
             set(pl.plot_brain_atlas_btn, 'Enable', 'on');
+        end
+        function update_plba()
+            el = pl.get('EL');
+            plba.set('ATLAS', el);
+        end
+        function surfs = get_surfs()
+            surfs_path = [fileparts(which('braph2.m')) filesep() 'brainsurfs'];
+            files = dir(fullfile(surfs_path, '*.nv'));
+            files_array = struct2cell(files);
+            surfs = cellfun(@(x) erase(x, '.nv'), files_array(1, :), 'UniformOutput', false);
+        end
+        function cb_surf_selector_popupmenu(~, ~)
+            selected_surface = surfs{get(surf_selector_popup, 'Value')};
+            el.set('SURF', ImporterBrainSurfaceNV('FILE', [selected_surface '.nv']).get('SURF'));
         end
 
     % output

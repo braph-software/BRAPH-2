@@ -69,6 +69,7 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
 
     measure_class = cp.get('MEASURE');
     if isempty(cp.get('MEASURE'))
+        diff = {};
         p1 = {};
         p2 = {};
         ci_lower = {};

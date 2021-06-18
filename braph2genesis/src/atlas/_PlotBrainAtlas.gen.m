@@ -63,6 +63,7 @@ f_ids_settings
 f_labs_settings
 
 pp
+h_axes
 %% ¡props!
 
 %%% ¡prop!
@@ -189,7 +190,7 @@ else
     msg = ['IDS_SIZE must have length 1 or (' num2str(pl.get('ATLAS').get('BR_DICT').length) ') length while its length ' num2str(length(value)) '.'];
 end
 %%%% ¡default!
-1
+13
 
 %%% ¡prop!
 IDS_FONT_COLOR (metadata, matrix) is the ids font color.
@@ -231,7 +232,7 @@ else
     msg = ['LABS_SIZE must have length 1 or (' num2str(pl.get('ATLAS').get('BR_DICT').length) ') length while its length ' num2str(length(value)) '.'];
 end
 %%%% ¡default!
-1
+13
 
 %%% ¡prop!
 LABS_FONT_COLOR (metadata, matrix) is the labs font color.
@@ -274,9 +275,8 @@ function h_panel = draw(pl, varargin)
 
 pl.pp = draw@PlotBrainSurface(pl, varargin{:});
 
-h_axes = [];
-if isempty(h_axes) || ~isgraphics(h_axes, 'axes')
-    h_axes =  get(pl.pp, 'Children');
+if isempty(pl.h_axes) || ~isgraphics(pl.h_axes, 'axes')
+    pl.h_axes =  get(pl.pp, 'Children');
 end
 
 % close function
@@ -331,91 +331,117 @@ LABS = cellfun(@(x) x.get('LABEL'), pl.get('ATLAS').get('BR_DICT').get('IT_LIST'
 % get values & complete vector size
 % symbols
 SYMS_SHOW = pl.get('SYMS');
-if SYMS_SHOW
+if any(SYMS_SHOW) && length(SYMS_SHOW) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     SYMS_SHOW = repmat(SYMS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 SYMS_SIZE = pl.get('SYMS_SIZE');
-if length(SYMS_SIZE) == 1
+if any(SYMS_SIZE) && length(SYMS_SIZE) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     SYMS_SIZE = repmat(SYMS_SIZE, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 SYMS_FACE_COLOR = pl.get('SYMS_FACE_COLOR');
-if  size(SYMS_FACE_COLOR, 1) == 1
+if any(SYMS_FACE_COLOR, 'all') && length(SYMS_FACE_COLOR) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     SYMS_FACE_COLOR = repmat(SYMS_FACE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 SYMS_EDGE_COLOR = pl.get('SYMS_EDGE_COLOR');
-if  size(SYMS_EDGE_COLOR, 1) == 1
+if any(SYMS_EDGE_COLOR, 'all') && length(SYMS_EDGE_COLOR) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     SYMS_EDGE_COLOR = repmat(SYMS_EDGE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 % spheres
 SPHS_SHOW = pl.get('SPHS');
-if SPHS_SHOW
-    SPHS_SHOW = repmat(SPHS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
+if any(SPHS_SHOW) && length(SPHS_SHOW) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
 else
-    SPHS_SHOW = zeros(pl.get('ATLAS').get('BR_DICT').length, 1);
+    SPHS_SHOW = repmat(SPHS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 SPHS_SIZE = pl.get('SPHS_SIZE');
-if length(SPHS_SIZE) == 1
+if any(SPHS_SIZE) && length(SPHS_SIZE) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     SPHS_SIZE = repmat(SPHS_SIZE, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 SPHS_FACE_COLOR = pl.get('SPHS_FACE_COLOR');
-if  size(SPHS_FACE_COLOR, 1) == 1
+if any(SPHS_FACE_COLOR, 'all') && length(SPHS_FACE_COLOR) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     SPHS_FACE_COLOR = repmat(SPHS_FACE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 SPHS_EDGE_COLOR = pl.get('SPHS_FACE_COLOR');
-if  size(SPHS_EDGE_COLOR, 1) == 1
+if any(SPHS_EDGE_COLOR, 'all') && length(SPHS_EDGE_COLOR) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     SPHS_EDGE_COLOR = repmat(SPHS_EDGE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 SPHS_EDGE_ALPHA = pl.get('SPHS_EDGE_ALPHA');
-if length(SPHS_EDGE_ALPHA) == 1
+if any(SPHS_EDGE_ALPHA) && length(SPHS_EDGE_ALPHA) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     SPHS_EDGE_ALPHA = repmat(SPHS_EDGE_ALPHA, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 SPHS_FACE_ALPHA = pl.get('SPHS_FACE_ALPHA');
-if length(SPHS_FACE_ALPHA) == 1
+if any(SPHS_FACE_ALPHA) && length(SPHS_FACE_ALPHA) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     SPHS_FACE_ALPHA = repmat(SPHS_FACE_ALPHA, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 % ids
 IDS_SHOW = pl.get('IDS');
-if IDS_SHOW
-    IDS_SHOW = repmat(IDS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
+if any(IDS_SHOW) && length(IDS_SHOW) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
 else
-    IDS_SHOW = zeros(pl.get('ATLAS').get('BR_DICT').length, 1);
+    IDS_SHOW = repmat(IDS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 IDS_SIZE = pl.get('IDS_SIZE');
-if length(IDS_SIZE) == 1
+if any(IDS_SIZE) && length(IDS_SIZE) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     IDS_SIZE = repmat(IDS_SIZE, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 IDS_FONT_COLOR = pl.get('IDS_FONT_COLOR');
-if  size(IDS_FONT_COLOR, 1) == 1
+if any(IDS_FONT_COLOR, 'all') && length(IDS_FONT_COLOR) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     IDS_FONT_COLOR = repmat(IDS_FONT_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 % labs
 LABS_SHOW = pl.get('LABS');
-if LABS_SHOW
-    LABS_SHOW = repmat(LABS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
+if any(LABS_SHOW) && length(LABS_SHOW) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
 else
-    LABS_SHOW = zeros(pl.get('ATLAS').get('BR_DICT').length, 1);
+    LABS_SHOW = repmat(LABS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 LABS_SIZE = pl.get('LABS_SIZE');
-if length(LABS_SIZE) == 1
+if any(LABS_SIZE) && length(LABS_SIZE) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     LABS_SIZE = repmat(LABS_SIZE, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 LABS_FONT_COLOR = pl.get('LABS_FONT_COLOR');
-if  size(LABS_FONT_COLOR, 1) == 1
+if any(LABS_FONT_COLOR, 'all') && length(LABS_FONT_COLOR) == pl.get('ATLAS').get('BR_DICT').length
+    % pass the vector as it is
+else
     LABS_FONT_COLOR = repmat(LABS_FONT_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
@@ -425,7 +451,7 @@ for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
     if SYMS_SHOW(i)
         % plotting
         if ~ishandle(pl.h_syms.h(i))
-            pl.h_syms.h(i) = plot3(h_axes, X{i}, Y{i}, Z{i});
+            pl.h_syms.h(i) = plot3(pl.h_axes, X{i}, Y{i}, Z{i});
         else
             set(pl.h_syms.h(i), 'Xdata',X{i}, 'Ydata', Y{i}, 'Zdata', Z{i})
         end
@@ -450,8 +476,8 @@ for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
         % plotting
         if ~ishandle(pl.h_sphs.h(i))
             [sx, sy, sz] = sphere();
-            pl.h_sphs.h(i) = surf(h_axes, X{i} * SPHS_SIZE(i) *sx, Y{i} * SPHS_SIZE(i) * sy, ...
-                Z{i} * SPHS_SIZE(i) * sz);
+            pl.h_sphs.h(i) = surf(pl.h_axes, X{i} + SPHS_SIZE(i) * sx, Y{i} + SPHS_SIZE(i) * sy, ...
+                Z{i} + SPHS_SIZE(i) * sz);
         end
         % set
         set(pl.h_sphs.h(i), ...
@@ -461,6 +487,10 @@ for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
             'FaceColor', SPHS_FACE_COLOR(i, :), ...
             'FaceAlpha', SPHS_FACE_ALPHA(i) ...
             );
+        [sx, sy, sz] = sphere();
+        set(pl.h_sphs.h(i), 'XData', X{i} + SPHS_SIZE(i) * sx);
+        set(pl.h_sphs.h(i), 'YData', Y{i} + SPHS_SIZE(i) * sy);
+        set(pl.h_sphs.h(i), 'ZData', Z{i} + SPHS_SIZE(i) * sz);
     else
         if ishandle(pl.h_sphs.h(i))  && ~isempty(pl.h_sphs.h(i))
             set(pl.h_sphs.h(i), ...
@@ -472,7 +502,7 @@ for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
     if IDS_SHOW(i)
         % plotting
         if ~ishandle(pl.h_ids.h(i))
-            pl.h_ids.h(i) = text(h_axes, X{i}, Y{i}, Z{i}, ID{i});
+            pl.h_ids.h(i) = text(X{i}, Y{i}, Z{i}, ID{i}, 'Parent', pl.h_axes);
         end
         % set
         int_ids = PlotBrainAtlas.PLOT_ID_FONT_INTREPETER(pl.get('IDS_FONT_INTERPRETER'));
@@ -480,6 +510,8 @@ for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
             'Visible', 'on', ...
             'FontSize', IDS_SIZE(i), ...
             'Color' , IDS_FONT_COLOR(i, :), ...
+            'Position', [X{i}, Y{i}, Z{i}], ...
+            'String', ID{i}, ...
             'FontName', pl.get('IDS_FONT_NAME'), ...
             'Interpreter', int_ids{1} ...
             );
@@ -494,7 +526,7 @@ for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
     if LABS_SHOW(i)
         % plotting
         if ~ishandle(pl.h_labs.h(i))
-            pl.h_labs.h(i) = text(h_axes, X{i}, Y{i}, Z{i}, LABS{i});
+            pl.h_labs.h(i) = text(X{i}, Y{i}, Z{i}, LABS{i}, 'Parent', pl.h_axes);
         end
         % set
         int_labs = PlotBrainAtlas.PLOT_ID_FONT_INTREPETER(pl.get('LABS_FONT_INTERPRETER'));
@@ -502,6 +534,8 @@ for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
             'Visible', 'on', ...
             'FontSize', LABS_SIZE(i), ...
             'Color' , LABS_FONT_COLOR(i, :), ...
+            'Position', [X{i}, Y{i}, Z{i}], ...
+            'String', LABS{i}, ...
             'FontName', pl.get('LABS_FONT_NAME'), ...
             'Interpreter', int_labs{1} ...
             );
@@ -533,11 +567,11 @@ function f_settings = settings(pl, varargin)
     %
     % See also draw, figure, isgraphics.
 
-    f_settings = settings@PlotBrainSurface(pl, varargin{:}); 
-    pl.f_settings = f_settings;
+    f_settings = settings@PlotBrainSurface(pl, varargin{:});     
 
     ui_toolbar = findall(f_settings, 'Tag', 'FigureToolBar');
     
+    ui_toolbar_separator = uipushtool(ui_toolbar, 'Separator', 'on', 'Visible', 'off');
     ui_toolbar_separator = uipushtool(ui_toolbar, 'Separator', 'on', 'Visible', 'off');
 
     ui_toolbar_symbols = uipushtool(ui_toolbar, ...
@@ -563,7 +597,9 @@ function f_settings = settings(pl, varargin)
         'TooltipString', 'Ids Panel', ...
         'CData', imread('icon_id.png'), ...
         'ClickedCallback', {@cb_ids_figure_settings});
-
+    
+    pl.f_settings = f_settings;
+    set(pl.f_settings, 'NAME', [pl.get('ATLAS').get('ID') ' - Plot Settings'])
 
     % callback functions
         function cb_syms_figure_settings(~, ~) % (src, event)
@@ -602,8 +638,8 @@ function f_out = syms_settings(pl)
         f = pl.f_syms_settings;
 
         set(f, 'units', 'normalized', ...
-            'Position', [.50 .30 .30 .30], ...
-            'Color', [.95 .95 .95], ...
+            'Position', [.60 .50 .30 .30], ...
+            'Color', [1 0.9725 0.929], ...
             'Name','Brain Region Symbol Settings', ...
             'MenuBar', 'none', ...
             'Toolbar', 'none', ...
@@ -623,7 +659,7 @@ function f_out = syms_settings(pl)
 
         ui_checkbox_id = uicontrol(f, 'Style', 'checkbox');
         set(ui_checkbox_id, 'Units', 'normalized')
-        set(ui_checkbox_id, 'BackgroundColor', [.95 .95 .95])
+        set(ui_checkbox_id, 'BackgroundColor', [1 0.9725 0.929])
         set(ui_checkbox_id, 'Position', [.05 .05 .20 .10])
         set(ui_checkbox_id, 'String', 'id')
         set(ui_checkbox_id, 'Value', true)
@@ -633,7 +669,7 @@ function f_out = syms_settings(pl)
 
         ui_checkbox_label = uicontrol(f, 'Style', 'checkbox');
         set(ui_checkbox_label, 'Units', 'normalized')
-        set(ui_checkbox_label, 'BackgroundColor', [.95 .95 .95])
+        set(ui_checkbox_label, 'BackgroundColor', [1 0.9725 0.929])
         set(ui_checkbox_label, 'Position', [.20 .05 .15 .10])
         set(ui_checkbox_label, 'String', 'label')
         set(ui_checkbox_label, 'Value', false)
@@ -642,7 +678,7 @@ function f_out = syms_settings(pl)
 
         ui_checkbox_xyz = uicontrol(f, 'Style', 'checkbox');
         set(ui_checkbox_xyz, 'Units', 'normalized')
-        set(ui_checkbox_xyz, 'BackgroundColor', [.95 .95 .95])
+        set(ui_checkbox_xyz, 'BackgroundColor', [1 0.9725 0.929])
         set(ui_checkbox_xyz, 'Position', [.35 .05 .15 .10])
         set(ui_checkbox_xyz, 'String', 'xyz')
         set(ui_checkbox_xyz, 'Value', false)
@@ -665,7 +701,7 @@ function f_out = syms_settings(pl)
 
         ui_popup_marker = uicontrol(f, 'Style', 'popup', 'String', {''});
         set(ui_popup_marker, 'Units', 'normalized')
-        set(ui_popup_marker, 'BackgroundColor', [.95 .95 .95])
+        set(ui_popup_marker, 'BackgroundColor', [1 0.9725 0.929])
         set(ui_popup_marker, 'Position', [.50 .50 .45 .10])
         set(ui_popup_marker, 'String', PlotBrainAtlas.PLOT_SYMBOL_NAME)
         set(ui_popup_marker, 'Value', 2)
@@ -674,7 +710,7 @@ function f_out = syms_settings(pl)
 
         ui_text_size = uicontrol(f, 'Style', 'text');
         set(ui_text_size, 'Units', 'normalized')
-        set(ui_text_size, 'BackgroundColor', [.95 .95 .95])
+        set(ui_text_size, 'BackgroundColor', [1 0.9725 0.929])
         set(ui_text_size, 'Position', [.50 .375 .20 .10])
         set(ui_text_size, 'String', 'symbol size ')
         set(ui_text_size, 'HorizontalAlignment', 'left')
@@ -682,7 +718,7 @@ function f_out = syms_settings(pl)
 
         ui_edit_size = uicontrol(f, 'Style', 'edit');
         set(ui_edit_size, 'Units','normalized')
-        set(ui_edit_size, 'BackgroundColor', [.95 .95 .95])
+        set(ui_edit_size, 'BackgroundColor', [1 0.9725 0.929])
         set(ui_edit_size, 'Position', [.70 .40 .25 .10])
         set(ui_edit_size, 'HorizontalAlignment', 'center')
         set(ui_edit_size, 'FontWeight', 'bold')
@@ -774,19 +810,11 @@ function f_out = syms_settings(pl)
                 if length(all_brs_show) == 1
                     all_brs_show = repmat(all_brs_show, pl.get('ATLAS').get('BR_DICT').length, 1);
                 end
-                syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
-                if length(syms_to_show) ~= pl.get('ATLAS').get('BR_DICT').length
-                    for i = 1:1:length(syms_to_show)
-                        syms_to_(syms_to_show(i)) = syms_to_show(i);
-                    end
-                else
-                    syms_to_ = syms_to_show;
+                for i = 1:length(syms_to_show)
+                    s_m = syms_to_show(i);
+                    all_brs_show(s_m) = 1;
                 end
-                for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
-                    if i == syms_to_(i)
-                        all_brs_show(i) = 1;
-                    end
-                end
+
                 pl.set('SYMS', all_brs_show);
                 pl.draw();
             end
@@ -796,18 +824,9 @@ function f_out = syms_settings(pl)
                 if length(all_brs_show) == 1
                     all_brs_show = repmat(all_brs_show, pl.get('ATLAS').get('BR_DICT').length, 1);
                 end
-                syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
-                if length(syms_to_show) ~= pl.get('ATLAS').get('BR_DICT').length
-                    for i = 1:1:length(syms_to_show)
-                        syms_to_(syms_to_show(i)) = syms_to_show(i);
-                    end
-                else
-                    syms_to_ = syms_to_show;
-                end
-                for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
-                    if i == syms_to_(i)
-                        all_brs_show(i) = 0;
-                    end
+                for i = 1:length(syms_to_show)
+                    s_m = syms_to_show(i);
+                    all_brs_show(s_m) = 0;
                 end
                 pl.set('SYMS', all_brs_show);
                 pl.draw();
@@ -824,22 +843,15 @@ function f_out = syms_settings(pl)
                     set(ui_edit_size, 'String', '1')
                     size = 1;
                 end
-
+                
                 syms_modified = get_br_list();
                 all_brs_sizes = pl.get('SYMS_SIZE');
                 if length(all_brs_sizes) == 1
                     all_brs_sizes = repmat(all_brs_sizes, pl.get('ATLAS').get('BR_DICT').length, 1);
                 end
-                if length(syms_modified) ~= pl.get('ATLAS').get('BR_DICT').length
-                    syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
-                    for i = 1:1:length(syms_modified)
-                        syms_to_(syms_modified(i)) = syms_modified(i);
-                    end
-                end
-                for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
-                    if i == syms_to_(i)
-                        all_brs_sizes(i) = size;
-                    end
+                for i = 1:length(syms_modified)
+                    s_m = syms_modified(i);
+                    all_brs_sizes(s_m) = size;
                 end
                 pl.set('SYMS_SIZE', all_brs_sizes);
                 pl.draw();
@@ -851,18 +863,9 @@ function f_out = syms_settings(pl)
                 if size(original_color, 1) == 1
                     original_color = repmat(original_color, pl.get('ATLAS').get('BR_DICT').length, 1);
                 end
-                syms_to_ = zeros(pl.get('ATLAS').get('BR_DICT').length, 1);
-                if length(syms_to_change) ~= pl.get('ATLAS').get('BR_DICT').length
-                    for i = 1:1:length(syms_to_change)
-                        syms_to_(syms_to_change(i)) = syms_to_change(i);
-                    end
-                else
-                    syms_to_ = syms_to_change;
-                end
-                for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
-                    if i == syms_to_(i)
-                        original_color(i, :) = color;
-                    end
+                for i = 1:length(syms_to_change)
+                    s_m = syms_to_change(i);
+                    original_color(s_m, :) = color;
                 end
                 pl.set('SYMS_FACE_COLOR', original_color);
                 pl.draw();
@@ -874,18 +877,10 @@ function f_out = syms_settings(pl)
                 if size(original_color, 1) == 1
                     original_color = repmat(original_color, pl.get('ATLAS').get('BR_DICT').length, 1);
                 end
-                syms_to_ = zeros(pl.get('ATLAS').get('BR_DICT').length, 1);
-                if length(syms_to_change) ~= pl.get('ATLAS').get('BR_DICT').length
-                    for i = 1:1:length(syms_to_change)
-                        syms_to_(syms_to_change(i)) = syms_to_change(i);
-                    end
-                else
-                    syms_to_ = syms_to_change;
-                end
-                for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
-                    if i == syms_to_(i)
-                        original_color(i, :) = color;
-                    end
+                
+                for i = 1:length(syms_to_change)
+                    s_m = syms_to_change(i);
+                    original_color(s_m, :) = color;
                 end
                 pl.set('SYMS_EDGE_COLOR', original_color);
                 pl.draw();
@@ -925,8 +920,8 @@ function f_out = sphs_settings(pl)
     f = pl.f_sphs_settings;
 
     set(f, 'units', 'normalized', ...
-        'Position', [.50 .30 .30 .30], ...
-        'Color', [.95 .95 .95], ...
+        'Position', [.60 .45 .30 .30], ...
+        'Color', [1 0.9725 0.929], ...
         'Name','Brain Region Sphere Settings', ...
         'MenuBar', 'none', ...
         'Toolbar', 'none', ...
@@ -946,7 +941,7 @@ function f_out = sphs_settings(pl)
 
     ui_checkbox_id = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_id, 'Units','normalized')
-    set(ui_checkbox_id, 'BackgroundColor', [.95 .95 .95])
+    set(ui_checkbox_id, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_checkbox_id, 'Position', [.05 .05 .20 .10])
     set(ui_checkbox_id, 'String', 'id')
     set(ui_checkbox_id, 'Value', true)
@@ -956,7 +951,7 @@ function f_out = sphs_settings(pl)
 
     ui_checkbox_label = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_label, 'Units','normalized')
-    set(ui_checkbox_label, 'BackgroundColor', [.95 .95 .95])
+    set(ui_checkbox_label, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_checkbox_label, 'Position', [.20 .05 .15 .10])
     set(ui_checkbox_label, 'String', 'label')
     set(ui_checkbox_label, 'Value', false)
@@ -965,7 +960,7 @@ function f_out = sphs_settings(pl)
 
     ui_checkbox_xyz = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_xyz, 'Units','normalized')
-    set(ui_checkbox_xyz, 'BackgroundColor', [.95 .95 .95])
+    set(ui_checkbox_xyz, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_checkbox_xyz, 'Position', [.35 .05 .15 .10])
     set(ui_checkbox_xyz, 'String', 'xyz')
     set(ui_checkbox_xyz, 'Value', false)
@@ -988,7 +983,7 @@ function f_out = sphs_settings(pl)
 
     ui_text = uicontrol(f, 'Style', 'text');
     set(ui_text, 'Units','normalized')
-    set(ui_text, 'BackgroundColor', [.95 .95 .95])
+    set(ui_text, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_text, 'String', 'transparency')
     set(ui_text, 'Position', [.70 .60 .25 .10])
     set(ui_text, 'HorizontalAlignment', 'center')
@@ -1004,7 +999,7 @@ function f_out = sphs_settings(pl)
 
     ui_slider_alpha = uicontrol(f, 'Style', 'slider');
     set(ui_slider_alpha, 'Units','normalized')
-    set(ui_slider_alpha, 'BackgroundColor', [.95 .95 .95])
+    set(ui_slider_alpha, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_slider_alpha, 'Position', [.70 .475 .25 .10])
     set(ui_slider_alpha, 'String', 'Brain region transparency')
     set(ui_slider_alpha, 'Min', 0, 'Max',1, 'Value',.5);
@@ -1021,7 +1016,7 @@ function f_out = sphs_settings(pl)
 
     ui_slider_facealpha = uicontrol(f, 'Style', 'slider');
     set(ui_slider_facealpha, 'Units', 'normalized')
-    set(ui_slider_facealpha, 'BackgroundColor', [.95 .95 .95])
+    set(ui_slider_facealpha, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_slider_facealpha, 'Position', [.70 .325 .25 .10])
     set(ui_slider_facealpha, 'String', 'Brain region transparency')
     set(ui_slider_facealpha, 'Min', 0, 'Max', 1, 'Value', .5)
@@ -1038,7 +1033,7 @@ function f_out = sphs_settings(pl)
 
     ui_slider_edgealpha = uicontrol(f, 'Style', 'slider');
     set(ui_slider_edgealpha, 'Units', 'normalized')
-    set(ui_slider_edgealpha, 'BackgroundColor', [.95 .95 .95])
+    set(ui_slider_edgealpha, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_slider_edgealpha, 'Position', [.70 .175 .25 .10])
     set(ui_slider_edgealpha, 'String', 'Brain transparency')
     set(ui_slider_edgealpha, 'Min', 0, 'Max', 1, 'Value', .5)
@@ -1047,7 +1042,7 @@ function f_out = sphs_settings(pl)
 
     ui_text_radius = uicontrol(f, 'Style', 'text');
     set(ui_text_radius, 'Units', 'normalized')
-    set(ui_text_radius, 'BackgroundColor', [.95 .95 .95])
+    set(ui_text_radius, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_text_radius, 'Position', [.50 .025 .20 .10])
     set(ui_text_radius, 'String', 'sphere radius ')
     set(ui_text_radius, 'HorizontalAlignment', 'left')
@@ -1055,7 +1050,7 @@ function f_out = sphs_settings(pl)
 
     ui_edit_radius = uicontrol(f, 'Style', 'edit');
     set(ui_edit_radius, 'Units', 'normalized')
-    set(ui_edit_radius, 'BackgroundColor', [.95 .95 .95])
+    set(ui_edit_radius, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_edit_radius, 'Position', [.70 .05 .25 .10])
     set(ui_edit_radius, 'HorizontalAlignment', 'center')
     set(ui_edit_radius, 'FontWeight', 'bold')
@@ -1134,134 +1129,82 @@ function f_out = sphs_settings(pl)
             if length(all_brs_show) == 1
                 all_brs_show = repmat(all_brs_show, pl.get('ATLAS').get('BR_DICT').length, 1);
             end
-            sphs_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
-            if length(sphs_to_show) ~= pl.get('ATLAS').get('BR_DICT').length
-                for i = 1:1:length(sphs_to_show)
-                    sphs_to_(sphs_to_show(i)) = sphs_to_show(i);
-                end
-            else
-                sphs_to_ = sphs_to_show;
-            end
-            for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
-                if i == sphs_to_(i)
-                    all_brs_show(i) = 1;
-                end
+            for i = 1:length(sphs_to_show)
+                s_m = sphs_to_show(i);
+                all_brs_show(s_m) = 1;
             end
             pl.set('SPHS', all_brs_show);
             pl.draw();
         end
         function cb_hide(~, ~)  % (src, event)
-            syms_to_show = get_br_list();
+            sphs_to_show = get_br_list();
             all_brs_show = pl.get('SPHS');
             if length(all_brs_show) == 1
                 all_brs_show = repmat(all_brs_show, pl.get('ATLAS').get('BR_DICT').length, 1);
             end
-            syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
-            if length(syms_to_show) ~= pl.get('ATLAS').get('BR_DICT').length
-                for i = 1:1:length(syms_to_show)
-                    syms_to_(syms_to_show(i)) = syms_to_show(i);
-                end
-            else
-                syms_to_ = syms_to_show;
-            end
-            for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
-                if i == syms_to_(i)
-                    all_brs_show(i) = 0;
-                end
+            for i = 1:length(sphs_to_show)
+                s_m = sphs_to_show(i);
+                all_brs_show(s_m) = 0;
             end
             pl.set('SPHS', all_brs_show);
             pl.draw();
         end
         function cb_color(~, ~)  %  (src, event)
             color = uisetcolor();
-            original_color = pl.get('SYMS_FACE_COLOR');
-            syms_to_change = get_br_list();
+            original_color = pl.get('SPHS_FACE_COLOR');
+            sphs_to_show = get_br_list();
             if size(original_color, 1) == 1
                 original_color = repmat(original_color, pl.get('ATLAS').get('BR_DICT').length, 1);
             end
-            syms_to_ = zeros(pl.get('ATLAS').get('BR_DICT').length, 1);
-            if length(syms_to_change) ~= pl.get('ATLAS').get('BR_DICT').length
-                for i = 1:1:length(syms_to_change)
-                    syms_to_(syms_to_change(i)) = syms_to_change(i);
-                end
-            else
-                syms_to_ = syms_to_change;
+            for i = 1:length(sphs_to_show)
+                s_m = sphs_to_show(i);
+                original_color(s_m, :) = color;
             end
-            for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
-                if i == syms_to_(i)
-                    original_color(i, :) = color;
-                end
-            end
-            pl.set('SYMS_FACE_COLOR', original_color);
-            pl.set('SYMS_EDGE_COLOR', original_color);
+
+            pl.set('SPHS_FACE_COLOR', original_color);
+            pl.set('SPHS_EDGE_COLOR', original_color);
             pl.draw();
         end
         function cb_facecolor(~, ~)  % (src, event)
             color = uisetcolor();
-            original_color = pl.get('SYMS_FACE_COLOR');
-            syms_to_change = get_br_list();
+            original_color = pl.get('SPHS_FACE_COLOR');
+            sphs_to_show = get_br_list();
             if size(original_color, 1) == 1
                 original_color = repmat(original_color, pl.get('ATLAS').get('BR_DICT').length, 1);
             end
-            syms_to_ = zeros(pl.get('ATLAS').get('BR_DICT').length, 1);
-            if length(syms_to_change) ~= pl.get('ATLAS').get('BR_DICT').length
-                for i = 1:1:length(syms_to_change)
-                    syms_to_(syms_to_change(i)) = syms_to_change(i);
-                end
-            else
-                syms_to_ = syms_to_change;
+            for i = 1:length(sphs_to_show)
+                s_m = sphs_to_show(i);
+                original_color(s_m, :) = color;
             end
-            for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
-                if i == syms_to_(i)
-                    original_color(i, :) = color;
-                end
-            end
-            pl.set('SYMS_FACE_COLOR', original_color);
+            pl.set('SPHS_FACE_COLOR', original_color);
             pl.draw();
         end
         function cb_edgecolor(~, ~)  % (src, event)
             color = uisetcolor();
-            original_color = pl.get('SYMS_EDGE_COLOR');
-            syms_to_change = get_br_list();
+            original_color = pl.get('SPHS_EDGE_COLOR');
+            sphs_to_show = get_br_list();
             if size(original_color, 1) == 1
                 original_color = repmat(original_color, pl.get('ATLAS').get('BR_DICT').length, 1);
             end
-            syms_to_ = zeros(pl.get('ATLAS').get('BR_DICT').length, 1);
-            if length(syms_to_change) ~= pl.get('ATLAS').get('BR_DICT').length
-                for i = 1:1:length(syms_to_change)
-                    syms_to_(syms_to_change(i)) = syms_to_change(i);
-                end
-            else
-                syms_to_ = syms_to_change;
+            for i = 1:length(sphs_to_show)
+                s_m = sphs_to_show(i);
+                original_color(s_m, :) = color;
             end
-            for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
-                if i == syms_to_(i)
-                    original_color(i, :) = color;
-                end
-            end
-            pl.set('SYMS_EDGE_COLOR', original_color);
+            pl.set('SPHS_EDGE_COLOR', original_color);
             pl.draw();
         end
         function cb_alpha(~, ~)  % (src, event)
             new_value = get(ui_slider_alpha, 'Value');
-            brs_to_change = get_br_list();
+            sphs_to_show = get_br_list();
             all_alphas_show = pl.get('SPHS_FACE_ALPHA');
             if length(all_alphas_show) == 1
                 all_alphas_show = repmat(all_alphas_show, pl.get('ATLAS').get('BR_DICT').length, 1);
             end
-            syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
-            if length(brs_to_change) ~= pl.get('ATLAS').get('BR_DICT').length
-                for i = 1:1:length(brs_to_change)
-                    syms_to_(brs_to_change(i)) = brs_to_change(i);
-                end
-            else
-                syms_to_ = brs_to_change;
+            for i = 1:length(sphs_to_show)
+                s_m = sphs_to_show(i);
+                all_alphas_show(s_m) = new_value;
             end
-            for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
-                if i == syms_to_(i)
-                    all_alphas_show(i) = new_value;
-                end
-            end
+
             pl.set('SPHS_FACE_ALPHA', all_alphas_show)
             pl.set('SPHS_EDGE_ALPHA', all_alphas_show)
             pl.draw();
@@ -1271,46 +1214,28 @@ function f_out = sphs_settings(pl)
         end
         function cb_facealpha(~, ~)  % (src, event)
             new_value = get(ui_slider_alpha, 'Value');
-            brs_to_change = get_br_list();
+            sphs_to_show = get_br_list();
             all_alphas_show = pl.get('SPHS_FACE_ALPHA');
             if length(all_alphas_show) == 1
                 all_alphas_show = repmat(all_alphas_show, pl.get('ATLAS').get('BR_DICT').length, 1);
             end
-            syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
-            if length(brs_to_change) ~= pl.get('ATLAS').get('BR_DICT').length
-                for i = 1:1:length(brs_to_change)
-                    syms_to_(brs_to_change(i)) = brs_to_change(i);
-                end
-            else
-                syms_to_ = brs_to_change;
-            end
-            for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
-                if i == syms_to_(i)
-                    all_alphas_show(i) = new_value;
-                end
+            for i = 1:length(sphs_to_show)
+                s_m = sphs_to_show(i);
+                all_alphas_show(s_m) = new_value;
             end
             pl.set('SPHS_FACE_ALPHA', all_alphas_show)
             pl.draw();
         end
         function cb_edgealpha(~, ~)  % (src, event)
             new_value = get(ui_slider_alpha, 'Value');
-            brs_to_change = get_br_list();
+            sphs_to_show = get_br_list();
             all_alphas_show = pl.get('SPHS_FACE_ALPHA');
             if length(all_alphas_show) == 1
                 all_alphas_show = repmat(all_alphas_show, pl.get('ATLAS').get('BR_DICT').length, 1);
             end
-            syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
-            if length(brs_to_change) ~= pl.get('ATLAS').get('BR_DICT').length
-                for i = 1:1:length(brs_to_change)
-                    syms_to_(brs_to_change(i)) = brs_to_change(i);
-                end
-            else
-                syms_to_ = brs_to_change;
-            end
-            for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
-                if i == syms_to_(i)
-                    all_alphas_show(i) = new_value;
-                end
+            for i = 1:length(sphs_to_show)
+                s_m = sphs_to_show(i);
+                all_alphas_show(s_m) = new_value;
             end
             pl.set('SPHS_EDGE_ALPHA', all_alphas_show)
             pl.draw();
@@ -1323,24 +1248,16 @@ function f_out = sphs_settings(pl)
                 R = 1;
             end
 
-            syms_to_show = get_br_list();
+            sphs_to_show = get_br_list();
             all_brs_show = pl.get('SPHS_SIZE');
             if length(all_brs_show) == 1
                 all_brs_show = repmat(all_brs_show, pl.get('ATLAS').get('BR_DICT').length, 1);
             end
-            syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
-            if length(syms_to_show) ~= pl.get('ATLAS').get('BR_DICT').length
-                for i = 1:1:length(syms_to_show)
-                    syms_to_(syms_to_show(i)) = syms_to_show(i);
-                end
-            else
-                syms_to_ = syms_to_show;
+            for i = 1:length(sphs_to_show)
+                s_m = sphs_to_show(i);
+                all_brs_show(s_m) = R;
             end
-            for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
-                if i == syms_to_(i)
-                    all_brs_show(i) = R;
-                end
-            end
+
             pl.set('SPHS_SIZE', all_brs_show);
             pl.draw();
         end
@@ -1378,8 +1295,8 @@ function f_out = ids_settings(pl)
     f = pl.f_ids_settings;
 
     set(f, 'units', 'normalized', ...
-        'Position', [.50 .30 .30 .30], ...
-        'Color', [.95 .95 .95], ...
+        'Position', [.60 .35 .30 .30], ...
+        'Color', [1 0.9725 0.929], ...
         'Name','Brain Region Ids Settings', ...
         'MenuBar', 'none', ...
         'Toolbar', 'none', ...
@@ -1399,7 +1316,7 @@ function f_out = ids_settings(pl)
 
     ui_checkbox_id = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_id, 'Units', 'normalized')
-    set(ui_checkbox_id, 'BackgroundColor', [.95 .95 .95])
+    set(ui_checkbox_id, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_checkbox_id, 'Position', [.05 .05 .20 .10])
     set(ui_checkbox_id, 'String', 'id')
     set(ui_checkbox_id, 'Value', true)
@@ -1409,7 +1326,7 @@ function f_out = ids_settings(pl)
 
     ui_checkbox_label = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_label, 'Units', 'normalized')
-    set(ui_checkbox_label, 'BackgroundColor', [.95 .95 .95])
+    set(ui_checkbox_label, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_checkbox_label, 'Position', [.20 .05 .15 .10])
     set(ui_checkbox_label, 'String', 'label')
     set(ui_checkbox_label, 'Value', false)
@@ -1418,7 +1335,7 @@ function f_out = ids_settings(pl)
 
     ui_checkbox_xyz = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_xyz, 'Units', 'normalized')
-    set(ui_checkbox_xyz, 'BackgroundColor', [.95 .95 .95])
+    set(ui_checkbox_xyz, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_checkbox_xyz, 'Position', [.35 .05 .15 .10])
     set(ui_checkbox_xyz, 'String', 'xyz')
     set(ui_checkbox_xyz, 'Value', false)
@@ -1455,7 +1372,7 @@ function f_out = ids_settings(pl)
 
     ui_text_interpreter = uicontrol(f, 'Style', 'text');
     set(ui_text_interpreter, 'Units', 'normalized')
-    set(ui_text_interpreter, 'BackgroundColor', [.95 .95 .95])
+    set(ui_text_interpreter, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_text_interpreter, 'Position', [.50 .175 .20 .10])
     set(ui_text_interpreter, 'String', 'interpreter')
     set(ui_text_interpreter, 'HorizontalAlignment', 'left')
@@ -1463,7 +1380,7 @@ function f_out = ids_settings(pl)
 
     ui_popup_interpreter = uicontrol(f, 'Style', 'popup', 'String', {''});
     set(ui_popup_interpreter, 'Units', 'normalized')
-    set(ui_popup_interpreter, 'BackgroundColor', [.95 .95 .95])
+    set(ui_popup_interpreter, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_popup_interpreter, 'Position', [.75 .20 .20 .10])
     set(ui_popup_interpreter, 'String', {'none', 'tex', 'latex'})
     set(ui_popup_interpreter, 'Value', 2)
@@ -1541,40 +1458,23 @@ function f_out = ids_settings(pl)
             if length(all_brs_show) == 1
                 all_brs_show = repmat(all_brs_show, pl.get('ATLAS').get('BR_DICT').length, 1);
             end
-            sphs_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
-            if length(ids_to_show) ~= pl.get('ATLAS').get('BR_DICT').length
-                for i = 1:1:length(ids_to_show)
-                    sphs_to_(ids_to_show(i)) = ids_to_show(i);
-                end
-            else
-                sphs_to_ = ids_to_show;
+            for i = 1:length(ids_to_show)
+                s_m = ids_to_show(i);
+                all_brs_show(s_m) = 1;
             end
-            for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
-                if i == sphs_to_(i)
-                    all_brs_show(i) = 1;
-                end
-            end
+
             pl.set('IDS', all_brs_show);
             pl.draw();
         end
         function cb_hide(~, ~)  % (src, event)
-            syms_to_show = get_br_list();
+            ids_to_show = get_br_list();
             all_brs_show = pl.get('IDS');
             if length(all_brs_show) == 1
                 all_brs_show = repmat(all_brs_show, pl.get('ATLAS').get('BR_DICT').length, 1);
             end
-            syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
-            if length(syms_to_show) ~= pl.get('ATLAS').get('BR_DICT').length
-                for i = 1:1:length(syms_to_show)
-                    syms_to_(syms_to_show(i)) = syms_to_show(i);
-                end
-            else
-                syms_to_ = syms_to_show;
-            end
-            for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
-                if i == syms_to_(i)
-                    all_brs_show(i) = 0;
-                end
+            for i = 1:length(ids_to_show)
+                s_m = ids_to_show(i);
+                all_brs_show(s_m) = 0;
             end
             pl.set('IDS', all_brs_show);
             pl.draw();
@@ -1582,23 +1482,15 @@ function f_out = ids_settings(pl)
         function cb_color(~, ~)  % (src, event)
             color = uisetcolor();
             original_color = pl.get('IDS_FONT_COLOR');
-            syms_to_change = get_br_list();
+            ids_to_show = get_br_list();
             if size(original_color, 1) == 1
                 original_color = repmat(original_color, pl.get('ATLAS').get('BR_DICT').length, 1);
             end
-            syms_to_ = zeros(pl.get('ATLAS').get('BR_DICT').length, 1);
-            if length(syms_to_change) ~= pl.get('ATLAS').get('BR_DICT').length
-                for i = 1:1:length(syms_to_change)
-                    syms_to_(syms_to_change(i)) = syms_to_change(i);
-                end
-            else
-                syms_to_ = syms_to_change;
+            for i = 1:length(ids_to_show)
+                s_m = ids_to_show(i);
+                original_color(s_m, :) = color;
             end
-            for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
-                if i == syms_to_(i)
-                    original_color(i, :) = color;
-                end
-            end
+
             pl.set('IDS_FONT_COLOR', original_color);
             pl.draw();
         end
@@ -1609,27 +1501,9 @@ function f_out = ids_settings(pl)
             pl.draw();
         end
         function cb_interpreter(~,~)  %  (src,event)
-            string = get(ui_popup_interpreter, 'Value');
+            value = get(ui_popup_interpreter, 'Value');
 
-            brs_to_change = get_br_list();
-            all_ints = pl.get('IDS_FONT_INTERPRETER');
-            if length(all_ints) == 1
-                all_ints = repmat(all_ints, pl.get('ATLAS').get('BR_DICT').length, 1);
-            end
-            syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
-            if length(brs_to_change) ~= pl.get('ATLAS').get('BR_DICT').length
-                for i = 1:1:length(brs_to_change)
-                    syms_to_(brs_to_change(i)) = brs_to_change(i);
-                end
-            else
-                syms_to_ = brs_to_change;
-            end
-            for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
-                if i == syms_to_(i)
-                    all_ints(i) = string;
-                end
-            end
-            pl.set('IDS_FONT_INTERPRETER', all_ints)
+            pl.set('IDS_FONT_INTERPRETER', value)
             pl.draw();
         end
         function bri = get_br_list()
@@ -1666,8 +1540,8 @@ function f_out = labs_settings(pl)
     f = pl.f_labs_settings;
 
     set(f, 'units', 'normalized', ...
-        'Position', [.50 .30 .30 .30], ...
-        'Color', [.95 .95 .95], ...
+        'Position', [.60 .40 .30 .30], ...
+        'Color', [1 0.9725 0.929], ...
         'Name','Brain Region Labels Settings', ...
         'MenuBar', 'none', ...
         'Toolbar', 'none', ...
@@ -1687,7 +1561,7 @@ function f_out = labs_settings(pl)
 
     ui_checkbox_id = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_id, 'Units', 'normalized')
-    set(ui_checkbox_id, 'BackgroundColor', [.95 .95 .95])
+    set(ui_checkbox_id, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_checkbox_id, 'Position', [.05 .05 .20 .10])
     set(ui_checkbox_id, 'String', 'id')
     set(ui_checkbox_id, 'Value', true)
@@ -1697,7 +1571,7 @@ function f_out = labs_settings(pl)
 
     ui_checkbox_label = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_label, 'Units', 'normalized')
-    set(ui_checkbox_label, 'BackgroundColor', [.95 .95 .95])
+    set(ui_checkbox_label, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_checkbox_label, 'Position', [.20 .05 .15 .10])
     set(ui_checkbox_label, 'String', 'label')
     set(ui_checkbox_label, 'Value', false)
@@ -1706,7 +1580,7 @@ function f_out = labs_settings(pl)
 
     ui_checkbox_xyz = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_xyz, 'Units', 'normalized')
-    set(ui_checkbox_xyz, 'BackgroundColor', [.95 .95 .95])
+    set(ui_checkbox_xyz, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_checkbox_xyz, 'Position', [.35 .05 .15 .10])
     set(ui_checkbox_xyz, 'String', 'xyz')
     set(ui_checkbox_xyz, 'Value', false)
@@ -1743,7 +1617,7 @@ function f_out = labs_settings(pl)
 
     ui_text_interpreter = uicontrol(f, 'Style', 'text');
     set(ui_text_interpreter, 'Units', 'normalized')
-    set(ui_text_interpreter, 'BackgroundColor', [.95 .95 .95])
+    set(ui_text_interpreter, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_text_interpreter, 'Position', [.50 .175 .20 .10])
     set(ui_text_interpreter, 'String', 'interpreter')
     set(ui_text_interpreter, 'HorizontalAlignment', 'left')
@@ -1751,7 +1625,7 @@ function f_out = labs_settings(pl)
 
     ui_popup_interpreter = uicontrol(f, 'Style', 'popup', 'String', {''});
     set(ui_popup_interpreter, 'Units', 'normalized')
-    set(ui_popup_interpreter, 'BackgroundColor', [.95 .95 .95])
+    set(ui_popup_interpreter, 'BackgroundColor', [1 0.9725 0.929])
     set(ui_popup_interpreter, 'Position', [.75 .20 .20 .10])
     set(ui_popup_interpreter, 'String', {'none', 'tex', 'latex'})
     set(ui_popup_interpreter, 'Value', 2)
@@ -1829,40 +1703,23 @@ function f_out = labs_settings(pl)
             if length(all_brs_show) == 1
                 all_brs_show = repmat(all_brs_show, pl.get('ATLAS').get('BR_DICT').length, 1);
             end
-            sphs_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
-            if length(ids_to_show) ~= pl.get('ATLAS').get('BR_DICT').length
-                for i = 1:1:length(ids_to_show)
-                    sphs_to_(ids_to_show(i)) = ids_to_show(i);
-                end
-            else
-                sphs_to_ = ids_to_show;
+            for i = 1:length(ids_to_show)
+                s_m = ids_to_show(i);
+                all_brs_show(s_m) = 1;
             end
-            for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
-                if i == sphs_to_(i)
-                    all_brs_show(i) = 1;
-                end
-            end
+
             pl.set('LABS', all_brs_show);
             pl.draw();
         end
         function cb_hide(~, ~)  % (src, event)
-            syms_to_show = get_br_list();
+            ids_to_show = get_br_list();
             all_brs_show = pl.get('LABS');
             if length(all_brs_show) == 1
                 all_brs_show = repmat(all_brs_show, pl.get('ATLAS').get('BR_DICT').length, 1);
             end
-            syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
-            if length(syms_to_show) ~= pl.get('ATLAS').get('BR_DICT').length
-                for i = 1:1:length(syms_to_show)
-                    syms_to_(syms_to_show(i)) = syms_to_show(i);
-                end
-            else
-                syms_to_ = syms_to_show;
-            end
-            for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
-                if i == syms_to_(i)
-                    all_brs_show(i) = 0;
-                end
+            for i = 1:length(ids_to_show)
+                s_m = ids_to_show(i);
+                all_brs_show(s_m) = 0;
             end
             pl.set('LABS', all_brs_show);
             pl.draw();
@@ -1870,23 +1727,15 @@ function f_out = labs_settings(pl)
         function cb_color(~, ~)  % (src, event)
             color = uisetcolor();
             original_color = pl.get('LABS_FONT_COLOR');
-            syms_to_change = get_br_list();
+            ids_to_show = get_br_list();
             if size(original_color, 1) == 1
                 original_color = repmat(original_color, pl.get('ATLAS').get('BR_DICT').length, 1);
             end
-            syms_to_ = zeros(pl.get('ATLAS').get('BR_DICT').length, 1);
-            if length(syms_to_change) ~= pl.get('ATLAS').get('BR_DICT').length
-                for i = 1:1:length(syms_to_change)
-                    syms_to_(syms_to_change(i)) = syms_to_change(i);
-                end
-            else
-                syms_to_ = syms_to_change;
+            for i = 1:length(ids_to_show)
+                s_m = ids_to_show(i);
+                original_color(s_m, :) = color;
             end
-            for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
-                if i == syms_to_(i)
-                    original_color(i, :) = color;
-                end
-            end
+
             pl.set('LABS_FONT_COLOR', original_color);
             pl.draw();
         end
@@ -1897,26 +1746,9 @@ function f_out = labs_settings(pl)
             pl.draw();
         end
         function cb_interpreter(~,~)  %  (src,event)
-            string = get(ui_popup_interpreter, 'String');
-            brs_to_change = get_br_list();
-            all_ints = pl.get('LABS_FONT_INTERPRETER');
-            if length(all_ints) == 1
-                all_ints = repmat(all_ints, pl.get('ATLAS').get('BR_DICT').length, 1);
-            end
-            syms_to_ = zeros(1, pl.get('ATLAS').get('BR_DICT').length);
-            if length(brs_to_change) ~= pl.get('ATLAS').get('BR_DICT').length
-                for i = 1:1:length(brs_to_change)
-                    syms_to_(brs_to_change(i)) = brs_to_change(i);
-                end
-            else
-                syms_to_ = brs_to_change;
-            end
-            for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
-                if i == syms_to_(i)
-                    all_ints(i) = string;
-                end
-            end
-            pl.set('LABS_FONT_INTERPRETER', all_ints)
+            value = get(ui_popup_interpreter, 'Value');
+            
+            pl.set('LABS_FONT_INTERPRETER', value)
             pl.draw();
         end
         function bri = get_br_list()

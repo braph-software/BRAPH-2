@@ -94,6 +94,7 @@ function update(pl)
 
     % callback
     function cb_matrix_value(src, event, i, j)
+        el = pl.get('EL');
         value = el.get(prop);
         value_ij = value{i, j};
         value_ij(event.Indices(1), event.Indices(2)) = event.NewData;
