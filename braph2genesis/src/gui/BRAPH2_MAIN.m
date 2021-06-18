@@ -41,7 +41,7 @@ f = init();
 warning('off', 'all')
 jPanelObj = com.mathworks.widgets.SearchTextField('Enter search filter:');
 jAssetComponent = jPanelObj.getComponent;
-[jhPanel, hContainer] = javacomponent(jAssetComponent, [20, 375, 350, 25], f);
+[jhPanel, hContainer] = javacomponent(jAssetComponent, [20, 375, 350, 25], f); %#ok<JAVCM>
 hjSearchField = handle(jAssetComponent.getComponent(0), 'CallbackProperties');
 set(hjSearchField, 'KeyPressedCallback', {@updateSearch, jPanelObj});
 warning('on', 'all')
