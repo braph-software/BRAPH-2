@@ -30,10 +30,9 @@ nn_CON_WU = ClassifierNN_CON_WU( ...
     );
 
 % nn result calculation
-trained_net = nn_CON_WU.get('NEURAL_NETWORK');
-trained_net_obj = nn_CON_WU.net_obj_transformer();
-acc_training = nn_CON_WU.getTrainingAccuracy();
-acc_test = nn_CON_WU.getTestAccuracy();
-confusion_matrix_training = nn_CON_WU.getTrainingConfusionMatrix();
-confusion_matrix_test = nn_CON_WU.getTestConfusionMatrix();
+nn_CON_WU.memorize('NEURAL_NETWORK_ANALYSIS');
+test_acc = nn_CON_WU.get('test_accuracy');
+train_acc = nn_CON_WU.get('training_accuracy');
+%confusion_matrix_training = nn_CON_WU.getTrainingConfusionMatrix();
+%confusion_matrix_test = nn_CON_WU.getTestConfusionMatrix();
 

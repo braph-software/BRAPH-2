@@ -4,16 +4,7 @@ ClassifierNN_CON_WU < BaseNN (nn, classification with connectivity data) is a cl
 %% ¡description!
 This classification uses connectivity data and trains neural network with them using weighted undirected graphs.
 
-%% ¡properties!
-training_accuracy
-test_accuracy
-y_tblTrain
-X_tblTrain
-y_tblTest
-X_tblTest
-class_name
-
-%% ¡props_update!
+%% ¡props!
 
 %%% ¡prop!
 GR1 (data, item) is the subject group, which also defines the subject class SubjectCON.
@@ -26,121 +17,104 @@ GR2 (data, item) is the subject group, which also defines the subject class Subj
 Group('SUB_CLASS', 'SubjectCON')
 
 %%% ¡prop!
-G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analysis.
+G_DICT (data, idict) is the graph (GraphWU) ensemble obtained from this analysis.
 %%%% ¡settings!
 'GraphWU'
 %%%% ¡default!
 IndexedDictionary('IT_CLASS', 'GraphWU');
 
+%%% ¡prop! 
+IndexAnalysisResult (metadata, OPTION) is the.
+%%%% ¡default!
+{'neural_network' 'X_tblTrain' 'y_tblTrain' 'X_tblTest' 'y_tblTest' 'classes' 'training_accuracy' 'test_accuracy'}
+
 %%% ¡prop!
-NEURAL_NETWORK (result, cell) is the neural network trained from this analysis.
+X_tblTrain (result, matrix) is the neural network trained from this analysis.
 %%%% ¡calculate!
-% import the data
-g_dict = nn.get('G_DICT');
+%[~, X_tblTrain, ~, ~, ~, ~, ~, ~] = calculate_results(nn);
+analysis = nn.get('NEURAL_NETWORK_ANALYSIS');
+value = analysis(convertCharsToStrings(nn.get('IndexAnalysisResult')) == 'X_tblTrain');
 
-gr1 = nn.get('GR1');
-label = [];
-for i = 1:1:gr1.get('SUB_DICT').length()
-	sub = gr1.get('SUB_DICT').getItem(i);
-    g = GraphWU( ...
-        'ID', ['g ' sub.get('ID')], ...
-        'B', Callback('EL', sub, 'TAG', 'CON') ...
-        );
-    g_dict.add(g)
-    label =[label string(gr1.get('ID'))];
-end
+%%% ¡prop!
+y_tblTrain (result, matrix) is the neural network trained from this analysis.
+%%%% ¡calculate!
+analysis = nn.get('NEURAL_NETWORK_ANALYSIS');
+value = analysis(convertCharsToStrings(nn.get('IndexAnalysisResult')) == 'y_tblTrain');
 
-gr2 = nn.get('GR2');
-for i = 1:1:gr2.get('SUB_DICT').length()
-	sub = gr2.get('SUB_DICT').getItem(i);
-    g = GraphWU( ...
-        'ID', ['g ' sub.get('ID')], ...
-        'B', Callback('EL', sub, 'TAG', 'CON') ...
-        );
-    g_dict.add(g)
-    label =[label string(gr2.get('ID'))];
-end
+%%% ¡prop!
+X_tblTest (result, matrix) is the neural network trained from this analysis.
+%%%% ¡calculate!
+analysis = nn.get('NEURAL_NETWORK_ANALYSIS');
+value = analysis(convertCharsToStrings(nn.get('IndexAnalysisResult')) == 'X_tblTest');
 
-% flattern the input
-dataset = cellfun(@(x) x.get('A'), g_dict.getItems(), 'UniformOutput', true);
-dataset = cellfun(@(x) triu(x, 1), dataset, 'UniformOutput', false);
-dataset = cellfun(@(x) nonzeros(x(:)), dataset, 'UniformOutput', false);
-dataset = array2table(cell2mat(dataset)');
-label = array2table(label', 'VariableNames', {'DX'})
-dataset = [dataset label];
+%%% ¡prop!
+y_tblTest (result, matrix) is the neural network trained from this analysis.
+%%%% ¡calculate!
+analysis = nn.get('NEURAL_NETWORK_ANALYSIS');
+value = analysis(convertCharsToStrings(nn.get('IndexAnalysisResult')) == 'y_tblTest');
 
-% get classes
-dataset = convertvars(dataset,'DX', 'categorical');
-classNames = categories(dataset{:,end})
-nn.class_name = classNames;
-% split the datset into training and test set
-numObservations = size(dataset, 1);
-numObservationsTrain = floor(0.9*numObservations);
-numObservationsTest = numObservations - numObservationsTrain;
+%%% ¡prop!
+classes (result, cell) is the neural network trained from this analysis.
+%%%% ¡calculate!
+analysis = nn.get('NEURAL_NETWORK_ANALYSIS');
+value = analysis(convertCharsToStrings(nn.get('IndexAnalysisResult')) == 'classes');
 
-idx = randperm(numObservations);
-idxTrain = idx(1:numObservationsTrain);
-idxTest = idx(numObservationsTrain+1:end);
+%%% ¡prop!
+training_accuracy (result, scalar) is the neural network trained from this analysis.
+%%%% ¡calculate!
+analysis = nn.get('NEURAL_NETWORK_ANALYSIS');
+value = analysis(convertCharsToStrings(nn.get('IndexAnalysisResult')) == 'training_accuracy');
 
-tblTrain = dataset(idxTrain, :);
-tblTest = dataset(idxTest, :);
+%%% ¡prop!
+test_accuracy (result, scalar) is the neural network trained from this analysis.
+%%%% ¡calculate!
+analysis = nn.get('NEURAL_NETWORK_ANALYSIS');
+value = analysis(convertCharsToStrings(nn.get('IndexAnalysisResult')) == 'test_accuracy');
 
-y_tblTrain = tblTrain{:, end};
-X_tblTrain = tblTrain{:, 1:end-1};
-X_tblTrain = reshape(X_tblTrain', [1, 1, size(X_tblTrain,2), size(X_tblTrain,1)]);
-y_tblTest = tblTest{:, end};
-X_tblTest = tblTest{:, 1:end-1};
-X_tblTest = reshape(X_tblTest', [1, 1, size(X_tblTest,2), size(X_tblTest,1)]);
+%%% ¡prop!
+trained_net (result, scalar) is the neural network trained from this analysis.
+%%%% ¡calculate!
+analysis = nn.get('NEURAL_NETWORK_ANALYSIS');
+value = analysis(convertCharsToStrings(nn.get('IndexAnalysisResult')) == 'neural_network');
 
-nn.X_tblTrain = X_tblTrain;
-nn.y_tblTrain = y_tblTrain;
-nn.X_tblTest = X_tblTest;
-nn.y_tblTest = y_tblTest;
+%% ¡props_update!
+%%% ¡prop!
+NEURAL_NETWORK_ANALYSIS (result, cell) is the neural network trained from this analysis.
+%%%% ¡calculate!
+value = calculate_results(nn);
+%value = neural_network;
 
+%% ¡methods!
 
-% specify the parameters and layers
-numFeatures = size(dataset, 2) - 1;
-numClasses = numel(classNames);
-layers = [
-    %featureInputLayer(numFeatures,'Normalization', 'zscore','Name','input')
-    imageInputLayer([1 1 numFeatures],'Normalization', 'zscore','Name','input')
-    fullyConnectedLayer(floor(1.5*numFeatures),'Name','fc1')
-    batchNormalizationLayer('Name','batchNormalization1')
-    fullyConnectedLayer(floor(1.5*numFeatures),'Name','fc2')
-    batchNormalizationLayer('Name','batchNormalization2')
-    reluLayer('Name','relu1')
-    fullyConnectedLayer(numClasses,'Name','fc3')
-    softmaxLayer('Name','sfmax1')
-    classificationLayer('Name','output')];
-lgraph = layerGraph(layers);
-plot(lgraph)
-miniBatchSize = 16;
+function value = calculate_results(nn)
+    % import the data
+    g_dict = nn.get('G_DICT');
 
-options = trainingOptions('sgdm', ...
-    'MiniBatchSize',miniBatchSize, ...
-    'Shuffle','every-epoch', ...
-    'Plots','training-progress', ...
-    'Verbose',false);
+    gr1 = nn.get('GR1');
+    label = [];
+    for i = 1:1:gr1.get('SUB_DICT').length()
+        sub = gr1.get('SUB_DICT').getItem(i);
+        g = GraphWU( ...
+            'ID', ['g ' sub.get('ID')], ...
+            'B', Callback('EL', sub, 'TAG', 'CON') ...
+            );
+        g_dict.add(g)
+        label =[label string(gr1.get('ID'))];
+    end
 
-% fit the model
-net = trainNetwork(X_tblTrain, y_tblTrain, layers, options);
+    gr2 = nn.get('GR2');
+    for i = 1:1:gr2.get('SUB_DICT').length()
+        sub = gr2.get('SUB_DICT').getItem(i);
+        g = GraphWU( ...
+            'ID', ['g ' sub.get('ID')], ...
+            'B', Callback('EL', sub, 'TAG', 'CON') ...
+            );
+        g_dict.add(g)
+        label =[label string(gr2.get('ID'))];
+    end
 
-% save the trained net
-nn_binary_format = nn.net_binary_transformer(net);
-
-% get prediction accuracy on training set
-YPred = classify(net, nn.X_tblTrain);
-YTest = y_tblTrain;
-nn.training_accuracy = sum(YPred == YTest)/numel(YTest);
-
-% get prediction accuracy on test set
-YPred = classify(net, X_tblTest);
-YTest = y_tblTest;
-nn.test_accuracy = sum(YPred == YTest)/numel(YTest);
-
-value = num2cell(nn_binary_format);
-
-if(~isempty(dataset))
+    % flattern the input
+    dataset = cellfun(@(x) x.get('A'), g_dict.getItems(), 'UniformOutput', true);
     dataset = cellfun(@(x) triu(x, 1), dataset, 'UniformOutput', false);
     dataset = cellfun(@(x) nonzeros(x(:)), dataset, 'UniformOutput', false);
     dataset = array2table(cell2mat(dataset)');
@@ -149,8 +123,8 @@ if(~isempty(dataset))
 
     % get classes
     dataset = convertvars(dataset,'DX', 'categorical');
-    classNames = categories(dataset{:,end})
-    nn.class_name = classNames;
+    class_names = categories(dataset{:,end})
+
     % split the datset into training and test set
     numObservations = size(dataset, 1);
     numObservationsTrain = floor(0.9*numObservations);
@@ -170,17 +144,10 @@ if(~isempty(dataset))
     X_tblTest = tblTest{:, 1:end-1};
     X_tblTest = reshape(X_tblTest', [1, 1, size(X_tblTest,2), size(X_tblTest,1)]);
 
-    nn.X_tblTrain = X_tblTrain;
-    nn.y_tblTrain = y_tblTrain;
-    nn.X_tblTest = X_tblTest;
-    nn.y_tblTest = y_tblTest;
-
-
     % specify the parameters and layers
     numFeatures = size(dataset, 2) - 1;
-    numClasses = numel(classNames);
+    numClasses = numel(class_names);
     layers = [
-        %featureInputLayer(numFeatures,'Normalization', 'zscore','Name','input')
         imageInputLayer([1 1 numFeatures],'Normalization', 'zscore','Name','input')
         fullyConnectedLayer(floor(1.5*numFeatures),'Name','fc1')
         batchNormalizationLayer('Name','batchNormalization1')
@@ -204,37 +171,25 @@ if(~isempty(dataset))
     net = trainNetwork(X_tblTrain, y_tblTrain, layers, options);
 
     % save the trained net
-    nn_binary_format = nn.net_binary_transformer(net);
+    neural_network = nn.net_binary_transformer(net);
 
     % get prediction accuracy on training set
-    YPred = classify(net, nn.X_tblTrain);
+    YPred = classify(net, X_tblTrain);
     YTest = y_tblTrain;
-    nn.training_accuracy = sum(YPred == YTest)/numel(YTest);
+    training_accuracy = sum(YPred == YTest)/numel(YTest);
 
     % get prediction accuracy on test set
     YPred = classify(net, X_tblTest);
     YTest = y_tblTest;
-    nn.test_accuracy = sum(YPred == YTest)/numel(YTest);
+    test_accuracy = sum(YPred == YTest)/numel(YTest);
 
-    value = nn_binary_format;
-else
-    value = [];
-end
-%% ¡methods!
-function accuracy = getTrainingAccuracy(nn)
-    accuracy = nn.training_accuracy
-end
-
-function accuracy = getTestAccuracy(nn)
-    accuracy = nn.test_accuracy
-end
-
-function class_name = getClassName(nn)
-    class_name = nn.class_name
+    % return all the values
+    value = {neural_network, X_tblTrain, y_tblTrain, X_tblTest, y_tblTest, class_names, training_accuracy, test_accuracy};
 end
 
 function m = getTrainingConfusionMatrix(nn)
-    YPred = classify(cell2mat(nn.get('NEURAL_NETWORK')), nn.X_tblTrain);
+    net = net_obj_transformer(nn.get('trained_net'));
+    YPred = classify(net, nn.get('trained_net'));
 	YTest = nn.y_tblTrain;
     % plot result
     [m,order] = confusionmat(YTest,YPred)
@@ -246,7 +201,8 @@ function m = getTrainingConfusionMatrix(nn)
 end
 
 function m = getTestConfusionMatrix(nn)
-    YPred = classify(cell2mat(nn.get('NEURAL_NETWORK')), nn.X_tblTest);
+    net = net_obj_transformer(nn.get('NEURAL_NETWORK'));
+    YPred = classify(net, nn.X_tblTest);
 	YTest = nn.y_tblTest;
     % plot result
     [m,order] = confusionmat(YTest,YPred)
@@ -257,22 +213,6 @@ function m = getTestConfusionMatrix(nn)
         'ColumnSummary','column-normalized');
 end
 
-function tbl = getTrainingTable(nn)
-    tbl = nn.X_tblTrain
-end
-
-function tbl = getTrainingLable(nn)
-    tbl = nn.y_tblTrain
-end
-
-function tbl = getTestTable(nn)
-    tbl = nn.X_tblTest
-end
-
-function tbl = getTestLable(nn)
-    tbl = nn.y_tblTest
-end
-
 function nn_obj_format = net_obj_transformer(nn)
     filename = 'nn.onnx';
     fileID = fopen(filename,'w');
@@ -281,6 +221,7 @@ function nn_obj_format = net_obj_transformer(nn)
     nn_obj_format = importONNXNetwork(filename,'OutputLayerType','classification','Classes',string(nn.class_name));
     delete nn.onnx
 end
+
 %% ¡tests!
 
 %%% ¡test!
