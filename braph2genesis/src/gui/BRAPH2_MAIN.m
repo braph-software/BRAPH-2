@@ -50,20 +50,8 @@ warning('on', 'all')
         update_listbox()
     end
     function update_position(~, ~)
-        pos = get_figure_position();
-        x = pos(1);
-        y = pos(2);
-        w = pos(3);
-        h = pos(4);
-        
-        
-        jhPanel.setLocation(1, 1);
-        jhPanel.setSize(1,1);
+        set(hContainer,'units','norm', 'position', [0.02 0.65 0.46 .05]);
     end
-    function pos = get_figure_position()
-        pos = getpixelposition(f); %// gives x left, y bottom, width, height
-    end
-
 
 % list
 workflow_list = uicontrol( ...
