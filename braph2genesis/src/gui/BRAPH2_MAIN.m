@@ -1,6 +1,6 @@
 function BRAPH2_MAIN(varargin)
 % constants
-f_position = get_from_varargin([.02 .1 .5 .65], 'Position', varargin);
+f_position = get_from_varargin([.02 .1 .4 .65], 'Position', varargin);
 name = 'BRAPH 2.0';
 BKGCOLOR = get_from_varargin([1 .9725 .929], 'BackgroundColor', varargin);
 close_request = 1; % true
@@ -38,6 +38,60 @@ f = init();
     end
 
 % main
+
+% rotate
+panel_rotate = uipanel( ...
+    'Parent', f, ...
+    'Units', 'normalized', ...
+    'Position', [.02 .1 .56 .5], ...
+    'BackgroundColor', BKGCOLOR,...
+    'BorderType', 'none');
+
+ui_checkbox_bottom_animation = uicontrol(f, 'Style', 'checkbox', 'Visible', 'off', 'Value', true);
+pl = PlotBrainSurface('SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
+pl.set(...
+    'AXESCOLOR', BKGCOLOR, ...
+    'LIGHTING', 'phong', ...
+    'MATERIAL', 'shiny', ...
+    'CAMLIGHT', 'left', ...
+    'SHADING', 'interp', ...
+    'COLORMAP', autumn)
+h_panel = pl.draw('Parent', panel_rotate, 'Units', 'normalized', 'Position', [.0 .0 1 1], 'BackgroundColor', BKGCOLOR);
+a = get(h_panel, 'Children');
+pl_axes = a;
+axis off
+pl.set('axis', false);
+count = 0;
+direction = 1;
+    function rotate()
+        try
+            while get(ui_checkbox_bottom_animation, 'Value')
+                if count > 100 % every 10s change direction
+                    direction  = direction * -1;
+                    count = 0;
+                end
+                camorbit(pl_axes, 3 * direction, 3 * direction, 'camera')
+                drawnow
+                pause(0.1)
+                count = count + 1;
+            end
+        catch
+            % nothing
+        end
+    end
+
+% logo
+panel_logo = uipanel( ...
+    'Parent', f, ...
+    'Units', 'normalized', ...
+    'Position', [.62 .75 .2 .2], ...
+    'BackgroundColor', BKGCOLOR,...
+    'BorderType', 'none');
+logo = imread([fileparts(which('braph2')) filesep 'src' filesep 'util' filesep 'head_main.png']);
+pax = axes(panel_logo);
+image(pax, logo);
+axis off
+
 % search
 warning('off', 'all')
 jPanelObj = com.mathworks.widgets.SearchTextField('Enter search filter:');
@@ -51,7 +105,7 @@ warning('on', 'all')
         update_listbox()
     end
     function update_position(~, ~)
-        set(hContainer,'units','norm', 'position', [0.02 0.65 0.46 .05]);
+        set(hContainer,'units','norm', 'position', [0.62 0.65 0.3 .05]);
     end
 
 % list
@@ -59,7 +113,7 @@ workflow_list = uicontrol( ...
     'Parent', f, ...
     'Style', 'listbox', ...
     'Units', 'normalized', ...
-    'Position', [.02 .1 .46 .5], ...
+    'Position', [.62 .1 .36 .5], ...
     'String', '', ...
     'Callback', {@cb_wf_list_box});
 
@@ -183,58 +237,6 @@ descriptions = [];
         set(hListbox, 'Tooltip',msgStr);
     end  
 
-% logo
-panel_logo = uipanel( ...
-    'Parent', f, ...
-    'Units', 'normalized', ...
-    'Position', [.2 .75 .6 .25], ...
-    'BackgroundColor', BKGCOLOR,...
-    'BorderType', 'none');
-logo = imread([fileparts(which('braph2')) filesep 'src' filesep 'util' filesep 'head_main.png']);
-pax = axes(panel_logo);
-image(pax, logo);
-axis off
-
-% rotate
-panel_rotate = uipanel( ...
-    'Parent', f, ...
-    'Units', 'normalized', ...
-    'Position', [.52 .1 .46 .5], ...
-    'BackgroundColor', BKGCOLOR,...
-    'BorderType', 'none');
-
-ui_checkbox_bottom_animation = uicontrol(f, 'Style', 'checkbox', 'Visible', 'off', 'Value', true);
-pl = PlotBrainSurface('SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
-pl.set(...
-    'AXESCOLOR', BKGCOLOR, ...
-    'LIGHTING', 'phong', ...
-    'MATERIAL', 'shiny', ...
-    'CAMLIGHT', 'left', ...
-    'SHADING', 'interp', ...
-    'COLORMAP', autumn)
-h_panel = pl.draw('Parent', panel_rotate, 'Units', 'normalized', 'Position', [.0 .0 1 1], 'BackgroundColor', BKGCOLOR);
-a = get(h_panel, 'Children');
-pl_axes = a;
-axis off
-pl.set('axis', false);
-count = 0;
-direction = 1;
-    function rotate()        
-        try        
-            while get(ui_checkbox_bottom_animation, 'Value')
-                if count > 100 % every 10s change direction
-                    direction  = direction * -1;
-                    count = 0;
-                end                
-                camorbit(pl_axes, 3 * direction, 3 * direction, 'camera')                
-                drawnow
-                pause(0.1)
-                count = count + 1;
-            end
-        catch
-            % nothing
-        end
-    end
 
 % menu
 menu()
