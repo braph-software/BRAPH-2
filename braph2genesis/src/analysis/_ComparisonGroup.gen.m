@@ -29,6 +29,11 @@ C (data, item) is the group-based comparison.
 'CompareGroup'
 
 %%% ¡prop!
+MEASUREPARAM(data, item) is the example measure parameters 
+%%%% ¡settings!
+'Measure'
+
+%%% ¡prop!
 DIFF (result, cell) is the group comparison value.
 %%%% ¡calculate!
 [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp);
@@ -77,14 +82,25 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
         return
     end
     
+    core_measure = me.get('MEASUREPARAM');
+    % get parameters from core measure
+    j = 1;
+    if Measure.getPropNumber() ~= core_measure.getPropNumber()
+        for i = Measure.getPropNumber() + 1:core_measure.getPropNumber()
+            varargin{j} = core_measure.getPropTag(i);
+            varargin{j + 1} = core_measure.getr(i);
+            j = j + 2;
+        end
+    end
+    
     c = cp.get('C');
     verbose = c.get('VERBOSE');
     interruptible = c.get('INTERRUPTIBLE');
     memorize = c.get('MEMORIZE');
 
     % Measure for groups 1 and 2, and their difference
-    m1 = c.get('A1').get('G').getMeasure(measure_class).memorize('M');
-    m2 = c.get('A2').get('G').getMeasure(measure_class).memorize('M');
+    m1 = c.get('A1').get('G').getMeasure(measure_class, varargin{:}).memorize('M');
+    m2 = c.get('A2').get('G').getMeasure(measure_class, varargin{:}).memorize('M');
     diff = cellfun(@(x, y) y - x, m1, m2, 'UniformOutput', false);
 
     % Permutations

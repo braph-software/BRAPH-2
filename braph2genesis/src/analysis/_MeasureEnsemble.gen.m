@@ -38,10 +38,12 @@ M (result, cell) is the measure result.
 core_measure = me.get('MEASUREPARAM');
 % get parameters from core measure
 j = 1;
-for i = Measure.getProps():core_measure.getProps()
-    varargin{j} = core_measure.getPropTag(i);
-    varargin{j + 1} = core_measure.getr(i);
-    j = j + 2;
+if Measure.getPropNumber() ~= core_measure.getPropNumber()
+    for i = Measure.getPropNumber() + 1:core_measure.getPropNumber()
+        varargin{j} = core_measure.getPropTag(i);
+        varargin{j + 1} = core_measure.getr(i);
+        j = j + 2;
+    end
 end
 
 m_list = cellfun(@(x) x.getMeasure(me.get('MEASURE'), varargin{:}).get('M'), me.get('A').get('G_DICT').getItems, 'UniformOutput', false);
