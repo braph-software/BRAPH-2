@@ -1,15 +1,11 @@
 function BRAPH2_MAIN(varargin)
 % constants
-<<<<<<< Updated upstream
-f_position = get_from_varargin([.02 .1 .4 .65], 'Position', varargin);
-=======
 screen_size = get(0, 'ScreenSize');
 h_f = screen_size(4) * 0.5;
 w_f = h_f * 1.61;
 x_f = screen_size(3) * 0.3;
 y_f = screen_size(4) * .3; 
 f_position = get_from_varargin([x_f y_f w_f h_f], 'Position', varargin);
->>>>>>> Stashed changes
 name = 'BRAPH 2.0';
 BKGCOLOR = get_from_varargin([1 .9725 .929], 'BackgroundColor', varargin);
 close_request = 1; % true
@@ -21,15 +17,12 @@ f = init();
             'Visible', 'off', ...
             'NumberTitle', 'off', ...
             'Name', name, ...
-<<<<<<< Updated upstream
-            'Units', 'normalized', ...
-=======
             'Units', 'pixels', ...
->>>>>>> Stashed changes
             'Position', f_position, ...
             'Units', 'character', ...
             'MenuBar', 'none', ...
             'DockControls', 'off', ...
+            'Color', BKGCOLOR, ...
             'SizeChangedFcn', {@update_position} ...
             );
         set_icon(f)
@@ -51,10 +44,6 @@ f = init();
     end
 
 % main
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 % rotate
 panel_rotate = uipanel( ...
     'Parent', f, ...
@@ -71,23 +60,11 @@ pl.set(...
     'MATERIAL', 'shiny', ...
     'CAMLIGHT', 'left', ...
     'SHADING', 'interp', ...
-<<<<<<< Updated upstream
-    'COLORMAP', autumn)
-h_panel = pl.draw('Parent', panel_rotate, 'Units', 'normalized', 'Position', [.0 .0 1 1], 'BackgroundColor', BKGCOLOR);
-a = get(h_panel, 'Children');
-pl_axes = a;
-axis off
-pl.set('axis', false);
-=======
     'GRID', false, ...
     'AXIS', false, ...    
     'COLORMAP', autumn)
 h_panel = pl.draw('Parent', panel_rotate, 'Units', 'normalized', 'Position', [.0 .0 1 1], 'BackgroundColor', BKGCOLOR, 'BorderType', 'none');
-a = get(h_panel, 'Children');
-pl_axes = a;
-set(pl_axes, 'COLOR', BKGCOLOR);
-axis off
->>>>>>> Stashed changes
+pl_axes = get(h_panel, 'Children');
 count = 0;
 direction = 1;
     function rotate()
@@ -111,11 +88,7 @@ direction = 1;
 panel_logo = uipanel( ...
     'Parent', f, ...
     'Units', 'normalized', ...
-<<<<<<< Updated upstream
-    'Position', [.62 .75 .2 .2], ...
-=======
-    'Position', [.6 .75 .4 .2], ...
->>>>>>> Stashed changes
+    'Position', [.55 .75 .45 .2], ...
     'BackgroundColor', BKGCOLOR,...
     'BorderType', 'none');
 logo = imread([fileparts(which('braph2')) filesep 'src' filesep 'util' filesep 'head_main.png']);
@@ -136,7 +109,7 @@ warning('on', 'all')
         update_listbox()
     end
     function update_position(~, ~)
-        set(hContainer,'units','norm', 'position', [0.62 0.65 0.3 .05]);
+        set(hContainer,'units','norm', 'position', [0.62 0.65 0.36 .06]);
     end
 
 % list
