@@ -22,14 +22,29 @@ NOTES (metadata, string) are some specific notes about the graph ensemble measur
 MEASURE (data, string) is the measure class.
 
 %%% ¡prop!
+MEASUREPARAM(data, item) is the example measure parameters 
+%%%% ¡settings!
+'Measure'
+
+%%% ¡prop!
 A (data, item) is the ensemble-based graph analysis.
 %%%% ¡settings!
 'AnalyzeEnsemble'
 
+
 %%% ¡prop!
 M (result, cell) is the measure result.
 %%%% ¡calculate!
-m_list = cellfun(@(x) x.getMeasure(me.get('MEASURE')).get('M'), me.get('A').get('G_DICT').getItems, 'UniformOutput', false);
+core_measure = me.get('MEASUREPARAM');
+% get parameters from core measure
+j = 1;
+for i = Measure.getProps():core_measure.getProps()
+    varargin{j} = core_measure.getPropTag(i);
+    varargin{j + 1} = core_measure.getr(i);
+    j = j + 2;
+end
+
+m_list = cellfun(@(x) x.getMeasure(me.get('MEASURE'), varargin{:}).get('M'), me.get('A').get('G_DICT').getItems, 'UniformOutput', false);
 
 if isempty(m_list)
     m_av = {};
