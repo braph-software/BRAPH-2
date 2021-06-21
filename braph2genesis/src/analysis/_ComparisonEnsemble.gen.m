@@ -92,11 +92,14 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     j = 1;
     if Measure.getPropNumber() ~= core_measure.getPropNumber()
         for i = Measure.getPropNumber() + 1:core_measure.getPropNumber()
-            varargin{j} = core_measure.getPropTag(i);
-            varargin{j + 1} = core_measure.getr(i);
+            if ~isa(core_measure.getr(i), 'NoValue')
+                varargin{j} = core_measure.getPropTag(i);
+                varargin{j + 1} = core_measure.getr(i);
+            end
             j = j + 2;
         end
     end
+    varargin(~cellfun('isempty', varargin));
 
     % Pre-calculate and save measures of all subjects
     ms1 = cellfun(@(x) x.getMeasure(measure_class, varargin{:}).memorize('M'), c.get('A1').memorize('G_DICT').getItems, 'UniformOutput', false);

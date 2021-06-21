@@ -87,11 +87,14 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     j = 1;
     if Measure.getPropNumber() ~= core_measure.getPropNumber()
         for i = Measure.getPropNumber() + 1:core_measure.getPropNumber()
-            varargin{j} = core_measure.getPropTag(i);
-            varargin{j + 1} = core_measure.getr(i);
+            if ~isa(core_measure.getr(i), 'NoValue')
+                varargin{j} = core_measure.getPropTag(i);
+                varargin{j + 1} = core_measure.getr(i);
+            end
             j = j + 2;
         end
     end
+    varargin(~cellfun('isempty', varargin));
     
     c = cp.get('C');
     verbose = c.get('VERBOSE');

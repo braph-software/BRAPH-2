@@ -40,7 +40,7 @@ core_measure = me.get('MEASUREPARAM');
 j = 1;
 if Measure.getPropNumber() ~= core_measure.getPropNumber()
     for i = Measure.getPropNumber() + 1:core_measure.getPropNumber()
-        if core_measure.getr(i) ~= NoValue()
+        if ~isa(core_measure.getr(i), 'NoValue')
             varargin{j} = core_measure.getPropTag(i);
             varargin{j + 1} = core_measure.getr(i);
         end
