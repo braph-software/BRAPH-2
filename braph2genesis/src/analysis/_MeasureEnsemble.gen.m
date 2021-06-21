@@ -40,11 +40,14 @@ core_measure = me.get('MEASUREPARAM');
 j = 1;
 if Measure.getPropNumber() ~= core_measure.getPropNumber()
     for i = Measure.getPropNumber() + 1:core_measure.getPropNumber()
-        varargin{j} = core_measure.getPropTag(i);
-        varargin{j + 1} = core_measure.getr(i);
+        if core_measure.getr(i) ~= NoValue()
+            varargin{j} = core_measure.getPropTag(i);
+            varargin{j + 1} = core_measure.getr(i);
+        end
         j = j + 2;
     end
 end
+varargin(~cellfun('isempty', varargin));
 
 m_list = cellfun(@(x) x.getMeasure(me.get('MEASURE'), varargin{:}).get('M'), me.get('A').get('G_DICT').getItems, 'UniformOutput', false);
 
