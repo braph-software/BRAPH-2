@@ -220,7 +220,10 @@ function h_panel = draw(pl, varargin)
             ylabel(pl.h_axes, 'Axial')
             zlabel(pl.h_axes, 'Coronal')
         end
-        set(pl.pp, 'Backgroundcolor', 'w');
+        has_background = get_from_varargin([], 'Backgroundcolor', varargin{:});
+        if isempty(has_background)
+            set(pl.pp, 'Backgroundcolor', 'w');
+        end
         set(pl.h_brain, ...
             'Visible', 'on', ...
             'EdgeColor', pl.get('EDGECOLOR'), ...
