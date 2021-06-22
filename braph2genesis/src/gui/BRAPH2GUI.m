@@ -1,4 +1,4 @@
-function BRAPH2_MAIN(varargin)
+function BRAPH2GUI(varargin)
 % constants
 screen_size = get(0, 'ScreenSize');
 h_f = screen_size(4) * 0.5;
@@ -149,7 +149,7 @@ descriptions = [];
         
         for i = 1: length(workflow_names)
             file_path = files_paths{i};
-            txt = fileread([file_path filesep workflow_names{i} '.m']);
+            txt = fileread([file_path filesep workflow_names{i}]);
             workflow_names{i} = getToken(txt, 'name');
             descriptions{i} = getToken(txt, 'description');
         end
@@ -261,7 +261,7 @@ linkbar()
             'Callback', {@cb_website_btn});
         set(forums_btn, ...
             'Position', [.2 0 .2 .08], ...
-            'Tooltip', 'Click to visit BRAPH 2.0 website', ...
+            'Tooltip', 'Click to visit BRAPH 2.0 forums', ...
             'Cdata', imread('forum_icon.png'), ...
             'BackgroundColor', [1 1 1], ...
             'Callback', {@cb_forum_btn});
