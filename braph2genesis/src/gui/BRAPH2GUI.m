@@ -104,7 +104,7 @@ jAssetComponent = jPanelObj.getComponent;
 if ismac
     hjSearchField = handle(jAssetComponent, 'CallbackProperties');
 elseif isunix
-    % Code to run on Linux platform
+    hjSearchField = handle(jAssetComponent.getComponent(0), 'CallbackProperties');
 elseif ispc
     hjSearchField = handle(jAssetComponent.getComponent(0), 'CallbackProperties');
 else
