@@ -100,10 +100,9 @@ axis off
 warning('off', 'all')
 jPanelObj = com.mathworks.widgets.SearchTextField('Enter search filter:');
 jAssetComponent = jPanelObj.getComponent;
-[jhPanel, hContainer] = javacomponent(jAssetComponent, [20, 375, 350, 25], f); %#ok<JAVCM>
+[jhPanel, hContainer] = javacomponent(jAssetComponent, [20, 375, 350, 25], f); %#ok<ASGLU,JAVCM>
 hjSearchField = handle(jAssetComponent.getComponent(0), 'CallbackProperties');
 set(hjSearchField, 'KeyPressedCallback', {@updateSearch, jPanelObj});
-warning('on', 'all')
 
     function updateSearch(~, ~, ~)  
         update_listbox()
@@ -241,7 +240,6 @@ descriptions = [];
         set(hListbox, 'Tooltip',msgStr);
     end  
 
-
 % menu
 menu()
     function menu()
@@ -315,5 +313,5 @@ update_listbox()
 set(f, 'Visible', 'on')
 set(f, 'Color', BKGCOLOR);
 rotate()
-
+warning('on', 'all')
 end
