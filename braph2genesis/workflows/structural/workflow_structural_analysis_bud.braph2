@@ -1,23 +1,16 @@
-%% ¡header!
-Workflow Structural Analysis BUD
+%% Workflow Structural Analysis BUD
+%
+% This is the workflow script to create an analysis of a group of subjects
+% with structural data and a binary undirected graph using densities.
+% Brain Atlas is set to Desikan Atlas example BrainAtlas. 
+% Group is set to example group. Modify the path of the files to your needs.
 
-%% ¡name!
-Workflow of Structural Analysis BUD
-
-%% ¡description!
- This is the workflow script to create an analysis of a group of subjects
- with structural data and a binary undirected graph using densities.
- Brain Atlas is set to Desikan Atlas example BrainAtlas. 
- Group is set to example group. Modify the path of the files to your needs.
-
-%% ¡brainAtlas!
+%% xxx
 ba = BrainAtlas();
 
-%% ¡groups!
-gr = Group();
+%% xxx
+gr = Group('BA', ba);
 
-%% ¡analysis!
-%%% ¡BUD!
-densities = [0 20 40 60 80 100];
-a_BUD = AnalyzeGroup_ST_BUD('GR', gr, 'DENSITIES', densities);
+%% xxx
+a_BUD = AnalyzeGroup_ST_BUD('GR', gr, 'DENSITIES', [0 20 40 60 80 100]);
 
