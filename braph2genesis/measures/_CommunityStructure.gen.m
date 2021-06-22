@@ -55,7 +55,7 @@ OM_TYPE (data, OPTION) is the objective-function type algorithm (Louvain).
 'modularity'
 
 %%% ¡prop! 
-quality_function (metadata, SCALAR) 
+QUALITY_FUNCTION (metadata, SCALAR) 
 
 %% ¡props_update!
 
@@ -146,7 +146,7 @@ switch lower(community_structure_algorithm)
             Ci_corrected(n_perm) = Ci;  % return order of nodes to the order used at the input stage.
             Ci = Ci_corrected;  % output corrected community assignments
             
-            m.set('quality_function', Q);   % save normalized quality function/modularity
+            m.set('QUALITY_FUNCTION', Q);   % save normalized quality function/modularity
             community_structure = {Ci};
             
         else  % directed graphs
@@ -214,7 +214,7 @@ switch lower(community_structure_algorithm)
             Ci_corrected(n_perm) = Ci;  % return order of nodes to the order used at the input stage.
             Ci = Ci_corrected;  % output corrected community assignments
             
-            m.set('quality_function', Q); % save normalized quality function/modularity
+            m.set('QUALITY_FUNCTION', Q); % save normalized quality function/modularity
             community_structure = {Ci};
         end
         
@@ -321,7 +321,7 @@ switch lower(community_structure_algorithm)
             Q0 = Q;
             Q = trace(OM)/s;  % compute modularity
         end
-        m.set('quality_function', Q);  % save normalized quality function/modularity
+        m.set('QUALITY_FUNCTION', Q);  % save normalized quality function/modularity
         community_structure = {M};
 end
 
