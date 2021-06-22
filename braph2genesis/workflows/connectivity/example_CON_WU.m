@@ -41,6 +41,11 @@ degree_WU2 = a_WU2.getMeasureEnsemble('Degree').get('M');
 degree_av_WU2 = a_WU2.getMeasureEnsemble('DegreeAv').get('M');
 distance_WU2 = a_WU2.getMeasureEnsemble('Distance').get('M');
 
+% core measure setting
+ecc_WU1 = a_WU1.getMeasureEnsemble('Eccentricity');
+ecc_WU1.set('MEASUREPARAM', Eccentricity('rule', 'subgraphs')); 
+ecc_WU1.get('M');
+
 % comparison
 c_WU = CompareEnsemble( ...
     'P', 10, ...
