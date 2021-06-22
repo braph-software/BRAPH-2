@@ -53,7 +53,7 @@ omega (parameter, SCALAR) is the inter-layer coupling parameter.
 1
 
 %%% ¡prop! 
-S0 (data, rvector) is the initial partition size of the multilayer modularity matrix.
+S0 (data, cvector) is the initial partition size of the multilayer modularity matrix.
 %%%% ¡default!
 []
 
