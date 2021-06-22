@@ -101,7 +101,15 @@ warning('off', 'all')
 jPanelObj = com.mathworks.widgets.SearchTextField('Enter search filter:');
 jAssetComponent = jPanelObj.getComponent;
 [jhPanel, hContainer] = javacomponent(jAssetComponent, [20, 375, 350, 25], f); %#ok<ASGLU,JAVCM>
-hjSearchField = handle(jAssetComponent.getComponent(0), 'CallbackProperties');
+if ismac
+    hjSearchField = handle(jAssetComponent, 'CallbackProperties');
+elseif isunix
+    % Code to run on Linux platform
+elseif ispc
+    hjSearchField = handle(jAssetComponent.getComponent(0), 'CallbackProperties');
+else
+    disp('Platform not supported')
+end
 set(hjSearchField, 'KeyPressedCallback', {@updateSearch, jPanelObj});
 
     function updateSearch(~, ~, ~)  
