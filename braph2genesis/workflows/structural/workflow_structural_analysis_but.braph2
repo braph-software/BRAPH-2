@@ -1,23 +1,16 @@
-%% ¡header!
-Workflow Structural Analysis BUT
+%% Workflow Structural Analysis BUT
+% 
+% This is the workflow script to create an analysis of a group of subjects
+% with structural data and a binary undirected graph using thresholds.
+% Brain Atlas is set to Desikan Atlas example BrainAtlas. 
+% Group is set to example group. Modify the path of the files to your needs.
 
-%% ¡name!
-Workflow of Structural Analysis BUT
-
-%% ¡description!
- This is the workflow script to create an analysis of a group of subjects
- with structural data and a binary undirected graph using thresholds.
- Brain Atlas is set to Desikan Atlas example BrainAtlas. 
- Group is set to example group. Modify the path of the files to your needs.
-
-%% ¡brainAtlas!
+%% BrainAtlas
 ba = BrainAtlas();
 
-%% ¡groups!
-gr = Group();
+%% Groups
+gr = Group(BA', ba);
 
-%% ¡analysis!
-%%% ¡BUT!
-thresholds = [.4 .5 .6 .7];
-a_BUT = AnalyzeGroup_ST_BUT('GR', gr, 'Thresholds', thresholds);
+%% Analysis
+a_BUT = AnalyzeGroup_ST_BUT('GR', gr, 'Thresholds', [.4 .5 .6 .7]);
 

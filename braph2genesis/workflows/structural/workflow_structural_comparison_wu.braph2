@@ -1,29 +1,21 @@
-%% ¡header!
-Workflow Structural Comparison WU
+%% Workflow Structural Comparison WU
+%
+% This is the workflow script to create an analysis of a group of subjects
+% with structural data and a weighted undirected graph.
+% Brain Atlas is set to Desikan Atlas example BrainAtlas. 
+% Group is set to example group. Modify the path of the files to your needs.
 
-%% ¡name!
-Workflow of Structural Comparison WU
-
-%% ¡description!
- This is the workflow script to create an analysis of a group of subjects
- with structural data and a weighted undirected graph.
- Brain Atlas is set to Desikan Atlas example BrainAtlas. 
- Group is set to example group. Modify the path of the files to your needs.
-
-%% ¡brainAtlas!
+%% BrainAtlas
 ba = BrainAtlas();
 
-%% ¡groups!
-gr1 = Group();
-gr2 = Groups();
+%% Groups
+gr1 = Group('BA', ba);
+gr2 = Group('BA', ba);
 
-%% ¡analysis!
-%%% ¡WU!
+%% Analysis
 a_WU1 = AnalyzeGroup_ST_WU('GR', gr1);
 a_WU2 = AnalyzeGroup_ST_WU('GR', gr2);
 
 %% ¡comparison!
-%%% ¡WU!
-
 c_WU = CompareGroup('P', 10, 'A1', a_WU1, 'A2', a_WU2, 'VERBOSE', true, 'MEMORIZE', true);
 

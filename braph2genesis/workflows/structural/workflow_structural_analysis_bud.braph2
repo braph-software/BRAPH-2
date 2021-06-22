@@ -5,12 +5,12 @@
 % Brain Atlas is set to Desikan Atlas example BrainAtlas. 
 % Group is set to example group. Modify the path of the files to your needs.
 
-%% xxx
+%% BrainAtlas
 ba = BrainAtlas();
 
-%% xxx
+%% Groups
 gr = Group('BA', ba);
 
-%% xxx
+%% Analysis
 a_BUD = AnalyzeGroup_ST_BUD('GR', gr, 'DENSITIES', [0 20 40 60 80 100]);
 

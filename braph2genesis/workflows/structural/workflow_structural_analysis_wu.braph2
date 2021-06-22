@@ -1,22 +1,16 @@
-%% ¡header!
-Workflow Structural Analysis WU
+%% Workflow Structural Analysis WU
+%
+% This is the workflow script to create an analysis of a group of subjects
+% with structural data and a weighted undirected graph.
+% Brain Atlas is set to Desikan Atlas example BrainAtlas. 
+% Group is set to example group. Modify the path of the files to your needs.
 
-%% ¡name!
-Workflow of Structural Analysis WU
-
-%% ¡description!
- This is the workflow script to create an analysis of a group of subjects
- with structural data and a weighted undirected graph.
- Brain Atlas is set to Desikan Atlas example BrainAtlas. 
- Group is set to example group. Modify the path of the files to your needs.
-
-%% ¡brainAtlas!
+%% BrainAtlas
 ba = BrainAtlas();
 
-%% ¡groups!
-gr = Group();
+%% Groups
+gr = Group('BA', ba);
 
-%% ¡analysis!
-%%% ¡WU!
+%% Analysis
 a_WU = AnalyzeGroup_ST_WU('GR', gr);
 
