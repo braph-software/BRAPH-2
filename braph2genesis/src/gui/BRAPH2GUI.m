@@ -131,17 +131,12 @@ descriptions = [];
     end
     function update_listbox()
         workflows_path = [fileparts(which('braph2.m')) filesep 'workflows'];
-        files = subdir(fullfile(workflows_path, '*.m'));
+        files = subdir(fullfile(workflows_path, '*.braph2'));
         files_array = struct2cell(files);
         files_names = files_array(1, :); 
         files_paths = files_array(2, :);
-        
-        workflow_indices = cell2mat(cellfun(@(x) contains(x, 'workflow_'), files_names, 'UniformOutput', false));
-        
-        workflow_names = files_names(workflow_indices);
-        paths = files_paths(workflow_indices);
-        
-        workflow_names = cellfun(@(x, y) erase(x, [y filesep()]), workflow_names, paths, 'UniformOutput', false);
+
+        workflow_names = cellfun(@(x, y) erase(x, [y filesep()]), files_names, files_paths, 'UniformOutput', false);
         workflow_names = cellfun(@(x) erase(x, '.m'), workflow_names, 'UniformOutput', false);
         
         if ~isempty(jPanelObj.getSearchText.toCharArray')
@@ -153,10 +148,10 @@ descriptions = [];
         % open and find name and description
         
         for i = 1: length(workflow_names)
-            file_path = paths{i};
+            file_path = files_paths{i};
             txt = fileread([file_path filesep workflow_names{i} '.m']);
-            workflow_names{i} = getToken(txt, 'Name');
-            descriptions{i} = getToken(txt, 'Description', 'Short');
+            workflow_names{i} = getToken(txt, 'name');
+            descriptions{i} = getToken(txt, 'description');
         end
         
         set(workflow_list, 'String', workflow_names)
