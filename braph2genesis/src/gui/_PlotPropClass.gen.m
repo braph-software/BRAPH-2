@@ -45,6 +45,10 @@ function h_panel = draw(pl, varargin)
             'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
             'Callback', {@cb_popupmenu_value} ...
             );
+        
+        if el.isLocked(prop)
+            set(pl.popupmenu_value, 'Enable', 'off');
+        end
     end
 
     % callback
@@ -88,6 +92,10 @@ function update(pl)
             value = el.getr(prop);
             if isa(value, 'Callback')
                 set(pl.popupmenu_value, 'Enable', pl.get('ENABLE'))
+            end
+            
+            if el.isLocked(prop)
+                set(pl.popupmenu_value, 'Enable', 'off');
             end
 
         case Category.RESULT

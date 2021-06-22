@@ -46,6 +46,7 @@ PLOT_SYMBOL_TAG = { ...
 
 PLOT_ID_FONT_INTREPETER = { ...
     'none' ...
+    'tex' ...
     'latex' ...
     }
 
@@ -345,14 +346,14 @@ else
 end
 
 SYMS_FACE_COLOR = pl.get('SYMS_FACE_COLOR');
-if any(SYMS_FACE_COLOR, 'all') && length(SYMS_FACE_COLOR) == pl.get('ATLAS').get('BR_DICT').length
+if any(any(SYMS_FACE_COLOR)) && length(SYMS_FACE_COLOR) == pl.get('ATLAS').get('BR_DICT').length
     % pass the vector as it is
 else
     SYMS_FACE_COLOR = repmat(SYMS_FACE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 SYMS_EDGE_COLOR = pl.get('SYMS_EDGE_COLOR');
-if any(SYMS_EDGE_COLOR, 'all') && length(SYMS_EDGE_COLOR) == pl.get('ATLAS').get('BR_DICT').length
+if any(any(SYMS_EDGE_COLOR)) && length(SYMS_EDGE_COLOR) == pl.get('ATLAS').get('BR_DICT').length
     % pass the vector as it is
 else
     SYMS_EDGE_COLOR = repmat(SYMS_EDGE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
@@ -374,14 +375,14 @@ else
 end
 
 SPHS_FACE_COLOR = pl.get('SPHS_FACE_COLOR');
-if any(SPHS_FACE_COLOR, 'all') && length(SPHS_FACE_COLOR) == pl.get('ATLAS').get('BR_DICT').length
+if any(any(SPHS_FACE_COLOR)) && length(SPHS_FACE_COLOR) == pl.get('ATLAS').get('BR_DICT').length
     % pass the vector as it is
 else
     SPHS_FACE_COLOR = repmat(SPHS_FACE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
 end
 
 SPHS_EDGE_COLOR = pl.get('SPHS_FACE_COLOR');
-if any(SPHS_EDGE_COLOR, 'all') && length(SPHS_EDGE_COLOR) == pl.get('ATLAS').get('BR_DICT').length
+if any(any(SPHS_EDGE_COLOR)) && length(SPHS_EDGE_COLOR) == pl.get('ATLAS').get('BR_DICT').length
     % pass the vector as it is
 else
     SPHS_EDGE_COLOR = repmat(SPHS_EDGE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
@@ -417,7 +418,7 @@ else
 end
 
 IDS_FONT_COLOR = pl.get('IDS_FONT_COLOR');
-if any(IDS_FONT_COLOR, 'all') && length(IDS_FONT_COLOR) == pl.get('ATLAS').get('BR_DICT').length
+if any(any(IDS_FONT_COLOR)) && length(IDS_FONT_COLOR) == pl.get('ATLAS').get('BR_DICT').length
     % pass the vector as it is
 else
     IDS_FONT_COLOR = repmat(IDS_FONT_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
@@ -439,7 +440,7 @@ else
 end
 
 LABS_FONT_COLOR = pl.get('LABS_FONT_COLOR');
-if any(LABS_FONT_COLOR, 'all') && length(LABS_FONT_COLOR) == pl.get('ATLAS').get('BR_DICT').length
+if any(any(LABS_FONT_COLOR)) && length(LABS_FONT_COLOR) == pl.get('ATLAS').get('BR_DICT').length
     % pass the vector as it is
 else
     LABS_FONT_COLOR = repmat(LABS_FONT_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
