@@ -6,7 +6,7 @@ w_f = h_f * 1.61;
 x_f = screen_size(3) * 0.3;
 y_f = screen_size(4) * .3; 
 f_position = get_from_varargin([x_f y_f w_f h_f], 'Position', varargin);
-name = 'BRAPH 2.0';
+name = 'BRAPH 2.0 - Brain Analysis using Graph Theory';
 BKGCOLOR = get_from_varargin([1 .9725 .929], 'BackgroundColor', varargin);
 close_request = 1; % true
 
@@ -137,7 +137,6 @@ descriptions = [];
         files_paths = files_array(2, :);
 
         workflow_names = cellfun(@(x, y) erase(x, [y filesep()]), files_names, files_paths, 'UniformOutput', false);
-        workflow_names = cellfun(@(x) erase(x, '.m'), workflow_names, 'UniformOutput', false);
         
         if ~isempty(jPanelObj.getSearchText.toCharArray')
             filter = jPanelObj.getSearchText.toCharArray';
@@ -232,7 +231,7 @@ descriptions = [];
         hoverValue = descriptions{hoverIndex};
         % Modify the tooltip based on the hovered item
         msgStr = sprintf('<html><b>%s</b></html>', hoverValue);
-        set(hListbox, 'Tooltip',msgStr);
+        set(hListbox, 'Tooltip', msgStr);
     end  
 
 % menu
