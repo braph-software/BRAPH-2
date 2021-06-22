@@ -227,7 +227,7 @@ while (isa(M,'function_handle'))  % loop around each "pass" (in language of Blon
         Q = full(Q);
         clear('group_handler');
         clear('metanetwork_reduce');
-        m.quality_function = Q/twom;  % save normalized quality function
+        m.set('quality_function', Q/twom)  % save normalized quality function
         S = reshape(S, N(1), L);
         multilayer_community_structure = cell(L, 1);
         for li = 1:1:L
@@ -281,7 +281,7 @@ while ~isequal(Sb, S2)  % loop around each "pass" (in language of Blondel et al)
     if isequal(Sb,S2)
         P = sparse(y,1:length(y),1);
         Q = full(sum(sum((P*M).*P)));
-        % m.quality_function = Q/twom;  % save normalized quality function
+        m.set('quality_function', Q/twom);  % save normalized quality function
         S = reshape(S, N(1), L);
         multilayer_community_structure = cell(L, 1);
         for li = 1:1:L
@@ -294,7 +294,7 @@ while ~isequal(Sb, S2)  % loop around each "pass" (in language of Blondel et al)
     M = m.metanetwork(OM, S2);
     y = unique(S2);  % unique also puts elements in ascending order
 end
-m.set('quality_function') = Q/twom;  % save normalized quality function
+m.set('quality_function', Q/twom);  % save normalized quality function
 S = reshape(S, N(1), L);
 multilayer_community_structure = cell(L, 1);
 for li = 1:1:L

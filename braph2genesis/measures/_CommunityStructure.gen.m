@@ -146,7 +146,7 @@ switch lower(community_structure_algorithm)
             Ci_corrected(n_perm) = Ci;  % return order of nodes to the order used at the input stage.
             Ci = Ci_corrected;  % output corrected community assignments
             
-            mo.quality_function = Q;  % save normalized quality function/modularity
+            m.set('quality_function', Q);   % save normalized quality function/modularity
             community_structure = {Ci};
             
         else  % directed graphs
@@ -214,7 +214,7 @@ switch lower(community_structure_algorithm)
             Ci_corrected(n_perm) = Ci;  % return order of nodes to the order used at the input stage.
             Ci = Ci_corrected;  % output corrected community assignments
             
-            mo.quality_function = Q;  % save normalized quality function/modularity
+            m.set('quality_function', Q); % save normalized quality function/modularity
             community_structure = {Ci};
         end
         
