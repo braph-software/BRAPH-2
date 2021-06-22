@@ -88,7 +88,7 @@ function [handles,levels,parentIdx,listing] = findjobj(container,varargin) %#ok<
 %    Please send to Yair Altman (altmany at gmail dot com)
 %
 % Change log:
-%    2019-12-15: Fix for changed warning IDs in R2019b; removed javacomponent warning; added promo message
+%    2019-12-15: Fix for changed warning IDs in R2019b; removed javacomponent warning;
 %    2019-07-03: Additional fix for R2018b; added separate findjobj_fast utility
 %    2018-09-21: Fix for R2018b suggested by Eddie (FEX); speedup suggested by Martin Lehmann (FEX); alert if trying to use with uifigure
 %    2017-04-13: Fixed two edge-cases (one suggested by H. Koch)
@@ -153,7 +153,7 @@ function [handles,levels,parentIdx,listing] = findjobj(container,varargin) %#ok<
     % Ensure Java AWT is enabled
     error(javachk('awt'));
 
-    persistent pContainer pHandles pLevels pParentIdx pPositions promo
+    persistent pContainer pHandles pLevels pParentIdx pPositions
 
     try
         % Initialize
@@ -172,21 +172,6 @@ function [handles,levels,parentIdx,listing] = findjobj(container,varargin) %#ok<
 
         % Force an EDT redraw before processing, to ensure all uicontrols etc. are rendered
         drawnow;  pause(0.02);
-
-        % Display promo (just once!)
-        if isempty(promo)
-            msg = 'If you need expert assistance with Matlab GUI, consider my professional consulting/training services';
-            website = 'https://undocumentedmatlab.com';
-            msg = [msg ' (' website ')'];
-            if ~isdeployed
-                link = ['<a href="' website];
-                msg = regexprep(msg,website,[link '">$0</a>']);
-                msg = regexprep(msg,{'consulting','training'},[link '/$0">$0</a>']);
-            end
-            %warning('YMA:findjobj:promo',msg);
-            disp(['[' 8 msg ']' 8]);
-            promo = true;
-        end
 
         % Default container is the current figure's root panel
         if nargin
