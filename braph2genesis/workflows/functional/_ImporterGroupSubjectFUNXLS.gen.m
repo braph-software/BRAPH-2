@@ -131,7 +131,7 @@ function uigetdir(im)
     % UIGETDIR opens a dialog box to set the directory from where to load the XLS/XLSX files of the FUN subject group.
 
     directory = uigetdir('Select directory');
-    if isfolder(directory)
+    if ischar(directory) && isfolder(directory)
         im.set('DIRECTORY', directory);
     end
 end
