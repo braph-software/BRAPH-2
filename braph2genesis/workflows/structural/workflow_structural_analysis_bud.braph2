@@ -6,10 +6,10 @@
 % Group is set to example group. Modify the path of the files to your needs.
 
 %% BrainAtlas
-ba = BrainAtlas();
+ba = ImporterBrainAtlasXLS().get('BA');
 
-%% Groups
-gr = Group();
+%% Group
+gr = ImporterGroupSubjectSTXLS('BA', ba).get('GR');
 
 %% Analysis
 a_BUD = AnalyzeGroup_ST_BUD('GR', gr, 'DENSITIES', [0 20 40 60 80 100]);
