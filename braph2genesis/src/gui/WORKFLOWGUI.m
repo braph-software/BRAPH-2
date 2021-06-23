@@ -104,7 +104,7 @@ init_atlas_panel()
                 'Style', 'pushbutton', ...
                 'String', 'BrainAtlas', ...
                 'Units', 'normalized', ...
-                'Position', [.3 .7 .3 .08], ...
+                'Position', [.3 .75 .3 .08], ...
                 'Callback', {@cb_atlas_btn} ...
                 )
         end
@@ -112,7 +112,7 @@ init_atlas_panel()
     end
     function cb_atlas_btn(~, ~)
         executable = split(atlas_vars{2}, '=');
-        eval(['ba = ' executable{2}])        
+        ba = eval([executable{2}]);   
         if ~isempty(ba) && isa(ba, 'BrainAtlas')
            GUI(ba)
            enable_panel(group_panel)
@@ -147,10 +147,10 @@ init_group_panel()
                 'Position', [.3 .9 .3 .08] ...
                 )
             
-            inner_panel_height = .7 / length(group_vars);
+            inner_panel_height = .8 / (length(group_vars) - 1);
             for k = 2:length(group_vars)
-                y_correction = 0.05;
-                inner_panel_y = 1 - k * inner_panel_height + y_correction;
+                y_correction = (k-1) * 0.05;
+                inner_panel_y = inner_panel_height - y_correction;
                 set(ui_group_btns(k), ...
                 'Style', 'pushbutton', ...
                 'String', ['Group ' num2str(k - 1)], ...
@@ -164,7 +164,7 @@ init_group_panel()
     function cb_group_btn(src, ~)
         source_group = str2double(erase(src.String, 'Group '));
         executable = split(group_vars{source_group + 1}, '=');
-        eval(['grs{source_group} = ' executable{2}])
+        grs{source_group} = eval([executable{2}]);
         GUI(grs{source_group})
         if ~isempty(grs{source_group}) && isa(grs{source_group}, 'Group')
            GUI(grs{source_group})
@@ -193,6 +193,7 @@ disable_panel(analysis_panel)
         childs = get(panel, 'Children');
         for i = 1:length(childs)
             set(childs(i), 'Enable', 'on');
+            set(childs(i), 'BackgroundColor', BKGCOLOR);
         end
     end
     function disable_panel(panel)
@@ -200,6 +201,7 @@ disable_panel(analysis_panel)
         childs = get(panel, 'Children');
         for i = 1:length(childs)
             set(childs(i), 'Enable', 'off');
+            set(childs(i), 'BackgroundColor', [220,220,220]/255);
         end
     end
 end
