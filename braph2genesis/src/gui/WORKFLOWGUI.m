@@ -194,7 +194,7 @@ end
 %declare comparisons
 if cycles > 4
     comparisons_vars = getExecutable(tokens{5});
-    comparisons_ = cell(length(comparisons_vars) - 1 , 1);
+    comparisons_ = struct;
     comparisons_panel = uipanel(analysis_comparisons_panel);
     if length(comparisons_vars) >= 2
         ui_comparisons_panel_name = uicontrol(comparisons_panel);
@@ -291,7 +291,7 @@ init_analysis_panel()
         source_comparison = str2double(erase(src.String, 'Comparison '));
         executable = split(comparisons_vars{source_comparison + 1}, '=');
         for l = 1:length(analysis_)
-            executable{2} = strrep(executable{2}, analysis_(source_comparison).name_script , analysis_(source_comparison).name);
+            executable{2} = strrep(executable{2}, analysis_(l).name_script , analysis_(l).name);
         end        
         
         comparisons_(source_comparison).comparison = eval([executable{2}]);
