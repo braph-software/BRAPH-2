@@ -45,7 +45,10 @@ gr.lock('SUB_CLASS');
 
 % analyzes file
 file = im.memorize('FILE');
-
+if ~isfile(file)
+    im.uigetfile()
+    file = im.memorize('FILE');
+end
 if isfile(file)
     f = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME);
     set_icon(f)
