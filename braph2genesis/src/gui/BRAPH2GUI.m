@@ -3780,7 +3780,6 @@ linkbar()
 % auxiliary
 update_listbox()
 set(f, 'Visible', 'on')
-set(f, 'Color', BKGCOLOR);
 rotate()
 warning('on', 'all')
 end

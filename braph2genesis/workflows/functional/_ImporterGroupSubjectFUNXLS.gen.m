@@ -41,7 +41,11 @@ gr = Group( ...
 gr.lock('SUB_CLASS');
 
 directory = im.get('DIRECTORY');
-
+directory = im.get('DIRECTORY');
+if ~isfolder(directory)
+    im.uigetdir()
+    directory = im.get('DIRECTORY');
+end
 if isfolder(directory)    
     f = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME);
     set_icon(f)
