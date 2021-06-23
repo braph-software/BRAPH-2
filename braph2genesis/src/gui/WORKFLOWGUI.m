@@ -137,8 +137,8 @@ init_group_panel()
             'Units', 'normalized', ...
             'Position', [.33 .02 .33 .96], ...
             'BackgroundColor', BKGCOLOR)
-        if length(group_vars) >= 2
-            
+        
+        if length(group_vars) >= 2            
             set(ui_group_panel_name, ...
                 'Style', 'text', ...
                 'Units', 'normalized', ...
@@ -175,13 +175,56 @@ init_group_panel()
     end
 
 %% analysis / comparison panel
+analysis_vars = getExecutable(tokens{4});
+% declare analysis variables
+analysis_comparisons = cell(length(analysis_vars) - 1 , 1);
 analysis_panel = uipanel(f);
+if length(analysis_vars) >= 2
+    ui_analysis_panel_name = uicontrol(analysis_panel);
+    ui_analysis_btns = zeros(length(analysis_vars) - 1 , 1);
+    for k = 2:length(analysis_vars)
+        ui_analysis_btns(k, 1) = uicontrol(analysis_panel);
+    end    
+end
 init_analysis_panel()
     function init_analysis_panel()
         set(analysis_panel, ...
             'Units', 'normalized', ...
             'Position', [.66 .02 .31 .96], ...
             'BackgroundColor', BKGCOLOR)
+        
+        if length(analysis_vars) >= 2            
+            set(ui_analysis_panel_name, ...
+                'Style', 'text', ...
+                'Units', 'normalized', ...
+                'String', analysis_vars{1}, ...
+                'BackgroundColor', BKGCOLOR, ...
+                'Position', [.3 .9 .3 .08] ...
+                )
+            
+            inner_panel_height = .8 / (length(analysis_vars) - 1);
+            for k = 2:length(analysis_vars)
+                y_correction = (k-1) * 0.05;
+                inner_panel_y = inner_panel_height - y_correction;
+                set(ui_analysis_btns(k), ...
+                'Style', 'pushbutton', ...
+                'String', ['Analsysis/Comparison ' num2str(k - 1)], ...
+                'Units', 'normalized', ...
+                'Position', [.3 inner_panel_y .3 .08], ...
+                'Callback', {@cb_analysis_btn} ...
+                )
+            end
+        end
+    end
+
+    function cb_analysis_btn(src, ~)
+        source_analysis = str2double(erase(src.String, 'Analsysis/Comparison '));
+        executable = split(analysis_vars{source_group + 1}, '=');
+        analysis_comparisons{source_analysis} = eval([executable{2}]);
+        GUI(analysis_comparisons{source_analysis})
+        if ~isempty(analysis_comparisons{source_analysis}) && isa(analysis_comparisons{source_analysis}, 'Element')
+            GUI(analysis_comparisons{source_analysis})
+        end        
     end
 
 %% auxiliary
