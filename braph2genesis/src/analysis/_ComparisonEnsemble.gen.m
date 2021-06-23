@@ -98,8 +98,8 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
             end
             j = j + 2;
         end
+        varargin = varargin(~cellfun('isempty', varargin));
     end
-    varargin(~cellfun('isempty', varargin));
 
     % Pre-calculate and save measures of all subjects
     ms1 = cellfun(@(x) x.getMeasure(measure_class, varargin{:}).memorize('M'), c.get('A1').memorize('G_DICT').getItems, 'UniformOutput', false);

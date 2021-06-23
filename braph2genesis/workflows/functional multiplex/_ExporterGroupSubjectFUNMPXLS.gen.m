@@ -107,7 +107,7 @@ function uigetdir(ex)
     % UIGETDIR opens a dialog box to set the directory where to save the group of subjects with functional data.
 
     directory = uigetdir('Select directory');
-    if isfolder(directory)
+    if ischar(directory) && isfolder(directory)
         ex.set('DIRECTORY', directory);
     end
 end

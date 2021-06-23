@@ -182,6 +182,7 @@ function h_panel = draw(pl, varargin)
         function update_plba()
             el = pl.get('EL');
             plba.set('ATLAS', el);
+            plba.set('SURF', el.get('SURF'));
         end
         function surfs = get_surfs()
             surfs_path = [fileparts(which('braph2.m')) filesep() 'brainsurfs'];
