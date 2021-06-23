@@ -147,9 +147,9 @@ init_group_panel()
                 'Position', [.3 .9 .3 .08] ...
                 )
             
-            inner_panel_height = .8 / (length(group_vars) - 1);
+            inner_panel_height = .8;
             for k = 2:length(group_vars)
-                y_correction = (k-1) * 0.05;
+                y_correction = (k-1) * 0.09;
                 inner_panel_y = inner_panel_height - y_correction;
                 set(ui_group_btns(k), ...
                 'Style', 'pushbutton', ...
@@ -173,11 +173,16 @@ init_group_panel()
         end        
     end
 
-%% analysis / comparison panel
-analysis_vars = getExecutable(tokens{4});
+%% analysis 
 % declare analysis variables
-analysis_comparisons = cell(length(analysis_vars) - 1 , 1);
-analysis_panel = uipanel(f);
+analysis_vars = getExecutable(tokens{4});
+analysis_ = struct;
+analysis_comparisons_panel = uipanel(f, ...
+    'Units', 'normalized', ...
+    'Position', [.66 .02 .31 .96], ...
+    'BackgroundColor', BKGCOLOR);
+
+analysis_panel = uipanel(analysis_comparisons_panel);
 if length(analysis_vars) >= 2
     ui_analysis_panel_name = uicontrol(analysis_panel);
     ui_analysis_btns = zeros(length(analysis_vars) - 1 , 1);
@@ -185,14 +190,29 @@ if length(analysis_vars) >= 2
         ui_analysis_btns(k, 1) = uicontrol(analysis_panel);
     end    
 end
+
+%declare comparisons
+if cycles > 4
+    comparisons_vars = getExecutable(tokens{5});
+    comparisons_ = cell(length(comparisons_vars) - 1 , 1);
+    comparisons_panel = uipanel(analysis_comparisons_panel);
+    if length(comparisons_vars) >= 2
+        ui_comparisons_panel_name = uicontrol(comparisons_panel);
+        ui_comparisons_btns = zeros(length(comparisons_panel) - 1 , 1);
+        for k = 2:length(comparisons_vars)
+            ui_comparisons_btns(k, 1) = uicontrol(comparisons_panel);
+        end
+    end
+end
+
 init_analysis_panel()
     function init_analysis_panel()
         set(analysis_panel, ...
             'Units', 'normalized', ...
-            'Position', [.66 .02 .31 .96], ...
+            'Position', [.02 .02 .96 .96], ...
             'BackgroundColor', BKGCOLOR)
         
-        if length(analysis_vars) >= 2            
+        if length(analysis_vars) >= 2
             set(ui_analysis_panel_name, ...
                 'Style', 'text', ...
                 'Units', 'normalized', ...
@@ -201,31 +221,86 @@ init_analysis_panel()
                 'Position', [.3 .9 .3 .08] ...
                 )
             
-            inner_panel_height = .8 / (length(analysis_vars) - 1);
+            inner_panel_height = .8;
             for k = 2:length(analysis_vars)
-                y_correction = (k-1) * 0.05;
+                y_correction = (k-1) * 0.09;
                 inner_panel_y = inner_panel_height - y_correction;
                 set(ui_analysis_btns(k), ...
-                'Style', 'pushbutton', ...
-                'String', ['Analsysis/Comparison ' num2str(k - 1)], ...
-                'Units', 'normalized', ...
-                'Position', [.02 inner_panel_y .96 .08], ...
-                'Callback', {@cb_analysis_btn} ...
-                )
+                    'Style', 'pushbutton', ...
+                    'String', ['Analsysis ' num2str(k - 1)], ...
+                    'Units', 'normalized', ...
+                    'Position', [.02 inner_panel_y .96 .08], ...
+                    'Callback', {@cb_analysis_btn} ...
+                    )
             end
         end
+        
+        if cycles > 4
+            set(analysis_panel, ...
+                'Units', 'normalized', ...
+                'Position', [.02 .45 .96 .53], ...
+                'BackgroundColor', BKGCOLOR)
+            
+            set(comparisons_panel, ...
+                'Units', 'normalized', ...
+                'Position', [.02 .01 .98 .43], ...
+                'BackgroundColor', BKGCOLOR)
+            
+            if length(comparisons_vars) >= 2
+                set(ui_comparisons_panel_name, ...
+                    'Style', 'text', ...
+                    'Units', 'normalized', ...
+                    'String', comparisons_vars{1}, ...
+                    'BackgroundColor', BKGCOLOR, ...
+                    'Position', [.3 .9 .3 .08] ...
+                    )
+                
+                inner_panel_height = .8 / (length(comparisons_vars) - 1);
+                for k = 2:length(comparisons_vars)
+                    y_correction = (k-1) * 0.09;
+                    inner_panel_y = inner_panel_height - y_correction;
+                    set(ui_comparisons_btns(k), ...
+                        'Style', 'pushbutton', ...
+                        'String', ['Comparison ' num2str(k - 1)], ...
+                        'Units', 'normalized', ...
+                        'Position', [.02 inner_panel_y .96 .08], ...
+                        'Callback', {@cb_comparison_btn} ...
+                        )
+                end
+            end
+            disable_panel(comparisons_panel);
+        end
     end
-
     function cb_analysis_btn(src, ~)
-        source_analysis = str2double(erase(src.String, 'Analsysis/Comparison '));
+        source_analysis = str2double(erase(src.String, 'Analsysis '));
         executable = split(analysis_vars{source_analysis + 1}, '=');
         for l = 1:length(grs)
             executable{2} = strrep(executable{2}, grs(source_analysis).name_script , grs(source_analysis).name);
         end        
-        analysis_comparisons{source_analysis} = eval([executable{2}]);
-        if ~isempty(analysis_comparisons{source_analysis}) && isa(analysis_comparisons{source_analysis}, 'Element')
-            GUI(analysis_comparisons{source_analysis})
+        
+        analysis_(source_analysis).analysis = eval([executable{2}]);
+        analysis_(source_analysis).name = ['analysis_(' num2str(source_analysis) ').analysis'];
+        analysis_(source_analysis).name_script = strtrim(executable{1});
+        
+        if ~isempty(analysis_(source_analysis).analysis) && isa(analysis_(source_analysis).analysis, 'Element')
+            GUI(analysis_(source_analysis).analysis)
+            enable_panel(comparisons_panel);
         end        
+    end
+    function cb_comparison_btn(src, ~)
+        source_comparison = str2double(erase(src.String, 'Comparison '));
+        executable = split(comparisons_vars{source_comparison + 1}, '=');
+        for l = 1:length(analysis_)
+            executable{2} = strrep(executable{2}, analysis_(source_comparison).name_script , analysis_(source_comparison).name);
+        end        
+        
+        comparisons_(source_comparison).comparison = eval([executable{2}]);
+        comparisons_(source_comparison).name = ['comparisons_(' num2str(source_comparison) ').comparison'];
+        comparisons_(source_comparison).name_script = strtrim(executable{1});
+        
+        if ~isempty(comparisons_(source_comparison).comparison) && isa(comparisons_(source_comparison).comparison, 'Element')
+            GUI(comparisons_(source_comparison).comparison)
+        end 
     end
 
 %% auxiliary
