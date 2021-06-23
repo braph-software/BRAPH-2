@@ -93,8 +93,8 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
             end
             j = j + 2;
         end
+        varargin = varargin(~cellfun('isempty', varargin));
     end
-    varargin(~cellfun('isempty', varargin));
     
     c = cp.get('C');
     verbose = c.get('VERBOSE');

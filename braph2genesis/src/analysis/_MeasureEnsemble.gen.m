@@ -46,8 +46,8 @@ if Measure.getPropNumber() ~= core_measure.getPropNumber()
         end
         j = j + 2;
     end
+    varargin = varargin(~cellfun('isempty', varargin));
 end
-varargin = varargin(~cellfun('isempty', varargin));
 
 m_list = cellfun(@(x) x.getMeasure(me.get('MEASURE'), varargin{:}).get('M'), me.get('A').get('G_DICT').getItems, 'UniformOutput', false);
 
