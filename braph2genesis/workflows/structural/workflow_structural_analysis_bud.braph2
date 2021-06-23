@@ -9,7 +9,7 @@
 ba = BrainAtlas();
 
 %% Groups
-gr = Group('BA', ba);
+gr = Group();
 
 %% Analysis
 a_BUD = AnalyzeGroup_ST_BUD('GR', gr, 'DENSITIES', [0 20 40 60 80 100]);

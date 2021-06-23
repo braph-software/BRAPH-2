@@ -9,7 +9,7 @@
 ba = BrainAtlas();
 
 %% Groups
-gr = Group(BA', ba);
+gr = Group();
 
 %% Analysis
 a_BUT = AnalyzeGroup_ST_BUT('GR', gr, 'Thresholds', [.4 .5 .6 .7]);

@@ -9,8 +9,8 @@
 ba = BrainAtlas();
 
 %% Groups
-gr1 = Group('BA', ba);
-gr2 = Group('BA', ba);
+gr1 = Group();
+gr2 = Group();
 
 %% Analysis
 a_WU1 = AnalyzeGroup_ST_WU('GR', gr1);
