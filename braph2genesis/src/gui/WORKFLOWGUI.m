@@ -122,7 +122,7 @@ init_atlas_panel()
 %% group panel
 group_vars = getExecutable(tokens{3});
 % declare atlas variables
-grs = cell(length(group_vars) - 1 , 1);
+grs = struct;
 group_panel = uipanel(f);
 if length(group_vars) >= 2
     ui_group_panel_name = uicontrol(group_panel);
@@ -164,13 +164,13 @@ init_group_panel()
     function cb_group_btn(src, ~)
         source_group = str2double(erase(src.String, 'Group '));
         executable = split(group_vars{source_group + 1}, '=');
-        grs{source_group} = eval([executable{2}]);
-        if ~isempty(grs{source_group}) && isa(grs{source_group}, 'Group')
-           GUI(grs{source_group})
-        end  
-        if ~any(cellfun(@(x) isempty(x), grs))
-            enable_panel(analysis_panel)
-        end
+        grs(source_group).group = eval([executable{2}]);
+        grs(source_group).name = ['grs(' num2str(source_group) ').group'];
+        grs(source_group).name_script = strtrim(executable{1});
+        if ~isempty(grs(source_group).group) && isa(grs(source_group).group, 'Group')
+           GUI(grs(source_group).group)
+           enable_panel(analysis_panel)
+        end        
     end
 
 %% analysis / comparison panel
@@ -219,8 +219,10 @@ init_analysis_panel()
     function cb_analysis_btn(src, ~)
         source_analysis = str2double(erase(src.String, 'Analsysis/Comparison '));
         executable = split(analysis_vars{source_analysis + 1}, '=');
+        for l = 1:length(grs)
+            executable{2} = strrep(executable{2}, grs(source_analysis).name_script , grs(source_analysis).name);
+        end        
         analysis_comparisons{source_analysis} = eval([executable{2}]);
-        GUI(analysis_comparisons{source_analysis})
         if ~isempty(analysis_comparisons{source_analysis}) && isa(analysis_comparisons{source_analysis}, 'Element')
             GUI(analysis_comparisons{source_analysis})
         end        
