@@ -165,12 +165,11 @@ init_group_panel()
         source_group = str2double(erase(src.String, 'Group '));
         executable = split(group_vars{source_group + 1}, '=');
         grs{source_group} = eval([executable{2}]);
-        GUI(grs{source_group})
         if ~isempty(grs{source_group}) && isa(grs{source_group}, 'Group')
            GUI(grs{source_group})
         end  
         if ~any(cellfun(@(x) isempty(x), grs))
-            enable_panel(analysis_panel, ba)
+            enable_panel(analysis_panel)
         end
     end
 
@@ -219,7 +218,7 @@ init_analysis_panel()
 
     function cb_analysis_btn(src, ~)
         source_analysis = str2double(erase(src.String, 'Analsysis/Comparison '));
-        executable = split(analysis_vars{source_group + 1}, '=');
+        executable = split(analysis_vars{source_analysis + 1}, '=');
         analysis_comparisons{source_analysis} = eval([executable{2}]);
         GUI(analysis_comparisons{source_analysis})
         if ~isempty(analysis_comparisons{source_analysis}) && isa(analysis_comparisons{source_analysis}, 'Element')
