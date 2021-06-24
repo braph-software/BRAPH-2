@@ -9,6 +9,11 @@ f_position = get_from_varargin([x_f y_f w_f h_f], 'Position', varargin);
 name = 'BRAPH 2.0 - Brain Analysis using Graph Theory';
 BKGCOLOR = get_from_varargin([1 .9725 .929], 'BackgroundColor', varargin);
 close_request = 1; % true
+click_time = [];
+click_threshold_s = 0.5;
+index = [];
+w_names = [];
+paths = [];
 
 % init
 f = init();
@@ -135,7 +140,16 @@ set(jListbox, 'MouseMovedCallback', {@mouseMovedCallback, workflow_list});
 descriptions = [];
 
     function cb_wf_list_box(~, ~)
-        % select the wf and plot the next window
+        index = get(workflow_list, 'Value');
+        if isempty(click_time)
+            click_time = tic();
+        else
+            time_between_clicks = toc( click_time );
+            click_time = tic();
+            if time_between_clicks < click_threshold_s
+                get_workflow_gui()
+            end
+        end
     end
     function update_listbox()
         workflows_path = [fileparts(which('braph2.m')) filesep 'workflows'];
@@ -149,17 +163,17 @@ descriptions = [];
         if ~isempty(jPanelObj.getSearchText.toCharArray')
             filter = jPanelObj.getSearchText.toCharArray';
             workflow_filter_index = cell2mat(cellfun(@(x) contains(x, filter), workflow_names, 'UniformOutput', false));
+            files_paths = files_paths(workflow_filter_index);
             workflow_names = workflow_names(workflow_filter_index);
         end
-        
+        w_names = workflow_names;
         % open and find name and description
-        
         for i = 1: length(workflow_names)
             file_path = files_paths{i};
             txt = fileread([file_path filesep workflow_names{i}]);
             [workflow_names{i}, descriptions{i}] = getGUIToken(txt, 1);
         end
-        
+        paths = files_paths;
         set(workflow_list, 'String', workflow_names)
     end
     function varargout = subdir(varargin)
@@ -3707,6 +3721,16 @@ descriptions = [];
                 break
             end
         end
+    end
+    function get_workflow_gui()
+        if isempty(index)
+            index = get(workflow_list, 'Value');
+        end
+        
+        file = [paths{index} filesep() w_names{index}];
+        
+        set(ui_checkbox_bottom_animation, 'Value', false)
+        WORKFLOWGUI(file);        
     end
 
 % menu
