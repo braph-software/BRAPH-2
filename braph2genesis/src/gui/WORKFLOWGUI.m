@@ -5,7 +5,7 @@ h_f = screen_size(4) * 0.65;
 w_f = h_f * 1.61;
 x_f = screen_size(3) * 0.2;
 y_f = screen_size(4) * .2; 
-name = ['Workflow - ' name];
+name_w = ['Workflow - ' name];
 f_position = get_from_varargin([x_f y_f w_f h_f], 'Position', varargin);
 BKGCOLOR = get_from_varargin([1 .9725 .929], 'BackgroundColor', varargin);
 BTNBKGCOLOR = get_from_varargin([.902 .835 .745], 'BackgroundColor', varargin);
@@ -48,7 +48,7 @@ f = init();
         f = figure(...
             'Visible', 'off', ...
             'NumberTitle', 'off', ...
-            'Name', name, ...
+            'Name', name_w, ...
             'Units', 'pixels', ...
             'Position', f_position, ...
             'Units', 'character', ...
@@ -77,6 +77,7 @@ f = init();
 %% panels
 panel_struct = struct([]);
 section_panel = cell(1, cycles - 1);  % cycles - title
+slider = cell(1, cycles - 1);
 panel_inner = [];
 x_slice = 1 / (cycles - 1);
 panel_executables = [];
@@ -87,22 +88,27 @@ for i = 2:cycles
     token = getGUIToken(txt, i);
     tokens{i} = token; %#ok<AGROW>  % saving purposes
     section_panel{i - 1} = uipanel(f);
-    init_section_panel(section_panel{i - 1}, x_offset) 
+    slider{i - 1} = uicontrol(section_panel{i - 1});
+    
+    % init
+    init_section_panel(section_panel{i - 1}, x_offset)
     
     % get executables
     panel_executable = getExecutable(token);
     panel_executables{i} = panel_executable; %#ok<AGROW>
-    y_slice = 1 / length(panel_executable);
-    for j = 1:length(panel_executable) + 1 % need to add panel name
+    y_slice = .15;
+    total_h = 0;
+    for j = 1:length(panel_executable) 
         panel_inner{i, j} = uicontrol(section_panel{i - 1}); %#ok<AGROW>
         y_offset = y_slice * (j - 1);
+        total_h = total_h + y_slice;
         if j > 1
             set(panel_inner{i, j}, ...
                'Style', 'pushbutton', ...
                'String', [panel_executable{1} ' ' num2str(j - 1)], ...
                'Units', 'normalized', ...
                'BackgroundColor', BTNBKGCOLOR, ...
-               'Position', [.02 y_offset .96 .08], ...
+               'Position', [.02 1-y_offset .94 .08], ...
                'Callback', {@(x, y) btn_action(i - 1, j- 1)}) 
         else
            set(panel_inner{i, j}, ...
@@ -110,17 +116,37 @@ for i = 2:cycles
                'String', panel_executable{1}, ...
                'Units', 'normalized', ...
                'BackgroundColor', BKGCOLOR, ...
-               'Position', [.3 .9 .3 .08]) 
-        end
-        
+               'Position', [.34 .9 .3 .08]) 
+        end        
     end
+    
+    init_slider(slider{i - 1}, total_h)
 end
 
     function init_section_panel(panel, x_offset)
         set(panel, ...
             'Units', 'normalized', ...
-            'Position', [x_offset .02 x_slice .96], ...
+            'Position', [x_offset .1 x_slice .9], ...
             'BackgroundColor', BKGCOLOR)
+    end
+    function init_slider(slider, total_h)
+        if total_h > 1
+        set(slider, ...
+            'Style', 'slider', ...
+            'Value', 0, ...
+            'Visible', 'on', ...
+            'Units', 'normalized', ...
+            'Min', 0, ...
+            'Max', total_h, ...
+            'Position', [.96 0 .04 1])
+        else
+            set(slider, ...
+            'Style', 'slider', ...
+            'Value', 0, ...
+            'Visible', 'off', ...
+            'Units', 'normalized', ...
+            'Position', [.96 0 .04 1])
+        end
     end
     function btn_action(panel, child)        
         panel_exe_ = panel_executables{panel + 1};
@@ -146,6 +172,57 @@ end
             end
         end
     end
+
+%% load and save 
+save_workflow_btn = uicontrol(f);
+load_workflow_btn = uicontrol(f);
+init_load_and_save()
+    function init_load_and_save()
+        set(save_workflow_btn, ...
+            'Units', 'normalized', ...
+            'Style', 'pushbutton', ...
+            'String', 'Save ...', ...
+            'Tooltip', ['Save the workspace of ' name], ...
+            'Position', [.2 .01 .3 .07], ...
+            'Callback', {@cb_save_worfklow})
+        
+        set(load_workflow_btn, ...
+            'Units', 'normalized', ...
+            'Style', 'pushbutton', ...
+            'String', 'Load ...', ...
+            'Tooltip', ['Load the workspace of ' name], ...
+            'Position', [.52 .01 .3 .07], ...
+            'Callback', {@cb_load_worfklow})
+    end
+    function cb_save_worfklow(~, ~)
+        % select file
+        [file, path, filterindex] = uiputfile(BRAPH2.EXT_WORKSPACE, 'Select the file to save the workspace.');
+        % save file
+        if filterindex
+            filename = fullfile(path, file);
+            build = BRAPH2.BUILD;
+            save(filename, 'panel_struct', 'build');            
+        end
+    end
+    function cb_load_worfklow(~, ~)
+        [file, path, filterindex] = uigetfile(BRAPH2.EXT_WORKSPACE, 'Select the file to load a workspace.');
+        if filterindex
+            filename = fullfile(path, file);
+            tmp = load(filename, '-mat', 'panel_struct');
+            if isa(tmp.panel_struct, 'struct')
+                panel_struct = tmp.panel_struct;
+                load_struct();
+            end
+        end
+    end
+    function load_struct()
+        for i = 1:size(panel_struct, 1)
+            if i + 1 <= length(section_panel)
+                enable_panel(section_panel{i + 1})
+            end
+        end
+    end
+
 
 %% auxiliary
 set(f, 'Visible', 'on')
