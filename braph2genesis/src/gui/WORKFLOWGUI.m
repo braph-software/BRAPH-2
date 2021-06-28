@@ -1,21 +1,22 @@
-function WORKFLOWGUI(file, varargin)
+function WORKFLOWGUI(file, name,  varargin)
 %% constants
 screen_size = get(0, 'ScreenSize');
 h_f = screen_size(4) * 0.65;
 w_f = h_f * 1.61;
 x_f = screen_size(3) * 0.2;
 y_f = screen_size(4) * .2; 
+name = ['Workflow - ' name];
 f_position = get_from_varargin([x_f y_f w_f h_f], 'Position', varargin);
-name = 'Workflow';
 BKGCOLOR = get_from_varargin([1 .9725 .929], 'BackgroundColor', varargin);
+BTNBKGCOLOR = get_from_varargin([.902 .835 .745], 'BackgroundColor', varargin);
 close_request = 0; % false has to be true after debugs
 tokens = [];
 % get info of file
 txt = fileread(file);
 cycles = getFileCycles(txt);
-for i = 1:cycles
-    tokens{i} = getGUIToken(txt, i);
-end
+% for i = 1:cycles
+%     tokens{i} = getGUIToken(txt, i);
+% end
     function cycles = getFileCycles(txt)
         splits = regexp(txt, ['(^|' newline() ')%%\s*'], 'split');
         splits = splits(~cellfun('isempty', splits));
@@ -73,240 +74,79 @@ f = init();
         end
     end
 
-%% atlas panel
-atlas_vars = getExecutable(tokens{2});
-% declare atlas variables
-ba = [];
+%% panels
+panel_struct = struct([]);
+section_panel = cell(1, cycles - 1);  % cycles - title
+panel_inner = [];
+x_slice = 1 / (cycles - 1);
+panel_executables = [];
 
-atlas_panel = uipanel(f);
-if length(atlas_vars) >= 2
-    ui_atlas_panel_name = uicontrol(atlas_panel);
-    ui_atlas_btn = uicontrol(atlas_panel);
-end
-
-init_atlas_panel()
-    function init_atlas_panel()
-        set(atlas_panel, ...
-            'Units', 'normalized', ...
-            'Position', [.02 .02 .31 .96], ...
-            'BackgroundColor', BKGCOLOR)
-        if length(atlas_vars) >= 2
-            
-            set(ui_atlas_panel_name, ...
-                'Style', 'text', ...
-                'Units', 'normalized', ...
-                'String', atlas_vars{1}, ...
-                'BackgroundColor', BKGCOLOR, ...
-                'Position', [.3 .9 .3 .08] ...
-                )
-            
-             set(ui_atlas_btn, ...
-                'Style', 'pushbutton', ...
-                'String', 'BrainAtlas', ...
-                'Units', 'normalized', ...
-                'Position', [.02 .75 .96 .08], ...
-                'Callback', {@cb_atlas_btn} ...
-                )
-        end
-        
-    end
-    function cb_atlas_btn(~, ~)
-        executable = split(atlas_vars{2}, '=');
-        ba = eval([executable{2}]);   
-        if ~isempty(ba) && isa(ba, 'BrainAtlas')
-           GUI(ba)
-           enable_panel(group_panel)
-        end        
-    end
+for i = 2:cycles
+    cycle = i - 1 ; % remove title;
+    x_offset = x_slice * (cycle - 1);
+    token = getGUIToken(txt, i);
+    tokens{i} = token; %#ok<AGROW>  % saving purposes
+    section_panel{i - 1} = uipanel(f);
+    init_section_panel(section_panel{i - 1}, x_offset) 
     
-%% group panel
-group_vars = getExecutable(tokens{3});
-% declare atlas variables
-grs = struct;
-group_panel = uipanel(f);
-if length(group_vars) >= 2
-    ui_group_panel_name = uicontrol(group_panel);
-    ui_group_btns = zeros(length(group_vars) - 1 , 1);
-    for k = 2:length(group_vars)
-        ui_group_btns(k, 1) = uicontrol(group_panel);
-    end    
+    % get executables
+    panel_executable = getExecutable(token);
+    panel_executables{i} = panel_executable; %#ok<AGROW>
+    y_slice = 1 / length(panel_executable);
+    for j = 1:length(panel_executable) + 1 % need to add panel name
+        panel_inner{i, j} = uicontrol(section_panel{i - 1}); %#ok<AGROW>
+        y_offset = y_slice * (j - 1);
+        if j > 1
+            set(panel_inner{i, j}, ...
+               'Style', 'pushbutton', ...
+               'String', [panel_executable{1} ' ' num2str(j - 1)], ...
+               'Units', 'normalized', ...
+               'BackgroundColor', BTNBKGCOLOR, ...
+               'Position', [.02 y_offset .96 .08], ...
+               'Callback', {@(x, y) btn_action(i, j)}) 
+        else
+           set(panel_inner{i, j}, ...
+               'Style', 'text', ...
+               'String', panel_executable{1}, ...
+               'Units', 'normalized', ...
+               'BackgroundColor', BKGCOLOR, ...
+               'Position', [.3 .9 .3 .08]) 
+        end
+        
+    end
 end
-init_group_panel()
-    function init_group_panel()
-        set(group_panel, ...
+
+    function init_section_panel(panel, x_offset)
+        set(panel, ...
             'Units', 'normalized', ...
-            'Position', [.33 .02 .33 .96], ...
+            'Position', [x_offset .02 x_slice .96], ...
             'BackgroundColor', BKGCOLOR)
-        
-        if length(group_vars) >= 2            
-            set(ui_group_panel_name, ...
-                'Style', 'text', ...
-                'Units', 'normalized', ...
-                'String', group_vars{1}, ...
-                'BackgroundColor', BKGCOLOR, ...
-                'Position', [.3 .9 .3 .08] ...
-                )
-            
-            inner_panel_height = .8;
-            for k = 2:length(group_vars)
-                y_correction = (k-1) * 0.09;
-                inner_panel_y = inner_panel_height - y_correction;
-                set(ui_group_btns(k), ...
-                'Style', 'pushbutton', ...
-                'String', ['Group ' num2str(k - 1)], ...
-                'Units', 'normalized', ...
-                'Position', [.02 inner_panel_y .96 .08], ...
-                'Callback', {@cb_group_btn} ...
-                )
+    end
+    function btn_action(panel, child)        
+        panel_exe_ = panel_executables{panel};
+        exe_ = split(panel_exe_{child}, '=');
+        for l = 1:length(panel_struct)
+            if ~isempty(panel_struct)
+                exe_{2} = strrep(exe_{2}, ...
+                    panel_struct(panel - 1, child - 1).name_script, ...
+                    panel_struct(panel - 1, child - 1).name);
             end
         end
-    end
-    function cb_group_btn(src, ~)
-        source_group = str2double(erase(src.String, 'Group '));
-        executable = split(group_vars{source_group + 1}, '=');
-        grs(source_group).group = eval([executable{2}]);
-        grs(source_group).name = ['grs(' num2str(source_group) ').group'];
-        grs(source_group).name_script = strtrim(executable{1});
-        if ~isempty(grs(source_group).group) && isa(grs(source_group).group, 'Group')
-           GUI(grs(source_group).group)
-           enable_panel(analysis_panel)
-        end        
-    end
-
-%% analysis 
-% declare analysis variables
-analysis_vars = getExecutable(tokens{4});
-analysis_ = struct;
-analysis_comparisons_panel = uipanel(f, ...
-    'Units', 'normalized', ...
-    'Position', [.66 .02 .31 .96], ...
-    'BackgroundColor', BKGCOLOR);
-
-analysis_panel = uipanel(analysis_comparisons_panel);
-if length(analysis_vars) >= 2
-    ui_analysis_panel_name = uicontrol(analysis_panel);
-    ui_analysis_btns = zeros(length(analysis_vars) - 1 , 1);
-    for k = 2:length(analysis_vars)
-        ui_analysis_btns(k, 1) = uicontrol(analysis_panel);
-    end    
-end
-
-%declare comparisons
-if cycles > 4
-    comparisons_vars = getExecutable(tokens{5});
-    comparisons_ = struct;
-    comparisons_panel = uipanel(analysis_comparisons_panel);
-    if length(comparisons_vars) >= 2
-        ui_comparisons_panel_name = uicontrol(comparisons_panel);
-        ui_comparisons_btns = zeros(length(comparisons_panel) - 1 , 1);
-        for k = 2:length(comparisons_vars)
-            ui_comparisons_btns(k, 1) = uicontrol(comparisons_panel);
+        panel_struct(panel - 1, child - 1).exe = eval([exe_{2}]);
+        panel_struct(panel - 1, child - 1).name = ['panel_struct(' num2str(panel - 1) ',' num2str(child - 1) ').exe'];
+        panel_struct(panel - 1, child - 1).name_script = strtrim(exe_{1});
+        
+        if ~isempty(panel_struct(panel - 1, child - 1).exe) && isa(panel_struct(panel - 1, child - 1).exe, 'Element')
+            GUI(panel_struct(panel - 1, child - 1).exe)
+            enable_panel(section_panel{panel}) % no need to add, since its offet by 1
         end
-    end
-end
-
-init_analysis_panel()
-    function init_analysis_panel()
-        set(analysis_panel, ...
-            'Units', 'normalized', ...
-            'Position', [.02 .02 .96 .96], ...
-            'BackgroundColor', BKGCOLOR)
-        
-        if length(analysis_vars) >= 2
-            set(ui_analysis_panel_name, ...
-                'Style', 'text', ...
-                'Units', 'normalized', ...
-                'String', analysis_vars{1}, ...
-                'BackgroundColor', BKGCOLOR, ...
-                'Position', [.3 .9 .3 .08] ...
-                )
-            
-            inner_panel_height = .8;
-            for k = 2:length(analysis_vars)
-                y_correction = (k-1) * 0.09;
-                inner_panel_y = inner_panel_height - y_correction;
-                set(ui_analysis_btns(k), ...
-                    'Style', 'pushbutton', ...
-                    'String', ['Analsysis ' num2str(k - 1)], ...
-                    'Units', 'normalized', ...
-                    'Position', [.02 inner_panel_y .96 .08], ...
-                    'Callback', {@cb_analysis_btn} ...
-                    )
-            end
-        end
-        
-        if cycles > 4
-            set(analysis_panel, ...
-                'Units', 'normalized', ...
-                'Position', [.02 .45 .96 .53], ...
-                'BackgroundColor', BKGCOLOR)
-            
-            set(comparisons_panel, ...
-                'Units', 'normalized', ...
-                'Position', [.02 .01 .98 .43], ...
-                'BackgroundColor', BKGCOLOR)
-            
-            if length(comparisons_vars) >= 2
-                set(ui_comparisons_panel_name, ...
-                    'Style', 'text', ...
-                    'Units', 'normalized', ...
-                    'String', comparisons_vars{1}, ...
-                    'BackgroundColor', BKGCOLOR, ...
-                    'Position', [.3 .9 .3 .08] ...
-                    )
-                
-                inner_panel_height = .8 / (length(comparisons_vars) - 1);
-                for k = 2:length(comparisons_vars)
-                    y_correction = (k-1) * 0.09;
-                    inner_panel_y = inner_panel_height - y_correction;
-                    set(ui_comparisons_btns(k), ...
-                        'Style', 'pushbutton', ...
-                        'String', ['Comparison ' num2str(k - 1)], ...
-                        'Units', 'normalized', ...
-                        'Position', [.02 inner_panel_y .96 .08], ...
-                        'Callback', {@cb_comparison_btn} ...
-                        )
-                end
-            end
-            disable_panel(comparisons_panel);
-        end
-    end
-    function cb_analysis_btn(src, ~)
-        source_analysis = str2double(erase(src.String, 'Analsysis '));
-        executable = split(analysis_vars{source_analysis + 1}, '=');
-        for l = 1:length(grs)
-            executable{2} = strrep(executable{2}, grs(source_analysis).name_script , grs(source_analysis).name);
-        end        
-        
-        analysis_(source_analysis).analysis = eval([executable{2}]);
-        analysis_(source_analysis).name = ['analysis_(' num2str(source_analysis) ').analysis'];
-        analysis_(source_analysis).name_script = strtrim(executable{1});
-        
-        if ~isempty(analysis_(source_analysis).analysis) && isa(analysis_(source_analysis).analysis, 'Element')
-            GUI(analysis_(source_analysis).analysis)
-            enable_panel(comparisons_panel);
-        end        
-    end
-    function cb_comparison_btn(src, ~)
-        source_comparison = str2double(erase(src.String, 'Comparison '));
-        executable = split(comparisons_vars{source_comparison + 1}, '=');
-        for l = 1:length(analysis_)
-            executable{2} = strrep(executable{2}, analysis_(l).name_script , analysis_(l).name);
-        end        
-        
-        comparisons_(source_comparison).comparison = eval([executable{2}]);
-        comparisons_(source_comparison).name = ['comparisons_(' num2str(source_comparison) ').comparison'];
-        comparisons_(source_comparison).name_script = strtrim(executable{1});
-        
-        if ~isempty(comparisons_(source_comparison).comparison) && isa(comparisons_(source_comparison).comparison, 'Element')
-            GUI(comparisons_(source_comparison).comparison)
-        end 
     end
 
 %% auxiliary
 set(f, 'Visible', 'on')
-disable_panel(group_panel)
-disable_panel(analysis_panel)
+for i = 2:cycles-1
+    disable_panel(section_panel{i})
+end
     function enable_panel(panel)
         set(panel, 'BackgroundColor', BKGCOLOR)
         childs = get(panel, 'Children');
