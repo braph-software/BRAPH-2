@@ -103,7 +103,7 @@ for i = 2:cycles
                'Units', 'normalized', ...
                'BackgroundColor', BTNBKGCOLOR, ...
                'Position', [.02 y_offset .96 .08], ...
-               'Callback', {@(x, y) btn_action(i, j)}) 
+               'Callback', {@(x, y) btn_action(i - 1, j- 1)}) 
         else
            set(panel_inner{i, j}, ...
                'Style', 'text', ...
@@ -123,22 +123,27 @@ end
             'BackgroundColor', BKGCOLOR)
     end
     function btn_action(panel, child)        
-        panel_exe_ = panel_executables{panel};
-        exe_ = split(panel_exe_{child}, '=');
-        for l = 1:length(panel_struct)
-            if ~isempty(panel_struct)
+        panel_exe_ = panel_executables{panel + 1};
+        exe_ = split(panel_exe_{child + 1}, '=');       
+        
+        % fill struct
+        panel_struct(panel, child).name = ['panel_struct(' num2str(panel) ',' num2str(child) ').exe'];
+        panel_struct(panel, child).name_script = strtrim(exe_{1});
+        
+        for l = 1:size(panel_struct, 2)
+            if ~isempty(panel_struct) && size(panel_struct, 1) > 1
                 exe_{2} = strrep(exe_{2}, ...
-                    panel_struct(panel - 1, child - 1).name_script, ...
-                    panel_struct(panel - 1, child - 1).name);
+                    panel_struct(panel - 1, l).name_script, ...
+                    panel_struct(panel - 1, l).name);
             end
         end
-        panel_struct(panel - 1, child - 1).exe = eval([exe_{2}]);
-        panel_struct(panel - 1, child - 1).name = ['panel_struct(' num2str(panel - 1) ',' num2str(child - 1) ').exe'];
-        panel_struct(panel - 1, child - 1).name_script = strtrim(exe_{1});
         
-        if ~isempty(panel_struct(panel - 1, child - 1).exe) && isa(panel_struct(panel - 1, child - 1).exe, 'Element')
-            GUI(panel_struct(panel - 1, child - 1).exe)
-            enable_panel(section_panel{panel}) % no need to add, since its offet by 1
+        panel_struct(panel, child).exe = eval([exe_{2}]);
+        if ~isempty(panel_struct(panel, child).exe) && isa(panel_struct(panel, child).exe, 'Element')
+            GUI(panel_struct(panel, child).exe)
+            if panel + 1 <= length(section_panel)
+                enable_panel(section_panel{panel + 1})
+            end
         end
     end
 
