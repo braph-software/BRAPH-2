@@ -256,7 +256,11 @@ end
         childs = get(panel, 'Children');
         for i = 1:length(childs)
             set(childs(i), 'Enable', 'on');
-            set(childs(i), 'BackgroundColor', BKGCOLOR);
+            if isequal(childs(i).Style, 'pushbutton')
+                set(childs(i), 'BackgroundColor', BTNBKGCOLOR);
+            else
+                set(childs(i), 'BackgroundColor', BKGCOLOR);
+            end
         end
     end
     function disable_panel(panel)
