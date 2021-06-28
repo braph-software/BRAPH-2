@@ -169,7 +169,7 @@ end
             GUI(panel_struct(panel, child).exe)
             if panel + 1 <= length(section_panel)
                 enable_panel(section_panel{panel + 1})
-                set(src, 'BackgroundColor', [50,205,50]/255)
+                set(src, 'Cdata', imread('checkicon_colorbackground.png'))
             end
         end
     end
