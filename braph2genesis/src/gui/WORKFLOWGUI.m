@@ -155,6 +155,7 @@ end
         % fill struct
         panel_struct(panel, child).name = ['panel_struct(' num2str(panel) ',' num2str(child) ').exe'];
         panel_struct(panel, child).name_script = strtrim(exe_{1});
+        panel_struct(panel, child).btn = src.String;
         
         for l = 1:size(panel_struct, 2)
             if ~isempty(panel_struct) && size(panel_struct, 1) > 1
@@ -220,6 +221,26 @@ init_load_and_save()
         for i = 1:size(panel_struct, 1)
             if i + 1 <= length(section_panel)
                 enable_panel(section_panel{i + 1})
+            end
+        end
+        set_loaded_objects()
+    end
+    function set_loaded_objects()
+        for j = 1:length(section_panel)
+            childs = get(section_panel{j}, 'Children');
+            childs_ = flip(childs(1: end - 2));
+            if size(panel_struct, 1) < j
+                    break;
+            end
+            for k = 1:length(childs_)
+                child_name = get(childs_(k), 'String');
+                if size(panel_struct, 2) < k
+                    break;
+                end
+                panel_btn = panel_struct(j, k).btn;
+                if isequal(child_name, panel_btn)
+                    set(childs_(k), 'Cdata', imread('checkicon_colorbackground.png'))
+                end
             end
         end
     end
