@@ -109,7 +109,7 @@ for i = 2:cycles
                'Units', 'normalized', ...
                'BackgroundColor', BTNBKGCOLOR, ...
                'Position', [.02 1-y_offset .94 .08], ...
-               'Callback', {@(x, y) btn_action(i - 1, j- 1)}) 
+               'Callback', {@(src, x, y) btn_action(src, i - 1, j- 1)}) 
         else
            set(panel_inner{i, j}, ...
                'Style', 'text', ...
@@ -148,7 +148,7 @@ end
             'Position', [.96 0 .04 1])
         end
     end
-    function btn_action(panel, child)        
+    function btn_action(src, panel, child)        
         panel_exe_ = panel_executables{panel + 1};
         exe_ = split(panel_exe_{child + 1}, '=');       
         
@@ -169,6 +169,7 @@ end
             GUI(panel_struct(panel, child).exe)
             if panel + 1 <= length(section_panel)
                 enable_panel(section_panel{panel + 1})
+                set(src, 'BackgroundColor', [50,205,50]/255)
             end
         end
     end
