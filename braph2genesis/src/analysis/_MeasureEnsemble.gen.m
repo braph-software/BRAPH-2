@@ -38,6 +38,7 @@ M (result, cell) is the measure result.
 core_measure = me.get('MEASUREPARAM');
 % get parameters from core measure
 j = 1;
+varargin = {};
 if Measure.getPropNumber() ~= core_measure.getPropNumber()
     for i = Measure.getPropNumber() + 1:core_measure.getPropNumber()
         if ~isa(core_measure.getr(i), 'NoValue')
