@@ -35,7 +35,7 @@ MultiplexWU
 M (result, cell) is the core-periphery.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
-core_periphery = calculateValue@Richness(m, prop);
+richness = calculateValue@Richness(m, prop);
 L = g.layernumber();
 
 if L == 0
@@ -77,7 +77,7 @@ else
         end
         
         [~, rankingInd] = sort(deg, 'descend');
-        richness_partition = core_periphery{li};
+        richness_partition = richness{li};
         [~, rankOfMaxRichness] = max(richness_partition(rankingInd));  
         core_periphery_partition(rankingInd(1:rankOfMaxRichness)) = 1;
         core_periphery(li) = {core_periphery_partition};
@@ -98,7 +98,7 @@ B = [
     0  1  0  0
     ];
 
-known_core_periphery = {[1 0 1 1]'};
+known_core_periphery = {[1 1 0 0]'};
 
 g = GraphBU('B', B);
 
@@ -120,8 +120,8 @@ B = [
     ];
 
 known_core_periphery = {
-                 [1 0 1 1]'
-                 [0 0 0 0]'};
+                 [1 1 0 0]'
+                 [1 0 0 0]'};
 
 g = MultigraphBUT('B', B, 'THRESHOLDS', [0 1]);
 core_periphery = CorePeriphery('G', g).get('M');
@@ -150,8 +150,8 @@ B22 = [
 B = {B11 B22};
 
 known_core_periphery = {
-                     [1 1 1 0]'
-                     [0 0 0 0]'};     
+                     [1 1 0 0]'
+                     [1 1 1 0]'};     
 
 g = MultiplexBU('B', B);
 core_periphery = CorePeriphery('G', g).get('M');
