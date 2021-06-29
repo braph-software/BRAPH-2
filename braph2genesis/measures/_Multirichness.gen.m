@@ -1,5 +1,5 @@
 %% ¡header!
-Multirichness < Richness (m, richness) is the graph multirichness.
+Multirichness < Richness (m, multirichness) is the graph multirichness.
 
 %%% ¡description!
 The multirichness of a node is the sum of the edges that connect nodes
