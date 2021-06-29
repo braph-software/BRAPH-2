@@ -89,6 +89,8 @@ slider = cell(1, cycles - 1);
 panel_inner = [];
 x_slice = 1 / (cycles - 1);
 panel_executables = [];
+y_slice = 2;
+define = false;
 
 panel_plot()
     function panel_plot()
@@ -96,9 +98,18 @@ panel_plot()
             cycle = i - 1 ; % remove title;
             x_offset = x_slice * (cycle - 1);
             token = getGUIToken(txt, i);
-            tokens{i} = token; %#ok<AGROW>  % saving purposes
-            section_panel{i - 1} = uipanel(f);
-            slider{i - 1} = uicontrol(section_panel{i - 1}, 'Style', 'slider', 'Callback', {@slide});
+            tokens{i} = token; % saving purposes   
+            
+            if isempty(section_panel{i - 1}) || ~isgraphics(section_panel{i - 1}, 'uipanel')
+                define = true;
+                section_panel{i - 1} = uipanel(f, 'BackgroundColor', BKGCOLOR);
+            else
+                define = false;
+            end
+            
+            if isempty(slider{i - 1}) || ~isgraphics(slider{i - 1}, 'uicontrol')
+                slider{i - 1} = uicontrol(section_panel{i - 1}, 'Style', 'slider', 'Callback', {@slide});
+            end
             
             % init
             init_section_panel(section_panel{i - 1}, x_offset)
@@ -109,19 +120,21 @@ panel_plot()
             
             % get executables
             panel_executable = getExecutable(token);
-            panel_executables{i} = panel_executable; %#ok<AGROW>
-            y_slice = 2;
+            panel_executables{i} = panel_executable;            
             total_h = 0;
             for j = 1:length(panel_executable)
-                panel_inner{i, j} = uicontrol(section_panel{i - 1}); %#ok<AGROW>
+                if define
+                    panel_inner{i, j} = uicontrol(section_panel{i - 1}); 
+                    set(panel_inner{i, j}, 'BackgroundColor', BKGCOLOR);
+                end
                 y_offset = heigth_ct + y_slice * (j);
                 total_h = total_h + y_slice;
+                
                 if j > 1
                     set(panel_inner{i, j}, ...
                         'Style', 'pushbutton', ...
                         'String', [panel_executable{1} ' ' num2str(j - 1)], ...
-                        'Units', 'characters', ...
-                        'BackgroundColor', BTNBKGCOLOR, ...
+                        'Units', 'characters', ...                        
                         'Position', [width_ct pos(4)-y_offset pos(3)-2*slider_width y_slice], ...
                         'Callback', {@(src, x, y) btn_action(src, i - 1, j - 1)})
                 else
@@ -129,7 +142,6 @@ panel_plot()
                         'Style', 'text', ...
                         'String', panel_executable{1}, ...
                         'Units', 'characters', ...
-                        'BackgroundColor', BKGCOLOR, ...
                         'Position', [pos(1)+width_ct pos(4)-y_offset pos(3)-2*slider_width y_slice])
                 end
             end
@@ -140,8 +152,7 @@ panel_plot()
     function init_section_panel(panel, x_offset)        
         set(panel, ...
             'Units', 'normalized', ...
-            'Position', [x_offset .1 x_slice .9], ...
-            'BackgroundColor', BKGCOLOR)
+            'Position', [x_offset .1 x_slice .9])
     end
     function init_slider(slider, total_h, pos)
         if total_h > pos(4)
