@@ -109,7 +109,7 @@ for i = 2:cycles
                'Units', 'normalized', ...
                'BackgroundColor', BTNBKGCOLOR, ...
                'Position', [.02 1-y_offset .94 .08], ...
-               'Callback', {@(src, x, y) btn_action(src, i - 1, j- 1)}) 
+               'Callback', {@(src, x, y) btn_action(src, i - 1, j - 1)}) 
         else
            set(panel_inner{i, j}, ...
                'Style', 'text', ...
@@ -168,11 +168,24 @@ end
         panel_struct(panel, child).exe = eval([exe_{2}]);
         if ~isempty(panel_struct(panel, child).exe) && isa(panel_struct(panel, child).exe, 'Element')
             GUI(panel_struct(panel, child).exe)
-            if panel + 1 <= length(section_panel)
-                enable_panel(section_panel{panel + 1})
-                set(src, 'Cdata', imread('checkicon_colorbackground.png'))
+            change_state_btn(src)
+            if check_section_objs(panel)
+                enable_panel(section_panel{panel + 1})                
             end
         end
+    end
+    function check = check_section_objs(panel)
+        check = false;
+        n = length(panel_executables{panel + 1}) - 1 ;
+        tmp = struct2cell(panel_struct);
+        if panel + 1 <= length(section_panel) && ...
+                (isequal(n, length(tmp(4, 1))) ||  isequal(n, length(tmp(4, panel, :))))             
+                
+            check = true;
+        end
+    end
+    function change_state_btn(btn)
+        set(btn, 'Cdata', imread('checkicon_colorbackground.png'))
     end
 
 %% load and save 
@@ -219,7 +232,7 @@ init_load_and_save()
     end
     function load_struct()
         for i = 1:size(panel_struct, 1)
-            if i + 1 <= length(section_panel)
+            if i + 1 <= length(section_panel) && check_section_objs(i)
                 enable_panel(section_panel{i + 1})
             end
         end
@@ -239,12 +252,11 @@ init_load_and_save()
                 end
                 panel_btn = panel_struct(j, k).btn;
                 if isequal(child_name, panel_btn)
-                    set(childs_(k), 'Cdata', imread('checkicon_colorbackground.png'))
+                    change_state_btn(childs_(k))
                 end
             end
         end
     end
-
 
 %% auxiliary
 set(f, 'Visible', 'on')
