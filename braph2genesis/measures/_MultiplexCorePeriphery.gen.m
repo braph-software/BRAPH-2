@@ -1,5 +1,5 @@
 %% ¡header!
-MultiplexCorePeriphery < Multirichness (m, multiplex core-periphery) is the graph multiplex core periphery.
+MultiplexCorePeriphery < Multirichness (m, multiplex core-periphery) is the graph multiplex core-periphery.
 
 %%% ¡description!
 The multiplex core-periphery of a node is the value of the rank corresponding 

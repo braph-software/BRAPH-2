@@ -1,5 +1,5 @@
 %% ¡header!
-CorePeriphery < Richness (m, core-periphery) is the graph multiplex core periphery.
+CorePeriphery < Richness (m, core-periphery) is the graph core-periphery.
 
 %%% ¡description!
 The core-periphery of a node is the value of the rank corresponding 
