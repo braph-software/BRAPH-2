@@ -90,6 +90,7 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     core_measure = me.get('MEASUREPARAM');
     % get parameters from core measure
     j = 1;
+    varargin = {};
     if Measure.getPropNumber() ~= core_measure.getPropNumber()
         for i = Measure.getPropNumber() + 1:core_measure.getPropNumber()
             if ~isa(core_measure.getr(i), 'NoValue')
