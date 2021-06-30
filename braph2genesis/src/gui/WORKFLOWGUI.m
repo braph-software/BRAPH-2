@@ -18,9 +18,6 @@ slider_width = 3;
 % get info of file
 txt = fileread(file);
 cycles = getFileCycles(txt);
-% for i = 1:cycles
-%     tokens{i} = getGUIToken(txt, i);
-% end
     function cycles = getFileCycles(txt)
         splits = regexp(txt, ['(^|' newline() ')%%\s*'], 'split');
         splits = splits(~cellfun('isempty', splits));
@@ -210,7 +207,7 @@ panel_plot()
         end
     end
     function change_state_btn(btn)
-        set(btn, 'Cdata', imread('checkicon_colorbackground.png'))
+        set(btn, 'BackgroundColor', [166 218 149]/255)
     end
     function pos = getPosition(obj)
         pos = get(obj, 'Position');
