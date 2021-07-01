@@ -3730,7 +3730,7 @@ descriptions = [];
         file = [paths{index} filesep() w_names{index}];
         
         set(ui_checkbox_bottom_animation, 'Value', false)
-        WORKFLOWGUI(file);        
+        WORKFLOWGUI(file, w_names{index});        
     end
 
 % menu
