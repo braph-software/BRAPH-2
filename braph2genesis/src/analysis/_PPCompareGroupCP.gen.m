@@ -1,15 +1,15 @@
 %% ¡header!
-PPAnalyzeGroupGraph < PlotProp (pl, plot property of analyze group graph) is a plot of analyze group graph.
+PPCompareGroupCP < PlotProp (pl, plot property of comparison group cp dict) is a plot of comparison group cp dict.
 
 %%% ¡description!
-PPAnalyzeGroupGraph plots a Analyze Group graph table.
+PPCompareGroupCP plots a Compairson Group cp dictionary.
 
 %%% ¡seealso!
-GUI, PlotElement, PlotProp, AnalyzeGroup, AnalyzeGroup_ST_WU, AnalyzeGroup_ST_BUT, AnalyzeGroup_ST_BUD
+GUI, PlotElement, PlotProp, ComparisonGroup.
 
 %% ¡properties!
 pp
-measure_tbl
+comparison_tbl
 selected
 
 %% ¡methods!
@@ -32,45 +32,43 @@ function h_panel = draw(pl, varargin)
     el = pl.get('EL');
     prop = pl.get('PROP');
     pl.selected = [];
-    graph = el.get(prop); 
-    if isa(graph, 'NoValue')
-        graph = el.getPropDefault(prop);
+    a1 = el.get('A1');
+    graph = a1.get('G'); % get first analysis graph class
+    if isa(graph, 'NoValue')        
+        graph_class =  el.get('A1').getPropSettings('G');
+        graph = eval([graph_class '()']);
     end
-    measures_guis = [];
-    graph_gui = [];
-    analysis_type = [];
+    comparison_guis = [];
+    case_ = 0;
     mlist = [];
+    
+    if isa(a1.get(a1.getPropNumber()), 'double')
+        % I assume both analyses have the same inputs of t and d
+        x_range = a1.get(a1.getPropNumber());  % bud, but
+        x_label = a1.getPropTag(a1.getPropNumber());
+    else
+        case_ = 1; % weighted
+    end
+
     pl.pp = draw@PlotProp(pl, varargin{:});
     set(pl.pp, 'DeleteFcn', {@close_f_settings}, ...
         varargin{:})
     
     function close_f_settings(~,~)
-        if ~isempty(measures_guis)
-            for k = 1:length(measures_guis)                
-                m_gui_h = measures_guis{k};
-                if isgraphics(m_gui_h)
-                    close(m_gui_h)
+        if ~isempty(comparison_guis)
+            for k = 1:length(comparison_guis)                
+                c_gui_h = comparison_guis{k};
+                if isgraphics(c_gui_h)
+                    close(c_gui_h)
                 end
             end
-        end
-        if ~isempty(graph_gui)
-            if isgraphics(graph_gui)
-                close(graph_gui)
-            end
-        end
+        end        
     end
 
-    if isempty(pl.measure_tbl) || ~isgraphics(pl.measure_tbl, 'uitable')
-        uicontrol( ...
-            'Parent', pl.pp, ...
-            'Units', 'normalized', ...
-            'Position', [.3 .8 .3 .1], ...
-            'Style', 'Text', ...
-            'String', graph.getClass() ...
-            )
+    if isempty(pl.comparison_tbl) || ~isgraphics(pl.comparison_tbl, 'uitable')
         
-        pl.measure_tbl = uitable();
-        set( pl.measure_tbl, ...
+        pl.comparison_tbl = uitable();
+        set( pl.comparison_tbl, ...
             'Parent', pl.pp, ...
             'Units', 'normalized', ...
             'Position', [.02 .2 .9 .7], ...
@@ -111,43 +109,35 @@ function h_panel = draw(pl, varargin)
                 
                 data{mi, 5} = eval([mlist{mi} '.getDescription()']);
             end
-            set(pl.measure_tbl, 'Data', data)
-            set(pl.measure_tbl, 'ColumnWidth', ['auto' 'auto' 'auto' 'auto' normalized(3)*.9*.3])
+            set(pl.comparison_tbl, 'Data', data)
+            set(pl.comparison_tbl, 'ColumnWidth', ['auto' 'auto' 'auto' 'auto' normalized(3)*.9*.3])
         end
     end
     
     ui_button_table_calculate = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
-    ui_button_table_see_graph = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
     ui_button_table_selectall = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
     ui_button_table_clearselection = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');    
     
     init_buttons()
         function init_buttons()            
             set(ui_button_table_calculate, ...
-                'Position', [.02 .01 .22 .07], ...
+                'Position', [.02 .01 .3 .07], ...
                 'String', 'Calculate Measures', ...
-                'TooltipString', 'Calculate Selected Measures', ...
-                'Callback', {@cb_table_calculate})
+                'TooltipString', 'Calculate Selected Comparisons', ...
+                'Callback', {@cb_table_calculate})           
             
-            set(ui_button_table_see_graph, ...
-                'Position', [.26 .01 .22 .07], ...
-                'String', 'See Graph', ...
-                'TooltipString', 'Create a GUI Graph', ...
-                'Callback', {@cb_table_graph})
             
             set(ui_button_table_selectall, ...
-                'Position', [.52 .01 .22 .07], ...
+                'Position', [.34 .01 .3 .07], ...
                 'String', 'Select All', ...
                 'TooltipString', 'Select all measures', ...
                 'Callback', {@cb_table_selectall})
 
             set(ui_button_table_clearselection, ...
-                'Position', [.76 .01 .22 .07], ...
+                'Position', [.66 .01 .3 .07], ...
                 'String', 'Clear All', ...
                 'TooltipString', 'Clear selection', ...
                 'Callback', {@cb_table_clearselection})
-            
-           
         end
 
     % callbacks
@@ -176,21 +166,25 @@ function h_panel = draw(pl, varargin)
         end
         function cb_table_calculate(~, ~)
             mlist = Graph.getCompatibleMeasureList(graph);
-            calculate_measure_list = mlist(pl.selected);
-            g = el.memorize('G');
+            calculate_measure_list = mlist(pl.selected);            
             
             % calculate
-            f = waitbar(0, ['Calculating ' num2str(length(calculate_measure_list))  ' measures ...'], 'Name', BRAPH2.NAME);
+            f = waitbar(0, ['Calculating ' num2str(length(calculate_measure_list))  ' comparisons ...'], 'Name', BRAPH2.NAME);
             set_icon(f)
             for i = 1:length(calculate_measure_list)
                 progress = (1 / (length(calculate_measure_list) * .9)) * i;   
                 extra = (1 / (length(calculate_measure_list) * .9)) * 1.5;
                 measure = calculate_measure_list{i};
-                waitbar(progress, f, ['Calculating measure: ' measure ' ...']);
-                result_measure{i} = g.getMeasure(measure);
+                waitbar(progress, f, ['Calculating comparison: ' measure ' ...']);               
+                
+                result_comparison{i, 1} = el.getComparison(measure); %#ok<*AGROW>
                 
                 % precalculate
-                g.getMeasure(measure).memorize('M');
+                el.getComparison(measure).memorize('DIFF');
+                el.getComparison(measure).memorize('P1');
+                el.getComparison(measure).memorize('P2');
+                el.getComparison(measure).memorize('CIU');
+                el.getComparison(measure).memorize('CIL');
                 
                 waitbar(extra, f, ['Measure: ' measure ' Calculated! ...']);
             end
@@ -203,15 +197,18 @@ function h_panel = draw(pl, varargin)
             y2 = normalized(2);
             w2 = normalized(3);            
             
-            waitbar(.95, f, 'Plotting the Measures GUI ...')            
-            for i = 1:length(result_measure)                
+            waitbar(.95, f, 'Plotting the Comparisons GUI ...')            
+            for i = 1:length(calculate_measure_list)                
                 offset = 0.02 * i;
                 if offset > .45
                     offset = 0;
                 end
-                measure = result_measure{i};
-                GUI(measure, 'CloseRequest', false, 'Position', [x2+offset y2-offset w2 h2])
+                
+                comparison = result_comparison{i};
+                GUI(comparison, 'CLOSEREQUEST', false, 'POSITION',  [x2+offset y2-offset w2*1.61 h2]);
             end
+            
+            comparison_guis = getGUIComparisons();
 
             % close progress bar
             if exist('f', 'var')
@@ -219,30 +216,6 @@ function h_panel = draw(pl, varargin)
                 pause(.5)
                 close(f)
             end       
-            measures_guis = getGUIMeasures();
-        end
-        function cb_table_graph(~, ~)
-            [parent_position_pixels, normalized] = get_figure_position();            
-            w = parent_position_pixels(3);
-            h = parent_position_pixels(4);
-
-            screen_size = get(0,'screensize');
-
-            if w >= screen_size(3) / 2
-                x2 = normalized(1) / 2;
-                w2 = normalized(3) / 2 - .01;
-            elseif h == screen_size(4)
-                y2 = normalized(2);
-                h2 = normalized(4) / 2;
-            else % golden ratio 
-                % golden ratio is defined as a+b/a = a/b = phi. phi = 1.61
-                x2 = normalized(1) + normalized(3);
-                h2 = normalized(4);
-                y2 = normalized(2);
-                w2 = normalized(3);               
-            end
-            GUI(graph, 'CloseRequest', false, 'Position', [x2 y2 w2 h2]); 
-            graph_gui = getGUIGraph();
         end
         function [pixels, normalized] = get_figure_position()
             fig_h = getGUIFigureObj();
@@ -252,16 +225,11 @@ function h_panel = draw(pl, varargin)
             set(fig_h, 'Units', 'characters'); % go back
         end
         function obj = getGUIFigureObj()
-            obj = get_handle_objs('figure', 'AnalyzeGroup');
+            obj = get_handle_objs('figure', 'Compare');
+        end    
+        function objs = getGUIComparisons()
+            objs = get_handle_objs('figure', [], 'ComparisonGroup');
         end
-        function objs = getGUIMeasures()
-            [~, objs] = get_handle_objs('figure', [], 'Measure');            
-        end
-        function obj = getGUIGraph()
-            [~, figHandles] = get_handle_objs('figure', [], 'Graph');
-            obj = figHandles{1};            
-        end
-
     % output
     if nargout > 0
         h_panel = pl.pp;
@@ -277,9 +245,10 @@ function update(pl)
     update@PlotProp(pl)
 
     el = pl.get('EL');
-    prop = pl.get('PROP');
+    prop = pl.get('PROP');    
+    a1 = el.get('A1');
+    graph = a1.get('G');
 
-    value = el.getPropDefault(prop);
     function [pixels, normalized] = get_figure_position()
         fig_h = getGUIFigureObj();
         set(fig_h, 'Units', 'normalized'); % set it to get position on normal units
@@ -288,16 +257,16 @@ function update(pl)
         set(fig_h, 'Units', 'characters'); % go back
     end
     function obj = getGUIFigureObj()
-        obj = get_handle_objs('figure', 'AnalyzeGroup');
+        obj = get_handle_objs('figure', 'CompareGroup');
     end
 
-    if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
+    if el.getPropCategory(prop) == Category.RESULT && isa(graph, 'NoValue')
         %
     else
         % construct a data holder
-        if ~isa(graph, 'Graph')  
+        if isa(graph, 'Graph')  
             [parent_position_pixels, ~] = get_figure_position();
-            mlist = Graph.getCompatibleMeasureList(value);
+            mlist = Graph.getCompatibleMeasureList(graph);
             data = cell(length(mlist), 5);
             for mi = 1:1:length(mlist)
                 if any(pl.selected == mi)
@@ -325,11 +294,11 @@ function update(pl)
                 data{mi, 5} = eval([mlist{mi} '.getDescription()']);
             end            
 
-            set(pl.measure_tbl, ...
+            set(pl.comparison_tbl, ...
                 'Data', data, ...
                 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)] ...
                 )
-            set(pl.measure_tbl, 'ColumnWidth', {'auto', 'auto', 'auto', 'auto', parent_position_pixels(3)})
+            set(pl.comparison_tbl, 'ColumnWidth', {'auto', 'auto', 'auto', 'auto', parent_position_pixels(3)})
         end
 
     end
