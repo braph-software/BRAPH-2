@@ -51,8 +51,9 @@ if ~isfolder(directory)
 end
 if isfolder(directory)
     % sets group props
-    f = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME);
+    f = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME, 'Visible', 'off');
     set_icon(f)
+    set(f, 'Visible', 'on');
     [~, name] = fileparts(directory);
     gr.set( ...
         'ID', name, ...

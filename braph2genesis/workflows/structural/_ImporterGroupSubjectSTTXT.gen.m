@@ -51,8 +51,9 @@ if ~isfile(file)
     file = im.memorize('FILE');
 end
 if isfile(file)
-    f = waitbar(0, 'Reading File ...', 'Name', BRAPH2.NAME);
+    f = waitbar(0, 'Reading File ...', 'Name', BRAPH2.NAME, 'Visible', 'off');
     set_icon(f)
+    set(f, 'Visible', 'on');
     raw = textread(file, '%s', 'delimiter', '\t', 'whitespace', '');
     raw = raw(~cellfun('isempty', raw));  % remove empty cells
     raw2 = readtable(file, 'Delimiter', '\t');

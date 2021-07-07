@@ -47,8 +47,9 @@ if ~isfolder(directory)
     directory = im.get('DIRECTORY');
 end
 if isfolder(directory)    
-    f = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME);
+    f = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME, 'Visible', 'off');
     set_icon(f)
+    set(f, 'Visible', 'on');
     % sets group props
     [~, name] = fileparts(directory);
     gr.set( ...
