@@ -50,10 +50,7 @@ B = [
     1   0   0
     ];
 
-known_connectivity = {[
-    0   1   1
-    1   0   0
-    1   0   0]'};
+known_connectivity = B;
 
 g = GraphBU('B', B);
 
@@ -74,19 +71,19 @@ B = [
 
 thresholds = [0 .5 1];
 
-known_connectivity = cell(3, 1);
+known_connectivity = cell(3);
 
 known_connectivity(1) = {[
-    0   .2   .7
-    .2   0   0
-    .7   0   0]'};
+    0   1   1
+    1   0   0
+    1   0   0]'};
 
-known_connectivity(2) = {[
-    0    0   .7
-    0    0   0
-    .7   0   0]'};
+known_connectivity(2, 2) = {[
+    0   0   1
+    0   0   0
+    1   0   0]'};
 
-known_connectivity(3) = {zeros(3)};
+known_connectivity(3, 3) = {zeros(3)};
 
 g = MultigraphBUT('B', B, 'THRESHOLDS', thresholds);
 
@@ -111,7 +108,11 @@ B22 = [
     ];
 B= {B11 B22};
 
-known_connectivity = B;
+known_connectivity = cell(2);
+known_connectivity(1) = {B11};
+known_connectivity(2) = {eye(3)};
+known_connectivity(3) = {eye(3)};
+known_connectivity(4) = {B22};
 
 g = MultiplexWU('B', B);
 av_connectivity = AverageConnectivity('G', g);
