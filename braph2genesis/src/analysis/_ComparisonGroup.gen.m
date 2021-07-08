@@ -82,7 +82,7 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
         return
     end
     
-    core_measure = me.get('MEASUREPARAM');
+    core_measure = cp.get('MEASUREPARAM');
     % get parameters from core measure
     j = 1;
     varargin = {};
