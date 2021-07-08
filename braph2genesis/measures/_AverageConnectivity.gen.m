@@ -50,7 +50,7 @@ B = [
     1   0   0
     ];
 
-known_connectivity = B;
+known_connectivity = {B};
 
 g = GraphBU('B', B);
 
