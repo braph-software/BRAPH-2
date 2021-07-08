@@ -1,14 +1,12 @@
 %% ¡header!
-AnalyzeGroup_CON_FUN_MP_WU < AnalyzeGroup(a, graph analysis with connectivity and functional multiplex data) is a graph analysis using connectivity and functional multiplex data.
+AnalyzeGroup_CON_FUN_MP_BUD < AnalyzeGroup (a, graph analysis with connectivity and functional multiplex data of fixed density) is a graph analysis using connectivity and functional multiplex data of fixed density.
 
 %% ¡description!
-This graph analysis uses connectivity and functional multiplex data and analyzes 
-them using weighted undirected graphs,
-binary undirected multigraphs with fixed thresholds,
-or binary undirected multigraphs with fixed densities.
+This graph analysis uses connectivity and functional multiplex data of 
+fixed density and analyzes them using binary undirected graphs.
 
 %%% ¡seealso!
-AnalyzeGroup_CON_FUN_MP_BUD, SubjectCON_FUN_MP, MultiplexWU.
+AnalyzeGroup_CON_FUN_MP_WU, SubjectCON_FUN_MP, MultiplexBUD.
 
 %% ¡props!
 %%% ¡prop!
@@ -16,11 +14,11 @@ REPETITION(parameter, scalar) is the number of repetitions for functional data
 %%%% ¡default!
 1
 %%% ¡prop!
-FREQUENCYRULEMIN(parameter, scalar) is the minimum frequency value for functional data
+FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value for functional data
 %%%% ¡default!
 0
 %%% ¡prop!
-FREQUENCYRULEMAX(parameter, scalar) is the maximum frequency value for functional data
+FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value for functional data
 %%%% ¡default!
 Inf
 
@@ -38,6 +36,11 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST
 %%%% ¡default!
 Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 
+%%% ¡prop!
+DENSITIES (parameter, rvector) is the vector of densities.
+%%%% ¡default!
+0
+
 %% ¡props_update!
 
 %%% ¡prop!
@@ -48,14 +51,15 @@ Group('SUB_CLASS', 'SubjectCON_FUN_MP')
 %%% ¡prop!
 G (result, item) is the average multiplex graph obtained from this analysis.
 %%%% ¡settings!
-'MultiplexWU'
+'MultiplexBUD'
 %%%% ¡default!
-MultiplexWU()
+MultiplexBUD()
 %%%% ¡calculate!
 gr = a.get('GR');
 T = a.get('REPETITION');
 fmin = a.get('FREQUENCYRULEMIN');
 fmax = a.get('FREQUENCYRULEMAX');
+densities = a.get('DENSITIES'); % this is a vector
 A = cell(1, 2);
 data = cell(1, 2);
 
@@ -89,9 +93,10 @@ end
 A(1) = {data{1}/gr.get('SUB_DICT').length()};
 A(2) = {Correlation.getAdjacencyMatrix(data{2}/gr.get('SUB_DICT').length(), a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'))};
 					
-g = MultiplexWU( ...
+g = MultiplexBUD( ...
     'ID', ['g ' sub.get('ID')], ...
-    'B', A ...
+    'B', A, ...
+    'DENSITIES', densities ...
     );
 
 value = g;
@@ -102,5 +107,4 @@ value = g;
 %%%% ¡name!
 Example
 %%%% ¡code!
-example_CON_FUN_MP_WU_Group
-    
+example_CON_FUN_MP_BUD_Group
