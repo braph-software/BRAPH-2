@@ -87,7 +87,7 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     interruptible = c.get('INTERRUPTIBLE');
     memorize = c.get('MEMORIZE');
     
-    core_measure = me.get('MEASUREPARAM');
+    core_measure = c.get('MEASUREPARAM');
     % get parameters from core measure
     j = 1;
     varargin = {};
