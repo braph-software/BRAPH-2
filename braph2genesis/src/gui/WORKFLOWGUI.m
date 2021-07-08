@@ -16,8 +16,15 @@ heigth_ct = .5;
 slider_width = 3;
 
 % get info of file
-txt = fileread(file);
-cycles = getFileCycles(txt);
+cycles = 1;
+previous_workspace = get_from_varargin([], 'PreviousWorkSpace', varargin);
+if ~isempty(previous_workspace)
+    txt = get_from_varargin('', 'PreviousWorkSpaceText', varargin);
+    cycles = get_from_varargin('', 'PreviousWorkSpaceCycles', varargin);
+else
+    txt = fileread(file);
+    cycles = getFileCycles(txt);
+end
     function cycles = getFileCycles(txt)
         splits = regexp(txt, ['(^|' newline() ')%%\s*'], 'split');
         splits = splits(~cellfun('isempty', splits));
@@ -31,7 +38,7 @@ cycles = getFileCycles(txt);
             if j == cycle
                 in_splits = regexp(split_tmp, ['(^|' newline() ')%\s*'], 'split');
                 in_splits = in_splits(~cellfun('isempty', in_splits));
-                token = in_splits{1};                
+                token = in_splits{1};
                 break
             end
         end
@@ -42,7 +49,6 @@ cycles = getFileCycles(txt);
         vars = vars(~cellfun('isempty', vars));
         vars_per_token = length(vars);
     end
-
 %% figure
 f = init();
     function f = init()
@@ -98,7 +104,13 @@ y_slice = 2;
 define = false;
 horizontal_slider = uicontrol(f, 'Style', 'slider', 'Callback', {@cb_horizontal_slider});
 
-panel_plot()
+if ~isempty(previous_workspace)
+    panel_struct = previous_workspace;
+    panel_plot();
+    load_struct();    
+else
+    panel_plot()
+end
     function panel_plot()
         for i = 2:cycles
             cycle = i - 1 ; % remove title;
@@ -336,7 +348,7 @@ buttons()
         if filterindex
             filename = fullfile(path, file);
             build = BRAPH2.BUILD;
-            save(filename, 'panel_struct', 'build');            
+            save(filename, 'panel_struct', 'txt', 'cycles', 'build');            
         end
     end
     function cb_load_worfklow(~, ~)
