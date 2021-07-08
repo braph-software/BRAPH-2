@@ -114,10 +114,13 @@ panel_plot()
             end
             
             if isempty(slider{i - 1}) || ~isgraphics(slider{i - 1}, 'uicontrol')
-                slider{i - 1} = uicontrol(section_panel{i - 1}, 'Style', 'slider', 'Callback', {@slide});
-                init_section_panel(section_panel{i - 1}, x_offset)
+                slider{i - 1} = uicontrol(section_panel{i - 1}, 'Style', 'slider', 'Callback', {@slide}); 
+                init_section_panel(section_panel{i - 1}, x_offset)                
             end
-           
+
+            % set y 
+            set_y_section_panel(section_panel{i - 1})
+            
             % get position
             set(section_panel{i - 1}, 'Units', 'characters')
             pos = getPosition(section_panel{i - 1});
@@ -176,6 +179,11 @@ panel_plot()
         set(panel, ...
             'Units', 'normalized', ...
             'Position', [x_offset .1 x_slice .9])
+    end
+    function set_y_section_panel(panel)
+        panel.Units = 'normalized';
+        panel.Position(2) = .1;
+        panel.Position(4) = .9;
     end
     function init_slider(slider, total_h, pos)
         if total_h > pos(4)
