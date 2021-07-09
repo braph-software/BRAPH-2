@@ -31,7 +31,6 @@ IndexAnalysisResult (metadata, OPTION) is the.
 %%% ¡prop!
 X_tblTrain (result, matrix) is the neural network trained from this analysis.
 %%%% ¡calculate!
-%[~, X_tblTrain, ~, ~, ~, ~, ~, ~] = calculate_results(nn);
 analysis = nn.get('NEURAL_NETWORK_ANALYSIS');
 value = analysis(convertCharsToStrings(nn.get('IndexAnalysisResult')) == 'X_tblTrain');
 
@@ -79,7 +78,7 @@ value = analysis(convertCharsToStrings(nn.get('IndexAnalysisResult')) == 'neural
 
 %% ¡props_update!
 %%% ¡prop!
-NEURAL_NETWORK_ANALYSIS (result, cell) is the neural network trained from this analysis.
+TRAINED_NEURAL_NETWORK (result, cell) is the neural network trained from this analysis.
 %%%% ¡calculate!
 value = calculate_results(nn);
 %value = neural_network;
