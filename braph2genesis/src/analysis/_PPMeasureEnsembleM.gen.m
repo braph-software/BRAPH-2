@@ -58,8 +58,9 @@ function update(pl)
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
         % do nothing
     elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
-        node_labels_tmp = graph.get('NODELABELS');
-        node_labels = split(node_labels_tmp, ',');
+        
+        node_labels_tmp = graph.get('BRAINATLAS').get('BR_DICT');
+        node_labels = cellfun(@(x) x.get('ID') , node_dict.getItems(), 'UniformOutput', false);
         if isa(graph, 'MultigraphBUD')
             x_range = graph.get('DENSITIES');
         else

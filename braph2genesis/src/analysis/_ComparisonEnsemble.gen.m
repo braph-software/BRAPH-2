@@ -24,6 +24,11 @@ NOTES (metadata, string) are some specific notes about the ensemble-based compar
 MEASURE (data, string) is the measure class.
 
 %%% ¡prop!
+MEASUREPARAM(data, item) is the example measure parameters 
+%%%% ¡settings!
+'Measure'
+
+%%% ¡prop!
 C (data, item) is the ensemble-based comparison.
 %%%% ¡settings!
 'CompareEnsemble'
@@ -33,6 +38,8 @@ DIFF (result, cell) is the ensemble comparison value.
 %%%% ¡calculate!
 [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp);
 value = diff;
+%%%% ¡gui!
+pl = PPComparisonEnsembleDiff('EL', cp, 'PROP', ComparisonEnsemble.DIFF, varargin{:});
 
 %%% ¡prop!
 P1 (result, cell) is the one-tailed p-value.
@@ -81,10 +88,25 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     verbose = c.get('VERBOSE');
     interruptible = c.get('INTERRUPTIBLE');
     memorize = c.get('MEMORIZE');
+    
+    core_measure = cp.get('MEASUREPARAM');
+    % get parameters from core measure
+    j = 1;
+    varargin = {};
+    if Measure.getPropNumber() ~= core_measure.getPropNumber()
+        for i = Measure.getPropNumber() + 1:core_measure.getPropNumber()
+            if ~isa(core_measure.getr(i), 'NoValue')
+                varargin{j} = core_measure.getPropTag(i);
+                varargin{j + 1} = core_measure.getr(i);
+            end
+            j = j + 2;
+        end
+        varargin = varargin(~cellfun('isempty', varargin));
+    end
 
     % Pre-calculate and save measures of all subjects
-    ms1 = cellfun(@(x) x.getMeasure(measure_class).memorize('M'), c.get('A1').memorize('G_DICT').getItems, 'UniformOutput', false);
-    ms2 = cellfun(@(x) x.getMeasure(measure_class).memorize('M'), c.get('A2').memorize('G_DICT').getItems, 'UniformOutput', false);
+    ms1 = cellfun(@(x) x.getMeasure(measure_class, varargin{:}).memorize('M'), c.get('A1').memorize('G_DICT').getItems, 'UniformOutput', false);
+    ms2 = cellfun(@(x) x.getMeasure(measure_class, varargin{:}).memorize('M'), c.get('A2').memorize('G_DICT').getItems, 'UniformOutput', false);
     
     % Measure for groups 1 and 2, and their difference
     m1 = c.get('A1').getMeasureEnsemble(measure_class).memorize('M');

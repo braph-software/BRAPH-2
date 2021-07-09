@@ -174,7 +174,10 @@ function h_panel = draw(pl, varargin)
                 extra = (.85 / n) + (.8 * j / n) + (.05 / n);
                 measure = calculate_measure_list{j};
                 waitbar(progress, f, ['Measure: ' measure '  ...']);
-                result_measure{j} = el.getMeasureEnsemble(measure); %#ok<AGROW>
+                measure_ensemble = el.getMeasureEnsemble(measure); %#ok<AGROW>
+                measure_element = eval([measure '()']);
+                measure_ensemble.set('MEASUREPARAM', measure_element);
+                result_measure{j} = measure_ensemble;
                 waitbar(extra, f, ['Measure: ' measure ' Calculated! ...']);
             end
             

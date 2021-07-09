@@ -38,8 +38,14 @@ gr = Group( ...
     'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectFUN_MP') ...
     );
 
-directory = im.get('DIRECTORY');
+gr.lock('SUB_CLASS');
 
+directory = im.get('DIRECTORY');
+directory = im.get('DIRECTORY');
+if ~isfolder(directory)
+    im.uigetdir()
+    directory = im.get('DIRECTORY');
+end
 if isfolder(directory)    
     % sets group props
     f = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME);
@@ -133,7 +139,7 @@ function uigetdir(im)
     % UIGETDIR opens a dialog box to set the directory from where to load the XLS/XLSX files of the FUN MP subject group with L layers.
 
     directory = uigetdir('Select directory');
-    if isfolder(directory)
+    if ischar(directory) && isfolder(directory)
         im.set('DIRECTORY', directory);
     end
 end

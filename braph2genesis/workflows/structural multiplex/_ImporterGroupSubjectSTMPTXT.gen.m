@@ -41,8 +41,14 @@ gr = Group( ...
     'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST_MP') ...
     );
 
-directory = im.get('DIRECTORY');
+gr.lock('SUB_CLASS');
 
+directory = im.get('DIRECTORY');
+directory = im.get('DIRECTORY');
+if ~isfolder(directory)
+    im.uigetdir()
+    directory = im.get('DIRECTORY');
+end
 if isfolder(directory)
     % sets group props
     f = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME);

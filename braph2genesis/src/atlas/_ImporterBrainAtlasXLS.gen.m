@@ -28,6 +28,10 @@ ba = BrainAtlas();
 
 % analyzes file
 file = im.memorize('FILE');
+if ~isfile(file)
+    im.uigetfile()
+    file = im.memorize('FILE');
+end
 if isfile(file)
     f = waitbar(0, 'Reading File ...', 'Name', BRAPH2.NAME);
     set_icon(f)
