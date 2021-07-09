@@ -314,7 +314,7 @@ function redraw(pl, varargin)
     %
     % See also draw, update, refresh.
 
-    pl.redraw@PlotProp('Height', 20, varargin{:});
+    pl.redraw@PlotProp('Height', 35, varargin{:});
 end
 function selected = getSelected(pl)
     selected = pl.selected;
