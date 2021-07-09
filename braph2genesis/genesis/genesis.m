@@ -69,10 +69,15 @@ mkdir([target_dir fp 'measures'])
 
 disp('¡! created dir structure - MEASURES')
 
-% workflows
-mkdir([target_dir fp 'workflows'])
+% measures
+mkdir([target_dir fp 'measures'])
 
-disp('¡! created dir structure - WORKFLOWS')
+disp('¡! created dir structure - MEASURES')
+
+% neuralnets
+mkdir([target_dir fp 'neuralnets'])
+
+disp('¡! created dir structure - NERURALNETS')
 
 % test
 mkdir([target_dir fp 'test'])
@@ -115,6 +120,11 @@ disp(' ')
 % measures
 copydir([source_dir fp 'measures'], [target_dir fp 'measures'], Inf)
 disp('¡! copied ready files - measures')
+disp(' ')
+
+% neuralntes
+copydir([source_dir fp 'neuralnets'], [target_dir fp 'neuralnets'], Inf)
+disp('¡! copied ready files - neuralnets')
 disp(' ')
 
 % brainsurfs
