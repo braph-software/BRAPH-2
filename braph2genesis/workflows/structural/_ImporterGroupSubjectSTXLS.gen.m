@@ -50,8 +50,9 @@ if ~isfile(file)
     file = im.memorize('FILE');
 end
 if isfile(file)
-    f = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME);
+    f = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME, 'Visible', 'off');
     set_icon(f)
+    set(f, 'Visible', 'on');
     [~, ~, raw] = xlsread(file);
     
     % Check if there are covariates to add (age and sex)

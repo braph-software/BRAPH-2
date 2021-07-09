@@ -16,8 +16,15 @@ heigth_ct = .5;
 slider_width = 3;
 
 % get info of file
-txt = fileread(file);
-cycles = getFileCycles(txt);
+cycles = 1;
+previous_workspace = get_from_varargin([], 'PreviousWorkSpace', varargin);
+if ~isempty(previous_workspace)
+    txt = get_from_varargin('', 'PreviousWorkSpaceText', varargin);
+    cycles = get_from_varargin('', 'PreviousWorkSpaceCycles', varargin);
+else
+    txt = fileread(file);
+    cycles = getFileCycles(txt);
+end
     function cycles = getFileCycles(txt)
         splits = regexp(txt, ['(^|' newline() ')%%\s*'], 'split');
         splits = splits(~cellfun('isempty', splits));
@@ -31,7 +38,7 @@ cycles = getFileCycles(txt);
             if j == cycle
                 in_splits = regexp(split_tmp, ['(^|' newline() ')%\s*'], 'split');
                 in_splits = in_splits(~cellfun('isempty', in_splits));
-                token = in_splits{1};                
+                token = in_splits{1};
                 break
             end
         end
@@ -42,7 +49,6 @@ cycles = getFileCycles(txt);
         vars = vars(~cellfun('isempty', vars));
         vars_per_token = length(vars);
     end
-
 %% figure
 f = init();
     function f = init()
@@ -77,6 +83,14 @@ f = init();
     end
     function redraw(~, ~)
         panel_plot()
+        set(f, 'Units', 'pixels')
+        figure_size = getPosition(f);        
+        if figure_size(3) < w_f
+            add_space_to_btns()
+        else
+            substract_space_to_btns()
+        end
+        set(f, 'Units', 'characters')
     end
 
 %% panels
@@ -88,8 +102,15 @@ x_slice = 1 / (cycles - 1);
 panel_executables = [];
 y_slice = 2;
 define = false;
+horizontal_slider = uicontrol(f, 'Style', 'slider', 'Callback', {@cb_horizontal_slider});
 
-panel_plot()
+if ~isempty(previous_workspace)
+    panel_struct = previous_workspace;
+    panel_plot();
+    load_struct();    
+else
+    panel_plot()
+end
     function panel_plot()
         for i = 2:cycles
             cycle = i - 1 ; % remove title;
@@ -105,15 +126,35 @@ panel_plot()
             end
             
             if isempty(slider{i - 1}) || ~isgraphics(slider{i - 1}, 'uicontrol')
-                slider{i - 1} = uicontrol(section_panel{i - 1}, 'Style', 'slider', 'Callback', {@slide});
+                slider{i - 1} = uicontrol(section_panel{i - 1}, 'Style', 'slider', 'Callback', {@slide}); 
+                init_section_panel(section_panel{i - 1}, x_offset)                
             end
-            
-            % init
-            init_section_panel(section_panel{i - 1}, x_offset)
+
+            % set y 
+            set_y_section_panel(section_panel{i - 1})
             
             % get position
             set(section_panel{i - 1}, 'Units', 'characters')
             pos = getPosition(section_panel{i - 1});
+            
+            % horizontal slider
+            set(f, 'Units', 'pixels')
+            figure_size = getPosition(f);
+            if figure_size(3) < w_f
+                set(horizontal_slider, ...
+                    'Units', 'characters', ...
+                    'Visible', 'on', ...
+                    'Min', 0, ...
+                    'Max', w_f, ...
+                    'Value', max(get(horizontal_slider, 'Value'), w_f - figure_size(3)), ...
+                    'Position', [0 0 figure_size(3) 1])
+            else
+                set(horizontal_slider, ... 
+                    'Units', ' characters', ...
+                    'Visible', 'off', ...
+                    'Position', [0 0 figure_size(3) 1])
+            end
+            set(f, 'Units', 'characters')
             
             % get executables
             panel_executable = getExecutable(token);
@@ -150,6 +191,11 @@ panel_plot()
         set(panel, ...
             'Units', 'normalized', ...
             'Position', [x_offset .1 x_slice .9])
+    end
+    function set_y_section_panel(panel)
+        panel.Units = 'normalized';
+        panel.Position(2) = .1;
+        panel.Position(4) = .9;
     end
     function init_slider(slider, total_h, pos)
         if total_h > pos(4)
@@ -217,27 +263,83 @@ panel_plot()
             set(slider{i}, 'Visible', 'on')
         end
     end
+    function cb_horizontal_slider(~, ~)
+        set(horizontal_slider, 'Visible', 'on')
+    end
 
-%% load and save 
-save_workflow_btn = uicontrol(f);
-load_workflow_btn = uicontrol(f);
-init_load_and_save()
-    function init_load_and_save()
+%% buttons
+save_workflow_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
+load_workflow_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
+% linkbar
+license_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
+about_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
+website_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
+forums_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
+twitter_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
+buttons()
+    function buttons()        
         set(save_workflow_btn, ...
-            'Units', 'normalized', ...
-            'Style', 'pushbutton', ...
             'String', 'Save ...', ...
             'Tooltip', ['Save the workspace of ' name], ...
-            'Position', [.2 .01 .3 .07], ...
+            'Position', [.0 0 .1428 .08], ...
+            'BackgroundColor', [1 1 1], ...
             'Callback', {@cb_save_worfklow})
         
         set(load_workflow_btn, ...
-            'Units', 'normalized', ...
-            'Style', 'pushbutton', ...
             'String', 'Load ...', ...
             'Tooltip', ['Load the workspace of ' name], ...
-            'Position', [.52 .01 .3 .07], ...
+            'Position', [.1428 0 .1428 .08], ...
+            'BackgroundColor', [1 1 1], ...
             'Callback', {@cb_load_worfklow})
+        
+        set(website_btn, ...
+            'Position', [.2856 0 .1428 .08], ...
+            'Tooltip', 'Click to visit BRAPH 2.0 website', ...
+            'Cdata', imread('webicon.png'), ...
+            'BackgroundColor', [1 1 1], ...
+            'Callback', {@cb_website_btn});
+        set(forums_btn, ...
+            'Position', [.4284 0 .1428 .08], ...
+            'Tooltip', 'Click to visit BRAPH 2.0 forums', ...
+            'Cdata', imread('forum_icon.png'), ...
+            'BackgroundColor', [1 1 1], ...
+            'Callback', {@cb_forum_btn});
+        set(twitter_btn, ...
+            'Position', [.5712 0 .1428 .08], ...
+            'Tooltip', 'Click to visit BRAPH 2.0 twitter', ...
+            'Cdata', imread('twitter_icon.png'), ...
+            'BackgroundColor', [1 1 1], ...
+            'Callback', {@cb_twitter_btn});        
+        set(license_btn, ...
+            'Position', [.714 0 .1428 .08], ...
+            'Cdata', imread('licenseicon.png'), ...
+            'BackgroundColor', [1 1 1], ...
+            'Tooltip', 'Click to open BRAPH 2.0 License', ...
+            'Callback', {@cb_license});
+        set(about_btn, ...
+            'Position', [.8568 0 .1428 .08], ...
+            'Cdata', imread('abouticon.png'), ...
+            'BackgroundColor', [1 1 1], ...
+            'Tooltip', 'Click to open BRAPH 2.0 information', ...
+            'Callback', {@cb_about});     
+    end
+    function cb_website_btn(~, ~)
+        url = 'http://braph.org/';
+        web(url);
+    end
+    function cb_twitter_btn(~, ~)
+        url = 'google.com'; % create a BRAPH 2 twitter.
+        web(url);
+    end
+    function cb_forum_btn(~, ~)
+        url = 'http://braph.org/forum/';
+        web(url);
+    end
+    function cb_license(~, ~)
+        BRAPH2_LICENSE()
+    end
+    function cb_about(~, ~)
+        BRAPH2_ABOUT();
     end
     function cb_save_worfklow(~, ~)
         % select file
@@ -246,7 +348,7 @@ init_load_and_save()
         if filterindex
             filename = fullfile(path, file);
             build = BRAPH2.BUILD;
-            save(filename, 'panel_struct', 'build');            
+            save(filename, 'panel_struct', 'txt', 'cycles', 'build');            
         end
     end
     function cb_load_worfklow(~, ~)
@@ -286,6 +388,52 @@ init_load_and_save()
                 end
             end
         end
+    end
+    function add_space_to_btns()
+        set(save_workflow_btn, ...
+            'Position', [.0 0.02 .1428 .08] ...
+            );
+        set(load_workflow_btn, ...
+            'Position', [.1428 0.02 .1428 .08] ...
+            );
+        set(website_btn, ...
+            'Position', [.2856 0.02 .1428 .08] ...
+            );
+        set(forums_btn, ...
+            'Position', [.4284 0.02 .1428 .08] ...
+            );
+        set(twitter_btn, ...
+            'Position', [.5712 0.02 .1428 .08] ...
+            );
+        set(license_btn, ...
+            'Position', [.714 0.02 .1428 .08] ...
+            );
+        set(about_btn, ...
+            'Position', [.8568 0.02 .1428 .08] ...
+            );
+    end
+    function substract_space_to_btns()
+         set(save_workflow_btn, ...
+            'Position', [.0 0 .1428 .08] ...
+            );
+        set(load_workflow_btn, ...
+            'Position', [.1428 0 .1428 .08] ...
+            );
+        set(website_btn, ...
+            'Position', [.2856 0 .1428 .08] ...
+            );
+        set(forums_btn, ...
+            'Position', [.4284 0 .1428 .08] ...
+            );
+        set(twitter_btn, ...
+            'Position', [.5712 0 .1428 .08] ...
+            );
+        set(license_btn, ...
+            'Position', [.714 0 .1428 .08] ...
+            );
+        set(about_btn, ...
+            'Position', [.8568 0 .1428 .08] ...
+            );
     end
 
 %% auxiliary
