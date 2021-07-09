@@ -535,7 +535,7 @@ function f_settings = settings(pl, varargin)
             color = uisetcolor;
             if length(color) == 3
                 pl.set('FACECOLOR', color, 'EDGECOLOR', color)
-                pl.draw()
+                set(pl.h_brain, 'FACECOLOR', color, 'EDGECOLOR', color)
             end
         end
         function cb_alpha(~, ~)  % (src, event)
@@ -548,7 +548,7 @@ function f_settings = settings(pl, varargin)
             color = uisetcolor;
             if length(color) == 3
                 pl.set('FACECOLOR', color)
-                pl.draw()
+                set(pl.h_brain, 'FACECOLOR', color)
             end
         end
         function cb_facealpha(~, ~)  % (src, event)
@@ -559,7 +559,7 @@ function f_settings = settings(pl, varargin)
             color = uisetcolor;
             if length(color) == 3
                 pl.set('EDGECOLOR', color)
-                pl.draw()
+                set(pl.h_brain, 'EDGECOLOR', color)
             end
         end
         function cb_edgealpha(~, ~)  % (src, event)

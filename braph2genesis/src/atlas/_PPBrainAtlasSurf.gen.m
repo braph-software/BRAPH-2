@@ -77,6 +77,8 @@ function h_panel = draw(pl, varargin)
     end
     
         function cb_pushbutton_brain_atlas(~, ~)
+            selected_surface = surfs{get(surf_selector_popup, 'Value')};
+            el.set('SURF', ImporterBrainSurfaceNV('FILE', [selected_surface '.nv']).get('SURF'));
             update_plba()
             [parent_position_pixels, normalized] = get_figure_position();
             x = parent_position_pixels(1);
