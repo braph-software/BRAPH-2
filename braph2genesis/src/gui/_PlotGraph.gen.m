@@ -65,7 +65,7 @@ function [h_figure, h_axes] = draw(pl, varargin)
         pl.h_axes = axes(pl.h_figure);
         set_icon(pl.h_figure);
         
-        ui_toolbar = findall(plot_figure, 'Tag', 'FigureToolBar');
+        ui_toolbar = findall(pl.h_figure, 'Tag', 'FigureToolBar');
         delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
         delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
         delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
@@ -80,7 +80,7 @@ function [h_figure, h_axes] = draw(pl, varargin)
         delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
         
         % menu
-        ui_menu_figure = uimenu(f, 'Label', 'Figure');
+        ui_menu_figure = uimenu(pl.h_figure, 'Label', 'Figure');
         uimenu(ui_menu_figure, ...
             'Label', 'Save ...', ...
             'Accelerator', 'S', ...
