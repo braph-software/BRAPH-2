@@ -14,6 +14,8 @@ tokens = [];
 width_ct = 1;
 heigth_ct = .5;
 slider_width = 3;
+min_height = 400;
+min_width = 500;
 
 % get info of file
 cycles = 1;
@@ -84,13 +86,31 @@ f = init();
     function redraw(~, ~)
         panel_plot()
         set(f, 'Units', 'pixels')
-        figure_size = getPosition(f);        
+        figure_size = getPosition(f);
         if figure_size(3) < w_f
-            add_space_to_btns()
+            set(horizontal_slider, ...
+                'Units', 'pixels',...
+                'Position', [0 figure_size(4)*0.08+1 figure_size(3) 10], ...
+                'Units', 'characters', ...
+                'Visible', 'on', ...
+                'Min', 0, ...
+                'Max', w_f, ...
+                'Value', max(get(horizontal_slider, 'Value'), w_f - figure_size(3)) ...
+                )
         else
-            substract_space_to_btns()
+            set(horizontal_slider, ...
+                'Units', ' characters', ...
+                'Visible', 'off', ...
+                'Position', [0 0 figure_size(3) 1])
+        end       
+        
+        % control min height
+        if figure_size(4) < min_height || figure_size(3) < min_width
+            f.Position(1) = screen_size(3) * 0.2;
+            f.Position(2) = screen_size(4) * .2;
+            f.Position(3) = min_width;
+            f.Position(4) = min_height;
         end
-        set(f, 'Units', 'characters')
     end
 
 %% panels
@@ -136,25 +156,6 @@ end
             % get position
             set(section_panel{i - 1}, 'Units', 'characters')
             pos = getPosition(section_panel{i - 1});
-            
-            % horizontal slider
-            set(f, 'Units', 'pixels')
-            figure_size = getPosition(f);
-            if figure_size(3) < w_f
-                set(horizontal_slider, ...
-                    'Units', 'characters', ...
-                    'Visible', 'on', ...
-                    'Min', 0, ...
-                    'Max', w_f, ...
-                    'Value', max(get(horizontal_slider, 'Value'), w_f - figure_size(3)), ...
-                    'Position', [0 0 figure_size(3) 1])
-            else
-                set(horizontal_slider, ... 
-                    'Units', ' characters', ...
-                    'Visible', 'off', ...
-                    'Position', [0 0 figure_size(3) 1])
-            end
-            set(f, 'Units', 'characters')
             
             % get executables
             panel_executable = getExecutable(token);
