@@ -226,7 +226,7 @@ end
         panel_struct(panel, child).btn = src.String;
         
         for l = 1:size(panel_struct, 2)
-            if ~isempty(panel_struct) && size(panel_struct, 1) > 1
+            if ~isempty(panel_struct) && size(panel_struct, 1) > 1 && panel ~= 1
                 exe_{2} = strrep(exe_{2}, ...
                     panel_struct(panel - 1, l).name_script, ...
                     panel_struct(panel - 1, l).name);
