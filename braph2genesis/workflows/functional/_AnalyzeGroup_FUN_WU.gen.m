@@ -52,7 +52,7 @@ gr = a.get('GR');
 T = a.get('REPETITION');
 fmin = a.get('FREQUENCYRULEMIN');
 fmax = a.get('FREQUENCYRULEMAX');
-
+A_fun = [];
 for i = 1:1:gr.get('SUB_DICT').length()
 	sub = gr.get('SUB_DICT').getItem(i);
     data = sub.getr('FUN');
