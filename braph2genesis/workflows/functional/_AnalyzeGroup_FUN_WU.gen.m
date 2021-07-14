@@ -65,18 +65,18 @@ for i = 1:1:gr.get('SUB_DICT').length()
         ft(f < fmin | f > fmax, :) = 0;
         data = ifft(ft, NFFT);
     end
-
+    A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
+    
     if i == 1
-        data_fun = data;
+        A_fun = A;
     else
-        data_fun = data_fun + data;
+        A_fun = A_fun + A;
     end    
 end
 
-A = Correlation.getAdjacencyMatrix(data_fun/gr.get('SUB_DICT').length(), a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
 g = GraphWU( ...
     'ID', ['g ' gr.get('ID')], ...
-    'B', A ...
+    'B', A_fun/gr.get('SUB_DICT').length() ...
     );
 value = g;
 %%%% ¡gui!
