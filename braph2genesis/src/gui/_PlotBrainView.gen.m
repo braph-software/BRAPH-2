@@ -47,7 +47,7 @@ function p = getBrainView(pl)
     % See also getGlobalPanel, getNodalPanel, getBinodalPanel.
     uiparent = pl.h_figure;
     atlas = pl.get('ATLAS');
-    pl.bg =  PlotBrainAtlas('ATLAS', atlas, 'Surf', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
+    pl.bg =  PlotBrainGraph('ATLAS', atlas, 'Surf', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
     bgp = [];
     mrc = [];
 
