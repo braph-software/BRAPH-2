@@ -49,8 +49,8 @@ INIT_CYL_COLOR = [0 0 0];
 INIT_CYL_R = .1;
 INIT_CYL_N = 32;
 
-h_figure
 h_axes
+pp
 TABBKGCOLOR = [.98 .95 .95];
 
 %% ¡methods!
@@ -70,7 +70,7 @@ function h_panel = draw(pl, varargin)
 %
 % see also settings, uipanel, isgraphics.
 
-pl.pp = draw@PlotBrainSurface(pl, varargin{:});
+pl.pp = draw@PlotBrainAtlas(pl, varargin{:});
 
 if isempty(pl.h_axes) || ~isgraphics(pl.h_axes, 'axes')
     pl.h_axes =  get(pl.pp, 'Children');
@@ -81,27 +81,10 @@ set(pl.pp, 'DeleteFcn', {@close_f_settings}, ...
     varargin{:})
 
     function close_f_settings(~, ~)
-        if ~isempty(pl.f_settings) && isgraphics(pl.f_settings, 'figure')
-            close(pl.f_settings)
-        end
-        if ~isempty(pl.f_settings_buttons) && isgraphics(pl.f_settings_buttons, 'figure')
-            close(pl.f_settings_buttons)
-        end
-        if ~isempty(pl.f_syms_settings) && isgraphics(pl.f_syms_settings, 'figure')
-            close(pl.f_syms_settings)
-        end
-        if ~isempty(pl.f_sphs_settings) && isgraphics(pl.f_sphs_settings, 'figure')
-            close(pl.f_sphs_settings)
-        end
-        if ~isempty(pl.f_ids_settings) && isgraphics(pl.f_ids_settings, 'figure')
-            close(pl.f_ids_settings)
-        end
-        if ~isempty(pl.f_labs_settings) && isgraphics(pl.f_labs_settings, 'figure')
-            close(pl.f_labs_settings)
-        end
+        
     end
 
-brain_regions_length = pl.get('BRAINATLAS').get('BR_DICT').length();
+brain_regions_length = pl.get('ATLAS').get('BR_DICT').length();
 pl.edges.h = NaN(brain_regions_length);
 pl.edges.arr = NaN(brain_regions_length);
 pl.edges.cyl = NaN(brain_regions_length);
@@ -140,8 +123,8 @@ function h = link_edge(pl, i, j, varargin)
     end
     % get brain regions
 
-    br_1 = pl.graph.get('BRAINATLAS').get('BR_DICT').getItem(i);
-    br_2 = pl.graph.get('BRAINATLAS').get('BR_DICT').getItem(j);
+    br_1 = pl.graph.get('ATLAS').get('BR_DICT').getItem(i);
+    br_2 = pl.graph.get('ATLAS').get('BR_DICT').getItem(j);
     % get coordinates
     X1 = br_1.get('X');
     Y1 = br_1.get('Y');
@@ -251,7 +234,7 @@ function link_edges(pl, i_vec, j_vec, varargin)
 
     if nargin < 2 || isempty(i_vec) || isempty(j_vec)
         for i = 1:1:pl.atlas.getBrainRegions().length()
-            for j = 1:1:pl.get('BRAINATLAS').get('BR_DICT').length()
+            for j = 1:1:pl.get('ATLAS').get('BR_DICT').length()
                 pl.link_edge(i, j, varargin{:})
             end
         end
@@ -277,8 +260,8 @@ function link_edges_on(pl, i_vec, j_vec)
     % See also PlotBrainGraph, link_edges, link_edges_off.
 
     if nargin<2 || isempty(i_vec) || isempty(j_vec)
-        for i = 1:1:pl.get('BRAINATLAS').get('BR_DICT').length()
-            for j = 1:1:pl.get('BRAINATLAS').get('BR_DICT').length()
+        for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
+            for j = 1:1:pl.get('ATLAS').get('BR_DICT').length()
                 pl.link_edge_on(i, j)
             end
         end
@@ -304,8 +287,8 @@ function link_edges_off(pl, i_vec, j_vec)
     % See also PlotBrainGraph, link_edge, link_edge_on.
 
     if nargin<2 || isempty(i_vec) || isempty(j_vec)
-        for i = 1:1:pl.get('BRAINATLAS').get('BR_DICT').length()
-            for j = 1:1:pl.get('BRAINATLAS').get('BR_DICT').length()
+        for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
+            for j = 1:1:pl.get('ATLAS').get('BR_DICT').length()
                 pl.link_edge_off(i, j)
             end
         end
@@ -337,7 +320,7 @@ function link_edges_settings(pl, i_vec, j_vec, varargin)
     %
     % See also PlotBrainGraph.
 
-    atlas_length = pl.get('BRAINATLAS').get('BR_DICT').length();
+    atlas_length = pl.get('ATLAS').get('BR_DICT').length();
     data = cell(atlas_length, atlas_length);
 
     if nargin<2 || isempty(i_vec) || isempty(j_vec)
@@ -550,8 +533,8 @@ function h = arrow_edge(pl, i, j, varargin)
     end
     pl.set_axes();
     % get brain regions
-    br_1 = pl.graph.get('BRAINATLAS').get('BR_DICT').getItem(i);
-    br_2 = pl.graph.get('BRAINATLAS').get('BR_DICT').getItem(j);
+    br_1 = pl.graph.get('ATLAS').get('BR_DICT').getItem(i);
+    br_2 = pl.graph.get('ATLAS').get('BR_DICT').getItem(j);
     % get coordinates
     X1 = br_1.get('X');
     Y1 = br_1.get('Y');
@@ -674,8 +657,8 @@ function arrow_edges(pl, i_vec, j_vec, varargin)
     % See also PlotBrainGraph, plot3, link_edge.
 
     if nargin < 2 || isempty(i_vec) || isempty(j_vec)
-        for i = 1:1:pl.get('BRAINATLAS').get('BR_DICT').length()
-            for j = 1:1:pl.get('BRAINATLAS').get('BR_DICT').length()
+        for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
+            for j = 1:1:pl.get('ATLAS').get('BR_DICT').length()
                 pl.arrow_edge(i, j, varargin{:})
             end
         end
@@ -701,8 +684,8 @@ function arrow_edges_on(pl, i_vec, j_vec)
     % See also PlotBrainGraph, link_edges, link_edges_off.
 
     if nargin<2 || isempty(i_vec) || isempty(j_vec)
-        for i = 1:1:pl.get('BRAINATLAS').get('BR_DICT').length()
-            for j = 1:1:pl.get('BRAINATLAS').get('BR_DICT').length()
+        for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
+            for j = 1:1:pl.get('ATLAS').get('BR_DICT').length()
                 pl.arrow_edge_on(i, j)
             end
         end
@@ -728,8 +711,8 @@ function arrow_edges_off(pl, i_vec, j_vec)
     % See also PlotBrainGraph, link_edge, link_edge_on.
 
     if nargin<2 || isempty(i_vec) || isempty(j_vec)
-        for i = 1:1:pl.get('BRAINATLAS').get('BR_DICT').length()
-            for j = 1:1:pl.get('BRAINATLAS').get('BR_DICT').length()
+        for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
+            for j = 1:1:pl.get('ATLAS').get('BR_DICT').length()
                 pl.arrow_edge_off(i, j)
             end
         end
@@ -761,7 +744,7 @@ function arrow_edges_settings(pl, i_vec, j_vec, varargin)
     %
     % See also PlotBrainGraph.
 
-    atlas_length = pl.get('BRAINATLAS').get('BR_DICT').length();
+    atlas_length = pl.get('ATLAS').get('BR_DICT').length();
     data = cell(atlas_length, atlas_length);
 
     if nargin<2 || isempty(i_vec) || isempty(j_vec)
@@ -949,8 +932,8 @@ function h = cylinder_edge(pl, i, j, varargin)
     end
     pl.set_axes();
     % get brain regions
-    br_1 = pl.graph.get('BRAINATLAS').get('BR_DICT').getItem(i);
-    br_2 = pl.graph.get('BRAINATLAS').get('BR_DICT').getItem(j);
+    br_1 = pl.graph.get('ATLAS').get('BR_DICT').getItem(i);
+    br_2 = pl.graph.get('ATLAS').get('BR_DICT').getItem(j);
     % get coordinates
     X1 = br_1.get('X');
     Y1 = br_1.get('Y');
@@ -1064,8 +1047,8 @@ function cylinder_edges(pl, i_vec, j_vec, varargin)
     % See also PlotBrainGraph, plot3, link_edge.
 
     if nargin < 2 || isempty(i_vec) || isempty(j_vec)
-        for i = 1:1:pl.get('BRAINATLAS').get('BR_DICT').length()
-            for j = 1:1:pl.get('BRAINATLAS').get('BR_DICT').length()
+        for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
+            for j = 1:1:pl.get('ATLAS').get('BR_DICT').length()
                 pl.cylinder_edge(i, j, varargin{:})
             end
         end
@@ -1091,8 +1074,8 @@ function cylinder_edges_on(pl, i_vec, j_vec)
     % See also PlotBrainGraph, link_edges, link_edges_off.
 
     if nargin<2 || isempty(i_vec) || isempty(j_vec)
-        for i = 1:1:pl.get('BRAINATLAS').get('BR_DICT').length()
-            for j = 1:1:pl.get('BRAINATLAS').get('BR_DICT').length()
+        for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
+            for j = 1:1:pl.get('ATLAS').get('BR_DICT').length()
                 pl.cylinder_edge_on(i, j)
             end
         end
@@ -1118,8 +1101,8 @@ function cylinder_edges_off(pl, i_vec, j_vec)
     % See also PlotBrainGraph, link_edge, link_edge_on.
 
     if nargin<2 || isempty(i_vec) || isempty(j_vec)
-        for i = 1:1:pl.get('BRAINATLAS').get('BR_DICT').length()
-            for j = 1:1:pl.get('BRAINATLAS').get('BR_DICT').length()
+        for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
+            for j = 1:1:pl.get('ATLAS').get('BR_DICT').length()
                 pl.cylinder_edge_off(i, j)
             end
         end
@@ -1151,7 +1134,7 @@ function cylinder_edges_settings(pl, i_vec, j_vec, varargin)
     %
     % See also PlotBrainGraph.
 
-    atlas_length = pl.get('BRAINATLAS').get('BR_DICT').length();
+    atlas_length = pl.get('ATLAS').get('BR_DICT').length();
     data = cell(atlas_length, atlas_length);
 
     if nargin<2 || isempty(i_vec) || isempty(j_vec)
@@ -1333,8 +1316,8 @@ function h = text_edge(pl, graph_axes, i, j , text_value, varargin)
     end
 
     pl.set_axes();
-    br_1 = pl.graph.get('BRAINATLAS').get('BR_DICT').getItem(i);
-    br_2 = pl.graph.get('BRAINATLAS').get('BR_DICT').getItem(j);
+    br_1 = pl.graph.get('ATLAS').get('BR_DICT').getItem(i);
+    br_2 = pl.graph.get('ATLAS').get('BR_DICT').getItem(j);
     % get coordinates
     X1 = br_1.get('X');
     Y1 = br_1.get('Y');
@@ -1397,6 +1380,16 @@ function bool = tex_edge_is_off(pl, i, j)
     % See also PlotBrainGraph, text_edge, tex_edge_is_off.
 
     bool = ishandle(pl.edges.texts(i, j)) && strcmpi(get(pl.edges.texts(i, j), 'Visible'), 'off');
+end
+
+function h = get_axes(pl)
+    % GET_AXES returns the panel axes
+    %
+    % H = GET_AXES(PL) returns the panel axes
+    %
+    % See also PlotBrainGraph.
+    
+    h = pl.h_axes;
 end
 
 %% ¡tests!
