@@ -26,6 +26,30 @@ PLOT_LINESTYLE_NAME = { ...
     'none' ...
     }
 
+% Symbols
+INIT_SYM_MARKER = 'o'
+INIT_SYM_SIZE = 10
+INIT_SYM_EDGE_COLOR = 'b'
+INIT_SYM_FACE_COLOR = 'b'
+
+% Spheres
+INIT_SPH_EDGE_COLOR = 'none'
+INIT_SPH_EDGE_ALPHA = .5
+INIT_SPH_FACE_COLOR = [.9 .4 .1]
+INIT_SPH_FACE_ALPHA = .5
+INIT_SPH_R = 1
+
+% IDs
+INIT_ID_FONT_SIZE = 13
+INIT_ID_FONT_NAME = GUI.FONT
+INIT_ID_FONT_COLOR = [0 0 0]
+INIT_ID_FONT_INTERPRETER = 'none'
+
+% Labels
+INIT_LAB_FONT_SIZE = 13
+INIT_LAB_FONT_NAME = GUI.FONT
+INIT_LAB_FONT_COLOR = [0 0 0]
+INIT_LAB_FONT_INTERPRETER = 'none'
 
 %% ¡properties!
 edges  % structure of 2D cell arrays containing edge properties
@@ -1316,8 +1340,8 @@ function h = text_edge(pl, graph_axes, i, j , text_value, varargin)
     end
 
     pl.set_axes();
-    br_1 = pl.graph.get('ATLAS').get('BR_DICT').getItem(i);
-    br_2 = pl.graph.get('ATLAS').get('BR_DICT').getItem(j);
+    br_1 = pl.get('ATLAS').get('BR_DICT').getItem(i);
+    br_2 = pl.get('ATLAS').get('BR_DICT').getItem(j);
     % get coordinates
     X1 = br_1.get('X');
     Y1 = br_1.get('Y');

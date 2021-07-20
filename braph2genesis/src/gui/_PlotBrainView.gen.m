@@ -13,7 +13,7 @@ uipanel, ishandle, isgraphics, figure, PlotGraph
 h_figure % panel graphical handle
 h_axes % axes handle
 subpanel % subpanel for pba
-bg % plot brain atlas
+bg % plot brain graph
 
 %% ¡props!
 %%% ¡prop!
@@ -197,6 +197,10 @@ function brain_graph_panel = getBrainGraphPanel(pl)
     fig_graph = figure('Name', NAME_GRAPH, ...
         'Units', 'normalized', ...
         'Visible', 'off', ...
+        'MenuBar', 'none', ...
+        'Toolbar', 'none', ...
+        'NumberTitle', 'off', ...
+        'DockControls', 'off', ...
         'Position', [.3 .2 .2 .4]);
 
     % variables
@@ -253,7 +257,7 @@ function brain_graph_panel = getBrainGraphPanel(pl)
             set(ui_checkbox_graph_lineweight, 'BackgroundColor',BKGCOLOR)
             set(ui_checkbox_graph_lineweight, 'Position', [.10 .61 .28 .10])
             set(ui_checkbox_graph_lineweight, 'String', ' Thickness ')
-            set(ui_checkbox_graph_lineweight, 'Value', false)
+            set(ui_checkbox_graph_lineweight, 'Value', true)
             set(ui_checkbox_graph_lineweight, 'FontWeight', 'bold')
             set(ui_checkbox_graph_lineweight, 'TooltipString', 'Shows brain regions by label')
             set(ui_checkbox_graph_lineweight, 'Callback', {@cb_checkbox_lineweight})
@@ -365,6 +369,8 @@ function brain_graph_panel = getBrainGraphPanel(pl)
             update_graph()
         end
         function cb_graph_show(~, ~)  % (src, event)
+            set(ui_edit_graph_lineweight, 'Enable', 'on')
+
             update_graph()
         end
         function cb_graph_hide(~, ~)  % (src, event)
@@ -472,1148 +478,473 @@ function brain_graph_panel = getBrainGraphPanel(pl)
     end
 end
 function h = getMCRPanel(pl)
-% sets position of figure
-APPNAME = 'Analysis Property Panel';
-FigPosition = [.10 .30 .35 .50];
-FigColor = GUI.BKGCOLOR;
+    % sets position of figure
+    APPNAME = [pl.get('ME').get('ID') ' Property Panel'];
 
-% create a figure
-f = GUI.init_figure(APPNAME, .45, .6, 'west');
+    f = figure('Name', APPNAME, ...
+        'Units', 'normalized', ...
+        'Visible', 'off', ...
+        'MenuBar', 'none', ...
+        'Toolbar', 'none', ...
+        'NumberTitle', 'off', ...
+        'DockControls', 'off', ...
+        'Position', [.3 .2 .2 .4]);
 
-set(f, 'Units', 'normalized')
-set(f, 'Position', FigPosition)
-set(f, 'Color', FigColor)
-set(f, 'Name', [APPNAME ' : Group settings - ' BRAPH2.VERSION])
-set(f, 'MenuBar', 'none')
-set(f, 'Toolbar', 'none')
-set(f, 'NumberTitle', 'off')
-set(f, 'DockControls', 'off')
+    % variables
+    atlas = pl.get('ATLAS');
+    br_axes = pl.h_axes; %#ok<NASGU>
+    FigColor = [.95 .94 .94];
 
-measure_data = [];
-fdr_lim = [];
-p1 = [];
-p2 = [];
-ga = analysis;
+    measure_data = pl.get('ME').get('M');
+    fdr_lim = [];
+    p1 = [];
+    p2 = [];
 
-% get all measures
-mlist = Graph.getCompatibleMeasureList(analysis.getGraphType());  % list of nodal measures
+    % initialization %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % measure container panel
+    ui_measure_container_panel = uipanel(f, 'Units', 'normalized');
 
-%% initialization
-% groups, actions and measures
-ui_action_measures_checkbox = uicontrol(f, 'Style', 'checkbox');
-ui_action_comparison_checkbox = uicontrol(f, 'Style', 'checkbox');
-ui_action_random_checkbox = uicontrol(f, 'Style', 'checkbox');
-ui_text_group1 = uicontrol(f, 'Style', 'text');
-ui_text_group2 = uicontrol(f, 'Style', 'text');
-ui_text_view_action = uicontrol(f, 'Style', 'text');
-ui_popup_grouplists1 = uicontrol(f, 'Style', 'popup', 'String', {''});
-ui_popup_grouplists2 = uicontrol(f, 'Style', 'popup', 'String', {''});
-ui_list_gr = uicontrol(f, 'Style',  'listbox');
-ui_list_threshold_or_density = uicontrol(f, 'Style', 'listbox');
-list_tittle = uicontrol(f, 'Style', 'text');
+    % nodal measure figure options
+    ui_checkbox_meas_symbolsize = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
+    ui_edit_meas_symbolsize = uicontrol(ui_measure_container_panel, 'Style', 'edit');
+    ui_checkbox_meas_symbolcolor = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
+    ui_popup_meas_initcolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
+    ui_popup_meas_fincolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
+    ui_checkbox_meas_sphereradius = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
+    ui_edit_meas_sphereradius = uicontrol(ui_measure_container_panel, 'Style', 'edit');
+    ui_checkbox_meas_spherecolor = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
+    ui_popup_meas_sphinitcolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
+    ui_popup_meas_sphfincolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
+    ui_checkbox_meas_spheretransparency = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
+    ui_slider_meas_spheretransparency = uicontrol(ui_measure_container_panel, 'Style', 'slider');
+    ui_checkbox_meas_labelsize = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
+    ui_edit_meas_labelsize = uicontrol(ui_measure_container_panel, 'Style', 'edit');
+    ui_checkbox_meas_labelcolor = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
+    ui_popup_meas_labelinitcolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
+    ui_popup_meas_labelfincolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
 
-% rescaling panel
-ui_panel_meas_scaling = uipanel(f);
-ui_text_meas_offset = uicontrol(ui_panel_meas_scaling, 'Style', 'text');
-ui_edit_meas_offset = uicontrol(ui_panel_meas_scaling, 'Style', 'edit');
-ui_text_meas_rescaling = uicontrol(ui_panel_meas_scaling, 'Style', 'text');
-ui_edit_meas_rescaling = uicontrol(ui_panel_meas_scaling, 'Style', 'edit');
-ui_checkbox_meas_fdr1 = uicontrol(ui_panel_meas_scaling, 'Style',  'checkbox');
-ui_edit_meas_fdr1 = uicontrol(ui_panel_meas_scaling, 'Style', 'edit');
-ui_checkbox_meas_fdr2 = uicontrol(ui_panel_meas_scaling, 'Style',  'checkbox');
-ui_edit_meas_fdr2 = uicontrol(ui_panel_meas_scaling, 'Style', 'edit');
-ui_button_meas_automatic = uicontrol(ui_panel_meas_scaling, 'Style', 'pushbutton');
+    init_measures_panel()
+    set(f, 'Visible', 'on')
 
-% measure container panel
-ui_measure_container_panel = uipanel(f, 'Units', 'normalized');
+    %% Callback functions
+        function init_measures_panel()
 
-% nodal measure figure options
-ui_checkbox_meas_symbolsize = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
-ui_edit_meas_symbolsize = uicontrol(ui_measure_container_panel, 'Style', 'edit');
-ui_checkbox_meas_symbolcolor = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
-ui_popup_meas_initcolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
-ui_popup_meas_fincolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
-ui_checkbox_meas_sphereradius = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
-ui_edit_meas_sphereradius = uicontrol(ui_measure_container_panel, 'Style', 'edit');
-ui_checkbox_meas_spherecolor = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
-ui_popup_meas_sphinitcolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
-ui_popup_meas_sphfincolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
-ui_checkbox_meas_spheretransparency = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
-ui_slider_meas_spheretransparency = uicontrol(ui_measure_container_panel, 'Style', 'slider');
-ui_checkbox_meas_labelsize = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
-ui_edit_meas_labelsize = uicontrol(ui_measure_container_panel, 'Style', 'edit');
-ui_checkbox_meas_labelcolor = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
-ui_popup_meas_labelinitcolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
-ui_popup_meas_labelfincolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
+            % measure figure *******************************
+            set(ui_measure_container_panel, 'Position', [.0 .01 1 .99])
 
-% binodal measure figure options
-ui_edge_value_show = uicontrol(f, 'Units', 'normalized', 'Style', 'checkbox');
+            set(ui_checkbox_meas_symbolsize, 'Units', 'normalized')
+            set(ui_checkbox_meas_symbolsize, 'BackgroundColor', FigColor)
+            set(ui_checkbox_meas_symbolsize, 'Position', [.01 .86 .30 .08])
+            set(ui_checkbox_meas_symbolsize, 'String', ' Symbol Size ')
+            set(ui_checkbox_meas_symbolsize, 'Value', false)
+            set(ui_checkbox_meas_symbolsize, 'FontWeight', 'bold')
+            set(ui_checkbox_meas_symbolsize, 'TooltipString', 'Shows brain regions by label')
+            set(ui_checkbox_meas_symbolsize, 'Callback', {@cb_checkbox_meas_symbolsize})
 
-init_measures_panel()
-update_figure_panel()
-update_popup_grouplist()
-update_measure_data(1);
-
-set(f, 'Visible', 'on')
-
-%% Callback functions
-    function init_measures_panel()
-        % actions ****************************************
-        set(ui_action_measures_checkbox, 'Units', 'normalized')
-        set(ui_action_measures_checkbox, 'Position', [.02 .95 .28 .03])
-        set(ui_action_measures_checkbox, 'Value', true)
-        set(ui_action_measures_checkbox, 'String', 'Measurement')
-        set(ui_action_measures_checkbox, 'Callback', {@cb_action_measurement})
-        
-        set(ui_action_comparison_checkbox, 'Units', 'normalized')
-        set(ui_action_comparison_checkbox, 'Position', [.32 .95 .28 .03])
-        set(ui_action_comparison_checkbox, 'Value', false)
-        set(ui_action_comparison_checkbox, 'String', 'Comparison')
-        set(ui_action_comparison_checkbox, 'Callback', {@cb_action_comparison})
-        
-        set(ui_action_random_checkbox, 'Units', 'normalized')
-        set(ui_action_random_checkbox, 'Position', [.62 .95 .28 .03])
-        set(ui_action_random_checkbox, 'Value', false)
-        set(ui_action_random_checkbox, 'String', 'Random Comparison')
-        set(ui_action_random_checkbox, 'Callback', {@cb_action_random})
-        
-        % text ***************************************
-        set(ui_text_group1, 'Units', 'normalized')
-        set(ui_text_group1, 'Position', [.02 .9125 .25 .035])
-        set(ui_text_group1, 'BackgroundColor', GUI.BKGCOLOR)
-        set(ui_text_group1, 'String', 'group 1')
-        set(ui_text_group1, 'HorizontalAlignment', 'left')
-        set(ui_text_group1, 'FontWeight', 'bold')
-        
-        set(ui_text_group2, 'Units', 'normalized')
-        set(ui_text_group2, 'Position', [.02 .795 .25 .035])
-        set(ui_text_group2, 'BackgroundColor', GUI.BKGCOLOR)
-        set(ui_text_group2, 'String', 'group 2')
-        set(ui_text_group2, 'HorizontalAlignment', 'left')
-        set(ui_text_group2, 'FontWeight', 'bold')
-        
-        set(ui_text_view_action, 'Units', 'normalized')
-        set(ui_text_view_action, 'Position', [0.4525 .9125 .40 .035])
-        set(ui_text_view_action, 'BackgroundColor', GUI.BKGCOLOR)
-        set(ui_text_view_action, 'HorizontalAlignment', 'center')
-        set(ui_text_view_action, 'FontWeight', 'bold')
-        
-        set(list_tittle, 'Units', 'normalized')
-        set(list_tittle, 'BackgroundColor', GUI.BKGCOLOR)
-        set(list_tittle, 'HorizontalAlignment', 'center')
-        set(list_tittle, 'FontWeight', 'bold')
-        
-        % groups *******************************************
-        set(ui_popup_grouplists1, 'Units', 'normalized')
-        set(ui_popup_grouplists1, 'BackgroundColor', GUI.BKGCOLOR)
-        set(ui_popup_grouplists1, 'Position', [.02 .86 .30 .04])
-        set(ui_popup_grouplists1, 'Value', 1)
-        set(ui_popup_grouplists1, 'TooltipString', 'Select group1');
-        set(ui_popup_grouplists1, 'Callback', {@cb_popup_grouplist})
-        
-        set(ui_popup_grouplists2, 'Units', 'normalized')
-        set(ui_popup_grouplists2, 'BackgroundColor', GUI.BKGCOLOR)
-        set(ui_popup_grouplists2, 'Position', [.02 .7575 .30 .04])
-        set(ui_popup_grouplists2, 'Value', 1)
-        set(ui_popup_grouplists2, 'TooltipString', 'Select group2');
-        set(ui_popup_grouplists2, 'Callback', {@cb_popup_grouplist})
-        
-        % lists ***************************************
-        set(ui_list_gr, 'Units', 'normalized')
-        set(ui_list_gr, 'BackgroundColor', GUI.BKGCOLOR)
-        set(ui_list_gr, 'String', cellfun(@(x) Measure.getName(x), mlist, 'UniformOutput', false))
-        set(ui_list_gr, 'Value', 1)
-        set(ui_list_gr, 'Max', -1, 'Min', 0)
-        set(ui_list_gr, 'BackgroundColor', [1 1 1])
-        set(ui_list_gr, 'Position', [.02 .02 .30 .68])
-        set(ui_list_gr, 'TooltipString', 'Select brain regions');
-        set(ui_list_gr, 'Callback', {@cb_list_gr});
-        
-        set(ui_list_threshold_or_density, 'Units', 'normalized')
-        set(ui_list_threshold_or_density, 'BackgroundColor', GUI.BKGCOLOR)
-        set(ui_list_threshold_or_density, 'Value', 1)
-        set(ui_list_threshold_or_density, 'Max', -1, 'Min', 0)
-        set(ui_list_threshold_or_density, 'BackgroundColor', [1 1 1])
-        set(ui_list_threshold_or_density, 'Callback', {@cb_list_t_or_d});
-        
-        % panels ******************************************
-        set(ui_panel_meas_scaling, 'Position', [.35 .65 .605 .2550])
-        
-        set(ui_text_meas_offset, 'Units', 'normalized')
-        set(ui_text_meas_offset, 'Position', [.02 .75 .15 .15])
-        set(ui_text_meas_offset, 'String', 'offset')
-        set(ui_text_meas_offset, 'HorizontalAlignment', 'center')
-        set(ui_text_meas_offset, 'FontWeight', 'bold')
-        
-        set(ui_edit_meas_offset, 'Units', 'normalized')
-        set(ui_edit_meas_offset, 'String', '0')
-        set(ui_edit_meas_offset, 'Enable', 'on')
-        set(ui_edit_meas_offset, 'Position', [.2 .75 .25 .15])
-        set(ui_edit_meas_offset, 'HorizontalAlignment', 'center')
-        set(ui_edit_meas_offset, 'FontWeight', 'bold')
-        set(ui_edit_meas_offset, 'Callback', {@cb_edit_meas_offset})
-        
-        set(ui_text_meas_rescaling, 'Units', 'normalized')
-        set(ui_text_meas_rescaling, 'Position', [.02 .45 .15 .15])
-        set(ui_text_meas_rescaling, 'String', 'rescale')
-        set(ui_text_meas_rescaling, 'HorizontalAlignment', 'center')
-        set(ui_text_meas_rescaling, 'FontWeight', 'bold')
-        
-        set(ui_edit_meas_rescaling, 'Units', 'normalized')
-        set(ui_edit_meas_rescaling, 'String', '10')
-        set(ui_edit_meas_rescaling, 'Enable', 'on')
-        set(ui_edit_meas_rescaling, 'Position', [.2 .45 .25 .15])
-        set(ui_edit_meas_rescaling, 'HorizontalAlignment', 'center')
-        set(ui_edit_meas_rescaling, 'FontWeight', 'bold')
-        set(ui_edit_meas_rescaling, 'Callback', {@cb_edit_meas_rescaling})
-        
-        set(ui_button_meas_automatic, 'Units', 'normalized')
-        set(ui_button_meas_automatic, 'Position', [.3 .02 .4 .2])
-        set(ui_button_meas_automatic, 'String', 'Automatic rescaling')
-        set(ui_button_meas_automatic, 'HorizontalAlignment', 'center')
-        set(ui_button_meas_automatic, 'Callback', {@cb_meas_automatic})
-        
-        set(ui_checkbox_meas_fdr1, 'Units', 'normalized')
-        set(ui_checkbox_meas_fdr1, 'BackgroundColor', GUI.BKGCOLOR)
-        set(ui_checkbox_meas_fdr1, 'Position', [.47 .75 .25 .15])
-        set(ui_checkbox_meas_fdr1, 'String', 'fdr (1-tailed)')
-        set(ui_checkbox_meas_fdr1, 'Value', false)
-        set(ui_checkbox_meas_fdr1, 'FontWeight', 'bold')
-        set(ui_checkbox_meas_fdr1, 'TooltipString', 'apply 1-tailed false discovery rate limit')
-        set(ui_checkbox_meas_fdr1, 'Callback', {@cb_checkbox_meas_fdr1})
-        
-        set(ui_edit_meas_fdr1, 'Units', 'normalized')
-        set(ui_edit_meas_fdr1, 'String', '0.05')
-        set(ui_edit_meas_fdr1, 'Position', [.74 0.75 .2 .15])
-        set(ui_edit_meas_fdr1, 'HorizontalAlignment', 'center')
-        set(ui_edit_meas_fdr1, 'FontWeight', 'bold')
-        set(ui_edit_meas_fdr1, 'Callback', {@cb_edit_meas_fdr1})
-        
-        set(ui_checkbox_meas_fdr2, 'Units', 'normalized')
-        set(ui_checkbox_meas_fdr2, 'BackgroundColor', GUI.BKGCOLOR)
-        set(ui_checkbox_meas_fdr2, 'Position', [.47 .45 .25 .15])
-        set(ui_checkbox_meas_fdr2, 'String', 'fdr (2-tailed)')
-        set(ui_checkbox_meas_fdr2, 'Value', false)
-        set(ui_checkbox_meas_fdr2, 'FontWeight', 'bold')
-        set(ui_checkbox_meas_fdr2, 'TooltipString', 'apply false discovery rate limit')
-        set(ui_checkbox_meas_fdr2, 'Callback', {@cb_checkbox_meas_fdr2})
-        
-        set(ui_edit_meas_fdr2, 'Units', 'normalized')
-        set(ui_edit_meas_fdr2, 'String', '0.05')
-        set(ui_edit_meas_fdr2, 'Position', [.74 0.45 .2 .15])
-        set(ui_edit_meas_fdr2, 'HorizontalAlignment', 'center')
-        set(ui_edit_meas_fdr2, 'FontWeight', 'bold')
-        set(ui_edit_meas_fdr2, 'Callback', {@cb_edit_meas_fdr2})
-        
-        % measure figure *******************************
-        set(ui_measure_container_panel, 'Position', [.35 .01 .605 .64])
-        
-        set(ui_checkbox_meas_symbolsize, 'Units', 'normalized')
-        set(ui_checkbox_meas_symbolsize, 'BackgroundColor', GUI.BKGCOLOR)
-        set(ui_checkbox_meas_symbolsize, 'Position', [.01 .9 .30 .08])
-        set(ui_checkbox_meas_symbolsize, 'String', ' Symbol Size ')
-        set(ui_checkbox_meas_symbolsize, 'Value', false)
-        set(ui_checkbox_meas_symbolsize, 'FontWeight', 'bold')
-        set(ui_checkbox_meas_symbolsize, 'TooltipString', 'Shows brain regions by label')
-        set(ui_checkbox_meas_symbolsize, 'Callback', {@cb_checkbox_meas_symbolsize})
-        
-        set(ui_edit_meas_symbolsize, 'Units', 'normalized')
-        set(ui_edit_meas_symbolsize, 'String', PlotBrainGraph.INIT_SYM_SIZE)
-        set(ui_edit_meas_symbolsize, 'Enable', 'off')
-        set(ui_edit_meas_symbolsize, 'Position', [.31 .9 .6 .08])
-        set(ui_edit_meas_symbolsize, 'HorizontalAlignment', 'center')
-        set(ui_edit_meas_symbolsize, 'FontWeight', 'bold')
-        set(ui_edit_meas_symbolsize, 'Callback', {@cb_edit_meas_symbolsize})
-        
-        set(ui_checkbox_meas_symbolcolor, 'Units', 'normalized')
-        set(ui_checkbox_meas_symbolcolor, 'BackgroundColor', GUI.BKGCOLOR)
-        set(ui_checkbox_meas_symbolcolor, 'Position', [.01 .8 .3 .08])
-        set(ui_checkbox_meas_symbolcolor, 'String', ' Symbol Color ')
-        set(ui_checkbox_meas_symbolcolor, 'Value', false)
-        set(ui_checkbox_meas_symbolcolor, 'FontWeight', 'bold')
-        set(ui_checkbox_meas_symbolcolor, 'TooltipString', 'Shows brain regions by label')
-        set(ui_checkbox_meas_symbolcolor, 'Callback', {@cb_checkbox_meas_symbolcolor})
-        
-        set(ui_popup_meas_initcolor, 'Units', 'normalized')
-        set(ui_popup_meas_initcolor, 'BackgroundColor', GUI.BKGCOLOR)
-        set(ui_popup_meas_initcolor, 'Enable', 'off')
-        set(ui_popup_meas_initcolor, 'Position', [.31 .8 .3 .08])
-        set(ui_popup_meas_initcolor, 'String', {'R', 'G', 'B'})
-        set(ui_popup_meas_initcolor, 'Value', 3)
-        set(ui_popup_meas_initcolor, 'TooltipString', 'Select symbol');
-        set(ui_popup_meas_initcolor, 'Callback', {@cb_meas_initcolor})
-        
-        set(ui_popup_meas_fincolor, 'Units', 'normalized')
-        set(ui_popup_meas_fincolor, 'BackgroundColor', GUI.BKGCOLOR)
-        set(ui_popup_meas_fincolor, 'Enable', 'off')
-        set(ui_popup_meas_fincolor, 'Position', [0.61 .8 .3 .08])
-        set(ui_popup_meas_fincolor, 'String', {'R', 'G', 'B'})
-        set(ui_popup_meas_fincolor, 'Value', 1)
-        set(ui_popup_meas_fincolor, 'TooltipString', 'Select symbol');
-        set(ui_popup_meas_fincolor, 'Callback', {@cb_meas_fincolor})
-        
-        set(ui_checkbox_meas_sphereradius, 'Units', 'normalized')
-        set(ui_checkbox_meas_sphereradius, 'BackgroundColor', GUI.BKGCOLOR)
-        set(ui_checkbox_meas_sphereradius, 'Position', [.01 0.7 .3 .08])
-        set(ui_checkbox_meas_sphereradius, 'String', ' Sphere Radius ')
-        set(ui_checkbox_meas_sphereradius, 'Value', false)
-        set(ui_checkbox_meas_sphereradius, 'FontWeight', 'bold')
-        set(ui_checkbox_meas_sphereradius, 'TooltipString', 'Shows brain regions by label')
-        set(ui_checkbox_meas_sphereradius, 'Callback', {@cb_checkbox_meas_sphereradius})
-        
-        set(ui_edit_meas_sphereradius, 'Units', 'normalized')
-        set(ui_edit_meas_sphereradius, 'String', PlotBrainGraph.INIT_SPH_R)
-        set(ui_edit_meas_sphereradius, 'Enable', 'off')
-        set(ui_edit_meas_sphereradius, 'Position', [.31 0.7 .6 .08])
-        set(ui_edit_meas_sphereradius, 'HorizontalAlignment', 'center')
-        set(ui_edit_meas_sphereradius, 'FontWeight', 'bold')
-        set(ui_edit_meas_sphereradius, 'Callback', {@cb_edit_meas_sphereradius})
-        
-        set(ui_checkbox_meas_spherecolor, 'Units', 'normalized')
-        set(ui_checkbox_meas_spherecolor, 'BackgroundColor', GUI.BKGCOLOR)
-        set(ui_checkbox_meas_spherecolor, 'Position', [.01 0.6 .3 .08])
-        set(ui_checkbox_meas_spherecolor, 'String', ' Sphere Color ')
-        set(ui_checkbox_meas_spherecolor, 'Value', false)
-        set(ui_checkbox_meas_spherecolor, 'FontWeight', 'bold')
-        set(ui_checkbox_meas_spherecolor, 'TooltipString', 'Shows brain regions by label')
-        set(ui_checkbox_meas_spherecolor, 'Callback', {@cb_checkbox_meas_spherecolor})
-        
-        set(ui_popup_meas_sphinitcolor, 'Units', 'normalized')
-        set(ui_popup_meas_sphinitcolor, 'BackgroundColor', GUI.BKGCOLOR)
-        set(ui_popup_meas_sphinitcolor, 'Enable', 'off')
-        set(ui_popup_meas_sphinitcolor, 'Position', [.31 .6 .3 .08])
-        set(ui_popup_meas_sphinitcolor, 'String', {'R', 'G', 'B'})
-        set(ui_popup_meas_sphinitcolor, 'Value', 1)
-        set(ui_popup_meas_sphinitcolor, 'TooltipString', 'Select symbol');
-        set(ui_popup_meas_sphinitcolor, 'Callback', {@cb_meas_sphinitcolor})
-        
-        set(ui_popup_meas_sphfincolor, 'Units', 'normalized')
-        set(ui_popup_meas_sphfincolor, 'BackgroundColor', GUI.BKGCOLOR)
-        set(ui_popup_meas_sphfincolor, 'Enable', 'off')
-        set(ui_popup_meas_sphfincolor, 'Position', [0.61 .6 .3 .08])
-        set(ui_popup_meas_sphfincolor, 'String', {'R', 'G', 'B'})
-        set(ui_popup_meas_sphfincolor, 'Value', 3)
-        set(ui_popup_meas_sphfincolor, 'TooltipString', 'Select symbol');
-        set(ui_popup_meas_sphfincolor, 'Callback', {@cb_meas_sphfincolor})
-        
-        set(ui_checkbox_meas_spheretransparency, 'Units', 'normalized')
-        set(ui_checkbox_meas_spheretransparency, 'BackgroundColor', GUI.BKGCOLOR)
-        set(ui_checkbox_meas_spheretransparency, 'Position', [.01 0.5 .3 .08])
-        set(ui_checkbox_meas_spheretransparency, 'String', ' Sphere Transparency ')
-        set(ui_checkbox_meas_spheretransparency, 'Value', false)
-        set(ui_checkbox_meas_spheretransparency, 'FontWeight', 'bold')
-        set(ui_checkbox_meas_spheretransparency, 'TooltipString', 'Shows brain regions by label')
-        set(ui_checkbox_meas_spheretransparency, 'Callback', {@cb_checkbox_meas_spheretransparency})
-        
-        set(ui_slider_meas_spheretransparency, 'Units', 'normalized')
-        set(ui_slider_meas_spheretransparency, 'BackgroundColor', GUI.BKGCOLOR)
-        set(ui_slider_meas_spheretransparency, 'Min', 0, 'Max', 1, 'Value', PlotBrainGraph.INIT_SPH_FACE_ALPHA);
-        set(ui_slider_meas_spheretransparency, 'Enable', 'off')
-        set(ui_slider_meas_spheretransparency, 'Position', [.31 0.5 .6 .08])
-        set(ui_slider_meas_spheretransparency, 'TooltipString', 'Brain region transparency (applied both to faces and edges)')
-        set(ui_slider_meas_spheretransparency, 'Callback', {@cb_slider_meas_spheretransparency})
-        
-        set(ui_checkbox_meas_labelsize, 'Units', 'normalized')
-        set(ui_checkbox_meas_labelsize, 'BackgroundColor', GUI.BKGCOLOR)
-        set(ui_checkbox_meas_labelsize, 'Position', [.01 .4 .3 .08])
-        set(ui_checkbox_meas_labelsize, 'String', ' Label Size ')
-        set(ui_checkbox_meas_labelsize, 'Value', false)
-        set(ui_checkbox_meas_labelsize, 'FontWeight', 'bold')
-        set(ui_checkbox_meas_labelsize, 'TooltipString', 'Shows brain regions by label')
-        set(ui_checkbox_meas_labelsize, 'Callback', {@cb_checkbox_meas_labelsize})
-        
-        set(ui_edit_meas_labelsize, 'Units', 'normalized')
-        set(ui_edit_meas_labelsize, 'String', PlotBrainGraph.INIT_LAB_FONT_SIZE)
-        set(ui_edit_meas_labelsize, 'Enable', 'off')
-        set(ui_edit_meas_labelsize, 'Position', [.31 .4 .6 .08])
-        set(ui_edit_meas_labelsize, 'HorizontalAlignment', 'center')
-        set(ui_edit_meas_labelsize, 'FontWeight', 'bold')
-        set(ui_edit_meas_labelsize, 'Callback', {@cb_edit_meas_labelsize})
-        
-        set(ui_checkbox_meas_labelcolor, 'Units', 'normalized')
-        set(ui_checkbox_meas_labelcolor, 'BackgroundColor', GUI.BKGCOLOR)
-        set(ui_checkbox_meas_labelcolor, 'Position', [.01 0.3 .3 .08])
-        set(ui_checkbox_meas_labelcolor, 'String', ' Label Color ')
-        set(ui_checkbox_meas_labelcolor, 'Value', false)
-        set(ui_checkbox_meas_labelcolor, 'FontWeight', 'bold')
-        set(ui_checkbox_meas_labelcolor, 'TooltipString', 'Shows brain regions by label')
-        set(ui_checkbox_meas_labelcolor, 'Callback', {@cb_checkbox_meas_labelcolor})
-        
-        set(ui_popup_meas_labelinitcolor, 'Units', 'normalized')
-        set(ui_popup_meas_labelinitcolor, 'BackgroundColor', GUI.BKGCOLOR)
-        set(ui_popup_meas_labelinitcolor, 'Enable', 'off')
-        set(ui_popup_meas_labelinitcolor, 'Position', [.31 .3 .3 .08])
-        set(ui_popup_meas_labelinitcolor, 'String', {'R', 'G', 'B'})
-        set(ui_popup_meas_labelinitcolor, 'Value', 1)
-        set(ui_popup_meas_labelinitcolor, 'TooltipString', 'Select symbol');
-        set(ui_popup_meas_labelinitcolor, 'Callback', {@cb_meas_labelinitcolor})
-        
-        set(ui_popup_meas_labelfincolor, 'Units', 'normalized')
-        set(ui_popup_meas_labelfincolor, 'BackgroundColor', GUI.BKGCOLOR)
-        set(ui_popup_meas_labelfincolor, 'Enable', 'off')
-        set(ui_popup_meas_labelfincolor, 'Position', [0.61 .3 .3 .08])
-        set(ui_popup_meas_labelfincolor, 'String', {'R', 'G', 'B'})
-        set(ui_popup_meas_labelfincolor, 'Value', 3)
-        set(ui_popup_meas_labelfincolor, 'TooltipString', 'Select symbol');
-        set(ui_popup_meas_labelfincolor, 'Callback', {@cb_meas_labelfincolor})
-        
-        set(ui_edge_value_show, 'Position', [0.4 0.3 0.4 0.2])
-        set(ui_edge_value_show, 'String', 'Show Binodal Measures as Labels')
-        set(ui_edge_value_show, 'Value', false)
-        set(ui_edge_value_show, 'Callback', {@cb_binodal_measure_show})
-        
-        update_measure_control_panel()
-    end
-    function cb_action_measurement(~, ~)
-        value = true;
-        set(ui_action_measures_checkbox, 'Value', value)
-        set(ui_action_comparison_checkbox, 'Value', ~value)
-        set(ui_action_random_checkbox, 'Value', ~value)
-        update_figure_panel()
-    end
-    function cb_action_comparison(~, ~)
-        value = true;
-        set(ui_action_measures_checkbox, 'Value', ~value)
-        set(ui_action_comparison_checkbox, 'Value', value)
-        set(ui_action_random_checkbox, 'Value', ~value)
-        update_figure_panel()
-    end
-    function cb_action_random(~, ~)
-        value = true;
-        set(ui_action_measures_checkbox, 'Value', ~value)
-        set(ui_action_comparison_checkbox, 'Value', ~value)
-        set(ui_action_random_checkbox, 'Value', value)
-        update_figure_panel()
-    end
-    function cb_list_gr(~, ~)
-        update_measure_data(2)
-        update_brain_meas_plot()
-        update_measure_control_panel()
-    end
-    function cb_list_t_or_d(~, ~)
-        update_measure_data(2)
-        update_brain_meas_plot()
-    end
-    function cb_popup_grouplist(~, ~)  % (src, event)
-        update_measure_data(2)
-        update_brain_meas_plot()
-    end
-    function cb_edit_meas_offset(~, ~)  %  (src, event)
-        offset = real(str2double(get(ui_edit_meas_offset, 'String')));
-        if isempty(offset)
-            set(ui_edit_meas_offset, 'String', '100')
-        else
-            set(ui_edit_meas_offset, 'String', num2str(offset))
-        end
-        update_brain_meas_plot()
-    end
-    function cb_edit_meas_rescaling(~, ~)  %  (src, event)
-        rescaling = real(str2double(get(ui_edit_meas_rescaling, 'String')));
-        if isempty(rescaling) || isnan(rescaling) || rescaling < 10^(-4) || rescaling > (10^+4)
-            set(ui_edit_meas_rescaling, 'String', '10')
-        else
-            set(ui_edit_meas_rescaling, 'String', num2str(rescaling))
-        end
-        update_brain_meas_plot()
-    end
-    function cb_checkbox_meas_fdr1(~, ~)  %  (src, event)
-        if get(ui_checkbox_meas_fdr1, 'Value')
-            set(ui_edit_meas_fdr1, 'Enable', 'on')
-            set(ui_edit_meas_fdr2, 'Enable', 'off')
-            set(ui_checkbox_meas_fdr2, 'Enable', 'off')
-            
-            update_measure_data(2)
-            update_brain_meas_plot()
-        else
-            set(ui_edit_meas_fdr1, 'Enable', 'off')
-            set(ui_checkbox_meas_fdr2, 'Enable', 'on')
-            
-            update_measure_data(2)
-            update_brain_meas_plot()
-        end
-    end
-    function cb_edit_meas_fdr1(~, ~)  %  (src, event)
-        lim = real(str2double(get(ui_edit_meas_fdr1, 'String')));
-        if isempty(lim) || lim <= 0 || lim > 1
-            set(ui_edit_meas_fdr1, 'String', '0.05')
-        else
-            set(ui_edit_meas_fdr1, 'String', num2str(lim))
-        end
-        update_measure_data(2)
-        update_brain_meas_plot()
-    end
-    function cb_checkbox_meas_fdr2(~, ~)  %  (src, event)
-        if get(ui_checkbox_meas_fdr2, 'Value')
-            set(ui_edit_meas_fdr2, 'Enable', 'on')
-            set(ui_edit_meas_fdr1, 'Enable', 'off')
-            set(ui_checkbox_meas_fdr1, 'Enable', 'off')
-            
-            update_measure_data(2)
-            update_brain_meas_plot()
-        else
-            set(ui_edit_meas_fdr2, 'Enable', 'off')
-            set(ui_checkbox_meas_fdr1, 'Enable', 'on')
-            
-            update_measure_data(2)
-            update_brain_meas_plot()
-        end
-    end
-    function cb_edit_meas_fdr2(~, ~)  %  (src, event)
-        lim = real(str2double(get(ui_edit_meas_fdr2, 'String')));
-        if isempty(lim) || lim <= 0 || lim > 1
-            set(ui_edit_meas_fdr2, 'String', '0.05')
-        else
-            set(ui_edit_meas_fdr2, 'String', num2str(lim))
-        end
-        update_measure_data(2)
-        update_brain_meas_plot()
-    end
-    function cb_meas_automatic(~, ~)  %  (src, event)
-        if ~isempty(measure_data)
-            if iscell(measure_data)
-                measure_data_inner = [measure_data{:}];
-            else
-                measure_data_inner = measure_data;
-            end
-            offset = min(measure_data_inner(:));
-            if isnan(offset) || offset == 0 || ~isreal(offset)
-                set(ui_edit_meas_offset, 'String', '0');
-            else
-                set(ui_edit_meas_offset, 'String', num2str(offset))
-            end
-            
-            rescaling = max(measure_data_inner(:)) - offset;
-            if rescaling == 0 || isnan(rescaling) || ~isreal(rescaling)
-                set(ui_edit_meas_rescaling, 'String', '1');
-            else
-                set(ui_edit_meas_rescaling, 'String', num2str(rescaling))
-            end
-            
-            update_brain_meas_plot()
-        end
-    end
-    function cb_checkbox_meas_symbolsize(~, ~)  %  (src, event)
-        if get(ui_checkbox_meas_symbolsize, 'Value')
-            set(ui_edit_meas_symbolsize, 'Enable', 'on')
-            
-            update_brain_meas_plot()
-        else
-            size = str2double(get(ui_edit_meas_symbolsize, 'String'));
-            size = 1 + size;
-            bg.br_syms([], 'Size', size);
-            
+            set(ui_edit_meas_symbolsize, 'Units', 'normalized')
+            set(ui_edit_meas_symbolsize, 'String', PlotBrainGraph.INIT_SYM_SIZE)
             set(ui_edit_meas_symbolsize, 'Enable', 'off')
-            update_brain_meas_plot()
-        end
-    end
-    function cb_edit_meas_symbolsize(~, ~)  %  (src, event)
-        size = real(str2double(get(ui_edit_meas_symbolsize, 'String')));
-        if isempty(size) || size<=0
-            set(ui_edit_meas_symbolsize, 'String', '1')
-            size = 5;
-        end
-        update_brain_meas_plot()
-    end
-    function cb_checkbox_meas_symbolcolor(~, ~)  %  (src, event)
-        if get(ui_checkbox_meas_symbolcolor, 'Value')
-            set(ui_popup_meas_initcolor, 'Enable', 'on')
-            set(ui_popup_meas_fincolor, 'Enable', 'on')
-            
-            update_brain_meas_plot()
-        else
-            val = get(ui_popup_meas_initcolor, 'Value');
-            str = get(ui_popup_meas_initcolor, 'String');
-            bg.br_syms([], 'Color', str{val});
-            
-            set(ui_popup_meas_initcolor, 'Enable', 'off')
-            set(ui_popup_meas_fincolor, 'Enable', 'off')
-            
-            update_brain_meas_plot()
-        end
-    end
-    function cb_meas_initcolor(~, ~)  %  (src, event)
-        update_brain_meas_plot()
-    end
-    function cb_meas_fincolor(~, ~)  %  (src, event)
-        update_brain_meas_plot()
-    end
-    function cb_checkbox_meas_sphereradius(~, ~)  %  (src, event)
-        if get(ui_checkbox_meas_sphereradius, 'Value')
-            set(ui_edit_meas_sphereradius, 'Enable', 'on')
-            
-            update_brain_meas_plot()
-        else
-            R = str2double(get(ui_edit_meas_sphereradius, 'String'));
-            R = R + 1;
-            bg.br_sphs([], 'R', R);
-            
-            set(ui_edit_meas_sphereradius, 'Enable', 'off')
-            update_brain_meas_plot()
-        end
-    end
-    function cb_edit_meas_sphereradius(~, ~)  %  (src, event)
-        R = real(str2double(get(ui_edit_meas_sphereradius, 'String')));
-        if isempty(R) || R<=0
-            set(ui_edit_meas_sphereradius, 'String', '1')
-            R = 3;
-        end
-        update_brain_meas_plot()
-    end
-    function cb_checkbox_meas_spherecolor(~, ~)  %  (src, event)
-        if get(ui_checkbox_meas_spherecolor, 'Value')
-            set(ui_popup_meas_sphinitcolor, 'Enable', 'on')
-            set(ui_popup_meas_sphfincolor, 'Enable', 'on')
-            update_brain_meas_plot()
-        else
-            val = get(ui_popup_meas_sphinitcolor, 'Value');
-            str = get(ui_popup_meas_sphinitcolor, 'String');
-            bg.br_sphs([], 'Color', str{val});
-            
-            set(ui_popup_meas_sphinitcolor, 'Enable', 'off')
-            set(ui_popup_meas_sphfincolor, 'Enable', 'off')
-            update_brain_meas_plot()
-        end
-    end
-    function cb_meas_sphinitcolor(~, ~)  %  (src, event)
-        update_brain_meas_plot()
-    end
-    function cb_meas_sphfincolor(~, ~)  %  (src, event)
-        update_brain_meas_plot()
-    end
-    function cb_checkbox_meas_spheretransparency(~, ~)  %  (src, event)
-        if get(ui_checkbox_meas_spheretransparency, 'Value')
-            set(ui_slider_meas_spheretransparency, 'Enable', 'on')
-            
-            update_brain_meas_plot()
-        else
-            alpha = get(ui_slider_meas_spheretransparency, 'Value');
-            bg.br_sphs([], 'Alpha', alpha);
-            
-            set(ui_slider_meas_spheretransparency, 'Enable', 'off')
-            update_brain_meas_plot()
-        end
-    end
-    function cb_slider_meas_spheretransparency(~, ~)  %  (src, event)
-        update_brain_meas_plot();
-    end
-    function cb_checkbox_meas_labelsize(~, ~)  %  (src, event)
-        if get(ui_checkbox_meas_labelsize, 'Value')
-            set(ui_edit_meas_labelsize, 'Enable', 'on')
-            
-            update_brain_meas_plot()
-        else
-            size = str2double(get(ui_edit_meas_labelsize, 'String'));
-            size = size + 1;
-            bg.br_labs([], 'FontSize', size);
-            
-            set(ui_edit_meas_labelsize, 'Enable', 'off')
-            update_brain_meas_plot()
-        end
-    end
-    function cb_edit_meas_labelsize(~, ~)  %  (src, event)
-        size = real(str2double(get(ui_edit_meas_labelsize, 'String')));
-        if isempty(size) || size<=0
-            set(ui_edit_meas_labelsize, 'String', '1')
-            size = 5;
-        end
-        update_brain_meas_plot()
-    end
-    function cb_checkbox_meas_labelcolor(~, ~)  %  (src, event)
-        if get(ui_checkbox_meas_labelcolor, 'Value')
-            set(ui_popup_meas_labelinitcolor, 'Enable', 'on')
-            set(ui_popup_meas_labelfincolor, 'Enable', 'on')
-            
-            update_brain_meas_plot()
-        else
-            val = get(ui_popup_meas_labelinitcolor, 'Value');
-            str = get(ui_popup_meas_labelinitcolor, 'String');
-            bg.br_labs([], 'Color', str{val});
-            
-            set(ui_popup_meas_labelinitcolor, 'Enable', 'off')
-            set(ui_popup_meas_labelfincolor, 'Enable', 'off')
-            update_brain_meas_plot()
-        end
-    end
-    function cb_meas_labelinitcolor(~, ~)  %  (src, event)
-        update_brain_meas_plot()
-    end
-    function cb_meas_labelfincolor(~, ~)  %  (src, event)
-        update_brain_meas_plot()
-    end
-    function update_figure_panel()
-        if isequal(ga.getClass(), 'AnalysisFNC_WU')
-            set(ui_list_gr, 'Position', [.02 .02 .30 .68])
-            set(ui_list_threshold_or_density, 'Position', [0 0 0 0])
-        else
-            set(ui_list_gr, 'Position', [.02 .36 .3 .36])
-            set(ui_list_threshold_or_density, 'Position', [.02 .02 .3 .3])
-            set(list_tittle, 'Position', [.02 .32 .25 .04])
-            if isequal(ga.getClass(), 'AnalysisFNC_BUT')
-                set(list_tittle, 'String', 'Select Threshold')
-            else  % desity
-                set(list_tittle, 'String', 'Select Density')
-            end
-        end
-        if get(ui_action_comparison_checkbox, 'Value')
-            % generals
-            set(ui_popup_grouplists2, 'Enable', 'on')
-            set(ui_text_group2, 'Enable', 'on')
-            set(ui_text_view_action, 'String', 'View difference')
-            % mesure panel
-            set(ui_checkbox_meas_fdr1, 'Enable', 'on')
-            set(ui_checkbox_meas_fdr2, 'Enable', 'on')
-            set(ui_edit_meas_fdr1, 'Enable', 'off')
-            set(ui_edit_meas_fdr2, 'Enable', 'off')
-        elseif get(ui_action_random_checkbox, 'Value')
-            set(ui_popup_grouplists2, 'Enable', 'off')
-            set(ui_text_group2, 'Enable', 'off')
-            set(ui_text_view_action, 'String', 'View measure')
-            
-            set(ui_checkbox_meas_fdr1, 'Enable', 'off')
-            set(ui_checkbox_meas_fdr2, 'Enable', 'off')
-            set(ui_edit_meas_fdr1, 'Enable', 'off')
-            set(ui_edit_meas_fdr2, 'Enable', 'off')
-        else
-            set(ui_popup_grouplists2, 'Enable', 'off')
-            set(ui_text_group2, 'Enable', 'off')
-            set(ui_text_view_action, 'String', 'View measure')
-            
-            set(ui_checkbox_meas_fdr1, 'Enable', 'off')
-            set(ui_checkbox_meas_fdr2, 'Enable', 'off')
-            set(ui_edit_meas_fdr1, 'Enable', 'off')
-            set(ui_edit_meas_fdr2, 'Enable', 'off')
-        end
-    end
-    function update_list_t_d(selected_case)
-        if isequal(ga.getClass(), 'AnalysisFNC_BUT')
-            if get(ui_action_comparison_checkbox, 'Value')
-                [a, b] = selected_case.getGroups();
-                set(ui_list_threshold_or_density, 'String', analysis.selectComparisons(selected_case.getMeasureCode(), a, b, '.getThreshold()'))
-            elseif get(ui_action_random_checkbox, 'Value')
-                set(ui_list_threshold_or_density, 'String', analysis.selectRandomComparisons(selected_case.getMeasureCode(), selected_case.getGroup(), '.getThreshold()'))
-            else
-                set(ui_list_threshold_or_density, 'String', analysis.selectMeasurements(selected_case.getMeasureCode(), selected_case.getGroup(), '.getThreshold()'))
-            end
-        elseif isequal(ga.getClass(), 'AnalysisFNC_BUD')
-            if get(ui_action_comparison_checkbox, 'Value')
-                [a, b] = selected_case.getGroups();
-                set(ui_list_threshold_or_density, 'String', analysis.selectComparisons(selected_case.getMeasureCode(), a, b, '.getDensity()'))
-            elseif get(ui_action_random_checkbox, 'Value')
-                set(ui_list_threshold_or_density, 'String', analysis.selectRandomComparisons(selected_case.getMeasureCode(), selected_case.getGroup(), '.getDensity()'))
-            else
-                set(ui_list_threshold_or_density, 'String', analysis.selectMeasurements(selected_case.getMeasureCode(), selected_case.getGroup(), '.getDensity()'))
-            end
-        else
-        end
-    end
-    function update_popup_grouplist()
-        if ga.getCohort().getGroups().length() > 0
-            % updates group lists of popups
-            GroupList = ga.getCohort().getGroups().getKeys();
-            %                     for g = 1:1:ga.getCohort().getGroups().length()
-            %                         GroupList{g} = ga.getCohort().getGroups().getValue(g);
-            %                     end
-        else
-            GroupList = {''};
-        end
-        set(ui_popup_grouplists1, 'String', GroupList)
-        set(ui_popup_grouplists2, 'String', GroupList)
-    end
-    function update_measure_data(init_or_selection)
-        if  init_or_selection == 2
-            i = get(ui_list_gr, 'Value');
-            group1_index = get(ui_popup_grouplists1, 'Value');
-            group1 = ga.getCohort().getGroups().getValue(group1_index);
-            measure = mlist{i};
-            selected_case = [];
-            if get(ui_action_comparison_checkbox, 'Value')
-                % i want to look in comprison
-                group2_index = get(ui_popup_grouplists2, 'Value');
-                group2 = ga.getCohort().getGroups().getValue(group2_index);
-                comparisons_idict = ga.getComparisons();
-                
-                for i = 1:1:comparisons_idict.length()
-                    comparison = comparisons_idict.getValue(i);
-                    [a, b] = comparison.getGroups();
-                    if isequal(comparison.getMeasureCode(), measure) && ((isequal(a, group1) && isequal (b, group2)) || (isequal(a, group2) && isequal (b, group1)))
-                        selected_case = comparison;
-                        update_list_t_d(selected_case)
-                        break;
-                    end
-                end
-                selected_action = 'Comparison';
-            elseif get(ui_action_random_checkbox, 'Value')
-                % i want to look in rcomprison
-                randoms_idict = ga.getRandomComparisons();
-                for i = 1:1:randoms_idict.length()
-                    r_comparison = randoms_idict.getValue(i);
-                    g = r_comparison.getGroup();
-                    if isequal(r_comparison.getMeasureCode(), measure) && isequal(g, group1)
-                        selected_case = r_comparison;
-                        update_list_t_d(selected_case)
-                        break;
-                    end
-                end
-                selected_action = 'Random Comparison';
-            else
-                % i want to look in measurements
-                meas_idict = ga.getMeasurements();
-                for i = 1:1:meas_idict.length()
-                    mesurements = meas_idict.getValue(i);
-                    g = mesurements.getGroup();
-                    if isequal(mesurements.getMeasureCode(), measure) && isequal(g, group1)
-                        selected_case = mesurements;
-                        update_list_t_d(selected_case)
-                        break;
-                    end
-                end
-                selected_action = 'Measurement';
-            end
-            if isempty(selected_case)
-                errordlg(['The measure: ' measure ' for ' selected_action ' does not exist.'])
-            else
-                if isequal(analysis.getClass(), 'AnalysisFNC_WU')
-                    switch selected_action
-                        case 'Measurement'
-                            measure_data = selected_case.getGroupAverageValue();
-                        case 'Comparison'
-                            atlases = ga.getCohort().getBrainAtlases();
-                            atlas = atlases{1};
-                            fdr_lim = ones(1, atlas.getBrainRegions().length());
-                            measure_data = selected_case.getDifference();
-                            p1 = selected_case.getP1();
-                            p2 = selected_case.getP2();
-                            calculate_fdr_lim()
-                        otherwise
-                            atlases = ga.getCohort().getBrainAtlases();
-                            atlas = atlases{1};
-                            fdr_lim = ones(1, atlas.getBrainRegions().length());
-                            measure_data = selected_case.getDifference();
-                            p1 = selected_case.getP1();
-                            p2 = selected_case.getP2();
-                            calculate_fdr_lim()
-                    end
-                elseif isequal(analysis.getClass(), 'AnalysisFNC_BUT')
-                    a = get(ui_list_threshold_or_density, 'String');
-                    b = a{get(ui_list_threshold_or_density, 'Value')};
-                    
-                    switch selected_action
-                        case 'Measurement'
-                            measurements = ga.getMeasurements().getValues();  % array
-                            for i = 1:1:length(measurements)
-                                m = measurements{i};
-                                if isequal(m.getClass(), selected_case.getClass()) && isequal(round(m.getThreshold(), 4), round(str2double(b), 4))
-                                    refined_case = m;
-                                    break;
-                                end
-                            end
-                            measure_data = refined_case.getGroupAverageValue();
-                        case 'Comparison'
-                            comparisons = ga.getComparisons().getValues();
-                            for i = 1:1:length(comparisons)
-                                c = comparisons{i};
-                                if isequal(c.getClass(), selected_case.getClass()) && isequal(round(c.getThreshold(), 4), round(str2double(b), 4))
-                                    refined_case = c;
-                                    break;
-                                end
-                            end
-                            atlases = ga.getCohort().getBrainAtlases();
-                            atlas = atlases{1};
-                            fdr_lim = ones(1, atlas.getBrainregions().length());
-                            measure_data = refined_case.getDifference()';
-                            p1 = refined_case.getP1();
-                            p2 = refined_case.getP2();
-                            calculate_fdr_lim()
-                        otherwise
-                            r_comparisons = ga.getRandomComparisons().getValues();
-                            for i = 1:1:length(r_comparisons)
-                                rc = r_comparisons{i};
-                                if isequal(rc.getClass(), selected_case.getClass()) && isequal(round(rc.getThreshold(), 4), round(str2double(b), 4))
-                                    refined_case = rc;
-                                    break;
-                                end
-                            end
-                            atlases = ga.getCohort().getBrainAtlases();
-                            atlas = atlases{1};
-                            fdr_lim = ones(1, atlas.getBrainregions().length());
-                            measure_data = refined_case.getDifference()';
-                            p1 = refined_case.getP1();
-                            p2 = refined_case.getP2();
-                            calculate_fdr_lim()
-                    end
-                else  % density
-                    a = get(ui_list_threshold_or_density, 'String');
-                    b = a{get(ui_list_threshold_or_density, 'Value')};
-                    
-                    switch selected_action
-                        case 'Measurement'
-                            measurements = ga.getMeasurements().getValues();  % array
-                            for i = 1:1:length(measurements)
-                                m = measurements{i};
-                                if isequal(m.getClass(), selected_case.getClass()) && isequal(round(m.getDensity(), 4), round(str2double(b), 4))
-                                    refined_case = m;
-                                    break;
-                                end
-                            end
-                            measure_data = refined_case.getGroupAverageValue();
-                        case 'Comparison'
-                            comparisons = ga.getComparisons().getValues();
-                            for i = 1:1:length(comparisons)
-                                c = comparisons{i};
-                                if isequal(c.getClass(), selected_case.getClass()) && isequal(round(c.getDensity(), 4), round(str2double(b), 4))
-                                    refined_case = c;
-                                    break;
-                                end
-                            end
-                            atlases = ga.getCohort().getBrainAtlases();
-                            atlas = atlases{1};
-                            fdr_lim = ones(1, atlas.getBrainregions().length());
-                            measure_data = refined_case.getDifference()';
-                            p1 = refined_case.getP1();
-                            p2 = refined_case.getP2();
-                            calculate_fdr_lim()
-                        otherwise
-                            r_comparisons = ga.getRandomComparisons().getValues();
-                            for i = 1:1:length(r_comparisons)
-                                rc = r_comparisons{i};
-                                if isequal(rc.getClass(), selected_case.getClass()) && isequal(round(rc.getDensity(), 4), round(str2double(b), 4))
-                                    refined_case = rc;
-                                    break;
-                                end
-                            end
-                            atlases = ga.getCohort().getBrainAtlases();
-                            atlas = atlases{1};
-                            fdr_lim = ones(1, atlas.getBrainregions().length());
-                            measure_data = refined_case.getDifference()';
-                            p1 = refined_case.getP1();
-                            p2 = refined_case.getP2();
-                            calculate_fdr_lim()
-                    end
-                end
-            end
-        else
-            % nothing
-        end
-    end
-    function update_brain_meas_plot()
-        if ~isempty(measure_data)
-            if isequal(size(measure_data, 2), 1)  % nodal
-                if iscell(measure_data)
-                    measure_data_inner = [measure_data{:}];
-                else
-                    measure_data_inner = measure_data;
-                end
-            elseif isequal(size(measure_data, 1), 1)  % global
-                % do nothing
-            else  % binodal
-            end
-            
-            if get(ui_checkbox_meas_symbolsize, 'Value')
-                
-                size_ = str2double(get(ui_edit_meas_symbolsize, 'String'));
-                offset = str2double(get(ui_edit_meas_offset, 'String'));
-                rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
-                
-                if isempty(fdr_lim)
-                    size_ = 1 + ((measure_data_inner - offset)./rescaling) * size_;
-                else
-                    size_ = (1 + ((measure_data_inner - offset)./rescaling) * size_) .* fdr_lim;
-                end
-                
-                size_(isnan(size_)) = 0.1;
-                size_(size_<=0) = 0.1;
-                bg.br_syms([], 'Size', size_);
-            end
-            
-            if get(ui_checkbox_meas_symbolcolor, 'Value')
-                
-                offset = str2double(get(ui_edit_meas_offset, 'String'));
-                rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
-                
-                colorValue = (measure_data_inner - offset)./rescaling;
-                %colorValue = (measure_data_inner - min(measure_data_inner))./(max(measure_data_inner)-min(measure_data_inner));
-                colorValue(isnan(colorValue)) = 0;
-                colorValue(colorValue<0) = 0;
-                colorValue(colorValue>1) = 1;
-                
-                C = zeros(length(colorValue), 3);
-                
-                val1 = get(ui_popup_meas_initcolor, 'Value');
-                val2 = get(ui_popup_meas_fincolor, 'Value');
-                C(:, val1) = colorValue;
-                C(:, val2) = 1 - colorValue;
-                
-                bg.br_syms([], 'Color', C);
-            end
-            
-            if get(ui_checkbox_meas_sphereradius, 'Value')
-                
-                R = str2double(get(ui_edit_meas_sphereradius, 'String'));
-                offset = str2double(get(ui_edit_meas_offset, 'String'));
-                rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
-                
-                if isempty(fdr_lim)
-                    R = 1 + ((measure_data_inner - offset)./rescaling)*R;
-                else
-                    R = (1 + ((measure_data_inner - offset)./rescaling)*R).*fdr_lim;
-                end
-                
-                R(isnan(R)) = 0.1;
-                R(R<=0) = 0.1;
-                bg.br_sphs([], 'R', R);
-            end
-            
-            if get(ui_checkbox_meas_spherecolor, 'Value')
-                
-                offset = str2double(get(ui_edit_meas_offset, 'String'));
-                rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
-                
-                colorValue = (measure_data_inner - offset)./rescaling;
-                %colorValue = (measure_data_inner - min(measure_data_inner))./(max(measure_data_inner)-min(measure_data_inner));
-                colorValue(isnan(colorValue)) = 0;
-                colorValue(colorValue<0) = 0;
-                colorValue(colorValue>1) = 1;
-                
-                C = zeros(length(colorValue), 3);
-                
-                val1 = get(ui_popup_meas_sphinitcolor, 'Value');
-                val2 = get(ui_popup_meas_sphfincolor, 'Value');
-                C(:, val1) = colorValue;
-                C(:, val2) = 1 - colorValue;
-                bg.br_sphs([], 'Color', C);
-            end
-            
-            if get(ui_checkbox_meas_spheretransparency, 'Value')
-                
-                alpha = get(ui_slider_meas_spheretransparency, 'Value');
-                offset = str2double(get(ui_edit_meas_offset, 'String'));
-                rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
-                
-                if isempty(fdr_lim)
-                    alpha_vec = ((measure_data_inner - offset)./rescaling).*alpha;
-                else
-                    alpha_vec = (((measure_data_inner - offset)./rescaling).*alpha).*fdr_lim;
-                end
-                alpha_vec(isnan(alpha_vec)) = 0;
-                alpha_vec(alpha_vec<0) = 0;
-                alpha_vec(alpha_vec>1) = 1;
-                bg.br_sphs([], 'Alpha', alpha_vec);
-            end
-            
-            if get(ui_checkbox_meas_labelsize, 'Value')
-                
-                size_ = str2double(get(ui_edit_meas_labelsize, 'String'));
-                offset = str2double(get(ui_edit_meas_offset, 'String'));
-                rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
-                
-                if isempty(fdr_lim)
-                    size_ = 1 + ((measure_data_inner - offset)./rescaling)*size_;
-                else
-                    size_ = (1 + ((measure_data_inner - offset)./rescaling)*size_).*fdr_lim;
-                end
-                
-                size_(isnan(size_)) = 0.1;
-                size_(size_<=0) = 0.1;
-                bg.br_labs([], 'FontSize', size_);
-            end
-            
-            if get(ui_checkbox_meas_labelcolor, 'Value')
-                
-                offset = str2double(get(ui_edit_meas_offset, 'String'));
-                rescaling = str2double(get(ui_edit_meas_rescaling, 'String'));
-                
-                colorValue = (measure_data_inner - offset)./rescaling;
-                %colorValue = (measure_data_inner - min(measure_data_inner))./(max(measure_data_inner)-min(measure_data_inner));
-                colorValue(isnan(colorValue)) = 0;
-                colorValue(colorValue<0) = 0;
-                colorValue(colorValue>1) = 1;
-                
-                C = zeros(length(colorValue), 3);
-                
-                val1 = get(ui_popup_meas_labelinitcolor, 'Value');
-                val2 = get(ui_popup_meas_labelfincolor, 'Value');
-                C(:, val1) = colorValue;
-                C(:, val2) = 1 - colorValue;
-                bg.br_labs([], 'Color', C);
-            end
-        end
-    end
-    function calculate_fdr_lim()
-        i = get(ui_list_gr, 'Value');
-        m = mlist{i};
-        atlases = ga.getCohort().getBrainAtlases();
-        atlas = atlases{1};
-        if Measure.is_nodal(m)
-            fdr_lim = ones(1, atlas.getBrainRegions().length());
-            for i = 1:1:atlas.getBrainRegions().length()
-                if get(ui_checkbox_meas_fdr1, 'Value')
-                    if p1(i) > fdr(p1, str2double(get(ui_edit_meas_fdr1, 'String')))
-                        fdr_lim(i) = 0;
-                    end
-                elseif get(ui_checkbox_meas_fdr2, 'Value')
-                    if p2(i) > fdr(p2, str2double(get(ui_edit_meas_fdr2, 'String')))
-                        fdr_lim(i) = 0;
-                    end
-                end
-            end
-        elseif Measure.is_binodal(m)
-            
-        else
-            % do nothing
-        end
-    end
-    function update_measure_control_panel()
-        i = get(ui_list_gr, 'Value');
-        measure = mlist{i};
-        if (Measure.is_nodal(measure))
-            set(ui_measure_container_panel, 'Visible', 'on')
-            childs_visibility(ui_measure_container_panel, 'on')
-            set(ui_edge_value_show, 'Enable', 'off')
-            set(ui_edge_value_show, 'Visible', 'off')
-        else
-            set(ui_measure_container_panel, 'Visible', 'off')
-            childs_visibility(ui_measure_container_panel, 'off')
-            set(ui_edge_value_show, 'Enable', 'on')
-            set(ui_edge_value_show, 'Visible', 'on')
-        end
-    end
-    function childs_visibility(handle, rule)
-        childs = allchild(handle);
-        set(handle, 'visible', rule)
-        for i = 1:1:length(childs)
-            set(childs(i), 'visible', rule)
-        end
-    end
-    function cb_binodal_measure_show(~, ~)
-        if iscell(measure_data)
-            measure_data_inner = [measure_data{:}];
-        else
-            measure_data_inner = measure_data;
-        end
-        if get(ui_edge_value_show, 'Value')
-            for i = 1:1:size(measure_data_inner, 1)
-                for j = 1:1:size(measure_data_inner, 2)
-                    if bg.link_edge_is_on(i, j) || bg.arrow_edge_is_on(i, j) || bg.cylinder_edge_is_on(i, j)
-                        if bg.tex_edge_is_off(i, j)
-                            bg.text_edge_on(i, j)
-                        else
-                            bg.text_edge(brain_axes, i, j, string(measure_data_inner(i, j)))
-                        end
-                    end
-                end
-            end
-        else
-            for i = 1:1:size(measure_data_inner, 1)
-                for j = 1:1:size(measure_data_inner, 2)
-                    if bg.link_edge_is_on(i, j) || bg.arrow_edge_is_on(i, j) || bg.cylinder_edge_is_on(i, j)
-                        bg.text_edge_off(i, j);
-                    end
-                end
-            end
-        end
-    end
+            set(ui_edit_meas_symbolsize, 'Position', [.31 .86 .6 .08])
+            set(ui_edit_meas_symbolsize, 'HorizontalAlignment', 'center')
+            set(ui_edit_meas_symbolsize, 'FontWeight', 'bold')
+            set(ui_edit_meas_symbolsize, 'Callback', {@cb_edit_meas_symbolsize})
 
-if nargout > 0
-    h = f;
-end
+            set(ui_checkbox_meas_symbolcolor, 'Units', 'normalized')
+            set(ui_checkbox_meas_symbolcolor, 'BackgroundColor', FigColor)
+            set(ui_checkbox_meas_symbolcolor, 'Position', [.01 .73 .3 .08])
+            set(ui_checkbox_meas_symbolcolor, 'String', ' Symbol Color ')
+            set(ui_checkbox_meas_symbolcolor, 'Value', false)
+            set(ui_checkbox_meas_symbolcolor, 'FontWeight', 'bold')
+            set(ui_checkbox_meas_symbolcolor, 'TooltipString', 'Shows brain regions by label')
+            set(ui_checkbox_meas_symbolcolor, 'Callback', {@cb_checkbox_meas_symbolcolor})
+
+            set(ui_popup_meas_initcolor, 'Units', 'normalized')
+            set(ui_popup_meas_initcolor, 'BackgroundColor', FigColor)
+            set(ui_popup_meas_initcolor, 'Enable', 'off')
+            set(ui_popup_meas_initcolor, 'Position', [.31 .73 .3 .08])
+            set(ui_popup_meas_initcolor, 'String', {'R', 'G', 'B'})
+            set(ui_popup_meas_initcolor, 'Value', 3)
+            set(ui_popup_meas_initcolor, 'TooltipString', 'Select symbol');
+            set(ui_popup_meas_initcolor, 'Callback', {@cb_meas_initcolor})
+
+            set(ui_popup_meas_fincolor, 'Units', 'normalized')
+            set(ui_popup_meas_fincolor, 'BackgroundColor', FigColor)
+            set(ui_popup_meas_fincolor, 'Enable', 'off')
+            set(ui_popup_meas_fincolor, 'Position', [0.61 .73 .3 .08])
+            set(ui_popup_meas_fincolor, 'String', {'R', 'G', 'B'})
+            set(ui_popup_meas_fincolor, 'Value', 1)
+            set(ui_popup_meas_fincolor, 'TooltipString', 'Select symbol');
+            set(ui_popup_meas_fincolor, 'Callback', {@cb_meas_fincolor})
+
+            set(ui_checkbox_meas_sphereradius, 'Units', 'normalized')
+            set(ui_checkbox_meas_sphereradius, 'BackgroundColor', FigColor)
+            set(ui_checkbox_meas_sphereradius, 'Position', [.01 0.6 .3 .08])
+            set(ui_checkbox_meas_sphereradius, 'String', ' Sphere Radius ')
+            set(ui_checkbox_meas_sphereradius, 'Value', false)
+            set(ui_checkbox_meas_sphereradius, 'FontWeight', 'bold')
+            set(ui_checkbox_meas_sphereradius, 'TooltipString', 'Shows brain regions by label')
+            set(ui_checkbox_meas_sphereradius, 'Callback', {@cb_checkbox_meas_sphereradius})
+
+            set(ui_edit_meas_sphereradius, 'Units', 'normalized')
+            set(ui_edit_meas_sphereradius, 'String', PlotBrainGraph.INIT_SPH_R)
+            set(ui_edit_meas_sphereradius, 'Enable', 'off')
+            set(ui_edit_meas_sphereradius, 'Position', [.31 0.6 .6 .08])
+            set(ui_edit_meas_sphereradius, 'HorizontalAlignment', 'center')
+            set(ui_edit_meas_sphereradius, 'FontWeight', 'bold')
+            set(ui_edit_meas_sphereradius, 'Callback', {@cb_edit_meas_sphereradius})
+
+            set(ui_checkbox_meas_spherecolor, 'Units', 'normalized')
+            set(ui_checkbox_meas_spherecolor, 'BackgroundColor', FigColor)
+            set(ui_checkbox_meas_spherecolor, 'Position', [.01 0.47 .3 .08])
+            set(ui_checkbox_meas_spherecolor, 'String', ' Sphere Color ')
+            set(ui_checkbox_meas_spherecolor, 'Value', false)
+            set(ui_checkbox_meas_spherecolor, 'FontWeight', 'bold')
+            set(ui_checkbox_meas_spherecolor, 'TooltipString', 'Shows brain regions by label')
+            set(ui_checkbox_meas_spherecolor, 'Callback', {@cb_checkbox_meas_spherecolor})
+
+            set(ui_popup_meas_sphinitcolor, 'Units', 'normalized')
+            set(ui_popup_meas_sphinitcolor, 'BackgroundColor', FigColor)
+            set(ui_popup_meas_sphinitcolor, 'Enable', 'off')
+            set(ui_popup_meas_sphinitcolor, 'Position', [.31 .47 .3 .08])
+            set(ui_popup_meas_sphinitcolor, 'String', {'R', 'G', 'B'})
+            set(ui_popup_meas_sphinitcolor, 'Value', 1)
+            set(ui_popup_meas_sphinitcolor, 'TooltipString', 'Select symbol');
+            set(ui_popup_meas_sphinitcolor, 'Callback', {@cb_meas_sphinitcolor})
+
+            set(ui_popup_meas_sphfincolor, 'Units', 'normalized')
+            set(ui_popup_meas_sphfincolor, 'BackgroundColor', FigColor)
+            set(ui_popup_meas_sphfincolor, 'Enable', 'off')
+            set(ui_popup_meas_sphfincolor, 'Position', [0.61 .47 .3 .08])
+            set(ui_popup_meas_sphfincolor, 'String', {'R', 'G', 'B'})
+            set(ui_popup_meas_sphfincolor, 'Value', 3)
+            set(ui_popup_meas_sphfincolor, 'TooltipString', 'Select symbol');
+            set(ui_popup_meas_sphfincolor, 'Callback', {@cb_meas_sphfincolor})
+
+            set(ui_checkbox_meas_spheretransparency, 'Units', 'normalized')
+            set(ui_checkbox_meas_spheretransparency, 'BackgroundColor', FigColor)
+            set(ui_checkbox_meas_spheretransparency, 'Position', [.01 0.34 .3 .08])
+            set(ui_checkbox_meas_spheretransparency, 'String', ' Sphere Transparency ')
+            set(ui_checkbox_meas_spheretransparency, 'Value', false)
+            set(ui_checkbox_meas_spheretransparency, 'FontWeight', 'bold')
+            set(ui_checkbox_meas_spheretransparency, 'TooltipString', 'Shows brain regions by label')
+            set(ui_checkbox_meas_spheretransparency, 'Callback', {@cb_checkbox_meas_spheretransparency})
+
+            set(ui_slider_meas_spheretransparency, 'Units', 'normalized')
+            set(ui_slider_meas_spheretransparency, 'BackgroundColor', FigColor)
+            set(ui_slider_meas_spheretransparency, 'Min', 0, 'Max', 1, 'Value', PlotBrainGraph.INIT_SPH_FACE_ALPHA);
+            set(ui_slider_meas_spheretransparency, 'Enable', 'off')
+            set(ui_slider_meas_spheretransparency, 'Position', [.31 0.34 .6 .08])
+            set(ui_slider_meas_spheretransparency, 'TooltipString', 'Brain region transparency (applied both to faces and edges)')
+            set(ui_slider_meas_spheretransparency, 'Callback', {@cb_slider_meas_spheretransparency})
+
+            set(ui_checkbox_meas_labelsize, 'Units', 'normalized')
+            set(ui_checkbox_meas_labelsize, 'BackgroundColor', FigColor)
+            set(ui_checkbox_meas_labelsize, 'Position', [.01 .21 .3 .08])
+            set(ui_checkbox_meas_labelsize, 'String', ' Label Size ')
+            set(ui_checkbox_meas_labelsize, 'Value', false)
+            set(ui_checkbox_meas_labelsize, 'FontWeight', 'bold')
+            set(ui_checkbox_meas_labelsize, 'TooltipString', 'Shows brain regions by label')
+            set(ui_checkbox_meas_labelsize, 'Callback', {@cb_checkbox_meas_labelsize})
+
+            set(ui_edit_meas_labelsize, 'Units', 'normalized')
+            set(ui_edit_meas_labelsize, 'String', PlotBrainGraph.INIT_LAB_FONT_SIZE)
+            set(ui_edit_meas_labelsize, 'Enable', 'off')
+            set(ui_edit_meas_labelsize, 'Position', [.31 .21 .6 .08])
+            set(ui_edit_meas_labelsize, 'HorizontalAlignment', 'center')
+            set(ui_edit_meas_labelsize, 'FontWeight', 'bold')
+            set(ui_edit_meas_labelsize, 'Callback', {@cb_edit_meas_labelsize})
+
+            set(ui_checkbox_meas_labelcolor, 'Units', 'normalized')
+            set(ui_checkbox_meas_labelcolor, 'BackgroundColor', FigColor)
+            set(ui_checkbox_meas_labelcolor, 'Position', [.01 0.07 .3 .08])
+            set(ui_checkbox_meas_labelcolor, 'String', ' Label Color ')
+            set(ui_checkbox_meas_labelcolor, 'Value', false)
+            set(ui_checkbox_meas_labelcolor, 'FontWeight', 'bold')
+            set(ui_checkbox_meas_labelcolor, 'TooltipString', 'Shows brain regions by label')
+            set(ui_checkbox_meas_labelcolor, 'Callback', {@cb_checkbox_meas_labelcolor})
+
+            set(ui_popup_meas_labelinitcolor, 'Units', 'normalized')
+            set(ui_popup_meas_labelinitcolor, 'BackgroundColor', FigColor)
+            set(ui_popup_meas_labelinitcolor, 'Enable', 'off')
+            set(ui_popup_meas_labelinitcolor, 'Position', [.31 .07 .3 .08])
+            set(ui_popup_meas_labelinitcolor, 'String', {'R', 'G', 'B'})
+            set(ui_popup_meas_labelinitcolor, 'Value', 1)
+            set(ui_popup_meas_labelinitcolor, 'TooltipString', 'Select symbol');
+            set(ui_popup_meas_labelinitcolor, 'Callback', {@cb_meas_labelinitcolor})
+
+            set(ui_popup_meas_labelfincolor, 'Units', 'normalized')
+            set(ui_popup_meas_labelfincolor, 'BackgroundColor', FigColor)
+            set(ui_popup_meas_labelfincolor, 'Enable', 'off')
+            set(ui_popup_meas_labelfincolor, 'Position', [0.61 .07 .3 .08])
+            set(ui_popup_meas_labelfincolor, 'String', {'R', 'G', 'B'})
+            set(ui_popup_meas_labelfincolor, 'Value', 3)
+            set(ui_popup_meas_labelfincolor, 'TooltipString', 'Select symbol');
+            set(ui_popup_meas_labelfincolor, 'Callback', {@cb_meas_labelfincolor})
+
+        end
+        function cb_checkbox_meas_symbolsize(~, ~)  %  (src, event)
+            if get(ui_checkbox_meas_symbolsize, 'Value')
+                set(ui_edit_meas_symbolsize, 'Enable', 'on')
+
+                update_brain_meas_plot()
+            else
+                size = str2double(get(ui_edit_meas_symbolsize, 'String'));
+                size = 1 + size;
+                pl.bg.set('SYMS_SIZE', size);
+
+                set(ui_edit_meas_symbolsize, 'Enable', 'off')
+                update_brain_meas_plot()
+            end
+        end
+        function cb_edit_meas_symbolsize(~, ~)  %  (src, event)
+            size = real(str2double(get(ui_edit_meas_symbolsize, 'String')));
+            if isempty(size) || size<=0
+                set(ui_edit_meas_symbolsize, 'String', '1')
+                size = 5;
+            end
+            update_brain_meas_plot()
+        end
+        function cb_checkbox_meas_symbolcolor(~, ~)  %  (src, event)
+            if get(ui_checkbox_meas_symbolcolor, 'Value')
+                set(ui_popup_meas_initcolor, 'Enable', 'on')
+                set(ui_popup_meas_fincolor, 'Enable', 'on')
+
+                update_brain_meas_plot()
+            else
+                val = get(ui_popup_meas_initcolor, 'Value');
+                str = get(ui_popup_meas_initcolor, 'String');
+                pl.bg.set('SYMS_EDGE_COLOR', str{val});
+                pl.bg.set('SYMS_FACE_COLOR', str{val});
+
+                set(ui_popup_meas_initcolor, 'Enable', 'off')
+                set(ui_popup_meas_fincolor, 'Enable', 'off')
+
+                update_brain_meas_plot()
+            end
+        end
+        function cb_meas_initcolor(~, ~)  %  (src, event)
+            update_brain_meas_plot()
+        end
+        function cb_meas_fincolor(~, ~)  %  (src, event)
+            update_brain_meas_plot()
+        end
+        function cb_checkbox_meas_sphereradius(~, ~)  %  (src, event)
+            if get(ui_checkbox_meas_sphereradius, 'Value')
+                set(ui_edit_meas_sphereradius, 'Enable', 'on')
+
+                update_brain_meas_plot()
+            else
+                R = str2double(get(ui_edit_meas_sphereradius, 'String'));
+                R = R + 1;
+                pl.bg.set('SPHS_SIZE', R);
+
+                set(ui_edit_meas_sphereradius, 'Enable', 'off')
+                update_brain_meas_plot()
+            end
+        end
+        function cb_edit_meas_sphereradius(~, ~)  %  (src, event)
+            R = real(str2double(get(ui_edit_meas_sphereradius, 'String')));
+            if isempty(R) || R<=0
+                set(ui_edit_meas_sphereradius, 'String', '1')
+                R = 3;
+            end
+            update_brain_meas_plot()
+        end
+        function cb_checkbox_meas_spherecolor(~, ~)  %  (src, event)
+            if get(ui_checkbox_meas_spherecolor, 'Value')
+                set(ui_popup_meas_sphinitcolor, 'Enable', 'on')
+                set(ui_popup_meas_sphfincolor, 'Enable', 'on')
+                update_brain_meas_plot()
+            else
+                val = get(ui_popup_meas_sphinitcolor, 'Value');
+                str = get(ui_popup_meas_sphinitcolor, 'String');
+                pl.bg.set('SPHS_EDGE_COLOR', str{val});
+                pl.bg.set('SPHS_FACE_COLOR', str{val});
+
+                set(ui_popup_meas_sphinitcolor, 'Enable', 'off')
+                set(ui_popup_meas_sphfincolor, 'Enable', 'off')
+                update_brain_meas_plot()
+            end
+        end
+        function cb_meas_sphinitcolor(~, ~)  %  (src, event)
+            update_brain_meas_plot()
+        end
+        function cb_meas_sphfincolor(~, ~)  %  (src, event)
+            update_brain_meas_plot()
+        end
+        function cb_checkbox_meas_spheretransparency(~, ~)  %  (src, event)
+            if get(ui_checkbox_meas_spheretransparency, 'Value')
+                set(ui_slider_meas_spheretransparency, 'Enable', 'on')
+
+                update_brain_meas_plot()
+            else
+                alpha = get(ui_slider_meas_spheretransparency, 'Value');
+                pl.bg.set('SPHS_FACE_ALPHA', alpha);
+                pl.bg.set('SPHS_EDGE_ALPHA', alpha);
+
+                set(ui_slider_meas_spheretransparency, 'Enable', 'off')
+                update_brain_meas_plot()
+            end
+        end
+        function cb_slider_meas_spheretransparency(~, ~)  %  (src, event)
+            update_brain_meas_plot();
+        end
+        function cb_checkbox_meas_labelsize(~, ~)  %  (src, event)
+            if get(ui_checkbox_meas_labelsize, 'Value')
+                set(ui_edit_meas_labelsize, 'Enable', 'on')
+
+                update_brain_meas_plot()
+            else
+                size = str2double(get(ui_edit_meas_labelsize, 'String'));
+                size = size + 1;
+                pl.bg.set('LABS_SIZE', size);
+
+                set(ui_edit_meas_labelsize, 'Enable', 'off')
+                update_brain_meas_plot()
+            end
+        end
+        function cb_edit_meas_labelsize(~, ~)  %  (src, event)
+            size = real(str2double(get(ui_edit_meas_labelsize, 'String')));
+            if isempty(size) || size<=0
+                set(ui_edit_meas_labelsize, 'String', '1')
+                size = 5;
+            end
+            update_brain_meas_plot()
+        end
+        function cb_checkbox_meas_labelcolor(~, ~)  %  (src, event)
+            if get(ui_checkbox_meas_labelcolor, 'Value')
+                set(ui_popup_meas_labelinitcolor, 'Enable', 'on')
+                set(ui_popup_meas_labelfincolor, 'Enable', 'on')
+
+                update_brain_meas_plot()
+            else
+                val = get(ui_popup_meas_labelinitcolor, 'Value');
+                str = get(ui_popup_meas_labelinitcolor, 'String');
+                pl.bg.set('LABS', str{val});
+
+                set(ui_popup_meas_labelinitcolor, 'Enable', 'off')
+                set(ui_popup_meas_labelfincolor, 'Enable', 'off')
+                update_brain_meas_plot()
+            end
+        end
+        function cb_meas_labelinitcolor(~, ~)  %  (src, event)
+            update_brain_meas_plot()
+        end
+        function cb_meas_labelfincolor(~, ~)  %  (src, event)
+            update_brain_meas_plot()
+        end
+        function update_brain_meas_plot()
+            if ~isempty(measure_data)
+                if isequal(size(measure_data, 2), 1)  % nodal
+                    if iscell(measure_data)
+                        measure_data_inner = [measure_data{:}];
+                    else
+                        measure_data_inner = measure_data;
+                    end
+                elseif isequal(size(measure_data, 1), 1)  % global
+                    % do nothing
+                else  % binodal
+                end
+
+                if get(ui_checkbox_meas_symbolsize, 'Value')
+
+                    size_ = str2double(get(ui_edit_meas_symbolsize, 'String'));
+
+                    size_(isnan(size_)) = 0.1;
+                    size_(size_<=0) = 0.1;
+                    pl.bg.set('SYMS_SIZE', size_');
+                end
+
+                if get(ui_checkbox_meas_symbolcolor, 'Value')
+
+                    colorValue = measure_data_inner ;
+
+                    colorValue(isnan(colorValue)) = 0;
+                    colorValue(colorValue<0) = 0;
+                    colorValue(colorValue>1) = 1;
+
+                    C = zeros(length(colorValue), 3);
+
+                    val1 = get(ui_popup_meas_initcolor, 'Value');
+                    val2 = get(ui_popup_meas_fincolor, 'Value');
+                    C(:, val1) = colorValue;
+                    C(:, val2) = 1 - colorValue;
+
+                    pl.bg.set('SYMS_FACE_COLOR', C);
+                    pl.bg.set('SYMS_EDGE_COLOR', C);
+                end
+
+                if get(ui_checkbox_meas_sphereradius, 'Value')
+
+                    R = str2double(get(ui_edit_meas_sphereradius, 'String'));
+
+                    R = 1 + (measure_data_inner)*R;
+
+                    R(isnan(R)) = 0.1;
+                    R(R<=0) = 0.1;
+                    pl.bg.set('SPHS_SIZE', R');
+                end
+
+                if get(ui_checkbox_meas_spherecolor, 'Value')
+
+                    colorValue = (measure_data_inner);
+                    colorValue(isnan(colorValue)) = 0;
+                    colorValue(colorValue<0) = 0;
+                    colorValue(colorValue>1) = 1;
+
+                    C = zeros(length(colorValue), 3);
+
+                    val1 = get(ui_popup_meas_sphinitcolor, 'Value');
+                    val2 = get(ui_popup_meas_sphfincolor, 'Value');
+                    C(:, val1) = colorValue;
+                    C(:, val2) = 1 - colorValue;
+                    pl.bg.set('SPHS_EDGE_COLOR', C);
+                    pl.bg.set('SPHS_FACE_COLOR', C);
+                end
+
+                if get(ui_checkbox_meas_spheretransparency, 'Value')
+
+                    alpha = get(ui_slider_meas_spheretransparency, 'Value');
+
+
+                    alpha_vec = (measure_data_inner)*alpha;
+                    alpha_vec(isnan(alpha_vec)) = 0;
+                    alpha_vec(alpha_vec<0) = 0;
+                    alpha_vec(alpha_vec>1) = 1;
+                    pl.bg.set('SPHS_EDGE_ALPHA', alpha_vec);
+                    pl.bg.set('SPHS_FACE_ALPHA', alpha_vec);
+                end
+
+                if get(ui_checkbox_meas_labelsize, 'Value')
+
+                    size_ = str2double(get(ui_edit_meas_labelsize, 'String'));
+                    size_ = (1 + (measure_data_inner )*size_);
+
+                    size_(isnan(size_)) = 0.1;
+                    size_(size_<=0) = 0.1;
+                    pl.bg.set( 'LABS_SIZE', size_);
+                end
+
+                if get(ui_checkbox_meas_labelcolor, 'Value')
+                    colorValue = (measure_data_inner);
+                    colorValue(isnan(colorValue)) = 0;
+                    colorValue(colorValue<0) = 0;
+                    colorValue(colorValue>1) = 1;
+
+                    C = zeros(length(colorValue), 3);
+
+                    val1 = get(ui_popup_meas_labelinitcolor, 'Value');
+                    val2 = get(ui_popup_meas_labelfincolor, 'Value');
+                    C(:, val1) = colorValue;
+                    C(:, val2) = 1 - colorValue;
+                    pl.bg.set('LABS_FONT_COLOR', C);
+                end
+            end
+        end
+
+    % draw
+    pl.bg.draw();
+    if nargout > 0
+        h = f;
+    end
 end
