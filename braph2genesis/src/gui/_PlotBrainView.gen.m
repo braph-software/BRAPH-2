@@ -505,6 +505,8 @@ function h = getMCRPanel(pl)
     ui_measure_container_panel = uipanel(f, 'Units', 'normalized');
 
     % nodal measure figure options
+    ui_layer_text = uicontrol(ui_measure_container_panel, 'Style', 'text');
+    ui_layer_selector = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
     ui_checkbox_meas_symbolsize = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
     ui_edit_meas_symbolsize = uicontrol(ui_measure_container_panel, 'Style', 'edit');
     ui_checkbox_meas_symbolcolor = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
@@ -532,9 +534,26 @@ function h = getMCRPanel(pl)
             % measure figure *******************************
             set(ui_measure_container_panel, 'Position', [.0 .01 1 .99])
 
+            set(ui_layer_text, ...
+                'Units', 'normalized', ...
+                'BackgroundColor', FigColor, ...
+                'Position', [.01 .91 .30 .08], ...
+                'FontWeight', 'bold', ...
+                'TooltipString', 'Select the layer of the Measure to be ploted.', ...
+                'String', 'Layer' ...
+                )
+
+            set(ui_layer_selector, ...
+                'Units', 'normalized', ...
+                'BackgroundColor', FigColor, ...
+                'Position', [.31 .91 .30 .08], ...
+                'String', cellfun(@(x) num2str(x),  num2cell([1:length(measure_data)]) , 'UniformOutput', false), ...
+                'Callback', {@cb_layer_selector} ...
+                )
+
             set(ui_checkbox_meas_symbolsize, 'Units', 'normalized')
             set(ui_checkbox_meas_symbolsize, 'BackgroundColor', FigColor)
-            set(ui_checkbox_meas_symbolsize, 'Position', [.01 .86 .30 .08])
+            set(ui_checkbox_meas_symbolsize, 'Position', [.01 .8 .30 .08])
             set(ui_checkbox_meas_symbolsize, 'String', ' Symbol Size ')
             set(ui_checkbox_meas_symbolsize, 'Value', false)
             set(ui_checkbox_meas_symbolsize, 'FontWeight', 'bold')
@@ -544,14 +563,14 @@ function h = getMCRPanel(pl)
             set(ui_edit_meas_symbolsize, 'Units', 'normalized')
             set(ui_edit_meas_symbolsize, 'String', PlotBrainGraph.INIT_SYM_SIZE)
             set(ui_edit_meas_symbolsize, 'Enable', 'off')
-            set(ui_edit_meas_symbolsize, 'Position', [.31 .86 .6 .08])
+            set(ui_edit_meas_symbolsize, 'Position', [.31 .8 .6 .08])
             set(ui_edit_meas_symbolsize, 'HorizontalAlignment', 'center')
             set(ui_edit_meas_symbolsize, 'FontWeight', 'bold')
             set(ui_edit_meas_symbolsize, 'Callback', {@cb_edit_meas_symbolsize})
 
             set(ui_checkbox_meas_symbolcolor, 'Units', 'normalized')
             set(ui_checkbox_meas_symbolcolor, 'BackgroundColor', FigColor)
-            set(ui_checkbox_meas_symbolcolor, 'Position', [.01 .73 .3 .08])
+            set(ui_checkbox_meas_symbolcolor, 'Position', [.01 .67 .3 .08])
             set(ui_checkbox_meas_symbolcolor, 'String', ' Symbol Color ')
             set(ui_checkbox_meas_symbolcolor, 'Value', false)
             set(ui_checkbox_meas_symbolcolor, 'FontWeight', 'bold')
@@ -561,7 +580,7 @@ function h = getMCRPanel(pl)
             set(ui_popup_meas_initcolor, 'Units', 'normalized')
             set(ui_popup_meas_initcolor, 'BackgroundColor', FigColor)
             set(ui_popup_meas_initcolor, 'Enable', 'off')
-            set(ui_popup_meas_initcolor, 'Position', [.31 .73 .3 .08])
+            set(ui_popup_meas_initcolor, 'Position', [.31 .67 .3 .08])
             set(ui_popup_meas_initcolor, 'String', {'R', 'G', 'B'})
             set(ui_popup_meas_initcolor, 'Value', 3)
             set(ui_popup_meas_initcolor, 'TooltipString', 'Select symbol');
@@ -570,7 +589,7 @@ function h = getMCRPanel(pl)
             set(ui_popup_meas_fincolor, 'Units', 'normalized')
             set(ui_popup_meas_fincolor, 'BackgroundColor', FigColor)
             set(ui_popup_meas_fincolor, 'Enable', 'off')
-            set(ui_popup_meas_fincolor, 'Position', [0.61 .73 .3 .08])
+            set(ui_popup_meas_fincolor, 'Position', [0.61 .67 .3 .08])
             set(ui_popup_meas_fincolor, 'String', {'R', 'G', 'B'})
             set(ui_popup_meas_fincolor, 'Value', 1)
             set(ui_popup_meas_fincolor, 'TooltipString', 'Select symbol');
@@ -578,7 +597,7 @@ function h = getMCRPanel(pl)
 
             set(ui_checkbox_meas_sphereradius, 'Units', 'normalized')
             set(ui_checkbox_meas_sphereradius, 'BackgroundColor', FigColor)
-            set(ui_checkbox_meas_sphereradius, 'Position', [.01 0.6 .3 .08])
+            set(ui_checkbox_meas_sphereradius, 'Position', [.01 0.54 .3 .08])
             set(ui_checkbox_meas_sphereradius, 'String', ' Sphere Radius ')
             set(ui_checkbox_meas_sphereradius, 'Value', false)
             set(ui_checkbox_meas_sphereradius, 'FontWeight', 'bold')
@@ -588,14 +607,14 @@ function h = getMCRPanel(pl)
             set(ui_edit_meas_sphereradius, 'Units', 'normalized')
             set(ui_edit_meas_sphereradius, 'String', PlotBrainGraph.INIT_SPH_R)
             set(ui_edit_meas_sphereradius, 'Enable', 'off')
-            set(ui_edit_meas_sphereradius, 'Position', [.31 0.6 .6 .08])
+            set(ui_edit_meas_sphereradius, 'Position', [.31 0.54 .6 .08])
             set(ui_edit_meas_sphereradius, 'HorizontalAlignment', 'center')
             set(ui_edit_meas_sphereradius, 'FontWeight', 'bold')
             set(ui_edit_meas_sphereradius, 'Callback', {@cb_edit_meas_sphereradius})
 
             set(ui_checkbox_meas_spherecolor, 'Units', 'normalized')
             set(ui_checkbox_meas_spherecolor, 'BackgroundColor', FigColor)
-            set(ui_checkbox_meas_spherecolor, 'Position', [.01 0.47 .3 .08])
+            set(ui_checkbox_meas_spherecolor, 'Position', [.01 0.41 .3 .08])
             set(ui_checkbox_meas_spherecolor, 'String', ' Sphere Color ')
             set(ui_checkbox_meas_spherecolor, 'Value', false)
             set(ui_checkbox_meas_spherecolor, 'FontWeight', 'bold')
@@ -605,7 +624,7 @@ function h = getMCRPanel(pl)
             set(ui_popup_meas_sphinitcolor, 'Units', 'normalized')
             set(ui_popup_meas_sphinitcolor, 'BackgroundColor', FigColor)
             set(ui_popup_meas_sphinitcolor, 'Enable', 'off')
-            set(ui_popup_meas_sphinitcolor, 'Position', [.31 .47 .3 .08])
+            set(ui_popup_meas_sphinitcolor, 'Position', [.31 .41 .3 .08])
             set(ui_popup_meas_sphinitcolor, 'String', {'R', 'G', 'B'})
             set(ui_popup_meas_sphinitcolor, 'Value', 1)
             set(ui_popup_meas_sphinitcolor, 'TooltipString', 'Select symbol');
@@ -614,7 +633,7 @@ function h = getMCRPanel(pl)
             set(ui_popup_meas_sphfincolor, 'Units', 'normalized')
             set(ui_popup_meas_sphfincolor, 'BackgroundColor', FigColor)
             set(ui_popup_meas_sphfincolor, 'Enable', 'off')
-            set(ui_popup_meas_sphfincolor, 'Position', [0.61 .47 .3 .08])
+            set(ui_popup_meas_sphfincolor, 'Position', [0.61 .41 .3 .08])
             set(ui_popup_meas_sphfincolor, 'String', {'R', 'G', 'B'})
             set(ui_popup_meas_sphfincolor, 'Value', 3)
             set(ui_popup_meas_sphfincolor, 'TooltipString', 'Select symbol');
@@ -622,7 +641,7 @@ function h = getMCRPanel(pl)
 
             set(ui_checkbox_meas_spheretransparency, 'Units', 'normalized')
             set(ui_checkbox_meas_spheretransparency, 'BackgroundColor', FigColor)
-            set(ui_checkbox_meas_spheretransparency, 'Position', [.01 0.34 .3 .08])
+            set(ui_checkbox_meas_spheretransparency, 'Position', [.01 0.28 .3 .08])
             set(ui_checkbox_meas_spheretransparency, 'String', ' Sphere Transparency ')
             set(ui_checkbox_meas_spheretransparency, 'Value', false)
             set(ui_checkbox_meas_spheretransparency, 'FontWeight', 'bold')
@@ -633,13 +652,13 @@ function h = getMCRPanel(pl)
             set(ui_slider_meas_spheretransparency, 'BackgroundColor', FigColor)
             set(ui_slider_meas_spheretransparency, 'Min', 0, 'Max', 1, 'Value', PlotBrainGraph.INIT_SPH_FACE_ALPHA);
             set(ui_slider_meas_spheretransparency, 'Enable', 'off')
-            set(ui_slider_meas_spheretransparency, 'Position', [.31 0.34 .6 .08])
+            set(ui_slider_meas_spheretransparency, 'Position', [.31 0.28 .6 .08])
             set(ui_slider_meas_spheretransparency, 'TooltipString', 'Brain region transparency (applied both to faces and edges)')
             set(ui_slider_meas_spheretransparency, 'Callback', {@cb_slider_meas_spheretransparency})
 
             set(ui_checkbox_meas_labelsize, 'Units', 'normalized')
             set(ui_checkbox_meas_labelsize, 'BackgroundColor', FigColor)
-            set(ui_checkbox_meas_labelsize, 'Position', [.01 .21 .3 .08])
+            set(ui_checkbox_meas_labelsize, 'Position', [.01 .15 .3 .08])
             set(ui_checkbox_meas_labelsize, 'String', ' Label Size ')
             set(ui_checkbox_meas_labelsize, 'Value', false)
             set(ui_checkbox_meas_labelsize, 'FontWeight', 'bold')
@@ -649,14 +668,14 @@ function h = getMCRPanel(pl)
             set(ui_edit_meas_labelsize, 'Units', 'normalized')
             set(ui_edit_meas_labelsize, 'String', PlotBrainGraph.INIT_LAB_FONT_SIZE)
             set(ui_edit_meas_labelsize, 'Enable', 'off')
-            set(ui_edit_meas_labelsize, 'Position', [.31 .21 .6 .08])
+            set(ui_edit_meas_labelsize, 'Position', [.31 .15 .6 .08])
             set(ui_edit_meas_labelsize, 'HorizontalAlignment', 'center')
             set(ui_edit_meas_labelsize, 'FontWeight', 'bold')
             set(ui_edit_meas_labelsize, 'Callback', {@cb_edit_meas_labelsize})
 
             set(ui_checkbox_meas_labelcolor, 'Units', 'normalized')
             set(ui_checkbox_meas_labelcolor, 'BackgroundColor', FigColor)
-            set(ui_checkbox_meas_labelcolor, 'Position', [.01 0.07 .3 .08])
+            set(ui_checkbox_meas_labelcolor, 'Position', [.01 0.01 .3 .08])
             set(ui_checkbox_meas_labelcolor, 'String', ' Label Color ')
             set(ui_checkbox_meas_labelcolor, 'Value', false)
             set(ui_checkbox_meas_labelcolor, 'FontWeight', 'bold')
@@ -666,7 +685,7 @@ function h = getMCRPanel(pl)
             set(ui_popup_meas_labelinitcolor, 'Units', 'normalized')
             set(ui_popup_meas_labelinitcolor, 'BackgroundColor', FigColor)
             set(ui_popup_meas_labelinitcolor, 'Enable', 'off')
-            set(ui_popup_meas_labelinitcolor, 'Position', [.31 .07 .3 .08])
+            set(ui_popup_meas_labelinitcolor, 'Position', [.31 .01 .3 .08])
             set(ui_popup_meas_labelinitcolor, 'String', {'R', 'G', 'B'})
             set(ui_popup_meas_labelinitcolor, 'Value', 1)
             set(ui_popup_meas_labelinitcolor, 'TooltipString', 'Select symbol');
@@ -675,12 +694,15 @@ function h = getMCRPanel(pl)
             set(ui_popup_meas_labelfincolor, 'Units', 'normalized')
             set(ui_popup_meas_labelfincolor, 'BackgroundColor', FigColor)
             set(ui_popup_meas_labelfincolor, 'Enable', 'off')
-            set(ui_popup_meas_labelfincolor, 'Position', [0.61 .07 .3 .08])
+            set(ui_popup_meas_labelfincolor, 'Position', [0.61 .01 .3 .08])
             set(ui_popup_meas_labelfincolor, 'String', {'R', 'G', 'B'})
             set(ui_popup_meas_labelfincolor, 'Value', 3)
             set(ui_popup_meas_labelfincolor, 'TooltipString', 'Select symbol');
             set(ui_popup_meas_labelfincolor, 'Callback', {@cb_meas_labelfincolor})
 
+        end
+        function cb_layer_selector(~, ~)
+            update_brain_meas_plot()
         end
         function cb_checkbox_meas_symbolsize(~, ~)  %  (src, event)
             if get(ui_checkbox_meas_symbolsize, 'Value')
@@ -835,15 +857,10 @@ function h = getMCRPanel(pl)
         end
         function update_brain_meas_plot()
             if ~isempty(measure_data)
-                if isequal(size(measure_data, 2), 1)  % nodal
-                    if iscell(measure_data)
-                        measure_data_inner = [measure_data{:}];
-                    else
-                        measure_data_inner = measure_data;
-                    end
-                elseif isequal(size(measure_data, 1), 1)  % global
-                    % do nothing
-                else  % binodal
+                if  Measure.is_nodal(pl.get('ME'))
+
+                    measure_data_inner = measure_data{get(ui_layer_selector, 'Value'))};
+
                 end
 
                 if get(ui_checkbox_meas_symbolsize, 'Value')
