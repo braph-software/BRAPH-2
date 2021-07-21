@@ -41,13 +41,13 @@ INIT_SPH_R = 1
 
 % IDs
 INIT_ID_FONT_SIZE = 13
-INIT_ID_FONT_NAME = GUI.FONT
+INIT_ID_FONT_NAME = 'helvetica'
 INIT_ID_FONT_COLOR = [0 0 0]
 INIT_ID_FONT_INTERPRETER = 'none'
 
 % Labels
 INIT_LAB_FONT_SIZE = 13
-INIT_LAB_FONT_NAME = GUI.FONT
+INIT_LAB_FONT_NAME = 'helvetica'
 INIT_LAB_FONT_COLOR = [0 0 0]
 INIT_LAB_FONT_INTERPRETER = 'none'
 
@@ -147,8 +147,8 @@ function h = link_edge(pl, i, j, varargin)
     end
     % get brain regions
 
-    br_1 = pl.graph.get('ATLAS').get('BR_DICT').getItem(i);
-    br_2 = pl.graph.get('ATLAS').get('BR_DICT').getItem(j);
+    br_1 = pl.get('ATLAS').get('BR_DICT').getItem(i);
+    br_2 = pl.get('ATLAS').get('BR_DICT').getItem(j);
     % get coordinates
     X1 = br_1.get('X');
     Y1 = br_1.get('Y');
@@ -557,8 +557,8 @@ function h = arrow_edge(pl, i, j, varargin)
     end
     pl.set_axes();
     % get brain regions
-    br_1 = pl.graph.get('ATLAS').get('BR_DICT').getItem(i);
-    br_2 = pl.graph.get('ATLAS').get('BR_DICT').getItem(j);
+    br_1 = pl.get('ATLAS').get('BR_DICT').getItem(i);
+    br_2 = pl.get('ATLAS').get('BR_DICT').getItem(j);
     % get coordinates
     X1 = br_1.get('X');
     Y1 = br_1.get('Y');
@@ -956,8 +956,8 @@ function h = cylinder_edge(pl, i, j, varargin)
     end
     pl.set_axes();
     % get brain regions
-    br_1 = pl.graph.get('ATLAS').get('BR_DICT').getItem(i);
-    br_2 = pl.graph.get('ATLAS').get('BR_DICT').getItem(j);
+    br_1 = pl.get('ATLAS').get('BR_DICT').getItem(i);
+    br_2 = pl.get('ATLAS').get('BR_DICT').getItem(j);
     % get coordinates
     X1 = br_1.get('X');
     Y1 = br_1.get('Y');

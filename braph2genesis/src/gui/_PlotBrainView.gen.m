@@ -859,7 +859,7 @@ function h = getMCRPanel(pl)
             if ~isempty(measure_data)
                 if  Measure.is_nodal(pl.get('ME'))
 
-                    measure_data_inner = measure_data{get(ui_layer_selector, 'Value'))};
+                    measure_data_inner = measure_data{get(ui_layer_selector, 'Value')};
 
                 end
 
@@ -900,6 +900,7 @@ function h = getMCRPanel(pl)
                     R(isnan(R)) = 0.1;
                     R(R<=0) = 0.1;
                     pl.bg.set('SPHS_SIZE', R');
+                    pl.bg.set('SPHS', 1);
                 end
 
                 if get(ui_checkbox_meas_spherecolor, 'Value')
@@ -917,6 +918,7 @@ function h = getMCRPanel(pl)
                     C(:, val2) = 1 - colorValue;
                     pl.bg.set('SPHS_EDGE_COLOR', C);
                     pl.bg.set('SPHS_FACE_COLOR', C);
+                    pl.bg.set('SPHS', 1);
                 end
 
                 if get(ui_checkbox_meas_spheretransparency, 'Value')
@@ -930,6 +932,7 @@ function h = getMCRPanel(pl)
                     alpha_vec(alpha_vec>1) = 1;
                     pl.bg.set('SPHS_EDGE_ALPHA', alpha_vec);
                     pl.bg.set('SPHS_FACE_ALPHA', alpha_vec);
+                    pl.bg.set('SPHS', 1);
                 end
 
                 if get(ui_checkbox_meas_labelsize, 'Value')
@@ -940,6 +943,7 @@ function h = getMCRPanel(pl)
                     size_(isnan(size_)) = 0.1;
                     size_(size_<=0) = 0.1;
                     pl.bg.set( 'LABS_SIZE', size_);
+                    pl.bg.set('LABS', 1);
                 end
 
                 if get(ui_checkbox_meas_labelcolor, 'Value')
@@ -955,8 +959,17 @@ function h = getMCRPanel(pl)
                     C(:, val1) = colorValue;
                     C(:, val2) = 1 - colorValue;
                     pl.bg.set('LABS_FONT_COLOR', C);
+                    pl.bg.set('LABS', 1);
                 end
             end
+            if get(ui_checkbox_meas_labelcolor, 'Value') || get(ui_checkbox_meas_labelsize, 'Value')
+                % set labels to values
+                new_labs = cellfun(@(x) num2str(x), num2cell(measure_data_inner), 'UniformOutput', false);
+                brs_dict = pl.bg.get('ATLAS').get('BR_DICT').get('IT_LIST');
+                cellfun(@(x, y) x.set('LABEL', y), brs_dict, new_labs', 'UniformOutput', false)
+            end
+            % draw
+            pl.bg.draw();
         end
 
     % draw
