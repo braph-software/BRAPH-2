@@ -45,7 +45,7 @@ gr.lock('SUB_CLASS');
 
 directory = im.get('DIRECTORY');
 directory = im.get('DIRECTORY');
-if ~isfolder(directory)
+if ~isfolder(directory) && ~isempty(im.get('ID'))
     im.uigetdir()
     directory = im.get('DIRECTORY');
 end

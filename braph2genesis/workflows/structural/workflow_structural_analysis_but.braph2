@@ -6,10 +6,10 @@
 % Group is set to example group. Modify the path of the files to your needs.
 
 %% Brain Atlas
-ba = ImporterBrainAtlasXLS().get('BA'); % Brain Atlas ST-BUT
+ba = ImporterBrainAtlasXLS('ID', 'GUI').get('BA'); % Brain Atlas ST-BUT
 
 %% Group
-gr = ImporterGroupSubjectSTXLS('BA', ba).get('GR'); % Group ST-BUT
+gr = ImporterGroupSubjectSTXLS('ID', 'GUI', 'BA', ba).get('GR'); % Group ST-BUT
 
 %% Analysis
 a_BUT = AnalyzeGroup_ST_BUT('GR', gr, 'Thresholds', [.4 .5 .6 .7]); % Analysis ST-BUT
