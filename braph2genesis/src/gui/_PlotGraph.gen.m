@@ -37,8 +37,13 @@ SETNAME (metadata, string) is the name of the setting interface.
 %%%% ¡default!
 'Graph Plot'
 
+%%% ¡prop!
+SUBMENU (metadata, logical) to set a submenu
+%%%% ¡default!
+false
+
 %% ¡methods!
-function [h_figure, h_axes] = draw(pl, varargin)
+function [h_figure, h_axes, subpanel] = draw(pl, varargin)
     %DRAW draws the graphical panel.
     %
     % DRAW(PL) draws the graphical panel.
@@ -60,9 +65,22 @@ function [h_figure, h_axes] = draw(pl, varargin)
             'Name', pl.get('SETNAME'), ...
             'Color', 'w', ...
             'Units', 'normalized', ...
+            'NumberTitle', 'off', ...
             'DeleteFcn', {@close_f_settings} ...
             );
-        pl.h_axes = axes(pl.h_figure);
+        if pl.get('SUBMENU')
+            subpanel = uipanel(pl.h_figure, ...
+                'BackGroundColor', 'w', ...
+                'Units', 'normalized', ...
+                'Position', [.0 .25 1 .75] ...
+                );
+            
+            pl.h_axes = axes(subpanel);
+            
+        else
+            pl.h_axes = axes(pl.h_figure);
+        end
+        
         set_icon(pl.h_figure);
         
         ui_toolbar = findall(pl.h_figure, 'Tag', 'FigureToolBar');
