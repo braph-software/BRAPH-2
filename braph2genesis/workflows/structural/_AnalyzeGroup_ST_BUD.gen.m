@@ -51,7 +51,9 @@ gr = a.get('GR');
 node_labels = '';
 data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
 data = cat(2, data_list{:})'; % correlation is a column based operation
-atlas = gr.get('SUB_DICT').getItem(1).get('BA');
+if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
+    atlas = gr.get('SUB_DICT').getItem(1).get('BA');
+end
 
 if a.get('USE_COVARIATES')
     age_list = cellfun(@(x) x.get('age'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);

@@ -59,7 +59,7 @@ IndexedDictionary('IT_CLASS', 'MultigraphBUD')
 g_dict = IndexedDictionary('IT_CLASS', 'MultigraphBUD');
 gr = a.get('GR');
 
-if ~isempty(gr) && ~isa(gr, 'NoValue')   
+if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
     atlas = gr.get('SUB_DICT').getItem(1).get('BA');
 end
 
