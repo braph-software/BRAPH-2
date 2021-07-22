@@ -59,7 +59,7 @@ g_dict = IndexedDictionary('IT_CLASS', 'MultiplexBUD');
 node_labels = '';
 gr = a.get('GR');
 
-if ~isempty(gr) && ~isa(gr, 'NoValue')   
+if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0   
     atlas = gr.get('SUB_DICT').getItem(1).get('BA');
 end
 
