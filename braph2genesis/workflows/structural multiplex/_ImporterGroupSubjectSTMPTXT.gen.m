@@ -116,7 +116,7 @@ if isfolder(directory)
                             
         % cycle over subjects, add subjects
         for i = 1:1:size(all_subjects_data, 2)
-            waitbar(.70, f, 'Almost there ...')
+            waitbar(.65, f, ['Processing your data: ' num2str(i) '/' num2str(size(all_subjects_data, 2)) ' ...'])
             layer_subject = reshape(all_subjects_data(:, i, :), [layers_number br_number]);
             for l = 1:1:layers_number
                 ST_MP(l) = {cell2mat(layer_subject(l, :)')};
