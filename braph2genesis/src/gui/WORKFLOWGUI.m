@@ -269,6 +269,7 @@ end
         if length(varargin) > 1
             btn_new_name = varargin{2};            
             set(btn, 'String', btn_new_name); % id
+            set(btn, 'Enable', 'off'); % id
         end
     end
     function pos = getPosition(obj)
