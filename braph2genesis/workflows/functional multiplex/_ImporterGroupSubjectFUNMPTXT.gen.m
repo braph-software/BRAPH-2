@@ -79,9 +79,7 @@ if isfolder(directory)
         % get all layers per subject folder
         waitbar(.45, f, 'Processing your data ...')
         for i = 1:1:length(subject_folders)
-            if i == floor(length(subject_folders)/2)
-                 waitbar(.70, f, 'Almost there ...')  
-            end
+            waitbar(.5, f, ['Processing your data: ' num2str(i) '/' num2str(length(subject_folders)) ' ...'])
             subjects_paths = [directory filesep() subject_folders(i).name];
             % analyzes file
             files = dir(fullfile(subjects_paths, '*.txt'));
