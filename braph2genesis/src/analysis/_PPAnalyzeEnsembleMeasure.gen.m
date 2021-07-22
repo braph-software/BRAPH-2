@@ -157,15 +157,15 @@ function update(pl, selected)
                     end
                 otherwise
             end
-            pl.update()
+            pl.update(pl.selected)
         end
         function cb_table_selectall(~, ~)  % (src, event)
             pl.selected = (1:1:length(mlist))';
-            pl.update()
+            pl.update(pl.selected)
         end
         function cb_table_clearselection(~, ~)  % (src, event)
             pl.selected = [];
-            pl.update()
+            pl.update(pl.selected)
         end
         function cb_table_calculate(~, ~)
             mlist = Graph.getCompatibleMeasureList(graph);
@@ -235,7 +235,7 @@ function update(pl, selected)
             guis = get_handle_objs('figure', [], 'MeasureEnsemble');
         end
         function cb_measures_update(~, ~)
-            pl.update();
+            pl.update(pl.selected);
         end
 
     set(pl.pp, 'DeleteFcn', {@close_f_settings})

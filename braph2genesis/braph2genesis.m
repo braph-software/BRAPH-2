@@ -29,4 +29,4 @@ end
 addpath(target_dir)
 braph2
 
-test_braph2
+% test_braph2

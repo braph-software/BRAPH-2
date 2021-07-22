@@ -132,8 +132,8 @@ function update(pl, selected)
         function init_buttons()
             set(ui_button_table_calculate, ...
                 'Position', [.02 .01 .3 .07], ...
-                'String', 'Calculate Measures', ...
-                'TooltipString', 'Calculate Selected Measures', ...
+                'String', 'Calculate Comparison', ...
+                'TooltipString', 'Calculate Comparison of Selected Measures', ...
                 'Callback', {@cb_table_calculate})
 
 
@@ -164,15 +164,15 @@ function update(pl, selected)
                     end
                 otherwise
             end
-            pl.update()
+            pl.update(pl.selected)
         end
         function cb_table_selectall(~, ~)  % (src, event)
             pl.selected = (1:1:length(mlist))';
-            pl.update()
+            pl.update(pl.selected)
         end
         function cb_table_clearselection(~, ~)  % (src, event)
             pl.selected = [];
-            pl.update()
+            pl.update(pl.selected)
         end
         function cb_table_calculate(~, ~)
             mlist = Graph.getCompatibleMeasureList(graph);

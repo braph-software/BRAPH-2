@@ -174,11 +174,11 @@ function update(pl, selected)
         end
         function cb_table_selectall(~, ~)  % (src, event)
             pl.selected = (1:1:length(mlist))';
-            pl.update()
+            pl.update(pl.selected)
         end
         function cb_table_clearselection(~, ~)  % (src, event)
             pl.selected = [];
-            pl.update()
+            pl.update(pl.selected)
         end
         function cb_table_calculate(~, ~)
             mlist = Graph.getCompatibleMeasureList(graph);
