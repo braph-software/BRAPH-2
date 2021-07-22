@@ -28,7 +28,7 @@ ba = BrainAtlas();
 
 % analyzes file
 file = im.get('FILE');
-if ~isfile(file)
+if ~isfile(file) && ~isempty(im.get('ID'))
     im.uigetfile()
     file = im.memorize('FILE');
 end

@@ -45,7 +45,7 @@ gr.lock('SUB_CLASS');
 
 % analyzes file
 file = im.memorize('FILE');
-if ~isfile(file)
+if ~isfile(file) && ~isempty(im.get('ID'))
     im.uigetfile()
     file = im.memorize('FILE');
 end

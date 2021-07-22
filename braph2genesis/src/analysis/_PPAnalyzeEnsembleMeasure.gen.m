@@ -157,18 +157,18 @@ function update(pl, selected)
                     end
                 otherwise
             end
-            pl.update()
+            pl.update(pl.selected)
         end
         function cb_table_selectall(~, ~)  % (src, event)
             pl.selected = (1:1:length(mlist))';
-            pl.update()
+            pl.update(pl.selected)
         end
         function cb_table_clearselection(~, ~)  % (src, event)
             pl.selected = [];
-            pl.update()
+            pl.update(pl.selected)
         end
         function cb_table_calculate(~, ~)
-            mlist = Graph.getCompatibleMeasureList(graph);
+            mlist = Graph.getCompatibleMeasureList(get_selected_graph());
             calculate_measure_list = mlist(pl.selected);
             g_dict = el.memorize('G_DICT');
 
@@ -178,8 +178,8 @@ function update(pl, selected)
 
             n = length(calculate_measure_list);
             for j = 1:length(calculate_measure_list)
-                progress = (.85 / n) + (.8* j / n);
-                extra = (.85 / n) + (.8 * j / n) + (.05 / n);
+                progress = (i / length(calculate_measure_list)) * .8;
+                extra = (i / length(calculate_measure_list)) * 1.05 * .8;
                 measure = calculate_measure_list{j};
                 waitbar(progress, f, ['Measure: ' measure '  ...']);
                 measure_ensemble = el.getMeasureEnsemble(measure); %#ok<AGROW>
@@ -235,7 +235,7 @@ function update(pl, selected)
             guis = get_handle_objs('figure', [], 'MeasureEnsemble');
         end
         function cb_measures_update(~, ~)
-            pl.update();
+            pl.update(pl.selected);
         end
 
     set(pl.pp, 'DeleteFcn', {@close_f_settings})

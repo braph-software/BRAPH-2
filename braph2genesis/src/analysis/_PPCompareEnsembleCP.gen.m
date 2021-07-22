@@ -56,11 +56,7 @@ function update(pl, selected)
         % do nothing
     else
         a1 = el.get('A1');
-        graph = a1.get('G_DICT').getItem(1); % get first analysis graph class
-        if isa(graph, 'NoValue')
-            graph_class =  el.get('A1').getPropSettings('G');
-            graph = eval([graph_class '()']);
-        end
+        graph = get_selected_graph();
         comparison_guis = [];
         case_ = 0;
         mlist = [];
@@ -132,8 +128,8 @@ function update(pl, selected)
         function init_buttons()
             set(ui_button_table_calculate, ...
                 'Position', [.02 .01 .3 .07], ...
-                'String', 'Calculate Measures', ...
-                'TooltipString', 'Calculate Selected Measures', ...
+                'String', 'Calculate Comparison', ...
+                'TooltipString', 'Calculate Comparison of Selected Measures', ...
                 'Callback', {@cb_table_calculate})
 
 
@@ -164,26 +160,26 @@ function update(pl, selected)
                     end
                 otherwise
             end
-            pl.update()
+            pl.update(pl.selected)
         end
         function cb_table_selectall(~, ~)  % (src, event)
             pl.selected = (1:1:length(mlist))';
-            pl.update()
+            pl.update(pl.selected)
         end
         function cb_table_clearselection(~, ~)  % (src, event)
             pl.selected = [];
-            pl.update()
+            pl.update(pl.selected)
         end
         function cb_table_calculate(~, ~)
-            mlist = Graph.getCompatibleMeasureList(graph);
+            mlist = Graph.getCompatibleMeasureList(get_selected_graph());
             calculate_measure_list = mlist(pl.selected);
 
             % calculate
             f = waitbar(0, ['Calculating ' num2str(length(calculate_measure_list))  ' measures ...'], 'Name', BRAPH2.NAME);
             set_icon(f)
             for i = 1:length(calculate_measure_list)
-                progress = (1 / (length(calculate_measure_list) * .85)) * i;
-                extra = (1 / (length(calculate_measure_list) * .85)) * 1.5;
+                progress = (i / length(calculate_measure_list)) * .8;
+                extra = (i / length(calculate_measure_list)) * 1.05 * .8;
                 measure = calculate_measure_list{i};
                 waitbar(progress, f, ['Calculating comparison: ' measure ' ...']);
 
@@ -237,6 +233,13 @@ function update(pl, selected)
         end
         function objs = getGUIComparisons()
             objs = get_handle_objs('figure', [], 'ComparisonEnsemble');
+        end
+        function graph = get_selected_graph()
+            graph = a1.get('G_DICT').getItem(1); % get first analysis graph class
+            if isa(graph, 'NoValue')
+                graph_class =  el.get('A1').getPropSettings('G');
+                graph = eval([graph_class '()']);
+            end
         end
 
     set(pl.pp, 'DeleteFcn', {@close_f_settings})
