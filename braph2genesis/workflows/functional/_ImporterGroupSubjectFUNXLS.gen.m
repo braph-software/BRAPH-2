@@ -86,7 +86,11 @@ if isfolder(directory)
         
         % adds subjects
         for i = 1:1:length(files)
-            waitbar(.5, f, ['Processing your data: ' num2str(i) '/' num2str(length(files)) ' ...'])
+            if i == 1
+                waitbar(.45, f, 'Processing your data ...')
+            elseif i == floor(length(files)/2)
+                waitbar(.70, f, 'Almost there ...')
+            end
             
             % read file
             FUN = xlsread(fullfile(directory, files(i).name));

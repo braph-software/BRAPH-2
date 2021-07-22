@@ -96,7 +96,9 @@ if isfile(file)
     
     % adds subjects
     for i = 2:1:size(raw, 1)
-        waitbar(.5, f, ['Processing your data: ' num2str(i) '/' num2str(size(raw, 1)) ' ...'])
+        if i == floor(size(raw, 1)/2)
+            waitbar(.70, f, 'Almost there ...')
+        end
         ST = zeros(br_number, 1);
         for j = 1:1:length(ST)
             ST(j) = raw{i, 3 + j};

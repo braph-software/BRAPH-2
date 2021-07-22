@@ -101,8 +101,10 @@ if isfolder(directory)
         subdict = gr.get('SUB_DICT');
         
         % adds subjects
-        for i = 1:1:length(files)            
-            waitbar(.5, f, ['Processing your data: ' num2str(i) '/' num2str(length(files)) ' ...'])
+        for i = 1:1:length(files)
+            if i == floor(length(files)/2)
+                waitbar(.70, f, 'Almost there ...')
+            end
             % read file
             CON = xlsread(fullfile(directory, files(i).name));
             [~, sub_id] = fileparts(files(i).name);
