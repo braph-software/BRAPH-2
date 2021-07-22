@@ -189,8 +189,8 @@ function update(pl, selected)
             f = waitbar(0, ['Calculating ' num2str(length(calculate_measure_list))  ' measures ...'], 'Name', BRAPH2.NAME);
             set_icon(f)
             for i = 1:length(calculate_measure_list)
-                progress = (1 / (length(calculate_measure_list) * .9)) * i;
-                extra = (1 / (length(calculate_measure_list) * .9)) * 1.5;
+                progress = (i / length(calculate_measure_list)) * .8;
+                extra = (i / length(calculate_measure_list)) * 1.05 * .8;
                 measure = calculate_measure_list{i};
                 waitbar(progress, f, ['Calculating measure: ' measure ' ...']);
                 result_measure{i} = g.getMeasure(measure);

@@ -168,7 +168,7 @@ function update(pl, selected)
             pl.update(pl.selected)
         end
         function cb_table_calculate(~, ~)
-            mlist = Graph.getCompatibleMeasureList(graph);
+            mlist = Graph.getCompatibleMeasureList(get_selected_graph());
             calculate_measure_list = mlist(pl.selected);
             g_dict = el.memorize('G_DICT');
 
@@ -178,8 +178,8 @@ function update(pl, selected)
 
             n = length(calculate_measure_list);
             for j = 1:length(calculate_measure_list)
-                progress = (.85 / n) + (.8* j / n);
-                extra = (.85 / n) + (.8 * j / n) + (.05 / n);
+                progress = (i / length(calculate_measure_list)) * .8;
+                extra = (i / length(calculate_measure_list)) * 1.05 * .8;
                 measure = calculate_measure_list{j};
                 waitbar(progress, f, ['Measure: ' measure '  ...']);
                 measure_ensemble = el.getMeasureEnsemble(measure); %#ok<AGROW>
