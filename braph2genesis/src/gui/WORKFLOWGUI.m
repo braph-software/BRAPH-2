@@ -84,14 +84,14 @@ f = init();
         end
     end
     function redraw(~, ~)
-        panel_plot()
+        panel_plot(false)
         set(f, 'Units', 'pixels')
         figure_size = getPosition(f);
-        if figure_size(3) < w_f
+        f_w = get(f, 'Position');
+        if figure_size(3) < w_f-1
             set(horizontal_slider, ...
                 'Units', 'pixels',...
                 'Position', [0 figure_size(4)*0.08+1 figure_size(3) 10], ...
-                'Units', 'characters', ...
                 'Visible', 'on', ...
                 'Min', 0, ...
                 'Max', w_f, ...
@@ -102,6 +102,7 @@ f = init();
                 'Units', ' characters', ...
                 'Visible', 'off', ...
                 'Position', [0 0 figure_size(3) 1])
+            panel_plot(true)
         end       
         
         % control min height
@@ -126,12 +127,12 @@ horizontal_slider = uicontrol(f, 'Style', 'slider', 'Callback', {@cb_horizontal_
 
 if ~isempty(previous_workspace)
     panel_struct = previous_workspace;
-    panel_plot();
+    panel_plot(false);
     load_struct();    
 else
-    panel_plot()
+    panel_plot(false)
 end
-    function panel_plot()
+    function panel_plot(isredraw)
         for i = 2:cycles
             cycle = i - 1 ; % remove title;
             x_offset = x_slice * (cycle - 1);
@@ -145,7 +146,7 @@ end
                 define = false;
             end
             
-            if isempty(slider{i - 1}) || ~isgraphics(slider{i - 1}, 'uicontrol')
+            if isempty(slider{i - 1}) || ~isgraphics(slider{i - 1}, 'uicontrol') || isredraw
                 slider{i - 1} = uicontrol(section_panel{i - 1}, 'Style', 'slider', 'Callback', {@slide}); 
                 init_section_panel(section_panel{i - 1}, x_offset)                
             end
