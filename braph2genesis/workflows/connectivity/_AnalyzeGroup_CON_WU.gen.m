@@ -21,7 +21,7 @@ G (result, idict) is the average graph obtained from this analysis.
 GraphWU()
 %%%% ¡calculate!
 gr = a.get('GR');
-
+A = [];
 for i = 1:1:gr.get('SUB_DICT').length()
 	sub = gr.get('SUB_DICT').getItem(i);
 
