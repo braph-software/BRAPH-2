@@ -42,7 +42,7 @@ gr = Group( ...
     );
 
 gr.lock('SUB_CLASS');
-
+global BRAPH2ISTESTING %#ok<TLEV>
 % analyzes file
 file = im.memorize('FILE');
 if ~isfile(file) && (exist('BRAPH2ISTESTING') && ~BRAPH2ISTESTING)

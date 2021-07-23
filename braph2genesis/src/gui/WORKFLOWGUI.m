@@ -241,8 +241,12 @@ end
                     panel_struct(panel - 1, l).name);
             end
         end
+         if isfield(panel_struct(panel, child), 'exe') && ~isempty(panel_struct(panel, child).exe)
+            % use the object;
+        else
+            panel_struct(panel, child).exe = eval([exe_{2}]);
+        end
         
-        panel_struct(panel, child).exe = eval([exe_{2}]);
         if ~isempty(panel_struct(panel, child).exe) && isa(panel_struct(panel, child).exe, 'Element')
             new_object =  panel_struct(panel, child).exe;
             GUI(new_object)
@@ -270,7 +274,6 @@ end
         if length(varargin) > 1
             btn_new_name = varargin{2};            
             set(btn, 'String', btn_new_name); % id
-            set(btn, 'Enable', 'off'); % id
         end
     end
     function pos = getPosition(obj)

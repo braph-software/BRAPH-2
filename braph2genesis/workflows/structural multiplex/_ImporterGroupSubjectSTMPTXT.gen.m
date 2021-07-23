@@ -42,7 +42,7 @@ gr = Group( ...
     );
 
 gr.lock('SUB_CLASS');
-
+global BRAPH2ISTESTING %#ok<TLEV>
 directory = im.get('DIRECTORY');
 directory = im.get('DIRECTORY');
 if ~isfolder(directory) && (exist('BRAPH2ISTESTING') && ~BRAPH2ISTESTING)

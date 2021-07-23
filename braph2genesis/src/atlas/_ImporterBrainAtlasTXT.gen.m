@@ -25,7 +25,7 @@ BrainAtlas()
 %%%% ¡calculate!
 % creates empty BrainAtlas
 ba = BrainAtlas();
-
+global BRAPH2ISTESTING %#ok<TLEV>
 % analyzes file
 file = im.get('FILE');
 if ~isfile(file) && (exist('BRAPH2ISTESTING') && ~BRAPH2ISTESTING)

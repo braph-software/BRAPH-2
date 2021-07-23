@@ -44,4 +44,7 @@ end
 
 clear src_dir brainsurfs_dir graphs_dir measures_dir test_dir workflows_dir workflows_dir_list i
 
+global BRAPH2ISTESTING
+BRAPH2ISTESTING = false; 
+
 % BRAPH2GUI()
