@@ -268,12 +268,14 @@ end
         end
     end
     function change_state_btn(varargin)
-        btn = varargin{1};      
+        btn = varargin{1};
         
-        set(btn, 'BackgroundColor', [166 218 149]/255) % color        
+        set(btn, 'BackgroundColor', [166 218 149]/255) % color
         if length(varargin) > 1
-            btn_new_name = varargin{2};            
-            set(btn, 'String', btn_new_name); % id
+            if ~isempty(varargin{2})
+                btn_new_name = varargin{2};
+                set(btn, 'String', btn_new_name); % id
+            end
         end
     end
     function pos = getPosition(obj)

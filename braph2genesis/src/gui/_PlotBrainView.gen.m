@@ -51,44 +51,23 @@ function p = getBrainView(pl)
     bgp = [];
     mrc = [];
 
-    ui_brainview_panel = uipanel('Parent', uiparent, 'Units', 'normalized', 'Position', [0 0 1 .25]);
+    ui_brainview_panel = uipanel('Parent', uiparent, 'Units', 'normalized', 'Position', [0 0 1 .15]);
     ui_brainview_edges_panel_button = uicontrol(ui_brainview_panel);
     ui_brainview_analysis_dictionaries_button = uicontrol(ui_brainview_panel);
-    ui_brain_view_show_checkbox = uicontrol(ui_brainview_panel, 'Style', 'checkbox');
-    ui_brain_view_syms_checkbox = uicontrol(ui_brainview_panel, 'Style', 'checkbox');
-    ui_brain_view_labs_checkbox = uicontrol(ui_brainview_panel, 'Style', 'checkbox');
-
+    
     init_brainview()
         function init_brainview()
-            set(ui_brain_view_show_checkbox, 'Units', 'normalized')
-            set(ui_brain_view_show_checkbox, 'Position', [.02 .61 .25 .3])
-            set(ui_brain_view_show_checkbox, 'String', 'Show Brain Surface')
-            set(ui_brain_view_show_checkbox, 'Value', true)
-            set(ui_brain_view_show_checkbox, 'Callback', {@cb_show_surf})
-
-            set(ui_brain_view_syms_checkbox, 'Units', 'normalized')
-            set(ui_brain_view_syms_checkbox, 'Position', [.02 .31 .25 .3])
-            set(ui_brain_view_syms_checkbox, 'String', 'Show Brain Regions')
-            set(ui_brain_view_syms_checkbox, 'Value', true)
-            set(ui_brain_view_syms_checkbox, 'Callback', {@cb_show_brs})
-
-            set(ui_brain_view_labs_checkbox, 'Units', 'normalized')
-            set(ui_brain_view_labs_checkbox, 'Position', [.02 .01 .25 .3])
-            set(ui_brain_view_labs_checkbox, 'String', 'Show Brain Labels')
-            set(ui_brain_view_labs_checkbox, 'Value', true)
-            set(ui_brain_view_labs_checkbox, 'Callback', {@cb_show_labs})
-
-            set(ui_brainview_edges_panel_button, 'Units', 'normalized')
-            set(ui_brainview_edges_panel_button, 'Position', [.3 .22 .25 .3])
-            set(ui_brainview_edges_panel_button, 'String', 'Brain Graph Options')
-            set(ui_brainview_edges_panel_button, 'Callback', {@cb_bv_bg_panel})
-
-            set(ui_brainview_analysis_dictionaries_button, 'Units', 'normalized')
-            set(ui_brainview_analysis_dictionaries_button, 'Position', [.62 .22 .25 .3])
-            set(ui_brainview_analysis_dictionaries_button, 'String', 'Measurement Options')
-            set(ui_brainview_analysis_dictionaries_button, 'Tooltip', 'Manage the Measurement, Comparison and Randomcomparison.')
-            set(ui_brainview_analysis_dictionaries_button, 'Callback', {@cb_bv_meas_panel})
-        end
+        set(ui_brainview_edges_panel_button, 'Units', 'normalized')
+        set(ui_brainview_edges_panel_button, 'Position', [.11 .22 .4 .7])
+        set(ui_brainview_edges_panel_button, 'String', 'Brain Graph Options')
+        set(ui_brainview_edges_panel_button, 'Callback', {@cb_bv_bg_panel})
+        
+        set(ui_brainview_analysis_dictionaries_button, 'Units', 'normalized')
+        set(ui_brainview_analysis_dictionaries_button, 'Position', [.51 .22 .4 .7])
+        set(ui_brainview_analysis_dictionaries_button, 'String', 'Measurement Options')
+        set(ui_brainview_analysis_dictionaries_button, 'Tooltip', 'Manage the Measurement, Comparison and Randomcomparison.')
+        set(ui_brainview_analysis_dictionaries_button, 'Callback', {@cb_bv_meas_panel})
+    end
     ui_contextmenu_figure_brainsurf = uicontextmenu();
     ui_contextmenu_figure_brainsurf_settings = uimenu(ui_contextmenu_figure_brainsurf);
     ui_contextmenu_figure_syms = uicontextmenu();
@@ -120,6 +99,7 @@ function p = getBrainView(pl)
         end
         function create_figure()
             pl.bg.draw('Parent', pl.subpanel);
+            pl.bg.settings();
         end
         function update_brain_graph()
             if get(ui_brain_view_show_checkbox, 'Value')

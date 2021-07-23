@@ -247,7 +247,7 @@ end
         x2 = normalized(1) + normalized(3);
         h2 = normalized(4);
         y2 = normalized(2);
-        w2 = normalized(3) * 1.61;
+        w2 = normalized(3) * 1.61;        
         
         pg = PlotGraph( ...
             'bkgcolor', [1 1 1], ...

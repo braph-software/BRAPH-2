@@ -1,5 +1,5 @@
 %% ¡header!
-PlotGraph < Element (pl, plot graph) is a plot of a graph of a function.
+PlotGraph < Plot (pl, plot graph) is a plot of a graph of a function.
 
 %%% ¡description!
 Plot is the plot of a graph of a function.
@@ -12,30 +12,9 @@ uipanel, ishandle, isgraphics, figure
 %% ¡properties!
 h_figure % panel graphical handle
 h_axes % axes handle
+pp
 
 %% ¡props!
-
-%%% ¡prop!
-ID (data, string) is a few-letter code for the plot.
-
-%%% ¡prop!
-BKGCOLOR (metadata, rvector) is background color.
-%%%% ¡check_prop!
-check = (length(value) == 3) && all(value >= 0 & value <= 1);
-%%%% ¡default!
-[1 .9725 .929]
-
-%%% ¡prop!
-SETPOS (metadata, rvector) is the normalized position of the setting interface on the screen.
-%%%% ¡check_prop!
-check = (length(value) == 4) && all(value >= 0 & value <= 1);
-%%%% ¡default!
-[.70 .50 .40 .20]
-
-%%% ¡prop!
-SETNAME (metadata, string) is the name of the setting interface.
-%%%% ¡default!
-'Graph Plot'
 
 %%% ¡prop!
 SUBMENU (metadata, logical) to set a submenu
@@ -54,74 +33,55 @@ function [h_figure, h_axes, subpanel] = draw(pl, varargin)
     %  panel with custom property-value couples.
     %  All standard plot properties of uipanel can be used.
     %
-    % see also settings, uipanel, isgraphics.
-
-    if isempty(pl.h_figure) || ~isgraphics(pl.h_figure, 'figure')
-        pl.h_figure = figure( ...
-            varargin{:}, ...
-            'DockControls', 'off', ...
-            'MenuBar', 'none', ...
-            'Toolbar', 'figure', ...
-            'Name', pl.get('SETNAME'), ...
-            'Color', 'w', ...
-            'Units', 'normalized', ...
-            'NumberTitle', 'off', ...
-            'DeleteFcn', {@close_f_settings} ...
-            );
-        if pl.get('SUBMENU')
-            subpanel = uipanel(pl.h_figure, ...
-                'BackGroundColor', 'w', ...
-                'Units', 'normalized', ...
-                'Position', [.0 .25 1 .75] ...
-                );
-            
-            pl.h_axes = axes(subpanel);
-            
-        else
-            pl.h_axes = axes(pl.h_figure);
-        end
-        
-        set_icon(pl.h_figure);
-        
-        ui_toolbar = findall(pl.h_figure, 'Tag', 'FigureToolBar');
-        delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
-        delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
-        delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
-        delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
-        delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
-        delete(findall(ui_toolbar, 'Tag', 'Standard.OpenInspector'))
-        delete(findall(ui_toolbar, 'Tag', 'Exploration.Brushing'))
-        delete(findall(ui_toolbar, 'Tag', 'DataManager.Linking'))
-        delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertColorbar'))
-        delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertLegend'))
-        delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
-        delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
-        
-        % menu
-        ui_menu_figure = uimenu(pl.h_figure, 'Label', 'Figure');
-        uimenu(ui_menu_figure, ...
-            'Label', 'Save ...', ...
-            'Accelerator', 'S', ...
-            'Callback', {@cb_save})
-    else
-        set(pl.h_figure, ...
-            varargin{:}, ...
-            'DeleteFcn', {@close_f_settings} ...
-            )
-    end
-
-    function close_f_settings(~, ~) % (src, event)
-        % do nothing
-    end
-    function cb_save(~, ~)
-        [file, path, filterindex] = uiputfile();
-        % save file
-        if filterindex
-            filename = fullfile(path, file);
-            save(filename);
-        end
-    end
+    % see also settings, uipanel, isgraphics.    
     
+    f = figure( ...
+        'Visible', 'off', ...
+        'NumberTitle', 'off', ...
+        'Name', ['PlotGraph - ' BRAPH2.STR], ...
+        'Units', 'normalized', ...
+        'Position', [.3 .4 .4 .5], ...
+        'Units', 'character', ...
+        'MenuBar', 'none', ...
+        'DockControls', 'off', ...
+        'Color', [.94 .94 .94] ...
+        );		    
+    
+    set_icon(f);
+    
+    ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
+    delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
+    delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
+    delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
+    delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
+    delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
+    delete(findall(ui_toolbar, 'Tag', 'Standard.OpenInspector'))
+    delete(findall(ui_toolbar, 'Tag', 'Exploration.Brushing'))
+    delete(findall(ui_toolbar, 'Tag', 'DataManager.Linking'))
+    delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertColorbar'))
+    delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertLegend'))
+    delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
+    delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
+    
+    pl.pp = draw@Plot(pl, 'Parent', f, varargin{:});
+    
+    set(f, 'Visible', 'on')
+
+    pl.h_figure = get(pl.pp, 'Parent');
+    
+    if pl.get('SUBMENU')
+        subpanel = uipanel(pl.h_figure, ...
+            'BackGroundColor', 'w', ...
+            'Units', 'normalized', ...
+            'Position', [.0 .25 1 .85] ...
+            );
+        
+        pl.h_axes = axes(subpanel);
+        
+    else
+        pl.h_axes = axes(pl.h_figure);
+    end
+        
     if nargout > 0
         h_figure = pl.h_figure;
     end
