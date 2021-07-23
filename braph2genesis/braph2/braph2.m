@@ -9,6 +9,9 @@
 %  <a href="matlab:help workflows   ">workflows</a>     - workflows
 %  <a href="matlab:help test        ">test</a>          - unit test
 
+global BRAPH2ISTESTING
+BRAPH2ISTESTING = false; 
+
 format long
 
 src_dir = [fileparts(which('braph2')) filesep 'src'];
@@ -43,8 +46,5 @@ for i = 1:1:length(workflows_dir_list)
 end
 
 clear src_dir brainsurfs_dir graphs_dir measures_dir test_dir workflows_dir workflows_dir_list i
-
-global BRAPH2ISTESTING
-BRAPH2ISTESTING = false; 
 
 % BRAPH2GUI()
