@@ -262,7 +262,7 @@ end
         n = length(panel_executables{panel + 1}) - 1 ;
         tmp = struct2cell(panel_struct);
         if panel + 1 <= length(section_panel) && ...
-                (isequal(n, length(tmp(4, 1))) ||  isequal(n, length(tmp(4, panel, :))))             
+                (isequal(n, length(tmp(4, 1))) ||  isequal(n, length([tmp{4, panel, :}])))             
                 
             check = true;
         end
