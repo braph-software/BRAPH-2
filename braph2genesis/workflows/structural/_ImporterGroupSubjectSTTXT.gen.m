@@ -46,7 +46,7 @@ gr.lock('SUB_CLASS');
 
 % analyzes file
 file = im.get('FILE');
-if ~isfile(file) && ~isempty(im.get('ID'))
+if ~isfile(file) && (exist('BRAPH2ISTESTING') && ~BRAPH2ISTESTING)
     im.uigetfile()
     file = im.memorize('FILE');
 end

@@ -44,7 +44,7 @@ gr = Group( ...
 gr.lock('SUB_CLASS');
 
 directory = im.get('DIRECTORY');
-if ~isfolder(directory) && ~isempty(im.get('ID'))
+if ~isfolder(directory) && (exist('BRAPH2ISTESTING') && ~BRAPH2ISTESTING)
     im.uigetdir()
     directory = im.get('DIRECTORY');
 end
