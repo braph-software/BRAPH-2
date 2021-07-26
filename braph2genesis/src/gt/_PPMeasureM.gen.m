@@ -124,7 +124,7 @@ function update(pl)
         init_measure_plot_area()
         init_brain_view_btn()
 
-    else
+    else % weighted
         % paint a normal cell tables
         value_cell = el.get(prop);
         if Measure.is_binodal(el)
@@ -156,6 +156,7 @@ function update(pl)
 
         ui_brain_view = uicontrol('Parent', pl.pp, 'Style', 'pushbutton');
         init_brain_view_btn()
+        x_label = 'Weighted';
     end
 
     % functions

@@ -20,6 +20,9 @@ bg % plot brain graph
 ME (metadata, item) is the measure.
 
 %%% ¡prop!
+COMP (metadata, item) is the comparison.
+
+%%% ¡prop!
 ATLAS(metadata, item) is a brain atlas.
 
 %%% ¡prop!
