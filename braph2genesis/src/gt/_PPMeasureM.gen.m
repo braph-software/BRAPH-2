@@ -122,6 +122,7 @@ function update(pl)
         ui_measure_plot = uicontrol('Parent', pl.pp, 'Style', 'pushbutton');
         ui_brain_view = uicontrol('Parent', pl.pp, 'Style', 'pushbutton');
         init_measure_plot_area()
+        init_brain_view_btn()
 
     else
         % paint a normal cell tables
@@ -131,10 +132,11 @@ function update(pl)
             'Data', value_double, ...
             'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
             'Units', 'normalized', ...
-            'Position', [.01 .2 .98 .8], ...
+            'Position', [.01 .1 .98 .84], ...
             'ColumnName', node_labels, ...
             'CellEditCallback', {@cb_matrix_value} ...
             )
+        init_brain_view_btn()
     end
 
     % functions
@@ -160,16 +162,18 @@ function update(pl)
                 'Units', 'normalized', ...
                 'Position', [.74 .01 .25 .08], ...
                 'Callback', {@cb_plot_m} ...
-                );
+                );            
+
+            rules_node_popmenu_deactivation()
+        end
+        function init_brain_view_btn()
             set(ui_brain_view, ...
                 'String', 'Brain View', ...
                 'Tooltip', 'Plot the Measure Brain View. Will plot depending on the node selection.', ...
                 'Units', 'normalized', ...
-                'Position', [.49 .02 .25 .08], ...
+                'Position', [.49 .01 .25 .08], ...
                 'Callback', {@cb_brain_view} ...
                 );
-
-            rules_node_popmenu_deactivation()
         end
         function rules_node_popmenu_deactivation()
             if Measure.is_global(el)
@@ -255,12 +259,41 @@ function update(pl)
             h2 = normalized(4);
             y2 = normalized(2);
             w2 = normalized(3) * 1.61;
+            
+            f = figure( ...
+                'Visible', 'off', ...
+                'NumberTitle', 'off', ...
+                'Name', ['PlotGraph - ' BRAPH2.STR], ...
+                'Units', 'normalized', ...
+                'Position', [x2 y2 w2 h2], ...
+                'Units', 'character', ...
+                'MenuBar', 'none', ...
+                'DockControls', 'off', ...
+                'Color', [.94 .94 .94] ...
+                );
+            
+            set_icon(f);
+            
+            ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
+            delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
+            delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
+            delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
+            delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
+            delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
+            delete(findall(ui_toolbar, 'Tag', 'Standard.OpenInspector'))
+            delete(findall(ui_toolbar, 'Tag', 'Exploration.Brushing'))
+            delete(findall(ui_toolbar, 'Tag', 'DataManager.Linking'))
+            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertColorbar'))
+            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertLegend'))
+            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
+            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
 
             pg = PlotGraph( ...
                 'bkgcolor', [1 1 1], ...
-                'setpos', [x2 y2 w2 h2], ...
                 'setname', ['Plot of Measure - ' BRAPH2.STR]);
-            [h_figure, h_axes] = pg.draw();
+            [h_figure, h_axes] = pg.draw('Parent', f);
+            
+            set(f, 'Visible', 'on')
 
             handle_plot = plot( ...
                 h_axes, ...
@@ -317,13 +350,15 @@ function redraw(pl, varargin)
         pl.redraw@PlotProp('Height', 1.8, varargin{:})
     else
         value_cell = el.get(prop);
-
+        graph = el.get('G');
+        
         if isempty(value_cell)
             pl.redraw@PlotProp('Height', 1.8, varargin{:})
-        else
+        elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
             pl.redraw@PlotProp('Height', 30, varargin{:})
+        else
+            pl.redraw@PlotProp('Height', 20, varargin{:})
         end
-
     end
 
     if Measure.is_binodal(el) && exist('value_cell')

@@ -34,38 +34,8 @@ function [h_figure, h_axes, subpanel] = draw(pl, varargin)
     %  All standard plot properties of uipanel can be used.
     %
     % see also settings, uipanel, isgraphics.    
-    
-    f = figure( ...
-        'Visible', 'off', ...
-        'NumberTitle', 'off', ...
-        'Name', ['PlotGraph - ' BRAPH2.STR], ...
-        'Units', 'normalized', ...
-        'Position', [.3 .4 .4 .5], ...
-        'Units', 'character', ...
-        'MenuBar', 'none', ...
-        'DockControls', 'off', ...
-        'Color', [.94 .94 .94] ...
-        );		    
-    
-    set_icon(f);
-    
-    ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
-    delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
-    delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
-    delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
-    delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
-    delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
-    delete(findall(ui_toolbar, 'Tag', 'Standard.OpenInspector'))
-    delete(findall(ui_toolbar, 'Tag', 'Exploration.Brushing'))
-    delete(findall(ui_toolbar, 'Tag', 'DataManager.Linking'))
-    delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertColorbar'))
-    delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertLegend'))
-    delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
-    delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
-    
-    pl.pp = draw@Plot(pl, 'Parent', f, varargin{:});
-    
-    set(f, 'Visible', 'on')
+        
+    pl.pp = draw@Plot(pl, varargin{:});
 
     pl.h_figure = get(pl.pp, 'Parent');
     
