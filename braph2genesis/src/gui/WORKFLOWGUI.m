@@ -175,7 +175,7 @@ end
                     decomp_exec = split(panel_executable{j}, '%');  % decomposition of the executable
                     if length(decomp_exec) > 1
                         btn_name = deblank(decomp_exec{2});
-                        loaded_names(i-1, j-1).msg = deblank(decomp_exec{3});
+                        loaded_names(i - 1, j - 1).msg = deblank(decomp_exec{3});
                     else
                         btn_name = [panel_executable{1} ' ' num2str(j - 1)];
                     end
