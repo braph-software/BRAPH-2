@@ -28,7 +28,7 @@ ba = BrainAtlas();
 global BRAPH2ISTESTING %#ok<TLEV>
 % analyzes file
 file = im.get('FILE');
-if ~isfile(file) && (exist('BRAPH2ISTESTING') && ~BRAPH2ISTESTING)
+if ~isfile(file) && ~BRAPH2ISTESTING
     im.uigetfile()
     file = im.memorize('FILE');
 end
