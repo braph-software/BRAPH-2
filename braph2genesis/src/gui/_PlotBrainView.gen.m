@@ -33,7 +33,6 @@ function h_panel = draw(pl, varargin)
 [pl.h_figure, pl.h_axes, pl.subpanel] = draw@PlotGraph(pl, ...
     varargin{:});
 
-set(pl.h_figure, 'Name', 'Brain View')
 pl.getBrainView();
 
 % output
@@ -102,7 +101,6 @@ function p = getBrainView(pl)
         end
         function create_figure()
             pl.bg.draw('Parent', pl.subpanel);
-            pl.bg.settings();
         end
         function update_brain_graph()
             if get(ui_brain_view_show_checkbox, 'Value')
@@ -960,4 +958,21 @@ function h = getMCRPanel(pl)
     if nargout > 0
         h = f;
     end
+end
+function f_settings = settings(pl, varargin)
+    %SETTINGS opens the brain surface property editor GUI.
+    %
+    % SETTINGS(PL) allows the user to specify the properties of the brain
+    %  atlas plot by opening a GUI property editor.
+    %
+    % F = SETTINGS(PL) returns a handle to the brain atlas property editor GUI.
+    %
+    % SETTINGS(PL, 'Property', VALUE, ...) sets the properties of the brain
+    %  atlas property editor GUI with custom property-value couples.
+    %  All standard plot properties of figure can be used.
+    %
+    % See also draw, figure, isgraphics.
+    
+    pl.bg.set(varargin{1}, varargin{2}); 
+    pl.bg.settings();
 end
