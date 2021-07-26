@@ -6,11 +6,11 @@
 % Group is set to example group. Modify the path of the files to your needs.
 
 %% Brain Atlas
-ba = ImporterBrainAtlasXLS().get('BA'); % Brain Atlas ST-WU
+ba = ImporterBrainAtlasXLS().get('BA'); % Load a Brain Atlas % Loaded Brain Atlas
 
 %% Group
-gr = ImporterGroupSubjectSTXLS('BA', ba).get('GR'); % Group ST-WU
+gr = ImporterGroupSubjectSTXLS('BA', ba).get('GR'); % Load a Group ST % Loaded Group ST
 
 %% Analysis
-a_WU = AnalyzeGroup_ST_WU('GR', gr); % Analysis ST-WU
+a_WU = AnalyzeGroup_ST_WU('GR', gr); % Analyze a Group % Analyzed Group
 

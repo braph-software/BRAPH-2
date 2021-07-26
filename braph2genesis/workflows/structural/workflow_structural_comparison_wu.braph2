@@ -6,16 +6,16 @@
 % Group is set to example group. Modify the path of the files to your needs.
 
 %% Brain Atlas
-ba = ImporterBrainAtlasXLS().get('BA'); % Brain Atlas ST-WU
+ba = ImporterBrainAtlasXLS().get('BA'); % Load a Brain Atlas % Loaded Brain Atlas
 
 %% Groups
-gr1 = ImporterGroupSubjectSTXLS('BA', ba).get('GR'); % Group 1 ST-WU
-gr2 = ImporterGroupSubjectSTXLS('BA', ba).get('GR'); % Group 2 ST-WU
+gr1 = ImporterGroupSubjectSTXLS('BA', ba).get('GR'); % Load a Group 1 ST % Loaded Group 1 ST
+gr2 = ImporterGroupSubjectSTXLS('BA', ba).get('GR'); % Load a Group 2 ST % Loaded Group 2 ST
 
 %% Analysis
-a_WU1 = AnalyzeGroup_ST_WU('GR', gr1); % Analysis ST-WU
-a_WU2 = AnalyzeGroup_ST_WU('GR', gr2); % Analysis ST-WU
+a_WU1 = AnalyzeGroup_ST_WU('GR', gr1); % Analyze Group 1 % Analyzed Group 1
+a_WU2 = AnalyzeGroup_ST_WU('GR', gr2); % Analyze Group 2 % Analyzed Group 2
 
 %% Comparison
-c_WU = CompareGroup('P', 10, 'A1', a_WU1, 'A2', a_WU2, 'VERBOSE', true, 'MEMORIZE', true); % Comparison ST-WU
+c_WU = CompareGroup('P', 10, 'A1', a_WU1, 'A2', a_WU2, 'VERBOSE', true, 'MEMORIZE', true); % Compare Groups % Compared Groups
 

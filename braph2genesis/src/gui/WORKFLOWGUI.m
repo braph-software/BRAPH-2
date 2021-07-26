@@ -124,6 +124,7 @@ panel_executables = [];
 y_slice = 2;
 define = false;
 horizontal_slider = uicontrol(f, 'Style', 'slider', 'Callback', {@cb_horizontal_slider});
+loaded_names = struct([]);
 
 if ~isempty(previous_workspace)
     panel_struct = previous_workspace;
@@ -174,6 +175,7 @@ end
                     decomp_exec = split(panel_executable{j}, '%');  % decomposition of the executable
                     if length(decomp_exec) > 1
                         btn_name = deblank(decomp_exec{2});
+                        loaded_names(i-1, j-1).msg = deblank(decomp_exec{3});
                     else
                         btn_name = [panel_executable{1} ' ' num2str(j - 1)];
                     end
@@ -251,7 +253,7 @@ end
             new_object =  panel_struct(panel, child).exe;
             GUI(new_object)
             % change btn state. turn green and change string            
-            change_state_btn(src, new_object.get('ID'))
+            change_state_btn(src, new_object.get('ID'),  loaded_names(panel, child).msg)
             if check_section_objs(panel)
                 enable_panel(section_panel{panel + 1})                
             end
@@ -275,6 +277,8 @@ end
             if ~isempty(varargin{2})
                 btn_new_name = varargin{2};
                 set(btn, 'String', btn_new_name); % id
+            else
+                set(btn, 'String', varargin{3}); % id
             end
         end
     end

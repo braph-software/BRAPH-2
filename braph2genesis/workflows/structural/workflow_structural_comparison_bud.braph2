@@ -6,16 +6,16 @@
 % Group is set to example group. Modify the path of the files to your needs.
 
 %% Brain Atlas
-ba = ImporterBrainAtlasXLS().get('BA'); % Brain Atlas ST-BUD
+ba = ImporterBrainAtlasXLS().get('BA'); % Load a Brain Atlas % Loaded Brain Atlas
 
 %% Groups
-gr1 = ImporterGroupSubjectSTXLS('BA', ba).get('GR'); % Group 1 ST-BUD
-gr2 = ImporterGroupSubjectSTXLS('BA', ba).get('GR'); % Group 2 ST-BUD
+gr1 = ImporterGroupSubjectSTXLS('BA', ba).get('GR'); % Load a Group 1 ST % Loaded Group 1 ST
+gr2 = ImporterGroupSubjectSTXLS('BA', ba).get('GR'); % Load a Group 2 ST % Loaded Group 2 ST
 
 %% Analysis
-a_BUD1 = AnalyzeGroup_ST_BUD('GR', gr1, 'DENSITIES', [0 20 40 60 80 100]); % Analysis ST-BUD
-a_BUD2 = AnalyzeGroup_ST_BUD('GR', gr2, 'DENSITIES', [0 20 40 60 80 100]); % Analysis ST-BUD
+a_BUD1 = AnalyzeGroup_ST_BUD('GR', gr1, 'DENSITIES', [0 20 40 60 80 100]); % Analyze Group 1 % Analyzed Group 1
+a_BUD2 = AnalyzeGroup_ST_BUD('GR', gr2, 'DENSITIES', [0 20 40 60 80 100]); % Analyze Group 2 % Analyzed Group 2
 
 %% Comparison
-c_BUD = CompareGroup('P', 10, 'A1', a_BUD1, 'A2', a_BUD2, 'VERBOSE', true, 'MEMORIZE', true); % Comparison ST-BUD
+c_BUD = CompareGroup('P', 10, 'A1', a_BUD1, 'A2', a_BUD2, 'VERBOSE', true, 'MEMORIZE', true); % Compare Groups % Compared Groups
 
