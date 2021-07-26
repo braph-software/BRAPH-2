@@ -19,7 +19,7 @@ for k = 1:length(importers)
 end
 function cb_importers(src, ~)
     src_name = erase(src.Text, ' ...');
-    imp_el = eval([src_name '(' '''ID''' ',' '''GUI''' ')']);          
+    imp_el = eval([src_name '()']);          
     imp_el.uigetdir();
     tmp_el = imp_el.get('GR');
     plot_element.set('El', tmp_el); 

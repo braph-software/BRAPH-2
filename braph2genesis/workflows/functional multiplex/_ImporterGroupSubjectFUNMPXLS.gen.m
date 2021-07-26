@@ -39,10 +39,10 @@ gr = Group( ...
     );
 
 gr.lock('SUB_CLASS');
-
+global BRAPH2ISTESTING %#ok<TLEV>
 directory = im.get('DIRECTORY');
 directory = im.get('DIRECTORY');
-if ~isfolder(directory) && ~isempty(im.get('ID'))
+if ~isfolder(directory) && ~BRAPH2ISTESTING
     im.uigetdir()
     directory = im.get('DIRECTORY');
 end

@@ -43,10 +43,10 @@ gr = Group( ...
     );
 
 gr.lock('SUB_CLASS');
-
+global BRAPH2ISTESTING %#ok<TLEV>
 % analyzes file
 file = im.get('FILE');
-if ~isfile(file) && ~isempty(im.get('ID'))
+if ~isfile(file) && ~BRAPH2ISTESTING
     im.uigetfile()
     file = im.memorize('FILE');
 end

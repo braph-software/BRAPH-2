@@ -82,16 +82,7 @@ function update(pl)
             end
             
         else  % binodal
-            current_layer = 1;
-            count = 1;
-            for k = 1:size(value{1}, 1)*size(value, 1)
-                if count > size(value{1}, 1)
-                    current_layer = current_layer + 1;
-                    count = 0;
-                end
-                row_names{k} = ['Layer ' num2str(current_layer)]; %#ok<AGROW>
-                count = count + 1;
-            end
+            % do nothing
         end
         
         value_double =  cell2mat(cellfun(@(x) x', value, 'UniformOutput', false));

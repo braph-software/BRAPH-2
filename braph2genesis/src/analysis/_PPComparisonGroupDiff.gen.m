@@ -28,11 +28,11 @@ function h_panel = draw(pl, varargin)
     %
     % see also update, redraw, refresh, settings, uipanel, isgraphics.
 
-     pl.pp = draw@PlotProp(pl, varargin{:});
-     
-     if isempty(pl.comparison_tbl)
-         pl.comparison_tbl = uitable('Parent', pl.pp);
-     end
+    pl.pp = draw@PlotProp(pl, varargin{:});
+
+    if isempty(pl.comparison_tbl)
+        pl.comparison_tbl = uitable('Parent', pl.pp);
+    end
 
     % output
     if nargout > 0
@@ -51,20 +51,20 @@ function update(pl)
     el = pl.get('EL');
     prop = pl.get('PROP');
     value = el.getr(prop);
-    comparison = el.get('C');    
+    comparison = el.get('C');
     graph = comparison.get('A1').get('G');
     node1_to_plot = 1;
     node2_to_plot = 1;
     node_labels = [];
     x_range = 1:10;
-    m = el.get('MEASURE');   
-    node_labels_tmp = graph.get('BRAINATLAS').get('BR_DICT');    
-    node_labels = cellfun(@(x) x.get('ID') , node_labels_tmp.getItems(), 'UniformOutput', false); 
-    
+    m = el.get('MEASURE');
+    node_labels_tmp = graph.get('BRAINATLAS').get('BR_DICT');
+    node_labels = cellfun(@(x) x.get('ID') , node_labels_tmp.getItems(), 'UniformOutput', false);
+
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
         % do nothing
     elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
-        
+
         if isa(graph, 'MultigraphBUD')
             x_range = graph.get('DENSITIES');
             x_name = 'Densities';
@@ -72,268 +72,311 @@ function update(pl)
             x_range = graph.get('THRESHOLDS');
             x_name = 'Thresholds';
         end
-        
+
         if Measure.is_global(m) % global
             node_labels = 'Global';
             for k = 1:size(value, 1)
                 row_names{k} = ['Layer ' num2str(k)]; %#ok<AGROW>
             end
-        elseif Measure.is_nodal(m) % nodal            
+        elseif Measure.is_nodal(m) % nodal
             for k = 1:size(value, 1)
                 row_names{k} = ['Layer ' num2str(k)]; %#ok<AGROW>
             end
-            
-        else  % binodal            
-            current_layer = 1;
-            count = 1;
-            for k = 1:size(value{1}, 1)*size(value, 1)
-                if count > size(value{1}, 1)
-                    current_layer = current_layer + 1;
-                    count = 0;
-                end
-                row_names{k} = ['Layer ' num2str(current_layer)]; %#ok<AGROW>
-                count = count + 1;
-            end
+
+        else  % binodal
+            % do nothing
         end
-        
-        value_double =  cell2mat(cellfun(@(x) x', value, 'UniformOutput', false));
-        set(pl.comparison_tbl, ...
-            'Data', value_double, ...
-            'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-            'Units', 'normalized', ...
-            'Position', [.01 .15 .98 .75], ...
-            'ColumnName', node_labels, ...
-            'RowName', row_names, ...
-            'CellEditCallback', {@cb_matrix_value} ...
-            )
+
+        if Measure.is_binodal(m)
+            delete(pl.comparison_tbl)
+            pl.comparison_tbl = cell(size(value));
+            for i = 1:1:size(pl.comparison_tbl, 1)
+                for j = 1:1:size(pl.comparison_tbl, 2)
+                    if isempty(pl.comparison_tbl{i, j}) || ~isgraphics(pl.comparison_tbl{i, j}, 'uitable')
+                        pl.comparison_tbl{i, j} = uitable('Parent', pl.pp);
+                    end
+                    set(pl.comparison_tbl{i, j}, ...
+                        'Data', value{i, j}, ...
+                        'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                        'CellEditCallback', {@cb_matrix_value, i, j} ...
+                        )
+                end
+            end
+        else
+
+            value_double =  cell2mat(cellfun(@(x) x', value, 'UniformOutput', false));
+            set(pl.comparison_tbl, ...
+                'Data', value_double, ...
+                'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                'Units', 'normalized', ...
+                'Position', [.01 .15 .98 .75], ...
+                'ColumnName', node_labels, ...
+                'RowName', row_names, ...
+                'CellEditCallback', {@cb_matrix_value} ...
+                )
+        end
 
         ui_node1_popmenu  = uicontrol('Parent', pl.pp, 'Style', 'popupmenu');
         ui_node2_popmenu  = uicontrol('Parent', pl.pp, 'Style', 'popupmenu');
         ui_measure_plot = uicontrol('Parent', pl.pp, 'Style', 'pushbutton');
         init_measure_plot_area()
-        
+        init_brain_view_btn()
     else
         % paint a normal cell tables
         value_cell = el.get(prop);
-        value_double = cell2mat(cellfun(@(x) x', value_cell, 'UniformOutput', false));
-        set(pl.comparison_tbl, ...
-            'Data', value_double, ...
-            'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-            'Units', 'normalized', ...
-            'Position', [.01 .2 .98 .8], ...
-            'ColumnName', node_labels, ...
-            'CellEditCallback', {@cb_matrix_value} ...
-            )
+        if Measure.is_binodal(el)
+            delete(pl.comparison_tbl)
+            pl.comparison_tbl = cell(size(value_cell));
+            for i = 1:1:size(pl.comparison_tbl, 1)
+                for j = 1:1:size(pl.comparison_tbl, 2)
+                    if isempty(pl.comparison_tbl{i, j}) || ~isgraphics(pl.comparison_tbl{i, j}, 'uitable')
+                        pl.comparison_tbl{i, j} = uitable('Parent', pl.pp);
+                    end
+                    set(pl.comparison_tbl{i, j}, ...
+                        'Data', value_cell{i, j}, ...
+                        'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                        'CellEditCallback', {@cb_matrix_value, i, j} ...
+                        )
+                end
+            end
+        else
+            value_double = cell2mat(cellfun(@(x) x', value_cell, 'UniformOutput', false));
+            set(pl.comparison_tbl, ...
+                'Data', value_double, ...
+                'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                'Units', 'normalized', ...
+                'Position', [.01 .1 .98 .84], ...
+                'ColumnName', node_labels, ...
+                'CellEditCallback', {@cb_matrix_value} ...
+                )
+        end
+        ui_brain_view = uicontrol('Parent', pl.pp, 'Style', 'pushbutton');
+        init_brain_view_btn()
+        x_name = 'Weighted';
     end
-    
+
     % functions
-    function init_measure_plot_area()
-        set(ui_node1_popmenu, ...
-            'Units', 'normalized', ...
-            'Tooltip', 'Select the Node to be Plotted.', ...
-            'String', node_labels, ...
-            'Position', [.01 .02 .3 .08], ...
-            'Callback', {@cb_node_1} ...
-            );
-        set(ui_node2_popmenu, ...
-            'Units', 'normalized', ...
-            'Tooltip', 'Select the Node to be Plotted.', ...
-            'String', node_labels, ...
-            'Position', [.32 .02 .3 .08], ...
-            'Callback', {@cb_node_2} ...
-            );
-        
-        set(ui_measure_plot, ...
-            'String', 'Measure Plot', ...
-            'Tooltip', 'Plot the Measure. Will plot depending on the node selection.', ...
-            'Units', 'normalized', ...
-            'Position', [.63 .02 .3 .08], ...
-            'Callback', {@cb_plot_m} ...
-            );
-        
-        rules_node_popmenu_deactivation()
-    end
-    function rules_node_popmenu_deactivation()
-        if Measure.is_global(m)
+        function init_measure_plot_area()
             set(ui_node1_popmenu, ...
-                'Visible', 'off', ...
-                'Enable', 'off' ...
-                )
+                'Units', 'normalized', ...
+                'Tooltip', 'Select the Node to be Plotted.', ...
+                'String', node_labels, ...
+                'Position', [.01 .01 .2 .08], ...
+                'Callback', {@cb_node_1} ...
+                );
             set(ui_node2_popmenu, ...
-                'Visible', 'off', ...
-                'Enable', 'off' ...
-                )
-        elseif Measure.is_nodal(m)
-            set(ui_node1_popmenu, ...
-                'Visible', 'on', ...
-                'Enable', 'on' ...
-                )
-            set(ui_node2_popmenu, ...
-                'Visible', 'off', ...
-                'Enable', 'off' ...
-                )
-        else
-            set(ui_node1_popmenu, ...
-                'Visible', 'on', ...
-                'Enable', 'on' ...
-                )
-            set(ui_node2_popmenu, ...
-                'Visible', 'on', ...
-                'Enable', 'on' ...
-                )
+                'Units', 'normalized', ...
+                'Tooltip', 'Select the Node to be Plotted.', ...
+                'String', node_labels, ...
+                'Position', [.21 .01 .2 .08], ...
+                'Callback', {@cb_node_2} ...
+                );
+
+            set(ui_measure_plot, ...
+                'String', 'Measure Plot', ...
+                'Tooltip', 'Plot the Measure. Will plot depending on the node selection.', ...
+                'Units', 'normalized', ...
+                'Position', [.74 .01 .25 .08], ...
+                'Callback', {@cb_plot_m} ...
+                );
+
+            rules_node_popmenu_deactivation()
         end
-    end
-    function cb_node_1(source, ~)
-        node1_to_plot = double(source.Value);
-    end
-    function cb_node_2(source, ~)
-        node2_to_plot = double(source.Value);
-    end
-    function cb_plot_m(~, ~)
-        plot_value = value;
-        x_label = graph.get('NODELABELS');         
-        y_name = m;
-        title_plot = [y_name ' vs ' x_name];
-        cil = el.memorize('CIL');
-        ciu = el.memorize('CIU');
-        
-        
-        if Measure.is_global(m) % global
-            is_inf_vector = cellfun(@(x) isinf(x), plot_value);
-            if any(is_inf_vector)
-                return;
+        function init_brain_view_btn()
+            set(ui_brain_view, ...
+                'String', 'Brain View', ...
+                'Tooltip', 'Plot the Measure Brain View. Will plot depending on the node selection.', ...
+                'Units', 'normalized', ...
+                'Position', [.49 .01 .25 .08], ...
+                'Callback', {@cb_brain_view} ...
+                );
+        end
+        function rules_node_popmenu_deactivation()
+            if Measure.is_global(m)
+                set(ui_node1_popmenu, ...
+                    'Visible', 'off', ...
+                    'Enable', 'off' ...
+                    )
+                set(ui_node2_popmenu, ...
+                    'Visible', 'off', ...
+                    'Enable', 'off' ...
+                    )
+            elseif Measure.is_nodal(m)
+                set(ui_node1_popmenu, ...
+                    'Visible', 'on', ...
+                    'Enable', 'on' ...
+                    )
+                set(ui_node2_popmenu, ...
+                    'Visible', 'off', ...
+                    'Enable', 'off' ...
+                    )
+            else
+                set(ui_node1_popmenu, ...
+                    'Visible', 'on', ...
+                    'Enable', 'on' ...
+                    )
+                set(ui_node2_popmenu, ...
+                    'Visible', 'on', ...
+                    'Enable', 'on' ...
+                    )
             end
-            y_ = [plot_value{:}];
-        elseif Measure.is_nodal(m) % nodal
-            for l = 1:length(plot_value)
-                tmp = plot_value{l};
-                tmp_y = tmp(node1_to_plot);
-                if isinf(tmp_y)
+        end
+        function cb_node_1(source, ~)
+            node1_to_plot = double(source.Value);
+        end
+        function cb_node_2(source, ~)
+            node2_to_plot = double(source.Value);
+        end
+        function cb_plot_m(~, ~)
+            plot_value = value;
+            x_label = graph.get('NODELABELS');
+            y_name = m;
+            title_plot = [y_name ' vs ' x_name];
+            cil = el.memorize('CIL');
+            ciu = el.memorize('CIU');
+
+
+            if Measure.is_global(m) % global
+                is_inf_vector = cellfun(@(x) isinf(x), plot_value);
+                if any(is_inf_vector)
                     return;
                 end
-                y_(l) = tmp_y; %#ok<AGROW>
-            end
-        else  % binodal
-            for l = 1:length(plot_value)
-                tmp = plot_value{l};
-                tmp_y = tmp(node1_to_plot, node2_to_plot);
-                if isinf(tmp_y)
-                    return;
+                y_ = [plot_value{:}];
+            elseif Measure.is_nodal(m) % nodal
+                for l = 1:length(plot_value)
+                    tmp = plot_value{l};
+                    tmp_y = tmp(node1_to_plot);
+                    if isinf(tmp_y)
+                        return;
+                    end
+                    y_(l) = tmp_y; %#ok<AGROW>
                 end
-                y_(l) = tmp_y; %#ok<AGROW>
+            else  % binodal
+                for l = 1:length(plot_value)
+                    tmp = plot_value{l};
+                    tmp_y = tmp(node1_to_plot, node2_to_plot);
+                    if isinf(tmp_y)
+                        return;
+                    end
+                    y_(l) = tmp_y; %#ok<AGROW>
+                end
             end
-        end
-        
-        x_ = x_range;       
-        
-        [~, normalized] = get_figure_position();
-        x2 = normalized(1) + normalized(3);
-        h2 = normalized(4);
-        y2 = normalized(2);
-        w2 = normalized(3) * 1.61;
-        
-        pg = PlotGraph( ...
-            'bkgcolor', [1 1 1], ...
-            'setpos', [x2 y2 w2 h2], ...
-            'setname', ['Plot of Measure - ' BRAPH2.STR]);
-        [h_figure, h_axes] = pg.draw();
-        
-        if ~isempty(x_) && ~isempty(y_)
-            
-            handle_plot = plot(h_axes, ...
-                x_, ...
-                y_, ...
-                'Marker', 'o', ...
-                'MarkerSize', 10, ...
-                'MarkerEdgeColor', [0 0 1], ...
-                'MarkerFaceColor', [.9 .4 .1], ...
-                'LineStyle', '-', ...
-                'LineWidth', 1, ...
-                'Color', [0 0 1]);
-            title(title_plot)
-            xlabel(x_name)
-            ylabel(y_name)
-        else
-        end
-        
-        hold(h_axes, 'on')
-        xlabel(h_axes, x_label)
-        ylabel(h_axes, measure_class)
-        
-        ui_confidence_interval_min_checkbox = uicontrol(f, 'Style', 'checkbox', 'Units', 'normalized');
-        ui_confidence_interval_max_checkbox = uicontrol(f, 'Style', 'checkbox', 'Units', 'normalized');
-        init_plot_panel()
-        function init_plot_panel()
-            set(ui_confidence_interval_min_checkbox, 'Position', [.02 .06 .25 .05]);
-            set(ui_confidence_interval_min_checkbox, 'String', 'Show Confidence Interval Min');
-            set(ui_confidence_interval_min_checkbox, 'Value', false);
-            set(ui_confidence_interval_min_checkbox, 'Callback', {@cb_show_confidence_interval_min})
-            
-            set(ui_confidence_interval_max_checkbox, 'Position', [.02 .01 .25 .05]);
-            set(ui_confidence_interval_max_checkbox, 'String', 'Show Confidence Interval Max');
-            set(ui_confidence_interval_max_checkbox, 'Value', false);
-            set(ui_confidence_interval_max_checkbox, 'Callback', {@cb_show_confidence_interval_max})
-        end
-        
-        h_p_min = [];
-        h_p_max = [];
-        function cb_show_confidence_interval_min(src, ~)
-            if src.Value == true
-                
-                y_ = cil;
-                x_ = x_range;
-                h_p_min = plot(h_axes, ...
+
+            x_ = x_range;
+
+            [~, normalized] = get_figure_position();
+            x2 = normalized(1) + normalized(3);
+            h2 = normalized(4);
+            y2 = normalized(2);
+            w2 = normalized(3) * 1.61;
+
+            pg = PlotGraph( ...
+                'bkgcolor', [1 1 1], ...
+                'setpos', [x2 y2 w2 h2], ...
+                'setname', ['Plot of Measure - ' BRAPH2.STR]);
+            [h_figure, h_axes] = pg.draw();
+
+            if ~isempty(x_) && ~isempty(y_)
+
+                handle_plot = plot(h_axes, ...
                     x_, ...
                     y_, ...
-                    'Marker', 'x', ...
+                    'Marker', 'o', ...
                     'MarkerSize', 10, ...
                     'MarkerEdgeColor', [0 0 1], ...
-                    'MarkerFaceColor', [.3 .4 .5], ...
+                    'MarkerFaceColor', [.9 .4 .1], ...
                     'LineStyle', '-', ...
                     'LineWidth', 1, ...
-                    'Color', [0 1 1]);
-                h_p_min.Visible = true;
+                    'Color', [0 0 1]);
+                title(title_plot)
+                xlabel(x_name)
+                ylabel(y_name)
             else
-                h_p_min.Visible = false;
+            end
+
+            hold(h_axes, 'on')
+            xlabel(h_axes, x_label)
+            ylabel(h_axes, measure_class)
+
+            ui_confidence_interval_min_checkbox = uicontrol(f, 'Style', 'checkbox', 'Units', 'normalized');
+            ui_confidence_interval_max_checkbox = uicontrol(f, 'Style', 'checkbox', 'Units', 'normalized');
+            init_plot_panel()
+            function init_plot_panel()
+                set(ui_confidence_interval_min_checkbox, 'Position', [.02 .06 .25 .05]);
+                set(ui_confidence_interval_min_checkbox, 'String', 'Show Confidence Interval Min');
+                set(ui_confidence_interval_min_checkbox, 'Value', false);
+                set(ui_confidence_interval_min_checkbox, 'Callback', {@cb_show_confidence_interval_min})
+
+                set(ui_confidence_interval_max_checkbox, 'Position', [.02 .01 .25 .05]);
+                set(ui_confidence_interval_max_checkbox, 'String', 'Show Confidence Interval Max');
+                set(ui_confidence_interval_max_checkbox, 'Value', false);
+                set(ui_confidence_interval_max_checkbox, 'Callback', {@cb_show_confidence_interval_max})
+            end
+
+            h_p_min = [];
+            h_p_max = [];
+            function cb_show_confidence_interval_min(src, ~)
+                if src.Value == true
+
+                    y_ = cil;
+                    x_ = x_range;
+                    h_p_min = plot(h_axes, ...
+                        x_, ...
+                        y_, ...
+                        'Marker', 'x', ...
+                        'MarkerSize', 10, ...
+                        'MarkerEdgeColor', [0 0 1], ...
+                        'MarkerFaceColor', [.3 .4 .5], ...
+                        'LineStyle', '-', ...
+                        'LineWidth', 1, ...
+                        'Color', [0 1 1]);
+                    h_p_min.Visible = true;
+                else
+                    h_p_min.Visible = false;
+                end
+            end
+            function cb_show_confidence_interval_max(src, ~)
+                if src.Value == true
+
+                    y_ = ciu;
+                    x_ = x_range;
+                    h_p_max = plot(h_axes, ...
+                        x_, ...
+                        y_, ...
+                        'Marker', 'x', ...
+                        'MarkerSize', 10, ...
+                        'MarkerEdgeColor', [0 0 1], ...
+                        'MarkerFaceColor', [.3 .4 .5], ...
+                        'LineStyle', '-', ...
+                        'LineWidth', 1, ...
+                        'Color', [0 1 1]);
+                    h_p_max.Visible = true;
+                else
+                    h_p_max.Visible = false;
+                end
             end
         end
-        function cb_show_confidence_interval_max(src, ~)
-            if src.Value == true
-                
-                y_ = ciu;
-                x_ = x_range;
-                h_p_max = plot(h_axes, ...
-                    x_, ...
-                    y_, ...
-                    'Marker', 'x', ...
-                    'MarkerSize', 10, ...
-                    'MarkerEdgeColor', [0 0 1], ...
-                    'MarkerFaceColor', [.3 .4 .5], ...
-                    'LineStyle', '-', ...
-                    'LineWidth', 1, ...
-                    'Color', [0 1 1]);
-                h_p_max.Visible = true;
-            else
-                h_p_max.Visible = false;
+        function [pixels, normalized] = get_figure_position()
+            fig_h = getGUIFigureObj();
+            set(fig_h, 'Units', 'normalized'); % set it to get position on normal units
+            pixels = getpixelposition(fig_h);
+            normalized = get(fig_h, 'Position');
+            set(fig_h, 'Units', 'characters'); % go back
+        end
+        function obj = getGUIFigureObj()
+            figHandles = findobj('Type', 'figure');
+            for i = 1:1:length(figHandles)
+                fig_h = figHandles(i);
+                if contains(fig_h.Name, el.getClass())
+                    obj = fig_h;
+                end
             end
         end
-    end
-    function [pixels, normalized] = get_figure_position()
-        fig_h = getGUIFigureObj();
-        set(fig_h, 'Units', 'normalized'); % set it to get position on normal units
-        pixels = getpixelposition(fig_h);
-        normalized = get(fig_h, 'Position');
-        set(fig_h, 'Units', 'characters'); % go back
-    end
-    function obj = getGUIFigureObj()
-        figHandles = findobj('Type', 'figure');
-        for i = 1:1:length(figHandles)
-            fig_h = figHandles(i);
-            if contains(fig_h.Name, el.getClass())
-                obj = fig_h;
-            end
+        function cb_brain_view(~, ~)
+            pbv = PlotBrainView('SUBMENU', true, 'SETPOS', [.4 .50 .40 .30], ...
+                'COMP', el, 'Atlas', graph.get('BRAINATLAS'), 'Type', x_name);
+            pbv.draw();
         end
-    end
 end
 function redraw(pl, varargin)
     %REDRAW redraws the element graphical panel.
@@ -346,17 +389,33 @@ function redraw(pl, varargin)
 
     el = pl.get('EL');
     prop = pl.get('PROP');
-    
+
     value = el.getr(prop);
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
         pl.redraw@PlotProp('Height', 1.8, varargin{:})
     else
         value_cell = el.get(prop);
-        
+
         if isempty(value_cell)
             pl.redraw@PlotProp('Height', 1.8, varargin{:})
         else
             pl.redraw@PlotProp('Height', 30, varargin{:})
+        end
+        if Measure.is_binodal(el.get('Measure')) && exist('value_cell')
+            for i = 1:1:size(value_cell, 1)
+                for j = 1:1:size(value_cell, 2)
+                    set(pl.comparison_tbl{i, j}, ...
+                        'Units', 'character', ...
+                        'Position', ...
+                        [ ...
+                        (0.01 + (i - 1) * 0.98 / size(pl.comparison_tbl, 1)) * Plot.w(pl.pp) ...
+                        (0.1 + (j - 1) * 0.98 / size(pl.comparison_tbl, 2)) * (Plot.h(pl.pp) - 1.8) ...
+                        0.98 / size(pl.comparison_tbl, 1) * Plot.w(pl.pp) ...
+                        0.98 / size(pl.comparison_tbl, 2) * (Plot.h(pl.pp) - 3.8) ...
+                        ] ...
+                        )
+                end
+            end
         end
     end
 end

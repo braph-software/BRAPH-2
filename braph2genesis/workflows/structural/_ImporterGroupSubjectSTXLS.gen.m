@@ -42,10 +42,10 @@ gr = Group( ...
     );
 
 gr.lock('SUB_CLASS');
-
+global BRAPH2ISTESTING %#ok<TLEV>
 % analyzes file
 file = im.memorize('FILE');
-if ~isfile(file) && ~isempty(im.get('ID'))
+if ~isfile(file) && ~BRAPH2ISTESTING
     im.uigetfile()
     file = im.memorize('FILE');
 end
@@ -96,7 +96,7 @@ if isfile(file)
     
     % adds subjects
     for i = 2:1:size(raw, 1)
-        waitbar(.5, f, ['Processing your data: ' num2str(i) '/' num2str(size(raw, 1)) ' ...'])
+        waitbar(.5, f, ['Processing your data: ' num2str(i - 1) '/' num2str(size(raw, 1) - 1) ' ...'])
         ST = zeros(br_number, 1);
         for j = 1:1:length(ST)
             ST(j) = raw{i, 3 + j};

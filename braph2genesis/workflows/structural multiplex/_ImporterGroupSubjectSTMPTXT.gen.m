@@ -42,10 +42,10 @@ gr = Group( ...
     );
 
 gr.lock('SUB_CLASS');
-
+global BRAPH2ISTESTING %#ok<TLEV>
 directory = im.get('DIRECTORY');
 directory = im.get('DIRECTORY');
-if ~isfolder(directory) && ~isempty(im.get('ID'))
+if ~isfolder(directory) && ~BRAPH2ISTESTING
     im.uigetdir()
     directory = im.get('DIRECTORY');
 end
@@ -116,7 +116,7 @@ if isfolder(directory)
                             
         % cycle over subjects, add subjects
         for i = 1:1:size(all_subjects_data, 2)
-            waitbar(.5, f, ['Processing your data: ' num2str(i) '/' num2str(size(all_subjects_data, 2)) ' ...'])
+            waitbar(.5, f, ['Processing your data: ' num2str(i) '/' num2str(size(all_subjects_data, 2) - 1) ' ...'])
             layer_subject = reshape(all_subjects_data(:, i, :), [layers_number br_number]);
             for l = 1:1:layers_number
                 ST_MP(l) = {cell2mat(layer_subject(l, :)')};

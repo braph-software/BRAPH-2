@@ -124,6 +124,7 @@ panel_executables = [];
 y_slice = 2;
 define = false;
 horizontal_slider = uicontrol(f, 'Style', 'slider', 'Callback', {@cb_horizontal_slider});
+loaded_names = struct([]);
 
 if ~isempty(previous_workspace)
     panel_struct = previous_workspace;
@@ -174,6 +175,7 @@ end
                     decomp_exec = split(panel_executable{j}, '%');  % decomposition of the executable
                     if length(decomp_exec) > 1
                         btn_name = deblank(decomp_exec{2});
+                        loaded_names(i - 1, j - 1).msg = deblank(decomp_exec{3});
                     else
                         btn_name = [panel_executable{1} ' ' num2str(j - 1)];
                     end
@@ -241,13 +243,17 @@ end
                     panel_struct(panel - 1, l).name);
             end
         end
+         if isfield(panel_struct(panel, child), 'exe') && ~isempty(panel_struct(panel, child).exe)
+            % use the object;
+        else
+            panel_struct(panel, child).exe = eval([exe_{2}]);
+        end
         
-        panel_struct(panel, child).exe = eval([exe_{2}]);
         if ~isempty(panel_struct(panel, child).exe) && isa(panel_struct(panel, child).exe, 'Element')
             new_object =  panel_struct(panel, child).exe;
             GUI(new_object)
             % change btn state. turn green and change string            
-            change_state_btn(src, new_object.get('ID'))
+            change_state_btn(src, new_object.get('ID'),  loaded_names(panel, child).msg)
             if check_section_objs(panel)
                 enable_panel(section_panel{panel + 1})                
             end
@@ -258,19 +264,22 @@ end
         n = length(panel_executables{panel + 1}) - 1 ;
         tmp = struct2cell(panel_struct);
         if panel + 1 <= length(section_panel) && ...
-                (isequal(n, length(tmp(4, 1))) ||  isequal(n, length(tmp(4, panel, :))))             
+                (isequal(n, length(tmp(4, 1))) ||  isequal(n, length([tmp{4, panel, :}])))             
                 
             check = true;
         end
     end
     function change_state_btn(varargin)
-        btn = varargin{1};      
+        btn = varargin{1};
         
-        set(btn, 'BackgroundColor', [166 218 149]/255) % color        
+        set(btn, 'BackgroundColor', [166 218 149] / 255) % color
         if length(varargin) > 1
-            btn_new_name = varargin{2};            
-            set(btn, 'String', btn_new_name); % id
-            set(btn, 'Enable', 'off'); % id
+            if ~isempty(varargin{2})
+                btn_new_name = varargin{2};
+                set(btn, 'String', btn_new_name); % id
+            else
+                set(btn, 'String', varargin{3}); % id
+            end
         end
     end
     function pos = getPosition(obj)

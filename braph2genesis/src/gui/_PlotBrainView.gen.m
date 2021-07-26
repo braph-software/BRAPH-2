@@ -20,6 +20,9 @@ bg % plot brain graph
 ME (metadata, item) is the measure.
 
 %%% ¡prop!
+COMP (metadata, item) is the comparison.
+
+%%% ¡prop!
 ATLAS(metadata, item) is a brain atlas.
 
 %%% ¡prop!
@@ -30,7 +33,6 @@ function h_panel = draw(pl, varargin)
 [pl.h_figure, pl.h_axes, pl.subpanel] = draw@PlotGraph(pl, ...
     varargin{:});
 
-set(pl.h_figure, 'Name', 'Brain View')
 pl.getBrainView();
 
 % output
@@ -51,44 +53,23 @@ function p = getBrainView(pl)
     bgp = [];
     mrc = [];
 
-    ui_brainview_panel = uipanel('Parent', uiparent, 'Units', 'normalized', 'Position', [0 0 1 .25]);
+    ui_brainview_panel = uipanel('Parent', uiparent, 'Units', 'normalized', 'Position', [0 0 1 .15]);
     ui_brainview_edges_panel_button = uicontrol(ui_brainview_panel);
     ui_brainview_analysis_dictionaries_button = uicontrol(ui_brainview_panel);
-    ui_brain_view_show_checkbox = uicontrol(ui_brainview_panel, 'Style', 'checkbox');
-    ui_brain_view_syms_checkbox = uicontrol(ui_brainview_panel, 'Style', 'checkbox');
-    ui_brain_view_labs_checkbox = uicontrol(ui_brainview_panel, 'Style', 'checkbox');
-
+    
     init_brainview()
         function init_brainview()
-            set(ui_brain_view_show_checkbox, 'Units', 'normalized')
-            set(ui_brain_view_show_checkbox, 'Position', [.02 .61 .25 .3])
-            set(ui_brain_view_show_checkbox, 'String', 'Show Brain Surface')
-            set(ui_brain_view_show_checkbox, 'Value', true)
-            set(ui_brain_view_show_checkbox, 'Callback', {@cb_show_surf})
-
-            set(ui_brain_view_syms_checkbox, 'Units', 'normalized')
-            set(ui_brain_view_syms_checkbox, 'Position', [.02 .31 .25 .3])
-            set(ui_brain_view_syms_checkbox, 'String', 'Show Brain Regions')
-            set(ui_brain_view_syms_checkbox, 'Value', true)
-            set(ui_brain_view_syms_checkbox, 'Callback', {@cb_show_brs})
-
-            set(ui_brain_view_labs_checkbox, 'Units', 'normalized')
-            set(ui_brain_view_labs_checkbox, 'Position', [.02 .01 .25 .3])
-            set(ui_brain_view_labs_checkbox, 'String', 'Show Brain Labels')
-            set(ui_brain_view_labs_checkbox, 'Value', true)
-            set(ui_brain_view_labs_checkbox, 'Callback', {@cb_show_labs})
-
-            set(ui_brainview_edges_panel_button, 'Units', 'normalized')
-            set(ui_brainview_edges_panel_button, 'Position', [.3 .22 .25 .3])
-            set(ui_brainview_edges_panel_button, 'String', 'Brain Graph Options')
-            set(ui_brainview_edges_panel_button, 'Callback', {@cb_bv_bg_panel})
-
-            set(ui_brainview_analysis_dictionaries_button, 'Units', 'normalized')
-            set(ui_brainview_analysis_dictionaries_button, 'Position', [.62 .22 .25 .3])
-            set(ui_brainview_analysis_dictionaries_button, 'String', 'Measurement Options')
-            set(ui_brainview_analysis_dictionaries_button, 'Tooltip', 'Manage the Measurement, Comparison and Randomcomparison.')
-            set(ui_brainview_analysis_dictionaries_button, 'Callback', {@cb_bv_meas_panel})
-        end
+        set(ui_brainview_edges_panel_button, 'Units', 'normalized')
+        set(ui_brainview_edges_panel_button, 'Position', [.11 .22 .4 .7])
+        set(ui_brainview_edges_panel_button, 'String', 'Brain Graph Options')
+        set(ui_brainview_edges_panel_button, 'Callback', {@cb_bv_bg_panel})
+        
+        set(ui_brainview_analysis_dictionaries_button, 'Units', 'normalized')
+        set(ui_brainview_analysis_dictionaries_button, 'Position', [.51 .22 .4 .7])
+        set(ui_brainview_analysis_dictionaries_button, 'String', 'Measurement Options')
+        set(ui_brainview_analysis_dictionaries_button, 'Tooltip', 'Manage the Measurement, Comparison and Randomcomparison.')
+        set(ui_brainview_analysis_dictionaries_button, 'Callback', {@cb_bv_meas_panel})
+    end
     ui_contextmenu_figure_brainsurf = uicontextmenu();
     ui_contextmenu_figure_brainsurf_settings = uimenu(ui_contextmenu_figure_brainsurf);
     ui_contextmenu_figure_syms = uicontextmenu();
@@ -938,8 +919,6 @@ function h = getMCRPanel(pl)
                 if get(ui_checkbox_meas_labelsize, 'Value')
 
                     size_ = str2double(get(ui_edit_meas_labelsize, 'String'));
-                    size_ = (1 + (measure_data_inner )*size_);
-
                     size_(isnan(size_)) = 0.1;
                     size_(size_<=0) = 0.1;
                     pl.bg.set( 'LABS_SIZE', size_);
@@ -977,4 +956,21 @@ function h = getMCRPanel(pl)
     if nargout > 0
         h = f;
     end
+end
+function f_settings = settings(pl, varargin)
+    %SETTINGS opens the brain surface property editor GUI.
+    %
+    % SETTINGS(PL) allows the user to specify the properties of the brain
+    %  atlas plot by opening a GUI property editor.
+    %
+    % F = SETTINGS(PL) returns a handle to the brain atlas property editor GUI.
+    %
+    % SETTINGS(PL, 'Property', VALUE, ...) sets the properties of the brain
+    %  atlas property editor GUI with custom property-value couples.
+    %  All standard plot properties of figure can be used.
+    %
+    % See also draw, figure, isgraphics.
+    
+    pl.bg.set(varargin{1}, varargin{2}); 
+    pl.bg.settings();
 end
