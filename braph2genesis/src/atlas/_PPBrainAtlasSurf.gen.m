@@ -182,7 +182,6 @@ function h_panel = draw(pl, varargin)
             set(pl.plot_brain_atlas_btn, 'Enable', 'on');
         end
         function update_plba()
-            el = pl.get('EL');
             plba.set('ATLAS', el);
             plba.set('SURF', el.get('SURF'));
         end
