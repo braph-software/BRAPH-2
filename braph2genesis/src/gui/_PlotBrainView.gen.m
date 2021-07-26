@@ -919,8 +919,6 @@ function h = getMCRPanel(pl)
                 if get(ui_checkbox_meas_labelsize, 'Value')
 
                     size_ = str2double(get(ui_edit_meas_labelsize, 'String'));
-                    size_ = (1 + (measure_data_inner )*size_);
-
                     size_(isnan(size_)) = 0.1;
                     size_(size_<=0) = 0.1;
                     pl.bg.set( 'LABS_SIZE', size_);

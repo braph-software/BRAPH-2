@@ -76,6 +76,7 @@ INIT_CYL_N = 32;
 h_axes
 pp
 TABBKGCOLOR = [.98 .95 .95];
+f_settings
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
@@ -105,7 +106,9 @@ set(pl.pp, 'DeleteFcn', {@close_f_settings}, ...
     varargin{:})
 
     function close_f_settings(~, ~)
-        
+        if ~isempty(pl.f_settings) && isgraphics(pl.f_settings, 'figure')
+            close(pl.f_settings)
+        end
     end
 
 brain_regions_length = pl.get('ATLAS').get('BR_DICT').length();
