@@ -127,6 +127,9 @@ function update(pl)
     else % weighted
         % paint a normal cell tables
         value_cell = el.get(prop);
+        if Measure.is_global(el) % global
+            node_labels = 'Global';
+        end
         if Measure.is_binodal(el)
             delete(pl.table_value_cell)
             pl.table_value_cell = cell(size(value_cell));
@@ -142,13 +145,24 @@ function update(pl)
                         )
                 end
             end
+        elseif Measure.is_global(el)
+            value_double = cell2mat(cellfun(@(x) x', value_cell, 'UniformOutput', false));
+            delete(pl.table_value_cell)
+            pl.table_value_cell = uicontrol( ...
+                'Parent', pl.pp, ...
+                'Style', 'text', ...
+                'Units', 'normalized', ...
+                'Position', [.01 .6 .5 .1], ...
+                'BackgroundColor', [1 1 1], ...
+                'String', num2str(value_double) ...
+                );
         else
             value_double = cell2mat(cellfun(@(x) x', value_cell, 'UniformOutput', false));
             set(pl.table_value_cell, ...
                 'Data', value_double, ...
                 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
                 'Units', 'normalized', ...
-                'Position', [.01 .1 .98 .84], ...
+                'Position', [.01 .3 .98 .6], ...
                 'ColumnName', node_labels, ...
                 'CellEditCallback', {@cb_matrix_value} ...
                 )
@@ -156,6 +170,7 @@ function update(pl)
 
         ui_brain_view = uicontrol('Parent', pl.pp, 'Style', 'pushbutton');
         init_brain_view_btn()
+        rules_brain_view()
         x_label = 'Weighted';
     end
 
@@ -209,6 +224,7 @@ function update(pl)
                 set(ui_brain_view, ...
                     'Visible', 'off', ...
                     'Enable', 'off');
+
             elseif Measure.is_nodal(el)
                 set(ui_node1_popmenu, ...
                     'Visible', 'on', ...
@@ -232,6 +248,22 @@ function update(pl)
                     'Enable', 'on' ...
                     )
 
+                set(ui_brain_view, ...
+                    'Visible', 'off', ...
+                    'Enable', 'off');
+            end
+        end
+        function rules_brain_view()
+            if Measure.is_global(el)
+                set(ui_brain_view, ...
+                    'Visible', 'off', ...
+                    'Enable', 'off');
+
+            elseif Measure.is_nodal(el)
+                set(ui_brain_view, ...
+                    'Visible', 'on', ...
+                    'Enable', 'on');
+            else
                 set(ui_brain_view, ...
                     'Visible', 'off', ...
                     'Enable', 'off');
@@ -390,8 +422,8 @@ function update(pl)
                 'BorderType', 'none' ...
                 );
 
-             pbv.draw('Parent', el_panel);
-             pbv.settings('SETPOS', [x2 normalized(2) w2 h2*1.61-h2-.065]);
+            pbv.draw('Parent', el_panel);
+            pbv.settings('SETPOS', [x2 normalized(2) w2 h2*1.61-h2-.065]);
 
             set(f, 'Visible', 'on')
         end
@@ -414,17 +446,21 @@ function redraw(pl, varargin)
     else
         value_cell = el.get(prop);
         graph = el.get('G');
-        
+
         if isempty(value_cell)
             pl.redraw@PlotProp('Height', 1.8, varargin{:})
         elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
             pl.redraw@PlotProp('Height', 30, varargin{:})
+        elseif Measure.is_binodal(el)
+            pl.redraw@PlotProp('Height', 30, varargin{:})
+        elseif Measure.is_global(el)
+            pl.redraw@PlotProp('Height', 8, varargin{:})
         else
-            pl.redraw@PlotProp('Height', 20, varargin{:})
+            pl.redraw@PlotProp('Height', 15, varargin{:})
         end
     end
 
-    if Measure.is_binodal(el) && exist('value_cell')
+    if Measure.is_binodal(el) && exist('value_cell') %#ok<EXIST>
         for i = 1:1:size(value_cell, 1)
             for j = 1:1:size(value_cell, 2)
                 set(pl.table_value_cell{i, j}, ...
@@ -434,7 +470,7 @@ function redraw(pl, varargin)
                     (0.01 + (i - 1) * 0.98 / size(pl.table_value_cell, 1)) * Plot.w(pl.pp) ...
                     (0.1 + (j - 1) * 0.98 / size(pl.table_value_cell, 2)) * (Plot.h(pl.pp) - 1.8) ...
                     0.98 / size(pl.table_value_cell, 1) * Plot.w(pl.pp) ...
-                    0.98 / size(pl.table_value_cell, 2) * (Plot.h(pl.pp) - 3.8) ...
+                    0.98 / size(pl.table_value_cell, 2) * (Plot.h(pl.pp) - 3.5) ...
                     ] ...
                     )
             end
