@@ -32,7 +32,7 @@ end
         splits = splits(~cellfun('isempty', splits));
         cycles = length(splits);
     end
-    function token = getGUIToken(txt, cycle)
+    function [token, comments] = getGUIToken(txt, cycle)
         splits = regexp(txt, ['(^|' newline() ')%%\s*'], 'split');
         splits = splits(~cellfun('isempty', splits));
         for j = 1:1:length(splits)
@@ -41,7 +41,14 @@ end
                 in_splits = regexp(split_tmp, ['(^|' newline() ')%\s*'], 'split');
                 in_splits = in_splits(~cellfun('isempty', in_splits));
                 token = in_splits{1};
-                break
+                if length(in_splits) > 1
+                    comments = in_splits{2};
+                    comments = comments(2:end);
+                    for k = 3:length(in_splits)
+                        comments = [comments newline() in_splits{k}]; %#ok<AGROW>
+                    end
+                    break
+                end
             end
         end
     end
@@ -51,6 +58,7 @@ end
         vars = vars(~cellfun('isempty', vars));
         vars_per_token = length(vars);
     end
+
 %% figure
 f = init();
     function f = init()
@@ -275,9 +283,9 @@ end
         set(btn, 'BackgroundColor', [166 218 149] / 255) % color
         if length(varargin) > 1
             if ~isempty(varargin{2})
-                btn_new_name = varargin{2};
+                btn_new_name = [varargin{3} ' ' varargin{2}];
                 set(btn, 'String', btn_new_name); % id
-            else
+            else % just default 
                 set(btn, 'String', varargin{3}); % id
             end
         end
@@ -415,6 +423,73 @@ buttons()
                 end
             end
         end
+    end
+
+%% menus
+menu()
+    function menu()
+        ui_menu_file = uimenu(f, 'Label', 'File');
+        uimenu(ui_menu_file, ...
+            'Label', 'Open ...', ...
+            'Accelerator', 'O', ...
+            'Callback', {@cb_load_worfklow})
+        uimenu(ui_menu_file, ...
+            'Label', 'Save as ...', ...
+            'Accelerator', 'A', ...
+            'Callback', {@cb_save_worfklow})
+        uimenu(ui_menu_file, ...
+            'Separator', 'on', ...
+            'Label', 'Close', ...
+            'Accelerator', 'C', ...
+            'Callback', {@cb_close})
+        
+        ui_menu_workflow = uimenu(f, ...
+            'Label', 'Workflow');
+        
+        uimenu(ui_menu_workflow, ...
+            'Label', 'Save Workflow ...', ...
+            'Callback', {@cb_save_workflow_braph2})
+        uimenu(ui_menu_workflow, ...
+            'Label', 'About Workflow ...', ...
+            'Callback', {@cb_about_workflow})
+        
+        ui_menu_about = uimenu(f, 'Label', 'About');
+        
+        uimenu(ui_menu_about, ...
+            'Label', 'License ...', ...
+            'Callback', {@cb_license})
+        uimenu(ui_menu_about, ...
+            'Label', 'About ...', ...
+            'Callback', {@cb_about})
+        
+    end
+    function cb_save_workflow_braph2(~, ~)
+         % select file
+        [fileoutput, path, filterindex] = uiputfile('.braph2', 'Select a workflow file name.');
+        % save file
+        if filterindex
+            filename = fullfile(path, fileoutput);
+            copyfile(file, filename, 'f')
+        end        
+    end
+    function cb_about_workflow(~, ~)
+        [tittle, msg] =  getGUIToken(txt, 1);
+        msg = erase(msg, '%');
+        CreateStruct.WindowStyle = 'modal';
+        CreateStruct.Interpreter = 'tex';
+        h = msgbox({'' ...
+            ['{\bf\color{orange}' BRAPH2.STR '}'] ...
+            ['{\color{gray}version ' BRAPH2.VERSION '}'] ...
+            ['{\color{gray}' BRAPH2.WEB '}'] ...
+            '' ...
+            msg ...
+            '' ...
+            ['{\color{gray}' BRAPH2.COPYRIGHT '}'] ...
+            '' ...
+            ''}, ...
+            ['About ' tittle], ...
+            CreateStruct);
+        set_icon(h)
     end
 
 %% auxiliary
