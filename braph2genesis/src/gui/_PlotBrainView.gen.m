@@ -48,10 +48,20 @@ function p = getBrainView(pl)
     % See also getGlobalPanel, getNodalPanel, getBinodalPanel.
     uiparent = pl.h_figure;
     atlas = pl.get('ATLAS');
-    pl.bg =  PlotBrainGraph('ATLAS', atlas, 'Surf', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
+    
+    if isempty(pl.get('ME')) && ~isempty(pl.get('COMP'))
+        case_tag = 'COMP';
+        case_data = pl.get('COMP');
+    else
+        case_tag = 'ME';
+        case_data = pl.get('ME');
+    end
+    pl.bg =  PlotBrainGraph('ATLAS', atlas, ...
+        case_tag, case_data, ...
+        'Surf', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
     
     function create_figure()
-        pl.bg.draw('Parent', pl.subpanel);
+        pl.bg.draw('Parent', uiparent);
     end
 
     create_figure()

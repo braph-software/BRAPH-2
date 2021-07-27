@@ -80,6 +80,13 @@ f_settings
 f_graph_settings
 f_measures_settings
 
+%% ¡props!
+%%% ¡prop!
+ME (metadata, item) is the measure.
+
+%%% ¡prop!
+COMP (metadata, item) is the comparison.
+
 %% ¡methods!
 function h_panel = draw(pl, varargin)
     %DRAW draws the brain atlas graph graphical panel.
@@ -1639,7 +1646,7 @@ function brain_graph_panel = getBrainGraphPanel(pl)
                 n = atlas.get('BR_DICT').length();
                 for i = 1:1:n
                     for j = 1:1:n
-                        pl.bg.link_edges(i, j, 'Color', [0 0 0])
+                        pl.link_edges(i, j, 'Color', [0 0 0])
                     end
                 end
             end
@@ -1658,7 +1665,7 @@ function brain_graph_panel = getBrainGraphPanel(pl)
                         if i == j
                             continue;
                         end
-                        pl.bg.link_edges(i, j, 'LineWidth', weight)
+                        pl.link_edges(i, j, 'LineWidth', weight)
                     end
                 end
             end
@@ -1684,11 +1691,11 @@ function brain_graph_panel = getBrainGraphPanel(pl)
         function cb_graph_hide(~, ~)  % (src, event)
             link_style = get(ui_link_type, 'Value');
             if  link_style == 1
-                pl.bg.link_edges_off([], [])
+                pl.link_edges_off([], [])
             elseif link_style == 2
-                pl.bg.arrow_edges_off([],[])
+                pl.arrow_edges_off([],[])
             else
-                pl.bg.cylinder_edges_off([],[])
+                pl.cylinder_edges_off([],[])
             end
         end
         function cb_graph_color(~, ~)  % (src, event)
@@ -1701,7 +1708,7 @@ function brain_graph_panel = getBrainGraphPanel(pl)
                         if i == j
                             continue;
                         end
-                        pl.bg.link_edge(i, j, 'Color', color)
+                        pl.link_edge(i, j, 'Color', color)
                     end
                 end
             end
@@ -1719,9 +1726,9 @@ function brain_graph_panel = getBrainGraphPanel(pl)
         function update_graph()
             link_style = get(ui_link_type, 'Value');
 
-            pl.bg.link_edges_off([], [])
-            pl.bg.arrow_edges_off([],[])
-            pl.bg.cylinder_edges_off([],[])
+            pl.link_edges_off([], [])
+            pl.arrow_edges_off([],[])
+            pl.cylinder_edges_off([],[])
 
             if get(ui_checkbox_graph_linecolor, 'Value')
                 val1 = get(ui_popup_graph_initcolor, 'Value');
@@ -1733,14 +1740,14 @@ function brain_graph_panel = getBrainGraphPanel(pl)
                             continue;
                         end
                         if  link_style == 1
-                            pl.bg.link_edges(i, j, 'Color', [val1 val2]);
-                            pl.bg.link_edge_on(i, j);
+                            pl.link_edges(i, j, 'Color', [val1 val2]);
+                            pl.link_edge_on(i, j);
                         elseif link_style == 2
-                            pl.bg.arrow_edges(i, j, 'Color', [val1 val2]);
-                            pl.bg.arrow_edge_on(i, j)
+                            pl.arrow_edges(i, j, 'Color', [val1 val2]);
+                            pl.arrow_edge_on(i, j)
                         else
-                            pl.bg.cylinder_edges(i, j, 'Color', [val1 val2]);
-                            pl.bg.cylinder_edge_on(i, j)
+                            pl.cylinder_edges(i, j, 'Color', [val1 val2]);
+                            pl.cylinder_edge_on(i, j)
                         end
                     end
                 end
@@ -1756,14 +1763,14 @@ function brain_graph_panel = getBrainGraphPanel(pl)
                             continue;
                         end
                         if  link_style == 1
-                            pl.bg.link_edges(i, j, 'LineWidth', weight);
-                            pl.bg.link_edge_on(i, j);
+                            pl.link_edges(i, j, 'LineWidth', weight);
+                            pl.link_edge_on(i, j);
                         elseif link_style == 2
-                            pl.bg.arrow_edges(i, j, 'LineWidth', weight);
-                            pl.bg.arrow_edge_on(i, j)
+                            pl.arrow_edges(i, j, 'LineWidth', weight);
+                            pl.arrow_edge_on(i, j)
                         else
-                            pl.bg.cylinder_edges(i, j, 'LineWidth', weight);
-                            pl.bg.cylinder_edge_on(i, j)
+                            pl.cylinder_edges(i, j, 'LineWidth', weight);
+                            pl.cylinder_edge_on(i, j)
                         end
                     end
                 end
@@ -1773,11 +1780,11 @@ function brain_graph_panel = getBrainGraphPanel(pl)
         function cb_graph_links_settings(~, ~)  % (src, event)
             link_style = get(ui_link_type, 'Value');
             if link_style == 1
-                pl.bg.link_edges_settings([], []);
+                pl.link_edges_settings([], []);
             elseif link_style == 2
-                pl.bg.arrow_edges_settings([], []);
+                pl.arrow_edges_settings([], []);
             else
-                pl.bg.cylinder_edges_settings([], []);
+                pl.cylinder_edges_settings([], []);
             end
         end
 
@@ -2011,7 +2018,7 @@ function h = getMCRPanel(pl)
             else
                 size = str2double(get(ui_edit_meas_symbolsize, 'String'));
                 size = 1 + size;
-                pl.bg.set('SYMS_SIZE', size);
+                pl.set('SYMS_SIZE', size);
 
                 set(ui_edit_meas_symbolsize, 'Enable', 'off')
                 update_brain_meas_plot()
@@ -2034,8 +2041,8 @@ function h = getMCRPanel(pl)
             else
                 val = get(ui_popup_meas_initcolor, 'Value');
                 str = get(ui_popup_meas_initcolor, 'String');
-                pl.bg.set('SYMS_EDGE_COLOR', str{val});
-                pl.bg.set('SYMS_FACE_COLOR', str{val});
+                pl.set('SYMS_EDGE_COLOR', str{val});
+                pl.set('SYMS_FACE_COLOR', str{val});
 
                 set(ui_popup_meas_initcolor, 'Enable', 'off')
                 set(ui_popup_meas_fincolor, 'Enable', 'off')
@@ -2057,7 +2064,7 @@ function h = getMCRPanel(pl)
             else
                 R = str2double(get(ui_edit_meas_sphereradius, 'String'));
                 R = R + 1;
-                pl.bg.set('SPHS_SIZE', R);
+                pl.set('SPHS_SIZE', R);
 
                 set(ui_edit_meas_sphereradius, 'Enable', 'off')
                 update_brain_meas_plot()
@@ -2079,8 +2086,8 @@ function h = getMCRPanel(pl)
             else
                 val = get(ui_popup_meas_sphinitcolor, 'Value');
                 str = get(ui_popup_meas_sphinitcolor, 'String');
-                pl.bg.set('SPHS_EDGE_COLOR', str{val});
-                pl.bg.set('SPHS_FACE_COLOR', str{val});
+                pl.set('SPHS_EDGE_COLOR', str{val});
+                pl.set('SPHS_FACE_COLOR', str{val});
 
                 set(ui_popup_meas_sphinitcolor, 'Enable', 'off')
                 set(ui_popup_meas_sphfincolor, 'Enable', 'off')
@@ -2100,8 +2107,8 @@ function h = getMCRPanel(pl)
                 update_brain_meas_plot()
             else
                 alpha = get(ui_slider_meas_spheretransparency, 'Value');
-                pl.bg.set('SPHS_FACE_ALPHA', alpha);
-                pl.bg.set('SPHS_EDGE_ALPHA', alpha);
+                pl.set('SPHS_FACE_ALPHA', alpha);
+                pl.set('SPHS_EDGE_ALPHA', alpha);
 
                 set(ui_slider_meas_spheretransparency, 'Enable', 'off')
                 update_brain_meas_plot()
@@ -2118,7 +2125,7 @@ function h = getMCRPanel(pl)
             else
                 size = str2double(get(ui_edit_meas_labelsize, 'String'));
                 size = size + 1;
-                pl.bg.set('LABS_SIZE', size);
+                pl.set('LABS_SIZE', size);
 
                 set(ui_edit_meas_labelsize, 'Enable', 'off')
                 update_brain_meas_plot()
@@ -2141,7 +2148,7 @@ function h = getMCRPanel(pl)
             else
                 val = get(ui_popup_meas_labelinitcolor, 'Value');
                 str = get(ui_popup_meas_labelinitcolor, 'String');
-                pl.bg.set('LABS', str{val});
+                pl.set('LABS', str{val});
 
                 set(ui_popup_meas_labelinitcolor, 'Enable', 'off')
                 set(ui_popup_meas_labelfincolor, 'Enable', 'off')
@@ -2168,7 +2175,7 @@ function h = getMCRPanel(pl)
 
                     size_(isnan(size_)) = 0.1;
                     size_(size_<=0) = 0.1;
-                    pl.bg.set('SYMS_SIZE', size_');
+                    pl.set('SYMS_SIZE', size_');
                 end
 
                 if get(ui_checkbox_meas_symbolcolor, 'Value')
@@ -2186,8 +2193,8 @@ function h = getMCRPanel(pl)
                     C(:, val1) = colorValue;
                     C(:, val2) = 1 - colorValue;
 
-                    pl.bg.set('SYMS_FACE_COLOR', C);
-                    pl.bg.set('SYMS_EDGE_COLOR', C);
+                    pl.set('SYMS_FACE_COLOR', C);
+                    pl.set('SYMS_EDGE_COLOR', C);
                 end
 
                 if get(ui_checkbox_meas_sphereradius, 'Value')
@@ -2198,8 +2205,8 @@ function h = getMCRPanel(pl)
 
                     R(isnan(R)) = 0.1;
                     R(R<=0) = 0.1;
-                    pl.bg.set('SPHS_SIZE', R');
-                    pl.bg.set('SPHS', 1);
+                    pl.set('SPHS_SIZE', R');
+                    pl.set('SPHS', 1);
                 end
 
                 if get(ui_checkbox_meas_spherecolor, 'Value')
@@ -2215,9 +2222,9 @@ function h = getMCRPanel(pl)
                     val2 = get(ui_popup_meas_sphfincolor, 'Value');
                     C(:, val1) = colorValue;
                     C(:, val2) = 1 - colorValue;
-                    pl.bg.set('SPHS_EDGE_COLOR', C);
-                    pl.bg.set('SPHS_FACE_COLOR', C);
-                    pl.bg.set('SPHS', 1);
+                    pl.set('SPHS_EDGE_COLOR', C);
+                    pl.set('SPHS_FACE_COLOR', C);
+                    pl.set('SPHS', 1);
                 end
 
                 if get(ui_checkbox_meas_spheretransparency, 'Value')
@@ -2229,9 +2236,9 @@ function h = getMCRPanel(pl)
                     alpha_vec(isnan(alpha_vec)) = 0;
                     alpha_vec(alpha_vec<0) = 0;
                     alpha_vec(alpha_vec>1) = 1;
-                    pl.bg.set('SPHS_EDGE_ALPHA', alpha_vec);
-                    pl.bg.set('SPHS_FACE_ALPHA', alpha_vec);
-                    pl.bg.set('SPHS', 1);
+                    pl.set('SPHS_EDGE_ALPHA', alpha_vec);
+                    pl.set('SPHS_FACE_ALPHA', alpha_vec);
+                    pl.set('SPHS', 1);
                 end
 
                 if get(ui_checkbox_meas_labelsize, 'Value')
@@ -2239,8 +2246,8 @@ function h = getMCRPanel(pl)
                     size_ = str2double(get(ui_edit_meas_labelsize, 'String'));
                     size_(isnan(size_)) = 0.1;
                     size_(size_<=0) = 0.1;
-                    pl.bg.set( 'LABS_SIZE', size_);
-                    pl.bg.set('LABS', 1);
+                    pl.set( 'LABS_SIZE', size_);
+                    pl.set('LABS', 1);
                 end
 
                 if get(ui_checkbox_meas_labelcolor, 'Value')
@@ -2255,22 +2262,22 @@ function h = getMCRPanel(pl)
                     val2 = get(ui_popup_meas_labelfincolor, 'Value');
                     C(:, val1) = colorValue;
                     C(:, val2) = 1 - colorValue;
-                    pl.bg.set('LABS_FONT_COLOR', C);
-                    pl.bg.set('LABS', 1);
+                    pl.set('LABS_FONT_COLOR', C);
+                    pl.set('LABS', 1);
                 end
             end
             if get(ui_checkbox_meas_labelcolor, 'Value') || get(ui_checkbox_meas_labelsize, 'Value')
                 % set labels to values
                 new_labs = cellfun(@(x) num2str(x), num2cell(measure_data_inner), 'UniformOutput', false);
-                brs_dict = pl.bg.get('ATLAS').get('BR_DICT').get('IT_LIST');
+                brs_dict = pl.get('ATLAS').get('BR_DICT').get('IT_LIST');
                 cellfun(@(x, y) x.set('LABEL', y), brs_dict, new_labs', 'UniformOutput', false)
             end
             % draw
-            pl.bg.draw();
+            pl.draw();
         end
 
     % draw
-    pl.bg.draw();
+    pl.draw();
     if nargout > 0
         h = f;
     end
