@@ -215,7 +215,7 @@ function update(pl, selected)
                 end
 
                 comparison = result_comparison{i};
-                GUI(comparison, 'CLOSEREQUEST', false, 'POSITION',  [x2+offset y2-offset w2*1.61 h2]);
+                GUI(comparison, 'CLOSEREQUEST', false, 'POSITION',  [x2+offset y2-offset w2 h2]);
             end
 
             comparison_guis = getGUIComparisons();
