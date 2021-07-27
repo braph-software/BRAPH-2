@@ -121,10 +121,10 @@ function update(pl)
         ui_measure_plot = uicontrol('Parent', pl.pp, 'Style', 'pushbutton');
         init_measure_plot_area()
         init_brain_view_btn()
-    else
+    else % weighted
         % paint a normal cell tables
         value_cell = el.get(prop);
-        if Measure.is_binodal(el)
+        if Measure.is_binodal(m)
             delete(pl.comparison_tbl)
             pl.comparison_tbl = cell(size(value_cell));
             for i = 1:1:size(pl.comparison_tbl, 1)
@@ -139,19 +139,31 @@ function update(pl)
                         )
                 end
             end
+        elseif  Measure.is_global(m)
+            value_double = cell2mat(cellfun(@(x) x', value_cell, 'UniformOutput', false));
+            delete(pl.comparison_tbl)
+            pl.comparison_tbl = uicontrol( ...
+                'Parent', pl.pp, ...
+                'Style', 'text', ...
+                'Units', 'normalized', ...
+                'Position', [.01 .3 .5 .2], ...
+                'BackgroundColor', [1 1 1], ...
+                'String', num2str(value_double) ...
+                );
         else
             value_double = cell2mat(cellfun(@(x) x', value_cell, 'UniformOutput', false));
             set(pl.comparison_tbl, ...
                 'Data', value_double, ...
                 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
                 'Units', 'normalized', ...
-                'Position', [.01 .1 .98 .84], ...
+                'Position', [.01 .23 .98 .55], ...
                 'ColumnName', node_labels, ...
                 'CellEditCallback', {@cb_matrix_value} ...
                 )
         end
         ui_brain_view = uicontrol('Parent', pl.pp, 'Style', 'pushbutton');
         init_brain_view_btn()
+        rules_brain_view()
         x_name = 'Weighted';
     end
 
@@ -187,7 +199,7 @@ function update(pl)
                 'String', 'Brain View', ...
                 'Tooltip', 'Plot the Measure Brain View. Will plot depending on the node selection.', ...
                 'Units', 'normalized', ...
-                'Position', [.49 .01 .25 .08], ...
+                'Position', [.49 .01 .25 .2], ...
                 'Callback', {@cb_brain_view} ...
                 );
         end
@@ -219,6 +231,22 @@ function update(pl)
                     'Visible', 'on', ...
                     'Enable', 'on' ...
                     )
+            end
+        end
+        function rules_brain_view()
+            if Measure.is_global(m)
+                set(ui_brain_view, ...
+                    'Visible', 'off', ...
+                    'Enable', 'off');
+
+            elseif Measure.is_nodal(m)
+                set(ui_brain_view, ...
+                    'Visible', 'on', ...
+                    'Enable', 'on');
+            else
+                set(ui_brain_view, ...
+                    'Visible', 'off', ...
+                    'Enable', 'off');
             end
         end
         function cb_node_1(source, ~)
@@ -373,9 +401,52 @@ function update(pl)
             end
         end
         function cb_brain_view(~, ~)
+            [~, normalized] = get_figure_position();
+            x2 = normalized(1) + normalized(3);
+            h2 = normalized(4) / 1.61;
+            y2 = normalized(2) + normalized(4) - h2;
+            w2 = normalized(3) * 1.61;
+
+            f = figure( ...
+                'Visible', 'off', ...
+                'NumberTitle', 'off', ...
+                'Name', ['PlotBrainView - ' BRAPH2.STR], ...
+                'Units', 'normalized', ...
+                'Position', [x2 y2 w2 h2], ...
+                'Units', 'character', ...
+                'MenuBar', 'none', ...
+                'DockControls', 'off', ...
+                'Color', [.94 .94 .94] ...
+                );
+
+            set_icon(f);
+
+            ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
+            delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
+            delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
+            delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
+            delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
+            delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
+            delete(findall(ui_toolbar, 'Tag', 'Standard.OpenInspector'))
+            delete(findall(ui_toolbar, 'Tag', 'Exploration.Brushing'))
+            delete(findall(ui_toolbar, 'Tag', 'DataManager.Linking'))
+            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertColorbar'))
+            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertLegend'))
+            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
+            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
+
             pbv = PlotBrainView('SUBMENU', true, 'SETPOS', [.4 .50 .40 .30], ...
-                'COMP', el, 'Atlas', graph.get('BRAINATLAS'), 'Type', x_name);
-            pbv.draw();
+                'ME', el, 'Atlas', graph.get('BRAINATLAS'), 'Type', x_name);
+
+            el_panel = uipanel( ...
+                'Parent', f, ...
+                'BorderType', 'none' ...
+                );
+
+            pbv.draw('Parent', el_panel);
+            pbv.settings('SETPOS', [x2 normalized(2) w2 h2*1.61-h2-.065]);
+
+            set(f, 'Visible', 'on')
         end
 end
 function redraw(pl, varargin)
@@ -395,12 +466,18 @@ function redraw(pl, varargin)
         pl.redraw@PlotProp('Height', 1.8, varargin{:})
     else
         value_cell = el.get(prop);
+        inner_tmp = value_cell{1};
 
         if isempty(value_cell)
             pl.redraw@PlotProp('Height', 1.8, varargin{:})
+        elseif size(inner_tmp, 1) == 1 % global WU
+            pl.redraw@PlotProp('Height', 5, varargin{:})
+        elseif size(inner_tmp, 1) ~= 1 && size(inner_tmp, 2) == 1 % nodal WU
+            pl.redraw@PlotProp('Height', 10, varargin{:})
         else
             pl.redraw@PlotProp('Height', 30, varargin{:})
         end
+
         if Measure.is_binodal(el.get('Measure')) && exist('value_cell')
             for i = 1:1:size(value_cell, 1)
                 for j = 1:1:size(value_cell, 2)
