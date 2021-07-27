@@ -275,9 +275,9 @@ end
         set(btn, 'BackgroundColor', [166 218 149] / 255) % color
         if length(varargin) > 1
             if ~isempty(varargin{2})
-                btn_new_name = varargin{2};
+                btn_new_name = [varargin{3} ' ' varargin{2}];
                 set(btn, 'String', btn_new_name); % id
-            else
+            else % just default 
                 set(btn, 'String', varargin{3}); % id
             end
         end
