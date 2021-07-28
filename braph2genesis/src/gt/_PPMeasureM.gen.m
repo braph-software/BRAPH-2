@@ -59,9 +59,22 @@ function update(pl)
     y_label = el.getClass();
     node_labels_tmp = graph.get('BRAINATLAS').get('BR_DICT');
     node_labels = cellfun(@(x) x.get('ID') , node_labels_tmp.getItems(), 'UniformOutput', false);
+    ui_brain_view = [];
 
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
-        % do nothing
+        % remove previous tables/textbox
+        if ~isempty(pl.table_value_cell)
+            delete(pl.table_value_cell)
+        end
+        % delete brainview buttons
+        childs = get(pl.pp, 'Child');
+        for n = 1:length(childs)
+            child = childs(n);
+            if isequal(child.String, 'Brain View')
+                delete(child)
+            end
+        end
+
     elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
         if isa(graph, 'MultigraphBUD')
             x_range = graph.get('DENSITIES');
@@ -105,6 +118,9 @@ function update(pl)
                 end
             end
         else
+            if isempty(pl.table_value_cell)
+                pl.table_value_cell = uitable('Parent', pl.pp);
+            end
             value_double =  cell2mat(cellfun(@(x) x', value_cell, 'UniformOutput', false));
             set(pl.table_value_cell, ...
                 'Data', value_double, ...
@@ -157,6 +173,9 @@ function update(pl)
                 'String', num2str(value_double) ...
                 );
         else
+            if isempty(pl.table_value_cell) || ~isvalid(pl.table_value_cell)
+                pl.table_value_cell = uitable('Parent', pl.pp);
+            end
             value_double = cell2mat(cellfun(@(x) x', value_cell, 'UniformOutput', false));
             set(pl.table_value_cell, ...
                 'Data', value_double, ...
