@@ -118,7 +118,7 @@ function update(pl)
                 end
             end
         else
-            if isempty(pl.table_value_cell)
+            if isempty(pl.table_value_cell) || ~isvalid(pl.table_value_cell)
                 pl.table_value_cell = uitable('Parent', pl.pp);
             end
             value_double =  cell2mat(cellfun(@(x) x', value_cell, 'UniformOutput', false));
@@ -146,7 +146,7 @@ function update(pl)
         if Measure.is_global(el) % global
             node_labels = 'Global';
         end
-        if Measure.is_binodal(el)
+        if Measure.is_binodal(el) % binodal
             delete(pl.table_value_cell)
             pl.table_value_cell = cell(size(value_cell));
             for i = 1:1:size(pl.table_value_cell, 1)
@@ -172,7 +172,7 @@ function update(pl)
                 'BackgroundColor', [1 1 1], ...
                 'String', num2str(value_double) ...
                 );
-        else
+        else % nodal
             if isempty(pl.table_value_cell) || ~isvalid(pl.table_value_cell)
                 pl.table_value_cell = uitable('Parent', pl.pp);
             end

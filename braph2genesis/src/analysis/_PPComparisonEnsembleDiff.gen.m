@@ -60,7 +60,18 @@ function update(pl)
     node_labels = cellfun(@(x) x.get('ID') , node_labels_tmp.getItems(), 'UniformOutput', false); 
     
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
-        % do nothing
+        % remove previous tables/textbox
+        if ~isempty(pl.comparison_tbl)
+            delete(pl.comparison_tbl)
+        end
+        % delete brainview buttons
+        childs = get(pl.pp, 'Child');
+        for n = 1:length(childs)
+            child = childs(n);
+            if isequal(child.String, 'Brain View')
+                delete(child)
+            end
+        end
     elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
 
         if isa(graph, 'MultigraphBUD')
@@ -102,6 +113,9 @@ function update(pl)
         
     else
         % paint a normal cell tables
+        if isempty(pl.comparison_tbl) || ~isvalid(pl.comparison_tbl)
+            pl.comparison_tbl = uitable('Parent', pl.pp);
+        end
         value_cell = el.get(prop);
         value_double = cell2mat(cellfun(@(x) x', value_cell, 'UniformOutput', false));
         set(pl.comparison_tbl, ...
