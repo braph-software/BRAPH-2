@@ -1,13 +1,13 @@
 %% ¡header!
-PlotBrainGraph < PlotBrainAtlas (pl, plot brain graph) is a plot of a brain graph.
+PlotBrainGraphComparison < PlotBrainAtlas (pl, plot brain graph) is a plot of a brain graph comparison.
 
 %%% ¡description!
-PlotBrainGraph manages the plot of the graph edges, arrows and cylinders.
-PlotBrainGraph utilizes the surface created from PlotBrainAtlas to
+PlotBrainGraphComparison manages the plot of the graph edges, arrows and cylinders.
+PlotBrainGraphComparison utilizes the surface created from PlotBrainAtlas to
 integrate the regions to a brain surface.
 
 %%% ¡seealso!
-Plot, BrainAtlas, PlotBrainSurface, PlotBrainAtlas.
+Plot, BrainAtlas, PlotBrainSurface, PlotBrainAtlas, PlotBrainGraph.
 
 %% ¡constants!
 PLOT_LINESTYLE_TAG = { ...
@@ -16,7 +16,7 @@ PLOT_LINESTYLE_TAG = { ...
     '-.' ...
     '--' ...
     'none' ...
-    }
+    };
 
 PLOT_LINESTYLE_NAME = { ...
     'solid' ...
@@ -24,7 +24,7 @@ PLOT_LINESTYLE_NAME = { ...
     'dashdot' ...
     'dashed' ...
     'none' ...
-    }
+    };
 
 % Symbols
 INIT_SYM_MARKER = 'o'
@@ -82,7 +82,7 @@ f_measures_settings
 
 %% ¡props!
 %%% ¡prop!
-ME (metadata, item) is the measure.
+COMP (metadata, item) is the comparison.
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
@@ -214,7 +214,7 @@ function f_settings  = settings(pl, varargin)
     cb_panel_mcr()
 
     if nargout > 0
-        f_settings = pl.f_settings
+        f_settings = pl.f_settings;
     end
 end
 
@@ -232,7 +232,7 @@ function h = link_edge(pl, i, j, varargin)
     % All standard plot properties of plot3 can be used.
     % The line properties can also be changed when hidden.
     %
-    % See also PlotBrainGraph, plot3, link_edges, text_edge.
+    % See also PlotBrainGraphComparison, plot3, link_edges, text_edge.
 
     if i == j  % removes diagonal
         return;
@@ -312,7 +312,7 @@ function link_edge_on(pl, i, j)
     % LINK_EDGE_ON(BG, I, J) shows the edge link from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, link_edge, link_edge_off.
+    % See also PlotBrainGraphComparison, link_edge, link_edge_off.
 
     if ishandle(pl.edges.h(i, j))
         set(pl.edges.h(i, j), 'Visible', 'on')
@@ -324,7 +324,7 @@ function link_edge_off(pl, i, j)
     % LINK_EDGE_OFF(BG, I, J) hides the edge link from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, link_edge, link_edge_on.
+    % See also PlotBrainGraphComparison, link_edge, link_edge_on.
 
     if ishandle(pl.edges.h(i, j))
         set(pl.edges.h(i, j), 'Visible', 'off')
@@ -346,7 +346,7 @@ function link_edges(pl, i_vec, j_vec, varargin)
     % All standard plot properties of plot3 can be used.
     % The line properties can also be changed when hidden.
     %
-    % See also PlotBrainGraph, plot3, link_edge.
+    % See also PlotBrainGraphComparison, plot3, link_edge.
 
     if nargin < 2 || isempty(i_vec) || isempty(j_vec)
         for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
@@ -373,7 +373,7 @@ function link_edges_on(pl, i_vec, j_vec)
     % LINK_EDGES_ON(BG, I, J) shows multiple edge link from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, link_edges, link_edges_off.
+    % See also PlotBrainGraphComparison, link_edges, link_edges_off.
 
     if nargin<2 || isempty(i_vec) || isempty(j_vec)
         for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
@@ -400,7 +400,7 @@ function link_edges_off(pl, i_vec, j_vec)
     % LINK_EDGES_OFF(BG, I, J) hides multiple edge links from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, link_edge, link_edge_on.
+    % See also PlotBrainGraphComparison, link_edge, link_edge_on.
 
     if nargin<2 || isempty(i_vec) || isempty(j_vec)
         for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
@@ -434,7 +434,7 @@ function link_edges_settings(pl, i_vec, j_vec, varargin)
     %       FigColor     -   background color of the GUI
     %       FigName      -   name of the GUI
     %
-    % See also PlotBrainGraph.
+    % See also PlotBrainGraphComparison.
 
     atlas_length = pl.get('ATLAS').get('BR_DICT').length();
     data = cell(atlas_length, atlas_length);
@@ -512,7 +512,7 @@ function link_edges_settings(pl, i_vec, j_vec, varargin)
 
     ui_popup_style = uicontrol(f, 'Units', 'normalized', 'Style',  'popup', 'String', {''});
     set(ui_popup_style, 'Position', [.62 .575 .35 .10])
-    set(ui_popup_style, 'String', PlotBrainGraph.PLOT_LINESTYLE_NAME)
+    set(ui_popup_style, 'String', PlotBrainGraphComparison.PLOT_LINESTYLE_NAME)
     set(ui_popup_style, 'Value', 1)
     set(ui_popup_style, 'TooltipString', 'Select line style');
     set(ui_popup_style, 'Callback', {@cb_style})
@@ -623,7 +623,7 @@ function bool = link_edge_is_on(pl, i, j)
     % BOOL = LINK_EDGE_IS_ON(BG, I, J) returns true if the line link
     % from the brain regions I to J is visible and false otherwise.
     %
-    % See also PlotBrainGraph.
+    % See also PlotBrainGraphComparison.
 
     bool = ishandle(pl.edges.h(i, j)) && strcmpi(get(pl.edges.h(i, j), 'Visible'), 'on');
 end
@@ -642,7 +642,7 @@ function h = arrow_edge(pl, i, j, varargin)
     % All standard plot properties of plot3 can be used.
     % The line properties can also be changed when hidden.
     %
-    % See also PlotBrainGraph, plot3, link_edges.
+    % See also PlotBrainGraphComparison, plot3, link_edges.
 
     if i == j  % removes diagonal
         return;
@@ -736,7 +736,7 @@ function arrow_edge_on(pl, i, j)
     % ARROW_EDGE_ON(BG, I, J) shows the edge link from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, link_edge, link_edge_off.
+    % See also PlotBrainGraphComparison, link_edge, link_edge_off.
 
     if ishandle(pl.edges.arr(i, j))
         set(pl.edges.arr(i, j), 'Visible', 'on')
@@ -748,7 +748,7 @@ function arrow_edge_off(pl, i, j)
     % ARROW_EDGE_OFF(BG, I, J) hides the edge link from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, link_edge, link_edge_on.
+    % See also PlotBrainGraphComparison, link_edge, link_edge_on.
 
     if ishandle(pl.edges.arr(i, j))
         set(pl.edges.arr(i, j), 'Visible', 'off')
@@ -770,7 +770,7 @@ function arrow_edges(pl, i_vec, j_vec, varargin)
     % All standard plot properties of plot3 can be used.
     % The line properties can also be changed when hidden.
     %
-    % See also PlotBrainGraph, plot3, link_edge.
+    % See also PlotBrainGraphComparison, plot3, link_edge.
 
     if nargin < 2 || isempty(i_vec) || isempty(j_vec)
         for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
@@ -797,7 +797,7 @@ function arrow_edges_on(pl, i_vec, j_vec)
     % ARROW_EDGES_ON(BG, I, J) shows multiple edge link from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, link_edges, link_edges_off.
+    % See also PlotBrainGraphComparison, link_edges, link_edges_off.
 
     if nargin<2 || isempty(i_vec) || isempty(j_vec)
         for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
@@ -824,7 +824,7 @@ function arrow_edges_off(pl, i_vec, j_vec)
     % ARROW_EDGES_OFF(BG, I, J) hides multiple edge links from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, link_edge, link_edge_on.
+    % See also PlotBrainGraphComparison, link_edge, link_edge_on.
 
     if nargin<2 || isempty(i_vec) || isempty(j_vec)
         for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
@@ -858,7 +858,7 @@ function arrow_edges_settings(pl, i_vec, j_vec, varargin)
     %       FigColor     -   background color of the GUI
     %       FigName      -   name of the GUI
     %
-    % See also PlotBrainGraph.
+    % See also PlotBrainGraphComparison.
 
     atlas_length = pl.get('ATLAS').get('BR_DICT').length();
     data = cell(atlas_length, atlas_length);
@@ -1022,7 +1022,7 @@ function bool = arrow_edge_is_on(pl, i, j)
     % BOOL = ARROW_EDGE_IS_ON(BG, I, J) returns true if the line arrow link
     % from the brain regions I to J is visible and false otherwise.
     %
-    % See also PlotBrainGraph.
+    % See also PlotBrainGraphComparison.
 
     bool = ishandle(pl.edges.arr(i, j)) && strcmpi(get(pl.edges.arr(i, j), 'Visible'), 'on');
 end
@@ -1041,7 +1041,7 @@ function h = cylinder_edge(pl, i, j, varargin)
     % All standard plot properties of plot3 can be used.
     % The line properties can also be changed when hidden.
     %
-    % See also PlotBrainGraph, plot3, link_edges.
+    % See also PlotBrainGraphComparison, plot3, link_edges.
 
     if i == j  % removes diagonal
         return;
@@ -1126,7 +1126,7 @@ function cylinder_edge_on(pl, i, j)
     % CYLINDER_EDGE_ON(BG, I, J) shows the edge link from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, link_edge, link_edge_off.
+    % See also PlotBrainGraphComparison, link_edge, link_edge_off.
 
     if ishandle(pl.edges.cyl(i, j))
         set(pl.edges.cyl(i, j), 'Visible', 'on')
@@ -1138,7 +1138,7 @@ function cylinder_edge_off(pl, i, j)
     % CYLINDER_EDGE_OFF(BG, I, J) hides the edge link from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, link_edge, link_edge_on.
+    % See also PlotBrainGraphComparison, link_edge, link_edge_on.
 
     if ishandle(pl.edges.cyl(i, j))
         set(pl.edges.cyl(i, j), 'Visible', 'off')
@@ -1160,7 +1160,7 @@ function cylinder_edges(pl, i_vec, j_vec, varargin)
     % All standard plot properties of plot3 can be used.
     % The line properties can also be changed when hidden.
     %
-    % See also PlotBrainGraph, plot3, link_edge.
+    % See also PlotBrainGraphComparison, plot3, link_edge.
 
     if nargin < 2 || isempty(i_vec) || isempty(j_vec)
         for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
@@ -1187,7 +1187,7 @@ function cylinder_edges_on(pl, i_vec, j_vec)
     % CYLINDER_EDGES_ON(BG, I, J) shows multiple edge link from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, link_edges, link_edges_off.
+    % See also PlotBrainGraphComparison, link_edges, link_edges_off.
 
     if nargin<2 || isempty(i_vec) || isempty(j_vec)
         for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
@@ -1214,7 +1214,7 @@ function cylinder_edges_off(pl, i_vec, j_vec)
     % CYLINDER_EDGES_OFF(BG, I, J) hides multiple edge links from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, link_edge, link_edge_on.
+    % See also PlotBrainGraphComparison, link_edge, link_edge_on.
 
     if nargin<2 || isempty(i_vec) || isempty(j_vec)
         for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
@@ -1248,7 +1248,7 @@ function cylinder_edges_settings(pl, i_vec, j_vec, varargin)
     %       FigColor     -   background color of the GUI
     %       FigName      -   name of the GUI
     %
-    % See also PlotBrainGraph.
+    % See also PlotBrainGraphComparison.
 
     atlas_length = pl.get('ATLAS').get('BR_DICT').length();
     data = cell(atlas_length, atlas_length);
@@ -1412,7 +1412,7 @@ function bool = cylinder_edge_is_on(pl, i, j)
     % BOOL = CYLINDER_EDGE_IS_ON(BG, I, J) returns true if the cylinder link
     % from the brain regions I to J is visible and false otherwise.
     %
-    % See also PlotBrainGraph.
+    % See also PlotBrainGraphComparison.
 
     bool = ishandle(pl.edges.cyl(i, j)) && strcmpi(get(pl.edges.cyl(i, j), 'Visible'), 'on');
 end
@@ -1459,7 +1459,7 @@ function text_edge_on(pl, i, j)
     % TEXT_EDGE_ON(BG, I, J) shows the edge text from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, text_edge, text_edge_off.
+    % See also PlotBrainGraphComparison, text_edge, text_edge_off.
 
     if ishandle(pl.edges.texts(i, j))
         set(pl.edges.texts(i, j), 'Visible', 'on')
@@ -1471,7 +1471,7 @@ function text_edge_off(pl, i, j)
     % TEXT_EDGE_OFF(BG, I, J) hides the edge text from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, text_edge, text_edge_on.
+    % See also PlotBrainGraphComparison, text_edge, text_edge_on.
 
     if ishandle(pl.edges.texts(i, j))
         set(pl.edges.texts(i, j), 'Visible', 'off')
@@ -1483,7 +1483,7 @@ function bool = text_edge_is_on(pl, i, j)
     % BOOL = TEXT_EDGE_IS_ON(BG, I, J) returns true if the edge text
     % from the brain regions I to J is visible and false otherwise.
     %
-    % See also PlotBrainGraph, text_edge, tex_edge_is_off.
+    % See also PlotBrainGraphComparison, text_edge, tex_edge_is_off.
 
     bool = ishandle(pl.edges.texts(i, j)) && strcmpi(get(pl.edges.texts(i, j), 'Visible'), 'on');
 end
@@ -1493,7 +1493,7 @@ function bool = tex_edge_is_off(pl, i, j)
     % BOOL = TEXT_EDGE_IS_Off(BG, I, J) returns true if the edge text
     % from the brain regions I to J is not visible and false otherwise.
     %
-    % See also PlotBrainGraph, text_edge, tex_edge_is_off.
+    % See also PlotBrainGraphComparison, text_edge, tex_edge_is_off.
 
     bool = ishandle(pl.edges.texts(i, j)) && strcmpi(get(pl.edges.texts(i, j), 'Visible'), 'off');
 end
@@ -1503,7 +1503,7 @@ function h = get_axes(pl)
     %
     % H = GET_AXES(PL) returns the panel axes
     %
-    % See also PlotBrainGraph.
+    % See also PlotBrainGraphComparison.
     
     h = pl.h_axes;
 end
@@ -1512,7 +1512,7 @@ function brain_graph_panel = getBrainGraphPanel(pl)
     % GETBRAINGRAPHPANEL creates a braingraph panel
     %
     % BRAIN_GRAPH_PANEL = GETBRAINGRAPHPANEL(ANAlYSIS, AXES, PLOTBRAINGRAPH)
-    % creates a brain graph panel to manage the type of
+    % creates a brain graph comparison panel to manage the type of
     % PLOTBRAINGRAPH that the GUIAnalysis plots in the AXES.
     %
     % See also getBrainView.
@@ -1801,7 +1801,9 @@ function h = getMCRPanel(pl)
     f = pl.f_measures_settings;
     BKGCOLOR = [1 .9725 .929];
 
-    measure_data = pl.get('ME').get('M');
+    comparison = pl.get('COMP');
+    measure_data = comparison.get('DIFF');
+    m = comparison.get('MEASURE');
     fdr_lim = [];
     p1 = [];
     p2 = [];
@@ -1864,7 +1866,7 @@ function h = getMCRPanel(pl)
             set(ui_checkbox_meas_symbolsize, 'Callback', {@cb_checkbox_meas_symbolsize})
 
             set(ui_edit_meas_symbolsize, 'Units', 'normalized')
-            set(ui_edit_meas_symbolsize, 'String', PlotBrainGraph.INIT_SYM_SIZE)
+            set(ui_edit_meas_symbolsize, 'String', PlotBrainGraphComparison.INIT_SYM_SIZE)
             set(ui_edit_meas_symbolsize, 'Enable', 'off')
             set(ui_edit_meas_symbolsize, 'Position', [.31 .8 .6 .08])
             set(ui_edit_meas_symbolsize, 'HorizontalAlignment', 'center')
@@ -1904,7 +1906,7 @@ function h = getMCRPanel(pl)
             set(ui_checkbox_meas_sphereradius, 'Callback', {@cb_checkbox_meas_sphereradius})
 
             set(ui_edit_meas_sphereradius, 'Units', 'normalized')
-            set(ui_edit_meas_sphereradius, 'String', PlotBrainGraph.INIT_SPH_R)
+            set(ui_edit_meas_sphereradius, 'String', PlotBrainGraphComparison.INIT_SPH_R)
             set(ui_edit_meas_sphereradius, 'Enable', 'off')
             set(ui_edit_meas_sphereradius, 'Position', [.31 0.54 .6 .08])
             set(ui_edit_meas_sphereradius, 'HorizontalAlignment', 'center')
@@ -1944,7 +1946,7 @@ function h = getMCRPanel(pl)
             set(ui_checkbox_meas_spheretransparency, 'Callback', {@cb_checkbox_meas_spheretransparency})
 
             set(ui_slider_meas_spheretransparency, 'Units', 'normalized')
-            set(ui_slider_meas_spheretransparency, 'Min', 0, 'Max', 1, 'Value', PlotBrainGraph.INIT_SPH_FACE_ALPHA);
+            set(ui_slider_meas_spheretransparency, 'Min', 0, 'Max', 1, 'Value', PlotBrainGraphComparison.INIT_SPH_FACE_ALPHA);
             set(ui_slider_meas_spheretransparency, 'Enable', 'off')
             set(ui_slider_meas_spheretransparency, 'Position', [.31 0.28 .6 .08])
             set(ui_slider_meas_spheretransparency, 'TooltipString', 'Brain region transparency (applied both to faces and edges)')
@@ -1959,7 +1961,7 @@ function h = getMCRPanel(pl)
             set(ui_checkbox_meas_labelsize, 'Callback', {@cb_checkbox_meas_labelsize})
 
             set(ui_edit_meas_labelsize, 'Units', 'normalized')
-            set(ui_edit_meas_labelsize, 'String', PlotBrainGraph.INIT_LAB_FONT_SIZE)
+            set(ui_edit_meas_labelsize, 'String', PlotBrainGraphComparison.INIT_LAB_FONT_SIZE)
             set(ui_edit_meas_labelsize, 'Enable', 'off')
             set(ui_edit_meas_labelsize, 'Position', [.31 .15 .6 .08])
             set(ui_edit_meas_labelsize, 'HorizontalAlignment', 'center')
@@ -2147,7 +2149,8 @@ function h = getMCRPanel(pl)
         end
         function update_brain_meas_plot()
             if ~isempty(measure_data)
-                if  Measure.is_nodal(pl.get('ME'))
+                
+                if  Measure.is_nodal(m)
 
                     measure_data_inner = measure_data{get(ui_layer_selector, 'Value')};
 
@@ -2287,7 +2290,7 @@ br_dict =  IndexedDictionary( ...
     'it_key', IndexedDictionary.getPropDefault(IndexedDictionary.IT_KEY), ...
     'it_list', {br1, br2, br3, br4, br5});
 atlas = BrainAtlas('ID', 'BA ID', 'Label', 'Brain Atlas Label', 'Notes', 'Brain atlas notes', 'SURF', bs, 'BR_DICT', br_dict);
-pl = PlotBrainGraph('atlas', atlas, ...
+pl = PlotBrainGraphComparison('atlas', atlas, ...
     'syms', 1, 'SYMS_SIZE', [1:5:25]', ...
     'SYMS_FACE_COLOR', [0 0 0], 'SYMS_EDGE_COLOR', [0 0 0], ...
     'SPHS', 1, 'SPHS_SIZE', [1:1:5]', ...
@@ -2300,7 +2303,7 @@ pl = PlotBrainGraph('atlas', atlas, ...
 close(gcf)
 
 %% Init edges lineså
-pl = PlotBrainGraph('atlas', atlas, ...
+pl = PlotBrainGraphComparison('atlas', atlas, ...
     'SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
 pl.draw();
 pl.link_edges();

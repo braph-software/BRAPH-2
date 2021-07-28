@@ -59,8 +59,7 @@ function update(pl)
     y_label = el.getClass();
     node_labels_tmp = graph.get('BRAINATLAS').get('BR_DICT');
     node_labels = cellfun(@(x) x.get('ID') , node_labels_tmp.getItems(), 'UniformOutput', false);
-    ui_brain_view = [];
-
+    
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
         % remove previous tables/textbox
         if ~isempty(pl.table_value_cell)
@@ -143,9 +142,7 @@ function update(pl)
     else % weighted
         % paint a normal cell tables
         value_cell = el.get(prop);
-        if Measure.is_global(el) % global
-            node_labels = 'Global';
-        end
+
         if Measure.is_binodal(el) % binodal
             delete(pl.table_value_cell)
             pl.table_value_cell = cell(size(value_cell));
@@ -162,6 +159,7 @@ function update(pl)
                 end
             end
         elseif Measure.is_global(el)
+            node_labels = 'Global';
             value_double = cell2mat(cellfun(@(x) x', value_cell, 'UniformOutput', false));
             delete(pl.table_value_cell)
             pl.table_value_cell = uicontrol( ...

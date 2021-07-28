@@ -50,15 +50,14 @@ function p = getBrainView(pl)
     atlas = pl.get('ATLAS');
     
     if isempty(pl.get('ME')) && ~isempty(pl.get('COMP'))
-        case_tag = 'COMP';
-        case_data = pl.get('COMP');
-    else
-        case_tag = 'ME';
-        case_data = pl.get('ME');
-    end
-    pl.bg =  PlotBrainGraph('ATLAS', atlas, ...
-        case_tag, case_data, ...
+        pl.bg =  PlotBrainGraphComparison('ATLAS', atlas, ...
+        'COMP', pl.get('COMP'), ...
         'Surf', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
+    else
+        pl.bg =  PlotBrainGraph('ATLAS', atlas, ...
+        'ME',  pl.get('ME'), ...
+        'Surf', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
+    end
     
     function create_figure()
         pl.bg.draw('Parent', uiparent);
