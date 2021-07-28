@@ -25,6 +25,9 @@ COMP (metadata, item) is the comparison.
 ATLAS(metadata, item) is a brain atlas.
 
 %%% ¡prop!
+PROPTAG(metadata, string) is a prop tag.
+
+%%% ¡prop!
 TYPE(metadata, string) is the type of measure.
 
 %% ¡methods!
@@ -49,9 +52,12 @@ function p = getBrainView(pl)
     uiparent = pl.h_figure;
     atlas = pl.get('ATLAS');
     
+    prop_tag = pl.get('PROPTAG');
+    
     if isequal(pl.get('ME'), Element()) && ~isempty(pl.get('COMP'))
         pl.bg =  PlotBrainGraphComparison('ATLAS', atlas, ...
         'COMP', pl.get('COMP'), ...
+        'PROPTAG', prop_tag, ...
         'Surf', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
     else
         pl.bg =  PlotBrainGraph('ATLAS', atlas, ...

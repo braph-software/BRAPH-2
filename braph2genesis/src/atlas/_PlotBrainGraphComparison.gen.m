@@ -84,6 +84,9 @@ f_measures_settings
 %%% ¡prop!
 COMP (metadata, item) is the comparison.
 
+%%% ¡prop!
+PROPTAG(metadata, string) is a prop tag.
+
 %% ¡methods!
 function h_panel = draw(pl, varargin)
     %DRAW draws the brain atlas graph graphical panel.
@@ -1802,7 +1805,8 @@ function h = getMCRPanel(pl)
     BKGCOLOR = [1 .9725 .929];
 
     comparison = pl.get('COMP');
-    measure_data = comparison.get('DIFF');
+    prop_tag = pl.get('PROPTAG');
+    measure_data = comparison.get(prop_tag);
     m = comparison.get('MEASURE');
     fdr_lim = [];
     p1 = [];

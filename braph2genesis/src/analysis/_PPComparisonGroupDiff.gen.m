@@ -435,9 +435,11 @@ function update(pl)
             ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
             delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
             delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
+            
+            prop_tag = el.getPropTag(prop);
 
             pbv = PlotBrainView('SUBMENU', false, 'SETPOS', [.4 .50 .40 .30], ...
-                'COMP', el, 'Atlas', graph.get('BRAINATLAS'), 'Type', x_name);
+                'COMP', el, 'PROPTAG', prop_tag, 'Atlas', graph.get('BRAINATLAS'), 'Type', x_name);
 
             el_panel = uipanel( ...
                 'Parent', f, ...
