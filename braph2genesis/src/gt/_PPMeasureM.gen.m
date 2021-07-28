@@ -346,16 +346,6 @@ function update(pl)
             ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
             delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
             delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.OpenInspector'))
-            delete(findall(ui_toolbar, 'Tag', 'Exploration.Brushing'))
-            delete(findall(ui_toolbar, 'Tag', 'DataManager.Linking'))
-            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertColorbar'))
-            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertLegend'))
-            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
-            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
 
             pg = PlotGraph( ...
                 'bkgcolor', [1 1 1], ...
@@ -420,16 +410,6 @@ function update(pl)
             ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
             delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
             delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.OpenInspector'))
-            delete(findall(ui_toolbar, 'Tag', 'Exploration.Brushing'))
-            delete(findall(ui_toolbar, 'Tag', 'DataManager.Linking'))
-            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertColorbar'))
-            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertLegend'))
-            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
-            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
 
             pbv = PlotBrainView('SUBMENU', false, 'SETPOS', [.4 .50 .40 .30], ...
                 'ME', el, 'Atlas', graph.get('BRAINATLAS'), 'Type', x_label);
