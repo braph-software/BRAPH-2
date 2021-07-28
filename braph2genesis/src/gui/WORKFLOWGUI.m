@@ -211,7 +211,7 @@ end
                         'String', btn_name, ...
                         'Units', 'characters', ...                        
                         'Position', [width_ct pos(4)-y_offset pos(3)-2*slider_width y_slice], ...
-                        'Callback', {@(src, x, y) btn_action(src, i - 1, j - 1)})
+                        'Callback', {@btn_action})
                 else
                     set(panel_inner{i, j}, ...
                         'Style', 'text', ...
@@ -253,7 +253,18 @@ end
                 'Position', [pos(3)-slider_width 0 slider_width pos(4)])
         end
     end
-    function btn_action(src, panel, child)        
+    function btn_action(src, ~) 
+        
+        for k = 1:size(panel_inner, 1)
+            for j = 1:size(panel_inner, 2)
+                obj_inner = panel_inner{k, j};
+                if isequal(src, obj_inner)
+                    panel = k-1;
+                    child = j-1;
+                end
+            end
+        end
+
         panel_exe_ = panel_executables{panel + 1};
         exe_ = split(panel_exe_{child + 1}, '=');       
         
@@ -264,9 +275,11 @@ end
         
         for l = 1:size(panel_struct, 2)
             if ~isempty(panel_struct) && size(panel_struct, 1) > 1 && panel ~= 1
-                exe_{2} = strrep(exe_{2}, ...
-                    panel_struct(panel - 1, l).name_script, ...
-                    panel_struct(panel - 1, l).name);
+                if ~isempty(panel_struct(panel - 1, l).name_script) && ~isempty(panel_struct(panel - 1, l).name)
+                    exe_{2} = strrep(exe_{2}, ...
+                        panel_struct(panel - 1, l).name_script, ...
+                        panel_struct(panel - 1, l).name);
+                end
             end
         end
          if isfield(panel_struct(panel, child), 'exe') && ~isempty(panel_struct(panel, child).exe)
