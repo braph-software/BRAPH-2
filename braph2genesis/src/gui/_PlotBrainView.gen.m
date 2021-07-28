@@ -49,7 +49,7 @@ function p = getBrainView(pl)
     uiparent = pl.h_figure;
     atlas = pl.get('ATLAS');
     
-    if isempty(pl.get('ME')) && ~isempty(pl.get('COMP'))
+    if isequal(pl.get('ME'), Element()) && ~isempty(pl.get('COMP'))
         pl.bg =  PlotBrainGraphComparison('ATLAS', atlas, ...
         'COMP', pl.get('COMP'), ...
         'Surf', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
