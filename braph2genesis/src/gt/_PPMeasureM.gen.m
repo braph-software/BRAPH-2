@@ -59,9 +59,21 @@ function update(pl)
     y_label = el.getClass();
     node_labels_tmp = graph.get('BRAINATLAS').get('BR_DICT');
     node_labels = cellfun(@(x) x.get('ID') , node_labels_tmp.getItems(), 'UniformOutput', false);
-
+    
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
-        % do nothing
+        % remove previous tables/textbox
+        if ~isempty(pl.table_value_cell)
+            delete(pl.table_value_cell)
+        end
+        % delete brainview buttons
+        childs = get(pl.pp, 'Child');
+        for n = 1:length(childs)
+            child = childs(n);
+            if isequal(child.String, 'Brain View')
+                delete(child)
+            end
+        end
+
     elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
         if isa(graph, 'MultigraphBUD')
             x_range = graph.get('DENSITIES');
@@ -105,6 +117,9 @@ function update(pl)
                 end
             end
         else
+            if isempty(pl.table_value_cell) || ~isvalid(pl.table_value_cell)
+                pl.table_value_cell = uitable('Parent', pl.pp);
+            end
             value_double =  cell2mat(cellfun(@(x) x', value_cell, 'UniformOutput', false));
             set(pl.table_value_cell, ...
                 'Data', value_double, ...
@@ -127,10 +142,8 @@ function update(pl)
     else % weighted
         % paint a normal cell tables
         value_cell = el.get(prop);
-        if Measure.is_global(el) % global
-            node_labels = 'Global';
-        end
-        if Measure.is_binodal(el)
+
+        if Measure.is_binodal(el) % binodal
             delete(pl.table_value_cell)
             pl.table_value_cell = cell(size(value_cell));
             for i = 1:1:size(pl.table_value_cell, 1)
@@ -146,6 +159,7 @@ function update(pl)
                 end
             end
         elseif Measure.is_global(el)
+            node_labels = 'Global';
             value_double = cell2mat(cellfun(@(x) x', value_cell, 'UniformOutput', false));
             delete(pl.table_value_cell)
             pl.table_value_cell = uicontrol( ...
@@ -156,7 +170,10 @@ function update(pl)
                 'BackgroundColor', [1 1 1], ...
                 'String', num2str(value_double) ...
                 );
-        else
+        else % nodal
+            if isempty(pl.table_value_cell) || ~isvalid(pl.table_value_cell)
+                pl.table_value_cell = uitable('Parent', pl.pp);
+            end
             value_double = cell2mat(cellfun(@(x) x', value_cell, 'UniformOutput', false));
             set(pl.table_value_cell, ...
                 'Data', value_double, ...
@@ -329,16 +346,6 @@ function update(pl)
             ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
             delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
             delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.OpenInspector'))
-            delete(findall(ui_toolbar, 'Tag', 'Exploration.Brushing'))
-            delete(findall(ui_toolbar, 'Tag', 'DataManager.Linking'))
-            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertColorbar'))
-            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertLegend'))
-            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
-            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
 
             pg = PlotGraph( ...
                 'bkgcolor', [1 1 1], ...
@@ -403,16 +410,6 @@ function update(pl)
             ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
             delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
             delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.OpenInspector'))
-            delete(findall(ui_toolbar, 'Tag', 'Exploration.Brushing'))
-            delete(findall(ui_toolbar, 'Tag', 'DataManager.Linking'))
-            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertColorbar'))
-            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertLegend'))
-            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
-            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
 
             pbv = PlotBrainView('SUBMENU', false, 'SETPOS', [.4 .50 .40 .30], ...
                 'ME', el, 'Atlas', graph.get('BRAINATLAS'), 'Type', x_label);

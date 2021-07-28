@@ -62,7 +62,18 @@ function update(pl)
     node_labels = cellfun(@(x) x.get('ID') , node_labels_tmp.getItems(), 'UniformOutput', false);
 
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
-        % do nothing
+        % remove previous tables/textbox
+        if ~isempty(pl.comparison_tbl)
+            delete(pl.comparison_tbl)
+        end
+        % delete brainview buttons
+        childs = get(pl.pp, 'Child');
+        for n = 1:length(childs)
+            child = childs(n);
+            if isequal(child.String, 'Brain View')
+                delete(child)
+            end
+        end
     elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
 
         if isa(graph, 'MultigraphBUD')
@@ -424,19 +435,11 @@ function update(pl)
             ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
             delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
             delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
-            delete(findall(ui_toolbar, 'Tag', 'Standard.OpenInspector'))
-            delete(findall(ui_toolbar, 'Tag', 'Exploration.Brushing'))
-            delete(findall(ui_toolbar, 'Tag', 'DataManager.Linking'))
-            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertColorbar'))
-            delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertLegend'))
-            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
-            delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
+            
+            prop_tag = el.getPropTag(prop);
 
             pbv = PlotBrainView('SUBMENU', false, 'SETPOS', [.4 .50 .40 .30], ...
-                'ME', el, 'Atlas', graph.get('BRAINATLAS'), 'Type', x_name);
+                'COMP', el, 'PROPTAG', prop_tag, 'Atlas', graph.get('BRAINATLAS'), 'Type', x_name);
 
             el_panel = uipanel( ...
                 'Parent', f, ...

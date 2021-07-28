@@ -46,24 +46,32 @@ P1 (result, cell) is the one-tailed p-value.
 %%%% ¡calculate!
 [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp);
 value = p1;
+%%%% ¡gui!
+pl = PPComparisonGroupDiff('EL', cp, 'PROP', ComparisonGroup.P1, varargin{:});
 
 %%% ¡prop!
 P2 (result, cell) is the two-tailed p-value.
 %%%% ¡calculate!
 [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp);
 value = p2;
+%%%% ¡gui!
+pl = PPComparisonGroupDiff('EL', cp, 'PROP', ComparisonGroup.P2, varargin{:});
 
 %%% ¡prop!
 CIL (result, cell) is the lower value of the 95%% confidence interval.
 %%%% ¡calculate!
 [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp);
 value = ci_lower;
+%%%% ¡gui!
+pl = PPComparisonGroupDiff('EL', cp, 'PROP', ComparisonGroup.CIL, varargin{:});
 
 %%% ¡prop!
 CIU (result, cell) is the upper value of the 95%% confidence interval.
 %%%% ¡calculate!
 [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp);
 value = ci_upper;
+%%%% ¡gui!
+pl = PPComparisonGroupDiff('EL', cp, 'PROP', ComparisonGroup.CIU, varargin{:});
 
 %% ¡methods!
 function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
