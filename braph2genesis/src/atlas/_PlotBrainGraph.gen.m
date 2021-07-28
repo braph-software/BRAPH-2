@@ -213,6 +213,9 @@ function f_settings  = settings(pl, varargin)
     function h_panel = getSurfacePanel()
         h_panel = get(f_settings, 'Child');
     end
+
+    cb_panel_mcr()
+
     if nargout > 0
         f_settings = pl.f_settings
     end
@@ -1520,24 +1523,23 @@ function brain_graph_panel = getBrainGraphPanel(pl)
     % variables
     atlas = pl.get('ATLAS');
     br_axes = pl.h_axes; %#ok<NASGU>
-    BKGCOLOR = [.95 .94 .94];
+    BKGCOLOR = [1 .9725 .929];
     fig_graph = pl.f_graph_settings;
 
-    ui_checkbox_graph_linecolor = uicontrol(fig_graph, 'Style',  'checkbox');
+    ui_checkbox_graph_linecolor = uicontrol(fig_graph, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
     ui_popup_graph_initcolor = uicontrol(fig_graph, 'Style', 'popup', 'String', {''});
     ui_popup_graph_fincolor = uicontrol(fig_graph, 'Style', 'popup', 'String', {''});
-    ui_checkbox_graph_lineweight = uicontrol(fig_graph, 'Style',  'checkbox');
+    ui_checkbox_graph_lineweight = uicontrol(fig_graph, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
     ui_edit_graph_lineweight = uicontrol(fig_graph, 'Style', 'edit');
     ui_button_graph_show = uicontrol(fig_graph, 'Style', 'pushbutton');
     ui_button_graph_hide = uicontrol(fig_graph, 'Style', 'pushbutton');
     ui_button_graph_color = uicontrol(fig_graph, 'Style', 'pushbutton');
     ui_button_graph_edge_settings = uicontrol(fig_graph, 'Style', 'pushbutton');
-    ui_text_graph_thickness = uicontrol(fig_graph, 'Style', 'text');
+    ui_text_graph_thickness = uicontrol(fig_graph, 'Style', 'text', 'BackgroundColor', BKGCOLOR);
     ui_edit_graph_thickness = uicontrol(fig_graph, 'Style', 'edit');
     ui_link_type = uicontrol(fig_graph, 'Style', 'popup', 'String', {'line', 'arrow', 'cylinder'});
 
     init_graph()
-    update_graph()
 
     %% Make the GUI visible.
     set(fig_graph, 'Visible', 'on');
@@ -1800,6 +1802,7 @@ function h = getMCRPanel(pl)
     br_axes = pl.h_axes; %#ok<NASGU>
     FigColor = [.95 .94 .94];
     f = pl.f_measures_settings;
+    BKGCOLOR = [1 .9725 .929];
 
     measure_data = pl.get('ME').get('M');
     fdr_lim = [];
@@ -1808,26 +1811,26 @@ function h = getMCRPanel(pl)
 
     % initialization %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % measure container panel
-    ui_measure_container_panel = uipanel(f, 'Units', 'normalized');
+    ui_measure_container_panel = uipanel(f, 'Units', 'normalized', 'BackgroundColor', BKGCOLOR);
 
     % nodal measure figure options
-    ui_layer_text = uicontrol(ui_measure_container_panel, 'Style', 'text');
+    ui_layer_text = uicontrol(ui_measure_container_panel, 'Style', 'text', 'BackgroundColor', BKGCOLOR);
     ui_layer_selector = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
-    ui_checkbox_meas_symbolsize = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
+    ui_checkbox_meas_symbolsize = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
     ui_edit_meas_symbolsize = uicontrol(ui_measure_container_panel, 'Style', 'edit');
-    ui_checkbox_meas_symbolcolor = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
+    ui_checkbox_meas_symbolcolor = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
     ui_popup_meas_initcolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
     ui_popup_meas_fincolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
-    ui_checkbox_meas_sphereradius = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
+    ui_checkbox_meas_sphereradius = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
     ui_edit_meas_sphereradius = uicontrol(ui_measure_container_panel, 'Style', 'edit');
-    ui_checkbox_meas_spherecolor = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
+    ui_checkbox_meas_spherecolor = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
     ui_popup_meas_sphinitcolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
     ui_popup_meas_sphfincolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
-    ui_checkbox_meas_spheretransparency = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
+    ui_checkbox_meas_spheretransparency = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
     ui_slider_meas_spheretransparency = uicontrol(ui_measure_container_panel, 'Style', 'slider');
-    ui_checkbox_meas_labelsize = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
+    ui_checkbox_meas_labelsize = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
     ui_edit_meas_labelsize = uicontrol(ui_measure_container_panel, 'Style', 'edit');
-    ui_checkbox_meas_labelcolor = uicontrol(ui_measure_container_panel, 'Style',  'checkbox');
+    ui_checkbox_meas_labelcolor = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
     ui_popup_meas_labelinitcolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
     ui_popup_meas_labelfincolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
 
@@ -1842,7 +1845,6 @@ function h = getMCRPanel(pl)
 
             set(ui_layer_text, ...
                 'Units', 'normalized', ...
-                'BackgroundColor', FigColor, ...
                 'Position', [.01 .91 .30 .08], ...
                 'FontWeight', 'bold', ...
                 'TooltipString', 'Select the layer of the Measure to be ploted.', ...
@@ -1851,14 +1853,12 @@ function h = getMCRPanel(pl)
 
             set(ui_layer_selector, ...
                 'Units', 'normalized', ...
-                'BackgroundColor', FigColor, ...
                 'Position', [.31 .91 .30 .08], ...
                 'String', cellfun(@(x) num2str(x),  num2cell([1:length(measure_data)]) , 'UniformOutput', false), ...
                 'Callback', {@cb_layer_selector} ...
                 )
 
             set(ui_checkbox_meas_symbolsize, 'Units', 'normalized')
-            set(ui_checkbox_meas_symbolsize, 'BackgroundColor', FigColor)
             set(ui_checkbox_meas_symbolsize, 'Position', [.01 .8 .30 .08])
             set(ui_checkbox_meas_symbolsize, 'String', ' Symbol Size ')
             set(ui_checkbox_meas_symbolsize, 'Value', false)
@@ -1875,7 +1875,6 @@ function h = getMCRPanel(pl)
             set(ui_edit_meas_symbolsize, 'Callback', {@cb_edit_meas_symbolsize})
 
             set(ui_checkbox_meas_symbolcolor, 'Units', 'normalized')
-            set(ui_checkbox_meas_symbolcolor, 'BackgroundColor', FigColor)
             set(ui_checkbox_meas_symbolcolor, 'Position', [.01 .67 .3 .08])
             set(ui_checkbox_meas_symbolcolor, 'String', ' Symbol Color ')
             set(ui_checkbox_meas_symbolcolor, 'Value', false)
@@ -1884,7 +1883,6 @@ function h = getMCRPanel(pl)
             set(ui_checkbox_meas_symbolcolor, 'Callback', {@cb_checkbox_meas_symbolcolor})
 
             set(ui_popup_meas_initcolor, 'Units', 'normalized')
-            set(ui_popup_meas_initcolor, 'BackgroundColor', FigColor)
             set(ui_popup_meas_initcolor, 'Enable', 'off')
             set(ui_popup_meas_initcolor, 'Position', [.31 .67 .3 .08])
             set(ui_popup_meas_initcolor, 'String', {'R', 'G', 'B'})
@@ -1893,7 +1891,6 @@ function h = getMCRPanel(pl)
             set(ui_popup_meas_initcolor, 'Callback', {@cb_meas_initcolor})
 
             set(ui_popup_meas_fincolor, 'Units', 'normalized')
-            set(ui_popup_meas_fincolor, 'BackgroundColor', FigColor)
             set(ui_popup_meas_fincolor, 'Enable', 'off')
             set(ui_popup_meas_fincolor, 'Position', [0.61 .67 .3 .08])
             set(ui_popup_meas_fincolor, 'String', {'R', 'G', 'B'})
@@ -1902,7 +1899,6 @@ function h = getMCRPanel(pl)
             set(ui_popup_meas_fincolor, 'Callback', {@cb_meas_fincolor})
 
             set(ui_checkbox_meas_sphereradius, 'Units', 'normalized')
-            set(ui_checkbox_meas_sphereradius, 'BackgroundColor', FigColor)
             set(ui_checkbox_meas_sphereradius, 'Position', [.01 0.54 .3 .08])
             set(ui_checkbox_meas_sphereradius, 'String', ' Sphere Radius ')
             set(ui_checkbox_meas_sphereradius, 'Value', false)
@@ -1919,7 +1915,6 @@ function h = getMCRPanel(pl)
             set(ui_edit_meas_sphereradius, 'Callback', {@cb_edit_meas_sphereradius})
 
             set(ui_checkbox_meas_spherecolor, 'Units', 'normalized')
-            set(ui_checkbox_meas_spherecolor, 'BackgroundColor', FigColor)
             set(ui_checkbox_meas_spherecolor, 'Position', [.01 0.41 .3 .08])
             set(ui_checkbox_meas_spherecolor, 'String', ' Sphere Color ')
             set(ui_checkbox_meas_spherecolor, 'Value', false)
@@ -1928,7 +1923,6 @@ function h = getMCRPanel(pl)
             set(ui_checkbox_meas_spherecolor, 'Callback', {@cb_checkbox_meas_spherecolor})
 
             set(ui_popup_meas_sphinitcolor, 'Units', 'normalized')
-            set(ui_popup_meas_sphinitcolor, 'BackgroundColor', FigColor)
             set(ui_popup_meas_sphinitcolor, 'Enable', 'off')
             set(ui_popup_meas_sphinitcolor, 'Position', [.31 .41 .3 .08])
             set(ui_popup_meas_sphinitcolor, 'String', {'R', 'G', 'B'})
@@ -1937,7 +1931,6 @@ function h = getMCRPanel(pl)
             set(ui_popup_meas_sphinitcolor, 'Callback', {@cb_meas_sphinitcolor})
 
             set(ui_popup_meas_sphfincolor, 'Units', 'normalized')
-            set(ui_popup_meas_sphfincolor, 'BackgroundColor', FigColor)
             set(ui_popup_meas_sphfincolor, 'Enable', 'off')
             set(ui_popup_meas_sphfincolor, 'Position', [0.61 .41 .3 .08])
             set(ui_popup_meas_sphfincolor, 'String', {'R', 'G', 'B'})
@@ -1946,7 +1939,6 @@ function h = getMCRPanel(pl)
             set(ui_popup_meas_sphfincolor, 'Callback', {@cb_meas_sphfincolor})
 
             set(ui_checkbox_meas_spheretransparency, 'Units', 'normalized')
-            set(ui_checkbox_meas_spheretransparency, 'BackgroundColor', FigColor)
             set(ui_checkbox_meas_spheretransparency, 'Position', [.01 0.28 .3 .08])
             set(ui_checkbox_meas_spheretransparency, 'String', ' Sphere Transparency ')
             set(ui_checkbox_meas_spheretransparency, 'Value', false)
@@ -1955,7 +1947,6 @@ function h = getMCRPanel(pl)
             set(ui_checkbox_meas_spheretransparency, 'Callback', {@cb_checkbox_meas_spheretransparency})
 
             set(ui_slider_meas_spheretransparency, 'Units', 'normalized')
-            set(ui_slider_meas_spheretransparency, 'BackgroundColor', FigColor)
             set(ui_slider_meas_spheretransparency, 'Min', 0, 'Max', 1, 'Value', PlotBrainGraph.INIT_SPH_FACE_ALPHA);
             set(ui_slider_meas_spheretransparency, 'Enable', 'off')
             set(ui_slider_meas_spheretransparency, 'Position', [.31 0.28 .6 .08])
@@ -1963,7 +1954,6 @@ function h = getMCRPanel(pl)
             set(ui_slider_meas_spheretransparency, 'Callback', {@cb_slider_meas_spheretransparency})
 
             set(ui_checkbox_meas_labelsize, 'Units', 'normalized')
-            set(ui_checkbox_meas_labelsize, 'BackgroundColor', FigColor)
             set(ui_checkbox_meas_labelsize, 'Position', [.01 .15 .3 .08])
             set(ui_checkbox_meas_labelsize, 'String', ' Label Size ')
             set(ui_checkbox_meas_labelsize, 'Value', false)
@@ -1980,7 +1970,6 @@ function h = getMCRPanel(pl)
             set(ui_edit_meas_labelsize, 'Callback', {@cb_edit_meas_labelsize})
 
             set(ui_checkbox_meas_labelcolor, 'Units', 'normalized')
-            set(ui_checkbox_meas_labelcolor, 'BackgroundColor', FigColor)
             set(ui_checkbox_meas_labelcolor, 'Position', [.01 0.01 .3 .08])
             set(ui_checkbox_meas_labelcolor, 'String', ' Label Color ')
             set(ui_checkbox_meas_labelcolor, 'Value', false)
@@ -1989,7 +1978,6 @@ function h = getMCRPanel(pl)
             set(ui_checkbox_meas_labelcolor, 'Callback', {@cb_checkbox_meas_labelcolor})
 
             set(ui_popup_meas_labelinitcolor, 'Units', 'normalized')
-            set(ui_popup_meas_labelinitcolor, 'BackgroundColor', FigColor)
             set(ui_popup_meas_labelinitcolor, 'Enable', 'off')
             set(ui_popup_meas_labelinitcolor, 'Position', [.31 .01 .3 .08])
             set(ui_popup_meas_labelinitcolor, 'String', {'R', 'G', 'B'})
@@ -1998,7 +1986,6 @@ function h = getMCRPanel(pl)
             set(ui_popup_meas_labelinitcolor, 'Callback', {@cb_meas_labelinitcolor})
 
             set(ui_popup_meas_labelfincolor, 'Units', 'normalized')
-            set(ui_popup_meas_labelfincolor, 'BackgroundColor', FigColor)
             set(ui_popup_meas_labelfincolor, 'Enable', 'off')
             set(ui_popup_meas_labelfincolor, 'Position', [0.61 .01 .3 .08])
             set(ui_popup_meas_labelfincolor, 'String', {'R', 'G', 'B'})
