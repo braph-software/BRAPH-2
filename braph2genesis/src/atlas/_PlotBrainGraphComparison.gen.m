@@ -2306,7 +2306,22 @@ pl = PlotBrainGraphComparison('atlas', atlas, ...
 
 close(gcf)
 
-%% Init edges lineså
+%% Init edges lines
+br1 = BrainRegion('ID', 'BR ID1', 'Label', 'brain region label 1', 'Notes', 'brain region notes 1', 'x', 1, 'y', 10, 'z', 11);
+br2 = BrainRegion('ID', 'BR ID2', 'Label', 'brain region label 2', 'Notes', 'brain region notes 2', 'x', 2, 'y', 20, 'z', 22);
+br3 = BrainRegion('ID', 'BR ID3', 'Label', 'brain region label 3', 'Notes', 'brain region notes 3', 'x', 3, 'y', 30, 'z', 33);
+br4 = BrainRegion('ID', 'BR ID4', 'Label', 'brain region label 4', 'Notes', 'brain region notes 4', 'x', 4, 'y', 40, 'z', 44);
+br5 = BrainRegion('ID', 'BR ID5', 'Label', 'brain region label 5', 'Notes', 'brain region notes 5', 'x', 5, 'y', 50, 'z', 55);
+
+bs = BrainSurface('ID', 'Human_Cerebellum.nv');
+br_dict =  IndexedDictionary( ...
+    'id', 'idict', ...
+    'it_class', 'BrainRegion', ...
+    'it_key', IndexedDictionary.getPropDefault(IndexedDictionary.IT_KEY), ...
+    'it_list', {br1, br2, br3, br4, br5});
+
+atlas = BrainAtlas('ID', 'BA ID', 'Label', 'Brain Atlas Label', 'Notes', 'Brain atlas notes', 'SURF', bs, 'BR_DICT', br_dict);
+
 pl = PlotBrainGraphComparison('atlas', atlas, ...
     'SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
 pl.draw();
