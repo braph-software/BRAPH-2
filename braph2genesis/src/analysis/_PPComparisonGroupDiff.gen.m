@@ -60,6 +60,7 @@ function update(pl)
     m = el.get('MEASURE');
     node_labels_tmp = graph.get('BRAINATLAS').get('BR_DICT');
     node_labels = cellfun(@(x) x.get('ID') , node_labels_tmp.getItems(), 'UniformOutput', false);
+    fdr_style = [0 1 0];
 
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
         % remove previous tables/textbox
@@ -143,8 +144,29 @@ function update(pl)
                     if isempty(pl.comparison_tbl{i, j}) || ~isgraphics(pl.comparison_tbl{i, j}, 'uitable')
                         pl.comparison_tbl{i, j} = uitable('Parent', pl.pp);
                     end
+                    p1s = el.get('P1');
+                    [~, mask] = fdr(p1s{1}, 0.5);
+
+                    tmp_data = value_cell(i, j);
+                    tmp_data = num2cell([tmp_data{:}]);
+
+                    for ll = 1:size(tmp_data, 1)
+                        for mm = 1:size(tmp_data, 2)
+                            if mask(ll, mm)
+
+                                clr = dec2hex(round(fdr_style * 255), 2)';
+                                clr = ['#'; clr(:)]';
+
+                                tmp_data(ll, mm) = {strcat(...
+                                    ['<html><body bgcolor="' clr '" text="#000000" width="100px">'], ...
+                                    num2str(tmp_data{ll, mm}))};
+
+                            end
+                        end
+                    end
+
                     set(pl.comparison_tbl{i, j}, ...
-                        'Data', value_cell{i, j}, ...
+                        'Data', tmp_data, ...
                         'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
                         'CellEditCallback', {@cb_matrix_value, i, j} ...
                         )
@@ -152,6 +174,8 @@ function update(pl)
             end
         elseif  Measure.is_global(m)
             value_double = cell2mat(cellfun(@(x) x', value_cell, 'UniformOutput', false));
+            p1s = cell2mat(cellfun(@(x) x', el.get('P1'), 'UniformOutput', false));
+
             delete(pl.comparison_tbl)
             pl.comparison_tbl = uicontrol( ...
                 'Parent', pl.pp, ...
@@ -159,18 +183,44 @@ function update(pl)
                 'Units', 'normalized', ...
                 'Position', [.01 .3 .5 .2], ...
                 'BackgroundColor', [1 1 1], ...
-                'String', num2str(value_double) ...
-                );
+                'String', num2str(value_double));
+
+            [~, mask] = fdr(p1s, 0.5);
+
+            if mask(1, 1)
+                set(pl.comparison_tbl, 'BackgroundColor', fdr_style);
+            end
         else
-            value_double = cell2mat(cellfun(@(x) x', value_cell, 'UniformOutput', false));
+            value_double = cellfun(@(x) x', value_cell, 'UniformOutput', false);
+            value_double = num2cell([value_double{:}]);
+            p1s = cell2mat(cellfun(@(x) x', el.get('P1'), 'UniformOutput', false));
             set(pl.comparison_tbl, ...
-                'Data', value_double, ...
                 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
                 'Units', 'normalized', ...
                 'Position', [.01 .23 .98 .55], ...
                 'ColumnName', node_labels, ...
                 'CellEditCallback', {@cb_matrix_value} ...
                 )
+
+            [~, mask] = fdr(p1s, 0.5);
+
+            for i = 1:size(value_double, 1)
+                for j = 1:size(value_double, 2)
+                    if mask(i, j)
+
+                        clr = dec2hex(round(fdr_style * 255), 2)';
+                        clr = ['#'; clr(:)]';
+
+                        value_double(i, j) = {strcat(...
+                            ['<html><body bgcolor="' clr '" text="#000000" width="100px">'], ...
+                            num2str(value_double{i, j}))};
+
+                    end
+                end
+            end
+
+            set(pl.comparison_tbl, 'Data', value_double);
+
         end
         ui_brain_view = uicontrol('Parent', pl.pp, 'Style', 'pushbutton');
         init_brain_view_btn()
@@ -199,7 +249,7 @@ function update(pl)
                 'String', 'Measure Plot', ...
                 'Tooltip', 'Plot the Measure. Will plot depending on the node selection.', ...
                 'Units', 'normalized', ...
-                'Position', [.74 .01 .25 .08], ...
+                'Position', [.49 .01 .25 .08], ...
                 'Callback', {@cb_plot_m} ...
                 );
 
@@ -210,7 +260,7 @@ function update(pl)
                 'String', 'Brain View', ...
                 'Tooltip', 'Plot the Measure Brain View. Will plot depending on the node selection.', ...
                 'Units', 'normalized', ...
-                'Position', [.49 .01 .25 .2], ...
+                'Position', [.74 .01 .25 .2], ...
                 'Callback', {@cb_brain_view} ...
                 );
         end
@@ -435,7 +485,7 @@ function update(pl)
             ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
             delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
             delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
-            
+
             prop_tag = el.getPropTag(prop);
 
             pbv = PlotBrainView('SUBMENU', false, 'SETPOS', [.4 .50 .40 .30], ...

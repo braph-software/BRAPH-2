@@ -27,11 +27,12 @@ else
 end
 
 x = [1:1:length(pvalues)] / length(pvalues); %#ok<NBRAK>
-pvalues = sort(pvalues);
-index = max(find(pvalues <= (x * q))); %#ok<MXFND>
+tmp_pvalues = pvalues;
+tmp_pvalues = sort(tmp_pvalues);
+index = max(find(tmp_pvalues <= (x * q))); %#ok<MXFND>
 
 if index
-    r = pvalues(index);
+    r = tmp_pvalues(index);
 else
     r = 0;
 end
