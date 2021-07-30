@@ -36,12 +36,12 @@ function h_panel = draw(pl, varargin)
         h_panel = pl.pp;
     end
     end
-function update(pl, selected)
-%UPDATE updates the content of the property graphical panel.
-%
-% UPDATE(PL) updates the content of the property graphical panel.
-%
-% See also draw, redraw, refresh.
+function update(pl, selected, plot_selected)
+    %UPDATE updates the content of the property graphical panel.
+    %
+    % UPDATE(PL) updates the content of the property graphical panel.
+    %
+    % See also draw, redraw, refresh.
 
     update@PlotProp(pl)
 
@@ -51,6 +51,11 @@ function update(pl, selected)
         pl.selected = selected;
     else
         pl.selected = [];
+    end
+    if nargin > 2
+        to_plot = plot_selected;
+    else
+        to_plot = [];
     end
 
     measures_guis = [];
@@ -78,46 +83,51 @@ function update(pl, selected)
                 'Parent', pl.pp, ...
                 'Units', 'normalized', ...
                 'Position', [.02 .2 .9 .7], ...
-                'ColumnName', {'', 'Measure', 'Shape', 'Scope', 'Notes'}, ...
-                'ColumnFormat', {'logical', 'char', 'char', 'char', 'char'}, ...
+                'ColumnName', {'', 'GUI', 'Measure', 'Shape', 'Scope', 'Notes'}, ...
+                'ColumnFormat', {'logical', 'logical', 'char', 'char', 'char', 'char'}, ...
                 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-                'ColumnEditable', [true false false false false], ...
+                'ColumnEditable', [true true false false false false], ...
                 'CellEditCallback', {@cb_measure_selection} ...
                 )
+        end
 
-            % get compatible measures for specific graph
-            mlist = Graph.getCompatibleMeasureList(graph);
-            if isa(graph, 'Graph')
-                [parent_position_pixels, normalized] = get_figure_position();
-                data = cell(length(mlist), 5);
-                for mi = 1:1:length(mlist)
-                    if any(pl.selected == mi)
-                        data{mi, 1} = true;
-                    else
-                        data{mi, 1} = false;
-                    end
-                    data{mi, 2} = mlist{mi};
-                    if Measure.is_nodal(mlist{mi})
-                        data{mi, 3} = 'NODAL';
-                    elseif Measure.is_global(mlist{mi})
-                        data{mi, 3} = 'GLOBAL';
-                    else
-                        data{mi, 3} = 'BINODAL';
-                    end
-
-                    if Measure.is_superglobal(mlist{mi})
-                        data{mi, 4} = 'SUPERGLOBAL';
-                    elseif Measure.is_unilayer(mlist{mi})
-                        data{mi, 4} = 'UNILAYER';
-                    else
-                        data{mi, 4} = 'BILAYER';
-                    end
-
-                    data{mi, 5} = eval([mlist{mi} '.getDescription()']);
+        % get compatible measures for specific graph
+        mlist = Graph.getCompatibleMeasureList(graph);
+        if isa(graph, 'Graph')
+            [parent_position_pixels, normalized] = get_figure_position();
+            data = cell(length(mlist), 6);
+            for mi = 1:1:length(mlist)
+                if any(pl.selected == mi)
+                    data{mi, 1} = true;
+                else
+                    data{mi, 1} = false;
                 end
-                set(pl.measure_tbl, 'Data', data)
-                set(pl.measure_tbl, 'ColumnWidth', {'auto', 'auto', 'auto', 'auto', parent_position_pixels(3)})
+                if any(to_plot == mi)
+                    data{mi, 2} = true;
+                else
+                    data{mi, 2} = false;
+                end
+                data{mi, 3} = mlist{mi};
+                if Measure.is_nodal(mlist{mi})
+                    data{mi, 4} = 'NODAL';
+                elseif Measure.is_global(mlist{mi})
+                    data{mi, 4} = 'GLOBAL';
+                else
+                    data{mi, 4} = 'BINODAL';
+                end
+
+                if Measure.is_superglobal(mlist{mi})
+                    data{mi, 5} = 'SUPERGLOBAL';
+                elseif Measure.is_unilayer(mlist{mi})
+                    data{mi, 5} = 'UNILAYER';
+                else
+                    data{mi, 5} = 'BILAYER';
+                end
+
+                data{mi, 6} = eval([mlist{mi} '.getDescription()']);
             end
+            set(pl.measure_tbl, 'Data', data)
+            set(pl.measure_tbl, 'ColumnWidth', {'auto', 'auto', 'auto', 'auto', 'auto', parent_position_pixels(3)})
         end
 
         ui_button_table_calculate = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
@@ -156,7 +166,7 @@ function update(pl, selected)
 
         end
 
-    % callbacks
+        % callbacks
         function cb_measure_selection(~, event)
             i = event.Indices(1);
             col = event.Indices(2);
@@ -166,13 +176,20 @@ function update(pl, selected)
                     if newdata == 1
                         pl.selected = sort(unique([pl.selected(:); i]));
                     else
-                        pl.selected = pl.selected(pl.selected~=i);
+                        pl.selected = pl.selected(pl.selected ~= i);
+                    end
+                case 2
+                    if newdata == 1
+                        to_plot = sort(unique([to_plot(:); i]));
+                    else
+                        to_plot = to_plot(to_plot ~= i);
                     end
                 otherwise
             end
-            pl.update(pl.selected)
+            pl.update(pl.selected, to_plot)
         end
         function cb_table_selectall(~, ~)  % (src, event)
+            mlist = Graph.getCompatibleMeasureList(graph);
             pl.selected = (1:1:length(mlist))';
             pl.update(pl.selected)
         end
@@ -183,6 +200,7 @@ function update(pl, selected)
         function cb_table_calculate(~, ~)
             mlist = Graph.getCompatibleMeasureList(graph);
             calculate_measure_list = mlist(pl.selected);
+            measure_list_to_plot = mlist(to_plot);
             g = el.memorize('G');
 
             % calculate
@@ -193,7 +211,13 @@ function update(pl, selected)
                 extra = (i / length(calculate_measure_list)) * 1.05 * .8;
                 measure = calculate_measure_list{i};
                 waitbar(progress, f, ['Calculating measure: ' measure ' ...']);
-                result_measure{i} = g.getMeasure(measure);
+                result_measure{i} = g.getMeasure(measure); %#ok<AGROW>
+
+                if contains(measure_list_to_plot, measure)
+                    plot_measure{i} = true; %#ok<AGROW>
+                else
+                    plot_measure{i} = false; %#ok<AGROW>
+                end
 
                 % precalculate
                 g.getMeasure(measure).memorize('M');
@@ -201,22 +225,27 @@ function update(pl, selected)
                 waitbar(extra, f, ['Measure: ' measure ' Calculated! ...']);
             end
 
-            [~, normalized] = get_figure_position();
-            % create window for results
-            % golden ratio is defined as a+b/a = a/b = phi. phi = 1.61
-            x2 = normalized(1) + normalized(3);
-            h2 = normalized(4);
-            y2 = normalized(2);
-            w2 = normalized(3);
-
-            waitbar(.95, f, 'Plotting the Measures GUI ...')
-            for i = 1:length(result_measure)
-                offset = 0.02 * i;
-                if offset > .45
-                    offset = 0;
+            if ~isempty(to_plot)
+                [~, normalized] = get_figure_position();
+                % create window for results
+                % golden ratio is defined as a+b/a = a/b = phi. phi = 1.61
+                x2 = normalized(1) + normalized(3);
+                h2 = normalized(4);
+                y2 = normalized(2);
+                w2 = normalized(3);
+                waitbar(.95, f, 'Plotting the Measures GUI ...')
+                k = 1;
+                for i = 1:length(result_measure)
+                    if plot_measure{i}
+                        offset = 0.02 * k;
+                        if offset > .45
+                            offset = 0;
+                        end
+                        measure = result_measure{i};
+                        GUI(measure, 'CloseRequest', false, 'Position', [x2+offset y2-offset w2 h2])
+                        k = k + 1;
+                    end
                 end
-                measure = result_measure{i};
-                GUI(measure, 'CloseRequest', false, 'Position', [x2+offset y2-offset w2 h2])
             end
 
             % close progress bar
@@ -268,26 +297,25 @@ function update(pl, selected)
             obj = figHandles{1};
         end
 
-    % close function to pl.pp
-    set(pl.pp, ...
-        'DeleteFcn', {@close_f_settings})
+        % close function to pl.pp
+        set(pl.pp, ...
+            'DeleteFcn', {@close_f_settings})
 
-        function close_f_settings(~,~)
-            if ~isempty(measures_guis)
-                for k = 1:length(measures_guis)
-                    m_gui_h = measures_guis{k};
-                    if isgraphics(m_gui_h)
-                        close(m_gui_h)
+            function close_f_settings(~,~)
+                if ~isempty(measures_guis)
+                    for k = 1:length(measures_guis)
+                        m_gui_h = measures_guis{k};
+                        if isgraphics(m_gui_h)
+                            close(m_gui_h)
+                        end
+                    end
+                end
+                if ~isempty(graph_gui)
+                    if isgraphics(graph_gui)
+                        close(graph_gui)
                     end
                 end
             end
-            if ~isempty(graph_gui)
-                if isgraphics(graph_gui)
-                    close(graph_gui)
-                end
-            end
-        end
-
 end
 function redraw(pl, varargin)
     %REDRAW redraws the element graphical panel.
