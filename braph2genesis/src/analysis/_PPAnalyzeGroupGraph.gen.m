@@ -213,7 +213,7 @@ function update(pl, selected, plot_selected)
                 waitbar(progress, f, ['Calculating measure: ' measure ' ...']);
                 result_measure{i} = g.getMeasure(measure); %#ok<AGROW>
 
-                if contains(measure_list_to_plot, measure)
+                if contains(measure, measure_list_to_plot)
                     plot_measure{i} = true; %#ok<AGROW>
                 else
                     plot_measure{i} = false; %#ok<AGROW>

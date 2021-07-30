@@ -180,7 +180,7 @@ function update(pl, selected, plot_selected)
                     end
                 otherwise
             end
-            pl.update(pl.selected)
+            pl.update(pl.selected, to_plot)
         end
         function cb_table_selectall(~, ~)  % (src, event)
             mlist = Graph.getCompatibleMeasureList(graph);
@@ -207,7 +207,7 @@ function update(pl, selected, plot_selected)
 
                 result_comparison{i, 1} = el.getComparison(measure); %#ok<*AGROW>
                 
-                if contains(measure_list_to_plot, measure)
+                if contains(measure, measure_list_to_plot)
                     plot_measure{i} = true; %#ok<AGROW>
                 else
                     plot_measure{i} = false; %#ok<AGROW>
