@@ -14,7 +14,7 @@ GR (data, item) is the subject group, which also defines the subject class Subje
 Group('SUB_CLASS', 'SubjectCON')
 
 %%% ¡prop!
-G (result, idict) is the average graph obtained from this analysis.
+G (result, item) is the average graph obtained from this analysis.
 %%%% ¡settings!
 'GraphWU'
 %%%% ¡default!
