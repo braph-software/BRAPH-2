@@ -154,6 +154,11 @@ function f_settings  = settings(pl, varargin)
     f_settings = settings@PlotBrainAtlas(pl, varargin{:});
     pl.f_settings = f_settings;
     
+     % add height
+     f_settings_size = get(pl.f_settings, 'Position');
+     pl.f_settings.Position(2) = f_settings_size(2) - 0.06;
+     pl.f_settings.Position(4) = f_settings_size(4) + 0.06;
+    
     ui_toolbar = findall(f_settings, 'Tag', 'FigureToolBar');
     ui_toolbar_separator = uipushtool(ui_toolbar, 'Separator', 'on', 'Visible', 'off');
     
@@ -1835,13 +1840,15 @@ function h = getMCRPanel(pl)
     measure_data = comparison.get(prop_tag);
     m = comparison.get('MEASURE');
     fdr_lim = [];
-    p1 = [];
-    p2 = [];
+
+    % p1 and p2 values because we need the fdr
+    p1_fdr = comparison.get('P1');
+    p2_fdr = comparison.get('P2');
 
     % initialization %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % measure container panel
     ui_measure_container_panel = uipanel(f, 'Units', 'normalized', 'BackgroundColor', BKGCOLOR);
-    
+
     ui_title = uicontrol(f, ...
         'Style', 'text', ...
         'String', 'Comparison Panel', ...
@@ -1851,28 +1858,36 @@ function h = getMCRPanel(pl)
         'FontWeight', 'bold', ...
         'Position', [0.01 .91 0.3 0.08]);
 
+    % first fdr panel
+    fdr_panel = uipanel(ui_measure_container_panel, 'Units', 'normalized', 'BackgroundColor', BKGCOLOR);
+    ui_checkbox_meas_fdr1 = uicontrol(fdr_panel, 'Style', 'checkbox');
+    ui_edit_meas_fdr1 = uicontrol(fdr_panel, 'Style','edit');
+    ui_checkbox_meas_fdr2 = uicontrol(fdr_panel, 'Style', 'checkbox');
+    ui_edit_meas_fdr2 = uicontrol(fdr_panel, 'Style','edit');
+
     % nodal measure figure options
+    measures_panels = uipanel(ui_measure_container_panel, 'Units', 'normalized', 'BackgroundColor', BKGCOLOR);
     if size(measure_data, 2) > 1
-        ui_layer_text = uicontrol(ui_measure_container_panel, 'Style', 'text', 'BackgroundColor', BKGCOLOR);
-        ui_layer_selector = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
+        ui_layer_text = uicontrol(measures_panels, 'Style', 'text', 'BackgroundColor', BKGCOLOR);
+        ui_layer_selector = uicontrol(measures_panels, 'Style', 'popup', 'String', {''});
     end
-    ui_checkbox_meas_symbolsize = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
-    ui_edit_meas_symbolsize = uicontrol(ui_measure_container_panel, 'Style', 'edit');
-    ui_checkbox_meas_symbolcolor = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
-    ui_popup_meas_initcolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
-    ui_popup_meas_fincolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
-    ui_checkbox_meas_sphereradius = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
-    ui_edit_meas_sphereradius = uicontrol(ui_measure_container_panel, 'Style', 'edit');
-    ui_checkbox_meas_spherecolor = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
-    ui_popup_meas_sphinitcolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
-    ui_popup_meas_sphfincolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
-    ui_checkbox_meas_spheretransparency = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
-    ui_slider_meas_spheretransparency = uicontrol(ui_measure_container_panel, 'Style', 'slider');
-    ui_checkbox_meas_labelsize = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
-    ui_edit_meas_labelsize = uicontrol(ui_measure_container_panel, 'Style', 'edit');
-    ui_checkbox_meas_labelcolor = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
-    ui_popup_meas_labelinitcolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
-    ui_popup_meas_labelfincolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
+    ui_checkbox_meas_symbolsize = uicontrol(measures_panels, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
+    ui_edit_meas_symbolsize = uicontrol(measures_panels, 'Style', 'edit');
+    ui_checkbox_meas_symbolcolor = uicontrol(measures_panels, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
+    ui_popup_meas_initcolor = uicontrol(measures_panels, 'Style', 'popup', 'String', {''});
+    ui_popup_meas_fincolor = uicontrol(measures_panels, 'Style', 'popup', 'String', {''});
+    ui_checkbox_meas_sphereradius = uicontrol(measures_panels, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
+    ui_edit_meas_sphereradius = uicontrol(measures_panels, 'Style', 'edit');
+    ui_checkbox_meas_spherecolor = uicontrol(measures_panels, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
+    ui_popup_meas_sphinitcolor = uicontrol(measures_panels, 'Style', 'popup', 'String', {''});
+    ui_popup_meas_sphfincolor = uicontrol(measures_panels, 'Style', 'popup', 'String', {''});
+    ui_checkbox_meas_spheretransparency = uicontrol(measures_panels, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
+    ui_slider_meas_spheretransparency = uicontrol(measures_panels, 'Style', 'slider');
+    ui_checkbox_meas_labelsize = uicontrol(measures_panels, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
+    ui_edit_meas_labelsize = uicontrol(measures_panels, 'Style', 'edit');
+    ui_checkbox_meas_labelcolor = uicontrol(measures_panels, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
+    ui_popup_meas_labelinitcolor = uicontrol(measures_panels, 'Style', 'popup', 'String', {''});
+    ui_popup_meas_labelfincolor = uicontrol(measures_panels, 'Style', 'popup', 'String', {''});
 
     init_measures_panel()
     set(f, 'Visible', 'on')
@@ -1880,9 +1895,51 @@ function h = getMCRPanel(pl)
     %% Callback functions
         function init_measures_panel()
 
-            % measure figure *******************************
+            % measure panels *******************************
             set(ui_measure_container_panel, 'Position', [.0 .01 1 .99])
+            set(fdr_panel, 'Position', [.0 .8 1 .2])
+            set(measures_panels, 'Position', [.0 .0 1 .8])
 
+            % fdr
+            set(ui_checkbox_meas_fdr1, ...
+                'Units', 'normalized', ...
+                'Position', [.31 .4 .3 .3], ...
+                'String', 'fdr (1-tailed)', ...
+                'BackgroundColor', BKGCOLOR, ...
+                'Value', false, ...
+                'FontWeight', 'bold', ...
+                'TooltipString','apply 1-tailed false discovery rate limit', ...
+                'Callback',{@cb_checkbox_meas_fdr1})
+
+            set(ui_edit_meas_fdr1, ...
+                'Units', 'normalized', ...
+                'String', '0.05', ...
+                'Enable', 'off', ...
+                'Position', [.6 0.4 .3 .3], ...
+                'HorizontalAlignment', 'center', ...
+                'FontWeight', 'bold', ...
+                'Callback', {@cb_edit_meas_fdr1})
+
+            set(ui_checkbox_meas_fdr2, ...
+                'Units', 'normalized', ...
+                'Position', [.31 .01 .3 .3], ...
+                'String', 'fdr (2-tailed)', ...
+                'BackgroundColor', BKGCOLOR, ...
+                'Value', false, ...
+                'FontWeight', 'bold', ...
+                'TooltipString', 'apply false discovery rate limit', ...
+                'Callback', {@cb_checkbox_meas_fdr2})
+
+            set(ui_edit_meas_fdr2, ...
+                'Units', 'normalized', ...
+                'String', '0.05', ...
+                'Enable', 'off', ...
+                'Position', [.6 0.01 .3 .3], ...
+                'HorizontalAlignment', 'center', ...
+                'FontWeight','bold', ...
+                'Callback',{@cb_edit_meas_fdr2})
+
+            % measures
             if size(measure_data, 2) > 1
                 set(ui_layer_text, ...
                     'Units', 'normalized', ...
@@ -1891,7 +1948,7 @@ function h = getMCRPanel(pl)
                     'TooltipString', 'Select the layer of the Measure to be ploted.', ...
                     'String', 'Layer' ...
                     )
-                
+
                 set(ui_layer_selector, ...
                     'Units', 'normalized', ...
                     'Position', [.71 .91 .25 .08], ...
@@ -2035,6 +2092,58 @@ function h = getMCRPanel(pl)
             set(ui_popup_meas_labelfincolor, 'TooltipString', 'Select symbol');
             set(ui_popup_meas_labelfincolor, 'Callback', {@cb_meas_labelfincolor})
 
+        end
+        function cb_checkbox_meas_fdr1(~,~)  %  (src,event)
+            if get(ui_checkbox_meas_fdr1, 'Value')
+                set(ui_edit_meas_fdr1, 'Enable', 'on')
+                set(ui_edit_meas_fdr2, 'Enable', 'off')
+                set(ui_checkbox_meas_fdr2, 'Enable', 'off')
+
+                update_data()
+                update_brain_meas_plot()
+            else
+                set(ui_edit_meas_fdr1, 'Enable', 'off')
+                set(ui_checkbox_meas_fdr2, 'Enable', 'on')
+
+                update_data()
+                update_brain_meas_plot()
+            end
+        end
+        function cb_edit_meas_fdr1(~,~)  %  (src,event)
+            lim = real(str2double(get(ui_edit_meas_fdr1,'String')));
+            if isempty(lim) || lim <= 0 || lim > 1
+                set(ui_edit_meas_fdr1, 'String', '0.05')
+            else
+                set(ui_edit_meas_fdr1, 'String', num2str(lim))
+            end
+            update_data()
+            update_brain_meas_plot()
+        end
+        function cb_checkbox_meas_fdr2(~,~)  %  (src,event)
+            if get(ui_checkbox_meas_fdr2, 'Value')
+                set(ui_edit_meas_fdr2, 'Enable', 'on')
+                set(ui_edit_meas_fdr1, 'Enable', 'off')
+                set(ui_checkbox_meas_fdr1, 'Enable', 'off')
+
+                update_data()
+                update_brain_meas_plot()
+            else
+                set(ui_edit_meas_fdr2, 'Enable', 'off')
+                set(ui_checkbox_meas_fdr1, 'Enable', 'on')
+
+                update_data()
+                update_brain_meas_plot()
+            end
+        end
+        function cb_edit_meas_fdr2(~,~)  %  (src,event)
+            lim = real(str2double(get(ui_edit_meas_fdr2, 'String')));
+            if isempty(lim) || lim <= 0 || lim > 1
+                set(ui_edit_meas_fdr2, 'String', '0.05')
+            else
+                set(ui_edit_meas_fdr2, 'String', num2str(lim))
+            end
+            update_data()
+            update_brain_meas_plot()
         end
         function cb_layer_selector(~, ~)
             update_brain_meas_plot()
@@ -2192,7 +2301,7 @@ function h = getMCRPanel(pl)
         end
         function update_brain_meas_plot()
             if ~isempty(measure_data)
-                
+
                 if  Measure.is_nodal(m)
                     if size(measure_data, 2) > 1
                         measure_data_inner = measure_data{get(ui_layer_selector, 'Value')};
@@ -2208,6 +2317,11 @@ function h = getMCRPanel(pl)
                     size_(isnan(size_)) = 0.1;
                     size_(size_<=0) = 0.1;
                     pl.set('SYMS_SIZE', size_');
+                    if ~isempty(fdr_lim)
+                        pl.set('SYMS', fdr_lim');
+                    else
+                        pl.set('SYMS', 1);
+                    end
                 end
 
                 if get(ui_checkbox_meas_symbolcolor, 'Value')
@@ -2238,7 +2352,11 @@ function h = getMCRPanel(pl)
                     R(isnan(R)) = 0.1;
                     R(R<=0) = 0.1;
                     pl.set('SPHS_SIZE', R');
-                    pl.set('SPHS', 1);
+                    if ~isempty(fdr_lim)
+                        pl.set('SPHS', fdr_lim');
+                    else
+                        pl.set('SPHS', 1);
+                    end
                 end
 
                 if get(ui_checkbox_meas_spherecolor, 'Value')
@@ -2256,21 +2374,29 @@ function h = getMCRPanel(pl)
                     C(:, val2) = 1 - colorValue;
                     pl.set('SPHS_EDGE_COLOR', C);
                     pl.set('SPHS_FACE_COLOR', C);
-                    pl.set('SPHS', 1);
+                    if ~isempty(fdr_lim)
+                        pl.set('SPHS', fdr_lim');
+                    else
+                        pl.set('SPHS', 1);
+                    end
                 end
 
                 if get(ui_checkbox_meas_spheretransparency, 'Value')
 
                     alpha = get(ui_slider_meas_spheretransparency, 'Value');
 
-
-                    alpha_vec = (measure_data_inner)*alpha;
+                    alpha_vec = ((measure_data_inner)*alpha);
                     alpha_vec(isnan(alpha_vec)) = 0;
                     alpha_vec(alpha_vec<0) = 0;
                     alpha_vec(alpha_vec>1) = 1;
+
                     pl.set('SPHS_EDGE_ALPHA', alpha_vec);
                     pl.set('SPHS_FACE_ALPHA', alpha_vec);
-                    pl.set('SPHS', 1);
+                    if ~isempty(fdr_lim)
+                        pl.set('SPHS', fdr_lim');
+                    else
+                        pl.set('SPHS', 1);
+                    end
                 end
 
                 if get(ui_checkbox_meas_labelsize, 'Value')
@@ -2279,7 +2405,11 @@ function h = getMCRPanel(pl)
                     size_(isnan(size_)) = 0.1;
                     size_(size_<=0) = 0.1;
                     pl.set( 'LABS_SIZE', size_);
-                    pl.set('LABS', 1);
+                    if ~isempty(fdr_lim)
+                        pl.set('LABS', fdr_lim');
+                    else
+                        pl.set('LABS', 1);
+                    end
                 end
 
                 if get(ui_checkbox_meas_labelcolor, 'Value')
@@ -2295,7 +2425,11 @@ function h = getMCRPanel(pl)
                     C(:, val1) = colorValue;
                     C(:, val2) = 1 - colorValue;
                     pl.set('LABS_FONT_COLOR', C);
-                    pl.set('LABS', 1);
+                    if ~isempty(fdr_lim)
+                        pl.set('LABS', fdr_lim');
+                    else
+                        pl.set('LABS', 1);
+                    end
                 end
             end
             if get(ui_checkbox_meas_labelcolor, 'Value') || get(ui_checkbox_meas_labelsize, 'Value')
@@ -2306,6 +2440,34 @@ function h = getMCRPanel(pl)
             end
             % draw
             pl.draw();
+        end
+        function update_data()
+            if ~isempty(measure_data)
+                fdr_lim = ones(1, size(measure_data, 1)); % nodal
+
+                if  Measure.is_nodal(m)
+                    if size(measure_data, 2) > 1
+                        p1_inner = p1_fdr{get(ui_layer_selector, 'Value')};
+                        p2_inner = p2_fdr{get(ui_layer_selector, 'Value')};
+                    else
+                        % weighted
+                        p1_inner = p1_fdr{1};
+                        p2_inner = p2_fdr{1};
+                    end
+                end
+
+                for i = 1:1:size(p1_inner, 1)
+                    if get(ui_checkbox_meas_fdr1, 'Value')
+                        if p1_inner(i) > fdr(p1_inner', str2double(get(ui_edit_meas_fdr1, 'String')))
+                            fdr_lim(i) = 0;
+                        end
+                    elseif get(ui_checkbox_meas_fdr2, 'Value')
+                        if p2_inner(i) > fdr(p2_inner', str2double(get(ui_edit_meas_fdr2, 'String')))
+                            fdr_lim(i) = 0;
+                        end
+                    end
+                end
+            end
         end
 
     % draw
