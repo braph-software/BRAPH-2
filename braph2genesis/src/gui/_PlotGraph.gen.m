@@ -49,7 +49,7 @@ function [h_figure, h_axes, subpanel] = draw(pl, varargin)
         pl.h_axes = axes(subpanel);
         
     else
-        pl.h_axes = axes(pl.h_figure);
+        pl.h_axes = axes(pl.pp);
     end
         
     if nargout > 0

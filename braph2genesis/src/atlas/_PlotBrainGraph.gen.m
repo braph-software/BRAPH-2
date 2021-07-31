@@ -1837,7 +1837,7 @@ function h = getMCRPanel(pl)
         'Position', [0.01 .91 0.3 0.08]);
 
     % nodal measure figure options
-    if size(measure_data, 2) > 1
+    if size(measure_data, 1) > 1
         ui_layer_text = uicontrol(ui_measure_container_panel, 'Style', 'text', 'BackgroundColor', BKGCOLOR);
         ui_layer_selector = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
     end
@@ -1868,7 +1868,7 @@ function h = getMCRPanel(pl)
             % measure figure *******************************
             set(ui_measure_container_panel, 'Position', [.0 .01 1 .99])
 
-            if size(measure_data, 2) > 1
+            if size(measure_data, 1) > 1
                 set(ui_layer_text, ...
                     'Units', 'normalized', ...
                     'Position', [.51 .91 .2 .08], ...
@@ -2178,7 +2178,7 @@ function h = getMCRPanel(pl)
         function update_brain_meas_plot()
             if ~isempty(measure_data)
                 if  Measure.is_nodal(pl.get('ME'))
-                    if size(measure_data, 2) > 1
+                    if size(measure_data, 1) > 1
                         measure_data_inner = measure_data{get(ui_layer_selector, 'Value')};
                     else
                         measure_data_inner = measure_data{1};
@@ -2190,7 +2190,7 @@ function h = getMCRPanel(pl)
                     size_ = str2double(get(ui_edit_meas_symbolsize, 'String'));
 
                     size_(isnan(size_)) = 0.1;
-                    size_(size_<=0) = 0.1;
+                    size_(size_ <= 0) = 0.1;
                     pl.set('SYMS_SIZE', size_');
                 end
 
@@ -2199,8 +2199,8 @@ function h = getMCRPanel(pl)
                     colorValue = measure_data_inner ;
 
                     colorValue(isnan(colorValue)) = 0;
-                    colorValue(colorValue<0) = 0;
-                    colorValue(colorValue>1) = 1;
+                    colorValue(colorValue < 0) = 0;
+                    colorValue(colorValue > 1) = 1;
 
                     C = zeros(length(colorValue), 3);
 
@@ -2220,7 +2220,7 @@ function h = getMCRPanel(pl)
                     R = 1 + (measure_data_inner)*R;
 
                     R(isnan(R)) = 0.1;
-                    R(R<=0) = 0.1;
+                    R(R <= 0) = 0.1;
                     pl.set('SPHS_SIZE', R');
                     pl.set('SPHS', 1);
                 end
@@ -2229,8 +2229,8 @@ function h = getMCRPanel(pl)
 
                     colorValue = (measure_data_inner);
                     colorValue(isnan(colorValue)) = 0;
-                    colorValue(colorValue<0) = 0;
-                    colorValue(colorValue>1) = 1;
+                    colorValue(colorValue < 0) = 0;
+                    colorValue(colorValue > 1) = 1;
 
                     C = zeros(length(colorValue), 3);
 
@@ -2250,8 +2250,8 @@ function h = getMCRPanel(pl)
 
                     alpha_vec = (measure_data_inner)*alpha;
                     alpha_vec(isnan(alpha_vec)) = 0;
-                    alpha_vec(alpha_vec<0) = 0;
-                    alpha_vec(alpha_vec>1) = 1;
+                    alpha_vec(alpha_vec < 0) = 0;
+                    alpha_vec(alpha_vec > 1) = 1;
                     pl.set('SPHS_EDGE_ALPHA', alpha_vec);
                     pl.set('SPHS_FACE_ALPHA', alpha_vec);
                     pl.set('SPHS', 1);
@@ -2261,7 +2261,7 @@ function h = getMCRPanel(pl)
 
                     size_ = str2double(get(ui_edit_meas_labelsize, 'String'));
                     size_(isnan(size_)) = 0.1;
-                    size_(size_<=0) = 0.1;
+                    size_(size_ <= 0) = 0.1;
                     pl.set( 'LABS_SIZE', size_);
                     pl.set('LABS', 1);
                 end
@@ -2269,8 +2269,8 @@ function h = getMCRPanel(pl)
                 if get(ui_checkbox_meas_labelcolor, 'Value')
                     colorValue = (measure_data_inner);
                     colorValue(isnan(colorValue)) = 0;
-                    colorValue(colorValue<0) = 0;
-                    colorValue(colorValue>1) = 1;
+                    colorValue(colorValue < 0) = 0;
+                    colorValue(colorValue > 1) = 1;
 
                     C = zeros(length(colorValue), 3);
 
