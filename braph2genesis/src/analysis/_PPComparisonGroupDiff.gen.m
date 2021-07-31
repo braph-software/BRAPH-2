@@ -10,6 +10,8 @@ GUI, PlotElement, PlotProp, ComparisonGroup.
 %% ¡properties!
 pp
 comparison_tbl
+ui_sliding_panel
+ui_slider
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
