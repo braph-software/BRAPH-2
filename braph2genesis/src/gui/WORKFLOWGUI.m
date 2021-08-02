@@ -71,7 +71,8 @@ f = init();
             'MenuBar', 'none', ...
             'DockControls', 'off', ...
             'Color', BKGCOLOR , ...
-            'SizeChangedFcn', {@redraw} ...
+            'SizeChangedFcn', {@redraw}, ...
+            'WindowButtonDownFcn', {@cb_get_objs_id} ...
             );
         set_icon(f)
         
@@ -102,11 +103,11 @@ f = init();
                 'Visible', 'on', ...
                 'Min', 0, ...
                 'Max', w_f, ...
-                'Value', max(get(horizontal_slider, 'Value'), w_f - figure_size(3)) ...
+                'Value', max(get(horizontal_slider, 'Value'), w_f - figure_size(3)) ...                
                 )
         else
             set(horizontal_slider, ...
-                'Units', ' characters', ...
+                'Units', ' pixels', ...
                 'Visible', 'off', ...
                 'Position', [0 0 figure_size(3) 1])
             panel_plot(true)
@@ -149,7 +150,8 @@ x_slice = 1 / (cycles - 1);
 panel_executables = [];
 y_slice = 2;
 define = false;
-horizontal_slider = uicontrol(f, 'Style', 'slider', 'Callback', {@cb_horizontal_slider});
+ui_panels_section = uipanel(f, 'Units', 'normalized', 'Position', [0 .15 1 .85]);
+horizontal_slider = uicontrol(f, 'Style', 'slider', 'Callback', {@cb_slide});
 loaded_names = struct([]);
 
 if ~isempty(previous_workspace)
@@ -168,7 +170,7 @@ end
             
             if isempty(section_panel{i - 1}) || ~isgraphics(section_panel{i - 1}, 'uipanel')
                 define = true;
-                section_panel{i - 1} = uipanel(f, 'BackgroundColor', BKGCOLOR);
+                section_panel{i - 1} = uipanel(ui_panels_section, 'BackgroundColor', BKGCOLOR);
             else
                 define = false;
             end
@@ -227,12 +229,12 @@ end
     function init_section_panel(panel, x_offset)        
         set(panel, ...
             'Units', 'normalized', ...
-            'Position', [x_offset .15 x_slice .85])
+            'Position', [x_offset 0 x_slice 1])
     end
     function set_y_section_panel(panel)
         panel.Units = 'normalized';
-        panel.Position(2) = .15;
-        panel.Position(4) = .85;
+        panel.Position(2) = 0;
+        panel.Position(4) = 1;
     end
     function init_slider(slider, total_h, pos)
         if total_h > pos(4)
@@ -272,25 +274,44 @@ end
         panel_struct(panel, child).name = ['panel_struct(' num2str(panel) ',' num2str(child) ').exe'];
         panel_struct(panel, child).name_script = strtrim(exe_{1});
         panel_struct(panel, child).btn = src.String;
+        panel_struct(panel, child).h_btn = src;
+        panel_struct(panel, child).exe = [];
+        panel_struct(panel, child).plot_element = [];
         
         for l = 1:size(panel_struct, 2)
             if ~isempty(panel_struct) && size(panel_struct, 1) > 1 && panel ~= 1
                 if ~isempty(panel_struct(panel - 1, l).name_script) && ~isempty(panel_struct(panel - 1, l).name)
-                    exe_{2} = strrep(exe_{2}, ...
-                        panel_struct(panel - 1, l).name_script, ...
-                        panel_struct(panel - 1, l).name);
+                    tmp_pl = panel_struct(panel - 1, l).plot_element;
+                    if ~isequal(panel_struct(panel - 1, l).exe, tmp_pl)
+                        % change to new obj
+                        new_script = ['panel_struct(' num2str(panel) ',' num2str(child) ').plot_element'];
+                        exe_{2} = strrep(exe_{2}, ...
+                            panel_struct(panel - 1, l).name_script, ...
+                            new_script);
+                    else
+                        exe_{2} = strrep(exe_{2}, ...
+                            panel_struct(panel - 1, l).name_script, ...
+                            panel_struct(panel - 1, l).name);
+                    end
                 end
             end
         end
-         if isfield(panel_struct(panel, child), 'exe') && ~isempty(panel_struct(panel, child).exe)
-            % use the object;
+        if isfield(panel_struct(panel, child), 'exe') && ~isempty(panel_struct(panel, child).exe)
+            tmp_pl = panel_struct(panel - 1, l).plot_element;
+            if ~isequal(panel_struct(panel - 1, l).exe, tmp_pl)
+                % change to new obj
+                panel_struct(panel, child).exe = tmp_pl.get('El');
+            else
+                % use the object;
+            end
         else
             panel_struct(panel, child).exe = eval([exe_{2}]);
         end
         
         if ~isempty(panel_struct(panel, child).exe) && isa(panel_struct(panel, child).exe, 'Element')
             new_object =  panel_struct(panel, child).exe;
-            GUI(new_object)
+            h_plot_element = GUI(new_object);
+            panel_struct(panel, child).plot_element = h_plot_element.get('EL');
             % change btn state. turn green and change string            
             change_state_btn(src, new_object.get('ID'),  loaded_names(panel, child).msg)
             if check_section_objs(panel)
@@ -303,7 +324,7 @@ end
         n = length(panel_executables{panel + 1}) - 1 ;
         tmp = struct2cell(panel_struct);
         if panel + 1 <= length(section_panel) && ...
-                (isequal(n, length(tmp(4, 1))) ||  isequal(n, length([tmp{4, panel, :}])))             
+                (isequal(n, length(tmp(6, 1))) ||  isequal(n, length([tmp{6, panel, :}])))             
                 
             check = true;
         end
@@ -329,8 +350,52 @@ end
             set(slider{i}, 'Visible', 'on')
         end
     end
-    function cb_horizontal_slider(~, ~)
-        set(horizontal_slider, 'Visible', 'on')
+    function cb_slide(~, ~)
+        uf = get(section_panel{1}, 'Units');        
+        up = get(ui_panels_section, 'Units');
+        set(ui_panels_section, 'Units', 'pixels');
+        
+        figure_size = getPosition(f);
+        
+        cellfun(@(x) set(x, 'Units', 'pixels'), section_panel, 'UniformOutput', false);
+
+        fp = get(ui_panels_section, 'Position');
+        fs = get(horizontal_slider, 'Position');
+        
+        dw = 1;
+        w_up = cellfun(@(x) Plot.w(x), section_panel);
+        w_p = sum(w_up + dw) + dw;
+        if w_p > figure_size(4)
+            offset = get(horizontal_slider, 'Value');
+            set(ui_panels_section, 'Position', [Plot.w(ui_panels_section)-figure_size(3)-offset fp(2) w_p fp(4)])
+            
+            set(horizontal_slider, ...
+            'Position', [0 figure_size(4)*0.08+1 figure_size(3) 10], ...
+            'Visible', 'on', ...
+            'Min', Plot.w(ui_panels_section) - figure_size(3), ...
+            'Max', w_p, ...
+            'Value', max(get(horizontal_slider, 'Value'), Plot.w(ui_panels_section) - figure_size(3)) ...
+            );
+        
+        end
+        
+        set(ui_panels_section, 'Units', up);
+        cellfun(@(x) set(x, 'Units', uf), section_panel, 'UniformOutput', false);
+    end    
+    function cb_get_objs_id(~, ~)
+        % load new ids.
+        for i = 1:size(panel_struct, 1)
+            for j = 1:size(panel_struct, 2)
+                obj = panel_struct(i, j).plot_element;
+                if isempty(obj)
+                    continue;
+                else
+                    btn = panel_struct(i, j).h_btn;
+                    default_msg = loaded_names(i, j).msg;
+                    change_state_btn(btn, obj.get('ID'), default_msg)
+                end                
+            end
+        end
     end
 
 %% buttons
