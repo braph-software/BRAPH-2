@@ -148,7 +148,7 @@ function update(pl, selected, plot_selected)
                 'Callback', {@cb_table_calculate})
             
             set(ui_button_delete, ...
-                'Position', [.02 .01 .22 .07], ...
+                'Position', [.02 .01 .3 .07], ...
                 'String', 'Delete Measures', ...
                 'TooltipString', 'Delete Selected Measures', ...
                 'Callback', {@cb_table_delete})
@@ -181,6 +181,7 @@ function update(pl, selected, plot_selected)
                 case 2
                     if newdata == 1
                         to_plot = sort(unique([to_plot(:); i]));
+                        pl.selected = sort(unique([pl.selected(:); i]));
                     else
                         to_plot = to_plot(to_plot ~= i);
                     end

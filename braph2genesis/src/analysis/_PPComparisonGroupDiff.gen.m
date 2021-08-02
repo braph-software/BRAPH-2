@@ -160,6 +160,7 @@ function update(pl)
             end
 
             % replace values to individual cells for html info
+            tmp_double = num2cell(value_double);
             for i = 1:size(value_double, 1)
                 for j = 1:size(value_double, 2)
                     if mask(i, j)
