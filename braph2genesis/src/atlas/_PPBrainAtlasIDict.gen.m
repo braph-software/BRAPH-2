@@ -88,7 +88,7 @@ function h_panel = draw(pl, varargin)
             set(ui_button_table_selectall, 'TooltipString', 'Select all brain regions')
             set(ui_button_table_selectall, 'Callback', {@cb_table_selectall})
 
-            set(ui_button_table_clearselection, 'Position', [.02 .01 .22 .07])
+            set(ui_button_table_clearselection, 'Position', [.02 .02 .22 .07])
             set(ui_button_table_clearselection, 'String', 'Clear')
             set(ui_button_table_clearselection, 'TooltipString', 'Clear selection')
             set(ui_button_table_clearselection, 'Callback', {@cb_table_clearselection})
