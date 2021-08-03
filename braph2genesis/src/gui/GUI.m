@@ -1,4 +1,4 @@
-function h_plot_element = GUI(el, varargin)
+function pl_out = GUI(el, varargin)
 %GUI creates and displays GUI for an element.
 %
 % GUI(EL) creates and displays GUI for element EL.
@@ -8,7 +8,9 @@ function h_plot_element = GUI(el, varargin)
 %  name, position, and background color. All these settings are optional 
 %  and can be in any order.
 %
-% See also Element.
+% PL = GUI(EL) returns the PlotElement pointer.
+%
+% See also Element, PlotElement().
 
 %% Parameters
 
@@ -225,7 +227,7 @@ toolbar()
 set(f, 'Visible', 'on')
 
 if nargout > 0 
-    h_plot_element = pl;
+    pl_out = pl;
 end
 
 end
