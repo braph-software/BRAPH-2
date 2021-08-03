@@ -457,7 +457,7 @@ function h_panel = draw(pl, varargin)
                 if X{i} ~= get(pl.h_syms.h(i), 'Xdata') || ...
                         Y{i} ~= get(pl.h_syms.h(i), 'Ydata') || ...
                         Z{i} ~= get(pl.h_syms.h(i), 'Zdata')
-                    set(pl.h_syms.h(i), 'Xdata',X{i}, 'Ydata', Y{i}, 'Zdata', Z{i})
+                    set(pl.h_syms.h(i), 'Xdata', X{i}, 'Ydata', Y{i}, 'Zdata', Z{i})
                 end
             end
             % set
