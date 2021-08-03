@@ -88,7 +88,7 @@ function update(pl)
         if Measure.is_global(el) % global
             node_labels = 'Global';
             for k = 1:size(value_cell, 1)
-                row_names{k} = [x_label ':' num2str(k)]; %#ok<AGROW>
+                row_names{k} = [x_label ': ' num2str(k)]; %#ok<AGROW>
             end
         elseif Measure.is_nodal(el) % nodal
             for k = 1:size(value_cell, 1)

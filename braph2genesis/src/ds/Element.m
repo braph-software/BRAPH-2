@@ -1124,7 +1124,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 
             if el.getPropNumber() > 0
                 % str = char(join([class(el) 'with properties' cellfun(@(prod) el.getPropTag(prod), num2cell(Element.getProps(el)'), 'UniformOutput', false)]));
-                str = [class(el) ' with ' int2str(el.getPropNumber()) ' properties ' el.getPropTag(1) ' = ' tostring(el.get(1)) '.'];
+                str = [class(el)  ' = ' tostring(el.get(1)) '.'];
             else
                 str = [class(el) ' without properties.'];
             end
