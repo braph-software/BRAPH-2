@@ -1,4 +1,4 @@
-function GUI(el, varargin)
+function h_plot_element = GUI(el, varargin)
 %GUI creates and displays GUI for an element.
 %
 % GUI(EL) creates and displays GUI for element EL.
@@ -223,5 +223,9 @@ toolbar()
 
 %% Show GUI
 set(f, 'Visible', 'on')
+
+if nargout > 0 
+    h_plot_element = pl;
+end
 
 end

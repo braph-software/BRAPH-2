@@ -10,6 +10,8 @@ GUI, PlotElement, PlotProp, ComparisonGroup.
 %% ¡properties!
 pp
 comparison_tbl
+ui_sliding_panel
+ui_slider
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
@@ -29,10 +31,6 @@ function h_panel = draw(pl, varargin)
     % see also update, redraw, refresh, settings, uipanel, isgraphics.
 
     pl.pp = draw@PlotProp(pl, varargin{:});
-
-    if isempty(pl.comparison_tbl)
-        pl.comparison_tbl = uitable('Parent', pl.pp);
-    end
 
     % output
     if nargout > 0
@@ -61,6 +59,7 @@ function update(pl)
     node_labels_tmp = graph.get('BRAINATLAS').get('BR_DICT');
     node_labels = cellfun(@(x) x.get('ID') , node_labels_tmp.getItems(), 'UniformOutput', false);
     fdr_style = [0 1 0];
+    fdr_q_value = 0.05; % default, might make it so the user chooses it.
 
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
         % remove previous tables/textbox
@@ -99,26 +98,83 @@ function update(pl)
             % do nothing
         end
 
-        if Measure.is_binodal(m)
+        if Measure.is_binodal(m) % binodal with sliding panel
+            pl.ui_sliding_panel = uipanel( ...
+                'Parent', pl.pp, ...
+                'Units', 'characters', ...
+                'BackgroundColor', [.62 .545 .439]);
+            pl.ui_slider = uicontrol( ...
+                'Parent', pl.pp, ...
+                'Style', 'slider', ...
+                'Units', 'characters', ...
+                'Value', 1, ...
+                'Callback', {@cb_slide} ...
+                );
             delete(pl.comparison_tbl)
             pl.comparison_tbl = cell(size(value));
             for i = 1:1:size(pl.comparison_tbl, 1)
                 for j = 1:1:size(pl.comparison_tbl, 2)
                     if isempty(pl.comparison_tbl{i, j}) || ~isgraphics(pl.comparison_tbl{i, j}, 'uitable')
-                        pl.comparison_tbl{i, j} = uitable('Parent', pl.pp);
+                        pl.comparison_tbl{i, j} = uitable('Parent', pl.ui_sliding_panel);
+                    end
+
+                    p1s = el.get('P1');
+                    [~, mask] = fdr(p1s{1}, fdr_q_value);
+
+                    tmp_data = value(i, j);
+                    tmp_data = num2cell([tmp_data{:}]);
+
+                    for ll = 1:size(tmp_data, 1)
+                        for mm = 1:size(tmp_data, 2)
+                            if mask(ll, mm)
+
+                                clr = dec2hex(round(fdr_style * 255), 2)';
+                                clr = ['#'; clr(:)]';
+
+                                tmp_data(ll, mm) = {strcat(...
+                                    ['<html><body bgcolor="' clr '" text="#000000" width="100px">'], ...
+                                    num2str(tmp_data{ll, mm}))};
+
+                            end
+                        end
                     end
                     set(pl.comparison_tbl{i, j}, ...
-                        'Data', value{i, j}, ...
+                        'Data', tmp_data, ...
                         'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
                         'CellEditCallback', {@cb_matrix_value, i, j} ...
                         )
                 end
             end
         else
-
+            % global and nodal with no sliding panel
+            if isempty(pl.comparison_tbl) || ~isvalid(pl.comparison_tbl)
+                pl.comparison_tbl = uitable('Parent', pl.pp);
+            end
             value_double =  cell2mat(cellfun(@(x) x', value, 'UniformOutput', false));
+            p1s = cell2mat(cellfun(@(x) x', el.get('P1'), 'UniformOutput', false));
+            if Measure.is_nodal(m)
+                [~, mask] = fdr(p1s, fdr_q_value);
+            else
+                [~, mask] = fdr(p1s', fdr_q_value);
+                mask = mask';
+            end
+
+            % replace values to individual cells for html info
+            tmp_double = num2cell(value_double);
+            for i = 1:size(value_double, 1)
+                for j = 1:size(value_double, 2)
+                    if mask(i, j)
+                        clr = dec2hex(round(fdr_style * 255), 2)';
+                        clr = ['#'; clr(:)]';
+                        tmp_double(i, j) = {strcat(...
+                            ['<html><body bgcolor="' clr '" text="#000000" width="100px">'], ...
+                            num2str(value_double(i, j)))}; %#ok<AGROW>
+                    end
+                end
+            end
+
             set(pl.comparison_tbl, ...
-                'Data', value_double, ...
+                'Data', tmp_double, ...
                 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
                 'Units', 'normalized', ...
                 'Position', [.01 .15 .98 .75], ...
@@ -131,8 +187,14 @@ function update(pl)
         ui_node1_popmenu  = uicontrol('Parent', pl.pp, 'Style', 'popupmenu');
         ui_node2_popmenu  = uicontrol('Parent', pl.pp, 'Style', 'popupmenu');
         ui_measure_plot = uicontrol('Parent', pl.pp, 'Style', 'pushbutton');
+        ui_brain_view = uicontrol('Parent', pl.pp, ...
+            'Style', 'pushbutton', ...
+            'Units', 'normalized', ...
+            'Position', [.74 .01 .25 .08]);
+
         init_measure_plot_area()
         init_brain_view_btn()
+        rules_brain_view()
     else % weighted
         % paint a normal cell tables
         value_cell = el.get(prop);
@@ -145,7 +207,7 @@ function update(pl)
                         pl.comparison_tbl{i, j} = uitable('Parent', pl.pp);
                     end
                     p1s = el.get('P1');
-                    [~, mask] = fdr(p1s{1}, 0.5);
+                    [~, mask] = fdr(p1s{1}, fdr_q_value);
 
                     tmp_data = value_cell(i, j);
                     tmp_data = num2cell([tmp_data{:}]);
@@ -185,7 +247,7 @@ function update(pl)
                 'BackgroundColor', [1 1 1], ...
                 'String', num2str(value_double));
 
-            [~, mask] = fdr(p1s, 0.5);
+            [~, mask] = fdr(p1s, fdr_q_value);
 
             if mask(1, 1)
                 set(pl.comparison_tbl, 'BackgroundColor', fdr_style);
@@ -194,6 +256,9 @@ function update(pl)
             value_double = cellfun(@(x) x', value_cell, 'UniformOutput', false);
             value_double = num2cell([value_double{:}]);
             p1s = cell2mat(cellfun(@(x) x', el.get('P1'), 'UniformOutput', false));
+            if isempty(pl.comparison_tbl) || ~isvalid(pl.comparison_tbl)
+                pl.comparison_tbl = uitable('Parent', pl.pp);
+            end
             set(pl.comparison_tbl, ...
                 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
                 'Units', 'normalized', ...
@@ -202,7 +267,7 @@ function update(pl)
                 'CellEditCallback', {@cb_matrix_value} ...
                 )
 
-            [~, mask] = fdr(p1s, 0.5);
+            [~, mask] = fdr(p1s, fdr_q_value);
 
             for i = 1:size(value_double, 1)
                 for j = 1:size(value_double, 2)
@@ -222,7 +287,10 @@ function update(pl)
             set(pl.comparison_tbl, 'Data', value_double);
 
         end
-        ui_brain_view = uicontrol('Parent', pl.pp, 'Style', 'pushbutton');
+        ui_brain_view = uicontrol('Parent', pl.pp, ...
+            'Style', 'pushbutton', ...
+            'Units', 'normalized', ...
+            'Position', [.74 .01 .25 .2]);
         init_brain_view_btn()
         rules_brain_view()
         x_name = 'Weighted';
@@ -259,8 +327,6 @@ function update(pl)
             set(ui_brain_view, ...
                 'String', 'Brain View', ...
                 'Tooltip', 'Plot the Measure Brain View. Will plot depending on the node selection.', ...
-                'Units', 'normalized', ...
-                'Position', [.74 .01 .25 .2], ...
                 'Callback', {@cb_brain_view} ...
                 );
         end
@@ -501,6 +567,9 @@ function update(pl)
 
             set(f, 'Visible', 'on')
         end
+        function cb_slide(~, ~)
+            pl.slide()
+        end
 end
 function redraw(pl, varargin)
     %REDRAW redraws the element graphical panel.
@@ -513,39 +582,119 @@ function redraw(pl, varargin)
 
     el = pl.get('EL');
     prop = pl.get('PROP');
+    comparison = el.get('C');
+    graph = comparison.get('A1').get('G');
 
     value = el.getr(prop);
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
         pl.redraw@PlotProp('Height', 1.8, varargin{:})
     else
         value_cell = el.get(prop);
-        inner_tmp = value_cell{1};
-
         if isempty(value_cell)
             pl.redraw@PlotProp('Height', 1.8, varargin{:})
-        elseif size(inner_tmp, 1) == 1 % global WU
-            pl.redraw@PlotProp('Height', 5, varargin{:})
-        elseif size(inner_tmp, 1) ~= 1 && size(inner_tmp, 2) == 1 % nodal WU
-            pl.redraw@PlotProp('Height', 10, varargin{:})
-        else
-            pl.redraw@PlotProp('Height', 30, varargin{:})
-        end
-
-        if Measure.is_binodal(el.get('Measure')) && exist('value_cell')
-            for i = 1:1:size(value_cell, 1)
-                for j = 1:1:size(value_cell, 2)
-                    set(pl.comparison_tbl{i, j}, ...
-                        'Units', 'character', ...
-                        'Position', ...
-                        [ ...
-                        (0.01 + (i - 1) * 0.98 / size(pl.comparison_tbl, 1)) * Plot.w(pl.pp) ...
-                        (0.1 + (j - 1) * 0.98 / size(pl.comparison_tbl, 2)) * (Plot.h(pl.pp) - 1.8) ...
-                        0.98 / size(pl.comparison_tbl, 1) * Plot.w(pl.pp) ...
-                        0.98 / size(pl.comparison_tbl, 2) * (Plot.h(pl.pp) - 3.8) ...
-                        ] ...
-                        )
+        elseif ~isempty(pl.comparison_tbl)
+            if isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT') % density and threshold
+                if  Measure.is_binodal(el.get('Measure')) % binodal
+                    % density and threshold
+                    pl.redraw@PlotProp('Height', 30, varargin{:})
+                    for i = 1:1:size(value_cell, 1)
+                        for j = 1:1:size(value_cell, 2)
+                            set(pl.comparison_tbl{i, j}, ...
+                                'Units', 'character', ...
+                                'Position', ...
+                                [ ...
+                                (0 + (i - 1) * 0.99) * Plot.w(pl.pp) ...
+                                (0 + (j - 1) * 0.99 / size(pl.comparison_tbl, 2)) * (Plot.h(pl.pp) *.725) ...
+                                0.98 * Plot.w(pl.pp) ...
+                                1 / size(pl.comparison_tbl, 2) * (Plot.h(pl.pp) * .75) ...
+                                ] ...
+                                )
+                        end
+                    end
+                    pl.slide()
+                else
+                    pl.redraw@PlotProp('Height', 20, varargin{:})
+                end
+            else % weighted
+                if  Measure.is_binodal(el.get('Measure')) % binodal
+                    pl.redraw@PlotProp('Height', 30, varargin{:})
+                    for i = 1:1:size(value_cell, 1)
+                        for j = 1:1:size(value_cell, 2)
+                            set(pl.comparison_tbl{i, j}, ...
+                                'Units', 'character', ...
+                                'Position', ...
+                                [ ...
+                                (0.01 + (i - 1) * 0.98 / size(pl.comparison_tbl, 1)) * Plot.w(pl.pp) ...
+                                (0.1 + (j - 1) * 0.98 / size(pl.comparison_tbl, 2)) * (Plot.h(pl.pp) - 1.8) ...
+                                0.98 / size(pl.comparison_tbl, 1) * Plot.w(pl.pp) ...
+                                0.98 / size(pl.comparison_tbl, 2) * (Plot.h(pl.pp) - 3.8) ...
+                                ] ...
+                                )
+                        end
+                    end
+                elseif Measure.is_nodal(el.get('Measure')) % nodal
+                    pl.redraw@PlotProp('Height', 10, varargin{:})
+                else % global
+                    pl.redraw@PlotProp('Height', 5, varargin{:})
                 end
             end
         end
     end
+end
+function slide(pl)
+    %SLIDE slides the panel horizontally.
+    %
+    % SLIDE(PL) slides the panel horizontally, without redrawing the prop panels.
+    %
+    % See also draw, update, redraw.
+
+    f = pl.pp;
+    p = pl.ui_sliding_panel;
+    s = pl.ui_slider;
+
+    units = get(f, 'Units');
+    set(f, 'Units', 'character')
+
+    y0_s = 3 + h(pl.pp)*.01;
+
+    dw = 1;
+    w_pp = cellfun(@(x) w(x), pl.comparison_tbl);
+    w_p = sum(w_pp + dw) + dw;
+
+    if w_p > w(f)
+        offset = get(s, 'Value');
+        set(p, 'Position', [w(p)-w(f)-offset y0_s+1 w_p h(f)*.76])
+
+        set(s, ...
+            'Position', [0 y0_s w(f) 1], ...
+            'Visible', 'on', ...
+            'Min', w(p) - w(f), ...
+            'Max', w_p, ...
+            'Value', max(get(s, 'Value'), w(p) - w(f)) ...
+            );
+    else
+        set(p, 'Position', [0.1 h(f)*.2 w(f)*.98 h(f)-h(f)*.15])
+
+        set(s, 'Visible', 'off')
+    end
+
+    set(f, 'Units', units)
+
+    % auxiliary functions
+        function r = x0(h)
+            r = get(h, 'Position');
+            r = r(1);
+        end
+        function r = y0(h)
+            r = get(h, 'Position');
+            r = r(2);
+        end
+        function r = w(h)
+            r = get(h, 'Position');
+            r = r(3);
+        end
+        function r = h(h)
+            r = get(h, 'Position');
+            r = r(4);
+        end
 end

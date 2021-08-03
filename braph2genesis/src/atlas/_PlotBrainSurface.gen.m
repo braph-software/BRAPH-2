@@ -219,6 +219,8 @@ function h_panel = draw(pl, varargin)
             xlabel(pl.h_axes, 'Sagital')
             ylabel(pl.h_axes, 'Axial')
             zlabel(pl.h_axes, 'Coronal')
+            h_3d = rotate3d(pl.h_axes);
+            h_3d.ActionPostCallback = @cb_rotate_3d;
         end
         has_background = get_from_varargin([], 'Backgroundcolor', varargin{:});
         if isempty(has_background)
@@ -278,6 +280,11 @@ function h_panel = draw(pl, varargin)
     
     if pl.get('TIGHT')
         axis(pl.h_axes, 'tight')
+    end
+    
+    function cb_rotate_3d(~, ~)
+        view_3d = get(pl.h_axes, 'view');
+        pl.set('View', view_3d);
     end
     
     % output

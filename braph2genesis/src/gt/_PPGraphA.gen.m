@@ -140,7 +140,12 @@ function update(pl)
         delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
         
         % if ... how to know which plot?
-        handle_plot = plotw(A{layer_to_plot});
+        if size(A, 2) > 1
+            handle_plot = plotw(A{layer_to_plot, layer_to_plot});
+        else
+            handle_plot = plotw(A{layer_to_plot});
+        end
+        
         % else
         % handle_plot = plotb(A{layer_to_plot});
         % end

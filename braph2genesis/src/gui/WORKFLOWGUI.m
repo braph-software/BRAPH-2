@@ -4,7 +4,7 @@ screen_size = get(0, 'ScreenSize');
 h_f = screen_size(4) * 0.65;
 w_f = h_f * 1.61;
 x_f = screen_size(3) * 0.2;
-y_f = screen_size(4) * .2; 
+y_f = screen_size(4) * .2;
 name_w = ['Workflow - ' name];
 f_position = get_from_varargin([x_f y_f w_f h_f], 'Position', varargin);
 BKGCOLOR = get_from_varargin([1 .9725 .929], 'BackgroundColor', varargin);
@@ -71,7 +71,8 @@ f = init();
             'MenuBar', 'none', ...
             'DockControls', 'off', ...
             'Color', BKGCOLOR , ...
-            'SizeChangedFcn', {@redraw} ...
+            'SizeChangedFcn', {@redraw}, ...
+            'WindowButtonDownFcn', {@cb_get_objs_id} ...
             );
         set_icon(f)
         
@@ -106,11 +107,11 @@ f = init();
                 )
         else
             set(horizontal_slider, ...
-                'Units', ' characters', ...
+                'Units', ' pixels', ...
                 'Visible', 'off', ...
                 'Position', [0 0 figure_size(3) 1])
             panel_plot(true)
-        end       
+        end
         
         % control min height
         if figure_size(4) < min_height || figure_size(3) < min_width
@@ -149,13 +150,14 @@ x_slice = 1 / (cycles - 1);
 panel_executables = [];
 y_slice = 2;
 define = false;
-horizontal_slider = uicontrol(f, 'Style', 'slider', 'Callback', {@cb_horizontal_slider});
+ui_panels_section = uipanel(f, 'Units', 'normalized', 'Position', [0 .15 1 .85]);
+horizontal_slider = uicontrol(f, 'Style', 'slider', 'Callback', {@cb_slide});
 loaded_names = struct([]);
 
 if ~isempty(previous_workspace)
     panel_struct = previous_workspace;
     panel_plot(false);
-    load_struct();    
+    load_struct();
 else
     panel_plot(false)
 end
@@ -164,21 +166,21 @@ end
             cycle = i - 1 ; % remove title;
             x_offset = x_slice * (cycle - 1);
             token = getGUIToken(txt, i);
-            tokens{i} = token; % saving purposes   
+            tokens{i} = token; % saving purposes
             
             if isempty(section_panel{i - 1}) || ~isgraphics(section_panel{i - 1}, 'uipanel')
                 define = true;
-                section_panel{i - 1} = uipanel(f, 'BackgroundColor', BKGCOLOR);
+                section_panel{i - 1} = uipanel(ui_panels_section, 'BackgroundColor', BKGCOLOR);
             else
                 define = false;
             end
             
             if isempty(slider{i - 1}) || ~isgraphics(slider{i - 1}, 'uicontrol') || isredraw
-                slider{i - 1} = uicontrol(section_panel{i - 1}, 'Style', 'slider', 'Callback', {@slide}); 
-                init_section_panel(section_panel{i - 1}, x_offset)                
+                slider{i - 1} = uicontrol(section_panel{i - 1}, 'Style', 'slider', 'Callback', {@slide});
+                init_section_panel(section_panel{i - 1}, x_offset)
             end
-
-            % set y 
+            
+            % set y
             set_y_section_panel(section_panel{i - 1})
             
             % get position
@@ -187,11 +189,11 @@ end
             
             % get executables
             panel_executable = getExecutable(token);
-            panel_executables{i} = panel_executable;      
+            panel_executables{i} = panel_executable;
             total_h = 0;
             for j = 1:length(panel_executable)
                 if define
-                    panel_inner{i, j} = uicontrol(section_panel{i - 1}); 
+                    panel_inner{i, j} = uicontrol(section_panel{i - 1});
                     set(panel_inner{i, j}, 'BackgroundColor', BKGCOLOR);
                 end
                 y_offset = heigth_ct + y_slice * (j);
@@ -209,7 +211,7 @@ end
                     set(panel_inner{i, j}, ...
                         'Style', 'pushbutton', ...
                         'String', btn_name, ...
-                        'Units', 'characters', ...                        
+                        'Units', 'characters', ...
                         'Position', [width_ct pos(4)-y_offset pos(3)-2*slider_width y_slice], ...
                         'Callback', {@btn_action})
                 else
@@ -224,19 +226,19 @@ end
             init_slider(slider{i - 1}, total_h, pos)
         end
     end
-    function init_section_panel(panel, x_offset)        
+    function init_section_panel(panel, x_offset)
         set(panel, ...
             'Units', 'normalized', ...
-            'Position', [x_offset .15 x_slice .85])
+            'Position', [x_offset 0 x_slice 1])
     end
     function set_y_section_panel(panel)
         panel.Units = 'normalized';
-        panel.Position(2) = .15;
-        panel.Position(4) = .85;
+        panel.Position(2) = 0;
+        panel.Position(4) = 1;
     end
     function init_slider(slider, total_h, pos)
         if total_h > pos(4)
-            set(slider, ...                
+            set(slider, ...
                 'Value', 0, ...
                 'Visible', 'on', ...
                 'Units', 'character', ...
@@ -253,7 +255,7 @@ end
                 'Position', [pos(3)-slider_width 0 slider_width pos(4)])
         end
     end
-    function btn_action(src, ~) 
+    function btn_action(src, ~)
         
         for k = 1:size(panel_inner, 1)
             for j = 1:size(panel_inner, 2)
@@ -264,37 +266,57 @@ end
                 end
             end
         end
-
+        
         panel_exe_ = panel_executables{panel + 1};
-        exe_ = split(panel_exe_{child + 1}, '=');       
+        exe_ = split(panel_exe_{child + 1}, '=');
         
         % fill struct
         panel_struct(panel, child).name = ['panel_struct(' num2str(panel) ',' num2str(child) ').exe'];
         panel_struct(panel, child).name_script = strtrim(exe_{1});
         panel_struct(panel, child).btn = src.String;
+        panel_struct(panel, child).h_btn = src;
+        panel_struct(panel, child).exe = [];
+        panel_struct(panel, child).plot_element = [];
         
+        % change script for internal values
         for l = 1:size(panel_struct, 2)
             if ~isempty(panel_struct) && size(panel_struct, 1) > 1 && panel ~= 1
                 if ~isempty(panel_struct(panel - 1, l).name_script) && ~isempty(panel_struct(panel - 1, l).name)
-                    exe_{2} = strrep(exe_{2}, ...
-                        panel_struct(panel - 1, l).name_script, ...
-                        panel_struct(panel - 1, l).name);
+                    tmp_pl = panel_struct(panel - 1, l).plot_element;
+                    if ~isempty(tmp_pl) && ~isequal(panel_struct(panel - 1, l).exe, tmp_pl.get('El'))
+                        % change to new obj
+                        new_script = ['panel_struct(' num2str(panel-1) ',' num2str(child) ').plot_element.get(''' 'El' ''')'];
+                        exe_{2} = strrep(exe_{2}, ...
+                            panel_struct(panel - 1, l).name_script, ...
+                            new_script);
+                    else
+                        exe_{2} = strrep(exe_{2}, ...
+                            panel_struct(panel - 1, l).name_script, ...
+                            panel_struct(panel - 1, l).name);
+                    end
                 end
             end
         end
-         if isfield(panel_struct(panel, child), 'exe') && ~isempty(panel_struct(panel, child).exe)
-            % use the object;
+        if isfield(panel_struct(panel, child), 'exe') && ~isempty(panel_struct(panel, child).exe)
+            tmp_pl = panel_struct(panel - 1, l).plot_element;
+            if ~isempty(tmp_pl) && ~isequal(panel_struct(panel - 1, l).exe, tmp_pl.get('EL'))
+                % change to new obj
+                panel_struct(panel, child).exe = tmp_pl.get('El');
+            else
+                % use the object;
+            end
         else
             panel_struct(panel, child).exe = eval([exe_{2}]);
         end
         
         if ~isempty(panel_struct(panel, child).exe) && isa(panel_struct(panel, child).exe, 'Element')
             new_object =  panel_struct(panel, child).exe;
-            GUI(new_object)
-            % change btn state. turn green and change string            
+            h_plot_element = GUI(new_object);
+            panel_struct(panel, child).plot_element = h_plot_element;
+            % change btn state. turn green and change string
             change_state_btn(src, new_object.get('ID'),  loaded_names(panel, child).msg)
             if check_section_objs(panel)
-                enable_panel(section_panel{panel + 1})                
+                enable_panel(section_panel{panel + 1})
             end
         end
     end
@@ -303,8 +325,8 @@ end
         n = length(panel_executables{panel + 1}) - 1 ;
         tmp = struct2cell(panel_struct);
         if panel + 1 <= length(section_panel) && ...
-                (isequal(n, length(tmp(4, 1))) ||  isequal(n, length([tmp{4, panel, :}])))             
-                
+                (isequal(n, length(tmp(6, 1))) ||  isequal(n, length([tmp{6, panel, :}])))
+            
             check = true;
         end
     end
@@ -316,7 +338,7 @@ end
             if ~isempty(varargin{2})
                 btn_new_name = [varargin{3} ' ' varargin{2}];
                 set(btn, 'String', btn_new_name); % id
-            else % just default 
+            else % just default
                 set(btn, 'String', varargin{3}); % id
             end
         end
@@ -325,12 +347,56 @@ end
         pos = get(obj, 'Position');
     end
     function slide(~, ~)
-        for i = 1:length(slider)            
+        for i = 1:length(slider)
             set(slider{i}, 'Visible', 'on')
         end
     end
-    function cb_horizontal_slider(~, ~)
-        set(horizontal_slider, 'Visible', 'on')
+    function cb_slide(~, ~)
+        uf = get(section_panel{1}, 'Units');
+        up = get(ui_panels_section, 'Units');
+        set(ui_panels_section, 'Units', 'pixels');
+        
+        figure_size = getPosition(f);
+        
+        cellfun(@(x) set(x, 'Units', 'pixels'), section_panel, 'UniformOutput', false);
+        
+        fp = get(ui_panels_section, 'Position');
+        fs = get(horizontal_slider, 'Position');
+        
+        dw = 1;
+        w_up = cellfun(@(x) Plot.w(x), section_panel);
+        w_p = sum(w_up + dw) + dw;
+        if w_p > figure_size(4)
+            offset = get(horizontal_slider, 'Value');
+            set(ui_panels_section, 'Position', [Plot.w(ui_panels_section)-figure_size(3)-offset fp(2) w_p fp(4)])
+            
+            set(horizontal_slider, ...
+                'Position', [0 figure_size(4)*0.08+1 figure_size(3) 10], ...
+                'Visible', 'on', ...
+                'Min', Plot.w(ui_panels_section) - figure_size(3), ...
+                'Max', w_p, ...
+                'Value', max(get(horizontal_slider, 'Value'), Plot.w(ui_panels_section) - figure_size(3)) ...
+                );
+            
+        end
+        
+        set(ui_panels_section, 'Units', up);
+        cellfun(@(x) set(x, 'Units', uf), section_panel, 'UniformOutput', false);
+    end
+    function cb_get_objs_id(~, ~)
+        % load new ids.
+        for i = 1:size(panel_struct, 1)
+            for j = 1:size(panel_struct, 2)
+                obj = panel_struct(i, j).plot_element;
+                if isempty(obj)
+                    continue;
+                else
+                    btn = panel_struct(i, j).h_btn;
+                    default_msg = loaded_names(i, j).msg;
+                    change_state_btn(btn, obj.get('ID'), default_msg)
+                end
+            end
+        end
     end
 
 %% buttons
@@ -343,7 +409,7 @@ website_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
 forums_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
 twitter_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
 buttons()
-    function buttons()        
+    function buttons()
         set(save_workflow_btn, ...
             'Cdata', imread('saveicon.png'), ...
             'Tooltip', ['Save the workspace of ' name], ...
@@ -375,7 +441,7 @@ buttons()
             'Tooltip', 'Click to visit BRAPH 2.0 twitter', ...
             'Cdata', imread('twitter_icon.png'), ...
             'BackgroundColor', [1 1 1], ...
-            'Callback', {@cb_twitter_btn});        
+            'Callback', {@cb_twitter_btn});
         set(license_btn, ...
             'Position', [.714 0 .1428 .08], ...
             'Cdata', imread('licenseicon.png'), ...
@@ -387,7 +453,7 @@ buttons()
             'Cdata', imread('abouticon.png'), ...
             'BackgroundColor', [1 1 1], ...
             'Tooltip', 'Click to open BRAPH 2.0 information', ...
-            'Callback', {@cb_about});     
+            'Callback', {@cb_about});
     end
     function cb_website_btn(~, ~)
         url = 'http://braph.org/';
@@ -414,7 +480,7 @@ buttons()
         if filterindex
             filename = fullfile(path, file);
             build = BRAPH2.BUILD;
-            save(filename, 'panel_struct', 'txt', 'cycles', 'build');    
+            save(filename, 'panel_struct', 'txt', 'cycles', 'build');
             update_filename(filename);
         end
     end
@@ -436,14 +502,14 @@ buttons()
                 enable_panel(section_panel{i + 1})
             end
         end
-        set_loaded_objects()        
+        set_loaded_objects()
     end
     function set_loaded_objects()
         for j = 1:length(section_panel)
             childs = get(section_panel{j}, 'Children');
             childs_ = flip(childs(1: end - 2));
             if size(panel_struct, 1) < j
-                    break;
+                break;
             end
             for k = 1:length(childs_)
                 child_name = get(childs_(k), 'String');
@@ -484,7 +550,7 @@ menu()
             'Label', 'Workflow');
         uimenu(ui_menu_workflow, ...
             'Label', 'About ...', ...
-            'Callback', {@cb_about_workflow})        
+            'Callback', {@cb_about_workflow})
         uimenu(ui_menu_workflow, ...
             'Label', 'Clone ...', ...
             'Callback', {@cb_save_workflow_braph2})
@@ -504,13 +570,13 @@ menu()
         
     end
     function cb_save_workflow_braph2(~, ~)
-         % select file
+        % select file
         [fileoutput, path, filterindex] = uiputfile('.braph2', 'Select a workflow file name.');
         % save file
         if filterindex
             filename = fullfile(path, fileoutput);
             dlmwrite(filename, txt, 'delimiter', '')
-        end        
+        end
     end
     function cb_save_direct_workflow(~, ~)
         fn = get(ui_text_workflow_filename, 'String');
@@ -519,7 +585,7 @@ menu()
         else
             build = BRAPH2.BUILD;
             save(fn, 'panel_struct', 'txt', 'cycles', 'build');
-        end        
+        end
     end
     function cb_about_workflow(~, ~)
         [tittle, msg] =  getGUIToken(txt, 1);
@@ -576,7 +642,7 @@ menu()
             if filterindex
                 filename = fullfile(path, fileoutput);
                 dlmwrite(filename, export_txt, 'delimiter', '')
-            end            
+            end
         end
     end
 

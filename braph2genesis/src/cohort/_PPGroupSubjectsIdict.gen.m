@@ -199,6 +199,7 @@ function h_panel = draw(pl, varargin)
             end
         end
         function get_subject_gui()
+            update_el()
             if isempty(index)
                 index = get(pl.table_value_idict, 'Value');
             end
@@ -229,6 +230,7 @@ function h_panel = draw(pl, varargin)
         end
         function update_el()
             el = pl.get('EL');
+            subjects_idict = el.getr(prop);
         end
 
     % output

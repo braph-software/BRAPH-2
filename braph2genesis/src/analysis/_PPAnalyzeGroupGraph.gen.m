@@ -131,6 +131,7 @@ function update(pl, selected, plot_selected)
         end
 
         ui_button_table_calculate = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
+        ui_button_delete = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
         ui_button_table_see_graph = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
         ui_button_table_selectall = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
         ui_button_table_clearselection = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
@@ -140,10 +141,16 @@ function update(pl, selected, plot_selected)
 
         function init_buttons()
             set(ui_button_table_calculate, ...
-                'Position', [.02 .01 .22 .07], ...
+                'Position', [.02 .11 .22 .07], ...
                 'String', 'Calculate Measures', ...
                 'TooltipString', 'Calculate Selected Measures', ...
                 'Callback', {@cb_table_calculate})
+
+            set(ui_button_delete, ...
+                'Position', [.02 .01 .22 .07], ...
+                'String', 'Delete Measures', ...
+                'TooltipString', 'Delete Selected Measures', ...
+                'Callback', {@cb_table_delete})
 
             set(ui_button_table_see_graph, ...
                 'Position', [.26 .01 .22 .07], ...
@@ -162,11 +169,9 @@ function update(pl, selected, plot_selected)
                 'String', 'Clear All', ...
                 'TooltipString', 'Clear selection', ...
                 'Callback', {@cb_table_clearselection})
-
-
         end
 
-        % callbacks
+    % callbacks
         function cb_measure_selection(~, event)
             i = event.Indices(1);
             col = event.Indices(2);
@@ -181,6 +186,7 @@ function update(pl, selected, plot_selected)
                 case 2
                     if newdata == 1
                         to_plot = sort(unique([to_plot(:); i]));
+                        pl.selected = sort(unique([pl.selected(:); i]));
                     else
                         to_plot = to_plot(to_plot ~= i);
                     end
@@ -256,6 +262,18 @@ function update(pl, selected, plot_selected)
             end
             measures_guis = getGUIMeasures();
         end
+        function cb_table_delete(~, ~)
+            mlist = Graph.getCompatibleMeasureList(graph);
+            delete_measure_list = mlist(pl.selected);
+            g_dict = el.get(prop).get('M_DICT');
+            for i = 1:length(delete_measure_list)
+                m_delete = delete_measure_list{i};
+                if g_dict.contains(m_delete)
+                    index = g_dict.getIndex(m_delete);
+                    g_dict.remove(index);
+                end
+            end
+        end
         function cb_table_graph(~, ~)
             [parent_position_pixels, normalized] = get_figure_position();
             w = parent_position_pixels(3);
@@ -297,25 +315,25 @@ function update(pl, selected, plot_selected)
             obj = figHandles{1};
         end
 
-        % close function to pl.pp
-        set(pl.pp, ...
-            'DeleteFcn', {@close_f_settings})
+    % close function to pl.pp
+    set(pl.pp, ...
+        'DeleteFcn', {@close_f_settings})
 
-            function close_f_settings(~,~)
-                if ~isempty(measures_guis)
-                    for k = 1:length(measures_guis)
-                        m_gui_h = measures_guis{k};
-                        if isgraphics(m_gui_h)
-                            close(m_gui_h)
-                        end
-                    end
-                end
-                if ~isempty(graph_gui)
-                    if isgraphics(graph_gui)
-                        close(graph_gui)
+        function close_f_settings(~,~)
+            if ~isempty(measures_guis)
+                for k = 1:length(measures_guis)
+                    m_gui_h = measures_guis{k};
+                    if isgraphics(m_gui_h)
+                        close(m_gui_h)
                     end
                 end
             end
+            if ~isempty(graph_gui)
+                if isgraphics(graph_gui)
+                    close(graph_gui)
+                end
+            end
+        end
 end
 function redraw(pl, varargin)
     %REDRAW redraws the element graphical panel.
