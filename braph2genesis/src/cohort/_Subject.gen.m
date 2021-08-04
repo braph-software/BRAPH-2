@@ -35,7 +35,7 @@ function str = tostring(el, varargin)
 
     if el.getPropNumber() > 0
         % str = char(join([class(el) 'with properties' cellfun(@(prod) el.getPropTag(prod), num2cell(Element.getProps(el)'), 'UniformOutput', false)]));
-        str = [class(el)  ' = ' tostring(el.get(1)) '.'];
+        str = [class(el) ' ' el.getPropTag(1) ' = ' tostring(el.get(1)) '.'];
     else
         str = [class(el) ' without properties.'];
     end

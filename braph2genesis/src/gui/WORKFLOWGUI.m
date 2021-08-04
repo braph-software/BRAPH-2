@@ -275,8 +275,6 @@ end
         panel_struct(panel, child).name_script = strtrim(exe_{1});
         panel_struct(panel, child).btn = src.String;
         panel_struct(panel, child).h_btn = src;
-        panel_struct(panel, child).exe = [];
-        panel_struct(panel, child).plot_element = [];
         
         % change script for internal values
         for l = 1:size(panel_struct, 2)
@@ -298,8 +296,10 @@ end
             end
         end
         if isfield(panel_struct(panel, child), 'exe') && ~isempty(panel_struct(panel, child).exe)
-            tmp_pl = panel_struct(panel - 1, l).plot_element;
-            if ~isempty(tmp_pl) && ~isequal(panel_struct(panel - 1, l).exe, tmp_pl.get('EL'))
+           
+            tmp_pl = panel_struct(panel, child).plot_element;
+         
+            if ~isempty(tmp_pl) && ~isequal(panel_struct(panel , child).exe, tmp_pl.get('EL'))
                 % change to new obj
                 panel_struct(panel, child).exe = tmp_pl.get('El');
             else
