@@ -218,14 +218,7 @@ function update(pl, selected, plot_selected)
                     plot_measure{i} = true; %#ok<AGROW>
                 else
                     plot_measure{i} = false; %#ok<AGROW>
-                end
-                
-                % precalculate
-                el.getComparison(measure).memorize('DIFF');
-                el.getComparison(measure).memorize('P1');
-                el.getComparison(measure).memorize('P2');
-                el.getComparison(measure).memorize('CIU');
-                el.getComparison(measure).memorize('CIL');
+                end                
 
                 waitbar(extra, f, ['Measure: ' measure ' Calculated! ...']);
             end
