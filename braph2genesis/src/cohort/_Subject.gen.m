@@ -21,7 +21,7 @@ LABEL (metadata, string) is an extended label of the subject.
 NOTES (metadata, string) are some specific notes about the subject.
 
 %% ¡methods!
-function str = tostring(el, varargin)
+function str = tostring(sub, varargin)
     %TOSTRING string with information about the element.
     %
     % STR = TOSTRING(EL) returns a string with information about the element.
@@ -35,9 +35,9 @@ function str = tostring(el, varargin)
 
     if el.getPropNumber() > 0
         % str = char(join([class(el) 'with properties' cellfun(@(prod) el.getPropTag(prod), num2cell(Element.getProps(el)'), 'UniformOutput', false)]));
-        str = [class(el) ' ' el.getPropTag(1) ' = ' tostring(el.get(1)) '.'];
+        str = [class(sub) ' ' sub.getPropTag(1) ' = ' tostring(sub.get(1)) '.'];
     else
-        str = [class(el) ' without properties.'];
+        str = [class(sub) ' without properties.'];
     end
     str = tostring(str, varargin{:});
     str = str(2:1:end-1);
