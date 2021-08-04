@@ -100,10 +100,7 @@ f = init();
             set(horizontal_slider, ...
                 'Units', 'pixels',...
                 'Position', [0 figure_size(4)*0.08+1 figure_size(3) 10], ...
-                'Visible', 'on', ...
-                'Min', 0, ...
-                'Max', w_f, ...
-                'Value', max(get(horizontal_slider, 'Value'), w_f - figure_size(3)) ...
+                'Visible', 'on' ...                
                 )
         else
             set(horizontal_slider, ...
@@ -126,7 +123,7 @@ f = init();
     end
 
 %% file name
-ui_text_workflow_filename = uicontrol(f, 'Style', 'text');
+ui_text_workflow_filename = uicontrol(f, 'Style','text');
 init_filename()
     function init_filename()
         set(f, 'Units', 'pixels')
@@ -150,8 +147,8 @@ x_slice = 1 / (cycles - 1);
 panel_executables = [];
 y_slice = 2;
 define = false;
-ui_panels_section = uipanel(f, 'Units', 'normalized', 'Position', [0 .15 1 .85], 'BorderType', 'none');
-horizontal_slider = uicontrol(f, 'Style', 'slider', 'Callback', {@cb_slide});
+ui_panels_section = uipanel(f, 'Units', 'normalized', 'Position', [0 .15 1 .85]);
+horizontal_slider = uicontrol(f, 'Style', 'slider', 'Value', 1, 'Callback', {@cb_slide});
 loaded_names = struct([]);
 
 if ~isempty(previous_workspace)
@@ -275,6 +272,8 @@ end
         panel_struct(panel, child).name_script = strtrim(exe_{1});
         panel_struct(panel, child).btn = src.String;
         panel_struct(panel, child).h_btn = src;
+%         panel_struct(panel, child).exe = [];
+%         panel_struct(panel, child).plot_element = [];
         
         % change script for internal values
         for l = 1:size(panel_struct, 2)
@@ -364,9 +363,9 @@ end
         fs = get(horizontal_slider, 'Position');
         
         dw = 1;
-        w_up = cellfun(@(x) Plot.w(x), section_panel);
+        w_up = cellfun(@(x) Plot.w(x), section_panel);       
         w_p = sum(w_up + dw) + dw;
-        if w_p > figure_size(4)
+        if w_p > figure_size(3)
             offset = get(horizontal_slider, 'Value');
             set(ui_panels_section, 'Position', [Plot.w(ui_panels_section)-figure_size(3)-offset fp(2) w_p fp(4)])
             
@@ -374,10 +373,11 @@ end
                 'Position', [0 figure_size(4)*0.08+1 figure_size(3) 10], ...
                 'Visible', 'on', ...
                 'Min', Plot.w(ui_panels_section) - figure_size(3), ...
-                'Max', w_p, ...
+                'Max', Plot.w(ui_panels_section) - figure_size(3) + Plot.w(ui_panels_section) - figure_size(3) , ...
                 'Value', max(get(horizontal_slider, 'Value'), Plot.w(ui_panels_section) - figure_size(3)) ...
                 );
-            
+        else  
+            set(ui_panels_section,'Units', 'normalized', 'Position', [0 .15 1 .85], 'Position', [0 0 figure_size(3) h(f)]);
         end
         
         set(ui_panels_section, 'Units', up);
