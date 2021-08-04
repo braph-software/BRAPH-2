@@ -126,7 +126,7 @@ f = init();
     end
 
 %% file name
-ui_text_workflow_filename = uicontrol(f, 'Style','text');
+ui_text_workflow_filename = uicontrol(f, 'Style', 'text');
 init_filename()
     function init_filename()
         set(f, 'Units', 'pixels')
@@ -150,7 +150,7 @@ x_slice = 1 / (cycles - 1);
 panel_executables = [];
 y_slice = 2;
 define = false;
-ui_panels_section = uipanel(f, 'Units', 'normalized', 'Position', [0 .15 1 .85]);
+ui_panels_section = uipanel(f, 'Units', 'normalized', 'Position', [0 .15 1 .85], 'BorderType', 'none');
 horizontal_slider = uicontrol(f, 'Style', 'slider', 'Callback', {@cb_slide});
 loaded_names = struct([]);
 
