@@ -126,7 +126,7 @@ f = init();
     end
 
 %% file name
-ui_text_workflow_filename = uicontrol(f, 'Style','text');
+ui_text_workflow_filename = uicontrol(f, 'Style', 'text');
 init_filename()
     function init_filename()
         set(f, 'Units', 'pixels')
@@ -150,7 +150,7 @@ x_slice = 1 / (cycles - 1);
 panel_executables = [];
 y_slice = 2;
 define = false;
-ui_panels_section = uipanel(f, 'Units', 'normalized', 'Position', [0 .15 1 .85]);
+ui_panels_section = uipanel(f, 'Units', 'normalized', 'Position', [0 .15 1 .85], 'BorderType', 'none');
 horizontal_slider = uicontrol(f, 'Style', 'slider', 'Callback', {@cb_slide});
 loaded_names = struct([]);
 
@@ -275,8 +275,6 @@ end
         panel_struct(panel, child).name_script = strtrim(exe_{1});
         panel_struct(panel, child).btn = src.String;
         panel_struct(panel, child).h_btn = src;
-        panel_struct(panel, child).exe = [];
-        panel_struct(panel, child).plot_element = [];
         
         % change script for internal values
         for l = 1:size(panel_struct, 2)
@@ -298,8 +296,10 @@ end
             end
         end
         if isfield(panel_struct(panel, child), 'exe') && ~isempty(panel_struct(panel, child).exe)
-            tmp_pl = panel_struct(panel - 1, l).plot_element;
-            if ~isempty(tmp_pl) && ~isequal(panel_struct(panel - 1, l).exe, tmp_pl.get('EL'))
+           
+            tmp_pl = panel_struct(panel, child).plot_element;
+         
+            if ~isempty(tmp_pl) && ~isequal(panel_struct(panel , child).exe, tmp_pl.get('EL'))
                 % change to new obj
                 panel_struct(panel, child).exe = tmp_pl.get('El');
             else
