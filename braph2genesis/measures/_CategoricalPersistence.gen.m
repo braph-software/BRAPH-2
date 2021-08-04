@@ -29,7 +29,7 @@ Ci (data, rvector) is the given multilayer community structure
 []
 
 %%% ¡prop! 
-rule (metadata, OPTION) 
+rule (parameter, OPTION) 
 %%%% ¡settings!
 { 'louvain' 'newman'}
 %%%% ¡default!

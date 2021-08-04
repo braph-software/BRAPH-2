@@ -225,9 +225,6 @@ function update(pl, selected, plot_selected)
                     plot_measure{i} = false; %#ok<AGROW>
                 end
 
-                % precalculate
-                g.getMeasure(measure).memorize('M');
-
                 waitbar(extra, f, ['Measure: ' measure ' Calculated! ...']);
             end
 
