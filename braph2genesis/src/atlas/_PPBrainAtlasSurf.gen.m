@@ -42,11 +42,8 @@ function h_panel = draw(pl, varargin)
             end
         end
 
-    if isempty(pl.plot_brain_atlas_btn) || ~isgraphics(pl.plot_brain_atlas_btn, 'edit')
-        if isempty(el.get('surf').get('id'))
-            surf = ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF');
-        end
-        plba =  PlotBrainAtlas('ATLAS', el, 'Surf', surf);
+    if isempty(pl.plot_brain_atlas_btn) || ~isgraphics(pl.plot_brain_atlas_btn, 'edit')       
+        plba =  PlotBrainAtlas('ATLAS', el);
         surfs = get_surfs();
 
         if plba.isLocked('SURF')
