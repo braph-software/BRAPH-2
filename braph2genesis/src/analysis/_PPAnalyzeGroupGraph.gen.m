@@ -62,8 +62,19 @@ function update(pl, selected, plot_selected)
     graph_gui = [];
     mlist = [];
 
-    if el.getPropCategory(prop) == Category.RESULT && ~el.isLocked('ID')
-        % do nothing
+    if el.getPropCategory(prop) == Category.RESULT && ~el.isLocked(prop)
+        if ~isempty(pl.measure_tbl)
+            delete(pl.measure_tbl)
+        end
+        % delete brainview buttons
+        childs = get(pl.pp, 'Child');
+        for n = 1:length(childs)
+            child = childs(n);
+            if isequal(child.Style, 'pushbutton') && ...
+                    ~(isequal(child.String, 'C') ||  isequal(child.String, 'D') || isequal(child.String, 'G'))
+                delete(child)
+            end
+        end
     else
         graph = el.get(prop);
         if isa(graph, 'NoValue')
