@@ -203,7 +203,6 @@ function update(pl)
         % paint a normal cell tables
         value_cell = el.get(prop);
         if Measure.is_binodal(m)
-            delete(pl.comparison_tbl)
             pl.comparison_tbl = cell(size(value_cell));
             for i = 1:1:size(pl.comparison_tbl, 1)
                 for j = 1:1:size(pl.comparison_tbl, 2)
