@@ -22,7 +22,7 @@ MultiplexWD
 
 %% ¡props!
 %%% ¡prop! 
-rule (metadata, OPTION) 
+rule (parameter, OPTION) 
 %%%% ¡settings!
 {'subgraphs' 'harmonic' 'default'}
 %%%% ¡default!
