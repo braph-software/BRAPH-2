@@ -31,22 +31,22 @@ function h_panel = draw(pl, varargin)
     % see also update, redraw, refresh, settings, uipanel, isgraphics.
 
     pl.pp = draw@PlotProp(pl, varargin{:});
-    
+
     if isempty(pl.measure_tbl) || ~isgraphics(pl.measure_tbl, 'uitable')
-        
+
         pl.measure_tbl = uitable('Parent', pl.pp);
         pl.text = uicontrol( ...
             'Parent', pl.pp, ...
             'Style', 'Text', ...
             'String', '' ...
-            )
+            );
     end
 
     % output
     if nargout > 0
         h_panel = pl.pp;
     end
-    end
+end
 function update(pl, selected, calculate, plot_selected)
     %UPDATE updates the content of the property graphical panel.
     %
@@ -63,7 +63,7 @@ function update(pl, selected, calculate, plot_selected)
     else
         pl.selected = [];
     end
-     if nargin > 2
+    if nargin > 2
         to_calc = calculate;
     else
         to_calc = [];
@@ -79,16 +79,17 @@ function update(pl, selected, calculate, plot_selected)
     mlist = [];
 
     if el.getPropCategory(prop) == Category.RESULT && ~isCalculated()
-        
-        set(pl.measure_tbl, 'Visible', 'off')       
-        
+
+        set(pl.measure_tbl, 'Visible', 'off')
+
         set(pl.text, 'Visible', 'off')
-       
+
         % delete brainview buttons
         childs = get(pl.pp, 'Child');
         for n = 1:length(childs)
             child = childs(n);
-            if isequal(child.Style, 'pushbutton') && ...
+            if ~isgraphics(child, 'uitable') && ...
+                    isequal(child.Style, 'pushbutton') && ...
                     ~(isequal(child.String, 'C') ||  isequal(child.String, 'D') || isequal(child.String, 'G'))
                 set(child, 'Visible', 'off')
             end
@@ -97,14 +98,15 @@ function update(pl, selected, calculate, plot_selected)
         graph = el.get(prop);
         if isa(graph, 'NoValue')
             graph = el.getPropDefault(prop);
-        end    
-        
+        end
+
         set(pl.text, ...
             'Units', 'normalized', ...
-            'Position', [.3 .8 .3 .1], ...
+            'Position', [.3 .9 .3 .06], ...
             'Visible', 'on', ...
+            'BackgroundColor', [.62 .545 .439], ...
             'String', graph.getClass());
- 
+
         set( pl.measure_tbl, ...
             'Parent', pl.pp, ...
             'Units', 'normalized', ...
@@ -268,12 +270,12 @@ function update(pl, selected, calculate, plot_selected)
                 else
                     plot_measure{i} = false; %#ok<AGROW>
                 end
-                
+
                 % precalculate
                 if contains(measure, measure_list_to_calculate)
-                    g_measure.memorize('M');                    
+                    g_measure.memorize('M');
                 end
-                
+
                 result_measure{i} = g_measure;
                 waitbar(extra, f, ['Measure: ' measure ' Calculated! ...']);
             end
@@ -366,12 +368,12 @@ function update(pl, selected, calculate, plot_selected)
             bool = false;
             for n = 1:length(childs)
                 child = childs(n);
-                if isequal(child.Style, 'pushbutton') && isequal(child.String, 'C') 
-                    if 'off' == child.Enable;
+                if ~isgraphics(child, 'uitable') && isequal(child.Style, 'pushbutton') && isequal(child.String, 'C')
+                    if isequal('off', child.Enable)
                         bool = true;
                     end
                 end
-            end            
+            end
         end
 
     % close function to pl.pp

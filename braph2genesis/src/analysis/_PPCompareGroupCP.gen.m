@@ -77,7 +77,8 @@ function update(pl, selected, calculate, plot_selected)
         childs = get(pl.pp, 'Child');
         for n = 1:length(childs)
             child = childs(n);
-            if isequal(child.Style, 'pushbutton') && ...
+            if ~isgraphics(child, 'uitable') && ...
+                    isequal(child.Style, 'pushbutton') && ...
                     ~(isequal(child.String, 'C') ||  isequal(child.String, 'D') || isequal(child.String, 'G'))
                 set(child, 'Visible', 'off')
             end
@@ -329,7 +330,7 @@ function update(pl, selected, calculate, plot_selected)
             bool = false;
             for n = 1:length(childs)
                 child = childs(n);
-                if isequal(child.Style, 'pushbutton') && isequal(child.String, 'C')
+                if ~isgraphics(child, 'uitable') && isequal(child.Style, 'pushbutton') && isequal(child.String, 'C')
                     if 'off' == child.Enable;
                         bool = true;
                     end
