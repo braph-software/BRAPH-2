@@ -33,7 +33,7 @@ function str = tostring(sub, varargin)
     %
     % See also disp, tree.
 
-    str = [class(el) ' ' el.getPropTag(1) ' = ' tostring(el.get(1)) '.'];
+    str = [class(sub) ' ' sub.getPropTag(1) ' = ' tostring(sub.get(1)) '.'];
     
     str = tostring(str, varargin{:});
     str = str(2:1:end-1);
