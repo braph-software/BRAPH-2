@@ -253,7 +253,7 @@ end
         end
     end
     function btn_action(src, ~)
-        
+        set(src, 'Enable', 'off')        
         for k = 1:size(panel_inner, 1)
             for j = 1:size(panel_inner, 2)
                 obj_inner = panel_inner{k, j};
@@ -321,7 +321,8 @@ end
             if check_section_objs(panel)
                 enable_panel(section_panel{panel + 1})
             end
-        end
+        end        
+        set(src, 'Enable', 'on')
     end
     function check = check_section_objs(panel)
         check = false;
