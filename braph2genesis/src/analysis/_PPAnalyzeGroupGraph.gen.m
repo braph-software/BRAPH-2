@@ -62,7 +62,7 @@ function update(pl, selected, plot_selected)
     graph_gui = [];
     mlist = [];
 
-    if el.getPropCategory(prop) == Category.RESULT && ~el.isLocked('ID')
+    if el.getPropCategory(prop) == Category.RESULT && ~el.isLocked(prop)
         if ~isempty(pl.measure_tbl)
             delete(pl.measure_tbl)
         end
