@@ -272,8 +272,6 @@ end
         panel_struct(panel, child).name_script = strtrim(exe_{1});
         panel_struct(panel, child).btn = src.String;
         panel_struct(panel, child).h_btn = src;
-%         panel_struct(panel, child).exe = [];
-%         panel_struct(panel, child).plot_element = [];
         
         % change script for internal values
         for l = 1:size(panel_struct, 2)
