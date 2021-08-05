@@ -137,7 +137,7 @@ function update(pl, selected, calculate, plot_selected)
                 data{mi, 7} = eval([mlist{mi} '.getDescription()']);
             end
             set(pl.measure_tbl, 'Data', data)
-            set(pl.measure_tbl, 'ColumnWidth', {parent_position_pixels(3)*.02, parent_position_pixels(3)*.02, parent_position_pixels(3)*.02, 'auto', 'auto', 'auto', parent_position_pixels(3)})
+            set(pl.measure_tbl, 'ColumnWidth', {parent_position_pixels(3)*.06, parent_position_pixels(3)*.06, parent_position_pixels(3)*.06, 'auto', 'auto', 'auto', parent_position_pixels(3)})
         end
 
         ui_button_table_calculate = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
