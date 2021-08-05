@@ -64,6 +64,8 @@ if isfile(file)
         idict.add(br);
     end
     ba.set('br_dict', idict);
+else
+    error(BRAPH2.WRONG_OUTPUT);
 end
 
 if exist('f', 'var')

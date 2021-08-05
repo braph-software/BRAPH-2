@@ -115,6 +115,8 @@ if isfile(file)
         subdict.add(sub);
     end
     gr.set('sub_dict', subdict);
+else
+    error(BRAPH2.WRONG_OUTPUT);
 end
 if exist('f', 'var')
     waitbar(1, f, 'Finishing')
