@@ -59,17 +59,22 @@ function update(pl)
     node_labels_tmp = graph.get('BRAINATLAS').get('BR_DICT');
     node_labels = cellfun(@(x) x.get('ID') , node_labels_tmp.getItems(), 'UniformOutput', false);
 
-    if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
+    if el.getPropCategory(prop) == Category.RESULT &&  ~isCalculated()
         % remove previous tables/textbox
         if ~isempty(pl.table_value_cell)
-            delete(pl.table_value_cell)
+            if iscell(pl.table_value_cell)
+                cellfun(@(x) set(x, 'Visible', 'off'), pl.table_value_cell, 'UniformOutput', false);
+            else
+                set(pl.table_value_cell, 'Visible', 'off')
+            end
+
         end
         % delete brainview buttons
         childs = get(pl.pp, 'Child');
         for n = 1:length(childs)
             child = childs(n);
-            if isequal(child.String, 'Brain View')
-                delete(child)
+            if ~isgraphics(child, 'uitable') && isequal(child.String, 'Brain View')
+                set(child, 'Visible', 'off')
             end
         end
 
@@ -113,7 +118,7 @@ function update(pl)
                 'Value', 1, ...
                 'Callback', {@cb_slide} ...
                 );
-            
+
             pl.table_tag = uicontrol('Parent', pl.pp, ...
                 'Style', 'text', ...
                 'Units', 'normalized', ...
@@ -121,13 +126,13 @@ function update(pl)
                 'BackgroundColor', [.62 .545 .439], ...
                 'HorizontalAlignment', 'left', ...
                 'String', '');
-            
+
             delete(pl.table_value_cell)
             pl.table_value_cell = cell(size(value_cell));
             for i = 1:1:size(pl.table_value_cell, 1)
                 for j = 1:1:size(pl.table_value_cell, 2)
                     if isempty(pl.table_value_cell{i, j}) || ~isgraphics(pl.table_value_cell{i, j}, 'uitable')
-                        pl.table_value_cell{i, j} = uitable('Parent', pl.ui_sliding_panel);
+                        pl.table_value_cell{i, j} = uitable('Parent', pl.ui_sliding_panel, 'Visible', 'on');
                     end
                     set(pl.table_value_cell{i, j}, ...
                         'Data', value_cell{i, j}, ...
@@ -147,11 +152,12 @@ function update(pl)
                 'Units', 'normalized', ...
                 'Position', [.01 .1 .98 .8], ...
                 'ColumnName', node_labels, ...
+                'Visible', 'on', ...
                 'RowName', row_names, ...
                 'CellEditCallback', {@cb_matrix_value} ...
                 )
         end
-        
+
         ui_node1_popmenu  = uicontrol('Parent', pl.pp, 'Style', 'popupmenu', 'String', node_labels);
         ui_node2_popmenu  = uicontrol('Parent', pl.pp, 'Style', 'popupmenu', 'String', node_labels);
         ui_measure_plot = uicontrol('Parent', pl.pp, 'Style', 'pushbutton');
@@ -168,12 +174,11 @@ function update(pl)
         value_cell = el.get(prop);
 
         if Measure.is_binodal(el) % binodal
-            delete(pl.table_value_cell)
             pl.table_value_cell = cell(size(value_cell));
             for i = 1:1:size(pl.table_value_cell, 1)
                 for j = 1:1:size(pl.table_value_cell, 2)
                     if isempty(pl.table_value_cell{i, j}) || ~isgraphics(pl.table_value_cell{i, j}, 'uitable')
-                        pl.table_value_cell{i, j} = uitable('Parent', pl.pp);
+                        pl.table_value_cell{i, j} = uitable('Parent', pl.pp, 'Visible', 'on');
                     end
                     set(pl.table_value_cell{i, j}, ...
                         'Data', value_cell{i, j}, ...
@@ -190,6 +195,7 @@ function update(pl)
                 'Parent', pl.pp, ...
                 'Style', 'text', ...
                 'Units', 'normalized', ...
+                'Visible', 'on', ...
                 'Position', [.01 .3 .5 .2], ...
                 'BackgroundColor', [1 1 1], ...
                 'String', num2str(value_double) ...
@@ -203,6 +209,7 @@ function update(pl)
                 'Data', value_double, ...
                 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
                 'Units', 'normalized', ...
+                'Visible', 'on', ...
                 'Position', [.01 .25 .98 .55], ...
                 'ColumnName', node_labels, ...
                 'CellEditCallback', {@cb_matrix_value} ...
@@ -439,6 +446,18 @@ function update(pl)
         end
         function cb_slide(~, ~)
             pl.slide()
+        end
+        function bool = isCalculated()
+            childs = get(pl.pp, 'Child');
+            bool = false;
+            for n = 1:length(childs)
+                child = childs(n);
+                if ~isgraphics(child, 'uitable') && isequal(child.Style, 'pushbutton') && isequal(child.String, 'C')
+                    if isequal('off', child.Enable)
+                        bool = true;
+                    end
+                end
+            end
         end
 end
 function redraw(pl, varargin)

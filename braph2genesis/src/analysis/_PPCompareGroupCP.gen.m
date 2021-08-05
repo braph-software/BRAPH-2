@@ -123,7 +123,7 @@ function update(pl, selected, calculate, plot_selected)
                 else
                     data{mi, 1} = false;
                 end
-                if any(to_plot == mi)
+                if any(to_calc == mi)
                     data{mi, 2} = true;
                 else
                     data{mi, 2} = false;
@@ -331,7 +331,7 @@ function update(pl, selected, calculate, plot_selected)
             for n = 1:length(childs)
                 child = childs(n);
                 if ~isgraphics(child, 'uitable') && isequal(child.Style, 'pushbutton') && isequal(child.String, 'C')
-                    if 'off' == child.Enable;
+                    if isequal('off', child.Enable)
                         bool = true;
                     end
                 end
