@@ -12,6 +12,7 @@ pp
 table_value_cell
 ui_sliding_panel
 ui_slider
+table_tag
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
@@ -112,6 +113,15 @@ function update(pl)
                 'Value', 1, ...
                 'Callback', {@cb_slide} ...
                 );
+            
+            pl.table_tag = uicontrol('Parent', pl.pp, ...
+                'Style', 'text', ...
+                'Units', 'normalized', ...
+                'Position', [.01 .09 .3 .05], ...
+                'BackgroundColor', [.62 .545 .439], ...
+                'HorizontalAlignment', 'left', ...
+                'String', '');
+            
             delete(pl.table_value_cell)
             pl.table_value_cell = cell(size(value_cell));
             for i = 1:1:size(pl.table_value_cell, 1)
@@ -141,7 +151,7 @@ function update(pl)
                 'CellEditCallback', {@cb_matrix_value} ...
                 )
         end
-
+        
         ui_node1_popmenu  = uicontrol('Parent', pl.pp, 'Style', 'popupmenu', 'String', node_labels);
         ui_node2_popmenu  = uicontrol('Parent', pl.pp, 'Style', 'popupmenu', 'String', node_labels);
         ui_measure_plot = uicontrol('Parent', pl.pp, 'Style', 'pushbutton');
@@ -520,8 +530,10 @@ function slide(pl)
     y0_s = y0(f) + h(pl.pp)*.01;
 
     dw = 1;
+    n = length(pl.table_value_cell);
     w_pp = cellfun(@(x) w(x), pl.table_value_cell);
     w_p = sum(w_pp + dw) + dw;
+    single_w = w_p / n;
 
     if w_p > w(f)
         offset = get(s, 'Value');
@@ -534,6 +546,9 @@ function slide(pl)
             'Max', w_p, ...
             'Value', max(get(s, 'Value'), w(p) - w(f)) ...
             );
+        current_table = abs((w(p)-w(f)-offset)) / single_w;GUI
+        set(pl.table_tag, 'String', ['Table : ' num2str(round(current_table) + 1)])
+        
     else
         set(p, 'Position', [0.1 h(f)*.2 w(f)*.98 h(f)-h(f)*.15])
 

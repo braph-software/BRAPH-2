@@ -50,9 +50,9 @@ if isfile(file)
    idict = ba.get('BR_DICT');
 
     % adds brain regions
-    waitbar(.45, f, 'Processing your data ...')
+    waitbar(.45, f, 'Loading your data ...')
     for i = 4:6:size(raw, 1)
-        waitbar(.5, f, ['Processing your data: ' num2str(i - 4) '/' num2str(size(raw, 1) - 3) ' ...'])
+        waitbar(.5, f, ['Loading your data: ' num2str(i - 4) '/' num2str(size(raw, 1) - 3) ' ...'])
         br = BrainRegion( ...
             'ID', char(raw{i, 1}), ...
             'LABEL', char(raw{i+1, 1}), ...
