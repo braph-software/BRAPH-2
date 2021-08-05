@@ -70,49 +70,53 @@ if isfile(file)
     
     % sets group props
     waitbar(.15, f, 'Loading your data ...');
-    [~, name, ext] = fileparts(file);
-    gr.set( ...
-        'ID', name, ...
-        'LABEL', [name ext], ...
-        'NOTES', ['Group loaded from ' file] ...
-    );
-
-    % brain atlas
-    waitbar(.45, f, 'Processing your data ...')
-    ba = im.get('BA');
-    br_number = size(raw, 2) - 3;
-    if ba.get('BR_DICT').length ~= br_number
-        ba = BrainAtlas();
-        idict = ba.get('BR_DICT');
-        for j = 4:1:length(raw)
-            br_id = raw{1, j};
-            br = BrainRegion('ID', br_id);
-            idict.add(br)
-        end
-        ba.set('br_dict', idict);
-    end
-
-    subdict = gr.get('SUB_DICT');
-    
-    % adds subjects
-    for i = 2:1:size(raw, 1)
-        waitbar(.5, f, ['Processing your data: ' num2str(i - 1) '/' num2str(size(raw, 1) - 1) ' ...'])
-        ST = zeros(br_number, 1);
-        for j = 1:1:length(ST)
-            ST(j) = raw{i, 3 + j};
-        end
-        sub = SubjectST( ...
-            'ID', raw{i, 1}, ...
-            'LABEL', raw{i, 2}, ...
-            'NOTES', raw{i, 3}, ...
-            'BA', ba, ...
-            'ST', ST, ...
-            'age', age{i-1}, ...
-            'sex', sex{i-1} ...
+    try
+        [~, name, ext] = fileparts(file);
+        gr.set( ...
+            'ID', name, ...
+            'LABEL', [name ext], ...
+            'NOTES', ['Group loaded from ' file] ...
             );
-        subdict.add(sub);
+        
+        % brain atlas
+        waitbar(.45, f, 'Loading your data ...')
+        ba = im.get('BA');
+        br_number = size(raw, 2) - 3;
+        if ba.get('BR_DICT').length ~= br_number
+            ba = BrainAtlas();
+            idict = ba.get('BR_DICT');
+            for j = 4:1:length(raw)
+                br_id = raw{1, j};
+                br = BrainRegion('ID', br_id);
+                idict.add(br)
+            end
+            ba.set('br_dict', idict);
+        end
+        
+        subdict = gr.get('SUB_DICT');
+        
+        % adds subjects
+        for i = 2:1:size(raw, 1)
+            waitbar(.5, f, ['Loading your data: ' num2str(i - 1) '/' num2str(size(raw, 1) - 1) ' ...'])
+            ST = zeros(br_number, 1);
+            for j = 1:1:length(ST)
+                ST(j) = raw{i, 3 + j};
+            end
+            sub = SubjectST( ...
+                'ID', raw{i, 1}, ...
+                'LABEL', raw{i, 2}, ...
+                'NOTES', raw{i, 3}, ...
+                'BA', ba, ...
+                'ST', ST, ...
+                'age', age{i-1}, ...
+                'sex', sex{i-1} ...
+                );
+            subdict.add(sub);
+        end
+        gr.set('sub_dict', subdict);
+    catch e
+        rethrow(e)
     end
-    gr.set('sub_dict', subdict);
 else
     error(BRAPH2.WRONG_OUTPUT);
 end
