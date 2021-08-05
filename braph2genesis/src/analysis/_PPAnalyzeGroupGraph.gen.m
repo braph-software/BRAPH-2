@@ -36,7 +36,7 @@ function h_panel = draw(pl, varargin)
         h_panel = pl.pp;
     end
     end
-function update(pl, selected, plot_selected)
+function update(pl, selected, calculate, plot_selected)
     %UPDATE updates the content of the property graphical panel.
     %
     % UPDATE(PL) updates the content of the property graphical panel.
@@ -52,7 +52,12 @@ function update(pl, selected, plot_selected)
     else
         pl.selected = [];
     end
-    if nargin > 2
+     if nargin > 2
+        to_calc = calculate;
+    else
+        to_calc = [];
+    end
+    if nargin > 3
         to_plot = plot_selected;
     else
         to_plot = [];
@@ -83,10 +88,10 @@ function update(pl, selected, plot_selected)
                 'Parent', pl.pp, ...
                 'Units', 'normalized', ...
                 'Position', [.02 .2 .9 .7], ...
-                'ColumnName', {'', 'GUI', 'Measure', 'Shape', 'Scope', 'Notes'}, ...
-                'ColumnFormat', {'logical', 'logical', 'char', 'char', 'char', 'char'}, ...
+                'ColumnName', {'SEL', 'CAL', 'GUI', 'Measure', 'Shape', 'Scope', 'Notes'}, ...
+                'ColumnFormat', {'logical', 'logical', 'logical', 'char', 'char', 'char', 'char'}, ...
                 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-                'ColumnEditable', [true true false false false false], ...
+                'ColumnEditable', [true true true false false false false], ...
                 'CellEditCallback', {@cb_measure_selection} ...
                 )
         end
@@ -95,39 +100,44 @@ function update(pl, selected, plot_selected)
         mlist = Graph.getCompatibleMeasureList(graph);
         if isa(graph, 'Graph')
             [parent_position_pixels, normalized] = get_figure_position();
-            data = cell(length(mlist), 6);
+            data = cell(length(mlist), 7);
             for mi = 1:1:length(mlist)
                 if any(pl.selected == mi)
                     data{mi, 1} = true;
                 else
                     data{mi, 1} = false;
                 end
-                if any(to_plot == mi)
+                if any(to_calc == mi)
                     data{mi, 2} = true;
                 else
                     data{mi, 2} = false;
                 end
-                data{mi, 3} = mlist{mi};
-                if Measure.is_nodal(mlist{mi})
-                    data{mi, 4} = 'NODAL';
-                elseif Measure.is_global(mlist{mi})
-                    data{mi, 4} = 'GLOBAL';
+                if any(to_plot == mi)
+                    data{mi, 3} = true;
                 else
-                    data{mi, 4} = 'BINODAL';
+                    data{mi, 3} = false;
+                end
+                data{mi, 4} = mlist{mi};
+                if Measure.is_nodal(mlist{mi})
+                    data{mi, 5} = 'NODAL';
+                elseif Measure.is_global(mlist{mi})
+                    data{mi, 5} = 'GLOBAL';
+                else
+                    data{mi, 5} = 'BINODAL';
                 end
 
                 if Measure.is_superglobal(mlist{mi})
-                    data{mi, 5} = 'SUPERGLOBAL';
+                    data{mi, 6} = 'SUPERGLOBAL';
                 elseif Measure.is_unilayer(mlist{mi})
-                    data{mi, 5} = 'UNILAYER';
+                    data{mi, 6} = 'UNILAYER';
                 else
-                    data{mi, 5} = 'BILAYER';
+                    data{mi, 6} = 'BILAYER';
                 end
 
-                data{mi, 6} = eval([mlist{mi} '.getDescription()']);
+                data{mi, 7} = eval([mlist{mi} '.getDescription()']);
             end
             set(pl.measure_tbl, 'Data', data)
-            set(pl.measure_tbl, 'ColumnWidth', {'auto', 'auto', 'auto', 'auto', 'auto', parent_position_pixels(3)})
+            set(pl.measure_tbl, 'ColumnWidth', {parent_position_pixels(3)*.02, parent_position_pixels(3)*.02, parent_position_pixels(3)*.02, 'auto', 'auto', 'auto', parent_position_pixels(3)})
         end
 
         ui_button_table_calculate = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
@@ -185,6 +195,13 @@ function update(pl, selected, plot_selected)
                     end
                 case 2
                     if newdata == 1
+                        to_calc = sort(unique([to_calc(:); i]));
+                        pl.selected = sort(unique([pl.selected(:); i]));
+                    else
+                        to_calc = to_calc(to_calc ~= i);
+                    end
+                case 3
+                    if newdata == 1
                         to_plot = sort(unique([to_plot(:); i]));
                         pl.selected = sort(unique([pl.selected(:); i]));
                     else
@@ -192,7 +209,7 @@ function update(pl, selected, plot_selected)
                     end
                 otherwise
             end
-            pl.update(pl.selected, to_plot)
+            pl.update(pl.selected, to_calc, to_plot)
         end
         function cb_table_selectall(~, ~)  % (src, event)
             mlist = Graph.getCompatibleMeasureList(graph);
@@ -207,6 +224,7 @@ function update(pl, selected, plot_selected)
             mlist = Graph.getCompatibleMeasureList(graph);
             calculate_measure_list = mlist(pl.selected);
             measure_list_to_plot = mlist(to_plot);
+            measure_list_to_calculate = mlist(to_calc);
             g = el.memorize('G');
 
             % calculate
@@ -217,14 +235,20 @@ function update(pl, selected, plot_selected)
                 extra = (i / length(calculate_measure_list)) * 1.05 * .8;
                 measure = calculate_measure_list{i};
                 waitbar(progress, f, ['Calculating measure: ' measure ' ...']);
-                result_measure{i} = g.getMeasure(measure); %#ok<AGROW>
+                g_measure = g.getMeasure(measure); %#ok<AGROW>
 
                 if contains(measure, measure_list_to_plot)
                     plot_measure{i} = true; %#ok<AGROW>
                 else
                     plot_measure{i} = false; %#ok<AGROW>
                 end
-
+                
+                % precalculate
+                if contains(measure, measure_list_to_calculate)
+                    g_measure.get('M');                    
+                end
+                
+                result_measure{i} = g_measure;
                 waitbar(extra, f, ['Measure: ' measure ' Calculated! ...']);
             end
 
