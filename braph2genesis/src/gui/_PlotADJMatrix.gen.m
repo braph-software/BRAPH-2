@@ -450,12 +450,12 @@ function h = hist(pl, A, varargin)
     count = [0 count 0];
     density = [100 density 0];
 
-    hold on
-    ht1 = fill(bins, count, 'k');
-    ht2 = plot( bins, density, 'b', 'linewidth', 2, 'Parent', pl.h_axes);
-    hold off
-    xlabel('coefficient values / threshold')
-    ylabel('coefficient counts / density')
+    hold(pl.h_axes, 'on')
+    ht1 = fill(pl.h_axes, bins, count, 'k');
+    ht2 = plot(bins, density, 'b', 'linewidth', 2, 'Parent', pl.h_axes);
+    hold(pl.h_axes, 'off')
+    xlabel(pl.h_axes, 'coefficient values / threshold')
+    ylabel(pl.h_axes, 'coefficient counts / density')
 
     grid(pl.h_axes, 'off')
     box(pl.h_axes, 'on')
