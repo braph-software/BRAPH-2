@@ -394,7 +394,7 @@ end
         % load new ids.
         for i = 1:size(panel_struct, 1)
             for j = 1:size(panel_struct, 2)
-                if isfield(panel_struct(panel, child), 'plot_element') && ~isempty(panel_struct(i, j).plot_element)
+                if isfield(panel_struct(i, j), 'plot_element') && ~isempty(panel_struct(i, j).plot_element)
                     obj = panel_struct(i, j).plot_element;
                     if isempty(obj)
                         continue;
