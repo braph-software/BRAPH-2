@@ -12,7 +12,16 @@ uipanel, ishandle, isgraphics, figure, PlotGraph
 %% ¡properties!
 h_figure % panel graphical handle
 h_axes % axes handle
+h_plot
 pp
+
+%% ¡props!
+
+%%% ¡prop!
+A (metadata, matrix) is the adjacency matrix.
+
+%%% ¡prop!
+Layer (metadata, scalar) is the layer to be plotted
 
 %% ¡methods!
 function [h_figure, h_axes] = draw(pl, varargin)
@@ -29,6 +38,15 @@ function [h_figure, h_axes] = draw(pl, varargin)
     % see also settings, uipanel, isgraphics.    
         
     [pl.h_figure, pl.h_axes] = draw@PlotGraph(pl, varargin{:});
+    
+    A = pl.get('A');
+    layer_to_plot = pl.get('Layer');
+    
+    if size(A, 2) > 1
+        pl.h_plot = pl.plotw(A{layer_to_plot, layer_to_plot});
+    else
+        pl.h_plot = pl.plotw(A{layer_to_plot});
+    end
     
     if nargout > 0
         h_figure = pl.h_figure;
@@ -52,5 +70,419 @@ function  f_settings = settings(pl, varargin)
     % See also draw, figure, isgraphics.
 
     f = settings@Plot(pl, varargin{:});
-    % todo adj matrix stuff
+    
+    % panel
+    ui_parent = f;
+    ui_parent_axes = pl.h_axes;
+    matrix_plot = pl.h_plot;
+    
+    cla(ui_parent_axes)
+    axes(ui_parent_axes)
+    
+    %  create the options     ****************
+    % weighted
+    ui_matrix_weighted_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox');
+    set(ui_matrix_weighted_checkbox, 'Position', [.02.82 .1 .07], ...
+        'String', 'weighted correlation matrix', ...
+        'Value', true, ...
+        'TooltipString', 'Select weighted matrix', ...
+        'FontWeight', 'bold', ...
+        'Callback', {@cb_matrix_weighted_checkbox})
+    
+    % density
+    ui_matrix_density_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox');
+    set(ui_matrix_density_checkbox, 'Position', [.02 .70 .1 .07], ...
+        'String', 'binary correlation matrix (set density)', ...
+        'Value', false,...
+        'TooltipString', 'Select binary correlation matrix with a set density', ...
+        'Callback', {@cb_matrix_density_checkbox})
+    
+    ui_matrix_density_edit = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'edit');
+    set(ui_matrix_density_edit, 'Position', [.02 .675 .3 .07], ...
+        'String', '50.00', ...
+        'TooltipString', 'Set density.', ...
+        'FontWeight', 'bold', ...
+        'Enable', 'off', ...
+        'Callback', {@cb_matrix_density_edit});
+    
+    ui_matrix_density_slider = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'slider');
+    set(ui_matrix_density_slider, 'Position', [.33 .675 .3 .07], ...
+        'Min', 0, 'Max', 100, 'Value', 50, ...
+        'TooltipString', 'Set density.', ...
+        'Enable', 'off', ...
+        'Callback', {@cb_matrix_density_slider})
+    
+    % threshold
+    ui_matrix_threshold_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox');
+    set(ui_matrix_threshold_checkbox, 'Position', [.02 .55 .1 .07],...
+        'String', 'binary correlation matrix (set threshold)', ...
+        'Value', false, ...
+        'TooltipString', 'Select binary correlation matrix with a set threshold', ...
+        'Callback', {@cb_matrix_threshold_checkbox})
+    
+    ui_matrix_threshold_edit = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'edit');
+    set(ui_matrix_threshold_edit, 'Position', [.02 .45 .3 .07], ...
+        'String', '0.50', ...
+        'TooltipString', 'Set threshold.', ...
+        'FontWeight', 'bold' ,...
+        'Enable', 'off', ...
+        'Callback', {@cb_matrix_threshold_edit});
+    
+    ui_matrix_threshold_slider = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'slider');
+    set(ui_matrix_threshold_slider, 'Position', [.45 .45 .3 .07], ...
+        'Min', -1, 'Max', 1, 'Value', .50, ...
+        'TooltipString', 'Set threshold.', ...
+        'Enable', 'off', ...
+        'Callback', {@cb_matrix_threshold_slider})
+    
+    % histogram
+    ui_matrix_histogram_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox');
+    set(ui_matrix_histogram_checkbox, 'Position', [.02 .3 .1 .07],...
+        'String', 'histogram', ...
+        'Value', false, ...
+        'TooltipString', 'Select histogram of correlation coefficients', ...
+        'Callback', {@cb_matrix_histogram_checkbox})
+    
+
+    function cb_matrix_weighted_checkbox(~, ~)
+        set(ui_matrix_weighted_checkbox, 'Value', true)
+        set(ui_matrix_weighted_checkbox, 'FontWeight', 'bold')
+        
+        set(ui_matrix_histogram_checkbox, 'Value', false)
+        set(ui_matrix_histogram_checkbox, 'FontWeight', 'normal')
+        
+        set(ui_matrix_density_checkbox, 'Value', false)
+        set(ui_matrix_density_checkbox, 'FontWeight', 'normal')
+        set(ui_matrix_density_edit, 'Enable', 'off')
+        set(ui_matrix_density_slider, 'Enable', 'off')
+        
+        set(ui_matrix_threshold_checkbox, 'Value', false)
+        set(ui_matrix_threshold_checkbox, 'FontWeight', 'normal')
+        set(ui_matrix_threshold_edit, 'Enable', 'off')
+        set(ui_matrix_threshold_slider, 'Enable', 'off')
+        
+        update_matrix()
+    end
+    function cb_matrix_density_checkbox(~, ~)
+        set(ui_matrix_weighted_checkbox, 'Value', false)
+        set(ui_matrix_weighted_checkbox, 'FontWeight', 'normal')
+        
+        set(ui_matrix_histogram_checkbox, 'Value', false)
+        set(ui_matrix_histogram_checkbox, 'FontWeight', 'normal')
+        
+        set(ui_matrix_density_checkbox, 'Value', true)
+        set(ui_matrix_density_checkbox, 'FontWeight', 'bold')
+        set(ui_matrix_density_edit, 'Enable', 'on')
+        set(ui_matrix_density_slider, 'Enable', 'on')
+        
+        set(ui_matrix_threshold_checkbox, 'Value', false)
+        set(ui_matrix_threshold_checkbox, 'FontWeight', 'normal')
+        set(ui_matrix_threshold_edit, 'Enable', 'off')
+        set(ui_matrix_threshold_slider, 'Enable', 'off')
+        
+        update_matrix()
+    end
+    function cb_matrix_threshold_checkbox(~, ~)
+        set(ui_matrix_weighted_checkbox, 'Value', false)
+        set(ui_matrix_weighted_checkbox, 'FontWeight', 'normal')
+        
+        set(ui_matrix_histogram_checkbox, 'Value', false)
+        set(ui_matrix_histogram_checkbox, 'FontWeight', 'normal')
+        
+        set(ui_matrix_density_checkbox, 'Value', false)
+        set(ui_matrix_density_checkbox, 'FontWeight', 'normal')
+        set(ui_matrix_density_edit, 'Enable', 'off')
+        set(ui_matrix_density_slider, 'Enable', 'off')
+        
+        set(ui_matrix_threshold_checkbox, 'Value', true)
+        set(ui_matrix_threshold_checkbox, 'FontWeight', 'bold')
+        set(ui_matrix_threshold_edit, 'Enable', 'on')
+        set(ui_matrix_threshold_slider, 'Enable', 'on')
+        
+        update_matrix()
+    end
+    function cb_matrix_histogram_checkbox(~, ~)
+        set(ui_matrix_weighted_checkbox, 'Value', false)
+        set(ui_matrix_weighted_checkbox, 'FontWeight', 'normal')
+        
+        set(ui_matrix_histogram_checkbox, 'Value', true)
+        set(ui_matrix_histogram_checkbox, 'FontWeight', 'bold')
+        
+        set(ui_matrix_density_checkbox, 'Value', false)
+        set(ui_matrix_density_checkbox, 'FontWeight', 'normal')
+        set(ui_matrix_density_edit, 'Enable', 'off')
+        set(ui_matrix_density_slider, 'Enable', 'off')
+        
+        set(ui_matrix_threshold_checkbox, 'Value', false)
+        set(ui_matrix_threshold_checkbox, 'FontWeight', 'normal')
+        set(ui_matrix_threshold_edit, 'Enable', 'off')
+        set(ui_matrix_threshold_slider, 'Enable', 'off')
+        
+        update_matrix()
+    end
+    function cb_matrix_density_edit(~, ~)
+        update_matrix();
+    end
+    function cb_matrix_density_slider(src, ~)
+        set(ui_matrix_density_edit, 'String', get(src, 'Value'))
+        update_matrix();
+    end
+    function cb_matrix_threshold_edit(~, ~)
+        update_matrix();
+    end
+    function cb_matrix_threshold_slider(src, ~)
+        set(ui_matrix_threshold_edit, 'String', get(src, 'Value'))
+        update_matrix();
+    end
+    function update_matrix()
+         % get A and layer
+        A = pl.get('A');
+        layer_to_plot = pl.get('Layer');
+        % i need to ask graph to return the plot 'Graph.PlotType'
+        if  get(ui_matrix_histogram_checkbox, 'Value') % histogram            
+            matrix_plot = pl.hist(A);
+        elseif get(ui_matrix_threshold_checkbox, 'Value')  % threshold            
+            if size(A, 2) > 1
+                pl.h_plot = pl.plotb(A{layer_to_plot, layer_to_plot}, ...
+                    'threshold', ...
+                    str2double(get(ui_matrix_threshold_edit, 'String')));
+            else
+                pl.h_plot = pl.plotb(A{layer_to_plot}, ...
+                    'threshold', ...
+                    str2double(get(ui_matrix_threshold_edit, 'String')));
+            end
+        elseif get(ui_matrix_density_checkbox, 'Value')  % density
+            if size(A, 2) > 1
+                pl.h_plot = pl.plotb(A{layer_to_plot, layer_to_plot}, ...
+                    'density', ...
+                    str2double(get(ui_matrix_density_edit, 'String')));
+            else
+                pl.h_plot = pl.plotb(A{layer_to_plot}, ...
+                    'density', ...
+                    str2double(get(ui_matrix_density_edit, 'String')));
+            end
+        else  % weighted correlation
+            if size(A, 2) > 1
+                pl.h_plot = pl.plotw(A{layer_to_plot, layer_to_plot});
+            else
+                pl.h_plot = pl.plotw(A{layer_to_plot});
+            end
+        end
+    end
+
+    update_matrix()
+
+    if nargout > 0
+        graph_panel = matrix_plot;
+    end
+end
+
+function h = plotw(A, varargin)
+    % PLOTW plots a weighted matrix
+    %
+    % H = PLOTW(A) plots the weighted matrix A and returns the handle to
+    %   the plot H.
+    %
+    % H = PLOTW(A,'PropertyName',PropertyValue) sets the property of the
+    %   matrix plot PropertyName to PropertyValue.
+    %   All standard plot properties of surf can be used.
+    %   Additional admissive properties are:
+    %       xlabels   -   1:1:number of matrix elements (default)
+    %       ylabels   -   1:1:number of matrix elements (default)
+    %
+    % See also Graph, plotb, surf.
+
+    N = length(A);
+
+    % x labels
+    xlabels = (1:1:N);
+    for n = 1:2:length(varargin)
+        if strcmpi(varargin{n}, 'xlabels')
+            xlabels = varargin{n + 1};
+        end
+    end
+    if ~iscell(xlabels)
+        xlabels = {xlabels};
+    end
+
+    % y labels
+    ylabels = (1:1:N);
+    for n = 1:2:length(varargin)
+        if strcmpi(varargin{n}, 'ylabels')
+            ylabels = varargin{n + 1};
+        end
+    end
+    if ~iscell(ylabels)
+        ylabels = {ylabels};
+    end
+
+    ht = surf(pl.h_plot, ...
+        (0:1:N), ...
+        (0:1:N), ...
+        [A, zeros(size(A, 1), 1); zeros(1, size(A, 1) + 1)]);
+    view(2)
+    shading flat
+    axis equal square tight
+    grid off
+    box on
+    set(pl.h_plot, ...
+        'XAxisLocation', 'top', ...
+        'XTick', (1:1:N) - .5, ...
+        'XTickLabel', {}, ...
+        'YAxisLocation', 'left', ...
+        'YDir', 'Reverse', ...
+        'YTick', (1:1:N) - .5, ...
+        'YTickLabel', ylabels)
+
+    if ~verLessThan('matlab', '8.4.0')
+        set(pl.h_plot, ...
+            'XTickLabelRotation', 90, ...
+            'XTickLabel', xlabels)
+    else
+        t = text(pl.h_plot, (1:1:N) - .5, zeros(1, N), xlabels);
+        set(t, ...
+            'HorizontalAlignment', 'left', ...
+            'VerticalAlignment', 'middle', ...
+            'Rotation', 90);
+    end
+
+    colormap jet
+
+    % output if needed
+    if nargout > 0
+        h = ht;
+    end
+end
+function h = plotb(A, varargin)
+    % PLOTB plots a binary matrix
+    %
+    % H = PLOTB(A) plots the binarized version of weighted matrix A and
+    %   returns the handle to the plot H.
+    %   The matrix A can be binarized by fixing the threshold
+    %   (default, threshold = 0.5).
+    %
+    % H = PLOTB(A, 'PropertyName', PropertyValue) sets the property of the
+    %   matrix plot PropertyName to PropertyValue.
+    %   All standard plot properties of surf can be used.
+    %   Additional admissive properties are:
+    %       threshold   -   0.5 (default)
+    %       xlabels     -   1:1:number of matrix elements (default)
+    %       ylabels     -   1:1:number of matrix elements (default)
+    %
+    % See also Graph, binarize, plotw, surf.
+
+    N = length(A);
+
+    % threshold
+    threshold = get_from_varargin(0, 'threshold', varargin{:});
+
+    % density
+    density = get_from_varargin([], 'density', varargin{:});
+
+    % x labels
+    xlabels = (1:1:N);
+    for n = 1:2:length(varargin)
+        if strcmpi(varargin{n}, 'xlabels')
+            xlabels = varargin{n + 1};
+        end
+    end
+    if ~iscell(xlabels)
+        xlabels = {xlabels};
+    end
+
+    % y labels
+    ylabels = (1:1:N);
+    for n = 1:2:length(varargin)
+        if strcmpi(varargin{n}, 'ylabels')
+            ylabels = varargin{n + 1};
+        end
+    end
+    if ~iscell(ylabels)
+        ylabels = {ylabels};
+    end
+
+    B = binarize(A, 'threshold', threshold, 'density', density);
+
+    ht = surf(pl.h_plot, ...
+        (0:1:N), ...
+        (0:1:N), ...
+        [B, zeros(size(B, 1), 1); zeros(1, size(B, 1) + 1)]);
+    view(2)
+    shading flat
+    axis equal square tight
+    grid off
+    box on
+    set(pl.h_plot, ...
+        'XAxisLocation', 'top',  ...
+        'XTick', (1:1:N) - .5, ...
+        'XTickLabel', {},  ...
+        'YAxisLocation', 'left',  ...
+        'YDir', 'Reverse',  ...
+        'YTick', (1:1:N) - .5, ...
+        'YTickLabel', ylabels)
+
+    if ~verLessThan('matlab',  '8.4.0')
+        set(pl.h_plot, ...
+            'XTickLabelRotation',90, ...
+            'XTickLabel', xlabels)
+    else
+        t = text(pl.h_plot, (1:1:N) - .5, zeros(1,N), xlabels);
+        set(t, ...
+            'HorizontalAlignment', 'left',  ...
+            'VerticalAlignment', 'middle',  ...
+            'Rotation',90);
+    end
+
+    colormap bone
+
+    % output if needed
+    if nargout > 0
+        h = ht;
+    end
+end
+function h = hist(A, varargin)
+    % HIST plots the histogram and density of a matrix
+    %
+    % H = HIST(A) plots the histogram of a matrix A and the associated density and
+    %   returns the handle to the plot H.
+    %
+    % H = HIST(A,'PropertyName',PropertyValue) sets the property of the histogram
+    %   plot PropertyName to PropertyValue.
+    %   All standard plot properties of surf can be used.
+    %   Additional admissive properties are:
+    %       bins       -   -1:.001:1 (default)
+    %       diagonal   -   'exclude' (default) | 'include'
+    %
+    % See also Graph, histogram.
+
+    [count, bins, density] = histogram(A, varargin{:});
+
+    bins = [bins(1) bins bins(end)];
+    count = [0 count 0];
+    density = [100 density 0];
+
+    hold on
+    ht1 = fill(bins, count, 'k');
+    ht2 = plot(pl.h_plot, bins, density, 'b', 'linewidth', 2);
+    hold off
+    xlabel('coefficient values / threshold')
+    ylabel('coefficient counts / density')
+
+    grid off
+    box on
+    axis square tight
+    set(pl.h_plot, ...
+        'XAxisLocation', 'bottom',  ...
+        'XTickLabelMode', 'auto',  ...
+        'XTickMode', 'auto',  ...
+        'YTickLabelMode', 'auto',  ...
+        'YAxisLocation', 'left',  ...
+        'YDir', 'Normal',  ...
+        'YTickMode', 'auto',  ...
+        'YTickLabelMode', 'auto')
+
+    % output if needed
+    if nargout > 0
+        h = [ht1 ht2];
+    end
 end
