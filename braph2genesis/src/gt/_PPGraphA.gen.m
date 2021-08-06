@@ -140,7 +140,8 @@ function update(pl)
             );
         pg.draw('Parent', f);
         pg.set('SETPOS', [x2 normalized(2) w2 h2*1.61-h2-.065]);
-        pg.settings();        
+        pg.settings();
+        set(f, 'Visible', 'on')
     end
     function [pixels, normalized] = get_figure_position()
         fig_h = getGUIFigureObj();
