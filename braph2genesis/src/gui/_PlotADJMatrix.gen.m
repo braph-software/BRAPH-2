@@ -14,13 +14,6 @@ h_figure % panel graphical handle
 h_axes % axes handle
 pp
 
-%% ¡props!
-
-%%% ¡prop!
-SUBMENU (metadata, logical) to set a submenu
-%%%% ¡default!
-false
-
 %% ¡methods!
 function [h_figure, h_axes] = draw(pl, varargin)
     %DRAW draws the graphical panel.

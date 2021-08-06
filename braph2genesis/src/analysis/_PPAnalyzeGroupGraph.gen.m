@@ -186,7 +186,7 @@ function update(pl, selected)
             set(ui_button_see_measures, ...
                 'Position', [.51 .11 .22 .07], ...
                 'Visible', 'on', ...
-                'String', 'Delete Measures', ...
+                'String', 'See Measures', ...
                 'TooltipString', 'See the GUI of the Selected Measures', ...
                 'Callback', {@cb_table_see_measures} ...
                 )
@@ -211,23 +211,10 @@ function update(pl, selected)
                     else
                         pl.selected = pl.selected(pl.selected ~= i);
                     end
-                case 2
-                    if newdata == 1
-                        to_calc = sort(unique([to_calc(:); i]));
-                        pl.selected = sort(unique([pl.selected(:); i]));
-                    else
-                        to_calc = to_calc(to_calc ~= i);
-                    end
-                case 3
-                    if newdata == 1
-                        to_plot = sort(unique([to_plot(:); i]));
-                        pl.selected = sort(unique([pl.selected(:); i]));
-                    else
-                        to_plot = to_plot(to_plot ~= i);
-                    end
+                
                 otherwise
             end
-            pl.update(pl.selected, to_calc, to_plot)
+            pl.update(pl.selected)
         end
         function cb_table_selectall(~, ~)  % (src, event)
             mlist = Graph.getCompatibleMeasureList(graph);
@@ -330,8 +317,11 @@ function update(pl, selected)
             is_calculated = 'N';
             m_dict = el.get('G').get('M_DICT');
             if m_dict.contains(m)
-                is_calculated = 'C';
-            end            
+                m_obj = m_dict.get(m);
+                if ~isa(m_obj.getr('M'), 'NoValue')
+                    is_calculated = 'C';
+                end
+            end
         end
         function cb_table_see_measures(~, ~)
             mlist = Graph.getCompatibleMeasureList(graph);
@@ -344,10 +334,9 @@ function update(pl, selected)
                 h2 = normalized(4);
                 y2 = normalized(2);
                 w2 = normalized(3);
-                waitbar(.95, f, 'Plotting the Measures GUI ...')
                 k = 1;
                 for i = 1:length(plot_measure_list)
-                    if plot_measure{i}
+                    if plot_measure_list{i}
                         offset = 0.02 * k;
                         if offset > .45
                             offset = 0;
