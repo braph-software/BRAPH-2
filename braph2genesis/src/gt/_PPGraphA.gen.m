@@ -110,8 +110,8 @@ function update(pl)
         
         [~, normalized] = get_figure_position();
         x2 = normalized(1) + normalized(3);
-        h2 = normalized(4);
-        y2 = normalized(2);
+        h2 = normalized(4) / 1.61;
+        y2 = normalized(2) + normalized(4) - h2;
         w2 = normalized(3) * 1.61;
         
         f = figure( ...
@@ -134,28 +134,13 @@ function update(pl)
         
         pg = PlotADJMatrix( ...
             'bkgcolor', [1 1 1], ...
-            'setpos', [x2 y2 w2 h2] ...
+            'setpos', [x2 y2 w2 h2], ...
+            'A', A, ...
+            'Layer', layer_to_plot ...
             );
-        [h_figure, h_axes] = pg.draw('Parent', f);
-        
-        adj_matrix_figure = figure( ...
-            'Visible', 'on', ...
-            'NumberTitle', 'off', ...
-            'Name', ['Adjacency Matrix - ' BRAPH2.STR], ...
-            'Units', 'normalized', ...
-            'Position', [x2 y2 w2 h2], ...
-            'MenuBar', 'none', ...
-            'Toolbar', 'figure', ...
-            'Color', 'w' ...
-            );
-        
-        % if ... how to know which plot?
-        if size(A, 2) > 1
-            handle_plot = plotw(A{layer_to_plot, layer_to_plot});
-        else
-            handle_plot = plotw(A{layer_to_plot});
-        end
-        
+        pg.draw('Parent', f);
+        pg.set('SETPOS', [x2 normalized(2) w2 h2*1.61-h2-.065]);
+        pg.settings();        
     end
     function [pixels, normalized] = get_figure_position()
         fig_h = getGUIFigureObj();
@@ -173,167 +158,7 @@ function update(pl)
             end
         end
     end
-    function h = plotw(A, varargin)
-        % PLOTW plots a weighted matrix
-        %
-        % H = PLOTW(A) plots the weighted matrix A and returns the handle to
-        %   the plot H.
-        %
-        % H = PLOTW(A,'PropertyName',PropertyValue) sets the property of the
-        %   matrix plot PropertyName to PropertyValue.
-        %   All standard plot properties of surf can be used.
-        %   Additional admissive properties are:
-        %       xlabels   -   1:1:number of matrix elements (default)
-        %       ylabels   -   1:1:number of matrix elements (default)
-        %
-        % See also Graph, plotb, surf.
-        
-        N = length(A);
-        
-        % x labels
-        xlabels = (1:1:N);
-        for n = 1:2:length(varargin)
-            if strcmpi(varargin{n}, 'xlabels')
-                xlabels = varargin{n + 1};
-            end
-        end
-        if ~iscell(xlabels)
-            xlabels = {xlabels};
-        end
-        
-        % y labels
-        ylabels = (1:1:N);
-        for n = 1:2:length(varargin)
-            if strcmpi(varargin{n}, 'ylabels')
-                ylabels = varargin{n + 1};
-            end
-        end
-        if ~iscell(ylabels)
-            ylabels = {ylabels};
-        end
-        
-        ht = surf((0:1:N), ...
-            (0:1:N), ...
-            [A, zeros(size(A, 1), 1); zeros(1, size(A, 1) + 1)]);
-        view(2)
-        shading flat
-        axis equal square tight
-        grid off
-        box on
-        set(gca, ...
-            'XAxisLocation', 'top', ...
-            'XTick', (1:1:N) - .5, ...
-            'XTickLabel', {}, ...
-            'YAxisLocation', 'left', ...
-            'YDir', 'Reverse', ...
-            'YTick', (1:1:N) - .5, ...
-            'YTickLabel', ylabels)
-        
-        if ~verLessThan('matlab', '8.4.0')
-            set(gca, ...
-                'XTickLabelRotation', 90, ...
-                'XTickLabel', xlabels)
-        else
-            t = text((1:1:N) - .5, zeros(1, N), xlabels);
-            set(t, ...
-                'HorizontalAlignment', 'left', ...
-                'VerticalAlignment', 'middle', ...
-                'Rotation', 90);
-        end
-        
-        colormap jet
-        
-        % output if needed
-        if nargout > 0
-            h = ht;
-        end
-    end
-    function h = plotb(A, varargin)
-        % PLOTB plots a binary matrix
-        %
-        % H = PLOTB(A) plots the binarized version of weighted matrix A and
-        %   returns the handle to the plot H.
-        %   The matrix A can be binarized by fixing the threshold
-        %   (default, threshold = 0.5).
-        %
-        % H = PLOTB(A, 'PropertyName', PropertyValue) sets the property of the
-        %   matrix plot PropertyName to PropertyValue.
-        %   All standard plot properties of surf can be used.
-        %   Additional admissive properties are:
-        %       threshold   -   0.5 (default)
-        %       xlabels     -   1:1:number of matrix elements (default)
-        %       ylabels     -   1:1:number of matrix elements (default)
-        %
-        % See also Graph, binarize, plotw, surf.
-        
-        N = length(A);
-        
-        % threshold
-        threshold = get_from_varargin(0, 'threshold', varargin{:});
-        
-        % density
-        density = get_from_varargin([], 'density', varargin{:});
-        
-        % x labels
-        xlabels = (1:1:N);
-        for n = 1:2:length(varargin)
-            if strcmpi(varargin{n}, 'xlabels')
-                xlabels = varargin{n + 1};
-            end
-        end
-        if ~iscell(xlabels)
-            xlabels = {xlabels};
-        end
-        
-        % y labels
-        ylabels = (1:1:N);
-        for n = 1:2:length(varargin)
-            if strcmpi(varargin{n}, 'ylabels')
-                ylabels = varargin{n + 1};
-            end
-        end
-        if ~iscell(ylabels)
-            ylabels = {ylabels};
-        end
-        
-        B = binarize(A, 'threshold', threshold, 'density', density);
-        
-        ht = surf((0:1:N), ...
-            (0:1:N), ...
-            [B, zeros(size(B, 1), 1); zeros(1, size(B, 1) + 1)]);
-        view(2)
-        shading flat
-        axis equal square tight
-        grid off
-        box on
-        set(gca, ...
-            'XAxisLocation', 'top',  ...
-            'XTick', (1:1:N) - .5, ...
-            'XTickLabel', {},  ...
-            'YAxisLocation', 'left',  ...
-            'YDir', 'Reverse',  ...
-            'YTick', (1:1:N) - .5, ...
-            'YTickLabel', ylabels)
-        
-        if ~verLessThan('matlab',  '8.4.0')
-            set(gca, ...
-                'XTickLabelRotation',90, ...
-                'XTickLabel', xlabels)
-        else
-            t = text((1:1:N) - .5, zeros(1,N), xlabels);
-            set(t, ...
-                'HorizontalAlignment', 'left',  ...
-                'VerticalAlignment', 'middle',  ...
-                'Rotation',90);
-        end
-        
-        colormap bone
-        
-        % output if needed
-        if nargout > 0
-            h = ht;
-        end
-    end
+    
     % callback
     function cb_matrix_value(src, event, i, j)
         value = el.get(prop);
