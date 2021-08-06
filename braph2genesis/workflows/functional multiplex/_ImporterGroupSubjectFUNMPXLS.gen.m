@@ -63,7 +63,7 @@ if isfolder(directory)
     subject_folders = subject_folders(~ismember({subject_folders(:).name}, {'.', '..'}));
     
     if length(subject_folders) > 0
-        waitbar(.15, f, 'Loading your data ...');
+        waitbar(.15, f, 'Loading your Group ...');
 
         % Check if there are covariates to add (age and sex)
         file_cov_XLSX = dir(fullfile(directory, '*.xlsx'));
@@ -81,9 +81,9 @@ if isfolder(directory)
         end
         
         % get all layers per subject folder
-        waitbar(.45, f, 'Processing your data ...')
+        waitbar(.45, f, 'Loading your Group ...')
         for i = 1:1:length(subject_folders)
-            waitbar(.5, f, ['Processing your data: ' num2str(i) '/' num2str(length(subject_folders)) ' ...'])
+            waitbar(.5, f, ['Loading your Subject: ' num2str(i) '/' num2str(length(subject_folders)) ' ...'])
             subjects_paths = [directory filesep() subject_folders(i).name];
             % analyzes file
             files_XLSX = dir(fullfile(subjects_paths, '*.xlsx'));

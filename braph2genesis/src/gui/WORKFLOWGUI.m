@@ -274,7 +274,7 @@ end
         panel_struct(panel, child).h_btn = src;
         
         % change script for internal values
-        exe_check = true;
+        exe_check = false;
         for l = 1:size(panel_struct, 2)
             if ~isempty(panel_struct) && size(panel_struct, 1) > 1 && panel ~= 1
                 if ~isempty(panel_struct(panel - 1, l).name_script) && ~isempty(panel_struct(panel - 1, l).name)
@@ -300,15 +300,17 @@ end
             if ~isempty(tmp_pl) && ~isequal(panel_struct(panel , child).exe, tmp_pl.get('EL'))
                 % change to new obj
                 panel_struct(panel, child).exe = tmp_pl.get('El');
+                exe_check = true;
             else
                 % use the object;
+                exe_check = true;
             end
         else
             try
                 panel_struct(panel, child).exe = eval([exe_{2}]);
+                exe_check = true;
             catch e 
-                exe_check = false;
-                % probabily can show in a modal.
+                warndlg(['Please select a valid input. ' e], 'Warning');
             end
         end
         
@@ -392,14 +394,16 @@ end
         % load new ids.
         for i = 1:size(panel_struct, 1)
             for j = 1:size(panel_struct, 2)
-                obj = panel_struct(i, j).plot_element;
-                if isempty(obj)
-                    continue;
-                else
-                    tmp_el =  obj.get('EL');
-                    btn = panel_struct(i, j).h_btn;
-                    default_msg = loaded_names(i, j).msg;
-                    change_state_btn(btn, tmp_el.get('ID'), default_msg);
+                if isfield(panel_struct(i, j), 'plot_element') && ~isempty(panel_struct(i, j).plot_element)
+                    obj = panel_struct(i, j).plot_element;
+                    if isempty(obj)
+                        continue;
+                    else
+                        tmp_el =  obj.get('EL');
+                        btn = panel_struct(i, j).h_btn;
+                        default_msg = loaded_names(i, j).msg;
+                        change_state_btn(btn, tmp_el.get('ID'), default_msg);
+                    end
                 end
             end
         end

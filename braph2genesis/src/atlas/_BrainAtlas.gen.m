@@ -25,9 +25,13 @@ function cb_importers(src, ~)
     src_name = erase(src.Text, ' ...');
     imp_el = eval([src_name '(' '''ID''' ',' '''GUI''' ')']);
     imp_el.uigetfile();
-    tmp_el = imp_el.get('BA');
-    plot_element.set('El', tmp_el); 
-    plot_element.reinit();
+    try
+        tmp_el = imp_el.get('BA');
+        plot_element.set('El', tmp_el);
+        plot_element.reinit();
+    catch e
+        warndlg(['Please select a valid input. ' e.message], 'Warning');
+    end
 end
 
 %%%% ¡menu_exporter!

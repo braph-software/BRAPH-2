@@ -82,7 +82,7 @@ if isfolder(directory)
         sex = unassigned(ones(length(files), 1));
     end
     
-    waitbar(.15, f, 'Loading your data ...');
+    waitbar(.15, f, 'Loading your Group ...');
     if length(files) > 0
         % brain atlas
         ba = im.get('BA');
@@ -102,7 +102,7 @@ if isfolder(directory)
         
         % adds subjects
         for i = 1:1:length(files)
-            waitbar(.5, f, ['Processing your data: ' num2str(i) '/' num2str(length(files)) ' ...'])
+            waitbar(.5, f, ['Loading your Subject: ' num2str(i) '/' num2str(length(files)) ' ...'])
             % read file
             CON = xlsread(fullfile(directory, files(i).name));
             [~, sub_id] = fileparts(files(i).name);
