@@ -86,6 +86,7 @@ function update(pl)
         if Graph.is_graph(el)
             set(ui_layer_edit, ...
                 'Enable', 'off' ...
+                'Visible', 'off', ...
                 )
         else
             set(ui_layer_edit, ...
@@ -93,7 +94,7 @@ function update(pl)
                 )
         end
         set(ui_adj_matrix, ... 
-            'String', 'Adjacency Matrix Plot', ...
+            'String', 'See Matrix Plot', ...
             'Tooltip', 'Plot the Adjacency Matrix of the Graph', ...
             'Units', 'normalized', ...
             'Position', [.32 .02 .3 .08], ...
@@ -112,6 +113,12 @@ function update(pl)
         y2 = normalized(2);
         w2 = normalized(3) * 1.61;
         
+        pg = PlotADJMatrix( ...
+            'bkgcolor', [1 1 1], ...
+            'setpos', [x2 y2 w2 h2], ...
+            'setname', ['Plot of Adjacency Matrix - ' BRAPH2.STR]);
+        [h_figure, h_axes] = pg.draw();
+        
         adj_matrix_figure = figure( ...
             'Visible', 'on', ...
             'NumberTitle', 'off', ...
@@ -121,23 +128,7 @@ function update(pl)
             'MenuBar', 'none', ...
             'Toolbar', 'figure', ...
             'Color', 'w' ...
-            );        
-        set_icon(adj_matrix_figure);
-        
-        ui_toolbar = findall(adj_matrix_figure, 'Tag', 'FigureToolBar');
-        
-        delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
-        delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
-        delete(findall(ui_toolbar, 'Tag', 'Standard.SaveFigure'))
-        delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
-        delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
-        delete(findall(ui_toolbar, 'Tag', 'Standard.OpenInspector'))
-        delete(findall(ui_toolbar, 'Tag', 'Exploration.Brushing'))
-        delete(findall(ui_toolbar, 'Tag', 'DataManager.Linking'))
-        delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertColorbar'))
-        delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertLegend'))
-        delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
-        delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
+            );
         
         % if ... how to know which plot?
         if size(A, 2) > 1
@@ -146,9 +137,6 @@ function update(pl)
             handle_plot = plotw(A{layer_to_plot});
         end
         
-        % else
-        % handle_plot = plotb(A{layer_to_plot});
-        % end
     end
     function [pixels, normalized] = get_figure_position()
         fig_h = getGUIFigureObj();
