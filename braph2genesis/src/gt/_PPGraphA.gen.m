@@ -110,8 +110,8 @@ function update(pl)
         
         [~, normalized] = get_figure_position();
         x2 = normalized(1) + normalized(3);
-        h2 = normalized(4);
-        y2 = normalized(2);
+        h2 = normalized(4) / 1.61;
+        y2 = normalized(2) + normalized(4) - h2;
         w2 = normalized(3) * 1.61;
         
         f = figure( ...
@@ -139,6 +139,7 @@ function update(pl)
             'Layer', layer_to_plot ...
             );
         pg.draw('Parent', f);
+        pg.set('SETPOS', [x2 normalized(2) w2 h2*1.61-h2-.065]);
         pg.settings();        
     end
     function [pixels, normalized] = get_figure_position()
