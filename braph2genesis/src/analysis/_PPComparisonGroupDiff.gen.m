@@ -61,17 +61,21 @@ function update(pl)
     fdr_style = [0 1 0];
     fdr_q_value = 0.05; % default, might make it so the user chooses it.
 
-    if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
+    if el.getPropCategory(prop) == Category.RESULT && ~isCalculated()
         % remove previous tables/textbox
         if ~isempty(pl.comparison_tbl)
-            delete(pl.comparison_tbl)
+            if iscell(pl.comparison_tbl)
+                cellfun(@(x) set(x, 'Visible', 'off'), pl.comparison_tbl, 'UniformOutput', false);
+            else
+                set(pl.comparison_tbl, 'Visible', 'off')
+            end            
         end
         % delete brainview buttons
         childs = get(pl.pp, 'Child');
         for n = 1:length(childs)
             child = childs(n);
-            if isequal(child.String, 'Brain View')
-                delete(child)
+            if ~isgraphics(child, 'uitable') && isequal(child.String, 'Brain View')
+                set(child, 'Visible', 'off')
             end
         end
     elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
@@ -199,7 +203,6 @@ function update(pl)
         % paint a normal cell tables
         value_cell = el.get(prop);
         if Measure.is_binodal(m)
-            delete(pl.comparison_tbl)
             pl.comparison_tbl = cell(size(value_cell));
             for i = 1:1:size(pl.comparison_tbl, 1)
                 for j = 1:1:size(pl.comparison_tbl, 2)
@@ -569,6 +572,18 @@ function update(pl)
         end
         function cb_slide(~, ~)
             pl.slide()
+        end
+        function bool = isCalculated()
+            childs = get(pl.pp, 'Child');
+            bool = false;
+            for n = 1:length(childs)
+                child = childs(n);
+                if ~isgraphics(child, 'uitable') && isequal(child.Style, 'pushbutton') && isequal(child.String, 'C')
+                    if isequal('off', child.Enable)
+                        bool = true;
+                    end
+                end
+            end
         end
 end
 function redraw(pl, varargin)
