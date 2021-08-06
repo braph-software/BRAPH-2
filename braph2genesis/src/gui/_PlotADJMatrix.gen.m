@@ -18,7 +18,7 @@ pp
 %% ¡props!
 
 %%% ¡prop!
-A (metadata, matrix) is the adjacency matrix.
+A (metadata, cell) is the adjacency matrix.
 
 %%% ¡prop!
 Layer (metadata, scalar) is the layer to be plotted
@@ -38,15 +38,6 @@ function [h_figure, h_axes] = draw(pl, varargin)
     % see also settings, uipanel, isgraphics.    
         
     [pl.h_figure, pl.h_axes] = draw@PlotGraph(pl, varargin{:});
-    
-    A = pl.get('A');
-    layer_to_plot = pl.get('Layer');
-    
-    if size(A, 2) > 1
-        pl.h_plot = pl.plotw(A{layer_to_plot, layer_to_plot});
-    else
-        pl.h_plot = pl.plotw(A{layer_to_plot});
-    end
     
     if nargout > 0
         h_figure = pl.h_figure;
@@ -277,7 +268,7 @@ function  f_settings = settings(pl, varargin)
     end
 end
 
-function h = plotw(A, varargin)
+function h = plotw(pl, A, varargin)
     % PLOTW plots a weighted matrix
     %
     % H = PLOTW(A) plots the weighted matrix A and returns the handle to
@@ -316,7 +307,7 @@ function h = plotw(A, varargin)
         ylabels = {ylabels};
     end
 
-    ht = surf(pl.h_plot, ...
+    ht = surf('Parent', pl.h_axes, ...
         (0:1:N), ...
         (0:1:N), ...
         [A, zeros(size(A, 1), 1); zeros(1, size(A, 1) + 1)]);
@@ -325,7 +316,7 @@ function h = plotw(A, varargin)
     axis equal square tight
     grid off
     box on
-    set(pl.h_plot, ...
+    set(pl.h_axes, ...
         'XAxisLocation', 'top', ...
         'XTick', (1:1:N) - .5, ...
         'XTickLabel', {}, ...
@@ -335,11 +326,11 @@ function h = plotw(A, varargin)
         'YTickLabel', ylabels)
 
     if ~verLessThan('matlab', '8.4.0')
-        set(pl.h_plot, ...
+        set(pl.h_axes, ...
             'XTickLabelRotation', 90, ...
             'XTickLabel', xlabels)
     else
-        t = text(pl.h_plot, (1:1:N) - .5, zeros(1, N), xlabels);
+        t = text('Parent', pl.h_axes, (1:1:N) - .5, zeros(1, N), xlabels);
         set(t, ...
             'HorizontalAlignment', 'left', ...
             'VerticalAlignment', 'middle', ...
@@ -353,7 +344,7 @@ function h = plotw(A, varargin)
         h = ht;
     end
 end
-function h = plotb(A, varargin)
+function h = plotb(pl, A, varargin)
     % PLOTB plots a binary matrix
     %
     % H = PLOTB(A) plots the binarized version of weighted matrix A and
@@ -403,7 +394,7 @@ function h = plotb(A, varargin)
 
     B = binarize(A, 'threshold', threshold, 'density', density);
 
-    ht = surf(pl.h_plot, ...
+    ht = surf('Parent', pl.h_axes, ...
         (0:1:N), ...
         (0:1:N), ...
         [B, zeros(size(B, 1), 1); zeros(1, size(B, 1) + 1)]);
@@ -412,7 +403,7 @@ function h = plotb(A, varargin)
     axis equal square tight
     grid off
     box on
-    set(pl.h_plot, ...
+    set(pl.h_axes, ...
         'XAxisLocation', 'top',  ...
         'XTick', (1:1:N) - .5, ...
         'XTickLabel', {},  ...
@@ -426,7 +417,7 @@ function h = plotb(A, varargin)
             'XTickLabelRotation',90, ...
             'XTickLabel', xlabels)
     else
-        t = text(pl.h_plot, (1:1:N) - .5, zeros(1,N), xlabels);
+        t = text('Parent', pl.h_axes, (1:1:N) - .5, zeros(1,N), xlabels);
         set(t, ...
             'HorizontalAlignment', 'left',  ...
             'VerticalAlignment', 'middle',  ...
@@ -440,7 +431,7 @@ function h = plotb(A, varargin)
         h = ht;
     end
 end
-function h = hist(A, varargin)
+function h = hist(pl, A, varargin)
     % HIST plots the histogram and density of a matrix
     %
     % H = HIST(A) plots the histogram of a matrix A and the associated density and
@@ -463,7 +454,7 @@ function h = hist(A, varargin)
 
     hold on
     ht1 = fill(bins, count, 'k');
-    ht2 = plot(pl.h_plot, bins, density, 'b', 'linewidth', 2);
+    ht2 = plot('Parent', pl.h_axes, bins, density, 'b', 'linewidth', 2);
     hold off
     xlabel('coefficient values / threshold')
     ylabel('coefficient counts / density')
@@ -471,7 +462,7 @@ function h = hist(A, varargin)
     grid off
     box on
     axis square tight
-    set(pl.h_plot, ...
+    set(pl.h_axes, ...
         'XAxisLocation', 'bottom',  ...
         'XTickLabelMode', 'auto',  ...
         'XTickMode', 'auto',  ...
