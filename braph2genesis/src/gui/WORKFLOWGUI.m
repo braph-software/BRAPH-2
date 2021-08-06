@@ -253,7 +253,7 @@ end
         end
     end
     function btn_action(src, ~)
-        
+        set(src, 'Enable', 'off')        
         for k = 1:size(panel_inner, 1)
             for j = 1:size(panel_inner, 2)
                 obj_inner = panel_inner{k, j};
@@ -274,11 +274,14 @@ end
         panel_struct(panel, child).h_btn = src;
         
         % change script for internal values
+        exe_check = true;
         for l = 1:size(panel_struct, 2)
             if ~isempty(panel_struct) && size(panel_struct, 1) > 1 && panel ~= 1
                 if ~isempty(panel_struct(panel - 1, l).name_script) && ~isempty(panel_struct(panel - 1, l).name)
                     tmp_pl = panel_struct(panel - 1, l).plot_element;
-                    if ~isempty(tmp_pl) && ~isequal(panel_struct(panel - 1, l).exe, tmp_pl.get('El'))
+                    tmp_el = tmp_pl.get('EL');
+                    inner_el = panel_struct(panel - 1, l).exe;
+                    if ~isempty(tmp_pl) && ~isequal(inner_el, tmp_el)
                         % change to new obj
                         new_script = ['panel_struct(' num2str(panel-1) ',' num2str(child) ').plot_element.get(''' 'El' ''')'];
                         exe_{2} = strrep(exe_{2}, ...
@@ -292,10 +295,8 @@ end
                 end
             end
         end
-        if isfield(panel_struct(panel, child), 'exe') && ~isempty(panel_struct(panel, child).exe)
-           
-            tmp_pl = panel_struct(panel, child).plot_element;
-         
+        if isfield(panel_struct(panel, child), 'exe') && ~isempty(panel_struct(panel, child).exe)           
+            tmp_pl = panel_struct(panel, child).plot_element;         
             if ~isempty(tmp_pl) && ~isequal(panel_struct(panel , child).exe, tmp_pl.get('EL'))
                 % change to new obj
                 panel_struct(panel, child).exe = tmp_pl.get('El');
@@ -303,10 +304,15 @@ end
                 % use the object;
             end
         else
-            panel_struct(panel, child).exe = eval([exe_{2}]);
+            try
+                panel_struct(panel, child).exe = eval([exe_{2}]);
+            catch e 
+                exe_check = false;
+                % probabily can show in a modal.
+            end
         end
         
-        if ~isempty(panel_struct(panel, child).exe) && isa(panel_struct(panel, child).exe, 'Element')
+        if exe_check && ~isempty(panel_struct(panel, child).exe) && isa(panel_struct(panel, child).exe, 'Element')
             new_object =  panel_struct(panel, child).exe;
             h_plot_element = GUI(new_object);
             panel_struct(panel, child).plot_element = h_plot_element;
@@ -315,7 +321,8 @@ end
             if check_section_objs(panel)
                 enable_panel(section_panel{panel + 1})
             end
-        end
+        end        
+        set(src, 'Enable', 'on')
     end
     function check = check_section_objs(panel)
         check = false;
@@ -389,9 +396,10 @@ end
                 if isempty(obj)
                     continue;
                 else
+                    tmp_el =  obj.get('EL');
                     btn = panel_struct(i, j).h_btn;
                     default_msg = loaded_names(i, j).msg;
-                    change_state_btn(btn, obj.get('ID'), default_msg)
+                    change_state_btn(btn, tmp_el.get('ID'), default_msg);
                 end
             end
         end
@@ -652,14 +660,16 @@ for i = 2:cycles-1
     disable_panel(section_panel{i})
 end
     function enable_panel(panel)
-        set(panel, 'BackgroundColor', BKGCOLOR)
-        childs = get(panel, 'Children');
-        for i = 1:length(childs)
-            set(childs(i), 'Enable', 'on');
-            if isequal(childs(i).Style, 'pushbutton')
-                set(childs(i), 'BackgroundColor', BTNBKGCOLOR);
-            else
-                set(childs(i), 'BackgroundColor', BKGCOLOR);
+        if ~isequal(get(panel, 'BackgroundColor'), BKGCOLOR)
+            set(panel, 'BackgroundColor', BKGCOLOR)
+            childs = get(panel, 'Children');
+            for i = 1:length(childs)
+                set(childs(i), 'Enable', 'on');
+                if isequal(childs(i).Style, 'pushbutton')
+                    set(childs(i), 'BackgroundColor', BTNBKGCOLOR);
+                else
+                    set(childs(i), 'BackgroundColor', BKGCOLOR);
+                end
             end
         end
     end
