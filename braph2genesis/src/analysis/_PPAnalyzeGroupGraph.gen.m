@@ -248,6 +248,7 @@ function update(pl, selected)
                 pause(.5)
                 close(f)
             end
+            pl.update(pl.selected);
         end
         function cb_table_delete(~, ~)
             mlist = Graph.getCompatibleMeasureList(graph);
@@ -260,6 +261,7 @@ function update(pl, selected)
                     g_dict.remove(index);
                 end
             end
+            pl.update(pl.selected)
         end
         function cb_table_graph(~, ~)
             [parent_position_pixels, normalized] = get_figure_position();
@@ -342,7 +344,9 @@ function update(pl, selected)
                             offset = 0;
                         end
                         measure = plot_measure_list{i};
-                        GUI(measure, 'CloseRequest', false, 'Position', [x2+offset y2-offset w2 h2])
+                        g = el.memorize('G');
+                        tmp_measure = g.getMeasure(measure);
+                        GUI(tmp_measure, 'CloseRequest', false, 'Position', [x2+offset y2-offset w2 h2])
                         k = k + 1;
                     end
                 end

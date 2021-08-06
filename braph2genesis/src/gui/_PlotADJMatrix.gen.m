@@ -28,9 +28,7 @@ function [h_figure, h_axes] = draw(pl, varargin)
     %
     % see also settings, uipanel, isgraphics.    
         
-    pl.pp = draw@PlotGraph(pl, varargin{:});
-    pl.h_figure = get(pl.pp, 'Parent');
-    pl.h_axes = axes(pl.pp);
+    [pl.h_figure, pl.h_axes] = draw@PlotGraph(pl, varargin{:});
     
     if nargout > 0
         h_figure = pl.h_figure;
