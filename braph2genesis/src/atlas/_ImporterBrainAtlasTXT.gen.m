@@ -41,7 +41,7 @@ if isfile(file)
         raw = raw(~cellfun('isempty', raw));  % remove empty cells
         
         % adds props
-        waitbar(.15, f, 'Loading your data ...');
+        waitbar(.15, f, 'Loading your Brain Atlas ...');
         ba.set( ...
             'ID', raw{1, 1}, ...
             'LABEL', raw{2, 1}, ...
@@ -51,9 +51,9 @@ if isfile(file)
         idict = ba.get('BR_DICT');
         
         % adds brain regions
-        waitbar(.45, f, 'Loading your data ...')
+        waitbar(.45, f, 'Loading your Brain Regions ...')
         for i = 4:6:size(raw, 1)
-            waitbar(.5, f, ['Loading your data: ' num2str(i - 4) '/' num2str(size(raw, 1) - 3) ' ...'])
+            waitbar(.5, f, ['Loading your Brain Region: ' num2str(i - 4) '/' num2str(size(raw, 1) - 3) ' ...'])
             br = BrainRegion( ...
                 'ID', char(raw{i, 1}), ...
                 'LABEL', char(raw{i+1, 1}), ...
@@ -66,10 +66,12 @@ if isfile(file)
         end
         ba.set('br_dict', idict);
     catch e
-        rethrow(e)
+        warndlg('Please select a valid input.', 'Warning');
+        close(f)        
+        rethrow(e)        
     end
 else
-    error(BRAPH2.WRONG_OUTPUT);
+    error(BRAPH2.BUG_IO);
 end
 
 if exist('f', 'var')

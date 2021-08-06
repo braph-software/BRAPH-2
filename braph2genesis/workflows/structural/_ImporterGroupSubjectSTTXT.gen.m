@@ -71,7 +71,7 @@ if isfile(file)
     end
     
     % sets group props
-    waitbar(.15, f, 'Loading your data ...');
+    waitbar(.15, f, 'Loading your Group ...');
     try
         [~, name, ext] = fileparts(file);
         gr.set( ...
@@ -81,7 +81,7 @@ if isfile(file)
             );
         
         % brain atlas
-        waitbar(.45, f, 'Loading your data ...')
+        waitbar(.45, f, 'Loading your Subjects ...')
         ba = im.get('BA');
         br_number = size(raw2, 2) - 3;
         if ba.get('BR_DICT').length ~= br_number
@@ -99,7 +99,7 @@ if isfile(file)
         
         % adds subjects
         for i = 1:1:size(raw2, 1)
-            waitbar(.5, f, ['Loading your data: ' num2str(i) '/' num2str(size(raw2, 1)) ' ...'])
+            waitbar(.5, f, ['Loading your Subject: ' num2str(i) '/' num2str(size(raw2, 1)) ' ...'])
             ST = zeros(br_number, 1);
             for j = 1:1:length(ST)
                 ST(j) = raw2{i, 3 + j};

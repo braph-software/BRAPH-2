@@ -80,13 +80,13 @@ if isfolder(directory)
         unassigned =  {'unassigned'};
         sex = unassigned(ones(length(files), 1));
     end
-    waitbar(.15, f, 'Loading your data ...');
+    waitbar(.15, f, 'Loading your Subject ...');
 
     if length(files) > 0
         
         % adds subjects
         for i = 1:1:length(files)
-            waitbar(.5, f, ['Processing your data: ' num2str(i) '/' num2str(length(files)) ' ...'])
+            waitbar(.5, f, ['Loading your Subject: ' num2str(i) '/' num2str(length(files)) ' ...'])
             
             % read file
             FUN = xlsread(fullfile(directory, files(i).name));
@@ -105,7 +105,6 @@ if isfolder(directory)
                 ba.set('br_dict', idict);
             end
             subdict = gr.get('SUB_DICT');
-            waitbar(.45, f, 'Processing your data ...')
             [~, sub_id] = fileparts(files(i).name);
             sub = SubjectFUN( ...
                 'ID', sub_id, ...
