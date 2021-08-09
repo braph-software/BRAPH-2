@@ -135,13 +135,16 @@ function h_panel = draw(pl, varargin)
         end
         function cb_table_calculate(~, ~)
             pl.mlist = Graph.getCompatibleMeasureList(pl.graph);
+            el = pl.get('EL');
             g = el.memorize('G');
+
+            measure_short_list = pl.mlist(pl.selected);
 
             % calculate
             f = waitbar(0, ['Calculating ' num2str(length(pl.selected))  ' measures ...'], 'Name', BRAPH2.NAME);
             set_icon(f)
             for i = 1:length(pl.mlist)
-                if ~ismember(pl.mlist(i), pl.selected)
+                if ~ismember(pl.mlist(i), measure_short_list)
                     continue;
                 end
                 progress = (i / length(pl.selected)) * .8;
@@ -163,14 +166,19 @@ function h_panel = draw(pl, varargin)
         end
         function cb_table_delete(~, ~)
             pl.mlist = Graph.getCompatibleMeasureList(pl.graph);
+            el = pl.get('EL');
             delete_measure_list = pl.mlist(pl.selected);
-            g_dict = el.get(prop).get('M_DICT');
-            for i = 1:length(delete_measure_list)
-                m_delete = delete_measure_list{i};
+            g_dict = el.get('G').get('M_DICT');
+            for i = 1:length(pl.mlist)
+                if ~ismember(pl.mlist(i), delete_measure_list)
+                    continue;
+                end
+                m_delete = pl.mlist{i};
                 if g_dict.contains(m_delete)
                     index = g_dict.getIndex(m_delete);
                     g_dict.remove(index);
                 end
+                pl.already_calculated(i) = 'N';
             end
             pl.update(pl.selected,  pl.already_calculated)
         end
@@ -194,11 +202,12 @@ function h_panel = draw(pl, varargin)
                 y2 = normalized(2);
                 w2 = normalized(3);
             end
-            graph_gui = GUI(graph, 'CloseRequest', false, 'Position', [x2 y2 w2 h2]);
+            graph_gui = GUI(pl.graph, 'CloseRequest', false, 'Position', [x2 y2 w2 h2]);
         end
         function cb_table_see_measures(~, ~)
             pl.mlist = Graph.getCompatibleMeasureList(pl.graph);
             plot_measure_list = pl.mlist(pl.selected);
+            el = pl.get('El');
             if ~isempty(plot_measure_list)
                 [~, normalized] = get_figure_position();
                 % create window for results
@@ -238,22 +247,22 @@ function h_panel = draw(pl, varargin)
     set(pl.pp, ...
         'DeleteFcn', {@close_f_settings})
 
-    function close_f_settings(~,~)
-        if ~isempty(h_measures)
-            for k = 1:length(h_measures)
-                pe = h_measures{k};
-                m_gui_h = pe.return_outer_panel();
-                if isgraphics(ancestor(m_gui_h, 'Figure'))
-                    close(m_gui_h)
+        function close_f_settings(~,~)
+            if ~isempty(h_measures)
+                for k = 1:length(h_measures)
+                    pe = h_measures{k};
+                    m_gui_h = pe.return_outer_panel();
+                    if isgraphics(ancestor(m_gui_h, 'Figure'))
+                        close(ancestor(m_gui_h, 'Figure'))
+                    end
+                end
+            end
+            if ~isempty(graph_gui)
+                if isgraphics(graph_gui)
+                    close(graph_gui)
                 end
             end
         end
-        if ~isempty(graph_gui)
-            if isgraphics(graph_gui)
-                close(graph_gui)
-            end
-        end
-    end
 
     % output
     if nargout > 0
