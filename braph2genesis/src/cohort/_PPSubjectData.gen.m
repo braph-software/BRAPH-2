@@ -119,8 +119,23 @@ function redraw(pl, varargin)
     % REDRAW(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=3.3).
     %
     % See also draw, update, refresh.
-
-    pl.redraw@PlotProp('Height', 20, varargin{:});
+    
+    el = pl.get('EL');
+    prop = pl.get('PROP');    
+    value = el.getr(prop);
+    if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
+        pl.redraw@PlotProp('Height', 1.8, varargin{:})
+    else
+        base = 1.8;
+        if isempty(pl.table_values)            
+            pl.redraw@PlotProp('Height', base + 2, varargin{:})              
+        elseif ~isempty(value) && ~isa(value, 'NoValue')
+            tmp_data = get(pl.table_values, 'Data');
+            tmp_h = size(tmp_data, 1); % 1.1 per row
+            f_h = (tmp_h * 1.1) + base;
+            pl.redraw@PlotProp('Height', f_h, varargin{:}) 
+        end
+    end
 end
 function selected = getSelected(pl)
     selected = pl.selected;
