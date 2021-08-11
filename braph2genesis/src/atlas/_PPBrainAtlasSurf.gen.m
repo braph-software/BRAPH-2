@@ -171,8 +171,7 @@ function h_panel = draw(pl, varargin)
             set(fig_h, 'Units', 'characters'); % go back
         end
         function obj = getGUIFigureObj()
-            [~, figHandles] = get_handle_objs('figure', [], 'BrainAtlas');
-            obj = figHandles{1};
+            obj = ancestor(pl.pp, 'Figure');
         end
         function cb_close_atlas_srf(~, ~)
             set(pl.plot_brain_atlas_btn, 'Enable', 'on');
