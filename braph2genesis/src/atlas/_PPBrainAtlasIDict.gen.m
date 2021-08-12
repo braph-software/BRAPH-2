@@ -82,47 +82,48 @@ function h_panel = draw(pl, varargin)
     ui_button_table_move2top = uicontrol(pl.pp,'Style', 'pushbutton', 'Units', 'normalized');
     ui_button_table_move2bottom = uicontrol(pl.pp,'Style', 'pushbutton', 'Units', 'normalized');
     init_buttons()
-        function init_buttons()
-            set(ui_button_table_selectall, 'Position', [.01 .1 .22 .07])
-            set(ui_button_table_selectall, 'String', 'Select All')
-            set(ui_button_table_selectall, 'TooltipString', 'Select all brain regions')
-            set(ui_button_table_selectall, 'Callback', {@cb_table_selectall})
-
-            set(ui_button_table_clearselection, 'Position', [.01 .02 .22 .07])
-            set(ui_button_table_clearselection, 'String', 'Clear')
-            set(ui_button_table_clearselection, 'TooltipString', 'Clear selection')
-            set(ui_button_table_clearselection, 'Callback', {@cb_table_clearselection})
-
-            set(ui_button_table_add, 'Position', [.26 .1 .22 .07])
-            set(ui_button_table_add, 'String', 'Add')
-            set(ui_button_table_add, 'TooltipString', 'Add brain region at the end of table.');
-            set(ui_button_table_add, 'Callback', {@cb_table_add})
-
-            set(ui_button_table_remove, 'Position', [.26 .02 .22 .07])
-            set(ui_button_table_remove, 'String', 'Remove')
-            set(ui_button_table_remove, 'TooltipString', 'Remove selected brain regions.');
-            set(ui_button_table_remove, 'Callback', {@cb_table_remove})
-
-            set(ui_button_table_moveup, 'Position', [.49 .1 .22 .07])
-            set(ui_button_table_moveup, 'String', 'Move up')
-            set(ui_button_table_moveup, 'TooltipString', 'Move selected brain regions up.');
-            set(ui_button_table_moveup, 'Callback', {@cb_table_moveup})
-
-            set(ui_button_table_movedown, 'Position', [.49 .02 .22 .07])
-            set(ui_button_table_movedown, 'String', 'Move down')
-            set(ui_button_table_movedown, 'TooltipString', 'Move selected brain regions down.');
-            set(ui_button_table_movedown, 'Callback', {@cb_table_movedown})
-
-            set(ui_button_table_move2top, 'Position', [.74 .1 .22 .07])
-            set(ui_button_table_move2top, 'String', 'Move top')
-            set(ui_button_table_move2top, 'TooltipString', 'Move selected brain regions to top of table.');
-            set(ui_button_table_move2top, 'Callback', {@cb_table_move2top})
-
-            set(ui_button_table_move2bottom, 'Position', [.74 .02 .22 .07])
-            set(ui_button_table_move2bottom, 'String', 'Move bottom')
-            set(ui_button_table_move2bottom, 'TooltipString', 'Move selected brain regions to bottom of table.');
-            set(ui_button_table_move2bottom, 'Callback', {@cb_table_move2bottom})
-        end
+    
+    function init_buttons()
+        set(ui_button_table_selectall, 'Position', [.02 .1 .22 .07])
+        set(ui_button_table_selectall, 'String', 'Select All')
+        set(ui_button_table_selectall, 'TooltipString', 'Select all brain regions')
+        set(ui_button_table_selectall, 'Callback', {@cb_table_selectall})
+        
+        set(ui_button_table_clearselection, 'Position', [.02 .02 .22 .07])
+        set(ui_button_table_clearselection, 'String', 'Clear')
+        set(ui_button_table_clearselection, 'TooltipString', 'Clear selection')
+        set(ui_button_table_clearselection, 'Callback', {@cb_table_clearselection})
+        
+        set(ui_button_table_add, 'Position', [.27 .1 .22 .07])
+        set(ui_button_table_add, 'String', 'Add')
+        set(ui_button_table_add, 'TooltipString', 'Add brain region at the end of table.');
+        set(ui_button_table_add, 'Callback', {@cb_table_add})
+        
+        set(ui_button_table_remove, 'Position', [.27 .02 .22 .07])
+        set(ui_button_table_remove, 'String', 'Remove')
+        set(ui_button_table_remove, 'TooltipString', 'Remove selected brain regions.');
+        set(ui_button_table_remove, 'Callback', {@cb_table_remove})
+        
+        set(ui_button_table_moveup, 'Position', [.52 .1 .22 .07])
+        set(ui_button_table_moveup, 'String', 'Move up')
+        set(ui_button_table_moveup, 'TooltipString', 'Move selected brain regions up.');
+        set(ui_button_table_moveup, 'Callback', {@cb_table_moveup})
+        
+        set(ui_button_table_movedown, 'Position', [.52 .02 .22 .07])
+        set(ui_button_table_movedown, 'String', 'Move down')
+        set(ui_button_table_movedown, 'TooltipString', 'Move selected brain regions down.');
+        set(ui_button_table_movedown, 'Callback', {@cb_table_movedown})
+        
+        set(ui_button_table_move2top, 'Position', [.77 .1 .22 .07])
+        set(ui_button_table_move2top, 'String', 'Move top')
+        set(ui_button_table_move2top, 'TooltipString', 'Move selected brain regions to top of table.');
+        set(ui_button_table_move2top, 'Callback', {@cb_table_move2top})
+        
+        set(ui_button_table_move2bottom, 'Position', [.77 .02 .22 .07])
+        set(ui_button_table_move2bottom, 'String', 'Move bottom')
+        set(ui_button_table_move2bottom, 'TooltipString', 'Move selected brain regions to bottom of table.');
+        set(ui_button_table_move2bottom, 'Callback', {@cb_table_move2bottom})
+    end
 
     % callbacks
         function cb_table_idict_value(~, event)
