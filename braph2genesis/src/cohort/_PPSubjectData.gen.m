@@ -124,13 +124,13 @@ function redraw(pl, varargin)
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
         pl.redraw@PlotProp('Height', 1.8, varargin{:})
     else
-        base = 1.8;
+        base = 5;
         if isempty(pl.table_values)
-            pl.redraw@PlotProp('Height', base + 2, varargin{:})
+            pl.redraw@PlotProp('Height', base, varargin{:})
         elseif ~isempty(value) && ~isa(value, 'NoValue')
             tmp_data = get(pl.table_values, 'Data');
             tmp_h = size(tmp_data, 1); % 1.1 per row
-            f_h = (tmp_h * 1.1) + base;
+            f_h = (tmp_h * 1.1) + base + 2;
             if f_h < 30
                 pl.redraw@PlotProp('Height', f_h, varargin{:})
             else
