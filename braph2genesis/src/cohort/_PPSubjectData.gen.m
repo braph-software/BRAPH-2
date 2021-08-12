@@ -131,7 +131,7 @@ function redraw(pl, varargin)
             tmp_data = get(pl.table_values, 'Data');
             tmp_h = size(tmp_data, 1); % 1.1 per row
             f_h = (tmp_h * 1.1) + base + 2;
-            if f_h < 30
+            if f_h < 25
                 pl.redraw@PlotProp('Height', f_h, varargin{:})
             else
                 pl.redraw@PlotProp('Height', 25, varargin{:})
