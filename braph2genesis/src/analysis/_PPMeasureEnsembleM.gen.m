@@ -10,6 +10,9 @@ GUI, PlotElement, PlotProp, MeasureEnsemble.
 %% ¡properties!
 pp
 measure_tbl
+ui_sliding_panel
+ui_slider
+table_tag
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
@@ -56,7 +59,22 @@ function update(pl)
     m = el.get('MEASURE');
     
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
-        % do nothing
+        % remove previous tables/textbox
+        if ~isempty(pl.measure_tbl)
+            if iscell(pl.measure_tbl)
+                cellfun(@(x) set(x, 'Visible', 'off'), pl.measure_tbl, 'UniformOutput', false);
+            else
+                set(pl.measure_tbl, 'Visible', 'off')
+            end
+        end
+        % delete brainview buttons
+        childs = get(pl.pp, 'Child');
+        for n = 1:length(childs)
+            child = childs(n);
+            if ~isgraphics(child, 'uitable') && isequal(child.String, 'Brain View')
+                set(child, 'Visible', 'off')
+            end
+        end
     elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
         
         node_labels_tmp = graph.get('BRAINATLAS').get('BR_DICT');
