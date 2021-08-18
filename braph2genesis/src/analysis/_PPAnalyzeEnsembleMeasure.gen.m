@@ -11,6 +11,12 @@ GUI, PlotElement, PlotProp, AnalyzeEnsemble, PPAnalyzeEnsembleGraph.
 pp
 measure_tbl
 selected
+mlist
+button_cb 
+button_calc
+button_del 
+graph
+already_calculated
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
@@ -30,6 +36,166 @@ function h_panel = draw(pl, varargin)
     % see also update, redraw, refresh, settings, uipanel, isgraphics.
 
     pl.pp = draw@PlotProp(pl, varargin{:});
+    
+    if isempty(pl.measure_tbl) || ~isgraphics(pl.measure_tbl, 'uitable')
+        pl.measure_tbl = uitable('Parent', pl.pp, ...
+            'CellEditCallback', {@cb_measure_selection});
+    end
+    
+    pl.mlist = [];
+    measures_guis = [];
+    
+    ui_button_table_update = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
+    ui_button_table_calculate = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
+    ui_button_table_selectall = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
+    ui_button_table_clearselection = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
+    
+    init_buttons()
+    get_super_buttons()
+    function init_buttons()
+        set(ui_button_table_update, ...
+            'Position', [0 0 0 0], ...
+            'Visible', 'off', ...
+            'Callback', {@cb_measures_update})
+        
+        set(ui_button_table_calculate, ...
+            'Position', [.02 .01 .3 .07], ...
+            'String', 'Calculate Measures', ...
+            'TooltipString', 'Calculate Selected Measures', ...
+            'Callback', {@cb_table_calculate})
+        
+        set(ui_button_table_selectall, ...
+            'Position', [.34 .01 .3 .07], ...
+            'String', 'Select All', ...
+            'TooltipString', 'Select all measures', ...
+            'Callback', {@cb_table_selectall})
+        
+        set(ui_button_table_clearselection, ...
+            'Position', [.66 .01 .3 .07], ...
+            'String', 'Clear All', ...
+            'TooltipString', 'Clear selection', ...
+            'Callback', {@cb_table_clearselection})
+    end
+    function get_super_buttons()
+        [pl.button_cb, pl.button_calc, pl.button_del] = pl.get_buttons();
+    end
+    function cb_measure_selection(~, event)
+        i = event.Indices(1);
+        col = event.Indices(2);
+        newdata = event.NewData;
+        switch col
+            case 1
+                if newdata == 1
+                    pl.selected = sort(unique([pl.selected(:); i]));
+                else
+                    pl.selected = pl.selected(pl.selected ~= i);
+                end
+            otherwise
+        end
+        pl.update(pl.selected, pl.alread_calculated)
+    end
+    function cb_table_selectall(~, ~)  % (src, event)
+        pl.selected = (1:1:length(mlist))';
+        pl.update(pl.selected, pl.already_calculated)
+    end
+    function cb_table_clearselection(~, ~)  % (src, event)
+        pl.selected = [];
+        pl.update(pl.selected, pl.already_calculated)
+    end
+    function cb_table_calculate(~, ~)
+        pl.mlist = Graph.getCompatibleMeasureList(get_selected_graph());
+        calculate_measure_list = pl.mlist(pl.selected);
+        g_dict = el.memorize('G_DICT');
+        
+        % calculate
+        f = waitbar(0, ['Calculating ' num2str(length(calculate_measure_list))  ' measures ensemble ...'], 'Name', BRAPH2.NAME);
+        set_icon(f)
+        
+        n = length(calculate_measure_list);
+        for j = 1:length(pl.mlist)
+            if ~ismember(pl.mlist(i), measure_short_list)
+                continue;
+            end
+            progress = (i / length(pl.selected)) * .8;
+            extra = (i / length(pl.selected)) * 1.05 * .8;
+            measure = pl.mlist{i};
+            waitbar(progress, f, ['Measure: ' measure '  ...']);
+            measure_ensemble = el.getMeasureEnsemble(measure); %#ok<AGROW>
+            measure_element = eval([measure '()']);
+            measure_ensemble.set('MEASUREPARAM', measure_element);
+            result_measure{j} = measure_ensemble;
+            waitbar(extra, f, ['Measure: ' measure ' Calculated! ...']);
+            pl.already_calculated(i) = 'C';
+        end
+
+        % close progress bar
+        if exist('f', 'var')
+            waitbar(1, f, 'Finishing')
+            pause(.5)
+            close(f)
+        end
+    end
+    function cb_table_see_measures(~, ~)
+        pl.mlist = Graph.getCompatibleMeasureList(get_selected_graph());
+        plot_measure_list = pl.mlist(pl.selected);
+        el = pl.get('El');
+        if ~isempty(plot_measure_list)
+            g = el.memorize('G');
+            [~, normalized] = get_figure_position();
+            % create window for results
+            % golden ratio is defined as a+b/a = a/b = phi. phi = 1.61
+            x2 = normalized(1) + normalized(3);
+            h2 = normalized(4);
+            y2 = normalized(2);
+            w2 = normalized(3);
+            k = 1;
+            for i = 1:length(plot_measure_list)
+                if plot_measure_list{i}
+                    offset = 0.02 * k;
+                    if offset > .45
+                        offset = 0;
+                    end
+                    measure = plot_measure_list{i};                    
+                    tmp_measure = g.getMeasure(measure);
+                    measures_guis{i} = GUI(tmp_measure, 'CloseRequest', false, 'Position', [x2+offset y2-offset w2 h2]); %#ok<AGROW>
+                    k = k + 1;
+                end
+            end
+        end
+    end
+    function [pixels, normalized] = get_figure_position()
+        fig_h = getGUIFigureObj();
+        set(fig_h, 'Units', 'normalized'); % set it to get position on normal units
+        pixels = getpixelposition(fig_h);
+        normalized = get(fig_h, 'Position');
+        set(fig_h, 'Units', 'characters'); % go back
+    end
+    function obj = getGUIFigureObj()
+        obj = ancestor(pl.pp, 'Figure');
+    end
+    function graph = get_selected_graph()
+        if isa(graph_dict, 'NoValue')
+            graph_dict = el.getPropDefault('G_DICT');
+        end
+        graph = graph_dict.getItem(1);
+    end
+    function cb_measures_update(~, ~)
+        pl.update(pl.selected, pl.already_calculated);
+    end
+
+    set(pl.pp, 'DeleteFcn', {@close_f_settings})
+    function close_f_settings(~,~)
+        if ~isempty(measures_guis)
+            for k = 1:length(measures_guis)
+                pe = measures_guis{k}; % plot element
+                m_gui_h = pe.return_outer_panel();
+                if isgraphics(ancestor(m_gui_h, 'Figure'))
+                    close(ancestor(m_gui_h, 'Figure'))
+                end
+            end
+        end
+    end
+
     % output
     if nargout > 0
         h_panel = pl.pp;
@@ -54,203 +220,91 @@ function update(pl, selected)
 
     if el.getPropCategory(prop) == Category.RESULT && ~el.isLocked('ID')
         % do nothing
+        set(pl.measure_tbl, 'Visible', 'off')
+        button_management('off')
     else
         graph_dict = el.get('G_DICT');
         if isa(graph_dict, 'NoValue')
             graph_dict = el.getPropDefault('G_DICT');
-        end
-        measures_guis = [];
-        mlist = [];
-        if isempty(pl.measure_tbl) || ~isgraphics(pl.measure_tbl, 'uitable')
-            graph = get_selected_graph();
+        end        
+        graph = get_selected_graph();
+        
+        set(pl.measure_tbl, ...
+            'Parent', pl.pp, ...
+            'Units', 'normalized', ...
+            'Position', [.02 .2 .97 .7], ...
+            'ColumnName', {'SEL', 'Measure', 'CAL', 'Shape', 'Scope', 'Notes'}, ...
+            'ColumnFormat', {'logical', 'char', 'char', 'char', 'char', 'char'}, ...
+            'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+            'ColumnEditable', [true false false false false false]);
 
-            pl.measure_tbl = uitable();
-            set( pl.measure_tbl, ...
-                'Parent', pl.pp, ...
-                'Units', 'normalized', ...
-                'Position', [.02 .15 .95 .7], ...
-                'ColumnName', {'SEL', 'Measure', 'Shape', 'Scope', 'Notes'}, ...
-                'ColumnFormat', {'logical', 'char', 'char', 'char', 'char'}, ...
-                'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-                'ColumnEditable', [true false false false false], ...
-                'CellEditCallback', {@cb_measure_selection} ...
-                )
-
-            % get compatible measures for specific graph
-
-            mlist = Graph.getCompatibleMeasureList(graph);
-            if isa(graph, 'Graph')
-                [parent_position_pixels, normalized] = get_figure_position();
-                data = cell(length(mlist), 5);
-                for mi = 1:1:length(mlist)
-                    if any(pl.selected == mi)
-                        data{mi, 1} = true;
-                    else
-                        data{mi, 1} = false;
-                    end
-                    data{mi, 2} = mlist{mi};
-                    if Measure.is_nodal(mlist{mi})
-                        data{mi, 3} = 'NODAL';
-                    elseif Measure.is_global(mlist{mi})
-                        data{mi, 3} = 'GLOBAL';
-                    else
-                        data{mi, 3} = 'BINODAL';
-                    end
-
-                    if Measure.is_superglobal(mlist{mi})
-                        data{mi, 4} = 'SUPERGLOBAL';
-                    elseif Measure.is_unilayer(mlist{mi})
-                        data{mi, 4} = 'UNILAYER';
-                    else
-                        data{mi, 4} = 'BILAYER';
-                    end
-
-                    data{mi, 5} = eval([mlist{mi} '.getDescription()']);
+        % get compatible measures for specific graph
+        
+        pl.mlist = Graph.getCompatibleMeasureList(graph);
+        if isa(graph, 'Graph')
+            [parent_position_pixels, ~] = get_figure_position();
+            data = cell(length(mlist), 6);
+            for mi = 1:1:length(mlist)
+                if any(pl.selected == mi)
+                    data{mi, 1} = true;
+                else
+                    data{mi, 1} = false;
                 end
-                set(pl.measure_tbl, 'Data', data)
-                set(pl.measure_tbl, 'ColumnWidth', {'auto', 'auto', 'auto', 'auto', parent_position_pixels(3)})
+                data{mi, 2} = mlist{mi};
+                data{mi, 3} = pl.already_calculated(mi);
+                if Measure.is_nodal(mlist{mi})
+                    data{mi, 4} = 'NODAL';
+                elseif Measure.is_global(mlist{mi})
+                    data{mi, 4} = 'GLOBAL';
+                else
+                    data{mi, 4} = 'BINODAL';
+                end
+                
+                if Measure.is_superglobal(mlist{mi})
+                    data{mi, 5} = 'SUPERGLOBAL';
+                elseif Measure.is_unilayer(mlist{mi})
+                    data{mi, 5} = 'UNILAYER';
+                else
+                    data{mi, 5} = 'BILAYER';
+                end
+                
+                data{mi, 6} = eval([mlist{mi} '.getDescription()']);
             end
+            set(pl.measure_tbl, 'Data', data)
+            set(pl.measure_tbl, 'ColumnWidth', {parent_position_pixels(3)*.06, 'auto', parent_position_pixels(3)*.06, 'auto', 'auto', parent_position_pixels(3)})
         end
-
-        ui_button_table_update = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
-        ui_button_table_calculate = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
-        ui_button_table_selectall = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
-        ui_button_table_clearselection = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
-
-        init_buttons()
+        
+        button_management('on')
     end
 
-        function init_buttons()
-            set(ui_button_table_update, ...
-                'Position', [0 0 0 0], ...
-                'Visible', 'off', ...
-                'Callback', {@cb_measures_update})
-
-            set(ui_button_table_calculate, ...
-                'Position', [.02 .01 .3 .07], ...
-                'String', 'Calculate Measures', ...
-                'TooltipString', 'Calculate Selected Measures', ...
-                'Callback', {@cb_table_calculate})
-
-            set(ui_button_table_selectall, ...
-                'Position', [.34 .01 .3 .07], ...
-                'String', 'Select All', ...
-                'TooltipString', 'Select all measures', ...
-                'Callback', {@cb_table_selectall})
-
-            set(ui_button_table_clearselection, ...
-                'Position', [.66 .01 .3 .07], ...
-                'String', 'Clear All', ...
-                'TooltipString', 'Clear selection', ...
-                'Callback', {@cb_table_clearselection})
-        end
-        function cb_measure_selection(~, event)
-            i = event.Indices(1);
-            col = event.Indices(2);
-            newdata = event.NewData;
-            switch col
-                case 1
-                    if newdata == 1
-                        pl.selected = sort(unique([pl.selected(:); i]));
-                    else
-                        pl.selected = pl.selected(pl.selected ~= i);
-                    end
-                otherwise
-            end
-            pl.update(pl.selected)
-        end
-        function cb_table_selectall(~, ~)  % (src, event)
-            pl.selected = (1:1:length(mlist))';
-            pl.update(pl.selected)
-        end
-        function cb_table_clearselection(~, ~)  % (src, event)
-            pl.selected = [];
-            pl.update(pl.selected)
-        end
-        function cb_table_calculate(~, ~)
-            mlist = Graph.getCompatibleMeasureList(get_selected_graph());
-            calculate_measure_list = mlist(pl.selected);
-            g_dict = el.memorize('G_DICT');
-
-            % calculate
-            f = waitbar(0, ['Calculating ' num2str(length(calculate_measure_list))  ' measures ensemble ...'], 'Name', BRAPH2.NAME);
-            set_icon(f)
-
-            n = length(calculate_measure_list);
-            for j = 1:length(calculate_measure_list)
-                progress = (i / length(calculate_measure_list)) * .8;
-                extra = (i / length(calculate_measure_list)) * 1.05 * .8;
-                measure = calculate_measure_list{j};
-                waitbar(progress, f, ['Measure: ' measure '  ...']);
-                measure_ensemble = el.getMeasureEnsemble(measure); %#ok<AGROW>
-                measure_element = eval([measure '()']);
-                measure_ensemble.set('MEASUREPARAM', measure_element);
-                result_measure{j} = measure_ensemble;
-                waitbar(extra, f, ['Measure: ' measure ' Calculated! ...']);
-            end
-
-            [~, normalized] = get_figure_position();
-            % create window for results
-            % golden ratio is defined as a+b/a = a/b = phi. phi = 1.61
-            x2 = normalized(1) + normalized(3);
-            h2 = normalized(4);
-            y2 = normalized(2);
-            w2 = normalized(3) * 1.61;
-
-            waitbar(.95, f, 'Plotting the Measures GUI ...')
-            for j = 1:length(result_measure)
-                offset = 0.02 * (j - 1);
-                if offset > .45
-                    offset = 0;
-                end
-                measure = result_measure{j};
-                GUI(measure, 'CloseRequest', false, 'POSITION', [x2+offset y2-offset w2 h2]);
-            end
-
-            % close progress bar
-            if exist('f', 'var')
-                waitbar(1, f, 'Finishing')
-                pause(.5)
-                close(f)
-            end
-            measures_guis = get_measure_guis();
-        end
-        function [pixels, normalized] = get_figure_position()
-            fig_h = getGUIFigureObj();
-            set(fig_h, 'Units', 'normalized'); % set it to get position on normal units
-            pixels = getpixelposition(fig_h);
-            normalized = get(fig_h, 'Position');
-            set(fig_h, 'Units', 'characters'); % go back
-        end
-        function obj = getGUIFigureObj()
-            obj = get_handle_objs('figure', 'AnalyzeEnsemble');
-        end
-        function graph = get_selected_graph()
-            if isa(graph_dict, 'NoValue')
-                graph_dict = el.getPropDefault('G_DICT');
-            end
-            graph = graph_dict.getItem(1);
-        end
-        function guis = get_measure_guis()
-            guis = get_handle_objs('figure', [], 'MeasureEnsemble');
-        end
-        function cb_measures_update(~, ~)
-            pl.update(pl.selected);
-        end
-
-    set(pl.pp, 'DeleteFcn', {@close_f_settings})
-
-        function close_f_settings(~,~)
-            if ~isempty(measures_guis)
-                for k = 1:length(measures_guis)
-                    m_gui_h = measures_guis{k};
-                    if isgraphics(m_gui_h)
-                        close(m_gui_h)
-                    end
-                end
+    function button_management(value)
+        % delete brainview buttons
+        childs = get(pl.pp, 'Child');
+        for n = 1:length(childs)
+            child = childs(n);
+            if ~isgraphics(child, 'uitable') && ...
+                    isequal(child.Style, 'pushbutton') && ...
+                    ~(isequal(child.String, 'C') ||  isequal(child.String, 'D') || isequal(child.String, 'G'))
+                set(child, 'Visible', value)
             end
         end
-
+    end
+    function graph = get_selected_graph()
+        if isa(graph_dict, 'NoValue')
+            graph_dict = el.getPropDefault('G_DICT');
+        end
+        graph = graph_dict.getItem(1);
+    end
+    function [pixels, normalized] = get_figure_position()
+        fig_h = getGUIFigureObj();
+        set(fig_h, 'Units', 'normalized'); % set it to get position on normal units
+        pixels = getpixelposition(fig_h);
+        normalized = get(fig_h, 'Position');
+        set(fig_h, 'Units', 'characters'); % go back
+    end
+    function obj = getGUIFigureObj()
+        obj = ancestor(pl.pp, 'Figure');
+    end
 end
 function redraw(pl, varargin)
     %REDRAW redraws the element graphical panel.
@@ -273,7 +327,6 @@ function redraw(pl, varargin)
         else
             pl.redraw@PlotProp('Height', 30, varargin{:})
         end
-
     end
 end
 function selected = getSelected(pl)

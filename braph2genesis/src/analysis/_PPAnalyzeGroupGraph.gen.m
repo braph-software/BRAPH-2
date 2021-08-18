@@ -405,7 +405,6 @@ function redraw(pl, varargin)
         else
             pl.redraw@PlotProp('Height', 30, varargin{:})
         end
-
     end
 end
 function selected = getSelected(pl)
