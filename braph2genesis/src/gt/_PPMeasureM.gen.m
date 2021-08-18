@@ -32,6 +32,11 @@ function h_panel = draw(pl, varargin)
     % see also update, redraw, refresh, settings, uipanel, isgraphics.
 
     pl.pp = draw@PlotProp(pl, varargin{:});
+    
+    get_super_buttons()
+    function get_super_buttons()
+        [pl.button_cb, pl.button_calc, pl.button_del] = pl.get_buttons();
+    end
 
     % output
     if nargout > 0
@@ -59,7 +64,7 @@ function update(pl)
     node_labels_tmp = graph.get('BRAINATLAS').get('BR_DICT');
     node_labels = cellfun(@(x) x.get('ID') , node_labels_tmp.getItems(), 'UniformOutput', false);
 
-    if el.getPropCategory(prop) == Category.RESULT &&  ~isCalculated()
+    if el.getPropCategory(prop) == Category.RESULT && isequal(pl.button_calc.Enable, 'on')
         % remove previous tables/textbox
         if ~isempty(pl.table_value_cell)
             if iscell(pl.table_value_cell)
@@ -440,19 +445,7 @@ function update(pl)
         end
         function cb_slide(~, ~)
             pl.slide()
-        end
-        function bool = isCalculated()
-            childs = get(pl.pp, 'Child');
-            bool = false;
-            for n = 1:length(childs)
-                child = childs(n);
-                if ~isgraphics(child, 'uitable') && isequal(child.Style, 'pushbutton') && isequal(child.String, 'C')
-                    if isequal('off', child.Enable)
-                        bool = true;
-                    end
-                end
-            end
-        end
+        end        
 end
 function redraw(pl, varargin)
     %REDRAW redraws the element graphical panel.
