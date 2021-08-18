@@ -137,7 +137,7 @@ function h_panel = draw(pl, varargin)
                 extra = (i / length(pl.selected)) * 1.05 * .8;
                 measure = pl.mlist{i};
                 waitbar(progress, f, ['Measure: ' measure '  ...']);
-                el.getMeasureEnsemble(measure);
+                el.getMeasureEnsemble(measure).memorize('M');
                 waitbar(extra, f, ['Measure: ' measure ' Calculated! ...']);
                 pl.already_calculated(i) = 'C';
             end
