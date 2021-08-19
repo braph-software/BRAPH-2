@@ -296,7 +296,36 @@ function update(pl, selected, calculated)
                 set(pl.comparison_tbl, 'ColumnWidth', {parent_position_pixels(3)*.06, 'auto', parent_position_pixels(3)*.06, 'auto', 'auto', parent_position_pixels(3)})
             end   
             button_management('on')
-    end       
+    end     
+    function button_management(value)
+        % delete brainview buttons
+        childs = get(pl.pp, 'Child');
+        for n = 1:length(childs)
+            child = childs(n);
+            if ~isgraphics(child, 'uitable') && ...
+                    isequal(child.Style, 'pushbutton') && ...
+                    ~(isequal(child.String, 'C') ||  isequal(child.String, 'D') || isequal(child.String, 'G'))
+                set(child, 'Visible', value)
+            end
+        end
+    end
+    function graph = get_selected_graph()
+        graph = pl.graph_dict.getItem(1); % get first analysis graph class
+        if isa(graph, 'NoValue')
+            graph_class =  el.get('A1').getPropSettings('G');
+            graph = eval([graph_class '()']);
+        end
+    end
+    function [pixels, normalized] = get_figure_position()
+        fig_h = getGUIFigureObj();
+        set(fig_h, 'Units', 'normalized'); % set it to get position on normal units
+        pixels = getpixelposition(fig_h);
+        normalized = get(fig_h, 'Position');
+        set(fig_h, 'Units', 'characters'); % go back
+    end
+    function obj = getGUIFigureObj()
+        obj = ancestor(pl.pp, 'Figure');
+    end
 end
 function redraw(pl, varargin)
     %REDRAW redraws the element graphical panel.
