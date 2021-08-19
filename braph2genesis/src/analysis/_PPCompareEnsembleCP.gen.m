@@ -162,7 +162,7 @@ function h_panel = draw(pl, varargin)
         obj = ancestor(pl.pp, 'Figure');
     end
     function graph = get_selected_graph()
-        graph = a1.get('G_DICT').getItem(1); % get first analysis graph class
+        graph = pl.graph_dict.getItem(1); % get first analysis graph class
         if isa(graph, 'NoValue')
             graph_class =  el.get('A1').getPropSettings('G');
             graph = eval([graph_class '()']);
@@ -237,10 +237,8 @@ function update(pl, selected, calculated)
         % do nothing
     else
         a1 = el.get('A1');
+        pl.graph_dict = a1.get('G_DICT');
         graph = get_selected_graph();
-        comparison_guis = [];
-        case_ = 0;
-        mlist = [];
 
         if isa(a1.get(a1.getPropNumber()), 'double')
             % I assume both analyses have the same inputs of t and d
@@ -250,22 +248,20 @@ function update(pl, selected, calculated)
             case_ = 1; % weighted
         end
 
-        if 1 == 1
-        
             set( pl.comparison_tbl, ...
                 'Parent', pl.pp, ...
                 'Units', 'normalized', ...
                 'Position', [.02 .2 .9 .7], ...
-                'ColumnName', {'SEL', 'Measure', 'Shape', 'Scope', 'Notes'}, ...
-                'ColumnFormat', {'logical', 'char', 'char', 'char', 'char'}, ...
+                'ColumnName', {'SEL', 'Measure', 'CAL', 'Shape', 'Scope', 'Notes'}, ...
+                'ColumnFormat', {'logical', 'char', 'char', 'char', 'char', 'char'}, ...
                 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-                'ColumnEditable', [true false false false false])
+                'ColumnEditable', [true false false false false false])
 
             % get compatible measures for specific graph
-            mlist = Graph.getCompatibleMeasureList(graph);
+            pl.mlist = Graph.getCompatibleMeasureList(graph);
             if isa(graph, 'Graph')
                 [~, normalized] = get_figure_position();
-                data = cell(length(mlist), 5);
+                data = cell(length(mlist), 6);
                 for mi = 1:1:length(mlist)
                     if any(pl.selected == mi)
                         data{mi, 1} = true;
@@ -293,19 +289,8 @@ function update(pl, selected, calculated)
                 end
                 set(pl.comparison_tbl, 'Data', data)
                 set(pl.comparison_tbl, 'ColumnWidth', ['auto' 'auto' 'auto' 'auto' normalized(3)*.9*.3])
-            end
-        end
-
-        
-
-       
-    end
-
-        
-
-    % callbacks
-        
-       
+            end       
+    end       
 end
 function redraw(pl, varargin)
     %REDRAW redraws the element graphical panel.
