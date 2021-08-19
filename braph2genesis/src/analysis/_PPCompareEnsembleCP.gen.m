@@ -47,27 +47,48 @@ function h_panel = draw(pl, varargin)
     ui_button_table_calculate = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
     ui_button_table_selectall = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
     ui_button_table_clearselection = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
-    init_buttons()
+    ui_button_delete = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
+    ui_button_see_measures = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
     
+    init_buttons() 
+    get_super_buttons()
     function init_buttons()
-        set(ui_button_table_calculate, ...
-            'Position', [.02 .01 .3 .07], ...
-            'String', 'Calculate Comparison', ...
-            'TooltipString', 'Calculate Comparison of Selected Measures', ...
-            'Callback', {@cb_table_calculate})
-        
-        
         set(ui_button_table_selectall, ...
-            'Position', [.34 .01 .3 .07], ...
+            'Position', [.01 .11 .22 .07], ...
             'String', 'Select All', ...
             'TooltipString', 'Select all measures', ...
             'Callback', {@cb_table_selectall})
         
         set(ui_button_table_clearselection, ...
-            'Position', [.66 .01 .3 .07], ...
+            'Position', [.01 .01 .22 .07], ...
             'String', 'Clear All', ...
             'TooltipString', 'Clear selection', ...
             'Callback', {@cb_table_clearselection})
+        
+        set(ui_button_table_calculate, ...
+            'Position', [.26 .11 .22 .07], ...
+            'String', 'Calculate Comparison', ...
+            'TooltipString', 'Calculate Comparison of Selected Measures', ...
+            'Callback', {@cb_table_calculate}) 
+        
+        set(ui_button_delete, ...
+            'Position', [.26 .01 .22 .07], ...
+            'Visible', 'on', ...
+            'String', 'Delete Measures', ...
+            'TooltipString', 'Delete Comparisons of selected Measuresz', ...
+            'Callback', {@cb_table_delete})
+        
+        set(ui_button_see_measures, ...
+            'Position', [.51 .11 .22 .07], ...
+            'Visible', 'on', ...
+            'String', 'See Comparisons', ...
+            'TooltipString', 'See the GUI of the Selected Comparisons', ...
+            'Callback', {@cb_table_see_measures} ...
+            )
+
+    end
+    function get_super_buttons()
+        [pl.button_cb, pl.button_calc, pl.button_del] = pl.get_buttons();
     end
     function cb_measure_selection(~, event)
         i = event.Indices(1);
@@ -82,15 +103,15 @@ function h_panel = draw(pl, varargin)
                 end
             otherwise
         end
-        pl.update(pl.selected)
+        pl.update(pl.selected, pl.already_calculated)
     end
     function cb_table_selectall(~, ~)  % (src, event)
         pl.selected = (1:1:length(mlist))';
-        pl.update(pl.selected)
+        pl.update(pl.selected, pl.already_calculated)
     end
     function cb_table_clearselection(~, ~)  % (src, event)
         pl.selected = [];
-        pl.update(pl.selected)
+        pl.update(pl.selected, pl.already_calculated)
     end
     function cb_table_calculate(~, ~)
         pl.mlist = Graph.getCompatibleMeasureList(get_selected_graph());
@@ -121,32 +142,14 @@ function h_panel = draw(pl, varargin)
             
             waitbar(extra, f, ['Measure: ' measure ' Calculated! ...']);
         end
-        
-        [~, normalized] = get_figure_position();
-        % create window for results
-        % golden ratio is defined as a+b/a = a/b = phi. phi = 1.61
-        x2 = normalized(1) + normalized(3);
-        h2 = normalized(4);
-        y2 = normalized(2);
-        w2 = normalized(3);
-        
-        waitbar(.95, f, 'Plotting the Comparisons GUI ...')
-        for i = 1:length(calculate_measure_list)
-            offset = 0.02 * i;
-            if offset > .45
-                offset = 0;
-            end
-            comparison = result_comparison{i};
-            
-            GUI(comparison, 'CLOSEREQUEST', false, 'POSITION', [x2+offset y2-offset w2*1.61 h2])
-        end
-        
+
         % close progress bar
         if exist('f', 'var')
             waitbar(1, f, 'Finishing')
             pause(.5)
             close(f)
         end
+        pl.update(pl.selected, pl.already_calculated)
     end
     function [pixels, normalized] = get_figure_position()
         fig_h = getGUIFigureObj();
@@ -163,6 +166,31 @@ function h_panel = draw(pl, varargin)
         if isa(graph, 'NoValue')
             graph_class =  el.get('A1').getPropSettings('G');
             graph = eval([graph_class '()']);
+        end
+    end
+    function cb_table_see_comparisons(~, ~)
+        pl.mlist = Graph.getCompatibleMeasureList(get_selected_graph());
+        calculate_measure_list = pl.mlist(pl.selected);
+        [~, normalized] = get_figure_position();
+        % create window for results
+        % golden ratio is defined as a+b/a = a/b = phi. phi = 1.61
+        x2 = normalized(1) + normalized(3);
+        h2 = normalized(4);
+        y2 = normalized(2);
+        w2 = normalized(3);
+        
+        waitbar(.95, f, 'Plotting the Comparisons GUI ...')
+        k = 1;
+        for i = 1:length(calculate_measure_list)
+            offset = 0.02 * k;
+            if offset > .45
+                offset = 0;
+            end
+            measure = calculate_measure_list{i};
+            tmp_compparison = el.getComparison(measure);
+            
+            comparison_guis{i} = GUI(tmp_compparison, 'CLOSEREQUEST', false, 'POSITION', [x2+offset y2-offset w2*1.61 h2]);
+            k = k + 1;
         end
     end
 
@@ -185,7 +213,7 @@ function h_panel = draw(pl, varargin)
         h_panel = pl.pp;
     end
 end
-function update(pl, selected)
+function update(pl, selected, calculated)
     %UPDATE updates the content of the property graphical panel.
     %
     % UPDATE(PL) updates the content of the property graphical panel.
@@ -201,8 +229,11 @@ function update(pl, selected)
     else
         pl.selected = [];
     end
+    if nargin > 2
+        pl.already_calculated = calculated;
+    end
 
-    if el.getPropCategory(prop) == Category.RESULT && ~el.isLocked('ID')
+    if el.getPropCategory(prop) == Category.RESULT && isequal(pl.button_calc.Enable, 'on')
         % do nothing
     else
         a1 = el.get('A1');
