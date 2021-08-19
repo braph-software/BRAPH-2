@@ -106,7 +106,7 @@ function h_panel = draw(pl, varargin)
         pl.update(pl.selected, pl.already_calculated)
     end
     function cb_table_selectall(~, ~)  % (src, event)
-        pl.selected = (1:1:length(mlist))';
+        pl.selected = (1:1:length(pl.mlist))';
         pl.update(pl.selected, pl.already_calculated)
     end
     function cb_table_clearselection(~, ~)  % (src, event)
@@ -265,32 +265,32 @@ function update(pl, selected, calculated)
             end
             if isa(graph, 'Graph')
                 [~, normalized] = get_figure_position();
-                data = cell(length(mlist), 6);
-                for mi = 1:1:length(mlist)
+                data = cell(length(pl.mlist), 6);
+                for mi = 1:1:length(pl.mlist)
                     if any(pl.selected == mi)
                         data{mi, 1} = true;
                     else
                         data{mi, 1} = false;
                     end
-                    data{mi, 2} = mlist{mi};
+                    data{mi, 2} = pl.mlist{mi};
                     data{mi, 3} = pl.already_calculated(mi);
-                    if Measure.is_nodal(mlist{mi})
+                    if Measure.is_nodal(pl.mlist{mi})
                         data{mi, 4} = 'NODAL';
-                    elseif Measure.is_global(mlist{mi})
+                    elseif Measure.is_global(pl.mlist{mi})
                         data{mi, 4} = 'GLOBAL';
                     else
                         data{mi, 4} = 'BINODAL';
                     end
 
-                    if Measure.is_superglobal(mlist{mi})
+                    if Measure.is_superglobal(pl.mlist{mi})
                         data{mi, 5} = 'SUPERGLOBAL';
-                    elseif Measure.is_unilayer(mlist{mi})
+                    elseif Measure.is_unilayer(pl.mlist{mi})
                         data{mi, 5} = 'UNILAYER';
                     else
                         data{mi, 5} = 'BILAYER';
                     end
 
-                    data{mi, 6} = eval([mlist{mi} '.getDescription()']);
+                    data{mi, 6} = eval([pl.mlist{mi} '.getDescription()']);
                 end
                 set(pl.comparison_tbl, 'Data', data)
                 set(pl.comparison_tbl, 'ColumnWidth', {parent_position_pixels(3)*.06, 'auto', parent_position_pixels(3)*.06, 'auto', 'auto', parent_position_pixels(3)})
