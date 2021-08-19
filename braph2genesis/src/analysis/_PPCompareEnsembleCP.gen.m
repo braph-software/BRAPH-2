@@ -234,7 +234,8 @@ function update(pl, selected, calculated)
     end
 
     if el.getPropCategory(prop) == Category.RESULT && isequal(pl.button_calc.Enable, 'on')
-        % do nothing
+        set(pl.measure_tbl, 'Visible', 'off')
+        button_management('off')
     else
         a1 = el.get('A1');
         pl.graph_dict = a1.get('G_DICT');
@@ -259,6 +260,9 @@ function update(pl, selected, calculated)
 
             % get compatible measures for specific graph
             pl.mlist = Graph.getCompatibleMeasureList(graph);
+            if isempty(pl.already_calculated)
+                pl.already_calculated =  repmat('N', [length(pl.mlist), 1]);
+            end
             if isa(graph, 'Graph')
                 [~, normalized] = get_figure_position();
                 data = cell(length(mlist), 6);
@@ -269,27 +273,29 @@ function update(pl, selected, calculated)
                         data{mi, 1} = false;
                     end
                     data{mi, 2} = mlist{mi};
+                    data{mi, 3} = pl.already_calculated(mi);
                     if Measure.is_nodal(mlist{mi})
-                        data{mi, 3} = 'NODAL';
+                        data{mi, 4} = 'NODAL';
                     elseif Measure.is_global(mlist{mi})
-                        data{mi, 3} = 'GLOBAL';
+                        data{mi, 4} = 'GLOBAL';
                     else
-                        data{mi, 3} = 'BINODAL';
+                        data{mi, 4} = 'BINODAL';
                     end
 
                     if Measure.is_superglobal(mlist{mi})
-                        data{mi, 4} = 'SUPERGLOBAL';
+                        data{mi, 5} = 'SUPERGLOBAL';
                     elseif Measure.is_unilayer(mlist{mi})
-                        data{mi, 4} = 'UNILAYER';
+                        data{mi, 5} = 'UNILAYER';
                     else
-                        data{mi, 4} = 'BILAYER';
+                        data{mi, 5} = 'BILAYER';
                     end
 
-                    data{mi, 5} = eval([mlist{mi} '.getDescription()']);
+                    data{mi, 6} = eval([mlist{mi} '.getDescription()']);
                 end
                 set(pl.comparison_tbl, 'Data', data)
-                set(pl.comparison_tbl, 'ColumnWidth', ['auto' 'auto' 'auto' 'auto' normalized(3)*.9*.3])
-            end       
+                set(pl.comparison_tbl, 'ColumnWidth', {parent_position_pixels(3)*.06, 'auto', parent_position_pixels(3)*.06, 'auto', 'auto', parent_position_pixels(3)})
+            end   
+            button_management('on')
     end       
 end
 function redraw(pl, varargin)
