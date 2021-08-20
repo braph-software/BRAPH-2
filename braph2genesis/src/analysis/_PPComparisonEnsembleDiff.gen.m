@@ -10,6 +10,11 @@ GUI, PlotElement, PlotProp, CompareEnsemble, ComparisonEnsemble.
 %% ¡properties!
 pp
 comparison_tbl
+ui_sliding_panel
+ui_slider
+button_cb 
+button_calc
+button_del
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
@@ -32,6 +37,12 @@ function h_panel = draw(pl, varargin)
     
     if isempty(pl.comparison_tbl)
         pl.comparison_tbl = uitable('Parent', pl.pp);
+    end
+    
+    get_super_buttons();
+    
+    function get_super_buttons()
+        [pl.button_cb, pl.button_calc, pl.button_del] = pl.get_buttons();
     end
 
     % output
@@ -59,17 +70,20 @@ function update(pl)
     node_labels_tmp = graph.get('BRAINATLAS').get('BR_DICT');    
     node_labels = cellfun(@(x) x.get('ID') , node_labels_tmp.getItems(), 'UniformOutput', false); 
     
-    if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
-        % remove previous tables/textbox
+    if el.getPropCategory(prop) == Category.RESULT && isequal(pl.button_calc.Enable, 'on')
         if ~isempty(pl.comparison_tbl)
-            delete(pl.comparison_tbl)
+            if iscell(pl.comparison_tbl)
+                cellfun(@(x) set(x, 'Visible', 'off'), pl.comparison_tbl, 'UniformOutput', false);
+            else
+                set(pl.comparison_tbl, 'Visible', 'off')
+            end
         end
         % delete brainview buttons
         childs = get(pl.pp, 'Child');
         for n = 1:length(childs)
             child = childs(n);
-            if isequal(child.String, 'Brain View')
-                delete(child)
+            if ~isgraphics(child, 'uitable') && isequal(child.String, 'Brain View')
+                set(child, 'Visible', 'off')
             end
         end
     elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
@@ -96,36 +110,201 @@ function update(pl)
             % do nothing
         end
         
-        value_double =  cell2mat(cellfun(@(x) x', value, 'UniformOutput', false));
-        set(pl.comparison_tbl, ...
-            'Data', value_double, ...
-            'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-            'Units', 'normalized', ...
-            'Position', [.01 .15 .98 .75], ...
-            'ColumnName', node_labels, ...
-            'RowName', row_names, ...
-            'CellEditCallback', {@cb_matrix_value} ...
-            )
+        if Measure.is_binodal(m) % binodal with sliding panel
+            pl.ui_sliding_panel = uipanel( ...
+                'Parent', pl.pp, ...
+                'Units', 'characters', ...
+                'BackgroundColor', [.62 .545 .439]);
+            pl.ui_slider = uicontrol( ...
+                'Parent', pl.pp, ...
+                'Style', 'slider', ...
+                'Units', 'characters', ...
+                'Value', 1, ...
+                'Callback', {@cb_slide} ...
+                );
+            delete(pl.comparison_tbl)
+            pl.comparison_tbl = cell(size(value));
+            for i = 1:1:size(pl.comparison_tbl, 1)
+                for j = 1:1:size(pl.comparison_tbl, 2)
+                    if isempty(pl.comparison_tbl{i, j}) || ~isgraphics(pl.comparison_tbl{i, j}, 'uitable')
+                        pl.comparison_tbl{i, j} = uitable('Parent', pl.ui_sliding_panel);
+                    end
+                    
+                    p1s = el.get('P1');
+                    [~, mask] = fdr(p1s{1}, fdr_q_value);
+                    
+                    tmp_data = value(i, j);
+                    tmp_data = num2cell([tmp_data{:}]);
+                    
+                    for ll = 1:size(tmp_data, 1)
+                        for mm = 1:size(tmp_data, 2)
+                            if mask(ll, mm)
+                                
+                                clr = dec2hex(round(fdr_style * 255), 2)';
+                                clr = ['#'; clr(:)]';
+                                
+                                tmp_data(ll, mm) = {strcat(...
+                                    ['<html><body bgcolor="' clr '" text="#000000" width="100px">'], ...
+                                    num2str(tmp_data{ll, mm}))};
+                                
+                            end
+                        end
+                    end
+                    set(pl.comparison_tbl{i, j}, ...
+                        'Data', tmp_data, ...
+                        'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                        'CellEditCallback', {@cb_matrix_value, i, j} ...
+                        )
+                end
+            end
+        else
+            % global and nodal with no sliding panel
+            if isempty(pl.comparison_tbl) || ~isvalid(pl.comparison_tbl)
+                pl.comparison_tbl = uitable('Parent', pl.pp);
+            end
+            value_double =  cell2mat(cellfun(@(x) x', value, 'UniformOutput', false));
+            p1s = cell2mat(cellfun(@(x) x', el.get('P1'), 'UniformOutput', false));
+            if Measure.is_nodal(m)
+                [~, mask] = fdr(p1s, fdr_q_value);
+            else
+                [~, mask] = fdr(p1s', fdr_q_value);
+                mask = mask';
+            end
+            
+            % replace values to individual cells for html info
+            tmp_double = num2cell(value_double);
+            for i = 1:size(value_double, 1)
+                for j = 1:size(value_double, 2)
+                    if mask(i, j)
+                        clr = dec2hex(round(fdr_style * 255), 2)';
+                        clr = ['#'; clr(:)]';
+                        tmp_double(i, j) = {strcat(...
+                            ['<html><body bgcolor="' clr '" text="#000000" width="100px">'], ...
+                            num2str(value_double(i, j)))}; %#ok<AGROW>
+                    end
+                end
+            end
+            
+            set(pl.comparison_tbl, ...
+                'Data', tmp_double, ...
+                'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                'Units', 'normalized', ...
+                'Position', [.01 .15 .98 .75], ...
+                'ColumnName', node_labels, ...
+                'RowName', row_names, ...
+                'CellEditCallback', {@cb_matrix_value} ...
+                )
+        end
+        
         ui_node1_popmenu  = uicontrol('Parent', pl.pp, 'Style', 'popupmenu');
         ui_node2_popmenu  = uicontrol('Parent', pl.pp, 'Style', 'popupmenu');
         ui_measure_plot = uicontrol('Parent', pl.pp, 'Style', 'pushbutton');
+        ui_brain_view = uicontrol('Parent', pl.pp, ...
+            'Style', 'pushbutton', ...
+            'Units', 'characters', ...
+            'Position', [50 .02 15 2]);
+        
         init_measure_plot_area()
+        init_brain_view_btn()
+        rules_brain_view()
         
     else
-        % paint a normal cell tables
-        if isempty(pl.comparison_tbl) || ~isvalid(pl.comparison_tbl)
-            pl.comparison_tbl = uitable('Parent', pl.pp);
-        end
         value_cell = el.get(prop);
-        value_double = cell2mat(cellfun(@(x) x', value_cell, 'UniformOutput', false));
-        set(pl.comparison_tbl, ...
-            'Data', value_double, ...
-            'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-            'Units', 'normalized', ...
-            'Position', [.01 .2 .98 .8], ...
-            'ColumnName', node_labels, ...
-            'CellEditCallback', {@cb_matrix_value} ...
-            )
+        if Measure.is_binodal(m)
+            pl.comparison_tbl = cell(size(value_cell));
+            for i = 1:1:size(pl.comparison_tbl, 1)
+                for j = 1:1:size(pl.comparison_tbl, 2)
+                    if isempty(pl.comparison_tbl{i, j}) || ~isgraphics(pl.comparison_tbl{i, j}, 'uitable')
+                        pl.comparison_tbl{i, j} = uitable('Parent', pl.pp);
+                    end
+                    p1s = el.get('P1');
+                    [~, mask] = fdr(p1s{1}, fdr_q_value);
+                    
+                    tmp_data = value_cell(i, j);
+                    tmp_data = num2cell([tmp_data{:}]);
+                    
+                    for ll = 1:size(tmp_data, 1)
+                        for mm = 1:size(tmp_data, 2)
+                            if mask(ll, mm)
+                                
+                                clr = dec2hex(round(fdr_style * 255), 2)';
+                                clr = ['#'; clr(:)]';
+                                
+                                tmp_data(ll, mm) = {strcat(...
+                                    ['<html><body bgcolor="' clr '" text="#000000" width="100px">'], ...
+                                    num2str(tmp_data{ll, mm}))};
+                                
+                            end
+                        end
+                    end
+                    
+                    set(pl.comparison_tbl{i, j}, ...
+                        'Data', tmp_data, ...
+                        'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                        'CellEditCallback', {@cb_matrix_value, i, j} ...
+                        )
+                end
+            end
+        elseif  Measure.is_global(m)
+            value_double = cell2mat(cellfun(@(x) x', value_cell, 'UniformOutput', false));
+            p1s = cell2mat(cellfun(@(x) x', el.get('P1'), 'UniformOutput', false));
+            
+            delete(pl.comparison_tbl)
+            pl.comparison_tbl = uicontrol( ...
+                'Parent', pl.pp, ...
+                'Style', 'text', ...
+                'Units', 'normalized', ...
+                'Position', [.01 .3 .5 .2], ...
+                'BackgroundColor', [1 1 1], ...
+                'String', num2str(value_double));
+            
+            [~, mask] = fdr(p1s, fdr_q_value);
+            
+            if mask(1, 1)
+                set(pl.comparison_tbl, 'BackgroundColor', fdr_style);
+            end
+        else
+            value_double = cellfun(@(x) x', value_cell, 'UniformOutput', false);
+            value_double = num2cell([value_double{:}]);
+            p1s = cell2mat(cellfun(@(x) x', el.get('P1'), 'UniformOutput', false));
+            if isempty(pl.comparison_tbl) || ~isvalid(pl.comparison_tbl)
+                pl.comparison_tbl = uitable('Parent', pl.pp);
+            end
+            set(pl.comparison_tbl, ...
+                'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                'Units', 'normalized', ...
+                'Position', [.01 .23 .98 .55], ...
+                'ColumnName', node_labels, ...
+                'CellEditCallback', {@cb_matrix_value} ...
+                )
+            
+            [~, mask] = fdr(p1s, fdr_q_value);
+            
+            for i = 1:size(value_double, 1)
+                for j = 1:size(value_double, 2)
+                    if mask(i, j)
+                        
+                        clr = dec2hex(round(fdr_style * 255), 2)';
+                        clr = ['#'; clr(:)]';
+                        
+                        value_double(i, j) = {strcat(...
+                            ['<html><body bgcolor="' clr '" text="#000000" width="100px">'], ...
+                            num2str(value_double{i, j}))};
+                        
+                    end
+                end
+            end
+            
+            set(pl.comparison_tbl, 'Data', value_double);
+            
+        end
+        ui_brain_view = uicontrol('Parent', pl.pp, ...
+            'Style', 'pushbutton', ...
+            'Units', 'characters', ...
+            'Position', [50 .02 15 2]);
+        init_brain_view_btn()
+        rules_brain_view()
+        x_name = 'Weighted';
     end
     
     % functions
@@ -155,6 +334,13 @@ function update(pl)
         
         rules_node_popmenu_deactivation()
     end
+    function init_brain_view_btn()
+        set(ui_brain_view, ...
+            'String', 'Brain View', ...
+            'Tooltip', 'Plot the Measure Brain View. Will plot depending on the node selection.', ...
+            'Callback', {@cb_brain_view} ...
+            );
+    end
     function rules_node_popmenu_deactivation()
         if Measure.is_global(m)
             set(ui_node1_popmenu, ...
@@ -183,6 +369,22 @@ function update(pl)
                 'Visible', 'on', ...
                 'Enable', 'on' ...
                 )
+        end
+    end
+    function rules_brain_view()
+        if Measure.is_global(m)
+            set(ui_brain_view, ...
+                'Visible', 'off', ...
+                'Enable', 'off');
+            
+        elseif Measure.is_nodal(m)
+            set(ui_brain_view, ...
+                'Visible', 'on', ...
+                'Enable', 'on');
+        else
+            set(ui_brain_view, ...
+                'Visible', 'off', ...
+                'Enable', 'off');
         end
     end
     function cb_node_1(source, ~)
@@ -327,13 +529,50 @@ function update(pl)
         set(fig_h, 'Units', 'characters'); % go back
     end
     function obj = getGUIFigureObj()
-        figHandles = findobj('Type', 'figure');
-        for i = 1:1:length(figHandles)
-            fig_h = figHandles(i);
-            if contains(fig_h.Name, el.getClass())
-                obj = fig_h;
-            end
-        end
+        obj = ancestor(pl.pp, 'Figure');
+    end
+    function cb_brain_view(~, ~)
+        [~, normalized] = get_figure_position();
+        x2 = normalized(1) + normalized(3);
+        h2 = normalized(4) / 1.61;
+        y2 = normalized(2) + normalized(4) - h2;
+        w2 = normalized(3) * 1.61;
+        
+        f = figure( ...
+            'Visible', 'off', ...
+            'NumberTitle', 'off', ...
+            'Name', ['PlotBrainView - ' BRAPH2.STR], ...
+            'Units', 'normalized', ...
+            'Position', [x2 y2 w2 h2], ...
+            'Units', 'character', ...
+            'MenuBar', 'none', ...
+            'DockControls', 'off', ...
+            'Color', [.94 .94 .94] ...
+            );
+        
+        set_icon(f);
+        
+        ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
+        delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
+        delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
+        
+        prop_tag = el.getPropTag(prop);
+        
+        pbv = PlotBrainView('SUBMENU', false, 'SETPOS', [.4 .50 .40 .30], ...
+            'COMP', el, 'PROPTAG', prop_tag, 'Atlas', graph.get('BRAINATLAS'), 'Type', x_name);
+        
+        el_panel = uipanel( ...
+            'Parent', f, ...
+            'BorderType', 'none' ...
+            );
+        
+        pbv.draw('Parent', el_panel);
+        pbv.settings('SETPOS', [x2 normalized(2) w2 h2*1.61-h2-.065]);
+        
+        set(f, 'Visible', 'on')
+    end
+    function cb_slide(~, ~)
+        pl.slide()
     end
 end
 function redraw(pl, varargin)
@@ -349,7 +588,7 @@ function redraw(pl, varargin)
     prop = pl.get('PROP');
     
     value = el.getr(prop);
-    if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
+    if el.getPropCategory(prop) == Category.RESULT && isequal(pl.button_calc.Enable, 'on')
         pl.redraw@PlotProp('Height', 1.8, varargin{:})
     else
         value_cell = el.get(prop);

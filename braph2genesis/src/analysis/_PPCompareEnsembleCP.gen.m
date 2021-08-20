@@ -249,7 +249,7 @@ function update(pl, selected, calculated)
     end
 
     if el.getPropCategory(prop) == Category.RESULT && isequal(pl.button_calc.Enable, 'on')
-        set(pl.measure_tbl, 'Visible', 'off')
+        set(pl.comparison_tbl, 'Visible', 'off')
         button_management('off')
     else
         a1 = el.get('A1');
@@ -268,6 +268,7 @@ function update(pl, selected, calculated)
             'Parent', pl.pp, ...
             'Units', 'normalized', ...
             'Position', [.02 .2 .9 .7], ...
+            'Visible', 'on', ...
             'ColumnName', {'SEL', 'Measure', 'CAL', 'Shape', 'Scope', 'Notes'}, ...
             'ColumnFormat', {'logical', 'char', 'char', 'char', 'char', 'char'}, ...
             'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
@@ -353,7 +354,7 @@ function redraw(pl, varargin)
 
     el = pl.get('EL');
     prop = pl.get('PROP');
-    if el.getPropCategory(prop) == Category.RESULT && ~el.isLocked('ID')
+    if el.getPropCategory(prop) == Category.RESULT && isequal(pl.button_calc.Enable, 'on')
         pl.redraw@PlotProp('Height', 1.8, varargin{:})
     else
         value_cell = el.get(prop);
