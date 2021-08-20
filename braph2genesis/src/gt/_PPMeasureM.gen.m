@@ -13,6 +13,9 @@ table_value_cell
 ui_sliding_panel
 ui_slider
 table_tag
+button_cb 
+button_calc
+button_del 
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
