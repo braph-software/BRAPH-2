@@ -176,11 +176,20 @@ function redraw(pl, varargin)
         pl.redraw@PlotProp('Height', 1.8, varargin{:})
     else
         value_cell = el.get(prop);
+        base = 10;
 
         if isempty(value_cell)
             pl.redraw@PlotProp('Height', 1.8, varargin{:})
         else
-            pl.redraw@PlotProp('Height', 30, varargin{:})
+            tmp_data = get(pl.measure_tbl, 'String');
+            tmp_h = size(tmp_data, 1); % 1.1 per row
+            f_h = (tmp_h * 1.1) + base;
+            if f_h < 20
+                pl.redraw@PlotProp('Height', f_h, varargin{:})
+                set(pl.comparison_tbl, 'Position', [.01 .2 .98 .6])
+            else
+                pl.redraw@PlotProp('Height', 15, varargin{:})
+            end
         end
 
     end
