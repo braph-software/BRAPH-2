@@ -86,23 +86,35 @@ function update(pl)
         end
     elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
         y_label = el.get('MEASURE');
-        node_labels_tmp = graph.get('BRAINATLAS').get('BR_DICT');
+        node_dict = graph.get('BRAINATLAS').get('BR_DICT');
         node_labels = cellfun(@(x) x.get('ID') , node_dict.getItems(), 'UniformOutput', false);
         if isa(graph, 'MultigraphBUD')
             x_range = graph.get('DENSITIES');
+            x_label = 'Densities';
         else
             x_range = graph.get('THRESHOLDS');
+            x_label = 'Thresholds';
         end
-        if isempty(node_labels)
-            node_labels = cell(1, size(value, 1));
-            for k = 1:length(node_labels)
-                node_labels{k} = ['node_' num2str(k)];
-            end
-        end
+        
         plot_title = [y_label ' vs ' x_label];
         value_cell = el.get(prop);
+        
+        % labels
+        if Measure.is_global(m) % global
+            node_labels = 'Global';
+            for k = 1:size(value_cell, 1)
+                row_names{k} = [x_label ': ' num2str(k)]; %#ok<AGROW>
+            end
+        elseif Measure.is_nodal(m) % nodal
+            for k = 1:size(value_cell, 1)
+                row_names{k} = [x_label ':' num2str(k)]; %#ok<AGROW>
+            end
+        else  % binodal
+            % do nothing
+        end
+        
         % plot rules edit/tables
-        if Measure.is_binodal(el)
+        if Measure.is_binodal(m)
             % create new panel with slider
             pl.ui_sliding_panel = uipanel( ...
                 'Parent', pl.pp, ...
@@ -430,6 +442,9 @@ function update(pl)
 
             set(f, 'Visible', 'on')
         end
+        function cb_slide(~, ~)
+            pl.slide()
+        end
 end
 function redraw(pl, varargin)
     %REDRAW redraws the element graphical panel.
@@ -536,7 +551,7 @@ function slide(pl)
     units = get(f, 'Units');
     set(f, 'Units', 'character')
 
-    y0_s = y0(f) + h(pl.pp)*.01;
+    y0_s = y0(f) + h(pl.pp)*.01+3.4;
 
     dw = 1;
     n = length(pl.measure_tbl);
