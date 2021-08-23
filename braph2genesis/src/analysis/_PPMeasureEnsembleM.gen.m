@@ -473,7 +473,7 @@ function redraw(pl, varargin)
             m = el.get('MEASURE');
             if isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
                 % density and threshold
-                if Measure.is_binodal(el) % binodal
+                if Measure.is_binodal(m) % binodal
                     pl.redraw@PlotProp('Height', 30, varargin{:})
                     for i = 1:1:size(value_cell, 1)
                         for j = 1:1:size(value_cell, 2)
