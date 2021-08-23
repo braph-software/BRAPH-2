@@ -177,7 +177,7 @@ function update(pl)
 
         init_measure_plot_area()
         init_brain_view_btn()
-
+        rules_brain_view()
     else
         % paint a normal cell tables
         value_cell = el.get(prop);
