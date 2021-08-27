@@ -60,9 +60,14 @@ function p = getBrainView(pl)
         'PROPTAG', prop_tag, ...
         'Surf', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
     else
-        pl.bg =  PlotBrainGraph('ATLAS', atlas, ...
-        'ME',  pl.get('ME'), ...
-        'Surf', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
+        tmp_me = pl.get('ME');
+        if isa(tmp_me, 'Measure')
+            pl.bg =  PlotBrainGraph('ATLAS', atlas, ...
+                'ME',  pl.get('ME'), ...
+                'Surf', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
+        else
+            % measure ensemble
+        end       
     end
     
     function create_figure()

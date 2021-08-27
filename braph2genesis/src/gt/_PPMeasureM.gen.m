@@ -13,6 +13,9 @@ table_value_cell
 ui_sliding_panel
 ui_slider
 table_tag
+button_cb 
+button_calc
+button_del 
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
@@ -32,6 +35,11 @@ function h_panel = draw(pl, varargin)
     % see also update, redraw, refresh, settings, uipanel, isgraphics.
 
     pl.pp = draw@PlotProp(pl, varargin{:});
+    
+    get_super_buttons()
+    function get_super_buttons()
+        [pl.button_cb, pl.button_calc, pl.button_del] = pl.get_buttons();
+    end
 
     % output
     if nargout > 0
@@ -59,7 +67,7 @@ function update(pl)
     node_labels_tmp = graph.get('BRAINATLAS').get('BR_DICT');
     node_labels = cellfun(@(x) x.get('ID') , node_labels_tmp.getItems(), 'UniformOutput', false);
 
-    if el.getPropCategory(prop) == Category.RESULT &&  ~isCalculated()
+    if el.getPropCategory(prop) == Category.RESULT && isequal(pl.button_calc.Enable, 'on')
         % remove previous tables/textbox
         if ~isempty(pl.table_value_cell)
             if iscell(pl.table_value_cell)
@@ -398,13 +406,7 @@ function update(pl)
             set(fig_h, 'Units', 'characters'); % go back
         end
         function obj = getGUIFigureObj()
-            figHandles = findobj('Type', 'figure');
-            for i = 1:1:length(figHandles)
-                fig_h = figHandles(i);
-                if contains(fig_h.Name, el.getClass())
-                    obj = fig_h;
-                end
-            end
+             obj = ancestor(pl.pp, 'Figure');
         end
         function cb_brain_view(~, ~)
             [~, normalized] = get_figure_position();
@@ -446,19 +448,7 @@ function update(pl)
         end
         function cb_slide(~, ~)
             pl.slide()
-        end
-        function bool = isCalculated()
-            childs = get(pl.pp, 'Child');
-            bool = false;
-            for n = 1:length(childs)
-                child = childs(n);
-                if ~isgraphics(child, 'uitable') && isequal(child.Style, 'pushbutton') && isequal(child.String, 'C')
-                    if isequal('off', child.Enable)
-                        bool = true;
-                    end
-                end
-            end
-        end
+        end        
 end
 function redraw(pl, varargin)
     %REDRAW redraws the element graphical panel.
@@ -482,6 +472,7 @@ function redraw(pl, varargin)
         if isempty(value_cell) % empty results
             pl.redraw@PlotProp('Height', 1.8, varargin{:})
         elseif ~isempty(pl.table_value_cell) % with values
+            base = 12;
             if isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
                 % density and threshold
                 if Measure.is_binodal(el) % binodal
@@ -502,9 +493,25 @@ function redraw(pl, varargin)
                     end
                     pl.slide()
                 elseif Measure.is_global(el) % global
-                    pl.redraw@PlotProp('Height', 15, varargin{:})
+                    tmp_data = get(pl.table_value_cell, 'Data');
+                    tmp_h = size(tmp_data, 1); % 1.1 per row
+                    f_h = (tmp_h * 1.1) + base;
+                    if f_h < 15
+                        pl.redraw@PlotProp('Height', f_h, varargin{:})
+                        set(pl.table_value_cell, 'Position', [.01 .2 .98 .6])
+                    else
+                        pl.redraw@PlotProp('Height', 15, varargin{:})
+                    end
                 else % nodal
-                    pl.redraw@PlotProp('Height', 20, varargin{:})
+                    tmp_data = get(pl.table_value_cell, 'Data');
+                    tmp_h = size(tmp_data, 1); % 1.1 per row
+                    f_h = (tmp_h * 1.1) + base + 2;
+                    if f_h < 20
+                        pl.redraw@PlotProp('Height', f_h, varargin{:})
+                        set(pl.table_value_cell, 'Position', [.01 .2 .98 .6])
+                    else
+                        pl.redraw@PlotProp('Height', 20, varargin{:})
+                    end
                 end
             else % weighted
                 if Measure.is_binodal(el) % binodal
@@ -523,7 +530,7 @@ function redraw(pl, varargin)
                                 )
                         end
                     end
-                elseif Measure.is_global(el) % global
+                elseif Measure.is_global(el) % global                    
                     pl.redraw@PlotProp('Height', 5, varargin{:})
                 else % nodal
                     pl.redraw@PlotProp('Height', 10, varargin{:})
