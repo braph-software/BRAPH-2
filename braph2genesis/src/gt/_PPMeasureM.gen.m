@@ -86,6 +86,87 @@ function update(pl)
             end
         end
 
+    elseif isa(graph, 'MultiplexWU') || isa(graph, 'MultiplexWD') ...
+            || isa(graph, 'MultiplexBU') || isa(graph, 'MultiplexBD')
+        % constants
+        value_cell = el.get(prop);
+        x_label = 'Layer';
+
+        % labels
+        if Measure.is_global(el) % global
+            node_labels = 'Global';
+            for k = 1:size(value_cell, 1)
+                row_names{k} = [x_label ': ' num2str(k)]; %#ok<AGROW>
+            end
+        elseif Measure.is_nodal(el) % nodal
+            for k = 1:size(value_cell, 1)
+                row_names{k} = [x_label ': ' num2str(k)]; %#ok<AGROW>
+            end
+        else  % binodal
+            % do nothing
+        end
+
+        % plot rules edit/tables
+        if Measure.is_binodal(el)
+            % create new panel with slider
+            pl.ui_sliding_panel = uipanel( ...
+                'Parent', pl.pp, ...
+                'Units', 'characters', ...
+                'BackgroundColor', [.62 .545 .439]);
+            pl.ui_slider = uicontrol( ...
+                'Parent', pl.pp, ...
+                'Style', 'slider', ...
+                'Units', 'characters', ...
+                'Value', 1, ...
+                'Callback', {@cb_slide} ...
+                );
+
+            pl.table_tag = uicontrol('Parent', pl.pp, ...
+                'Style', 'text', ...
+                'Units', 'normalized', ...
+                'Position', [.01 .09 .3 .05], ...
+                'BackgroundColor', [.62 .545 .439], ...
+                'HorizontalAlignment', 'left', ...
+                'String', '');
+
+            delete(pl.table_value_cell)
+            pl.table_value_cell = cell(size(value_cell));
+            for i = 1:1:size(pl.table_value_cell, 1)
+                for j = 1:1:size(pl.table_value_cell, 2)
+                    if isempty(pl.table_value_cell{i, j}) || ~isgraphics(pl.table_value_cell{i, j}, 'uitable')
+                        pl.table_value_cell{i, j} = uitable('Parent', pl.ui_sliding_panel, 'Visible', 'on');
+                    end
+                    set(pl.table_value_cell{i, j}, ...
+                        'Data', value_cell{i, j}, ...
+                        'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                        'CellEditCallback', {@cb_matrix_value, i, j} ...
+                        )
+                end
+            end
+        else
+            if isempty(pl.table_value_cell) || ~isvalid(pl.table_value_cell)
+                pl.table_value_cell = uitable('Parent', pl.pp);
+            end
+            value_double =  cell2mat(cellfun(@(x) x', value_cell, 'UniformOutput', false));
+            set(pl.table_value_cell, ...
+                'Data', value_double, ...
+                'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                'Units', 'normalized', ...
+                'Position', [.01 .1 .98 .8], ...
+                'ColumnName', node_labels, ...
+                'Visible', 'on', ...
+                'RowName', row_names, ...
+                'CellEditCallback', {@cb_matrix_value} ...
+                )
+        end
+
+        ui_brain_view = uicontrol('Parent', pl.pp, ...
+            'Style', 'pushbutton', ...
+            'Units', 'normalized', ...
+            'Position', [.74 .01 .25 .08]);
+
+        init_brain_view_btn()
+
     elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
         % constants
         if isa(graph, 'MultigraphBUD')
@@ -229,7 +310,6 @@ function update(pl)
             'Units', 'normalized', ...
             'Position', [.74 .01 .25 .2]);
         init_brain_view_btn()
-        rules_brain_view()
         x_label = 'Weighted';
     end
 
@@ -266,6 +346,7 @@ function update(pl)
                 'Tooltip', 'Plot the Measure Brain View. Will plot depending on the node selection.', ...
                 'Callback', {@cb_brain_view} ...
                 );
+            rules_brain_view()
         end
         function rules_node_popmenu_deactivation()
             if Measure.is_global(el)
@@ -406,7 +487,7 @@ function update(pl)
             set(fig_h, 'Units', 'characters'); % go back
         end
         function obj = getGUIFigureObj()
-             obj = ancestor(pl.pp, 'Figure');
+            obj = ancestor(pl.pp, 'Figure');
         end
         function cb_brain_view(~, ~)
             [~, normalized] = get_figure_position();
@@ -448,7 +529,7 @@ function update(pl)
         end
         function cb_slide(~, ~)
             pl.slide()
-        end        
+        end
 end
 function redraw(pl, varargin)
     %REDRAW redraws the element graphical panel.
@@ -513,6 +594,47 @@ function redraw(pl, varargin)
                         pl.redraw@PlotProp('Height', 20, varargin{:})
                     end
                 end
+            elseif isa(graph, 'MultiplexWU') || isa(graph, 'MultiplexWD') ...
+                    || isa(graph, 'MultiplexBU') || isa(graph, 'MultiplexBD')
+                if Measure.is_binodal(el) % binodal
+                    pl.redraw@PlotProp('Height', 30, varargin{:})
+                    for i = 1:1:size(value_cell, 1)
+                        for j = 1:1:size(value_cell, 2)
+                            set(pl.table_value_cell{i, j}, ...
+                                'Units', 'character', ...
+                                'Position', ...
+                                [ ...
+                                (0 + (i - 1) * 0.99) * Plot.w(pl.pp) ...
+                                (0 + (j - 1) * 0.99 / size(pl.table_value_cell, 2)) * (Plot.h(pl.pp) *.725) ...
+                                0.98 * Plot.w(pl.pp) ...
+                                1 / size(pl.table_value_cell, 2) * (Plot.h(pl.pp) * .75) ...
+                                ] ...
+                                )
+                        end
+                    end
+                    pl.slide()
+                elseif Measure.is_global(el) % global
+                    tmp_data = get(pl.table_value_cell, 'Data');
+                    tmp_h = size(tmp_data, 1); % 1.1 per row
+                    f_h = (tmp_h * 1.1) + base;
+                    if f_h < 15
+                        pl.redraw@PlotProp('Height', f_h, varargin{:})
+                        set(pl.table_value_cell, 'Position', [.01 .2 .98 .6])
+                    else
+                        pl.redraw@PlotProp('Height', 15, varargin{:})
+                    end
+                else % nodal
+                    tmp_data = get(pl.table_value_cell, 'Data');
+                    tmp_h = size(tmp_data, 1); % 1.1 per row
+                    f_h = (tmp_h * 1.1) + base + 2;
+                    if f_h < 20
+                        pl.redraw@PlotProp('Height', f_h, varargin{:})
+                        set(pl.table_value_cell, 'Position', [.01 .2 .98 .6])
+                    else
+                        pl.redraw@PlotProp('Height', 20, varargin{:})
+                    end
+                end
+
             else % weighted
                 if Measure.is_binodal(el) % binodal
                     pl.redraw@PlotProp('Height', 30, varargin{:})
@@ -530,7 +652,7 @@ function redraw(pl, varargin)
                                 )
                         end
                     end
-                elseif Measure.is_global(el) % global                    
+                elseif Measure.is_global(el) % global
                     pl.redraw@PlotProp('Height', 5, varargin{:})
                 else % nodal
                     pl.redraw@PlotProp('Height', 10, varargin{:})
