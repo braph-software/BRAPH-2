@@ -565,7 +565,7 @@ function slide(pl)
             'Max', w_p, ...
             'Value', max(get(s, 'Value'), w(p) - w(f)) ...
             );
-        current_table = abs((w(p)-w(f)-offset)) / single_w;GUI
+        current_table = abs((w(p)-w(f)-offset)) / single_w;
         set(pl.table_tag, 'String', ['Table : ' num2str(round(current_table) + 1)])
         
     else
