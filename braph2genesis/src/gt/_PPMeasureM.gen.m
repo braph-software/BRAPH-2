@@ -554,88 +554,9 @@ function redraw(pl, varargin)
             pl.redraw@PlotProp('Height', 1.8, varargin{:})
         elseif ~isempty(pl.table_value_cell) % with values
             base = 12;
-            if isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
-                % density and threshold
-                if Measure.is_binodal(el) % binodal
-                    pl.redraw@PlotProp('Height', 30, varargin{:})
-                    for i = 1:1:size(value_cell, 1)
-                        for j = 1:1:size(value_cell, 2)
-                            set(pl.table_value_cell{i, j}, ...
-                                'Units', 'character', ...
-                                'Position', ...
-                                [ ...
-                                (0 + (i - 1) * 0.99) * Plot.w(pl.pp) ...
-                                (0 + (j - 1) * 0.99 / size(pl.table_value_cell, 2)) * (Plot.h(pl.pp) *.725) ...
-                                0.98 * Plot.w(pl.pp) ...
-                                1 / size(pl.table_value_cell, 2) * (Plot.h(pl.pp) * .75) ...
-                                ] ...
-                                )
-                        end
-                    end
-                    pl.slide()
-                elseif Measure.is_global(el) % global
-                    tmp_data = get(pl.table_value_cell, 'Data');
-                    tmp_h = size(tmp_data, 1); % 1.1 per row
-                    f_h = (tmp_h * 1.1) + base;
-                    if f_h < 15
-                        pl.redraw@PlotProp('Height', f_h, varargin{:})
-                        set(pl.table_value_cell, 'Position', [.01 .2 .98 .6])
-                    else
-                        pl.redraw@PlotProp('Height', 15, varargin{:})
-                    end
-                else % nodal
-                    tmp_data = get(pl.table_value_cell, 'Data');
-                    tmp_h = size(tmp_data, 1); % 1.1 per row
-                    f_h = (tmp_h * 1.1) + base + 2;
-                    if f_h < 20
-                        pl.redraw@PlotProp('Height', f_h, varargin{:})
-                        set(pl.table_value_cell, 'Position', [.01 .2 .98 .6])
-                    else
-                        pl.redraw@PlotProp('Height', 20, varargin{:})
-                    end
-                end
-            elseif isa(graph, 'MultiplexWU') || isa(graph, 'MultiplexWD') ...
-                    || isa(graph, 'MultiplexBU') || isa(graph, 'MultiplexBD')
-                if Measure.is_binodal(el) % binodal
-                    pl.redraw@PlotProp('Height', 30, varargin{:})
-                    for i = 1:1:size(value_cell, 1)
-                        for j = 1:1:size(value_cell, 2)
-                            set(pl.table_value_cell{i, j}, ...
-                                'Units', 'character', ...
-                                'Position', ...
-                                [ ...
-                                (0 + (i - 1) * 0.99) * Plot.w(pl.pp) ...
-                                (0 + (j - 1) * 0.99 / size(pl.table_value_cell, 2)) * (Plot.h(pl.pp) *.725) ...
-                                0.98 * Plot.w(pl.pp) ...
-                                1 / size(pl.table_value_cell, 2) * (Plot.h(pl.pp) * .75) ...
-                                ] ...
-                                )
-                        end
-                    end
-                    pl.slide()
-                elseif Measure.is_global(el) % global
-                    tmp_data = get(pl.table_value_cell, 'Data');
-                    tmp_h = size(tmp_data, 1); % 1.1 per row
-                    f_h = (tmp_h * 1.1) + base;
-                    if f_h < 15
-                        pl.redraw@PlotProp('Height', f_h, varargin{:})
-                        set(pl.table_value_cell, 'Position', [.01 .2 .98 .6])
-                    else
-                        pl.redraw@PlotProp('Height', 15, varargin{:})
-                    end
-                else % nodal
-                    tmp_data = get(pl.table_value_cell, 'Data');
-                    tmp_h = size(tmp_data, 1); % 1.1 per row
-                    f_h = (tmp_h * 1.1) + base + 2;
-                    if f_h < 20
-                        pl.redraw@PlotProp('Height', f_h, varargin{:})
-                        set(pl.table_value_cell, 'Position', [.01 .2 .98 .6])
-                    else
-                        pl.redraw@PlotProp('Height', 20, varargin{:})
-                    end
-                end
-
-            else % weighted
+            if isa(graph, 'GraphBU') || isa(graph, 'GraphBD') ...
+                    || isa(graph, 'GraphWU') || isa(graph, 'GraphWD')
+                
                 if Measure.is_binodal(el) % binodal
                     pl.redraw@PlotProp('Height', 30, varargin{:})
                     for i = 1:1:size(value_cell, 1)
@@ -656,6 +577,46 @@ function redraw(pl, varargin)
                     pl.redraw@PlotProp('Height', 5, varargin{:})
                 else % nodal
                     pl.redraw@PlotProp('Height', 10, varargin{:})
+                end
+            else
+                % density and threshold and multiplex weighted
+                if Measure.is_binodal(el) % binodal
+                    pl.redraw@PlotProp('Height', 30, varargin{:})
+                    for i = 1:1:size(value_cell, 1)
+                        for j = 1:1:size(value_cell, 2)
+                            set(pl.table_value_cell{i, j}, ...
+                                'Units', 'character', ...
+                                'Position', ...
+                                [ ...
+                                (0 + (i - 1) * 0.99) * Plot.w(pl.pp) ...
+                                (0 + (j - 1) * 0.99 / size(pl.table_value_cell, 2)) * (Plot.h(pl.pp) *.725) ...
+                                0.98 * Plot.w(pl.pp) ...
+                                1 / size(pl.table_value_cell, 2) * (Plot.h(pl.pp) * .75) ...
+                                ] ...
+                                )
+                        end
+                    end
+                    pl.slide()
+                elseif Measure.is_global(el) % global
+                    tmp_data = get(pl.table_value_cell, 'Data');
+                    tmp_h = size(tmp_data, 1); % 1.1 per row
+                    f_h = (tmp_h * 1.1) + base;
+                    if f_h < 15
+                        pl.redraw@PlotProp('Height', f_h, varargin{:})
+                        set(pl.table_value_cell, 'Position', [.01 .2 .98 .6])
+                    else
+                        pl.redraw@PlotProp('Height', 15, varargin{:})
+                    end
+                else % nodal
+                    tmp_data = get(pl.table_value_cell, 'Data');
+                    tmp_h = size(tmp_data, 1); % 1.1 per row
+                    f_h = (tmp_h * 1.1) + base + 2;
+                    if f_h < 20
+                        pl.redraw@PlotProp('Height', f_h, varargin{:})
+                        set(pl.table_value_cell, 'Position', [.01 .2 .98 .6])
+                    else
+                        pl.redraw@PlotProp('Height', 20, varargin{:})
+                    end
                 end
             end
         end
