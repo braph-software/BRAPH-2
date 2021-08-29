@@ -91,8 +91,10 @@ function update(pl)
             end
         end
         
-    elseif isa(graph, 'MultiplexWU') || isa(graph, 'MultiplexWD') ...
-            || isa(graph, 'MultiplexBU') || isa(graph, 'MultiplexBD')
+    elseif (isa(graph, 'MultiplexWU') && (~isa(graph, 'MultiplexBUD') && ~isa(graph, 'MultiplexBUT'))) ...
+            || isa(graph, 'MultiplexWD') ...
+            || isa(graph, 'MultiplexBU') ...
+            || isa(graph, 'MultiplexBD')
         
         if Measure.is_global(m) % global
             node_labels = 'Global';
@@ -201,9 +203,10 @@ function update(pl)
         
         init_brain_view_btn()
         
-    elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
+    elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT') ...
+            || isa(graph, 'MultiplexBUD') || isa(graph, 'MultiplexBUT')
 
-        if isa(graph, 'MultigraphBUD')
+        if isa(graph, 'MultigraphBUD') || isa(graph, 'MultiplexBUD')
             x_range = graph.get('DENSITIES');
             x_name = 'Densities';
         else

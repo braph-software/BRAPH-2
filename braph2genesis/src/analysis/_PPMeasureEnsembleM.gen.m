@@ -84,8 +84,10 @@ function update(pl)
                 set(child, 'Visible', 'off')
             end
         end
-    elseif isa(graph, 'MultiplexWU') || isa(graph, 'MultiplexWD') ...
-            || isa(graph, 'MultiplexBU') || isa(graph, 'MultiplexBD')
+    elseif  (isa(graph, 'MultiplexWU') && (~isa(graph, 'MultiplexBUD') && ~isa(graph, 'MultiplexBUT'))) ...
+            || isa(graph, 'MultiplexWD') ...
+            || isa(graph, 'MultiplexBU') ...
+            || isa(graph, 'MultiplexBD')
         
         
         node_dict = graph.get('BRAINATLAS').get('BR_DICT');
@@ -167,11 +169,13 @@ function update(pl)
             'Position', [.74 .01 .25 .08]);        
         init_brain_view_btn()
         
-    elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
+    elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT') ...
+            || isa(graph, 'MultiplexBUD') || isa(graph, 'MultiplexBUT')
+        
         y_label = el.get('MEASURE');
         node_dict = graph.get('BRAINATLAS').get('BR_DICT');
         node_labels = cellfun(@(x) x.get('ID') , node_dict.getItems(), 'UniformOutput', false);
-        if isa(graph, 'MultigraphBUD')
+        if isa(graph, 'MultigraphBUD') || isa(graph, 'MultiplexBUD')
             x_range = graph.get('DENSITIES');
             x_label = 'Densities';
         else

@@ -86,8 +86,10 @@ function update(pl)
             end
         end
 
-    elseif isa(graph, 'MultiplexWU') || isa(graph, 'MultiplexWD') ...
-            || isa(graph, 'MultiplexBU') || isa(graph, 'MultiplexBD')
+    elseif (isa(graph, 'MultiplexWU') && (~isa(graph, 'MultiplexBUD') && ~isa(graph, 'MultiplexBUT'))) ...
+            || isa(graph, 'MultiplexWD') ...
+            || isa(graph, 'MultiplexBU') ...
+            || isa(graph, 'MultiplexBD')
         % constants
         value_cell = el.get(prop);
         x_label = 'Layer';
@@ -167,9 +169,10 @@ function update(pl)
 
         init_brain_view_btn()
 
-    elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
+    elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT') ...
+            || isa(graph, 'MultiplexBUD') || isa(graph, 'MultiplexBUT')
         % constants
-        if isa(graph, 'MultigraphBUD')
+        if isa(graph, 'MultigraphBUD') || isa(graph, 'MultiplexBUD')
             x_range = graph.get('DENSITIES');
             x_label = 'Densities';
         else
