@@ -90,9 +90,123 @@ function update(pl)
                 set(child, 'Visible', 'off')
             end
         end
-    elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
+        
+    elseif (isa(graph, 'MultiplexWU') && (~isa(graph, 'MultiplexBUD') && ~isa(graph, 'MultiplexBUT'))) ...
+            || isa(graph, 'MultiplexWD') ...
+            || isa(graph, 'MultiplexBU') ...
+            || isa(graph, 'MultiplexBD')
+        
+        if Measure.is_global(m) % global
+            node_labels = 'Global';
+            for k = 1:size(value, 1)
+                row_names{k} = ['Layer ' num2str(k)]; %#ok<AGROW>
+            end
+        elseif Measure.is_nodal(m) % nodal
+            for k = 1:size(value, 1)
+                row_names{k} = ['Layer ' num2str(k)]; %#ok<AGROW>
+            end
+            
+        else  % binodal
+            % do nothing
+        end
+        
+        if Measure.is_binodal(m) % binodal with sliding panel
+            pl.ui_sliding_panel = uipanel( ...
+                'Parent', pl.pp, ...
+                'Units', 'characters', ...
+                'BackgroundColor', [.62 .545 .439]);
+            pl.ui_slider = uicontrol( ...
+                'Parent', pl.pp, ...
+                'Style', 'slider', ...
+                'Units', 'characters', ...
+                'Value', 1, ...
+                'Callback', {@cb_slide} ...
+                );
+            delete(pl.comparison_tbl)
+            pl.comparison_tbl = cell(size(value));
+            for i = 1:1:size(pl.comparison_tbl, 1)
+                for j = 1:1:size(pl.comparison_tbl, 2)
+                    if isempty(pl.comparison_tbl{i, j}) || ~isgraphics(pl.comparison_tbl{i, j}, 'uitable')
+                        pl.comparison_tbl{i, j} = uitable('Parent', pl.ui_sliding_panel);
+                    end
+                    
+                    p1s = el.get('P1');
+                    [~, mask] = fdr(p1s{1}, fdr_q_value);
+                    
+                    tmp_data = value(i, j);
+                    tmp_data = num2cell([tmp_data{:}]);
+                    
+                    for ll = 1:size(tmp_data, 1)
+                        for mm = 1:size(tmp_data, 2)
+                            if mask(ll, mm)
+                                
+                                clr = dec2hex(round(fdr_style * 255), 2)';
+                                clr = ['#'; clr(:)]';
+                                
+                                tmp_data(ll, mm) = {strcat(...
+                                    ['<html><body bgcolor="' clr '" text="#000000" width="100px">'], ...
+                                    num2str(tmp_data{ll, mm}))};
+                                
+                            end
+                        end
+                    end
+                    set(pl.comparison_tbl{i, j}, ...
+                        'Data', tmp_data, ...
+                        'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                        'CellEditCallback', {@cb_matrix_value, i, j} ...
+                        )
+                end
+            end
+        else
+            % global and nodal with no sliding panel
+            if isempty(pl.comparison_tbl) || ~isvalid(pl.comparison_tbl)
+                pl.comparison_tbl = uitable('Parent', pl.pp);
+            end
+            value_double =  cell2mat(cellfun(@(x) x', value, 'UniformOutput', false));
+            p1s = cell2mat(cellfun(@(x) x', el.get('P1'), 'UniformOutput', false));
+            if Measure.is_nodal(m)
+                [~, mask] = fdr(p1s, fdr_q_value);
+            else
+                [~, mask] = fdr(p1s', fdr_q_value);
+                mask = mask';
+            end
+            
+            % replace values to individual cells for html info
+            tmp_double = num2cell(value_double);
+            for i = 1:size(value_double, 1)
+                for j = 1:size(value_double, 2)
+                    if mask(i, j)
+                        clr = dec2hex(round(fdr_style * 255), 2)';
+                        clr = ['#'; clr(:)]';
+                        tmp_double(i, j) = {strcat(...
+                            ['<html><body bgcolor="' clr '" text="#000000" width="100px">'], ...
+                            num2str(value_double(i, j)))}; %#ok<AGROW>
+                    end
+                end
+            end
+            
+            set(pl.comparison_tbl, ...
+                'Data', tmp_double, ...
+                'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                'Units', 'normalized', ...
+                'Position', [.01 .15 .98 .75], ...
+                'ColumnName', node_labels, ...
+                'RowName', row_names, ...
+                'CellEditCallback', {@cb_matrix_value} ...
+                )
+        end
+        
+        ui_brain_view = uicontrol('Parent', pl.pp, ...
+            'Style', 'pushbutton', ...
+            'Units', 'characters', ...
+            'Position', [50 .02 15 2]);
+        
+        init_brain_view_btn()
+        
+    elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT') ...
+            || isa(graph, 'MultiplexBUD') || isa(graph, 'MultiplexBUT')
 
-        if isa(graph, 'MultigraphBUD')
+        if isa(graph, 'MultigraphBUD') || isa(graph, 'MultiplexBUD')
             x_range = graph.get('DENSITIES');
             x_name = 'Densities';
         else
@@ -210,8 +324,6 @@ function update(pl)
 
         init_measure_plot_area()
         init_brain_view_btn()
-        rules_brain_view()
-
     else
         value_cell = el.get(prop);
         if Measure.is_binodal(m)
@@ -307,7 +419,6 @@ function update(pl)
             'Units', 'characters', ...
             'Position', [50 .02 15 2]);
         init_brain_view_btn()
-        rules_brain_view()
         x_name = 'Weighted';
     end
 
@@ -344,6 +455,7 @@ function update(pl)
                 'Tooltip', 'Plot the Measure Brain View. Will plot depending on the node selection.', ...
                 'Callback', {@cb_brain_view} ...
                 );
+            rules_brain_view()
         end
         function rules_node_popmenu_deactivation()
             if Measure.is_global(m)
@@ -601,8 +713,33 @@ function redraw(pl, varargin)
         if isempty(value_cell)
             pl.redraw@PlotProp('Height', 1.8, varargin{:})
         elseif ~isempty(pl.comparison_tbl)
-            if isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT') % density and threshold
-                base = 10;
+            base = 10;
+            if isa(graph, 'GraphBU') || isa(graph, 'GraphBD') ...
+                    || isa(graph, 'GraphWU') || isa(graph, 'GraphWD')
+                
+                if  Measure.is_binodal(el.get('Measure')) % binodal
+                    pl.redraw@PlotProp('Height', 30, varargin{:})
+                    for i = 1:1:size(value_cell, 1)
+                        for j = 1:1:size(value_cell, 2)
+                            set(pl.comparison_tbl{i, j}, ...
+                                'Units', 'character', ...
+                                'Position', ...
+                                [ ...
+                                (0.01 + (i - 1) * 0.98 / size(pl.comparison_tbl, 1)) * Plot.w(pl.pp) ...
+                                (0.1 + (j - 1) * 0.98 / size(pl.comparison_tbl, 2)) * (Plot.h(pl.pp) - 1.8) ...
+                                0.98 / size(pl.comparison_tbl, 1) * Plot.w(pl.pp) ...
+                                0.98 / size(pl.comparison_tbl, 2) * (Plot.h(pl.pp) - 3.8) ...
+                                ] ...
+                                )
+                        end
+                    end
+                elseif Measure.is_nodal(el.get('Measure')) % nodal
+                    pl.redraw@PlotProp('Height', 10, varargin{:})
+                else % global
+                    pl.redraw@PlotProp('Height', 5, varargin{:})
+                end
+            else
+                % density, threshold and multiplex                
                 if  Measure.is_binodal(el.get('Measure')) % binodal
                     % density and threshold
                     pl.redraw@PlotProp('Height', 30, varargin{:})
@@ -631,28 +768,6 @@ function redraw(pl, varargin)
                     else
                         pl.redraw@PlotProp('Height', 15, varargin{:})
                     end
-                end
-            else % weighted
-                if  Measure.is_binodal(el.get('Measure')) % binodal
-                    pl.redraw@PlotProp('Height', 30, varargin{:})
-                    for i = 1:1:size(value_cell, 1)
-                        for j = 1:1:size(value_cell, 2)
-                            set(pl.comparison_tbl{i, j}, ...
-                                'Units', 'character', ...
-                                'Position', ...
-                                [ ...
-                                (0.01 + (i - 1) * 0.98 / size(pl.comparison_tbl, 1)) * Plot.w(pl.pp) ...
-                                (0.1 + (j - 1) * 0.98 / size(pl.comparison_tbl, 2)) * (Plot.h(pl.pp) - 1.8) ...
-                                0.98 / size(pl.comparison_tbl, 1) * Plot.w(pl.pp) ...
-                                0.98 / size(pl.comparison_tbl, 2) * (Plot.h(pl.pp) - 3.8) ...
-                                ] ...
-                                )
-                        end
-                    end
-                elseif Measure.is_nodal(el.get('Measure')) % nodal
-                    pl.redraw@PlotProp('Height', 10, varargin{:})
-                else % global
-                    pl.redraw@PlotProp('Height', 5, varargin{:})
                 end
             end
         end
