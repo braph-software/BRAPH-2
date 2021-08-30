@@ -522,13 +522,7 @@ function update(pl)
             set(fig_h, 'Units', 'characters'); % go back
         end
         function obj = getGUIFigureObj()
-            figHandles = findobj('Type', 'figure');
-            for i = 1:1:length(figHandles)
-                fig_h = figHandles(i);
-                if contains(fig_h.Name, el.getClass())
-                    obj = fig_h;
-                end
-            end
+            obj = ancestor(pl.pp, 'Figure');
         end
         function cb_brain_view(~, ~)
             [~, normalized] = get_figure_position();
