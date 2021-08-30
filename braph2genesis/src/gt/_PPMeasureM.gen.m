@@ -482,6 +482,7 @@ function redraw(pl, varargin)
         if isempty(value_cell) % empty results
             pl.redraw@PlotProp('Height', 1.8, varargin{:})
         elseif ~isempty(pl.table_value_cell) % with values
+            base = 12;
             if isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT')
                 % density and threshold
                 if Measure.is_binodal(el) % binodal
@@ -502,9 +503,25 @@ function redraw(pl, varargin)
                     end
                     pl.slide()
                 elseif Measure.is_global(el) % global
-                    pl.redraw@PlotProp('Height', 15, varargin{:})
+                    tmp_data = get(pl.table_value_cell, 'Data');
+                    tmp_h = size(tmp_data, 1); % 1.1 per row
+                    f_h = (tmp_h * 1.1) + base;
+                    if f_h < 15
+                        pl.redraw@PlotProp('Height', f_h, varargin{:})
+                        set(pl.table_value_cell, 'Position', [.01 .2 .98 .6])
+                    else
+                        pl.redraw@PlotProp('Height', 15, varargin{:})
+                    end
                 else % nodal
-                    pl.redraw@PlotProp('Height', 20, varargin{:})
+                    tmp_data = get(pl.table_value_cell, 'Data');
+                    tmp_h = size(tmp_data, 1); % 1.1 per row
+                    f_h = (tmp_h * 1.1) + base + 2;
+                    if f_h < 20
+                        pl.redraw@PlotProp('Height', f_h, varargin{:})
+                        set(pl.table_value_cell, 'Position', [.01 .2 .98 .6])
+                    else
+                        pl.redraw@PlotProp('Height', 20, varargin{:})
+                    end
                 end
             else % weighted
                 if Measure.is_binodal(el) % binodal
@@ -523,7 +540,7 @@ function redraw(pl, varargin)
                                 )
                         end
                     end
-                elseif Measure.is_global(el) % global
+                elseif Measure.is_global(el) % global                    
                     pl.redraw@PlotProp('Height', 5, varargin{:})
                 else % nodal
                     pl.redraw@PlotProp('Height', 10, varargin{:})
@@ -565,7 +582,7 @@ function slide(pl)
             'Max', w_p, ...
             'Value', max(get(s, 'Value'), w(p) - w(f)) ...
             );
-        current_table = abs((w(p)-w(f)-offset)) / single_w;GUI
+        current_table = abs((w(p)-w(f)-offset)) / single_w;
         set(pl.table_tag, 'String', ['Table : ' num2str(round(current_table) + 1)])
         
     else
