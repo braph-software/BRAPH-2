@@ -263,6 +263,8 @@ menu()
             load_rule = [edited_data{:, 1}];
             load_order = [edited_data{:, 2}];
             save([gui_files_dir el.getClass() '.mat'], 'load_rule', 'load_order');
+            pl.set('PP_DICT', NoValue.getNoValue())
+            plot()
         end
         
         function cb_cancel_edit(~, ~)
