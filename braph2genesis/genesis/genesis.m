@@ -50,6 +50,7 @@ mkdir([target_dir fp 'src' fp 'cohort'])
 mkdir([target_dir fp 'src' fp 'gt'])
 mkdir([target_dir fp 'src' fp 'analysis'])
 mkdir([target_dir fp 'src' fp 'gui'])
+mkdir([target_dir fp 'src' fp 'gui' fp 'modified'])
 
 disp('¡! created dir structure - SRC')
 
