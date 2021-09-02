@@ -558,8 +558,9 @@ function redraw(pl, varargin)
             graph = graph_dict.getItem(1);
             base = 12;
             m = el.get('MEASURE');
-            if isa(graph, 'GraphBU') || isa(graph, 'GraphBD') ...
-                    || isa(graph, 'GraphWU') || isa(graph, 'GraphWD')
+            if (isa(graph, 'GraphBU') || isa(graph, 'GraphBD') ...
+                    || isa(graph, 'GraphWU') || isa(graph, 'GraphWD')) ...
+                    && ~isa(graph, 'MultigraphBUD') && ~isa(graph, 'MultigraphBUT')
                 
                 if Measure.is_binodal(m) % binodal
                     pl.redraw@PlotProp('Height', 30, varargin{:})
