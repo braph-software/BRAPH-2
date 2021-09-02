@@ -557,8 +557,9 @@ function redraw(pl, varargin)
             pl.redraw@PlotProp('Height', 1.8, varargin{:})
         elseif ~isempty(pl.table_value_cell) % with values
             base = 12;
-            if isa(graph, 'GraphBU') || isa(graph, 'GraphBD') ...
-                    || isa(graph, 'GraphWU') || isa(graph, 'GraphWD')
+            if (isa(graph, 'GraphBU') || isa(graph, 'GraphBD') ...
+                    || isa(graph, 'GraphWU') || isa(graph, 'GraphWD')) ...
+                    && ~isa(graph, 'MultigraphBUD') && ~isa(graph, 'MultigraphBUT')
                 
                 if Measure.is_binodal(el) % binodal
                     pl.redraw@PlotProp('Height', 30, varargin{:})
