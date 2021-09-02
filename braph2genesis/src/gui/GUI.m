@@ -199,7 +199,7 @@ menu()
             'NumberTitle', 'off', ...
             'Name', ['Edit GUI - ' BRAPH2.STR], ...
             'Units', 'normalized', ...
-            'Position', [.4 .1 .30 .3], ...
+            'Position', [.35 .2 .30 .3], ...
             'Units', 'character', ...
             'MenuBar', 'none', ...
             'DockControls', 'off', ...
@@ -212,7 +212,8 @@ menu()
             'Position', [.02 .2 .9 .7], ...
             'ColumnName', {'Show', 'Order', 'Property'}, ...
             'ColumnFormat', {'logical', 'char', 'char'}, ...
-            'ColumnEditable', [true true false] ...
+            'ColumnEditable', [true true false], ...
+            'CellEditCallback', {@cb_edit_tb} ...
             );
         save_edit_btn = uicontrol('Parent', p_f, ...
             'Units', 'normalized', ...
@@ -258,6 +259,42 @@ menu()
         set(edit_table, 'ColumnWidth', {'auto' 'auto' 'auto'})
         set(p_f, 'Visible', 'on');
         
+        
+        function cb_edit_tb(~, event) 
+            i = event.Indices(1);
+            col = event.Indices(2);
+            newdata = event.NewData;
+            data = get(edit_table, 'Data');
+            switch col
+                case 1
+                    if newdata == 1
+                        % fill with last position
+                        last_order = cell2mat(data(:, 2));
+                        continue_order = [1:length(last_order)];
+                        missing_values = setdiff(continue_order, last_order);
+                        data(i, 2) = {min(missing_values)};
+                        set(edit_table, 'Data', data);
+                    else
+                        % fill with NaN
+                        last_order = data(:, 2);
+                        for j = 1:length(last_order)
+                            if j == i
+                                data(j, 2) = {nan};
+                            elseif j > i && last_order{j} - 1 > 0
+                                data(j, 2) = {last_order{j}-1};                             
+                            else                                
+                            end
+                        end
+                        
+                        set(edit_table, 'Data', data);
+                    end
+                case 2
+                    if isequalwithequalnans(newdata, nan) %#ok<DISEQN>
+                        data(i, 1) = {false};
+                        set(edit_table, 'Data', data);
+                    end
+            end
+        end
         function cb_save_edit(~, ~)
             edited_data = get(edit_table, 'Data');
             load_rule = [edited_data{:, 1}];
@@ -265,8 +302,7 @@ menu()
             save([gui_files_dir el.getClass() '.mat'], 'load_rule', 'load_order');
             pl.set('PP_DICT', NoValue.getNoValue())
             plot()
-        end
-        
+        end        
         function cb_cancel_edit(~, ~)
             close(p_f)
         end
