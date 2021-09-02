@@ -261,9 +261,8 @@ menu()
         end
         set(edit_table, 'Data', data)
         set(edit_table, 'ColumnWidth', {'auto' 'auto' 'auto'})
-        set(p_f, 'Visible', 'on');
-        
-        
+        set(p_f, 'Visible', 'on');        
+     
         function cb_edit_tb(~, event)
             i = event.Indices(1);
             col = event.Indices(2);
