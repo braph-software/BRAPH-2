@@ -193,13 +193,17 @@ menu()
     function cb_refresh(~,~)
         sub_menus()
     end
-    function cb_personalize(~, ~)
+    function cb_personalize(~, ~)       
+        x2 = f_position(1) + f_position(3);
+        h2 = f_position(4)/3;
+        y2 = f_position(2);
+        w2 = f_position(3);
        p_f = figure( ...
             'Visible', 'off', ...
             'NumberTitle', 'off', ...
             'Name', ['Edit GUI - ' BRAPH2.STR], ...
             'Units', 'normalized', ...
-            'Position', [.35 .2 .30 .3], ...
+            'Position', [x2 y2 w2 h2], ...
             'Units', 'character', ...
             'MenuBar', 'none', ...
             'DockControls', 'off', ...
@@ -260,37 +264,43 @@ menu()
         set(p_f, 'Visible', 'on');
         
         
-        function cb_edit_tb(~, event) 
+        function cb_edit_tb(~, event)
             i = event.Indices(1);
             col = event.Indices(2);
             newdata = event.NewData;
-            data = get(edit_table, 'Data');
+            data_now = get(edit_table, 'Data');
             switch col
                 case 1
                     if newdata == 1
                         % fill with last position
-                        last_order = cell2mat(data(:, 2));
+                        last_order = cell2mat(data_now(:, 2));
                         continue_order = [1:length(last_order)];
                         missing_values = setdiff(continue_order, last_order);
-                        data(i, 2) = {min(missing_values)};
-                        set(edit_table, 'Data', data);
+                        data_now(i, 2) = {min(missing_values)};
+                        set(edit_table, 'Data', data_now);
                     else
                         % fill with NaN
-                        last_order = data(:, 2);
-                        for j = 1:length(last_order)
-                            if j == i
-                                data(j, 2) = {nan};
-                            elseif j > i && last_order{j} - 1 > 0
-                                data(j, 2) = {last_order{j}-1};                             
-                            else                                
+                        continue_order = [1:length(data_now(:, 2))];
+                        for j = 1:length(data_now(:, 2))
+                            if data_now{j, 1}
+                                tmp_choice = min(continue_order);
+                                data_now(j, 2) = {tmp_choice};
+                                index = find(continue_order==tmp_choice);
+                                continue_order(index) = nan;
+                            elseif j == i
+                                data_now(i, 2) = {nan};
+                            else
+                                
                             end
+                            
                         end
-                        
-                        set(edit_table, 'Data', data);
+                        set(edit_table, 'Data', data_now);
                     end
                 case 2
                     if isequalwithequalnans(newdata, nan) %#ok<DISEQN>
-                        data(i, 1) = {false};
+                        data_now(i, 1) = {false};
+                        set(edit_table, 'Data', data_now);
+                    elseif any(find(cell2mat(data(:, 2)),  newdata))
                         set(edit_table, 'Data', data);
                     end
             end
@@ -305,7 +315,7 @@ menu()
         end        
         function cb_cancel_edit(~, ~)
             close(p_f)
-        end
+        end        
     end
     
 
