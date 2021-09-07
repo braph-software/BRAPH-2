@@ -201,7 +201,7 @@ menu()
        p_f = figure( ...
             'Visible', 'off', ...
             'NumberTitle', 'off', ...
-            'Name', ['Edit GUI - ' BRAPH2.STR], ...
+            'Name', ['Properties - ' BRAPH2.STR], ...
             'Units', 'normalized', ...
             'Position', [x2 y2 w2 h2], ...
             'Units', 'character', ...
@@ -214,9 +214,9 @@ menu()
         edit_table = uitable('Parent', p_f, ...
             'Units', 'normalized', ...
             'Position', [.02 .2 .9 .7], ...
-            'ColumnName', {'Show', 'Order', 'Property'}, ...
-            'ColumnFormat', {'logical', 'char', 'char'}, ...
-            'ColumnEditable', [true true false], ...
+            'ColumnName', {'Show', 'Order', 'Property', 'Category', 'Format'}, ...
+            'ColumnFormat', {'logical', 'char', 'char', 'char', 'char'}, ...
+            'ColumnEditable', [true true false false false], ...
             'CellEditCallback', {@cb_edit_tb} ...
             );
         save_edit_btn = uicontrol('Parent', p_f, ...
@@ -247,7 +247,7 @@ menu()
         end
         
         plist = el.getProps();
-        data = cell(length(plist), 3);
+        data = cell(length(plist), 5);
         for mi = 1:1:length(plist)            
             if exist('load_rule_array')
                 data{mi, 1} = load_rule_array(mi);
@@ -257,10 +257,12 @@ menu()
                 data{mi, 2} = plist(mi); 
             end     
             data{mi, 3} = el.getPropTag(plist(mi));
+            data{mi, 4} = el.getPropCategory(plist(mi)); 
+            data{mi, 5} = el.getPropFormat(plist(mi)); 
             
         end
         set(edit_table, 'Data', data)
-        set(edit_table, 'ColumnWidth', {'auto' 'auto' 'auto'})
+        set(edit_table, 'ColumnWidth', {'auto' 'auto' 'auto' 'auto' 'auto'})
         set(p_f, 'Visible', 'on');        
      
         function cb_edit_tb(~, event)
@@ -298,6 +300,20 @@ menu()
                 case 2
                     if isequalwithequalnans(newdata, nan) %#ok<DISEQN>
                         data_now(i, 1) = {false};
+                        continue_order = [1:length(data_now(:, 2))];
+                        for j = 1:length(data_now(:, 2))
+                            if data_now{j, 1}
+                                tmp_choice = min(continue_order);
+                                data_now(j, 2) = {tmp_choice};
+                                index = find(continue_order==tmp_choice);
+                                continue_order(index) = nan;
+                            elseif j == i
+                                data_now(i, 2) = {nan};
+                            else
+                                
+                            end
+                            
+                        end
                         set(edit_table, 'Data', data_now);
                     elseif any(find(cell2mat(data(:, 2)),  newdata))
                         set(edit_table, 'Data', data);
