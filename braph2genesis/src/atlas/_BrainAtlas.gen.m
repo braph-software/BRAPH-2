@@ -68,7 +68,7 @@ BR_DICT (data, idict) contains the brain regions of the brain atlas.
 pl = PPBrainAtlasIDict('EL', ba, 'PROP', BrainAtlas.BR_DICT, varargin{:});
 
 %%% ¡prop!
-SURF (data, item) contains the brain surface of the brain atlas.
+SURF (metadata, item) contains the brain surface of the brain atlas.
 %%%% ¡settings!
 'BrainSurface'
 %%%% ¡gui!
