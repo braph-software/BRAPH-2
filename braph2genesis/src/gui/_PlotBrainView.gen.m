@@ -53,7 +53,7 @@ function p = getBrainView(pl)
     atlas = pl.get('ATLAS');
     
     % get surf or set default
-    if isa(atlas.get('SURF'), 'NoValue')
+    if isempty(atlas.get('SURF').get('Triangles'))
         selected_surface = 'human_ICBM152';
         atlas.set('SURF', ImporterBrainSurfaceNV('FILE', [selected_surface '.nv']).get('SURF'));
         surf =  atlas.get('SURF');
