@@ -66,7 +66,7 @@ PP_DICT (result, idict) is a dictionary of the property plots.
 %%%% ¡calculate!
 el = pl.get('EL');
 
-gui_files_dir = [fileparts(which('braph2.m')) filesep 'src' filesep 'gui' filesep 'modified' filesep];
+gui_files_dir = [fileparts(which('braph2.m')) filesep 'src' filesep 'gui' filesep 'prop_order' filesep];
 gui_files = dir(gui_files_dir); % get the folder contents
 gui_files = gui_files([gui_files(:).isdir] ~= 1); % remove all folders (isdir property is 0)
 gui_files = gui_files(~ismember({gui_files(:).name}, {'.', '..'})); % remove '.' and '..'
@@ -75,8 +75,8 @@ gui_files = cellfun(@(x) erase(x, '.mat'), gui_files, 'UniformOutput', false);
 
 if contains(el.getClass(), gui_files)
     gui_modified_file = load([gui_files_dir el.getClass()]);
-    load_rule_array = gui_modified_file.load_rule;
-    load_order_array = gui_modified_file.load_order;
+    load_rule_array = gui_modified_file.visibility;
+    load_order_array = gui_modified_file.order;
     
     for prop = 1:el.getPropNumber()
         load_rule = load_rule_array(prop);

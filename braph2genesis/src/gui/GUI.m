@@ -193,13 +193,17 @@ menu()
     function cb_refresh(~,~)
         sub_menus()
     end
-    function cb_personalize(~, ~)
+    function cb_personalize(~, ~)       
+        x2 = f_position(1) + f_position(3);
+        h2 = f_position(4)/3;
+        y2 = f_position(2);
+        w2 = f_position(3);
        p_f = figure( ...
             'Visible', 'off', ...
             'NumberTitle', 'off', ...
-            'Name', ['Edit GUI - ' BRAPH2.STR], ...
+            'Name', ['Properties - ' BRAPH2.STR], ...
             'Units', 'normalized', ...
-            'Position', [.35 .2 .30 .3], ...
+            'Position', [x2 y2 w2 h2], ...
             'Units', 'character', ...
             'MenuBar', 'none', ...
             'DockControls', 'off', ...
@@ -210,9 +214,9 @@ menu()
         edit_table = uitable('Parent', p_f, ...
             'Units', 'normalized', ...
             'Position', [.02 .2 .9 .7], ...
-            'ColumnName', {'Show', 'Order', 'Property'}, ...
-            'ColumnFormat', {'logical', 'char', 'char'}, ...
-            'ColumnEditable', [true true false], ...
+            'ColumnName', {'Show', 'Order', 'Property', 'Category', 'Format'}, ...
+            'ColumnFormat', {'logical', 'char', 'char', 'char', 'char'}, ...
+            'ColumnEditable', [true true false false false], ...
             'CellEditCallback', {@cb_edit_tb} ...
             );
         save_edit_btn = uicontrol('Parent', p_f, ...
@@ -229,7 +233,7 @@ menu()
             );
         
         % see if there is a saved edit
-        gui_files_dir = [fileparts(which('braph2.m')) filesep 'src' filesep 'gui' filesep 'modified' filesep];
+        gui_files_dir = [fileparts(which('braph2.m')) filesep 'src' filesep 'gui' filesep 'prop_order' filesep];
         gui_files = dir(gui_files_dir); % get the folder contents
         gui_files = gui_files([gui_files(:).isdir] ~= 1); % remove all folders (isdir property is 0)
         gui_files = gui_files(~ismember({gui_files(:).name}, {'.', '..'})); % remove '.' and '..'
@@ -238,12 +242,12 @@ menu()
         
         if contains(el.getClass(), gui_files)
             gui_modified_file = load([gui_files_dir el.getClass()]);
-            load_rule_array = gui_modified_file.load_rule;
-            load_order_array = gui_modified_file.load_order;
+            load_rule_array = gui_modified_file.visibility;
+            load_order_array = gui_modified_file.order;
         end
         
         plist = el.getProps();
-        data = cell(length(plist), 3);
+        data = cell(length(plist), 5);
         for mi = 1:1:length(plist)            
             if exist('load_rule_array')
                 data{mi, 1} = load_rule_array(mi);
@@ -253,59 +257,80 @@ menu()
                 data{mi, 2} = plist(mi); 
             end     
             data{mi, 3} = el.getPropTag(plist(mi));
+            data{mi, 4} = el.getPropCategory(plist(mi)); 
+            data{mi, 5} = el.getPropFormat(plist(mi)); 
             
         end
         set(edit_table, 'Data', data)
-        set(edit_table, 'ColumnWidth', {'auto' 'auto' 'auto'})
-        set(p_f, 'Visible', 'on');
-        
-        
-        function cb_edit_tb(~, event) 
+        set(edit_table, 'ColumnWidth', {'auto' 'auto' 'auto' 'auto' 'auto'})
+        set(p_f, 'Visible', 'on');        
+     
+        function cb_edit_tb(~, event)
             i = event.Indices(1);
             col = event.Indices(2);
             newdata = event.NewData;
-            data = get(edit_table, 'Data');
+            data_now = get(edit_table, 'Data');
             switch col
                 case 1
                     if newdata == 1
                         % fill with last position
-                        last_order = cell2mat(data(:, 2));
+                        last_order = cell2mat(data_now(:, 2));
                         continue_order = [1:length(last_order)];
                         missing_values = setdiff(continue_order, last_order);
-                        data(i, 2) = {min(missing_values)};
-                        set(edit_table, 'Data', data);
+                        data_now(i, 2) = {min(missing_values)};
+                        set(edit_table, 'Data', data_now);
                     else
                         % fill with NaN
-                        last_order = data(:, 2);
-                        for j = 1:length(last_order)
-                            if j == i
-                                data(j, 2) = {nan};
-                            elseif j > i && last_order{j} - 1 > 0
-                                data(j, 2) = {last_order{j}-1};                             
-                            else                                
+                        continue_order = [1:length(data_now(:, 2))];
+                        for j = 1:length(data_now(:, 2))
+                            if data_now{j, 1}
+                                tmp_choice = min(continue_order);
+                                data_now(j, 2) = {tmp_choice};
+                                index = find(continue_order==tmp_choice);
+                                continue_order(index) = nan;
+                            elseif j == i
+                                data_now(i, 2) = {nan};
+                            else
+                                
                             end
+                            
                         end
-                        
-                        set(edit_table, 'Data', data);
+                        set(edit_table, 'Data', data_now);
                     end
                 case 2
                     if isequalwithequalnans(newdata, nan) %#ok<DISEQN>
-                        data(i, 1) = {false};
+                        data_now(i, 1) = {false};
+                        continue_order = [1:length(data_now(:, 2))];
+                        for j = 1:length(data_now(:, 2))
+                            if data_now{j, 1}
+                                tmp_choice = min(continue_order);
+                                data_now(j, 2) = {tmp_choice};
+                                index = find(continue_order==tmp_choice);
+                                continue_order(index) = nan;
+                            elseif j == i
+                                data_now(i, 2) = {nan};
+                            else
+                                
+                            end
+                            
+                        end
+                        set(edit_table, 'Data', data_now);
+                    elseif any(find(cell2mat(data(:, 2)),  newdata))
                         set(edit_table, 'Data', data);
                     end
             end
         end
         function cb_save_edit(~, ~)
             edited_data = get(edit_table, 'Data');
-            load_rule = [edited_data{:, 1}];
-            load_order = [edited_data{:, 2}];
-            save([gui_files_dir el.getClass() '.mat'], 'load_rule', 'load_order');
+            visibility = [edited_data{:, 1}];
+            order = [edited_data{:, 2}];
+            save([gui_files_dir el.getClass() '.mat'], 'visibility', 'order');
             pl.set('PP_DICT', NoValue.getNoValue())
             plot()
         end        
         function cb_cancel_edit(~, ~)
             close(p_f)
-        end
+        end        
     end
     
 
