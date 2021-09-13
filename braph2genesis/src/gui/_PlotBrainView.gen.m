@@ -52,19 +52,28 @@ function p = getBrainView(pl)
     uiparent = pl.h_figure;
     atlas = pl.get('ATLAS');
     
+    % get surf or set default
+    if isempty(atlas.get('SURF').get('Triangles'))
+        selected_surface = 'human_ICBM152';
+        atlas.set('SURF', ImporterBrainSurfaceNV('FILE', [selected_surface '.nv']).get('SURF'));
+        surf =  atlas.get('SURF');
+    else
+        surf = atlas.get('SURF');
+    end
+    
     prop_tag = pl.get('PROPTAG');
     
     if isequal(pl.get('ME'), Element()) && ~isempty(pl.get('COMP'))
         pl.bg =  PlotBrainGraphComparison('ATLAS', atlas, ...
         'COMP', pl.get('COMP'), ...
         'PROPTAG', prop_tag, ...
-        'Surf', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
+        'Surf', surf);
     else
         tmp_me = pl.get('ME');
         if isa(tmp_me, 'Measure')
             pl.bg =  PlotBrainGraph('ATLAS', atlas, ...
                 'ME',  pl.get('ME'), ...
-                'Surf', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
+                'Surf', surf);
         else
             % measure ensemble
         end       
