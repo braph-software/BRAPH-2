@@ -204,7 +204,7 @@ function h_panel = draw(pl, varargin)
                 end
                 measure = calculate_measure_list{i};
                 tmp_compparison = el.getComparison(measure);
-                comparison_guis{i} = GUI(tmp_compparison, 'CLOSEREQUEST', false, 'POSITION', [x2+offset y2-offset w2*1.61 h2]);
+                comparison_guis{i} = GUI(tmp_compparison, 'CLOSEREQUEST', false, 'POSITION', [x2+offset y2-offset w2 h2]);
                 k = k + 1;
             end
         end

@@ -58,7 +58,7 @@ IndexedDictionary('IT_CLASS', 'MultigraphBUT')
 %%%% ¡calculate!
 g_dict = IndexedDictionary('IT_CLASS', 'MultigraphBUT');
 gr = a.get('GR');
-
+atlas = BrainAtlas();
 if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
     atlas = gr.get('SUB_DICT').getItem(1).get('BA');
 end
