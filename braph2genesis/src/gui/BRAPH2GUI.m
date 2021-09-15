@@ -161,7 +161,7 @@ descriptions = [];
         workflow_names = cellfun(@(x, y) erase(x, [y filesep()]), files_names, files_paths, 'UniformOutput', false);
         
         if ~isempty(jPanelObj.getSearchText.toCharArray')
-            filter = jPanelObj.getSearchText.toCharArray';
+            filter = lower(jPanelObj.getSearchText.toCharArray');
             workflow_filter_index = cell2mat(cellfun(@(x) contains(x, filter), workflow_names, 'UniformOutput', false));
             files_paths = files_paths(workflow_filter_index);
             workflow_names = workflow_names(workflow_filter_index);
