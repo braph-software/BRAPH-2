@@ -54,6 +54,10 @@ gr = a.get('GR');
 T = a.get('REPETITION');
 fmin = a.get('FREQUENCYRULEMIN');
 fmax = a.get('FREQUENCYRULEMAX');
+atlas = BrainAtlas();
+if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
+    atlas = gr.get('SUB_DICT').getItem(1).get('BA');
+end
 for i = 1:1:gr.get('SUB_DICT').length()
 	sub = gr.get('SUB_DICT').getItem(i);
     data = sub.getr('FUN');
@@ -71,7 +75,8 @@ for i = 1:1:gr.get('SUB_DICT').length()
     
     g = GraphWU( ...
         'ID', ['g ' sub.get('ID')], ...
-        'B', A ...
+        'B', A, ...
+        'BRAINATLAS', atlas ...
         );
     g_dict.add(g)
 end

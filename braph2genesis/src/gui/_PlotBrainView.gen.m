@@ -70,12 +70,14 @@ function p = getBrainView(pl)
         'Surf', surf);
     else
         tmp_me = pl.get('ME');
-        if isa(tmp_me, 'Measure')
+        if isa(tmp_me, 'Measure') % group
             pl.bg =  PlotBrainGraph('ATLAS', atlas, ...
                 'ME',  pl.get('ME'), ...
                 'Surf', surf);
-        else
-            % measure ensemble
+        else % ensemble
+            pl.bg =  PlotBrainGraphEnsemble('ATLAS', atlas, ...
+                'ME',  pl.get('ME'), ...
+                'Surf', surf);
         end       
     end
     
