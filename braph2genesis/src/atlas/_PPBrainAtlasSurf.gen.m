@@ -35,29 +35,26 @@ function h_panel = draw(pl, varargin)
     second_figure = [];
     set(pl.pp, 'DeleteFcn', {@close_f_settings}, ...
         varargin{:})
-    
-    function close_f_settings(~,~)
-        if ~isempty(second_figure) && isgraphics(second_figure)           
-           close(second_figure)               
-        end
-    end
 
-    if isempty(pl.plot_brain_atlas_btn) || ~isgraphics(pl.plot_brain_atlas_btn, 'edit')
-        if isempty(el.get('surf').get('id'))
-            surf = ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF');
+        function close_f_settings(~,~)
+            if ~isempty(second_figure) && isgraphics(second_figure)
+                close(second_figure)
+            end
         end
-        plba =  PlotBrainAtlas('ATLAS', el, 'Surf', surf);
+
+    if isempty(pl.plot_brain_atlas_btn) || ~isgraphics(pl.plot_brain_atlas_btn, 'edit')       
+        plba =  PlotBrainAtlas('ATLAS', el);
         surfs = get_surfs();
-        
+
         if plba.isLocked('SURF')
             activation = 'off';
         else
             activation = 'on';
         end
-        
+
         surf_selector_popup = uicontrol( ...
             'Parent', pl.pp, ...
-            'Style', 'popupmenu', ...            
+            'Style', 'popupmenu', ...
             'Units', 'normalized', ...
             'Position', [.02 .1 .46 .5], ...
             'String', surfs, ...
@@ -73,10 +70,11 @@ function h_panel = draw(pl, varargin)
             'Position', [.52 .1 .46 .65], ...
             'Callback', {@cb_pushbutton_brain_atlas} ...
             );
-        
+
     end
-    
+
         function cb_pushbutton_brain_atlas(~, ~)
+            set(pl.plot_brain_atlas_btn, 'Enable', 'off'); % stop multiple creations
             update_plba()
             [parent_position_pixels, normalized] = get_figure_position();
             x = parent_position_pixels(1);
@@ -92,14 +90,14 @@ function h_panel = draw(pl, varargin)
             elseif h == screen_size(4)
                 y2 = normalized(2);
                 h2 = normalized(4)/2;
-            else % golden ratio 
+            else % golden ratio
                 % golden ratio is defined as a+b/a = a/b = phi. phi = 1.61
                 x2 = normalized(1) + normalized(3);
                 h2 = normalized(4) / 1.61;
                 y2 = normalized(2) + normalized(4) - h2;
-                w2 = normalized(3) * 1.61;               
+                w2 = normalized(3) * 1.61;
             end
-            
+
             second_figure =  figure( ...
                 'Visible', 'on', ...
                 'NumberTitle', 'off', ...
@@ -109,13 +107,13 @@ function h_panel = draw(pl, varargin)
                 'Toolbar', 'figure', ...
                 'Color', 'w' ...
                 );
-            
+
             figure_menu = uimenu(second_figure, 'Label', 'Figure');
             uimenu(figure_menu, ...
                 'Label', 'Save Figure ...', ...
                 'Accelerator', 'F', ...
                 'Callback', {@cb_save_figure})
-            
+
             ui_menu_about = uimenu(second_figure, 'Label', 'About BRAPH 2');
             uimenu(ui_menu_about, ...
                 'Label', 'License ...', ...
@@ -124,10 +122,10 @@ function h_panel = draw(pl, varargin)
                 'Label', 'About ...', ...
                 'Callback', {@cb_about})
 
-            addlistener(second_figure, 'ObjectBeingDestroyed', @cb_close_atlas_srf);            
+            addlistener(second_figure, 'ObjectBeingDestroyed', @cb_close_atlas_srf);
             set_icon(second_figure)
-            
-            ui_toolbar = findall(second_figure, 'Tag', 'FigureToolBar');            
+
+            ui_toolbar = findall(second_figure, 'Tag', 'FigureToolBar');
             delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
             delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
 
@@ -143,8 +141,8 @@ function h_panel = draw(pl, varargin)
             plba.draw('Parent', second_figure);
             plba.set('SETPOS', [x2 normalized(2) w2 h2*1.61-h2-.065]); % height has to be correcter for the toolbar and menu
             plba.settings();
-            set(pl.plot_brain_atlas_btn, 'Enable', 'off');
-            
+            set(pl.plot_brain_atlas_btn, 'Enable', 'on');
+
             function cb_save_figure(~, ~)
                 % select file
                 [file, path, filterindex] = uiputfile('.jpg', ['Select the ' second_figure.Name ' file.']);
@@ -173,14 +171,14 @@ function h_panel = draw(pl, varargin)
             set(fig_h, 'Units', 'characters'); % go back
         end
         function obj = getGUIFigureObj()
-            [~, figHandles] = get_handle_objs('figure', [], 'BrainAtlas');
-            obj = figHandles{1};
-        end        
+            obj = ancestor(pl.pp, 'Figure');
+        end
         function cb_close_atlas_srf(~, ~)
             set(pl.plot_brain_atlas_btn, 'Enable', 'on');
         end
         function update_plba()
             el = pl.get('EL');
+            cb_surf_selector_popupmenu()
             plba.set('ATLAS', el);
             plba.set('SURF', el.get('SURF'));
         end

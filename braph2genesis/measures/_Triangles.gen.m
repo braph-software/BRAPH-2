@@ -35,7 +35,7 @@ MultiplexBD
 %% ¡props!
 
 %%% ¡prop! 
-rule (metadata, OPTION) is the rule to determine what is a triangle.
+rule (parameter, OPTION) is the rule to determine what is a triangle.
 %%%% ¡settings!
 {'all' 'middleman' 'in' 'out' 'cycle'}
 %%%% ¡default!

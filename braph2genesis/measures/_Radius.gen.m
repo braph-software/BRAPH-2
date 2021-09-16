@@ -25,7 +25,7 @@ MultiplexWU
 
 %% ¡props!
 %%% ¡prop! 
-rule (metadata, OPTION) % calculation in a graph or its subgraph
+rule (parameter, OPTION) % calculation in a graph or its subgraph
 %%%% ¡settings!
 {'all', 'subgraphs'}
 %%%% ¡default!

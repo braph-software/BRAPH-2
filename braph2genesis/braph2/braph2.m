@@ -9,6 +9,9 @@
 %  <a href="matlab:help workflows   ">workflows</a>     - workflows
 %  <a href="matlab:help test        ">test</a>          - unit test
 
+global BRAPH2ISTESTING
+BRAPH2ISTESTING = false; 
+
 format long
 
 src_dir = [fileparts(which('braph2')) filesep 'src'];

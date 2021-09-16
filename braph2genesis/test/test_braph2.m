@@ -33,7 +33,10 @@ end
 clear braph2_dir workflows_dir workflows_dir_list i
 
 %% Runs tests
+global BRAPH2ISTESTING
+BRAPH2ISTESTING = true; %#ok<NASGU>
 results = runtests(directories_to_test, 'UseParallel', true);
+BRAPH2ISTESTING = false;
 
 %% Shows test results
 results_table = table(results) %#ok<NOPTS>

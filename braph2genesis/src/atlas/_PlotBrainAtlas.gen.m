@@ -259,300 +259,375 @@ check = 1 <= value &&  value <= length(PlotBrainAtlas.PLOT_ID_FONT_INTREPETER);
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
-%DRAW draws the brain atlas graphical panel.
-%
-% DRAW(PL) draws the brain atlas graphical panel.
-%
-% H = DRAW(PL) returns a handle to the brain atlas graphical panel.
-%
-% DRAW(PL, 'Property', VALUE, ...) sets the properties of the graphical
-%  panel with custom property-value couples.
-%  All standard plot properties of uipanel can be used.
-%
-% It is possible to access the properties of the various graphical
-%  objects from the handle to the brain atlas graphical panel H.
-%
-% see also settings, uipanel, isgraphics.
+    %DRAW draws the brain atlas graphical panel.
+    %
+    % DRAW(PL) draws the brain atlas graphical panel.
+    %
+    % H = DRAW(PL) returns a handle to the brain atlas graphical panel.
+    %
+    % DRAW(PL, 'Property', VALUE, ...) sets the properties of the graphical
+    %  panel with custom property-value couples.
+    %  All standard plot properties of uipanel can be used.
+    %
+    % It is possible to access the properties of the various graphical
+    %  objects from the handle to the brain atlas graphical panel H.
+    %
+    % see also settings, uipanel, isgraphics.
 
-pl.pp = draw@PlotBrainSurface(pl, varargin{:});
+    pl.pp = draw@PlotBrainSurface(pl, varargin{:});
 
-if isempty(pl.h_axes) || ~isgraphics(pl.h_axes, 'axes')
-    pl.h_axes =  get(pl.pp, 'Children');
-end
-
-% close function
-set(pl.pp, 'DeleteFcn', {@close_f_settings}, ...
-    varargin{:})
-
-    function close_f_settings(~, ~)
-        if ~isempty(pl.f_settings) && isgraphics(pl.f_settings, 'figure')
-            close(pl.f_settings)
-        end
-        if ~isempty(pl.f_settings_buttons) && isgraphics(pl.f_settings_buttons, 'figure')
-            close(pl.f_settings_buttons)
-        end
-        if ~isempty(pl.f_syms_settings) && isgraphics(pl.f_syms_settings, 'figure')
-            close(pl.f_syms_settings)
-        end
-        if ~isempty(pl.f_sphs_settings) && isgraphics(pl.f_sphs_settings, 'figure')
-            close(pl.f_sphs_settings)
-        end
-        if ~isempty(pl.f_ids_settings) && isgraphics(pl.f_ids_settings, 'figure')
-            close(pl.f_ids_settings)
-        end
-        if ~isempty(pl.f_labs_settings) && isgraphics(pl.f_labs_settings, 'figure')
-            close(pl.f_labs_settings)
-        end
+    if isempty(pl.h_axes) || ~isgraphics(pl.h_axes, 'axes')
+        pl.h_axes =  get(pl.pp, 'Children');
     end
 
-% initialization
-if isempty(pl.h_syms) || length(pl.h_syms.h) ~= pl.get('ATLAS').get('BR_DICT').length
-    pl.h_syms.h = NaN(1, pl.get('ATLAS').get('BR_DICT').length);
-end
+    % close function
+    set(pl.pp, 'DeleteFcn', {@close_f_settings}, ...
+        varargin{:})
 
-if isempty(pl.h_sphs) || length(pl.h_sphs.h) ~= pl.get('ATLAS').get('BR_DICT').length
-    pl.h_sphs.h = NaN(1, pl.get('ATLAS').get('BR_DICT').length);
-end
+        function close_f_settings(~, ~)
+            if ~isempty(pl.f_settings) && isgraphics(pl.f_settings, 'figure')
+                close(pl.f_settings)
+            end
+            if ~isempty(pl.f_settings_buttons) && isgraphics(pl.f_settings_buttons, 'figure')
+                close(pl.f_settings_buttons)
+            end
+            if ~isempty(pl.f_syms_settings) && isgraphics(pl.f_syms_settings, 'figure')
+                close(pl.f_syms_settings)
+            end
+            if ~isempty(pl.f_sphs_settings) && isgraphics(pl.f_sphs_settings, 'figure')
+                close(pl.f_sphs_settings)
+            end
+            if ~isempty(pl.f_ids_settings) && isgraphics(pl.f_ids_settings, 'figure')
+                close(pl.f_ids_settings)
+            end
+            if ~isempty(pl.f_labs_settings) && isgraphics(pl.f_labs_settings, 'figure')
+                close(pl.f_labs_settings)
+            end
+        end
 
-if isempty(pl.h_ids) || length(pl.h_ids.h) ~= pl.get('ATLAS').get('BR_DICT').length
-    pl.h_ids.h = NaN(1, pl.get('ATLAS').get('BR_DICT').length);
-end
+    % initialization
+    if isempty(pl.h_syms) || length(pl.h_syms.h) ~= pl.get('ATLAS').get('BR_DICT').length
+        pl.h_syms.h = NaN(1, pl.get('ATLAS').get('BR_DICT').length);
+    end
 
-if isempty(pl.h_labs) || length(pl.h_labs.h) ~= pl.get('ATLAS').get('BR_DICT').length
-    pl.h_labs.h = NaN(1, pl.get('ATLAS').get('BR_DICT').length);
-end
+    if isempty(pl.h_sphs) || length(pl.h_sphs.h) ~= pl.get('ATLAS').get('BR_DICT').length
+        pl.h_sphs.h = NaN(1, pl.get('ATLAS').get('BR_DICT').length);
+    end
 
-% get coordinates
-X = cellfun(@(x) x.get('X'), pl.get('ATLAS').get('BR_DICT').get('IT_LIST'), 'UniformOutput', false);
-Y = cellfun(@(x) x.get('Y'), pl.get('ATLAS').get('BR_DICT').get('IT_LIST'), 'UniformOutput', false);
-Z = cellfun(@(x) x.get('Z'), pl.get('ATLAS').get('BR_DICT').get('IT_LIST'), 'UniformOutput', false);
-ID = cellfun(@(x) x.get('ID'), pl.get('ATLAS').get('BR_DICT').get('IT_LIST'), 'UniformOutput', false);
-LABS = cellfun(@(x) x.get('LABEL'), pl.get('ATLAS').get('BR_DICT').get('IT_LIST'), 'UniformOutput', false);
+    if isempty(pl.h_ids) || length(pl.h_ids.h) ~= pl.get('ATLAS').get('BR_DICT').length
+        pl.h_ids.h = NaN(1, pl.get('ATLAS').get('BR_DICT').length);
+    end
 
-% get values & complete vector size
-% symbols
-SYMS_SHOW = pl.get('SYMS');
-if any(SYMS_SHOW) && length(SYMS_SHOW) == pl.get('ATLAS').get('BR_DICT').length
-    % pass the vector as it is
-else
-    SYMS_SHOW = repmat(SYMS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
-end
+    if isempty(pl.h_labs) || length(pl.h_labs.h) ~= pl.get('ATLAS').get('BR_DICT').length
+        pl.h_labs.h = NaN(1, pl.get('ATLAS').get('BR_DICT').length);
+    end
 
-SYMS_SIZE = pl.get('SYMS_SIZE');
-if any(SYMS_SIZE) && length(SYMS_SIZE) == pl.get('ATLAS').get('BR_DICT').length
-    % pass the vector as it is
-else
-    SYMS_SIZE = repmat(SYMS_SIZE, pl.get('ATLAS').get('BR_DICT').length, 1);
-end
+    % get coordinates
+    X = cellfun(@(x) x.get('X'), pl.get('ATLAS').get('BR_DICT').get('IT_LIST'), 'UniformOutput', false);
+    Y = cellfun(@(x) x.get('Y'), pl.get('ATLAS').get('BR_DICT').get('IT_LIST'), 'UniformOutput', false);
+    Z = cellfun(@(x) x.get('Z'), pl.get('ATLAS').get('BR_DICT').get('IT_LIST'), 'UniformOutput', false);
+    ID = cellfun(@(x) x.get('ID'), pl.get('ATLAS').get('BR_DICT').get('IT_LIST'), 'UniformOutput', false);
+    LABS = cellfun(@(x) x.get('LABEL'), pl.get('ATLAS').get('BR_DICT').get('IT_LIST'), 'UniformOutput', false);
 
-SYMS_FACE_COLOR = pl.get('SYMS_FACE_COLOR');
-if any(any(SYMS_FACE_COLOR)) && length(SYMS_FACE_COLOR) == pl.get('ATLAS').get('BR_DICT').length
-    % pass the vector as it is
-else
-    SYMS_FACE_COLOR = repmat(SYMS_FACE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
-end
-
-SYMS_EDGE_COLOR = pl.get('SYMS_EDGE_COLOR');
-if any(any(SYMS_EDGE_COLOR)) && length(SYMS_EDGE_COLOR) == pl.get('ATLAS').get('BR_DICT').length
-    % pass the vector as it is
-else
-    SYMS_EDGE_COLOR = repmat(SYMS_EDGE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
-end
-
-% spheres
-SPHS_SHOW = pl.get('SPHS');
-if any(SPHS_SHOW) && length(SPHS_SHOW) == pl.get('ATLAS').get('BR_DICT').length
-    % pass the vector as it is
-else
-    SPHS_SHOW = repmat(SPHS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
-end
-
-SPHS_SIZE = pl.get('SPHS_SIZE');
-if any(SPHS_SIZE) && length(SPHS_SIZE) == pl.get('ATLAS').get('BR_DICT').length
-    % pass the vector as it is
-else
-    SPHS_SIZE = repmat(SPHS_SIZE, pl.get('ATLAS').get('BR_DICT').length, 1);
-end
-
-SPHS_FACE_COLOR = pl.get('SPHS_FACE_COLOR');
-if any(any(SPHS_FACE_COLOR)) && length(SPHS_FACE_COLOR) == pl.get('ATLAS').get('BR_DICT').length
-    % pass the vector as it is
-else
-    SPHS_FACE_COLOR = repmat(SPHS_FACE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
-end
-
-SPHS_EDGE_COLOR = pl.get('SPHS_FACE_COLOR');
-if any(any(SPHS_EDGE_COLOR)) && length(SPHS_EDGE_COLOR) == pl.get('ATLAS').get('BR_DICT').length
-    % pass the vector as it is
-else
-    SPHS_EDGE_COLOR = repmat(SPHS_EDGE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
-end
-
-SPHS_EDGE_ALPHA = pl.get('SPHS_EDGE_ALPHA');
-if any(SPHS_EDGE_ALPHA) && length(SPHS_EDGE_ALPHA) == pl.get('ATLAS').get('BR_DICT').length
-    % pass the vector as it is
-else
-    SPHS_EDGE_ALPHA = repmat(SPHS_EDGE_ALPHA, pl.get('ATLAS').get('BR_DICT').length, 1);
-end
-
-SPHS_FACE_ALPHA = pl.get('SPHS_FACE_ALPHA');
-if any(SPHS_FACE_ALPHA) && length(SPHS_FACE_ALPHA) == pl.get('ATLAS').get('BR_DICT').length
-    % pass the vector as it is
-else
-    SPHS_FACE_ALPHA = repmat(SPHS_FACE_ALPHA, pl.get('ATLAS').get('BR_DICT').length, 1);
-end
-
-% ids
-IDS_SHOW = pl.get('IDS');
-if any(IDS_SHOW) && length(IDS_SHOW) == pl.get('ATLAS').get('BR_DICT').length
-    % pass the vector as it is
-else
-    IDS_SHOW = repmat(IDS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
-end
-
-IDS_SIZE = pl.get('IDS_SIZE');
-if any(IDS_SIZE) && length(IDS_SIZE) == pl.get('ATLAS').get('BR_DICT').length
-    % pass the vector as it is
-else
-    IDS_SIZE = repmat(IDS_SIZE, pl.get('ATLAS').get('BR_DICT').length, 1);
-end
-
-IDS_FONT_COLOR = pl.get('IDS_FONT_COLOR');
-if any(any(IDS_FONT_COLOR)) && length(IDS_FONT_COLOR) == pl.get('ATLAS').get('BR_DICT').length
-    % pass the vector as it is
-else
-    IDS_FONT_COLOR = repmat(IDS_FONT_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
-end
-
-% labs
-LABS_SHOW = pl.get('LABS');
-if any(LABS_SHOW) && length(LABS_SHOW) == pl.get('ATLAS').get('BR_DICT').length
-    % pass the vector as it is
-else
-    LABS_SHOW = repmat(LABS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
-end
-
-LABS_SIZE = pl.get('LABS_SIZE');
-if any(LABS_SIZE) && length(LABS_SIZE) == pl.get('ATLAS').get('BR_DICT').length
-    % pass the vector as it is
-else
-    LABS_SIZE = repmat(LABS_SIZE, pl.get('ATLAS').get('BR_DICT').length, 1);
-end
-
-LABS_FONT_COLOR = pl.get('LABS_FONT_COLOR');
-if any(any(LABS_FONT_COLOR)) && length(LABS_FONT_COLOR) == pl.get('ATLAS').get('BR_DICT').length
-    % pass the vector as it is
-else
-    LABS_FONT_COLOR = repmat(LABS_FONT_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
-end
-
-% for loop for plots and sets
-for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
+    % get values & complete vector size
     % symbols
-    if SYMS_SHOW(i)
-        % plotting
-        if ~ishandle(pl.h_syms.h(i))
-            pl.h_syms.h(i) = plot3(pl.h_axes, X{i}, Y{i}, Z{i});
-        else
-            set(pl.h_syms.h(i), 'Xdata',X{i}, 'Ydata', Y{i}, 'Zdata', Z{i})
-        end
-        % set
-        m = PlotBrainAtlas.PLOT_SYMBOL_TAG(pl.get('syms_marker'));
-        set(pl.h_syms.h(i), ...
-            'Visible', 'on', ...
-            'Marker', m{1}, ...
-            'MarkerSize', SYMS_SIZE(i), ...
-            'MarkerFaceColor', SYMS_FACE_COLOR(i, :), ...
-            'MarkerEdgeColor', SYMS_EDGE_COLOR(i, :) ...
-            );
+    SYMS_SHOW = pl.get('SYMS');
+    if any(SYMS_SHOW) && length(SYMS_SHOW) == pl.get('ATLAS').get('BR_DICT').length
+        % pass the vector as it is
     else
-        if ishandle(pl.h_syms.h(i))  && ~isempty(pl.h_syms.h(i))
-            set(pl.h_syms.h(i), ...
-                'Visible', 'off');
-        end
+        SYMS_SHOW = repmat(SYMS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
     end
-    
-    % spheres
-    if SPHS_SHOW(i)
-        % plotting
-        if ~ishandle(pl.h_sphs.h(i))
-            [sx, sy, sz] = sphere();
-            pl.h_sphs.h(i) = surf(pl.h_axes, X{i} + SPHS_SIZE(i) * sx, Y{i} + SPHS_SIZE(i) * sy, ...
-                Z{i} + SPHS_SIZE(i) * sz);
-        end
-        % set
-        set(pl.h_sphs.h(i), ...
-            'Visible', 'on', ...
-            'EdgeColor', SPHS_EDGE_COLOR(i, :), ...
-            'EdgeAlpha', SPHS_EDGE_ALPHA(i), ...
-            'FaceColor', SPHS_FACE_COLOR(i, :), ...
-            'FaceAlpha', SPHS_FACE_ALPHA(i) ...
-            );
-        [sx, sy, sz] = sphere();
-        set(pl.h_sphs.h(i), 'XData', X{i} + SPHS_SIZE(i) * sx);
-        set(pl.h_sphs.h(i), 'YData', Y{i} + SPHS_SIZE(i) * sy);
-        set(pl.h_sphs.h(i), 'ZData', Z{i} + SPHS_SIZE(i) * sz);
-    else
-        if ishandle(pl.h_sphs.h(i))  && ~isempty(pl.h_sphs.h(i))
-            set(pl.h_sphs.h(i), ...
-                'Visible', 'off');
-        end
-    end
-    
-    % ids
-    if IDS_SHOW(i)
-        % plotting
-        if ~ishandle(pl.h_ids.h(i))
-            pl.h_ids.h(i) = text(X{i}, Y{i}, Z{i}, ID{i}, 'Parent', pl.h_axes);
-        end
-        % set
-        int_ids = PlotBrainAtlas.PLOT_ID_FONT_INTREPETER(pl.get('IDS_FONT_INTERPRETER'));
-        set(pl.h_ids.h(i), ...
-            'Visible', 'on', ...
-            'FontSize', IDS_SIZE(i), ...
-            'Color' , IDS_FONT_COLOR(i, :), ...
-            'Position', [X{i}, Y{i}, Z{i}], ...
-            'String', ID{i}, ...
-            'FontName', pl.get('IDS_FONT_NAME'), ...
-            'Interpreter', int_ids{1} ...
-            );
-    else
-        if ishandle(pl.h_ids.h(i))  && ~isempty(pl.h_ids.h(i))
-            set(pl.h_ids.h(i), ...
-                'Visible', 'off');
-        end
-    end
-    
-    % labs
-    if LABS_SHOW(i)
-        % plotting
-        if ~ishandle(pl.h_labs.h(i))
-            pl.h_labs.h(i) = text(X{i}, Y{i}, Z{i}, LABS{i}, 'Parent', pl.h_axes);
-        end
-        % set
-        int_labs = PlotBrainAtlas.PLOT_ID_FONT_INTREPETER(pl.get('LABS_FONT_INTERPRETER'));
-        set(pl.h_labs.h(i), ...
-            'Visible', 'on', ...
-            'FontSize', LABS_SIZE(i), ...
-            'Color' , LABS_FONT_COLOR(i, :), ...
-            'Position', [X{i}, Y{i}, Z{i}], ...
-            'String', LABS{i}, ...
-            'FontName', pl.get('LABS_FONT_NAME'), ...
-            'Interpreter', int_labs{1} ...
-            );
-    else
-        if ishandle(pl.h_labs.h(i))  && ~isempty(pl.h_labs.h(i))
-            set(pl.h_labs.h(i), ...
-                'Visible', 'off');
-        end
-    end
-    
-end
 
-% output
-if nargout > 0
-    h_panel = pl.pp;
-end
+    SYMS_SIZE = pl.get('SYMS_SIZE');
+    if any(SYMS_SIZE) && length(SYMS_SIZE) == pl.get('ATLAS').get('BR_DICT').length
+        % pass the vector as it is
+    else
+        SYMS_SIZE = repmat(SYMS_SIZE, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end
+
+    SYMS_FACE_COLOR = pl.get('SYMS_FACE_COLOR');
+    if any(any(SYMS_FACE_COLOR)) && length(SYMS_FACE_COLOR) == pl.get('ATLAS').get('BR_DICT').length
+        % pass the vector as it is
+    else
+        SYMS_FACE_COLOR = repmat(SYMS_FACE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end
+
+    SYMS_EDGE_COLOR = pl.get('SYMS_EDGE_COLOR');
+    if any(any(SYMS_EDGE_COLOR)) && length(SYMS_EDGE_COLOR) == pl.get('ATLAS').get('BR_DICT').length
+        % pass the vector as it is
+    else
+        SYMS_EDGE_COLOR = repmat(SYMS_EDGE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end
+
+    % spheres
+    SPHS_SHOW = pl.get('SPHS');
+    if any(SPHS_SHOW) && length(SPHS_SHOW) == pl.get('ATLAS').get('BR_DICT').length
+        % pass the vector as it is
+    else
+        SPHS_SHOW = repmat(SPHS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end
+
+    SPHS_SIZE = pl.get('SPHS_SIZE');
+    if any(SPHS_SIZE) && length(SPHS_SIZE) == pl.get('ATLAS').get('BR_DICT').length
+        % pass the vector as it is
+    else
+        SPHS_SIZE = repmat(SPHS_SIZE, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end
+
+    SPHS_FACE_COLOR = pl.get('SPHS_FACE_COLOR');
+    if any(any(SPHS_FACE_COLOR)) && length(SPHS_FACE_COLOR) == pl.get('ATLAS').get('BR_DICT').length
+        % pass the vector as it is
+    else
+        SPHS_FACE_COLOR = repmat(SPHS_FACE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end
+
+    SPHS_EDGE_COLOR = pl.get('SPHS_FACE_COLOR');
+    if any(any(SPHS_EDGE_COLOR)) && length(SPHS_EDGE_COLOR) == pl.get('ATLAS').get('BR_DICT').length
+        % pass the vector as it is
+    else
+        SPHS_EDGE_COLOR = repmat(SPHS_EDGE_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end
+
+    SPHS_EDGE_ALPHA = pl.get('SPHS_EDGE_ALPHA');
+    if any(SPHS_EDGE_ALPHA) && length(SPHS_EDGE_ALPHA) == pl.get('ATLAS').get('BR_DICT').length
+        % pass the vector as it is
+    else
+        SPHS_EDGE_ALPHA = repmat(SPHS_EDGE_ALPHA, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end
+
+    SPHS_FACE_ALPHA = pl.get('SPHS_FACE_ALPHA');
+    if any(SPHS_FACE_ALPHA) && length(SPHS_FACE_ALPHA) == pl.get('ATLAS').get('BR_DICT').length
+        % pass the vector as it is
+    else
+        SPHS_FACE_ALPHA = repmat(SPHS_FACE_ALPHA, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end
+
+    % ids
+    IDS_SHOW = pl.get('IDS');
+    if any(IDS_SHOW) && length(IDS_SHOW) == pl.get('ATLAS').get('BR_DICT').length
+        % pass the vector as it is
+    else
+        IDS_SHOW = repmat(IDS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end
+
+    IDS_SIZE = pl.get('IDS_SIZE');
+    if any(IDS_SIZE) && length(IDS_SIZE) == pl.get('ATLAS').get('BR_DICT').length
+        % pass the vector as it is
+    else
+        IDS_SIZE = repmat(IDS_SIZE, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end
+
+    IDS_FONT_COLOR = pl.get('IDS_FONT_COLOR');
+    if any(any(IDS_FONT_COLOR)) && length(IDS_FONT_COLOR) == pl.get('ATLAS').get('BR_DICT').length
+        % pass the vector as it is
+    else
+        IDS_FONT_COLOR = repmat(IDS_FONT_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end
+
+    % labs
+    LABS_SHOW = pl.get('LABS');
+    if any(LABS_SHOW) && length(LABS_SHOW) == pl.get('ATLAS').get('BR_DICT').length
+        % pass the vector as it is
+    else
+        LABS_SHOW = repmat(LABS_SHOW, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end
+
+    LABS_SIZE = pl.get('LABS_SIZE');
+    if any(LABS_SIZE) && length(LABS_SIZE) == pl.get('ATLAS').get('BR_DICT').length
+        % pass the vector as it is
+    else
+        LABS_SIZE = repmat(LABS_SIZE, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end
+
+    LABS_FONT_COLOR = pl.get('LABS_FONT_COLOR');
+    if any(any(LABS_FONT_COLOR)) && length(LABS_FONT_COLOR) == pl.get('ATLAS').get('BR_DICT').length
+        % pass the vector as it is
+    else
+        LABS_FONT_COLOR = repmat(LABS_FONT_COLOR, pl.get('ATLAS').get('BR_DICT').length, 1);
+    end
+
+    % for loop for plots and sets
+    for i = 1:1:pl.get('ATLAS').get('BR_DICT').length
+        % symbols
+        if SYMS_SHOW(i)
+            % plotting
+            m = PlotBrainAtlas.PLOT_SYMBOL_TAG(pl.get('syms_marker'));
+            if ~ishandle(pl.h_syms.h(i))
+                pl.h_syms.h(i) = plot3(pl.h_axes, X{i}, Y{i}, Z{i});
+                set(pl.h_syms.h(i), ...
+                    'Visible', 'on', ...
+                    'Marker', m{1}, ...
+                    'MarkerSize', SYMS_SIZE(i), ...
+                    'MarkerFaceColor', SYMS_FACE_COLOR(i, :), ...
+                    'MarkerEdgeColor', SYMS_EDGE_COLOR(i, :) ...
+                    );
+            else
+                if X{i} ~= get(pl.h_syms.h(i), 'Xdata') || ...
+                        Y{i} ~= get(pl.h_syms.h(i), 'Ydata') || ...
+                        Z{i} ~= get(pl.h_syms.h(i), 'Zdata')
+                    set(pl.h_syms.h(i), 'Xdata', X{i}, 'Ydata', Y{i}, 'Zdata', Z{i})
+                end
+            end
+            if m{1} ~= get(pl.h_syms.h(i), 'Marker')  || ...
+                    SYMS_SIZE(i) ~= get(pl.h_syms.h(i), 'MarkerSize')  || ...
+                    any(isequal(SYMS_FACE_COLOR(i, :), get(pl.h_syms.h(i), 'MarkerFaceColor')))  || ...
+                    any(isequal(SYMS_EDGE_COLOR(i, :), get(pl.h_syms.h(i), 'MarkerEdgeColor')))
+                % set
+                set(pl.h_syms.h(i), ...
+                    'Visible', 'on', ...
+                    'Marker', m{1}, ...
+                    'MarkerSize', SYMS_SIZE(i), ...
+                    'MarkerFaceColor', SYMS_FACE_COLOR(i, :), ...
+                    'MarkerEdgeColor', SYMS_EDGE_COLOR(i, :) ...
+                    );
+            end
+        else
+            if ishandle(pl.h_syms.h(i))  && ~isempty(pl.h_syms.h(i))
+                set(pl.h_syms.h(i), ...
+                    'Visible', 'off');
+            end
+        end
+
+        % spheres
+        if SPHS_SHOW(i)
+            [sx, sy, sz] = sphere();
+            % plotting
+            if ~ishandle(pl.h_sphs.h(i))
+                pl.h_sphs.h(i) = surf(pl.h_axes, X{i} + SPHS_SIZE(i) * sx, Y{i} + SPHS_SIZE(i) * sy, ...
+                    Z{i} + SPHS_SIZE(i) * sz);
+                set(pl.h_sphs.h(i), ...
+                    'Visible', 'on', ...
+                    'EdgeColor', SPHS_EDGE_COLOR(i, :), ...
+                    'EdgeAlpha', SPHS_EDGE_ALPHA(i), ...
+                    'FaceColor', SPHS_FACE_COLOR(i, :), ...
+                    'FaceAlpha', SPHS_FACE_ALPHA(i) ...
+                    );
+
+            else
+                if any(any(X{i} + SPHS_SIZE(i) * sx ~= get(pl.h_sphs.h(i), 'Xdata'))) || ...
+                        any(any(Y{i} + SPHS_SIZE(i) * sy ~= get(pl.h_sphs.h(i), 'Ydata'))) || ...
+                        any(any(Z{i} + SPHS_SIZE(i) * sz ~= get(pl.h_sphs.h(i), 'Zdata')))
+
+                    set(pl.h_sphs.h(i), 'XData', X{i} + SPHS_SIZE(i) * sx);
+                    set(pl.h_sphs.h(i), 'YData', Y{i} + SPHS_SIZE(i) * sy);
+                    set(pl.h_sphs.h(i), 'ZData', Z{i} + SPHS_SIZE(i) * sz);
+
+                end
+            end
+            if any(isequal(SPHS_EDGE_COLOR(i, :) , get(pl.h_sphs.h(i), 'EdgeColor'))) || ...
+                    SPHS_EDGE_ALPHA(i, :) ~= get(pl.h_sphs.h(i), 'EdgeAlpha') || ...
+                    any(isequal(SPHS_FACE_COLOR(i, :), get(pl.h_sphs.h(i), 'FaceColor'))) || ...
+                    SPHS_FACE_ALPHA(i, :) ~= get(pl.h_sphs.h(i), 'FaceAlpha')
+                % set
+                set(pl.h_sphs.h(i), ...
+                    'Visible', 'on', ...
+                    'EdgeColor', SPHS_EDGE_COLOR(i, :), ...
+                    'EdgeAlpha', SPHS_EDGE_ALPHA(i), ...
+                    'FaceColor', SPHS_FACE_COLOR(i, :), ...
+                    'FaceAlpha', SPHS_FACE_ALPHA(i) ...
+                    );
+            end
+        else
+            if ishandle(pl.h_sphs.h(i))  && ~isempty(pl.h_sphs.h(i))
+                set(pl.h_sphs.h(i), ...
+                    'Visible', 'off');
+            end
+        end
+
+        % ids
+        if IDS_SHOW(i)
+            % plotting
+            int_ids = PlotBrainAtlas.PLOT_ID_FONT_INTREPETER(pl.get('IDS_FONT_INTERPRETER'));
+            if ~ishandle(pl.h_ids.h(i))
+                pl.h_ids.h(i) = text(X{i}, Y{i}, Z{i}, ID{i}, 'Parent', pl.h_axes);
+                set(pl.h_ids.h(i), ...
+                    'Visible', 'on', ...
+                    'FontSize', IDS_SIZE(i), ...
+                    'Color' , IDS_FONT_COLOR(i, :), ...
+                    'Position', [X{i}, Y{i}, Z{i}], ...
+                    'String', ID{i}, ...
+                    'FontName', pl.get('IDS_FONT_NAME'), ...
+                    'Interpreter', int_ids{1} ...
+                    );
+            else
+                position = get(pl.h_ids.h(i), 'Position');
+                if X{i} ~= position(1) || ...
+                        Y{i} ~= position(2) || ...
+                        Z{i} ~= position(3) || ...
+                        ~isequal(ID{i}, get(pl.h_ids.h(i), 'String'))
+                    pl.h_ids.h(i) = text(X{i}, Y{i}, Z{i}, ID{i}, 'Parent', pl.h_axes);
+                end
+            end
+            % set
+            if IDS_SIZE(i) ~= get(pl.h_ids.h(i), 'FontSize') || ...
+                    any(isequal(IDS_FONT_COLOR(i, :), get(pl.h_ids.h(i), 'Color'))) || ...
+                    any(pl.get('IDS_FONT_NAME') ~= get(pl.h_ids.h(i), 'FontName')) || ...
+                    any(int_ids{1} ~= get(pl.h_ids.h(i), 'Interpreter'))
+
+                set(pl.h_ids.h(i), ...
+                    'Visible', 'on', ...
+                    'FontSize', IDS_SIZE(i), ...
+                    'Color' , IDS_FONT_COLOR(i, :), ...
+                    'FontName', pl.get('IDS_FONT_NAME'), ...
+                    'Interpreter', int_ids{1} ...
+                    );
+            end
+        else
+            if ishandle(pl.h_ids.h(i))  && ~isempty(pl.h_ids.h(i))
+                set(pl.h_ids.h(i), ...
+                    'Visible', 'off');
+            end
+        end
+
+        % labs
+        if LABS_SHOW(i)
+            % plotting
+            int_labs = PlotBrainAtlas.PLOT_ID_FONT_INTREPETER(pl.get('LABS_FONT_INTERPRETER'));
+            if ~ishandle(pl.h_labs.h(i))
+                pl.h_labs.h(i) = text(X{i}, Y{i}, Z{i}, LABS{i}, 'Parent', pl.h_axes);
+                set(pl.h_labs.h(i), ...
+                    'Visible', 'on', ...
+                    'FontSize', LABS_SIZE(i), ...
+                    'Color' , LABS_FONT_COLOR(i, :), ...
+                    'FontName', pl.get('LABS_FONT_NAME'), ...
+                    'Interpreter', int_labs{1} ...
+                    );
+            else
+                position = get(pl.h_labs.h(i), 'Position');
+                if X{i} ~= position(1) || ...
+                        Y{i} ~= position(2) || ...
+                        Z{i} ~= position(3) || ...
+                        ~isequal(LABS{i}, get(pl.h_labs.h(i), 'String'))
+                    pl.h_labs.h(i) = text(X{i}, Y{i}, Z{i}, LABS{i}, 'Parent', pl.h_axes);
+                end
+            end
+            % set
+            if LABS_SIZE(i) ~= get(pl.h_labs.h(i), 'FontSize') || ...
+                    any(isequal(LABS_FONT_COLOR(i, :), get(pl.h_labs.h(i), 'Color'))) || ...
+                    any(pl.get('LABS_FONT_NAME') ~= get(pl.h_labs.h(i), 'FontName')) || ...
+                    any(int_labs{1} ~= get(pl.h_labs.h(i), 'Interpreter'))
+
+                set(pl.h_labs.h(i), ...
+                    'Visible', 'on', ...
+                    'FontSize', LABS_SIZE(i), ...
+                    'Color' , LABS_FONT_COLOR(i, :), ...
+                    'FontName', pl.get('LABS_FONT_NAME'), ...
+                    'Interpreter', int_labs{1} ...
+                    );
+            end
+        else
+            if ishandle(pl.h_labs.h(i))  && ~isempty(pl.h_labs.h(i))
+                set(pl.h_labs.h(i), ...
+                    'Visible', 'off');
+            end
+        end
+
+    end
+
+    % output
+    if nargout > 0
+        h_panel = pl.pp;
+    end
 end
 function f_settings = settings(pl, varargin)
     %SETTINGS opens the brain surface property editor GUI.

@@ -50,7 +50,7 @@ mkdir([target_dir fp 'src' fp 'cohort'])
 mkdir([target_dir fp 'src' fp 'gt'])
 mkdir([target_dir fp 'src' fp 'analysis'])
 mkdir([target_dir fp 'src' fp 'gui'])
-mkdir([target_dir fp 'src' fp 'nn'])
+mkdir([target_dir fp 'src' fp 'gui' fp 'prop_order'])
 
 disp('¡! created dir structure - SRC')
 
@@ -69,15 +69,10 @@ mkdir([target_dir fp 'measures'])
 
 disp('¡! created dir structure - MEASURES')
 
-% measures
-mkdir([target_dir fp 'measures'])
+% workflows
+mkdir([target_dir fp 'workflows'])
 
-disp('¡! created dir structure - MEASURES')
-
-% neuralnets
-mkdir([target_dir fp 'neuralnets'])
-
-disp('¡! created dir structure - NERURALNETS')
+disp('¡! created dir structure - WORKFLOWS')
 
 % test
 mkdir([target_dir fp 'test'])
@@ -108,8 +103,6 @@ copydir([source_dir fp 'src' fp 'analysis'], [target_dir fp 'src' fp 'analysis']
 disp('¡! copied ready files - analysis')
 copydir([source_dir fp 'src' fp 'gui'], [target_dir fp 'src' fp 'gui'])
 disp('¡! copied ready files - gui')
-copydir([source_dir fp 'src' fp 'nn'], [target_dir fp 'src' fp 'nn'])
-disp('¡! copied ready files - nn')
 disp(' ')
 
 % graphs
@@ -120,11 +113,6 @@ disp(' ')
 % measures
 copydir([source_dir fp 'measures'], [target_dir fp 'measures'], Inf)
 disp('¡! copied ready files - measures')
-disp(' ')
-
-% neuralntes
-copydir([source_dir fp 'neuralnets'], [target_dir fp 'neuralnets'], Inf)
-disp('¡! copied ready files - neuralnets')
 disp(' ')
 
 % brainsurfs
@@ -176,17 +164,6 @@ for run = 1:1:run_number
     analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
     for i = 1:1:numel(analysis_gen_list)
         create_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
-    end
-    
-    v = matlab.addons.installedAddons;
-    result = all(ismember('Deep Learning Toolbox', v.Name) & ismember('Deep Learning Toolbox Converter for ONNX Model Format', v.Name));
-    if result
-        nn_gen_list = getGenerators([source_dir fp 'src' fp 'nn']);
-        for i = 1:1:numel(nn_gen_list)
-            create_Element([source_dir fp 'src' fp 'nn' fp nn_gen_list{i}], [target_dir fp 'src' fp 'nn'])
-        end    
-    else
-        warning('Deep Learning Toolbox is not installed. Please refer to <a href="matlab: web(''https://se.mathworks.com/products/deep-learning.html'') ">Deep Learning Toolbox</a> and <a href="matlab: web(''https://se.mathworks.com/matlabcentral/fileexchange/67296-deep-learning-toolbox-converter-for-onnx-model-format'') ">Deep Learning Toolbox Converter for ONNX Model Format</a>');
     end
     
     % graphs
@@ -260,15 +237,6 @@ end
 analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
 for i = 1:1:numel(analysis_gen_list)
     create_test_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
-end
-
-v = matlab.addons.installedAddons;
-result = all(ismember('Deep Learning Toolbox', v.Name) & ismember('Deep Learning Toolbox Converter for ONNX Model Format', v.Name));
-if result
-    nn_gen_list = getGenerators([source_dir fp 'src' fp 'nn']);
-    for i = 1:1:numel(nn_gen_list)
-        create_test_Element([source_dir fp 'src' fp 'nn' fp nn_gen_list{i}], [target_dir fp 'src' fp 'nn'])
-    end
 end
 
 % graphs

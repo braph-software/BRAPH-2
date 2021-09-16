@@ -40,17 +40,18 @@ gr = Group( ...
     );
 
 gr.lock('SUB_CLASS');
-
+global BRAPH2ISTESTING %#ok<TLEV>
 directory = im.get('DIRECTORY');
 directory = im.get('DIRECTORY');
-if ~isfolder(directory)
+if ~isfolder(directory) && ~BRAPH2ISTESTING
     im.uigetdir()
     directory = im.get('DIRECTORY');
 end
 if isfolder(directory)    
     % sets group props
-    f = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME);
+    f = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME, 'Visible', 'off');
     set_icon(f)
+    set(f, 'Visible', 'on');
     [~, name] = fileparts(directory);
     gr.set( ...
         'ID', name, ...
@@ -81,7 +82,7 @@ if isfolder(directory)
         sex = unassigned(ones(length(files), 1));
     end
     
-    waitbar(.15, f, 'Loading your data ...');
+    waitbar(.15, f, 'Loading your Group ...');
     if length(files) > 0
         % brain atlas
         ba = im.get('BA');
@@ -101,9 +102,7 @@ if isfolder(directory)
         
         % adds subjects
         for i = 1:1:length(files)
-            if i == floor(length(files)/2)
-                waitbar(.70, f, 'Almost there ...')
-            end
+            waitbar(.5, f, ['Loading your Subject: ' num2str(i) '/' num2str(length(files)) ' ...'])
             % read file
             CON = xlsread(fullfile(directory, files(i).name));
             [~, sub_id] = fileparts(files(i).name);

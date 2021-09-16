@@ -25,45 +25,52 @@ BrainAtlas()
 %%%% ¡calculate!
 % creates empty BrainAtlas
 ba = BrainAtlas();
-
+global BRAPH2ISTESTING %#ok<TLEV>
 % analyzes file
 file = im.memorize('FILE');
-if ~isfile(file)
+if ~isfile(file) && ~BRAPH2ISTESTING
     im.uigetfile()
     file = im.memorize('FILE');
 end
 if isfile(file)
-    f = waitbar(0, 'Reading File ...', 'Name', BRAPH2.NAME);
+    f = waitbar(0, 'Reading File ...', 'Name', BRAPH2.NAME, 'Visible', 'off');
     set_icon(f)
-    [~, ~, raw] = xlsread(file);
-
-    % adds props
-    waitbar(.15, f, 'Loading your data ...');
-    ba.set( ...
-        'ID', raw{1, 1}, ...
-        'LABEL', raw{2, 1}, ...
-        'NOTES', raw{3, 1} ...
-        );
-    
-     idict = ba.get('BR_DICT');
-
-    % adds brain regions
-    waitbar(.45, f, 'Processing your data ...')
-    for i = 5:1:size(raw, 1)
-        if i == floor(size(raw, 1)/2)
-            waitbar(.70, f, 'Almost there ...')
+    set(f, 'Visible', 'on');
+    try
+        [~, ~, raw] = xlsread(file);
+        
+        % adds props
+        waitbar(.15, f, 'Loading your Brain Atlas ...');
+        ba.set( ...
+            'ID', raw{1, 1}, ...
+            'LABEL', raw{2, 1}, ...
+            'NOTES', raw{3, 1} ...
+            );
+        
+        idict = ba.get('BR_DICT');
+        
+        % adds brain regions
+        waitbar(.45, f, 'Loading your Brain Regions ...')
+        for i = 5:1:size(raw, 1)
+            waitbar(.5, f, ['Loading your Brain Region: ' num2str(i - 4) '/' num2str(size(raw, 1) - 4) ' ...'])
+            br = BrainRegion( ...
+                'ID', raw{i, 1}, ...
+                'LABEL', raw{i, 2}, ...
+                'X', raw{i, 3}, ...
+                'Y', raw{i, 4}, ...
+                'Z', raw{i, 5}, ...
+                'NOTES', raw{i, 6} ...
+                );
+            idict.add(br);
         end
-        br = BrainRegion( ...
-            'ID', raw{i, 1}, ...
-            'LABEL', raw{i, 2}, ...
-            'X', raw{i, 3}, ...
-            'Y', raw{i, 4}, ...
-            'Z', raw{i, 5}, ...
-            'NOTES', raw{i, 6} ...
-        );
-       idict.add(br);
+        ba.set('br_dict', idict);
+    catch e
+        warndlg('Please select a valid input.', 'Warning');
+        close(f)        
+        rethrow(e)
     end
-    ba.set('br_dict', idict);
+else
+    error(BRAPH2.BUG_IO);
 end
 if exist('f', 'var')
     waitbar(1, f, 'Finishing')

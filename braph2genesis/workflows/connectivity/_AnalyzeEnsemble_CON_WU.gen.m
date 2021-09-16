@@ -21,12 +21,16 @@ G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analys
 IndexedDictionary('IT_CLASS', 'GraphWU')
 %%%% ¡calculate!
 g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
-
+atlas = BrainAtlas();
+if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0 
+    atlas = gr.get('SUB_DICT').getItem(1).get('BA');
+end
 gr = a.get('GR');
 for i = 1:1:gr.get('SUB_DICT').length()
 	sub = gr.get('SUB_DICT').getItem(i);
     g = GraphWU( ...
         'ID', ['g ' sub.get('ID')], ...
+        'BRAINATLAS', atlas, ...
         'B', Callback('EL', sub, 'TAG', 'CON') ...
         );
     g_dict.add(g)

@@ -30,12 +30,12 @@ MultiplexWU
 
 %% ¡props!
 %%% ¡prop! 
-CI (metadata, MATRIX) 
+CI (parameter, MATRIX) 
 %%%% ¡default!
 1
 
 %%% ¡prop! 
-rule (metadata, OPTION) 
+rule (parameter, OPTION) 
 %%%% ¡settings!
 {'in' 'out' }
 %%%% ¡default!

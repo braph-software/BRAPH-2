@@ -31,7 +31,6 @@ A (data, item) is the ensemble-based graph analysis.
 %%%% ¡settings!
 'AnalyzeEnsemble'
 
-
 %%% ¡prop!
 M (result, cell) is the measure result.
 %%%% ¡calculate!

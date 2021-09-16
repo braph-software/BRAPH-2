@@ -23,11 +23,15 @@ end
 
 function cb_importers(src, ~)
     src_name = erase(src.Text, ' ...');
-    imp_el = eval([src_name '()']);
+    imp_el = eval([src_name '(' '''ID''' ',' '''GUI''' ')']);
     imp_el.uigetfile();
-    tmp_el = imp_el.get('BA');
-    plot_element.set('El', tmp_el); 
-    plot_element.reinit();
+    try
+        tmp_el = imp_el.get('BA');
+        plot_element.set('El', tmp_el);
+        plot_element.reinit();
+    catch e
+        warndlg(['Please select a valid input. ' e.message], 'Warning');
+    end
 end
 
 %%%% ¡menu_exporter!
@@ -64,7 +68,7 @@ BR_DICT (data, idict) contains the brain regions of the brain atlas.
 pl = PPBrainAtlasIDict('EL', ba, 'PROP', BrainAtlas.BR_DICT, varargin{:});
 
 %%% ¡prop!
-SURF (data, item) contains the brain surface of the brain atlas.
+SURF (metadata, item) contains the brain surface of the brain atlas.
 %%%% ¡settings!
 'BrainSurface'
 %%%% ¡gui!

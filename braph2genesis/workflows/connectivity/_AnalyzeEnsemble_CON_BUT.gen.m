@@ -33,8 +33,8 @@ g_dict = IndexedDictionary('IT_CLASS', 'MultigraphBUT');
 node_labels = '';
 gr = a.get('GR');
 thresholds = a.get('THRESHOLDS');
-
-if ~isempty(gr) && ~isa(gr, 'NoValue')   
+atlas = BrainAtlas();
+if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0 
     atlas = gr.get('SUB_DICT').getItem(1).get('BA');
 end
 

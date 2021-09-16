@@ -5,12 +5,12 @@
 % Brain Atlas is set to Desikan Atlas example BrainAtlas. 
 % Group is set to example group. Modify the path of the files to your needs.
 
-%% BrainAtlas
-ba = ImporterBrainAtlasXLS().get('BA');
+%% Brain Atlas
+ba = ImporterBrainAtlasXLS().get('BA'); % Load Brain Atlas XLS % Brain Atlas:
 
 %% Group
-gr = ImporterGroupSubjectSTXLS('BA', ba).get('GR');
+gr = ImporterGroupSubjectSTXLS('BA', ba).get('GR'); % Load Group ST XLS % Group ST:
 
 %% Analysis
-a_BUD = AnalyzeGroup_ST_BUD('GR', gr, 'DENSITIES', [0 20 40 60 80 100]);
+a_BUD = AnalyzeGroup_ST_BUD('GR', gr, 'DENSITIES', [0 20 40 60 80 100]); % Analyze Group % Analyzed Group:
 

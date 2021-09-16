@@ -25,46 +25,53 @@ BrainAtlas()
 %%%% ¡calculate!
 % creates empty BrainAtlas
 ba = BrainAtlas();
-
+global BRAPH2ISTESTING %#ok<TLEV>
 % analyzes file
 file = im.get('FILE');
-if ~isfile(file)
+if ~isfile(file) && ~BRAPH2ISTESTING
     im.uigetfile()
     file = im.memorize('FILE');
 end
 if isfile(file)
-    f = waitbar(0, 'Reading File ...', 'Name', BRAPH2.NAME);
+    f = waitbar(0, 'Reading File ...', 'Name', BRAPH2.NAME, 'Visible', 'off');
     set_icon(f)
-    raw = textread(file, '%s', 'delimiter', '\t', 'whitespace', '');
-    raw = raw(~cellfun('isempty', raw));  % remove empty cells
-
-    % adds props
-    waitbar(.15, f, 'Loading your data ...');
-    ba.set( ...
-        'ID', raw{1, 1}, ...
-        'LABEL', raw{2, 1}, ...
-        'NOTES', raw{3, 1} ...
-        );
-    
-   idict = ba.get('BR_DICT');
-
-    % adds brain regions
-    waitbar(.45, f, 'Processing your data ...')
-    for i = 4:6:size(raw, 1)
-        if i == floor(size(raw, 1)/2)
-            waitbar(.70, f, 'Almost there ...')
+    set(f, 'Visible', 'on');
+    try
+        raw = textread(file, '%s', 'delimiter', '\t', 'whitespace', '');
+        raw = raw(~cellfun('isempty', raw));  % remove empty cells
+        
+        % adds props
+        waitbar(.15, f, 'Loading your Brain Atlas ...');
+        ba.set( ...
+            'ID', raw{1, 1}, ...
+            'LABEL', raw{2, 1}, ...
+            'NOTES', raw{3, 1} ...
+            );
+        
+        idict = ba.get('BR_DICT');
+        
+        % adds brain regions
+        waitbar(.45, f, 'Loading your Brain Regions ...')
+        for i = 4:6:size(raw, 1)
+            waitbar(.5, f, ['Loading your Brain Region: ' num2str(i - 4) '/' num2str(size(raw, 1) - 3) ' ...'])
+            br = BrainRegion( ...
+                'ID', char(raw{i, 1}), ...
+                'LABEL', char(raw{i+1, 1}), ...
+                'X', str2double(raw{i+2, 1}), ...
+                'Y', str2double(raw{i+3, 1}), ...
+                'Z', str2double(raw{i+4, 1}), ...
+                'NOTES', char(raw{i+5, 1}) ...
+                );
+            idict.add(br);
         end
-        br = BrainRegion( ...
-            'ID', char(raw{i, 1}), ...
-            'LABEL', char(raw{i+1, 1}), ...
-            'X', str2double(raw{i+2, 1}), ...
-            'Y', str2double(raw{i+3, 1}), ...
-            'Z', str2double(raw{i+4, 1}), ...
-            'NOTES', char(raw{i+5, 1}) ...
-        );
-        idict.add(br);
+        ba.set('br_dict', idict);
+    catch e
+        warndlg('Please select a valid input.', 'Warning');
+        close(f)        
+        rethrow(e)        
     end
-    ba.set('br_dict', idict);
+else
+    error(BRAPH2.BUG_IO);
 end
 
 if exist('f', 'var')

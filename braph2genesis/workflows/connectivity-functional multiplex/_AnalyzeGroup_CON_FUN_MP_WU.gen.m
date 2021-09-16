@@ -75,22 +75,24 @@ for i = 1:1:gr.get('SUB_DICT').length()
         data_fun = ifft(ft, NFFT);
     end
     
+    A_fun = Correlation.getAdjacencyMatrix(data_fun, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
+    
     % CON data
     if i == 1
         data(1) = CON_FUN_MP(1);
-        data(2) = {data_fun};
+        data(2) = {A_fun};
     else
         data(1) = {data{1} + CON_FUN_MP{1}};
-        data(2) = {data{2} + data_fun};
+        data(2) = {data{2} + A_fun};
     end
     
 end
 
 A(1) = {data{1}/gr.get('SUB_DICT').length()};
-A(2) = {Correlation.getAdjacencyMatrix(data{2}/gr.get('SUB_DICT').length(), a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'))};
+A(2) = {data{2}/gr.get('SUB_DICT').length()};
 					
 g = MultiplexWU( ...
-    'ID', ['g ' sub.get('ID')], ...
+    'ID', ['g ' gr.get('ID')], ...
     'B', A ...
     );
 
