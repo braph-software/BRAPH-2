@@ -166,7 +166,7 @@ function value = calculate_results(nn)
         'Plots','training-progress', ...
         'Verbose',false);
 
-    % fit the model
+    % fit the nn model
     net = trainNetwork(X_tblTrain, y_tblTrain, layers, options);
 
     % save the trained net
