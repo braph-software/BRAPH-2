@@ -52,6 +52,8 @@ function update(pl, selected)
     else
         pl.selected = [];
     end
+    
+    graph_gui = [];
 
     if el.getPropCategory(prop) == Category.RESULT && ~el.isLocked('ID')
         % do nothing
@@ -60,7 +62,7 @@ function update(pl, selected)
         if isa(graph_dict, 'NoValue')
             graph_dict = el.getPropDefault(prop);
         end
-        graph_gui = [];
+        
         if graph_dict.length ~= 0
             selected_graph = graph_dict.getItem(1);
         else
