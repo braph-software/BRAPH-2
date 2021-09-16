@@ -90,12 +90,12 @@ function update(pl)
                 set(child, 'Visible', 'off')
             end
         end
-        
+
     elseif (isa(graph, 'MultiplexWU') && (~isa(graph, 'MultiplexBUD') && ~isa(graph, 'MultiplexBUT'))) ...
             || isa(graph, 'MultiplexWD') ...
             || isa(graph, 'MultiplexBU') ...
             || isa(graph, 'MultiplexBD')
-        
+
         if Measure.is_global(m) % global
             node_labels = 'Global';
             for k = 1:size(value, 1)
@@ -105,11 +105,11 @@ function update(pl)
             for k = 1:size(value, 1)
                 row_names{k} = ['Layer ' num2str(k)]; %#ok<AGROW>
             end
-            
+
         else  % binodal
             % do nothing
         end
-        
+
         if Measure.is_binodal(m) % binodal with sliding panel
             pl.ui_sliding_panel = uipanel( ...
                 'Parent', pl.pp, ...
@@ -129,24 +129,24 @@ function update(pl)
                     if isempty(pl.comparison_tbl{i, j}) || ~isgraphics(pl.comparison_tbl{i, j}, 'uitable')
                         pl.comparison_tbl{i, j} = uitable('Parent', pl.ui_sliding_panel);
                     end
-                    
+
                     p1s = el.get('P1');
                     [~, mask] = fdr(p1s{1}, fdr_q_value);
-                    
+
                     tmp_data = value(i, j);
                     tmp_data = num2cell([tmp_data{:}]);
-                    
+
                     for ll = 1:size(tmp_data, 1)
                         for mm = 1:size(tmp_data, 2)
                             if mask(ll, mm)
-                                
+
                                 clr = dec2hex(round(fdr_style * 255), 2)';
                                 clr = ['#'; clr(:)]';
-                                
+
                                 tmp_data(ll, mm) = {strcat(...
                                     ['<html><body bgcolor="' clr '" text="#000000" width="100px">'], ...
                                     num2str(tmp_data{ll, mm}))};
-                                
+
                             end
                         end
                     end
@@ -170,7 +170,7 @@ function update(pl)
                 [~, mask] = fdr(p1s', fdr_q_value);
                 mask = mask';
             end
-            
+
             % replace values to individual cells for html info
             tmp_double = num2cell(value_double);
             for i = 1:size(value_double, 1)
@@ -184,7 +184,7 @@ function update(pl)
                     end
                 end
             end
-            
+
             set(pl.comparison_tbl, ...
                 'Data', tmp_double, ...
                 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
@@ -195,14 +195,14 @@ function update(pl)
                 'CellEditCallback', {@cb_matrix_value} ...
                 )
         end
-        
+
         ui_brain_view = uicontrol('Parent', pl.pp, ...
             'Style', 'pushbutton', ...
             'Units', 'characters', ...
-            'Position', [50 .02 15 2]);
-        
+            'Position', [50 .03 14 2]);
+
         init_brain_view_btn()
-        
+
     elseif isa(graph, 'MultigraphBUD') || isa(graph, 'MultigraphBUT') ...
             || isa(graph, 'MultiplexBUD') || isa(graph, 'MultiplexBUT')
 
@@ -320,7 +320,7 @@ function update(pl)
         ui_brain_view = uicontrol('Parent', pl.pp, ...
             'Style', 'pushbutton', ...
             'Units', 'characters', ...
-            'Position', [50 .02 15 2]);
+            'Position', [50 .03 14 2]);
 
         init_measure_plot_area()
         init_brain_view_btn()
@@ -417,7 +417,7 @@ function update(pl)
         ui_brain_view = uicontrol('Parent', pl.pp, ...
             'Style', 'pushbutton', ...
             'Units', 'characters', ...
-            'Position', [50 .02 15 2]);
+            'Position', [50 .03 14 2]);
         init_brain_view_btn()
         x_name = 'Weighted';
     end
@@ -425,25 +425,25 @@ function update(pl)
     % functions
         function init_measure_plot_area()
             set(ui_node1_popmenu, ...
-                'Units', 'normalized', ...
+                'Units', 'characters', ...
                 'Tooltip', 'Select the Node to be Plotted.', ...
                 'String', node_labels, ...
-                'Position', [.01 .02 .3 .08], ...
+                'Position', [1 .03 12 2], ...
                 'Callback', {@cb_node_1} ...
                 );
             set(ui_node2_popmenu, ...
-                'Units', 'normalized', ...
+                'Units', 'characters', ...
                 'Tooltip', 'Select the Node to be Plotted.', ...
                 'String', node_labels, ...
-                'Position', [.32 .02 .3 .08], ...
+                'Position', [14 .03 12 2], ...
                 'Callback', {@cb_node_2} ...
                 );
 
             set(ui_measure_plot, ...
                 'String', 'Measure Plot', ...
                 'Tooltip', 'Plot the Measure. Will plot depending on the node selection.', ...
-                'Units', 'normalized', ...
-                'Position', [.63 .02 .3 .08], ...
+                'Units', 'characters', ...
+                'Position', [27 .02 14 2], ...
                 'Callback', {@cb_plot_m} ...
                 );
 
@@ -511,7 +511,6 @@ function update(pl)
         end
         function cb_plot_m(~, ~)
             plot_value = value;
-            x_label = graph.get('NODELABELS');
             y_name = m;
             title_plot = [y_name ' vs ' x_name];
             cil = el.memorize('CIL');
@@ -576,11 +575,11 @@ function update(pl)
             end
 
             hold(h_axes, 'on')
-            xlabel(h_axes, x_label)
-            ylabel(h_axes, m.getClass())
+            xlabel(h_axes, x_name)
+            ylabel(h_axes, m)
 
-            ui_confidence_interval_min_checkbox = uicontrol(f, 'Style', 'checkbox', 'Units', 'normalized');
-            ui_confidence_interval_max_checkbox = uicontrol(f, 'Style', 'checkbox', 'Units', 'normalized');
+            ui_confidence_interval_min_checkbox = uicontrol(h_figure, 'Style', 'checkbox', 'Units', 'normalized');
+            ui_confidence_interval_max_checkbox = uicontrol(h_figure, 'Style', 'checkbox', 'Units', 'normalized');
             init_plot_panel()
             function init_plot_panel()
                 set(ui_confidence_interval_min_checkbox, 'Position', [.02 .06 .25 .05]);
@@ -599,8 +598,8 @@ function update(pl)
             function cb_show_confidence_interval_min(src, ~)
                 if src.Value == true
 
-                    y_ = cil;
-                    x_ = x_range;
+                    y_ = [cil{:}];
+                    x_ = x_range';
                     h_p_min = plot(h_axes, ...
                         x_, ...
                         y_, ...
@@ -619,8 +618,8 @@ function update(pl)
             function cb_show_confidence_interval_max(src, ~)
                 if src.Value == true
 
-                    y_ = ciu;
-                    x_ = x_range;
+                    y_ = [ciu{:}];
+                    x_ = x_range';
                     h_p_max = plot(h_axes, ...
                         x_, ...
                         y_, ...
