@@ -1889,9 +1889,6 @@ function h = getMCRPanel(pl)
     ui_popup_meas_labelinitcolor = uicontrol(measures_panels, 'Style', 'popup', 'String', {''});
     ui_popup_meas_labelfincolor = uicontrol(measures_panels, 'Style', 'popup', 'String', {''});
 
-    init_measures_panel()
-    set(f, 'Visible', 'on')
-
     %% Callback functions
         function init_measures_panel()
 
@@ -2322,6 +2319,14 @@ function h = getMCRPanel(pl)
                     else
                         pl.set('SYMS', 1);
                     end
+                else
+                    measure_data_inner(measure_data_inner == 0 ) = 0.01;
+                    if ~isempty(fdr_lim)
+                        pl.set('SYMS', fdr_lim');
+                    else
+                        pl.set('SYMS', 1);
+                    end
+                    pl.set('SYMS_SIZE', measure_data_inner);
                 end
 
                 if get(ui_checkbox_meas_symbolcolor, 'Value')
@@ -2442,7 +2447,8 @@ function h = getMCRPanel(pl)
             pl.draw();
         end
         function update_data()
-            if ~isempty(measure_data)
+            if ~isempty(measure_data) &&  ...
+                    (get(ui_checkbox_meas_fdr1, 'Value') || get(ui_checkbox_meas_fdr2, 'Value'))
                 fdr_lim = ones(1, size(measure_data, 1)); % nodal
 
                 if  Measure.is_nodal(m)
@@ -2455,7 +2461,6 @@ function h = getMCRPanel(pl)
                         p2_inner = p2_fdr{1};
                     end
                 end
-
                 for i = 1:1:size(p1_inner, 1)
                     if get(ui_checkbox_meas_fdr1, 'Value')
                         if p1_inner(i) > fdr(p1_inner', str2double(get(ui_edit_meas_fdr1, 'String')))
@@ -2467,11 +2472,16 @@ function h = getMCRPanel(pl)
                         end
                     end
                 end
+            else
+                fdr_lim = [];
             end
         end
 
     % draw
+    init_measures_panel()
     pl.draw();
+    update_brain_meas_plot()
+    set(f, 'Visible', 'on')
     if nargout > 0
         h = f;
     end

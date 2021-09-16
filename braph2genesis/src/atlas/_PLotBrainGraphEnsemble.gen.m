@@ -1826,7 +1826,7 @@ function h = getMCRPanel(pl)
     % initialization %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % measure container panel
     ui_measure_container_panel = uipanel(f, 'Units', 'normalized', 'BackgroundColor', BKGCOLOR);
-    
+
     ui_title = uicontrol(f, ...
         'Style', 'text', ...
         'String', 'Measure Panel', ...
@@ -1859,9 +1859,6 @@ function h = getMCRPanel(pl)
     ui_popup_meas_labelinitcolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
     ui_popup_meas_labelfincolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
 
-    init_measures_panel()
-    set(f, 'Visible', 'on')
-
     %% Callback functions
         function init_measures_panel()
 
@@ -1876,10 +1873,10 @@ function h = getMCRPanel(pl)
                     'TooltipString', 'Select the layer of the Measure to be ploted.', ...
                     'String', 'Layer' ...
                     )
-                
+
                 set(ui_layer_selector, ...
                     'Units', 'normalized', ...
-                    'Position', [.71 .91 .25 .08], ...
+                    'Position', [.71 .91 .2 .08], ...
                     'String', cellfun(@(x) num2str(x),  num2cell([1:length(measure_data)]) , 'UniformOutput', false), ...
                     'Callback', {@cb_layer_selector} ...
                     )
@@ -2192,6 +2189,9 @@ function h = getMCRPanel(pl)
                     size_(isnan(size_)) = 0.1;
                     size_(size_ <= 0) = 0.1;
                     pl.set('SYMS_SIZE', size_');
+                else
+                    measure_data_inner(measure_data_inner == 0 ) = 0.01;
+                    pl.set('SYMS_SIZE', measure_data_inner);
                 end
 
                 if get(ui_checkbox_meas_symbolcolor, 'Value')
@@ -2221,7 +2221,7 @@ function h = getMCRPanel(pl)
 
                     R(isnan(R)) = 0.1;
                     R(R <= 0) = 0.1;
-                    pl.set('SPHS_SIZE', R');
+                    pl.set('SPHS_SIZE', R);
                     pl.set('SPHS', 1);
                 end
 
@@ -2293,7 +2293,10 @@ function h = getMCRPanel(pl)
         end
 
     % draw
+    init_measures_panel()
     pl.draw();
+    update_brain_meas_plot()
+    set(f, 'Visible', 'on')
     if nargout > 0
         h = f;
     end
