@@ -214,11 +214,14 @@ function h_panel = draw(pl, varargin)
             pl.update(pl.selected, pl.already_calculated);
         end
 
-    set(pl.pp, 'DeleteFcn', {@close_f_settings})
+    % close function to pl.pp
+    set(pl.pp, ...
+        'DeleteFcn', {@close_f_settings})
+
         function close_f_settings(~,~)
             if ~isempty(measures_guis)
                 for k = 1:length(measures_guis)
-                    pe = measures_guis{k}; % plot element
+                    pe = measures_guis{k};
                     m_gui_h = pe.return_outer_panel();
                     if isgraphics(ancestor(m_gui_h, 'Figure'))
                         close(ancestor(m_gui_h, 'Figure'))
@@ -226,6 +229,7 @@ function h_panel = draw(pl, varargin)
                 end
             end
         end
+
 
     % output
     if nargout > 0
@@ -257,9 +261,9 @@ function update(pl, selected, calculated)
         set(pl.measure_tbl, 'Visible', 'off')
         button_management('off')
     else
-        pl.graph_dict = el.get('G_DICT');      
+        pl.graph_dict = el.get('G_DICT');
         graph = get_selected_graph();
-        
+
         set(pl.measure_tbl, ...
             'Parent', pl.pp, ...
             'Units', 'normalized', ...
@@ -270,7 +274,7 @@ function update(pl, selected, calculated)
             'ColumnEditable', [true false false false false false]);
 
         % get compatible measures for specific graph
-        
+
         pl.mlist = Graph.getCompatibleMeasureList(graph);
         if isempty(pl.already_calculated)
             pl.already_calculated =  repmat('N', [length(pl.mlist), 1]);
@@ -293,7 +297,7 @@ function update(pl, selected, calculated)
                 else
                     data{mi, 4} = 'BINODAL';
                 end
-                
+
                 if Measure.is_superglobal(pl.mlist{mi})
                     data{mi, 5} = 'SUPERGLOBAL';
                 elseif Measure.is_unilayer(pl.mlist{mi})
@@ -301,44 +305,44 @@ function update(pl, selected, calculated)
                 else
                     data{mi, 5} = 'BILAYER';
                 end
-                
+
                 data{mi, 6} = eval([pl.mlist{mi} '.getDescription()']);
             end
             set(pl.measure_tbl, 'Data', data)
             set(pl.measure_tbl, 'ColumnWidth', {parent_position_pixels(3)*.06, 'auto', parent_position_pixels(3)*.06, 'auto', 'auto', parent_position_pixels(3)})
         end
-        
+
         button_management('on')
     end
 
-    function button_management(value)
-        % delete brainview buttons
-        childs = get(pl.pp, 'Child');
-        for n = 1:length(childs)
-            child = childs(n);
-            if ~isgraphics(child, 'uitable') && ...
-                    isequal(child.Style, 'pushbutton') && ...
-                    ~(isequal(child.String, 'C') ||  isequal(child.String, 'D') || isequal(child.String, 'G'))
-                set(child, 'Visible', value)
+        function button_management(value)
+            % delete brainview buttons
+            childs = get(pl.pp, 'Child');
+            for n = 1:length(childs)
+                child = childs(n);
+                if ~isgraphics(child, 'uitable') && ...
+                        isequal(child.Style, 'pushbutton') && ...
+                        ~(isequal(child.String, 'C') ||  isequal(child.String, 'D') || isequal(child.String, 'G'))
+                    set(child, 'Visible', value)
+                end
             end
         end
-    end
-    function graph = get_selected_graph()
-        if isa(pl.graph_dict, 'NoValue')
-            pl.graph_dict = el.getPropDefault('G_DICT');
+        function graph = get_selected_graph()
+            if isa(pl.graph_dict, 'NoValue')
+                pl.graph_dict = el.getPropDefault('G_DICT');
+            end
+            graph = pl.graph_dict.getItem(1);
         end
-        graph = pl.graph_dict.getItem(1);
-    end
-    function [pixels, normalized] = get_figure_position()
-        fig_h = getGUIFigureObj();
-        set(fig_h, 'Units', 'normalized'); % set it to get position on normal units
-        pixels = getpixelposition(fig_h);
-        normalized = get(fig_h, 'Position');
-        set(fig_h, 'Units', 'characters'); % go back
-    end
-    function obj = getGUIFigureObj()
-        obj = ancestor(pl.pp, 'Figure');
-    end
+        function [pixels, normalized] = get_figure_position()
+            fig_h = getGUIFigureObj();
+            set(fig_h, 'Units', 'normalized'); % set it to get position on normal units
+            pixels = getpixelposition(fig_h);
+            normalized = get(fig_h, 'Position');
+            set(fig_h, 'Units', 'characters'); % go back
+        end
+        function obj = getGUIFigureObj()
+            obj = ancestor(pl.pp, 'Figure');
+        end
 end
 function redraw(pl, varargin)
     %REDRAW redraws the element graphical panel.
