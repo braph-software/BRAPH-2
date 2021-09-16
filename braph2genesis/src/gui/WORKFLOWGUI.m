@@ -27,7 +27,7 @@ if ~isempty(previous_workspace)
 else
     txt = fileread(file);
     cycles = getFileCycles(txt);
-    disable_cycle = 1;
+    disable_cycle = 2;
 end
     function cycles = getFileCycles(txt)
         splits = regexp(txt, ['(^|' newline() ')%%\s*'], 'split');
