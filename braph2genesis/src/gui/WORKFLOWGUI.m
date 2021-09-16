@@ -23,9 +23,11 @@ previous_workspace = get_from_varargin([], 'PreviousWorkSpace', varargin);
 if ~isempty(previous_workspace)
     txt = get_from_varargin('', 'PreviousWorkSpaceText', varargin);
     cycles = get_from_varargin('', 'PreviousWorkSpaceCycles', varargin);
+
 else
     txt = fileread(file);
     cycles = getFileCycles(txt);
+    disable_cycle = 1;
 end
     function cycles = getFileCycles(txt)
         splits = regexp(txt, ['(^|' newline() ')%%\s*'], 'split');
@@ -153,6 +155,7 @@ loaded_names = struct([]);
 
 if ~isempty(previous_workspace)
     panel_struct = previous_workspace;
+    disable_cycle = size(panel_struct, 1) + 1;
     panel_plot(false);
     load_struct();
 else
@@ -271,7 +274,6 @@ end
         panel_struct(panel, child).name = ['panel_struct(' num2str(panel) ',' num2str(child) ').exe'];
         panel_struct(panel, child).name_script = strtrim(exe_{1});
         panel_struct(panel, child).btn = src.String;
-        panel_struct(panel, child).h_btn = src;
         
         % change script for internal values
         exe_check = false;
@@ -331,7 +333,7 @@ end
         n = length(panel_executables{panel + 1}) - 1 ;
         tmp = struct2cell(panel_struct);
         if panel + 1 <= length(section_panel) && ...
-                (isequal(n, length(tmp(6, 1))) ||  isequal(n, length([tmp{6, panel, :}])))
+                (isequal(n, length(tmp(5, 1))) ||  isequal(n, length([tmp{5, panel, :}])))
             
             check = true;
         end
@@ -339,15 +341,26 @@ end
     function change_state_btn(varargin)
         btn = varargin{1};
         
-        set(btn, 'BackgroundColor', [166 218 149] / 255) % color
-        if length(varargin) > 1
-            if ~isempty(varargin{2})
-                btn_new_name = [varargin{3} ' ' varargin{2}];
+        if ~isempty(btn) && isgraphics(btn)
+            set(btn, 'BackgroundColor', [166 218 149] / 255) % color
+            if length(varargin) > 1
+                if ~isempty(varargin{2})
+                    btn_new_name = [varargin{3} ' ' varargin{2}];
+                    set(btn, 'String', btn_new_name); % id
+                else % just default
+                    set(btn, 'String', varargin{3}); % id
+                end
+            end
+        else
+            h_btn = panel_inner{varargin{5}, varargin{6}};
+            set(h_btn, 'BackgroundColor', [166 218 149] / 255) % color            
+            if ~isempty(varargin{4})
+                btn_new_name = [varargin{3} ' ' varargin{4}];
                 set(btn, 'String', btn_new_name); % id
             else % just default
                 set(btn, 'String', varargin{3}); % id
-            end
-        end
+            end            
+        end        
     end
     function pos = getPosition(obj)
         pos = get(obj, 'Position');
@@ -400,9 +413,9 @@ end
                         continue;
                     else
                         tmp_el =  obj.get('EL');
-                        btn = panel_struct(i, j).h_btn;
+                        btn = panel_struct(i, j).btn;
                         default_msg = loaded_names(i, j).msg;
-                        change_state_btn(btn, tmp_el.get('ID'), default_msg);
+                        change_state_btn([], tmp_el.get('ID'), default_msg, btn, i, j);
                     end
                 end
             end
@@ -660,7 +673,7 @@ menu()
 set(f, 'Visible', 'on')
 [title, ~] =  getGUIToken(txt, 1);
 update_figure_title(title)
-for i = 2:cycles-1
+for i = disable_cycle:cycles-1
     disable_panel(section_panel{i})
 end
     function enable_panel(panel)
