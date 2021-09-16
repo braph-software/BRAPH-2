@@ -52,6 +52,8 @@ function update(pl, selected)
     else
         pl.selected = [];
     end
+    
+    graph_gui = [];
 
     if el.getPropCategory(prop) == Category.RESULT && ~el.isLocked('ID')
         % do nothing
@@ -60,7 +62,7 @@ function update(pl, selected)
         if isa(graph_dict, 'NoValue')
             graph_dict = el.getPropDefault(prop);
         end
-        graph_gui = [];
+        
         if graph_dict.length ~= 0
             selected_graph = graph_dict.getItem(1);
         else
@@ -186,7 +188,7 @@ function redraw(pl, varargin)
             f_h = (tmp_h * 1.1) + base;
             if f_h < 20
                 pl.redraw@PlotProp('Height', f_h, varargin{:})
-                set(pl.comparison_tbl, 'Position', [.01 .2 .98 .6])
+                set(pl.measure_tbl, 'Position', [.01 .2 .98 .6])
             else
                 pl.redraw@PlotProp('Height', 15, varargin{:})
             end
