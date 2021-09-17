@@ -555,6 +555,7 @@ function update(pl)
                 'setpos', [x2 y2 w2 h2], ...
                 'setname', ['Plot of Measure - ' BRAPH2.STR]);
             [h_figure, h_axes] = pg.draw();
+            pg.settings();
 
             if ~isempty(x_) && ~isempty(y_)
 

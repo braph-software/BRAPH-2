@@ -463,6 +463,7 @@ function update(pl)
                 'bkgcolor', [1 1 1], ...
                 'setname', ['Plot of Measure - ' BRAPH2.STR]);
             [h_figure, h_axes] = pg.draw('Parent', f);
+            pg.settings();
 
             set(f, 'Visible', 'on')
 
