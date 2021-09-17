@@ -110,4 +110,10 @@ function  f_settings = settings(pl, varargin)
     
     f = settings@Plot(pl, varargin{:});
     set_icon(f);
+    
+    
+    
+    if nargin > 0 
+        f_settings = f;
+    end
 end
