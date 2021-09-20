@@ -43,6 +43,12 @@ PLOTVALUE(data, cell) to set plot line atlas
 MEASURE(data, string) to set plot line measure
 
 %%% ¡prop!
+CIL (metadata, CELL) to set plot line cil
+
+%%% ¡prop!
+CIU (metadata, CELL) to set plot line ciu
+
+%%% ¡prop!
 NODE1 (metadata, scalar) to set plot line node 1
 %%%% ¡default!
 1
@@ -375,8 +381,96 @@ function  f_settings = settings(pl, varargin)
             update();
         end
 
-    init_measure_plot_area()
+    if ~isempty(pl.get('CIL')) && ~isempty(pl.get('CIU'))
+        ui_confidence_interval_min_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized');
+        ui_confidence_interval_max_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized');
+        h_p_min = [];
+        h_p_max = [];
+        init_cil_panel()
+    end
+        function init_cil_panel()
+            set(ui_confidence_interval_min_checkbox, 'Position', [.05 .01 .4 .14]);
+            set(ui_confidence_interval_min_checkbox, 'String', 'Show Confidence Interval Min');
+            set(ui_confidence_interval_min_checkbox, 'Value', false);
+            set(ui_confidence_interval_min_checkbox, 'Callback', {@cb_show_confidence_interval_min})
 
+            set(ui_confidence_interval_max_checkbox, 'Position', [.55 .01 .4 .14]);
+            set(ui_confidence_interval_max_checkbox, 'String', 'Show Confidence Interval Max');
+            set(ui_confidence_interval_max_checkbox, 'Value', false);
+            set(ui_confidence_interval_max_checkbox, 'Callback', {@cb_show_confidence_interval_max})
+        end
+        function cb_show_confidence_interval_min(src, ~)
+            if src.Value == true
+                cil = obtain_cil_ciu_value(pl.get('CIL'));
+                x_ = pl.get('X');
+                hold(pl.h_axes, 'on')
+                h_p_min = plot(pl.h_axes, ...
+                    x_, ...
+                    cil, ...
+                    'Marker', 'x', ...
+                    'MarkerSize', 10, ...
+                    'MarkerEdgeColor', [0 0 1], ...
+                    'MarkerFaceColor', [.3 .4 .5], ...
+                    'LineStyle', '-', ...
+                    'LineWidth', 1, ...
+                    'Color', [0 1 1]);
+                h_p_min.Visible = true;
+            else
+                h_p_min.Visible = false;
+            end
+        end
+        function cb_show_confidence_interval_max(src, ~)
+            if src.Value == true
+                hold(pl.h_axes, 'on')
+                x_ = pl.get('X');
+                ciu = obtain_cil_ciu_value(pl.get('CIU'));
+                h_p_max = plot(pl.h_axes, ...
+                    x_, ...
+                    ciu, ...
+                    'Marker', 'x', ...
+                    'MarkerSize', 10, ...
+                    'MarkerEdgeColor', [0 0 1], ...
+                    'MarkerFaceColor', [.3 .4 .5], ...
+                    'LineStyle', '-', ...
+                    'LineWidth', 1, ...
+                    'Color', [0 1 1]);
+                h_p_max.Visible = true;
+            else
+                h_p_max.Visible = false;
+            end
+        end
+        function limit = obtain_cil_ciu_value(array)
+            node1_to_plot = pl.get('NODE1');
+            node2_to_plot = pl.get('NODE2');
+
+            if Measure.is_global(m) % global
+                is_inf_vector = cellfun(@(x) isinf(x), array);
+                if any(is_inf_vector)
+                    return;
+                end
+                limit = [array{:}];
+            elseif Measure.is_nodal(m) % nodal
+                for l = 1:length(array)
+                    tmp = array{l};
+                    tmp_y = tmp(node1_to_plot);
+                    if isinf(tmp_y)
+                        return;
+                    end
+                    limit(l) = tmp_y; %#ok<AGROW>
+                end
+            else  % binodal
+                for l = 1:length(array)
+                    tmp = array{l};
+                    tmp_y = tmp(node1_to_plot, node2_to_plot);
+                    if isinf(tmp_y)
+                        return;
+                    end
+                    limit(l) = tmp_y; %#ok<AGROW>
+                end
+            end
+        end
+
+    init_measure_plot_area()
 
     if nargin > 0
         f_settings = f;
