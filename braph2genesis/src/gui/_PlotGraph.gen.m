@@ -21,41 +21,6 @@ SUBMENU (metadata, logical) to set a submenu
 %%%% ¡default!
 false
 
-%%% ¡prop!
-COLOR (metadata, rvector) to set plot line color
-%%%% ¡default!
-[0 0 0]
-
-%%% ¡prop!
-LINESTYLE (metadata, string) to set plot line style
-%%%% ¡default!
-'-'
-
-%%% ¡prop!
-LINEWIDTH (metadata, scalar) to set plot line width
-%%%% ¡default!
-0.5
-
-%%% ¡prop!
-MARKER (metadata, string) to set plot marker style
-%%%% ¡default!
-'none'
-
-%%% ¡prop!
-MARKERSIZE (metadata, scalar) to set plot marker size
-%%%% ¡default!
-6
-
-%%% ¡prop!
-MARKEREDGECOLOR (metadata, rvector) to set plot marker edge color
-%%%% ¡default!
-[0 0 0]
-
-%%% ¡prop!
-MARKERFACECOLOR (metadata, rvector) to set plot marker face color
-%%%% ¡default!
-[0 0 0]
-
 %% ¡methods!
 function [h_figure, h_axes, subpanel] = draw(pl, varargin)
     %DRAW draws the graphical panel.
@@ -78,10 +43,12 @@ function [h_figure, h_axes, subpanel] = draw(pl, varargin)
         subpanel = uipanel(pl.h_figure, ...
             'BackGroundColor', 'w', ...
             'Units', 'normalized', ...
-            'Position', [.0 .2 1 .8] ...
+            'Position', [.0 .15 1 .85] ...
             );
         
         pl.h_axes = axes(subpanel);
+        set(pl.h_figure, 'Color', 'w')
+        set(pl.pp, 'BackGroundColor', 'w');
         
     else
         pl.h_axes = axes(pl.pp);

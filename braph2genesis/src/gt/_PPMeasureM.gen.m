@@ -405,34 +405,7 @@ function update(pl)
             node2_to_plot = double(source.Value);
         end
         function cb_plot_m(~, ~)
-            plot_value = value;
-
-            if Measure.is_global(el) % global
-                is_inf_vector = cellfun(@(x) isinf(x), plot_value);
-                if any(is_inf_vector)
-                    return;
-                end
-                y_ = [plot_value{:}];
-            elseif Measure.is_nodal(el) % nodal
-                for l = 1:length(plot_value)
-                    tmp = plot_value{l};
-                    tmp_y = tmp(node1_to_plot);
-                    if isinf(tmp_y)
-                        return;
-                    end
-                    y_(l) = tmp_y; %#ok<AGROW>
-                end
-            else  % binodal
-                for l = 1:length(plot_value)
-                    tmp = plot_value{l};
-                    tmp_y = tmp(node1_to_plot, node2_to_plot);
-                    if isinf(tmp_y)
-                        return;
-                    end
-                    y_(l) = tmp_y; %#ok<AGROW>
-                end
-            end
-
+            plot_value = value;    
             x_ = x_range;
 
             [~, normalized] = get_figure_position();
@@ -460,29 +433,23 @@ function update(pl)
             delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
             delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
 
-            pg = PlotGraph( ...
+            pg = PlotGraphLine( ...
                 'bkgcolor', [1 1 1], ...
-                'setname', ['Plot of Measure - ' BRAPH2.STR]);
-            [h_figure, h_axes] = pg.draw('Parent', f);
+                'setname', ['Plot of Measure - ' BRAPH2.STR], ...
+                'ATLAS', graph.get('BRAINATLAS'),...
+                'X', x_,...
+                'PLOTVALUE', plot_value, ...
+                'MEASURE', el.getClass(), ...
+                'PLOTTITLE', plot_title, ...
+                'XLABEL', x_label, ...
+                'YLABEL', y_label ...
+                );
+            
+            h_plot_line = pg.draw('Parent', f);
             pg.settings();
 
             set(f, 'Visible', 'on')
-
-            handle_plot = plot( ...
-                h_axes, ...
-                x_, ...
-                y_, ...
-                'Marker', 'o', ...
-                'MarkerSize', 10, ...
-                'MarkerEdgeColor', [0 0 1], ...
-                'MarkerFaceColor', [.9 .4 .1], ...
-                'LineStyle', '-', ...
-                'LineWidth', 1, ...
-                'Color', [0 0 1] ...
-                );
-            title(plot_title)
-            xlabel(x_label)
-            ylabel(y_label)
+           
         end
         function [pixels, normalized] = get_figure_position()
             fig_h = getGUIFigureObj();
