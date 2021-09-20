@@ -410,8 +410,8 @@ function update(pl)
 
             [~, normalized] = get_figure_position();
             x2 = normalized(1) + normalized(3);
-            h2 = normalized(4);
-            y2 = normalized(2);
+            h2 = normalized(4) / 1.61;
+            y2 = normalized(2) + normalized(4) - h2;
             w2 = normalized(3) * 1.61;
 
             f = figure( ...
@@ -446,6 +446,7 @@ function update(pl)
                 );
             
             h_plot_line = pg.draw('Parent', f);
+            pg.set('SETPOS', [x2 normalized(2) w2 h2*1.61-h2-.065]); % height has to be correcter for the toolbar and menu
             pg.settings();
 
             set(f, 'Visible', 'on')
