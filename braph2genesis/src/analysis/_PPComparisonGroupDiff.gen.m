@@ -506,7 +506,6 @@ function update(pl)
             ciu = el.memorize('CIU');
             x_ = x_range;
 
-
             [~, normalized] = get_figure_position();
             x2 = normalized(1) + normalized(3);
             h2 = normalized(4) / 1.61;
