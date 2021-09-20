@@ -499,132 +499,56 @@ function update(pl)
         end
         function cb_plot_m(~, ~)
             plot_value = value;
-            x_label = graph.get('NODELABELS');
-            y_name = m;
-            title_plot = [y_name ' vs ' x_name];
+            x_label = x_name;
+            y_label = m;
+            title_plot = [y_label ' vs ' x_label];
             cil = el.memorize('CIL');
             ciu = el.memorize('CIU');
-
-
-            if Measure.is_global(m) % global
-                is_inf_vector = cellfun(@(x) isinf(x), plot_value);
-                if any(is_inf_vector)
-                    return;
-                end
-                y_ = [plot_value{:}];
-            elseif Measure.is_nodal(m) % nodal
-                for l = 1:length(plot_value)
-                    tmp = plot_value{l};
-                    tmp_y = tmp(node1_to_plot);
-                    if isinf(tmp_y)
-                        return;
-                    end
-                    y_(l) = tmp_y; %#ok<AGROW>
-                end
-            else  % binodal
-                for l = 1:length(plot_value)
-                    tmp = plot_value{l};
-                    tmp_y = tmp(node1_to_plot, node2_to_plot);
-                    if isinf(tmp_y)
-                        return;
-                    end
-                    y_(l) = tmp_y; %#ok<AGROW>
-                end
-            end
-
             x_ = x_range;
+
 
             [~, normalized] = get_figure_position();
             x2 = normalized(1) + normalized(3);
-            h2 = normalized(4);
-            y2 = normalized(2);
+            h2 = normalized(4) / 1.61;
+            y2 = normalized(2) + normalized(4) - h2;
             w2 = normalized(3) * 1.61;
+            
+            f = figure( ...
+                'Visible', 'off', ...
+                'NumberTitle', 'off', ...
+                'Name', ['PlotGraph - ' BRAPH2.STR], ...
+                'Units', 'normalized', ...
+                'Position', [x2 y2 w2 h2], ...
+                'Units', 'character', ...
+                'MenuBar', 'none', ...
+                'Toolbar', 'figure', ...
+                'DockControls', 'off', ...
+                'Color', [.94 .94 .94] ...
+                );
+            set_icon(f);
+            ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
+            delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
+            delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
 
-            pg = PlotGraph( ...
+            pg = PlotGraphLine( ...
                 'bkgcolor', [1 1 1], ...
-                'setpos', [x2 y2 w2 h2], ...
-                'setname', ['Plot of Measure - ' BRAPH2.STR]);
-            [h_figure, h_axes] = pg.draw();
-
-            if ~isempty(x_) && ~isempty(y_)
-
-                handle_plot = plot(h_axes, ...
-                    x_, ...
-                    y_, ...
-                    'Marker', 'o', ...
-                    'MarkerSize', 10, ...
-                    'MarkerEdgeColor', [0 0 1], ...
-                    'MarkerFaceColor', [.9 .4 .1], ...
-                    'LineStyle', '-', ...
-                    'LineWidth', 1, ...
-                    'Color', [0 0 1]);
-                title(title_plot)
-                xlabel(x_name)
-                ylabel(y_name)
-            else
-            end
-
-            hold(h_axes, 'on')
-            xlabel(h_axes, x_label)
-            ylabel(h_axes, measure_class)
-
-            ui_confidence_interval_min_checkbox = uicontrol(f, 'Style', 'checkbox', 'Units', 'normalized');
-            ui_confidence_interval_max_checkbox = uicontrol(f, 'Style', 'checkbox', 'Units', 'normalized');
-            init_plot_panel()
-            function init_plot_panel()
-                set(ui_confidence_interval_min_checkbox, 'Position', [.02 .06 .25 .05]);
-                set(ui_confidence_interval_min_checkbox, 'String', 'Show Confidence Interval Min');
-                set(ui_confidence_interval_min_checkbox, 'Value', false);
-                set(ui_confidence_interval_min_checkbox, 'Callback', {@cb_show_confidence_interval_min})
-
-                set(ui_confidence_interval_max_checkbox, 'Position', [.02 .01 .25 .05]);
-                set(ui_confidence_interval_max_checkbox, 'String', 'Show Confidence Interval Max');
-                set(ui_confidence_interval_max_checkbox, 'Value', false);
-                set(ui_confidence_interval_max_checkbox, 'Callback', {@cb_show_confidence_interval_max})
-            end
-
-            h_p_min = [];
-            h_p_max = [];
-            function cb_show_confidence_interval_min(src, ~)
-                if src.Value == true
-
-                    y_ = cil;
-                    x_ = x_range;
-                    h_p_min = plot(h_axes, ...
-                        x_, ...
-                        y_, ...
-                        'Marker', 'x', ...
-                        'MarkerSize', 10, ...
-                        'MarkerEdgeColor', [0 0 1], ...
-                        'MarkerFaceColor', [.3 .4 .5], ...
-                        'LineStyle', '-', ...
-                        'LineWidth', 1, ...
-                        'Color', [0 1 1]);
-                    h_p_min.Visible = true;
-                else
-                    h_p_min.Visible = false;
-                end
-            end
-            function cb_show_confidence_interval_max(src, ~)
-                if src.Value == true
-
-                    y_ = ciu;
-                    x_ = x_range;
-                    h_p_max = plot(h_axes, ...
-                        x_, ...
-                        y_, ...
-                        'Marker', 'x', ...
-                        'MarkerSize', 10, ...
-                        'MarkerEdgeColor', [0 0 1], ...
-                        'MarkerFaceColor', [.3 .4 .5], ...
-                        'LineStyle', '-', ...
-                        'LineWidth', 1, ...
-                        'Color', [0 1 1]);
-                    h_p_max.Visible = true;
-                else
-                    h_p_max.Visible = false;
-                end
-            end
+                'setname', ['Plot of Measure - ' BRAPH2.STR], ...
+                'ATLAS', graph.get('BRAINATLAS'),...
+                'X', x_,...
+                'PLOTVALUE', plot_value, ...
+                'MEASURE', m, ...
+                'CIL', cil, ...
+                'CIU', ciu, ...
+                'PLOTTITLE', title_plot, ...
+                'XLABEL', x_label, ...
+                'YLABEL', y_label ...
+                );
+            
+            h_plot_line = pg.draw('Parent', f);
+            pg.set('SETPOS', [x2 normalized(2) w2 h2*1.61-h2-.065]); % height has to be correcter for the toolbar and menu
+            pg.settings();
+            set(f, 'Visible', 'on')
+           
         end
         function [pixels, normalized] = get_figure_position()
             fig_h = getGUIFigureObj();
