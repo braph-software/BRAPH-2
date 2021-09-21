@@ -117,7 +117,7 @@ if isfile(file)
     catch e
         rethrow(e)
     end
-else
+elseif ~BRAPH2ISTESTING
     error(BRAPH2.WRONG_OUTPUT);
 end
 if exist('f', 'var')
