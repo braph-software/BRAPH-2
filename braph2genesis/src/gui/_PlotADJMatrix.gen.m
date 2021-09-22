@@ -310,7 +310,7 @@ function h = plotw(pl, A, varargin)
         (0:1:N), ...
         [A, zeros(size(A, 1), 1); zeros(1, size(A, 1) + 1)]);
     view(pl.h_axes, 2)
-    colorbar('target', pl.h_axes)
+    colorbar(pl.h_axes)
     shading(pl.h_axes, 'flat')
     axis(pl.h_axes, 'equal', 'square', 'tight')
     grid(pl.h_axes, 'off')
