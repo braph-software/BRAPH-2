@@ -263,13 +263,17 @@ menu()
         end
         set(edit_table, 'Data', data)
         set(edit_table, 'ColumnWidth', {'auto' 'auto' 'auto' 'auto' 'auto'})
-        set(p_f, 'Visible', 'on');        
+        set(p_f, 'Visible', 'on');   
+        data_before_operation = [];
      
         function cb_edit_tb(~, event)
             i = event.Indices(1);
             col = event.Indices(2);
             newdata = event.NewData;
             data_now = get(edit_table, 'Data');
+            if isempty(data_before_operation)
+                data_before_operation = data;
+            end
             switch col
                 case 1
                     if newdata == 1
@@ -279,6 +283,7 @@ menu()
                         missing_values = setdiff(continue_order, last_order);
                         data_now(i, 2) = {min(missing_values)};
                         set(edit_table, 'Data', data_now);
+                        data_before_operation = data_now;
                     else
                         % fill with NaN
                         continue_order = [1:length(data_now(:, 2))];
@@ -296,6 +301,7 @@ menu()
                             
                         end
                         set(edit_table, 'Data', data_now);
+                        data_before_operation = data_now;
                     end
                 case 2
                     if isequalwithequalnans(newdata, nan) %#ok<DISEQN>
@@ -315,8 +321,15 @@ menu()
                             
                         end
                         set(edit_table, 'Data', data_now);
-                    elseif any(find(cell2mat(data(:, 2)),  newdata))
-                        set(edit_table, 'Data', data);
+                        data_before_operation = data_now;
+                    elseif any(find(cell2mat(data(:, 2)),  newdata))  % repeating value 
+                        index_old_value = find(cell2mat(data_before_operation(:, 2)) == newdata);
+                        get_old_calling_value_to_swap = data_before_operation{i, 2};
+                        data_now(index_old_value, 2) = {get_old_calling_value_to_swap};
+                        data_now(i, 2) = {newdata};
+                        
+                        set(edit_table, 'Data', data_now);
+                        data_before_operation = data_now;
                     end
             end
         end
