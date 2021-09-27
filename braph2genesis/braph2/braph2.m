@@ -34,6 +34,9 @@ addpath(graphs_dir)
 measures_dir = [fileparts(which('braph2')) filesep 'measures'];
 addpath(measures_dir)
 
+neuralnetworks_dir = [fileparts(which('braph2')) filesep 'neuralnetworks'];
+addpath(neuralnetworks_dir)
+
 test_dir = [fileparts(which('braph2')) filesep 'test'];
 addpath(test_dir)
 
