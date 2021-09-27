@@ -299,7 +299,6 @@ if installedDLToolbox
     end 
 end
 
-
 % gui
 gui_gen_list = getGenerators([source_dir fp 'src' fp 'gui']);
 for i = 1:1:numel(gui_gen_list)
