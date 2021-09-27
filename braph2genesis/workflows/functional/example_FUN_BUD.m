@@ -4,7 +4,7 @@
 clear variables %#ok<*NASGU>
 
 %% Load BrainAtlas
-im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('example_FUN_BUD')) filesep 'example data FUN (fMRI)' filesep 'desikan_atlas.xlsx']);
+im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('example_FUN_BUD')) filesep 'example data FUN (fMRI)' filesep 'aal90_atlas.xlsx']);
 
 ba = im_ba.get('BA');
 
@@ -22,6 +22,22 @@ im_gr2 = ImporterGroupSubjectFUNXLS( ...
     );
 
 gr2 = im_gr2.get('GR');
+%%
+directory =  [fileparts(which('example_FUN_BUD')) filesep 'example data FUN (fMRI)' filesep 'txt' filesep 'GroupName1'];
+if ~exist(directory, 'dir')
+    mkdir(directory)
+end
+ex1 = ExporterGroupSubjectFUNTXT( ...
+    'DIRECTORY',directory, ...
+    'GR', gr1 ...
+    );
+ex1.get('SAVE');
+%%
+ex2 = ExporterGroupSubjectFUNTXT( ...
+    'DIRECTORY', [fileparts(which('example_FUN_BUD')) filesep 'example data FUN (fMRI)' filesep 'txt' filesep 'GroupName2'], ...
+    'GR', gr2 ...
+    );
+ex2.get('SAVE');
 
 %% Analysis FUN BUD
 densities = [0 100];
