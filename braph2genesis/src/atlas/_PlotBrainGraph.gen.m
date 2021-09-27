@@ -155,13 +155,13 @@ function f_settings  = settings(pl, varargin)
     ui_toolbar_separator = uipushtool(ui_toolbar, 'Separator', 'on', 'Visible', 'off');
     
     ui_toolbar_mcr = uipushtool(ui_toolbar, ...
-        'Separator', 'off', ...
+        'Separator', 'on', ...
         'TooltipString', 'Brain Regions', ...
         'CData', imread('icon_measure_panel.png'), ...
         'ClickedCallback', {@cb_panel_mcr});   
     
     ui_toolbar_graph = uipushtool(ui_toolbar, ...
-        'Separator', 'off', ...
+        'Separator', 'on', ...
         'TooltipString', 'Brain Connections', ...
         'CData', imread('icon_graph_panel.png'), ...
         'ClickedCallback', {@cb_panel_graph});
@@ -1687,7 +1687,7 @@ function brain_graph_panel = getBrainGraphPanel(pl)
             end
         end
         function cb_edit_lineweight(~, ~)  % (src, event)
-            weigth = real(str2double(get(ui_edit_graph_bs, 'String')));
+            weigth = real(str2double(get(ui_edit_graph_lineweight, 'String')));
             if isnan(weigth) || weigth <= 0
                 set(ui_edit_graph_lineweight, 'String', '5');
             end
@@ -1749,6 +1749,9 @@ function brain_graph_panel = getBrainGraphPanel(pl)
             if get(ui_checkbox_graph_linecolor, 'Value')
                 val1 = get(ui_popup_graph_initcolor, 'Value');
                 val2 = get(ui_popup_graph_fincolor, 'Value');
+                C = zeros(1, 3);
+                C(1, val1) = 1;
+                C(1, val2) = 1;
                 n = atlas.get('BR_DICT').length();
                 for i = 1:1:n
                     for j = 1:1:n
@@ -1756,13 +1759,13 @@ function brain_graph_panel = getBrainGraphPanel(pl)
                             continue;
                         end
                         if  link_style == 1
-                            pl.link_edges(i, j, 'Color', [val1 val2]);
+                            pl.link_edges(i, j, 'Color', C);
                             pl.link_edge_on(i, j);
                         elseif link_style == 2
-                            pl.arrow_edges(i, j, 'Color', [val1 val2]);
+                            pl.arrow_edges(i, j, 'Color', C);
                             pl.arrow_edge_on(i, j)
                         else
-                            pl.cylinder_edges(i, j, 'Color', [val1 val2]);
+                            pl.cylinder_edges(i, j, 'Color', C);
                             pl.cylinder_edge_on(i, j)
                         end
                     end
@@ -2357,4 +2360,5 @@ pl.link_edges();
 pl.link_edges_on();
 pl.link_edges_settings();
 
+close(gcf)
 close(gcf)

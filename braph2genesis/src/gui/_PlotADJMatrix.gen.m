@@ -310,6 +310,7 @@ function h = plotw(pl, A, varargin)
         (0:1:N), ...
         [A, zeros(size(A, 1), 1); zeros(1, size(A, 1) + 1)]);
     view(pl.h_axes, 2)
+    colorbar(pl.h_axes)
     shading(pl.h_axes, 'flat')
     axis(pl.h_axes, 'equal', 'square', 'tight')
     grid(pl.h_axes, 'off')
@@ -400,6 +401,7 @@ function h = plotb(pl, A, varargin)
     shading(pl.h_axes, 'flat')
     axis(pl.h_axes, 'equal', 'square', 'tight')
     grid(pl.h_axes, 'off')
+    colorbar(pl.h_axes)
     box(pl.h_axes, 'on')
     set(pl.h_axes, ...
         'XAxisLocation', 'top',  ...
@@ -459,6 +461,7 @@ function h = hist(pl, A, varargin)
 
     grid(pl.h_axes, 'off')
     box(pl.h_axes, 'on')
+    colorbar(pl.h_axes, 'off')
     axis(pl.h_axes, 'square', 'tight')
     set(pl.h_axes, ...
         'XAxisLocation', 'bottom',  ...

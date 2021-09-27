@@ -58,6 +58,7 @@ function update(pl, selected)
     else
         pl.selected = [];
     end   
+    comparison_guis = [];
 
     if el.getPropCategory(prop) == Category.RESULT && ~isCalculated()
         % do nothing
@@ -80,7 +81,7 @@ function update(pl, selected)
             graph_class =  el.get('A1').getPropSettings('G');
             graph = eval([graph_class '()']);
         end
-        comparison_guis = [];
+        
         case_ = 0;
         mlist = [];
         if isa(a1.get(a1.getPropNumber()), 'double')
