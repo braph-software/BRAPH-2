@@ -34,4 +34,3 @@ nn_regressor_ST = RegressorNN_ST( ...
 nn_regressor_ST.memorize('NEURAL_NETWORK_ANALYSIS');
 test_mse = nn_regressor_ST.get('TEST_RMSE');
 train_mse = nn_regressor_ST.get('TRAINING_RMSE');
-
