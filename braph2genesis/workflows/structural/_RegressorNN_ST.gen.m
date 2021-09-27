@@ -1,5 +1,5 @@
 %% ¡header!
-RegressorNN_ST < RegressorNN (nn, regression with structural data) is a regressor using neural network with structural data.
+RegressorNN_ST < RegressorNN (nn, regression with structural data) is a neural network regressor using structural data.
 
 %% ¡description!
 This regressor uses structural data and trains neural network for regression.
@@ -21,50 +21,50 @@ GR2 (data, item) is the subject group 2, which also defines the subject class Su
 Group('SUB_CLASS', 'SubjectST')
 
 %%% ¡prop!
-X_TBLTRAIN (result, matrix) is the neural network trained from this analysis.
+X_TBLTRAIN (result, matrix) is the training dataset separated from the whole dataset.
 %%%% ¡calculate!
 analysis = nn.get('NEURAL_NETWORK_ANALYSIS');
 value = analysis{2};
 
 %%% ¡prop!
-Y_TBLTRAIN (result, matrix) is the neural network trained from this analysis.
+Y_TBLTRAIN (result, matrix) is the labels for the training dataset.
 %%%% ¡calculate!
 analysis = nn.get('NEURAL_NETWORK_ANALYSIS');
 value = analysis{3};
 
 %%% ¡prop!
-X_TBLTEST (result, matrix) is the neural network trained from this analysis.
+X_TBLTEST (result, matrix) is the test dataset separated from the whole dataset.
 %%%% ¡calculate!
 analysis = nn.get('NEURAL_NETWORK_ANALYSIS');
 value = analysis{4};
 
 %%% ¡prop!
-Y_TBLTEST (result, matrix) is the neural network trained from this analysis.
+Y_TBLTEST (result, matrix) is the labels for the test dataset.
 %%%% ¡calculate!
 analysis = nn.get('NEURAL_NETWORK_ANALYSIS');
 value = analysis{5};
 
 %%% ¡prop!
-TRAINED_NET (result, rvector) is the neural network trained from this analysis.
+TRAINED_NET (result, rvector) is the trained neural network.
 %%%% ¡calculate!
 analysis = nn.get('NEURAL_NETWORK_ANALYSIS');
 value = analysis{1};
 
 %% ¡props_update!
 %%% ¡prop!
-TRAINING_RMSE (result, scalar) is the model root mean square error obtained from the training data.
+TRAINING_RMSE (result, scalar) is the root mean square error obtained from training dataset.
 %%%% ¡calculate!
 analysis = nn.get('NEURAL_NETWORK_ANALYSIS');
 value = analysis{6};
 
 %%% ¡prop!
-TEST_RMSE (result, scalar) is the model root mean square error obtained from the test data.
+TEST_RMSE (result, scalar) is the root mean square error obtained from test dataset.
 %%%% ¡calculate!
 analysis = nn.get('NEURAL_NETWORK_ANALYSIS');
 value = analysis{7};
 
 %%% ¡prop!
-NEURAL_NETWORK_ANALYSIS (result, cell) is the neural network trained from this analysis.
+NEURAL_NETWORK_ANALYSIS (result, cell) is the machine learning analysis.
 %%%% ¡calculate!
 value = calculate_results(nn);
 
@@ -87,10 +87,6 @@ function value = calculate_results(nn)
     if(~isempty(dataset))
         label = array2table(label, 'VariableNames', {'DX'})
         dataset = [dataset label];
-        %dataset = convertvars(dataset,'DX', 'categorical');
-
-        % show classes name
-        %class_names = categories(dataset{:,end})
 
         % split the data into training set and test set (85:15)
         numObservations = size(dataset,1);

@@ -1,21 +1,20 @@
 %% ¡header!
-ClassifierNN < BaseNN (nn, classifier with nerual networks) is a classifier consists of neural network.
+ClassifierNN < BaseNN (nn, classifier with nerual networks) is a classifier consists of artificial neural network.
 
 %% ¡description!
 This classifier is composed of artificial neural network layers and classification output layer.
 
 %% ¡props!
 %%% ¡prop!
-TRAINING_ACCURACY (result, scalar) is the model accuracy obtained from the training data.
+TRAINING_ACCURACY (result, scalar) is the accuracy of the classifier obtained from the training data.
 
 %%% ¡prop!
-TEST_ACCURACY (result, scalar) is the model accuracy obtained from test data.
+TEST_ACCURACY (result, scalar) is the accuracy of the classifier obtained from test data.
 
 
 %% ¡methods!
 function layers = getLayers(nn, numFeatures, numClasses)
     layers = [
-        %featureInputLayer(numFeatures,'Normalization', 'zscore','Name','input')
         imageInputLayer([1 1 numFeatures],'Normalization', 'zscore','Name','input')
         fullyConnectedLayer(floor(1.5*numFeatures),'Name','fc1')
         batchNormalizationLayer('Name','batchNormalization1')

@@ -1,4 +1,4 @@
-%EXAMPLE_NN_CLASSIFICATION
+%EXAMPLE_NN_REGRESSION
 % Script example workflow 
 
 clear variables %#ok<*NASGU>
@@ -25,13 +25,13 @@ im_gr2 = ImporterGroupSubjectSTXLS( ...
 gr2 = im_gr2.get('GR');
 
 %% Neural network
-nn_ST = RegressorNN_ST( ...
+nn_regressor_ST = RegressorNN_ST( ...
     'GR1', gr1, ...
     'GR2', gr2 ...
     );
 
 % nn result calculation
-nn_ST.memorize('NEURAL_NETWORK_ANALYSIS');
-test_mse = nn_ST.get('TEST_RMSE');
-train_mse = nn_ST.get('TRAINING_RMSE');
+nn_regressor_ST.memorize('NEURAL_NETWORK_ANALYSIS');
+test_mse = nn_regressor_ST.get('TEST_RMSE');
+train_mse = nn_regressor_ST.get('TRAINING_RMSE');
 

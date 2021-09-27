@@ -25,13 +25,13 @@ im_gr2 = ImporterGroupSubjectSTXLS( ...
 gr2 = im_gr2.get('GR');
 
 %% Neural network
-nn_ST = ClassifierNN_ST( ...
+nn_classifier_ST = ClassifierNN_ST( ...
     'GR1', gr1, ...
     'GR2', gr2 ...
     );
 
 % nn result calculation
-nn_ST.memorize('NEURAL_NETWORK_ANALYSIS');
-test_acc = nn_ST.get('TEST_ACCURACY');
-train_acc = nn_ST.get('TRAINING_ACCURACY');
+nn_classifier_ST.memorize('NEURAL_NETWORK_ANALYSIS');
+test_acc = nn_classifier_ST.get('TEST_ACCURACY');
+train_acc = nn_classifier_ST.get('TRAINING_ACCURACY');
 

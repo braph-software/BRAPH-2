@@ -1,15 +1,15 @@
 %% ¡header!
-RegressorNN < BaseNN (nn, regressor with nerual networks) is a regressor consist of neural network.
+RegressorNN < BaseNN (nn, regressor with nerual networks) is a regressor consist of artificial neural network.
 
 %% ¡description!
 This regressor is composed of artificial neural network layers and regression output layer.
 
 %% ¡props!
 %%% ¡prop!
-TRAINING_RMSE (result, scalar) is the model root mean square error obtained from the training data.
+TRAINING_RMSE (result, scalar) is the root mean square error of the regressor obtained from the training data.
 
 %%% ¡prop!
-TEST_RMSE (result, scalar) is the model root mean square error obtained from the test data.
+TEST_RMSE (result, scalar) is the root mean square error of the regressor obtained from the test data.
 
 
 %% ¡methods!

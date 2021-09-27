@@ -1,5 +1,5 @@
 %% ¡header!
-ClassifierNN_ST < ClassifierNN (nn, classification with structural data) is a classifier using neural network with structural data.
+ClassifierNN_ST < ClassifierNN (nn, classification with structural data) is a neural network classifier using structural data.
 
 %% ¡description!
 This classifier uses structural data and trains neural network for classification.
@@ -21,56 +21,56 @@ GR2 (data, item) is the subject group 2, which also defines the subject class Su
 Group('SUB_CLASS', 'SubjectST')
 
 %%% ¡prop!
-X_TBLTRAIN (result, matrix) is the neural network trained from this analysis.
+X_TBLTRAIN (result, matrix) is the training dataset separated from the whole dataset.
 %%%% ¡calculate!
 analysis = nn.get('NEURAL_NETWORK_ANALYSIS');
 value = analysis{2};
 
 %%% ¡prop!
-Y_TBLTRAIN (result, matrix) is the neural network trained from this analysis.
+Y_TBLTRAIN (result, matrix) is the labels for the training dataset.
 %%%% ¡calculate!
 analysis = nn.get('NEURAL_NETWORK_ANALYSIS');
 value = analysis{3};
 
 %%% ¡prop!
-X_TBLTEST (result, matrix) is the neural network trained from this analysis.
+X_TBLTEST (result, matrix) is the test dataset separated from the whole dataset.
 %%%% ¡calculate!
 analysis = nn.get('NEURAL_NETWORK_ANALYSIS');
 value = analysis{4};
 
 %%% ¡prop!
-Y_TBLTEST (result, matrix) is the neural network trained from this analysis.
+Y_TBLTEST (result, matrix) is the labels for the test dataset.
 %%%% ¡calculate!
 analysis = nn.get('NEURAL_NETWORK_ANALYSIS');
 value = analysis{5};
 
 %%% ¡prop!
-CLASSES (result, cell) is the neural network trained from this analysis.
+CLASSES (result, cell) is the contained classes of the labels.
 %%%% ¡calculate!
 analysis = nn.get('NEURAL_NETWORK_ANALYSIS');
 value = analysis(6);
 
 %%% ¡prop!
-TRAINED_NET (result, rvector) is the neural network trained from this analysis.
+TRAINED_NET (result, rvector) is the trained neural network.
 %%%% ¡calculate!
 analysis = nn.get('NEURAL_NETWORK_ANALYSIS');
 value = analysis{1};
 
 %% ¡props_update!
 %%% ¡prop!
-TRAINING_ACCURACY (result, scalar) is the neural network trained from this analysis.
+TRAINING_ACCURACY (result, scalar) is the accuracy obtained from training dataset.
 %%%% ¡calculate!
 analysis = nn.get('NEURAL_NETWORK_ANALYSIS');
 value = analysis{7};
 
 %%% ¡prop!
-TEST_ACCURACY (result, scalar) is the neural network trained from this analysis.
+TEST_ACCURACY (result, scalar) is the accuracy obtained from test dataset.
 %%%% ¡calculate!
 analysis = nn.get('NEURAL_NETWORK_ANALYSIS');
 value = analysis{8};
 
 %%% ¡prop!
-NEURAL_NETWORK_ANALYSIS (result, cell) is the neural network trained from this analysis.
+NEURAL_NETWORK_ANALYSIS (result, cell) is the machine learning analysis.
 %%%% ¡calculate!
 value = calculate_results(nn);
 
