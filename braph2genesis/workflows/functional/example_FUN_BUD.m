@@ -4,7 +4,7 @@
 clear variables %#ok<*NASGU>
 
 %% Load BrainAtlas
-im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('example_FUN_BUD')) filesep 'example data FUN (fMRI)' filesep 'aal90_atlas.xlsx']);
+im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('example_FUN_BUD')) filesep 'example data FUN (fMRI)' filesep 'craddock_atlas.xlsx']);
 
 ba = im_ba.get('BA');
 
