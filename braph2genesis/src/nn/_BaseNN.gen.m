@@ -8,7 +8,6 @@ Use one of its subclasses instead.
 
 
 %% ¡props!
-
 %%% ¡prop!
 ID (data, string) is a few-letter code for the classification.
 
