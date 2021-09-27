@@ -8,13 +8,13 @@ Use one of its subclasses instead.
 
 %% ¡props!
 %%% ¡prop!
-ID (data, string) is a few-letter code for the classification.
+ID (data, string) is a few-letter code for the machien learning analysis.
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the classification.
+LABEL (metadata, string) is an extended label of the machien learning analysis.
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the classification.
+NOTES (metadata, string) are some specific notes about  the machien learning analysis.
 
 %%% ¡prop!
 NEURAL_NETWORK_ANALYSIS (result, cell) is the machine learning analysis.
