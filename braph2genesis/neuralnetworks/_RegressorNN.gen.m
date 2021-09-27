@@ -6,14 +6,14 @@ This regressor is composed of artificial neural network layers and regression ou
 
 %% ¡props!
 %%% ¡prop!
-TRAINING_MSE (result, scalar) is the model mean square error obtained from the training data.
+TRAINING_RMSE (result, scalar) is the model root mean square error obtained from the training data.
 
 %%% ¡prop!
-TEST_MSE (result, scalar) is the model mean square error obtained from the test data.
+TEST_RMSE (result, scalar) is the model root mean square error obtained from the test data.
 
 
 %% ¡methods!
-function layers = getLayers(numFeatures)
+function layers = getLayers(nn, numFeatures)
     layers = [
         imageInputLayer([1 1 numFeatures],'Normalization', 'zscore','Name','input')
         fullyConnectedLayer(floor(1.5*numFeatures),'Name','fc1')
