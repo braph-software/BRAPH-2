@@ -1,11 +1,10 @@
 %% ¡header!
-ClassifierNN_ST < ClassifierNN (nn, classification with structural data) is a neural network classifier using structural data.
+ClassifierNN_ST < ClassifierNN (nn, classification with structural data) is a neural network classifier using structural data for classifying groups.
 
 %% ¡description!
-This classifier uses structural data and trains neural network for classification.
+This classifier uses structural data and trains neural network for classification of groups.
 
 %% ¡props!
-
 %%% ¡prop!
 GR1 (data, item) is the subject group 1, which also defines the subject class SubjectST.
 %%%% ¡settings!
@@ -146,7 +145,6 @@ function value = calculate_results(nn)
 
         % get string format of nn
         neural_network = nn.net_binary_transformer(net);
-
     else
         neural_network = [];
         X_tblTrain = [];
@@ -157,12 +155,12 @@ function value = calculate_results(nn)
         training_accuracy = 0;
         test_accuracy = 0;
     end
+    
     % return all the values
     value = {neural_network, X_tblTrain, y_tblTrain, X_tblTest, y_tblTest, class_names, training_accuracy, test_accuracy};
 end
 
 %% ¡tests!
-
 %%% ¡test!
 %%%% ¡name!
 Example

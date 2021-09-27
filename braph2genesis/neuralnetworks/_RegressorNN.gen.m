@@ -11,7 +11,6 @@ TRAINING_RMSE (result, scalar) is the root mean square error of the regressor ob
 %%% ¡prop!
 TEST_RMSE (result, scalar) is the root mean square error of the regressor obtained from the test data.
 
-
 %% ¡methods!
 function layers = getLayers(nn, numFeatures)
     layers = [

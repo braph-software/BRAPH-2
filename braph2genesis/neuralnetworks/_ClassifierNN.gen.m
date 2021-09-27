@@ -11,7 +11,6 @@ TRAINING_ACCURACY (result, scalar) is the accuracy of the classifier obtained fr
 %%% ¡prop!
 TEST_ACCURACY (result, scalar) is the accuracy of the classifier obtained from test data.
 
-
 %% ¡methods!
 function layers = getLayers(nn, numFeatures, numClasses)
     layers = [

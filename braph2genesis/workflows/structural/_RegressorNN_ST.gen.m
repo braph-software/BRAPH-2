@@ -1,11 +1,10 @@
 %% ¡header!
-RegressorNN_ST < RegressorNN (nn, regression with structural data) is a neural network regressor using structural data.
+RegressorNN_ST < RegressorNN (nn, regression with structural data) is a neural network regressor using structural data for predicting age.
 
 %% ¡description!
-This regressor uses structural data and trains neural network for regression.
+This regressor uses structural data and trains neural network for regression of age.
 
 %% ¡props!
-
 %%% ¡prop!
 GR1 (data, item) is the subject group 1, which also defines the subject class SubjectST.
 %%%% ¡settings!
@@ -139,7 +138,6 @@ function value = calculate_results(nn)
 
         % get string format of nn
         neural_network = nn.net_binary_transformer(net);
-
     else
         neural_network = [];
         X_tblTrain = [];
@@ -154,7 +152,6 @@ function value = calculate_results(nn)
 end
 
 %% ¡tests!
-
 %%% ¡test!
 %%%% ¡name!
 Example
