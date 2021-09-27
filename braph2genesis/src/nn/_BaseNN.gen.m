@@ -28,5 +28,3 @@ function nn_binary_format = net_binary_transformer(nn, net)
     fclose(fileID);
     delete nn.bin
 end
-
-
