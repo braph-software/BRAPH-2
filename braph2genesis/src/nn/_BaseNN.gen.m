@@ -19,7 +19,7 @@ LABEL (metadata, string) is an extended label of the classification.
 NOTES (metadata, string) are some specific notes about the classification.
 
 %%% ¡prop!
-TRAINED_NEURAL_NETWORK (result, cell) is the neural network trained from this analysis.
+NEURAL_NETWORK_ANALYSIS (result, cell) is the neural network analysis.
 
 %% ¡methods!
 function nn_binary_format = net_binary_transformer(nn, net)
