@@ -4,15 +4,34 @@
 clear variables %#ok<*NASGU>
 
 
+%% Load BrainAtlas
+im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('example_ST_WU')) filesep 'example data ST (MRI)' filesep 'desikan_atlas.xlsx']);
+
+ba = im_ba.get('BA');
+
+%% Load Groups of SubjectST
+im_gr1 = ImporterGroupSubjectSTXLS( ...
+    'FILE', [fileparts(which('example_ST_WU')) filesep 'example data ST (MRI)' filesep 'xls' filesep 'ST_group1.xlsx'], ...
+    'BA', ba ...
+    );
+
+gr1 = im_gr1.get('GR');
+
+im_gr2 = ImporterGroupSubjectSTXLS( ...
+    'FILE', [fileparts(which('example_ST_WU')) filesep 'example data ST (MRI)' filesep 'xls' filesep 'ST_group2.xlsx'], ...
+    'BA', ba ...
+    );
+
+gr2 = im_gr2.get('GR');
+
 %% Neural network
 nn_ST = ClassifierNN_ST( ...
-    'FILE', [fileparts(which('example_ST_WU')) filesep 'example data ST (MRI)' filesep 'xls' filesep 'mr_adni.csv'] ...
+    'GR1', gr1, ...
+    'GR2', gr2 ...
     );
 
 % nn result calculation
-nn_CON_WU.memorize('NEURAL_NETWORK_ANALYSIS');
-test_acc = nn_CON_WU.get('test_accuracy');
-train_acc = nn_CON_WU.get('training_accuracy');
-%confusion_matrix_training = nn_CON_WU.getTrainingConfusionMatrix();
-%confusion_matrix_test = nn_CON_WU.getTestConfusionMatrix();
+nn_ST.memorize('NEURAL_NETWORK_ANALYSIS');
+test_acc = nn_ST.get('TEST_ACCURACY');
+train_acc = nn_ST.get('TRAINING_ACCURACY');
 
