@@ -6,7 +6,6 @@ BaseNN provides the methods necessary for setting up neural networks.
 Instances of this class should not be created. 
 Use one of its subclasses instead.
 
-
 %% ¡props!
 %%% ¡prop!
 ID (data, string) is a few-letter code for the classification.
