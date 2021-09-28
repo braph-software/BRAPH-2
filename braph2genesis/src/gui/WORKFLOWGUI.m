@@ -299,7 +299,7 @@ end
         end
         if isfield(panel_struct(panel, child), 'exe') && ~isempty(panel_struct(panel, child).exe)           
             tmp_pl = panel_struct(panel, child).plot_element;         
-            if ~isempty(tmp_pl) && ~isequal(panel_struct(panel , child).exe, tmp_pl.get('EL'))
+            if ~isempty(tmp_pl) && ~isequal_shallow(panel_struct(panel , child).exe, tmp_pl.get('EL'))
                 % change to new obj
                 panel_struct(panel, child).exe = tmp_pl.get('El');
                 exe_check = true;
@@ -418,6 +418,24 @@ end
                         change_state_btn([], tmp_el.get('ID'), default_msg, btn, i, j);
                     end
                 end
+            end
+        end
+    end
+    function check = isequal_shallow(obj_a, obj_b)
+        check = isa(obj_b, obj_a.getClass());
+        if check
+            for prop = 1:1:obj_a.getPropNumber()
+                val_prop_a = obj_a.getr(prop);
+                val_prop_b = obj_b.getr(prop);
+                if isa(val_prop_a,'NoValue') || isa(val_prop_b,'NoValue')
+                    check = check && (obj_a.isLocked(prop) == obj_b.isLocked(prop));
+                elseif isa(val_prop_a, 'Element')
+                    check = check && isequal(val_prop_a.get('ID'), val_prop_b.get('ID')) && (obj_a.isLocked(prop) == obj_b.isLocked(prop));
+                else
+                    % not an object
+                    check = check && isequal(val_prop_a, val_prop_b) && (obj_a.isLocked(prop) == obj_b.isLocked(prop));
+                end
+                
             end
         end
     end
