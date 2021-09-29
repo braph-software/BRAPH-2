@@ -2219,14 +2219,11 @@ function h = getMCRPanel(pl)
                 if get(ui_checkbox_meas_sphereradius, 'Value')
 
                     R = str2double(get(ui_edit_meas_sphereradius, 'String'));
-
+                    R = 1 + (measure_data_inner)*R;
                     R(isnan(R)) = 0.1;
                     R(R <= 0) = 0.1;
-                    pl.set('SPHS_SIZE', R');
+                    pl.set('SPHS_SIZE', R);
                     pl.set('SPHS', 1);
-                else
-                    measure_data_inner(measure_data_inner == 0 ) = 0.01;
-                    pl.set('SPHS_SIZE', measure_data_inner);
                 end
                 		               
                 if get(ui_checkbox_meas_spherecolor, 'Value')
