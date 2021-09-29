@@ -202,15 +202,6 @@ function f_settings  = settings(pl, varargin)
         set(surface_panel, 'Visible', 'on', 'Enable', 'on')
         set(ui_panel_graph, 'Visible', 'off', 'Enable', 'off')
         set(ui_panel_mcr, 'Visible', 'off', 'Enable', 'off')
-        
-        ui_title = uicontrol(surface_panel, ...
-            'Style', 'text', ...
-            'String', 'Surface Panel', ...
-            'Units', 'normalized', ...
-            'BackgroundColor', BKGCOLOR, ...
-            'HorizontalAlignment', 'left', ...
-            'FontWeight', 'bold', ...
-            'Position', [0.01 .91 0.3 0.08]);
     end
     function cb_panel_graph(~, ~)
         set(surface_panel, 'Visible', 'off', 'Enable', 'off')
@@ -2356,7 +2347,7 @@ function h = getMCRPanel(pl)
 
                     R(isnan(R)) = 0.1;
                     R(R<=0) = 0.1;
-                    pl.set('SPHS_SIZE', R');
+                    pl.set('SPHS_SIZE', R);
                     if ~isempty(fdr_lim)
                         pl.set('SPHS', fdr_lim');
                     else
