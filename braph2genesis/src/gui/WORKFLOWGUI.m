@@ -342,7 +342,9 @@ end
         btn = varargin{1};
         
         if ~isempty(btn) && isgraphics(btn)
-            set(btn, 'BackgroundColor', [166 218 149] / 255) % color
+            if ~isequal(btn.Style,'text')
+                set(btn, 'BackgroundColor', [166 218 149] / 255) % color
+            end
             if length(varargin) > 1
                 if ~isempty(varargin{2})
                     btn_new_name = [varargin{3} ' ' varargin{2}];
@@ -353,7 +355,9 @@ end
             end
         else
             h_btn = panel_inner{varargin{5}, varargin{6}};
-            set(h_btn, 'BackgroundColor', [166 218 149] / 255) % color            
+            if ~isempty(h_btn) && ~isequal(h_btn.Style,'text')
+                set(h_btn, 'BackgroundColor', [166 218 149] / 255) % color
+            end          
             if ~isempty(varargin{4})
                 btn_new_name = [varargin{3} ' ' varargin{4}];
                 set(btn, 'String', btn_new_name); % id
