@@ -9,8 +9,8 @@
 ba = ImporterBrainAtlasXLS().get('BA'); % Load a Brain Atlas XLS % Brain Atlas:
 
 %% Groups
-gr1 = ImporterGroupSubjectSTMPXLS('BA', ba).get('GR'); % Load Group 1 STMP XLS % Group 1 STMP:
-gr2 = ImporterGroupSubjectSTMPXLS('BA', ba).get('GR'); % Load Group 2 STMP XLS % Group 2 STMP:
+gr1 = ImporterGroupSubjectSTMPXLS('BA', ba).get('GR'); % Load Group 1 ST MP XLS % Group 1 ST MP:
+gr2 = ImporterGroupSubjectSTMPXLS('BA', ba).get('GR'); % Load Group 2 ST MP XLS % Group 2 ST MP:
 
 %% Analysis
 a_WU1 = AnalyzeGroup_ST_MP_WU('GR', gr1); % Analyze Group 1 % Analyzed Group 1:
