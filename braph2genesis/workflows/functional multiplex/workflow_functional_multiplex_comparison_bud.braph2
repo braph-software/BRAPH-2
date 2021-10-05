@@ -9,8 +9,8 @@
 ba = ImporterBrainAtlasXLS().get('BA'); % Load Brain Atlas XLS % Brain Atlas
 
 %% Groups
-gr1 = ImporterGroupSubjectFUNMPXLS('BA', ba).get('GR'); % Load Group 1 FUN XLS % Group 1 FUN:
-gr2 = ImporterGroupSubjectFUNMPXLS('BA', ba).get('GR'); % Load Group 2 FUN XLS % Group 2 FUN:
+gr1 = ImporterGroupSubjectFUNMPXLS('BA', ba).get('GR'); % Load Group 1 FUN MP XLS % Group 1 FUN MP:
+gr2 = ImporterGroupSubjectFUNMPXLS('BA', ba).get('GR'); % Load Group 2 FUN MP XLS % Group 2 FUN MP:
 
 %% Analysis
 a_BUD1 = AnalyzeEnsemble_FUN_MP_BUD('GR', gr1, 'DENSITIES', [0 20 40 60 80 100]); % Analyze Group 1 % Analyzed Group 1:
