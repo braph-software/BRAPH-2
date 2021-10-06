@@ -1817,30 +1817,6 @@ function h = getMCRPanel(pl)
             set(ui_edit_meas_symbolsize, 'FontWeight', 'bold')
             set(ui_edit_meas_symbolsize, 'Callback', {@cb_edit_meas_symbolsize})
 
-            set(ui_checkbox_meas_symbolcolor, 'Units', 'normalized')
-            set(ui_checkbox_meas_symbolcolor, 'Position', [.01 .67 .3 .08])
-            set(ui_checkbox_meas_symbolcolor, 'String', ' Symbol Color ')
-            set(ui_checkbox_meas_symbolcolor, 'Value', false)
-            set(ui_checkbox_meas_symbolcolor, 'FontWeight', 'bold')
-            set(ui_checkbox_meas_symbolcolor, 'TooltipString', 'Shows brain regions by label')
-            set(ui_checkbox_meas_symbolcolor, 'Callback', {@cb_checkbox_meas_symbolcolor})
-
-            set(ui_popup_meas_initcolor, 'Units', 'normalized')
-            set(ui_popup_meas_initcolor, 'Enable', 'off')
-            set(ui_popup_meas_initcolor, 'Position', [.31 .67 .3 .08])
-            set(ui_popup_meas_initcolor, 'String', {'R', 'G', 'B'})
-            set(ui_popup_meas_initcolor, 'Value', 3)
-            set(ui_popup_meas_initcolor, 'TooltipString', 'Select symbol');
-            set(ui_popup_meas_initcolor, 'Callback', {@cb_meas_initcolor})
-
-            set(ui_popup_meas_fincolor, 'Units', 'normalized')
-            set(ui_popup_meas_fincolor, 'Enable', 'off')
-            set(ui_popup_meas_fincolor, 'Position', [0.61 .67 .3 .08])
-            set(ui_popup_meas_fincolor, 'String', {'R', 'G', 'B'})
-            set(ui_popup_meas_fincolor, 'Value', 1)
-            set(ui_popup_meas_fincolor, 'TooltipString', 'Select symbol');
-            set(ui_popup_meas_fincolor, 'Callback', {@cb_meas_fincolor})
-
             set(ui_checkbox_meas_sphereradius, 'Units', 'normalized')
             set(ui_checkbox_meas_sphereradius, 'Position', [.01 0.54 .3 .08])
             set(ui_checkbox_meas_sphereradius, 'String', ' Sphere Radius ')
@@ -1856,30 +1832,6 @@ function h = getMCRPanel(pl)
             set(ui_edit_meas_sphereradius, 'HorizontalAlignment', 'center')
             set(ui_edit_meas_sphereradius, 'FontWeight', 'bold')
             set(ui_edit_meas_sphereradius, 'Callback', {@cb_edit_meas_sphereradius})
-
-            set(ui_checkbox_meas_spherecolor, 'Units', 'normalized')
-            set(ui_checkbox_meas_spherecolor, 'Position', [.01 0.41 .3 .08])
-            set(ui_checkbox_meas_spherecolor, 'String', ' Sphere Color ')
-            set(ui_checkbox_meas_spherecolor, 'Value', false)
-            set(ui_checkbox_meas_spherecolor, 'FontWeight', 'bold')
-            set(ui_checkbox_meas_spherecolor, 'TooltipString', 'Shows brain regions by label')
-            set(ui_checkbox_meas_spherecolor, 'Callback', {@cb_checkbox_meas_spherecolor})
-
-            set(ui_popup_meas_sphinitcolor, 'Units', 'normalized')
-            set(ui_popup_meas_sphinitcolor, 'Enable', 'off')
-            set(ui_popup_meas_sphinitcolor, 'Position', [.31 .41 .3 .08])
-            set(ui_popup_meas_sphinitcolor, 'String', {'R', 'G', 'B'})
-            set(ui_popup_meas_sphinitcolor, 'Value', 1)
-            set(ui_popup_meas_sphinitcolor, 'TooltipString', 'Select symbol');
-            set(ui_popup_meas_sphinitcolor, 'Callback', {@cb_meas_sphinitcolor})
-
-            set(ui_popup_meas_sphfincolor, 'Units', 'normalized')
-            set(ui_popup_meas_sphfincolor, 'Enable', 'off')
-            set(ui_popup_meas_sphfincolor, 'Position', [0.61 .41 .3 .08])
-            set(ui_popup_meas_sphfincolor, 'String', {'R', 'G', 'B'})
-            set(ui_popup_meas_sphfincolor, 'Value', 3)
-            set(ui_popup_meas_sphfincolor, 'TooltipString', 'Select symbol');
-            set(ui_popup_meas_sphfincolor, 'Callback', {@cb_meas_sphfincolor})
 
             set(ui_checkbox_meas_spheretransparency, 'Units', 'normalized')
             set(ui_checkbox_meas_spheretransparency, 'Position', [.01 0.28 .3 .08])
@@ -1910,31 +1862,7 @@ function h = getMCRPanel(pl)
             set(ui_edit_meas_labelsize, 'Position', [.31 .15 .6 .08])
             set(ui_edit_meas_labelsize, 'HorizontalAlignment', 'center')
             set(ui_edit_meas_labelsize, 'FontWeight', 'bold')
-            set(ui_edit_meas_labelsize, 'Callback', {@cb_edit_meas_labelsize})
-
-            set(ui_checkbox_meas_labelcolor, 'Units', 'normalized')
-            set(ui_checkbox_meas_labelcolor, 'Position', [.01 0.01 .3 .08])
-            set(ui_checkbox_meas_labelcolor, 'String', ' Label Color ')
-            set(ui_checkbox_meas_labelcolor, 'Value', false)
-            set(ui_checkbox_meas_labelcolor, 'FontWeight', 'bold')
-            set(ui_checkbox_meas_labelcolor, 'TooltipString', 'Shows brain regions by label')
-            set(ui_checkbox_meas_labelcolor, 'Callback', {@cb_checkbox_meas_labelcolor})
-
-            set(ui_popup_meas_labelinitcolor, 'Units', 'normalized')
-            set(ui_popup_meas_labelinitcolor, 'Enable', 'off')
-            set(ui_popup_meas_labelinitcolor, 'Position', [.31 .01 .3 .08])
-            set(ui_popup_meas_labelinitcolor, 'String', {'R', 'G', 'B'})
-            set(ui_popup_meas_labelinitcolor, 'Value', 1)
-            set(ui_popup_meas_labelinitcolor, 'TooltipString', 'Select symbol');
-            set(ui_popup_meas_labelinitcolor, 'Callback', {@cb_meas_labelinitcolor})
-
-            set(ui_popup_meas_labelfincolor, 'Units', 'normalized')
-            set(ui_popup_meas_labelfincolor, 'Enable', 'off')
-            set(ui_popup_meas_labelfincolor, 'Position', [0.61 .01 .3 .08])
-            set(ui_popup_meas_labelfincolor, 'String', {'R', 'G', 'B'})
-            set(ui_popup_meas_labelfincolor, 'Value', 3)
-            set(ui_popup_meas_labelfincolor, 'TooltipString', 'Select symbol');
-            set(ui_popup_meas_labelfincolor, 'Callback', {@cb_meas_labelfincolor})
+            set(ui_edit_meas_labelsize, 'Callback', {@cb_edit_meas_labelsize})  
 
         end
         function cb_layer_selector(~, ~)
