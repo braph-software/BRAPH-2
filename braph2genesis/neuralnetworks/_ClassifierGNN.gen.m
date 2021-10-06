@@ -1,5 +1,5 @@
 %% ¡header!
-ClassifierGNN < BaseNN (nn, classifier with graph nerual network) is a classifier consists of graph neural network.
+ClassifierGNN < BaseNN (gnn, classifier with graph nerual network) is a classifier consists of graph neural network.
 
 %% ¡description!
 This node classifier is composed of graph neural network layers and classification output layer.
@@ -14,14 +14,15 @@ TRAINING_ACCURACY (result, scalar) is the accuracy of the classifier obtained fr
 TEST_ACCURACY (result, scalar) is the accuracy of the classifier obtained from test data.
 
 %% ¡methods!
-function [score, prediction] = accuracy(YPred, target, classes)
+function [score, prediction] = accuracy(gnn, YPred, target, classes)
     % Decode probability vectors into class labels
     prediction = onehotdecode(YPred, classes, 2);
     score = sum(prediction == target)/numel(target);
 end
 
-function weights = initialize_glorot(sz,numOut,numIn,className)
+function weights = initialize_glorot(gnn, sz,numOut,numIn,className)
     arguments
+        gnn
         sz
         numOut
         numIn
@@ -35,7 +36,7 @@ function weights = initialize_glorot(sz,numOut,numIn,className)
     weights = dlarray(weights);
 end
 
-function [gradients, loss, dlYPred] = model_gradients(dlX, adjacencyTrain, T, parameters)
+function [gradients, loss, dlYPred] = model_gradients(gnn, dlX, adjacencyTrain, T, parameters)
 
     dlYPred = model(dlX, adjacencyTrain, parameters);
 
@@ -45,10 +46,7 @@ function [gradients, loss, dlYPred] = model_gradients(dlX, adjacencyTrain, T, pa
 
 end
 
-function normAdjacency = normalize_adjacency(adjacency)
-
-    % Add self connections to adjacency matrix
-    adjacency = adjacency + speye(size(adjacency));
+function normAdjacency = normalize_adjacency(gnn, adjacency)
 
     % Compute degree of nodes
     degree = sum(adjacency, 2);
@@ -61,24 +59,24 @@ function normAdjacency = normalize_adjacency(adjacency)
 
 end
 
-function features = normalize_features(features)
+function features = normalize_features(gnn, features)
 
     % Get the mean and variance from the training data
     meanFeatures = mean(features{1});
     varFeatures = var(features{1}, 1);
 
-    % Standardize training, validation and test data
-    for i = 1:3
+    % Standardize training and test data
+    for i = 1:2
         features{i} = (features{i} - meanFeatures)./sqrt(varFeatures);
     end
 
 end
 
-function nn_obj_format = net_obj_transformer(nn)
+function nn_obj_format = net_obj_transformer(gnn)
     filename = 'nn.onnx';
     fileID = fopen(filename,'w');
-    fwrite(fileID, cell2mat(nn.get('NEURAL_NETWORK')));
+    fwrite(fileID, cell2mat(gnn.get('NEURAL_NETWORK')));
     fclose(fileID);
-    nn_obj_format = importONNXNetwork(filename,'OutputLayerType','classification','Classes',string(nn.class_name));
+    nn_obj_format = importONNXNetwork(filename,'OutputLayerType','classification','Classes',string(gnn.class_name));
     delete nn.onnx
 end
