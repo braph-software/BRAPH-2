@@ -1530,6 +1530,7 @@ function brain_graph_panel = getBrainGraphPanel(pl)
     br_axes = pl.h_axes; %#ok<NASGU>
     BKGCOLOR = [1 .9725 .929];
     fig_graph = pl.f_graph_settings;
+    color = [1 1 1];
     
     ui_title = uicontrol(fig_graph, ...
         'Style', 'text', ...
@@ -1540,17 +1541,12 @@ function brain_graph_panel = getBrainGraphPanel(pl)
         'FontWeight', 'bold', ...
         'Position', [0.01 .91 0.3 0.08]);
 
-    ui_checkbox_graph_linecolor = uicontrol(fig_graph, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
-    ui_popup_graph_initcolor = uicontrol(fig_graph, 'Style', 'popup', 'String', {''});
-    ui_popup_graph_fincolor = uicontrol(fig_graph, 'Style', 'popup', 'String', {''});
     ui_checkbox_graph_lineweight = uicontrol(fig_graph, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
     ui_edit_graph_lineweight = uicontrol(fig_graph, 'Style', 'edit');
     ui_button_graph_show = uicontrol(fig_graph, 'Style', 'pushbutton');
     ui_button_graph_hide = uicontrol(fig_graph, 'Style', 'pushbutton');
     ui_button_graph_color = uicontrol(fig_graph, 'Style', 'pushbutton');
     ui_button_graph_edge_settings = uicontrol(fig_graph, 'Style', 'pushbutton');
-    ui_text_graph_thickness = uicontrol(fig_graph, 'Style', 'text', 'BackgroundColor', BKGCOLOR);
-    ui_edit_graph_thickness = uicontrol(fig_graph, 'Style', 'edit');
     ui_link_type = uicontrol(fig_graph, 'Style', 'popup', 'String', {'line', 'arrow', 'cylinder'});
 
     init_graph()
@@ -1559,31 +1555,7 @@ function brain_graph_panel = getBrainGraphPanel(pl)
     set(fig_graph, 'Visible', 'on');
 
         function init_graph()
-            set(ui_checkbox_graph_linecolor, 'Units', 'normalized')
-            set(ui_checkbox_graph_linecolor, 'BackgroundColor',BKGCOLOR)
-            set(ui_checkbox_graph_linecolor, 'Position', [.10 .81 .23 .10])
-            set(ui_checkbox_graph_linecolor, 'String', ' Color ')
-            set(ui_checkbox_graph_linecolor, 'Value', false)
-            set(ui_checkbox_graph_linecolor, 'FontWeight', 'bold')
-            set(ui_checkbox_graph_linecolor, 'TooltipString', 'Shows brain regions by label')
-            set(ui_checkbox_graph_linecolor, 'Callback', {@cb_checkbox_linecolor})
-
-            set(ui_popup_graph_initcolor, 'Units', 'normalized')
-            set(ui_popup_graph_initcolor, 'BackgroundColor',BKGCOLOR)
-            set(ui_popup_graph_initcolor, 'Position', [.355 .8 .155 .10])
-            set(ui_popup_graph_initcolor, 'String', {'R', 'G', 'B'})
-            set(ui_popup_graph_initcolor, 'Value', 3)
-            set(ui_popup_graph_initcolor, 'TooltipString', 'Select symbol');
-            set(ui_popup_graph_initcolor, 'Callback', {@cb_popup_initcolor})
-
-            set(ui_popup_graph_fincolor, 'Units', 'normalized')
-            set(ui_popup_graph_fincolor, 'BackgroundColor',BKGCOLOR)
-            set(ui_popup_graph_fincolor, 'Position', [.575 .8 .155 .10])
-            set(ui_popup_graph_fincolor, 'String', {'R', 'G', 'B'})
-            set(ui_popup_graph_fincolor, 'Value', 1)
-            set(ui_popup_graph_fincolor, 'TooltipString', 'Select symbol');
-            set(ui_popup_graph_fincolor, 'Callback', {@cb_popup_fincolor})
-
+            
             set(ui_checkbox_graph_lineweight, 'Units', 'normalized')
             set(ui_checkbox_graph_lineweight, 'BackgroundColor',BKGCOLOR)
             set(ui_checkbox_graph_lineweight, 'Position', [.10 .61 .28 .10])
@@ -1594,12 +1566,16 @@ function brain_graph_panel = getBrainGraphPanel(pl)
             set(ui_checkbox_graph_lineweight, 'Callback', {@cb_checkbox_lineweight})
 
             set(ui_edit_graph_lineweight, 'Units', 'normalized')
-            set(ui_edit_graph_lineweight, 'Position', [.35 .62 .38 .08])
+            set(ui_edit_graph_lineweight, 'Position', [.3 .62 .3 .08])
             set(ui_edit_graph_lineweight, 'String', '1');
             set(ui_edit_graph_lineweight, 'TooltipString', 'Set line weight.');
             set(ui_edit_graph_lineweight, 'FontWeight', 'bold')
             set(ui_edit_graph_lineweight, 'Callback', {@cb_edit_lineweight});
-
+            
+            set(ui_link_type, 'Units', 'normalized')
+            set(ui_link_type, 'Position', [.62 .62 .3 .08])
+            set(ui_link_type, 'Callback', {@cb_link_type});
+            
             set(ui_button_graph_show, 'Units', 'normalized')
             set(ui_button_graph_show, 'Position', [.1 .45 .4 .08])
             set(ui_button_graph_show, 'String', ' Show ')
@@ -1632,41 +1608,8 @@ function brain_graph_panel = getBrainGraphPanel(pl)
             set(ui_button_graph_edge_settings, 'FontSize', 10)
             set(ui_button_graph_edge_settings, 'Callback', {@cb_graph_links_settings})
 
-            set(ui_text_graph_thickness, 'Units', 'normalized')
-            set(ui_text_graph_thickness, 'Position', [.02 .05 .3 .08])
-            set(ui_text_graph_thickness, 'String', 'Set thickness  ')
-            set(ui_text_graph_thickness, 'HorizontalAlignment', 'center')
-            set(ui_text_graph_thickness, 'FontWeight', 'bold')
-            set(ui_text_graph_thickness, 'FontSize', 8)
-
-            set(ui_edit_graph_thickness, 'Units', 'normalized')
-            set(ui_edit_graph_thickness, 'Position', [.34 .06 .2 .08])
-            set(ui_edit_graph_thickness, 'String', '1');
-            set(ui_edit_graph_thickness, 'TooltipString', 'Set density.');
-            set(ui_edit_graph_thickness, 'FontWeight', 'bold')
-            set(ui_edit_graph_thickness, 'Callback', {@cb_graph_thickness});
-
-            set(ui_link_type, 'Units', 'normalized')
-            set(ui_link_type, 'Position', [.62 .05 .3 .08])
-            set(ui_link_type, 'Callback', {@cb_link_type});
-        end
-        function cb_checkbox_linecolor(~, ~)  % (src, event)
-            if get(ui_checkbox_graph_linecolor, 'Value')
-                set(ui_popup_graph_initcolor, 'Enable', 'on')
-                set(ui_popup_graph_fincolor, 'Enable', 'on')
-                update_graph()
-            else
-                set(ui_popup_graph_initcolor, 'Enable', 'off')
-                set(ui_popup_graph_fincolor, 'Enable', 'off')
-
-                n = atlas.get('BR_DICT').length();
-                for i = 1:1:n
-                    for j = 1:1:n
-                        pl.link_edges(i, j, 'Color', [0 0 0])
-                    end
-                end
-            end
-        end
+           
+        end        
         function cb_checkbox_lineweight(~, ~)  % (src, event)
             if get(ui_checkbox_graph_lineweight, 'Value')
                 set(ui_edit_graph_lineweight, 'Enable', 'on')
@@ -1691,12 +1634,6 @@ function brain_graph_panel = getBrainGraphPanel(pl)
             if isnan(weigth) || weigth <= 0
                 set(ui_edit_graph_lineweight, 'String', '5');
             end
-            update_graph()
-        end
-        function cb_popup_initcolor(~, ~)  % (src, event)
-            update_graph()
-        end
-        function cb_popup_fincolor(~, ~)  % (src, event)
             update_graph()
         end
         function cb_graph_show(~, ~)  % (src, event)
@@ -1729,13 +1666,6 @@ function brain_graph_panel = getBrainGraphPanel(pl)
                 end
             end
         end
-        function cb_graph_thickness(~, ~)  % (src, event)
-            thickness = real(str2double(get(ui_edit_graph_thickness, 'String')));
-            if isnan(thickness) || thickness <= 0
-                set(ui_edit_graph_thickness, 'String', '1');
-            end
-            update_graph()
-        end
         function cb_link_type(~, ~)
             update_graph()
         end
@@ -1746,9 +1676,7 @@ function brain_graph_panel = getBrainGraphPanel(pl)
             pl.arrow_edges_off([],[])
             pl.cylinder_edges_off([],[])
 
-            if get(ui_checkbox_graph_linecolor, 'Value')
-                val1 = get(ui_popup_graph_initcolor, 'Value');
-                val2 = get(ui_popup_graph_fincolor, 'Value');
+            if get(ui_checkbox_graph_linecolor, 'Value')                
                 n = atlas.get('BR_DICT').length();
                 for i = 1:1:n
                     for j = 1:1:n
@@ -1756,13 +1684,13 @@ function brain_graph_panel = getBrainGraphPanel(pl)
                             continue;
                         end
                         if  link_style == 1
-                            pl.link_edges(i, j, 'Color', [val1 val2]);
+                            pl.link_edges(i, j, 'Color', color);
                             pl.link_edge_on(i, j);
                         elseif link_style == 2
-                            pl.arrow_edges(i, j, 'Color', [val1 val2]);
+                            pl.arrow_edges(i, j, 'Color', color);
                             pl.arrow_edge_on(i, j)
                         else
-                            pl.cylinder_edges(i, j, 'Color', [val1 val2]);
+                            pl.cylinder_edges(i, j, 'Color', color);
                             pl.cylinder_edge_on(i, j)
                         end
                     end
@@ -1843,21 +1771,12 @@ function h = getMCRPanel(pl)
     end
     ui_checkbox_meas_symbolsize = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
     ui_edit_meas_symbolsize = uicontrol(ui_measure_container_panel, 'Style', 'edit');
-    ui_checkbox_meas_symbolcolor = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
-    ui_popup_meas_initcolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
-    ui_popup_meas_fincolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
     ui_checkbox_meas_sphereradius = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
     ui_edit_meas_sphereradius = uicontrol(ui_measure_container_panel, 'Style', 'edit');
-    ui_checkbox_meas_spherecolor = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
-    ui_popup_meas_sphinitcolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
-    ui_popup_meas_sphfincolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
     ui_checkbox_meas_spheretransparency = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
     ui_slider_meas_spheretransparency = uicontrol(ui_measure_container_panel, 'Style', 'slider');
     ui_checkbox_meas_labelsize = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
     ui_edit_meas_labelsize = uicontrol(ui_measure_container_panel, 'Style', 'edit');
-    ui_checkbox_meas_labelcolor = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
-    ui_popup_meas_labelinitcolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
-    ui_popup_meas_labelfincolor = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
 
     %% Callback functions
         function init_measures_panel()
@@ -2043,30 +1962,6 @@ function h = getMCRPanel(pl)
             end
             update_brain_meas_plot()
         end
-        function cb_checkbox_meas_symbolcolor(~, ~)  %  (src, event)
-            if get(ui_checkbox_meas_symbolcolor, 'Value')
-                set(ui_popup_meas_initcolor, 'Enable', 'on')
-                set(ui_popup_meas_fincolor, 'Enable', 'on')
-
-                update_brain_meas_plot()
-            else
-                val = get(ui_popup_meas_initcolor, 'Value');
-                str = get(ui_popup_meas_initcolor, 'String');
-                pl.set('SYMS_EDGE_COLOR', str{val});
-                pl.set('SYMS_FACE_COLOR', str{val});
-
-                set(ui_popup_meas_initcolor, 'Enable', 'off')
-                set(ui_popup_meas_fincolor, 'Enable', 'off')
-
-                update_brain_meas_plot()
-            end
-        end
-        function cb_meas_initcolor(~, ~)  %  (src, event)
-            update_brain_meas_plot()
-        end
-        function cb_meas_fincolor(~, ~)  %  (src, event)
-            update_brain_meas_plot()
-        end
         function cb_checkbox_meas_sphereradius(~, ~)  %  (src, event)
             if get(ui_checkbox_meas_sphereradius, 'Value')
                 set(ui_edit_meas_sphereradius, 'Enable', 'on')
@@ -2087,28 +1982,6 @@ function h = getMCRPanel(pl)
                 set(ui_edit_meas_sphereradius, 'String', '1')
                 R = 3;
             end
-            update_brain_meas_plot()
-        end
-        function cb_checkbox_meas_spherecolor(~, ~)  %  (src, event)
-            if get(ui_checkbox_meas_spherecolor, 'Value')
-                set(ui_popup_meas_sphinitcolor, 'Enable', 'on')
-                set(ui_popup_meas_sphfincolor, 'Enable', 'on')
-                update_brain_meas_plot()
-            else
-                val = get(ui_popup_meas_sphinitcolor, 'Value');
-                str = get(ui_popup_meas_sphinitcolor, 'String');
-                pl.set('SPHS_EDGE_COLOR', str{val});
-                pl.set('SPHS_FACE_COLOR', str{val});
-
-                set(ui_popup_meas_sphinitcolor, 'Enable', 'off')
-                set(ui_popup_meas_sphfincolor, 'Enable', 'off')
-                update_brain_meas_plot()
-            end
-        end
-        function cb_meas_sphinitcolor(~, ~)  %  (src, event)
-            update_brain_meas_plot()
-        end
-        function cb_meas_sphfincolor(~, ~)  %  (src, event)
             update_brain_meas_plot()
         end
         function cb_checkbox_meas_spheretransparency(~, ~)  %  (src, event)
@@ -2150,28 +2023,6 @@ function h = getMCRPanel(pl)
             end
             update_brain_meas_plot()
         end
-        function cb_checkbox_meas_labelcolor(~, ~)  %  (src, event)
-            if get(ui_checkbox_meas_labelcolor, 'Value')
-                set(ui_popup_meas_labelinitcolor, 'Enable', 'on')
-                set(ui_popup_meas_labelfincolor, 'Enable', 'on')
-
-                update_brain_meas_plot()
-            else
-                val = get(ui_popup_meas_labelinitcolor, 'Value');
-                str = get(ui_popup_meas_labelinitcolor, 'String');
-                pl.set('LABS', str{val});
-
-                set(ui_popup_meas_labelinitcolor, 'Enable', 'off')
-                set(ui_popup_meas_labelfincolor, 'Enable', 'off')
-                update_brain_meas_plot()
-            end
-        end
-        function cb_meas_labelinitcolor(~, ~)  %  (src, event)
-            update_brain_meas_plot()
-        end
-        function cb_meas_labelfincolor(~, ~)  %  (src, event)
-            update_brain_meas_plot()
-        end
         function update_brain_meas_plot()
             if ~isempty(measure_data)
                 if  Measure.is_nodal(pl.get('ME').get('MEASURE'))
@@ -2194,24 +2045,6 @@ function h = getMCRPanel(pl)
                     pl.set('SYMS_SIZE', measure_data_inner);
                 end
 
-                if get(ui_checkbox_meas_symbolcolor, 'Value')
-
-                    colorValue = measure_data_inner ;
-
-                    colorValue(isnan(colorValue)) = 0;
-                    colorValue(colorValue < 0) = 0;
-                    colorValue(colorValue > 1) = 1;
-
-                    C = zeros(length(colorValue), 3);
-
-                    val1 = get(ui_popup_meas_initcolor, 'Value');
-                    val2 = get(ui_popup_meas_fincolor, 'Value');
-                    C(:, val1) = colorValue;
-                    C(:, val2) = 1 - colorValue;
-
-                    pl.set('SYMS_FACE_COLOR', C);
-                    pl.set('SYMS_EDGE_COLOR', C);
-                end
 
                 if get(ui_checkbox_meas_sphereradius, 'Value')
 
@@ -2225,28 +2058,9 @@ function h = getMCRPanel(pl)
                     pl.set('SPHS', 1);
                 end
 
-                if get(ui_checkbox_meas_spherecolor, 'Value')
-
-                    colorValue = (measure_data_inner);
-                    colorValue(isnan(colorValue)) = 0;
-                    colorValue(colorValue < 0) = 0;
-                    colorValue(colorValue > 1) = 1;
-
-                    C = zeros(length(colorValue), 3);
-
-                    val1 = get(ui_popup_meas_sphinitcolor, 'Value');
-                    val2 = get(ui_popup_meas_sphfincolor, 'Value');
-                    C(:, val1) = colorValue;
-                    C(:, val2) = 1 - colorValue;
-                    pl.set('SPHS_EDGE_COLOR', C);
-                    pl.set('SPHS_FACE_COLOR', C);
-                    pl.set('SPHS', 1);
-                end
-
                 if get(ui_checkbox_meas_spheretransparency, 'Value')
 
                     alpha = get(ui_slider_meas_spheretransparency, 'Value');
-
 
                     alpha_vec = (measure_data_inner)*alpha;
                     alpha_vec(isnan(alpha_vec)) = 0;
@@ -2266,23 +2080,8 @@ function h = getMCRPanel(pl)
                     pl.set('LABS', 1);
                 end
 
-                if get(ui_checkbox_meas_labelcolor, 'Value')
-                    colorValue = (measure_data_inner);
-                    colorValue(isnan(colorValue)) = 0;
-                    colorValue(colorValue < 0) = 0;
-                    colorValue(colorValue > 1) = 1;
-
-                    C = zeros(length(colorValue), 3);
-
-                    val1 = get(ui_popup_meas_labelinitcolor, 'Value');
-                    val2 = get(ui_popup_meas_labelfincolor, 'Value');
-                    C(:, val1) = colorValue;
-                    C(:, val2) = 1 - colorValue;
-                    pl.set('LABS_FONT_COLOR', C);
-                    pl.set('LABS', 1);
-                end
             end
-            if get(ui_checkbox_meas_labelcolor, 'Value') || get(ui_checkbox_meas_labelsize, 'Value')
+            if get(ui_checkbox_meas_labelsize, 'Value')
                 % set labels to values
                 new_labs = cellfun(@(x) num2str(x), num2cell(measure_data_inner), 'UniformOutput', false);
                 brs_dict = pl.get('ATLAS').get('BR_DICT').get('IT_LIST');

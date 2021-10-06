@@ -2117,25 +2117,6 @@ function h = getMCRPanel(pl)
                     pl.set('SYMS_SIZE', measure_data_inner);
                 end
 
-                if get(ui_checkbox_meas_symbolcolor, 'Value')
-
-                    colorValue = measure_data_inner ;
-
-                    colorValue(isnan(colorValue)) = 0;
-                    colorValue(colorValue<0) = 0;
-                    colorValue(colorValue>1) = 1;
-
-                    C = zeros(length(colorValue), 3);
-
-                    val1 = get(ui_popup_meas_initcolor, 'Value');
-                    val2 = get(ui_popup_meas_fincolor, 'Value');
-                    C(:, val1) = colorValue;
-                    C(:, val2) = 1 - colorValue;
-
-                    pl.set('SYMS_FACE_COLOR', C);
-                    pl.set('SYMS_EDGE_COLOR', C);
-                end
-
                 if get(ui_checkbox_meas_sphereradius, 'Value')
 
                     R = str2double(get(ui_edit_meas_sphereradius, 'String'));
@@ -2145,28 +2126,6 @@ function h = getMCRPanel(pl)
                     R(isnan(R)) = 0.1;
                     R(R<=0) = 0.1;
                     pl.set('SPHS_SIZE', R);
-                    if ~isempty(fdr_lim)
-                        pl.set('SPHS', fdr_lim');
-                    else
-                        pl.set('SPHS', 1);
-                    end
-                end
-
-                if get(ui_checkbox_meas_spherecolor, 'Value')
-
-                    colorValue = (measure_data_inner);
-                    colorValue(isnan(colorValue)) = 0;
-                    colorValue(colorValue<0) = 0;
-                    colorValue(colorValue>1) = 1;
-
-                    C = zeros(length(colorValue), 3);
-
-                    val1 = get(ui_popup_meas_sphinitcolor, 'Value');
-                    val2 = get(ui_popup_meas_sphfincolor, 'Value');
-                    C(:, val1) = colorValue;
-                    C(:, val2) = 1 - colorValue;
-                    pl.set('SPHS_EDGE_COLOR', C);
-                    pl.set('SPHS_FACE_COLOR', C);
                     if ~isempty(fdr_lim)
                         pl.set('SPHS', fdr_lim');
                     else
@@ -2204,28 +2163,8 @@ function h = getMCRPanel(pl)
                         pl.set('LABS', 1);
                     end
                 end
-
-                if get(ui_checkbox_meas_labelcolor, 'Value')
-                    colorValue = (measure_data_inner);
-                    colorValue(isnan(colorValue)) = 0;
-                    colorValue(colorValue<0) = 0;
-                    colorValue(colorValue>1) = 1;
-
-                    C = zeros(length(colorValue), 3);
-
-                    val1 = get(ui_popup_meas_labelinitcolor, 'Value');
-                    val2 = get(ui_popup_meas_labelfincolor, 'Value');
-                    C(:, val1) = colorValue;
-                    C(:, val2) = 1 - colorValue;
-                    pl.set('LABS_FONT_COLOR', C);
-                    if ~isempty(fdr_lim)
-                        pl.set('LABS', fdr_lim');
-                    else
-                        pl.set('LABS', 1);
-                    end
-                end
             end
-            if get(ui_checkbox_meas_labelcolor, 'Value') || get(ui_checkbox_meas_labelsize, 'Value')
+            if  get(ui_checkbox_meas_labelsize, 'Value')
                 % set labels to values
                 new_labs = cellfun(@(x) num2str(x), num2cell(measure_data_inner), 'UniformOutput', false);
                 brs_dict = pl.get('ATLAS').get('BR_DICT').get('IT_LIST');
