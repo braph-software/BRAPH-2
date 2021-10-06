@@ -14,29 +14,13 @@ TRAINING_ACCURACY (result, scalar) is the accuracy of the classifier obtained fr
 TEST_ACCURACY (result, scalar) is the accuracy of the classifier obtained from test data.
 
 %% ¡methods!
-function layers = getLayers(nn, numFeatures, numClasses)
-    layers = [
-        imageInputLayer([1 1 numFeatures],'Normalization', 'zscore','Name','input')
-        fullyConnectedLayer(floor(1.5*numFeatures),'Name','fc1')
-        batchNormalizationLayer('Name','batchNormalization1')
-        fullyConnectedLayer(floor(1.5*numFeatures),'Name','fc2')
-        batchNormalizationLayer('Name','batchNormalization2')
-        reluLayer('Name','relu1')
-        fullyConnectedLayer(numClasses,'Name','fc3')
-        softmaxLayer('Name','sfmax1')
-        classificationLayer('Name','output')];
-    lgraph = layerGraph(layers);
-    plot(lgraph)
-end
-
 function [score, prediction] = accuracy(YPred, target, classes)
     % Decode probability vectors into class labels
     prediction = onehotdecode(YPred, classes, 2);
     score = sum(prediction == target)/numel(target);
 end
 
-function weights = initializeGlorot(sz,numOut,numIn,className)
-
+function weights = initialize_glorot(sz,numOut,numIn,className)
     arguments
         sz
         numOut
@@ -49,10 +33,9 @@ function weights = initializeGlorot(sz,numOut,numIn,className)
 
     weights = bound * Z;
     weights = dlarray(weights);
-
 end
 
-function [gradients, loss, dlYPred] = modelGradients(dlX, adjacencyTrain, T, parameters)
+function [gradients, loss, dlYPred] = model_gradients(dlX, adjacencyTrain, T, parameters)
 
     dlYPred = model(dlX, adjacencyTrain, parameters);
 
