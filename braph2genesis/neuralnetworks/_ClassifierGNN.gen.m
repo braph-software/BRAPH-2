@@ -45,6 +45,35 @@ function [gradients, loss, dlYPred] = model_gradients(dlX, adjacencyTrain, T, pa
 
 end
 
+function normAdjacency = normalize_adjacency(adjacency)
+
+    % Add self connections to adjacency matrix
+    adjacency = adjacency + speye(size(adjacency));
+
+    % Compute degree of nodes
+    degree = sum(adjacency, 2);
+
+    % Compute inverse square root of degree
+    degreeInvSqrt = sparse(sqrt(1./degree));
+
+    % Normalize adjacency matrix
+    normAdjacency = diag(degreeInvSqrt) * adjacency * diag(degreeInvSqrt);
+
+end
+
+function features = normalize_features(features)
+
+    % Get the mean and variance from the training data
+    meanFeatures = mean(features{1});
+    varFeatures = var(features{1}, 1);
+
+    % Standardize training, validation and test data
+    for i = 1:3
+        features{i} = (features{i} - meanFeatures)./sqrt(varFeatures);
+    end
+
+end
+
 function nn_obj_format = net_obj_transformer(nn)
     filename = 'nn.onnx';
     fileID = fopen(filename,'w');
