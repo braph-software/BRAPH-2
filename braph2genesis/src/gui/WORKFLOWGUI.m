@@ -283,7 +283,7 @@ end
                     tmp_pl = panel_struct(panel - 1, l).plot_element;
                     tmp_el = tmp_pl.get('EL');
                     inner_el = panel_struct(panel - 1, l).exe;
-                    if ~isempty(tmp_pl) && ~isequal(inner_el, tmp_el)
+                    if ~isempty(tmp_pl) && ~isequal_shallow(inner_el, tmp_el)
                         % change to new obj
                         new_script = ['panel_struct(' num2str(panel-1) ',' num2str(child) ').plot_element.get(''' 'El' ''')'];
                         exe_{2} = strrep(exe_{2}, ...
