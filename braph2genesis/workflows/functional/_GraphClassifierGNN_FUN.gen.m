@@ -99,7 +99,7 @@ function dlY = model(gnn, dlX, A, parameters)
     % Normalize adjacency matrix
     L = gnn.normalize_adjacency(A);
 
-    n = 64;
+    n = 64; %64 filters
     Z1 = dlX;
 
     Z2 = L * Z1 * parameters.W1;
@@ -114,7 +114,7 @@ function dlY = model(gnn, dlX, A, parameters)
 
     Z4 = L * Z3 * parameters.W3;
     Z4 = dlarray(Z4,'ST');
-    dlY = avgpool(Z4, 200, 'PoolFormat','S','Stride',200);
+    dlY = avgpool(Z4, 200, 'PoolFormat','S','Stride',200); %200 nodes per graph
     dlY = reshape(dlY, [size(dlY,1), size(dlY,2)]);
     dlY = softmax(dlY, 'DataFormat', 'BC');
 end
@@ -183,7 +183,7 @@ function value = calculate_results(gnn)
     
     features = gnn.normalize_features(features);
     
-    if(~isempty(features))
+    if(~isempty(features{1}))
         featureTrain = features{1};
         adjacencyTrain = adjacency{1};
         targetTrain = labels{1};
