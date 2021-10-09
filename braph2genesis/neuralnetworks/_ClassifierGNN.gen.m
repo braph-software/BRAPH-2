@@ -38,7 +38,7 @@ end
 
 function [gradients, loss, dlYPred] = model_gradients(gnn, dlX, adjacencyTrain, T, parameters)
 
-    dlYPred = model(dlX, adjacencyTrain, parameters);
+    dlYPred = gnn.model(dlX, adjacencyTrain, parameters);
 
     loss = crossentropy(dlYPred, T, 'DataFormat', 'BC');
 
