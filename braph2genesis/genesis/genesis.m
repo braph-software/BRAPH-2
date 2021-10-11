@@ -125,7 +125,7 @@ disp(' ')
 
 % neuralnetworks
 addons = matlab.addons.installedAddons;
-installedDLToolbox = all([ismember('Deep Learning Toolbox', addons.Name) ismember('Deep Learning Toolbox Converter for ONNX Model Format', addons.Name)]);
+installedDLToolbox = all(ismember(["Deep Learning Toolbox"; "Deep Learning Toolbox Converter for ONNX Model Format"], addons.Name));
 if installedDLToolbox    
     copydir([source_dir fp 'neuralnetworks'], [target_dir fp 'neuralnetworks'], Inf)
     disp('¡! copied ready files - neuralnetworks')
