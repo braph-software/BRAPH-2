@@ -1,5 +1,5 @@
 %% ¡header!
-ClassifierGNN < BaseNN (gnn, classifier with graph nerual network) is a classifier consists of graph neural network.
+ClassifierGNN < BaseNN (gnn, classifier with graph neural network) is a classifier consists of graph neural network.
 
 %% ¡description!
 This node classifier is composed of graph neural network layers and classification output layer.
