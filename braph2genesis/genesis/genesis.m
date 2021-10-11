@@ -124,10 +124,16 @@ disp('¡! copied ready files - measures')
 disp(' ')
 
 % neuralnetworks
-copydir([source_dir fp 'neuralnetworks'], [target_dir fp 'neuralnetworks'], Inf)
-disp('¡! copied ready files - neuralnetworks')
-disp(' ')
-
+addons = matlab.addons.installedAddons;
+installedDLToolbox = all([ismember('Deep Learning Toolbox', addons.Name) ismember('Deep Learning Toolbox Converter for ONNX Model Format', addons.Name)]);
+if installedDLToolbox    
+    copydir([source_dir fp 'neuralnetworks'], [target_dir fp 'neuralnetworks'], Inf)
+    disp('¡! copied ready files - neuralnetworks')
+    disp(' ')
+else
+    warning('Deep Learning Toolboxs are not both installed. Please refer to <a href="matlab: web(''https://se.mathworks.com/products/deep-learning.html'') ">Deep Learning Toolbox</a> and <a href="matlab: web(''https://se.mathworks.com/matlabcentral/fileexchange/67296-deep-learning-toolbox-converter-for-onnx-model-format'') ">Deep Learning Toolbox Converter for ONNX Model Format</a>');
+end
+    
 % brainsurfs
 copydir([source_dir fp 'brainsurfs'], [target_dir fp 'brainsurfs'], Inf)
 disp('¡! copied ready files - brainsurf')
@@ -179,16 +185,11 @@ for run = 1:1:run_number
         create_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
     end
     
-    v = ver;
-    [installedToolboxes{1:length(v)}] = deal(v.Name);
-    installedDLToolbox = all(ismember('Deep Learning Toolbox', installedToolboxes));
     if installedDLToolbox
         nn_gen_list = getGenerators([source_dir fp 'src' fp 'nn']);
         for i = 1:1:numel(nn_gen_list)
             create_Element([source_dir fp 'src' fp 'nn' fp nn_gen_list{i}], [target_dir fp 'src' fp 'nn'])
         end
-    else
-        warning('Deep Learning Toolbox is not installed. Please refer to <a href="matlab: web(''https://se.mathworks.com/products/deep-learning.html'') ">Deep Learning Toolbox</a> and <a href="matlab: web(''https://se.mathworks.com/matlabcentral/fileexchange/67296-deep-learning-toolbox-converter-for-onnx-model-format'') ">Deep Learning Toolbox Converter for ONNX Model Format</a>');
     end
     
     % graphs
