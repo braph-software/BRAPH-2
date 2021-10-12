@@ -34,3 +34,7 @@ nn_classifier_ST = ClassifierNN_ST( ...
 nn_classifier_ST.memorize('NEURAL_NETWORK_ANALYSIS');
 test_acc = nn_classifier_ST.get('TEST_ACCURACY');
 train_acc = nn_classifier_ST.get('TRAINING_ACCURACY');
+
+% save the training progress figure
+currentfig = findall(groot, 'Tag', 'NNET_CNN_TRAININGPLOT_UIFIGURE');
+savefig(currentfig, [fileparts(which('example_ST_WU')) filesep 'example data ST (MRI)' filesep 'classification_training_progress.fig'])

@@ -34,3 +34,7 @@ nn_regressor_ST = RegressorNN_ST( ...
 nn_regressor_ST.memorize('NEURAL_NETWORK_ANALYSIS');
 test_mse = nn_regressor_ST.get('TEST_RMSE');
 train_mse = nn_regressor_ST.get('TRAINING_RMSE');
+
+% save the training progress figure
+currentfig = findall(groot, 'Tag', 'NNET_CNN_TRAININGPLOT_UIFIGURE');
+savefig(currentfig, [fileparts(which('example_ST_WU')) filesep 'example data ST (MRI)' filesep 'regression_training_progress.fig'])
