@@ -183,7 +183,7 @@ function value = calculate_results(gnn)
     
     features = gnn.normalize_features(features);
     
-    if(~isempty(features{1}))
+    if(~isempty(features{1}) && gnn.check_toolbox_installation())
         featureTrain = features{1};
         adjacencyTrain = adjacency{1};
         targetTrain = labels{1};

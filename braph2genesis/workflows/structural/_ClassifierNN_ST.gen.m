@@ -87,7 +87,7 @@ function value = calculate_results(nn)
     label = [label; repmat(string(gr2.get('ID')), gr2.get('SUB_DICT').length(), 1)];
 
     dataset = array2table(data);
-    if(~isempty(dataset))
+    if(~isempty(dataset) && nn.check_toolbox_installation())
         label = array2table(label, 'VariableNames', {'DX'})
         dataset = [dataset label];
         dataset = convertvars(dataset,'DX', 'categorical');

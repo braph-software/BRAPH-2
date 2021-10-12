@@ -124,15 +124,9 @@ disp('¡! copied ready files - measures')
 disp(' ')
 
 % neuralnetworks
-addons = matlab.addons.installedAddons;
-installedDLToolbox = all(ismember(["Deep Learning Toolbox"; "Deep Learning Toolbox Converter for ONNX Model Format"], addons.Name));
-if installedDLToolbox    
-    copydir([source_dir fp 'neuralnetworks'], [target_dir fp 'neuralnetworks'], Inf)
-    disp('¡! copied ready files - neuralnetworks')
-    disp(' ')
-else
-    warning('Deep Learning Toolboxs are not both installed. Please refer to <a href="matlab: web(''https://se.mathworks.com/products/deep-learning.html'') ">Deep Learning Toolbox</a> and <a href="matlab: web(''https://se.mathworks.com/matlabcentral/fileexchange/67296-deep-learning-toolbox-converter-for-onnx-model-format'') ">Deep Learning Toolbox Converter for ONNX Model Format</a>');
-end
+copydir([source_dir fp 'neuralnetworks'], [target_dir fp 'neuralnetworks'], Inf)
+disp('¡! copied ready files - neuralnetworks')
+disp(' ')
     
 % brainsurfs
 copydir([source_dir fp 'brainsurfs'], [target_dir fp 'brainsurfs'], Inf)
@@ -185,11 +179,10 @@ for run = 1:1:run_number
         create_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
     end
     
-    if installedDLToolbox
-        nn_gen_list = getGenerators([source_dir fp 'src' fp 'nn']);
-        for i = 1:1:numel(nn_gen_list)
-            create_Element([source_dir fp 'src' fp 'nn' fp nn_gen_list{i}], [target_dir fp 'src' fp 'nn'])
-        end
+    % nn
+    nn_gen_list = getGenerators([source_dir fp 'src' fp 'nn']);
+    for i = 1:1:numel(nn_gen_list)
+        create_Element([source_dir fp 'src' fp 'nn' fp nn_gen_list{i}], [target_dir fp 'src' fp 'nn'])
     end
     
     % graphs
@@ -205,11 +198,9 @@ for run = 1:1:run_number
     end
     
     % neural networks
-    if installedDLToolbox
-        neuralnetworks_gen_list = getGenerators([source_dir fp 'neuralnetworks']);
-        for i = 1:1:numel(neuralnetworks_gen_list)
-            create_Element([source_dir fp 'neuralnetworks' fp neuralnetworks_gen_list{i}], [target_dir fp 'neuralnetworks'])
-        end
+    neuralnetworks_gen_list = getGenerators([source_dir fp 'neuralnetworks']);
+    for i = 1:1:numel(neuralnetworks_gen_list)
+        create_Element([source_dir fp 'neuralnetworks' fp neuralnetworks_gen_list{i}], [target_dir fp 'neuralnetworks'])
     end
     
     % gui
@@ -273,11 +264,10 @@ for i = 1:1:numel(analysis_gen_list)
     create_test_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
 end
 
-if installedDLToolbox
-    nn_gen_list = getGenerators([source_dir fp 'src' fp 'nn']);
-    for i = 1:1:numel(nn_gen_list)
-        create_test_Element([source_dir fp 'src' fp 'nn' fp nn_gen_list{i}], [target_dir fp 'src' fp 'nn'])
-    end
+% nn
+nn_gen_list = getGenerators([source_dir fp 'src' fp 'nn']);
+for i = 1:1:numel(nn_gen_list)
+    create_test_Element([source_dir fp 'src' fp 'nn' fp nn_gen_list{i}], [target_dir fp 'src' fp 'nn'])
 end
 
 % graphs
@@ -293,12 +283,10 @@ for i = 1:1:numel(measures_gen_list)
 end
 
 % neuralnetworks
-if installedDLToolbox
-    neuralnetworks_gen_list = getGenerators([source_dir fp 'neuralnetworks']);
-    for i = 1:1:numel(neuralnetworks_gen_list)
-        create_test_Element([source_dir fp 'neuralnetworks' fp neuralnetworks_gen_list{i}], [target_dir fp 'neuralnetworks'])
-    end 
-end
+neuralnetworks_gen_list = getGenerators([source_dir fp 'neuralnetworks']);
+for i = 1:1:numel(neuralnetworks_gen_list)
+    create_test_Element([source_dir fp 'neuralnetworks' fp neuralnetworks_gen_list{i}], [target_dir fp 'neuralnetworks'])
+end 
 
 % gui
 gui_gen_list = getGenerators([source_dir fp 'src' fp 'gui']);
