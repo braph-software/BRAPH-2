@@ -1,5 +1,5 @@
 %% ¡header!
-RegressorNN < BaseNN (nn, regressor with nerual network) is a regressor consist of artificial neural network.
+RegressorNN < BaseNN (nn, regressor with neural network) is a regressor consist of artificial neural network.
 
 %% ¡description!
 This regressor is composed of artificial neural network layers and regression output layer.

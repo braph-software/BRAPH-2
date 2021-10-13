@@ -15,18 +15,18 @@ TEST_ACCURACY (result, scalar) is the accuracy of the classifier obtained from t
 
 %% ¡methods!
 function [score, prediction] = accuracy(gnn, YPred, target, classes)
+    
     % Decode probability vectors into class labels
     prediction = onehotdecode(YPred, classes, 2);
+    
     score = sum(prediction == target)/numel(target);
+    
 end
 
-function weights = initialize_glorot(gnn, sz,numOut,numIn,className)
-    arguments
-        gnn
-        sz
-        numOut
-        numIn
-        className = 'single'
+function weights = initialize_glorot(gnn, sz, numOut, numIn, className)
+
+    if nargin < 5
+        className = 'single';
     end
 
     Z = 2*rand(sz,className) - 1;
@@ -34,10 +34,11 @@ function weights = initialize_glorot(gnn, sz,numOut,numIn,className)
 
     weights = bound * Z;
     weights = dlarray(weights);
+    
 end
 
 function [gradients, loss, dlYPred] = model_gradients(gnn, dlX, adjacencyTrain, T, parameters)
-
+    
     dlYPred = gnn.model(dlX, adjacencyTrain, parameters);
 
     loss = crossentropy(dlYPred, T, 'DataFormat', 'BC');
@@ -73,10 +74,12 @@ function features = normalize_features(gnn, features)
 end
 
 function nn_obj_format = net_obj_transformer(gnn)
+    
     filename = 'nn.onnx';
     fileID = fopen(filename,'w');
     fwrite(fileID, cell2mat(gnn.get('NEURAL_NETWORK')));
     fclose(fileID);
     nn_obj_format = importONNXNetwork(filename,'OutputLayerType','classification','Classes',string(gnn.class_name));
     delete nn.onnx
+    
 end

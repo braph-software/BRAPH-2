@@ -83,7 +83,7 @@ function value = calculate_results(nn)
     label = [label; cat(2, age_list{:})'];
 
     dataset = array2table(data);
-    if(~isempty(dataset))
+    if(~isempty(dataset) && nn.check_toolbox_installation())
         label = array2table(label, 'VariableNames', {'DX'})
         dataset = [dataset label];
 

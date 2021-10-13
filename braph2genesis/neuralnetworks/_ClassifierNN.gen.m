@@ -1,5 +1,5 @@
 %% ¡header!
-ClassifierNN < BaseNN (nn, classifier with nerual network) is a classifier consists of artificial neural network.
+ClassifierNN < BaseNN (nn, classifier with neural network) is a classifier consists of artificial neural network.
 
 %% ¡description!
 This classifier is composed of artificial neural network layers and classification output layer.

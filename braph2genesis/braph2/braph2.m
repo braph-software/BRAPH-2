@@ -49,6 +49,12 @@ for i = 1:1:length(workflows_dir_list)
     addpath([workflows_dir filesep workflows_dir_list(i).name])
 end
 
-clear src_dir brainsurfs_dir graphs_dir measures_dir test_dir workflows_dir workflows_dir_list i
+addons = matlab.addons.installedAddons;
+installed = all(ismember(["Deep Learning Toolbox"; "Deep Learning Toolbox Converter for ONNX Model Format"], addons.Name));
+if ~installed
+    warning('Deep Learning Toolboxs are not installed. Please refer to <a href="matlab: web(''https://se.mathworks.com/products/deep-learning.html'') ">Deep Learning Toolbox</a> and <a href="matlab: web(''https://se.mathworks.com/matlabcentral/fileexchange/67296-deep-learning-toolbox-converter-for-onnx-model-format'') ">Deep Learning Toolbox Converter for ONNX Model Format</a>');
+end
+
+clear src_dir brainsurfs_dir graphs_dir measures_dir test_dir workflows_dir workflows_dir_list i addons installed
 
 % BRAPH2GUI()
