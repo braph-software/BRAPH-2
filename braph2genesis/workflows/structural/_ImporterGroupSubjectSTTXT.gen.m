@@ -45,7 +45,7 @@ gr = Group( ...
 gr.lock('SUB_CLASS');
 % analyzes file
 file = im.get('FILE');
-if ~isfile(file) && is_braph_testing()
+if ~isfile(file) && ~is_braph_testing()
     im.uigetfile()
     file = im.memorize('FILE');
 end
@@ -118,7 +118,7 @@ if isfile(file)
     catch e
         rethrow(e)
     end
-elseif is_braph_testing()
+elseif ~is_braph_testing()
     error(BRAPH2.WRONG_OUTPUT);
 end
 if exist('f', 'var')

@@ -28,7 +28,7 @@ ba = BrainAtlas();
 
 % analyzes file
 file = im.memorize('FILE');
-if ~isfile(file) && is_braph_testing()
+if ~isfile(file) && ~is_braph_testing()
     im.uigetfile()
     file = im.memorize('FILE');
 end
@@ -69,7 +69,7 @@ if isfile(file)
         close(f)        
         rethrow(e)
     end
-elseif exist('BRAPH2ISTESTING') && is_braph_testing()
+elseif ~is_braph_testing()
     error(BRAPH2.BUG_IO);
 end
 if exist('f', 'var')
