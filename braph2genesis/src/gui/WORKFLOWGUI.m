@@ -283,7 +283,7 @@ end
                     tmp_pl = panel_struct(panel - 1, l).plot_element;
                     tmp_el = tmp_pl.get('EL');
                     inner_el = panel_struct(panel - 1, l).exe;
-                    if ~isempty(tmp_pl) && ~isequal(inner_el, tmp_el)
+                    if ~isempty(tmp_pl) && ~isequal_shallow(inner_el, tmp_el)
                         % change to new obj
                         new_script = ['panel_struct(' num2str(panel-1) ',' num2str(child) ').plot_element.get(''' 'El' ''')'];
                         exe_{2} = strrep(exe_{2}, ...
@@ -299,7 +299,7 @@ end
         end
         if isfield(panel_struct(panel, child), 'exe') && ~isempty(panel_struct(panel, child).exe)           
             tmp_pl = panel_struct(panel, child).plot_element;         
-            if ~isempty(tmp_pl) && ~isequal(panel_struct(panel , child).exe, tmp_pl.get('EL'))
+            if ~isempty(tmp_pl) && ~isequal_shallow(panel_struct(panel , child).exe, tmp_pl.get('EL'))
                 % change to new obj
                 panel_struct(panel, child).exe = tmp_pl.get('El');
                 exe_check = true;
@@ -342,7 +342,9 @@ end
         btn = varargin{1};
         
         if ~isempty(btn) && isgraphics(btn)
-            set(btn, 'BackgroundColor', [166 218 149] / 255) % color
+            if ~isequal(btn.Style,'text')
+                set(btn, 'BackgroundColor', [166 218 149] / 255) % color
+            end
             if length(varargin) > 1
                 if ~isempty(varargin{2})
                     btn_new_name = [varargin{3} ' ' varargin{2}];
@@ -353,7 +355,9 @@ end
             end
         else
             h_btn = panel_inner{varargin{5}, varargin{6}};
-            set(h_btn, 'BackgroundColor', [166 218 149] / 255) % color            
+            if ~isempty(h_btn) && ~isequal(h_btn.Style,'text')
+                set(h_btn, 'BackgroundColor', [166 218 149] / 255) % color
+            end          
             if ~isempty(varargin{4})
                 btn_new_name = [varargin{3} ' ' varargin{4}];
                 set(btn, 'String', btn_new_name); % id
@@ -418,6 +422,24 @@ end
                         change_state_btn([], tmp_el.get('ID'), default_msg, btn, i, j);
                     end
                 end
+            end
+        end
+    end
+    function check = isequal_shallow(obj_a, obj_b)
+        check = isa(obj_b, obj_a.getClass());
+        if check
+            for prop = 1:1:obj_a.getPropNumber()
+                val_prop_a = obj_a.getr(prop);
+                val_prop_b = obj_b.getr(prop);
+                if isa(val_prop_a,'NoValue') || isa(val_prop_b,'NoValue')
+                    check = check && (obj_a.isLocked(prop) == obj_b.isLocked(prop));
+                elseif isa(val_prop_a, 'Element')
+                    check = check && isequal(val_prop_a.get('ID'), val_prop_b.get('ID')) && (obj_a.isLocked(prop) == obj_b.isLocked(prop));
+                else
+                    % not an object
+                    check = check && isequal(val_prop_a, val_prop_b) && (obj_a.isLocked(prop) == obj_b.isLocked(prop));
+                end
+                
             end
         end
     end

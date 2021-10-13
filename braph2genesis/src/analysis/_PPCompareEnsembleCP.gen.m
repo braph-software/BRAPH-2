@@ -181,7 +181,8 @@ function h_panel = draw(pl, varargin)
         function graph = get_selected_graph()
             graph = pl.graph_dict.getItem(1); % get first analysis graph class
             if isa(graph, 'NoValue')
-                graph_class =  el.get('A1').getPropSettings('G');
+                graph_class =  el.get('A1');
+                grpah_class = graph_class.getPropSettings('G');
                 graph = eval([graph_class '()']);
             end
         end
@@ -328,7 +329,8 @@ function update(pl, selected, calculated)
         function graph = get_selected_graph()
             graph = pl.graph_dict.getItem(1); % get first analysis graph class
             if isa(graph, 'NoValue')
-                graph_class =  el.get('A1').getPropSettings('G');
+                graph_class =  el.get('A1');
+                graph_class = graph_class.getPropSettings('G');
                 graph = eval([graph_class '()']);
             end
         end

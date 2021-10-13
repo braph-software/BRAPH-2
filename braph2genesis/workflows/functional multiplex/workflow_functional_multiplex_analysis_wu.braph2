@@ -9,7 +9,7 @@
 ba = ImporterBrainAtlasXLS().get('BA'); % Load Brain Atlas XLS % Brain Atlas:
 
 %% Group
-gr = ImporterGroupSubjectFUNMPXLS('BA', ba).get('GR'); % Load Group FUN XLS % Group FUN:
+gr = ImporterGroupSubjectFUNMPXLS('BA', ba).get('GR'); % Load Group FUN MP XLS % Group FUN MP:
 
 %% Analysis
 a_WU = AnalyzeEnsemble_FUN_MP_WU('GR', gr); % Analyze Group % Analyzed Group:

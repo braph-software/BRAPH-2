@@ -9,7 +9,7 @@
 ba = ImporterBrainAtlasXLS().get('BA');  % Load Brain Atlas XLS % Brain Atlas:
 
 %% Group
-gr = ImporterGroupSubjectSTMPXLS('BA', ba).get('GR'); % Load Group ST XLS % Group ST:
+gr = ImporterGroupSubjectSTMPXLS('BA', ba).get('GR'); % Load Group ST MP XLS % Group ST MP:
 
 %% Analysis
 a_BUT = AnalyzeGroup_ST_MP_BUT('GR', gr, 'Thresholds', [.4 .5 .6 .7]); % Analyze Group % Analyzed Group:
