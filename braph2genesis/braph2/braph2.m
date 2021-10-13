@@ -23,6 +23,7 @@ addpath([src_dir filesep 'cohort'])
 addpath([src_dir filesep 'gt'])
 addpath([src_dir filesep 'analysis'])
 addpath([src_dir filesep 'gui'])
+addpath([src_dir filesep 'nn'])
 
 brainsurfs_dir = [fileparts(which('braph2')) filesep 'brainsurfs'];
 addpath(brainsurfs_dir)
@@ -32,6 +33,9 @@ addpath(graphs_dir)
 
 measures_dir = [fileparts(which('braph2')) filesep 'measures'];
 addpath(measures_dir)
+
+neuralnetworks_dir = [fileparts(which('braph2')) filesep 'neuralnetworks'];
+addpath(neuralnetworks_dir)
 
 test_dir = [fileparts(which('braph2')) filesep 'test'];
 addpath(test_dir)
@@ -45,6 +49,12 @@ for i = 1:1:length(workflows_dir_list)
     addpath([workflows_dir filesep workflows_dir_list(i).name])
 end
 
-clear src_dir brainsurfs_dir graphs_dir measures_dir test_dir workflows_dir workflows_dir_list i
+addons = matlab.addons.installedAddons;
+installed = all(ismember(["Deep Learning Toolbox"; "Deep Learning Toolbox Converter for ONNX Model Format"], addons.Name));
+if ~installed
+    warning('Deep Learning Toolboxs are not installed. Please refer to <a href="matlab: web(''https://se.mathworks.com/products/deep-learning.html'') ">Deep Learning Toolbox</a> and <a href="matlab: web(''https://se.mathworks.com/matlabcentral/fileexchange/67296-deep-learning-toolbox-converter-for-onnx-model-format'') ">Deep Learning Toolbox Converter for ONNX Model Format</a>');
+end
+
+clear src_dir brainsurfs_dir graphs_dir measures_dir test_dir workflows_dir workflows_dir_list i addons installed
 
 % BRAPH2GUI()
