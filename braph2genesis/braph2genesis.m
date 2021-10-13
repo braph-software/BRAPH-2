@@ -8,7 +8,8 @@
 %  <a href="matlab:help src         ">src</a>           - BRAPH2 core
 %  <a href="matlab:help brainsurfs  ">brainsurfs</a>    - BRAPH2 brainsurfs
 %  <a href="matlab:help graphs      ">graphs</a>        - BRAPH2 graphs
-%  <a href="matlab:help measures    ">measures</a>      - BRAPH2 measures
+%  <a href="matlab:help measures    ">measures</a>      - BRAPH2
+%  measurescle
 %  <a href="matlab:help workflows   ">workflows</a>     - BRAPH2 workflows
 %  <a href="matlab:help test        ">test</a>          - BRAPH2 test
 

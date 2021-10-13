@@ -25,10 +25,10 @@ BrainAtlas()
 %%%% ¡calculate!
 % creates empty BrainAtlas
 ba = BrainAtlas();
-global BRAPH2ISTESTING %#ok<TLEV>
+
 % analyzes file
 file = im.memorize('FILE');
-if ~isfile(file) && ~BRAPH2ISTESTING
+if ~isfile(file) && is_braph_testing()
     im.uigetfile()
     file = im.memorize('FILE');
 end
@@ -69,7 +69,7 @@ if isfile(file)
         close(f)        
         rethrow(e)
     end
-elseif ~BRAPH2ISTESTING
+elseif exist('BRAPH2ISTESTING') && ~BRAPH2ISTESTING
     error(BRAPH2.BUG_IO);
 end
 if exist('f', 'var')
