@@ -69,7 +69,7 @@ if isfile(file)
         close(f)        
         rethrow(e)
     end
-elseif exist('BRAPH2ISTESTING') && ~BRAPH2ISTESTING
+elseif exist('BRAPH2ISTESTING') && is_braph_testing()
     error(BRAPH2.BUG_IO);
 end
 if exist('f', 'var')

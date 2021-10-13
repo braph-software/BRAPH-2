@@ -39,10 +39,9 @@ gr = Group( ...
     );
 
 gr.lock('SUB_CLASS');
-global BRAPH2ISTESTING %#ok<TLEV>
 directory = im.get('DIRECTORY');
 directory = im.get('DIRECTORY');
-if ~isfolder(directory)&& ~BRAPH2ISTESTING
+if ~isfolder(directory)&& is_braph_testing()
     im.uigetdir()
     directory = im.get('DIRECTORY');
 end
