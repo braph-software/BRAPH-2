@@ -29,4 +29,6 @@ end
 addpath(target_dir)
 braph2
 
+disp('BRAPH 2.0 is ready to use')
+
 % test_braph2
