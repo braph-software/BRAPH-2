@@ -99,7 +99,7 @@ function update(pl)
                 'Callback', {@cb_adj_matrix} ...
                 );
         end
-        function cb_adj_layer(~, ~)
+        function cb_layer_selector(~, ~)
             layer_to_plot = get(ui_layer_selector, 'Value');
         end
         function cb_adj_matrix(~, ~)
