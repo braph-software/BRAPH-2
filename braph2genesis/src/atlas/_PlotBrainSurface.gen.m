@@ -178,7 +178,7 @@ COLORMAP (metadata, matrix) is the colormap.
 %%%% ¡check_prop!
 check = size(value, 2) == 3;
 %%%% ¡default!
-jet
+white
         
 %% ¡methods!
 function h_panel = draw(pl, varargin)
