@@ -178,7 +178,12 @@ COLORMAP (metadata, matrix) is the colormap.
 %%%% ¡check_prop!
 check = size(value, 2) == 3;
 %%%% ¡default!
-jet
+gray
+
+%%% ¡prop!
+COLORMAPSTRING (metadata, string) is the colormap string value.
+%%%% ¡default!
+'gray'
         
 %% ¡methods!
 function h_panel = draw(pl, varargin)
@@ -682,19 +687,23 @@ function f_settings = settings(pl, varargin)
         'Position', [.65 .10 .10 .15], ...
         'HorizontalAlignment', 'center', ...
         'FontWeight', 'bold');
+    
+    cm_values = {'parula', 'jet', 'hsv', 'hot', 'cool', 'spring', ...
+        'summer', 'autumn', 'winter', 'gray', 'bone', 'copper', ...
+        'pink', 'lines', 'colorcube', 'prism', 'flag', 'white'};
 
     ui_popup_colormap = uicontrol(ui_surface_panel, 'Style', 'popupmenu', ...
         'Units', 'normalized', ...
         'Position', [.75 .10 .20 .15], ...
-        'String', {'parula', 'jet', 'hsv', 'hot', 'cool', 'spring', ...
-        'summer', 'autumn', 'winter', 'gray', 'bone', 'copper', ...
-        'pink', 'lines', 'colorcube', 'prism', 'flag', 'white'}, ... % set(ui_popup_colormap, 'Value', find(strcmpi(bs.Colormap, get(ui_popup_colormap, 'String'))))
+        'String', cm_values, ... % set(ui_popup_colormap, 'Value', find(strcmpi(bs.Colormap, get(ui_popup_colormap, 'String'))))
         'HorizontalAlignment', 'center', ...
+        'Value',  find(strcmpi(pl.get('COLORMAPSTRING'), cm_values)),...
         'Callback', {@cb_colormap});
 
         function cb_colormap(~, ~)  % (src, event)
             val = ui_popup_colormap.Value;
             str = ui_popup_colormap.String;
+            pl.set('COLORMAPSTRING', str{val})
             pl.set('COLORMAP', eval(str{val}))
             pl.draw()
         end
