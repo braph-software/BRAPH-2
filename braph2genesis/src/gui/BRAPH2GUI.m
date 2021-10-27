@@ -106,8 +106,7 @@ warning('off', 'all')
 jPanelObj = com.mathworks.widgets.SearchTextField('Enter search filter:');
 jAssetComponent = jPanelObj.getComponent;
 [jhPanel, hContainer] = javacomponent(jAssetComponent, [20, 375, 350, 25], f); %#ok<ASGLU,JAVCM>
-bgcolor = get(gcf, 'Color');
-jAssetComponent.setBackground(java.awt.Color(bgcolor(1),bgcolor(2),bgcolor(3)));
+jAssetComponent.setBackground(java.awt.Color(BKGCOLOR(1), BKGCOLOR(2), BKGCOLOR(3)));
 
 if ismac
     hjSearchField = handle(jAssetComponent, 'CallbackProperties');
