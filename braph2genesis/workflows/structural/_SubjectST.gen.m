@@ -10,12 +10,15 @@ Element, Subject
 
 %%% ¡gui!
 %%%% ¡menu_importer!
-importers = {'ImporterGroupSubjectSTTXT', 'ImporterGroupSubjectSTXLS'};
-for k = 1:length(importers)
-    imp = importers{k};
-    uimenu(ui_menu_import, ...
-        'Label', [imp ' ...'], ...
-        'Callback', {@cb_importers});
+calling_class = plot_element.get('El');
+if isa(calling_class, 'Group')
+    importers = {'ImporterGroupSubjectSTTXT', 'ImporterGroupSubjectSTXLS'};
+    for k = 1:length(importers)
+        imp = importers{k};
+        uimenu(ui_menu_import, ...
+            'Label', [imp ' ...'], ...
+            'Callback', {@cb_importers});
+    end
 end
 
 function cb_importers(src, ~)
@@ -32,12 +35,15 @@ function cb_importers(src, ~)
 end
 
 %%%% ¡menu_exporter!
-exporters = {'ExporterGroupSubjectSTTXT', 'ExporterGroupSubjectSTXLS'};
-for k = 1:length(exporters)
-    exp = exporters{k};
-    uimenu(ui_menu_export, ...
-        'Label', [exp ' ...'], ...
-        'Callback', {@cb_exporters});
+calling_class = plot_element.get('El');
+if isa(calling_class, 'Group')
+    exporters = {'ExporterGroupSubjectSTTXT', 'ExporterGroupSubjectSTXLS'};
+    for k = 1:length(exporters)
+        exp = exporters{k};
+        uimenu(ui_menu_export, ...
+            'Label', [exp ' ...'], ...
+            'Callback', {@cb_exporters});
+    end
 end
 function cb_exporters(src, ~)
     src_name = erase(src.Text, ' ...');
