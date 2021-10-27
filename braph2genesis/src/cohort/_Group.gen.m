@@ -23,7 +23,7 @@ exp_sub_menus = get(ui_menu_export, 'Children');
 for i = 1:length(exp_sub_menus)
     delete(exp_sub_menus(i));
 end
-eval([el.get('SUB_CLASS') '.getGUIMenuExport(el, ui_menu_export)']);
+eval([el.get('SUB_CLASS') '.getGUIMenuExport(el, ui_menu_export, plot_element)']);
 
 %% ¡props!
 

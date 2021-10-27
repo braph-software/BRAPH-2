@@ -1735,7 +1735,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 end
             end
         end
-        function getGUIMenuExport(el, ui_menu_export)
+        function getGUIMenuExport(el, ui_menu_export, plot_element)
             %GETGUIMENUEXPORT sets the export submenu gui json.
             % 
             % GETGUIMENUEXPORT(EL, UI_MENU) sets the export submenu for the ui menu UI_MENU.
@@ -1750,7 +1750,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 [file, path, filterindex] = uiputfile('.json', ['Select ' el.getName  ' file location.']);
                 if filterindex
                     filename = fullfile(path, file);
-                    [json, ~, ~] = encodeJSON(el);
+                    [json, ~, ~] = encodeJSON(plot_element.get('EL'));
                     fid = fopen(filename, 'w');
                     fprintf(fid, json);
                     fclose(fid);
