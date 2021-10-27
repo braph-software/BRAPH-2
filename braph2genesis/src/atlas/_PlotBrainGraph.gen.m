@@ -1673,28 +1673,6 @@ function brain_graph_panel = getBrainGraphPanel(pl)
             pl.arrow_edges_off([],[])
             pl.cylinder_edges_off([],[])
 
-            if get(ui_checkbox_graph_linecolor, 'Value')
-                C = color;
-                n = atlas.get('BR_DICT').length();
-                for i = 1:1:n
-                    for j = 1:1:n
-                        if i == j
-                            continue;
-                        end
-                        if  link_style == 1
-                            pl.link_edges(i, j, 'Color', C);
-                            pl.link_edge_on(i, j);
-                        elseif link_style == 2
-                            pl.arrow_edges(i, j, 'Color', C);
-                            pl.arrow_edge_on(i, j)
-                        else
-                            pl.cylinder_edges(i, j, 'Color', C);
-                            pl.cylinder_edge_on(i, j)
-                        end
-                    end
-                end
-            end
-
             if get(ui_checkbox_graph_lineweight, 'Value')
                 % get measure value
                 n = atlas.get('BR_DICT').length();
