@@ -258,8 +258,9 @@ function h_panel = draw(pl, varargin)
                 end
             end
             if ~isempty(graph_gui)
-                if isgraphics(graph_gui)
-                    close(graph_gui)
+                m_gui_h = graph_gui.return_outer_panel();
+                if isgraphics(ancestor(m_gui_h, 'Figure'))
+                    close(ancestor(m_gui_h, 'Figure'))
                 end
             end
         end
