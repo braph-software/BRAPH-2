@@ -60,6 +60,8 @@ function update(pl)
     node_labels = cellfun(@(x) x.get('ID') , node_labels_tmp.getItems(), 'UniformOutput', false);
     fdr_style = [0 1 0];
     fdr_q_value = 0.05; % default, might make it so the user chooses it.
+    line_plot_gui = [];
+    brain_view_gui = [];
 
     if el.getPropCategory(prop) == Category.RESULT && ~isCalculated()
         % remove previous tables/textbox
@@ -511,8 +513,8 @@ function update(pl)
             h2 = normalized(4) / 1.61;
             y2 = normalized(2) + normalized(4) - h2;
             w2 = normalized(3) * 1.61;
-            
-            f = figure( ...
+
+            line_plot_gui = figure( ...
                 'Visible', 'off', ...
                 'NumberTitle', 'off', ...
                 'Name', ['PlotGraph - ' BRAPH2.STR], ...
@@ -524,8 +526,8 @@ function update(pl)
                 'DockControls', 'off', ...
                 'Color', [.94 .94 .94] ...
                 );
-            set_icon(f);
-            ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
+            set_icon(line_plot_gui);
+            ui_toolbar = findall(line_plot_gui, 'Tag', 'FigureToolBar');
             delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
             delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
 
@@ -542,12 +544,12 @@ function update(pl)
                 'XLABEL', x_label, ...
                 'YLABEL', y_label ...
                 );
-            
-            h_plot_line = pg.draw('Parent', f);
+
+            h_plot_line = pg.draw('Parent', line_plot_gui);
             pg.set('SETPOS', [x2 normalized(2) w2 h2*1.61-h2-.065]); % height has to be correcter for the toolbar and menu
             pg.settings();
-            set(f, 'Visible', 'on')
-           
+            set(line_plot_gui, 'Visible', 'on')
+
         end
         function [pixels, normalized] = get_figure_position()
             fig_h = getGUIFigureObj();
@@ -566,7 +568,7 @@ function update(pl)
             y2 = normalized(2) + normalized(4) - h2;
             w2 = normalized(3) * 1.61;
 
-            f = figure( ...
+            brain_view_gui = figure( ...
                 'Visible', 'off', ...
                 'NumberTitle', 'off', ...
                 'Name', ['PlotBrainView - ' BRAPH2.STR], ...
@@ -579,9 +581,9 @@ function update(pl)
                 'Color', [.94 .94 .94] ...
                 );
 
-            set_icon(f);
+            set_icon(brain_view_gui);
 
-            ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
+            ui_toolbar = findall(brain_view_gui, 'Tag', 'FigureToolBar');
             delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
             delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
 
@@ -591,14 +593,14 @@ function update(pl)
                 'COMP', el, 'PROPTAG', prop_tag, 'Atlas', graph.get('BRAINATLAS'), 'Type', x_name);
 
             el_panel = uipanel( ...
-                'Parent', f, ...
+                'Parent', brain_view_gui, ...
                 'BorderType', 'none' ...
                 );
 
             pbv.draw('Parent', el_panel);
             pbv.settings('SETPOS', [x2 normalized(2) w2 h2*1.61-h2-.065]);
 
-            set(f, 'Visible', 'on')
+            set(brain_view_gui, 'Visible', 'on')
         end
         function cb_slide(~, ~)
             pl.slide()
@@ -612,6 +614,23 @@ function update(pl)
                     if isequal('off', child.Enable)
                         bool = true;
                     end
+                end
+            end
+        end
+    
+    % close function to pl.pp
+    set(pl.pp, ...
+        'DeleteFcn', {@close_f_settings})
+
+        function close_f_settings(~,~)
+            if ~isempty(line_plot_gui)
+                if isgraphics(ancestor(line_plot_gui, 'Figure'))
+                    close(ancestor(line_plot_gui, 'Figure'))
+                end
+            end
+            if ~isempty(brain_view_gui)
+                if isgraphics(ancestor(brain_view_gui, 'Figure'))
+                    close(ancestor(brain_view_gui, 'Figure'))
                 end
             end
         end

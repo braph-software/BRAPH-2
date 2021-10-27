@@ -48,6 +48,7 @@ function update(pl)
     prop = pl.get('PROP');
     value = el.getr(prop);
     layer_to_plot = 1;
+    f = [];
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
         %
     else
@@ -156,6 +157,18 @@ function update(pl)
                     obj = fig_h;
                 end
             end
+        end
+    
+        set(pl.pp, ...
+            'DeleteFcn', {@close_f_settings})
+
+        function close_f_settings(~,~)
+            if ~isempty(f)
+                if isgraphics(ancestor(f, 'Figure'))
+                    close(ancestor(f, 'Figure'))
+                end
+            end
+
         end
 
     % callback
