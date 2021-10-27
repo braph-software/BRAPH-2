@@ -178,12 +178,12 @@ COLORMAP (metadata, matrix) is the colormap.
 %%%% ¡check_prop!
 check = size(value, 2) == 3;
 %%%% ¡default!
-gray
+white
 
 %%% ¡prop!
 COLORMAPSTRING (metadata, string) is the colormap string value.
 %%%% ¡default!
-'gray'
+'white'
         
 %% ¡methods!
 function h_panel = draw(pl, varargin)
