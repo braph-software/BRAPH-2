@@ -154,9 +154,8 @@ function update(pl, selected)
 
         function close_f_settings(~,~)
             if ~isempty(graph_gui)
-                m_gui_h = graph_gui.return_outer_panel();
-                if isgraphics(ancestor(m_gui_h, 'Figure'))
-                    close(ancestor(m_gui_h, 'Figure'))
+                if isgraphics(ancestor(graph_gui, 'Figure'))
+                    close(ancestor(graph_gui, 'Figure'))
                 end
             end
         end
