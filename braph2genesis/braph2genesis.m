@@ -27,6 +27,9 @@ end
 [target_dir, source_dir] = genesis(target_dir, [], 2);
 
 addpath(target_dir)
+
+disp('BRAPH 2.0 is now fully compiled and ready to be used')
+
 braph2
 
 % test_braph2
