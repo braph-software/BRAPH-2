@@ -49,7 +49,7 @@ if isfolder(fileparts(file))
         ba = sub.get('BA');
         br_list = cellfun(@(i) ba.get('BR_DICT').getItem(i), ...
             num2cell([1:1:ba.get('BR_DICT').length()]), 'UniformOutput', false);
-        br_labels = cellfun(@(br) br.get('LABEL'), br_list, 'UniformOutput', false);
+        br_labels = cellfun(@(br) br.get('ID'), br_list, 'UniformOutput', false);
 
         age = cell(sub_number, 1);
         sex = cell(sub_number, 1);
