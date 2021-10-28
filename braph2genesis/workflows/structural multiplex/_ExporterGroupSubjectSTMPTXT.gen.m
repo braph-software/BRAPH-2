@@ -54,7 +54,7 @@ if isfolder(directory)
         ba = sub.get('BA');
         br_list = cellfun(@(i) ba.get('BR_DICT').getItem(i), ...
             num2cell([1:1:ba.get('BR_DICT').length()]), 'UniformOutput', false);
-        br_labels = cellfun(@(br) br.get('LABEL'), br_list, 'UniformOutput', false);
+        br_labels = cellfun(@(br) br.get('ID'), br_list, 'UniformOutput', false);
         layers_number = sub_dict.getItem(1).get('L');
         br_number = length(br_labels);
         all_data = cell(layers_number, sub_number, br_number);

@@ -1731,7 +1731,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     fclose(fid);
                     tmp_el = Element.decodeJSON(str);
                     plot_element.set('El', tmp_el); 
-                    plot_element.redraw();
+                    plot_element.reinit();
                 end
             end
         end
