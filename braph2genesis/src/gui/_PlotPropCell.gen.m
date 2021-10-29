@@ -70,8 +70,8 @@ function update(pl)
     prop = pl.get('PROP');
     
     value = el.getr(prop);
-    if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
-        %
+    if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')        
+        
     else
         value_cell = el.get(prop);
         if isempty(pl.table_value_cell)
@@ -90,6 +90,38 @@ function update(pl)
             end
         end
         
+    end
+    
+    % in both cases we might want to add values
+    % new input method
+    input_field = uicontrol('Parent', pl.pp, ...
+        'Style', 'edit', ...
+        'Position', [.01 .02 .98 .1], ...
+        'Callback', {@cb_edit_values} ...
+        );
+    function cb_edit_values(~, ~)
+        % get input and element
+        input_string = get(input_field, 'String');
+        el = pl.get('EL');
+        
+        % I want the input to be separeted via , or space. And column separtation with ; 
+        % for example '1,2;3 4' = [1, 2; 3 4]
+        
+        input_values_array =  split(split(input_string, ';'), [" ", ","]);
+        final_value = cellfun(@(x) str2double(x), input_values_array);
+         
+        % set the values
+        try
+            if isequal(el.getPropFormat(prop), 'nr')
+                el.set(prop, final_value')
+            else
+                el.set(prop, final_value)
+            end
+        catch e 
+            warndlg(['Please select a valid input. ' e.message], 'Warning');
+        end
+
+        pl.update()
     end
 
     % callback
@@ -183,9 +215,9 @@ function redraw(pl, varargin)
                     'Position', ...
                         [ ...
                             (0.01 + (i - 1) * 0.98 / size(pl.table_value_cell, 1)) * Plot.w(pl.pp) ...
-                            (0.01 + (j - 1) * 0.98 / size(pl.table_value_cell, 2)) * (Plot.h(pl.pp) - 1.8) ...
+                            (0.01 + (j - 1) * 0.98 / size(pl.table_value_cell, 2)) * (Plot.h(pl.pp) - 2.8) ...
                             0.98 / size(pl.table_value_cell, 1) * Plot.w(pl.pp) ...
-                            0.98 / size(pl.table_value_cell, 2) * (Plot.h(pl.pp) - 1.8) ...
+                            0.98 / size(pl.table_value_cell, 2) * (Plot.h(pl.pp) - 2.8) ...
                         ] ...
                     )
             end
