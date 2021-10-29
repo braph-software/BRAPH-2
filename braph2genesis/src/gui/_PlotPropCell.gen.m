@@ -70,8 +70,8 @@ function update(pl)
     prop = pl.get('PROP');
     
     value = el.getr(prop);
-    if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
-        %
+    if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')        
+        
     else
         value_cell = el.get(prop);
         if isempty(pl.table_value_cell)

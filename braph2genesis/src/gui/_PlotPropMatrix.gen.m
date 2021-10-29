@@ -37,7 +37,7 @@ function h_panel = draw(pl, varargin)
         pl.table_value = uitable( ...
             'Parent', pl.pp, ...
             'Units', 'normalized', ...
-            'Position', [.01 .05 .98 .80], ...
+            'Position', [.01 .25 .98 .6], ...
             'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
             'CellEditCallback', {@cb_matrix_value} ...
             );
@@ -85,11 +85,19 @@ function update(pl)
                 'ColumnEditable', true)
 
         case {Category.PARAMETER, Category.DATA}
+            % new input method
+            input_field = uicontrol('Parent', pl.pp, ...
+                'Style', 'edit', ...
+                'Units', 'normalized', ...
+                'Position', [.01 .05 .98 .1], ...
+                'Callback', {@cb_edit_values} ...
+                );
+            
             set(pl.table_value, ...
                 'Data', el.get(prop), ...
                 'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
                 'ColumnEditable', true)
-
+            
             value = el.getr(prop);
             if isa(value, 'Callback')
                 set(pl.table_value, ...
@@ -117,6 +125,30 @@ function update(pl)
                     )
             end
     end
+    function cb_edit_values(~, ~)
+        % get input and element
+        input_string = get(input_field, 'String');
+        el = pl.get('EL');
+        
+        % I want the input to be separeted via , or space. And column separtation with ; 
+        % for example '1,2;3 4' = [1, 2; 3 4]
+        
+        input_values_array =  split(split(input_string, ';'), [" ", ","]);
+        final_value = cellfun(@(x) str2double(x), input_values_array);
+         
+        % set the values
+        try
+            if isequal(el.getPropFormat(prop), 'nr')
+                el.set(prop, final_value')
+            else
+                el.set(prop, final_value)
+            end
+        catch e 
+            warndlg(['Please select a valid input. ' e.message], 'Warning');
+        end
+
+        pl.update()
+    end
 end
 function redraw(pl, varargin)
     %REDRAW redraws the element graphical panel.
@@ -127,5 +159,5 @@ function redraw(pl, varargin)
     %
     % See also draw, update, refresh.
     
-    pl.redraw@PlotProp('Height', 10, varargin{:})
+    pl.redraw@PlotProp('Height', 20, varargin{:})
 end
