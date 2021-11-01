@@ -311,8 +311,6 @@ end
             try
                 panel_struct(panel, child).exe = eval([exe_{2}]);
                 exe_check = true;
-            catch e 
-                warndlg(['Please select a valid input. ' e.message], 'Warning');
             end
         end
         
