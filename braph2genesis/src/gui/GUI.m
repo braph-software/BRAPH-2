@@ -298,7 +298,14 @@ menu()
                         continue_order = [1:length(data_now(:, 2))];
                         for j = 1:length(data_now(:, 2))
                             if data_now{j, 1}
+                                
                                 tmp_choice = min(continue_order);
+                                if data_now{j, 2} < size(data, 2)-1 && ...
+                                        data_now{j, 2} > tmp_choice && ...
+                                        any(find(tmp_choice == [data_now{:,2}]))
+                                    
+                                    tmp_choice = data_now{j, 2};
+                                end
                                 data_now(j, 2) = {tmp_choice};
                                 index = find(continue_order==tmp_choice);
                                 continue_order(index) = nan;
@@ -319,6 +326,12 @@ menu()
                         for j = 1:length(data_now(:, 2))
                             if data_now{j, 1}
                                 tmp_choice = min(continue_order);
+                                if data_now{j, 2} < size(data, 2)-1 && ...
+                                        data_now{j, 2} > tmp_choice && ...
+                                        any(find(tmp_choice == [data_now{:,2}]))
+                                    
+                                    tmp_choice = data_now{j, 2};
+                                end
                                 data_now(j, 2) = {tmp_choice};
                                 index = find(continue_order==tmp_choice);
                                 continue_order(index) = nan;
