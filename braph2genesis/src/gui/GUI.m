@@ -27,6 +27,7 @@ close_request = get_from_varargin(true, 'CloseRequest', varargin);
 f_position = get_from_varargin([.02 .1 .30 .80], 'Position', varargin);
 
 BKGCOLOR = get_from_varargin([.98 .95 .95], 'BackgroundColor', varargin);
+p_f = [];
 
 %% Initialize GUI
 f = init();
@@ -58,6 +59,9 @@ f = init();
                 delete(f)
             case 'No'
                 return
+        end
+        if ~isempty(p_f) && isgraphics(p_f)
+            close(p_f)
         end
     end
 
