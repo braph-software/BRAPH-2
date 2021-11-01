@@ -196,8 +196,9 @@ menu()
     function cb_personalize(~, ~)       
         x2 = f_position(1) + f_position(3);
         h2 = f_position(4)/3;
-        y2 = f_position(2);
+        y2 = f_position(2)+f_position(4)-h2+.06;
         w2 = f_position(3);
+        
         p_f = figure( ...
             'Visible', 'off', ...
             'NumberTitle', 'off', ...
@@ -214,9 +215,9 @@ menu()
         edit_table = uitable('Parent', p_f, ...
             'Units', 'normalized', ...
             'Position', [.02 .2 .9 .7], ...
-            'ColumnName', {'Show', 'Order', 'Property', 'Category', 'Format'}, ...
-            'ColumnFormat', {'logical', 'char', 'char', 'char', 'char'}, ...
-            'ColumnEditable', [true true false false false], ...
+            'ColumnName', {'Show', 'Order', 'Property', 'Category', 'Format', 'Tag'}, ...
+            'ColumnFormat', {'logical', 'char', 'char', 'char', 'char', 'char'}, ...
+            'ColumnEditable', [true true false false false true], ...
             'CellEditCallback', {@cb_edit_tb} ...
             );
         save_edit_btn = uicontrol('Parent', p_f, ...
@@ -244,25 +245,29 @@ menu()
             gui_modified_file = load([gui_files_dir el.getClass()]);
             load_rule_array = gui_modified_file.visibility;
             load_order_array = gui_modified_file.order;
+            load_titles = gui_modified_file.title;
         end
         
         plist = el.getProps();
-        data = cell(length(plist), 5);
+        data = cell(length(plist), 6);
         for mi = 1:1:length(plist)            
             if exist('load_rule_array')
                 data{mi, 1} = load_rule_array(mi);
-                data{mi, 2} = load_order_array(mi); 
+                data{mi, 2} = load_order_array(mi);
+                data{mi, 6} = load_titles{mi};
             else
                 data{mi, 1} = true;
                 data{mi, 2} = plist(mi); 
+                data{mi, 6} = el.getPropTag(plist(mi));
             end     
             data{mi, 3} = el.getPropTag(plist(mi));
             data{mi, 4} = el.getPropCategory(plist(mi)); 
-            data{mi, 5} = el.getPropFormat(plist(mi)); 
+            data{mi, 5} = el.getPropFormat(plist(mi));
+            
             
         end
         set(edit_table, 'Data', data);
-        set(edit_table, 'ColumnWidth', {'auto' 'auto' 'auto' 'auto' 'auto'})
+        set(edit_table, 'ColumnWidth', {'auto' 'auto' 'auto' 'auto' 'auto' 'auto'})
         set(p_f, 'Visible', 'on');   
         data_before_operation = [];
      
@@ -322,14 +327,17 @@ menu()
                         end
                         set(edit_table, 'Data', data_now);
                         data_before_operation = data_now;
-                    elseif any(find(cell2mat(data(:, 2)),  newdata))  % repeating value 
+                    elseif any(find(cell2mat(data(:, 2)) ==  newdata))  % repeating value 
                         index_old_value = find(cell2mat(data_before_operation(:, 2)) == newdata);
                         get_old_calling_value_to_swap = data_before_operation{i, 2};
                         data_now(index_old_value, 2) = {get_old_calling_value_to_swap};
+                        % 
                         data_now(i, 2) = {newdata};
                         
                         set(edit_table, 'Data', data_now);
                         data_before_operation = data_now;
+                    elseif newdata > size(data, 2)-1|| newdata < 1
+                        set(edit_table, 'Data', data_before_operation)
                     end
             end
         end
@@ -337,7 +345,8 @@ menu()
             edited_data = get(edit_table, 'Data');
             visibility = [edited_data{:, 1}];
             order = [edited_data{:, 2}];
-            save([gui_files_dir el.getClass() '.mat'], 'visibility', 'order');
+            title = edited_data(:, 6);
+            save([gui_files_dir el.getClass() '.mat'], 'visibility', 'order', 'title');
             pl.set('PP_DICT', NoValue.getNoValue());
             plot();
         end        
