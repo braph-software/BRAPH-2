@@ -14,6 +14,7 @@ click_threshold_s = 0.5;
 index = [];
 w_names = [];
 paths = [];
+workflow_guis = [];
 
 % init
 f = init();
@@ -45,6 +46,15 @@ f = init();
                 delete(f)
             case 'No'
                 return
+        end
+        
+        if ~isempty(workflow_guis)
+            for i = 1:length(workflow_guis)
+                wf_g = workflow_guis{i};
+                if isgraphics(ancestor(wf_g, 'Figure'))
+                    close(ancestor(wf_g, 'Figure'))
+                end
+            end
         end
     end
 
@@ -3730,7 +3740,7 @@ descriptions = [];
         file = [paths{index} filesep() w_names{index}];
         
         set(ui_checkbox_bottom_animation, 'Value', false)
-        WORKFLOWGUI(file, w_names{index});        
+        workflow_guis{end+1} = WORKFLOWGUI(file, w_names{index});        
     end
     function update_position(~, ~)        
         set(hContainer, 'units', 'norm', 'position', [0.62 0.65 0.36 .06]);

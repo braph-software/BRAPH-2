@@ -1,4 +1,4 @@
-function WORKFLOWGUI(file, name,  varargin)
+function h_workflow = WORKFLOWGUI(file, name,  varargin)
 %% constants
 screen_size = get(0, 'ScreenSize');
 h_f = screen_size(4) * 0.65;
@@ -723,5 +723,9 @@ end
             set(childs(i), 'Enable', 'off');
             set(childs(i), 'BackgroundColor', [220,220,220]/255);
         end
+    end
+
+    if nargout > 0
+        h_workflow = f;
     end
 end
