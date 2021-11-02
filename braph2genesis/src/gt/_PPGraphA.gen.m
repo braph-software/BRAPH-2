@@ -49,6 +49,7 @@ function update(pl)
     value = el.getr(prop);
     layer_to_plot = 1;
     f = [];
+    layer_name = [];
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
         %
     else
@@ -69,6 +70,14 @@ function update(pl)
             end
         end
 
+        if isa(el, 'MultigraphBUD') || isa(el, 'MultiplexBUD')
+            layer_name = 'Density';
+        elseif isa(el, 'MultigraphBUT') || isa(el, 'MultiplexBUT')
+            layer_name = 'Threshold';
+        else
+            layer_name = 'Layer';
+        end
+
         ui_layer_text = uicontrol('Parent', pl.pp, 'Style', 'text');
         ui_layer_selector = uicontrol('Parent', pl.pp, 'Style', 'popup', 'String', {''});
         ui_adj_matrix = uicontrol('Parent', pl.pp, 'Style', 'pushbutton');
@@ -83,7 +92,7 @@ function update(pl)
                 'FontWeight', 'bold', ...
                 'TooltipString', 'Select the layer of the Measure to be ploted.', ...
                 'BackgroundColor', [.62 .545 .439], ...
-                'String', 'Layer' ...
+                'String', layer_name ...
                 )
 
             set(ui_layer_selector, ...
@@ -158,9 +167,9 @@ function update(pl)
                 end
             end
         end
-    
-        set(pl.pp, ...
-            'DeleteFcn', {@close_f_settings})
+
+    set(pl.pp, ...
+        'DeleteFcn', {@close_f_settings})
 
         function close_f_settings(~,~)
             if ~isempty(f)
