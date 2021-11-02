@@ -65,7 +65,7 @@ if isfile(file)
         end
         ba.set('br_dict', idict);
     catch e
-        warndlg('Please select a valid atlas.', 'Warning');
+        e.message = 'Please select a valid atlas.';
         close(f)        
         rethrow(e)
     end
