@@ -22,6 +22,10 @@ classdef BRAPH2
     %  BUG_COPY     - bug while deep-copying an object
     %  BUG_IO       - bug while loading/saving
     %  BUG_ERR      - bug in the handling of errors
+    %
+    % Properties (Constant) - BRAPH2 GUI constants:
+    %  FONTUNITS    - sets the units of the font
+    %  FONTSIZE     - sets the size of the font
     
     properties (Constant) % BRAPH2 ID Card
         NAME = 'Braph 2.0' % BRAPH2 full name
@@ -46,5 +50,9 @@ classdef BRAPH2
         BUG_IO = 'BugIO' % bug while loading/saving files
         BUG_JSON = 'BugJSON' % bug in JSON encoding/deconding
         BUG_ERR = 'BugErr' % bug in the handling of errors
+    end
+    properties (Constant) % BRAPH2 GUI constants
+        FONTUNITS = 'normalized';
+        FONTSIZE = 0.5;
     end
 end
