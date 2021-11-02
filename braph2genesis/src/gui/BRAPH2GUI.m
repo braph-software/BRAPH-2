@@ -122,10 +122,7 @@ set(hjSearchField, 'KeyPressedCallback', {@updateSearch, jPanelObj});
     function updateSearch(~, ~, ~)  
         update_listbox()
     end
-    function update_position(~, ~)
-        set(hContainer,'units','norm', 'position', [0.62 0.65 0.36 .06]);
-    end
-
+    
 % list
 workflow_list = uicontrol( ...
     'Parent', f, ...
@@ -3734,6 +3731,10 @@ descriptions = [];
         
         set(ui_checkbox_bottom_animation, 'Value', false)
         WORKFLOWGUI(file, w_names{index});        
+    end
+    function update_position(~, ~)        
+        set(hContainer, 'units', 'norm', 'position', [0.62 0.65 0.36 .06]);
+        set(workflow_list, 'FontUnits',  'normalized', 'FontSize', 0.06)
     end
 
 % menu
