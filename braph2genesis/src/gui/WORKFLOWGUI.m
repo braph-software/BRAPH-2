@@ -311,6 +311,8 @@ end
             try
                 panel_struct(panel, child).exe = eval([exe_{2}]);
                 exe_check = true;
+            catch e
+                warndlg(e.message, 'Warning');
             end
         end
         

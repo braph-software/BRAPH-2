@@ -115,7 +115,7 @@ if isfile(file)
         end
         gr.set('sub_dict', subdict);
     catch e
-        warndlg('Please select a valid group file.', 'Warning');
+        e.message = 'Please select a valid group file.';
         close(f)
         rethrow(e)
     end
