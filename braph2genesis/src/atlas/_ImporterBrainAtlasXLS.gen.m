@@ -65,9 +65,8 @@ if isfile(file)
         end
         ba.set('br_dict', idict);
     catch e
-        e.message = 'Please select a valid atlas.';
-        close(f)        
-        rethrow(e)
+        warndlg('Please select a valid group file.', 'Warning');
+        close(f)
     end
 elseif ~BRAPH2ISTESTING
     error(BRAPH2.BUG_IO);
