@@ -1,4 +1,4 @@
-function pl_out = GUI(el, varargin)
+function [pl_out, h_fig] = GUI(el, varargin)
 %GUI creates and displays GUI for an element.
 %
 % GUI(EL) creates and displays GUI for element EL.
@@ -409,8 +409,10 @@ toolbar()
 %% Show GUI
 set(f, 'Visible', 'on')
 
-if nargout > 0 
-    pl_out = pl;
-end
-
+    if nargout > 0 
+        pl_out = pl;
+    end
+    if nargout > 1
+        h_fig = f;
+    end
 end

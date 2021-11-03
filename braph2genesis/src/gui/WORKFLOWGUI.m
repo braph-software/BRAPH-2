@@ -1,4 +1,4 @@
-function WORKFLOWGUI(file, name,  varargin)
+function h_workflow = WORKFLOWGUI(file, name,  varargin)
 %% constants
 screen_size = get(0, 'ScreenSize');
 h_f = screen_size(4) * 0.65;
@@ -9,13 +9,14 @@ name_w = ['Workflow - ' name];
 f_position = get_from_varargin([x_f y_f w_f h_f], 'Position', varargin);
 BKGCOLOR = get_from_varargin([1 .9725 .929], 'BackgroundColor', varargin);
 BTNBKGCOLOR = get_from_varargin([.902 .835 .745], 'BackgroundColor', varargin);
-close_request = 0; % false has to be true after debugs
+close_request = get_from_varargin(1, 'CloseRequest', varargin); % false has to be true after debugs
 tokens = [];
 width_ct = 1;
 heigth_ct = .5;
 slider_width = 3;
 min_height = 400;
 min_width = 500;
+object_gui_handles = [];
 
 % get info of file
 cycles = 1;
@@ -82,17 +83,7 @@ f = init();
             set(f, 'CloseRequestFcn', {@cb_close})
         end
     end
-    function cb_close(~, ~)
-        selection = questdlg(['Do you want to close ' name '?'], ...
-            ['Close ' name], ...
-            'Yes', 'No', 'Yes');
-        switch selection
-            case 'Yes'
-                delete(f)
-            case 'No'
-                return
-        end
-    end
+    
     function redraw(~, ~)
         panel_plot(false)
         set(f, 'Units', 'pixels')
@@ -322,7 +313,8 @@ end
         
         if exe_check && ~isempty(panel_struct(panel, child).exe) && isa(panel_struct(panel, child).exe, 'Element')
             new_object =  panel_struct(panel, child).exe;
-            h_plot_element = GUI(new_object);
+            [h_plot_element, h_fig] = GUI(new_object);
+            object_gui_handles{end+1} = h_fig;
             panel_struct(panel, child).plot_element = h_plot_element;
             % change btn state. turn green and change string
             change_state_btn(src, new_object.get('ID'),  loaded_names(panel, child).msg)
@@ -724,4 +716,20 @@ end
             set(childs(i), 'BackgroundColor', [220,220,220]/255);
         end
     end
+    function cb_close(~, ~)        
+        if ~isempty(object_gui_handles)
+            for m = 1:length(object_gui_handles)                
+                wf_g = object_gui_handles{m};
+                if isgraphics(ancestor(wf_g, 'Figure'))
+                    close(ancestor(wf_g, 'Figure'))
+                end                
+            end
+        end
+        delete(f)
+    end
+
+    if nargout > 0
+        h_workflow = f;
+    end
+    
 end

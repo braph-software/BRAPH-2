@@ -655,7 +655,7 @@ function h = arrow_edge(pl, i, j, varargin)
     if i == j  % removes diagonal
         return;
     end
-    pl.set_axes();
+    
     % get brain regions
     br_1 = pl.get('ATLAS').get('BR_DICT').getItem(i);
     br_2 = pl.get('ATLAS').get('BR_DICT').getItem(j);
@@ -1054,7 +1054,7 @@ function h = cylinder_edge(pl, i, j, varargin)
     if i == j  % removes diagonal
         return;
     end
-    pl.set_axes();
+    
     % get brain regions
     br_1 = pl.get('ATLAS').get('BR_DICT').getItem(i);
     br_2 = pl.get('ATLAS').get('BR_DICT').getItem(j);
@@ -1439,7 +1439,7 @@ function h = text_edge(pl, graph_axes, i, j , text_value, varargin)
         return;
     end
 
-    pl.set_axes();
+    
     br_1 = pl.get('ATLAS').get('BR_DICT').getItem(i);
     br_2 = pl.get('ATLAS').get('BR_DICT').getItem(j);
     % get coordinates
