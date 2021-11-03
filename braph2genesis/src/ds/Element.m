@@ -1747,7 +1747,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 'Callback', {@cb_export_json})
           
             function cb_export_json(~,~)
-                [file, path, filterindex] = uiputfile('.json', ['Select ' el.getName  ' file location.']);
+                [file, path, filterindex] = uiputfile({'*.*', '*.json'}, ['Select ' el.getName  ' file location.']);
                 if filterindex
                     filename = fullfile(path, file);
                     [json, ~, ~] = encodeJSON(plot_element.get('EL'));
