@@ -300,12 +300,6 @@ menu()
                             if data_now{j, 1}
                                 
                                 tmp_choice = min(continue_order);
-                                if data_now{j, 2} < size(data, 2)-1 && ...
-                                        data_now{j, 2} > tmp_choice && ...
-                                        any(find(tmp_choice == [data_now{:,2}]))
-                                    
-                                    tmp_choice = data_now{j, 2};
-                                end
                                 data_now(j, 2) = {tmp_choice};
                                 index = find(continue_order==tmp_choice);
                                 continue_order(index) = nan;
@@ -326,12 +320,6 @@ menu()
                         for j = 1:length(data_now(:, 2))
                             if data_now{j, 1}
                                 tmp_choice = min(continue_order);
-                                if data_now{j, 2} < size(data, 2)-1 && ...
-                                        data_now{j, 2} > tmp_choice && ...
-                                        any(find(tmp_choice == [data_now{:,2}]))
-                                    
-                                    tmp_choice = data_now{j, 2};
-                                end
                                 data_now(j, 2) = {tmp_choice};
                                 index = find(continue_order==tmp_choice);
                                 continue_order(index) = nan;
@@ -344,17 +332,28 @@ menu()
                         end
                         set(edit_table, 'Data', data_now);
                         data_before_operation = data_now;
-                    elseif any(find(cell2mat(data(:, 2)) ==  newdata))  % repeating value 
-                        index_old_value = find(cell2mat(data_before_operation(:, 2)) == newdata);
-                        get_old_calling_value_to_swap = data_before_operation{i, 2};
-                        data_now(index_old_value, 2) = {get_old_calling_value_to_swap};
-                        % 
-                        data_now(i, 2) = {newdata};
-                        
+                    elseif newdata > max(cell2mat(data_before_operation(:,2))) || newdata < 1
+                        set(edit_table, 'Data', data_before_operation)
+                    else % just order 
+                        continue_order = [1:length(data_now(:, 2))];
+                        for j = 1:length(data_now(:, 2))
+                            if data_now{j, 1} && j ~= i && j>i
+                                tmp_choice = min(continue_order);
+                                data_now(j, 2) = {tmp_choice};
+                                index = find(continue_order==tmp_choice);
+                                continue_order(index) = nan;
+                            elseif j == i
+                                data_now(i, 2) = {newdata};
+                                tmp_removal = cell2mat(data_now(1:i,2));
+                                indexes_of_remov = ismember(continue_order, tmp_removal);
+                                continue_order(indexes_of_remov) = nan;
+                            else % is nan                            
+                            end
+                            
+                        end                   
                         set(edit_table, 'Data', data_now);
                         data_before_operation = data_now;
-                    elseif newdata > size(data, 2)-1|| newdata < 1
-                        set(edit_table, 'Data', data_before_operation)
+                        
                     end
             end
         end
