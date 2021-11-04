@@ -653,7 +653,7 @@ menu()
         uimenu(ui_menu_file, ...
             'Label', 'Save ...', ...
             'Accelerator', 'S', ...
-            'Callback', {@cb_save_direct_workflow})
+            'Callback', {@cb_save_direct_workspace})
         uimenu(ui_menu_file, ...
             'Label', 'Save as ...', ...
             'Accelerator', 'A', ...
@@ -689,14 +689,14 @@ menu()
     end
     function cb_save_workflow_braph2(~, ~)
         % select file
-        [fileoutput, path, filterindex] = uiputfile('.braph2', 'Select a workflow file name.');
+        [fileoutput, path, filterindex] = uiputfile(BRAPH2.EXT_WORKFLOW, 'Select a workflow file name.');
         % save file
         if filterindex
             filename = fullfile(path, fileoutput);
             dlmwrite(filename, txt, 'delimiter', '')
         end
     end
-    function cb_save_direct_workflow(~, ~)
+    function cb_save_direct_workspace(~, ~)
         fn = get(ui_text_workflow_filename, 'String');
         if isempty(fn)
             cb_save_workspace();
@@ -755,7 +755,7 @@ menu()
         
         function cb_export_btn(~, ~)
             export_txt = get(ui_export_textbox, 'String');
-            [fileoutput, path, filterindex] = uiputfile('.braph2', 'Select a workflow file name.');
+            [fileoutput, path, filterindex] = uiputfile(BRAPH2.EXT_WORKFLOW, 'Select a workflow file name.');
             % save file
             if filterindex
                 filename = fullfile(path, fileoutput);
