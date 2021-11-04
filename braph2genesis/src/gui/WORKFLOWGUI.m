@@ -533,14 +533,14 @@ buttons()
             'Tooltip', ['Save the workspace of ' name], ...
             'Position', [.0 0 .1428 .15], ...
             'BackgroundColor', [1 1 1], ...
-            'Callback', {@cb_save_worfklow})
+            'Callback', {@cb_save_workspace})
         
         set(load_workflow_btn, ...
             'Cdata', imread('loadicon.png'), ...
             'Tooltip', ['Load the workspace of ' name], ...
             'Position', [.1428 0 .1428 .15], ...
             'BackgroundColor', [1 1 1], ...
-            'Callback', {@cb_load_worfklow})
+            'Callback', {@cb_load_workspace})
         
         set(website_btn, ...
             'Position', [.2856 0 .1428 .15], ...
@@ -591,7 +591,7 @@ buttons()
     function cb_about(~, ~)
         BRAPH2_ABOUT();
     end
-    function cb_save_worfklow(~, ~)
+    function cb_save_workspace(~, ~)
         % select file
         [file, path, filterindex] = uiputfile(BRAPH2.EXT_WORKSPACE, 'Select the file to save the workspace.');
         % save file
@@ -602,7 +602,7 @@ buttons()
             update_filename(filename);
         end
     end
-    function cb_load_worfklow(~, ~)
+    function cb_load_workspace(~, ~)
         [file, path, filterindex] = uigetfile(BRAPH2.EXT_WORKSPACE, 'Select the file to load a workspace.');
         if filterindex
             filename = fullfile(path, file);
@@ -649,15 +649,15 @@ menu()
         uimenu(ui_menu_file, ...
             'Label', 'Open ...', ...
             'Accelerator', 'O', ...
-            'Callback', {@cb_load_worfklow})
+            'Callback', {@cb_load_workspace})
         uimenu(ui_menu_file, ...
             'Label', 'Save ...', ...
             'Accelerator', 'S', ...
-            'Callback', {@cb_save_direct_workflow})
+            'Callback', {@cb_save_direct_workspace})
         uimenu(ui_menu_file, ...
             'Label', 'Save as ...', ...
             'Accelerator', 'A', ...
-            'Callback', {@cb_save_worfklow})
+            'Callback', {@cb_save_workspace})
         uimenu(ui_menu_file, ...
             'Separator', 'on', ...
             'Label', 'Close', ...
@@ -689,17 +689,17 @@ menu()
     end
     function cb_save_workflow_braph2(~, ~)
         % select file
-        [fileoutput, path, filterindex] = uiputfile('.braph2', 'Select a workflow file name.');
+        [fileoutput, path, filterindex] = uiputfile(BRAPH2.EXT_WORKFLOW, 'Select a workflow file name.');
         % save file
         if filterindex
             filename = fullfile(path, fileoutput);
             dlmwrite(filename, txt, 'delimiter', '')
         end
     end
-    function cb_save_direct_workflow(~, ~)
+    function cb_save_direct_workspace(~, ~)
         fn = get(ui_text_workflow_filename, 'String');
         if isempty(fn)
-            cb_save_worfklow();
+            cb_save_workspace();
         else
             build = BRAPH2.BUILD;
             save(fn, 'panel_struct', 'txt', 'cycles', 'build');
@@ -755,7 +755,7 @@ menu()
         
         function cb_export_btn(~, ~)
             export_txt = get(ui_export_textbox, 'String');
-            [fileoutput, path, filterindex] = uiputfile('.braph2', 'Select a workflow file name.');
+            [fileoutput, path, filterindex] = uiputfile(BRAPH2.EXT_WORKFLOW, 'Select a workflow file name.');
             % save file
             if filterindex
                 filename = fullfile(path, fileoutput);
