@@ -242,14 +242,6 @@ function h_panel = draw(pl, varargin)
 
         material(pl.h_axes, pl.get('MATERIAL'))
 
-        delete(findall(pl.h_axes, 'Type', 'light'));
-        camlight(pl.h_axes, pl.get('CAMLIGHT'))
-
-        colormap(pl.h_axes, pl.get('COLORMAP'))
-        
-        if ~strcmpi(pl.get('SHADING'), 'none')
-            shading(pl.h_axes, pl.get('SHADING'))
-        end
     else
         if ~isempty(pl.h_brain) && isgraphics(pl.h_brain, 'patch')
             set(pl.h_brain, 'Visible', 'off')
@@ -260,6 +252,15 @@ function h_panel = draw(pl, varargin)
     set(pl.h_axes, 'Color', pl.get('AXESCOLOR'))
 
     view(pl.h_axes, pl.get('VIEW'))
+    
+    delete(findall(pl.h_axes, 'Type', 'light'));
+    camlight(pl.h_axes, pl.get('CAMLIGHT'))
+    
+    colormap(pl.h_axes, pl.get('COLORMAP'))
+    
+    if ~strcmpi(pl.get('SHADING'), 'none')
+        shading(pl.h_axes, pl.get('SHADING'))
+    end
     
     if pl.get('HOLD')
         hold(pl.h_axes, 'on')
