@@ -65,9 +65,8 @@ if isfile(file)
         end
         ba.set('br_dict', idict);
     catch e
-        warndlg('Please select a valid input.', 'Warning');
-        close(f)        
-        rethrow(e)
+        warndlg('Please select a valid group file.', 'Warning');
+        close(f)
     end
 elseif ~BRAPH2ISTESTING
     error(BRAPH2.BUG_IO);

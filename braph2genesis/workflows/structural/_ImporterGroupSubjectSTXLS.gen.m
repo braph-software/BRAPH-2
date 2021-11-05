@@ -115,7 +115,8 @@ if isfile(file)
         end
         gr.set('sub_dict', subdict);
     catch e
-        rethrow(e)
+        warndlg('Please select a valid group file.', 'Warning');
+        close(f)
     end
 elseif ~BRAPH2ISTESTING
     error(BRAPH2.WRONG_OUTPUT);
