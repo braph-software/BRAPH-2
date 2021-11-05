@@ -1909,7 +1909,7 @@ function h = getMCRPanel(pl)
 
             set(ui_checkbox_meas_labelsize, 'Units', 'normalized')
             set(ui_checkbox_meas_labelsize, 'Position', [.01 .26 .3 .08])
-            set(ui_checkbox_meas_labelsize, 'String', ' Label Size ')
+            set(ui_checkbox_meas_labelsize, 'String', ' Value Size ')
             set(ui_checkbox_meas_labelsize, 'Value', false)
             set(ui_checkbox_meas_labelsize, 'FontWeight', 'bold')
             set(ui_checkbox_meas_labelsize, 'TooltipString', 'Shows brain regions by label')
@@ -2049,6 +2049,7 @@ function h = getMCRPanel(pl)
                 size = str2double(get(ui_edit_meas_labelsize, 'String'));
                 size = size + 1;
                 pl.set('LABS_SIZE', size);
+                pl.set('LABS', 0);
 
                 set(ui_edit_meas_labelsize, 'Enable', 'off')
                 update_brain_meas_plot()
