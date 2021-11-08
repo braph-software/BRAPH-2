@@ -1,6 +1,6 @@
-%% Workflow Connectivity Comparison BUT
+%% Pipeline Connectivity Comparison BUT
 %
-% This is the workflow script to create an analysis of a group of subjects
+% This is the pipeline script to create an analysis of a group of subjects
 % with connectivity data and a weighted undirected graph using thresholds.
 % Brain Atlas is set to Desikan Atlas example BrainAtlas. 
 % Group is set to example group. Modify the path of the files to your needs.
