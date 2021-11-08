@@ -1,5 +1,5 @@
 %EXAMPLE_CON_FUN_MP_BUD
-% Script example workflow CON_FUN_MP BUD
+% Script example pipeline CON_FUN_MP BUD
 
 clear variables %#ok<*NASGU>
 
