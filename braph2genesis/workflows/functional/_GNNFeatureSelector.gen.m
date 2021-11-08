@@ -8,20 +8,6 @@ Graph labels are the diagnosis of individual, for example, MCI. As such, input t
 
 %% ¡props!
 %%% ¡prop!
-GR1 (data, item) is the subject group 1, which also defines the subject class SubjectST.
-%%%% ¡settings!
-'Group'
-%%%% ¡default!
-Group('SUB_CLASS', 'SubjectFUN')
-
-%%% ¡prop!
-GR2 (data, item) is the subject group 2, which also defines the subject class SubjectST.
-%%%% ¡settings!
-'Group'
-%%%% ¡default!
-Group('SUB_CLASS', 'SubjectFUN')
-
-%%% ¡prop!
 A_1 (data, item) is the analysis 1
 %%%% ¡settings!
 'AnalyzeEnsemble'
@@ -52,8 +38,8 @@ for i = 1:length(a_BUD2_adjs)
     links2{end+1} = cell2mat(a_BUD2_adjs{i}.get('A'));
 end
 
-gr1 = el.get('GR1');
-gr2 = el.get('GR2');
+gr1 = a_1.get('GR');
+gr2 = a_2.get('GR');
 
 value = GraphClassifierGNN_FUN( ...
     'GR1', gr1, ...
