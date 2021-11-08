@@ -1,11 +1,11 @@
-function h_workflow = WORKFLOWGUI(file, name,  varargin)
+function h_pipeline = PIPELINEGUI(file, name,  varargin)
 %% constants
 screen_size = get(0, 'ScreenSize');
 h_f = screen_size(4) * 0.25;
 w_f = h_f * 3; % 1.61
 x_f = 1;
 y_f = screen_size(4) - h_f - 90;
-name_w = ['Workflow - ' name];
+name_w = ['Pipeline - ' name];
 f_position = get_from_varargin([x_f y_f w_f h_f], 'Position', varargin);
 BKGCOLOR = get_from_varargin([1 .9725 .929], 'BackgroundColor', varargin);
 BTNBKGCOLOR = get_from_varargin([.902 .835 .745], 'BackgroundColor', varargin);
@@ -100,10 +100,10 @@ f = init();
         
         % control height changes in buttons and pannels
         if figure_size(4) > h_f + 100
-            set(save_workflow_btn, ...
+            set(save_pipeline_btn, ...
                 'Position', [.0 0 .1428 .1] ...
                 );
-            set(load_workflow_btn, ...
+            set(load_pipeline_btn, ...
                 'Position', [.1428 0 .1428 .1] ...
                 );
             set(website_btn, ...
@@ -125,10 +125,10 @@ f = init();
             set(ui_panels_section, ...
                 'Position', [0 .1 1 .9]);
         else
-            set(save_workflow_btn, ...
+            set(save_pipeline_btn, ...
                 'Position', [.0 0 .1428 .15] ...
                 );
-            set(load_workflow_btn, ...
+            set(load_pipeline_btn, ...
                 'Position', [.1428 0 .1428 .15] ...
                 );
             set(website_btn, ...
@@ -193,19 +193,19 @@ f = init();
     end
 
 %% file name
-ui_text_workflow_filename = uicontrol(f, 'Style','text');
+ui_text_pipeline_filename = uicontrol(f, 'Style','text');
 init_filename()
     function init_filename()
         set(f, 'Units', 'pixels')
         figure_size = getPosition(f);
-        set(ui_text_workflow_filename, ...
+        set(ui_text_pipeline_filename, ...
             'Units', 'pixels', ...
             'BackgroundColor', BKGCOLOR, ...
             'Position', [3 figure_size(4)*0.08+15 300 20], ...
             'HorizontalAlignment', 'left');
     end
     function update_filename(filename)
-        set(ui_text_workflow_filename, 'String', filename)
+        set(ui_text_pipeline_filename, 'String', filename)
     end
 
 %% panels
@@ -520,8 +520,8 @@ end
     end
 
 %% buttons
-save_workflow_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
-load_workflow_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
+save_pipeline_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
+load_pipeline_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
 % linkbar
 license_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
 about_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
@@ -530,14 +530,14 @@ forums_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
 twitter_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
 buttons()
     function buttons()
-        set(save_workflow_btn, ...
+        set(save_pipeline_btn, ...
             'Cdata', imread('saveicon.png'), ...
             'Tooltip', ['Save the workspace of ' name], ...
             'Position', [.0 0 .1428 .15], ...
             'BackgroundColor', [1 1 1], ...
             'Callback', {@cb_save_workspace})
         
-        set(load_workflow_btn, ...
+        set(load_pipeline_btn, ...
             'Cdata', imread('loadicon.png'), ...
             'Tooltip', ['Load the workspace of ' name], ...
             'Position', [.1428 0 .1428 .15], ...
@@ -666,17 +666,17 @@ menu()
             'Accelerator', 'C', ...
             'Callback', {@cb_close})
         
-        ui_menu_workflow = uimenu(f, ...
-            'Label', 'Workflow');
-        uimenu(ui_menu_workflow, ...
+        ui_menu_pipeline = uimenu(f, ...
+            'Label', 'Pipeline');
+        uimenu(ui_menu_pipeline, ...
             'Label', 'About ...', ...
-            'Callback', {@cb_about_workflow})
-        uimenu(ui_menu_workflow, ...
+            'Callback', {@cb_about_pipeline})
+        uimenu(ui_menu_pipeline, ...
             'Label', 'Clone ...', ...
-            'Callback', {@cb_save_workflow_braph2})
-        uimenu(ui_menu_workflow, ...
+            'Callback', {@cb_save_pipeline_braph2})
+        uimenu(ui_menu_pipeline, ...
             'Label', 'Export ...', ...
-            'Callback', {@cb_export_workflow_braph2})
+            'Callback', {@cb_export_pipeline_braph2})
         
         
         ui_menu_about = uimenu(f, 'Label', 'About');
@@ -689,9 +689,9 @@ menu()
             'Callback', {@cb_about})
         
     end
-    function cb_save_workflow_braph2(~, ~)
+    function cb_save_pipeline_braph2(~, ~)
         % select file
-        [fileoutput, path, filterindex] = uiputfile(BRAPH2.EXT_WORKFLOW, 'Select a workflow file name.');
+        [fileoutput, path, filterindex] = uiputfile(BRAPH2.EXT_PIPELINE, 'Select a pipeline file name.');
         % save file
         if filterindex
             filename = fullfile(path, fileoutput);
@@ -699,7 +699,7 @@ menu()
         end
     end
     function cb_save_direct_workspace(~, ~)
-        fn = get(ui_text_workflow_filename, 'String');
+        fn = get(ui_text_pipeline_filename, 'String');
         if isempty(fn)
             cb_save_workspace();
         else
@@ -707,7 +707,7 @@ menu()
             save(fn, 'panel_struct', 'txt', 'cycles', 'build');
         end
     end
-    function cb_about_workflow(~, ~)
+    function cb_about_pipeline(~, ~)
         [tittle, msg] =  getGUIToken(txt, 1);
         msg = erase(msg, '%');
         CreateStruct.WindowStyle = 'modal';
@@ -726,7 +726,7 @@ menu()
             CreateStruct);
         set_icon(h)
     end
-    function cb_export_workflow_braph2(~, ~)
+    function cb_export_pipeline_braph2(~, ~)
         exp_h_f = screen_size(4) * 0.5;
         exp_w_f = exp_h_f * 1.61;
         exp_x_f = screen_size(3) * 0.3;
@@ -757,7 +757,7 @@ menu()
         
         function cb_export_btn(~, ~)
             export_txt = get(ui_export_textbox, 'String');
-            [fileoutput, path, filterindex] = uiputfile(BRAPH2.EXT_WORKFLOW, 'Select a workflow file name.');
+            [fileoutput, path, filterindex] = uiputfile(BRAPH2.EXT_PIPELINE, 'Select a pipeline file name.');
             % save file
             if filterindex
                 filename = fullfile(path, fileoutput);
@@ -808,7 +808,7 @@ end
     end
 
     if nargout > 0
-        h_workflow = f;
+        h_pipeline = f;
     end
     
 end

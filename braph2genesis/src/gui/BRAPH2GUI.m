@@ -14,7 +14,7 @@ click_threshold_s = 0.5;
 index = [];
 w_names = [];
 paths = [];
-workflow_guis = [];
+pipeline_guis = [];
 
 % init
 f = init();
@@ -48,9 +48,9 @@ f = init();
                 return
         end
         
-        if ~isempty(workflow_guis)
-            for i = 1:length(workflow_guis)
-                wf_g = workflow_guis{i};
+        if ~isempty(pipeline_guis)
+            for i = 1:length(pipeline_guis)
+                wf_g = pipeline_guis{i};
                 if isgraphics(ancestor(wf_g, 'Figure'))
                     close(ancestor(wf_g, 'Figure'))
                 end
@@ -134,7 +134,7 @@ set(hjSearchField, 'KeyPressedCallback', {@updateSearch, jPanelObj});
     end
     
 % list
-workflow_list = uicontrol( ...
+pipeline_list = uicontrol( ...
     'Parent', f, ...
     'Style', 'listbox', ...
     'Units', 'normalized', ...
@@ -142,48 +142,48 @@ workflow_list = uicontrol( ...
     'String', '', ...
     'Callback', {@cb_wf_list_box});
 
-jScrollPane = findjobj(workflow_list);
+jScrollPane = findjobj(pipeline_list);
 jListbox = jScrollPane.getViewport.getComponent(0);
 jListbox = handle(jListbox, 'CallbackProperties');
-set(jListbox, 'MouseMovedCallback', {@mouseMovedCallback, workflow_list});
+set(jListbox, 'MouseMovedCallback', {@mouseMovedCallback, pipeline_list});
 descriptions = [];
 
     function cb_wf_list_box(~, ~)
-        index = get(workflow_list, 'Value');
+        index = get(pipeline_list, 'Value');
         if isempty(click_time)
             click_time = tic();
         else
             time_between_clicks = toc( click_time );
             click_time = tic();
             if time_between_clicks < click_threshold_s
-                get_workflow_gui()
+                get_pipeline_gui()
             end
         end
     end
     function update_listbox()
-        workflows_path = [fileparts(which('braph2.m')) filesep 'workflows'];
-        files = subdir(fullfile(workflows_path, '*.braph2'));
+        pipelines_path = [fileparts(which('braph2.m')) filesep 'pipelines'];
+        files = subdir(fullfile(pipelines_path, '*.braph2'));
         files_array = struct2cell(files);
         files_names = files_array(1, :); 
         files_paths = files_array(2, :);
 
-        workflow_names = cellfun(@(x, y) erase(x, [y filesep()]), files_names, files_paths, 'UniformOutput', false);
+        pipeline_names = cellfun(@(x, y) erase(x, [y filesep()]), files_names, files_paths, 'UniformOutput', false);
         
         if ~isempty(jPanelObj.getSearchText.toCharArray')
             filter = lower(jPanelObj.getSearchText.toCharArray');
-            workflow_filter_index = cell2mat(cellfun(@(x) contains(x, filter), workflow_names, 'UniformOutput', false));
-            files_paths = files_paths(workflow_filter_index);
-            workflow_names = workflow_names(workflow_filter_index);
+            pipeline_filter_index = cell2mat(cellfun(@(x) contains(x, filter), pipeline_names, 'UniformOutput', false));
+            files_paths = files_paths(pipeline_filter_index);
+            pipeline_names = pipeline_names(pipeline_filter_index);
         end
-        w_names = workflow_names;
+        w_names = pipeline_names;
         % open and find name and description
-        for i = 1: length(workflow_names)
+        for i = 1: length(pipeline_names)
             file_path = files_paths{i};
-            txt = fileread([file_path filesep workflow_names{i}]);
-            [workflow_names{i}, descriptions{i}] = getGUIToken(txt, 1);
+            txt = fileread([file_path filesep pipeline_names{i}]);
+            [pipeline_names{i}, descriptions{i}] = getGUIToken(txt, 1);
         end
         paths = files_paths;
-        set(workflow_list, 'String', workflow_names)
+        set(pipeline_list, 'String', pipeline_names)
     end
     function varargout = subdir(varargin)
         % Function based on Kelly Kearney subdir function.
@@ -3732,19 +3732,19 @@ descriptions = [];
             end
         end
     end
-    function get_workflow_gui()
+    function get_pipeline_gui()
         if isempty(index)
-            index = get(workflow_list, 'Value');
+            index = get(pipeline_list, 'Value');
         end
         
         file = [paths{index} filesep() w_names{index}];
         
         set(ui_checkbox_bottom_animation, 'Value', false)
-        workflow_guis{end+1} = WORKFLOWGUI(file, w_names{index});        
+        pipeline_guis{end+1} = PIPELINEGUI(file, w_names{index});        
     end
     function update_position(~, ~)        
         set(hContainer, 'units', 'norm', 'position', [0.62 0.65 0.36 .06]);
-        set(workflow_list, 'FontUnits',  'normalized', 'FontSize', 0.06)
+        set(pipeline_list, 'FontUnits',  'normalized', 'FontSize', 0.06)
     end
 
 % menu
@@ -3831,7 +3831,7 @@ linkbar()
             txt = load(filename, '-mat', 'txt');
             cycles = load(filename, '-mat', 'cycles');
             if isa(tmp.panel_struct, 'struct')
-                WORKFLOWGUI(file, filename, ...
+                PIPELINEGUI(file, filename, ...
                     'PreviousWorkSpace', tmp.panel_struct, ...
                     'PreviousWorkSpaceText', txt.txt, ...
                     'PreviousWorkSpaceCycles', cycles.cycles); 
