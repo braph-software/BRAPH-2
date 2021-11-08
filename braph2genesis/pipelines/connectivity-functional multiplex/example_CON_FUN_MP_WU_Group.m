@@ -1,5 +1,5 @@
 %EXAMPLE_CON_FUN_MP_WU_GROUP
-% Script example workflow CON_FUN_MP WU GROUP
+% Script example pipeline CON_FUN_MP WU GROUP
 
 clear variables %#ok<*NASGU>
 

@@ -1,5 +1,5 @@
 %EXAMPLE_NN_REGRESSION
-% Script example workflow 
+% Script example pipeline 
 
 clear variables %#ok<*NASGU>
 

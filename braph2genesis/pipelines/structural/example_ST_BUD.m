@@ -1,5 +1,5 @@
 %EXAMPLE_ST_BUD
-% Script example workflow ST BUD
+% Script example pipeline ST BUD
 
 clear variables %#ok<*NASGU>
 

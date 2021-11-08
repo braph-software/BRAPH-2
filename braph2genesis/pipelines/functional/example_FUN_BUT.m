@@ -1,5 +1,5 @@
 %EXAMPLE_FUN_BUT
-% Script example workflow FUN BUT
+% Script example pipeline FUN BUT
 
 clear variables %#ok<*NASGU>
 

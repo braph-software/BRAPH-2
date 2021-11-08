@@ -1,5 +1,5 @@
 %EXAMPLE_FUN_WU
-% Script example workflow FUN WU
+% Script example pipeline FUN WU
 
 clear variables %#ok<*NASGU>
 
