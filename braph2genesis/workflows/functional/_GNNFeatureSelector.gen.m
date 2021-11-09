@@ -2,9 +2,7 @@
 GNNFeatureSelector < ClassifierGNN (gnn, graph classifier with functional data) is a graph neural network classifier using functional data for classification.
 
 %% ¡description!
-This classifier classifies graphs using functional data with graph neural network. The graph classification task is one where an algorithm, in this example, a GNN has to predict the labels of unlabelled graphs.
-In this example, a graph is represented by a connectom of individual. Nodal graph measures represent nodes in the graph and the correlation betweeens brain regions obtained from functional time series represent links in the graph.
-Graph labels are the diagnosis of individual, for example, MCI. As such, input to the GNN are connectom along with graph nodal measures and the outputs are predictions of the type of diagnosis.
+Class used to retrieve features and create a init a GraphClassifierGNN_FUN
 
 %% ¡props!
 %%% ¡prop!
@@ -20,7 +18,7 @@ A_2 (data, item) is the analysis 2
 %%% ¡prop!
 GNN_Classification (result, item) is the GNN object
 %%%% ¡calculate!
-a_1 = el.get('A_1');
+a_1 = gnn.get('A_1');
 a_BUD1_adjs = a_1.get('G_DICT').getItems();
 features1 = {};
 links1 = {};
@@ -29,7 +27,7 @@ for i = 1:length(a_BUD1_adjs)
     links1{end+1} = cell2mat(a_BUD1_adjs{i}.get('A'));
 end
 
-a_2 = el.get('A_2');
+a_2 = gnn.get('A_2');
 a_BUD2_adjs = a_2.get('G_DICT').getItems();
 features2 = {};
 links2 = {};
