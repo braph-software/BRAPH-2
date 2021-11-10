@@ -42,10 +42,9 @@ gr = Group( ...
     );
 
 gr.lock('SUB_CLASS');
-global BRAPH2ISTESTING %#ok<TLEV>
 % analyzes file
 file = im.memorize('FILE');
-if ~isfile(file) && ~BRAPH2ISTESTING
+if ~isfile(file) && ~is_braph2_testing()
     im.uigetfile()
     file = im.memorize('FILE');
 end
@@ -118,7 +117,7 @@ if isfile(file)
         warndlg('Please select a valid group file.', 'Warning');
         close(f)
     end
-elseif ~BRAPH2ISTESTING
+elseif ~is_braph2_testing()
     error(BRAPH2.WRONG_OUTPUT);
 end
 if exist('f', 'var')
