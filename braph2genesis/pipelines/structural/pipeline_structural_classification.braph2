@@ -1,6 +1,6 @@
-%% Workflow Structural Regression
+%% Pipeline Structural Classification
 %
-% This is the workflow script to create a regression of a group of subjects
+% This is the pipeline script to create a classification of a group of subjects
 % with structural data.
 % Brain Atlas is set to Desikan Atlas example BrainAtlas. 
 % Group is set to example group. Modify the path of the files to your needs.
@@ -12,6 +12,6 @@ ba = ImporterBrainAtlasXLS().get('BA'); % Load Brain Atlas XLS % Brain Atlas:
 gr1 = ImporterGroupSubjectSTXLS('BA', ba).get('GR'); % Load Group 1 ST XLS % Group 1 ST:
 gr2 = ImporterGroupSubjectSTXLS('BA', ba).get('GR'); % Load Group 2 ST XLS % Group 2 ST:
 
-%% Regression
-r_ST = RegressorNN_ST('GR1', gr1, 'GR2', gr2); % Regressor % Regressed Group:
+%% Classification
+c_ST = ClassifierNN_ST('GR1', gr1, 'GR2', gr2); % Classify % Classified Group:
 
