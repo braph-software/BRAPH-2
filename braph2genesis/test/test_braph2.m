@@ -20,22 +20,22 @@ directories_to_test = { ...
     [braph2_dir filesep 'measures'] ...
     };
 
-workflows_dir = [fileparts(which('braph2')) filesep 'workflows'];
+pipelines_dir = [fileparts(which('braph2')) filesep 'pipelines'];
 
-addpath(workflows_dir)
-workflows_dir_list = dir(workflows_dir); % get the folder contents
-workflows_dir_list = workflows_dir_list([workflows_dir_list(:).isdir] == 1); % remove all files (isdir property is 0)
-workflows_dir_list = workflows_dir_list(~ismember({workflows_dir_list(:).name}, {'.', '..'})); % remove '.' and '..'
-for i = 1:1:length(workflows_dir_list)
-    directories_to_test{end + 1} = [workflows_dir filesep workflows_dir_list(i).name]; %#ok<SAGROW>
+addpath(pipelines_dir)
+pipelines_dir_list = dir(pipelines_dir); % get the folder contents
+pipelines_dir_list = pipelines_dir_list([pipelines_dir_list(:).isdir] == 1); % remove all files (isdir property is 0)
+pipelines_dir_list = pipelines_dir_list(~ismember({pipelines_dir_list(:).name}, {'.', '..'})); % remove '.' and '..'
+for i = 1:1:length(pipelines_dir_list)
+    directories_to_test{end + 1} = [pipelines_dir filesep pipelines_dir_list(i).name]; %#ok<SAGROW>
 end
 
-clear braph2_dir workflows_dir workflows_dir_list i
+clear braph2_dir pipelines_dir pipelines_dir_list i
 
 %% Runs tests
 global BRAPH2ISTESTING
 BRAPH2ISTESTING = true; %#ok<NASGU>
-results = runtests(directories_to_test, 'UseParallel', true);
+results = runtests(directories_to_test, 'UseParallel', false);
 BRAPH2ISTESTING = false;
 
 %% Shows test results
