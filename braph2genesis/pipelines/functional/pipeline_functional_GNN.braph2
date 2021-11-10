@@ -1,6 +1,6 @@
-%% Workflow Functional GNN Classification
+%% Pipeline Functional GNN Classification
 %
-% This is the workflow script to create a GNN classification of a group of
+% This is the pipeline script to create a GNN classification of a group of
 % subjects with functional data.
 % Brain Atlas is set to Desikan Atlas example BrainAtlas. 
 % Group is set to example group. Modify the path of the files to your needs.
