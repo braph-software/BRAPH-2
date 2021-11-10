@@ -6,14 +6,7 @@ This regressor uses structural data and trains neural network for regression of 
 
 %% ¡props!
 %%% ¡prop!
-GR1 (data, item) is the subject group 1, which also defines the subject class SubjectST.
-%%%% ¡settings!
-'Group'
-%%%% ¡default!
-Group('SUB_CLASS', 'SubjectST')
-
-%%% ¡prop!
-GR2 (data, item) is the subject group 2, which also defines the subject class SubjectST.
+GR (data, item) is the subject group, which also contains the subject information for regression.
 %%%% ¡settings!
 'Group'
 %%%% ¡default!
@@ -70,17 +63,11 @@ value = calculate_results(nn);
 %% ¡methods!
 function value = calculate_results(nn)
     % import the data
-    gr1 = nn.get('GR1');
-    data_list = cellfun(@(x) x.get('ST'), gr1.get('SUB_DICT').getItems, 'UniformOutput', false);
+    gr = nn.get('GR');
+    data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
     data = cat(2, data_list{:})'; 
-    age_list = cellfun(@(x) x.get('age'), gr1.get('SUB_DICT').getItems, 'UniformOutput', false);
+    age_list = cellfun(@(x) x.get('age'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
     label = cat(2, age_list{:})';
-
-    gr2 = nn.get('GR2');
-    data_list = cellfun(@(x) x.get('ST'), gr1.get('SUB_DICT').getItems, 'UniformOutput', false);
-    data = [data; cat(2, data_list{:})'];
-    age_list = cellfun(@(x) x.get('age'), gr2.get('SUB_DICT').getItems, 'UniformOutput', false);
-    label = [label; cat(2, age_list{:})'];
 
     dataset = array2table(data);
     if(~isempty(dataset) && nn.check_toolbox_installation())
