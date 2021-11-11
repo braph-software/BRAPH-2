@@ -170,7 +170,10 @@ function h_panel = draw(pl, varargin)
                             offset = 0;
                         end
                         measure = plot_measure_list{i};
-                        tmp_measure = el.getMeasureEnsemble(measure);
+                        g_dict = el.memorize('G_DICT');
+                        graph_in_ensemble = g_dict.getItem(1);
+                        dummy_measure = graph_in_ensemble.getMeasure(measure);
+                        tmp_measure = el.getMeasureEnsemble(measure, 'MEASUREPARAM', dummy_measure);
                         measures_guis{i} = GUI(tmp_measure, 'CloseRequest', false, 'Position', [x2+offset y2-offset w2 h2]); %#ok<AGROW>
                         k = k + 1;
                     end
