@@ -3823,18 +3823,24 @@ linkbar()
         BRAPH2_ABOUT();
     end
     function cb_load_worfklow(~, ~)
-        [file, path, filterindex] = uigetfile(BRAPH2.EXT_WORKSPACE, 'Select the file to load a workspace.');
+        [file, path, filterindex] = uigetfile({'*.b2'; '*.braph2'}, 'Select the file to load a workspace or pipeline.'); %#ok<NBRAK,CCAT>
         if filterindex
             set(ui_checkbox_bottom_animation, 'Value', false)
             filename = fullfile(path, file);
-            tmp = load(filename, '-mat', 'panel_struct');
-            txt = load(filename, '-mat', 'txt');
-            cycles = load(filename, '-mat', 'cycles');
-            if isa(tmp.panel_struct, 'struct')
-                PIPELINEGUI(file, filename, ...
-                    'PreviousWorkSpace', tmp.panel_struct, ...
-                    'PreviousWorkSpaceText', txt.txt, ...
-                    'PreviousWorkSpaceCycles', cycles.cycles); 
+            workspace_extension = BRAPH2.EXT_WORKSPACE{1};
+            pipeline_extension = BRAPH2.EXT_PIPELINE{1};
+            if isequal(file(end-length(workspace_extension)+2:end), workspace_extension(end-length(workspace_extension)+2:end))
+                tmp = load(filename, '-mat', 'panel_struct');
+                txt = load(filename, '-mat', 'txt');
+                cycles = load(filename, '-mat', 'cycles');
+                if isa(tmp.panel_struct, 'struct')
+                    PIPELINEGUI(file, filename, ...
+                        'PreviousWorkSpace', tmp.panel_struct, ...
+                        'PreviousWorkSpaceText', txt.txt, ...
+                        'PreviousWorkSpaceCycles', cycles.cycles);
+                end
+            else  % pipeline
+                pipeline_guis{end+1} = PIPELINEGUI(filename, file);
             end
         end
     end
