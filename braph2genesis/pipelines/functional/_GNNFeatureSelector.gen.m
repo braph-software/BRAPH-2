@@ -22,6 +22,10 @@ a_1 = gnn.get('A_1');
 a_BUD1_adjs = a_1.get('G_DICT').getItems();
 features1 = {};
 links1 = {};
+f = waitbar(0, 'Selecting Features ...', 'Name', BRAPH2.NAME, 'Visible', 'off');
+set_icon(f)
+set(f, 'Visible', 'on');
+waitbar(.15, f, 'Selecting Features for first analysis ...');
 for i = 1:length(a_BUD1_adjs)
     features1{end+1} = cell2mat(a_BUD1_adjs{i}.getMeasure('Degree').get('M'));
     links1{end+1} = cell2mat(a_BUD1_adjs{i}.get('A'));
@@ -31,6 +35,7 @@ a_2 = gnn.get('A_2');
 a_BUD2_adjs = a_2.get('G_DICT').getItems();
 features2 = {};
 links2 = {};
+waitbar(.55, f, 'Selecting Features for second analysis ...');
 for i = 1:length(a_BUD2_adjs)
     features2{end+1} = cell2mat(a_BUD2_adjs{i}.getMeasure('Degree').get('M'));
     links2{end+1} = cell2mat(a_BUD2_adjs{i}.get('A'));
@@ -38,6 +43,14 @@ end
 
 gr1 = a_1.get('GR');
 gr2 = a_2.get('GR');
+
+waitbar(.85, f, 'Creating Classifier GNN ...');
+
+if exist('f', 'var')
+    waitbar(1, f, 'Finishing')
+    pause(.5)
+    close(f)
+end
 
 value = GraphClassifierGNN_FUN( ...
     'GR1', gr1, ...
@@ -47,4 +60,5 @@ value = GraphClassifierGNN_FUN( ...
     'LINKS1', links1, ...
     'LINKS2', links2 ...
     );
+
 
