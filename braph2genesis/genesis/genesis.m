@@ -109,6 +109,8 @@ copydir([source_dir fp 'src' fp 'analysis'], [target_dir fp 'src' fp 'analysis']
 disp('¡! copied ready files - analysis')
 copydir([source_dir fp 'src' fp 'gui'], [target_dir fp 'src' fp 'gui'])
 disp('¡! copied ready files - gui')
+copydir([source_dir fp 'src' fp 'gui' fp 'prop_order'], [target_dir fp 'src' fp 'gui' fp 'prop_order'])
+disp('¡! copied ready files - gui - prop_order')
 copydir([source_dir fp 'src' fp 'nn'], [target_dir fp 'src' fp 'nn'])
 disp('¡! copied ready files - nn')
 disp(' ')
