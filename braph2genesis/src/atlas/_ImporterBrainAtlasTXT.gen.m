@@ -25,10 +25,9 @@ BrainAtlas()
 %%%% ¡calculate!
 % creates empty BrainAtlas
 ba = BrainAtlas();
-global BRAPH2ISTESTING %#ok<TLEV>
 % analyzes file
 file = im.get('FILE');
-if ~isfile(file) && ~BRAPH2ISTESTING
+if ~isfile(file) && ~is_braph2_testing()
     im.uigetfile()
     file = im.memorize('FILE');
 end
@@ -52,8 +51,9 @@ if isfile(file)
         
         % adds brain regions
         waitbar(.45, f, 'Loading your Brain Regions ...')
+        count = 1;
         for i = 4:6:size(raw, 1)
-            waitbar(.5, f, ['Loading your Brain Region: ' num2str(i - 4) '/' num2str(size(raw, 1) - 3) ' ...'])
+            waitbar(.5, f, ['Loading your Brain Region: ' num2str(count) '/' num2str((size(raw, 1) - 3)/6) ' ...'])
             br = BrainRegion( ...
                 'ID', char(raw{i, 1}), ...
                 'LABEL', char(raw{i+1, 1}), ...
@@ -63,6 +63,7 @@ if isfile(file)
                 'NOTES', char(raw{i+5, 1}) ...
                 );
             idict.add(br);
+            count = count + 1;
         end
         ba.set('br_dict', idict);
     catch e
@@ -70,7 +71,7 @@ if isfile(file)
         close(f)        
         rethrow(e)        
     end
-elseif ~BRAPH2ISTESTING
+elseif ~is_braph2_testing()
     error(BRAPH2.BUG_IO);
 end
 

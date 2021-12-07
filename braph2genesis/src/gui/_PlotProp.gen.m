@@ -20,6 +20,9 @@ EL (metadata, item) is the element.
 PROP (data, scalar) is the property number.
 
 %%% ¡prop!
+TITLE (metadata, string) is the property edited title.
+
+%%% ¡prop!
 ENABLE (metadata, option) switches between off and inactive fields.
 %%%% ¡settings!
 {'inactive' 'off'}
@@ -58,12 +61,19 @@ function h_panel = draw(pl, varargin)
     el = pl.get('EL');
     prop = pl.get('PROP');
     
+    default_string = upper(el.getPropTag(prop));
+    if ~isempty(pl.get('TITLE')) && ~isequal(pl.get('TITLE'), default_string)
+        pl_string_title = pl.get('TITLE');
+    else
+        pl_string_title = default_string;
+    end
+    
     if isempty(pl.text_tag) || ~isgraphics(pl.text_tag, 'text')
         pl.text_tag =  uicontrol( ...
             'Style', 'text', ...
             'Parent', pl.pp, ...
             'Units', 'character', ...
-            'String', upper(el.getPropTag(prop)), ...
+            'String', upper(pl_string_title), ...
             'HorizontalAlignment', 'left', ...
             'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
             'BackgroundColor', pl.get('BKGCOLOR') ...

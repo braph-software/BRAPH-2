@@ -75,10 +75,10 @@ mkdir([target_dir fp 'measures'])
 
 disp('¡! created dir structure - MEASURES')
 
-% workflows
-mkdir([target_dir fp 'workflows'])
+% pipelines
+mkdir([target_dir fp 'pipelines'])
 
-disp('¡! created dir structure - WORKFLOWS')
+disp('¡! created dir structure - PIPELINES')
 
 % test
 mkdir([target_dir fp 'test'])
@@ -109,6 +109,8 @@ copydir([source_dir fp 'src' fp 'analysis'], [target_dir fp 'src' fp 'analysis']
 disp('¡! copied ready files - analysis')
 copydir([source_dir fp 'src' fp 'gui'], [target_dir fp 'src' fp 'gui'])
 disp('¡! copied ready files - gui')
+copydir([source_dir fp 'src' fp 'gui' fp 'prop_order'], [target_dir fp 'src' fp 'gui' fp 'prop_order'])
+disp('¡! copied ready files - gui - prop_order')
 copydir([source_dir fp 'src' fp 'nn'], [target_dir fp 'src' fp 'nn'])
 disp('¡! copied ready files - nn')
 disp(' ')
@@ -133,8 +135,8 @@ copydir([source_dir fp 'brainsurfs'], [target_dir fp 'brainsurfs'], Inf)
 disp('¡! copied ready files - brainsurf')
 disp(' ')
 
-% workflows
-copydir([source_dir fp 'workflows'], [target_dir fp 'workflows'], Inf)
+% pipelines
+copydir([source_dir fp 'pipelines'], [target_dir fp 'pipelines'], Inf)
 disp('¡! copied ready files - brainsurf')
 disp(' ')
 
@@ -209,15 +211,15 @@ for run = 1:1:run_number
         create_Element([source_dir fp 'src' fp 'gui' fp gui_gen_list{i}], [target_dir fp 'src' fp 'gui'])
     end
     
-    % workflows
-    workflows_contents = dir([source_dir fp 'workflows']);  % get the folder contents
-    workflows_dir_list = workflows_contents([workflows_contents(:).isdir] == 1);  % remove all files (isdir property is 0)
-    workflows_dir_list = workflows_dir_list(~ismember({workflows_dir_list(:).name}, {'.', '..'}));  % remove '.' and '..'
-    for i = 1:1:length(workflows_dir_list)
-        wf_name = workflows_dir_list(i).name;
-        wf_gen_list = getGenerators([source_dir fp 'workflows' fp wf_name]);
+    % pipelines
+    pipelines_contents = dir([source_dir fp 'pipelines']);  % get the folder contents
+    pipelines_dir_list = pipelines_contents([pipelines_contents(:).isdir] == 1);  % remove all files (isdir property is 0)
+    pipelines_dir_list = pipelines_dir_list(~ismember({pipelines_dir_list(:).name}, {'.', '..'}));  % remove '.' and '..'
+    for i = 1:1:length(pipelines_dir_list)
+        wf_name = pipelines_dir_list(i).name;
+        wf_gen_list = getGenerators([source_dir fp 'pipelines' fp wf_name]);
         for j = 1:1:numel(wf_gen_list)
-            create_Element([source_dir fp 'workflows' fp wf_name fp wf_gen_list{j}], [target_dir fp 'workflows' fp wf_name])
+            create_Element([source_dir fp 'pipelines' fp wf_name fp wf_gen_list{j}], [target_dir fp 'pipelines' fp wf_name])
         end
     end
     
@@ -294,15 +296,15 @@ for i = 1:1:numel(gui_gen_list)
     create_test_Element([source_dir fp 'src' fp 'gui' fp gui_gen_list{i}], [target_dir fp 'src' fp 'gui'])
 end
 
-% workflows
-workflows_contents = dir([source_dir fp 'workflows']);  % get the folder contents
-workflows_dir_list = workflows_contents([workflows_contents(:).isdir] == 1);  % remove all files (isdir property is 0)
-workflows_dir_list = workflows_dir_list(~ismember({workflows_dir_list(:).name}, {'.', '..'}));  % remove '.' and '..'
-for i = 1:1:length(workflows_dir_list)
-    wf_name = workflows_dir_list(i).name;
-    wf_gen_list = getGenerators([source_dir fp 'workflows' fp wf_name]);
+% pipelines
+pipelines_contents = dir([source_dir fp 'pipelines']);  % get the folder contents
+pipelines_dir_list = pipelines_contents([pipelines_contents(:).isdir] == 1);  % remove all files (isdir property is 0)
+pipelines_dir_list = pipelines_dir_list(~ismember({pipelines_dir_list(:).name}, {'.', '..'}));  % remove '.' and '..'
+for i = 1:1:length(pipelines_dir_list)
+    wf_name = pipelines_dir_list(i).name;
+    wf_gen_list = getGenerators([source_dir fp 'pipelines' fp wf_name]);
     for j = 1:1:numel(wf_gen_list)
-        create_test_Element([source_dir fp 'workflows' fp wf_name fp wf_gen_list{j}], [target_dir fp 'workflows' fp wf_name])
+        create_test_Element([source_dir fp 'pipelines' fp wf_name fp wf_gen_list{j}], [target_dir fp 'pipelines' fp wf_name])
     end
 end
 

@@ -42,7 +42,7 @@ function h_panel = draw(pl, varargin)
         h_panel = pl.pp;
     end
 end
-function update(pl, selected)
+function update(pl, selected, comp_guis)
     %UPDATE updates the content of the property graphical panel.
     %
     % UPDATE(PL) updates the content of the property graphical panel.
@@ -57,13 +57,17 @@ function update(pl, selected)
         pl.selected = selected;
     else
         pl.selected = [];
-    end   
-    comparison_guis = [];
+    end
+    if nargin > 2
+        comparison_guis = comp_guis;
+    else
+        comparison_guis = [];
+    end
 
     if el.getPropCategory(prop) == Category.RESULT && ~isCalculated()
         % do nothing
         set(pl.comparison_tbl, 'Visible', 'off')
-        
+
         % delete brainview buttons
         childs = get(pl.pp, 'Child');
         for n = 1:length(childs)
@@ -81,7 +85,7 @@ function update(pl, selected)
             graph_class =  el.get('A1').getPropSettings('G');
             graph = eval([graph_class '()']);
         end
-        
+
         case_ = 0;
         mlist = [];
         if isa(a1.get(a1.getPropNumber()), 'double')
@@ -91,7 +95,7 @@ function update(pl, selected)
         else
             case_ = 1; % weighted
         end
-        
+
         set(pl.comparison_tbl, ...
             'Units', 'normalized', ...
             'Position', [.02 .2 .9 .7], ...
@@ -113,7 +117,7 @@ function update(pl, selected)
                     data{mi, 1} = true;
                 else
                     data{mi, 1} = false;
-                end                
+                end
                 data{mi, 2} = mlist{mi};
                 data{mi, 3} = isAlreadyCalculated(mlist{mi});
                 if Measure.is_nodal(mlist{mi})
@@ -123,7 +127,7 @@ function update(pl, selected)
                 else
                     data{mi, 4} = 'BINODAL';
                 end
-                
+
                 if Measure.is_superglobal(mlist{mi})
                     data{mi, 5} = 'SUPERGLOBAL';
                 elseif Measure.is_unilayer(mlist{mi})
@@ -131,7 +135,7 @@ function update(pl, selected)
                 else
                     data{mi, 5} = 'BILAYER';
                 end
-                
+
                 data{mi, 6} = eval([mlist{mi} '.getDescription()']);
             end
             set(pl.comparison_tbl, 'Data', data)
@@ -143,7 +147,7 @@ function update(pl, selected)
         ui_button_table_clearselection = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
         ui_button_delete = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
         ui_button_see_comparisons = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized');
-        
+
         init_buttons()
     end
 
@@ -161,21 +165,21 @@ function update(pl, selected)
                 'String', 'Clear', ...
                 'TooltipString', 'Clear selection', ...
                 'Callback', {@cb_table_clearselection})
-            
+
             set(ui_button_table_calculate, ...
                 'Position', [.26 .11 .22 .07], ...
                 'Visible', 'on', ...
                 'String', 'Calculate Comparisons', ...
                 'TooltipString', 'Calculate Comparison of Selected Comparisons', ...
                 'Callback', {@cb_table_calculate})
-            
+
             set(ui_button_delete, ...
                 'Position', [.26 .01 .22 .07], ...
                 'Visible', 'on', ...
                 'String', 'Delete Measures', ...
                 'TooltipString', 'Delete Selected Measures', ...
                 'Callback', {@cb_table_delete})
-            
+
             set(ui_button_see_comparisons, ...
                 'Position', [.51 .11 .22 .07], ...
                 'Visible', 'on', ...
@@ -197,19 +201,19 @@ function update(pl, selected)
                     else
                         pl.selected = pl.selected(pl.selected~=i);
                     end
-                
+
                 otherwise
             end
-            pl.update(pl.selected)
+            pl.update(pl.selected, comparison_guis)
         end
         function cb_table_selectall(~, ~)  % (src, event)
             mlist = Graph.getCompatibleMeasureList(graph);
             pl.selected = (1:1:length(mlist))';
-            pl.update(pl.selected)
+            pl.update(pl.selected, comparison_guis)
         end
         function cb_table_clearselection(~, ~)  % (src, event)
             pl.selected = [];
-            pl.update(pl.selected)
+            pl.update(pl.selected, comparison_guis)
         end
         function cb_table_calculate(~, ~)
             mlist = Graph.getCompatibleMeasureList(graph);
@@ -222,8 +226,8 @@ function update(pl, selected)
                 progress = (i / length(calculate_measure_list)) * .8;
                 extra = (i / length(calculate_measure_list)) * 1.05 * .8;
                 measure = calculate_measure_list{i};
-                waitbar(progress, f, ['Calculating comparison: ' measure ' ...']);              
-                tmp_comp = el.getComparison(measure)                
+                waitbar(progress, f, ['Calculating comparison: ' measure ' ...']);
+                tmp_comp = el.getComparison(measure)
 
                 tmp_comp.memorize('DIFF');
                 tmp_comp.memorize('P1')
@@ -235,14 +239,14 @@ function update(pl, selected)
 
                 waitbar(extra, f, ['Measure: ' measure ' Calculated! ...']);
             end
-            
+
             % close progress bar
             if exist('f', 'var')
                 waitbar(1, f, 'Finishing')
                 pause(.5)
                 close(f)
             end
-            pl.update(pl.selected)
+            pl.update(pl.selected, comparison_guis)
         end
         function cb_table_delete(~, ~)
             mlist = Graph.getCompatibleMeasureList(graph);
@@ -250,8 +254,8 @@ function update(pl, selected)
             c_dict = el.get(prop).get('CP_DICT');
             for i = 1:c_dict.length()
                 c_c = c_dict.getItem(i);
-                m_c = c_c.get('Measure');               
-                if contains(m_c, delete_measure_list)                   
+                m_c = c_c.get('Measure');
+                if contains(m_c, delete_measure_list)
                     c_dict.remove(i);
                 end
             end
@@ -301,14 +305,13 @@ function update(pl, selected)
                         end
                         measure = plot_measure_list{i};
                         tmp_comparison = el.getComparison(measure);
-                        GUI(tmp_comparison, 'CLOSEREQUEST', false, 'POSITION',  [x2+offset y2-offset w2 h2]);
+                        comparison_guis{end+1} = GUI(tmp_comparison, 'CLOSEREQUEST', false, 'POSITION',  [x2+offset y2-offset w2 h2]);
                         k = k + 1;
                     end
                 end
             end
 
-            comparison_guis = getGUIComparisons();
-            pl.update(pl.selected)
+            pl.update(pl.selected, comparison_guis)
         end
         function is_calculated = isAlreadyCalculated(m)
             is_calculated = 'N';
@@ -328,8 +331,9 @@ function update(pl, selected)
             if ~isempty(comparison_guis)
                 for k = 1:length(comparison_guis)
                     c_gui_h = comparison_guis{k};
-                    if isgraphics(c_gui_h)
-                        close(c_gui_h)
+                    m_gui_h = c_gui_h.return_outer_panel();
+                    if isgraphics(ancestor(m_gui_h, 'Figure'))
+                        close(ancestor(m_gui_h, 'Figure'))
                     end
                 end
             end

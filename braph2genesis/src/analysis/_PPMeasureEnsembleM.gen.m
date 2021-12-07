@@ -66,6 +66,8 @@ function update(pl)
     node_labels = [];
     x_range = 1:10;
     m = el.get('MEASURE');
+    f = [];
+    brain_view_gui = [];
 
     if el.getPropCategory(prop) == Category.RESULT && isequal(pl.button_calc.Enable, 'on')
         % remove previous tables/textbox
@@ -467,7 +469,7 @@ function update(pl)
             y2 = normalized(2) + normalized(4) - h2;
             w2 = normalized(3) * 1.61;
 
-            f = figure( ...
+            brain_view_gui = figure( ...
                 'Visible', 'off', ...
                 'NumberTitle', 'off', ...
                 'Name', ['PlotBrainView - ' BRAPH2.STR], ...
@@ -480,9 +482,9 @@ function update(pl)
                 'Color', [.94 .94 .94] ...
                 );
 
-            set_icon(f);
+            set_icon(brain_view_gui);
 
-            ui_toolbar = findall(f, 'Tag', 'FigureToolBar');
+            ui_toolbar = findall(brain_view_gui, 'Tag', 'FigureToolBar');
             delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
             delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
 
@@ -490,17 +492,33 @@ function update(pl)
                 'ME', el, 'Atlas', graph.get('BRAINATLAS'), 'Type', x_label);
 
             el_panel = uipanel( ...
-                'Parent', f, ...
+                'Parent', brain_view_gui, ...
                 'BorderType', 'none' ...
                 );
 
             pbv.draw('Parent', el_panel);
             pbv.settings('SETPOS', [x2 normalized(2) w2 h2*1.61-h2-.065]);
 
-            set(f, 'Visible', 'on')
+            set(brain_view_gui, 'Visible', 'on')
         end
         function cb_slide(~, ~)
             pl.slide()
+        end
+    
+      set(pl.pp, ...
+            'DeleteFcn', {@close_f_settings})
+
+        function close_f_settings(~,~)
+            if ~isempty(f)               
+                if isgraphics(ancestor(f, 'Figure'))
+                    close(ancestor(f, 'Figure'))
+                end                
+            end
+            if ~isempty(brain_view_gui)               
+                if isgraphics(ancestor(brain_view_gui, 'Figure'))
+                    close(ancestor(brain_view_gui, 'Figure'))
+                end                
+            end
         end
 end
 function redraw(pl, varargin)

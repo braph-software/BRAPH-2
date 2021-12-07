@@ -110,14 +110,14 @@ SYMS_FACE_COLOR (metadata, matrix) is the symbol face color.
 %%%% ¡check_value!
 check = (size(value, 1) == 1 && size(value, 2) == 3)|| (size(value, 1) == pl.get('ATLAS').get('BR_DICT').length() &&  size(value, 2) == 3);
 %%%% ¡default!
-[0 0 0]
+[0.90 0.56 0.15]
 
 %%% ¡prop!
 SYMS_EDGE_COLOR (metadata, matrix) is the symbol edge color.
 %%%% ¡check_value!
 check = (size(value, 1) == 1 && size(value, 2) == 3)|| (size(value, 1) == pl.get('ATLAS').get('BR_DICT').length() &&  size(value, 2) == 3);
 %%%% ¡default!
-[0 0 0]
+[0.90 0.56 0.15]
 
 %%% ¡prop!
 SPHS (metadata, cvector) is sphere visibility.

@@ -13,7 +13,7 @@ classdef BRAPH2
     %
     % Properties (Constant) - BRAPH2 extensions
     %  EXT_ELEMENT  - BRAPH2 element extension
-    %  EXT_WORKFLOW - BRAPH2 workflow extentsion
+    %  EXT_PIPELINE - BRAPH2 pipeline extentsion
     %
     % Properties (Constant) - BRAPH2 error codes:
     %  WRONG_INPUT  - wrong input value or format in a function
@@ -22,6 +22,10 @@ classdef BRAPH2
     %  BUG_COPY     - bug while deep-copying an object
     %  BUG_IO       - bug while loading/saving
     %  BUG_ERR      - bug in the handling of errors
+    %
+    % Properties (Constant) - BRAPH2 GUI constants:
+    %  FONTUNITS    - sets the units of the font
+    %  FONTSIZE     - sets the size of the font
     
     properties (Constant) % BRAPH2 ID Card
         NAME = 'Braph 2.0' % BRAPH2 full name
@@ -33,9 +37,9 @@ classdef BRAPH2
         COPYRIGHT = ['Copyright 2014-' datestr(now,'yyyy')]        
     end
     properties (Constant) % BRAPH2 extensions
-        EXT_ELEMENT = '*.b2e' % BRAPH2 element extension
-        EXT_WORKFLOW = '*.braph2' % BRAPH2 workflow extentsion
-        EXT_WORKSPACE = '.b2' % BRAPH2 workflow workspace extension
+        EXT_ELEMENT = {'*.b2e', '*.b2e'} % BRAPH2 element extension
+        EXT_PIPELINE = {'*.braph2', '*.braph2'} % BRAPH2 pipeline extentsion
+        EXT_WORKSPACE = {'*.b2', '*.b2'} % BRAPH2 pipeline workspace extension
     end
     properties (Constant) % BRAPH2 error codes
         WRONG_INPUT = 'WrongInput' % wrong input value or format in a function
@@ -46,5 +50,9 @@ classdef BRAPH2
         BUG_IO = 'BugIO' % bug while loading/saving files
         BUG_JSON = 'BugJSON' % bug in JSON encoding/deconding
         BUG_ERR = 'BugErr' % bug in the handling of errors
+    end
+    properties (Constant) % BRAPH2 GUI constants
+        FONTUNITS = 'normalized';
+        FONTSIZE = 0.5;
     end
 end

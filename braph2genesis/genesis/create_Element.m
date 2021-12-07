@@ -1633,7 +1633,7 @@ generate_gui_static()
                 ''
                 })
                 gs(3, {
-                    'Element.getGUIMenuImport(el, ui_menu_import);'
+                    'Element.getGUIMenuImport(el, ui_menu_import, plot_element);'
                     ''
                     })
             gs(3, gui_menu_import)
@@ -1641,7 +1641,7 @@ generate_gui_static()
             g(2, 'end')
         end
         if  any(cellfun(@(x) ~isempty(x), gui_menu_export))
-            g(2, 'function getGUIMenuExport(el, ui_menu_export)')
+            g(2, 'function getGUIMenuExport(el, ui_menu_export, plot_element)')
             gs(3, {
                 '%GETGUIMENUEXPORT sets a figure menu.'
                 '%'
@@ -1651,7 +1651,7 @@ generate_gui_static()
                 ''
                 })
                 gs(3, {
-                    'Element.getGUIMenuExport(el, ui_menu_export);'
+                    'Element.getGUIMenuExport(el, ui_menu_export, plot_element);'
                     ''
                     })
             gs(3, gui_menu_export)

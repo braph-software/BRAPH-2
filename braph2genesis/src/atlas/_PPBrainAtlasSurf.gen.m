@@ -58,6 +58,7 @@ function h_panel = draw(pl, varargin)
             'Units', 'normalized', ...
             'Position', [.02 .1 .46 .5], ...
             'String', surfs, ...
+            'Value', 6, ...
             'Enable', activation, ...
             'Callback', {@cb_surf_selector_popupmenu} ...
             );
@@ -75,6 +76,7 @@ function h_panel = draw(pl, varargin)
 
         function cb_pushbutton_brain_atlas(~, ~)
             set(pl.plot_brain_atlas_btn, 'Enable', 'off'); % stop multiple creations
+            set(surf_selector_popup, 'Enable', 'off');
             update_plba()
             [parent_position_pixels, normalized] = get_figure_position();
             x = parent_position_pixels(1);
@@ -105,6 +107,7 @@ function h_panel = draw(pl, varargin)
                 'Units', 'normalized', ...
                 'Position', [x2 y2 w2 h2], ...
                 'Toolbar', 'figure', ...
+                'CloseRequestFcn', {@cb_surf_close}, ...
                 'Color', 'w' ...
                 );
 
@@ -141,7 +144,6 @@ function h_panel = draw(pl, varargin)
             plba.draw('Parent', second_figure);
             plba.set('SETPOS', [x2 normalized(2) w2 h2*1.61-h2-.065]); % height has to be correcter for the toolbar and menu
             plba.settings();
-            set(pl.plot_brain_atlas_btn, 'Enable', 'on');
 
             function cb_save_figure(~, ~)
                 % select file
@@ -191,6 +193,11 @@ function h_panel = draw(pl, varargin)
         function cb_surf_selector_popupmenu(~, ~)
             selected_surface = surfs{get(surf_selector_popup, 'Value')};
             el.set('SURF', ImporterBrainSurfaceNV('FILE', [selected_surface '.nv']).get('SURF'));
+        end
+        function cb_surf_close(~, ~)
+            set(pl.plot_brain_atlas_btn, 'Enable', 'on');
+            set(surf_selector_popup, 'Enable', 'on');
+            delete(second_figure)
         end
 
     % output

@@ -663,7 +663,7 @@ function h = arrow_edge(pl, i, j, varargin)
     if i == j  % removes diagonal
         return;
     end
-    pl.set_axes();
+    
     % get brain regions
     br_1 = pl.get('ATLAS').get('BR_DICT').getItem(i);
     br_2 = pl.get('ATLAS').get('BR_DICT').getItem(j);
@@ -1062,7 +1062,7 @@ function h = cylinder_edge(pl, i, j, varargin)
     if i == j  % removes diagonal
         return;
     end
-    pl.set_axes();
+    
     % get brain regions
     br_1 = pl.get('ATLAS').get('BR_DICT').getItem(i);
     br_2 = pl.get('ATLAS').get('BR_DICT').getItem(j);
@@ -1447,7 +1447,7 @@ function h = text_edge(pl, graph_axes, i, j , text_value, varargin)
         return;
     end
 
-    pl.set_axes();
+    
     br_1 = pl.get('ATLAS').get('BR_DICT').getItem(i);
     br_2 = pl.get('ATLAS').get('BR_DICT').getItem(j);
     % get coordinates
@@ -1655,7 +1655,7 @@ function brain_graph_panel = getBrainGraphPanel(pl)
             end
         end
         function cb_edit_lineweight(~, ~)  % (src, event)
-            weigth = real(str2double(get(ui_edit_graph_bs, 'String')));
+            weigth = real(str2double(get(ui_edit_graph_lineweight, 'String')));
             if isnan(weigth) || weigth <= 0
                 set(ui_edit_graph_lineweight, 'String', '5');
             end
@@ -1700,28 +1700,6 @@ function brain_graph_panel = getBrainGraphPanel(pl)
             pl.link_edges_off([], [])
             pl.arrow_edges_off([],[])
             pl.cylinder_edges_off([],[])
-
-            if get(ui_checkbox_graph_linecolor, 'Value')
-                C = color;
-                n = atlas.get('BR_DICT').length();
-                for i = 1:1:n
-                    for j = 1:1:n
-                        if i == j
-                            continue;
-                        end
-                        if  link_style == 1
-                            pl.link_edges(i, j, 'Color', C);
-                            pl.link_edge_on(i, j);
-                        elseif link_style == 2
-                            pl.arrow_edges(i, j, 'Color', C);
-                            pl.arrow_edge_on(i, j)
-                        else
-                            pl.cylinder_edges(i, j, 'Color', C);
-                            pl.cylinder_edge_on(i, j)
-                        end
-                    end
-                end
-            end
 
             if get(ui_checkbox_graph_lineweight, 'Value')
                 % get measure value
@@ -1931,7 +1909,7 @@ function h = getMCRPanel(pl)
 
             set(ui_checkbox_meas_labelsize, 'Units', 'normalized')
             set(ui_checkbox_meas_labelsize, 'Position', [.01 .26 .3 .08])
-            set(ui_checkbox_meas_labelsize, 'String', ' Label Size ')
+            set(ui_checkbox_meas_labelsize, 'String', ' Value Size ')
             set(ui_checkbox_meas_labelsize, 'Value', false)
             set(ui_checkbox_meas_labelsize, 'FontWeight', 'bold')
             set(ui_checkbox_meas_labelsize, 'TooltipString', 'Shows brain regions by label')
@@ -2071,6 +2049,7 @@ function h = getMCRPanel(pl)
                 size = str2double(get(ui_edit_meas_labelsize, 'String'));
                 size = size + 1;
                 pl.set('LABS_SIZE', size);
+                pl.set('LABS', 0);
 
                 set(ui_edit_meas_labelsize, 'Enable', 'off')
                 update_brain_meas_plot()

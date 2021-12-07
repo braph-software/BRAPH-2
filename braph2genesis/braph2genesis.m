@@ -9,7 +9,7 @@
 %  <a href="matlab:help brainsurfs  ">brainsurfs</a>    - BRAPH2 brainsurfs
 %  <a href="matlab:help graphs      ">graphs</a>        - BRAPH2 graphs
 %  <a href="matlab:help measures    ">measures</a>      - BRAPH2 measures
-%  <a href="matlab:help workflows   ">workflows</a>     - BRAPH2 workflows
+%  <a href="matlab:help pipelines   ">pipelines</a>     - BRAPH2 pipelines
 %  <a href="matlab:help test        ">test</a>          - BRAPH2 test
 
 close all
@@ -27,6 +27,9 @@ end
 [target_dir, source_dir] = genesis(target_dir, [], 2);
 
 addpath(target_dir)
+
+disp('BRAPH 2.0 is now fully compiled and ready to be used')
+
 braph2
 
 % test_braph2

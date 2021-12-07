@@ -14,6 +14,7 @@ click_threshold_s = 0.5;
 index = [];
 w_names = [];
 paths = [];
+pipeline_guis = [];
 
 % init
 f = init();
@@ -45,6 +46,15 @@ f = init();
                 delete(f)
             case 'No'
                 return
+        end
+        
+        if ~isempty(pipeline_guis)
+            for i = 1:length(pipeline_guis)
+                wf_g = pipeline_guis{i};
+                if isgraphics(ancestor(wf_g, 'Figure'))
+                    close(ancestor(wf_g, 'Figure'))
+                end
+            end
         end
     end
 
@@ -106,6 +116,8 @@ warning('off', 'all')
 jPanelObj = com.mathworks.widgets.SearchTextField('Enter search filter:');
 jAssetComponent = jPanelObj.getComponent;
 [jhPanel, hContainer] = javacomponent(jAssetComponent, [20, 375, 350, 25], f); %#ok<ASGLU,JAVCM>
+jAssetComponent.setBackground(java.awt.Color(BKGCOLOR(1), BKGCOLOR(2), BKGCOLOR(3)));
+
 if ismac
     hjSearchField = handle(jAssetComponent, 'CallbackProperties');
 elseif isunix
@@ -120,12 +132,9 @@ set(hjSearchField, 'KeyPressedCallback', {@updateSearch, jPanelObj});
     function updateSearch(~, ~, ~)  
         update_listbox()
     end
-    function update_position(~, ~)
-        set(hContainer,'units','norm', 'position', [0.62 0.65 0.36 .06]);
-    end
-
+    
 % list
-workflow_list = uicontrol( ...
+pipeline_list = uicontrol( ...
     'Parent', f, ...
     'Style', 'listbox', ...
     'Units', 'normalized', ...
@@ -133,48 +142,48 @@ workflow_list = uicontrol( ...
     'String', '', ...
     'Callback', {@cb_wf_list_box});
 
-jScrollPane = findjobj(workflow_list);
+jScrollPane = findjobj(pipeline_list);
 jListbox = jScrollPane.getViewport.getComponent(0);
 jListbox = handle(jListbox, 'CallbackProperties');
-set(jListbox, 'MouseMovedCallback', {@mouseMovedCallback, workflow_list});
+set(jListbox, 'MouseMovedCallback', {@mouseMovedCallback, pipeline_list});
 descriptions = [];
 
     function cb_wf_list_box(~, ~)
-        index = get(workflow_list, 'Value');
+        index = get(pipeline_list, 'Value');
         if isempty(click_time)
             click_time = tic();
         else
             time_between_clicks = toc( click_time );
             click_time = tic();
             if time_between_clicks < click_threshold_s
-                get_workflow_gui()
+                get_pipeline_gui()
             end
         end
     end
     function update_listbox()
-        workflows_path = [fileparts(which('braph2.m')) filesep 'workflows'];
-        files = subdir(fullfile(workflows_path, '*.braph2'));
+        pipelines_path = [fileparts(which('braph2.m')) filesep 'pipelines'];
+        files = subdir(fullfile(pipelines_path, '*.braph2'));
         files_array = struct2cell(files);
         files_names = files_array(1, :); 
         files_paths = files_array(2, :);
 
-        workflow_names = cellfun(@(x, y) erase(x, [y filesep()]), files_names, files_paths, 'UniformOutput', false);
+        pipeline_names = cellfun(@(x, y) erase(x, [y filesep()]), files_names, files_paths, 'UniformOutput', false);
         
         if ~isempty(jPanelObj.getSearchText.toCharArray')
             filter = lower(jPanelObj.getSearchText.toCharArray');
-            workflow_filter_index = cell2mat(cellfun(@(x) contains(x, filter), workflow_names, 'UniformOutput', false));
-            files_paths = files_paths(workflow_filter_index);
-            workflow_names = workflow_names(workflow_filter_index);
+            pipeline_filter_index = cell2mat(cellfun(@(x) contains(x, filter), pipeline_names, 'UniformOutput', false));
+            files_paths = files_paths(pipeline_filter_index);
+            pipeline_names = pipeline_names(pipeline_filter_index);
         end
-        w_names = workflow_names;
+        w_names = pipeline_names;
         % open and find name and description
-        for i = 1: length(workflow_names)
+        for i = 1: length(pipeline_names)
             file_path = files_paths{i};
-            txt = fileread([file_path filesep workflow_names{i}]);
-            [workflow_names{i}, descriptions{i}] = getGUIToken(txt, 1);
+            txt = fileread([file_path filesep pipeline_names{i}]);
+            [pipeline_names{i}, descriptions{i}] = getGUIToken(txt, 1);
         end
         paths = files_paths;
-        set(workflow_list, 'String', workflow_names)
+        set(pipeline_list, 'String', pipeline_names)
     end
     function varargout = subdir(varargin)
         % Function based on Kelly Kearney subdir function.
@@ -3723,15 +3732,19 @@ descriptions = [];
             end
         end
     end
-    function get_workflow_gui()
+    function get_pipeline_gui()
         if isempty(index)
-            index = get(workflow_list, 'Value');
+            index = get(pipeline_list, 'Value');
         end
         
         file = [paths{index} filesep() w_names{index}];
         
         set(ui_checkbox_bottom_animation, 'Value', false)
-        WORKFLOWGUI(file, w_names{index});        
+        pipeline_guis{end+1} = PIPELINEGUI(file, w_names{index});        
+    end
+    function update_position(~, ~)        
+        set(hContainer, 'units', 'norm', 'position', [0.62 0.65 0.36 .06]);
+        set(pipeline_list, 'FontUnits',  'normalized', 'FontSize', 0.06)
     end
 
 % menu
@@ -3751,45 +3764,51 @@ website_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
 forums_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
 twitter_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
 load_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
+load_pipeline_btn = uicontrol(f, 'Style', 'pushbutton', 'Units', 'normalized');
 linkbar()
     function linkbar()
         set(load_btn, ...
             'Cdata', imread('loadicon.png'), ...
             'Tooltip', ['Load the workspace of ' fig_name], ...
-            'Position', [.0 0 .1666 .08], ...
+            'Position', [.01 0 .14 .08], ...
             'BackgroundColor', [1 1 1], ...
             'Callback', {@cb_load_worfklow});
+        set(load_pipeline_btn, ...
+            'Position', [.15 0 .14 .08], ...
+            'Tooltip', 'Load a pipeline', ...
+            'Cdata', imread('loadicon_2.png'), ...
+            'BackgroundColor', [1 1 1], ...
+            'Callback', {@cb_load_pipeline});
         set(website_btn, ...
-            'Position', [.1666 0 .1666 .08], ...
+            'Position', [.29 0 .14 .08], ...
             'Tooltip', 'Click to visit BRAPH 2.0 website', ...
             'Cdata', imread('webicon.png'), ...
             'BackgroundColor', [1 1 1], ...
             'Callback', {@cb_website_btn});
         set(forums_btn, ...
-            'Position', [.3333 0 .1666 .08], ...
+            'Position', [.43 0 .14 .08], ...
             'Tooltip', 'Click to visit BRAPH 2.0 forums', ...
             'Cdata', imread('forum_icon.png'), ...
             'BackgroundColor', [1 1 1], ...
             'Callback', {@cb_forum_btn});
         set(twitter_btn, ...
-            'Position', [.4999 0 .1666 .08], ...
+            'Position', [.57 0 .14 .08], ...
             'Tooltip', 'Click to visit BRAPH 2.0 twitter', ...
             'Cdata', imread('twitter_icon.png'), ...
             'BackgroundColor', [1 1 1], ...
             'Callback', {@cb_twitter_btn});        
         set(license_btn, ...
-            'Position', [.6666 0 .1666 .08], ...
+            'Position', [.71 0 .14 .08], ...
             'Cdata', imread('licenseicon.png'), ...
             'BackgroundColor', [1 1 1], ...
             'Tooltip', 'Click to open BRAPH 2.0 License', ...
             'Callback', {@cb_license});
         set(about_btn, ...
-            'Position', [.8333 0 .1666 .08], ...
+            'Position', [.85 0 .14 .08], ...
             'Cdata', imread('abouticon.png'), ...
             'BackgroundColor', [1 1 1], ...
             'Tooltip', 'Click to open BRAPH 2.0 information', ...
-            'Callback', {@cb_about});
-        
+            'Callback', {@cb_about});        
     end
     function cb_website_btn(~, ~)
         url = 'http://braph.org/';
@@ -3810,19 +3829,27 @@ linkbar()
         BRAPH2_ABOUT();
     end
     function cb_load_worfklow(~, ~)
-        [file, path, filterindex] = uigetfile(BRAPH2.EXT_WORKSPACE, 'Select the file to load a workspace.');
+        [file, path, filterindex] = uigetfile(BRAPH2.EXT_WORKSPACE, 'Select the file to load a workspace.'); %#ok<NBRAK,CCAT>
         if filterindex
             set(ui_checkbox_bottom_animation, 'Value', false)
-            filename = fullfile(path, file);
+            filename = fullfile(path, file);            
             tmp = load(filename, '-mat', 'panel_struct');
             txt = load(filename, '-mat', 'txt');
             cycles = load(filename, '-mat', 'cycles');
             if isa(tmp.panel_struct, 'struct')
-                WORKFLOWGUI(file, filename, ...
+                PIPELINEGUI(file, filename, ...
                     'PreviousWorkSpace', tmp.panel_struct, ...
                     'PreviousWorkSpaceText', txt.txt, ...
-                    'PreviousWorkSpaceCycles', cycles.cycles); 
+                    'PreviousWorkSpaceCycles', cycles.cycles);
             end
+        end
+    end
+    function cb_load_pipeline(~, ~)
+        [file, path, filterindex] = uigetfile(BRAPH2.EXT_PIPELINE, 'Select the file to load a pipeline.'); %#ok<NBRAK,CCAT>
+        if filterindex
+            set(ui_checkbox_bottom_animation, 'Value', false)
+            filename = fullfile(path, file);
+            pipeline_guis{end+1} = PIPELINEGUI(filename, file);
         end
     end
 % auxiliary

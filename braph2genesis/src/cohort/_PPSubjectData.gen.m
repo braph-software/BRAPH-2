@@ -67,7 +67,11 @@ function h_panel = draw(pl, varargin)
             m = event.Indices(1);
             col = event.Indices(2);
             sub_data(m, col) = event.NewData;
-            el.set('sub_data_tag', sub_data);
+            if isequal(el.getPropFormat(prop), 'nc')
+                el.set(prop, sub_data');
+            else
+                el.set(prop, sub_data);
+            end
             pl.update()
         end        
 

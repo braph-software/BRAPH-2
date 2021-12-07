@@ -77,10 +77,12 @@ if contains(el.getClass(), gui_files)
     gui_modified_file = load([gui_files_dir el.getClass()]);
     load_rule_array = gui_modified_file.visibility;
     load_order_array = gui_modified_file.order;
+    load_titles = gui_modified_file.title;
     
     for prop = 1:el.getPropNumber()
         load_rule = load_rule_array(prop);
         load_order = load_order_array(prop);
+        load_title = load_titles{prop};
         if load_rule
             switch el.getPropCategory(prop)
                 case Category.METADATA
@@ -93,7 +95,8 @@ if contains(el.getClass(), gui_files)
                     color = pl.get('RCOLOR');
             end
             pp_list{load_order} = el.getPlotProp(prop, ...
-            'BKGCOLOR', color);
+            'BKGCOLOR', color, ...
+            'TITLE', load_title);
         end
     end
 else

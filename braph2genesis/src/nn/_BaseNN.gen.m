@@ -18,6 +18,8 @@ NOTES (metadata, string) are some specific notes about  the machien learning ana
 
 %%% ¡prop!
 NEURAL_NETWORK_ANALYSIS (result, cell) is the machine learning analysis.
+%%%% ¡gui!
+pl = PlotPropNNAnalysis('EL', nn, 'PROP', BaseNN.NEURAL_NETWORK_ANALYSIS, varargin{:});
 
 %% ¡methods!
 function installed = check_toolbox_installation(nn)

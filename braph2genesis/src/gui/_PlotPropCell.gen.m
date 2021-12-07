@@ -70,8 +70,8 @@ function update(pl)
     prop = pl.get('PROP');
     
     value = el.getr(prop);
-    if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
-        %
+    if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')        
+        
     else
         value_cell = el.get(prop);
         if isempty(pl.table_value_cell)
@@ -85,6 +85,8 @@ function update(pl)
                 set(pl.table_value_cell{i, j}, ...
                     'Data', value_cell{i, j}, ...
                     'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                    'FontUnits', BRAPH2.FONTUNITS, ...
+                    'FontSize', BRAPH2.FONTSIZE, ...
                     'CellEditCallback', {@cb_matrix_value, i, j} ...
                     )
             end
