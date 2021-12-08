@@ -59,9 +59,14 @@ for i = 1:1:L
     M = standardize(M, varargin{:}); %% enforces binary adjacency matrix
     A(i, i) = {M};
     if ~isempty(A{1, 1})
-        if i < L % not last layer
-            A(i, i+1) = {eye(length(A{1, 1}))};
-            A(i+1, i) = {eye(length(A{1, 1}))};
+        for j = i+1:1:L
+            if j == i+1
+                A(i, j) = {eye(length(A{1, 1}))};
+                A(j, i) = {eye(length(A{1, 1}))};
+            else
+                A(i, j) = {zeros(length(A{1, 1}))};
+                A(j, i) = {zeros(length(A{1, 1}))};
+            end
         end
     end
 end
@@ -118,11 +123,11 @@ end
 Constructor
 %%%% ¡code!
 A = rand(randi(10));
-B = {A, A};
+B = {A, A, A};
 g = OrderedMultiplexWU('B', B);
 
 A1 = symmetrize(standardize(semipositivize(dediagonalize(A))));
-A = {A1, eye(length(A)); eye(length(A)), A1};
+A = {A1, eye(length(A)), zeros(length(A)); eye(length(A)), A1, eye(length(A)); zeros(length(A)), eye(length(A)), A1};
 
 assert(isequal(g.get('A'), A), ...
     [BRAPH2.STR ':OrderedMultiplexWU:' BRAPH2.BUG_ERR], ...
