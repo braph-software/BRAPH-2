@@ -49,7 +49,7 @@ G (result, idict) is the average graph (MultiplexWU) obtained from this analysis
 %%%% ¡settings!
 'MultiplexWU'
 %%%% ¡default!
-'MultiplexWU'()
+MultiplexWU()
 %%%% ¡calculate!
 gr = a.get('GR');
 atlas = BrainAtlas();
