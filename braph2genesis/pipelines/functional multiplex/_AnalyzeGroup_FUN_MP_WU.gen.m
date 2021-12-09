@@ -45,14 +45,12 @@ GR (data, item) is the subject group, which also defines the subject class Subje
 Group('SUB_CLASS', 'SubjectFUN_MP')
 
 %%% ¡prop!
-G_DICT (result, idict) is the graph (MultiplexWU) ensemble obtained from this analysis.
+G (result, idict) is the average graph (MultiplexWU) obtained from this analysis.
 %%%% ¡settings!
 'MultiplexWU'
 %%%% ¡default!
-IndexedDictionary('IT_CLASS', 'MultiplexWU')
+'MultiplexWU'()
 %%%% ¡calculate!
-g_dict = IndexedDictionary('IT_CLASS', 'MultiplexWU');
-
 gr = a.get('GR');
 atlas = BrainAtlas();
 subjects_number = gr.get('SUB_DICT').length();
@@ -96,9 +94,7 @@ g = MultiplexWU( ...
     'B', cellfun(@(a) a/subjects_number, A_fun, 'UniformOutput', false), ...
     'BRAINATLAS', atlas ...
     );
-g_dict.add(g)
-    
-value = g_dict;
+value = g;
 %%%% ¡gui!
 pl = PPAnalyzeEnsembleGraph('EL', a, 'PROP', AnalyzeGroup_FUN_MP_WU.G_DICT, varargin{:});
 
