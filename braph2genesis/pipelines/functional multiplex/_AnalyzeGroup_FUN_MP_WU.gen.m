@@ -1,5 +1,5 @@
 %% ¡header!
-AnalyzeGroup_FUN_MP_WU < AnalyzeEnsemble (a, graph analysis with functional multiplex data) is a graph analysis using functional multiplex data.
+AnalyzeGroup_FUN_MP_WU < AnalyzeGroup (a, graph analysis with functional multiplex data) is a graph analysis using functional multiplex data.
 
 %% ¡description!
 This graph analysis uses functional multiplex data and analyzes them using weighted undirected graphs,
@@ -45,7 +45,7 @@ GR (data, item) is the subject group, which also defines the subject class Subje
 Group('SUB_CLASS', 'SubjectFUN_MP')
 
 %%% ¡prop!
-G (result, idict) is the average graph (MultiplexWU) obtained from this analysis.
+G (result, item) is the average graph (MultiplexWU) obtained from this analysis.
 %%%% ¡settings!
 'MultiplexWU'
 %%%% ¡default!

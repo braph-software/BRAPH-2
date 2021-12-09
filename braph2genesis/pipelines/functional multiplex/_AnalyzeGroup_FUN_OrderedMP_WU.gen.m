@@ -1,5 +1,5 @@
 %% ¡header!
-AnalyzeGroup_FUN_OrderedMP_WU < AnalyzeEnsemble (a, graph analysis with functional ordinal multiplex data) is a graph analysis using functional ordinal multiplex data.
+AnalyzeGroup_FUN_OrderedMP_WU < AnalyzeGroup (a, graph analysis with functional ordinal multiplex data) is a graph analysis using functional ordinal multiplex data.
 
 %% ¡description!
 This graph analysis uses functional ordinal multiplex data and analyzes them 
@@ -44,7 +44,7 @@ GR (data, item) is the subject group, which also defines the subject class Subje
 Group('SUB_CLASS', 'SubjectFUN_MP')
 
 %%% ¡prop!
-G (result, idict) is the average graph (OrderedMultiplexWU) obtained from this analysis.
+G (result, item) is the average graph (OrderedMultiplexWU) obtained from this analysis.
 %%%% ¡settings!
 'OrderedMultiplexWU'
 %%%% ¡default!
