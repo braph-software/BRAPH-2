@@ -1,13 +1,12 @@
 %% ¡header!
-AnalyzeEnsemble_FUN_MP_WU < AnalyzeEnsemble (a, graph analysis with functional multiplex data) is a graph analysis using functional multiplex data.
+AnalyzeEnsemble_FUN_OrderedMP_WU < AnalyzeEnsemble (a, graph analysis with functional ordinal multiplex data) is a graph analysis using functional ordinal multiplex data.
 
 %% ¡description!
-This graph analysis uses functional multiplex data and analyzes them using weighted undirected graphs,
-binary undirected multigraphs with fixed thresholds,
-or binary undirected multigraphs with fixed densities.
+This graph analysis uses functional ordinal multiplex data and analyzes them 
+using weighted undirected graphs.
 
 %%% ¡seealso!
-AnalyzeEnsemble_FUN_MP_BUD, AnalyzeEnsemble_FUN_MP_BUT, Subject_FUN_MP, MultiplexWU.
+Subject_FUN_MP, OrderedMultiplexWU, AnalyzeEnsemble_FUN_MP_WU.
 
 %% ¡props!
 %%% ¡prop!
@@ -45,13 +44,13 @@ GR (data, item) is the subject group, which also defines the subject class Subje
 Group('SUB_CLASS', 'SubjectFUN_MP')
 
 %%% ¡prop!
-G_DICT (result, idict) is the graph (MultiplexWU) ensemble obtained from this analysis.
+G_DICT (result, idict) is the graph (OrderedMultiplexWU) ensemble obtained from this analysis.
 %%%% ¡settings!
-'MultiplexWU'
+'OrderedMultiplexWU'
 %%%% ¡default!
-IndexedDictionary('IT_CLASS', 'MultiplexWU')
+IndexedDictionary('IT_CLASS', 'OrderedMultiplexWU')
 %%%% ¡calculate!
-g_dict = IndexedDictionary('IT_CLASS', 'MultiplexWU');
+g_dict = IndexedDictionary('IT_CLASS', 'OrderedMultiplexWU');
 
 gr = a.get('GR');
 atlas = BrainAtlas();
@@ -82,7 +81,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
         A(j) = {Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'))};
     end
     
-    g = MultiplexWU( ...
+    g = OrderedMultiplexWU( ...
         'ID', ['g ' sub.get('ID')], ...
         'B', A, ...
         'BRAINATLAS', atlas ...
@@ -92,7 +91,7 @@ end
 
 value = g_dict;
 %%%% ¡gui!
-pl = PPAnalyzeEnsembleGraph('EL', a, 'PROP', AnalyzeEnsemble_FUN_MP_WU.G_DICT, varargin{:});
+pl = PPAnalyzeEnsembleGraph('EL', a, 'PROP', AnalyzeEnsemble_FUN_OrderedMP_WU.G_DICT, varargin{:});
 
 %% ¡tests!
 
@@ -100,4 +99,4 @@ pl = PPAnalyzeEnsembleGraph('EL', a, 'PROP', AnalyzeEnsemble_FUN_MP_WU.G_DICT, v
 %%%% ¡name!
 Example
 %%%% ¡code!
-example_FUN_MP_WU
+example_FUN_OrderedMP_WU

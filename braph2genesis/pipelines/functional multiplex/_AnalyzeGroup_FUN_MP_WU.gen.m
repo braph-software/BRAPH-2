@@ -1,5 +1,5 @@
 %% ¡header!
-AnalyzeEnsemble_FUN_MP_WU < AnalyzeEnsemble (a, graph analysis with functional multiplex data) is a graph analysis using functional multiplex data.
+AnalyzeGroup_FUN_MP_WU < AnalyzeEnsemble (a, graph analysis with functional multiplex data) is a graph analysis using functional multiplex data.
 
 %% ¡description!
 This graph analysis uses functional multiplex data and analyzes them using weighted undirected graphs,
@@ -7,7 +7,7 @@ binary undirected multigraphs with fixed thresholds,
 or binary undirected multigraphs with fixed densities.
 
 %%% ¡seealso!
-AnalyzeEnsemble_FUN_MP_BUD, AnalyzeEnsemble_FUN_MP_BUT, Subject_FUN_MP, MultiplexWU.
+AnalyzeGroup_FUN_MP_BUD, AnalyzeGroup_FUN_MP_BUT, Subject_FUN_MP, MultiplexWU.
 
 %% ¡props!
 %%% ¡prop!
@@ -45,24 +45,24 @@ GR (data, item) is the subject group, which also defines the subject class Subje
 Group('SUB_CLASS', 'SubjectFUN_MP')
 
 %%% ¡prop!
-G_DICT (result, idict) is the graph (MultiplexWU) ensemble obtained from this analysis.
+G (result, idict) is the average graph (MultiplexWU) obtained from this analysis.
 %%%% ¡settings!
 'MultiplexWU'
 %%%% ¡default!
-IndexedDictionary('IT_CLASS', 'MultiplexWU')
+MultiplexWU()
 %%%% ¡calculate!
-g_dict = IndexedDictionary('IT_CLASS', 'MultiplexWU');
-
 gr = a.get('GR');
 atlas = BrainAtlas();
-if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
+subjects_number = gr.get('SUB_DICT').length();
+
+if ~isempty(gr) && ~isa(gr, 'NoValue') && subjects_number > 0
     atlas = gr.get('SUB_DICT').getItem(1).get('BA');
 end
 T = a.get('REPETITION');
 fmin = a.get('FREQUENCYRULEMIN');
 fmax = a.get('FREQUENCYRULEMAX');
-for i = 1:1:gr.get('SUB_DICT').length()
-    A = cell(1, 2);
+A_fun = cell(1, 2);
+for i = 1:1:subjects_number
 	sub = gr.get('SUB_DICT').getItem(i);
     FUN_MP = sub.getr('FUN_MP');
     L = sub.get('L');
@@ -79,20 +79,24 @@ for i = 1:1:gr.get('SUB_DICT').length()
             data = ifft(ft, NFFT);
         end
         
-        A(j) = {Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'))};
+        A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
+        
+        if i == 1
+            A_fun(j) = {A};
+        else
+            A_fun(j) = {A_fun{j} + A};
+        end     
     end
-    
-    g = MultiplexWU( ...
-        'ID', ['g ' sub.get('ID')], ...
-        'B', A, ...
-        'BRAINATLAS', atlas ...
-        );
-    g_dict.add(g)
 end
 
-value = g_dict;
+g = MultiplexWU( ...
+    'ID', ['g ' sub.get('ID')], ...
+    'B', cellfun(@(a) a/subjects_number, A_fun, 'UniformOutput', false), ...
+    'BRAINATLAS', atlas ...
+    );
+value = g;
 %%%% ¡gui!
-pl = PPAnalyzeEnsembleGraph('EL', a, 'PROP', AnalyzeEnsemble_FUN_MP_WU.G_DICT, varargin{:});
+pl = PPAnalyzeEnsembleGraph('EL', a, 'PROP', AnalyzeGroup_FUN_MP_WU.G_DICT, varargin{:});
 
 %% ¡tests!
 
@@ -100,4 +104,4 @@ pl = PPAnalyzeEnsembleGraph('EL', a, 'PROP', AnalyzeEnsemble_FUN_MP_WU.G_DICT, v
 %%%% ¡name!
 Example
 %%%% ¡code!
-example_FUN_MP_WU
+example_FUN_MP_WU_Group
