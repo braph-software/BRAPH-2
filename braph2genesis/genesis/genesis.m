@@ -45,9 +45,9 @@ disp('¡! created target dir')
 % src
 mkdir([target_dir fp 'src' fp 'util'])
 mkdir([target_dir fp 'src' fp 'ds'])
-% % % mkdir([target_dir fp 'src' fp 'atlas'])
-% % % mkdir([target_dir fp 'src' fp 'cohort'])
 % % % mkdir([target_dir fp 'src' fp 'gt'])
+mkdir([target_dir fp 'src' fp 'atlas'])
+% % % mkdir([target_dir fp 'src' fp 'cohort'])
 % % % mkdir([target_dir fp 'src' fp 'analysis'])
 % % % mkdir([target_dir fp 'src' fp 'gui'])
 % % % mkdir([target_dir fp 'src' fp 'gui' fp 'prop_order'])
@@ -55,11 +55,11 @@ mkdir([target_dir fp 'src' fp 'ds'])
 
 disp('¡! created dir structure - SRC')
 
-% % % % brainsurfs
-% % % mkdir([target_dir fp 'brainsurfs'])
-% % % 
-% % % disp('¡! created dir structure - BRAINGRAPHS')
-% % % 
+% brainsurfs
+mkdir([target_dir fp 'brainsurfs'])
+
+disp('¡! created dir structure - BRAINSURFS')
+
 % % % % graphs
 % % % mkdir([target_dir fp 'graphs'])
 % % % 
@@ -101,8 +101,8 @@ copydir([source_dir fp 'src' fp 'ds'], [target_dir fp 'src' fp 'ds'])
 disp('¡! copied ready files - ds')
 % % % copydir([source_dir fp 'src' fp 'gt'], [target_dir fp 'src' fp 'gt'])
 % % % disp('¡! copied ready files - gt')
-% % % copydir([source_dir fp 'src' fp 'atlas'], [target_dir fp 'src' fp 'atlas'])
-% % % disp('¡! copied ready files - atlas')
+copydir([source_dir fp 'src' fp 'atlas'], [target_dir fp 'src' fp 'atlas'])
+disp('¡! copied ready files - atlas')
 % % % copydir([source_dir fp 'src' fp 'cohort'], [target_dir fp 'src' fp 'cohort'])
 % % % disp('¡! copied ready files - cohort')
 % % % copydir([source_dir fp 'src' fp 'analysis'], [target_dir fp 'src' fp 'analysis'])
@@ -113,8 +113,13 @@ disp('¡! copied ready files - ds')
 % % % disp('¡! copied ready files - gui - prop_order')
 % % % copydir([source_dir fp 'src' fp 'nn'], [target_dir fp 'src' fp 'nn'])
 % % % disp('¡! copied ready files - nn')
-% % % disp(' ')
-% % % 
+disp(' ')
+
+% brainsurfs
+copydir([source_dir fp 'brainsurfs'], [target_dir fp 'brainsurfs'], Inf)
+disp('¡! copied ready files - brainsurf')
+disp(' ')
+
 % % % % graphs
 % % % copydir([source_dir fp 'graphs'], [target_dir fp 'graphs'], Inf)
 % % % disp('¡! copied ready files - graphs')
@@ -130,11 +135,6 @@ disp('¡! copied ready files - ds')
 % % % disp('¡! copied ready files - neuralnetworks')
 % % % disp(' ')
 % % %     
-% % % % brainsurfs
-% % % copydir([source_dir fp 'brainsurfs'], [target_dir fp 'brainsurfs'], Inf)
-% % % disp('¡! copied ready files - brainsurf')
-% % % disp(' ')
-% % % 
 % % % % pipelines
 % % % copydir([source_dir fp 'pipelines'], [target_dir fp 'pipelines'], Inf)
 % % % disp('¡! copied ready files - brainsurf')
@@ -160,20 +160,19 @@ for run = 1:1:run_number
     for i = 1:1:numel(util_gen_list)
         create_Element([source_dir fp 'src' fp 'util' fp util_gen_list{i}], [target_dir fp 'src' fp 'util'])
     end
-
-% % %     atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
-% % %     for i = 1:1:numel(atlas_gen_list)
-% % %         create_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
-% % %     end
-% % %     
-% % %     cohort_gen_list = getGenerators([source_dir fp 'src' fp 'cohort']);
-% % %     for i = 1:1:numel(cohort_gen_list)
-% % %         create_Element([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'cohort'])
-% % %     end
-% % %     
 % % %     gt_gen_list = getGenerators([source_dir fp 'src' fp 'gt']);
 % % %     for i = 1:1:numel(gt_gen_list)
 % % %         create_Element([source_dir fp 'src' fp 'gt' fp gt_gen_list{i}], [target_dir fp 'src' fp 'gt'])
+% % %     end
+
+    atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
+    for i = 1:1:numel(atlas_gen_list)
+        create_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
+    end
+    
+% % %     cohort_gen_list = getGenerators([source_dir fp 'src' fp 'cohort']);
+% % %     for i = 1:1:numel(cohort_gen_list)
+% % %         create_Element([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'cohort'])
 % % %     end
 % % %     
 % % %     analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
@@ -246,19 +245,19 @@ for i = 1:1:numel(util_gen_list)
     create_test_Element([source_dir fp 'src' fp 'util' fp util_gen_list{i}], [target_dir fp 'src' fp 'util'])
 end
 
-% % % atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
-% % % for i = 1:1:numel(atlas_gen_list)
-% % %     create_test_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
-% % % end
-% % % 
-% % % cohort_gen_list = getGenerators([source_dir fp 'src' fp 'cohort']);
-% % % for i = 1:1:numel(cohort_gen_list)
-% % %     create_test_Element([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'cohort'])
-% % % end
-% % % 
 % % % gt_gen_list = getGenerators([source_dir fp 'src' fp 'gt']);
 % % % for i = 1:1:numel(gt_gen_list)
 % % %     create_test_Element([source_dir fp 'src' fp 'gt' fp gt_gen_list{i}], [target_dir fp 'src' fp 'gt'])
+% % % end
+
+atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
+for i = 1:1:numel(atlas_gen_list)
+    create_test_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
+end
+
+% % % cohort_gen_list = getGenerators([source_dir fp 'src' fp 'cohort']);
+% % % for i = 1:1:numel(cohort_gen_list)
+% % %     create_test_Element([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'cohort'])
 % % % end
 % % % 
 % % % analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
