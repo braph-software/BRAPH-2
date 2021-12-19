@@ -79,11 +79,11 @@ disp('¡! created dir structure - SRC')
 % % % mkdir([target_dir fp 'pipelines'])
 % % % 
 % % % disp('¡! created dir structure - PIPELINES')
-% % % 
-% % % % test
-% % % mkdir([target_dir fp 'test'])
-% % % 
-% % % disp('¡! created dir structure - TEST')
+
+% test
+mkdir([target_dir fp 'test'])
+
+disp('¡! created dir structure - TEST')
 
 disp(' ')
 
@@ -139,28 +139,28 @@ disp('¡! copied ready files - ds')
 % % % copydir([source_dir fp 'pipelines'], [target_dir fp 'pipelines'], Inf)
 % % % disp('¡! copied ready files - brainsurf')
 % % % disp(' ')
-% % % 
-% % % % test
-% % % copydir([source_dir fp 'test'], [target_dir fp 'test'], Inf)
-% % % disp('¡! copied ready files - test')
-% % % disp(' ')
-% % % 
-% % % %% CREATE ELEMENTS
-% % % for run = 1:1:run_number
-% % %     
-% % %     disp(['¡! started run number ' int2str(run)])
-% % %     
-% % %     % src
-% % %     ds_gen_list = getGenerators([source_dir fp 'src' fp 'ds']);
-% % %     for i = 1:1:numel(ds_gen_list)
-% % %         create_Element([source_dir fp 'src' fp 'ds' fp ds_gen_list{i}], [target_dir fp 'src' fp 'ds'])
-% % %     end
-% % % 
-% % %     util_gen_list = getGenerators([source_dir fp 'src' fp 'util']);
-% % %     for i = 1:1:numel(util_gen_list)
-% % %         create_Element([source_dir fp 'src' fp 'util' fp util_gen_list{i}], [target_dir fp 'src' fp 'util'])
-% % %     end
-% % % 
+
+% test
+copydir([source_dir fp 'test'], [target_dir fp 'test'], Inf)
+disp('¡! copied ready files - test')
+disp(' ')
+
+%% CREATE ELEMENTS
+for run = 1:1:run_number
+    
+    disp(['¡! started run number ' int2str(run)])
+    
+    % src
+    ds_gen_list = getGenerators([source_dir fp 'src' fp 'ds']);
+    for i = 1:1:numel(ds_gen_list)
+        create_Element([source_dir fp 'src' fp 'ds' fp ds_gen_list{i}], [target_dir fp 'src' fp 'ds'])
+    end
+
+    util_gen_list = getGenerators([source_dir fp 'src' fp 'util']);
+    for i = 1:1:numel(util_gen_list)
+        create_Element([source_dir fp 'src' fp 'util' fp util_gen_list{i}], [target_dir fp 'src' fp 'util'])
+    end
+
 % % %     atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
 % % %     for i = 1:1:numel(atlas_gen_list)
 % % %         create_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
@@ -222,30 +222,30 @@ disp('¡! copied ready files - ds')
 % % %             create_Element([source_dir fp 'pipelines' fp wf_name fp wf_gen_list{j}], [target_dir fp 'pipelines' fp wf_name])
 % % %         end
 % % %     end
-% % %     
-% % %     % LOAD BRAPH2
-% % %     addpath(target_dir)
-% % %     braph2
-% % % 
-% % %     disp('¡! loaded BRAPH2')
-% % %     disp(' ')
-% % %     
-% % %     disp(['¡! completed run number ' int2str(run)])
-% % %     disp(' ')
-% % % end
-% % % 
-% % % %% CREATE TEST
-% % % % src
-% % % ds_gen_list = getGenerators([source_dir fp 'src' fp 'ds']);
-% % % for i = 1:1:numel(ds_gen_list)
-% % %     create_test_Element([source_dir fp 'src' fp 'ds' fp ds_gen_list{i}], [target_dir fp 'src' fp 'ds'])
-% % % end
-% % % 
-% % % util_gen_list = getGenerators([source_dir fp 'src' fp 'util']);
-% % % for i = 1:1:numel(util_gen_list)
-% % %     create_test_Element([source_dir fp 'src' fp 'util' fp util_gen_list{i}], [target_dir fp 'src' fp 'util'])
-% % % end
-% % % 
+    
+    % LOAD BRAPH2
+    addpath(target_dir)
+    braph2
+
+    disp('¡! loaded BRAPH2')
+    disp(' ')
+    
+    disp(['¡! completed run number ' int2str(run)])
+    disp(' ')
+end
+
+%% CREATE TEST
+% src
+ds_gen_list = getGenerators([source_dir fp 'src' fp 'ds']);
+for i = 1:1:numel(ds_gen_list)
+    create_test_Element([source_dir fp 'src' fp 'ds' fp ds_gen_list{i}], [target_dir fp 'src' fp 'ds'])
+end
+
+util_gen_list = getGenerators([source_dir fp 'src' fp 'util']);
+for i = 1:1:numel(util_gen_list)
+    create_test_Element([source_dir fp 'src' fp 'util' fp util_gen_list{i}], [target_dir fp 'src' fp 'util'])
+end
+
 % % % atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
 % % % for i = 1:1:numel(atlas_gen_list)
 % % %     create_test_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
