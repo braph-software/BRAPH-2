@@ -33,10 +33,11 @@ directories_to_test = { ...
 % % % clear braph2_dir pipelines_dir pipelines_dir_list i
 
 %% Runs tests
-% % % global BRAPH2ISTESTING
-% % % BRAPH2ISTESTING = true; %#ok<NASGU>
+global BRAPH2_IS_TESTING
+BRAPH2_IS_TESTING = true; %#ok<NASGU>
 results = runtests(directories_to_test, 'UseParallel', false);
-% % % BRAPH2ISTESTING = false;
+BRAPH2_IS_TESTING = false;
+clear BRAPH2_IS_TESTING
 
 %% Shows test results
 results_table = table(results) %#ok<NOPTS>
