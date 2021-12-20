@@ -16,21 +16,21 @@ addpath(src_dir)
 addpath([src_dir filesep 'util'])
 addpath([src_dir filesep 'ds'])
 addpath([src_dir filesep 'atlas'])
+addpath([src_dir filesep 'gt'])
 % % % addpath([src_dir filesep 'cohort'])
-% % % addpath([src_dir filesep 'gt'])
 % % % addpath([src_dir filesep 'analysis'])
 % % % addpath([src_dir filesep 'gui'])
 % % % addpath([src_dir filesep 'nn'])
 
+graphs_dir = [fileparts(which('braph2')) filesep 'graphs'];
+addpath(graphs_dir)
+
+measures_dir = [fileparts(which('braph2')) filesep 'measures'];
+addpath(measures_dir)
+
 brainsurfs_dir = [fileparts(which('braph2')) filesep 'brainsurfs'];
 addpath(brainsurfs_dir)
 
-% % % graphs_dir = [fileparts(which('braph2')) filesep 'graphs'];
-% % % addpath(graphs_dir)
-% % % 
-% % % measures_dir = [fileparts(which('braph2')) filesep 'measures'];
-% % % addpath(measures_dir)
-% % % 
 % % % neuralnetworks_dir = [fileparts(which('braph2')) filesep 'neuralnetworks'];
 % % % addpath(neuralnetworks_dir)
 

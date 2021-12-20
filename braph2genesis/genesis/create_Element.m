@@ -168,22 +168,22 @@ disp('¡! generator file read')
         gui_export = splitlines(getToken(txt, 'header', 'gui', 'menu_exporter'));
     end
 
-% % % [graph, connectivity, directionality, selfconnectivity, negativity] = analyze_header_graph(); % only for graphs
-% % %     function [graph, connectivity, directionality, selfconnectivity, negativity] = analyze_header_graph()
-% % %         graph = getToken(txt, 'header', 'graph');
-% % %         connectivity = splitlines(getToken(txt, 'header', 'connectivity'));
-% % %         directionality = splitlines(getToken(txt, 'header', 'directionality'));
-% % %         selfconnectivity = splitlines(getToken(txt, 'header', 'selfconnectivity'));
-% % %         negativity = splitlines(getToken(txt, 'header', 'negativity'));
-% % %     end
-% % % 
-% % % [shape, scope, parametricity, compatible_graphs] = analyze_header_measure(); % only for measures
-% % %     function [shape, scope, parametricity, compatible_graphs] = analyze_header_measure()
-% % %         shape = getToken(txt, 'header', 'shape');
-% % %         scope = getToken(txt, 'header', 'scope');
-% % %         parametricity = getToken(txt, 'header', 'parametricity');
-% % %         compatible_graphs = getToken(txt, 'header', 'compatible_graphs');
-% % %     end
+[graph, connectivity, directionality, selfconnectivity, negativity] = analyze_header_graph(); % only for graphs
+    function [graph, connectivity, directionality, selfconnectivity, negativity] = analyze_header_graph()
+        graph = getToken(txt, 'header', 'graph');
+        connectivity = splitlines(getToken(txt, 'header', 'connectivity'));
+        directionality = splitlines(getToken(txt, 'header', 'directionality'));
+        selfconnectivity = splitlines(getToken(txt, 'header', 'selfconnectivity'));
+        negativity = splitlines(getToken(txt, 'header', 'negativity'));
+    end
+
+[shape, scope, parametricity, compatible_graphs] = analyze_header_measure(); % only for measures
+    function [shape, scope, parametricity, compatible_graphs] = analyze_header_measure()
+        shape = getToken(txt, 'header', 'shape');
+        scope = getToken(txt, 'header', 'scope');
+        parametricity = getToken(txt, 'header', 'parametricity');
+        compatible_graphs = getToken(txt, 'header', 'compatible_graphs');
+    end
 
 [props, props_update] = analyze_props();
     function [props, props_update] = analyze_props()
@@ -1159,235 +1159,235 @@ generate_inspection()
         g(1, 'end')
     end
 
-% % % generate_header_graph() % only for graphs
-% % %     function generate_header_graph()
-% % %         get_layernumber = { ''
-% % %             'if isempty(varargin)'
-% % %             '\tlayernumber = 1;'
-% % %             'else'
-% % %             '\tlayernumber = varargin{1};'
-% % %             'end'
-% % %             ''};
-% % %         if ~isempty(graph) || ...
-% % %                 ~(numel(connectivity) == 1 && isempty(connectivity{1})) || ...
-% % %                 ~(numel(directionality) == 1 && isempty(directionality{1})) || ...
-% % %                 ~(numel(selfconnectivity) == 1 && isempty(selfconnectivity{1})) || ...
-% % %                 ~(numel(negativity) == 1 && isempty(negativity{1}))
-% % %             g(1, 'methods (Static) %% graph methods')
-% % %                 if ~isempty(graph)
-% % %                     g(2, 'function graph = getGraphType()')
-% % %                         if element_class_created
-% % %                             graph_type = Graph.getGraphType(class_name);
-% % %                             graph_type_names = Graph.TYPE_NAME;
-% % %                             graph_type_name = graph_type_names{graph_type};
-% % %                             gs(3, {
-% % %                                 ['%GETGRAPHTYPE returns ' int2str(graph_type) ' (' graph_type_name ').']
-% % %                                  '%'
-% % %                                 ['% ' int2str(graph_type) ' = ' class_name '.GETGRAPHTYPE() returns the type of graph (' graph_type_name ').']
-% % %                                  '%'
-% % %                                  '% See also getConnectivityType, getDirectionalityType, getSelfConnectivityType, getNegativityType.'
-% % %                                  ''
-% % %                                 })
-% % %                         end                    
-% % %                         g(3, graph)
-% % %                     g(2, 'end')
-% % %                 end
-% % %                 if ~(numel(connectivity) == 1 && isempty(connectivity{1}))
-% % %                     g(2, 'function connectivity = getConnectivityType(varargin)')
-% % %                         if element_class_created
-% % %                             graph_connectivity = Graph.getConnectivityType(class_name);
-% % %                             graph_connectivity_names = Graph.CONNECTIVITY_TYPE_NAME;
-% % %                             graph_connectivity_name = graph_connectivity_names{graph_connectivity};
-% % %                             gs(3, {
-% % %                                 ['%GETCONNECTIVITYTYPE returns ' int2str(graph_connectivity) ' (' graph_connectivity_name ').']
-% % %                                  '%'
-% % %                                 ['% ' int2str(graph_connectivity) ' = ' class_name '.GETCONNECTIVITYTYPE() returns the type of graph connectivity (' graph_connectivity_name ').']
-% % %                                  '%'
-% % %                                 ['% ' int2str(graph_connectivity) ' = ' class_name '.GETCONNECTIVITYTYPE(LAYERNUMBER) returns a matrix with the ']
-% % %                                  '%  connectivity type of each layer in a multiple layer graph.'
-% % %                                  '%'
-% % %                                 '% See also getGraphType, getDirectionalityType, getSelfConnectivityType, getNegativityType.'
-% % %                                 ''
-% % %                                 })
-% % %                         end
-% % %                         gs(3, get_layernumber)
-% % %                         gs(3, connectivity)
-% % %                     g(2, 'end')
-% % %                 end
-% % %                 if ~(numel(directionality) == 1 && isempty(directionality{1}))
-% % %                     g(2, 'function directionality = getDirectionalityType(varargin)')
-% % %                         if element_class_created
-% % %                             graph_directionality = Graph.getConnectivityType(class_name);
-% % %                             graph_directionality_names = Graph.DIRECTIONALITY_TYPE_NAME;
-% % %                             graph_directionality_name = graph_directionality_names{graph_directionality};
-% % %                             gs(3, {
-% % %                                 ['%GETDIRECTIONALITYTYPE returns ' int2str(graph_directionality) ' (' graph_directionality_name ').']
-% % %                                  '%'
-% % %                                 ['% ' int2str(graph_directionality) ' = ' class_name '.GETDIRECTIONALITYTYPE() returns the type of graph directionality (' graph_directionality_name ').']
-% % %                                  '% the directionality type of each layer.'
-% % %                                  '%'
-% % %                                 ['% ' int2str(graph_directionality) ' = ' class_name '.GETDIRECTIONALITYTYPE(LAYERNUMBER) returns a matrix with ']
-% % %                                  '%  the directionality type of each layer.'
-% % %                                  '%'
-% % %                                  '% See also getGraphType, getConnectivityType, getSelfConnectivityType, getNegativityType.'
-% % %                                  ''
-% % %                                 })    
-% % %                         end
-% % %                         gs(3, get_layernumber)
-% % %                         gs(3, directionality)
-% % %                     g(2, 'end')
-% % %                 end
-% % %                 if ~(numel(selfconnectivity) == 1 && isempty(selfconnectivity{1}))
-% % %                     g(2, 'function selfconnectivity = getSelfConnectivityType(varargin)')
-% % %                         if element_class_created
-% % %                             graph_selfconnectivity = Graph.getConnectivityType(class_name);
-% % %                             graph_selfconnectivity_names = Graph.SELFCONNECTIVITY_TYPE_NAME;
-% % %                             graph_selfconnectivity_name = graph_selfconnectivity_names{graph_selfconnectivity};
-% % %                             gs(3, {
-% % %                                 ['%GETSELFCONNECTIVITYTYPE returns ' int2str(graph_selfconnectivity) ' (' graph_selfconnectivity_name ').']
-% % %                                  '%'
-% % %                                 ['% ' int2str(graph_selfconnectivity) ' = ' class_name '.GETSELFCONNECTIVITYTYPE() returns the type of graph self connnectivity (' graph_selfconnectivity_name ').']
-% % %                                  '%'
-% % %                                 ['% ' int2str(graph_selfconnectivity) ' = ' class_name '.GETSELFCONNECTIVITYTYPE(LAYERNUMBER) returns a matrix ']
-% % %                                  '%  with the self-connectivity type of each layer.'
-% % %                                  '%'
-% % %                                  '% See also getGraphType, getConnectivityType, getDirectionalityType, getNegativityType.'
-% % %                                  ''
-% % %                                 })
-% % %                         end
-% % %                         gs(3, get_layernumber)
-% % %                         gs(3, selfconnectivity)
-% % %                     g(2, 'end')
-% % %                 end
-% % %                 if ~(numel(negativity) == 1 && isempty(negativity{1}))
-% % %                     g(2, 'function negativity = getNegativityType(varargin)')
-% % %                         if element_class_created
-% % %                             graph_negativity = Graph.getConnectivityType(class_name);
-% % %                             graph_negativity_names = Graph.NEGATIVITY_TYPE_NAME;
-% % %                             graph_negativity_name = graph_negativity_names{graph_negativity};
-% % %                             gs(3, {
-% % %                                 ['%GETNEGATIVITYTYPE returns ' int2str(graph_negativity) ' (' graph_negativity_name ').']
-% % %                                  '%'
-% % %                                 ['% ' int2str(graph_negativity) ' = ' class_name '.GETNEGATIVITYTYPE() returns the type of graph negativity (' graph_negativity_name ').']
-% % %                                  '%'
-% % %                                 ['% ' int2str(graph_negativity) ' = ' class_name '.GETNEGATIVITYTYPE(LAYERNUMBER) returns a matrix ']
-% % %                                  '%  with the negativity type of each layer.'
-% % %                                  '%'
-% % %                                  '% See also getGraphType, getConnectivityType, getDirectionalityType, getSelfConnectivityType.'
-% % %                                  ''
-% % %                                 })
-% % %                         end
-% % %                         gs(3, get_layernumber)
-% % %                         gs(3, negativity)
-% % %                     g(2, 'end')
-% % %                 end
-% % %             g(1, 'end')
-% % %         end
-% % %     end
-% % % 
-% % % generate_header_measure() % only for measures
-% % %     function generate_header_measure()
-% % %         if ~isempty(shape) || ...
-% % %                 ~isempty(scope) || ...
-% % %                 ~isempty(parametricity) || ...
-% % %                 ~isempty(compatible_graphs)
-% % %             g(1, 'methods (Static) %% graph methods')
-% % %                 if ~isempty(shape)
-% % %                     g(2, 'function shape = getMeasureShape()')
-% % %                         if element_class_created
-% % %                             measure_shape = Measure.getMeasureShape(class_name);
-% % %                             measure_shape_names = Measure.SHAPE_NAME;
-% % %                             measure_shape_name = measure_shape_names{measure_shape};
-% % %                             gs(3, {
-% % %                                 ['%GETMEASURESHAPE returns ' int2str(measure_shape) ' (' measure_shape_name ').']
-% % %                                  '%'
-% % %                                 ['% ' int2str(measure_shape) ' = ' class_name '.GETMEASURESHAPE() returns the measures graph shape (' measure_shape_name ').']
-% % %                                  '%'
-% % %                                  '% See also getMeasureScope, getMeasureParametricity, getCompatibleGraphList.'
-% % %                                  ''
-% % %                                 })    
-% % %                         end
-% % %                         g(3, shape)
-% % %                     g(2, 'end')
-% % %                 end
-% % %                 if ~isempty(scope)
-% % %                     g(2, 'function scope = getMeasureScope()')
-% % %                         if element_class_created
-% % %                             measure_scope = Measure.getMeasureScope(class_name);
-% % %                             measure_scope_names = Measure.SCOPE_NAME;
-% % %                             measure_scope_name = measure_scope_names{measure_scope};    
-% % %                             gs(3, {
-% % %                                 ['%GETMEASURESCOPE returns ' int2str(measure_scope) ' (' measure_scope_name ').']
-% % %                                  '%'
-% % %                                 ['% ' int2str(measure_scope) ' = ' class_name '.GETMEASURESCOPE() returns the measures layer scope (' measure_shape_name ').']
-% % %                                  '%'
-% % %                                  '% See also getMeasureShape, getMeasureParametricity, getCompatibleGraphList.'
-% % %                                  ''
-% % %                                 })
-% % %                         end
-% % %                         g(3, scope)
-% % %                     g(2, 'end')
-% % %                 end
-% % %                 if ~isempty(parametricity)
-% % %                     g(2, 'function parametricity = getMeasureParametricity()')
-% % %                         if element_class_created
-% % %                             measure_parametricity = Measure.getMeasureParametricity(class_name);
-% % %                             measure_parametricity_names = Measure.PARAMETRICITY_NAME;
-% % %                             measure_parametricity_name = measure_parametricity_names{measure_parametricity};    
-% % %                             gs(3, {
-% % %                                 ['%GETMEASUREPARAMETRICITY returns ' int2str(measure_parametricity) ' (' measure_parametricity_name ').']
-% % %                                 '%'
-% % %                                 ['% ' int2str(measure_parametricity) ' = ' class_name '.GETMEASUREPARAMETRICITY() returns the measures parametricity (' measure_parametricity_name ').']
-% % %                                 '%'
-% % %                                 '% See also getMeasureShape, getMeasureScope, getCompatibleGraphList.'
-% % %                                 ''
-% % %                                 })
-% % %                         end
-% % %                         g(3, parametricity)
-% % %                     g(2, 'end')
-% % %                 end
-% % %                 if ~isempty(compatible_graphs)
-% % %                     g(2, 'function list = getCompatibleGraphList()')
-% % %                         if element_class_created
-% % %                             graph_list = Measure.getCompatibleGraphList(class_name);
-% % %                             gs(3, {
-% % %                                 ['%GETCOMPATIBLEGRAPHLIST returns the list of ' class_name ' compatible graphs.']
-% % %                                  '%'
-% % %                                 ['% LIST = ' class_name '.GETCOMPATIBLEGRAPHLIST() returns the list of compatible graphs.']
-% % %                                  '%'
-% % %                                  '% The compatible graphs are:'
-% % %                                 })
-% % %                             gs(3, cellfun(@(x) ['%  <a href="matlab:help ' x '">' x '</a>'], graph_list, 'UniformOutput', false))
-% % %                             gs(3, {
-% % %                                  '%'
-% % %                                  '% See also getCompatibleGraphNumber.'
-% % %                                  ''
-% % %                                 })
-% % %                         end
-% % %                         g(3, 'list = { ...');
-% % %                             lines = splitlines(compatible_graphs);
-% % %                             for i = 1:1:length(lines)
-% % %                                 g(4, ['''' lines{i} ''', ...'])
-% % %                             end
-% % %                             g(4, '};')
-% % %                     g(2, 'end')
-% % %                     g(2, 'function n = getCompatibleGraphNumber()')
-% % %                         if element_class_created
-% % %                             gs(3, {
-% % %                                 ['%GETCOMPATIBLEGRAPHNUMBER returns the number (' int2str(Measure.getCompatibleGraphNumber(class_name)) ') of ' class_name ' compatible graphs.']
-% % %                                  '%'
-% % %                                 ['% ' int2str(Measure.getCompatibleGraphNumber(class_name)) ' = ' class_name '.GETCOMPATIBLEGRAPHNUMBER() returns the measures number of compatible graphs.']
-% % %                                  '%'
-% % %                                  '% See also getCompatibleGraphList.'
-% % %                                  ''
-% % %                                 })
-% % %                         end
-% % %                         g(3, ['n = Measure.getCompatibleGraphNumber(''' class_name ''');'])
-% % %                     g(2, 'end')
-% % %                 end
-% % %             g(1, 'end')
-% % %         end
-% % %     end
+generate_header_graph() % only for graphs
+    function generate_header_graph()
+        get_layernumber = { ''
+            'if isempty(varargin)'
+            '\tlayernumber = 1;'
+            'else'
+            '\tlayernumber = varargin{1};'
+            'end'
+            ''};
+        if ~isempty(graph) || ...
+                ~(numel(connectivity) == 1 && isempty(connectivity{1})) || ...
+                ~(numel(directionality) == 1 && isempty(directionality{1})) || ...
+                ~(numel(selfconnectivity) == 1 && isempty(selfconnectivity{1})) || ...
+                ~(numel(negativity) == 1 && isempty(negativity{1}))
+            g(1, 'methods (Static) %% graph methods')
+                if ~isempty(graph)
+                    g(2, 'function graph = getGraphType()')
+                        if element_class_created
+                            graph_type = Graph.getGraphType(class_name);
+                            graph_type_names = Graph.TYPE_NAME;
+                            graph_type_name = graph_type_names{graph_type};
+                            gs(3, {
+                                ['%GETGRAPHTYPE returns ' int2str(graph_type) ' (' graph_type_name ').']
+                                 '%'
+                                ['% ' int2str(graph_type) ' = ' class_name '.GETGRAPHTYPE() returns the type of graph (' graph_type_name ').']
+                                 '%'
+                                 '% See also getConnectivityType, getDirectionalityType, getSelfConnectivityType, getNegativityType.'
+                                 ''
+                                })
+                        end                    
+                        g(3, graph)
+                    g(2, 'end')
+                end
+                if ~(numel(connectivity) == 1 && isempty(connectivity{1}))
+                    g(2, 'function connectivity = getConnectivityType(varargin)')
+                        if element_class_created
+                            graph_connectivity = Graph.getConnectivityType(class_name);
+                            graph_connectivity_names = Graph.CONNECTIVITY_TYPE_NAME;
+                            graph_connectivity_name = graph_connectivity_names{graph_connectivity};
+                            gs(3, {
+                                ['%GETCONNECTIVITYTYPE returns ' int2str(graph_connectivity) ' (' graph_connectivity_name ').']
+                                 '%'
+                                ['% ' int2str(graph_connectivity) ' = ' class_name '.GETCONNECTIVITYTYPE() returns the type of graph connectivity (' graph_connectivity_name ').']
+                                 '%'
+                                ['% ' int2str(graph_connectivity) ' = ' class_name '.GETCONNECTIVITYTYPE(LAYERNUMBER) returns a matrix with the ']
+                                 '%  connectivity type of each layer in a multiple layer graph.'
+                                 '%'
+                                '% See also getGraphType, getDirectionalityType, getSelfConnectivityType, getNegativityType.'
+                                ''
+                                })
+                        end
+                        gs(3, get_layernumber)
+                        gs(3, connectivity)
+                    g(2, 'end')
+                end
+                if ~(numel(directionality) == 1 && isempty(directionality{1}))
+                    g(2, 'function directionality = getDirectionalityType(varargin)')
+                        if element_class_created
+                            graph_directionality = Graph.getConnectivityType(class_name);
+                            graph_directionality_names = Graph.DIRECTIONALITY_TYPE_NAME;
+                            graph_directionality_name = graph_directionality_names{graph_directionality};
+                            gs(3, {
+                                ['%GETDIRECTIONALITYTYPE returns ' int2str(graph_directionality) ' (' graph_directionality_name ').']
+                                 '%'
+                                ['% ' int2str(graph_directionality) ' = ' class_name '.GETDIRECTIONALITYTYPE() returns the type of graph directionality (' graph_directionality_name ').']
+                                 '% the directionality type of each layer.'
+                                 '%'
+                                ['% ' int2str(graph_directionality) ' = ' class_name '.GETDIRECTIONALITYTYPE(LAYERNUMBER) returns a matrix with ']
+                                 '%  the directionality type of each layer.'
+                                 '%'
+                                 '% See also getGraphType, getConnectivityType, getSelfConnectivityType, getNegativityType.'
+                                 ''
+                                })    
+                        end
+                        gs(3, get_layernumber)
+                        gs(3, directionality)
+                    g(2, 'end')
+                end
+                if ~(numel(selfconnectivity) == 1 && isempty(selfconnectivity{1}))
+                    g(2, 'function selfconnectivity = getSelfConnectivityType(varargin)')
+                        if element_class_created
+                            graph_selfconnectivity = Graph.getConnectivityType(class_name);
+                            graph_selfconnectivity_names = Graph.SELFCONNECTIVITY_TYPE_NAME;
+                            graph_selfconnectivity_name = graph_selfconnectivity_names{graph_selfconnectivity};
+                            gs(3, {
+                                ['%GETSELFCONNECTIVITYTYPE returns ' int2str(graph_selfconnectivity) ' (' graph_selfconnectivity_name ').']
+                                 '%'
+                                ['% ' int2str(graph_selfconnectivity) ' = ' class_name '.GETSELFCONNECTIVITYTYPE() returns the type of graph self connnectivity (' graph_selfconnectivity_name ').']
+                                 '%'
+                                ['% ' int2str(graph_selfconnectivity) ' = ' class_name '.GETSELFCONNECTIVITYTYPE(LAYERNUMBER) returns a matrix ']
+                                 '%  with the self-connectivity type of each layer.'
+                                 '%'
+                                 '% See also getGraphType, getConnectivityType, getDirectionalityType, getNegativityType.'
+                                 ''
+                                })
+                        end
+                        gs(3, get_layernumber)
+                        gs(3, selfconnectivity)
+                    g(2, 'end')
+                end
+                if ~(numel(negativity) == 1 && isempty(negativity{1}))
+                    g(2, 'function negativity = getNegativityType(varargin)')
+                        if element_class_created
+                            graph_negativity = Graph.getConnectivityType(class_name);
+                            graph_negativity_names = Graph.NEGATIVITY_TYPE_NAME;
+                            graph_negativity_name = graph_negativity_names{graph_negativity};
+                            gs(3, {
+                                ['%GETNEGATIVITYTYPE returns ' int2str(graph_negativity) ' (' graph_negativity_name ').']
+                                 '%'
+                                ['% ' int2str(graph_negativity) ' = ' class_name '.GETNEGATIVITYTYPE() returns the type of graph negativity (' graph_negativity_name ').']
+                                 '%'
+                                ['% ' int2str(graph_negativity) ' = ' class_name '.GETNEGATIVITYTYPE(LAYERNUMBER) returns a matrix ']
+                                 '%  with the negativity type of each layer.'
+                                 '%'
+                                 '% See also getGraphType, getConnectivityType, getDirectionalityType, getSelfConnectivityType.'
+                                 ''
+                                })
+                        end
+                        gs(3, get_layernumber)
+                        gs(3, negativity)
+                    g(2, 'end')
+                end
+            g(1, 'end')
+        end
+    end
+
+generate_header_measure() % only for measures
+    function generate_header_measure()
+        if ~isempty(shape) || ...
+                ~isempty(scope) || ...
+                ~isempty(parametricity) || ...
+                ~isempty(compatible_graphs)
+            g(1, 'methods (Static) %% graph methods')
+                if ~isempty(shape)
+                    g(2, 'function shape = getMeasureShape()')
+                        if element_class_created
+                            measure_shape = Measure.getMeasureShape(class_name);
+                            measure_shape_names = Measure.SHAPE_NAME;
+                            measure_shape_name = measure_shape_names{measure_shape};
+                            gs(3, {
+                                ['%GETMEASURESHAPE returns ' int2str(measure_shape) ' (' measure_shape_name ').']
+                                 '%'
+                                ['% ' int2str(measure_shape) ' = ' class_name '.GETMEASURESHAPE() returns the measures graph shape (' measure_shape_name ').']
+                                 '%'
+                                 '% See also getMeasureScope, getMeasureParametricity, getCompatibleGraphList.'
+                                 ''
+                                })    
+                        end
+                        g(3, shape)
+                    g(2, 'end')
+                end
+                if ~isempty(scope)
+                    g(2, 'function scope = getMeasureScope()')
+                        if element_class_created
+                            measure_scope = Measure.getMeasureScope(class_name);
+                            measure_scope_names = Measure.SCOPE_NAME;
+                            measure_scope_name = measure_scope_names{measure_scope};    
+                            gs(3, {
+                                ['%GETMEASURESCOPE returns ' int2str(measure_scope) ' (' measure_scope_name ').']
+                                 '%'
+                                ['% ' int2str(measure_scope) ' = ' class_name '.GETMEASURESCOPE() returns the measures layer scope (' measure_shape_name ').']
+                                 '%'
+                                 '% See also getMeasureShape, getMeasureParametricity, getCompatibleGraphList.'
+                                 ''
+                                })
+                        end
+                        g(3, scope)
+                    g(2, 'end')
+                end
+                if ~isempty(parametricity)
+                    g(2, 'function parametricity = getMeasureParametricity()')
+                        if element_class_created
+                            measure_parametricity = Measure.getMeasureParametricity(class_name);
+                            measure_parametricity_names = Measure.PARAMETRICITY_NAME;
+                            measure_parametricity_name = measure_parametricity_names{measure_parametricity};    
+                            gs(3, {
+                                ['%GETMEASUREPARAMETRICITY returns ' int2str(measure_parametricity) ' (' measure_parametricity_name ').']
+                                '%'
+                                ['% ' int2str(measure_parametricity) ' = ' class_name '.GETMEASUREPARAMETRICITY() returns the measures parametricity (' measure_parametricity_name ').']
+                                '%'
+                                '% See also getMeasureShape, getMeasureScope, getCompatibleGraphList.'
+                                ''
+                                })
+                        end
+                        g(3, parametricity)
+                    g(2, 'end')
+                end
+                if ~isempty(compatible_graphs)
+                    g(2, 'function list = getCompatibleGraphList()')
+                        if element_class_created
+                            graph_list = Measure.getCompatibleGraphList(class_name);
+                            gs(3, {
+                                ['%GETCOMPATIBLEGRAPHLIST returns the list of ' class_name ' compatible graphs.']
+                                 '%'
+                                ['% LIST = ' class_name '.GETCOMPATIBLEGRAPHLIST() returns the list of compatible graphs.']
+                                 '%'
+                                 '% The compatible graphs are:'
+                                })
+                            gs(3, cellfun(@(x) ['%  <a href="matlab:help ' x '">' x '</a>'], graph_list, 'UniformOutput', false))
+                            gs(3, {
+                                 '%'
+                                 '% See also getCompatibleGraphNumber.'
+                                 ''
+                                })
+                        end
+                        g(3, 'list = { ...');
+                            lines = splitlines(compatible_graphs);
+                            for i = 1:1:length(lines)
+                                g(4, ['''' lines{i} ''', ...'])
+                            end
+                            g(4, '};')
+                    g(2, 'end')
+                    g(2, 'function n = getCompatibleGraphNumber()')
+                        if element_class_created
+                            gs(3, {
+                                ['%GETCOMPATIBLEGRAPHNUMBER returns the number (' int2str(Measure.getCompatibleGraphNumber(class_name)) ') of ' class_name ' compatible graphs.']
+                                 '%'
+                                ['% ' int2str(Measure.getCompatibleGraphNumber(class_name)) ' = ' class_name '.GETCOMPATIBLEGRAPHNUMBER() returns the measures number of compatible graphs.']
+                                 '%'
+                                 '% See also getCompatibleGraphList.'
+                                 ''
+                                })
+                        end
+                        g(3, ['n = Measure.getCompatibleGraphNumber(''' class_name ''');'])
+                    g(2, 'end')
+                end
+            g(1, 'end')
+        end
+    end
 
 generate_constructor()
     function generate_constructor()
