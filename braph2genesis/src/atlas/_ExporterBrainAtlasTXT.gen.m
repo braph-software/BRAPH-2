@@ -25,8 +25,10 @@ SAVE (result, empty) saves the brain atlas in the selected TXT file.
 file = ex.get('FILE');
 
 if isfolder(fileparts(file))
-    wb = waitbar(0, 'Retrieving path ...', 'Name', BRAPH2.NAME);
-    set_braph2_icon(wb)
+    if ex.get('WAITBAR')
+        wb = waitbar(0, 'Retrieving path ...', 'Name', BRAPH2.NAME);
+        set_braph2_icon(wb)
+    end
 
     ba = ex.get('BA');
     ba_id = ba.get('ID');
@@ -42,7 +44,9 @@ if isfolder(fileparts(file))
     end
 
     % gets brain region data
-    waitbar(.15, wb, 'Organizing info ...');
+    if ex.get('WAITBAR')
+        waitbar(.15, wb, 'Organizing info ...');
+    end
     
     br_dict = ba.get('BR_DICT');
     br_ids = cell(br_dict.length(), 1);
@@ -52,7 +56,9 @@ if isfolder(fileparts(file))
     br_y = cell(br_dict.length(), 1);
     br_z = cell(br_dict.length(), 1);
     for i = 1:1:br_dict.length()
-        waitbar(.30 + .70 * i / br_dict.length(), wb, ['Saving brain region ' num2str(i) ' of ' num2str(br_dict.length())]);
+        if ex.get('WAITBAR')
+            waitbar(.30 + .70 * i / br_dict.length(), wb, ['Saving brain region ' num2str(i) ' of ' num2str(br_dict.length())]);
+        end
         
         br = br_dict.getItem(i);
         br_ids{i} = br.get('ID');
@@ -81,14 +87,18 @@ if isfolder(fileparts(file))
         ];
 
     % saves
-    waitbar(1, wb, 'Finalizing ...');
+    if ex.get('WAITBAR')
+        waitbar(1, wb, 'Finalizing ...');
+    end
 
     writetable(tab, file, 'Delimiter', '\t', 'WriteVariableNames', 0);
 
     % sets value to empty
     value = [];
     
-    close(wb)
+    if ex.get('WAITBAR')
+        close(wb)
+    end
 else
     value = ex.getr('SAVE');
 end

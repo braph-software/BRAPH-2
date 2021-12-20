@@ -29,6 +29,11 @@ if ~isfile(file)
 end
 
 if isfile(file)
+    if im.get('WAITBAR')
+        wb = waitbar(.15, 'Reading brain surface file ...', 'Name', BRAPH2.NAME);
+        set_braph2_icon(wb)
+    end
+    
     fid = fopen(file);
     vertex_number = fscanf(fid, '%f', 1);
     coord = fscanf(fid, '%f', [3, vertex_number])';
@@ -44,6 +49,10 @@ if isfile(file)
     bs.set('coordinates', coord);
     bs.set('triangles_number', tri_number);
     bs.set('triangles', tri);
+    
+    if im.get('WAITBAR')
+        close(wb)
+    end    
 end
 
 value = bs;

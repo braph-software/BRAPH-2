@@ -32,15 +32,19 @@ if ~isfile(file) && ~braph2_testing()
     file = im.memorize('FILE');
 end
 if isfile(file)
-    wb = waitbar(0, 'Reading brain atlas file ...', 'Name', BRAPH2.NAME);
-    set_braph2_icon(wb)
+    if im.get('WAITBAR')
+        wb = waitbar(0, 'Reading brain atlas file ...', 'Name', BRAPH2.NAME);
+        set_braph2_icon(wb)
+    end
 
     try
         raw = textread(file, '%s', 'delimiter', '\t', 'whitespace', '');
         raw = raw(~cellfun('isempty', raw));  % remove empty cells
         
         % adds props
-        waitbar(.15, wb, 'Loading brain atlas file ...');
+        if im.get('WAITBAR')
+            waitbar(.15, wb, 'Loading brain atlas file ...');
+        end
         
         ba.set( ...
             'ID', raw{1, 1}, ...
@@ -51,10 +55,14 @@ if isfile(file)
         idict = ba.get('BR_DICT');
         
         % adds brain regions
-        waitbar(.30, wb, 'Extracting brain regions ...')
+        if im.get('WAITBAR')
+            waitbar(.30, wb, 'Extracting brain regions ...')
+        end
         
         for i = 4:6:size(raw, 1)
-            waitbar(.30 + .70 * i / size(raw, 1), wb, ['Loading brain region ' num2str((i - 3) / 6) ' of ' num2str((size(raw, 1) - 3) / 6) ' ...'])
+            if im.get('WAITBAR')
+                waitbar(.30 + .70 * i / size(raw, 1), wb, ['Loading brain region ' num2str((i - 4) / 6 + 1) ' of ' num2str((size(raw, 1) - 3) / 6) ' ...'])
+            end
             
             br = BrainRegion( ...
                 'ID', char(raw{i, 1}), ...
@@ -69,10 +77,11 @@ if isfile(file)
         ba.set('br_dict', idict);
     catch e
         warndlg('Please select a valid input.', 'Warning');
-        rethrow(e)        
     end
     
-    close(wb)        
+    if im.get('WAITBAR')
+        close(wb)
+    end
 elseif ~braph2_testing()
     error(BRAPH2.BUG_IO);
 end
