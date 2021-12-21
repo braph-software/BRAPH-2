@@ -17,10 +17,10 @@ addpath([src_dir filesep 'util'])
 addpath([src_dir filesep 'ds'])
 addpath([src_dir filesep 'atlas'])
 addpath([src_dir filesep 'gt'])
-% % % addpath([src_dir filesep 'cohort'])
-% % % addpath([src_dir filesep 'analysis'])
-% % % addpath([src_dir filesep 'gui'])
+addpath([src_dir filesep 'cohort'])
+addpath([src_dir filesep 'analysis'])
 % % % addpath([src_dir filesep 'nn'])
+% % % addpath([src_dir filesep 'gui'])
 
 graphs_dir = [fileparts(which('braph2')) filesep 'graphs'];
 addpath(graphs_dir)
@@ -37,15 +37,15 @@ addpath(brainsurfs_dir)
 test_dir = [fileparts(which('braph2')) filesep 'test'];
 addpath(test_dir)
 
-% % % pipelines_dir = [fileparts(which('braph2')) filesep 'pipelines'];
-% % % addpath(pipelines_dir)
-% % % pipelines_dir_list = dir(pipelines_dir); % get the folder contents
-% % % pipelines_dir_list = pipelines_dir_list([pipelines_dir_list(:).isdir] == 1); % remove all files (isdir property is 0)
-% % % pipelines_dir_list = pipelines_dir_list(~ismember({pipelines_dir_list(:).name}, {'.', '..'})); % remove '.' and '..'
-% % % for i = 1:1:length(pipelines_dir_list)
-% % %     addpath([pipelines_dir filesep pipelines_dir_list(i).name])
-% % % end
-% % % 
+pipelines_dir = [fileparts(which('braph2')) filesep 'pipelines'];
+addpath(pipelines_dir)
+pipelines_dir_list = dir(pipelines_dir); % get the folder contents
+pipelines_dir_list = pipelines_dir_list([pipelines_dir_list(:).isdir] == 1); % remove all files (isdir property is 0)
+pipelines_dir_list = pipelines_dir_list(~ismember({pipelines_dir_list(:).name}, {'.', '..'})); % remove '.' and '..'
+for i = 1:1:length(pipelines_dir_list)
+    addpath([pipelines_dir filesep pipelines_dir_list(i).name])
+end
+
 % % % addons = matlab.addons.installedAddons;
 % % % installed = all(ismember(["Deep Learning Toolbox"; "Deep Learning Toolbox Converter for ONNX Model Format"], addons.Name));
 % % % if ~installed
