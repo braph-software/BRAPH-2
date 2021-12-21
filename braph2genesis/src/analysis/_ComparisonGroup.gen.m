@@ -134,7 +134,7 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
         m2_perms{1, i} = a2_perm.memorize('G').getMeasure(measure_class).memorize('M');
         diff_perms{1, i} = cellfun(@(x, y) y - x, m1_perms{1, i}, m2_perms{1, i}, 'UniformOutput', false);
 
-        if im.get('WAITBAR')
+        if c.get('WAITBAR')
             waitbar(i / P, wb, ['Permutation ' num2str(i) ' of ' num2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's ...']);
         end
         if c.get('VERBOSE')
@@ -143,6 +143,10 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
         if c.get('INTERRUPTIBLE')
             pause(c.get('INTERRUPTIBLE'))
         end        
+    end
+    
+    if c.get('WAITBAR')
+        close(wb)
     end
 
     % Statistical analysis

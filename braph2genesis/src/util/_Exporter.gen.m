@@ -21,5 +21,3 @@ NOTES (metadata, string) are some specific notes about the exporter.
 
 %%% ¡prop!
 WAITBAR (metadata, logical) detemines whether to how the waitbar.
-%%%% ¡default!
-true

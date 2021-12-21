@@ -4,21 +4,26 @@
 clear variables %#ok<*NASGU>
 
 %% Load BrainAtlas
-im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('example_ST_WU')) filesep 'example data ST (MRI)' filesep 'desikan_atlas.xlsx']);
+im_ba = ImporterBrainAtlasXLS( ...
+    'FILE', [fileparts(which('example_ST_WU')) filesep 'example data ST (MRI)' filesep 'desikan_atlas.xlsx'], ...
+    'WAITBAR', true ...
+    );
 
 ba = im_ba.get('BA');
 
 %% Load Groups of SubjectST
 im_gr1 = ImporterGroupSubjectSTXLS( ...
     'FILE', [fileparts(which('example_ST_BUT')) filesep 'example data ST (MRI)' filesep 'xls' filesep 'ST_group1.xlsx'], ...
-    'BA', ba ...
+    'BA', ba, ...
+    'WAITBAR', true ...
     );
 
 gr1 = im_gr1.get('GR');
 
 im_gr2 = ImporterGroupSubjectSTXLS( ...
     'FILE', [fileparts(which('example_ST_BUT')) filesep 'example data ST (MRI)' filesep 'xls' filesep 'ST_group2.xlsx'], ...
-    'BA', ba ...
+    'BA', ba, ...
+    'WAITBAR', true ...
     );
 
 gr2 = im_gr2.get('GR');
@@ -39,24 +44,30 @@ degree_BUT1 = g_BUT2.getMeasure('Degree').get('M');
 degree_av_BUT1 = g_BUT2.getMeasure('DegreeAv').get('M');
 distance_BUT1 = g_BUT2.getMeasure('Distance').get('M');
 
-% % % % comparison
-% % % c_BUT = CompareGroup( ...
-% % %     'P', 10, ...
-% % %     'A1', a_BUT1, ...
-% % %     'A2', a_BUT2 ...
-% % %     );
-% % % 
-% % % degree_BUT_p1 = c_BUT.getComparison('Degree').get('P1');
-% % % degree_BUT_p2 = c_BUT.getComparison('Degree').get('P2');
-% % % degree_BUT_cil = c_BUT.getComparison('Degree').get('CIL');
-% % % degree_BUT_ciu = c_BUT.getComparison('Degree').get('CIU');
-% % % 
-% % % degree_av_BUT_p1 = c_BUT.getComparison('DegreeAv').get('P1');
-% % % degree_av_BUT_p2 = c_BUT.getComparison('DegreeAv').get('P2');
-% % % degree_av_BUT_cil = c_BUT.getComparison('DegreeAv').get('CIL');
-% % % degree_av_BUT_ciu = c_BUT.getComparison('DegreeAv').get('CIU');
-% % % 
-% % % distance_BUT_p1 = c_BUT.getComparison('Distance').get('P1');
-% % % distance_BUT_p2 = c_BUT.getComparison('Distance').get('P2');
-% % % distance_BUT_cil = c_BUT.getComparison('Distance').get('CIL');
-% % % distance_BUT_ciu = c_BUT.getComparison('Distance').get('CIU');
+% comparison
+c_BUT = CompareGroup( ...
+    'P', 10, ...
+    'A1', a_BUT1, ...
+    'A2', a_BUT2, ...
+    'WAITBAR', true, ...
+    'VERBOSE', false, ...
+    'MEMORIZE', true ...
+    );
+
+degree_BUT_p1 = c_BUT.getComparison('Degree').get('DIFF');
+degree_BUT_p1 = c_BUT.getComparison('Degree').get('P1');
+degree_BUT_p2 = c_BUT.getComparison('Degree').get('P2');
+degree_BUT_cil = c_BUT.getComparison('Degree').get('CIL');
+degree_BUT_ciu = c_BUT.getComparison('Degree').get('CIU');
+
+degree_av_BUT_p1 = c_BUT.getComparison('DegreeAv').get('DIFF');
+degree_av_BUT_p1 = c_BUT.getComparison('DegreeAv').get('P1');
+degree_av_BUT_p2 = c_BUT.getComparison('DegreeAv').get('P2');
+degree_av_BUT_cil = c_BUT.getComparison('DegreeAv').get('CIL');
+degree_av_BUT_ciu = c_BUT.getComparison('DegreeAv').get('CIU');
+
+distance_BUT_p1 = c_BUT.getComparison('Distance').get('DIFF');
+distance_BUT_p1 = c_BUT.getComparison('Distance').get('P1');
+distance_BUT_p2 = c_BUT.getComparison('Distance').get('P2');
+distance_BUT_cil = c_BUT.getComparison('Distance').get('CIL');
+distance_BUT_ciu = c_BUT.getComparison('Distance').get('CIU');

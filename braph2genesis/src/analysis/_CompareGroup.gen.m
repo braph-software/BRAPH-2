@@ -21,8 +21,6 @@ NOTES (metadata, string) are some specific notes about the comparison.
 
 %%% ¡prop!
 WAITBAR (metadata, logical) detemines whether to show the waitbar.
-%%%% ¡default!
-true
 
 %%% ¡prop!
 VERBOSE (metadata, logical) sets whether to write the progress of the comparisons.
