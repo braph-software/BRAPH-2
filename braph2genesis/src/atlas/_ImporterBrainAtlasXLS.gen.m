@@ -75,7 +75,7 @@ if isfile(file)
         end
         ba.set('br_dict', idict);
     catch e
-        warndlg('Please select a valid group file.', 'Warning');
+        warndlg('Please select a valid brain atlas file.', 'Warning');
     end
     
     if im.get('WAITBAR')
