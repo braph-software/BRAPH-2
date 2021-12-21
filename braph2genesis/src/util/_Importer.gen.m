@@ -20,6 +20,6 @@ LABEL (metadata, string) is an extended label of the importer.
 NOTES (metadata, string) are some specific notes about the importer.
 
 %%% ¡prop!
-WAITBAR (metadata, logical) detemines whether to how the waitbar.
+WAITBAR (metadata, logical) detemines whether to show the waitbar.
 %%%% ¡default!
 true

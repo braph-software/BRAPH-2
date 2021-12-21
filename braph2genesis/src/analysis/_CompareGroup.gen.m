@@ -20,6 +20,11 @@ LABEL (metadata, string) is an extended label of the comparison.
 NOTES (metadata, string) are some specific notes about the comparison.
 
 %%% ¡prop!
+WAITBAR (metadata, logical) detemines whether to show the waitbar.
+%%%% ¡default!
+true
+
+%%% ¡prop!
 VERBOSE (metadata, logical) sets whether to write the progress of the comparisons.
 
 %%% ¡prop!
@@ -80,16 +85,18 @@ CP_DICT (result, idict) contains the results of the comparison.
 %%%% ¡calculate!
 value = IndexedDictionary('IT_CLASS', 'ComparisonGroup', 'IT_KEY', 4);
 %%%% ¡gui!
-pl = PPCompareGroupCP('EL', c, 'PROP', CompareGroup.CP_DICT, varargin{:});
+% % % pl = PPCompareGroupCP('EL', c, 'PROP', CompareGroup.CP_DICT, varargin{:});
 
 %% ¡methods!
 function cp = getComparison(c, measure_class, varargin)
-    %GETComparisonE returns comparison.
+    %GETCOMPARISON returns comparison.
     %
-    % CP = GETMEASURE(G, MEASURE_CLASS) checks if the measure exists in the
-    % property MDICT. If not it creates a new measure M of class MEASURE_CLASS
-    % with properties defined by the graph settings. The user must call
-    % getValue() for the new measure M to retrieve the value of measure M.
+    % CP = GETMEASURE(G, MEASURE_CLASS) checks if the comparison exists in the
+    %  comparison dictionary CP_DICT. If not, it creates a new comparison
+    %  CP of class MEASURE_CLASS. The user must call getValue() for the new
+    %  comparison CP to retrieve the value of the comparison. 
+    %
+    % See also ComparisonGroup.
 
     cp_dict = c.memorize('CP_DICT');
     if cp_dict.containsKey(measure_class)
