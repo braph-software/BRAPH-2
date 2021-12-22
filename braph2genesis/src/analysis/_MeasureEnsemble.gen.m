@@ -22,7 +22,7 @@ NOTES (metadata, string) are some specific notes about the graph ensemble measur
 MEASURE (data, string) is the measure class.
 
 %%% ¡prop!
-MEASUREPARAM(data, item) is the example measure parameters. 
+MEASUREPARAM(data, item) provides the measure parameters. 
 %%%% ¡settings!
 'Measure'
 
