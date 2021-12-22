@@ -24,7 +24,7 @@ NOTES (metadata, string) are some specific notes about the group-based compariso
 MEASURE (data, string) is the measure class.
 
 %%% ¡prop!
-MEASUREPARAM(data, item) is the example measure parameters. 
+MEASUREPARAM(data, item) provides the measure parameters. 
 %%%% ¡settings!
 'Measure'
 
@@ -93,7 +93,7 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
         return
     end
     
-	% get parameters from core measure
+	% get parameters from example measure
     core_measure = cp.get('MEASUREPARAM');
     j = 1;
     varargin = {};
