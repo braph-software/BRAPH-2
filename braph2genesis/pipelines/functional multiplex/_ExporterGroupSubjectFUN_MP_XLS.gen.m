@@ -58,7 +58,7 @@ if isfolder(directory)
 
     for i = 1:1:sub_number
         if ex.get('WAITBAR')
-            waitbar(.30 + .70 * i / sub_number, wb, ['Saving subject ' num2str(i) ' of ' num2str(sub_number) ' ...');
+            waitbar(.30 + .70 * i / sub_number, wb, ['Saving subject ' num2str(i) ' of ' num2str(sub_number) ' ...']);
         end
 
         layers_number = sub_dict.getItem(1).get('L');
