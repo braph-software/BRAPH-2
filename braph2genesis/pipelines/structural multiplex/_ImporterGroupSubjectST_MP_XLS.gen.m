@@ -121,7 +121,7 @@ if isfolder(directory)
         % cycle over subjects, add subjects
         for i = 1:1:size(all_subjects_data, 2)
             if im.get('WAITBAR')
-                waitbar(.30 + .70 * i / size(all_subjects_data, 2), wb, ['Loading subject: ' num2str(i) ' of ' num2str(size(all_subjects_data, 2)) ' ...'])
+                waitbar(.30 + .70 * i / size(all_subjects_data, 2), wb, ['Loading subject ' num2str(i) ' of ' num2str(size(all_subjects_data, 2)) ' ...'])
             end
 
             layer_subject = reshape(all_subjects_data(:, i, :), [layers_number br_number]);

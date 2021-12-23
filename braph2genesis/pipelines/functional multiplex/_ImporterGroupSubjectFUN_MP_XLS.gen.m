@@ -85,7 +85,7 @@ if isfolder(directory)
         % get all layers per subject folder
         for i = 1:1:length(subject_folders)
             if im.get('WAITBAR')
-                waitbar(.30 + .70 * i / length(subject_folders), wb, ['Loading subject: ' num2str(i) ' of ' num2str(length(subject_folders)) ' ...'])
+                waitbar(.30 + .70 * i / length(subject_folders), wb, ['Loading subject ' num2str(i) ' of ' num2str(length(subject_folders)) ' ...'])
             end
 
             subjects_paths = [directory filesep() subject_folders(i).name];

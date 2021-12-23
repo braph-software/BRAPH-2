@@ -1,5 +1,5 @@
-%EXAMPLE_CON_FUN_MP_WU_GA
-% Script example pipeline CON FUN MP WU GA
+%EXAMPLE_CON_FUN_MP_GA_WU
+% Script example pipeline CON FUN MP GA WU
 
 clear variables %#ok<*NASGU>
 
@@ -62,12 +62,12 @@ co_gr2 = CombineGroups_CON_FUN( ...
 
 gr2 = co_gr2.get('GR');
 
-%% Analysis CON FUN MP WU GA
-a_WU1 = AnalyzeGroup_CON_FUN_MP_WU_GA( ...
+%% Analysis CON FUN MP GA WU
+a_WU1 = AnalyzeGroup_CON_FUN_MP_GA_WU( ...
     'GR', gr1 ...
     );
 
-a_WU2 = AnalyzeGroup_CON_FUN_MP_WU_GA( ...
+a_WU2 = AnalyzeGroup_CON_FUN_MP_GA_WU( ...
     'GR', gr2 ...
     );
 
