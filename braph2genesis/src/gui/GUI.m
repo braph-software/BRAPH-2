@@ -1,4 +1,4 @@
-function [pl_out, h_fig] = GUI(el, varargin)
+function [pl_out, f_fig] = GUI(el, varargin)
 %GUI creates and displays GUI for an element.
 %
 % GUI(EL) creates and displays GUI for element EL.
@@ -9,6 +9,8 @@ function [pl_out, h_fig] = GUI(el, varargin)
 %  and can be in any order.
 %
 % PL = GUI(EL) returns the PlotElement pointer.
+%
+% [PL, F] = GUI(EL) returns also the handle of the figure.
 %
 % See also Element, PlotElement().
 
@@ -213,7 +215,7 @@ menu()
             'Color', [.98 .95 .95] ...
             );
         
-        set_icon(p_f);
+        set_braph2_icon(p_f);
         edit_table = uitable('Parent', p_f, ...
             'Units', 'normalized', ...
             'Position', [.02 .2 .9 .7], ...
@@ -369,7 +371,6 @@ menu()
         end
     end
 
-
 %% Toolbar
 toolbar()
     function toolbar()
@@ -410,6 +411,6 @@ if nargout > 0
     pl_out = pl;
 end
 if nargout > 1
-    h_fig = f;
+    f_fig = f;
 end
 end
