@@ -20,7 +20,7 @@ EL (metadata, item) is the element.
 PROP (data, scalar) is the property number.
 
 %%% ¡prop!
-TITLE (metadata, string) is the property edited title.
+TITLE (metadata, string) is the property title.
 
 %%% ¡prop!
 ENABLE (metadata, option) switches between off and inactive fields.

@@ -66,42 +66,12 @@ PP_DICT (result, idict) is a dictionary of the property plots.
 %%%% ¡calculate!
 el = pl.get('EL');
 
-% % % gui_files_dir = [fileparts(which('braph2.m')) filesep 'src' filesep 'gui' filesep 'prop_order' filesep];
-% % % gui_files = dir(gui_files_dir); % get the folder contents
-% % % gui_files = gui_files([gui_files(:).isdir] ~= 1); % remove all folders (isdir property is 0)
-% % % gui_files = gui_files(~ismember({gui_files(:).name}, {'.', '..'})); % remove '.' and '..'
-% % % gui_files = {gui_files.name}; % convert to cell;
-% % % gui_files = cellfun(@(x) erase(x, '.mat'), gui_files, 'UniformOutput', false);
-% % % 
-% % % if contains(el.getClass(), gui_files)
-% % %     gui_modified_file = load([gui_files_dir el.getClass()]);
-% % %     load_rule_array = gui_modified_file.visibility;
-% % %     load_order_array = gui_modified_file.order;
-% % %     load_titles = gui_modified_file.title;
-% % %     
-% % %     for prop = 1:el.getPropNumber()
-% % %         load_rule = load_rule_array(prop);
-% % %         load_order = load_order_array(prop);
-% % %         load_title = load_titles{prop};
-% % %         if load_rule
-% % %             switch el.getPropCategory(prop)
-% % %                 case Category.METADATA
-% % %                     color = pl.get('MCOLOR');
-% % %                 case Category.PARAMETER
-% % %                     color = pl.get('PCOLOR');
-% % %                 case Category.DATA
-% % %                     color = pl.get('DCOLOR');
-% % %                 case Category.RESULT
-% % %                     color = pl.get('RCOLOR');
-% % %             end
-% % %             pp_list{load_order} = el.getPlotProp(prop, ...
-% % %             'BKGCOLOR', color, ...
-% % %             'TITLE', load_title);
-% % %         end
-% % %     end
-% % % else
-    pp_list = cell(1, el.getPropNumber());
-    for prop = 1:1:el.getPropNumber()
+[order, title, visible] = load_layout(el);
+number_visible_prop = sum(visible);
+
+pp_list = cell(1, number_visible_prop);
+for prop = 1:1:el.getPropNumber()
+    if visible(prop)
         switch el.getPropCategory(prop)
             case Category.METADATA
                 color = pl.get('MCOLOR');
@@ -112,11 +82,12 @@ el = pl.get('EL');
             case Category.RESULT
                 color = pl.get('RCOLOR');
         end
-        
-        pp_list{prop} = el.getPlotProp(prop, ...
+
+        pp_list{order(prop)} = el.getPlotProp(prop, ...
+            'TITLE', title{prop}, ...
             'BKGCOLOR', color);
     end
-% % % end
+end
 
 value = IndexedDictionary( ...
     'ID', el.tostring(), ...
