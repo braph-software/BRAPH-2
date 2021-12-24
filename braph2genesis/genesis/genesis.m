@@ -51,7 +51,7 @@ mkdir([target_dir fp 'src' fp 'cohort'])
 mkdir([target_dir fp 'src' fp 'analysis'])
 mkdir([target_dir fp 'src' fp 'nn'])
 mkdir([target_dir fp 'src' fp 'gui'])
-% % % mkdir([target_dir fp 'src' fp 'gui' fp 'prop_order'])
+mkdir([target_dir fp 'src' fp 'gui' fp 'layouts'])
 
 disp('¡! created dir structure - SRC')
 
@@ -111,8 +111,8 @@ copydir([source_dir fp 'src' fp 'nn'], [target_dir fp 'src' fp 'nn'])
 disp('¡! copied ready files - nn')
 copydir([source_dir fp 'src' fp 'gui'], [target_dir fp 'src' fp 'gui'])
 disp('¡! copied ready files - gui')
-% % % copydir([source_dir fp 'src' fp 'gui' fp 'prop_order'], [target_dir fp 'src' fp 'gui' fp 'prop_order'])
-% % % disp('¡! copied ready files - gui - prop_order')
+copydir([source_dir fp 'src' fp 'gui' fp 'layouts'], [target_dir fp 'src' fp 'gui' fp 'layouts'])
+disp('¡! copied ready files - gui - layouts')
 disp(' ')
 
 % graphs
