@@ -1569,53 +1569,53 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             end
         end
     end
-% % %     methods % GUI
-% % %         function fig = getGUI(el, varargin)
-% % %             %GETGUI returns figure with element GUI.
-% % %             %
-% % %             % GETGUI(EL) opens figure with GUI for element EL.
-% % %             %
-% % %             % GETGUI(EL, 'Name', Value, ...) sets the settings of GUI.
-% % %             %
-% % %             % FIG = GETGUI(EL) returns figure with GUI for element EL.
-% % %             %
-% % %             % See also GUI.
-% % %             
-% % %             GUI(el, varargin{:});
-% % %             
-% % %             if nargout == 1
-% % %                 fig = gcf();
-% % %             end
-% % %         end
-% % %         function pl = getPlotElement(el, varargin) 
-% % %             %GETPLOTELEMENT returns the element plot.
-% % %             %
-% % %             % PL = GETPLOTELEMENT(EL) returns the plot of element EL.
-% % %             %
-% % %             % PL = GETPLOTELEMENT(EL, 'Name', Value, ...) sets the settings of PlotElement.
-% % %             %
-% % %             % See also PlotElement.
-% % %             
-% % %             pl = PlotElement('EL', el, varargin{:});
-% % %         end
-% % %         function pl = getPlotProp(el, prop, varargin)
-% % %             %GETPLOTPROP returns a prop plot.
-% % %             %
-% % %             % PL = GETPLOTPROP(EL, PROP) returns the plot of prop PROP.
-% % %             %
-% % %             % PL = GETPLOTPROP(EL, PROP, 'Name', Value, ...) sets the settings.
-% % %             %
-% % %             % See also PlotProp, PlotPropCell, PlotPropClass, PlotPropClassList,
-% % %             %  PlotPropIDict, PlotPropItem, PlotPropItemList, PlotPropLogical,
-% % %             %  PlotPropMatrix, PlotPropOption, PlotPropScalar, PlotPropString.
-% % %             
-% % %             switch el.getPropFormat(prop)
-% % %                 case Format.EMPTY
-% % %                     pl = PlotProp( ...
-% % %                         'ID', el.getPropTag(prop), ...
-% % %                         'EL', el, ...
-% % %                         'PROP', prop, ...
-% % %                         varargin{:});
+    methods % GUI
+        function fig = getGUI(el, varargin)
+            %GETGUI returns figure with element GUI.
+            %
+            % GETGUI(EL) opens figure with GUI for element EL.
+            %
+            % GETGUI(EL, 'Name', Value, ...) sets the settings of GUI.
+            %
+            % FIG = GETGUI(EL) returns handle with figure with GUI for element EL.
+            %
+            % See also GUI.
+            
+            GUI(el, varargin{:});
+            
+            if nargout == 1
+                fig = gcf();
+            end
+        end
+        function pl = getPlotElement(el, varargin) 
+            %GETPLOTELEMENT returns the element plot.
+            %
+            % PL = GETPLOTELEMENT(EL) returns the plot of element EL.
+            %
+            % PL = GETPLOTELEMENT(EL, 'Name', Value, ...) sets the settings of PlotElement.
+            %
+            % See also PlotElement.
+            
+            pl = PlotElement('EL', el, varargin{:});
+        end
+        function pl = getPlotProp(el, prop, varargin)
+            %GETPLOTPROP returns a prop plot.
+            %
+            % PL = GETPLOTPROP(EL, PROP) returns the plot of prop PROP.
+            %
+            % PL = GETPLOTPROP(EL, PROP, 'Name', Value, ...) sets the settings.
+            %
+            % See also PlotProp, PlotPropCell, PlotPropClass, PlotPropClassList,
+            %  PlotPropIDict, PlotPropItem, PlotPropItemList, PlotPropLogical,
+            %  PlotPropMatrix, PlotPropOption, PlotPropScalar, PlotPropString.
+            
+            switch el.getPropFormat(prop)
+                case Format.EMPTY
+                    pl = PlotProp( ...
+                        'ID', el.getPropTag(prop), ...
+                        'EL', el, ...
+                        'PROP', prop, ...
+                        varargin{:});
 % % %                 case Format.STRING
 % % %                     pl = PlotPropString( ...
 % % %                         'ID', el.getPropTag(prop), ...
@@ -1700,16 +1700,16 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % %                         'EL', el, ...
 % % %                         'PROP', prop, ...
 % % %                         varargin{:});
-% % %                 otherwise
-% % %                     pl = PlotProp( ...
-% % %                         'ID', el.getPropTag(prop), ...
-% % %                         'EL', el, ...
-% % %                         'PROP', prop, ...
-% % %                         varargin{:});
-% % %             end
-% % %         end
-% % %     end
-% % %     methods (Static) % GUI Static
+                otherwise
+                    pl = PlotProp( ...
+                        'ID', el.getPropTag(prop), ...
+                        'EL', el, ...
+                        'PROP', prop, ...
+                        varargin{:});
+            end
+        end
+    end
+    methods (Static) % GUI Static
 % % %         function getGUIMenuImport(el, ui_menu_import, plot_element)
 % % %             %GETGUIMENUIMPORT sets the import submenu gui json.
 % % %             % 
@@ -1757,5 +1757,5 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % %                 end
 % % %             end
 % % %         end
-% % %     end
+    end
 end
