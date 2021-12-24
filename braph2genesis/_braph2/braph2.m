@@ -19,7 +19,7 @@ addpath([src_dir filesep 'atlas'])
 addpath([src_dir filesep 'gt'])
 addpath([src_dir filesep 'cohort'])
 addpath([src_dir filesep 'analysis'])
-% % % addpath([src_dir filesep 'nn'])
+addpath([src_dir filesep 'nn'])
 % % % addpath([src_dir filesep 'gui'])
 
 graphs_dir = [fileparts(which('braph2')) filesep 'graphs'];
@@ -31,8 +31,8 @@ addpath(measures_dir)
 brainsurfs_dir = [fileparts(which('braph2')) filesep 'brainsurfs'];
 addpath(brainsurfs_dir)
 
-% % % neuralnetworks_dir = [fileparts(which('braph2')) filesep 'neuralnetworks'];
-% % % addpath(neuralnetworks_dir)
+neuralnetworks_dir = [fileparts(which('braph2')) filesep 'neuralnetworks'];
+addpath(neuralnetworks_dir)
 
 test_dir = [fileparts(which('braph2')) filesep 'test'];
 addpath(test_dir)
@@ -51,7 +51,7 @@ end
 % % % if ~installed
 % % %     warning('Deep Learning Toolboxs are not installed. Please refer to <a href="matlab: web(''https://se.mathworks.com/products/deep-learning.html'') ">Deep Learning Toolbox</a> and <a href="matlab: web(''https://se.mathworks.com/matlabcentral/fileexchange/67296-deep-learning-toolbox-converter-for-onnx-model-format'') ">Deep Learning Toolbox Converter for ONNX Model Format</a>');
 % % % end
-% % % 
-% % % clear src_dir brainsurfs_dir graphs_dir measures_dir test_dir pipelines_dir pipelines_dir_list i addons installed
-% % % 
+
+clear src_dir brainsurfs_dir graphs_dir measures_dir test_dir pipelines_dir pipelines_dir_list i addons installed
+
 % % % % BRAPH2GUI()
