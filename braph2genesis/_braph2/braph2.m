@@ -20,7 +20,7 @@ addpath([src_dir filesep 'gt'])
 addpath([src_dir filesep 'cohort'])
 addpath([src_dir filesep 'analysis'])
 addpath([src_dir filesep 'nn'])
-% % % addpath([src_dir filesep 'gui'])
+addpath([src_dir filesep 'gui'])
 
 graphs_dir = [fileparts(which('braph2')) filesep 'graphs'];
 addpath(graphs_dir)
