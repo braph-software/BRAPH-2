@@ -11,44 +11,60 @@ BrainAtlas can be imported/exported to .txt, .xls and .json files.
 %%% ¡seealso!
 Element, BrainRegion, BrainSurface, ImporterBrainAtlasXLS, ImporterBrainAtlasTXT, ExporterBrainAtlasXLS, ExporterBrainAtlasTXT
 
-% % % %%% ¡gui!
-% % % %%%% ¡menu_importer!
-% % % importers_names = {'ImporterBrainAtlasTXT', 'ImporterBrainAtlasXLS'};
-% % % for k = 1:length(importers_names)
-% % %     imp = importers_names{k};
-% % %     uimenu(ui_menu_import, ...
-% % %         'Label', [imp ' ...'], ...
-% % %         'Callback', {@cb_importers});
-% % % end
-% % % 
-% % % function cb_importers(src, ~)
-% % %     src_name = erase(src.Text, ' ...');
-% % %     imp_el = eval([src_name '(' '''ID''' ',' '''GUI''' ')']);
-% % %     imp_el.uigetfile();
-% % %     try
-% % %         tmp_el = imp_el.get('BA');
-% % %         plot_element.set('El', tmp_el);
-% % %         plot_element.reinit();
-% % %     catch e
-% % %         warndlg(['Please select a valid input. ' e.message], 'Warning');
-% % %     end
-% % % end
-% % % 
-% % % %%%% ¡menu_exporter!
-% % % exporters_names = {'ExporterBrainAtlasTXT', 'ExporterBrainAtlasXLS'};
-% % % for k = 1:length(exporters_names)
-% % %     exp = exporters_names{k};
-% % %     uimenu(ui_menu_export, ...
-% % %         'Label', [exp ' ...'], ...
-% % %         'Callback', {@cb_exporters});
-% % % end
-% % % function cb_exporters(src, ~)
-% % %     src_name = erase(src.Text, ' ...');
-% % %     tmp_el = plot_element.get('EL'); %#ok<NASGU>
-% % %     exmp_el = eval([src_name '(' '''BA''' ', tmp_el)']);
-% % %     exmp_el.uiputfile();
-% % %     exmp_el.get('SAVE');
-% % % end
+%%% ¡gui!
+%%%% ¡menu_importer!
+uimenu(ui_menu_import, ...
+    'Label', 'Import TXT ...', ...
+    'Callback', {@cb_importer_TXT});
+function cb_importer_TXT(~, ~)
+    im = ImporterBrainAtlasTXT('ID', 'Import Brain Atlas from TXT');
+    im.uigetfile();
+    try
+        pl.set('EL', im.get('BA')); 
+        pl.reinit();
+    catch e
+        warndlg(['Please, select a valid input BrainAtlas in TXT format. ' e.message], 'Warning');
+    end
+end
+
+uimenu(ui_menu_import, ...
+    'Label', 'Import XLS ...', ...
+    'Callback', {@cb_importer_XLS});
+function cb_importer_XLS(~, ~)
+    im = ImporterBrainAtlasXLS('ID', 'Import Brain Atlas from XLS');
+    im.uigetfile();
+    try
+        pl.set('EL', im.get('BA')); 
+        pl.reinit();
+    catch e
+        warndlg(['Please, select a valid input BrainAtlas in XLS format. ' e.message], 'Warning');
+    end
+end
+
+%%%% ¡menu_exporter!
+uimenu(ui_menu_export, ...
+    'Label', 'Export TXT ...', ...
+    'Callback', {@cb_exporter_TXT});
+function cb_exporter_TXT(~, ~)
+    ex = ExporterBrainAtlasTXT( ...
+        'ID', 'Export Brain Atlas to TXT', ...
+        'BA', el.copy() ...
+        );
+    ex.uiputfile()
+    ex.get('SAVE');
+end
+
+uimenu(ui_menu_export, ...
+    'Label', 'Export XLS ...', ...
+    'Callback', {@cb_exporter_XLS});
+function cb_exporter_XLS(~, ~)
+    ex = ExporterBrainAtlasXLS( ...
+        'ID', 'Export Brain Atlas to XLS', ...
+        'BA', el.copy() ...
+        );
+    ex.uiputfile()
+    ex.get('SAVE');
+end
 
 %% ¡props!
 
@@ -173,26 +189,26 @@ assert(isequal(ba.get('BR_DICT'), idict_1), ...
     [BRAPH2.STR ':' class(ba) ':' BRAPH2.WRONG_OUTPUT], ...
     'BrainAtlas.set() does not work.')
 
-% % % %%% ¡test!
-% % % %%%% ¡name!
-% % % Plot Brain Atlas GUI
-% % % %%%% ¡code!
-% % % br1 = BrainRegion('ID', 'id1', 'LABEL', 'label1', 'NOTES', 'notes1', 'X', 1, 'Y', 1, 'Z', 1);
-% % % br2 = BrainRegion('ID', 'id2', 'LABEL', 'label2', 'NOTES', 'notes2', 'X', 2, 'Y', 2, 'Z', 2);
-% % % br3 = BrainRegion('ID', 'id3', 'LABEL', 'label3', 'NOTES', 'notes3', 'X', 3, 'Y', 3, 'Z', 3);
-% % % br4 = BrainRegion('ID', 'id4', 'LABEL', 'label4', 'NOTES', 'notes4', 'X', 4, 'Y', 4, 'Z', 4);
-% % % br5 = BrainRegion('ID', 'id5', 'LABEL', 'label5', 'NOTES', 'notes5', 'X', 5, 'Y', 5, 'Z', 5);
-% % % br6 = BrainRegion('ID', 'id6', 'LABEL', 'label6', 'NOTES', 'notes6', 'X', 6, 'Y', 6, 'Z', 6);
-% % % 
-% % % items = {br1, br2, br3, br4, br5, br6};
-% % % 
-% % % idict_1 = IndexedDictionary( ...
-% % %     'id', 'idict', ...
-% % %     'it_class', 'BrainRegion', ...
-% % %     'it_key', IndexedDictionary.getPropDefault(IndexedDictionary.IT_KEY), ...
-% % %     'it_list', items ...
-% % %     );
-% % % ba = BrainAtlas('ID', 'BA1', 'LABEL', 'brain atlas', 'Notes', 'Notes on brain atlas.', 'br_dict', idict_1);
-% % % GUI(ba);
-% % % set(gcf, 'CloseRequestFcn', 'closereq')
-% % % close(gcf)
+%%% ¡test!
+%%%% ¡name!
+Plot Brain Atlas GUI
+%%%% ¡code!
+br1 = BrainRegion('ID', 'id1', 'LABEL', 'label1', 'NOTES', 'notes1', 'X', 1, 'Y', 1, 'Z', 1);
+br2 = BrainRegion('ID', 'id2', 'LABEL', 'label2', 'NOTES', 'notes2', 'X', 2, 'Y', 2, 'Z', 2);
+br3 = BrainRegion('ID', 'id3', 'LABEL', 'label3', 'NOTES', 'notes3', 'X', 3, 'Y', 3, 'Z', 3);
+br4 = BrainRegion('ID', 'id4', 'LABEL', 'label4', 'NOTES', 'notes4', 'X', 4, 'Y', 4, 'Z', 4);
+br5 = BrainRegion('ID', 'id5', 'LABEL', 'label5', 'NOTES', 'notes5', 'X', 5, 'Y', 5, 'Z', 5);
+br6 = BrainRegion('ID', 'id6', 'LABEL', 'label6', 'NOTES', 'notes6', 'X', 6, 'Y', 6, 'Z', 6);
+
+items = {br1, br2, br3, br4, br5, br6};
+
+idict_1 = IndexedDictionary( ...
+    'id', 'idict', ...
+    'it_class', 'BrainRegion', ...
+    'it_key', IndexedDictionary.getPropDefault(IndexedDictionary.IT_KEY), ...
+    'it_list', items ...
+    );
+ba = BrainAtlas('ID', 'BA1', 'LABEL', 'brain atlas', 'Notes', 'Notes on brain atlas.', 'br_dict', idict_1);
+GUI(ba);
+set(gcf, 'CloseRequestFcn', 'closereq')
+close(gcf)

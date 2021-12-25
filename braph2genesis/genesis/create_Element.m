@@ -44,13 +44,20 @@ function create_Element(generator_file, target_dir)
 %  Lis of compatible graphs with the measure.
 %
 % <strong>%%% ¡gui!</strong>
-%  GUI code to represent the panel of the element. 
-%  Can be on multiple lines.
-%  Should return a Plot object in 'pl'
-%  <strong>%%% ¡menu_import!</strong>
-%   Menu Import for the GUI figure. The menus is ui_menu_import.
-%  <strong>%%% ¡menu_export!</strong>
-%   Menu Export for the GUI figure. The menus is ui_menu_export.
+%  <strong>%%%% ¡panel!</strong>
+%   GUI code to represent the panel of the element. 
+%   Can be on multiple lines.
+%   Should return a Plot object in 'pl'
+%  <strong>%%%% ¡menu_import!</strong>
+%   Menu Import for the GUI figure. 
+%   The element is el.
+%   The menu is ui_menu_import.
+%   The plot element is pl.
+%  <strong>%%%% ¡menu_export!</strong>
+%   Menu Export for the GUI figure. 
+%   The element is el.
+%   The menu is ui_menu_export.
+%   The plot element is pl.
 % 
 %<strong>%% ¡props!</strong>
 % <strong>%%% ¡prop!</strong>
@@ -146,8 +153,8 @@ txt = fileread(generator_file);
 disp('¡! generator file read')
 
 %% Analysis
-[class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui, gui_menu_import, gui_menu_export] = analyze_header();
-    function [class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui, gui_import, gui_export] = analyze_header()
+[class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui_panel, gui_menu_import, gui_menu_export] = analyze_header();
+    function [class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui_panel, gui_menu_import, gui_menu_export] = analyze_header()
         header = getToken(txt, 'header');
         res = regexp(header, '^\s*(?<class_name>\w*)\s*<\s*(?<superclass_name>\w*)\s*\(\s*(?<moniker>\w*)\s*,\s*(?<descriptive_name>[^)]*)\)\s*(?<header_description>[^.]*)\.', 'names');
         class_name = res.class_name;
@@ -162,10 +169,10 @@ disp('¡! generator file read')
         
         seealso = getToken(txt, 'header', 'seealso');        
 
-        gui = splitlines(getToken(txt, 'header', 'gui'));
+        gui_panel = splitlines(getToken(txt, 'header', 'gui', 'panel'));
         
-        gui_import = splitlines(getToken(txt, 'header', 'gui', 'menu_importer'));        
-        gui_export = splitlines(getToken(txt, 'header', 'gui', 'menu_exporter'));
+        gui_menu_import = splitlines(getToken(txt, 'header', 'gui', 'menu_importer'));        
+        gui_menu_export = splitlines(getToken(txt, 'header', 'gui', 'menu_exporter'));
     end
 
 [graph, connectivity, directionality, selfconnectivity, negativity] = analyze_header_graph(); % only for graphs
@@ -1555,13 +1562,13 @@ generate_methods()
 
 generate_gui()
     function generate_gui()
-        if (numel(gui) == 1 && isempty(gui{1})) && ...
+        if (numel(gui_panel) == 1 && isempty(gui_panel{1})) && ...
                 all(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props)) && ...
                 all(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props_update))
             return
         end
         g(1, 'methods % GUI')
-            if ~(numel(gui) == 1 && isempty(gui{1})) && ...
+            if ~(numel(gui_panel) == 1 && isempty(gui_panel{1})) && ...
                     any(cellfun(@(x) isempty(x), gui_menu_import)) && ...
                     any(cellfun(@(x) isempty(x), gui_menu_export))
                 g(2, ['function pl = getPlotElement(' moniker ', varargin)'])
@@ -1575,7 +1582,7 @@ generate_gui()
                      '% See also PlotElement.'
                      ''
                     })
-                    gs(3, gui)
+                    gs(3, gui_panel)
                 g(2, 'end')
             end
             if any(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props)) || any(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props_update))
@@ -1623,17 +1630,18 @@ generate_gui_static()
         end
         g(1, 'methods (Static) % GUI static methods')
         if any(cellfun(@(x) ~isempty(x), gui_menu_import))
-            g(2, 'function getGUIMenuImport(el, ui_menu_import, plot_element)')
+            g(2, 'function getGUIMenuImport(el, ui_menu_import, pl)')
             gs(3, {
                 '%GETGUIMENUIMPORT sets a figure menu.'
                 '%'
-                '% GETGUIMENUIMPORT(EL, MENU, PLOTELEMENT) sets the figure menu import which operates on the element EL.'
+                '% GETGUIMENUIMPORT(EL, MENU, PL) sets the figure menu import'
+                '%  which operates on the element EL in the plot element PL.'
                 '%'
-                '% See also getGUIMenuExporter.'
+                '% See also getGUIMenuExporter, PlotElement.'
                 ''
                 })
                 gs(3, {
-                    'Element.getGUIMenuImport(el, ui_menu_import, plot_element);'
+                    'Element.getGUIMenuImport(el, ui_menu_import, pl);'
                     ''
                     })
             gs(3, gui_menu_import)
@@ -1641,17 +1649,18 @@ generate_gui_static()
             g(2, 'end')
         end
         if  any(cellfun(@(x) ~isempty(x), gui_menu_export))
-            g(2, 'function getGUIMenuExport(el, ui_menu_export, plot_element)')
+            g(2, 'function getGUIMenuExport(el, ui_menu_export, pl)')
             gs(3, {
                 '%GETGUIMENUEXPORT sets a figure menu.'
                 '%'
-                '% GETGUIMENUIMPORT(EL, MENU) sets the figure menu export which operates on the element EL.'
+                '% GETGUIMENUIMPORT(EL, MENU, PL) sets the figure menu export'
+                '%  which operates on the element EL in the plot element PL.'
                 '%'
-                '% See also getGUIMenuImporter.'
+                '% See also getGUIMenuImporter, PlotElement.'
                 ''
                 })
                 gs(3, {
-                    'Element.getGUIMenuExport(el, ui_menu_export, plot_element);'
+                    'Element.getGUIMenuExport(el, ui_menu_export, pl);'
                     ''
                     })
             gs(3, gui_menu_export)

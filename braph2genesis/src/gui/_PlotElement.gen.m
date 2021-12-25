@@ -309,6 +309,7 @@ function reinit(pl)
     %REINIT sets el in each PlotProp of PlotElement
     %
     % See also update, draw, redraw.
+    
     if ~isempty(pl.pp_list) || any(cellfun(@(x) isgraphics(x, 'uipanel'), pl.pp_list))
         pp_dict = pl.get('PP_DICT');
         for i = 1:pp_dict.length()

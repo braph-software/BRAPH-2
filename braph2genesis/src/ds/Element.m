@@ -1710,52 +1710,53 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         end
     end
     methods (Static) % GUI Static
-% % %         function getGUIMenuImport(el, ui_menu_import, plot_element)
-% % %             %GETGUIMENUIMPORT sets the import submenu gui json.
-% % %             % 
-% % %             % GETGUIMENUIMPORT(EL, UI_MENU) sets the import submenu json for the menu UI_MENU.
-% % %             % 
-% % %             % See also getGUI, getGUIMenuExport.
-% % %             
-% % %             uimenu(ui_menu_import, ...
-% % %                 'Label', 'Import JSON ...', ...
-% % %                 'Callback', {@cb_import_json})
-% % %                  
-% % %             function cb_import_json(~,~)
-% % %                 [file, path, filterindex] = uigetfile('.json', ['Select ' el.getName() ' file location.']);
-% % %                 if filterindex
-% % %                     filename = fullfile(path, file);
-% % %                     fid = fopen(filename);
-% % %                     raw = fread(fid, inf);
-% % %                     str = char(raw');
-% % %                     fclose(fid);
-% % %                     tmp_el = Element.decodeJSON(str);
-% % %                     plot_element.set('El', tmp_el); 
-% % %                     plot_element.reinit();
-% % %                 end
-% % %             end
-% % %         end
-% % %         function getGUIMenuExport(el, ui_menu_export, plot_element)
-% % %             %GETGUIMENUEXPORT sets the export submenu gui json.
-% % %             % 
-% % %             % GETGUIMENUEXPORT(EL, UI_MENU) sets the export submenu for the ui menu UI_MENU.
-% % %             % 
-% % %             % See also getGUI, getGUIMenuImport.
-% % %                      
-% % %             uimenu(ui_menu_export, ...
-% % %                 'Label', 'Export JSON ...', ...
-% % %                 'Callback', {@cb_export_json})
-% % %           
-% % %             function cb_export_json(~,~)
-% % %                 [file, path, filterindex] = uiputfile({'*.json', '*.json'}, ['Select ' el.getName  ' file location.']);
-% % %                 if filterindex
-% % %                     filename = fullfile(path, file);
-% % %                     [json, ~, ~] = encodeJSON(plot_element.get('EL'));
-% % %                     fid = fopen(filename, 'w');
-% % %                     fprintf(fid, json);
-% % %                     fclose(fid);
-% % %                 end
-% % %             end
-% % %         end
+        function getGUIMenuImport(el, ui_menu_import, pl)
+            %GETGUIMENUIMPORT sets the import submenu gui json.
+            % 
+            % GETGUIMENUIMPORT(EL, UI_MENU, PL) sets the import submenu
+            %  json for the menu UI_MENU for the plot element PL.
+            % 
+            % See also getGUI, getGUIMenuExport, PLotElement.
+            
+            uimenu(ui_menu_import, ...
+                'Label', 'Import JSON ...', ...
+                'Callback', {@cb_import_json})
+                 
+            function cb_import_json(~,~)
+                [file, path, filterindex] = uigetfile('.json', ['Select ' el.getName() ' file location.']);
+                if filterindex
+                    filename = fullfile(path, file);
+                    fid = fopen(filename);
+                    raw = fread(fid, inf);
+                    str = char(raw');
+                    fclose(fid);
+
+                    pl.set('EL', Element.decodeJSON(str)); 
+                    pl.reinit();
+                end
+            end
+        end
+        function getGUIMenuExport(el, ui_menu_export, plot_element)
+            %GETGUIMENUEXPORT sets the export submenu gui json.
+            % 
+            % GETGUIMENUEXPORT(EL, UI_MENU) sets the export submenu for the ui menu UI_MENU.
+            % 
+            % See also getGUI, getGUIMenuImport.
+                     
+            uimenu(ui_menu_export, ...
+                'Label', 'Export JSON ...', ...
+                'Callback', {@cb_export_json})
+          
+            function cb_export_json(~,~)
+                [file, path, filterindex] = uiputfile({'*.json', '*.json'}, ['Select ' el.getName  ' file location.']);
+                if filterindex
+                    filename = fullfile(path, file);
+                    [json, ~, ~] = encodeJSON(plot_element.get('EL'));
+                    fid = fopen(filename, 'w');
+                    fprintf(fid, json);
+                    fclose(fid);
+                end
+            end
+        end
     end
 end

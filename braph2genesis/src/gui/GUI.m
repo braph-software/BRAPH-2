@@ -84,8 +84,9 @@ init_filename()
     end
 
 %% Plot Element
-pl = plot();
-    function pl = plot()
+pl = [];
+plot()
+    function plot()
         if isgraphics(el_panel, 'uipanel')
             delete(el_panel)
         end
@@ -140,11 +141,11 @@ menu()
         
         ui_menu_import = uimenu(f, ...
             'Label', 'Import', ...
-            'Callback', {@cb_refresh});
+            'Callback', {@cb_refresh_menus});
         
         ui_menu_export = uimenu(f, ...
             'Label', 'Export', ...
-            'Callback', {@cb_refresh});
+            'Callback', {@cb_refresh_menus});
         
         ui_menu_personalize = uimenu(f, 'Label', 'Personalize');
         uimenu(ui_menu_personalize, ...
@@ -158,19 +159,6 @@ menu()
         uimenu(ui_menu_about, ...
             'Label', 'About ...', ...
             'Callback', {@cb_about})
-    end
-    function sub_menus()
-        imp_sub_menus = get(ui_menu_import, 'Children');
-        for i = 1:length(imp_sub_menus)
-            delete(imp_sub_menus(i));
-        end
-        eval([el.getClass() '.getGUIMenuImport(el, ui_menu_import, pl)']);
-        
-        exp_sub_menus = get(ui_menu_export, 'Children');
-        for i = 1:length(exp_sub_menus)
-            delete(exp_sub_menus(i));
-        end
-        eval([el.getClass() '.getGUIMenuExport(el, ui_menu_export, pl)']);
     end
     function cb_open(~, ~)
         % select file
@@ -210,9 +198,6 @@ menu()
     end
     function cb_about(~, ~)
         BRAPH2.about()
-    end
-    function cb_refresh(~,~)
-        sub_menus()
     end
     function cb_layout(~, ~)
         if isgraphics(f_layout, 'figure')
@@ -320,6 +305,19 @@ menu()
         function cb_cancel_edit(~, ~)
             close(f_layout)
         end
+    end
+    function cb_refresh_menus(~,~)
+        im_menus = get(ui_menu_import, 'Children');
+        for i = 1:1:length(im_menus)
+            delete(im_menus(i));
+        end
+        eval([el.getClass() '.getGUIMenuImport(el, ui_menu_import, pl)']);
+        
+        ex_menus = get(ui_menu_export, 'Children');
+        for i = 1:length(ex_menus)
+            delete(ex_menus(i));
+        end
+        eval([el.getClass() '.getGUIMenuExport(el, ui_menu_export, pl)']);
     end
 
 %% Toolbar
