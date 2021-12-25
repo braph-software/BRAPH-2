@@ -26,9 +26,10 @@ classdef BRAPH2
     %  BUG_JSON     - bug in JSON encoding/deconding
     %  BUG_ERR      - bug in the handling of errors
     %
-% % %     % Properties (Constant) - BRAPH2 GUI constants:
-% % %     %  FONTUNITS    - sets the units of the font
-% % %     %  FONTSIZE     - sets the size of the font
+    % Properties (Constant) - BRAPH2 GUI constants:
+    %  FONTUNITS    - sets the units of the font
+    %  FONTSIZE     - sets the size of the font
+    %
     % Methods (Static) - BRAPH2 info panels:
     %  about        - provides information about BRAPH2
     %  license      - provides information about the license of BRAPH2
@@ -57,10 +58,10 @@ classdef BRAPH2
         BUG_JSON = 'BugJSON' % bug in JSON encoding/deconding
         BUG_ERR = 'BugErr' % bug in the handling of errors
     end
-% % %     properties (Constant) % BRAPH2 GUI constants
-% % %         FONTUNITS = 'normalized';
-% % %         FONTSIZE = 0.5;
-% % %     end
+    properties (Constant) % BRAPH2 GUI constants
+        FONTUNITS = 'normalized';
+        FONTSIZE = 0.5;
+    end
     methods (Static)
         function about()
             %ABOUT provides information about BRAPH2.
