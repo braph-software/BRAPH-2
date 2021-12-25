@@ -65,14 +65,14 @@ NOTES (metadata, string) are some specific notes about the brain atlas.
 BR_DICT (data, idict) contains the brain regions of the brain atlas.
 %%%% ¡settings!
 'BrainRegion'
-%%%% ¡gui!
+%%%% ¡gui__!
 % % % pl = PPBrainAtlasIDict('EL', ba, 'PROP', BrainAtlas.BR_DICT, varargin{:});
 
 %%% ¡prop!
 SURF (metadata, item) contains the brain surface of the brain atlas.
 %%%% ¡settings!
 'BrainSurface'
-%%%% ¡gui!
+%%%% ¡gui__!
 % % % pl = PPBrainAtlasSurf('EL', ba, 'PROP', BrainAtlas.SURF, varargin{:});
 
 %% ¡tests!

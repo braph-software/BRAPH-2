@@ -1,12 +1,12 @@
-function [pl_out, f_fig] = GUI(el, varargin)
+function [pl_out, f_out] = GUI(el, varargin)
 %GUI creates and displays GUI for an element.
 %
 % GUI(EL) creates and displays GUI for element EL.
 %
 % GUI(EL, 'CloseRequest', CLOSE_REQUEST, 'Name', NAME, 'Position',
-%  POSITION, 'BackgroundColor', BACKGROUNDCOLOR) sets the GUI close request,
-%  name, position, and background color. All these settings are optional
-%  and can be in any order.
+%  POSITION, 'BackgroundColor', BACKGROUNDCOLOR, 'FileName', FILENAME) sets
+%  the GUI close request, name, position, background color, and filename.
+%  All these settings are optional and can be in any order.
 %
 % PL = GUI(EL) returns the PlotElement pointer.
 %
@@ -27,6 +27,8 @@ position = get_from_varargin([.02 .1 .30 .80], 'Position', varargin);
 
 bkgcolor = get_from_varargin([.98 .95 .95], 'BackgroundColor', varargin);
 
+filename = get_from_varargin('', 'FileName', varargin);
+
 %% Handles
 el_panel = []; % Element panel
 f_layout = []; % Figure with panel to manage layout
@@ -45,7 +47,6 @@ f = init();
             'DockControls', 'off', ...
             'Color', bkgcolor ...
             );
-        
         set_braph2_icon(f)
         
         if close_request
@@ -65,6 +66,19 @@ f = init();
         if ~isempty(f_layout) && isgraphics(f_layout)
             close(f_layout)
         end
+    end
+
+%% Text File Name
+ui_text_filename = uicontrol('Parent', f, 'Style','text');
+init_filename()
+    function init_filename()
+        set(ui_text_filename, ...
+            'Units', 'character', ...
+            'HorizontalAlignment', 'left', ...
+            'String', filename)
+    end
+    function update_filename()
+        set(ui_text_filename, 'String', filename)
     end
 
 %% Plot Element
@@ -90,18 +104,10 @@ pl = plot();
         
         pl = el.getPlotElement();
         pl.draw('Parent', el_panel);
-    end
-
-%% Text File Name
-ui_text_filename = uicontrol('Parent', f, 'Style','text');
-init_filename()
-    function init_filename()
-        set(ui_text_filename, ...
-            'Units', 'character', ...
-            'HorizontalAlignment', 'left')
-    end
-    function update_filename(filename)
-        set(ui_text_filename, 'String', filename)
+        
+        update_filename()
+        
+        resize()
     end
 
 %% Menu
@@ -171,16 +177,17 @@ menu()
             if isa(tmp.el, el.getClass())
                 el = tmp.el;
                 plot();
-                update_filename(filename);
+            else
+                GUI(tmp.el, 'FileName', filename)
             end
         end
     end
     function cb_save(~, ~)
-        fn = get(ui_text_filename, 'String');
-        if isempty(fn)
-            cb_saveas();
+        if isfile(filename)
+            build = BRAPH2.BUILD;
+            save(filename, 'el', 'build');
         else
-            save(fn, 'el');
+            cb_saveas();
         end
     end
     function cb_saveas(~, ~)
@@ -191,7 +198,7 @@ menu()
             filename = fullfile(path, file);
             build = BRAPH2.BUILD;
             save(filename, 'el', 'build');
-            update_filename(filename);
+            update_filename();
         end
     end
     function cb_license(~, ~)
@@ -343,6 +350,7 @@ toolbar()
         % Copy
         
         % Clone
+        
     end
 
 %% Show GUI
@@ -352,6 +360,6 @@ if nargout > 0
     pl_out = pl;
 end
 if nargout > 1
-    f_fig = f;
+    f_out = f;
 end
 end

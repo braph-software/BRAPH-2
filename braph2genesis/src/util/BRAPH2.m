@@ -11,9 +11,10 @@ classdef BRAPH2
     %  AUTHORS      - BRAPH2 authors
     %  COPYRIGHT    - BRAPH2 copyright
     %
-% % %     % Properties (Constant) - BRAPH2 extensions
-% % %     %  EXT_ELEMENT  - BRAPH2 element extension
-% % %     %  EXT_PIPELINE - BRAPH2 pipeline extentsion
+    % Properties (Constant) - BRAPH2 extensions
+    %  EXT_ELEMENT  - BRAPH2 element extension (*.b2e)
+    %  EXT_PIPELINE - BRAPH2 pipeline extentsion (*.braph2)
+    %  EXT_WORKSPACE - BRAPH2 workspace extenstion (*.b2)
     %
     % Properties (Constant) - BRAPH2 error codes:
     %  WRONG_INPUT  - wrong input value or format in a function
@@ -41,11 +42,11 @@ classdef BRAPH2
         AUTHORS = 'Giovanni Volpe, Emiliano Gomez Ruiz, Anna Canal Garcia, Yu-Wei Chang, Mite Mijalkov, Joana Braga Pereira, Ehsan Kakaei, Eric Westman, et al.'
         COPYRIGHT = ['Copyright 2014-' datestr(now,'yyyy')]        
     end
-% % %     properties (Constant) % BRAPH2 extensions
-% % %         EXT_ELEMENT = {'*.b2e', '*.b2e'} % BRAPH2 element extension
-% % %         EXT_PIPELINE = {'*.braph2', '*.braph2'} % BRAPH2 pipeline extentsion
-% % %         EXT_WORKSPACE = {'*.b2', '*.b2'} % BRAPH2 pipeline workspace extension
-% % %     end
+    properties (Constant) % BRAPH2 extensions
+        EXT_ELEMENT = {'*.b2e'} % BRAPH2 element extension
+        EXT_PIPELINE = {'*.braph2'} % BRAPH2 pipeline extentsion
+        EXT_WORKSPACE = {'*.b2'} % BRAPH2 workspace extension
+    end
     properties (Constant) % BRAPH2 error codes
         WRONG_INPUT = 'WrongInput' % wrong input value or format in a function
         WRONG_OUTPUT = 'WrongOutput' % wrong output value or format in a function
