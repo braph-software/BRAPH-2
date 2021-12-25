@@ -23,11 +23,13 @@ end
 
 close_request = get_from_varargin(true, 'CloseRequest', varargin);
 
-f_position = get_from_varargin([.02 .1 .30 .80], 'Position', varargin);
+position = get_from_varargin([.02 .1 .30 .80], 'Position', varargin);
 
-BKGCOLOR = get_from_varargin([.98 .95 .95], 'BackgroundColor', varargin);
+bkgcolor = get_from_varargin([.98 .95 .95], 'BackgroundColor', varargin);
 
-p_f = [];
+%% Handles
+el_panel = []; % Element panel
+f_layout = []; % Figure with panel to manage layout
 
 %% Initialize GUI
 f = init();
@@ -37,11 +39,11 @@ f = init();
             'NumberTitle', 'off', ...
             'Name', [name ' - ' BRAPH2.STR], ...
             'Units', 'normalized', ...
-            'Position', f_position, ...
+            'Position', position, ...
             'Units', 'character', ...
             'MenuBar', 'none', ...
             'DockControls', 'off', ...
-            'Color', BKGCOLOR ...
+            'Color', bkgcolor ...
             );
         
         set_braph2_icon(f)
@@ -60,14 +62,18 @@ f = init();
             case 'No'
                 return
         end
-        if ~isempty(p_f) && isgraphics(p_f)
-            close(p_f)
+        if ~isempty(f_layout) && isgraphics(f_layout)
+            close(f_layout)
         end
     end
 
 %% Plot Element
 pl = plot();
     function pl = plot()
+        if isgraphics(el_panel, 'uipanel')
+            delete(el_panel)
+        end
+        
         el_panel = uipanel( ...
             'Parent', f, ...
             'BorderType', 'none' ...
@@ -133,7 +139,7 @@ menu()
         ui_menu_personalize = uimenu(f, 'Label', 'Personalize');
         uimenu(ui_menu_personalize, ...
             'Label', 'Layout ...', ...
-            'Callback', {@cb_personalize});
+            'Callback', {@cb_layout});
         
         ui_menu_about = uimenu(f, 'Label', 'About');
         uimenu(ui_menu_about, ...
@@ -189,185 +195,119 @@ menu()
         end
     end
     function cb_license(~, ~)
-        BRAPH2_LICENSE()
+        BRAPH2.license()
     end
     function cb_about(~, ~)
-        BRAPH2_ABOUT();
+        BRAPH2.about()
     end
     function cb_refresh(~,~)
         sub_menus()
     end
-    function cb_personalize(~, ~)
-        x2 = f_position(1) + f_position(3);
-        h2 = f_position(4)/3;
-        y2 = f_position(2)+f_position(4)-h2+.06;
-        w2 = f_position(3);
+    function cb_layout(~, ~)
+        if isgraphics(f_layout, 'figure')
+            delete(f_layout)
+        end
         
-        p_f = figure( ...
+        f_layout = figure( ...
             'Visible', 'off', ...
             'NumberTitle', 'off', ...
-            'Name', ['Properties - ' BRAPH2.STR], ...
-            'Units', 'normalized', ...
-            'Position', [x2 y2 w2 h2], ...
+            'Name', ['Layout ' el.getClass() ' - ' BRAPH2.STR], ...
+            'Units', get(f, 'Units'), ...
+            'Position', [Plot.x0(f)+Plot.w(f) Plot.y0(f)+Plot.h(f)*2/3 Plot.w(f) Plot.h(f)/3], ...
             'Units', 'character', ...
             'MenuBar', 'none', ...
             'DockControls', 'off', ...
-            'Color', [.98 .95 .95] ...
+            'Color', get(f, 'Color') ...
             );
-        
-        set_braph2_icon(p_f);
-        edit_table = uitable('Parent', p_f, ...
+        set_braph2_icon(f_layout);
+
+        edit_table = uitable('Parent', f_layout, ...
             'Units', 'normalized', ...
             'Position', [.02 .2 .9 .7], ...
-            'ColumnName', {'Show', 'Order', 'Property', 'Category', 'Format', 'Tag'}, ...
+            'ColumnName', {'Show', 'Order', 'Title', 'Property', 'Category', 'Format'}, ...
             'ColumnFormat', {'logical', 'char', 'char', 'char', 'char', 'char'}, ...
-            'ColumnEditable', [true true false false false true], ...
+            'ColumnEditable', [true true true false false false], ...
             'CellEditCallback', {@cb_edit_tb} ...
             );
-        save_edit_btn = uicontrol('Parent', p_f, ...
+        save_edit_btn = uicontrol('Parent', f_layout, ...
             'Units', 'normalized', ...
             'Position', [.49 .02 .24 .1], ...
             'String', 'Save', ...
             'Callback', {@cb_save_edit} ...
             );
-        cancel_edit_btn =  uicontrol('Parent', p_f, ...
+        cancel_edit_btn =  uicontrol('Parent', f_layout, ...
             'Units', 'normalized', ...
             'Position', [.74 .02 .24 .1], ...
             'String', 'Cancel', ...
             'Callback', {@cb_cancel_edit} ...
             );
-        
-        % see if there is a saved edit
-        gui_files_dir = [fileparts(which('braph2.m')) filesep 'src' filesep 'gui' filesep 'prop_order' filesep];
-        gui_files = dir(gui_files_dir); % get the folder contents
-        gui_files = gui_files([gui_files(:).isdir] ~= 1); % remove all folders (isdir property is 0)
-        gui_files = gui_files(~ismember({gui_files(:).name}, {'.', '..'})); % remove '.' and '..'
-        gui_files = {gui_files.name}; % convert to cell;
-        gui_files = cellfun(@(x) erase(x, '.mat'), gui_files, 'UniformOutput', false);
-        
-        if contains(el.getClass(), gui_files)
-            gui_modified_file = load([gui_files_dir el.getClass()]);
-            load_rule_array = gui_modified_file.visibility;
-            load_order_array = gui_modified_file.order;
-            load_titles = gui_modified_file.title;
-        end
-        
-        plist = el.getProps();
-        data = cell(length(plist), 6);
-        for mi = 1:1:length(plist)
-            if exist('load_rule_array')
-                data{mi, 1} = load_rule_array(mi);
-                data{mi, 2} = load_order_array(mi);
-                data{mi, 6} = load_titles{mi};
-            else
-                data{mi, 1} = true;
-                data{mi, 2} = plist(mi);
-                data{mi, 6} = el.getPropTag(plist(mi));
-            end
-            data{mi, 3} = el.getPropTag(plist(mi));
-            data{mi, 4} = el.getPropCategory(plist(mi));
-            data{mi, 5} = el.getPropFormat(plist(mi));
-            
-            
-        end
+
+        [order, title, visible] = load_layout(el);
+        VISIBLE = 1;
+        ORDER = 2;
+        TITLE = 3;
+        TAG = 4;
+        CATEGORY = 5;
+        FORMAT = 6;
+        data = cell(el.getPropNumber(), 6);
+        for prop = 1:1:el.getPropNumber()
+            data{prop, VISIBLE} = visible(prop);
+            data{prop, ORDER} = order(prop);
+            data{prop, TITLE} = title{prop};
+            data{prop, TAG} = upper(el.getPropTag(prop));
+            data{prop, CATEGORY} = el.getPropCategory(prop);
+            data{prop, FORMAT} = el.getPropFormat(prop);
+        end        
         set(edit_table, 'Data', data);
-        set(edit_table, 'ColumnWidth', {'auto' 'auto' 'auto' 'auto' 'auto' 'auto'})
-        set(p_f, 'Visible', 'on');
-        data_before_operation = [];
+
+        set(f_layout, 'Visible', 'on');
         
         function cb_edit_tb(~, event)
-            i = event.Indices(1);
+            prop = event.Indices(1);
             col = event.Indices(2);
             newdata = event.NewData;
-            data_now = get(edit_table, 'Data');
-            if isempty(data_before_operation)
-                data_before_operation = data;
-            end
-            switch col
-                case 1
-                    if newdata == 1
-                        % fill with last position
-                        last_order = cell2mat(data_now(:, 2));
-                        continue_order = [1:length(last_order)];
-                        missing_values = setdiff(continue_order, last_order);
-                        data_now(i, 2) = {min(missing_values)};
-                        set(edit_table, 'Data', data_now);
-                        data_before_operation = data_now;
-                    else
-                        % fill with NaN
-                        continue_order = [1:length(data_now(:, 2))];
-                        for j = 1:length(data_now(:, 2))
-                            if data_now{j, 1}
-                                
-                                tmp_choice = min(continue_order);
-                                data_now(j, 2) = {tmp_choice};
-                                index = find(continue_order==tmp_choice);
-                                continue_order(index) = nan;
-                            elseif j == i
-                                data_now(i, 2) = {nan};
-                            else
-                                
-                            end
-                            
-                        end
-                        set(edit_table, 'Data', data_now);
-                        data_before_operation = data_now;
+            data = get(edit_table, 'Data');
+
+            if col == VISIBLE
+                if newdata == true
+                    data{prop, ORDER} = max(cell2mat(data(:, ORDER))) + 1;
+                else % newdata == false
+                    for i = data{prop, ORDER} + 1:1:max(cell2mat(data(:, ORDER)))
+                        data{cell2mat(data(:, ORDER)) == i, ORDER} = i - 1;
                     end
-                case 2
-                    if isequalwithequalnans(newdata, nan) %#ok<DISEQN>
-                        data_now(i, 1) = {false};
-                        continue_order = [1:length(data_now(:, 2))];
-                        for j = 1:length(data_now(:, 2))
-                            if data_now{j, 1}
-                                tmp_choice = min(continue_order);
-                                data_now(j, 2) = {tmp_choice};
-                                index = find(continue_order==tmp_choice);
-                                continue_order(index) = nan;
-                            elseif j == i
-                                data_now(i, 2) = {nan};
-                            else
-                                
-                            end
-                            
-                        end
-                        set(edit_table, 'Data', data_now);
-                        data_before_operation = data_now;
-                    elseif newdata > max(cell2mat(data_before_operation(:,2))) || newdata < 1
-                        set(edit_table, 'Data', data_before_operation)
-                    else % just order
-                        continue_order = [1:length(data_now(:, 2))];
-                        for j = 1:length(data_now(:, 2))
-                            if data_now{j, 1} && j ~= i && j>i
-                                tmp_choice = min(continue_order);
-                                data_now(j, 2) = {tmp_choice};
-                                index = find(continue_order==tmp_choice);
-                                continue_order(index) = nan;
-                            elseif j == i
-                                data_now(i, 2) = {newdata};
-                                tmp_removal = cell2mat(data_now(1:i,2));
-                                indexes_of_remov = ismember(continue_order, tmp_removal);
-                                continue_order(indexes_of_remov) = nan;
-                            else % is nan
-                            end
-                            
-                        end
-                        set(edit_table, 'Data', data_now);
-                        data_before_operation = data_now;
-                        
-                    end
+                    data{prop, ORDER} = NaN;
+                end
             end
+
+            if col == ORDER
+                if isnan(newdata)
+                    data{prop, VISIBLE} = false;
+                else
+                    data{prop, VISIBLE} = true;
+                end
+                
+                order = cell2mat(data(:, ORDER)) + .001;
+                order(prop) = newdata;
+                for i = 1:1:numel(order) - sum(isnan(order))
+                    min_order_index = find(order == min(order));
+                    data{min_order_index, ORDER} = i;
+                    order(min_order_index) = NaN;
+                end
+            end
+
+            set(edit_table, 'Data', data);
         end
         function cb_save_edit(~, ~)
-            edited_data = get(edit_table, 'Data');
-            visibility = [edited_data{:, 1}];
-            order = [edited_data{:, 2}];
-            title = edited_data(:, 6);
-            save([gui_files_dir el.getClass() '.mat'], 'visibility', 'order', 'title');
+            data = get(edit_table, 'Data');
+            order = cell2mat(data(:, 2))';
+            title = data(:, 3); title = title';
+            save_layout(el, order, title)
+
             pl.set('PP_DICT', NoValue.getNoValue());
             plot();
         end
         function cb_cancel_edit(~, ~)
-            close(p_f)
+            close(f_layout)
         end
     end
 
@@ -401,6 +341,7 @@ toolbar()
             'ClickedCallback', {@cb_save})
         
         % Copy
+        
         % Clone
     end
 

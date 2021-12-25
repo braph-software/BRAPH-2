@@ -185,7 +185,7 @@ end
 function redraw(pl)
     %RESIZE redraws the element graphical panel.
     %
-    % RESIZE(PL) redraws (includign resizing) the plot PL.
+    % RESIZE(PL) redraws (including resizing) the plot PL.
     %
     % See also draw, update, slide.
 
