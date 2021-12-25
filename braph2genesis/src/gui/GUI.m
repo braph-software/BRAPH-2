@@ -1,4 +1,4 @@
-function [pl_out, f_out] = GUI(el, varargin)
+function f_out = GUI(el, varargin)
 %GUI creates and displays GUI for an element.
 %
 % GUI(EL) creates and displays GUI for element EL.
@@ -8,11 +8,13 @@ function [pl_out, f_out] = GUI(el, varargin)
 %  the GUI close request, name, position, background color, and filename.
 %  All these settings are optional and can be in any order.
 %
-% PL = GUI(EL) returns the PlotElement pointer.
+% F = GUI(EL) returns also the handle of the figure.
 %
-% [PL, F] = GUI(EL) returns also the handle of the figure.
+% The PlotElement and Element can be retrieved as 
+%  pl = get(F, 'UserData')
+%  el = pl.get('EL')
 %
-% See also Element, PlotElement().
+% See also Element, PlotElement.
 
 %% Parameters
 if el.existsTag('ID')
@@ -105,9 +107,11 @@ pl = plot();
         pl = el.getPlotElement();
         pl.draw('Parent', el_panel);
         
+        set(f, 'UserData', pl) % handle to retrieve pl and el
+        
         update_filename()
         
-        resize()
+        resize() % to ensure that filename appears
     end
 
 %% Menu
@@ -345,21 +349,13 @@ toolbar()
         ui_toolbar_save = findall(ui_toolbar, 'Tag', 'Standard.SaveFigure');
         set(ui_toolbar_save, ...
             'TooltipString', ['Save ' el.getName()], ...
-            'ClickedCallback', {@cb_save})
-        
-        % Copy
-        
-        % Clone
-        
+            'ClickedCallback', {@cb_save})        
     end
 
 %% Show GUI
 set(f, 'Visible', 'on')
 
 if nargout > 0
-    pl_out = pl;
-end
-if nargout > 1
     f_out = f;
 end
 end
