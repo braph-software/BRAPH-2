@@ -59,8 +59,8 @@ classdef BRAPH2
         BUG_ERR = 'BugErr' % bug in the handling of errors
     end
     properties (Constant) % BRAPH2 GUI constants
-        FONTUNITS = 'normalized';
-        FONTSIZE = 0.5;
+        FONTUNITS = 'points';
+        FONTSIZE = 12;
     end
     methods (Static)
         function about()
