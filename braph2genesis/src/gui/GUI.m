@@ -106,10 +106,14 @@ plot()
             set(ui_text_filename, 'Position', [0 0 Plot.w(f) 1])
         end
         
-        pl = el.getPlotElement(); % IMPORTANT: el should not be ised anymore, use el = pl.get('EL') instead
+        if isempty(pl) % executed when called the first time
+            pl = el.getPlotElement();
+        else % executed subsequent times
+            el = pl.get('EL');
+        end
         pl.draw('Parent', el_panel);
         
-        set(f, 'UserData', pl) % handle to retrieve pl and el = pl.get('EL')
+        set(f, 'UserData', pl) % handle to retrieve pl and el
         
         update_filename()
         
@@ -167,8 +171,8 @@ menu()
         if filterindex
             filename = fullfile(path, file);
             tmp = load(filename, '-mat', 'el');
-            if isa(tmp.el, pl.get('EL').getClass())
-                pl.set('EL', tmp.el);
+            if isa(tmp.el, el.getClass())
+                el = tmp.el;
                 plot();
             else
                 GUI(tmp.el, 'FileName', filename)
@@ -178,7 +182,6 @@ menu()
     function cb_save(~, ~)
         if isfile(filename)
             build = BRAPH2.BUILD;
-            el = pl.get('EL');
             save(filename, 'el', 'build');
         else
             cb_saveas();
@@ -191,7 +194,6 @@ menu()
         if filterindex
             filename = fullfile(path, file);
             build = BRAPH2.BUILD;
-            el = pl.get('EL');
             save(filename, 'el', 'build');
             update_filename();
         end
@@ -210,7 +212,7 @@ menu()
         f_layout = figure( ...
             'Visible', 'off', ...
             'NumberTitle', 'off', ...
-            'Name', ['Layout ' pl.get('EL').getClass() ' - ' BRAPH2.STR], ...
+            'Name', ['Layout ' el.getClass() ' - ' BRAPH2.STR], ...
             'Units', get(f, 'Units'), ...
             'Position', [Plot.x0(f)+Plot.w(f) Plot.y0(f)+Plot.h(f)*2/3 Plot.w(f) Plot.h(f)/3], ...
             'Units', 'character', ...
@@ -241,21 +243,21 @@ menu()
             'Callback', {@cb_cancel_edit} ...
             );
 
-        [order, title, visible] = load_layout(pl.get('EL'));
+        [order, title, visible] = load_layout(el);
         VISIBLE = 1;
         ORDER = 2;
         TITLE = 3;
         TAG = 4;
         CATEGORY = 5;
         FORMAT = 6;
-        data = cell(pl.get('EL').getPropNumber(), 6);
-        for prop = 1:1:pl.get('EL').getPropNumber()
+        data = cell(el.getPropNumber(), 6);
+        for prop = 1:1:el.getPropNumber()
             data{prop, VISIBLE} = visible(prop);
             data{prop, ORDER} = order(prop);
             data{prop, TITLE} = title{prop};
-            data{prop, TAG} = upper(pl.get('EL').getPropTag(prop));
-            data{prop, CATEGORY} = pl.get('EL').getPropCategory(prop);
-            data{prop, FORMAT} = pl.get('EL').getPropFormat(prop);
+            data{prop, TAG} = upper(el.getPropTag(prop));
+            data{prop, CATEGORY} = el.getPropCategory(prop);
+            data{prop, FORMAT} = el.getPropFormat(prop);
         end        
         set(edit_table, 'Data', data);
 
@@ -300,7 +302,7 @@ menu()
             data = get(edit_table, 'Data');
             order = cell2mat(data(:, 2))';
             title = data(:, 3); title = title';
-            save_layout(pl.get('EL'), order, title)
+            save_layout(el, order, title)
 
             pl.set('PP_DICT', NoValue.getNoValue());
             plot();
@@ -314,13 +316,13 @@ menu()
         for i = 1:1:length(im_menus)
             delete(im_menus(i));
         end
-        eval([pl.get('EL').getClass() '.getGUIMenuImport(pl.get(''EL''), ui_menu_import, pl)']);
+        eval([el.getClass() '.getGUIMenuImport(el, ui_menu_import, pl)']);
         
         ex_menus = get(ui_menu_export, 'Children');
         for i = 1:length(ex_menus)
             delete(ex_menus(i));
         end
-        eval([pl.get('EL').getClass() '.getGUIMenuExport(pl.get(''EL''), ui_menu_export, pl)']);
+        eval([el.getClass() '.getGUIMenuExport(el, ui_menu_export, pl)']);
     end
 
 %% Toolbar
@@ -344,12 +346,12 @@ toolbar()
         % Open
         ui_toolbar_open = findall(ui_toolbar, 'Tag', 'Standard.FileOpen');
         set(ui_toolbar_open, ...
-            'TooltipString', ['Open ' pl.get('EL').getName()], ...
+            'TooltipString', ['Open ' el.getName()], ...
             'ClickedCallback', {@cb_open})
         % Save
         ui_toolbar_save = findall(ui_toolbar, 'Tag', 'Standard.SaveFigure');
         set(ui_toolbar_save, ...
-            'TooltipString', ['Save ' pl.get('EL').getName()], ...
+            'TooltipString', ['Save ' el.getName()], ...
             'ClickedCallback', {@cb_save})        
     end
 
