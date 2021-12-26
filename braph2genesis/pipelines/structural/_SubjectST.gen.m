@@ -21,8 +21,10 @@ function cb_importer_TXT(~, ~)
         );
     im.uigetfile();
     try
-        pl.set('EL', im.get('GR')); 
-        pl.reinit();
+        if isfile(im.get('FILE'))
+            pl.set('EL', im.get('GR')); 
+            pl.reinit();
+        end
     catch e
         warndlg(['Please, select a valid input Group of SubjectSts in TXT format. ' e.message], 'Warning');
     end
@@ -38,8 +40,10 @@ function cb_importer_XLS(~, ~)
         );
     im.uigetfile();
     try
-        pl.set('EL', im.get('GR')); 
-        pl.reinit();
+        if isfile(im.get('FILE'))
+            pl.set('EL', im.get('GR')); 
+            pl.reinit();
+        end
     catch e
         warndlg(['Please, select a valid input Group of SubjectSTs in XLS format. ' e.message], 'Warning');
     end
@@ -78,7 +82,9 @@ function cb_exporter_TXT(~, ~)
         'WAITBAR', true ...
         );
     ex.uiputfile()
-    ex.get('SAVE');
+    if ~strcmp(ex.get('FILE'), ExporterGroupSubjectST_TXT.getPropDefault('FILE'))
+        ex.get('SAVE');
+    end
 end
 
 uimenu(ui_menu_export, ...
@@ -91,7 +97,9 @@ function cb_exporter_XLS(~, ~)
         'WAITBAR', true ...
         );
     ex.uiputfile()
-    ex.get('SAVE');
+    if ~strcmp(ex.get('FILE'), ExporterGroupSubjectST_XLS.getPropDefault('FILE'))
+        ex.get('SAVE');
+    end
 end
 % % % calling_class = pl.get('El');
 % % % if isa(calling_class, 'Group')

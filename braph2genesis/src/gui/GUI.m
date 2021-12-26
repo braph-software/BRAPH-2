@@ -106,7 +106,11 @@ plot()
             set(ui_text_filename, 'Position', [0 0 Plot.w(f) 1])
         end
         
-        pl = el.getPlotElement();
+        if isempty(pl) % executed when called the first time
+            pl = el.getPlotElement();
+        else % executed subsequent times
+            el = pl.get('EL');
+        end
         pl.draw('Parent', el_panel);
         
         set(f, 'UserData', pl) % handle to retrieve pl and el

@@ -24,8 +24,10 @@ function cb_importer_TXT(~, ~)
         );
     im.uigetfile();
     try
-        pl.set('EL', im.get('BA')); 
-        pl.reinit();
+        if isfile(im.get('FILE'))
+            pl.set('EL', im.get('BA')); 
+            pl.reinit();
+        end
     catch e
         warndlg(['Please, select a valid input BrainAtlas in TXT format. ' e.message], 'Warning');
     end
@@ -41,8 +43,10 @@ function cb_importer_XLS(~, ~)
         );
     im.uigetfile();
     try
-        pl.set('EL', im.get('BA')); 
-        pl.reinit();
+        if isfile(im.get('FILE'))
+            pl.set('EL', im.get('BA')); 
+            pl.reinit();
+        end
     catch e
         warndlg(['Please, select a valid input BrainAtlas in XLS format. ' e.message], 'Warning');
     end
@@ -59,7 +63,9 @@ function cb_exporter_TXT(~, ~)
         'WAITBAR', true ...
         );
     ex.uiputfile()
-    ex.get('SAVE');
+    if ~strcmp(ex.get('FILE'), ExporterBrainAtlasTXT.getPropDefault('FILE'))
+        ex.get('SAVE');
+    end
 end
 
 uimenu(ui_menu_export, ...
@@ -72,7 +78,9 @@ function cb_exporter_XLS(~, ~)
         'WAITBAR', true ...
         );
     ex.uiputfile()
-    ex.get('SAVE');
+    if ~strcmp(ex.get('FILE'), ExporterBrainAtlasXLS.getPropDefault('FILE'))
+        ex.get('SAVE');
+    end
 end
 
 %% ¡props!
