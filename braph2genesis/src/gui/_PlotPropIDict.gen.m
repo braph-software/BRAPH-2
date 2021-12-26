@@ -54,7 +54,7 @@ function h_panel = draw(pl, varargin)
         if isa(value, 'NoValue')
             GUI(el.getPropDefault(prop))
         else
-            GUI(el.get(prop).tostring())
+            GUI(el.get(prop))
         end
     end
 
