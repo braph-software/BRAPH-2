@@ -46,7 +46,7 @@ function h_panel = draw(pl, varargin)
     end
 
     % callback
-    function cb_pushbutton_value(src, ~)
+    function cb_pushbutton_value(~, ~)
         el = pl.get('EL');
         pl.update()
         
