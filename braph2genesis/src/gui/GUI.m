@@ -5,7 +5,8 @@ function f_out = GUI(el, varargin)
 %
 % GUI(EL, 'CloseRequest', CLOSE_REQUEST, 'Name', NAME, 'Position',
 %  POSITION, 'BackgroundColor', BACKGROUNDCOLOR, 'FileName', FILENAME) sets
-%  the GUI close request, name, position, background color, and filename.
+%  the GUI close request, name, position (normalized units), background
+%  color, and filename. 
 %  All these settings are optional and can be in any order.
 %
 % F = GUI(EL) returns also the handle of the figure.

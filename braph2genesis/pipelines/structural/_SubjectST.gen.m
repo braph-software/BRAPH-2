@@ -128,7 +128,7 @@ if check
 else   
     msg = ['ST must be a column vector with the same number of element as the brain regions (' int2str(br_number) ').'];
 end
-%%%% ¡gui!
+%%%% ¡gui__!
 % % % pl = PPSubjectData('EL', sub, 'PROP', SubjectST.ST, varargin{:});
 
 %%% ¡prop!
