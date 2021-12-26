@@ -271,7 +271,11 @@ menu()
 
             if col == VISIBLE
                 if newdata == true
-                    data{prop, ORDER} = max(cell2mat(data(:, ORDER))) + 1;
+                    if any(~isnan(cell2mat(data(:, ORDER))))
+                        data{prop, ORDER} = max(cell2mat(data(:, ORDER))) + 1;
+                    else % all NaN (edge case)
+                        data{prop, ORDER} = 1;
+                    end
                 else % newdata == false
                     for i = data{prop, ORDER} + 1:1:max(cell2mat(data(:, ORDER)))
                         data{cell2mat(data(:, ORDER)) == i, ORDER} = i - 1;
