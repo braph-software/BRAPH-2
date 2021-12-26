@@ -9,8 +9,42 @@ For example, structural data can be structural MRI.
 Element, Subject
 
 %%% ¡gui!
-% % % %%%% ¡menu_importer!
-% % % calling_class = plot_element.get('El');
+
+%%%% ¡menu_importer!
+uimenu(ui_menu_import, ...
+    'Label', 'Import TXT ...', ...
+    'Callback', {@cb_importer_TXT});
+function cb_importer_TXT(~, ~)
+    im = ImporterGroupSubjectST_TXT( ...
+        'ID', 'Import Group of SubjectSts from TXT', ...
+        'WAITBAR', true ...
+        );
+    im.uigetfile();
+    try
+        pl.set('EL', im.get('GR')); 
+        pl.reinit();
+    catch e
+        warndlg(['Please, select a valid input Group of SubjectSts in TXT format. ' e.message], 'Warning');
+    end
+end
+
+uimenu(ui_menu_import, ...
+    'Label', 'Import XLS ...', ...
+    'Callback', {@cb_importer_XLS});
+function cb_importer_XLS(~, ~)
+    im = ImporterGroupSubjectST_XLS( ...
+        'ID', 'Import Group of SubjectSts from XLS', ...
+        'WAITBAR', true ...
+        );
+    im.uigetfile();
+    try
+        pl.set('EL', im.get('GR')); 
+        pl.reinit();
+    catch e
+        warndlg(['Please, select a valid input Group of SubjectSTs in XLS format. ' e.message], 'Warning');
+    end
+end
+% % % calling_class = pl.get('El');
 % % % if isa(calling_class, 'Group')
 % % %     importers = {'ImporterGroupSubjectSTTXT', 'ImporterGroupSubjectSTXLS'};
 % % %     for k = 1:length(importers)
@@ -20,7 +54,6 @@ Element, Subject
 % % %             'Callback', {@cb_importers});
 % % %     end
 % % % end
-% % % 
 % % % function cb_importers(src, ~)
 % % %     src_name = erase(src.Text, ' ...');
 % % %     imp_el = eval([src_name '()']);          
@@ -33,9 +66,34 @@ Element, Subject
 % % %         warndlg(['Please select a valid input. ' e.message], 'Warning');
 % % %     end    
 % % % end
-% % % 
-% % % %%%% ¡menu_exporter!
-% % % calling_class = plot_element.get('El');
+
+%%%% ¡menu_exporter!
+uimenu(ui_menu_export, ...
+    'Label', 'Export TXT ...', ...
+    'Callback', {@cb_exporter_TXT});
+function cb_exporter_TXT(~, ~)
+    ex = ExporterGroupSubjectST_TXT( ...
+        'ID', 'Export Brain Group of SubjectSTs to TXT', ...
+        'BA', el.copy(), ...
+        'WAITBAR', true ...
+        );
+    ex.uiputfile()
+    ex.get('SAVE');
+end
+
+uimenu(ui_menu_export, ...
+    'Label', 'Export XLS ...', ...
+    'Callback', {@cb_exporter_XLS});
+function cb_exporter_XLS(~, ~)
+    ex = ExporterGroupSubjectST_XLS( ...
+        'ID', 'Export Brain Group of SubjectSTs to XLS', ...
+        'BA', el.copy(), ...
+        'WAITBAR', true ...
+        );
+    ex.uiputfile()
+    ex.get('SAVE');
+end
+% % % calling_class = pl.get('El');
 % % % if isa(calling_class, 'Group')
 % % %     exporters = {'ExporterGroupSubjectSTTXT', 'ExporterGroupSubjectSTXLS'};
 % % %     for k = 1:length(exporters)
@@ -87,16 +145,16 @@ sex (data, option) is an option containing the sex of the subject (female/male).
 
 %% ¡tests!
 
-% % % %%% ¡test!
-% % % %%%% ¡name!
-% % % GUI
-% % % %%%% ¡code!
-% % % im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('example_ST_WU')) filesep 'example data ST (MRI)' filesep 'desikan_atlas.xlsx']);
-% % % ba = im_ba.get('BA');
-% % % im_gr1 = ImporterGroupSubjectSTXLS( ...
-% % %     'FILE', [fileparts(which('example_ST_WU')) filesep 'example data ST (MRI)' filesep 'xls' filesep 'ST_group1.xlsx'], ...
-% % %     'BA', ba ...
-% % %     );
-% % % gr1 = im_gr1.get('GR');
-% % % GUI(gr1, 'CloseRequest', false)
-% % % close(gcf)
+%%% ¡test!
+%%%% ¡name!
+GUI
+%%%% ¡code!
+im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectST')) filesep 'example data ST (MRI)' filesep 'desikan_atlas.xlsx']);
+ba = im_ba.get('BA');
+im_gr1 = ImporterGroupSubjectST_XLS( ...
+    'FILE', [fileparts(which('SubjectST')) filesep 'example data ST (MRI)' filesep 'xls' filesep 'ST_group1.xlsx'], ...
+    'BA', ba ...
+    );
+gr1 = im_gr1.get('GR');
+GUI(gr1, 'CloseRequest', false)
+close(gcf)
