@@ -31,7 +31,9 @@ function h_panel = draw(pl, varargin)
 
     pl.pp = draw@PlotProp(pl, 'DeleteFcn', {@close_f_subs}, varargin{:});
         function close_f_subs(~, ~) % Note that this will prevent the settings figure from being closed, which should not be a problem because settings is not used
-            cellfun(@(x) close(x), pl.f_subs)
+            if ~isempty(pl.f_subs)
+                cellfun(@(x) close(x), pl.f_subs)
+            end
         end
         
     if isempty(pl.list_subs) || ~isgraphics(pl.list_subs, 'listbox')
