@@ -230,12 +230,10 @@ function h_panel = draw(pl, varargin)
         update_brain_surface();
     end
     function update_brain_surface()
-% % %         fig_h = get_handle_objs('figure', 'Brain Surface - ');
-% % %         fig_h_children = get(fig_h, 'Children'); 
-% % %         if ~isempty(fig_h_children)
-% % %             update_btn = fig_h_children(2);
-% % %             feval(get(update_btn, 'Callback'), update_btn, []);
-% % %         end
+        f = get(get(get(get(pl.pp, 'Parent'), 'Parent'), 'Parent'), 'Parent'); % get figure BrainAtlas
+        pe = get(f, 'UserData'); % get PlotElement BrainAtlas
+        pp_surf = pe.get(PlotElement.PP_DICT).getItem(BrainAtlas.SURF_TAG); % get PlotProp Surf
+        pp_surf.update_brain_atlas()
     end
     function checkIDict()     
         update_el()

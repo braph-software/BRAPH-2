@@ -11,6 +11,7 @@ GUI, PlotElement, PlotProp, BrainAtlas
 pp
 surf_selector_popup
 plot_brain_atlas_btn
+update_brain_atlas_btn
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
@@ -173,20 +174,20 @@ function h_panel = draw(pl, varargin)
         delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
         delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
 
-% % %         % Used to update the PlotBrainAtlas when BRDict is updated (see
-% % %         % PPBrainAtlas_BRDict)
-% % %         update_tbn = uicontrol('Style', 'pushbutton', ...
-% % %             'Parent', f_pba, ...
-% % %             'Units', 'normalized', ...
-% % %             'Visible', 'off', ...
-% % %             'String', 'Hidden button', ...
-% % %             'Position', [.01 .01 .01 .01], ...
-% % %             'Callback', {@cb_pushbutton_update} ...
-% % %             );
-% % %         function cb_pushbutton_update(~, ~)
-% % %             update_pba()
-% % %             pba.draw('Parent', f_pba);
-% % %         end
+        % Used to update the PlotBrainAtlas when BRDict is updated (see
+        % PPBrainAtlas_BRDict)
+        pl.update_brain_atlas_btn = uicontrol('Style', 'pushbutton', ...
+            'Parent', f_pba, ...
+            'Units', 'normalized', ...
+            'Visible', 'off', ...
+            'String', 'Hidden button', ...
+            'Position', [.01 .01 .01 .01], ...
+            'Callback', {@cb_update_brain_atlas} ...
+            );
+        function cb_update_brain_atlas(~, ~)
+            update_pba()
+            pba.draw('Parent', f_pba);
+        end
 
         pba.draw('Parent', f_pba)
 
@@ -225,4 +226,14 @@ function redraw(pl, varargin)
     % See also draw, update, refresh.
 
     pl.redraw@PlotProp('Height', 4, varargin{:});
+end
+function update_brain_atlas(pl)
+    %UPDATE_BRAIN_ATLAS updates the brain atlas.
+    %
+    % UPDATE_BRAIN_ATLAS(PL) updates the brain atlas. Usually used
+    %  triggered by PPBrainAtlas_BRDict.
+    %
+    % See also PPBrainAtlas_BRDict.
+    
+    feval(get(pl.update_brain_atlas_btn, 'Callback'), pl.update_brain_atlas_btn, [])
 end
