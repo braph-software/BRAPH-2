@@ -9,7 +9,7 @@ GUI, PlotElement, PlotProp, BrainAtlas
 
 %% ¡properties!
 pp
-table_value_idict
+table
 selected
 
 %% ¡methods!
@@ -36,12 +36,12 @@ function h_panel = draw(pl, varargin)
 
     pl.pp = draw@PlotProp(pl, varargin{:});
 
-    if isempty(pl.table_value_idict) || ~isgraphics(pl.table_value_idict, 'uitable')
+    if isempty(pl.table) || ~isgraphics(pl.table, 'uitable')
         % construct a data holder
         value_idict_ba = ba_idict;
 
-        pl.table_value_idict = uitable();
-        set( pl.table_value_idict, ...
+        pl.table = uitable();
+        set( pl.table, ...
             'Parent', pl.pp, ...
             'Units', 'normalized', ...
             'Position', [.02 .2 .96 .7], ...
@@ -49,7 +49,7 @@ function h_panel = draw(pl, varargin)
             'ColumnFormat', {'logical', 'char', 'char', 'numeric', 'numeric', 'numeric', 'char'}, ...
             'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
             'ColumnEditable', true, ...
-            'CellEditCallback', {@cb_table_idict_value} ...
+            'CellEditCallback', {@cb_table} ...
             );
 
         if ~isequal(value_idict_ba, NoValue)
@@ -67,8 +67,8 @@ function h_panel = draw(pl, varargin)
                 data{sub, 6} = value_idict_ba.getItem(sub).get('Z');
                 data{sub, 7} = value_idict_ba.getItem(sub).get('Notes');
             end
-            set(pl.table_value_idict, 'Data', data);
-            set(pl.table_value_idict, 'ColumnWidth', 'auto')
+            set(pl.table, 'Data', data);
+            set(pl.table, 'ColumnWidth', 'auto')
         end
     end
 
@@ -125,7 +125,7 @@ function h_panel = draw(pl, varargin)
     end
 
     % callbacks
-    function cb_table_idict_value(~, event)
+    function cb_table(~, event)
         i = event.Indices(1);
         col = event.Indices(2);
         newdata = event.NewData;
@@ -291,12 +291,11 @@ function update(pl)
             data{i, 7} = value_idict_ba.getItem(i).get('Notes');
         end
 
-
-        if isempty(pl.table_value_idict)
-            pl.table_value_idict = cell(value_idict_ba.length(), 7); % {'logical', 'char', 'char', 'numeric', 'numeric', 'numeric', 'char'})
+        if isempty(pl.table)
+            pl.table = cell(value_idict_ba.length(), 7); % {'logical', 'char', 'char', 'numeric', 'numeric', 'numeric', 'char'})
         end
 
-        set(pl.table_value_idict, ...
+        set(pl.table, ...
             'Data', data, ...
             'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)] ...
             )

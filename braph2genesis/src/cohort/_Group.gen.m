@@ -19,7 +19,7 @@ Element, Subject, IndexedDictionary
 % % % end
 eval([el.get('SUB_CLASS') '.getGUIMenuImport(el, ui_menu_import, pl)']);
 im_sub_menus = get(ui_menu_import, 'Children');
-delete(imp_sub_menus(2)); % delete one sub menu to import JSON
+delete(im_sub_menus(end)); % delete one sub menu to import JSON
 
 %%%% ¡menu_exporter!
 % % % % exp_sub_menus = get(ui_menu_export, 'Children');
@@ -27,8 +27,8 @@ delete(imp_sub_menus(2)); % delete one sub menu to import JSON
 % % % %     delete(exp_sub_menus(i));
 % % % % end
 eval([el.get('SUB_CLASS') '.getGUIMenuExport(el, ui_menu_export, pl)']);
-im_sub_menus = get(ui_menu_import, 'Children');
-delete(imp_sub_menus(2)); % delete one sub menu to export JSON
+ex_sub_menus = get(ui_menu_export, 'Children');
+delete(ex_sub_menus(end)); % delete one sub menu to export JSON
 
 %% ¡props!
 
@@ -50,8 +50,8 @@ SUB_CLASS (parameter, class) is the class of the subjects of the group.
 SUB_DICT (data, idict) is an indexed dictionary containing the subjects of the group.
 %%%% ¡settings!
 'Subject'
-%%%% ¡gui__!
-% % % pl = PPGroupSubjectsIdict('EL', gr, 'PROP', Group.SUB_DICT, varargin{:});
+%%%% ¡gui!
+pl = PPGroup_SUBDict('EL', gr, 'PROP', Group.SUB_DICT, varargin{:});
 
 %% ¡tests!
 

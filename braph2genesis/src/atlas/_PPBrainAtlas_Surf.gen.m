@@ -38,9 +38,9 @@ function h_panel = draw(pl, varargin)
     
     % deletes PlotBrainAtlas figure when the BrainAtlas GUI is closed
     set(pl.pp, ...
-        'DeleteFcn', {@close_f_settings}, ...
+        'DeleteFcn', {@close_f_pba}, ...
         varargin{:})
-    function close_f_settings(~,~)
+    function close_f_pba(~,~)
         if ~isempty(f_pba) && isgraphics(f_pba)
             close(f_pba)
         end
