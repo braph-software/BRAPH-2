@@ -7,6 +7,8 @@ The TXT file consists of 6 columns. It reads as follows:
 BrainAtlas ID (column 1), BrainAtlas LABEL (column 2),
 BrainRegions (column 3-5; coordinates x, y, z, one per column) and 
 BrainAtlas NOTES (column 6).
+It will throw an error is problems occur during the import.
+It throws an error is problems occur during the import.
 
 %%% ¡seealso!
 Element, Importer, ExporterBrainAtlasXLS.
@@ -75,7 +77,8 @@ if isfile(file)
         end
         ba.set('br_dict', idict);
     catch e
-        warndlg('Please select a valid brain atlas file.', 'Warning');
+        % warndlg('Please select a valid brain atlas file.', 'Warning');
+        rethrow(e)
     end
     
     if im.get('WAITBAR')

@@ -10,6 +10,7 @@ The first row contains the headers and each subsequent row the values for each s
 The covariates must be on the second Sheet of the same XLS/XLSX file. Sheet 2 consists of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
+It throws an error is problems occur during the import.
 
 %%% ¡seealso!
 Element, Importer, ExporterGroupSubjectST_XLS
@@ -124,7 +125,8 @@ if isfile(file)
         end
         gr.set('sub_dict', subdict);
     catch e
-        warndlg('Please select a valid group file.', 'Warning');
+        % warndlg('Please select a valid group file.', 'Warning');
+        rethrow(e)
     end
     
     if im.get('WAITBAR')
