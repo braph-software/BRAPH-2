@@ -13,19 +13,11 @@ Element, Subject, IndexedDictionary
 %%% ¡gui!
 
 %%%% ¡menu_importer!
-% % % imp_sub_menus = get(ui_menu_import, 'Children');
-% % % for i = 1:1:length(imp_sub_menus)
-% % %     delete(imp_sub_menus(i));
-% % % end
 eval([el.get('SUB_CLASS') '.getGUIMenuImport(el, ui_menu_import, pl)']);
 im_sub_menus = get(ui_menu_import, 'Children');
 delete(im_sub_menus(end)); % delete one sub menu to import JSON
 
 %%%% ¡menu_exporter!
-% % % % exp_sub_menus = get(ui_menu_export, 'Children');
-% % % % for i = 1:1:length(exp_sub_menus)
-% % % %     delete(exp_sub_menus(i));
-% % % % end
 eval([el.get('SUB_CLASS') '.getGUIMenuExport(el, ui_menu_export, pl)']);
 ex_sub_menus = get(ui_menu_export, 'Children');
 delete(ex_sub_menus(end)); % delete one sub menu to export JSON

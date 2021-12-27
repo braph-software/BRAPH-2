@@ -161,7 +161,7 @@ function redraw(pl, varargin)
     %
     % REDRAW(PL) redraws the plot PL.
     %
-    % REDRAW(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=3.3).
+    % REDRAW(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=20).
     %
     % See also draw, update, refresh.
     

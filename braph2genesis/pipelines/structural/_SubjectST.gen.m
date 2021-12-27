@@ -48,28 +48,6 @@ function cb_importer_XLS(~, ~)
         warndlg(['Please, select a valid input Group of SubjectSTs in XLS format. ' e.message], 'Warning');
     end
 end
-% % % calling_class = pl.get('El');
-% % % if isa(calling_class, 'Group')
-% % %     importers = {'ImporterGroupSubjectSTTXT', 'ImporterGroupSubjectSTXLS'};
-% % %     for k = 1:length(importers)
-% % %         imp = importers{k};
-% % %         uimenu(ui_menu_import, ...
-% % %             'Label', [imp ' ...'], ...
-% % %             'Callback', {@cb_importers});
-% % %     end
-% % % end
-% % % function cb_importers(src, ~)
-% % %     src_name = erase(src.Text, ' ...');
-% % %     imp_el = eval([src_name '()']);          
-% % %     imp_el.uigetfile();
-% % %     try
-% % %         tmp_el = imp_el.get('GR');
-% % %         plot_element.set('El', tmp_el);
-% % %         plot_element.reinit();
-% % %     catch e
-% % %         warndlg(['Please select a valid input. ' e.message], 'Warning');
-% % %     end    
-% % % end
 
 %%%% ¡menu_exporter!
 uimenu(ui_menu_export, ...
@@ -101,23 +79,6 @@ function cb_exporter_XLS(~, ~)
         ex.get('SAVE');
     end
 end
-% % % calling_class = pl.get('El');
-% % % if isa(calling_class, 'Group')
-% % %     exporters = {'ExporterGroupSubjectSTTXT', 'ExporterGroupSubjectSTXLS'};
-% % %     for k = 1:length(exporters)
-% % %         exp = exporters{k};
-% % %         uimenu(ui_menu_export, ...
-% % %             'Label', [exp ' ...'], ...
-% % %             'Callback', {@cb_exporters});
-% % %     end
-% % % end
-% % % function cb_exporters(src, ~)
-% % %     src_name = erase(src.Text, ' ...');
-% % %     tmp_el = plot_element.get('EL'); %#ok<NASGU>
-% % %     exmp_el = eval([src_name '(' '''GR''' ', tmp_el)']); % el is a group passed from Group   
-% % %     exmp_el.uiputfile();
-% % %     exmp_el.get('SAVE');
-% % % end
 
 %% ¡props!
 
@@ -136,8 +97,8 @@ if check
 else   
     msg = ['ST must be a column vector with the same number of element as the brain regions (' int2str(br_number) ').'];
 end
-%%%% ¡gui__!
-% % % pl = PPSubjectData('EL', sub, 'PROP', SubjectST.ST, varargin{:});
+%%%% ¡gui!
+pl = PPSubjectST_ST('EL', sub, 'PROP', SubjectST.ST, varargin{:});
 
 %%% ¡prop!
 age (data, scalar) is a scalar number containing the age of the subject.
