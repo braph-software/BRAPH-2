@@ -11,6 +11,13 @@ GUI, PlotElement, PlotProp
 pp
 pushbutton_value
 
+%% ¡props_update!
+
+%%% ¡prop!
+ENABLE (metadata, option) switches between off and inactive fields.
+%%%% ¡default!
+'off'
+
 %% ¡methods!
 function h_panel = draw(pl, varargin)
     %DRAW draws the item property graphical panel.
@@ -75,9 +82,9 @@ function update(pl)
     el = pl.get('EL');
     prop = pl.get('PROP');
 
-    if el.isLocked(prop)
-        set(pl.pushbutton_value, 'Enable', pl.get('ENABLE'))
-    end
+% % %     if el.isLocked(prop)
+% % %         set(pl.pushbutton_value, 'Enable', pl.get('ENABLE'))
+% % %     end
     
     switch el.getPropCategory(prop)
         case Category.METADATA
@@ -92,10 +99,10 @@ function update(pl)
                 'Tooltip', regexprep(el.get(prop).tree(), {'<strong>', '</strong>'}, {'' ''}) ...
                 )
             
-            value = el.getr(prop);
-            if isa(value, 'Callback')
-                set(pl.pushbutton_value, 'Enable', pl.get('ENABLE'))
-            end
+% % %             value = el.getr(prop);
+% % %             if isa(value, 'Callback')
+% % %                 set(pl.pushbutton_value, 'Enable', pl.get('ENABLE'))
+% % %             end
 
         case Category.RESULT
             value = el.getr(prop);
@@ -110,7 +117,7 @@ function update(pl)
                 set(pl.pushbutton_value, ...
                     'String', el.get(prop).tostring(), ...
                     'Tooltip', regexprep(el.get(prop).tree(), {'<strong>', '</strong>'}, {'' ''}), ...
-                    'Enable', pl.get('ENABLE') ...
+                    'Enable', 'on' ...
                     )
             end
     end
