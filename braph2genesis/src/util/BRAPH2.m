@@ -46,7 +46,7 @@ classdef BRAPH2
     properties (Constant) % BRAPH2 extensions
         EXT_ELEMENT = {'*.b2e'} % BRAPH2 element extension
         EXT_PIPELINE = {'*.braph2'} % BRAPH2 pipeline extentsion
-        EXT_WORKSPACE = {'*.b2'} % BRAPH2 workspace extension
+        EXT_WORKSPACE = {'*.b2w'} % BRAPH2 workspace extension
     end
     properties (Constant) % BRAPH2 error codes
         WRONG_INPUT = 'WrongInput' % wrong input value or format in a function
