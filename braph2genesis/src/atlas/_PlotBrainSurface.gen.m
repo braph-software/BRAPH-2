@@ -80,6 +80,8 @@ pp  % handle for panel
 SURF (metadata, item) is the brain surface to be plotted.
 %%%% ¡settings!
 'BrainSurface'
+%%%% ¡default!
+BrainAtlas.getPropDefault('SURF')
 
 %%% ¡prop!
 AXESCOLOR (metadata, rvector) is axes background color.

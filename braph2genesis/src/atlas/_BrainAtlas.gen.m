@@ -105,6 +105,8 @@ pl = PPBrainAtlas_BRDict('EL', ba, 'PROP', BrainAtlas.BR_DICT, varargin{:});
 SURF (metadata, item) contains the brain surface of the brain atlas.
 %%%% ¡settings!
 'BrainSurface'
+%%%% ¡default!
+ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF')
 %%%% ¡gui!
 pl = PPBrainAtlas_Surf('EL', ba, 'PROP', BrainAtlas.SURF, varargin{:});
 

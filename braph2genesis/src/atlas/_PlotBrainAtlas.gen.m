@@ -69,7 +69,7 @@ h_axes
 %% ¡props!
 
 %%% ¡prop!
-ATLAS (metadata, item) is the brain atlas with the brain regions
+ATLAS (metadata, item) is the brain atlas with the brain regions.
 %%%% ¡settings!
 'BrainAtlas'
 

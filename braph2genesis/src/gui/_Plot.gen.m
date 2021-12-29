@@ -28,7 +28,7 @@ check = (length(value) == 3) && all(value >= 0 & value <= 1);
 %%% ¡prop!
 SETPOS (metadata, rvector) is the normalized position of the setting interface on the screen.
 %%%% ¡check_prop!
-check = (length(value) == 4) && all(value >= 0 & value <= 1);
+check = (length(value) == 4);
 %%%% ¡default!
 [.70 .50 .40 .20]
 

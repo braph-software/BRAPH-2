@@ -173,6 +173,7 @@ menu()
             tmp = load(filename, '-mat', 'el');
             if isa(tmp.el, el.getClass())
                 el = tmp.el;
+                pl = [];
                 plot();
             else
                 GUI(tmp.el, 'FileName', filename)
