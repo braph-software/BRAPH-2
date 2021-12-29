@@ -92,7 +92,7 @@ value = ba;
 
 %% ¡methods!
 function uigetfile(im)
-    % UIGETFILE opens a dialog box to set the XLS/XLSX file where to save the brain atlas.
+    % UIGETFILE opens a dialog box to get the XLS/XLSX file from where to load the brain atlas.
     
     [filename, filepath, filterindex] = uigetfile({'*.xlsx';'*.xls'}, 'Select Excel file');
     if filterindex
