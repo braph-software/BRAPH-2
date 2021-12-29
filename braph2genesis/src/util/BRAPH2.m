@@ -12,9 +12,9 @@ classdef BRAPH2
     %  COPYRIGHT    - BRAPH2 copyright
     %
     % Properties (Constant) - BRAPH2 extensions
-    %  EXT_ELEMENT  - BRAPH2 element extension (*.b2e)
-    %  EXT_PIPELINE - BRAPH2 pipeline extentsion (*.braph2)
-    %  EXT_WORKSPACE - BRAPH2 workspace extenstion (*.b2)
+    %  EXT_ELEMENT  - BRAPH2 element extension (*.b2)
+    %  EXT_PIPELINE - BRAPH2 pipeline extension (*.braph2)
+    %  EXT_WORKSPACE - BRAPH2 workspace extension (*.mat)
     %
     % Properties (Constant) - BRAPH2 error codes:
     %  WRONG_INPUT  - wrong input value or format in a function
@@ -44,9 +44,9 @@ classdef BRAPH2
         COPYRIGHT = ['Copyright 2014-' datestr(now,'yyyy')]        
     end
     properties (Constant) % BRAPH2 extensions
-        EXT_ELEMENT = {'*.b2e'} % BRAPH2 element extension
-        EXT_PIPELINE = {'*.braph2'} % BRAPH2 pipeline extentsion
-        EXT_WORKSPACE = {'*.b2w'} % BRAPH2 workspace extension
+        EXT_ELEMENT = {'*.b2'} % BRAPH2 element extension
+        EXT_PIPELINE = {'*.braph2'} % BRAPH2 pipeline extension
+        EXT_WORKSPACE = {'*.b2ws'} % BRAPH2 workspace extension
     end
     properties (Constant) % BRAPH2 error codes
         WRONG_INPUT = 'WrongInput' % wrong input value or format in a function
