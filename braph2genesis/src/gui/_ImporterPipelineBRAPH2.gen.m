@@ -76,6 +76,12 @@ if isfile(file)
             section_txt = section_txt(section_newlines(1):end);
             code_marks = [regexp(section_txt, newline(), 'all') length(section_txt) + 1];
             for c = 1:1:length(code_marks) - 1
+                if im.get('WAITBAR')
+                    waitbar(.00 + 1.00 * (s - 1 + c / (length(code_marks) - 1)) / (length(section_marks) - 1), wb, ...
+                        ['Loading pipeline section ' num2str(s) ' of ' num2str(length(section_marks) - 1) ...
+                        ', code line ' num2str(c) ' of ' num2str(length(code_marks) - 1) ' ...'])
+                end
+                
                 code_txt = strtrim(section_txt(code_marks(c):code_marks(c + 1) - 1));
 
                 text = strtrim(code_txt(regexp(code_txt, ';', 'once') + 1:end));
@@ -93,45 +99,6 @@ if isfile(file)
                 ps.get('PC_DICT').add(pc)
             end
         end
-        
-        
-% % %         raw = textread(file, '%s', 'delimiter', '\t', 'whitespace', '');
-% % %         raw = raw(~cellfun('isempty', raw));  % remove empty cells
-% % %         
-% % %         % adds props
-% % %         if im.get('WAITBAR')
-% % %             waitbar(.15, wb, 'Loading brain atlas file ...');
-% % %         end
-% % %         
-% % %         ba.set( ...
-% % %             'ID', raw{1, 1}, ...
-% % %             'LABEL', raw{2, 1}, ...
-% % %             'NOTES', raw{3, 1} ...
-% % %             );
-% % %         
-% % %         idict = ba.get('BR_DICT');
-% % %         
-% % %         % adds brain regions
-% % %         if im.get('WAITBAR')
-% % %             waitbar(.30, wb, 'cleaExtracting brain regions ...')
-% % %         end
-% % %         
-% % %         for i = 4:6:size(raw, 1)
-% % %             if im.get('WAITBAR')
-% % %                 waitbar(.30 + .70 * i / size(raw, 1), wb, ['Loading brain region ' num2str((i - 4) / 6 + 1) ' of ' num2str((size(raw, 1) - 3) / 6) ' ...'])
-% % %             end
-% % %             
-% % %             br = BrainRegion( ...
-% % %                 'ID', char(raw{i, 1}), ...
-% % %                 'LABEL', char(raw{i+1, 1}), ...
-% % %                 'X', str2double(raw{i+2, 1}), ...
-% % %                 'Y', str2double(raw{i+3, 1}), ...
-% % %                 'Z', str2double(raw{i+4, 1}), ...
-% % %                 'NOTES', char(raw{i+5, 1}) ...
-% % %                 );
-% % %             idict.add(br);
-% % %         end
-% % %         ba.set('br_dict', idict);
     catch e
         % warndlg('Please select a valid input.', 'Warning');
         rethrow(e)
