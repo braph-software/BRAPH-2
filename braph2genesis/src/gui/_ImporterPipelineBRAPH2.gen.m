@@ -6,7 +6,7 @@ ImporterPipelineBRAPH2 imports a pipeline from a BRAPH2 file.
 The format of the BRAPH2 file should include the label, description and at least one code section.
 
 %%% ¡seealso!
-Importer, Pipeline.
+Importer, Pipeline, ExporterPipelineBRAPH2.
 
 %% ¡props!
 
@@ -48,7 +48,7 @@ if isfile(file)
         label = strtrim(header_txt(3:header_newlines(1))); % eliminates %%
         pl.set('LABEL', label)
         
-        notes = strtrim(txt(header_newlines(1) + 4:end - 1));
+        notes = strtrim(header_txt(header_newlines(1) + 4:end - 1));
         notes_newlines = regexp(notes, newline(), 'all');
         for i = length(notes_newlines):-1:1
             notes = [notes(1:notes_newlines(i)) strtrim(notes(notes_newlines(i) + 2:end))]; % eliminates % but not newline
