@@ -92,7 +92,8 @@ value = ba;
 
 %% ¡methods!
 function uigetfile(im)
-    % UIGETFILE opens a dialog box to set the TXT file where to save the brain atlas.
+    % UIGETFILE opens a dialog box to get the TXT file from where to load the brain atlas.
+    
     [filename, filepath, filterindex] = uigetfile('*.txt', 'Select TXT file');
     if filterindex
         file = [filepath filename];
