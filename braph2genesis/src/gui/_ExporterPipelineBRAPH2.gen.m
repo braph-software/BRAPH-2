@@ -49,6 +49,12 @@ if isfolder(fileparts(file))
         
         pc_dict = ps.get('PC_DICT');
         for c = 1:1:pc_dict.length()
+            if im.get('WAITBAR')
+                waitbar(.00 + 1.00 * (s - 1 + c / pc_dict.length() / ps_dict.length(), wb, ...
+                    ['Saving pipeline section ' num2str(s) ' of ' num2str(ps_dict.length()) ...
+                    ', code line ' num2str(c) ' of ' num2str(pc_dict.length()) ' ...'])
+            end
+                
             pc = pc_dict.getItem(c);
             
             txt = [ txt ...
