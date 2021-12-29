@@ -1,0 +1,23 @@
+%% Pipeline Structural Comparison WU
+%
+% This is the pipeline script to compare two groups of subjects
+% using structural data and weighted undirected graphs.
+% 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
+% 2. It loads the data of two groups of subjects from XLS files (e.g., ST_group1.xlsx and ST_group2.xlsx).
+% 3. It analyzes these data using structural analyses (ST) based on weighted graphs (WU).
+% 4. It compares the results of the two analyses.
+
+%% Brain Atlas
+ba = ImporterBrainAtlasXLS().get('BA'); % Load a Brain Atlas XLS % Brain Atlas
+
+%% Groups
+gr1 = ImporterGroupSubjectSTXLS('BA', ba).get('GR'); % Load Group ST 1 from XLS % Group ST 1
+gr2 = ImporterGroupSubjectSTXLS('BA', ba).get('GR'); % Load Group ST 2 from XLS % Group ST 2
+
+%% Analysis
+a_WU1 = AnalyzeGroup_ST_WU('GR', gr1); % Analyze Group 1 % Group 1 Analysis
+a_WU2 = AnalyzeGroup_ST_WU('GR', gr2); % Analyze Group 2 % Group 2 Analysis
+
+%% Comparison
+c_WU = CompareGroup('P', 10, 'A1', a_WU1, 'A2', a_WU2, 'VERBOSE', true, 'MEMORIZE', true); % Compare Groups % Group Comparison
+
