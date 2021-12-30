@@ -74,7 +74,7 @@ function h_panel = draw(pl, varargin)
         c = userdata(2);
         
         pl.update('Section', s, 'Code', c)
-    end    
+    end
     
     if nargout > 0
         h_panel = pl.pp;
