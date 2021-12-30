@@ -130,10 +130,15 @@ function update(PL, varargin)
                 if isa(Code.getr('EL'), 'NoValue') % the code has not been calculated yet -- CALCULATE
                     Codeline = [Moniker ' = ' Code.get('CODE')];
                     try
+                        set(PL.pc_btns(S, C), ...
+                            'Enable', 'off' ...
+                            )
+                            
                         eval(Codeline)
                         Code.set('EL', eval([Moniker ';']))
 
                         set(PL.pc_btns(S, C), ...
+                            'Enable', 'on', ...
                             'String', Code.get('TEXT_AFTER_EXEC'), ...
                             'FontAngle', 'normal', ...
                             'FontWeight', 'normal' ...
@@ -144,8 +149,11 @@ function update(PL, varargin)
                             S_to_be_calculated = S + 1;
                         end
                     catch e
-% FIXME streamline errors during IO
-                        if ~strcmp(e.message, BRAPH2.BUG_IO) && ~strcmp(e.message, BRAPH2.WRONG_OUTPUT)
+                        set(PL.pc_btns(S, C), ...
+                            'Enable', 'on' ...
+                            )
+
+                        if ~strcmp(e.message, BRAPH2.IM_ERR)
                             warndlg(['An error occurred while trying to execute the code:' newline() ...
                                 newline() ...
                                 Codeline newline() ...
@@ -157,6 +165,9 @@ function update(PL, varargin)
                     end
                 else % the code has already been calculated -- GUI
                     fig = eval(['GUI(' Moniker ')']);
+                    
+                    % feval(get(fig, 'CloseRequestFcn'), fig, [])
+                    
 % FIXME add on close ba = pl.ba
 % FIXME manage the position of the appearing figures
                 end

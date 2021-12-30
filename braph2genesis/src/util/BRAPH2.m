@@ -25,6 +25,8 @@ classdef BRAPH2
     %  BUG_IO       - bug while loading/saving
     %  BUG_JSON     - bug in JSON encoding/deconding
     %  BUG_ERR      - bug in the handling of errors
+    %  IM_ERR       - error while importing a file
+    %  EX_ERR       - error while exporting a file
     %
     % Properties (Constant) - BRAPH2 GUI constants:
     %  FONTUNITS    - sets the units of the font
@@ -57,6 +59,8 @@ classdef BRAPH2
         BUG_IO = 'BugIO' % bug while loading/saving files
         BUG_JSON = 'BugJSON' % bug in JSON encoding/deconding
         BUG_ERR = 'BugErr' % bug in the handling of errors
+        IM_ERR = 'ImporterError. Most likely wrong file format.' % error while importing a file
+        EX_ERR = 'ExporterError.' % error while exporting a file
     end
     properties (Constant) % BRAPH2 GUI constants
         FONTUNITS = 'points';

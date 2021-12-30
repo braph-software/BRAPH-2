@@ -133,7 +133,7 @@ if isfile(file)
         close(wb)
     end
 elseif ~braph2_testing()
-    error(BRAPH2.WRONG_OUTPUT);
+    error(BRAPH2.IM_ERR);
 end
 
 value = gr;

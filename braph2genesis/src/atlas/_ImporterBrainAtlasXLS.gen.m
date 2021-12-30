@@ -85,7 +85,7 @@ if isfile(file)
         close(wb)
     end
 elseif ~braph2_testing()
-    error(BRAPH2.BUG_IO);
+    error(BRAPH2.IM_ERR);
 end
 
 value = ba;
