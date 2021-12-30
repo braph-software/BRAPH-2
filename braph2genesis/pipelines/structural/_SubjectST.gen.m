@@ -22,7 +22,24 @@ function cb_importer_TXT(~, ~)
     im.uigetfile();
     try
         if isfile(im.get('FILE'))
-            pl.set('EL', im.get('GR')); 
+            % pl.set('EL', im.get('GR')); 
+            % pl.reinit();
+            
+            gr = pl.get('EL');
+            
+            assert( ...
+                all(cellfun(@(prop) ~gr.isLocked(prop), num2cell(gr.getProps()))), ...
+                [BRAPH2.STR ':SubjectST:' BRAPH2.BUG_FUNC], ...
+                'To import an element, all its properties must be unlocked.' ...
+                )
+            
+            gr_new = im.get('GR');
+            for prop = 1:1:gr.getPropNumber()
+                if gr.getPropCategory(prop) ~= Category.RESULT
+                    gr.set(prop, gr_new.get(prop))
+                end
+            end
+            
             pl.reinit();
         end
     catch e
@@ -45,8 +62,25 @@ function cb_importer_XLS(~, ~)
     im.uigetfile();
     try
         if isfile(im.get('FILE'))
-            pl.set('EL', im.get('GR')); 
-            pl.reinit();
+            % pl.set('EL', im.get('GR')); 
+            % pl.reinit();
+            
+            gr = pl.get('EL');
+            
+            assert( ...
+                all(cellfun(@(prop) ~gr.isLocked(prop), num2cell(gr.getProps()))), ...
+                [BRAPH2.STR ':SubjectST:' BRAPH2.BUG_FUNC], ...
+                'To import an element, all its properties must be unlocked.' ...
+                )
+            
+            gr_new = im.get('GR');
+            for prop = 1:1:gr.getPropNumber()
+                if gr.getPropCategory(prop) ~= Category.RESULT
+                    gr.set(prop, gr_new.get(prop))
+                end
+            end
+            
+            pl.reinit();            
         end
     catch e
         warndlg(['Please, select a valid input Group of SubjectSTs in XLS format. ' newline() ...

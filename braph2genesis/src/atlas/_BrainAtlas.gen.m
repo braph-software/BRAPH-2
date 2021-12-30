@@ -25,7 +25,24 @@ function cb_importer_TXT(~, ~)
     im.uigetfile();
     try
         if isfile(im.get('FILE'))
-            pl.set('EL', im.get('BA')); 
+            % pl.set('EL', im.get('PIP')); 
+            % pl.reinit();
+
+            ba = pl.get('EL');
+            
+            assert( ...
+                all(cellfun(@(prop) ~ba.isLocked(prop), num2cell(ba.getProps()))), ...
+                [BRAPH2.STR ':BrainAtlas:' BRAPH2.BUG_FUNC], ...
+                'To import an element, all its properties must be unlocked.' ...
+                )
+            
+            ba_new = im.get('BA');
+            for prop = 1:1:ba.getPropNumber()
+                if ba.getPropCategory(prop) ~= Category.RESULT
+                    ba.set(prop, ba_new.get(prop))
+                end
+            end
+            
             pl.reinit();
         end
     catch e
@@ -48,7 +65,24 @@ function cb_importer_XLS(~, ~)
     im.uigetfile();
     try
         if isfile(im.get('FILE'))
-            pl.set('EL', im.get('BA')); 
+            % pl.set('EL', im.get('PIP')); 
+            % pl.reinit();
+
+            ba = pl.get('EL');
+            
+            assert( ...
+                all(cellfun(@(prop) ~ba.isLocked(prop), num2cell(ba.getProps()))), ...
+                [BRAPH2.STR ':BrainAtlas:' BRAPH2.BUG_FUNC], ...
+                'To import an element, all its properties must be unlocked.' ...
+                )
+            
+            ba_new = im.get('BA');
+            for prop = 1:1:ba.getPropNumber()
+                if ba.getPropCategory(prop) ~= Category.RESULT
+                    ba.set(prop, ba_new.get(prop))
+                end
+            end
+            
             pl.reinit();
         end
     catch e

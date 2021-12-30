@@ -21,7 +21,24 @@ function cb_importer_BRAPH2(~, ~)
     im.uigetfile();
     try
         if isfile(im.get('FILE'))
-            pl.set('EL', im.get('PIP')); 
+            % pl.set('EL', im.get('PIP')); 
+            % pl.reinit();
+
+            pip = pl.get('EL');
+            
+            assert( ...
+                all(cellfun(@(prop) ~pip.isLocked(prop), num2cell(pip.getProps()))), ...
+                [BRAPH2.STR ':Pipeline:' BRAPH2.BUG_FUNC], ...
+                'To import an element, all its properties must be unlocked.' ...
+                )
+            
+            pip_new = im.get('PIP');
+            for prop = 1:1:pip.getPropNumber()
+                if pip.getPropCategory(prop) ~= Category.RESULT
+                    pip.set(prop, pip_new.get(prop))
+                end
+            end
+            
             pl.reinit();
         end
     catch e
