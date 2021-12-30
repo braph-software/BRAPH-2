@@ -2,7 +2,7 @@
 PlotPropScalar < PlotProp (pl, plot property scalar) is a plot of a property scalar.
 
 %%% ¡description!
-PlotProp plots a property scalar of an element in a panel.
+PlotPropScalar plots a property scalar of an element in a panel.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp

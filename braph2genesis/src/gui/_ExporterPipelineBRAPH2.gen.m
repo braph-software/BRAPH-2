@@ -35,9 +35,13 @@ if isfolder(fileparts(file))
     txt = [ ...
         '%% ' pl.get('LABEL') newline()  ...
         '%' newline() ...
-        '% ' regexprep(pl.get('NOTES'), newline(), [newline() '% ']) newline() ...
         ];
-    
+
+    notes = cellfun(@(x) ['% ' strtrim(x) newline()], cellstr(pl.get('NOTES')), 'UniformOutput', false);
+    for i = 1:1:length(notes)
+        txt = [txt notes{i}];
+    end
+
     ps_dict = pl.get('PS_DICT');
     for s = 1:1:ps_dict.length()
         ps = ps_dict.getItem(s);
@@ -49,7 +53,7 @@ if isfolder(fileparts(file))
         
         pc_dict = ps.get('PC_DICT');
         for c = 1:1:pc_dict.length()
-            if im.get('WAITBAR')
+            if ex.get('WAITBAR')
                 waitbar(.00 + 1.00 * (s - 1 + c / pc_dict.length()) / ps_dict.length(), wb, ...
                     ['Saving pipeline section ' num2str(s) ' of ' num2str(ps_dict.length()) ...
                     ', code line ' num2str(c) ' of ' num2str(pc_dict.length()) ' ...'])

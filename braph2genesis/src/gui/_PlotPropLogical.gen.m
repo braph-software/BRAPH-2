@@ -2,7 +2,7 @@
 PlotPropLogical < PlotProp (pl, plot property logical) is a plot of a property logical.
 
 %%% ¡description!
-PlotProp plots a property logical of an element in a panel.
+PlotPropLogical plots a property logical of an element in a panel.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp

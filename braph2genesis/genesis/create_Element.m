@@ -90,7 +90,7 @@ function create_Element(generator_file, target_dir)
 %   Code to calculate prop results (only for category RESULT).
 %   Can be on multiple lines.
 %   The result should be in variable 'value'.
-%  <strong>%%% ¡gui!</strong>
+%  <strong>%%%% ¡gui!</strong>
 %   GUI code for representing the panel of the prop.
 %   Can be on multiple lines.
 %   Should return a Plot object in 'pl'.

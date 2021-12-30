@@ -2,7 +2,7 @@
 PlotPropItemList < PlotProp (pl, plot property item list) is a plot of a property item list.
 
 %%% ¡description!
-PlotProp plots a property item list of an element in a panel.
+PlotPropItemList plots a property item list of an element in a panel.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp

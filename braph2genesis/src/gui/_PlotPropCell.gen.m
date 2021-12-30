@@ -2,7 +2,7 @@
 PlotPropCell < PlotProp (pl, plot property cell) is a plot of a property cell.
 
 %%% ¡description!
-PlotProp plots a property cell of an element in a panel.
+PlotPropCell plots a property cell of an element in a panel.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp

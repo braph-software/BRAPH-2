@@ -2,7 +2,7 @@
 PlotPropMatrix < PlotProp (pl, plot property matrix) is a plot of a property matrix.
 
 %%% ¡description!
-PlotProp plots a property matrix of an element in a panel.
+PlotPropMatrix plots a property matrix of an element in a panel.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp

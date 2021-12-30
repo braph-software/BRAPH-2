@@ -2,7 +2,7 @@
 PlotPropOption < PlotProp (pl, plot property option) is a plot of a property option.
 
 %%% ¡description!
-PlotProp plots a property option of an element in a panel.
+PlotPropOption plots a property option of an element in a panel.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp

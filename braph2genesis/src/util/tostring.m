@@ -34,7 +34,17 @@ elseif iscell(value) % cell arrays
 elseif ischar(value) && isempty(value) % empty string
     str = '''''';
 else  % char arrays
-    str = ['''' num2str(value) ''''];
+    if size(value, 1) == 1 % single line char array
+        str = ['''' num2str(value) ''''];
+    else % multiline char array
+        str = '';
+        for i = 1:1:size(value, 1)
+            str = [str strtrim(value(i, :))];
+            if i < size(value, 1)
+                str = [str ' '];
+            end
+        end
+    end
 end
 
 if length(str) > n

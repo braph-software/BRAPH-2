@@ -2,7 +2,7 @@
 PlotPropClass < PlotProp (pl, plot property class) is a plot of a property class.
 
 %%% ¡description!
-PlotProp plots a property class of an element in a panel.
+PlotPropClass plots a property class of an element in a panel.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp

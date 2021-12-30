@@ -5,7 +5,7 @@ PipelineSection < Element (ps, pipeline section) is a pipeline code section.
 PipelineCode represents a section of executable code in a pipeline.
 
 %%% ¡seealso!
-PipelineGUI, Pipeline, PipelineSection.
+PipelineGUI, Pipeline, PipelineSection
 
 %% ¡props!
 

@@ -5,7 +5,7 @@ PipelineCode < Element (pc, pipeline code line) is an executable code line of a 
 PipelineCode represents a line of executable code in a pipeline.
 
 %%% ¡seealso!
-PipelineGUI, Pipeline, PipelineSection.
+PipelineGUI, Pipeline, PipelineSection
 
 %% ¡props!
 

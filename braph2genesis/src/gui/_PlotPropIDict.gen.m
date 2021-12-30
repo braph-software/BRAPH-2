@@ -2,7 +2,7 @@
 PlotPropIDict < PlotProp (pl, plot property idict) is a plot of a property idict.
 
 %%% ¡description!
-PlotProp plots a property idict of an element in a panel.
+PlotPropIDict plots a property idict of an element in a panel.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp
