@@ -62,4 +62,6 @@ pl = PlotPropText('EL', pip, 'PROP', Pipeline.NOTES, varargin{:}); % multiline t
 PS_DICT (data, idict) is an indexed dictionary with the code sections.
 %%%% ¡settings!
 'PipelineSection'
+%%%% ¡gui!
+pl = PPPipeline_PSDict('EL', pip, 'PROP', Pipeline.PS_DICT, varargin{:});
 
