@@ -3,7 +3,7 @@ PPPipeline_PSDict < PlotProp (pl, pipeline plot) is a plot of a pipeline.
 
 %%% ¡description!
 PPPipeline_PCDict plots a pipeline allowing the user to execute it in the correct order.
-
+   
 %%% ¡seealso!
 Pipeline, PlotProp
 
@@ -55,39 +55,112 @@ function h_panel = draw(pl, varargin)
                 'Style', 'pushbutton', ...
                 'Parent', pl.ps_panels(s), ...
                 'Tooltip', pc.get('NOTES'), ...
+                'Enable', 'off', ...
+                'String', pc.get('TEXT_BEFORE_EXEC'), ...
+                'FontAngle', 'italic', ...
                 'FontUnits', BRAPH2.FONTUNITS, ...
                 'FontSize', BRAPH2.FONTSIZE, ...
-                'Callback', {@cb_pushbutton_value} ...
+                'UserData', [s c], ...
+                'Callback', {@cb_pc_btn} ...
                 );
         end
     end
+    
+    % callback
+    function cb_pc_btn(src, ~)
+        userdata = get(src, 'UserData');
+        s = userdata(1);
+        c = userdata(2);
+        
+        pl.update('Section', s, 'Code', c)
+    end    
     
     if nargout > 0
         h_panel = pl.pp;
     end
 end
-function update(pl)
+function update(PL, varargin)
     %UPDATE updates the content of the property graphical panel.
     %
     % UPDATE(PL) updates the content of the property graphical panel.
     %
     % See also draw, resize, refresh.
 
-    update@PlotProp(pl)
+    % Important note: I use capitalized variables to avoid possible
+    % conflicts with the pipeline monikers, which should be lowercase.
+    % Possible errors might arise if upper case monikers are used.
     
-    pip = pl.get('EL');
+    S_selected = get_from_varargin(0, 'Section', varargin); % selected section
+    C_selected = get_from_varargin(0, 'Code', varargin); % selected code
+    
+    update@PlotProp(PL)
+    
+    PIP = PL.get('EL');
 
-    ps_dict = pip.get('PS_DICT');
-    for s = 1:1:ps_dict.length()
-        ps = ps_dict.getItem(s);
+    S_to_be_calculated = 1;
+    S_dict = PIP.get('PS_DICT');
+    for S = 1:1:S_dict.length()
+        Section = S_dict.getItem(S);
         
-        pc_dict = ps.get('PC_DICT');
-        for c = 1:1:pc_dict.length()
-            pc = pc_dict.getItem(c);
-        
-            set(pl.pc_btns(s, c), ...
-                'String', pc.get('TEXT_BEFORE_EXEC') ...
-                )
+        Code_dict = Section.get('PC_DICT');
+        for C = 1:1:Code_dict.length()
+            Code = Code_dict.getItem(C);
+            Moniker = Code.get('MONIKER');
+
+% FIXME send error if moniker equal to some variables 
+
+            % If a code has already been executed and the relative element exists, 
+            % loads the calculated element to the workspace
+            if ~isa(Code.getr('EL'), 'NoValue')
+                eval([Moniker ' = Code.get(''EL'');'])
+            end
+            
+            % activates the next section that can be calculated
+            % (only the codes that have not been calculated yet)
+            if S == S_to_be_calculated && isa(Code.getr('EL'), 'NoValue')
+                set(PL.pc_btns(S, C), ...
+                    'Enable', 'on', ...
+                    'FontAngle', 'normal', ...
+                    'FontWeight', 'bold' ...
+                    )
+            end
+            
+            % callback code
+            if S == S_selected && C == C_selected
+                if isa(Code.getr('EL'), 'NoValue') % the code has not been calculated yet -- CALCULATE
+                    Codeline = [Moniker ' = ' Code.get('CODE')];
+                    try
+                        eval(Codeline)
+                        Code.set('EL', eval([Moniker ';']))
+
+                        set(PL.pc_btns(S, C), ...
+                            'String', Code.get('TEXT_AFTER_EXEC'), ...
+                            'FontAngle', 'normal', ...
+                            'FontWeight', 'normal' ...
+                            )
+                        
+                        % if all section codes calculated, updates the section to be calculated
+                        if all(cellfun(@(pc) ~isa(pc.getr('EL'), 'NoValue'), Code_dict.getItems()))
+                            S_to_be_calculated = S + 1;
+                        end
+                    catch e
+% FIXME streamline errors during IO
+                        if ~strcmp(e.message, BRAPH2.BUG_IO) && ~strcmp(e.message, BRAPH2.WRONG_OUTPUT)
+                            warndlg(['An error occurred while trying to execute the code:' newline() ...
+                                newline() ...
+                                Codeline newline() ...
+                                newline() ...
+                                'Error message:' newline() ...
+                                newline() ...
+                                e.message newline()], 'Warning');
+                        end
+                    end
+                else % the code has already been calculated -- GUI
+                    fig = eval(['GUI(' Moniker ')']);
+% FIXME add on close ba = pl.ba
+% FIXME manage the position of the appearing figures
+                end
+            end
         end
     end  
 end
