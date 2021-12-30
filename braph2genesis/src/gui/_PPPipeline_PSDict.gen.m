@@ -169,7 +169,7 @@ function update(PL, varargin)
                         end
                     end
                 else % the code has already been calculated -- GUI
-                    pl.pc_GUIs(S, C) = eval(['GUI(' Moniker ')'])
+                    pl.pc_GUIs(S, C) = eval(['GUI(' Moniker ')']);
 % FIXME ensure that only one figure exists at a time
 % FIXME manage the position of the appearing figures
                 end
