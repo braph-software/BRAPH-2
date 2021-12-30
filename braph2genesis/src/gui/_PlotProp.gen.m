@@ -7,6 +7,10 @@ with the prop tag and a tooltip with the prop description.
 For parameter and data callback, it also features a callback button.
 For results, it features calculate and delete buttons.
 It typically is employed in one of its derived forms.
+The key methods are:
+- draw() to draw the initial graphical objects.
+- update() to update the information content of the graphical obejcts.
+- redraw() to set the height of the panel and, if resizing is expected, also the position of the graphical obejcts.
 
 %%% ¡seealso!
 GUI, PlotElement

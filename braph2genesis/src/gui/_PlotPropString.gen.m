@@ -109,6 +109,8 @@ function update(pl)
                     )
             end
     end
+    
+    set(pl.edit_value, 'Max', size(get(pl.edit_value, 'String'), 1)) % switches between multi-line and single-line
 end
 function redraw(pl, varargin)
     %REDRAW resizes the element graphical panel.

@@ -10,6 +10,7 @@ GUI, PlotElement, PlotProp, PlotPropString
 
 %% ¡properties!
 pp
+edit_value
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
@@ -30,6 +31,14 @@ function h_panel = draw(pl, varargin)
 
     pl.pp = draw@PlotPropString(pl, 'Position', [.01 .03 .98 .85], varargin{:});
 
+    % retrieves the handle of the edit_value
+    children = get(pl.pp, 'Children');
+    for i = 1:1:length(children)
+        if isa(children(i), 'matlab.ui.control.UIControl') && strcmp(get(children(i), 'Style'), 'edit')
+            pl.edit_value = children(i);
+        end
+    end    
+    
     % output
     if nargout > 0
         h_panel = pl.pp;
@@ -43,6 +52,8 @@ function update(pl)
     % See also draw, resize, refresh.
 
     update@PlotPropString(pl)
+    
+    set(pl.edit_value, 'Max', 2) % ensures multi-line
 end
 function redraw(pl, varargin)
     %REDRAW resizes the element graphical panel.

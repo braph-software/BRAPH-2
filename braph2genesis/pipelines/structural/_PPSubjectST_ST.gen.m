@@ -36,7 +36,7 @@ function h_panel = draw(pl, varargin)
         if isa(children(i), 'matlab.ui.control.Table')
             pl.table_value = children(i);
         end
-    end       
+    end
 
     % output
     if nargout > 0
