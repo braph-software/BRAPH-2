@@ -148,7 +148,6 @@ function update(pl)
     %
     % See also draw, redraw, refresh.
 
-
     el = pl.get('EL');
     prop = pl.get('PROP');
 
@@ -287,15 +286,3 @@ function cb_button_del(pl)
 
     pl.refresh() % includes pl.update() and pl.redraw(), also one level up
 end
-% % % function [h_cb, h_calc, h_del] = get_buttons(pl)
-% % %     % GET_BUTTONS function to expose the private buttons to subclasses
-% % %     % 
-% % %     % [h_cb, h_calc, h_del] = GET_BUTTONS(pl) function to expose the 
-% % %     % private buttons to subclasses.
-% % %     %
-% % %     % see also update, redraw, refresh.
-% % % 
-% % %     h_cb = pl.button_cb;
-% % %     h_calc = pl.button_calc;
-% % %     h_del = pl.button_del;
-% % % end

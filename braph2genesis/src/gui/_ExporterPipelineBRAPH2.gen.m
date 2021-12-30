@@ -10,7 +10,7 @@ Exporter, Pipeline, ImporterPipelineBRAPH2.
 %% ¡props!
 
 %%% ¡prop!
-PL (data, item) is a pipeline.
+PIP (data, item) is a pipeline.
 %%%% ¡settings!
 'Pipeline'
 
@@ -30,19 +30,19 @@ if isfolder(fileparts(file))
         set_braph2_icon(wb)
     end
     
-    pl = ex.get('PL');
-    
+    pip = ex.get('PIP');
+   
     txt = [ ...
-        '%% ' pl.get('LABEL') newline()  ...
+        '%% ' pip.get('LABEL') newline()  ...
         '%' newline() ...
         ];
 
-    notes = cellfun(@(x) ['% ' strtrim(x) newline()], cellstr(pl.get('NOTES')), 'UniformOutput', false);
+    notes = cellfun(@(x) ['% ' strtrim(x) newline()], cellstr(pip.get('NOTES')), 'UniformOutput', false);
     for i = 1:1:length(notes)
         txt = [txt notes{i}];
     end
 
-    ps_dict = pl.get('PS_DICT');
+    ps_dict = pip.get('PS_DICT');
     for s = 1:1:ps_dict.length()
         ps = ps_dict.getItem(s);
         

@@ -1,5 +1,5 @@
 %% ¡header!
-Pipeline < Element (pl, analysis pipeline) is an analysis pipeline.
+Pipeline < Element (pip, analysis pipeline) is an analysis pipeline.
 
 %%% ¡description!
 Pipeline is an analysis pipeline.
@@ -21,7 +21,7 @@ function cb_importer_BRAPH2(~, ~)
     im.uigetfile();
     try
         if isfile(im.get('FILE'))
-            pl.set('EL', im.get('PL')); 
+            pl.set('EL', im.get('PIP')); 
             pl.reinit();
         end
     catch e
@@ -36,7 +36,7 @@ uimenu(ui_menu_export, ...
 function cb_exporter_BRAPH2(~, ~)
     ex = ExporterPipelineBRAPH2( ...
         'ID', 'Export BRAPH2 Pipeline', ...
-        'PL', el.copy(), ...
+        'PIP', el.copy(), ...
         'WAITBAR', true ...
         );
     ex.uiputfile()
@@ -56,7 +56,7 @@ LABEL (metadata, string) is an extended label of the pipeline.
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the pipeline.
 %%%% ¡gui!
-pl = PlotPropText('EL', pl, 'PROP', Pipeline.NOTES, varargin{:}); % multiline text
+pl = PlotPropText('EL', pip, 'PROP', Pipeline.NOTES, varargin{:}); % multiline text
 
 %%% ¡prop!
 PS_DICT (data, idict) is an indexed dictionary with the code sections.

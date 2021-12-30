@@ -14,14 +14,14 @@ Importer, Pipeline, ExporterPipelineBRAPH2.
 FILE (data, string) is the BRAPH2 file from where to load the pipeline.
 
 %%% ¡prop!
-PL (result, item) is a pipeline.
+PIP (result, item) is a pipeline.
 %%%% ¡settings!
 'Pipeline'
 %%%% ¡default!
 Pipeline()
 %%%% ¡calculate!
 % creates empty Pipeline
-pl = Pipeline();
+pip = Pipeline();
 % analyzes file
 file = im.get('FILE');
 if ~isfile(file) && ~braph2_testing()
@@ -43,20 +43,20 @@ if isfile(file)
         header_newlines = regexp(header_txt, newline(), 'all');
 
         [~, id] = fileparts(file);
-        pl.set('ID', id)
+        pip.set('ID', id)
 
         label = strtrim(header_txt(3:header_newlines(1))); % eliminates %%
-        pl.set('LABEL', label)
+        pip.set('LABEL', label)
         
         notes = strtrim(header_txt(header_newlines(1) + 4:end - 1));
         notes_newlines = regexp(notes, newline(), 'all');
         for i = length(notes_newlines):-1:1
             notes = [notes(1:notes_newlines(i)) strtrim(notes(notes_newlines(i) + 2:end))]; % eliminates % but not newline
         end
-        pl.set('NOTES', notes)
+        pip.set('NOTES', notes)
         
         % PipelineSection Dictionary
-        pl.set('PS_DICT', Pipeline.getPropDefault('PS_DICT'))
+        pip.set('PS_DICT', Pipeline.getPropDefault('PS_DICT'))
         
         txt = txt(header_marks(2):end);
         section_marks = [regexp(txt, '%%', 'all') length(txt) + 1];
@@ -68,7 +68,7 @@ if isfile(file)
                 'ID', int2str(s), ...
                 'Label', strtrim(section_txt(1:section_newlines(1))) ...
                 );
-            pl.get('PS_DICT').add(ps)
+            pip.get('PS_DICT').add(ps)
             
             % PipelineCode Dictionary
             ps.set('PC_DICT', PipelineSection.getPropDefault('PC_DICT'))
@@ -111,7 +111,7 @@ elseif ~braph2_testing()
     error(BRAPH2.BUG_IO);
 end
 
-value = pl;
+value = pip;
 
 %% ¡methods!
 function uigetfile(im)
