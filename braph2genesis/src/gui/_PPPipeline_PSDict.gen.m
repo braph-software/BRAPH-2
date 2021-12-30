@@ -11,6 +11,7 @@ Pipeline, PlotProp
 pp
 ps_panels % list of section panels
 pc_btns % 2D-list of code buttons
+pc_GUIs % 2D list of GUIs
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
@@ -111,8 +112,12 @@ function update(PL, varargin)
 
             % If a code has already been executed and the relative element exists, 
             % loads the calculated element to the workspace
+            % and update the ID in the btn
             if ~isa(Code.getr('EL'), 'NoValue')
                 eval([Moniker ' = Code.get(''EL'');'])
+                set(PL.pc_btns(S, C), ...
+                    'String', [Code.get('TEXT_AFTER_EXEC') ' / ' Code.get('EL').get('ID')] ...
+                    )
             end
             
             % activates the next section that can be calculated
@@ -139,7 +144,7 @@ function update(PL, varargin)
 
                         set(PL.pc_btns(S, C), ...
                             'Enable', 'on', ...
-                            'String', Code.get('TEXT_AFTER_EXEC'), ...
+                            'String', [Code.get('TEXT_AFTER_EXEC') ' / ' Code.get('EL').get('ID')], ...
                             'FontAngle', 'normal', ...
                             'FontWeight', 'normal' ...
                             )
@@ -164,11 +169,8 @@ function update(PL, varargin)
                         end
                     end
                 else % the code has already been calculated -- GUI
-                    fig = eval(['GUI(' Moniker ')']);
-                    
-                    % feval(get(fig, 'CloseRequestFcn'), fig, [])
-                    
-% FIXME add on close ba = pl.ba
+                    pl.pc_GUIs(S, C) = eval(['GUI(' Moniker ')'])
+% FIXME ensure that only one figure exists at a time
 % FIXME manage the position of the appearing figures
                 end
             end
