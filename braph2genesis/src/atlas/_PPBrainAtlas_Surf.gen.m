@@ -57,7 +57,7 @@ function h_panel = draw(pl, varargin)
     % see also update, redraw, refresh, settings, uipanel, isgraphics.
 
     pl.pp = draw@PlotProp(pl, 'DeleteFcn', {@close_f_pba}, varargin{:});
-    function close_f_pba(~,~)
+    function close_f_pba(~, ~)
         if ~isempty(pl.f_pba) && isgraphics(pl.f_pba, 'figure')
             close(pl.f_pba)
         end

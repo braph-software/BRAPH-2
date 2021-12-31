@@ -39,10 +39,10 @@ function cb_importer_BRAPH2(~, ~)
                 end
             end
             
-            pl.reinit()
-
             pl.get('PP_DICT').getItem('ps_dict').draw() % draws the correct section panels and code buttons
             pl.get('PP_DICT').getItem('ps_dict').refresh() % triggers redraw on the whole PlotElement and on all PlotProp's
+
+            pl.reinit()
         end
     catch e
         warndlg(['Please, select a valid input Pipeline in BRAPH2 format. ' newline() ...
