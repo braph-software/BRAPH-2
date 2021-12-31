@@ -58,7 +58,7 @@ function h_panel = draw(pl, varargin)
 
     pl.pp = draw@PlotProp(pl, 'DeleteFcn', {@close_f_pba}, varargin{:});
     function close_f_pba(~,~)
-        if ~isempty(pl.f_pba) && isgraphics(pl.f_pba, 'Figure')
+        if ~isempty(pl.f_pba) && isgraphics(pl.f_pba, 'figure')
             close(pl.f_pba)
         end
     end
@@ -202,7 +202,7 @@ function update(pl)
     
     ba = pl.get('EL');
     
-    if isgraphics(pl.f_pba, 'Figure')
+    if isgraphics(pl.f_pba, 'figure')
         set(pl.f_pba, ...
             'Name', ba.get('ID') ...
             )            
@@ -235,7 +235,7 @@ function update_brain_atlas(pl)
     %
     % See also PPBrainAtlas_BRDict.
     
-    if isgraphics(pl.f_pba, 'Figure')
+    if isgraphics(pl.f_pba, 'figure')
         pba = pl.get('PBA');
         try
             pba.draw('Parent', pl.f_pba)

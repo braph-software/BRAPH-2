@@ -66,7 +66,7 @@ f = init();
             case 'No'
                 return
         end
-        if ~isempty(f_layout) && isgraphics(f_layout)
+        if ~isempty(f_layout) && isgraphics(f_layout, 'figure')
             close(f_layout)
         end
     end

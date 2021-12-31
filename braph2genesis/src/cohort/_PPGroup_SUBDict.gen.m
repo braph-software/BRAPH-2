@@ -33,7 +33,7 @@ function h_panel = draw(pl, varargin)
         function close_f_subs(~, ~) % Note that this will prevent the settings figure from being closed, which should not be a problem because settings is not used
             if ~isempty(pl.f_subs)
                 for i = 1:1:length(pl.f_subs)
-                    if isgraphics(pl.f_subs{i}, 'Figure')
+                    if isgraphics(pl.f_subs{i}, 'figure')
                         close(pl.f_subs{i})
                     end
                 end
@@ -93,7 +93,7 @@ function h_panel = draw(pl, varargin)
             
             % plot subject figure (or bring it to front)           
             sub = sub_dict.getItem(selected_sub);
-            if length(pl.f_subs) < selected_sub || isempty(pl.f_subs{selected_sub}) || ~isgraphics(pl.f_subs{selected_sub}, 'Figure')
+            if length(pl.f_subs) < selected_sub || isempty(pl.f_subs{selected_sub}) || ~isgraphics(pl.f_subs{selected_sub}, 'figure')
                 pl.f_subs{selected_sub} = GUI(sub, ...
                     'Position', [x y w h], ...
                     'CloseRequest', false ...
