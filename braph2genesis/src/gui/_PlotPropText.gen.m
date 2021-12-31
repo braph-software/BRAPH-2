@@ -29,12 +29,12 @@ function h_panel = draw(pl, varargin)
     %
     % see also update, resize, refresh, settings, uipanel, isgraphics.
 
-    pl.pp = draw@PlotPropString(pl, 'Position', [.01 .03 .98 .85], varargin{:});
+    pl.pp = draw@PlotPropString(pl, 'Position', [.01 .03 .98 .80], varargin{:});
 
     % retrieves the handle of the edit_value
     children = get(pl.pp, 'Children');
     for i = 1:1:length(children)
-        if isa(children(i), 'matlab.ui.control.UIControl') && strcmp(get(children(i), 'Style'), 'edit')
+        if isgraphics(children(i), 'uicontrol') && strcmpi(get(children(i), 'Style'), 'edit')
             pl.edit_value = children(i);
         end
     end    

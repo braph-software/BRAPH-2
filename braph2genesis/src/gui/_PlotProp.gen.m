@@ -11,6 +11,7 @@ The key methods are:
 - draw() to draw the initial graphical objects.
 - update() to update the information content of the graphical obejcts.
 - redraw() to set the height of the panel and, if resizing is expected, also the position of the graphical obejcts.
+- refresh() to update and resize also parent and siblings.
 
 %%% ¡seealso!
 GUI, PlotElement
@@ -72,7 +73,7 @@ function h_panel = draw(pl, varargin)
         pl_string_title = default_string;
     end
     
-    if isempty(pl.text_tag) || ~isgraphics(pl.text_tag, 'text')
+    if isempty(pl.text_tag) || ~isgraphics(pl.text_tag, 'uicontrol') || ~strcmpi(get(pl.text_tag, 'Style'), 'text')
         pl.text_tag =  uicontrol( ...
             'Style', 'text', ...
             'Parent', pl.pp, ...
