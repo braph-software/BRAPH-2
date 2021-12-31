@@ -26,7 +26,7 @@ end
 
 close_request = get_from_varargin(true, 'CloseRequest', varargin);
 
-position = get_from_varargin([.02 .1 .30 .80], 'Position', varargin);
+position = get_from_varargin([.00 .00 .20 1.00], 'Position', varargin);
 
 bkgcolor = get_from_varargin([.98 .95 .95], 'BackgroundColor', varargin);
 
