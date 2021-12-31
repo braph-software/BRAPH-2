@@ -60,9 +60,9 @@ function redraw(pl, varargin)
     %
     % REDRAW(PL) resizes the plot PL.
     %
-    % REDRAW(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=8).
+    % REDRAW(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=12).
     %
     % See also draw, update, refresh.
     
-    pl.redraw@PlotPropString('Height', 8, varargin{:})
+    pl.redraw@PlotPropString('Height', 12, varargin{:})
 end
