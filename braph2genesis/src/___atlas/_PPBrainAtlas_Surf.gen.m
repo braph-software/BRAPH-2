@@ -117,7 +117,7 @@ function h_panel = draw(pl, varargin)
             f_ba_h = f_ba_pos(4);
             set(f_ba, 'Units', backup_units);
 
-            screen_pos = get(0,'screensize');  % pixels
+            screen_pos = get(0, 'screensize');  % pixels
             screen_x = screen_pos(1);
             screen_y = screen_pos(2);
             screen_w = screen_pos(3);

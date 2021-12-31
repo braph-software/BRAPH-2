@@ -31,6 +31,7 @@ classdef BRAPH2
     % Properties (Constant) - BRAPH2 GUI constants:
     %  FONTUNITS    - sets the units of the font
     %  FONTSIZE     - sets the size of the font
+    %  COL_FIG      - figure background color
     %
     % Methods (Static) - BRAPH2 info panels:
     %  about        - provides information about BRAPH2
@@ -48,7 +49,7 @@ classdef BRAPH2
     properties (Constant) % BRAPH2 extensions
         EXT_ELEMENT = {'*.b2'} % BRAPH2 element extension
         EXT_PIPELINE = {'*.braph2'} % BRAPH2 pipeline extension
-        EXT_WORKSPACE = {'*.b2ws'} % BRAPH2 workspace extension
+        EXT_WORKSPACE = {'*.b2ws'} % BRAPH2 workspace extension % FIXME: keep? eliminate? change to .mat?
     end
     properties (Constant) % BRAPH2 error codes
         WRONG_INPUT = 'WrongInput' % wrong input value or format in a function
@@ -65,6 +66,7 @@ classdef BRAPH2
     properties (Constant) % BRAPH2 GUI constants
         FONTUNITS = 'points';
         FONTSIZE = 12;
+        COL_FIG = [1 .9725 .929]; % figure background color
     end
     methods (Static)
         function about()
