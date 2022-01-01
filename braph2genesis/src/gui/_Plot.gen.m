@@ -52,7 +52,7 @@ CALLBACKS - These are callback functions:
     pl.<strong>cb_bring_fs_to_front</strong>() - brings to the front the settings figure
 
 %%% ¡seealso!
-uipanel, ishandle, isgraphics, GUI, PlotElement, PlotProp
+uipanel, GUI, PlotElement, PlotProp
 
 %% ¡properties!
 h_panel % panel graphical handle
@@ -75,18 +75,18 @@ function h_panel = draw(pl, varargin)
     %  panel with custom Name-Value pairs.
     %  All standard Name-Value pairs of uipanel can be used.
     %
-    % See also settings, uipanel, isgraphics.
+    % See also settings, uipanel.
 
-    if isempty(pl.h_panel) || ~isgraphics(pl.h_panel, 'uipanel')
+    if ~check_graphics(pl.h_panel, 'uipanel')
         pl.h_panel = uipanel( ...
             'DeleteFcn', @cb_close_fs, ...
+            'BorderType', 'none', ...
             varargin{:} ...
             );
     else
-        set(pl.h_panel, ...
-            'DeleteFcn', @cb_close_fs, ...
-            varargin{:} ...
-            )
+        if ~isempty(varargin)
+            set(pl.h_panel, varargin{:})
+        end
     end
     h = pl.h_panel;
 
@@ -110,24 +110,27 @@ function f_settings = settings(pl, varargin)
     %  settings figure with custom Name-Value pairs. 
     %  All standard plot Name-Value pairs of figure can be used.
     %
-    % See also draw, figure, isgraphics.
+    % See also draw, figure.
 
     % create a figure
-    if isempty(pl.f_settings) || ~isgraphics(pl.f_settings, 'figure')
+    if ~check_graphics(pl.f_settings, 'figure')
         pl.f_settings = figure();
+        set(pl.f_settings, ...
+            'units', 'normalized', ...
+            'Position', [.70 .50 .40 .20], ... 
+            'Name', strtrim([pl.get('ID') ' Settings']), ...
+            'Color', BRAPH2.COL_FIG, ...
+            'MenuBar', 'none', ...
+            'Toolbar', 'none', ...
+            'NumberTitle', 'off', ...
+            'DockControls', 'off', ...
+            varargin{:} ...
+            )
+    else
+        if ~isempty(varargin)
+            set(pl.f_settings, varargin{:})
+        end
     end
-    
-    set(pl.f_settings, ...
-        'units', 'normalized', ...
-        'Position', [.70 .50 .40 .20], ... 
-        'Name', strtrim([pl.get('ID') ' Settings']), ...
-        'Color', BRAPH2.COL_FIG, ...
-        'MenuBar', 'none', ...
-        'Toolbar', 'none', ...
-        'NumberTitle', 'off', ...
-        'DockControls', 'off', ...
-        varargin{:} ...
-        )
     
     if nargout > 0
         f_settings = pl.f_settings;
@@ -141,7 +144,7 @@ function cb_close_fs(pl)
     %
     % See also close.
 
-    if ~isempty(pl.f_settings) && isgraphics(pl.f_settings, 'figure')
+    if check_graphics(pl.f_settings, 'figure')
         close(pl.f_settings)
     end
 end
@@ -152,7 +155,7 @@ function cb_bring_fs_to_front(pl)
     %
     % See also settings.
 
-    if ~isempty(pl.f_settings) && isgraphics(pl.f_settings, 'figure')
+    if check_graphics(pl.f_settings, 'figure')
         figure(pl.f_settings)
     end    
 end
