@@ -3,10 +3,10 @@ Plot < Element (pl, plot) is a plot.
 
 %%% ¡description!
 Plot is the basic element to manage graphical representations of elements.
-It is an empty graphical panel. It is filled with the graphical content representing 
-an element (typically, PlotElement) or property (typically, PlopProp and derived classes).
-It is then placed within another container; for example, a figure (e.g., PlotElement into GUI) 
-or another panel (e.g., PlotProp into PlotElement).
+ It is an empty graphical panel. It is filled with the graphical content representing 
+ an element (typically, PlotElement) or property (typically, PlopProp and derived classes).
+ It is then placed within another container; for example, a figure (e.g., PlotElement into GUI) 
+ or another panel (e.g., PlotProp into PlotElement).
 
 CONSTRUCTOR - To construct a Plot use the constructor:
 
@@ -79,6 +79,7 @@ function h_panel = draw(pl, varargin)
 
     if ~check_graphics(pl.h_panel, 'uipanel')
         pl.h_panel = uipanel( ...
+            'Tag', 'h_panel', ...
             'DeleteFcn', @cb_close_fs, ...
             'BorderType', 'none', ...
             varargin{:} ...
