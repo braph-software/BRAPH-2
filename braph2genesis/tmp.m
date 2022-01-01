@@ -2,102 +2,123 @@ close all
 clear all
 clc
 
-% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_Plot.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PlotPropScalar.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
 
-delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui/PlotProp.m')
-create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PlotProp.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+% minimal working version for category RESULT
+figure()
+p = uipanel('Parent', gcf); % needed for the function refresh that is called when the result is calculated
+set(gcf, 'SizeChangedFcn', 'pr_res.update()') % callback to update panel when figure is resized (in refresh)
+et = ETA();
+pr_res = PlotPropScalar('EL', et, 'PROP', et.PROP_SCALAR_R_CALC);
+pr_res.draw('Parent', p, 'BackgroundColor', [.8 .5 .2])
+pr_res.update()
+pr_res.redraw()
 
-% draws PlotProp's at once
-figure('Color', 'w', 'Units', 'normalized', 'Position', [0 0 1 1])
-et1 = ETA();
-for category = 1:1:Element.getCategoryNumber() + 1
-    for format = 1:1:Element.getFormatNumber()
-        prop = (category - 1) * Element.getFormatNumber() + format;
-        pr{category, format} = PlotProp('EL', et1, 'PROP', prop);
-        pr{category, format}.draw( ...
-            'Units', 'normalized', ...
-            'Position', [ ...
-                (category-1)/(Element.getCategoryNumber()+1) ...
-                1-format/Element.getFormatNumber() ...
-                .9/(Element.getCategoryNumber()+1) ...
-                .9/Element.getFormatNumber() ...
-                ], ...
-            'BackgroundColor', [format/Element.getFormatNumber() category/(Element.getCategoryNumber()+1)] * [1 .5 0; 0 .5 1] ...
-            )
-        drawnow()
-    end
-end
-close(gcf)
+% et = ETA();
+% props = [et.PROP_SCALAR_M et.PROP_SCALAR_P et.PROP_SCALAR_D et.PROP_SCALAR_R et.PROP_SCALAR_R_CALC];
+% for i = 1:1:length(props)
+%     pr{i} = PlotPropScalar('EL', et, 'PROP', props(i));
+%     pr{i}.draw('BackgroundColor', [i/length(props) .5 (length(props)-i)/length(props)])
+%     pr{i}.update()
+%     pr{i}.redraw('Y0', (length(props) - i)/length(props) * Plot.h(gcf, 'characters'))
+% end
 
-% draws PlotProp's with multiple calls to draw()
-figure('Color', 'w', 'Units', 'normalized', 'Position', [0 0 1 1])
-et2 = ETA();
-for category = 1:1:Element.getCategoryNumber() + 1
-    for format = 1:1:Element.getFormatNumber()
-        prop = (category - 1) * Element.getFormatNumber() + format;
-        pr{category, format} = PlotProp('EL', et2, 'PROP', prop);
-        pr{category, format}.draw()
-        pr{category, format}.draw('Units', 'normalized')
-        pr{category, format}.draw('Position', [ ...
-                (category-1)/(Element.getCategoryNumber()+1) ...
-                1-format/Element.getFormatNumber() ...
-                .9/(Element.getCategoryNumber()+1) ...
-                .9/Element.getFormatNumber() ...
-                ])
-        pr{category, format}.draw('BackgroundColor', [format/Element.getFormatNumber() category/(Element.getCategoryNumber()+1)] * [1 .5 0; 0 .5 1])
-        drawnow()
-    end
-end
-close(gcf)
-
-% calls redraw() to resize the property graphical panel and reposition its text
-figure('Color', 'w', 'Units', 'normalized', 'Position', [0 0 1 1])
-drawnow() % to solve ensure the figure is stable under drawnow()
-et3 = ETA();
-for category = 1:1:Element.getCategoryNumber() + 1
-    for format = 1:1:Element.getFormatNumber()
-        prop = (category - 1) * Element.getFormatNumber() + format;
-        pr{category, format} = PlotProp('EL', et3, 'PROP', prop);
-        pr{category, format}.draw()
-        pr{category, format}.draw('Units', 'normalized')
-        pr{category, format}.draw('BackgroundColor', [format/Element.getFormatNumber() category/(Element.getCategoryNumber()+1)] * [1 .5 0; 0 .5 1])
-
-        pr{category, format}.redraw( ...
-            'X0', (category - 1) / (Element.getCategoryNumber() + 1) * Plot.w(gcf, 'characters'), ...
-            'Y0', (1 - format / Element.getFormatNumber()) * Plot.h(gcf, 'characters'), ...
-            'Width', .9 / (Element.getCategoryNumber() + 1) * Plot.w(gcf, 'characters'), ...
-            'Height', .9 / Element.getFormatNumber() * Plot.h(gcf, 'characters') ...
-            )
-        drawnow()
-    end
-end
-close(gcf)
-
-% calls update() and redraw()
-% note that it doesn't work because it needs to be used with PlotElement() and GUI()
-figure('Color', 'w', 'Units', 'normalized', 'Position', [0 0 1 1])
-drawnow() % to solve ensure the figure is stable under drawnow()
-et3 = ETA();
-for category = 1:1:Element.getCategoryNumber() + 1
-    for format = 1:1:Element.getFormatNumber()
-        prop = (category - 1) * Element.getFormatNumber() + format;
-        pr{category, format} = PlotProp('EL', et3, 'PROP', prop);
-        pr{category, format}.draw()
-        pr{category, format}.draw('Units', 'normalized')
-        pr{category, format}.draw('BackgroundColor', [format/Element.getFormatNumber() category/(Element.getCategoryNumber()+1)] * [1 .5 0; 0 .5 1])
-
-        pr{category, format}.update()
-        
-        pr{category, format}.redraw( ...
-            'X0', (category - 1) / (Element.getCategoryNumber() + 1) * Plot.w(gcf, 'characters'), ...
-            'Y0', (1 - format / Element.getFormatNumber()) * Plot.h(gcf, 'characters'), ...
-            'Width', .9 / (Element.getCategoryNumber() + 1) * Plot.w(gcf, 'characters'), ...
-            'Height', .9 / Element.getFormatNumber() * Plot.h(gcf, 'characters') ...
-            )
-        drawnow()
-    end
-end
-close(gcf)
+% % create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_Plot.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+% 
+% delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui/PlotProp.m')
+% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PlotProp.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+% 
+% % draws PlotProp's at once
+% figure('Color', 'w', 'Units', 'normalized', 'Position', [0 0 1 1])
+% et1 = ETA();
+% for category = 1:1:Element.getCategoryNumber() + 1
+%     for format = 1:1:Element.getFormatNumber()
+%         prop = (category - 1) * Element.getFormatNumber() + format;
+%         pr{category, format} = PlotProp('EL', et1, 'PROP', prop);
+%         pr{category, format}.draw( ...
+%             'Units', 'normalized', ...
+%             'Position', [ ...
+%                 (category-1)/(Element.getCategoryNumber()+1) ...
+%                 1-format/Element.getFormatNumber() ...
+%                 .9/(Element.getCategoryNumber()+1) ...
+%                 .9/Element.getFormatNumber() ...
+%                 ], ...
+%             'BackgroundColor', [format/Element.getFormatNumber() category/(Element.getCategoryNumber()+1)] * [1 .5 0; 0 .5 1] ...
+%             )
+%         drawnow()
+%     end
+% end
+% close(gcf)
+% 
+% % draws PlotProp's with multiple calls to draw()
+% figure('Color', 'w', 'Units', 'normalized', 'Position', [0 0 1 1])
+% et2 = ETA();
+% for category = 1:1:Element.getCategoryNumber() + 1
+%     for format = 1:1:Element.getFormatNumber()
+%         prop = (category - 1) * Element.getFormatNumber() + format;
+%         pr{category, format} = PlotProp('EL', et2, 'PROP', prop);
+%         pr{category, format}.draw()
+%         pr{category, format}.draw('Units', 'normalized')
+%         pr{category, format}.draw('Position', [ ...
+%                 (category-1)/(Element.getCategoryNumber()+1) ...
+%                 1-format/Element.getFormatNumber() ...
+%                 .9/(Element.getCategoryNumber()+1) ...
+%                 .9/Element.getFormatNumber() ...
+%                 ])
+%         pr{category, format}.draw('BackgroundColor', [format/Element.getFormatNumber() category/(Element.getCategoryNumber()+1)] * [1 .5 0; 0 .5 1])
+%         drawnow()
+%     end
+% end
+% close(gcf)
+% 
+% % calls redraw() to resize the property graphical panel and reposition its text
+% figure('Color', 'w', 'Units', 'normalized', 'Position', [0 0 1 1])
+% drawnow() % to solve ensure the figure is stable under drawnow()
+% et3 = ETA();
+% for category = 1:1:Element.getCategoryNumber() + 1
+%     for format = 1:1:Element.getFormatNumber()
+%         prop = (category - 1) * Element.getFormatNumber() + format;
+%         pr{category, format} = PlotProp('EL', et3, 'PROP', prop);
+%         pr{category, format}.draw()
+%         pr{category, format}.draw('Units', 'normalized')
+%         pr{category, format}.draw('BackgroundColor', [format/Element.getFormatNumber() category/(Element.getCategoryNumber()+1)] * [1 .5 0; 0 .5 1])
+% 
+%         pr{category, format}.redraw( ...
+%             'X0', (category - 1) / (Element.getCategoryNumber() + 1) * Plot.w(gcf, 'characters'), ...
+%             'Y0', (1 - format / Element.getFormatNumber()) * Plot.h(gcf, 'characters'), ...
+%             'Width', .9 / (Element.getCategoryNumber() + 1) * Plot.w(gcf, 'characters'), ...
+%             'Height', .9 / Element.getFormatNumber() * Plot.h(gcf, 'characters') ...
+%             )
+%         drawnow()
+%     end
+% end
+% close(gcf)
+% 
+% % calls update() and redraw()
+% % note that it doesn't work because it needs to be used with PlotElement() and GUI()
+% figure('Color', 'w', 'Units', 'normalized', 'Position', [0 0 1 1])
+% drawnow() % to solve ensure the figure is stable under drawnow()
+% et3 = ETA();
+% for category = 1:1:Element.getCategoryNumber() + 1
+%     for format = 1:1:Element.getFormatNumber()
+%         prop = (category - 1) * Element.getFormatNumber() + format;
+%         pr{category, format} = PlotProp('EL', et3, 'PROP', prop);
+%         pr{category, format}.draw()
+%         pr{category, format}.draw('Units', 'normalized')
+%         pr{category, format}.draw('BackgroundColor', [format/Element.getFormatNumber() category/(Element.getCategoryNumber()+1)] * [1 .5 0; 0 .5 1])
+% 
+%         pr{category, format}.update()
+%         
+%         pr{category, format}.redraw( ...
+%             'X0', (category - 1) / (Element.getCategoryNumber() + 1) * Plot.w(gcf, 'characters'), ...
+%             'Y0', (1 - format / Element.getFormatNumber()) * Plot.h(gcf, 'characters'), ...
+%             'Width', .9 / (Element.getCategoryNumber() + 1) * Plot.w(gcf, 'characters'), ...
+%             'Height', .9 / Element.getFormatNumber() * Plot.h(gcf, 'characters') ...
+%             )
+%         drawnow()
+%     end
+% end
+% close(gcf)
 
 
 

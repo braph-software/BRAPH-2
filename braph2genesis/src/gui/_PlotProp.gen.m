@@ -87,7 +87,7 @@ function h_panel = draw(pr, varargin)
     %  All standard plot properties of uipanel can be used.
     %
     % It is possible to access the properties of the various graphical
-    %  objects from the handle to the brain surface panel H.
+    %  objects from the handle H of the panel.
     %
     % See also update, redraw, refresh, settings, uipanel.
 disp('d') % FIXME
