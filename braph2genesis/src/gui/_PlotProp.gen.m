@@ -12,8 +12,9 @@ PlotProp plots a property of an element in a panel.
 Important notes:
 1. PlotProp is intimately connected with GUI (cb_button_cb) and 
  PlotElement (update, redraw, refresh).
-2. The methods update(), redraw() and refresh() are used internally by PlotElement
- and typically do not need to be explicitly called in children of PlotProp.
+2. The methods redraw() and refresh() are used internally by PlotElement
+ and typically do not need to be explicitly called in children of PlotProp, 
+ while update() is typically called in callbacks to update the contents.
 3. Children of PlotProp should implement the methods:
   - draw() to initially create the panel and its graphical objects
   - update() to update the information content of the panel and of the element
