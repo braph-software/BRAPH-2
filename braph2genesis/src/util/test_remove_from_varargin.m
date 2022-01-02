@@ -1,4 +1,4 @@
-%TEST_CLEAN_VARARGIN
+%TEST_REMOVE_FROM_VARARGIN
 
 %% Test 1
 handle = 'H';
