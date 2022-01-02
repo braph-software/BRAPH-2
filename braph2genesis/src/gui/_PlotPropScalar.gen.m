@@ -125,7 +125,9 @@ function redraw(pr, varargin)
     %
     % See also draw, update, refresh, PlotElement.
 
-    pr.redraw@PlotProp('Height', 2.5, varargin{:})
+    [h, varargin] = get_and_remove_from_varargin(2.5, 'Height', varargin);
+    
+    pr.redraw@PlotProp('Height', h, varargin{:})
 end
 function cb_edit_value(pr)
     %CB_EDIT_VALUE executes callback for the edit value.

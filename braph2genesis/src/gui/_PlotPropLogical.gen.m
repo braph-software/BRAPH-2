@@ -126,7 +126,9 @@ function redraw(pr, varargin)
     %
     % See also draw, update, refresh, PlotElement.
     
-    pr.redraw@PlotProp('Height', 2.5, varargin{:})
+    [h, varargin] = get_and_remove_from_varargin(2.5, 'Height', varargin);
+
+    pr.redraw@PlotProp('Height', h, varargin{:})
 end
 function cb_checkbox_value(pr)
     %CB_CHECKBOX_VALUE executes callback for the checkbox value.

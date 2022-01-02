@@ -127,7 +127,9 @@ function redraw(pr, varargin)
     %
     % See also draw, update, refresh, PlotElement.
     
-    pr.redraw@PlotProp('Height', 3.5, varargin{:})
+    [h, varargin] = get_and_remove_from_varargin(3.5, 'Height', varargin);
+
+    pr.redraw@PlotProp('Height', h, varargin{:})
 end
 function cb_popupmenu_value(pr)
     %CB_POPUPMENU_VALUE executes callback for the popupmenu value.
