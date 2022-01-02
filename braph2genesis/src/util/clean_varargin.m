@@ -10,7 +10,7 @@ function varargin_clean = clean_varargin(handles, varargin)
 %  VARARGIN can also be passed as a list of couples each including a 
 %  'PropertyName' and a PROPERTY.
 %
-% See also GET_FROM_VARARGIN, COPY_VARARGIN.
+% See also GET_FROM_VARARGIN, COPY_VARARGIN, REMOVE_FROM_VARARGIN, GET_AND_REMOVE_FROM_VARARGIN.
 
 if length(varargin) == 1
     varargin = varargin{:};

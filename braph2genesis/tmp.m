@@ -2,17 +2,21 @@ close all
 clear all
 clc
 
-create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PlotPropScalar.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+copydir('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/util', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/util')
 
-% minimal working version for category RESULT
-figure()
-p = uipanel('Parent', gcf); % needed for the function refresh that is called when the result is calculated
-set(gcf, 'SizeChangedFcn', 'pr_res.update()') % callback to update panel when figure is resized (in refresh)
-et = ETA();
-pr_res = PlotPropScalar('EL', et, 'PROP', et.PROP_SCALAR_R_CALC);
-pr_res.draw('Parent', p, 'BackgroundColor', [.8 .5 .2])
-pr_res.update()
-pr_res.redraw()
+test_remove_from_varargin
+
+% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PlotPropScalar.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+% 
+% % minimal working version for category RESULT
+% figure()
+% p = uipanel('Parent', gcf); % needed for the function refresh that is called when the result is calculated
+% set(gcf, 'SizeChangedFcn', 'pr_res.update()') % callback to update panel when figure is resized (in refresh)
+% et = ETA();
+% pr_res = PlotPropScalar('EL', et, 'PROP', et.PROP_SCALAR_R_CALC);
+% pr_res.draw('Parent', p, 'BackgroundColor', [.8 .5 .2])
+% pr_res.update()
+% pr_res.redraw()
 
 % et = ETA();
 % props = [et.PROP_SCALAR_M et.PROP_SCALAR_P et.PROP_SCALAR_D et.PROP_SCALAR_R et.PROP_SCALAR_R_CALC];
