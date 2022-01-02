@@ -17,9 +17,9 @@ function [r, mask] = fdr(pvalues, q)
 %
 % See also bonferroni, pvalue1, pvalue2, quantiles.
 
-% q value [default = 0.05]
+% q value [default = .05]
 if nargin < 2
-    q = 0.05;
+    q = .05;
 else
     assert(q > 0 && q <= 1, ...
         [BRAPH2.STR ':fdr:' BRAPH2.WRONG_INPUT], ...

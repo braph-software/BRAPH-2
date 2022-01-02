@@ -56,7 +56,7 @@ function h_panel = draw(pl, varargin)
             else
                 time_between_clicks = toc(click_time);
                 click_time = tic();
-                if time_between_clicks < 0.3
+                if time_between_clicks < .3
                     selected_sub = get(pl.list_subs, 'Value');
                     plot_subject_figure(selected_sub)
                 end

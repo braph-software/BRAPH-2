@@ -28,7 +28,7 @@ VERBOSE (metadata, logical) sets whether to write the progress of the comparison
 %%% ¡prop!
 INTERRUPTIBLE (metadata, scalar) sets whether the comparison computation is interruptible for multitasking.
 %%%% ¡default!
-0.001
+.001
 
 %%% ¡prop!
 MEMORIZE (metadata, logical) sets whether to memorize the permuted analysis.

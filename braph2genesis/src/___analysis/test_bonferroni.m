@@ -1,7 +1,7 @@
 % Test bonferroni
 
 %% Test 1: Basics
-significant_p_value = 0.05;
+significant_p_value = .05;
 n = 25;  % number of samples or number of tests
 pvalues = rand(1, n);
 % Bonferroni Correction is defined as a the level of significance / number

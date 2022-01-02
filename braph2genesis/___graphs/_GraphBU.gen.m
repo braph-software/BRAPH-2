@@ -106,7 +106,7 @@ function [random_A, swaps] = randomize_A(A, attempts_per_edge)
         node_start_2 = I_edges(selected_edges(2));
         node_end_2 = J_edges(selected_edges(2));
 
-        if rand(1) > 0.5
+        if rand(1) > .5
             I_edges(selected_edges(2)) = node_end_2;
             J_edges(selected_edges(2)) = node_start_2;
 
