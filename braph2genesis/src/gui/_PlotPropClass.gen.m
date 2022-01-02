@@ -136,6 +136,10 @@ function redraw(pr, varargin)
     pr.redraw@PlotProp('Height', h, varargin{:})
 end
 function cb_popupmenu_value(pr)
+    %CB_POPUPMENU_VALUE executes callback for the popupmenu.
+    %
+    % CB_POPUPMENU_VALUE(PR) executes callback for the popupmenu.
+
     el = pr.get('EL');
     prop = pr.get('PROP');
     

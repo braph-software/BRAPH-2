@@ -136,6 +136,10 @@ function redraw(pr, varargin)
     
 end
 function cb_listbox_value(pr)
+    %CB_LISTBOX_VALUE executes callback for the listbox.
+    %
+    % CB_LISTBOX_VALUE(PR) executes callback for the listbox.
+
     el = pr.get('EL');
     prop = pr.get('PROP');
 

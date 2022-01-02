@@ -149,6 +149,10 @@ function redraw(pr, varargin)
     pr.redraw@PlotProp('Height', h, varargin{:})
 end
 function cb_edit_value(pr)
+    %CB_EDIT_VALUE executes callback for the edit value.
+    %
+    % CB_EDIT_VALUE(PR) executes callback for the edit value.
+
     el = pr.get('EL');
     prop = pr.get('PROP');
 

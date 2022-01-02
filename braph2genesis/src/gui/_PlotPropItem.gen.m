@@ -131,6 +131,10 @@ function redraw(pr, varargin)
     pr.redraw@PlotProp('Height', 3.33, varargin{:})
 end
 function cb_pushbutton_value(pr)
+    %CB_PUSHBUTTON_VALUE executes callback for the pushbutton.
+    %
+    % CB_PUSHBUTTON_VALUE(PR) executes callback for the pushbutton.
+
     el = pr.get('EL');
     prop = pr.get('PROP');    
     

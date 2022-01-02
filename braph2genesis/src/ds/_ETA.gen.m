@@ -296,6 +296,8 @@ PROP_SMATRIX_R_CALC (result, smatrix) is a result, smatrix.
 PROP_CELL_R_CALC (result, cell) is a result, cell.
 %%%% ¡conditioning!
 value = NoValue.getNoValue();
+%%%% ¡calculate!
+value = cellfun(@(x) rand(x), {1 2 3; 4 5 6}, 'UniformOutput', false);
 
 %% ¡tests!
 
