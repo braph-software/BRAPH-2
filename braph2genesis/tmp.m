@@ -21,7 +21,7 @@ end
 
 figure()
 p = uipanel('Parent', gcf); % needed for the function refresh that is called when the result is calculated
-set(gcf, 'SizeChangedFcn', 'pr_res.update()') % callback to update panel when figure is resized (in refresh)
+set(gcf, 'SizeChangedFcn', 'pr_res.update(); pr_res.redraw();') % callback to update panel when figure is resized (in refresh)
 et = ETA();
 pr_res = PlotPropMatrix('EL', et, 'PROP', et.PROP_MATRIX_R_CALC);
 pr_res.draw('Parent', p, 'BackgroundColor', [.8 .5 .2])
