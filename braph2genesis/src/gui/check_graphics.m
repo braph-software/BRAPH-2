@@ -28,6 +28,8 @@ if nargout == 1
                 check = ~isempty(h) && isgraphics(h, 'uipanel');
             case 'axes'
                 check = ~isempty(h) && isgraphics(h, 'axes');
+            case 'uitable'
+                check = ~isempty(h) && isgraphics(h, 'uitable');
             case 'pushbutton'
                 check = ~isempty(h) && isgraphics(h, 'uicontrol') && strcmpi(get(h, 'Style'), 'pushbutton');
             case 'togglebutton'
