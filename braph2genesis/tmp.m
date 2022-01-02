@@ -2,23 +2,32 @@ close all
 clear all
 clc
 
-create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PlotPropCell.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PlotPropMatrix.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
 
 figure('Units', 'normalized', 'Position', [0 .5 1 .5])
 et = ETA( ...
-    'PROP_CELL_M', {rand(10) eye(10); eye(10) rand(10)}, ...
-    'PROP_CELL_P', {3.14 eye(2) rand(3)}, ...
-    'PROP_CELL_D', rand(3) ... % note that this works only because of the conditioning (otherwise not a valid cell input)
+    'PROP_MATRIX_M', rand(30, 5), ...
+    'PROP_MATRIX_P', 3.14, ...
+    'PROP_MATRIX_D', eye(6) ...
     );
-props = [et.PROP_CELL_M et.PROP_CELL_P et.PROP_CELL_D et.PROP_CELL_R et.PROP_CELL_R_CALC];
+props = [et.PROP_MATRIX_M et.PROP_MATRIX_P et.PROP_MATRIX_D et.PROP_MATRIX_R et.PROP_MATRIX_R_CALC];
 for i = 1:1:length(props)
-    pr{i} = PlotPropCell('EL', et, 'PROP', props(i));
+    pr{i} = PlotPropMatrix('EL', et, 'PROP', props(i));
     pr{i}.draw('BackgroundColor', [i/length(props) .5 (length(props)-i)/length(props)])
     pr{i}.update()
     pr{i}.redraw('X0', (i-1)/length(props) * Plot.w(gcf, 'characters'), ...
-        'Width', 1/length(props) * Plot.w(gcf, 'characters'), ...
-        'DHeight', 25)
+        'Width', 1/length(props) * Plot.w(gcf, 'characters'))
 end
+
+figure()
+p = uipanel('Parent', gcf); % needed for the function refresh that is called when the result is calculated
+set(gcf, 'SizeChangedFcn', 'pr_res.update()') % callback to update panel when figure is resized (in refresh)
+et = ETA();
+pr_res = PlotPropMatrix('EL', et, 'PROP', et.PROP_MATRIX_R_CALC);
+pr_res.draw('Parent', p, 'BackgroundColor', [.8 .5 .2])
+pr_res.update()
+pr_res.redraw()
+
 
 % copydir('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/util', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/util')
 % 
