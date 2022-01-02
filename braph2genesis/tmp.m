@@ -2,9 +2,9 @@ close all
 clear all
 clc
 
-copydir('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/util', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/util')
-
-test_get_and_remove_from_varargin
+% copydir('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/util', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/util')
+% 
+% test_get_and_remove_from_varargin
 
 % create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PlotPropScalar.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
 % 
