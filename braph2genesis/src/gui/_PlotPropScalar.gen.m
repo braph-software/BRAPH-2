@@ -18,7 +18,7 @@ function h_panel = draw(pr, varargin)
     %
     % DRAW(PR) draws the panel of the scalar property.
     %
-    % H = DRAW(PR) returns a handle to the the panel of the scalar property.
+    % H = DRAW(PR) returns a handle to the property panel.
     %
     % DRAW(PR, 'Property', VALUE, ...) sets the properties of the graphical
     %  panel with custom Name-Value pairs.
