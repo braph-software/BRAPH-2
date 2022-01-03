@@ -52,12 +52,12 @@ function create_Element(generator_file, target_dir)
 %   Menu Import for the GUI figure. 
 %   The element is el.
 %   The menu is ui_menu_import.
-%   The plot element is pl.
+%   The plot element is pe.
 %  <strong>%%%% ¡menu_export!</strong>
 %   Menu Export for the GUI figure. 
 %   The element is el.
 %   The menu is ui_menu_export.
-%   The plot element is pl.
+%   The plot element is pe.
 % 
 %<strong>%% ¡props!</strong>
 % <strong>%%% ¡prop!</strong>
@@ -93,7 +93,7 @@ function create_Element(generator_file, target_dir)
 %  <strong>%%%% ¡gui!</strong>
 %   GUI code for representing the panel of the prop.
 %   Can be on multiple lines.
-%   Should return a Plot object in 'pl'.
+%   Should return a PlotProp object in 'pr'.
 % <strong>%%% ¡prop!</strong>
 %   <tag2> ...
 % 
@@ -410,7 +410,7 @@ generate_header()
              '%  checkFormat - returns whether a value format is correct/error'
              '%'
             ['% ' class_name ' methods (GUI):']
-             '%  getGUI - returns figure with element GUI'
+             '%  getGUI - returns the element GUI'
              '%  getPlotElement - returns the element plot'
              '%  getPlotProp - returns a prop plot'
              '%'
@@ -1571,13 +1571,13 @@ generate_gui()
             if ~(numel(gui_panel) == 1 && isempty(gui_panel{1})) && ...
                     any(cellfun(@(x) isempty(x), gui_menu_import)) && ...
                     any(cellfun(@(x) isempty(x), gui_menu_export))
-                g(2, ['function pl = getPlotElement(' moniker ', varargin)'])
+                g(2, ['function pe = getPlotElement(' moniker ', varargin)'])
                 gs(3, {
                      '%GETPLOTELEMENT returns the element plot.'
                      '%'
-                     '% PL = GETPLOTELEMENT(EL) returns the plot of element EL.'
+                     '% PE = GETPLOTELEMENT(EL) returns the plot of element EL.'
                      '%'
-                     '% PL = GETPLOTELEMENT(EL, ''Name'', Value, ...) sets the settings of PlotElement.'
+                     '% PE = GETPLOTELEMENT(EL, ''Name'', Value, ...) sets the settings of PlotElement.'
                      '%'
                      '% See also PlotElement.'
                      ''
@@ -1586,13 +1586,13 @@ generate_gui()
                 g(2, 'end')
             end
             if any(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props)) || any(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props_update))
-                g(2, ['function pl = getPlotProp(' moniker ', prop, varargin)'])
+                g(2, ['function pr = getPlotProp(' moniker ', prop, varargin)'])
                 gs(3, {
                     '%GETPLOTPROP returns a prop plot.'
                     '%'
-                    '% PL = GETPLOTPROP(EL, PROP) returns the plot of prop PROP.'
+                    '% PR = GETPLOTPROP(EL, PROP) returns the plot of prop PROP.'
                     '%'
-                    '% PL = GETPLOTPROP(EL, PROP, ''Name'', Value, ...) sets the settings.'
+                    '% PR = GETPLOTPROP(EL, PROP, ''Name'', Value, ...) sets the settings.'
                     '%'
                     '% See also PlotProp, PlotPropCell, PlotPropClass, PlotPropClassList,'
                     '%  PlotPropIDict, PlotPropItem, PlotPropItemList, PlotPropLogical,'
@@ -1615,7 +1615,7 @@ generate_gui()
                     end
                 end
                 g(4, 'otherwise')
-                gs(5, {['pl = getPlotProp@' superclass_name '(' moniker ', prop, varargin{:});'], ''})
+                gs(5, {['pr = getPlotProp@' superclass_name '(' moniker ', prop, varargin{:});'], ''})
                 g(3, 'end')
                 g(2, 'end')
             end            
@@ -1630,18 +1630,18 @@ generate_gui_static()
         end
         g(1, 'methods (Static) % GUI static methods')
         if any(cellfun(@(x) ~isempty(x), gui_menu_import))
-            g(2, 'function getGUIMenuImport(el, ui_menu_import, pl)')
+            g(2, 'function getGUIMenuImport(el, ui_menu_import, pe)')
             gs(3, {
                 '%GETGUIMENUIMPORT sets a figure menu.'
                 '%'
-                '% GETGUIMENUIMPORT(EL, MENU, PL) sets the figure menu import'
-                '%  which operates on the element EL in the plot element PL.'
+                '% GETGUIMENUIMPORT(EL, MENU, PE) sets the figure menu import'
+                '%  which operates on the element EL in the plot element PE.'
                 '%'
                 '% See also getGUIMenuExporter, PlotElement.'
                 ''
                 })
                 gs(3, {
-                    'Element.getGUIMenuImport(el, ui_menu_import, pl);'
+                    'Element.getGUIMenuImport(el, ui_menu_import, pe);'
                     ''
                     })
             gs(3, gui_menu_import)
@@ -1649,18 +1649,18 @@ generate_gui_static()
             g(2, 'end')
         end
         if  any(cellfun(@(x) ~isempty(x), gui_menu_export))
-            g(2, 'function getGUIMenuExport(el, ui_menu_export, pl)')
+            g(2, 'function getGUIMenuExport(el, ui_menu_export, pe)')
             gs(3, {
                 '%GETGUIMENUEXPORT sets a figure menu.'
                 '%'
-                '% GETGUIMENUIMPORT(EL, MENU, PL) sets the figure menu export'
-                '%  which operates on the element EL in the plot element PL.'
+                '% GETGUIMENUIMPORT(EL, MENU, PE) sets the figure menu export'
+                '%  which operates on the element EL in the plot element PE.'
                 '%'
                 '% See also getGUIMenuImporter, PlotElement.'
                 ''
                 })
                 gs(3, {
-                    'Element.getGUIMenuExport(el, ui_menu_export, pl);'
+                    'Element.getGUIMenuExport(el, ui_menu_export, pe);'
                     ''
                     })
             gs(3, gui_menu_export)
