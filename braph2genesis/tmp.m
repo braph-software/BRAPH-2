@@ -9,13 +9,13 @@ clc
 % delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui/PlotElement.m')
 % create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PlotElement.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
 
-braph2genesis
-
-et = ETA();
-pe = PlotElement('EL', et);
-pp = pe.draw();
-
-get(pp, 'UserData')
+% braph2genesis
+% 
+% et = ETA();
+% pe = PlotElement('EL', et);
+% pp = pe.draw();
+% 
+% get(pp, 'UserData')
 
 % create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PlotPropMatrix.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
 % 
