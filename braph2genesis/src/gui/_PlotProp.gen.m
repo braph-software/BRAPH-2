@@ -82,8 +82,8 @@ function h_panel = draw(pr, varargin)
     %
     % H = DRAW(PL) returns a handle to the property panel.
     %
-    % DRAW(PL, 'Property', VALUE, ...) sets the properties of the graphical
-    %  panel with custom Name-Value pairs.
+    % DRAW(PL, 'Property', VALUE, ...) sets the properties of the panel 
+    %  with custom Name-Value pairs.
     %  All standard plot properties of uipanel can be used.
     %
     % It is possible to access the properties of the various graphical
@@ -112,7 +112,7 @@ disp('d') % FIXME
             'String', pr_string_title, ...
             'HorizontalAlignment', 'left', ...
             'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-            'BackgroundColor', pr.p.get('BackgroundColor') ...
+            'BackgroundColor', pr.get('BKGCOLOR') ...
             );
     end
 

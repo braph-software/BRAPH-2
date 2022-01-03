@@ -17,8 +17,7 @@ PROP_EMPTY_M (metadata, empty) is a metadata, empty.
 %%% ¡prop!
 PROP_STRING_M (metadata, string) is a metadata, string.
 %%%% ¡gui!
-% % % pl = PlotPropString('EL', et, 'PROP', ETA.PROP_STRING_M, varargin{:});
-pl = PlotProp('EL', et, 'PROP', ETA.PROP_STRING_M, varargin{:});
+pr = PlotPropString('EL', et, 'PROP', ETA.PROP_STRING_M, varargin{:});
 
 %%% ¡prop!
 PROP_LOGICAL_M (metadata, logical) is a metadata, logical.

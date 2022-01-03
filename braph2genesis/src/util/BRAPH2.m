@@ -64,9 +64,13 @@ classdef BRAPH2
         EX_ERR = 'ExporterError.' % error while exporting a file
     end
     properties (Constant) % BRAPH2 GUI constants
-        FONTUNITS = 'points';
-        FONTSIZE = 12;
-        COL_FIG = [1 .9725 .929]; % figure background color
+        FONTUNITS = 'points'
+        FONTSIZE = 12
+        COL_FIG = [1 .9725 .929] % figure background color
+        COL_M = [.20 .50 .80] % standard metadata background color % [.745 .839 .902]
+        COL_P = [.40 .50 .60] % standard parameter background color % [.38 .514 .6]
+        COL_D = [.60 .50 .40] % standard data background color % [.902 .835 .745]
+        COL_R = [.80 .50 .20] % standard result background color % [.62 .545 .439]
     end
     methods (Static)
         function about()
