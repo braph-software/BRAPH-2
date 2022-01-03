@@ -382,8 +382,8 @@ et1 = ETA();
 for category = 1:1:Element.getCategoryNumber() + 1
     for format = 1:1:Element.getFormatNumber()
         prop = (category - 1) * Element.getFormatNumber() + format;
-        pr{category, format} = PlotProp('EL', et1, 'PROP', prop);
-        pr{category, format}.draw( ...
+        prs{category, format} = PlotProp('EL', et1, 'PROP', prop);
+        prs{category, format}.draw( ...
             'Units', 'normalized', ...
             'Position', [ ...
                 (category-1)/(Element.getCategoryNumber()+1) ...
@@ -404,16 +404,16 @@ et2 = ETA();
 for category = 1:1:Element.getCategoryNumber() + 1
     for format = 1:1:Element.getFormatNumber()
         prop = (category - 1) * Element.getFormatNumber() + format;
-        pr{category, format} = PlotProp('EL', et2, 'PROP', prop);
-        pr{category, format}.draw()
-        pr{category, format}.draw('Units', 'normalized')
-        pr{category, format}.draw('Position', [ ...
+        prs{category, format} = PlotProp('EL', et2, 'PROP', prop);
+        prs{category, format}.draw()
+        prs{category, format}.draw('Units', 'normalized')
+        prs{category, format}.draw('Position', [ ...
                 (category-1)/(Element.getCategoryNumber()+1) ...
                 1-format/Element.getFormatNumber() ...
                 .9/(Element.getCategoryNumber()+1) ...
                 .9/Element.getFormatNumber() ...
                 ])
-        pr{category, format}.draw('BackgroundColor', [format/Element.getFormatNumber() category/(Element.getCategoryNumber()+1)] * [1 .5 0; 0 .5 1])
+        prs{category, format}.draw('BackgroundColor', [format/Element.getFormatNumber() category/(Element.getCategoryNumber()+1)] * [1 .5 0; 0 .5 1])
         drawnow()
     end
 end
@@ -426,12 +426,12 @@ et3 = ETA();
 for category = 1:1:Element.getCategoryNumber() + 1
     for format = 1:1:Element.getFormatNumber()
         prop = (category - 1) * Element.getFormatNumber() + format;
-        pr{category, format} = PlotProp('EL', et3, 'PROP', prop);
-        pr{category, format}.draw()
-        pr{category, format}.draw('Units', 'normalized')
-        pr{category, format}.draw('BackgroundColor', [format/Element.getFormatNumber() category/(Element.getCategoryNumber()+1)] * [1 .5 0; 0 .5 1])
+        prs{category, format} = PlotProp('EL', et3, 'PROP', prop);
+        prs{category, format}.draw()
+        prs{category, format}.draw('Units', 'normalized')
+        prs{category, format}.draw('BackgroundColor', [format/Element.getFormatNumber() category/(Element.getCategoryNumber()+1)] * [1 .5 0; 0 .5 1])
 
-        pr{category, format}.redraw( ...
+        prs{category, format}.redraw( ...
             'X0', (category - 1) / (Element.getCategoryNumber() + 1) * Plot.w(gcf, 'characters'), ...
             'Y0', (1 - format / Element.getFormatNumber()) * Plot.h(gcf, 'characters'), ...
             'Width', .9 / (Element.getCategoryNumber() + 1) * Plot.w(gcf, 'characters'), ...
@@ -450,14 +450,14 @@ et3 = ETA();
 for category = 1:1:Element.getCategoryNumber() + 1
     for format = 1:1:Element.getFormatNumber()
         prop = (category - 1) * Element.getFormatNumber() + format;
-        pr{category, format} = PlotProp('EL', et3, 'PROP', prop);
-        pr{category, format}.draw()
-        pr{category, format}.draw('Units', 'normalized')
-        pr{category, format}.draw('BackgroundColor', [format/Element.getFormatNumber() category/(Element.getCategoryNumber()+1)] * [1 .5 0; 0 .5 1])
+        prs{category, format} = PlotProp('EL', et3, 'PROP', prop);
+        prs{category, format}.draw()
+        prs{category, format}.draw('Units', 'normalized')
+        prs{category, format}.draw('BackgroundColor', [format/Element.getFormatNumber() category/(Element.getCategoryNumber()+1)] * [1 .5 0; 0 .5 1])
 
-        pr{category, format}.update()
+        prs{category, format}.update()
         
-        pr{category, format}.redraw( ...
+        prs{category, format}.redraw( ...
             'X0', (category - 1) / (Element.getCategoryNumber() + 1) * Plot.w(gcf, 'characters'), ...
             'Y0', (1 - format / Element.getFormatNumber()) * Plot.h(gcf, 'characters'), ...
             'Width', .9 / (Element.getCategoryNumber() + 1) * Plot.w(gcf, 'characters'), ...
