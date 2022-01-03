@@ -190,11 +190,15 @@ function h_panel = draw(pe, varargin)
             ), ...
             pe.memorize('PR_DICT').getItems(), 'UniformOutput', false);
     end
+
+    pe.update()
+    set(pe.pp, 'Visible', 'on') % calls also redraw() and slide()
     
-    set(pe.pp, ...
-        'UserData', 'update', ... % calls update(), through redraw()
-        'Visible', 'on' ... % calls redraw() and slide()
-        )
+% % % FIXME: erase
+% % %     set(pe.pp, ...
+% % %         'UserData', 'update', ... % calls update(), through redraw()
+% % %         'Visible', 'on' ... % calls redraw() and slide()
+% % %         )
     
     % output
     if nargout > 0
@@ -231,13 +235,14 @@ function redraw(pe)
     pp = pe.pp;
     pr_list = pe.pr_list;
     
-    if strcmpi(get(pp, 'UserData'), 'ignore')
-        set(pp, 'UserData', [])
-        return
-    elseif strcmpi(get(pp, 'UserData'), 'update')
-        set(pp, 'UserData', [])
-        pe.update()
-    end
+% % % FIXME: erase
+% % %     if strcmpi(get(pp, 'UserData'), 'ignore')
+% % %         set(pp, 'UserData', pe)
+% % %         return
+% % %     elseif strcmpi(get(pp, 'UserData'), 'update')
+% % %         set(pp, 'UserData', pe)
+% % %         pe.update()
+% % %     end
     
     % redraw prop panels
     dw = pe.get('DW');   

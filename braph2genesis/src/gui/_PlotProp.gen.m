@@ -42,9 +42,9 @@ REDRAW - Resizes the panel and repositions its graphical objcts.
   Typically, it does not need to be called explicitly.
   It is internally called by PlotElement when needed.
 
-REFRESH - Updates and resizes the panel and also its parent and siblings.
-  Typically, it does not need to be called explicitly.
-  It is internally called by PlotElement when needed.
+% % % REFRESH - Updates and resizes the panel and also its parent and siblings.
+% % %   Typically, it does not need to be called explicitly.
+% % %   It is internally called by PlotElement when needed.
 
 %%% ¡seealso!
 GUI, PlotElement
@@ -89,7 +89,9 @@ function h_panel = draw(pr, varargin)
     % It is possible to access the properties of the various graphical
     %  objects from the handle H of the panel.
     %
-    % See also update, redraw, refresh, settings, uipanel.
+    % See also update, redraw, settings, uipanel.
+% % % FIXME: erase
+% % %     % See also update, redraw, refresh, settings, uipanel.
 disp('d') % FIXME
 
     pr.p = draw@Plot(pr, varargin{:});
@@ -187,7 +189,9 @@ function update(pr)
     % 1. UPDATE() is typically called internally by PlotElement and does not need 
     %  to be explicitly called in children of PlotProp.
     %
-    % See also draw, redraw, refresh, PlotElement.
+    % See also draw, redraw, PlotElement.
+% % % FIXME: erase
+% % %     % See also draw, redraw, refresh, PlotElement.
 disp('u') % FIXME
 
     el = pr.get('EL');
@@ -241,6 +245,8 @@ function redraw(pr, varargin)
     %  - WIDTH does not change
     %  - HEIGHT=1.4 characters.
     %
+    % See also draw, update, PlotElement.
+% % % FIXME: erase
     % See also draw, update, refresh, PlotElement.
 disp('r') % FIXME
 
@@ -302,32 +308,33 @@ disp('r') % FIXME
         r = Plot.h(h, 'characters');
     end
 end
-function refresh(pr)
-    %REFRESH updates and resizes parent and siblings.
-    %
-    % REFRESH(PL) updates and resizes parent and siblings.
-    %
-    % Important note:
-    % 1. UPDATE() is typically called internally by PlotElement and does not need 
-    %  to be explicitly called in children of PlotProp.
-    %
-    % See also draw, update, redraw, PlotElement.
-disp('f') % FIXME
-
-    p = pr.p;
-    pp = get(p, 'Parent');
-    if check_graphics(pp, 'uipanel')
-        f = get(pp, 'Parent');
-        backup_units = get(f, 'Units');
-        backup_position = get(f, 'Position');
-        backup_userdata = get(f, 'UserData'); % FIXME: addition - check
-        set(f, 'Units', 'pixels') 
-        set(f, 'UserData', 'ignore', 'Position', get(f, 'Position') + [0 0 0 -10])
-        set(f, 'UserData', 'update', 'Units', backup_units, 'Position', backup_position) % triggers call to calls update() and redraw() on f
-        set(f, 'UserData', backup_userdata) % FIXME: addition - check
-% FIXME: check this code carefully once PlotElement is ready        
-    end
-end
+% % % FIXME: erase
+% % % function refresh(pr)
+% % %     %REFRESH updates and resizes parent and siblings.
+% % %     %
+% % %     % REFRESH(PL) updates and resizes parent and siblings.
+% % %     %
+% % %     % Important note:
+% % %     % 1. UPDATE() is typically called internally by PlotElement and does not need 
+% % %     %  to be explicitly called in children of PlotProp.
+% % %     %
+% % %     % See also draw, update, redraw, PlotElement.
+% % % disp('f') % FIXME
+% % % 
+% % %     p = pr.p;
+% % %     pp = get(p, 'Parent');
+% % %     if check_graphics(pp, 'uipanel')
+% % %         f = get(pp, 'Parent');
+% % %         backup_units = get(f, 'Units');
+% % %         backup_position = get(f, 'Position');
+% % %         backup_userdata = get(f, 'UserData'); % FIXME: addition - check
+% % %         set(f, 'Units', 'pixels') 
+% % %         set(f, 'UserData', 'ignore', 'Position', get(f, 'Position') + [0 0 0 -10])
+% % %         set(f, 'UserData', 'update', 'Units', backup_units, 'Position', backup_position) % triggers call to calls update() and redraw() on f
+% % %         set(f, 'UserData', backup_userdata) % FIXME: addition - check
+% % % % FIXME: check this code carefully once PlotElement is ready        
+% % %     end
+% % % end
 function cb_button_cb(pr)
     %CB_BUTTON_CB executes callback for button callback.
     %
@@ -353,7 +360,12 @@ function cb_button_calc(pr)
 
     el.memorize(prop);
 
-    pr.refresh() % includes pr.update() and pr.redraw(), also one level up
+% % % FIXME: erase
+% % %     pr.refresh() % includes pr.update() and pr.redraw(), also one level up
+    % updates and redraws the parent PlotElement as well as all siblings PlotProp's
+    pe = get(get(get(pr.p, 'Parent'), 'Parent'), 'UserData');
+    pe.update()
+    pe.redraw()
 end
 function cb_button_del(pr)
     %CB_BUTTON_DEL executes callback for button delete.
@@ -367,7 +379,12 @@ function cb_button_del(pr)
     
     el.set(prop, NoValue.getNoValue())
 
-    pr.refresh() % includes pr.update() and pr.redraw(), also one level up
+% % % FIXME: erase
+% % %     pr.refresh() % includes pr.update() and pr.redraw(), also one level up
+    % updates and redraws the parent PlotElement as well as all siblings PlotProp's
+    pe = get(get(get(pr.p, 'Parent'), 'Parent'), 'UserData');
+    pe.update()
+    pe.redraw()
 end
 
 %% ¡tests!
