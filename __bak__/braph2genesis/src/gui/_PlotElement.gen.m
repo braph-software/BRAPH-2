@@ -218,17 +218,17 @@ function redraw(pl)
     %
     % See also draw, update, slide.
 
-    f = pl.f;
+    PPPPPPP = pl.f;
     pp_list = pl.pp_list;
     
-    units = get(f, 'Units');
-    set(f, 'Units', 'character')    
+    units = get(PPPPPPP, 'Units');
+    set(PPPPPPP, 'Units', 'character')    
 
-    if strcmpi(get(f, 'UserData'), 'ignore')
-        set(f, 'UserData', [])
+    if strcmpi(get(PPPPPPP, 'UserData'), 'ignore')
+        set(PPPPPPP, 'UserData', [])
         return
-    elseif strcmpi(get(f, 'UserData'), 'update')
-        set(f, 'UserData', [])
+    elseif strcmpi(get(PPPPPPP, 'UserData'), 'update')
+        set(PPPPPPP, 'UserData', [])
         pl.update()
     end
     
@@ -236,7 +236,7 @@ function redraw(pl)
     dw = pl.get('DW');   
     w_s = pl.get('WSLIDER');
     for prop = 1:1:length(pp_list)
-        pl.get('PP_DICT').getItem(prop).redraw('Width', w(f) - 2 * dw - w_s)
+        pl.get('PP_DICT').getItem(prop).redraw('Width', w(PPPPPPP) - 2 * dw - w_s)
     end
     
     % redraw panel and place prop panels
@@ -248,22 +248,22 @@ function redraw(pl)
 
     % p, s
     h_p = sum(h_pp + dh) + dh;
-    if h_p > h(f)
+    if h_p > h(PPPPPPP)
         for prop = 1:1:length(pp_list)
-            pp = pp_list{prop};
-            set(pp, 'Position', [x0_pp y0_pp(prop) w(pp) h(pp)])
+            pp_item = pp_list{prop};
+            set(pp_item, 'Position', [x0_pp y0_pp(prop) w(pp_item) h(pp_item)])
         end
     else
         for prop = 1:1:length(pp_list)
-            pp = pp_list{prop};
-            set(pp, 'Position', [x0_pp y0_pp(prop)+h(f)-h_p w(pp) h(pp)])
+            pp_item = pp_list{prop};
+            set(pp_item, 'Position', [x0_pp y0_pp(prop)+h(PPPPPPP)-h_p w(pp_item) h(pp_item)])
         end
     end    
     
     % slide and adjust panel
     pl.slide()
     
-    set(f, 'Units', units)
+    set(PPPPPPP, 'Units', units)
     
     % auxiliary functions
     function r = x0(h)

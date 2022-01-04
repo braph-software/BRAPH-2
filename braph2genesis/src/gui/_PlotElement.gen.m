@@ -66,7 +66,7 @@ PCOLOR (metadata, rvector) is background color of the parameter properties.
 %%%% ¡check_prop!
 check = (length(value) == 3) && all(value >= 0 & value <= 1);
 %%%% ¡default!
-BRAPH2.COL_M
+BRAPH2.COL_P
 
 %%% ¡prop!
 DCOLOR (metadata, rvector) is background color of the data properties.
@@ -262,13 +262,13 @@ function redraw(pe)
     h_p = sum(h_pp + dh) + dh;
     if h_p > h(pp)
         for prop = 1:1:length(pr_list)
-            pp = pr_list{prop};
-            set(pp, 'Position', [x0_pp y0_pp(prop) w(pp) h(pp)])
+            pp_item = pr_list{prop};
+            set(pp_item, 'Position', [x0_pp y0_pp(prop) w(pp_item) h(pp_item)])
         end
     else
         for prop = 1:1:length(pr_list)
-            pp = pr_list{prop};
-            set(pp, 'Position', [x0_pp y0_pp(prop)+h(pp)-h_p w(pp) h(pp)])
+            pp_item = pr_list{prop};
+            set(pp_item, 'Position', [x0_pp y0_pp(prop)+h(pp)-h_p w(pp_item) h(pp_item)])
         end
     end    
     

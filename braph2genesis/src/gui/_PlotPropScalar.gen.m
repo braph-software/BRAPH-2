@@ -40,7 +40,7 @@ function h_panel = draw(pr, varargin)
             'Tag', 'edit_value', ...
             'Parent', pr.p, ...
             'Units', 'normalized', ...
-            'Position', [.01 .10 .29 .40], ... % position defined here because it's always the same
+            'Position', [.01 .10 .29 .50], ... % position defined here because it's always the same
             'HorizontalAlignment', 'left', ...
             'BackgroundColor', 'w', ...
             'FontUnits', BRAPH2.FONTUNITS, ...
@@ -121,11 +121,11 @@ function redraw(pr, varargin)
     %  - X0 does not change
     %  - Y0 does not change
     %  - WIDTH does not change
-    %  - HEIGHT=2.5 characters.
+    %  - HEIGHT=2.8 characters.
     %
     % See also draw, update, refresh, PlotElement.
 
-    [h, varargin] = get_and_remove_from_varargin(2.5, 'Height', varargin);
+    [h, varargin] = get_and_remove_from_varargin(2.8, 'Height', varargin);
     
     pr.redraw@PlotProp('Height', h, varargin{:})
 end

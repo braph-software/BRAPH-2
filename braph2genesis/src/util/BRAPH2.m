@@ -34,8 +34,11 @@ classdef BRAPH2
     %  COL_FIG      - figure background color
     %
     % Methods (Static) - BRAPH2 info panels:
-    %  about        - provides information about BRAPH2
+    %  credits        - provides information about the authors of BRAPH2
     %  license      - provides information about the license of BRAPH2
+    %  web          - opens the BRAPH2 website
+    %  forum        - opens the BRAPH2 forum
+    %  twitter      - opens the BRAPH2 Twitter
     
     properties (Constant) % BRAPH2 ID Card
         NAME = 'Braph 2.0' % BRAPH2 full name
@@ -73,8 +76,8 @@ classdef BRAPH2
         COL_R = [.80 .50 .20] % standard result background color % [.62 .545 .439]
     end
     methods (Static)
-        function about()
-            %ABOUT provides information about BRAPH2.
+        function credits()
+            %CREDITS provides information about the authors of BRAPH2.
             %
             % See also license.
             
@@ -116,5 +119,29 @@ classdef BRAPH2
                 CreateStruct);
             set_braph2_icon(h)
         end        
+        function web()
+            %WEB opens the BRAPH2 website.
+            %
+            % See also forum, twitter.
+            
+            url = 'http://braph.org/'; % FIXME: finalize once web ready
+            web(url);            
+        end
+        function forum()
+            %FORUM opens the BRAPH2 forum.
+            %
+            % See also web, twitter.
+            
+            url = 'http://braph.org/forum/'; % FIXME: finalize once web ready
+            web(url);
+        end
+        function twitter()
+            %TWITTER opens the BRAPH2 Twitter.
+            %
+            % See also web, forum.
+            
+            url = 'http://twitter.com/'; % FIXME: finalize once web ready
+            web(url);            
+        end
     end
 end
