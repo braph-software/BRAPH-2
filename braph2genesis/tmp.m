@@ -2,15 +2,23 @@ close all
 clear all
 clc
 
-delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui/GUI.m')
-create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_GUI.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
-create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_GUI.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/atlas/BrainAtlas.m')
+create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/atlas/_BrainAtlas.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/atlas')
+create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/atlas/_BrainAtlas.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/atlas')
 
-et = ETA();
-gui = GUI('PE', et, 'CLOSEREQ', false);
+ba = BrainAtlas();
+gui = GUI('PE', ba, 'CLOSEREQ', false);
 gui.draw()
 
-gui.set('NAME', 'new name', 'POSITION', [.5 .5 .5 .5]).draw()
+% delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui/GUI.m')
+% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_GUI.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_GUI.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+% 
+% et = ETA();
+% gui = GUI('PE', et, 'CLOSEREQ', false);
+% gui.draw()
+% 
+% gui.set('NAME', 'new name', 'POSITION', [.5 .5 .5 .5]).draw()
 
 % delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui/Plot.m')
 % create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_Plot.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')

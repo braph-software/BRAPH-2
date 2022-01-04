@@ -14,7 +14,7 @@ Element, BrainRegion, BrainSurface, ImporterBrainAtlasXLS, ImporterBrainAtlasTXT
 %%% ¡gui!
 
 %%%% ¡menu_importer!
-uimenu(ui_menu_import, ...
+uimenu(menu_import, ...
     'Label', 'Import TXT ...', ...
     'Callback', {@cb_importer_TXT});
 function cb_importer_TXT(~, ~)
@@ -25,10 +25,10 @@ function cb_importer_TXT(~, ~)
     im.uigetfile();
     try
         if isfile(im.get('FILE'))
-            % pl.set('EL', im.get('PIP')); 
-            % pl.reinit();
+            % pe.set('EL', im.get('PIP')); 
+            % pe.reinit();
 
-            ba = pl.get('EL');
+            ba = pe.get('EL');
             
             assert( ...
                 all(cellfun(@(prop) ~ba.isLocked(prop), num2cell(ba.getProps()))), ...
@@ -43,7 +43,7 @@ function cb_importer_TXT(~, ~)
                 end
             end
             
-            pl.reinit();
+            pe.reinit(ba_new);
         end
     catch e
         warndlg(['Please, select a valid input BrainAtlas in TXT format. ' newline() ...
@@ -54,7 +54,7 @@ function cb_importer_TXT(~, ~)
     end
 end
 
-uimenu(ui_menu_import, ...
+uimenu(menu_import, ...
     'Label', 'Import XLS ...', ...
     'Callback', {@cb_importer_XLS});
 function cb_importer_XLS(~, ~)
@@ -65,10 +65,10 @@ function cb_importer_XLS(~, ~)
     im.uigetfile();
     try
         if isfile(im.get('FILE'))
-            % pl.set('EL', im.get('PIP')); 
-            % pl.reinit();
+            % pe.set('EL', im.get('PIP')); 
+            % pe.reinit();
 
-            ba = pl.get('EL');
+            ba = pe.get('EL');
             
             assert( ...
                 all(cellfun(@(prop) ~ba.isLocked(prop), num2cell(ba.getProps()))), ...
@@ -83,7 +83,7 @@ function cb_importer_XLS(~, ~)
                 end
             end
             
-            pl.reinit();
+            pe.reinit(ba_new);
         end
     catch e
         warndlg(['Please, select a valid input BrainAtlas in XLS format. ' newline() ...
@@ -95,7 +95,7 @@ function cb_importer_XLS(~, ~)
 end
 
 %%%% ¡menu_exporter!
-uimenu(ui_menu_export, ...
+uimenu(menu_export, ...
     'Label', 'Export TXT ...', ...
     'Callback', {@cb_exporter_TXT});
 function cb_exporter_TXT(~, ~)
@@ -110,7 +110,7 @@ function cb_exporter_TXT(~, ~)
     end
 end
 
-uimenu(ui_menu_export, ...
+uimenu(menu_export, ...
     'Label', 'Export XLS ...', ...
     'Callback', {@cb_exporter_XLS});
 function cb_exporter_XLS(~, ~)
@@ -141,7 +141,7 @@ BR_DICT (data, idict) contains the brain regions of the brain atlas.
 %%%% ¡settings!
 'BrainRegion'
 %%%% ¡gui!
-pl = PPBrainAtlas_BRDict('EL', ba, 'PROP', BrainAtlas.BR_DICT, varargin{:});
+pr = PPBrainAtlas_BRDict('EL', ba, 'PROP', BrainAtlas.BR_DICT, varargin{:});
 
 %%% ¡prop!
 SURF (metadata, item) contains the brain surface of the brain atlas.
@@ -150,7 +150,7 @@ SURF (metadata, item) contains the brain surface of the brain atlas.
 %%%% ¡default!
 ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF')
 %%%% ¡gui!
-pl = PPBrainAtlas_Surf('EL', ba, 'PROP', BrainAtlas.SURF, varargin{:});
+pr = PPBrainAtlas_Surf('EL', ba, 'PROP', BrainAtlas.SURF, varargin{:});
 
 %% ¡tests!
 

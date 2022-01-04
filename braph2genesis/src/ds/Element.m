@@ -1718,7 +1718,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         end
     end
     methods (Static) % GUI Static
-        function getGUIMenuImport(el, ui_menu_import, pl)
+        function getGUIMenuImport(el, menu_import, pl)
             %GETGUIMENUIMPORT sets the import submenu gui json.
             % 
             % GETGUIMENUIMPORT(EL, UI_MENU, PL) sets the import submenu
@@ -1726,7 +1726,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % 
             % See also getGUI, getGUIMenuExport, PLotElement.
             
-            uimenu(ui_menu_import, ...
+            uimenu(menu_import, ...
                 'Label', 'Import JSON ...', ...
                 'Callback', {@cb_import_json})
                  
@@ -1744,14 +1744,14 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 end
             end
         end
-        function getGUIMenuExport(el, ui_menu_export, plot_element)
+        function getGUIMenuExport(el, menu_export, plot_element)
             %GETGUIMENUEXPORT sets the export submenu gui json.
             % 
             % GETGUIMENUEXPORT(EL, UI_MENU) sets the export submenu for the ui menu UI_MENU.
             % 
             % See also getGUI, getGUIMenuImport.
                      
-            uimenu(ui_menu_export, ...
+            uimenu(menu_export, ...
                 'Label', 'Export JSON ...', ...
                 'Callback', {@cb_export_json})
           

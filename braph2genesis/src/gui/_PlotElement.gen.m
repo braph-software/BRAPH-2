@@ -194,12 +194,6 @@ function h_panel = draw(pe, varargin)
     pe.update()
     set(pe.pp, 'Visible', 'on') % calls also redraw() and slide()
     
-% % % FIXME: erase
-% % %     set(pe.pp, ...
-% % %         'UserData', 'update', ... % calls update(), through redraw()
-% % %         'Visible', 'on' ... % calls redraw() and slide()
-% % %         )
-    
     % output
     if nargout > 0
         h_panel = pe.pp;
@@ -235,15 +229,6 @@ function redraw(pe)
     pp = pe.pp;
     pr_list = pe.pr_list;
     
-% % % FIXME: erase
-% % %     if strcmpi(get(pp, 'UserData'), 'ignore')
-% % %         set(pp, 'UserData', pe)
-% % %         return
-% % %     elseif strcmpi(get(pp, 'UserData'), 'update')
-% % %         set(pp, 'UserData', pe)
-% % %         pe.update()
-% % %     end
-    
     % redraw prop panels
     dw = pe.get('DW');   
     w_s = pe.get('WSLIDER');
@@ -262,13 +247,13 @@ function redraw(pe)
     h_p = sum(h_pp + dh) + dh;
     if h_p > h(pp)
         for prop = 1:1:length(pr_list)
-            pp_item = pr_list{prop};
-            set(pp_item, 'Position', [x0_pp y0_pp(prop) w(pp_item) h(pp_item)])
+            pr = pr_list{prop};
+            set(pr, 'Position', [x0_pp y0_pp(prop) w(pr) h(pr)])
         end
     else
         for prop = 1:1:length(pr_list)
-            pp_item = pr_list{prop};
-            set(pp_item, 'Position', [x0_pp y0_pp(prop)+h(pp)-h_p w(pp_item) h(pp_item)])
+            pr = pr_list{prop};
+            set(pr, 'Position', [x0_pp y0_pp(prop)+h(pp)-h_p w(pr) h(pr)])
         end
     end    
     

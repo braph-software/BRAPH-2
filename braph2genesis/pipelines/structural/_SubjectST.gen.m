@@ -11,7 +11,7 @@ Element, Subject
 %%% ¡gui!
 
 %%%% ¡menu_importer!
-uimenu(ui_menu_import, ...
+uimenu(menu_import, ...
     'Label', 'Import TXT ...', ...
     'Callback', {@cb_importer_TXT});
 function cb_importer_TXT(~, ~)
@@ -22,10 +22,10 @@ function cb_importer_TXT(~, ~)
     im.uigetfile();
     try
         if isfile(im.get('FILE'))
-            % pl.set('EL', im.get('GR')); 
-            % pl.reinit();
+            % pe.set('EL', im.get('GR')); 
+            % pe.reinit();
             
-            gr = pl.get('EL');
+            gr = pe.get('EL');
             
             assert( ...
                 all(cellfun(@(prop) ~gr.isLocked(prop), num2cell(gr.getProps()))), ...
@@ -40,7 +40,7 @@ function cb_importer_TXT(~, ~)
                 end
             end
             
-            pl.reinit();
+            pe.reinit(gr_new);
         end
     catch e
         warndlg(['Please, select a valid input Group of SubjectSts in TXT format. ' newline() ...
@@ -51,7 +51,7 @@ function cb_importer_TXT(~, ~)
     end
 end
 
-uimenu(ui_menu_import, ...
+uimenu(menu_import, ...
     'Label', 'Import XLS ...', ...
     'Callback', {@cb_importer_XLS});
 function cb_importer_XLS(~, ~)
@@ -62,10 +62,10 @@ function cb_importer_XLS(~, ~)
     im.uigetfile();
     try
         if isfile(im.get('FILE'))
-            % pl.set('EL', im.get('GR')); 
-            % pl.reinit();
+            % pe.set('EL', im.get('GR')); 
+            % pe.reinit();
             
-            gr = pl.get('EL');
+            gr = pe.get('EL');
             
             assert( ...
                 all(cellfun(@(prop) ~gr.isLocked(prop), num2cell(gr.getProps()))), ...
@@ -80,7 +80,7 @@ function cb_importer_XLS(~, ~)
                 end
             end
             
-            pl.reinit();            
+            pe.reinit(gr_new);            
         end
     catch e
         warndlg(['Please, select a valid input Group of SubjectSTs in XLS format. ' newline() ...
@@ -92,7 +92,7 @@ function cb_importer_XLS(~, ~)
 end
 
 %%%% ¡menu_exporter!
-uimenu(ui_menu_export, ...
+uimenu(menu_export, ...
     'Label', 'Export TXT ...', ...
     'Callback', {@cb_exporter_TXT});
 function cb_exporter_TXT(~, ~)
@@ -107,7 +107,7 @@ function cb_exporter_TXT(~, ~)
     end
 end
 
-uimenu(ui_menu_export, ...
+uimenu(menu_export, ...
     'Label', 'Export XLS ...', ...
     'Callback', {@cb_exporter_XLS});
 function cb_exporter_XLS(~, ~)
@@ -140,7 +140,7 @@ else
     msg = ['ST must be a column vector with the same number of element as the brain regions (' int2str(br_number) ').'];
 end
 %%%% ¡gui!
-pl = PPSubjectST_ST('EL', sub, 'PROP', SubjectST.ST, varargin{:});
+pr = PPSubjectST_ST('EL', sub, 'PROP', SubjectST.ST, varargin{:});
 
 %%% ¡prop!
 age (data, scalar) is a scalar number containing the age of the subject.

@@ -326,7 +326,7 @@ function f_out = draw(gui)
                     data{prop, VISIBLE} = true;
                 end
                 
-                order = cell2mat(data(:, ORDER)) + .001;
+                order = cell2mat(data(:, ORDER)) + .00301040106;
                 order(prop) = newdata;
                 for i = 1:1:numel(order) - sum(isnan(order))
                     min_order_index = find(order == min(order));

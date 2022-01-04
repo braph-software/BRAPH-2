@@ -51,12 +51,12 @@ function create_Element(generator_file, target_dir)
 %  <strong>%%%% ¡menu_import!</strong>
 %   Menu Import for the GUI figure. 
 %   The element is el.
-%   The menu is ui_menu_import.
+%   The menu is menu_import.
 %   The plot element is pe.
 %  <strong>%%%% ¡menu_export!</strong>
 %   Menu Export for the GUI figure. 
 %   The element is el.
-%   The menu is ui_menu_export.
+%   The menu is menu_export.
 %   The plot element is pe.
 % 
 %<strong>%% ¡props!</strong>
@@ -1630,7 +1630,7 @@ generate_gui_static()
         end
         g(1, 'methods (Static) % GUI static methods')
         if any(cellfun(@(x) ~isempty(x), gui_menu_import))
-            g(2, 'function getGUIMenuImport(el, ui_menu_import, pe)')
+            g(2, 'function getGUIMenuImport(el, menu_import, pe)')
             gs(3, {
                 '%GETGUIMENUIMPORT sets a figure menu.'
                 '%'
@@ -1641,7 +1641,7 @@ generate_gui_static()
                 ''
                 })
                 gs(3, {
-                    'Element.getGUIMenuImport(el, ui_menu_import, pe);'
+                    'Element.getGUIMenuImport(el, menu_import, pe);'
                     ''
                     })
             gs(3, gui_menu_import)
@@ -1649,7 +1649,7 @@ generate_gui_static()
             g(2, 'end')
         end
         if  any(cellfun(@(x) ~isempty(x), gui_menu_export))
-            g(2, 'function getGUIMenuExport(el, ui_menu_export, pe)')
+            g(2, 'function getGUIMenuExport(el, menu_export, pe)')
             gs(3, {
                 '%GETGUIMENUEXPORT sets a figure menu.'
                 '%'
@@ -1660,7 +1660,7 @@ generate_gui_static()
                 ''
                 })
                 gs(3, {
-                    'Element.getGUIMenuExport(el, ui_menu_export, pe);'
+                    'Element.getGUIMenuExport(el, menu_export, pe);'
                     ''
                     })
             gs(3, gui_menu_export)

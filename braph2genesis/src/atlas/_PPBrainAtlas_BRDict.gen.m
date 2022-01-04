@@ -260,7 +260,7 @@ function update(pl)
     % update brain surface
     f = ancestor(pl.pp, 'Figure'); % get figure BrainAtlas
     pe = get(f, 'UserData'); % get PlotElement BrainAtlas
-    pp_surf = pe.get(PlotElement.PP_DICT).getItem(BrainAtlas.SURF_TAG); % get PlotProp Surf
+    pp_surf = pe.get(PlotElement.PR_DICT).getItem(BrainAtlas.SURF_TAG); % get PlotProp Surf
     pp_surf.update_brain_atlas()
 end
 function redraw(pl, varargin)
