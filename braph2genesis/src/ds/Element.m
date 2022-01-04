@@ -601,7 +601,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         end
     end
     methods % set/check/get/seed/locked/checked
-        function set(el, varargin)
+        function el_out = set(el, varargin)
             %SET sets the value of a property.
             %
             % SET(EL, POINTER1, VALUE1, POINTER2, VALUE2, ...) sets the value of
@@ -634,6 +634,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %
             % If the property is Category.RESULT, the value can only be set to
             %  NoValue().
+            %
+            % EL = SET(EL, POINTER1, VALUE1, ...) returns the element.
             %
             % See also get, getr, memorize, check, isChecked, checked, unchecked,
             % isLocked, lock, Callback.
@@ -725,6 +727,11 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         'Nevertheless, there might be problems, so better you check your code!'] ...
                         )
                 end
+            end
+            
+            % output
+            if nargout > 0
+                el_out = el;
             end
         end
         function [element_check, element_msg] = check(el)
