@@ -270,7 +270,6 @@ idict_1 = IndexedDictionary( ...
     'it_list', items ...
     );
 ba = BrainAtlas('ID', 'BA1', 'LABEL', 'brain atlas', 'Notes', 'Notes on brain atlas.', 'br_dict', idict_1);
-GUI(ba);
+GUI('PE', ba, 'CLOSEREQ', false).draw()
 
-set(gcf, 'CloseRequestFcn', 'closereq')
 close(gcf)

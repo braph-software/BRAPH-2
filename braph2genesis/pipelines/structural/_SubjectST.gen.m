@@ -167,5 +167,6 @@ im_gr1 = ImporterGroupSubjectST_XLS( ...
     'BA', ba ...
     );
 gr1 = im_gr1.get('GR');
-GUI(gr1, 'CloseRequest', false)
+GUI('PE', gr1, 'CLOSEREQ', false).draw()
+
 close(gcf)

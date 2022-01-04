@@ -125,7 +125,10 @@ if isfile(file)
         end
         gr.set('sub_dict', subdict);
     catch e
-        % warndlg('Please select a valid group file.', 'Warning');
+        if im.get('WAITBAR')
+            close(wb)
+        end
+
         rethrow(e)
     end
     
@@ -136,6 +139,7 @@ elseif ~braph2_testing()
     if im.get('WAITBAR')
         close(wb)
     end
+    
     error(BRAPH2.IM_ERR);
 end
 
