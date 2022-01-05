@@ -6,14 +6,16 @@ delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui/PP
 create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PPPipeline_PSDict.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
 create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PPPipeline_PSDict.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
 
-im = ImporterPipelineBRAPH2(...
-    'FILE', [fileparts(which('SubjectST')) filesep 'pipeline_structural_comparison_wu.braph2'], ...
-    'WAITBAR', false ...
-    ); 
-pip = im.get('PIP');
+lf = load('pip_c.mat');
+pip = lf.el;
+
+% im = ImporterPipelineBRAPH2(...
+%     'FILE', [fileparts(which('SubjectST')) filesep 'pipeline_structural_comparison_wu.braph2'], ...
+%     'WAITBAR', false ...
+%     ); 
+% pip = im.get('PIP');
 
 gui = GUI('PE', pip, 'CLOSEREQ', false);
-
 gui.draw()
 
 % load('tmp_pip.mat')
