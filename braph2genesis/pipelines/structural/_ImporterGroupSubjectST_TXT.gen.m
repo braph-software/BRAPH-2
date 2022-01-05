@@ -11,7 +11,7 @@ The TXT file containing the covariates must be in the same directory and have th
 where groupname corresponds to the name of the file containing the data. It consists of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
-It throws an error is problems occur during the import.
+It throws an error if problems occur during the import.
 
 %%% ¡seealso!
 Element, Importer, ExporterGroupSubjectST_TXT
