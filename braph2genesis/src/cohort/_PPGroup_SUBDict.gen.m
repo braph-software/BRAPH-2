@@ -37,7 +37,7 @@ function h_panel = draw(pr, varargin)
             
             if ~isempty(pr.f_subs)
                 for i = 1:1:length(pr.f_subs)
-                    if isgraphics(pr.f_subs{i}, 'figure')
+                    if check_graphics(pr.f_subs{i}, 'figure')
                         close(pr.f_subs{i})
                     end
                 end
