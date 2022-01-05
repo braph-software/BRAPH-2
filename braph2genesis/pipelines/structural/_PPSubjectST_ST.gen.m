@@ -8,53 +8,61 @@ PPSubjectST_ST represents the structural data of a subject.
 GUI, PlotElement, PlotPropMatrix, Subejct, SubjectST.
 
 %% ¡properties!
-pp
+p
 table_value
 
 %% ¡methods!
-function h_panel = draw(pl, varargin)
+function h_panel = draw(pr, varargin)
     %DRAW draws a table with the structural data of a subject.
     %
-    % DRAW(PL) draws the graphical panel.
+    % DRAW(PL) draws the property panel a table with the structural data of 
+    %  a subject.
     %
-    % H = DRAW(PL) returns a handle to the graphical panel.
+    % H = DRAW(PL) returns a handle to the property panel.
     %
-    % DRAW(PL, 'Property', VALUE, ...) sets the properties of the graphical
-    %  panel with custom property-value couples.
+    % DRAW(PL, 'Property', VALUE, ...) sets the properties of the panel 
+    %  with custom Name-Value pairs.
     %  All standard plot properties of uipanel can be used.
     %
     % It is possible to access the properties of the various graphical
-    %  objects from the handle H.
+    %  objects from the handle H of the panel.
     %
-    % See also update, redraw, refresh, settings, uipanel, isgraphics.
+    % See also update, redraw, settings, uipanel.
     
-    pl.pp = draw@PlotPropMatrix(pl, varargin{:});
+    pr.p = draw@PlotPropMatrix(pr, varargin{:});
 
     % retrieves the handle of the table
-    children = get(pl.pp, 'Children');
+    children = get(pr.p, 'Children');
     for i = 1:1:length(children)
-        if isa(children(i), 'matlab.ui.control.Table')
-            pl.table_value = children(i);
+        if check_graphics(children(i), 'uitable')
+            pr.table_value = children(i);
         end
     end
 
     % output
     if nargout > 0
-        h_panel = pl.pp;
+        h_panel = pr.p;
     end
 end
-function update(pl)
-    %UPDATE updates the content of the property graphical panel.
+function update(pr)
+    %UPDATE updates the content of the property panel and its graphical objects.
     %
-    % UPDATE(PL) updates the content of the property graphical panel.
+    % UPDATE(PL) updates the content of the property panel and its graphical objects.
     %
-    % See also draw, redraw, refresh.
+    % Important note:
+    % 1. UPDATE() is typically called internally by PlotElement and does not need 
+    %  to be explicitly called in children of PlotProp.
+    %
+    % See also draw, redraw, PlotElement.
 
-    update@PlotPropMatrix(pl)
+    update@PlotPropMatrix(pr)
+    
+    sub = pr.get('EL');
+    br_dict = sub.get('BA').get('BR_DICT');
 
-    br_ids = cell(ba.length(), 1);
-    for i = 1:1:ba.length()
-        br = ba.getItem(i);
+    br_ids = cell(br_dict.length(), 1);
+    for i = 1:1:br_dict.length()
+        br = br_dict.getItem(i);
         br_id = br.get(BrainRegion.ID);
         if length(br_id) > 10
             br_id = [br_id(1:8) '..'];
@@ -62,19 +70,32 @@ function update(pl)
         br_ids{i} = br_id;
     end
 
-    set(pl.table_value, ...
+    set(pr.table_value, ...
         'ColumnName', {}, ...
         'RowName', br_ids ...
         )
 end
-function redraw(pl, varargin)
-    %REDRAW redraws the element graphical panel.
+function redraw(pr, varargin)
+    %REDRAW resizes the property panel and repositions its graphical objects.
     %
-    % REDRAW(PL) redraws the plot PL.
+    % REDRAW(PL) resizes the property panel and repositions its
+    %   graphical objects. 
+    % 
+    % Important notes:
+    % 1. REDRAW() sets the units 'characters' for panel and all its graphical objects. 
+    % 2. REDRAW() is typically called internally by PlotElement and does not need 
+    %  to be explicitly called in children of PlotProp.
     %
-    % REDRAW(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=3.3).
+    % REDRAW(PL, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT)
+    %  repositions the property panel. It is possible to use a
+    %  subset of the Name-Value pairs.
+    %  By default:
+    %  - X0 does not change
+    %  - Y0 does not change
+    %  - WIDTH does not change
+    %  - HEIGHT=1.4 characters.
     %
-    % See also draw, update, refresh.
+    % See also draw, update, PlotElement.
     
-    pl.redraw@PlotPropMatrix(varargin{:});
+    pr.redraw@PlotPropMatrix(varargin{:});
 end
