@@ -8,7 +8,7 @@ PPPipeline_PCDict plots a pipeline allowing the user to execute it in the correc
 Pipeline, PlotProp
 
 %% ¡properties!
-pp
+p
 ps_panels % list of section panels
 pc_btns % 2D cell array of code buttons
 pc_GUIs % 2D cell array of GUIs
@@ -30,7 +30,7 @@ function h_panel = draw(pr, varargin)
     %
     % See also update, redraw, refresh, uipanel.
 
-    pr.pp = draw@PlotProp(pr, 'DeleteFcn', {@close_GUIs}, varargin{:});
+    pr.p = draw@PlotProp(pr, 'DeleteFcn', {@close_GUIs}, varargin{:});
     function close_GUIs(~, ~)
         for i = 1:1:length(pr.pc_GUIs)
             for j = 1:1:length(pr.pc_GUIs{i})
@@ -62,7 +62,7 @@ function h_panel = draw(pr, varargin)
 
         % if length(pl.ps_panels) < s || isempty(pl.ps_panels{s}) || ~isgraphics(pl.ps_panels{s}, 'uipanel')
             pr.ps_panels{s} = uipanel( ...
-                'Parent', pr.pp, ...
+                'Parent', pr.p, ...
                 'Title', [ps.get('ID') '. ' ps.get('LABEL')], ...
                 'Tooltip', ps.get('NOTES'), ...
                 'FontUnits', BRAPH2.FONTUNITS, ...
@@ -102,58 +102,54 @@ function h_panel = draw(pr, varargin)
     end
     
     if nargout > 0
-        h_panel = pr.pp;
+        h_panel = pr.p;
     end
 end
-function update(PR, varargin)
+function update(pr, varargin)
     %UPDATE updates the content and permissions of the pushbutton.
     %
     % UPDATE(PR) updates the content and permissions of the pushbutton.
     %
     % See also draw, redraw, refresh, PlotElement.
 
-    % Important note: I use capitalized variables to avoid possible
-    % conflicts with the pipeline monikers, which should be lowercase.
-    % Possible errors might arise if upper-case monikers are used.
+    s_selected = get_from_varargin(0, 'Section', varargin); % selected section
+    c_selected = get_from_varargin(0, 'Code', varargin); % selected code
     
-    S_selected = get_from_varargin(0, 'Section', varargin); % selected section
-    C_selected = get_from_varargin(0, 'Code', varargin); % selected code
+    update@PlotProp(pr)
     
-    update@PlotProp(PR)
-    
-    PIP = PR.get('EL');
+    pip = pr.get('EL');
 
-    S_to_be_calculated = 1;
-    S_dict = PIP.get('PS_DICT');
-    for S = 1:1:S_dict.length()
-        Section = S_dict.getItem(S);
+    s_to_be_calculated = 1;
+    s_dict = pip.get('PS_DICT');
+    for s = 1:1:s_dict.length()
+        section = s_dict.getItem(s);
         
-        Code_dict = Section.get('PC_DICT');
-        for C = 1:1:Code_dict.length()
-            Code = Code_dict.getItem(C);
-            Moniker = Code.get('MONIKER');
+        code_dict = section.get('PC_DICT');
+        for c = 1:1:code_dict.length()
+            code = code_dict.getItem(c);
+            moniker = code.get('MONIKER');
 % FIXME send error if moniker equal to some variables 
 
             % callback code
-            if S == S_selected && C == C_selected
-                if isa(Code.getr('EL'), 'NoValue') % the code has not been calculated yet -- CALCULATE
-                    Codeline = [Moniker ' = ' Code.get('CODE')];
+            if s == s_selected && c == c_selected
+                if isa(code.getr('EL'), 'NoValue') % the code has not been calculated yet -- CALCULATE
+                    codeline = [moniker ' = ' code.get('CODE')];
                     try
-                        set(PR.pc_btns{S}{C}, ...
+                        set(pr.pc_btns{s}{c}, ...
                             'Enable', 'off' ...
                             )
                             
-                        eval(Codeline)
-                        Code.set('EL', eval([Moniker ';']))
+                        eval(codeline)
+                        code.set('EL', eval([moniker ';']))
                     catch e
-                        set(PR.pc_btns{S}{C}, ...
+                        set(pr.pc_btns{s}{c}, ...
                             'Enable', 'on' ...
                             )
 
                         if ~strcmp(e.message, BRAPH2.IM_ERR)
                             warndlg(['An error occurred while trying to execute the code:' newline() ...
                                 newline() ...
-                                Codeline newline() ...
+                                codeline newline() ...
                                 newline() ...
                                 'Error message:' newline() ...
                                 newline() ...
@@ -161,29 +157,23 @@ function update(PR, varargin)
                         end
                     end
                 else % the code has already been calculated -- GUI
-                    if length(PR.pc_GUIs) < S || length(PR.pc_GUIs{S}) < C || isempty(PR.pc_GUIs{S}{C}) || ~isgraphics(PR.pc_GUIs{S}{C}, 'figure')
-                        Screen_pos = get(0,'screensize');  % pixels
-
-                        F_pip = ancestor(PR.pp, 'Figure'); % Pipeline GUI
-                        Backup_units = get(F_pip, 'Units');
-                        set(F_pip, 'Units', 'pixels')
-                        F_pip_pos = get(F_pip, 'Position'); % pixels
-                        F_pip_x = F_pip_pos(1) / Screen_pos(3); % normalized
-                        F_pip_y = F_pip_pos(2) / Screen_pos(4); % normalized
-                        F_pip_w = F_pip_pos(3) / Screen_pos(3); % normalized
-                        F_pip_h = F_pip_pos(4) / Screen_pos(4); % normalized
-                        set(F_pip, 'Units', Backup_units);
+                    if length(pr.pc_GUIs) < s || length(pr.pc_GUIs{s}) < c || isempty(pr.pc_GUIs{s}{c}) || ~isgraphics(pr.pc_GUIs{s}{c}, 'figure')
+                        f_pip = ancestor(pr.p, 'Figure'); % Pipeline GUI
+                        f_pip_x = Plot.x0(f_pip, 'normalized');
+                        f_pip_y = Plot.y0(f_pip, 'normalized');
+                        f_pip_w = Plot.w(f_pip, 'normalized');
+                        f_pip_h = Plot.h(f_pip, 'normalized');
                         
-                        PR.pc_GUIs{S}{C} = GUI(Code.get('EL'), ...
+                        pr.pc_GUIs{s}{c} = GUI(code.get('EL'), ...
                             'Position', [ ...
-                                F_pip_x ...
-                                F_pip_y ...
+                                f_pip_x ...
+                                f_pip_y ...
                                 .20 ...
-                                F_pip_h ...
+                                f_pip_h ...
                                 ] ...
                             );
                     else
-                        figure(PR.pc_GUIs{S}{C})
+                        figure(pr.pc_GUIs{s}{c})
 % FIXME ensure that all subfigures are brought to front
                     end
                 end
@@ -193,26 +183,26 @@ function update(PR, varargin)
             % 1. loads the calculated element to the workspace
             % 2. updates the ID in the btn
             % 3. calculates whether to move to the next section
-            if ~isa(Code.getr('EL'), 'NoValue')
-                eval([Moniker ' = Code.get(''EL'');'])
+            if ~isa(code.getr('EL'), 'NoValue')
+                eval([moniker ' = code.get(''EL'');'])
 
-                set(PR.pc_btns{S}{C}, ...
+                set(pr.pc_btns{s}{c}, ...
                     'Enable', 'on', ...
-                    'String', [Code.get('TEXT_AFTER_EXEC') ' / ' Code.get('EL').get('ID')], ...
+                    'String', [code.get('TEXT_AFTER_EXEC') ' / ' code.get('EL').get('ID')], ...
                     'FontAngle', 'normal', ...
                     'FontWeight', 'normal' ...
                     )
 
                 % if all section codes calculated, updates the section to be calculated
-                if all(cellfun(@(pc) ~isa(pc.getr('EL'), 'NoValue'), Code_dict.getItems()))
-                    S_to_be_calculated = S + 1;
+                if all(cellfun(@(pc) ~isa(pc.getr('EL'), 'NoValue'), code_dict.getItems()))
+                    s_to_be_calculated = s + 1;
                 end
             end
             
             % activates the next section that can be calculated
             % (only the codes that have not been calculated yet)
-            if S == S_to_be_calculated && isa(Code.getr('EL'), 'NoValue')
-                set(PR.pc_btns{S}{C}, ...
+            if s == s_to_be_calculated && isa(code.getr('EL'), 'NoValue')
+                set(pr.pc_btns{s}{c}, ...
                     'Enable', 'on', ...
                     'FontAngle', 'normal', ...
                     'FontWeight', 'bold' ...
@@ -220,103 +210,6 @@ function update(PR, varargin)
             end            
         end
     end
-    
-% % %     S_selected = get_from_varargin(0, 'Section', varargin); % selected section
-% % %     C_selected = get_from_varargin(0, 'Code', varargin); % selected code
-% % %     
-% % %     update@PlotProp(PL)
-% % %     
-% % %     PIP = PL.get('EL');
-% % % 
-% % %     S_to_be_calculated = 1;
-% % %     S_dict = PIP.get('PS_DICT');
-% % %     for S = 1:1:S_dict.length()
-% % %         Section = S_dict.getItem(S);
-% % %         
-% % %         Code_dict = Section.get('PC_DICT');
-% % %         for C = 1:1:Code_dict.length()
-% % %             Code = Code_dict.getItem(C);
-% % %             Moniker = Code.get('MONIKER');
-% % % 
-% % % % FIXME send error if moniker equal to some variables 
-% % % 
-% % %             % If a code has already been executed and the relative element exists, 
-% % %             % loads the calculated element to the workspace
-% % %             % and update the ID in the btn
-% % %             if ~isa(Code.getr('EL'), 'NoValue')
-% % %                 eval([Moniker ' = Code.get(''EL'');'])
-% % % %                 set(PL.pc_btns{S}{C}, ...
-% % % %                     'String', [Code.get('TEXT_AFTER_EXEC') ' / ' Code.get('EL').get('ID')] ...
-% % % %                     )
-% % % set(PL.pc_btns{S}{C}, ...
-% % %     'Enable', 'on', ...
-% % %     'String', [Code.get('TEXT_AFTER_EXEC') ' / ' Code.get('EL').get('ID')], ...
-% % %     'FontAngle', 'normal', ...
-% % %     'FontWeight', 'normal' ...
-% % %     )
-% % % 
-% % % % if all section codes calculated, updates the section to be calculated
-% % % if all(cellfun(@(pc) ~isa(pc.getr('EL'), 'NoValue'), Code_dict.getItems()))
-% % %     S_to_be_calculated = S + 1;
-% % % end
-% % %             end
-% % %             
-% % %             % activates the next section that can be calculated
-% % %             % (only the codes that have not been calculated yet)
-% % %             if S == S_to_be_calculated && isa(Code.getr('EL'), 'NoValue')
-% % %                 set(PL.pc_btns{S}{C}, ...
-% % %                     'Enable', 'on', ...
-% % %                     'FontAngle', 'normal', ...
-% % %                     'FontWeight', 'bold' ...
-% % %                     )
-% % %             end
-% % %             
-% % %             % callback code
-% % %             if S == S_selected && C == C_selected
-% % %                 if isa(Code.getr('EL'), 'NoValue') % the code has not been calculated yet -- CALCULATE
-% % %                     Codeline = [Moniker ' = ' Code.get('CODE')];
-% % %                     try
-% % %                         set(PL.pc_btns{S}{C}, ...
-% % %                             'Enable', 'off' ...
-% % %                             )
-% % %                             
-% % %                         eval(Codeline)
-% % %                         Code.set('EL', eval([Moniker ';']))
-% % % 
-% % %                         set(PL.pc_btns{S}{C}, ...
-% % %                             'Enable', 'on', ...
-% % %                             'String', [Code.get('TEXT_AFTER_EXEC') ' / ' Code.get('EL').get('ID')], ...
-% % %                             'FontAngle', 'normal', ...
-% % %                             'FontWeight', 'normal' ...
-% % %                             )
-% % %                         
-% % %                         % if all section codes calculated, updates the section to be calculated
-% % %                         if all(cellfun(@(pc) ~isa(pc.getr('EL'), 'NoValue'), Code_dict.getItems()))
-% % %                             S_to_be_calculated = S + 1;
-% % %                         end
-% % %                     catch e
-% % %                         set(PL.pc_btns{S}{C}, ...
-% % %                             'Enable', 'on' ...
-% % %                             )
-% % % 
-% % %                         if ~strcmp(e.message, BRAPH2.IM_ERR)
-% % %                             warndlg(['An error occurred while trying to execute the code:' newline() ...
-% % %                                 newline() ...
-% % %                                 Codeline newline() ...
-% % %                                 newline() ...
-% % %                                 'Error message:' newline() ...
-% % %                                 newline() ...
-% % %                                 e.message newline()], 'Warning');
-% % %                         end
-% % %                     end
-% % %                 else % the code has already been calculated -- GUI
-% % %                     PL.pc_GUIs{S}{C} = eval(['GUI(' Moniker ')']);
-% % % % FIXME ensure that only one figure exists at a time
-% % % % FIXME manage the position of the appearing figures
-% % %                 end
-% % %             end
-% % %         end
-% % %     end
 end
 function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
