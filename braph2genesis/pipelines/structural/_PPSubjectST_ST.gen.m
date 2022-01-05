@@ -15,12 +15,12 @@ table_value
 function h_panel = draw(pr, varargin)
     %DRAW draws a table with the structural data of a subject.
     %
-    % DRAW(PL) draws the property panel a table with the structural data of 
+    % DRAW(PR) draws the property panel a table with the structural data of 
     %  a subject.
     %
-    % H = DRAW(PL) returns a handle to the property panel.
+    % H = DRAW(PR) returns a handle to the property panel.
     %
-    % DRAW(PL, 'Property', VALUE, ...) sets the properties of the panel 
+    % DRAW(PR, 'Property', VALUE, ...) sets the properties of the panel 
     %  with custom Name-Value pairs.
     %  All standard plot properties of uipanel can be used.
     %
@@ -47,7 +47,7 @@ end
 function update(pr)
     %UPDATE updates the content of the property panel and its graphical objects.
     %
-    % UPDATE(PL) updates the content of the property panel and its graphical objects.
+    % UPDATE(PR) updates the content of the property panel and its graphical objects.
     %
     % Important note:
     % 1. UPDATE() is typically called internally by PlotElement and does not need 
@@ -78,7 +78,7 @@ end
 function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
     %
-    % REDRAW(PL) resizes the property panel and repositions its
+    % REDRAW(PR) resizes the property panel and repositions its
     %   graphical objects. 
     % 
     % Important notes:
@@ -86,7 +86,7 @@ function redraw(pr, varargin)
     % 2. REDRAW() is typically called internally by PlotElement and does not need 
     %  to be explicitly called in children of PlotProp.
     %
-    % REDRAW(PL, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT)
+    % REDRAW(PR, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT)
     %  repositions the property panel. It is possible to use a
     %  subset of the Name-Value pairs.
     %  By default:
