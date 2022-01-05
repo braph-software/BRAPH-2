@@ -21,10 +21,7 @@ function cb_importer_BRAPH2(~, ~)
     im.uigetfile();
     try
         if isfile(im.get('FILE'))
-            % pl.set('EL', im.get('PIP')); 
-            % pl.reinit();
-
-            pip = pl.get('EL');
+            pip = pe.get('EL');
             
             assert( ...
                 all(cellfun(@(prop) ~pip.isLocked(prop), num2cell(pip.getProps()))), ...
@@ -39,10 +36,10 @@ function cb_importer_BRAPH2(~, ~)
                 end
             end
             
-            pl.get('PP_DICT').getItem('ps_dict').draw() % draws the correct section panels and code buttons
-            pl.get('PP_DICT').getItem('ps_dict').refresh() % triggers redraw on the whole PlotElement and on all PlotProp's
+            pe.get('PP_DICT').getItem('ps_dict').draw() % draws the correct section panels and code buttons
+            pe.get('PP_DICT').getItem('ps_dict').refresh() % triggers redraw on the whole PlotElement and on all PlotProp's
 
-            pl.reinit()
+            pe.reinit()
         end
     catch e
         warndlg(['Please, select a valid input Pipeline in BRAPH2 format. ' newline() ...
@@ -80,12 +77,12 @@ LABEL (metadata, string) is an extended label of the pipeline.
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the pipeline.
 %%%% ¡gui!
-pl = PlotPropText('EL', pip, 'PROP', Pipeline.NOTES, varargin{:}); % multiline text
+pr = PlotPropString('EL', pip, 'PROP', Pipeline.NOTES, 'MAX', '2', 'EDITPOS', [.01 .03 .98 .80], varargin{:});
 
 %%% ¡prop!
 PS_DICT (data, idict) is an indexed dictionary with the code sections.
 %%%% ¡settings!
 'PipelineSection'
 %%%% ¡gui!
-pl = PPPipeline_PSDict('EL', pip, 'PROP', Pipeline.PS_DICT, varargin{:});
+pr = PPPipeline_PSDict('EL', pip, 'PROP', Pipeline.PS_DICT, varargin{:});
 

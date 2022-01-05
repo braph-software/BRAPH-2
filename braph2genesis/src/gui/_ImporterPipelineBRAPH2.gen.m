@@ -100,7 +100,9 @@ if isfile(file)
             end
         end
     catch e
-        % warndlg('Please select a valid input.', 'Warning');
+        if im.get('WAITBAR')
+            close(wb)
+        end
         rethrow(e)
     end
     
@@ -108,6 +110,9 @@ if isfile(file)
         close(wb)
     end
 elseif ~braph2_testing()
+    if im.get('WAITBAR')
+        close(wb)
+    end
     error(BRAPH2.IM_ERR);
 end
 
@@ -123,3 +128,22 @@ function uigetfile(im)
         im.set('FILE', file);
     end
 end
+
+%% ¡tests!
+
+%%% ¡test!
+%%%% ¡name!
+Example
+%%%% ¡code!
+im = ImporterPipelineBRAPH2(...
+    'FILE', [fileparts(which('SubjectST')) filesep 'pipeline_structural_comparison_wu.braph2'], ...
+    'WAITBAR', true ...
+    ); 
+pip = im.get('PIP');
+% pip.tree(4)
+
+ex= ExporterPipelineBRAPH2( ...
+    'PIP', pip, ...
+    'WAITBAR', true ...
+    );
+ex.get('SAVE');

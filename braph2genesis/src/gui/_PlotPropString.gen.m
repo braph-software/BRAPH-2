@@ -5,8 +5,8 @@ PlotPropString < PlotProp (pr, plot property string) is a plot of a string prope
 PlotPropString plots a STRING property of an element in an edit field.
 It works for all categories.
 It has the following additional properties:
-- ''Max'', 1 (single-line edit field, default) or 2 (multi-line edit field).
-- ''EditPosition'' with the normalized position of the edit field.
+- ''Max'', ''1'' (single-line edit field, default) or ''2'' (multi-line edit field).
+- ''EditPos'' with the normalized position of the edit field.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp, PlotPropText
