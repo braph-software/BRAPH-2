@@ -52,19 +52,19 @@ function update(pl)
 
     update@PlotPropMatrix(pl)
     
-    pp_el = pp.get('EL');
+    pp_el = pl.get('EL');
     ba = pp_el.get('BA');
-
-    br_ids = cell(ba.length(), 1);
-    for i = 1:1:ba.length()
-        br = ba.getItem(i);
+    
+    br_ids = cell(ba.get('br_dict').length(), 1);
+    for i = 1:1:ba.get('br_dict').length()
+        br = ba.get('br_dict').getItem(i);
         br_id = br.get(BrainRegion.ID);
         if length(br_id) > 10
             br_id = [br_id(1:8) '..'];
         end
         br_ids{i} = br_id;
     end
-
+    
     set(pl.table_value, ...
         'ColumnName', {}, ...
         'RowName', br_ids ...
