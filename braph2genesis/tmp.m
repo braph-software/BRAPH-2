@@ -2,9 +2,54 @@ close all
 clear all
 clc
 
-delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/pipelines/connectivity/PPSubjectCON_CON.m')
-create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/pipelines/connectivity/_PPSubjectCON_CON.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/pipelines/connectivity')
-create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/pipelines/connectivity/_PPSubjectCON_CON.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/pipelines/connectivity')
+delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui/PPPipeline_PSDict.m')
+create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PPPipeline_PSDict.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PPPipeline_PSDict.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+
+im = ImporterPipelineBRAPH2(...
+    'FILE', [fileparts(which('SubjectST')) filesep 'pipeline_structural_comparison_wu.braph2'], ...
+    'WAITBAR', false ...
+    ); 
+pip = im.get('PIP');
+
+gui = GUI('PE', pip, 'CLOSEREQ', false);
+
+gui.draw()
+
+% load('tmp_pip.mat')
+% 
+% % create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PlotPropString.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+% % create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PlotPropText.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+% % create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_Pipeline.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PPPipeline_PSDict.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+% % im = ImporterPipelineBRAPH2(...
+% %     'FILE', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/pipelines/structural/pipeline_structural_analysis_wu.braph2', ...
+% %     'WAITBAR', false ...
+% %     ); 
+% % im = ImporterPipelineBRAPH2(...
+% %     'FILE', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/pipelines/structural/pipeline_structural_comparison_wu.braph2', ...
+% %     'WAITBAR', false ...
+% %     ); 
+% % pip = im.get('PIP');
+% 
+% GUI(pip)
+% 
+% % create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_Pipeline.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+% % create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_ImporterPipelineBRAPH2.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+% % create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_ExporterPipelineBRAPH2.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+
+% im = ImporterPipelineBRAPH2(...
+%     'FILE', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/pipelines/structural/pipeline_structural_comparison_wu.braph2', ...
+%     'WAITBAR', true ...
+%     ); 
+% pip = im.get('PIP');
+% % pip.tree(4)
+% 
+% ex= ExporterPipelineBRAPH2( ...
+%     'PIP', pip, ...
+%     'WAITBAR', true ...
+%     );
+% ex.get('SAVE');
 
 braph2
 
@@ -12,13 +57,25 @@ delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/pipelines/
 create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/pipelines/connectivity/_PPSubjectCON_CON.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/pipelines/connectivity')
 create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/pipelines/connectivity/_PPSubjectCON_CON.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/pipelines/connectivity')
 
-% ba = BrainAtlas();
 % gui1 = GUI('PE', ba, 'CLOSEREQ', false);
 % gui1.draw()
 
-gr = Group();
-gui2 = GUI('PE', gr, 'CLOSEREQ', false);
-gui2.draw()
+% delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/cohort/PPGroup_SUBDict.m')
+% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/cohort/_PPGroup_SUBDict.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/cohort')
+% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/cohort/_PPGroup_SUBDict.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/cohort')
+% 
+% delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/pipelines/structural/PPSubjectST_ST.m')
+% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/pipelines/structural/_PPSubjectST_ST.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/pipelines/structural')
+% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/pipelines/structural/_PPSubjectST_ST.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/pipelines/structural')
+
+% braph2genesis
+% 
+% gr = ImporterGroupSubjectST_XLS( ...
+%     'FILE', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/pipelines/structural/example data ST (MRI)/xls/ST_group1.xlsx', ...
+%     'WAITBAR', true ...
+%     ).get('GR');
+% gui2 = GUI('PE', gr, 'CLOSEREQ', false);
+% gui2.draw();
 
 % delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui/GUI.m')
 % create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_GUI.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
