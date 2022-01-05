@@ -51,11 +51,11 @@ gui.draw()
 %     );
 % ex.get('SAVE');
 
-braph2
-
-delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/pipelines/connectivity/PPSubjectCON_CON.m')
-create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/pipelines/connectivity/_PPSubjectCON_CON.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/pipelines/connectivity')
-create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/pipelines/connectivity/_PPSubjectCON_CON.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/pipelines/connectivity')
+% % braph2
+% % 
+% % delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/pipelines/connectivity/PPSubjectCON_CON.m')
+% % create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/pipelines/connectivity/_PPSubjectCON_CON.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/pipelines/connectivity')
+% % create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/pipelines/connectivity/_PPSubjectCON_CON.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/pipelines/connectivity')
 
 % gui1 = GUI('PE', ba, 'CLOSEREQ', false);
 % gui1.draw()

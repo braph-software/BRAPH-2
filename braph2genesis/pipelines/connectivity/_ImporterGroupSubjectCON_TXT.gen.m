@@ -129,10 +129,6 @@ if isfolder(directory)
         close(wb)
     end
 elseif ~braph2_testing()
-    if im.get('WAITBAR')
-        close(wb)
-    end
-    
     error(BRAPH2.IM_ERR);
 end
 value = gr;
