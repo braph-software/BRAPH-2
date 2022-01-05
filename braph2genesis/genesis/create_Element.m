@@ -47,7 +47,7 @@ function create_Element(generator_file, target_dir)
 %  <strong>%%%% ¡panel!</strong>
 %   GUI code to represent the panel of the element. 
 %   Can be on multiple lines.
-%   Should return a Plot object in 'pl'
+%   Should return a Plot object in 'pe'
 %  <strong>%%%% ¡menu_import!</strong>
 %   Menu Import for the GUI figure. 
 %   The element is el.

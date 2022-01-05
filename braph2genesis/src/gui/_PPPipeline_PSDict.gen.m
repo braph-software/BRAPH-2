@@ -14,45 +14,45 @@ pc_btns % 2D cell array of code buttons
 pc_GUIs % 2D cell array of GUIs
 
 %% ¡methods!
-function h_panel = draw(pl, varargin)
-    %DRAW draws the pipeline graphical panel.
+function h_panel = draw(pr, varargin)
+    %DRAW draws the pipeline panel.
     %
-    % DRAW(PL) draws the pipeline graphical panel.
+    % DRAW(PR) draws the pipeline panel.
     %
-    % H = DRAW(PL) returns a handle to the pipeline graphical panel.
+    % H = DRAW(PR) returns a handle to the property panel.
     %
-    % DRAW(PL, 'Property', VALUE, ...) sets the properties of the graphical
-    %  panel with custom property-value couples.
+    % DRAW(PR, 'Property', VALUE, ...) sets the properties of the graphical
+    %  panel with custom Name-Value pairs.
     %  All standard plot properties of uipanel can be used.
     %
     % It is possible to access the properties of the various graphical
-    %  objects from the handle H.
+    %  objects from the handle H of the panel.
     %
-    % see also update, resize, refresh, settings, uipanel, isgraphics.
+    % See also update, redraw, refresh, uipanel.
 
-    pl.pp = draw@PlotProp(pl, 'DeleteFcn', {@close_GUIs}, varargin{:});
+    pr.pp = draw@PlotProp(pr, 'DeleteFcn', {@close_GUIs}, varargin{:});
     function close_GUIs(~, ~)
-        for i = 1:1:length(pl.pc_GUIs)
-            for j = 1:1:length(pl.pc_GUIs{i})
-                delete(pl.pc_GUIs{i}{j})
+        for i = 1:1:length(pr.pc_GUIs)
+            for j = 1:1:length(pr.pc_GUIs{i})
+                delete(pr.pc_GUIs{i}{j})
             end
         end
     end
 
     % deletes all graphic objects
     % panels and btns
-    if ~isempty(pl.ps_panels)
-        cellfun(@(panel) delete(panel), pl.ps_panels)
-        pl.ps_panels = {};
-        pl.pc_btns = {}; % deleted through panels
+    if ~isempty(pr.ps_panels)
+        cellfun(@(panel) delete(panel), pr.ps_panels)
+        pr.ps_panels = {};
+        pr.pc_btns = {}; % deleted through panels
     end
     % GUIs
-    if ~isempty(pl.pc_GUIs)
+    if ~isempty(pr.pc_GUIs)
         close_GUIs()
-        pl.pc_GUIs = {};
+        pr.pc_GUIs = {};
     end
     
-    pip = pl.get('EL');
+    pip = pr.get('EL');
 
     % the checks on the existence of the panels and btns are not necessary
     % because they have been deleted at the beginning of the script
@@ -61,8 +61,8 @@ function h_panel = draw(pl, varargin)
         ps = ps_dict.getItem(s);
 
         % if length(pl.ps_panels) < s || isempty(pl.ps_panels{s}) || ~isgraphics(pl.ps_panels{s}, 'uipanel')
-            pl.ps_panels{s} = uipanel( ...
-                'Parent', pl.pp, ...
+            pr.ps_panels{s} = uipanel( ...
+                'Parent', pr.pp, ...
                 'Title', [ps.get('ID') '. ' ps.get('LABEL')], ...
                 'Tooltip', ps.get('NOTES'), ...
                 'FontUnits', BRAPH2.FONTUNITS, ...
@@ -75,9 +75,9 @@ function h_panel = draw(pl, varargin)
                 pc = pc_dict.getItem(c);
 
                 % if length(pl.pc_btns) < s || length(pl.pc_btns{s}) < c || isempty(pl.pc_btns{s}{c}) || ~isgraphics(pl.pc_btns{s}{c}, 'uicontrol') || ~strcmpi(get(pl.pc_btns{s}{c}, 'Style'), 'pushbutton')
-                    pl.pc_btns{s}{c} = uicontrol( ...
+                    pr.pc_btns{s}{c} = uicontrol( ...
                         'Style', 'pushbutton', ...
-                        'Parent', pl.ps_panels{s}, ...
+                        'Parent', pr.ps_panels{s}, ...
                         'Tooltip', pc.get('NOTES'), ...
                         'Enable', 'off', ...
                         'String', pc.get('TEXT_BEFORE_EXEC'), ...
@@ -98,19 +98,19 @@ function h_panel = draw(pl, varargin)
         s = userdata(1);
         c = userdata(2);
         
-        pl.update('Section', s, 'Code', c)
+        pr.update('Section', s, 'Code', c)
     end
     
     if nargout > 0
-        h_panel = pl.pp;
+        h_panel = pr.pp;
     end
 end
-function update(PL, varargin)
-    %UPDATE updates the content of the property graphical panel.
+function update(PR, varargin)
+    %UPDATE updates the content and permissions of the pushbutton.
     %
-    % UPDATE(PL) updates the content of the property graphical panel.
+    % UPDATE(PR) updates the content and permissions of the pushbutton.
     %
-    % See also draw, resize, refresh.
+    % See also draw, redraw, refresh, PlotElement.
 
     % Important note: I use capitalized variables to avoid possible
     % conflicts with the pipeline monikers, which should be lowercase.
@@ -119,9 +119,9 @@ function update(PL, varargin)
     S_selected = get_from_varargin(0, 'Section', varargin); % selected section
     C_selected = get_from_varargin(0, 'Code', varargin); % selected code
     
-    update@PlotProp(PL)
+    update@PlotProp(PR)
     
-    PIP = PL.get('EL');
+    PIP = PR.get('EL');
 
     S_to_be_calculated = 1;
     S_dict = PIP.get('PS_DICT');
@@ -139,14 +139,14 @@ function update(PL, varargin)
                 if isa(Code.getr('EL'), 'NoValue') % the code has not been calculated yet -- CALCULATE
                     Codeline = [Moniker ' = ' Code.get('CODE')];
                     try
-                        set(PL.pc_btns{S}{C}, ...
+                        set(PR.pc_btns{S}{C}, ...
                             'Enable', 'off' ...
                             )
                             
                         eval(Codeline)
                         Code.set('EL', eval([Moniker ';']))
                     catch e
-                        set(PL.pc_btns{S}{C}, ...
+                        set(PR.pc_btns{S}{C}, ...
                             'Enable', 'on' ...
                             )
 
@@ -161,10 +161,10 @@ function update(PL, varargin)
                         end
                     end
                 else % the code has already been calculated -- GUI
-                    if length(PL.pc_GUIs) < S || length(PL.pc_GUIs{S}) < C || isempty(PL.pc_GUIs{S}{C}) || ~isgraphics(PL.pc_GUIs{S}{C}, 'figure')
+                    if length(PR.pc_GUIs) < S || length(PR.pc_GUIs{S}) < C || isempty(PR.pc_GUIs{S}{C}) || ~isgraphics(PR.pc_GUIs{S}{C}, 'figure')
                         Screen_pos = get(0,'screensize');  % pixels
 
-                        F_pip = ancestor(PL.pp, 'Figure'); % Pipeline GUI
+                        F_pip = ancestor(PR.pp, 'Figure'); % Pipeline GUI
                         Backup_units = get(F_pip, 'Units');
                         set(F_pip, 'Units', 'pixels')
                         F_pip_pos = get(F_pip, 'Position'); % pixels
@@ -174,7 +174,7 @@ function update(PL, varargin)
                         F_pip_h = F_pip_pos(4) / Screen_pos(4); % normalized
                         set(F_pip, 'Units', Backup_units);
                         
-                        PL.pc_GUIs{S}{C} = GUI(Code.get('EL'), ...
+                        PR.pc_GUIs{S}{C} = GUI(Code.get('EL'), ...
                             'Position', [ ...
                                 F_pip_x ...
                                 F_pip_y ...
@@ -183,7 +183,7 @@ function update(PL, varargin)
                                 ] ...
                             );
                     else
-                        figure(PL.pc_GUIs{S}{C})
+                        figure(PR.pc_GUIs{S}{C})
 % FIXME ensure that all subfigures are brought to front
                     end
                 end
@@ -196,7 +196,7 @@ function update(PL, varargin)
             if ~isa(Code.getr('EL'), 'NoValue')
                 eval([Moniker ' = Code.get(''EL'');'])
 
-                set(PL.pc_btns{S}{C}, ...
+                set(PR.pc_btns{S}{C}, ...
                     'Enable', 'on', ...
                     'String', [Code.get('TEXT_AFTER_EXEC') ' / ' Code.get('EL').get('ID')], ...
                     'FontAngle', 'normal', ...
@@ -212,7 +212,7 @@ function update(PL, varargin)
             % activates the next section that can be calculated
             % (only the codes that have not been calculated yet)
             if S == S_to_be_calculated && isa(Code.getr('EL'), 'NoValue')
-                set(PL.pc_btns{S}{C}, ...
+                set(PR.pc_btns{S}{C}, ...
                     'Enable', 'on', ...
                     'FontAngle', 'normal', ...
                     'FontWeight', 'bold' ...
@@ -318,16 +318,29 @@ function update(PL, varargin)
 % % %         end
 % % %     end
 end
-function redraw(pl, varargin)
-    %REDRAW resizes the element graphical panel.
+function redraw(pr, varargin)
+    %REDRAW resizes the property panel and repositions its graphical objects.
     %
-    % REDRAW(PL) resizes the plot PL.
+    % REDRAW(PR) resizes the property panel and repositions its
+    %   graphical objects. 
+    % 
+    % Important notes:
+    % 1. REDRAW() sets the units 'characters' for panel and all its graphical objects. 
+    % 2. REDRAW() is typically called internally by PlotElement and does not need 
+    %  to be explicitly called in children of PlotProp.
     %
-    % REDRAW(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=2).
+    % REDRAW(PR, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT)
+    %  repositions the property panel. It is possible to use a
+    %  subset of the Name-Value pairs.
+    %  By default:
+    %  - X0 does not change
+    %  - Y0 does not change
+    %  - WIDTH does not change
+    %  - HEIGHT=3.33 characters.
     %
-    % See also draw, update, refresh.
+    % See also draw, update, refresh, PlotElement.
     
-    pip = pl.get('EL');
+    pip = pr.get('EL');
     ps_dict = pip.get('PS_DICT');
         
     ps_number = ps_dict.length();
@@ -339,7 +352,7 @@ function redraw(pl, varargin)
     h_ps_footer = .5; % height section footer
     h_ps_margin = .5; % height section margin
     h = h_min + (h_ps_margin + h_ps_header + h_ps_footer) * ps_number + h_pc * sum(pc_numbers);
-    pl.redraw@PlotProp('Height', h, varargin{:})
+    pr.redraw@PlotProp('Height', h, varargin{:})
 
     for s = 1:1:ps_number
         ps_y = h_ps_header * (ps_number - s) ...
@@ -348,13 +361,13 @@ function redraw(pl, varargin)
             + h_ps_margin * (ps_number - s + 1);
         ps_h = h_ps_header + h_pc * pc_numbers(s) + h_ps_footer;
         
-        set(pl.ps_panels{s}, ...
+        set(pr.ps_panels{s}, ...
             'Units', 'normalized', ...
             'Position', [.02 ps_y/h .96 ps_h/h] ...
             )
         
         for c = 1:1:pc_numbers(s)
-            set(pl.pc_btns{s}{c}, ...
+            set(pr.pc_btns{s}{c}, ...
                 'Units', 'normalized', ...
                 'Position', [.02 (h_ps_footer+(pc_numbers(s) - c)*h_pc)/ps_h .96 h_pc/ps_h] ...
                 )

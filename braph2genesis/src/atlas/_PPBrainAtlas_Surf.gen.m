@@ -2,7 +2,7 @@
 PPBrainAtlas_Surf < PlotProp (pl, plot property of brain atlas surface) is a plot of brain atlas surface.
 
 %%% ¡description!
-PPBrainAtlas_Surf plots for Brain Atlas surface.
+PPBrainAtlas_Surf plots for a brain atlas surface.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp, BrainAtlas
@@ -33,38 +33,40 @@ PROP (data, scalar) is the property number (BrainAtlas.SURF).
 BrainAtlas.SURF
 
 %% ¡properties!
-pp
+p
 surf_selector_popup
 plot_brain_atlas_btn
 
 f_pba % figure for PlotBrainAtlas
 
 %% ¡methods!
-function h_panel = draw(pl, varargin)
-    %DRAW draws the idict for brain atlas property graphical panel.
+function h_panel = draw(pr, varargin)
+    %DRAW draws the panel to manage a brain atlas surface.
     %
-    % DRAW(PL) draws the idict property graphical panel.
+    % DRAW(PR) draws the panel to manage a brain atlas surface, with a
+    %  pupupmenu to select the brain surface and a button to open it in a
+    %  separate GUI.
     %
-    % H = DRAW(PL) returns a handle to the idict property graphical panel.
+    % H = DRAW(PR) returns a handle to the property panel.
     %
-    % DRAW(PL, 'Property', VALUE, ...) sets the properties of the graphical
-    %  panel with custom property-value couples.
+    % DRAW(PR, 'Property', VALUE, ...) sets the properties of the panel 
+    %  with custom Name-Value pairs.
     %  All standard plot properties of uipanel can be used.
     %
     % It is possible to access the properties of the various graphical
-    %  objects from the handle to the brain surface graphical panel H.
+    %  objects from the handle H of the panel.
     %
-    % see also update, redraw, refresh, settings, uipanel, isgraphics.
+    % See also update, redraw, settings, uipanel.
 
-    pl.pp = draw@PlotProp(pl, 'DeleteFcn', {@close_f_pba}, varargin{:});
+    pr.p = draw@PlotProp(pr, 'DeleteFcn', {@close_f_pba}, varargin{:});
     function close_f_pba(~, ~)
-        if ~isempty(pl.f_pba) && isgraphics(pl.f_pba, 'figure')
-            close(pl.f_pba)
+        if check_graphics(pr.f_pba, 'figure')
+            close(pr.f_pba)
         end
     end
 
-    pl.surf_selector_popup = uicontrol( ...
-        'Parent', pl.pp, ...
+    pr.surf_selector_popup = uicontrol( ...
+        'Parent', pr.p, ...
         'Style', 'popupmenu', ...
         'Units', 'normalized', ...
         'Position', [.02 .1 .46 .5], ... 
@@ -79,7 +81,7 @@ function h_panel = draw(pl, varargin)
             surfs = cellfun(@(x) erase(x, '.nv'), files_array(1, :), 'UniformOutput', false);
         end
         function value = get_surf_selector_popup_value()
-            ba = pl.get('EL');
+            ba = pr.get('EL');
             ba_surf_id = erase(ba.get('SURF').get('ID'), '.nv');
             
             value = find(strcmp(ba_surf_id, get_brain_surfaces()));
@@ -89,39 +91,39 @@ function h_panel = draw(pl, varargin)
         end
         function cb_surf_selector_popup(~, ~)
             brain_surfaces = get_brain_surfaces();
-            selected_surface = brain_surfaces{get(pl.surf_selector_popup, 'Value')};
+            selected_surface = brain_surfaces{get(pr.surf_selector_popup, 'Value')};
 
-            ba = pl.get('EL');
+            ba = pr.get('EL');
             ba.set('SURF', ImporterBrainSurfaceNV('FILE', [selected_surface '.nv']).get('SURF'));
 
-            pl.update();
+            pr.update();
         end
 
-    pl.plot_brain_atlas_btn = uicontrol(...
+    pr.plot_brain_atlas_btn = uicontrol(...
         'Style', 'pushbutton', ...
-        'Parent', pl.pp, ...
+        'Parent', pr.p, ...
         'Units', 'normalized', ...
         'String', 'Plot Brain Atlas', ...
         'Position', [.52 .1 .46 .65], ...
         'Callback', {@cb_plot_brain_atlas_btn} ...
         );
         function cb_plot_brain_atlas_btn(~, ~)
+            % prevents multiple PlotBrainAtlas figure creations (re-enabled when figure is closed)
+            set(pr.plot_brain_atlas_btn, 'Enable', 'off');
+            set(pr.surf_selector_popup, 'Enable', 'off');
+            drawnow()
+            
             % determine position for figure of PlotBrainAtlas
-            f_ba = ancestor(pl.pp, 'Figure'); % BrainAtlas GUI
-            backup_units = get(f_ba, 'Units');
-            set(f_ba, 'Units', 'pixels')
-            f_ba_pos = get(f_ba, 'Position'); % pixels
-            f_ba_x = f_ba_pos(1);
-            f_ba_y = f_ba_pos(2);
-            f_ba_w = f_ba_pos(3);
-            f_ba_h = f_ba_pos(4);
-            set(f_ba, 'Units', backup_units);
+            f_ba = ancestor(pr.p, 'Figure'); % BrainAtlas GUI
+            f_ba_x = Plot.x0(f_ba, 'pixels');
+            f_ba_y = Plot.y0(f_ba, 'pixels');
+            f_ba_w = Plot.w(f_ba, 'pixels');
+            f_ba_h = Plot.h(f_ba, 'pixels');
 
-            screen_pos = get(0, 'screensize');  % pixels
-            screen_x = screen_pos(1);
-            screen_y = screen_pos(2);
-            screen_w = screen_pos(3);
-            screen_h = screen_pos(4);
+            screen_x = Plot.x0(0, 'pixels');
+            screen_y = Plot.y0(0, 'pixels');
+            screen_w = Plot.w(0, 'pixels');
+            screen_h = Plot.h(0, 'pixels');
 
             % golden ratio is defined as a+b/a = a/b = phi. phi = 1.61
             x = f_ba_x + f_ba_w;
@@ -129,116 +131,118 @@ function h_panel = draw(pl, varargin)
             y = f_ba_y + f_ba_h - h;
             w = f_ba_w * 1.61;
             
-            pl.f_pba = figure( ...
+            pr.f_pba = figure( ...
                 'NumberTitle', 'off', ...
                 'Units', 'normalized', ...
                 'Position', [x/screen_w y/screen_h w/screen_w h/screen_h], ...
                 'CloseRequestFcn', {@cb_f_pba_close} ...
                 );
-                set_braph2_icon(pl.f_pba)
-                function cb_f_pba_close(~, ~)
-                    delete(pl.f_pba)
+            set_braph2_icon(pr.f_pba)
+            function cb_f_pba_close(~, ~)
+                delete(pr.f_pba) % deletes also f_settings
+                pr.update() % re-activates the surf_selector_popup and plot_brain_atlas_btn
+            end
 
-                    pl.update()
-                end
-                
-                ui_menu_about = uimenu(pl.f_pba, 'Label', 'About');
-                uimenu(ui_menu_about, ...
-                    'Label', 'License ...', ...
-                    'Callback', {@cb_license})
-                function cb_license(~, ~)
-                    BRAPH2.license()
-                end
-                uimenu(ui_menu_about, ...
-                    'Label', 'About ...', ...
-                    'Callback', {@cb_about})
-                function cb_about(~, ~)
-                    BRAPH2.about()
-                end
-                % % % ui_menu = uimenu(pl.f_pba, 'Label', 'Figure');
-                % % % uimenu(ui_menu, ...
-                % % %     'Label', 'Save Figure ...', ...
-                % % %     'Accelerator', 'F', ...
-                % % %     'Callback', {@cb_save_figure})
-                % % % function cb_save_figure(~, ~)
-                % % %     % select file
-                % % %     [file, path, filterindex] = uiputfile('*.jpg', ['Select the ' pl.f_pba.Name ' file.']);
-                % % %     % save file
-                % % %     if filterindex
-                % % %         filename = fullfile(path, file);
-                % % %         saveas(gcf, filename, 'jpg');
-                % % %     end
-                % % % end
+            menu_about = uimenu(pr.f_pba, 'Label', 'About');
+            uimenu(menu_about, ...
+                'Label', 'License ...', ...
+                'Callback', {@cb_license})
+            function cb_license(~, ~)
+                BRAPH2.license()
+            end
+            uimenu(menu_about, ...
+                'Label', 'About ...', ...
+                'Callback', {@cb_about})
+            function cb_about(~, ~)
+                BRAPH2.about()
+            end
 
-                ui_toolbar = findall(pl.f_pba, 'Tag', 'FigureToolBar');
-                delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
-                delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
+            ui_toolbar = findall(pr.f_pba, 'Tag', 'FigureToolBar');
+            delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
+            delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
 
-            % Plor figure PlotBrainAtlas
-            pba = pl.memorize('PBA');
-            pba.draw('Parent', pl.f_pba)
+            % Plot PlotBrainAtlas panel
+            pba = pr.memorize('PBA');
+            pba.draw('Parent', pr.f_pba)
             
-            % Plot setting panel
+            % Plot settings panel
             f_settings = pba.settings();
             set(f_settings, 'OuterPosition', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
-            pba.set('SETPOS', get(f_settings, 'Position'))
             
-            pl.update()
+            % updates PlotProp panel
+            pr.update()
         end
     
     % output
     if nargout > 0
-        h_panel = pl.pp;
+        h_panel = pr.p;
     end
 end
-function update(pl)
-    %UPDATE updates the content of the property graphical panel.
+function update(pr)
+    %UPDATE updates the content of the property panel and its graphical objects.
     %
-    % UPDATE(PL) updates the content of the property graphical panel.
+    % UPDATE(PR) updates the content of the property panel and its graphical objects.
     %
-    % See also draw, redraw, refresh.
+    % Important note:
+    % 1. UPDATE() is typically called internally by PlotElement and does not need 
+    %  to be explicitly called in children of PlotProp.
+    %
+    % See also draw, redraw, PlotElement.
     
-    update@PlotProp(pl)
+    update@PlotProp(pr)
     
-    ba = pl.get('EL');
+    ba = pr.get('EL');
     
-    if isgraphics(pl.f_pba, 'figure')
-        set(pl.f_pba, ...
+    if check_graphics(pr.f_pba, 'figure')
+        set(pr.f_pba, ...
             'Name', ba.get('ID') ...
             )            
         
         % prevents multiple PlotBrainAtlas figure creations (re-enabled when figure is closed)
-        set(pl.plot_brain_atlas_btn, 'Enable', 'off');
-        set(pl.surf_selector_popup, 'Enable', 'off');
+        set(pr.plot_brain_atlas_btn, 'Enable', 'off');
+        set(pr.surf_selector_popup, 'Enable', 'off');
     else
         % enables creation of a PlotBrainAtlas figure
-        set(pl.plot_brain_atlas_btn, 'Enable', 'on');
-        set(pl.surf_selector_popup, 'Enable', 'on');
+        set(pr.plot_brain_atlas_btn, 'Enable', 'on');
+        set(pr.surf_selector_popup, 'Enable', 'on');
     end
 end
-function redraw(pl, varargin)
-    %REDRAW redraws the element graphical panel.
+function redraw(pr, varargin)
+    %REDRAW resizes the property panel and repositions its graphical objects.
     %
-    % REDRAW(PL) redraws the plot PL.
+    % REDRAW(PR) resizes the property panel and repositions its
+    %   graphical objects. 
+    % 
+    % Important notes:
+    % 1. REDRAW() sets the units 'characters' for panel and all its graphical objects. 
+    % 2. REDRAW() is typically called internally by PlotElement and does not need 
+    %  to be explicitly called in children of PlotProp.
     %
-    % REDRAW(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=4).
+    % REDRAW(PR, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT)
+    %  repositions the property panel. It is possible to use a
+    %  subset of the Name-Value pairs.
+    %  By default:
+    %  - X0 does not change
+    %  - Y0 does not change
+    %  - WIDTH does not change
+    %  - HEIGHT=1.4 characters.
     %
-    % See also draw, update, refresh.
-
-    pl.redraw@PlotProp('Height', 4, varargin{:});
+    % See also draw, update, PlotElement.
+    
+    pr.redraw@PlotProp('Height', 4, varargin{:});
 end
-function update_brain_atlas(pl)
+function update_brain_atlas(pr)
     %UPDATE_BRAIN_ATLAS updates the brain atlas.
     %
-    % UPDATE_BRAIN_ATLAS(PL) updates the brain atlas. Usually used
+    % UPDATE_BRAIN_ATLAS(PR) updates the brain atlas. Usually used
     %  triggered by PPBrainAtlas_BRDict.
     %
     % See also PPBrainAtlas_BRDict.
     
-    if isgraphics(pl.f_pba, 'figure')
-        pba = pl.get('PBA');
+    if isgraphics(pr.f_pba, 'figure')
+        pba = pr.get('PBA');
         try
-            pba.draw('Parent', pl.f_pba)
+            pba.draw('Parent', pr.f_pba)
         catch e
             if strcmp(e.identifier, 'MATLAB:badsubscript') % regions added too fast by the user
                 % do nothing

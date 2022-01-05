@@ -25,6 +25,16 @@ end
 FILE (data, string) is the B2 file where the element is saved.
 
 %%% ¡prop!
+MENUBAR (metadata, logical) determines whether to show the menubar.
+%%%% ¡default!
+true
+
+%%% ¡prop!
+TOOLBAR (metadata, logical) determines whether to show the toolbar.
+%%%% ¡default!
+true
+
+%%% ¡prop!
 NAME (metadata, string) is the name of the GUI.
 
 %%% ¡prop!
@@ -54,7 +64,7 @@ menu_about
 f_layout % handle to figure with panel to manage layout
 
 %% ¡methods!
-function f_out = draw(gui)
+function f_out = draw(gui, varargin)
 % % % FIXME
 
     pe = gui.get('pe');
@@ -72,6 +82,9 @@ function f_out = draw(gui)
             'CloseRequestFcn', {@cb_close} ...
             );
         set_braph2_icon(gui.f)
+    end
+    if ~isempty(varargin)
+        set(gui.f, varargin{:})
     end
     
     % update figure
@@ -132,7 +145,7 @@ function f_out = draw(gui)
             'Units', 'character', ...
             'HorizontalAlignment', 'left', ...
             'String', gui.get('FILE') ...
-            )
+            );
     end
 % FIXME: check whether to bring out the update filename    
     function update_filename()
@@ -151,7 +164,7 @@ function f_out = draw(gui)
     pe.draw('Parent', gui.pp)
     
     %% Menu
-    if ~check_graphics(gui.menu_file, 'uimenu')
+    if ~check_graphics(gui.menu_file, 'uimenu') && gui.get('MENUBAR')
         gui.menu_file = uimenu(gui.f, 'Label', 'File');
         uimenu(gui.menu_file, ...
             'Label', 'Open ...', ...
@@ -207,7 +220,7 @@ function f_out = draw(gui)
         end
     end
     
-    if ~check_graphics(gui.menu_import, 'uimenu')
+    if ~check_graphics(gui.menu_import, 'uimenu') && gui.get('MENUBAR')
         gui.menu_import = uimenu(gui.f, ...
             'Label', 'Import', ...
             'Callback', {@cb_refresh_import_menu});
@@ -220,7 +233,7 @@ function f_out = draw(gui)
         eval([el.getClass() '.getGUIMenuImport(el, gui.menu_import, pe)']);
     end    
 
-    if ~check_graphics(gui.menu_export, 'uimenu')
+    if ~check_graphics(gui.menu_export, 'uimenu') && gui.get('MENUBAR')
         gui.menu_export = uimenu(gui.f, ...
             'Label', 'Export', ...
             'Callback', {@cb_refresh_export_menu});
@@ -233,7 +246,7 @@ function f_out = draw(gui)
         eval([el.getClass() '.getGUIMenuExport(el, gui.menu_export, pe)']);
     end
 
-    if ~check_graphics(gui.menu_personalize, 'uimenu')
+    if ~check_graphics(gui.menu_personalize, 'uimenu') && gui.get('MENUBAR')
         gui.menu_personalize = uimenu(gui.f, 'Label', 'Personalize');
         uimenu(gui.menu_personalize, ...
             'Label', 'Layout ...', ...
@@ -351,7 +364,7 @@ function f_out = draw(gui)
         end
     end
 
-    if ~check_graphics(gui.menu_about, 'uimenu')
+    if ~check_graphics(gui.menu_about, 'uimenu') && gui.get('MENUBAR')
         gui.menu_about = uimenu(gui.f, 'Label', 'About');
         uimenu(gui.menu_about, ...
             'Label', 'BRAPH.org ...', ...
@@ -386,7 +399,7 @@ function f_out = draw(gui)
     end
 
     %% Toolbar
-    if ~check_graphics(gui.toolbar, 'uitoolbar')
+    if ~check_graphics(gui.toolbar, 'uitoolbar') && gui.get('TOOLBAR')
         set(gui.f, 'Toolbar', 'figure')
 
         gui.toolbar = findall(gui.f, 'Tag', 'FigureToolBar');
