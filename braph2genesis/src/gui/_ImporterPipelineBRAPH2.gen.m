@@ -103,6 +103,7 @@ if isfile(file)
         if im.get('WAITBAR')
             close(wb)
         end
+        
         rethrow(e)
     end
     
@@ -113,6 +114,7 @@ elseif ~braph2_testing()
     if im.get('WAITBAR')
         close(wb)
     end
+    
     error(BRAPH2.IM_ERR);
 end
 
