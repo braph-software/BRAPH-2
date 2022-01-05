@@ -33,7 +33,12 @@ REINIT - To reinitialize the element plot with a new element, call:
 
  This function resets both the element and the panel using the new element.
  Importnatly, the new element must be of exactly the same class as the old element.
-  
+
+
+CALLBACK - This is a callback function:
+
+    pl.<strong>cb_bring_to_front</strong>() - brings to the front the figure and its dependent figures
+ 
 %%% ¡seealso!
 GUI, PlotProp
 
@@ -357,6 +362,25 @@ function reinit(pe, el)
     pe.draw()
     pe.update()
     pe.redraw()
+end
+function cb_bring_to_front(pe)
+    %CB_BRING_TO_FRONT brings to front the figure and its dependent figures.
+    %
+    % CB_BRING_TO_FRONT(GUI) brings the figure and its dependent figures to
+    %  front by calling the methods cb_bring_to_front() and all the
+    %  PlotProp panels of the PlotElement.
+    %  
+    % Note that it will draw anew the figure it it hae been closed.
+    %
+    % See also Plot, PlotProp, PlotElement.
+
+    pe.cb_bring_to_front@Plot();
+    
+    pr_dict = pe.get('PR_DICT');
+    for prop = 1:1:pr_dict.length()
+        pr = pr_dict.getItem(prop);
+        pr.cb_bring_to_front()
+    end
 end
 
 %% ¡tests!
