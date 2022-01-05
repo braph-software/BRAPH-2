@@ -54,7 +54,7 @@ menu_about
 f_layout % handle to figure with panel to manage layout
 
 %% ¡methods!
-function f_out = draw(gui)
+function f_out = draw(gui, varargin)
 % % % FIXME
 
     pe = gui.get('pe');
@@ -72,6 +72,9 @@ function f_out = draw(gui)
             'CloseRequestFcn', {@cb_close} ...
             );
         set_braph2_icon(gui.f)
+    end
+    if ~isempty(varargin)
+        set(gui.f, varargin{:})
     end
     
     % update figure
