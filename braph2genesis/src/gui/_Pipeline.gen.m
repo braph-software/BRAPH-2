@@ -10,7 +10,7 @@ PipelineGUI, PipelineSection, PipelineCode
 %%% ¡gui!
 
 %%%% ¡menu_importer!
-uimenu(ui_menu_import, ...
+uimenu(menu_import, ...
     'Label', 'Import BRAPH2 ...', ...
     'Callback', {@cb_importer_BRAPH2});
 function cb_importer_BRAPH2(~, ~)
@@ -36,10 +36,7 @@ function cb_importer_BRAPH2(~, ~)
                 end
             end
             
-            pe.get('PP_DICT').getItem('ps_dict').draw() % draws the correct section panels and code buttons
-            pe.get('PP_DICT').getItem('ps_dict').refresh() % triggers redraw on the whole PlotElement and on all PlotProp's
-
-            pe.reinit()
+            pe.reinit(pip_new)
         end
     catch e
         warndlg(['Please, select a valid input Pipeline in BRAPH2 format. ' newline() ...
@@ -51,7 +48,7 @@ function cb_importer_BRAPH2(~, ~)
 end
 
 %%%% ¡menu_exporter!
-uimenu(ui_menu_export, ...
+uimenu(menu_export, ...
     'Label', 'Export BRAPH2 ...', ...
     'Callback', {@cb_exporter_BRAPH2});
 function cb_exporter_BRAPH2(~, ~)
