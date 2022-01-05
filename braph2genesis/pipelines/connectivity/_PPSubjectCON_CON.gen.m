@@ -1,11 +1,11 @@
 %% ¡header!
-PPSubjectST_ST < PlotPropMatrix (pl, plot subject structural data) represents the structural data of a subject.
+PPSubjectCON_CON < PlotPropMatrix (pl, plot subject connnectivity data) represents the connnectivity data of a subject.
 
 %%% ¡description!
-PPSubjectST_ST represents the structural data of a subject.
+PPSubjectCON_CON represents the connnectivity data of a subject.
 
 %%% ¡seealso!
-GUI, PlotElement, PlotPropMatrix, Subject, SubjectST.
+GUI, PlotElement, PlotPropMatrix, Subject, SubjectCON.
 
 %% ¡properties!
 pp
@@ -13,7 +13,7 @@ table_value
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
-    %DRAW draws a table with the structural data of a subject.
+    %DRAW draws a table with the connnectivity data of a subject.
     %
     % DRAW(PL) draws the graphical panel.
     %
@@ -51,6 +51,9 @@ function update(pl)
     % See also draw, redraw, refresh.
 
     update@PlotPropMatrix(pl)
+    
+    pp_el = pp.get('EL');
+    ba = pp_el.get('BA');
 
     br_ids = cell(ba.length(), 1);
     for i = 1:1:ba.length()
