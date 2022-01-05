@@ -1,11 +1,11 @@
 %% ¡header!
-PPSubjectST_ST < PlotPropMatrix (pl, plot subject structural data) represents the structural data of a subject.
+PPSubjectCON_CON < PlotPropMatrix (pl, plot subject connnectivity data) represents the connnectivity data of a subject.
 
 %%% ¡description!
-PPSubjectST_ST represents the structural data of a subject.
+PPSubjectCON_CON represents the connnectivity data of a subject.
 
 %%% ¡seealso!
-GUI, PlotElement, PlotPropMatrix, Subject, SubjectST.
+GUI, PlotElement, PlotPropMatrix, Subject, SubjectCON.
 
 %% ¡properties!
 p
@@ -13,21 +13,20 @@ table_value
 
 %% ¡methods!
 function h_panel = draw(pr, varargin)
-    %DRAW draws a table with the structural data of a subject.
+    %DRAW draws the subject panel.
     %
-    % DRAW(PR) draws the property panel a table with the structural data of 
-    %  a subject.
+    % DRAW(PR) draws the subject panel.
     %
     % H = DRAW(PR) returns a handle to the property panel.
     %
-    % DRAW(PR, 'Property', VALUE, ...) sets the properties of the panel 
-    %  with custom Name-Value pairs.
+    % DRAW(PR, 'Property', VALUE, ...) sets the properties of the graphical
+    %  panel with custom Name-Value pairs.
     %  All standard plot properties of uipanel can be used.
     %
     % It is possible to access the properties of the various graphical
     %  objects from the handle H of the panel.
     %
-    % See also update, redraw, settings, uipanel.
+    % See also update, redraw, refresh, uipanel.
     
     pr.p = draw@PlotPropMatrix(pr, varargin{:});
 
@@ -45,21 +44,17 @@ function h_panel = draw(pr, varargin)
     end
 end
 function update(pr)
-    %UPDATE updates the content of the property panel and its graphical objects.
+    %UPDATE updates the content and permissions of the panel.
     %
-    % UPDATE(PR) updates the content of the property panel and its graphical objects.
+    % UPDATE(PR) updates the content and permissions of the panel.
     %
-    % Important note:
-    % 1. UPDATE() is typically called internally by PlotElement and does not need 
-    %  to be explicitly called in children of PlotProp.
-    %
-    % See also draw, redraw, PlotElement.
+    % See also draw, redraw, refresh, PlotElement.
 
     update@PlotPropMatrix(pr)
     
-    sub = pr.get('EL');
-    br_dict = sub.get('BA').get('BR_DICT');
-
+    pp_el = pr.get('EL');
+    br_dict = pp_el.get('BA').get('br_dict');
+    
     br_ids = cell(br_dict.length(), 1);
     for i = 1:1:br_dict.length()
         br = br_dict.getItem(i);
@@ -69,9 +64,9 @@ function update(pr)
         end
         br_ids{i} = br_id;
     end
-
+    
     set(pr.table_value, ...
-        'ColumnName', {}, ...
+        'ColumnName', br_ids, ...
         'RowName', br_ids ...
         )
 end
@@ -93,9 +88,9 @@ function redraw(pr, varargin)
     %  - X0 does not change
     %  - Y0 does not change
     %  - WIDTH does not change
-    %  - HEIGHT=1.4 characters.
+    %  - HEIGHT=3.33 characters.
     %
-    % See also draw, update, PlotElement.
+    % See also draw, update, refresh, PlotElement.
     
     pr.redraw@PlotPropMatrix(varargin{:});
 end
