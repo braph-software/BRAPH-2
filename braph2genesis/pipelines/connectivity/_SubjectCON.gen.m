@@ -134,7 +134,7 @@ else
     msg = ['CON must be a square matrix with the dimensiton equal to the number of brain regions (' int2str(br_number) ').'];
 end
 %%%% ¡gui!
-pl = PPSubjectCON_CON('EL', sub, 'PROP', SubjectCON.CON, varargin{:});
+pr = PPSubjectCON_CON('EL', sub, 'PROP', SubjectCON.CON, varargin{:});
  
 %%% ¡prop!
 age (data, scalar) is a scalar number containing the age of the subject.
