@@ -171,7 +171,6 @@ function update(pr, varargin)
                                 'CLOSERQ', false ...
                             ).draw();
                     else
-% FIXME ensure that all subfigures are brought to front
                         gui = get(pr.pc_GUIs{s}{c}, 'UserData');
                         gui.cb_bring_to_front()
                     end
