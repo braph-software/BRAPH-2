@@ -3,6 +3,9 @@ GUI < Element (gui, graphical user interface) is a GUI for an element.
 
 %%% ¡description!
 % % % FIXME
+CALLBACK - This is a callback function:
+
+    pl.<strong>cb_bring_to_front</strong>() - brings to the front the figure and its dependent figures
 
 %%% ¡seealso!
 Element, PlotElement
@@ -97,7 +100,7 @@ function f_out = draw(gui, varargin)
         end
     end
     set(gui.f, ...
-        'UserData', pe, ... % handle to retrieve pe and el from figure
+        'UserData', gui, ... % handle to retrieve gui, pe and el from figure
         'Name', [el.getClass() ' - ' name ' - ' BRAPH2.STR], ...
         'Units', 'normalized', ...
         'Position', gui.get('POSITION'), ...
@@ -475,5 +478,30 @@ function f_out = draw(gui, varargin)
     % output
     if nargout > 0
         f_out = gui.f;
+    end
+end
+function cb_bring_to_front(gui)
+    %CB_BRING_TO_FRONT brings to front the figure and its dependent figures.
+    %
+    % CB_BRING_TO_FRONT(GUI) brings the figure and its dependent figures to
+    %  front by calling the methods cb_bring_to_front() and all the
+    %  PlotProp panels of the PlotElement.
+    %  
+    % Note that it will draw anew the figure it it hae been closed.
+    %
+    % See also Plot, PlotProp, PlotElement.
+
+    % brings to front the main GUI
+    if check_graphics(gui.f, 'figure')
+        figure(gui.f)
+    end
+    
+    % brings to front the other panels
+    pe = gui.get('PE');
+    pr_dict = pe.get('PR_DICT');
+    for prop = 1:1:pr_dict.length()
+        pr = pr_dict.getItem(prop);
+        
+        pr.cb_bring_to_front()
     end
 end

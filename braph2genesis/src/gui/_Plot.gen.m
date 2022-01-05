@@ -49,7 +49,7 @@ The first time that it is called it generates a new settings figure. The subsequ
 CALLBACKS - These are callback functions:
 
     pl.<strong>cb_close_fs</strong>() - closes the settings figure
-    pl.<strong>cb_bring_fs_to_front</strong>() - brings to the front the settings figure
+    pl.<strong>cb_bring_to_front</strong>() - brings to the front the settings figure
 
 %%% ¡seealso!
 uipanel, GUI, PlotElement, PlotProp
@@ -158,10 +158,10 @@ function cb_close_fs(pl)
         close(pl.f_settings)
     end
 end
-function cb_bring_fs_to_front(pl)
-    %CB_BRING_FS_TO_FRONT brings the settings figure to the front.
+function cb_bring_to_front(pl)
+    %CB_BRING_TO_FRONT brings the settings figure to the front.
     %
-    % CB_BRING_FS_TO_FRONT(PL) brings the settings figure to the front.
+    % CB_BRING_TO_FRONT(PL) brings the settings figure to the front.
     %
     % See also settings.
 
@@ -420,7 +420,7 @@ pl_SE.settings( ...
 pl_SE.cb_close_fs()
 
 % bring to from NW settings figure
-pl_NW.cb_bring_fs_to_front()
+pl_NW.cb_bring_to_front()
 
 % close SE
 close(f_SW)

@@ -260,7 +260,8 @@ function update(pr)
     
     % update brain surface
     f = ancestor(pr.p, 'Figure'); % get figure BrainAtlas
-    pe = get(f, 'UserData'); % get PlotElement BrainAtlas
+    gui = get(f, 'UserData'); % get GUI PlotElement BrainAtlas
+    pe = gui.get('PE'); % get PlotElement BrainAtlas
     pp_surf = pe.get(PlotElement.PR_DICT).getItem(BrainAtlas.SURF_TAG); % get PlotProp Surf
     pp_surf.update_brain_atlas()
 end

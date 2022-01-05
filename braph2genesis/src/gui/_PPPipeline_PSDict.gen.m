@@ -170,8 +170,9 @@ function update(pr, varargin)
                                 ] ...
                             ).draw();
                     else
-                        figure(pr.pc_GUIs{s}{c})
 % FIXME ensure that all subfigures are brought to front
+                        gui = get(pr.pc_GUIs{s}{c}, 'UserData');
+                        gui.cb_bring_to_front()
                     end
                 end
             end

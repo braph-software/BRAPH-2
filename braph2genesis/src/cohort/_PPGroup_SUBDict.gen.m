@@ -3,6 +3,10 @@ PPGroup_SUBDict < PlotProp (pl, plot property of group subjects idict) is a plot
 
 %%% ¡description!
 PPGroup_SUBDict plots a table to visualize IndexedDictionary of the group of subjects.
+% % % 
+% % % CALLBACK - This is a callback function:
+% % % 
+% % %     pl.<strong>cb_bring_to_front</strong>() - brings to the front the group figure and its subject figures
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp, Group, Subject, IndexedDictionary
@@ -258,3 +262,21 @@ function redraw(pr, varargin)
 
     pr.redraw@PlotProp('Height', 30, varargin{:});
 end
+function cb_bring_to_front(pr)
+    %CB_BRING_TO_FRONT brings to front the group figure and its subject figures.
+    %
+    % CB_BRING_TO_FRONT(GUI) brings to front the group figure and its
+    %  subject figures. 
+
+    % brings to front settings panel
+    pr.cb_bring_to_front@PlotProp();
+
+    % brings to front subject figures
+    for i = 1:1:length(pr.f_subs)
+        if check_graphics(pr.f_subs(i), 'figure')
+            figure(pr.f_subs(i))
+        end
+    end
+end
+
+
