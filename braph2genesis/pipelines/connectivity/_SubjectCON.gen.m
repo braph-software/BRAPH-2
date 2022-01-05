@@ -17,9 +17,9 @@ function cb_importer_TXT(~, ~)
         'ID', 'Import Group of SubjectCons from TXT', ...
         'WAITBAR', true ...
         );
-    im.uigetfile();
+    im.uigetdir();
     try
-        if isfile(im.get('FILE'))
+        if isfolder(im.get('DIRECTORY'))
             gr = pe.get('EL');
             
             assert( ...
@@ -54,9 +54,9 @@ function cb_importer_XLS(~, ~)
         'ID', 'Import Group of SubjectCons from XLS', ...
         'WAITBAR', true ...
         );
-    im.uigetfile();
+    im.uigetdir();
     try
-        if isfile(im.get('FILE'))
+        if isfolder(im.get('DIRECTORY'))
             gr = pe.get('EL');
             
             assert( ...
@@ -93,8 +93,8 @@ function cb_exporter_TXT(~, ~)
         'GR', el.copy(), ...
         'WAITBAR', true ...
         );
-    ex.uiputfile()
-    if ~strcmp(ex.get('FILE'), ExporterGroupSubjectCON_TXT.getPropDefault('FILE'))
+    ex.uigetdir()
+    if ~strcmp(ex.get('DIRECTORY'), ExporterGroupSubjectCON_TXT.getPropDefault('DIRECTORY'))
         ex.get('SAVE');
     end
 end
@@ -108,8 +108,8 @@ function cb_exporter_TXT(~, ~)
         'GR', el.copy(), ...
         'WAITBAR', true ...
         );
-    ex.uiputfile()
-    if ~strcmp(ex.get('FILE'), ExporterGroupSubjectCON_XLS.getPropDefault('FILE'))
+    ex.uigetdir()
+    if ~strcmp(ex.get('DIRECTORY'), ExporterGroupSubjectCON_XLS.getPropDefault('DIRECTORY'))
         ex.get('SAVE');
     end
 end
