@@ -156,10 +156,11 @@ GUI
 %%%% ¡code!
 im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('example_CON_WU')) filesep 'example data CON (DTI)' filesep 'desikan_atlas.xlsx']);
 ba = im_ba.get('BA');
-im_gr1 = ImporterGroupSubjectCONXLS( ...
+im_gr = ImporterGroupSubjectCON_XLS( ...
     'DIRECTORY', [fileparts(which('example_CON_WU')) filesep 'example data CON (DTI)' filesep 'xls' filesep 'GroupName1'], ...
     'BA', ba ...
     );
-gr1 = im_gr1.get('GR');
-GUI(gr1, 'CloseRequest', false)
+gr = im_gr.get('GR');
+GUI('PE', gr, 'CLOSEREQ', false).draw()
+
 close(gcf)

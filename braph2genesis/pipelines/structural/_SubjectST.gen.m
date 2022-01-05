@@ -162,11 +162,11 @@ GUI
 %%%% ¡code!
 im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectST')) filesep 'example data ST (MRI)' filesep 'desikan_atlas.xlsx']);
 ba = im_ba.get('BA');
-im_gr1 = ImporterGroupSubjectST_XLS( ...
+im_gr = ImporterGroupSubjectST_XLS( ...
     'FILE', [fileparts(which('SubjectST')) filesep 'example data ST (MRI)' filesep 'xls' filesep 'ST_group1.xlsx'], ...
     'BA', ba ...
     );
-gr1 = im_gr1.get('GR');
-GUI('PE', gr1, 'CLOSEREQ', false).draw()
+gr = im_gr.get('GR');
+GUI('PE', gr, 'CLOSEREQ', false).draw()
 
 close(gcf)

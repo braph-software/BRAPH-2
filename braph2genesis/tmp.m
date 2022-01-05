@@ -2,13 +2,19 @@ close all
 clear all
 clc
 
-% delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/atlas/BrainAtlas.m')
-% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/atlas/_BrainAtlas.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/atlas')
-% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/atlas/_BrainAtlas.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/atlas')
+delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/pipelines/connectivity/PPSubjectCON_CON.m')
+create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/pipelines/connectivity/_PPSubjectCON_CON.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/pipelines/connectivity')
+create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/pipelines/connectivity/_PPSubjectCON_CON.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/pipelines/connectivity')
 
-ba = BrainAtlas();
-gui1 = GUI('PE', ba, 'CLOSEREQ', false);
-gui1.draw()
+braph2
+
+delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/pipelines/connectivity/PPSubjectCON_CON.m')
+create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/pipelines/connectivity/_PPSubjectCON_CON.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/pipelines/connectivity')
+create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/pipelines/connectivity/_PPSubjectCON_CON.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/pipelines/connectivity')
+
+% ba = BrainAtlas();
+% gui1 = GUI('PE', ba, 'CLOSEREQ', false);
+% gui1.draw()
 
 gr = Group();
 gui2 = GUI('PE', gr, 'CLOSEREQ', false);
