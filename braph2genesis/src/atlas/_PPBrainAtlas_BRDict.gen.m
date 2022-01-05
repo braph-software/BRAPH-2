@@ -8,32 +8,33 @@ PPBrainAtlas_BRDict plots the IndexedDictionary containing a BrainAtlas.
 GUI, PlotElement, PlotProp, BrainAtlas
 
 %% ¡properties!
-pp
+p
 table % table with the brain regions
 selected % selected brain regions
 
 %% ¡methods!
-function h_panel = draw(pl, varargin)
+function h_panel = draw(pr, varargin)
     %DRAW draws the BrainAtlas idict.
     %
-    % DRAW(PL) draws the BrainAtlas idict graphical panel.
+    % DRAW(PR) draws a panel with a table with the BrainAtlas idict and the
+    %  relative management buttons.
     %
-    % H = DRAW(PL) returns a handle to the BrainAtlas idict graphical panel.
+    % H = DRAW(PR) returns a handle to the property panel.
     %
-    % DRAW(PL, 'Property', VALUE, ...) sets the properties of the graphical
-    %  panel with custom property-value couples.
+    % DRAW(PR, 'Property', VALUE, ...) sets the properties of the panel 
+    %  with custom Name-Value pairs.
     %  All standard plot properties of uipanel can be used.
     %
     % It is possible to access the properties of the various graphical
-    %  objects from the handle H.
+    %  objects from the handle H of the panel.
     %
-    % see also update, redraw, refresh, settings, uipanel, isgraphics.
+    % See also update, redraw, settings, uipanel.
 
-    pl.pp = draw@PlotProp(pl, varargin{:});
+    pr.p = draw@PlotProp(pr, varargin{:});
 
-    pl.table = uitable();
-    set(pl.table, ...
-        'Parent', pl.pp, ...
+    pr.table = uitable();
+    set(pr.table, ...
+        'Parent', pr.p, ...
         'Units', 'normalized', ...
         'Position', [.02 .20 .96 .75], ...
         'ColumnName', {'', 'ID', 'Label', 'x', 'y', 'z', 'Notes'}, ...
@@ -47,15 +48,15 @@ function h_panel = draw(pl, varargin)
             col = event.Indices(2);
             newdata = event.NewData;
 
-            ba = pl.get('EL');
+            ba = pr.get('EL');
             br_dict = ba.get('BR_DICT');
 
             switch col
                 case 1
                     if newdata == 1
-                        pl.selected = sort(unique([pl.selected(:); i]));
+                        pr.selected = sort(unique([pr.selected(:); i]));
                     else
-                        pl.selected = pl.selected(pl.selected~=i);
+                        pr.selected = pr.selected(pr.selected~=i);
                     end
                 case 2
                     if ~br_dict.containsKey(newdata)
@@ -77,10 +78,10 @@ function h_panel = draw(pl, varargin)
                     br_dict.getItem(i).set('Notes', newdata)
             end
 
-            pl.update()            
+            pr.update()            
         end
 
-    ui_button_table_selectall = uicontrol(pl.pp, 'Style', 'pushbutton', ...
+    ui_button_table_selectall = uicontrol(pr.p, 'Style', 'pushbutton', ...
         'Units', 'normalized', ...
         'Position', [.02 .1 .22 .07], ...
         'String', 'Select All', ...
@@ -88,30 +89,30 @@ function h_panel = draw(pl, varargin)
         'Callback', {@cb_table_selectall} ...
         );
         function cb_table_selectall(~, ~)  % (src, event)
-            ba = pl.get('EL');
+            ba = pr.get('EL');
             br_dict = ba.get('BR_DICT');
 
-            pl.selected = [1:1:br_dict.length()]';
+            pr.selected = [1:1:br_dict.length()]';
 
-            pl.update()
+            pr.update()
         end
 
-    ui_button_table_clearselection = uicontrol(pl.pp, 'Style', 'pushbutton', 'Units', 'normalized', ...
+    ui_button_table_clearselection = uicontrol(pr.p, 'Style', 'pushbutton', 'Units', 'normalized', ...
         'Position', [.02 .02 .22 .07], ...
         'String', 'Clear', ...
         'TooltipString', 'Clear selection', ...
         'Callback', {@cb_table_clearselection} ...
         );
         function cb_table_clearselection(~, ~)  % (src, event)
-            ba = pl.get('EL');
+            ba = pr.get('EL');
             br_dict = ba.get('BR_DICT');
 
-            pl.selected = [];
+            pr.selected = [];
 
-            pl.update()
+            pr.update()
         end
     
-    ui_button_table_add = uicontrol(pl.pp, 'Style', 'pushbutton', ...
+    ui_button_table_add = uicontrol(pr.p, 'Style', 'pushbutton', ...
         'Units', 'normalized', ...
         'Position', [.27 .1 .22 .07], ...
         'String', 'Add', ...
@@ -119,7 +120,7 @@ function h_panel = draw(pl, varargin)
         'Callback', {@cb_table_add} ...
         );
         function cb_table_add(~, ~)  % (src, event)
-            ba = pl.get('EL');
+            ba = pr.get('EL');
             br_dict = ba.get('BR_DICT');
 
             br_id = 1;
@@ -137,10 +138,10 @@ function h_panel = draw(pl, varargin)
                 );
             br_dict.add(br);
 
-            pl.update()
+            pr.update()
         end
     
-    ui_button_table_remove = uicontrol(pl.pp,'Style', 'pushbutton', ...
+    ui_button_table_remove = uicontrol(pr.p,'Style', 'pushbutton', ...
         'Units', 'normalized', ...
         'Position', [.27 .02 .22 .07], ...
         'String', 'Remove', ...
@@ -148,15 +149,15 @@ function h_panel = draw(pl, varargin)
         'Callback', {@cb_table_remove} ...
         );
         function cb_table_remove(~, ~)  % (src, event)
-            ba = pl.get('EL');
+            ba = pr.get('EL');
             br_dict = ba.get('BR_DICT');
 
-            pl.selected = br_dict.remove_all(pl.selected);
+            pr.selected = br_dict.remove_all(pr.selected);
 
-            pl.update()
+            pr.update()
         end
     
-    ui_button_table_moveup = uicontrol(pl.pp,'Style', 'pushbutton', ...
+    ui_button_table_moveup = uicontrol(pr.p,'Style', 'pushbutton', ...
         'Units', 'normalized', ...
         'Position', [.52 .1 .22 .07], ...
         'String', 'Move up', ...
@@ -164,15 +165,15 @@ function h_panel = draw(pl, varargin)
         'Callback', {@cb_table_moveup} ...
         );
         function cb_table_moveup(~, ~)  % (src, event)
-            ba = pl.get('EL');
+            ba = pr.get('EL');
             br_dict = ba.get('BR_DICT');
 
-            pl.selected = br_dict.move_up(pl.selected);
+            pr.selected = br_dict.move_up(pr.selected);
 
-            pl.update()
+            pr.update()
         end
     
-    ui_button_table_movedown = uicontrol(pl.pp,'Style', 'pushbutton', ...
+    ui_button_table_movedown = uicontrol(pr.p,'Style', 'pushbutton', ...
         'Units', 'normalized', ...
         'Position', [.52 .02 .22 .07], ...
         'String', 'Move down', ...
@@ -180,15 +181,15 @@ function h_panel = draw(pl, varargin)
         'Callback', {@cb_table_movedown} ...
         );
         function cb_table_movedown(~, ~)  % (src, event)
-            ba = pl.get('EL');
+            ba = pr.get('EL');
             br_dict = ba.get('BR_DICT');
 
-            pl.selected = br_dict.move_down(pl.selected);
+            pr.selected = br_dict.move_down(pr.selected);
 
-            pl.update()
+            pr.update()
         end
     
-    ui_button_table_move2top = uicontrol(pl.pp,'Style', 'pushbutton', ...
+    ui_button_table_move2top = uicontrol(pr.p,'Style', 'pushbutton', ...
         'Units', 'normalized', ...
         'Position', [.77 .1 .22 .07], ...
         'String', 'Move top', ...
@@ -196,15 +197,15 @@ function h_panel = draw(pl, varargin)
         'Callback', {@cb_table_move2top} ...
         );
         function cb_table_move2top(~, ~)  % (src, event)
-            ba = pl.get('EL');
+            ba = pr.get('EL');
             br_dict = ba.get('BR_DICT');
 
-            pl.selected = br_dict.move_to_top(pl.selected);
+            pr.selected = br_dict.move_to_top(pr.selected);
 
-            pl.update()
+            pr.update()
         end
     
-    ui_button_table_move2bottom = uicontrol(pl.pp,'Style', 'pushbutton', ...
+    ui_button_table_move2bottom = uicontrol(pr.p,'Style', 'pushbutton', ...
         'Units', 'normalized', ...
         'Position', [.77 .02 .22 .07], ...
         'String', 'Move bottom', ...
@@ -212,29 +213,29 @@ function h_panel = draw(pl, varargin)
         'Callback', {@cb_table_move2bottom} ...
         );
         function cb_table_move2bottom(~, ~)  % (src, event)
-            ba = pl.get('EL');
+            ba = pr.get('EL');
             br_dict = ba.get('BR_DICT');
 
-            pl.selected = br_dict.move_to_bottom(pl.selected);
+            pr.selected = br_dict.move_to_bottom(pr.selected);
 
-            pl.update()
+            pr.update()
         end
 
     % output
     if nargout > 0
-        h_panel = pl.pp;
+        h_panel = pr.p;
     end
 end
-function update(pl)
+function update(pr)
     %UPDATE updates the content of the property graphical panel.
     %
-    % UPDATE(PL) updates the content of the property graphical panel.
+    % UPDATE(PR) updates the content of the property graphical panel.
     %
     % See also draw, redraw, refresh.
 
-    update@PlotProp(pl)
+    update@PlotProp(pr)
 
-    ba = pl.get('EL');
+    ba = pr.get('EL');
 	br_dict = ba.get('BR_DICT');
 
     if isa(ba.getr('BR_DICT'), 'NoValue')
@@ -243,7 +244,7 @@ function update(pl)
     
     data = cell(br_dict.length(), 7);
     for sub = 1:1:br_dict.length()
-        if any(pl.selected == sub)
+        if any(pr.selected == sub)
             data{sub, 1} = true;
         else
             data{sub, 1} = false;
@@ -255,22 +256,35 @@ function update(pl)
         data{sub, 6} = br_dict.getItem(sub).get('Z');
         data{sub, 7} = br_dict.getItem(sub).get('Notes');
     end
-    set(pl.table, 'Data', data);
+    set(pr.table, 'Data', data);
     
     % update brain surface
-    f = ancestor(pl.pp, 'Figure'); % get figure BrainAtlas
+    f = ancestor(pr.p, 'Figure'); % get figure BrainAtlas
     pe = get(f, 'UserData'); % get PlotElement BrainAtlas
     pp_surf = pe.get(PlotElement.PR_DICT).getItem(BrainAtlas.SURF_TAG); % get PlotProp Surf
     pp_surf.update_brain_atlas()
 end
-function redraw(pl, varargin)
-    %REDRAW redraws the element graphical panel.
+function redraw(pr, varargin)
+    %REDRAW resizes the property panel and repositions its graphical objects.
     %
-    % REDRAW(PL) redraws the plot PL.
+    % REDRAW(PR) resizes the property panel and repositions its
+    %   graphical objects. 
+    % 
+    % Important notes:
+    % 1. REDRAW() sets the units 'characters' for panel and all its graphical objects. 
+    % 2. REDRAW() is typically called internally by PlotElement and does not need 
+    %  to be explicitly called in children of PlotProp.
     %
-    % REDRAW(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=35).
+    % REDRAW(PR, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT)
+    %  repositions the property panel. It is possible to use a
+    %  subset of the Name-Value pairs.
+    %  By default:
+    %  - X0 does not change
+    %  - Y0 does not change
+    %  - WIDTH does not change
+    %  - HEIGHT=1.4 characters.
     %
-    % See also draw, update, refresh.
-
-    pl.redraw@PlotProp('Height', 35, varargin{:});
+    % See also draw, update, PlotElement.
+    
+    pr.redraw@PlotProp('Height', 35, varargin{:});
 end
