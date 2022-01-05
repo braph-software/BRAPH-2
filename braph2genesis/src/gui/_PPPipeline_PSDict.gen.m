@@ -157,7 +157,7 @@ function update(pr, varargin)
                         end
                     end
                 else % the code has already been calculated -- GUI
-                    if length(pr.pc_GUIs) < s || length(pr.pc_GUIs{s}) < c || isempty(pr.pc_GUIs{s}{c}) || ~isgraphics(pr.pc_GUIs{s}{c}, 'figure')
+                    if length(pr.pc_GUIs) < s || length(pr.pc_GUIs{s}) < c || ~check_graphics(pr.pc_GUIs{s}{c}, 'figure')
                         f_pip = ancestor(pr.p, 'Figure'); % Pipeline GUI
 
                         pr.pc_GUIs{s}{c} = GUI( ...
