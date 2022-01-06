@@ -508,6 +508,7 @@ function f_out = draw(gui, varargin)
                 'TooltipString', ['Save ' el.getName()], ...
                 'ClickedCallback', {@cb_save})
         else
+            toolbar_open = findall(gui.toolbar, 'Tag', 'Standard.FileOpen');
             delete(findall(gui.toolbar, 'Tag', 'Standard.SaveFigure'))
         end
         
