@@ -13,20 +13,21 @@ table_value
 
 %% ¡methods!
 function h_panel = draw(pr, varargin)
-    %DRAW draws the subject panel.
+    %DRAW draws a table with the connectivity data of a subject.
     %
-    % DRAW(PR) draws the subject panel.
+    % DRAW(PR) draws the property panel a table with the connectivity data of 
+    %  a subject.
     %
     % H = DRAW(PR) returns a handle to the property panel.
     %
-    % DRAW(PR, 'Property', VALUE, ...) sets the properties of the graphical
-    %  panel with custom Name-Value pairs.
+    % DRAW(PR, 'Property', VALUE, ...) sets the properties of the panel 
+    %  with custom Name-Value pairs.
     %  All standard plot properties of uipanel can be used.
     %
     % It is possible to access the properties of the various graphical
     %  objects from the handle H of the panel.
     %
-    % See also update, redraw, refresh, uipanel.
+    % See also update, redraw, settings, uipanel.
     
     pr.p = draw@PlotPropMatrix(pr, varargin{:});
 
@@ -44,9 +45,13 @@ function h_panel = draw(pr, varargin)
     end
 end
 function update(pr)
-    %UPDATE updates the content and permissions of the panel.
+    %UPDATE updates the content of the panel and its graphical objects.
     %
-    % UPDATE(PR) updates the content and permissions of the panel.
+    % UPDATE(PR) updates the content of the panel and its graphical objects.
+    %
+    % Important note:
+    % 1. UPDATE() is typically called internally by PlotElement and does not need 
+    %  to be explicitly called in children of PlotProp.
     %
     % See also draw, redraw, refresh, PlotElement.
 
