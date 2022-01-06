@@ -143,7 +143,7 @@ function redraw(pr, varargin)
     %
     % See also draw, update, refresh, PlotElement.
     
-    h = pr.get('EDITHEIGHT')
+    h = pr.get('EDITHEIGHT');
     
     set(pr.edit_value, 'Position', [.01 .33/(1.83+h) .98 h/(1.83+h)])
     
