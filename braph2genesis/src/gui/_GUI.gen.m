@@ -45,7 +45,47 @@ MENUBAR (metadata, logical) determines whether to show the menubar.
 true
 
 %%% ¡prop!
+MENU_FILE (metadata, logical) determines whether to show the menu file.
+%%%% ¡default!
+true
+
+%%% ¡prop!
+MENU_IMPORT (metadata, logical) determines whether to show the menu import.
+%%%% ¡default!
+true
+
+%%% ¡prop!
+MENU_EXPORT (metadata, logical) determines whether to show the menu export.
+%%%% ¡default!
+true
+
+%%% ¡prop!
+MENU_PERSONALIZE (metadata, logical) determines whether to show the menu personalize.
+%%%% ¡default!
+true
+
+%%% ¡prop!
+MENU_ABOUT (metadata, logical) determines whether to show the menu about.
+%%%% ¡default!
+true
+
+%%% ¡prop!
 TOOLBAR (metadata, logical) determines whether to show the toolbar.
+%%%% ¡default!
+true
+
+%%% ¡prop!
+TOOL_FIG (metadata, logical) determines whether to show the toolbar figure buttons.
+%%%% ¡default!
+false
+
+%%% ¡prop!
+TOOL_FILE (metadata, logical) determines whether to show the toolbar file buttons.
+%%%% ¡default!
+true
+
+%%% ¡prop!
+TOOL_ABOUT (metadata, logical) determines whether to show the toolbar about buttons.
 %%%% ¡default!
 true
 
@@ -197,7 +237,7 @@ function f_out = draw(gui, varargin)
     pe.draw('Parent', gui.pp)
     
     %% Menu
-    if ~check_graphics(gui.menu_file, 'uimenu') && gui.get('MENUBAR')
+    if gui.get('MENUBAR') && gui.get('MENU_FILE') && ~check_graphics(gui.menu_file, 'uimenu')
         gui.menu_file = uimenu(gui.f, 'Label', 'File');
         uimenu(gui.menu_file, ...
             'Label', 'Open ...', ...
@@ -253,7 +293,7 @@ function f_out = draw(gui, varargin)
         end
     end
     
-    if ~check_graphics(gui.menu_import, 'uimenu') && gui.get('MENUBAR')
+    if gui.get('MENUBAR') && gui.get('MENU_IMPORT') && ~check_graphics(gui.menu_import, 'uimenu') 
         gui.menu_import = uimenu(gui.f, ...
             'Label', 'Import', ...
             'Callback', {@cb_refresh_import_menu});
@@ -266,7 +306,7 @@ function f_out = draw(gui, varargin)
         eval([el.getClass() '.getGUIMenuImport(el, gui.menu_import, pe)']);
     end    
 
-    if ~check_graphics(gui.menu_export, 'uimenu') && gui.get('MENUBAR')
+    if gui.get('MENUBAR') && gui.get('MENU_PERSONALIZE') && ~check_graphics(gui.menu_import, 'uimenu') 
         gui.menu_export = uimenu(gui.f, ...
             'Label', 'Export', ...
             'Callback', {@cb_refresh_export_menu});
@@ -279,7 +319,7 @@ function f_out = draw(gui, varargin)
         eval([el.getClass() '.getGUIMenuExport(el, gui.menu_export, pe)']);
     end
 
-    if ~check_graphics(gui.menu_personalize, 'uimenu') && gui.get('MENUBAR')
+    if gui.get('MENUBAR') && gui.get('MENU_PERSONALIZE') && ~check_graphics(gui.menu_import, 'uimenu') 
         gui.menu_personalize = uimenu(gui.f, 'Label', 'Personalize');
         uimenu(gui.menu_personalize, ...
             'Label', 'Layout ...', ...
@@ -397,7 +437,7 @@ function f_out = draw(gui, varargin)
         end
     end
 
-    if ~check_graphics(gui.menu_about, 'uimenu') && gui.get('MENUBAR')
+    if gui.get('MENUBAR') && gui.get('MENU_ABOUT') && ~check_graphics(gui.menu_import, 'uimenu') 
         gui.menu_about = uimenu(gui.f, 'Label', 'About');
         uimenu(gui.menu_about, ...
             'Label', 'BRAPH.org ...', ...
@@ -432,73 +472,87 @@ function f_out = draw(gui, varargin)
     end
 
     %% Toolbar
-    if ~check_graphics(gui.toolbar, 'uitoolbar') && gui.get('TOOLBAR')
+    if gui.get('TOOLBAR') && ~check_graphics(gui.toolbar, 'uitoolbar')
         set(gui.f, 'Toolbar', 'figure')
 
         gui.toolbar = findall(gui.f, 'Tag', 'FigureToolBar');
 
         delete(findall(gui.toolbar, 'Tag', 'Standard.NewFigure'))
-        delete(findall(gui.toolbar, 'Tag', 'Standard.PrintFigure'))
-        delete(findall(gui.toolbar, 'Tag', 'Standard.EditPlot'))
-        delete(findall(gui.toolbar, 'Tag', 'Standard.OpenInspector'))
-        delete(findall(gui.toolbar, 'Tag', 'Exploration.Brushing'))
-        delete(findall(gui.toolbar, 'Tag', 'DataManager.Linking'))
-        delete(findall(gui.toolbar, 'Tag', 'Annotation.InsertColorbar'))
-        delete(findall(gui.toolbar, 'Tag', 'Annotation.InsertLegend'))
-        delete(findall(gui.toolbar, 'Tag', 'Plottools.PlottoolsOff'))
-        delete(findall(gui.toolbar, 'Tag', 'Plottools.PlottoolsOn'))
-
-        % Open
-        toolbar_open = findall(gui.toolbar, 'Tag', 'Standard.FileOpen');
-        set(toolbar_open, ...
-            'TooltipString', ['Open ' el.getName()], ...
-            'ClickedCallback', {@cb_open})
-        % Save
-        toolbar_save = findall(gui.toolbar, 'Tag', 'Standard.SaveFigure');
-        set(toolbar_save, ...
-            'TooltipString', ['Save ' el.getName()], ...
-            'ClickedCallback', {@cb_save})
         
-        uipushtool(gui.toolbar, 'Separator', 'on', 'Visible', 'off')
-        uipushtool(gui.toolbar, 'Separator', 'on', 'Visible', 'off')
+        if ~gui.get('TOOL_FIG')
+            delete(findall(gui.toolbar, 'Tag', 'Standard.PrintFigure'))
+            delete(findall(gui.toolbar, 'Tag', 'Standard.EditPlot'))
+            delete(findall(gui.toolbar, 'Tag', 'Standard.OpenInspector'))
+            delete(findall(gui.toolbar, 'Tag', 'Exploration.Brushing'))
+            delete(findall(gui.toolbar, 'Tag', 'DataManager.Linking'))
+            delete(findall(gui.toolbar, 'Tag', 'Annotation.InsertColorbar'))
+            delete(findall(gui.toolbar, 'Tag', 'Annotation.InsertLegend'))
+            delete(findall(gui.toolbar, 'Tag', 'Plottools.PlottoolsOff'))
+            delete(findall(gui.toolbar, 'Tag', 'Plottools.PlottoolsOn'))
+        else
+            toolbar_print = findall(gui.toolbar, 'Tag', 'Standard.PrintFigure');
+            set(toolbar_print, ...
+                'Separator', 'on' ...
+                )
+        end
 
-        % Website
-        toolbar_web = uipushtool(gui.toolbar, ...
-            'Separator', 'on', ...
-            'TooltipString', 'Link to braph.org', ...
-            'CData', imresize(imread('icon_web.png'), [24 24]), ...
-            'ClickedCallback', {@cb_web});
-
-        % Forum
-        toolbar_web = uipushtool(gui.toolbar, ...
-            'Separator', 'off', ...
-            'TooltipString', 'Link to the BRAPH 2.0 forum', ...
-            'CData', imresize(imread('icon_forum.png'), [24 24]), ...
-            'ClickedCallback', {@cb_forum});
-
-        % Twitter
-        toolbar_web = uipushtool(gui.toolbar, ...
-            'Separator', 'off', ...
-            'TooltipString', 'Link to the BRAPH 2.0 Twitter', ...
-            'CData', imresize(imread('icon_twitter.png'), [24 24]), ...
-            'ClickedCallback', {@cb_twitter});
+        if gui.get('TOOL_FILE')
+            % Open
+            toolbar_open = findall(gui.toolbar, 'Tag', 'Standard.FileOpen');
+            set(toolbar_open, ...
+                'TooltipString', ['Open ' el.getName()], ...
+                'ClickedCallback', {@cb_open})
+            % Save
+            toolbar_save = findall(gui.toolbar, 'Tag', 'Standard.SaveFigure');
+            set(toolbar_save, ...
+                'TooltipString', ['Save ' el.getName()], ...
+                'ClickedCallback', {@cb_save})
+        else
+            delete(findall(gui.toolbar, 'Tag', 'Standard.SaveFigure'))
+        end
         
-        uipushtool(gui.toolbar, 'Separator', 'on', 'Visible', 'off')
-        uipushtool(gui.toolbar, 'Separator', 'on', 'Visible', 'off')
-        
-        % License
-        toolbar_web = uipushtool(gui.toolbar, ...
-            'Separator', 'on', ...
-            'TooltipString', 'BRAPH 2.0 License', ...
-            'CData', imresize(imread('icon_license.png'), [24 24]), ...
-            'ClickedCallback', {@cb_license});
+        if gui.get('TOOL_ABOUT')
+            uipushtool(gui.toolbar, 'Separator', 'on', 'Visible', 'off')
+            uipushtool(gui.toolbar, 'Separator', 'on', 'Visible', 'off')
 
-        % About
-        toolbar_web = uipushtool(gui.toolbar, ...
-            'Separator', 'off', ...
-            'TooltipString', 'Informtion about BRAPH 2.0 and credits', ...
-            'CData', imresize(imread('icon_about.png'), [24 24]), ...
-            'ClickedCallback', {@cb_about});
+            % Website
+            toolbar_web = uipushtool(gui.toolbar, ...
+                'Separator', 'on', ...
+                'TooltipString', 'Link to braph.org', ...
+                'CData', imresize(imread('icon_web.png'), [24 24]), ...
+                'ClickedCallback', {@cb_web});
+
+            % Forum
+            toolbar_web = uipushtool(gui.toolbar, ...
+                'Separator', 'off', ...
+                'TooltipString', 'Link to the BRAPH 2.0 forum', ...
+                'CData', imresize(imread('icon_forum.png'), [24 24]), ...
+                'ClickedCallback', {@cb_forum});
+
+            % Twitter
+            toolbar_web = uipushtool(gui.toolbar, ...
+                'Separator', 'off', ...
+                'TooltipString', 'Link to the BRAPH 2.0 Twitter', ...
+                'CData', imresize(imread('icon_twitter.png'), [24 24]), ...
+                'ClickedCallback', {@cb_twitter});
+
+            uipushtool(gui.toolbar, 'Separator', 'on', 'Visible', 'off')
+            uipushtool(gui.toolbar, 'Separator', 'on', 'Visible', 'off')
+
+            % License
+            toolbar_web = uipushtool(gui.toolbar, ...
+                'Separator', 'on', ...
+                'TooltipString', 'BRAPH 2.0 License', ...
+                'CData', imresize(imread('icon_license.png'), [24 24]), ...
+                'ClickedCallback', {@cb_license});
+
+            % About
+            toolbar_web = uipushtool(gui.toolbar, ...
+                'Separator', 'off', ...
+                'TooltipString', 'Informtion about BRAPH 2.0 and credits', ...
+                'CData', imresize(imread('icon_about.png'), [24 24]), ...
+                'ClickedCallback', {@cb_about});
+        end
     end
 
     %% SHOW and OUTPUT

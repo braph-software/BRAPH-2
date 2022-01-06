@@ -2,11 +2,27 @@ close all
 clear all
 clc
 
-delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui/PlotPropString.m')
-create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PlotPropString.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
-create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PlotPropString.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+% delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui/PlotPropString.m')
+% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PlotPropString.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PlotPropString.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
 
-gui = GUI('PE', Pipeline(), 'CLOSEREQ', false);
+delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui/GUI.m')
+create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_GUI.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_GUI.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+
+lf = load('pip_c.b2', '-mat');
+pip = lf.el;
+
+gui = GUI( ...
+    'PE', pip, ...
+    'MENU_FILE', false, ...
+    'MENU_IMPORT', false, ...
+    'MENU_EXPORT', false, ...
+    'MENU_PERSONALIZE', false, ...
+    'MENU_ABOUT', false, ...
+    'TOOL_FIG', true, ...
+    'CLOSEREQ', false ...
+    );
 gui.draw()
 
 % % % delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui/PPPipeline_PSDict.m')
