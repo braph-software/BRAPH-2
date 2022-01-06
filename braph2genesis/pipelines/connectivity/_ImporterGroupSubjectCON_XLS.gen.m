@@ -40,16 +40,17 @@ gr = Group( ...
 
 gr.lock('SUB_CLASS');
 directory = im.get('DIRECTORY');
-if ~isfolder(directory) && ~is_braph2_testing()
+if ~isfolder(directory) && ~braph2_testing()
     im.uigetdir()
     directory = im.get('DIRECTORY');
 end
 if isfolder(directory)    
     % sets group props
     if im.get('WAITBAR')
-        wb = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME);
+        wb = waitbar(0, 'Reading directory ...', 'Name', BRAPH2.NAME);
         set_braph2_icon(wb)
     end
+    
     [~, name] = fileparts(directory);
     gr.set( ...
         'ID', name, ...
@@ -83,56 +84,50 @@ if isfolder(directory)
     if im.get('WAITBAR')
         waitbar(.15, wb, 'Loading subject group ...');
     end
-    try
-        if ~isempty(files)
-            % brain atlas
-            ba = im.get('BA');
-            br_number = size(xlsread(fullfile(directory, files(1).name)), 1);
-            if ba.get('BR_DICT').length ~= br_number
-                ba = BrainAtlas();
-                idict = ba.get('BR_DICT');
-                for j = 1:1:br_number
-                    br_id = ['br' int2str(j)];
-                    br = BrainRegion('ID', br_id);
-                    idict.add(br)
-                end
-                ba.set('br_dict', idict);
+    
+    if length(files) > 0
+        % brain atlas
+        ba = im.get('BA');
+        br_number = size(xlsread(fullfile(directory, files(1).name)), 1);
+        if ba.get('BR_DICT').length ~= br_number
+            ba = BrainAtlas();
+            idict = ba.get('BR_DICT');
+            for j = 1:1:br_number
+                br_id = ['br' int2str(j)];
+                br = BrainRegion('ID', br_id);
+                idict.add(br)
             end
-            
-            subdict = gr.get('SUB_DICT');
-            
-            % adds subjects
-            for i = 1:1:length(files)
-                if im.get('WAITBAR')
-                    waitbar(.30 + .70 * i / length(files), wb, ['Loading subject ' num2str(i) ' of ' num2str(length(files)) ' ...'])
-                end
-                % read file
-                CON = xlsread(fullfile(directory, files(i).name));
-                [~, sub_id] = fileparts(files(i).name);
-                sub = SubjectCON( ...
-                    'ID', sub_id, ...
-                    'BA', ba, ...
-                    'age', age{i}, ...
-                    'sex', sex{i}, ...
-                    'CON', CON ...
-                    );
-                subdict.add(sub);
-            end
-            gr.set('sub_dict', subdict);
+            ba.set('br_dict', idict);
         end
-    catch e
-        if im.get('WAITBAR')
-            close(wb)
-        end
+
+        subdict = gr.get('SUB_DICT');
         
-        rethrow(e)
+        % adds subjects
+        for i = 1:1:length(files)
+            if im.get('WAITBAR')
+                waitbar(.30 + .70 * i / length(files), wb, ['Loading subject ' num2str(i) ' of ' num2str(length(files)) ' ...'])
+            end
+
+            % read file
+            CON = xlsread(fullfile(directory, files(i).name));
+            [~, sub_id] = fileparts(files(i).name);
+            sub = SubjectCON( ...
+                'ID', sub_id, ...
+                'BA', ba, ...
+                'age', age{i}, ...
+                'sex', sex{i}, ...
+                'CON', CON ...
+            );
+            subdict.add(sub);
+        end
+        gr.set('sub_dict', subdict);
     end
+    
     if im.get('WAITBAR')
         close(wb)
-    end    
-elseif ~braph2_testing()
-    error(BRAPH2.IM_ERR);
+    end
 end
+
 value = gr;
 
 %% ¡methods!
