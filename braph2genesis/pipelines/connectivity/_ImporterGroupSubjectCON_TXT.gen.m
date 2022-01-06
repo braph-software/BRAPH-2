@@ -58,70 +58,80 @@ if isfolder(directory)
         'NOTES', ['Group loaded from ' directory] ...
     );
 
-    % analyzes file
-    files = dir(fullfile(directory, '*.txt'));
-    
-    % Check if there are covariates to add (age and sex)
-    cov_folder = dir(directory);
-    cov_folder = cov_folder([cov_folder(:).isdir] == 1);
-    cov_folder = cov_folder(~ismember({cov_folder(:).name}, {'.', '..'}));
-    if ~isempty(cov_folder)
-        file_cov = dir(fullfile([directory filesep() cov_folder.name], '*.txt'));
-        raw_covariates = readtable([directory filesep() cov_folder.name filesep() file_cov.name], 'Delimiter', '	');
-        age = raw_covariates{:, 2};
-        sex = raw_covariates{:, 3};
-    else
-        age = ones(length(files), 1);
-        unassigned =  {'unassigned'};
-        sex = unassigned(ones(length(files), 1));
-    end
-    
-    if im.get('WAITBAR')
-        waitbar(.15, wb, 'Loading subjecy group ...');
-    end
-    
-    if length(files) > 0
-        % brain atlas
-        ba = im.get('BA');
-        raw = readtable(fullfile(directory, files(1).name), 'Delimiter', '	');
-        br_number = size(raw, 1);  
-        if ba.get('BR_DICT').length ~= br_number
-            ba = BrainAtlas();
-            idict = ba.get('BR_DICT');
-            for j = 1:1:br_number
-                br_id = ['br' int2str(j)];
-                br = BrainRegion('ID', br_id);
-                idict.add(br)
-            end
-            ba.set('br_dict', idict);
+    try
+        % analyzes file
+        files = dir(fullfile(directory, '*.txt'));
+
+        % Check if there are covariates to add (age and sex)
+        cov_folder = dir(directory);
+        cov_folder = cov_folder([cov_folder(:).isdir] == 1);
+        cov_folder = cov_folder(~ismember({cov_folder(:).name}, {'.', '..'}));
+        if ~isempty(cov_folder)
+            file_cov = dir(fullfile([directory filesep() cov_folder.name], '*.txt'));
+            raw_covariates = readtable([directory filesep() cov_folder.name filesep() file_cov.name], 'Delimiter', '	');
+            age = raw_covariates{:, 2};
+            sex = raw_covariates{:, 3};
+        else
+            age = ones(length(files), 1);
+            unassigned =  {'unassigned'};
+            sex = unassigned(ones(length(files), 1));
         end
 
-        subdict = gr.get('SUB_DICT');
-        
-        % adds subjects
-        for i = 1:1:length(files)
-            if im.get('WAITBAR')
-                waitbar(.30 + .70 * i / length(files), wb, ['Loading subject ' num2str(i) ' of ' num2str(length(files)) ' ...'])
-            end
-            
-            % read file
-            CON = table2array(readtable(fullfile(directory, files(i).name), 'Delimiter', '	'));
-            [~, sub_id] = fileparts(files(i).name);
-            sub = SubjectCON( ...
-                'ID', sub_id, ...
-                'BA', ba, ...
-                'age', age(i), ...
-                'sex', sex{i}, ...
-                'CON', CON ...
-            );
-            subdict.add(sub);
+        if im.get('WAITBAR')
+            waitbar(.15, wb, 'Loading subjecy group ...');
         end
-        gr.set('sub_dict', subdict);
+
+        if length(files) > 0
+            % brain atlas
+            ba = im.get('BA');
+            raw = readtable(fullfile(directory, files(1).name), 'Delimiter', '	');
+            br_number = size(raw, 1);  
+            if ba.get('BR_DICT').length ~= br_number
+                ba = BrainAtlas();
+                idict = ba.get('BR_DICT');
+                for j = 1:1:br_number
+                    br_id = ['br' int2str(j)];
+                    br = BrainRegion('ID', br_id);
+                    idict.add(br)
+                end
+                ba.set('br_dict', idict);
+            end
+
+            subdict = gr.get('SUB_DICT');
+
+            % adds subjects
+            for i = 1:1:length(files)
+                if im.get('WAITBAR')
+                    waitbar(.30 + .70 * i / length(files), wb, ['Loading subject ' num2str(i) ' of ' num2str(length(files)) ' ...'])
+                end
+
+                % read file
+                CON = table2array(readtable(fullfile(directory, files(i).name), 'Delimiter', '	'));
+                [~, sub_id] = fileparts(files(i).name);
+                sub = SubjectCON( ...
+                    'ID', sub_id, ...
+                    'BA', ba, ...
+                    'age', age(i), ...
+                    'sex', sex{i}, ...
+                    'CON', CON ...
+                );
+                subdict.add(sub);
+            end
+            gr.set('sub_dict', subdict);
+        end
+    catch e
+        if im.get('WAITBAR')
+            close(wb)
+        end
+        
+        rethrow(e)
     end
     
     if im.get('WAITBAR')
         close(wb)
     end
+elseif ~braph2_testing()
+    error(BRAPH2.IM_ERR);
 end
 
 value = gr;
