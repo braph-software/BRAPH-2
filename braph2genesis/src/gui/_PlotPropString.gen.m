@@ -187,7 +187,7 @@ figure()
 p = uipanel('Parent', gcf); % needed for the function refresh that is called when the result is calculated
 set(gcf, 'SizeChangedFcn', 'pr_res.update()') % callback to update panel when figure is resized (in refresh)
 et = ETA();
-pr_res = PlotPropString('EL', et, 'PROP', et.PROP_STRING_R_CALC, 'MAX', '2', 'EDITPOS', [.01 .10 .48 .45]);
+pr_res = PlotPropString('EL', et, 'PROP', et.PROP_STRING_R_CALC, 'LINES', 'multi', 'EDITHEIGHT', 10);
 pr_res.draw('Parent', p, 'BackgroundColor', [.8 .5 .2])
 pr_res.update()
 pr_res.redraw()
