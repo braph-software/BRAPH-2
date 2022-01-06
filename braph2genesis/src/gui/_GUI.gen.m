@@ -2,7 +2,19 @@
 GUI < Element (gui, graphical user interface) is a GUI for an element.
 
 %%% ¡description!
-% % % FIXME
+GUI plots an element in a figure.
+
+CONSTRUCTOR - To construct a GUI use the constructor:
+
+    gui = GUI(''PE'', <element>)
+    
+DRAW - To create the element figure, call gui.draw():
+
+    f = gui.<strong>draw</strong>();
+ 
+ Here, f is the figure.
+ It is also possible to use pr.draw() to get the figure handle and to set its properties.
+  
 CALLBACK - This is a callback function:
 
     pl.<strong>cb_bring_to_front</strong>() - brings to the front the figure and its dependent figures
@@ -68,7 +80,25 @@ f_layout % handle to figure with panel to manage layout
 
 %% ¡methods!
 function f_out = draw(gui, varargin)
-% % % FIXME
+    %GUI creates and displays the GUI figure for an element.
+    %
+    % GUI() creates and displays the GUI figure for an element.
+    %
+    % F = DRAW(GUI) returns a handle to the GUI figure.
+    %
+    % DRAW(GUI, 'Property', VALUE, ...) sets the properties of the parent
+    %  panel with custom Name-Value pairs.
+    %  All standard plot properties of figure can be used.
+    %
+    % It is possible to access the properties of the various graphical
+    %  objects from the handle F of the GUI figure.
+    %
+    % The GUI, PlotElement and Element can be retrieved as 
+    %  GUI = get(F, 'UserData')
+    %  PE = GUI.get('PE')
+    %  EL = PE.get('EL')
+    %
+    % See also cb_bring_to_front, figure.
 
     pe = gui.get('pe');
     el = pe.get('el');
