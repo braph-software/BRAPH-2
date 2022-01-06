@@ -74,7 +74,7 @@ LABEL (metadata, string) is an extended label of the pipeline.
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the pipeline.
 %%%% ¡gui!
-pr = PlotPropString('EL', pip, 'PROP', Pipeline.NOTES, 'MAX', '2', 'EDITPOS', [.01 .03 .98 .80], varargin{:});
+pr = PlotPropString('EL', pip, 'PROP', Pipeline.NOTES, 'LINES', 'multi', 'EDITHEIGHT', 4.5, varargin{:});
 
 %%% ¡prop!
 PS_DICT (data, idict) is an indexed dictionary with the code sections.

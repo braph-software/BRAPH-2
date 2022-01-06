@@ -5,8 +5,8 @@ PlotPropString < PlotProp (pr, plot property string) is a plot of a string prope
 PlotPropString plots a STRING property of an element in an edit field.
 It works for all categories.
 It has the following additional properties:
-- ''Max'', ''1'' (single-line edit field, default) or ''2'' (multi-line edit field).
-- ''EditPos'' with the normalized position of the edit field.
+- ''Lines'', ''single'' (single-line edit field, default) or ''multi'' (multi-line edit field).
+- ''EditHeight'' with the height of the edit field in characters.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp, PlotPropText
@@ -18,16 +18,16 @@ edit_value
 %% ¡props!
 
 %%% ¡prop!
-MAX (metadata, option) switches between single- and multi-line edit field.
+LINES (metadata, option) switches between single- and multi-line edit field.
 %%%% ¡settings!
-{'1', '2'}
+{'single', 'multi'}
 
 %%% ¡prop!
-EDITPOS (metadata, rvector) is the normalized position of the edit field.
+EDITHEIGHT (metadata, scalar) is the height of the edit field in characters.
 %%%% ¡check_prop!
-check = length(value) == 4;
+check = value > 0;
 %%%% ¡default!
-[.01 .10 .98 .45]
+1.5
 
 %% ¡methods!
 function h_panel = draw(pr, varargin)
@@ -57,11 +57,10 @@ function h_panel = draw(pr, varargin)
             'Tag', 'edit_value', ...
             'Parent', pr.p, ...
             'Units', 'normalized', ...
-            'Position', pr.get('EDITPOS'), ... % position defined here because it's always the same
             'HorizontalAlignment', 'left', ...
             'BackgroundColor', 'w', ...
             'Min', 0, ...
-            'Max', str2num(pr.get('MAX')), ...
+            'Max', find(strcmpi(pr.getPropSettings('LINES'), pr.get('LINES'))), ...
             'FontUnits', BRAPH2.FONTUNITS, ...
             'FontSize', BRAPH2.FONTSIZE, ...
             'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
@@ -144,9 +143,11 @@ function redraw(pr, varargin)
     %
     % See also draw, update, refresh, PlotElement.
     
-    [h, varargin] = get_and_remove_from_varargin(3.33, 'Height', varargin);
-
-    pr.redraw@PlotProp('Height', h, varargin{:})
+    h = pr.get('EDITHEIGHT')
+    
+    set(pr.edit_value, 'Position', [.01 .33/(1.83+h) .98 h/(1.83+h)])
+    
+    pr.redraw@PlotProp('Height', 1.83 + h, varargin{:})
 end
 function cb_edit_value(pr)
     %CB_EDIT_VALUE executes callback for the edit value.
