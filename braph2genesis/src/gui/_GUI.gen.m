@@ -306,7 +306,7 @@ function f_out = draw(gui, varargin)
         eval([el.getClass() '.getGUIMenuImport(el, gui.menu_import, pe)']);
     end    
 
-    if gui.get('MENUBAR') && gui.get('MENU_PERSONALIZE') && ~check_graphics(gui.menu_import, 'uimenu') 
+    if gui.get('MENUBAR') && gui.get('MENU_EXPORT') && ~check_graphics(gui.menu_export, 'uimenu') 
         gui.menu_export = uimenu(gui.f, ...
             'Label', 'Export', ...
             'Callback', {@cb_refresh_export_menu});
@@ -319,7 +319,7 @@ function f_out = draw(gui, varargin)
         eval([el.getClass() '.getGUIMenuExport(el, gui.menu_export, pe)']);
     end
 
-    if gui.get('MENUBAR') && gui.get('MENU_PERSONALIZE') && ~check_graphics(gui.menu_import, 'uimenu') 
+    if gui.get('MENUBAR') && gui.get('MENU_PERSONALIZE') && ~check_graphics(gui.menu_personalize, 'uimenu') 
         gui.menu_personalize = uimenu(gui.f, 'Label', 'Personalize');
         uimenu(gui.menu_personalize, ...
             'Label', 'Layout ...', ...
@@ -437,7 +437,7 @@ function f_out = draw(gui, varargin)
         end
     end
 
-    if gui.get('MENUBAR') && gui.get('MENU_ABOUT') && ~check_graphics(gui.menu_import, 'uimenu') 
+    if gui.get('MENUBAR') && gui.get('MENU_ABOUT') && ~check_graphics(gui.menu_about, 'uimenu') 
         gui.menu_about = uimenu(gui.f, 'Label', 'About');
         uimenu(gui.menu_about, ...
             'Label', 'BRAPH.org ...', ...
