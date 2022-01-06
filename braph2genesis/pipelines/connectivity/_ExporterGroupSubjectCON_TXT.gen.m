@@ -10,7 +10,7 @@ Subject ID (column 1), Subject AGE (column 2), and, Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 
 %%% ¡seealso!
-Element, Exporter, ImporterGroupSubjectCON_TXT
+Element, Exporter, ExporterGroupSubjectCON_TXT
 
 %% ¡props!
 
@@ -38,18 +38,15 @@ if isfolder(directory)
         wb = waitbar(0, 'Retrieving path ...', 'Name', BRAPH2.NAME);
         set_braph2_icon(wb)
     end
-    
     gr = ex.get('GR');
 
     gr_directory = [directory filesep() gr.get('ID')];
     if ~exist(gr_directory, 'dir')
         mkdir(gr_directory)
     end
-    
     if ex.get('WAITBAR')
         waitbar(.15, wb, 'Organizing info ...');
     end
-    
     sub_dict = gr.get('SUB_DICT');
     sub_number = sub_dict.length();
     sub_id = cell(sub_number, 1);
@@ -57,10 +54,11 @@ if isfolder(directory)
     sex = cell(sub_number, 1);
     
     for i = 1:1:sub_number
-        if ex.get('WAITBAR')
-            waitbar(.30 + .70 * i / sub_number, wb, ['Saving subject ' num2str(i) ' of ' num2str(sub_number) '...']);
+        if i == floor(sub_number/2)
+            if ex.get('WAITBAR')
+                waitbar(1, wb, 'Saving ...');
+            end
         end
-        
         sub = sub_dict.getItem(i);
         sub_id(i) = {sub.get('ID')};
         sub_CON = sub.get('CON');
@@ -96,13 +94,13 @@ if isfolder(directory)
     
     % sets value to empty
     value = [];
-    
     if ex.get('WAITBAR')
         close(wb)
     end
 else
     value = ex.getr('SAVE');    
 end
+
 
 %% ¡methods!
 function uigetdir(ex)
