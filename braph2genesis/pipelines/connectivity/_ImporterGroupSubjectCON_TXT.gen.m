@@ -2,14 +2,13 @@
 ImporterGroupSubjectCON_TXT < Importer (im, importer of CON subject group from TXT) imports a group of subjects with connectivity data from a series of TXT file.
 
 %%% ¡description!
-ImporterGroupSubjectCONTXT imports a group of subjects with connectivity data from a series of TXT file and their covariates (optional) from another TXT file.
+ImporterGroupSubjectCON_TXT imports a group of subjects with connectivity data from a series of TXT file and their covariates (optional) from another TXT file.
 All these files must be in the same folder; also, no other files should be in the folder.
 Each file contains a table of values corresponding to the adjacency matrix.
 The TXT file containing the covariates must be inside another folder in the same group directory 
 and consists of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
-It throws an error if problems occur during the import.
 
 %%% ¡seealso!
 Element, Importer, ExporterGroupSubjectCON_TXT
@@ -46,12 +45,12 @@ if ~isfolder(directory)&& ~braph2_testing()
     directory = im.get('DIRECTORY');
 end
 if isfolder(directory)  
-    % sets group props
     if im.get('WAITBAR')
-        wb = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME);
+        wb = waitbar(0, 'Reading directory ...', 'Name', BRAPH2.NAME);
         set_braph2_icon(wb)
     end
     
+    % sets group props
     [~, name] = fileparts(directory);
     gr.set( ...
         'ID', name, ...
@@ -78,59 +77,53 @@ if isfolder(directory)
     end
     
     if im.get('WAITBAR')
-        waitbar(.15, wb, 'Loading subject group ...');
+        waitbar(.15, wb, 'Loading subjecy group ...');
     end
-    try
-        if ~isempty(files)
-            % brain atlas
-            ba = im.get('BA');
-            raw = readtable(fullfile(directory, files(1).name), 'Delimiter', '	');
-            br_number = size(raw, 1);
-            if ba.get('BR_DICT').length ~= br_number
-                ba = BrainAtlas();
-                idict = ba.get('BR_DICT');
-                for j = 1:1:br_number
-                    br_id = ['br' int2str(j)];
-                    br = BrainRegion('ID', br_id);
-                    idict.add(br)
-                end
-                ba.set('br_dict', idict);
+    
+    if length(files) > 0
+        % brain atlas
+        ba = im.get('BA');
+        raw = readtable(fullfile(directory, files(1).name), 'Delimiter', '	');
+        br_number = size(raw, 1);  
+        if ba.get('BR_DICT').length ~= br_number
+            ba = BrainAtlas();
+            idict = ba.get('BR_DICT');
+            for j = 1:1:br_number
+                br_id = ['br' int2str(j)];
+                br = BrainRegion('ID', br_id);
+                idict.add(br)
             end
-            
-            subdict = gr.get('SUB_DICT');
-            
-            % adds subjects
-            for i = 1:1:length(files)
-                % read file
-                if im.get('WAITBAR')
-                    waitbar(.30 + .70 * i / length(files), wb, ['Loading subject ' num2str(i) ' of ' num2str(length(files)) ' ...'])
-                end
-                CON = table2array(readtable(fullfile(directory, files(i).name), 'Delimiter', '	'));
-                [~, sub_id] = fileparts(files(i).name);
-                sub = SubjectCON( ...
-                    'ID', sub_id, ...
-                    'BA', ba, ...
-                    'age', age(i), ...
-                    'sex', sex{i}, ...
-                    'CON', CON ...
-                    );
-                subdict.add(sub);
-            end
-            gr.set('sub_dict', subdict);
+            ba.set('br_dict', idict);
         end
-    catch e
-        if im.get('WAITBAR')
-            close(wb)
-        end
+
+        subdict = gr.get('SUB_DICT');
         
-        rethrow(e)
+        % adds subjects
+        for i = 1:1:length(files)
+            if im.get('WAITBAR')
+                waitbar(.30 + .70 * i / length(files), wb, ['Loading subject ' num2str(i) ' of ' num2str(length(files)) ' ...'])
+            end
+            
+            % read file
+            CON = table2array(readtable(fullfile(directory, files(i).name), 'Delimiter', '	'));
+            [~, sub_id] = fileparts(files(i).name);
+            sub = SubjectCON( ...
+                'ID', sub_id, ...
+                'BA', ba, ...
+                'age', age(i), ...
+                'sex', sex{i}, ...
+                'CON', CON ...
+            );
+            subdict.add(sub);
+        end
+        gr.set('sub_dict', subdict);
     end
+    
     if im.get('WAITBAR')
         close(wb)
     end
-elseif ~braph2_testing()
-    error(BRAPH2.IM_ERR);
 end
+
 value = gr;
 
 %% ¡methods!
