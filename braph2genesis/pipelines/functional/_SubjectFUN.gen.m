@@ -127,11 +127,11 @@ BrainAtlas()
 FUN (data, smatrix) is an adjacency matrix.
 %%%% ¡check_value!
 br_number = sub.get('BA').get('BR_DICT').length();
-check = isequal(size(value), [br_number, br_number]); % Format.checkFormat(Format.SMATRIX, value) already checked
+check = size(value, 2) == br_number; % Format.checkFormat(Format.MATRIX, value) already checked
 if check
     msg = 'All ok!';
 else   
-    msg = ['FUN must be a square matrix with the dimensiton equal to the number of brain regions (' int2str(br_number) ').'];
+    msg = ['FUN must be a matrix with the same number of columns as the brain regions (' int2str(br_number) ').'];
 end
 %%%% ¡gui!
 pr = PPSubjectFUN_FUN('EL', sub, 'PROP', SubjectFUN.FUN, varargin{:});
