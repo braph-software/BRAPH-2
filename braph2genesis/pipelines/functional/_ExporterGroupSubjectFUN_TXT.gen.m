@@ -50,7 +50,9 @@ if isfolder(directory)
     sub_id = cell(sub_number, 1);
     age = cell(sub_number, 1);
     sex = cell(sub_number, 1);
-    waitbar(.15, f, 'Organizing Info ...');
+    if ex.get('WAITBAR')
+        waitbar(.15, wb, 'Organizing info ...');
+    end
     for i = 1:1:sub_number
         if ex.get('WAITBAR')
             waitbar(.30 + .70 * i / sub_number, wb, ['Saving subject ' num2str(i) ' of ' num2str(sub_number) '...']);
