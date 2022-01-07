@@ -124,7 +124,7 @@ BA (data, item) is a brain atlas.
 BrainAtlas()
 
 %%% ¡prop!
-FUN (data, smatrix) is an adjacency matrix.
+FUN (data, matrix) is an adjacency matrix.
 %%%% ¡check_value!
 br_number = sub.get('BA').get('BR_DICT').length();
 check = size(value, 2) == br_number; % Format.checkFormat(Format.MATRIX, value) already checked
