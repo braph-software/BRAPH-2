@@ -40,7 +40,7 @@ gr = Group( ...
 
 gr.lock('SUB_CLASS');
 directory = im.get('DIRECTORY');
-if ~isfolder(directory) && ~is_braph2_testing()
+if ~isfolder(directory) && ~braph2_testing()
     im.uigetdir()
     directory = im.get('DIRECTORY');
 end
