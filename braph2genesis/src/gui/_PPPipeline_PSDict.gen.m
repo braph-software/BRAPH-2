@@ -119,6 +119,9 @@ function update(pr, varargin)
     
     pip = pr.get('EL');
 
+% % %
+to_be_executed = {};
+    
     s_to_be_calculated = 1;
     s_dict = pip.get('PS_DICT');
     for s = 1:1:s_dict.length()
@@ -127,20 +130,23 @@ function update(pr, varargin)
         code_dict = section.get('PC_DICT');
         for c = 1:1:code_dict.length()
             code = code_dict.getItem(c);
-            moniker = code.get('MONIKER');
-% FIXME send error if moniker equal to some variables 
+            moniker = code.get('MONIKER'); % FIXME send error if moniker equal to varargin
 
             % callback code
             if s == s_selected && c == c_selected
                 if isa(code.getr('EL'), 'NoValue') % the code has not been calculated yet -- CALCULATE
-                    codeline = [moniker ' = ' code.get('CODE')];
+% % %                     codeline = [moniker ' = ' code.get('CODE')];
                     try
                         set(pr.pc_btns{s}{c}, ...
                             'Enable', 'off' ...
                             )
                             
-                        eval(codeline)
-                        code.set('EL', eval([moniker ';']))
+% % %    
+pr.x_update(to_be_executed{:}, ...
+    {moniker, code, [moniker ' = ' code.get('CODE') ';']}, ... % varargin{1}{2} = code
+    {moniker, code, ['varargin{1}{2}.set(''EL'', ' moniker ');']}) % varargin{1}{2} = code
+% % %                         eval(codeline)
+% % %                         code.set('EL', eval([moniker ';']))
                     catch e
                         set(pr.pc_btns{s}{c}, ...
                             'Enable', 'on' ...
@@ -182,7 +188,10 @@ function update(pr, varargin)
             % 2. updates the ID in the btn
             % 3. calculates whether to move to the next section
             if ~isa(code.getr('EL'), 'NoValue')
-                eval([moniker ' = code.get(''EL'');'])
+% % %  
+to_be_executed = {to_be_executed{:}, {moniker, code, [moniker ' = varargin{1}{2}.get(''EL'');']}}; % varargin{1}{2} = code
+% % % pr.x_update(to_be_executed{:})
+% % %                 eval([moniker ' = code.get(''EL'');'])
 
                 set(pr.pc_btns{s}{c}, ...
                     'Enable', 'on', ...
@@ -208,6 +217,28 @@ function update(pr, varargin)
             end            
         end
     end
+end
+function x_update(varargin)
+    %X_UPDATE internal function - do NOT use.
+
+    % Safe environment to evaluate the codes of the pipeline
+    % varargin consists of cell arrays with triplets:
+    %  varargin{n} = {moniker, code, codeline}
+
+    varargin = varargin(2:end); % eliminates pr from varargin
+    
+% % %     for i = 1:1:length(varargin)
+% % %         code = varargin{i}{2};
+% % %         eval(varargin{i}{3})
+% % %     end
+
+    while ~isempty(varargin)
+% % %         code = varargin{1}{2};
+        eval(varargin{1}{3})
+        varargin = varargin(2:end);
+    end
+    
+who()
 end
 function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
