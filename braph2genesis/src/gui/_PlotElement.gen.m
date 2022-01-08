@@ -17,10 +17,10 @@ CONSTRUCTOR - To construct a PlotElement use the constructor:
 
     pe = PlotElement(''EL'', <element>)
     
-DRAW - To create the element panel, call pr.draw():
+DRAW - To create the element panel, call pe.draw():
 
-    pp = pr.<strong>draw</strong>();
-    pp = pr.<strong>draw</strong>(''Parent'', f);
+    pp = pe.<strong>draw</strong>();
+    pp = pe.<strong>draw</strong>(''Parent'', f);
  
  Here, pp is the parent panel (see above).
  Typically, f is a figure where the parent panel is plotted.
@@ -37,7 +37,7 @@ REINIT - To reinitialize the element plot with a new element, call:
 
 CALLBACK - This is a callback function:
 
-    pl.<strong>cb_bring_to_front</strong>() - brings to the front the figure and its dependent figures
+    pe.<strong>cb_bring_to_front</strong>() - brings to the front the figure and its dependent figures
  
 %%% ¡seealso!
 GUI, PlotProp

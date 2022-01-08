@@ -259,9 +259,10 @@ function update(pr)
     set(pr.table, 'Data', data);
     
     % update brain surface
-    f = ancestor(pr.p, 'Figure'); % get figure BrainAtlas
-    gui = get(f, 'UserData'); % get GUI PlotElement BrainAtlas
-    pe = gui.get('PE'); % get PlotElement BrainAtlas
+% % %     f = ancestor(pr.p, 'Figure'); % get figure BrainAtlas
+% % %     gui = get(f, 'UserData'); % get GUI PlotElement BrainAtlas
+% % %     pe = gui.get('PE'); % get PlotElement BrainAtlas
+    pe = get(get(get(pr.p, 'Parent'), 'Parent'), 'UserData'); % get PlotElement BrainAtlas
     pp_surf = pe.get(PlotElement.PR_DICT).getItem(BrainAtlas.SURF_TAG); % get PlotProp Surf
     pp_surf.update_brain_atlas()
 end

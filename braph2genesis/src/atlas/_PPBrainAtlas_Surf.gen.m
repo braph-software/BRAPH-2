@@ -1,12 +1,12 @@
 %% ¡header!
-PPBrainAtlas_Surf < PlotProp (pl, plot property of brain atlas surface) is a plot of brain atlas surface.
+PPBrainAtlas_Surf < PlotProp (pr, plot property of brain atlas surface) is a plot of brain atlas surface.
 
 %%% ¡description!
 PPBrainAtlas_Surf plots for a brain atlas surface.
 
 CALLBACK - This is a callback function:
 
-    pl.<strong>cb_bring_to_front</strong>() - brings to the front the brain atlas figure and its settings figure
+    pr.<strong>cb_bring_to_front</strong>() - brings to the front the brain atlas figure and its settings figure
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp, BrainAtlas
@@ -271,8 +271,8 @@ function cb_bring_to_front(pr)
     for i = 1:1:length(children)
         if check_graphics(children(i), 'uipanel') && strcmp(get(children(i), 'Tag'), 'h_panel')
             pba = get(children(i), 'UserData');
+            pba.cb_bring_to_front()
         end
     end
-    pba.cb_bring_to_front()
 end
 
