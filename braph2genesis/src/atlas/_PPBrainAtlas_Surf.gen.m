@@ -18,7 +18,7 @@ PBA (result, item) is a plot brain atlas.
 %%%% ¡settings!
 'PlotBrainAtlas'
 %%%% ¡calculate!
-ba = pl.get('el');
+ba = pr.get('el');
 pba =  PlotBrainAtlas('ATLAS', ba);
 value = pba;
 
