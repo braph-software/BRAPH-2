@@ -18,7 +18,7 @@ Element, Exporter, ImporterGroupSubjectFUN_XLS
 GR (data, item) is a group of subjects with functional data.
 %%%% ¡settings!
 'Group'
-%%%% ¡check!
+%%%% ¡check_prop!
 check = any(strcmp(value.get(Group.SUB_CLASS_TAG), subclasses('SubjectFUN', [], [], true))); % Format.checkFormat(Format.ITEM, value) already checked
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectFUN', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectFUN'))

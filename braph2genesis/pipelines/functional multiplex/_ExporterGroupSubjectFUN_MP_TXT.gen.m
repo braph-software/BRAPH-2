@@ -18,7 +18,7 @@ Element, Exporter, ImporterGroupSubjectFUN_MP_TXT
 GR (data, item) is a group of subjects with functional multiplex data.
 %%%% ¡settings!
 'Group'
-%%%% ¡check!
+%%%% ¡check_prop!
 check = any(strcmp(value.get(Group.SUB_CLASS_TAG), subclasses('SubjectFUN_MP', [], [], true))); 
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectFUN_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectFUN_MP'))

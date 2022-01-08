@@ -21,7 +21,7 @@ Element, Exporter, ImporterGroupSubjectST_MP_TXT
 GR (data, item) is a group of subjects with structural multiplex data.
 %%%% ¡settings!
 'Group'
-%%%% ¡check!
+%%%% ¡check_prop!
 check = any(strcmp(value.get(Group.SUB_CLASS_TAG), subclasses('SubjectST_MP', [], [], true))); 
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectST_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST_MP'))
