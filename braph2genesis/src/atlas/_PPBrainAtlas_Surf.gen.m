@@ -147,19 +147,20 @@ function h_panel = draw(pr, varargin)
                 pr.update() % re-activates the surf_selector_popup and plot_brain_atlas_btn
             end
 
-            menu_about = uimenu(pr.f_pba, 'Label', 'About');
-            uimenu(menu_about, ...
-                'Label', 'License ...', ...
-                'Callback', {@cb_license})
-            function cb_license(~, ~)
-                BRAPH2.license()
-            end
-            uimenu(menu_about, ...
-                'Label', 'About ...', ...
-                'Callback', {@cb_about})
-            function cb_about(~, ~)
-                BRAPH2.about()
-            end
+        menu_about = BRAPH2.add_menu_about(pr.f_pba);
+% % %             menu_about = uimenu(pr.f_pba, 'Label', 'About');
+% % %             uimenu(menu_about, ...
+% % %                 'Label', 'License ...', ...
+% % %                 'Callback', {@cb_license})
+% % %             function cb_license(~, ~)
+% % %                 BRAPH2.license()
+% % %             end
+% % %             uimenu(menu_about, ...
+% % %                 'Label', 'About ...', ...
+% % %                 'Callback', {@cb_about})
+% % %             function cb_about(~, ~)
+% % %                 BRAPH2.about()
+% % %             end
 
             ui_toolbar = findall(pr.f_pba, 'Tag', 'FigureToolBar');
             delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
