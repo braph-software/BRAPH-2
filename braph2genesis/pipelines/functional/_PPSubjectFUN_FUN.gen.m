@@ -43,8 +43,7 @@ function h_panel = draw(pr, varargin)
     prop = pr.get('PROP');
     data = el.get(prop);
     % change columns for rows
-    set(pr.table_value, ...
-                'Data', data', ...
+    set(pr.table_value, 'Data', data');
 
     % output
     if nargout > 0
