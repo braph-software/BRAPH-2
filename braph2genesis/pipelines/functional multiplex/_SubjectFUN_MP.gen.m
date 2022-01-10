@@ -9,44 +9,111 @@ For example, functional data can be fMRI or EEG.
 Element, Subject
 
 %%% ¡gui!
-% % % %%%% ¡menu_importer!
-% % % calling_class = plot_element.get('El');
-% % % if isa(calling_class, 'Group')
-% % %     importers = {'ImporterGroupSubjectFUNMPTXT', 'ImporterGroupSubjectFUNMPXLS'};
-% % %     for k = 1:length(importers)
-% % %         imp = importers{k};
-% % %         uimenu(ui_menu_import, ...
-% % %             'Label', [imp ' ...'], ...
-% % %             'Callback', {@cb_importers});
-% % %     end
-% % % end
-% % % function cb_importers(src, ~)
-% % %     src_name = erase(src.Text, ' ...');
-% % %     imp_el = eval([src_name '()']);          
-% % %     imp_el.uigetdir();
-% % %     tmp_el = imp_el.get('GR');
-% % %     plot_element.set('El', tmp_el); 
-% % %     plot_element.reinit();
-% % % end
-% % % 
-% % % %%%% ¡menu_exporter!
-% % % calling_class = plot_element.get('El');
-% % % if isa(calling_class, 'Group')
-% % %     exporters = {'ExporterGroupSubjectFUNMPTXT', 'ExporterGroupSubjectFUNMPXLS'};
-% % %     for k = 1:length(exporters)
-% % %         exp = exporters{k};
-% % %         uimenu(ui_menu_export, ...
-% % %             'Label', [exp ' ...'], ...
-% % %             'Callback', {@cb_exporters});
-% % %     end
-% % % end
-% % % function cb_exporters(src, ~)
-% % %     src_name = erase(src.Text, ' ...');
-% % %     tmp_el = plot_element.get('EL'); %#ok<NASGU>
-% % %     exmp_el = eval([src_name '(' '''GR''' ', tmp_el)']); % el is a group passed from Group    
-% % %     exmp_el.uigetdir();
-% % %     exmp_el.get('SAVE');
-% % % end
+%%%% ¡menu_importer!
+uimenu(menu_import, ...
+    'Label', 'Import TXT ...', ...
+    'Callback', {@cb_importer_TXT});
+function cb_importer_TXT(~, ~)
+    im = ImporterGroupSubjectFUNMP_TXT( ...
+        'ID', 'Import Group of SubjectFUNMPs from TXT', ...
+        'WAITBAR', true ...
+        );
+    im.uigetdir();
+    try
+        if isfolder(im.get('DIRECTORY'))
+            gr = pe.get('EL');
+            
+            assert( ...
+                all(cellfun(@(prop) ~gr.isLocked(prop), num2cell(gr.getProps()))), ...
+                [BRAPH2.STR ':SubjectFUN_MP:' BRAPH2.BUG_FUNC], ...
+                'To import an element, all its properties must be unlocked.' ...
+                )
+            
+            gr_new = im.get('GR');
+            for prop = 1:1:gr.getPropNumber()
+                if gr.getPropCategory(prop) ~= Category.RESULT
+                    gr.set(prop, gr_new.get(prop))
+                end
+            end
+            
+            pe.reinit(gr_new);
+        end
+    catch e
+        warndlg(['Please, select a valid input Group of SubjectFUNMPs in TXT format. ' newline() ...
+            newline() ...
+            'Error message:' newline() ...
+            newline() ...
+            e.message newline()], 'Warning');
+    end
+end
+
+uimenu(menu_import, ...
+    'Label', 'Import XLS ...', ...
+    'Callback', {@cb_importer_XLS});
+function cb_importer_XLS(~, ~)
+    im = ImporterGroupSubjectFUNMP_XLS( ...
+        'ID', 'Import Group of SubjectFUNMPs from XLS', ...
+        'WAITBAR', true ...
+        );
+    im.uigetdir();
+    try
+        if isfolder(im.get('DIRECTORY'))
+            gr = pe.get('EL');
+            
+            assert( ...
+                all(cellfun(@(prop) ~gr.isLocked(prop), num2cell(gr.getProps()))), ...
+                [BRAPH2.STR ':SubjectFUN_MP:' BRAPH2.BUG_FUNC], ...
+                'To import an element, all its properties must be unlocked.' ...
+                )
+            
+            gr_new = im.get('GR');
+            for prop = 1:1:gr.getPropNumber()
+                if gr.getPropCategory(prop) ~= Category.RESULT
+                    gr.set(prop, gr_new.get(prop))
+                end
+            end
+            
+            pe.reinit(gr_new);
+        end
+    catch e
+        warndlg(['Please, select a valid input Group of SubjectFUNMPs in XLS format. ' newline() ...
+            newline() ...
+            'Error message:' newline() ...
+            newline() ...
+            e.message newline()], 'Warning');
+    end
+end
+
+%%%% ¡menu_exporter!
+uimenu(menu_export, ...
+    'Label', 'Export TXT ...', ...
+    'Callback', {@cb_exporter_TXT});
+function cb_exporter_TXT(~, ~)
+    ex = ExporterGroupSubjectFUNMP_TXT( ...
+        'ID', 'Export Brain Group of SubjectFUNMps to TXT', ...
+        'GR', el.copy(), ...
+        'WAITBAR', true ...
+        );
+    ex.uigetdir()
+    if ~strcmp(ex.get('DIRECTORY'), ExporterGroupSubjectFUNMP_TXT.getPropDefault('DIRECTORY'))
+        ex.get('SAVE');
+    end
+end
+
+uimenu(menu_export, ...
+    'Label', 'Export XLS ...', ...
+    'Callback', {@cb_exporter_XLS});
+function cb_exporter_XLS(~, ~)
+    ex = ExporterGroupSubjectFUNMP_XLS( ...
+        'ID', 'Export Brain Group of SubjectFUNMps to XLS', ...
+        'GR', el.copy(), ...
+        'WAITBAR', true ...
+        );
+    ex.uigetdir()
+    if ~strcmp(ex.get('DIRECTORY'), ExporterGroupSubjectFUNMP_XLS.getPropDefault('DIRECTORY'))
+        ex.get('SAVE');
+    end
+end
 
 %% ¡props!
 
@@ -72,7 +139,7 @@ else
     msg = ['FUN_MP must be a cell with L matrices with the same number of columns as the number of brain regions (' int2str(br_number) ').'];
 end
 %%%% ¡gui!
-% % % pl = PPMultiplexSubjectData('EL', sub, 'PROP', SubjectFUN_MP.FUN_MP, varargin{:});
+pr = PPMultiplexFUNMP_FUNMP('EL', sub, 'PROP', SubjectFUN_MP.FUN_MP, varargin{:});
  
 %%% ¡prop!
 age (data, scalar) is a scalar number containing the age of the subject.

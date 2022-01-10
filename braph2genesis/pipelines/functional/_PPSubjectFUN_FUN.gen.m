@@ -38,6 +38,13 @@ function h_panel = draw(pr, varargin)
             pr.table_value = children(i);
         end
     end
+    
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    data = el.get(prop);
+    % change columns for rows
+    set(pr.table_value, ...
+                'Data', data', ...
 
     % output
     if nargout > 0
@@ -61,6 +68,7 @@ function update(pr)
     br_dict = pp_el.get('BA').get('br_dict');
     
     br_ids = cell(br_dict.length(), 1);
+    time_stamps = cell(1, br_dict.length());
     for i = 1:1:br_dict.length()
         br = br_dict.getItem(i);
         br_id = br.get(BrainRegion.ID);
@@ -68,11 +76,12 @@ function update(pr)
             br_id = [br_id(1:8) '..'];
         end
         br_ids{i} = br_id;
+        time_stamps{i} = ['T:' num2str(i)];
     end
     
     set(pr.table_value, ...
-        'ColumnName', br_ids, ...
-        'RowName', {} ...
+        'ColumnName', time_stamps, ...
+        'RowName', br_ids ...
         )
 end
 function redraw(pr, varargin)
