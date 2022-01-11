@@ -139,7 +139,7 @@ else
     msg = ['ST_MP must be a column vector with the same number of element as the brain regions (' int2str(br_number) ').'];
 end
 %%%% ¡gui!
-pr = PPSubjectSTMP_STMP('EL', sub, 'PROP', SubjectST_MP.ST_MP, varargin{:});
+pr = PPSubjectST_MP_ST_MP('EL', sub, 'PROP', SubjectST_MP.ST_MP, varargin{:});
  
 %%% ¡prop!
 age (data, scalar) is a scalar number containing the age of the subject.

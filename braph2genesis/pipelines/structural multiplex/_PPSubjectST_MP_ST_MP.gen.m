@@ -1,8 +1,8 @@
 %% ¡header!
-PPSubjectSTMP_STMP < PPSubjectST_ST (pr, plot subject structural multiplex data) represents the structural multiplex data of a subject.
+PPSubjectST_MP_ST_MP < PPSubjectST_ST (pr, plot subject structural multiplex data) represents the structural multiplex data of a subject.
 
 %%% ¡description!
-PPSubjectSTMP_STMP represents the structural multiplex data of a subject.
+PPSubjectST_MP_ST_MP represents the structural multiplex data of a subject.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotPropMatrix, Subject, SubjectSTMP.
@@ -11,8 +11,7 @@ GUI, PlotElement, PlotPropMatrix, Subject, SubjectSTMP.
 p
 table_value
 table_tag
-ui_sliding_panel
-ui_slider
+slider
 
 %% ¡methods!
 function h_panel = draw(pr, varargin)
@@ -43,11 +42,8 @@ function h_panel = draw(pr, varargin)
     end
     
     % create panel with slider
-    pr.ui_sliding_panel = uipanel( ...
-        'Parent', pr.p, ...
-        'Units', 'characters', ...
-        'BackgroundColor', [.62 .545 .439]);
-    pr.ui_slider = uicontrol( ...
+    % has to be higher above tbl
+    pr.slider = uicontrol( ...
         'Parent', pr.p, ...
         'Style', 'slider', ...
         'Units', 'characters', ...
@@ -68,12 +64,7 @@ function h_panel = draw(pr, varargin)
     value = el.get(prop);    
     br_dict = el.get('BA').get('BR_DICT');
     
-    % change type of table    
-    if ~isempty(pr.table_value) && ~iscell(pr.table_value)
-        delete(pr.table_value)
-        pr.table_value = cell(size(value));
-    end
-    
+    % change type of table        
     for i = 1:1:size(pr.table_value, 1)
         for j = 1:1:size(pr.table_value, 2)
             if isempty(pr.table_value{i, j}) || ~isgraphics(pr.table_value{i, j}, 'uitable')
