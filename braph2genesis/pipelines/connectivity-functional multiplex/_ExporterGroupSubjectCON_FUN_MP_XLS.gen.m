@@ -49,11 +49,6 @@ if isfolder(directory_con) && length(grs) > 0
         wb = waitbar(0, 'Calling first exporter path ...', 'Name', BRAPH2.NAME);
         set_braph2_icon(wb)
     end
-
-    gr_directory = [directory_con filesep() gr.get('ID') '_CON'];
-    if ~exist(gr_directory, 'dir')
-        mkdir(gr_directory)
-    end
     
     ex_con = ExporterGroupSubjectCON_XLS( ...
         'DIRECTORY', directory_con, ...
@@ -79,11 +74,6 @@ if isfolder(directory_fun) && length(grs) > 0
         set_braph2_icon(wb)
     end
 
-    gr_directory = [directory_fun filesep() gr.get('ID') '_FUN'];
-    if ~exist(gr_directory, 'dir')
-        mkdir(gr_directory)
-    end
-    
     ex_con = ExporterGroupSubjectFUN_XLS( ...
         'DIRECTORY', directory_fun, ...
         'GR', grs{2}, ...
