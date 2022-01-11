@@ -12,6 +12,7 @@ p
 table_value
 table_tag
 slider
+current_layer
 
 %% ¡methods!
 function h_panel = draw(pr, varargin)
@@ -42,44 +43,39 @@ function h_panel = draw(pr, varargin)
     end
     
     % create panel with slider
-    % has to be higher above tbl
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    value = pr.get(prop);
+    s_min_value = 1;
+    s_max_value = length(value); % rows dimension
+    
+    % set on first layer
+    pr.current_layer = 1;
+    
+    % transform width of slide into values
+    width = Plot.w(s, 'characters');
     pr.slider = uicontrol( ...
         'Parent', pr.p, ...
         'Style', 'slider', ...
         'Units', 'characters', ...
-        'Value', 1, ...
+        'Min', s_min_value, ...
+        'Max', s_max_value, ...
         'Callback', {@cb_slide} ...
         );
     pr.table_tag = uicontrol('Parent', pr.p, ...
         'Style', 'text', ...
-        'Units', 'normalized', ...
-        'Position', [.01 .09 .3 .05], ...
-        'BackgroundColor', [.62 .545 .439], ...
+        'Units', 'characters', ...
         'HorizontalAlignment', 'left', ...
         'String', '');
     
-    % get some needed variables
-    el = pr.get('EL');
-    prop = pr.get('PROP');
-    value = el.get(prop);    
-    br_dict = el.get('BA').get('BR_DICT');
-    
-    % change type of table        
-    for i = 1:1:size(pr.table_value, 1)
-        for j = 1:1:size(pr.table_value, 2)
-            if isempty(pr.table_value{i, j}) || ~isgraphics(pr.table_value{i, j}, 'uitable')
-                pr.table_value{i, j} = uitable('Parent', pr.ui_sliding_panel, 'Visible', 'on');
-            end
-            set(pr.table_value{i, j}, ...
-                'Data', value{i, j}, ...
-                'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-                'ColumnName', el.get('ID'), ...
-                'RowName', cellfun(@(x) x.get('ID'), br_dict.getItems(), 'UniformOutput', false) ...
-                )
-        end
-    end
     function cb_slide(~, ~)
-        pr.slide()
+        slider_current_value = get(pr.slider, 'Value');
+        % change table tag
+        set(pr.table_tag, 'String', num2str(slider_current_value)); 
+        % change current layer
+        pr.current_layer = num2str(slider_current_value);
+        % change values
+        pr.update();
     end
 
     % output
@@ -98,7 +94,17 @@ function update(pr)
     %
     % See also draw, redraw, PlotElement.
 
-    update@PPSubjectST_ST(pr)
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    
+    value = el.get(prop);
+    
+    set(pr.table_value, ...
+        'Data', value{pr.current_layer}, ...
+        'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
+        'ColumnEditable', true, ...
+        'CellEditCallback', {@cb_matrix_value});
+    
     
 end
 function redraw(pr, varargin)
@@ -123,7 +129,27 @@ function redraw(pr, varargin)
     %
     % See also draw, update, PlotElement.
     
-    pr.redraw@PPSubjectST_ST(varargin{:});
+    p_t = pr_table_tag;
+    s = pr.slider;
+    
+    set(p_t, ...
+        'Position', [0 16 1 2]);
+    
+    set(s, ...
+        'Position', [0 17 1 45]);
+    
+    varargin{end+1} = 'Height';
+    varargin{end+1} = 2;
+    varargin{end+1} = 'DHeight';
+    varargin{end+1} = 21;
+    
+    if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
+        pr.redraw@PPSubjectST_ST(varargin{:})
+    else
+        pr.redraw@PPSubjectST_ST(varargin{:});
+    end
+    
+    
 end
 function slide(pr)
     %SLIDE slides the panel horizontally.
@@ -132,58 +158,91 @@ function slide(pr)
     %
     % See also draw, update, redraw.
 
-    f = pr.pp;
-    p = pr.ui_sliding_panel;
-    s = pr.ui_slider;
+%     p = pr.pp;
+%     s = pr.slider;
+%     
+%     el = pr.get('EL');
+%     prop = pr.get('PROP');
+%     value = pr.get(prop);
+%     
+%     s_min_value = 1;
+%     s_max_value = length(value); % rows dimension
+%     
+%     % transform width of slide into values
+%     width = Plot.w(s, 'characters');
+%     set(s, ...
+%         'Visible', 'on', ...
+%         'Min', s_min_value, ...
+%         'Max', s_max_value, ...
+%         'Value', max(get(s, 'Value'), Plot.w(s, 'characters')) ...
+%         );
+%     
+    
 
-    units = get(f, 'Units');
-    set(f, 'Units', 'character')
+%     y0_s = y0(p) + h(pr.pp)*.01;
+% 
+%     dw = 1;
+%     n = length(pr.table_value);
+%     w_pp = cellfun(@(x) w(x), pr.table_value);
+%     w_p = sum(w_pp + dw) + dw;
+%     single_w = w_p / n;
 
-    y0_s = y0(f) + h(pr.pp)*.01;
+%     if w_p > w(p)
+%         offset = get(s, 'Value');
+%         set(p, 'Position', [w(p)-w(p)-offset y0_s+1 w_p h(p)*.76])
+% 
+%         set(s, ...
+%             'Position', [0 y0_s w(p) 1], ...
+%             'Visible', 'on', ...
+%             'Min', w(p) - w(p), ...
+%             'Max', w_p, ...
+%             'Value', max(get(s, 'Value'), w(p) - w(p)) ...
+%             );
+%         current_table = abs((w(p)-w(p)-offset)) / single_w;
+%         set(pr.table_tag, 'String', ['Table : ' num2str(round(current_table) + 1)])
+%         
+%     else
+%         set(p, 'Position', [0.1 h(p)*.2 w(p)*.98 h(p)-h(p)*.15])
+% 
+%         set(s, 'Visible', 'off')
+%     end
 
-    dw = 1;
-    n = length(pr.table_value);
-    w_pp = cellfun(@(x) w(x), pr.table_value);
-    w_p = sum(w_pp + dw) + dw;
-    single_w = w_p / n;
+%     set(p, 'Units', units)
+% 
+%     % auxiliary functions
+%         function r = x0(h)
+%             r = get(h, 'Position');
+%             r = r(1);
+%         end
+%         function r = y0(h)
+%             r = get(h, 'Position');
+%             r = r(2);
+%         end
+%         function r = w(h)
+%             r = get(h, 'Position');
+%             r = r(3);
+%         end
+%         function r = h(h)
+%             r = get(h, 'Position');
+%             r = r(4);
+%         end
+end
+function cb_matrix_value(pr, i, j, newdata)
+    %CB_MATRIX_VALUE executes callback for the matrix table.
+    %
+    % CB_MATRIX_VALUE(PR, I, J, NEWDATA) executes callback for the matrix table.
+    %  It updates the matrix at position (I,J) with NEWDATA and the
+    %  information of current layer.
 
-    if w_p > w(f)
-        offset = get(s, 'Value');
-        set(p, 'Position', [w(p)-w(f)-offset y0_s+1 w_p h(f)*.76])
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    current_layer = pr.current_layer;
 
-        set(s, ...
-            'Position', [0 y0_s w(f) 1], ...
-            'Visible', 'on', ...
-            'Min', w(p) - w(f), ...
-            'Max', w_p, ...
-            'Value', max(get(s, 'Value'), w(p) - w(f)) ...
-            );
-        current_table = abs((w(p)-w(f)-offset)) / single_w;
-        set(pr.table_tag, 'String', ['Table : ' num2str(round(current_table) + 1)])
-        
-    else
-        set(p, 'Position', [0.1 h(f)*.2 w(f)*.98 h(f)-h(f)*.15])
+    value = el.get(prop);
+    layer_value = value{current_layer};
+    layer_value(i, j) = newdata;
+    value{current_layer} = layer_value;
+    el.set(prop, value)
 
-        set(s, 'Visible', 'off')
-    end
-
-    set(f, 'Units', units)
-
-    % auxiliary functions
-        function r = x0(h)
-            r = get(h, 'Position');
-            r = r(1);
-        end
-        function r = y0(h)
-            r = get(h, 'Position');
-            r = r(2);
-        end
-        function r = w(h)
-            r = get(h, 'Position');
-            r = r(3);
-        end
-        function r = h(h)
-            r = get(h, 'Position');
-            r = r(4);
-        end
+    pr.update()
 end
