@@ -19,9 +19,9 @@ GR (data, item) is a group of subjects with connectivity data and functional dat
 %%%% ¡settings!
 'Group'
 %%%% ¡check_value!
-check = any(strcmp(value.get(Group.SUB_CLASS_TAG), subclasses('SubjectCON', [], [], true))); % Format.checkFormat(Format.ITEM, value, 'Group') already checked
+check = any(strcmp(value.get(Group.SUB_CLASS_TAG), subclasses('SubjectCON_FUN_MP', [], [], true))); % Format.checkFormat(Format.ITEM, value, 'Group') already checked
 %%%% ¡default!
-Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON'))
+Group('SUB_CLASS', 'SubjectCON_FUN_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON_FUN_MP'))
 
 %%% ¡prop!
 DIRECTORY_CON (data, string) is the directory name where to save the group of subjects with connectivity data.
@@ -39,10 +39,12 @@ SAVE (result, empty) saves the group of subjects with connectivity data and func
 
 directory_con = ex.get('DIRECTORY_CON');
 gr = ex.get('GR');
-grs = SepareteGroupsCON_FUN( ... 
-        'GRP_CON_FUN_MP', gr);
+grs_obj = SepareteGroupsCON_FUN( ...
+    'GRP_CON_FUN_MP', gr);
 
-if isfolder(directory_con)
+grs = grs_obj.get('GRS');
+
+if isfolder(directory_con) && length(grs) > 0
     if ex.get('WAITBAR')
         wb = waitbar(0, 'Calling first exporter path ...', 'Name', BRAPH2.NAME);
         set_braph2_icon(wb)
@@ -66,11 +68,11 @@ if isfolder(directory_con)
         close(wb)
     end
 else
-    value = ex.getr('SAVE');    
+    value = [];
 end
 
 directory_fun = ex.get('DIRECTORY_FUN');
-if isfolder(directory_fun)
+if isfolder(directory_fun) && length(grs) > 0
     if ex.get('WAITBAR')
         wb = waitbar(0, 'Calling second exporter path ...', 'Name', BRAPH2.NAME);
         set_braph2_icon(wb)
@@ -94,7 +96,7 @@ if isfolder(directory_fun)
         close(wb)
     end
 else
-    value = ex.getr('SAVE');    
+    value = [];    
 end
 
 %% ¡methods!
@@ -254,10 +256,11 @@ if ~exist(directory_fun, 'dir')
     mkdir(directory_fun)
 end
 
+mixed_gr = co_gr1.get('GR');
 ex = ExporterGroupSubjectCON_FUN_MP_XLS( ...
     'DIRECTORY_CON', directory_con, ...
     'DIRECTORY_FUN', directory_fun, ...
-    'GR', co_gr1 ...
+    'GR', mixed_gr ...
     );
 ex.get('SAVE');
 
