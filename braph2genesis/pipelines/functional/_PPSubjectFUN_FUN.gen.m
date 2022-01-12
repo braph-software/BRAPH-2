@@ -38,12 +38,6 @@ function h_panel = draw(pr, varargin)
             pr.table_value = children(i);
         end
     end
-    
-    el = pr.get('EL');
-    prop = pr.get('PROP');
-    data = el.get(prop);
-    % change columns for rows
-    set(pr.table_value, 'Data', data');
 
     % output
     if nargout > 0
@@ -65,6 +59,8 @@ function update(pr)
     
     pp_el = pr.get('EL');
     br_dict = pp_el.get('BA').get('br_dict');
+    prop = pr.get('PROP');
+    data = pp_el.get(prop);
     
     br_ids = cell(br_dict.length(), 1);
     time_stamps = cell(1, br_dict.length());
@@ -80,7 +76,8 @@ function update(pr)
     
     set(pr.table_value, ...
         'ColumnName', time_stamps, ...
-        'RowName', br_ids ...
+        'RowName', br_ids, ...
+        'Data', data' ...
         )
 end
 function redraw(pr, varargin)
