@@ -1,0 +1,15 @@
+%% Pipeline Functional Analysis BUD
+%
+% This is the pipeline script to analyze a group of subjects using functional data and a binary undirected graph using densities.
+% 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
+% 2. It loads the data of a group of subjects from a directory containing XLS files ... and covariates ...
+% 3. It analyzes these data using a functional analysis (FUN) based on a binary undirected graph using thresholds (BUT).
+
+%% Brain Atlas
+ba = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load Brain Atlas from XLS % Brain Atlas
+
+%% Group
+gr = ImporterGroupSubjectFUN_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group FUN from XLS % Group FUN
+
+%% Analysis
+a_BUD = AnalyzeGroup_FUN_BUD('GR', gr, 'Densities', [0 20 40 60 80 100]); % Analyze Group % Group Analysis
