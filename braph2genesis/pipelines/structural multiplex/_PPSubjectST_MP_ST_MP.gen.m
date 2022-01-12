@@ -12,6 +12,7 @@ GUI, PlotElement, PlotPropMatrix, Subject, SubjectSTMP.
 p
 table_value
 slider
+table_tag
 
 %% ¡methods!
 function h_panel = draw(pr, varargin)
@@ -53,8 +54,8 @@ function h_panel = draw(pr, varargin)
         'Value', 1, ...
         'Min', 1, ...
         'Max', L, ...
-        'SliderStep', 1, ...
-        'Callback', {@cb_slide} ...
+        'SliderStep', [1/L L], ...
+        'Callback', {@cb_slider} ...
         );
     function cb_slider(~, ~)
         pr.update()
@@ -88,6 +89,10 @@ function update(pr)
     % See also draw, redraw, PlotElement.
 
     update@PlotProp(pr)
+    
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    value = el.get(prop);
         
     if el.isLocked(prop)
         set(pr.table_value, ...
@@ -95,10 +100,7 @@ function update(pr)
             'ColumnEditable', false ...
             )
     end
-
-    el = pr.get('EL');
-    prop = pr.get('PROP');
-    value = el.get(prop);
+    
     set(pr.table_value, ...
         'Data', value{get(pr.slider, 'Value')}, ...
         'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
