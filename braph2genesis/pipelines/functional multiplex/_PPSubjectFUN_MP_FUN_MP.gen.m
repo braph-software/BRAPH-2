@@ -17,8 +17,8 @@ slider
 function h_panel = draw(pr, varargin)
     %DRAW draws a table with the functional multiplex data of a subject.
     %
-    % DRAW(PR) draws the property panel a table with the functional multiplex data of
-    %  a subject.
+    % DRAW(PR) draws the property panel, a slider to navigate the values
+    %  a table with the functional multiplex data of a subject.
     %
     % H = DRAW(PR) returns a handle to the property panel.
     %
@@ -84,10 +84,6 @@ function update(pr)
     %
     % UPDATE(PR) updates the content of the property panel and its graphical objects.
     %
-    % Important note:
-    % 1. UPDATE() is typically called internally by PlotElement and does not need
-    %  to be expricitly called in children of PlotProp.
-    %
     % See also draw, redraw, PlotElement.
 
     update@PlotProp(pr)
@@ -121,7 +117,7 @@ function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
     %
     % REDRAW(PR) resizes the property panel and repositions its
-    %   graphical objects.
+    %   graphical objects (slider, slider value tag and table).
     %
     % Important notes:
     % 1. REDRAW() sets the units 'characters' for panel and all its graphical objects.
@@ -134,8 +130,11 @@ function redraw(pr, varargin)
     %  By default:
     %  - X0 does not change
     %  - Y0 does not change
-    %  - WIDTH does not change
-    %  - HEIGHT=1.4 characters.
+    %  - WIDTH does not change    
+    %  - HEIGHT=1.8 characters.
+    %  - SHEIGHT=2.0 characters (slider height).
+    %  - THEIGHT=2.0 characters (tag height).
+    %  - DHEIGHT=20 characters (table height).
     %
     % See also draw, update, PlotElement.
 
