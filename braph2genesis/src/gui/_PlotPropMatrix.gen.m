@@ -123,14 +123,15 @@ function redraw(pr, varargin)
     % 2. REDRAW() is typically called internally by PlotElement and does not need 
     %  to be explicitly called in children of PlotProp.
     %
-    % REDRAW(PR, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT)
+    % REDRAW(PR, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT, 'DHeight', DHEIGHT)
     %  repositions the property panel. It is possible to use a
     %  subset of the Name-Value pairs.
     %  By default:
     %  - X0 does not change
     %  - Y0 does not change
     %  - WIDTH does not change
-    %  - HEIGHT=20 characters.
+    %  - HEIGHT=1.8 characters.
+    %  - DHEIGHT=20 characters (table height).
     %
     % See also draw, update, refresh, PlotElement.
     
@@ -150,7 +151,7 @@ function redraw(pr, varargin)
         
         set(pr.table_value, ...
             'Units', 'normalized', ...
-            'Position', [.01 .02 .97 (Dh / (h + Dh) - .02)] ...
+            'Position', [.01 .02 .97 (Dh/(h+Dh)-.02)] ...
             )
     end  
 end
