@@ -104,6 +104,7 @@ function update(pr)
     %
     % See also draw, redraw, PlotElement.
 
+    update@PlotProp(pr)
     el = pr.get('EL');
     prop = pr.get('PROP');
 
