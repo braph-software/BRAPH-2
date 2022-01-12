@@ -92,12 +92,13 @@ else
 end
 
 %% ¡methods!
-function uigetdir(ex)
+function uigetdir(ex, varargin)
     % UIGETDIR opens a dialog box to set the directory where to save the group of subjects with connectivity data.
     
     directory = uigetdir('Select directory');
+    dir_type = get_from_varargin('', 'DIR_TYPE', varargin{:});
     if ischar(directory) && isfolder(directory)
-        ex.set('DIRECTORY', directory);
+        ex.set(dir_type, directory);
     end
 end
 

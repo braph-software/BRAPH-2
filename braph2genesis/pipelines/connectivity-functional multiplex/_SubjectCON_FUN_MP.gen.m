@@ -18,9 +18,10 @@ function cb_importer_TXT(~, ~)
         'ID', 'Import Group of SubjectConFunMps from TXT', ...
         'WAITBAR', true ...
         );
-    im.uigetdir();
+    im.uigetdir('DIR_TYPE','DIRECTORY_CON');
+    im.uigetdir('DIR_TYPE','DIRECTORY_FUN');
     try
-        if isfolder(im.get('DIRECTORY'))
+        if isfolder(im.get('DIRECTORY_CON')) && isfolder(im.get('DIRECTORY_FUN'))
             gr = pe.get('EL');
             
             assert( ...
@@ -55,9 +56,10 @@ function cb_importer_XLS(~, ~)
         'ID', 'Import Group of SubjectConFunMps from XLS', ...
         'WAITBAR', true ...
         );
-    im.uigetdir();
+    im.uigetdir('DIR_TYPE','DIRECTORY_CON');
+    im.uigetdir('DIR_TYPE','DIRECTORY_FUN');
     try
-        if isfolder(im.get('DIRECTORY'))
+        if isfolder(im.get('DIRECTORY_CON')) && isfolder(im.get('DIRECTORY_FUN'))
             gr = pe.get('EL');
             
             assert( ...
@@ -143,7 +145,7 @@ else
            'and the second with the same number of columns as the brain regions (' int2str(br_number) ', functional data).'];
 end
 %%%% ¡gui!
-pr = PPSubjectCONFUNMP_CONFUNMP('EL', sub, 'PROP', SubjectCON_FUN_MP.CON_FUN_MP, varargin{:});
+pr = PPSubjectCON_FUN_MP_CON_FUN_MP('EL', sub, 'PROP', SubjectCON_FUN_MP.CON_FUN_MP, varargin{:});
  
 %%% ¡prop!
 age (data, scalar) is a scalar number containing the age of the subject.
