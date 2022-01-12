@@ -3,6 +3,7 @@ PPSubjectST_MP_ST_MP < PPSubjectST_ST (pr, plot subject structural multiplex dat
 
 %%% ¡description!
 PPSubjectST_MP_ST_MP represents the structural multiplex data of a subject.
+It visualized a table showing the content of a layer, which can be selected by a slider.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotPropMatrix, Subject, SubjectSTMP.
@@ -10,9 +11,7 @@ GUI, PlotElement, PlotPropMatrix, Subject, SubjectSTMP.
 %% ¡properties!
 p
 table_value
-table_tag
 slider
-current_layer
 
 %% ¡methods!
 function h_panel = draw(pr, varargin)
@@ -42,51 +41,35 @@ function h_panel = draw(pr, varargin)
         end
     end
 
-    % create panel with slider
     el = pr.get('EL');
     prop = pr.get('PROP');
     value = el.get(prop);
-    total_rows = length(value);
+    L = length(value); % number of layers
 
-    % set on first layer
-    pr.current_layer = 1;
-
-    % transform width of slide into values
     pr.slider = uicontrol( ...
         'Parent', pr.p, ...
         'Style', 'slider', ...
         'Units', 'characters', ...
         'Value', 1, ...
+        'Min', 1, ...
+        'Max', L, ...
+        'SliderStep', 1, ...
         'Callback', {@cb_slide} ...
         );
-    pr.table_tag = uicontrol('Parent', pr.p, ...
+    function cb_slider(~, ~)
+        pr.update()
+    end
+    
+    pr.table_tag = uicontrol( ...
+        'Parent', pr.p, ...
         'Style', 'text', ...
         'Units', 'characters', ...
         'HorizontalAlignment', 'left', ...
+        'FontUnits', BRAPH2.FONTUNITS, ...
+        'FontSize', BRAPH2.FONTSIZE, ...
         'String', '1', ...
-        'BackgroundColor', pr.get('BKGCOLOR') );
-
-        function cb_slide(~, ~)
-            slider_current_value = get(pr.slider, 'Value');
-            max_value = get(pr.slider, 'Max');
-            segments = round(max_value / total_rows);
-            c_s = segments;
-            for i = 1:total_rows
-                if slider_current_value < c_s
-                    n = i;
-                    break;
-                end
-                c_s =  c_s + segments;
-            end
-
-
-            % change table tag
-            set(pr.table_tag, 'String', num2str(n));
-            % change current layer
-            pr.current_layer = n;
-            % change values
-            pr.update();
-        end
+        'BackgroundColor', pr.get('BKGCOLOR') ...
+        );
 
     % output
     if nargout > 0
@@ -105,26 +88,29 @@ function update(pr)
     % See also draw, redraw, PlotElement.
 
     update@PlotProp(pr)
+        
+    if el.isLocked(prop)
+        set(pr.table_value, ...
+            'Enable', pr.get('ENABLE'), ...
+            'ColumnEditable', false ...
+            )
+    end
+
     el = pr.get('EL');
     prop = pr.get('PROP');
-
     value = el.get(prop);
-
     set(pr.table_value, ...
-        'Data', value{pr.current_layer}, ...
+        'Data', value{get(pr.slider, 'Value')}, ...
         'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-        'ColumnEditable', true, ...
-        'CellEditCallback', {@cb_matrix_value});
+        'ColumnEditable', true)
 
-        function cb_matrix_value(~, event)
-            layer_value = value{pr.current_layer};
-            layer_value(event.Indices(1), event.Indices(2)) = event.NewData;
-            value{pr.current_layer} = layer_value;
-            el.set(prop, value)
-
-            pr.update()
-        end
-
+    value = el.getr(prop);
+    if isa(value, 'Callback')
+        set(pr.table_value, ...
+        'Enable', pr.get('ENABLE'), ...
+        'ColumnEditable', false ...
+        )
+    end
 end
 function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
@@ -137,39 +123,55 @@ function redraw(pr, varargin)
     % 2. REDRAW() is typically called internally by PlotElement and does not need
     %  to be expricitly called in children of PlotProp.
     %
-    % REDRAW(PR, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT)
+    % REDRAW(PR, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT, 'DHeight', DHEIGHT)
     %  repositions the property panel. It is possible to use a
     %  subset of the Name-Value pairs.
     %  By default:
     %  - X0 does not change
     %  - Y0 does not change
     %  - WIDTH does not change
-    %  - HEIGHT=1.4 characters.
+    %  - HEIGHT=1.8 characters.
+    %  - SHEIGHT=2.0 characters (slider height).
+    %  - THEIGHT=2.0 characters (tag height).
+    %  - DHEIGHT=20 characters (table height).
     %
     % See also draw, update, PlotElement.
 
+    [h, varargin] = get_and_remove_from_varargin(1.8, 'Height', varargin);
+    [Sh, varargin] = get_and_remove_from_varargin(2.0, 'SHeight', varargin);
+    [Th, varargin] = get_and_remove_from_varargin(2.0, 'THeight', varargin);
+    [Dh, varargin] = get_and_remove_from_varargin(20, 'DHeight', varargin);
+
+    pr.redraw@PlotProp('Height', h + Sh + Th + Dh, varargin{:})
+
+    set(pr.slider, ...
+        'Units', 'normalized', ...
+        'Position', [.01 (Th+Dh)/(h+Sh+Th+Dh) .97 (Th/(h+Sh+Th+Dh)-.02)] ...
+        );
+
+    set(pr.table_tag, ...
+        'Units', 'normalized', ...
+        'Position', [.01 Dh/(h+Sh+Th+Dh) .97 (Th/(h+Sh+Th+Dh)-.02)] ...
+        );
+
+    set(pr.table_value, ...
+        'Units', 'normalized', ...
+        'Position', [.01 .02 .97 (Dh/(h+Sh+Th+Dh)-.02)] ...
+        )
+end
+function cb_matrix_value(pr, i, j, newdata)
+    %CB_MATRIX_VALUE executes callback for the matrix table.
+    %
+    % CB_MATRIX_VALUE(PR, I, J, NEWDATA) executes callback for the matrix table.
+    %  It updates the matrix at position (I,J) with NEWDATA 
+    %  for the layer that is currently selected by the slider. 
+
     el = pr.get('EL');
     prop = pr.get('PROP');
+    
+    value = el.get(prop);
+    value{get(pr.slider, 'Value')}(i, j) = newdata;
+    el.set(prop, value)
 
-    p_t = pr.table_tag;
-    s = pr.slider;
-
-    set(p_t, ...
-        'Position', [0 16 2 1]);
-
-    set(s, ...
-        'Position', [0 17 45 1], ...
-        'Min', 1, ...
-        'Max', Plot.w(s));
-
-    varargin{end+1} = 'Height';
-    varargin{end+1} = 5;
-    varargin{end+1} = 'DHeight';
-    varargin{end+1} = 15;
-
-    if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
-        pr.redraw@PPSubjectST_ST(varargin{:})
-    else
-        pr.redraw@PPSubjectST_ST(varargin{:});
-    end
+    pr.update()
 end
