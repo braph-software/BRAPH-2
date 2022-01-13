@@ -372,8 +372,7 @@ function cb_bring_to_front(pe)
     %  its dependent figures by calling the methods cb_bring_to_front() for
     %  all the PlotProp panels of the PlotElement.
     %  
-    % Note that it will draw a new the figure if the element panel is
-    %  currently not plotted. 
+    % Note that it will draw a new the figure if the element panel is currently not plotted. 
     %
     % See also cb_hide, cb_close.
 
