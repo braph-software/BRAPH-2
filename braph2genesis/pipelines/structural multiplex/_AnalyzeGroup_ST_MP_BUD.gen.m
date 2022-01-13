@@ -107,7 +107,7 @@ g = MultiplexBUD( ...
     );
 
 value = g;
-%%%% ¡gui!
+% %%%% ¡gui!
 % % % pl = PPAnalyzeGroupGraph('EL', a, 'PROP', AnalyzeGroup_ST_MP_BUD.G, varargin{:});
 
 %% ¡tests!

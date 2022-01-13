@@ -86,7 +86,7 @@ g = MultigraphBUD( ...
     );
 
 value = g;
-%%%% ¡gui!
+% %%%% ¡gui!
 % % % pl = PPAnalyzeGroupGraph('EL', a, 'PROP', AnalyzeGroup_ST_BUD.G, varargin{:});
 
 %% ¡tests!
