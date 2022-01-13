@@ -2,7 +2,7 @@
 %
 % This is the pipeline script to compare two groups of subjects using functional data and weighted undirected graphs.
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
-% 2. It loads the data of two groups of subjects from directories containing XLS files (e.g., FUN_group1.xlsx and FUN_group2.xlsx).
+% 2. It loads the data of two groups of subjects from a directory containing XLS files (e.g., FUN_group1.xlsx and FUN_group2.xlsx).
 % 3. It analyzes these data using functional analyses (FUN) based on graphs (BUD).
 % 4. It compares the results of the two analyses.
 
