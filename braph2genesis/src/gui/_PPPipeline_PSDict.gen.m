@@ -237,8 +237,6 @@ function x_update(varargin)
         eval(varargin{1}{3})
         varargin = varargin(2:end);
     end
-    
-who()
 end
 function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
