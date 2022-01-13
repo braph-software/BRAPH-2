@@ -7,6 +7,8 @@ PPBrainAtlas_Surf plots for a brain atlas surface.
 CALLBACK - This is a callback function:
 
     pr.<strong>cb_bring_to_front</strong>() - brings to the front the brain atlas figure and its settings figure
+    pr.<strong>cb_hide</strong>() - hides the brain atlas figure and its settings figure
+    pr.<strong>cb_close</strong>() - closes the brain atlas figure and its settings figure
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp, BrainAtlas
@@ -260,8 +262,10 @@ end
 function cb_bring_to_front(pr)
     %CB_BRING_TO_FRONT brings to front the brain atlas figure and its settings figure.
     %
-    % CB_BRING_TO_FRONT(GUI) brings to front the brain atlas figure and its
+    % CB_BRING_TO_FRONT(PR) brings to front the brain atlas figure and its
     %  settings figure.
+    %
+    % See also cb_hide, cb_close.
 
     % brings to front settings panel
     pr.cb_bring_to_front@PlotProp();
@@ -275,4 +279,41 @@ function cb_bring_to_front(pr)
         end
     end
 end
+function cb_hide(pr)
+    %CB_HIDE hides the brain atlas figure and its settings figure.
+    %
+    % CB_HIDE(PR) hides the brain atlas figure and its settings figure.
+    %
+    % See also cb_bring_to_front, cb_close.
 
+    % hides settings panel
+    pr.cb_hide@PlotProp();
+
+    % hides brain atlas figure
+    children = get(pr.f_pba, 'Children');
+    for i = 1:1:length(children)
+        if check_graphics(children(i), 'uipanel') && strcmp(get(children(i), 'Tag'), 'h_panel')
+            pba = get(children(i), 'UserData');
+            pba.cb_hide()
+        end
+    end
+end
+function cb_close(pr)
+    %CB_CLOSE closes the brain atlas figure and its settings figure.
+    %
+    % CB_CLOSE(PR) closes the brain atlas figure and its settings figure.
+    %
+    % See also cb_bring_to_front, cd_hide.
+
+    % closes settings panel
+    pr.cb_close@PlotProp();
+
+    % closes brain atlas figure
+    children = get(pr.f_pba, 'Children');
+    for i = 1:1:length(children)
+        if check_graphics(children(i), 'uipanel') && strcmp(get(children(i), 'Tag'), 'h_panel')
+            pba = get(children(i), 'UserData');
+            pba.cb_close()
+        end
+    end
+end
