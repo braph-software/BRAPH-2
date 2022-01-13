@@ -11,8 +11,8 @@ GUI, PlotElement, PlotPropMatrix, Subject, SubjectSTMP.
 %% ¡properties!
 p
 table_value
-slider
 table_text
+slider
 
 %% ¡methods!
 function h_panel = draw(pr, varargin)
