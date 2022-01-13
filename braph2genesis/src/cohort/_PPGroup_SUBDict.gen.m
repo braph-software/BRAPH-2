@@ -315,7 +315,7 @@ function cb_close(pr)
     % See also cb_bring_to_front, cb_hide.
 
     % closes settings panel
-    pr.cb_bring_to_front@PlotProp();
+    pr.cb_close@PlotProp();
 
     % closes subject figures
     for i = 1:1:length(pr.f_subs)
