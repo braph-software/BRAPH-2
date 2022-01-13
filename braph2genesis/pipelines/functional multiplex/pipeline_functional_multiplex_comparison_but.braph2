@@ -14,8 +14,8 @@ gr1 = ImporterGroupSubjectFUN_MP_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Loa
 gr2 = ImporterGroupSubjectFUN_MP_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group FUN_MP 2 from XLS % Group FUN_MP 2
 
 %% Analysis
-a_BUT1 = AnalyzeGroup_FUN_MP_BUT('GR', gr1, 'Thresholds', [.4 .5 .6 .7]); % Analyze Group 1 % Group 1 Analysis
-a_BUT2 = AnalyzeGroup_FUN_MP_BUT('GR', gr2, 'Thresholds', [.4 .5 .6 .7]); % Analyze Group 2 % Group 2 Analysis
+a_BUT1 = AnalyzeEnsemble_FUN_MP_BUT('GR', gr1, 'Thresholds', [.4 .5 .6 .7]); % Analyze Group 1 % Group 1 Analysis
+a_BUT2 = AnalyzeEnsemble_FUN_MP_BUT('GR', gr2, 'Thresholds', [.4 .5 .6 .7]); % Analyze Group 2 % Group 2 Analysis
 
 %% Comparison
 c_BUT = CompareGroup('P', 10, 'A1', a_BUT1, 'A2', a_BUT2, 'VERBOSE', true, 'MEMORIZE', true); % Compare Groups % Group Comparison
