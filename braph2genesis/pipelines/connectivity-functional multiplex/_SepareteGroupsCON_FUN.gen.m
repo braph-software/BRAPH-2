@@ -23,7 +23,7 @@ NOTES (metadata, string) are some specific notes about the group combiner.
 WAITBAR (metadata, logical) determines whether to show the waitbar.
 
 %%% ¡prop!
-GRP_CON_FUN_MP (data, item) is a group of subjects with functional and connectivity data
+GR_CON_FUN_MP (data, item) is a group of subjects with functional and connectivity data
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectCON_FUN_MP')
 
