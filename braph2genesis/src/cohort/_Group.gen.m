@@ -32,6 +32,8 @@ LABEL (metadata, string) is an extended label of the group of subjects.
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the group of subjects.
+%%%% ¡gui!
+pr = PlotPropString('EL', gr, 'PROP', Group.NOTES, 'LINES', 'multi', 'EDITHEIGHT', 4.5, varargin{:});
 
 %%% ¡prop!
 SUB_CLASS (parameter, class) is the class of the subjects of the group.
