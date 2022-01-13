@@ -50,6 +50,8 @@ CALLBACKS - These are callback functions:
 
     pl.<strong>cb_close_fs</strong>() - closes the settings figure
     pl.<strong>cb_bring_to_front</strong>() - brings to the front the figure with the panel and the settings figure
+    pl.<strong>cb_hide</strong>() - hides the figure containing the panel and the settings figure
+    pl.<strong>cb_close</strong>() - closes the figure containing the panel and the settings figure
 
 %%% ¡seealso!
 uipanel, GUI, PlotElement, PlotProp
@@ -152,7 +154,7 @@ function cb_close_fs(pl)
     % CB_CLOSE_FS(PL) closes the settings figure if it exists by calling the
     %  function close().
     %
-    % See also close.
+    % See also settings, cb_close, cb_bring_to_front, cb_hide.
 
     if check_graphics(pl.f_settings, 'figure')
         close(pl.f_settings)
@@ -164,7 +166,7 @@ function cb_bring_to_front(pl)
     % CB_BRING_TO_FRONT(PL) brings to the front the figure with the
     %  panel and the settings figure.
     %
-    % See also settings.
+    % See also cb_hide, cb_close, cb_close_fs.
 
     if check_graphics(pl.h_panel, 'uipanel')
         figure(ancestor(pl.h_panel, 'figure'))
@@ -173,6 +175,22 @@ function cb_bring_to_front(pl)
     if check_graphics(pl.f_settings, 'figure')
         figure(pl.f_settings)
     end    
+end
+function cb_hide(pl)
+    %CB_HIDE hides the figure containing the panel and the settings figure.
+    %
+    % CB_HIDE(PL) hides the figure containing the panel and the settings figure.
+    %
+    % See also cb_bring_to_front, cb_close, cb_close_fs.
+    
+end
+function cb_close(pl)
+    %CB_CLOSE closes the figure containing the panel and the settings figure.
+    % 
+    % CB_CLOSE(PL) closes the figure containing the panel and the settings figure.
+    %
+    % See also cb_close_fs, cb_bring_to_front, cb_hide.
+
 end
 
 %% ¡staticmethods!
