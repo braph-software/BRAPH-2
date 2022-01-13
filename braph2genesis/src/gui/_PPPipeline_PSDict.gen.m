@@ -184,7 +184,11 @@ function update(pr, varargin)
                             ).draw();
                     else
                         gui = get(pr.pc_GUIs{s}{c}, 'UserData');
-                        gui.cb_bring_to_front()
+                        if get(pr.pc_GUIs{s}{c}, 'Visible')
+                            gui.cb_hide()
+                        else
+                            gui.cb_bring_to_front()
+                        end
                     end
                 end
             end
