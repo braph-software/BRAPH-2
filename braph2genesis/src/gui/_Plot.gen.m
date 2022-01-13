@@ -169,11 +169,20 @@ function cb_bring_to_front(pl)
     % See also cb_hide, cb_close, cb_close_fs.
 
     if check_graphics(pl.h_panel, 'uipanel')
-        figure(ancestor(pl.h_panel, 'figure'))
+        fig = ancestor(pl.h_panel, 'figure');
+        figure(fig)
+        set(fig, ...
+            'Visible', 'on', ...
+            'WindowState', 'normal' ...
+            )        
     end
 
     if check_graphics(pl.f_settings, 'figure')
         figure(pl.f_settings)
+        set(pl.f_settings, ...
+            'Visible', 'on', ...
+            'WindowState', 'normal' ...
+            )
     end    
 end
 function cb_hide(pl)
@@ -183,6 +192,14 @@ function cb_hide(pl)
     %
     % See also cb_bring_to_front, cb_close, cb_close_fs.
     
+    if check_graphics(pl.h_panel, 'uipanel')
+        fig = ancestor(pl.h_panel, 'figure');
+        set(fig, 'Visible', 'off')
+    end
+
+    if check_graphics(pl.f_settings, 'figure')
+        set(pl.f_settings, 'Visible', 'off')
+    end    
 end
 function cb_close(pl)
     %CB_CLOSE closes the figure containing the panel and the settings figure.
@@ -191,6 +208,11 @@ function cb_close(pl)
     %
     % See also cb_close_fs, cb_bring_to_front, cb_hide.
 
+    if check_graphics(pl.h_panel, 'uipanel')
+        close(ancestor(pl.h_panel, 'figure'))
+    end
+
+    % pl.cb_close_fs() % this is called automatically when the panel is deleted
 end
 
 %% ¡staticmethods!
@@ -458,3 +480,20 @@ pl_SW.settings()
 close(f_NW)
 close(f_NE)
 close(f_SE)
+
+%%% ¡test!
+%%%% ¡name!
+
+%%%% ¡code!
+pl = Plot();
+pl.draw()
+
+pl.settings()
+pl.cb_close_fs()
+
+pl.settings()
+pl.cb_hide()
+pl.cb_bring_to_front()
+
+pl.settings()
+pl.cb_close()
