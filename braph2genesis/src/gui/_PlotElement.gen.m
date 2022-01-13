@@ -37,7 +37,9 @@ REINIT - To reinitialize the element plot with a new element, call:
 
 CALLBACK - This is a callback function:
 
-    pe.<strong>cb_bring_to_front</strong>() - brings to the front the figure and its dependent figures
+    pe.<strong>cb_bring_to_front</strong>() - brings to the front the figure with the element panel and its dependent figures
+    pe.<strong>cb_hide</strong>() - hides the figure with the element panel and its dependent figures
+    pe.<strong>cb_close</strong>() - closes the figure with the element panel and its dependent figures
  
 %%% ¡seealso!
 GUI, PlotProp
@@ -364,15 +366,16 @@ function reinit(pe, el)
     pe.redraw()
 end
 function cb_bring_to_front(pe)
-    %CB_BRING_TO_FRONT brings to front the figure and its dependent figures.
+    %CB_BRING_TO_FRONT brings to front the figure with the element panel and its dependent figures.
     %
-    % CB_BRING_TO_FRONT(GUI) brings the figure and its dependent figures to
-    %  front by calling the methods cb_bring_to_front() and all the
-    %  PlotProp panels of the PlotElement.
+    % CB_BRING_TO_FRONT(PE) brings to front the figure with the element and
+    %  its dependent figures by calling the methods cb_bring_to_front() for
+    %  all the PlotProp panels of the PlotElement.
     %  
-    % Note that it will draw anew the figure it it hae been closed.
+    % Note that it will draw a new the figure if the element panel is
+    %  currently not plotted. 
     %
-    % See also Plot, PlotProp, PlotElement.
+    % See also cb_hide, cb_close.
 
     pe.cb_bring_to_front@Plot();
     
@@ -380,6 +383,38 @@ function cb_bring_to_front(pe)
     for prop = 1:1:pr_dict.length()
         pr = pr_dict.getItem(prop);
         pr.cb_bring_to_front()
+    end
+end
+function cb_hide(pe)
+    %CB_HIDE hides the figure with the element panel and its dependent figures.
+    %
+    % CB_HIDE(PE) hides the figure with the element panel and its dependent figures 
+    %  by calling the methods cb_hide() for all the PlotProp panels of the PlotElement.
+    %  
+    % See also cb_bring_to_front, cb_close.
+
+    pe.cb_hide@Plot();
+    
+    pr_dict = pe.get('PR_DICT');
+    for prop = 1:1:pr_dict.length()
+        pr = pr_dict.getItem(prop);
+        pr.cb_hide()
+    end
+end
+function cb_close(pe)
+    %CB_CLOSE closes the figure with the element panel and its dependent figures.
+    %
+    % CB_CLOSE(PE) closes the figure with the element panel and its dependent figures 
+    %  by calling the methods cb_close() for all the PlotProp panels of the PlotElement.
+    %  
+    % See also cb_bring_to_front, cb_hide.
+
+    pe.cb_close@Plot();
+    
+    pr_dict = pe.get('PR_DICT');
+    for prop = 1:1:pr_dict.length()
+        pr = pr_dict.getItem(prop);
+        pr.cb_close()
     end
 end
 
@@ -440,3 +475,13 @@ pe = PlotElement('EL', et);
 pe.draw()
 
 close(fig)
+
+%%% ¡test!
+%%%% ¡name!
+Callbacks
+%%%% ¡code!
+pe = PlotElement('EL', ETA());
+pe.draw()
+pe.cb_hide()
+pe.cb_bring_to_front()
+pe.cb_close()
