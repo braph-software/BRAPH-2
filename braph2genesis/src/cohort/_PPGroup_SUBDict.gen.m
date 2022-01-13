@@ -287,7 +287,7 @@ function cb_bring_to_front(pr)
         end
     end
 end
-function cb_hode(pr)
+function cb_hide(pr)
     %CB_HIDE hides the group figure and its subject figures.
     %
     % CB_HIDE(PR) hides the group figure and its subject figures.
