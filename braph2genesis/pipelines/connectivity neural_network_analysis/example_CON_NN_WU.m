@@ -44,7 +44,7 @@ cv = AnalyzeKFoldCrossValidation_CON_WU( ...
     'KFOLD', 5, ...
     'DENSITY_OF_FEATURE_SELECTION', 0.05);
 
-average_auc = cv.get('AUC');
+average_auc = cv.get('AVERAGE_AUC');
 average_auc = cv.get('AUC_CIL');
 average_auc = cv.get('AUC_CIU');
 cv.getHeatMap('HeatMap'); % fig
