@@ -631,6 +631,16 @@ function cb_close(gui)
     %  
     % See also cb_bring_to_front, cb_hide.
 
+    % determines GUI name
+    name = gui.get('NAME');
+    if isempty(name)
+        if el.existsTag('ID')
+            name = el.get('ID');
+        else
+            name = el.tostring();
+        end
+    end
+    
     % closes the main GUI
     if check_graphics(gui.f, 'figure')
         if gui.get('CLOSEREQ')
