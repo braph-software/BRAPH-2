@@ -75,16 +75,18 @@ elseif ~braph2_testing()
     error(BRAPH2.IM_ERR);
 end
 
-co_gr = CombineGroups_CON_FUN( ...
-    'GR1', gr_con.get('GR'), ...
-    'GR2', gr_fun.get('GR'), ...
-    'WAITBAR', true ...
-    );
-
-gr = co_gr.get('GR');
+if exist('gr_con') && exist('gr_fun')
+    co_gr = CombineGroups_CON_FUN( ...
+        'GR1', gr_con.get('GR'), ...
+        'GR2', gr_fun.get('GR'), ...
+        'WAITBAR', true ...
+        );
+    
+    gr = co_gr.get('GR');
+    
+end
 
 value = gr;
-
 %% ¡methods!
 function uigetdir(im, varargin)
     % UIGETDIR opens a dialog box to set the directory from where to load the TXT files of the CON_FUN_MP subject group.
