@@ -59,8 +59,11 @@ function update(pr)
     
     pp_el = pr.get('EL');
     br_dict = pp_el.get('BA').get('br_dict');
+    prop = pr.get('PROP');
+    data = pp_el.get(prop);
     
     br_ids = cell(br_dict.length(), 1);
+    time_stamps = cell(1, br_dict.length());
     for i = 1:1:br_dict.length()
         br = br_dict.getItem(i);
         br_id = br.get(BrainRegion.ID);
@@ -68,11 +71,13 @@ function update(pr)
             br_id = [br_id(1:8) '..'];
         end
         br_ids{i} = br_id;
+        time_stamps{i} = ['T:' num2str(i)];
     end
     
     set(pr.table_value, ...
-        'ColumnName', br_ids, ...
-        'RowName', {} ...
+        'ColumnName', time_stamps, ...
+        'RowName', br_ids, ...
+        'Data', data' ...
         )
 end
 function redraw(pr, varargin)
