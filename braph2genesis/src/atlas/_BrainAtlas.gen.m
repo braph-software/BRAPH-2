@@ -136,7 +136,7 @@ LABEL (metadata, string) is an extended label of the brain atlas.
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the brain atlas.
 %%%% ¡gui!
-pr = PlotPropString('EL', ba, 'PROP', BrainAtlas.NOTES, 'LINES', multi, 'EDITHEIGHT', 4.5, varargin{:});
+pr = PlotPropString('EL', ba, 'PROP', BrainAtlas.NOTES, 'LINES', 'multi', 'EDITHEIGHT', 4.5, varargin{:});
 
 %%% ¡prop!
 BR_DICT (data, idict) contains the brain regions of the brain atlas.
