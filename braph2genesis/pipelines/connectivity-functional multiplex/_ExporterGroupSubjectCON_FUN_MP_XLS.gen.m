@@ -40,7 +40,7 @@ SAVE (result, empty) saves the group of subjects with connectivity data and func
 directory_con = ex.get('DIRECTORY_CON');
 gr = ex.get('GR');
 grs_obj = SepareteGroupsCON_FUN( ...
-    'GRP_CON_FUN_MP', gr);
+    'GR_CON_FUN_MP', gr);
 
 grs = grs_obj.get('GRS');
 

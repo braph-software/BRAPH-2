@@ -35,7 +35,7 @@ if se.get('WAITBAR')
     set_braph2_icon(wb)
 end
 
-gr = se.get('GRP_CON_FUN_MP');
+gr = se.get('GR_CON_FUN_MP');
 gr_subdict = gr.get('SUB_DICT');
 if ~isa(gr_subdict, 'NoValue') && gr_subdict.length() > 0
     ba = gr.get('SUB_DICT').getItem(1).get('BA');
