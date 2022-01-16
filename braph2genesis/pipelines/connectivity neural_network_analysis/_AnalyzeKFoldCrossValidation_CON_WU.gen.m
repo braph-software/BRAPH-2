@@ -30,7 +30,7 @@ AVERAGE_AUC (result, scalar) is the AUC obtained across k folds
 %%%% ¡calculate!
 classifier_nn_dict = cv.memorize('CLASSIFIER_NN_DICT');
 for i = 1:1:classifier_nn_dict.length()
-    auc[i] = classifier_nn_dict.getItem(i).get('TEST_AUC');
+    auc(i) = classifier_nn_dict.getItem(i).get('TEST_AUC');
 end
 value = mean(auc);
 
@@ -58,7 +58,6 @@ for i = 1:1:cv.get('KFOLD')
 end
 
 value = classifier_nn_dict;
-
 
 %% ¡tests!
 %%% ¡test!
