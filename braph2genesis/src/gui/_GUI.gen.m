@@ -634,6 +634,8 @@ function cb_close(gui)
     % determines GUI name
     name = gui.get('NAME');
     if isempty(name)
+        pe = gui.get('pe');
+        el = pe.get('el');
         if el.existsTag('ID')
             name = el.get('ID');
         else

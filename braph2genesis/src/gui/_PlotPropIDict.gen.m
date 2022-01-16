@@ -145,9 +145,9 @@ function cb_pushbutton_value(pr)
     % TODO: check once GUI is finalized
     value = el.getr(prop);
     if isa(value, 'NoValue')
-        GUI(el.getPropDefault(prop))
+        GUI('PE', el.getPropDefault(prop)).draw()
     else
-        GUI(el.get(prop))
+        GUI('PE', el.get(prop)).draw()
     end
 end
 
