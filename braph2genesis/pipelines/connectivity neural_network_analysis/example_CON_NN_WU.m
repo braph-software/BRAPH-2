@@ -28,19 +28,18 @@ im_gr2 = ImporterGroupSubjectCON_XLS( ...
 
 gr2 = im_gr2.get('GR');
 
-
-%% k-fold cross validation
-cv = AnalyzeKFoldCrossValidationClassification_CON_WU( ...
-    'GR_1', gr1, ...
-    'GR_2', gr2, ...
-    'KFOLD', 5, ...
+%% Train the Classifier with training set
+ds_processor = DatasetProcessor_Classification_CON_WU( ...
+    'GR_1', gr_1, ...
+    'GR_2', gr_2, ...
     'DENSITY_OF_FEATURE_SELECTION', 0.05);
 
-average_auc = cv.get('AVERAGE_AUC');
-average_auc = cv.get('AUC_CIL');
-average_auc = cv.get('AUC_CIU');
-cv.getHeatMap('HEATMAP'); % fig
-cv.getConfusionMatrix('CONFUSION_MATRIX'); % fig
+classifier_nn = ClassifierNN('DatasetProcessor', ds_processor);
+
+classifier_nn.memorize('TRAINED_NN');
+auc_train = classifier_nn.get('AUC');
+classifier_nn.getHeatMap('HEATMAP'); % fig
+classifier_nn.getConfusionMatrix('CONFUSION_MATRIX'); % fig
 
 %% Load Groups of SubjectCON as Test Set 
 im_gr1 = ImporterGroupSubjectCON_XLS( ...
@@ -59,19 +58,6 @@ im_gr2 = ImporterGroupSubjectCON_XLS( ...
 
 gr2_test = im_gr2.get('GR');
 
-%% Train the Classifier with training set
-ds_processor = DatasetProcessor( ...
-    'GR_1', gr_1, ...
-    'GR_2', gr_2, ...
-    'DENSITY_OF_FEATURE_SELECTION', 0.05);
-
-classifier_nn = ClassifierNN_CON_WU( ...
-    'DatasetProcessor', ds_processor);
-
-classifier_nn.memorize('TRAINED_NN');
-auc_train = classifier_nn.get('AUC');
-classifier_nn.getHeatMap('HEATMAP'); % fig
-classifier_nn.getConfusionMatrix('CONFUSION_MATRIX'); % fig
 
 %% Evaluate the model with unseen dataset
 model_evaluator = ModelEvaluator_Classification( ...
