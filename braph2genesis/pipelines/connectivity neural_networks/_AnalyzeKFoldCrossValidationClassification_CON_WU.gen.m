@@ -31,8 +31,6 @@ end
 
 value = classifier_nn_dict;
 
-%%% ¡prop!
-
 
 %% ¡props_update!
 %%% ¡prop!
