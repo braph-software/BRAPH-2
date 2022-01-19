@@ -21,11 +21,6 @@ GR2 (data, item) is the subject group 2.
 'Group'
 
 %%% ¡prop!
-DENSITY_OF_FEATURE_SELECTION (parameter, scalar) is the density of selected features
-%%%% ¡default!
-0.5
-
-%%% ¡prop!
 FEATURE_SELECTION (data, item) is the feature selection analysis.
 %%%% ¡settings!
 'FeatureSelection'
@@ -33,13 +28,8 @@ FEATURE_SELECTION (data, item) is the feature selection analysis.
 FeatureSelection('DatasetProcessor', dp);
 
 %%% ¡prop!
-CLASSIFIER_NN (data, item) is the feature selection analysis.
+CLASSIFIER_NN (data, item) is the neural network classifier.
 %%%% ¡settings!
 'ClaasifierNN'
 %%%% ¡default!
 ClassifierNN('DatasetProcessor', dp);
-
-%% ¡methods!
-function PlotFeatureMask()
-
-end

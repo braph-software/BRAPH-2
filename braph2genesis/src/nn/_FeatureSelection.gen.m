@@ -1,8 +1,8 @@
 %% ¡header!
-FeatureSelection < Element (fs, feature selection analysis) produces selected index of features for a dataset
+FeatureSelection < Element (fs, feature selection analysis) produces selected index of features for a dataset.
 
 %% ¡description!
-This feature selection analysis perform mutual information analysis to get the most relevant features among all the input data.
+This feature selection analysis perform mutual information analysis to get the most relevant features among all of the input data.
 
 %% ¡props!
 %%% ¡prop!
