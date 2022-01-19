@@ -39,12 +39,12 @@ fs.memorize('FEATURE_SELECTION_MASK');
 classifier = dp_train.get('CLASSIFIER_NN');
 classifier.memorize('TRAINED_NN');
 
-%% Evaluate the Model with Training Set
+%% Evaluate the Model with the Training Set
 me_train = ModelEvaluator_Classification('DATASET_PROCESSOR', dp_train);
 auc_train = me_train.get('AUC');
 me_train.get('CONFUSION_MATRIX'); % fig
 
-%% Load Groups of SubjectCON as Testing Set 
+%% Load Groups of SubjectCON as a Testing Set 
 im_gr1 = ImporterGroupSubjectCON_XLS( ...
     'DIRECTORY', [fileparts(which('example_CON_WU')) filesep 'example data CON (DTI)' filesep 'xls' filesep 'GroupName1'], ...
     'BA', ba, ...
@@ -61,7 +61,7 @@ im_gr2 = ImporterGroupSubjectCON_XLS( ...
 
 gr2_test = im_gr2.get('GR');
 
-%% Evaluate the model with unseen dataset
+%% Evaluate the Trained Model with the Testing dataset
 dp_test = DatasetProcessor_Classification_CON_WU( ...
     'GR1', gr1_test, ...
     'GR2', gr2_test, ...
