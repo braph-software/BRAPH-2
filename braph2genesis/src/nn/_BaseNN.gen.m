@@ -17,7 +17,7 @@ LABEL (metadata, string) is an extended label of the neural.
 NOTES (metadata, string) are some specific notes about the neural network.
 
 %%% ¡prop!
-TRAINED_NN (result, cell) is the trained neural network model.
+TRAINED_NN (result, cell) is a trained neural network model.
 
 % % % %%% ¡prop!
 % % % NEURAL_NETWORK_ANALYSIS (result, cell) is the machine learning analysis.

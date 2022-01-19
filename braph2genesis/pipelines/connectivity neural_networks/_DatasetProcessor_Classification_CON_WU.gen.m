@@ -1,5 +1,5 @@
 %% ¡header!
-DatasetProcessor_Classification_CON_WU < DatasetProcessor_Classification (dp, data processor of neural network classifier using connectivity data) produces the dataset to train or test neural netowrk classifier using connectivity data. 
+DatasetProcessor_Classification_CON_WU < DatasetProcessor_Classification (dp, data processor of neural network classifier using connectivity data) produces a dataset to train or test neural netowrk classifier using connectivity data. 
 
 %% ¡description!
 This dataset processor uses connectivity data as input and produce the dataset 
@@ -77,7 +77,7 @@ end
 value = [data_gr1 data_gr2];
 
 %%% ¡prop!
-X_MASKED (result, cell) is the dataset after applying feature selection.
+X_MASKED (result, cell) is the dataset with feature selection.
 %%%% ¡calculate!
 x_raw = dp.get('X_RAW');
 if(isempty(dp.get('FEATURE_SELECTION_MASK')))

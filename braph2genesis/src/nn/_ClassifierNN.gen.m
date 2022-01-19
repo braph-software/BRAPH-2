@@ -2,7 +2,7 @@
 ClassifierNN < BaseNN (nn, classifier with dense layers) is a binary neural network classifier.
 
 %% ¡description!
-This classifier with dense layers is trained for a classification of two groups of subjects.
+This classifier with dense layers is trained for a classification of two groups of subject.
 
 %% ¡props!
 %%% ¡prop!

@@ -8,7 +8,7 @@ the area under the ROC curve (AUC) and the confusion matrix.
 
 %% ¡props_update!
 %%% ¡prop!
-DATASET_PROCESSOR (data, item) is the dataset processor contains the connectivity dataset and the neural network classifier
+DATASET_PROCESSOR (data, item) is a dataset processor contains a connectivity dataset and a neural network classifier
 %%%% ¡settings!
 'DatasetProcessor_Classification_CON_WU'
 

@@ -1,8 +1,8 @@
 %% ¡header!
-DatasetProcessor < Element (dp, data processor of neural network model) produces the dataset to train or test a neural netowrk model.  
+DatasetProcessor < Element (dp, data processor of neural network model) produces a dataset to train or test a neural netowrk model.  
 
 %% ¡description!
-This dataset processor produces the dataset that can be used to train a 
+This dataset processor produces a dataset that can be used to train a 
 neural network model. Feature selection procedure can be implemented.
 Instances of this class should not be created. 
 Use one of its subclasses instead.
@@ -24,4 +24,4 @@ DENSITY_OF_FEATURE_SELECTION (parameter, scalar) is the density of selected feat
 0.5
 
 %%% ¡prop!
-FEATURE_SELECTION_MASK (data, cell) is the mask for selected features.
+FEATURE_SELECTION_MASK (data, cell) is a mask for selected features.

@@ -6,12 +6,12 @@ This feature selection analysis perform mutual information analysis to get the m
 
 %% ¡props!
 %%% ¡prop!
-DATASET_PROCESSOR (data, item) is the dataset processor that prepares the dataset for training a neural network model.
+DATASET_PROCESSOR (data, item) is a dataset processor for training a neural network model.
 %%%% ¡settings!
 'DatasetProcessor'
 
 %%% ¡prop!
-FEATURE_SELECTION_MASK (result, cell) is the mask for selected features.
+FEATURE_SELECTION_MASK (result, cell) is a mask for selected features.
 %%%% ¡calculate!
 dp = fs.get('DATASET_PROCESSOR');
 top_ratio = dp.get('DENSITY_OF_FEATURE_SELECTION');

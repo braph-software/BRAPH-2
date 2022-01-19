@@ -8,17 +8,18 @@ ROC curve (AUC) and the confusion matrix.
 
 %% ¡props!
 %%% ¡prop!
-PREDICTION_NN (result, matrix) is the output of prediction from a neural network model.
+PREDICTION_NN (result, matrix) is an output matrix of prediction from a neural network model.
 %%%% ¡calculate!
 dp = me.get('DATASET_PROCESSOR');
 nn = me.get('TRAINED_MODEL').transform_to_matlab_format();
 x_masked = dp.get('X_MASKED');
 x_masked = x_masked{1};
 x_masked = reshape(x_masked, [1, 1, size(x_masked,1), size(x_masked,2)]);
+
 value = nn.predict(x_masked);
 
 %%% ¡prop!
-AUC (result, scalar) is the area under the curve score obtained from the neural network prediction.
+AUC (result, scalar) is an area under the curve score obtained from the neural network prediction.
 %%%% ¡calculate!
 pred = me.get('PREDICTION_NN');
 y = me.get('DATASET_PROCESSOR').get('Y');
@@ -29,13 +30,13 @@ class_names = nn.Layers(end).Classes;
 value = auc;
 
 %%% ¡prop!
-CONFUSION_MATRIX (result, matrix)is the confusion matrix obtained from the neural network prediction by a cut-off of 0.5.
+CONFUSION_MATRIX (result, matrix) is a confusion matrix obtained from the neural network prediction by a cut-off of 0.5.
 %%%% ¡calculus!
 value = 0
 
 %% ¡props_update!
 %%% ¡prop!
-DATASET_PROCESSOR (data, item) is the dataset processor contains the dataset and the neural network classifier.
+DATASET_PROCESSOR (data, item) is a dataset processor contains a dataset and a neural network classifier.
 %%%% ¡settings!
 'DatasetProcessor_Classification'
 
