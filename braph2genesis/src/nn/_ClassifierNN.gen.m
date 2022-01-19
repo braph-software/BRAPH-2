@@ -4,17 +4,22 @@ ClassifierNN < BaseNN (nn, classifier with dense layers) is a binary neural netw
 %% ¡description!
 This classifier with dense layers is trained for a classification of two groups of subjects.
 
-%% ¡props_update!
+%% ¡props!
 %%% ¡prop!
-DATASET_PROCESSOR (data, item) is a dataset processor that prepares the dataset for training a neural network model.
+DATASET_PROCESSOR (data, item) is a dataset processor that prepares the dataset for training or testing a neural network model.
 %%%% ¡settings!
 'DatasetProcessor'
 
+%% ¡props_update!
 %%% ¡prop!
 TRAINED_NN (result, cell) is a trained neural network classifier.
 %%%% ¡calculate!
 if(nn.check_toolbox_installation())
-    layers = nn.getLayers(length(nn.get('DATASET_PROCESSOR').get('X_MASKED')), 2);
+    x_masked = nn.get('DATASET_PROCESSOR').get('X_MASKED');
+    x_masked = x_masked{1};
+    layers = nn.getLayers(length(x_masked), 2);
+    x_masked = reshape(x_masked, [1, 1, size(x_masked,1), size(x_masked,2)]);
+    y = nn.get('DATASET_PROCESSOR').get('Y');
     lgraph = layerGraph(layers);
     options = trainingOptions('adam', ...
                 'MiniBatchSize',8, ...
@@ -22,7 +27,7 @@ if(nn.check_toolbox_installation())
                 'Shuffle','every-epoch', ...
                 'Plots','none', ...
                 'Verbose',true);
-    net = trainNetwork(nn.get('DATASET_PROCESSOR').get('X_MASKED'), categorical(nn.get('DATASET_PROCESSOR').get('Y')), layers, options);
+    net = trainNetwork(x_masked, categorical(y{1}), layers, options);
 
     value = nn.transform_to_braph_format(net);
 else

@@ -1,6 +1,5 @@
 %% ¡header!
-DatasetProcessor_Classification_CON_WU < DatasetProcessor_Classification (dp, data processor of neural network classifier using connectivity data) produces the dataset 
-for training or testing neural netowrk classifier using connectivity data. 
+DatasetProcessor_Classification_CON_WU < DatasetProcessor_Classification (dp, data processor of neural network classifier using connectivity data) produces the dataset to train or test neural netowrk classifier using connectivity data. 
 
 %% ¡description!
 This dataset processor uses connectivity data as input and produce the dataset 
@@ -66,22 +65,27 @@ X_RAW (result, cell) is the dataset without feature selection.
 adjs_gr1 = dp.get('G_DICT_1').getItems();
 data_gr1 = {};
 for i = 1:length(adjs_gr1)
-    data_gr1{end+1} = cell2mat(gr1_adjs{i}.get('A'));
+    data_gr1{end+1} = cell2mat(adjs_gr1{i}.get('A'));
 end
 adjs_gr2 = dp.get('G_DICT_2').getItems();
 data_gr2 = {};
 for i = 1:length(adjs_gr2)
-    data_gr2{end+1} = cell2mat(gr2_adjs{i}.get('A'));
+    data_gr2{end+1} = cell2mat(adjs_gr2{i}.get('A'));
 end
 
-value = {[data_gr1 data_gr2]};
+%value = {[data_gr1 data_gr2]};
+value = [data_gr1 data_gr2];
 
 %%% ¡prop!
 X_MASKED (result, cell) is the dataset after applying feature selection.
 %%%% ¡calculate!
-x_raw = dp.get('X_RAW')
-idx_selected = dp.get('FEATURE_SELECTION_MASK');
-x_masked = cellfun(@(v)v(idx_selected),x_raw,'UniformOutput',false);
+x_raw = dp.get('X_RAW');
+if(isempty(dp.get('FEATURE_SELECTION_MASK')))
+    mask = dp.get('FEATURE_SELECTION').get('FEATURE_SELECTION_MASK');
+else
+    mask = dp.get('FEATURE_SELECTION_MASK');
+end
+x_masked = cellfun(@(v)v(mask{1}),x_raw,'UniformOutput',false);
 x_masked = cat(2, x_masked{:});
 
 value = {x_masked};
@@ -92,7 +96,7 @@ Y (result, cell) is the label for the dataset.
 y1 = repmat(string(dp.get('GR1').get('ID')), dp.get('GR1').get('SUB_DICT').length(), 1);
 y2 = repmat(string(dp.get('GR2').get('ID')), dp.get('GR2').get('SUB_DICT').length(), 1);
 
-value = {[y1; y2]};
+value = {[y1; y2]'};
 
 %% ¡props_update!
 %%% ¡prop!

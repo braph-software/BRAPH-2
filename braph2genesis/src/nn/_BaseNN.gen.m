@@ -41,22 +41,23 @@ function installed = check_toolbox_installation(nn)
     end
 end
 
-function nn_braph_format = transform_to_braph_format(nn)
+function nn_braph_format = transform_to_braph_format(nn, net)
     %transform_to_braph_format transforms the build-in neural network 
     % object in matlab to a binary format that can be saved as a cell
     % in braph.
     %
-    % NN_BRAPH_FORMAT = TRANSFORM_TO_BRAPH_FORMAT(NN) transforms the
+    % NN_BRAPH_FORMAT = TRANSFORM_TO_BRAPH_FORMAT(NN, NET) transforms the
     %  build-in neural network object to a binary format by firstly 
     %  converting it to ONNX file and then reading the file as binary file.
     %  Typically, this method is called internally when a neural network
     %  model is trained and ready to be saved in braph.
-    filename = 'nn.bin';
-    exportONNXNetwork(nn.get('TRAINED_NN'), filename);
+    warning('off','MATLAB:mir_warning_unrecognized_pragma');
+    filename = 'nn_from_matlab.onnx';
+    exportONNXNetwork(net, filename);
     fileID = fopen(filename);
-    nn_braph_format = fread(fileID);
+    nn_braph_format = {fread(fileID), net.Layers(end).Classes};	    
     fclose(fileID);
-    delete nn.bin
+    delete nn_from_matlab.onnx
 end
 
 function nn_matlab_format = transform_to_matlab_format(nn)
@@ -69,10 +70,12 @@ function nn_matlab_format = transform_to_matlab_format(nn)
     %  then importing the file as ONNX object.
     %  Typically, this method is called internally when a saved neural 
     %  network model is evaluated by a test data.
-    filename = 'nn.onnx';
+    warning('off','MATLAB:mir_warning_unrecognized_pragma');
+    filename = 'nn_from_braph.onnx';
     fileID = fopen(filename, 'w');
-    fwrite(fileID, cell2mat(nn.get('TRAINED_NN')));
+    trained_nn = nn.get('TRAINED_NN');
+    fwrite(fileID, trained_nn{1});
     fclose(fileID);
-    nn_matlab_format = importONNXNetwork(filename, 'OutputLayerType', 'classification', 'Classes', string(nn.class_name));
-    delete nn.onnx
+    nn_matlab_format = importONNXNetwork(filename, 'OutputLayerType', 'classification', 'Classes', trained_nn{2}, 'InputDataFormats', 'BCSS');
+    delete nn_from_braph.onnx
 end

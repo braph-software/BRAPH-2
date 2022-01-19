@@ -1,5 +1,5 @@
 %% ¡header!
-DatasetProcessor < Element (dp, data processor of neural network model) produces the dataset for training or testing a neural netowrk model.  
+DatasetProcessor < Element (dp, data processor of neural network model) produces the dataset to train or test a neural netowrk model.  
 
 %% ¡description!
 This dataset processor produces the dataset that can be used to train a 
@@ -22,3 +22,6 @@ NOTES (metadata, string) are some specific notes about the graph analysis.
 DENSITY_OF_FEATURE_SELECTION (parameter, scalar) is the density of selected features.
 %%%% ¡default!
 0.5
+
+%%% ¡prop!
+FEATURE_SELECTION_MASK (data, cell) is the mask for selected features.

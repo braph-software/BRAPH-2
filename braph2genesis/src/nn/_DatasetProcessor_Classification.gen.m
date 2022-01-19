@@ -1,5 +1,5 @@
 %% ¡header!
-DatasetProcessor_Classification < DatasetProcessor (dp, data processor of neural network classifier) produces the dataset for training or testing a neural netowrk classifier.  
+DatasetProcessor_Classification < DatasetProcessor (dp, data processor of neural network classifier) produces the dataset to train or test a neural netowrk classifier.  
 
 %% ¡description!
 This dataset processor produces the dataset that can be used to train
@@ -20,15 +20,15 @@ GR2 (data, item) is the subject group 2.
 'Group'
 
 %%% ¡prop!
-FEATURE_SELECTION (data, item) is the feature selection analysis.
+FEATURE_SELECTION (result, item) is the feature selection analysis.
 %%%% ¡settings!
 'FeatureSelection'
-%%%% ¡default!
-FeatureSelection('DatasetProcessor', dp);
+%%%% ¡calculate!
+value = FeatureSelection('DATASET_PROCESSOR', dp);
 
 %%% ¡prop!
-CLASSIFIER_NN (data, item) is the neural network classifier.
+CLASSIFIER_NN (result, item) is the neural network classifier.
 %%%% ¡settings!
 'ClaasifierNN'
-%%%% ¡default!
-ClassifierNN('DatasetProcessor', dp);
+%%%% ¡calculate!
+value = ClassifierNN('DATASET_PROCESSOR', dp);

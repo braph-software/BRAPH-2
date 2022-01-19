@@ -1,5 +1,5 @@
 %% ¡header!
-FeatureSelection < Element (fs, feature selection analysis) produces selected index of features for a dataset.
+FeatureSelection < Element (fs, feature selection analysis) produces selected index of features to a dataset.
 
 %% ¡description!
 This feature selection analysis perform mutual information analysis to get the most relevant features among all of the input data.
@@ -11,22 +11,24 @@ DATASET_PROCESSOR (data, item) is the dataset processor that prepares the datase
 'DatasetProcessor'
 
 %%% ¡prop!
-FEATURE_SELECTION_MASK (result, cell) is index for selected features.
+FEATURE_SELECTION_MASK (result, cell) is the mask for selected features.
 %%%% ¡calculate!
 dp = fs.get('DATASET_PROCESSOR');
+top_ratio = dp.get('DENSITY_OF_FEATURE_SELECTION');
 x_raw = dp.get('X_RAW');
 y = dp.get('Y');
+y = categorical(y{1});
 for j = 1:size(x_raw{1},2)
     for k = 1:size(x_raw{1},2)
         data = cellfun(@(v)v(j,k),x_raw);
-        label = onehotencode(y,2);
-        mask(j,k) = .MutualInformationAnalysis(data, label', 5);
+        label = onehotencode(y',2);
+        mask(j,k) = fs.MutualInformationAnalysis(data, label', 5);
     end
 end
 [~,idx_all] = sort(mask(:), 'descend');
 num_top_idx = floor(top_ratio*size(mask,1)*size(mask,2));
 
-value = idx_all(1:num_top_idx);
+value = {idx_all(1:num_top_idx)};
 
 %% ¡methods!
 function [mutinf] = MutualInformationAnalysis(nn, X, Y, n)
