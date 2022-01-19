@@ -77,5 +77,5 @@ me_test = ModelEvaluator_Classification( ...
     'TRAINED_MODEL', trained_classifier ...
     );
 
-prediction_test = me_test.get('PREDICTION_NN');
+prediction_test = me_test.get('PREDICTION_NN')
 auc_test = me_test.get('AUC')
