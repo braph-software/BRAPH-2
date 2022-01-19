@@ -1,13 +1,13 @@
 %% ¡header!
-ModelEvaluator < Element (me, model evaluator of a neural network model)
+ModelEvaluator < Element (me, model evaluator of a neural network model) evaluates the performance of a neural network model with specific dataset.
 
 %% ¡description!
-This dataset processor uses connectivity data as input and produce the dataset 
-that can be used to train a neural network classifier. Feature selection procedure
-can be implemented.
+This model evaluator evaluates the performance of a neural network model.
+Instances of this class should not be created. 
+Use one of its subclasses instead.
 
-%% ¡props!
+%% ¡prop!
 %%% ¡prop!
-TRAINED_MODEL (data, item) is the dataset processor that prepares the dataset for training a neural network model.
+DATASET_PREPROCESS(data, item) is the dataset for testing the trained neural network model.
 %%%% ¡settings!
-'BasedNN'
+'DatasetProcessor'

@@ -1,35 +1,32 @@
 %% ¡header!
-ModelEvaluator_Classification < ModelEvaluator (me, model evaluator of a neural network classifier)
+ModelEvaluator_Classification < ModelEvaluator (me, model evaluator of a neural network classifier) evaluates the performance of a neural network classifier with specific dataset.
 
 %% ¡description!
-This dataset processor uses connectivity data as input and produce the dataset 
-that can be used to train a neural network classifier. Feature selection procedure
-can be implemented.
+This model evaluator evaluates the performance of a neural network classifier
+in terms of the receiver operating characteristic curve (ROC), the area under the
+ROC curve (AUC) and the confusion matrix.
 
-%% ¡props!
+%% ¡prop!
 %%% ¡prop!
-GR1 (data, item) is the subject group 1.
-%%%% ¡settings!
-'Group'
-
-%%% ¡prop!
-GR2 (data, item) is the subject group 2.
-%%%% ¡settings!
-'Group'
+PREDICTION (result, matrix)
+%%%% ¡calculus!
+value = 0
 
 %%% ¡prop!
-FEATURE_SELECTION (data, item) is the subject group 2.
-%%%% ¡settings!
-'FeatureSelection'
-%%%% ¡default!
-me.get('TRAINED_MODEL').get('DATASET_PROCESSOR').get('FEATURE_SELECTION')
+AUC (result, scalar)
+%%%% ¡calculus!
+value = 0
 
 %%% ¡prop!
-DATASET_PREPROCESS(result, item)
+CONFUSION_MATRIX (result, matrix)
+%%%% ¡calculus!
+value = 0
+
+%% ¡props_update!
+%%% ¡prop!
+DATASET_PREPROCESS (data, item) is the dataset for testing the classifier.
 %%%% ¡settings!
 'DatasetProcessor_Classification'
 
-%%% ¡AUC!
-DATASET_PREPROCESS(result, item)
-%%%% ¡settings!
-'DatasetProcessor_Classification'
+
+

@@ -1,10 +1,9 @@
 %% ¡header!
-DatasetProcessor_Classification < DatasetProcessor (dp, data processor of neural network classifier) produces the dataset that 
-is prepared for training or testing neural netowrk classifier.  
+DatasetProcessor_Classification < DatasetProcessor (dp, data processor of neural network classifier) produces the dataset for training or testing a neural netowrk classifier.  
 
 %% ¡description!
-This dataset processor produces the dataset that can be used to train a neural network classifier.
-Feature selection procedure can be implemented.
+This dataset processor produces the dataset that can be used to train
+or test a neural network classifier. Feature selection procedure can be implemented.
 Instances of this class should not be created. 
 Use one of its subclasses instead.
 

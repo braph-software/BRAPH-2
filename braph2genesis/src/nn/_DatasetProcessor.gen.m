@@ -1,10 +1,9 @@
 %% ¡header!
-DatasetProcessor < Element (dp, data processor of neural network model) produces the dataset that 
-is prepared for training or testing neural netowrk model.  
+DatasetProcessor < Element (dp, data processor of neural network model) produces the dataset for training or testing a neural netowrk model.  
 
 %% ¡description!
-This dataset processor produces the dataset that can be used to train a neural network model.
-Feature selection procedure can be implemented.
+This dataset processor produces the dataset that can be used to train a 
+neural network model. Feature selection procedure can be implemented.
 Instances of this class should not be created. 
 Use one of its subclasses instead.
 
