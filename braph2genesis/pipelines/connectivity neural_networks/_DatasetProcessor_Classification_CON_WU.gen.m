@@ -2,8 +2,8 @@
 DatasetProcessor_Classification_CON_WU < DatasetProcessor_Classification (dp, data processor of neural network classifier using connectivity data) produces a dataset to train or test neural netowrk classifier using connectivity data. 
 
 %% ¡description!
-This dataset processor uses connectivity data as input and produce the dataset 
-that can be used to train or test a neural network classifier. 
+This dataset processor uses connectivity data as input and produces 
+a dataset that can train or test a neural network classifier. 
 Feature selection procedure can be implemented.
 
 %% ¡props!
