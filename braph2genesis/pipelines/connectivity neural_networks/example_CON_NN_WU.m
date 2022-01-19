@@ -29,18 +29,18 @@ im_gr2 = ImporterGroupSubjectCON_XLS( ...
 gr2_train = im_gr2.get('GR');
 
 %% Train the Model with the Training Set
-ds_processor_train = DatasetProcessor_Classification_CON_WU( ...
+dp_train = DatasetProcessor_Classification_CON_WU( ...
     'GR1', gr1_train, ...
     'GR2', gr2_train, ...
     'DENSITY_OF_FEATURE_SELECTION', 0.05);
 
-fs = ds_processor_train.get('FEATURE_SELECTION');
+fs = dp_train.get('FEATURE_SELECTION');
 fs.memorize('FEATURE_SELECTION_MASK');
-classifier = ds_processor_train.get('CLASSIFIER_NN');
+classifier = dp_train.get('CLASSIFIER_NN');
 classifier.memorize('TRAINED_NN');
 
 %% Evaluate the Model with Training Set
-model_evaluator_train = ModelEvaluator_Classification('DATASET_PROCESSOR', ds_processor_train);
+model_evaluator_train = ModelEvaluator_Classification('DATASET_PROCESSOR', dp_train);
 auc_train = model_evaluator_train.get('AUC');
 model_evaluator_train.get('CONFUSION_MATRIX'); % fig
 
@@ -63,12 +63,12 @@ gr2_test = im_gr2.get('GR');
 
 
 %% Evaluate the model with unseen dataset
-ds_processor_test = DatasetProcessor_Classification_CON_WU( ...
+dp_test = DatasetProcessor_Classification_CON_WU( ...
     'GR1', gr1_test, ...
     'GR2', gr2_test, ...
     'FEATURE_SELECTION', fs, ...
     'CLASSIFIER_NN', classifier);
 
-model_evaluator_test = ModelEvaluator_Classification('DATASET_PROCESSOR', ds_processor_test);
+model_evaluator_test = ModelEvaluator_Classification('DATASET_PROCESSOR', dp_test);
 auc_test = model_evaluator_test.get('AUC');
 model_evaluator_test.get('CONFUSION_MATRIX'); % fig
