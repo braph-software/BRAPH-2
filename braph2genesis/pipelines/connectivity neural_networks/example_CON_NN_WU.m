@@ -40,9 +40,9 @@ classifier = dp_train.get('CLASSIFIER_NN');
 classifier.memorize('TRAINED_NN');
 
 %% Evaluate the Model with Training Set
-model_evaluator_train = ModelEvaluator_Classification('DATASET_PROCESSOR', dp_train);
-auc_train = model_evaluator_train.get('AUC');
-model_evaluator_train.get('CONFUSION_MATRIX'); % fig
+me_train = ModelEvaluator_Classification('DATASET_PROCESSOR', dp_train);
+auc_train = me_train.get('AUC');
+me_train.get('CONFUSION_MATRIX'); % fig
 
 %% Load Groups of SubjectCON as Testing Set 
 im_gr1 = ImporterGroupSubjectCON_XLS( ...
@@ -61,7 +61,6 @@ im_gr2 = ImporterGroupSubjectCON_XLS( ...
 
 gr2_test = im_gr2.get('GR');
 
-
 %% Evaluate the model with unseen dataset
 dp_test = DatasetProcessor_Classification_CON_WU( ...
     'GR1', gr1_test, ...
@@ -69,6 +68,6 @@ dp_test = DatasetProcessor_Classification_CON_WU( ...
     'FEATURE_SELECTION', fs, ...
     'CLASSIFIER_NN', classifier);
 
-model_evaluator_test = ModelEvaluator_Classification('DATASET_PROCESSOR', dp_test);
-auc_test = model_evaluator_test.get('AUC');
-model_evaluator_test.get('CONFUSION_MATRIX'); % fig
+me_test = ModelEvaluator_Classification('DATASET_PROCESSOR', dp_test);
+auc_test = me_test.get('AUC');
+me_test.get('CONFUSION_MATRIX'); % fig
