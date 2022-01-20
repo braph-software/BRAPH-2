@@ -11,8 +11,10 @@ Use one of its subclasses instead.
 DATASET_PROCESSOR (data, item) is a dataset processor contains a dataset and a neural network model.
 %%%% ¡settings!
 'DatasetProcessor'
+%FIXME: update
 
 %%% ¡prop!
-TRAINED_MODEL (data, item) is a trained neural network model.
+TRAINED_NN (data, item) is a trained neural network model.
 %%%% ¡settings!
 'BaseNN'
+%FIXME: update
