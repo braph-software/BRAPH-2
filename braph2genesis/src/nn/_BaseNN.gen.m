@@ -26,23 +26,27 @@ TRAINED_NN (result, cell) is a trained neural network model.
 
 %% ¡methods!
 function installed = check_toolbox_installation(nn)
-    %check_toolbox_installation checks if the deep-learning-required toolboxes are installed.
+    %CHECK_TOOLBOX_INSTALLATION checks whether the deep-learning-required toolboxes are installed.
     %
-    % INSTALLED = CHECK_TOOLBOX_INSTALLATION(NN) check the toolbox 
-    %  "Deep Learning Toolbox" and "Deep learning Toolbox Converter 
-    %  for ONNX Model Format" installation status. If they are not
-    %  installed, then it will throw a warning.
+    % INSTALLED = CHECK_TOOLBOX_INSTALLATION(NN) check the installation of the toolboxes:
+    %  "Deep Learning Toolbox" and 
+    %  "Deep learning Toolbox Converter for ONNX Model Format" installation status. 
+    %  If they are not installed, then it throws a warning.
     %  Typically, this method is only called internally when training
     %  the any subclass of the neural network models.
+    
     addons = matlab.addons.installedAddons;
     installed = all(ismember(["Deep Learning Toolbox"; "Deep Learning Toolbox Converter for ONNX Model Format"], addons.Name));
     if ~installed
-        warning('Deep Learning Toolboxs are not installed. Please refer to <a href="matlab: web(''https://se.mathworks.com/products/deep-learning.html'') ">Deep Learning Toolbox</a> and <a href="matlab: web(''https://se.mathworks.com/matlabcentral/fileexchange/67296-deep-learning-toolbox-converter-for-onnx-model-format'') ">Deep Learning Toolbox Converter for ONNX Model Format</a>');
+        warning('Some of the required deep-learning toolboxs are not installed. ' ...
+            'Please, refer to ' ...
+            '<a href="matlab: web(''https://se.mathworks.com/products/deep-learning.html'') ">Deep Learning Toolbox</a> ' ...
+            'and ' ...
+            '<a href="matlab: web(''https://se.mathworks.com/matlabcentral/fileexchange/67296-deep-learning-toolbox-converter-for-onnx-model-format'') ">Deep Learning Toolbox Converter for ONNX Model Format</a>')
     end
 end
-
 function nn_braph_format = transform_to_braph_format(nn, net)
-    %transform_to_braph_format transforms the build-in neural network 
+    %TRANSFORM_TO_BRAPH_FORMAT transforms the build-in neural network 
     % object in matlab to a binary format that can be saved as a cell
     % in braph.
     %
@@ -51,7 +55,8 @@ function nn_braph_format = transform_to_braph_format(nn, net)
     %  converting it to ONNX file and then reading the file as binary file.
     %  Typically, this method is called internally when a neural network
     %  model is trained and ready to be saved in braph.
-    warning('off','MATLAB:mir_warning_unrecognized_pragma');
+    
+    warning('off', 'MATLAB:mir_warning_unrecognized_pragma')
     filename = 'nn_from_matlab.onnx';
     exportONNXNetwork(net, filename);
     fileID = fopen(filename);
@@ -59,7 +64,6 @@ function nn_braph_format = transform_to_braph_format(nn, net)
     fclose(fileID);
     delete nn_from_matlab.onnx
 end
-
 function nn_matlab_format = transform_to_matlab_format(nn)
     %transform_to_matlab_format transforms the saved neural network 
     % in braph to a build-in object in matlab.
@@ -70,7 +74,8 @@ function nn_matlab_format = transform_to_matlab_format(nn)
     %  then importing the file as ONNX object.
     %  Typically, this method is called internally when a saved neural 
     %  network model is evaluated by a test data.
-    warning('off','MATLAB:mir_warning_unrecognized_pragma');
+    
+    warning('off', 'MATLAB:mir_warning_unrecognized_pragma')
     filename = 'nn_from_braph.onnx';
     fileID = fopen(filename, 'w');
     trained_nn = nn.get('TRAINED_NN');
