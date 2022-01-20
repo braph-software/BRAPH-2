@@ -16,8 +16,12 @@ LABEL (metadata, string) is an extended label of the neural.
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the neural network.
 
+%%%% ¡prop!
+DATA (data, item) ... %FIXME
+
 %%% ¡prop!
 TRAINED_NN (result, cell) is a trained neural network model.
+%FIXME: check format of this prop - check that it works for all NN
 
 % % % %%% ¡prop!
 % % % NEURAL_NETWORK_ANALYSIS (result, cell) is the machine learning analysis.
@@ -25,7 +29,7 @@ TRAINED_NN (result, cell) is a trained neural network model.
 % % % pl = PlotPropNNAnalysis('EL', nn, 'PROP', BaseNN.NEURAL_NETWORK_ANALYSIS, varargin{:});
 
 %% ¡methods!
-function installed = check_toolbox_installation(nn)
+function installed = check_toolboxes(nn) %FIXME
     %CHECK_TOOLBOX_INSTALLATION checks whether the deep-learning-required toolboxes are installed.
     %
     % INSTALLED = CHECK_TOOLBOX_INSTALLATION(NN) check the installation of the toolboxes:
@@ -92,3 +96,5 @@ function net = to_net(nn)
     net = importONNXNetwork(filename, 'OutputLayerType', 'classification', 'Classes', trained_nn{2}, 'InputDataFormats', 'BCSS');
     delete nn_from_matlab_to_be_erased.onnx
 end
+
+%FIXME: test(s) to demonstrate how this works with various NN
