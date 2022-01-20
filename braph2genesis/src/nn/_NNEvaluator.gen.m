@@ -18,3 +18,7 @@ TRAINED_NN (data, item) is a trained neural network model.
 %%%% ¡settings!
 'BaseNN'
 %FIXME: update
+
+%FIXME: add output properties as results calcualted in this element
+
+%FIXME: add tests

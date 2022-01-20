@@ -17,11 +17,3 @@ LABEL (metadata, string) is an extended label of the graph analysis.
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the graph analysis.
-
-% % % %%% ¡prop!
-% % % DENSITY_OF_FEATURE_SELECTION (parameter, scalar) is the density of selected features.
-% % % %%%% ¡default!
-% % % 0.5
-% % % 
-% % % %%% ¡prop!
-% % % FEATURE_SELECTION_MASK (data, cell) is a mask for selected features.

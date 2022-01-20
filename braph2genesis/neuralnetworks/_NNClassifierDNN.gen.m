@@ -50,3 +50,5 @@ function layers = getLayers(nn, numFeatures, numClasses)
     lgraph = layerGraph(layers);
     plot(lgraph)
 end
+
+%FIXME: tests
