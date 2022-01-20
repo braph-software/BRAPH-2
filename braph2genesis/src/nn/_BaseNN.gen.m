@@ -45,7 +45,8 @@ function installed = check_toolbox_installation(nn)
             '<a href="matlab: web(''https://se.mathworks.com/matlabcentral/fileexchange/67296-deep-learning-toolbox-converter-for-onnx-model-format'') ">Deep Learning Toolbox Converter for ONNX Model Format</a>')
     end
 end
-function nn_braph_format = transform_to_braph_format(nn, net)
+function nn_str = from_net(nn, net)
+%FIXME: update function name everywhere
     %TRANSFORM_TO_BRAPH_FORMAT transforms the build-in neural network 
     % object in matlab to a binary format that can be saved as a cell
     % in braph.
@@ -55,16 +56,20 @@ function nn_braph_format = transform_to_braph_format(nn, net)
     %  converting it to ONNX file and then reading the file as binary file.
     %  Typically, this method is called internally when a neural network
     %  model is trained and ready to be saved in braph.
+
+%FIXME: explain net in comment
     
     warning('off', 'MATLAB:mir_warning_unrecognized_pragma')
-    filename = 'nn_from_matlab.onnx';
+%FIXME: put file in test folder
+    filename = 'nn_from_matlab_to_be_erased.onnx';
     exportONNXNetwork(net, filename);
     fileID = fopen(filename);
-    nn_braph_format = {fread(fileID), net.Layers(end).Classes};	    
+    nn_str = {fread(fileID), net.Layers(end).Classes};	    
     fclose(fileID);
-    delete nn_from_matlab.onnx
+    delete nn_from_matlab_to_be_erased.onnx
 end
-function nn_matlab_format = transform_to_matlab_format(nn)
+function net = to_net(nn)
+%FIXME: update function name everywhere
     %transform_to_matlab_format transforms the saved neural network 
     % in braph to a build-in object in matlab.
     %
@@ -74,13 +79,16 @@ function nn_matlab_format = transform_to_matlab_format(nn)
     %  then importing the file as ONNX object.
     %  Typically, this method is called internally when a saved neural 
     %  network model is evaluated by a test data.
-    
+
+%FIXME: explain net in comment
+
     warning('off', 'MATLAB:mir_warning_unrecognized_pragma')
-    filename = 'nn_from_braph.onnx';
+%FIXME: put file in test folder
+    filename = 'nn_from_matlab_to_be_erased.onnx';
     fileID = fopen(filename, 'w');
     trained_nn = nn.get('TRAINED_NN');
     fwrite(fileID, trained_nn{1});
     fclose(fileID);
-    nn_matlab_format = importONNXNetwork(filename, 'OutputLayerType', 'classification', 'Classes', trained_nn{2}, 'InputDataFormats', 'BCSS');
-    delete nn_from_braph.onnx
+    net = importONNXNetwork(filename, 'OutputLayerType', 'classification', 'Classes', trained_nn{2}, 'InputDataFormats', 'BCSS');
+    delete nn_from_matlab_to_be_erased.onnx
 end
