@@ -29,7 +29,7 @@ TRAINED_NN (result, cell) is a trained neural network model.
 % % % pl = PlotPropNNAnalysis('EL', nn, 'PROP', BaseNN.NEURAL_NETWORK_ANALYSIS, varargin{:});
 
 %% ¡methods!
-function installed = check_toolboxes(nn) %FIXME
+function installed = check_nn_toolboxes(nn) %FIXME
     %CHECK_TOOLBOX_INSTALLATION checks whether the deep-learning-required toolboxes are installed.
     %
     % INSTALLED = CHECK_TOOLBOX_INSTALLATION(NN) check the installation of the toolboxes:

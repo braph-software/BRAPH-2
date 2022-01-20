@@ -8,7 +8,7 @@ Use one of its subclasses instead.
 
 %% ¡props!
 %%% ¡prop!
-DATASET_PROCESSOR (data, item) is a dataset processor contains a dataset and a neural network model.
+DATA (data, item) is a dataset processor contains a dataset and a neural network model.
 %%%% ¡settings!
 'DatasetProcessor'
 %FIXME: update
