@@ -59,25 +59,25 @@ end
 
 value = g_dict;
 
-%%% ¡prop!
-X_RAW (result, cell) is the dataset without feature selection.
-%%%% ¡calculate!
-adjs_gr1 = dp.get('G_DICT_1').getItems();
-data_gr1 = {};
-for i = 1:length(adjs_gr1)
-    data_gr1{end+1} = cell2mat(adjs_gr1{i}.get('A'));
-end
-adjs_gr2 = dp.get('G_DICT_2').getItems();
-data_gr2 = {};
-for i = 1:length(adjs_gr2)
-    data_gr2{end+1} = cell2mat(adjs_gr2{i}.get('A'));
-end
+% % % %%% ¡prop!
+% % % X_RAW (result, cell) is the dataset without feature selection.
+% % % %%%% ¡calculate!
+% % % adjs_gr1 = dp.get('G_DICT_1').getItems();
+% % % data_gr1 = {};
+% % % for i = 1:length(adjs_gr1)
+% % %     data_gr1{end+1} = cell2mat(adjs_gr1{i}.get('A'));
+% % % end
+% % % adjs_gr2 = dp.get('G_DICT_2').getItems();
+% % % data_gr2 = {};
+% % % for i = 1:length(adjs_gr2)
+% % %     data_gr2{end+1} = cell2mat(adjs_gr2{i}.get('A'));
+% % % end
+% % % 
+% % % %value = {[data_gr1 data_gr2]};
+% % % value = [data_gr1 data_gr2];
 
-%value = {[data_gr1 data_gr2]};
-value = [data_gr1 data_gr2];
-
 %%% ¡prop!
-X_MASKED (result, cell) is the dataset with feature selection.
+INPUTS (result, cell) is the dataset with feature selection.
 %%%% ¡calculate!
 x_raw = dp.get('X_RAW');
 if(isempty(dp.get('FEATURE_SELECTION_MASK')))
@@ -91,7 +91,7 @@ x_masked = cat(2, x_masked{:});
 value = {x_masked};
 
 %%% ¡prop!
-Y (result, cell) is the label for the dataset.
+TARGETS (result, cell) is the label for the dataset.
 %%%% ¡calculate!
 y1 = repmat(string(dp.get('GR1').get('ID')), dp.get('GR1').get('SUB_DICT').length(), 1);
 y2 = repmat(string(dp.get('GR2').get('ID')), dp.get('GR2').get('SUB_DICT').length(), 1);

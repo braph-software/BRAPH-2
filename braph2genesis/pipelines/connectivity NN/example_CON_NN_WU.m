@@ -46,7 +46,7 @@ me_train = ModelEvaluator_Classification( ...
     );
 
 prediction_train = me_train.get('PREDICTION_NN');
-auc_train = me_train.get('AUC')
+auc_train = me_train.get('AUC');
 
 %% Load Groups of SubjectCON as a Testing Set 
 im_gr1 = ImporterGroupSubjectCON_XLS( ...
