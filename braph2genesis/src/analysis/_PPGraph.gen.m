@@ -14,7 +14,8 @@ p
 measure_tbl
 measure_btn
 graph_btn
-measure_list
+mlist
+selected
 
 %% ¡props_update!
 
@@ -73,10 +74,11 @@ function h_panel = draw(pr, varargin)
     end
     
     if isempty(pr.measure_tbl) || ~isgraphics(pr.measure_tbl, 'uitable')
+        pr.mlist = [];
         pr.measure_tbl = uitable( ...
             'Parent', pr.p, ...
             'CellEditCallback', {@cb_measure_selection} ...
-            );
+            );        
         tbl_selectall_btn = uicontrol( ...
             'Parent', pr.p, ...
             'Style', 'pushbutton', ...
@@ -122,6 +124,17 @@ function h_panel = draw(pr, varargin)
 %         pr.update(pr.selected, pr.already_calculated)
         pr.update()
     end
+    function cb_table_selectall(~, ~)  % (src, event)
+        pr.mlist = Graph.getCompatibleMeasureList(el.get(prop));
+        pr.selected = (1:1:length(pr.mlist))';
+        pr.update()
+%         pr.update(pr.selected, pr.already_calculated)
+    end
+    function cb_table_clearselection(~, ~)  % (src, event)
+        pr.selected = [];
+        pr.update()
+%         pr.update(pl.selected, pl.already_calculated)
+    end
 
     % output
     if nargout > 0
@@ -139,37 +152,53 @@ function update(pr)
     
     el = pr.get('EL');
     prop = pr.get('PROP');
-
-    switch el.getPropCategory(prop)
-        case Category.METADATA
-            set(pr.pushbutton_value, ...
-                'String', el.get(prop).tostring(), ...
-                'Tooltip', regexprep(el.get(prop).tree(), {'<strong>', '</strong>'}, {'' ''}) ...
-                )
-            
-        case {Category.PARAMETER, Category.DATA}
-            set(pr.pushbutton_value, ...
-                'String', el.get(prop).tostring(), ...
-                'Tooltip', regexprep(el.get(prop).tree(), {'<strong>', '</strong>'}, {'' ''}) ...
-                )
-            
-        case Category.RESULT
-            value = el.getr(prop);
-            
-            if isa(value, 'NoValue')
-                set(pr.pushbutton_value, ...
-                    'String', el.getPropDefault(prop).tostring(), ...
-                    'Tooltip', regexprep(el.getPropDefault(prop).tree(), {'<strong>', '</strong>'}, {'' ''}), ...
-                    'Enable', pr.get('ENABLE') ...
-                    )
+    
+    graph = el.get(prop);   
+    
+    set(pr.measure_tbl, ...
+        'Units', 'normalized', ...
+        'Position', [.02 .2 .9 .7], ...
+        'Visible', 'on', ...
+        'ColumnName', {'SEL', 'Measure', 'CAL' 'Shape', 'Scope', 'Notes'}, ...
+        'ColumnFormat', {'logical', 'char', 'char', 'char', 'char', 'char'}, ...
+        'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+        'ColumnEditable', [true false false false false false] ...
+        )
+    
+    pr.mlist = Graph.getCompatibleMeasureList(graph);
+    if isa(graph, 'Graph')
+        data = cell(length(pr.mlist), 6);
+        for mi = 1:1:length(pr.mlist)
+            if any(pr.selected == mi)
+                data{mi, 1} = true;
             else
-                set(pr.pushbutton_value, ...
-                    'String', el.get(prop).tostring(), ...
-                    'Tooltip', regexprep(el.get(prop).tree(), {'<strong>', '</strong>'}, {'' ''}), ...
-                    'Enable', 'on' ...
-                    )
+                data{mi, 1} = false;
             end
+            data{mi, 2} = pr.mlist{mi};
+            data{mi, 3} = pr.already_calculated(mi);
+            if Measure.is_nodal(pr.mlist{mi})
+                data{mi, 4} = 'NODAL';
+            elseif Measure.is_global(pr.mlist{mi})
+                data{mi, 4} = 'GLOBAL';
+            else
+                data{mi, 4} = 'BINODAL';
+            end
+            
+            if Measure.is_superglobal(pr.mlist{mi})
+                data{mi, 5} = 'SUPERGLOBAL';
+            elseif Measure.is_unilayer(pr.mlist{mi})
+                data{mi, 5} = 'UNILAYER';
+            else
+                data{mi, 5} = 'BILAYER';
+            end
+            
+            data{mi, 6} = eval([pr.mlist{mi} '.getDescription()']);
+        end
+        set(pr.measure_tbl, 'Data', data)
+        set(pr.measure_tbl, 'ColumnWidth', {'auto', 'auto', 'auto', 'auto', 'auto', 'auto'})
     end
+
+
 end
 function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
