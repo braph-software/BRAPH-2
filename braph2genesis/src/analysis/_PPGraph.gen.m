@@ -169,7 +169,9 @@ function update(pr)
     else
 
         if  ~isa(graph, 'NoValue') && isa(graph, 'Graph')
-            pr.mlist = Graph.getCompatibleMeasureList(graph);
+            if isempty(pr.mlist)
+                pr.mlist = Graph.getCompatibleMeasureList(graph);
+            end
             pr.already_calculated = pr.is_measure_calculated();
             data = cell(length(pr.mlist), 6);
             for mi = 1:1:length(pr.mlist)
