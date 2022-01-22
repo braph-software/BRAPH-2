@@ -31,3 +31,5 @@ G (result, item) is the graph obtained from this analysis.
 'Graph'
 %%%% ¡calculate!
 value = Graph();
+%%%% ¡gui!
+pr = PPGraph('EL', a, 'PROP', AnalyzeGroup.G, varargin{:});
