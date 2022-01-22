@@ -252,4 +252,36 @@ function cb_measure_value(pr)
     %  It opens Measure GUI.
     %
     % See also cb_graph_value.
+    
+   
+    el = pr.get('EL');
+    prop = pr.get('PROP');    
+    graph = el.memorize(prop);
+    pr.mlist = Graph.getCompatibleMeasureList(graph);
+    
+    measure_short_list = pr.mlist(pr.selected);
+    
+    % calculate
+    f = waitbar(0, ['Calculating ' num2str(length(pr.selected))  ' measures ...'], 'Name', BRAPH2.NAME);
+    set_icon(f)
+    for i = 1:length(pr.mlist)
+        if ~ismember(pr.mlist(i), measure_short_list)
+            continue;
+        end
+        progress = (i / length(pr.selected)) * .8;
+        extra = (i / length(pr.selected)) * 1.05 * .8;
+        measure = pr.mlist{i};
+        waitbar(progress, f, ['Calculating measure: ' measure ' ...']);
+        result_measure{i} = g.getMeasure(measure).memorize('M'); %#ok<AGROW>
+        waitbar(extra, f, ['Measure: ' measure ' Calculated! ...']);
+        pr.already_calculated(i) = 'C';
+    end
+    
+    % close progress bar
+    if exist('f', 'var')
+        waitbar(1, f, 'Finishing')
+        pause(.5)
+        close(f)
+    end
+    pr.update(pr.selected,  pr.already_calculated);
 end
