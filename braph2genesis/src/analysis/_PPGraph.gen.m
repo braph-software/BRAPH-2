@@ -6,6 +6,12 @@ PPGraph plots the measure table associated with a graph of the analysis.
 It also provides the buttons to navigate the graphical interface of both
 the measures and the graph.
 
+CALLBACK - This is a callback function:
+
+    pr.<strong>cb_bring_to_front</strong>() - brings to the front the measure figure and its settings figure
+    pr.<strong>cb_hide</strong>() - hides the measure figure and its settings figure
+    pr.<strong>cb_close</strong>() - closes the measure figure and its settings figure
+
 %%% ¡seealso!
 GUI, PlotElement, PlotProp, AnalyzeGroup, 
 
@@ -17,6 +23,7 @@ graph_btn
 mlist
 selected
 already_calculated
+f_m % array of measure figures
 
 %% ¡props_update!
 
@@ -45,7 +52,16 @@ function h_panel = draw(pr, varargin)
     el = pr.get('EL');
     prop = pr.get('PROP');
 
-    pr.p = draw@PlotProp(pr, varargin{:});
+    pr.p = draw@PlotProp(pr, 'DeleteFcn', {@close_f_measures}, varargin{:});
+   
+    function close_f_measures(~, ~)
+        for i = 1:length(pr.fm)
+            f_m = pr.fm{i};
+            if check_graphics(f_m, 'figure')
+                close(f_m)
+            end
+        end
+    end
 
     if ~check_graphics(pr.graph_btn, 'pushbutton') || ~check_graphics(pr.measure_btn, 'pushbutton')
         % graph button
@@ -121,19 +137,16 @@ function h_panel = draw(pr, varargin)
 
                 otherwise
             end
-            %         pr.update(pr.selected, pr.already_calculated)
             pr.update()
         end
         function cb_table_selectall(~, ~)  % (src, event)
             pr.mlist = Graph.getCompatibleMeasureList(el.get(prop));
             pr.selected = (1:1:length(pr.mlist))';
-            pr.update()
-            %         pr.update(pr.selected, pr.already_calculated)
+            pr.update()            
         end
         function cb_table_clearselection(~, ~)  % (src, event)
             pr.selected = [];
             pr.update()
-            %         pr.update(pl.selected, pl.already_calculated)
         end
 
     % output
@@ -266,7 +279,6 @@ function cb_measure_value(pr)
     %
     % See also cb_graph_value.
 
-
     el = pr.get('EL');
     prop = pr.get('PROP');
     graph = el.memorize(prop);
@@ -275,28 +287,31 @@ function cb_measure_value(pr)
     measure_short_list = pr.mlist(pr.selected);
 
     % calculate
-    f = waitbar(0, ['Calculating ' num2str(length(pr.selected))  ' measures ...'], 'Name', BRAPH2.NAME);
-    set_icon(f)
+    if pr.get('WAITBAR')
+        wb = waitbar(0, ['Calculating ' num2str(length(pr.selected))  ' measures ...'], 'Name', BRAPH2.NAME);
+        set_braph2_icon(wb)
+    end    
+
     for i = 1:length(pr.mlist)
         if ~ismember(pr.mlist(i), measure_short_list)
             continue;
         end
-        progress = (i / length(pr.selected)) * .8;
-        extra = (i / length(pr.selected)) * 1.05 * .8;
+        
         measure = pr.mlist{i};
-        waitbar(progress, f, ['Calculating measure: ' measure ' ...']);
-        result_measure{i} = g.getMeasure(measure).memorize('M'); %#ok<AGROW>
-        waitbar(extra, f, ['Measure: ' measure ' Calculated! ...']);
+        if pr.get('WAITBAR')
+            waitbar(.1 + .70 * i / length(pr.selected), wb, ['Calculating measure ' measure ]);
+        end
+        result_measure = graph.getMeasure(measure);
+        result_measure.memorize('M');
+        pr.f_m{i} = GUI('pe', result_measure).draw();
         pr.already_calculated(i) = 'C';
     end
 
     % close progress bar
-    if exist('f', 'var')
-        waitbar(1, f, 'Finishing')
-        pause(.5)
-        close(f)
+    if im.get('WAITBAR')
+        close(wb)
     end
-    pr.update(pr.selected,  pr.already_calculated);
+    pr.update();
 end
 function list =  is_measure_calculated(pr)
     el = pr.get('EL');
@@ -328,4 +343,83 @@ function btn = get_button_condition(pr)
         end
     end
 
+end
+function update_brain_atlas(pr)
+    %UPDATE_BRAIN_ATLAS updates the brain atlas.
+    %
+    % UPDATE_BRAIN_ATLAS(PR) updates the brain atlas. Usually used
+    %  triggered by PPBrainAtlas_BRDict.
+    %
+    % See also PPBrainAtlas_BRDict.
+    
+    if isgraphics(pr.f_pba, 'figure')
+        pba = pr.get('PBA');
+        try
+            pba.draw('Parent', pr.f_pba)
+        catch e
+            if strcmp(e.identifier, 'MATLAB:badsubscript') % regions added too fast by the user
+                % do nothing
+            else
+                rethrow(e)
+            end
+        end
+    end
+end
+function cb_bring_to_front(pr)
+    %CB_BRING_TO_FRONT brings to front the brain atlas figure and its settings figure.
+    %
+    % CB_BRING_TO_FRONT(PR) brings to front the brain atlas figure and its
+    %  settings figure.
+    %
+    % See also cb_hide, cb_close.
+
+    % brings to front settings panel
+    pr.cb_bring_to_front@PlotProp();
+
+    % brings to front brain atlas figure
+    children = get(pr.f_pba, 'Children');
+    for i = 1:1:length(children)
+        if check_graphics(children(i), 'uipanel') && strcmp(get(children(i), 'Tag'), 'h_panel')
+            pba = get(children(i), 'UserData');
+            pba.cb_bring_to_front()
+        end
+    end
+end
+function cb_hide(pr)
+    %CB_HIDE hides the brain atlas figure and its settings figure.
+    %
+    % CB_HIDE(PR) hides the brain atlas figure and its settings figure.
+    %
+    % See also cb_bring_to_front, cb_close.
+
+    % hides settings panel
+    pr.cb_hide@PlotProp();
+
+    % hides brain atlas figure
+    children = get(pr.f_pba, 'Children');
+    for i = 1:1:length(children)
+        if check_graphics(children(i), 'uipanel') && strcmp(get(children(i), 'Tag'), 'h_panel')
+            pba = get(children(i), 'UserData');
+            pba.cb_hide()
+        end
+    end
+end
+function cb_close(pr)
+    %CB_CLOSE closes the brain atlas figure and its settings figure.
+    %
+    % CB_CLOSE(PR) closes the brain atlas figure and its settings figure.
+    %
+    % See also cb_bring_to_front, cd_hide.
+
+    % closes settings panel
+    pr.cb_close@PlotProp();
+
+    % closes brain atlas figure
+    children = get(pr.f_pba, 'Children');
+    for i = 1:1:length(children)
+        if check_graphics(children(i), 'uipanel') && strcmp(get(children(i), 'Tag'), 'h_panel')
+            pba = get(children(i), 'UserData');
+            pba.cb_close()
+        end
+    end
 end
