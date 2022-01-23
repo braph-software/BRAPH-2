@@ -304,11 +304,11 @@ function cb_measure_value(pr)
         result_measure = graph.getMeasure(measure);
         result_measure.memorize('M');
         pr.f_m{i} = GUI('pe', result_measure).draw();
-        pr.already_calculated(i) = 'C';
+        pr.already_calculated{i} = 'C';
     end
 
     % close progress bar
-    if im.get('WAITBAR')
+    if pr.get('WAITBAR')
         close(wb)
     end
     pr.update();
@@ -323,7 +323,7 @@ function list =  is_measure_calculated(pr)
     if measure_dict.length() > 0
         for i = 1:length(measure_list)
             measure = measure_list{i};
-            if any(cellfun(@(x) isequal(measure, x.get('ID')), measure_dict.getItems(), 'UniformOutput', false))
+            if any(cellfun(@(x) isequal(measure, x.get('ID')), measure_dict.getItems()))
                 calculated_list{i} = 'C';
             else
                 calculated_list{i} = 'F';
