@@ -38,15 +38,9 @@ ENABLE (metadata, option) switches between off and inactive fields.
 %% ¡props!
 
 %%% ¡prop!
-PG (result, item) is a plot graph.
+PG (data, item) is a plot graph.
 %%%% ¡settings!
 'PlotGraph'
-%%%% ¡calculate!
-el = pr.get('EL');
-prop = pr.get('PROP');
-g = el.get(prop);
-pg =  PlotGraph('GRAPH', g);
-value = pg;
 
 %% ¡methods!
 function h_panel = draw(pr, varargin)
@@ -112,7 +106,7 @@ function h_panel = draw(pr, varargin)
             pr.cb_measure_value()
         end
         function cb_plot_graph_btn(~, ~)
-            pr.cb_plot_graph();
+            pr.cb_graph_ui_figure();
         end
 
     if isempty(pr.measure_tbl) || ~isgraphics(pr.measure_tbl, 'uitable')
@@ -238,6 +232,8 @@ function update(pr)
             set(pr.measure_tbl, 'Data', data)
             set(pr.measure_tbl, 'ColumnWidth', {'auto', 'auto', 'auto', 'auto', 'auto', 'auto'})
         end
+        
+        set(pr.plot_graph_btn, 'Enable', 'on');
     end
 end
 function redraw(pr, varargin)
@@ -377,7 +373,11 @@ function cb_graph_ui_figure(pr)
     set_braph2_icon(pr.f_pg)
     menu_about = BRAPH2.add_menu_about(pr.f_pg);
     
-    pg = pr.memorize('PG');
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    g = el.get(prop);
+    pg =  PlotGraph('GRAPH', g);
+    
     pg.draw('Parent', pr.f_pg)
     
     f_settings = pg.settings();
@@ -482,11 +482,16 @@ function cb_close(pr)
     % closes settings panel
     pr.cb_close@PlotProp();
 
-    % closes brain atlas figure
-    for i = 1:length(pr.fm)
-        f_m = pr.fm{i};
+    % closes measure class guis
+    for i = 1:length(pr.f_m)
+        f_m = pr.f_m{i};
         if check_graphics(f_m, 'figure')
             close(f_m)
         end
+    end
+    
+    % close plot graph figure
+    if check_graphics(pr.f_pg, 'figure')
+        close(pr.f_pg)
     end
 end

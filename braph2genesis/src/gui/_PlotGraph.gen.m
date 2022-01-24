@@ -14,6 +14,7 @@ h_figure % panel graphical handle
 h_axes % axes handle
 h_plot % plot handle
 pp
+h_settings
 h_settings_line % settings panel handle
 h_settings_adj % settings panel for adjacency matrix
 
@@ -28,6 +29,11 @@ false
 GRAPH (data, item) is the graph which is been ploted
 %%%% ¡default!
 Graph()
+
+%%% ¡prop!
+LAYER (metadata, scalar) is the layer to be ploted
+%%%% ¡default!
+1
 
 %% ¡methods!
 function [h_figure, h_axes, subpanel] = draw(pr, varargin)
@@ -84,21 +90,21 @@ function f_settings = settings(pr, varargin)
     % See also draw, figure, isgraphics.
     
     f = settings@Plot(pr, varargin{:});
-    set_icon(f);
+    pr.h_settings = f;
     graph = pr.get('GRAPH');
     
     set(f, 'Toolbar', 'figure')
     pg_toolbar = findall(f, 'Tag', 'FigureToolBar');
-    delete(findall(ui_toolbar, 'Tag', 'Standard.NewFigure'))
-    delete(findall(ui_toolbar, 'Tag', 'Standard.PrintFigure'))
-    delete(findall(ui_toolbar, 'Tag', 'Standard.EditPlot'))
-    delete(findall(ui_toolbar, 'Tag', 'Standard.OpenInspector'))
-    delete(findall(ui_toolbar, 'Tag', 'Exploration.Brushing'))
-    delete(findall(ui_toolbar, 'Tag', 'DataManager.Linking'))
-    delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertColorbar'))
-    delete(findall(ui_toolbar, 'Tag', 'Annotation.InsertLegend'))
-    delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
-    delete(findall(ui_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
+    delete(findall(pg_toolbar, 'Tag', 'Standard.NewFigure'))
+    delete(findall(pg_toolbar, 'Tag', 'Standard.PrintFigure'))
+    delete(findall(pg_toolbar, 'Tag', 'Standard.EditPlot'))
+    delete(findall(pg_toolbar, 'Tag', 'Standard.OpenInspector'))
+    delete(findall(pg_toolbar, 'Tag', 'Exploration.Brushing'))
+    delete(findall(pg_toolbar, 'Tag', 'DataManager.Linking'))
+    delete(findall(pg_toolbar, 'Tag', 'Annotation.InsertColorbar'))
+    delete(findall(pg_toolbar, 'Tag', 'Annotation.InsertLegend'))
+    delete(findall(pg_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
+    delete(findall(pg_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
     
     pg_toolbar_line = uipushtool(pg_toolbar, ...
         'Separator', 'off', ...
@@ -121,7 +127,7 @@ function f_settings = settings(pr, varargin)
     function cb_toolbar_adjacency(~,~)
         set(pr.h_settings_line, 'Visible', 'off', 'Enable', 'off')
         set(pr.h_settings_adj, 'Visible', 'on', 'Enable', 'on')
-        pr.line_plot_adjacency();
+        pr.adj_plot_settings();
     end
     
     % create dynamic panel, create two panels
@@ -145,7 +151,7 @@ function f_settings = settings(pr, varargin)
     end
 
     if nargin > 0 
-        f_settings = h_settings;
+        f_settings = pr.h_settings;
     end
 end
 function f_line_plot = line_plot_settings(pr, varargin)
@@ -289,7 +295,7 @@ function f_line_plot = line_plot_settings(pr, varargin)
 end
 function f_adj_plot = adj_plot_settings(pr, varargin)
     % panel
-    ui_parent = pr.h_figure;
+    ui_parent = pr.h_settings;
     ui_parent_axes = pr.h_axes;
     matrix_plot = pr.h_plot;
 
