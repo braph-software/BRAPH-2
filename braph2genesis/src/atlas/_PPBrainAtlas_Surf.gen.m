@@ -309,11 +309,13 @@ function cb_close(pr)
     pr.cb_close@PlotProp();
 
     % closes brain atlas figure
-    children = get(pr.f_pba, 'Children');
-    for i = 1:1:length(children)
-        if check_graphics(children(i), 'uipanel') && strcmp(get(children(i), 'Tag'), 'h_panel')
-            pba = get(children(i), 'UserData');
-            pba.cb_close()
+    if check_graphics(pr.f_pba, 'figure')
+        children = get(pr.f_pba, 'Children');
+        for i = 1:1:length(children)
+            if check_graphics(children(i), 'uipanel') && strcmp(get(children(i), 'Tag'), 'h_panel')
+                pba = get(children(i), 'UserData');
+                pba.cb_close()
+            end
         end
     end
 end

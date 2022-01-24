@@ -52,16 +52,7 @@ function h_panel = draw(pr, varargin)
     el = pr.get('EL');
     prop = pr.get('PROP');
 
-    pr.p = draw@PlotProp(pr, 'DeleteFcn', {@close_f_measures}, varargin{:});
-   
-    function close_f_measures(~, ~)
-        for i = 1:length(pr.fm)
-            f_m = pr.fm{i};
-            if check_graphics(f_m, 'figure')
-                close(f_m)
-            end
-        end
-    end
+    pr.p = draw@PlotProp(pr, varargin{:});
 
     if ~check_graphics(pr.graph_btn, 'pushbutton') || ~check_graphics(pr.measure_btn, 'pushbutton')
         % graph button
@@ -415,11 +406,10 @@ function cb_close(pr)
     pr.cb_close@PlotProp();
 
     % closes brain atlas figure
-    children = get(pr.f_pba, 'Children');
-    for i = 1:1:length(children)
-        if check_graphics(children(i), 'uipanel') && strcmp(get(children(i), 'Tag'), 'h_panel')
-            pba = get(children(i), 'UserData');
-            pba.cb_close()
+    for i = 1:length(pr.fm)
+        f_m = pr.fm{i};
+        if check_graphics(f_m, 'figure')
+            close(f_m)
         end
     end
 end
