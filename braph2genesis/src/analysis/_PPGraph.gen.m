@@ -20,10 +20,13 @@ p
 measure_tbl
 measure_btn
 graph_btn
+plot_graph_btn
 mlist
 selected
 already_calculated
-f_m % array of measure figures
+f_m % array of measure class figures
+f_pg % figure for plot graph
+plot_graph
 
 %% ¡props_update!
 
@@ -31,6 +34,19 @@ f_m % array of measure figures
 ENABLE (metadata, option) switches between off and inactive fields.
 %%%% ¡default!
 'off'
+
+%% ¡props!
+
+%%% ¡prop!
+PG (result, item) is a plot graph.
+%%%% ¡settings!
+'PlotGraph'
+%%%% ¡calculate!
+el = pr.get('EL');
+prop = pr.get('PROP');
+g = el.get(prop);
+pg =  PlotGraph('GRAPH', g);
+value = pg;
 
 %% ¡methods!
 function h_panel = draw(pr, varargin)
@@ -61,9 +77,19 @@ function h_panel = draw(pr, varargin)
             'Tag', 'pushbutton_value', ...
             'Parent', pr.p, ...
             'Units', 'normalized', ...
-            'String', el.get(prop).tostring(), ...
-            'Position', [.01 .11 .48 .09], ...
+            'String', 'Graph', ...
+            'Position', [.01 .01 .32 .09], ...
             'Callback', {@cb_graph_btn} ...
+            );
+        
+        pr.plot_graph_btn = uicontrol( ...
+            'Style', 'pushbutton', ...
+            'Tag', 'pushbutton_value', ...
+            'Parent', pr.p, ...
+            'Units', 'normalized', ...
+            'String', 'Plot Graph', ...
+            'Position', [.01 .11 .32 .09], ...
+            'Callback', {@cb_plot_graph_btn} ...
             );
 
         % measure button
@@ -73,11 +99,21 @@ function h_panel = draw(pr, varargin)
             'Tag', 'measure_button', ...
             'Units', 'normalized', ...
             'String', 'Measures', ...
-            'Position', [.01 .01 .48 .09], ...
+            'Position', [.34 .11 .32 .09], ...
             'Callback', {@cb_measure_btn} ...
             );
 
     end
+    
+        function cb_graph_btn(~, ~) % (src, event)
+            pr.cb_graph_value()
+        end
+        function cb_measure_btn(~, ~)
+            pr.cb_measure_value()
+        end
+        function cb_plot_graph_btn(~, ~)
+            pr.cb_plot_graph();
+        end
 
     if isempty(pr.measure_tbl) || ~isgraphics(pr.measure_tbl, 'uitable')
         pr.mlist = [];
@@ -90,7 +126,7 @@ function h_panel = draw(pr, varargin)
             'Parent', pr.p, ...
             'Style', 'pushbutton', ...
             'Units', 'normalized', ...
-            'Position', [.51 .11 .48 .09], ...
+            'Position', [.67 .11 .32 .09], ...
             'Visible', 'on', ...
             'String', 'Select All', ...
             'TooltipString', 'Select all measures', ...
@@ -100,20 +136,14 @@ function h_panel = draw(pr, varargin)
             'Parent', pr.p, ...
             'Style', 'pushbutton', ...
             'Units', 'normalized', ...
-            'Position', [.51 .01 .48 .09], ...
+            'Position', [.67 .01 .32 .09], ...
             'Visible', 'on', ...
             'String', 'Clear All', ...
             'TooltipString', 'Clear selection', ...
             'Callback', {@cb_table_clearselection} ...
             );
     end
-
-        function cb_graph_btn(~, ~) % (src, event)
-            pr.cb_graph_value()
-        end
-        function cb_measure_btn(~, ~)
-            pr.cb_measure_value()
-        end
+        
         function cb_measure_selection(~, event)
             i = event.Indices(1);
             col = event.Indices(2);
@@ -133,12 +163,13 @@ function h_panel = draw(pr, varargin)
         function cb_table_selectall(~, ~)  % (src, event)
             pr.mlist = Graph.getCompatibleMeasureList(el.get(prop));
             pr.selected = (1:1:length(pr.mlist))';
-            pr.update()            
+            pr.update()
         end
         function cb_table_clearselection(~, ~)  % (src, event)
             pr.selected = [];
             pr.update()
         end
+        
 
     % output
     if nargout > 0
@@ -158,7 +189,7 @@ function update(pr)
     prop = pr.get('PROP');
     graph = el.get(prop);
 
-    button_calc = pr.get_button_condition();
+    button_state = pr.get_button_condition();
     set(...
         pr.measure_tbl, ...
         'Visible', 'on', ...
@@ -168,7 +199,7 @@ function update(pr)
         'ColumnEditable', [true false false false false false] ...
         );
 
-    if isequal(button_calc.Enable, 'on')
+    if button_state
 
     else
 
@@ -304,7 +335,65 @@ function cb_measure_value(pr)
     end
     pr.update();
 end
+function cb_graph_ui_figure(pr)  
+    % CB_GRAPH_UI_FIGURE draws a new figure to manage a plot graph.
+    % 
+    % CB_GRAPH_UI_FIGURE(PR) draws a new figure to manage a plot graph and
+    % sets the figure to F_PG property of PPGRAPH
+    %
+    % see also cb_graph_value, cb_measure_value.
+    
+    set(pr.plot_graph_btn, 'Enable', 'off');
+    drawnow()
+    
+    f_pg = ancestor(pr.p, 'Figure'); % BrainAtlas GUI
+    f_ba_x = Plot.x0(f_pg, 'pixels');
+    f_ba_y = Plot.y0(f_pg, 'pixels');
+    f_ba_w = Plot.w(f_pg, 'pixels');
+    f_ba_h = Plot.h(f_pg, 'pixels');
+    
+    screen_x = Plot.x0(0, 'pixels');
+    screen_y = Plot.y0(0, 'pixels');
+    screen_w = Plot.w(0, 'pixels');
+    screen_h = Plot.h(0, 'pixels');
+    
+    x = f_ba_x + f_ba_w;
+    h = f_ba_h / 1.61;
+    y = f_ba_y + f_ba_h - h;
+    w = f_ba_w * 1.61;
+    
+    pr.f_pg = figure( ...
+        'NumberTitle', 'off', ...
+        'Units', 'normalized', ...
+        'Position', [x/screen_w y/screen_h w/screen_w h/screen_h], ...
+        'CloseRequestFcn', {@cb_f_pg_close} ...
+        );
+    
+    function cb_f_pg_close(~, ~)
+        delete(pr.f_pg) % deletes also f_settings
+        pr.update() % re-activates the btns
+    end
+    
+    set_braph2_icon(pr.f_pg)
+    menu_about = BRAPH2.add_menu_about(pr.f_pg);
+    
+    pg = pr.memorize('PG');
+    pg.draw('Parent', pr.f_pg)
+    
+    f_settings = pg.settings();
+    set(f_settings, 'OuterPosition', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
+    
+    pr.update()
+end
 function list =  is_measure_calculated(pr)
+    % IS_MEASURE_CALCULATED checks if a measure has been calculated for the graph.
+    % 
+    % LIST = IS_MEASURE_CALCULATED(PR) returns an array with the check for
+    %  previously calculated measures. C if a measures has been calculated
+    %  and NC for nor calculated measures.
+    %
+    % See also get_button_condition.
+    
     el = pr.get('EL');
     prop = pr.get('PROP');
     graph = el.memorize(prop);
@@ -321,40 +410,28 @@ function list =  is_measure_calculated(pr)
             end
         end
     else
-        [calculated_list{:}] = deal('F');
+        [calculated_list{:}] = deal('N');
     end
     list = calculated_list;
 end
-function btn = get_button_condition(pr)
+function state = get_button_condition(pr)
+    % GET_BUTTON_CONDITION returns the calculate button state.
+    %
+    % STATE = GET_BUTTON_CONDITION(PR) returns the calculate button state.
+    %
+    % see also is_measure_calculated.
+    
     plot_prop_children = get(pr.p, 'Children');
+    state = 0;
     for i = 1:length(plot_prop_children)
         pp_c = plot_prop_children(i);
         if check_graphics(pp_c, 'pushbutton') && isequal(pp_c.Tag, 'button_calc')
-            btn = pp_c;
-        end
-    end
-
-end
-function update_brain_atlas(pr)
-    %UPDATE_BRAIN_ATLAS updates the brain atlas.
-    %
-    % UPDATE_BRAIN_ATLAS(PR) updates the brain atlas. Usually used
-    %  triggered by PPBrainAtlas_BRDict.
-    %
-    % See also PPBrainAtlas_BRDict.
-    
-    if isgraphics(pr.f_pba, 'figure')
-        pba = pr.get('PBA');
-        try
-            pba.draw('Parent', pr.f_pba)
-        catch e
-            if strcmp(e.identifier, 'MATLAB:badsubscript') % regions added too fast by the user
-                % do nothing
-            else
-                rethrow(e)
+            if isequal(pp_c, 'on')
+                state = 1;            
             end
         end
     end
+
 end
 function cb_bring_to_front(pr)
     %CB_BRING_TO_FRONT brings to front the brain atlas figure and its settings figure.
