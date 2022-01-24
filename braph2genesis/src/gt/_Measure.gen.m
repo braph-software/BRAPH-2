@@ -30,7 +30,7 @@ M (result, cell) is the measure result.
 %%%% ¡calculate!
 value = {};
 %%%% ¡gui!
-pl = PPMeasure('EL', pr, 'PROP', Measure.M, varargin{:});
+pr = PPMeasure('EL', m, 'PROP', Measure.M, varargin{:});
 
 %% ¡constants!
 
