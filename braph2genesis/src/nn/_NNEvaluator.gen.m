@@ -1,5 +1,5 @@
 %% ¡header!
-ModelEvaluator < Element (me, model evaluator of a neural network model) evaluates the performance of a neural network model with a specific dataset.
+NNEvaluator < Element (nne, evaluator of a neural network model) evaluates the performance of a neural network model with a specific dataset.
 
 %% ¡description!
 This model evaluator evaluates the performance of a neural network model.
@@ -8,17 +8,17 @@ Use one of its subclasses instead.
 
 %% ¡props!
 %%% ¡prop!
-DATA (data, item) is a dataset processor contains a dataset and a neural network model.
+NN_DATA (data, item) is a dataset for neural networks.
 %%%% ¡settings!
-'DatasetProcessor'
-%FIXME: update
+'NNData'
 
 %%% ¡prop!
-TRAINED_NN (data, item) is a trained neural network model.
+NN_TRAINED (data, item) is a trained neural network.
 %%%% ¡settings!
-'BaseNN'
-%FIXME: update
+'NNBase'
 
-%FIXME: add output properties as results calcualted in this element
+%%% ¡prop!
+NN_PREDICTION (result, matrix) is the predictions from neural networks.
 
-%FIXME: add tests
+%%% ¡prop!
+NN_VAL_PREDICTION (result, matrix) is the predictions from neural networks for validation set.

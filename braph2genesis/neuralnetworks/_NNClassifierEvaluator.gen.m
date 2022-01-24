@@ -1,31 +1,35 @@
 %% ¡header!
-ModelEvaluator_Classification < ModelEvaluator (me, model evaluator of a neural network classifier) evaluates the performance of a neural network classifier with a specific dataset.
+NNClassifierEvaluator < NNEvaluator (nne, evaluator of a neural network classifier) evaluates the performance of a neural network classifier with a specific dataset.
 
 %% ¡description!
-This model evaluator evaluates the performance of a neural network classifier
+This evaluator evaluates the performance of a neural network classifier
 in terms of the receiver operating characteristic curve (ROC), the area under the
 ROC curve (AUC) and the confusion matrix.
 
 %% ¡props!
 %%% ¡prop!
-PREDICTION_NN (result, matrix) is an output matrix of prediction from a neural network model.
-%%%% ¡calculate!
-dp = me.get('DATASET_PROCESSOR');
-nn = me.get('TRAINED_MODEL').transform_to_matlab_format();
-x_masked = dp.get('X_MASKED');
-x_masked = x_masked{1};
-x_masked = reshape(x_masked, [1, 1, size(x_masked,1), size(x_masked,2)]);
-
-value = nn.predict(x_masked);
-
-%%% ¡prop!
 AUC (result, scalar) is an area under the curve score obtained from the neural network prediction.
 %%%% ¡calculate!
-pred = me.get('PREDICTION_NN');
-y = me.get('DATASET_PROCESSOR').get('Y');
-nn = me.get('TRAINED_MODEL').transform_to_matlab_format();
-class_names = nn.Layers(end).Classes; 
-[X,Y,T,auc] = perfcurve(categorical(y{1}), pred(:,2), class_names(2));
+pred = nne.get('NN_PREDICTION');
+targets = nne.get('NN_DATA').get('TARGETS');
+%nn = nne.get('NN_TRAINED').to_net();
+nn = nne.get('NN_TRAINED').get('TRAINED_NN');
+net = nn{1};
+class_names = net.Layers(end).Classes; 
+[X, Y, T, auc] = perfcurve(categorical(targets{1}), pred(:,2), class_names(2));
+
+value = auc;
+
+%%% ¡prop!
+VAL_AUC (result, scalar) is an area under the curve score obtained from the neural network prediction for validation set.
+%%%% ¡calculate!
+pred = nne.get('NN_VAL_PREDICTION');
+targets = nne.get('NN_DATA').get('VAL_TARGETS');
+%nn = nne.get('NN_TRAINED').to_net();
+nn = nne.get('NN_TRAINED').get('TRAINED_NN');
+net = nn{1};
+class_names = net.Layers(end).Classes; 
+[X, Y, T, auc] = perfcurve(categorical(targets{1}), pred(:,2), class_names(2));
 
 value = auc;
 
@@ -36,9 +40,35 @@ value = 0
 
 %% ¡props_update!
 %%% ¡prop!
-DATASET_PROCESSOR (data, item) is a dataset processor contains a dataset and a neural network classifier.
+NN_DATA (data, item) is a dataset for testing the neural networks.
 %%%% ¡settings!
-'DatasetProcessor_Classification'
+'NNClassifierData'
+
+%%% ¡prop!
+NN_PREDICTION (result, matrix) is an output matrix of prediction from a neural network model.
+%%%% ¡calculate!
+nnd = nne.get('NN_DATA');
+%nn = nne.get('NN_TRAINED').to_net();
+nn = nne.get('NN_TRAINED').get('TRAINED_NN');
+net = nn{1};
+inputs = nnd.get('INPUTS');
+inputs = inputs{1};
+inputs = reshape(inputs, [1, 1, size(inputs,1), size(inputs,2)]);
+
+value = net.predict(inputs);
+
+%%% ¡prop!
+NN_VAL_PREDICTION (result, matrix) is an output matrix of prediction from a neural network model for validation set.
+%%%% ¡calculate!
+nnd = nne.get('NN_DATA');
+%nn = nne.get('NN_TRAINED').to_net();
+nn = nne.get('NN_TRAINED').get('TRAINED_NN');
+net = nn{1};
+inputs = nnd.get('VAL_INPUTS');
+inputs = inputs{1};
+inputs = reshape(inputs, [1, 1, size(inputs,1), size(inputs,2)]);
+
+value = net.predict(inputs);
 
 
 

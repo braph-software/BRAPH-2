@@ -1,10 +1,9 @@
 %% ¡header!
-DatasetProcessor < Element (dp, data processor of neural network model) produces a dataset to train or test a neural netowrk model.  
-%FIXME: NNData (?)
+NNData < Element (nnd, data of neural network) produces a dataset to train or test a neural netowrk.  
 
 %% ¡description!
-This dataset processor produces a dataset that can be used to train a 
-neural network model. Feature selection procedure can be implemented.
+This dataset can be used to train or test a neural network. 
+Feature selection procedure can be implemented.
 Instances of this class should not be created. 
 Use one of its subclasses instead.
 
