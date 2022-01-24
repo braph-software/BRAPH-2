@@ -1,42 +1,63 @@
 %% ¡header!
-ClassifierNN < BaseNN (nn, classifier with dense layers) is a binary neural network classifier.
+NNClassifierDNN < NNBase (nn, classifier with dense layers) is a binary neural network classifier.
 
 %% ¡description!
 This classifier with dense layers is trained for a classification of two groups of subject.
 
 %% ¡props!
 %%% ¡prop!
-DATASET_PROCESSOR (data, item) is a dataset processor that prepares the dataset for training or testing a neural network model.
+NNClassifierData (data, item) is a dataset for training or testing a neural network classifier.
 %%%% ¡settings!
-'DatasetProcessor'
-%FIXM: update - specialize to NNClassifierData
+'NNClassifierData'
+
+%%% ¡prop!
+MINI_BATCH_SIZE (data, scalar) is the size of the mini-batch to use for each training iteration.
+%%%% ¡default!
+8
+
+%%% ¡prop!
+MAX_EPOCHS (data, scalar) is the maximum number of epochs.
+%%%% ¡default!
+20
+
+%%% ¡prop!
+SHUFFLE (data, OPTION) is a option for data shuffling.
+%%%% ¡settings!
+{'once' 'never' 'every-epoch'}
+%%%% ¡default!
+'once'
+
+%%% ¡prop!
+PLOT_TRAINING_PROGRESS (data, OPTION) is an option for plots of training-progress during network training.
+%%%% ¡settings!
+{'none' 'training-progress'}
+%%%% ¡default!
+'none'
+
+%%% ¡prop!
+VERBOSE (data, logical) is an option for plots of training-progress during network training.
+%%%% ¡default!
+0
+
+%%% ¡prop!
+PLOT_LAYERS (data, logical) is an option for plots of the layers.
+%%%% ¡default!
+0
 
 %% ¡props_update!
 %%% ¡prop!
 TRAINED_NN (result, cell) is a trained neural network classifier.
 %%%% ¡calculate!
 if nn.check_nn_toolboxes()
-    x_masked = nn.get('DATASET_PROCESSOR').get('X_MASKED');
-    x_masked = x_masked{1};
-    layers = nn.getLayers(length(x_masked), 2);
-    x_masked = reshape(x_masked, [1, 1, size(x_masked, 1), size(x_masked, 2)]);
-    y = nn.get('DATASET_PROCESSOR').get('Y');
-    lgraph = layerGraph(layers);
-    options = trainingOptions('adam', ...
-        'MiniBatchSize', 8, ...
-        'MaxEpochs', 20, ...
-        'Shuffle', 'every-epoch', ...
-        'Plots', 'none', ...
-        'Verbose', true); % FIXME: make all relevant parameters props
-    net = trainNetwork(x_masked, categorical(y{1}), layers, options);
-
-    value = nn.transform_to_braph_format(net);
-else
-    value = '';
-end
-
-%FIXME: integrate with calculate + props
-function layers = getLayers(nn, numFeatures, numClasses)
+    % get inputs
+    inputs = nn.get('NNClassifierData').get('INPUTS');
+    inputs = inputs{1};
+    numFeatures = length(inputs);
+    numClasses = 2;
+    inputs = reshape(inputs, [1, 1, size(inputs, 1), size(inputs, 2)]);
+    targets = nn.get('NNClassifierData').get('TARGETS');
+    
+    % init layers
     layers = [
         imageInputLayer([1 1 numFeatures], 'Normalization', 'zscore', 'Name', 'input')
         fullyConnectedLayer(floor(1.5 * numFeatures), 'Name', 'fc1')
@@ -47,8 +68,25 @@ function layers = getLayers(nn, numFeatures, numClasses)
         fullyConnectedLayer(numClasses, 'Name', 'fc3')
         softmaxLayer('Name', 'sfmax1')
         classificationLayer('Name', 'output')];
-    lgraph = layerGraph(layers);
-    plot(lgraph)
+    
+    % plot layers
+    if nn.get('PLOT_LAYERS')
+        lgraph = layerGraph(layers);
+        plot(lgraph)
+    end
+    
+    % specify trianing parameters
+    options = trainingOptions('adam', ...
+        'MiniBatchSize', nn.get('MINI_BATCH_SIZE'), ...
+        'MaxEpochs', nn.get('MAX_EPOCHS'), ...
+        'Shuffle', nn.get('SHUFFLE'), ...
+        'Plots', nn.get('PLOT_TRAINING_PROGRESS'), ...
+        'Verbose', nn.get('VERBOSE')); 
+    
+    % train the neural network
+    net = trainNetwork(inputs, categorical(targets{1}), layers, options);
+    %value = nn.from_net(net);
+    value = {net};
+else
+    value = '';
 end
-
-%FIXME: tests
