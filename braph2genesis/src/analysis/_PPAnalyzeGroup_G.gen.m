@@ -234,7 +234,7 @@ function update(pr)
             set(pr.measure_tbl, 'ColumnWidth', {'auto', 'auto', 'auto', 'auto', 'auto', 'auto'})
         end
         
-        if isempty(pr.f_pg)
+        if ~check_graphics(pr.f_pg, 'figure')
             set(pr.plot_graph_btn, 'Enable', 'on');
         end        
     end
@@ -415,7 +415,6 @@ function cb_graph_ui_figure(pr)
     
     function cb_f_pg_close(~, ~)
         delete(pr.f_pg);
-        pr.f_pg = [];
         pr.update()
     end
     

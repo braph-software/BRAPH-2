@@ -1,5 +1,5 @@
 %% ¡header!
-PPMeasure_M < PlotPropMatrix (pr, plot property M of measure) is a plot of property M of measure.
+PPMeasure_M < PlotProp (pr, plot property M of measure) is a plot of property M of measure.
 
 %%% ¡description!
 PPMeasure_M plots a Measure result table and plot.
@@ -9,9 +9,9 @@ GUI, PlotElement, PlotProp, MultigraphBUD, MultigraphBUT.
 
 %% ¡properties!
 p
-measure_tbl
+measure_value_container
 measure_text
-slider 
+slider
 
 %% ¡methods!
 function h_panel = draw(pr, varargin)
@@ -30,21 +30,23 @@ function h_panel = draw(pr, varargin)
     %
     % see also update, redraw, refresh, settings, uipanel, isgraphics.
 
-    pr.p = draw@PlotPropMatrix(pr, varargin{:});
-
-    children = get(pr.p, 'Children');
-    for i = 1:1:length(children)
-        if check_graphics(children(i), 'uitable')
-            pr.measure_tbl = children(i);
-        end
-    end
-
     % create panel with slider
     el = pr.get('EL');
     prop = pr.get('PROP');
     value = el.get(prop);
     L = length(value);
-
+    
+    if Measure.is_global(el)
+        pr.measure_value_container = PlotGlobalMeasure('EL', el, 'PROP', prop, varargin{:});
+        pr.p = pr.measure_value_container.draw();
+    elseif Measure.is_nodal(el)
+        pr.measure_value_container = PlotNodalMeasure('EL', el, 'PROP', prop, varargin{:});
+        pr.p = pr.measure_value_container.draw();
+    else % binodal
+        pr.measure_value_container = PlotBinodalMeasure('EL', el, 'PROP', prop, varargin{:});
+        pr.p = pr.measure_value_container.draw();
+    end
+    
     % set on first layer
     pr.slider = uicontrol( ...
         'Parent', pr.p, ...
@@ -100,11 +102,8 @@ function update(pr)
     %
     % See also draw, redraw, refresh.
 
-    update@PlotProp(pr)
-
     el = pr.get('EL');
     prop = pr.get('PROP');
-    value = el.getr(prop);
 
     if el.isLocked(prop)
         set(pr.measure_tbl, ...
@@ -115,11 +114,8 @@ function update(pr)
 
     set(pr.measure_text, ...
         'String', num2str(round(get(pr.slider, 'Value'))));
-
-    set(pr.measure_tbl, ...
-        'Data', value{round(get(pr.slider, 'Value'))}', ...
-        'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-        'ColumnEditable', false)
+    
+    pr.measure_value_container.update(round(get(pr.slider, 'Value')));
 
 end
 function redraw(pr, varargin)
@@ -141,8 +137,6 @@ function redraw(pr, varargin)
     value = el.get(prop);
     L = length(value);
 
-    pr.redraw@PlotProp('Height', h + Sh + Th + Dh, varargin{:})
-
     set(pr.slider, ...
         'Units', 'normalized', ...
         'Position', [.01 (Th+Dh)/(h+Sh+Th+Dh) .97 (Th/(h+Sh+Th+Dh)-.02)] ...
@@ -154,14 +148,13 @@ function redraw(pr, varargin)
         );
 
     if L > 1
-        set(pr.measure_tbl, ...
-            'Units', 'normalized', ...
-            'Position', [.01 .02 .97 (Dh/(h+Sh+Th+Dh)-.02)] ...
-            )
+        pr.measure_value_container.redraw('Height', h + Sh + Th + Dh, varargin{:})
     else
-        set(pr.measure_tbl, ...
-            'Units', 'normalized', ...
-            'Position', [.01 .02 .97 (Dh/(h+Dh)-.02)] ...
-            )
+        if Measure.is_global(el)
+            pr.measure_value_container.redraw('EDITHEIGHT', 3.3)
+        else
+            pr.measure_value_container.redraw()
+        end
+        
     end
 end
