@@ -234,7 +234,9 @@ function update(pr)
             set(pr.measure_tbl, 'ColumnWidth', {'auto', 'auto', 'auto', 'auto', 'auto', 'auto'})
         end
         
-        set(pr.plot_graph_btn, 'Enable', 'on');
+        if isempty(pr.f_pg)
+            set(pr.plot_graph_btn, 'Enable', 'on');
+        end        
     end
 end
 function redraw(pr, varargin)
@@ -411,8 +413,10 @@ function cb_graph_ui_figure(pr)
         'CloseRequestFcn', {@cb_f_pg_close} ...
         );
     
-    function cb_f_pg_close(~, ~)        
-        pr.update() % re-activates the btns
+    function cb_f_pg_close(~, ~)
+        delete(pr.f_pg);
+        pr.f_pg = [];
+        pr.update()
     end
     
     set_braph2_icon(pr.f_pg)
@@ -533,14 +537,8 @@ function cb_close(pr)
     end
     
     % close plot graph figure
-    if check_graphics(pr.f_pg, 'figure')
-        children = get(pr.f_pg, 'Children');
-        for i = 1:1:length(children)
-            if check_graphics(children(i), 'uipanel') && strcmp(get(children(i), 'Tag'), 'h_panel')
-                pba = get(children(i), 'UserData');
-                pba.cb_close()
-            end
-        end
+    if ~isempty(pr.f_pg) && check_graphics(pr.f_pg, 'figure')
+        delete(pr.f_pg);
     end
     
     % close graph class
