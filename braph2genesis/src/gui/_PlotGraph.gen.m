@@ -53,6 +53,13 @@ function [h_figure, h_axes, subpanel] = draw(pr, varargin)
 
     pr.h_figure = get(pr.pp, 'Parent');
     
+    % overwrite close req
+    set(pr.pp, 'DeleteFcn', {@cb_close_fs})
+    
+    function cb_close_fs(~, ~)
+        close(pr.h_settings)
+    end
+    
     if pr.get('SUBMENU')
         subpanel = uipanel(pr.h_figure, ...
             'BackGroundColor', 'w', ...
