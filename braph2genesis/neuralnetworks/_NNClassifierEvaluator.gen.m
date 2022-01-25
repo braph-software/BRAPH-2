@@ -8,7 +8,7 @@ ROC curve (AUC) and the confusion matrix.
 
 %% ¡props!
 %%% ¡prop!
-AUC (result, scalar) is an area under the curve score obtained from the neural network prediction.
+AUC (result, scalar) is an area under the curve score obtained from the dataset.
 %%%% ¡calculate!
 pred = nne.get('NN_PREDICTION');
 targets = nne.get('NN_DATA').get('TARGETS');
@@ -20,7 +20,7 @@ class_names = net.Layers(end).Classes;
 value = auc;
 
 %%% ¡prop!
-VAL_AUC (result, scalar) is an area under the curve score obtained from the neural network prediction for validation set.
+VAL_AUC (result, scalar) is an area under the curve score obtained from the validation set.
 %%%% ¡calculate!
 pred = nne.get('NN_VAL_PREDICTION');
 targets = nne.get('NN_DATA').get('VAL_TARGETS');
@@ -32,7 +32,7 @@ class_names = net.Layers(end).Classes;
 value = auc;
 
 %%% ¡prop!
-CONFUSION_MATRIX (result, matrix) is a confusion matrix obtained from the neural network prediction by a cut-off of 0.5.
+CONFUSION_MATRIX (result, matrix) is a confusion matrix obtained with a cut-off of 0.5.
 %%%% ¡calculus!
 value = 0
 
@@ -55,7 +55,7 @@ inputs = reshape(inputs, [1, 1, size(inputs,1), size(inputs,2)]);
 value = net.predict(inputs);
 
 %%% ¡prop!
-NN_VAL_PREDICTION (result, matrix) is an output matrix of prediction from a neural network model for validation set.
+NN_VAL_PREDICTION (result, matrix) is an output matrix of prediction for the validation set.
 %%%% ¡calculate!
 nnd = nne.get('NN_DATA');
 classifier = nne.get('NN_MODEL');

@@ -22,7 +22,7 @@ DATA (data, item)
 'NNData'
 
 %%% ¡prop!
-TRAINED_NN (result, cell) is a trained neural network model.
+TRAINED_NN (result, cell) is a trained neural network.
 
 % % % %%%% ¡gui!
 % % % pl = PlotPropNNAnalysis('EL', nn, 'PROP', BaseNN.NEURAL_NETWORK_ANALYSIS, varargin{:});

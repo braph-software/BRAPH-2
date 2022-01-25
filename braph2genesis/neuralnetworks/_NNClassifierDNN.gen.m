@@ -2,7 +2,7 @@
 NNClassifierDNN < NNBase (nn, classifier with dense layers) is a binary neural network classifier.
 
 %% ¡description!
-This classifier with dense layers is trained for a classification of two groups of subject.
+This classifier with  with fully-connected layers is trained for a classification of two groups of subject.
 
 %% ¡props!
 %%% ¡prop!
@@ -21,26 +21,26 @@ MAX_EPOCHS (data, scalar) is the maximum number of epochs.
 20
 
 %%% ¡prop!
-SHUFFLE (data, OPTION) is a option for data shuffling.
+SHUFFLE (data, OPTION) is an option for data shuffling.
 %%%% ¡settings!
 {'once' 'never' 'every-epoch'}
 %%%% ¡default!
 'once'
 
 %%% ¡prop!
-PLOT_TRAINING_PROGRESS (data, OPTION) is an option for plots of training-progress during network training.
+PLOT_TRAINING_PROGRESS (data, OPTION) is an option for plots of training-progress.
 %%%% ¡settings!
 {'none' 'training-progress'}
 %%%% ¡default!
 'none'
 
 %%% ¡prop!
-VERBOSE (data, logical) is an option for plots of training-progress during network training.
+VERBOSE (data, logical) is an indictor to display trining progress information.
 %%%% ¡default!
 false
 
 %%% ¡prop!
-PLOT_LAYERS (data, logical) is an option for plots of the layers.
+PLOT_LAYERS (data, logical) is an option for the plot of the layers.
 %%%% ¡default!
 false
 
@@ -85,6 +85,8 @@ if nn.check_nn_toolboxes()
     
     % train the neural network
     net = trainNetwork(inputs, categorical(targets{1}), layers, options);
+
+    % transform the net object to a cell
     value = nn.from_net(net);
 else
     value = '';

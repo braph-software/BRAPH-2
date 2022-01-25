@@ -7,7 +7,7 @@ with connectivity data. Feature selection procedure can be implemented.
 
 %% ¡props_update!
 %%% ¡prop!
-TRAIN_G_DICT_1 (result, idict) is the graph (GraphWU) ensemble obtained from subject group 1.
+TRAIN_G_DICT_1 (result, idict) is the graph (GraphWU) from subject group 1 in training set.
 %%%% ¡settings!
 'GraphWU'
 %%%% ¡default!
@@ -33,7 +33,7 @@ end
 value = g_dict;
 
 %%% ¡prop!
-TRAIN_G_DICT_2 (result, idict) is the graph (GraphWU) ensemble obtained from subject group 2.
+TRAIN_G_DICT_2 (result, idict) is the graph (GraphWU) from subject group 2 in training set.
 %%%% ¡settings!
 'GraphWU'
 %%%% ¡default!
@@ -59,7 +59,7 @@ end
 value = g_dict;
 
 %%% ¡prop!
-VAL_G_DICT_1 (result, idict) is the graph (GraphWU) ensemble obtained from subject group 1.
+VAL_G_DICT_1 (result, idict) is the graph (GraphWU) from subject group 1 in validation set.
 %%%% ¡settings!
 'GraphWU'
 %%%% ¡default!
@@ -85,7 +85,7 @@ end
 value = g_dict;
 
 %%% ¡prop!
-VAL_G_DICT_2 (result, idict) is the graph (GraphWU) ensemble obtained from subject group 2.
+VAL_G_DICT_2 (result, idict) is the graph (GraphWU) from subject group 2 in validation set.
 %%%% ¡settings!
 'GraphWU'
 %%%% ¡default!

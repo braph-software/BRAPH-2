@@ -9,17 +9,17 @@ Use one of its subclasses instead.
 
 %% ¡props!
 %%% ¡prop!
-GR_1 (data, item) is subject group 1.
+GR_1 (data, item) is the subject group 1.
 %%%% ¡settings!
 'Group'
 
 %%% ¡prop!
-GR_2 (data, item) is subject group 2.
+GR_2 (data, item) is the subject group 2.
 %%%% ¡settings!
 'Group'
 
 %%% ¡prop!
-TRAIN_GR_1 (result, item) is subject group 1.
+TRAIN_GR_1 (result, item) is the subject group 1 for training set.
 %%%% ¡settings!
 'Group'
 %%%% ¡calculate!
@@ -47,7 +47,7 @@ train_gr_1.set('SUB_DICT', subdict);
 value = train_gr_1;
 
 %%% ¡prop!
-TRAIN_GR_2 (result, item) is subject group 2.
+TRAIN_GR_2 (result, item) is the subject group 2 for taining set.
 %%%% ¡settings!
 'Group'
 %%%% ¡calculate!
@@ -75,7 +75,7 @@ train_gr_2.set('SUB_DICT', subdict);
 value = train_gr_2;
 
 %%% ¡prop!
-VAL_GR_1 (result, item) is subject group 1.
+VAL_GR_1 (result, item) is the subject group 1 for validation set.
 %%%% ¡settings!
 'Group'
 %%%% ¡calculate!
@@ -103,7 +103,7 @@ val_gr_1.set('SUB_DICT', subdict);
 value = val_gr_1;
 
 %%% ¡prop!
-VAL_GR_2 (result, item) is subject group 2.
+VAL_GR_2 (result, item) is the subject group 2 for validation set.
 %%%% ¡settings!
 'Group'
 %%%% ¡calculate!
@@ -131,7 +131,7 @@ val_gr_2.set('SUB_DICT', subdict);
 value = val_gr_2;
 
 %%% ¡prop!
-TRAIN_VAL_INDEX_GR_1 (data, rvector) is a vector sepcifying which subjects belong to validation set.
+TRAIN_VAL_INDEX_GR_1 (data, rvector) is a vector stating which subjects belong to validation set.
 %%%% ¡conditioning!
 if isa(value, 'double')
     num_val = value * nnd.get('GR_1').get('SUB_DICT').length();
@@ -145,7 +145,7 @@ end
 
 
 %%% ¡prop!
-TRAIN_VAL_INDEX_GR_2 (data, rvector) is a vector sepcifying which subjects belong to validation set.
+TRAIN_VAL_INDEX_GR_2 (data, rvector) is a vector stating which subjects belong to validation set.
 %%%% ¡conditioning!
 if isa(value, 'double')
     num_val = value * nnd.get('GR_2').get('SUB_DICT').length();
@@ -163,10 +163,10 @@ FEATURE_DENSITY (parameter, scalar) is the density of selected features.
 0.05
 
 %%% ¡prop!
-GIVEN_FEATURE_MASK (data, cell) is a mask for selected features.
+GIVEN_FEATURE_MASK (data, cell) is a given mask for selected features.
 
 %%% ¡prop!
-CALCULATED_FEATURE_MASK (result, cell) is a mask for selected features.
+CALCULATED_FEATURE_MASK (result, cell) is a mask generated with training set for selected features.
 %%%% ¡calculate!
 density = nnd.get('FEATURE_DENSITY');
 
@@ -219,12 +219,12 @@ VAL_G_DICT_2 (result, idict) is the graph obtained from subject group 2 in valid
 'Graph'
 
 %%% ¡prop!
-INPUTS (result, cell) is the dataset with feature selection.
+INPUTS (result, cell) is the inputs for training or testing a neural network.
 %%%% ¡calculate!
 value = nnd.input_construction(nnd.memorize('TRAIN_G_DICT_1'), nnd.memorize('TRAIN_G_DICT_2'));
 
 %%% ¡prop!
-VAL_INPUTS (result, cell) is the validation dataset with feature selection.
+VAL_INPUTS (result, cell) is the inputs from validation set for testing a neural network.
 %%%% ¡calculate!
 value = nnd.input_construction(nnd.memorize('VAL_G_DICT_1'), nnd.memorize('VAL_G_DICT_2'));
 
@@ -253,13 +253,14 @@ value = unique(nd.get('TARGETS'));
 function inputs = input_construction(nnd, g_dict_1, g_dict_2)
     %INPUT_CONSTRUCTION constructs the inputs for neural networks.
     % 
-    % INPUT = INPUT_CONSTRUCTION(NN, G_DICT_1, G_DICT_2) constructs
-    % the input for training or testing neural networks. The connectivity
-    % matrices will firstly extracted from graph dict G_DICT_1 annd
-    % G_DICT_2. Then the extracted features will be masked by the feature
-    % mask. The masked features will construct the eventual input for
-    % the neural network.
-
+    % INPUTS = INPUT_CONSTRUCTION(NN, G_DICT_1, G_DICT_2) constructs
+    %  the input for training or testing neural networks. The connectivity
+    %  matrices will firstly extracted from graph dict G_DICT_1 and
+    %  G_DICT_2. Then the extracted features will be masked by the feature
+    %  mask. The masked features will construct the eventual inputs INPUTS 
+    %  for the neural network.
+    
+    % get the connectivity matrices 
     adjs_gr_1 = g_dict_1.getItems();
     data_gr_1 = {};
     for i = 1:length(adjs_gr_1)
