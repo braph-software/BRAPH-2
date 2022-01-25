@@ -13,12 +13,12 @@ NN_DATA (data, item) is a dataset for neural networks.
 'NNData'
 
 %%% ¡prop!
-NN_TRAINED (data, item) is a trained neural network.
+NN_MODEL (data, item) is a neural network that need to be evaluated.
 %%%% ¡settings!
 'NNBase'
 
 %%% ¡prop!
-NN_PREDICTION (result, matrix) is the predictions from neural networks.
+NN_PREDICTION (result, matrix) is the predictions from a neural network.
 
 %%% ¡prop!
-NN_VAL_PREDICTION (result, matrix) is the predictions from neural networks for validation set.
+NN_VAL_PREDICTION (result, matrix) is the predictions from a neural network for validation set.

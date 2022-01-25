@@ -12,9 +12,8 @@ AUC (result, scalar) is an area under the curve score obtained from the neural n
 %%%% ¡calculate!
 pred = nne.get('NN_PREDICTION');
 targets = nne.get('NN_DATA').get('TARGETS');
-%nn = nne.get('NN_TRAINED').to_net();
-nn = nne.get('NN_TRAINED').get('TRAINED_NN');
-net = nn{1};
+classifier = nne.get('NN_MODEL');
+net = classifier.to_net(classifier.get('TRAINED_NN'));
 class_names = net.Layers(end).Classes; 
 [X, Y, T, auc] = perfcurve(categorical(targets{1}), pred(:,2), class_names(2));
 
@@ -25,9 +24,8 @@ VAL_AUC (result, scalar) is an area under the curve score obtained from the neur
 %%%% ¡calculate!
 pred = nne.get('NN_VAL_PREDICTION');
 targets = nne.get('NN_DATA').get('VAL_TARGETS');
-%nn = nne.get('NN_TRAINED').to_net();
-nn = nne.get('NN_TRAINED').get('TRAINED_NN');
-net = nn{1};
+classifier = nne.get('NN_MODEL');
+net = classifier.to_net(classifier.get('TRAINED_NN'));
 class_names = net.Layers(end).Classes; 
 [X, Y, T, auc] = perfcurve(categorical(targets{1}), pred(:,2), class_names(2));
 
@@ -48,9 +46,8 @@ NN_DATA (data, item) is a dataset for testing the neural networks.
 NN_PREDICTION (result, matrix) is an output matrix of prediction from a neural network model.
 %%%% ¡calculate!
 nnd = nne.get('NN_DATA');
-%nn = nne.get('NN_TRAINED').to_net();
-nn = nne.get('NN_TRAINED').get('TRAINED_NN');
-net = nn{1};
+classifier = nne.get('NN_MODEL');
+net = classifier.to_net(classifier.get('TRAINED_NN'));
 inputs = nnd.get('INPUTS');
 inputs = inputs{1};
 inputs = reshape(inputs, [1, 1, size(inputs,1), size(inputs,2)]);
@@ -61,9 +58,8 @@ value = net.predict(inputs);
 NN_VAL_PREDICTION (result, matrix) is an output matrix of prediction from a neural network model for validation set.
 %%%% ¡calculate!
 nnd = nne.get('NN_DATA');
-%nn = nne.get('NN_TRAINED').to_net();
-nn = nne.get('NN_TRAINED').get('TRAINED_NN');
-net = nn{1};
+classifier = nne.get('NN_MODEL');
+net = classifier.to_net(classifier.get('TRAINED_NN'));
 inputs = nnd.get('VAL_INPUTS');
 inputs = inputs{1};
 inputs = reshape(inputs, [1, 1, size(inputs,1), size(inputs,2)]);

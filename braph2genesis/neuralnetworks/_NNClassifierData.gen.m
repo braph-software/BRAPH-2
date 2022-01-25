@@ -35,15 +35,13 @@ train_gr_1.set( ...
     );
 
 subdict = train_gr_1.get('SUB_DICT');
-
 sub = nnd.get('GR_1').get('SUB_DICT').getItems();
-selected_sub = sub(find(nnd.get('TRAIN_VAL_INDEX_GR_1') == 0));
-
+selected_idx = setdiff(1:length(sub), nnd.get('TRAIN_VAL_INDEX_GR_1'));
+selected_sub = sub(selected_idx);
 for i = 1:1:length(selected_sub)
     sub = selected_sub{i};
     subdict.add(sub);
 end
-
 train_gr_1.set('SUB_DICT', subdict);
 
 value = train_gr_1;
@@ -65,15 +63,13 @@ train_gr_2.set( ...
     );
 
 subdict = train_gr_2.get('SUB_DICT');
-
 sub = nnd.get('GR_2').get('SUB_DICT').getItems();
-selected_sub = sub(find(nnd.get('TRAIN_VAL_INDEX_GR_2') == 0));
-
+selected_idx = setdiff(1:length(sub), nnd.get('TRAIN_VAL_INDEX_GR_2'));
+selected_sub = sub(selected_idx);
 for i = 1:1:length(selected_sub)
     sub = selected_sub{i};
     subdict.add(sub);
 end
-
 train_gr_2.set('SUB_DICT', subdict);
 
 value = train_gr_2;
@@ -95,15 +91,13 @@ val_gr_1.set( ...
     );
 
 subdict = val_gr_1.get('SUB_DICT');
-
 sub = nnd.get('GR_1').get('SUB_DICT').getItems();
-selected_sub = sub(find(nnd.get('TRAIN_VAL_INDEX_GR_1') == 1));
-
+selected_idx = nnd.get('TRAIN_VAL_INDEX_GR_1');
+selected_sub = sub(selected_idx);
 for i = 1:1:length(selected_sub)
     sub = selected_sub{i};
     subdict.add(sub);
 end
-
 val_gr_1.set('SUB_DICT', subdict);
 
 value = val_gr_1;
@@ -125,40 +119,43 @@ val_gr_2.set( ...
     );
 
 subdict = val_gr_2.get('SUB_DICT');
-
-% adds subjects
 sub = nnd.get('GR_2').get('SUB_DICT').getItems();
-selected_sub = sub(find(nnd.get('TRAIN_VAL_INDEX_GR_2') == 1));
-
+selected_idx = nnd.get('TRAIN_VAL_INDEX_GR_2');
+selected_sub = sub(selected_idx);
 for i = 1:1:length(selected_sub)
     sub = selected_sub{i};
     subdict.add(sub);
 end
-
 val_gr_2.set('SUB_DICT', subdict);
 
 value = val_gr_2;
 
 %%% ¡prop!
-TRAIN_VAL_INDEX_GR_1 (data, rvector) is a vector sepcify which subject in group 1 goes to validation set. It can also be a scalar that represents the proportion of the dataset to include in the test split.
+TRAIN_VAL_INDEX_GR_1 (data, rvector) is a vector sepcifying which subjects belong to validation set.
 %%%% ¡conditioning!
 if isa(value, 'double')
     num_val = value * nnd.get('GR_1').get('SUB_DICT').length();
     num_train = nnd.get('GR_1').get('SUB_DICT').length() - num_val;
     value = [ones(1, num_val), zeros(1, num_train)];
     value = value(randperm(length(value)));
+    value = find(value == 1);
 end
+%%%% ¡default!
+[]
 
 
 %%% ¡prop!
-TRAIN_VAL_INDEX_GR_2 (data, rvector) is a vector sepcify which subject in group 2 goes to validation set. It can also be a scalar that represents the proportion of the dataset to include in the test split.
+TRAIN_VAL_INDEX_GR_2 (data, rvector) is a vector sepcifying which subjects belong to validation set.
 %%%% ¡conditioning!
 if isa(value, 'double')
-    num_val = value*nnd.get('GR_2').get('SUB_DICT').length();
+    num_val = value * nnd.get('GR_2').get('SUB_DICT').length();
     num_train = nnd.get('GR_2').get('SUB_DICT').length() - num_val;
     value = [ones(1, num_val), zeros(1, num_train)];
     value = value(randperm(length(value)));
+    value = find(value == 1);
 end
+%%%% ¡default!
+[]
 
 %%% ¡prop!
 FEATURE_DENSITY (parameter, scalar) is the density of selected features.
@@ -171,7 +168,8 @@ GIVEN_FEATURE_MASK (data, cell) is a mask for selected features.
 %%% ¡prop!
 CALCULATED_FEATURE_MASK (result, cell) is a mask for selected features.
 %%%% ¡calculate!
-top_ratio = nnd.get('FEATURE_DENSITY');
+density = nnd.get('FEATURE_DENSITY');
+
 adjs_gr_1 = nnd.get('TRAIN_G_DICT_1').getItems();
 data_gr_1 = {};
 for i = 1:length(adjs_gr_1)
@@ -190,13 +188,13 @@ y = nnd.get('TARGETS');
 y = categorical(y{1});
 for j = 1:size(data{1},2)
     for k = 1:size(data{1},2)
-        data_per_feature = cellfun(@(v)v(j,k),data);
-        label = onehotencode(y',2);
-        mask(j,k) = nnd.mutual_information_analysis(data_per_feature, label', 5);
+        data_per_feature = cellfun(@(v)v(j, k), data);
+        label = onehotencode(y', 2);
+        mask(j, k) = nnd.mutual_information_analysis(data_per_feature, label', 5);
     end
 end
 [~,idx_all] = sort(mask(:), 'descend');
-num_top_idx = floor(top_ratio*size(mask,1)*size(mask,2));
+num_top_idx = floor(density*size(mask,1)*size(mask,2));
 
 value = {idx_all(1:num_top_idx)};
 
@@ -223,12 +221,12 @@ VAL_G_DICT_2 (result, idict) is the graph obtained from subject group 2 in valid
 %%% ¡prop!
 INPUTS (result, cell) is the dataset with feature selection.
 %%%% ¡calculate!
-value = nnd.input_construction(nnd.get('TRAIN_G_DICT_1'), nnd.get('TRAIN_G_DICT_2'));
+value = nnd.input_construction(nnd.memorize('TRAIN_G_DICT_1'), nnd.memorize('TRAIN_G_DICT_2'));
 
 %%% ¡prop!
 VAL_INPUTS (result, cell) is the validation dataset with feature selection.
 %%%% ¡calculate!
-value = nnd.input_construction(nnd.get('VAL_G_DICT_1'), nnd.get('VAL_G_DICT_2'));
+value = nnd.input_construction(nnd.memorize('VAL_G_DICT_1'), nnd.memorize('VAL_G_DICT_2'));
 
 %%% ¡prop!
 TARGETS (result, cell) is the label for the dataset.
@@ -246,10 +244,14 @@ y2 = repmat(string(nnd.get('VAL_GR_2').get('ID')), nnd.get('VAL_GR_2').get('SUB_
 
 value = {[y1; y2]'};
 
+%%% ¡prop!
+label_name (result, cell) is the label names of the classifier
+%%%% ¡calculate!
+value = unique(nd.get('TARGETS'));
 
 %% ¡methods!
-function input = input_construction(nnd, g_dict_1, g_dict_2)
-    %INPUT_CONSTRUCTION construct the input for neural networks.
+function inputs = input_construction(nnd, g_dict_1, g_dict_2)
+    %INPUT_CONSTRUCTION constructs the inputs for neural networks.
     % 
     % INPUT = INPUT_CONSTRUCTION(NN, G_DICT_1, G_DICT_2) constructs
     % the input for training or testing neural networks. The connectivity
@@ -274,18 +276,18 @@ function input = input_construction(nnd, g_dict_1, g_dict_2)
     
     % get the feature mask
     if isempty(nnd.get('GIVEN_FEATURE_MASK'))
-        mask = nnd.get('CALCULATED_FEATURE_MASK');
+        mask = nnd.memorize('CALCULATED_FEATURE_MASK');
     else
         mask = nnd.get('GIVEN_FEATURE_MASK');
     end
     
     % construct the input
     if nnd.get('FEATURE_DENSITY') == 1.0
-        input = cellfun(@(v)v(:), data, 'UniformOutput', false);
+        inputs = cellfun(@(v)v(:), data, 'UniformOutput', false);
     else
-        input = cellfun(@(v)v(mask{1}), data, 'UniformOutput', false);
+        inputs = cellfun(@(v)v(mask{1}), data, 'UniformOutput', false);
     end
-    input = {cat(2, input{:})};
+    inputs = {cat(2, inputs{:})};
 end
 
 function [mutinf] = mutual_information_analysis(nnd, X, Y, n)

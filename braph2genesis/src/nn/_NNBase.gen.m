@@ -23,10 +23,6 @@ DATA (data, item)
 
 %%% ¡prop!
 TRAINED_NN (result, cell) is a trained neural network model.
-%%%% ¡calculate!
-value = nn.from_net(net);
-
-%FIXME: check format of this prop - check that it works for all NN
 
 % % % %%%% ¡gui!
 % % % pl = PlotPropNNAnalysis('EL', nn, 'PROP', BaseNN.NEURAL_NETWORK_ANALYSIS, varargin{:});
@@ -52,13 +48,12 @@ function installed = check_nn_toolboxes(nn) %FIXME
             '<a href="matlab: web(''https://se.mathworks.com/matlabcentral/fileexchange/67296-deep-learning-toolbox-converter-for-onnx-model-format'') ">Deep Learning Toolbox Converter for ONNX Model Format</a>'])
     end
 end
-function nn_str = from_net(nn, net)
-%FIXME: update function name everywhere
+function nn_cell = from_net(nn, net)
     %FROM_NET transforms the build-in neural network object in matlab 
-    % to a string format that can be saved as a string in braph.
+    % to a string format that can be saved as cell in braph.
     % 
-    % NN_STR = FROM_NET(NN, NET) transforms the build-in neural network
-    %  object NET to a string format. Firstly, the NET is exported to an
+    % NN_CELL = FROM_NET(NN, NET) transforms the build-in neural network
+    %  object NET to a cell format. Firstly, the NET is exported to an
     %  ONNX file and then the file is imported as a string format which 
     %  can be saved in braph.
     %  Typically, this method is called internally when a neural network
@@ -66,7 +61,7 @@ function nn_str = from_net(nn, net)
     
     warning('off', 'MATLAB:mir_warning_unrecognized_pragma')
 
-    directory = [fileparts(which('test_braph2')) filesep 'trial_nn_to_be_erased'];
+    directory = [fileparts(which('test_braph2')) filesep 'trial_nn_from_matlab_to_be_erased'];
     if ~exist(directory, 'dir')
         mkdir(directory)
     end
@@ -75,13 +70,12 @@ function nn_str = from_net(nn, net)
     exportONNXNetwork(net, filename);
     
     fileID = fopen(filename);
-    nn_str = {fread(fileID), net.Layers(end).Classes};	    
+    nn_cell = {fread(fileID)};	
     fclose(fileID);
     
     rmdir(directory, 's')
 end
-function net = to_net(nn)
-%FIXME: update function name everywhere
+function net = to_net(nn, saved_nn)
     %TO_NET transforms the saved neural network 
     % in braph to a build-in object in matlab.
     %
@@ -93,31 +87,20 @@ function net = to_net(nn)
     %  network model is evaluated by a test data.
 
     warning('off', 'MATLAB:mir_warning_unrecognized_pragma')
+    warning('off','nnet_cnn:internal:cnn:analyzer:NetworkAnalyzer:NetworkHasWarnings')
 
-    directory = [fileparts(which('test_braph2')) filesep 'trial_nn_to_be_erased'];
+    directory = [fileparts(which('test_braph2')) filesep 'trial_nn_from_braph_to_be_erased'];
     if ~exist(directory, 'dir')
         mkdir(directory)
     end
-    filename = [directory filesep 'nn_from_string_to_be_erased.onnx'];
+    filename = [directory filesep 'nn_from_braph_to_be_erased.onnx'];
 
     fileID = fopen(filename, 'w');
-    trained_nn = nn.get('TRAINED_NN');
-    fwrite(fileID, trained_nn{1});
+    fwrite(fileID, saved_nn{1});
     fclose(fileID);
-    
-    net = importONNXNetwork(filename, 'OutputLayerType', 'classification', 'Classes', trained_nn{2}, 'InputDataFormats', 'BCSS');
-    
+   
+    lgraph = importONNXLayers(filename, InputDataFormats = "BCSS");
+    net = assembleNetwork(lgraph)
+
     rmdir(directory, 's')
 end
-
-%FIXME: test(s) to demonstrate how this works with various NN
-%% ¡tests!
-
-%%% ¡test!
-%%%% ¡name!
-neural network saving and transforming
-%%%% ¡code!
-nn = NNbase();
-assert(nn.to_net(get('TRAINED_NN')), ...
-    net, ...
-    'Problems saving a neural network.')

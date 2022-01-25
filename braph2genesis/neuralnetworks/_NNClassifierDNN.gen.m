@@ -37,12 +37,12 @@ PLOT_TRAINING_PROGRESS (data, OPTION) is an option for plots of training-progres
 %%% ¡prop!
 VERBOSE (data, logical) is an option for plots of training-progress during network training.
 %%%% ¡default!
-0
+false
 
 %%% ¡prop!
 PLOT_LAYERS (data, logical) is an option for plots of the layers.
 %%%% ¡default!
-0
+false
 
 %% ¡props_update!
 %%% ¡prop!
@@ -59,7 +59,7 @@ if nn.check_nn_toolboxes()
     
     % init layers
     layers = [
-        imageInputLayer([1 1 numFeatures], 'Normalization', 'zscore', 'Name', 'input')
+        imageInputLayer([1 1 numFeatures], 'Name', 'input')
         fullyConnectedLayer(floor(1.5 * numFeatures), 'Name', 'fc1')
         batchNormalizationLayer('Name', 'batchNormalization1')
         fullyConnectedLayer(floor(1.5 * numFeatures), 'Name', 'fc2')
@@ -85,8 +85,64 @@ if nn.check_nn_toolboxes()
     
     % train the neural network
     net = trainNetwork(inputs, categorical(targets{1}), layers, options);
-    %value = nn.from_net(net);
-    value = {net};
+    value = nn.from_net(net);
 else
     value = '';
+end
+
+%% ¡methods!
+function nn_cell = from_net(nn, net)
+    %FROM_NET transforms the build-in neural network object in matlab 
+    % to a string format that can be saved as cell in braph.
+    % 
+    % NN_CELL = FROM_NET(NN, NET) transforms the build-in neural network
+    %  object NET to a cell format. Firstly, the NET is exported to an
+    %  ONNX file and then the file is imported as a string format which 
+    %  can be saved in braph.
+    %  Typically, this method is called internally when a neural network
+    %  model is trained and ready to be saved in braph.
+    
+    warning('off', 'MATLAB:mir_warning_unrecognized_pragma')
+
+    directory = [fileparts(which('test_braph2')) filesep 'trial_nn_from_matlab_to_be_erased'];
+    if ~exist(directory, 'dir')
+        mkdir(directory)
+    end
+    filename = [directory filesep 'nn_from_matlab_to_be_erased.onnx'];
+
+    exportONNXNetwork(net, filename);
+    
+    fileID = fopen(filename);
+    nn_cell = {fread(fileID), net.Layers(end).Classes};		
+    fclose(fileID);
+    
+    rmdir(directory, 's')
+end
+function net = to_net(nn, saved_nn)
+    %TO_NET transforms the saved neural network 
+    % in braph to a build-in object in matlab.
+    %
+    % NET = TO_NET(NN) transforms the saved neural network in braph
+    %  to a build-in object in matlab. Firstly the saved neural network
+    %  in braph is exported as an ONNX file, and then the file is 
+    %  imported as a build-in neural network object in matlab.
+    %  Typically, this method is called internally when a saved neural 
+    %  network model is evaluated by a test data.
+
+    warning('off', 'MATLAB:mir_warning_unrecognized_pragma')
+    warning('off','nnet_cnn:internal:cnn:analyzer:NetworkAnalyzer:NetworkHasWarnings')
+
+    directory = [fileparts(which('test_braph2')) filesep 'trial_nn_from_braph_to_be_erased'];
+    if ~exist(directory, 'dir')
+        mkdir(directory)
+    end
+    filename = [directory filesep 'nn_from_braph_to_be_erased.onnx'];
+
+    fileID = fopen(filename, 'w');
+    fwrite(fileID, saved_nn{1});
+    fclose(fileID);
+   
+    net = importONNXNetwork(filename, 'InputDataFormats', 'BCSS', 'OutputLayerType' , 'classification', 'Classes', saved_nn{2});
+
+    rmdir(directory, 's')
 end
