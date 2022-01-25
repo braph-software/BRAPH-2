@@ -341,7 +341,7 @@ function cb_measure_value(pr)
         end
         result_measure = graph.getMeasure(measure);
         result_measure.memorize('M');
-        pr.f_m{i} = GUI('pe', result_measure, 'POSITION', [x y w h]).draw();
+        pr.f_m{i} = GUI('pe', result_measure, 'POSITION', [x y w h], 'CLOSEREQ', false).draw();
         pr.already_calculated{i} = 'C';
     end
 
