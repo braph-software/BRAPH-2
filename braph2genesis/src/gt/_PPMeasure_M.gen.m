@@ -37,13 +37,13 @@ function h_panel = draw(pr, varargin)
     L = length(value);
     
     if Measure.is_global(el)
-        pr.measure_value_container = PlotGlobalMeasure('EL', el, 'PROP', prop, varargin{:});
+        pr.measure_value_container = PlotGlobalMeasure('EL', el, 'PROP', prop, 'ID', 'm', 'TITLE', 'M', 'BKGCOLOR', [0.8 0.5 0.2]);
         pr.p = pr.measure_value_container.draw();
     elseif Measure.is_nodal(el)
-        pr.measure_value_container = PlotNodalMeasure('EL', el, 'PROP', prop, varargin{:});
+        pr.measure_value_container = PlotNodalMeasure('EL', el, 'PROP', prop, 'ID', 'm', 'TITLE', 'M', 'BKGCOLOR', [0.8 0.5 0.2]);
         pr.p = pr.measure_value_container.draw();
     else % binodal
-        pr.measure_value_container = PlotBinodalMeasure('EL', el, 'PROP', prop, varargin{:});
+        pr.measure_value_container = PlotBinodalMeasure('EL', el, 'PROP', prop, 'ID', 'm', 'TITLE', 'M', 'BKGCOLOR', [0.8 0.5 0.2]);
         pr.p = pr.measure_value_container.draw();
     end
     

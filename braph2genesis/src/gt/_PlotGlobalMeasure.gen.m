@@ -34,7 +34,7 @@ function h_panel = draw(pl, varargin)
     % retrieves the handle of the table
     children = get(pl.p, 'Children');
     for i = 1:1:length(children)
-        if check_graphics(children(i), 'uicontrol') && isequal(children(i).style, 'edit')
+        if check_graphics(children(i), 'edit')
             pl.edit_value = children(i);
         end
     end
@@ -57,13 +57,13 @@ function update(pl, layer)
 
     update@PlotProp(pl)
     
-    el = pr.get('EL');
-    prop = pr.get('PROP');
+    el = pl.get('EL');
+    prop = pl.get('PROP');
     value = el.getr(prop);
 
     set(pl.edit_value, ...
         'String', value{layer}, ...
-        'Enable', pr.get('ENABLE') ...
+        'Enable', pl.get('ENABLE') ...
         )
 end
 function redraw(pl, varargin)

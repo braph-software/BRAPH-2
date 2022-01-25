@@ -57,12 +57,12 @@ function update(pl, layer)
 
     update@PlotProp(pl)
     
-    el = pr.get('EL');
-    prop = pr.get('PROP');
+    el = pl.get('EL');
+    prop = pl.get('PROP');
     value = el.getr(prop);
     
     measure = pl.get('EL');
-    br_dict = measure.get('G').get('BA').get('BR_DICT');
+    br_dict = measure.get('G').get('BRAINATLAS').get('BR_DICT');
 
     br_ids = cell(br_dict.length(), 1);
     for i = 1:1:br_dict.length()
@@ -75,7 +75,7 @@ function update(pl, layer)
     end
 
     set(pl.table_value, ...
-        'Data', value{layer}', ...
+        'Data', value{layer}, ...
         'ColumnName', {}, ...
         'RowName', br_ids ...
         )
