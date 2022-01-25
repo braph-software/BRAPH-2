@@ -28,6 +28,13 @@ SHUFFLE (data, OPTION) is an option for data shuffling.
 'once'
 
 %%% ¡prop!
+SOLVER (data, OPTION) is an option for solver.
+%%%% ¡settings!
+{'sgdm' 'rmsprop' 'adam'}
+%%%% ¡default!
+'adam'
+
+%%% ¡prop!
 PLOT_TRAINING_PROGRESS (data, OPTION) is an option for plots of training-progress.
 %%%% ¡settings!
 {'none' 'training-progress'}
@@ -76,7 +83,7 @@ if nn.check_nn_toolboxes()
     end
     
     % specify trianing parameters
-    options = trainingOptions('adam', ...
+    options = trainingOptions(nn.get('SOLVER'), ...
         'MiniBatchSize', nn.get('MINI_BATCH_SIZE'), ...
         'MaxEpochs', nn.get('MAX_EPOCHS'), ...
         'Shuffle', nn.get('SHUFFLE'), ...
