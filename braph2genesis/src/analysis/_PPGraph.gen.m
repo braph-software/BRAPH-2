@@ -26,6 +26,7 @@ selected
 already_calculated
 f_m % array of measure class figures
 f_pg % figure for plot graph
+f_g % figure for class graph
 plot_graph
 
 %% ¡props_update!
@@ -284,9 +285,9 @@ function cb_graph_value(pr)
     % TODO: check this part of the code once GUI is finalized
     value = el.getr(prop);
     if isa(value, 'NoValue')
-        GUI('PE', el.getPropDefault(prop)).draw()
+        pr.f_g = GUI('PE', el.getPropDefault(prop), 'CLOSEREQ', false).draw()
     else
-        GUI('PE', el.get(prop)).draw()
+        pr.f_g = GUI('PE', el.get(prop), 'CLOSEREQ', false).draw()
     end
 end
 function cb_measure_value(pr)
@@ -303,7 +304,21 @@ function cb_measure_value(pr)
     pr.mlist = Graph.getCompatibleMeasureList(graph);
 
     measure_short_list = pr.mlist(pr.selected);
-
+    
+    % determine figure position
+    f_gr = ancestor(pr.p, 'Figure'); % GUI Group
+    f_gr_x = Plot.x0(f_gr, 'pixels');
+    f_gr_y = Plot.y0(f_gr, 'pixels');
+    f_gr_w = Plot.w(f_gr, 'pixels');
+    f_gr_h = Plot.h(f_gr, 'pixels');
+    
+    screen_x = Plot.x0(0, 'pixels');
+    screen_y = Plot.y0(0, 'pixels');
+    screen_w = Plot.w(0, 'pixels');
+    screen_h = Plot.h(0, 'pixels');
+    
+    N = ceil(sqrt(sub_dict.length())); % number of row and columns of figures
+    
     % calculate
     if pr.get('WAITBAR')
         wb = waitbar(0, ['Calculating ' num2str(length(pr.selected))  ' measures ...'], 'Name', BRAPH2.NAME);
@@ -315,13 +330,18 @@ function cb_measure_value(pr)
             continue;
         end
         
+        x = (f_gr_x + f_gr_w) / screen_w + mod(i - 1, N) * (screen_w - f_gr_x - 2 * f_gr_w) / N / screen_w;
+        y = f_gr_y / screen_h;
+        w = f_gr_w / screen_w;
+        h = .5 * f_gr_h / screen_h + .5 * f_gr_h * (N - floor((i - .5) / N)) / N / screen_h;
+        
         measure = pr.mlist{i};
         if pr.get('WAITBAR')
             waitbar(.1 + .70 * i / length(pr.selected), wb, ['Calculating measure ' measure ]);
         end
         result_measure = graph.getMeasure(measure);
         result_measure.memorize('M');
-        pr.f_m{i} = GUI('pe', result_measure).draw();
+        pr.f_m{i} = GUI('pe', result_measure, 'POSITION', [x y w h]).draw();
         pr.already_calculated{i} = 'C';
     end
 
@@ -492,6 +512,19 @@ function cb_close(pr)
     
     % close plot graph figure
     if check_graphics(pr.f_pg, 'figure')
-        close(pr.f_pg)
+        children = get(pr.f_pg, 'Children');
+        for i = 1:1:length(children)
+            if check_graphics(children(i), 'uipanel') && strcmp(get(children(i), 'Tag'), 'h_panel')
+                pba = get(children(i), 'UserData');
+                pba.cb_close()
+            end
+        end
+    end
+    
+    % close graph class
+    if check_graphics(pr.f_g, 'figure')
+        gui = get(pr.f_g, 'UserData');
+        pe = gui.get('PE');
+        pe.cb_close()
     end
 end
