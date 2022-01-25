@@ -57,7 +57,9 @@ function [h_figure, h_axes, subpanel] = draw(pr, varargin)
     set(pr.pp, 'DeleteFcn', {@cb_close_fs})
     
     function cb_close_fs(~, ~)
-        close(pr.h_settings)
+        if ~isempty(pr.h_settings) && check_graphics(pr.h_settings, 'figure')
+            close(pr.h_settings)
+        end
     end
     
     if pr.get('SUBMENU')

@@ -411,8 +411,7 @@ function cb_graph_ui_figure(pr)
         'CloseRequestFcn', {@cb_f_pg_close} ...
         );
     
-    function cb_f_pg_close(~, ~)
-        delete(pr.f_pg) % deletes also f_settings
+    function cb_f_pg_close(~, ~)        
         pr.update() % re-activates the btns
     end
     
@@ -480,9 +479,9 @@ function state = get_button_condition(pr)
 
 end
 function cb_bring_to_front(pr)
-    %CB_BRING_TO_FRONT brings to front the brain atlas figure and its settings figure.
+    %CB_BRING_TO_FRONT brings to front the figure and its settings figure.
     %
-    % CB_BRING_TO_FRONT(PR) brings to front the brain atlas figure and its
+    % CB_BRING_TO_FRONT(PR) brings to front the figure and its
     %  settings figure.
     %
     % See also cb_hide, cb_close.
@@ -500,9 +499,9 @@ function cb_bring_to_front(pr)
     end
 end
 function cb_hide(pr)
-    %CB_HIDE hides the brain atlas figure and its settings figure.
+    %CB_HIDE hides the figure and its settings figure.
     %
-    % CB_HIDE(PR) hides the brain atlas figure and its settings figure.
+    % CB_HIDE(PR) hides the figure and its settings figure.
     %
     % See also cb_bring_to_front, cb_close.
 
@@ -519,14 +518,11 @@ function cb_hide(pr)
     end
 end
 function cb_close(pr)
-    %CB_CLOSE closes the brain atlas figure and its settings figure.
+    %CB_CLOSE closes the figure.
     %
-    % CB_CLOSE(PR) closes the brain atlas figure and its settings figure.
+    % CB_CLOSE(PR) closes the figure and its children figures.
     %
     % See also cb_bring_to_front, cd_hide.
-
-    % closes settings panel
-    pr.cb_close@PlotProp();
 
     % closes measure class guis
     for i = 1:length(pr.f_m)
