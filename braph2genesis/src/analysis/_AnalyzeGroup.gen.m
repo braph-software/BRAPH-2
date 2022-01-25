@@ -32,4 +32,4 @@ G (result, item) is the graph obtained from this analysis.
 %%%% ¡calculate!
 value = Graph();
 %%%% ¡gui!
-pr = PPGraph('EL', a, 'PROP', AnalyzeGroup.G, varargin{:});
+pr = PPAnalyzeGroup_G('EL', a, 'PROP', AnalyzeGroup.G, varargin{:});

@@ -1,8 +1,8 @@
 %% ¡header!
-PPMeasure < PlotPropMatrix (pr, plot property M of measure) is a plot of property M of measure.
+PPMeasure_M < PlotPropMatrix (pr, plot property M of measure) is a plot of property M of measure.
 
 %%% ¡description!
-PPMeasure plots a Measure result table and plot.
+PPMeasure_M plots a Measure result table and plot.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp, MultigraphBUD, MultigraphBUT.

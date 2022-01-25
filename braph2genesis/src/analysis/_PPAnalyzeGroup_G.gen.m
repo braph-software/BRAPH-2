@@ -1,8 +1,8 @@
 %% ¡header!
-PPGraph < PlotProp (pr, plot property graph) is a plot of a graph property.
+PPAnalyzeGroup_G < PlotProp (pr, plot property graph) is a plot of a graph property.
 
 %%% ¡description!
-PPGraph plots the measure table associated with a graph of the analysis.
+PPAnalyzeGroup_G plots the measure table associated with a graph of the analysis.
 It also provides the buttons to navigate the graphical interface of both
 the measures and the graph.
 
@@ -281,13 +281,39 @@ function cb_graph_value(pr)
     prop = pr.get('PROP');
 
     pr.update()
+    
+    % determine figure position
+    f_gr = ancestor(pr.p, 'Figure'); % GUI Group
+    f_gr_x = Plot.x0(f_gr, 'pixels');
+    f_gr_y = Plot.y0(f_gr, 'pixels');
+    f_gr_w = Plot.w(f_gr, 'pixels');
+    f_gr_h = Plot.h(f_gr, 'pixels');
+    
+    screen_x = Plot.x0(0, 'pixels');
+    screen_y = Plot.y0(0, 'pixels');
+    screen_w = Plot.w(0, 'pixels');
+    screen_h = Plot.h(0, 'pixels');
+    
+    N = ceil(sqrt(1));
+    
+    x = (f_gr_x + f_gr_w) / screen_w + mod(1 - 1, N) * (screen_w - f_gr_x - 2 * f_gr_w) / N / screen_w;
+    y = f_gr_y / screen_h;
+    w = f_gr_w / screen_w;
+    h = .5 * f_gr_h / screen_h + .5 * f_gr_h * (N - floor((1 - .5) / N)) / N / screen_h;
+		        
 
     % TODO: check this part of the code once GUI is finalized
     value = el.getr(prop);
     if isa(value, 'NoValue')
-        pr.f_g = GUI('PE', el.getPropDefault(prop), 'CLOSEREQ', false).draw()
+        pr.f_g = GUI( ...
+            'PE', el.getPropDefault(prop), ...
+            'POSITION', [x y w h], ...
+            'CLOSEREQ', false).draw();
     else
-        pr.f_g = GUI('PE', el.get(prop), 'CLOSEREQ', false).draw()
+        pr.f_g = GUI( ...
+            'PE', el.get(prop), ...
+            'POSITION', [x y w h], ...
+            'CLOSEREQ', false).draw();
     end
 end
 function cb_measure_value(pr)
@@ -317,7 +343,7 @@ function cb_measure_value(pr)
     screen_w = Plot.w(0, 'pixels');
     screen_h = Plot.h(0, 'pixels');
     
-    N = ceil(sqrt(sub_dict.length())); % number of row and columns of figures
+    N = ceil(sqrt(length(pr.mlist))); % number of row and columns of figures
     
     % calculate
     if pr.get('WAITBAR')
