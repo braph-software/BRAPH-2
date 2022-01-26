@@ -4,7 +4,7 @@ NNClassifierData < NNData (nnd, data of a neural network classifier) produces a 
 %% ¡description!
 This dataset can be used to train or test a neural network classifier. The
 INPUTS and TARGETS are the two cells for trianing a neurla network. The INPUTS 
-cell is represent as floating point feature vectors. Feature selection procedure
+cell is represented as floating point feature vectors. Feature selection procedure
 can be implemented when constructing the INPUTS. The TARGETS cell holds the 
 target values for the trianing samples. Instances of this class should not be created. 
 Use one of its subclasses instead.
@@ -243,7 +243,7 @@ function inputs = input_construction(nnd, g_dict_1, g_dict_2)
     %  the input for training or testing neural networks. The connectivity
     %  matrices will firstly extracted from graph dict G_DICT_1 and
     %  G_DICT_2. Then the extracted features will be masked by the feature
-    %  mask. The masked features will construct the eventual inputs INPUTS 
+    %  mask. The selected features will construct the eventual inputs INPUTS 
     %  for the neural network.
     
     % get the connectivity matrices 
@@ -269,6 +269,13 @@ function inputs = input_construction(nnd, g_dict_1, g_dict_2)
     inputs = {cat(2, inputs{:})};
 end
 function [mutinf] = mutual_information_analysis(nnd, X, Y, n)
+    %MUTUAL_INFORMATION_ANALYSIS computes the mutual information value.
+    % 
+    % MUTINF = MUTUAL_INFORMATION_ANALYSIS(NND, X, Y, n) compute the mutual
+    %  information MUTINF of two discrete variables X and Y. These two vectors
+    %  must have the same length. The higher value of the MUTINF, the
+    %  closer connection between X and Y.
+
     xmin = min(X, [], 2);
     xmax = max(X, [], 2);
     xrange = (xmax - xmin) / n;

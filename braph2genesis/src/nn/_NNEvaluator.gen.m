@@ -2,7 +2,7 @@
 NNEvaluator < Element (nne, evaluator of a neural network) evaluates the performance of a neural network with a specific dataset.
 
 %% ¡description!
-This model evaluator evaluates the performance of a neural network.
+This evaluator evaluates the performance of a neural network.
 Instances of this class should not be created. 
 Use one of its subclasses instead.
 

@@ -15,7 +15,7 @@ NNDATA (data, item) is a dataset for training or testing a neural network classi
 'NNClassifierData'
 
 %%% ¡prop!
-LAYERS (metadata, rvector) is a vector represents the number of neurons in each layer.
+LAYERS (data, rvector) is a vector represents the number of neurons in each layer.
 %%%% ¡postprocessing!
 if isempty(nn.get('LAYERS'))
     inputs = nn.get('NNDATA').get('INPUTS');
@@ -141,5 +141,5 @@ function net = to_net(nn, saved_nn)
     %  Typically, this method is called internally when a saved neural 
     %  network model is evaluated by a test data.
     
-    net = to_net@BaseNN(nn, saved_nn, nn.get('INPUT_FORMAT'), "classification", nn.get('TARGET_NAME'));
+    net = to_net@NNBase(nn, saved_nn, nn.get('INPUT_FORMAT'), "classification", nn.get('TARGET_NAME'));
 end
