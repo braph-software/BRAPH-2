@@ -133,8 +133,8 @@ value = val_gr_2;
 %%% ¡prop!
 TRAIN_VAL_INDEX_GR_1 (data, rvector) is a vector stating which subjects belong to validation set.
 %%%% ¡conditioning!
-if isa(value, 'double')
-    num_val = value * nnd.get('GR_1').get('SUB_DICT').length();
+if length(value) == 1 & value < 1
+    num_val = floor(value * nnd.get('GR_1').get('SUB_DICT').length());
     num_train = nnd.get('GR_1').get('SUB_DICT').length() - num_val;
     value = [ones(1, num_val), zeros(1, num_train)];
     value = value(randperm(length(value)));
@@ -147,8 +147,8 @@ end
 %%% ¡prop!
 TRAIN_VAL_INDEX_GR_2 (data, rvector) is a vector stating which subjects belong to validation set.
 %%%% ¡conditioning!
-if isa(value, 'double')
-    num_val = value * nnd.get('GR_2').get('SUB_DICT').length();
+if length(value) == 1 & value < 1
+    num_val = floor(value * nnd.get('GR_2').get('SUB_DICT').length());
     num_train = nnd.get('GR_2').get('SUB_DICT').length() - num_val;
     value = [ones(1, num_val), zeros(1, num_train)];
     value = value(randperm(length(value)));
