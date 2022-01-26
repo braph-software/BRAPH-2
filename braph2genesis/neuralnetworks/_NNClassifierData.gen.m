@@ -140,9 +140,6 @@ if length(value) == 1 & value < 1
     value = value(randperm(length(value)));
     value = find(value == 1);
 end
-%%%% ¡default!
-[]
-
 
 %%% ¡prop!
 TRAIN_VAL_INDEX_GR_2 (data, rvector) is a vector stating which subjects belong to validation set.
@@ -154,19 +151,12 @@ if length(value) == 1 & value < 1
     value = value(randperm(length(value)));
     value = find(value == 1);
 end
-%%%% ¡default!
-[]
 
 %%% ¡prop!
-FEATURE_DENSITY (parameter, scalar) is the density of selected features.
-%%%% ¡default!
-0.05
-
-%%% ¡prop!
-FEATURE_MASK (data, cell) is a mask for selected features.
-%%%% ¡postprocessing!
-if isempty(value)
-    density = nnd.get('FEATURE_DENSITY');
+FEATURE_MASK (metadata, cell) is a mask for selected features.
+%%%% ¡conditioning!
+if isa(value, 'double')
+    density = value;
 
     adjs_gr_1 = nnd.get('TRAIN_G_DICT_1').getItems();
     data_gr_1 = {};
@@ -192,17 +182,10 @@ if isempty(value)
         end
     end
     [~,idx_all] = sort(mask(:), 'descend');
-    num_top_idx = floor(density*size(mask,1)*size(mask,2));
+    num_top_idx = floor(density * size(mask, 1) * size(mask, 2));
 
     value = {idx_all(1:num_top_idx)};
 end
-% % % 
-% % % %%% ¡prop!
-% % % GIVEN_FEATURE_MASK (data, cell) is a given mask for selected features.
-% % % 
-% % % %%% ¡prop!
-% % % CALCULATED_FEATURE_MASK (result, cell) is a mask generated with training set for selected features.
-% % % %%%% ¡calculate!
 
 
 %%% ¡prop!
@@ -251,11 +234,6 @@ y2 = repmat(string(nnd.get('VAL_GR_2').get('ID')), nnd.get('VAL_GR_2').get('SUB_
 
 value = {[y1; y2]'};
 
-%%% ¡prop!
-label_name (result, cell) is the label names of the classifier
-%%%% ¡calculate!
-value = unique(nd.get('TARGETS'));
-
 %% ¡methods!
 function inputs = input_construction(nnd, g_dict_1, g_dict_2)
     %INPUT_CONSTRUCTION constructs the inputs for neural networks.
@@ -285,12 +263,8 @@ function inputs = input_construction(nnd, g_dict_1, g_dict_2)
     % get the feature mask
     mask = nnd.get('FEATURE_MASK');
     
-    % construct the input
-    if nnd.get('FEATURE_DENSITY') == 1.0
-        inputs = cellfun(@(v)v(:), data, 'UniformOutput', false);
-    else
-        inputs = cellfun(@(v)v(mask{1}), data, 'UniformOutput', false);
-    end
+    % construct the inputs
+    inputs = cellfun(@(v)v(mask{1}), data, 'UniformOutput', false);
     inputs = {cat(2, inputs{:})};
 end
 function [mutinf] = mutual_information_analysis(nnd, X, Y, n)

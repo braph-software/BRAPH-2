@@ -6,19 +6,21 @@ This classifier with fully-connected layers is trained for a classification of t
 
 %% ¡props!
 %%% ¡prop!
-DATA (data, item) is a dataset for training or testing a neural network classifier.
+NNDATA (data, item) is a dataset for training or testing a neural network classifier.
 %%%% ¡settings!
 'NNClassifierData'
 
 %%% ¡prop!
-LAYERS (data, rvector) is a vector represents the number of neurons in each layer.
+LAYERS (metadata, rvector) is a vector represents the number of neurons in each layer.
 %%%% ¡postprocessing!
-if isempty(value)
-    inputs = nn.get('DATA').get('INPUTS');
+if isempty(nn.get('LAYERS'))
+    inputs = nn.get('NNDATA').get('INPUTS');
     inputs = inputs{1};
     numFeatures = length(inputs);
-    value = [numFeatures numFeatures];
+    value = [floor(1.5 * numFeatures) floor(1.5 * numFeatures)];
+    nn.set('LAYERS', value);
 end
+
 
 %%% ¡prop!
 BATCH (data, scalar) is the size of the mini-batch to use for each training iteration.
@@ -49,12 +51,6 @@ false
 PLOT_TRAINING (data, logical) is an option for the plot of training-progress.
 %%%% ¡default!
 false
-%%%% ¡postprocessing!
-if value
-    value = 'training-progress';
-else
-    value = 'none';
-end
 
 %%% ¡prop!
 PLOT_LAYERS (data, logical) is an option for the plot of the layers.
@@ -67,25 +63,25 @@ MODEL (result, cell) is a trained neural network classifier.
 %%%% ¡calculate!
 if nn.check_nn_toolboxes()
     % get inputs
-    inputs = nn.get('DATA').get('INPUTS');
+    inputs = nn.get('NNDATA').get('INPUTS');
     inputs = inputs{1};
     numFeatures = length(inputs);
     numClasses = 2;
     inputs = reshape(inputs, [1, 1, size(inputs, 1), size(inputs, 2)]);
-    targets = nn.get('DATA').get('TARGETS');
+    targets = nn.get('NNDATA').get('TARGETS');
     
     % init layers
     numLayer = nn.get('LAYERS');
     layers = [imageInputLayer([1 1 numFeatures], 'Name', 'input')];
     for i = 1:1:length(nn.get('LAYERS'))
         layers = [layers
-            fullyConnectedLayer(numLayer(i), 'Name', 'fc2')
-            batchNormalizationLayer('Name', 'batchNormalization1')
+            fullyConnectedLayer(numLayer(i), 'Name', ['fc' num2str(i)])
+            batchNormalizationLayer('Name', ['batchNormalization' num2str(i)])
             ];
     end
     layers = [layers
         reluLayer('Name', 'relu1')
-        fullyConnectedLayer(numClasses, 'Name', 'fc3')
+        fullyConnectedLayer(numClasses, 'Name', 'fc_output')
         softmaxLayer('Name', 'sfmax1')
         classificationLayer('Name', 'output')
         ];
@@ -97,11 +93,17 @@ if nn.check_nn_toolboxes()
     end
     
     % specify trianing parameters
+    if nn.get('PLOT_TRAINING')
+        plot_training = 'training-progress';
+    else
+        plot_training = 'none';
+    end
+
     options = trainingOptions(nn.get('SOLVER'), ...
         'MiniBatchSize', nn.get('BATCH'), ...
         'MaxEpochs', nn.get('EPOCHS'), ...
         'Shuffle', nn.get('SHUFFLE'), ...
-        'Plots', nn.get('PLOT_TRAINING'), ...
+        'Plots', plot_training, ...
         'Verbose', nn.get('VERBOSE')); 
     
     % train the neural network

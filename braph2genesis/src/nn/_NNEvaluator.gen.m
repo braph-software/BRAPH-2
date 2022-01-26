@@ -17,7 +17,7 @@ LABEL (metadata, string) is an extended label of the evaluator.
 NOTES (metadata, string) are some specific notes about the evaluator.
 
 %%% ¡prop!
-DATA (data, item) is a dataset for neural networks.
+NNDATA (data, item) is a dataset for neural networks.
 %%%% ¡settings!
 'NNData'
 

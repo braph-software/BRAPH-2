@@ -10,10 +10,10 @@ ROC curve (AUC) and the confusion matrix.
 %%% ¡prop!
 AUC (result, scalar) is an area under the curve score obtained from the dataset.
 %%%% ¡calculate!
-pred = nne.get('NN_PREDICTION');
-targets = nne.get('DATA').get('TARGETS');
+pred = nne.get('PREDICTION');
+targets = nne.get('NNDATA').get('TARGETS');
 classifier = nne.get('NN');
-net = classifier.to_net(classifier.get('TRAINED_NN'));
+net = classifier.to_net(classifier.get('MODEL'));
 class_names = net.Layers(end).Classes; 
 [X, Y, T, auc] = perfcurve(categorical(targets{1}), pred(:,2), class_names(2));
 
@@ -22,8 +22,8 @@ value = auc;
 %%% ¡prop!
 VAL_AUC (result, scalar) is an area under the curve score obtained from the validation set.
 %%%% ¡calculate!
-pred = nne.get('NN_VAL_PREDICTION');
-targets = nne.get('DATA').get('VAL_TARGETS');
+pred = nne.get('VAL_PREDICTION');
+targets = nne.get('NNDATA').get('VAL_TARGETS');
 classifier = nne.get('NN');
 net = classifier.to_net(classifier.get('MODEL'));
 class_names = net.Layers(end).Classes; 
@@ -38,14 +38,14 @@ value = 0
 
 %% ¡props_update!
 %%% ¡prop!
-DATA (data, item) is a dataset for testing the neural networks.
+NNDATA (data, item) is a dataset for testing the neural networks.
 %%%% ¡settings!
 'NNClassifierData'
 
 %%% ¡prop!
-NN_PREDICTION (result, matrix) is an output matrix of prediction from a neural network model.
+PREDICTION (result, matrix) is an output matrix of prediction from a neural network model.
 %%%% ¡calculate!
-nnd = nne.get('DATA');
+nnd = nne.get('NNDATA');
 classifier = nne.get('NN');
 net = classifier.to_net(classifier.get('MODEL'));
 inputs = nnd.get('INPUTS');
@@ -55,9 +55,9 @@ inputs = reshape(inputs, [1, 1, size(inputs,1), size(inputs,2)]);
 value = net.predict(inputs);
 
 %%% ¡prop!
-NN_VAL_PREDICTION (result, matrix) is an output matrix of prediction for the validation set.
+VAL_PREDICTION (result, matrix) is an output matrix of prediction for the validation set.
 %%%% ¡calculate!
-nnd = nne.get('DATA');
+nnd = nne.get('NNDATA');
 classifier = nne.get('NN');
 net = classifier.to_net(classifier.get('MODEL'));
 inputs = nnd.get('VAL_INPUTS');
