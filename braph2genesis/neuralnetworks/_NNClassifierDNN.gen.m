@@ -6,45 +6,45 @@ This classifier with fully-connected layers is trained for a classification of t
 
 %% ¡props!
 %%% ¡prop!
-NNClassifierData (data, item) is a dataset for training or testing a neural network classifier.
+DATA (data, item) is a dataset for training or testing a neural network classifier.
 %%%% ¡settings!
 'NNClassifierData'
 
 %%% ¡prop!
-MINI_BATCH_SIZE (data, scalar) is the size of the mini-batch to use for each training iteration.
+BATCH (data, scalar) is the size of the mini-batch to use for each training iteration.
 %%%% ¡default!
 8
 
 %%% ¡prop!
-MAX_EPOCHS (data, scalar) is the maximum number of epochs.
+EPOCHS (data, scalar) is the maximum number of epochs.
 %%%% ¡default!
 20
 
 %%% ¡prop!
-SHUFFLE (data, OPTION) is an option for data shuffling.
+SHUFFLE (data, option) is an option for data shuffling.
 %%%% ¡settings!
 {'once' 'never' 'every-epoch'}
-%%%% ¡default!
-'once'
 
 %%% ¡prop!
-SOLVER (data, OPTION) is an option for solver.
+SOLVER (data, option) is an option for the solver.
 %%%% ¡settings!
-{'sgdm' 'rmsprop' 'adam'}
-%%%% ¡default!
-'adam'
+{'adam' 'sgdm' 'rmsprop'}
 
 %%% ¡prop!
-PLOT_TRAINING_PROGRESS (data, OPTION) is an option for plots of training-progress.
-%%%% ¡settings!
-{'none' 'training-progress'}
-%%%% ¡default!
-'none'
-
-%%% ¡prop!
-VERBOSE (data, logical) is an indictor to display trining progress information.
+VERBOSE (data, logical) is an indicator to display trining progress information.
 %%%% ¡default!
 false
+
+%%% ¡prop!
+PLOT_TRAINING (data, logical) is an option for the plot of training-progress.
+%%%% ¡default!
+false
+%%%% ¡postprocessing!
+if value
+    value = 'training-progress';
+else
+    value = 'none';
+end
 
 %%% ¡prop!
 PLOT_LAYERS (data, logical) is an option for the plot of the layers.
@@ -53,7 +53,7 @@ false
 
 %% ¡props_update!
 %%% ¡prop!
-TRAINED_NN (result, cell) is a trained neural network classifier.
+MODEL (result, cell) is a trained neural network classifier.
 %%%% ¡calculate!
 if nn.check_nn_toolboxes()
     % get inputs
@@ -98,10 +98,10 @@ if nn.check_nn_toolboxes()
     
     % specify trianing parameters
     options = trainingOptions(nn.get('SOLVER'), ...
-        'MiniBatchSize', nn.get('MINI_BATCH_SIZE'), ...
-        'MaxEpochs', nn.get('MAX_EPOCHS'), ...
+        'MiniBatchSize', nn.get('BATCH'), ...
+        'MaxEpochs', nn.get('EPOCHS'), ...
         'Shuffle', nn.get('SHUFFLE'), ...
-        'Plots', nn.get('PLOT_TRAINING_PROGRESS'), ...
+        'Plots', nn.get('PLOT_TRAINING'), ...
         'Verbose', nn.get('VERBOSE')); 
     
     % train the neural network
@@ -110,7 +110,7 @@ if nn.check_nn_toolboxes()
     % transform the net object to a cell
     value = nn.from_net(net);
 else
-    value = '';
+    value = {};
 end
 
 %% ¡methods!

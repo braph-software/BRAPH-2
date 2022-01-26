@@ -22,7 +22,7 @@ DATA (data, item) is the data for training or testing the neural network.
 'NNData'
 
 %%% ¡prop!
-TRAINED_NN (result, cell) is a trained neural network.
+MODEL (result, cell) is a trained neural network.
 % % % %%%% ¡gui!
 % % % pl = PlotPropNNAnalysis('EL', nn, 'PROP', BaseNN.NEURAL_NETWORK_ANALYSIS, varargin{:});
 
