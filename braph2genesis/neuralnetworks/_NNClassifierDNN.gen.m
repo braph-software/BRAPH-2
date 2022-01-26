@@ -75,6 +75,20 @@ if nn.check_nn_toolboxes()
         fullyConnectedLayer(numClasses, 'Name', 'fc3')
         softmaxLayer('Name', 'sfmax1')
         classificationLayer('Name', 'output')];
+        
+    layers = [imageInputLayer([1 1 numFeatures], 'Name', 'input')];
+    for get(LAYERS)
+    layers = [layers
+        batchNormalizationLayer('Name', 'batchNormalization1')
+        fullyConnectedLayer(floor(1.5 * numFeatures), 'Name', 'fc2')
+        ];
+    end
+    layers = [layers
+        reluLayer('Name', 'relu1')
+        fullyConnectedLayer(numClasses, 'Name', 'fc3')
+        softmaxLayer('Name', 'sfmax1')
+        classificationLayer('Name', 'output')
+        ];
     
     % plot layers
     if nn.get('PLOT_LAYERS')
