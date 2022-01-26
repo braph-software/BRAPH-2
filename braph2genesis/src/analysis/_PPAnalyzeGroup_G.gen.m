@@ -509,8 +509,7 @@ function cb_bring_to_front(pr)
     % bring to front plot graph
     if check_graphics(pr.f_pg, 'figure')
         gui = get(pr.f_pg, 'UserData');
-        pe = gui.get('PE');
-        pe.cb_bring_to_front()
+        gui.cb_bring_to_front()
     end    
 end
 function cb_hide(pr)
@@ -543,8 +542,7 @@ function cb_hide(pr)
     % bring to front plot graph
     if check_graphics(pr.f_pg, 'figure')
         gui = get(pr.f_pg, 'UserData');
-        pe = gui.get('PE');
-        pe.cb_hide()
+        gui.cb_hide();
     end 
 end
 function cb_close(pr)
