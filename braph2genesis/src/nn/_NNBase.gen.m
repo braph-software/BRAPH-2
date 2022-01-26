@@ -17,7 +17,7 @@ LABEL (metadata, string) is an extended label of the neural network.
 NOTES (metadata, string) are some specific notes about the neural network.
 
 %%%% ¡prop!
-DATA (data, item) 
+DATA (data, item) is the data for training or testing the neural network.
 %%%% ¡settings!
 'NNData'
 
@@ -28,7 +28,7 @@ TRAINED_NN (result, cell) is a trained neural network.
 % % % pl = PlotPropNNAnalysis('EL', nn, 'PROP', BaseNN.NEURAL_NETWORK_ANALYSIS, varargin{:});
 
 %% ¡methods!
-function installed = check_nn_toolboxes(nn) %FIXME
+function installed = check_nn_toolboxes(nn)
     %CHECK_NN_TOOLBOXES checks whether the deep-learning-required toolboxes are installed.
     %
     % INSTALLED = CHECK_NN_TOOLBOXES(NN) checks the installation of the toolboxes:
