@@ -66,7 +66,7 @@ ENABLE (metadata, option) switches between off and inactive fields.
 {'inactive' 'off'}
 
 %%% ¡prop!
-WAITBAR (metadata, logical) determines whether to show the waitbar when execturing calculations.
+WAITBAR (metadata, logical) determines whether to show the waitbar when executing calculations.
 
 %% ¡properties!
 p % panel (it is h_panel in Plot)
