@@ -2,9 +2,11 @@
 NNClassifierData < NNData (nnd, data of a neural network classifier) produces a dataset to train or test a neural netowrk classifier.  
 
 %% ¡description!
-This dataset can be used to train or test a neural network classifier. 
-Feature selection procedure can be implemented.
-Instances of this class should not be created. 
+This dataset can be used to train or test a neural network classifier. The
+INPUTS and TARGETS are the two cells for trianing a neurla network. The INPUTS 
+cell is represent as floating point feature vectors. Feature selection procedure
+can be implemented when constructing the INPUTS. The TARGETS cell holds the 
+target values for the trianing samples. Instances of this class should not be created. 
 Use one of its subclasses instead.
 
 %% ¡props!

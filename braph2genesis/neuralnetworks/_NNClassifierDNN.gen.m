@@ -2,7 +2,11 @@
 NNClassifierDNN < NNBase (nn, classifier with dense layers) is a binary neural network classifier.
 
 %% ¡description!
-This classifier with fully-connected layers is trained for a classification of two groups of subject.
+This classifier is a fully-connected-lyaer neural network by training with
+backpropagation on the data provided by NNData. The Classifier trains on two
+cells: cell INPUTS from NNData holds the training samples represented as 
+floating point feature vectors, and the cell TARGETS, which holds the target
+values for the trianing samples.
 
 %% ¡props!
 %%% ¡prop!
