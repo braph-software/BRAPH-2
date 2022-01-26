@@ -77,7 +77,7 @@ function nn_cell = from_net(nn, net)
     rmdir(directory, 's')
     warning(w.state, 'MATLAB:mir_warning_unrecognized_pragma')
 end
-function net = to_net(nn, saved_nn)
+function net = to_net(nn, saved_nn, varargin)
     %TO_NET transforms the saved neural network 
     % in braph to a build-in object in matlab.
     %
@@ -104,10 +104,20 @@ function net = to_net(nn, saved_nn)
     fileID = fopen(filename, 'w');
     fwrite(fileID, saved_nn{1});
     fclose(fileID);
-   
-    lgraph = importONNXLayers(filename, InputDataFormats = "BCSS");
-    net = assembleNetwork(lgraph)
-
+    
+    if length(varargin) == 3
+        format = varargin{1};
+        type = varargin{2};
+        class_name = varargin{3};
+        net = importONNXNetwork(filename, InputDataFormats = format, OutputLayerType = type, Classes = class_name);
+    elseif length(varargin) == 1
+        format = varargin{1};
+        net = importONNXNetwork(filename, InputDataFormats = format);
+    else
+        lgraph = importONNXLayers(filename, InputDataFormats = "BCSS");
+        net = assembleNetwork(lgraph)
+    end
+    
     rmdir(directory, 's')
     warning(w_matlab.state, 'MATLAB:mir_warning_unrecognized_pragma');
     warning(w_nnet.state,'nnet_cnn:internal:cnn:analyzer:NetworkAnalyzer:NetworkHasWarnings');
