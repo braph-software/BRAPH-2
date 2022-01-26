@@ -11,6 +11,16 @@ DATA (data, item) is a dataset for training or testing a neural network classifi
 'NNClassifierData'
 
 %%% ¡prop!
+LAYERS (data, rvector) is a vector represents the number of neurons in each layer.
+%%%% ¡postprocessing!
+if isempty(value)
+    inputs = nn.get('DATA').get('INPUTS');
+    inputs = inputs{1};
+    numFeatures = length(inputs);
+    value = [numFeatures numFeatures];
+end
+
+%%% ¡prop!
 BATCH (data, scalar) is the size of the mini-batch to use for each training iteration.
 %%%% ¡default!
 8
@@ -57,31 +67,21 @@ MODEL (result, cell) is a trained neural network classifier.
 %%%% ¡calculate!
 if nn.check_nn_toolboxes()
     % get inputs
-    inputs = nn.get('NNClassifierData').get('INPUTS');
+    inputs = nn.get('DATA').get('INPUTS');
     inputs = inputs{1};
     numFeatures = length(inputs);
     numClasses = 2;
     inputs = reshape(inputs, [1, 1, size(inputs, 1), size(inputs, 2)]);
-    targets = nn.get('NNClassifierData').get('TARGETS');
+    targets = nn.get('DATA').get('TARGETS');
     
     % init layers
-    layers = [
-        imageInputLayer([1 1 numFeatures], 'Name', 'input')
-        fullyConnectedLayer(floor(1.5 * numFeatures), 'Name', 'fc1')
-        batchNormalizationLayer('Name', 'batchNormalization1')
-        fullyConnectedLayer(floor(1.5 * numFeatures), 'Name', 'fc2')
-        batchNormalizationLayer('Name', 'batchNormalization2')
-        reluLayer('Name', 'relu1')
-        fullyConnectedLayer(numClasses, 'Name', 'fc3')
-        softmaxLayer('Name', 'sfmax1')
-        classificationLayer('Name', 'output')];
-        
+    numLayer = nn.get('LAYERS');
     layers = [imageInputLayer([1 1 numFeatures], 'Name', 'input')];
-    for get(LAYERS)
-    layers = [layers
-        batchNormalizationLayer('Name', 'batchNormalization1')
-        fullyConnectedLayer(floor(1.5 * numFeatures), 'Name', 'fc2')
-        ];
+    for i = 1:1:length(nn.get('LAYERS'))
+        layers = [layers
+            fullyConnectedLayer(numLayer(i), 'Name', 'fc2')
+            batchNormalizationLayer('Name', 'batchNormalization1')
+            ];
     end
     layers = [layers
         reluLayer('Name', 'relu1')

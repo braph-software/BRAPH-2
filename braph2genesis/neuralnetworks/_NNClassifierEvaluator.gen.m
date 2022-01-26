@@ -11,8 +11,8 @@ ROC curve (AUC) and the confusion matrix.
 AUC (result, scalar) is an area under the curve score obtained from the dataset.
 %%%% ¡calculate!
 pred = nne.get('NN_PREDICTION');
-targets = nne.get('NN_DATA').get('TARGETS');
-classifier = nne.get('NN_MODEL');
+targets = nne.get('DATA').get('TARGETS');
+classifier = nne.get('NN');
 net = classifier.to_net(classifier.get('TRAINED_NN'));
 class_names = net.Layers(end).Classes; 
 [X, Y, T, auc] = perfcurve(categorical(targets{1}), pred(:,2), class_names(2));
@@ -23,9 +23,9 @@ value = auc;
 VAL_AUC (result, scalar) is an area under the curve score obtained from the validation set.
 %%%% ¡calculate!
 pred = nne.get('NN_VAL_PREDICTION');
-targets = nne.get('NN_DATA').get('VAL_TARGETS');
-classifier = nne.get('NN_MODEL');
-net = classifier.to_net(classifier.get('TRAINED_NN'));
+targets = nne.get('DATA').get('VAL_TARGETS');
+classifier = nne.get('NN');
+net = classifier.to_net(classifier.get('MODEL'));
 class_names = net.Layers(end).Classes; 
 [X, Y, T, auc] = perfcurve(categorical(targets{1}), pred(:,2), class_names(2));
 
@@ -38,16 +38,16 @@ value = 0
 
 %% ¡props_update!
 %%% ¡prop!
-NN_DATA (data, item) is a dataset for testing the neural networks.
+DATA (data, item) is a dataset for testing the neural networks.
 %%%% ¡settings!
 'NNClassifierData'
 
 %%% ¡prop!
 NN_PREDICTION (result, matrix) is an output matrix of prediction from a neural network model.
 %%%% ¡calculate!
-nnd = nne.get('NN_DATA');
-classifier = nne.get('NN_MODEL');
-net = classifier.to_net(classifier.get('TRAINED_NN'));
+nnd = nne.get('DATA');
+classifier = nne.get('NN');
+net = classifier.to_net(classifier.get('MODEL'));
 inputs = nnd.get('INPUTS');
 inputs = inputs{1};
 inputs = reshape(inputs, [1, 1, size(inputs,1), size(inputs,2)]);
@@ -57,9 +57,9 @@ value = net.predict(inputs);
 %%% ¡prop!
 NN_VAL_PREDICTION (result, matrix) is an output matrix of prediction for the validation set.
 %%%% ¡calculate!
-nnd = nne.get('NN_DATA');
-classifier = nne.get('NN_MODEL');
-net = classifier.to_net(classifier.get('TRAINED_NN'));
+nnd = nne.get('DATA');
+classifier = nne.get('NN');
+net = classifier.to_net(classifier.get('MODEL'));
 inputs = nnd.get('VAL_INPUTS');
 inputs = inputs{1};
 inputs = reshape(inputs, [1, 1, size(inputs,1), size(inputs,2)]);

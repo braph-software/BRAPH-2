@@ -22,7 +22,7 @@ DATA (data, item) is a dataset for neural networks.
 'NNData'
 
 %%% ¡prop!
-NN (data, item) is a neural network that needs to be evaluated.
+NN (data, item) is a neural network model that needs to be evaluated.
 %%%% ¡settings!
 'NNBase'
 
