@@ -27,7 +27,6 @@ already_calculated
 f_m % array of measure class figures
 f_pg % figure for plot graph
 f_g % figure for class graph
-plot_graph % FIXME: get it for f_g UserData
 
 %% ¡props_update!
 
@@ -367,7 +366,7 @@ function cb_measure_value(pr)
         result_measure = graph.getMeasure(measure);
         result_measure.memorize('M');
         pr.f_m{i} = GUI('pe', result_measure, 'POSITION', [x y w h], 'CLOSEREQ', false).draw();
-        pr.already_calculated{i} = 'C';
+        pr.already_calculated{i} = 1;
     end
 
     % close progress bar
@@ -424,6 +423,7 @@ function cb_graph_ui_figure(pr)
     pg =  PlotGraph('GRAPH', g);
     
     pg.draw('Parent', pr.f_pg)
+    set(pr.f_pg, 'UserData', pg);
     
     f_settings = pg.settings();
     set(f_settings, 'OuterPosition', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
@@ -449,13 +449,13 @@ function list =  is_measure_calculated(pr)
         for i = 1:length(measure_list)
             measure = measure_list{i};
             if any(cellfun(@(x) isequal(measure, x.get('ID')), measure_dict.getItems()))
-                calculated_list{i} = 'C';
+                calculated_list{i} = 1;
             else
-                calculated_list{i} = 'F';
+                calculated_list{i} = 0;
             end
         end
     else
-        [calculated_list{:}] = deal('N');
+        [calculated_list{:}] = deal(0);
     end
     list = calculated_list;
 end
@@ -488,15 +488,30 @@ function cb_bring_to_front(pr)
 
     % brings to front settings panel
     pr.cb_bring_to_front@PlotProp();
-
-    % brings to front brain atlas figure
-    children = get(pr.f_pba, 'Children');
-    for i = 1:1:length(children)
-        if check_graphics(children(i), 'uipanel') && strcmp(get(children(i), 'Tag'), 'h_panel')
-            pba = get(children(i), 'UserData');
-            pba.cb_bring_to_front()
+    
+    % bring to front graph class
+    if check_graphics(pr.f_g, 'figure')
+        gui = get(pr.f_g, 'UserData');
+        pe = gui.get('PE');
+        pe.cb_bring_to_front()
+    end
+    
+    % bring to front measure class guis
+    for i = 1:length(pr.f_m)
+        f_m = pr.f_m{i};
+        if check_graphics(f_m, 'figure')
+            gui = get(f_m, 'UserData');
+            pe = gui.get('PE');
+            pe.cb_bring_to_front()
         end
     end
+    
+    % bring to front plot graph
+    if check_graphics(pr.f_pg, 'figure')
+        gui = get(pr.f_pg, 'UserData');
+        pe = gui.get('PE');
+        pe.cb_bring_to_front()
+    end    
 end
 function cb_hide(pr)
     %CB_HIDE hides the figure and its settings figure.
@@ -507,15 +522,30 @@ function cb_hide(pr)
 
     % hides settings panel
     pr.cb_hide@PlotProp();
-
-    % hides brain atlas figure
-    children = get(pr.f_pba, 'Children');
-    for i = 1:1:length(children)
-        if check_graphics(children(i), 'uipanel') && strcmp(get(children(i), 'Tag'), 'h_panel')
-            pba = get(children(i), 'UserData');
-            pba.cb_hide()
+    
+    % bring to front graph class
+    if check_graphics(pr.f_g, 'figure')
+        gui = get(pr.f_g, 'UserData');
+        pe = gui.get('PE');
+        pe.cb_hide()
+    end
+    
+    % bring to front measure class guis
+    for i = 1:length(pr.f_m)
+        f_m = pr.f_m{i};
+        if check_graphics(f_m, 'figure')
+            gui = get(f_m, 'UserData');
+            pe = gui.get('PE');
+            pe.cb_hide()
         end
     end
+    
+    % bring to front plot graph
+    if check_graphics(pr.f_pg, 'figure')
+        gui = get(pr.f_pg, 'UserData');
+        pe = gui.get('PE');
+        pe.cb_hide()
+    end 
 end
 function cb_close(pr)
     %CB_CLOSE closes the figure.

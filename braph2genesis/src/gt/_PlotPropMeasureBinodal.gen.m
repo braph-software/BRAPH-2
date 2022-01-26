@@ -1,8 +1,8 @@
 %% ¡header!
-PlotBinodalMeasure < PlotPropMatrix (pl, plot binodal measure) represents the nodal measure .
+PlotPropMeasureBinodal < PlotPropMatrix (pr, plot binodal measure) represents the nodal measure .
 
 %%% ¡description!
-PlotBinodalMeasure represents the binodal measure.
+PlotPropMeasureBinodal represents the binodal measure.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotPropMatrix, PPMeasure_M.
@@ -11,18 +11,18 @@ GUI, PlotElement, PlotPropMatrix, PPMeasure_M.
 p
 table_value
 
-% FIXME: PL > PR, pl > pr
+% FIXME: PR > PR, pr > pr
 
 %% ¡methods!
-function h_panel = draw(pl, varargin)
+function h_panel = draw(pr, varargin)
     %DRAW draws a table with the binodal measure.
     %
-    % DRAW(PL) draws the property panel a table with the structural data of 
+    % DRAW(PR) draws the property panel a table with the structural data of 
     %  a subject.
     %
-    % H = DRAW(PL) returns a handle to the property panel.
+    % H = DRAW(PR) returns a handle to the property panel.
     %
-    % DRAW(PL, 'Property', VALUE, ...) sets the properties of the panel 
+    % DRAW(PR, 'Property', VALUE, ...) sets the properties of the panel 
     %  with custom Name-Value pairs.
     %  All standard plot properties of uipanel can be used.
     %
@@ -31,25 +31,25 @@ function h_panel = draw(pl, varargin)
     %
     % See also update, redraw, settings, uipanel.
     
-    pl.p = draw@PlotPropMatrix(pl, varargin{:});
+    pr.p = draw@PlotPropMatrix(pr, varargin{:});
 
     % retrieves the handle of the table
-    children = get(pl.p, 'Children');
+    children = get(pr.p, 'Children');
     for i = 1:1:length(children)
         if check_graphics(children(i), 'uitable')
-            pl.table_value = children(i);
+            pr.table_value = children(i);
         end
     end
 
     % output
     if nargout > 0
-        h_panel = pl.p;
+        h_panel = pr.p;
     end
 end
-function update(pl, layer)
+function update(pr)
     %UPDATE updates the content of the property panel and its graphical objects.
     %
-    % UPDATE(PL) updates the content of the property panel and its graphical objects.
+    % UPDATE(PR) updates the content of the property panel and its graphical objects.
     %
     % Important note:
     % 1. UPDATE() is typically called internally by PlotElement and does not need 
@@ -57,13 +57,13 @@ function update(pl, layer)
     %
     % See also draw, redraw, PlotElement.
 
-    update@PlotProp(pl)
+    update@PlotProp(pr)
     
-    el = pl.get('EL');
-    prop = pl.get('PROP');
+    el = pr.get('EL');
+    prop = pr.get('PROP');
     value = el.getr(prop);
     
-    measure = pl.get('EL');
+    measure = pr.get('EL');
     br_dict = measure.get('G').get('BRAINATLAS').get('BR_DICT');
 
     br_ids = cell(br_dict.length(), 1);
@@ -76,16 +76,20 @@ function update(pl, layer)
         br_ids{i} = br_id;
     end
 
-    set(pl.table_value, ...
-        'Data', value{layer}, ...
+    if iscell(value)
+        value = value{1};
+    end
+            
+    set(pr.table_value, ...
+        'Data', value, ...
         'ColumnName', br_ids, ...
         'RowName', br_ids ...
         )
 end
-function redraw(pl, varargin)
+function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
     %
-    % REDRAW(PL) resizes the property panel and repositions its
+    % REDRAW(PR) resizes the property panel and repositions its
     %   graphical objects. 
     % 
     % Important notes:
@@ -93,7 +97,7 @@ function redraw(pl, varargin)
     % 2. REDRAW() is typically called internally by PlotElement and does not need 
     %  to be explicitly called in children of PlotProp.
     %
-    % REDRAW(PL, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT)
+    % REDRAW(PR, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT)
     %  repositions the property panel. It is possible to use a
     %  subset of the Name-Value pairs.
     %  By default:
@@ -104,5 +108,5 @@ function redraw(pl, varargin)
     %
     % See also draw, update, PlotElement.
     
-    pl.redraw@PlotPropMatrix(varargin{:});
+    pr.redraw@PlotPropMatrix(varargin{:});
 end

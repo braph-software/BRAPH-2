@@ -1,9 +1,8 @@
 %% ¡header!
-PlotGlobalMeasure < PlotPropString (pr, plot global measure) represents the nodal measure.
-% FIXME: < PlotPropScalar
+PlotPropMeasureGlobal < PlotPropScalar (pr, plot global measure) represents the nodal measure.
 
 %%% ¡description!
-PlotGlobalMeasure represents the global measure.
+PlotPropMeasureGlobal represents the global measure.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotPropString, PPMeasure_M.
@@ -12,18 +11,18 @@ GUI, PlotElement, PlotPropString, PPMeasure_M.
 p
 edit_value
 
-% FIXME: PL > PR, pl > pr
+% FIXME: PR > PR, pr > pr
 
 %% ¡methods!
 function h_panel = draw(pr, varargin)
     %DRAW draws a table with the global measure.
     %
-    % DRAW(PL) draws the property panel a table with the structural data of 
+    % DRAW(PR) draws the property panel a table with the structural data of 
     %  a subject.
     %
-    % H = DRAW(PL) returns a handle to the property panel.
+    % H = DRAW(PR) returns a handle to the property panel.
     %
-    % DRAW(PL, 'Property', VALUE, ...) sets the properties of the panel 
+    % DRAW(PR, 'Property', VALUE, ...) sets the properties of the panel 
     %  with custom Name-Value pairs.
     %  All standard plot properties of uipanel can be used.
     %
@@ -32,7 +31,7 @@ function h_panel = draw(pr, varargin)
     %
     % See also update, redraw, settings, uipanel.
     
-    pr.p = draw@PlotPropString(pr, varargin{:});
+    pr.p = draw@PlotPropScalar(pr, varargin{:});
 
     % retrieves the handle of the table
     children = get(pr.p, 'Children');
@@ -47,10 +46,10 @@ function h_panel = draw(pr, varargin)
         h_panel = pr.p;
     end
 end
-function update(pr, layer)
+function update(pr)
     %UPDATE updates the content of the property panel and its graphical objects.
     %
-    % UPDATE(PL) updates the content of the property panel and its graphical objects.
+    % UPDATE(PR) updates the content of the property panel and its graphical objects.
     %
     % Important note:
     % 1. UPDATE() is typically called internally by PlotElement and does not need 
@@ -63,16 +62,20 @@ function update(pr, layer)
     el = pr.get('EL');
     prop = pr.get('PROP');
     value = el.getr(prop);
+    
+    if iscell(value)
+        value = value{1};
+    end
 
     set(pr.edit_value, ...
-        'String', value{layer}, ...
+        'String', value, ...
         'Enable', pr.get('ENABLE') ...
         )
 end
 function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
     %
-    % REDRAW(PL) resizes the property panel and repositions its
+    % REDRAW(PR) resizes the property panel and repositions its
     %   graphical objects. 
     % 
     % Important notes:
@@ -80,7 +83,7 @@ function redraw(pr, varargin)
     % 2. REDRAW() is typically called internally by PlotElement and does not need 
     %  to be explicitly called in children of PlotProp.
     %
-    % REDRAW(PL, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT)
+    % REDRAW(PR, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT)
     %  repositions the property panel. It is possible to use a
     %  subset of the Name-Value pairs.
     %  By default:
@@ -91,5 +94,5 @@ function redraw(pr, varargin)
     %
     % See also draw, update, PlotElement.
     
-    pr.redraw@PlotPropString(varargin{:});
+    pr.redraw@PlotPropScalar(varargin{:});
 end
