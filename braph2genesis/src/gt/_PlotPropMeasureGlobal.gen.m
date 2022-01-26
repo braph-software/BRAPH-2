@@ -1,19 +1,22 @@
 %% ¡header!
-PlotBinodalMeasure < PlotPropMatrix (pl, plot binodal measure) represents the nodal measure .
+PlotGlobalMeasure < PlotPropString (pr, plot global measure) represents the nodal measure.
+% FIXME: < PlotPropScalar
 
 %%% ¡description!
-PlotBinodalMeasure represents the binodal measure.
+PlotGlobalMeasure represents the global measure.
 
 %%% ¡seealso!
-GUI, PlotElement, PlotPropMatrix, PPMeasure_M.
+GUI, PlotElement, PlotPropString, PPMeasure_M.
 
 %% ¡properties!
 p
-table_value
+edit_value
+
+% FIXME: PL > PR, pl > pr
 
 %% ¡methods!
-function h_panel = draw(pl, varargin)
-    %DRAW draws a table with the binodal measure.
+function h_panel = draw(pr, varargin)
+    %DRAW draws a table with the global measure.
     %
     % DRAW(PL) draws the property panel a table with the structural data of 
     %  a subject.
@@ -29,22 +32,22 @@ function h_panel = draw(pl, varargin)
     %
     % See also update, redraw, settings, uipanel.
     
-    pl.p = draw@PlotPropMatrix(pl, varargin{:});
+    pr.p = draw@PlotPropString(pr, varargin{:});
 
     % retrieves the handle of the table
-    children = get(pl.p, 'Children');
+    children = get(pr.p, 'Children');
     for i = 1:1:length(children)
-        if check_graphics(children(i), 'uitable')
-            pl.table_value = children(i);
+        if check_graphics(children(i), 'edit')
+            pr.edit_value = children(i);
         end
     end
 
     % output
     if nargout > 0
-        h_panel = pl.p;
+        h_panel = pr.p;
     end
 end
-function update(pl, layer)
+function update(pr, layer)
     %UPDATE updates the content of the property panel and its graphical objects.
     %
     % UPDATE(PL) updates the content of the property panel and its graphical objects.
@@ -55,32 +58,18 @@ function update(pl, layer)
     %
     % See also draw, redraw, PlotElement.
 
-    update@PlotProp(pl)
+    update@PlotProp(pr)
     
-    el = pl.get('EL');
-    prop = pl.get('PROP');
+    el = pr.get('EL');
+    prop = pr.get('PROP');
     value = el.getr(prop);
-    
-    measure = pl.get('EL');
-    br_dict = measure.get('G').get('BRAINATLAS').get('BR_DICT');
 
-    br_ids = cell(br_dict.length(), 1);
-    for i = 1:1:br_dict.length()
-        br = br_dict.getItem(i);
-        br_id = br.get(BrainRegion.ID);
-        if length(br_id) > 10
-            br_id = [br_id(1:8) '..'];
-        end
-        br_ids{i} = br_id;
-    end
-
-    set(pl.table_value, ...
-        'Data', value{layer}, ...
-        'ColumnName', br_ids, ...
-        'RowName', br_ids ...
+    set(pr.edit_value, ...
+        'String', value{layer}, ...
+        'Enable', pr.get('ENABLE') ...
         )
 end
-function redraw(pl, varargin)
+function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
     %
     % REDRAW(PL) resizes the property panel and repositions its
@@ -102,5 +91,5 @@ function redraw(pl, varargin)
     %
     % See also draw, update, PlotElement.
     
-    pl.redraw@PlotPropMatrix(varargin{:});
+    pr.redraw@PlotPropString(varargin{:});
 end

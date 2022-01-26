@@ -13,7 +13,7 @@ CALLBACK - This is a callback function:
     pr.<strong>cb_close</strong>() - closes the measure figure and its settings figure
 
 %%% ¡seealso!
-GUI, PlotElement, PlotProp, AnalyzeGroup, 
+GUI, PlotElement, PlotProp, AnalyzeGroup
 
 %% ¡properties!
 p
@@ -27,7 +27,7 @@ already_calculated
 f_m % array of measure class figures
 f_pg % figure for plot graph
 f_g % figure for class graph
-plot_graph
+plot_graph % FIXME: get it for f_g UserData
 
 %% ¡props_update!
 
@@ -97,18 +97,16 @@ function h_panel = draw(pr, varargin)
             'Position', [.34 .11 .32 .09], ...
             'Callback', {@cb_measure_btn} ...
             );
-
     end
-    
-        function cb_graph_btn(~, ~) % (src, event)
-            pr.cb_graph_value()
-        end
-        function cb_measure_btn(~, ~)
-            pr.cb_measure_value()
-        end
-        function cb_plot_graph_btn(~, ~)
-            pr.cb_graph_ui_figure();
-        end
+    function cb_graph_btn(~, ~) % (src, event)
+        pr.cb_graph_value()
+    end
+    function cb_measure_btn(~, ~)
+        pr.cb_measure_value()
+    end
+    function cb_plot_graph_btn(~, ~)
+        pr.cb_graph_ui_figure();
+    end
 
     if isempty(pr.measure_tbl) || ~isgraphics(pr.measure_tbl, 'uitable')
         pr.mlist = [];
@@ -138,33 +136,32 @@ function h_panel = draw(pr, varargin)
             'Callback', {@cb_table_clearselection} ...
             );
     end
-        
-        function cb_measure_selection(~, event)
-            i = event.Indices(1);
-            col = event.Indices(2);
-            newdata = event.NewData;
-            switch col
-                case 1
-                    if newdata == 1
-                        pr.selected = sort(unique([pr.selected(:); i]));
-                    else
-                        pr.selected = pr.selected(pr.selected ~= i);
-                    end
-
-                otherwise
-            end
-            pr.update()
+    function cb_measure_selection(~, event)
+        i = event.Indices(1);
+        col = event.Indices(2);
+        newdata = event.NewData;
+        switch col
+            case 1
+                if newdata == 1
+                    pr.selected = sort(unique([pr.selected(:); i]));
+                else
+                    pr.selected = pr.selected(pr.selected ~= i);
+                end
+                
+            otherwise
+                %
         end
-        function cb_table_selectall(~, ~)  % (src, event)
-            pr.mlist = Graph.getCompatibleMeasureList(el.get(prop));
-            pr.selected = (1:1:length(pr.mlist))';
-            pr.update()
-        end
-        function cb_table_clearselection(~, ~)  % (src, event)
-            pr.selected = [];
-            pr.update()
-        end
-        
+        pr.update()
+    end
+    function cb_table_selectall(~, ~)  % (src, event)
+        pr.mlist = Graph.getCompatibleMeasureList(el.get(prop));
+        pr.selected = (1:1:length(pr.mlist))';
+        pr.update()
+    end
+    function cb_table_clearselection(~, ~)  % (src, event)
+        pr.selected = [];
+        pr.update()
+    end
 
     % output
     if nargout > 0

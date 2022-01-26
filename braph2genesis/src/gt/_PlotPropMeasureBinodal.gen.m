@@ -1,19 +1,21 @@
 %% ¡header!
-PlotGlobalMeasure < PlotPropString (pl, plot global measure) represents the nodal measure .
+PlotBinodalMeasure < PlotPropMatrix (pl, plot binodal measure) represents the nodal measure .
 
 %%% ¡description!
-PlotGlobalMeasure represents the global measure.
+PlotBinodalMeasure represents the binodal measure.
 
 %%% ¡seealso!
-GUI, PlotElement, PlotPropString, PPMeasure_M.
+GUI, PlotElement, PlotPropMatrix, PPMeasure_M.
 
 %% ¡properties!
 p
-edit_value
+table_value
+
+% FIXME: PL > PR, pl > pr
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
-    %DRAW draws a table with the global measure.
+    %DRAW draws a table with the binodal measure.
     %
     % DRAW(PL) draws the property panel a table with the structural data of 
     %  a subject.
@@ -29,13 +31,13 @@ function h_panel = draw(pl, varargin)
     %
     % See also update, redraw, settings, uipanel.
     
-    pl.p = draw@PlotPropString(pl, varargin{:});
+    pl.p = draw@PlotPropMatrix(pl, varargin{:});
 
     % retrieves the handle of the table
     children = get(pl.p, 'Children');
     for i = 1:1:length(children)
-        if check_graphics(children(i), 'edit')
-            pl.edit_value = children(i);
+        if check_graphics(children(i), 'uitable')
+            pl.table_value = children(i);
         end
     end
 
@@ -60,10 +62,24 @@ function update(pl, layer)
     el = pl.get('EL');
     prop = pl.get('PROP');
     value = el.getr(prop);
+    
+    measure = pl.get('EL');
+    br_dict = measure.get('G').get('BRAINATLAS').get('BR_DICT');
 
-    set(pl.edit_value, ...
-        'String', value{layer}, ...
-        'Enable', pl.get('ENABLE') ...
+    br_ids = cell(br_dict.length(), 1);
+    for i = 1:1:br_dict.length()
+        br = br_dict.getItem(i);
+        br_id = br.get(BrainRegion.ID);
+        if length(br_id) > 10
+            br_id = [br_id(1:8) '..'];
+        end
+        br_ids{i} = br_id;
+    end
+
+    set(pl.table_value, ...
+        'Data', value{layer}, ...
+        'ColumnName', br_ids, ...
+        'RowName', br_ids ...
         )
 end
 function redraw(pl, varargin)
@@ -88,5 +104,5 @@ function redraw(pl, varargin)
     %
     % See also draw, update, PlotElement.
     
-    pl.redraw@PlotPropString(varargin{:});
+    pl.redraw@PlotPropMatrix(varargin{:});
 end

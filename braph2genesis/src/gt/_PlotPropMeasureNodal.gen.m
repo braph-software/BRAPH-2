@@ -1,5 +1,5 @@
 %% ¡header!
-PlotNodalMeasure < PlotPropMatrix (pl, plot nodal measure) represents the nodal measure .
+PlotNodalMeasure < PlotPropMatrix (pl, plot nodal measure) represents the nodal measure.
 
 %%% ¡description!
 PlotNodalMeasure represents the nodal measure.
@@ -10,6 +10,8 @@ GUI, PlotElement, PlotPropMatrix, PPMeasure_M.
 %% ¡properties!
 p
 table_value
+
+% FIXME: PL > PR, pl > pr
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
