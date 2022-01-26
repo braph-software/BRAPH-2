@@ -24,7 +24,7 @@ DATA (data, item) is the data for training or testing the neural network.
 %%% ¡prop!
 MODEL (result, cell) is a trained neural network.
 % % % %%%% ¡gui!
-% % % pl = PlotPropNNAnalysis('EL', nn, 'PROP', BaseNN.NEURAL_NETWORK_ANALYSIS, varargin{:});
+% % % pl = PPNNBase_MODEL('EL', nn, 'PROP', BaseNN.MODEL, varargin{:});
 
 %% ¡methods!
 function installed = check_nn_toolboxes(nn)
