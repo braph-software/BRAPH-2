@@ -8,17 +8,26 @@ Use one of its subclasses instead.
 
 %% ¡props!
 %%% ¡prop!
-NN_DATA (data, item) is a dataset for neural networks.
+ID (data, string) is a few-letter code for the evaluator.
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the evaluator.
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the evaluator.
+
+%%% ¡prop!
+DATA (data, item) is a dataset for neural networks.
 %%%% ¡settings!
 'NNData'
 
 %%% ¡prop!
-NN_MODEL (data, item) is a neural network that need to be evaluated.
+NN (data, item) is a neural network that needs to be evaluated.
 %%%% ¡settings!
 'NNBase'
 
 %%% ¡prop!
-NN_PREDICTION (result, matrix) is the predictions from a neural network.
+PREDICTION (result, cell) is the predictions from a neural network.
 
 %%% ¡prop!
-NN_VAL_PREDICTION (result, matrix) is the predictions from a neural network for validation set.
+VAL_PREDICTION (result, cell) is the predictions from a neural network for validation set.
