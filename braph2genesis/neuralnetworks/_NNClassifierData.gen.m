@@ -293,7 +293,6 @@ function inputs = input_construction(nnd, g_dict_1, g_dict_2)
     end
     inputs = {cat(2, inputs{:})};
 end
-
 function [mutinf] = mutual_information_analysis(nnd, X, Y, n)
     xmin = min(X, [], 2);
     xmax = max(X, [], 2);
