@@ -147,13 +147,15 @@ function redraw(pr, varargin)
         'Position', [.01 Dh/(h+Sh+Th+Dh) .97 (Th/(h+Sh+Th+Dh)-.02)] ...
         );
 
+    width = get_from_varargin(Plot.w(pr.p)-2, 'WIDTH', varargin{:});
+    
     if L > 1
         pr.measure_value_container.redraw('Height', h + Sh + Th + Dh, varargin{:})
     else
         if Measure.is_global(el)
-            pr.measure_value_container.redraw('EDITHEIGHT', 3.3)
+            pr.measure_value_container.redraw('EDITHEIGHT', 3.3, 'WIDHT', width)
         else
-            pr.measure_value_container.redraw()
+            pr.measure_value_container.redraw('WIDHT', width)
         end
         
     end
