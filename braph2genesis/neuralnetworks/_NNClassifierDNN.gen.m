@@ -21,7 +21,6 @@ if isempty(nn.get('LAYERS'))
     nn.set('LAYERS', value);
 end
 
-
 %%% ¡prop!
 BATCH (data, scalar) is the size of the mini-batch to use for each training iteration.
 %%%% ¡default!

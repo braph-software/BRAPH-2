@@ -187,7 +187,6 @@ if isa(value, 'double')
     value = {idx_all(1:num_top_idx)};
 end
 
-
 %%% ¡prop!
 TRAIN_G_DICT_1 (result, idict) is the graph obtained from subject group 1 in training set.
 %%%% ¡settings!

@@ -65,6 +65,3 @@ inputs = inputs{1};
 inputs = reshape(inputs, [1, 1, size(inputs,1), size(inputs,2)]);
 
 value = net.predict(inputs);
-
-
-
