@@ -295,8 +295,8 @@ function inputs = input_construction(nnd, g_dict_1, g_dict_2)
 end
 
 function [mutinf] = mutual_information_analysis(nnd, X, Y, n)
-    xmin = min(X,[],2);
-    xmax = max(X,[],2);
+    xmin = min(X, [], 2);
+    xmax = max(X, [], 2);
     xrange = (xmax - xmin) / n;
     if xmax - xmin < 1e-4
         mutinf = 0;
@@ -305,28 +305,28 @@ function [mutinf] = mutual_information_analysis(nnd, X, Y, n)
     if size(Y, 1) ~= 1
         probmatr = zeros(n, size(Y, 1));
         for i = 1 : size(X,2)
-            dimx = ceil((X(:,i) - xmin) / xrange);
+            dimx = ceil((X(:, i) - xmin) / xrange);
             if dimx < 1
                 dimx = 1;
             elseif dimx > n
                 dimx = n;
             end
-            dimy = find(Y(:,i) == 1);
+            dimy = find(Y(:, i) == 1);
             probmatr(dimx, dimy) = probmatr(dimx, dimy) + 1;
         end
     else
-        ymin = min(Y,[],2);
-        ymax = max(Y,[],2);
+        ymin = min(Y, [], 2);
+        ymax = max(Y, [], 2);
         yrange = (ymax - ymin) / n;
         probmatr = zeros(n, n);
-        for i = 1 : size(X,2)
-            dimx = ceil((X(:,i) - xmin) / xrange);
+        for i = 1 : size(X, 2)
+            dimx = ceil((X(:, i) - xmin) / xrange);
             if dimx < 1
                 dimx = 1;
             elseif dimx > n
                 dimx = n;
             end
-            dimy = ceil((Y(:,i) - ymin) / yrange);
+            dimy = ceil((Y(:, i) - ymin) / yrange);
             if dimy < 1
                 dimy = 1;
             elseif dimy > n
@@ -335,10 +335,10 @@ function [mutinf] = mutual_information_analysis(nnd, X, Y, n)
             probmatr(dimx, dimy) = probmatr(dimx, dimy) + 1;
         end
     end
-    p_y = sum(probmatr, 1) / size(X,2);
+    p_y = sum(probmatr, 1) / size(X, 2);
     p_y_x = probmatr ./ (sum(probmatr, 2) + 1e-8);
     p_y(p_y == 0) = 1e-8;
     p_y_x(p_y_x == 0) = 1e-8;
     
-    mutinf = sum(sum(probmatr / size(X,2) .* log(p_y_x))) - sum(p_y .* log(p_y));
+    mutinf = sum(sum(probmatr / size(X, 2) .* log(p_y_x))) - sum(p_y .* log(p_y));
 end
