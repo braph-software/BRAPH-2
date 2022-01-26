@@ -48,15 +48,16 @@ function installed = check_nn_toolboxes(nn)
     end
 end
 function nn_cell = from_net(nn, net)
-    %FROM_NET transforms the build-in neural network object in matlab 
-    % to a string format that can be saved as cell in braph.
+    %FROM_NET saves the newtork object as the binary format in braph.
     % 
     % NN_CELL = FROM_NET(NN, NET) transforms the build-in neural network
     %  object NET to a cell format. Firstly, the NET is exported to an
-    %  ONNX file and then the file is imported as a string format which 
-    %  can be saved in braph.
+    %  ONNX file and then the file is imported as the binary format which 
+    %  can be saved as cell in braph.
     %  Typically, this method is called internally when a neural network
     %  model is trained and ready to be saved in braph.
+    %
+    % See also to_net.
     
     warning('off', 'MATLAB:mir_warning_unrecognized_pragma')
 
@@ -84,6 +85,8 @@ function net = to_net(nn, saved_nn)
     %  imported as a build-in neural network object in matlab.
     %  Typically, this method is called internally when a saved neural 
     %  network model is evaluated by a test data.
+    %
+    % See also from_net.
 
     warning('off', 'MATLAB:mir_warning_unrecognized_pragma')
     warning('off','nnet_cnn:internal:cnn:analyzer:NetworkAnalyzer:NetworkHasWarnings')
