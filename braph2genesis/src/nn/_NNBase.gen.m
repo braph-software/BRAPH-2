@@ -59,7 +59,8 @@ function nn_cell = from_net(nn, net)
     %
     % See also to_net.
     
-    warning('off', 'MATLAB:mir_warning_unrecognized_pragma')
+    w = warning('query','MATLAB:mir_warning_unrecognized_pragma');
+    warning('off', 'MATLAB:mir_warning_unrecognized_pragma');
 
     directory = [fileparts(which('test_braph2')) filesep 'trial_nn_from_matlab_to_be_erased'];
     if ~exist(directory, 'dir')
@@ -74,6 +75,7 @@ function nn_cell = from_net(nn, net)
     fclose(fileID);
     
     rmdir(directory, 's')
+    warning(w.state, 'MATLAB:mir_warning_unrecognized_pragma')
 end
 function net = to_net(nn, saved_nn)
     %TO_NET transforms the saved neural network 
@@ -87,9 +89,11 @@ function net = to_net(nn, saved_nn)
     %  network model is evaluated by a test data.
     %
     % See also from_net.
-
-    warning('off', 'MATLAB:mir_warning_unrecognized_pragma')
-    warning('off','nnet_cnn:internal:cnn:analyzer:NetworkAnalyzer:NetworkHasWarnings')
+    
+    w_matlab = warning('query','MATLAB:mir_warning_unrecognized_pragma');
+    warning('off', 'MATLAB:mir_warning_unrecognized_pragma');
+    w_nnet = warning('query','nnet_cnn:internal:cnn:analyzer:NetworkAnalyzer:NetworkHasWarnings');
+    warning('off','nnet_cnn:internal:cnn:analyzer:NetworkAnalyzer:NetworkHasWarnings');
 
     directory = [fileparts(which('test_braph2')) filesep 'trial_nn_from_braph_to_be_erased'];
     if ~exist(directory, 'dir')
@@ -105,4 +109,6 @@ function net = to_net(nn, saved_nn)
     net = assembleNetwork(lgraph)
 
     rmdir(directory, 's')
+    warning(w_matlab.state, 'MATLAB:mir_warning_unrecognized_pragma');
+    warning(w_nnet.state,'nnet_cnn:internal:cnn:analyzer:NetworkAnalyzer:NetworkHasWarnings');
 end
