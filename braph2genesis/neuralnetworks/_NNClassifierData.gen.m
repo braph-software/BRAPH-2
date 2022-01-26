@@ -163,40 +163,47 @@ FEATURE_DENSITY (parameter, scalar) is the density of selected features.
 0.05
 
 %%% ¡prop!
-GIVEN_FEATURE_MASK (data, cell) is a given mask for selected features.
+FEATURE_MASK (data, cell) is a mask for selected features.
+%%%% ¡postprocessing!
+if isempty(value)
+    density = nnd.get('FEATURE_DENSITY');
 
-%%% ¡prop!
-CALCULATED_FEATURE_MASK (result, cell) is a mask generated with training set for selected features.
-%%%% ¡calculate!
-density = nnd.get('FEATURE_DENSITY');
-
-adjs_gr_1 = nnd.get('TRAIN_G_DICT_1').getItems();
-data_gr_1 = {};
-for i = 1:length(adjs_gr_1)
-    data_gr_1{end+1} = cell2mat(adjs_gr_1{i}.get('A'));
-end
-
-adjs_gr_2 = nnd.get('TRAIN_G_DICT_1').getItems();
-data_gr_2 = {};
-for i = 1:length(adjs_gr_2)
-    data_gr_2{end+1} = cell2mat(adjs_gr_2{i}.get('A'));
-end
-
-data = [data_gr_1 data_gr_2];
-
-y = nnd.get('TARGETS');
-y = categorical(y{1});
-for j = 1:size(data{1},2)
-    for k = 1:size(data{1},2)
-        data_per_feature = cellfun(@(v)v(j, k), data);
-        label = onehotencode(y', 2);
-        mask(j, k) = nnd.mutual_information_analysis(data_per_feature, label', 5);
+    adjs_gr_1 = nnd.get('TRAIN_G_DICT_1').getItems();
+    data_gr_1 = {};
+    for i = 1:length(adjs_gr_1)
+        data_gr_1{end+1} = cell2mat(adjs_gr_1{i}.get('A'));
     end
-end
-[~,idx_all] = sort(mask(:), 'descend');
-num_top_idx = floor(density*size(mask,1)*size(mask,2));
 
-value = {idx_all(1:num_top_idx)};
+    adjs_gr_2 = nnd.get('TRAIN_G_DICT_1').getItems();
+    data_gr_2 = {};
+    for i = 1:length(adjs_gr_2)
+        data_gr_2{end+1} = cell2mat(adjs_gr_2{i}.get('A'));
+    end
+
+    data = [data_gr_1 data_gr_2];
+
+    y = nnd.get('TARGETS');
+    y = categorical(y{1});
+    for j = 1:size(data{1},2)
+        for k = 1:size(data{1},2)
+            data_per_feature = cellfun(@(v)v(j, k), data);
+            label = onehotencode(y', 2);
+            mask(j, k) = nnd.mutual_information_analysis(data_per_feature, label', 5);
+        end
+    end
+    [~,idx_all] = sort(mask(:), 'descend');
+    num_top_idx = floor(density*size(mask,1)*size(mask,2));
+
+    value = {idx_all(1:num_top_idx)};
+end
+% % % 
+% % % %%% ¡prop!
+% % % GIVEN_FEATURE_MASK (data, cell) is a given mask for selected features.
+% % % 
+% % % %%% ¡prop!
+% % % CALCULATED_FEATURE_MASK (result, cell) is a mask generated with training set for selected features.
+% % % %%%% ¡calculate!
+
 
 %%% ¡prop!
 TRAIN_G_DICT_1 (result, idict) is the graph obtained from subject group 1 in training set.
@@ -276,11 +283,7 @@ function inputs = input_construction(nnd, g_dict_1, g_dict_2)
     data = [data_gr_1 data_gr_2];
     
     % get the feature mask
-    if isempty(nnd.get('GIVEN_FEATURE_MASK'))
-        mask = nnd.memorize('CALCULATED_FEATURE_MASK');
-    else
-        mask = nnd.get('GIVEN_FEATURE_MASK');
-    end
+    mask = nnd.get('FEATURE_MASK');
     
     % construct the input
     if nnd.get('FEATURE_DENSITY') == 1.0
