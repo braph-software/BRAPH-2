@@ -21,10 +21,11 @@ measure_tbl
 measure_btn
 graph_btn
 plot_graph_btn
+line_plot_tglbtn % line plot toggle button
 mlist
 selected
 already_calculated
-plot_type
+plot_type % selected type of plot graph
 graph % internal graph type
 f_m % array of measure class figures
 f_pg % figure for plot graph
@@ -63,7 +64,7 @@ function h_panel = draw(pr, varargin)
 
     el = pr.get('EL');
     prop = pr.get('PROP');
-    graph = [];
+    pr.graph = el.get('G');
     click_time = [];
 
     pr.p = draw@PlotProp(pr, varargin{:});
@@ -102,7 +103,7 @@ function h_panel = draw(pr, varargin)
             'Callback', {@cb_plot_type_adj} ...
             );
         
-        plot_type_line = uicontrol(...
+        pr.line_plot_tglbtn = uicontrol(...
             'Style', 'togglebutton', ...
             'Parent', pr.p, ...
             'Units', 'normalized', ...
@@ -125,15 +126,7 @@ function h_panel = draw(pr, varargin)
     end
     function cb_plot_type_line(~, ~)
         pr.plot_type = 'lines';
-    end
-    function plot_type_rules()
-        if ~isempty(pr.graph) && ~isa(pr.graph, 'GraphWU')
-            set(plot_type_line, 'Enable', 'on');
-        else
-            set(plot_type_line, 'Enable', 'off');
-        end        
-    end
-    plot_type_rules()
+    end    
     pr.plot_type = 'adjacency';
 
     if isempty(pr.measure_tbl) || ~isgraphics(pr.measure_tbl, 'uitable')
@@ -299,7 +292,17 @@ function update(pr)
         if ~check_graphics(pr.f_pg, 'figure')
             set(pr.plot_graph_btn, 'Enable', 'on');
         end
+        
     end
+        
+    function plot_type_rules()
+        if ~isempty(pr.graph) && ~isa(el, 'AnalyzeGroup_ST_WU') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}])
+            set(pr.line_plot_tglbtn, 'Enable', 'on');
+        else
+            set(pr.line_plot_tglbtn, 'Enable', 'off');
+        end
+    end
+    plot_type_rules()
 end
 function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
@@ -502,9 +505,21 @@ function cb_graph_ui_figure(pr)
     el = pr.get('EL');
     prop = pr.get('PROP');
     g = el.get(prop);
+    if isa(el, 'AnalyzeGroup_ST_BUD')
+        x_range = el.get('DENSITIES');
+        x_title = 'DENSITIES';
+    elseif isa(el, 'AnalyzeGroup_ST_BUT')
+        x_range = el.get('THRESHOLDS');
+         x_title = 'THRESHOLDS';
+    end
+    
     switch pr.plot_type
         case 'lines'
-            pg = PlotGraphLine('Graph', g);
+            pg = PlotGraphLine( ... 
+                'Graph', g, ...
+                'X', x_range, ...
+                'XLABEL', x_title ...
+                );
         otherwise
             pg = PlotAdjacencyMatrix('Graph', g);
     end

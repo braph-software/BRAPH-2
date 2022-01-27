@@ -100,65 +100,7 @@ function f_settings = settings(pr, varargin)
     
     f = settings@Plot(pr, varargin{:});
     pr.h_settings = f;
-    graph = pr.get('GRAPH');
     
-    set(f, 'Toolbar', 'figure')
-    pg_toolbar = findall(f, 'Tag', 'FigureToolBar');
-    delete(findall(pg_toolbar, 'Tag', 'Standard.NewFigure'))
-    delete(findall(pg_toolbar, 'Tag', 'Standard.PrintFigure'))
-    delete(findall(pg_toolbar, 'Tag', 'Standard.EditPlot'))
-    delete(findall(pg_toolbar, 'Tag', 'Standard.OpenInspector'))
-    delete(findall(pg_toolbar, 'Tag', 'Exploration.Brushing'))
-    delete(findall(pg_toolbar, 'Tag', 'DataManager.Linking'))
-    delete(findall(pg_toolbar, 'Tag', 'Annotation.InsertColorbar'))
-    delete(findall(pg_toolbar, 'Tag', 'Annotation.InsertLegend'))
-    delete(findall(pg_toolbar, 'Tag', 'Plottools.PlottoolsOff'))
-    delete(findall(pg_toolbar, 'Tag', 'Plottools.PlottoolsOn'))
-    
-    pg_toolbar_line = uipushtool(pg_toolbar, ...
-        'Separator', 'off', ...
-        'TooltipString', 'Line Plot Panel', ...
-        'CData', imread('icon_plot_lines.png'), ...
-        'ClickedCallback', {@cb_toolbar_line});
-    
-    function cb_toolbar_line(~,~)
-        set(pr.h_settings_line, 'Visible', 'on', 'Enable', 'on')
-        set(pr.h_settings_adj, 'Visible', 'off', 'Enable', 'off')
-        pr.line_plot_settings();
-    end
-    
-    pg_toolbar_adj = uipushtool(pg_toolbar, ...
-        'Separator', 'off', ...
-        'TooltipString', 'Adjacency Plot Panel', ...
-        'CData', imread('icon_plot_adj.png'), ...
-        'ClickedCallback', {@cb_toolbar_adjacency});
-    
-    function cb_toolbar_adjacency(~,~)
-        set(pr.h_settings_line, 'Visible', 'off', 'Enable', 'off')
-        set(pr.h_settings_adj, 'Visible', 'on', 'Enable', 'on')
-        pr.adj_plot_settings();
-    end
-    
-    % create dynamic panel, create two panels
-    pr.h_settings_line = uipanel(f, ...
-        'Units', 'normalized', ...
-        'BackgroundColor', [1 .9725 .929], ...
-        'Position', [0 0 1 1]);
-    
-    pr.h_settings_adj = uipanel(f, ...
-        'Units', 'normalized', ...
-        'BackgroundColor', [1 .9725 .929], ...
-        'Position', [0 0 1 1]);
-    
-    initial_rules()
-    function initial_rules()
-        if isa(graph, 'GraphWU')
-            cb_toolbar_adjacency()
-        else
-            cb_toolbar_line()
-        end
-    end
-
     if nargin > 0 
         f_settings = pr.h_settings;
     end
