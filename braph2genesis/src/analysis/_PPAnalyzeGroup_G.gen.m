@@ -198,10 +198,10 @@ function update(pr)
     set(...
         pr.measure_tbl, ...
         'Visible', 'on', ...
-        'ColumnName', {'SEL', 'Measure', 'CAL' 'Shape', 'Scope', 'Notes'}, ...
-        'ColumnFormat', {'logical',  'char', 'logical', 'char', 'char', 'char'}, ...
+        'ColumnName', {'SEL', 'Measure', 'Shape', 'Scope', 'Notes'}, ...
+        'ColumnFormat', {'logical',  'char', 'char', 'char', 'char'}, ...
         'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-        'ColumnEditable', [true false false false false false] ...
+        'ColumnEditable', [true false false false false] ...
         );
 
     if button_state
@@ -213,56 +213,62 @@ function update(pr)
                 pr.mlist = Graph.getCompatibleMeasureList(graph);
             end
             pr.already_calculated = pr.is_measure_calculated();
-            data = cell(length(pr.mlist), 6);
+            data = cell(length(pr.mlist), 5);
             for mi = 1:1:length(pr.mlist)
                 if any(pr.selected == mi)
                     data{mi, 1} = true;
                 else
                     data{mi, 1} = false;
                 end
-                
+
                 data{mi, 2} = pr.mlist{mi};
-                if pr.already_calculated{mi}
-                    data{mi, 3} = true;
-                else
-                    data{mi, 3} = false;
-                end
+
                 if Measure.is_nodal(pr.mlist{mi})
-                    data{mi, 4} = 'NODAL';
+                    data{mi, 3} = 'NODAL';
                 elseif Measure.is_global(pr.mlist{mi})
-                    data{mi, 4} = 'GLOBAL';
+                    data{mi, 3} = 'GLOBAL';
                 else
-                    data{mi, 4} = 'BINODAL';
+                    data{mi, 3} = 'BINODAL';
                 end
 
                 if Measure.is_superglobal(pr.mlist{mi})
-                    data{mi, 5} = 'SUPERGLOBAL';
+                    data{mi, 4} = 'SUPERGLOBAL';
                 elseif Measure.is_unilayer(pr.mlist{mi})
-                    data{mi, 5} = 'UNILAYER';
+                    data{mi, 4} = 'UNILAYER';
                 else
-                    data{mi, 5} = 'BILAYER';
+                    data{mi, 4} = 'BILAYER';
                 end
 
-                data{mi, 6} = eval([pr.mlist{mi} '.getDescription()']);
+                data{mi, 5} = eval([pr.mlist{mi} '.getDescription()']);
             end
             set(pr.measure_tbl, 'Data', data)
-            set(pr.measure_tbl, 'ColumnWidth', {30, 'auto', 30, 'auto', 'auto', 'auto'})
+            set(pr.measure_tbl, 'ColumnWidth', {30, 'auto', 'auto', 'auto', 'auto'})
+
+            row_names = cell(length(pr.already_calculated));
+            for i = 1:length(pr.already_calculated)
+                if pr.already_calculated{i}
+                    row_names{i} = 'C';
+                else
+                    row_names{i} = 'NC';
+                end
+            end
+            set(pr.measure_tbl, 'RowName', row_names)
         end
 
         if ~check_graphics(pr.f_pg, 'figure')
             set(pr.plot_type_adj, 'Enable', 'on');
             set(pr.line_plot_tglbtn, 'Enable', 'on');
         end
-        
+
     end
-        
-    function plot_type_rules()
-        if ~isempty(pr.graph) && ~isa(el, 'AnalyzeGroup_ST_WU') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}]) && ~check_graphics(pr.f_pg, 'figure')
-            set(pr.line_plot_tglbtn, 'Enable', 'on');
-        else
-            set(pr.line_plot_tglbtn, 'Enable', 'off');
+
+        function plot_type_rules()
+            if ~isempty(pr.graph) && ~isa(el, 'AnalyzeGroup_ST_WU') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}]) && ~check_graphics(pr.f_pg, 'figure')
+                set(pr.line_plot_tglbtn, 'Enable', 'on');
+            else
+                set(pr.line_plot_tglbtn, 'Enable', 'off');
+            end
         end
-    end
     plot_type_rules()
 end
 function redraw(pr, varargin)
@@ -492,7 +498,9 @@ function cb_graph_ui_figure(pr)
     set(pr.f_pg, 'UserData', pg);
 
     f_settings = pg.settings();
-    set(f_settings, 'OuterPosition', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
+    set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
+    f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
+    f_settings.OuterPosition(2) = f_ba_y/screen_h;
 
     pr.update()
 end

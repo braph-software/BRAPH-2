@@ -177,7 +177,9 @@ function h_panel = draw(pr, varargin)
             
             % Plot settings panel
             f_settings = pba.settings();
-            set(f_settings, 'OuterPosition', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
+            set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
+            f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
+            f_settings.OuterPosition(2) = f_ba_y/screen_h;
             
             % updates PlotProp panel
             pr.update()
