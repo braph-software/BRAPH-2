@@ -3,14 +3,14 @@ NNRegressorDNN < NNBase (nn, regressor with dense layers) is a binary neural net
 
 %% ¡description!
 This regressor is a fully-connected-lyaer neural network by training with
-backpropagation on the data provided by NNData. The Classifier trains on two
+backpropagation on the data provided by NNData. The Regressor trains on two
 cells: cell INPUTS from NNData holds the training samples represented as 
 floating point feature vectors, and the cell TARGETS, which holds the target
 values for the trianing samples.
 
 %% ¡props!
 %%% ¡prop!
-NNDATA (data, item) is a dataset for training or testing a neural network classifier.
+NNDATA (data, item) is a dataset for training or testing a neural network regressor.
 %%%% ¡settings!
 'NNRegressorData'
 
@@ -80,7 +80,6 @@ if nn.check_nn_toolboxes()
     inputs = nn.get('NNDATA').get('INPUTS');
     inputs = inputs{1};
     numFeatures = length(inputs);
-    numClasses = 2;
     inputs = reshape(inputs, [1, 1, size(inputs, 1), size(inputs, 2)]);
     targets = nn.get('NNDATA').get('TARGETS');
     
@@ -95,9 +94,8 @@ if nn.check_nn_toolboxes()
     end
     layers = [layers
         reluLayer('Name', 'relu1')
-        fullyConnectedLayer(numClasses, 'Name', 'fc_output')
-        softmaxLayer('Name', 'sfmax1')
-        classificationLayer('Name', 'output')
+        fullyConnectedLayer(1, 'Name', 'fc_output')
+        regressionLayer
         ];
     
     % plot layers
@@ -141,5 +139,5 @@ function net = to_net(nn, saved_nn)
     %  Typically, this method is called internally when a saved neural 
     %  network model is evaluated by a test data.
     
-    net = to_net@NNBase(nn, saved_nn, nn.get('INPUT_FORMAT'), "classification", nn.get('TARGET_NAME'));
+    net = to_net@NNBase(nn, saved_nn, nn.get('INPUT_FORMAT'), "regression");
 end

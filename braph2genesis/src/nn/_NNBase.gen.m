@@ -110,9 +110,9 @@ function net = to_net(nn, saved_nn, varargin)
         type = varargin{2};
         class_name = varargin{3};
         net = importONNXNetwork(filename, InputDataFormats = format, OutputLayerType = type, Classes = class_name);
-    elseif length(varargin) == 1
+    elseif length(varargin) == 
         format = varargin{1};
-        net = importONNXNetwork(filename, InputDataFormats = format);
+        net = importONNXNetwork(filename, InputDataFormats = format, OutputLayerType = type);
     else
         lgraph = importONNXLayers(filename, InputDataFormats = "BCSS");
         net = assembleNetwork(lgraph)
