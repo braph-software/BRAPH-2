@@ -198,10 +198,10 @@ function update(pr)
     set(...
         pr.measure_tbl, ...
         'Visible', 'on', ...
-        'ColumnName', {'SEL','GUI', 'Measure', 'CAL' 'Shape', 'Scope', 'Notes'}, ...
-        'ColumnFormat', {'logical', 'logical', 'char', 'logical', 'char', 'char', 'char'}, ...
+        'ColumnName', {'SEL', 'Measure', 'CAL' 'Shape', 'Scope', 'Notes'}, ...
+        'ColumnFormat', {'logical',  'char', 'logical', 'char', 'char', 'char'}, ...
         'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-        'ColumnEditable', [true true false false false false false] ...
+        'ColumnEditable', [true false false false false false] ...
         );
 
     if button_state
@@ -213,44 +213,40 @@ function update(pr)
                 pr.mlist = Graph.getCompatibleMeasureList(graph);
             end
             pr.already_calculated = pr.is_measure_calculated();
-            data = cell(length(pr.mlist), 7);
+            data = cell(length(pr.mlist), 6);
             for mi = 1:1:length(pr.mlist)
                 if any(pr.selected == mi)
                     data{mi, 1} = true;
                 else
                     data{mi, 1} = false;
                 end
-                if ~isempty(pr.f_m) && length(pr.f_m)>=mi && ~isempty(pr.f_m{mi}) && check_graphics(pr.f_m{mi}, 'figure')
-                    data{mi, 2} = true;
-                else
-                    data{mi, 2} = false;
-                end
-                data{mi, 3} = pr.mlist{mi};
+                
+                data{mi, 2} = pr.mlist{mi};
                 if pr.already_calculated{mi}
-                    data{mi, 4} = true;
+                    data{mi, 3} = true;
                 else
-                    data{mi, 4} = false;
+                    data{mi, 3} = false;
                 end
                 if Measure.is_nodal(pr.mlist{mi})
-                    data{mi, 5} = 'NODAL';
+                    data{mi, 4} = 'NODAL';
                 elseif Measure.is_global(pr.mlist{mi})
-                    data{mi, 5} = 'GLOBAL';
+                    data{mi, 4} = 'GLOBAL';
                 else
-                    data{mi, 5} = 'BINODAL';
+                    data{mi, 4} = 'BINODAL';
                 end
 
                 if Measure.is_superglobal(pr.mlist{mi})
-                    data{mi, 6} = 'SUPERGLOBAL';
+                    data{mi, 5} = 'SUPERGLOBAL';
                 elseif Measure.is_unilayer(pr.mlist{mi})
-                    data{mi, 6} = 'UNILAYER';
+                    data{mi, 5} = 'UNILAYER';
                 else
-                    data{mi, 6} = 'BILAYER';
+                    data{mi, 5} = 'BILAYER';
                 end
 
-                data{mi, 7} = eval([pr.mlist{mi} '.getDescription()']);
+                data{mi, 6} = eval([pr.mlist{mi} '.getDescription()']);
             end
             set(pr.measure_tbl, 'Data', data)
-            set(pr.measure_tbl, 'ColumnWidth', {30, 30, 'auto', 30, 'auto', 'auto', 'auto'})
+            set(pr.measure_tbl, 'ColumnWidth', {30, 'auto', 30, 'auto', 'auto', 'auto'})
         end
 
         if ~check_graphics(pr.f_pg, 'figure')
