@@ -21,6 +21,7 @@ measure_tbl
 measure_btn
 graph_btn
 plot_graph_btn
+plot_type_adj
 line_plot_tglbtn % line plot toggle button
 mlist
 selected
@@ -69,18 +70,8 @@ function h_panel = draw(pr, varargin)
 
     pr.p = draw@PlotProp(pr, varargin{:});
 
-    if ~check_graphics(pr.graph_btn, 'pushbutton') || ~check_graphics(pr.plot_graph_btn, 'pushbutton')
-        pr.plot_graph_btn = uicontrol( ...
-            'Style', 'pushbutton', ...
-            'Tag', 'pushbutton_value', ...
-            'Parent', pr.p, ...
-            'Units', 'normalized', ...
-            'String', 'Plot Graph', ...
-            'TooltipString', 'Open a figure with the selected type of plot for the graph.', ...
-            'Position', [.01 .81 .61 .09], ...
-            'Callback', {@cb_plot_graph_btn} ...
-            );
-        
+    if ~check_graphics(pr.graph_btn, 'pushbutton')
+ 
         % graph button
         pr.graph_btn = uicontrol( ...
             'Style', 'pushbutton', ...
@@ -93,13 +84,13 @@ function h_panel = draw(pr, varargin)
             'Callback', {@cb_graph_btn} ...
             );
         
-        plot_type_adj = uicontrol(...
+        pr.plot_type_adj = uicontrol(...
             'Style', 'togglebutton', ...
             'Parent', pr.p, ...
             'Units', 'normalized', ...
             'CData', imread('icon_plot_adj.png'), ...
             'TooltipString', 'Set the plot to adjacency matrix plot.', ...
-            'Position', [.01 .71 .11 .09], ...
+            'Position', [.01 .81 .11 .09], ...
             'Callback', {@cb_plot_type_adj} ...
             );
         
@@ -109,7 +100,7 @@ function h_panel = draw(pr, varargin)
             'Units', 'normalized', ...
             'CData', imread('icon_plot_lines.png'), ...
             'TooltipString', 'Set the plot to line plot.', ...
-            'Position', [.13 .71 .11 .09], ...
+            'Position', [.13 .81 .11 .09], ...
             'Callback', {@cb_plot_type_line} ...
             );
         
@@ -118,14 +109,13 @@ function h_panel = draw(pr, varargin)
     function cb_graph_btn(~, ~) % (src, event)
         pr.cb_graph_value()
     end
-    function cb_plot_graph_btn(~, ~)
-        pr.cb_graph_ui_figure();
-    end
     function cb_plot_type_adj(~, ~)
         pr.plot_type = 'adjacency';
+        pr.cb_graph_ui_figure();
     end
     function cb_plot_type_line(~, ~)
         pr.plot_type = 'lines';
+        pr.cb_graph_ui_figure();
     end    
     pr.plot_type = 'adjacency';
 
@@ -137,28 +127,6 @@ function h_panel = draw(pr, varargin)
             'CellEditCallback', {@cb_measure_edit} ...
             );
 
-        tbl_selectall_btn = uicontrol( ...
-            'Parent', pr.p, ...
-            'Style', 'pushbutton', ...
-            'Units', 'normalized', ...
-            'Position', [.01 .11 .32 .09], ...
-            'Visible', 'on', ...
-            'String', 'Select All', ...
-            'TooltipString', 'Select all measures', ...
-            'Callback', {@cb_table_selectall} ...
-            );
-
-        tbl_clearselection_btn = uicontrol( ...
-            'Parent', pr.p, ...
-            'Style', 'pushbutton', ...
-            'Units', 'normalized', ...
-            'Position', [.01 .01 .32 .09], ...
-            'Visible', 'on', ...
-            'String', 'Clear All', ...
-            'TooltipString', 'Clear measure selection', ...
-            'Callback', {@cb_table_clearselection} ...
-            );
-
         % measure button
         pr.measure_btn = uicontrol( ...
             'Parent', pr.p, ...
@@ -167,49 +135,45 @@ function h_panel = draw(pr, varargin)
             'Units', 'normalized', ...
             'String', 'Calculate Measures', ...
             'TooltipString', 'Calculate Selected Measures', ...
-            'Position', [.34 .11 .32 .09], ...
+            'Position', [.01 .11 .49 .09], ...
             'Callback', {@cb_measure_btn} ...
+            );
+        
+        measure_plot_btn = uicontrol(...
+            'Parent', pr.p, ...
+            'Style', 'pushbutton', ...
+            'Tag', 'measure_plot_button', ...
+            'Units', 'normalized', ...
+            'String', 'Plot Measures', ...
+            'TooltipString', 'Plot Selected Measures', ...
+            'Position', [.51 .11 .49 .09], ...
+            'Callback', {@cb_measure_plot_btn} ...
             );
     end
        
-        function cb_measure_edit(~, event)
-            i = event.Indices(1);
-            col = event.Indices(2);
-            newdata = event.NewData;
-            switch col
-                case 1
-                    if newdata == 1
-                        pr.selected = sort(unique([pr.selected(:); i]));
-                    else
-                        pr.selected = pr.selected(pr.selected ~= i);
-                    end
-                case 2
-                    if newdata == 1
-                        pr.cb_measure_gui(i);
-                    else
-                        f_m = pr.f_m{i}; %#ok<PROPLC>
-                        if check_graphics(f_m, 'figure') %#ok<PROPLC>
-                            close(f_m) %#ok<PROPLC>
-                        end
-                        pr.f_m{i} = [];
-                    end
-                otherwise
-                    % dont do anything
-            end
-            pr.update()
+    function cb_measure_edit(~, event)
+        i = event.Indices(1);
+        col = event.Indices(2);
+        newdata = event.NewData;
+        switch col
+            case 1
+                if newdata == 1
+                    pr.selected = sort(unique([pr.selected(:); i]));
+                else
+                    pr.selected = pr.selected(pr.selected ~= i);
+                end            
+                
+            otherwise
+                % dont do anything
         end
-        function cb_table_selectall(~, ~)  % (src, event)
-            pr.mlist = Graph.getCompatibleMeasureList(el.get(prop));
-            pr.selected = (1:1:length(pr.mlist))';
-            pr.update()
-        end
-        function cb_table_clearselection(~, ~)  % (src, event)
-            pr.selected = [];
-            pr.update()
-        end
-        function cb_measure_btn(~, ~)
-            pr.cb_measure_calc()
-        end
+        pr.update()
+    end
+    function cb_measure_btn(~, ~)
+        pr.cb_measure_calc()
+    end
+    function cb_measure_plot_btn(~, ~)
+        pr.cb_measure_gui();
+    end
 
     % output
     if nargout > 0
@@ -290,13 +254,14 @@ function update(pr)
         end
 
         if ~check_graphics(pr.f_pg, 'figure')
-            set(pr.plot_graph_btn, 'Enable', 'on');
+            set(pr.plot_type_adj, 'Enable', 'on');
+            set(pr.line_plot_tglbtn, 'Enable', 'on');
         end
         
     end
         
     function plot_type_rules()
-        if ~isempty(pr.graph) && ~isa(el, 'AnalyzeGroup_ST_WU') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}])
+        if ~isempty(pr.graph) && ~isa(el, 'AnalyzeGroup_ST_WU') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}]) && ~check_graphics(pr.f_pg, 'figure')
             set(pr.line_plot_tglbtn, 'Enable', 'on');
         else
             set(pr.line_plot_tglbtn, 'Enable', 'off');
@@ -331,7 +296,7 @@ function redraw(pr, varargin)
 
     set(pr.measure_tbl, ...
         'Units', 'normalized', ...
-        'Position', [.01 .22 .98 (Dh/(h+Dh)-.42)] ...
+        'Position', [.01 .22 .98 (Dh/(h+Dh)-.32)] ...
         )
 
     pr.redraw@PlotProp('Height', h + Dh, varargin{:})
@@ -383,7 +348,7 @@ function cb_graph_value(pr)
             'CLOSEREQ', false).draw();
     end
 end
-function cb_measure_gui(pr, index)
+function cb_measure_gui(pr)
     %CB_MEASURE_GUI executes callback for the pushbutton.
     %
     % CB_MEASURE_GUI(PR) executes callback for the pushbutton.
@@ -396,7 +361,7 @@ function cb_measure_gui(pr, index)
     graph = el.memorize(prop);
     pr.mlist = Graph.getCompatibleMeasureList(graph);
 
-    measure = pr.mlist{index};
+    measure_short_list = pr.mlist(pr.selected);
 
     % determine figure position
     f_gr = ancestor(pr.p, 'Figure'); % GUI Group
@@ -413,9 +378,11 @@ function cb_measure_gui(pr, index)
     N = ceil(sqrt(length(pr.mlist))); % number of row and columns of figures
 
     for i = 1:length(pr.mlist)
-        if ~ismember(pr.mlist(i), measure)
+        if ~ismember(pr.mlist(i), measure_short_list)
             continue;
         end
+        
+        measure = pr.mlist{i};
 
         x = (f_gr_x + f_gr_w) / screen_w + mod(i - 1, N) * (screen_w - f_gr_x - 2 * f_gr_w) / N / screen_w;
         y = f_gr_y / screen_h;
@@ -468,7 +435,8 @@ function cb_graph_ui_figure(pr)
     %
     % see also cb_graph_value, cb_measure_value.
 
-    set(pr.plot_graph_btn, 'Enable', 'off');
+    set(pr.plot_type_adj, 'Enable', 'off');
+    set(pr.line_plot_tglbtn, 'Enable', 'off');
     drawnow()
 
     f_pg = ancestor(pr.p, 'Figure'); % BrainAtlas GUI
