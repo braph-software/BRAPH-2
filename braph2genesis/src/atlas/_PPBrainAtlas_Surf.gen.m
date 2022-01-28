@@ -169,7 +169,10 @@ function h_panel = draw(pr, varargin)
             delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
 
             % Plot PlotBrainAtlas panel
-            pba = pr.memorize('PBA');
+            ba = pr.get('EL');
+            surf = ba.get('SURF');
+            pba = pr.get('PBA');
+            pba.set('SURF', surf);
             pba.draw('Parent', pr.f_pba)
             
             % Plot settings panel
