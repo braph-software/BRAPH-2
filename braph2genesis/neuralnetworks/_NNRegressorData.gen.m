@@ -2,7 +2,7 @@
 NNRegressorData < NNData (nnd, data of a neural network regressor) produces a dataset to train or test a neural netowrk regressor.  
 
 %% ¡description!
-This dataset can be used to train or test a neural network classifier. The
+This dataset can be used to train or test a neural network regressor. The
 INPUTS and TARGETS are the two cells for trianing a neurla network. The INPUTS 
 cell is represented as floating point feature vectors. Feature selection procedure
 can be implemented when constructing the INPUTS. The TARGETS cell holds the 

@@ -1,5 +1,5 @@
 %% ¡header!
-NNRegressorDNN < NNBase (nn, regressor with dense layers) is a binary neural network regressor.
+NNRegressorDNN < NNBase (nn, regressor with dense layers) is a neural network regressor.
 
 %% ¡description!
 This regressor is a fully-connected-lyaer neural network by training with
@@ -63,8 +63,7 @@ false
 %%% ¡prop!
 TARGET_NAME (result, cell) is the names for the targets.
 %%%% ¡calculate!
-targets = nn.get('NNDATA').get('TARGETS');
-value = unique(targets{1});
+value = nn.get('NNDATA').get('TARGET_NAME');
 
 %%% ¡prop!
 INPUT_FORMAT (data, string) is the data format of network inputs.
@@ -73,7 +72,7 @@ INPUT_FORMAT (data, string) is the data format of network inputs.
 
 %% ¡props_update!
 %%% ¡prop!
-MODEL (result, cell) is a trained neural network classifier.
+MODEL (result, cell) is a trained neural network regressor.
 %%%% ¡calculate!
 if nn.check_nn_toolboxes()
     % get inputs

@@ -39,7 +39,7 @@ inputs = reshape(inputs, [1, 1, size(inputs,1), size(inputs,2)]);
 value = {net.predict(inputs)};
 
 %%% ¡prop!
-VAL_PREDICTION (result, cell) is an output matrix of prediction for the validation set.
+VAL_PREDICTION (result, cell) is an output cell of prediction for the validation set.
 %%%% ¡calculate!
 nnd = nne.get('NNDATA');
 regressor = nne.get('NN');
