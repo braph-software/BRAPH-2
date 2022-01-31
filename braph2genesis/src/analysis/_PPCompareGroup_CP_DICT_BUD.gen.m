@@ -1,8 +1,9 @@
 %% ¡header!
-PPCompareGroup_CP_DICT_WU < PlotProp (pr, plot property graph) is a plot of a comparison dictionary.
+PPCompareGroup_CP_DICT_BUD < PlotProp (pr, plot property graph) is a plot of a binary undirect using densities comparison dictionary.
 
 %%% ¡description!
-PPCompareGroup_CP_DICT_WU plots the comparison dictionary property associated with a graph.
+PPCompareGroup_CP_DICT_BUD plots the binary undirect using densities comparison 
+dictionary property associated with a graph.
 It also provides the buttons to navigate the graphical interface of the measures.
 
 CALLBACK - This is a callback function:
@@ -18,6 +19,7 @@ GUI, PlotElement, PlotProp, CompareGroup, ComparisonGroup.
 p
 measure_tbl % measure table
 measure_btn % calculate measures button
+line_plot_tgl_btn % line plot toggle button
 adj_plot_tgl_btn % adjacency toggle button
 mlist % list of measures compatible with the graph
 selected % list of selected measures
@@ -67,11 +69,26 @@ function h_panel = draw(pr, varargin)
         'TooltipString', 'Plot to adjacency matrix plot.', ...
         'Position', [.01 .81 .11 .09], ...
         'Callback', {@cb_plot_type_adj} ...
-        );   
+        );
+    
+    pr.line_plot_tgl_btn = uicontrol(...
+        'Style', 'togglebutton', ...
+        'Parent', pr.p, ...
+        'Units', 'normalized', ...
+        'CData', imread('icon_plot_lines.png'), ...
+        'TooltipString', 'Plot to line plot.', ...
+        'Position', [.13 .81 .11 .09], ...
+        'Callback', {@cb_plot_type_line} ...
+        );
         
     function cb_plot_type_adj(~, ~)
+        set(pr.line_plot_tgl_btn, 'Value', 0);
         pr.cb_graph_ui_figure();
-    end  
+    end
+    function cb_plot_type_line(~, ~)
+        set(pr.adj_plot_tgl_btn, 'Value', 0);
+        pr.cb_graph_ui_figure();
+    end    
 
     if isempty(pr.measure_tbl) || ~isgraphics(pr.measure_tbl, 'uitable')
         pr.mlist = [];
@@ -210,9 +227,19 @@ function update(pr)
 
         if ~check_graphics(pr.f_pc, 'figure')
             set(pr.adj_plot_tgl_btn, 'Enable', 'on');
+            set(pr.line_plot_tgl_btn, 'Enable', 'on');
         end
 
     end
+
+        function plot_type_rules()
+            if ~isempty(pr.graph) && isa(el.get('A1'), 'AnalyzeGroup_ST_BUD') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}]) && ~check_graphics(pr.f_pc, 'figure')
+                set(pr.line_plot_tgl_btn, 'Enable', 'on');
+            else
+                set(pr.line_plot_tgl_btn, 'Enable', 'off');
+            end
+        end
+    plot_type_rules()
 end
 function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
@@ -336,6 +363,7 @@ function cb_graph_ui_figure(pr)
     % see also cb_graph_value, cb_measure_value.
 
     set(pr.adj_plot_tgl_btn, 'Enable', 'off');
+    set(pr.line_plot_tgl_btn, 'Enable', 'off');
     drawnow()
 
     f_pc = ancestor(pr.p, 'Figure'); % BrainAtlas GUI
@@ -368,8 +396,22 @@ function cb_graph_ui_figure(pr)
 
     set_braph2_icon(pr.f_pc)
     menu_about = BRAPH2.add_menu_about(pr.f_pc);
+
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+   
+    x_range = el.get('A1').get('DENSITIES');
+    x_title = 'DENSITIES';
     
-    pg = PlotAdjacencyMatrix('Graph', pr.graph);   
+    if isequal(get(pr.line_plot_tgl_btn, 'Value'), 1) % plot lines tgl btn is pressed
+        pg = PlotGraphCompareLine( ...
+            'Comparison', el.get('CP_DICT'), ...
+            'X', x_range, ...
+            'XLABEL', x_title ...
+            );
+    else
+        pg = PlotAdjacencyMatrix('Graph', pr.graph);
+    end
 
     pg.draw('Parent', pr.f_pc)
     set(pr.f_pc, 'UserData', pg);
