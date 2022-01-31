@@ -28,12 +28,12 @@ end
 %%% ¡prop!
 BATCH (data, scalar) is the size of the mini-batch to use for each training iteration.
 %%%% ¡default!
-8
+4
 
 %%% ¡prop!
 EPOCHS (data, scalar) is the maximum number of epochs.
 %%%% ¡default!
-20
+500
 
 %%% ¡prop!
 SHUFFLE (data, option) is an option for data shuffling.
@@ -119,7 +119,7 @@ if nn.check_nn_toolboxes()
         'Verbose', nn.get('VERBOSE')); 
     
     % train the neural network
-    net = trainNetwork(inputs, categorical(targets{1}), layers, options);
+    net = trainNetwork(inputs, targets{1}, layers, options);
 
     % transform the net object to a cell
     value = nn.from_net(net);

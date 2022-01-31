@@ -1,5 +1,5 @@
 %% ¡header!
-NNRegressorData < NNData (nnd, data of a neural network classifier) produces a dataset to train or test a neural netowrk classifier.  
+NNRegressorData < NNData (nnd, data of a neural network regressor) produces a dataset to train or test a neural netowrk regressor.  
 
 %% ¡description!
 This dataset can be used to train or test a neural network classifier. The
@@ -53,13 +53,13 @@ val_gr = Group( ...
     'SUB_DICT', IndexedDictionary('IT_CLASS', 'Subject') ...
     );
 
-val_gr_1.set( ...
+val_gr.set( ...
     'ID', nnd.get('GR').get('ID'), ...
     'LABEL', nnd.get('GR').get('LABEL'), ...
     'NOTES', nnd.get('GR').get('NOTES') ...
     );
 
-subdict = val_gr_1.get('SUB_DICT');
+subdict = val_gr.get('SUB_DICT');
 sub = nnd.get('GR').get('SUB_DICT').getItems();
 selected_idx = nnd.get('TRAIN_VAL_INDEX_GR');
 selected_sub = sub(selected_idx);
@@ -75,8 +75,8 @@ value = val_gr;
 TRAIN_VAL_INDEX_GR (data, rvector) is a vector stating which subjects belong to validation set.
 %%%% ¡conditioning!
 if length(value) == 1 & value < 1
-    num_val = floor(value * nnd.get('GR_1').get('SUB_DICT').length());
-    num_train = nnd.get('GR_1').get('SUB_DICT').length() - num_val;
+    num_val = floor(value * nnd.get('GR').get('SUB_DICT').length());
+    num_train = nnd.get('GR').get('SUB_DICT').length() - num_val;
     value = [ones(1, num_val), zeros(1, num_train)];
     value = value(randperm(length(value)));
     value = find(value == 1);
@@ -89,18 +89,18 @@ if isa(value, 'double')
     density = value;
 
     adjs_gr = nnd.get('TRAIN_G_DICT').getItems();
-    data_gr = {};
+    data = {};
     for i = 1:length(adjs_gr)
-        data_gr{end+1} = cell2mat(adjs_gr{i}.get('A'));
+        data{end+1} = cell2mat(adjs_gr{i}.get('A'));
     end
 
     y = nnd.get('TARGETS');
-    y = categorical(y{1});
+    y = y{1};
     for j = 1:size(data{1},2)
         for k = 1:size(data{1},2)
-            data_per_feature = cellfun(@(v)v(j, k), data_gr);
-            label = onehotencode(y', 2);
-            mask(j, k) = nnd.mutual_information_analysis(data_per_feature, label', 5);
+            data_per_feature = cellfun(@(v)v(j, k), data);
+            label = y';
+            mask(j, k) = nnd.mutual_information_analysis(data_per_feature, label, 5);
         end
     end
     [~,idx_all] = sort(mask(:), 'descend');
@@ -132,14 +132,17 @@ value = nnd.input_construction(nnd.memorize('VAL_G_DICT'));
 %%% ¡prop!
 TARGETS (result, cell) is the label for the dataset.
 %%%% ¡calculate!
-age_list = cellfun(@(x) x.get('age'), nnd.get('TRAIN_GR').get('SUB_DICT').getItems, 'UniformOutput', false);
-value = {cat(2, age_list{:})'};
+target_list = cellfun(@(x) x.get(nnd.get('TARGET_NAME')), nnd.get('TRAIN_GR').get('SUB_DICT').getItems, 'UniformOutput', false);
+value = {cat(2, target_list{:})'};
 
 %%% ¡prop!
 VAL_TARGETS (result, cell) is the label for the validation dataset.
 %%%% ¡calculate!
-age_list = cellfun(@(x) x.get('age'), nnd.get('VAL_GR').get('SUB_DICT').getItems, 'UniformOutput', false);
-value = {cat(2, age_list{:})'};
+target_list = cellfun(@(x) x.get(nnd.get('TARGET_NAME')), nnd.get('VAL_GR').get('SUB_DICT').getItems, 'UniformOutput', false);
+value = {cat(2, target_list{:})'};
+
+%%% ¡prop!
+TARGET_NAME (data, string) is the name of the traget.
 
 %% ¡methods!
 function inputs = input_construction(nnd, g_dict)
