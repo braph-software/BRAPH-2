@@ -33,3 +33,15 @@ G (result, item) is the graph obtained from this analysis.
 value = Graph();
 %%%% ¡gui!
 pr = PPAnalyzeGroup_G('EL', a, 'PROP', AnalyzeGroup.G, varargin{:});
+
+%% ¡staticmethods!
+function pp = getAnalysisGroupCompatibleComparePP(a) 
+    % GETANALYSISGROUPCOMPATIBLECOMPAREPP returns the comparison pp compatible with the analysis.
+    %
+    % PP = GETANALYSISGROUPCOMPATIBLECOMPAREPP(A) returns the comparison pp
+    % that is compatible with the analyze group.
+    %
+    % see also Element.
+    
+    pp = eval([Element.getClass(a) '.getAnalysisGroupCompatibleComparePP()']);
+end

@@ -86,8 +86,18 @@ g = MultigraphBUT( ...
     );
 
 value = g;
-% %%%% ¡gui!
-% % % pl = PPAnalyzeGroupGraph('EL', a, 'PROP', AnalyzeGroup_ST_BUT.G, varargin{:});
+
+%% ¡staticmethods!
+function pp = getAnalysisGroupCompatibleComparePP(a) 
+    % GETANALYSISGROUPCOMPATIBLECOMPAREPP returns the comparison pp compatible with the analysis.
+    %
+    % PP = GETANALYSISGROUPCOMPATIBLECOMPAREPP(A) returns the comparison pp
+    % that is compatible with the analyze group.
+    %
+    % see also Element.
+    
+    pp = 'PPCompareGroup_CP_DICT_BUT';
+end
 
 %% ¡tests!
 
