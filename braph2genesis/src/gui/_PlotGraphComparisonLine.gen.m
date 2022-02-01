@@ -159,6 +159,7 @@ function f_settings = settings(pr, varargin)
             val = measure_list_popup.Value;
             str = measure_list_popup.String;
             pr.cp = cp_dict.getItem(val);
+            pr.set('YLABEL', pr.cp.get('MEASURE'))
             rules_node_popmenu_deactivation()
             pr.update_plot()
         end
@@ -477,7 +478,7 @@ function plotline(pr, x, y)
         'Color', pr.get('COLOR') ...
         );
 
-    title(pr.get('PLOTTITLE'))
-    xlabel(pr.get('XLABEL'))
-    ylabel(pr.get('YLABEL'))
+    title(pr.h_axes, pr.get('PLOTTITLE'))
+    xlabel(pr.h_axes, pr.get('XLABEL'))
+    ylabel(pr.h_axes, pr.get('YLABEL'))
 end
