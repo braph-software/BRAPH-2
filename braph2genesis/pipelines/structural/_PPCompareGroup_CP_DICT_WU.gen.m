@@ -350,9 +350,9 @@ function cb_graph_ui_figure(pr)
     screen_h = Plot.h(0, 'pixels');
 
     x = f_ba_x + f_ba_w;
-    h = f_ba_h / 1.61;
+    h = f_ba_h / 1.5;
     y = f_ba_y + f_ba_h - h;
-    w = f_ba_w * 1.61;
+    w = screen_w - x;
 
     pr.f_pc = figure( ...
         'NumberTitle', 'off', ...
