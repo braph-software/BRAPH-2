@@ -169,12 +169,17 @@ function h_panel = draw(pr, varargin)
             delete(findall(ui_toolbar, 'Tag', 'Standard.FileOpen'))
 
             % Plot PlotBrainAtlas panel
-            pba = pr.memorize('PBA');
+            ba = pr.get('EL');
+            surf = ba.get('SURF');
+            pba = pr.get('PBA');
+            pba.set('SURF', surf);
             pba.draw('Parent', pr.f_pba)
             
             % Plot settings panel
             f_settings = pba.settings();
-            set(f_settings, 'OuterPosition', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
+            set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
+            f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
+            f_settings.OuterPosition(2) = f_ba_y/screen_h;
             
             % updates PlotProp panel
             pr.update()
@@ -309,11 +314,13 @@ function cb_close(pr)
     pr.cb_close@PlotProp();
 
     % closes brain atlas figure
-    children = get(pr.f_pba, 'Children');
-    for i = 1:1:length(children)
-        if check_graphics(children(i), 'uipanel') && strcmp(get(children(i), 'Tag'), 'h_panel')
-            pba = get(children(i), 'UserData');
-            pba.cb_close()
+    if check_graphics(pr.f_pba, 'figure')
+        children = get(pr.f_pba, 'Children');
+        for i = 1:1:length(children)
+            if check_graphics(children(i), 'uipanel') && strcmp(get(children(i), 'Tag'), 'h_panel')
+                pba = get(children(i), 'UserData');
+                pba.cb_close()
+            end
         end
     end
 end
