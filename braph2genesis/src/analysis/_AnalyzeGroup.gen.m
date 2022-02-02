@@ -35,13 +35,13 @@ value = Graph();
 pr = PPAnalyzeGroup_G('EL', a, 'PROP', AnalyzeGroup.G, 'WAITBAR', true, varargin{:});
 
 %% ¡staticmethods!
-function pp = getAnalysisGroupCompatibleComparePP(a) 
-    % GETANALYSISGROUPCOMPATIBLECOMPAREPP returns the comparison pp compatible with the analysis.
+function pp = getPPCompareGroup_CpDict(a) 
+    %GEPPPCOMPAREGROUP_CPDICT returns the comparison plot panel compatible with the analysis.
     %
-    % PP = GETANALYSISGROUPCOMPATIBLECOMPAREPP(A) returns the comparison pp
-    % that is compatible with the analyze group.
+    % PR = GEPPPCOMPAREGROUP_CPDICT(A) returns the comparison plot panel
+    %  that is compatible with the analyze group.
     %
-    % see also Element.
+    % See also CompareGroup.
     
     pp = eval([Element.getClass(a) '.getAnalysisGroupCompatibleComparePP()']);
 end
