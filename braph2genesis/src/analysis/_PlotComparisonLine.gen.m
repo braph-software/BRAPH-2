@@ -1,8 +1,8 @@
 %% ¡header!
-PlotGraphLine < Plot (pr, plot graph) is a line plot of the measure values.
+PlotGraphComparisonLine < PlotGraph (pr, plot graph) is a line plot of the comparison values.
 
 %%% ¡description!
-Plot is the line plot of the measure values.
+Plot is the line plot of the comparison values.
 It is a graphical figure with empty axes, which should be filled by derived element.
 To generate the plot, call pr.draw().
 
@@ -15,9 +15,10 @@ h_axes % axes handle
 h_plot % plot handle
 pp
 h_settings
-m % measure
+cp % measure
 
 %% ¡props!
+
 
 %%% ¡prop!
 PLOTTITLE(metadata, string) to set plot line title
@@ -36,6 +37,9 @@ PLOTVALUE(data, cell) to set plot line atlas
 
 %%% ¡prop!
 MEASURE(data, string) to set plot line measure
+
+%%% ¡prop!
+COMPARISON(data, IDICT) to set the comparison dictionary
 
 %%% ¡prop!
 CIL (metadata, CELL) to set plot line cil
@@ -100,9 +104,9 @@ function h_figure = draw(pr, varargin)
     %  with custom property-value couples.
     %  All standard plot properties of plot line can be used.
     %
-    % see also settings, uipanel, isgraphics, Plot.    
+    % see also settings, uipanel, isgraphics, PlotGraph.    
         
-    [pr.h_figure, pr.h_axes] = draw@Plot(pr, varargin{:});
+    [pr.h_figure, pr.h_axes] = draw@PlotGraph(pr, varargin{:});
         
     if nargout > 0
         h_figure = pr.h_figure;
@@ -122,19 +126,18 @@ function f_settings = settings(pr, varargin)
     %
     % See also draw, figure, isgraphics.
 
-    pr.h_settings = settings@Plot(pr, varargin{:});
+    pr.h_settings = settings@PlotGraph(pr, varargin{:});
     set_braph2_icon(pr.h_settings);
 
     % constants
-    line_style = {'-', '--', ':', ':.', 'none'}; % TODO: move to BRAPH2
+    line_style = {'-', '--', ':', ':.', 'none'};
     marker_style = {'o', '+', '*', '.', 'x', ...
         '_', '|', 'square', 'diamond', '^', ...
-        '>', '<', 'pentagram', 'hexagram', 'none'}; % TODO: move to BRAPH2
-    graph = pr.get('GRAPH');
-    measure_dict = graph.get('M_DICT');
-    pr.m = measure_dict.getItem(1); % it has at least 1 measure
-    measure_list = measure_dict.getKeys();
-    atlas = graph.get('BRAINATLAS');
+        '>', '<', 'pentagram', 'hexagram', 'none'};
+    cp_dict = pr.get('Comparison');
+    pr.cp = cp_dict.getItem(1); % it has at least 1 measure
+    measure_list = cellfun(@(x) x.get('MEASURE'), cp_dict.getItems(), 'UniformOutput', false);
+    atlas = pr.cp.get('C').get('A1').get('G').get('BRAINATLAS');
     node_labels = cellfun(@(x) x.get('ID') , atlas.get('BR_DICT').getItems(), 'UniformOutput', false);
 
     ui_plot_properties_panel = uipanel(pr.h_settings, ...
@@ -155,8 +158,8 @@ function f_settings = settings(pr, varargin)
         function cb_measure_selection(~,~)
             val = measure_list_popup.Value;
             str = measure_list_popup.String;
-            pr.m = measure_dict.getItem(val);
-            pr.set('YLABEL', pr.m.get('ID'))
+            pr.cp = cp_dict.getItem(val);
+            pr.set('YLABEL', pr.cp.get('MEASURE'))
             rules_node_popmenu_deactivation()
             pr.update_plot()
         end
@@ -281,7 +284,7 @@ function f_settings = settings(pr, varargin)
                 'Tooltip', 'Select the Node to be Plotted.', ...
                 'String', node_labels, ...
                 'Value', pr.get('NODE1'), ...
-                'Position', [.55 .8 .2 .16], ...
+                'Position', [.55 .8 .1 .16], ...
                 'Callback', {@cb_node_1} ...
                 );
             set(ui_node2_popmenu, ...
@@ -289,13 +292,13 @@ function f_settings = settings(pr, varargin)
                 'Tooltip', 'Select the Node to be Plotted.', ...
                 'String', node_labels, ...
                 'Value', pr.get('NODE2'), ...
-                'Position', [.76 .8 .2 .16], ...
+                'Position', [.66 .8 .1 .16], ...
                 'Callback', {@cb_node_2} ...
                 );
             rules_node_popmenu_deactivation()
         end
         function rules_node_popmenu_deactivation()
-            if Measure.is_global(pr.m)
+            if Measure.is_global(pr.cp.get('MEASURE'))
                 set(ui_node1_popmenu, ...
                     'Visible', 'off', ...
                     'Enable', 'off' ...
@@ -305,7 +308,7 @@ function f_settings = settings(pr, varargin)
                     'Enable', 'off' ...
                     )
 
-            elseif Measure.is_nodal(pr.m)
+            elseif Measure.is_nodal(pr.cp.get('MEASURE'))
                 set(ui_node1_popmenu, ...
                     'Visible', 'on', ...
                     'Enable', 'on' ...
@@ -344,12 +347,12 @@ function f_settings = settings(pr, varargin)
         init_cil_panel()
     end
         function init_cil_panel()
-            set(ui_confidence_interval_min_checkbox, 'Position', [.55 .01 .2 .14]);
+            set(ui_confidence_interval_min_checkbox, 'Position', [.77 .8 .1 .16]);
             set(ui_confidence_interval_min_checkbox, 'String', 'Show Confidence Interval Min');
             set(ui_confidence_interval_min_checkbox, 'Value', false);
             set(ui_confidence_interval_min_checkbox, 'Callback', {@cb_show_confidence_interval_min})
 
-            set(ui_confidence_interval_max_checkbox, 'Position', [.75 .01 .2 .14]);
+            set(ui_confidence_interval_max_checkbox, 'Position', [.88 .8 .1 .16]);
             set(ui_confidence_interval_max_checkbox, 'String', 'Show Confidence Interval Max');
             set(ui_confidence_interval_max_checkbox, 'Value', false);
             set(ui_confidence_interval_max_checkbox, 'Callback', {@cb_show_confidence_interval_max})
@@ -398,13 +401,13 @@ function f_settings = settings(pr, varargin)
             node1_to_plot = pr.get('NODE1');
             node2_to_plot = pr.get('NODE2');
 
-            if Measure.is_global(pr.m) % global
+            if Measure.is_global(pr.cp.get('MEASURE')) % global
                 is_inf_vector = cellfun(@(x) isinf(x), array);
                 if any(is_inf_vector)
                     return;
                 end
                 limit = [array{:}];
-            elseif Measure.is_nodal(pr.m) % nodal
+            elseif Measure.is_nodal(pr.cp.get('MEASURE')) % nodal
                 for l = 1:length(array)
                     tmp = array{l};
                     tmp_y = tmp(node1_to_plot);
@@ -432,15 +435,15 @@ function f_settings = settings(pr, varargin)
     end
 end
 function update_plot(pr)
-    measure = pr.m;
-    plot_value = measure.get('M');
-    if Measure.is_global(pr.m) % global
+    comparison = pr.cp;
+    plot_value = comparison.get('DIFF');
+    if Measure.is_global(pr.cp.get('MEASURE')) % global
         is_inf_vector = cellfun(@(x) isinf(x), plot_value);
         if any(is_inf_vector)
             return;
         end
         y_ = [plot_value{:}];
-    elseif Measure.is_nodal(pr.m) % nodal
+    elseif Measure.is_nodal(pr.cp.get('MEASURE')) % nodal
         for l = 1:length(plot_value)
             tmp = plot_value{l};
             tmp_y = tmp(pr.get('NODE1'));

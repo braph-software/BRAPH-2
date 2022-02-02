@@ -24,6 +24,8 @@ WAITBAR (metadata, logical) detemines whether to show the waitbar.
 
 %%% ¡prop!
 VERBOSE (metadata, logical) sets whether to write the progress of the comparisons.
+%%%% ¡default!
+false
 
 %%% ¡prop!
 INTERRUPTIBLE (metadata, scalar) sets whether the comparison computation is interruptible for multitasking.
@@ -82,8 +84,9 @@ CP_DICT (result, idict) contains the results of the comparison.
 'ComparisonGroup'
 %%%% ¡calculate!
 value = IndexedDictionary('IT_CLASS', 'ComparisonGroup', 'IT_KEY', 4);
-%%%% ¡gui_!
-% % % pl = PPCompareGroupCP('EL', c, 'PROP', CompareGroup.CP_DICT, varargin{:});
+%%%% ¡gui!
+a1 = c.get('A1');
+pr = a1.getPPCompareGroup_CPDict('EL', c, 'PROP', CompareGroup.CP_DICT);
 
 %% ¡methods!
 function cp = getComparison(c, measure_class, varargin)
