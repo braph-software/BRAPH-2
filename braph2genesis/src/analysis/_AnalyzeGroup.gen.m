@@ -34,8 +34,8 @@ value = Graph();
 %%%% ¡gui!
 pr = PPAnalyzeGroup_G('EL', a, 'PROP', AnalyzeGroup.G, 'WAITBAR', true, varargin{:});
 
-%% ¡staticmethods!
-function pp = getPPCompareGroup_CpDict(a) 
+%% ¡methods!
+function pr = getPPCompareGroup_CPDict(a, varargin) 
     %GEPPPCOMPAREGROUP_CPDICT returns the comparison plot panel compatible with the analysis.
     %
     % PR = GEPPPCOMPAREGROUP_CPDICT(A) returns the comparison plot panel
@@ -43,5 +43,5 @@ function pp = getPPCompareGroup_CpDict(a)
     %
     % See also CompareGroup.
     
-    pp = eval([Element.getClass(a) '.getAnalysisGroupCompatibleComparePP()']);
+    pr = PropPlotIDict(varargin{:});
 end

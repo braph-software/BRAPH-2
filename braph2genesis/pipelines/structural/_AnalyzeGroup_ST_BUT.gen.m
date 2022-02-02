@@ -87,16 +87,16 @@ g = MultigraphBUT( ...
 
 value = g;
 
-%% ¡staticmethods!
-function pp = getAnalysisGroupCompatibleComparePP(a) 
-    % GETANALYSISGROUPCOMPATIBLECOMPAREPP returns the comparison pp compatible with the analysis.
+%% ¡methods!
+function pr = getPPCompareGroup_CPDict(a, varargin) 
+    %GEPPPCOMPAREGROUP_CPDICT returns the comparison plot panel compatible with the analysis.
     %
-    % PP = GETANALYSISGROUPCOMPATIBLECOMPAREPP(A) returns the comparison pp
-    % that is compatible with the analyze group.
+    % PR = GEPPPCOMPAREGROUP_CPDICT(A) returns the comparison plot panel
+    %  that is compatible with the analyze group.
     %
-    % see also Element.
+    % See also CompareGroup.
     
-    pp = 'PPCompareGroup_CP_DICT_BUT';
+    pr = PPCompareGroup_CPDict_BUT(varargin{:});
 end
 
 %% ¡tests!
