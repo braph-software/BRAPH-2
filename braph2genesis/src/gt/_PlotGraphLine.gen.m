@@ -1,5 +1,5 @@
 %% ¡header!
-PlotGraphLine < PlotGraph (pr, plot graph) is a line plot of the measure values.
+PlotGraphLine < Plot (pr, plot graph) is a line plot of the measure values.
 
 %%% ¡description!
 Plot is the line plot of the measure values.
@@ -100,9 +100,9 @@ function h_figure = draw(pr, varargin)
     %  with custom property-value couples.
     %  All standard plot properties of plot line can be used.
     %
-    % see also settings, uipanel, isgraphics, PlotGraph.    
+    % see also settings, uipanel, isgraphics, Plot.    
         
-    [pr.h_figure, pr.h_axes] = draw@PlotGraph(pr, varargin{:});
+    [pr.h_figure, pr.h_axes] = draw@Plot(pr, varargin{:});
         
     if nargout > 0
         h_figure = pr.h_figure;
@@ -122,7 +122,7 @@ function f_settings = settings(pr, varargin)
     %
     % See also draw, figure, isgraphics.
 
-    pr.h_settings = settings@PlotGraph(pr, varargin{:});
+    pr.h_settings = settings@Plot(pr, varargin{:});
     set_braph2_icon(pr.h_settings);
 
     % constants
