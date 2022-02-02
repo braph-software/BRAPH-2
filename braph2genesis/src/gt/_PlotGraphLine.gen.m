@@ -126,10 +126,10 @@ function f_settings = settings(pr, varargin)
     set_braph2_icon(pr.h_settings);
 
     % constants
-    line_style = {'-', '--', ':', ':.', 'none'};
+    line_style = {'-', '--', ':', ':.', 'none'}; % TODO: move to BRAPH2
     marker_style = {'o', '+', '*', '.', 'x', ...
         '_', '|', 'square', 'diamond', '^', ...
-        '>', '<', 'pentagram', 'hexagram', 'none'};
+        '>', '<', 'pentagram', 'hexagram', 'none'}; % TODO: move to BRAPH2
     graph = pr.get('GRAPH');
     measure_dict = graph.get('M_DICT');
     pr.m = measure_dict.getItem(1); % it has at least 1 measure

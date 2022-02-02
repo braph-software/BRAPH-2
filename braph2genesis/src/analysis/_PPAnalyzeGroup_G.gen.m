@@ -6,7 +6,7 @@ PPAnalyzeGroup_G plots the measure table associated with a graph of the analysis
 It also provides the buttons to navigate the graphical interface of both
 the measures and the graph.
 
-CALLBACK - This is a callback function:
+CALLBACKS - These are callback functions:
 
     pr.<strong>cb_bring_to_front</strong>() - brings to the front the measure figure and its settings figure
     pr.<strong>cb_hide</strong>() - hides the measure figure and its settings figure

@@ -2,7 +2,7 @@
 PPMeasure_M < PlotProp (pr, plot property M of measure) is a plot of property M of measure.
 
 %%% ¡description!
-PPMeasure_M plots a Measure result table and plot.
+PPMeasure_M plots a Measure result.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp, MultigraphBUD, MultigraphBUT.
