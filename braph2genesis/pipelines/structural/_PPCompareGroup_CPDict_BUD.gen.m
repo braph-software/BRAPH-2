@@ -1,8 +1,8 @@
 %% ¡header!
-PPCompareGroup_CP_DICT_BUD < PlotProp (pr, plot property graph) is a plot of a binary undirect using densities comparison dictionary.
+PPCompareGroup_CPDict_BUD < PlotProp (pr, plot property graph) is a plot of a binary undirect using densities comparison dictionary.
 
 %%% ¡description!
-PPCompareGroup_CP_DICT_BUD plots the binary undirect using densities comparison 
+PPCompareGroup_CPDict_BUD plots the binary undirect using densities comparison 
 dictionary property associated with a graph.
 It also provides the buttons to navigate the graphical interface of the measures.
 
