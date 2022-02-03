@@ -1,11 +1,11 @@
 %% ¡header!
-PlotPropMeasureBinodal < PlotPropMatrix (pr, plot binodal measure) represents the nodal measure .
+PlotPropMeasureEnsembleBinodal < PlotPropMatrix (pr, plot binodal measure ensemble) represents the binodal measure ensemble.
 
 %%% ¡description!
-PlotPropMeasureBinodal represents the binodal measure.
+PlotPropMeasureEnsembleBinodal represents the binodal measure ensemble.
 
 %%% ¡seealso!
-GUI, PlotElement, PlotPropMatrix, PPMeasure_M.
+GUI, PlotElement, PlotPropMatrix, AnalyzeEnsemble, MeasureEnsemble.
 
 %% ¡properties!
 p
@@ -61,8 +61,9 @@ function update(pr)
     prop = pr.get('PROP');
     value = el.getr(prop);
     
-    measure = pr.get('EL');
-    br_dict = measure.get('G').get('BRAINATLAS').get('BR_DICT');
+    g_dict = el.get('A').get('G_DICT');
+    graph = g_dict.getItem(1);
+    br_dict = graph.get('BRAINATLAS').get('BR_DICT');
 
     br_ids = cell(br_dict.length(), 1);
     for i = 1:1:br_dict.length()

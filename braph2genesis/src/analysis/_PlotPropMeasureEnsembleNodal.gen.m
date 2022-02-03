@@ -1,11 +1,11 @@
 %% ¡header!
-PlotPropMeasureBinodal < PlotPropMatrix (pr, plot binodal measure) represents the nodal measure .
+PlotPropMeasureEnsembleNodal < PlotPropMatrix (pr, plot nodal measure ensemble) represents the nodal measure ensemble.
 
 %%% ¡description!
-PlotPropMeasureBinodal represents the binodal measure.
+PlotPropMeasureEnsembleNodal represents the nodal measure ensemble.
 
 %%% ¡seealso!
-GUI, PlotElement, PlotPropMatrix, PPMeasure_M.
+GUI, PlotElement, PlotPropMatrix, AnalyzeEnsemble, MeasureEnsemble.
 
 %% ¡properties!
 p
@@ -13,7 +13,7 @@ table_value
 
 %% ¡methods!
 function h_panel = draw(pr, varargin)
-    %DRAW draws a table with the binodal measure.
+    %DRAW draws a table with the nodal measure.
     %
     % DRAW(PR) draws the property panel a table with the structural data of 
     %  a subject.
@@ -61,8 +61,9 @@ function update(pr)
     prop = pr.get('PROP');
     value = el.getr(prop);
     
-    measure = pr.get('EL');
-    br_dict = measure.get('G').get('BRAINATLAS').get('BR_DICT');
+    g_dict = el.get('A').get('G_DICT');
+    graph = g_dict.getItem(1);
+    br_dict = graph.get('BRAINATLAS').get('BR_DICT');
 
     br_ids = cell(br_dict.length(), 1);
     for i = 1:1:br_dict.length()
@@ -77,6 +78,7 @@ function update(pr)
     if iscell(value)
         value = value{1};
     end
+    
     if isa(value, 'NoValue')
         set(pr.table_value, ...
             'ColumnName', {}, ...
