@@ -4,7 +4,7 @@ NNClassifierData_CON_WU < NNClassifierData (nnd, data of a neural network classi
 %% ¡description!
 This dataset can be used to train or test a neural network classifier. The
 INPUTS and TARGETS are the two cells for trianing a neurla network. The INPUTS 
-cell is obtained direcly from DTI connectivity matrices, and is represent as 
+cell is obtained direcly from DTI adjacency matrices, and is represent as 
 floating point feature cell. Feature selection procedure can be implemented 
 when constructing the INPUTS. The TARGETS cell holds the target values for 
 the trianing samples. 

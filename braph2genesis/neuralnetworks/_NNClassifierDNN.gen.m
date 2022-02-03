@@ -79,7 +79,7 @@ if nn.check_nn_toolboxes()
     % get inputs
     inputs = nn.get('NNDATA').get('INPUTS');
     inputs = inputs{1};
-    numFeatures = length(inputs);
+    numFeatures = size(inputs, 1);
     numClasses = 2;
     inputs = reshape(inputs, [1, 1, size(inputs, 1), size(inputs, 2)]);
     targets = nn.get('NNDATA').get('TARGETS');

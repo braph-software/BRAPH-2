@@ -1,13 +1,12 @@
 %% ¡header!
-NNClassifierData < NNData (nnd, data of a neural network classifier) produces a dataset to train or test a neural netowrk classifier.  
+NNClassifierData_GraphMeasures < NNData (nnd, data of a neural network classifier) produces a dataset to train or test a neural netowrk classifier.  
 
 %% ¡description!
 This dataset can be used to train or test a neural network classifier. The
 INPUTS and TARGETS are the two cells for trianing a neurla network. The INPUTS 
-cell is represented as floating point feature vectors obtained from adjacency
-matrices. Feature selection procedure can be implemented when constructing the 
-INPUTS. The TARGETS cell holds the target values for the trianing samples. 
-Instances of this class should not be created. 
+cell is represented as floating point feature vectors. Feature selection procedure
+can be implemented when constructing the INPUTS. The TARGETS cell holds the 
+target values for the trianing samples. Instances of this class should not be created. 
 Use one of its subclasses instead.
 
 %% ¡props!
@@ -158,64 +157,37 @@ end
 %%% ¡prop!
 INPUT_TYPE (data, option) is the input type for training or testing the NN.
 %%%% ¡settings!
-{'adjacency_matrices' 'graph_measures'}
+{'adjacency_matrices' 'graph_measures' 'both'}
 
 %%% ¡prop!
 MEASURES (data, cell) is the graph measures as input to NN.
 %%%% ¡default!
-{'DegreeAv', 'DegreeAv', 'DegreeAv', 'DegreeAv', 'DegreeAv'}
+{'DegreeAv'}
 
 %%% ¡prop!
 FEATURE_MASK (metadata, cell) is a mask for selected features.
 %%%% ¡conditioning!
-if isa(value, 'double') 
-    if nnd.get('INPUT_TYPE') == "adjacency_matrices"
-        density = value;
-    
-        adjs_gr_1 = nnd.get('TRAIN_G_DICT_1').getItems();
-        data_gr_1 = {};
-        for i = 1:length(adjs_gr_1)
-            data_gr_1{end+1} = cell2mat(adjs_gr_1{i}.get('A'));
-        end
-    
-        adjs_gr_2 = nnd.get('TRAIN_G_DICT_1').getItems();
-        data_gr_2 = {};
-        for i = 1:length(adjs_gr_2)
-            data_gr_2{end+1} = cell2mat(adjs_gr_2{i}.get('A'));
-        end
-    
-        data = [data_gr_1 data_gr_2];
-    else
-        density = value;
-    
-        adjs_gr_1 = nnd.get('TRAIN_G_DICT_1').getItems();
-        data_gr_1 = {};
-        measure_class = nnd.get('MEASURES');
-        for i = 1:length(adjs_gr_1)
-            m = [];
-            for j = 1:length(measure_class)
-                m = [m; cell2mat(adjs_gr_1{i}.getMeasure(measure_class{j}).get('M'))];
-            end
-            data_gr_1{end+1} = m;
-        end
-    
-        adjs_gr_2 = nnd.get('TRAIN_G_DICT_2').getItems();
-        data_gr_2 = {};
-        measure_class = nnd.get('MEASURES');
-        for i = 1:length(adjs_gr_2)
-            m = [];
-            for j = 1:length(measure_class)
-                m = [m; cell2mat(adjs_gr_2{i}.getMeasure(measure_class{j}).get('M'))];
-            end
-            data_gr_1{end+1} = m;
-        end
-    
-        data = [data_gr_1 data_gr_2];
+if isa(value, 'double')
+    density = value;
+
+    adjs_gr_1 = nnd.get('TRAIN_G_DICT_1').getItems();
+    data_gr_1 = {};
+    for i = 1:length(adjs_gr_1)
+        data_gr_1{end+1} = cell2mat(adjs_gr_1{i}.get('A'));
     end
+
+    adjs_gr_2 = nnd.get('TRAIN_G_DICT_1').getItems();
+    data_gr_2 = {};
+    for i = 1:length(adjs_gr_2)
+        data_gr_2{end+1} = cell2mat(adjs_gr_2{i}.get('A'));
+    end
+
+    data = [data_gr_1 data_gr_2];
+
     y = nnd.get('TARGETS');
     y = categorical(y{1});
-    for j = 1:size(data{1}, 1)
-        for k = 1:size(data{1}, 2)
+    for j = 1:size(data{1},2)
+        for k = 1:size(data{1},2)
             data_per_feature = cellfun(@(v)v(j, k), data);
             label = onehotencode(y', 2);
             mask(j, k) = nnd.mutual_information_analysis(data_per_feature, label', 5);
@@ -223,7 +195,7 @@ if isa(value, 'double')
     end
     [~,idx_all] = sort(mask(:), 'descend');
     num_top_idx = floor(density * size(mask, 1) * size(mask, 2));
-    
+
     value = {idx_all(1:num_top_idx)};
 end
 
@@ -285,46 +257,19 @@ function inputs = input_construction(nnd, g_dict_1, g_dict_2)
     %  for the neural network.
     
     % get the connectivity matrices 
-
-    if nnd.get('INPUT_TYPE') == "adjacency_matrices"
-        adjs_gr_1 = g_dict_1.getItems();
-        data_gr_1 = {};
-        for i = 1:length(adjs_gr_1)
-            data_gr_1{end+1} = cell2mat(adjs_gr_1{i}.get('A'));
-        end
-    
-        adjs_gr_2 = g_dict_2.getItems();
-        data_gr_2 = {};
-        for i = 1:length(adjs_gr_2)
-            data_gr_2{end+1} = cell2mat(adjs_gr_2{i}.get('A'));
-        end
-        
-        data = [data_gr_1 data_gr_2];
-    else
-        adjs_gr_1 = g_dict_1.getItems();
-        data_gr_1 = {};
-        measure_class = nnd.get('MEASURES');
-        for i = 1:length(adjs_gr_1)
-            m = [];
-            for j = 1:length(measure_class)
-                m = [m; cell2mat(adjs_gr_1{i}.getMeasure(measure_class{j}).get('M'))];
-            end
-            data_gr_1{end+1} = m;
-        end
-    
-        adjs_gr_2 = g_dict_2.getItems();
-        data_gr_2 = {};
-        measure_class = nnd.get('MEASURES');
-        for i = 1:length(adjs_gr_2)
-            m = [];
-            for j = 1:length(measure_class)
-                m = [m; cell2mat(adjs_gr_1{i}.getMeasure(measure_class{j}).get('M'))];
-            end
-            data_gr_1{end+1} = m;
-        end
-    
-        data = [data_gr_1 data_gr_2];
+    adjs_gr_1 = g_dict_1.getItems();
+    data_gr_1 = {};
+    for i = 1:length(adjs_gr_1)
+        data_gr_1{end+1} = cell2mat(adjs_gr_1{i}.get('A'));
     end
+
+    adjs_gr_2 = g_dict_2.getItems();
+    data_gr_2 = {};
+    for i = 1:length(adjs_gr_2)
+        data_gr_2{end+1} = cell2mat(adjs_gr_2{i}.get('A'));
+    end
+    
+    data = [data_gr_1 data_gr_2];
     
     % get the feature mask
     mask = nnd.get('FEATURE_MASK');
