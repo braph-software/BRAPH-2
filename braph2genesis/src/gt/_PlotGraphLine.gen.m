@@ -23,6 +23,9 @@ m % measure
 PLOTTITLE(metadata, string) to set plot line title
 
 %%% ¡prop!
+GRAPH(data, item) to set plot line title
+
+%%% ¡prop!
 X(data, rvector) to set plot line graph x range
 
 %%% ¡prop!
@@ -102,7 +105,16 @@ function h_figure = draw(pr, varargin)
     %
     % see also settings, uipanel, isgraphics, Plot.    
         
-    [pr.h_figure, pr.h_axes] = draw@Plot(pr, varargin{:});
+    
+    pr.pp = draw@Plot(pr, varargin{:});
+    pr.h_figure = get(pr.pp, 'Parent');
+    subpanel = uipanel(pr.h_figure, ...
+        'BackGroundColor', 'w', ...
+        'Units', 'normalized', ...
+        'Position', [.0 .0 1 1] ...
+        );
+    
+    pr.h_axes = axes(subpanel);
         
     if nargout > 0
         h_figure = pr.h_figure;

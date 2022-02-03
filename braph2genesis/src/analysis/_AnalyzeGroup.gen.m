@@ -19,6 +19,8 @@ LABEL (metadata, string) is an extended label of the graph analysis.
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the graph analysis.
+%%%% ¡gui!
+pr = PlotPropString('EL', a, 'PROP', AnalyzeGroup.NOTES, 'LINES', 'multi', 'EDITHEIGHT', 4.5, varargin{:});
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class.

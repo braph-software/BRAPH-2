@@ -18,6 +18,8 @@ LABEL (metadata, string) is an extended label of the comparison.
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the comparison.
+%%%% ¡gui!
+pr = PlotPropString('EL', c, 'PROP', CompareGroup.NOTES, 'LINES', 'multi', 'EDITHEIGHT', 4.5, varargin{:});
 
 %%% ¡prop!
 WAITBAR (metadata, logical) detemines whether to show the waitbar.

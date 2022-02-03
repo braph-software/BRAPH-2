@@ -401,8 +401,7 @@ function cb_graph_ui_figure(pr)
     prop = pr.get('PROP');
    
     x_range = el.get('A1').get('THRESHOLDS');
-    x_title = 'THRESHOLDS';
-    
+    x_title = 'THRESHOLDS';    
     plot_title = ['Comparison between ' el.get('A1').get('GR').get('ID') ' and ' el.get('A2').get('GR').get('ID')];
     
     if isequal(get(pr.line_plot_tgl_btn, 'Value'), 1) % plot lines tgl btn is pressed
