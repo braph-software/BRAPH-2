@@ -18,12 +18,12 @@ TRAIN_G_DICT_1 (result, idict) is the graph (GraphWU) from subject group 1 in tr
 IndexedDictionary('IT_CLASS', 'GraphWU')
 %%%% ¡calculate!
 g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
-gr = nnd.get('TRAIN_GR_1');
+gr = nnd.get('TRAIN_GR1');
 atlas = BrainAtlas();
 if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0 
     atlas = gr.get('SUB_DICT').getItem(1).get('BA');
 end
-gr = nnd.get('TRAIN_GR_1');
+gr = nnd.get('TRAIN_GR1');
 for i = 1:1:gr.get('SUB_DICT').length()
 	sub = gr.get('SUB_DICT').getItem(i);
     g = GraphWU( ...
@@ -44,12 +44,12 @@ TRAIN_G_DICT_2 (result, idict) is the graph (GraphWU) from subject group 2 in tr
 IndexedDictionary('IT_CLASS', 'GraphWU')
 %%%% ¡calculate!
 g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
-gr = nnd.get('TRAIN_GR_2');
+gr = nnd.get('TRAIN_GR2');
 atlas = BrainAtlas();
 if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0 
     atlas = gr.get('SUB_DICT').getItem(1).get('BA');
 end
-gr = nnd.get('TRAIN_GR_2');
+gr = nnd.get('TRAIN_GR2');
 for i = 1:1:gr.get('SUB_DICT').length()
 	sub = gr.get('SUB_DICT').getItem(i);
     g = GraphWU( ...
@@ -70,12 +70,12 @@ VAL_G_DICT_1 (result, idict) is the graph (GraphWU) from subject group 1 in vali
 IndexedDictionary('IT_CLASS', 'GraphWU')
 %%%% ¡calculate!
 g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
-gr = nnd.get('VAL_GR_1');
+gr = nnd.get('VAL_GR1');
 atlas = BrainAtlas();
 if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0 
     atlas = gr.get('SUB_DICT').getItem(1).get('BA');
 end
-gr = nnd.get('VAL_GR_1');
+gr = nnd.get('VAL_GR1');
 for i = 1:1:gr.get('SUB_DICT').length()
 	sub = gr.get('SUB_DICT').getItem(i);
     g = GraphWU( ...
@@ -96,12 +96,12 @@ VAL_G_DICT_2 (result, idict) is the graph (GraphWU) from subject group 2 in vali
 IndexedDictionary('IT_CLASS', 'GraphWU')
 %%%% ¡calculate!
 g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
-gr = nnd.get('VAL_GR_2');
+gr = nnd.get('VAL_GR2');
 atlas = BrainAtlas();
 if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0 
     atlas = gr.get('SUB_DICT').getItem(1).get('BA');
 end
-gr = nnd.get('VAL_GR_2');
+gr = nnd.get('VAL_GR2');
 for i = 1:1:gr.get('SUB_DICT').length()
 	sub = gr.get('SUB_DICT').getItem(i);
     g = GraphWU( ...
@@ -115,12 +115,12 @@ end
 value = g_dict;
 
 %%% ¡prop!
-GR_1 (data, item) is the subject group 1, which also defines the subject class SubjectCON.
+GR1 (data, item) is the subject group 1, which also defines the subject class SubjectCON.
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectCON')
 
 %%% ¡prop!
-GR_2 (data, item) is the subject group 2, which also defines the subject class SubjectCON.
+GR2 (data, item) is the subject group 2, which also defines the subject class SubjectCON.
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectCON')
 
