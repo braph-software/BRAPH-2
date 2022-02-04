@@ -1,5 +1,5 @@
 %% ¡header!
-PlotGraphComparisonLine < PlotGraph (pr, plot graph) is a line plot of the comparison values.
+PlotGraphComparisonLine < Plot (pr, plot graph) is a line plot of the comparison values.
 
 %%% ¡description!
 Plot is the line plot of the comparison values.
@@ -106,7 +106,15 @@ function h_figure = draw(pr, varargin)
     %
     % see also settings, uipanel, isgraphics, PlotGraph.    
         
-    [pr.h_figure, pr.h_axes] = draw@PlotGraph(pr, varargin{:});
+    pr.pp = draw@Plot(pr, varargin{:});
+    pr.h_figure = get(pr.pp, 'Parent');
+    subpanel = uipanel(pr.h_figure, ...
+        'BackGroundColor', 'w', ...
+        'Units', 'normalized', ...
+        'Position', [.0 .0 1 1] ...
+        );
+    
+    pr.h_axes = axes(subpanel);
         
     if nargout > 0
         h_figure = pr.h_figure;
@@ -126,7 +134,7 @@ function f_settings = settings(pr, varargin)
     %
     % See also draw, figure, isgraphics.
 
-    pr.h_settings = settings@PlotGraph(pr, varargin{:});
+    pr.h_settings = settings@Plot(pr, varargin{:});
     set_braph2_icon(pr.h_settings);
 
     % constants
@@ -159,7 +167,9 @@ function f_settings = settings(pr, varargin)
             val = measure_list_popup.Value;
             str = measure_list_popup.String;
             pr.cp = cp_dict.getItem(val);
-            pr.set('YLABEL', pr.cp.get('MEASURE'))
+            pr.set('YLABEL', pr.cp.get('MEASURE'));
+            pr.set('CIL', pr.cp.get('CIL'));
+            pr.set('CIU', pr.cp.get('CIU'));
             rules_node_popmenu_deactivation()
             pr.update_plot()
         end
@@ -339,13 +349,12 @@ function f_settings = settings(pr, varargin)
             update();
         end
 
-    if ~isempty(pr.get('CIL')) && ~isempty(pr.get('CIU'))
-        ui_confidence_interval_min_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized');
-        ui_confidence_interval_max_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized');
-        h_p_min = [];
-        h_p_max = [];
-        init_cil_panel()
-    end
+    
+    ui_confidence_interval_min_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized');
+    ui_confidence_interval_max_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized');
+    h_p_min = [];
+    h_p_max = [];
+    init_cil_panel()
         function init_cil_panel()
             set(ui_confidence_interval_min_checkbox, 'Position', [.77 .8 .1 .16]);
             set(ui_confidence_interval_min_checkbox, 'String', 'Show Confidence Interval Min');
