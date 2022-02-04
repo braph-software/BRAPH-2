@@ -474,14 +474,9 @@ function cb_graph_ui_figure(pr)
 
     el = pr.get('EL');
     group = el.get('GR').get('ID');
-
-    if isa(el, 'AnalyzeGroup_ST_BUD')
-        x_range = el.get('DENSITIES');
-        x_title = 'DENSITIES';
-    elseif isa(el, 'AnalyzeGroup_ST_BUT')
-        x_range = el.get('THRESHOLDS');
-        x_title = 'THRESHOLDS';
-    end
+    
+    x_title = el.getPropTag(7);
+    x_range = el.get(x_title);
 
     switch pr.plot_type
         case 'lines'

@@ -1,8 +1,8 @@
 %% ¡header!
-PlotComparisonLine < Plot (pr, plot graph) is a line plot of the comparison values.
+PlotComparisonEnsembleLine < Plot (pr, plot graph) is a line plot of the comparison ensemble values.
 
 %%% ¡description!
-Plot is the line plot of the comparison values.
+Plot is the line plot of the comparison ensembles values.
 It is a graphical figure with empty axes, which should be filled by derived element.
 To generate the plot, call pr.draw().
 
@@ -145,7 +145,8 @@ function f_settings = settings(pr, varargin)
     cp_dict = pr.get('Comparison');
     pr.cp = cp_dict.getItem(1); % it has at least 1 measure
     measure_list = cellfun(@(x) x.get('MEASURE'), cp_dict.getItems(), 'UniformOutput', false);
-    atlas = pr.cp.get('C').get('A1').get('G').get('BRAINATLAS');
+    a1 = pr.cp.get('C').get('A1').get('g_dict').getItem(1);
+    atlas = a1.get('BRAINATLAS');
     node_labels = cellfun(@(x) x.get('ID') , atlas.get('BR_DICT').getItems(), 'UniformOutput', false);
 
     ui_plot_properties_panel = uipanel(pr.h_settings, ...
