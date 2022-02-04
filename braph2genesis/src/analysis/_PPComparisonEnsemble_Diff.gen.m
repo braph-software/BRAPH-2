@@ -1,5 +1,5 @@
 %% ¡header!
-PPComparisonGroup_Diff < PlotPropMatrix (pr, plot property of comparison group difference) is a plot of comparison group difference.
+PPComparisonEnsemble_Diff < PlotPropMatrix (pr, plot property of comparison ensemble difference) is a plot of comparison ensemble difference.
 
 %%% ¡description!
 PPComparisonGroupDiff plots a Comparison Group Difference.
@@ -48,7 +48,7 @@ function h_panel = draw(pr, varargin)
     value = el.get(prop);
     L = size(value, 1);
     L2 = size(value, 2);
-    label = el.get('C').get('A1').getPropTag(9);
+    label = el.get('C').get('A1').getPropTag(7);
     
     if L > 1
         % set on first layer
@@ -124,7 +124,7 @@ function update(pr)
     el = pr.get('EL');
     prop = pr.get('PROP');
     value = el.getr(prop);  
-    label = el.get('C').get('A1').getPropTag(9);
+    label = el.get('C').get('A1').getPropTag(7);
    
     if el.isLocked(prop)
         set(pr.comparison_tbl, ...
