@@ -1,11 +1,11 @@
 %% ¡header!
-PPCompareGroup_CPDict_WU < PlotProp (pr, plot property graph) is a plot of a comparison dictionary.
+PPCompareEnsemble_CPDict_WU < PlotProp (pr, plot property graph) is a plot of a comparison ensemble dictionary.
 
 %%% ¡description!
-PPCompareGroup_CPDict_WU plots the comparison dictionary property associated with a graph.
-It also provides the buttons to navigate the graphical interface of the measures.
+PPCompareEnsemble_CPDict_WU plots the comparison ensemble dictionary property associated with a graph.
+It also provides the buttons to navigate the graphical interface of the measures ensemble.
 
-CALLBACK -  These are callback functions:
+CALLBACK - These are callback functions:
 
     pr.<strong>cb_bring_to_front</strong>() - brings to the front the measure figure and its settings figure
     pr.<strong>cb_hide</strong>() - hides the measure figure and its settings figure
@@ -52,9 +52,8 @@ function h_panel = draw(pr, varargin)
 
     % declare constants
     el = pr.get('EL');
-    prop = pr.get('PROP');
-    pr.graph = el.get('A1').get('G');
-    click_time = [];
+    a1 = el.get('A1');
+    pr.graph = a1.get('G_DICT').getItem(1);
 
     pr.p = draw@PlotProp(pr, varargin{:});
 
@@ -145,7 +144,6 @@ function update(pr)
 
     el = pr.get('EL');
     prop = pr.get('PROP');
-    cp_dict = el.get(prop);
 
     button_state = pr.get_button_condition();
     set(...

@@ -50,8 +50,18 @@ for i = 1:1:gr.get('SUB_DICT').length()
 end
 
 value = g_dict;
-% %%%% ¡gui!
-% % % pl = PPAnalyzeEnsembleGraph('EL', a, 'PROP', AnalyzeEnsemble_CON_BUT.G_DICT, varargin{:});
+
+%% ¡methods!
+function pr = getPPCompareEnsemble_CPDict(a, varargin) 
+    %GETPPCOMPAREENSEMBLE_CPDICT returns the comparison ensemble plot panel compatible with the analysis.
+    %
+    % PR = GETPPCOMPAREENSEMBLE_CPDICT(A) returns the comparison ensemble plot panel
+    %  that is compatible with the analyze ensemble.
+    %
+    % See also CompareEnsemble.
+    
+    pr = PPCompareEnsemble_CPDict_BUT(varargin{:});
+end
 
 %% ¡tests!
 

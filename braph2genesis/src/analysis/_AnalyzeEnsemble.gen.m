@@ -63,3 +63,13 @@ function me = getMeasureEnsemble(a, measure_class, varargin)
         me_dict.add(me);
     end
 end
+function pr = getPPCompareEnsemble_CPDict(a, varargin)
+    %GETPPCOMPAREENSEMBLE_CPDICT returns the comparison ensemble plot panel compatible with the analysis.
+    %
+    % PR = GEPPPCOMPAREGROUP_CPDICT(A) returns the comparison ensemble plot panel
+    %  that is compatible with the analyze ensemble.
+    %
+    % See also CompareEnsemble.
+
+    pr = PropPlotIDict(varargin{:});
+end

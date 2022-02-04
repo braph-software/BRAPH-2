@@ -6,7 +6,7 @@ PPCompareGroup_CPDict_BUD plots the binary undirect using densities comparison
 dictionary property associated with a graph.
 It also provides the buttons to navigate the graphical interface of the measures.
 
-CALLBACK - This is a callback function:
+CALLBACK - These are callback functions:
 
     pr.<strong>cb_bring_to_front</strong>() - brings to the front the measure figure and its settings figure
     pr.<strong>cb_hide</strong>() - hides the measure figure and its settings figure
@@ -56,7 +56,6 @@ function h_panel = draw(pr, varargin)
     el = pr.get('EL');
     prop = pr.get('PROP');
     pr.graph = el.get('A1').get('G');
-    click_time = [];
 
     pr.p = draw@PlotProp(pr, varargin{:});
 

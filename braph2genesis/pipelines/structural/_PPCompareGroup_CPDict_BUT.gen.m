@@ -6,7 +6,7 @@ PPCompareGroup_CPDict_BUT plots the binary undirect using thresholds comparison
 dictionary property associated with a graph.
 It also provides the buttons to navigate the graphical interface of the measures.
 
-CALLBACK - This is a callback function:
+CALLBACK - These are callback functions:
 
     pr.<strong>cb_bring_to_front</strong>() - brings to the front the measure figure and its settings figure
     pr.<strong>cb_hide</strong>() - hides the measure figure and its settings figure
