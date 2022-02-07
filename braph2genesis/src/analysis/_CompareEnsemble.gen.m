@@ -18,6 +18,8 @@ LABEL (metadata, string) is an extended label of the comparison.
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the comparison.
+%%%% ¡gui!
+pr = PlotPropString('EL', c, 'PROP', CompareEnsemble.NOTES, 'LINES', 'multi', 'EDITHEIGHT', 4.5, varargin{:});
 
 %%% ¡prop!
 WAITBAR (metadata, logical) detemines whether to show the waitbar.
@@ -84,7 +86,7 @@ CP_DICT (result, idict) contains the results of the comparison.
 value = IndexedDictionary('IT_CLASS', 'ComparisonEnsemble', 'IT_KEY', 4);
 %%%% ¡gui!
 a1 = c.get('A1');
-pr = a1.getPPCompareEnsemble_CPDict('EL', c, 'PROP', CompareEnsemble.CP_DICT, varargin{:});
+pr = a1.getPPCompareEnsemble_CPDict('EL', c, 'PROP', CompareEnsemble.CP_DICT, 'WAITBAR', true, varargin{:});
 
 %% ¡methods!
 function cp = getComparison(c, measure_class, varargin)

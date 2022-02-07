@@ -19,6 +19,8 @@ LABEL (metadata, string) is an extended label of the graph analysis.
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the graph analysis.
+%%%% ¡gui!
+pr = PlotPropString('EL', a, 'PROP', AnalyzeEnsemble.NOTES, 'LINES', 'multi', 'EDITHEIGHT', 4.5, varargin{:});
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class.
@@ -39,7 +41,7 @@ ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
 %%%% ¡calculate!
 value = IndexedDictionary('IT_CLASS', 'MeasureEnsemble', 'IT_KEY', 4);
 %%%% ¡gui!
-pr = PPAnalyzeEnsemble_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble.ME_DICT, varargin{:});
+pr = PPAnalyzeEnsemble_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %% ¡methods!
 function me = getMeasureEnsemble(a, measure_class, varargin)
