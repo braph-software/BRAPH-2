@@ -479,7 +479,11 @@ function cb_graph_ui_figure(pr)
     el = pr.get('EL');
     group = el.get('GR').get('ID');
     
-    x_title = el.getPropTag(7);
+    if isequal(el.getPropFormat(7), 'nr')
+        x_title = el.getPropTag(7);
+    else
+        x_title = el.getPropTag(12);
+    end
     x_range = el.get(x_title);
 
     switch pr.plot_type
