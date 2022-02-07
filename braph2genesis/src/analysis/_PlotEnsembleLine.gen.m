@@ -1,5 +1,5 @@
 %% ¡header!
-PlotGraphLine < Plot (pr, plot graph) is a line plot of the measure values.
+PlotEnsembleLine < Plot (pr, plot graph) is a line plot of the measure values.
 
 %%% ¡description!
 Plot is the line plot of the measure values.
@@ -20,74 +20,74 @@ m % measure
 %% ¡props!
 
 %%% ¡prop!
-PLOTTITLE(metadata, string) to set plot line title
+PLOTTITLE(metadata, string) to set plot line title.
 
 %%% ¡prop!
-GRAPH(data, item) to set plot line title
+A(data, item) to set ensemble line information.
 
 %%% ¡prop!
-X(data, rvector) to set plot line graph x range
+X(data, rvector) to set plot line graph x range.
 
 %%% ¡prop!
-XLABEL(metadata, string) to set plot line x label
+XLABEL(metadata, string) to set plot line x label.
 
 %%% ¡prop!
-YLABEL(metadata, string) to set plot line y label
+YLABEL(metadata, string) to set plot line y label.
 
 %%% ¡prop!
-PLOTVALUE(data, cell) to set plot line atlas
+PLOTVALUE(data, cell) to set plot line atlas.
 
 %%% ¡prop!
-MEASURE(data, string) to set plot line measure
+MEASURE(data, string) to set plot line measure.
 
 %%% ¡prop!
-CIL (metadata, CELL) to set plot line cil
+CIL (metadata, CELL) to set plot line cil.
 
 %%% ¡prop!
-CIU (metadata, CELL) to set plot line ciu
+CIU (metadata, CELL) to set plot line ciu.
 
 %%% ¡prop!
-NODE1 (metadata, scalar) to set plot line node 1
+NODE1 (metadata, scalar) to set plot line node 1.
 %%%% ¡default!
 1
 
 %%% ¡prop!
-NODE2 (metadata, scalar) to set plot line node 2
+NODE2 (metadata, scalar) to set plot line node 2.
 %%%% ¡default!
 2
 
 %%% ¡prop!
-COLOR (metadata, rvector) to set plot line color
+COLOR (metadata, rvector) to set plot line color.
 %%%% ¡default!
 [0 0 0]
 
 %%% ¡prop!
-LINESTYLE (metadata, string) to set plot line style
+LINESTYLE (metadata, string) to set plot line style.
 %%%% ¡default!
 '-'
 
 %%% ¡prop!
-LINEWIDTH (metadata, scalar) to set plot line width
+LINEWIDTH (metadata, scalar) to set plot line width.
 %%%% ¡default!
 0.5
 
 %%% ¡prop!
-MARKER (metadata, string) to set plot marker style
+MARKER (metadata, string) to set plot marker style.
 %%%% ¡default!
 'none'
 
 %%% ¡prop!
-MARKERSIZE (metadata, scalar) to set plot marker size
+MARKERSIZE (metadata, scalar) to set plot marker size.
 %%%% ¡default!
 6
 
 %%% ¡prop!
-MARKEREDGECOLOR (metadata, rvector) to set plot marker edge color
+MARKEREDGECOLOR (metadata, rvector) to set plot marker edge color.
 %%%% ¡default!
 [0 0 0]
 
 %%% ¡prop!
-MARKERFACECOLOR (metadata, rvector) to set plot marker face color
+MARKERFACECOLOR (metadata, rvector) to set plot marker face color.
 %%%% ¡default!
 [0 0 0]
 
@@ -103,9 +103,9 @@ function h_figure = draw(pr, varargin)
     %  with custom property-value couples.
     %  All standard plot properties of plot line can be used.
     %
-    % see also settings, uipanel, isgraphics, Plot.    
-        
-    
+    % see also settings, uipanel, isgraphics, Plot.
+
+
     pr.pp = draw@Plot(pr, varargin{:});
     pr.h_figure = get(pr.pp, 'Parent');
     subpanel = uipanel(pr.h_figure, ...
@@ -113,9 +113,9 @@ function h_figure = draw(pr, varargin)
         'Units', 'normalized', ...
         'Position', [.0 .0 1 1] ...
         );
-    
+
     pr.h_axes = axes(subpanel);
-        
+
     if nargout > 0
         h_figure = pr.h_figure;
     end
@@ -142,12 +142,19 @@ function f_settings = settings(pr, varargin)
     marker_style = {'o', '+', '*', '.', 'x', ...
         '_', '|', 'square', 'diamond', '^', ...
         '>', '<', 'pentagram', 'hexagram', 'none'}; % TODO: move to BRAPH2
-    graph = pr.get('GRAPH');
-    measure_dict = graph.get('M_DICT');
-    pr.m = measure_dict.getItem(1); % it has at least 1 measure
-    measure_list = measure_dict.getKeys();
-    atlas = graph.get('BRAINATLAS');
+
+    % values
+    analyze_ensemble = pr.get('A');
+    me_dict = analyze_ensemble.get('ME_DICT');
+    pr.m = me_dict.getItem(1); % its a cell;
+
+    % atlas
+    sub = analyze_ensemble.get('GR').get('SUB_DICT').getItem(1);
+    atlas = sub.get('BA');
     node_labels = cellfun(@(x) x.get('ID') , atlas.get('BR_DICT').getItems(), 'UniformOutput', false);
+
+    % measure list
+    measure_list = me_dict.getKeys();
 
     ui_plot_properties_panel = uipanel(pr.h_settings, ...
         'Units', 'normalized', ...
@@ -167,8 +174,8 @@ function f_settings = settings(pr, varargin)
         function cb_measure_selection(~,~)
             val = measure_list_popup.Value;
             str = measure_list_popup.String;
-            pr.m = measure_dict.getItem(val);
-            pr.set('YLABEL', pr.m.get('ID'))
+            pr.m = me_dict.getItem(val);
+            pr.set('YLABEL', pr.m.get('MEASURE'))
             rules_node_popmenu_deactivation()
             pr.update_plot()
         end
@@ -307,7 +314,7 @@ function f_settings = settings(pr, varargin)
             rules_node_popmenu_deactivation()
         end
         function rules_node_popmenu_deactivation()
-            if Measure.is_global(pr.m)
+            if Measure.is_global(pr.m.get('Measure'))
                 set(ui_node1_popmenu, ...
                     'Visible', 'off', ...
                     'Enable', 'off' ...
@@ -317,7 +324,7 @@ function f_settings = settings(pr, varargin)
                     'Enable', 'off' ...
                     )
 
-            elseif Measure.is_nodal(pr.m)
+            elseif Measure.is_nodal(pr.m.get('Measure'))
                 set(ui_node1_popmenu, ...
                     'Visible', 'on', ...
                     'Enable', 'on' ...
@@ -410,13 +417,13 @@ function f_settings = settings(pr, varargin)
             node1_to_plot = pr.get('NODE1');
             node2_to_plot = pr.get('NODE2');
 
-            if Measure.is_global(pr.m) % global
+            if Measure.is_global(pr.m.get('Measure')) % global
                 is_inf_vector = cellfun(@(x) isinf(x), array);
                 if any(is_inf_vector)
                     return;
                 end
                 limit = [array{:}];
-            elseif Measure.is_nodal(pr.m) % nodal
+            elseif Measure.is_nodal(pr.m.get('Measure')) % nodal
                 for l = 1:length(array)
                     tmp = array{l};
                     tmp_y = tmp(node1_to_plot);
@@ -446,13 +453,13 @@ end
 function update_plot(pr)
     measure = pr.m;
     plot_value = measure.get('M');
-    if Measure.is_global(pr.m) % global
+    if Measure.is_global(pr.m.get('Measure')) % global
         is_inf_vector = cellfun(@(x) isinf(x), plot_value);
         if any(is_inf_vector)
             return;
         end
         y_ = [plot_value{:}];
-    elseif Measure.is_nodal(pr.m) % nodal
+    elseif Measure.is_nodal(pr.m.get('Measure')) % nodal
         for l = 1:length(plot_value)
             tmp = plot_value{l};
             tmp_y = tmp(pr.get('NODE1'));
