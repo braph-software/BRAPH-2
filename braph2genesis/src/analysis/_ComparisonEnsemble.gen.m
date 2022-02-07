@@ -24,7 +24,7 @@ NOTES (metadata, string) are some specific notes about the ensemble-based compar
 MEASURE (data, string) is the measure class.
 
 %%% ¡prop!
-MEASUREPARAM(data, item) provides the measure parameters 
+MEASUREPARAM(data, item) provides the measure parameters.
 %%%% ¡settings!
 'Measure'
 
