@@ -1,8 +1,8 @@
 %% ¡header!
-PlotComparisonLine < Plot (pr, plot graph) is a line plot of the comparison values.
+PlotEnsembleLine < Plot (pr, plot graph) is a line plot of the measure values.
 
 %%% ¡description!
-Plot is the line plot of the comparison values.
+Plot is the line plot of the measure values.
 It is a graphical figure with empty axes, which should be filled by derived element.
 To generate the plot, call pr.draw().
 
@@ -15,80 +15,79 @@ h_axes % axes handle
 h_plot % plot handle
 pp
 h_settings
-cp % measure
+m % measure
 
 %% ¡props!
 
+%%% ¡prop!
+PLOTTITLE(metadata, string) to set plot line title.
 
 %%% ¡prop!
-PLOTTITLE(metadata, string) to set plot line title
+A(data, item) to set ensemble line information.
 
 %%% ¡prop!
-X(data, rvector) to set plot line graph x range
+X(data, rvector) to set plot line graph x range.
 
 %%% ¡prop!
-XLABEL(metadata, string) to set plot line x label
+XLABEL(metadata, string) to set plot line x label.
 
 %%% ¡prop!
-YLABEL(metadata, string) to set plot line y label
+YLABEL(metadata, string) to set plot line y label.
 
 %%% ¡prop!
-PLOTVALUE(data, cell) to set plot line atlas
+PLOTVALUE(data, cell) to set plot line atlas.
 
 %%% ¡prop!
-MEASURE(data, string) to set plot line measure
+MEASURE(data, string) to set plot line measure.
 
 %%% ¡prop!
-COMPARISON(data, IDICT) to set the comparison dictionary
+CIL (metadata, CELL) to set plot line cil.
 
 %%% ¡prop!
-CIL (metadata, CELL) to set plot line cil
+CIU (metadata, CELL) to set plot line ciu.
 
 %%% ¡prop!
-CIU (metadata, CELL) to set plot line ciu
-
-%%% ¡prop!
-NODE1 (metadata, scalar) to set plot line node 1
+NODE1 (metadata, scalar) to set plot line node 1.
 %%%% ¡default!
 1
 
 %%% ¡prop!
-NODE2 (metadata, scalar) to set plot line node 2
+NODE2 (metadata, scalar) to set plot line node 2.
 %%%% ¡default!
 2
 
 %%% ¡prop!
-COLOR (metadata, rvector) to set plot line color
+COLOR (metadata, rvector) to set plot line color.
 %%%% ¡default!
 [0 0 0]
 
 %%% ¡prop!
-LINESTYLE (metadata, string) to set plot line style
+LINESTYLE (metadata, string) to set plot line style.
 %%%% ¡default!
 '-'
 
 %%% ¡prop!
-LINEWIDTH (metadata, scalar) to set plot line width
+LINEWIDTH (metadata, scalar) to set plot line width.
 %%%% ¡default!
 0.5
 
 %%% ¡prop!
-MARKER (metadata, string) to set plot marker style
+MARKER (metadata, string) to set plot marker style.
 %%%% ¡default!
 'none'
 
 %%% ¡prop!
-MARKERSIZE (metadata, scalar) to set plot marker size
+MARKERSIZE (metadata, scalar) to set plot marker size.
 %%%% ¡default!
 6
 
 %%% ¡prop!
-MARKEREDGECOLOR (metadata, rvector) to set plot marker edge color
+MARKEREDGECOLOR (metadata, rvector) to set plot marker edge color.
 %%%% ¡default!
 [0 0 0]
 
 %%% ¡prop!
-MARKERFACECOLOR (metadata, rvector) to set plot marker face color
+MARKERFACECOLOR (metadata, rvector) to set plot marker face color.
 %%%% ¡default!
 [0 0 0]
 
@@ -104,8 +103,9 @@ function h_figure = draw(pr, varargin)
     %  with custom property-value couples.
     %  All standard plot properties of plot line can be used.
     %
-    % see also settings, uipanel, isgraphics, PlotGraph.    
-        
+    % see also settings, uipanel, isgraphics, Plot.
+
+
     pr.pp = draw@Plot(pr, varargin{:});
     pr.h_figure = get(pr.pp, 'Parent');
     subpanel = uipanel(pr.h_figure, ...
@@ -113,9 +113,9 @@ function h_figure = draw(pr, varargin)
         'Units', 'normalized', ...
         'Position', [.0 .0 1 1] ...
         );
-    
+
     pr.h_axes = axes(subpanel);
-        
+
     if nargout > 0
         h_figure = pr.h_figure;
     end
@@ -138,15 +138,23 @@ function f_settings = settings(pr, varargin)
     set_braph2_icon(pr.h_settings);
 
     % constants
-    line_style = {'-', '--', ':', ':.', 'none'};
+    line_style = {'-', '--', ':', ':.', 'none'}; % TODO: move to BRAPH2
     marker_style = {'o', '+', '*', '.', 'x', ...
         '_', '|', 'square', 'diamond', '^', ...
-        '>', '<', 'pentagram', 'hexagram', 'none'};
-    cp_dict = pr.get('Comparison');
-    pr.cp = cp_dict.getItem(1); % it has at least 1 measure
-    measure_list = cellfun(@(x) x.get('MEASURE'), cp_dict.getItems(), 'UniformOutput', false);
-    atlas = pr.cp.get('C').get('A1').get('G').get('BRAINATLAS');
+        '>', '<', 'pentagram', 'hexagram', 'none'}; % TODO: move to BRAPH2
+
+    % values
+    analyze_ensemble = pr.get('A');
+    me_dict = analyze_ensemble.get('ME_DICT');
+    pr.m = me_dict.getItem(1); % its a cell;
+
+    % atlas
+    sub = analyze_ensemble.get('GR').get('SUB_DICT').getItem(1);
+    atlas = sub.get('BA');
     node_labels = cellfun(@(x) x.get('ID') , atlas.get('BR_DICT').getItems(), 'UniformOutput', false);
+
+    % measure list
+    measure_list = me_dict.getKeys();
 
     ui_plot_properties_panel = uipanel(pr.h_settings, ...
         'Units', 'normalized', ...
@@ -166,10 +174,8 @@ function f_settings = settings(pr, varargin)
         function cb_measure_selection(~,~)
             val = measure_list_popup.Value;
             str = measure_list_popup.String;
-            pr.cp = cp_dict.getItem(val);
-            pr.set('YLABEL', pr.cp.get('MEASURE'));
-            pr.set('CIL', pr.cp.get('CIL'));
-            pr.set('CIU', pr.cp.get('CIU'));
+            pr.m = me_dict.getItem(val);
+            pr.set('YLABEL', pr.m.get('MEASURE'))
             rules_node_popmenu_deactivation()
             pr.update_plot()
         end
@@ -294,7 +300,7 @@ function f_settings = settings(pr, varargin)
                 'Tooltip', 'Select the Node to be Plotted.', ...
                 'String', node_labels, ...
                 'Value', pr.get('NODE1'), ...
-                'Position', [.55 .8 .1 .16], ...
+                'Position', [.55 .8 .2 .16], ...
                 'Callback', {@cb_node_1} ...
                 );
             set(ui_node2_popmenu, ...
@@ -302,13 +308,13 @@ function f_settings = settings(pr, varargin)
                 'Tooltip', 'Select the Node to be Plotted.', ...
                 'String', node_labels, ...
                 'Value', pr.get('NODE2'), ...
-                'Position', [.66 .8 .1 .16], ...
+                'Position', [.76 .8 .2 .16], ...
                 'Callback', {@cb_node_2} ...
                 );
             rules_node_popmenu_deactivation()
         end
         function rules_node_popmenu_deactivation()
-            if Measure.is_global(pr.cp.get('MEASURE'))
+            if Measure.is_global(pr.m.get('Measure'))
                 set(ui_node1_popmenu, ...
                     'Visible', 'off', ...
                     'Enable', 'off' ...
@@ -318,7 +324,7 @@ function f_settings = settings(pr, varargin)
                     'Enable', 'off' ...
                     )
 
-            elseif Measure.is_nodal(pr.cp.get('MEASURE'))
+            elseif Measure.is_nodal(pr.m.get('Measure'))
                 set(ui_node1_popmenu, ...
                     'Visible', 'on', ...
                     'Enable', 'on' ...
@@ -349,23 +355,22 @@ function f_settings = settings(pr, varargin)
             update();
         end
 
-    
-    ui_confidence_interval_min_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized');
-    ui_confidence_interval_max_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized');
-    h_p_min = [];
-    h_p_max = [];
-    init_cil_panel()
+    if ~isempty(pr.get('CIL')) && ~isempty(pr.get('CIU'))
+        ui_confidence_interval_min_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized');
+        ui_confidence_interval_max_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized');
+        h_p_min = [];
+        h_p_max = [];
+        init_cil_panel()
+    end
         function init_cil_panel()
-            set(ui_confidence_interval_min_checkbox, 'Position', [.77 .81 .1 .16]);
+            set(ui_confidence_interval_min_checkbox, 'Position', [.55 .01 .2 .14]);
             set(ui_confidence_interval_min_checkbox, 'String', 'Show Confidence Interval Min');
             set(ui_confidence_interval_min_checkbox, 'Value', false);
-            set(ui_confidence_interval_min_checkbox, 'BackgroundColor', pr.h_settings.Color);
             set(ui_confidence_interval_min_checkbox, 'Callback', {@cb_show_confidence_interval_min})
-            
-            set(ui_confidence_interval_max_checkbox, 'Position', [.88 .81 .1 .16]);
+
+            set(ui_confidence_interval_max_checkbox, 'Position', [.75 .01 .2 .14]);
             set(ui_confidence_interval_max_checkbox, 'String', 'Show Confidence Interval Max');
             set(ui_confidence_interval_max_checkbox, 'Value', false);
-            set(ui_confidence_interval_max_checkbox, 'BackgroundColor', pr.h_settings.Color);
             set(ui_confidence_interval_max_checkbox, 'Callback', {@cb_show_confidence_interval_max})
         end
         function cb_show_confidence_interval_min(src, ~)
@@ -412,13 +417,13 @@ function f_settings = settings(pr, varargin)
             node1_to_plot = pr.get('NODE1');
             node2_to_plot = pr.get('NODE2');
 
-            if Measure.is_global(pr.cp.get('MEASURE')) % global
+            if Measure.is_global(pr.m.get('Measure')) % global
                 is_inf_vector = cellfun(@(x) isinf(x), array);
                 if any(is_inf_vector)
                     return;
                 end
                 limit = [array{:}];
-            elseif Measure.is_nodal(pr.cp.get('MEASURE')) % nodal
+            elseif Measure.is_nodal(pr.m.get('Measure')) % nodal
                 for l = 1:length(array)
                     tmp = array{l};
                     tmp_y = tmp(node1_to_plot);
@@ -446,15 +451,15 @@ function f_settings = settings(pr, varargin)
     end
 end
 function update_plot(pr)
-    comparison = pr.cp;
-    plot_value = comparison.get('DIFF');
-    if Measure.is_global(pr.cp.get('MEASURE')) % global
+    measure = pr.m;
+    plot_value = measure.get('M');
+    if Measure.is_global(pr.m.get('Measure')) % global
         is_inf_vector = cellfun(@(x) isinf(x), plot_value);
         if any(is_inf_vector)
             return;
         end
         y_ = [plot_value{:}];
-    elseif Measure.is_nodal(pr.cp.get('MEASURE')) % nodal
+    elseif Measure.is_nodal(pr.m.get('Measure')) % nodal
         for l = 1:length(plot_value)
             tmp = plot_value{l};
             tmp_y = tmp(pr.get('NODE1'));

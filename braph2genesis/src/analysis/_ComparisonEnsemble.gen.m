@@ -38,8 +38,8 @@ DIFF (result, cell) is the ensemble comparison value.
 %%%% ¡calculate!
 [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp);
 value = diff;
-%%%% ¡gui__!
-% % % pl = PPComparisonEnsembleDiff('EL', cp, 'PROP', ComparisonEnsemble.DIFF, varargin{:});
+%%%% ¡gui!
+pr = PPComparisonEnsemble_Diff('EL', cp, 'PROP', ComparisonEnsemble.DIFF, varargin{:});
 
 %%% ¡prop!
 P1 (result, cell) is the one-tailed p-value.

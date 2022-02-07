@@ -64,5 +64,5 @@ else
 end
 
 value = m_av;
-%%%% ¡gui__!
-% % % pl = PPMeasureEnsembleM('EL', me, 'PROP', MeasureEnsemble.M, varargin{:});
+%%%% ¡gui!
+pr = PPMeasureEnsemble_M('EL', me, 'PROP', MeasureEnsemble.M, varargin{:});

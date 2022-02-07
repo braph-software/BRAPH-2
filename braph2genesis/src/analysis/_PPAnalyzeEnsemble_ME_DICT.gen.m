@@ -1,10 +1,10 @@
 %% ¡header!
-PPAnalyzeGroup_G < PlotProp (pr, plot property graph) is a plot of a graph property.
+PPAnalyzeEnsemble_ME_DICT < PlotProp (pr, plot property graph) is a plot of a measure ensemble property.
 
 %%% ¡description!
-PPAnalyzeGroup_G plots the measure table associated with a graph of the analysis.
+PPAnalyzeGroup_ME_DICT plots the measure table associated with a measure ensemble of the analysis.
 It also provides the buttons to navigate the graphical interface of both
-the measures and the graph.
+the measures and the measure ensemble.
 
 CALLBACKS - These are callback functions:
 
@@ -65,7 +65,9 @@ function h_panel = draw(pr, varargin)
 
     el = pr.get('EL');
     prop = pr.get('PROP');
-    pr.graph = el.get('G');
+    
+    g_dict = el.get('G_DICT');
+    pr.graph = g_dict.getItem(1);
     click_time = [];
 
     pr.p = draw@PlotProp(pr, varargin{:});
@@ -191,8 +193,6 @@ function update(pr)
 
     el = pr.get('EL');
     prop = pr.get('PROP');
-    graph = el.get(prop);
-    pr.graph = graph;
 
     button_state = pr.get_button_condition();
     set(...
@@ -208,9 +208,9 @@ function update(pr)
 
     else
 
-        if  ~isa(graph, 'NoValue') && isa(graph, 'Graph')
+        if  ~isa(pr.graph, 'NoValue') && isa(pr.graph, 'Graph')
             if isempty(pr.mlist)
-                pr.mlist = Graph.getCompatibleMeasureList(graph);
+                pr.mlist = Graph.getCompatibleMeasureList(pr.graph);
             end
             pr.already_calculated = pr.is_measure_calculated();
             data = cell(length(pr.mlist), 5);
@@ -263,7 +263,12 @@ function update(pr)
     end
 
         function plot_type_rules()
-            if ~isempty(pr.graph) && ~isa(el, 'AnalyzeGroup_ST_WU') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}]) && ~check_graphics(pr.f_pg, 'figure')
+            if ~isempty(pr.graph) && ...
+                    (pr.graph.existsTag('densities') || pr.graph.existsTag('thresholds')) && ...
+                    ~isempty(pr.already_calculated) && ...
+                    any([pr.already_calculated{:}]) && ...
+                    ~check_graphics(pr.f_pg, 'figure')
+                
                 set(pr.line_plot_tglbtn, 'Enable', 'on');
             else
                 set(pr.line_plot_tglbtn, 'Enable', 'off');
@@ -340,12 +345,12 @@ function cb_graph_value(pr)
     value = el.getr(prop);
     if isa(value, 'NoValue')
         pr.f_g = GUI( ...
-            'PE', el.getPropDefault(prop), ...
+            'PE', pr.graph, ...
             'POSITION', [x y w h], ...
             'CLOSEREQ', false).draw();
     else
         pr.f_g = GUI( ...
-            'PE', el.get(prop), ...
+            'PE', pr.graph, ...
             'POSITION', [x y w h], ...
             'CLOSEREQ', false).draw();
     end
@@ -359,9 +364,9 @@ function cb_measure_gui(pr)
     % See also cb_graph_value.
 
     el = pr.get('EL');
-    prop = pr.get('PROP');
-    graph = el.memorize(prop);
-    pr.mlist = Graph.getCompatibleMeasureList(graph);
+    g_dict = el.memorize('G_DICT');
+    pr.mlist = Graph.getCompatibleMeasureList(g_dict.getItem(1));
+    m_dict = el.get('ME_DICT');
 
     measure_short_list = pr.mlist(pr.selected);
 
@@ -391,17 +396,14 @@ function cb_measure_gui(pr)
         w = f_gr_w / screen_w;
         h = .5 * f_gr_h / screen_h + .5 * f_gr_h * (N - floor((i - .5) / N)) / N / screen_h;
 
-        result_measure = graph.getMeasure(measure);
+        result_measure = m_dict.getItem(measure);
         pr.f_m{i} = GUI('pe', result_measure, 'POSITION', [x y w h], 'CLOSEREQ', false).draw();
     end
 end
 function cb_measure_calc(pr)
     el = pr.get('EL');
-    prop = pr.get('PROP');
-    graph = el.memorize(prop);
-    pr.mlist = Graph.getCompatibleMeasureList(graph);
-
     measure_short_list = pr.mlist(pr.selected);
+    m_dict = el.get('ME_DICT');
 
     % calculate
     if pr.get('WAITBAR')
@@ -418,8 +420,10 @@ function cb_measure_calc(pr)
         if pr.get('WAITBAR')
             waitbar(.1 + .70 * i / length(pr.selected), wb, ['Calculating measure ' measure ]);
         end
-        result_measure = graph.getMeasure(measure);
-        result_measure.memorize('M');
+        el.getMeasureEnsemble(measure);
+        m_dict = el.get('ME_DICT');
+        tmp_measure = m_dict.getItem(measure);
+        tmp_measure.memorize('M');
         pr.already_calculated{i} = 1;
     end
 
@@ -473,28 +477,25 @@ function cb_graph_ui_figure(pr)
     menu_about = BRAPH2.add_menu_about(pr.f_pg);
 
     el = pr.get('EL');
-    prop = pr.get('PROP');
-    g = el.get(prop);
     group = el.get('GR').get('ID');
     
-    if isa(el, 'AnalyzeGroup_ST_BUD')
-        x_range = el.get('DENSITIES');
-        x_title = 'DENSITIES';
-    elseif isa(el, 'AnalyzeGroup_ST_BUT')
-        x_range = el.get('THRESHOLDS');
-         x_title = 'THRESHOLDS';
+    if isequal(el.getPropFormat(7), 'nr')
+        x_title = el.getPropTag(7);
+    else
+        x_title = el.getPropTag(12);
     end
-    
+    x_range = el.get(x_title);
+
     switch pr.plot_type
         case 'lines'
-            pg = PlotAnalysisLine( ... 
-                'Graph', g, ...
+            pg = PlotEnsembleLine( ...
+                'A', el, ...
                 'X', x_range, ...
                 'PLOTTITLE', ['Analysis of group ' group], ...
                 'XLABEL', x_title ...
                 );
         otherwise
-            pg = PlotAdjacencyMatrix('Graph', g);
+            pg = PlotAdjacencyMatrix('Graph', pr.graph);
     end
 
     pg.draw('Parent', pr.f_pg)
@@ -509,17 +510,15 @@ function cb_graph_ui_figure(pr)
 end
 function list =  is_measure_calculated(pr)
     % IS_MEASURE_CALCULATED checks if a measure has been calculated for the graph.
-    % 
+    %
     % LIST = IS_MEASURE_CALCULATED(PR) returns an array with the check for
     %  previously calculated measures. C if a measures has been calculated
     %  and NC for nor calculated measures.
     %
     % See also get_button_condition.
-    
+
     el = pr.get('EL');
-    prop = pr.get('PROP');
-    graph = el.memorize(prop);
-    measure_dict = graph.get('M_DICT');
+    measure_dict = el.get('ME_DICT');
     measure_list = pr.mlist;
     calculated_list = cell(size(measure_list, 2), 1);
     if measure_dict.length() > 0
@@ -535,7 +534,7 @@ function list =  is_measure_calculated(pr)
         [calculated_list{:}] = deal(0);
     end
     list = calculated_list;
-end
+    end
 function state = get_button_condition(pr)
     % GET_BUTTON_CONDITION returns the calculate button state.
     %
