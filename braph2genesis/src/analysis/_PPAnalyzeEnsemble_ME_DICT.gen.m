@@ -366,7 +366,6 @@ function cb_measure_gui(pr)
     el = pr.get('EL');
     g_dict = el.memorize('G_DICT');
     pr.mlist = Graph.getCompatibleMeasureList(g_dict.getItem(1));
-    m_dict = el.get('ME_DICT');
 
     measure_short_list = pr.mlist(pr.selected);
 
@@ -395,7 +394,9 @@ function cb_measure_gui(pr)
         y = f_gr_y / screen_h;
         w = f_gr_w / screen_w;
         h = .5 * f_gr_h / screen_h + .5 * f_gr_h * (N - floor((i - .5) / N)) / N / screen_h;
-
+        
+        el.getMeasureEnsemble(measure);
+        m_dict = el.get('ME_DICT');
         result_measure = m_dict.getItem(measure);
         pr.f_m{i} = GUI('pe', result_measure, 'POSITION', [x y w h], 'CLOSEREQ', false).draw();
     end
