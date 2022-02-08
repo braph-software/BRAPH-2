@@ -1,5 +1,5 @@
 %% ¡header!
-PlotComparisonLine < Plot (pr, plot graph) is a line plot of the comparison values.
+PlotComparisonGroupLine < Plot (pr, plot graph) is a line plot of the comparison values.
 
 %%% ¡description!
 Plot is the line plot of the comparison values.

@@ -82,7 +82,7 @@ function h_panel = draw(pr, varargin)
             'Units', 'normalized', ...
             'String', 'Graph', ...
             'TooltipString', 'Open the graph class GUI.', ...
-            'Position', [.63 .81 .36 .09], ...
+            'Position', [.79 .71 .2 .2], ...
             'Callback', {@cb_graph_btn} ...
             );
         
@@ -137,7 +137,7 @@ function h_panel = draw(pr, varargin)
             'Units', 'normalized', ...
             'String', 'Calculate Measures', ...
             'TooltipString', 'Calculate Selected Measures', ...
-            'Position', [.01 .02 .49 .09], ...
+            'Position', [.01 .02 .48 .09], ...
             'Callback', {@cb_measure_btn} ...
             );
         
@@ -148,7 +148,7 @@ function h_panel = draw(pr, varargin)
             'Units', 'normalized', ...
             'String', 'Show Measures', ...
             'TooltipString', 'Show Selected Measures', ...
-            'Position', [.51 .02 .49 .09], ...
+            'Position', [.51 .02 .48 .09], ...
             'Callback', {@cb_measure_plot_btn} ...
             );
     end
@@ -244,7 +244,7 @@ function update(pr)
             set(pr.measure_tbl, 'Data', data)
             set(pr.measure_tbl, 'ColumnWidth', {30, 'auto', 'auto', 'auto', 'auto'})
 
-            row_names = cell(length(pr.already_calculated));
+            row_names = cell(length(pr.already_calculated), 1);
             for i = 1:length(pr.already_calculated)
                 if pr.already_calculated{i}
                     row_names{i} = 'C';
@@ -366,7 +366,6 @@ function cb_measure_gui(pr)
     el = pr.get('EL');
     g_dict = el.memorize('G_DICT');
     pr.mlist = Graph.getCompatibleMeasureList(g_dict.getItem(1));
-    m_dict = el.get('ME_DICT');
 
     measure_short_list = pr.mlist(pr.selected);
 
@@ -395,7 +394,9 @@ function cb_measure_gui(pr)
         y = f_gr_y / screen_h;
         w = f_gr_w / screen_w;
         h = .5 * f_gr_h / screen_h + .5 * f_gr_h * (N - floor((i - .5) / N)) / N / screen_h;
-
+        
+        el.getMeasureEnsemble(measure);
+        m_dict = el.get('ME_DICT');
         result_measure = m_dict.getItem(measure);
         pr.f_m{i} = GUI('pe', result_measure, 'POSITION', [x y w h], 'CLOSEREQ', false).draw();
     end
@@ -403,7 +404,6 @@ end
 function cb_measure_calc(pr)
     el = pr.get('EL');
     measure_short_list = pr.mlist(pr.selected);
-    m_dict = el.get('ME_DICT');
 
     % calculate
     if pr.get('WAITBAR')
@@ -420,10 +420,7 @@ function cb_measure_calc(pr)
         if pr.get('WAITBAR')
             waitbar(.1 + .70 * i / length(pr.selected), wb, ['Calculating measure ' measure ]);
         end
-        el.getMeasureEnsemble(measure);
-        m_dict = el.get('ME_DICT');
-        tmp_measure = m_dict.getItem(measure);
-        tmp_measure.memorize('M');
+        el.getMeasureEnsemble(measure).memorize('M');
         pr.already_calculated{i} = 1;
     end
 
