@@ -197,7 +197,7 @@ function update(pr)
             set(pr.measure_tbl, 'Data', data)
             set(pr.measure_tbl, 'ColumnWidth', {30, 'auto', 'auto', 'auto', 'auto'})
 
-            row_names = cell(length(pr.already_calculated));
+            row_names = cell(length(pr.already_calculated), 1);
             for i = 1:length(pr.already_calculated)
                 if pr.already_calculated{i}
                     row_names{i} = 'C';
