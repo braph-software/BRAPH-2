@@ -403,7 +403,6 @@ end
 function cb_measure_calc(pr)
     el = pr.get('EL');
     measure_short_list = pr.mlist(pr.selected);
-    m_dict = el.get('ME_DICT');
 
     % calculate
     if pr.get('WAITBAR')
@@ -420,10 +419,7 @@ function cb_measure_calc(pr)
         if pr.get('WAITBAR')
             waitbar(.1 + .70 * i / length(pr.selected), wb, ['Calculating measure ' measure ]);
         end
-        el.getMeasureEnsemble(measure);
-        m_dict = el.get('ME_DICT');
-        tmp_measure = m_dict.getItem(measure);
-        tmp_measure.memorize('M');
+        el.getMeasureEnsemble(measure).memorize('M');
         pr.already_calculated{i} = 1;
     end
 
