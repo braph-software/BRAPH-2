@@ -49,7 +49,7 @@ end
 value = auc;
 
 %%% ¡prop!
-VAL_AUC (result, scalar) is an area under the curve score obtained from the validation set.
+VAL_AUC (result, cell) is an area under the curve score obtained from the validation set.
 %%%% ¡calculate!
 pred = nne.get('VAL_PREDICTION');
 targets = nne.get('NNDATA').get('VAL_TARGETS');
@@ -72,7 +72,7 @@ if nne.get('PLOT_ROC')
     saveas(gcf, filename);
 end
 
-value = auc;
+value = {auc, X, Y};
 
 %%% ¡prop!
 CONFUSION_MATRIX (result, matrix) is a confusion matrix obtained with a cut-off of 0.5.
