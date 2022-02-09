@@ -33,7 +33,7 @@ train_gr.set( ...
 
 subdict = train_gr.get('SUB_DICT');
 sub = nnd.get('GR').get('SUB_DICT').getItems();
-selected_idx = setdiff(1:length(sub), nnd.get('TRAIN_VAL_INDEX_GR'));
+selected_idx = setdiff(1:length(sub), nnd.get('SPLIT'));
 selected_sub = sub(selected_idx);
 for i = 1:1:length(selected_sub)
     sub = selected_sub{i};
@@ -61,7 +61,7 @@ val_gr.set( ...
 
 subdict = val_gr.get('SUB_DICT');
 sub = nnd.get('GR').get('SUB_DICT').getItems();
-selected_idx = nnd.get('TRAIN_VAL_INDEX_GR');
+selected_idx = nnd.get('SPLIT');
 selected_sub = sub(selected_idx);
 for i = 1:1:length(selected_sub)
     sub = selected_sub{i};
@@ -72,7 +72,7 @@ val_gr.set('SUB_DICT', subdict);
 value = val_gr;
 
 %%% ¡prop!
-TRAIN_VAL_INDEX_GR (data, rvector) is a vector stating which subjects belong to validation set.
+SPLIT (data, rvector) is a vector stating which subjects belong to validation set.
 %%%% ¡conditioning!
 if length(value) == 1 & value < 1
     num_val = floor(value * nnd.get('GR').get('SUB_DICT').length());
@@ -83,18 +83,43 @@ if length(value) == 1 & value < 1
 end
 
 %%% ¡prop!
+INPUT_TYPE (data, option) is the input type for training or testing the NN.
+%%%% ¡settings!
+{'adjacency_matrices' 'graph_measures'}
+
+%%% ¡prop!
+MEASURES (data, cell) is the graph measures as input to NN.
+%%%% ¡default!
+{'DegreeAv', 'DegreeAv', 'DegreeAv', 'DegreeAv', 'DegreeAv'}
+
+%%% ¡prop!
 FEATURE_MASK (metadata, cell) is a mask for selected features.
 %%%% ¡conditioning!
 if isa(value, 'double')
-    density = value;
+    if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
+        density = value;
 
-    adjs_gr = nnd.get('TRAIN_G_DICT').getItems();
-    data = {};
-    for i = 1:length(adjs_gr)
-        data{end+1} = cell2mat(adjs_gr{i}.get('A'));
+        adjs_gr = nnd.memorize('TRAIN_G_DICT').getItems();
+        data = {};
+        for i = 1:length(adjs_gr)
+            data{end+1} = cell2mat(adjs_gr{i}.get('A'));
+        end
+    else
+        density = value;
+
+        adjs_gr = nnd.memorize('TRAIN_G_DICT').getItems();
+        measure_class = nnd.get('MEASURES');
+        data = {};
+        for i = 1:length(adjs_gr)
+            m = [];
+            for j = 1:length(measure_class)
+                m = [m; cell2mat(adjs_gr{i}.getMeasure(measure_class{j}).get('M'))];
+            end
+            data{end+1} = m;
+        end
     end
-
-    y = nnd.get('TARGETS');
+    
+    y = nnd.memorize('TARGETS');
     y = y{1};
     for j = 1:size(data{1},2)
         for k = 1:size(data{1},2)
@@ -155,11 +180,25 @@ function inputs = input_construction(nnd, g_dict)
     %  features will construct the eventual inputs INPUTS for the neural 
     %  network.
     
-    % get the connectivity matrices 
-    adjs_gr = g_dict.getItems();
-    data_gr = {};
-    for i = 1:length(adjs_gr)
-        data_gr{end+1} = cell2mat(adjs_gr{i}.get('A'));
+    if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
+        % get the connectivity matrices
+        adjs_gr = g_dict.getItems();
+        data_gr = {};
+        for i = 1:length(adjs_gr)
+            data_gr{end+1} = cell2mat(adjs_gr{i}.get('A'));
+        end
+    else
+        % get the connectivity matrices
+        adjs_gr = g_dict.getItems();
+        data_gr = {};
+        measure_class = nnd.get('MEASURES');
+        for i = 1:length(adjs_gr)
+            m = [];
+            for j = 1:length(measure_class)
+                m = [m; cell2mat(adjs_gr{i}.getMeasure(measure_class{j}).get('M'))];
+            end
+            data_gr{end+1} = m;
+        end
     end
 
     % get the feature mask

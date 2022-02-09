@@ -25,8 +25,8 @@ false
 %%% ¡prop!
 AUC (result, scalar) is an area under the curve score obtained from the dataset.
 %%%% ¡calculate!
-pred = nne.get('PREDICTION');
-targets = nne.get('NNDATA').get('TARGETS');
+pred = nne.memorize('PREDICTION');
+targets = nne.get('NNDATA').memorize('TARGETS');
 classifier = nne.get('NN');
 net = classifier.to_net(classifier.get('MODEL'));
 class_names = net.Layers(end).Classes; 
@@ -51,8 +51,8 @@ value = auc;
 %%% ¡prop!
 VAL_AUC (result, cell) is an area under the curve score obtained from the validation set.
 %%%% ¡calculate!
-pred = nne.get('VAL_PREDICTION');
-targets = nne.get('NNDATA').get('VAL_TARGETS');
+pred = nne.memorize('VAL_PREDICTION');
+targets = nne.get('NNDATA').memorize('VAL_TARGETS');
 classifier = nne.get('NN');
 net = classifier.to_net(classifier.get('MODEL'));
 class_names = net.Layers(end).Classes; 
@@ -78,11 +78,11 @@ value = {auc, X, Y};
 CONFUSION_MATRIX (result, matrix) is a confusion matrix obtained with a cut-off of 0.5.
 %%%% ¡calculate!
 % get prediction
-preds = nne.get('PREDICTION');
+preds = nne.memorize('PREDICTION');
 preds = preds > 0.5;
 
 % get ground truth
-targets = nne.get('NNDATA').get('TARGETS');
+targets = nne.get('NNDATA').memorize('TARGETS');
 targets_mark = categories(categorical(targets{1}));
 known = onehotencode(categorical(targets{1}), 1);
 
@@ -105,11 +105,11 @@ value = cm;
 VAL_CONFUSION_MATRIX (result, matrix) is a confusion matrix obtained with a cut-off of 0.5.
 %%%% ¡calculate!
 % get prediction
-preds = nne.get('VAL_PREDICTION');
+preds = nne.memorize('VAL_PREDICTION');
 preds = preds > 0.5;
 
 % get ground truth
-targets = nne.get('NNDATA').get('VAL_TARGETS');
+targets = nne.get('NNDATA').memorize('VAL_TARGETS');
 targets_mark = categories(categorical(targets{1}));
 known = onehotencode(categorical(targets{1}), 1);
 
@@ -132,12 +132,34 @@ value = cm;
 FEATURE_MAP (result, matrix) is a feature map obtained with feature selection analysis.
 %%%% ¡calculate!
 selected_idx = nne.get('NNDATA').get('FEATURE_MASK');
-adjs = nne.get('NNDATA').get('TRAIN_G_DICT_1').getItem(1).get('A');
-fm = zeros(length(adjs{1}));
+if string(nne.get('NNDATA').get('INPUT_TYPE')) == 'graph_measures'
+    feature = nne.get('NNDATA').get('MEASURES');
+    fm = zeros(1, length(feature));
+    ticklabel = feature;
+    fontsize = 12;
+else
+    feature = nne.get('NNDATA').get('TRAIN_G_DICT_1').getItem(1).get('A');
+    fm = zeros(length(feature{1}));
+    ticklabel = 0:size(fm, 2);
+    fontsize = 5;
+end
+
 fm(selected_idx{1}) = 1;
+
 if nne.get('PLOT_MAP')
     figure
-    image(fm, 'CDataMapping', 'scaled')
+    x = [1 size(fm, 2)];
+    y = [0 size(fm, 1)];
+    image(x, y, fm, 'CDataMapping', 'scaled')
+
+    xticks([1:size(fm, 2)]);
+    yticks([1:size(fm, 1)]);
+    xticklabels(ticklabel);
+    yticklabels(0:size(fm, 1));
+    a = get(gca,'XTickLabel');  
+    set(gca, 'XTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
+    a = get(gca,'YTickLabel'); 
+    set(gca, 'YTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
     colorbar
     directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
     if ~exist(directory, 'dir')
@@ -161,7 +183,7 @@ PREDICTION (result, matrix) is an output matrix of prediction from a neural netw
 nnd = nne.get('NNDATA');
 classifier = nne.get('NN');
 net = classifier.to_net(classifier.get('MODEL'));
-inputs = nnd.get('INPUTS');
+inputs = nnd.memorize('INPUTS');
 inputs = inputs{1};
 inputs = reshape(inputs, [1, 1, size(inputs,1), size(inputs,2)]);
 
@@ -173,7 +195,7 @@ VAL_PREDICTION (result, matrix) is an output matrix of prediction for the valida
 nnd = nne.get('NNDATA');
 classifier = nne.get('NN');
 net = classifier.to_net(classifier.get('MODEL'));
-inputs = nnd.get('VAL_INPUTS');
+inputs = nnd.memorize('VAL_INPUTS');
 inputs = inputs{1};
 inputs = reshape(inputs, [1, 1, size(inputs,1), size(inputs,2)]);
 

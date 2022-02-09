@@ -206,7 +206,24 @@ end
 heat_map = heat_map / nne_dict.length();
 if nncv.get('PLOT_MAP')
     figure
-    image(heat_map, 'CDataMapping', 'scaled')
+    x = [1 size(heat_map, 2)];
+    y = [0 size(heat_map, 1)];
+    image(x, y, heat_map, 'CDataMapping', 'scaled')
+    if string(nne_dict.getItem(i).get('NNData').get('INPUT_TYPE')) == 'graph_measures'
+        ticklabel = nne_dict.getItem(i).get('NNDATA').get('MEASURES');
+        fontsize = 12;
+    else
+        ticklabel = 0:size(heat_map, 2);
+        fontsize = 5;
+    end
+    xticks([1:size(heat_map, 2)]);
+    yticks([1:size(heat_map, 1)]);
+	xticklabels(ticklabel);
+    yticklabels(0:size(heat_map, 1));
+    a = get(gca,'XTickLabel');  
+    set(gca, 'XTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
+    a = get(gca,'YTickLabel'); 
+    set(gca, 'YTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
     colorbar
     directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
     if ~exist(directory, 'dir')

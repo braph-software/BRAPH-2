@@ -169,16 +169,16 @@ MEASURES (data, cell) is the graph measures as input to NN.
 FEATURE_MASK (metadata, cell) is a mask for selected features.
 %%%% ¡conditioning!
 if isa(value, 'double') 
-    if nnd.get('INPUT_TYPE') == "adjacency_matrices"
+    if string(nnd.get('INPUT_TYPE')) == 'adjacency_matrices'
         density = value;
     
-        adjs_gr_1 = nnd.get('TRAIN_G_DICT_1').getItems();
+        adjs_gr_1 = nnd.memorize('TRAIN_G_DICT_1').getItems();
         data_gr_1 = {};
         for i = 1:length(adjs_gr_1)
             data_gr_1{end+1} = cell2mat(adjs_gr_1{i}.get('A'));
         end
     
-        adjs_gr_2 = nnd.get('TRAIN_G_DICT_1').getItems();
+        adjs_gr_2 = nnd.memorize('TRAIN_G_DICT_1').getItems();
         data_gr_2 = {};
         for i = 1:length(adjs_gr_2)
             data_gr_2{end+1} = cell2mat(adjs_gr_2{i}.get('A'));
@@ -188,7 +188,7 @@ if isa(value, 'double')
     else
         density = value;
     
-        adjs_gr_1 = nnd.get('TRAIN_G_DICT_1').getItems();
+        adjs_gr_1 = nnd.memorize('TRAIN_G_DICT_1').getItems();
         data_gr_1 = {};
         measure_class = nnd.get('MEASURES');
         for i = 1:length(adjs_gr_1)
@@ -199,7 +199,7 @@ if isa(value, 'double')
             data_gr_1{end+1} = m;
         end
     
-        adjs_gr_2 = nnd.get('TRAIN_G_DICT_2').getItems();
+        adjs_gr_2 = nnd.memorize('TRAIN_G_DICT_2').getItems();
         data_gr_2 = {};
         measure_class = nnd.get('MEASURES');
         for i = 1:length(adjs_gr_2)
@@ -212,7 +212,7 @@ if isa(value, 'double')
     
         data = [data_gr_1 data_gr_2];
     end
-    y = nnd.get('TARGETS');
+    y = nnd.memorize('TARGETS');
     y = categorical(y{1});
     for j = 1:size(data{1}, 1)
         for k = 1:size(data{1}, 2)
@@ -286,7 +286,7 @@ function inputs = input_construction(nnd, g_dict_1, g_dict_2)
     
     % get the connectivity matrices 
 
-    if nnd.get('INPUT_TYPE') == "adjacency_matrices"
+    if string(nnd.get('INPUT_TYPE')) == 'adjacency_matrices'
         adjs_gr_1 = g_dict_1.getItems();
         data_gr_1 = {};
         for i = 1:length(adjs_gr_1)
