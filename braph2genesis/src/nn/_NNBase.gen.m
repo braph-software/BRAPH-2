@@ -123,3 +123,20 @@ function net = to_net(nn, saved_nn, varargin)
     warning(w_matlab.state, 'MATLAB:mir_warning_unrecognized_pragma');
     warning(w_nnet.state,'nnet_cnn:internal:cnn:analyzer:NetworkAnalyzer:NetworkHasWarnings');
 end
+
+%% ¡tests!
+
+%%% ¡test!
+%%%% ¡name!
+Net prediction
+%%%% ¡code!
+net = squeezenet;
+img = rand(net.Layers(1).InputSize);
+pred_from_original_net = predict(net, img);
+
+net_braph = NNBase().to_net(NNBase().from_net(squeezenet));
+pred_from_braph = predict(net_braph, img);
+
+assert(isequal(pred_from_original_net, pred_from_braph), ...
+    [BRAPH2.STR ':NNBase:' BRAPH2.BUG_ERR], ...
+    'Prediction is not being calculated correctly for neural networks.')
