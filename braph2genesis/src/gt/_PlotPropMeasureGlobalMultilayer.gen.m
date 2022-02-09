@@ -38,7 +38,7 @@ function h_panel = draw(pr, varargin)
     % retrieves the handle of the table
     children = get(pr.p, 'Children');
     for i = 1:1:length(children)
-        if check_graphics(children(i), 'uitable')
+        if check_graphics(children(i), 'edit')
             pr.edit_value = children(i);
         end
     end
@@ -51,7 +51,7 @@ function h_panel = draw(pr, varargin)
     if el.get('G').getPropNumber() > 9
         n = length(el.get('G').get(10)); % 10 is densities or thresholds
         L = size(value, 1) / n;
-        label = el.get('G').getPropTag(11);
+        label = el.get('G').getPropTag(10);
     end
     
     % set on first layer
@@ -139,7 +139,7 @@ function update(pr)
     if el.get('G').getPropNumber() > 9
         n = length(el.get('G').get(10)); % 10 is densities or thresholds
         L = size(value, 1) / n;
-        label = el.get('G').getPropTag(11);
+        label = el.get('G').getPropTag(10);
     end
     br_dict = el.get('G').get('BRAINATLAS').get('BR_DICT');
 
@@ -157,7 +157,7 @@ function update(pr)
         % do nothing
     else
         set(pr.slider_text, ...
-            'String', [label ' ' num2str(round(get(pr.slider, 'Value')))]);
+            'String', ['Layer ' num2str(round(get(pr.slider, 'Value')))]);
         
         if el.get('G').getPropNumber() > 9
             
@@ -168,7 +168,7 @@ function update(pr)
             l = round(get(pr.slider, 'Value')); % layer
             d = round(get(pr.layer_slider, 'Value')); % threshold or ddensity
         
-            correct_i =  (d * L)-(L + l) ;
+            correct_i =  (d * L)- L + l ;
             
             set(pr.edit_value, ...
                 'String', value{correct_i}, ...
@@ -234,11 +234,13 @@ function redraw(pr, varargin)
 
         set(pr.layer_slider, ...
             'Units', 'normalized', ...
+            'Visible', 'on', ...
             'Position', [.01 (Dh+h)/(h+Sh+Sh+Th+Th+Dh) .97 (Th/(h+Sh+Sh+Th+Th+Dh)-.02)] ...
             );
 
         set(pr.layer_text, ...
             'Units', 'normalized', ...
+            'Visible', 'on', ...
             'Position', [.01 (Dh+Th+h)/(h+Sh+Sh+Th+Th+Dh) .97 (Th/(h+Sh+Sh+Th+Th+Dh)-.02)] ...
             );
 
