@@ -41,10 +41,9 @@ PLOTVALUE(data, cell) to set plot line atlas.
 MEASURE(data, string) to set plot line measure.
 
 %%% ¡prop!
-CIL (metadata, CELL) to set plot line cil.
-
-%%% ¡prop!
-CIU (metadata, CELL) to set plot line ciu.
+LAYER (metadata, scalar) to set plot line layer.
+%%%% ¡default!
+1
 
 %%% ¡prop!
 NODE1 (metadata, scalar) to set plot line node 1.
@@ -293,7 +292,7 @@ function f_settings = settings(pr, varargin)
                 'Tooltip', 'Select the Node to be Plotted.', ...
                 'String', node_labels, ...
                 'Value', pr.get('NODE1'), ...
-                'Position', [.55 .8 .2 .16], ...
+                'Position', [.55 .8 .1 .16], ...
                 'Callback', {@cb_node_1} ...
                 );
             set(ui_node2_popmenu, ...
@@ -301,7 +300,7 @@ function f_settings = settings(pr, varargin)
                 'Tooltip', 'Select the Node to be Plotted.', ...
                 'String', node_labels, ...
                 'Value', pr.get('NODE2'), ...
-                'Position', [.76 .8 .2 .16], ...
+                'Position', [.66 .8 .1 .16], ...
                 'Callback', {@cb_node_2} ...
                 );
             rules_node_popmenu_deactivation()
@@ -348,93 +347,22 @@ function f_settings = settings(pr, varargin)
             update();
         end
 
-    if ~isempty(pr.get('CIL')) && ~isempty(pr.get('CIU'))
-        ui_confidence_interval_min_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized');
-        ui_confidence_interval_max_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized');
-        h_p_min = [];
-        h_p_max = [];
-        init_cil_panel()
-    end
-        function init_cil_panel()
-            set(ui_confidence_interval_min_checkbox, 'Position', [.55 .01 .2 .14]);
-            set(ui_confidence_interval_min_checkbox, 'String', 'Show Confidence Interval Min');
-            set(ui_confidence_interval_min_checkbox, 'Value', false);
-            set(ui_confidence_interval_min_checkbox, 'Callback', {@cb_show_confidence_interval_min})
+    layer_number = size(pr.m.get('G').get('B'), 2);
+    layer_popup = uicontrol('Parent', ui_plot_properties_panel,...
+        'Style', 'popupmenu',...
+        'Units', 'normalized', ...
+        'String', arrayfun(@(x) [num2str(x)], [1:layer_number], 'UniformOutput', false));
+    init_layer_section()
+        function init_layer_section()
+            set(layer_popup, 'Position', [.77 .81 .1 .16], ...
+                'Value', pr.get('LAYER'), ...
+                'Callback', {@layer_popup_selector});
 
-            set(ui_confidence_interval_max_checkbox, 'Position', [.75 .01 .2 .14]);
-            set(ui_confidence_interval_max_checkbox, 'String', 'Show Confidence Interval Max');
-            set(ui_confidence_interval_max_checkbox, 'Value', false);
-            set(ui_confidence_interval_max_checkbox, 'Callback', {@cb_show_confidence_interval_max})
         end
-        function cb_show_confidence_interval_min(src, ~)
-            if src.Value == true
-                cil = obtain_cil_ciu_value(pr.get('CIL'));
-                x_ = pr.get('X');
-                hold(pr.h_axes, 'on')
-                h_p_min = plot(pr.h_axes, ...
-                    x_, ...
-                    cil, ...
-                    'Marker', 'x', ...
-                    'MarkerSize', 10, ...
-                    'MarkerEdgeColor', [0 0 1], ...
-                    'MarkerFaceColor', [.3 .4 .5], ...
-                    'LineStyle', '-', ...
-                    'LineWidth', 1, ...
-                    'Color', [0 1 1]);
-                h_p_min.Visible = true;
-            else
-                h_p_min.Visible = false;
-            end
-        end
-        function cb_show_confidence_interval_max(src, ~)
-            if src.Value == true
-                hold(pr.h_axes, 'on')
-                x_ = pr.get('X');
-                ciu = obtain_cil_ciu_value(pr.get('CIU'));
-                h_p_max = plot(pr.h_axes, ...
-                    x_, ...
-                    ciu, ...
-                    'Marker', 'x', ...
-                    'MarkerSize', 10, ...
-                    'MarkerEdgeColor', [0 0 1], ...
-                    'MarkerFaceColor', [.3 .4 .5], ...
-                    'LineStyle', '-', ...
-                    'LineWidth', 1, ...
-                    'Color', [0 1 1]);
-                h_p_max.Visible = true;
-            else
-                h_p_max.Visible = false;
-            end
-        end
-        function limit = obtain_cil_ciu_value(array)
-            node1_to_plot = pr.get('NODE1');
-            node2_to_plot = pr.get('NODE2');
-
-            if Measure.is_global(pr.m) % global
-                is_inf_vector = cellfun(@(x) isinf(x), array);
-                if any(is_inf_vector)
-                    return;
-                end
-                limit = [array{:}];
-            elseif Measure.is_nodal(pr.m) % nodal
-                for l = 1:length(array)
-                    tmp = array{l};
-                    tmp_y = tmp(node1_to_plot);
-                    if isinf(tmp_y)
-                        return;
-                    end
-                    limit(l) = tmp_y; %#ok<AGROW>
-                end
-            else  % binodal
-                for l = 1:length(array)
-                    tmp = array{l};
-                    tmp_y = tmp(node1_to_plot, node2_to_plot);
-                    if isinf(tmp_y)
-                        return;
-                    end
-                    limit(l) = tmp_y; %#ok<AGROW>
-                end
-            end
+        function layer_popup_selector(src, ~)
+            layer_to_plot = double(src.Value);
+            pr.set('LAYER', layer_to_plot)
+            update();
         end
 
     init_measure_plot_area()
@@ -446,29 +374,36 @@ end
 function update_plot(pr)
     measure = pr.m;
     plot_value = measure.get('M');
+    layer_number = size(pr.m.get('G').get('B'), 2);
+    choosen_layer = pr.get('LAYER');
+
     if Measure.is_global(pr.m) % global
         is_inf_vector = cellfun(@(x) isinf(x), plot_value);
         if any(is_inf_vector)
             return;
         end
-        y_ = [plot_value{:}];
+        y_ = [plot_value{choosen_layer:layer_number:end}];
     elseif Measure.is_nodal(pr.m) % nodal
-        for l = 1:length(plot_value)
+        tmp_index = 1;
+        for l = choosen_layer:layer_number:length(plot_value)
             tmp = plot_value{l};
             tmp_y = tmp(pr.get('NODE1'));
             if isinf(tmp_y)
                 return;
             end
-            y_(l) = tmp_y; %#ok<AGROW>
+            y_(tmp_index) = tmp_y; %#ok<AGROW>
+            tmp_index = tmp_index + 1;
         end
     else  % binodal
-        for l = 1:length(plot_value)
+        tmp_index = 1;
+        for l = choosen_layer:layer_number:length(plot_value)
             tmp = plot_value{l};
             tmp_y = tmp(pr.get('NODE1'), pr.get('NODE2'));
             if isinf(tmp_y)
                 return;
             end
-            y_(l) = tmp_y; %#ok<AGROW>
+            y_(tmp_index) = tmp_y; %#ok<AGROW>
+            tmp_index = tmp_index + 1;
         end
     end
     pr.plotline(pr.get('X'), y_)

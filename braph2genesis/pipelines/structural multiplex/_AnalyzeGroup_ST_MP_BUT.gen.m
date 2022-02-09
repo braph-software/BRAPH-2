@@ -107,8 +107,8 @@ g = MultiplexBUT( ...
     );
 
 value = g;
-% %%%% ¡gui!
-% % % pl = PPAnalyzeGroupGraph('EL', a, 'PROP', AnalyzeGroup_ST_MP_BUT.G, varargin{:});
+%%%% ¡gui!
+pr = PPAnalyzeGroupMP_G('EL', a, 'PROP', AnalyzeGroup_ST_MP_BUT.G, 'WAITBAR', true, varargin{:});
 
 %% ¡tests!
 
