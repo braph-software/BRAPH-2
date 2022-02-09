@@ -101,8 +101,8 @@ g = MultiplexWU( ...
     );
 
 value = g;
-% %%%% ¡gui!
-% % % pl = PPAnalyzeGroupGraph('EL', a, 'PROP', AnalyzeGroup_ST_MP_WU.G, varargin{:});
+%%%% ¡gui!
+pr = PPAnalyzeGroupMP_G('EL', a, 'PROP', AnalyzeGroup_ST_MP_WU.G, 'WAITBAR', true, varargin{:});
 
 %% ¡tests!
 
