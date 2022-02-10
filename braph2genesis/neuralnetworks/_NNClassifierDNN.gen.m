@@ -10,7 +10,7 @@ values for the trianing samples.
 
 %% ¡props!
 %%% ¡prop!
-LAYERS (data, rvector) is a vector represents the number of neurons in each layer.
+LAYERS (data, rvector) is a vector representing the number of neurons in each layer.
 %%%% ¡postprocessing!
 if isempty(nn.get('LAYERS'))
     inputs = nn.get('NNDATA').get('INPUTS');

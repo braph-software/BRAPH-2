@@ -165,72 +165,73 @@ MEASURES (data, classlist) is the graph measures as input to NN.
 %%%% ¡settings!
 {'Measure'}
 %%%% ¡default!
-{'DegreeAv', 'DegreeAv', 'DegreeAv', 'DegreeAv', 'DegreeAv'}
+{'DegreeAv', 'Degree'}
 
 %%% ¡prop!
-FEATURE_MASK (metadata, cell) is a mask for selected features.
-%%%% ¡conditioning!
-if isa(value, 'double') 
-    if string(nnd.get('INPUT_TYPE')) == 'adjacency_matrices'
-        density = value;
-    
-        adjs_gr_1 = nnd.get('TRAIN_G_DICT_1').getItems();
-        data_gr_1 = {};
-        for i = 1:length(adjs_gr_1)
-            data_gr_1{end+1} = cell2mat(adjs_gr_1{i}.get('A'));
-        end
-    
-        adjs_gr_2 = nnd.get('TRAIN_G_DICT_1').getItems();
-        data_gr_2 = {};
-        for i = 1:length(adjs_gr_2)
-            data_gr_2{end+1} = cell2mat(adjs_gr_2{i}.get('A'));
-        end
-    
-        data = [data_gr_1 data_gr_2];
-    else
-        density = value;
-    
-        adjs_gr_1 = nnd.get('TRAIN_G_DICT_1').getItems();
-        data_gr_1 = {};
-        measure_class = nnd.get('MEASURES');
-        for i = 1:length(adjs_gr_1)
-            m = [];
-            for j = 1:length(measure_class)
-                m = [m; cell2mat(adjs_gr_1{i}.getMeasure(measure_class{j}).get('M'))];
-            end
-            data_gr_1{end+1} = m;
-        end
-    
-        adjs_gr_2 = nnd.get('TRAIN_G_DICT_2').getItems();
-        data_gr_2 = {};
-        measure_class = nnd.get('MEASURES');
-        for i = 1:length(adjs_gr_2)
-            m = [];
-            for j = 1:length(measure_class)
-                m = [m; cell2mat(adjs_gr_2{i}.getMeasure(measure_class{j}).get('M'))];
-            end
-            data_gr_1{end+1} = m;
-        end
-    
-        data = [data_gr_1 data_gr_2];
-    end
-    if(isempty(data))
-        value = {};
-    else
-        y = nnd.get('TARGETS');
-        y = y{1};
-        for j = 1:size(data{1}, 1)
-            for k = 1:size(data{1}, 2)
-                data_per_feature = cellfun(@(v)v(j, k), data);
-                label = y;
-                mask(j, k) = nnd.mutual_information_analysis(data_per_feature, label', 5);
-            end
-        end
-        [~,idx_all] = sort(mask(:), 'descend');
-        num_top_idx = floor(density * size(mask, 1) * size(mask, 2));
+FEATURE_MASK (data, cell) is a mask for selected features.
 
-        value = {idx_all(1:num_top_idx)};
+%%% ¡prop!
+FEATURE_MASK_ANALYSIS (result, cell) is an analysis for generating mask for selected features.
+%%%% ¡calculate!
+if string(nnd.get('INPUT_TYPE')) == 'adjacency_matrices'
+    density = value;
+
+    adjs_gr_1 = nnd.get('TRAIN_G_DICT_1').getItems();
+    data_gr_1 = {};
+    for i = 1:length(adjs_gr_1)
+        data_gr_1{end+1} = cell2mat(adjs_gr_1{i}.get('A'));
     end
+
+    adjs_gr_2 = nnd.get('TRAIN_G_DICT_1').getItems();
+    data_gr_2 = {};
+    for i = 1:length(adjs_gr_2)
+        data_gr_2{end+1} = cell2mat(adjs_gr_2{i}.get('A'));
+    end
+
+    data = [data_gr_1 data_gr_2];
+else
+    density = value;
+
+    adjs_gr_1 = nnd.get('TRAIN_G_DICT_1').getItems();
+    data_gr_1 = {};
+    measure_class = nnd.get('MEASURES');
+    for i = 1:length(adjs_gr_1)
+        m = [];
+        for j = 1:length(measure_class)
+            m = [m; cell2mat(adjs_gr_1{i}.getMeasure(measure_class{j}).get('M'))];
+        end
+        data_gr_1{end+1} = m;
+    end
+
+    adjs_gr_2 = nnd.get('TRAIN_G_DICT_2').getItems();
+    data_gr_2 = {};
+    measure_class = nnd.get('MEASURES');
+    for i = 1:length(adjs_gr_2)
+        m = [];
+        for j = 1:length(measure_class)
+            m = [m; cell2mat(adjs_gr_2{i}.getMeasure(measure_class{j}).get('M'))];
+        end
+        data_gr_1{end+1} = m;
+    end
+
+    data = [data_gr_1 data_gr_2];
+end
+if(isempty(data))
+    value = {};
+else
+    y = nnd.get('TARGETS');
+    y = y{1};
+    for j = 1:size(data{1}, 1)
+        for k = 1:size(data{1}, 2)
+            data_per_feature = cellfun(@(v)v(j, k), data);
+            label = y;
+            mask(j, k) = nnd.mutual_information_analysis(data_per_feature, label', 5);
+        end
+    end
+    [~,idx_all] = sort(mask(:), 'descend');
+    num_top_idx = floor(density * size(mask, 1) * size(mask, 2));
+
+    value = {idx_all(1:num_top_idx)};
 end
 
 %%% ¡prop!
@@ -294,7 +295,6 @@ INPUTS (result, cell) is the inputs for training or testing a neural network.
 %%%% ¡calculate!
 value = nnd.input_construction(nnd.get('TRAIN_G_DICT_1'), nnd.get('TRAIN_G_DICT_2'));
 
-
 %% ¡methods!
 function inputs = input_construction(nnd, g_dict_1, g_dict_2)
     %INPUT_CONSTRUCTION constructs the inputs for neural networks.
@@ -350,63 +350,11 @@ function inputs = input_construction(nnd, g_dict_1, g_dict_2)
     
     % get the feature mask
     mask = nnd.get('FEATURE_MASK');
+    if isempty(mask)
+        mask = nnd.get('FEATURE_MASK_ANALYSIS');
+    end
     
     % construct the inputs
     inputs = cellfun(@(v)v(mask{1}), data, 'UniformOutput', false);
     inputs = {cat(2, inputs{:})};
-end
-function [mutinf] = mutual_information_analysis(nnd, X, Y, n)
-    %MUTUAL_INFORMATION_ANALYSIS computes the mutual information value.
-    % 
-    % MUTINF = MUTUAL_INFORMATION_ANALYSIS(NND, X, Y, n) compute the mutual
-    %  information MUTINF of two discrete variables X and Y. These two vectors
-    %  must have the same length. The higher value of the MUTINF, the
-    %  closer connection between X and Y.
-
-    xmin = min(X, [], 2);
-    xmax = max(X, [], 2);
-    xrange = (xmax - xmin) / n;
-    if xmax - xmin < 1e-4
-        mutinf = 0;
-        return;
-    end
-    if size(Y, 1) ~= 1
-        probmatr = zeros(n, size(Y, 1));
-        for i = 1 : size(X,2)
-            dimx = ceil((X(:, i) - xmin) / xrange);
-            if dimx < 1
-                dimx = 1;
-            elseif dimx > n
-                dimx = n;
-            end
-            dimy = find(Y(:, i) == 1);
-            probmatr(dimx, dimy) = probmatr(dimx, dimy) + 1;
-        end
-    else
-        ymin = min(Y, [], 2);
-        ymax = max(Y, [], 2);
-        yrange = (ymax - ymin) / n;
-        probmatr = zeros(n, n);
-        for i = 1 : size(X, 2)
-            dimx = ceil((X(:, i) - xmin) / xrange);
-            if dimx < 1
-                dimx = 1;
-            elseif dimx > n
-                dimx = n;
-            end
-            dimy = ceil((Y(:, i) - ymin) / yrange);
-            if dimy < 1
-                dimy = 1;
-            elseif dimy > n
-                dimy = n;
-            end
-            probmatr(dimx, dimy) = probmatr(dimx, dimy) + 1;
-        end
-    end
-    p_y = sum(probmatr, 1) / size(X, 2);
-    p_y_x = probmatr ./ (sum(probmatr, 2) + 1e-8);
-    p_y(p_y == 0) = 1e-8;
-    p_y_x(p_y_x == 0) = 1e-8;
-    
-    mutinf = sum(sum(probmatr / size(X, 2) .* log(p_y_x))) - sum(p_y .* log(p_y));
 end
