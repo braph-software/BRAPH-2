@@ -2,12 +2,12 @@
 NNClassifierCV < Element (nncv, cross-validation of a neural network classifier) cross-validate the performance of a neural network classifier .
 
 %% ¡description!
-This cross validation performan k-fold cross validation of a neural network
+This cross validation perform a k-fold cross validation of a neural network
 classifier with desired repetitions. The dataset is split into k consecutive 
 folds with shuffling by default, and each fold is then used once as a 
 validation while the k-1 remaining folds form the training set. 
 The confusion matrix, ROC curves, AUCs, and weighted contributing maps will
-be calculated across folds.
+be calculated across folds and repetitions.
 
 %% ¡props!
 %%% ¡prop!
