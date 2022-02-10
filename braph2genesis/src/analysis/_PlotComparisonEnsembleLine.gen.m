@@ -284,13 +284,12 @@ function f_settings = settings(pr, varargin)
             update();
         end
 
-    if ~isempty(pr.get('CIL')) && ~isempty(pr.get('CIU'))
+    
         ui_confidence_interval_min_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized');
         ui_confidence_interval_max_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized');
         h_p_min = [];
         h_p_max = [];
         init_cil_panel()
-    end
         function init_cil_panel()
             set(ui_confidence_interval_min_checkbox, 'Position', [.04 .4 .2 .12]);
             set(ui_confidence_interval_min_checkbox, 'String', 'Show Confidence Interval Min');
