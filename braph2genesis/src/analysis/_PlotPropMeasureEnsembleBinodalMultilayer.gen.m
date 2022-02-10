@@ -218,7 +218,7 @@ function redraw(pr, varargin)
     %
     % See also draw, update, PlotElement.
     
-    [[h, varargin] = get_and_remove_from_varargin(1.8, 'Height', varargin);
+    [h, varargin] = get_and_remove_from_varargin(1.8, 'Height', varargin);
     [Sh, varargin] = get_and_remove_from_varargin(1.8, 'SHeight', varargin);
     [Th, varargin] = get_and_remove_from_varargin(1.8, 'THeight', varargin);
     [Dh, varargin] = get_and_remove_from_varargin(18, 'DHeight', varargin);
