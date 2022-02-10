@@ -1,13 +1,13 @@
 %% ¡header!
-NNClassifierCV_CON_WU < NNClassifierCV (nncv, cross-validation of a neural network classifier) cross-validate the performance of a neural network classifier .
+NNClassifierCV_CON_WU < NNClassifierCV (nncv, cross-validation of a neural network classifier) cross-validates the performance of a neural network classifier.
 
 %% ¡description!
 This cross validation performan k-fold cross validation of a neural network
 classifier with desired repetitions for connectivity data. The dataset is 
 split into k consecutive folds with shuffling by default, and each fold is 
 then used once as a validation while the k-1 remaining folds form the 
-training set. The confusion matrix, ROC curves, AUCs, and weighted contributing maps will
-be calculated across folds.
+training set. The confusion matrix, ROC curves, AUCs, and contributing maps 
+are calculated across the testing sets over k folds.
 
 %% ¡props_update!
 %%% ¡prop!
@@ -54,3 +54,10 @@ for i = 1:1:nncv.get('REPETITION')
 end
 
 value = nne_dict;
+
+%% ¡tests!
+%%% ¡test!
+%%%% ¡name!
+Example
+%%%% ¡code!
+example_CV_WU_Classification_AdjacencyMatrix

@@ -16,8 +16,8 @@ LABEL (metadata, string) is an extended label of the neural network.
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the neural network.
 
-%%%% ¡prop!
-NNDATA (data, item) is the data for training or testing the neural network.
+%%% ¡prop!
+NNDATA (data, item) is a dataset for neural networks.
 %%%% ¡settings!
 'NNData'
 

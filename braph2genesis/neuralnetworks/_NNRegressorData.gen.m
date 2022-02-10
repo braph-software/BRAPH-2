@@ -88,9 +88,11 @@ INPUT_TYPE (data, option) is the input type for training or testing the NN.
 {'adjacency_matrices' 'graph_measures'}
 
 %%% ¡prop!
-MEASURES (data, cell) is the graph measures as input to NN.
+MEASURES (data, classlist) is the graph measures as input to NN.
+%%%% ¡settings!
+{'Measure'}
 %%%% ¡default!
-{'DegreeAv', 'DegreeAv', 'DegreeAv', 'DegreeAv', 'DegreeAv'}
+{'DegreeAv' 'DegreeAv' 'DegreeAv' 'DegreeAv' 'DegreeAv'}
 
 %%% ¡prop!
 FEATURE_MASK (metadata, cell) is a mask for selected features.
@@ -99,7 +101,7 @@ if isa(value, 'double')
     if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
         density = value;
 
-        adjs_gr = nnd.memorize('TRAIN_G_DICT').getItems();
+        adjs_gr = nnd.get('TRAIN_G_DICT').getItems();
         data = {};
         for i = 1:length(adjs_gr)
             data{end+1} = cell2mat(adjs_gr{i}.get('A'));
@@ -107,7 +109,7 @@ if isa(value, 'double')
     else
         density = value;
 
-        adjs_gr = nnd.memorize('TRAIN_G_DICT').getItems();
+        adjs_gr = nnd.get('TRAIN_G_DICT').getItems();
         measure_class = nnd.get('MEASURES');
         data = {};
         for i = 1:length(adjs_gr)
@@ -119,7 +121,7 @@ if isa(value, 'double')
         end
     end
     
-    y = nnd.memorize('TARGETS');
+    y = nnd.get('TARGETS');
     y = y{1};
     for j = 1:size(data{1},2)
         for k = 1:size(data{1},2)
@@ -145,14 +147,9 @@ VAL_G_DICT (result, idict) is the graph obtained from subjects in validation set
 'Graph'
 
 %%% ¡prop!
-INPUTS (result, cell) is the inputs for training or testing a neural network.
-%%%% ¡calculate!
-value = nnd.input_construction(nnd.memorize('TRAIN_G_DICT'));
-
-%%% ¡prop!
 VAL_INPUTS (result, cell) is the inputs from validation set for testing a neural network.
 %%%% ¡calculate!
-value = nnd.input_construction(nnd.memorize('VAL_G_DICT'));
+value = nnd.input_construction(nnd.get('VAL_G_DICT'));
 
 %%% ¡prop!
 TARGETS (result, cell) is the label for the dataset.
@@ -168,6 +165,14 @@ value = {cat(2, target_list{:})'};
 
 %%% ¡prop!
 TARGET_NAME (data, string) is the name of the traget.
+%%%% ¡default!
+'age'
+
+%% ¡props_update!
+%%% ¡prop!
+INPUTS (result, cell) is the inputs for training or testing a neural network.
+%%%% ¡calculate!
+value = nnd.input_construction(nnd.get('TRAIN_G_DICT'));
 
 %% ¡methods!
 function inputs = input_construction(nnd, g_dict)

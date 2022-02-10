@@ -18,12 +18,12 @@ TRAIN_G_DICT (result, idict) is the graph (GraphWU) from subjects in training se
 IndexedDictionary('IT_CLASS', 'GraphWU')
 %%%% ¡calculate!
 g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
-gr = nnd.memorize('TRAIN_GR');
+gr = nnd.get('TRAIN_GR');
 atlas = BrainAtlas();
 if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0 
     atlas = gr.get('SUB_DICT').getItem(1).get('BA');
 end
-gr = nnd.memorize('TRAIN_GR');
+gr = nnd.get('TRAIN_GR');
 for i = 1:1:gr.get('SUB_DICT').length()
 	sub = gr.get('SUB_DICT').getItem(i);
     g = GraphWU( ...
@@ -72,4 +72,4 @@ Group('SUB_CLASS', 'SubjectCON')
 %%%% ¡name!
 Example
 %%%% ¡code!
-example_CON_WU_NN_REGRESSION
+example_NN_WU_Regression_AdjacencyMatrix

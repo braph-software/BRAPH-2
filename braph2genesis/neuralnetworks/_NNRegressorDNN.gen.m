@@ -2,7 +2,7 @@
 NNRegressorDNN < NNBase (nn, regressor with dense layers) is a neural network regressor.
 
 %% ¡description!
-This regressor is a fully-connected-lyaer neural network by training with
+This regressor is a fully-connected-layer neural network by training with
 backpropagation on the data provided by NNData. The Regressor trains on two
 cells: cell INPUTS from NNData holds the training samples represented as 
 floating point feature vectors, and the cell TARGETS, which holds the target
@@ -10,19 +10,16 @@ values for the trianing samples.
 
 %% ¡props!
 %%% ¡prop!
-NNDATA (data, item) is a dataset for training or testing a neural network regressor.
-%%%% ¡settings!
-'NNRegressorData'
-
-%%% ¡prop!
 LAYERS (data, rvector) is a vector represents the number of neurons in each layer.
 %%%% ¡postprocessing!
 if isempty(nn.get('LAYERS'))
     inputs = nn.get('NNDATA').get('INPUTS');
-    inputs = inputs{1};
-    numFeatures = length(inputs);
-    value = [floor(1.5 * numFeatures) floor(1.5 * numFeatures)];
-    nn.set('LAYERS', value);
+    if ~isempty(inputs{1})
+        inputs = inputs{1};
+        numFeatures = length(inputs);
+        value = [floor(1.5 * numFeatures) floor(1.5 * numFeatures)];
+        nn.set('LAYERS', value);
+    end
 end
 
 %%% ¡prop!
@@ -68,9 +65,16 @@ value = nn.get('NNDATA').get('TARGET_NAME');
 %%% ¡prop!
 INPUT_FORMAT (data, string) is the data format of network inputs.
 %%%% ¡default!
-"BCSS"
+'BCSS'
 
 %% ¡props_update!
+%%% ¡prop!
+NNDATA (data, item) is a dataset for training or testing a neural network regressor.
+%%%% ¡settings!
+'NNRegressorData'
+%%%% ¡default!
+NNRegressorData()
+
 %%% ¡prop!
 MODEL (result, cell) is a trained neural network regressor.
 %%%% ¡calculate!

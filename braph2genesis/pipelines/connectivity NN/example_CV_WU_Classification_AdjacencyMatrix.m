@@ -41,6 +41,7 @@ nncv = NNClassifierCV_CON_WU( ...
     );
 
 %% Evaluate the Performance
+nncv.memorize('NNE_DICT');
 auc = nncv.get('AUC');
 auc_cil = nncv.get('AUC_CIL');
 auc_ciu = nncv.get('AUC_CIU');

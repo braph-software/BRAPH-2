@@ -161,7 +161,9 @@ INPUT_TYPE (data, option) is the input type for training or testing the NN.
 {'adjacency_matrices' 'graph_measures'}
 
 %%% ¡prop!
-MEASURES (data, cell) is the graph measures as input to NN.
+MEASURES (data, classlist) is the graph measures as input to NN.
+%%%% ¡settings!
+{'Measure'}
 %%%% ¡default!
 {'DegreeAv', 'DegreeAv', 'DegreeAv', 'DegreeAv', 'DegreeAv'}
 
@@ -172,13 +174,13 @@ if isa(value, 'double')
     if string(nnd.get('INPUT_TYPE')) == 'adjacency_matrices'
         density = value;
     
-        adjs_gr_1 = nnd.memorize('TRAIN_G_DICT_1').getItems();
+        adjs_gr_1 = nnd.get('TRAIN_G_DICT_1').getItems();
         data_gr_1 = {};
         for i = 1:length(adjs_gr_1)
             data_gr_1{end+1} = cell2mat(adjs_gr_1{i}.get('A'));
         end
     
-        adjs_gr_2 = nnd.memorize('TRAIN_G_DICT_1').getItems();
+        adjs_gr_2 = nnd.get('TRAIN_G_DICT_1').getItems();
         data_gr_2 = {};
         for i = 1:length(adjs_gr_2)
             data_gr_2{end+1} = cell2mat(adjs_gr_2{i}.get('A'));
@@ -188,7 +190,7 @@ if isa(value, 'double')
     else
         density = value;
     
-        adjs_gr_1 = nnd.memorize('TRAIN_G_DICT_1').getItems();
+        adjs_gr_1 = nnd.get('TRAIN_G_DICT_1').getItems();
         data_gr_1 = {};
         measure_class = nnd.get('MEASURES');
         for i = 1:length(adjs_gr_1)
@@ -199,7 +201,7 @@ if isa(value, 'double')
             data_gr_1{end+1} = m;
         end
     
-        adjs_gr_2 = nnd.memorize('TRAIN_G_DICT_2').getItems();
+        adjs_gr_2 = nnd.get('TRAIN_G_DICT_2').getItems();
         data_gr_2 = {};
         measure_class = nnd.get('MEASURES');
         for i = 1:length(adjs_gr_2)
@@ -212,19 +214,23 @@ if isa(value, 'double')
     
         data = [data_gr_1 data_gr_2];
     end
-    y = nnd.memorize('TARGETS');
-    y = categorical(y{1});
-    for j = 1:size(data{1}, 1)
-        for k = 1:size(data{1}, 2)
-            data_per_feature = cellfun(@(v)v(j, k), data);
-            label = onehotencode(y', 2);
-            mask(j, k) = nnd.mutual_information_analysis(data_per_feature, label', 5);
+    if(isempty(data))
+        value = {};
+    else
+        y = nnd.get('TARGETS');
+        y = y{1};
+        for j = 1:size(data{1}, 1)
+            for k = 1:size(data{1}, 2)
+                data_per_feature = cellfun(@(v)v(j, k), data);
+                label = y;
+                mask(j, k) = nnd.mutual_information_analysis(data_per_feature, label', 5);
+            end
         end
+        [~,idx_all] = sort(mask(:), 'descend');
+        num_top_idx = floor(density * size(mask, 1) * size(mask, 2));
+
+        value = {idx_all(1:num_top_idx)};
     end
-    [~,idx_all] = sort(mask(:), 'descend');
-    num_top_idx = floor(density * size(mask, 1) * size(mask, 2));
-    
-    value = {idx_all(1:num_top_idx)};
 end
 
 %%% ¡prop!
@@ -248,14 +254,9 @@ VAL_G_DICT_2 (result, idict) is the graph obtained from subject group 2 in valid
 'Graph'
 
 %%% ¡prop!
-INPUTS (result, cell) is the inputs for training or testing a neural network.
-%%%% ¡calculate!
-value = nnd.input_construction(nnd.memorize('TRAIN_G_DICT_1'), nnd.memorize('TRAIN_G_DICT_2'));
-
-%%% ¡prop!
 VAL_INPUTS (result, cell) is the inputs from validation set for testing a neural network.
 %%%% ¡calculate!
-value = nnd.input_construction(nnd.memorize('VAL_G_DICT_1'), nnd.memorize('VAL_G_DICT_2'));
+value = nnd.input_construction(nnd.get('VAL_G_DICT_1'), nnd.get('VAL_G_DICT_2'));
 
 %%% ¡prop!
 TARGETS (result, cell) is the label for the dataset.
@@ -263,7 +264,7 @@ TARGETS (result, cell) is the label for the dataset.
 y1 = repmat(string(nnd.get('TRAIN_GR1').get('ID')), nnd.get('TRAIN_GR1').get('SUB_DICT').length(), 1);
 y2 = repmat(string(nnd.get('TRAIN_GR2').get('ID')), nnd.get('TRAIN_GR2').get('SUB_DICT').length(), 1);
 
-value = {[y1; y2]'};
+value = {onehotencode(categorical([y1; y2]), 2)};
 
 %%% ¡prop!
 VAL_TARGETS (result, cell) is the label for the validation dataset.
@@ -271,7 +272,28 @@ VAL_TARGETS (result, cell) is the label for the validation dataset.
 y1 = repmat(string(nnd.get('VAL_GR1').get('ID')), nnd.get('VAL_GR1').get('SUB_DICT').length(), 1);
 y2 = repmat(string(nnd.get('VAL_GR2').get('ID')), nnd.get('VAL_GR2').get('SUB_DICT').length(), 1);
 
-value = {[y1; y2]'};
+value = {onehotencode(categorical([y1; y2]), 2)};
+
+%%% ¡prop!
+TARGET_NAME_GR1 (result, string) is the name of the traget for group 1.
+%%%% ¡default!
+'Group1'
+%%%% ¡calculate!
+value = nnd.get('VAL_GR1').get('ID');
+
+%%% ¡prop!
+TARGET_NAME_GR2 (result, string) is the name of the traget for group 2.
+%%%% ¡default!
+'Group2'
+%%%% ¡calculate!
+value = nnd.get('VAL_GR2').get('ID');
+
+%% ¡props_update!
+%%% ¡prop!
+INPUTS (result, cell) is the inputs for training or testing a neural network.
+%%%% ¡calculate!
+value = nnd.input_construction(nnd.get('TRAIN_G_DICT_1'), nnd.get('TRAIN_G_DICT_2'));
+
 
 %% ¡methods!
 function inputs = input_construction(nnd, g_dict_1, g_dict_2)
