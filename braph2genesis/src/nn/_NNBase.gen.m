@@ -16,8 +16,8 @@ LABEL (metadata, string) is an extended label of the neural network.
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the neural network.
 
-%%%% ¡prop!
-NNDATA (data, item) is the data for training or testing the neural network.
+%%% ¡prop!
+NNDATA (data, item) is a dataset for neural networks.
 %%%% ¡settings!
 'NNData'
 
@@ -110,9 +110,10 @@ function net = to_net(nn, saved_nn, varargin)
         type = varargin{2};
         class_name = varargin{3};
         net = importONNXNetwork(filename, InputDataFormats = format, OutputLayerType = type, Classes = class_name);
-    elseif length(varargin) == 1
+    elseif length(varargin) == 2
         format = varargin{1};
-        net = importONNXNetwork(filename, InputDataFormats = format);
+        type = varargin{2};
+        net = importONNXNetwork(filename, InputDataFormats = format, OutputLayerType = type);
     else
         lgraph = importONNXLayers(filename, InputDataFormats = "BCSS");
         net = assembleNetwork(lgraph)
@@ -122,3 +123,20 @@ function net = to_net(nn, saved_nn, varargin)
     warning(w_matlab.state, 'MATLAB:mir_warning_unrecognized_pragma');
     warning(w_nnet.state,'nnet_cnn:internal:cnn:analyzer:NetworkAnalyzer:NetworkHasWarnings');
 end
+
+%% ¡tests!
+
+%%% ¡test!
+%%%% ¡name!
+Net prediction
+%%%% ¡code!
+net = squeezenet;
+img = rand(net.Layers(1).InputSize);
+pred_from_original_net = predict(net, img);
+
+net_braph = NNBase().to_net(NNBase().from_net(squeezenet));
+pred_from_braph = predict(net_braph, img);
+
+assert(isequal(pred_from_original_net, pred_from_braph), ...
+    [BRAPH2.STR ':NNBase:' BRAPH2.BUG_ERR], ...
+    'Prediction is not being calculated correctly for neural networks.')
