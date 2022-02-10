@@ -376,6 +376,9 @@ function f_settings = settings(pr, varargin)
             if src.Value == true
                 cil = obtain_cil_ciu_value(pr.get('CIL'));
                 x_ = pr.get('X');
+                layer_number = size(pr.cp.get('C').get('A1').get('G').get('B'), 2);
+                choosen_layer = pr.get('LAYER');
+                cil = [cil(choosen_layer:layer_number:end)];
                 hold(pr.h_axes, 'on')
                 h_p_min = plot(pr.h_axes, ...
                     x_, ...
@@ -397,6 +400,9 @@ function f_settings = settings(pr, varargin)
                 hold(pr.h_axes, 'on')
                 x_ = pr.get('X');
                 ciu = obtain_cil_ciu_value(pr.get('CIU'));
+                layer_number = size(pr.cp.get('C').get('A1').get('G').get('B'), 2);
+                choosen_layer = pr.get('LAYER');
+                ciu = [ciu(choosen_layer:layer_number:end)];
                 h_p_max = plot(pr.h_axes, ...
                     x_, ...
                     ciu, ...
