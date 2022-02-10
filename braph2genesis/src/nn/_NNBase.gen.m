@@ -128,7 +128,7 @@ end
 
 %%% ¡test!
 %%%% ¡name!
-Net prediction
+Net import and export
 %%%% ¡code!
 net = squeezenet;
 img = rand(net.Layers(1).InputSize);
