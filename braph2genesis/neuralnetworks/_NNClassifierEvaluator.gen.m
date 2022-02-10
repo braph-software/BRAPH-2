@@ -195,8 +195,6 @@ else
     value = [];
 end
 
-
-
 %% ¡props_update!
 %%% ¡prop!
 NNDATA (data, item) is a dataset for testing the neural networks.
