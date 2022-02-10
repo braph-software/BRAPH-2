@@ -107,6 +107,8 @@ g = MultiplexBUT( ...
     );
 
 value = g;
+%%%% ¡gui!
+pr = PPAnalyzeGroupMP_G('EL', a, 'PROP', AnalyzeGroup_ST_MP_BUT.G, 'WAITBAR', true, varargin{:});
 
 %% ¡methods!
 function pr = getPPCompareGroup_CPDict(a, varargin) 
