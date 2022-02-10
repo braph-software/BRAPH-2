@@ -56,12 +56,12 @@ nne_train = NNClassifierEvaluator( ...
     );
 
 prediction_train = nne_train.memorize('PREDICTION');
-auc_train = nne_train.get('AUC')
+auc_train = nne_train.get('AUC');
 cm_train = nne_train.get('CONFUSION_MATRIX');
 map = nne_train.get('FEATURE_MAP');
 
 prediction_val = nne_train.memorize('VAL_PREDICTION');
-auc_val = nne_train.get('VAL_AUC')
+auc_val = nne_train.get('VAL_AUC');
 cm_val = nne_train.get('VAL_CONFUSION_MATRIX');
 
 %% Load Groups of SubjectCON as a Testing Set 
