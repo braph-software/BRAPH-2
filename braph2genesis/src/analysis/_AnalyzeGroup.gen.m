@@ -19,6 +19,8 @@ LABEL (metadata, string) is an extended label of the graph analysis.
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the graph analysis.
+%%%% ¡gui!
+pr = PlotPropString('EL', a, 'PROP', AnalyzeGroup.NOTES, 'LINES', 'multi', 'EDITHEIGHT', 4.5, varargin{:});
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class.
@@ -31,3 +33,17 @@ G (result, item) is the graph obtained from this analysis.
 'Graph'
 %%%% ¡calculate!
 value = Graph();
+%%%% ¡gui!
+pr = PPAnalyzeGroup_G('EL', a, 'PROP', AnalyzeGroup.G, 'WAITBAR', true, varargin{:});
+
+%% ¡methods!
+function pr = getPPCompareGroup_CPDict(a, varargin) 
+    %GEPPPCOMPAREGROUP_CPDICT returns the comparison plot panel compatible with the analysis.
+    %
+    % PR = GEPPPCOMPAREGROUP_CPDICT(A) returns the comparison plot panel
+    %  that is compatible with the analyze group.
+    %
+    % See also CompareGroup.
+    
+    pr = PropPlotIDict(varargin{:});
+end

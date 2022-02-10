@@ -17,7 +17,9 @@ DRAW - To create the element figure, call gui.draw():
   
 CALLBACK - This is a callback function:
 
-    pl.<strong>cb_bring_to_front</strong>() - brings to the front the figure and its dependent figures
+    gui.<strong>cb_bring_to_front</strong>() - brings to the front the figure and its dependent figures
+    gui.<strong>cb_hide</strong>() - hides the figure and its dependent figures
+    gui.<strong>cb_close</strong>() - closes the figure and its dependent figures
 
 %%% ¡seealso!
 Element, PlotElement
@@ -179,22 +181,23 @@ function f_out = draw(gui, varargin)
     
     % callback on close request
     function cb_close(~, ~)
-        if gui.get('CLOSEREQ')
-            selection = questdlg(['Do you want to close ' name '?'], ...
-                ['Close ' name], ...
-                'Yes', 'No', 'Yes');
-        else
-            selection = 'Yes';
-        end
-        switch selection
-            case 'Yes'
-                delete(gui.f)
-                if check_graphics(gui.f_layout, 'figure')
-                    close(gui.f_layout)
-                end
-            case 'No'
-                return
-        end
+% % %         if gui.get('CLOSEREQ')
+% % %             selection = questdlg(['Do you want to close ' name '?'], ...
+% % %                 ['Close ' name], ...
+% % %                 'Yes', 'No', 'Yes');
+% % %         else
+% % %             selection = 'Yes';
+% % %         end
+% % %         switch selection
+% % %             case 'Yes'
+% % %                 delete(gui.f)
+% % %                 if check_graphics(gui.f_layout, 'figure')
+% % %                     close(gui.f_layout)
+% % %                 end
+% % %             case 'No'
+% % %                 return
+% % %         end
+        gui.cb_close()
     end
 
     % callback on resize
@@ -572,17 +575,21 @@ end
 function cb_bring_to_front(gui)
     %CB_BRING_TO_FRONT brings to front the figure and its dependent figures.
     %
-    % CB_BRING_TO_FRONT(GUI) brings the figure and its dependent figures to
-    %  front by calling the methods cb_bring_to_front() and all the
-    %  PlotProp panels of the PlotElement.
+    % CB_BRING_TO_FRONT(GUI) brings to front the figure and its dependent figures 
+    %  by calling the methods cb_bring_to_front() for all the PlotProp
+    %  panels of the PlotElement. 
     %  
-    % Note that it will draw anew the figure it it hae been closed.
+    % Note that it will draw anew the figure if it has been closed.
     %
-    % See also Plot, PlotProp, PlotElement.
+    % See also cb_hide, cb_close.
 
     % brings to front the main GUI
     if check_graphics(gui.f, 'figure')
-        figure(gui.f)
+        figure(gui.f) 
+        set(gui.f, ...
+            'Visible', 'on', ...
+            'WindowState', 'normal' ...
+            )
     end
     
     % brings to front the other panels
@@ -590,7 +597,77 @@ function cb_bring_to_front(gui)
     pr_dict = pe.get('PR_DICT');
     for prop = 1:1:pr_dict.length()
         pr = pr_dict.getItem(prop);
-        
         pr.cb_bring_to_front()
+    end
+end
+function cb_hide(gui)
+    %CB_HIDE hides the figure and its dependent figures.
+    %
+    % CB_HIDE(GUI) hides the figure and its dependent figures 
+    %  by calling the methods cb_hide() for all the PlotProp
+    %  panels of the PlotElement. 
+    %
+    % See also cb_bring_to_front, cb_close.
+
+    % hides the main GUI
+    if check_graphics(gui.f, 'figure')
+        figure(gui.f)
+    end
+    
+    % hides the other panels
+    pe = gui.get('PE');
+    pr_dict = pe.get('PR_DICT');
+    for prop = 1:1:pr_dict.length()
+        pr = pr_dict.getItem(prop);
+        pr.cb_hide()
+    end
+end
+function cb_close(gui)
+    %CB_CLOSE closes the figure and its dependent figures.
+    %
+    % CB_CLOSE(GUI) closes the figure and its dependent figures 
+    %  by calling the methods cb_close() for all the PlotProp
+    %  panels of the PlotElement. 
+    %  
+    % See also cb_bring_to_front, cb_hide.
+
+    % determines GUI name
+    name = gui.get('NAME');
+    if isempty(name)
+        pe = gui.get('pe');
+        el = pe.get('el');
+        if el.existsTag('ID')
+            name = el.get('ID');
+        else
+            name = el.tostring();
+        end
+    end
+    
+    % closes the main GUI
+    if check_graphics(gui.f, 'figure')
+        if gui.get('CLOSEREQ')
+            selection = questdlg(['Do you want to close ' name '?'], ...
+                ['Close ' name], ...
+                'Yes', 'No', 'Yes');
+        else
+            selection = 'Yes';
+        end
+        switch selection
+            case 'Yes'
+                delete(gui.f)
+                if check_graphics(gui.f_layout, 'figure')
+                    close(gui.f_layout)
+                end
+            case 'No'
+                return
+        end
+    end
+    
+    % closes the other panels
+    pe = gui.get('PE');
+    pr_dict = pe.get('PR_DICT');
+    for prop = 1:1:pr_dict.length()
+        pr = pr_dict.getItem(prop);
+        pr.cb_close()
     end
 end

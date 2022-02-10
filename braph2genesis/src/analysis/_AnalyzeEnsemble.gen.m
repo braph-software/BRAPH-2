@@ -19,6 +19,8 @@ LABEL (metadata, string) is an extended label of the graph analysis.
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the graph analysis.
+%%%% ¡gui!
+pr = PlotPropString('EL', a, 'PROP', AnalyzeEnsemble.NOTES, 'LINES', 'multi', 'EDITHEIGHT', 4.5, varargin{:});
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class.
@@ -38,8 +40,8 @@ ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
 'MeasureEnsemble'
 %%%% ¡calculate!
 value = IndexedDictionary('IT_CLASS', 'MeasureEnsemble', 'IT_KEY', 4);
-%%%% ¡gui__!
-% % % pl = PPAnalyzeEnsembleMeasure('EL', a, 'PROP', AnalyzeEnsemble.ME_DICT, varargin{:});
+%%%% ¡gui!
+pr = PPAnalyzeEnsemble_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %% ¡methods!
 function me = getMeasureEnsemble(a, measure_class, varargin)
@@ -62,4 +64,14 @@ function me = getMeasureEnsemble(a, measure_class, varargin)
             );
         me_dict.add(me);
     end
+end
+function pr = getPPCompareEnsemble_CPDict(a, varargin)
+    %GETPPCOMPAREENSEMBLE_CPDICT returns the comparison ensemble plot panel compatible with the analysis.
+    %
+    % PR = GEPPPCOMPAREGROUP_CPDICT(A) returns the comparison ensemble plot panel
+    %  that is compatible with the analyze ensemble.
+    %
+    % See also CompareEnsemble.
+
+    pr = PropPlotIDict(varargin{:});
 end

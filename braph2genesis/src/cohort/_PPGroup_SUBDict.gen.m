@@ -1,12 +1,14 @@
 %% ¡header!
-PPGroup_SUBDict < PlotProp (pl, plot property of group subjects idict) is a plot of group subjects idict.
+PPGroup_SUBDict < PlotProp (pr, plot property of group subjects idict) is a plot of group subjects idict.
 
 %%% ¡description!
 PPGroup_SUBDict plots a table to visualize IndexedDictionary of the group of subjects.
 
 CALLBACK - This is a callback function:
 
-    pl.<strong>cb_bring_to_front</strong>() - brings to the front the group figure and its subject figures
+    pr.<strong>cb_bring_to_front</strong>() - brings to the front the group figure and its subject figures
+    pr.<strong>cb_hide</strong>() - hides the group figure and its subject figures
+    pr.<strong>cb_close</strong>() - closes the group figure and its subject figures
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp, Group, Subject, IndexedDictionary
@@ -267,8 +269,10 @@ end
 function cb_bring_to_front(pr)
     %CB_BRING_TO_FRONT brings to front the group figure and its subject figures.
     %
-    % CB_BRING_TO_FRONT(GUI) brings to front the group figure and its
-    %  subject figures. 
+    % CB_BRING_TO_FRONT(PR) brings to front the group figure and its
+    %  subject figures.
+    %
+    % See also cb_hide, cb_close.
 
     % brings to front settings panel
     pr.cb_bring_to_front@PlotProp();
@@ -280,6 +284,46 @@ function cb_bring_to_front(pr)
             gui = get(f_sub, 'UserData');
             pe = gui.get('PE');
             pe.cb_bring_to_front()
+        end
+    end
+end
+function cb_hide(pr)
+    %CB_HIDE hides the group figure and its subject figures.
+    %
+    % CB_HIDE(PR) hides the group figure and its subject figures.
+    %
+    % See also cb_bring_to_front, cb_close.
+
+    % hides settings panel
+    pr.cb_hide@PlotProp();
+
+    % hides subject figures
+    for i = 1:1:length(pr.f_subs)
+        f_sub = pr.f_subs{i};
+        if check_graphics(f_sub, 'figure')
+            gui = get(f_sub, 'UserData');
+            pe = gui.get('PE');
+            pe.cb_hide()
+        end
+    end
+end
+function cb_close(pr)
+    %CB_CLOSE closes the group figure and its subject figures.
+    %
+    % CB_CLOSE(PR) closes the group figure and its subject figures.
+    %
+    % See also cb_bring_to_front, cb_hide.
+
+    % closes settings panel
+    pr.cb_close@PlotProp();
+
+    % closes subject figures
+    for i = 1:1:length(pr.f_subs)
+        f_sub = pr.f_subs{i};
+        if check_graphics(f_sub, 'figure')
+            gui = get(f_sub, 'UserData');
+            pe = gui.get('PE');
+            pe.cb_close()
         end
     end
 end

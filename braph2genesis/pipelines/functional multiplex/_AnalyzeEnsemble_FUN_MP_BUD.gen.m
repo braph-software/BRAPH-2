@@ -98,7 +98,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
 end
 
 value = g_dict;
-%%%% ¡gui!
+% %%%% ¡gui!
 % % % pl = PPAnalyzeEnsembleGraph('EL', a, 'PROP', AnalyzeEnsemble_FUN_MP_BUD.G_DICT, varargin{:});
 
 %% ¡tests!

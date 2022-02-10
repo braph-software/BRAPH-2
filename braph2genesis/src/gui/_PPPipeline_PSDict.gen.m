@@ -1,9 +1,15 @@
 %% ¡header!
-PPPipeline_PSDict < PlotProp (pl, pipeline plot) is a plot of a pipeline.
+PPPipeline_PSDict < PlotProp (pr, pipeline plot) is a plot of a pipeline.
 
 %%% ¡description!
 PPPipeline_PCDict plots a pipeline allowing the user to execute it in the correct order.
-   
+
+CALLBACKS - These are callback functions:
+
+    pr.<strong>cb_bring_to_front</strong>() - brings to the front the pipeline figure
+    pr.<strong>cb_hide</strong>() - hides the pipeline figure and all dependent figures
+    pr.<strong>cb_close</strong>() - closes the pipeline figure and all dependent figures
+
 %%% ¡seealso!
 Pipeline, PlotProp
 
@@ -120,7 +126,7 @@ function update(pr, varargin)
     pip = pr.get('EL');
 
 % % %
-to_be_executed = {};
+    to_be_executed = {};
     
     s_to_be_calculated = 1;
     s_dict = pip.get('PS_DICT');
@@ -142,9 +148,9 @@ to_be_executed = {};
                             )
                             
 % % %    
-pr.x_update(to_be_executed{:}, ...
-    {moniker, code, [moniker ' = ' code.get('CODE') ';']}, ... % varargin{1}{2} = code
-    {moniker, code, ['varargin{1}{2}.set(''EL'', ' moniker ');']}) % varargin{1}{2} = code
+                        pr.x_update(to_be_executed{:}, ...
+                            {moniker, code, [moniker ' = ' code.get('CODE') ';']}, ... % varargin{1}{2} = code
+                            {moniker, code, ['varargin{1}{2}.set(''EL'', ' moniker ');']}) % varargin{1}{2} = code
 % % %                         eval(codeline)
 % % %                         code.set('EL', eval([moniker ';']))
                     catch e
@@ -178,7 +184,11 @@ pr.x_update(to_be_executed{:}, ...
                             ).draw();
                     else
                         gui = get(pr.pc_GUIs{s}{c}, 'UserData');
-                        gui.cb_bring_to_front()
+                        if get(pr.pc_GUIs{s}{c}, 'Visible')
+                            gui.cb_hide()
+                        else
+                            gui.cb_bring_to_front()
+                        end
                     end
                 end
             end
@@ -189,7 +199,7 @@ pr.x_update(to_be_executed{:}, ...
             % 3. calculates whether to move to the next section
             if ~isa(code.getr('EL'), 'NoValue')
 % % %  
-to_be_executed = {to_be_executed{:}, {moniker, code, [moniker ' = varargin{1}{2}.get(''EL'');']}}; % varargin{1}{2} = code
+                to_be_executed = {to_be_executed{:}, {moniker, code, [moniker ' = varargin{1}{2}.get(''EL'');']}}; % varargin{1}{2} = code
 % % % pr.x_update(to_be_executed{:})
 % % %                 eval([moniker ' = code.get(''EL'');'])
 
@@ -237,8 +247,6 @@ function x_update(varargin)
         eval(varargin{1}{3})
         varargin = varargin(2:end);
     end
-    
-who()
 end
 function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
@@ -295,4 +303,49 @@ function redraw(pr, varargin)
                 )
         end
     end
+end
+function cb_bring_to_front(pr)
+    %CB_BRING_TO_FRONT brings to the front the figure with the pipeline panel.
+    %
+    % CB_BRING_TO_FRONT(PR) brings to the front the figure with the pipeline panel 
+    %  but not its dependent figures. 
+    %
+    % See also cb_hide, cb_close, cb_close_fs.
+
+    pr.cb_bring_to_front@Plot()
+    
+    % code to bring to front the dependent figures, currently not in use
+    % for i = 1:1:length(pr.pc_GUIs)
+    %     for j = 1:1:length(pr.pc_GUIs{i})
+    %         gui = get(pr.pc_GUIs{i}{j}, 'UserData');
+    %         gui.cb_bring_to_front()
+    %     end
+    % end
+end
+function cb_hide(pr)
+    %CB_HIDE hides the figure containing the pipeline panel and all dependent figures.
+    %
+    % CB_HIDE(PR) hides the figure containing the pipeline panel and all
+    %  dependent figures. 
+    %
+    % See also cb_bring_to_front, cb_close.
+    
+    pr.cb_hide@Plot()
+    
+    for i = 1:1:length(pr.pc_GUIs)
+        for j = 1:1:length(pr.pc_GUIs{i})
+            gui = get(pr.pc_GUIs{i}{j}, 'UserData');
+            gui.cb_hide()
+        end
+    end    
+end
+function cb_close(pr)
+    %CB_CLOSE closes the figure containing the pipeline panel and all dependent figures.
+    % 
+    % CB_CLOSE(PR) closes the figure containing the pipeline panel and
+    %  deletes all dependent figures. 
+    %
+    % See also cb_bring_to_front, cb_hide.
+
+    pr.cb_close@Plot() % this triggers a call for the delete function defined in draw() that deletes the dependent figures
 end
