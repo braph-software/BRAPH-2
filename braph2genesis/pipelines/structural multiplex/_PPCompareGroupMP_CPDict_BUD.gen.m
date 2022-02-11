@@ -380,48 +380,92 @@ function cb_graph_ui_figure(pr)
     h = f_ba_h / 1.5;
     y = f_ba_y + f_ba_h - h;
     w = screen_w - x;
-
-    pr.f_pc = figure( ...
-        'NumberTitle', 'off', ...
-        'Units', 'normalized', ...
-        'Position', [x/screen_w y/screen_h w/screen_w h/screen_h], ...
-        'CloseRequestFcn', {@cb_f_pg_close} ...
-        );
+if isempty(pr.f_pc) || ~check_graphics(pr.f_pc, 'figure')
+        pr.f_pc = figure( ...
+            'NumberTitle', 'off', ...
+            'Units', 'normalized', ...
+            'Position', [x/screen_w y/screen_h w/screen_w h/screen_h], ...
+            'CloseRequestFcn', {@cb_f_pg_close} ...
+            );
+        set_braph2_icon(pr.f_pc)
+        menu_about = BRAPH2.add_menu_about(pr.f_pc);
+        
+        el = pr.get('EL');
+        prop = pr.get('PROP');
+        
+        x_range = el.get('A1').get('DENSITIES');
+        x_title = 'DENSITIES';
+        plot_title = ['Comparison between ' el.get('A1').get('GR').get('ID') ' and ' el.get('A2').get('GR').get('ID')];
+        
+         pg = PlotComparisonGroupLine( ...
+            'Comparison', el.get('CP_DICT'), ...
+            'X', x_range, ...
+            'PLOTTITLE', plot_title, ...
+            'XLABEL', x_title ...
+            );
+        
+        pg.draw('Parent', pr.f_pc)
+        set(pr.f_pc, 'UserData', pg);
+        
+        f_settings = pg.settings();
+        set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
+        f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
+        f_settings.OuterPosition(2) = f_ba_y/screen_h;
+    else
+        gui = get(pr.f_pc, 'UserData');
+        gui.cb_bring_to_front()
+    end
 
         function cb_f_pg_close(~, ~)
             delete(pr.f_pc);
             pr.update()
         end
 
-    set_braph2_icon(pr.f_pc)
-    menu_about = BRAPH2.add_menu_about(pr.f_pc);
+    pr.update()
+end
+function cb_graph_adj_figure(pr)
+    f_pg = ancestor(pr.p, 'Figure'); % BrainAtlas GUI
+    f_ba_x = Plot.x0(f_pg, 'pixels');
+    f_ba_y = Plot.y0(f_pg, 'pixels');
+    f_ba_w = Plot.w(f_pg, 'pixels');
+    f_ba_h = Plot.h(f_pg, 'pixels');
 
-    el = pr.get('EL');
-    prop = pr.get('PROP');
-   
-    x_range = el.get('A1').get('DENSITIES');
-    x_title = 'DENSITIES';
-    
-    plot_title = ['Comparison between ' el.get('A1').get('GR').get('ID') ' and ' el.get('A2').get('GR').get('ID')];
-    
-    if isequal(get(pr.line_plot_tgl_btn, 'Value'), 1) % plot lines tgl btn is pressed
-        pg = PlotComparisonGroupMPLine( ...
-            'Comparison', el.get('CP_DICT'), ...
-            'X', x_range, ...
-            'PLOTTITLE', plot_title, ...
-            'XLABEL', x_title ...
+    screen_x = Plot.x0(0, 'pixels');
+    screen_y = Plot.y0(0, 'pixels');
+    screen_w = Plot.w(0, 'pixels');
+    screen_h = Plot.h(0, 'pixels');
+
+    x = f_ba_x + f_ba_w;
+    h = f_ba_h / 1.5;
+    y = f_ba_y + f_ba_h - h;
+    w = screen_w - x;
+
+    if isempty(pr.f_adj) || ~check_graphics(pr.f_adj, 'figure')
+        pr.f_adj = figure( ...
+            'NumberTitle', 'off', ...
+            'Units', 'normalized', ...
+            'Position', [x/screen_w y/screen_h w/screen_w h/screen_h], ...
+            'CloseRequestFcn', {@cb_f_adj_close} ...
             );
-    else
+        set_braph2_icon(pr.f_adj)
+        menu_about = BRAPH2.add_menu_about(pr.f_adj);
         pg = PlotAdjacencyMatrix('Graph', pr.graph);
+        pg.draw('Parent', pr.f_adj)
+        set(pr.f_adj, 'UserData', pg);
+
+        f_settings = pg.settings();
+        set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
+        f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
+        f_settings.OuterPosition(2) = f_ba_y/screen_h;
+    else
+        gui = get(pr.f_adj, 'UserData');
+        gui.cb_bring_to_front()
     end
 
-    pg.draw('Parent', pr.f_pc)
-    set(pr.f_pc, 'UserData', pg);
-
-    f_settings = pg.settings();
-    set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
-    f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
-    f_settings.OuterPosition(2) = f_ba_y/screen_h;
+        function cb_f_adj_close(~, ~)
+            delete(pr.f_adj);
+            pr.update()
+        end
 
     pr.update()
 end
