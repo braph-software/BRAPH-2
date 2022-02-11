@@ -152,6 +152,9 @@ end
 FEATURE_MAP (result, matrix) is a feature map obtained with feature selection analysis.
 %%%% ¡calculate!
 selected_idx = nne.get('NNDATA').get('FEATURE_MASK');
+if length(selected_idx) == 1 && abs(selected_idx) <= 1
+    selected_idx = nne.get('NNDATA').get('FEATURE_MASK_ANALYSIS');
+end
 if ~isempty(selected_idx)
     if string(nne.get('NNDATA').get('INPUT_TYPE')) == 'graph_measures'
         feature = nne.get('NNDATA').get('MEASURES');
@@ -165,7 +168,7 @@ if ~isempty(selected_idx)
         fontsize = 5;
     end
 
-    fm(selected_idx{1}) = 1;
+    fm(selected_idx) = 1;
 
     if nne.get('PLOT_MAP')
         figure

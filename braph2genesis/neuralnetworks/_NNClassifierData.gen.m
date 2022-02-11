@@ -168,14 +168,15 @@ MEASURES (data, classlist) is the graph measures as input to NN.
 {'DegreeAv', 'Degree'}
 
 %%% ¡prop!
-FEATURE_MASK (data, cell) is a mask for selected features.
+FEATURE_MASK (data, cvector) is a mask for selected features.
+%%%% ¡default!
+0.05
 
 %%% ¡prop!
-FEATURE_MASK_ANALYSIS (result, cell) is an analysis for generating mask for selected features.
+FEATURE_MASK_ANALYSIS (result, cvector) is an analysis for generating mask for selected features.
 %%%% ¡calculate!
+density = nnd.get('FEATURE_MASK');
 if string(nnd.get('INPUT_TYPE')) == 'adjacency_matrices'
-    density = value;
-
     adjs_gr_1 = nnd.get('TRAIN_G_DICT_1').getItems();
     data_gr_1 = {};
     for i = 1:length(adjs_gr_1)
@@ -190,8 +191,6 @@ if string(nnd.get('INPUT_TYPE')) == 'adjacency_matrices'
 
     data = [data_gr_1 data_gr_2];
 else
-    density = value;
-
     adjs_gr_1 = nnd.get('TRAIN_G_DICT_1').getItems();
     data_gr_1 = {};
     measure_class = nnd.get('MEASURES');
@@ -229,9 +228,9 @@ else
         end
     end
     [~,idx_all] = sort(mask(:), 'descend');
-    num_top_idx = floor(density * size(mask, 1) * size(mask, 2));
+    num_top_idx = ceil(density * size(mask, 1) * size(mask, 2));
 
-    value = {idx_all(1:num_top_idx)};
+    value = idx_all(1:num_top_idx);
 end
 
 %%% ¡prop!
@@ -350,11 +349,11 @@ function inputs = input_construction(nnd, g_dict_1, g_dict_2)
     
     % get the feature mask
     mask = nnd.get('FEATURE_MASK');
-    if isempty(mask)
+    if length(mask) == 1 && abs(mask) <= 1 
         mask = nnd.get('FEATURE_MASK_ANALYSIS');
     end
     
     % construct the inputs
-    inputs = cellfun(@(v)v(mask{1}), data, 'UniformOutput', false);
+    inputs = cellfun(@(v)v(mask), data, 'UniformOutput', false);
     inputs = {cat(2, inputs{:})};
 end

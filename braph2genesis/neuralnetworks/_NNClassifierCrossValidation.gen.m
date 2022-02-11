@@ -1,5 +1,5 @@
 %% ¡header!
-NNClassifierCV < Element (nncv, cross-validation of a neural network classifier) cross-validate the performance of a neural network classifier .
+NNClassifierCrossValidation < Element (nncv, cross-validation of a neural network classifier) cross-validate the performance of a neural network classifier .
 
 %% ¡description!
 This cross validation perform a k-fold cross validation of a neural network

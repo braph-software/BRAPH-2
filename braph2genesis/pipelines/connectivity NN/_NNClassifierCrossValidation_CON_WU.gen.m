@@ -1,5 +1,5 @@
 %% ¡header!
-NNClassifierCV_CON_WU < NNClassifierCV (nncv, cross-validation of a neural network classifier) cross-validates the performance of a neural network classifier.
+NNClassifierCrossValidation_CON_WU < NNClassifierCrossValidation (nncv, cross-validation of a neural network classifier) cross-validates the performance of a neural network classifier.
 
 %% ¡description!
 This cross validation performan k-fold cross validation of a neural network
@@ -30,6 +30,11 @@ for i = 1:1:nncv.get('REPETITION')
             'SPLIT_GR2', idx_per_fold_gr2{j}, ...
             'FEATURE_MASK', 0.05 ...
             );
+        nnd.memorize('FEATURE_MASK_ANALYSIS');
+        nnd.memorize('INPUTS');
+        nnd.memorize('VAL_INPUTS');
+        nnd.memorize('TARGETS');
+        nnd.memorize('VAL_TARGETS');
 
         classifier = NNClassifierDNN( ...
             'ID', ['kfold ', num2str(j), 'repetition ', num2str(i)], ...
@@ -60,4 +65,4 @@ value = nne_dict;
 %%%% ¡name!
 Example
 %%%% ¡code!
-example_CV_WU_Classification_AdjacencyMatrix
+example_NNCV_WU_Classification_AdjacencyMatrix

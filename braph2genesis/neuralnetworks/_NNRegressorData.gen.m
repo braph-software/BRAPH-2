@@ -95,10 +95,12 @@ MEASURES (data, classlist) is the graph measures as input to NN.
 {'DegreeAv' 'DegreeAv' 'DegreeAv' 'DegreeAv' 'DegreeAv'}
 
 %%% ¡prop!
-FEATURE_MASK (data, cell) is a mask for selected features.
+FEATURE_MASK (data, cvector) is a mask for selected features.
+%%%% ¡default!
+0.05
 
 %%% ¡prop!
-FEATURE_MASK_ANALYSIS (result, cell) is an analysis for generating mask for selected features.
+FEATURE_MASK_ANALYSIS (result, cvector) is an analysis for generating mask for selected features.
 %%%% ¡calculate!
 if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
     density = value;
@@ -135,7 +137,7 @@ end
 [~,idx_all] = sort(mask(:), 'descend');
 num_top_idx = floor(density * size(mask, 1) * size(mask, 2));
 
-value = {idx_all(1:num_top_idx)};
+value = idx_all(1:num_top_idx);
 
 %%% ¡prop!
 TRAIN_G_DICT (result, idict) is the graph obtained from subjects in training set.
@@ -214,6 +216,6 @@ function inputs = input_construction(nnd, g_dict)
     end
     
     % construct the inputs
-    inputs = cellfun(@(v)v(mask{1}), data_gr, 'UniformOutput', false);
+    inputs = cellfun(@(v)v(mask), data_gr, 'UniformOutput', false);
     inputs = {cat(2, inputs{:})};
 end
