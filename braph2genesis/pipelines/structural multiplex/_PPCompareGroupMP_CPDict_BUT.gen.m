@@ -361,10 +361,6 @@ function cb_graph_ui_figure(pr)
     %
     % see also cb_graph_value, cb_measure_value.
 
-    set(pr.adj_plot_tgl_btn, 'Enable', 'off');
-    set(pr.line_plot_tgl_btn, 'Enable', 'off');
-    drawnow()
-
     f_pc = ancestor(pr.p, 'Figure'); % BrainAtlas GUI
     f_ba_x = Plot.x0(f_pc, 'pixels');
     f_ba_y = Plot.y0(f_pc, 'pixels');

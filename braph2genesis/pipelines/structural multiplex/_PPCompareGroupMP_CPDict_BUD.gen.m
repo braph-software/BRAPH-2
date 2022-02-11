@@ -27,6 +27,7 @@ already_calculated % list of measures already calculated
 f_m % array of measure class figures
 f_pc % figure for plot graph
 graph % graph of the comparison
+f_adj
 
 %% ¡props_update!
 
@@ -61,7 +62,7 @@ function h_panel = draw(pr, varargin)
 
     % graph button
     pr.adj_plot_tgl_btn = uicontrol(...
-        'Style', 'togglebutton', ...
+        'Style', 'pushbutton', ...
         'Parent', pr.p, ...
         'Units', 'normalized', ...
         'CData', imresize(imread('icon_plot_adj.png'), [40 40]), ...
@@ -71,7 +72,7 @@ function h_panel = draw(pr, varargin)
         );
     
     pr.line_plot_tgl_btn = uicontrol(...
-        'Style', 'togglebutton', ...
+        'Style', 'pushbutton', ...
         'Parent', pr.p, ...
         'Units', 'normalized', ...
         'CData', imresize(imread('icon_plot_lines.png'), [40 40]), ...
@@ -81,11 +82,9 @@ function h_panel = draw(pr, varargin)
         );
         
     function cb_plot_type_adj(~, ~)
-        set(pr.line_plot_tgl_btn, 'Value', 0);
-        pr.cb_graph_ui_figure();
+        pr.cb_graph_adj_figure();
     end
     function cb_plot_type_line(~, ~)
-        set(pr.adj_plot_tgl_btn, 'Value', 0);
         pr.cb_graph_ui_figure();
     end    
 
@@ -361,10 +360,6 @@ function cb_graph_ui_figure(pr)
     %
     % see also cb_graph_value, cb_measure_value.
 
-    set(pr.adj_plot_tgl_btn, 'Enable', 'off');
-    set(pr.line_plot_tgl_btn, 'Enable', 'off');
-    drawnow()
-
     f_pc = ancestor(pr.p, 'Figure'); % BrainAtlas GUI
     f_ba_x = Plot.x0(f_pc, 'pixels');
     f_ba_y = Plot.y0(f_pc, 'pixels');
@@ -380,7 +375,8 @@ function cb_graph_ui_figure(pr)
     h = f_ba_h / 1.5;
     y = f_ba_y + f_ba_h - h;
     w = screen_w - x;
-if isempty(pr.f_pc) || ~check_graphics(pr.f_pc, 'figure')
+    
+    if isempty(pr.f_pc) || ~check_graphics(pr.f_pc, 'figure')
         pr.f_pc = figure( ...
             'NumberTitle', 'off', ...
             'Units', 'normalized', ...
