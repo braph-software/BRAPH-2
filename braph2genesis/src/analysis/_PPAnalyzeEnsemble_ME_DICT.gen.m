@@ -263,8 +263,7 @@ function update(pr)
             if ~isempty(pr.graph) && ...
                     (pr.graph.existsTag('densities') || pr.graph.existsTag('thresholds')) && ...
                     ~isempty(pr.already_calculated) && ...
-                    any([pr.already_calculated{:}]) && ...
-                    ~check_graphics(pr.f_pg, 'figure')
+                    any([pr.already_calculated{:}])
                 
                 set(pr.line_plot_tglbtn, 'Enable', 'on');
             else
@@ -434,10 +433,6 @@ function cb_graph_ui_figure(pr)
     % sets the figure to F_PG property of PPGRAPH
     %
     % see also cb_graph_value, cb_measure_value.
-
-    set(pr.plot_type_adj, 'Enable', 'off');
-    set(pr.line_plot_tglbtn, 'Enable', 'off');
-    drawnow()
 
     f_pg = ancestor(pr.p, 'Figure'); % BrainAtlas GUI
     f_ba_x = Plot.x0(f_pg, 'pixels');

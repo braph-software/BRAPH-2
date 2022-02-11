@@ -26,10 +26,10 @@ line_plot_tglbtn % line plot toggle button
 mlist
 selected
 already_calculated
-plot_type % selected type of plot graph
 graph % internal graph type
 f_m % array of measure class figures
 f_pg % figure for plot graph
+f_adj % figure for plot adj
 f_g % figure for class graph
 
 %% ¡props_update!
@@ -85,7 +85,7 @@ function h_panel = draw(pr, varargin)
             );
         
         pr.plot_type_adj = uicontrol(...
-            'Style', 'togglebutton', ...
+            'Style', 'pushbutton', ...
             'Parent', pr.p, ...
             'Units', 'normalized', ...
             'CData', imresize(imread('icon_plot_adj.png'), [40 40]), ...
@@ -95,7 +95,7 @@ function h_panel = draw(pr, varargin)
             );
         
         pr.line_plot_tglbtn = uicontrol(...
-            'Style', 'togglebutton', ...
+            'Style', 'pushbutton', ...
             'Parent', pr.p, ...
             'Units', 'normalized', ...
             'CData', imresize(imread('icon_plot_lines.png'), [40 40]), ...
@@ -110,15 +110,12 @@ function h_panel = draw(pr, varargin)
         pr.cb_graph_value()
     end
     function cb_plot_type_adj(~, ~)
-        pr.plot_type = 'adjacency';
-        pr.cb_graph_ui_figure();
+        pr.cb_graph_adj_figure();
     end
     function cb_plot_type_line(~, ~)
-        pr.plot_type = 'lines';
         pr.cb_graph_ui_figure();
     end    
-    pr.plot_type = 'adjacency';
-
+    
     if isempty(pr.measure_tbl) || ~isgraphics(pr.measure_tbl, 'uitable')
         pr.mlist = [];
 
@@ -263,7 +260,7 @@ function update(pr)
     end
 
         function plot_type_rules()
-            if ~isempty(pr.graph) && ~isa(el, 'AnalyzeGroup_ST_MP_WU') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}]) && ~check_graphics(pr.f_pg, 'figure')
+            if ~isempty(pr.graph) && ~isa(el, 'AnalyzeGroup_ST_MP_WU') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}])
                 set(pr.line_plot_tglbtn, 'Enable', 'on');
             else
                 set(pr.line_plot_tglbtn, 'Enable', 'off');
@@ -437,10 +434,71 @@ function cb_graph_ui_figure(pr)
     %
     % see also cb_graph_value, cb_measure_value.
 
-    set(pr.plot_type_adj, 'Enable', 'off');
-    set(pr.line_plot_tglbtn, 'Enable', 'off');
-    drawnow()
+    f_pg = ancestor(pr.p, 'Figure'); % BrainAtlas GUI
+    f_ba_x = Plot.x0(f_pg, 'pixels');
+    f_ba_y = Plot.y0(f_pg, 'pixels');
+    f_ba_w = Plot.w(f_pg, 'pixels');
+    f_ba_h = Plot.h(f_pg, 'pixels');
 
+    screen_x = Plot.x0(0, 'pixels');
+    screen_y = Plot.y0(0, 'pixels');
+    screen_w = Plot.w(0, 'pixels');
+    screen_h = Plot.h(0, 'pixels');
+
+    x = f_ba_x + f_ba_w;
+    h = f_ba_h / 1.5;
+    y = f_ba_y + f_ba_h - h;
+    w = screen_w - x;
+    
+    if isempty(pr.f_pg) || ~check_graphics(pr.f_pg, 'figure')
+        pr.f_pg = figure( ...
+            'NumberTitle', 'off', ...
+            'Units', 'normalized', ...
+            'Position', [x/screen_w y/screen_h w/screen_w h/screen_h], ...
+            'CloseRequestFcn', {@cb_f_pg_close} ...
+            );
+        set_braph2_icon(pr.f_pg)
+        menu_about = BRAPH2.add_menu_about(pr.f_pg);
+
+        el = pr.get('EL');
+        prop = pr.get('PROP');        
+        group = el.get('GR').get('ID');
+
+        if isa(el, 'AnalyzeGroup_ST_MP_BUD')
+            x_range = el.get('DENSITIES');
+            x_title = 'DENSITIES';
+        elseif isa(el, 'AnalyzeGroup_ST_MP_BUT')
+            x_range = el.get('THRESHOLDS');
+            x_title = 'THRESHOLDS';
+        end
+        
+         pg = PlotAnalysisMPLine( ... 
+                'Graph', pr.graph, ...
+                'X', x_range, ...
+                'PLOTTITLE', ['Analysis of group ' group], ...
+                'XLABEL', x_title ...
+                );
+            
+            pg.draw('Parent', pr.f_pg)
+            set(pr.f_pg, 'UserData', pg);
+            
+            f_settings = pg.settings();
+            set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
+            f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
+            f_settings.OuterPosition(2) = f_ba_y/screen_h;     
+    else
+        gui = get(pr.f_pg, 'UserData');
+        gui.cb_bring_to_front()        
+    end
+
+        function cb_f_pg_close(~, ~)
+            delete(pr.f_pg);
+            pr.update()
+        end
+
+    pr.update()
+end
+function cb_graph_adj_figure(pr)
     f_pg = ancestor(pr.p, 'Figure'); % BrainAtlas GUI
     f_ba_x = Plot.x0(f_pg, 'pixels');
     f_ba_y = Plot.y0(f_pg, 'pixels');
@@ -457,53 +515,35 @@ function cb_graph_ui_figure(pr)
     y = f_ba_y + f_ba_h - h;
     w = screen_w - x;
 
-    pr.f_pg = figure( ...
-        'NumberTitle', 'off', ...
-        'Units', 'normalized', ...
-        'Position', [x/screen_w y/screen_h w/screen_w h/screen_h], ...
-        'CloseRequestFcn', {@cb_f_pg_close} ...
-        );
+    if isempty(pr.f_adj) || ~check_graphics(pr.f_adj, 'figure')
+        pr.f_adj = figure( ...
+            'NumberTitle', 'off', ...
+            'Units', 'normalized', ...
+            'Position', [x/screen_w y/screen_h w/screen_w h/screen_h], ...
+            'CloseRequestFcn', {@cb_f_adj_close} ...
+            );
+        set_braph2_icon(pr.f_adj)
+        menu_about = BRAPH2.add_menu_about(pr.f_adj);
+        el = pr.get('EL');
+        prop = pr.get('PROP');
+        g = el.get(prop);
+        pg = PlotAdjacencyMatrix('Graph', g);
+        pg.draw('Parent', pr.f_adj)
+        set(pr.f_adj, 'UserData', pg);
 
-        function cb_f_pg_close(~, ~)
-            delete(pr.f_pg);
+        f_settings = pg.settings();
+        set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
+        f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
+        f_settings.OuterPosition(2) = f_ba_y/screen_h;
+    else
+        gui = get(pr.f_adj, 'UserData');
+        gui.cb_bring_to_front()
+    end
+
+        function cb_f_adj_close(~, ~)
+            delete(pr.f_adj);
             pr.update()
         end
-
-    set_braph2_icon(pr.f_pg)
-    menu_about = BRAPH2.add_menu_about(pr.f_pg);
-
-    el = pr.get('EL');
-    prop = pr.get('PROP');
-    g = el.get(prop);
-    group = el.get('GR').get('ID');
-    
-    if isa(el, 'AnalyzeGroup_ST_MP_BUD')
-        x_range = el.get('DENSITIES');
-        x_title = 'DENSITIES';
-    elseif isa(el, 'AnalyzeGroup_ST_MP_BUT')
-        x_range = el.get('THRESHOLDS');
-         x_title = 'THRESHOLDS';
-    end
-    
-    switch pr.plot_type
-        case 'lines'
-            pg = PlotAnalysisMPLine( ... 
-                'Graph', g, ...
-                'X', x_range, ...
-                'PLOTTITLE', ['Analysis of group ' group], ...
-                'XLABEL', x_title ...
-                );
-        otherwise
-            pg = PlotAdjacencyMatrix('Graph', g);
-    end
-
-    pg.draw('Parent', pr.f_pg)
-    set(pr.f_pg, 'UserData', pg);
-
-    f_settings = pg.settings();
-    set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
-    f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
-    f_settings.OuterPosition(2) = f_ba_y/screen_h;
 
     pr.update()
 end
