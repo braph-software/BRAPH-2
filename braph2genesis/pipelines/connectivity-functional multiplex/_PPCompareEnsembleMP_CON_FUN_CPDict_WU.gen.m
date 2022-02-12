@@ -1,8 +1,8 @@
 %% ¡header!
-PPCompareEnsembleMP_FUN_CPDict_WU < PlotProp (pr, plot property graph mp) is a plot of a multilayer comparison ensemble dictionary.
+PPCompareEnsembleMP_CON_FUN_CPDict_WU < PlotProp (pr, plot property graph mp) is a plot of a multilayer comparison ensemble dictionary.
 
 %%% ¡description!
-PPCompareEnsembleMP_FUN_CPDict_WU plots the multilayercomparison ensemble dictionary property associated with a graph.
+PPCompareEnsembleMP_CON_FUN_CPDict_WU plots the multilayer comparison ensemble dictionary property associated with a graph.
 It also provides the buttons to navigate the graphical interface of the measures ensemble.
 
 CALLBACK - These are callback functions:
