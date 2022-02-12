@@ -301,7 +301,8 @@ function f_settings = settings(pr, varargin)
         'BackgroundColor', pr.h_settings.Color, ...
         'Position', [.04 .4 .15 .12]);
 
-    layer_number = size(pr.m.get('G').get('B'), 2);
+    graph = pr.m.get('A').get('G_Dict').getItem(1);
+    layer_number = size(graph.get('B'), 2);
     layer_popup = uicontrol('Parent', ui_plot_properties_panel,...
         'Style', 'popupmenu',...
         'Units', 'normalized', ...
@@ -482,7 +483,8 @@ end
 function update_plot(pr)
     measure = pr.m;
     plot_value = measure.get('M');
-    layer_number = size(pr.m.get('G').get('B'), 2);
+    graph = pr.m.get('A').get('G_Dict').getItem(1);
+    layer_number = size(graph.get('B'), 2);
     choosen_layer = pr.get('LAYER');
 
     if Measure.is_global(pr.m.get('Measure')) % global

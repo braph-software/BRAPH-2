@@ -1,8 +1,8 @@
 %% ¡header!
-PPCompareEnsembleMP_FUN_CPDict_BUT < PlotProp (pr, plot property graph) is a plot of a binary undirect using thresholds multilayer comparison ensemble dictionary.
+PPCompareEnsembleMP_CON_FUN_CPDict_BUD < PlotProp (pr, plot property graph mp) is a plot of a binary undirect using densities multilayer comparison ensemble dictionary.
 
 %%% ¡description!
-PPCompareEnsembleMP_FUN_CPDict_BUT plots the binary undirect using thresholds multilayer comparison ensemble
+PPCompareEnsembleMP_FUN_CPDict_BUD plots the binary undirect using densities multilayer comparison ensemble
 dictionary property associated with a graph.
 It also provides the buttons to navigate the graphical interface of the multilayer measure ensemble.
 
@@ -230,7 +230,7 @@ function update(pr)
     end
 
         function plot_type_rules()
-            if ~isempty(pr.graph) && isa(el.get('A1'), 'AnalyzeEnsemble_FUN_BUT') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}])
+            if ~isempty(pr.graph) && isa(el.get('A1'), 'AnalyzeEnsemble_FUN_BUD') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}])
                 set(pr.line_plot_tgl_btn, 'Enable', 'on');
             else
                 set(pr.line_plot_tgl_btn, 'Enable', 'off');
@@ -375,7 +375,7 @@ function cb_graph_ui_figure(pr)
     y = f_ba_y + f_ba_h - h;
     w = screen_w - x;
 
-    if isempty(pr.f_pc) || ~check_graphics(pr.f_pc, 'figure')
+   if isempty(pr.f_pc) || ~check_graphics(pr.f_pc, 'figure')
         pr.f_pc = figure( ...
             'NumberTitle', 'off', ...
             'Units', 'normalized', ...
@@ -388,18 +388,16 @@ function cb_graph_ui_figure(pr)
         el = pr.get('EL');
         prop = pr.get('PROP');
         
-        x_range = el.get('A1').get('THRESHOLDS');
-        x_title = 'THRESHOLDS';
+        x_range = el.get('A1').get('DENSITIES');
+        x_title = 'DENSITIES';
         
         plot_title = ['Comparison between ' el.get('A1').get('GR').get('ID') ' and ' el.get('A2').get('GR').get('ID')];
-        
         pg = PlotComparisonEnsembleMPLine( ...
             'Comparison', el.get('CP_DICT'), ...
             'X', x_range, ...
             'PLOTTITLE', plot_title, ...
             'XLABEL', x_title ...
             );
-        
         pg.draw('Parent', pr.f_pc)
         set(pr.f_pc, 'UserData', pg);
         
@@ -407,10 +405,10 @@ function cb_graph_ui_figure(pr)
         set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
         f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
         f_settings.OuterPosition(2) = f_ba_y/screen_h;
-    else
-        gui = get(pr.f_pc, 'UserData');
-        gui.cb_bring_to_front()
-    end   
+   else
+       gui = get(pr.f_pc, 'UserData');
+       gui.cb_bring_to_front()
+   end
 
         function cb_f_pg_close(~, ~)
             delete(pr.f_pc);
