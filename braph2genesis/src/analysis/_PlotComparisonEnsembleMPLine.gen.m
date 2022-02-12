@@ -295,12 +295,12 @@ function f_settings = settings(pr, varargin)
         h_p_max = [];
         init_cil_panel()
         function init_cil_panel()
-            set(ui_confidence_interval_min_checkbox, 'Position', [.04 .4 .2 .12]);
+            set(ui_confidence_interval_min_checkbox, 'Position', [.04 .27 .2 .12]);
             set(ui_confidence_interval_min_checkbox, 'String', 'Show Confidence Interval Min');
             set(ui_confidence_interval_min_checkbox, 'Value', false);
             set(ui_confidence_interval_min_checkbox, 'Callback', {@cb_show_confidence_interval_min})
 
-            set(ui_confidence_interval_max_checkbox, 'Position', [.04 .027 .2 .12]);
+            set(ui_confidence_interval_max_checkbox, 'Position', [.04 .15 .2 .12]);
             set(ui_confidence_interval_max_checkbox, 'String', 'Show Confidence Interval Max');
             set(ui_confidence_interval_max_checkbox, 'Value', false);
             set(ui_confidence_interval_max_checkbox, 'Callback', {@cb_show_confidence_interval_max})
@@ -400,7 +400,7 @@ function f_settings = settings(pr, varargin)
             'String', arrayfun(@(x) [num2str(x)], [1:layer_number], 'UniformOutput', false));
         init_layer_section()
         function init_layer_section()
-            set(layer_popup, 'Position', [.2 .02 .2 .12], ...
+            set(layer_popup, 'Position', [.2 .4 .2 .12], ...
                 'Value', pr.get('LAYER'), ...
                 'Callback', {@layer_popup_selector});
 

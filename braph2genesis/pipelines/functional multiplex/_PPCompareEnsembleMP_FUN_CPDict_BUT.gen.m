@@ -230,7 +230,7 @@ function update(pr)
     end
 
         function plot_type_rules()
-            if ~isempty(pr.graph) && isa(el.get('A1'), 'AnalyzeEnsemble_FUN_BUT') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}])
+            if ~isempty(pr.graph) && isa(el.get('A1'), 'AnalyzeEnsemble_FUN_MP_BUT') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}])
                 set(pr.line_plot_tgl_btn, 'Enable', 'on');
             else
                 set(pr.line_plot_tgl_btn, 'Enable', 'off');
