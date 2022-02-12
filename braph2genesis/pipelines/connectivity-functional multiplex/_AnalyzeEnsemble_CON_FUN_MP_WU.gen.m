@@ -85,8 +85,8 @@ for i = 1:1:gr.get('SUB_DICT').length()
 end
 
 value = g_dict;
-% %%%% ¡gui!
-% % % pl = PPAnalyzeEnsembleGraph('EL', a, 'PROP', AnalyzeEnsemble_CON_FUN_MP_WU.G_DICT, varargin{:});
+%%%% ¡gui!
+pr = PPAnalyzeGroupMP_G('EL', a, 'PROP', AnalyzeGroup_ST_MP_BUT.G, 'WAITBAR', true, varargin{:});
 
 %% ¡tests!
 
