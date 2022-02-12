@@ -1,10 +1,10 @@
 %% ¡header!
-PPCompareEnsemble_FUN_CPDict_BUD < PlotProp (pr, plot property graph) is a plot of a binary undirect using densities comparison ensemble dictionary.
+PPCompareEnsembleMP_FUN_CPDict_BUD < PlotProp (pr, plot property graph mp) is a plot of a binary undirect using densities multilayer comparison ensemble dictionary.
 
 %%% ¡description!
-PPCompareEnsemble_FUN_CPDict_BUD plots the binary undirect using densities comparison ensemble
+PPCompareEnsembleMP_FUN_CPDict_BUD plots the binary undirect using densities multilayer comparison ensemble
 dictionary property associated with a graph.
-It also provides the buttons to navigate the graphical interface of the measure ensemble.
+It also provides the buttons to navigate the graphical interface of the multilayer measure ensemble.
 
 CALLBACK - These are callback functions:
 
@@ -392,14 +392,12 @@ function cb_graph_ui_figure(pr)
         x_title = 'DENSITIES';
         
         plot_title = ['Comparison between ' el.get('A1').get('GR').get('ID') ' and ' el.get('A2').get('GR').get('ID')];
-        
-        pg = PlotComparisonEnsembleLine( ...
+        pg = PlotComparisonEnsembleMPLine( ...
             'Comparison', el.get('CP_DICT'), ...
             'X', x_range, ...
             'PLOTTITLE', plot_title, ...
             'XLABEL', x_title ...
             );
-        
         pg.draw('Parent', pr.f_pc)
         set(pr.f_pc, 'UserData', pg);
         

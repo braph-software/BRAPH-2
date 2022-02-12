@@ -1,10 +1,9 @@
 %% ¡header!
-PPCompareEnsemble_FUN_CPDict_BUD < PlotProp (pr, plot property graph) is a plot of a binary undirect using densities comparison ensemble dictionary.
+PPCompareEnsembleMP_FUN_CPDict_WU < PlotProp (pr, plot property graph) is a plot of a comparison ensemble dictionary.
 
 %%% ¡description!
-PPCompareEnsemble_FUN_CPDict_BUD plots the binary undirect using densities comparison ensemble
-dictionary property associated with a graph.
-It also provides the buttons to navigate the graphical interface of the measure ensemble.
+PPCompareEnsembleMP_FUN_CPDict_WU plots the comparison ensemble dictionary property associated with a graph.
+It also provides the buttons to navigate the graphical interface of the measures ensemble.
 
 CALLBACK - These are callback functions:
 
@@ -13,20 +12,18 @@ CALLBACK - These are callback functions:
     pr.<strong>cb_close</strong>() - closes the measure figure and its settings figure
 
 %%% ¡seealso!
-GUI, PlotElement, PlotProp, CompareEnsemble, ComparisonEnsemble.
+GUI, PlotElement, PlotProp, CompareGroup, ComparisonGroup.
 
 %% ¡properties!
 p
 measure_tbl % measure table
 measure_btn % calculate measures button
-line_plot_tgl_btn % line plot toggle button
 adj_plot_tgl_btn % adjacency toggle button
 mlist % list of measures compatible with the graph
 selected % list of selected measures
 already_calculated % list of measures already calculated
 f_m % array of measure class figures
 f_pc % figure for plot graph
-f_adj
 graph % graph of the comparison
 
 %% ¡props_update!
@@ -69,24 +66,11 @@ function h_panel = draw(pr, varargin)
         'TooltipString', 'Plot to adjacency matrix plot.', ...
         'Position', [.01 .71 .2 .2], ...
         'Callback', {@cb_plot_type_adj} ...
-        );
-    
-    pr.line_plot_tgl_btn = uicontrol(...
-        'Style', 'pushbutton', ...
-        'Parent', pr.p, ...
-        'Units', 'normalized', ...
-        'CData', imresize(imread('icon_plot_lines.png'), [40 40]), ...
-        'TooltipString', 'Plot to line plot.', ...
-        'Position', [.23 .71 .2 .2], ...
-        'Callback', {@cb_plot_type_line} ...
-        );
+        );   
         
     function cb_plot_type_adj(~, ~)
-        pr.cb_graph_adj_figure();
-    end
-    function cb_plot_type_line(~, ~)
         pr.cb_graph_ui_figure();
-    end    
+    end  
 
     if isempty(pr.measure_tbl) || ~isgraphics(pr.measure_tbl, 'uitable')
         pr.mlist = [];
@@ -224,19 +208,9 @@ function update(pr)
 
         if ~check_graphics(pr.f_pc, 'figure')
             set(pr.adj_plot_tgl_btn, 'Enable', 'on');
-            set(pr.line_plot_tgl_btn, 'Enable', 'on');
         end
 
     end
-
-        function plot_type_rules()
-            if ~isempty(pr.graph) && isa(el.get('A1'), 'AnalyzeEnsemble_FUN_BUD') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}])
-                set(pr.line_plot_tgl_btn, 'Enable', 'on');
-            else
-                set(pr.line_plot_tgl_btn, 'Enable', 'off');
-            end
-        end
-    plot_type_rules()
 end
 function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
@@ -359,6 +333,9 @@ function cb_graph_ui_figure(pr)
     %
     % see also cb_graph_value, cb_measure_value.
 
+    set(pr.adj_plot_tgl_btn, 'Enable', 'off');
+    drawnow()
+
     f_pc = ancestor(pr.p, 'Figure'); % BrainAtlas GUI
     f_ba_x = Plot.x0(f_pc, 'pixels');
     f_ba_y = Plot.y0(f_pc, 'pixels');
@@ -375,93 +352,30 @@ function cb_graph_ui_figure(pr)
     y = f_ba_y + f_ba_h - h;
     w = screen_w - x;
 
-   if isempty(pr.f_pc) || ~check_graphics(pr.f_pc, 'figure')
-        pr.f_pc = figure( ...
-            'NumberTitle', 'off', ...
-            'Units', 'normalized', ...
-            'Position', [x/screen_w y/screen_h w/screen_w h/screen_h], ...
-            'CloseRequestFcn', {@cb_f_pg_close} ...
-            );
-        set_braph2_icon(pr.f_pc)
-        menu_about = BRAPH2.add_menu_about(pr.f_pc);
-        
-        el = pr.get('EL');
-        prop = pr.get('PROP');
-        
-        x_range = el.get('A1').get('DENSITIES');
-        x_title = 'DENSITIES';
-        
-        plot_title = ['Comparison between ' el.get('A1').get('GR').get('ID') ' and ' el.get('A2').get('GR').get('ID')];
-        
-        pg = PlotComparisonEnsembleLine( ...
-            'Comparison', el.get('CP_DICT'), ...
-            'X', x_range, ...
-            'PLOTTITLE', plot_title, ...
-            'XLABEL', x_title ...
-            );
-        
-        pg.draw('Parent', pr.f_pc)
-        set(pr.f_pc, 'UserData', pg);
-        
-        f_settings = pg.settings();
-        set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
-        f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
-        f_settings.OuterPosition(2) = f_ba_y/screen_h;
-   else
-       gui = get(pr.f_pc, 'UserData');
-       gui.cb_bring_to_front()
-   end
+    pr.f_pc = figure( ...
+        'NumberTitle', 'off', ...
+        'Units', 'normalized', ...
+        'Position', [x/screen_w y/screen_h w/screen_w h/screen_h], ...
+        'CloseRequestFcn', {@cb_f_pg_close} ...
+        );
 
         function cb_f_pg_close(~, ~)
             delete(pr.f_pc);
             pr.update()
         end
 
-    pr.update()
-end
-function cb_graph_adj_figure(pr)
-    f_pg = ancestor(pr.p, 'Figure'); % BrainAtlas GUI
-    f_ba_x = Plot.x0(f_pg, 'pixels');
-    f_ba_y = Plot.y0(f_pg, 'pixels');
-    f_ba_w = Plot.w(f_pg, 'pixels');
-    f_ba_h = Plot.h(f_pg, 'pixels');
+    set_braph2_icon(pr.f_pc)
+    menu_about = BRAPH2.add_menu_about(pr.f_pc);
+    
+    pg = PlotAdjacencyMatrix('Graph', pr.graph);   
 
-    screen_x = Plot.x0(0, 'pixels');
-    screen_y = Plot.y0(0, 'pixels');
-    screen_w = Plot.w(0, 'pixels');
-    screen_h = Plot.h(0, 'pixels');
+    pg.draw('Parent', pr.f_pc)
+    set(pr.f_pc, 'UserData', pg);
 
-    x = f_ba_x + f_ba_w;
-    h = f_ba_h / 1.5;
-    y = f_ba_y + f_ba_h - h;
-    w = screen_w - x;
-
-    if isempty(pr.f_adj) || ~check_graphics(pr.f_adj, 'figure')
-        pr.f_adj = figure( ...
-            'NumberTitle', 'off', ...
-            'Units', 'normalized', ...
-            'Position', [x/screen_w y/screen_h w/screen_w h/screen_h], ...
-            'CloseRequestFcn', {@cb_f_adj_close} ...
-            );
-        set_braph2_icon(pr.f_adj)
-        menu_about = BRAPH2.add_menu_about(pr.f_adj);
-        pg = PlotAdjacencyMatrix('Graph', pr.graph);
-        pg.draw('Parent', pr.f_adj)
-        set(pr.f_adj, 'UserData', pg);
-
-        f_settings = pg.settings();
-        set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
-        f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
-        f_settings.OuterPosition(2) = f_ba_y/screen_h;
-    else
-        gui = get(pr.f_adj, 'UserData');
-        gui.cb_bring_to_front()
-    end
-
-        function cb_f_adj_close(~, ~)
-            delete(pr.f_adj);
-            pr.update()
-        end
+    f_settings = pg.settings();
+    set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
+    f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
+    f_settings.OuterPosition(2) = f_ba_y/screen_h;
 
     pr.update()
 end

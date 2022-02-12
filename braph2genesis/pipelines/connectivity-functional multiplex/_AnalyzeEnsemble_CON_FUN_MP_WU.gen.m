@@ -85,8 +85,18 @@ for i = 1:1:gr.get('SUB_DICT').length()
 end
 
 value = g_dict;
-%%%% ¡gui!
-pr = PPAnalyzeGroupMP_G('EL', a, 'PROP', AnalyzeGroup_ST_MP_BUT.G, 'WAITBAR', true, varargin{:});
+
+%% ¡methods!
+function pr = getPPCompareEnsemble_CPDict(a, varargin) 
+    %GETPPCOMPAREENSEMBLE_CPDICT returns the comparison ensemble plot panel compatible with the analysis.
+    %
+    % PR = GETPPCOMPAREENSEMBLE_CPDICT(A) returns the comparison ensemble plot panel
+    %  that is compatible with the analyze ensemble.
+    %
+    % See also CompareEnsemble.
+    
+    pr = PPCompareEnsembleMP_CON_FUN_CPDict_WU(varargin{:});
+end
 
 %% ¡tests!
 
