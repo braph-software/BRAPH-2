@@ -1,8 +1,8 @@
 %% ¡header!
-PlotComparisonGroupLine < Plot (pr, plot graph) is a line plot of the comparison values.
+PlotComparisonGroupMPLine < Plot (pr, plot graph) is a line plot of the multilayer comparison values.
 
 %%% ¡description!
-Plot is the line plot of the comparison values.
+Plot is the line plot of the multilayer comparison values.
 It is a graphical figure with empty axes, which should be filled by derived element.
 To generate the plot, call pr.draw().
 
@@ -18,7 +18,6 @@ h_settings
 cp % measure
 
 %% ¡props!
-
 
 %%% ¡prop!
 PLOTTITLE(metadata, string) to set plot line title
@@ -56,6 +55,11 @@ NODE1 (metadata, scalar) to set plot line node 1
 NODE2 (metadata, scalar) to set plot line node 2
 %%%% ¡default!
 2
+
+%%% ¡prop!
+LAYER (metadata, scalar) to set plot line layer
+%%%% ¡default!
+1
 
 %%% ¡prop!
 COLOR (metadata, rvector) to set plot line color
@@ -282,6 +286,31 @@ function f_settings = settings(pr, varargin)
             pr.set('NODE2', node2_to_plot)
             update();
         end
+    
+        layer_id = uicontrol(ui_plot_properties_panel, ...
+            'Style', 'text', ...
+            'Units', 'normalized', ...
+            'String', 'Layer Selection', ...
+            'BackgroundColor', pr.h_settings.Color, ...
+            'Position', [.04 .4 .15 .12]);
+    
+        layer_number = size(pr.cp.get('C').get('A1').get('G').get('B'), 2);
+        layer_popup = uicontrol('Parent', ui_plot_properties_panel,...
+            'Style', 'popupmenu',...
+            'Units', 'normalized', ...
+            'String', arrayfun(@(x) [num2str(x)], [1:layer_number], 'UniformOutput', false));
+        init_layer_section()
+        function init_layer_section()
+            set(layer_popup, 'Position', [.2 .4 .2 .12], ...
+                'Value', pr.get('LAYER'), ...
+                'Callback', {@layer_popup_selector});
+
+        end
+        function layer_popup_selector(src, ~)
+            layer_to_plot = double(src.Value);
+            pr.set('LAYER', layer_to_plot)
+            update();
+        end
 
     
         ui_confidence_interval_min_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized');
@@ -290,12 +319,12 @@ function f_settings = settings(pr, varargin)
         h_p_max = [];
         init_cil_panel()
         function init_cil_panel()
-            set(ui_confidence_interval_min_checkbox, 'Position', [.04 .4 .2 .12]);
+            set(ui_confidence_interval_min_checkbox, 'Position', [.04 .27 .2 .12]);
             set(ui_confidence_interval_min_checkbox, 'String', 'Show Confidence Interval Min');
             set(ui_confidence_interval_min_checkbox, 'Value', false);
             set(ui_confidence_interval_min_checkbox, 'Callback', {@cb_show_confidence_interval_min})
 
-            set(ui_confidence_interval_max_checkbox, 'Position', [.04 .027 .2 .12]);
+            set(ui_confidence_interval_max_checkbox, 'Position', [.04 .14 .2 .12]);
             set(ui_confidence_interval_max_checkbox, 'String', 'Show Confidence Interval Max');
             set(ui_confidence_interval_max_checkbox, 'Value', false);
             set(ui_confidence_interval_max_checkbox, 'Callback', {@cb_show_confidence_interval_max})
@@ -304,6 +333,9 @@ function f_settings = settings(pr, varargin)
             if src.Value == true
                 cil = obtain_cil_ciu_value(pr.get('CIL'));
                 x_ = pr.get('X');
+                layer_number = size(pr.cp.get('C').get('A1').get('G').get('B'), 2);
+                choosen_layer = pr.get('LAYER');
+                cil = [cil(choosen_layer:layer_number:end)];
                 hold(pr.h_axes, 'on')
                 h_p_min = plot(pr.h_axes, ...
                     x_, ...
@@ -325,6 +357,9 @@ function f_settings = settings(pr, varargin)
                 hold(pr.h_axes, 'on')
                 x_ = pr.get('X');
                 ciu = obtain_cil_ciu_value(pr.get('CIU'));
+                layer_number = size(pr.cp.get('C').get('A1').get('G').get('B'), 2);
+                choosen_layer = pr.get('LAYER');
+                ciu = [ciu(choosen_layer:layer_number:end)];
                 h_p_max = plot(pr.h_axes, ...
                     x_, ...
                     ciu, ...
@@ -534,29 +569,35 @@ end
 function update_plot(pr)
     comparison = pr.cp;
     plot_value = comparison.get('DIFF');
+    layer_number = size(pr.cp.get('C').get('A1').get('G').get('B'), 2);
+    choosen_layer = pr.get('LAYER');
     if Measure.is_global(pr.cp.get('MEASURE')) % global
         is_inf_vector = cellfun(@(x) isinf(x), plot_value);
         if any(is_inf_vector)
             return;
         end
-        y_ = [plot_value{:}];
+        y_ = [plot_value{choosen_layer:layer_number:end}];
     elseif Measure.is_nodal(pr.cp.get('MEASURE')) % nodal
-        for l = 1:length(plot_value)
+        tmp_index = 1;
+        for l = choosen_layer:layer_number:length(plot_value)
             tmp = plot_value{l};
             tmp_y = tmp(pr.get('NODE1'));
             if isinf(tmp_y)
                 return;
             end
-            y_(l) = tmp_y; %#ok<AGROW>
+            y_(tmp_index) = tmp_y; %#ok<AGROW>
+            tmp_index = tmp_index + 1;
         end
     else  % binodal
-        for l = 1:length(plot_value)
+        tmp_index = 1;
+        for l = choosen_layer:layer_number:length(plot_value)
             tmp = plot_value{l};
             tmp_y = tmp(pr.get('NODE1'), pr.get('NODE2'));
             if isinf(tmp_y)
                 return;
             end
-            y_(l) = tmp_y; %#ok<AGROW>
+            y_(tmp_index) = tmp_y; %#ok<AGROW>
+            tmp_index = tmp_index + 1;
         end
     end
     pr.plotline(pr.get('X'), y_)

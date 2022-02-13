@@ -1,10 +1,10 @@
 %% ¡header!
-PPCompareEnsemble_CPDict_BUT < PlotProp (pr, plot property graph) is a plot of a binary undirect using thresholds comparison ensemble dictionary.
+PPCompareEnsembleMP_FUN_CPDict_BUT < PlotProp (pr, plot property graph) is a plot of a binary undirect using thresholds multilayer comparison ensemble dictionary.
 
 %%% ¡description!
-PPCompareEnsemble_CPDict_BUT plots the binary undirect using thresholds comparison ensemble
+PPCompareEnsembleMP_FUN_CPDict_BUT plots the binary undirect using thresholds multilayer comparison ensemble
 dictionary property associated with a graph.
-It also provides the buttons to navigate the graphical interface of the measure ensemble.
+It also provides the buttons to navigate the graphical interface of the multilayer measure ensemble.
 
 CALLBACK - These are callback functions:
 
@@ -230,7 +230,7 @@ function update(pr)
     end
 
         function plot_type_rules()
-            if ~isempty(pr.graph) && isa(el.get('A1'), 'AnalyzeEnsemble_CON_BUT') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}])
+            if ~isempty(pr.graph) && isa(el.get('A1'), 'AnalyzeEnsemble_FUN_MP_BUT') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}])
                 set(pr.line_plot_tgl_btn, 'Enable', 'on');
             else
                 set(pr.line_plot_tgl_btn, 'Enable', 'off');
@@ -359,10 +359,6 @@ function cb_graph_ui_figure(pr)
     %
     % see also cb_graph_value, cb_measure_value.
 
-    set(pr.adj_plot_tgl_btn, 'Enable', 'off');
-    set(pr.line_plot_tgl_btn, 'Enable', 'off');
-    drawnow()
-
     f_pc = ancestor(pr.p, 'Figure'); % BrainAtlas GUI
     f_ba_x = Plot.x0(f_pc, 'pixels');
     f_ba_y = Plot.y0(f_pc, 'pixels');
@@ -378,7 +374,7 @@ function cb_graph_ui_figure(pr)
     h = f_ba_h / 1.5;
     y = f_ba_y + f_ba_h - h;
     w = screen_w - x;
-    
+
     if isempty(pr.f_pc) || ~check_graphics(pr.f_pc, 'figure')
         pr.f_pc = figure( ...
             'NumberTitle', 'off', ...
@@ -397,7 +393,7 @@ function cb_graph_ui_figure(pr)
         
         plot_title = ['Comparison between ' el.get('A1').get('GR').get('ID') ' and ' el.get('A2').get('GR').get('ID')];
         
-        pg = PlotComparisonEnsembleLine( ...
+        pg = PlotComparisonEnsembleMPLine( ...
             'Comparison', el.get('CP_DICT'), ...
             'X', x_range, ...
             'PLOTTITLE', plot_title, ...
@@ -414,12 +410,13 @@ function cb_graph_ui_figure(pr)
     else
         gui = get(pr.f_pc, 'UserData');
         gui.cb_bring_to_front()
-    end
-    
-    function cb_f_pg_close(~, ~)
-        delete(pr.f_pc);
-        pr.update()
-    end
+    end   
+
+        function cb_f_pg_close(~, ~)
+            delete(pr.f_pc);
+            pr.update()
+        end
+
     pr.update()
 end
 function cb_graph_adj_figure(pr)

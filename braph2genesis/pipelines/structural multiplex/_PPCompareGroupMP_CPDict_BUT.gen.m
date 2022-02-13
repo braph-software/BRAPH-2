@@ -1,10 +1,10 @@
 %% ¡header!
-PPCompareEnsemble_CPDict_BUT < PlotProp (pr, plot property graph) is a plot of a binary undirect using thresholds comparison ensemble dictionary.
+PPCompareGroupMP_CPDict_BUT < PlotProp (pr, plot property graph mp) is a plot of a multilayer binary undirect using thresholds comparison dictionary.
 
 %%% ¡description!
-PPCompareEnsemble_CPDict_BUT plots the binary undirect using thresholds comparison ensemble
+PPCompareGroupMP_CPDict_BUT plots the multilayer binary undirect using thresholds comparison 
 dictionary property associated with a graph.
-It also provides the buttons to navigate the graphical interface of the measure ensemble.
+It also provides the buttons to navigate the graphical interface of the measures.
 
 CALLBACK - These are callback functions:
 
@@ -13,7 +13,7 @@ CALLBACK - These are callback functions:
     pr.<strong>cb_close</strong>() - closes the measure figure and its settings figure
 
 %%% ¡seealso!
-GUI, PlotElement, PlotProp, CompareEnsemble, ComparisonEnsemble.
+GUI, PlotElement, PlotProp, CompareGroup, ComparisonGroup.
 
 %% ¡properties!
 p
@@ -55,8 +55,9 @@ function h_panel = draw(pr, varargin)
 
     % declare constants
     el = pr.get('EL');
-    a1 = el.get('A1');
-    pr.graph = a1.get('G_DICT').getItem(1);
+    prop = pr.get('PROP');
+    pr.graph = el.get('A1').get('G');
+    click_time = [];
 
     pr.p = draw@PlotProp(pr, varargin{:});
 
@@ -160,6 +161,7 @@ function update(pr)
 
     el = pr.get('EL');
     prop = pr.get('PROP');
+    cp_dict = el.get(prop);
 
     button_state = pr.get_button_condition();
     set(...
@@ -230,7 +232,7 @@ function update(pr)
     end
 
         function plot_type_rules()
-            if ~isempty(pr.graph) && isa(el.get('A1'), 'AnalyzeEnsemble_CON_BUT') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}])
+            if ~isempty(pr.graph) && isa(el.get('A1'), 'AnalyzeGroup_ST_MP_BUT') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}])
                 set(pr.line_plot_tgl_btn, 'Enable', 'on');
             else
                 set(pr.line_plot_tgl_btn, 'Enable', 'off');
@@ -359,10 +361,6 @@ function cb_graph_ui_figure(pr)
     %
     % see also cb_graph_value, cb_measure_value.
 
-    set(pr.adj_plot_tgl_btn, 'Enable', 'off');
-    set(pr.line_plot_tgl_btn, 'Enable', 'off');
-    drawnow()
-
     f_pc = ancestor(pr.p, 'Figure'); % BrainAtlas GUI
     f_ba_x = Plot.x0(f_pc, 'pixels');
     f_ba_y = Plot.y0(f_pc, 'pixels');
@@ -388,16 +386,13 @@ function cb_graph_ui_figure(pr)
             );
         set_braph2_icon(pr.f_pc)
         menu_about = BRAPH2.add_menu_about(pr.f_pc);
-        
         el = pr.get('EL');
         prop = pr.get('PROP');
         
         x_range = el.get('A1').get('THRESHOLDS');
         x_title = 'THRESHOLDS';
-        
         plot_title = ['Comparison between ' el.get('A1').get('GR').get('ID') ' and ' el.get('A2').get('GR').get('ID')];
-        
-        pg = PlotComparisonEnsembleLine( ...
+        pg = PlotComparisonGroupMPLine( ...
             'Comparison', el.get('CP_DICT'), ...
             'X', x_range, ...
             'PLOTTITLE', plot_title, ...
@@ -411,15 +406,17 @@ function cb_graph_ui_figure(pr)
         set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
         f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
         f_settings.OuterPosition(2) = f_ba_y/screen_h;
+        
     else
         gui = get(pr.f_pc, 'UserData');
-        gui.cb_bring_to_front()
+        gui.cb_bring_to_front()        
     end
-    
-    function cb_f_pg_close(~, ~)
-        delete(pr.f_pc);
-        pr.update()
-    end
+
+        function cb_f_pg_close(~, ~)
+            delete(pr.f_pc);
+            pr.update()
+        end
+
     pr.update()
 end
 function cb_graph_adj_figure(pr)
