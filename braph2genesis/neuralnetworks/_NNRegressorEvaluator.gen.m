@@ -92,12 +92,12 @@ NNDATA (data, item) is a dataset for testing the neural networks.
 NNRegressorData()
 
 %%% ¡prop!
-PREDICTION (result, cell) is an output cell of prediction from a neural network model.
+PREDICTION (result, matrix) is an output cell of prediction from a neural network model.
 %%%% ¡calculate!
 nnd = nne.get('NNDATA');
 inputs = nnd.memorize('INPUTS');
 if isempty(inputs{1})
-    value = {};
+    value = [];
 else
     regressor = nne.get('NN');
     net = regressor.to_net(regressor.get('MODEL'));
@@ -109,12 +109,12 @@ else
 end
 
 %%% ¡prop!
-VAL_PREDICTION (result, cell) is an output cell of prediction for the validation set.
+VAL_PREDICTION (result, matrix) is an output cell of prediction for the validation set.
 %%%% ¡calculate!
 nnd = nne.get('NNDATA');
 inputs = nnd.memorize('VAL_INPUTS');
 if isempty(inputs{1})
-    value = {};
+    value = [];
 else
     regressor = nne.get('NN');
     net = regressor.to_net(regressor.get('MODEL'));

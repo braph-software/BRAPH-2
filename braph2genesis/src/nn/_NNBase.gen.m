@@ -116,10 +116,10 @@ function net = to_net(nn, saved_nn, varargin)
         net = importONNXNetwork(filename, InputDataFormats = format, OutputLayerType = type);
     else
         lgraph = importONNXLayers(filename, InputDataFormats = "BCSS");
-        net = assembleNetwork(lgraph)
+        net = assembleNetwork(lgraph);
     end
     
-    rmdir(directory, 's')
+    rmdir(directory, 's');
     warning(w_matlab.state, 'MATLAB:mir_warning_unrecognized_pragma');
     warning(w_nnet.state,'nnet_cnn:internal:cnn:analyzer:NetworkAnalyzer:NetworkHasWarnings');
 end

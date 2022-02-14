@@ -54,7 +54,7 @@ else
 end
 
 %%% ¡prop!
-VAL_AUC (result, scalar) is an area under the curve score obtained from the validation set.
+VAL_AUC (result, cell) is an area under the curve score obtained from the validation set.
 %%%% ¡calculate!
 pred = nne.memorize('VAL_PREDICTION');
 targets = nne.get('NNDATA').memorize('VAL_TARGETS');
