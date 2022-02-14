@@ -24,8 +24,8 @@ INPUTS (result, cell) is the inputs for training or testing a neural network.
 function score = mutual_information_analysis(nnd, X, Y, n)
     %MUTUAL_INFORMATION_ANALYSIS computes the mutual information value.
     % 
-    % MUTINF = MUTUAL_INFORMATION_ANALYSIS(NND, X, Y, n) compute the mutual
-    %  information MUTINF of two discrete variables X and Y. These two vectors
+    % SCORE = MUTUAL_INFORMATION_ANALYSIS(NND, X, Y, n) compute the mutual
+    %  information SCORE of two discrete variables X and Y. These two vectors
     %  must have the same length. The higher value of the score, the
     %  closer connection between X and Y.
 
@@ -33,7 +33,7 @@ function score = mutual_information_analysis(nnd, X, Y, n)
     xmax = max(X, [], 2);
     xrange = (xmax - xmin) / n;
     if xmax - xmin < 1e-4
-        mutinf = 0;
+        score = 0;
         return;
     end
     if size(Y, 1) ~= 1
