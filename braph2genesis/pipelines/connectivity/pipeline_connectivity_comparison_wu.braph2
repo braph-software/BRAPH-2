@@ -5,7 +5,7 @@
 % 2. It loads the data of two groups of subjects from directories containing XLS files (e.g., CON_group1.xlsx and CON_group2.xlsx).
 % 3. It analyzes these data using connectivity analyses (CON) based on graphs (BUD).
 % 4. It compares the results of the two analyses.
-
+x
 %% Brain Atlas
 ba = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load a Brain Atlas XLS % Brain Atlas
 
