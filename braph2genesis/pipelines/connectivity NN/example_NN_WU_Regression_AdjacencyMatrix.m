@@ -44,11 +44,11 @@ nne_train = NNRegressorEvaluator( ...
     );
 
 prediction_train = nne_train.memorize('PREDICTION');
-rmse_train = nne_train.get('RMSE')
+rmse_train = nne_train.get('RMSE');
 map = nne_train.get('FEATURE_MAP');
 
 prediction_val = nne_train.memorize('VAL_PREDICTION');
-rmse_val = nne_train.get('VAL_RMSE')
+rmse_val = nne_train.get('VAL_RMSE');
 
 %% Load Groups of SubjectCON as a Testing Set 
 im_gr = ImporterGroupSubjectCON_XLS( ...
@@ -71,7 +71,7 @@ nne_test = NNRegressorEvaluator( ...
     'NN', regressor ...
     );
 
-prediction_test = nne_test.memorize('PREDICTION')
-rmse_test = nne_test.get('RMSE')
+prediction_test = nne_test.memorize('PREDICTION');
+rmse_test = nne_test.get('RMSE');
 
 close all
