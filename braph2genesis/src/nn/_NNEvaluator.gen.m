@@ -27,7 +27,7 @@ NN (data, item) is a neural network model that needs to be evaluated.
 'NNBase'
 
 %%% ¡prop!
-PREDICTION (result, cell) is the predictions from a neural network.
+PREDICTION (result, matrix) is the predictions from a neural network.
 
 %%% ¡prop!
-VAL_PREDICTION (result, cell) is the predictions from a neural network for validation set.
+VAL_PREDICTION (result, matrix) is the predictions from a neural network for validation set.

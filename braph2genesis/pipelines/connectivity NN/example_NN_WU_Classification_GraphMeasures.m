@@ -97,3 +97,5 @@ nne_test = NNClassifierEvaluator( ...
 
 prediction_test = nne_test.memorize('PREDICTION')
 auc_test = nne_test.get('AUC')
+
+close all

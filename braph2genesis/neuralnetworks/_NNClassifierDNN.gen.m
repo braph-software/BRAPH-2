@@ -11,16 +11,6 @@ values for the trianing samples.
 %% ¡props!
 %%% ¡prop!
 LAYERS (data, rvector) is a vector representing the number of neurons in each layer.
-%%%% ¡postprocessing!
-if isempty(nn.get('LAYERS'))
-    inputs = nn.get('NNDATA').get('INPUTS');
-    if ~isempty(inputs{1})
-        inputs = inputs{1};
-        numFeatures = length(inputs);
-        value = [floor(1.5 * numFeatures) floor(1.5 * numFeatures)];
-        nn.set('LAYERS', value);
-    end
-end
 
 %%% ¡prop!
 BATCH (data, scalar) is the size of the mini-batch to use for each training iteration.
@@ -88,8 +78,17 @@ if nn.check_nn_toolboxes()
         targets = onehotdecode(targets{1}, classes, 2);
         % init layers
         numLayer = nn.get('LAYERS');
+        if isempty(numLayer)
+            inputs_tmp = nn.get('NNDATA').get('INPUTS');
+            if ~isempty(inputs_tmp{1})
+                inputs_tmp = inputs_tmp{1};
+                numFeatures = length(inputs_tmp);
+                value = [floor(1.5 * numFeatures) floor(1.5 * numFeatures)];
+                nn.set('LAYERS', value);
+            end
+        end
         layers = [imageInputLayer([1 1 numFeatures], 'Name', 'input')];
-        for i = 1:1:length(nn.get('LAYERS'))
+        for i = 1:1:length(numLayer)
             layers = [layers
                 fullyConnectedLayer(numLayer(i), 'Name', ['fc' num2str(i)])
                 batchNormalizationLayer('Name', ['batchNormalization' num2str(i)])

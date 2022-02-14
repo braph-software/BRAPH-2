@@ -23,7 +23,7 @@ PLOT_ROC (data, logical) is an option for the plot of the receiver operating cha
 false
 
 %%% ¡prop!
-AUC (result, scalar) is an area under the curve score obtained from the dataset.
+AUC (result, cell) is an area under the curve score obtained from the dataset.
 %%%% ¡calculate!
 pred = nne.memorize('PREDICTION');
 targets = nne.get('NNDATA').memorize('TARGETS');
@@ -50,11 +50,11 @@ else
         saveas(gcf, filename);
     end
 
-    value = auc;
+    value = {auc, X, Y};
 end
 
 %%% ¡prop!
-VAL_AUC (result, cell) is an area under the curve score obtained from the validation set.
+VAL_AUC (result, scalar) is an area under the curve score obtained from the validation set.
 %%%% ¡calculate!
 pred = nne.memorize('VAL_PREDICTION');
 targets = nne.get('NNDATA').memorize('VAL_TARGETS');
@@ -203,6 +203,8 @@ end
 NNDATA (data, item) is a dataset for testing the neural networks.
 %%%% ¡settings!
 'NNClassifierData'
+%%%% ¡default!
+NNClassifierData()
 
 %%% ¡prop!
 PREDICTION (result, matrix) is an output matrix of prediction from a neural network model.

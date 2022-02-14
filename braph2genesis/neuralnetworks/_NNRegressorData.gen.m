@@ -102,17 +102,14 @@ FEATURE_MASK (data, cvector) is a mask for selected features.
 %%% ¡prop!
 FEATURE_MASK_ANALYSIS (result, cvector) is an analysis for generating mask for selected features.
 %%%% ¡calculate!
+density = nnd.get('FEATURE_MASK');
 if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
-    density = value;
-
     adjs_gr = nnd.get('TRAIN_G_DICT').getItems();
     data = {};
     for i = 1:length(adjs_gr)
         data{end+1} = cell2mat(adjs_gr{i}.get('A'));
     end
 else
-    density = value;
-
     adjs_gr = nnd.get('TRAIN_G_DICT').getItems();
     measure_class = nnd.get('MEASURES');
     data = {};
@@ -125,19 +122,23 @@ else
     end
 end
 
-y = nnd.get('TARGETS');
-y = y{1};
-for j = 1:size(data{1},2)
-    for k = 1:size(data{1},2)
-        data_per_feature = cellfun(@(v)v(j, k), data);
-        label = y';
-        mask(j, k) = nnd.mutual_information_analysis(data_per_feature, label, 5);
+if(isempty(data))
+    value = [];
+else
+    y = nnd.get('TARGETS');
+    y = y{1};
+    for j = 1:size(data{1},2)
+        for k = 1:size(data{1},2)
+            data_per_feature = cellfun(@(v)v(j, k), data);
+            label = y';
+            mask(j, k) = nnd.mutual_information_analysis(data_per_feature, label, 5);
+        end
     end
-end
-[~,idx_all] = sort(mask(:), 'descend');
-num_top_idx = floor(density * size(mask, 1) * size(mask, 2));
+    [~,idx_all] = sort(mask(:), 'descend');
+    num_top_idx = floor(density * size(mask, 1) * size(mask, 2));
 
-value = idx_all(1:num_top_idx);
+    value = idx_all(1:num_top_idx);
+end
 
 %%% ¡prop!
 TRAIN_G_DICT (result, idict) is the graph obtained from subjects in training set.
@@ -211,7 +212,7 @@ function inputs = input_construction(nnd, g_dict)
 
     % get the feature mask
     mask = nnd.get('FEATURE_MASK');
-    if isempty(mask)
+    if length(mask) == 1 && abs(mask) <= 1 
         mask = nnd.get('FEATURE_MASK_ANALYSIS');
     end
     

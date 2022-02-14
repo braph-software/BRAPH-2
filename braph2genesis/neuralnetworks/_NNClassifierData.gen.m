@@ -216,7 +216,7 @@ else
     data = [data_gr_1 data_gr_2];
 end
 if(isempty(data))
-    value = {};
+    value = [];
 else
     y = nnd.get('TARGETS');
     y = y{1};

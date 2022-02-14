@@ -11,16 +11,6 @@ values for the trianing samples.
 %% ¡props!
 %%% ¡prop!
 LAYERS (data, rvector) is a vector represents the number of neurons in each layer.
-%%%% ¡postprocessing!
-if isempty(nn.get('LAYERS'))
-    inputs = nn.get('NNDATA').get('INPUTS');
-    if ~isempty(inputs{1})
-        inputs = inputs{1};
-        numFeatures = length(inputs);
-        value = [floor(1.5 * numFeatures) floor(1.5 * numFeatures)];
-        nn.set('LAYERS', value);
-    end
-end
 
 %%% ¡prop!
 BATCH (data, scalar) is the size of the mini-batch to use for each training iteration.
@@ -58,7 +48,7 @@ PLOT_LAYERS (data, logical) is an option for the plot of the layers.
 false
 
 %%% ¡prop!
-TARGET_NAME (result, cell) is the names for the targets.
+TARGET_NAME (result, string) is the names for the targets.
 %%%% ¡calculate!
 value = nn.get('NNDATA').get('TARGET_NAME');
 
@@ -85,47 +75,59 @@ if nn.check_nn_toolboxes()
     numFeatures = length(inputs);
     inputs = reshape(inputs, [1, 1, size(inputs, 1), size(inputs, 2)]);
     targets = nn.get('NNDATA').get('TARGETS');
-    
-    % init layers
-    numLayer = nn.get('LAYERS');
-    layers = [imageInputLayer([1 1 numFeatures], 'Name', 'input')];
-    for i = 1:1:length(nn.get('LAYERS'))
-        layers = [layers
-            fullyConnectedLayer(numLayer(i), 'Name', ['fc' num2str(i)])
-            batchNormalizationLayer('Name', ['batchNormalization' num2str(i)])
-            ];
-    end
-    layers = [layers
-        reluLayer('Name', 'relu1')
-        fullyConnectedLayer(1, 'Name', 'fc_output')
-        regressionLayer
-        ];
-    
-    % plot layers
-    if nn.get('PLOT_LAYERS')
-        lgraph = layerGraph(layers);
-        plot(lgraph)
-    end
-    
-    % specify trianing parameters
-    if nn.get('PLOT_TRAINING')
-        plot_training = 'training-progress';
+    if(isempty(targets{1}))
+        value = {[]};
     else
-        plot_training = 'none';
+        % init layers
+        numLayer = nn.get('LAYERS');
+        if isempty(numLayer)
+            inputs_tmp = nn.get('NNDATA').get('INPUTS');
+            if ~isempty(inputs_tmp{1})
+                inputs_tmp = inputs_tmp{1};
+                numFeatures = length(inputs_tmp);
+                value = [floor(1.5 * numFeatures) floor(1.5 * numFeatures)];
+                nn.set('LAYERS', value);
+            end
+        end
+        layers = [imageInputLayer([1 1 numFeatures], 'Name', 'input')];
+        for i = 1:1:length(numLayer)
+            layers = [layers
+                fullyConnectedLayer(numLayer(i), 'Name', ['fc' num2str(i)])
+                batchNormalizationLayer('Name', ['batchNormalization' num2str(i)])
+                ];
+        end
+        layers = [layers
+            reluLayer('Name', 'relu1')
+            fullyConnectedLayer(1, 'Name', 'fc_output')
+            regressionLayer
+            ];
+
+        % plot layers
+        if nn.get('PLOT_LAYERS')
+            lgraph = layerGraph(layers);
+            plot(lgraph)
+        end
+
+        % specify trianing parameters
+        if nn.get('PLOT_TRAINING')
+            plot_training = 'training-progress';
+        else
+            plot_training = 'none';
+        end
+
+        options = trainingOptions(nn.get('SOLVER'), ...
+            'MiniBatchSize', nn.get('BATCH'), ...
+            'MaxEpochs', nn.get('EPOCHS'), ...
+            'Shuffle', nn.get('SHUFFLE'), ...
+            'Plots', plot_training, ...
+            'Verbose', nn.get('VERBOSE'));
+
+        % train the neural network
+        net = trainNetwork(inputs, targets{1}, layers, options);
+
+        % transform the net object to a cell
+        value = nn.from_net(net);
     end
-
-    options = trainingOptions(nn.get('SOLVER'), ...
-        'MiniBatchSize', nn.get('BATCH'), ...
-        'MaxEpochs', nn.get('EPOCHS'), ...
-        'Shuffle', nn.get('SHUFFLE'), ...
-        'Plots', plot_training, ...
-        'Verbose', nn.get('VERBOSE')); 
-    
-    % train the neural network
-    net = trainNetwork(inputs, targets{1}, layers, options);
-
-    % transform the net object to a cell
-    value = nn.from_net(net);
 else
     value = {};
 end

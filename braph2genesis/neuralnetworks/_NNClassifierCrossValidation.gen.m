@@ -113,38 +113,40 @@ CONFUSION_MATRIX (result, matrix) is an add-up confusion matrix across k folds f
 %%%% ¡calculate!
 nne_dict = nncv.get('NNE_DICT');
 cm_val = 0;
-for i = 1:1:nne_dict.length()
-    cm_val = cm_val + nne_dict.getItem(i).memorize('VAL_CONFUSION_MATRIX');
-end
-if nncv.get('PLOT_CM')
-    targets = nne_dict.getItem(i).get('NNDATA').memorize('VAL_TARGETS');
-    if ~isempty(targets{1})
-        classes = [string(nne_dict.getItem(i).get('NNDATA').get('TARGET_NAME_GR1')), string(nne_dict.getItem(i).get('NNDATA').get('TARGET_NAME_GR2'))];
-        targets_mark = categories(onehotdecode(targets{1}, classes, 2));
-        figure
-        heatmap(targets_mark, targets_mark, cm_val)
-        directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
-        if ~exist(directory, 'dir')
-            mkdir(directory)
-        end
-        filename = [directory filesep 'cv_confusion_matrix.svg'];
-        saveas(gcf, filename);
+value = 0;
+if ~isempty(nne_dict.getItems())
+    for i = 1:1:nne_dict.length()
+        cm_val = cm_val + nne_dict.getItem(i).get('VAL_CONFUSION_MATRIX');
     end
-end
+    if nncv.get('PLOT_CM')
+        targets = nne_dict.getItem(i).get('NNDATA').get('VAL_TARGETS');
+        if ~isempty(targets{1})
+            classes = [string(nne_dict.getItem(i).get('NNDATA').get('TARGET_NAME_GR1')), string(nne_dict.getItem(i).get('NNDATA').get('TARGET_NAME_GR2'))];
+            targets_mark = categories(onehotdecode(targets{1}, classes, 2));
+            figure
+            heatmap(targets_mark, targets_mark, cm_val)
+            directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
+            if ~exist(directory, 'dir')
+                mkdir(directory)
+            end
+            filename = [directory filesep 'cv_confusion_matrix.svg'];
+            saveas(gcf, filename);
+        end
+    end
 
-value = cm_val;
+    value = cm_val;
+end
 
 %%% ¡prop!
 AUC (result, rvector) is the area under the curve scores across k folds for all repetitions.
 %%%% ¡calculate!
 nne_dict = nncv.get('NNE_DICT');
-auc_val = nne_dict.getItem(1).memorize('VAL_AUC');
 auc = {};
 X = {};
 Y = {};
-if ~isempty(auc_val)
+if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('VAL_AUC'))
     for i = 1:1:nne_dict.length()
-        auc_val = nne_dict.getItem(i).memorize('VAL_AUC');
+        auc_val = nne_dict.getItem(i).get('VAL_AUC');
         auc{i} = auc_val{1};
         X{i} = auc_val{2};
         Y{i} = auc_val{3};
@@ -207,13 +209,10 @@ CONTRIBUTION_MAP (result, matrix) is a heat map obtained with feature selection 
 %%%% ¡calculate!
 nne_dict = nncv.get('NNE_DICT');
 heat_map = 0;
-feature_map = nne_dict.getItem(1).memorize('FEATURE_MAP');
-if isempty(feature_map)
-    value = heat_map;
-else
+if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('VAL_AUC'))
     for i = 1:1:nne_dict.length()
-        feature_map = nne_dict.getItem(i).memorize('FEATURE_MAP');
-        auc_val = nne_dict.getItem(i).memorize('VAL_AUC');
+        feature_map = nne_dict.getItem(i).get('FEATURE_MAP');
+        auc_val = nne_dict.getItem(i).get('VAL_AUC');
         feature_map(feature_map == 1) = auc_val{1};
         heat_map = heat_map + feature_map;
     end
@@ -248,7 +247,10 @@ else
     end
 
     value = heat_map;
+else
+    value = heat_map;
 end
+
 
 %%% ¡prop!
 NNE_DICT (result, idict) is the NN evaluators for k folds.

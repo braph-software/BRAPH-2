@@ -73,3 +73,5 @@ nne_test = NNRegressorEvaluator( ...
 
 prediction_test = nne_test.memorize('PREDICTION')
 rmse_test = nne_test.get('RMSE')
+
+close all
