@@ -92,7 +92,7 @@ MEASURES (data, classlist) is the graph measures as input to NN.
 %%%% ¡settings!
 {'Measure'}
 %%%% ¡default!
-{'DegreeAv' 'DegreeAv' 'DegreeAv' 'DegreeAv' 'DegreeAv'}
+{'Degree'}
 
 %%% ¡prop!
 FEATURE_MASK (data, cvector) is a mask for selected features.

@@ -21,12 +21,12 @@ NOTES (metadata, string) are some specific notes about the graph analysis.
 INPUTS (result, cell) is the inputs for training or testing a neural network.
 
 %% ¡methods!
-function [mutinf] = mutual_information_analysis(nnd, X, Y, n)
+function score = mutual_information_analysis(nnd, X, Y, n)
     %MUTUAL_INFORMATION_ANALYSIS computes the mutual information value.
     % 
     % MUTINF = MUTUAL_INFORMATION_ANALYSIS(NND, X, Y, n) compute the mutual
     %  information MUTINF of two discrete variables X and Y. These two vectors
-    %  must have the same length. The higher value of the MUTINF, the
+    %  must have the same length. The higher value of the score, the
     %  closer connection between X and Y.
 
     xmin = min(X, [], 2);
@@ -74,5 +74,5 @@ function [mutinf] = mutual_information_analysis(nnd, X, Y, n)
     p_y(p_y == 0) = 1e-8;
     p_y_x(p_y_x == 0) = 1e-8;
     
-    mutinf = sum(sum(probmatr / size(X, 2) .* log(p_y_x))) - sum(p_y .* log(p_y));
+    score = sum(sum(probmatr / size(X, 2) .* log(p_y_x))) - sum(p_y .* log(p_y));
 end

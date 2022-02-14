@@ -1,5 +1,5 @@
 %% ¡header!
-NNRegressorEvaluator < NNEvaluator (nne, evaluator of a neural network regressor) evaluates the performance of a neural network regressor with a specific dataset.
+NNRegressorEvaluator < NNEvaluator (nne, evaluator for a neural network regressor) evaluates the performance of a neural network regressor with a specific dataset.
 
 %% ¡description!
 This evaluator evaluates the performance of a neural network regressor

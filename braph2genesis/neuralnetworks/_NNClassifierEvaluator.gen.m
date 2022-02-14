@@ -1,5 +1,5 @@
 %% ¡header!
-NNClassifierEvaluator < NNEvaluator (nne, evaluator of a neural network classifier) evaluates the performance of a neural network classifier with a specific dataset.
+NNClassifierEvaluator < NNEvaluator (nne, evaluator for a neural network classifier) evaluates the performance of a neural network classifier with a specific dataset.
 
 %% ¡description!
 This evaluator evaluates the performance of a neural network classifier

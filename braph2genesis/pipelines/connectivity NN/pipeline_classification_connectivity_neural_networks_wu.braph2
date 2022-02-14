@@ -5,7 +5,7 @@
 % 2. It loads the data of two groups of subjects from directories containing XLS files (e.g., CON_group1.xlsx and CON_group2.xlsx).
 % 3. It constructs the dataset using connectivity matrices (CON) based on graphs (WU).
 % 4. It trains the neural netork model.
-% 5. It evaluate the performance.
+% 5. It evaluates the performance.
 % 6. It loads the data of another two groups of subjects from directories containing XLS files (e.g., CON_group1.xlsx and CON_group2.xlsx).
 % 7. It tests the trained classifier on the test dataset.
 x

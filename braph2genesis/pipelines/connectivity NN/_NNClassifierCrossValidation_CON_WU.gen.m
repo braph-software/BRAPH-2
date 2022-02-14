@@ -1,5 +1,5 @@
 %% ¡header!
-NNClassifierCrossValidation_CON_WU < NNClassifierCrossValidation (nncv, cross-validation of a neural network classifier) cross-validates the performance of a neural network classifier.
+NNClassifierCrossValidation_CON_WU < NNClassifierCrossValidation (nncv, cross-validation of a neural network classifier) cross-validates the performance of a neural network classifier with a dataset.
 
 %% ¡description!
 This cross validation performan k-fold cross validation of a neural network

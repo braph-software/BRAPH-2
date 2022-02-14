@@ -1,11 +1,11 @@
 %% ¡header!
-NNClassifierCrossValidation < Element (nncv, cross-validation of a neural network classifier) cross-validate the performance of a neural network classifier .
+NNClassifierCrossValidation < Element (nncv, cross-validation of a neural network classifier) cross-validate the performance of a neural network classifier with a dataset.
 
 %% ¡description!
 This cross validation perform a k-fold cross validation of a neural network
-classifier with desired repetitions. The dataset is split into k consecutive 
-folds with shuffling by default, and each fold is then used once as a 
-validation while the k-1 remaining folds form the training set. 
+classifier with desired repetitions on a dataset. The dataset is split into
+k consecutive folds with shuffling by default, and each fold is then used 
+once as a validation while the k-1 remaining folds form the training set. 
 The confusion matrix, ROC curves, AUCs, and weighted contributing maps will
 be calculated across folds and repetitions.
 
@@ -40,7 +40,7 @@ MEASURES (data, classlist) is the graph measures as input to NN.
 %%%% ¡settings!
 {'Measure'}
 %%%% ¡default!
-{'DegreeAv', 'DegreeAv', 'DegreeAv', 'DegreeAv', 'DegreeAv'}
+{'DegreeAv'}
 
 %%% ¡prop!
 FEATURE_MASK (data, scalar) is a mask for selected features.
@@ -269,7 +269,7 @@ function [avg, CI] = get_CI(nncv, scores)
     %  the corresponding 95% confidence interval.
 
     avg = mean(scores);
-    SEM = std(scores)/sqrt(length(scores));               % Standard Error
-    ts = tinv([0.025  0.975],length(scores)-1);      % T-Score
+    SEM = std(scores)/sqrt(length(scores));               
+    ts = tinv([0.025  0.975],length(scores)-1);     
     CI = avg + ts*SEM;
 end

@@ -1,5 +1,5 @@
 %% ¡header!
-NNEvaluator < Element (nne, evaluator of a neural network) evaluates the performance of a neural network with a specific dataset.
+NNEvaluator < Element (nne, evaluator for a neural network) evaluates the performance of a neural network with a specific dataset.
 
 %% ¡description!
 This evaluator evaluates the performance of a neural network.
