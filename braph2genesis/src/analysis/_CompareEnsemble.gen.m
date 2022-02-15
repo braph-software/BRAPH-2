@@ -26,6 +26,8 @@ WAITBAR (metadata, logical) detemines whether to show the waitbar.
 
 %%% ¡prop!
 VERBOSE (metadata, logical) sets whether to write the progress of the comparisons.
+%%%% ¡default!
+false
 
 %%% ¡prop!
 INTERRUPTIBLE (metadata, scalar) sets whether the comparison computation is interruptible for multitasking.

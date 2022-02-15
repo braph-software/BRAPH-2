@@ -70,8 +70,6 @@ CIU (result, cell) is the upper value of the 95%% confidence interval.
 %%%% ¡calculate!
 [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp);
 value = ci_upper;
-%%%% ¡gui__!
-% % % pl = PPComparisonEnsembleDiff('EL', cp, 'PROP', ComparisonEnsemble.CIU, varargin{:});
 
 %% ¡methods!
 function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
