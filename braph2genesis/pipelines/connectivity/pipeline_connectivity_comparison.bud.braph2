@@ -1,5 +1,5 @@
 %% Pipeline Connectivity Comparison BUD
-%
+
 % This is the pipeline script to compare two groups of subjects using connectivity data and binary undirected graphs using densities.
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
 % 2. It loads the data of two groups of subjects from a directory containing XLS files (e.g., CON_group1.xlsx and CON_group2.xlsx).

@@ -1,5 +1,5 @@
 %% Pipeline Connectivity-Functional Multiplex Analysis BUD
-%
+
 % This is the pipeline script to analyze a group of subjects using connectivity-functional multiplex data and a binary undirected graph using densities.
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
 % 2. It loads the data of a group of subjects from two directories containing XLS files (e.g., CON_group1.xlsx and FUN_group1.xlsx).
