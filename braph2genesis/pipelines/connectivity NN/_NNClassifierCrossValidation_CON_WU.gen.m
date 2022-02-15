@@ -55,6 +55,11 @@ if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
                 'PLOT_ROC', false, ...
                 'PLOT_MAP', false ...
                 );
+            
+            nne.memorize('VAL_PREDICTION');
+            nne.memorize('VAL_AUC');
+            nne.memorize('VAL_CONFUSION_MATRIX');
+            nne.memorize('FEATURE_MAP');
 
             nne_dict.add(nne)
         end
