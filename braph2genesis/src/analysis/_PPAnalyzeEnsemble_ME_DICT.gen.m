@@ -620,6 +620,10 @@ function cb_bring_to_front(pr)
     if check_graphics(pr.f_pg, 'figure')
         gui = get(pr.f_pg, 'UserData');
         gui.cb_bring_to_front()
+    end
+    if check_graphics(pr.f_adj, 'figure')
+        gui = get(pr.f_adj, 'UserData');
+        gui.cb_bring_to_front()
     end    
 end
 function cb_hide(pr)
@@ -654,6 +658,10 @@ function cb_hide(pr)
         gui = get(pr.f_pg, 'UserData');
         gui.cb_hide();
     end 
+    if check_graphics(pr.f_adj, 'figure')
+        gui = get(pr.f_adj, 'UserData');
+        gui.cb_hide();
+    end
 end
 function cb_close(pr)
     %CB_CLOSE closes the figure.
@@ -673,6 +681,9 @@ function cb_close(pr)
     % close plot graph figure
     if ~isempty(pr.f_pg) && check_graphics(pr.f_pg, 'figure')
         delete(pr.f_pg);
+    end
+    if ~isempty(pr.f_adj) && check_graphics(pr.f_adj, 'figure')
+        delete(pr.f_adj);
     end
     
     % close graph class
