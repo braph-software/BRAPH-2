@@ -11,7 +11,7 @@ are calculated across the testing sets over k folds.
 
 %% ¡props_update!
 %%% ¡prop!
-NNE_DICT (result, idict) is the NN evaluators for k folds.
+NNE_DICT (result, idict) is the NN evaluators for k folds across repetitions.
 %%%% ¡settings!
 'NNClassifierEvaluator'
 %%%% ¡default!
@@ -65,6 +65,7 @@ if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
         end
     end
 end
+
 value = nne_dict;
 
 %% ¡tests!
