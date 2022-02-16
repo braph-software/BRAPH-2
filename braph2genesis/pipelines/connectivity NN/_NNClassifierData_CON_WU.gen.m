@@ -129,10 +129,10 @@ Group('SUB_CLASS', 'SubjectCON')
 %%%% ¡name!
 Example 1
 %%%% ¡code!
-example_NN_WU_Classification_GraphMeasures
+example_NN_CON_WU_Classification_GraphMeasures
 
 %%% ¡test!
 %%%% ¡name!
 Example 2
 %%%% ¡code!
-example_NN_WU_Classification_AdjacencyMatrix
+example_NN_CON_WU_Classification_AdjacencyMatrix

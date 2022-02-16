@@ -68,7 +68,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
         data = ifft(ft, NFFT);
     end
     
-    A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
+    A = Correlation.getAdjacencyMatrix(data, nnd.get('CORRELATION_RULE'), nnd.get('NEGATIVE_WEIGHT_RULE'));
     
     g = GraphWU( ...
         'ID', ['g ' sub.get('ID')], ...
@@ -109,7 +109,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
         data = ifft(ft, NFFT);
     end
     
-    A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
+    A = Correlation.getAdjacencyMatrix(data, nnd.get('CORRELATION_RULE'), nnd.get('NEGATIVE_WEIGHT_RULE'));
     
     g = GraphWU( ...
         'ID', ['g ' sub.get('ID')], ...
@@ -131,4 +131,4 @@ Group('SUB_CLASS', 'SubjectFUN')
 %%%% ¡name!
 Example
 %%%% ¡code!
-example_NN_WU_Regression_AdjacencyMatrix
+example_NN_FUN_WU_Regression_AdjacencyMatrix

@@ -72,4 +72,4 @@ Group('SUB_CLASS', 'SubjectCON')
 %%%% ¡name!
 Example
 %%%% ¡code!
-example_NN_WU_Regression_AdjacencyMatrix
+example_NN_CON_WU_Regression_AdjacencyMatrix

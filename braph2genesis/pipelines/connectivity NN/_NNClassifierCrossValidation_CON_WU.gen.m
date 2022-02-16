@@ -73,4 +73,4 @@ value = nne_dict;
 %%%% ¡name!
 Example
 %%%% ¡code!
-example_NNCV_WU_Classification_AdjacencyMatrix
+example_NNCV_CON_WU_Classification_AdjacencyMatrix
