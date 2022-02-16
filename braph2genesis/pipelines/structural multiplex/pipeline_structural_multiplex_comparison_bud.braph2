@@ -1,5 +1,5 @@
 %% Pipeline Structural Multiplex Comparison BUD
-%
+
 % This is the pipeline script to compare two groups of subjects using structural multiplex data and undirected graphs using densities.
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
 % 2. It loads the data of two groups of subjects from XLS files (e.g., ST_MP_group1.xlsx and ST_MP_group2.xlsx).
