@@ -59,12 +59,6 @@ function [h_figure, h_axes, subpanel] = draw(pr, varargin)
     % overwrite close req
     set(pr.pp, 'DeleteFcn', {@cb_close_fs})
     
-    % set layer and number of subjects
-    g_dict = pr.get('G_DICT');
-    pr.set('SUBJECT') = g_dict.length();
-    tmp_g = g_dict.getItem(1);
-    pr.set('LAYER') = size(tmp_g.get('A'), 2);
-    
     function cb_close_fs(~, ~)
         if ~isempty(pr.h_settings) && check_graphics(pr.h_settings, 'figure')
             close(pr.h_settings)
@@ -117,14 +111,67 @@ function f_settings = settings(pr, varargin)
     ui_parent_axes = pr.h_axes;
     matrix_plot = pr.h_plot;
     
+    g_dict = pr.get('G_DICT');
+    g_check = g_dict.length();
+    tmp_g = g_dict.getItem(1);
+    layer_check = size(tmp_g.get('B'), 2);
+    
     % new part layers and subjects
     mod = 0;
-    if pr.get('SUBJECT') > 1
+    if g_check > 1
         mod = mod + .1; % substract from height to all uicontrols
-        subject_select_popup = uicontrol('Parent', ui_parent, 'Units', 'normalized');
+        
+        subject_selector_id = uicontrol(ui_parent, ...
+            'Style', 'text', ...
+            'Units', 'normalized', ...
+            'String', 'Subject Selection', ...
+            'BackgroundColor', pr.h_settings.Color, ...
+            'Position', [.02 .82 .3 .07]);
+        
+        subject_list = cellfun(@(x) ['Subject: ' num2str(x)], num2cell([1:g_check]), 'UniformOutput', false);
+        subject_select_popup = uicontrol('Parent', ui_parent, ...
+            'Style', 'popupmenu', ...
+            'Units', 'normalized', ...            
+            'Position', [.33 .82 .3 .07], ...
+            'String', subject_list, ...
+            'TooltipString', 'Select a subject.', ...
+            'Callback', {@cb_subject_index} ...
+            );
     end
-    if pr.get('LAYER') > 1
+    
+    function cb_subject_index(~, ~)
+        val = subject_select_popup.Value;
+        str = subject_select_popup.String;
+        pr.set('subject', val); 
+        update_matrix();
+    end
+
+    if layer_check > 1 
+        layer_selector_id = uicontrol(ui_parent, ...
+            'Style', 'text', ...
+            'Units', 'normalized', ...
+            'String', 'Layer Selection', ...
+            'BackgroundColor', pr.h_settings.Color, ...
+            'Position', [.02 .82-mod .3 .07]);
+        
+        layer_list = cellfun(@(x) ['Layer: ' num2str(x)], num2cell([1:layer_check]), 'UniformOutput', false);
+        layer_select_popup = uicontrol('Parent', ui_parent, ...
+            'Style', 'popupmenu', ...
+            'Units', 'normalized', ...            
+            'Position', [.33 .82-mod .3 .07], ...
+            'String', layer_list, ...
+            'TooltipString', 'Select a layer.', ...
+            'Callback', {@cb_layer_index} ...
+            );
+        
         mod = mod + .1;
+    end
+    
+    function cb_layer_index(~, ~)
+        val = layer_select_popup.Value;
+        str = layer_select_popup.String;
+        pr.set('layer', val);
+        update_matrix();
     end
     
     ui_matrix_weighted_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox');
@@ -281,7 +328,8 @@ function f_settings = settings(pr, varargin)
     end
     function update_matrix()
         % get A and layer
-        A = pr.get('GRAPH').get('A');
+        g_dict_item = pr.get('G_DICT').getItem(pr.get('Subject'));
+        A = g_dict_item.get('B');
         layer_to_plot = pr.get('Layer');
         % i need to ask graph to return the plot 'Graph.PlotType'
         if  get(ui_matrix_histogram_checkbox, 'Value') % histogram

@@ -527,7 +527,13 @@ function cb_graph_adj_figure(pr)
         el = pr.get('EL');
         prop = pr.get('PROP');
         g = el.get(prop);
-        pg = PlotAdjacencyMatrix('Graph', g);
+        
+        g_dict = IndexedDictionary( ...
+            'it_class', 'GRAPH' ...
+            );
+        g_dict.add(g);
+        pg = PlotAdjacencyMatrix('G_DICT', g_dict);
+        
         pg.draw('Parent', pr.f_adj)
         set(pr.f_adj, 'UserData', pg);
 

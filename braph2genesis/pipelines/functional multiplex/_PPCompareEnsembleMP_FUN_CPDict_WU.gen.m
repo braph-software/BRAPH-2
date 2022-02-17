@@ -367,7 +367,10 @@ function cb_graph_ui_figure(pr)
     set_braph2_icon(pr.f_pc)
     menu_about = BRAPH2.add_menu_about(pr.f_pc);
     
-    pg = PlotAdjacencyMatrix('Graph', pr.graph);   
+    el = pr.get('EL');
+    a1 = el.get('A1');
+    g_dict_tmp = a1.get('G_DICT');
+    pg = PlotAdjacencyMatrix('G_DICT', g_dict_tmp);   
 
     pg.draw('Parent', pr.f_pc)
     set(pr.f_pc, 'UserData', pg);
