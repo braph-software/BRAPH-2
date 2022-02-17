@@ -23,6 +23,7 @@ graph_btn
 plot_graph_btn
 plot_type_adj
 line_plot_tglbtn % line plot toggle button
+plot_brain_btn
 mlist
 selected
 already_calculated
@@ -30,6 +31,7 @@ graph % internal graph type
 f_m % array of measure class figures
 f_pg % figure for plot graph
 f_adj % figure for plot adj
+f_br % figure for plot brain measures
 f_g % figure for class graph
 
 %% ¡props_update!
@@ -104,6 +106,18 @@ function h_panel = draw(pr, varargin)
             'Callback', {@cb_plot_type_line} ...
             );
         
+        % brain view
+        pr.plot_brain_btn = uicontrol( ...
+            'Style', 'pushbutton', ...
+            'Tag', 'pushbutton_value', ...
+            'Parent', pr.p, ...
+            'Units', 'normalized', ...
+            'String', 'Brain View', ...
+            'TooltipString', 'Open the Brain View.', ...
+            'Position', [.58 .71 .2 .2], ...
+            'Callback', {@cb_brain_view} ...
+            );
+        
     end
     
     function cb_graph_btn(~, ~) % (src, event)
@@ -114,7 +128,10 @@ function h_panel = draw(pr, varargin)
     end
     function cb_plot_type_line(~, ~)
         pr.cb_graph_ui_figure();
-    end        
+    end      
+    function cb_brain_view (~, ~)
+        pr.cb_brain_view_fig();
+    end
 
     if isempty(pr.measure_tbl) || ~isgraphics(pr.measure_tbl, 'uitable')
         pr.mlist = [];
@@ -495,7 +512,7 @@ function cb_graph_ui_figure(pr)
     pr.update()
 end
 function cb_graph_adj_figure(pr)
-    f_pg = ancestor(pr.p, 'Figure'); % BrainAtlas GUI
+    f_pg = ancestor(pr.p, 'Figure'); 
     f_ba_x = Plot.x0(f_pg, 'pixels');
     f_ba_y = Plot.y0(f_pg, 'pixels');
     f_ba_w = Plot.w(f_pg, 'pixels');
@@ -544,6 +561,41 @@ function cb_graph_adj_figure(pr)
             delete(pr.f_adj);
             pr.update()
         end
+
+    pr.update()
+end
+function cb_brain_view_fig(pr)
+    f_pg = ancestor(pr.p, 'Figure');
+    f_ba_x = Plot.x0(f_pg, 'pixels');
+    f_ba_y = Plot.y0(f_pg, 'pixels');
+    f_ba_w = Plot.w(f_pg, 'pixels');
+    f_ba_h = Plot.h(f_pg, 'pixels');
+
+    screen_x = Plot.x0(0, 'pixels');
+    screen_y = Plot.y0(0, 'pixels');
+    screen_w = Plot.w(0, 'pixels');
+    screen_h = Plot.h(0, 'pixels');
+
+    x = f_ba_x + f_ba_w;
+    h = f_ba_h / 1.5;
+    y = f_ba_y + f_ba_h - h;
+    w = screen_w - x;
+    
+    if isempty(pr.f_br) || ~check_graphics(pr.f_br, 'figure')
+        pr.f_br = figure( ...
+            'NumberTitle', 'off', ...
+            'Units', 'normalized', ...
+            'Position', [x/screen_w y/screen_h w/screen_w h/screen_h], ...
+            'CloseRequestFcn', {@cb_f_br_close} ...
+            );
+        set_braph2_icon(pr.f_br)
+        menu_about = BRAPH2.add_menu_about(pr.f_br);
+    end
+    
+    function cb_f_br_close(~, ~)
+        delete(pr.f_br);
+        pr.update()
+    end
 
     pr.update()
 end
@@ -634,6 +686,11 @@ function cb_bring_to_front(pr)
         gui = get(pr.f_adj, 'UserData');
         gui.cb_bring_to_front()
     end 
+    
+    if check_graphics(pr.f_br, 'figure')
+        gui = get(pr.f_br, 'UserData');
+        gui.cb_bring_to_front()
+    end 
 end
 function cb_hide(pr)
     %CB_HIDE hides the figure and its settings figure.
@@ -671,6 +728,10 @@ function cb_hide(pr)
         gui = get(pr.f_adj, 'UserData');
         gui.cb_hide();
     end 
+    if check_graphics(pr.f_br, 'figure')
+        gui = get(pr.f_br, 'UserData');
+        gui.cb_hide();
+    end 
 end
 function cb_close(pr)
     %CB_CLOSE closes the figure.
@@ -695,6 +756,10 @@ function cb_close(pr)
     % close adj graph figure
     if ~isempty(pr.f_adj) && check_graphics(pr.f_adj, 'figure')
         delete(pr.f_adj);
+    end
+    
+    if ~isempty(pr.f_br) && check_graphics(pr.f_br, 'figure')
+        delete(pr.f_br);
     end
     
     % close graph class
