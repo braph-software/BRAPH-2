@@ -156,16 +156,31 @@ if length(selected_idx) == 1 && abs(selected_idx) <= 1
     selected_idx = nne.get('NNDATA').get('FEATURE_MASK_ANALYSIS');
 end
 if ~isempty(selected_idx)
-    if string(nne.get('NNDATA').get('INPUT_TYPE')) == 'graph_measures'
-        feature = nne.get('NNDATA').get('MEASURES');
-        fm = zeros(1, length(feature));
-        ticklabel = feature;
-        fontsize = 12;
-    else
-        feature = nne.get('NNDATA').get('TRAIN_G_DICT_1').getItem(1).get('A');
-        fm = zeros(length(feature{1}));
-        ticklabel = 0:size(fm, 2);
-        fontsize = 5;
+    switch string(nne.get('NNDATA').get('INPUT_TYPE'))
+        case 'graph_measures'
+            feature = nne.get('NNDATA').get('MEASURES');
+            fm = zeros(1, length(feature));
+            x_ticklabel = feature;
+            y_ticklabel = '';
+            fontsize = 12;
+
+        case 'adjacency_matrices'
+            feature = nne.get('NNDATA').get('TRAIN_G_DICT_1').getItem(1).get('A');
+            fm = zeros(length(feature{1}));
+            x_ticklabel = 0:size(fm, 2);
+            y_ticklabel = 0:size(fm, 1);
+            fontsize = 5;
+
+        case 'structural_data'
+            data = nne.get('NNDATA').data_construction(nne.get('NNDATA').get('GR1'));
+            feature = data{1};
+            fm = zeros(1, length(feature));
+            br = nne.get('NNDATA').get('GR1').get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').getItems();
+            br = cellfun(@(v)v.get('ID'), br, 'UniformOutput', false);
+            x_ticklabel = br;
+            y_ticklabel = '';
+            fontsize = 5;
+        otherwise
     end
 
     fm(selected_idx) = 1;
@@ -178,8 +193,8 @@ if ~isempty(selected_idx)
 
         xticks([1:size(fm, 2)]);
         yticks([1:size(fm, 1)]);
-        xticklabels(ticklabel);
-        yticklabels(0:size(fm, 1));
+        xticklabels(x_ticklabel);
+        yticklabels(y_ticklabel);
         a = get(gca,'XTickLabel');
         set(gca, 'XTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
         a = get(gca,'YTickLabel');

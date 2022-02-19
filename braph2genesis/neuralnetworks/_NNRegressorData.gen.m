@@ -83,18 +83,6 @@ if length(value) == 1 & value < 1
 end
 
 %%% ¡prop!
-INPUT_TYPE (data, option) is the input type for training or testing the NN.
-%%%% ¡settings!
-{'adjacency_matrices' 'graph_measures'}
-
-%%% ¡prop!
-MEASURES (data, classlist) is the graph measures as input to NN.
-%%%% ¡settings!
-{'Measure'}
-%%%% ¡default!
-{'Degree'}
-
-%%% ¡prop!
 FEATURE_MASK (data, cvector) is a mask for selected features.
 %%%% ¡default!
 0.05
@@ -103,31 +91,13 @@ FEATURE_MASK (data, cvector) is a mask for selected features.
 FEATURE_MASK_ANALYSIS (result, cvector) is an analysis for generating mask for selected features.
 %%%% ¡calculate!
 density = nnd.get('FEATURE_MASK');
-if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
-    adjs_gr = nnd.get('TRAIN_G_DICT').getItems();
-    data = {};
-    for i = 1:length(adjs_gr)
-        data{end+1} = cell2mat(adjs_gr{i}.get('A'));
-    end
-else
-    adjs_gr = nnd.get('TRAIN_G_DICT').getItems();
-    measure_class = nnd.get('MEASURES');
-    data = {};
-    for i = 1:length(adjs_gr)
-        m = [];
-        for j = 1:length(measure_class)
-            m = [m; cell2mat(adjs_gr{i}.getMeasure(measure_class{j}).get('M'))];
-        end
-        data{end+1} = m;
-    end
-end
-
+data = nnd.data_construction_graph(nnd.get('TRAIN_G_DICT'), nnd.get('INPUT_TYPE'), nnd.get('MEASURES'));
 if(isempty(data))
     value = [];
 else
     y = nnd.get('TARGETS');
     y = y{1};
-    for j = 1:size(data{1},2)
+    for j = 1:size(data{1},1)
         for k = 1:size(data{1},2)
             data_per_feature = cellfun(@(v)v(j, k), data);
             label = y';
@@ -153,7 +123,11 @@ VAL_G_DICT (result, idict) is the graph obtained from subjects in validation set
 %%% ¡prop!
 VAL_INPUTS (result, cell) is the inputs from validation set for testing a neural network.
 %%%% ¡calculate!
-value = nnd.input_construction(nnd.get('VAL_G_DICT'));
+mask = nnd.get('FEATURE_MASK');
+if length(mask) == 1 && abs(mask) <= 1
+    mask = nnd.get('FEATURE_MASK_ANALYSIS');
+end
+value = nnd.input_construction(nnd.get('VAL_G_DICT'), nnd.get('INPUT_TYPE'), nnd.get('MEASURES'), mask);
 
 %%% ¡prop!
 TARGETS (result, cell) is the label for the dataset.
@@ -176,47 +150,25 @@ TARGET_NAME (data, string) is the name of the traget.
 %%% ¡prop!
 INPUTS (result, cell) is the inputs for training or testing a neural network.
 %%%% ¡calculate!
-value = nnd.input_construction(nnd.get('TRAIN_G_DICT'));
+mask = nnd.get('FEATURE_MASK');
+if length(mask) == 1 && abs(mask) <= 1
+    mask = nnd.get('FEATURE_MASK_ANALYSIS');
+end
+value = nnd.input_construction(nnd.get('TRAIN_G_DICT'), nnd.get('INPUT_TYPE'), nnd.get('MEASURES'), mask);
 
 %% ¡methods!
-function inputs = input_construction(nnd, g_dict)
+function inputs = input_construction(nnd, g_dict, input_type, measure_class, mask)
     %INPUT_CONSTRUCTION constructs the inputs for neural networks.
     % 
-    % INPUTS = INPUT_CONSTRUCTION(NN, G_DICT) constructs
-    %  the input for training or testing neural networks. The connectivity
-    %  matrices will firstly extracted from graph dict G_DICT. Then the
-    %  extracted features will be masked by the feature mask. The selected
-    %  features will construct the eventual inputs INPUTS for the neural 
-    %  network.
+    % INPUTS = INPUT_CONSTRUCTION(NN, G_DICT, INPUT_TYPE, MEASURE_CLASS, MASK) 
+    %  constructs the input for training or testing neural networks. Based
+    %  on the INPUT_TYPE, either the adjacency matrices or the graph
+    %  measures in MEASURE_CLASS will firstly extracted from graph dict G_DICT. 
+    %  Then the extracted features will be masked by the feature mask. The 
+    %  selected features will construct the eventual inputs INPUTS for the
+    %  neural network.
     
-    if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
-        % get the connectivity matrices
-        adjs_gr = g_dict.getItems();
-        data_gr = {};
-        for i = 1:length(adjs_gr)
-            data_gr{end+1} = cell2mat(adjs_gr{i}.get('A'));
-        end
-    else
-        % get the connectivity matrices
-        adjs_gr = g_dict.getItems();
-        data_gr = {};
-        measure_class = nnd.get('MEASURES');
-        for i = 1:length(adjs_gr)
-            m = [];
-            for j = 1:length(measure_class)
-                m = [m; cell2mat(adjs_gr{i}.getMeasure(measure_class{j}).get('M'))];
-            end
-            data_gr{end+1} = m;
-        end
-    end
-
-    % get the feature mask
-    mask = nnd.get('FEATURE_MASK');
-    if length(mask) == 1 && abs(mask) <= 1 
-        mask = nnd.get('FEATURE_MASK_ANALYSIS');
-    end
-    
-    % construct the inputs
+    data_gr = nnd.data_construction_graph(g_dict, input_type, measure_class);  
     inputs = cellfun(@(v)v(mask), data_gr, 'UniformOutput', false);
     inputs = {cat(2, inputs{:})};
 end
