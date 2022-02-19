@@ -4,7 +4,7 @@ NNRegressorData_CON_WU < NNRegressorData (nnd, data of a neural network regresso
 %% ¡description!
 This dataset can be used to train or test a neural network regressor. The
 INPUTS and TARGETS are the two cells for trianing a neurla network. The INPUTS 
-cell is obtained direcly from DTI connectivity matrices, and is represent as 
+cell is obtained direcly from DTI connectivity matrices, and is represented as 
 floating point feature cell. Feature selection procedure can be implemented 
 when constructing the INPUTS. The TARGETS cell holds the target values for 
 the trianing samples. 
@@ -72,4 +72,4 @@ Group('SUB_CLASS', 'SubjectCON')
 %%%% ¡name!
 Example
 %%%% ¡code!
-example_NN_WU_Regression_AdjacencyMatrix
+example_NN_CON_WU_Regression_AdjacencyMatrix

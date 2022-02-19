@@ -72,7 +72,7 @@ if nn.check_nn_toolboxes()
     % get inputs
     inputs = nn.get('NNDATA').get('INPUTS');
     inputs = inputs{1};
-    numFeatures = length(inputs);
+    numFeatures = size(inputs, 1);
     inputs = reshape(inputs, [1, 1, size(inputs, 1), size(inputs, 2)]);
     targets = nn.get('NNDATA').get('TARGETS');
     if(isempty(targets{1}))
@@ -84,7 +84,6 @@ if nn.check_nn_toolboxes()
             inputs_tmp = nn.get('NNDATA').get('INPUTS');
             if ~isempty(inputs_tmp{1})
                 inputs_tmp = inputs_tmp{1};
-                numFeatures = length(inputs_tmp);
                 value = [floor(1.5 * numFeatures) floor(1.5 * numFeatures)];
                 nn.set('LAYERS', value);
             end
