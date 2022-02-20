@@ -291,7 +291,7 @@ function cb_brain_view_fig(pr)
         el = pr.get('EL');
         prop = pr.get('PROP');
         
-        graph = el.get('G');
+        graph = el.get('c').get('a1').get('g');
         
         if isequal(graph.getClass(), 'MultigraphBUD')
             type = 'Densities';
@@ -304,7 +304,7 @@ function cb_brain_view_fig(pr)
         prop_tag = el.getPropTag(prop);
         
         pbv = PlotBrainView('COMP', el, ...
-            'Atlas', graph.get('BRAINATLAS'), ...
+            'Atlas', atlas, ...
             'PROPTAG', prop_tag, ...
             'Type', type);
 
