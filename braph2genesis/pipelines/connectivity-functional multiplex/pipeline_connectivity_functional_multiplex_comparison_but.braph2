@@ -1,5 +1,5 @@
 %% Pipeline Connectivity-Functional Multiplex Comparison BUT
-%
+
 % This is the pipeline script to compare two groups of subjects using connectivity-functional multiplex data and undirected graphs using thresholds.
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
 % 2. It loads the data of two groups of subjects from two directories containing XLS files (e.g., CON_group1.xlsx and FUN_group1.xlsx).

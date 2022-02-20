@@ -161,9 +161,9 @@ if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('VAL_AUC'))
             hold on;
             Xadjusted = zeros(1, length(X{i}));
             aux= 0.00001;
-            for i = 1 : length(X{i})
-                if i ~= 1
-                    Xadjusted(i) = X{i}(i) + aux;
+            for j = 1 : length(X{i})
+                if j ~= 1
+                    Xadjusted(j) = X{i}(j) + aux;
                     aux = aux + 0.00001;
                 end
             end
