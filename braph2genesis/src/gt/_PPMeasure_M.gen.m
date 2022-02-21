@@ -160,9 +160,9 @@ function cb_brain_view_fig(pr)
         
         graph = el.get('G');
         
-        if isequal(graph.getClass(), 'MultigraphBUD')
+        if isequal(graph.getClass(), 'MultigraphBUD') || isequal(graph.getClass(), 'MultiplexBUD')
             type = 'Densities';
-        elseif isequal(graph.getClass(), 'MultigraphBUT')
+        elseif isequal(graph.getClass(), 'MultigraphBUT') || isequal(graph.getClass(), 'MultiplexBUT')
             type = 'Thresholds';
         else
             type = 'Weighted';

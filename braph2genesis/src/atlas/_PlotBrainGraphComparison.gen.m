@@ -1758,13 +1758,21 @@ function h = getMCRPanel(pl)
     measure_data = comparison.get(prop_tag);
     m = comparison.get('MEASURE');
     fdr_lim = [];
-    
+
     d_t_check = 0;
+    layer_element = pl.get('comp').get('c').get('a1').get('g').get('b');
+    layer_check = 0;
+    d_t_check = 0;
+    layer_dim = 1;
     if size(measure_data, 1) > 1 % density or threshold
-        d_t_check = 1;        
-        d_or_t = pl.get('type');        
+        d_t_check = 1;
+        d_or_t = pl.get('type');
     end
-    
+    if size(layer_element, 2) > 1 % mp
+        layer_check = 1;
+        layer_dim =  size(layer_element, 2);
+    end
+
     % p1 and p2 values because we need the fdr
     p1_fdr = comparison.get('P1');
     p2_fdr = comparison.get('P2');
@@ -1791,11 +1799,11 @@ function h = getMCRPanel(pl)
 
     % nodal measure figure options
     measures_panels = uipanel(ui_measure_container_panel, 'Units', 'normalized', 'BackgroundColor', BKGCOLOR);
-    if d_t_check 
+    if d_t_check
         d_t_text = uicontrol(measures_panels, 'Style', 'text', 'BackgroundColor', BKGCOLOR);
         d_t_selector = uicontrol(measures_panels, 'Style', 'popup', 'String', {''});
     end
-    if size(measure_data, 2) > 1
+    if layer_check
         ui_layer_text = uicontrol(measures_panels, 'Style', 'text', 'BackgroundColor', BKGCOLOR);
         ui_layer_selector = uicontrol(measures_panels, 'Style', 'popup', 'String', {''});
     end
@@ -1807,7 +1815,7 @@ function h = getMCRPanel(pl)
     ui_slider_meas_spheretransparency = uicontrol(measures_panels, 'Style', 'slider');
     ui_checkbox_meas_labelsize = uicontrol(measures_panels, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
     ui_edit_meas_labelsize = uicontrol(measures_panels, 'Style', 'edit');
-    
+
     %% Callback functions
         function init_measures_panel()
 
@@ -1868,11 +1876,11 @@ function h = getMCRPanel(pl)
                 set(d_t_selector, ...
                     'Units', 'normalized', ...
                     'Position', [.41 .91 .2 .08], ...
-                    'String', cellfun(@(x) num2str(x),  num2cell([1:size(measure_data, 1)]) , 'UniformOutput', false), ...
+                    'String', cellfun(@(x) num2str(x),   num2cell([1:size(measure_data, 1)/layer_dim]) , 'UniformOutput', false), ...
                     'Callback', {@cb_d_t_selector} ...
                     )
             end
-            if size(measure_data, 2) > 1
+            if layer_check
                 set(ui_layer_text, ...
                     'Units', 'normalized', ...
                     'Position', [.61 .91 .15 .08], ...
@@ -1884,7 +1892,7 @@ function h = getMCRPanel(pl)
                 set(ui_layer_selector, ...
                     'Units', 'normalized', ...
                     'Position', [.76 .91 .2 .08], ...
-                    'String', cellfun(@(x) num2str(x),  num2cell([1:size(measure_data, 2)]) , 'UniformOutput', false), ...
+                    'String', cellfun(@(x) num2str(x),  num2cell([1:layer_dim]) , 'UniformOutput', false), ...
                     'Callback', {@cb_layer_selector} ...
                     )
             end
@@ -1950,7 +1958,7 @@ function h = getMCRPanel(pl)
             set(ui_edit_meas_labelsize, 'Position', [.31 .26 .6 .08])
             set(ui_edit_meas_labelsize, 'HorizontalAlignment', 'center')
             set(ui_edit_meas_labelsize, 'FontWeight', 'bold')
-            set(ui_edit_meas_labelsize, 'Callback', {@cb_edit_meas_labelsize}) 
+            set(ui_edit_meas_labelsize, 'Callback', {@cb_edit_meas_labelsize})
 
         end
         function cb_checkbox_meas_fdr1(~,~)  %  (src,event)
@@ -2098,20 +2106,21 @@ function h = getMCRPanel(pl)
         function update_brain_meas_plot()
             if ~isempty(measure_data)
                 if  Measure.is_nodal(m)
-                    if size(measure_data, 1) > 1 && size(measure_data, 2) == 1 %  d/t but not mp
+                    if d_t_check && ~layer_check  %  d/t but not mp
                         measure_data_inner = measure_data{get(d_t_selector, 'Value')};
-                    elseif size(measure_data, 2) > 1 && size(measure_data, 1) == 1 % mp but no d/t
+                    elseif layer_check && ~d_t_check % mp but no d/t
                         measure_data_inner = measure_data{get(ui_layer_selector, 'Value')};
-                    elseif size(measure_data, 2) > 1 && size(measure_data, 1) > 1 % mp and d/t
-                        measure_data_inner = measure_data{get(d_t_selector, 'Value'), get(ui_layer_selector, 'Value')};
-                    else 
+                    elseif layer_check && d_t_check % mp and d/t
+                        tmp_diff = layer_dim-get(ui_layer_selector, 'Value');
+                        measure_data_inner = measure_data{get(d_t_selector, 'Value')*layer_dim-tmp_diff};
+                    else
                         measure_data_inner = measure_data{1};
                     end
-                else  
+                else
                     measure_warn_f = warndlg('BRAPH 2 only visualize nodal measures.');
-                    set_braph2_icon(measure_warn_f);                    
+                    set_braph2_icon(measure_warn_f);
                 end
-                
+
                 if any(isnan(measure_data_inner)) || any(isinf(measure_data_inner))
                     nan_warn_f = warndlg('A value is not a finite real number.');
                     set_braph2_icon(nan_warn_f);
