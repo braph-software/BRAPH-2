@@ -146,30 +146,86 @@ function update(pr)
 
     el = pr.get('EL');
     prop = pr.get('PROP');
-    value = el.getr(prop);  
+    value = el.getr(prop);
     label = el.get('C').get('A1').getPropTag(9);
-   
+    fdr_q_value = 0.05;
+    fdr_style = [1 1 0];
+
     if el.isLocked(prop)
         set(pr.comparison_tbl, ...
             'Enable', pr.get('ENABLE'), ...
             'ColumnEditable', false ...
             )
     end
-    
+
     if  size(value, 2) > 2
         set(pr.slider_text, ...
             'String', [label ' ' num2str(round(get(pr.slider, 'Value')))]);
         set(pr.second_slider_text, ...
             'String', [label ' ' num2str(round(get(pr.second_slider, 'Value')))]);
+        
+        % set p values mask
+        tmp_value = value{round(get(pr.slider, 'Value')), round(get(pr.second_slider, 'Value'))};
+        p1 = el.get('P1');
+        p1 = p1{round(get(pr.slider, 'Value')), round(get(pr.second_slider, 'Value'))};
+
+        if Measure.is_nodal(el.get('measure'))
+            p1 = p1';
+            [~, mask] = fdr(p1, fdr_q_value);
+            mask = mask';
+        else
+            [~, mask] = fdr(p1, fdr_q_value);
+        end
+
+        for i = 1:size(tmp_value, 1)
+            for j = 1:size(tmp_value, 2)
+                if mask(i, j)
+                    clr = dec2hex(round(fdr_style * 255), 2)';
+                    clr = ['#'; clr(:)]';
+
+                    tmp_value(ll, mm) = {strcat(...
+                        ['<html><body bgcolor="' clr '" text="#000000" width="100px">'], ...
+                        num2str(tmp_data{ll, mm}))};
+                end
+            end
+        end
+
         set(pr.comparison_tbl, ...
-            'Data', value{round(get(pr.slider, 'Value')), round(get(pr.second_slider, 'Value'))}, ...
+            'Data', , ...
             'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-            'ColumnEditable', false)        
-    else        
+            'ColumnEditable', false)
+    else
         set(pr.slider_text, ...
             'String', [label ' ' num2str(round(get(pr.slider, 'Value')))]);
+
+        % set p values mask
+        tmp_value = value{round(get(pr.slider, 'Value'))};
+        p1 = el.get('P1');
+        p1 = p1{round(get(pr.slider, 'Value'))};
+
+        if Measure.is_nodal(el.get('measure'))
+            p1 = p1';
+            [~, mask] = fdr(p1, fdr_q_value);
+            mask = mask';
+        else
+            [~, mask] = fdr(p1, fdr_q_value);
+        end
+
+        for i = 1:size(tmp_value, 1)
+            for j = 1:size(tmp_value, 2)
+                if mask(i, j)
+                    clr = dec2hex(round(fdr_style * 255), 2)';
+                    clr = ['#'; clr(:)]';
+
+                    tmp_value(ll, mm) = {strcat(...
+                        ['<html><body bgcolor="' clr '" text="#000000" width="100px">'], ...
+                        num2str(tmp_data{ll, mm}))};
+                end
+            end
+        end
+
         set(pr.comparison_tbl, ...
-            'Data', value{round(get(pr.slider, 'Value'))}, ...
+            'Data', tmp_value, ...
             'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
             'ColumnEditable', false)
     end
@@ -181,7 +237,7 @@ function update(pr)
             'ColumnEditable', false ...
             )
     end
-    
+
 end
 function redraw(pr, varargin)
     %REDRAW redraws the element graphical panel.
