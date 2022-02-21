@@ -84,6 +84,9 @@ f_measures_settings
 %%% ¡prop!
 ME (metadata, item) is the measure.
 
+%%% ¡prop!
+TYPE (metadata, string) is the type of measure.
+
 %% ¡methods!
 function h_panel = draw(pl, varargin)
     %DRAW draws the brain atlas graph graphical panel.
@@ -1725,12 +1728,8 @@ function h = getMCRPanel(pl)
     measure_data = pl.get('ME').get('M');
     d_t_check = 0;
     if size(measure_data, 1) > 1 % density or threshold
-        d_t_check = 1;
-        if  isa(pl.get('me').get('g'), 'MultigraphBUT')
-            d_or_t = 'Threshold';
-        else
-            d_or_t = 'Density';
-        end
+        d_t_check = 1;        
+        d_or_t = pl.get('type');        
     end
 
     fdr_lim = [];
@@ -1973,7 +1972,7 @@ function h = getMCRPanel(pl)
                         measure_data_inner = measure_data{get(ui_layer_selector, 'Value')};
                     elseif size(measure_data, 2) > 1 && size(measure_data, 1) > 1 % mp and d/t
                         measure_data_inner = measure_data{get(d_t_selector, 'Value'), get(ui_layer_selector, 'Value')};
-                    else % wu
+                    else 
                         measure_data_inner = measure_data{1};
                     end
                 else

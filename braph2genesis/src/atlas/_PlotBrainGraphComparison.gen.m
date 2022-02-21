@@ -87,6 +87,9 @@ COMP (metadata, item) is the comparison.
 %%% ¡prop!
 PROPTAG(metadata, string) is a prop tag.
 
+%%% ¡prop!
+TYPE (metadata, string) is the type of measure.
+
 %% ¡methods!
 function h_panel = draw(pl, varargin)
     %DRAW draws the brain atlas graph graphical panel.
@@ -1755,7 +1758,13 @@ function h = getMCRPanel(pl)
     measure_data = comparison.get(prop_tag);
     m = comparison.get('MEASURE');
     fdr_lim = [];
-
+    
+    d_t_check = 0;
+    if size(measure_data, 1) > 1 % density or threshold
+        d_t_check = 1;        
+        d_or_t = pl.get('type');        
+    end
+    
     % p1 and p2 values because we need the fdr
     p1_fdr = comparison.get('P1');
     p2_fdr = comparison.get('P2');
@@ -1771,7 +1780,7 @@ function h = getMCRPanel(pl)
         'BackgroundColor', BKGCOLOR, ...
         'HorizontalAlignment', 'left', ...
         'FontWeight', 'bold', ...
-        'Position', [0.01 .91 0.3 0.08]);
+        'Position', [0.01 .91 0.25 0.08]);
 
     % first fdr panel
     fdr_panel = uipanel(ui_measure_container_panel, 'Units', 'normalized', 'BackgroundColor', BKGCOLOR);
@@ -1782,6 +1791,10 @@ function h = getMCRPanel(pl)
 
     % nodal measure figure options
     measures_panels = uipanel(ui_measure_container_panel, 'Units', 'normalized', 'BackgroundColor', BKGCOLOR);
+    if d_t_check 
+        d_t_text = uicontrol(measures_panels, 'Style', 'text', 'BackgroundColor', BKGCOLOR);
+        d_t_selector = uicontrol(measures_panels, 'Style', 'popup', 'String', {''});
+    end
     if size(measure_data, 2) > 1
         ui_layer_text = uicontrol(measures_panels, 'Style', 'text', 'BackgroundColor', BKGCOLOR);
         ui_layer_selector = uicontrol(measures_panels, 'Style', 'popup', 'String', {''});
@@ -1843,10 +1856,26 @@ function h = getMCRPanel(pl)
                 'Callback',{@cb_edit_meas_fdr2})
 
             % measures
+            if d_t_check
+                set(d_t_text, ...
+                    'Units', 'normalized', ...
+                    'Position', [.26 .91 .15 .08], ...
+                    'FontWeight', 'bold', ...
+                    'TooltipString', 'Select the layer of the Measure to be ploted.', ...
+                    'String', d_or_t ...
+                    )
+
+                set(d_t_selector, ...
+                    'Units', 'normalized', ...
+                    'Position', [.41 .91 .2 .08], ...
+                    'String', cellfun(@(x) num2str(x),  num2cell([1:size(measure_data, 1)]) , 'UniformOutput', false), ...
+                    'Callback', {@cb_d_t_selector} ...
+                    )
+            end
             if size(measure_data, 2) > 1
                 set(ui_layer_text, ...
                     'Units', 'normalized', ...
-                    'Position', [.51 .91 .2 .08], ...
+                    'Position', [.61 .91 .15 .08], ...
                     'FontWeight', 'bold', ...
                     'TooltipString', 'Select the layer of the Measure to be ploted.', ...
                     'String', 'Layer' ...
@@ -1854,8 +1883,8 @@ function h = getMCRPanel(pl)
 
                 set(ui_layer_selector, ...
                     'Units', 'normalized', ...
-                    'Position', [.71 .91 .2 .08], ...
-                    'String', cellfun(@(x) num2str(x),  num2cell([1:length(measure_data)]) , 'UniformOutput', false), ...
+                    'Position', [.76 .91 .2 .08], ...
+                    'String', cellfun(@(x) num2str(x),  num2cell([1:size(measure_data, 2)]) , 'UniformOutput', false), ...
                     'Callback', {@cb_layer_selector} ...
                     )
             end
@@ -1979,6 +2008,9 @@ function h = getMCRPanel(pl)
         function cb_layer_selector(~, ~)
             update_brain_meas_plot()
         end
+        function cb_d_t_selector(~, ~)
+            update_brain_meas_plot()
+        end
         function cb_checkbox_meas_symbolsize(~, ~)  %  (src, event)
             if get(ui_checkbox_meas_symbolsize, 'Value')
                 set(ui_edit_meas_symbolsize, 'Enable', 'on')
@@ -2065,13 +2097,25 @@ function h = getMCRPanel(pl)
         end
         function update_brain_meas_plot()
             if ~isempty(measure_data)
-
                 if  Measure.is_nodal(m)
-                    if size(measure_data, 2) > 1
+                    if size(measure_data, 1) > 1 && size(measure_data, 2) == 1 %  d/t but not mp
+                        measure_data_inner = measure_data{get(d_t_selector, 'Value')};
+                    elseif size(measure_data, 2) > 1 && size(measure_data, 1) == 1 % mp but no d/t
                         measure_data_inner = measure_data{get(ui_layer_selector, 'Value')};
-                    else
+                    elseif size(measure_data, 2) > 1 && size(measure_data, 1) > 1 % mp and d/t
+                        measure_data_inner = measure_data{get(d_t_selector, 'Value'), get(ui_layer_selector, 'Value')};
+                    else 
                         measure_data_inner = measure_data{1};
                     end
+                else  
+                    measure_warn_f = warndlg('BRAPH 2 only visualize nodal measures.');
+                    set_braph2_icon(measure_warn_f);                    
+                end
+                
+                if any(isnan(measure_data_inner)) || any(isinf(measure_data_inner))
+                    nan_warn_f = warndlg('A value is not a finite real number.');
+                    set_braph2_icon(nan_warn_f);
+                    return
                 end
 
                 if get(ui_checkbox_meas_symbolsize, 'Value')

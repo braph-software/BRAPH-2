@@ -84,6 +84,9 @@ f_measures_settings
 %%% ¡prop!
 ME (metadata, item) is the measure.
 
+%%% ¡prop!
+TYPE (metadata, string) is the type of measure.
+
 %% ¡methods!
 function h_panel = draw(pl, varargin)
     %DRAW draws the brain atlas graph graphical panel.
