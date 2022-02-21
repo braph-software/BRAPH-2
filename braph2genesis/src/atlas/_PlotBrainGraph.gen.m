@@ -1726,10 +1726,18 @@ function h = getMCRPanel(pl)
     BKGCOLOR = [1 .9725 .929];
 
     measure_data = pl.get('ME').get('M');
+    % layer dim
+    layer_element = pl.get('me').get('g').get('B');
+    layer_check = 0;
     d_t_check = 0;
+    layer_dim = 1;
     if size(measure_data, 1) > 1 % density or threshold
-        d_t_check = 1;        
-        d_or_t = pl.get('type');        
+        d_t_check = 1;
+        d_or_t = pl.get('type');
+    end
+    if size(layer_element, 2) > 1 % mp
+        layer_check = 1;
+        layer_dim =  size(layer_element, 2);
     end
 
     fdr_lim = [];
@@ -1754,7 +1762,7 @@ function h = getMCRPanel(pl)
         d_t_text = uicontrol(ui_measure_container_panel, 'Style', 'text', 'BackgroundColor', BKGCOLOR);
         d_t_selector = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
     end
-    if size(measure_data, 2) > 1
+    if layer_check
         ui_layer_text = uicontrol(ui_measure_container_panel, 'Style', 'text', 'BackgroundColor', BKGCOLOR);
         ui_layer_selector = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
     end
@@ -1786,12 +1794,12 @@ function h = getMCRPanel(pl)
                 set(d_t_selector, ...
                     'Units', 'normalized', ...
                     'Position', [.41 .91 .2 .08], ...
-                    'String', cellfun(@(x) num2str(x),  num2cell([1:size(measure_data, 1)]) , 'UniformOutput', false), ...
+                    'String', cellfun(@(x) num2str(x),  num2cell([1:size(measure_data, 1)/layer_dim]) , 'UniformOutput', false), ...
                     'Callback', {@cb_d_t_selector} ...
                     )
             end
 
-            if size(measure_data, 2) > 1
+            if layer_check
                 set(ui_layer_text, ...
                     'Units', 'normalized', ...
                     'Position', [.61 .91 .15 .08], ...
@@ -1803,7 +1811,7 @@ function h = getMCRPanel(pl)
                 set(ui_layer_selector, ...
                     'Units', 'normalized', ...
                     'Position', [.76 .91 .2 .08], ...
-                    'String', cellfun(@(x) num2str(x),  num2cell([1:size(measure_data, 2)]) , 'UniformOutput', false), ...
+                    'String', cellfun(@(x) num2str(x),  num2cell([1:layer_dim]) , 'UniformOutput', false), ...
                     'Callback', {@cb_layer_selector} ...
                     )
             end
@@ -1966,13 +1974,14 @@ function h = getMCRPanel(pl)
         function update_brain_meas_plot()
             if ~isempty(measure_data)
                 if  Measure.is_nodal(pl.get('ME'))
-                    if size(measure_data, 1) > 1 && size(measure_data, 2) == 1 %  d/t but not mp
+                    if d_t_check && ~layer_check %  d/t but not mp
                         measure_data_inner = measure_data{get(d_t_selector, 'Value')};
-                    elseif size(measure_data, 2) > 1 && size(measure_data, 1) == 1 % mp but no d/t
+                    elseif layer_check && ~d_t_check % mp but no d/t
                         measure_data_inner = measure_data{get(ui_layer_selector, 'Value')};
-                    elseif size(measure_data, 2) > 1 && size(measure_data, 1) > 1 % mp and d/t
-                        measure_data_inner = measure_data{get(d_t_selector, 'Value'), get(ui_layer_selector, 'Value')};
-                    else 
+                    elseif layer_check && d_t_check % mp and d/t
+                        tmp_diff = layer_dim-get(ui_layer_selector, 'Value');
+                        measure_data_inner = measure_data{get(d_t_selector, 'Value')*layer_dim-tmp_diff};
+                    else
                         measure_data_inner = measure_data{1};
                     end
                 else
