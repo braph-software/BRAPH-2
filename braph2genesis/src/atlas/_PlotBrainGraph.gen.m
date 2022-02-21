@@ -1976,6 +1976,15 @@ function h = getMCRPanel(pl)
                     else % wu
                         measure_data_inner = measure_data{1};
                     end
+                else
+                    measure_warn_f = warndlg('BRAPH 2 only visualize nodal measures.');
+                    set_braph2_icon(measure_warn_f);
+                end
+
+                if any(isnan(measure_data_inner)) || any(isinf(measure_data_inner))
+                    nan_warn_f = warndlg('A value is not a finite real number.');
+                    set_braph2_icon(nan_warn_f);
+                    return
                 end
 
                 if get(ui_checkbox_meas_symbolsize, 'Value')
