@@ -1723,6 +1723,16 @@ function h = getMCRPanel(pl)
     BKGCOLOR = [1 .9725 .929];
 
     measure_data = pl.get('ME').get('M');
+    d_t_check = 0;
+    if size(measure_data, 1) > 1 % density or threshold
+        d_t_check = 1;
+        if  isa(pl.get('me').get('g'), 'MultigraphBUT')
+            d_or_t = 'Threshold';
+        else
+            d_or_t = 'Density';
+        end
+    end
+
     fdr_lim = [];
     p1 = [];
     p2 = [];
@@ -1738,10 +1748,14 @@ function h = getMCRPanel(pl)
         'BackgroundColor', BKGCOLOR, ...
         'HorizontalAlignment', 'left', ...
         'FontWeight', 'bold', ...
-        'Position', [0.01 .91 0.3 0.08]);
+        'Position', [0.01 .91 0.25 0.08]);
 
     % nodal measure figure options
-    if size(measure_data, 1) > 1
+    if d_t_check
+        d_t_text = uicontrol(ui_measure_container_panel, 'Style', 'text', 'BackgroundColor', BKGCOLOR);
+        d_t_selector = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
+    end
+    if size(measure_data, 2) > 1
         ui_layer_text = uicontrol(ui_measure_container_panel, 'Style', 'text', 'BackgroundColor', BKGCOLOR);
         ui_layer_selector = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
     end
@@ -1761,10 +1775,27 @@ function h = getMCRPanel(pl)
             % measure figure *******************************
             set(ui_measure_container_panel, 'Position', [.0 .01 1 .99])
 
-            if size(measure_data, 1) > 1
+            if d_t_check
+                set(d_t_text, ...
+                    'Units', 'normalized', ...
+                    'Position', [.26 .91 .15 .08], ...
+                    'FontWeight', 'bold', ...
+                    'TooltipString', 'Select the layer of the Measure to be ploted.', ...
+                    'String', d_or_t ...
+                    )
+
+                set(d_t_selector, ...
+                    'Units', 'normalized', ...
+                    'Position', [.41 .91 .2 .08], ...
+                    'String', cellfun(@(x) num2str(x),  num2cell([1:size(measure_data, 1)]) , 'UniformOutput', false), ...
+                    'Callback', {@cb_d_t_selector} ...
+                    )
+            end
+
+            if size(measure_data, 2) > 1
                 set(ui_layer_text, ...
                     'Units', 'normalized', ...
-                    'Position', [.51 .91 .2 .08], ...
+                    'Position', [.61 .91 .15 .08], ...
                     'FontWeight', 'bold', ...
                     'TooltipString', 'Select the layer of the Measure to be ploted.', ...
                     'String', 'Layer' ...
@@ -1772,8 +1803,8 @@ function h = getMCRPanel(pl)
 
                 set(ui_layer_selector, ...
                     'Units', 'normalized', ...
-                    'Position', [.71 .91 .2 .08], ...
-                    'String', cellfun(@(x) num2str(x),  num2cell([1:length(measure_data)]) , 'UniformOutput', false), ...
+                    'Position', [.76 .91 .2 .08], ...
+                    'String', cellfun(@(x) num2str(x),  num2cell([1:size(measure_data, 2)]) , 'UniformOutput', false), ...
                     'Callback', {@cb_layer_selector} ...
                     )
             end
@@ -1842,6 +1873,9 @@ function h = getMCRPanel(pl)
             set(ui_edit_meas_labelsize, 'Callback', {@cb_edit_meas_labelsize})
 
 
+        end
+        function cb_d_t_selector(~, ~)
+            update_brain_meas_plot()
         end
         function cb_layer_selector(~, ~)
             update_brain_meas_plot()
@@ -1933,9 +1967,13 @@ function h = getMCRPanel(pl)
         function update_brain_meas_plot()
             if ~isempty(measure_data)
                 if  Measure.is_nodal(pl.get('ME'))
-                    if size(measure_data, 1) > 1 %#ok<NODEF>
+                    if size(measure_data, 1) > 1 && size(measure_data, 2) == 1 %  d/t but not mp
+                        measure_data_inner = measure_data{get(d_t_selector, 'Value')};
+                    elseif size(measure_data, 2) > 1 && size(measure_data, 1) == 1 % mp but no d/t
                         measure_data_inner = measure_data{get(ui_layer_selector, 'Value')};
-                    else
+                    elseif size(measure_data, 2) > 1 && size(measure_data, 1) > 1 % mp and d/t
+                        measure_data_inner = measure_data{get(d_t_selector, 'Value'), get(ui_layer_selector, 'Value')};
+                    else % wu
                         measure_data_inner = measure_data{1};
                     end
                 end
