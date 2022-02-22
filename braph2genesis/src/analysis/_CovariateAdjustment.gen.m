@@ -108,7 +108,7 @@ value = [ms1_adjusted; ms2_adjusted];
 
 %% ¡methods!
 function adjusted_values = adjustment(ca, values, covariates)
-    %ADJUSTMENT adjusts the covariant of data
+    %ADJUSTMENT adjusts the covariant of data.
     %
     % ADJUSTED_VALUES = ADJUSTMENT(VALUES, COVARIATES) It adjusts the values in
     %  numerical arrays VALUES, so the differences related to COVARIATES are removed.
