@@ -34,6 +34,11 @@ C (data, item) is the ensemble-based comparison.
 'CompareEnsemble'
 
 %%% ¡prop!
+USE_COVARIATES (parameter, logical) determines the use of covariates in the analysis.
+%%%% ¡default!
+true
+
+%%% ¡prop!
 DIFF (result, cell) is the ensemble comparison value.
 %%%% ¡calculate!
 [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp);
@@ -112,12 +117,36 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     end
 
     % Pre-calculate and save measures of all subjects
-    ms1 = cellfun(@(x) x.getMeasure(measure_class, varargin{:}).memorize('M'), c.get('A1').memorize('G_DICT').getItems, 'UniformOutput', false);
-    ms2 = cellfun(@(x) x.getMeasure(measure_class, varargin{:}).memorize('M'), c.get('A2').memorize('G_DICT').getItems, 'UniformOutput', false);
-    
+    if cp.get('USE_COVARIATES')
+        value = CovariateAdjustment('CP', cp).get('M_LIST_ADJUSTED');
+        ms1 = value(1, :);
+        ms2 = value(2, :);
+    else
+        ms1 = cellfun(@(x) x.getMeasure(measure_class, varargin{:}).memorize('M'), c.get('A1').memorize('G_DICT').getItems, 'UniformOutput', false);
+        ms2 = cellfun(@(x) x.getMeasure(measure_class, varargin{:}).memorize('M'), c.get('A2').memorize('G_DICT').getItems, 'UniformOutput', false);
+    end
+
     % Measure for groups 1 and 2, and their difference
-    m1 = c.get('A1').getMeasureEnsemble(measure_class).memorize('M');
-    m2 = c.get('A2').getMeasureEnsemble(measure_class).memorize('M');
+    if cp.get('USE_COVARIATES')
+        m1 = cell(size(ms1{1}));
+        for i = 1:1:size(ms1{1}, 1)
+            for j = 1:1:size(ms1{1}, 2)
+                m_ij_list = cellfun(@(x) x{i, j}, ms1, 'UniformOutput', false);
+                m1{i, j} = mean(cat(ndims(m_ij_list{1}) + 1, m_ij_list{:}), ndims(m_ij_list{1}) + 1);
+            end
+        end
+        m2 = cell(size(ms2{1}));
+        for i = 1:1:size(ms2{1}, 1)
+            for j = 1:1:size(ms2{1}, 2)
+                m_ij_list = cellfun(@(x) x{i, j}, ms2, 'UniformOutput', false);
+                m2{i, j} = mean(cat(ndims(m_ij_list{1}) + 1, m_ij_list{:}), ndims(m_ij_list{1}) + 1);
+            end
+        end
+    else
+        m1 = c.get('A1').getMeasureEnsemble(measure_class).memorize('M');
+        m2 = c.get('A2').getMeasureEnsemble(measure_class).memorize('M');
+    end
+
     diff = cellfun(@(x, y) y - x, m1, m2, 'UniformOutput', false);
 
     % Permutations
