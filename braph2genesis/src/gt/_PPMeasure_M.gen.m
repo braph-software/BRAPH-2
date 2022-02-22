@@ -158,18 +158,18 @@ function cb_brain_view_fig(pr)
         el = pr.get('EL');
         prop = pr.get('PROP');
         
-        graph = el.get('G');
+        g = el.get('G');
         
-        if isequal(graph.getClass(), 'MultigraphBUD') || isequal(graph.getClass(), 'MultiplexBUD')
+        if isequal(g.getClass(), 'MultigraphBUD') || isequal(g.getClass(), 'MultiplexBUD')
             type = 'Densities';
-        elseif isequal(graph.getClass(), 'MultigraphBUT') || isequal(graph.getClass(), 'MultiplexBUT')
+        elseif isequal(g.getClass(), 'MultigraphBUT') || isequal(g.getClass(), 'MultiplexBUT')
             type = 'Thresholds';
         else
             type = 'Weighted';
         end
         
         pbv = PlotBrainView('ME', el, ...
-            'Atlas', graph.get('BRAINATLAS'), ...
+            'Atlas', g.get('BRAINATLAS'), ...
             'Type', type);
 
         

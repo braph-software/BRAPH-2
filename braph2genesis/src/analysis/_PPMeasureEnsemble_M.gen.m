@@ -84,7 +84,7 @@ function h_panel = draw(pr, varargin)
             'BKGCOLOR', [0.8 0.5 0.2]).draw(varargin{:});
     end  
     
-    ui_brain_view = uicontrol('Parent', pr.p, ...
+    brain_view = uicontrol('Parent', pr.p, ...
         'Style', 'pushbutton', ...
         'Units', 'normalized', ...
         'Visible', 'on', ...
@@ -159,18 +159,18 @@ function cb_brain_view_fig(pr)
         el = pr.get('EL');
         prop = pr.get('PROP');
         
-        graph = el.get('G');
+        g = el.get('G');
         
-        if isequal(graph.getClass(), 'MultigraphBUD')
+        if isequal(g.getClass(), 'MultigraphBUD') || isequal(g.getClass(), 'MultiplexBUD')
             type = 'Densities';
-        elseif isequal(graph.getClass(), 'MultigraphBUT')
+        elseif isequal(g.getClass(), 'MultigraphBUT') || isequal(g.getClass(), 'MultiplexBUT')
             type = 'Thresholds';
         else
             type = 'Weighted';
         end
         
         pbv = PlotBrainView('ME', el, ...
-            'Atlas', graph.get('BRAINATLAS'), ...
+            'Atlas', g.get('BRAINATLAS'), ...
             'Type', type);
 
         

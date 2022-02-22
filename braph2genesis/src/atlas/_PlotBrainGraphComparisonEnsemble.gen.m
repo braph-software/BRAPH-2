@@ -1,13 +1,13 @@
 %% ¡header!
-PlotBrainGraphEnsemble < PlotBrainAtlas (pl, plot brain graph) is a plot of a brain graph of a measure ensemble.
+PlotBrainGraphComparisonEnsemble < PlotBrainAtlas (pl, plot brain graph) is a plot of a brain graph comparison ensemble.
 
 %%% ¡description!
-PlotBrainGraphEnsemble manages the plot of the graph edges, arrows and cylinders.
-PlotBrainGraphEnsemble utilizes the surface created from PlotBrainAtlas to
+PlotBrainGraphComparisonEnsemble manages the plot of the graph edges, arrows and cylinders.
+PlotBrainGraphComparisonEnsemble utilizes the surface created from PlotBrainAtlas to
 integrate the regions to a brain surface.
 
 %%% ¡seealso!
-Plot, BrainAtlas, PlotBrainSurface, PlotBrainAtlas, MeasureEnsemble.
+Plot, BrainAtlas, PlotBrainSurface, PlotBrainAtlas, PlotBrainGraph.
 
 %% ¡constants!
 PLOT_LINESTYLE_TAG = { ...
@@ -16,7 +16,7 @@ PLOT_LINESTYLE_TAG = { ...
     '-.' ...
     '--' ...
     'none' ...
-    }
+    };
 
 PLOT_LINESTYLE_NAME = { ...
     'solid' ...
@@ -24,7 +24,7 @@ PLOT_LINESTYLE_NAME = { ...
     'dashdot' ...
     'dashed' ...
     'none' ...
-    }
+    };
 
 % Symbols
 INIT_SYM_MARKER = 'o'
@@ -82,7 +82,10 @@ f_measures_settings
 
 %% ¡props!
 %%% ¡prop!
-ME (metadata, item) is the measure.
+COMP (metadata, item) is the comparison.
+
+%%% ¡prop!
+PROPTAG(metadata, string) is a prop tag.
 
 %%% ¡prop!
 TYPE (metadata, string) is the type of measure.
@@ -154,6 +157,11 @@ function f_settings  = settings(pl, varargin)
     f_settings = settings@PlotBrainAtlas(pl, varargin{:});
     pl.f_settings = f_settings;
     
+     % add height
+     f_settings_size = get(pl.f_settings, 'Position');
+     pl.f_settings.Position(2) = f_settings_size(2) - 0.06;
+     pl.f_settings.Position(4) = f_settings_size(4) + 0.06;
+    
     ui_toolbar = findall(f_settings, 'Tag', 'FigureToolBar');
     ui_toolbar_separator = uipushtool(ui_toolbar, 'Separator', 'on', 'Visible', 'off');
     
@@ -161,7 +169,7 @@ function f_settings  = settings(pl, varargin)
         'Separator', 'on', ...
         'TooltipString', 'Brain Regions', ...
         'CData', imread('icon_measure_panel.png'), ...
-        'ClickedCallback', {@cb_panel_mcr});   
+        'ClickedCallback', {@cb_panel_mcr});
     
     ui_toolbar_graph = uipushtool(ui_toolbar, ...
         'Separator', 'on', ...
@@ -225,7 +233,7 @@ function f_settings  = settings(pl, varargin)
     cb_panel_mcr()
 
     if nargout > 0
-        f_settings = pl.f_settings
+        f_settings = pl.f_settings;
     end
 end
 
@@ -243,7 +251,7 @@ function h = link_edge(pl, i, j, varargin)
     % All standard plot properties of plot3 can be used.
     % The line properties can also be changed when hidden.
     %
-    % See also PlotBrainGraph, plot3, link_edges, text_edge.
+    % See also PlotBrainGraphComparisonEnsemble, plot3, link_edges, text_edge.
 
     if i == j  % removes diagonal
         return;
@@ -323,7 +331,7 @@ function link_edge_on(pl, i, j)
     % LINK_EDGE_ON(BG, I, J) shows the edge link from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, link_edge, link_edge_off.
+    % See also PlotBrainGraphComparisonEnsemble, link_edge, link_edge_off.
 
     if ishandle(pl.edges.h(i, j))
         set(pl.edges.h(i, j), 'Visible', 'on')
@@ -335,7 +343,7 @@ function link_edge_off(pl, i, j)
     % LINK_EDGE_OFF(BG, I, J) hides the edge link from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, link_edge, link_edge_on.
+    % See also PlotBrainGraphComparisonEnsemble, link_edge, link_edge_on.
 
     if ishandle(pl.edges.h(i, j))
         set(pl.edges.h(i, j), 'Visible', 'off')
@@ -357,7 +365,7 @@ function link_edges(pl, i_vec, j_vec, varargin)
     % All standard plot properties of plot3 can be used.
     % The line properties can also be changed when hidden.
     %
-    % See also PlotBrainGraph, plot3, link_edge.
+    % See also PlotBrainGraphComparisonEnsemble, plot3, link_edge.
 
     if nargin < 2 || isempty(i_vec) || isempty(j_vec)
         for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
@@ -384,7 +392,7 @@ function link_edges_on(pl, i_vec, j_vec)
     % LINK_EDGES_ON(BG, I, J) shows multiple edge link from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, link_edges, link_edges_off.
+    % See also PlotBrainGraphComparisonEnsemble, link_edges, link_edges_off.
 
     if nargin<2 || isempty(i_vec) || isempty(j_vec)
         for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
@@ -411,7 +419,7 @@ function link_edges_off(pl, i_vec, j_vec)
     % LINK_EDGES_OFF(BG, I, J) hides multiple edge links from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, link_edge, link_edge_on.
+    % See also PlotBrainGraphComparisonEnsemble, link_edge, link_edge_on.
 
     if nargin<2 || isempty(i_vec) || isempty(j_vec)
         for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
@@ -445,7 +453,7 @@ function link_edges_settings(pl, i_vec, j_vec, varargin)
     %       FigColor     -   background color of the GUI
     %       FigName      -   name of the GUI
     %
-    % See also PlotBrainGraph.
+    % See also PlotBrainGraphComparisonEnsemble.
 
     atlas_length = pl.get('ATLAS').get('BR_DICT').length();
     data = cell(atlas_length, atlas_length);
@@ -523,7 +531,7 @@ function link_edges_settings(pl, i_vec, j_vec, varargin)
 
     ui_popup_style = uicontrol(f, 'Units', 'normalized', 'Style',  'popup', 'String', {''});
     set(ui_popup_style, 'Position', [.62 .575 .35 .10])
-    set(ui_popup_style, 'String', PlotBrainGraph.PLOT_LINESTYLE_NAME)
+    set(ui_popup_style, 'String', PlotBrainGraphComparisonEnsemble.PLOT_LINESTYLE_NAME)
     set(ui_popup_style, 'Value', 1)
     set(ui_popup_style, 'TooltipString', 'Select line style');
     set(ui_popup_style, 'Callback', {@cb_style})
@@ -634,7 +642,7 @@ function bool = link_edge_is_on(pl, i, j)
     % BOOL = LINK_EDGE_IS_ON(BG, I, J) returns true if the line link
     % from the brain regions I to J is visible and false otherwise.
     %
-    % See also PlotBrainGraph.
+    % See also PlotBrainGraphComparisonEnsemble.
 
     bool = ishandle(pl.edges.h(i, j)) && strcmpi(get(pl.edges.h(i, j), 'Visible'), 'on');
 end
@@ -653,7 +661,7 @@ function h = arrow_edge(pl, i, j, varargin)
     % All standard plot properties of plot3 can be used.
     % The line properties can also be changed when hidden.
     %
-    % See also PlotBrainGraph, plot3, link_edges.
+    % See also PlotBrainGraphComparisonEnsemble, plot3, link_edges.
 
     if i == j  % removes diagonal
         return;
@@ -747,7 +755,7 @@ function arrow_edge_on(pl, i, j)
     % ARROW_EDGE_ON(BG, I, J) shows the edge link from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, link_edge, link_edge_off.
+    % See also PlotBrainGraphComparisonEnsemble, link_edge, link_edge_off.
 
     if ishandle(pl.edges.arr(i, j))
         set(pl.edges.arr(i, j), 'Visible', 'on')
@@ -759,7 +767,7 @@ function arrow_edge_off(pl, i, j)
     % ARROW_EDGE_OFF(BG, I, J) hides the edge link from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, link_edge, link_edge_on.
+    % See also PlotBrainGraphComparisonEnsemble, link_edge, link_edge_on.
 
     if ishandle(pl.edges.arr(i, j))
         set(pl.edges.arr(i, j), 'Visible', 'off')
@@ -781,7 +789,7 @@ function arrow_edges(pl, i_vec, j_vec, varargin)
     % All standard plot properties of plot3 can be used.
     % The line properties can also be changed when hidden.
     %
-    % See also PlotBrainGraph, plot3, link_edge.
+    % See also PlotBrainGraphComparisonEnsemble, plot3, link_edge.
 
     if nargin < 2 || isempty(i_vec) || isempty(j_vec)
         for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
@@ -808,7 +816,7 @@ function arrow_edges_on(pl, i_vec, j_vec)
     % ARROW_EDGES_ON(BG, I, J) shows multiple edge link from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, link_edges, link_edges_off.
+    % See also PlotBrainGraphComparisonEnsemble, link_edges, link_edges_off.
 
     if nargin<2 || isempty(i_vec) || isempty(j_vec)
         for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
@@ -835,7 +843,7 @@ function arrow_edges_off(pl, i_vec, j_vec)
     % ARROW_EDGES_OFF(BG, I, J) hides multiple edge links from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, link_edge, link_edge_on.
+    % See also PlotBrainGraphComparisonEnsemble, link_edge, link_edge_on.
 
     if nargin<2 || isempty(i_vec) || isempty(j_vec)
         for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
@@ -869,7 +877,7 @@ function arrow_edges_settings(pl, i_vec, j_vec, varargin)
     %       FigColor     -   background color of the GUI
     %       FigName      -   name of the GUI
     %
-    % See also PlotBrainGraph.
+    % See also PlotBrainGraphComparisonEnsemble.
 
     atlas_length = pl.get('ATLAS').get('BR_DICT').length();
     data = cell(atlas_length, atlas_length);
@@ -1033,7 +1041,7 @@ function bool = arrow_edge_is_on(pl, i, j)
     % BOOL = ARROW_EDGE_IS_ON(BG, I, J) returns true if the line arrow link
     % from the brain regions I to J is visible and false otherwise.
     %
-    % See also PlotBrainGraph.
+    % See also PlotBrainGraphComparisonEnsemble.
 
     bool = ishandle(pl.edges.arr(i, j)) && strcmpi(get(pl.edges.arr(i, j), 'Visible'), 'on');
 end
@@ -1052,7 +1060,7 @@ function h = cylinder_edge(pl, i, j, varargin)
     % All standard plot properties of plot3 can be used.
     % The line properties can also be changed when hidden.
     %
-    % See also PlotBrainGraph, plot3, link_edges.
+    % See also PlotBrainGraphComparisonEnsemble, plot3, link_edges.
 
     if i == j  % removes diagonal
         return;
@@ -1137,7 +1145,7 @@ function cylinder_edge_on(pl, i, j)
     % CYLINDER_EDGE_ON(BG, I, J) shows the edge link from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, link_edge, link_edge_off.
+    % See also PlotBrainGraphComparisonEnsemble, link_edge, link_edge_off.
 
     if ishandle(pl.edges.cyl(i, j))
         set(pl.edges.cyl(i, j), 'Visible', 'on')
@@ -1149,7 +1157,7 @@ function cylinder_edge_off(pl, i, j)
     % CYLINDER_EDGE_OFF(BG, I, J) hides the edge link from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, link_edge, link_edge_on.
+    % See also PlotBrainGraphComparisonEnsemble, link_edge, link_edge_on.
 
     if ishandle(pl.edges.cyl(i, j))
         set(pl.edges.cyl(i, j), 'Visible', 'off')
@@ -1171,7 +1179,7 @@ function cylinder_edges(pl, i_vec, j_vec, varargin)
     % All standard plot properties of plot3 can be used.
     % The line properties can also be changed when hidden.
     %
-    % See also PlotBrainGraph, plot3, link_edge.
+    % See also PlotBrainGraphComparisonEnsemble, plot3, link_edge.
 
     if nargin < 2 || isempty(i_vec) || isempty(j_vec)
         for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
@@ -1198,7 +1206,7 @@ function cylinder_edges_on(pl, i_vec, j_vec)
     % CYLINDER_EDGES_ON(BG, I, J) shows multiple edge link from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, link_edges, link_edges_off.
+    % See also PlotBrainGraphComparisonEnsemble, link_edges, link_edges_off.
 
     if nargin<2 || isempty(i_vec) || isempty(j_vec)
         for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
@@ -1225,7 +1233,7 @@ function cylinder_edges_off(pl, i_vec, j_vec)
     % CYLINDER_EDGES_OFF(BG, I, J) hides multiple edge links from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, link_edge, link_edge_on.
+    % See also PlotBrainGraphComparisonEnsemble, link_edge, link_edge_on.
 
     if nargin<2 || isempty(i_vec) || isempty(j_vec)
         for i = 1:1:pl.get('ATLAS').get('BR_DICT').length()
@@ -1259,7 +1267,7 @@ function cylinder_edges_settings(pl, i_vec, j_vec, varargin)
     %       FigColor     -   background color of the GUI
     %       FigName      -   name of the GUI
     %
-    % See also PlotBrainGraph.
+    % See also PlotBrainGraphComparisonEnsemble.
 
     atlas_length = pl.get('ATLAS').get('BR_DICT').length();
     data = cell(atlas_length, atlas_length);
@@ -1423,7 +1431,7 @@ function bool = cylinder_edge_is_on(pl, i, j)
     % BOOL = CYLINDER_EDGE_IS_ON(BG, I, J) returns true if the cylinder link
     % from the brain regions I to J is visible and false otherwise.
     %
-    % See also PlotBrainGraph.
+    % See also PlotBrainGraphComparisonEnsemble.
 
     bool = ishandle(pl.edges.cyl(i, j)) && strcmpi(get(pl.edges.cyl(i, j), 'Visible'), 'on');
 end
@@ -1470,7 +1478,7 @@ function text_edge_on(pl, i, j)
     % TEXT_EDGE_ON(BG, I, J) shows the edge text from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, text_edge, text_edge_off.
+    % See also PlotBrainGraphComparisonEnsemble, text_edge, text_edge_off.
 
     if ishandle(pl.edges.texts(i, j))
         set(pl.edges.texts(i, j), 'Visible', 'on')
@@ -1482,7 +1490,7 @@ function text_edge_off(pl, i, j)
     % TEXT_EDGE_OFF(BG, I, J) hides the edge text from the brain
     % region I to J.
     %
-    % See also PlotBrainGraph, text_edge, text_edge_on.
+    % See also PlotBrainGraphComparisonEnsemble, text_edge, text_edge_on.
 
     if ishandle(pl.edges.texts(i, j))
         set(pl.edges.texts(i, j), 'Visible', 'off')
@@ -1494,7 +1502,7 @@ function bool = text_edge_is_on(pl, i, j)
     % BOOL = TEXT_EDGE_IS_ON(BG, I, J) returns true if the edge text
     % from the brain regions I to J is visible and false otherwise.
     %
-    % See also PlotBrainGraph, text_edge, tex_edge_is_off.
+    % See also PlotBrainGraphComparisonEnsemble, text_edge, tex_edge_is_off.
 
     bool = ishandle(pl.edges.texts(i, j)) && strcmpi(get(pl.edges.texts(i, j), 'Visible'), 'on');
 end
@@ -1504,7 +1512,7 @@ function bool = tex_edge_is_off(pl, i, j)
     % BOOL = TEXT_EDGE_IS_Off(BG, I, J) returns true if the edge text
     % from the brain regions I to J is not visible and false otherwise.
     %
-    % See also PlotBrainGraph, text_edge, tex_edge_is_off.
+    % See also PlotBrainGraphComparisonEnsemble, text_edge, tex_edge_is_off.
 
     bool = ishandle(pl.edges.texts(i, j)) && strcmpi(get(pl.edges.texts(i, j), 'Visible'), 'off');
 end
@@ -1514,7 +1522,7 @@ function h = get_axes(pl)
     %
     % H = GET_AXES(PL) returns the panel axes
     %
-    % See also PlotBrainGraph.
+    % See also PlotBrainGraphComparisonEnsemble.
     
     h = pl.h_axes;
 end
@@ -1523,7 +1531,7 @@ function brain_graph_panel = getBrainGraphPanel(pl)
     % GETBRAINGRAPHPANEL creates a braingraph panel
     %
     % BRAIN_GRAPH_PANEL = GETBRAINGRAPHPANEL(ANAlYSIS, AXES, PLOTBRAINGRAPH)
-    % creates a brain graph panel to manage the type of
+    % creates a brain graph comparison panel to manage the type of
     % PLOTBRAINGRAPH that the GUIAnalysis plots in the AXES.
     %
     % See also getBrainView.
@@ -1543,7 +1551,7 @@ function brain_graph_panel = getBrainGraphPanel(pl)
         'HorizontalAlignment', 'left', ...
         'FontWeight', 'bold', ...
         'Position', [0.01 .91 0.3 0.08]);
-
+    
     ui_checkbox_graph_lineweight = uicontrol(fig_graph, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
     ui_edit_graph_lineweight = uicontrol(fig_graph, 'Style', 'edit');
     ui_button_graph_show = uicontrol(fig_graph, 'Style', 'pushbutton');
@@ -1561,7 +1569,7 @@ function brain_graph_panel = getBrainGraphPanel(pl)
             
             set(ui_checkbox_graph_lineweight, 'Units', 'normalized')
             set(ui_checkbox_graph_lineweight, 'BackgroundColor',BKGCOLOR)
-            set(ui_checkbox_graph_lineweight, 'Position', [.10 .61 .28 .10])
+            set(ui_checkbox_graph_lineweight, 'Position', [.10 .61 .15 .1])
             set(ui_checkbox_graph_lineweight, 'String', ' Thickness ')
             set(ui_checkbox_graph_lineweight, 'Value', true)
             set(ui_checkbox_graph_lineweight, 'FontWeight', 'bold')
@@ -1569,7 +1577,7 @@ function brain_graph_panel = getBrainGraphPanel(pl)
             set(ui_checkbox_graph_lineweight, 'Callback', {@cb_checkbox_lineweight})
 
             set(ui_edit_graph_lineweight, 'Units', 'normalized')
-            set(ui_edit_graph_lineweight, 'Position', [.3 .62 .3 .08])
+            set(ui_edit_graph_lineweight, 'Position', [.3 .62 .3 .09])
             set(ui_edit_graph_lineweight, 'String', '1');
             set(ui_edit_graph_lineweight, 'TooltipString', 'Set line weight.');
             set(ui_edit_graph_lineweight, 'FontWeight', 'bold')
@@ -1578,7 +1586,7 @@ function brain_graph_panel = getBrainGraphPanel(pl)
             set(ui_link_type, 'Units', 'normalized')
             set(ui_link_type, 'Position', [.62 .62 .3 .08])
             set(ui_link_type, 'Callback', {@cb_link_type});
-            
+
             set(ui_button_graph_show, 'Units', 'normalized')
             set(ui_button_graph_show, 'Position', [.1 .45 .4 .08])
             set(ui_button_graph_show, 'String', ' Show ')
@@ -1612,7 +1620,24 @@ function brain_graph_panel = getBrainGraphPanel(pl)
             set(ui_button_graph_edge_settings, 'Callback', {@cb_graph_links_settings})
 
            
-        end        
+        end
+        function cb_checkbox_linecolor(~, ~)  % (src, event)
+            if get(ui_checkbox_graph_linecolor, 'Value')
+                set(ui_popup_graph_initcolor, 'Enable', 'on')
+                set(ui_popup_graph_fincolor, 'Enable', 'on')
+                update_graph()
+            else
+                set(ui_popup_graph_initcolor, 'Enable', 'off')
+                set(ui_popup_graph_fincolor, 'Enable', 'off')
+
+                n = atlas.get('BR_DICT').length();
+                for i = 1:1:n
+                    for j = 1:1:n
+                        pl.link_edges(i, j, 'Color', [0 0 0])
+                    end
+                end
+            end
+        end
         function cb_checkbox_lineweight(~, ~)  % (src, event)
             if get(ui_checkbox_graph_lineweight, 'Value')
                 set(ui_edit_graph_lineweight, 'Enable', 'on')
@@ -1638,7 +1663,7 @@ function brain_graph_panel = getBrainGraphPanel(pl)
                 set(ui_edit_graph_lineweight, 'String', '5');
             end
             update_graph()
-        end
+        end        
         function cb_graph_show(~, ~)  % (src, event)
             set(ui_edit_graph_lineweight, 'Enable', 'on')
 
@@ -1728,10 +1753,15 @@ function h = getMCRPanel(pl)
     f = pl.f_measures_settings;
     BKGCOLOR = [1 .9725 .929];
 
-    measure_data = pl.get('ME').get('M');
-    %layer dim
-    layer_element_item = pl.get('me').get('a').get('g_dict').getItem(1);
-    layer_element = layer_element_item.get('b');
+    comparison = pl.get('COMP');
+    prop_tag = pl.get('PROPTAG');
+    measure_data = comparison.get(prop_tag);
+    m = comparison.get('MEASURE');
+    fdr_lim = [];
+
+    d_t_check = 0;
+    layer_element = pl.get('comp').get('c').get('a1').get('g_dict');
+    layer_element = layer_element.get('b');
     layer_check = 0;
     d_t_check = 0;
     layer_dim = 1;
@@ -1743,10 +1773,10 @@ function h = getMCRPanel(pl)
         layer_check = 1;
         layer_dim =  size(layer_element, 2);
     end
-    
-    fdr_lim = [];
-    p1 = [];
-    p2 = [];
+
+    % p1 and p2 values because we need the fdr
+    p1_fdr = comparison.get('P1');
+    p2_fdr = comparison.get('P2');
 
     % initialization %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % measure container panel
@@ -1754,37 +1784,87 @@ function h = getMCRPanel(pl)
 
     ui_title = uicontrol(f, ...
         'Style', 'text', ...
-        'String', 'Measure Panel', ...
+        'String', 'Comparison Panel', ...
         'Units', 'normalized', ...
         'BackgroundColor', BKGCOLOR, ...
         'HorizontalAlignment', 'left', ...
         'FontWeight', 'bold', ...
-        'Position', [0.01 .91 0.3 0.08]);
+        'Position', [0.01 .91 0.25 0.08]);
+
+    % first fdr panel
+    fdr_panel = uipanel(ui_measure_container_panel, 'Units', 'normalized', 'BackgroundColor', BKGCOLOR);
+    ui_checkbox_meas_fdr1 = uicontrol(fdr_panel, 'Style', 'checkbox');
+    ui_edit_meas_fdr1 = uicontrol(fdr_panel, 'Style','edit');
+    ui_checkbox_meas_fdr2 = uicontrol(fdr_panel, 'Style', 'checkbox');
+    ui_edit_meas_fdr2 = uicontrol(fdr_panel, 'Style','edit');
 
     % nodal measure figure options
+    measures_panels = uipanel(ui_measure_container_panel, 'Units', 'normalized', 'BackgroundColor', BKGCOLOR);
     if d_t_check
-        d_t_text = uicontrol(ui_measure_container_panel, 'Style', 'text', 'BackgroundColor', BKGCOLOR);
-        d_t_selector = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
+        d_t_text = uicontrol(measures_panels, 'Style', 'text', 'BackgroundColor', BKGCOLOR);
+        d_t_selector = uicontrol(measures_panels, 'Style', 'popup', 'String', {''});
     end
     if layer_check
-        ui_layer_text = uicontrol(ui_measure_container_panel, 'Style', 'text', 'BackgroundColor', BKGCOLOR);
-        ui_layer_selector = uicontrol(ui_measure_container_panel, 'Style', 'popup', 'String', {''});
+        ui_layer_text = uicontrol(measures_panels, 'Style', 'text', 'BackgroundColor', BKGCOLOR);
+        ui_layer_selector = uicontrol(measures_panels, 'Style', 'popup', 'String', {''});
     end
-    ui_checkbox_meas_symbolsize = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
-    ui_edit_meas_symbolsize = uicontrol(ui_measure_container_panel, 'Style', 'edit');
-    ui_checkbox_meas_sphereradius = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
-    ui_edit_meas_sphereradius = uicontrol(ui_measure_container_panel, 'Style', 'edit');
-    ui_checkbox_meas_spheretransparency = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
-    ui_slider_meas_spheretransparency = uicontrol(ui_measure_container_panel, 'Style', 'slider');
-    ui_checkbox_meas_labelsize = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
-    ui_edit_meas_labelsize = uicontrol(ui_measure_container_panel, 'Style', 'edit');
+    ui_checkbox_meas_symbolsize = uicontrol(measures_panels, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
+    ui_edit_meas_symbolsize = uicontrol(measures_panels, 'Style', 'edit');
+    ui_checkbox_meas_sphereradius = uicontrol(measures_panels, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
+    ui_edit_meas_sphereradius = uicontrol(measures_panels, 'Style', 'edit');
+    ui_checkbox_meas_spheretransparency = uicontrol(measures_panels, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
+    ui_slider_meas_spheretransparency = uicontrol(measures_panels, 'Style', 'slider');
+    ui_checkbox_meas_labelsize = uicontrol(measures_panels, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
+    ui_edit_meas_labelsize = uicontrol(measures_panels, 'Style', 'edit');
 
     %% Callback functions
         function init_measures_panel()
 
-            % measure figure *******************************
+            % measure panels *******************************
             set(ui_measure_container_panel, 'Position', [.0 .01 1 .99])
+            set(fdr_panel, 'Position', [.0 .8 1 .2])
+            set(measures_panels, 'Position', [.0 .0 1 .8])
 
+            % fdr
+            set(ui_checkbox_meas_fdr1, ...
+                'Units', 'normalized', ...
+                'Position', [.31 .4 .3 .3], ...
+                'String', 'fdr (1-tailed)', ...
+                'BackgroundColor', BKGCOLOR, ...
+                'Value', false, ...
+                'FontWeight', 'bold', ...
+                'TooltipString','apply 1-tailed false discovery rate limit', ...
+                'Callback',{@cb_checkbox_meas_fdr1})
+
+            set(ui_edit_meas_fdr1, ...
+                'Units', 'normalized', ...
+                'String', '0.05', ...
+                'Enable', 'off', ...
+                'Position', [.6 0.4 .3 .3], ...
+                'HorizontalAlignment', 'center', ...
+                'FontWeight', 'bold', ...
+                'Callback', {@cb_edit_meas_fdr1})
+
+            set(ui_checkbox_meas_fdr2, ...
+                'Units', 'normalized', ...
+                'Position', [.31 .01 .3 .3], ...
+                'String', 'fdr (2-tailed)', ...
+                'BackgroundColor', BKGCOLOR, ...
+                'Value', false, ...
+                'FontWeight', 'bold', ...
+                'TooltipString', 'apply false discovery rate limit', ...
+                'Callback', {@cb_checkbox_meas_fdr2})
+
+            set(ui_edit_meas_fdr2, ...
+                'Units', 'normalized', ...
+                'String', '0.05', ...
+                'Enable', 'off', ...
+                'Position', [.6 0.01 .3 .3], ...
+                'HorizontalAlignment', 'center', ...
+                'FontWeight','bold', ...
+                'Callback',{@cb_edit_meas_fdr2})
+
+            % measures
             if d_t_check
                 set(d_t_text, ...
                     'Units', 'normalized', ...
@@ -1797,14 +1877,14 @@ function h = getMCRPanel(pl)
                 set(d_t_selector, ...
                     'Units', 'normalized', ...
                     'Position', [.41 .91 .2 .08], ...
-                    'String', cellfun(@(x) num2str(x),  num2cell([1:size(measure_data, 1)/layer_dim]) , 'UniformOutput', false), ...
+                    'String', cellfun(@(x) num2str(x),   num2cell([1:size(measure_data, 1)/layer_dim]) , 'UniformOutput', false), ...
                     'Callback', {@cb_d_t_selector} ...
                     )
             end
             if layer_check
                 set(ui_layer_text, ...
                     'Units', 'normalized', ...
-                    'Position', [.51 .91 .2 .08], ...
+                    'Position', [.61 .91 .15 .08], ...
                     'FontWeight', 'bold', ...
                     'TooltipString', 'Select the layer of the Measure to be ploted.', ...
                     'String', 'Layer' ...
@@ -1812,8 +1892,8 @@ function h = getMCRPanel(pl)
 
                 set(ui_layer_selector, ...
                     'Units', 'normalized', ...
-                    'Position', [.71 .91 .2 .08], ...
-                    'String', cellfun(@(x) num2str(x),  num2cell([1:length(measure_data)]) , 'UniformOutput', false), ...
+                    'Position', [.76 .91 .2 .08], ...
+                    'String', cellfun(@(x) num2str(x),  num2cell([1:layer_dim]) , 'UniformOutput', false), ...
                     'Callback', {@cb_layer_selector} ...
                     )
             end
@@ -1827,7 +1907,7 @@ function h = getMCRPanel(pl)
             set(ui_checkbox_meas_symbolsize, 'Callback', {@cb_checkbox_meas_symbolsize})
 
             set(ui_edit_meas_symbolsize, 'Units', 'normalized')
-            set(ui_edit_meas_symbolsize, 'String', PlotBrainGraph.INIT_SYM_SIZE)
+            set(ui_edit_meas_symbolsize, 'String', PlotBrainGraphComparisonEnsemble.INIT_SYM_SIZE)
             set(ui_edit_meas_symbolsize, 'Enable', 'off')
             set(ui_edit_meas_symbolsize, 'Position', [.31 .7 .6 .08])
             set(ui_edit_meas_symbolsize, 'HorizontalAlignment', 'center')
@@ -1843,7 +1923,7 @@ function h = getMCRPanel(pl)
             set(ui_checkbox_meas_sphereradius, 'Callback', {@cb_checkbox_meas_sphereradius})
 
             set(ui_edit_meas_sphereradius, 'Units', 'normalized')
-            set(ui_edit_meas_sphereradius, 'String', PlotBrainGraph.INIT_SPH_R)
+            set(ui_edit_meas_sphereradius, 'String', PlotBrainGraphComparisonEnsemble.INIT_SPH_R)
             set(ui_edit_meas_sphereradius, 'Enable', 'off')
             set(ui_edit_meas_sphereradius, 'Position', [.31 0.54 .6 .08])
             set(ui_edit_meas_sphereradius, 'HorizontalAlignment', 'center')
@@ -1859,7 +1939,7 @@ function h = getMCRPanel(pl)
             set(ui_checkbox_meas_spheretransparency, 'Callback', {@cb_checkbox_meas_spheretransparency})
 
             set(ui_slider_meas_spheretransparency, 'Units', 'normalized')
-            set(ui_slider_meas_spheretransparency, 'Min', 0, 'Max', 1, 'Value', PlotBrainGraph.INIT_SPH_FACE_ALPHA);
+            set(ui_slider_meas_spheretransparency, 'Min', 0, 'Max', 1, 'Value', PlotBrainGraphComparisonEnsemble.INIT_SPH_FACE_ALPHA);
             set(ui_slider_meas_spheretransparency, 'Enable', 'off')
             set(ui_slider_meas_spheretransparency, 'Position', [.31 0.4 .6 .08])
             set(ui_slider_meas_spheretransparency, 'TooltipString', 'Brain region transparency (applied both to faces and edges)')
@@ -1874,13 +1954,65 @@ function h = getMCRPanel(pl)
             set(ui_checkbox_meas_labelsize, 'Callback', {@cb_checkbox_meas_labelsize})
 
             set(ui_edit_meas_labelsize, 'Units', 'normalized')
-            set(ui_edit_meas_labelsize, 'String', PlotBrainGraph.INIT_LAB_FONT_SIZE)
+            set(ui_edit_meas_labelsize, 'String', PlotBrainGraphComparisonEnsemble.INIT_LAB_FONT_SIZE)
             set(ui_edit_meas_labelsize, 'Enable', 'off')
             set(ui_edit_meas_labelsize, 'Position', [.31 .26 .6 .08])
             set(ui_edit_meas_labelsize, 'HorizontalAlignment', 'center')
             set(ui_edit_meas_labelsize, 'FontWeight', 'bold')
-            set(ui_edit_meas_labelsize, 'Callback', {@cb_edit_meas_labelsize})  
+            set(ui_edit_meas_labelsize, 'Callback', {@cb_edit_meas_labelsize})
 
+        end
+        function cb_checkbox_meas_fdr1(~,~)  %  (src,event)
+            if get(ui_checkbox_meas_fdr1, 'Value')
+                set(ui_edit_meas_fdr1, 'Enable', 'on')
+                set(ui_edit_meas_fdr2, 'Enable', 'off')
+                set(ui_checkbox_meas_fdr2, 'Enable', 'off')
+
+                update_data()
+                update_brain_meas_plot()
+            else
+                set(ui_edit_meas_fdr1, 'Enable', 'off')
+                set(ui_checkbox_meas_fdr2, 'Enable', 'on')
+
+                update_data()
+                update_brain_meas_plot()
+            end
+        end
+        function cb_edit_meas_fdr1(~,~)  %  (src,event)
+            lim = real(str2double(get(ui_edit_meas_fdr1,'String')));
+            if isempty(lim) || lim <= 0 || lim > 1
+                set(ui_edit_meas_fdr1, 'String', '0.05')
+            else
+                set(ui_edit_meas_fdr1, 'String', num2str(lim))
+            end
+            update_data()
+            update_brain_meas_plot()
+        end
+        function cb_checkbox_meas_fdr2(~,~)  %  (src,event)
+            if get(ui_checkbox_meas_fdr2, 'Value')
+                set(ui_edit_meas_fdr2, 'Enable', 'on')
+                set(ui_edit_meas_fdr1, 'Enable', 'off')
+                set(ui_checkbox_meas_fdr1, 'Enable', 'off')
+
+                update_data()
+                update_brain_meas_plot()
+            else
+                set(ui_edit_meas_fdr2, 'Enable', 'off')
+                set(ui_checkbox_meas_fdr1, 'Enable', 'on')
+
+                update_data()
+                update_brain_meas_plot()
+            end
+        end
+        function cb_edit_meas_fdr2(~,~)  %  (src,event)
+            lim = real(str2double(get(ui_edit_meas_fdr2, 'String')));
+            if isempty(lim) || lim <= 0 || lim > 1
+                set(ui_edit_meas_fdr2, 'String', '0.05')
+            else
+                set(ui_edit_meas_fdr2, 'String', num2str(lim))
+            end
+            update_data()
+            update_brain_meas_plot()
         end
         function cb_layer_selector(~, ~)
             update_brain_meas_plot()
@@ -1974,8 +2106,8 @@ function h = getMCRPanel(pl)
         end
         function update_brain_meas_plot()
             if ~isempty(measure_data)
-                if  Measure.is_nodal(pl.get('ME').get('MEASURE'))
-                    if d_t_check && ~layer_check %  d/t but not mp
+                if  Measure.is_nodal(m)
+                    if d_t_check && ~layer_check  %  d/t but not mp
                         measure_data_inner = measure_data{get(d_t_selector, 'Value')};
                     elseif layer_check && ~d_t_check % mp but no d/t
                         measure_data_inner = measure_data{get(ui_layer_selector, 'Value')};
@@ -1987,9 +2119,9 @@ function h = getMCRPanel(pl)
                     end
                 else
                     measure_warn_f = warndlg('BRAPH 2 only visualize nodal measures.');
-                    set_braph2_icon(measure_warn_f);                    
+                    set_braph2_icon(measure_warn_f);
                 end
-                
+
                 if any(isnan(measure_data_inner)) || any(isinf(measure_data_inner))
                     nan_warn_f = warndlg('A value is not a finite real number.');
                     set_braph2_icon(nan_warn_f);
@@ -2001,13 +2133,22 @@ function h = getMCRPanel(pl)
                     size_ = str2double(get(ui_edit_meas_symbolsize, 'String'));
 
                     size_(isnan(size_)) = 0.1;
-                    size_(size_ <= 0) = 0.1;
+                    size_(size_<=0) = 0.1;
                     pl.set('SYMS_SIZE', size_');
+                    if ~isempty(fdr_lim)
+                        pl.set('SYMS', fdr_lim');
+                    else
+                        pl.set('SYMS', 1);
+                    end
                 else
                     measure_data_inner(measure_data_inner == 0 ) = 0.01;
+                    if ~isempty(fdr_lim)
+                        pl.set('SYMS', fdr_lim');
+                    else
+                        pl.set('SYMS', 1);
+                    end
                     pl.set('SYMS_SIZE', measure_data_inner);
                 end
-
 
                 if get(ui_checkbox_meas_sphereradius, 'Value')
 
@@ -2016,35 +2157,47 @@ function h = getMCRPanel(pl)
                     R = 1 + (measure_data_inner)*R;
 
                     R(isnan(R)) = 0.1;
-                    R(R <= 0) = 0.1;
+                    R(R<=0) = 0.1;
                     pl.set('SPHS_SIZE', R);
-                    pl.set('SPHS', 1);
+                    if ~isempty(fdr_lim)
+                        pl.set('SPHS', fdr_lim');
+                    else
+                        pl.set('SPHS', 1);
+                    end
                 end
 
                 if get(ui_checkbox_meas_spheretransparency, 'Value')
 
                     alpha = get(ui_slider_meas_spheretransparency, 'Value');
 
-                    alpha_vec = (measure_data_inner)*alpha;
+                    alpha_vec = ((measure_data_inner)*alpha);
                     alpha_vec(isnan(alpha_vec)) = 0;
-                    alpha_vec(alpha_vec < 0) = 0;
-                    alpha_vec(alpha_vec > 1) = 1;
+                    alpha_vec(alpha_vec<0) = 0;
+                    alpha_vec(alpha_vec>1) = 1;
+
                     pl.set('SPHS_EDGE_ALPHA', alpha_vec);
                     pl.set('SPHS_FACE_ALPHA', alpha_vec);
-                    pl.set('SPHS', 1);
+                    if ~isempty(fdr_lim)
+                        pl.set('SPHS', fdr_lim');
+                    else
+                        pl.set('SPHS', 1);
+                    end
                 end
 
                 if get(ui_checkbox_meas_labelsize, 'Value')
 
                     size_ = str2double(get(ui_edit_meas_labelsize, 'String'));
                     size_(isnan(size_)) = 0.1;
-                    size_(size_ <= 0) = 0.1;
+                    size_(size_<=0) = 0.1;
                     pl.set( 'LABS_SIZE', size_);
-                    pl.set('LABS', 1);
+                    if ~isempty(fdr_lim)
+                        pl.set('LABS', fdr_lim');
+                    else
+                        pl.set('LABS', 1);
+                    end
                 end
-
             end
-            if get(ui_checkbox_meas_labelsize, 'Value')
+            if  get(ui_checkbox_meas_labelsize, 'Value')
                 % set labels to values
                 new_labs = cellfun(@(x) num2str(x), num2cell(measure_data_inner), 'UniformOutput', false);
                 brs_dict = pl.get('ATLAS').get('BR_DICT').get('IT_LIST');
@@ -2052,6 +2205,36 @@ function h = getMCRPanel(pl)
             end
             % draw
             pl.draw();
+        end
+        function update_data()
+            if ~isempty(measure_data) &&  ...
+                    (get(ui_checkbox_meas_fdr1, 'Value') || get(ui_checkbox_meas_fdr2, 'Value'))
+                fdr_lim = ones(1, size(measure_data, 1)); % nodal
+
+                if  Measure.is_nodal(m)
+                    if size(measure_data, 2) > 1
+                        p1_inner = p1_fdr{get(ui_layer_selector, 'Value')};
+                        p2_inner = p2_fdr{get(ui_layer_selector, 'Value')};
+                    else
+                        % weighted
+                        p1_inner = p1_fdr{1};
+                        p2_inner = p2_fdr{1};
+                    end
+                end
+                for i = 1:1:size(p1_inner, 1)
+                    if get(ui_checkbox_meas_fdr1, 'Value')
+                        if p1_inner(i) > fdr(p1_inner', str2double(get(ui_edit_meas_fdr1, 'String')))
+                            fdr_lim(i) = 0;
+                        end
+                    elseif get(ui_checkbox_meas_fdr2, 'Value')
+                        if p2_inner(i) > fdr(p2_inner', str2double(get(ui_edit_meas_fdr2, 'String')))
+                            fdr_lim(i) = 0;
+                        end
+                    end
+                end
+            else
+                fdr_lim = [];
+            end
         end
 
     % draw
@@ -2084,7 +2267,7 @@ br_dict =  IndexedDictionary( ...
     'it_key', IndexedDictionary.getPropDefault(IndexedDictionary.IT_KEY), ...
     'it_list', {br1, br2, br3, br4, br5});
 atlas = BrainAtlas('ID', 'BA ID', 'Label', 'Brain Atlas Label', 'Notes', 'Brain atlas notes', 'SURF', bs, 'BR_DICT', br_dict);
-pl = PlotBrainGraph('atlas', atlas, ...
+pl = PlotBrainGraphComparisonEnsemble('atlas', atlas, ...
     'syms', 1, 'SYMS_SIZE', [1:5:25]', ...
     'SYMS_FACE_COLOR', [0 0 0], 'SYMS_EDGE_COLOR', [0 0 0], ...
     'SPHS', 1, 'SPHS_SIZE', [1:1:5]', ...
@@ -2112,7 +2295,7 @@ br_dict =  IndexedDictionary( ...
 
 atlas = BrainAtlas('ID', 'BA ID', 'Label', 'Brain Atlas Label', 'Notes', 'Brain atlas notes', 'SURF', bs, 'BR_DICT', br_dict);
 
-pl = PlotBrainGraph('atlas', atlas, ...
+pl = PlotBrainGraphComparisonEnsemble('atlas', atlas, ...
     'SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
 pl.draw();
 pl.link_edges();
