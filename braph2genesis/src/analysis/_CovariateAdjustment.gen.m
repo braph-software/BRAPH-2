@@ -104,7 +104,7 @@ end
 ms1_adjusted = ms_adjusted(1:subj_num1);
 ms2_adjusted = ms_adjusted(subj_num1 + 1:subj_num);
 
-value = [ms1_adjusted; ms2_adjusted];
+value = [ms1_adjusted ms2_adjusted];
 
 %% ¡methods!
 function adjusted_values = adjustment(ca, values, covariates)
