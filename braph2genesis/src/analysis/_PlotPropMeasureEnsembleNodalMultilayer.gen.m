@@ -49,13 +49,13 @@ function h_panel = draw(pr, varargin)
     L = size(value, 1);
     label = 'Layer';
     g_dict = el.get('A').get('G_DICT');
-    graph = g_dict.getItem(1);
-    check = graph.getPropNumber() > 9;
+    g = g_dict.getItem(1);
+    check = g.getPropNumber() > 9;
     
     if check
-        n = length(el.get('G').get(10)); % 10 is densities or thresholds
+        n = length(g.get(10)); % 10 is densities or thresholds
         L = size(value, 1) / n;
-        label = el.get('G').getPropTag(10);
+        label = g.getPropTag(10);
     end
 		 
     if L > 1
@@ -110,7 +110,7 @@ function h_panel = draw(pr, varargin)
             'FontUnits', BRAPH2.FONTUNITS, ...
             'FontSize', BRAPH2.FONTSIZE, ...
             'FontWeight', 'bold', ...
-            'String', [label ' ' num2str(round(get(pr.layer_slider, 'Value')))], ...
+            'String', [label ' ' num2str(round(get(pr.extra_slider, 'Value')))], ...
             'BackgroundColor', pr.get('BKGCOLOR') ...
             );
     end
@@ -143,13 +143,13 @@ function update(pr)
     L = size(value, 1);
     label = 'Layer';
     g_dict = el.get('A').get('G_DICT');
-    graph = g_dict.getItem(1);
-    br_dict = graph.get('BRAINATLAS').get('BR_DICT');
-    check = graph.getPropNumber() > 9;
+    g = g_dict.getItem(1);
+    br_dict = g.get('BRAINATLAS').get('BR_DICT');
+    check = g.getPropNumber() > 9;
     if check
-        n = length(el.get('G').get(10)); % 10 is densities or thresholds
+        n = length(g.get(10)); % 10 is densities or thresholds
         L = size(value, 1) / n;
-        label = el.get('G').getPropTag(10);
+        label = g.getPropTag(10);
     end
     
     br_ids = cell(br_dict.length(), 1);
@@ -174,7 +174,7 @@ function update(pr)
         if check
             
             set(pr.extra_text, ...
-            'String', [label ' ' num2str(round(get(pr.layer_slider, 'Value')))]);
+            'String', [label ' ' num2str(round(get(pr.extra_slider, 'Value')))]);
         
             % get the correct index
             l = round(get(pr.slider, 'Value')); % layer
@@ -228,8 +228,10 @@ function redraw(pr, varargin)
     value = el.get(prop);
     L = size(value, 1);
     n = 0;
-    if el.get('G').getPropNumber() > 9
-        n = length(el.get('G').get(10)); % 10 is densities or thresholds
+    g_dict = el.get('A').get('G_DICT');
+    g = g_dict.getItem(1);
+    if g.getPropNumber() > 9
+        n = length(g.get(10)); % 10 is densities or thresholds
     end
 
     if n > 1

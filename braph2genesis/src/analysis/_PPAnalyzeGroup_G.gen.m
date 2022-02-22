@@ -102,7 +102,7 @@ function h_panel = draw(pr, varargin)
             'TooltipString', 'Plot to line plot.', ...
             'Position', [.23 .71 .2 .2], ...
             'Callback', {@cb_plot_type_line} ...
-            );
+            );        
         
     end
     
@@ -114,7 +114,7 @@ function h_panel = draw(pr, varargin)
     end
     function cb_plot_type_line(~, ~)
         pr.cb_graph_ui_figure();
-    end        
+    end 
 
     if isempty(pr.measure_tbl) || ~isgraphics(pr.measure_tbl, 'uitable')
         pr.mlist = [];
@@ -495,7 +495,7 @@ function cb_graph_ui_figure(pr)
     pr.update()
 end
 function cb_graph_adj_figure(pr)
-    f_pg = ancestor(pr.p, 'Figure'); % BrainAtlas GUI
+    f_pg = ancestor(pr.p, 'Figure'); 
     f_ba_x = Plot.x0(f_pg, 'pixels');
     f_ba_y = Plot.y0(f_pg, 'pixels');
     f_ba_w = Plot.w(f_pg, 'pixels');
@@ -523,7 +523,11 @@ function cb_graph_adj_figure(pr)
         el = pr.get('EL');
         prop = pr.get('PROP');
         g = el.get(prop);
-        pg = PlotAdjacencyMatrix('Graph', g);
+        g_dict = IndexedDictionary( ...
+            'it_class', 'GRAPH' ...
+            );
+        g_dict.add(g);
+        pg = PlotAdjacencyMatrix('G_DICT', g_dict);
         pg.draw('Parent', pr.f_adj)
         set(pr.f_adj, 'UserData', pg);
 
@@ -691,7 +695,7 @@ function cb_close(pr)
     % close adj graph figure
     if ~isempty(pr.f_adj) && check_graphics(pr.f_adj, 'figure')
         delete(pr.f_adj);
-    end
+    end    
     
     % close graph class
     if check_graphics(pr.f_g, 'figure')

@@ -48,13 +48,13 @@ function h_panel = draw(pr, varargin)
     value = el.getr(prop);
     L = size(value, 1);
     label = 'Layer';
-    graph = el.get('A').get('G_DICT').getItem(1);
+    g = el.get('A').get('G_DICT').getItem(1);
     check = graph.getPropNumber() > 9;
     
     if check
-        n = length(el.get('G').get(10)); % 10 is densities or thresholds
+        n = length(g.get(10)); % 10 is densities or thresholds
         L = size(value, 1) / n;
-        label = el.get('G').getPropTag(10);
+        label = g.getPropTag(10);
     end
    
     % set on first layer
@@ -107,7 +107,7 @@ function h_panel = draw(pr, varargin)
             'FontUnits', BRAPH2.FONTUNITS, ...
             'FontSize', BRAPH2.FONTSIZE, ...
             'FontWeight', 'bold', ...
-            'String', [label ' ' num2str(round(get(pr.layer_slider, 'Value')))], ...
+            'String', [label ' ' num2str(round(get(pr.extra_slider, 'Value')))], ...
             'BackgroundColor', pr.get('BKGCOLOR') ...
             );
     end
@@ -138,13 +138,13 @@ function update(pr)
     prop = pr.get('PROP');
     value = el.getr(prop);
     label = 'Layer';
-    graph = el.get('A').get('G_DICT').getItem(1);
+    g = el.get('A').get('G_DICT').getItem(1);
     check = graph.getPropNumber() > 9;
     
     if check
-        n = length(el.get('G').get(10)); % 10 is densities or thresholds
+        n = length(g.get(10)); % 10 is densities or thresholds
         L = size(value, 1) / n;
-        label = el.get('G').getPropTag(10);
+        label = g.getPropTag(10);
     end
     
     if isa(value, 'NoValue')
@@ -213,10 +213,10 @@ function redraw(pr, varargin)
     value = el.get(prop);
     L = size(value, 1);
     n = 0;
-    graph = el.get('A').get('G_DICT').getItem(1);
-    check = graph.getPropNumber() > 9;
+    g = el.get('A').get('G_DICT').getItem(1);
+    check = g.getPropNumber() > 9;
     if check
-        n = length(el.get('G').get(10)); % 10 is densities or thresholds
+        n = length(g.get(10)); % 10 is densities or thresholds
     end
     
     if n > 1

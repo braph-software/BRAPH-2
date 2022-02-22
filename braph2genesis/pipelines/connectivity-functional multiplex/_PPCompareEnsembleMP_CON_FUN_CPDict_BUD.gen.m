@@ -443,7 +443,10 @@ function cb_graph_adj_figure(pr)
             );
         set_braph2_icon(pr.f_adj)
         menu_about = BRAPH2.add_menu_about(pr.f_adj);
-        pg = PlotAdjacencyMatrix('Graph', pr.graph);
+        el = pr.get('EL');
+        a1 = el.get('A1');
+        tmp_adj = a1.get('G_DICT');
+        pg = PlotAdjacencyMatrix('G_DICT',tmp_adj);
         pg.draw('Parent', pr.f_adj)
         set(pr.f_adj, 'UserData', pg);
 

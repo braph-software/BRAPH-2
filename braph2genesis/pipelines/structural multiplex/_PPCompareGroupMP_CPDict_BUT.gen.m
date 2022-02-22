@@ -445,7 +445,11 @@ function cb_graph_adj_figure(pr)
             );
         set_braph2_icon(pr.f_adj)
         menu_about = BRAPH2.add_menu_about(pr.f_adj);
-        pg = PlotAdjacencyMatrix('Graph', pr.graph);
+        g_dict = IndexedDictionary( ...
+            'it_class', 'GRAPH' ...
+            );
+        g_dict.add(pr.graph);
+        pg = PlotAdjacencyMatrix('G_DICT', g_dict);
         pg.draw('Parent', pr.f_adj)
         set(pr.f_adj, 'UserData', pg);
 
