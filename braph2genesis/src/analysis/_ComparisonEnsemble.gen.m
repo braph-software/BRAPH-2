@@ -36,7 +36,7 @@ C (data, item) is the ensemble-based comparison.
 %%% ¡prop!
 USE_COVARIATES (parameter, logical) determines the use of covariates in the analysis.
 %%%% ¡default!
-true
+false
 
 %%% ¡prop!
 DIFF (result, cell) is the ensemble comparison value.
