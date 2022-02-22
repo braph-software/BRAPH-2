@@ -159,7 +159,7 @@ function cb_brain_view_fig(pr)
         el = pr.get('EL');
         prop = pr.get('PROP');
         
-        g = el.get('G');
+        g = el.get('a').get('g_dict').getItem(1);
         
         if isequal(g.getClass(), 'MultigraphBUD') || isequal(g.getClass(), 'MultiplexBUD')
             type = 'Densities';

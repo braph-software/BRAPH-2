@@ -143,13 +143,13 @@ function update(pr)
     L = size(value, 1);
     label = 'Layer';
     g_dict = el.get('A').get('G_DICT');
-    graph = g_dict.getItem(1);
-    br_dict = graph.get('BRAINATLAS').get('BR_DICT');
-    check = graph.getPropNumber() > 9;
+    g = g_dict.getItem(1);
+    br_dict = g.get('BRAINATLAS').get('BR_DICT');
+    check = g.getPropNumber() > 9;
     if check
-        n = length(el.get('G').get(10)); % 10 is densities or thresholds
+        n = length(g.get(10)); % 10 is densities or thresholds
         L = size(value, 1) / n;
-        label = el.get('G').getPropTag(10);
+        label = g.getPropTag(10);
     end
     
     br_ids = cell(br_dict.length(), 1);
