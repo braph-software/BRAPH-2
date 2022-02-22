@@ -118,8 +118,8 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
 
     % Pre-calculate and save measures of all subjects
     if cp.get('USE_COVARIATES')
-        length(cp.get('C').get('A1').get('GR').get('SUB_DICT').getItems());
-        length(cp.get('C').get('A2').get('GR').get('SUB_DICT').getItems());
+        sub_num1 = length(cp.get('C').get('A1').get('GR').get('SUB_DICT').getItems());
+        sub_num2 = length(cp.get('C').get('A2').get('GR').get('SUB_DICT').getItems());
         value = CovariateAdjustment('CP', cp).get('M_LIST_ADJUSTED');
         ms1 = value(1:sub_num1);
         ms2 = value(sub_num1 + 1:sub_num1 + sub_num2);
