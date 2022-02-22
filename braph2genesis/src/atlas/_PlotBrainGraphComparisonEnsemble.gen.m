@@ -1760,7 +1760,7 @@ function h = getMCRPanel(pl)
     fdr_lim = [];
 
     d_t_check = 0;
-    layer_element = pl.get('comp').get('c').get('a1').get('g_dict');
+    layer_element = pl.get('comp').get('c').get('a1').get('g_dict').getItem(1);
     layer_element = layer_element.get('b');
     layer_check = 0;
     d_t_check = 0;
