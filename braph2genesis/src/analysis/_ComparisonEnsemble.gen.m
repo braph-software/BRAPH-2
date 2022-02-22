@@ -122,7 +122,7 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
         length(cp.get('C').get('A2').get('GR').get('SUB_DICT').getItems());
         value = CovariateAdjustment('CP', cp).get('M_LIST_ADJUSTED');
         ms1 = value(1:sub_num1);
-        ms2 = value(sub_num1 + 1, sub_num1 + sub_num2);
+        ms2 = value(sub_num1 + 1:sub_num1 + sub_num2);
     else
         ms1 = cellfun(@(x) x.getMeasure(measure_class, varargin{:}).memorize('M'), c.get('A1').memorize('G_DICT').getItems, 'UniformOutput', false);
         ms2 = cellfun(@(x) x.getMeasure(measure_class, varargin{:}).memorize('M'), c.get('A2').memorize('G_DICT').getItems, 'UniformOutput', false);
