@@ -134,11 +134,11 @@ function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
     %
     % REDRAW(PR) resizes the property panel and repositions its
-    %   graphical objects. 
-    % 
+    %   graphical objects.
+    %
     % Important notes:
-    % 1. REDRAW() sets the units 'characters' for panel and all its graphical objects. 
-    % 2. REDRAW() is typically called internally by PlotElement and does not need 
+    % 1. REDRAW() sets the units 'characters' for panel and all its graphical objects.
+    % 2. REDRAW() is typically called internally by PlotElement and does not need
     %  to be explicitly called in children of PlotProp.
     %
     % REDRAW(PR, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT)
@@ -151,35 +151,35 @@ function redraw(pr, varargin)
     %  - HEIGHT=1.4 characters.
     %
     % See also draw, update, PlotElement.
-    
+
     [h, varargin] = get_and_remove_from_varargin(1.8, 'Height', varargin);
     [Sh, varargin] = get_and_remove_from_varargin(2.0, 'SHeight', varargin);
     [Th, varargin] = get_and_remove_from_varargin(2.0, 'THeight', varargin);
     [Dh, varargin] = get_and_remove_from_varargin(20, 'DHeight', varargin);
-    
+
     el = pr.get('EL');
     prop = pr.get('PROP');
     value = el.get(prop);
     L = size(value, 1);
-    
+
     if L > 1
-        pr.redraw@PlotPropMatrix('Height', h + Sh + Th + Dh, varargin{:});
+        pr.redraw@PlotPropMatrix('Height', h*2, varargin{:});
         set(pr.slider, ...
             'Units', 'normalized', ...
             'Visible', 'on', ...
-            'Position', [.01 Dh/(h+Sh+Th+Dh) .97 (Th/(h+Sh+Th+Dh)-.02)] ...
+            'Position', [.01 Dh/(h+Sh+Th+Dh)-.01 .97 (Th/(h+Sh+Th+Dh)-.02)] ...
             );
-        
+
         set(pr.slider_text, ...
             'Units', 'normalized', ...
             'Visible', 'on', ...
-            'Position', [.01 (Th+Dh)/(h+Sh+Th+Dh) .97 (Th/(h+Sh+Th+Dh)-.02)] ...
+            'Position', [.01 (Th+Dh)/(h+Sh+Th+Dh)-.02 .97 (Th/(h+Sh+Th+Dh)-.02)] ...
             );
-        
+
         set(pr.table_value, ...
             'Visible', 'on', ...
             'Units', 'normalized', ...
-            'Position', [.01 .02 .97 (Dh/(h+Sh+Th+Dh)-.02)] ...
+            'Position', [.01 .01 .97 (Dh/(h+Sh+Th+Dh)-.02)] ...
             )
     else
         pr.redraw@PlotPropMatrix('Height', h*2, varargin{:});
