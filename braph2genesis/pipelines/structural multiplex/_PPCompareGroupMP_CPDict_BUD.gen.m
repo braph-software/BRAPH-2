@@ -333,7 +333,7 @@ function cb_measure_calc(pr)
 
         measure = pr.mlist{i};
         if pr.get('WAITBAR')
-            waitbar(.1 + .70 * i / length(pr.selected), wb, ['Calculating measure ' measure ]);
+            waitbar(.1 + .70 * i / length(pr.selected), wb, ['Calculating comparison ' measure ]);
         end
         el.getComparison(measure).memorize('DIFF');
         el.getComparison(measure).get('P1');
