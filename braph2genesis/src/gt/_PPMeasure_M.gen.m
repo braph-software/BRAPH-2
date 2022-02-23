@@ -177,6 +177,7 @@ function cb_brain_view_fig(pr)
         
         pbv.draw('Parent', pr.f_br );
         f_settings = pbv.settings();
+        set(pr.f_br, 'UserData', pbv);
         set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
         f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
         f_settings.OuterPosition(2) = f_ba_y/screen_h;
