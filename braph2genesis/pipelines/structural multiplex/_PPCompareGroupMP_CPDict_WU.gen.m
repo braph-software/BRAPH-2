@@ -26,13 +26,6 @@ f_m % array of measure class figures
 f_pc % figure for plot graph
 graph % graph of the comparison
 
-%% ¡props_update!
-
-%%% ¡prop!
-ENABLE (metadata, option) switches between off and inactive fields.
-%%%% ¡default!
-'on'
-
 %% ¡methods!
 function h_panel = draw(pr, varargin)
     %DRAW draws the panel of the graph property and the measure table.

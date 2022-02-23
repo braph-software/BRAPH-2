@@ -32,20 +32,6 @@ f_pg % figure for plot graph
 f_adj % figure for plot adj
 f_g % figure for class graph
 
-%% ¡props_update!
-
-%%% ¡prop!
-ENABLE (metadata, option) switches between off and inactive fields.
-%%%% ¡default!
-'on'
-
-%% ¡props!
-
-%%% ¡prop!
-PG (data, item) is a plot graph.
-%%%% ¡settings!
-'PlotGraph'
-
 %% ¡methods!
 function h_panel = draw(pr, varargin)
     %DRAW draws the panel of the graph property and the measure table.
