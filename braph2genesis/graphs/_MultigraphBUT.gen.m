@@ -26,7 +26,7 @@ negativity = Graph.NONNEGATIVE * ones(layernumber);
 %% ¡props!
 
 %%% ¡prop!
-THRESHOLDS (data, rvector) is the vector of thresholds.
+THRESHOLDS (parameter, rvector) is the vector of thresholds.
 
 %% ¡props_update!
 
