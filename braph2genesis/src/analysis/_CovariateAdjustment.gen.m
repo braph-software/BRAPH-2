@@ -9,13 +9,13 @@ the residuals of the value after removing the effect of covariate.
 
 %% ¡props!
 %%% ¡prop!
-ID (data, string) is a few-letter code for the evaluator.
+ID (data, string) is a few-letter code for the covariate adjustment.
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the evaluator.
+LABEL (metadata, string) is an extended label of the covariate adjustment.
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the evaluator.
+NOTES (metadata, string) are some specific notes about the covariate adjustment.
 
 %%% ¡prop!
 CP (data, item) is the ensemble-based comparison.
@@ -23,7 +23,7 @@ CP (data, item) is the ensemble-based comparison.
 'ComparisonEnsemble'
 
 %%% ¡prop!
-M_LIST_ADJUSTED (result, cell) is the adjusted measure result at single layer level.
+M_LIST_ADJUSTED (result, cell) is the adjusted target result.
 %%%% ¡calculate!
 core_measure = ca.get('CP').get('MEASUREPARAM');
 j = 1;
