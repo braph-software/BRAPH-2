@@ -18,5 +18,5 @@ a_WU1 = AnalyzeGroup_ST_MP_WU('GR', gr1); % Analyze Group 1 % Group 1 Analysis
 a_WU2 = AnalyzeGroup_ST_MP_WU('GR', gr2); % Analyze Group 2 % Group 2 Analysis
 
 %% Comparison
-c_WU = CompareGroup('P', 10, 'A1', a_WU1, 'A2', a_WU2, 'VERBOSE', true, 'MEMORIZE', true); % Compare Groups % Group Comparison
+c_WU = CompareGroup('P', 10, 'A1', a_WU1, 'A2', a_WU2, 'MEMORIZE', true); % Compare Groups % Group Comparison
 
