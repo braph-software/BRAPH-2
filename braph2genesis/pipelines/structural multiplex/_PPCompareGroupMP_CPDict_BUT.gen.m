@@ -404,9 +404,12 @@ function cb_graph_ui_figure(pr)
         f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
         f_settings.OuterPosition(2) = f_ba_y/screen_h;
         
+    elseif isequal(get(pr.f_pc, 'Visible'), 'on')
+        gui = get(pr.f_pc, 'UserData');
+        gui.cb_hide()
     else
         gui = get(pr.f_pc, 'UserData');
-        gui.cb_bring_to_front()        
+        gui.cb_bring_to_front()
     end
 
         function cb_f_pg_close(~, ~)
@@ -454,6 +457,9 @@ function cb_graph_adj_figure(pr)
         set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
         f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
         f_settings.OuterPosition(2) = f_ba_y/screen_h;
+    elseif isequal(get(pr.f_adj, 'Visible'), 'on')
+        gui = get(pr.f_adj, 'UserData');
+        gui.cb_hide()
     else
         gui = get(pr.f_adj, 'UserData');
         gui.cb_bring_to_front()

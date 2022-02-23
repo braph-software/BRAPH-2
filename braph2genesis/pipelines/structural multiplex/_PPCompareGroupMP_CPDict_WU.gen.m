@@ -346,35 +346,42 @@ function cb_graph_ui_figure(pr)
     h = f_ba_h / 1.5;
     y = f_ba_y + f_ba_h - h;
     w = screen_w - x;
-
-    pr.f_pc = figure( ...
-        'NumberTitle', 'off', ...
-        'Units', 'normalized', ...
-        'Position', [x/screen_w y/screen_h w/screen_w h/screen_h], ...
-        'CloseRequestFcn', {@cb_f_pg_close} ...
-        );
+    
+    if isempty(pr.f_pc) || ~check_graphics(pr.f_pc, 'figure')
+        pr.f_pc = figure( ...
+            'NumberTitle', 'off', ...
+            'Units', 'normalized', ...
+            'Position', [x/screen_w y/screen_h w/screen_w h/screen_h], ...
+            'CloseRequestFcn', {@cb_f_pg_close} ...
+            );
+        set_braph2_icon(pr.f_pc)
+        menu_about = BRAPH2.add_menu_about(pr.f_pc);
+        
+        g_dict = IndexedDictionary( ...
+            'it_class', pr.graph.getClass() ...
+            );
+        g_dict.add(pr.graph);
+        pg = PlotAdjacencyMatrix('G_DICT', g_dict);
+        
+        pg.draw('Parent', pr.f_pc)
+        set(pr.f_pc, 'UserData', pg);
+        
+        f_settings = pg.settings();
+        set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
+        f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
+        f_settings.OuterPosition(2) = f_ba_y/screen_h;
+    elseif isequal(get(pr.f_pc, 'Visible'), 'on')
+        gui = get(pr.f_pc, 'UserData');
+        gui.cb_hide()
+    else
+        gui = get(pr.f_pc, 'UserData');
+        gui.cb_bring_to_front()
+    end
 
         function cb_f_pg_close(~, ~)
             delete(pr.f_pc);
             pr.update()
         end
-
-    set_braph2_icon(pr.f_pc)
-    menu_about = BRAPH2.add_menu_about(pr.f_pc);
-    
-    g_dict = IndexedDictionary( ...
-        'it_class', pr.graph.getClass() ...
-        );
-    g_dict.add(pr.graph);
-    pg = PlotAdjacencyMatrix('G_DICT', g_dict);
-
-    pg.draw('Parent', pr.f_pc)
-    set(pr.f_pc, 'UserData', pg);
-
-    f_settings = pg.settings();
-    set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
-    f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
-    f_settings.OuterPosition(2) = f_ba_y/screen_h;
 
     pr.update()
 end
