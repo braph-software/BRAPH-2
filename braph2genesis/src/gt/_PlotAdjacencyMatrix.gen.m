@@ -114,7 +114,11 @@ function f_settings = settings(pr, varargin)
     g_dict = pr.get('G_DICT');
     g_check = g_dict.length();
     tmp_g = g_dict.getItem(1);
-    layer_check = size(tmp_g.get('B'), 2);
+    if iscell(tmp_g.get('B'))
+        layer_check = size(tmp_g.get('B'), 2);
+    else
+        layer_check = 1;
+    end
     
     % new part layers and subjects
     mod = 0;
@@ -359,10 +363,12 @@ function f_settings = settings(pr, varargin)
                     str2double(get(ui_matrix_density_edit, 'String')));
             end
         else  % weighted correlation
-            if size(A, 2) > 1
+            if iscell(A) && size(A, 2) > 1
                 pr.h_plot = pr.plotw(A{layer_to_plot, layer_to_plot});
-            else
+            elseif iscell(A)
                 pr.h_plot = pr.plotw(A{layer_to_plot});
+            else
+                pr.h_plot = pr.plotw(A);
             end
         end
     end
