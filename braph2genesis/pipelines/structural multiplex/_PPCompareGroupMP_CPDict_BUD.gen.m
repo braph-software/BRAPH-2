@@ -210,7 +210,7 @@ function update(pr)
                 if pr.already_calculated{i}
                     row_names{i} = 'C';
                 else
-                    row_names{i} = 'NC';
+                    row_names{i} = '';
                 end
             end
             set(pr.measure_tbl, 'RowName', row_names)
