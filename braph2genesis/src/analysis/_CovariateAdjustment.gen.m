@@ -44,67 +44,71 @@ c = ca.get('CP').get('C');
 ms1 = cellfun(@(x) x.getMeasure(measure_class, varargin{:}).memorize('M'), c.get('A1').memorize('G_DICT').getItems, 'UniformOutput', false);
 ms2 = cellfun(@(x) x.getMeasure(measure_class, varargin{:}).memorize('M'), c.get('A2').memorize('G_DICT').getItems, 'UniformOutput', false);
 
-subj_num1 = size(ms1, 2);
-subj_num2 = size(ms2, 2);
-subj_num = subj_num1 + subj_num2;
-ms = [ms1 ms2];
+if isempty(ms1)
+    value = {};
+else
+    subj_num1 = size(ms1, 2);
+    subj_num2 = size(ms2, 2);
+    subj_num = subj_num1 + subj_num2;
+    ms = [ms1 ms2];
 
-gr1 = ca.get('CP').get('C').get('A1').get('GR');
-gr2 = ca.get('CP').get('C').get('A2').get('GR');
+    gr1 = ca.get('CP').get('C').get('A1').get('GR');
+    gr2 = ca.get('CP').get('C').get('A2').get('GR');
 
-age_list = cellfun(@(x) x.get('age'), gr1.get('SUB_DICT').getItems, 'UniformOutput', false);
-age1 = cat(2, age_list{:})';
-age_list = cellfun(@(x) x.get('age'), gr2.get('SUB_DICT').getItems, 'UniformOutput', false);
-age2 = cat(2, age_list{:})';
-age = [age1; age2];
+    age_list = cellfun(@(x) x.get('age'), gr1.get('SUB_DICT').getItems, 'UniformOutput', false);
+    age1 = cat(2, age_list{:})';
+    age_list = cellfun(@(x) x.get('age'), gr2.get('SUB_DICT').getItems, 'UniformOutput', false);
+    age2 = cat(2, age_list{:})';
+    age = [age1; age2];
 
-sex_list = cellfun(@(x) x.get('sex'), gr1.get('SUB_DICT').getItems, 'UniformOutput', false);
-sex1 = zeros(size(age1));
-for i = 1:length(sex_list)
-    switch lower(sex_list{i})
-        case 'female'
-            sex1(i) = 1;
-        case 'male'
-            sex1(i) = -1;
-        otherwise
-            sex1(i) = 2; % cannot assign zero otherwise the least square solver will return NaN
-    end
-end
-sex_list = cellfun(@(x) x.get('sex'), gr2.get('SUB_DICT').getItems, 'UniformOutput', false);
-sex2 = zeros(size(age2));
-for i = 1:length(sex_list)
-    switch lower(sex_list{i})
-        case 'female'
-            sex2(i) = 1;
-        case 'male'
-            sex2(i) = -1;
-        otherwise
-            sex2(i) = 2; % cannot assign zero otherwise the least square solver will return NaN
-    end
-end
-sex = [sex1; sex2];
-
-for i = 1:1:size(ms{1}, 1)
-    for j = 1:1:size(ms{1}, 2)
-        m_ij_list = cellfun(@(x) x{i, j}, ms, 'UniformOutput', false);
-        m_list_cat = cat(ndims(m_ij_list{1}) + 1, m_ij_list{:});
-        m_list_cat_adjusted = zeros(size(m_list_cat));
-        for k = 1:1:size(m_list_cat, 2)
-            m_list_unadjusted = reshape(squeeze(m_list_cat(:, k, :)), [], subj_num);
-            m_list_cat_adjusted(:, k, :) = ca.adjustment(m_list_unadjusted, [sex age]);
-        end
-        for k = 1:1:size(m_list_cat, 3)
-            m_ij_list_adjusted{k} = m_list_cat_adjusted(:, :, k);
-        end
-        for k = 1:1:subj_num1 + subj_num2
-            ms_adjusted{k}(i, j) = m_ij_list_adjusted(k);
+    sex_list = cellfun(@(x) x.get('sex'), gr1.get('SUB_DICT').getItems, 'UniformOutput', false);
+    sex1 = zeros(size(age1));
+    for i = 1:length(sex_list)
+        switch lower(sex_list{i})
+            case 'female'
+                sex1(i) = 1;
+            case 'male'
+                sex1(i) = -1;
+            otherwise
+                sex1(i) = 2; % cannot assign zero otherwise the least square solver will return NaN
         end
     end
-end
-ms1_adjusted = ms_adjusted(1:subj_num1);
-ms2_adjusted = ms_adjusted(subj_num1 + 1:subj_num);
+    sex_list = cellfun(@(x) x.get('sex'), gr2.get('SUB_DICT').getItems, 'UniformOutput', false);
+    sex2 = zeros(size(age2));
+    for i = 1:length(sex_list)
+        switch lower(sex_list{i})
+            case 'female'
+                sex2(i) = 1;
+            case 'male'
+                sex2(i) = -1;
+            otherwise
+                sex2(i) = 2; % cannot assign zero otherwise the least square solver will return NaN
+        end
+    end
+    sex = [sex1; sex2];
 
-value = [ms1_adjusted ms2_adjusted];
+    for i = 1:1:size(ms{1}, 1)
+        for j = 1:1:size(ms{1}, 2)
+            m_ij_list = cellfun(@(x) x{i, j}, ms, 'UniformOutput', false);
+            m_list_cat = cat(ndims(m_ij_list{1}) + 1, m_ij_list{:});
+            m_list_cat_adjusted = zeros(size(m_list_cat));
+            for k = 1:1:size(m_list_cat, 2)
+                m_list_unadjusted = reshape(squeeze(m_list_cat(:, k, :)), [], subj_num);
+                m_list_cat_adjusted(:, k, :) = ca.adjustment(m_list_unadjusted, [sex age]);
+            end
+            for k = 1:1:size(m_list_cat, 3)
+                m_ij_list_adjusted{k} = m_list_cat_adjusted(:, :, k);
+            end
+            for k = 1:1:subj_num1 + subj_num2
+                ms_adjusted{k}(i, j) = m_ij_list_adjusted(k);
+            end
+        end
+    end
+    ms1_adjusted = ms_adjusted(1:subj_num1);
+    ms2_adjusted = ms_adjusted(subj_num1 + 1:subj_num);
+
+    value = [ms1_adjusted ms2_adjusted];
+end
 
 %% ¡methods!
 function adjusted_values = adjustment(ca, values, covariates)
