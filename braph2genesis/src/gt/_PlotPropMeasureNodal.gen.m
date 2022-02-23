@@ -45,8 +45,7 @@ function h_panel = draw(pr, varargin)
     prop = pr.get('PROP');
     value = el.get(prop);
     L = size(value, 1);
-    label = el.get('G').getPropTag(10);
-	
+    	
     % set on first layer
     pr.slider = uicontrol( ...
         'Parent', pr.p, ...
@@ -68,7 +67,7 @@ function h_panel = draw(pr, varargin)
         'FontUnits', BRAPH2.FONTUNITS, ...
         'FontSize', BRAPH2.FONTSIZE, ...
         'FontWeight', 'bold', ...
-        'String', [label ' ' num2str(round(get(pr.slider, 'Value')))], ...
+        'String', '', ...
         'BackgroundColor', pr.get('BKGCOLOR') ...
         );
     
@@ -98,7 +97,12 @@ function update(pr)
     prop = pr.get('PROP');
     value = el.get(prop);
     L = size(value, 1);
-    label = el.get('G').getPropTag(10);
+    if el.get('G').getPropNumber() > 9
+        label = el.get('G').getPropTag(10);
+    else
+        label = 'Weighted';
+        set(pr.slider, 'Enable', 'off')
+    end
     br_dict = el.get('G').get('BRAINATLAS').get('BR_DICT');
 
     br_ids = cell(br_dict.length(), 1);
