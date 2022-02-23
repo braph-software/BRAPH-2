@@ -137,12 +137,12 @@ function cb_edit_value(pr)
 
     el = pr.get('EL');
     prop = pr.get('PROP');
-    
-    % get string value 
+
+    % get string value
     tmp_value = get(pr.edit_value, 'String');
-    
+
     if isequal(el.getPropTag(prop), 'Densities')
-        step = 10;     
+        step = 10;
         max = 100;
         min = 0;
     else % thresholds
@@ -150,47 +150,91 @@ function cb_edit_value(pr)
         max = 1;
         min = 0;
     end
-    
+
     if contains(tmp_value, ':') % value that wants to create an array
         if length(strfind(tmp_value, ':')) > 1  % specifies the step
             tmp_split_values = strsplit(tmp_value, ':');
+            tmp_min = str2double(tmp_split_values{1});
+            tmp_max = str2double(tmp_split_values{3});
+            tmp_step = str2double(tmp_split_values{2});
+
+            [tmp_min, tmp_step, tmp_max] = pr.min_max_rules(min, step, max, tmp_min, tmp_step, tmp_max);
+
             try
-                proccessed_value = [str2double(tmp_split_values{1}):str2double(tmp_split_values{2}):str2double(tmp_split_values{3})];
+                proccessed_value = [tmp_min:tmp_step:tmp_max];
             catch e
-                warning_creator(e.message)
+                pr.warning_creator(e.message);
             end
         else % default step
             tmp_split_values = strsplit(tmp_value, ':');
+            tmp_min = str2double(tmp_split_values{1});
+            tmp_max = str2double(tmp_split_values{2});
+
+            [tmp_min, tmp_step, tmp_max] = pr.min_max_rules(min, step, max, tmp_min, step, tmp_max);
             try
-                proccessed_value = [str2double(tmp_split_values{1}):step:str2double(tmp_split_values{3})];
+                proccessed_value = [tmp_min:tmp_step:tmp_max];
             catch e
-                warning_creator(e.message)
+                pr.warning_creator(e.message);
             end
-        end        
+        end
     elseif contains(tmp_value, ',') || contains(tmp_value, '-') || contains(tmp_value, ' ') % array separeted by commas or slash or space
         tmp_split_values = strsplit(tmp_value,{' ', ',', '-'}, 'CollapseDelimiters', true);
         try
             proccessed_value = cell2mat(tmp_split_values);
         catch e
-            warning_creator(e.message)
+            pr.warning_creator(e.message);
         end
-        
+
     else
-        warning_creator('Value is not a valid entry.')
+        try
+            if isnumeric(num2str(tmp_value))
+                proccessed_value = num2str(tmp_value);
+            else
+                pr.warning_creator('Value is not a valid entry.')
+            end
+        catch e
+            pr.warning_creator(e.message);
+        end
+
     end
-    
+
     % set rvector
     if isnumeric(proccessed_value)
-        el.set(prop, proccessed_value)
+        el.set(prop, proccessed_value);
     else
         % do nothing
     end
-    
+
     pr.update()
 end
 function warning_creator(pr, text)
     warning_figure = warndlg(text);
     set_braph2_icon(warning_figure);
+end
+function [min, step, max] =  min_max_rules(pr, min_, step_, max_, tmp_min, tmp_step, tmp_max)
+    min = tmp_min;
+    max = tmp_max;
+    step = tmp_step;
+
+    if tmp_min < min_
+        min = min_;
+    end
+    if tmp_min > max_
+        min = max_;
+    end
+    if tmp_step > max_
+        step = max_;
+    end
+    if tmp_step < 0
+        step = step_;
+    end
+    if tmp_max < min_
+        max = step_;
+    end
+    if tmp_max < step_
+        step = step_;
+        max = step_;
+    end
 end
   
 %% ¡tests!
