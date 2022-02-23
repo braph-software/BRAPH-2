@@ -90,7 +90,7 @@ function h_panel = draw(pr, varargin)
             'Visible', 'on', ...
             'TooltipString', 'Open the measure in a Brain View plot.', ...
             'String', 'Plot Brain View', ...
-            'Position', [.02 .92 .3 .06], ...
+            'Position', [.02 .88 .3 .06], ...
             'Callback', {@cb_brainview});
     end
         
@@ -121,7 +121,7 @@ function redraw(pr, varargin)
     %
     % See also draw, update, refresh.
 
-    get(pr.p, 'UserData').redraw('Height', 6, varargin{:})    
+    get(pr.p, 'UserData').redraw(varargin{:})    
 end
 function cb_brain_view_fig(pr)
     f_pg = ancestor(pr.p, 'Figure');

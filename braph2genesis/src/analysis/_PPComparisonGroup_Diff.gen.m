@@ -121,7 +121,7 @@ function h_panel = draw(pr, varargin)
             'Visible', 'on', ...
             'TooltipString', 'Open the comparison in a Brain View plot.', ...
             'String', 'Plot Brain View', ...
-            'Position', [.02 .92 .3 .06], ...
+            'Position', [.02 .88 .3 .06], ...
             'Callback', {@cb_brainview});
     end
 
@@ -181,6 +181,8 @@ function update(pr)
         else
             [~, mask] = fdr(p1, fdr_q_value);
         end
+        
+        tmp_value = num2cell(tmp_value);
 
         for i = 1:size(tmp_value, 1)
             for j = 1:size(tmp_value, 2)
@@ -188,9 +190,9 @@ function update(pr)
                     clr = dec2hex(round(fdr_style * 255), 2)';
                     clr = ['#'; clr(:)]';
 
-                    tmp_value(ll, mm) = {strcat(...
+                    tmp_value(i, j) = {strcat(...
                         ['<html><body bgcolor="' clr '" text="#000000" width="100px">'], ...
-                        num2str(tmp_data{ll, mm}))};
+                        num2str(tmp_value{i, j}))};
                 end
             end
         end
@@ -215,6 +217,8 @@ function update(pr)
         else
             [~, mask] = fdr(p1, fdr_q_value);
         end
+        
+        tmp_value = num2cell(tmp_value);
 
         for i = 1:size(tmp_value, 1)
             for j = 1:size(tmp_value, 2)
@@ -222,9 +226,9 @@ function update(pr)
                     clr = dec2hex(round(fdr_style * 255), 2)';
                     clr = ['#'; clr(:)]';
 
-                    tmp_value(ll, mm) = {strcat(...
+                    tmp_value(i, j) = {strcat(...
                         ['<html><body bgcolor="' clr '" text="#000000" width="100px">'], ...
-                        num2str(tmp_data{ll, mm}))};
+                        num2str(tmp_value{i, j}))};
                 end
             end
         end

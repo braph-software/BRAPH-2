@@ -182,6 +182,6 @@ function redraw(pr, varargin)
             'Position', [.01 .02 .97 (Dh/(h+Sh+Th+Dh)-.02)] ...
             )
     else
-        pr.redraw@PlotPropMatrix(varargin{:});
+        pr.redraw@PlotPropMatrix('Height', h*2, varargin{:});
     end
 end
