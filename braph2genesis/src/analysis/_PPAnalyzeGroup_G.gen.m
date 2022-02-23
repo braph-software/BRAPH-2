@@ -255,10 +255,15 @@ function update(pr)
     end
 
         function plot_type_rules()
-            if ~isempty(pr.graph) && ~isa(el, 'AnalyzeGroup_ST_WU') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}])
-                set(pr.line_plot_tglbtn, 'Enable', 'on');
+            if ~isempty(pr.graph) && ~isa(el, 'AnalyzeGroup_ST_WU') && ~isempty(pr.already_calculated) && ...
+                    any([pr.already_calculated{:}])
+                set(pr.line_plot_tglbtn, ...
+                    'Enable', 'on', ...
+                    'Visible', 'on');
             else
-                set(pr.line_plot_tglbtn, 'Enable', 'off');
+                set(pr.line_plot_tglbtn, ...
+                    'Enable', 'off', ...
+                    'Visible', 'off');
             end
         end
     plot_type_rules()

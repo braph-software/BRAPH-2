@@ -233,9 +233,13 @@ function update(pr)
 
         function plot_type_rules()
             if ~isempty(pr.graph) && isa(el.get('A1'), 'AnalyzeGroup_ST_BUT') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}])
-                set(pr.line_plot_tgl_btn, 'Enable', 'on');
+                set(pr.line_plot_tgl_btn, ...
+                    'Enable', 'on', ...
+                    'Visible', 'on');
             else
-                set(pr.line_plot_tgl_btn, 'Enable', 'off');
+                set(pr.line_plot_tgl_btn, ...
+                    'Enable', 'on', ...
+                    'Visible', 'on');
             end
         end
     plot_type_rules()
