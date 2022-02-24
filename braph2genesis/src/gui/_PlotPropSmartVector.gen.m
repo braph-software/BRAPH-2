@@ -162,8 +162,8 @@ function cb_edit_value(pr)
         pr.warning_creator(e.message);
     end
     
-    proccessed_value = proccessed_value(proccessed_value < max);
-    proccessed_value = proccessed_value(proccessed_value > min);
+    proccessed_value = proccessed_value(proccessed_value <= max);
+    proccessed_value = proccessed_value(proccessed_value >= min);
     
     % set rvector
     if isnumeric(proccessed_value)
