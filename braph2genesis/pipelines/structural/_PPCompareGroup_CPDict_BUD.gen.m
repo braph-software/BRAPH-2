@@ -158,12 +158,13 @@ function update(pr)
     prop = pr.get('PROP');
     button_state = pr.get_button_condition();
 
-    if button_state
-        set(pr.graph_btn , 'Visible', 'off')
-        set(pr.plot_type_adj , 'Visible', 'off')
+    if ~button_state
+
+        set(pr.adj_plot_tgl_btn , 'Visible', 'off')
         set(pr.measure_tbl , 'Visible', 'off')
         set(pr.measure_btn , 'Visible', 'off')
         set(pr.measure_plot_btn , 'Visible', 'off')
+        set(pr.line_plot_tgl_btn , 'Visible', 'off')
 
     else
         pr.graph = el.get('A1').get('G');
