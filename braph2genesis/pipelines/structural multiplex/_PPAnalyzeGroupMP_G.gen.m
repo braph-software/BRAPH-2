@@ -244,7 +244,8 @@ function update(pr)
         if ~check_graphics(pr.f_pg, 'figure')
             set(pr.plot_type_adj, 'Enable', 'on');
             set(pr.line_plot_tglbtn, 'Enable', 'on');
-        end
+        end        
+    end
 
     function plot_type_rules()
         if ~isempty(pr.graph) && ~isa(el, 'AnalyzeGroup_ST_MP_WU') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}])
