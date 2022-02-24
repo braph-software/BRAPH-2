@@ -33,7 +33,7 @@ THRESHOLDS (parameter, rvector) is the vector of thresholds.
 %%%% ¡default!
 0
 %%%% ¡gui!
-pr = PlotPropSmartVector('EL', a, 'PROP', AnalyzeGroup_ST_BUT.THRESHOLDS, varargin{:});
+pr = PlotPropSmartVector('EL', a, 'PROP', AnalyzeGroup_ST_BUT.THRESHOLDS, 'MAX', 1, 'MIN', 0, 'STEP', 0.1, varargin{:});
 
 %% ¡props_update!
 

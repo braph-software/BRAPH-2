@@ -29,6 +29,15 @@ check = value > 0;
 %%%% ¡default!
 1.5
 
+%%% ¡prop!
+MAX (metadata, scalar) is the max value acceptable as input
+
+%%% ¡prop!
+MIN (metadata, scalar) is the min value acceptable as input
+
+%%% ¡prop!
+STEP (metadata, scalar) is the step value
+
 %% ¡methods!
 function h_panel = draw(pr, varargin)
     %DRAW draws the panel of the string property.
@@ -139,68 +148,30 @@ function cb_edit_value(pr)
     prop = pr.get('PROP');
 
     % get string value
-    tmp_value = get(pr.edit_value, 'String');
-
-    if isequal(el.getPropTag(prop), 'Densities')
-        step = 10;
-        max = 100;
-        min = 0;
-    else % thresholds
-        step = 0.1;
-        max = 1;
-        min = 0;
+    tmp_value = get(pr.edit_value, 'String');   
+    step = pr.get('step');
+    max = pr.get('max');
+    min = pr.get('min');
+    
+    allowedChars = "0123456789,:. ";
+    pat = characterListPattern(allowedChars); % pattern
+    result = extract(tmp_value, pat); % cell array
+    try
+        proccessed_value = eval([result{:}]);
+    catch e
+        pr.warning_creator(e.message);
     end
-
-    if contains(tmp_value, ':') % value that wants to create an array
-        if length(strfind(tmp_value, ':')) > 1  % specifies the step
-            tmp_split_values = strsplit(tmp_value, ':');
-            tmp_min = str2double(tmp_split_values{1});
-            tmp_max = str2double(tmp_split_values{3});
-            tmp_step = str2double(tmp_split_values{2});
-
-            [tmp_min, tmp_step, tmp_max] = pr.min_max_rules(min, step, max, tmp_min, tmp_step, tmp_max);
-
-            try
-                proccessed_value = [tmp_min:tmp_step:tmp_max];
-            catch e
-                pr.warning_creator(e.message);
-            end
-        else % default step
-            tmp_split_values = strsplit(tmp_value, ':');
-            tmp_min = str2double(tmp_split_values{1});
-            tmp_max = str2double(tmp_split_values{2});
-
-            [tmp_min, tmp_step, tmp_max] = pr.min_max_rules(min, step, max, tmp_min, step, tmp_max);
-            try
-                proccessed_value = [tmp_min:tmp_step:tmp_max];
-            catch e
-                pr.warning_creator(e.message);
-            end
-        end
-    elseif contains(tmp_value, ',') || contains(tmp_value, '-') || contains(tmp_value, ' ') % array separeted by commas or slash or space
-        tmp_split_values = strsplit(tmp_value,{' ', ',', '-'}, 'CollapseDelimiters', true);
-        try
-            proccessed_value = cell2mat(tmp_split_values);
-        catch e
-            pr.warning_creator(e.message);
-        end
-
-    else
-        try
-            if isnumeric(num2str(tmp_value))
-                proccessed_value = num2str(tmp_value);
-            else
-                pr.warning_creator('Value is not a valid entry.')
-            end
-        catch e
-            pr.warning_creator(e.message);
-        end
-
-    end
-
+    
+    proccessed_value = proccessed_value(proccessed_value < max);
+    proccessed_value = proccessed_value(proccessed_value > min);
+    
     % set rvector
     if isnumeric(proccessed_value)
-        el.set(prop, proccessed_value);
+        try
+            el.set(prop, proccessed_value);
+        catch e
+            pr.warning_creator(e.message);
+        end
     else
         % do nothing
     end
@@ -210,31 +181,6 @@ end
 function warning_creator(pr, text)
     warning_figure = warndlg(text);
     set_braph2_icon(warning_figure);
-end
-function [min, step, max] =  min_max_rules(pr, min_, step_, max_, tmp_min, tmp_step, tmp_max)
-    min = tmp_min;
-    max = tmp_max;
-    step = tmp_step;
-
-    if tmp_min < min_
-        min = min_;
-    end
-    if tmp_min > max_
-        min = max_;
-    end
-    if tmp_step > max_
-        step = max_;
-    end
-    if tmp_step < 0
-        step = step_;
-    end
-    if tmp_max < min_
-        max = step_;
-    end
-    if tmp_max < step_
-        step = step_;
-        max = step_;
-    end
 end
   
 %% ¡tests!
