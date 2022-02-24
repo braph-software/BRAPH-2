@@ -163,6 +163,11 @@ function update(pr)
     button_state = pr.get_button_condition();
 
     if ~button_state
+        set(pr.graph_btn , 'Visible', 'off')
+        set(pr.plot_type_adj , 'Visible', 'off')
+        set(pr.measure_tbl , 'Visible', 'off')
+        set(pr.measure_btn , 'Visible', 'off')
+        set(pr.measure_plot_btn , 'Visible', 'off')
 
     else
         pr.graph = el.get('A1').get('G');
@@ -236,8 +241,8 @@ function update(pr)
                     'Visible', 'on');
             else
                 set(pr.line_plot_tgl_btn, ...
-                    'Enable', 'on', ...
-                    'Visible', 'on');
+                    'Enable', 'off', ...
+                    'Visible', 'off');
             end
         end
     plot_type_rules()
@@ -267,12 +272,24 @@ function redraw(pr, varargin)
     [h, varargin] = get_and_remove_from_varargin(1.8, 'Height', varargin);
     [Dh, varargin] = get_and_remove_from_varargin(15, 'DHeight', varargin);
 
-    set(pr.measure_tbl, ...
-        'Units', 'normalized', ...
-        'Position', [.01 .13 .98 (Dh/(h+Dh)-.32)] ...
-        )
-
-    pr.redraw@PlotProp('Height', h + Dh, varargin{:})
+    if pr.get_button_condition()
+        if  ~isempty(pr.measure_tbl) && isgraphics(pr.measure_tbl, 'uitable')
+            set(pr.measure_tbl, ...
+                'Units', 'normalized', ...
+                'Position', [.01 .13 .98 (Dh/(h+Dh)-.32)] ...
+                )
+        end
+        pr.redraw@PlotProp('Height', h + Dh, varargin{:})
+    else
+        if  ~isempty(pr.measure_tbl) && isgraphics(pr.measure_tbl, 'uitable')
+            set(pr.measure_tbl, ...
+                'Units', 'normalized', ...
+                'Position', [.01 .13 .98 (Dh/(h+Dh)-.32)], ...
+                'Visible', 'off' ...
+                )
+        end
+        pr.redraw@PlotProp(varargin{:})
+    end
 end
 function cb_measure_gui(pr)
     %CB_MEASURE_GUI executes callback for the pushbutton.

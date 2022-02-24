@@ -183,7 +183,12 @@ function update(pr)
     button_state = pr.get_button_condition();
 
     if ~button_state
-        % do nothing
+        % visible gui
+        set(pr.graph_btn , 'Visible', 'off')
+        set(pr.plot_type_adj , 'Visible', 'off')
+        set(pr.measure_tbl , 'Visible', 'off')
+        set(pr.measure_btn , 'Visible', 'off')
+        set(pr.measure_plot_btn , 'Visible', 'off')
     else
         graph = el.get(prop);
         pr.graph = graph;
