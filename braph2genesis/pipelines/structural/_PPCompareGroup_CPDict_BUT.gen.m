@@ -300,11 +300,14 @@ function cb_measure_gui(pr)
 
     N = ceil(sqrt(length(pr.mlist))); % number of row and columns of figures
 
+    f_count = 1;
     for i = 1:length(pr.mlist)
         if ~ismember(pr.mlist(i), measure_short_list)
             continue;
         end
         measure_name = pr.mlist{i};
+        plot_permission = true;
+        tmp_gui = [];
         for j = 1:cp_dict.length()
             cp = cp_dict.getItem(j);
             if isequal(measure_name, cp.get('measure'))
@@ -312,8 +315,30 @@ function cb_measure_gui(pr)
                 y = f_gr_y / screen_h;
                 w = f_gr_w / screen_w;
                 h = .5 * f_gr_h / screen_h + .5 * f_gr_h * (N - floor((i - .5) / N)) / N / screen_h;
-                               
-                pr.f_m{i} = GUI('pe', cp, 'POSITION', [x y w h], 'CLOSEREQ', false).draw();   
+                   
+                for k = 1:length(pr.f_m)
+                    tmp_f = pr.f_m{k};
+                    tmp_gui = get(tmp_f, 'UserData');
+                    if isequal(tmp_gui.get('ID'), cp.get('ID'))
+                        plot_permission = false;
+                        if isequal(get(tmp_f, 'Visible'), 'on')
+                            % hide
+                            set(tmp_f, 'Visible', 'off')
+                        else
+                            % show
+                            figure(tmp_f);
+                            set(tmp_f, ...
+                                'Visible', 'on', ...
+                                'WindowState', 'normal' ...
+                                );
+                        end
+                    end
+                end
+                if plot_permission
+                    pr.f_m{f_count} = GUI('pe', cp, 'POSITION', [x y w h], 'CLOSEREQ', false).draw();
+                    set(pr.f_m{f_count}, 'UserData', cp);
+                    f_count = f_count + 1;
+                end
                 break; % go to next measure
             end            
         end        
