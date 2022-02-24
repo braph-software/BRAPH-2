@@ -165,8 +165,8 @@ function update(pr)
             'String', [label ' ' num2str(round(get(pr.layer_slider, 'Value')/map_multiplier))]);
         
             % get the correct index
-            l = round(get(pr.slider, 'Value')/map_multiplier)); % layer
-            d = round(get(pr.layer_slider, 'Value')/map_multiplier)); % threshold or ddensity
+            l = round(get(pr.slider, 'Value')/map_multiplier); % layer
+            d = round(get(pr.layer_slider, 'Value')/map_multiplier); % threshold or ddensity
         
             correct_i =  (d * L)- L + l ;
             
