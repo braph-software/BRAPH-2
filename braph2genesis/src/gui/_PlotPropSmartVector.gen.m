@@ -148,23 +148,31 @@ function cb_edit_value(pr)
     prop = pr.get('PROP');
 
     % get string value
-    tmp_value = get(pr.edit_value, 'String');   
-    step = pr.get('step');
+    tmp_value = get(pr.edit_value, 'String');
     max = pr.get('max');
     min = pr.get('min');
-    
+
     allowedChars = "0123456789,:. ";
     pat = characterListPattern(allowedChars); % pattern
     result = extract(tmp_value, pat); % cell array
-    try
-        proccessed_value = eval([result{:}]);
+    try 
+        if contains(result, ':')
+             proccessed_value = eval([result{:}]);
+        else
+            tmp_r = convertCharsToStrings([result{:}]);
+            tmp_r = strsplit(tmp_r, {' ', ','});
+            holder = 0;
+            for i = 1:length(tmp_r)
+                holder = [holder str2double(tmp_r{i})]; %#ok<AGROW>
+            end  
+            proccessed_value = holder;
+        end
+
+        proccessed_value = proccessed_value(proccessed_value <= max);
+        proccessed_value = proccessed_value(proccessed_value >= min);
     catch e
         pr.warning_creator(e.message);
     end
-    
-    proccessed_value = proccessed_value(proccessed_value <= max);
-    proccessed_value = proccessed_value(proccessed_value >= min);
-    
     % set rvector
     if isnumeric(proccessed_value)
         try
