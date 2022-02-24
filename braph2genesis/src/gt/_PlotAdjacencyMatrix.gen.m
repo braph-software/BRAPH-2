@@ -114,7 +114,11 @@ function f_settings = settings(pr, varargin)
     g_dict = pr.get('G_DICT');
     g_check = g_dict.length();
     tmp_g = g_dict.getItem(1);
-    layer_check = size(tmp_g.get('B'), 2);
+    if iscell(tmp_g.get('B'))
+        layer_check = size(tmp_g.get('B'), 2);
+    else
+        layer_check = 1;
+    end
     
     % new part layers and subjects
     mod = 0;
@@ -333,36 +337,48 @@ function f_settings = settings(pr, varargin)
         layer_to_plot = pr.get('Layer');
         % i need to ask graph to return the plot 'Graph.PlotType'
         if  get(ui_matrix_histogram_checkbox, 'Value') % histogram
-            if size(A, 2) > 1
+            if iscell(A) && size(A, 2) > 1
                 pr.h_plot = pr.hist(A{layer_to_plot, layer_to_plot});
-            else
+            elseif iscell(A)
                 pr.h_plot = pr.hist(A{layer_to_plot});
+            else
+                pr.h_plot = pr.hist(A);
             end
         elseif get(ui_matrix_threshold_checkbox, 'Value')  % threshold
-            if size(A, 2) > 1
+            if iscell(A) && size(A, 2) > 1
                 pr.h_plot = pr.plotb(A{layer_to_plot, layer_to_plot}, ...
                     'threshold', ...
                     str2double(get(ui_matrix_threshold_edit, 'String')));
-            else
+            elseif iscell(A)
                 pr.h_plot = pr.plotb(A{layer_to_plot}, ...
+                    'threshold', ...
+                    str2double(get(ui_matrix_threshold_edit, 'String')));
+            else
+                pr.h_plot = pr.plotb(A, ...
                     'threshold', ...
                     str2double(get(ui_matrix_threshold_edit, 'String')));
             end
         elseif get(ui_matrix_density_checkbox, 'Value')  % density
-            if size(A, 2) > 1
+            if iscell(A) && size(A, 2) > 1
                 pr.h_plot = pr.plotb(A{layer_to_plot, layer_to_plot}, ...
                     'density', ...
                     str2double(get(ui_matrix_density_edit, 'String')));
-            else
+            elseif iscell(A)
                 pr.h_plot = pr.plotb(A{layer_to_plot}, ...
+                    'density', ...
+                    str2double(get(ui_matrix_density_edit, 'String')));
+            else
+                pr.h_plot = pr.plotb(A, ...
                     'density', ...
                     str2double(get(ui_matrix_density_edit, 'String')));
             end
         else  % weighted correlation
-            if size(A, 2) > 1
+            if iscell(A) && size(A, 2) > 1
                 pr.h_plot = pr.plotw(A{layer_to_plot, layer_to_plot});
-            else
+            elseif iscell(A)
                 pr.h_plot = pr.plotw(A{layer_to_plot});
+            else
+                pr.h_plot = pr.plotw(A);
             end
         end
     end

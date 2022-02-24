@@ -26,13 +26,6 @@ f_m % array of measure class figures
 f_pc % figure for plot graph
 graph % graph of the comparison
 
-%% ¡props_update!
-
-%%% ¡prop!
-ENABLE (metadata, option) switches between off and inactive fields.
-%%%% ¡default!
-'on'
-
 %% ¡methods!
 function h_panel = draw(pr, varargin)
     %DRAW draws the panel of the graph property and the measure table.
@@ -309,7 +302,7 @@ function cb_measure_calc(pr)
 
         measure = pr.mlist{i};
         if pr.get('WAITBAR')
-            waitbar(.1 + .70 * i / length(pr.selected), wb, ['Calculating measure ' measure ]);
+            waitbar(.1 + .70 * i / length(pr.selected), wb, ['Calculating comparison ' measure ]);
         end
         el.getComparison(measure).memorize('DIFF');
         el.getComparison(measure).get('P1');

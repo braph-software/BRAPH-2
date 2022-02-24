@@ -33,6 +33,8 @@ false
 DENSITIES (parameter, rvector) is the vector of densities.
 %%%% ¡default!
 0
+%%%% ¡gui!
+pr = PlotPropSmartVector('EL', a, 'PROP', AnalyzeGroup_ST_MP_BUD.DENSITIES, varargin{:});
 
 %% ¡props_update!
 

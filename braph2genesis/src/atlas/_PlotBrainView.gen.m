@@ -14,7 +14,7 @@ h_figure % panel graphical handle
 h_axes % axes handle
 bg % plot brain graph
 p
-h_settings
+f_settings
 m
 
 %% ¡props!
@@ -129,4 +129,5 @@ function f_settings = settings(pr, varargin)
     % See also draw, figure, isgraphics.
 
     f_settings = pr.bg.settings();
+    pl.f_settings = f_settings;
 end

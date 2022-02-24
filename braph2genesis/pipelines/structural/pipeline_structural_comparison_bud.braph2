@@ -18,5 +18,5 @@ a_BUD1 = AnalyzeGroup_ST_BUD('GR', gr1, 'Densities', [0 20 40 60 80 100]); % Ana
 a_BUD2 = AnalyzeGroup_ST_BUD('GR', gr2, 'Densities', [0 20 40 60 80 100]); % Analyze Group 2 % Group 2 Analysis
 
 %% Comparison
-c_BUD = CompareGroup('P', 10, 'A1', a_BUD1, 'A2', a_BUD2, 'VERBOSE', true, 'MEMORIZE', true); % Compare Groups % Group Comparison
+c_BUD = CompareGroup('P', 10, 'A1', a_BUD1, 'A2', a_BUD2, 'MEMORIZE', true); % Compare Groups % Group Comparison
 

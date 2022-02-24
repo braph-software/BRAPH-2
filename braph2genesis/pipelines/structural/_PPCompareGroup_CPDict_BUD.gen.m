@@ -29,13 +29,6 @@ f_pc % figure for plot graph
 f_adj
 graph % graph of the comparison
 
-%% ¡props_update!
-
-%%% ¡prop!
-ENABLE (metadata, option) switches between off and inactive fields.
-%%%% ¡default!
-'on'
-
 %% ¡methods!
 function h_panel = draw(pr, varargin)
     %DRAW draws the panel of the graph property and the measure table.
@@ -217,7 +210,7 @@ function update(pr)
                 if pr.already_calculated{i}
                     row_names{i} = 'C';
                 else
-                    row_names{i} = 'NC';
+                    row_names{i} = '';
                 end
             end
             set(pr.measure_tbl, 'RowName', row_names)
@@ -232,9 +225,13 @@ function update(pr)
 
         function plot_type_rules()
             if ~isempty(pr.graph) && isa(el.get('A1'), 'AnalyzeGroup_ST_BUD') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}])
-                set(pr.line_plot_tgl_btn, 'Enable', 'on');
+                set(pr.line_plot_tgl_btn, ...
+                    'Enable', 'on', ...
+                    'Visible', 'on');
             else
-                set(pr.line_plot_tgl_btn, 'Enable', 'off');
+                set(pr.line_plot_tgl_btn, ...
+                    'Enable', 'on', ...
+                    'Visible', 'on');
             end
         end
     plot_type_rules()
@@ -336,7 +333,7 @@ function cb_measure_calc(pr)
 
         measure = pr.mlist{i};
         if pr.get('WAITBAR')
-            waitbar(.1 + .70 * i / length(pr.selected), wb, ['Calculating measure ' measure ]);
+            waitbar(.1 + .70 * i / length(pr.selected), wb, ['Calculating comparison ' measure ]);
         end
         el.getComparison(measure).memorize('DIFF');
         el.getComparison(measure).get('P1');
@@ -407,6 +404,9 @@ function cb_graph_ui_figure(pr)
         set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
         f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
         f_settings.OuterPosition(2) = f_ba_y/screen_h;
+    elseif isequal(get(pr.f_pc, 'Visible'), 'on')
+        gui = get(pr.f_pc, 'UserData');
+        gui.cb_hide()
     else
         gui = get(pr.f_pc, 'UserData');
         gui.cb_bring_to_front()
@@ -446,7 +446,7 @@ function cb_graph_adj_figure(pr)
         set_braph2_icon(pr.f_adj)
         menu_about = BRAPH2.add_menu_about(pr.f_adj);
         g_dict = IndexedDictionary( ...
-            'it_class', 'GRAPH' ...
+            'it_class', pr.graph.getClass() ...
             );
         g_dict.add(pr.graph);
         pg = PlotAdjacencyMatrix('G_DICT', g_dict);
@@ -457,6 +457,9 @@ function cb_graph_adj_figure(pr)
         set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
         f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
         f_settings.OuterPosition(2) = f_ba_y/screen_h;
+    elseif isequal(get(pr.f_adj, 'Visible'), 'on')
+        gui = get(pr.f_adj, 'UserData');
+        gui.cb_hide()
     else
         gui = get(pr.f_adj, 'UserData');
         gui.cb_bring_to_front()
