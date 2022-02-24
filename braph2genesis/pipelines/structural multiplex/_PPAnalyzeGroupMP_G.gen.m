@@ -127,7 +127,7 @@ function h_panel = draw(pr, varargin)
             'Visible', 'off', ...
             'Callback', {@cb_measure_plot_btn} ...
             );
-    else
+    end
         
         function cb_graph_btn(~, ~) % (src, event)
         pr.cb_graph_value()
