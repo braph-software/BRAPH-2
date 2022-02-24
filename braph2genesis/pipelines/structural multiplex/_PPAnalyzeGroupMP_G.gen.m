@@ -598,7 +598,7 @@ function state = get_button_condition(pr)
     for i = 1:length(plot_prop_children)
         pp_c = plot_prop_children(i);
         if check_graphics(pp_c, 'pushbutton') && isequal(pp_c.Tag, 'button_calc')
-            if isequal(pp_c.Value, 1)
+            if isequal(pp_c.Enable, 'off')
                 state = 1;  % not calculated
             end
         end
