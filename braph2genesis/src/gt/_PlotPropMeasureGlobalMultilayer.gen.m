@@ -157,12 +157,12 @@ function update(pr)
         % do nothing
     else
         set(pr.slider_text, ...
-            'String', ['Layer ' num2str(round(get(pr.slider, 'Value')/map_multiplier)))]);
+            'String', ['Layer ' num2str(round(get(pr.slider, 'Value')/map_multiplier))]);
         
         if el.get('G').getPropNumber() > 9
             
             set(pr.layer_text, ...
-            'String', [label ' ' num2str(round(get(pr.layer_slider, 'Value')/map_multiplier)))]);
+            'String', [label ' ' num2str(round(get(pr.layer_slider, 'Value')/map_multiplier))]);
         
             % get the correct index
             l = round(get(pr.slider, 'Value')/map_multiplier)); % layer
@@ -176,7 +176,7 @@ function update(pr)
                 )
         else % wu
             set(pr.edit_value, ...
-                'String', value{round(get(pr.slider, 'Value')/map_multiplier))}, ...
+                'String', value{round(get(pr.slider, 'Value')/map_multiplier)}, ...
                 'Enable', pr.get('ENABLE') ...
                 )
         end
