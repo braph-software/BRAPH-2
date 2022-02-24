@@ -163,22 +163,22 @@ function update(pr)
     button_state = pr.get_button_condition();
 
     if ~button_state
-        set(pr.adj_plot_tgl_btn , 'Visible', 'off')
-        set(pr.measure_tbl , 'Visible', 'off')
-        set(pr.measure_btn , 'Visible', 'off')
-        set(pr.measure_plot_btn , 'Visible', 'off')
-        set(pr.line_plot_tgl_btn , 'Visible', 'off')
+        set(pr.adj_plot_tgl_btn, 'Visible', 'off')
+        set(pr.measure_tbl, 'Visible', 'off')
+        set(pr.measure_btn, 'Visible', 'off')
+        set(pr.measure_plot_btn, 'Visible', 'off')
+        set(pr.line_plot_tgl_btn, 'Visible', 'off')
 
     else
         pr.graph = el.get('A1').get('G');
         cp_dict = el.get(prop);
 
          % visible gui
-        set(pr.adj_plot_tgl_btn , 'Visible', 'on')
-        set(pr.measure_tbl , 'Visible', 'on')
-        set(pr.measure_btn , 'Visible', 'on')
-        set(pr.measure_plot_btn , 'Visible', 'on')
-        set(pr.line_plot_tgl_btn , 'Visible', 'on')
+        set(pr.adj_plot_tgl_btn, 'Visible', 'on')
+        set(pr.measure_tbl, 'Visible', 'on')
+        set(pr.measure_btn, 'Visible', 'on')
+        set(pr.measure_plot_btn, 'Visible', 'on')
+        set(pr.line_plot_tgl_btn, 'Visible', 'on')
 
         if  ~isa(pr.graph, 'NoValue') && isa(pr.graph, 'Graph')
             if isempty(pr.mlist)

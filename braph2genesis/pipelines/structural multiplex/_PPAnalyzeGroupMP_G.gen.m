@@ -183,22 +183,22 @@ function update(pr)
 
     if ~button_state
         % visible gui
-        set(pr.graph_btn , 'Visible', 'off')
-        set(pr.plot_type_adj , 'Visible', 'off')
-        set(pr.measure_tbl , 'Visible', 'off')
-        set(pr.measure_btn , 'Visible', 'off')
-        set(pr.measure_plot_btn , 'Visible', 'off')
+        set(pr.graph_btn, 'Visible', 'off')
+        set(pr.plot_type_adj, 'Visible', 'off')
+        set(pr.measure_tbl, 'Visible', 'off')
+        set(pr.measure_btn, 'Visible', 'off')
+        set(pr.measure_plot_btn, 'Visible', 'off')
 
     else
         graph = el.get(prop);
         pr.graph = graph;
         
         % visible gui
-        set(pr.graph_btn , 'Visible', 'on')
-        set(pr.plot_type_adj , 'Visible', 'on')
-        set(pr.measure_tbl , 'Visible', 'on')
-        set(pr.measure_btn , 'Visible', 'on')
-        set(pr.measure_plot_btn , 'Visible', 'on')
+        set(pr.graph_btn, 'Visible', 'on')
+        set(pr.plot_type_adj, 'Visible', 'on')
+        set(pr.measure_tbl, 'Visible', 'on')
+        set(pr.measure_btn, 'Visible', 'on')
+        set(pr.measure_plot_btn, 'Visible', 'on')
 
         if  ~isa(graph, 'NoValue') && isa(graph, 'Graph')
             if isempty(pr.mlist)
