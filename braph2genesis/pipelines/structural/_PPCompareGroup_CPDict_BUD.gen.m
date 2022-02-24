@@ -20,14 +20,12 @@ p
 measure_tbl % measure table
 measure_btn % calculate measures button
 line_plot_tgl_btn % line plot toggle button
-adj_plot_tgl_btn % adjacency toggle button
 measure_plot_btn
 mlist % list of measures compatible with the graph
 selected % list of selected measures
 already_calculated % list of measures already calculated
 f_m % array of measure class figures
 f_pc % figure for plot graph
-f_adj
 graph % graph of the comparison
 
 %% ¡methods!
@@ -53,17 +51,7 @@ function h_panel = draw(pr, varargin)
 
     pr.p = draw@PlotProp(pr, varargin{:});
 
-    % graph button
-    pr.adj_plot_tgl_btn = uicontrol(...
-        'Style', 'pushbutton', ...
-        'Parent', pr.p, ...
-        'Units', 'normalized', ...
-        'CData', imresize(imread('icon_plot_adj.png'), [40 40]), ...
-        'TooltipString', 'Plot to adjacency matrix plot.', ...
-        'Position', [.01 .71 .2 .2], ...
-        'Callback', {@cb_plot_type_adj} ...
-        );
-    
+    % graph button    
     pr.line_plot_tgl_btn = uicontrol(...
         'Style', 'pushbutton', ...
         'Parent', pr.p, ...
@@ -74,9 +62,6 @@ function h_panel = draw(pr, varargin)
         'Callback', {@cb_plot_type_line} ...
         );
         
-    function cb_plot_type_adj(~, ~)
-        pr.cb_graph_adj_figure();
-    end
     function cb_plot_type_line(~, ~)
         pr.cb_graph_ui_figure();
     end    
@@ -159,8 +144,6 @@ function update(pr)
     button_state = pr.get_button_condition();
 
     if ~button_state
-
-        set(pr.adj_plot_tgl_btn, 'Visible', 'off')
         set(pr.measure_tbl, 'Visible', 'off')
         set(pr.measure_btn, 'Visible', 'off')
         set(pr.measure_plot_btn, 'Visible', 'off')
@@ -170,7 +153,6 @@ function update(pr)
         pr.graph = el.get('A1').get('G');
         cp_dict = el.get(prop);
         % visible gui
-        set(pr.adj_plot_tgl_btn, 'Visible', 'on')
         set(pr.measure_tbl, 'Visible', 'on')
         set(pr.measure_btn, 'Visible', 'on')
         set(pr.measure_plot_btn, 'Visible', 'on')
@@ -437,59 +419,6 @@ function cb_graph_ui_figure(pr)
 
     pr.update()
 end
-function cb_graph_adj_figure(pr)
-    f_pg = ancestor(pr.p, 'Figure'); % BrainAtlas GUI
-    f_ba_x = Plot.x0(f_pg, 'pixels');
-    f_ba_y = Plot.y0(f_pg, 'pixels');
-    f_ba_w = Plot.w(f_pg, 'pixels');
-    f_ba_h = Plot.h(f_pg, 'pixels');
-
-    screen_x = Plot.x0(0, 'pixels');
-    screen_y = Plot.y0(0, 'pixels');
-    screen_w = Plot.w(0, 'pixels');
-    screen_h = Plot.h(0, 'pixels');
-
-    x = f_ba_x + f_ba_w;
-    h = f_ba_h / 1.5;
-    y = f_ba_y + f_ba_h - h;
-    w = screen_w - x;
-
-    if isempty(pr.f_adj) || ~check_graphics(pr.f_adj, 'figure')
-        pr.f_adj = figure( ...
-            'NumberTitle', 'off', ...
-            'Units', 'normalized', ...
-            'Position', [x/screen_w y/screen_h w/screen_w h/screen_h], ...
-            'CloseRequestFcn', {@cb_f_adj_close} ...
-            );
-        set_braph2_icon(pr.f_adj)
-        menu_about = BRAPH2.add_menu_about(pr.f_adj);
-        g_dict = IndexedDictionary( ...
-            'it_class', pr.graph.getClass() ...
-            );
-        g_dict.add(pr.graph);
-        pg = PlotAdjacencyMatrix('G_DICT', g_dict);
-        pg.draw('Parent', pr.f_adj)
-        set(pr.f_adj, 'UserData', pg);
-
-        f_settings = pg.settings();
-        set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
-        f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
-        f_settings.OuterPosition(2) = f_ba_y/screen_h;
-    elseif isequal(get(pr.f_adj, 'Visible'), 'on')
-        gui = get(pr.f_adj, 'UserData');
-        gui.cb_hide()
-    else
-        gui = get(pr.f_adj, 'UserData');
-        gui.cb_bring_to_front()
-    end
-
-        function cb_f_adj_close(~, ~)
-            delete(pr.f_adj);
-            pr.update()
-        end
-
-    pr.update()
-end
 function list =  is_measure_calculated(pr)
     % IS_MEASURE_CALCULATED checks if a measure has been calculated for the graph.
     % 
@@ -563,10 +492,6 @@ function cb_bring_to_front(pr)
         gui = get(pr.f_pc, 'UserData');
         gui.cb_bring_to_front()
     end 
-    if check_graphics(pr.f_adj, 'figure')
-        gui = get(pr.f_adj, 'UserData');
-        gui.cb_bring_to_front()
-    end
 end
 function cb_hide(pr)
     %CB_HIDE hides the figure and its settings figure.
@@ -592,10 +517,6 @@ function cb_hide(pr)
     if check_graphics(pr.f_pc, 'figure')
         gui = get(pr.f_pc, 'UserData');
         gui.cb_hide();
-    end 
-    if check_graphics(pr.f_adj, 'figure')
-        gui = get(pr.f_adj, 'UserData');
-        gui.cb_hide();
     end
 end
 function cb_close(pr)
@@ -616,8 +537,5 @@ function cb_close(pr)
     % close plot graph figure
     if ~isempty(pr.f_pc) && check_graphics(pr.f_pc, 'figure')
         delete(pr.f_pc);
-    end
-    if ~isempty(pr.f_adj) && check_graphics(pr.f_adj, 'figure')
-        delete(pr.f_adj);
     end
 end

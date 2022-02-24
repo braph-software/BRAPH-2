@@ -156,12 +156,12 @@ function cb_edit_value(pr)
     pat = characterListPattern(allowedChars); % pattern
     result = extract(tmp_value, pat); % cell array
     try 
-        if contains(result, ':')
+        if any(contains(result, ':'))
              proccessed_value = eval([result{:}]);
         else
             tmp_r = convertCharsToStrings([result{:}]);
             tmp_r = strsplit(tmp_r, {' ', ','});
-            holder = 0;
+            holder = [];
             for i = 1:length(tmp_r)
                 holder = [holder str2double(tmp_r{i})]; %#ok<AGROW>
             end  
