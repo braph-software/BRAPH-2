@@ -225,7 +225,7 @@ function f_settings  = settings(pl, varargin)
     cb_panel_mcr()
 
     if nargout > 0
-        f_settings = pl.f_settings
+        f_settings = pl.f_settings;
     end
 end
 
