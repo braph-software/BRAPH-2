@@ -108,6 +108,7 @@ function h_panel = draw(pr, varargin)
                 'TOOL_FILE', false, ...
                 'CLOSEREQ', false ...
                 ).draw();
+            set(pr.f_subs{selected_sub}, 'UserData', id_update_btn)
         else
             figure(pr.f_subs{selected_sub})
         end
@@ -206,7 +207,19 @@ function h_panel = draw(pr, varargin)
             selected_sub = sub_dict.move_to_bottom(selected_sub);
 
             pr.update();           
-        end
+    end
+    
+    id_update_btn = uicontrol(pr.p, 'Style', 'pushbutton', ...
+        'Units', 'normalized', ...
+        'Position', [.0 .0 .0 .0], ...
+        'Visible', 'off', ...
+        'String', 'id_updater_btn', ...
+        'Callback', {@update_btn} ...
+        );
+    
+    function update_btn(~, ~)
+        pr.update()
+    end
 
     % output
     if nargout > 0
