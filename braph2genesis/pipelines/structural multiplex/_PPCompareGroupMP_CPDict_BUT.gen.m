@@ -424,6 +424,7 @@ function cb_graph_ui_figure(pr)
             );
         set_braph2_icon(pr.f_pc)
         menu_about = BRAPH2.add_menu_about(pr.f_pc);
+        set(pr.f_pc, 'Name', [pr.get('el').getClass() ' - ' pr.get('el').get('ID')])
         el = pr.get('EL');
         prop = pr.get('PROP');
         

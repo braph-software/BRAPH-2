@@ -427,6 +427,7 @@ function cb_graph_ui_figure(pr)
         
         pg.draw('Parent', pr.f_pc)
         set(pr.f_pc, 'UserData', pg);
+        set(pr.f_pc, 'Name', [pr.get('el').getClass() ' - ' pr.get('el').get('ID')])
         
         f_settings = pg.settings();
         set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])

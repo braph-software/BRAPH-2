@@ -150,7 +150,7 @@ function h_panel = draw(pr, varargin)
                 'CloseRequestFcn', {@cb_f_pba_close} ...
                 );
             set_braph2_icon(pr.f_pba)
-            set(pr.f_pba, 'Name', pr.get('el').get('ID'))
+            set(pr.f_pba, 'Name', [pr.get('el').getClass() ' - ' pr.get('el').get('ID')])
             function cb_f_pba_close(~, ~)
                 delete(pr.f_pba) % deletes also f_settings
                 pr.update() % re-activates the surf_selector_popup and plot_brain_atlas_btn
