@@ -185,7 +185,7 @@ function redraw(pr, varargin)
     else
         pr.redraw@PlotPropMatrix('Height', h*2, varargin{:});
     end
-    if ~button_state
+    if ~pr.get_button_condition()
          set(pr.slider, ...
             'Visible', 'off' ...
             );

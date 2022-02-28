@@ -176,7 +176,7 @@ function redraw(pr, varargin)
      else
         pr.redraw@PlotPropScalar(varargin{:});
      end
-      if ~button_state
+      if ~pr.get_button_condition()
          set(pr.slider, ...
             'Visible', 'off' ...
             );
