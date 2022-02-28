@@ -405,21 +405,23 @@ function cb_measure_gui(pr)
         tmp_gui = [];
         for j = 1:length(pr.f_m)
             tmp_f = pr.f_m{j};
-            tmp_gui = get(tmp_f, 'UserData');
-            if isequal(tmp_gui.get('pe').get('el').get('id'), result_measure.get('ID'))
-                plot_permission = false;
-                if isequal(get(tmp_f, 'Visible'), 'on')
-                    % hide
-                    set(tmp_f, 'Visible', 'off')
-                else
-                    % show
-                    figure(tmp_f)
-                    set(tmp_f, ...
-                        'Visible', 'on', ...
-                        'WindowState', 'normal' ...
-                        )
-                end                            
-            end
+            if isgraphics(tmp_f)
+                tmp_gui = get(tmp_f, 'UserData');
+                if isequal(tmp_gui.get('pe').get('el').get('id'), result_measure.get('ID'))
+                    plot_permission = false;
+                    if isequal(get(tmp_f, 'Visible'), 'on')
+                        % hide
+                        set(tmp_f, 'Visible', 'off')
+                    else
+                        % show
+                        figure(tmp_f)
+                        set(tmp_f, ...
+                            'Visible', 'on', ...
+                            'WindowState', 'normal' ...
+                            )
+                    end
+                end
+            end            
         end
         if plot_permission
             pr.f_m{f_count} = GUI('pe', result_measure, 'POSITION', [x y w h], 'CLOSEREQ', false).draw();

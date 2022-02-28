@@ -45,14 +45,14 @@ function h_panel = draw(pr, varargin)
     
     el = pr.get('EL');
     prop = pr.get('PROP');
-    value = el.get(prop);
-    L = size(value, 1);
+    g = el.get('g');
+    L = size(g.get('B'), 2);
     label = 'Layer';
     map_multiplier = 100;
-    if el.get('G').getPropNumber() > 9
-        n = length(el.get('G').get(10)); % 10 is densities or thresholds
-        L = size(value, 1) / n;
-        label = el.get('G').getPropTag(10);
+    if g.getPropNumber() > 9
+        n = length(g.get(10)); % 10 is densities or thresholds
+        L = size(g.get('B'), 2) / n;
+        label = g.getPropTag(10);
     end
     
     % set on first layer
@@ -132,15 +132,16 @@ function update(pr)
     
     el = pr.get('EL');
     prop = pr.get('PROP');
-    value = el.get(prop);
-    L = size(value, 1);
+    g = el.get('g');
+    L = size(g.get('B'), 2);
     label = 'Layer';
     map_multiplier = 100;
-    if el.get('G').getPropNumber() > 9
-        n = length(el.get('G').get(10)); % 10 is densities or thresholds
-        L = size(value, 1) / n;
-        label = el.get('G').getPropTag(10);
+    if g.getPropNumber() > 9
+        n = length(g.get(10)); % 10 is densities or thresholds
+        L = size(g.get('B'), 2) / n;
+        label = g.getPropTag(10);
     end
+    value = el.getr(prop);
     br_dict = el.get('G').get('BRAINATLAS').get('BR_DICT');
 
     br_ids = cell(br_dict.length(), 1);
@@ -211,8 +212,8 @@ function redraw(pr, varargin)
 
     el = pr.get('EL');
     prop = pr.get('PROP');
-    value = el.get(prop);
-    L = size(value, 1);
+    g = el.get('g');
+    L = size(el.get('B'), 2);
     n = 0;
     if el.get('G').getPropNumber() > 9
         n = length(el.get('G').get(10)); % 10 is densities or thresholds

@@ -43,8 +43,12 @@ function h_panel = draw(pr, varargin)
     
     el = pr.get('EL');
     prop = pr.get('PROP');
-    value = el.get(prop);
-    L = size(value, 1);
+    g = el.get('g');
+    L = 1;
+    if g.getPropNumber() > 9
+        L_prop = g.get(10);
+        L = size(L_prop, 2);
+    end
     map_multiplier = 100;
     
     % set on first layer
@@ -95,8 +99,12 @@ function update(pr)
     
     el = pr.get('EL');
     prop = pr.get('PROP');
-    value = el.get(prop);
-    L = size(value, 1);
+    g = el.get('g');
+    L = 1;
+    if g.getPropNumber() > 9
+        L_prop = g.get(10);
+        L = size(L_prop, 2);
+    end
     map_multiplier = 100;
     if el.get('G').getPropNumber() > 9
         label = el.get('G').getPropTag(10);
@@ -151,8 +159,12 @@ function redraw(pr, varargin)
     
     el = pr.get('EL');
     prop = pr.get('PROP');
-    value = el.get(prop);
-    L = size(value, 1);
+    g = el.get('g');
+    L = 1;
+    if g.getPropNumber() > 9
+        L_prop = g.get(10);
+        L = size(L_prop, 2);
+    end
     
      if L > 1
         pr.redraw@PlotPropScalar('Height', h*2+Sh+Th, varargin{:});
