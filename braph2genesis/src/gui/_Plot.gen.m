@@ -218,6 +218,10 @@ function cb_close(pl)
     % pl.cb_close_fs() % this is called automatically when the panel is deleted
 end
 
+function set_settings(pl, outer_settings)
+    pl.f_settings = outer_settings;
+end
+
 %% ¡staticmethods!
 function r = x0(h, units, position)
     %X0 returns the position of the left edge of a graphical element.

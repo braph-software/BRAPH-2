@@ -317,18 +317,20 @@ function redraw(pr, varargin)
             'Position', [.01 .02 .97 (Dh/(h+Sh+Th+Dh)-.02)] ...
             )
     else
-        set(pr.slider, ...
+        pr.redraw@PlotProp(varargin{:})
+    end
+     if ~button_state
+         set(pr.slider, ...
             'Visible', 'off' ...
             );
-        
+
         set(pr.slider_text, ...
             'Visible', 'off' ...
             );
-        
-        set(pr.comparison_tbl, ...
+
+        set(pr.table_value, ...
             'Visible', 'off' ...
             )
-        pr.redraw@PlotProp(varargin{:})
     end
 end
 function cb_brain_view_fig(pr)
@@ -449,4 +451,22 @@ function cb_close(pr)
     if ~isempty(pr.f_br) && check_graphics(pr.f_br, 'figure')
         delete(pr.f_br);
     end     
+end
+function state = get_button_condition(pr)
+    % GET_BUTTON_CONDITION returns the calculate button state.
+    %
+    % STATE = GET_BUTTON_CONDITION(PR) returns the calculate button state.
+    %
+    % see also is_measure_calculated.
+
+    plot_prop_children = get(pr.p, 'Children');
+    state = 0; % calculated
+    for i = 1:length(plot_prop_children)
+        pp_c = plot_prop_children(i);
+        if check_graphics(pp_c, 'pushbutton') && isequal(pp_c.Tag, 'button_calc')
+            if isequal(pp_c.Enable, 'off')
+                state = 1;  % not calculated
+            end
+        end
+    end
 end
