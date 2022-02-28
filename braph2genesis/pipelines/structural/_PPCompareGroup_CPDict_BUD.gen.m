@@ -58,7 +58,7 @@ function h_panel = draw(pr, varargin)
         'Units', 'normalized', ...
         'CData', imresize(imread('icon_plot_lines.png'), [40 40]), ...
         'TooltipString', 'Plot to line plot.', ...
-        'Position', [.23 .71 .2 .2], ...
+        'Position', [.23 .76 .2 .2], ...
         'Callback', {@cb_plot_type_line} ...
         );
         
@@ -315,7 +315,7 @@ function cb_measure_gui(pr)
                 for k = 1:length(pr.f_m)
                     tmp_f = pr.f_m{k};
                     tmp_gui = get(tmp_f, 'UserData');
-                    if isequal(tmp_gui.get('ID'), cp.get('ID'))
+                    if isequal(tmp_gui.get('pe').get('el').get('id'), cp.get('ID'))
                         plot_permission = false;
                         if isequal(get(tmp_f, 'Visible'), 'on')
                             % hide
@@ -332,7 +332,6 @@ function cb_measure_gui(pr)
                 end
                 if plot_permission
                     pr.f_m{f_count} = GUI('pe', cp, 'POSITION', [x y w h], 'CLOSEREQ', false).draw();
-                    set(pr.f_m{f_count}, 'UserData', cp);
                     f_count = f_count + 1;
                 end
                 break; % go to next measure

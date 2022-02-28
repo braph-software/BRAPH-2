@@ -281,7 +281,7 @@ function cb_measure_gui(pr)
                 for k = 1:length(pr.f_m)
                     tmp_f = pr.f_m{k};
                     tmp_gui = get(tmp_f, 'UserData');
-                    if isequal(tmp_gui.get('ID'), cp.get('ID'))
+                    if isequal(tmp_gui.get('pe').get('el').get('id'), cp.get('ID'))
                         plot_permission = false;
                         if isequal(get(tmp_f, 'Visible'), 'on')
                             % hide
@@ -298,7 +298,6 @@ function cb_measure_gui(pr)
                 end
                 if plot_permission
                     pr.f_m{f_count} = GUI('pe', cp, 'POSITION', [x y w h], 'CLOSEREQ', false).draw();
-                    set(pr.f_m{f_count}, 'UserData', cp);
                     f_count = f_count + 1;
                 end
                 break; % go to next measure
