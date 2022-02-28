@@ -129,5 +129,12 @@ function f_settings = settings(pr, varargin)
     % See also draw, figure, isgraphics.
 
     f_settings = pr.bg.settings();
-    pl.f_settings = f_settings;
+    pr.set_settings(f_settings);
+    pr.f_settings = f_settings;
+end
+function Inner_Show()
+    pr.bg.Inner_Show()
+end
+function Inner_Hide()
+    pr.bg.Inner_Hide()
 end

@@ -63,9 +63,9 @@ function h_panel = draw(pr, varargin)
             'Tag', 'pushbutton_value', ...
             'Parent', pr.p, ...
             'Units', 'normalized', ...
-            'String', 'Graph', ...
+            'String', 'Graph Data', ...
             'TooltipString', 'Open the graph class GUI.', ...
-            'Position', [.79 .71 .2 .2], ...
+            'Position', [.79 .76 .2 .15], ...
             'Visible', 'off', ...
             'Callback', {@cb_graph_btn} ...
             );
@@ -76,7 +76,7 @@ function h_panel = draw(pr, varargin)
             'Units', 'normalized', ...
             'CData', imresize(imread('icon_plot_adj.png'), [40 40]), ...
             'TooltipString', 'Plot to adjacency matrix plot.', ...
-            'Position', [.01 .71 .2 .2], ...
+            'Position', [.01 .76 .2 .15], ...
             'Visible', 'off', ...
             'Callback', {@cb_plot_type_adj} ...
             );
@@ -87,7 +87,7 @@ function h_panel = draw(pr, varargin)
             'Units', 'normalized', ...
             'CData', imresize(imread('icon_plot_lines.png'), [40 40]), ...
             'TooltipString', 'Plot to line plot.', ...
-            'Position', [.23 .71 .2 .2], ...
+            'Position', [.23 .76 .2 .15], ...
             'Visible', 'off', ...
             'Callback', {@cb_plot_type_line} ...
             );
@@ -184,6 +184,7 @@ function update(pr)
 
     if ~button_state
         % visible gui
+        set(pr.line_plot_tglbtn, 'Visible', 'off')
         set(pr.graph_btn, 'Visible', 'off')
         set(pr.plot_type_adj, 'Visible', 'off')
         set(pr.measure_tbl, 'Visible', 'off')
@@ -292,11 +293,11 @@ function redraw(pr, varargin)
        if  ~isempty(pr.measure_tbl) && isgraphics(pr.measure_tbl, 'uitable')
            set(pr.measure_tbl, ...
                'Units', 'normalized', ...
-               'Position', [.01 .13 .98 (Dh/(h+Dh)-.32)] ...
+               'Position', [.01 .13 .98 (Dh/(h+Dh)-.27)] ...
                )
        end
         
-        pr.redraw@PlotProp('Height', h + Dh, varargin{:})
+        pr.redraw@PlotProp('Height', (h + Dh)*1.5, varargin{:})
     else
         if  ~isempty(pr.measure_tbl) && isgraphics(pr.measure_tbl, 'uitable')
             set(pr.measure_tbl, ...
@@ -385,12 +386,13 @@ function cb_measure_gui(pr)
     screen_h = Plot.h(0, 'pixels');
 
     N = ceil(sqrt(length(pr.mlist))); % number of row and columns of figures
+    f_count = 1;
 
     for i = 1:length(pr.mlist)
         if ~ismember(pr.mlist(i), measure_short_list)
             continue;
         end
-        
+
         measure = pr.mlist{i};
 
         x = (f_gr_x + f_gr_w) / screen_w + mod(i - 1, N) * (screen_w - f_gr_x - 2 * f_gr_w) / N / screen_w;
@@ -399,7 +401,30 @@ function cb_measure_gui(pr)
         h = .5 * f_gr_h / screen_h + .5 * f_gr_h * (N - floor((i - .5) / N)) / N / screen_h;
 
         result_measure = graph.getMeasure(measure);
-        pr.f_m{i} = GUI('pe', result_measure, 'POSITION', [x y w h], 'CLOSEREQ', false).draw();
+        plot_permission = true;
+        tmp_gui = [];
+        for j = 1:length(pr.f_m)
+            tmp_f = pr.f_m{j};
+            tmp_gui = get(tmp_f, 'UserData');
+            if isequal(tmp_gui.get('pe').get('el').get('id'), result_measure.get('ID'))
+                plot_permission = false;
+                if isequal(get(tmp_f, 'Visible'), 'on')
+                    % hide
+                    set(tmp_f, 'Visible', 'off')
+                else
+                    % show
+                    figure(tmp_f)
+                    set(tmp_f, ...
+                        'Visible', 'on', ...
+                        'WindowState', 'normal' ...
+                        )
+                end                            
+            end
+        end
+        if plot_permission
+            pr.f_m{f_count} = GUI('pe', result_measure, 'POSITION', [x y w h], 'CLOSEREQ', false).draw();
+            f_count = f_count + 1;
+        end
     end
 end
 function cb_measure_calc(pr)
@@ -423,7 +448,7 @@ function cb_measure_calc(pr)
 
         measure = pr.mlist{i};
         if pr.get('WAITBAR')
-            waitbar(.1 + .70 * i / length(pr.selected), wb, ['Calculating measure ' measure ]);
+            waitbar(.1 + .20 * i / length(pr.selected), wb, ['Calculating measure ' measure ]);
         end
         result_measure = graph.getMeasure(measure);
         result_measure.memorize('M');

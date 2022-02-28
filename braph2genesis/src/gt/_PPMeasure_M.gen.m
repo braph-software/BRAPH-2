@@ -17,6 +17,7 @@ GUI, PlotElement, PlotProp, MultigraphBUD, MultigraphBUT.
 p
 f_br
 br_type
+br_btn
 
 %% ¡methods!
 function h_panel = draw(pr, varargin)
@@ -84,7 +85,7 @@ function h_panel = draw(pr, varargin)
     end
     
     if Measure.is_nodal(el)        
-        ui_brain_view = uicontrol('Parent', pr.p, ...
+        pr.br_btn = uicontrol('Parent', pr.p, ...
             'Style', 'pushbutton', ...
             'Units', 'normalized', ...
             'Visible', 'on', ...
@@ -121,7 +122,10 @@ function redraw(pr, varargin)
     %
     % See also draw, update, refresh.
 
-    get(pr.p, 'UserData').redraw(varargin{:})    
+    get(pr.p, 'UserData').redraw(varargin{:}) 
+    if ~pr.get_button_condition()
+        set(pr.br_btn, 'Visible', 'off')
+    end
 end
 function cb_brain_view_fig(pr)
     f_pg = ancestor(pr.p, 'Figure');
@@ -238,4 +242,22 @@ function cb_close(pr)
     if ~isempty(pr.f_br) && check_graphics(pr.f_br, 'figure')
         delete(pr.f_br);
     end     
+end
+function state = get_button_condition(pr)
+    % GET_BUTTON_CONDITION returns the calculate button state.
+    %
+    % STATE = GET_BUTTON_CONDITION(PR) returns the calculate button state.
+    %
+    % see also is_measure_calculated.
+
+    plot_prop_children = get(pr.p, 'Children');
+    state = 0; % calculated
+    for i = 1:length(plot_prop_children)
+        pp_c = plot_prop_children(i);
+        if check_graphics(pp_c, 'pushbutton') && isequal(pp_c.Tag, 'button_calc')
+            if isequal(pp_c.Enable, 'off')
+                state = 1;  % not calculated
+            end
+        end
+    end
 end

@@ -183,6 +183,9 @@ function cb_bring_to_front(pl)
             'Visible', 'on', ...
             'WindowState', 'normal' ...
             )
+        if ismethod(pl, 'Inner_Show')
+             pl.Inner_Show(); 
+        end             
     end    
 end
 function cb_hide(pl)
@@ -199,6 +202,9 @@ function cb_hide(pl)
 
     if check_graphics(pl.f_settings, 'figure')
         set(pl.f_settings, 'Visible', 'off')
+        if ismethod(pl, 'Inner_Hide')
+             pl.Inner_Hide(); 
+        end   
     end    
 end
 function cb_close(pl)
@@ -213,6 +219,10 @@ function cb_close(pl)
     end
 
     % pl.cb_close_fs() % this is called automatically when the panel is deleted
+end
+
+function set_settings(pl, outer_settings)
+    pl.f_settings = outer_settings;
 end
 
 %% ¡staticmethods!
