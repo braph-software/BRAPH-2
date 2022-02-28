@@ -139,7 +139,6 @@ function update(pr)
         pr.graph = el.get('A1').get('G');
         
          % visible gui
-        set(pr.adj_plot_tgl_btn, 'Visible', 'on')
         set(pr.measure_tbl, 'Visible', 'on')
         set(pr.measure_btn, 'Visible', 'on')
         set(pr.measure_plot_btn, 'Visible', 'on')
