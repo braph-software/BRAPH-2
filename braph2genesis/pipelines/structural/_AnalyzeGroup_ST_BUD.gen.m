@@ -16,7 +16,7 @@ Correlation.CORRELATION_RULE_LIST
 %%%% ¡default!
 Correlation.CORRELATION_RULE_LIST{1}
 %%%% ¡conditioning!
-if ~isequal(value, Correlation.CORRELATION_RULE_LIST{4})
+if ~(isequal(value, Correlation.CORRELATION_RULE_LIST{4}) || isequal(value, Correlation.CORRELATION_RULE_LIST{5}))
     a.set('USE_COVARIATES', false);
 end
 %%%% ¡gui!
