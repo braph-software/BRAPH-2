@@ -15,6 +15,12 @@ CORRELATION_RULE (parameter, option) is the correlation type.
 Correlation.CORRELATION_RULE_LIST
 %%%% ¡default!
 Correlation.CORRELATION_RULE_LIST{1}
+%%%% ¡conditioning!
+if ~isequal(value, Correlation.CORRELATION_RULE_LIST{4})
+    a.set('USE_COVARIATES', false);
+end
+%%%% ¡gui!
+pr = PPAnalyzeGroup_CORRELATION_RULE('EL', a, 'PROP', AnalyzeGroup_ST_BUT.CORRELATION_RULE, varargin{:});
 
 %%% ¡prop!
 NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
@@ -27,6 +33,12 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 USE_COVARIATES (parameter, logical) determines the use of covariates in the analysis.
 %%%% ¡default!
 false
+%%%% ¡conditioning!
+if value == true
+    a.set('CORRELATION_RULE', Correlation.CORRELATION_RULE_LIST{4});
+end
+%%%% ¡gui!
+pr = PPAnalyzeGroup_USE_COVARIATES('EL', a, 'PROP', AnalyzeGroup_ST_BUT.USE_COVARIATES, varargin{:});
 
 %%% ¡prop!
 DENSITIES (parameter, rvector) is the vector of densities.
