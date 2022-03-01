@@ -33,7 +33,7 @@ USE_COVARIATES (parameter, logical) determines the use of covariates in the anal
 %%%% ¡default!
 false
 %%%% ¡conditioning!
-if value == true
+if value == true && ~(isequal(a.get('CORRELATION_RULE'), Correlation.CORRELATION_RULE_LIST{4}) || isequal(a.get('CORRELATION_RULE'), Correlation.CORRELATION_RULE_LIST{5}))
     a.set('CORRELATION_RULE', Correlation.CORRELATION_RULE_LIST{4}); % partial Pearson
 end
 %%%% ¡gui!
