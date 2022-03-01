@@ -289,13 +289,16 @@ function update(pr)
             full_value = cell(size(tmp_value, 1), 5);
             for k = 1:size(tmp_value, 1)
                 full_value{k, 1} = tmp_value{k};
-                full_value{k, 2} = p1{k};
-                full_value{k, 3} = p2{k};
-                full_value{k, 4} = ciu{k};
-                full_value{k, 5} = cil{k};
+                full_value{k, 2} = p1(k);
+                full_value{k, 3} = p2(k);
+                full_value{k, 4} = ciu(k);
+                full_value{k, 5} = cil(k);
             end
             
-            set('Data', full_value)
+            set(pr.comparison_tbl, ...
+                'Data', full_value, ...
+                'ColumnFormat', repmat({'long'}, size(tmp_value, 1), size(el.get(prop), 2))', ...
+                'ColumnEditable', false)
         else
             set(pr.comparison_tbl, ...
                 'Data', tmp_value, ...
