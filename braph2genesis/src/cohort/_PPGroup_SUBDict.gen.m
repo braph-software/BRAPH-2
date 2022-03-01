@@ -108,7 +108,8 @@ function h_panel = draw(pr, varargin)
                 'TOOL_FILE', false, ...
                 'CLOSEREQ', false ...
                 ).draw();
-            set(pr.f_subs{selected_sub}, 'UserData', id_update_btn)
+            tmp_gui = get(pr.f_subs{selected_sub}, 'UserData');
+            set(pr.f_subs{selected_sub}, 'UserData', {tmp_gui, id_update_btn})
         else
             figure(pr.f_subs{selected_sub})
         end
@@ -294,7 +295,8 @@ function cb_bring_to_front(pr)
     for i = 1:1:length(pr.f_subs)
         f_sub = pr.f_subs{i};
         if check_graphics(f_sub, 'figure')
-            gui = get(f_sub, 'UserData');
+            gui_tmp = get(f_sub, 'UserData');
+            gui = gui_tmp{1};
             pe = gui.get('PE');
             pe.cb_bring_to_front()
         end
@@ -314,7 +316,8 @@ function cb_hide(pr)
     for i = 1:1:length(pr.f_subs)
         f_sub = pr.f_subs{i};
         if check_graphics(f_sub, 'figure')
-            gui = get(f_sub, 'UserData');
+            gui_tmp = get(f_sub, 'UserData');
+            gui = gui_tmp{1};
             pe = gui.get('PE');
             pe.cb_hide()
         end
@@ -334,7 +337,8 @@ function cb_close(pr)
     for i = 1:1:length(pr.f_subs)
         f_sub = pr.f_subs{i};
         if check_graphics(f_sub, 'figure')
-            gui = get(f_sub, 'UserData');
+            gui_tmp = get(f_sub, 'UserData');
+            gui = gui_tmp{1};
             pe = gui.get('PE');
             pe.cb_close()
         end

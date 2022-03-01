@@ -163,6 +163,11 @@ function update(pr)
             )
     end
 
+    %get brain atlas
+    br_dict = el.get('C').get('A1').get('g').get('brainatlas').get('br_dict');
+    br_ids = cellfun(@(x) x.get('id'), br_dict.getItems(), 'UniformOutput', false);
+
+
     if  size(value, 2) > 2
         set(pr.slider_text, ...
             'String', [label ' ' num2str(round(get(pr.slider, 'Value')))]);
@@ -181,7 +186,7 @@ function update(pr)
         else
             [~, mask] = fdr(p1, fdr_q_value);
         end
-        
+
         tmp_value = num2cell(tmp_value);
 
         for i = 1:size(tmp_value, 1)
@@ -197,10 +202,19 @@ function update(pr)
             end
         end
 
-        set(pr.comparison_tbl, ...
-            'Data', tmp_value, ...
-            'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-            'ColumnEditable', false)
+        if Measure.is_nodal(el.get('Measure')) || Measure.is_binodal(el.get('Measure'))
+            set(pr.comparison_tbl, ...
+                'Data', tmp_value, ...
+                'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
+                'ColumnEditable', false, ...
+                'RowName', br_ids)
+        else
+            set(pr.comparison_tbl, ...
+                'Data', tmp_value, ...
+                'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
+                'ColumnEditable', false)
+        end
+
     else
         set(pr.slider_text, ...
             'String', [label ' ' num2str(round(get(pr.slider, 'Value')))]);
@@ -217,7 +231,7 @@ function update(pr)
         else
             [~, mask] = fdr(p1, fdr_q_value);
         end
-        
+
         tmp_value = num2cell(tmp_value);
 
         for i = 1:size(tmp_value, 1)
@@ -237,6 +251,19 @@ function update(pr)
             'Data', tmp_value, ...
             'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
             'ColumnEditable', false)
+
+        if Measure.is_nodal(el.get('Measure')) || Measure.is_binodal(el.get('Measure'))
+            set(pr.comparison_tbl, ...
+                'Data', tmp_value, ...
+                'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
+                'ColumnEditable', false, ...
+                'RowName', br_ids)
+        else
+            set(pr.comparison_tbl, ...
+                'Data', tmp_value, ...
+                'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
+                'ColumnEditable', false)
+        end
     end
 
     value = el.getr(prop);
