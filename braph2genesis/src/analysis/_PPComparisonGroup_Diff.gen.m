@@ -163,6 +163,11 @@ function update(pr)
             )
     end
 
+    %get brain atlas
+    br_dict = el.get('C').get('A1').get('g').get('brainatlas').get('br_dict');
+    br_ids = cellfun(@(x) x.get('id'), br_dict.getItems(), 'UniformOutput', false);
+
+
     if  size(value, 2) > 2
         set(pr.slider_text, ...
             'String', [label ' ' num2str(round(get(pr.slider, 'Value')))]);
@@ -172,7 +177,13 @@ function update(pr)
         % set p values mask
         tmp_value = value{round(get(pr.slider, 'Value')), round(get(pr.second_slider, 'Value'))};
         p1 = el.get('P1');
+        p2 = el.get('P2');
+        cil = el.get('cil');
+        ciu = el.get('ciu');
         p1 = p1{round(get(pr.slider, 'Value')), round(get(pr.second_slider, 'Value'))};
+        p2 = p2{round(get(pr.slider, 'Value')), round(get(pr.second_slider, 'Value'))};
+        cil = cil{round(get(pr.slider, 'Value')), round(get(pr.second_slider, 'Value'))};
+        ciu = ciu{round(get(pr.slider, 'Value')), round(get(pr.second_slider, 'Value'))};
 
         if Measure.is_nodal(el.get('measure'))
             p1 = p1';
@@ -181,7 +192,7 @@ function update(pr)
         else
             [~, mask] = fdr(p1, fdr_q_value);
         end
-        
+
         tmp_value = num2cell(tmp_value);
 
         for i = 1:size(tmp_value, 1)
@@ -196,11 +207,38 @@ function update(pr)
                 end
             end
         end
+        
+        % rule column diff, p1, p2, cil, ciu
+        if Measure.is_nodal(el.get('Measure')) || Measure.is_global(el.get('Measure'))
+            set(pr.comparison_tbl, ...
+                'ColumnName', {'DIFF', 'P1', 'P2', 'CIU', 'CIL'}, ...
+                'ColumnFormat', {'char',  'char', 'char', 'char', 'char'}, ...
+                'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                'ColumnEditable', [false false false false false] ...
+                );
+            
+            full_value = cell(size(tmp_value, 1), 5);
+            for k = 1:size(tmp_value, 1)
+                full_value{k, 1} = tmp_value{k};
+                full_value{k, 2} = p1{k};
+                full_value{k, 3} = p2{k};
+                full_value{k, 4} = ciu{k};
+                full_value{k, 5} = cil{k};
+            end
+            
+            set('Data', full_value)
+        else
+            set(pr.comparison_tbl, ...
+                'Data', tmp_value, ...
+                'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
+                'ColumnEditable', false)        
+        end
 
-        set(pr.comparison_tbl, ...
-            'Data', tmp_value, ...
-            'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-            'ColumnEditable', false)
+        % rule atlas
+        if Measure.is_nodal(el.get('Measure')) || Measure.is_binodal(el.get('Measure'))
+            set(pr.comparison_tbl, ...               
+                'RowName', br_ids)
+        end
     else
         set(pr.slider_text, ...
             'String', [label ' ' num2str(round(get(pr.slider, 'Value')))]);
@@ -208,7 +246,13 @@ function update(pr)
         % set p values mask
         tmp_value = value{round(get(pr.slider, 'Value'))};
         p1 = el.get('P1');
+        p2 = el.get('P2');
+        cil = el.get('cil');
+        ciu = el.get('ciu');
         p1 = p1{round(get(pr.slider, 'Value'))};
+        p2 = p2{round(get(pr.slider, 'Value'))};
+        cil = cil{round(get(pr.slider, 'Value'))};
+        ciu = ciu{round(get(pr.slider, 'Value'))};
 
         if Measure.is_nodal(el.get('measure'))
             p1 = p1';
@@ -217,7 +261,7 @@ function update(pr)
         else
             [~, mask] = fdr(p1, fdr_q_value);
         end
-        
+
         tmp_value = num2cell(tmp_value);
 
         for i = 1:size(tmp_value, 1)
@@ -232,11 +276,37 @@ function update(pr)
                 end
             end
         end
+        
+        % rule column diff, p1, p2, cil, ciu
+        if Measure.is_nodal(el.get('Measure')) || Measure.is_global(el.get('Measure'))
+            set(pr.comparison_tbl, ...
+                'ColumnName', {'DIFF', 'P1', 'P2', 'CIU', 'CIL'}, ...
+                'ColumnFormat', {'char',  'char', 'char', 'char', 'char'}, ...
+                'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                'ColumnEditable', [false false false false false] ...
+                );
+            
+            full_value = cell(size(tmp_value, 1), 5);
+            for k = 1:size(tmp_value, 1)
+                full_value{k, 1} = tmp_value{k};
+                full_value{k, 2} = p1{k};
+                full_value{k, 3} = p2{k};
+                full_value{k, 4} = ciu{k};
+                full_value{k, 5} = cil{k};
+            end
+            
+            set('Data', full_value)
+        else
+            set(pr.comparison_tbl, ...
+                'Data', tmp_value, ...
+                'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
+                'ColumnEditable', false)        
+        end
 
-        set(pr.comparison_tbl, ...
-            'Data', tmp_value, ...
-            'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-            'ColumnEditable', false)
+        if Measure.is_nodal(el.get('Measure')) || Measure.is_binodal(el.get('Measure'))
+            set(pr.comparison_tbl, ...               
+                'RowName', br_ids)
+        end
     end
 
     value = el.getr(prop);
@@ -297,7 +367,7 @@ function redraw(pr, varargin)
             'Units', 'normalized', ...
             'Position', [.01 .02 .97 (Dh/(h+Sh+Sh+Th+Th+Dh)-.02)] ...
             )
-    else
+    elseif L
         pr.redraw@PlotProp('Height', h + Sh + Th + Dh, varargin{:})
         set(pr.slider, ...
             'Units', 'normalized', ...
@@ -315,6 +385,21 @@ function redraw(pr, varargin)
             'Visible', 'on', ...
             'Units', 'normalized', ...
             'Position', [.01 .02 .97 (Dh/(h+Sh+Th+Dh)-.02)] ...
+            )
+    else
+        pr.redraw@PlotProp(varargin{:})
+    end
+     if ~pr.get_button_condition
+         set(pr.slider, ...
+            'Visible', 'off' ...
+            );
+
+        set(pr.slider_text, ...
+            'Visible', 'off' ...
+            );
+
+        set(pr.table_value, ...
+            'Visible', 'off' ...
             )
     end
 end
@@ -436,4 +521,22 @@ function cb_close(pr)
     if ~isempty(pr.f_br) && check_graphics(pr.f_br, 'figure')
         delete(pr.f_br);
     end     
+end
+function state = get_button_condition(pr)
+    % GET_BUTTON_CONDITION returns the calculate button state.
+    %
+    % STATE = GET_BUTTON_CONDITION(PR) returns the calculate button state.
+    %
+    % see also is_measure_calculated.
+
+    plot_prop_children = get(pr.p, 'Children');
+    state = 0; % calculated
+    for i = 1:length(plot_prop_children)
+        pp_c = plot_prop_children(i);
+        if check_graphics(pp_c, 'pushbutton') && isequal(pp_c.Tag, 'button_calc')
+            if isequal(pp_c.Enable, 'off')
+                state = 1;  % not calculated
+            end
+        end
+    end
 end

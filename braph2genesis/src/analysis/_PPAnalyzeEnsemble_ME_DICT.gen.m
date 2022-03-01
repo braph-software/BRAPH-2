@@ -414,7 +414,7 @@ function cb_measure_calc(pr)
 
         measure = pr.mlist{i};
         if pr.get('WAITBAR')
-            waitbar(.1 + .70 * i / length(pr.selected), wb, ['Calculating measure ' measure ]);
+            waitbar(.1 + .20 * i / length(pr.selected), wb, ['Calculating measure ' measure ]);
         end
         el.getMeasureEnsemble(measure).memorize('M');
         pr.already_calculated{i} = 1;

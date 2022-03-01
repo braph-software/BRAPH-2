@@ -13,6 +13,8 @@ Element, BrainAtlas, Group
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the subject.
+%%%% ¡gui!
+pr = PPSubject_ID('EL', sub, 'PROP', Subject.ID, varargin{:});
 
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the subject.

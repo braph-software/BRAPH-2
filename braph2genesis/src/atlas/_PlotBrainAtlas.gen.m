@@ -643,7 +643,7 @@ function f_settings = settings(pl, varargin)
     %
     % See also draw, figure, isgraphics.
 
-    f_settings = settings@PlotBrainSurface(pl, varargin{:});     
+    f_settings = settings@PlotBrainSurface(pl, varargin{:}); 
 
     ui_toolbar = findall(f_settings, 'Tag', 'FigureToolBar');
     
@@ -1837,6 +1837,34 @@ function f_out = labs_settings(pl)
 
     if nargout > 0
         f_out = f;
+    end
+end
+function Inner_Show(pl)
+    if ~isempty(pl.f_syms_settings) && isgraphics(pl.f_syms_settings, 'figure')
+        set(pl.f_syms_settings, 'Visible' , 'on', 'WindowState', 'normal');
+    end
+    if ~isempty(pl.f_sphs_settings) && isgraphics(pl.f_sphs_settings, 'figure')
+        set(pl.f_sphs_settings, 'Visible' , 'on', 'WindowState', 'normal');
+    end
+    if ~isempty(pl.f_ids_settings) && isgraphics(pl.f_ids_settings, 'figure')
+        set(pl.f_ids_settings, 'Visible' , 'on', 'WindowState', 'normal');
+    end
+    if ~isempty(pl.f_labs_settings) && isgraphics(pl.f_labs_settings, 'figure')
+        set(pl.f_labs_settings, 'Visible' , 'on', 'WindowState', 'normal');
+    end
+end
+function Inner_Hide(pl)
+    if ~isempty(pl.f_syms_settings) && isgraphics(pl.f_syms_settings, 'figure')
+        set(pl.f_syms_settings, 'Visible' , 'off');
+    end
+    if ~isempty(pl.f_sphs_settings) && isgraphics(pl.f_sphs_settings, 'figure')
+        set(pl.f_sphs_settings, 'Visible' , 'off');
+    end
+    if ~isempty(pl.f_ids_settings) && isgraphics(pl.f_ids_settings, 'figure')
+        set(pl.f_ids_settings, 'Visible' , 'off');
+    end
+    if ~isempty(pl.f_labs_settings) && isgraphics(pl.f_labs_settings, 'figure')
+        set(pl.f_labs_settings, 'Visible' , 'off');
     end
 end
 

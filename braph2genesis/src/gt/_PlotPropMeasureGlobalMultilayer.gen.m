@@ -45,14 +45,14 @@ function h_panel = draw(pr, varargin)
     
     el = pr.get('EL');
     prop = pr.get('PROP');
-    value = el.get(prop);
-    L = size(value, 1);
+    g = el.get('g');
+    L = size(g.get('B'), 2);
     label = 'Layer';
     map_multiplier = 100;
-    if el.get('G').getPropNumber() > 9
-        n = length(el.get('G').get(10)); % 10 is densities or thresholds
-        L = size(value, 1) / n;
-        label = el.get('G').getPropTag(10);
+    if g.getPropNumber() > 9
+        n = length(g.get(10)); % 10 is densities or thresholds
+        L = size(g.get('B'), 2) / n;
+        label = g.getPropTag(10);
     end
     
     % set on first layer
@@ -132,26 +132,16 @@ function update(pr)
     
     el = pr.get('EL');
     prop = pr.get('PROP');
-    value = el.get(prop);
-    L = size(value, 1);
+    g = el.get('g');
+    L = size(g.get('B'), 2);
     label = 'Layer';
     map_multiplier = 100;
-    if el.get('G').getPropNumber() > 9
-        n = length(el.get('G').get(10)); % 10 is densities or thresholds
-        L = size(value, 1) / n;
-        label = el.get('G').getPropTag(10);
+    if g.getPropNumber() > 9
+        n = length(g.get(10)); % 10 is densities or thresholds
+        L = size(g.get('B'), 2) / n;
+        label = g.getPropTag(10);
     end
-    br_dict = el.get('G').get('BRAINATLAS').get('BR_DICT');
-
-    br_ids = cell(br_dict.length(), 1);
-    for i = 1:1:br_dict.length()
-        br = br_dict.getItem(i);
-        br_id = br.get(BrainRegion.ID);
-        if length(br_id) > 10
-            br_id = [br_id(1:8) '..'];
-        end
-        br_ids{i} = br_id;
-    end
+    value = el.getr(prop);
 
     if isa(value, 'NoValue')
         % do nothing
@@ -211,8 +201,8 @@ function redraw(pr, varargin)
 
     el = pr.get('EL');
     prop = pr.get('PROP');
-    value = el.get(prop);
-    L = size(value, 1);
+    g = el.get('g');
+    L = size(el.get('B'), 2);
     n = 0;
     if el.get('G').getPropNumber() > 9
         n = length(el.get('G').get(10)); % 10 is densities or thresholds
@@ -268,5 +258,47 @@ function redraw(pr, varargin)
             'Units', 'normalized', ...
             'Position', [.01 .02 .97 ((Dh+h)/(h+Sh+Th+Dh)-.02)] ...
             )
+    end
+    if ~pr.get_button_condition()
+        set(pr.slider, ...
+            'Visible', 'off' ...
+            );
+        
+        set(pr.slider_text, ...
+            'Visible', 'off' ...
+            );
+        
+        set(pr.edit_value, ...
+            'Visible', 'off' ...
+            )
+        
+        if ~isempty(pr.layer_slider) && ~isempty(pr.layer_text)
+            set(pr.layer_slider, ...
+                'Visible', 'off' ...
+                );
+            
+            set(pr.layer_text, ...
+                'Visible', 'off' ...
+                );
+            
+        end
+    end
+end
+function state = get_button_condition(pr)
+    % GET_BUTTON_CONDITION returns the calculate button state.
+    %
+    % STATE = GET_BUTTON_CONDITION(PR) returns the calculate button state.
+    %
+    % see also is_measure_calculated.
+
+    plot_prop_children = get(pr.p, 'Children');
+    state = 0; % calculated
+    for i = 1:length(plot_prop_children)
+        pp_c = plot_prop_children(i);
+        if check_graphics(pp_c, 'pushbutton') && isequal(pp_c.Tag, 'button_calc')
+            if isequal(pp_c.Enable, 'off')
+                state = 1;  % not calculated
+            end
+        end
     end
 end

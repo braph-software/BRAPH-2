@@ -43,8 +43,12 @@ function h_panel = draw(pr, varargin)
     
     el = pr.get('EL');
     prop = pr.get('PROP');
-    value = el.get(prop);
-    L = size(value, 1);
+    g = el.get('g');
+    L = 1;
+    if g.getPropNumber() > 9
+        L_prop = g.get(10);
+        L = size(L_prop, 2);
+    end
     map_multiplier = 100;
     
     % set on first layer
@@ -95,8 +99,12 @@ function update(pr)
     
     el = pr.get('EL');
     prop = pr.get('PROP');
-    value = el.get(prop);
-    L = size(value, 1);
+    g = el.get('g');
+    L = 1;
+    if g.getPropNumber() > 9
+        L_prop = g.get(10);
+        L = size(L_prop, 2);
+    end
     map_multiplier = 100;
     if el.get('G').getPropNumber() > 9
         label = el.get('G').getPropTag(10);
@@ -104,7 +112,7 @@ function update(pr)
         label = 'Weighted';
         set(pr.slider, 'Enable', 'off')
     end
-    br_dict = el.get('G').get('BRAINATLAS').get('BR_DICT');
+    value = el.getr(prop);
     
     if isa(value, 'NoValue')
         set(pr.slider_text, ...
@@ -151,8 +159,12 @@ function redraw(pr, varargin)
     
     el = pr.get('EL');
     prop = pr.get('PROP');
-    value = el.get(prop);
-    L = size(value, 1);
+    g = el.get('g');
+    L = 1;
+    if g.getPropNumber() > 9
+        L_prop = g.get(10);
+        L = size(L_prop, 2);
+    end
     
      if L > 1
         pr.redraw@PlotPropScalar('Height', h*2+Sh+Th, varargin{:});
@@ -173,7 +185,38 @@ function redraw(pr, varargin)
             'Units', 'normalized', ...
             'Position', [.01 .02 .97 (Dh/(h+Sh+Th+Dh)-.02)] ...
             )
-    else
+     else
         pr.redraw@PlotPropScalar(varargin{:});
      end
+      if ~pr.get_button_condition()
+         set(pr.slider, ...
+            'Visible', 'off' ...
+            );
+
+        set(pr.slider_text, ...
+            'Visible', 'off' ...
+            );
+
+        set(pr.edit_value, ...
+            'Visible', 'off' ...
+            )
+    end
+end
+function state = get_button_condition(pr)
+    % GET_BUTTON_CONDITION returns the calculate button state.
+    %
+    % STATE = GET_BUTTON_CONDITION(PR) returns the calculate button state.
+    %
+    % see also is_measure_calculated.
+
+    plot_prop_children = get(pr.p, 'Children');
+    state = 0; % calculated
+    for i = 1:length(plot_prop_children)
+        pp_c = plot_prop_children(i);
+        if check_graphics(pp_c, 'pushbutton') && isequal(pp_c.Tag, 'button_calc')
+            if isequal(pp_c.Enable, 'off')
+                state = 1;  % not calculated
+            end
+        end
+    end
 end
