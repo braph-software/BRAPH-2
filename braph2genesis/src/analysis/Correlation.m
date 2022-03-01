@@ -18,7 +18,7 @@ classdef Correlation
     % See also Analysis, Measurement.   
     
     properties (Constant)
-        CORRELATION_RULE_LIST = {'pearson', 'spearman', 'kendall', 'partial pearson', 'partial spearman'};
+        CORRELATION_RULE_LIST = {'Pearson', 'Spearman', 'Kendall', 'partial Pearson', 'partial Spearman'};
         NEGATIVE_WEIGHT_RULE_LIST = {'zero', 'abs', 'none'};
     end
     methods (Static)
