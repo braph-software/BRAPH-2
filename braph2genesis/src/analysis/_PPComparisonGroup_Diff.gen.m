@@ -207,7 +207,7 @@ function update(pr)
                 end
             end
         end
-        
+
         % rule column diff, p1, p2, cil, ciu
         if Measure.is_nodal(el.get('Measure')) || Measure.is_global(el.get('Measure'))
             set(pr.comparison_tbl, ...
@@ -216,7 +216,7 @@ function update(pr)
                 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
                 'ColumnEditable', [false false false false false] ...
                 );
-            
+
             full_value = cell(size(tmp_value, 1), 5);
             for k = 1:size(tmp_value, 1)
                 full_value{k, 1} = tmp_value{k};
@@ -225,18 +225,18 @@ function update(pr)
                 full_value{k, 4} = ciu{k};
                 full_value{k, 5} = cil{k};
             end
-            
-            set('Data', full_value)
+
+            set(pr.comparison_tbl, 'Data', full_value)
         else
             set(pr.comparison_tbl, ...
                 'Data', tmp_value, ...
                 'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-                'ColumnEditable', false)        
+                'ColumnEditable', false)
         end
 
         % rule atlas
         if Measure.is_nodal(el.get('Measure')) || Measure.is_binodal(el.get('Measure'))
-            set(pr.comparison_tbl, ...               
+            set(pr.comparison_tbl, ...
                 'RowName', br_ids)
         end
     else
@@ -276,7 +276,7 @@ function update(pr)
                 end
             end
         end
-        
+
         % rule column diff, p1, p2, cil, ciu
         if Measure.is_nodal(el.get('Measure')) || Measure.is_global(el.get('Measure'))
             set(pr.comparison_tbl, ...
@@ -285,26 +285,26 @@ function update(pr)
                 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
                 'ColumnEditable', [false false false false false] ...
                 );
-            
+
             full_value = cell(size(tmp_value, 1), 5);
             for k = 1:size(tmp_value, 1)
                 full_value{k, 1} = tmp_value{k};
-                full_value{k, 2} = p1{k};
-                full_value{k, 3} = p2{k};
-                full_value{k, 4} = ciu{k};
-                full_value{k, 5} = cil{k};
+                full_value{k, 2} = p1(k);
+                full_value{k, 3} = p2(k);
+                full_value{k, 4} = ciu(k);
+                full_value{k, 5} = cil(k);
             end
-            
-            set('Data', full_value)
+
+            set(pr.comparison_tbl, 'Data', full_value)
         else
             set(pr.comparison_tbl, ...
                 'Data', tmp_value, ...
                 'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-                'ColumnEditable', false)        
+                'ColumnEditable', false)
         end
 
         if Measure.is_nodal(el.get('Measure')) || Measure.is_binodal(el.get('Measure'))
-            set(pr.comparison_tbl, ...               
+            set(pr.comparison_tbl, ...
                 'RowName', br_ids)
         end
     end
