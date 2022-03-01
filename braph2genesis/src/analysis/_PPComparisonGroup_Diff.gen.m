@@ -177,7 +177,13 @@ function update(pr)
         % set p values mask
         tmp_value = value{round(get(pr.slider, 'Value')), round(get(pr.second_slider, 'Value'))};
         p1 = el.get('P1');
+        p2 = el.get('P2');
+        cil = el.get('cil');
+        ciu = el.get('ciu');
         p1 = p1{round(get(pr.slider, 'Value')), round(get(pr.second_slider, 'Value'))};
+        p2 = p2{round(get(pr.slider, 'Value')), round(get(pr.second_slider, 'Value'))};
+        cil = cil{round(get(pr.slider, 'Value')), round(get(pr.second_slider, 'Value'))};
+        ciu = ciu{round(get(pr.slider, 'Value')), round(get(pr.second_slider, 'Value'))};
 
         if Measure.is_nodal(el.get('measure'))
             p1 = p1';
@@ -201,20 +207,38 @@ function update(pr)
                 end
             end
         end
-
-        if Measure.is_nodal(el.get('Measure')) || Measure.is_binodal(el.get('Measure'))
+        
+        % rule column diff, p1, p2, cil, ciu
+        if Measure.is_nodal(el.get('Measure')) || Measure.is_global(el.get('Measure'))
             set(pr.comparison_tbl, ...
-                'Data', tmp_value, ...
-                'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-                'ColumnEditable', false, ...
-                'RowName', br_ids)
+                'ColumnName', {'DIFF', 'P1', 'P2', 'CIU', 'CIL'}, ...
+                'ColumnFormat', {'char',  'char', 'char', 'char', 'char'}, ...
+                'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                'ColumnEditable', [false false false false false] ...
+                );
+            
+            full_value = cell(size(tmp_value, 1), 5);
+            for k = 1:size(tmp_value, 1)
+                full_value{k, 1} = tmp_value{k};
+                full_value{k, 2} = p1{k};
+                full_value{k, 3} = p2{k};
+                full_value{k, 4} = ciu{k};
+                full_value{k, 5} = cil{k};
+            end
+            
+            set('Data', full_value)
         else
             set(pr.comparison_tbl, ...
                 'Data', tmp_value, ...
                 'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-                'ColumnEditable', false)
+                'ColumnEditable', false)        
         end
 
+        % rule atlas
+        if Measure.is_nodal(el.get('Measure')) || Measure.is_binodal(el.get('Measure'))
+            set(pr.comparison_tbl, ...               
+                'RowName', br_ids)
+        end
     else
         set(pr.slider_text, ...
             'String', [label ' ' num2str(round(get(pr.slider, 'Value')))]);
@@ -222,7 +246,13 @@ function update(pr)
         % set p values mask
         tmp_value = value{round(get(pr.slider, 'Value'))};
         p1 = el.get('P1');
+        p2 = el.get('P2');
+        cil = el.get('cil');
+        ciu = el.get('ciu');
         p1 = p1{round(get(pr.slider, 'Value'))};
+        p2 = p2{round(get(pr.slider, 'Value'))};
+        cil = cil{round(get(pr.slider, 'Value'))};
+        ciu = ciu{round(get(pr.slider, 'Value'))};
 
         if Measure.is_nodal(el.get('measure'))
             p1 = p1';
@@ -246,23 +276,36 @@ function update(pr)
                 end
             end
         end
-
-        set(pr.comparison_tbl, ...
-            'Data', tmp_value, ...
-            'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-            'ColumnEditable', false)
-
-        if Measure.is_nodal(el.get('Measure')) || Measure.is_binodal(el.get('Measure'))
+        
+        % rule column diff, p1, p2, cil, ciu
+        if Measure.is_nodal(el.get('Measure')) || Measure.is_global(el.get('Measure'))
             set(pr.comparison_tbl, ...
-                'Data', tmp_value, ...
-                'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-                'ColumnEditable', false, ...
-                'RowName', br_ids)
+                'ColumnName', {'DIFF', 'P1', 'P2', 'CIU', 'CIL'}, ...
+                'ColumnFormat', {'char',  'char', 'char', 'char', 'char'}, ...
+                'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                'ColumnEditable', [false false false false false] ...
+                );
+            
+            full_value = cell(size(tmp_value, 1), 5);
+            for k = 1:size(tmp_value, 1)
+                full_value{k, 1} = tmp_value{k};
+                full_value{k, 2} = p1{k};
+                full_value{k, 3} = p2{k};
+                full_value{k, 4} = ciu{k};
+                full_value{k, 5} = cil{k};
+            end
+            
+            set('Data', full_value)
         else
             set(pr.comparison_tbl, ...
                 'Data', tmp_value, ...
                 'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-                'ColumnEditable', false)
+                'ColumnEditable', false)        
+        end
+
+        if Measure.is_nodal(el.get('Measure')) || Measure.is_binodal(el.get('Measure'))
+            set(pr.comparison_tbl, ...               
+                'RowName', br_ids)
         end
     end
 

@@ -142,17 +142,6 @@ function update(pr)
         label = g.getPropTag(10);
     end
     value = el.getr(prop);
-    br_dict = el.get('G').get('BRAINATLAS').get('BR_DICT');
-
-    br_ids = cell(br_dict.length(), 1);
-    for i = 1:1:br_dict.length()
-        br = br_dict.getItem(i);
-        br_id = br.get(BrainRegion.ID);
-        if length(br_id) > 10
-            br_id = [br_id(1:8) '..'];
-        end
-        br_ids{i} = br_id;
-    end
 
     if isa(value, 'NoValue')
         % do nothing

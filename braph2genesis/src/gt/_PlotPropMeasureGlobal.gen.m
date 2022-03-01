@@ -112,7 +112,7 @@ function update(pr)
         label = 'Weighted';
         set(pr.slider, 'Enable', 'off')
     end
-    br_dict = el.get('G').get('BRAINATLAS').get('BR_DICT');
+    value = el.getr(prop);
     
     if isa(value, 'NoValue')
         set(pr.slider_text, ...

@@ -113,6 +113,7 @@ function update(pr)
         set(pr.slider, 'Enable', 'off')
     end
     br_dict = el.get('G').get('BRAINATLAS').get('BR_DICT');
+    value = el.getr(prop);
 
     br_ids = cell(br_dict.length(), 1);
     for i = 1:1:br_dict.length()

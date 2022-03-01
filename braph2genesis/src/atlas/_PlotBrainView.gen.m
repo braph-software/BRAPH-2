@@ -132,9 +132,9 @@ function f_settings = settings(pr, varargin)
     pr.set_settings(f_settings);
     pr.f_settings = f_settings;
 end
-function Inner_Show()
+function Inner_Show(pr)
     pr.bg.Inner_Show()
 end
-function Inner_Hide()
+function Inner_Hide(pr)
     pr.bg.Inner_Hide()
 end

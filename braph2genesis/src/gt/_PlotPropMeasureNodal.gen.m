@@ -112,6 +112,8 @@ function update(pr)
         label = 'Weighted';
         set(pr.slider, 'Enable', 'off')
     end
+    
+    value = el.getr(prop);
     br_dict = el.get('G').get('BRAINATLAS').get('BR_DICT');
 
     br_ids = cell(br_dict.length(), 1);
