@@ -8,19 +8,26 @@ genesis_path = [pwd '\braph2genesis']
 %% list the files that need to be validated for a quick check
 % list the files to be directly copied to braph2 folder
 files_for_copy = { ...
-    '\pipelines\structural NN\example_NNCV_ST_Classification.m'
-    '\pipelines\structural NN\example_NN_ST_Classification.m'
+    '\src\analysis\Correlation.m'
     }
 
 % list the genesis files to be compiled to braph2 folder
 gen_files = { ...
-    '\src\nn\_NNBase.gen.m' ...
-    '\src\nn\_NNData.gen.m' ...
-    '\src\nn\_NNEvaluator.gen.m'};
+    '\pipelines\structural\_AnalyzeGroup_ST_WU.gen.m' ...
+    '\pipelines\structural\_AnalyzeGroup_ST_BUT.gen.m' ...
+    '\pipelines\structural\_AnalyzeGroup_ST_BUD.gen.m' ...
+    '\pipelines\structural\_PPAnalyzeGroup_USE_COVARIATES.gen.m' ...
+    '\pipelines\structural\_PPAnalyzeGroup_CORRELATION_RULE.gen.m' ...
+    };
+
+%% Delete the files
+for i = 1:length(gen_files)
+    delete([braph_path extractBefore(gen_files{i}, "\_") filesep char(extractBetween(gen_files{i}, "\_", ".gen")) '.m']);
+end 
 
 %% Compile and run the test
 for i = 1:length(files_for_copy)
-    status = copyfile([genesis_path files_for_copy{i}], [braph_path extractBefore(files_for_copy{i}, "\_")]);
+    status = copyfile([genesis_path files_for_copy{i}], [braph_path files_for_copy{i}]);
     if status == 0
         warning([files_for_copy{i} ' copy failed'])
     end
@@ -28,9 +35,14 @@ end
 
 for i = 1:length(gen_files)
     create_Element([genesis_path gen_files{i}], [braph_path extractBefore(gen_files{i}, "\_")])
-    create_test_Element([genesis_path gen_files{i}], [braph_path extractBefore(gen_files{i}, "\_")])
-    eval(['test_' char(extractBetween(gen_files{i}, "\_", ".gen"))])
 end
+for i = 1:length(gen_files)
+    create_test_Element([genesis_path gen_files{i}], [braph_path extractBefore(gen_files{i}, "\_")])
+    %eval(['test_' char(extractBetween(gen_files{i}, "\_", ".gen"))])
+end
+
+%% test on GUI
+GUI('pe', Pipeline()).draw()
 
 %% archived codes
 % delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui/PlotElement.m')
@@ -59,8 +71,8 @@ end
 % create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PPPipeline_PSDict.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
 % create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PPPipeline_PSDict.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
 
-lf = load('pip_c.b2', '-mat');
-pip = lf.el;
+% lf = load('pip_c.b2', '-mat');
+% pip = lf.el;
 
 % gui = GUI( ...
 %     'PE', pip, ...
@@ -72,11 +84,11 @@ pip = lf.el;
 %     'TOOL_FIG', true, ...
 %     'CLOSEREQ', false ...
 %     );
-gui = GUI( ...
-    'PE', pip, ...
-    'CLOSEREQ', false ...
-    );
-gui.draw()
+% gui = GUI( ...
+%     'PE', pip, ...
+%     'CLOSEREQ', false ...
+%     );
+% gui.draw()
 
 % % % delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui/PPPipeline_PSDict.m')
 % % % create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PPPipeline_PSDict.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
