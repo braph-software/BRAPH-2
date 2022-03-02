@@ -15,12 +15,14 @@ CORRELATION_RULE (parameter, option) is the correlation type.
 Correlation.CORRELATION_RULE_LIST
 %%%% ¡default!
 Correlation.CORRELATION_RULE_LIST{1}
-%%%% ¡conditioning!
-if ~(isequal(value, Correlation.CORRELATION_RULE_LIST{4}) || isequal(value, Correlation.CORRELATION_RULE_LIST{5})) % Pearson, Spearman, or Kendall
-    a.set('USE_COVARIATES', false);
+%%%% ¡postprocessing!
+if a.get('USE_COVARIATES') && ~(isequal(a.get('CORRELATION_RULE'), Correlation.CORRELATION_RULE_LIST{4}) || isequal(a.get('CORRELATION_RULE'), Correlation.CORRELATION_RULE_LIST{5})) % Pearson, Spearman, or Kendall
+    a.set('CORRELATION_RULE', Correlation.CORRELATION_RULE_LIST{4}); % partial Pearson
+elseif ~a.get('USE_COVARIATES') && (isequal(a.get('CORRELATION_RULE'), Correlation.CORRELATION_RULE_LIST{4}) || isequal(a.get('CORRELATION_RULE'), Correlation.CORRELATION_RULE_LIST{5})) % partial Pearson or partial Spearman
+    a.set('CORRELATION_RULE', Correlation.CORRELATION_RULE_LIST{1}); % Pearson
 end
 %%%% ¡gui!
-pr = PPAnalyzeGroup_CORRELATION_RULE('EL', a, 'PROP', AnalyzeGroup_ST_BUT.CORRELATION_RULE, varargin{:});
+pr = PPAnalyzeGroup_CorrelationRule('EL', a, 'PROP', AnalyzeGroup_ST_BUT.CORRELATION_RULE, varargin{:});
 
 %%% ¡prop!
 NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
@@ -33,12 +35,12 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 USE_COVARIATES (parameter, logical) determines the use of covariates in the analysis.
 %%%% ¡default!
 false
-%%%% ¡conditioning!
-if value == true && ~(isequal(a.get('CORRELATION_RULE'), Correlation.CORRELATION_RULE_LIST{4}) || isequal(a.get('CORRELATION_RULE'), Correlation.CORRELATION_RULE_LIST{5}))
-    a.set('CORRELATION_RULE', Correlation.CORRELATION_RULE_LIST{4}); % partial Pearson
+%%%% ¡postprocessing!
+if a.get('USE_COVARIATES') && ~(isequal(a.get('CORRELATION_RULE'), Correlation.CORRELATION_RULE_LIST{4}) || isequal(a.get('CORRELATION_RULE'), Correlation.CORRELATION_RULE_LIST{5})) % Pearson, Spearman, or Kendall
+    a.set('USE_COVARIATES', false);
 end
 %%%% ¡gui!
-pr = PPAnalyzeGroup_USE_COVARIATES('EL', a, 'PROP', AnalyzeGroup_ST_BUT.USE_COVARIATES, varargin{:});
+pr = PPAnalyzeGroup_UseCovariates('EL', a, 'PROP', AnalyzeGroup_ST_BUT.USE_COVARIATES, varargin{:});
 
 %%% ¡prop!
 DENSITIES (parameter, rvector) is the vector of densities.
