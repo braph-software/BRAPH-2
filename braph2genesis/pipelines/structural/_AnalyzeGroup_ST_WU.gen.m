@@ -98,7 +98,7 @@ function pr = getPPCompareGroup_CPDict(a, varargin)
     %
     % See also CompareGroup.
     
-    pr = PPCompareGroup_CPDict_WU(varargin{:});
+    pr = PPCompareGroup_CPDict_ST_WU(varargin{:});
 end
 
 %% ¡tests!

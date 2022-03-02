@@ -110,7 +110,7 @@ function pr = getPPCompareGroup_CPDict(a, varargin)
     %
     % See also CompareGroup.
     
-    pr = PPCompareGroup_CPDict_BUT(varargin{:});
+    pr = PPCompareGroup_CPDict_ST_BUT(varargin{:});
 end
 
 %% ¡tests!
