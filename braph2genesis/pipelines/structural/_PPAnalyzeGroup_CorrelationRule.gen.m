@@ -1,9 +1,8 @@
 %% ¡header!
-PPAnalyzeGroup_CORRELATION_RULE < PlotPropOption (pr, plot property option) is a plot of an option property.
+PPAnalyzeGroup_CorrelationRule < PlotPropOption (pr, plot property option) is a plot of an option property.
 
 %%% ¡description!
-PlotPropOption plots an OPTION property of an element in a popupmenu.
-It works for all categories.
+PPAnalyzeGroup_CorrelationRule plots an OPTION property of correlation rule.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp

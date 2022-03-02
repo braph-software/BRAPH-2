@@ -1,8 +1,8 @@
 %% ¡header!
-PPAnalyzeGroup_USE_COVARIATES < PlotPropLogical (pr, plot property logical) is a plot of a property logical.
+PPAnalyzeGroup_UseCovariates < PlotPropLogical (pr, plot property logical) is a plot of a property logical.
 
 %%% ¡description!
-PPAnalyzeGroup_USE_COVARIATES plots a LOGICAL property USE_COVARIATES in a checkbox.
+PPAnalyzeGroup_UseCovariates plots a LOGICAL property of USE_COVARIATES in a checkbox.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp
