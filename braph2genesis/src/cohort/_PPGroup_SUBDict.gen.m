@@ -109,7 +109,7 @@ function h_panel = draw(pr, varargin)
                 'CLOSEREQ', false ...
                 ).draw();
             tmp_gui = get(pr.f_subs{selected_sub}, 'UserData');
-            set(pr.f_subs{selected_sub}, 'UserData', {tmp_gui, pr.p})
+            set(pr.f_subs{selected_sub}, 'UserData', {tmp_gui, pr})
         else
             figure(pr.f_subs{selected_sub})
         end
