@@ -176,10 +176,10 @@ function update(pr)
 
         % set p values mask
         tmp_value = value{round(get(pr.slider, 'Value')), round(get(pr.second_slider, 'Value'))};
-        p1 = el.get('P1');
-        p2 = el.get('P2');
-        cil = el.get('cil');
-        ciu = el.get('ciu');
+        p1 = el.memorize('P1');
+        p2 = el.memorize('P2');
+        cil = el.memorize('cil');
+        ciu = el.memorize('ciu');
         p1 = p1{round(get(pr.slider, 'Value')), round(get(pr.second_slider, 'Value'))};
         p2 = p2{round(get(pr.slider, 'Value')), round(get(pr.second_slider, 'Value'))};
         cil = cil{round(get(pr.slider, 'Value')), round(get(pr.second_slider, 'Value'))};
@@ -245,10 +245,10 @@ function update(pr)
 
         % set p values mask
         tmp_value = value{round(get(pr.slider, 'Value'))};
-        p1 = el.get('P1');
-        p2 = el.get('P2');
-        cil = el.get('cil');
-        ciu = el.get('ciu');
+        p1 = el.memorize('P1');
+        p2 = el.memorize('P2');
+        cil = el.memorize('cil');
+        ciu = el.memorize('ciu');
         p1 = p1{round(get(pr.slider, 'Value'))};
         p2 = p2{round(get(pr.slider, 'Value'))};
         cil = cil{round(get(pr.slider, 'Value'))};
@@ -424,7 +424,6 @@ function cb_brain_view_fig(pr)
         pr.f_br = figure( ...
             'NumberTitle', 'off', ...
             'Units', 'normalized', ...
-            'MenuBar', 'none', ...
             'Toolbar', 'figure', ...
             'DockControls', 'off', ...
             'Name', [pr.get('el').getClass() ' - ' pr.get('el').get('ID')], ...

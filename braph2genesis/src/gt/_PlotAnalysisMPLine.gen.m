@@ -472,6 +472,7 @@ function f_settings = settings(pr, varargin)
         end
 
     init_measure_plot_area()
+    cb_measure_selection()
 
     if nargin > 0
         f_settings = pr.h_settings;
