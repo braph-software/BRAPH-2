@@ -25,11 +25,6 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST
 %%%% ¡default!
 Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 
-%%% ¡prop!
-USE_COVARIATES (parameter, logical) determines the use of covariates in the analysis.
-%%%% ¡default!
-false
-
 %% ¡props_update!
 
 %%% ¡prop!
@@ -51,7 +46,7 @@ if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
     atlas = gr.get('SUB_DICT').getItem(1).get('BA');
 end
 
-if a.get('USE_COVARIATES')
+if any(strcmp(a.get('CORRELATION_RULE'), {'Pearson with covariates', 'Spearman with covariates'}))
     age_list = cellfun(@(x) x.get('age'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
     age = cat(2, age_list{:})';
     sex_list = cellfun(@(x) x.get('sex'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
@@ -86,7 +81,7 @@ else
 
     A = cell(1, L);
     for i = 1:L
-        if a.get('USE_COVARIATES')
+        if any(strcmp(a.get('CORRELATION_RULE'), {'Pearson with covariates', 'Spearman with covariates'}))
             A(i) = {Correlation.getAdjacencyMatrix(data{i}, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'), covariates)};
         else
             A(i) = {Correlation.getAdjacencyMatrix(data{i}, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'))};
