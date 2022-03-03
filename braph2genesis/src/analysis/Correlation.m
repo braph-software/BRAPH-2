@@ -8,8 +8,9 @@ classdef Correlation
     % negative rule.
     %
     % Correlation properties (Constant)
-    %  Correlation_Rule_List        - pearson, spearman, kendall, partial
-    %                                 pearson, partial spearman
+    %  Correlation_Rule_List        - Pearson, Spearman, Kendall, Pearson
+    %                                 with covariates, Spearman with
+    %                                 covariates
     %  Negative_Weight_Rule_List    - zero, abs, none
     %
     % Correlation methods (Static)
@@ -18,7 +19,7 @@ classdef Correlation
     % See also Analysis, Measurement.   
     
     properties (Constant)
-        CORRELATION_RULE_LIST = {'Pearson', 'Spearman', 'Kendall', 'partial Pearson', 'partial spearman'};
+        CORRELATION_RULE_LIST = {'Pearson', 'Spearman', 'Kendall', 'Pearson with covariates', 'Spearman with covariates'};
         NEGATIVE_WEIGHT_RULE_LIST = {'zero', 'abs', 'none'};
     end
     methods (Static)
@@ -33,11 +34,11 @@ classdef Correlation
             % adjacency matrix calculated with the specified correlation rule.
             % May return the p-values correlation matrix P. 
             % Admissible CORRELTION_RULE are:
-            %   'CorrelationRule'   = 'spearman' - pairwise correlations Spearman's rho.
-            %                         'kendall'  - pairwise correlations Kendall's tau.
-            %                         'partial pearson'  - Spearman's rank partial correlations. 
-            %                         'partial spearman' - linear partial Pearson correlations.
-            %                         'person'(default)  - Pearson's linear correlation coefficient.
+            %   'CorrelationRule'   = 'Spearman' - pairwise correlations Spearman's rho.
+            %                         'Kendall'  - pairwise correlations Kendall's tau.
+            %                         'Pearson with covariates'  - Spearman's rank partial correlations. 
+            %                         'Spearman with covariates' - linear partial Pearson correlations.
+            %                         'Pearson'(default)  - Pearson's linear correlation coefficient.
             %
             % [A, P] = GETADJACENCYMATRIX(DATA, CORRELATION_RULE, NEGATIVE_WEIGHT_RULE) 
             % returns an adjacency matrix calculated with the specified correlation rule.
@@ -61,9 +62,9 @@ classdef Correlation
                     [A, P] = corr(data, 'Type', 'Spearman');
                 case 'kendall'
                     [A, P] = corr(data, 'Type','Kendall');
-                case 'partial pearson'
+                case 'pearson with covariates'
                     [A, P] = partialcorr(data, covariates, 'Type', 'Pearson');
-                case 'partial spearman'
+                case 'spearman with covariates'
                     [A, P] = partialcorr(data, covariates, 'Type', 'Spearman');
                 otherwise  % 'Pearson' default
                     [A, P] = corrcoef(data);
