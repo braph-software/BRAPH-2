@@ -164,7 +164,7 @@ function cb_edit_value(pr)
 end
 function update_group(pr)
     figure_h = ancestor(pr.p, 'figure');
-    update_btn_tmp = get(figure_h, 'UserData');
-    update_btn = update_btn_tmp{2};
-    feval(get(update_btn, 'Callback'), update_btn, []);
+    gui_user_data = get(figure_h, 'UserData');
+    cohort_panel = gui_user_data{2};
+    cohort_panel.update();
 end
