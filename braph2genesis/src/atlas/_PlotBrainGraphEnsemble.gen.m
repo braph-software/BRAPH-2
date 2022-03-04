@@ -235,6 +235,13 @@ function f_settings  = settings(pl, varargin)
     end
 end
 function cb_bring_to_front(pl)
+    %CB_BRING_TO_FRONT brings to front the brain view figure and its settings figure.
+    %
+    % CB_BRING_TO_FRONT(PR) brings to front the brain view figure and its
+    %  settings figure.
+    %
+    % See also cb_hide.
+    
     pl.cb_bring_to_front@PlotBrainAtlas();    
     if check_graphics(pl.f_graph_settings, 'figure')
         set(pl.f_graph_settings, 'Visible' , 'on', 'WindowState', 'normal');
@@ -244,7 +251,14 @@ function cb_bring_to_front(pl)
     end    
 end
 function cb_hide(pl)
+    %CB_HIDE hides the brain view figure and its settings figure.
+    %
+    % CB_HIDE(PR) hides the brain view figure and its settings figure.
+    %
+    % See also cb_bring_to_front.
+    
     pl.cb_hide@PlotBrainAtlas();  
+    
     if check_graphics(pl.f_graph_settings, 'figure')
         set(pl.f_graph_settings, 'Visible' , 'off');
     end

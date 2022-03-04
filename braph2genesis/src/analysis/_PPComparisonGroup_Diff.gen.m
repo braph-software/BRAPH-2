@@ -181,10 +181,10 @@ function update(pr)
         set(pr.slider_text, ...
             'String', [label num2str(round(get(pr.slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.slider, 'Value') * map_multiplier)}]);
         set(pr.second_slider_text, ...
-            'String', ['Layer: ' num2str(round(get(pr.second_slider, 'Value'))* map_multiplier)]);
+            'String', ['Layer: ' num2str(round(get(pr.second_slider, 'Value')) * map_multiplier)]);
 
         % set p values mask
-        tmp_value = value{round(get(pr.slider, 'Value')), round(get(pr.second_slider, 'Value')* map_multiplier)};
+        tmp_value = value{round(get(pr.slider, 'Value')), round(get(pr.second_slider, 'Value') * map_multiplier)};
         p1 = el.memorize('P1');
         p2 = el.memorize('P2');
         cil = el.memorize('cil');

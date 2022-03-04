@@ -1840,7 +1840,15 @@ function f_out = labs_settings(pl)
     end
 end
 function cb_bring_to_front(pl)
+    %CB_BRING_TO_FRONT brings to front the brain atlas figure and its settings figure.
+    %
+    % CB_BRING_TO_FRONT(PR) brings to front the brain atlas figure and its
+    %  settings figure.
+    %
+    % See also cb_hide, cb_close.
+
     pl.cb_bring_to_front@Plot();
+    
     if check_graphics(pl.f_syms_settings, 'figure')
         set(pl.f_syms_settings, 'Visible' , 'on', 'WindowState', 'normal');
     end
@@ -1855,7 +1863,14 @@ function cb_bring_to_front(pl)
     end
 end
 function cb_hide(pl)
+    %CB_HIDE hides the brain atlas figure and its settings figure.
+    %
+    % CB_HIDE(PR) hides the brain atlas figure and its settings figure.
+    %
+    % See also cb_bring_to_front, cb_close.
+    
     pl.cb_hide@Plot();
+    
     if check_graphics(pl.f_syms_settings, 'figure')
         set(pl.f_syms_settings, 'Visible' , 'off');
     end

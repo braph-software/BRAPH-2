@@ -346,7 +346,7 @@ function cb_graph_value(pr)
 
     % TODO: check this part of the code once GUI is finalized
     value = el.getr(prop);
-    if isempty(pr.f_g) || ~check_graphics(pr.f_g, 'figure')
+    if ~check_graphics(pr.f_g, 'figure')
         if isa(value, 'NoValue')
             pr.f_g = GUI( ...
                 'PE', el.getPropDefault(prop), ...
@@ -413,7 +413,7 @@ function cb_measure_gui(pr)
         tmp_gui = [];
         for j = 1:length(pr.f_m)
             tmp_f = pr.f_m{j};
-            if isgraphics(tmp_f)
+            if chec_graphics(tmp_f, 'figure')
                 tmp_gui = get(tmp_f, 'UserData');
                 if isequal(tmp_gui.get('pe').get('el').get('id'), result_measure.get('ID'))
                     plot_permission = false;
