@@ -14,7 +14,7 @@ CORRELATION_RULE (parameter, option) is the correlation type.
 %%%% ¡settings!
 Correlation.CORRELATION_RULE_LIST
 %%%% ¡default!
-Correlation.CORRELATION_RULE_LIST{Correlation.PEARSON}
+Correlation.PEARSON
 
 %%% ¡prop!
 NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
@@ -53,7 +53,7 @@ if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
     atlas = gr.get('SUB_DICT').getItem(1).get('BA');
 end
 
-if any(strcmp(a.get('CORRELATION_RULE'), {'Pearson with covariates', 'Spearman with covariates'}))
+if any(strcmp(a.get('CORRELATION_RULE'), {Correlatoin.PEARSON_CV, Correlatoin.SPEARMAN_CV}))
     age_list = cellfun(@(x) x.get('age'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
     age = cat(2, age_list{:})';
     sex_list = cellfun(@(x) x.get('sex'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
