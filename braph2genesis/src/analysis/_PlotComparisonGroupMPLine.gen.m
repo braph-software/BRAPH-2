@@ -327,12 +327,12 @@ function f_settings = settings(pr, varargin)
         function init_cil_panel()
             set(ui_confidence_interval_min_checkbox, 'Position', [.04 .27 .2 .12]);
             set(ui_confidence_interval_min_checkbox, 'String', 'Show Confidence Interval Min');
-            set(ui_confidence_interval_min_checkbox, 'Value', false);
+            set(ui_confidence_interval_min_checkbox, 'Value', false, 'BackgroundColor', pr.h_settings.Color);
             set(ui_confidence_interval_min_checkbox, 'Callback', {@cb_show_confidence_interval_min})
 
             set(ui_confidence_interval_max_checkbox, 'Position', [.04 .14 .2 .12]);
             set(ui_confidence_interval_max_checkbox, 'String', 'Show Confidence Interval Max');
-            set(ui_confidence_interval_max_checkbox, 'Value', false);
+            set(ui_confidence_interval_max_checkbox, 'Value', false, 'BackgroundColor', pr.h_settings.Color);
             set(ui_confidence_interval_max_checkbox, 'Callback', {@cb_show_confidence_interval_max})
         end
         function cb_show_confidence_interval_min(src, ~)

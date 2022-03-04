@@ -1841,31 +1841,31 @@ function f_out = labs_settings(pl)
 end
 function cb_bring_to_front(pl)
     pl.cb_bring_to_front@Plot();
-    if ~isempty(pl.f_syms_settings) && isgraphics(pl.f_syms_settings, 'figure')
+    if check_graphics(pl.f_syms_settings, 'figure')
         set(pl.f_syms_settings, 'Visible' , 'on', 'WindowState', 'normal');
     end
-    if ~isempty(pl.f_sphs_settings) && isgraphics(pl.f_sphs_settings, 'figure')
+    if  check_graphics(pl.f_sphs_settings, 'figure')
         set(pl.f_sphs_settings, 'Visible' , 'on', 'WindowState', 'normal');
     end
-    if ~isempty(pl.f_ids_settings) && isgraphics(pl.f_ids_settings, 'figure')
+    if check_graphics(pl.f_ids_settings, 'figure')
         set(pl.f_ids_settings, 'Visible' , 'on', 'WindowState', 'normal');
     end
-    if ~isempty(pl.f_labs_settings) && isgraphics(pl.f_labs_settings, 'figure')
+    if check_graphics(pl.f_labs_settings, 'figure')
         set(pl.f_labs_settings, 'Visible' , 'on', 'WindowState', 'normal');
     end
 end
 function cb_hide(pl)
     pl.cb_hide@Plot();
-    if ~isempty(pl.f_syms_settings) && isgraphics(pl.f_syms_settings, 'figure')
+    if check_graphics(pl.f_syms_settings, 'figure')
         set(pl.f_syms_settings, 'Visible' , 'off');
     end
-    if ~isempty(pl.f_sphs_settings) && isgraphics(pl.f_sphs_settings, 'figure')
+    if check_graphics(pl.f_sphs_settings, 'figure')
         set(pl.f_sphs_settings, 'Visible' , 'off');
     end
-    if ~isempty(pl.f_ids_settings) && isgraphics(pl.f_ids_settings, 'figure')
+    if check_graphics(pl.f_ids_settings, 'figure')
         set(pl.f_ids_settings, 'Visible' , 'off');
     end
-    if ~isempty(pl.f_labs_settings) && isgraphics(pl.f_labs_settings, 'figure')
+    if check_graphics(pl.f_labs_settings, 'figure')
         set(pl.f_labs_settings, 'Visible' , 'off');
     end
 end

@@ -178,7 +178,7 @@ function f_settings = settings(pr, varargin)
         update_matrix();
     end
     
-    ui_matrix_weighted_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox');
+    ui_matrix_weighted_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox', 'BackgroundColor', pr.h_settings.Color);
     set(ui_matrix_weighted_checkbox, 'Position', [.02 .82-mod .3 .07], ...
         'String', 'weighted correlation matrix', ...
         'Value', true, ...
@@ -187,7 +187,7 @@ function f_settings = settings(pr, varargin)
         'Callback', {@cb_matrix_weighted_checkbox})
     
     % density
-    ui_matrix_density_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox');
+    ui_matrix_density_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox', 'BackgroundColor', pr.h_settings.Color);
     set(ui_matrix_density_checkbox, 'Position', [.02 .7-mod .3 .07], ...
         'String', 'binary correlation matrix (set density)', ...
         'Value', false,...
@@ -210,7 +210,7 @@ function f_settings = settings(pr, varargin)
         'Callback', {@cb_matrix_density_slider})
     
     % threshold
-    ui_matrix_threshold_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox');
+    ui_matrix_threshold_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox', 'BackgroundColor', pr.h_settings.Color);
     set(ui_matrix_threshold_checkbox, 'Position', [.02 .5-mod .3 .07],...
         'String', 'binary correlation matrix (set threshold)', ...
         'Value', false, ...
@@ -233,7 +233,7 @@ function f_settings = settings(pr, varargin)
         'Callback', {@cb_matrix_threshold_slider})
     
     % histogram
-    ui_matrix_histogram_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox');
+    ui_matrix_histogram_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox', 'BackgroundColor', pr.h_settings.Color);
     set(ui_matrix_histogram_checkbox, 'Position', [.02 .33-mod .1 .07],...
         'String', 'histogram', ...
         'Value', false, ...
@@ -576,6 +576,7 @@ function h = hist(pr, A, varargin)
     density = [100 density 0];
 
     hold(pr.h_axes, 'on')
+    cla(pr.h_axes)
     ht1 = fill(pr.h_axes, bins, count, 'k');
     ht2 = plot(bins, density, 'b', 'linewidth', 2, 'Parent', pr.h_axes);
     hold(pr.h_axes, 'off')

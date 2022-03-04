@@ -288,8 +288,8 @@ function f_settings = settings(pr, varargin)
         end
 
     if ~isempty(pr.get('CIL')) && ~isempty(pr.get('CIU'))
-        ui_confidence_interval_min_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized');
-        ui_confidence_interval_max_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized');
+        ui_confidence_interval_min_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized', 'BackgroundColor', pr.h_settings.Color);
+        ui_confidence_interval_max_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized', 'BackgroundColor', pr.h_settings.Color);
         h_p_min = [];
         h_p_max = [];
         init_cil_panel()

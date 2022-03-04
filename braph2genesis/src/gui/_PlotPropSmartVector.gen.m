@@ -99,11 +99,13 @@ function update(pr)
     prop = pr.get('PROP');
     
     switch el.getPropCategory(prop)
+        tmp_value = num2str(el.get(prop));
+        tmp_value = regexprep(tmp_value, '(.)\1', '');
         case Category.METADATA
-            set(pr.edit_value, 'String', num2str(el.get(prop)))
+            set(pr.edit_value, 'String', tmp_value)
 
         case {Category.PARAMETER, Category.DATA}
-            set(pr.edit_value, 'String', num2str(el.get(prop)))
+            set(pr.edit_value, 'String', tmp_value)
 
             value = el.getr(prop);
             if isa(value, 'Callback')
