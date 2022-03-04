@@ -46,7 +46,7 @@ if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
     atlas = gr.get('SUB_DICT').getItem(1).get('BA');
 end
 
-if any(strcmp(a.get('CORRELATION_RULE'), {Correlatoin.PEARSON_CV, Correlatoin.SPEARMAN_CV}))
+if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
     age_list = cellfun(@(x) x.get('age'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
     age = cat(2, age_list{:})';
     sex_list = cellfun(@(x) x.get('sex'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
