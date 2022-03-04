@@ -8,10 +8,10 @@ classdef Correlation
     % negative rule.
     %
     % Correlation properties (Constant)
-    %  Correlation_Rule_List        - Pearson, Spearman, Kendall, Pearson
+    %  CORRELATION_RULE_LIST        - Pearson, Spearman, Kendall, Pearson
     %                                 with covariates, Spearman with
     %                                 covariates
-    %  Negative_Weight_Rule_List    - zero, abs, none
+    %  NEGATIVE_WEIGHT_RULE_List    - zero, abs, none
     %
     % Correlation methods (Static)
     %  getAdjacencyMatrix           - returns an adjacency matrix and p-values
@@ -19,8 +19,16 @@ classdef Correlation
     % See also Analysis, Measurement.   
     
     properties (Constant)
-        CORRELATION_RULE_LIST = {'Pearson', 'Spearman', 'Kendall', 'Pearson with covariates', 'Spearman with covariates'};
-        NEGATIVE_WEIGHT_RULE_LIST = {'zero', 'abs', 'none'};
+        PEARSON = 'Pearson';
+        SPEARMAN = 'Spearman';
+        KENDALL = 'Kendall';
+        PEARSON_CV = 'Pearson with covariates';
+        SPEARMAN_CV = 'Spearman with covariates';
+        ZERO = 'zero';
+        ABS = 'abs';
+        NONE = 'none';
+        CORRELATION_RULE_LIST = {Correlation.PEARSON, Correlation.SPEARMAN, Correlation.KENDALL, Correlation.PEARSON_CV, Correlation.SPEARMAN_CV};
+        NEGATIVE_WEIGHT_RULE_LIST = {Correlation.ZERO, Correlation.ABS, Correlation.NONE};
     end
     methods (Static)
         function [A, P] = getAdjacencyMatrix(data, correlation_rule, negative_weight_rule, covariates)
@@ -58,24 +66,24 @@ classdef Correlation
             % See also Analysis, Measurement, corr, corrcoef, partialcorr.
             
             switch lower(correlation_rule)
-                case 'spearman'
+                case Correlation.SPEARMAN
                     [A, P] = corr(data, 'Type', 'Spearman');
-                case 'kendall'
+                case Correlation.KENDALL
                     [A, P] = corr(data, 'Type','Kendall');
-                case 'pearson with covariates'
+                case Correlation.PEARSON_CV
                     [A, P] = partialcorr(data, covariates, 'Type', 'Pearson');
-                case 'spearman with covariates'
+                case Correlation.SPEARMAN_CV
                     [A, P] = partialcorr(data, covariates, 'Type', 'Spearman');
-                otherwise  % 'Pearson' default
+                otherwise  % Correlation.PEARSON default
                     [A, P] = corrcoef(data);
             end
             
             switch lower(negative_weight_rule)
-                case 'none'
+                case Correlation.NONE
                     
-                case 'abs'
+                case Correlation.ABS
                     A = abs(A);
-                otherwise  % 'zero' default
+                otherwise  % Correlation.ZERO default
                     A(A < 0) = 0;
             end
         end
