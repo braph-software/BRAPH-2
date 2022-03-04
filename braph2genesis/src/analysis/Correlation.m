@@ -1,11 +1,11 @@
 classdef Correlation
-    % Correlation Correlates a matrix
+    %Correlation Correlates a matrix.
     % Correlation correlates a matrix with the given correlation rule.
     % 
     % Correlation returns an adjacency matrix. Depending on the correlation
-    % rule, it uses a different type of correlation function. It also
-    % returns the adjacency matrix with modified values depending on the
-    % negative rule.
+    %  rule, it uses a different type of correlation function. It also
+    %  returns the adjacency matrix with modified values depending on the
+    %  negative rule.
     %
     % The list of Correlation properties (Constant) is:
     %  PEARSON                      - is Pearson's linear correlation coefficient
@@ -39,7 +39,7 @@ classdef Correlation
     end
     methods (Static)
         function [A, P] = getAdjacencyMatrix(data, correlation_rule, negative_weight_rule, covariates)
-            %GETADJACENCYMATRIX returns an adjacency matrix
+            %GETADJACENCYMATRIX returns an adjacency matrix.
             %
             % [A, P] = GETADJACENCYMATRIX(DATA) returns an adjacency matrix
             %  calculated with pearson correlation. May return the p-values
