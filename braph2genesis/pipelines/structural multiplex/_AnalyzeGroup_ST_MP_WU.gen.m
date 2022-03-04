@@ -81,7 +81,7 @@ else
 
     A = cell(1, L);
     for i = 1:L
-        if any(strcmp(a.get('CORRELATION_RULE'), {'Pearson with covariates', 'Spearman with covariates'}))
+        if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
             A(i) = {Correlation.getAdjacencyMatrix(data{i}, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'), covariates)};
         else
             A(i) = {Correlation.getAdjacencyMatrix(data{i}, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'))};
