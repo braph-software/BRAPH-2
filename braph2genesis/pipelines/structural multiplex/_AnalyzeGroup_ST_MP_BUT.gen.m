@@ -15,14 +15,14 @@ CORRELATION_RULE (parameter, option) is the correlation type.
 %%%% ¡settings!
 Correlation.CORRELATION_RULE_LIST
 %%%% ¡default!
-Correlation.CORRELATION_RULE_LIST{1}
+Correlation.PEARSON
 
 %%% ¡prop!
 NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
 %%%% ¡settings!
 Correlation.NEGATIVE_WEIGHT_RULE_LIST
 %%%% ¡default!
-Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
+Correlation.ZERO
 
 %%% ¡prop!
 THRESHOLDS (parameter, rvector) is the vector of thresholds.
