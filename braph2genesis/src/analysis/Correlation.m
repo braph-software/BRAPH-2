@@ -7,7 +7,7 @@ classdef Correlation
     %  returns the adjacency matrix with modified values depending on the
     %  negative rule.
     %
-    % The list of Correlation properties (Constant) is:
+    % The list of correlation properties (Constant) is:
     %  PEARSON                      - is Pearson's linear correlation coefficient
     %  SPEARMAN                     - is pairwise correlations Spearman's rho
     %  KENDALL                      - is pairwise correlations Kendall's tau
