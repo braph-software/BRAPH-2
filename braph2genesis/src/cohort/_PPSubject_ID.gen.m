@@ -164,37 +164,12 @@ function cb_edit_value(pr)
 end
 function update_group(pr)
     figure_h = ancestor(pr.p, 'figure');
-    update_btn = get(figure_h, 'UserData');
-    feval(get(update_btn, 'Callback'), update_btn, []);
+    gui_user_data = get(figure_h, 'UserData');
+    if iscell(gui_user_data) && length(gui_user_data) > 1
+        cohort_panel = gui_user_data{2};
+        if ~isempty(cohort_panel)
+            cohort_panel.update();
+        end
+    end
+    
 end
-  
-%% ¡tests!
-
-%%% ¡test!
-%%%% ¡name!
-Example
-%%%% ¡code!
-% draws PPSubject_ID and calls update() and redraw()
-% note that it doesn't work for category RESULT 
-% because it needs to be used with PlotElement() and GUI()
-figure()
-et = ETA();
-props = [et.PROP_STRING_M et.PROP_STRING_P et.PROP_STRING_D et.PROP_STRING_R et.PROP_STRING_R_CALC];
-for i = 1:1:length(props)
-    pr{i} = PPSubject_ID('EL', et, 'PROP', props(i));
-    pr{i}.draw('BackgroundColor', [i/length(props) .5 (length(props)-i)/length(props)])
-    pr{i}.update()
-    pr{i}.redraw('Y0', (length(props) - i)/length(props) * Plot.h(gcf, 'characters'))
-end
-close(gcf)
-
-% minimal working version for category RESULT
-figure()
-p = uipanel('Parent', gcf); % needed for the function refresh that is called when the result is calculated
-set(gcf, 'SizeChangedFcn', 'pr_res.update()') % callback to update panel when figure is resized (in refresh)
-et = ETA();
-pr_res = PPSubject_ID('EL', et, 'PROP', et.PROP_STRING_R_CALC, 'LINES', 'multi', 'EDITHEIGHT', 10);
-pr_res.draw('Parent', p, 'BackgroundColor', [.8 .5 .2])
-pr_res.update()
-pr_res.redraw()
-close(gcf)

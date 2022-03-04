@@ -96,14 +96,18 @@ function update(pr)
     update@PlotProp(pr)
     
     el = pr.get('EL');
-    prop = pr.get('PROP');
+    prop = pr.get('PROP');   
     
-    switch el.getPropCategory(prop)
+    switch el.getPropCategory(prop)        
         case Category.METADATA
-            set(pr.edit_value, 'String', num2str(el.get(prop)))
+            tmp_value = num2str(el.get(prop));
+            tmp_value = regexprep(tmp_value, '(     )', ' ');
+            set(pr.edit_value, 'String', tmp_value)
 
         case {Category.PARAMETER, Category.DATA}
-            set(pr.edit_value, 'String', num2str(el.get(prop)))
+            tmp_value = num2str(el.get(prop));
+            tmp_value = regexprep(tmp_value, '(     )', ' ');
+            set(pr.edit_value, 'String', tmp_value)
 
             value = el.getr(prop);
             if isa(value, 'Callback')
@@ -175,8 +179,10 @@ function cb_edit_value(pr)
     end
     % set rvector
     if isnumeric(proccessed_value)
-        try
+        try            
             el.set(prop, proccessed_value);
+            % set other analysis if needed
+            
         catch e
             pr.warning_creator(e.message);
         end

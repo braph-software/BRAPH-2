@@ -6,6 +6,12 @@ Plot is the plot of a graph of a function.
 It is a graphical figure with empty axes, which should be filled by derived element.
 To generate the plot, call pr.draw().
 
+CALLBACKS - These are callback functions:
+
+    pr.<strong>cb_bring_to_front</strong>() - brings to the front the measure figure and its settings figure
+    pr.<strong>cb_hide</strong>() - hides the measure figure and its settings figure
+    pr.<strong>cb_close</strong>() - closes the measure figure and its settings figure
+
 %%% ¡seealso!
 uipanel, ishandle, isgraphics, figure, PlotGraph
 
@@ -132,9 +138,11 @@ function f_settings = settings(pr, varargin)
     pr.set_settings(f_settings);
     pr.f_settings = f_settings;
 end
-function Inner_Show()
-    pr.bg.Inner_Show()
+function cb_bring_to_front(pr)
+    pr.cb_bring_to_front@Plot();    
+    pr.bg.cb_bring_to_front()
 end
-function Inner_Hide()
-    pr.bg.Inner_Hide()
+function cb_hide(pr)
+    pr.cb_hide@Plot();
+    pr.bg.cb_hide()
 end

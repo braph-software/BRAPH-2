@@ -1,5 +1,5 @@
 %% ¡header!
-PPCompareGroup_CPDict_WU < PlotProp (pr, plot property graph) is a plot of a comparison dictionary.
+PPCompareGroup_CPDict_ST_WU < PlotProp (pr, plot property graph) is a plot of a comparison dictionary.
 
 %%% ¡description!
 PPCompareGroup_CPDict_WU plots the comparison dictionary property associated with a graph.
@@ -281,21 +281,23 @@ function cb_measure_gui(pr)
                    
                 for k = 1:length(pr.f_m)
                     tmp_f = pr.f_m{k};
-                    tmp_gui = get(tmp_f, 'UserData');
-                    if isequal(tmp_gui.get('pe').get('el').get('id'), cp.get('ID'))
-                        plot_permission = false;
-                        if isequal(get(tmp_f, 'Visible'), 'on')
-                            % hide
-                            set(tmp_f, 'Visible', 'off')
-                        else
-                            % show
-                            figure(tmp_f);
-                            set(tmp_f, ...
-                                'Visible', 'on', ...
-                                'WindowState', 'normal' ...
-                                );
+                    if isgraphics(tmp_f)
+                        tmp_gui = get(tmp_f, 'UserData');
+                        if isequal(tmp_gui.get('pe').get('el').get('id'), cp.get('ID'))
+                            plot_permission = false;
+                            if isequal(get(tmp_f, 'Visible'), 'on')
+                                % hide
+                                set(tmp_f, 'Visible', 'off')
+                            else
+                                % show
+                                figure(tmp_f);
+                                set(tmp_f, ...
+                                    'Visible', 'on', ...
+                                    'WindowState', 'normal' ...
+                                    );
+                            end
                         end
-                    end
+                    end                    
                 end
                 if plot_permission
                     pr.f_m{f_count} = GUI('pe', cp, 'POSITION', [x y w h], 'CLOSEREQ', false).draw();

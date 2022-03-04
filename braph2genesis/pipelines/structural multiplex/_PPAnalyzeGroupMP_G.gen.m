@@ -333,17 +333,26 @@ function cb_graph_value(pr)
 
     % TODO: check this part of the code once GUI is finalized
     value = el.getr(prop);
-    if isa(value, 'NoValue')
-        pr.f_g = GUI( ...
-            'PE', el.getPropDefault(prop), ...
-            'POSITION', [x y w h], ...
-            'CLOSEREQ', false).draw();
+    if ~check_graphics(pr.f_g, 'figure')
+        if isa(value, 'NoValue')
+            pr.f_g = GUI( ...
+                'PE', el.getPropDefault(prop), ...
+                'POSITION', [x y w h], ...
+                'CLOSEREQ', false).draw();
+        else
+            pr.f_g = GUI( ...
+                'PE', el.get(prop), ...
+                'POSITION', [x y w h], ...
+                'CLOSEREQ', false).draw();
+        end
+    elseif  isequal(get(pr.f_g, 'Visible'), 'on')
+        gui = get(pr.f_g, 'UserData');
+        gui.cb_hide()
     else
-        pr.f_g = GUI( ...
-            'PE', el.get(prop), ...
-            'POSITION', [x y w h], ...
-            'CLOSEREQ', false).draw();
+        gui = get(pr.f_g, 'UserData');
+        gui.cb_bring_to_front()
     end
+    
 end
 function cb_measure_gui(pr)
     %CB_MEASURE_GUI executes callback for the pushbutton.
@@ -392,21 +401,23 @@ function cb_measure_gui(pr)
         tmp_gui = [];
         for j = 1:length(pr.f_m)
             tmp_f = pr.f_m{j};
-            tmp_gui = get(tmp_f, 'UserData');
-            if isequal(tmp_gui.get('pe').get('el').get('id'), result_measure.get('ID'))
-                plot_permission = false;
-                if isequal(get(tmp_f, 'Visible'), 'on')
-                    % hide
-                    set(tmp_f, 'Visible', 'off')
-                else
-                    % show
-                    figure(tmp_f)
-                    set(tmp_f, ...
-                        'Visible', 'on', ...
-                        'WindowState', 'normal' ...
-                        )
+            if check_graphics(tmp_f,'figure')
+                tmp_gui = get(tmp_f, 'UserData');
+                if isequal(tmp_gui.get('pe').get('el').get('id'), result_measure.get('ID'))
+                    plot_permission = false;
+                    if isequal(get(tmp_f, 'Visible'), 'on')
+                        % hide
+                        set(tmp_f, 'Visible', 'off')
+                    else
+                        % show
+                        figure(tmp_f)
+                        set(tmp_f, ...
+                            'Visible', 'on', ...
+                            'WindowState', 'normal' ...
+                            )
+                    end
                 end
-            end
+            end            
         end
         if plot_permission
             pr.f_m{f_count} = GUI('pe', result_measure, 'POSITION', [x y w h], 'CLOSEREQ', false).draw();
@@ -481,6 +492,7 @@ function cb_graph_ui_figure(pr)
             );
         set_braph2_icon(pr.f_pg)
         menu_about = BRAPH2.add_menu_about(pr.f_pg);
+        set(pr.f_pg, 'Name', [pr.get('el').getClass() ' - ' pr.get('el').get('ID')])
 
         el = pr.get('EL');
         prop = pr.get('PROP');        
@@ -549,6 +561,7 @@ function cb_graph_adj_figure(pr)
             );
         set_braph2_icon(pr.f_adj)
         menu_about = BRAPH2.add_menu_about(pr.f_adj);
+        set(pr.f_adj, 'Name', [pr.get('el').getClass() ' - ' pr.get('el').get('ID')])
         el = pr.get('EL');
         prop = pr.get('PROP');
         g = el.get(prop);

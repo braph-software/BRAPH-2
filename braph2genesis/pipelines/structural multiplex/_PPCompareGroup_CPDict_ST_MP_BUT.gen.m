@@ -1,8 +1,8 @@
 %% ¡header!
-PPCompareGroup_CPDict_BUD < PlotProp (pr, plot property graph) is a plot of a binary undirect using densities comparison dictionary.
+PPCompareGroup_CPDict_ST_MP_BUT < PlotProp (pr, plot property graph mp) is a plot of a multilayer binary undirect using thresholds comparison dictionary.
 
 %%% ¡description!
-PPCompareGroup_CPDict_BUD plots the binary undirect using densities comparison 
+PPCompareGroupMP_CPDict_BUT plots the multilayer binary undirect using thresholds comparison 
 dictionary property associated with a graph.
 It also provides the buttons to navigate the graphical interface of the measures.
 
@@ -20,7 +20,6 @@ p
 measure_tbl % measure table
 measure_btn % calculate measures button
 line_plot_tgl_btn % line plot toggle button
-measure_plot_btn
 mlist % list of measures compatible with the graph
 selected % list of selected measures
 already_calculated % list of measures already calculated
@@ -51,14 +50,16 @@ function h_panel = draw(pr, varargin)
 
     pr.p = draw@PlotProp(pr, varargin{:});
 
-    % graph button    
+    % graph button
+    
     pr.line_plot_tgl_btn = uicontrol(...
         'Style', 'pushbutton', ...
         'Parent', pr.p, ...
         'Units', 'normalized', ...
+        'Visible', 'off', ...
         'CData', imresize(imread('icon_plot_lines.png'), [40 40]), ...
         'TooltipString', 'Plot to line plot.', ...
-        'Position', [.23 .76 .2 .2], ...
+        'Position', [.01 .76 .2 .15], ...
         'Callback', {@cb_plot_type_line} ...
         );
         
@@ -85,6 +86,7 @@ function h_panel = draw(pr, varargin)
         'Tag', 'measure_button', ...
         'Units', 'normalized', ...
         'String', 'Calculate Comparisons', ...
+        'Visible', 'off', ...
         'TooltipString', 'Calculate Selected Measure Comparison', ...
         'Position', [.01 .02 .48 .09], ...
         'Callback', {@cb_measure_btn} ...
@@ -96,11 +98,12 @@ function h_panel = draw(pr, varargin)
         'Tag', 'measure_plot_button', ...
         'Units', 'normalized', ...
         'String', 'Show Comparisons', ...
+        'Visible', 'off', ...
         'TooltipString', 'Show Selected Measures Comparison', ...
         'Position', [.51 .02 .48 .09], ...
         'Callback', {@cb_measure_plot_btn} ...
         );
-        
+       
     function cb_measure_edit(~, event)
         i = event.Indices(1);
         col = event.Indices(2);
@@ -152,6 +155,7 @@ function update(pr)
     else
         pr.graph = el.get('A1').get('G');
         cp_dict = el.get(prop);
+        
         % visible gui
         set(pr.measure_tbl, 'Visible', 'on')
         set(pr.measure_btn, 'Visible', 'on')
@@ -206,15 +210,17 @@ function update(pr)
         end
 
         if ~check_graphics(pr.f_pc, 'figure')
+            set(pr.adj_plot_tgl_btn, 'Enable', 'on');
             set(pr.line_plot_tgl_btn, 'Enable', 'on');
         end
+
     end
 
         function plot_type_rules()
-            if ~isempty(pr.graph) && isa(el.get('A1'), 'AnalyzeGroup_ST_BUD') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}])
+            if ~isempty(pr.graph) && isa(el.get('A1'), 'AnalyzeGroup_ST_MP_BUT') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}])
                 set(pr.line_plot_tgl_btn, ...
                     'Enable', 'on', ...
-                    'Visible', 'on');
+                    'Visible', 'off');
             else
                 set(pr.line_plot_tgl_btn, ...
                     'Enable', 'off', ...
@@ -313,19 +319,21 @@ function cb_measure_gui(pr)
                    
                 for k = 1:length(pr.f_m)
                     tmp_f = pr.f_m{k};
-                    tmp_gui = get(tmp_f, 'UserData');
-                    if isequal(tmp_gui.get('pe').get('el').get('id'), cp.get('ID'))
-                        plot_permission = false;
-                        if isequal(get(tmp_f, 'Visible'), 'on')
-                            % hide
-                            set(tmp_f, 'Visible', 'off')
-                        else
-                            % show
-                            figure(tmp_f);
-                            set(tmp_f, ...
-                                'Visible', 'on', ...
-                                'WindowState', 'normal' ...
-                                );
+                    if isgraphics(tmp_f)
+                        tmp_gui = get(tmp_f, 'UserData');
+                        if isequal(tmp_gui.get('pe').get('el').get('id'), cp.get('ID'))
+                            plot_permission = false;
+                            if isequal(get(tmp_f, 'Visible'), 'on')
+                                % hide
+                                set(tmp_f, 'Visible', 'off')
+                            else
+                                % show
+                                figure(tmp_f);
+                                set(tmp_f, ...
+                                    'Visible', 'on', ...
+                                    'WindowState', 'normal' ...
+                                    );
+                            end
                         end
                     end
                 end
@@ -405,15 +413,14 @@ function cb_graph_ui_figure(pr)
             );
         set_braph2_icon(pr.f_pc)
         menu_about = BRAPH2.add_menu_about(pr.f_pc);
-        
+        set(pr.f_pc, 'Name', [pr.get('el').getClass() ' - ' pr.get('el').get('ID')])
         el = pr.get('EL');
         prop = pr.get('PROP');
         
-        x_range = el.get('A1').get('DENSITIES');
-        x_title = 'DENSITIES';
+        x_range = el.get('A1').get('THRESHOLDS');
+        x_title = 'THRESHOLDS';
         plot_title = ['Comparison between ' el.get('A1').get('GR').get('ID') ' and ' el.get('A2').get('GR').get('ID')];
-        
-         pg = PlotComparisonGroupLine( ...
+        pg = PlotComparisonGroupMPLine( ...
             'Comparison', el.get('CP_DICT'), ...
             'X', x_range, ...
             'PLOTTITLE', plot_title, ...
@@ -427,6 +434,7 @@ function cb_graph_ui_figure(pr)
         set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
         f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
         f_settings.OuterPosition(2) = f_ba_y/screen_h;
+        
     elseif isequal(get(pr.f_pc, 'Visible'), 'on')
         gui = get(pr.f_pc, 'UserData');
         gui.cb_hide()
@@ -435,10 +443,10 @@ function cb_graph_ui_figure(pr)
         gui.cb_bring_to_front()
     end
 
-    function cb_f_pg_close(~, ~)
-        delete(pr.f_pc);
-        pr.update()
-    end
+        function cb_f_pg_close(~, ~)
+            delete(pr.f_pc);
+            pr.update()
+        end
 
     pr.update()
 end
@@ -487,7 +495,6 @@ function state = get_button_condition(pr)
             end
         end
     end
-
 end
 function cb_bring_to_front(pr)
     %CB_BRING_TO_FRONT brings to front the figure and its settings figure.
@@ -540,7 +547,7 @@ function cb_hide(pr)
     if check_graphics(pr.f_pc, 'figure')
         gui = get(pr.f_pc, 'UserData');
         gui.cb_hide();
-    end
+    end 
 end
 function cb_close(pr)
     %CB_CLOSE closes the figure.

@@ -1839,31 +1839,48 @@ function f_out = labs_settings(pl)
         f_out = f;
     end
 end
-function Inner_Show(pl)
-    if ~isempty(pl.f_syms_settings) && isgraphics(pl.f_syms_settings, 'figure')
+function cb_bring_to_front(pl)
+    %CB_BRING_TO_FRONT brings to front the brain atlas figure and its settings figure.
+    %
+    % CB_BRING_TO_FRONT(PR) brings to front the brain atlas figure and its
+    %  settings figure.
+    %
+    % See also cb_hide, cb_close.
+
+    pl.cb_bring_to_front@Plot();
+    
+    if check_graphics(pl.f_syms_settings, 'figure')
         set(pl.f_syms_settings, 'Visible' , 'on', 'WindowState', 'normal');
     end
-    if ~isempty(pl.f_sphs_settings) && isgraphics(pl.f_sphs_settings, 'figure')
+    if  check_graphics(pl.f_sphs_settings, 'figure')
         set(pl.f_sphs_settings, 'Visible' , 'on', 'WindowState', 'normal');
     end
-    if ~isempty(pl.f_ids_settings) && isgraphics(pl.f_ids_settings, 'figure')
+    if check_graphics(pl.f_ids_settings, 'figure')
         set(pl.f_ids_settings, 'Visible' , 'on', 'WindowState', 'normal');
     end
-    if ~isempty(pl.f_labs_settings) && isgraphics(pl.f_labs_settings, 'figure')
+    if check_graphics(pl.f_labs_settings, 'figure')
         set(pl.f_labs_settings, 'Visible' , 'on', 'WindowState', 'normal');
     end
 end
-function Inner_Hide(pl)
-    if ~isempty(pl.f_syms_settings) && isgraphics(pl.f_syms_settings, 'figure')
+function cb_hide(pl)
+    %CB_HIDE hides the brain atlas figure and its settings figure.
+    %
+    % CB_HIDE(PR) hides the brain atlas figure and its settings figure.
+    %
+    % See also cb_bring_to_front, cb_close.
+    
+    pl.cb_hide@Plot();
+    
+    if check_graphics(pl.f_syms_settings, 'figure')
         set(pl.f_syms_settings, 'Visible' , 'off');
     end
-    if ~isempty(pl.f_sphs_settings) && isgraphics(pl.f_sphs_settings, 'figure')
+    if check_graphics(pl.f_sphs_settings, 'figure')
         set(pl.f_sphs_settings, 'Visible' , 'off');
     end
-    if ~isempty(pl.f_ids_settings) && isgraphics(pl.f_ids_settings, 'figure')
+    if check_graphics(pl.f_ids_settings, 'figure')
         set(pl.f_ids_settings, 'Visible' , 'off');
     end
-    if ~isempty(pl.f_labs_settings) && isgraphics(pl.f_labs_settings, 'figure')
+    if check_graphics(pl.f_labs_settings, 'figure')
         set(pl.f_labs_settings, 'Visible' , 'off');
     end
 end

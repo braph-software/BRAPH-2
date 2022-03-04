@@ -43,8 +43,12 @@ function h_panel = draw(pr, varargin)
     
     el = pr.get('EL');
     prop = pr.get('PROP');
-    value = el.get(prop);
-    L = size(value, 1);
+    g = el.get('g');
+    L = 1;
+    if g.getPropNumber() > 9
+        L_prop = g.get(10);
+        L = size(L_prop, 2);
+    end
     map_multiplier = 100;
     
     % set on first layer
@@ -53,9 +57,10 @@ function h_panel = draw(pr, varargin)
         'Style', 'slider', ...
         'Units', 'characters', ...
         'Visible', 'off', ...
-        'Value', 1 * map_multiplier, ...
-        'Min', 1, ...
-        'Max', L * map_multiplier, ...
+        'Value', 1 / map_multiplier, ...
+        'Min', 1 / map_multiplier, ...
+        'Max', L / map_multiplier, ...
+        'SliderStep', [map_multiplier/(L*map_multiplier) map_multiplier/(L*map_multiplier)] , ...
         'Callback', {@cb_slider} ...
         );
     pr.slider_text = uicontrol(...
@@ -95,16 +100,28 @@ function update(pr)
     
     el = pr.get('EL');
     prop = pr.get('PROP');
-    value = el.get(prop);
-    L = size(value, 1);
+    g = el.get('g');
+    L = 1;
+    slider_tags = {'1'};
+    if g.getPropNumber() > 9
+        L_prop = g.get(10);
+        L = size(L_prop, 2);
+        slider_tags = compose("%g", round(L_prop, 2));
+    end
     map_multiplier = 100;
-    if el.get('G').getPropNumber() > 9
-        label = el.get('G').getPropTag(10);
+    if g.getPropNumber() > 9
+        label = g.getPropTag(10);
+        if strcmp(label, 'thresholds')
+            label = 'Threshold';
+        elseif strcmp(label, 'densities')
+            label = 'Density';
+        end
     else
         label = 'Weighted';
         set(pr.slider, 'Enable', 'off')
     end
     br_dict = el.get('G').get('BRAINATLAS').get('BR_DICT');
+    value = el.getr(prop);
 
     br_ids = cell(br_dict.length(), 1);
     for i = 1:1:br_dict.length()
@@ -123,9 +140,9 @@ function update(pr)
             )
     else
         set(pr.slider_text, ...
-            'String', [label ' ' num2str(round(get(pr.slider, 'Value') / map_multiplier))]);
+            'String', [label ' ' num2str(round(get(pr.slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.slider, 'Value') * map_multiplier)}]);
         set(pr.table_value, ...
-            'Data', value{round(get(pr.slider, 'Value') / map_multiplier)}, ...
+            'Data', value{round(get(pr.slider, 'Value') * map_multiplier)}, ...
             'ColumnName', br_ids, ...
             'RowName', br_ids ...
             )
@@ -160,27 +177,31 @@ function redraw(pr, varargin)
 
     el = pr.get('EL');
     prop = pr.get('PROP');
-    value = el.get(prop);
-    L = size(value, 1);
+    g = el.get('g');
+    L = 1;
+    if g.getPropNumber() > 9
+        L_prop = g.get(10);
+        L = size(L_prop, 2);
+    end
 
     if L > 1
         pr.redraw@PlotPropMatrix(varargin{:});
         set(pr.slider, ...
             'Units', 'normalized', ...
             'Visible', 'on', ...
-            'Position', [.01 Dh/(h+Sh+Th+Dh)-.01 .97 (Th/(h+Sh+Th+Dh)-.02)] ...
+            'Position', [.01 Dh/(h+Sh+Th+Dh)-.2 .97 (Th/(h+Sh+Th+Dh)-.02)] ...
             );
 
         set(pr.slider_text, ...
             'Units', 'normalized', ...
             'Visible', 'on', ...
-            'Position', [.01 (Th+Dh)/(h+Sh+Th+Dh)-.02 .97 (Th/(h+Sh+Th+Dh)-.02)] ...
+            'Position', [.01 (Th+Dh)/(h+Sh+Th+Dh)-.2 .97 (Th/(h+Sh+Th+Dh)-.02)] ...
             );
 
         set(pr.table_value, ...
             'Visible', 'on', ...
             'Units', 'normalized', ...
-            'Position', [.01 .01 .97 (Dh/(h+Sh+Th+Dh)-.02)] ...
+            'Position', [.01 .01 .97 (Dh/(h+Sh+Th+Dh)-.2)] ...
             )
     else
         pr.redraw@PlotPropMatrix(varargin{:});
