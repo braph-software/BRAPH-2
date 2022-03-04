@@ -150,9 +150,9 @@ function update(pr)
     slider_tags = {'1'};
     if el.get('C').get('A1').getPropNumber() > 8
         label = el.get('C').get('A1').getPropTag(9);
-        if label == 'Thresholds'
+        if strcmp(label, 'thresholds')
             label = 'Threshold';
-        elseif label == 'Densities'
+        elseif strcmp(label, 'densities')
             label = 'Density';
         end
         slider_tags = compose("%g", round(el.get('C').get('A1').get(9), 2));
@@ -179,7 +179,7 @@ function update(pr)
 
     if  size(value, 2) > 2
         set(pr.slider_text, ...
-            'String', [label num2str(round(get(pr.slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.slider, 'Value') * map_multiplier)}]);
+            'String', [label ' ' num2str(round(get(pr.slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.slider, 'Value') * map_multiplier)}]);
         set(pr.second_slider_text, ...
             'String', ['Layer: ' num2str(round(get(pr.second_slider, 'Value')) * map_multiplier)]);
 
@@ -250,7 +250,7 @@ function update(pr)
         end
     else
         set(pr.slider_text, ...
-            'String', [label num2str(round(get(pr.slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.slider, 'Value') * map_multiplier)}]);
+            'String', [label ' ' num2str(round(get(pr.slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.slider, 'Value') * map_multiplier)}]);
 
         % set p values mask
         tmp_value = value{round(get(pr.slider, 'Value')*map_multiplier)};

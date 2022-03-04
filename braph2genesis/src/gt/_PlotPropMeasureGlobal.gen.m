@@ -111,9 +111,9 @@ function update(pr)
     map_multiplier = 100;
     if el.get('G').getPropNumber() > 9
         label = el.get('G').getPropTag(10);
-        if label == 'Thresholds'
+        if strcmp(label, 'thresholds')
             label = 'Threshold';
-        elseif label == 'Densities'
+        elseif strcmp(label, 'densities')
             label = 'Density';
         end
     else
@@ -124,14 +124,14 @@ function update(pr)
     
     if isa(value, 'NoValue')
         set(pr.slider_text, ...
-            'String', [label num2str(round(get(pr.slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.slider, 'Value') * map_multiplier)}]);
+            'String', [label ' ' num2str(round(get(pr.slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.slider, 'Value') * map_multiplier)}]);
         set(pr.edit_value, ...
             'String', 'No Value', ...
             'Enable', pr.get('ENABLE') ...
             )
     else
         set(pr.slider_text, ...
-            'String', [label num2str(round(get(pr.slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.slider, 'Value') * map_multiplier)}]);
+            'String', [label ' ' num2str(round(get(pr.slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.slider, 'Value') * map_multiplier)}]);
         set(pr.edit_value, ...
             'String', value{round(get(pr.slider, 'Value') * map_multiplier)}, ...
             'Enable', pr.get('ENABLE') ...

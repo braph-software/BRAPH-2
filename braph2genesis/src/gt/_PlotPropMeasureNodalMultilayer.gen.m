@@ -142,9 +142,9 @@ function update(pr)
     if g.getPropNumber() > 9
         n = length(g.get(10)); % 10 is densities or thresholds
         L = size(g.get('B'), 2) / n;
-        if label == 'Thresholds'
+        if strcmp(label, 'thresholds')
             label = 'Threshold';
-        elseif label == 'Densities'
+        elseif strcmp(label, 'densities')
             label = 'Density';
         end
         slider_tags = compose("%g", round(g.get(10), 2));
@@ -174,7 +174,7 @@ function update(pr)
         if el.get('G').getPropNumber() > 9
             
             set(pr.layer_text, ...
-            'String', [label num2str(round(get(pr.slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.slider, 'Value') * map_multiplier)}]);
+            'String', [label ' ' num2str(round(get(pr.slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.slider, 'Value') * map_multiplier)}]);
         
             % get the correct index
             l = round(get(pr.slider, 'Value') * map_multiplier); % layer
