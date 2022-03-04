@@ -545,7 +545,7 @@ function update_plot(pr)
     if Measure.is_global(pr.m.get('Measure')) % global
         is_inf_vector = cellfun(@(x) isinf(x), plot_value);
         if any(is_inf_vector)
-            f = warndlg('The measure cannot be plotted because it has number of infinity.');
+            f = warndlg('The measure cannot be plotted because it contains Inf values.');
             set_braph2_icon(f);
             return;
         end
@@ -555,7 +555,7 @@ function update_plot(pr)
             tmp = plot_value{l};
             tmp_y = tmp(pr.get('NODE1'));
             if isinf(tmp_y)
-                f = warndlg('The measure cannot be plotted because it has number of infinity.');
+                f = warndlg('The measure cannot be plotted because it contains Inf values.');
                 set_braph2_icon(f);
                 return;
             end
@@ -566,7 +566,7 @@ function update_plot(pr)
             tmp = plot_value{l};
             tmp_y = tmp(pr.get('NODE1'), pr.get('NODE2'));
             if isinf(tmp_y)
-                f = warndlg('The measure cannot be plotted because it has number of infinity.');
+                f = warndlg('The measure cannot be plotted because it contains Inf values.');
                 set_braph2_icon(f);
                 return;
             end
