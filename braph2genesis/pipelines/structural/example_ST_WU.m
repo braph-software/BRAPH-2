@@ -29,8 +29,8 @@ im_gr2 = ImporterGroupSubjectST_XLS( ...
 gr2 = im_gr2.get('GR');
 
 %% Analysis ST WU
-a_WU1 = AnalyzeGroup_ST_WU('GR', gr1, 'CORRELATION_RULE', 'Pearson with covariates');
-a_WU2 = AnalyzeGroup_ST_WU('GR', gr2, 'CORRELATION_RULE', 'Pearson with covariates');
+a_WU1 = AnalyzeGroup_ST_WU('GR', gr1, 'CORRELATION_RULE', Correlation.PEARSON_CV);
+a_WU2 = AnalyzeGroup_ST_WU('GR', gr2, 'CORRELATION_RULE', Correlation.PEARSON_CV);
 
 % measure calculation
 g_WU1 = a_WU1.get('G');
