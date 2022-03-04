@@ -18,7 +18,6 @@ gen_files = { ...
     '\src\nn\_NNData.gen.m' ...
     '\src\nn\_NNEvaluator.gen.m'};
 
-
 %% Compile and run the test
 for i = 1:length(files_for_copy)
     status = copyfile([genesis_path files_for_copy{i}], [braph_path extractBefore(files_for_copy{i}, "\_")]);
@@ -32,7 +31,6 @@ for i = 1:length(gen_files)
     create_test_Element([genesis_path gen_files{i}], [braph_path extractBefore(gen_files{i}, "\_")])
     eval(['test_' char(extractBetween(gen_files{i}, "\_", ".gen"))])
 end
-
 
 %% archived codes
 % delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui/PlotElement.m')
@@ -76,6 +74,8 @@ pip = lf.el;
 %     );
 gui = GUI( ...
     'PE', pip, ...
+    'CLOSEREQ', false ...
+    );
 gui.draw()
 
 % % % delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui/PPPipeline_PSDict.m')
