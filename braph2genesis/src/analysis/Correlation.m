@@ -14,7 +14,7 @@ classdef Correlation
     %  PEARSON_CV                   - is linear partial Pearson correlations
     %  SPEARMAN_CV                  - is Spearman's rank partial correlations
     %  ZERO                         - changes all negative values to zero
-    %  ABS                          - output the absolute value
+    %  ABS                          - outputs the absolute value
     %  NONE                         - does not filter the output
     %  CORRELATION_RULE_LIST        - PEARSON, SPEARMAN, KENDALL, PEARSON_CV
     %                                 SPEARMAN_CV
@@ -48,12 +48,9 @@ classdef Correlation
             % [A, P] = GETADJACENCYMATRIX(DATA, CORRELATION_RULE) returns an
             %  adjacency matrix calculated with the specified correlation rule.
             %  May return the p-values correlation matrix P. 
-            % 
             %  Admissible CORRELTION_RULE are:
-            %   'CorrelationRule'   = 'Spearman' - pairwise correlations Spearman's rho
+            %   'CORRELTION_RULE'   = 'Spearman' - pairwise correlations Spearman's rho
             %                         'Kendall'  - pairwise correlations Kendall's tau
-            %                         'Pearson with covariates'  - linear partial Pearson correlations
-            %                         'Spearman with covariates' - Spearman's rank partial correlations 
             %                         'Pearson'(default)  - Pearson's linear correlation coefficient
             %
             % [A, P] = GETADJACENCYMATRIX(DATA, CORRELATION_RULE, NEGATIVE_WEIGHT_RULE) 
@@ -61,15 +58,18 @@ classdef Correlation
             %  It filters the values with the NEGATIVE_WEIGHT_RULE.
             %  May return the p-values correlation matrix P.
             %  Admissible NEGATIVE_WEIGHT_RULE are:
-            %   'NegativeWeightRule' = 'none'   - does not filter the output.
-            %                          'abs'    - output is the absolute value.
-            %                          'zero'(default) - changes all negative values to zero.
+            %   'NEGATIVE_WEIGHT_RULE' = 'none'   - does not filter the output
+            %                            'abs'    - output is the absolute value
+            %                            'zero'(default) - changes all negative values to zero
             %
             % [A, P] = GETADJACENCYMATRIX(DATA, CORRELATION_RULE, NEGATIVE_WEIGHT_RULE, COVARIATES)
             %  returns an adjacency matrix calculated with the specified correlation rule and 
             %  negative weight rule.
             %  It uses COVARIATES age and sex for the partial correlation.
             %  May return the p-values correlation matrix P.
+            %  Admissible CORRELTION_RULE are:
+            %   'CORRELTION_RULE'   = 'Pearson with covariates'  - linear partial Pearson correlations
+            %                         'Spearman with covariates' - Spearman's rank partial correlations 
             %
             % See also Analysis, Measurement, corr, corrcoef, partialcorr.
             
