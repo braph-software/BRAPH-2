@@ -242,8 +242,8 @@ function f_settings  = settings(pl, varargin)
         f_settings = pl.f_settings;
     end
 end
-function cb_bring_to_front(pr)
-    pr.cb_bring_to_front@PlotBrainAtlas();    
+function cb_bring_to_front(pl)
+    pl.cb_bring_to_front@PlotBrainAtlas();    
     if check_graphics(pl.f_graph_settings, 'figure')
         set(pl.f_graph_settings, 'Visible' , 'on', 'WindowState', 'normal');
     end
@@ -251,8 +251,8 @@ function cb_bring_to_front(pr)
         set(pl.f_measures_settings, 'Visible' , 'on', 'WindowState', 'normal');
     end    
 end
-function cb_hide(pr)
-    pr.cb_hide@PlotBrainAtlas();  
+function cb_hide(pl)
+    pl.cb_hide@PlotBrainAtlas();  
     if check_graphics(pl.f_graph_settings, 'figure')
         set(pl.f_graph_settings, 'Visible' , 'off');
     end
