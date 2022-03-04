@@ -1839,7 +1839,7 @@ function f_out = labs_settings(pl)
         f_out = f;
     end
 end
-function Inner_Show(pl)
+function cb_bring_to_front(pr)
     if ~isempty(pl.f_syms_settings) && isgraphics(pl.f_syms_settings, 'figure')
         set(pl.f_syms_settings, 'Visible' , 'on', 'WindowState', 'normal');
     end
@@ -1853,7 +1853,7 @@ function Inner_Show(pl)
         set(pl.f_labs_settings, 'Visible' , 'on', 'WindowState', 'normal');
     end
 end
-function Inner_Hide(pl)
+function cb_hide(pr)
     if ~isempty(pl.f_syms_settings) && isgraphics(pl.f_syms_settings, 'figure')
         set(pl.f_syms_settings, 'Visible' , 'off');
     end

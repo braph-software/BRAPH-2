@@ -182,10 +182,7 @@ function cb_bring_to_front(pl)
         set(pl.f_settings, ...
             'Visible', 'on', ...
             'WindowState', 'normal' ...
-            )
-        if ismethod(pl, 'Inner_Show')
-             pl.Inner_Show(); 
-        end             
+            )            
     end    
 end
 function cb_hide(pl)
@@ -201,10 +198,7 @@ function cb_hide(pl)
     end
 
     if check_graphics(pl.f_settings, 'figure')
-        set(pl.f_settings, 'Visible', 'off')
-        if ismethod(pl, 'Inner_Hide')
-             pl.Inner_Hide(); 
-        end   
+        set(pl.f_settings, 'Visible', 'off') 
     end    
 end
 function cb_close(pl)

@@ -165,6 +165,11 @@ end
 function update_group(pr)
     figure_h = ancestor(pr.p, 'figure');
     gui_user_data = get(figure_h, 'UserData');
-    cohort_panel = gui_user_data{2};
-    cohort_panel.update();
+    if iscell(gui_user_data) && length(gui_user_data) > 1
+        cohort_panel = gui_user_data{2};
+        if ~isempty(cohort_panel)
+            cohort_panel.update();
+        end
+    end
+    
 end
