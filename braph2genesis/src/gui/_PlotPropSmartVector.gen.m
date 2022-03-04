@@ -101,12 +101,12 @@ function update(pr)
     switch el.getPropCategory(prop)        
         case Category.METADATA
             tmp_value = num2str(el.get(prop));
-            tmp_value = regexprep(tmp_value, '(     )', ' ');
+            tmp_value = regexprep(tmp_value, '\\s+', ' ');
             set(pr.edit_value, 'String', tmp_value)
 
         case {Category.PARAMETER, Category.DATA}
             tmp_value = num2str(el.get(prop));
-            tmp_value = regexprep(tmp_value, '(     )', ' ');
+            tmp_value = regexprep(tmp_value, '\\s+', ' ');
             set(pr.edit_value, 'String', tmp_value)
 
             value = el.getr(prop);
