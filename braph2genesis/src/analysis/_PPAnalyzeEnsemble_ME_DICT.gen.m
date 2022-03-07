@@ -37,14 +37,7 @@ f_g % figure for class graph
 %%% ¡prop!
 ENABLE (metadata, option) switches between off and inactive fields.
 %%%% ¡default!
-'on'
-
-%% ¡props!
-
-%%% ¡prop!
-PG (data, item) is a plot graph.
-%%%% ¡settings!
-'PlotGraph'
+'inactive'
 
 %% ¡methods!
 function h_panel = draw(pr, varargin)
@@ -101,7 +94,7 @@ function h_panel = draw(pr, varargin)
             'Parent', pr.p, ...
             'Units', 'normalized', ...
             'CData', imresize(imread('icon_plot_lines.png'), [40 40]), ...
-            'TooltipString', 'Plot to line plot.', ...
+            'TooltipString', 'Open a line plot for the measure.', ...
             'Position', [.23 .71 .2 .2], ...
             'Callback', {@cb_plot_type_line} ...
             );
