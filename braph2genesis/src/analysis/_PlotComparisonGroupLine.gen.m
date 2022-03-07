@@ -92,6 +92,21 @@ MARKERFACECOLOR (metadata, rvector) to set plot marker face color
 %%%% ¡default!
 [0 0 0]
 
+%%% ¡prop!
+FILLCOLOR (metadata, rvector) to set plot patch face color
+%%%% ¡default!
+[0 0 0]
+
+%%% ¡prop!
+FILLALPHA (metadata, scalar) to set plot patch face color alpha
+%%%% ¡default!
+[0 0 0]
+
+%%% ¡prop!
+FILLCOLORMAP (metadata, scalar) to set plot patch face color alpha
+%%%% ¡default!
+[0 0 0]
+
 %% ¡methods!
 function h_figure = draw(pr, varargin)
     %DRAW draws the plot line.
@@ -287,7 +302,6 @@ function f_settings = settings(pr, varargin)
             pr.set('NODE2', node2_to_plot)
             update();
         end
-
     
         ui_confidence_interval_min_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized');
         ui_confidence_interval_max_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized');
@@ -591,4 +605,8 @@ function plotline(pr, x, y)
     title(pr.h_axes, pr.get('PLOTTITLE'))
     xlabel(pr.h_axes, pr.get('XLABEL'))
     ylabel(pr.h_axes, pr.get('YLABEL'))
+end
+function area_fill(pr, X, Y)
+inBetween = [X]
+fill()
 end
