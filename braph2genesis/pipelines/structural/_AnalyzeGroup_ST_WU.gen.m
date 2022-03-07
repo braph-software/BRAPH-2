@@ -13,31 +13,14 @@ CORRELATION_RULE (parameter, option) is the correlation type.
 %%%% ¡settings!
 Correlation.CORRELATION_RULE_LIST
 %%%% ¡default!
-Correlation.CORRELATION_RULE_LIST{1}
-%%%% ¡conditioning!
-if ~(isequal(value, Correlation.CORRELATION_RULE_LIST{4}) || isequal(value, Correlation.CORRELATION_RULE_LIST{5})) % Pearson, Spearman, or Kendall
-    a.set('USE_COVARIATES', false);
-end
-%%%% ¡gui!
-pr = PPAnalyzeGroup_CORRELATION_RULE('EL', a, 'PROP', AnalyzeGroup_ST_BUT.CORRELATION_RULE, varargin{:});
+Correlation.PEARSON
 
 %%% ¡prop!
 NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
 %%%% ¡settings!
 Correlation.NEGATIVE_WEIGHT_RULE_LIST
 %%%% ¡default!
-Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
-
-%%% ¡prop!
-USE_COVARIATES (parameter, logical) determines the use of covariates in the analysis.
-%%%% ¡default!
-false
-%%%% ¡conditioning!
-if value == true && ~(isequal(a.get('CORRELATION_RULE'), Correlation.CORRELATION_RULE_LIST{4}) || isequal(a.get('CORRELATION_RULE'), Correlation.CORRELATION_RULE_LIST{5}))
-    a.set('CORRELATION_RULE', Correlation.CORRELATION_RULE_LIST{4}); % partial Pearson
-end
-%%%% ¡gui!
-pr = PPAnalyzeGroup_USE_COVARIATES('EL', a, 'PROP', AnalyzeGroup_ST_BUT.USE_COVARIATES, varargin{:});
+Correlation.ZERO
 
 %% ¡props_update!
 
@@ -61,7 +44,7 @@ if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
     atlas = gr.get('SUB_DICT').getItem(1).get('BA');
 end
 
-if a.get('USE_COVARIATES')
+if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
     age_list = cellfun(@(x) x.get('age'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
     age = cat(2, age_list{:})';
     sex_list = cellfun(@(x) x.get('sex'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
@@ -98,7 +81,7 @@ function pr = getPPCompareGroup_CPDict(a, varargin)
     %
     % See also CompareGroup.
     
-    pr = PPCompareGroup_CPDict_WU(varargin{:});
+    pr = PPCompareGroup_CPDict_ST_WU(varargin{:});
 end
 
 %% ¡tests!

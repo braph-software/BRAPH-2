@@ -159,7 +159,7 @@ function f_settings = settings(pr, varargin)
         'Style', 'text', ...
         'HorizontalAlignment', 'left', ...
         'Units', 'normalized', ...
-        'String', 'Measure List', ...
+        'String', 'Measure', ...
         'BackgroundColor', pr.h_settings.Color, ...
         'Position', [.04 .8 .15 .12]);
     measure_list_popup = uicontrol(ui_plot_properties_panel, ...
@@ -184,14 +184,14 @@ function f_settings = settings(pr, varargin)
         'Style', 'text', ...
         'HorizontalAlignment', 'left', ...
         'Units', 'normalized', ...
-        'String', 'Node 1', ...
+        'String', 'Brain Region 1', ...
         'BackgroundColor', pr.h_settings.Color, ...
         'Position', [.04 .66 .15 .12]);
     node_2_id = uicontrol(ui_plot_properties_panel, ...
         'Style', 'text', ...
         'HorizontalAlignment', 'left', ...
         'Units', 'normalized', ...
-        'String', 'Node 2', ...
+        'String', 'Brain Region 2', ...
         'BackgroundColor', pr.h_settings.Color, ...
         'Position', [.04 .53 .15 .12]);
     ui_node1_popmenu  = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'popupmenu', 'String', node_labels);
@@ -255,6 +255,7 @@ function f_settings = settings(pr, varargin)
                     'Visible', 'off', ...
                     'Enable', 'off' ...
                     )
+                node_1_id.String = 'Brain Region';
             else
                 set(ui_node1_popmenu, ...
                     'Visible', 'on', ...
@@ -272,6 +273,7 @@ function f_settings = settings(pr, varargin)
                     'Visible', 'on', ...
                     'Enable', 'on' ...
                     )
+                node_1_id.String = 'Brain Region 1';
             end
         end
         function cb_node_1(source, ~)
@@ -286,8 +288,8 @@ function f_settings = settings(pr, varargin)
         end
 
     if ~isempty(pr.get('CIL')) && ~isempty(pr.get('CIU'))
-        ui_confidence_interval_min_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized');
-        ui_confidence_interval_max_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized');
+        ui_confidence_interval_min_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized', 'BackgroundColor', pr.h_settings.Color);
+        ui_confidence_interval_max_checkbox = uicontrol('Parent', ui_plot_properties_panel, 'Style', 'checkbox', 'Units', 'normalized', 'BackgroundColor', pr.h_settings.Color);
         h_p_min = [];
         h_p_max = [];
         init_cil_panel()
@@ -536,6 +538,7 @@ function f_settings = settings(pr, varargin)
         end
 
     init_measure_plot_area()
+    cb_measure_selection()
 
     if nargin > 0
         f_settings = pr.h_settings;
@@ -547,7 +550,7 @@ function update_plot(pr)
     if Measure.is_global(pr.m) % global
         is_inf_vector = cellfun(@(x) isinf(x), plot_value);
         if any(is_inf_vector)
-            f = warndlg('Plot cancelled. Measure has an Infite value.');
+            f = warndlg('The measure cannot be plotted because it contains Inf values.');
             set_braph2_icon(f);
             return;
         end
@@ -557,7 +560,7 @@ function update_plot(pr)
             tmp = plot_value{l};
             tmp_y = tmp(pr.get('NODE1'));
             if isinf(tmp_y)
-                f = warndlg('Plot cancelled. Measure has an Infite value.');
+                f = warndlg('The measure cannot be plotted because it contains Inf values.');
                 set_braph2_icon(f);
                 return;
             end
@@ -568,7 +571,7 @@ function update_plot(pr)
             tmp = plot_value{l};
             tmp_y = tmp(pr.get('NODE1'), pr.get('NODE2'));
             if isinf(tmp_y)
-                f = warndlg('Plot cancelled. Measure has an Infite value.');
+                f = warndlg('The measure cannot be plotted because it contains Inf values.');
                 set_braph2_icon(f);
                 return;
             end

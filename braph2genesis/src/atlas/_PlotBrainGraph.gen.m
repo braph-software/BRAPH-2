@@ -6,6 +6,12 @@ PlotBrainGraph manages the plot of the graph edges, arrows and cylinders.
 PlotBrainGraph utilizes the surface created from PlotBrainAtlas to
 integrate the regions to a brain surface.
 
+CALLBACKS - These are callback functions:
+
+    pr.<strong>cb_bring_to_front</strong>() - brings to the front the measure figure and its settings figure
+    pr.<strong>cb_hide</strong>() - hides the measure figure and its settings figure
+    pr.<strong>cb_close</strong>() - closes the measure figure and its settings figure
+
 %%% ¡seealso!
 Plot, BrainAtlas, PlotBrainSurface, PlotBrainAtlas.
 
@@ -227,6 +233,39 @@ function f_settings  = settings(pl, varargin)
     if nargout > 0
         f_settings = pl.f_settings;
     end
+end
+function cb_bring_to_front(pl)
+    %CB_BRING_TO_FRONT brings to front the brain view figure and its settings figure.
+    %
+    % CB_BRING_TO_FRONT(PR) brings to front the brain view figure and its
+    %  settings figure.
+    %
+    % See also cb_hide.
+    
+    pl.cb_bring_to_front@PlotBrainAtlas();  
+    
+    if check_graphics(pl.f_graph_settings, 'figure')
+        set(pl.f_graph_settings, 'Visible' , 'on', 'WindowState', 'normal');
+    end
+    if check_graphics(pl.f_measures_settings, 'figure')
+        set(pl.f_measures_settings, 'Visible' , 'on', 'WindowState', 'normal');
+    end    
+end
+function cb_hide(pl)
+    %CB_HIDE hides the brain view figure and its settings figure.
+    %
+    % CB_HIDE(PR) hides the brain view figure and its settings figure.
+    %
+    % See also cb_bring_to_front.
+    
+    pl.cb_hide@PlotBrainAtlas();  
+    
+    if check_graphics(pl.f_graph_settings, 'figure')
+        set(pl.f_graph_settings, 'Visible' , 'off');
+    end
+    if check_graphics(pl.f_measures_settings, 'figure')
+        set(pl.f_measures_settings, 'Visible' , 'off');
+    end   
 end
 
 function h = link_edge(pl, i, j, varargin)

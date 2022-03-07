@@ -21,12 +21,7 @@ PBA (result, item) is a plot brain atlas.
 'PlotBrainAtlas'
 %%%% ¡calculate!
 ba = pr.get('el');
-if isempty(pr.pba)
-    pba =  PlotBrainAtlas('ATLAS', ba);
-    pr.pba = pba;
-else
-    pba = pr.pba;
-end
+pba =  PlotBrainAtlas('ATLAS', ba);
 value = pba;
 
 %% ¡props_update!
@@ -49,7 +44,6 @@ surf_selector_popup
 plot_brain_atlas_btn
 
 f_pba % figure for PlotBrainAtlas
-pba
 
 %% ¡methods!
 function h_panel = draw(pr, varargin)
@@ -178,7 +172,7 @@ function h_panel = draw(pr, varargin)
             % Plot PlotBrainAtlas panel
             ba = pr.get('EL');
             surf = ba.get('SURF');
-            pba = pr.get('PBA');
+            pba = pr.memorize('PBA');
             pba.set('SURF', surf);
             pba.draw('Parent', pr.f_pba)
             

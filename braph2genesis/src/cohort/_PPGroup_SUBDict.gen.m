@@ -109,7 +109,7 @@ function h_panel = draw(pr, varargin)
                 'CLOSEREQ', false ...
                 ).draw();
             tmp_gui = get(pr.f_subs{selected_sub}, 'UserData');
-            set(pr.f_subs{selected_sub}, 'UserData', {tmp_gui, id_update_btn})
+            set(pr.f_subs{selected_sub}, 'UserData', {tmp_gui, pr})
         else
             figure(pr.f_subs{selected_sub})
         end
@@ -210,18 +210,6 @@ function h_panel = draw(pr, varargin)
             pr.update();           
     end
     
-    id_update_btn = uicontrol(pr.p, 'Style', 'pushbutton', ...
-        'Units', 'normalized', ...
-        'Position', [.0 .0 .0 .0], ...
-        'Visible', 'off', ...
-        'String', 'id_updater_btn', ...
-        'Callback', {@update_btn} ...
-        );
-    
-    function update_btn(~, ~)
-        pr.update()
-    end
-
     % output
     if nargout > 0
         h_panel = pr.p;
