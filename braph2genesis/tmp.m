@@ -8,16 +8,11 @@ genesis_path = [pwd '\braph2genesis']
 %% list the files that need to be validated for a quick check
 % list the files to be directly copied to braph2 folder
 files_for_copy = { ...
-    '\src\analysis\Correlation.m'
     }
 
 % list the genesis files to be compiled to braph2 folder
 gen_files = { ...
-    '\pipelines\structural\_AnalyzeGroup_ST_WU.gen.m' ...
-    '\pipelines\structural\_AnalyzeGroup_ST_BUT.gen.m' ...
-    '\pipelines\structural\_AnalyzeGroup_ST_BUD.gen.m' ...
-    '\pipelines\structural\_PPAnalyzeGroup_USE_COVARIATES.gen.m' ...
-    '\pipelines\structural\_PPAnalyzeGroup_CORRELATION_RULE.gen.m' ...
+    '\pipelines\connectivity NN\_NNClassifierCrossValidation_CON_WU.gen.m' ...
     };
 
 %% Delete the files
@@ -41,8 +36,9 @@ for i = 1:length(gen_files)
     %eval(['test_' char(extractBetween(gen_files{i}, "\_", ".gen"))])
 end
 
+braph2
 %% test on GUI
-GUI('pe', Pipeline()).draw()
+%GUI('pe', Pipeline()).draw()
 
 %% archived codes
 % delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui/PlotElement.m')
