@@ -178,7 +178,11 @@ else
         for k = 1:size(data{1}, 2)
             data_per_feature = cellfun(@(v)v(j, k), data);
             label = y;
-            mask(j, k) = nnd.mutual_information_analysis(data_per_feature, label', 5);
+            if(any(isinf(data_per_feature)))
+                mask(j, k) = 0;
+            else
+                mask(j, k) = nnd.mutual_information_analysis(data_per_feature, label', 5);
+            end
         end
     end
     [~,idx_all] = sort(mask(:), 'descend');
