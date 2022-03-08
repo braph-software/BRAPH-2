@@ -30,7 +30,7 @@ FEATURE_MASK_ANALYSIS (result, cvector) is an analysis for generating mask for s
 %%%% ¡calculate!
 density = nnd.get('FEATURE_MASK');
 data1 = nnd.data_construction(nnd.get('TRAIN_GR1'));
-data2 = nnd.data_construction(nnd.get('TRAIN_GR1'));
+data2 = nnd.data_construction(nnd.get('TRAIN_GR2'));
 data = [data1 data2];
 
 if(isempty(data))
