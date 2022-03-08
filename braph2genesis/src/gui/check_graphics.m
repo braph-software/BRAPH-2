@@ -1,13 +1,13 @@
 function check = check_graphics(h, type)
 %CHECK_GRAPHICS returns whether a handle is a graphic obejct/error.
 %
-% CHECK = CHECK_GRAPHICS(H) returns whether the H is a graphic obejct.
+% CHECK = CHECK_GRAPHICS(H) returns whether the H is a graphic object.
 %
-% CHECK = CHECK_GRAPHICS(H, TYPE) returns whether the H is a graphic obejct 
+% CHECK = CHECK_GRAPHICS(H, TYPE) returns whether the H is a graphic object 
 %  of the kind TYPE = 'figure', 'uipanel', 'axes', 'uitable', 'uimenu',
 %  'uicontextmenu', 'uitoolbar', 'uipushtool', 'pushbutton',
 %  'togglebutton', 'checkbox', 'radiobutton', 'edit', 'text', 'slider',
-%  'listbox', or 'popupmenu'.
+%  'listbox', 'popupmenu', or 'line'.
 %
 % CHECK_GRAPHICS(H[, TYPE]) throws an error if H is not a correct graphic object.
 %  Error id: [BRAPH2:Format:WrongInput]
