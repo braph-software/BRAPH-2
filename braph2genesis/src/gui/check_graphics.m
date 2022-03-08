@@ -57,6 +57,8 @@ if nargout == 1
                 check = ~isempty(h) && isgraphics(h, 'uicontrol') && strcmpi(get(h, 'Style'), 'listbox');
             case 'popupmenu'
                 check = ~isempty(h) && isgraphics(h, 'uicontrol') && strcmpi(get(h, 'Style'), 'popupmenu');
+            case 'line'
+                check = ~isempty(h) && isgraphics(h, 'line');
             otherwise
                 error( ...
                     [BRAPH2.STR ':check_graphics:' BRAPH2.WRONG_INPUT], ...
