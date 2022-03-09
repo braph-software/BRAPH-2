@@ -190,6 +190,8 @@ function update(pr)
         set(pr.measure_tbl, 'Visible', 'off')
         set(pr.measure_btn, 'Visible', 'off')
         set(pr.measure_plot_btn, 'Visible', 'off')
+        pr.graph = [];
+        pr.already_calculated = [];
     else
         graph = el.get(prop);
         pr.graph = graph;

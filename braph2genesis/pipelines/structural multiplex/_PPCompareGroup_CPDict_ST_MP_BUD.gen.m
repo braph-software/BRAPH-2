@@ -150,6 +150,8 @@ function update(pr)
         set(pr.measure_btn, 'Visible', 'off')
         set(pr.measure_plot_btn, 'Visible', 'off')
         set(pr.line_plot_tgl_btn, 'Visible', 'off')
+        pr.graph = [];
+        pr.already_calculated = [];
 
     else
         pr.graph = el.get('A1').get('G');
