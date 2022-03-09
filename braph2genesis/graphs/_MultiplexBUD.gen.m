@@ -27,6 +27,8 @@ negativity = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
 DENSITIES (parameter, rvector) is the vector of densities.
+%%%% ¡gui!
+pr = PlotPropSmartVector('EL', g, 'PROP', MultiplexBUD.DENSITIES, 'MAX', 100, 'MIN', 0, varargin{:});
 
 %%% ¡prop!
 NODELABELS (metadata, STRING) is the node labels.
