@@ -190,6 +190,8 @@ function update(pr)
         set(pr.measure_tbl, 'Visible', 'off')
         set(pr.measure_btn, 'Visible', 'off')
         set(pr.measure_plot_btn, 'Visible', 'off')
+        pr.graph = [];
+        pr.already_calculated = [];
     else
         graph = el.get(prop);
         pr.graph = graph;
@@ -413,7 +415,7 @@ function cb_measure_gui(pr)
         tmp_gui = [];
         for j = 1:length(pr.f_m)
             tmp_f = pr.f_m{j};
-            if chec_graphics(tmp_f, 'figure')
+            if check_graphics(tmp_f, 'figure')
                 tmp_gui = get(tmp_f, 'UserData');
                 if isequal(tmp_gui.get('pe').get('el').get('id'), result_measure.get('ID'))
                     plot_permission = false;
