@@ -185,7 +185,7 @@ function redraw(pr, varargin)
     L = size(value, 1);
     
     if L > 1
-        pr.redraw@PlotPropMatrix(varargin{:});
+        pr.redraw@PlotPropMatrix('Height', h*2, varargin{:});
         set(pr.slider, ...
             'Units', 'normalized', ...
             'Visible', 'on', ...
@@ -204,7 +204,7 @@ function redraw(pr, varargin)
             'Position', [.01 .02 .97 (Dh/(h+Sh+Th+Dh)-.2)] ...
             )
     else
-        pr.redraw@PlotPropMatrix(varargin{:});
+        pr.redraw@PlotPropMatrix('Height', h*2, varargin{:});
     end
     if ~pr.get_button_condition()
         set(pr.slider, ...
