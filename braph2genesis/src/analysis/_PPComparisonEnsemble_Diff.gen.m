@@ -366,11 +366,12 @@ function redraw(pr, varargin)
 
 
     el = pr.get('EL');
-    prop = pr.get('PROP');
-    value = el.get(prop);
-    L = size(value, 1);
-    layer_dim_elemnt = el.get('C').get('A1').get('G_DICT').getItem(1);
-    L2 = size(layer_dim_elemnt.get('b'), 2);
+    layer_dim_element = el.get('C').get('A1').get('G_DICT').getItem(1);
+    if iscell(layer_dim_element)
+        L2 = size(layer_dim_element.get('b'), 2);
+    else
+        L2 = 1;
+    end
 
     if L2 > 1
         pr.redraw@PlotProp('Height', h + Sh + Sh + Th + Th + Dh, varargin{:})
@@ -427,11 +428,11 @@ function redraw(pr, varargin)
         set(pr.slider, ...
             'Visible', 'off' ...
             );
-        
+
         set(pr.slider_text, ...
             'Visible', 'off' ...
             );
-        
+
         set(pr.table_value, ...
             'Visible', 'off' ...
             )
