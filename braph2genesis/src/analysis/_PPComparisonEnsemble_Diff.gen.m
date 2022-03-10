@@ -56,11 +56,21 @@ function h_panel = draw(pr, varargin)
     value = el.get(prop);
     L = size(value, 1);
     layer_dim_element = el.get('C').get('A1').get('G_DICT').getItem(1);
-    L2 = size(layer_dim_element.get('b'), 2);
+    if iscell(layer_dim_element)
+        L2 = size(layer_dim_element.get('b'), 2);
+    else
+        L2 = 1;
+    end
     map_multiplier = 100;
 
     if L2 > 1
         L = L/L2;
+    end
+
+    if L == 1
+        Ll=1;
+    else
+        Ll = L-1;
     end
 
     % set on first layer
@@ -72,7 +82,7 @@ function h_panel = draw(pr, varargin)
         'Value', 1 / map_multiplier, ...
         'Min', 1 / map_multiplier, ...
         'Max', L / map_multiplier, ...
-        'SliderStep', [map_multiplier/((L-1)*map_multiplier) map_multiplier/((L-1)*map_multiplier)] , ...
+        'SliderStep', [map_multiplier/(Ll*map_multiplier) map_multiplier/(Ll*map_multiplier)] , ...
         'Callback', {@cb_slider} ...
         );
     pr.slider_text = uicontrol(...
@@ -152,7 +162,7 @@ function update(pr)
     el = pr.get('EL');
     prop = pr.get('PROP');
     value = el.getr(prop);
-    
+
     slider_tags = {'1'};
     if el.get('C').get('A1').getPropNumber() > 8
         label = el.get('C').get('A1').getPropTag(12);
@@ -170,8 +180,12 @@ function update(pr)
     fdr_q_value = 0.05;
     fdr_style = [1 1 0];
     map_multiplier = 100;
-    layer_dim_elemnt = el.get('C').get('A1').get('G_DICT').getItem(1);
-    L2 = size(layer_dim_elemnt.get('b'), 2);
+    layer_dim_element = el.get('C').get('A1').get('G_DICT').getItem(1);
+    if iscell(layer_dim_element)
+        L2 = size(layer_dim_element.get('b'), 2);
+    else
+        L2 = 1;
+    end
 
     if el.isLocked(prop)
         set(pr.comparison_tbl, ...
@@ -179,9 +193,9 @@ function update(pr)
             'ColumnEditable', false ...
             )
     end
-    
+
     %get brain atlas
-    br_dict = layer_dim_elemnt.get('brainatlas').get('br_dict');
+    br_dict = layer_dim_element.get('brainatlas').get('br_dict');
     br_ids = cellfun(@(x) x.get('id'), br_dict.getItems(), 'UniformOutput', false);
 
     if  L2 > 1
@@ -211,7 +225,7 @@ function update(pr)
         else
             [~, mask] = fdr(p1, fdr_q_value);
         end
-        
+
         tmp_value = num2cell(tmp_value);
 
         for i = 1:size(tmp_value, 1)
@@ -226,7 +240,7 @@ function update(pr)
                 end
             end
         end
-         % rule column diff, p1, p2, cil, ciu
+        % rule column diff, p1, p2, cil, ciu
         if Measure.is_nodal(el.get('Measure')) || Measure.is_global(el.get('Measure'))
             set(pr.comparison_tbl, ...
                 'ColumnName', {'DIFF', 'P1', 'P2', 'CIU', 'CIL'}, ...
@@ -234,7 +248,7 @@ function update(pr)
                 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
                 'ColumnEditable', [false false false false false] ...
                 );
-            
+
             full_value = cell(size(tmp_value, 1), 5);
             for k = 1:size(tmp_value, 1)
                 full_value{k, 1} = tmp_value{k};
@@ -243,7 +257,7 @@ function update(pr)
                 full_value{k, 4} = ciu{k};
                 full_value{k, 5} = cil{k};
             end
-            
+
             set(pr.comparison_tbl, 'Data', full_value)
         else
             set(pr.comparison_tbl, ...
@@ -251,14 +265,14 @@ function update(pr)
                 'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
                 'ColumnEditable', false)
         end
-        
+
         % rule atlas
         if Measure.is_nodal(el.get('Measure')) || Measure.is_binodal(el.get('Measure'))
             set(pr.comparison_tbl, ...
                 'RowName', br_ids)
         end
 
-        
+
     else
         set(pr.slider_text, ...
             'String', [label ' ' num2str(round(get(pr.slider, 'Value') * map_multiplier))]);
@@ -283,6 +297,7 @@ function update(pr)
             [~, mask] = fdr(p1, fdr_q_value);
         end
 
+        tmp_value = num2cell(tmp_value);
         for i = 1:size(tmp_value, 1)
             for j = 1:size(tmp_value, 2)
                 if mask(i, j)
@@ -303,7 +318,7 @@ function update(pr)
                 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
                 'ColumnEditable', [false false false false false] ...
                 );
-            
+
             full_value = cell(size(tmp_value, 1), 5);
             for k = 1:size(tmp_value, 1)
                 full_value{k, 1} = tmp_value{k};
@@ -312,7 +327,7 @@ function update(pr)
                 full_value{k, 4} = ciu(k);
                 full_value{k, 5} = cil(k);
             end
-            
+
             set(pr.comparison_tbl, 'Data', full_value)
         else
             set(pr.comparison_tbl, ...
@@ -320,7 +335,7 @@ function update(pr)
                 'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
                 'ColumnEditable', false)
         end
-        
+
         if Measure.is_nodal(el.get('Measure')) || Measure.is_binodal(el.get('Measure'))
             set(pr.comparison_tbl, ...
                 'RowName', br_ids)
@@ -334,7 +349,6 @@ function update(pr)
             'ColumnEditable', false ...
             )
     end
-
 end
 function redraw(pr, varargin)
     %REDRAW redraws the element graphical panel.
