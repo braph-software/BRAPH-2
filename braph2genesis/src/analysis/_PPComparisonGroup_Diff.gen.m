@@ -183,7 +183,7 @@ function update(pr)
             'String', ['Layer: ' num2str(round(get(pr.second_slider, 'Value')) * map_multiplier)]);
 
         % set p values mask
-        tmp_value = value{round(get(pr.slider, 'Value')), round(get(pr.second_slider, 'Value') * map_multiplier)};
+        tmp_value = value{round(get(pr.slider, 'Value')* map_multiplier), round(get(pr.second_slider, 'Value') * map_multiplier)};
         p1 = el.memorize('P1');
         p2 = el.memorize('P2');
         cil = el.memorize('cil');
@@ -257,10 +257,10 @@ function update(pr)
         p2 = el.memorize('P2');
         cil = el.memorize('cil');
         ciu = el.memorize('ciu');
-        p1 = p1{round(get(pr.slider, 'Value')*map_multiplier)};
-        p2 = p2{round(get(pr.slider, 'Value')*map_multiplier)};
-        cil = cil{round(get(pr.slider, 'Value')*map_multiplier)};
-        ciu = ciu{round(get(pr.slider, 'Value')*map_multiplier)};
+        p1 = p1{round(get(pr.slider, 'Value') * map_multiplier)};
+        p2 = p2{round(get(pr.slider, 'Value') * map_multiplier)};
+        cil = cil{round(get(pr.slider, 'Value') * map_multiplier)};
+        ciu = ciu{round(get(pr.slider, 'Value') * map_multiplier)};
 
         if Measure.is_nodal(el.get('measure'))
             p1 = p1';
