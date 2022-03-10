@@ -71,7 +71,7 @@ if nn.check_nn_toolboxes()
     numClasses = 2;
     inputs = reshape(inputs, [1, 1, size(inputs, 1), size(inputs, 2)]);
     targets = nn.get('NNDATA').get('TARGETS');
-    classes = [string(nn.get('NNDATA').get('TARGET_NAME_GR1')), string(nn.get('NNDATA').get('TARGET_NAME_GR2'))];
+    classes = nn.get('NNDATA').get('TARGET_CLASS_NAMES');
     if(isempty(targets{1}))
         value = {[]};
     else
@@ -143,5 +143,5 @@ function net = to_net(nn, saved_nn)
     %  Typically, this method is called internally when a saved neural 
     %  network model is evaluated by a test data.
     
-    net = to_net@NNBase(nn, saved_nn, nn.get('INPUT_FORMAT'), "classification", [string(nn.get('NNDATA').get('TARGET_NAME_GR1')), string(nn.get('NNDATA').get('TARGET_NAME_GR2'))]);
+    net = to_net@NNBase(nn, saved_nn, nn.get('INPUT_FORMAT'), "classification", nn.get('NNDATA').get('TARGET_CLASS_NAMES'));
 end

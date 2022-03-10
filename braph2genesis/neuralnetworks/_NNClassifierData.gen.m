@@ -237,18 +237,15 @@ y2 = repmat(string(nnd.get('VAL_GR2').get('ID')), nnd.get('VAL_GR2').get('SUB_DI
 value = {onehotencode(categorical([y1; y2]), 2)};
 
 %%% ¡prop!
-TARGET_NAME_GR1 (result, string) is the name of the traget for group 1.
+TARGET_CLASS_NAMES (result, string) is the name of the traget for groups
 %%%% ¡default!
 'Group1'
 %%%% ¡calculate!
-value = nnd.get('VAL_GR1').get('ID');
+y1 = repmat(string(nnd.get('VAL_GR1').get('ID')), nnd.get('VAL_GR1').get('SUB_DICT').length(), 1);
+y2 = repmat(string(nnd.get('VAL_GR2').get('ID')), nnd.get('VAL_GR2').get('SUB_DICT').length(), 1);
 
-%%% ¡prop!
-TARGET_NAME_GR2 (result, string) is the name of the traget for group 2.
-%%%% ¡default!
-'Group2'
-%%%% ¡calculate!
-value = nnd.get('VAL_GR2').get('ID');
+value = categories(categorical([y1; y2]));
+
 
 %% ¡props_update!
 %%% ¡prop!

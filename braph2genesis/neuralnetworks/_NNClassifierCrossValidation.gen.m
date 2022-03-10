@@ -121,7 +121,7 @@ if ~isempty(nne_dict.getItems())
     if nncv.get('PLOT_CM')
         targets = nne_dict.getItem(i).get('NNDATA').get('VAL_TARGETS');
         if ~isempty(targets{1})
-            classes = [string(nne_dict.getItem(i).get('NNDATA').get('TARGET_NAME_GR1')), string(nne_dict.getItem(i).get('NNDATA').get('TARGET_NAME_GR2'))];
+            classes = nne_dict.getItem(i).get('NNDATA').get('TARGET_CLASS_NAMES');
             targets_mark = categories(onehotdecode(targets{1}, classes, 2));
             figure
             heatmap(targets_mark, targets_mark, cm_val)

@@ -30,7 +30,7 @@ targets = nne.get('NNDATA').memorize('TARGETS');
 if(isempty(targets{1}))
     value = {};
 else
-    classes = [string(nne.get('NNDATA').get('TARGET_NAME_GR1')), string(nne.get('NNDATA').get('TARGET_NAME_GR2'))];
+    classes = nne.get('NNDATA').get('TARGET_CLASS_NAMES');
     targets = onehotdecode(targets{1}, classes, 2);
     classifier = nne.get('NN');
     net = classifier.to_net(classifier.get('MODEL'));
@@ -61,7 +61,7 @@ targets = nne.get('NNDATA').memorize('VAL_TARGETS');
 if(isempty(targets{1}))
     value = {};
 else
-    classes = [string(nne.get('NNDATA').get('TARGET_NAME_GR1')), string(nne.get('NNDATA').get('TARGET_NAME_GR2'))];
+    classes = nne.get('NNDATA').get('TARGET_CLASS_NAMES');
     targets = onehotdecode(targets{1}, classes, 2);
     classifier = nne.get('NN');
     net = classifier.to_net(classifier.get('MODEL'));
@@ -92,7 +92,7 @@ preds = nne.memorize('PREDICTION');
 preds = preds > 0.5;
 
 % get ground truth
-classes = [string(nne.get('NNDATA').get('TARGET_NAME_GR1')), string(nne.get('NNDATA').get('TARGET_NAME_GR2'))];
+classes = nne.get('NNDATA').get('TARGET_CLASS_NAMES');
 targets = nne.get('NNDATA').memorize('TARGETS');
 if(isempty(targets{1}))
     value = [];
@@ -124,7 +124,7 @@ preds = nne.memorize('VAL_PREDICTION');
 preds = preds > 0.5;
 
 % get ground truth
-classes = [string(nne.get('NNDATA').get('TARGET_NAME_GR1')), string(nne.get('NNDATA').get('TARGET_NAME_GR2'))];
+classes = nne.get('NNDATA').get('TARGET_CLASS_NAMES');
 targets = nne.get('NNDATA').memorize('VAL_TARGETS');
 if(isempty(targets{1}))
     value = [];
