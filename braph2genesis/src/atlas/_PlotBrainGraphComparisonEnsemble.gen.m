@@ -1808,7 +1808,7 @@ function h = getMCRPanel(pl)
         d_t_check = 1;
         d_or_t = pl.get('type');
     end
-    if size(layer_element, 2) > 1 % mp
+    if iscell(layer_element) && size(layer_element, 2) > 1 % mp
         layer_check = 1;
         layer_dim =  size(layer_element, 2);
     end
