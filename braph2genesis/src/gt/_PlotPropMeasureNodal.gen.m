@@ -211,7 +211,7 @@ function redraw(pr, varargin)
             'Position', [.01 .01 .97 (Dh/(h+Sh+Th+Dh)-.2)] ...
             )
     else
-        pr.redraw@PlotPropMatrix(c varargin{:});
+        pr.redraw@PlotPropMatrix(varargin{:});
     end
     if ~pr.get_button_condition()
          set(pr.slider, ...
