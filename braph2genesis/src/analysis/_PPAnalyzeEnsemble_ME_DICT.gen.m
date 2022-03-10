@@ -187,7 +187,7 @@ function update(pr)
     prop = pr.get('PROP');
     button_state = pr.get_button_condition();
 
-    if button_state
+    if ~button_state
         set(pr.line_plot_tglbtn, 'Visible', 'off')
         set(pr.graph_btn, 'Visible', 'off')
         set(pr.plot_type_adj, 'Visible', 'off')
@@ -390,7 +390,7 @@ function cb_measure_gui(pr)
     screen_h = Plot.h(0, 'pixels');
 
     N = ceil(sqrt(length(pr.mlist))); % number of row and columns of figures
-
+    f_count = 1;
     for i = 1:length(pr.mlist)
         if ~ismember(pr.mlist(i), measure_short_list)
             continue;
