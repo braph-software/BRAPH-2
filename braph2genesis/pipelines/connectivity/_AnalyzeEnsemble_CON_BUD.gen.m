@@ -14,6 +14,8 @@ AnalyzeEnsemble_CON_WU, Subject_CON, MultigraphBUD.
 DENSITIES (parameter, rvector) is the vector of densities.
 %%%% ¡default!
 0
+%%%% ¡gui!
+pr = PlotPropSmartVector('EL', a, 'PROP', AnalyzeEnsemble_CON_BUD.DENSITIES, 'MAX', 100, 'MIN', 0, varargin{:});
 
 %% ¡props_update!
 

@@ -205,7 +205,7 @@ function update(pr)
             'String', ['Layer: ' num2str(round(get(pr.second_slider, 'Value')) * map_multiplier)]);
 
         % set p values mask
-        D_T = round(get(pr.slider, 'Value')* map_multiplier);
+        D_T = round(get(pr.slider, 'Value') * map_multiplier);
         layer_sel = round(get(pr.second_slider, 'Value') * map_multiplier);
         tmp_diff = L2-layer_sel;
         tmp_value = value{D_T*L2-tmp_diff};
@@ -234,9 +234,9 @@ function update(pr)
                     clr = dec2hex(round(fdr_style * 255), 2)';
                     clr = ['#'; clr(:)]';
 
-                    tmp_value(ll, mm) = {strcat(...
+                    tmp_value(i, j) = {strcat(...
                         ['<html><body bgcolor="' clr '" text="#000000" width="100px">'], ...
-                        num2str(tmp_data{ll, mm}))};
+                        num2str(tmp_value{i, j}))};
                 end
             end
         end
@@ -304,9 +304,9 @@ function update(pr)
                     clr = dec2hex(round(fdr_style * 255), 2)';
                     clr = ['#'; clr(:)]';
 
-                    tmp_value(ll, mm) = {strcat(...
+                    tmp_value(i, j) = {strcat(...
                         ['<html><body bgcolor="' clr '" text="#000000" width="100px">'], ...
-                        num2str(tmp_data{ll, mm}))};
+                        num2str(tmp_value{i, j}))};
                 end
             end
         end

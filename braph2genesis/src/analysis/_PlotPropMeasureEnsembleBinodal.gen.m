@@ -108,7 +108,7 @@ function update(pr)
     graph = g_dict.getItem(1);
     L = 1;
     if graph.getPropNumber() > 9
-        L_prop = g.get(10);
+        L_prop = graph.get(10);
         L = size(L_prop, 2);
         slider_tags = compose("%g", round(L_prop, 2));
     end
@@ -143,8 +143,14 @@ function update(pr)
             'RowName', br_ids ...
             )
     else
-        set(pr.slider_text, ...
-            'String', [label ' ' num2str(round(get(pr.slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.slider, 'Value') * map_multiplier)}]);
+        if ~graph.getPropNumber() > 9
+            set(pr.slider_text, ...
+            'Visible', 'off');
+        else
+            set(pr.slider_text, ...
+                'Visible', 'on', ...
+                'String', [label ' ' num2str(round(get(pr.slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.slider, 'Value') * map_multiplier)}]);
+        end
         set(pr.table_value, ...
             'Data', value{round(get(pr.slider, 'Value') * map_multiplier)}, ...
             'ColumnName', br_ids, ...
@@ -204,7 +210,7 @@ function redraw(pr, varargin)
             'Position', [.01 .02 .97 (Dh/(h+Sh+Th+Dh)-.2)] ...
             )
     else
-        pr.redraw@PlotPropMatrix('Height', h*2, varargin{:});
+        pr.redraw@PlotPropMatrix(varargin{:});
     end
     if ~pr.get_button_condition()
         set(pr.slider, ...
