@@ -22,116 +22,128 @@ GR2 (data, item) is the subject group 2.
 'Group'
 
 %%% ¡prop!
-TRAIN_GR1 (result, item) is the subject group 1 for training set.
+TRAIN_NN_GR1 (result, item) is the subject group 1 for training set.
 %%%% ¡settings!
-'Group'
+'NNGroup'
 %%%% ¡calculate!
-train_gr_1 = Group( ...
-    'SUB_CLASS', nnd.get('GR1').get('SUB_CLASS'), ...
+nnGroup = 'NN_GR1';
+train_nn_gr = NNGroup( ...
+    'SUB_CLASS', nnd.get(nnGroup).get('SUB_CLASS'), ...
     'SUB_DICT', IndexedDictionary('IT_CLASS', 'Subject') ...
     );
 
-train_gr_1.set( ...
-    'ID', nnd.get('GR1').get('ID'), ...
-    'LABEL', nnd.get('GR1').get('LABEL'), ...
-    'NOTES', nnd.get('GR1').get('NOTES') ...
+train_nn_gr.set( ...
+    'ID', nnd.get(nnGroup).get('ID'), ...
+    'LABEL', nnd.get(nnGroup).get('LABEL'), ...
+    'NOTES', nnd.get(nnGroup).get('NOTES'), ...
+    'FEATURE_LABEL', nnd.get(nnGroup).get('FEATURE_LABEL'), ...
+    'FEATURE_MASK', nnd.get(nnGroup).get('FEATURE_MASK') ...
     );
 
-subdict = train_gr_1.get('SUB_DICT');
-sub = nnd.get('GR1').get('SUB_DICT').getItems();
-selected_idx = setdiff(1:length(sub), nnd.get('SPLIT_GR1'));
-selected_sub = sub(selected_idx);
-for i = 1:1:length(selected_sub)
-    sub = selected_sub{i};
-    subdict.add(sub);
+sub_dict = train_nn_gr.get('SUB_DICT');
+subs = nnd.get(nnGroup).get('SUB_DICT').getItems();
+selected_idx = setdiff(1:length(subs), nnd.get('SPLIT_GR1'));
+selected_subs = subs(selected_idx);
+for i = 1:1:length(selected_subs)
+    sub = selected_subs{i};
+    sub_dict.add(sub);
 end
-train_gr_1.set('SUB_DICT', subdict);
+train_nn_gr.set('SUB_DICT', sub_dict);
 
-value = train_gr_1;
+value = train_nn_gr;
 
 %%% ¡prop!
-TRAIN_GR2 (result, item) is the subject group 2 for taining set.
+TRAIN_NN_GR2 (result, item) is the subject group 2 for taining set.
 %%%% ¡settings!
-'Group'
+'NNGroup'
 %%%% ¡calculate!
-train_gr_2 = Group( ...
-    'SUB_CLASS', nnd.get('GR2').get('SUB_CLASS'), ...
+nnGroup = 'NN_GR2';
+train_nn_gr = NNGroup( ...
+    'SUB_CLASS', nnd.get(nnGroup).get('SUB_CLASS'), ...
     'SUB_DICT', IndexedDictionary('IT_CLASS', 'Subject') ...
     );
 
-train_gr_2.set( ...
-    'ID', nnd.get('GR2').get('ID'), ...
-    'LABEL', nnd.get('GR2').get('LABEL'), ...
-    'NOTES', nnd.get('GR2').get('NOTES') ...
+train_nn_gr.set( ...
+    'ID', nnd.get(nnGroup).get('ID'), ...
+    'LABEL', nnd.get(nnGroup).get('LABEL'), ...
+    'NOTES', nnd.get(nnGroup).get('NOTES'), ...
+    'FEATURE_LABEL', nnd.get(nnGroup).get('FEATURE_LABEL'), ...
+    'FEATURE_MASK', nnd.get(nnGroup).get('FEATURE_MASK') ...
     );
 
-subdict = train_gr_2.get('SUB_DICT');
-sub = nnd.get('GR2').get('SUB_DICT').getItems();
-selected_idx = setdiff(1:length(sub), nnd.get('SPLIT_GR2'));
-selected_sub = sub(selected_idx);
-for i = 1:1:length(selected_sub)
-    sub = selected_sub{i};
-    subdict.add(sub);
+sub_dict = train_nn_gr.get('SUB_DICT');
+subs = nnd.get(nnGroup).get('SUB_DICT').getItems();
+selected_idx = setdiff(1:length(subs), nnd.get('SPLIT_GR2'));
+selected_subs = subs(selected_idx);
+for i = 1:1:length(selected_subs)
+    sub = selected_subs{i};
+    sub_dict.add(sub);
 end
-train_gr_2.set('SUB_DICT', subdict);
+train_nn_gr.set('SUB_DICT', sub_dict);
 
-value = train_gr_2;
+value = train_nn_gr;
 
 %%% ¡prop!
-VAL_GR1 (result, item) is the subject group 1 for validation set.
+VAL_NN_GR1 (result, item) is the subject group 1 for validation set.
 %%%% ¡settings!
-'Group'
+'NNGroup'
 %%%% ¡calculate!
-val_gr_1 = Group( ...
-    'SUB_CLASS', nnd.get('GR1').get('SUB_CLASS'), ...
+nnGroup = 'NN_GR1';
+val_nn_gr = NNGroup( ...
+    'SUB_CLASS', nnd.get(nnGroup).get('SUB_CLASS'), ...
     'SUB_DICT', IndexedDictionary('IT_CLASS', 'Subject') ...
     );
 
-val_gr_1.set( ...
-    'ID', nnd.get('GR1').get('ID'), ...
-    'LABEL', nnd.get('GR1').get('LABEL'), ...
-    'NOTES', nnd.get('GR1').get('NOTES') ...
+val_nn_gr.set( ...
+    'ID', nnd.get(nnGroup).get('ID'), ...
+    'LABEL', nnd.get(nnGroup).get('LABEL'), ...
+    'NOTES', nnd.get(nnGroup).get('NOTES'), ...
+    'FEATURE_LABEL', nnd.get(nnGroup).get('FEATURE_LABEL'), ...
+    'FEATURE_MASK', nnd.get(nnGroup).get('FEATURE_MASK') ...
     );
 
-subdict = val_gr_1.get('SUB_DICT');
-sub = nnd.get('GR1').get('SUB_DICT').getItems();
+sub_dict = val_nn_gr.get('SUB_DICT');
+subs = nnd.get(nnGroup).get('SUB_DICT').getItems();
 selected_idx = nnd.get('SPLIT_GR1');
-selected_sub = sub(selected_idx);
-for i = 1:1:length(selected_sub)
-    sub = selected_sub{i};
-    subdict.add(sub);
+selected_subs = subs(selected_idx);
+for i = 1:1:length(selected_subs)
+    sub = selected_subs{i};
+    sub_dict.add(sub);
 end
-val_gr_1.set('SUB_DICT', subdict);
+val_nn_gr.set('SUB_DICT', sub_dict);
 
-value = val_gr_1;
+value = val_nn_gr;
 
 %%% ¡prop!
-VAL_GR2 (result, item) is the subject group 2 for validation set.
+VAL_NN_GR2 (result, item) is the subject group 2 for validation set.
 %%%% ¡settings!
 'Group'
 %%%% ¡calculate!
-val_gr_2 = Group( ...
-    'SUB_CLASS', nnd.get('GR2').get('SUB_CLASS'), ...
+nnGroup = 'NN_GR2';
+val_nn_gr = NNGroup( ...
+    'SUB_CLASS', nnd.get(nnGroup).get('SUB_CLASS'), ...
     'SUB_DICT', IndexedDictionary('IT_CLASS', 'Subject') ...
     );
 
-val_gr_2.set( ...
-    'ID', nnd.get('GR2').get('ID'), ...
-    'LABEL', nnd.get('GR2').get('LABEL'), ...
-    'NOTES', nnd.get('GR2').get('NOTES') ...
+val_nn_gr.set( ...
+    'ID', nnd.get(nnGroup).get('ID'), ...
+    'LABEL', nnd.get(nnGroup).get('LABEL'), ...
+    'NOTES', nnd.get(nnGroup).get('NOTES'), ...
+    'FEATURE_LABEL', nnd.get(nnGroup).get('FEATURE_LABEL'), ...
+    'FEATURE_MASK', nnd.get(nnGroup).get('FEATURE_MASK') ...
     );
 
-subdict = val_gr_2.get('SUB_DICT');
-sub = nnd.get('GR2').get('SUB_DICT').getItems();
+sub_dict = val_nn_gr.get('SUB_DICT');
+subs = nnd.get(nnGroup).get('SUB_DICT').getItems();
 selected_idx = nnd.get('SPLIT_GR2');
-selected_sub = sub(selected_idx);
-for i = 1:1:length(selected_sub)
-    sub = selected_sub{i};
-    subdict.add(sub);
+selected_subs = subs(selected_idx);
+for i = 1:1:length(selected_subs)
+    sub = selected_subs{i};
+    sub_dict.add(sub);
 end
-val_gr_2.set('SUB_DICT', subdict);
+val_nn_gr.set('SUB_DICT', sub_dict);
 
-value = val_gr_2;
+value = val_nn_gr;
 
 %%% ¡prop!
 SPLIT_GR1 (data, rvector) is a vector stating which subjects belong to validation set.
@@ -156,24 +168,21 @@ if length(value) == 1 & value < 1
 end
 
 %%% ¡prop!
-FEATURE_MASK (data, cvector) is a mask for selected features.
+FEATURE_MASK (data, cell) is a mask for selected features.
 %%%% ¡default!
 0.05
 
 %%% ¡prop!
-FEATURE_MASK_ANALYSIS (result, cvector) is an analysis for generating mask for selected features.
+FEATURE_MASK_ANALYSIS (result, cell) is an analysis for generating mask for selected features.
 %%%% ¡calculate!
 density = nnd.get('FEATURE_MASK');
 
-data_gr_1 = nnd.data_construction_graph(nnd.get('TRAIN_G_DICT_1'), nnd.get('INPUT_TYPE'), nnd.get('MEASURES'));
-data_gr_2 = nnd.data_construction_graph(nnd.get('TRAIN_G_DICT_2'), nnd.get('INPUT_TYPE'), nnd.get('MEASURES'));
-data = [data_gr_1 data_gr_2];
+data = cellfun(@(x) x.get('INPUT'), nnd.get('NN_GR').get('SUB_DICT').getItems();, 'UniformOutput', false);
+y = cellfun(@(x) x.get('TARGET'), nnd.get('NN_GR').get('SUB_DICT').getItems();, 'UniformOutput', false);
 
 if(isempty(data))
     value = [];
 else
-    y = nnd.get('TARGETS');
-    y = y{1};
     for j = 1:size(data{1}, 1)
         for k = 1:size(data{1}, 2)
             data_per_feature = cellfun(@(v)v(j, k), data);
@@ -192,70 +201,70 @@ else
 end
 
 %%% ¡prop!
-TRAIN_G_DICT_1 (result, idict) is the graph obtained from subject group 1 in training set.
+NN_GR1 (result, item) is the group composed of NN subjects.
 %%%% ¡settings!
-'Graph'
+'NNGroup'
 
 %%% ¡prop!
-TRAIN_G_DICT_2 (result, idict) is the graph obtained from subject group 2 in training set.
+NN_GR2 (result, item) is the group composed of NN subjects.
 %%%% ¡settings!
-'Graph'
+'NNGroup'
 
 %%% ¡prop!
-VAL_G_DICT_1 (result, idict) is the graph obtained from subject group 1 in validation set.
+NN_GR1_FS (result, item) is the group composed of NN subjects.
 %%%% ¡settings!
-'Graph'
+'NNGroup'
 
 %%% ¡prop!
-VAL_G_DICT_2 (result, idict) is the graph obtained from subject group 2 in validation set.
+NN_GR2_FS (result, item) is the group composed of NN subjects.
 %%%% ¡settings!
-'Graph'
+'NNGroup'
 
-%%% ¡prop!
-VAL_INPUTS (result, cell) is the inputs from validation set for testing a neural network.
-%%%% ¡calculate!
-mask = nnd.get('FEATURE_MASK');
-if length(mask) == 1 && abs(mask) <= 1
-    mask = nnd.get('FEATURE_MASK_ANALYSIS');
-end
-value = nnd.input_construction(nnd.get('VAL_G_DICT_1'), nnd.get('VAL_G_DICT_2'), nnd.get('INPUT_TYPE'), nnd.get('MEASURES'), mask);
-
-%%% ¡prop!
-TARGETS (result, cell) is the label for the dataset.
-%%%% ¡calculate!
-y1 = repmat(string(nnd.get('TRAIN_GR1').get('ID')), nnd.get('TRAIN_GR1').get('SUB_DICT').length(), 1);
-y2 = repmat(string(nnd.get('TRAIN_GR2').get('ID')), nnd.get('TRAIN_GR2').get('SUB_DICT').length(), 1);
-
-value = {onehotencode(categorical([y1; y2]), 2)};
-
-%%% ¡prop!
-VAL_TARGETS (result, cell) is the label for the validation dataset.
-%%%% ¡calculate!
-y1 = repmat(string(nnd.get('VAL_GR1').get('ID')), nnd.get('VAL_GR1').get('SUB_DICT').length(), 1);
-y2 = repmat(string(nnd.get('VAL_GR2').get('ID')), nnd.get('VAL_GR2').get('SUB_DICT').length(), 1);
-
-value = {onehotencode(categorical([y1; y2]), 2)};
-
-%%% ¡prop!
-TARGET_CLASS_NAMES (result, string) is the name of the traget for groups
-%%%% ¡default!
-'Group1'
-%%%% ¡calculate!
-y1 = repmat(string(nnd.get('VAL_GR1').get('ID')), nnd.get('VAL_GR1').get('SUB_DICT').length(), 1);
-y2 = repmat(string(nnd.get('VAL_GR2').get('ID')), nnd.get('VAL_GR2').get('SUB_DICT').length(), 1);
-
-value = categories(categorical([y1; y2]));
-
-
-%% ¡props_update!
-%%% ¡prop!
-INPUTS (result, cell) is the inputs for training or testing a neural network.
-%%%% ¡calculate!
-mask = nnd.get('FEATURE_MASK');
-if length(mask) == 1 && abs(mask) <= 1
-    mask = nnd.get('FEATURE_MASK_ANALYSIS');
-end
-value = nnd.input_construction(nnd.get('TRAIN_G_DICT_1'), nnd.get('TRAIN_G_DICT_2'), nnd.get('INPUT_TYPE'), nnd.get('MEASURES'), mask);
+% % %%% ¡prop!
+% % VAL_INPUTS (result, cell) is the inputs from validation set for testing a neural network.
+% % %%%% ¡calculate!
+% % mask = nnd.get('FEATURE_MASK');
+% % if length(mask) == 1 && abs(mask) <= 1
+% %     mask = nnd.get('FEATURE_MASK_ANALYSIS');
+% % end
+% % value = nnd.input_construction(nnd.get('VAL_G_DICT_1'), nnd.get('VAL_G_DICT_2'), nnd.get('INPUT_TYPE'), nnd.get('MEASURES'), mask);
+% % 
+% % %%% ¡prop!
+% % TARGETS (result, cell) is the label for the dataset.
+% % %%%% ¡calculate!
+% % y1 = repmat(string(nnd.get('TRAIN_GR1').get('ID')), nnd.get('TRAIN_GR1').get('SUB_DICT').length(), 1);
+% % y2 = repmat(string(nnd.get('TRAIN_GR2').get('ID')), nnd.get('TRAIN_GR2').get('SUB_DICT').length(), 1);
+% % 
+% % value = {onehotencode(categorical([y1; y2]), 2)};
+% % 
+% % %%% ¡prop!
+% % VAL_TARGETS (result, cell) is the label for the validation dataset.
+% % %%%% ¡calculate!
+% % y1 = repmat(string(nnd.get('VAL_GR1').get('ID')), nnd.get('VAL_GR1').get('SUB_DICT').length(), 1);
+% % y2 = repmat(string(nnd.get('VAL_GR2').get('ID')), nnd.get('VAL_GR2').get('SUB_DICT').length(), 1);
+% % 
+% % value = {onehotencode(categorical([y1; y2]), 2)};
+% % 
+% % %%% ¡prop!
+% % TARGET_CLASS_NAMES (result, string) is the name of the traget for groups
+% % %%%% ¡default!
+% % 'Group1'
+% % %%%% ¡calculate!
+% % y1 = repmat(string(nnd.get('VAL_GR1').get('ID')), nnd.get('VAL_GR1').get('SUB_DICT').length(), 1);
+% % y2 = repmat(string(nnd.get('VAL_GR2').get('ID')), nnd.get('VAL_GR2').get('SUB_DICT').length(), 1);
+% % 
+% % value = categories(categorical([y1; y2]));
+% % 
+% % 
+% % %% ¡props_update!
+% % %%% ¡prop!
+% % INPUTS (result, cell) is the inputs for training or testing a neural network.
+% % %%%% ¡calculate!
+% % mask = nnd.get('FEATURE_MASK');
+% % if length(mask) == 1 && abs(mask) <= 1
+% %     mask = nnd.get('FEATURE_MASK_ANALYSIS');
+% % end
+% % value = nnd.input_construction(nnd.get('TRAIN_G_DICT_1'), nnd.get('TRAIN_G_DICT_2'), nnd.get('INPUT_TYPE'), nnd.get('MEASURES'), mask);
 
 %% ¡methods!
 function inputs = input_construction(nnd, g_dict_1, g_dict_2, input_type, measure_class, mask)

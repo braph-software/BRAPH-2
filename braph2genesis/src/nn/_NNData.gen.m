@@ -18,9 +18,6 @@ LABEL (metadata, string) is an extended label of the graph analysis.
 NOTES (metadata, string) are some specific notes about the graph analysis.
 
 %%% ¡prop!
-INPUTS (result, cell) is the inputs for training or testing a neural network.
-
-%%% ¡prop!
 INPUT_TYPE (data, option) is the input type for training or testing the NN.
 %%%% ¡settings!
 {'adjacency_matrices' 'graph_measures' 'structural_data'}
@@ -31,7 +28,6 @@ MEASURES (data, classlist) is the graph measures as input to NN.
 {'Measure'}
 %%%% ¡default!
 {'DegreeAv', 'Degree'}
-
 
 %% ¡methods!
 function score = mutual_information_analysis(nnd, X, Y, n)
