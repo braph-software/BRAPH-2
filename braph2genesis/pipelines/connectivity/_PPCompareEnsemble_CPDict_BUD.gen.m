@@ -297,6 +297,7 @@ function cb_measure_gui(pr)
         measure_name = pr.mlist{i};        
         plot_permission = true;
         tmp_gui = [];
+        el.getComparison(measure_name); % create inside dictionary but with nothing calculated.
         for j = 1:cp_dict.length()
             cp = cp_dict.getItem(j);
             if isequal(measure_name, cp.get('measure'))

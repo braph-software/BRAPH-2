@@ -58,6 +58,8 @@ function me = getMeasureEnsemble(a, measure_class, varargin)
     %  getValue() for the new measure M to retrieve the value of measure M.
 
     me_dict = a.memorize('ME_DICT');
+    g_dict = a.memorize('G_DICT');
+    g = g_dict.getItem(1);
     if me_dict.containsKey(measure_class)
         me = me_dict.getItem(measure_class);
     else
@@ -65,6 +67,7 @@ function me = getMeasureEnsemble(a, measure_class, varargin)
             'ID', measure_class, ...
             'A', a, ...
             'MEASURE', measure_class, ...
+            'MEASUREPARAM', g.getMeasure(measure_class), ...
             varargin{:} ...
             );
         me_dict.add(me);
