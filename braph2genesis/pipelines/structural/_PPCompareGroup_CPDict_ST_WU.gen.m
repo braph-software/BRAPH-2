@@ -329,10 +329,10 @@ function cb_measure_calc(pr)
             waitbar(.1 + .20 * i / length(pr.selected), wb, ['Calculating comparison ' measure ]);
         end
         el.getComparison(measure).memorize('DIFF');
-        el.getComparison(measure).get('P1');
-        el.getComparison(measure).get('P2');
-        el.getComparison(measure).get('CIL');
-        el.getComparison(measure).get('CIU');
+        el.getComparison(measure).memorize('P1');
+        el.getComparison(measure).memorize('P2');
+        el.getComparison(measure).memorize('CIL');
+        el.getComparison(measure).memorize('CIU');
         pr.already_calculated{i} = 1;
     end
 

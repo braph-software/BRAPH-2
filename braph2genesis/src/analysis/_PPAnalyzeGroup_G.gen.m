@@ -310,8 +310,6 @@ function redraw(pr, varargin)
         end
          pr.redraw@PlotProp(varargin{:})
     end
-
-   
 end
 function cb_graph_value(pr)
     %CB_GRAPH_VALUE executes callback for the pushbutton.

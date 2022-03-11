@@ -96,7 +96,7 @@ function h_panel = draw(pr, varargin)
             'Min', 1 / map_multiplier, ...
             'Max', L2 / map_multiplier, ...
             'SliderStep', [map_multiplier/((L2-1)*map_multiplier) map_multiplier/((L2-1)*map_multiplier)] , ...
-            'Callback', {@cb_slider} ...
+            'Callback', {@cb_slider_2} ...
             );
         pr.second_slider_text = uicontrol(...
             'Parent', pr.p, ...
@@ -176,7 +176,6 @@ function update(pr)
     br_dict = el.get('C').get('A1').get('g').get('brainatlas').get('br_dict');
     br_ids = cellfun(@(x) x.get('id'), br_dict.getItems(), 'UniformOutput', false);
 
-
     if  size(value, 2) > 2
         set(pr.slider_text, ...
             'String', [label ' ' num2str(round(get(pr.slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.slider, 'Value') * map_multiplier)}]);
@@ -184,7 +183,7 @@ function update(pr)
             'String', ['Layer: ' num2str(round(get(pr.second_slider, 'Value')) * map_multiplier)]);
 
         % set p values mask
-        tmp_value = value{round(get(pr.slider, 'Value')), round(get(pr.second_slider, 'Value') * map_multiplier)};
+        tmp_value = value{round(get(pr.slider, 'Value') * map_multiplier), round(get(pr.second_slider, 'Value') * map_multiplier)};
         p1 = el.memorize('P1');
         p2 = el.memorize('P2');
         cil = el.memorize('cil');
@@ -258,10 +257,10 @@ function update(pr)
         p2 = el.memorize('P2');
         cil = el.memorize('cil');
         ciu = el.memorize('ciu');
-        p1 = p1{round(get(pr.slider, 'Value')*map_multiplier)};
-        p2 = p2{round(get(pr.slider, 'Value')*map_multiplier)};
-        cil = cil{round(get(pr.slider, 'Value')*map_multiplier)};
-        ciu = ciu{round(get(pr.slider, 'Value')*map_multiplier)};
+        p1 = p1{round(get(pr.slider, 'Value') * map_multiplier)};
+        p2 = p2{round(get(pr.slider, 'Value') * map_multiplier)};
+        cil = cil{round(get(pr.slider, 'Value') * map_multiplier)};
+        ciu = ciu{round(get(pr.slider, 'Value') * map_multiplier)};
 
         if Measure.is_nodal(el.get('measure'))
             p1 = p1';

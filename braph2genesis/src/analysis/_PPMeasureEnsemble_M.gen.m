@@ -17,6 +17,7 @@ GUI, PlotElement, PlotProp, MultigraphBUD, MultigraphBUT, MeasureEnsemble.
 p
 f_br
 br_type
+br_btn
 
 %% ¡methods!
 function h_panel = draw(pr, varargin)
@@ -40,21 +41,21 @@ function h_panel = draw(pr, varargin)
     prop = pr.get('PROP');
     g = el.get('a').get('g_dict').getItem(1);
     
-    if Measure.is_global(el.get('Measure')) && g.getGraphType()==2
+    if Measure.is_global(el.get('Measure')) && (g.getGraphType()==1 || g.getGraphType()==2)
          pr.p = PlotPropMeasureEnsembleGlobal( ...
             'EL', el, ...
             'PROP', prop, ...
             'ID', 'm', ...
             'TITLE', 'M', ...
             'BKGCOLOR', [0.8 0.5 0.2]).draw(varargin{:});
-    elseif Measure.is_nodal(el.get('Measure')) && g.getGraphType()==2
+    elseif Measure.is_nodal(el.get('Measure')) && (g.getGraphType()==1 || g.getGraphType()==2)
          pr.p = PlotPropMeasureEnsembleNodal( ...
             'EL', el, ...
             'PROP', prop, ...
             'ID', 'm', ...
             'TITLE', 'M', ...
             'BKGCOLOR', [0.8 0.5 0.2]).draw(varargin{:});
-    elseif Measure.is_binodal(el.get('Measure')) && g.getGraphType()==2 % binodal
+    elseif Measure.is_binodal(el.get('Measure')) && (g.getGraphType()==1 || g.getGraphType()==2) % binodal
         pr.p = PlotPropMeasureEnsembleBinodal( ...
             'EL', el, ...
             'PROP', prop, ...
@@ -84,15 +85,17 @@ function h_panel = draw(pr, varargin)
             'BKGCOLOR', [0.8 0.5 0.2]).draw(varargin{:});
     end  
     
-    brain_view = uicontrol('Parent', pr.p, ...
-        'Style', 'pushbutton', ...
-        'Units', 'normalized', ...
-        'Visible', 'on', ...
-        'TooltipString', 'Open the measure in a Brain View plot.', ...
-        'String', 'Plot Brain View', ...
-        'Position', [.02 .76 .2 .15], ...
-        'Callback', {@cb_brainview});
-        
+    if Measure.is_nodal(el.get('Measure'))
+        pr.br_btn = uicontrol('Parent', pr.p, ...
+            'Style', 'pushbutton', ...
+            'Units', 'normalized', ...
+            'Visible', 'on', ...
+            'TooltipString', 'Open the measure in a Brain View plot.', ...
+            'String', 'Plot Brain View', ...
+            'Position', [.02 .76 .2 .15], ...
+            'Callback', {@cb_brainview});
+    end
+   
     function cb_brainview (~, ~)
         pr.cb_brain_view_fig();
     end
@@ -120,7 +123,10 @@ function redraw(pr, varargin)
     %
     % See also draw, update, refresh.
 
-    get(pr.p, 'UserData').redraw(varargin{:})    
+    get(pr.p, 'UserData').redraw(varargin{:}) 
+    if ~pr.get_button_condition()
+        set(pr.br_btn, 'Visible', 'off')
+    end
 end
 function cb_brain_view_fig(pr)
     f_pg = ancestor(pr.p, 'Figure');
@@ -236,4 +242,22 @@ function cb_close(pr)
     if ~isempty(pr.f_br) && check_graphics(pr.f_br, 'figure')
         delete(pr.f_br);
     end     
+end
+function state = get_button_condition(pr)
+    % GET_BUTTON_CONDITION returns the calculate button state.
+    %
+    % STATE = GET_BUTTON_CONDITION(PR) returns the calculate button state.
+    %
+    % see also is_measure_calculated.
+
+    plot_prop_children = get(pr.p, 'Children');
+    state = 0; % calculated
+    for i = 1:length(plot_prop_children)
+        pp_c = plot_prop_children(i);
+        if check_graphics(pp_c, 'pushbutton') && isequal(pp_c.Tag, 'button_calc')
+            if isequal(pp_c.Enable, 'off')
+                state = 1;  % not calculated
+            end
+        end
+    end
 end
