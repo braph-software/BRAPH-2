@@ -52,7 +52,7 @@ function h_panel = draw(pr, varargin)
     map_multiplier = 100;
     
     if L == 1
-        Ll=1;
+        Ll = 1;
     else
         Ll = L-1;
     end
