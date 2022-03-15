@@ -292,7 +292,6 @@ function cb_measure_gui(pr)
     screen_h = Plot.h(0, 'pixels');
 
     N = ceil(sqrt(length(pr.mlist))); % number of row and columns of figures
-
     f_count = 1;
     for i = 1:length(pr.mlist)
         if ~ismember(pr.mlist(i), measure_short_list)
