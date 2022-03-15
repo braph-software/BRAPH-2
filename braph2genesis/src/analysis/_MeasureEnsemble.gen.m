@@ -17,6 +17,8 @@ LABEL (metadata, string) is an extended label of the graph ensemble measure.
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the graph ensemble measure.
+%%%% ¡gui!
+pr = PlotPropString('EL', me, 'PROP', MeasureEnsemble.NOTES, 'LINES', 'multi', 'EDITHEIGHT', 4.5, varargin{:});
 
 %%% ¡prop!
 MEASURE (data, string) is the measure class.

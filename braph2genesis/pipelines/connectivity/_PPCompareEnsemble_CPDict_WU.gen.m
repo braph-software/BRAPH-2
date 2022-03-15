@@ -217,7 +217,7 @@ function redraw(pr, varargin)
         if  ~isempty(pr.measure_tbl) && isgraphics(pr.measure_tbl, 'uitable')
             set(pr.measure_tbl, ...
                 'Units', 'normalized', ...
-                'Position', [.01 .13 .98 (Dh/(h+Dh)-.27)] ...
+                'Position', [.01 .13 .98 (Dh/(h+Dh)-.15)] ...
                 )
         end
         pr.redraw@PlotProp('Height', (h + Dh)*1.5, varargin{:})
@@ -225,7 +225,7 @@ function redraw(pr, varargin)
         if  ~isempty(pr.measure_tbl) && isgraphics(pr.measure_tbl, 'uitable')
             set(pr.measure_tbl, ...
                 'Units', 'normalized', ...
-                'Position', [.01 .13 .98 (Dh/(h+Dh)-.32)], ...
+                'Position', [.01 .13 .98 (Dh/(h+Dh)-.15)], ...
                 'Visible', 'off' ...
                 )
         end
@@ -267,6 +267,7 @@ function cb_measure_gui(pr)
         measure_name = pr.mlist{i};
         plot_permission = true;
         tmp_gui = [];
+        el.getComparison(measure_name); % create inside dictionary but with nothing calculated.
         for j = 1:cp_dict.length()
             cp = cp_dict.getItem(j);
             if isequal(measure_name, cp.get('measure'))
@@ -322,7 +323,7 @@ function cb_measure_calc(pr)
 
         measure = pr.mlist{i};
         if pr.get('WAITBAR')
-            waitbar(.1 + .70 * i / length(pr.selected), wb, ['Calculating comparison ' measure ]);
+            waitbar(.1 + .20 * i / length(pr.selected), wb, ['Calculating comparison ' measure ]);
         end
         el.getComparison(measure).memorize('DIFF');
         el.getComparison(measure).memorize('P1');

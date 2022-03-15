@@ -199,6 +199,12 @@ function graph_type = getGraphType(g)
     %
     % See also is_graph, is_multigraph, is_multilayer, is_multiplex,
     % is_ordered_multilayer, is_ordered_multiplex.
+    
+    % % %TODO: Improve this (connected with MeasurePatam in AnalyzeEnsemble and CompareEnsemble)
+    if nargin < 1
+        graph_type = 0;
+        return;
+    end
 
     if strcmp(Element.getClass(g), 'Graph')
         graph_type = Graph.GRAPH;

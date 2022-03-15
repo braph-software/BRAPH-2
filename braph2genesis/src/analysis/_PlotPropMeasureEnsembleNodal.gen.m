@@ -112,7 +112,7 @@ function update(pr)
     
     if graph.getPropNumber() > 9
         L_prop = graph.get(10);
-        label = g.getPropTag(10);
+        label = graph.getPropTag(10);
         if strcmp(label, 'thresholds')
             label = 'Threshold';
         elseif strcmp(label, 'densities')
@@ -141,8 +141,15 @@ function update(pr)
             'RowName', br_ids ...
             )
     else
-        set(pr.slider_text, ...
-            'String', [label ' ' num2str(round(get(pr.slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.slider, 'Value') * map_multiplier)}]);
+        if ~graph.getPropNumber() > 9
+            set(pr.slider_text, ...
+            'Visible', 'off');
+        else
+            set(pr.slider_text, ...
+                'Visible', 'on', ...
+                'String', [label ' ' num2str(round(get(pr.slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.slider, 'Value') * map_multiplier)}]);
+        end
+        
         set(pr.table_value, ...
             'Data', value{round(get(pr.slider, 'Value') * map_multiplier)}, ...
             'ColumnName', {}, ...
@@ -154,11 +161,11 @@ function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
     %
     % REDRAW(PR) resizes the property panel and repositions its
-    %   graphical objects. 
-    % 
+    %   graphical objects.
+    %
     % Important notes:
-    % 1. REDRAW() sets the units 'characters' for panel and all its graphical objects. 
-    % 2. REDRAW() is typically called internally by PlotElement and does not need 
+    % 1. REDRAW() sets the units 'characters' for panel and all its graphical objects.
+    % 2. REDRAW() is typically called internally by PlotElement and does not need
     %  to be explicitly called in children of PlotProp.
     %
     % REDRAW(PR, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT)
@@ -171,17 +178,17 @@ function redraw(pr, varargin)
     %  - HEIGHT=1.4 characters.
     %
     % See also draw, update, PlotElement.
-    
+
     [h, varargin] = get_and_remove_from_varargin(1.8, 'Height', varargin);
     [Sh, varargin] = get_and_remove_from_varargin(2.0, 'SHeight', varargin);
     [Th, varargin] = get_and_remove_from_varargin(2.0, 'THeight', varargin);
     [Dh, varargin] = get_and_remove_from_varargin(20, 'DHeight', varargin);
-    
+
     el = pr.get('EL');
     prop = pr.get('PROP');
     value = el.getr(prop);
     L = size(value, 1);
-    
+
     if L > 1
         pr.redraw@PlotProp('Height', h*2+Dh, varargin{:});
         set(pr.slider, ...
@@ -189,28 +196,36 @@ function redraw(pr, varargin)
             'Visible', 'on', ...
             'Position', [.01 Dh/(h+Sh+Th+Dh)-.2 .97 (Th/(h+Sh+Th+Dh)-.02)] ...
             );
-        
+
         set(pr.slider_text, ...
             'Units', 'normalized', ...
             'Visible', 'on', ...
             'Position', [.01 (Th+Dh)/(h+Sh+Th+Dh)-.2 .97 (Th/(h+Sh+Th+Dh)-.02)] ...
             );
-        
+
         set(pr.table_value, ...
             'Visible', 'on', ...
             'Units', 'normalized', ...
             'Position', [.01 .02 .97 (Dh/(h+Sh+Th+Dh)-.2)] ...
             )
     else
+        set(pr.slider, ...
+            'Visible', 'off' ...
+            );
+
+        set(pr.slider_text, ...
+            'Visible', 'off' ...
+            );
+
         set(pr.table_value, ...
             'Visible', 'on', ...
             'Units', 'normalized', ...
-            'Position', [.01 .02 .97 .7] ...
+            'Position', [.01 .02 .97 (Dh/(h+Sh+Th+Dh))] ...
             )
         pr.redraw@PlotProp('Height', h*2+Dh, varargin{:});
     end
-     if ~pr.get_button_condition()
-         set(pr.slider, ...
+    if ~pr.get_button_condition()
+        set(pr.slider, ...
             'Visible', 'off' ...
             );
 
@@ -221,6 +236,7 @@ function redraw(pr, varargin)
         set(pr.table_value, ...
             'Visible', 'off' ...
             )
+        pr.redraw@PlotProp(varargin{:});
     end
 end
 function state = get_button_condition(pr)
