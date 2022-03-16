@@ -47,6 +47,7 @@ function h_panel = draw(pr, varargin)
 
     % declare constants
     el = pr.get('EL');
+    prop = pr.get('prop');
 
     pr.p = draw@PlotProp(pr, varargin{:});
     
