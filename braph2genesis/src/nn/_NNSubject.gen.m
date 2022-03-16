@@ -1,8 +1,8 @@
 %% ¡header!
-NNSubject < Subject (sub, subject with connectivity matrix) is a subject with connectivity matrix (e.g. DTI).
+NNSubject < Subject (sub, subject with connectivity matrix) is a subject for the neural network analysis.
 
 %%% ¡description!
-Subject with a connectivity matrix (e.g. obtained from DTI).
+NNSubject contains the required information for individual to perform neural network analysisi 
 
 %%% ¡seealso!
 Element, Subject
@@ -10,25 +10,25 @@ Element, Subject
 %% ¡props!
 
 %%% ¡prop!
-G (data, item) is the input of the subject for a neural network.
+G (data, item) the graph obtained from the data of the subject.
 %%%% ¡settings!
 'Graph'
 
 %%% ¡prop!
-INPUT (data, cell) is the input of the subject for a neural network.
+INPUT (data, cell) is the input obtained from the data of the subject for the neural network analysis.
 % % %%%% ¡gui!
 % % pr = PPSubjectCON_CON('EL', sub, 'PROP', SubjectCON.CON, varargin{:})
 
 %%% ¡prop!
-INPUT_FS (data, cell) is the selected input by feature mask of the subject for a neural network.
+INPUT_FS (data, cell) is the input with feature selection.
 % % %%%% ¡gui!
 % % pr = PPSubjectCON_CON('EL', sub, 'PROP', SubjectCON.CON, varargin{:});
 
 %%% ¡prop!
-TARGET (data, cell) is the target of the subject for a neural network.
+TARGET (data, string) is the target of the subject for the neural network analysis.
 
 %%% ¡prop!
-PREDICTION (data, cell) is the prediction of the subject from a neural network.
+PREDICTION (data, cell) is the prediction of the subject from the neural network analysis.
 
 %%% ¡prop!
 BA (data, item) is a brain atlas.
