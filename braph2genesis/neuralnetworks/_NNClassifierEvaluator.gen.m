@@ -7,6 +7,7 @@ in terms of the receiver operating characteristic curve (ROC), the area
 under the ROC curve (AUC), and the confusion matrix.
 
 %% ¡props!
+
 %%% ¡prop!
 PLOT_CM (data, logical) is an option for the plot of the confusion matrix.
 %%%% ¡default!
@@ -145,6 +146,7 @@ value = nne.get('NN_GR').get('FEATURE_MASK');
 % % end
 
 %% ¡props_update!
+
 %%% ¡prop!
 NN (data, item) is a neural network model that needs to be evaluated.
 %%%% ¡settings!

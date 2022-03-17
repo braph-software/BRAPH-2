@@ -2,11 +2,8 @@
 NNClassifierData < NNData (nnd, data of a neural network classifier) produces a dataset to train or test a neural netowrk classifier.  
 
 %% ¡description!
-This dataset can be used to train or test a neural network classifier. The
-INPUTS and TARGETS are the two cells for trianing a neurla network. The INPUTS 
-cell is represented as floating point feature vectors obtained from adjacency
-matrices. Feature selection procedure can be implemented when constructing the 
-INPUTS. The TARGETS cell holds the target values for the trianing samples. 
+This dataset produce the NN Groups to train or test a neural network classifier.
+Feature selection procedure can be implemented.  
 Instances of this class should not be created. 
 Use one of its subclasses instead.
 
@@ -44,7 +41,7 @@ if length(value) == 1 & value < 1
 end
 
 %%% ¡prop!
-FEATURE_MASK (data, cell) is a given mask or a percentile for feature selection.
+FEATURE_MASK (data, cell) is a given mask or a percentile for selecting relevant features.
 %%%% ¡default!
 num2cell(0.05)
 %%%% ¡conditioning!
@@ -53,12 +50,12 @@ if ~iscell(value) & isnumeric(value)
 end
 
 %%% ¡prop!
-NN_GR1 (result, item) is a group of subjects defined as NNSubject class.
+NN_GR1 (result, item) is a group of NN subjects.
 %%%% ¡settings!
 'NNGroup'
 
 %%% ¡prop!
-NN_GR2 (result, item) is a group of subjects defined as NNSubject class.
+NN_GR2 (result, item) is a group of NN subjects.
 %%%% ¡settings!
 'NNGroup'
 
@@ -149,7 +146,7 @@ val_nn_gr.set('SUB_DICT', sub_dict);
 value = val_nn_gr;
 
 %%% ¡prop!
-FEATURE_SELECTION_ANALYSIS (result, cell) is an analysis for generating mask for selected features.
+FEATURE_SELECTION_ANALYSIS (result, cell) is an analysis for generating a feature mask.
 %%%% ¡calculate!
 percentile = cell2mat(nnd.get('FEATURE_MASK'));
 data = cellfun(@(x) x.get('INPUT'), nnd.get('TRAIN_NN_GR').get('SUB_DICT').getItems(), 'UniformOutput', false);

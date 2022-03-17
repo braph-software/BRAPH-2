@@ -1,14 +1,12 @@
 %% ¡header!
-NNClassifierDNN < NNBase (nn, classifier with dense layers) is a binary neural network classifier.
+NNClassifierDNN < NNBase (nn, classifier with dense layers) is a neural network classifier.
 
 %% ¡description!
-This classifier is a fully-connected-lyaer neural network by training with
-backpropagation on the data provided by NNData. The Classifier trains on two
-cells: cell INPUTS from NNData holds the training samples represented as 
-floating point feature vectors, and the cell TARGETS, which holds the target
-values for the trianing samples.
+This classifier is a fully-connected-lyaer neural network 
+The Classifier trains on NN groups which contain the input and targets.
 
 %% ¡props!
+
 %%% ¡prop!
 LAYERS (data, rvector) is a vector representing the number of neurons in each layer.
 %%%% ¡default!
@@ -147,7 +145,9 @@ end
 function [inputs, num_features] = construct_inputs(nn, nn_gr)
 %CONSTRUCT_INPUTS constructs the inputs for NN
 %
-% INPUTS = CONSTRUCT_INPUTS(NN, NN_GR) constructs the inputs.
+% [INPUTS, NUM_FEATURES] = CONSTRUCT_INPUTS(NN, NN_GR) constructs the
+%   inputs from NN_GR, NN group, by concatenating the INPUT of NN subjects.
+%   NUM_FEATURES is the number of features that go to the NN.
 
     mask = nn_gr.get('FEATURE_MASK');
     if nn_gr.get('SUB_DICT').length() == 0
@@ -168,7 +168,9 @@ end
 function [targets, classes] = construct_targets(nn, nn_gr)
 %CONSTRUCT_INPUTS constructs the targets for NN
 %
-% INPUTS = CONSTRUCT_INPUTS(NN, NN_GR) constructs the targets.
+% [TARGETS, CLASSES] = CONSTRUCT_TARGETS(NN, NN_GR) constructs the targets
+%  from NN_GR, NN group, by concatenating the TARGET of NN Subjects.
+%  CLASSES is the categories name of the unique targets.
 
     if nn_gr.get('SUB_DICT').length() == 0
         targets = [];
