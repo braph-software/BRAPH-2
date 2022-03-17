@@ -19,12 +19,13 @@ if nne.get('NN_GR_PREDICTION').get('SUB_DICT').length() == 0
 else
     preds = cellfun(@(x) cell2mat(x.get('PREDICTION'))', nne.memorize('NN_GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
     preds = cell2mat(preds);
-    targets = cellfun(@(x) x.get('TARGET'), nne.get('NN_GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
+    targets = cellfun(@(x) str2num(x.get('TARGET')), nne.get('NN_GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
+    targets = cell2mat(targets);
     value = sqrt(mean((preds - targets).^2));
 end
 
 %%% ¡prop!
-FEATURE_MAP (result, matrix) is a feature map obtained with feature selection analysis.
+FEATURE_MAP (result, cell) is a feature map obtained with feature selection analysis.
 %%%% ¡calculate!
 value = nne.get('NN_GR').get('FEATURE_MASK');
 % % % selected_idx = nne.get('NNDATA').get('FEATURE_MASK');
