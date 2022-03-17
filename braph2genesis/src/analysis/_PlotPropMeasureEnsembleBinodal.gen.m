@@ -102,11 +102,11 @@ function update(pr)
     
     el = pr.get('EL');
     prop = pr.get('PROP');
-    value = el.getr(prop);
-%     L = size(value, 1);    
+    value = el.getr(prop);   
     g_dict = el.get('A').get('G_DICT');
     graph = g_dict.getItem(1);
     L = 1;
+    slider_tags = {'1'};
     if graph.getPropNumber() > 9
         L_prop = graph.get(10);
         L = size(L_prop, 2);
@@ -114,7 +114,7 @@ function update(pr)
     end
     br_dict = graph.get('BRAINATLAS').get('BR_DICT');
     map_multiplier = 100;
-    slider_tags = {'1'};
+    
     if graph.getPropNumber() > 9
         label = graph.getPropTag(10);
         if strcmp(label, 'thresholds')
