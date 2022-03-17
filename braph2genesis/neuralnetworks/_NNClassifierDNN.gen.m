@@ -3,7 +3,7 @@ NNClassifierDNN < NNBase (nn, classifier with dense layers) is a neural network 
 
 %% ¡description!
 This classifier is a fully-connected-lyaer neural network 
-The Classifier trains on NN groups which contain the input and targets.
+The Classifier trains on NN groups which contain the inputs and targets.
 
 %% ¡props!
 
