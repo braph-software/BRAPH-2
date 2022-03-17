@@ -5,6 +5,8 @@ NNRegressorDNN < NNBase (nn, regressor with dense layers) is a neural network re
 This regressor is composed of fully-connected layers.
 The regressor trains on NN groups which contain the inputs and targets.
 
+%% ¡props!
+
 %%% ¡prop!
 LAYERS (data, rvector) is a vector representing the number of neurons in each layer.
 %%%% ¡default!
@@ -172,6 +174,8 @@ function [targets, classes] = construct_targets(nn, nn_gr)
     if nn_gr.get('SUB_DICT').length() == 0
         targets = [];
     else
-        targets = cellfun(@(x) x.get('TARGET'), nn_gr.get('SUB_DICT').getItems(), 'UniformOutput', false);
+        targets = cellfun(@(x) str2num(x.get('TARGET')), nn_gr.get('SUB_DICT').getItems(), 'UniformOutput', false);
+        targets = cell2mat(targets);
+        targets = targets';
     end
 end

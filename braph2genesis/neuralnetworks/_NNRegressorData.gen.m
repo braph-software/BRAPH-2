@@ -16,6 +16,11 @@ GR (data, item) is a group of subjects
 'Group'
 
 %%% ¡prop!
+TARGET_NAME (data, string) is the name of the traget.
+%%%% ¡default!
+'age'
+
+%%% ¡prop!
 SPLIT (data, rvector) is a ratio or a vector stating which subjects belong to validation set.
 %%%% ¡conditioning!
 if length(value) == 1 & value < 1
@@ -27,7 +32,7 @@ if length(value) == 1 & value < 1
 end
 
 %%% ¡prop!
-FEATURE_MASK (data, cvector) is a given mask or a percentile for selecting relevant features.
+FEATURE_MASK (data, cell) is a given mask or a percentile for selecting relevant features.
 %%%% ¡default!
 num2cell(0.05)
 %%%% ¡conditioning!
@@ -95,7 +100,7 @@ val_nn_gr.set( ...
 sub_dict = val_nn_gr.get('SUB_DICT');
 
 subs = nnd.memorize('NN_GR').get('SUB_DICT').getItems();
-selected_idx = nnd.get('SPLIT_GR1');
+selected_idx = nnd.get('SPLIT');
 selected_subs = subs(selected_idx);
 for i = 1:1:length(selected_subs)
     sub = selected_subs{i};
@@ -115,7 +120,7 @@ data = cellfun(@(x) x.get('INPUT'), nnd.get('TRAIN_NN_GR').get('SUB_DICT').getIt
 if(isempty(data))
     value = {};
 else
-    y = cellfun(@(x) x.get('TARGET'), nnd.get('TRAIN_NN_GR').get('SUB_DICT').getItems(), 'UniformOutput', false);
+    y = cellfun(@(x) str2num(x.get('TARGET')), nnd.get('TRAIN_NN_GR').get('SUB_DICT').getItems(), 'UniformOutput', false);
     %y = onehotencode(categorical(y), 1);
     num_feature_cluster = length(data{1});
     value = cell(size(data{1}));
@@ -127,7 +132,7 @@ else
         else
             for i = 1:numel(mask)
                 data_per_feature = cellfun(@(v)v(i), data_per_cluster);
-                label = y;
+                label = cell2mat(y);
                 % label = y(1, :);
                 if(any(isinf(data_per_feature)))
                     mask(i) = 0;
