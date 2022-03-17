@@ -2,12 +2,9 @@
 NNClassifierData_CON_WU < NNClassifierData (nnd, data of a neural network classifier with connectivity data) produces a dataset to a neural netowrk classifier using connectivity data. 
 
 %% ¡description!
-This dataset can be used to train or test a neural network classifier. The
-INPUTS and TARGETS are the two cells for trianing a neurla network. The INPUTS 
-cell is obtained direcly from DTI adjacency matrices, and it is represented as 
-floating point feature cell. Feature selection procedure can be implemented 
-when constructing the INPUTS. The TARGETS cell holds the target values for 
-the trianing samples. 
+This dataset produces NN groups with connectivity data.
+The dataset produces NN groups for trianing or testing a neurla network
+with connectivity data. 
 
 %% ¡props_update!
 
@@ -22,7 +19,7 @@ GR2 (data, item) is a group of subjects defined as SubjectCON class.
 Group('SUB_CLASS', 'SubjectCON')
 
 %%% ¡prop!
-NN_GR1 (result, group) is a group of subjects defined as NNSubject class.
+NN_GR1 (result, group) is a group of NN subjects.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡default!
@@ -94,7 +91,7 @@ nn_gr.set('sub_dict', nn_sub_dict);
 value = nn_gr;
 
 %%% ¡prop!
-NN_GR2 (result, group)  is a group of subjects defined as NNSubject class.
+NN_GR2 (result, group)  is a group of NN subjects.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡default!

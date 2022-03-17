@@ -3,6 +3,8 @@ NNClassifierData < NNData (nnd, data of a neural network classifier) produces a 
 
 %% ¡description!
 This dataset produce the NN Groups to train or test a neural network classifier.
+The input for training a neural network classifer can be obtained direcly
+from the structual data, the adjacency matrices, or the graph measures.
 Feature selection procedure can be implemented.  
 Instances of this class should not be created. 
 Use one of its subclasses instead.
