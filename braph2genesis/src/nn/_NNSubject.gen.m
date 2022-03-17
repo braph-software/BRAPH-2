@@ -2,7 +2,7 @@
 NNSubject < Subject (sub, subject with connectivity matrix) is a subject for the neural network analysis.
 
 %%% ¡description!
-NNSubject contains the required information for individual to perform neural network analysisi 
+NNSubject contains the required information for individual to be analyzed by neural network analysis.
 
 %%% ¡seealso!
 Element, Subject
