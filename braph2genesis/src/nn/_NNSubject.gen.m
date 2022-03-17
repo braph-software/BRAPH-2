@@ -10,12 +10,12 @@ Element, Subject
 %% ¡props!
 
 %%% ¡prop!
-G (data, item) the graph obtained from the data of the subject.
+G (data, item) is a graph obtained from the data of the subject.
 %%%% ¡settings!
 'Graph'
 
 %%% ¡prop!
-INPUT (data, cell) is the input obtained from the data of the subject for the neural network analysis.
+INPUT (data, cell) is the input obtained from the data of subject for the neural network analysis.
 % % %%%% ¡gui!
 % % pr = PPSubjectCON_CON('EL', sub, 'PROP', SubjectCON.CON, varargin{:})
 
