@@ -46,9 +46,9 @@ end
 %%% ¡prop!
 FEATURE_MASK (data, cell) is a given mask or a percentile for feature selection.
 %%%% ¡default!
-{[0.05]}
+num2cell(0.05)
 %%%% ¡conditioning!
-if ~iscell(value)
+if ~iscell(value) & isnumeric(value)
     value = num2cell(value);
 end
 
@@ -152,11 +152,11 @@ value = val_nn_gr;
 FEATURE_SELECTION_ANALYSIS (result, cell) is an analysis for generating mask for selected features.
 %%%% ¡calculate!
 percentile = cell2mat(nnd.get('FEATURE_MASK'));
+data = cellfun(@(x) x.get('INPUT'), nnd.get('TRAIN_NN_GR').get('SUB_DICT').getItems(), 'UniformOutput', false);
 
-if(isempty(nnd.get('TRAIN_NN_GR')))
+if(isempty(data))
     value = {};
 else
-    data = cellfun(@(x) x.get('INPUT'), nnd.get('TRAIN_NN_GR').get('SUB_DICT').getItems(), 'UniformOutput', false);
     y = cellfun(@(x) x.get('TARGET'), nnd.get('TRAIN_NN_GR').get('SUB_DICT').getItems(), 'UniformOutput', false);
     y = onehotencode(categorical(y), 1);
     num_feature_cluster = length(data{1});

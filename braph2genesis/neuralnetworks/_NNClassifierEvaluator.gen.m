@@ -25,13 +25,13 @@ false
 %%% ¡prop!
 AUC (result, cell) is an area under the curve score obtained from the dataset.
 %%%% ¡calculate!
-pred = cellfun(@(x) cell2mat(x.get('PREDICTION'))', nne.memorize('NN_GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
-pred = cell2mat(pred);
-y = cellfun(@(x) x.get('TARGET'), nne.memorize('NN_GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
-y = categorical(y);
-if(isempty(y))
+if nne.get('NN_GR_PREDICTION').get('SUB_DICT').length() == 0
     value = {};
 else
+    pred = cellfun(@(x) cell2mat(x.get('PREDICTION'))', nne.memorize('NN_GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
+    pred = cell2mat(pred);
+    y = cellfun(@(x) x.get('TARGET'), nne.memorize('NN_GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
+    y = categorical(y);
     classes = categories(y);
     targets = onehotencode(y, 1);
     [X, Y, T, auc] = perfcurve(y, pred(2, :), classes(2));
@@ -56,18 +56,17 @@ end
 %%% ¡prop!
 CONFUSION_MATRIX (result, matrix) is a confusion matrix obtained with a cut-off of 0.5.
 %%%% ¡calculate!
-% get prediction
-pred = cellfun(@(x) cell2mat(x.get('PREDICTION'))', nne.memorize('NN_GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
-pred = cell2mat(pred);
-pred = pred > 0.5;
-
-% get ground truth
-y = cellfun(@(x) x.get('TARGET'), nne.get('NN_GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
-y = categorical(y);
-classes = categories(y);
-if(isempty(y))
+if nne.get('NN_GR_PREDICTION').get('SUB_DICT').length() == 0
     value = [];
 else
+    pred = cellfun(@(x) cell2mat(x.get('PREDICTION'))', nne.memorize('NN_GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
+    pred = cell2mat(pred);
+    pred = pred > 0.5;
+
+    % get ground truth
+    y = cellfun(@(x) x.get('TARGET'), nne.get('NN_GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
+    y = categorical(y);
+    classes = categories(y);
     targets = onehotencode(y, 1);
     %targets_mark = categories(onehotdecode(targets, classes, 2));
     % calculate the confusion matrix
@@ -87,76 +86,83 @@ else
 end
 
 %%% ¡prop!
-FEATURE_MAP (result, matrix) is a feature map obtained with feature selection analysis.
+FEATURE_MAP (result, cell) is a feature map obtained with feature selection analysis.
 %%%% ¡calculate!
-mask = nne.get('NN_GR_PREDICTION').get('FEATURE_MASK');
-if ~isempty(selected_idx)
-    switch string(nne.get('NNDATA').get('INPUT_TYPE'))
-        case 'graph_measures'
-            feature = nne.get('NNDATA').get('MEASURES');
-            x_ticklabel = feature;
-            y_ticklabel = '';
-            fontsize = 12;
-
-        case 'adjacency_matrices'
-            x_ticklabel = 0:size(fm, 2);
-            y_ticklabel = 0:size(fm, 1);
-            fontsize = 5;
-
-        case 'structural_data'
-            data = nne.get('NNDATA').data_construction(nne.get('NNDATA').get('GR1'));
-            feature = data{1};
-            fm = zeros(1, length(feature));
-            br = nne.get('NNDATA').get('GR1').get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').getItems();
-            br = cellfun(@(v)v.get('ID'), br, 'UniformOutput', false);
-            x_ticklabel = br;
-            y_ticklabel = '';
-            fontsize = 5;
-        otherwise
-    end
-
-
-    if nne.get('PLOT_MAP')
-        figure
-        x = [1 size(fm, 2)];
-        y = [0 size(fm, 1)];
-        image(x, y, mask{1}, 'CDataMapping', 'scaled')
-
-        xticks([1:size(fm, 2)]);
-        yticks([1:size(fm, 1)]);
-        xticklabels(x_ticklabel);
-        yticklabels(y_ticklabel);
-        a = get(gca,'XTickLabel');
-        set(gca, 'XTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
-        a = get(gca,'YTickLabel');
-        set(gca, 'YTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
-        colorbar
-        directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
-        if ~exist(directory, 'dir')
-            mkdir(directory)
-        end
-        filename = [directory filesep 'connection_mask.svg'];
-        saveas(gcf, filename);
-    end
-
-    value = fm;
-else
-    value = [];
-end
+value = nne.get('NN_GR').get('FEATURE_MASK');
+% % mask = nne.get('NN_GR_PREDICTION').get('FEATURE_MASK');
+% % if ~isempty(selected_idx)
+% %     switch string(nne.get('NNDATA').get('INPUT_TYPE'))
+% %         case 'graph_measures'
+% %             feature = nne.get('NNDATA').get('MEASURES');
+% %             x_ticklabel = feature;
+% %             y_ticklabel = '';
+% %             fontsize = 12;
+% % 
+% %         case 'adjacency_matrices'
+% %             x_ticklabel = 0:size(fm, 2);
+% %             y_ticklabel = 0:size(fm, 1);
+% %             fontsize = 5;
+% % 
+% %         case 'structural_data'
+% %             data = nne.get('NNDATA').data_construction(nne.get('NNDATA').get('GR1'));
+% %             feature = data{1};
+% %             fm = zeros(1, length(feature));
+% %             br = nne.get('NNDATA').get('GR1').get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').getItems();
+% %             br = cellfun(@(v)v.get('ID'), br, 'UniformOutput', false);
+% %             x_ticklabel = br;
+% %             y_ticklabel = '';
+% %             fontsize = 5;
+% %         otherwise
+% %     end
+% % 
+% % 
+% %     if nne.get('PLOT_MAP')
+% %         figure
+% %         x = [1 size(fm, 2)];
+% %         y = [0 size(fm, 1)];
+% %         image(x, y, mask{1}, 'CDataMapping', 'scaled')
+% % 
+% %         xticks([1:size(fm, 2)]);
+% %         yticks([1:size(fm, 1)]);
+% %         xticklabels(x_ticklabel);
+% %         yticklabels(y_ticklabel);
+% %         a = get(gca,'XTickLabel');
+% %         set(gca, 'XTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
+% %         a = get(gca,'YTickLabel');
+% %         set(gca, 'YTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
+% %         colorbar
+% %         directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
+% %         if ~exist(directory, 'dir')
+% %             mkdir(directory)
+% %         end
+% %         filename = [directory filesep 'connection_mask.svg'];
+% %         saveas(gcf, filename);
+% %     end
+% % 
+% %     value = fm;
+% % else
+% %     value = [];
+% % end
 
 %% ¡props_update!
+%%% ¡prop!
+NN (data, item) is a neural network model that needs to be evaluated.
+%%%% ¡settings!
+'NNClassifierDNN'
+%%%% ¡default!
+NNClassifierDNN()
 
 %%% ¡prop!
 NN_GR_PREDICTION (result, item) is a group of NN subjects containing the prediction from the neural network.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡calculate!
-nn = nne.get('NN');
-nn_gr = nne.get('NN_GR');
-inputs = nn.construct_inputs(nn_gr);
-if isempty(inputs)
-    value = [];
+if nne.get('NN_GR').get('SUB_DICT').length() == 0
+    value = NNGroup();
 else
+    nn = nne.get('NN');
+    nn_gr = nne.get('NN_GR');
+    inputs = nn.construct_inputs(nn_gr);
     net = nn.to_net(nn.get('MODEL'));
     predictions = net.predict(inputs);
 
@@ -185,4 +191,3 @@ else
 
     value = nn_gr_pred;
 end
-

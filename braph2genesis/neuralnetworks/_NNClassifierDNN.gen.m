@@ -15,10 +15,11 @@ LAYERS (data, rvector) is a vector representing the number of neurons in each la
 []
 %%%% ¡postprocessing!
 if isempty(nn.get('LAYERS'))
-    input = nn.get('NN_GR').get('SUB_DICT').getItem(1).get('INPUT_FS');
-    mask = nn.get('NN_GR').get('FEATURE_MASK');
-    if ~isempty(input)
-        input_per_sub = cellfun(@(x, y) x(y==1), input, mask, 'UniformOutput', false);
+    inputs = nn.get('NN_GR').get('SUB_DICT').getItems();
+    if ~isempty(inputs)
+        input = inputs{1}.get('INPUT_FS');
+        mask = nn.get('NN_GR').get('FEATURE_MASK');
+        input_per_sub = cellfun(@(x, y) x(y == 1), input, mask, 'UniformOutput', false);
         input_per_sub = cell2mat(input_per_sub);
         numFeature = length(input_per_sub);
         value = [floor(1.5 * numFeature) floor(1.5 * numFeature)];
@@ -74,7 +75,7 @@ MODEL (result, cell) is a trained neural network classifier.
 if nn.check_nn_toolboxes()
     % get inputs
     nn_gr = nn.get('NN_GR');
-    if(isempty(nn_gr.get('SUB_DICT').getItems()))
+    if nn_gr.get('SUB_DICT').length() == 0
         value = {};
     else
         [inputs, num_features] = nn.construct_inputs(nn_gr);
@@ -149,22 +150,32 @@ function [inputs, num_features] = construct_inputs(nn, nn_gr)
 % INPUTS = CONSTRUCT_INPUTS(NN, NN_GR) constructs the inputs.
 
     mask = nn_gr.get('FEATURE_MASK');
-    inputs = [];
-    for i = 1:1:nn_gr.get('SUB_DICT').length()
-        input = nn_gr.get('SUB_DICT').getItem(i).get('INPUT_FS');
-        input_per_sub = cellfun(@(x, y) x(y==1), input, mask, 'UniformOutput', false);
-        input_per_sub = cell2mat(input_per_sub);
-        inputs = [inputs; input_per_sub'];
+    if nn_gr.get('SUB_DICT').length() == 0
+        inputs = [];
+        num_features = 0;
+    else
+        inputs = [];
+        for i = 1:1:nn_gr.get('SUB_DICT').length()
+            input = nn_gr.get('SUB_DICT').getItem(i).get('INPUT_FS');
+            input_per_sub = cellfun(@(x, y) x(y == 1), input, mask, 'UniformOutput', false);
+            input_per_sub = cell2mat(input_per_sub);
+            inputs = [inputs; input_per_sub'];
+        end
+        num_features = length(inputs(1, :));
+        inputs = reshape(inputs, [1, 1, num_features, nn_gr.get('SUB_DICT').length()]);
     end
-    num_features = length(inputs(1, :));
-    inputs = reshape(inputs, [1, 1, num_features, nn_gr.get('SUB_DICT').length()]);
 end
 function [targets, classes] = construct_targets(nn, nn_gr)
 %CONSTRUCT_INPUTS constructs the targets for NN
 %
 % INPUTS = CONSTRUCT_INPUTS(NN, NN_GR) constructs the targets.
 
-    targets = cellfun(@(x) x.get('TARGET'), nn_gr.get('SUB_DICT').getItems(), 'UniformOutput', false);
-    targets = categorical(targets);
-    classes = categories(targets);
+    if nn_gr.get('SUB_DICT').length() == 0
+        targets = [];
+        classes = [];
+    else
+        targets = cellfun(@(x) x.get('TARGET'), nn_gr.get('SUB_DICT').getItems(), 'UniformOutput', false);
+        targets = categorical(targets);
+        classes = categories(targets);
+    end
 end
