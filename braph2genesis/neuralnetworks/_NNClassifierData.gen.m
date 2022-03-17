@@ -162,7 +162,7 @@ else
     value = cell(size(data{1}));
     for k = 1:1:num_feature_cluster
         data_per_cluster = cellfun(@(v)v{k}, data, 'UniformOutput', false);
-        mask = zeros(size(data_per_cluster{1}));
+        mask = zeros(size(data_per_cluster{k}));
         if isempty(mask)
             value{k} = mask;
         else
