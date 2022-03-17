@@ -194,13 +194,13 @@ function update(pr, sliders_condition)
     else
         slider_tags = {'1'};
         if el.get('C').get('A1').getPropNumber() > 6
-            label = el.get('C').get('A1').getPropTag(7);
+            label = el.get('C').get('A1').getPropTag(el.get('C').get('A1').getPropNumber());
             if strcmp(label, 'thresholds')
                 label = 'Threshold';
             elseif strcmp(label, 'densities')
                 label = 'Density';
             end
-            slider_tags = compose("%g", round(el.get('C').get('A1').get(7), 2));
+            slider_tags = compose("%g", round(el.get('C').get('A1').get(el.get('C').get('A1').getPropNumber()), 2));
         else
             label = 'Weighted';
             set(pr.slider, ...
