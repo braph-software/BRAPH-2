@@ -268,6 +268,7 @@ function f_out = draw(gui, varargin)
             tmp = load(filename, '-mat', 'el');
             if strcmp(tmp.el.getClass(), el.getClass())
                 pe.reinit(tmp.el)
+                el = tmp.el;
                 gui.draw()
             else
                 GUI('PE', tmp.el, 'FILE', filename).draw()
