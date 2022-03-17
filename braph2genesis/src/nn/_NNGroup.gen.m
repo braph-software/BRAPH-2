@@ -14,7 +14,7 @@ Element, Subject, IndexedDictionary
 %% ¡props!
 
 %%% ¡prop!
-FEATURE_LABEL (metadata, string) is an feature label of the group of subjects.
+FEATURE_LABEL (metadata, string) is an feature label for feature mask.
 
 %%% ¡prop!
-FEATURE_MASK (metadata, cell) is an feature mask of the group of subjects.
+FEATURE_MASK (metadata, cell) is an feature mask for all the NN subjects in the group.
