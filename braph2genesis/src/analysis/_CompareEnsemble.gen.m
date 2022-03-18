@@ -25,6 +25,12 @@ pr = PlotPropString('EL', c, 'PROP', CompareEnsemble.NOTES, 'LINES', 'multi', 'E
 WAITBAR (metadata, logical) detemines whether to show the waitbar.
 
 %%% ¡prop!
+WAITBAR_MSG (metadata, string) detemines the waitbar message.
+
+%%% ¡prop!
+WAITBAR_PER (metadata, scalar) detemines the waitbar message percentage.
+
+%%% ¡prop!
 VERBOSE (metadata, logical) sets whether to write the progress of the comparisons.
 %%%% ¡default!
 false
@@ -100,6 +106,12 @@ function cp = getComparison(c, measure_class, varargin)
     %  comparison CP to retrieve the value of the comparison. 
     %
     % See also ComparisonEnsemble.
+    
+    waitbar = get_from_varargin([], 'waitbar', varargin{:});
+    
+    if ~isempty(waitbar)
+        c.set('waitbar', true);
+    end
 
     cp_dict = c.memorize('CP_DICT');
     if cp_dict.containsKey(measure_class)

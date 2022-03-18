@@ -255,11 +255,17 @@ function redraw(pr, varargin)
     [h, varargin] = get_and_remove_from_varargin(1.8, 'Height', varargin);
     [Dh, varargin] = get_and_remove_from_varargin(15, 'DHeight', varargin);
 
+    if pr.line_plot_tgl_btn.Visible == 'on'
+        extra = .2;
+    else
+        extra = 0;
+    end
+    
     if pr.get_button_condition()
         if  ~isempty(pr.measure_tbl) && isgraphics(pr.measure_tbl, 'uitable')
             set(pr.measure_tbl, ...
                 'Units', 'normalized', ...
-                'Position', [.01 .13 .98 (Dh/(h+Dh)-.27)] ...
+                'Position', [.01 .13 .98 (Dh/(h+Dh)-extra-.07)] ...
                 )
         end
         pr.redraw@PlotProp('Height', (h + Dh)*1.5, varargin{:})
@@ -267,7 +273,7 @@ function redraw(pr, varargin)
         if  ~isempty(pr.measure_tbl) && isgraphics(pr.measure_tbl, 'uitable')
             set(pr.measure_tbl, ...
                 'Units', 'normalized', ...
-                'Position', [.01 .13 .98 (Dh/(h+Dh)-.32)], ...
+                'Position', [.01 .13 .98 (Dh/(h+Dh)-extra-.12)], ...
                 'Visible', 'off' ...
                 )
         end
@@ -380,6 +386,7 @@ function cb_measure_calc(pr)
         close(wb)
     end
     pr.update();
+    pr.redraw();
 end
 function cb_graph_ui_figure(pr)
     % CB_GRAPH_UI_FIGURE draws a new figure to manage a plot graph.
