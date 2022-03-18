@@ -19,7 +19,6 @@ cp % measure
 
 %% ¡props!
 
-
 %%% ¡prop!
 PLOTTITLE(metadata, string) to set plot line title
 
@@ -179,8 +178,7 @@ function f_settings = settings(pr, varargin)
     
     h_p_min = [];
     h_fill_area = [];
-    h_p_max = [];
-    
+    h_p_max = [];    
     
     plot_properties_panel = uipanel(pr.h_settings, ...
         'Units', 'normalized', ...
