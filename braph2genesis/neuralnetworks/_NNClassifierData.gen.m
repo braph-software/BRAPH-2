@@ -77,8 +77,6 @@ train_nn_gr.set( ...
     'ID', nnd.get(nnGroup).get('ID'), ...
     'LABEL', nnd.get(nnGroup).get('LABEL'), ...
     'NOTES', nnd.get(nnGroup).get('NOTES'), ...
-    'FEATURE_LABEL', nnd.get(nnGroup).get('FEATURE_LABEL'), ...
-    'FEATURE_MASK', nnd.get(nnGroup).get('FEATURE_MASK') ...
     );
 
 % add subejcts from all groups
@@ -120,8 +118,6 @@ val_nn_gr.set( ...
     'ID', nnd.get(nnGroup).get('ID'), ...
     'LABEL', nnd.get(nnGroup).get('LABEL'), ...
     'NOTES', nnd.get(nnGroup).get('NOTES'), ...
-    'FEATURE_LABEL', nnd.get(nnGroup).get('FEATURE_LABEL'), ...
-    'FEATURE_MASK', nnd.get(nnGroup).get('FEATURE_MASK') ...
     );
 
 % add subejcts from all groups
@@ -153,19 +149,19 @@ FEATURE_SELECTION_ANALYSIS (result, cell) is an analysis for generating a featur
 percentile = cell2mat(nnd.get('FEATURE_MASK'));
 data = cellfun(@(x) x.get('INPUT'), nnd.get('TRAIN_NN_GR').get('SUB_DICT').getItems(), 'UniformOutput', false);
 
-if(isempty(data))
+if nnd.get('TRAIN_NN_GR').get('SUB_DICT').length == 0
     value = {};
 else
     y = cellfun(@(x) x.get('TARGET'), nnd.get('TRAIN_NN_GR').get('SUB_DICT').getItems(), 'UniformOutput', false);
-    y = onehotencode(categorical(y), 1);
+    %y = onehotencode(categorical(y), 1);
     num_feature_cluster = length(data{1});
     value = cell(size(data{1}));
     for k = 1:1:num_feature_cluster
         data_per_cluster = cellfun(@(v)v{k}, data, 'UniformOutput', false);
         mask = zeros(size(data_per_cluster{k}));
-        if isempty(mask)
-            value{k} = mask;
-        else
+% %         if isempty(mask)
+% %             value{k} = mask;
+% %         else
             for i = 1:numel(mask)
                 data_per_feature = cellfun(@(v)v(i), data_per_cluster);
                 label = y(1, :);
@@ -181,7 +177,7 @@ else
             mask(idx_all(1:num_top_idx)) = 1;
             mask(idx_all(num_top_idx:end)) = 0;
             value{k} = mask;
-        end
+% %         end
     end
 end
 

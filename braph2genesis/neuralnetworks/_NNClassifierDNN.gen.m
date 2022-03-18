@@ -61,7 +61,7 @@ PLOT_LAYERS (metadata, logical) is an option for the plot of the layers.
 false
 
 %%% ¡prop!
-INPUT_FORMAT (data, string) is the data format of network inputs.
+INPUT_FORMAT (data, string) is the data format of neural network inputs.
 %%%% ¡default!
 'BCSS'
 
@@ -142,21 +142,22 @@ function net = to_net(nn, saved_nn)
     [~, classes] = nn.construct_targets(nn.get('NN_GR'));
     net = to_net@NNBase(nn, saved_nn, nn.get('INPUT_FORMAT'), "classification", classes);
 end
-function [inputs, num_features] = construct_inputs(nn, nn_gr)
-%CONSTRUCT_INPUTS constructs the inputs for NN
+function [inputs, num_features] = reconstruct_inputs(nn, nn_gr)
+%CONSTRUCT_INPUTS reconstructs the inputs for NN
 %
-% [INPUTS, NUM_FEATURES] = CONSTRUCT_INPUTS(NN, NN_GR) constructs the
-%   inputs from NN_GR, NN group, by concatenating the INPUT of NN subjects.
-%   NUM_FEATURES is the number of features that go to the NN.
+% [INPUTS, NUM_FEATURES] = RECONSTRUCT_INPUTS(NN, NN_GR) reconstructs the
+%   inputs from NN group. According to the tyep of this fully-connected NN,
+%   this function will fatten the input into a vector for each datapoint.
 
-    mask = nn_gr.get('FEATURE_MASK');
     if nn_gr.get('SUB_DICT').length() == 0
         inputs = [];
         num_features = 0;
     else
+        mask = nn_gr.get('SUB_DICT').getItem(1).get('FEATURE_MASK');
         inputs = [];
-        for i = 1:1:nn_gr.get('SUB_DICT').length()
-            input = nn_gr.get('SUB_DICT').getItem(i).get('INPUT_FS');
+        inputs_tmp = nn_gr.get('INPUTS');
+        for i = 1:1:length(inputs_tmp)
+            input_per_sub = inputs_tmp(i);
             input_per_sub = cellfun(@(x, y) x(y == 1), input, mask, 'UniformOutput', false);
             input_per_sub = cell2mat(input_per_sub);
             inputs = [inputs; input_per_sub'];
