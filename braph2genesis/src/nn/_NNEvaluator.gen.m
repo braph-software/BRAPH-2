@@ -27,6 +27,6 @@ NN_GR (data, item) is a group of NN subjects that the NN will be evaluated on.
 'NNGroup'
 
 %%% ¡prop!
-NN_GR_PREDICTION (result, item) is a group of NN subjects obtained with the prediction from the neural network.
+NN_GR_PREDICTION (result, item) is a group of NN subjects containing the prediction from the neural network.
 %%%% ¡settings!
 'NNGroup'
