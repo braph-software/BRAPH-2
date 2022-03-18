@@ -316,6 +316,7 @@ function cb_measure_calc(pr)
         set_braph2_icon(wb)
     end
 
+    j = 1;
     for i = 1:length(pr.mlist)
         if ~ismember(pr.mlist(i), measure_short_list)
             continue;
@@ -323,8 +324,9 @@ function cb_measure_calc(pr)
 
         measure = pr.mlist{i};
         if pr.get('WAITBAR')
-            waitbar(.1 + .20 * i / length(pr.selected), wb, ['Calculating comparison ' measure ]);
+            waitbar(.1 + .20 * j / length(pr.selected), wb, ['Calculating comparison ' measure ]);
         end
+        j = j + 1;
         el.getComparison(measure).memorize('DIFF');
         el.getComparison(measure).memorize('P1');
         el.getComparison(measure).memorize('P2');
