@@ -41,6 +41,8 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 DENSITIES (parameter, rvector) is the vector of densities.
 %%%% ¡default!
 0
+%%%% ¡gui!
+pr = PlotPropSmartVector('EL', a, 'PROP', AnalyzeEnsemble_FUN_BUD.DENSITIES, 'MAX', 100, 'MIN', 0, varargin{:});
 
 %% ¡props_update!
 
