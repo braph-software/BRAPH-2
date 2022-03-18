@@ -107,12 +107,11 @@ function cp = getComparison(c, measure_class, varargin)
     %
     % See also ComparisonEnsemble.
     
-    wb = get_from_varargin([], 'waitbar', varargin{:});
+    [wb, varargin] = get_and_remove_from_varargin([], 'waitbar', varargin{:});
     
-    if ~isempty(waitbar)
+    if ~isempty(wb)
         c.set('waitbar', true);
-        c.set('WAITBAR_MSG', get(wb, 'Children').Title);
-        c.set('WAITBAR_PER', wb);
+        c.set('WAITBAR_MSG', get(wb, 'Children').Title.String);
     end
 
     cp_dict = c.memorize('CP_DICT');
