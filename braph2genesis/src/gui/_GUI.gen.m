@@ -268,6 +268,7 @@ function f_out = draw(gui, varargin)
             tmp = load(filename, '-mat', 'el');
             if strcmp(tmp.el.getClass(), el.getClass())
                 pe.reinit(tmp.el)
+                el = tmp.el; % update local variable 'el' to synchronize it with pe 'el'  
                 gui.draw()
             else
                 GUI('PE', tmp.el, 'FILE', filename).draw()
