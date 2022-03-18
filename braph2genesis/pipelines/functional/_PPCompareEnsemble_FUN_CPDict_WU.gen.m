@@ -179,7 +179,7 @@ function update(pr)
                 if pr.already_calculated{i}
                     row_names{i} = 'C';
                 else
-                    row_names{i} = 'NC';
+                    row_names{i} = '';
                 end
             end
             set(pr.measure_tbl, 'RowName', row_names)
@@ -318,6 +318,7 @@ function cb_measure_calc(pr)
         set_braph2_icon(wb)
     end
 
+    j = 1;
     for i = 1:length(pr.mlist)
         if ~ismember(pr.mlist(i), measure_short_list)
             continue;
@@ -325,8 +326,9 @@ function cb_measure_calc(pr)
 
         measure = pr.mlist{i};
         if pr.get('WAITBAR')
-            waitbar(.1 + .70 * i / length(pr.selected), wb, ['Calculating comparison ' measure ]);
+            waitbar(.1 + .20 * j / length(pr.selected), wb, ['Calculating comparison ' measure ]);
         end
+        j = j + 1;
         el.getComparison(measure).memorize('DIFF');
         el.getComparison(measure).get('P1');
         el.getComparison(measure).get('P2');

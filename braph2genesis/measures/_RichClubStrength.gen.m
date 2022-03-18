@@ -5,7 +5,7 @@ RichClubStrength < Strength (m, rich-club strength) is the graph rich-club stren
 The rich-club strength of a node at level s is the sum of the weighted edges 
 that connect nodes of strength s or higher within a layer.
 s is set by the user and it can be a vector containting all the strength thresholds
-the default value is equal to 1 
+the default value is equal to 1.
 
 %%% ¡shape!
 shape = Measure.NODAL;
