@@ -147,14 +147,15 @@ function [inputs, num_features] = construct_inputs(nn, nn_gr)
 %   inputs from NN_GR, NN group, by concatenating the INPUT of NN subjects.
 %   NUM_FEATURES is the number of features that go to the NN.
 
-    mask = nn_gr.get('FEATURE_MASK');
     if nn_gr.get('SUB_DICT').length() == 0
         inputs = [];
         num_features = 0;
     else
+        mask = nn_gr.get('SUB_DICT').getItem(1).get('FEATURE_MASK');
         inputs = [];
+        inputs_tmp = nn_gr.get('INPUTS');
         for i = 1:1:nn_gr.get('SUB_DICT').length()
-            input = nn_gr.get('SUB_DICT').getItem(i).get('INPUT_FS');
+            input = inputs_tmp(i);
             input_per_sub = cellfun(@(x, y) x(y == 1), input, mask, 'UniformOutput', false);
             input_per_sub = cell2mat(input_per_sub);
             inputs = [inputs; input_per_sub'];
@@ -170,12 +171,13 @@ function [targets, classes] = construct_targets(nn, nn_gr)
 %  from NN_GR, NN group, by concatenating the TARGET of NN Subjects.
 %  CLASSES is the categories name of the unique targets.
     
-    classes = [];
     if nn_gr.get('SUB_DICT').length() == 0
         targets = [];
+        classes = [];
     else
-        targets = cellfun(@(x) str2num(x.get('TARGET')), nn_gr.get('SUB_DICT').getItems(), 'UniformOutput', false);
-        targets = cell2mat(targets);
+        targets = cellfun(@(x) x.get('TARGET'), nn_gr.get('SUB_DICT').getItems(), 'UniformOutput', false);
+        %targets = cell2mat(targets);
         targets = targets';
+        classes = categories(categorical(cellfun(@(x) x.get('TARGET_NAME'), nn_gr.get('SUB_DICT').getItems(), 'UniformOutput', false)));
     end
 end

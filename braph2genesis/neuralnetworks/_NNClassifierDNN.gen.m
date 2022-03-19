@@ -13,14 +13,9 @@ LAYERS (data, rvector) is a vector representing the number of neurons in each la
 []
 %%%% ¡postprocessing!
 if isempty(nn.get('LAYERS'))
-    inputs = nn.get('NN_GR').get('SUB_DICT').getItems();
-    if ~isempty(inputs)
-        input = inputs{1}.get('INPUT_FS');
-        mask = nn.get('NN_GR').get('FEATURE_MASK');
-        input_per_sub = cellfun(@(x, y) x(y == 1), input, mask, 'UniformOutput', false);
-        input_per_sub = cell2mat(input_per_sub);
-        numFeature = length(input_per_sub);
-        value = [floor(1.5 * numFeature) floor(1.5 * numFeature)];
+    if nn.get('NN_GR').get('SUB_DICT').length() > 0
+        [inputs, num_features] = nn.reconstruct_inputs(nn.get('NN_GR'));
+        value = [floor(1.5 * num_features) floor(1.5 * num_features)];
         nn.set('LAYERS', value);
     end
 end
@@ -79,6 +74,7 @@ if nn.check_nn_toolboxes()
         [inputs, num_features] = nn.construct_inputs(nn_gr);
         [targets, classes] = nn.construct_targets(nn_gr);
         numClasses = length(classes);
+        targets = onehotdecode(targets, classes, 1);
         
         % init layers
         numLayer = nn.get('LAYERS');
@@ -139,7 +135,7 @@ function net = to_net(nn, saved_nn)
     %  Typically, this method is called internally when a saved neural 
     %  network model is evaluated by a test data.
     
-    [~, classes] = nn.construct_targets(nn.get('NN_GR'));
+    [~, classes] = nn.reconstruct_targets(nn.get('NN_GR'));
     net = to_net@NNBase(nn, saved_nn, nn.get('INPUT_FORMAT'), "classification", classes);
 end
 function [inputs, num_features] = reconstruct_inputs(nn, nn_gr)
@@ -157,7 +153,7 @@ function [inputs, num_features] = reconstruct_inputs(nn, nn_gr)
         inputs = [];
         inputs_tmp = nn_gr.get('INPUTS');
         for i = 1:1:length(inputs_tmp)
-            input_per_sub = inputs_tmp(i);
+            input = inputs_tmp{i};
             input_per_sub = cellfun(@(x, y) x(y == 1), input, mask, 'UniformOutput', false);
             input_per_sub = cell2mat(input_per_sub);
             inputs = [inputs; input_per_sub'];
@@ -166,7 +162,7 @@ function [inputs, num_features] = reconstruct_inputs(nn, nn_gr)
         inputs = reshape(inputs, [1, 1, num_features, nn_gr.get('SUB_DICT').length()]);
     end
 end
-function [targets, classes] = construct_targets(nn, nn_gr)
+function [targets, classes] = reconstruct_targets(nn, nn_gr)
 %CONSTRUCT_INPUTS constructs the targets for NN
 %
 % [TARGETS, CLASSES] = CONSTRUCT_TARGETS(NN, NN_GR) constructs the targets
@@ -177,8 +173,8 @@ function [targets, classes] = construct_targets(nn, nn_gr)
         targets = [];
         classes = [];
     else
-        targets = cellfun(@(x) x.get('TARGET'), nn_gr.get('SUB_DICT').getItems(), 'UniformOutput', false);
-        targets = categorical(targets);
-        classes = categories(targets);
+        targets = cellfun(@(x) cell2mat(x.get('TARGET')), nn_gr.get('SUB_DICT').getItems(), 'UniformOutput', false); 
+        targets = cell2mat(targets);
+        classes = categories(categorical(cellfun(@(x) x.get('TARGET_NAME'), nn_gr.get('SUB_DICT').getItems(), 'UniformOutput', false)));
     end
 end

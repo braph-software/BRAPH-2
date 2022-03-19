@@ -27,7 +27,12 @@ end
 %%% ¡prop!
 FEATURE_MAP (result, cell) is a feature map obtained with feature selection analysis.
 %%%% ¡calculate!
-value = nne.get('NN_GR').get('FEATURE_MASK');
+sub_dict = nne.get('NN_GR').get('SUB_DICT');
+if sub_dict.length() == 0
+    value = {};
+else
+    value = sub_dict.getItem(1).get('FEATURE_MASK');
+end
 % % % selected_idx = nne.get('NNDATA').get('FEATURE_MASK');
 % % % if length(selected_idx) == 1 && abs(selected_idx) <= 1
 % % %     selected_idx = nne.get('NNDATA').get('FEATURE_MASK_ANALYSIS');
@@ -121,9 +126,7 @@ else
     nn_gr_pred.set( ...
         'ID', nn_gr.get('ID'), ...
         'LABEL', nn_gr.get('LABEL'), ...
-        'NOTES', nn_gr.get('NOTES'), ...
-        'FEATURE_LABEL', nn_gr.get('FEATURE_LABEL'), ...
-        'FEATURE_MASK', nn_gr.get('FEATURE_MASK') ...
+        'NOTES', nn_gr.get('NOTES') ...
         );
 
     % add subejcts

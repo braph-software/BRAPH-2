@@ -13,9 +13,9 @@ Group, NNSubject
 %% ¡props!
 
 %%% ¡prop!
-INPUTS (data, cell) is an feature label for feature mask.
+INPUTS (result, cell) is an feature label for feature mask.
 %%%% ¡calculate!
-if nn_gr.get('SUB_DICT').length() == 0
+if gr.get('SUB_DICT').length() == 0
     inputs = {};
 else
     inputs = cellfun(@(x) x.get('MASKED_INPUT'), gr.get('SUB_DICT').getItems(), 'UniformOutput', false);
@@ -24,9 +24,9 @@ end
 value = inputs;
 
 %%% ¡prop!
-TARGETS (data, cell) is an feature mask for all the NN subjects in the group.
+TARGETS (result, cell) is an feature mask for all the NN subjects in the group.
 %%%% ¡calculate!
-if nn_gr.get('SUB_DICT').length() == 0
+if gr.get('SUB_DICT').length() == 0
     targets = {};
 else
     targets = cellfun(@(x) x.get('TARGET'), gr.get('SUB_DICT').getItems(), 'UniformOutput', false);

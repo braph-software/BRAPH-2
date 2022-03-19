@@ -21,6 +21,11 @@ GR2 (data, item) is a group of subjects.
 'Group'
 
 %%% ¡prop!
+TARGET_NAME (data, string) is the name of the traget.
+%%%% ¡default!
+'diagnosis'
+
+%%% ¡prop!
 SPLIT_GR1 (data, rvector) is a ratio or a vector stating which subjects belong to validation set.
 %%%% ¡conditioning!
 if length(value) == 1 & value < 1
@@ -76,26 +81,38 @@ train_nn_gr = NNGroup( ...
 train_nn_gr.set( ...
     'ID', nnd.get(nnGroup).get('ID'), ...
     'LABEL', nnd.get(nnGroup).get('LABEL'), ...
-    'NOTES', nnd.get(nnGroup).get('NOTES'), ...
+    'NOTES', nnd.get(nnGroup).get('NOTES') ...
     );
 
 % add subejcts from all groups
 sub_dict = train_nn_gr.get('SUB_DICT');
 
-subs = nnd.memorize('NN_GR1').get('SUB_DICT').getItems();
-selected_idx = setdiff(1:length(subs), nnd.get('SPLIT_GR1'));
-selected_subs = subs(selected_idx);
-for i = 1:1:length(selected_subs)
-    sub = selected_subs{i};
-    sub_dict.add(sub);
+if nnd.memorize('NN_GR1').get('SUB_DICT').length() > 0
+    subs = nnd.memorize('NN_GR1').get('SUB_DICT').getItems();
+    selected_idx = setdiff(1:length(subs), nnd.get('SPLIT_GR1'));
+    selected_subs = subs(selected_idx);
+    for i = 1:1:length(selected_subs)
+        sub = selected_subs{i};
+        sub_dict.add(sub);
+    end
 end
 
-subs = nnd.memorize('NN_GR2').get('SUB_DICT').getItems();
-selected_idx = setdiff(1:length(subs), nnd.get('SPLIT_GR2'));
-selected_subs = subs(selected_idx);
-for i = 1:1:length(selected_subs)
-    sub = selected_subs{i};
-    sub_dict.add(sub);
+if nnd.memorize('NN_GR2').get('SUB_DICT').length() > 0
+    subs = nnd.memorize('NN_GR2').get('SUB_DICT').getItems();
+    selected_idx = setdiff(1:length(subs), nnd.get('SPLIT_GR2'));
+    selected_subs = subs(selected_idx);
+    for i = 1:1:length(selected_subs)
+        sub = selected_subs{i};
+        sub_dict.add(sub);
+    end
+end
+
+if sub_dict.length() > 0
+    target_names = cellfun(@(x) x.get('TARGET_NAME'), sub_dict.getItems(), 'UniformOutput', false);
+    targets = onehotencode(categorical(target_names), 1);
+    for i = 1:1:sub_dict.length()
+        sub_dict.getItem(i).set('TARGET', {targets(:, i)});
+    end
 end
 
 train_nn_gr.set('SUB_DICT', sub_dict);
@@ -117,26 +134,38 @@ val_nn_gr = NNGroup( ...
 val_nn_gr.set( ...
     'ID', nnd.get(nnGroup).get('ID'), ...
     'LABEL', nnd.get(nnGroup).get('LABEL'), ...
-    'NOTES', nnd.get(nnGroup).get('NOTES'), ...
+    'NOTES', nnd.get(nnGroup).get('NOTES') ...
     );
 
 % add subejcts from all groups
 sub_dict = val_nn_gr.get('SUB_DICT');
 
-subs = nnd.memorize('NN_GR1').get('SUB_DICT').getItems();
-selected_idx = nnd.get('SPLIT_GR1');
-selected_subs = subs(selected_idx);
-for i = 1:1:length(selected_subs)
-    sub = selected_subs{i};
-    sub_dict.add(sub);
+if nnd.memorize('NN_GR1').get('SUB_DICT').length() > 0
+    subs = nnd.memorize('NN_GR1').get('SUB_DICT').getItems();
+    selected_idx = nnd.get('SPLIT_GR1');
+    selected_subs = subs(selected_idx);
+    for i = 1:1:length(selected_subs)
+        sub = selected_subs{i};
+        sub_dict.add(sub);
+    end
 end
 
-subs = nnd.memorize('NN_GR2').get('SUB_DICT').getItems();
-selected_idx = nnd.get('SPLIT_GR2');
-selected_subs = subs(selected_idx);
-for i = 1:1:length(selected_subs)
-    sub = selected_subs{i};
-    sub_dict.add(sub);
+if nnd.memorize('NN_GR2').get('SUB_DICT').length() > 0
+    subs = nnd.memorize('NN_GR2').get('SUB_DICT').getItems();
+    selected_idx = nnd.get('SPLIT_GR2');
+    selected_subs = subs(selected_idx);
+    for i = 1:1:length(selected_subs)
+        sub = selected_subs{i};
+        sub_dict.add(sub);
+    end
+end
+
+if sub_dict.length() > 0
+    target_names = cellfun(@(x) x.get('TARGET_NAME'), sub_dict.getItems(), 'UniformOutput', false);
+    targets = onehotencode(categorical(target_names), 1);
+    for i = 1:1:sub_dict.length()
+        sub_dict.getItem(i).set('TARGET', {targets(:, i)});
+    end
 end
 
 val_nn_gr.set('SUB_DICT', sub_dict);
@@ -152,19 +181,17 @@ data = cellfun(@(x) x.get('INPUT'), nnd.get('TRAIN_NN_GR').get('SUB_DICT').getIt
 if nnd.get('TRAIN_NN_GR').get('SUB_DICT').length == 0
     value = {};
 else
-    y = cellfun(@(x) x.get('TARGET'), nnd.get('TRAIN_NN_GR').get('SUB_DICT').getItems(), 'UniformOutput', false);
-    %y = onehotencode(categorical(y), 1);
+    y = cellfun(@(x) cell2mat(x.get('TARGET')), nnd.get('TRAIN_NN_GR').get('SUB_DICT').getItems(), 'UniformOutput', false);
+    y = cell2mat(y);
+    label = y(1, :);
     num_feature_cluster = length(data{1});
     value = cell(size(data{1}));
     for k = 1:1:num_feature_cluster
         data_per_cluster = cellfun(@(v)v{k}, data, 'UniformOutput', false);
         mask = zeros(size(data_per_cluster{k}));
-% %         if isempty(mask)
-% %             value{k} = mask;
-% %         else
+        if ~isempty(mask)
             for i = 1:numel(mask)
                 data_per_feature = cellfun(@(v)v(i), data_per_cluster);
-                label = y(1, :);
                 if(any(isinf(data_per_feature)))
                     mask(i) = 0;
                 else
@@ -172,12 +199,12 @@ else
                 end
             end
 
-            [~,idx_all] = sort(mask(:), 'descend');
+            [~, idx_all] = sort(mask(:), 'descend');
             num_top_idx = ceil(percentile * numel(mask));
             mask(idx_all(1:num_top_idx)) = 1;
             mask(idx_all(num_top_idx:end)) = 0;
-            value{k} = mask;
-% %         end
+        end
+        value{k} = mask;
     end
 end
 
@@ -194,10 +221,9 @@ if length(feature_mask) == 1 && length(cell2mat(feature_mask(1))) == 1 % given p
     feature_mask = nnd.memorize('FEATURE_SELECTION_ANALYSIS');
 end
 
-if(isempty(feature_mask))
+if isempty(feature_mask)
     value = NNGroup();
 else
-    nn_gr_copy.set('FEATURE_MASK', feature_mask);
     for i = 1:1:nn_gr_copy.get('SUB_DICT').length()
         input = nn_gr_copy.get('SUB_DICT').getItem(i).get('INPUT');
         num_feature_cluster = length(input);
@@ -208,7 +234,8 @@ else
             input_per_cluster(mask_per_cluster == 0) = 0;
             input_masked{j} = input_per_cluster;
         end
-        nn_gr_copy.get('SUB_DICT').getItem(i).set('INPUT_FS', input_masked);
+        %nn_gr_copy.get('SUB_DICT').getItem(i).set('INPUT_FS', input_masked);
+        nn_gr_copy.get('SUB_DICT').getItem(i).set('FEATURE_MASK', feature_mask);
     end
     value = nn_gr_copy;
 end
@@ -226,10 +253,9 @@ if length(feature_mask) == 1 && length(cell2mat(feature_mask(1))) == 1 % given p
     feature_mask = nnd.memorize('FEATURE_SELECTION_ANALYSIS');
 end
 
-if(isempty(feature_mask))
+if isempty(feature_mask)
     value = NNGroup();
 else
-    nn_gr_copy.set('FEATURE_MASK', feature_mask);
     for i = 1:1:nn_gr_copy.get('SUB_DICT').length()
         input = nn_gr_copy.get('SUB_DICT').getItem(i).get('INPUT');
         num_feature_cluster = length(input);
@@ -240,7 +266,8 @@ else
             input_per_cluster(mask_per_cluster == 0) = 0;
             input_masked{j} = input_per_cluster;
         end
-        nn_gr_copy.get('SUB_DICT').getItem(i).set('INPUT_FS', input_masked);
+        %nn_gr_copy.get('SUB_DICT').getItem(i).set('INPUT_FS', input_masked);
+        nn_gr_copy.get('SUB_DICT').getItem(i).set('FEATURE_MASK', feature_mask);
     end
     value = nn_gr_copy;
 end

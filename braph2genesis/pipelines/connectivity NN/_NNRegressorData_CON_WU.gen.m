@@ -39,48 +39,49 @@ if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
     atlas = gr.get('SUB_DICT').getItem(1).get('BA');
 end
 
-nn_sub_dict = nn_gr.get('SUB_DICT');
+if gr.get('SUB_DICT').length() > 0
+    nn_sub_dict = nn_gr.get('SUB_DICT');
+    for i = 1:1:gr.get('SUB_DICT').length()
+    	sub = gr.get('SUB_DICT').getItem(i);
+        g = GraphWU( ...
+            'ID', ['g ' sub.get('ID')], ...
+            'BRAINATLAS', atlas, ...
+            'B', Callback('EL', sub, 'TAG', 'CON') ...
+            );
 
-for i = 1:1:gr.get('SUB_DICT').length()
-	sub = gr.get('SUB_DICT').getItem(i);
-    g = GraphWU( ...
-        'ID', ['g ' sub.get('ID')], ...
-        'BRAINATLAS', atlas, ...
-        'B', Callback('EL', sub, 'TAG', 'CON') ...
-        );
-    
-    if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
-        input = g.get('A'); 
+        if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
+            input = g.get('A');
 
-    elseif string(nnd.get('INPUT_TYPE')) == "graph_measures"
-        input_nodal = [];
-        input_binodal = [];
-        input_global = [];
-        mlist = nnd.get('MEASURES');
-        for j = 1:length(mlist)
-            if Measure.is_nodal(mlist{j})
-                input_nodal = [input_nodal; cell2mat(g.getMeasure(mlist{j}).get('M'))];
-            elseif Measure.is_global(mlist{j})
-                input_global = [input_global; cell2mat(g.getMeasure(mlist{j}).get('M'))];
-            else
-                input_binodal = [input_binodal; cell2mat(g.getMeasure(mlist{j}).get('M'))];
+        elseif string(nnd.get('INPUT_TYPE')) == "graph_measures"
+            input_nodal = [];
+            input_binodal = [];
+            input_global = [];
+            mlist = nnd.get('MEASURES');
+            for j = 1:length(mlist)
+                if Measure.is_nodal(mlist{j})
+                    input_nodal = [input_nodal; cell2mat(g.getMeasure(mlist{j}).get('M'))];
+                elseif Measure.is_global(mlist{j})
+                    input_global = [input_global; cell2mat(g.getMeasure(mlist{j}).get('M'))];
+                else
+                    input_binodal = [input_binodal; cell2mat(g.getMeasure(mlist{j}).get('M'))];
+                end
             end
+            input = {input_nodal input_global input_binodal};
         end
-        input = {input_nodal input_global input_binodal};
-    end
 
-    nn_sub = NNSubject( ...
-        'ID', [sub.get('ID') ' in ' gr.get('ID')], ...
-        'BA', atlas, ...
-        'age', sub.get('age'), ...
-        'sex', sub.get('sex'), ...
-        'G', g, ...
-        'INPUT', input, ...
-        'TARGET', num2str(sub.get(nnd.get('TARGET_NAME'))) ...
-        );
-    nn_sub_dict.add(nn_sub);
+        nn_sub = NNSubject( ...
+            'ID', [sub.get('ID') ' in ' gr.get('ID')], ...
+            'BA', atlas, ...
+            'age', sub.get('age'), ...
+            'sex', sub.get('sex'), ...
+            'G', g, ...
+            'INPUT', input, ...
+            'TARGET', sub.get(nnd.get('TARGET_NAME')) ...
+            );
+        nn_sub_dict.add(nn_sub);
+    end
+    nn_gr.set('sub_dict', nn_sub_dict);
 end
-nn_gr.set('sub_dict', nn_sub_dict);
 
 value = nn_gr;
 

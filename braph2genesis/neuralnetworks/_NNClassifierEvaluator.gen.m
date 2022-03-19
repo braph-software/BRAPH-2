@@ -31,10 +31,11 @@ if nne.get('NN_GR_PREDICTION').get('SUB_DICT').length() == 0
 else
     pred = cellfun(@(x) cell2mat(x.get('PREDICTION'))', nne.memorize('NN_GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
     pred = cell2mat(pred);
-    y = cellfun(@(x) x.get('TARGET'), nne.memorize('NN_GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
-    y = categorical(y);
-    classes = categories(y);
-    targets = onehotencode(y, 1);
+    nn = nne.get('NN');
+    nn_gr = nne.get('NN_GR');
+    [inputs, ~] = nn.reconstruct_inputs(nn_gr);
+    [targets, classes] = nn.reconstruct_targets(nn_gr);
+    targets = onehotdecode(targets, classes, 1);
     [X, Y, T, auc] = perfcurve(y, pred(2, :), classes(2));
     if nne.get('PLOT_ROC')
         plot(X, Y, 'LineWidth', 3.0, 'Color', 'Black')
@@ -65,13 +66,12 @@ else
     pred = pred > 0.5;
 
     % get ground truth
-    y = cellfun(@(x) x.get('TARGET'), nne.get('NN_GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
-    y = categorical(y);
-    classes = categories(y);
-    targets = onehotencode(y, 1);
-    %targets_mark = categories(onehotdecode(targets, classes, 2));
+    nn = nne.get('NN');
+    nn_gr = nne.get('NN_GR');
+    [inputs, ~] = nn.reconstruct_inputs(nn_gr);
+    [targets, classes] = nn.reconstruct_targets(nn_gr);
     % calculate the confusion matrix
-    [cm, order] = confusionmat(targets(2, :), double(pred(2, :)));
+    [cm, order] = confusionmat(targets, double(pred(2, :)));
     if nne.get('PLOT_CM')
         figure
         heatmap(classes, classes, cm)
@@ -89,7 +89,13 @@ end
 %%% ¡prop!
 FEATURE_MAP (result, cell) is a feature map obtained with feature selection analysis.
 %%%% ¡calculate!
-value = nne.get('NN_GR').get('FEATURE_MASK');
+sub_dict = nne.get('NN_GR').get('SUB_DICT');
+if sub_dict.length() == 0
+    value = {};
+else
+    value = sub_dict.getItem(1).get('FEATURE_MASK');
+end
+
 % % mask = nne.get('NN_GR_PREDICTION').get('FEATURE_MASK');
 % % if ~isempty(selected_idx)
 % %     switch string(nne.get('NNDATA').get('INPUT_TYPE'))
@@ -164,7 +170,7 @@ if nne.get('NN_GR').get('SUB_DICT').length() == 0
 else
     nn = nne.get('NN');
     nn_gr = nne.get('NN_GR');
-    inputs = nn.construct_inputs(nn_gr);
+    inputs = nn.reconstruct_inputs(nn_gr);
     net = nn.to_net(nn.get('MODEL'));
     predictions = net.predict(inputs);
 
@@ -176,9 +182,7 @@ else
     nn_gr_pred.set( ...
         'ID', nn_gr.get('ID'), ...
         'LABEL', nn_gr.get('LABEL'), ...
-        'NOTES', nn_gr.get('NOTES'), ...
-        'FEATURE_LABEL', nn_gr.get('FEATURE_LABEL'), ...
-        'FEATURE_MASK', nn_gr.get('FEATURE_MASK') ...
+        'NOTES', nn_gr.get('NOTES') ...
         );
 
     % add subejcts from all groups
