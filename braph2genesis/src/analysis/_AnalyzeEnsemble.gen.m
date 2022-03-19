@@ -41,11 +41,11 @@ ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
 %%%% ¡calculate!
 value = IndexedDictionary('IT_CLASS', 'MeasureEnsemble', 'IT_KEY', 4);
 %%%% ¡gui!
-g = a.get('G_Dict').getItem(1);
-if g.getGraphType() == 4
-    pr = PPAnalyzeEnsembleMP_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble.ME_DICT, 'WAITBAR', true, varargin{:});
-else
+s_c = a.get('gr').get('sub_class');
+if isequal(s_c, 'SubjectCON') || isequal(s_c, 'SubjectFUN')
     pr = PPAnalyzeEnsemble_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble.ME_DICT, 'WAITBAR', true, varargin{:});
+else
+    pr = PPAnalyzeEnsembleMP_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble.ME_DICT, 'WAITBAR', true, varargin{:});
 end
 
 %% ¡methods!
