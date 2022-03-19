@@ -17,9 +17,9 @@ LABEL (metadata, string) is an extended label of the neural network.
 NOTES (metadata, string) are some specific notes about the neural network.
 
 %%% ¡prop!
-NNDATA (data, item) is a dataset for neural networks.
+NN_GR (data, item) is a group of NN subjects containing the information for training the neural network.
 %%%% ¡settings!
-'NNData'
+'NNGroup'
 
 %%% ¡prop!
 MODEL (result, cell) is a trained neural network.
@@ -137,6 +137,6 @@ pred_from_original_net = predict(net, img);
 net_braph = NNBase().to_net(NNBase().from_net(squeezenet));
 pred_from_braph = predict(net_braph, img);
 
-assert(isequal(pred_from_original_net, pred_from_braph), ...
+assert(max(abs(pred_from_braph - pred_from_original_net)) < 1E-06, ...
     [BRAPH2.STR ':NNBase:' BRAPH2.BUG_ERR], ...
     'Prediction is not being calculated correctly for neural networks.')

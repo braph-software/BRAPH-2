@@ -17,17 +17,16 @@ LABEL (metadata, string) is an extended label of the evaluator.
 NOTES (metadata, string) are some specific notes about the evaluator.
 
 %%% ¡prop!
-NNDATA (data, item) is a dataset for neural networks.
-%%%% ¡settings!
-'NNData'
-
-%%% ¡prop!
-NN (data, item) is a neural network model that needs to be evaluated.
+NN (data, item) is a neural network model to be evaluated.
 %%%% ¡settings!
 'NNBase'
 
 %%% ¡prop!
-PREDICTION (result, matrix) is the predictions from a neural network.
+NN_GR (data, item) is a group of NN subjects that the NN will be evaluated on.
+%%%% ¡settings!
+'NNGroup'
 
 %%% ¡prop!
-VAL_PREDICTION (result, matrix) is the predictions from a neural network for validation set.
+NN_GR_PREDICTION (result, item) is a group of NN subjects containing the prediction from the neural network.
+%%%% ¡settings!
+'NNGroup'
