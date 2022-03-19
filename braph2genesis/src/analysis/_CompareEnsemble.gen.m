@@ -25,12 +25,6 @@ pr = PlotPropString('EL', c, 'PROP', CompareEnsemble.NOTES, 'LINES', 'multi', 'E
 WAITBAR (metadata, logical) detemines whether to show the waitbar.
 
 %%% ¡prop!
-WAITBAR_MSG (metadata, string) detemines the waitbar message.
-
-%%% ¡prop!
-WAITBAR_PER (metadata, scalar) detemines the waitbar message percentage.
-
-%%% ¡prop!
 VERBOSE (metadata, logical) sets whether to write the progress of the comparisons.
 %%%% ¡default!
 false
@@ -111,7 +105,6 @@ function cp = getComparison(c, measure_class, varargin)
     
     if ~isempty(wb)
         c.set('waitbar', true);
-        c.set('WAITBAR_MSG', get(wb, 'Children').Title.String);
     end
 
     cp_dict = c.memorize('CP_DICT');
