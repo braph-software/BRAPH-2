@@ -2,14 +2,12 @@
 NNClassifierData_FUN_WU < NNClassifierData (nnd, data of a neural network classifier with functional data) produces a dataset to a neural netowrk classifier using functional data. 
 
 %% ¡description!
-This dataset can be used to train or test a neural network classifier. The
-INPUTS and TARGETS are the two cells for trianing a neurla network. The INPUTS 
-cell is obtained direcly from functional adjacency matrices, and it is represented as 
-floating point feature cell. Feature selection procedure can be implemented 
-when constructing the INPUTS. The TARGETS cell holds the target values for 
-the trianing samples. 
+This dataset produces NN groups with functional data.
+The dataset produces NN groups for trianing or testing a neurla network
+with functional data. 
 
 %% ¡props!
+
 %%% ¡prop!
 REPETITION(parameter, scalar) is the number of repetitions
 %%%% ¡default!
@@ -39,179 +37,190 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST
 Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 
 %% ¡props_update!
-%%% ¡prop!
-TRAIN_G_DICT_1 (result, idict) is the graph (GraphWU) from subject group 1 in training set.
-%%%% ¡settings!
-'GraphWU'
-%%%% ¡default!
-IndexedDictionary('IT_CLASS', 'GraphWU')
-%%%% ¡calculate!
-g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
-gr = nnd.get('TRAIN_GR1');
-T = nnd.get('REPETITION');
-fmin = nnd.get('FREQUENCYRULEMIN');
-fmax = nnd.get('FREQUENCYRULEMAX');
-atlas = BrainAtlas();
-if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-    atlas = gr.get('SUB_DICT').getItem(1).get('BA');
-end
-for i = 1:1:gr.get('SUB_DICT').length()
-	sub = gr.get('SUB_DICT').getItem(i);
-    data = sub.getr('FUN');
-    fs = 1 / T;
-    
-    if fmax > fmin && T > 0
-        NFFT = 2 * ceil(size(data, 1) / 2);
-        ft = fft(data, NFFT);  % Fourier transform
-        f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
-        ft(f < fmin | f > fmax, :) = 0;
-        data = ifft(ft, NFFT);
-    end
-    
-    A = Correlation.getAdjacencyMatrix(data, nnd.get('CORRELATION_RULE'), nnd.get('NEGATIVE_WEIGHT_RULE'));
-    
-    g = GraphWU( ...
-        'ID', ['g ' sub.get('ID')], ...
-        'B', A, ...
-        'BRAINATLAS', atlas ...
-        );
-    g_dict.add(g)
-end
-
-value = g_dict;
 
 %%% ¡prop!
-TRAIN_G_DICT_2 (result, idict) is the graph (GraphWU) from subject group 2 in training set.
-%%%% ¡settings!
-'GraphWU'
-%%%% ¡default!
-IndexedDictionary('IT_CLASS', 'GraphWU')
-%%%% ¡calculate!
-g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
-gr = nnd.get('TRAIN_GR2');
-T = nnd.get('REPETITION');
-fmin = nnd.get('FREQUENCYRULEMIN');
-fmax = nnd.get('FREQUENCYRULEMAX');
-atlas = BrainAtlas();
-if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-    atlas = gr.get('SUB_DICT').getItem(1).get('BA');
-end
-for i = 1:1:gr.get('SUB_DICT').length()
-	sub = gr.get('SUB_DICT').getItem(i);
-    data = sub.getr('FUN');
-    fs = 1 / T;
-    
-    if fmax > fmin && T > 0
-        NFFT = 2 * ceil(size(data, 1) / 2);
-        ft = fft(data, NFFT);  % Fourier transform
-        f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
-        ft(f < fmin | f > fmax, :) = 0;
-        data = ifft(ft, NFFT);
-    end
-    
-    A = Correlation.getAdjacencyMatrix(data, nnd.get('CORRELATION_RULE'), nnd.get('NEGATIVE_WEIGHT_RULE'));
-    
-    g = GraphWU( ...
-        'ID', ['g ' sub.get('ID')], ...
-        'B', A, ...
-        'BRAINATLAS', atlas ...
-        );
-    g_dict.add(g)
-end
-
-value = g_dict;
-
-%%% ¡prop!
-VAL_G_DICT_1 (result, idict) is the graph (GraphWU) from subject group 1 in validation set.
-%%%% ¡settings!
-'GraphWU'
-%%%% ¡default!
-IndexedDictionary('IT_CLASS', 'GraphWU')
-%%%% ¡calculate!
-g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
-gr = nnd.get('VAL_GR1');
-T = nnd.get('REPETITION');
-fmin = nnd.get('FREQUENCYRULEMIN');
-fmax = nnd.get('FREQUENCYRULEMAX');
-atlas = BrainAtlas();
-if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-    atlas = gr.get('SUB_DICT').getItem(1).get('BA');
-end
-for i = 1:1:gr.get('SUB_DICT').length()
-	sub = gr.get('SUB_DICT').getItem(i);
-    data = sub.getr('FUN');
-    fs = 1 / T;
-    
-    if fmax > fmin && T > 0
-        NFFT = 2 * ceil(size(data, 1) / 2);
-        ft = fft(data, NFFT);  % Fourier transform
-        f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
-        ft(f < fmin | f > fmax, :) = 0;
-        data = ifft(ft, NFFT);
-    end
-    
-    A = Correlation.getAdjacencyMatrix(data, nnd.get('CORRELATION_RULE'), nnd.get('NEGATIVE_WEIGHT_RULE'));
-    
-    g = GraphWU( ...
-        'ID', ['g ' sub.get('ID')], ...
-        'B', A, ...
-        'BRAINATLAS', atlas ...
-        );
-    g_dict.add(g)
-end
-
-value = g_dict;
-
-%%% ¡prop!
-VAL_G_DICT_2 (result, idict) is the graph (GraphWU) from subject group 2 in validation set.
-%%%% ¡settings!
-'GraphWU'
-%%%% ¡default!
-IndexedDictionary('IT_CLASS', 'GraphWU')
-%%%% ¡calculate!
-g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
-gr = nnd.get('VAL_GR2');
-T = nnd.get('REPETITION');
-fmin = nnd.get('FREQUENCYRULEMIN');
-fmax = nnd.get('FREQUENCYRULEMAX');
-atlas = BrainAtlas();
-if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-    atlas = gr.get('SUB_DICT').getItem(1).get('BA');
-end
-for i = 1:1:gr.get('SUB_DICT').length()
-	sub = gr.get('SUB_DICT').getItem(i);
-    data = sub.getr('FUN');
-    fs = 1 / T;
-    
-    if fmax > fmin && T > 0
-        NFFT = 2 * ceil(size(data, 1) / 2);
-        ft = fft(data, NFFT);  % Fourier transform
-        f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
-        ft(f < fmin | f > fmax, :) = 0;
-        data = ifft(ft, NFFT);
-    end
-    
-    A = Correlation.getAdjacencyMatrix(data, nnd.get('CORRELATION_RULE'), nnd.get('NEGATIVE_WEIGHT_RULE'));
-    
-    g = GraphWU( ...
-        'ID', ['g ' sub.get('ID')], ...
-        'B', A, ...
-        'BRAINATLAS', atlas ...
-        );
-    g_dict.add(g)
-end
-
-value = g_dict;
-
-%%% ¡prop!
-GR1 (data, item) is the subject group 1, which also defines the subject class SubjectFUN.
+GR1 (data, item) is a group of subjects defined as SubjectFUN class.
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectFUN')
 
 %%% ¡prop!
-GR2 (data, item) is the subject group 2, which also defines the subject class SubjectFUN.
+GR2 (data, item) is a group of subjects defined as SubjectFUN class.
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectFUN')
+
+%%% ¡prop!
+NN_GR1 (result, group) is a group of NN subjects.
+%%%% ¡settings!
+'NNGroup'
+%%%% ¡default!
+NNGroup('SUB_CLASS', 'NNSubject', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject'))
+%%%% ¡calculate!
+gr = nnd.get('GR1');
+T = nnd.get('REPETITION');
+fmin = nnd.get('FREQUENCYRULEMIN');
+fmax = nnd.get('FREQUENCYRULEMAX');
+nn_gr = NNGroup( ...
+    'SUB_CLASS', 'NNSubject', ...
+    'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject') ...
+    );
+
+nn_gr.lock('SUB_CLASS');
+
+nn_gr.set( ...
+    'ID', gr.get('ID'), ...
+    'LABEL', gr.get('LABEL'), ...
+    'NOTES', gr.get('NOTES') ...
+    );
+
+atlas = BrainAtlas();
+if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0 
+    atlas = gr.get('SUB_DICT').getItem(1).get('BA');
+end
+
+nn_sub_dict = nn_gr.get('SUB_DICT');
+
+for i = 1:1:gr.get('SUB_DICT').length()
+	sub = gr.get('SUB_DICT').getItem(i);
+    data = sub.getr('FUN');
+    fs = 1 / T;
+    
+    if fmax > fmin && T > 0
+        NFFT = 2 * ceil(size(data, 1) / 2);
+        ft = fft(data, NFFT);  % Fourier transform
+        f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
+        ft(f < fmin | f > fmax, :) = 0;
+        data = ifft(ft, NFFT);
+    end
+    
+    A = Correlation.getAdjacencyMatrix(data, nnd.get('CORRELATION_RULE'), nnd.get('NEGATIVE_WEIGHT_RULE'));
+    
+    g = GraphWU( ...
+        'ID', ['g ' sub.get('ID')], ...
+        'B', A, ...
+        'BRAINATLAS', atlas ...
+        );
+    
+    if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
+        input = g.get('A'); 
+
+    elseif string(nnd.get('INPUT_TYPE')) == "graph_measures"
+        input_nodal = [];
+        input_binodal = [];
+        input_global = [];
+        mlist = nnd.get('MEASURES');
+        for j = 1:length(mlist)
+            if Measure.is_nodal(mlist{j})
+                input_nodal = [input_nodal; cell2mat(g.getMeasure(mlist{j}).get('M'))];
+            elseif Measure.is_global(mlist{j})
+                input_global = [input_global; cell2mat(g.getMeasure(mlist{j}).get('M'))];
+            else
+                input_binodal = [input_binodal; cell2mat(g.getMeasure(mlist{j}).get('M'))];
+            end
+        end
+        input = {input_nodal input_global input_binodal};
+    end
+
+    nn_sub = NNSubject( ...
+        'ID', [sub.get('ID') ' in ' gr.get('ID')], ...
+        'BA', atlas, ...
+        'age', sub.get('age'), ...
+        'sex', sub.get('sex'), ...
+        'G', g, ...
+        'INPUT', input, ...
+        'TARGET', gr.get('ID') ...
+        );
+    nn_sub_dict.add(nn_sub);
+end
+nn_gr.set('sub_dict', nn_sub_dict);
+
+value = nn_gr;
+
+%%% ¡prop!
+NN_GR2 (result, group) is a group of NN subjects.
+%%%% ¡settings!
+'NNGroup'
+%%%% ¡default!
+NNGroup('SUB_CLASS', 'NNSubject', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject'))
+%%%% ¡calculate!
+gr = nnd.get('GR2');
+T = nnd.get('REPETITION');
+fmin = nnd.get('FREQUENCYRULEMIN');
+fmax = nnd.get('FREQUENCYRULEMAX');
+nn_gr = NNGroup( ...
+    'SUB_CLASS', 'NNSubject', ...
+    'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject') ...
+    );
+
+nn_gr.lock('SUB_CLASS');
+
+nn_gr.set( ...
+    'ID', gr.get('ID'), ...
+    'LABEL', gr.get('LABEL'), ...
+    'NOTES', gr.get('NOTES') ...
+    );
+
+atlas = BrainAtlas();
+if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0 
+    atlas = gr.get('SUB_DICT').getItem(1).get('BA');
+end
+
+nn_sub_dict = nn_gr.get('SUB_DICT');
+
+for i = 1:1:gr.get('SUB_DICT').length()
+	sub = gr.get('SUB_DICT').getItem(i);
+    data = sub.getr('FUN');
+    fs = 1 / T;
+    
+    if fmax > fmin && T > 0
+        NFFT = 2 * ceil(size(data, 1) / 2);
+        ft = fft(data, NFFT);  % Fourier transform
+        f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
+        ft(f < fmin | f > fmax, :) = 0;
+        data = ifft(ft, NFFT);
+    end
+    
+    A = Correlation.getAdjacencyMatrix(data, nnd.get('CORRELATION_RULE'), nnd.get('NEGATIVE_WEIGHT_RULE'));
+    
+    g = GraphWU( ...
+        'ID', ['g ' sub.get('ID')], ...
+        'B', A, ...
+        'BRAINATLAS', atlas ...
+        );
+    
+    if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
+        input = g.get('A'); 
+
+    elseif string(nnd.get('INPUT_TYPE')) == "graph_measures"
+        input_nodal = [];
+        input_binodal = [];
+        input_global = [];
+        mlist = nnd.get('MEASURES');
+        for j = 1:length(mlist)
+            if Measure.is_nodal(mlist{j})
+                input_nodal = [input_nodal; cell2mat(g.getMeasure(mlist{j}).get('M'))];
+            elseif Measure.is_global(mlist{j})
+                input_global = [input_global; cell2mat(g.getMeasure(mlist{j}).get('M'))];
+            else
+                input_binodal = [input_binodal; cell2mat(g.getMeasure(mlist{j}).get('M'))];
+            end
+        end
+        input = {input_nodal input_global input_binodal};
+    end
+
+    nn_sub = NNSubject( ...
+        'ID', [sub.get('ID') ' in ' gr.get('ID')], ...
+        'BA', atlas, ...
+        'age', sub.get('age'), ...
+        'sex', sub.get('sex'), ...
+        'G', g, ...
+        'INPUT', input, ...
+        'TARGET', gr.get('ID') ...
+        );
+    nn_sub_dict.add(nn_sub);
+end
+nn_gr.set('sub_dict', nn_sub_dict);
+
+value = nn_gr;
 
 %% ¡tests!
 %%% ¡test!

@@ -12,130 +12,132 @@ PLOT_MAP (data, logical) is an option for the plot of the feature map.
 false
 
 %%% ¡prop!
-RMSE (result, scalar) is the root mean squared error between targets and predictions.
+RMSE (result, scalar) is the root mean squared error between targets and predictions for validation set.
 %%%% ¡calculate!
-preds = nne.memorize('PREDICTION');
-targets = nne.get('NNDATA').get('TARGETS');
-if(isempty(targets{1}))
+if nne.get('NN_GR_PREDICTION').get('SUB_DICT').length() == 0
     value = 0;
 else
-    value = sqrt(mean((preds{1} - targets{1}).^2));
+    preds = cellfun(@(x) cell2mat(x.get('PREDICTION'))', nne.memorize('NN_GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
+    preds = cell2mat(preds);
+    targets = cellfun(@(x) str2num(x.get('TARGET')), nne.get('NN_GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
+    targets = cell2mat(targets);
+    value = sqrt(mean((preds - targets).^2));
 end
 
 %%% ¡prop!
-VAL_RMSE (result, scalar) is the root mean squared error between targets and predictions for validation set.
+FEATURE_MAP (result, cell) is a feature map obtained with feature selection analysis.
 %%%% ¡calculate!
-preds = nne.memorize('VAL_PREDICTION');
-targets = nne.get('NNDATA').get('VAL_TARGETS');
-if(isempty(targets{1}))
-    value = 0;
+sub_dict = nne.get('NN_GR').get('SUB_DICT');
+if sub_dict.length() == 0
+    value = {};
 else
-    value = sqrt(mean((preds{1} - targets{1}).^2));
+    value = sub_dict.getItem(1).get('FEATURE_MASK');
 end
-
-%%% ¡prop!
-FEATURE_MAP (result, matrix) is a feature map obtained with feature selection analysis.
-%%%% ¡calculate!
-selected_idx = nne.get('NNDATA').get('FEATURE_MASK');
-if length(selected_idx) == 1 && abs(selected_idx) <= 1
-    selected_idx = nne.get('NNDATA').get('FEATURE_MASK_ANALYSIS');
-end
-if ~isempty(selected_idx)
-    switch string(nne.get('NNDATA').get('INPUT_TYPE'))
-        case 'graph_measures'
-            feature = nne.get('NNDATA').get('MEASURES');
-            fm = zeros(1, length(feature));
-            x_ticklabel = feature;
-            y_ticklabel = '';
-            fontsize = 12;
-
-        case 'adjacency_matrices'
-            feature = nne.get('NNDATA').get('TRAIN_G_DICT').getItem(1).get('A');
-            fm = zeros(length(feature{1}));
-            x_ticklabel = 0:size(fm, 2);
-            y_ticklabel = 0:size(fm, 1);
-            fontsize = 5;
-
-        case 'structural_data'
-            data = nne.get('NNDATA').data_construction(nne.get('NNDATA').get('GR'));
-            feature = data{1};
-            fm = zeros(1, length(feature));
-            br = nne.get('NNDATA').get('GR').get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').getItems();
-            br = cellfun(@(v)v.get('ID'), br, 'UniformOutput', false);
-            x_ticklabel = br;
-            y_ticklabel = '';
-            fontsize = 5;
-        otherwise
-    end
-
-    fm(selected_idx) = 1;
-
-    if nne.get('PLOT_MAP')
-        figure
-        x = [1 size(fm, 2)];
-        y = [0 size(fm, 1)];
-        image(x, y, fm, 'CDataMapping', 'scaled')
-
-        xticks([1:size(fm, 2)]);
-        yticks([1:size(fm, 1)]);
-        xticklabels(x_ticklabel);
-        yticklabels(y_ticklabel);
-        a = get(gca,'XTickLabel');
-        set(gca, 'XTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
-        a = get(gca,'YTickLabel');
-        set(gca, 'YTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
-        colorbar
-        directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
-        if ~exist(directory, 'dir')
-            mkdir(directory)
-        end
-        filename = [directory filesep 'connection_mask.svg'];
-        saveas(gcf, filename);
-    end
-
-    value = fm;
-else
-    value = [];
-end
+% % % selected_idx = nne.get('NNDATA').get('FEATURE_MASK');
+% % % if length(selected_idx) == 1 && abs(selected_idx) <= 1
+% % %     selected_idx = nne.get('NNDATA').get('FEATURE_MASK_ANALYSIS');
+% % % end
+% % % if ~isempty(selected_idx)
+% % %     switch string(nne.get('NNDATA').get('INPUT_TYPE'))
+% % %         case 'graph_measures'
+% % %             feature = nne.get('NNDATA').get('MEASURES');
+% % %             fm = zeros(1, length(feature));
+% % %             x_ticklabel = feature;
+% % %             y_ticklabel = '';
+% % %             fontsize = 12;
+% % % 
+% % %         case 'adjacency_matrices'
+% % %             feature = nne.get('NNDATA').get('TRAIN_G_DICT').getItem(1).get('A');
+% % %             fm = zeros(length(feature{1}));
+% % %             x_ticklabel = 0:size(fm, 2);
+% % %             y_ticklabel = 0:size(fm, 1);
+% % %             fontsize = 5;
+% % % 
+% % %         case 'structural_data'
+% % %             data = nne.get('NNDATA').data_construction(nne.get('NNDATA').get('GR'));
+% % %             feature = data{1};
+% % %             fm = zeros(1, length(feature));
+% % %             br = nne.get('NNDATA').get('GR').get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').getItems();
+% % %             br = cellfun(@(v)v.get('ID'), br, 'UniformOutput', false);
+% % %             x_ticklabel = br;
+% % %             y_ticklabel = '';
+% % %             fontsize = 5;
+% % %         otherwise
+% % %     end
+% % % 
+% % %     fm(selected_idx) = 1;
+% % % 
+% % %     if nne.get('PLOT_MAP')
+% % %         figure
+% % %         x = [1 size(fm, 2)];
+% % %         y = [0 size(fm, 1)];
+% % %         image(x, y, fm, 'CDataMapping', 'scaled')
+% % % 
+% % %         xticks([1:size(fm, 2)]);
+% % %         yticks([1:size(fm, 1)]);
+% % %         xticklabels(x_ticklabel);
+% % %         yticklabels(y_ticklabel);
+% % %         a = get(gca,'XTickLabel');
+% % %         set(gca, 'XTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
+% % %         a = get(gca,'YTickLabel');
+% % %         set(gca, 'YTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
+% % %         colorbar
+% % %         directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
+% % %         if ~exist(directory, 'dir')
+% % %             mkdir(directory)
+% % %         end
+% % %         filename = [directory filesep 'connection_mask.svg'];
+% % %         saveas(gcf, filename);
+% % %     end
+% % % 
+% % %     value = fm;
+% % % else
+% % %     value = [];
+% % % end
 
 %% ¡props_update!
+
 %%% ¡prop!
-NNDATA (data, item) is a dataset for testing the neural networks.
+NN (data, item) is a neural network model that needs to be evaluated.
 %%%% ¡settings!
-'NNRegressorData'
+'NNRegressorDNN'
 %%%% ¡default!
-NNRegressorData()
+NNRegressorDNN()
 
 %%% ¡prop!
-PREDICTION (result, matrix) is an output cell of prediction from a neural network model.
+NN_GR_PREDICTION (result, item) is a group of NN subjects containing the prediction from the neural network.
+%%%% ¡settings!
+'NNGroup'
 %%%% ¡calculate!
-nnd = nne.get('NNDATA');
-inputs = nnd.memorize('INPUTS');
-if isempty(inputs{1})
-    value = [];
+if nne.get('NN_GR').get('SUB_DICT').length() == 0
+    value = NNGroup();
 else
-    regressor = nne.get('NN');
-    net = regressor.to_net(regressor.get('MODEL'));
-    inputs = nnd.memorize('INPUTS');
-    inputs = inputs{1};
-    inputs = reshape(inputs, [1, 1, size(inputs,1), size(inputs,2)]);
+    nn = nne.get('NN');
+    nn_gr = nne.get('NN_GR');
+    inputs = nn.construct_inputs(nn_gr);
+    net = nn.to_net(nn.get('MODEL'));
+    predictions = net.predict(inputs);
 
-    value = {net.predict(inputs)};
-end
+    nn_gr_pred = NNGroup( ...
+        'SUB_CLASS', nn_gr.get('SUB_CLASS'), ...
+        'SUB_DICT', IndexedDictionary('IT_CLASS', 'Subject') ...
+        );
 
-%%% ¡prop!
-VAL_PREDICTION (result, matrix) is an output cell of prediction for the validation set.
-%%%% ¡calculate!
-nnd = nne.get('NNDATA');
-inputs = nnd.memorize('VAL_INPUTS');
-if isempty(inputs{1})
-    value = [];
-else
-    regressor = nne.get('NN');
-    net = regressor.to_net(regressor.get('MODEL'));
-    inputs = nnd.memorize('VAL_INPUTS');
-    inputs = inputs{1};
-    inputs = reshape(inputs, [1, 1, size(inputs,1), size(inputs,2)]);
+    nn_gr_pred.set( ...
+        'ID', nn_gr.get('ID'), ...
+        'LABEL', nn_gr.get('LABEL'), ...
+        'NOTES', nn_gr.get('NOTES') ...
+        );
 
-    value = {net.predict(inputs)};
+    % add subejcts
+    sub_dict = nn_gr_pred.get('SUB_DICT');
+    subs = nn_gr.get('SUB_DICT').getItems();
+    for i = 1:1:length(subs)
+        sub = subs{i}.deepclone();
+        sub.set('PREDICTION', {predictions(i, :)});
+        sub_dict.add(sub);
+    end
+    nn_gr_pred.set('SUB_DICT', sub_dict);
+
+    value = nn_gr_pred;
 end
