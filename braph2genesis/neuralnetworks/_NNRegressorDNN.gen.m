@@ -2,15 +2,23 @@
 NNRegressorDNN < NNBase (nn, regressor with dense layers) is a neural network regressor.
 
 %% ¡description!
-This regressor is a fully-connected-layer neural network by training with
-backpropagation on the data provided by NNData. The Regressor trains on two
-cells: cell INPUTS from NNData holds the training samples represented as 
-floating point feature vectors, and the cell TARGETS, which holds the target
-values for the trianing samples.
+This regressor is composed of fully-connected layers.
+The regressor trains on NN groups which contain the inputs and targets.
 
 %% ¡props!
+
 %%% ¡prop!
-LAYERS (data, rvector) is a vector represents the number of neurons in each layer.
+LAYERS (data, rvector) is a vector representing the number of neurons in each layer.
+%%%% ¡default!
+[]
+%%%% ¡postprocessing!
+if isempty(nn.get('LAYERS'))
+    if nn.get('GR').get('SUB_DICT').length() > 0
+        [inputs, num_features] = nn.reconstruct_inputs(nn.get('GR'));
+        value = [floor(1.5 * num_features) floor(1.5 * num_features)];
+        nn.set('LAYERS', value);
+    end
+end
 
 %%% ¡prop!
 BATCH (data, scalar) is the size of the mini-batch to use for each training iteration.
@@ -18,7 +26,7 @@ BATCH (data, scalar) is the size of the mini-batch to use for each training iter
 4
 
 %%% ¡prop!
-EPOCHS (data, scalar) is the maximum number of epochs.
+EPOCHS (data, scalar) is a maximum number of epochs.
 %%%% ¡default!
 500
 
@@ -48,47 +56,27 @@ PLOT_LAYERS (data, logical) is an option for the plot of the layers.
 false
 
 %%% ¡prop!
-TARGET_NAME (result, string) is the names for the targets.
-%%%% ¡calculate!
-value = nn.get('NNDATA').get('TARGET_NAME');
-
-%%% ¡prop!
 INPUT_FORMAT (data, string) is the data format of network inputs.
 %%%% ¡default!
 'BCSS'
 
 %% ¡props_update!
-%%% ¡prop!
-NNDATA (data, item) is a dataset for training or testing a neural network regressor.
-%%%% ¡settings!
-'NNRegressorData'
-%%%% ¡default!
-NNRegressorData()
 
 %%% ¡prop!
 MODEL (result, cell) is a trained neural network regressor.
 %%%% ¡calculate!
 if nn.check_nn_toolboxes()
     % get inputs
-    inputs = nn.get('NNDATA').get('INPUTS');
-    inputs = inputs{1};
-    numFeatures = size(inputs, 1);
-    inputs = reshape(inputs, [1, 1, size(inputs, 1), size(inputs, 2)]);
-    targets = nn.get('NNDATA').get('TARGETS');
-    if(isempty(targets{1}))
-        value = {[]};
+    nn_gr = nn.get('GR');
+    if nn_gr.get('SUB_DICT').length() == 0
+        value = {};
     else
+        [inputs, num_features] = nn.reconstruct_inputs(nn_gr);
+        [targets, classes] = nn.reconstruct_targets(nn_gr);
+        
         % init layers
         numLayer = nn.get('LAYERS');
-        if isempty(numLayer)
-            inputs_tmp = nn.get('NNDATA').get('INPUTS');
-            if ~isempty(inputs_tmp{1})
-                inputs_tmp = inputs_tmp{1};
-                value = [floor(1.5 * numFeatures) floor(1.5 * numFeatures)];
-                nn.set('LAYERS', value);
-            end
-        end
-        layers = [imageInputLayer([1 1 numFeatures], 'Name', 'input')];
+        layers = [imageInputLayer([1 1 num_features], 'Name', 'input')];
         for i = 1:1:length(numLayer)
             layers = [layers
                 fullyConnectedLayer(numLayer(i), 'Name', ['fc' num2str(i)])
@@ -98,7 +86,7 @@ if nn.check_nn_toolboxes()
         layers = [layers
             reluLayer('Name', 'relu1')
             fullyConnectedLayer(1, 'Name', 'fc_output')
-            regressionLayer
+            regressionLayer('Name', 'output')
             ];
 
         % plot layers
@@ -122,11 +110,12 @@ if nn.check_nn_toolboxes()
             'Verbose', nn.get('VERBOSE'));
 
         % train the neural network
-        net = trainNetwork(inputs, targets{1}, layers, options);
+        net = trainNetwork(inputs, targets, layers, options);
 
         % transform the net object to a cell
         value = nn.from_net(net);
     end
+    
 else
     value = {};
 end
@@ -144,4 +133,47 @@ function net = to_net(nn, saved_nn)
     %  network model is evaluated by a test data.
     
     net = to_net@NNBase(nn, saved_nn, nn.get('INPUT_FORMAT'), "regression");
+end
+function [inputs, num_features] = reconstruct_inputs(nn, gr)
+%RECONSTRUCT_INPUTS reconstructs the inputs for NN
+%
+% [INPUTS, NUM_FEATURES] = RECONSTRUCT_INPUTS(NN, NN_GR) reconstructs the
+%   inputs from NN group. According to the tyep of this fully-connected NN,
+%   this function will flatten the input into a vector for each datapoint
+%   and return the number of features for input layer as well.
+
+    if gr.get('SUB_DICT').length() == 0
+        inputs = [];
+        num_features = 0;
+    else
+        mask = gr.get('SUB_DICT').getItem(1).get('FEATURE_MASK');
+        inputs = [];
+        inputs_tmp = gr.get('INPUTS');
+        for i = 1:1:gr.get('SUB_DICT').length()
+            input = inputs_tmp{i};
+            input_per_sub = cellfun(@(x, y) x(y == 1), input, mask, 'UniformOutput', false);
+            input_per_sub = cell2mat(input_per_sub);
+            inputs = [inputs; input_per_sub'];
+        end
+        num_features = length(inputs(1, :));
+        inputs = reshape(inputs, [1, 1, num_features, gr.get('SUB_DICT').length()]);
+    end
+end
+function [targets, classes] = reconstruct_targets(nn, gr)
+%RECONSTRUCT_INPUTS reconstructs the targets for NN
+%
+% [TARGETS, CLASSES] = RECONSTRUCT_TARGETS(NN, GR) reconstructs the targets
+%  from NN group, by concatenating the target of NN Subjects.
+%  CLASSES is the categories name of the targets.
+    
+    if gr.get('SUB_DICT').length() == 0
+        targets = [];
+        classes = [];
+    else
+        targets = gr.get('TARGETS');
+        targets = cellfun(@(x) cell2mat(x),targets, 'UniformOutput', false);
+        targets = cell2mat(targets);
+        targets = targets';
+        classes = categories(categorical(cellfun(@(x) x.get('TARGET_NAME'), gr.get('SUB_DICT').getItems(), 'UniformOutput', false)));
+    end
 end
