@@ -17,7 +17,7 @@ LABEL (metadata, string) is an extended label of the neural network.
 NOTES (metadata, string) are some specific notes about the neural network.
 
 %%% ¡prop!
-NN_GR (data, item) is a group of NN subjects containing the information for training the neural network.
+GR (data, item) is a group of NN subjects containing the information for training the neural network.
 %%%% ¡settings!
 'NNGroup'
 

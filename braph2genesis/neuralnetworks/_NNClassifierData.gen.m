@@ -1,9 +1,9 @@
 %% ¡header!
-NNClassifierData < NNData (nnd, data of a neural network classifier) produces a dataset to train or test a neural netowrk classifier.  
+NNClassifierData < NNData (nnd, data of a neural network classifier) produces NN groups to train or test a neural netowrk classifier.  
 
 %% ¡description!
 This dataset produce the NN Groups to train or test a neural network classifier.
-The input for training a neural network classifer can be obtained direcly
+The input for a neural network classifer can be obtained directly
 from the structual data, the adjacency matrices, or the graph measures.
 Feature selection procedure can be implemented.  
 Instances of this class should not be created. 
@@ -26,7 +26,7 @@ TARGET_NAME (data, string) is the name of the traget.
 'diagnosis'
 
 %%% ¡prop!
-SPLIT_GR1 (data, rvector) is a ratio or a vector stating which subjects belong to validation set.
+SPLIT_GR1 (data, rvector) is a ratio or a vector stating which subjects belong to the validation set.
 %%%% ¡conditioning!
 if length(value) == 1 & value < 1
     num_val = floor(value * nnd.get('GR1').get('SUB_DICT').length());
@@ -37,7 +37,7 @@ if length(value) == 1 & value < 1
 end
 
 %%% ¡prop!
-SPLIT_GR2 (data, rvector) is a ratio or a vector stating which subjects belong to validation set.
+SPLIT_GR2 (data, rvector) is a ratio or a vector stating which subjects belong to the validation set.
 %%%% ¡conditioning!
 if length(value) == 1 & value < 1
     num_val = floor(value * nnd.get('GR2').get('SUB_DICT').length());
@@ -48,7 +48,7 @@ if length(value) == 1 & value < 1
 end
 
 %%% ¡prop!
-FEATURE_MASK (data, cell) is a given mask or a percentile for selecting relevant features.
+FEATURE_MASK (data, cell) is a given mask or a percentile to select relevant features.
 %%%% ¡default!
 num2cell(0.05)
 %%%% ¡conditioning!
@@ -57,22 +57,22 @@ if ~iscell(value) & isnumeric(value)
 end
 
 %%% ¡prop!
-NN_GR1 (result, item) is a group of NN subjects.
+GR1_NN (result, item) is a group of NN subjects.
 %%%% ¡settings!
 'NNGroup'
 
 %%% ¡prop!
-NN_GR2 (result, item) is a group of NN subjects.
+GR2_NN (result, item) is a group of NN subjects.
 %%%% ¡settings!
 'NNGroup'
 
 %%% ¡prop!
-TRAIN_NN_GR (result, item) is a group of NN subjects for training set.
+GR_TRAIN (result, item) is a group of NN subjects for the training set.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡calculate!
 % init a NNGroup
-nnGroup = 'NN_GR1';
+nnGroup = 'GR1_NN';
 train_nn_gr = NNGroup( ...
     'SUB_CLASS', nnd.get(nnGroup).get('SUB_CLASS'), ...
     'SUB_DICT', IndexedDictionary('IT_CLASS', 'Subject') ...
@@ -87,8 +87,8 @@ train_nn_gr.set( ...
 % add subejcts from all groups
 sub_dict = train_nn_gr.get('SUB_DICT');
 
-if nnd.memorize('NN_GR1').get('SUB_DICT').length() > 0
-    subs = nnd.memorize('NN_GR1').get('SUB_DICT').getItems();
+if nnd.memorize('GR1_NN').get('SUB_DICT').length() > 0
+    subs = nnd.memorize('GR1_NN').get('SUB_DICT').getItems();
     selected_idx = setdiff(1:length(subs), nnd.get('SPLIT_GR1'));
     selected_subs = subs(selected_idx);
     for i = 1:1:length(selected_subs)
@@ -97,8 +97,8 @@ if nnd.memorize('NN_GR1').get('SUB_DICT').length() > 0
     end
 end
 
-if nnd.memorize('NN_GR2').get('SUB_DICT').length() > 0
-    subs = nnd.memorize('NN_GR2').get('SUB_DICT').getItems();
+if nnd.memorize('GR2_NN').get('SUB_DICT').length() > 0
+    subs = nnd.memorize('GR2_NN').get('SUB_DICT').getItems();
     selected_idx = setdiff(1:length(subs), nnd.get('SPLIT_GR2'));
     selected_subs = subs(selected_idx);
     for i = 1:1:length(selected_subs)
@@ -120,12 +120,12 @@ train_nn_gr.set('SUB_DICT', sub_dict);
 value = train_nn_gr;
 
 %%% ¡prop!
-VAL_NN_GR (result, item) is a group of NN subjects for validation set.
+GR_VAL (result, item) is a group of NN subjects for the validation set.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡calculate!
 % init a NNGroup
-nnGroup = 'NN_GR1';
+nnGroup = 'GR1_NN';
 val_nn_gr = NNGroup( ...
     'SUB_CLASS', nnd.get(nnGroup).get('SUB_CLASS'), ...
     'SUB_DICT', IndexedDictionary('IT_CLASS', 'Subject') ...
@@ -140,8 +140,8 @@ val_nn_gr.set( ...
 % add subejcts from all groups
 sub_dict = val_nn_gr.get('SUB_DICT');
 
-if nnd.memorize('NN_GR1').get('SUB_DICT').length() > 0
-    subs = nnd.memorize('NN_GR1').get('SUB_DICT').getItems();
+if nnd.memorize('GR1_NN').get('SUB_DICT').length() > 0
+    subs = nnd.memorize('GR1_NN').get('SUB_DICT').getItems();
     selected_idx = nnd.get('SPLIT_GR1');
     selected_subs = subs(selected_idx);
     for i = 1:1:length(selected_subs)
@@ -150,8 +150,8 @@ if nnd.memorize('NN_GR1').get('SUB_DICT').length() > 0
     end
 end
 
-if nnd.memorize('NN_GR2').get('SUB_DICT').length() > 0
-    subs = nnd.memorize('NN_GR2').get('SUB_DICT').getItems();
+if nnd.memorize('GR2_NN').get('SUB_DICT').length() > 0
+    subs = nnd.memorize('GR2_NN').get('SUB_DICT').getItems();
     selected_idx = nnd.get('SPLIT_GR2');
     selected_subs = subs(selected_idx);
     for i = 1:1:length(selected_subs)
@@ -176,12 +176,12 @@ value = val_nn_gr;
 FEATURE_SELECTION_ANALYSIS (result, cell) is an analysis for generating a feature mask.
 %%%% ¡calculate!
 percentile = cell2mat(nnd.get('FEATURE_MASK'));
-data = cellfun(@(x) x.get('INPUT'), nnd.get('TRAIN_NN_GR').get('SUB_DICT').getItems(), 'UniformOutput', false);
+data = cellfun(@(x) x.get('INPUT'), nnd.get('GR_TRAIN').get('SUB_DICT').getItems(), 'UniformOutput', false);
 
-if nnd.get('TRAIN_NN_GR').get('SUB_DICT').length == 0
+if nnd.get('GR_TRAIN').get('SUB_DICT').length == 0
     value = {};
 else
-    y = cellfun(@(x) cell2mat(x.get('TARGET')), nnd.get('TRAIN_NN_GR').get('SUB_DICT').getItems(), 'UniformOutput', false);
+    y = cellfun(@(x) cell2mat(x.get('TARGET')), nnd.get('GR_TRAIN').get('SUB_DICT').getItems(), 'UniformOutput', false);
     y = cell2mat(y);
     label = y(1, :);
     num_feature_cluster = length(data{1});
@@ -209,13 +209,13 @@ else
 end
 
 %%% ¡prop!
-TRAIN_NN_GR_FS (result, item) is a group of NN subjects with feature selection for training set.
+GR_TRAIN_FS (result, item) is a group of NN subjects with feature mask for the training set.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡default!
 NNGroup('SUB_CLASS', 'NNSubject', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject'))
 %%%% ¡calculate!
-nn_gr_copy = nnd.memorize('TRAIN_NN_GR');
+nn_gr_copy = nnd.memorize('GR_TRAIN');
 feature_mask = nnd.get('FEATURE_MASK');
 if length(feature_mask) == 1 && length(cell2mat(feature_mask(1))) == 1 % given percentile
     feature_mask = nnd.memorize('FEATURE_SELECTION_ANALYSIS');
@@ -225,29 +225,19 @@ if isempty(feature_mask)
     value = NNGroup();
 else
     for i = 1:1:nn_gr_copy.get('SUB_DICT').length()
-        input = nn_gr_copy.get('SUB_DICT').getItem(i).get('INPUT');
-        num_feature_cluster = length(input);
-        input_masked = cell(size(input));
-        for j = 1:1:num_feature_cluster
-            input_per_cluster = input{j};
-            mask_per_cluster = feature_mask{j};
-            input_per_cluster(mask_per_cluster == 0) = 0;
-            input_masked{j} = input_per_cluster;
-        end
-        %nn_gr_copy.get('SUB_DICT').getItem(i).set('INPUT_FS', input_masked);
         nn_gr_copy.get('SUB_DICT').getItem(i).set('FEATURE_MASK', feature_mask);
     end
     value = nn_gr_copy;
 end
 
 %%% ¡prop!
-VAL_NN_GR_FS (result, item) is a group of NN subjects with feature selection for validation set.
+GR_VAL_FS (result, item) is a group of NN subjects with feature mask for the validation set.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡default!
 NNGroup('SUB_CLASS', 'NNSubject', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject'))
 %%%% ¡calculate!
-nn_gr_copy = nnd.memorize('VAL_NN_GR');
+nn_gr_copy = nnd.memorize('GR_VAL');
 feature_mask = nnd.get('FEATURE_MASK');
 if length(feature_mask) == 1 && length(cell2mat(feature_mask(1))) == 1 % given percentile
     feature_mask = nnd.memorize('FEATURE_SELECTION_ANALYSIS');
@@ -257,16 +247,6 @@ if isempty(feature_mask)
     value = NNGroup();
 else
     for i = 1:1:nn_gr_copy.get('SUB_DICT').length()
-        input = nn_gr_copy.get('SUB_DICT').getItem(i).get('INPUT');
-        num_feature_cluster = length(input);
-        input_masked = cell(size(input));
-        for j = 1:1:num_feature_cluster
-            input_per_cluster = input{j};
-            mask_per_cluster = feature_mask{j};
-            input_per_cluster(mask_per_cluster == 0) = 0;
-            input_masked{j} = input_per_cluster;
-        end
-        %nn_gr_copy.get('SUB_DICT').getItem(i).set('INPUT_FS', input_masked);
         nn_gr_copy.get('SUB_DICT').getItem(i).set('FEATURE_MASK', feature_mask);
     end
     value = nn_gr_copy;

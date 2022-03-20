@@ -13,14 +13,9 @@ LAYERS (data, rvector) is a vector representing the number of neurons in each la
 []
 %%%% ¡postprocessing!
 if isempty(nn.get('LAYERS'))
-    inputs = nn.get('NN_GR').get('SUB_DICT').getItems();
-    if ~isempty(inputs)
-        input = inputs{1}.get('INPUT_FS');
-        mask = nn.get('NN_GR').get('FEATURE_MASK');
-        input_per_sub = cellfun(@(x, y) x(y == 1), input, mask, 'UniformOutput', false);
-        input_per_sub = cell2mat(input_per_sub);
-        numFeature = length(input_per_sub);
-        value = [floor(1.5 * numFeature) floor(1.5 * numFeature)];
+    if nn.get('GR').get('SUB_DICT').length() > 0
+        [inputs, num_features] = nn.reconstruct_inputs(nn.get('GR'));
+        value = [floor(1.5 * num_features) floor(1.5 * num_features)];
         nn.set('LAYERS', value);
     end
 end
@@ -31,7 +26,7 @@ BATCH (data, scalar) is the size of the mini-batch to use for each training iter
 4
 
 %%% ¡prop!
-EPOCHS (data, scalar) is the maximum number of epochs.
+EPOCHS (data, scalar) is a maximum number of epochs.
 %%%% ¡default!
 500
 
@@ -72,13 +67,12 @@ MODEL (result, cell) is a trained neural network regressor.
 %%%% ¡calculate!
 if nn.check_nn_toolboxes()
     % get inputs
-    nn_gr = nn.get('NN_GR');
+    nn_gr = nn.get('GR');
     if nn_gr.get('SUB_DICT').length() == 0
         value = {};
     else
-        [inputs, num_features] = nn.construct_inputs(nn_gr);
-        [targets, classes] = nn.construct_targets(nn_gr);
-        numClasses = length(classes);
+        [inputs, num_features] = nn.reconstruct_inputs(nn_gr);
+        [targets, classes] = nn.reconstruct_targets(nn_gr);
         
         % init layers
         numLayer = nn.get('LAYERS');
@@ -140,44 +134,46 @@ function net = to_net(nn, saved_nn)
     
     net = to_net@NNBase(nn, saved_nn, nn.get('INPUT_FORMAT'), "regression");
 end
-function [inputs, num_features] = construct_inputs(nn, nn_gr)
-%CONSTRUCT_INPUTS constructs the inputs for NN
+function [inputs, num_features] = reconstruct_inputs(nn, gr)
+%RECONSTRUCT_INPUTS reconstructs the inputs for NN
 %
-% [INPUTS, NUM_FEATURES] = CONSTRUCT_INPUTS(NN, NN_GR) constructs the
-%   inputs from NN_GR, NN group, by concatenating the INPUT of NN subjects.
-%   NUM_FEATURES is the number of features that go to the NN.
+% [INPUTS, NUM_FEATURES] = RECONSTRUCT_INPUTS(NN, NN_GR) reconstructs the
+%   inputs from NN group. According to the tyep of this fully-connected NN,
+%   this function will flatten the input into a vector for each datapoint
+%   and return the number of features for input layer as well.
 
-    if nn_gr.get('SUB_DICT').length() == 0
+    if gr.get('SUB_DICT').length() == 0
         inputs = [];
         num_features = 0;
     else
-        mask = nn_gr.get('SUB_DICT').getItem(1).get('FEATURE_MASK');
+        mask = gr.get('SUB_DICT').getItem(1).get('FEATURE_MASK');
         inputs = [];
-        inputs_tmp = nn_gr.get('INPUTS');
-        for i = 1:1:nn_gr.get('SUB_DICT').length()
-            input = inputs_tmp(i);
+        inputs_tmp = gr.get('INPUTS');
+        for i = 1:1:gr.get('SUB_DICT').length()
+            input = inputs_tmp{i};
             input_per_sub = cellfun(@(x, y) x(y == 1), input, mask, 'UniformOutput', false);
             input_per_sub = cell2mat(input_per_sub);
             inputs = [inputs; input_per_sub'];
         end
         num_features = length(inputs(1, :));
-        inputs = reshape(inputs, [1, 1, num_features, nn_gr.get('SUB_DICT').length()]);
+        inputs = reshape(inputs, [1, 1, num_features, gr.get('SUB_DICT').length()]);
     end
 end
-function [targets, classes] = construct_targets(nn, nn_gr)
-%CONSTRUCT_INPUTS constructs the targets for NN
+function [targets, classes] = reconstruct_targets(nn, gr)
+%RECONSTRUCT_INPUTS reconstructs the targets for NN
 %
-% [TARGETS, CLASSES] = CONSTRUCT_TARGETS(NN, NN_GR) constructs the targets
-%  from NN_GR, NN group, by concatenating the TARGET of NN Subjects.
-%  CLASSES is the categories name of the unique targets.
+% [TARGETS, CLASSES] = RECONSTRUCT_TARGETS(NN, GR) reconstructs the targets
+%  from NN group, by concatenating the target of NN Subjects.
+%  CLASSES is the categories name of the targets.
     
-    if nn_gr.get('SUB_DICT').length() == 0
+    if gr.get('SUB_DICT').length() == 0
         targets = [];
         classes = [];
     else
-        targets = cellfun(@(x) x.get('TARGET'), nn_gr.get('SUB_DICT').getItems(), 'UniformOutput', false);
-        %targets = cell2mat(targets);
+        targets = gr.get('TARGETS');
+        targets = cellfun(@(x) cell2mat(x),targets, 'UniformOutput', false);
+        targets = cell2mat(targets);
         targets = targets';
-        classes = categories(categorical(cellfun(@(x) x.get('TARGET_NAME'), nn_gr.get('SUB_DICT').getItems(), 'UniformOutput', false)));
+        classes = categories(categorical(cellfun(@(x) x.get('TARGET_NAME'), gr.get('SUB_DICT').getItems(), 'UniformOutput', false)));
     end
 end

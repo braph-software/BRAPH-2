@@ -14,7 +14,7 @@ GR (data, item) is a group of subjects defined as SubjectCON class.
 Group('SUB_CLASS', 'SubjectCON')
 
 %%% ¡prop!
-NN_GR (result, group) is a group of NN subjects.
+GR_NN (result, group) is a group of NN subjects.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡default!
@@ -76,7 +76,7 @@ if gr.get('SUB_DICT').length() > 0
             'sex', sub.get('sex'), ...
             'G', g, ...
             'INPUT', input, ...
-            'TARGET', sub.get(nnd.get('TARGET_NAME')) ...
+            'TARGET_NAME', nnd.get('TARGET_NAME') ...
             );
         nn_sub_dict.add(nn_sub);
     end

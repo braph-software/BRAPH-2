@@ -1,8 +1,7 @@
 %% ¡header!
-NNClassifierData_CON_WU < NNClassifierData (nnd, data of a neural network classifier with connectivity data) produces a dataset to a neural netowrk classifier using connectivity data. 
+NNClassifierData_CON_WU < NNClassifierData (nnd, data of a neural network classifier with connectivity data) produces NN groups using connectivity data. 
 
 %% ¡description!
-This dataset produces NN groups with connectivity data.
 The dataset produces NN groups for trianing or testing a neurla network
 with connectivity data. 
 
@@ -19,7 +18,7 @@ GR2 (data, item) is a group of subjects defined as SubjectCON class.
 Group('SUB_CLASS', 'SubjectCON')
 
 %%% ¡prop!
-NN_GR1 (result, group) is a group of NN subjects.
+GR1_NN (result, group) is a group of NN subjects.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡default!
@@ -92,7 +91,7 @@ end
 value = nn_gr;
 
 %%% ¡prop!
-NN_GR2 (result, group)  is a group of NN subjects.
+GR2_NN (result, group)  is a group of NN subjects.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡default!

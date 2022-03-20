@@ -14,12 +14,12 @@ false
 %%% ¡prop!
 RMSE (result, scalar) is the root mean squared error between targets and predictions for validation set.
 %%%% ¡calculate!
-if nne.get('NN_GR_PREDICTION').get('SUB_DICT').length() == 0
+if nne.get('GR_PREDICTION').get('SUB_DICT').length() == 0
     value = 0;
 else
-    preds = cellfun(@(x) cell2mat(x.get('PREDICTION'))', nne.memorize('NN_GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
+    preds = cellfun(@(x) cell2mat(x.get('PREDICTION'))', nne.memorize('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
     preds = cell2mat(preds);
-    targets = cellfun(@(x) str2num(x.get('TARGET')), nne.get('NN_GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
+    targets = cellfun(@(x) cell2mat(x.get('TARGET')), nne.get('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
     targets = cell2mat(targets);
     value = sqrt(mean((preds - targets).^2));
 end
@@ -27,12 +27,14 @@ end
 %%% ¡prop!
 FEATURE_MAP (result, cell) is a feature map obtained with feature selection analysis.
 %%%% ¡calculate!
-sub_dict = nne.get('NN_GR').get('SUB_DICT');
+sub_dict = nne.get('GR').get('SUB_DICT');
 if sub_dict.length() == 0
     value = {};
 else
     value = sub_dict.getItem(1).get('FEATURE_MASK');
 end
+
+% TODO: visulazie the feature maps for all cases
 % % % selected_idx = nne.get('NNDATA').get('FEATURE_MASK');
 % % % if length(selected_idx) == 1 && abs(selected_idx) <= 1
 % % %     selected_idx = nne.get('NNDATA').get('FEATURE_MASK_ANALYSIS');
@@ -105,16 +107,16 @@ NN (data, item) is a neural network model that needs to be evaluated.
 NNRegressorDNN()
 
 %%% ¡prop!
-NN_GR_PREDICTION (result, item) is a group of NN subjects containing the prediction from the neural network.
+GR_PREDICTION (result, item) is a group of NN subjects containing the prediction from the neural network.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡calculate!
-if nne.get('NN_GR').get('SUB_DICT').length() == 0
+if nne.get('GR').get('SUB_DICT').length() == 0
     value = NNGroup();
 else
     nn = nne.get('NN');
-    nn_gr = nne.get('NN_GR');
-    inputs = nn.construct_inputs(nn_gr);
+    nn_gr = nne.get('GR');
+    inputs = nn.reconstruct_inputs(nn_gr);
     net = nn.to_net(nn.get('MODEL'));
     predictions = net.predict(inputs);
 
@@ -134,7 +136,7 @@ else
     subs = nn_gr.get('SUB_DICT').getItems();
     for i = 1:1:length(subs)
         sub = subs{i}.deepclone();
-        sub.set('PREDICTION', {predictions(i, :)});
+        sub.set('PREDICTION', {predictions(i)});
         sub_dict.add(sub);
     end
     nn_gr_pred.set('SUB_DICT', sub_dict);
