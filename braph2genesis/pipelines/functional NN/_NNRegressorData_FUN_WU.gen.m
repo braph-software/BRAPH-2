@@ -43,7 +43,7 @@ GR (data, item) is a group of subjects defined as SubjectFUN class.
 Group('SUB_CLASS', 'SubjectFUN')
 
 %%% ¡prop!
-GR1_NN (result, group) is a group of NN subjects.
+GR_NN (result, group) is a group of NN subjects.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡default!
