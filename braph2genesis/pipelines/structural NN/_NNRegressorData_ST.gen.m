@@ -19,7 +19,7 @@ INPUT_TYPE (data, option) is the input type for training or testing the NN.
 'structural_data'
 
 %%% ¡prop!
-NN_GR (result, group) is a group of NN subjects.
+GR_NN (result, group) is a group of NN subjects.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡default!
