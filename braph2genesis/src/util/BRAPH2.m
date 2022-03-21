@@ -142,7 +142,7 @@ classdef BRAPH2
             %
             % See also web, forum.
             
-            url = 'http://twitter.com/'; % FIXME: finalize once web ready
+            url = 'http://twitter.com/braph2software'; % FIXME: finalize once web ready
             web(url);
         end
         function menu_about = add_menu_about(f)

@@ -40,13 +40,13 @@ ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
 'MeasureEnsemble'
 %%%% ¡calculate!
 value = IndexedDictionary('IT_CLASS', 'MeasureEnsemble', 'IT_KEY', 4);
-%%%% ¡gui!
-g = a.get('G_Dict').getItem(1);
-if g.getGraphType() == 4
-    pr = PPAnalyzeEnsembleMP_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble.ME_DICT, 'WAITBAR', true, varargin{:});
-else
-    pr = PPAnalyzeEnsemble_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble.ME_DICT, 'WAITBAR', true, varargin{:});
-end
+%%%% ¡gui__!
+% s_c = a.get('gr').get('sub_class');
+% if isequal(s_c, 'SubjectCON') || isequal(s_c, 'SubjectFUN')
+%     pr = PPAnalyzeEnsemble_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble.ME_DICT, 'WAITBAR', true, varargin{:});
+% else
+%     pr = PPAnalyzeEnsembleMP_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble.ME_DICT, 'WAITBAR', true, varargin{:});
+% end
 
 %% ¡methods!
 function me = getMeasureEnsemble(a, measure_class, varargin)
@@ -57,6 +57,15 @@ function me = getMeasureEnsemble(a, measure_class, varargin)
     %  with properties defined by the graph settings. The user must call
     %  getValue() for the new measure M to retrieve the value of measure M.
 
+    g = a.get('G_DICT').getItem(1);  % works if all graphs are the same
+    m_list = Graph.getCompatibleMeasureList(g);
+    
+    assert( ...
+        contains(measure_class, m_list), ...
+        [BRAPH2.STR ':' a.getClass() ':' BRAPH2.WRONG_INPUT], ...
+        [BRAPH2.STR ':' a.getClass() ':' BRAPH2.WRONG_INPUT ' '], ...
+        [a.getClass() ' utilizes Graphs of type ' g.getClass() '.' measure_class ' is not a compatible Measure with ' g.getClass() '. Please use Graph function getCompatibleMeasureList for more information.']);
+    
     me_dict = a.memorize('ME_DICT');
     if me_dict.containsKey(measure_class)
         me = me_dict.getItem(measure_class);

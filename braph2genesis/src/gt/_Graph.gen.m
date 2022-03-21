@@ -38,7 +38,7 @@ Graph.checkSelfConnectivity(Graph.getSelfConnectivityType(g, length(A)), A);
 Graph.checkNegativity(Graph.getNegativityType(g, length(A)), A);
 check = true; % only if no error is thrown by the previous code!
 %%%% ¡gui__!
-% % % pl = PPGraphA('EL', g, 'PROP', Graph.A, varargin{:});
+pr = PPGraph_A('EL', g, 'PROP', Graph.A, varargin{:});
 
 %%% ¡prop!
 M_DICT (result, idict) contains the calculated measures of the graph.
@@ -937,7 +937,15 @@ function m = getMeasure(g, measure_class, varargin)
     %  property M_DICT. If not it creates a new measure M of class MEASURE_CLASS
     %  with properties defined by the graph settings. The user must call
     %  getValue() for the new measure M to retrieve the value of measure M.
-
+    
+    m_list = Graph.getCompatibleMeasureList(g);
+    
+    assert( ...
+        contains(measure_class, m_list), ...
+        [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+        [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT ' '], ...
+        [measure_class ' is not a compatible Measure with ' g.getClass() '. Please use Graph function getCompatibleMeasureList for more information.'])
+    
     m_dict = g.memorize('M_DICT');
     if m_dict.containsKey(measure_class)
         m = m_dict.getItem(measure_class);
