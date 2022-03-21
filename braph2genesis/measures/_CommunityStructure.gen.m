@@ -23,6 +23,8 @@ GraphWU
 GraphWD
 GraphBU
 GraphBD
+MultigraphBUD
+MultigraphBUT
 
 %% ¡props!
 %%% ¡prop! 
