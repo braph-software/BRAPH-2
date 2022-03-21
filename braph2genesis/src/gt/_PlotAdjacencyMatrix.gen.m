@@ -96,21 +96,27 @@ function f_settings = settings(pr, varargin)
     % F = SETTINGS(PL) returns a handle to the property editor GUI.
     %
     % SETTINGS(PL, 'Property', VALUE, ...) sets the properties of the
-    %  property editor GUI with custom property-value couples. 
+    %  property editor GUI with custom property-value couples.
     %  All standard plot properties of figure can be used.
     %
     % See also draw, figure, isgraphics.
-    
+
     f = settings@Plot(pr, varargin{:});
     pr.h_settings = f;
-    
+
     set(f, 'Toolbar', 'none')
-    
+
     % panel
     ui_parent = pr.h_settings;
     ui_parent_axes = pr.h_axes;
     matrix_plot = pr.h_plot;
-    
+
+    subject_panel = uipanel(ui_parent, ...
+        'Units', 'normalized', ...
+        'BackgroundColor',  pr.h_settings.Color, ...
+        'Position', [.01 .85 .98 .14] ...
+        );
+
     g_dict = pr.get('G_DICT');
     g_check = g_dict.length();
     tmp_g = g_dict.getItem(1);
@@ -119,275 +125,280 @@ function f_settings = settings(pr, varargin)
     else
         layer_check = 1;
     end
-    
+
     % new part layers and subjects
     mod = 0;
     if g_check > 1
-        mod = mod + .1; % substract from height to all uicontrols
-        
-        subject_selector_id = uicontrol(ui_parent, ...
+        mod = mod + .2; % substract from height to all uicontrols
+
+        subject_selector_id = uicontrol(subject_panel, ...
             'Style', 'text', ...
             'Units', 'normalized', ...
             'String', 'Subject Selection', ...
             'BackgroundColor', pr.h_settings.Color, ...
-            'Position', [.02 .82 .3 .07]);
-        
+            'Position', [.01 .02 .2 .8]);
+
         subject_list = cellfun(@(x) ['Subject: ' num2str(x)], num2cell([1:g_check]), 'UniformOutput', false);
-        subject_select_popup = uicontrol('Parent', ui_parent, ...
+        subject_select_popup = uicontrol('Parent', subject_panel, ...
             'Style', 'popupmenu', ...
-            'Units', 'normalized', ...            
-            'Position', [.33 .82 .3 .07], ...
+            'Units', 'normalized', ...
+            'Position', [.24 .02 .2 .88], ...
             'String', subject_list, ...
             'TooltipString', 'Select a subject.', ...
             'Callback', {@cb_subject_index} ...
             );
     end
-    
-    function cb_subject_index(~, ~)
-        val = subject_select_popup.Value;
-        str = subject_select_popup.String;
-        pr.set('subject', val); 
-        update_matrix();
-    end
 
-    if layer_check > 1 
-        layer_selector_id = uicontrol(ui_parent, ...
+        function cb_subject_index(~, ~)
+            val = subject_select_popup.Value;
+            str = subject_select_popup.String;
+            pr.set('subject', val);
+            update_matrix();
+        end
+
+    if layer_check > 1
+        layer_selector_id = uicontrol(subject_panel, ...
             'Style', 'text', ...
             'Units', 'normalized', ...
             'String', 'Layer Selection', ...
             'BackgroundColor', pr.h_settings.Color, ...
-            'Position', [.02 .82-mod .3 .07]);
-        
+            'Position', [.01+mod .02 .2 .8]);
+
         layer_list = cellfun(@(x) ['Layer: ' num2str(x)], num2cell([1:layer_check]), 'UniformOutput', false);
-        layer_select_popup = uicontrol('Parent', ui_parent, ...
+        layer_select_popup = uicontrol('Parent', subject_panel, ...
             'Style', 'popupmenu', ...
-            'Units', 'normalized', ...            
-            'Position', [.33 .82-mod .3 .07], ...
+            'Units', 'normalized', ...
+            'Position', [.24+mod .02 .2 .88], ...
             'String', layer_list, ...
             'TooltipString', 'Select a layer.', ...
             'Callback', {@cb_layer_index} ...
             );
-        
-        mod = mod + .1;
+
     end
-    
-    function cb_layer_index(~, ~)
-        val = layer_select_popup.Value;
-        str = layer_select_popup.String;
-        pr.set('layer', val);
-        update_matrix();
-    end
-    
-    ui_matrix_weighted_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox', 'BackgroundColor', pr.h_settings.Color);
-    set(ui_matrix_weighted_checkbox, 'Position', [.02 .82-mod .3 .07], ...
+
+        function cb_layer_index(~, ~)
+            val = layer_select_popup.Value;
+            str = layer_select_popup.String;
+            pr.set('layer', val);
+            update_matrix();
+        end
+
+    options_panel = uipanel(ui_parent, ...
+        'Units', 'normalized', ...
+        'BackgroundColor',  pr.h_settings.Color, ...
+        'Position', [.01 .01 .98 .84] ...
+        );
+
+    ui_matrix_weighted_checkbox = uicontrol('Parent', options_panel, 'Units', 'normalized', 'Style', 'checkbox', 'BackgroundColor', pr.h_settings.Color);
+    set(ui_matrix_weighted_checkbox, 'Position', [.02 .82 .3 .07], ...
         'String', 'weighted correlation matrix', ...
         'Value', true, ...
         'TooltipString', 'Select weighted matrix', ...
         'FontWeight', 'bold', ...
         'Callback', {@cb_matrix_weighted_checkbox})
-    
+
     % density
-    ui_matrix_density_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox', 'BackgroundColor', pr.h_settings.Color);
-    set(ui_matrix_density_checkbox, 'Position', [.02 .7-mod .3 .07], ...
+    ui_matrix_density_checkbox = uicontrol('Parent', options_panel, 'Units', 'normalized', 'Style', 'checkbox', 'BackgroundColor', pr.h_settings.Color);
+    set(ui_matrix_density_checkbox, 'Position', [.02 .7 .3 .07], ...
         'String', 'binary correlation matrix (set density)', ...
         'Value', false,...
         'TooltipString', 'Select binary correlation matrix with a set density', ...
         'Callback', {@cb_matrix_density_checkbox})
-    
-    ui_matrix_density_edit = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'edit');
-    set(ui_matrix_density_edit, 'Position', [.02 .6-mod .3 .07], ...
+
+    ui_matrix_density_edit = uicontrol('Parent', options_panel, 'Units', 'normalized', 'Style', 'edit');
+    set(ui_matrix_density_edit, 'Position', [.02 .6 .3 .07], ...
         'String', '50.00', ...
         'TooltipString', 'Set density.', ...
         'FontWeight', 'bold', ...
         'Enable', 'off', ...
         'Callback', {@cb_matrix_density_edit});
-    
-    ui_matrix_density_slider = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'slider');
-    set(ui_matrix_density_slider, 'Position', [.33 .6-mod .3 .07], ...
+
+    ui_matrix_density_slider = uicontrol('Parent', options_panel, 'Units', 'normalized', 'Style', 'slider');
+    set(ui_matrix_density_slider, 'Position', [.33 .6 .3 .07], ...
         'Min', 0, 'Max', 100, 'Value', 50, ...
         'TooltipString', 'Set density.', ...
         'Enable', 'off', ...
         'Callback', {@cb_matrix_density_slider})
-    
+
     % threshold
-    ui_matrix_threshold_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox', 'BackgroundColor', pr.h_settings.Color);
-    set(ui_matrix_threshold_checkbox, 'Position', [.02 .5-mod .3 .07],...
+    ui_matrix_threshold_checkbox = uicontrol('Parent', options_panel, 'Units', 'normalized', 'Style', 'checkbox', 'BackgroundColor', pr.h_settings.Color);
+    set(ui_matrix_threshold_checkbox, 'Position', [.02 .5 .3 .07],...
         'String', 'binary correlation matrix (set threshold)', ...
         'Value', false, ...
         'TooltipString', 'Select binary correlation matrix with a set threshold', ...
         'Callback', {@cb_matrix_threshold_checkbox})
-    
-    ui_matrix_threshold_edit = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'edit');
-    set(ui_matrix_threshold_edit, 'Position', [.02 .4-mod .3 .07], ...
+
+    ui_matrix_threshold_edit = uicontrol('Parent', options_panel, 'Units', 'normalized', 'Style', 'edit');
+    set(ui_matrix_threshold_edit, 'Position', [.02 .4 .3 .07], ...
         'String', '0.50', ...
         'TooltipString', 'Set threshold.', ...
         'FontWeight', 'bold' ,...
         'Enable', 'off', ...
         'Callback', {@cb_matrix_threshold_edit});
-    
-    ui_matrix_threshold_slider = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'slider');
-    set(ui_matrix_threshold_slider, 'Position', [.33 .4-mod .3 .07], ...
+
+    ui_matrix_threshold_slider = uicontrol('Parent', options_panel, 'Units', 'normalized', 'Style', 'slider');
+    set(ui_matrix_threshold_slider, 'Position', [.33 .4 .3 .07], ...
         'Min', -1, 'Max', 1, 'Value', .50, ...
         'TooltipString', 'Set threshold.', ...
         'Enable', 'off', ...
         'Callback', {@cb_matrix_threshold_slider})
-    
+
     % histogram
-    ui_matrix_histogram_checkbox = uicontrol('Parent', ui_parent, 'Units', 'normalized', 'Style', 'checkbox', 'BackgroundColor', pr.h_settings.Color);
-    set(ui_matrix_histogram_checkbox, 'Position', [.02 .33-mod .1 .07],...
+    ui_matrix_histogram_checkbox = uicontrol('Parent', options_panel, 'Units', 'normalized', 'Style', 'checkbox', 'BackgroundColor', pr.h_settings.Color);
+    set(ui_matrix_histogram_checkbox, 'Position', [.02 .3 .1 .07],...
         'String', 'histogram', ...
         'Value', false, ...
         'TooltipString', 'Select histogram of correlation coefficients', ...
         'Callback', {@cb_matrix_histogram_checkbox})
-    
-    function cb_matrix_weighted_checkbox(~, ~)
-        set(ui_matrix_weighted_checkbox, 'Value', true)
-        set(ui_matrix_weighted_checkbox, 'FontWeight', 'bold')
-        
-        set(ui_matrix_histogram_checkbox, 'Value', false)
-        set(ui_matrix_histogram_checkbox, 'FontWeight', 'normal')
-        
-        set(ui_matrix_density_checkbox, 'Value', false)
-        set(ui_matrix_density_checkbox, 'FontWeight', 'normal')
-        set(ui_matrix_density_edit, 'Enable', 'off')
-        set(ui_matrix_density_slider, 'Enable', 'off')
-        
-        set(ui_matrix_threshold_checkbox, 'Value', false)
-        set(ui_matrix_threshold_checkbox, 'FontWeight', 'normal')
-        set(ui_matrix_threshold_edit, 'Enable', 'off')
-        set(ui_matrix_threshold_slider, 'Enable', 'off')
-        
-        update_matrix()
-    end
-    function cb_matrix_density_checkbox(~, ~)
-        set(ui_matrix_weighted_checkbox, 'Value', false)
-        set(ui_matrix_weighted_checkbox, 'FontWeight', 'normal')
-        
-        set(ui_matrix_histogram_checkbox, 'Value', false)
-        set(ui_matrix_histogram_checkbox, 'FontWeight', 'normal')
-        
-        set(ui_matrix_density_checkbox, 'Value', true)
-        set(ui_matrix_density_checkbox, 'FontWeight', 'bold')
-        set(ui_matrix_density_edit, 'Enable', 'on')
-        set(ui_matrix_density_slider, 'Enable', 'on')
-        
-        set(ui_matrix_threshold_checkbox, 'Value', false)
-        set(ui_matrix_threshold_checkbox, 'FontWeight', 'normal')
-        set(ui_matrix_threshold_edit, 'Enable', 'off')
-        set(ui_matrix_threshold_slider, 'Enable', 'off')
-        
-        update_matrix()
-    end
-    function cb_matrix_threshold_checkbox(~, ~)
-        set(ui_matrix_weighted_checkbox, 'Value', false)
-        set(ui_matrix_weighted_checkbox, 'FontWeight', 'normal')
-        
-        set(ui_matrix_histogram_checkbox, 'Value', false)
-        set(ui_matrix_histogram_checkbox, 'FontWeight', 'normal')
-        
-        set(ui_matrix_density_checkbox, 'Value', false)
-        set(ui_matrix_density_checkbox, 'FontWeight', 'normal')
-        set(ui_matrix_density_edit, 'Enable', 'off')
-        set(ui_matrix_density_slider, 'Enable', 'off')
-        
-        set(ui_matrix_threshold_checkbox, 'Value', true)
-        set(ui_matrix_threshold_checkbox, 'FontWeight', 'bold')
-        set(ui_matrix_threshold_edit, 'Enable', 'on')
-        set(ui_matrix_threshold_slider, 'Enable', 'on')
-        
-        update_matrix()
-    end
-    function cb_matrix_histogram_checkbox(~, ~)
-        set(ui_matrix_weighted_checkbox, 'Value', false)
-        set(ui_matrix_weighted_checkbox, 'FontWeight', 'normal')
-        
-        set(ui_matrix_histogram_checkbox, 'Value', true)
-        set(ui_matrix_histogram_checkbox, 'FontWeight', 'bold')
-        
-        set(ui_matrix_density_checkbox, 'Value', false)
-        set(ui_matrix_density_checkbox, 'FontWeight', 'normal')
-        set(ui_matrix_density_edit, 'Enable', 'off')
-        set(ui_matrix_density_slider, 'Enable', 'off')
-        
-        set(ui_matrix_threshold_checkbox, 'Value', false)
-        set(ui_matrix_threshold_checkbox, 'FontWeight', 'normal')
-        set(ui_matrix_threshold_edit, 'Enable', 'off')
-        set(ui_matrix_threshold_slider, 'Enable', 'off')
-        
-        update_matrix()
-    end
-    function cb_matrix_density_edit(~, ~)
-        update_matrix();
-    end
-    function cb_matrix_density_slider(src, ~)
-        set(ui_matrix_density_edit, 'String', get(src, 'Value'))
-        update_matrix();
-    end
-    function cb_matrix_threshold_edit(~, ~)
-        update_matrix();
-    end
-    function cb_matrix_threshold_slider(src, ~)
-        set(ui_matrix_threshold_edit, 'String', get(src, 'Value'))
-        update_matrix();
-    end
-    function update_matrix()
-        % get A and layer
-        g_dict_item = pr.get('G_DICT').getItem(pr.get('Subject'));
-        A = g_dict_item.get('B');
-        layer_to_plot = pr.get('Layer');
-        % i need to ask graph to return the plot 'Graph.PlotType'
-        if  get(ui_matrix_histogram_checkbox, 'Value') % histogram
-            if iscell(A) && size(A, 2) > 1
-                pr.h_plot = pr.hist(A{layer_to_plot, layer_to_plot});
-            elseif iscell(A)
-                pr.h_plot = pr.hist(A{layer_to_plot});
-            else
-                pr.h_plot = pr.hist(A);
-            end
-        elseif get(ui_matrix_threshold_checkbox, 'Value')  % threshold
-            if iscell(A) && size(A, 2) > 1
-                pr.h_plot = pr.plotb(A{layer_to_plot, layer_to_plot}, ...
-                    'threshold', ...
-                    str2double(get(ui_matrix_threshold_edit, 'String')));
-            elseif iscell(A)
-                pr.h_plot = pr.plotb(A{layer_to_plot}, ...
-                    'threshold', ...
-                    str2double(get(ui_matrix_threshold_edit, 'String')));
-            else
-                pr.h_plot = pr.plotb(A, ...
-                    'threshold', ...
-                    str2double(get(ui_matrix_threshold_edit, 'String')));
-            end
-        elseif get(ui_matrix_density_checkbox, 'Value')  % density
-            if iscell(A) && size(A, 2) > 1
-                pr.h_plot = pr.plotb(A{layer_to_plot, layer_to_plot}, ...
-                    'density', ...
-                    str2double(get(ui_matrix_density_edit, 'String')));
-            elseif iscell(A)
-                pr.h_plot = pr.plotb(A{layer_to_plot}, ...
-                    'density', ...
-                    str2double(get(ui_matrix_density_edit, 'String')));
-            else
-                pr.h_plot = pr.plotb(A, ...
-                    'density', ...
-                    str2double(get(ui_matrix_density_edit, 'String')));
-            end
-        else  % weighted correlation
-            if iscell(A) && size(A, 2) > 1
-                pr.h_plot = pr.plotw(A{layer_to_plot, layer_to_plot});
-            elseif iscell(A)
-                pr.h_plot = pr.plotw(A{layer_to_plot});
-            else
-                pr.h_plot = pr.plotw(A);
+
+        function cb_matrix_weighted_checkbox(~, ~)
+            set(ui_matrix_weighted_checkbox, 'Value', true)
+            set(ui_matrix_weighted_checkbox, 'FontWeight', 'bold')
+
+            set(ui_matrix_histogram_checkbox, 'Value', false)
+            set(ui_matrix_histogram_checkbox, 'FontWeight', 'normal')
+
+            set(ui_matrix_density_checkbox, 'Value', false)
+            set(ui_matrix_density_checkbox, 'FontWeight', 'normal')
+            set(ui_matrix_density_edit, 'Enable', 'off')
+            set(ui_matrix_density_slider, 'Enable', 'off')
+
+            set(ui_matrix_threshold_checkbox, 'Value', false)
+            set(ui_matrix_threshold_checkbox, 'FontWeight', 'normal')
+            set(ui_matrix_threshold_edit, 'Enable', 'off')
+            set(ui_matrix_threshold_slider, 'Enable', 'off')
+
+            update_matrix()
+        end
+        function cb_matrix_density_checkbox(~, ~)
+            set(ui_matrix_weighted_checkbox, 'Value', false)
+            set(ui_matrix_weighted_checkbox, 'FontWeight', 'normal')
+
+            set(ui_matrix_histogram_checkbox, 'Value', false)
+            set(ui_matrix_histogram_checkbox, 'FontWeight', 'normal')
+
+            set(ui_matrix_density_checkbox, 'Value', true)
+            set(ui_matrix_density_checkbox, 'FontWeight', 'bold')
+            set(ui_matrix_density_edit, 'Enable', 'on')
+            set(ui_matrix_density_slider, 'Enable', 'on')
+
+            set(ui_matrix_threshold_checkbox, 'Value', false)
+            set(ui_matrix_threshold_checkbox, 'FontWeight', 'normal')
+            set(ui_matrix_threshold_edit, 'Enable', 'off')
+            set(ui_matrix_threshold_slider, 'Enable', 'off')
+
+            update_matrix()
+        end
+        function cb_matrix_threshold_checkbox(~, ~)
+            set(ui_matrix_weighted_checkbox, 'Value', false)
+            set(ui_matrix_weighted_checkbox, 'FontWeight', 'normal')
+
+            set(ui_matrix_histogram_checkbox, 'Value', false)
+            set(ui_matrix_histogram_checkbox, 'FontWeight', 'normal')
+
+            set(ui_matrix_density_checkbox, 'Value', false)
+            set(ui_matrix_density_checkbox, 'FontWeight', 'normal')
+            set(ui_matrix_density_edit, 'Enable', 'off')
+            set(ui_matrix_density_slider, 'Enable', 'off')
+
+            set(ui_matrix_threshold_checkbox, 'Value', true)
+            set(ui_matrix_threshold_checkbox, 'FontWeight', 'bold')
+            set(ui_matrix_threshold_edit, 'Enable', 'on')
+            set(ui_matrix_threshold_slider, 'Enable', 'on')
+
+            update_matrix()
+        end
+        function cb_matrix_histogram_checkbox(~, ~)
+            set(ui_matrix_weighted_checkbox, 'Value', false)
+            set(ui_matrix_weighted_checkbox, 'FontWeight', 'normal')
+
+            set(ui_matrix_histogram_checkbox, 'Value', true)
+            set(ui_matrix_histogram_checkbox, 'FontWeight', 'bold')
+
+            set(ui_matrix_density_checkbox, 'Value', false)
+            set(ui_matrix_density_checkbox, 'FontWeight', 'normal')
+            set(ui_matrix_density_edit, 'Enable', 'off')
+            set(ui_matrix_density_slider, 'Enable', 'off')
+
+            set(ui_matrix_threshold_checkbox, 'Value', false)
+            set(ui_matrix_threshold_checkbox, 'FontWeight', 'normal')
+            set(ui_matrix_threshold_edit, 'Enable', 'off')
+            set(ui_matrix_threshold_slider, 'Enable', 'off')
+
+            update_matrix()
+        end
+        function cb_matrix_density_edit(~, ~)
+            update_matrix();
+        end
+        function cb_matrix_density_slider(src, ~)
+            set(ui_matrix_density_edit, 'String', get(src, 'Value'))
+            update_matrix();
+        end
+        function cb_matrix_threshold_edit(~, ~)
+            update_matrix();
+        end
+        function cb_matrix_threshold_slider(src, ~)
+            set(ui_matrix_threshold_edit, 'String', get(src, 'Value'))
+            update_matrix();
+        end
+        function update_matrix()
+            % get A and layer
+            g_dict_item = pr.get('G_DICT').getItem(pr.get('Subject'));
+            A = g_dict_item.get('B');
+            layer_to_plot = pr.get('Layer');
+            % i need to ask graph to return the plot 'Graph.PlotType'
+            if  get(ui_matrix_histogram_checkbox, 'Value') % histogram
+                if iscell(A) && size(A, 2) > 1
+                    pr.h_plot = pr.hist(A{layer_to_plot, layer_to_plot});
+                elseif iscell(A)
+                    pr.h_plot = pr.hist(A{layer_to_plot});
+                else
+                    pr.h_plot = pr.hist(A);
+                end
+            elseif get(ui_matrix_threshold_checkbox, 'Value')  % threshold
+                if iscell(A) && size(A, 2) > 1
+                    pr.h_plot = pr.plotb(A{layer_to_plot, layer_to_plot}, ...
+                        'threshold', ...
+                        str2double(get(ui_matrix_threshold_edit, 'String')));
+                elseif iscell(A)
+                    pr.h_plot = pr.plotb(A{layer_to_plot}, ...
+                        'threshold', ...
+                        str2double(get(ui_matrix_threshold_edit, 'String')));
+                else
+                    pr.h_plot = pr.plotb(A, ...
+                        'threshold', ...
+                        str2double(get(ui_matrix_threshold_edit, 'String')));
+                end
+            elseif get(ui_matrix_density_checkbox, 'Value')  % density
+                if iscell(A) && size(A, 2) > 1
+                    pr.h_plot = pr.plotb(A{layer_to_plot, layer_to_plot}, ...
+                        'density', ...
+                        str2double(get(ui_matrix_density_edit, 'String')));
+                elseif iscell(A)
+                    pr.h_plot = pr.plotb(A{layer_to_plot}, ...
+                        'density', ...
+                        str2double(get(ui_matrix_density_edit, 'String')));
+                else
+                    pr.h_plot = pr.plotb(A, ...
+                        'density', ...
+                        str2double(get(ui_matrix_density_edit, 'String')));
+                end
+            else  % weighted correlation
+                if iscell(A) && size(A, 2) > 1
+                    pr.h_plot = pr.plotw(A{layer_to_plot, layer_to_plot});
+                elseif iscell(A)
+                    pr.h_plot = pr.plotw(A{layer_to_plot});
+                else
+                    pr.h_plot = pr.plotw(A);
+                end
             end
         end
+
+    update_matrix()
+
+    if nargout > 0
+        f_settings = pr.h_settings;
     end
-
-update_matrix()
-
-if nargout > 0
-    f_settings = pr.h_settings;
-end
 end
 function h = plotw(pr, A, varargin)
     % PLOTW plots a weighted matrix
