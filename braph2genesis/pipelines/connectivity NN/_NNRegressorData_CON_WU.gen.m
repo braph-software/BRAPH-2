@@ -2,7 +2,6 @@
 NNRegressorData_CON_WU < NNRegressorData (nnd, data of a neural network regressor with connectivity data) produces a dataset to train or test a neural netowrk regressor using connectivity data. 
 
 %% ¡description!
-This dataset produces NN groups with connectivity data.
 The dataset produces NN groups for trianing or testing a neurla network
 with connectivity data. 
 

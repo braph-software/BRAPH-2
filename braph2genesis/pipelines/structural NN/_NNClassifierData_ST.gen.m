@@ -2,7 +2,6 @@
 NNClassifierData_ST < NNClassifierData (nnd, data of a neural network classifier with structural data) produces a dataset to a neural netowrk classifier using structural data. 
 
 %% ¡description!
-This dataset produces NN groups with structural data.
 The dataset produces NN groups for trianing or testing a neurla network
 with structural data. 
 

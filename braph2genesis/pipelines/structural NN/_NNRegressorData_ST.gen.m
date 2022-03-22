@@ -2,7 +2,6 @@
 NNRegressorData_ST < NNRegressorData (nnd, data of a neural network regressor with structural data) produces a dataset to train or test a neural netowrk regressor using structural data. 
 
 %% ¡description!
-This dataset produces NN groups with structural data.
 The dataset produces NN groups for trianing or testing a neurla network
 with structural data. 
 

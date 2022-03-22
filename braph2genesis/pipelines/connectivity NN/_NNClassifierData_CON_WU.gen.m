@@ -1,6 +1,5 @@
 %% ¡header!
-NNClassifierData_CON_WU < NNClassifierData (nnd, data of a neural network classifier with connectivity data) produces NN groups using connectivity data. 
-
+NNClassifierData_CON_WU < NNClassifierData (nnd, data of a neural network classifier with connectivity data) produces a dataset to train or test a neural netowrk regressor using connectivity data. 
 %% ¡description!
 The dataset produces NN groups for trianing or testing a neurla network
 with connectivity data. 

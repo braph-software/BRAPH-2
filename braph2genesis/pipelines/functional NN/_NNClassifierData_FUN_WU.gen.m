@@ -8,16 +8,16 @@ with functional data.
 %% ¡props!
 
 %%% ¡prop!
-REPETITION(parameter, scalar) is the number of repetitions
+REPETITION(parameter, scalar) is the number of repetitions.
 %%%% ¡default!
 1
 
 %%% ¡prop!
-FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value
+FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value.
 %%%% ¡default!
 0
 %%% ¡prop!
-FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value
+FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value.
 %%%% ¡default!
 Inf
 
