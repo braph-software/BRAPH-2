@@ -50,7 +50,7 @@ function h_panel = draw(pr, varargin)
     if g.getGraphType() == 4 && g.getPropNumber() > 9 % mp but/bud
         n = length(g.get(10)); % 10 is densities or thresholds
     elseif g.getGraphType() == 4 && g.getPropNumber() <= 9 % eu
-        L = size(g.get('B'), 2) / n;
+        n = 1;
     end
 
     if L == 1
