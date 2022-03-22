@@ -49,8 +49,7 @@ function h_panel = draw(pr, varargin)
     map_multiplier = 100;
     if g.getGraphType() == 4 && g.getPropNumber() > 9 % mp but/bud
         n = length(g.get(10)); % 10 is densities or thresholds
-    elseif g.getGraphType() ~= 4 && g.getPropNumber() > 9 % bud/but
-        n = length(g.get(10)); % 10 is densities or thresholds
+    elseif g.getGraphType() == 4 && g.getPropNumber() <= 9 % eu
         L = size(g.get('B'), 2) / n;
     end
 
@@ -58,6 +57,12 @@ function h_panel = draw(pr, varargin)
         Ll = 1;
     else
         Ll = L-1;
+    end
+    
+    if n == 1
+        nn = 1;
+    else
+        nn = n-1;
     end
 
     % set on first layer
@@ -89,7 +94,7 @@ function h_panel = draw(pr, varargin)
             pr.update()
         end
 
-    if g.getGraphType() == 4
+    if n > 1 
         pr.layer_slider = uicontrol( ...
             'Parent', pr.p, ...
             'Style', 'slider', ...
@@ -98,7 +103,7 @@ function h_panel = draw(pr, varargin)
             'Value', 1 / map_multiplier, ...
             'Min', 1 / map_multiplier, ...
             'Max', n / map_multiplier, ...
-            'SliderStep', [map_multiplier/((n-1)*map_multiplier) map_multiplier/((n-1)*map_multiplier)] , ...
+            'SliderStep', [map_multiplier/(nn*map_multiplier) map_multiplier/(nn*map_multiplier)] , ...
             'Callback', {@cb_slider_layer} ...
             );
         pr.layer_text = uicontrol(...
@@ -155,16 +160,9 @@ function update(pr)
             extra_label = '%';
         end
         slider_tags = compose("%g", round(g.get(10), 2));
-    elseif g.getGraphType() ~= 4 && g.getPropNumber() > 9
-        n = length(g.get(10)); % 10 is densities or thresholds
+    elseif g.getGraphType() == 4 && g.getPropNumber() <= 9
+        n = 1; % 10 is densities or thresholds
         L = size(g.get('B'), 2) / n;
-        if strcmp(label, 'thresholds')
-            label = 'Threshold';
-        elseif strcmp(label, 'densities')
-            label = 'Density';
-            extra_label = '%';
-        end
-        slider_tags = compose("%g", round(g.get(10), 2));
     end
     value = el.getr(prop);
 

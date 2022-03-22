@@ -49,15 +49,20 @@ function h_panel = draw(pr, varargin)
     map_multiplier = 100;
     if g.getGraphType() == 4 && g.getPropNumber() > 9 % mp but/bud
         n = length(g.get(10)); % 10 is densities or thresholds
-    elseif g.getGraphType() ~= 4 && g.getPropNumber() > 9 % bud/but
-        n = length(g.get(10)); % 10 is densities or thresholds
-        L = size(g.get('B'), 2) / n;
+    elseif g.getGraphType() == 4 && g.getPropNumber() < 9 % wu
+        n = 1; % 10 is densities or thresholds
     end
 
     if L == 1
         Ll = 1;
     else
         Ll = L-1;
+    end
+    
+    if n == 1
+        nn = 1;
+    else
+        nn = n-1;
     end
 
     % set on first layer
@@ -89,7 +94,7 @@ function h_panel = draw(pr, varargin)
             pr.update()
         end
 
-    if g.getGraphType() == 4
+    if n > 1
         pr.layer_slider = uicontrol( ...
             'Parent', pr.p, ...
             'Style', 'slider', ...
@@ -155,16 +160,9 @@ function update(pr)
             extra_label = '%';
         end
         slider_tags = compose("%g", round(g.get(10), 2));
-    elseif g.getGraphType() ~= 4 && g.getPropNumber() > 9
-        n = length(g.get(10)); % 10 is densities or thresholds
+    elseif g.getGraphType() == 4 && g.getPropNumber() <= 9
+        n = 1; % 10 is densities or thresholds
         L = size(g.get('B'), 2) / n;
-        if strcmp(label, 'thresholds')
-            label = 'Threshold';
-        elseif strcmp(label, 'densities')
-            label = 'Density';
-            extra_label = '%';
-        end
-        slider_tags = compose("%g", round(g.get(10), 2));
     end
     value = el.getr(prop);
     br_dict = el.get('G').get('BRAINATLAS').get('BR_DICT');
