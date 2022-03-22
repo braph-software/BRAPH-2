@@ -1,5 +1,5 @@
 %% EXAMPLE_NN_FUN_WU_ClASSIFICATION_ADJACENCYMATRIX
-% Script example pipeline for NN Classification with input of ajacency matrix  
+% Script example pipeline for NN Classification with the input of ajacency matrix  
 
 clear variables %#ok<*NASGU>
 
@@ -74,7 +74,7 @@ nne_val = NNClassifierEvaluator( ...
 auc_val = nne_val.get('AUC');
 cm_val = nne_val.get('CONFUSION_MATRIX');
 
-%% Load Groups of SubjectFUN
+%% Load another groups of SubjectFUN
 im_gr1 = ImporterGroupSubjectFUN_XLS( ...
     'DIRECTORY', [fileparts(which('example_NN_FUN_WU_Classification_AdjacencyMatrix')) filesep 'example data FUN (fMRI)' filesep 'xls' filesep 'GroupName1'], ...
     'BA', ba, ...

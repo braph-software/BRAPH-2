@@ -1,5 +1,5 @@
 %% EXAMPLE_NN_CON_WU_CLASSIFICATION_ADJACENCYMATRIX
-% Script example pipeline for NN classification with input of adjacency matrix
+% Script example pipeline for NN classification with the input of adjacency matrix
 
 clear variables %#ok<*NASGU>
 
@@ -90,7 +90,7 @@ im_gr2 = ImporterGroupSubjectCON_XLS( ...
 
 gr2_unseen = im_gr2.get('GR');
 
-%% Evaluate the classifier with the testing set
+%% Evaluate the classifier for the testing set
 nnd_test = NNClassifierData_CON_WU( ...
     'GR1', gr1_unseen, ...
     'GR2', gr2_unseen, ...
