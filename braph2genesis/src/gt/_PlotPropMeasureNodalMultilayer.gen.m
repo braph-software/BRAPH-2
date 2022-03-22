@@ -55,6 +55,12 @@ function h_panel = draw(pr, varargin)
         label = g.getPropTag(10);
     end
     
+    if L == 1
+        Ll = 1;
+    else
+        Ll = L-1;
+    end
+    
     % set on first layer
     pr.slider = uicontrol( ...
         'Parent', pr.p, ...
@@ -64,7 +70,7 @@ function h_panel = draw(pr, varargin)
         'Value', 1 / map_multiplier, ...
         'Min', 1 / map_multiplier, ...
         'Max', L / map_multiplier, ...
-        'SliderStep', [map_multiplier/((L-1)*map_multiplier) map_multiplier/((L-1)*map_multiplier)] , ...
+        'SliderStep', [map_multiplier/(Ll*map_multiplier) map_multiplier/(Ll*map_multiplier)] , ...
         'Callback', {@cb_slider} ...
         );
     pr.slider_text = uicontrol(...
@@ -139,6 +145,7 @@ function update(pr)
     label = 'Layer';
     map_multiplier = 100;
     slider_tags = {'1'};
+    extra_label = '';
     if g.getPropNumber() > 9
         n = length(g.get(10)); % 10 is densities or thresholds
         L = size(g.get('B'), 2) / n;
@@ -146,6 +153,7 @@ function update(pr)
             label = 'Threshold';
         elseif strcmp(label, 'densities')
             label = 'Density';
+            extra_label = '%';
         end
         slider_tags = compose("%g", round(g.get(10), 2));
     end
@@ -174,7 +182,7 @@ function update(pr)
         if el.get('G').getPropNumber() > 9
             
             set(pr.layer_text, ...
-            'String', [label ' ' num2str(round(get(pr.slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.slider, 'Value') * map_multiplier)}]);
+            'String', [label ' ' num2str(round(get(pr.slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.slider, 'Value') * map_multiplier)} ' ' extra_label]);
         
             % get the correct index
             l = round(get(pr.slider, 'Value') * map_multiplier); % layer
