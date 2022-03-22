@@ -20,6 +20,7 @@ p
 measure_tbl % measure table
 measure_btn % calculate measures button
 line_plot_tgl_btn % line plot toggle button
+measure_plot_btn
 mlist % list of measures compatible with the graph
 selected % list of selected measures
 already_calculated % list of measures already calculated
@@ -50,8 +51,7 @@ function h_panel = draw(pr, varargin)
 
     pr.p = draw@PlotProp(pr, varargin{:});
 
-    % graph button
-    
+    % graph button    
     pr.line_plot_tgl_btn = uicontrol(...
         'Style', 'pushbutton', ...
         'Parent', pr.p, ...
@@ -302,7 +302,6 @@ function cb_measure_gui(pr)
     screen_h = Plot.h(0, 'pixels');
 
     N = ceil(sqrt(length(pr.mlist))); % number of row and columns of figures
-
     f_count = 1;
     for i = 1:length(pr.mlist)
         if ~ismember(pr.mlist(i), measure_short_list)

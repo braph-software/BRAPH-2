@@ -212,14 +212,14 @@ function redraw(pr, varargin)
     % See also draw, update, PlotElement.
 
     [h, varargin] = get_and_remove_from_varargin(1.8, 'Height', varargin);
-    [Sh, varargin] = get_and_remove_from_varargin(1.8, 'SHeight', varargin);
-    [Th, varargin] = get_and_remove_from_varargin(1.8, 'THeight', varargin);
-    [Dh, varargin] = get_and_remove_from_varargin(18, 'DHeight', varargin);
+    [Sh, varargin] = get_and_remove_from_varargin(2.0, 'SHeight', varargin);
+    [Th, varargin] = get_and_remove_from_varargin(2.0, 'THeight', varargin);
+    [Dh, varargin] = get_and_remove_from_varargin(2.0, 'DHeight', varargin);
 
     el = pr.get('EL');
     prop = pr.get('PROP');
     g = el.get('g');
-    L = size(el.get('B'), 2);
+    L = size(g.get('B'), 2);
     n = 0;
     if el.get('G').getPropNumber() > 9
         n = length(el.get('G').get(10)); % 10 is densities or thresholds
@@ -257,7 +257,7 @@ function redraw(pr, varargin)
             'Position', [.01 .02 .97 ((Dh+h)/(h+Sh+Sh+Th+Th+Dh)-.2)] ...
             )
     else
-        pr.redraw@PlotPropScalar('Height', h + Sh + Th + Dh, varargin{:});
+        pr.redraw@PlotPropScalar('Height', h*2+Sh+Th, varargin{:});
         set(pr.slider, ...
             'Units', 'normalized', ...
             'Visible', 'on', ...
@@ -273,31 +273,31 @@ function redraw(pr, varargin)
         set(pr.edit_value, ...
             'Visible', 'on', ...
             'Units', 'normalized', ...
-            'Position', [.01 .02 .97 ((Dh+h)/(h+Sh+Th+Dh)-.2)] ...
+            'Position', [.01 .02 .97 ((Dh+h)/(h+Sh+Th+Dh))-.2] ...
             )
     end
     if ~pr.get_button_condition()
         set(pr.slider, ...
             'Visible', 'off' ...
             );
-        
+
         set(pr.slider_text, ...
             'Visible', 'off' ...
             );
-        
+
         set(pr.edit_value, ...
             'Visible', 'off' ...
             )
-        
+
         if ~isempty(pr.layer_slider) && ~isempty(pr.layer_text)
             set(pr.layer_slider, ...
                 'Visible', 'off' ...
                 );
-            
+
             set(pr.layer_text, ...
                 'Visible', 'off' ...
                 );
-            
+
         end
     end
 end
