@@ -64,7 +64,7 @@ function h_panel = draw(pr, varargin)
             'Units', 'normalized', ...
             'String', 'Graph Data', ...
             'TooltipString', 'Open a GUI for the graph data.', ...
-            'Position', [.79 .76 .2 .2], ...
+            'Position', [.79 .76 .2 .15], ...
             'Visible', 'off', ...
             'Callback', {@cb_graph_btn} ...
             );
@@ -75,7 +75,7 @@ function h_panel = draw(pr, varargin)
             'Units', 'normalized', ...
             'CData', imresize(imread('icon_plot_adj.png'), [40 40]), ...
             'TooltipString', 'Open a plot for the adjacency matrix.', ...
-            'Position', [.01 .76 .2 .2], ...
+            'Position', [.01 .76 .2 .15], ...
             'Visible', 'off', ...
             'Callback', {@cb_plot_type_adj} ...
             );
@@ -86,7 +86,7 @@ function h_panel = draw(pr, varargin)
             'Units', 'normalized', ...
             'CData', imresize(imread('icon_plot_lines.png'), [40 40]), ...
             'TooltipString', 'Open a line plot for the measure.', ...
-            'Position', [.23 .76 .2 .2], ...
+            'Position', [.23 .76 .2 .15], ...
             'Visible', 'off', ...
             'Callback', {@cb_plot_type_line} ...
             );
@@ -183,11 +183,14 @@ function update(pr)
 
     if ~button_state
         % visible gui
+        set(pr.line_plot_tglbtn, 'Visible', 'off')
         set(pr.graph_btn, 'Visible', 'off')
         set(pr.plot_type_adj, 'Visible', 'off')
         set(pr.measure_tbl, 'Visible', 'off')
         set(pr.measure_btn, 'Visible', 'off')
         set(pr.measure_plot_btn, 'Visible', 'off')
+        pr.graph = [];
+        pr.already_calculated = [];
 
     else
         graph = el.get(prop);
@@ -255,9 +258,13 @@ function update(pr)
 
     function plot_type_rules()
         if ~isempty(pr.graph) && ~isa(el, 'AnalyzeGroup_ST_MP_WU') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}])
-            set(pr.line_plot_tglbtn, 'Enable', 'on');
+            set(pr.line_plot_tglbtn, ...
+                    'Enable', 'on', ...
+                    'Visible', 'on');
         else
-            set(pr.line_plot_tglbtn, 'Enable', 'off');
+            set(pr.line_plot_tglbtn, ...
+                    'Enable', 'off', ...
+                    'Visible', 'off');
         end
     end
    
@@ -289,12 +296,22 @@ function redraw(pr, varargin)
     [Dh, varargin] = get_and_remove_from_varargin(15, 'DHeight', varargin);
 
     if pr.get_button_condition()
-        set(pr.measure_tbl, ...
-            'Units', 'normalized', ...
-            'Position', [.01 .13 .98 (Dh/(h+Dh)-.27)] ...
-            )
+        if ~isempty(pr.measure_tbl) && isgraphics(pr.measure_tbl, 'uitable')
+            set(pr.measure_tbl, ...
+                'Units', 'normalized', ...
+                'Position', [.01 .13 .98 (Dh/(h+Dh)-.27)] ...
+                )
+        end
+        
         pr.redraw@PlotProp('Height', (h + Dh)*1.5, varargin{:})
     else
+        if ~isempty(pr.measure_tbl) && isgraphics(pr.measure_tbl, 'uitable')
+            set(pr.measure_tbl, ...
+                'Units', 'normalized', ...
+                'Position', [.01 .13 .98 (Dh/(h+Dh)-.32)], ...
+                'Visible', 'off' ...
+                )
+        end
         pr.redraw@PlotProp(varargin{:})
     end   
 end
@@ -446,7 +463,7 @@ function cb_measure_calc(pr)
 
         measure = pr.mlist{i};
         if pr.get('WAITBAR')
-            waitbar(.1 + .70 * i / length(pr.selected), wb, ['Calculating measure ' measure ]);
+            waitbar(.1 + .20 * i / length(pr.selected), wb, ['Calculating measure ' measure ]);
         end
         result_measure = graph.getMeasure(measure);
         result_measure.memorize('M');
@@ -673,7 +690,11 @@ function cb_bring_to_front(pr)
     if check_graphics(pr.f_pg, 'figure')
         gui = get(pr.f_pg, 'UserData');
         gui.cb_bring_to_front()
-    end    
+    end  
+    if check_graphics(pr.f_adj, 'figure')
+        gui = get(pr.f_adj, 'UserData');
+        gui.cb_bring_to_front()
+    end
 end
 function cb_hide(pr)
     %CB_HIDE hides the figure and its settings figure.
@@ -707,6 +728,10 @@ function cb_hide(pr)
         gui = get(pr.f_pg, 'UserData');
         gui.cb_hide();
     end 
+    if check_graphics(pr.f_adj, 'figure')
+        gui = get(pr.f_adj, 'UserData');
+        gui.cb_hide();
+    end 
 end
 function cb_close(pr)
     %CB_CLOSE closes the figure.
@@ -727,6 +752,12 @@ function cb_close(pr)
     if ~isempty(pr.f_pg) && check_graphics(pr.f_pg, 'figure')
         delete(pr.f_pg);
     end
+    
+    
+    % close adj graph figure
+    if ~isempty(pr.f_adj) && check_graphics(pr.f_adj, 'figure')
+        delete(pr.f_adj);
+    end 
     
     % close graph class
     if check_graphics(pr.f_g, 'figure')

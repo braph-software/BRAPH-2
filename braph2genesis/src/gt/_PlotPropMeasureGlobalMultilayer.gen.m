@@ -19,12 +19,12 @@ layer_text
 function h_panel = draw(pr, varargin)
     %DRAW draws a table with the global measure.
     %
-    % DRAW(PR) draws the property panel a table with the structural data of 
+    % DRAW(PR) draws the property panel a table with the structural data of
     %  a subject.
     %
     % H = DRAW(PR) returns a handle to the property panel.
     %
-    % DRAW(PR, 'Property', VALUE, ...) sets the properties of the panel 
+    % DRAW(PR, 'Property', VALUE, ...) sets the properties of the panel
     %  with custom Name-Value pairs.
     %  All standard plot properties of uipanel can be used.
     %
@@ -32,7 +32,7 @@ function h_panel = draw(pr, varargin)
     %  objects from the handle H of the panel.
     %
     % See also update, redraw, settings, uipanel.
-    
+
     pr.p = draw@PlotPropScalar(pr, varargin{:});
 
     % retrieves the handle of the table
@@ -42,19 +42,29 @@ function h_panel = draw(pr, varargin)
             pr.edit_value = children(i);
         end
     end
-    
+
     el = pr.get('EL');
-    prop = pr.get('PROP');
     g = el.get('g');
     L = size(g.get('B'), 2);
-    label = 'Layer';
     map_multiplier = 100;
-    if g.getPropNumber() > 9
+    if g.getGraphType() == 4 && g.getPropNumber() > 9 % mp but/bud
         n = length(g.get(10)); % 10 is densities or thresholds
-        L = size(g.get('B'), 2) / n;
-        label = g.getPropTag(10);
+    elseif g.getGraphType() == 4 && g.getPropNumber() <= 9 % eu
+        n = 1;
+    end
+
+    if L == 1
+        Ll = 1;
+    else
+        Ll = L-1;
     end
     
+    if n == 1
+        nn = 1;
+    else
+        nn = n-1;
+    end
+
     % set on first layer
     pr.slider = uicontrol( ...
         'Parent', pr.p, ...
@@ -64,7 +74,7 @@ function h_panel = draw(pr, varargin)
         'Value', 1 / map_multiplier, ...
         'Min', 1 / map_multiplier, ...
         'Max', L / map_multiplier, ...
-        'SliderStep', [map_multiplier/((L-1)*map_multiplier) map_multiplier/((L-1)*map_multiplier)] , ...
+        'SliderStep', [map_multiplier/(Ll*map_multiplier) map_multiplier/(Ll*map_multiplier)] , ...
         'Callback', {@cb_slider} ...
         );
     pr.slider_text = uicontrol(...
@@ -79,12 +89,12 @@ function h_panel = draw(pr, varargin)
         'String', '', ...
         'BackgroundColor', pr.get('BKGCOLOR') ...
         );
-    
-    function cb_slider(~, ~)
-        pr.update()
-    end
 
-    if el.get('G').getPropNumber() > 9
+        function cb_slider(~, ~)
+            pr.update()
+        end
+
+    if n > 1 
         pr.layer_slider = uicontrol( ...
             'Parent', pr.p, ...
             'Style', 'slider', ...
@@ -93,7 +103,7 @@ function h_panel = draw(pr, varargin)
             'Value', 1 / map_multiplier, ...
             'Min', 1 / map_multiplier, ...
             'Max', n / map_multiplier, ...
-            'SliderStep', [map_multiplier/((n-1)*map_multiplier) map_multiplier/((n-1)*map_multiplier)] , ...
+            'SliderStep', [map_multiplier/(nn*map_multiplier) map_multiplier/(nn*map_multiplier)] , ...
             'Callback', {@cb_slider_layer} ...
             );
         pr.layer_text = uicontrol(...
@@ -109,10 +119,10 @@ function h_panel = draw(pr, varargin)
             'BackgroundColor', pr.get('BKGCOLOR') ...
             );
     end
-    
-    function cb_slider_layer(~, ~)
-        pr.update()
-    end
+
+        function cb_slider_layer(~, ~)
+            pr.update()
+        end
 
     % output
     if nargout > 0
@@ -125,13 +135,13 @@ function update(pr)
     % UPDATE(PR) updates the content of the property panel and its graphical objects.
     %
     % Important note:
-    % 1. UPDATE() is typically called internally by PlotElement and does not need 
+    % 1. UPDATE() is typically called internally by PlotElement and does not need
     %  to be explicitly called in children of PlotProp.
     %
     % See also draw, redraw, PlotElement.
 
     update@PlotProp(pr)
-    
+
     el = pr.get('EL');
     prop = pr.get('PROP');
     g = el.get('g');
@@ -139,16 +149,20 @@ function update(pr)
     label = 'Layer';
     map_multiplier = 100;
     slider_tags = {'1'};
-    if g.getPropNumber() > 9
+    extra_label = '';
+    if g.getGraphType() == 4 && g.getPropNumber() > 9
         n = length(g.get(10)); % 10 is densities or thresholds
-        L = size(g.get('B'), 2) / n;
         label = g.getPropTag(10);
         if strcmp(label, 'thresholds')
             label = 'Threshold';
         elseif strcmp(label, 'densities')
             label = 'Density';
+            extra_label = '%';
         end
         slider_tags = compose("%g", round(g.get(10), 2));
+    elseif g.getGraphType() == 4 && g.getPropNumber() <= 9
+        n = 1; % 10 is densities or thresholds
+        L = size(g.get('B'), 2) / n;
     end
     value = el.getr(prop);
 
@@ -157,18 +171,18 @@ function update(pr)
     else
         set(pr.slider_text, ...
             'String', ['Layer: ' num2str(round(get(pr.slider, 'Value') * map_multiplier))]);
-        
+
         if el.get('G').getPropNumber() > 9
-            
+
             set(pr.layer_text, ...
-            'String', [label ' ' num2str(round(get(pr.layer_slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.layer_slider, 'Value') * map_multiplier)}]);
-        
+                'String', [label ' ' num2str(round(get(pr.layer_slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.layer_slider, 'Value') * map_multiplier)} ' ' extra_label]);
+
             % get the correct index
             l = round(get(pr.slider, 'Value') * map_multiplier); % layer
             d = round(get(pr.layer_slider, 'Value') * map_multiplier); % threshold or ddensity
-        
+
             correct_i =  (d * L)- L + l ;
-            
+
             set(pr.edit_value, ...
                 'String', value{correct_i}, ...
                 'Enable', pr.get('ENABLE') ...
@@ -204,21 +218,21 @@ function redraw(pr, varargin)
     % See also draw, update, PlotElement.
 
     [h, varargin] = get_and_remove_from_varargin(1.8, 'Height', varargin);
-    [Sh, varargin] = get_and_remove_from_varargin(1.8, 'SHeight', varargin);
-    [Th, varargin] = get_and_remove_from_varargin(1.8, 'THeight', varargin);
-    [Dh, varargin] = get_and_remove_from_varargin(18, 'DHeight', varargin);
+    [Sh, varargin] = get_and_remove_from_varargin(2.0, 'SHeight', varargin);
+    [Th, varargin] = get_and_remove_from_varargin(2.0, 'THeight', varargin);
+    [Dh, varargin] = get_and_remove_from_varargin(2.0, 'DHeight', varargin);
 
     el = pr.get('EL');
     prop = pr.get('PROP');
     g = el.get('g');
-    L = size(el.get('B'), 2);
+    L = size(g.get('B'), 2);
     n = 0;
     if el.get('G').getPropNumber() > 9
         n = length(el.get('G').get(10)); % 10 is densities or thresholds
     end
 
     if n > 1
-        pr.redraw@PlotPropScalar('Height', h*2+Sh+Th, varargin{:});
+        pr.redraw@PlotPropScalar('Height', h*2+Sh+Th+Sh, varargin{:});
         set(pr.slider, ...
             'Units', 'normalized', ...
             'Visible', 'on', ...
@@ -234,7 +248,7 @@ function redraw(pr, varargin)
         set(pr.layer_slider, ...
             'Units', 'normalized', ...
             'Visible', 'on', ...
-            'Position', [.01 (Dh+h)/(h+Sh+Sh+Th+Th+Dh)-.2 .97 (Th/(h+Sh+Sh+Th+Th+Dh)-.02)] ...
+            'Position', [.01 (Dh+h)/(h+Sh+Sh+Th+Th+Dh)-.18 .97 (Th/(h+Sh+Sh+Th+Th+Dh)-.02)] ...
             );
 
         set(pr.layer_text, ...
@@ -249,7 +263,7 @@ function redraw(pr, varargin)
             'Position', [.01 .02 .97 ((Dh+h)/(h+Sh+Sh+Th+Th+Dh)-.2)] ...
             )
     else
-        pr.redraw@PlotPropScalar('Height', h + Sh + Th + Dh, varargin{:});
+        pr.redraw@PlotPropScalar('Height', h*2+Sh+Th, varargin{:});
         set(pr.slider, ...
             'Units', 'normalized', ...
             'Visible', 'on', ...
@@ -265,31 +279,31 @@ function redraw(pr, varargin)
         set(pr.edit_value, ...
             'Visible', 'on', ...
             'Units', 'normalized', ...
-            'Position', [.01 .02 .97 ((Dh+h)/(h+Sh+Th+Dh)-.2)] ...
+            'Position', [.01 .02 .97 ((Dh+h)/(h+Sh+Th+Dh))-.2] ...
             )
     end
     if ~pr.get_button_condition()
         set(pr.slider, ...
             'Visible', 'off' ...
             );
-        
+
         set(pr.slider_text, ...
             'Visible', 'off' ...
             );
-        
+
         set(pr.edit_value, ...
             'Visible', 'off' ...
             )
-        
+
         if ~isempty(pr.layer_slider) && ~isempty(pr.layer_text)
             set(pr.layer_slider, ...
                 'Visible', 'off' ...
                 );
-            
+
             set(pr.layer_text, ...
                 'Visible', 'off' ...
                 );
-            
+
         end
     end
 end

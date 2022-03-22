@@ -209,18 +209,13 @@ function update(pr)
             end
             set(pr.measure_tbl, 'RowName', row_names)
         end
-
-        if ~check_graphics(pr.f_pc, 'figure')
-            set(pr.adj_plot_tgl_btn, 'Enable', 'on');
-            set(pr.line_plot_tgl_btn, 'Enable', 'on');
-        end
     end
 
         function plot_type_rules()
             if ~isempty(pr.graph) && isa(el.get('A1'), 'AnalyzeGroup_ST_MP_BUD') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}]) && ~check_graphics(pr.f_pc, 'figure')
                 set(pr.line_plot_tgl_btn, ...
                     'Enable', 'on', ...
-                    'Visible', 'off');
+                    'Visible', 'on');
             else
                 set(pr.line_plot_tgl_btn, ...
                     'Enable', 'off', ...
@@ -300,7 +295,6 @@ function cb_measure_gui(pr)
     screen_h = Plot.h(0, 'pixels');
 
     N = ceil(sqrt(length(pr.mlist))); % number of row and columns of figures
-
     f_count = 1;
     for i = 1:length(pr.mlist)
         if ~ismember(pr.mlist(i), measure_short_list)

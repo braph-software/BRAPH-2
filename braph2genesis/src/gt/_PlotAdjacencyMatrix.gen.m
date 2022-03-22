@@ -348,7 +348,7 @@ function f_settings = settings(pr, varargin)
             layer_to_plot = pr.get('Layer');
             % i need to ask graph to return the plot 'Graph.PlotType'
             if  get(ui_matrix_histogram_checkbox, 'Value') % histogram
-                if iscell(A) && size(A, 2) > 1
+                if iscell(A) && size(A, 1) > 1 && size(A, 2) > 1
                     pr.h_plot = pr.hist(A{layer_to_plot, layer_to_plot});
                 elseif iscell(A)
                     pr.h_plot = pr.hist(A{layer_to_plot});
@@ -356,7 +356,7 @@ function f_settings = settings(pr, varargin)
                     pr.h_plot = pr.hist(A);
                 end
             elseif get(ui_matrix_threshold_checkbox, 'Value')  % threshold
-                if iscell(A) && size(A, 2) > 1
+                if iscell(A) && size(A, 1) > 1 && size(A, 2) > 1
                     pr.h_plot = pr.plotb(A{layer_to_plot, layer_to_plot}, ...
                         'threshold', ...
                         str2double(get(ui_matrix_threshold_edit, 'String')));
@@ -370,7 +370,7 @@ function f_settings = settings(pr, varargin)
                         str2double(get(ui_matrix_threshold_edit, 'String')));
                 end
             elseif get(ui_matrix_density_checkbox, 'Value')  % density
-                if iscell(A) && size(A, 2) > 1
+                if iscell(A) && size(A, 1) > 1 && size(A, 2) > 1
                     pr.h_plot = pr.plotb(A{layer_to_plot, layer_to_plot}, ...
                         'density', ...
                         str2double(get(ui_matrix_density_edit, 'String')));
@@ -384,7 +384,7 @@ function f_settings = settings(pr, varargin)
                         str2double(get(ui_matrix_density_edit, 'String')));
                 end
             else  % weighted correlation
-                if iscell(A) && size(A, 2) > 1
+                if iscell(A) && size(A, 1) > 1 && size(A, 2) > 1
                     pr.h_plot = pr.plotw(A{layer_to_plot, layer_to_plot});
                 elseif iscell(A)
                     pr.h_plot = pr.plotw(A{layer_to_plot});
