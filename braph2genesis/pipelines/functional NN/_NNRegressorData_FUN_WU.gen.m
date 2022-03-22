@@ -2,22 +2,22 @@
 NNRegressorData_FUN_WU < NNRegressorData (nnd, data of a neural network regressor with functional data) produces a dataset to train or test a neural netowrk regressor using functional data. 
 
 %% ¡description!
-This dataset produces NN groups with functional data.
 The dataset produces NN groups for trianing or testing a neurla network
 with functional data. 
 
 %% ¡props!
+
 %%% ¡prop!
-REPETITION(parameter, scalar) is the number of repetitions
+REPETITION(parameter, scalar) is the number of repetitions.
 %%%% ¡default!
 1
 
 %%% ¡prop!
-FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value
+FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value.
 %%%% ¡default!
 0
 %%% ¡prop!
-FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value
+FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value.
 %%%% ¡default!
 Inf
 
@@ -119,10 +119,9 @@ for i = 1:1:gr.get('SUB_DICT').length()
         'BA', atlas, ...
         'age', sub.get('age'), ...
         'sex', sub.get('sex'), ...
-        ...
         'G', g, ...
         'INPUT', input, ...
-        'TARGET', sub.get(nnd.get('TARGET_NAME')) ...
+        'TARGET_NAME', nnd.get('TARGET_NAME') ...
         );
     nn_sub_dict.add(nn_sub);
 end
