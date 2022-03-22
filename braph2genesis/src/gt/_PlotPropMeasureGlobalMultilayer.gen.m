@@ -19,12 +19,12 @@ layer_text
 function h_panel = draw(pr, varargin)
     %DRAW draws a table with the global measure.
     %
-    % DRAW(PR) draws the property panel a table with the structural data of 
+    % DRAW(PR) draws the property panel a table with the structural data of
     %  a subject.
     %
     % H = DRAW(PR) returns a handle to the property panel.
     %
-    % DRAW(PR, 'Property', VALUE, ...) sets the properties of the panel 
+    % DRAW(PR, 'Property', VALUE, ...) sets the properties of the panel
     %  with custom Name-Value pairs.
     %  All standard plot properties of uipanel can be used.
     %
@@ -32,7 +32,7 @@ function h_panel = draw(pr, varargin)
     %  objects from the handle H of the panel.
     %
     % See also update, redraw, settings, uipanel.
-    
+
     pr.p = draw@PlotPropScalar(pr, varargin{:});
 
     % retrieves the handle of the table
@@ -42,25 +42,24 @@ function h_panel = draw(pr, varargin)
             pr.edit_value = children(i);
         end
     end
-    
+
     el = pr.get('EL');
-    prop = pr.get('PROP');
     g = el.get('g');
     L = size(g.get('B'), 2);
-    label = 'Layer';
     map_multiplier = 100;
-    if g.getPropNumber() > 9
+    if g.getGraphType() == 4 && g.getPropNumber() > 9 % mp but/bud
+        n = length(g.get(10)); % 10 is densities or thresholds
+    elseif g.getGraphType() ~= 4 && g.getPropNumber() > 9 % bud/but
         n = length(g.get(10)); % 10 is densities or thresholds
         L = size(g.get('B'), 2) / n;
-        label = g.getPropTag(10);
     end
-    
+
     if L == 1
         Ll = 1;
     else
         Ll = L-1;
     end
-    
+
     % set on first layer
     pr.slider = uicontrol( ...
         'Parent', pr.p, ...
@@ -85,12 +84,12 @@ function h_panel = draw(pr, varargin)
         'String', '', ...
         'BackgroundColor', pr.get('BKGCOLOR') ...
         );
-    
-    function cb_slider(~, ~)
-        pr.update()
-    end
 
-    if el.get('G').getPropNumber() > 9
+        function cb_slider(~, ~)
+            pr.update()
+        end
+
+    if g.getGraphType() == 4
         pr.layer_slider = uicontrol( ...
             'Parent', pr.p, ...
             'Style', 'slider', ...
@@ -115,10 +114,10 @@ function h_panel = draw(pr, varargin)
             'BackgroundColor', pr.get('BKGCOLOR') ...
             );
     end
-    
-    function cb_slider_layer(~, ~)
-        pr.update()
-    end
+
+        function cb_slider_layer(~, ~)
+            pr.update()
+        end
 
     % output
     if nargout > 0
@@ -131,13 +130,13 @@ function update(pr)
     % UPDATE(PR) updates the content of the property panel and its graphical objects.
     %
     % Important note:
-    % 1. UPDATE() is typically called internally by PlotElement and does not need 
+    % 1. UPDATE() is typically called internally by PlotElement and does not need
     %  to be explicitly called in children of PlotProp.
     %
     % See also draw, redraw, PlotElement.
 
     update@PlotProp(pr)
-    
+
     el = pr.get('EL');
     prop = pr.get('PROP');
     g = el.get('g');
@@ -146,12 +145,21 @@ function update(pr)
     map_multiplier = 100;
     slider_tags = {'1'};
     extra_label = '';
-    if g.getPropNumber() > 9
+    if g.getGraphType() == 4 && g.getPropNumber() > 9
         n = length(g.get(10)); % 10 is densities or thresholds
-        L = size(g.get('B'), 2) / n;
         label = g.getPropTag(10);
         if strcmp(label, 'thresholds')
-            label = 'Threshold';            
+            label = 'Threshold';
+        elseif strcmp(label, 'densities')
+            label = 'Density';
+            extra_label = '%';
+        end
+        slider_tags = compose("%g", round(g.get(10), 2));
+    elseif g.getGraphType() ~= 4 && g.getPropNumber() > 9
+        n = length(g.get(10)); % 10 is densities or thresholds
+        L = size(g.get('B'), 2) / n;
+        if strcmp(label, 'thresholds')
+            label = 'Threshold';
         elseif strcmp(label, 'densities')
             label = 'Density';
             extra_label = '%';
@@ -165,18 +173,18 @@ function update(pr)
     else
         set(pr.slider_text, ...
             'String', ['Layer: ' num2str(round(get(pr.slider, 'Value') * map_multiplier))]);
-        
+
         if el.get('G').getPropNumber() > 9
-            
+
             set(pr.layer_text, ...
-            'String', [label ' ' num2str(round(get(pr.layer_slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.layer_slider, 'Value') * map_multiplier)} ' ' extra_label]);
-        
+                'String', [label ' ' num2str(round(get(pr.layer_slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.layer_slider, 'Value') * map_multiplier)} ' ' extra_label]);
+
             % get the correct index
             l = round(get(pr.slider, 'Value') * map_multiplier); % layer
             d = round(get(pr.layer_slider, 'Value') * map_multiplier); % threshold or ddensity
-        
+
             correct_i =  (d * L)- L + l ;
-            
+
             set(pr.edit_value, ...
                 'String', value{correct_i}, ...
                 'Enable', pr.get('ENABLE') ...
@@ -226,7 +234,7 @@ function redraw(pr, varargin)
     end
 
     if n > 1
-        pr.redraw@PlotPropScalar('Height', h*2+Sh+Th, varargin{:});
+        pr.redraw@PlotPropScalar('Height', h*2+Sh+Th+Sh, varargin{:});
         set(pr.slider, ...
             'Units', 'normalized', ...
             'Visible', 'on', ...
@@ -242,7 +250,7 @@ function redraw(pr, varargin)
         set(pr.layer_slider, ...
             'Units', 'normalized', ...
             'Visible', 'on', ...
-            'Position', [.01 (Dh+h)/(h+Sh+Sh+Th+Th+Dh)-.2 .97 (Th/(h+Sh+Sh+Th+Th+Dh)-.02)] ...
+            'Position', [.01 (Dh+h)/(h+Sh+Sh+Th+Th+Dh)-.18 .97 (Th/(h+Sh+Sh+Th+Th+Dh)-.02)] ...
             );
 
         set(pr.layer_text, ...
