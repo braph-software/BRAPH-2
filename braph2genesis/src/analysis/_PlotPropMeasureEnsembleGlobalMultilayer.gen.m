@@ -49,7 +49,7 @@ function h_panel = draw(pr, varargin)
     L = size(value, 1);
     label = 'Layer';
     g = el.get('A').get('G_DICT').getItem(1);
-    check = graph.getPropNumber() > 9;
+    check = g.getPropNumber() > 9;
     map_multiplier = 100;
     
     if check  % bud
@@ -156,7 +156,7 @@ function update(pr)
     value = el.getr(prop);
     label = 'Layer';
     g = el.get('A').get('G_DICT').getItem(1);
-    check = graph.getPropNumber() > 9;
+    check = g.getPropNumber() > 9;
     map_multiplier = 100;
     
     slider_tags = {'1'};
@@ -235,7 +235,7 @@ function redraw(pr, varargin)
     [h, varargin] = get_and_remove_from_varargin(1.8, 'Height', varargin);
     [Sh, varargin] = get_and_remove_from_varargin(1.8, 'SHeight', varargin);
     [Th, varargin] = get_and_remove_from_varargin(1.8, 'THeight', varargin);
-    [Dh, varargin] = get_and_remove_from_varargin(18, 'DHeight', varargin);
+    [Dh, varargin] = get_and_remove_from_varargin(2, 'DHeight', varargin);
     
     el = pr.get('EL');
     prop = pr.get('PROP');
@@ -249,7 +249,7 @@ function redraw(pr, varargin)
     end
     
     if n > 1
-        pr.redraw@PlotPropScalar('Height', h+Sh+Th, varargin{:});
+        pr.redraw@PlotPropScalar('Height', h*2+Sh+Th, varargin{:});
         set(pr.slider, ...
             'Units', 'normalized', ...
             'Visible', 'on', ...
@@ -277,7 +277,7 @@ function redraw(pr, varargin)
         set(pr.edit_value, ...
             'Visible', 'on', ...
             'Units', 'normalized', ...
-            'Position', [.01 .02 .97 ((Dh+h)/(h+Sh+Sh+Th+Th+Dh)-.1)] ...
+            'Position', [.01 .02 .97 Dh] ...
             )
     else
         pr.redraw@PlotPropScalar('Height', h + Sh + Th + Dh, varargin{:});

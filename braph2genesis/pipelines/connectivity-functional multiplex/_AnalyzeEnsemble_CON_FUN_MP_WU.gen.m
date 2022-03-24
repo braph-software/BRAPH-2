@@ -43,6 +43,11 @@ GR (data, item) is the subject group, which also defines the subject class Subje
 Group('SUB_CLASS', 'SubjectCON_FUN_MP')
 
 %%% ¡prop!
+ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
+%%%% ¡gui!
+pr = PPAnalyzeEnsembleMP_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_CON_FUN_MP_WU.ME_DICT, 'WAITBAR', true, varargin{:});
+
+%%% ¡prop!
 G_DICT (result, idict) is the multiplex (MultiplexWU) ensemble obtained from this analysis.
 %%%% ¡settings!
 'MultiplexWU'

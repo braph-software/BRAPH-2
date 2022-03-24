@@ -160,7 +160,7 @@ function update(pr)
     map_multiplier = 100;
     g_dict = el.get('A').get('G_DICT');
     g = g_dict.getItem(1);
-    br_dict = graph.get('BRAINATLAS').get('BR_DICT');
+    br_dict = g.get('BRAINATLAS').get('BR_DICT');
     check = g.getPropNumber() > 9;
     slider_tags = {'1'};
     extra_label = '';

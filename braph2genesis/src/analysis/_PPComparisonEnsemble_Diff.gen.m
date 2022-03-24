@@ -54,7 +54,6 @@ function h_panel = draw(pr, varargin)
     % create panel with slider
     el = pr.get('EL');
     prop = pr.get('PROP');
-
     value = el.getr(prop);
 
     if isa(value, 'NoValue')
@@ -81,22 +80,31 @@ function h_panel = draw(pr, varargin)
     else
         L = size(value, 1);
         layer_dim_element = el.get('C').get('A1').get('G_DICT').getItem(1);
-        if iscell(layer_dim_element)
+        if iscell(layer_dim_element) && layer_dim_element.getGraphType() == 4 && layer_dim_element.getPropNumber() > 9 % mp bud/but
+            L2 =  size(layer_dim_element.get(10), 1);
+            L = L/L2;
+        elseif iscell(layer_dim_element) && layer_dim_element.getGraphType() == 4 && layer_dim_element.getPropNumber() <= 9 % mp wu
+            L2 =  size(layer_dim_element.get('b'), 2);
+            L = L/L2;
+        elseif iscell(layer_dim_element) % bud/but
             L2 = size(layer_dim_element.get('b'), 2);
-        else
+            L = L/L2;
+        else % wu
             L2 = 1;
         end
         map_multiplier = 100;
-
-        if L2 > 1
-            L = L/L2;
-        end
 
         if L == 1
             Ll=1;
         else
             Ll = L-1;
         end
+        if L2 == 1
+            Ll2=1;
+        else
+            Ll2 = L2-1;
+        end
+        
         if L2 > 1
             pr.second_slider = uicontrol( ...
                 'Parent', pr.p, ...
@@ -105,7 +113,7 @@ function h_panel = draw(pr, varargin)
                 'Value', 1 / map_multiplier, ...
                 'Min', 1 / map_multiplier, ...
                 'Max', L2 / map_multiplier, ...
-                'SliderStep', [map_multiplier/((L2-1)*map_multiplier) map_multiplier/((L2-1)*map_multiplier)] , ...
+                'SliderStep', [map_multiplier/(Ll2*map_multiplier) map_multiplier/(Ll2*map_multiplier)] , ...
                 'Callback', {@cb_slider_2} ...
                 );
             pr.second_slider_text = uicontrol(...
@@ -120,6 +128,7 @@ function h_panel = draw(pr, varargin)
                 'BackgroundColor', pr.get('BKGCOLOR') ...
                 );
         end % set on first layer
+        if L > 1
         pr.slider = uicontrol( ...
             'Parent', pr.p, ...
             'Style', 'slider', ...
@@ -143,7 +152,7 @@ function h_panel = draw(pr, varargin)
             'String', '', ...
             'BackgroundColor', pr.get('BKGCOLOR') ...
             );
-
+        end
     end
         function cb_slider(~, ~)
             pr.update()
@@ -159,7 +168,7 @@ function h_panel = draw(pr, varargin)
             'Visible', 'on', ...
             'TooltipString', 'Open the comparison in a Brain View plot.', ...
             'String', 'Plot Brain View', ...
-            'Position', [.02 .76 .2 .15], ...
+            'Position', [.02 .8 .2 .1], ...
             'Callback', {@cb_brainview});
     end
 
@@ -210,28 +219,32 @@ function update(pr, sliders_condition)
         fdr_q_value = 0.05;
         fdr_style = [1 1 0];
         L = size(value, 1);
+        map_multiplier = 100;
         layer_dim_element = el.get('C').get('A1').get('G_DICT').getItem(1);
-        if iscell(layer_dim_element)
+        if iscell(layer_dim_element) && layer_dim_element.getGraphType() == 4 && layer_dim_element.getPropNumber() > 9 % mp bud/but
+            L2 =  size(layer_dim_element.get(10), 1);
+            L = L/L2;
+        elseif iscell(layer_dim_element) && layer_dim_element.getGraphType() == 4 && layer_dim_element.getPropNumber() <= 9 % mp wu
+            L2 =  size(layer_dim_element.get('b'), 2);
+            L = L/L2;
+        elseif iscell(layer_dim_element) % bud/but
             L2 = size(layer_dim_element.get('b'), 2);
-        else
+            L = L/L2;
+        else % wu
             L2 = 1;
         end
-        map_multiplier = 100;
-
-        if L2 > 1
-            L = L/L2;
-        end
-
+        
         if L == 1
             Ll=1;
         else
             Ll = L-1;
         end
-        if iscell(layer_dim_element)
-            L2 = size(layer_dim_element.get('b'), 2);
+        
+        if L2 == 1
+            Ll2=1;
         else
-            L2 = 1;
-        end
+            Ll2 = L2-1;
+        end       
 
         % have to declare in case of refresh
         if L2 > 1 && init_sliders
@@ -242,7 +255,7 @@ function update(pr, sliders_condition)
                 'Value', 1 / map_multiplier, ...
                 'Min', 1 / map_multiplier, ...
                 'Max', L2 / map_multiplier, ...
-                'SliderStep', [map_multiplier/((L2-1)*map_multiplier) map_multiplier/((L2-1)*map_multiplier)],  ...
+                'SliderStep', [map_multiplier/(Ll2*map_multiplier) map_multiplier/(Ll2*map_multiplier)],  ...
                 'Callback', {@cb_slider_2} ...
                 );
             pr.second_slider_text = uicontrol(...
@@ -257,7 +270,7 @@ function update(pr, sliders_condition)
                 'BackgroundColor', pr.get('BKGCOLOR') ...
                 );
         end % set on first layer
-        if init_sliders
+        if init_sliders && L > 1
             pr.slider = uicontrol( ...
                 'Parent', pr.p, ...
                 'Style', 'slider', ...
@@ -284,20 +297,156 @@ function update(pr, sliders_condition)
         end
 
         %%%%%%
-
-
-        if el.isLocked(prop)
-            set(pr.comparison_tbl, ...
-                'Enable', pr.get('ENABLE'), ...
-                'ColumnEditable', false ...
-                )
-        end
-
         %get brain atlas
         br_dict = layer_dim_element.get('brainatlas').get('br_dict');
         br_ids = cellfun(@(x) x.get('id'), br_dict.getItems(), 'UniformOutput', false);
+        if layer_dim_element.getGraphType() == 4 && L > 1 && L2 > 1% mp bud
+            set(pr.slider_text, ...
+                'String', [label ' ' num2str(round(get(pr.slider, 'Value') * map_multiplier))]);
+            set(pr.second_slider_text, ...
+                'String', ['Layer: ' num2str(round(get(pr.second_slider, 'Value')) * map_multiplier)]);
 
-        if  L2 > 1
+            % set p values mask
+            D_T = round(get(pr.slider, 'Value') * map_multiplier);
+            layer_sel = round(get(pr.second_slider, 'Value') * map_multiplier);
+            tmp_diff = L2-layer_sel;
+            tmp_value = value{D_T*L2-tmp_diff};
+            p1 = el.memorize('P1');
+            p2 = el.memorize('P2');
+            cil = el.memorize('cil');
+            ciu = el.memorize('ciu');
+            p1 = p1{D_T*L2-tmp_diff};
+            p2 = p2{D_T*L2-tmp_diff};
+            cil = p1{D_T*L2-tmp_diff};
+            ciu = p1{D_T*L2-tmp_diff};
+
+            if Measure.is_nodal(el.get('measure'))
+                p1 = p1';
+                [~, mask] = fdr(p1, fdr_q_value);
+                mask = mask';
+            else
+                [~, mask] = fdr(p1, fdr_q_value);
+            end
+
+            tmp_value = num2cell(tmp_value);
+
+            for i = 1:size(tmp_value, 1)
+                for j = 1:size(tmp_value, 2)
+                    if mask(i, j)
+                        clr = dec2hex(round(fdr_style * 255), 2)';
+                        clr = ['#'; clr(:)]';
+
+                        tmp_value(i, j) = {strcat(...
+                            ['<html><body bgcolor="' clr '" text="#000000" width="100px">'], ...
+                            num2str(tmp_value{i, j}))};
+                    end
+                end
+            end
+            % rule column diff, p1, p2, cil, ciu
+            if Measure.is_nodal(el.get('Measure')) || Measure.is_global(el.get('Measure'))
+                set(pr.comparison_tbl, ...
+                    'ColumnName', {'DIFF', 'P1', 'P2', 'CIU', 'CIL'}, ...
+                    'ColumnFormat', {'char',  'char', 'char', 'char', 'char'}, ...
+                    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                    'ColumnEditable', [false false false false false] ...
+                    );
+
+                full_value = cell(size(tmp_value, 1), 5);
+                for k = 1:size(tmp_value, 1)
+                    full_value{k, 1} = tmp_value{k};
+                    full_value{k, 2} = p1{k};
+                    full_value{k, 3} = p2{k};
+                    full_value{k, 4} = ciu{k};
+                    full_value{k, 5} = cil{k};
+                end
+
+                set(pr.comparison_tbl, 'Data', full_value)
+            else
+                set(pr.comparison_tbl, ...
+                    'Data', tmp_value, ...
+                    'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
+                    'ColumnEditable', false)
+            end
+
+            % rule atlas
+            if Measure.is_nodal(el.get('Measure')) || Measure.is_binodal(el.get('Measure'))
+                set(pr.comparison_tbl, ...
+                    'RowName', br_ids)
+            end
+        elseif layer_dim_element.getGraphType() == 4 && L == 1 && L2 > 1 %mp wu
+            set(pr.slider_text, ...
+                'Visible', 'off');
+            set(pr.second_slider_text, ...
+                'String', ['Layer: ' num2str(round(get(pr.second_slider, 'Value')) * map_multiplier)]);
+
+            % set p values mask
+            D_T = round(get(pr.slider, 'Value') * map_multiplier);
+            layer_sel = round(get(pr.second_slider, 'Value') * map_multiplier);
+            tmp_diff = L2-layer_sel;
+            tmp_value = value{D_T*L2-tmp_diff};
+            p1 = el.memorize('P1');
+            p2 = el.memorize('P2');
+            cil = el.memorize('cil');
+            ciu = el.memorize('ciu');
+            p1 = p1{D_T*L2-tmp_diff};
+            p2 = p2{D_T*L2-tmp_diff};
+            cil = p1{D_T*L2-tmp_diff};
+            ciu = p1{D_T*L2-tmp_diff};
+
+            if Measure.is_nodal(el.get('measure'))
+                p1 = p1';
+                [~, mask] = fdr(p1, fdr_q_value);
+                mask = mask';
+            else
+                [~, mask] = fdr(p1, fdr_q_value);
+            end
+
+            tmp_value = num2cell(tmp_value);
+
+            for i = 1:size(tmp_value, 1)
+                for j = 1:size(tmp_value, 2)
+                    if mask(i, j)
+                        clr = dec2hex(round(fdr_style * 255), 2)';
+                        clr = ['#'; clr(:)]';
+
+                        tmp_value(i, j) = {strcat(...
+                            ['<html><body bgcolor="' clr '" text="#000000" width="100px">'], ...
+                            num2str(tmp_value{i, j}))};
+                    end
+                end
+            end
+            % rule column diff, p1, p2, cil, ciu
+            if Measure.is_nodal(el.get('Measure')) || Measure.is_global(el.get('Measure'))
+                set(pr.comparison_tbl, ...
+                    'ColumnName', {'DIFF', 'P1', 'P2', 'CIU', 'CIL'}, ...
+                    'ColumnFormat', {'char',  'char', 'char', 'char', 'char'}, ...
+                    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                    'ColumnEditable', [false false false false false] ...
+                    );
+
+                full_value = cell(size(tmp_value, 1), 5);
+                for k = 1:size(tmp_value, 1)
+                    full_value{k, 1} = tmp_value{k};
+                    full_value{k, 2} = p1{k};
+                    full_value{k, 3} = p2{k};
+                    full_value{k, 4} = ciu{k};
+                    full_value{k, 5} = cil{k};
+                end
+
+                set(pr.comparison_tbl, 'Data', full_value)
+            else
+                set(pr.comparison_tbl, ...
+                    'Data', tmp_value, ...
+                    'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
+                    'ColumnEditable', false)
+            end
+
+            % rule atlas
+            if Measure.is_nodal(el.get('Measure')) || Measure.is_binodal(el.get('Measure'))
+                set(pr.comparison_tbl, ...
+                    'RowName', br_ids)
+            end
+        elseif  L2 > 1 % bud/but
             set(pr.slider_text, ...
                 'String', [label ' ' num2str(round(get(pr.slider, 'Value') * map_multiplier))]);
             set(pr.second_slider_text, ...
@@ -372,7 +521,7 @@ function update(pr, sliders_condition)
             end
 
 
-        else
+        else % wu
             set(pr.slider_text, ...
                 'String', [label ' ' num2str(round(get(pr.slider, 'Value') * map_multiplier))]);
 
@@ -480,9 +629,13 @@ function redraw(pr, varargin)
         pr.redraw@PlotProp(varargin{:})
     else
         layer_dim_element = el.get('C').get('A1').get('G_DICT').getItem(1);
-        if iscell(layer_dim_element)
+        if iscell(layer_dim_element) && layer_dim_element.getGraphType() == 4 && layer_dim_element.getPropNumber() > 9 % mp bud/but
+            L2 =  size(layer_dim_element.get(10), 1);
+        elseif iscell(layer_dim_element) && layer_dim_element.getGraphType() == 4 && layer_dim_element.getPropNumber() <= 9 % mp wu
+            L2 =  size(layer_dim_element.get('b'), 2);
+        elseif iscell(layer_dim_element) % bud/but
             L2 = size(layer_dim_element.get('b'), 2);
-        else
+        else % wu
             L2 = 1;
         end
         
