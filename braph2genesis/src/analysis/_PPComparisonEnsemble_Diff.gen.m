@@ -229,8 +229,8 @@ function update(pr, sliders_condition)
         L = size(value, 1);
         map_multiplier = 100;
         layer_dim_element = el.get('C').get('A1').get('G_DICT').getItem(1);
-        if iscell(layer_dim_element) && layer_dim_element.getGraphType() == 4 && layer_dim_element.getPropNumber() > 9 % mp bud/but
-            L2 =  size(layer_dim_element.get(10), 1);
+        if layer_dim_element.getGraphType() == 4 && layer_dim_element.getPropNumber() > 9 % mp bud/but
+            L2 =  size(layer_dim_element.get(10), 2);
             L = L/L2;
         elseif layer_dim_element.getGraphType() == 4 && layer_dim_element.getPropNumber() <= 9 % mp wu
             L2 =  size(layer_dim_element.get('b'), 2);
@@ -310,9 +310,9 @@ function update(pr, sliders_condition)
         br_ids = cellfun(@(x) x.get('id'), br_dict.getItems(), 'UniformOutput', false);
         if layer_dim_element.getGraphType() == 4 && L > 1 && L2 > 1% mp bud
             set(pr.slider_text, ...
-                'String', [label ' ' num2str(round(get(pr.slider, 'Value') * map_multiplier))]);
+                'String', ['Layer: ' num2str(round(get(pr.slider, 'Value') * map_multiplier))]);
             set(pr.second_slider_text, ...
-                'String', ['Layer: ' num2str(round(get(pr.second_slider, 'Value')) * map_multiplier)]);
+                'String', [label ' ' num2str(round(get(pr.second_slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.second_slider, 'Value') * map_multiplier)}]);
 
             % set p values mask
             D_T = round(get(pr.slider, 'Value') * map_multiplier);
@@ -362,10 +362,10 @@ function update(pr, sliders_condition)
                 full_value = cell(size(tmp_value, 1), 5);
                 for k = 1:size(tmp_value, 1)
                     full_value{k, 1} = tmp_value{k};
-                    full_value{k, 2} = p1{k};
-                    full_value{k, 3} = p2{k};
-                    full_value{k, 4} = ciu{k};
-                    full_value{k, 5} = cil{k};
+                    full_value{k, 2} = p1(k);
+                    full_value{k, 3} = p2(k);
+                    full_value{k, 4} = ciu(k);
+                    full_value{k, 5} = cil(k);
                 end
 
                 set(pr.comparison_tbl, 'Data', full_value)
@@ -638,10 +638,10 @@ function redraw(pr, varargin)
     else
         L = size(value, 1);
         layer_dim_element = el.get('C').get('A1').get('G_DICT').getItem(1);
-        if iscell(layer_dim_element) && layer_dim_element.getGraphType() == 4 && layer_dim_element.getPropNumber() > 9 % mp bud/but
-            L2 =  size(layer_dim_element.get(10), 1);
+        if layer_dim_element.getGraphType() == 4 && layer_dim_element.getPropNumber() > 9 % mp bud/but
+            L2 =  size(layer_dim_element.get(10), 2);
             L = L/L2;
-        elseif iscell(layer_dim_element) && layer_dim_element.getGraphType() == 4 && layer_dim_element.getPropNumber() <= 9 % mp wu
+        elseif layer_dim_element.getGraphType() == 4 && layer_dim_element.getPropNumber() <= 9 % mp wu
             L2 =  size(layer_dim_element.get('b'), 2);
             L = L/L2;
         elseif iscell(layer_dim_element) % bud/but
