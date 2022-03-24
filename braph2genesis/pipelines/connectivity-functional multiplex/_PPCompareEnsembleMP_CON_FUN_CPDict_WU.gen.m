@@ -44,7 +44,8 @@ function h_panel = draw(pr, varargin)
     % See also update, redraw, refresh, uipanel.
 
     % declare constants
-    el = pr.get('EL');    
+    el = pr.get('EL');  
+    prop = pr.get('prop');
     pr.p = draw@PlotProp(pr, varargin{:});
 
     if isempty(pr.measure_tbl) || ~isgraphics(pr.measure_tbl, 'uitable')
