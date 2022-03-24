@@ -20,13 +20,12 @@ p
 measure_tbl % measure table
 measure_btn % calculate measures button
 line_plot_tgl_btn % line plot toggle button
-adj_plot_tgl_btn % adjacency toggle button
+measure_plot_btn
 mlist % list of measures compatible with the graph
 selected % list of selected measures
 already_calculated % list of measures already calculated
 f_m % array of measure class figures
 f_pc % figure for plot graph
-f_adj
 graph % graph of the comparison
 
 %% ¡methods!
@@ -48,71 +47,62 @@ function h_panel = draw(pr, varargin)
 
     % declare constants
     el = pr.get('EL');
-    a1 = el.get('A1');
-    pr.graph = a1.get('G_DICT').getItem(1);
-
     pr.p = draw@PlotProp(pr, varargin{:});
 
     % graph button
-    pr.adj_plot_tgl_btn = uicontrol(...
-        'Style', 'pushbutton', ...
-        'Parent', pr.p, ...
-        'Units', 'normalized', ...
-        'CData', imresize(imread('icon_plot_adj.png'), [40 40]), ...
-        'TooltipString', 'Open a plot for the adjacency matrix.', ...
-        'Position', [.01 .71 .2 .2], ...
-        'Callback', {@cb_plot_type_adj} ...
-        );
-    
-    pr.line_plot_tgl_btn = uicontrol(...
-        'Style', 'pushbutton', ...
-        'Parent', pr.p, ...
-        'Units', 'normalized', ...
-        'CData', imresize(imread('icon_plot_lines.png'), [40 40]), ...
-        'TooltipString', 'Open a line plot for the measure.', ...
-        'Position', [.23 .71 .2 .2], ...
-        'Callback', {@cb_plot_type_line} ...
-        );
-        
-    function cb_plot_type_adj(~, ~)
-        pr.cb_graph_adj_figure();
-    end
-    function cb_plot_type_line(~, ~)
-        pr.cb_graph_ui_figure();
-    end    
-
     if isempty(pr.measure_tbl) || ~isgraphics(pr.measure_tbl, 'uitable')
+        pr.line_plot_tgl_btn = uicontrol(...
+            'Style', 'pushbutton', ...
+            'Parent', pr.p, ...
+            'Units', 'normalized', ...
+            'Visible', 'off', ...
+            'CData', imresize(imread('icon_plot_lines.png'), [40 40]), ...
+            'TooltipString', 'Open a line plot for the measure.', ...
+            'Position', [.01 .71 .2 .2], ...
+            'Callback', {@cb_plot_type_line} ...
+            );
         pr.mlist = [];
-
+        
         pr.measure_tbl = uitable( ...
             'Parent', pr.p, ...
+            'Visible', 'on', ...
+            'Visible', 'off', ...
+            'ColumnName', {'SEL', 'Measure', 'Shape', 'Scope', 'Notes'}, ...
+            'ColumnFormat', {'logical',  'char', 'char', 'char', 'char'}, ...
+            'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+            'ColumnEditable', [true false false false false], ...
             'CellEditCallback', {@cb_measure_edit} ...
             );
-
+        
         % measure button
         pr.measure_btn = uicontrol( ...
             'Parent', pr.p, ...
             'Style', 'pushbutton', ...
             'Tag', 'measure_button', ...
             'Units', 'normalized', ...
+            'Visible', 'off', ...
             'String', 'Calculate Comparisons', ...
             'TooltipString', 'Calculate Selected Measure Comparison', ...
             'Position', [.01 .02 .48 .09], ...
             'Callback', {@cb_measure_btn} ...
             );
         
-        measure_plot_btn = uicontrol(...
+        pr.measure_plot_btn = uicontrol(...
             'Parent', pr.p, ...
             'Style', 'pushbutton', ...
             'Tag', 'measure_plot_button', ...
             'Units', 'normalized', ...
+            'Visible', 'off', ...
             'String', 'Show Comparisons', ...
             'TooltipString', 'Show Selected Measures Comparison', ...
             'Position', [.51 .02 .48 .09], ...
             'Callback', {@cb_measure_plot_btn} ...
             );
     end
-       
+  
+    function cb_plot_type_line(~, ~)
+        pr.cb_graph_ui_figure();
+    end      
     function cb_measure_edit(~, event)
         i = event.Indices(1);
         col = event.Indices(2);
@@ -153,20 +143,23 @@ function update(pr)
 
     el = pr.get('EL');
     prop = pr.get('PROP');
-
     button_state = pr.get_button_condition();
-    set(...
-        pr.measure_tbl, ...
-        'Visible', 'on', ...
-        'ColumnName', {'SEL', 'Measure', 'Shape', 'Scope', 'Notes'}, ...
-        'ColumnFormat', {'logical',  'char', 'char', 'char', 'char'}, ...
-        'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-        'ColumnEditable', [true false false false false] ...
-        );
 
-    if button_state
+    if ~button_state
+        set(pr.measure_tbl, 'Visible', 'off')
+        set(pr.measure_btn, 'Visible', 'off')
+        set(pr.measure_plot_btn, 'Visible', 'off')
+        set(pr.line_plot_tgl_btn, 'Visible', 'off')
+        pr.graph = [];
+        pr.already_calculated = [];
 
     else
+        a1 = el.get('A1');
+        pr.graph = a1.get('G_DICT').getItem(1);
+        set(pr.measure_tbl, 'Visible', 'on')
+        set(pr.measure_btn, 'Visible', 'on')
+        set(pr.measure_plot_btn, 'Visible', 'on')
+        set(pr.line_plot_tgl_btn, 'Visible', 'on')
 
         if  ~isa(pr.graph, 'NoValue') && isa(pr.graph, 'Graph')
             if isempty(pr.mlist)
@@ -214,19 +207,13 @@ function update(pr)
             end
             set(pr.measure_tbl, 'RowName', row_names)
         end
-
-        if ~check_graphics(pr.f_pc, 'figure')
-            set(pr.adj_plot_tgl_btn, 'Enable', 'on');
-            set(pr.line_plot_tgl_btn, 'Enable', 'on');
-        end
-
     end
 
         function plot_type_rules()
             if ~isempty(pr.graph) && isa(el.get('A1'), 'AnalyzeEnsemble_CON_FUN_MP_BUT') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}])
-                set(pr.line_plot_tgl_btn, 'Enable', 'on');
+                set(pr.line_plot_tgl_btn, 'Enable', 'on', 'Visible', 'on');
             else
-                set(pr.line_plot_tgl_btn, 'Enable', 'off');
+                set(pr.line_plot_tgl_btn, 'Enable', 'off', 'Visible', 'off');
             end
         end
     plot_type_rules()
@@ -256,12 +243,24 @@ function redraw(pr, varargin)
     [h, varargin] = get_and_remove_from_varargin(1.8, 'Height', varargin);
     [Dh, varargin] = get_and_remove_from_varargin(15, 'DHeight', varargin);
 
-    set(pr.measure_tbl, ...
-        'Units', 'normalized', ...
-        'Position', [.01 .13 .98 (Dh/(h+Dh)-.32)] ...
-        )
-
-    pr.redraw@PlotProp('Height', h + Dh, varargin{:})
+    if pr.get_button_condition()
+        if  ~isempty(pr.measure_tbl) && isgraphics(pr.measure_tbl, 'uitable')
+            set(pr.measure_tbl, ...
+                'Units', 'normalized', ...
+                'Position', [.01 .13 .98 (Dh/(h+Dh)-.27)] ...
+                )
+        end
+        pr.redraw@PlotProp('Height', (h + Dh)*1.5, varargin{:})
+    else
+        if  ~isempty(pr.measure_tbl) && isgraphics(pr.measure_tbl, 'uitable')
+            set(pr.measure_tbl, ...
+                'Units', 'normalized', ...
+                'Position', [.01 .13 .98 (Dh/(h+Dh)-.32)], ...
+                'Visible', 'off' ...
+                )
+        end
+        pr.redraw@PlotProp(varargin{:})
+    end
 end
 function cb_measure_gui(pr)
     %CB_MEASURE_GUI executes callback for the pushbutton.
@@ -290,12 +289,14 @@ function cb_measure_gui(pr)
     screen_h = Plot.h(0, 'pixels');
 
     N = ceil(sqrt(length(pr.mlist))); % number of row and columns of figures
-
+    f_count = 1;
     for i = 1:length(pr.mlist)
         if ~ismember(pr.mlist(i), measure_short_list)
             continue;
         end
         measure_name = pr.mlist{i};
+        plot_permission = true;
+        tmp_gui = [];
         for j = 1:cp_dict.length()
             cp = cp_dict.getItem(j);
             if isequal(measure_name, cp.get('measure'))
@@ -304,7 +305,30 @@ function cb_measure_gui(pr)
                 w = f_gr_w / screen_w;
                 h = .5 * f_gr_h / screen_h + .5 * f_gr_h * (N - floor((i - .5) / N)) / N / screen_h;
                                
-                pr.f_m{i} = GUI('pe', cp, 'POSITION', [x y w h], 'CLOSEREQ', false).draw();   
+                for k = 1:length(pr.f_m)
+                    tmp_f = pr.f_m{k};
+                    if isgraphics(tmp_f)
+                        tmp_gui = get(tmp_f, 'UserData');
+                        if isequal(tmp_gui.get('pe').get('el').get('id'), cp.get('ID'))
+                            plot_permission = false;
+                            if isequal(get(tmp_f, 'Visible'), 'on')
+                                % hide
+                                set(tmp_f, 'Visible', 'off')
+                            else
+                                % show
+                                figure(tmp_f);
+                                set(tmp_f, ...
+                                    'Visible', 'on', ...
+                                    'WindowState', 'normal' ...
+                                    );
+                            end
+                        end
+                    end
+                end
+                if plot_permission
+                    pr.f_m{f_count} = GUI('pe', cp, 'POSITION', [x y w h], 'CLOSEREQ', false).draw();
+                    f_count = f_count + 1;
+                end
                 break; % go to next measure
             end            
         end        
@@ -328,7 +352,7 @@ function cb_measure_calc(pr)
 
         measure = pr.mlist{i};
         if pr.get('WAITBAR')
-            waitbar(.1 + .70 * i / length(pr.selected), wb, ['Calculating comparison ' measure ]);
+            waitbar(.1 + .20 * i / length(pr.selected), wb, ['Calculating comparison ' measure ]);
         end
         el.getComparison(measure).memorize('DIFF');
         el.getComparison(measure).get('P1');
@@ -400,62 +424,16 @@ function cb_graph_ui_figure(pr)
         set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
         f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
         f_settings.OuterPosition(2) = f_ba_y/screen_h;
+    elseif isequal(get(pr.f_pc, 'Visible'), 'on')
+        gui = get(pr.f_pc, 'UserData');
+        gui.cb_hide()
     else
         gui = get(pr.f_pc, 'UserData');
         gui.cb_bring_to_front()
-    end   
+    end 
 
         function cb_f_pg_close(~, ~)
             delete(pr.f_pc);
-            pr.update()
-        end
-
-    pr.update()
-end
-function cb_graph_adj_figure(pr)
-    f_pg = ancestor(pr.p, 'Figure'); % BrainAtlas GUI
-    f_ba_x = Plot.x0(f_pg, 'pixels');
-    f_ba_y = Plot.y0(f_pg, 'pixels');
-    f_ba_w = Plot.w(f_pg, 'pixels');
-    f_ba_h = Plot.h(f_pg, 'pixels');
-
-    screen_x = Plot.x0(0, 'pixels');
-    screen_y = Plot.y0(0, 'pixels');
-    screen_w = Plot.w(0, 'pixels');
-    screen_h = Plot.h(0, 'pixels');
-
-    x = f_ba_x + f_ba_w;
-    h = f_ba_h / 1.5;
-    y = f_ba_y + f_ba_h - h;
-    w = screen_w - x;
-
-    if isempty(pr.f_adj) || ~check_graphics(pr.f_adj, 'figure')
-        pr.f_adj = figure( ...
-            'NumberTitle', 'off', ...
-            'Units', 'normalized', ...
-            'Position', [x/screen_w y/screen_h w/screen_w h/screen_h], ...
-            'CloseRequestFcn', {@cb_f_adj_close} ...
-            );
-        set_braph2_icon(pr.f_adj)
-        menu_about = BRAPH2.add_menu_about(pr.f_adj);
-        el = pr.get('EL');
-        a1 = el.get('A1');
-        tmp_adj = a1.get('G_DICT');
-        pg = PlotAdjacencyMatrix('G_DICT',tmp_adj);
-        pg.draw('Parent', pr.f_adj)
-        set(pr.f_adj, 'UserData', pg);
-
-        f_settings = pg.settings();
-        set(f_settings, 'Position', [x/screen_w f_ba_y/screen_h w/screen_w (f_ba_h-h)/screen_h])
-        f_settings.OuterPosition(4) = (f_ba_h-h)/screen_h;
-        f_settings.OuterPosition(2) = f_ba_y/screen_h;
-    else
-        gui = get(pr.f_adj, 'UserData');
-        gui.cb_bring_to_front()
-    end
-
-        function cb_f_adj_close(~, ~)
-            delete(pr.f_adj);
             pr.update()
         end
 
@@ -501,12 +479,11 @@ function state = get_button_condition(pr)
     for i = 1:length(plot_prop_children)
         pp_c = plot_prop_children(i);
         if check_graphics(pp_c, 'pushbutton') && isequal(pp_c.Tag, 'button_calc')
-            if isequal(pp_c, 'on')
+            if isequal(pp_c.Enable, 'off')
                 state = 1;            
             end
         end
     end
-
 end
 function cb_bring_to_front(pr)
     %CB_BRING_TO_FRONT brings to front the figure and its settings figure.
@@ -533,11 +510,7 @@ function cb_bring_to_front(pr)
     if check_graphics(pr.f_pc, 'figure')
         gui = get(pr.f_pc, 'UserData');
         gui.cb_bring_to_front()
-    end   
-    if check_graphics(pr.f_adj, 'figure')
-        gui = get(pr.f_adj, 'UserData');
-        gui.cb_bring_to_front()
-    end  
+    end 
 end
 function cb_hide(pr)
     %CB_HIDE hides the figure and its settings figure.
@@ -563,10 +536,6 @@ function cb_hide(pr)
     if check_graphics(pr.f_pc, 'figure')
         gui = get(pr.f_pc, 'UserData');
         gui.cb_hide();
-    end 
-    if check_graphics(pr.f_adj, 'figure')
-        gui = get(pr.f_adj, 'UserData');
-        gui.cb_hide();
     end
 end
 function cb_close(pr)
@@ -587,9 +556,5 @@ function cb_close(pr)
     % close plot graph figure
     if ~isempty(pr.f_pc) && check_graphics(pr.f_pc, 'figure')
         delete(pr.f_pc);
-    end
-     if ~isempty(pr.f_adj) && check_graphics(pr.f_adj, 'figure')
-        delete(pr.f_adj);
-    end
-    
+    end    
 end
