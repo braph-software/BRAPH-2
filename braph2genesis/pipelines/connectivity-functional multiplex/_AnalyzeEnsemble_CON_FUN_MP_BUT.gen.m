@@ -40,6 +40,8 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 THRESHOLDS (parameter, rvector) is the vector of thresholds.
 %%%% ¡default!
 0
+%%%% ¡gui!
+pr = PlotPropSmartVector('EL', a, 'PROP', AnalyzeEnsemble_CON_FUN_MP_BUT.THRESHOLDS, 'MAX', 1, 'MIN', 0, varargin{:});
 
 %% ¡props_update!
 
