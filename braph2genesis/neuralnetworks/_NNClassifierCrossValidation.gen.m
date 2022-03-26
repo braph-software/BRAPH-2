@@ -23,26 +23,12 @@ REPETITION (data, scalar) is the number of repetitions.
 %%% ¡prop!
 GR1 (data, item) is is a group of subjects.
 %%%% ¡settings!
-'Group'
+'NNGroup'
 
 %%% ¡prop!
 GR2 (data, item) is is a group of subjects.
 %%%% ¡settings!
-'Group'
-
-%%% ¡prop!
-INPUT_TYPE (data, option) is the input type for training or testing the NN.
-%%%% ¡settings!
-{'adjacency_matrices' 'graph_measures' 'structural_data'}
-%%%% ¡default!
-'adjacency_matrices'
-
-%%% ¡prop!
-MEASURES (data, classlist) is the graph measures as input to NN.
-%%%% ¡settings!
-{'Measure'}
-%%%% ¡default!
-{'DegreeAv'}
+'NNGroup'
 
 %%% ¡prop!
 FEATURE_MASK (data, cell) is a given mask or a percentile to select relevant features.
@@ -115,27 +101,52 @@ end
 value = index_kfold;
 
 %%% ¡prop!
-NND_DICT (result, idict) is the NN data objects for k folds for all repetitions.
+NNDS_DICT (result, idict) contains the NN data splits for k folds across repetitions.
 %%%% ¡settings!
-'NNClassifierData'
+'NNClassifierDataSplit'
 %%%% ¡default!
-IndexedDictionary('IT_CLASS', 'NNClassifierData')
+IndexedDictionary('IT_CLASS', 'NNClassifierDataSplit')
+%%%% ¡calculate!
+nnds_dict = IndexedDictionary('IT_CLASS', 'NNClassifierDataSplit');
+if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
+    for i = 1:1:nncv.get('REPETITION')
+        idx_per_fold_gr1 = nncv.get('SPLIT_KFOLD_GR1');
+        idx_per_fold_gr2 = nncv.get('SPLIT_KFOLD_GR2');
+        for j = 1:1:nncv.get('KFOLD')
+            nnds = NNClassifierDataSplit( ...
+                'ID', ['kfold ', num2str(j), ' repetition ', num2str(i)], ...
+                'GR1', nncv.get('GR1'), ...
+                'GR2', nncv.get('GR2'), ...
+                'SPLIT_GR1', idx_per_fold_gr1{j}, ...
+                'SPLIT_GR2', idx_per_fold_gr2{j}, ...
+                'FEATURE_MASK', 0.05 ...
+                );
+
+            nnds.memorize('GR_VAL_FS');
+            nnds.memorize('GR_TRAIN_FS');
+
+            nnds_dict.add(nnds)
+        end
+    end
+end
+
+value = nnds_dict;
 
 %%% ¡prop!
-NN_DICT (result, idict) is the NN classifiers for k folds for all repetitions.
+NN_DICT (result, idict) contains the NN classifiers for k folds for all repetitions.
 %%%% ¡settings!
 'NNClassifierDNN'
 %%%% ¡default!
 IndexedDictionary('IT_CLASS', 'NNClassifierDNN')
 %%%% ¡calculate!
 nn_dict = IndexedDictionary('IT_CLASS', 'NNClassifierDNN');
-if nncv.memorize('NND_DICT').length() > 0
-    for i = 1:1:nncv.get('NND_DICT').length()
-        nnd = nncv.get('NND_DICT').getItem(i);
-        gr_train = nnd.get('GR_TRAIN_FS');
+if nncv.memorize('NNDS_DICT').length() > 0
+    for i = 1:1:nncv.get('NNDS_DICT').length()
+        nnds = nncv.get('NNDS_DICT').getItem(i);
+        gr_train = nnds.get('GR_TRAIN_FS');
 
         nn = NNClassifierDNN( ...
-                'ID', nnd.get('ID'), ...
+                'ID', nnds.get('ID'), ...
                 'GR', gr_train, ...
                 'VERBOSE', true, ...
                 'SHUFFLE', 'every-epoch' ...
@@ -148,7 +159,7 @@ end
 value = nn_dict;
 
 %%% ¡prop!
-NNE_DICT (result, idict) is the NN evaluators for k folds for all repetitions.
+NNE_DICT (result, idict) contains the NN evaluators for k folds for all repetitions.
 %%%% ¡settings!
 'NNClassifierEvaluator'
 %%%% ¡default!
@@ -158,8 +169,8 @@ nne_dict = IndexedDictionary('IT_CLASS', 'NNClassifierEvaluator');
 if nncv.memorize('NN_DICT').length() > 0
     for i = 1:1:nncv.get('NN_DICT').length()
         nn = nncv.get('NN_DICT').getItem(i);
-        nnd = nncv.get('NND_DICT').getItem(i);
-        gr_val = nnd.get('GR_VAL_FS');
+        nnds = nncv.get('NNDS_DICT').getItem(i);
+        gr_val = nnds.get('GR_VAL_FS');
 
         nne = NNClassifierEvaluator( ...
                 'ID', nn.get('ID'), ...
