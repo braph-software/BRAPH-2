@@ -1,13 +1,11 @@
 %% ¡header!
-NNClassifierDataSplit < NNDataSplit (nnds, data of a neural network classifier) produces NN groups to train or test a neural netowrk classifier.  
+NNClassifierDataSplit < NNDataSplit (nnds, data split for a neural network classifier) split a dataset into training set and validation set for classification.  
 
 %% ¡description!
-This dataset produce the NN Groups to train or test a neural network classifier.
-The input for a neural network classifer can be obtained directly
-from the structual data, the adjacency matrices, or the graph measures.
-Feature selection procedure can be implemented.  
-Instances of this class should not be created. 
-Use one of its subclasses instead.
+This NNRegressorDataSplit splits the NN group into two, one for training set,
+and the other for validation set. GR_TRAIN and GR_test can be used to train
+and test NN classifier. A Feature mask is generated from a feature selection
+analysis on training set and applied to validation set. 
 
 %% ¡props!
 %%% ¡prop!

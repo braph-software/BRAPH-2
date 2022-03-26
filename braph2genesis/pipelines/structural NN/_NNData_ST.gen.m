@@ -1,9 +1,10 @@
 %% ¡header!
-NNData_ST < NNData (nnd, data of a neural network regressor with structural data) produces a dataset to train or test a neural netowrk regressor using structural data. 
+NNData_ST < NNData (nnd, data for neural network) produces a dataset to train or test a neural netowrk model for structural data. 
 
 %% ¡description!
-The dataset produces NN groups for trianing or testing a neurla network
-with structural data. 
+This NN data generates a group of NN subjects, each of which contains the 
+input as structural data. The generated NN group can be used to train or 
+test a neural network model.
 
 %% ¡props_update!
 

@@ -1,9 +1,10 @@
 %% ¡header!
-NNData_CON_WU < NNData (nnd, data of a neural network regressor with connectivity data) produces a dataset to train or test a neural netowrk regressor using connectivity data. 
+NNData_CON_WU < NNData (nnd, data for neural network) produces a dataset to train or test a neural netowrk model for connectivity data. 
 
 %% ¡description!
-The dataset produces NN groups for trianing or testing a neurla network
-with connectivity data. 
+This NN data generates a group of NN subjects, each of which contains the 
+input as adjacency matrices or graph measures from connectivity data. 
+The generated NN group can be used to train or test a neural network model.
 
 %% ¡props_update!
 

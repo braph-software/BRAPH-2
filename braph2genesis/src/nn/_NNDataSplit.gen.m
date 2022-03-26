@@ -1,5 +1,5 @@
 %% ¡header!
-NNDataSplit < Element (nnds, data of neural network) split a dataset into training set and validation set.  
+NNDataSplit < Element (nnds, data split for neural network) split a dataset into training set and validation set.  
 
 %% ¡description!
 This NNDataSplit splits the NN group into two, one for training set, and 

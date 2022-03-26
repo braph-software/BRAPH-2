@@ -1,8 +1,11 @@
 %% ¡header!
-NNData < Element (nnd, data of neural network) produces a dataset to train or test a neural netowrk.  
+NNData < Element (nnd, data for neural network) produces a dataset to train or test a neural netowrk model.  
 
 %% ¡description!
-This dataset can be used to train or test a neural network. 
+This NN data generates a group of NN subjects, each of which contains the 
+input as structural, adjacency matrices, or graph measures from all of the 
+modalities. The generated NN group can be used to train or test neural 
+network models.
 Instances of this class should not be created. 
 Use one of its subclasses instead.
 
