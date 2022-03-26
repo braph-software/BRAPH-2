@@ -148,3 +148,9 @@ example_NN_FUN_WU_Classification_AdjacencyMatrix
 Example 3
 %%%% ¡code!
 example_NN_FUN_WU_Classification_GraphMeasures
+
+%%% ¡test!
+%%%% ¡name!
+Example 4
+%%%% ¡code!
+example_NNCV_FUN_WU_Classification_AdjacencyMatrix

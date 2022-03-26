@@ -75,3 +75,9 @@ example_NN_ST_Regression
 Example 2
 %%%% ¡code!
 example_NN_ST_Classification
+
+%%% ¡test!
+%%%% ¡name!
+Example 3
+%%%% ¡code!
+example_NNCV_ST_Classification
