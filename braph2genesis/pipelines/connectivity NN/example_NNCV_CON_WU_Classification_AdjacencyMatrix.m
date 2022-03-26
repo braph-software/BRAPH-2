@@ -1,9 +1,9 @@
-%EXAMPLE_CON_CV_WU
-% Script example pipeline CON CV WU
+%% EXAMPLE_NNCV_CON_WU_CLASSIFICATION_ADJACENCYMATRIX
+% Script example pipeline for NN classification with the input of adjacency matrix 
 
 clear variables %#ok<*NASGU>
 
-%% Load BrainAtlas
+%% Load brain atlas
 im_ba = ImporterBrainAtlasXLS( ...
     'FILE', [fileparts(which('example_NNCV_CON_WU_Classification_AdjacencyMatrix')) filesep 'example data CON (DTI)' filesep 'desikan_atlas.xlsx'], ...
     'WAITBAR', true ...
@@ -11,7 +11,7 @@ im_ba = ImporterBrainAtlasXLS( ...
 
 ba = im_ba.get('BA');
 
-%% Load Groups of SubjectCON
+%% Load groups of SubjectCON
 im_gr1 = ImporterGroupSubjectCON_XLS( ...
     'DIRECTORY', [fileparts(which('example_NNCV_CON_WU_Classification_AdjacencyMatrix')) filesep 'example data CON (DTI)' filesep 'xls' filesep 'GroupName1'], ...
     'BA', ba, ...
@@ -28,7 +28,7 @@ im_gr2 = ImporterGroupSubjectCON_XLS( ...
 
 gr2 = im_gr2.get('GR');
 
-%% Initiate the Cross Validation Analysis
+%% Initiate the cross validation analysis
 nncv = NNClassifierCrossValidation_CON_WU( ...
     'GR1', gr1, ...
     'GR2', gr2, ...
@@ -41,11 +41,8 @@ nncv = NNClassifierCrossValidation_CON_WU( ...
     );
 
 %% Evaluate the Performance
-nncv.memorize('NNE_DICT');
-auc = nncv.memorize('AUC');
-auc_cil = nncv.get('AUC_CIL');
-auc_ciu = nncv.get('AUC_CIU');
-cm = nncv.get('CONFUSION_MATRIX');
-map = nncv.get('CONTRIBUTION_MAP');
+gr_cv = nncv.get('GR_PREDICTION');
+auc_test = nncv.get('AUC');
+cm_test = nncv.get('CONFUSION_MATRIX');
 
 close all

@@ -1,5 +1,5 @@
 %% ¡header!
-NNClassifierCrossValidation < Element (nncv, cross-validation of a neural network classifier) cross-validate the performance of a neural network classifier with a dataset.
+NNClassifierCrossValidation < Element (nncv, cross-validation for neural network classifiers) cross-validate the performance of neural network classifier with a dataset.
 
 %% ¡description!
 This cross validation perform a k-fold cross validation of a neural network
@@ -21,19 +21,21 @@ REPETITION (data, scalar) is the number of repetitions.
 1
 
 %%% ¡prop!
-GR1 (data, item) is the subject group 1.
+GR1 (data, item) is is a group of subjects.
 %%%% ¡settings!
 'Group'
 
 %%% ¡prop!
-GR2 (data, item) is the subject group 2.
+GR2 (data, item) is is a group of subjects.
 %%%% ¡settings!
 'Group'
 
 %%% ¡prop!
 INPUT_TYPE (data, option) is the input type for training or testing the NN.
 %%%% ¡settings!
-{'adjacency_matrices' 'graph_measures'}
+{'adjacency_matrices' 'graph_measures' 'structural_data'}
+%%%% ¡default!
+'adjacency_matrices'
 
 %%% ¡prop!
 MEASURES (data, classlist) is the graph measures as input to NN.
@@ -43,9 +45,13 @@ MEASURES (data, classlist) is the graph measures as input to NN.
 {'DegreeAv'}
 
 %%% ¡prop!
-FEATURE_MASK (data, scalar) is a mask for selected features.
+FEATURE_MASK (data, cell) is a given mask or a percentile to select relevant features.
 %%%% ¡default!
-0.05
+num2cell(0.05)
+%%%% ¡conditioning!
+if ~iscell(value) & isnumeric(value)
+    value = num2cell(value);
+end
 
 %%% ¡prop!
 PLOT_CM (data, logical) is an option for the plot of the confusion matrix.
@@ -109,44 +115,138 @@ end
 value = index_kfold;
 
 %%% ¡prop!
-CONFUSION_MATRIX (result, matrix) is an add-up confusion matrix across k folds for all repeitions.
+NND_DICT (result, idict) is the NN data objects for k folds for all repetitions.
+%%%% ¡settings!
+'NNClassifierData'
+%%%% ¡default!
+IndexedDictionary('IT_CLASS', 'NNClassifierData')
+
+%%% ¡prop!
+NN_DICT (result, idict) is the NN classifiers for k folds for all repetitions.
+%%%% ¡settings!
+'NNClassifierDNN'
+%%%% ¡default!
+IndexedDictionary('IT_CLASS', 'NNClassifierDNN')
 %%%% ¡calculate!
-nne_dict = nncv.get('NNE_DICT');
-cm_val = 0;
-value = 0;
-if ~isempty(nne_dict.getItems())
-    for i = 1:1:nne_dict.length()
-        cm_val = cm_val + nne_dict.getItem(i).get('VAL_CONFUSION_MATRIX');
+nn_dict = IndexedDictionary('IT_CLASS', 'NNClassifierDNN');
+if nncv.memorize('NND_DICT').length() > 0
+    for i = 1:1:nncv.get('NND_DICT').length()
+        nnd = nncv.get('NND_DICT').getItem(i);
+        gr_train = nnd.get('GR_TRAIN_FS');
+
+        nn = NNClassifierDNN( ...
+                'ID', nnd.get('ID'), ...
+                'GR', gr_train, ...
+                'VERBOSE', true, ...
+                'SHUFFLE', 'every-epoch' ...
+                );
+            
+        nn_dict.add(nn)
     end
-    if nncv.get('PLOT_CM')
-        targets = nne_dict.getItem(i).get('NNDATA').get('VAL_TARGETS');
-        if ~isempty(targets{1})
-            classes = nne_dict.getItem(i).get('NNDATA').get('TARGET_CLASS_NAMES');
-            targets_mark = categories(onehotdecode(targets{1}, classes, 2));
-            figure
-            heatmap(targets_mark, targets_mark, cm_val)
-            directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
-            if ~exist(directory, 'dir')
-                mkdir(directory)
-            end
-            filename = [directory filesep 'cv_confusion_matrix.svg'];
-            saveas(gcf, filename);
+end
+
+value = nn_dict;
+
+%%% ¡prop!
+NNE_DICT (result, idict) is the NN evaluators for k folds for all repetitions.
+%%%% ¡settings!
+'NNClassifierEvaluator'
+%%%% ¡default!
+IndexedDictionary('IT_CLASS', 'NNClassifierEvaluator')
+%%%% ¡calculate!
+nne_dict = IndexedDictionary('IT_CLASS', 'NNClassifierEvaluator');
+if nncv.memorize('NN_DICT').length() > 0
+    for i = 1:1:nncv.get('NN_DICT').length()
+        nn = nncv.get('NN_DICT').getItem(i);
+        nnd = nncv.get('NND_DICT').getItem(i);
+        gr_val = nnd.get('GR_VAL_FS');
+
+        nne = NNClassifierEvaluator( ...
+                'ID', nn.get('ID'), ...
+                'GR', gr_val, ...
+                'NN', nn ...
+                );
+            
+        nne_dict.add(nne)
+    end
+end
+
+value = nne_dict;
+
+%%% ¡prop!
+GR_PREDICTION (result, item) is a group of NN subjects with prediction from NN.
+%%%% ¡settings!
+'NNGroup'
+%%%% ¡calculate!
+if nncv.memorize('NNE_DICT').length() > 0
+    gr = nncv.get('NNE_DICT').getItem(1).get('GR_PREDICTION');
+    gr_prediction = NNGroup( ...
+        'ID', gr.get('ID'), ...
+        'LABEL', gr.get('LABEL'), ...
+        'NOTES', gr.get('NOTES'), ...
+        'SUB_CLASS', gr.get('SUB_CLASS'), ...
+        'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject') ...
+        );
+
+    % add subejcts from NNE_DICT
+    sub_dict = gr_prediction.get('SUB_DICT');
+
+    for i = 1:1:nncv.memorize('NNE_DICT').length()
+        nne = nncv.memorize('NNE_DICT').getItem(i);
+        for j = 1:1:nne.memorize('GR_PREDICTION').get('SUB_DICT').length()
+            sub = nne.memorize('GR_PREDICTION').get('SUB_DICT').getItem(j);
+            sub_dict.add(sub);
         end
     end
 
-    value = cm_val;
+    gr_prediction.set('SUB_DICT', sub_dict);
+else
+    gr_prediction = NNGroup();
+end
+
+value = gr_prediction;
+
+%%% ¡prop!
+CONFUSION_MATRIX (result, matrix) is an add-up confusion matrix across k folds for all repeitions.
+%%%% ¡calculate!
+if nncv.memorize('GR_PREDICTION').get('SUB_DICT').length() == 0
+    value = [];
+else
+    pred = cellfun(@(x) cell2mat(x.get('PREDICTION'))', nncv.get('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
+    pred = cell2mat(pred);
+    pred = pred > 0.5;
+
+    % get ground truth
+    nn = nncv.get('NN_DICT').getItem(1);
+    gr = nncv.get('GR_PREDICTION');
+    [inputs, ~] = nn.reconstruct_inputs(gr);
+    [targets, classes] = nn.reconstruct_targets(gr);
+    % calculate the confusion matrix
+	[cm, order] = confusionmat(targets(2, :), double(pred(2, :)));
+    if nncv.get('PLOT_CM')
+        figure
+        heatmap(classes, classes, cm)
+        directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
+        if ~exist(directory, 'dir')
+            mkdir(directory)
+        end
+        filename = [directory filesep 'confusion_matrix.svg'];
+        saveas(gcf, filename);
+    end
+
+    value = cm;
 end
 
 %%% ¡prop!
-AUC (result, rvector) is the area under the curve scores across k folds for all repetitions.
+AUC (result, cell) is the area under the curve scores across k folds for all repetitions.
 %%%% ¡calculate!
-nne_dict = nncv.get('NNE_DICT');
+nne_dict = nncv.memorize('NNE_DICT');
 auc = {};
 X = {};
 Y = {};
-if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('VAL_AUC'))
+if nne_dict.length() > 0
     for i = 1:1:nne_dict.length()
-        auc_val = nne_dict.getItem(i).get('VAL_AUC');
+        auc_val = nne_dict.getItem(i).get('AUC');
         auc{i} = auc_val{1};
         X{i} = auc_val{2};
         Y{i} = auc_val{3};
@@ -182,9 +282,9 @@ if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('VAL_AUC'))
         filename = [directory filesep 'cv_roc.svg'];
         saveas(gcf, filename);
     end
-    value = cell2mat(auc);
+    value = {auc, X, Y};
 else
-    value = [];
+    value = {};
 end
 
 
@@ -192,27 +292,33 @@ end
 AUC_CIU (result, scalar) is the upper boundary of 95% confident internal for AUC.
 %%%% ¡calculate!
 auc = nncv.get('AUC');
-[~, CI] = nncv.get_CI(auc);
-
-value = CI(2);
+if isempty(auc)
+    value = 0;
+else
+    [~, CI] = nncv.get_CI(auc{1});
+    value = CI(2);
+end
 
 %%% ¡prop!
 AUC_CIL (result, scalar) is the lower boundary of 95% confident internal for AUC.
 %%%% ¡calculate!
 auc = nncv.get('AUC');
-[~, CI] = nncv.get_CI(auc);
-
-value = CI(1);
+if isempty(auc)
+    value = 0;
+else
+    [~, CI] = nncv.get_CI(auc{1});
+    value = CI(1);
+end
 
 %%% ¡prop!
 CONTRIBUTION_MAP (result, matrix) is a heat map obtained with feature selection analysis and the AUC value.
 %%%% ¡calculate!
-nne_dict = nncv.get('NNE_DICT');
+nne_dict = nncv.memorize('NNE_DICT');
 heat_map = 0;
 if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('VAL_AUC'))
     for i = 1:1:nne_dict.length()
-        feature_map = nne_dict.getItem(i).get('FEATURE_MAP');
-        auc_val = nne_dict.getItem(i).get('VAL_AUC');
+        feature_map = nne_dict.getItem(i).get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('FEATURE_MASK');
+        auc_val = nne_dict.getItem(i).get('AUC');
         feature_map(feature_map == 1) = auc_val{1};
         heat_map = heat_map + feature_map;
     end
@@ -223,7 +329,7 @@ if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('VAL_AUC'))
         y = [0 size(heat_map, 1)];
         image(x, y, heat_map, 'CDataMapping', 'scaled')
         if string(nne_dict.getItem(i).get('NNData').get('INPUT_TYPE')) == 'graph_measures'
-            ticklabel = nne_dict.getItem(i).get('NNDATA').get('MEASURES');
+            ticklabel = nncv.get('MEASURES');
             fontsize = 12;
         else
             ticklabel = 0:size(heat_map, 2);
@@ -250,14 +356,6 @@ if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('VAL_AUC'))
 else
     value = heat_map;
 end
-
-
-%%% ¡prop!
-NNE_DICT (result, idict) is the NN evaluators for k folds.
-%%%% ¡settings!
-'NNClassifierEvaluator'
-%%%% ¡default!
-IndexedDictionary('IT_CLASS', 'NNClassifierEvaluator')
 
 %% ¡methods!
 function [avg, CI] = get_CI(nncv, scores)

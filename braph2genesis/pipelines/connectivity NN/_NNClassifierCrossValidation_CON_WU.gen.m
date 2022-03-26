@@ -10,14 +10,25 @@ training set. The confusion matrix, ROC curves, AUCs, and contributing maps
 are calculated across the testing sets over k folds.
 
 %% ¡props_update!
+
 %%% ¡prop!
-NNE_DICT (result, idict) is the NN evaluators for k folds across repetitions.
-%%%% ¡settings!
-'NNClassifierEvaluator'
+GR1 (data, item) is a group of subjects defined as SubjectCON class.
 %%%% ¡default!
-IndexedDictionary('IT_CLASS', 'NNClassifierEvaluator')
+Group('SUB_CLASS', 'SubjectCON')
+
+%%% ¡prop!
+GR2 (data, item) is a group of subjects defined as SubjectCON class.
+%%%% ¡default!
+Group('SUB_CLASS', 'SubjectCON')
+
+%%% ¡prop!
+NND_DICT (result, idict) is the NN evaluators for k folds across repetitions.
+%%%% ¡settings!
+'NNClassifierData_CON_WU'
+%%%% ¡default!
+IndexedDictionary('IT_CLASS', 'NNClassifierData_CON_WU')
 %%%% ¡calculate!
-nne_dict = IndexedDictionary('IT_CLASS', 'NNClassifierEvaluator');
+nnd_dict = IndexedDictionary('IT_CLASS', 'NNClassifierData_CON_WU');
 if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
     for i = 1:1:nncv.get('REPETITION')
         idx_per_fold_gr1 = nncv.get('SPLIT_KFOLD_GR1');
@@ -34,41 +45,15 @@ if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
                 'FEATURE_MASK', 0.05 ...
                 );
 
-            nnd.memorize('FEATURE_MASK_ANALYSIS');
-            nnd.memorize('INPUTS');
-            nnd.memorize('VAL_INPUTS');
-            nnd.memorize('TARGETS');
-            nnd.memorize('VAL_TARGETS');
+            nnd.memorize('GR_VAL_FS');
+            nnd.memorize('GR_TRAIN_FS');
 
-            classifier = NNClassifierDNN( ...
-                'ID', ['kfold ', num2str(j), 'repetition ', num2str(i)], ...
-                'NNDATA', nnd, ...
-                'VERBOSE', true, ...
-                'SHUFFLE', 'every-epoch' ...
-                );
-
-            classifier.memorize('MODEL');
-
-            nne = NNClassifierEvaluator( ...
-                'ID', ['kfold ', num2str(j), 'repetition ', num2str(i)], ...
-                'NNDATA', nnd, ...
-                'NN', classifier, ...
-                'PLOT_CM', false, ...
-                'PLOT_ROC', false, ...
-                'PLOT_MAP', false ...
-                );
-            
-            nne.memorize('VAL_PREDICTION');
-            nne.memorize('VAL_AUC');
-            nne.memorize('VAL_CONFUSION_MATRIX');
-            nne.memorize('FEATURE_MAP');
-
-            nne_dict.add(nne)
+            nnd_dict.add(nnd)
         end
     end
 end
 
-value = nne_dict;
+value = nnd_dict;
 
 %% ¡tests!
 %%% ¡test!

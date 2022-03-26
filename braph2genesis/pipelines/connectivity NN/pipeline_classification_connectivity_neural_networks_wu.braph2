@@ -17,20 +17,23 @@ gr1_train = ImporterGroupSubjectCON_XLS('BA', ba, 'WAITBAR', true).get('GR'); % 
 gr2_train = ImporterGroupSubjectCON_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group CON 2 from XLS % Group CON 2
 
 %% Dataset Construction
-nnd_train = NNClassifierData_CON_WU('GR1', gr1_train, 'GR2', gr2_train, 'SPLIT_GR1', 0.2, 'SPLIT_GR2', 0.2, 'FEATURE_MASK', 0.05); % Construct the dataset % NNData
+nnd_train = NNClassifierData_CON_WU('GR1', gr1_train, 'GR2', gr2_train, 'SPLIT_GR1', 0.2, 'SPLIT_GR2', 0.2, 'FEATURE_MASK', 0.05); % Construct the dataset % Dataset
 
-%% Model training
-classifier = NNClassifierDNN('NNDATA', nnd_train, 'VERBOSE', true, 'SHUFFLE', 'every-epoch'); % Train the NN % NN Classifier
+%% Model Training
+classifier = NNClassifierDNN('GR', nnd_train.get('GR_TRAIN_FS'), 'VERBOSE', true, 'SHUFFLE', 'every-epoch'); % Train the NN % NN Classifier
 
-%% Model Evaluation
-nne_train = NNClassifierEvaluator('NNDATA', nnd_train, 'NN', classifier); % Evaluate the NN % Evaluation of NN
+%% Evaluation on Training Group
+nne_train = NNClassifierEvaluator('GR', nnd_train.get('GR_TRAIN_FS'), 'NN', classifier); % Evaluate the NN % Evaluation on Training Group
 
-%% Test Groups
+%% Evaluation on Validation Group
+nne_val = NNClassifierEvaluator('GR', nnd_train.get('GR_VAL_FS'), 'NN', classifier); % Evaluate the NN % Evaluation on Validation Group
+
+%% Testing Groups
 gr1_test = ImporterGroupSubjectCON_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group CON 1 from XLS % Group CON 1
 gr2_test = ImporterGroupSubjectCON_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group CON 2 from XLS % Group CON 2
 
-%% Test Dataset Construction
-nnd_test = NNClassifierData_CON_WU('GR1', gr1_test, 'GR2', gr2_test, 'FEATURE_MASK', nnd_train.get('FEATURE_MASK')); % Construct the dataset % Unseen NNData
+%% Testing Dataset Construction
+nnd_test = NNClassifierData_CON_WU('GR1', gr1_test, 'GR2', gr2_test, 'SPLIT_GR1', 1.0, 'SPLIT_GR2', 1.0, 'FEATURE_MASK', nnd_train.get('FEATURE_MASK')); % Construct the dataset % Another Dataset
 
-%% Model Evaluation
-nne_test = NNClassifierEvaluator('NNDATA', nnd_test, 'NN', classifier); % Evaluate the NN % Evaluation of NN
+%% Evaluation on Testing Group
+nne_test = NNClassifierEvaluator('GR', nnd_test.get('GR_VAL_FS'), 'NN', classifier); % Evaluate the NN % Evaluation on Testing Group
