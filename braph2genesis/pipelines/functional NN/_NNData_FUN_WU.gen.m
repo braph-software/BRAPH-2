@@ -1,9 +1,10 @@
 %% ¡header!
-NNRegressorData_FUN_WU < NNRegressorData (nnd, data of a neural network regressor with functional data) produces a dataset to train or test a neural netowrk regressor using functional data. 
+NNData_FUN_WU < NNData (nnd, data for neural network) produces a dataset to train or test a neural netowrk model for functional data. 
 
 %% ¡description!
-The dataset produces NN groups for trianing or testing a neurla network
-with functional data. 
+This NN data generates a group of NN subjects, each of which contains the 
+input as adjacency matrices or graph measures from functional data. 
+The generated NN group can be used to train or test a neural network model.
 
 %% ¡props!
 
@@ -132,6 +133,18 @@ value = nn_gr;
 %% ¡tests!
 %%% ¡test!
 %%%% ¡name!
-Example
+Example 1
 %%%% ¡code!
 example_NN_FUN_WU_Regression_AdjacencyMatrix
+
+%%% ¡test!
+%%%% ¡name!
+Example 2
+%%%% ¡code!
+example_NN_FUN_WU_Classification_AdjacencyMatrix
+
+%%% ¡test!
+%%%% ¡name!
+Example 3
+%%%% ¡code!
+example_NN_FUN_WU_Classification_GraphMeasures

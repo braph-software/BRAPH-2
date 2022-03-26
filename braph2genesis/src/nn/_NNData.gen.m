@@ -1,9 +1,11 @@
 %% ¡header!
-NNData < Element (nnd, data of neural network) produces a dataset to train or test a neural netowrk.  
+NNData < Element (nnd, data for neural network) produces a dataset to train or test a neural netowrk model.  
 
 %% ¡description!
-This dataset can be used to train or test a neural network. 
-Feature selection procedure can be implemented.
+This NN data generates a group of NN subjects, each of which contains the 
+input as structural, adjacency matrices, or graph measures from all of the 
+modalities. The generated NN group can be used to train or test neural 
+network models.
 Instances of this class should not be created. 
 Use one of its subclasses instead.
 
@@ -29,59 +31,19 @@ MEASURES (data, classlist) is the graph measures as input to NN.
 %%%% ¡default!
 {'DegreeAv', 'Degree'}
 
-%% ¡methods!
-function score = mutual_information_analysis(nnd, X, Y, n)
-    %MUTUAL_INFORMATION_ANALYSIS computes the mutual information value.
-    % 
-    % SCORE = MUTUAL_INFORMATION_ANALYSIS(NND, X, Y, n) compute the mutual
-    %  information SCORE of two discrete variables X and Y. These two vectors
-    %  must have the same length. The higher value of the score, the
-    %  closer connection between X and Y.
+%%% ¡prop!
+TARGET_NAME (data, string) is the name of the traget.
+%%%% ¡default!
+'diagnosis'
 
-    xmin = min(X, [], 2);
-    xmax = max(X, [], 2);
-    xrange = (xmax - xmin) / n;
-    if xmax - xmin < 1e-4
-        score = 0;
-        return;
-    end
-    if size(Y, 1) ~= 1
-        probmatr = zeros(n, size(Y, 1));
-        for i = 1 : size(X,2)
-            dimx = ceil((X(:, i) - xmin) / xrange);
-            if dimx < 1
-                dimx = 1;
-            elseif dimx > n
-                dimx = n;
-            end
-            dimy = find(Y(:, i) == 1);
-            probmatr(dimx, dimy) = probmatr(dimx, dimy) + 1;
-        end
-    else
-        ymin = min(Y, [], 2);
-        ymax = max(Y, [], 2);
-        yrange = (ymax - ymin) / n;
-        probmatr = zeros(n, n);
-        for i = 1 : size(X, 2)
-            dimx = ceil((X(:, i) - xmin) / xrange);
-            if dimx < 1
-                dimx = 1;
-            elseif dimx > n
-                dimx = n;
-            end
-            dimy = ceil((Y(:, i) - ymin) / yrange);
-            if dimy < 1
-                dimy = 1;
-            elseif dimy > n
-                dimy = n;
-            end
-            probmatr(dimx, dimy) = probmatr(dimx, dimy) + 1;
-        end
-    end
-    p_y = sum(probmatr, 1) / size(X, 2);
-    p_y_x = probmatr ./ (sum(probmatr, 2) + 1e-8);
-    p_y(p_y == 0) = 1e-8;
-    p_y_x(p_y_x == 0) = 1e-8;
-    
-    score = sum(sum(probmatr / size(X, 2) .* log(p_y_x))) - sum(p_y .* log(p_y));
-end
+%%% ¡prop!
+GR (data, item) is a group of subjects defined as SubjectCON class.
+%%%% ¡settings!
+'Group'
+%%%% ¡default!
+Group()
+
+%%% ¡prop!
+GR_NN (result, item) is a group of NN subjects.
+%%%% ¡settings!
+'NNGroup'
