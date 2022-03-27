@@ -1,9 +1,10 @@
 %% ¡header!
-NNRegressorData_CON_WU < NNRegressorData (nnd, data of a neural network regressor with connectivity data) produces a dataset to train or test a neural netowrk regressor using connectivity data. 
+NNData_CON_WU < NNData (nnd, data for neural network) produces a dataset to train or test a neural netowrk model for connectivity data. 
 
 %% ¡description!
-The dataset produces NN groups for trianing or testing a neurla network
-with connectivity data. 
+This NN data generates a group of NN subjects, each of which contains the 
+input as adjacency matrices or graph measures from connectivity data. 
+The generated NN group can be used to train or test a neural network model.
 
 %% ¡props_update!
 
@@ -13,7 +14,7 @@ GR (data, item) is a group of subjects defined as SubjectCON class.
 Group('SUB_CLASS', 'SubjectCON')
 
 %%% ¡prop!
-GR_NN (result, group) is a group of NN subjects.
+GR_NN (result, item) is a group of NN subjects.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡default!
@@ -87,6 +88,18 @@ value = nn_gr;
 %% ¡tests!
 %%% ¡test!
 %%%% ¡name!
-Example
+Example 1
 %%%% ¡code!
 example_NN_CON_WU_Regression_AdjacencyMatrix
+
+%%% ¡test!
+%%%% ¡name!
+Example 2
+%%%% ¡code!
+example_NN_CON_WU_Classification_AdjacencyMatrix
+
+%%% ¡test!
+%%%% ¡name!
+Example 3
+%%%% ¡code!
+example_NN_CON_WU_Classification_GraphMeasures

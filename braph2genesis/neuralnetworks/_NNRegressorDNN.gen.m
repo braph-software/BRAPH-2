@@ -28,7 +28,7 @@ BATCH (data, scalar) is the size of the mini-batch to use for each training iter
 %%% ¡prop!
 EPOCHS (data, scalar) is a maximum number of epochs.
 %%%% ¡default!
-500
+200
 
 %%% ¡prop!
 SHUFFLE (data, option) is an option for data shuffling.
