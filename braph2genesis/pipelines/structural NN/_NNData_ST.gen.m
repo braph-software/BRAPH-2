@@ -80,4 +80,10 @@ example_NN_ST_Classification
 %%%% ¡name!
 Example 3
 %%%% ¡code!
+example_NNCV_ST_Regression
+
+%%% ¡test!
+%%%% ¡name!
+Example 4
+%%%% ¡code!
 example_NNCV_ST_Classification
