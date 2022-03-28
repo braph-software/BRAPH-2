@@ -828,36 +828,80 @@ end
 function update_plot(pr)
     comparison = pr.cp;
     plot_value = comparison.get('DIFF');
-    tmp_g = pr.cp.get('C').get('A1').get('G_DICT').getItem(1);    
+    tmp_g = pr.cp.get('C').get('A1').get('G_DICT').getItem(1);
     layer_number = size(tmp_g.get('B'), 2);
     choosen_layer = pr.get('LAYER');
-    if Measure.is_global(pr.cp.get('MEASURE')) % global
+
+    %pr.cp.get('MEASURE')
+    if Measure.is_global(pr.cp.get('MEASURE')) && ~Measure.is_superglobal(pr.cp.get('MEASURE')) % global
         is_inf_vector = cellfun(@(x) isinf(x), plot_value);
         if any(is_inf_vector)
+            f = warndlg('The measure cannot be plotted because it contains Inf values.');
+            set_braph2_icon(f);
             return;
         end
         y_ = [plot_value{choosen_layer:layer_number:end}];
-    elseif Measure.is_nodal(pr.cp.get('MEASURE')) % nodal
+    elseif Measure.is_nodal(pr.cp.get('MEASURE')) && ~Measure.is_superglobal(pr.cp.get('MEASURE')) % nodal
         tmp_index = 1;
         for l = choosen_layer:layer_number:length(plot_value)
             tmp = plot_value{l};
             tmp_y = tmp(pr.get('NODE1'));
             if isinf(tmp_y)
+                f = warndlg('The measure cannot be plotted because it contains Inf values.');
+                set_braph2_icon(f);
                 return;
             end
             y_(tmp_index) = tmp_y; %#ok<AGROW>
             tmp_index = tmp_index + 1;
         end
-    else  % binodal
+    elseif  Measure.is_binodal(pr.cp.get('MEASURE')) && ~Measure.is_superglobal(pr.cp.get('MEASURE')) % binodal
         tmp_index = 1;
         for l = choosen_layer:layer_number:length(plot_value)
             tmp = plot_value{l};
             tmp_y = tmp(pr.get('NODE1'), pr.get('NODE2'));
             if isinf(tmp_y)
+                f = warndlg('The measure cannot be plotted because it contains Inf values.');
+                set_braph2_icon(f);
                 return;
             end
             y_(tmp_index) = tmp_y; %#ok<AGROW>
             tmp_index = tmp_index + 1;
+        end
+    elseif Measure.is_superglobal(pr.cp.get('MEASURE')) % superglobal
+        if Measure.is_global(pr.cp.get('MEASURE'))
+            is_inf_vector = cellfun(@(x) isinf(x), plot_value);
+            if any(is_inf_vector)
+                f = warndlg('The measure cannot be plotted because it contains Inf values.');
+                set_braph2_icon(f);
+                return;
+            end
+            y_ = [plot_value{:}];
+        elseif Measure.is_nodal(pr.cp.get('MEASURE'))
+            tmp_index = 1;
+            for l = 1:length(plot_value)
+                tmp = plot_value{l};
+                tmp_y = tmp(pr.get('NODE1'));
+                if isinf(tmp_y)
+                    f = warndlg('The measure cannot be plotted because it contains Inf values.');
+                    set_braph2_icon(f);
+                    return;
+                end
+                y_(tmp_index) = tmp_y; %#ok<AGROW>
+                tmp_index = tmp_index + 1;
+            end
+        else
+            tmp_index = 1;
+            for l = 1:length(plot_value)
+                tmp = plot_value{l};
+                tmp_y = tmp(pr.get('NODE1'), pr.get('NODE2'));
+                if isinf(tmp_y)
+                    f = warndlg('The measure cannot be plotted because it contains Inf values.');
+                    set_braph2_icon(f);
+                    return;
+                end
+                y_(tmp_index) = tmp_y; %#ok<AGROW>
+                tmp_index = tmp_index + 1;
+            end
         end
     end
     pr.plotline(pr.get('X'), y_)
