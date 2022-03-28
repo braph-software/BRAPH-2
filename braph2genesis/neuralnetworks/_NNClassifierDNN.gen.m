@@ -156,10 +156,10 @@ function [inputs, num_features] = reconstruct_inputs(nn, gr)
         for i = 1:1:length(inputs_tmp)
             input = inputs_tmp{i};
             input_per_sub = cellfun(@(x, y) x(y == 1), input, mask, 'UniformOutput', false);
-            input_per_sub = cell2mat(input_per_sub);
-            inputs = [inputs; input_per_sub'];
+            input_per_sub = cell2mat(input_per_sub');
+            inputs = [inputs input_per_sub];
         end
-        num_features = length(inputs(1, :));
+        num_features = length(inputs(:, 1));
         inputs = reshape(inputs, [1, 1, num_features, gr.get('SUB_DICT').length()]);
     end
 end
