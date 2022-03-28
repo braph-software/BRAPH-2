@@ -109,3 +109,9 @@ example_NN_CON_WU_Classification_GraphMeasures
 Example 4
 %%%% ¡code!
 example_NNCV_CON_WU_Classification_AdjacencyMatrix
+
+%%% ¡test!
+%%%% ¡name!
+Example 5
+%%%% ¡code!
+example_NNCV_CON_WU_Regression_GraphMeasures

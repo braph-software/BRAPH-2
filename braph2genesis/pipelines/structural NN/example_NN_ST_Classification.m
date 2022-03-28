@@ -1,5 +1,5 @@
 %% EXAMPLE_NN_ST_CLASSIFICATION
-% Script example pipeline for NN Classification with the input of ROI values
+% Script example pipeline for NN classification with the input of ROI values
 
 clear variables %#ok<*NASGU>
 
