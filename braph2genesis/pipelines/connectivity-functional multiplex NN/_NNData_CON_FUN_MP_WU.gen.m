@@ -104,7 +104,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
     
     if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
         adj = g.get('A'); 
-        input ={adj(1) adj(4)};
+        input ={adj{1} adj{4}};
 
     elseif string(nnd.get('INPUT_TYPE')) == "graph_measures"
         input_nodal = [];
