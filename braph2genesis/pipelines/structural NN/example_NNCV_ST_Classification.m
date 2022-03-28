@@ -1,5 +1,5 @@
 %EXAMPLE_NNCV_ST_CLASSIFICATION
-% Script example pipeline NNCV ST Classification
+% Script example pipeline for NN cross-validation for classification with the input of ROI values
 
 clear variables %#ok<*NASGU>
 
@@ -11,7 +11,7 @@ im_ba = ImporterBrainAtlasXLS( ...
 
 ba = im_ba.get('BA');
 
-%% Load Groups of SubjectST as a Training Set
+%% Load Groups of SubjectST
 im_gr1 = ImporterGroupSubjectST_XLS( ...
     'FILE', [fileparts(which('example_NNCV_ST_Classification')) filesep 'example data ST (MRI)' filesep 'xls' filesep 'ST_group1.xlsx'], ...
     'BA', ba, ...
@@ -59,7 +59,7 @@ nncv = NNClassifierCrossValidation( ...
 
 %% Evaluate the Performance
 gr_cv = nncv.get('GR_PREDICTION');
-auc_test = nncv.get('AUC');
-cm_test = nncv.get('CONFUSION_MATRIX');
+auc_cv = nncv.get('AUC');
+cm_cv = nncv.get('CONFUSION_MATRIX');
 
 close all
