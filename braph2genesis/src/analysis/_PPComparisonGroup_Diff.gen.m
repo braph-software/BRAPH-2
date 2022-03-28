@@ -245,7 +245,7 @@ function update(pr, init_sliders)
         else
             Ll = L-1;
         end
-        
+
         if L2 == 1
             Ll2=1;
         else
@@ -455,15 +455,20 @@ function update(pr, init_sliders)
                 'String', [label ' ' num2str(round(get(pr.slider, 'Value') * map_multiplier)) ': ' slider_tags{round(get(pr.slider, 'Value') * map_multiplier)}]);
 
             % set p values mask
-            tmp_value = value{round(get(pr.slider, 'Value') * map_multiplier)};
+            if ~isempty(pr.slider)
+                inner_choose = round(get(pr.slider, 'Value') * map_multiplier);
+            else
+                inner_choose = 1;
+            end
+            tmp_value = value{inner_choose};
             p1 = el.memorize('P1');
             p2 = el.memorize('P2');
             cil = el.memorize('cil');
             ciu = el.memorize('ciu');
-            p1 = p1{round(get(pr.slider, 'Value') * map_multiplier)};
-            p2 = p2{round(get(pr.slider, 'Value') * map_multiplier)};
-            cil = cil{round(get(pr.slider, 'Value') * map_multiplier)};
-            ciu = ciu{round(get(pr.slider, 'Value') * map_multiplier)};
+            p1 = p1{inner_choose};
+            p2 = p2{inner_choose};
+            cil = cil{inner_choose};
+            ciu = ciu{inner_choose};
 
             if Measure.is_nodal(el.get('measure'))
                 p1 = p1';
@@ -602,6 +607,11 @@ function redraw(pr, varargin)
             )
     elseif L
         pr.redraw@PlotProp('Height', h + Sh + Th + Dh, varargin{:})
+        if isempty(pr.slider)
+            change_up = 0.2;
+        else
+            change_up = 0;
+        end
         set(pr.slider, ...
             'Units', 'normalized', ...
             'Visible', 'on', ...
@@ -617,7 +627,7 @@ function redraw(pr, varargin)
         set(pr.comparison_tbl, ...
             'Visible', 'on', ...
             'Units', 'normalized', ...
-            'Position', [.01 .02 .97 (Dh/(h+Sh+Th+Dh)-.2)] ...
+            'Position', [.01 .02 .97 (Dh/(h+Sh+Th+Dh)-.2+change_up)] ...
             )
     else
         pr.redraw@PlotProp(varargin{:})
