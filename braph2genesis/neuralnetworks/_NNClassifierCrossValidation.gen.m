@@ -5,7 +5,7 @@ NNClassifierCrossValidation < Element (nncv, cross-validation for neural network
 This cross validation perform a k-fold cross validation of a neural network
 classifier with desired repetitions on a dataset. The dataset is split into
 k consecutive folds with shuffling by default, and each fold is then used 
-once as a validation while the k-1 remaining folds form the training set. 
+once as a validation while the k-1 remaining folds from the training set. 
 The confusion matrix, ROC curves, AUCs, and weighted contributing maps will
 be calculated across folds and repetitions.
 
@@ -119,7 +119,7 @@ if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
                 'GR2', nncv.get('GR2'), ...
                 'SPLIT_GR1', idx_per_fold_gr1{j}, ...
                 'SPLIT_GR2', idx_per_fold_gr2{j}, ...
-                'FEATURE_MASK', 0.05 ...
+                'FEATURE_MASK', nncv.get('FEATURE_MASK') ...
                 );
 
             nnds.memorize('GR_VAL_FS');

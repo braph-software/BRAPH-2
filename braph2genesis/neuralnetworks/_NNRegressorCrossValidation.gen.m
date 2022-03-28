@@ -66,12 +66,12 @@ IndexedDictionary('IT_CLASS', 'NNRegressorDataSplit')
 nnds_dict = IndexedDictionary('IT_CLASS', 'NNRegressorDataSplit');
 if ~isa(nncv.get('GR').getr('SUB_DICT'), 'NoValue')
     for i = 1:1:nncv.get('REPETITION')
-        idx_per_fold = nncv.get('SPLIT_KFOLD_GR');
+        idx_per_fold = nncv.get('SPLIT_KFOLD');
         for j = 1:1:nncv.get('KFOLD')
             nnds = NNRegressorDataSplit( ...
                 'ID', ['kfold ', num2str(j), ' repetition ', num2str(i)], ...
                 'GR', nncv.get('GR'), ...
-                'SPLIT_GR', idx_per_fold{j}, ...
+                'SPLIT', idx_per_fold{j}, ...
                 'FEATURE_MASK', nncv.get('FEATURE_MASK') ...
                 );
 
@@ -171,7 +171,7 @@ end
 value = gr_prediction;
 
 %%% ¡prop!
-RMSE_CV (result, scalar) is the root mean squared error between targets and predictions across k folds for all repeitions.
+RMSE (result, scalar) is the root mean squared error between targets and predictions across k folds for all repeitions.
 %%%% ¡calculate!
 if nncv.memorize('GR_PREDICTION').get('SUB_DICT').length() == 0
     value = 0;
