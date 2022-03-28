@@ -234,7 +234,7 @@ else
             [~, idx_all] = sort(mask(:), 'descend');
             num_top_idx = ceil(percentile * numel(mask));
             mask(idx_all(1:num_top_idx)) = 1;
-            mask(idx_all(num_top_idx:end)) = 0;
+            mask(idx_all(end-num_top_idx+1:end)) = 0;
         end
         value{k} = mask;
     end
