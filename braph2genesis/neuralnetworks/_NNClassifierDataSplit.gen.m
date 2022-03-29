@@ -222,7 +222,15 @@ else
     label = y(1, :);
     num_feature_cluster = length(data{1});
     value = cell(size(data{1}));
+    
+    % setup counter for waitbar
     counter = 0;
+    num_feature_all = 0;
+    for k = 1:1:num_feature_cluster
+        data_per_cluster = cellfun(@(v)v{k}, data, 'UniformOutput', false);
+        num_feature_all = num_feature_all + numel(data_per_cluster{k});
+    end
+
     for k = 1:1:num_feature_cluster
         data_per_cluster = cellfun(@(v)v{k}, data, 'UniformOutput', false);
         mask = zeros(size(data_per_cluster{k}));
@@ -236,8 +244,8 @@ else
                 end
                 counter = counter + 1;
                 if nnds.get('WAITBAR')
-                    waitbar(.30 + .70 * counter / (numel(mask) * num_feature_cluster), wb, ['Performing feature selection, ' num2str(100 * counter / (numel(mask) * num_feature_cluster), '%.0f') '% done...'])
-                end
+                    waitbar(.30 + .70 * counter / num_feature_all, wb, ['Performing feature selection, ' num2str(100 * counter / num_feature_all, '%.0f') '% done...'])
+				end
             end
 
             [~, idx_all] = sort(mask(:), 'descend');
