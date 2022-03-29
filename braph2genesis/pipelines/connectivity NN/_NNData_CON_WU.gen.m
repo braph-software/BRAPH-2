@@ -20,6 +20,11 @@ GR_NN (result, item) is a group of NN subjects.
 %%%% ¡default!
 NNGroup('SUB_CLASS', 'NNSubject', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject'))
 %%%% ¡calculate!
+if nnd.get('WAITBAR')
+    wb = waitbar(0, 'Constructing NN input ...', 'Name', BRAPH2.NAME);
+    set_braph2_icon(wb)
+end
+
 gr = nnd.get('GR');
 nn_gr = NNGroup( ...
     'SUB_CLASS', 'NNSubject', ...
@@ -39,48 +44,57 @@ if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
     atlas = gr.get('SUB_DICT').getItem(1).get('BA');
 end
 
-if gr.get('SUB_DICT').length() > 0
-    nn_sub_dict = nn_gr.get('SUB_DICT');
-    for i = 1:1:gr.get('SUB_DICT').length()
-    	sub = gr.get('SUB_DICT').getItem(i);
-        g = GraphWU( ...
-            'ID', ['g ' sub.get('ID')], ...
-            'BRAINATLAS', atlas, ...
-            'B', Callback('EL', sub, 'TAG', 'CON') ...
-            );
+nn_sub_dict = nn_gr.get('SUB_DICT');
 
-        if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
-            input = g.get('A');
+for i = 1:1:gr.get('SUB_DICT').length()
+    sub = gr.get('SUB_DICT').getItem(i);
+    g = GraphWU( ...
+        'ID', ['g ' sub.get('ID')], ...
+        'BRAINATLAS', atlas, ...
+        'B', Callback('EL', sub, 'TAG', 'CON') ...
+        );
 
-        elseif string(nnd.get('INPUT_TYPE')) == "graph_measures"
-            input_nodal = [];
-            input_binodal = [];
-            input_global = [];
-            mlist = nnd.get('MEASURES');
-            for j = 1:length(mlist)
-                if Measure.is_nodal(mlist{j})
-                    input_nodal = [input_nodal; cell2mat(g.getMeasure(mlist{j}).get('M'))];
-                elseif Measure.is_global(mlist{j})
-                    input_global = [input_global; cell2mat(g.getMeasure(mlist{j}).get('M'))];
-                else
-                    input_binodal = [input_binodal; cell2mat(g.getMeasure(mlist{j}).get('M'))];
-                end
+    if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
+        input = g.get('A');
+
+    elseif string(nnd.get('INPUT_TYPE')) == "graph_measures"
+        input_nodal = [];
+        input_binodal = [];
+        input_global = [];
+        mlist = nnd.get('MEASURES');
+        for j = 1:length(mlist)
+            if Measure.is_nodal(mlist{j})
+                input_nodal = [input_nodal; cell2mat(g.getMeasure(mlist{j}).get('M'))];
+            elseif Measure.is_global(mlist{j})
+                input_global = [input_global; cell2mat(g.getMeasure(mlist{j}).get('M'))];
+            else
+                input_binodal = [input_binodal; cell2mat(g.getMeasure(mlist{j}).get('M'))];
             end
-            input = {input_nodal input_global input_binodal};
         end
-
-        nn_sub = NNSubject( ...
-            'ID', [sub.get('ID') ' in ' gr.get('ID')], ...
-            'BA', atlas, ...
-            'age', sub.get('age'), ...
-            'sex', sub.get('sex'), ...
-            'G', g, ...
-            'INPUT', input, ...
-            'TARGET_NAME', nnd.get('TARGET_NAME') ...
-            );
-        nn_sub_dict.add(nn_sub);
+        input = {input_nodal input_global input_binodal};
     end
-    nn_gr.set('sub_dict', nn_sub_dict);
+
+    nn_sub = NNSubject( ...
+        'ID', [sub.get('ID') ' in ' gr.get('ID')], ...
+        'BA', atlas, ...
+        'age', sub.get('age'), ...
+        'sex', sub.get('sex'), ...
+        'G', g, ...
+        'INPUT', input, ...
+        'TARGET_NAME', nnd.get('TARGET_NAME') ...
+        );
+
+    nn_sub_dict.add(nn_sub);
+    
+    if nnd.get('WAITBAR')
+        waitbar(.30 + .70 * i / gr.get('SUB_DICT').length(), wb, ['Constructing subject ' num2str(i) ' of ' num2str(gr.get('SUB_DICT').length())  ' in ' gr.get('ID') ' ...'])
+    end
+end
+
+nn_gr.set('sub_dict', nn_sub_dict);
+
+if nnd.get('WAITBAR')
+    close(wb)
 end
 
 value = nn_gr;
