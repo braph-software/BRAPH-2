@@ -16,6 +16,11 @@ LABEL (metadata, string) is an extended label of the graph analysis.
 NOTES (metadata, string) are some specific notes about the graph analysis.
 
 %%% ¡prop!
+WAITBAR (metadata, logical) detemines whether to show the waitbar.
+%%%% ¡default!
+true
+
+%%% ¡prop!
 GR_TRAIN (result, item) is a group of NN subjects for the training set.
 %%%% ¡settings!
 'NNGroup'

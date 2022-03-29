@@ -129,6 +129,10 @@ data = cellfun(@(x) x.get('INPUT'), nnds.get('GR_TRAIN').get('SUB_DICT').getItem
 if nnds.get('GR_TRAIN').get('SUB_DICT').length == 0
     value = {};
 else
+    if nnds.get('WAITBAR')
+        wb = waitbar(0, 'Performing feature selection on training set ...', 'Name', BRAPH2.NAME);
+        set_braph2_icon(wb)
+    end
     y = cellfun(@(x) cell2mat(x.get('TARGET')), nnds.get('GR_TRAIN').get('SUB_DICT').getItems(), 'UniformOutput', false);
     label = cell2mat(y);
     num_feature_cluster = length(data{1});
@@ -144,6 +148,9 @@ else
                 else
                     mask(i) = nnds.mutual_information_analysis(data_per_feature, label, 5);
                 end
+                if nnds.get('WAITBAR')
+                    waitbar(.30 + .70 * i / (numel(mask) * num_feature_cluster), wb, ['Performing feature selection, ' num2str(0.7 * i / (numel(mask) * num_feature_cluster)) '% done...'])
+                end
             end
 
             [~, idx_all] = sort(mask(:), 'descend');
@@ -152,6 +159,9 @@ else
             mask(idx_all(end-num_top_idx+1:end)) = 0;
         end
         value{k} = mask;
+    end
+    if nnds.get('WAITBAR')
+        close(wb)
     end
 end
 
