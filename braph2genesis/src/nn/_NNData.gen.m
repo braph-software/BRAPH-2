@@ -20,6 +20,11 @@ LABEL (metadata, string) is an extended label of the graph analysis.
 NOTES (metadata, string) are some specific notes about the graph analysis.
 
 %%% ¡prop!
+WAITBAR (metadata, logical) detemines whether to show the waitbar.
+%%%% ¡default!
+true
+
+%%% ¡prop!
 INPUT_TYPE (data, option) is the input type for training or testing the NN.
 %%%% ¡settings!
 {'adjacency_matrices' 'graph_measures' 'structural_data'}
