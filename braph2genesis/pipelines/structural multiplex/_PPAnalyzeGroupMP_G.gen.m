@@ -257,7 +257,7 @@ function update(pr)
     end
 
     function plot_type_rules()
-        if ~isempty(pr.graph) && ~isa(el, 'AnalyzeGroup_ST_MP_WU') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}])
+        if ~isempty(pr.graph) && ~contains(el.getClass(), 'WU') && ~isempty(pr.already_calculated) && any([pr.already_calculated{:}])
             set(pr.line_plot_tglbtn, ...
                     'Enable', 'on', ...
                     'Visible', 'on');
