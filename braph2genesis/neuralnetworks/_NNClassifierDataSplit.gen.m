@@ -208,16 +208,30 @@ value = val_nn_gr;
 FEATURE_SELECTION_ANALYSIS (result, cell) is an analysis for generating a feature mask.
 %%%% ¡calculate!
 percentile = cell2mat(nnds.get('FEATURE_MASK'));
-data = cellfun(@(x) x.get('INPUT'), nnds.get('GR_TRAIN').get('SUB_DICT').getItems(), 'UniformOutput', false);
+gr_train = nnds.memorize('GR_TRAIN');
+data = cellfun(@(x) x.get('INPUT'), gr_train.get('SUB_DICT').getItems(), 'UniformOutput', false);
 
 if nnds.get('GR_TRAIN').get('SUB_DICT').length == 0
     value = {};
 else
-    y = cellfun(@(x) cell2mat(x.get('TARGET')), nnds.get('GR_TRAIN').get('SUB_DICT').getItems(), 'UniformOutput', false);
+    if nnds.get('WAITBAR')
+        wb = waitbar(0, 'Initialing feature selection on training set ...', 'Name', BRAPH2.NAME);
+        set_braph2_icon(wb)
+    end
+    y = cellfun(@(x) cell2mat(x.get('TARGET')), gr_train.get('SUB_DICT').getItems(), 'UniformOutput', false);
     y = cell2mat(y);
     label = y(1, :);
     num_feature_cluster = length(data{1});
     value = cell(size(data{1}));
+    
+    % setup counter for waitbar
+    counter = 0;
+    num_feature_all = 0;
+    for k = 1:1:num_feature_cluster
+        data_per_cluster = cellfun(@(v)v{k}, data, 'UniformOutput', false);
+        num_feature_all = num_feature_all + numel(data_per_cluster{k});
+    end
+
     for k = 1:1:num_feature_cluster
         data_per_cluster = cellfun(@(v)v{k}, data, 'UniformOutput', false);
         mask = zeros(size(data_per_cluster{k}));
@@ -229,6 +243,10 @@ else
                 else
                     mask(i) = nnds.mutual_information_analysis(data_per_feature, label, 5);
                 end
+                counter = counter + 1;
+                if nnds.get('WAITBAR')
+                    waitbar(.30 + .70 * counter / num_feature_all, wb, ['Performing feature selection, ' num2str(100 * counter / num_feature_all, '%.0f') '% done...'])
+				end
             end
 
             [~, idx_all] = sort(mask(:), 'descend');
@@ -237,6 +255,9 @@ else
             mask(idx_all(end-num_top_idx+1:end)) = 0;
         end
         value{k} = mask;
+    end
+    if nnds.get('WAITBAR')
+        close(wb)
     end
 end
 
