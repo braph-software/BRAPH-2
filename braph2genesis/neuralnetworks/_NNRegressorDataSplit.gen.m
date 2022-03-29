@@ -124,7 +124,8 @@ value = val_nn_gr;
 FEATURE_SELECTION_ANALYSIS (result, cell) is an analysis for generating a feature mask.
 %%%% ¡calculate!
 percentile = cell2mat(nnds.get('FEATURE_MASK'));
-data = cellfun(@(x) x.get('INPUT'), nnds.get('GR_TRAIN').get('SUB_DICT').getItems(), 'UniformOutput', false);
+gr_train = nnds.memorize('GR_TRAIN');
+data = cellfun(@(x) x.get('INPUT'), gr_train.get('SUB_DICT').getItems(), 'UniformOutput', false);
 
 if nnds.get('GR_TRAIN').get('SUB_DICT').length == 0
     value = {};
@@ -133,7 +134,7 @@ else
         wb = waitbar(0, 'Performing feature selection on training set ...', 'Name', BRAPH2.NAME);
         set_braph2_icon(wb)
     end
-    y = cellfun(@(x) cell2mat(x.get('TARGET')), nnds.get('GR_TRAIN').get('SUB_DICT').getItems(), 'UniformOutput', false);
+    y = cellfun(@(x) cell2mat(x.get('TARGET')), gr_train.get('SUB_DICT').getItems(), 'UniformOutput', false);
     label = cell2mat(y);
     num_feature_cluster = length(data{1});
     value = cell(size(data{1}));
