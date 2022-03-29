@@ -131,7 +131,7 @@ if nnds.get('GR_TRAIN').get('SUB_DICT').length == 0
     value = {};
 else
     if nnds.get('WAITBAR')
-        wb = waitbar(0, 'Performing feature selection on training set ...', 'Name', BRAPH2.NAME);
+        wb = waitbar(0, 'Initialing feature selection on training set ...', 'Name', BRAPH2.NAME);
         set_braph2_icon(wb)
     end
     y = cellfun(@(x) cell2mat(x.get('TARGET')), gr_train.get('SUB_DICT').getItems(), 'UniformOutput', false);
