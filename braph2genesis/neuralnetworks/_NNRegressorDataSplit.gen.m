@@ -137,6 +137,7 @@ else
     label = cell2mat(y);
     num_feature_cluster = length(data{1});
     value = cell(size(data{1}));
+    counter = 0;
     for k = 1:1:num_feature_cluster
         data_per_cluster = cellfun(@(v)v{k}, data, 'UniformOutput', false);
         mask = zeros(size(data_per_cluster{k}));
@@ -148,8 +149,9 @@ else
                 else
                     mask(i) = nnds.mutual_information_analysis(data_per_feature, label, 5);
                 end
+                counter = counter + 1;
                 if nnds.get('WAITBAR')
-                    waitbar(.30 + .70 * i / (numel(mask) * num_feature_cluster), wb, ['Performing feature selection, ' num2str(0.7 * i / (numel(mask) * num_feature_cluster)) '% done...'])
+                    waitbar(.30 + .70 * counter / (numel(mask) * num_feature_cluster), wb, ['Performing feature selection, ' num2str(0.7 * counter / (numel(mask) * num_feature_cluster), '%.1f') '% done...'])
                 end
             end
 
