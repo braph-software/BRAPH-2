@@ -3743,7 +3743,13 @@ descriptions = [];
         file = [paths{index} filesep() w_names{index}];
         
         set(ui_checkbox_bottom_animation, 'Value', false)
-        pipeline_guis{end+1} = PIPELINEGUI(file, w_names{index});        
+        pipe = ImporterPipelineBRAPH2( ...
+            'ID', 'Import BRAPH2 Pipeline', ...
+            'WAITBAR', true, ...
+            'File', file ...
+            ).get('Pip');
+        
+        pipeline_guis{end+1} = GUI('pe', pipe).draw();
     end
     function update_position(~, ~)        
         set(hContainer, 'units', 'norm', 'position', [0.62 0.65 0.36 .06]);
@@ -3832,19 +3838,11 @@ linkbar()
         BRAPH2_ABOUT();
     end
     function cb_load_worfklow(~, ~)
-        [file, path, filterindex] = uigetfile(BRAPH2.EXT_WORKSPACE, 'Select the file to load a workspace.'); %#ok<NBRAK,CCAT>
+        [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, ['Select the .b2 file.']);
         if filterindex
-            set(ui_checkbox_bottom_animation, 'Value', false)
-            filename = fullfile(path, file);            
-            tmp = load(filename, '-mat', 'panel_struct');
-            txt = load(filename, '-mat', 'txt');
-            cycles = load(filename, '-mat', 'cycles');
-            if isa(tmp.panel_struct, 'struct')
-                PIPELINEGUI(file, filename, ...
-                    'PreviousWorkSpace', tmp.panel_struct, ...
-                    'PreviousWorkSpaceText', txt.txt, ...
-                    'PreviousWorkSpaceCycles', cycles.cycles);
-            end
+            filename = fullfile(path, file);
+            tmp = load(filename, '-mat', 'el');
+            GUI('PE', tmp.el, 'FILE', filename).draw()
         end
     end
     function cb_load_pipeline(~, ~)
@@ -3852,7 +3850,13 @@ linkbar()
         if filterindex
             set(ui_checkbox_bottom_animation, 'Value', false)
             filename = fullfile(path, file);
-            pipeline_guis{end+1} = PIPELINEGUI(filename, file);
+            pipe = ImporterPipelineBRAPH2( ...
+                'ID', 'Import BRAPH2 Pipeline', ...
+                'WAITBAR', true, ...
+                'File', filename ...
+                ).get('Pip');
+            
+            pipeline_guis{end+1} = GUI('pe', pipe).draw();
         end
     end
 % auxiliary
