@@ -25,6 +25,11 @@ GR_NN (result, group) is a group of NN subjects.
 %%%% ¡default!
 NNGroup('SUB_CLASS', 'NNSubject', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject'))
 %%%% ¡calculate!
+if nnd.get('WAITBAR')
+    wb = waitbar(0, 'Constructing NN input ...', 'Name', BRAPH2.NAME);
+    set_braph2_icon(wb)
+end
+
 gr = nnd.get('GR');
 nn_gr = NNGroup( ...
     'SUB_CLASS', 'NNSubject', ...
@@ -48,7 +53,7 @@ nn_sub_dict = nn_gr.get('SUB_DICT');
 
 for i = 1:1:gr.get('SUB_DICT').length()
 	sub = gr.get('SUB_DICT').getItem(i);
-    input = {sub.get('ST_MP')};
+    input = sub.get('ST_MP');
     nn_sub = NNSubject( ...
         'ID', [sub.get('ID') ' in ' gr.get('ID')], ...
         'BA', atlas, ...
@@ -57,9 +62,18 @@ for i = 1:1:gr.get('SUB_DICT').length()
         'INPUT', input, ...
         'TARGET_NAME', nnd.get('TARGET_NAME')...
         );
+
     nn_sub_dict.add(nn_sub);
+
+    if nnd.get('WAITBAR')
+        waitbar(.30 + .70 * i / gr.get('SUB_DICT').length(), wb, ['Constructing subject ' num2str(i) ' of ' num2str(gr.get('SUB_DICT').length())  ' in ' gr.get('ID') ' ...'])
+    end
 end
 nn_gr.set('sub_dict', nn_sub_dict);
+
+if nnd.get('WAITBAR')
+    close(wb)
+end
 
 value = nn_gr;
 
