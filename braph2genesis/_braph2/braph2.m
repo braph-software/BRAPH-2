@@ -54,4 +54,4 @@ end
 
 clear src_dir brainsurfs_dir graphs_dir measures_dir test_dir pipelines_dir pipelines_dir_list i addons installed
 
-% % % % BRAPH2GUI()
+% % % BRAPH2GUI()

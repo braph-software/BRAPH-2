@@ -36,8 +36,6 @@ g = GraphWU( ...
     'B', A/gr.get('SUB_DICT').length() ...
     );
 value = g;
-%%%% ¡gui!
-% % % pl = PPAnalyzeGroupGraph('EL', a, 'PROP', AnalyzeGroup_CON_WU.G, varargin{:});
 
 %% ¡tests!
 

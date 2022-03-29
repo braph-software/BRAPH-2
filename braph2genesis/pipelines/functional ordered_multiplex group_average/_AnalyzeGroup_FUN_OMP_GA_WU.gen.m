@@ -94,8 +94,6 @@ g = OrderedMultiplexWU( ...
     'BRAINATLAS', atlas ...
     );
 value = g;
-%%%% ¡gui!
-% % % pl = PPAnalyzeEnsembleGraph('EL', a, 'PROP', AnalyzeGroup_FUN_OMP_GA_WU.G_DICT, varargin{:});
 
 %% ¡tests!
 
