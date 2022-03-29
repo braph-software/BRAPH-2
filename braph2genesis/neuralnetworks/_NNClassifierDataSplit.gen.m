@@ -236,7 +236,7 @@ else
                 end
                 counter = counter + 1;
                 if nnds.get('WAITBAR')
-                    waitbar(.30 + .70 * counter / (numel(mask) * num_feature_cluster), wb, ['Performing feature selection, ' num2str(0.7 * counter / (numel(mask) * num_feature_cluster), '%.1f') '% done...'])
+                    waitbar(.30 + .70 * counter / (numel(mask) * num_feature_cluster), wb, ['Performing feature selection, ' num2str(100 * .70 * counter / (numel(mask) * num_feature_cluster), '%.0f') '% done...'])
                 end
             end
 
