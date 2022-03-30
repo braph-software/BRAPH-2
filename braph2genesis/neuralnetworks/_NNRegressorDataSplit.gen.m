@@ -49,7 +49,7 @@ train_nn_gr.set( ...
 
 % setup counter for waitbar
 counter = 0;
-num_sub_all = legnth(setdiff(1:length(subs), nnds.get('SPLIT')));
+num_sub_all = length(setdiff(1:nnds.get('GR').get('SUB_DICT').length(), nnds.get('SPLIT')));
 
 % add subejcts
 sub_dict = train_nn_gr.get('SUB_DICT');
@@ -82,8 +82,11 @@ if nnds.get('GR').get('SUB_DICT').length() > 0
     end
 end
 
-
 train_nn_gr.set('SUB_DICT', sub_dict);
+
+if nnds.get('WAITBAR')
+    close(wb)
+end
 
 value = train_nn_gr;
 
@@ -93,7 +96,7 @@ GR_VAL (result, item) is a group of NN subjects for the validation set.
 'NNGroup'
 %%%% ¡calculate!
 if nnds.get('WAITBAR')
-    wb = waitbar(0, 'Constructing the training set ...', 'Name', BRAPH2.NAME);
+    wb = waitbar(0, 'Constructing the validation set ...', 'Name', BRAPH2.NAME);
     set_braph2_icon(wb)
 end
 
@@ -110,7 +113,7 @@ val_nn_gr.set( ...
 
 % setup counter for waitbar
 counter = 0;
-num_sub_all = legnth(nnds.get('SPLIT_GR1')) + legnth(nnds.get('SPLIT_GR2'));
+num_sub_all = length(nnds.get('SPLIT'));
 
 % add subejcts
 sub_dict = val_nn_gr.get('SUB_DICT');
@@ -138,7 +141,7 @@ if nnds.get('GR').get('SUB_DICT').length() > 0
         sub_dict.add(sub_copy);
         counter = counter + 1;
         if nnds.get('WAITBAR')
-            waitbar(.30 + .70 * counter / num_sub_all, wb, ['Constructing testing set, ' num2str(100 * counter / num_sub_all, '%.0f') '% done...'])
+            waitbar(.30 + .70 * counter / num_sub_all, wb, ['Constructing validation set, ' num2str(100 * counter / num_sub_all, '%.0f') '% done...'])
         end
     end
 end
