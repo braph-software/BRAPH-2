@@ -98,6 +98,8 @@ if nnd.get('WAITBAR')
 end
 
 value = nn_gr;
+%%%% ¡gui!
+pr = PPNNData_CON_GR_NN('EL', nnd, 'PROP', NNData_CON_WU.GR_NN, varargin{:});
 
 %% ¡tests!
 %%% ¡test!

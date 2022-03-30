@@ -35,6 +35,8 @@ MEASURES (data, classlist) is the graph measures as input to NN.
 {'Measure'}
 %%%% ¡default!
 {'DegreeAv', 'Degree'}
+%%%% ¡gui!
+pr = PPNNData_Measure('EL', nnd, 'PROP', NNData.MEASURES, varargin{:});
 
 %%% ¡prop!
 TARGET_NAME (data, string) is the name of the traget.
