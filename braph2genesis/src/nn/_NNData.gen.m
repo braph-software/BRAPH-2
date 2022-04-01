@@ -36,7 +36,7 @@ MEASURES (data, classlist) is the graph measures as input to NN.
 %%%% ¡default!
 {'DegreeAv', 'Degree'}
 %%%% ¡gui!
-pr = PPNNData_Measure('EL', nnd, 'PROP', NNData.MEASURES, varargin{:});
+pr = PPNNData_Measures('EL', nnd, 'PROP', NNData.MEASURES, varargin{:});
 
 %%% ¡prop!
 TARGET_NAME (data, string) is the name of the traget.
@@ -54,3 +54,5 @@ Group()
 GR_NN (result, item) is a group of NN subjects.
 %%%% ¡settings!
 'NNGroup'
+%%%% ¡gui!
+pr = PPNNData_GR_NN('EL', nnd, 'PROP', NNData.GR_NN, varargin{:});

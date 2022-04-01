@@ -1,15 +1,14 @@
 %% ¡header!
-PPNNData_CON_GR_NN < PlotPropItem (pr, plot property item) is a plot of an item property.
+PPNNData_GR_NN < PlotPropItem (pr, plot property item) is a plot of an item property.
 
 %%% ¡description!
-PlotPropItem plots an ITEM property of an element using a pushbutton that opens the linked object.
-It works for all categories.
+PPNNData_GR_NN plots NN group using a pushbutton that opens the linked object at a certain location.
 
 CALLBACK - This is a callback function:
 
-    pr.<strong>cb_bring_to_front</strong>() - brings to the front the nndata figure and its settings figure
-    pr.<strong>cb_hide</strong>() - hides the nndata figure and its settings figure
-    pr.<strong>cb_close</strong>() - closes the nndata figure and its settings figure
+    pr.<strong>cb_bring_to_front</strong>() - brings to the front the NN group figure and its settings figure
+    pr.<strong>cb_hide</strong>() - hides the NN group figure and its settings figure
+    pr.<strong>cb_close</strong>() - closes the NN group figure and its settings figure
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp
@@ -42,17 +41,22 @@ function h_panel = draw(pr, varargin)
     %  objects from the handle H of the panel.
     %
     % See also update, redraw, refresh, uipanel.
-  
+
     pr.p = draw@PlotPropItem(pr, varargin{:});
-    
+
     children = get(pr.p, 'Children');
     for i = 1:1:length(children)
         if check_graphics(children(i), 'pushbutton')
             pr.pushbutton = children(i);
+            break; % to do change the condition
         end
     end
-    
+
     set(pr.pushbutton, 'Callback', {@cb_pushbutton_margin})
+
+    function cb_pushbutton_margin(~, ~)
+        pr.cb_pushbutton_margin()
+    end
 
     % output
     if nargout > 0
@@ -98,33 +102,30 @@ function cb_pushbutton_margin(pr)
     % CB_PUSHBUTTON_VALUE(PR) executes callback for the pushbutton.
 
     el = pr.get('EL');
-    prop = pr.get('PROP');    
-    
-    pr.update()
+    prop = pr.get('PROP');
 
-    % TODO: check this part of the code once GUI is finalized
+    pr.update()
+    f_ba = ancestor(pr.p, 'Figure');
+    f_ba_x = Plot.x0(f_ba, 'pixels');
+    f_ba_y = Plot.y0(f_ba, 'pixels');
+    f_ba_w = Plot.w(f_ba, 'pixels');
+    f_ba_h = Plot.h(f_ba, 'pixels');
+
+    screen_x = Plot.x0(0, 'pixels');
+    screen_y = Plot.y0(0, 'pixels');
+    screen_w = Plot.w(0, 'pixels');
+    screen_h = Plot.h(0, 'pixels');
+
+    x = (f_ba_x + f_ba_w) / screen_w;
+    y = f_ba_y / screen_h;
+    w = f_ba_w / screen_w;
+    h = f_ba_h / screen_h;
+
     value = el.getr(prop);
     if isa(value, 'NoValue')
-        GUI('PE', el.getPropDefault(prop)).draw()
+        GUI('PE', el.getPropDefault(prop), 'POSITION', [x y w h]).draw()
     else
-        % determine position for figure of PlotBrainAtlas
-        f_ba = ancestor(pr.p, 'Figure'); 
-        f_ba_x = Plot.x0(f_ba, 'pixels');
-        f_ba_y = Plot.y0(f_ba, 'pixels');
-        f_ba_w = Plot.w(f_ba, 'pixels');
-        f_ba_h = Plot.h(f_ba, 'pixels');
-        
-        screen_x = Plot.x0(0, 'pixels');
-        screen_y = Plot.y0(0, 'pixels');
-        screen_w = Plot.w(0, 'pixels');
-        screen_h = Plot.h(0, 'pixels');
-        
-        x = (f_gr_x + f_gr_w) / screen_w;
-        y = f_gr_y / screen_h;
-        w = f_gr_w / screen_w;
-        h = f_gr_h / screen_h;
-
-       f_nn_data = GUI('PE', el.get(prop), 'POSITION', [x y w h]).draw();
+        f_nn_data = GUI('PE', el.get(prop), 'POSITION', [x y w h]).draw();
     end
 end
 function cb_bring_to_front(pr)
@@ -135,20 +136,13 @@ function cb_bring_to_front(pr)
     %
     % See also cb_hide, cb_close.
 
-    % brings to front settings panel
+    % bring to front settings panel
     pr.cb_bring_to_front@PlotProp();
 
-    % brings to front brain atlas figure
+    % bring to front NN group figure
     children = get(pr.f_nn_data, 'Children');
-    for i = 1:1:length(children)
-        if check_graphics(children(i), 'uipanel') && strcmp(get(children(i), 'Tag'), 'h_panel')
-            pba = get(children(i), 'UserData');
-            pba.cb_bring_to_front()
-        end
-    end
-    % try this if not
-    % pe = get(pr.f_nn_data, 'UserData');
-    % pe.cb_bring_to_front();
+    holder = get(pr.f_nn_data, 'UserData');
+    holder.cb_bring_to_front();
 end
 function cb_hide(pr)
     %CB_HIDE hides the brain atlas figure and its settings figure.
@@ -157,36 +151,22 @@ function cb_hide(pr)
     %
     % See also cb_bring_to_front, cb_close.
 
-    % hides settings panel
+    % hide settings panel
     pr.cb_hide@PlotProp();
 
-    % hides brain atlas figure
-    children = get(pr.f_nn_data, 'Children');
-    for i = 1:1:length(children)
-        if check_graphics(children(i), 'uipanel') && strcmp(get(children(i), 'Tag'), 'h_panel')
-            pba = get(children(i), 'UserData');
-            pba.cb_hide()
-        end
-    end
+    % hide NN group figure
+    holder = get(pr.f_nn_data, 'UserData');
+    holder.cb_hide();
 end
 function cb_close(pr)
-    %CB_CLOSE closes the brain atlas figure and its settings figure.
+    %CB_CLOSE closes the figure.
     %
-    % CB_CLOSE(PR) closes the brain atlas figure and its settings figure.
+    % CB_CLOSE(PR) closes the figure and its children figures.
     %
     % See also cb_bring_to_front, cd_hide.
 
-    % closes settings panel
-    pr.cb_close@PlotProp();
-
-    % closes brain atlas figure
+    % close NN group gui
     if check_graphics(pr.f_nn_data, 'figure')
-        children = get(pr.f_nn_data, 'Children');
-        for i = 1:1:length(children)
-            if check_graphics(children(i), 'uipanel') && strcmp(get(children(i), 'Tag'), 'h_panel')
-                pba = get(children(i), 'UserData');
-                pba.cb_close()
-            end
-        end
+        close(pr.f_nn_data)
     end
 end
