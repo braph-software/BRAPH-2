@@ -2166,7 +2166,7 @@ function h = getMCRPanel(pl, ui_panel_mcr)
 
                     size_(isnan(size_)) = 0.1;
                     size_(size_<=0) = 0.1;
-                    pl.set('SYMS_SIZE', size_');
+                    pl.set('SYMS_SIZE', size_);
                     if ~isempty(fdr_lim)
                         pl.set('SYMS', fdr_lim');
                     else
