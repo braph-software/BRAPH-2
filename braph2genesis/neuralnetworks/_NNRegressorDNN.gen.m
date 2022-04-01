@@ -48,12 +48,12 @@ false
 %%% ¡prop!
 PLOT_TRAINING (data, logical) is an option for the plot of training-progress.
 %%%% ¡default!
-false
+true
 
 %%% ¡prop!
 PLOT_LAYERS (data, logical) is an option for the plot of the layers.
 %%%% ¡default!
-false
+true
 
 %%% ¡prop!
 INPUT_FORMAT (data, string) is the data format of network inputs.

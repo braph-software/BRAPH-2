@@ -123,9 +123,9 @@ function cb_pushbutton_margin(pr)
 
     value = el.getr(prop);
     if isa(value, 'NoValue')
-        GUI('PE', el.getPropDefault(prop), 'POSITION', [x y w h]).draw()
+        GUI('PE', el.getPropDefault(prop), 'POSITION', [x y w h], 'CLOSEREQ', false).draw()
     else
-        f_nn_data = GUI('PE', el.get(prop), 'POSITION', [x y w h]).draw();
+        pr.f_nn_data = GUI('PE', el.get(prop), 'POSITION', [x y w h], 'CLOSEREQ', false).draw();
     end
 end
 function cb_bring_to_front(pr)

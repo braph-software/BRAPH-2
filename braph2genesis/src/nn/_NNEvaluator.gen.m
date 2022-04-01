@@ -30,3 +30,5 @@ GR (data, item) is a group of NN subjects that the NN model will be evaluated on
 GR_PREDICTION (result, item) is a group of NN subjects containing the prediction from the neural network.
 %%%% ¡settings!
 'NNGroup'
+%%%% ¡gui!
+pr = PPNNData_GR_NN('EL', nnd, 'PROP', NNEvaluator.GR_PREDICTION, varargin{:});

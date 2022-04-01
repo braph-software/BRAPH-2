@@ -11,17 +11,17 @@ under the ROC curve (AUC), and the confusion matrix.
 %%% ¡prop!
 PLOT_CM (data, logical) is an option for the plot of the confusion matrix.
 %%%% ¡default!
-false
+true
 
 %%% ¡prop!
 PLOT_MAP (data, logical) is an option for the plot of the feature map.
 %%%% ¡default!
-false
+true
 
 %%% ¡prop!
 PLOT_ROC (data, logical) is an option for the plot of the receiver operating characteristic curve.
 %%%% ¡default!
-false
+true
 
 %%% ¡prop!
 AUC (result, cell) is an area under the curve score.
