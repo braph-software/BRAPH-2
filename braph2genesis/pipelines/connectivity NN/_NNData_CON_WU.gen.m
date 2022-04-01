@@ -3,7 +3,7 @@ NNData_CON_WU < NNData (nnd, data for neural network) produces a dataset to trai
 
 %% ¡description!
 This NN data generates a group of NN subjects, each of which contains the 
-input as adjacency matrices or graph measures from connectivity data. 
+input as BUD adjacency matrices or graph measures from connectivity data. 
 The generated NN group can be used to train or test a neural network model.
 
 %% ¡props_update!

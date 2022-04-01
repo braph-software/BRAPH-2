@@ -34,7 +34,7 @@ PLOT_LINESTYLE_NAME = { ...
 
 % Symbols
 INIT_SYM_MARKER = 'o'
-INIT_SYM_SIZE = 10
+INIT_SYM_SIZE = 1
 INIT_SYM_EDGE_COLOR = 'b'
 INIT_SYM_FACE_COLOR = 'b'
 
@@ -46,13 +46,13 @@ INIT_SPH_FACE_ALPHA = .5
 INIT_SPH_R = 1
 
 % IDs
-INIT_ID_FONT_SIZE = 13
+INIT_ID_FONT_SIZE = 1
 INIT_ID_FONT_NAME = 'helvetica'
 INIT_ID_FONT_COLOR = [0 0 0]
 INIT_ID_FONT_INTERPRETER = 'none'
 
 % Labels
-INIT_LAB_FONT_SIZE = 13
+INIT_LAB_FONT_SIZE = 1
 INIT_LAB_FONT_NAME = 'helvetica'
 INIT_LAB_FONT_COLOR = [0 0 0]
 INIT_LAB_FONT_INTERPRETER = 'none'
@@ -189,7 +189,6 @@ function f_settings  = settings(pl, varargin)
         'Visible', 'off', ...
         'Enable', 'off', ...
         'Position', [0 0 1 1]);
-    pl.f_graph_settings = ui_panel_graph;
     
     ui_panel_mcr = uipanel(f_settings, ...
         'Units', 'normalized', ...
@@ -197,7 +196,6 @@ function f_settings  = settings(pl, varargin)
         'Visible', 'off', ...
         'Enable', 'off', ...
         'Position', [0 0 1 1]);
-    pl.f_measures_settings = ui_panel_mcr;
     
     function cb_panel_surface(~, ~)
         set(surface_panel, 'Visible', 'on', 'Enable', 'on')
@@ -208,13 +206,17 @@ function f_settings  = settings(pl, varargin)
         set(surface_panel, 'Visible', 'off', 'Enable', 'off')
         set(ui_panel_graph, 'Visible', 'on', 'Enable', 'on')
         set(ui_panel_mcr, 'Visible', 'off', 'Enable', 'off')
-        pl.getBrainGraphPanel();
+        if  isempty(pl.f_graph_settings)
+            pl.getBrainGraphPanel(ui_panel_graph);
+        end
     end
     function cb_panel_mcr(~, ~)
         set(surface_panel, 'Visible', 'off', 'Enable', 'off')
         set(ui_panel_graph, 'Visible', 'off', 'Enable', 'off')
         set(ui_panel_mcr, 'Visible', 'on', 'Enable', 'on')
-        pl.getMCRPanel();
+        if isempty(pl.f_measures_settings)
+            pl.getMCRPanel(ui_panel_mcr);
+        end
     end
     function h_panel = getSurfacePanel()
         h_panel = get(f_settings, 'Child');
@@ -1557,7 +1559,7 @@ function h = get_axes(pl)
     h = pl.h_axes;
 end
 
-function brain_graph_panel = getBrainGraphPanel(pl)
+function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
     % GETBRAINGRAPHPANEL creates a braingraph panel
     %
     % BRAIN_GRAPH_PANEL = GETBRAINGRAPHPANEL(ANAlYSIS, AXES, PLOTBRAINGRAPH)
@@ -1570,6 +1572,7 @@ function brain_graph_panel = getBrainGraphPanel(pl)
     atlas = pl.get('ATLAS');
     br_axes = pl.h_axes; %#ok<NASGU>
     BKGCOLOR = [1 .9725 .929];
+    pl.f_graph_settings = ui_panel_graph;
     fig_graph = pl.f_graph_settings;
     color = [1 1 1];
     
@@ -1756,13 +1759,14 @@ function brain_graph_panel = getBrainGraphPanel(pl)
         brain_graph_panel = fig_graph;
     end
 end
-function h = getMCRPanel(pl)
+function h = getMCRPanel(pl, ui_panel_mcr)
     % sets position of figure
 
     % variables
     atlas = pl.get('ATLAS');
     br_axes = pl.h_axes; %#ok<NASGU>
     FigColor = [.95 .94 .94];
+    pl.f_measures_settings = ui_panel_mcr;
     f = pl.f_measures_settings;
     BKGCOLOR = [1 .9725 .929];
 
@@ -1782,9 +1786,6 @@ function h = getMCRPanel(pl)
         layer_dim =  size(layer_element, 2);
     end
     
-    fdr_lim = [];
-    p1 = [];
-    p2 = [];
 
     % initialization %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % measure container panel
@@ -1929,13 +1930,11 @@ function h = getMCRPanel(pl)
         function cb_checkbox_meas_symbolsize(~, ~)  %  (src, event)
             if get(ui_checkbox_meas_symbolsize, 'Value')
                 set(ui_edit_meas_symbolsize, 'Enable', 'on')
-
                 update_brain_meas_plot()
             else
                 size = str2double(get(ui_edit_meas_symbolsize, 'String'));
-                size = 1 + size;
                 pl.set('SYMS_SIZE', size);
-
+                pl.set('SYMS', 0);
                 set(ui_edit_meas_symbolsize, 'Enable', 'off')
                 update_brain_meas_plot()
             end
@@ -1943,21 +1942,18 @@ function h = getMCRPanel(pl)
         function cb_edit_meas_symbolsize(~, ~)  %  (src, event)
             size = real(str2double(get(ui_edit_meas_symbolsize, 'String')));
             if isempty(size) || size<=0
-                set(ui_edit_meas_symbolsize, 'String', '1')
-                size = 5;
+                set(ui_edit_meas_symbolsize, 'String', '1')                
             end
             update_brain_meas_plot()
         end
         function cb_checkbox_meas_sphereradius(~, ~)  %  (src, event)
             if get(ui_checkbox_meas_sphereradius, 'Value')
                 set(ui_edit_meas_sphereradius, 'Enable', 'on')
-
                 update_brain_meas_plot()
             else
                 R = str2double(get(ui_edit_meas_sphereradius, 'String'));
-                R = R + 1;
                 pl.set('SPHS_SIZE', R);
-
+                pl.set('SPHS', 0);
                 set(ui_edit_meas_sphereradius, 'Enable', 'off')
                 update_brain_meas_plot()
             end
@@ -1965,8 +1961,7 @@ function h = getMCRPanel(pl)
         function cb_edit_meas_sphereradius(~, ~)  %  (src, event)
             R = real(str2double(get(ui_edit_meas_sphereradius, 'String')));
             if isempty(R) || R<=0
-                set(ui_edit_meas_sphereradius, 'String', '1')
-                R = 3;
+                set(ui_edit_meas_sphereradius, 'String', '1')                
             end
             update_brain_meas_plot()
         end
@@ -1990,14 +1985,11 @@ function h = getMCRPanel(pl)
         function cb_checkbox_meas_labelsize(~, ~)  %  (src, event)
             if get(ui_checkbox_meas_labelsize, 'Value')
                 set(ui_edit_meas_labelsize, 'Enable', 'on')
-
                 update_brain_meas_plot()
             else
                 size = str2double(get(ui_edit_meas_labelsize, 'String'));
-                size = size + 1;
                 pl.set('LABS_SIZE', size);
                 pl.set('LABS', 0);
-
                 set(ui_edit_meas_labelsize, 'Enable', 'off')
                 update_brain_meas_plot()
             end
@@ -2037,26 +2029,25 @@ function h = getMCRPanel(pl)
                 if get(ui_checkbox_meas_symbolsize, 'Value')
 
                     size_ = str2double(get(ui_edit_meas_symbolsize, 'String'));
-
                     size_(isnan(size_)) = 0.1;
                     size_(size_ <= 0) = 0.1;
                     pl.set('SYMS_SIZE', size_');
+                    pl.set('SYMS', 1);
                 else
-                    measure_data_inner(measure_data_inner == 0 ) = 0.01;
-                    pl.set('SYMS_SIZE', measure_data_inner);
+                    pl.set('SYMS', 0);
                 end
 
 
                 if get(ui_checkbox_meas_sphereradius, 'Value')
 
                     R = str2double(get(ui_edit_meas_sphereradius, 'String'));
-
-                    R = 1 + (measure_data_inner)*R;
-
+                    R = measure_data_inner * R;
                     R(isnan(R)) = 0.1;
                     R(R <= 0) = 0.1;
                     pl.set('SPHS_SIZE', R);
                     pl.set('SPHS', 1);
+                else
+                    pl.set('SPHS', 0);
                 end
 
                 if get(ui_checkbox_meas_spheretransparency, 'Value')
@@ -2079,6 +2070,8 @@ function h = getMCRPanel(pl)
                     size_(size_ <= 0) = 0.1;
                     pl.set( 'LABS_SIZE', size_);
                     pl.set('LABS', 1);
+                else
+                    pl.set('LABS', 0);
                 end
 
             end
@@ -2094,7 +2087,6 @@ function h = getMCRPanel(pl)
 
     % draw
     init_measures_panel()
-    pl.draw();
     update_brain_meas_plot()
     set(f, 'Visible', 'on')
     if nargout > 0
