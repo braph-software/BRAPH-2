@@ -1,13 +1,13 @@
-%% Pipeline Classification Connectivity Neural Networks WU
+%% Pipeline Neural Networks Classification CON WU
 %
-% This is the pipeline script to perform classification by using neural networks for two groups of subjects with connectivity data and weighted undirected graphs.
+% This is the pipeline script to perform classification by neural networks for two groups of subjects with connectivity data and weighted undirected graphs.
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
 % 2. It loads the data of two groups of subjects from directories containing XLS files.
 % 3. It constructs the dataset using with connectivity matrices (CON) based on graphs (WU).
 % 4. It splits the dataset into training set and testing set.
-% 4. It trains the neural netork model.
-% 5. It evaluates the performance on training set.
-% 5. It evaluates the performance on testing set.
+% 5. It trains the neural netork model.
+% 6. It evaluates the performance on training set.
+% 7. It evaluates the performance on validation set.
 
 %% Brain Atlas
 ba = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load a Brain Atlas XLS % Brain Atlas
