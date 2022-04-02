@@ -171,10 +171,29 @@ descriptions = [];
         files_paths = files_array(2, :);
 
         pipeline_names = cellfun(@(x, y) erase(x, [y filesep()]), files_names, files_paths, 'UniformOutput', false);
+        clean_pipeline_names = cellfun(@(x) erase(strrep(strrep(x, '.', ' '), '_', ' '), ' braph2'), pipeline_names,  'UniformOutput', false);
         
         if ~isempty(jPanelObj.getSearchText.toCharArray')
             filter = lower(jPanelObj.getSearchText.toCharArray');
-            pipeline_filter_index = cell2mat(cellfun(@(x) contains(x, filter), pipeline_names, 'UniformOutput', false));
+            array_filter = split(filter, ' ');
+            tmp_filter = [];
+            tmp_intersect = zeros(1, length(clean_pipeline_names));
+            for i = 1:length(array_filter)
+                current_filter = array_filter{i};
+                tmp_filter_index = cell2mat(cellfun(@(x) contains(x, current_filter), clean_pipeline_names, 'UniformOutput', false));
+                if i > 1
+                      holder = tmp_filter+tmp_filter_index;
+                else
+                    tmp_filter = tmp_filter_index;
+                end
+            end
+            if length(array_filter) > 1
+                tmp_intersect(holder > length(array_filter)-1) = 1;
+            else
+                tmp_intersect = tmp_filter_index;
+            end
+            
+            pipeline_filter_index = logical(tmp_intersect);
             files_paths = files_paths(pipeline_filter_index);
             pipeline_names = pipeline_names(pipeline_filter_index);
         end
@@ -186,7 +205,9 @@ descriptions = [];
             [pipeline_names{i}, descriptions{i}] = getGUIToken(txt, 1);
         end
         paths = files_paths;
-        set(pipeline_list, 'String', pipeline_names)
+        result_p_n = cellfun(@(x) x(isstrprop(x, 'cntrl')) , pipeline_names, 'UniformOutput', false);
+        result_p_n_mixed = cellfun(@(x, y) erase(x, y), pipeline_names,  result_p_n, 'UniformOutput', false);
+        set(pipeline_list, 'String', result_p_n_mixed)
     end
     function varargout = subdir(varargin)
         % Function based on Kelly Kearney subdir function.
