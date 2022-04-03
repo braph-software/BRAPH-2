@@ -32,7 +32,7 @@ GR_VAL (result, item) is a group of NN subjects for the validation set.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡gui!
-pr = PPNNData_GR_NN('EL', nnd, 'PROP', NNDataSplit.GR_VAL, varargin{:});
+pr = PPNNData_GR_NN('EL', nnds, 'PROP', NNDataSplit.GR_VAL, varargin{:});
 
 %%% ¡prop!
 FEATURE_MASK (data, cell) is a given mask or a percentile to select relevant features.

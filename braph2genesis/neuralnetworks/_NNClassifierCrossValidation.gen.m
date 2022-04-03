@@ -216,6 +216,8 @@ else
 end
 
 value = gr_prediction;
+%%%% ¡gui!
+pr = PPNNData_GR_NN('EL', nncv, 'PROP', NNClassifierCrossValidation.GR_PREDICTION, varargin{:});
 
 %%% ¡prop!
 CONFUSION_MATRIX (result, matrix) is an add-up confusion matrix across k folds for all repeitions.

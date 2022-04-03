@@ -31,4 +31,4 @@ GR_PREDICTION (result, item) is a group of NN subjects containing the prediction
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡gui!
-pr = PPNNData_GR_NN('EL', nnd, 'PROP', NNEvaluator.GR_PREDICTION, varargin{:});
+pr = PPNNData_GR_NN('EL', nne, 'PROP', NNEvaluator.GR_PREDICTION, varargin{:});
