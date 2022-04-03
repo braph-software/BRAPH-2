@@ -54,6 +54,9 @@ classdef Format < handle
     %  CELL         Cell is a 2D cell array of numeric data, typically used
     %               for adjaciency matrices and measures.
     %
+    %  ONNX         Onnx is a char array that represents a trained neural
+    %               network in the ONNX format.
+    %
     % Format properties (Constant):
     %
     %  EMPTY = 'em'
@@ -115,6 +118,10 @@ classdef Format < handle
     %  CELL = 'll'
     %  CELL_NAME = 'cell'
     %  CELL_DESCRIPTION
+    %
+    %  ONNX = 'ox'
+    %  ONNX_NAME = 'onnx'
+    %  ONNX_DESCRIPTION
     %
     % Format methods (Static):
     %  getFormats - returns the list of formats
@@ -188,6 +195,10 @@ classdef Format < handle
         CELL = 'll'
         CELL_NAME = 'cell'
         CELL_DESCRIPTION = 'Cell is a 2D cell array of numeric data, typically used for adjaciency matrices and measures.'
+        
+        ONNX = 'ox'
+        ONNX_NAME = 'onnx'
+        ONNX_DESCRIPTION = 'Onnx is a char array that represents a trained neural network in the ONNX format.'
     end
     methods (Static)
         function formats = getFormats()
@@ -213,6 +224,7 @@ classdef Format < handle
                 Format.MATRIX
                 Format.SMATRIX
                 Format.CELL
+                Format.ONNX
                 };
         end
         function format_number = getFormatNumber()
@@ -222,7 +234,7 @@ classdef Format < handle
             %
             % See also getFormats, existsFormat.
 
-            format_number = 15; % numel(Format.getFormats());
+            format_number = 16; % numel(Format.getFormats());
         end
         function check = existsFormat(format)
             %EXISTSFORMAT returns whether a format exists/error.
@@ -257,8 +269,7 @@ classdef Format < handle
             % A list of all format names can be obtained using
             %  <a href="matlab:cellfun(@(x) Format.getFormatName(x), Format.getFormats(), 'UniformOutput', false)">cellfun(@(x) Format.getFormatName(x), Format.getFormats(), 'UniformOutput', false)</a>
             %
-            % See also getFormats, getFormatDescription, getFormatSettings,
-            % getFormatDefault, checkFormat.
+            % See also getFormats, getFormatDescription, getFormatSettings, getFormatDefault, checkFormat.
 
             switch format
                 case Format.EMPTY
@@ -291,6 +302,8 @@ classdef Format < handle
                     format_name = Format.SMATRIX_NAME;
                 case Format.CELL
                     format_name = Format.CELL_NAME;
+                case Format.ONNX
+                    format_name = Format.ONNX_NAME;
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end
@@ -307,8 +320,7 @@ classdef Format < handle
             % A list of all format descriptions with default settings can be obtained using
             %  <a href="matlab:cellfun(@(x) Format.getFormatDescription(x), Format.getFormats(), 'UniformOutput', false)">cellfun(@(x) Format.getFormatDescription(x), Format.getFormats(), 'UniformOutput', false)</a>
             %
-            % See also getFormats, getFormatName, getFormatSettings,
-            % getFormatDefault, checkFormat.
+            % See also getFormats, getFormatName, getFormatSettings, getFormatDefault, checkFormat.
             
             switch format
                 case Format.EMPTY
@@ -371,6 +383,8 @@ classdef Format < handle
                     format_description = Format.SMATRIX_DESCRIPTION;
                 case Format.CELL
                     format_description = Format.CELL_DESCRIPTION;
+                case Format.ONNX
+                    format_description = Format.ONNX_DESCRIPTION;
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end
@@ -438,6 +452,8 @@ classdef Format < handle
                 case Format.SMATRIX
                     format_settings = '';
                 case Format.CELL
+                    format_settings = '';
+                case Format.ONNX
                     format_settings = '';
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
@@ -511,6 +527,8 @@ classdef Format < handle
                     format_default = [];
                 case Format.CELL
                     format_default = {};
+                case Format.CELL
+                    format_default = '';
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end
@@ -587,6 +605,8 @@ classdef Format < handle
                     check = isnumeric(value) && ismatrix(value) && size(value, 1) == size(value, 2);
                 case Format.CELL
                     check = iscell(value) && all(cellfun(@(x) isnumeric(x), value(:)));
+                case Format.CELL
+                    check = true; %TODO: complete check for format ONNX
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end
