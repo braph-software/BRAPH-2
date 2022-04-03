@@ -466,7 +466,7 @@ classdef Format < handle
             %  for a format FORMAT.
             %
             % DEFAULT = GETFORMATDEFAULT(FORMAT, SETTINGS) returns the
-            %  default value adappted for settings SETTINGS.
+            %  default value adapted for settings SETTINGS.
             % 
             % A list of all format defaults with default settings can be obtained using
             %  <a href="matlab:cellfun(@(x) Format.getFormatDefault(x), Format.getFormats(), 'UniformOutput', false)">cellfun(@(x) Format.getFormatDefault(x), Format.getFormats(), 'UniformOutput', false)</a>
