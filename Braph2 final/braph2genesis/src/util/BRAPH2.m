@@ -87,7 +87,7 @@ classdef BRAPH2
         function credits()
             %CREDITS provides information about the authors of BRAPH2.
             %
-            % See also license.
+            % See also license, braph2msgbox.
             
             title = ['About ' BRAPH2.STR];
             
@@ -104,23 +104,12 @@ classdef BRAPH2
                 '' ...
                 ''};
             
-            icon = rgb2gray(imresize(imread('braph2icon.png'), [50 50]));
-            cmap = [BRAPH2.COL_FIG; repmat(BRAPH2.COL, 254, 1); 1 1 1];
-            
-            CreateStruct.WindowStyle = 'modal';
-            CreateStruct.Interpreter = 'tex';
-            
-            f = msgbox(message, title, ...
-                'custom', icon, cmap, ...
-                CreateStruct);
-            set(f, 'Color', BRAPH2.COL_FIG)
-            
-            set_braph2icon(f)
+            braph2msgbox(title, message)
         end
         function license()
             %LICENSE provides information about the license of BRAPH2.
             %
-            % See also about.
+            % See also about, braph2msgbox.
             
             title = [BRAPH2.STR ' License'];
             
@@ -138,18 +127,7 @@ classdef BRAPH2
                 '' ...
                 ''};
             
-            icon = rgb2gray(imresize(imread('braph2icon.png'), [50 50]));
-            cmap = [BRAPH2.COL_FIG; repmat(BRAPH2.COL, 254, 1); 1 1 1];
-            
-            CreateStruct.WindowStyle = 'modal';
-            CreateStruct.Interpreter = 'tex';
-            
-            f = msgbox(message, title, ...
-                'custom', icon, cmap, ...
-                CreateStruct);
-            set(f, 'Color', BRAPH2.COL_FIG)
-            
-            set_braph2icon(f)
+            braph2msgbox(title, message)
         end
         function web()
             %WEB opens the BRAPH2 website.
