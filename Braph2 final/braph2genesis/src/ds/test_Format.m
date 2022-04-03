@@ -1,4 +1,6 @@
-%TEST_FORMAT
+%TEST_FORMAT 
+
+%TODO: revise
 
 format_list = Format.getFormats();
 
