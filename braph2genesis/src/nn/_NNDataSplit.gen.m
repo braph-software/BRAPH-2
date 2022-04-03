@@ -25,7 +25,7 @@ GR_TRAIN (result, item) is a group of NN subjects for the training set.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡gui!
-pr = PPNNData_GR_NN('EL', nnd, 'PROP', NNDataSplit.GR_TRAIN, varargin{:});
+pr = PPNNData_GR_NN('EL', nnds, 'PROP', NNDataSplit.GR_TRAIN, varargin{:});
 
 %%% ¡prop!
 GR_VAL (result, item) is a group of NN subjects for the validation set.
