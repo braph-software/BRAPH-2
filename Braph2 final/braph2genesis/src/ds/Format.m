@@ -1,4 +1,4 @@
-classdef Format < handle
+classdef Format < handle %TODO: revise
     %Format defines the format of a property.
     % Static class that defines the possible formats of the properties of
     % the elements. It is a subclass of handle.
