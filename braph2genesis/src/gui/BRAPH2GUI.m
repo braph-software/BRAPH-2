@@ -3853,10 +3853,10 @@ linkbar()
         web(url);
     end
     function cb_license(~, ~)
-        BRAPH2_LICENSE()
+        BRAPH2.license();
     end
     function cb_about(~, ~)
-        BRAPH2_ABOUT();
+        BRAPH2.credits();
     end
     function cb_load_worfklow(~, ~)
         [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, ['Select the .b2 file.']);
