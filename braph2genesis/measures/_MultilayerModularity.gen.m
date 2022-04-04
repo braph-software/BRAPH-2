@@ -21,6 +21,7 @@ MultiplexBUT
 MultiplexBD
 MultiplexWU
 MultiplexWD
+OrderedMultiplexWU
 
 %% ¡props_update!
 %%% ¡prop!
