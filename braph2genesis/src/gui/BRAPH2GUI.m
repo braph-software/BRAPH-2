@@ -7,7 +7,7 @@ screen_size = get(0, 'ScreenSize');
 h_f = screen_size(4) * 0.5;
 w_f = h_f * 1.61;
 x_f = screen_size(3) * 0.3;
-y_f = screen_size(4) * .3; 
+y_f = screen_size(4) * .3;
 f_position = get_from_varargin([x_f y_f w_f h_f], 'Position', varargin);
 fig_name = 'BRAPH 2.0 - Brain Analysis using Graph Theory';
 BKGCOLOR = get_from_varargin([1 .9725 .929], 'BackgroundColor', varargin);
@@ -79,7 +79,7 @@ pl.set(...
     'CAMLIGHT', 'left', ...
     'SHADING', 'interp', ...
     'GRID', false, ...
-    'AXIS', false, ...    
+    'AXIS', false, ...
     'COLORMAP', autumn)
 h_panel = pl.draw('Parent', panel_rotate, 'Units', 'normalized', 'Position', [.0 .0 1 1], 'BackgroundColor', BKGCOLOR, 'BorderType', 'none');
 pl_axes = get(h_panel, 'Children');
@@ -103,10 +103,21 @@ direction = 1;
     end
 
 % logo
+% get dimensions
+    function logo_position = get_position()
+        x0 = Plot.x0(f, 'characters');
+        y0 = Plot.y0(f, 'characters');
+        w_f = Plot.w(f, 'characters');
+        h_f = Plot.h(f, 'characters');
+        
+        logo_position = [w_f-48 h_f-11 45 12];
+    end
+
+logo_position = get_position();
 panel_logo = uipanel( ...
     'Parent', f, ...
-    'Units', 'normalized', ...
-    'Position', [.575 .7 .45 .25], ...
+    'Units', 'characters', ...
+    'Position', logo_position, ...
     'BackgroundColor', BKGCOLOR,...
     'BorderType', 'none');
 logo = imread([fileparts(which('braph2')) filesep 'src' filesep 'util' filesep 'head_braph2.png']);
@@ -132,10 +143,10 @@ else
 end
 set(hjSearchField, 'KeyPressedCallback', {@updateSearch, jPanelObj});
 
-    function updateSearch(~, ~, ~)  
+    function updateSearch(~, ~, ~)
         update_listbox()
     end
-    
+
 % list
 pipeline_list = uicontrol( ...
     'Parent', f, ...
@@ -167,9 +178,9 @@ descriptions = [];
         pipelines_path = [fileparts(which('braph2.m')) filesep 'pipelines'];
         files = subdir(fullfile(pipelines_path, '*.braph2'));
         files_array = struct2cell(files);
-        files_names = files_array(1, :); 
+        files_names = files_array(1, :);
         files_paths = files_array(2, :);
-
+        
         pipeline_names = cellfun(@(x, y) erase(x, [y filesep()]), files_names, files_paths, 'UniformOutput', false);
         clean_pipeline_names = cellfun(@(x) erase(strrep(strrep(x, '.', ' '), '_', ' '), ' braph2'), pipeline_names,  'UniformOutput', false);
         
@@ -182,7 +193,7 @@ descriptions = [];
                 current_filter = array_filter{i};
                 tmp_filter_index = cell2mat(cellfun(@(x) contains(x, current_filter), clean_pipeline_names, 'UniformOutput', false));
                 if i > 1
-                      holder = tmp_filter+tmp_filter_index;
+                    holder = tmp_filter+tmp_filter_index;
                 else
                     tmp_filter = tmp_filter_index;
                 end
@@ -3772,15 +3783,17 @@ descriptions = [];
         
         pipeline_guis{end+1} = GUI('pe', pipe).draw();
     end
-    function update_position(~, ~)        
+    function update_position(~, ~)
+        logo_position = get_position();
         set(hContainer, 'units', 'norm', 'position', [0.62 0.65 0.36 .06]);
-        set(pipeline_list, 'FontUnits',  'normalized', 'FontSize', 0.06)
+        set(pipeline_list, 'FontUnits',  'normalized', 'FontSize', 0.06);
+        set(panel_logo, 'Position', logo_position);
     end
 
 % menu
 menu()
     function menu()
-        % nothing        
+        % nothing
     end
 % toolbar
 toolbar()
@@ -3826,7 +3839,7 @@ linkbar()
             'Tooltip', 'Click to visit BRAPH 2.0 twitter', ...
             'Cdata', imread('icon_twitter.png'), ...
             'BackgroundColor', [1 1 1], ...
-            'Callback', {@cb_twitter_btn});        
+            'Callback', {@cb_twitter_btn});
         set(license_btn, ...
             'Position', [.71 0 .14 .08], ...
             'Cdata', imread('icon_license.png'), ...
@@ -3838,7 +3851,7 @@ linkbar()
             'Cdata', imread('icon_about.png'), ...
             'BackgroundColor', [1 1 1], ...
             'Tooltip', 'Click to open BRAPH 2.0 information', ...
-            'Callback', {@cb_about});        
+            'Callback', {@cb_about});
     end
     function cb_website_btn(~, ~)
         url = 'http://braph.org/';
@@ -3853,10 +3866,10 @@ linkbar()
         web(url);
     end
     function cb_license(~, ~)
-        BRAPH2.license();
+        BRAPH2_LICENSE()
     end
     function cb_about(~, ~)
-        BRAPH2.credits();
+        BRAPH2_ABOUT();
     end
     function cb_load_worfklow(~, ~)
         [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, ['Select the .b2 file.']);
