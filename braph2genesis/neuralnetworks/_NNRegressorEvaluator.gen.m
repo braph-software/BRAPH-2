@@ -34,7 +34,12 @@ else
     preds = cell2mat(preds);
     targets = cellfun(@(x) cell2mat(x.get('TARGET')), nne.get('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
     targets = cell2mat(targets);
-    plot(preds, targets)
+    figure
+    scatter(preds, targets);
+    hold on
+    plot([min(preds) max(preds)], [min(targets) max(targets)]);
+    hold off
+    plot()
     xlabel('Prediction')
     ylabel('Target')
     title('Scatter plot for regression')
@@ -44,6 +49,7 @@ else
     end
     filename = [directory filesep 'roc.svg'];
     saveas(gcf, filename);
+    value = 0;
 end
 
 %%% ¡prop!
