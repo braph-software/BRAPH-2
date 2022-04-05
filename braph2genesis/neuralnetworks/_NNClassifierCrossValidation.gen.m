@@ -11,6 +11,15 @@ be calculated across folds and repetitions.
 
 %% ¡props!
 %%% ¡prop!
+ID (data, string) is a few-letter code for the cross validation.
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the cross validation.
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the cross validation.
+
+%%% ¡prop!
 KFOLD (data, scalar) is the number of folds.
 %%%% ¡default!
 5
@@ -216,6 +225,8 @@ else
 end
 
 value = gr_prediction;
+%%%% ¡gui!
+pr = PPNNData_GR_NN('EL', nncv, 'PROP', NNClassifierCrossValidation.GR_PREDICTION, varargin{:});
 
 %%% ¡prop!
 CONFUSION_MATRIX (result, matrix) is an add-up confusion matrix across k folds for all repeitions.

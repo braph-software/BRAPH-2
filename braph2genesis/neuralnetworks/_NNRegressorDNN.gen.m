@@ -92,6 +92,7 @@ if nn.check_nn_toolboxes()
         % plot layers
         if nn.get('PLOT_LAYERS')
             lgraph = layerGraph(layers);
+            figure
             plot(lgraph)
         end
 

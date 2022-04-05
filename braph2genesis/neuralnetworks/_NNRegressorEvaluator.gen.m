@@ -25,6 +25,34 @@ else
 end
 
 %%% ¡prop!
+SCATTER_PLOT (result, scalar) creates a scatter plot with circular markers at the locations specified by predictions and targets.
+%%%% ¡calculate!
+if nne.get('GR_PREDICTION').get('SUB_DICT').length() == 0
+    value = 0;
+else
+    preds = cellfun(@(x) cell2mat(x.get('PREDICTION'))', nne.memorize('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
+    preds = cell2mat(preds);
+    targets = cellfun(@(x) cell2mat(x.get('TARGET')), nne.get('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
+    targets = cell2mat(targets);
+    figure
+    scatter(preds, targets);
+    hold on
+    plot([min(preds) max(preds)], [min(targets) max(targets)]);
+    hold off
+    plot()
+    xlabel('Prediction')
+    ylabel('Target')
+    title('Scatter plot for regression')
+    directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
+    if ~exist(directory, 'dir')
+        mkdir(directory)
+    end
+    filename = [directory filesep 'roc.svg'];
+    saveas(gcf, filename);
+    value = 0;
+end
+
+%%% ¡prop!
 FEATURE_MAP (result, cell) is a feature map obtained with feature selection analysis.
 %%%% ¡calculate!
 sub_dict = nne.get('GR').get('SUB_DICT');
