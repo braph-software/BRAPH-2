@@ -11,6 +11,15 @@ be calculated across folds and repetitions.
 
 %% ¡props!
 %%% ¡prop!
+ID (data, string) is a few-letter code for the cross validation.
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the cross validation.
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the cross validation.
+
+%%% ¡prop!
 KFOLD (data, scalar) is the number of folds.
 %%%% ¡default!
 5
