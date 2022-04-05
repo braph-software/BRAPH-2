@@ -4,8 +4,7 @@
 
 <h3 align="center">Brain Analysis using Graph Theory.</h3>
 <p align="center">
-  <a href="https://github.com/softmatterlab/BRAPH-2-Matlab/blob/develop/braph2genesis/braph2license.rtf" alt="licence"><img src="https://img.shields.io/github/license/softmatterlab/BRAPH-2-Matlab"></a>
-  <a href="https://softmatterlab.github.io/DeepTrack-2.0/deeptrack.html"><img src="https://img.shields.io/badge/docs-passing-green" alt="PyPI version"></a>
+  <a href="https://github.com/softmatterlab/BRAPH-2-Matlab/blob/develop/braph2genesis/braph2license.rtf" alt="licence"><img src="https://img.shields.io/github/license/softmatterlab/BRAPH-2-Matlab?label=license&logo=MIT&logoColor=green"></a>
   <a href="https://doi.org/10.1371/journal.pone.01787981" alt="DOI"><img src="https://img.shields.io/badge/DOI-10.1371%2Fjournal.pone.0178798-blue">
   </a>
 </p>
