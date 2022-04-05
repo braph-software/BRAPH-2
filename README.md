@@ -17,7 +17,7 @@
 </p>
 
 
-We provide tools to analyze the human brain connectome with multilayer graph theory and deep learning.
+An object-oriented software that provides pipelines for conventional brain connectivity analysis as well as more advanced methods, including multilayer networks and deep learning methods.
 
 # Installation
 
@@ -39,7 +39,7 @@ BRAPH 2.0 is a powerful tool that transforms scripts to pipelines. We have added
 If you use BRAPH 2.0 in your project, please cite us here:
 
 ```
-Emiliano Gomez-Ruiz, Anna Canal, Yu-Wei Chang, Mite Mijalkov, Daniel Vereb, Joana Pereira, Giovanni Volpe.
+Emiliano Gomez-Ruiz, Anna Canal-Garcia, Yu-Wei Chang, Mite Mijalkov, Daniel Vereb, Eric Westman, Joana Pereira, Giovanni Volpe.
 "BRAPH 2.0: A software for brain connectivity analysis with multilayer graphs and deep learning."
 JOURNAL
 DOI
