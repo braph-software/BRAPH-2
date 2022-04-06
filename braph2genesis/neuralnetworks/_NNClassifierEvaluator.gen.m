@@ -38,6 +38,7 @@ else
     targets = onehotdecode(targets, classes, 1);
     [X, Y, T, auc] = perfcurve(targets, pred(2, :), classes(2));
     if nne.get('PLOT_ROC')
+        figure
         plot(X, Y, 'LineWidth', 3.0, 'Color', 'Black')
         xlabel('False positive rate')
         ylabel('True positive rate')
