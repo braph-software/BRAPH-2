@@ -216,7 +216,18 @@ function redraw(pr, varargin)
             'Position', [.01 .13 .98 (Dh/(h+Dh)-.27)] ...
             )
     end
-    pr.redraw@PlotProp('Height', (h + Dh)*1.5, varargin{:})
+    if strcmp(get(pr.measure_tbl, 'Visible'), 'on')
+        pr.redraw@PlotProp('Height', h + Dh, varargin{:})
+        set(pr.measure_btn, 'Visible', 'on')
+        set(pr.select_all_btn, 'Visible', 'on')
+        set(pr.deselect_all_btn, 'Visible', 'on')
+    else
+        pr.redraw@PlotProp(varargin{:})
+        set(pr.measure_btn, 'Visible', 'off')
+        set(pr.select_all_btn, 'Visible', 'off')
+        set(pr.deselect_all_btn, 'Visible', 'off')
+    end
+    
 end
 function cb_set_measures(pr)
     el = pr.get('EL');
@@ -224,18 +235,13 @@ function cb_set_measures(pr)
     el.set('Measures', measure_short_list); 
     pr.update();
 end
-function list =  is_measure_calculated(pr)
-    % IS_MEASURE_CALCULATED checks if a measure has been calculated for the graph.
-    %
-    % LIST = IS_MEASURE_CALCULATED(PR) returns an array with the check for
-    %  previously calculated measures. C if a measures has been calculated
-    %  and NC for nor calculated measures.
-    %
-    % See also get_button_condition.
-
-    el = pr.get('EL');
-    measure_short_list = pr.mlist(pr.selected);
-
-    el.set('Measures', measure_short_list); % maybe its locked... sooo think when its possible to modify
-    pr.update();
+function cb_hide_table(pr)
+% yuwei, should this el = pr.get('EL');
+% el.set('measures', []);
+    set(pr.measure_tbl, 'Visible', 'off');
+    pr.redraw();
+end
+function cb_show_table(pr)
+    set(pr.measure_tbl, 'Visible', 'on');
+    pr.redraw();
 end
