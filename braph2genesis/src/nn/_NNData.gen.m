@@ -32,6 +32,11 @@ INPUT_TYPE (data, option) is the input type for training or testing the NN.
 pr = PPNNData_Input_Type('EL', nnd, 'PROP', NNData.INPUT_TYPE, varargin{:});
 
 %%% ¡prop!
+G (data, item) is the graph for calculating the graph measures.
+%%%% ¡default!
+GraphWU()
+
+%%% ¡prop!
 MEASURES (data, classlist) is the graph measures as input to NN.
 %%%% ¡settings!
 {'Measure'}
