@@ -28,6 +28,8 @@ true
 INPUT_TYPE (data, option) is the input type for training or testing the NN.
 %%%% ¡settings!
 {'adjacency_matrices' 'graph_measures' 'structural_data'}
+%%%% ¡gui!
+pr = PPNNData_Input_Type('EL', nnd, 'PROP', NNData.INPUT_TYPE, varargin{:});
 
 %%% ¡prop!
 MEASURES (data, classlist) is the graph measures as input to NN.
