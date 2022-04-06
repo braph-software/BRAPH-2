@@ -23,8 +23,8 @@ GR (data, item) is a group of NN subjects containing the information for trainin
 
 %%% ¡prop!
 MODEL (result, cell) is a trained neural network.
-% % % %%%% ¡gui!
-% % % pl = PPNNBase_MODEL('EL', nn, 'PROP', BaseNN.MODEL, varargin{:});
+%%%% ¡gui!
+pr = PPNNBase_Model('EL', nn, 'PROP', nn.MODEL, varargin{:});
 
 %% ¡methods!
 function installed = check_nn_toolboxes(nn)

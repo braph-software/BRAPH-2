@@ -53,7 +53,10 @@ true
 %%% ¡prop!
 PLOT_LAYERS (metadata, logical) is an option for the plot of the layers.
 %%%% ¡default!
-true
+0
+
+%%% ¡prop!
+PLOT_POS (metadata, rvector) is an option for the plot of the layers.
 
 %%% ¡prop!
 INPUT_FORMAT (data, string) is the data format of neural network inputs.
@@ -94,8 +97,12 @@ if nn.check_nn_toolboxes()
 
         % plot layers
         if nn.get('PLOT_LAYERS')
-            lgraph = layerGraph(layers);
-            figure
+            if ~isempty(nn.get('PLOT_POS')) && size(nn.get('PLOT_POS'), 2) == 4
+                figure('UNITS', 'normalized', 'POSITION', nn.get('PLOT_POS'));
+            else
+                figure();
+            end
+            lgraph = layerGraph(layers);            
             plot(lgraph)
         end
 
