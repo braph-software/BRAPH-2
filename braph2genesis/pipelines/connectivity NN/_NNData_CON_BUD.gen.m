@@ -16,6 +16,11 @@ DENSITIES (parameter, rvector) is the vector of densities.
 %% ¡props_update!
 
 %%% ¡prop!
+G (data, item) is the graph for calculating the graph measures.
+%%%% ¡default!
+MultigraphBUD()
+
+%%% ¡prop!
 GR (data, item) is a group of subjects defined as SubjectCON class.
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectCON')

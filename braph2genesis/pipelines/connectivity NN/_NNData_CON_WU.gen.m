@@ -14,6 +14,11 @@ GR (data, item) is a group of subjects defined as SubjectCON class.
 Group('SUB_CLASS', 'SubjectCON')
 
 %%% ¡prop!
+G (data, item) is the graph for calculating the graph measures.
+%%%% ¡default!
+GraphWU()
+
+%%% ¡prop!
 GR_NN (result, item) is a group of NN subjects.
 %%%% ¡settings!
 'NNGroup'

@@ -40,6 +40,11 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 %% ¡props_update!
 
 %%% ¡prop!
+G (data, item) is the graph for calculating the graph measures.
+%%%% ¡default!
+MultiplexWU()
+
+%%% ¡prop!
 GR (data, item) is a group of subjects defined as SubjectFUN class.
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectCON_FUN_MP')

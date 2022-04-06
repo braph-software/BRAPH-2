@@ -143,7 +143,7 @@ function update(pr)
 
     el = pr.get('EL');
     prop = pr.get('PROP');
-    pr.graph = el.get('NN_GR').get('G');
+    pr.graph = el.get('G');
 
     % visible gui
     set(pr.measure_tbl, 'Visible', 'on')
