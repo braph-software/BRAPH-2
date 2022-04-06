@@ -61,9 +61,6 @@ function h_panel = draw(pr, varargin)
         pr.cb_button_calc()
 
     end
-    function cb_f_pba_close(~, ~)
-        delete(pr.f_c) % or something else
-    end
 
     % output
     if nargout > 0
