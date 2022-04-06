@@ -2,7 +2,13 @@
 PPNNBase_Model < PlotPropCell (pr, plot property model) is afor yuwei.
 
 %%% ¡description!
-PPNNBase_Model represents all compatible measures as a table.
+PPNNBase_Model plots the NN layers.
+
+CALLBACK - This is a callback function:
+
+    pr.<strong>cb_bring_to_front</strong>() - brings to the front the NN group figure and its settings figure
+    pr.<strong>cb_hide</strong>() - hides the NN group figure and its settings figure
+    pr.<strong>cb_close</strong>() - closes the NN group figure and its settings figure
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp
@@ -12,7 +18,7 @@ p
 c_btn
 d_btn
 f_c
-
+h
 %% ¡methods!
 function h_panel = draw(pr, varargin)
     %DRAW draws the panel of the graph property and the measure table.
@@ -39,7 +45,12 @@ function h_panel = draw(pr, varargin)
     
     function cb_button_mod_calc(~, ~)              
         % position  %%%%%%%%%%%
-        % determine position for figure of PlotBrainAtlas
+
+        % supress ploting from command line usage
+        el.set('PLOT_LAYERS', false);
+
+        pr.cb_button_calc()
+
         f_ba = ancestor(pr.p, 'Figure'); % BrainAtlas GUI
         f_ba_x = Plot.x0(f_ba, 'pixels');
         f_ba_y = Plot.y0(f_ba, 'pixels');
@@ -57,9 +68,10 @@ function h_panel = draw(pr, varargin)
         y = f_ba_y + f_ba_h - h;
         w = f_ba_w * 1.61;
         
-        el.set('PLOT_POS', [x/screen_w y/screen_h w/screen_w h/screen_h])
-        pr.cb_button_calc()
-
+        pr.h = figure('UNITS', 'normalized', 'POSITION', [x/screen_w y/screen_h w/screen_w h/screen_h]);
+        net = el.to_net(el.get('MODEL'));
+        lgraph = layerGraph(net);
+        plot(lgraph)
     end
 
     % output
@@ -117,4 +129,38 @@ function get_buttons(pr)
             pr.d_btn = pp_c;
         end
     end
+end
+function cb_bring_to_front(pr)
+    %CB_BRING_TO_FRONT brings to front the brain atlas figure and its settings figure.
+    %
+    % CB_BRING_TO_FRONT(PR) brings to front the brain atlas figure and its
+    %  settings figure.
+    %
+    % See also cb_hide, cb_close.
+
+    % bring to front settings panel
+    pr.cb_bring_to_front@PlotProp();
+
+    set(pr.h, 'Visible', 'on');
+end
+function cb_hide(pr)
+    %CB_HIDE hides the brain atlas figure and its settings figure.
+    %
+    % CB_HIDE(PR) hides the brain atlas figure and its settings figure.
+    %
+    % See also cb_bring_to_front, cb_close.
+
+    % hide settings panel
+    pr.cb_hide@PlotProp();
+
+    set(pr.h, 'Visible', 'off');
+end
+function cb_close(pr)
+    %CB_CLOSE closes the figure.
+    %
+    % CB_CLOSE(PR) closes the figure and its children figures.
+    %
+    % See also cb_bring_to_front, cd_hide.
+
+    close(pr.h);
 end
