@@ -32,3 +32,14 @@ else
 end
 
 value = targets;
+
+%%% ¡prop!
+G (result, item) is the graph obtained from this analysis.
+%%%% ¡calculate!
+sub_dict = gr.get('SUB_DICT');
+if sub_dict.length == 0
+    value = Graph();
+else
+    sub = sub_dict.getItem(1);
+    value = sub.get('G').clone;
+end
