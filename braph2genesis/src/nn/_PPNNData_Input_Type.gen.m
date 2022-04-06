@@ -33,7 +33,7 @@ function h_panel = draw(pr, varargin)
 
     children = get(pr.p, 'Children');
     for i = 1:1:length(children)
-        if check_graphics(children(i), 'listbox')
+        if check_graphics(children(i), 'popupmenu')
             pr.list_tbl = children(i);
         end
     end

@@ -143,13 +143,22 @@ function update(pr)
 
     el = pr.get('EL');
     prop = pr.get('PROP');
-    pr.graph = GraphWU();
+    pr.graph = el.get('G');
 
     % visible gui
-    set(pr.measure_tbl, 'Visible', 'on')
-    set(pr.measure_btn, 'Visible', 'on')
-    set(pr.select_all_btn, 'Visible', 'on')
-    set(pr.deselect_all_btn, 'Visible', 'on')
+    pe =  ancestor(pr.p, 'figure').UserData.get('PE');
+    input_type_panel =  pe.get('pr_dict').getItem('input_type');
+    if input_type_panel.get('EL').get('input_type') == "graph_measures"
+        set(pr.measure_tbl, 'Visible', 'on')
+        set(pr.measure_btn, 'Visible', 'on')
+        set(pr.select_all_btn, 'Visible', 'on')
+        set(pr.deselect_all_btn, 'Visible', 'on')
+    else
+        set(pr.measure_tbl, 'Visible', 'off')
+        set(pr.measure_btn, 'Visible', 'off')
+        set(pr.select_all_btn, 'Visible', 'off')
+        set(pr.deselect_all_btn, 'Visible', 'off')
+    end
 
     if  ~isa(pr.graph, 'NoValue') && isa(pr.graph, 'Graph')
         if isempty(pr.mlist)
