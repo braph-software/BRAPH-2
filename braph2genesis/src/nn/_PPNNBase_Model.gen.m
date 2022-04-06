@@ -1,14 +1,14 @@
 %% ¡header!
-PPNNBase_Model < PlotPropCell (pr, plot property model) is afor yuwei.
+PPNNBase_Model < PlotPropCell (pr, plot property model) plots the layer of neural networks.
 
 %%% ¡description!
 PPNNBase_Model plots the NN layers.
 
 CALLBACK - This is a callback function:
 
-    pr.<strong>cb_bring_to_front</strong>() - brings to the front the NN group figure and its settings figure
-    pr.<strong>cb_hide</strong>() - hides the NN group figure and its settings figure
-    pr.<strong>cb_close</strong>() - closes the NN group figure and its settings figure
+    pr.<strong>cb_bring_to_front</strong>() - brings to the front the layer figure
+    pr.<strong>cb_hide</strong>() - hides the layer figure
+    pr.<strong>cb_close</strong>() - closes the layer figure
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp
@@ -87,6 +87,7 @@ function update(pr)
     % See also draw, redraw, refresh, PlotElement.
 
     update@PlotPropCell(pr)
+    pr.get_buttons();
 end
 function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
@@ -126,6 +127,9 @@ function get_buttons(pr)
             pr.c_btn = pp_c;
         end
         if check_graphics(pp_c, 'pushbutton') && isequal(pp_c.Tag, 'button_del')
+            if isgraphics(pr.h)
+                close(pr.h);
+            end
             pr.d_btn = pp_c;
         end
     end
@@ -161,6 +165,8 @@ function cb_close(pr)
     % CB_CLOSE(PR) closes the figure and its children figures.
     %
     % See also cb_bring_to_front, cd_hide.
-
-    close(pr.h);
+    
+    if isgraphics(pr.h)
+        close(pr.h);
+    end
 end
