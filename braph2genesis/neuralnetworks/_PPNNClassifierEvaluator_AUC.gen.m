@@ -1,15 +1,15 @@
 %% ¡header!
-PPNNBase_Model < PlotPropCell (pr, plot property model) plots the layer of neural networks.
+PPNNClassifierEvaluator_AUC < PlotPropCell (pr, plot property auc) plots the ROC for neural network analysis.
 
 %%% ¡description!
-PPNNBase_Model plots the NN layers.
+PPNNClassifierEvaluator_AUC plots the ROC for neural network analysis.
 
 CALLBACK - This is a callback function:
 
-    pr.<strong>cb_bring_to_front</strong>() - brings to the front the layer figure
-    pr.<strong>cb_hide</strong>() - hides the layer figure
-    pr.<strong>cb_close</strong>() - closes the layer figure
-
+    pr.<strong>cb_bring_to_front</strong>() - brings to the front the ROC figure
+    pr.<strong>cb_hide</strong>() - hides the ROC figure
+    pr.<strong>cb_close</strong>() - closes the ROC figure
+    
 %%% ¡seealso!
 GUI, PlotElement, PlotProp
 
@@ -46,12 +46,9 @@ function h_panel = draw(pr, varargin)
     function cb_button_mod_calc(~, ~)              
         % position  %%%%%%%%%%%
 
-        % supress ploting from command line usage
-        el.set('PLOT_LAYERS', false);
-
         pr.cb_button_calc()
 
-        f_ba = ancestor(pr.p, 'Figure'); % BrainAtlas GUI
+        f_ba = ancestor(pr.p, 'Figure'); 
         f_ba_x = Plot.x0(f_ba, 'pixels');
         f_ba_y = Plot.y0(f_ba, 'pixels');
         f_ba_w = Plot.w(f_ba, 'pixels');
@@ -69,9 +66,16 @@ function h_panel = draw(pr, varargin)
         w = f_ba_w * 1.61;
         
         pr.h = figure('UNITS', 'normalized', 'POSITION', [x/screen_w y/screen_h w/screen_w h/screen_h]);
-        net = el.to_net(el.get('MODEL'));
-        lgraph = layerGraph(net);
-        plot(lgraph)
+        auc_all = el.get('AUC');
+        auc = auc_all{1};
+        X = auc_all{2};
+        Y = auc_all{3};
+        plot(X, Y, 'LineWidth', 3.0, 'Color', 'Black')
+        xlabel('False positive rate')
+        ylabel('True positive rate')
+        title('ROC for Classification')
+        legend(sprintf('ROC (AU-ROC = %.2f)', auc), 'Location', 'southeast', 'FontSize', 12);
+        legend('boxoff');
     end
 
     % output
@@ -111,7 +115,7 @@ function redraw(pr, varargin)
     %
     % See also draw, update, refresh, PlotElement.
 
-    pr.redraw@PlotProp(varargin{:})
+    pr.redraw@PlotPropCell(varargin{:})
 end
 function get_buttons(pr)
     % GET_BUTTON_CONDITION returns the calculate button state.
@@ -143,7 +147,7 @@ function cb_bring_to_front(pr)
     % See also cb_hide, cb_close.
 
     % bring to front settings panel
-    pr.cb_bring_to_front@PlotProp();
+    pr.cb_bring_to_front@PlotPropCell();
 
     set(pr.h, 'Visible', 'on');
 end
@@ -155,7 +159,7 @@ function cb_hide(pr)
     % See also cb_bring_to_front, cb_close.
 
     % hide settings panel
-    pr.cb_hide@PlotProp();
+    pr.cb_hide@PlotPropCell();
 
     set(pr.h, 'Visible', 'off');
 end
@@ -165,7 +169,7 @@ function cb_close(pr)
     % CB_CLOSE(PR) closes the figure and its children figures.
     %
     % See also cb_bring_to_front, cd_hide.
-    
+
     if isgraphics(pr.h)
         close(pr.h);
     end

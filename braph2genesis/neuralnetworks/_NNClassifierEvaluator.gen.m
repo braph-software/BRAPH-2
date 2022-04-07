@@ -11,17 +11,17 @@ under the ROC curve (AUC), and the confusion matrix.
 %%% ¡prop!
 PLOT_CM (data, logical) is an option for the plot of the confusion matrix.
 %%%% ¡default!
-true
+false
 
 %%% ¡prop!
 PLOT_MAP (data, logical) is an option for the plot of the feature map.
 %%%% ¡default!
-true
+false
 
 %%% ¡prop!
 PLOT_ROC (data, logical) is an option for the plot of the receiver operating characteristic curve.
 %%%% ¡default!
-true
+false
 
 %%% ¡prop!
 AUC (result, cell) is an area under the curve score.
@@ -55,6 +55,8 @@ else
 
     value = {auc, X, Y};
 end
+%%%% ¡gui!
+pr = PPNNClassifierEvaluator_AUC('EL', nne, 'PROP', NNClassifierEvaluator.AUC, varargin{:});
 
 %%% ¡prop!
 CONFUSION_MATRIX (result, matrix) is a confusion matrix obtained with a cut-off of 0.5.
@@ -86,6 +88,8 @@ else
 
     value = cm;
 end
+%%%% ¡gui!
+pr = PPNNClassifierEvaluator_Confusion_Matrix('EL', nne, 'PROP', NNClassifierEvaluator.CONFUSION_MATRIX, varargin{:});
 
 %%% ¡prop!
 FEATURE_MAP (result, cell) is a feature map obtained with feature selection analysis.
