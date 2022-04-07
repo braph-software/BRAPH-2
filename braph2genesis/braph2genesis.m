@@ -13,6 +13,7 @@
 %  <a href="matlab:help test        ">test</a>          - BRAPH2 test
 
 close all
+clear variables
 clear all %#ok<CLALL>
 clc
 

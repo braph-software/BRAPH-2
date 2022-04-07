@@ -46,6 +46,7 @@ f = init();
             'Yes', 'No', 'Yes');
         switch selection
             case 'Yes'
+                clear pl
                 delete(f)
             case 'No'
                 return
