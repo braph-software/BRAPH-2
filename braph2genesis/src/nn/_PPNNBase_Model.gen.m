@@ -36,7 +36,7 @@ function h_panel = draw(pr, varargin)
     %
     % See also update, redraw, refresh, uipanel.
 
-    pr.p = draw@PlotPropCell(pr, varargin{:});
+    pr.p = draw@PlotProp(pr, varargin{:});
     pr.get_buttons();
     
     el = pr.get('el');

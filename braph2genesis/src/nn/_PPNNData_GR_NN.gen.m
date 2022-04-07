@@ -17,6 +17,7 @@ GUI, PlotElement, PlotProp
 p
 pushbutton
 f_nn_data
+pushbutton_value
 
 %% ¡props_update!
 
@@ -42,7 +43,27 @@ function h_panel = draw(pr, varargin)
     %
     % See also update, redraw, refresh, uipanel.
 
-    pr.p = draw@PlotPropItem(pr, varargin{:});
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    
+    pr.p = draw@PlotProp(pr, varargin{:});
+    
+    if ~check_graphics(pr.pushbutton_value, 'pushbutton')
+        pr.pushbutton_value = uicontrol( ...
+            'Style', 'pushbutton', ...
+            'Tag', 'pushbutton_value', ...
+            'Parent', pr.p, ...
+            'Units', 'normalized', ...
+            'Position', [.01 .10 .98 .45], ... % position defined here because it's always the same
+            'FontUnits', BRAPH2.FONTUNITS, ...
+            'FontSize', BRAPH2.FONTSIZE, ...
+            'Callback', {@cb_pushbutton_value} ...
+            );
+    end
+
+    function cb_pushbutton_value(~, ~) % (src, event)
+        pr.cb_pushbutton_value();
+    end
 
     children = get(pr.p, 'Children');
     for i = 1:1:length(children)
@@ -52,10 +73,10 @@ function h_panel = draw(pr, varargin)
         end
     end
 
-    set(pr.pushbutton, 'Callback', {@cb_pushbutton_margin})
+    set(pr.pushbutton, 'Callback', {@cb_pushbutton_margin});
 
     function cb_pushbutton_margin(~, ~)
-        pr.cb_pushbutton_margin()
+        pr.cb_pushbutton_margin();
     end
 
     % output
@@ -70,7 +91,26 @@ function update(pr)
     %
     % See also draw, redraw, refresh, PlotElement.
 
-    update@PlotPropItem(pr)
+    update@PlotProp(pr);
+    
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+
+    value = el.getr(prop);
+
+    if isa(value, 'NoValue')
+        set(pr.pushbutton_value, ...
+            'String', 'NNGroup', ...
+            'Tooltip', regexprep(el.getPropDefault(prop).tree(), {'<strong>', '</strong>'}, {'' ''}), ...
+            'Enable', pr.get('ENABLE') ...
+            );
+    else
+        set(pr.pushbutton_value, ...
+            'String', 'NNGroup', ...
+            'Tooltip', regexprep(el.get(prop).tree(), {'<strong>', '</strong>'}, {'' ''}), ...
+            'Enable', 'on' ...
+            );
+    end
 end
 function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
@@ -94,7 +134,7 @@ function redraw(pr, varargin)
     %
     % See also draw, update, refresh, PlotElement.
 
-    pr.redraw@PlotPropItem(varargin{:})
+    pr.redraw@PlotPropItem(varargin{:});
 end
 function cb_pushbutton_margin(pr)
     %CB_PUSHBUTTON_VALUE executes callback for the pushbutton.
@@ -104,7 +144,7 @@ function cb_pushbutton_margin(pr)
     el = pr.get('EL');
     prop = pr.get('PROP');
 
-    pr.update()
+    pr.update();
     f_ba = ancestor(pr.p, 'Figure');
     f_ba_x = Plot.x0(f_ba, 'pixels');
     f_ba_y = Plot.y0(f_ba, 'pixels');
@@ -123,7 +163,7 @@ function cb_pushbutton_margin(pr)
 
     value = el.getr(prop);
     if isa(value, 'NoValue')
-        pr.f_nn_data = GUI('PE', el.getPropDefault(prop), 'POSITION', [x y w h], 'CLOSEREQ', false).draw()
+        pr.f_nn_data = GUI('PE', el.getPropDefault(prop), 'POSITION', [x y w h], 'CLOSEREQ', false).draw();
     else
         pr.f_nn_data = GUI('PE', el.get(prop), 'POSITION', [x y w h], 'CLOSEREQ', false).draw();
     end
@@ -140,9 +180,11 @@ function cb_bring_to_front(pr)
     pr.cb_bring_to_front@PlotProp();
 
     % bring to front NN group figure
-    children = get(pr.f_nn_data, 'Children');
-    holder = get(pr.f_nn_data, 'UserData');
-    holder.cb_bring_to_front();
+    if check_graphics(pr.f_nn_data, 'figure')
+        children = get(pr.f_nn_data, 'Children');
+        holder = get(pr.f_nn_data, 'UserData');
+        holder.cb_bring_to_front();
+    end
 end
 function cb_hide(pr)
     %CB_HIDE hides the brain atlas figure and its settings figure.
@@ -155,8 +197,10 @@ function cb_hide(pr)
     pr.cb_hide@PlotProp();
 
     % hide NN group figure
-    holder = get(pr.f_nn_data, 'UserData');
-    holder.cb_hide();
+    if check_graphics(pr.f_nn_data, 'figure')
+        holder = get(pr.f_nn_data, 'UserData');
+        holder.cb_hide();
+    end
 end
 function cb_close(pr)
     %CB_CLOSE closes the figure.
