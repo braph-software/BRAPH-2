@@ -19,6 +19,8 @@ if isempty(nn.get('LAYERS'))
         nn.set('LAYERS', value);
     end
 end
+%%%% ¡gui!
+pr = PlotPropSmartVector('EL', nn, 'PROP', NNClassifierDNN.LAYERS, 'MAX', 100000, 'MIN', 1, varargin{:});
 
 %%% ¡prop!
 BATCH (data, scalar) is the size of the mini-batch to use for each training iteration.
@@ -176,7 +178,7 @@ function [targets, classes] = reconstruct_targets(nn, gr)
         classes = [];
     else
         targets = gr.get('TARGETS');
-        targets = cellfun(@(x) cell2mat(x), targets, 'UniformOutput', false);
+        targets = cellfun(@(x) cell2mat(x)', targets, 'UniformOutput', false);
         targets = cell2mat(targets);
         classes = categories(categorical(cellfun(@(x) x.get('TARGET_NAME'), gr.get('SUB_DICT').getItems(), 'UniformOutput', false)));
     end
