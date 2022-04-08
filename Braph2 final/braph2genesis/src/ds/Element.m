@@ -687,7 +687,11 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % set
             for i = 1:2:length(varargin)
                 prop = el.getPropProp(varargin{i}); % also Element.existsProp(el, prop)
-                value = el.conditioning(prop, varargin{i+1}); % also conditions the value
+                value = varargin{i+1};
+                
+                if ~isa(value, 'Callback')
+                    value = el.conditioning(prop, value);
+                end
 
                 switch el.getPropCategory(prop)
                     case Category.METADATA
