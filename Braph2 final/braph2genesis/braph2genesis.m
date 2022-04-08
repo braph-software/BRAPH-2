@@ -31,6 +31,6 @@ addpath(target_dir)
 
 disp('BRAPH 2.0 is now fully compiled and ready to be used')
 
-% % % braph2
+braph2
 
-% % % test_braph2
+test_braph2
