@@ -100,12 +100,20 @@ function update(pr)
     
     switch el.getPropCategory(prop)        
         case Category.METADATA
-            tmp_value = num2str(el.get(prop));
+            raw_tmp = el.get(prop);
+            if iscell(raw_tmp)
+                raw_tmp = cell2mat(raw_tmp);
+            end
+            tmp_value = num2str(raw_tmp);
             tmp_value = regexprep(tmp_value, '\\s+', ' ');
             set(pr.edit_value, 'String', tmp_value)
 
         case {Category.PARAMETER, Category.DATA}
-            tmp_value = num2str(el.get(prop));
+            raw_tmp = el.get(prop);
+            if iscell(raw_tmp)
+                raw_tmp = cell2mat(raw_tmp);
+            end
+            tmp_value = num2str(raw_tmp);
             tmp_value = regexprep(tmp_value, '\\s+', ' ');
             set(pr.edit_value, 'String', tmp_value)
 
@@ -208,6 +216,7 @@ Example
 % because it needs to be used with PlotElement() and GUI()
 figure()
 et = ETA();
+pr = {};
 props = [et.PROP_STRING_M et.PROP_STRING_P et.PROP_STRING_D et.PROP_STRING_R et.PROP_STRING_R_CALC];
 for i = 1:1:length(props)
     pr{i} = PlotPropString('EL', et, 'PROP', props(i));

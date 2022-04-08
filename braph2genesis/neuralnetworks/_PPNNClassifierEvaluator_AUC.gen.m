@@ -36,7 +36,7 @@ function h_panel = draw(pr, varargin)
     %
     % See also update, redraw, refresh, uipanel.
 
-    pr.p = draw@PlotPropCell(pr, varargin{:});
+    pr.p = draw@PlotProp(pr, varargin{:});
     pr.get_buttons();
     
     el = pr.get('el');
@@ -90,7 +90,7 @@ function update(pr)
     %
     % See also draw, redraw, refresh, PlotElement.
 
-    update@PlotPropCell(pr)
+    update@PlotProp(pr)
     pr.get_buttons();
 end
 function redraw(pr, varargin)
@@ -115,7 +115,7 @@ function redraw(pr, varargin)
     %
     % See also draw, update, refresh, PlotElement.
 
-    pr.redraw@PlotPropCell(varargin{:})
+    pr.redraw@PlotProp(varargin{:})
 end
 function get_buttons(pr)
     % GET_BUTTON_CONDITION returns the calculate button state.
@@ -149,7 +149,9 @@ function cb_bring_to_front(pr)
     % bring to front settings panel
     pr.cb_bring_to_front@PlotPropCell();
 
-    set(pr.h, 'Visible', 'on');
+    if isgraphics(pr.h)
+        set(pr.h, 'Visible', 'on');
+    end
 end
 function cb_hide(pr)
     %CB_HIDE hides the brain atlas figure and its settings figure.
@@ -161,7 +163,9 @@ function cb_hide(pr)
     % hide settings panel
     pr.cb_hide@PlotPropCell();
 
-    set(pr.h, 'Visible', 'off');
+    if isgraphics(pr.h)
+        set(pr.h, 'Visible', 'off');
+    end
 end
 function cb_close(pr)
     %CB_CLOSE closes the figure.

@@ -217,12 +217,12 @@ function redraw(pr, varargin)
     % See also draw, update, refresh, PlotElement.
 
     [h, varargin] = get_and_remove_from_varargin(1.8, 'Height', varargin);
-    [Dh, varargin] = get_and_remove_from_varargin(15, 'DHeight', varargin);
+    [Dh, varargin] = get_and_remove_from_varargin(20, 'DHeight', varargin);
 
     if  ~isempty(pr.measure_tbl) && check_graphics(pr.measure_tbl, 'uitable')
         set(pr.measure_tbl, ...
             'Units', 'normalized', ...
-            'Position', [.01 .13 .98 (Dh/(h+Dh)-.27)] ...
+            'Position', [.01 .13 .98 (Dh/(h+Dh)- .12)] ...
             )
     end
     if strcmp(get(pr.measure_tbl, 'Visible'), 'on')

@@ -42,6 +42,8 @@ num2cell(0.05)
 if ~iscell(value) & isnumeric(value)
     value = num2cell(value);
 end
+%%%% ¡gui!
+pr = PlotPropSmartVector('EL', nnds, 'PROP', NNDataSplit.FEATURE_MASK, 'MAX', 10000000, 'MIN', 0, varargin{:});
 
 %%% ¡prop!
 FEATURE_SELECTION_ANALYSIS (result, cell) is an analysis for generating a feature mask.

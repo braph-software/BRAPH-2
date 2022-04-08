@@ -41,6 +41,14 @@ function h_panel = draw(pr, varargin)
     set(pr.list_tbl, 'Callback', {@cb_item_list});
     
     function cb_item_list(~, ~)
+        val = get(pr.list_tbl, 'Value');
+        str = get(pr.list_tbl, 'String');
+
+        el = pr.get('el');
+        prop = pr.get('prop');
+        str = str{val};
+        el.set(prop, str)
+        pr.update();
         pr.lock_measures_prop();
     end
     

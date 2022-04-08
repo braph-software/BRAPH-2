@@ -24,8 +24,6 @@ nnds = NNRegressorDataSplit('GR', nnd.get('GR_NN'), 'SPLIT', 0.2, 'FEATURE_MASK'
 %% Model Training
 regressor = NNRegressorDNN('GR', nnds.get('GR_TRAIN_FS'), 'VERBOSE', true, 'SHUFFLE', 'every-epoch'); % Train the NN % NN Regressor
 
-%% Evaluation on Training Set
-nne_train = NNRegressorEvaluator('GR', nnds.get('GR_TRAIN_FS'), 'NN', regressor); % Evaluate the NN % Evaluation on Training Group
-
-%% Evaluation on Validation Set
-nne_val = NNRegressorEvaluator('GR', nnds.get('GR_VAL_FS'), 'NN', regressor); % Evaluate the NN % Evaluation on Validation Group
+%% Model Evaluation
+nne_train = NNRegressorEvaluator('GR', nnds.get('GR_TRAIN_FS'), 'NN', regressor); % Evaluate on Training Group % Training Group
+nne_val = NNRegressorEvaluator('GR', nnds.get('GR_VAL_FS'), 'NN', regressor); % Evaluate on Validation Group % Validation Group

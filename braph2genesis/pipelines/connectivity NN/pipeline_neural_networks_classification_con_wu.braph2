@@ -26,8 +26,6 @@ nnds = NNClassifierDataSplit('GR1', nnd1.get('GR_NN'), 'GR2', nnd2.get('GR_NN'),
 %% Model Training
 classifier = NNClassifierDNN('GR', nnds.get('GR_TRAIN_FS'), 'VERBOSE', true, 'SHUFFLE', 'every-epoch'); % Train the NN % NN Classifier
 
-%% Evaluation on Training Set
-nne_train = NNClassifierEvaluator('GR', nnds.get('GR_TRAIN_FS'), 'NN', classifier); % Evaluate the NN % Evaluation on Training Group
-
-%% Evaluation on Validation Set
-nne_val = NNClassifierEvaluator('GR', nnds.get('GR_VAL_FS'), 'NN', classifier); % Evaluate the NN % Evaluation on Validation Group
+%% Model Evaluation
+nne_train = NNClassifierEvaluator('GR', nnds.get('GR_TRAIN_FS'), 'NN', classifier); % Evaluate on Training Group % Training Group
+nne_val = NNClassifierEvaluator('GR', nnds.get('GR_VAL_FS'), 'NN', classifier); % Evaluate on Validation Group % Validation Group
