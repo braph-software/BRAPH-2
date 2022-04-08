@@ -1066,8 +1066,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             end
         end     
     end
-    methods (Access=protected) % conditioning
-        function value = conditioning(el, prop, value) %#ok<INUSL>
+    methods (Static) % conditioning
+        function value = conditioning(el, pointer, value)
             %CONDITIONING conditions a value before setting a property.
             %
             % VALUE = CONDITIONING(EL, PROP, VALUE) conditions the value VALUE before
@@ -1076,6 +1076,17 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %  be implemented in the subclasses of Element when needed.
             %
             % See also set, postprocessing, calculateValue, checkValue.
+            
+            % calls from Element
+            if nargin < 3
+                value = pointer;
+                % pointer = el; %#ok<NASGU>
+                % el = 'Element'; %#ok<NASGU>
+                return
+            end
+            
+            % calls from subclasses of Element
+            value = eval([Element.getClass(el) '.conditioning(pointer, value)']);
         end
     end
     methods (Access=protected) % postprocessing

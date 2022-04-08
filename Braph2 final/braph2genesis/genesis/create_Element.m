@@ -1451,9 +1451,13 @@ generate_conditioning()
         if all(cellfun(@(x) numel(x.conditioning) == 1 && isempty(x.conditioning{1}), props)) && all(cellfun(@(x) numel(x.conditioning) == 1 && isempty(x.conditioning{1}), props_update))
             return
         end
-        g(1, 'methods (Access=protected) % conditioning')
-            g(2, ['function value = conditioning(' moniker ', prop, value)'])
-                g(3, 'switch prop')
+        g(1, 'methods (Static) % conditioning')
+            g(2, ['function value = conditioning(pointer, value)'])
+                gs(3, {
+                    ['prop = ' class_name '.getPropProp(pointer);']
+                	 ''
+                	 'switch prop'
+                    })
                     for i = 1:1:numel(props)
                         if numel(props{i}.conditioning) > 1 || ~isempty(props{i}.conditioning{1})
                             g(4, ['case ' class_name '.' props{i}.TAG])
@@ -1469,7 +1473,7 @@ generate_conditioning()
                         end
                     end
                     g(4, 'otherwise')
-                        gs(5, {['value = conditioning@' superclass_name '(' moniker ', prop, value);'], ''})
+                        gs(5, {['value = conditioning@' superclass_name '(pointer, value);'], ''})
                 g(3, 'end')
             g(2, 'end')
         g(1, 'end')
