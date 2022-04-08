@@ -1,4 +1,4 @@
-function generator_list = getGenerators(source_dir)
+function generator_list = getGenerators(source_dir) %TODO: revise
 %GETGENERATORS retrieves all generators within a directory.
 %
 % GENERATORS = GETGENERATORS(DIR) retrieves a list of all generators within

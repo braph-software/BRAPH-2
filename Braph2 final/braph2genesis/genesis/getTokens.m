@@ -1,4 +1,4 @@
-function tokens = getTokens(txt, h1, varargin)
+function tokens = getTokens(txt, h1, varargin) %TODO: revise
 %GETTOKENS extract a list of tokens from a text.
 %
 % TOKENS = GETTOKENS(TXT, H1) extracts from text TXT the list of tokens 

@@ -1,4 +1,4 @@
-function token = getToken(txt, h1, varargin)
+function token = getToken(txt, h1, varargin) %TODO: revise
 %GETTOKEN extract a token from a text.
 %
 % TOKEN = GETTOKEN(TXT, H1) extracts from text TXT the token 

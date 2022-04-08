@@ -1,4 +1,4 @@
-function copydir(source_dir, target_dir, iterate)
+function copydir(source_dir, target_dir, iterate) %TODO: revise
 %COPYDIR copies a directory contents.
 %
 % COPYDIR(SOURCE_DIR, TARGET_DIR) copies the files of directory SOURCE_DIR

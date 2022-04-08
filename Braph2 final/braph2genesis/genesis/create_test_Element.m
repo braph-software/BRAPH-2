@@ -1,4 +1,4 @@
-function create_test_Element(generator_file, target_dir)
+function create_test_Element(generator_file, target_dir) %TODO: revise
 %CREATE_TEST_ELEMENT creates the test of an element.
 %
 % CREATE_TEST_ELEMENT(FILE, DIR) creates the m-file with the script to test
