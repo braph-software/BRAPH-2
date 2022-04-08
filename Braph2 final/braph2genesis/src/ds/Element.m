@@ -353,7 +353,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     )
             end
         end
-        function prop_prop = getPropProp(el, pointer) %#ok<INUSD>
+        function prop_prop = getPropProp(el, pointer)
             % GETPROPPROP returns the property number of a property.
             %
             % PROP = Element.GETPROPPROP(PROP) returns PROP, i.e., the
@@ -380,7 +380,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % calls from subclasses of Element
             prop_prop = eval([Element.getClass(el) '.getPropProp(pointer)']);
         end
-        function prop_tag = getPropTag(el, pointer) %#ok<INUSD>
+        function prop_tag = getPropTag(el, pointer)
             % GETPROPTAG returns the tag of a property.
             %
             % TAG = Element.GETPROPTAG(PROP) returns the tag TAG of the
@@ -407,7 +407,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % calls from subclasses of Element
             prop_tag = eval([Element.getClass(el) '.getPropTag(pointer)']);
         end
-        function prop_category = getPropCategory(el, pointer) %#ok<INUSD>
+        function prop_category = getPropCategory(el, pointer)
             % GETPROPCATEGORY returns the category of a property.
             %
             % CATEGORY = Element.GETPROPCATEGORY(PROP) returns the
@@ -434,7 +434,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % calls from subclasses of Element
             prop_category = eval([Element.getClass(el) '.getPropCategory(pointer)']);
         end
-        function prop_format = getPropFormat(el, pointer) %#ok<INUSD>
+        function prop_format = getPropFormat(el, pointer)
             % GETPROPFORMAT returns the format of a property.
             %
             % FORMAT = Element.GETPROPFORMAT(PROP) returns the format of
@@ -461,7 +461,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % calls from subclasses of Element
             prop_format = eval([Element.getClass(el) '.getPropFormat(pointer)']);
         end
-        function prop_description = getPropDescription(el, pointer) %#ok<INUSD>
+        function prop_description = getPropDescription(el, pointer)
             % GETPROPDESCRIPTION returns the description of a property.
             %
             % DESCRIPTION = Element.GETPROPDESCRIPTION(PROP) returns the
@@ -488,7 +488,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % calls from subclasses of Element
             prop_description = eval([Element.getClass(el) '.getPropDescription(pointer)']);
         end
-        function prop_settings = getPropSettings(el, pointer) %#ok<INUSD>
+        function prop_settings = getPropSettings(el, pointer)
             % GETPROPSETTINGS returns the settings of a property.
             %
             % SETTINGS = Element.GETPROPSETTINGS(PROP) returns the
@@ -515,7 +515,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % calls from subclasses of Element
             prop_settings = eval([Element.getClass(el) '.getPropSettings(pointer)']);
         end
-        function prop_default = getPropDefault(el, pointer) %#ok<INUSD>
+        function prop_default = getPropDefault(el, pointer)
             %GETPROPDEFAULT returns the default value of a property.
             %
             % DEFAULT = Element.GETPROPDEFAULT(PROP) returns the default
@@ -542,7 +542,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % calls from subclasses of Element
             prop_default = eval([Element.getClass(el) '.getPropDefault(pointer)']);
         end
-        function prop_check = checkProp(el, pointer, value) %#ok<INUSD>
+        function prop_check = checkProp(el, pointer, value)
             %CHECKPROP checks whether a value has the correct format/error.
             %
             % CHECK = Element.CHECKPROP(POINTER, VALUE) checks whether
