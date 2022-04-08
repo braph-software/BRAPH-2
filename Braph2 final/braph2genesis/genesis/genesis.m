@@ -17,6 +17,8 @@ function [target_dir, source_dir] = genesis(target_dir, source_dir, run_number)
 %
 % See also braph2genesis, create_Element, create_test_Element.
 
+%TODO: use parfor for generation
+
 fp = filesep();
 
 if nargin < 3

@@ -17,6 +17,7 @@ classdef BRAPH2
     %  EXT_PIPELINE - BRAPH2 pipeline extension (*.braph2)
     %
     % Properties (Constant) - BRAPH2 error codes:
+	%  ADDON        - addon not installed
     %  WRONG_INPUT  - wrong input value or format in a function
     %  WRONG_OUTPUT - wrong output value or format in a function
     %  BUG_FUNC     - bug in a function (wrong behavior)
@@ -62,6 +63,7 @@ classdef BRAPH2
         EXT_PIPELINE = {'*.braph2'} % BRAPH2 pipeline extension
     end
     properties (Constant) % BRAPH2 error codes
+        ADDON = 'AddOn' % addon not installed
         WRONG_INPUT = 'WrongInput' % wrong input value or format in a function
         WRONG_OUTPUT = 'WrongOutput' % wrong output value or format in a function
         BUG_FUNC = 'BugFunc' % bug in a function (wrong behavior)
