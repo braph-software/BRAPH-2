@@ -139,11 +139,11 @@ disp('¡! copied ready files - ds')
 % % % copydir([source_dir fp 'pipelines'], [target_dir fp 'pipelines'], Inf)
 % % % disp('¡! copied ready files - brainsurf')
 % % % disp(' ')
-% % % 
-% % % % test
-% % % copydir([source_dir fp 'test'], [target_dir fp 'test'], Inf)
-% % % disp('¡! copied ready files - test')
-% % % disp(' ')
+
+% test
+copydir([source_dir fp 'test'], [target_dir fp 'test'], Inf)
+disp('¡! copied ready files - test')
+disp(' ')
 
 %% CREATE ELEMENTS
 for run = 1:1:run_number
