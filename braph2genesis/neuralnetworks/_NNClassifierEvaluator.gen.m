@@ -91,18 +91,6 @@ end
 %%%% ¡gui!
 pr = PPNNClassifierEvaluator_Confusion_Matrix('EL', nne, 'PROP', NNClassifierEvaluator.CONFUSION_MATRIX, varargin{:});
 
-%%% ¡prop!
-FEATURE_MAP (result, cell) is a feature map obtained with feature selection analysis.
-%%%% ¡calculate!
-sub_dict = nne.get('GR').get('SUB_DICT');
-if sub_dict.length() == 0
-    value = {};
-else
-    value = sub_dict.getItem(1).get('FEATURE_MASK');
-end
-%%%% ¡gui!
-pr = PPNNClassifierEvaluator_Feasture_Map('EL', nne, 'PROP', NNClassifierEvaluator.FEATURE_MAP, varargin{:});
-
 
 %% ¡props_update!
 
