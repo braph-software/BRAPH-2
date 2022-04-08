@@ -2,10 +2,10 @@
 ETC2 < ETC1 (et, test Element C2) tests conditioning inheritance.
 
 %%% ¡description!
-ETC1 tests conditioning inheritance.
+ETC2 tests conditioning inheritance.
 
 %%% ¡seealso!
-Element, Category, Format, ETC1
+Element, Category, Format, ETC1, ETC3
 
 %% ¡props_update!
 

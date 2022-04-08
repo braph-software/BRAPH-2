@@ -5,7 +5,7 @@ ETC1 < Element (et, test Element C) tests conditioning.
 ETC1 tests conditioning.
 
 %%% ¡seealso!
-Element, Category, Format, ETC2
+Element, Category, Format, ETC2, ETC3
 
 %% ¡props!
 
