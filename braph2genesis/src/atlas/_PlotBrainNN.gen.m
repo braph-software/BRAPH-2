@@ -1529,528 +1529,531 @@ function h = get_axes(pl)
 end
 
 function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
-    % GETBRAINGRAPHPANEL creates a braingraph panel
-    %
-    % BRAIN_GRAPH_PANEL = GETBRAINGRAPHPANEL(ANAlYSIS, AXES, PLOTBRAINGRAPH)
-    % creates a brain graph panel to manage the type of
-    % PLOTBRAINGRAPH that the GUIAnalysis plots in the AXES.
-    %
-    % See also getBrainView.
-
-    % variables
-    atlas = pl.get('ATLAS');
-    nn_el = pl.get('NNEL');
-    feature_map = nn_el.get('feature_map');
-    br_axes = pl.h_axes; %#ok<NASGU>
-    BKGCOLOR = [1 .9725 .929];
-    pl.f_feature_settings = ui_panel_graph;
-    fig_graph = pl.f_feature_settings;
-    color = [1 1 1];
-    
-    feature_map_inner = [];
-
-    ui_title = uicontrol(fig_graph, ...
-        'Style', 'text', ...
-        'String', 'Feature Map', ...
-        'Units', 'normalized', ...
-        'BackgroundColor', BKGCOLOR, ...
-        'HorizontalAlignment', 'left', ...
-        'FontWeight', 'bold', ...
-        'Position', [0.01 .91 0.3 0.08]);
-    
-    if length(feature_map) > 1 %mp
-        layer_id = cellfun(@(x) ['Layer ' num2str(x)] , num2cell([1:length(feature_map)]), 'UniformOutput', false);
-        layer_title_ = uicontrol(fig_graph, ...
-            'Style', 'text', ...
-            'Units', 'normalized', ...
-            'string', 'Layer', ...
-            'BackgroundColor', BKGCOLOR, ...            
-            'Position', [0.1 .72 0.2 0.1]);
-        layer_selector = uicontrol(fig_graph, ...
-            'Style', 'popupmenu', ...
-            'Units', 'normalized', ...
-            'String', layer_id,...
-            'BackgroundColor', BKGCOLOR, ...            
-            'Position', [0.22 .72 0.2 0.1], ...
-            'Callback', {@cb_layer_sel});
-    else
-        feature_map_inner = feature_map{1};
-    end
-        
-
-    ui_checkbox_graph_lineweight = uicontrol(fig_graph, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
-    ui_edit_graph_lineweight = uicontrol(fig_graph, 'Style', 'edit');
-    ui_button_graph_show = uicontrol(fig_graph, 'Style', 'pushbutton');
-    ui_button_graph_hide = uicontrol(fig_graph, 'Style', 'pushbutton');
-    ui_button_graph_color = uicontrol(fig_graph, 'Style', 'pushbutton');
-    ui_button_graph_edge_settings = uicontrol(fig_graph, 'Style', 'pushbutton');
-    ui_link_type = uicontrol(fig_graph, 'Style', 'popup', 'String', {'line', 'arrow', 'cylinder'});
-
-    init_graph()
-
-    %% Make the GUI visible.
-    set(fig_graph, 'Visible', 'on');
-
-        function init_graph()
-            set(ui_checkbox_graph_lineweight, 'Units', 'normalized')
-            set(ui_checkbox_graph_lineweight, 'BackgroundColor',BKGCOLOR)
-            set(ui_checkbox_graph_lineweight, 'Position', [.10 .61 .15 .1])
-            set(ui_checkbox_graph_lineweight, 'String', ' Thickness ')
-            set(ui_checkbox_graph_lineweight, 'Value', true)
-            set(ui_checkbox_graph_lineweight, 'FontWeight', 'bold')
-            set(ui_checkbox_graph_lineweight, 'TooltipString', 'Shows brain regions by label')
-            set(ui_checkbox_graph_lineweight, 'Callback', {@cb_checkbox_lineweight})
-
-            set(ui_edit_graph_lineweight, 'Units', 'normalized')
-            set(ui_edit_graph_lineweight, 'Position', [.3 .62 .3 .09])
-            set(ui_edit_graph_lineweight, 'String', '1');
-            set(ui_edit_graph_lineweight, 'TooltipString', 'Set line weight.');
-            set(ui_edit_graph_lineweight, 'FontWeight', 'bold')
-            set(ui_edit_graph_lineweight, 'Callback', {@cb_edit_lineweight});
-
-            set(ui_link_type, 'Units', 'normalized')
-            set(ui_link_type, 'Position', [.62 .62 .3 .08])
-            set(ui_link_type, 'Callback', {@cb_link_type});
-
-            set(ui_button_graph_show, 'Units', 'normalized')
-            set(ui_button_graph_show, 'Position', [.1 .45 .4 .08])
-            set(ui_button_graph_show, 'String', ' Show ')
-            set(ui_button_graph_show, 'HorizontalAlignment', 'center')
-            set(ui_button_graph_show, 'FontWeight', 'bold')
-            set(ui_button_graph_show, 'FontSize', 10)
-            set(ui_button_graph_show, 'Callback', {@cb_graph_show})
-
-            set(ui_button_graph_hide, 'Units', 'normalized')
-            set(ui_button_graph_hide, 'Position', [.1 .3 .4 .08])
-            set(ui_button_graph_hide, 'String', ' Hide ')
-            set(ui_button_graph_hide, 'HorizontalAlignment', 'center')
-            set(ui_button_graph_hide, 'FontWeight', 'bold')
-            set(ui_button_graph_hide, 'FontSize', 10)
-            set(ui_button_graph_hide, 'Callback', {@cb_graph_hide})
-
-            set(ui_button_graph_color, 'Units', 'normalized')
-            set(ui_button_graph_color, 'Position', [.52 .45 .4 .08])
-            set(ui_button_graph_color, 'String', ' Color ')
-            set(ui_button_graph_color, 'HorizontalAlignment', 'center')
-            set(ui_button_graph_color, 'FontWeight', 'bold')
-            set(ui_button_graph_color, 'FontSize', 10)
-            set(ui_button_graph_color, 'Callback', {@cb_graph_color})
-
-            set(ui_button_graph_edge_settings, 'Units', 'normalized')
-            set(ui_button_graph_edge_settings, 'Position', [.52 .3 .4 .08])
-            set(ui_button_graph_edge_settings, 'String', 'Edge Settings')
-            set(ui_button_graph_edge_settings, 'HorizontalAlignment', 'center')
-            set(ui_button_graph_edge_settings, 'FontWeight', 'bold')
-            set(ui_button_graph_edge_settings, 'FontSize', 10)
-            set(ui_button_graph_edge_settings, 'Callback', {@cb_graph_links_settings})
-        end
-        function cb_layer_sel(~, ~)
-            val = get(layer_selector, 'Value');
-            feature_map_inner = feature_map{val};
-        end
-        function cb_checkbox_lineweight(~, ~)  % (src, event)
-            if get(ui_checkbox_graph_lineweight, 'Value')
-                set(ui_edit_graph_lineweight, 'Enable', 'on')
-                update_graph()
-            else
-                set(ui_edit_graph_lineweight, 'Enable', 'off')
-
-                weight = str2double(get(ui_edit_graph_lineweight, 'String'));
-                n = atlas.get('BR_DICT').length();
-                for i = 1:1:n
-                    for j = 1:1:n
-                        if i == j
-                            continue;
-                        end
-                        pl.link_edges(i, j, 'LineWidth', weight)
-                    end
+		    % GETBRAINGRAPHPANEL creates a braingraph panel
+		    %
+		    % BRAIN_GRAPH_PANEL = GETBRAINGRAPHPANEL(ANAlYSIS, AXES, PLOTBRAINGRAPH)
+		    % creates a brain graph panel to manage the type of
+		    % PLOTBRAINGRAPH that the GUIAnalysis plots in the AXES.
+		    %
+		    % See also getBrainView.
+		
+		    % variables
+		    atlas = pl.get('ATLAS');
+		    nn_el = pl.get('NNEL');
+		    feature_map = nn_el.get('feature_map');
+		    br_axes = pl.h_axes; %#ok<NASGU>
+		    BKGCOLOR = [1 .9725 .929];
+		    pl.f_feature_settings = ui_panel_graph;
+		    fig_graph = pl.f_feature_settings;
+		    color = [1 1 1];
+		    
+		    feature_map_inner = [];
+		
+		    ui_title = uicontrol(fig_graph, ...
+		        'Style', 'text', ...
+		        'String', 'Feature Map', ...
+		        'Units', 'normalized', ...
+		        'BackgroundColor', BKGCOLOR, ...
+		        'HorizontalAlignment', 'left', ...
+		        'FontWeight', 'bold', ...
+		        'Position', [0.01 .91 0.3 0.08]);
+		    
+		    if length(feature_map) > 1 %mp
+		        layer_id = cellfun(@(x) ['Layer ' num2str(x)] , num2cell([1:length(feature_map)]), 'UniformOutput', false);
+		        layer_title_ = uicontrol(fig_graph, ...
+		            'Style', 'text', ...
+		            'Units', 'normalized', ...
+		            'string', 'Layer', ...
+		            'BackgroundColor', BKGCOLOR, ...            
+		            'Position', [0.1 .72 0.2 0.1]);
+		        layer_selector = uicontrol(fig_graph, ...
+		            'Style', 'popupmenu', ...
+		            'Units', 'normalized', ...
+		            'String', layer_id,...
+		            'BackgroundColor', BKGCOLOR, ...            
+		            'Position', [0.22 .72 0.2 0.1], ...
+		            'Callback', {@cb_layer_sel});
+		    else
+		        feature_map_inner = feature_map{1};
+		    end
+		        
+		
+		    ui_checkbox_graph_lineweight = uicontrol(fig_graph, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
+		    ui_edit_graph_lineweight = uicontrol(fig_graph, 'Style', 'edit');
+		    ui_button_graph_show = uicontrol(fig_graph, 'Style', 'pushbutton');
+		    ui_button_graph_hide = uicontrol(fig_graph, 'Style', 'pushbutton');
+		    ui_button_graph_color = uicontrol(fig_graph, 'Style', 'pushbutton');
+		    ui_button_graph_edge_settings = uicontrol(fig_graph, 'Style', 'pushbutton');
+		    ui_link_type = uicontrol(fig_graph, 'Style', 'popup', 'String', {'line', 'arrow', 'cylinder'});
+		
+		    init_graph()
+		
+		    %% Make the GUI visible.
+		    set(fig_graph, 'Visible', 'on');
+		
+		        function init_graph()
+		            set(ui_checkbox_graph_lineweight, 'Units', 'normalized')
+		            set(ui_checkbox_graph_lineweight, 'BackgroundColor',BKGCOLOR)
+		            set(ui_checkbox_graph_lineweight, 'Position', [.10 .61 .15 .1])
+		            set(ui_checkbox_graph_lineweight, 'String', ' Thickness ')
+		            set(ui_checkbox_graph_lineweight, 'Value', true)
+		            set(ui_checkbox_graph_lineweight, 'FontWeight', 'bold')
+		            set(ui_checkbox_graph_lineweight, 'TooltipString', 'Shows brain regions by label')
+		            set(ui_checkbox_graph_lineweight, 'Callback', {@cb_checkbox_lineweight})
+		
+		            set(ui_edit_graph_lineweight, 'Units', 'normalized')
+		            set(ui_edit_graph_lineweight, 'Position', [.3 .62 .3 .09])
+		            set(ui_edit_graph_lineweight, 'String', '1');
+		            set(ui_edit_graph_lineweight, 'TooltipString', 'Set line weight.');
+		            set(ui_edit_graph_lineweight, 'FontWeight', 'bold')
+		            set(ui_edit_graph_lineweight, 'Callback', {@cb_edit_lineweight});
+		
+		            set(ui_link_type, 'Units', 'normalized')
+		            set(ui_link_type, 'Position', [.62 .62 .3 .08])
+		            set(ui_link_type, 'Callback', {@cb_link_type});
+		
+		            set(ui_button_graph_show, 'Units', 'normalized')
+		            set(ui_button_graph_show, 'Position', [.1 .45 .4 .08])
+		            set(ui_button_graph_show, 'String', ' Show ')
+		            set(ui_button_graph_show, 'HorizontalAlignment', 'center')
+		            set(ui_button_graph_show, 'FontWeight', 'bold')
+		            set(ui_button_graph_show, 'FontSize', 10)
+		            set(ui_button_graph_show, 'Callback', {@cb_graph_show})
+		
+		            set(ui_button_graph_hide, 'Units', 'normalized')
+		            set(ui_button_graph_hide, 'Position', [.1 .3 .4 .08])
+		            set(ui_button_graph_hide, 'String', ' Hide ')
+		            set(ui_button_graph_hide, 'HorizontalAlignment', 'center')
+		            set(ui_button_graph_hide, 'FontWeight', 'bold')
+		            set(ui_button_graph_hide, 'FontSize', 10)
+		            set(ui_button_graph_hide, 'Callback', {@cb_graph_hide})
+		
+		            set(ui_button_graph_color, 'Units', 'normalized')
+		            set(ui_button_graph_color, 'Position', [.52 .45 .4 .08])
+		            set(ui_button_graph_color, 'String', ' Color ')
+		            set(ui_button_graph_color, 'HorizontalAlignment', 'center')
+		            set(ui_button_graph_color, 'FontWeight', 'bold')
+		            set(ui_button_graph_color, 'FontSize', 10)
+		            set(ui_button_graph_color, 'Callback', {@cb_graph_color})
+		
+		            set(ui_button_graph_edge_settings, 'Units', 'normalized')
+		            set(ui_button_graph_edge_settings, 'Position', [.52 .3 .4 .08])
+		            set(ui_button_graph_edge_settings, 'String', 'Edge Settings')
+		            set(ui_button_graph_edge_settings, 'HorizontalAlignment', 'center')
+		            set(ui_button_graph_edge_settings, 'FontWeight', 'bold')
+		            set(ui_button_graph_edge_settings, 'FontSize', 10)
+		            set(ui_button_graph_edge_settings, 'Callback', {@cb_graph_links_settings})
+		        end
+		        function cb_layer_sel(~, ~)
+		            val = get(layer_selector, 'Value');
+		            feature_map_inner = feature_map{val};
+		        end
+		        function cb_checkbox_lineweight(~, ~)  % (src, event)
+		            if get(ui_checkbox_graph_lineweight, 'Value')
+		                set(ui_edit_graph_lineweight, 'Enable', 'on')
+		                update_graph()
+		            else
+		                set(ui_edit_graph_lineweight, 'Enable', 'off')
+		
+		                weight = str2double(get(ui_edit_graph_lineweight, 'String'));
+		                n = atlas.get('BR_DICT').length();
+		                for i = 1:1:n
+		                    for j = 1:1:n
+		                        if i == j
+		                            continue;
+		                        end
+		                        pl.link_edges(i, j, 'LineWidth', weight)
+		                    end
+		                end
+		            end
+		        end
+		        function cb_edit_lineweight(~, ~)  % (src, event)
+		            weigth = real(str2double(get(ui_edit_graph_lineweight, 'String')));
+		            if isnan(weigth) || weigth <= 0
+		                set(ui_edit_graph_lineweight, 'String', '5');
+		            end
+		            update_graph()
+		        end
+		        function cb_graph_show(~, ~)  % (src, event)
+		            set(ui_edit_graph_lineweight, 'Enable', 'on')
+		
+		            update_graph()
+		        end
+		        function cb_graph_hide(~, ~)  % (src, event)
+		            link_style = get(ui_link_type, 'Value');
+		            if  link_style == 1
+		                pl.link_edges_off([], [])
+		            elseif link_style == 2
+		                pl.arrow_edges_off([],[])
+		            else
+		                pl.cylinder_edges_off([],[])
+		            end
+		        end
+		        function cb_graph_color(~, ~)  % (src, event)
+		            color = uisetcolor();
+		
+		            if length(color)==3
+		                n = atlas.get('BR_DICT').length();
+		                for i = 1:1:n
+		                    for j = 1:1:n
+		                        if i == j
+		                            continue;
+		                        end
+		                        pl.link_edge(i, j, 'Color', color)
+		                    end
+		                end
+		            end
+		        end
+		        function cb_link_type(~, ~)
+		            update_graph()
+		        end
+		        function update_graph()
+		            link_style = get(ui_link_type, 'Value');
+		
+		            pl.link_edges_off([], [])
+		            pl.arrow_edges_off([],[])
+		            pl.cylinder_edges_off([],[])
+		
+		            if get(ui_checkbox_graph_lineweight, 'Value')
+		                % get measure value
+		                n = atlas.get('BR_DICT').length();
+		                weight = str2double(get(ui_edit_graph_lineweight, 'String'));
+		                for i = 1:1:n
+		                    for j = 1:1:n
+		                        if i == j
+		                            continue;
+		                        end
+		                        value = feature_map_inner(i, j);
+		                        if value == 0
+		                            continue;
+		                        end
+		                        if  link_style == 1
+		                            pl.link_edges(i, j, 'LineWidth', weight*value);
+		                            pl.link_edge_on(i, j);
+		                        elseif link_style == 2
+		                            pl.arrow_edges(i, j, 'LineWidth', weight*value);
+		                            pl.arrow_edge_on(i, j)
+		                        else
+		                            pl.cylinder_edges(i, j, 'LineWidth', weight*value);
+		                            pl.cylinder_edge_on(i, j)
+		                        end
+		                    end
+		                end
+		            end
+		
+		        end
+		        function cb_graph_links_settings(~, ~)  % (src, event)
+		            link_style = get(ui_link_type, 'Value');
+		            if link_style == 1
+		                pl.link_edges_settings([], []);
+		            elseif link_style == 2
+		                pl.arrow_edges_settings([], []);
+		            else
+		                pl.cylinder_edges_settings([], []);
+		            end
                 end
-            end
-        end
-        function cb_edit_lineweight(~, ~)  % (src, event)
-            weigth = real(str2double(get(ui_edit_graph_lineweight, 'String')));
-            if isnan(weigth) || weigth <= 0
-                set(ui_edit_graph_lineweight, 'String', '5');
-            end
-            update_graph()
-        end
-        function cb_graph_show(~, ~)  % (src, event)
-            set(ui_edit_graph_lineweight, 'Enable', 'on')
-
-            update_graph()
-        end
-        function cb_graph_hide(~, ~)  % (src, event)
-            link_style = get(ui_link_type, 'Value');
-            if  link_style == 1
-                pl.link_edges_off([], [])
-            elseif link_style == 2
-                pl.arrow_edges_off([],[])
-            else
-                pl.cylinder_edges_off([],[])
-            end
-        end
-        function cb_graph_color(~, ~)  % (src, event)
-            color = uisetcolor();
-
-            if length(color)==3
-                n = atlas.get('BR_DICT').length();
-                for i = 1:1:n
-                    for j = 1:1:n
-                        if i == j
-                            continue;
-                        end
-                        pl.link_edge(i, j, 'Color', color)
-                    end
-                end
-            end
-        end
-        function cb_link_type(~, ~)
-            update_graph()
-        end
-        function update_graph()
-            link_style = get(ui_link_type, 'Value');
-
-            pl.link_edges_off([], [])
-            pl.arrow_edges_off([],[])
-            pl.cylinder_edges_off([],[])
-
-            if get(ui_checkbox_graph_lineweight, 'Value')
-                % get measure value
-                n = atlas.get('BR_DICT').length();
-                weight = str2double(get(ui_edit_graph_lineweight, 'String'));
-                for i = 1:1:n
-                    for j = 1:1:n
-                        if i == j
-                            continue;
-                        end
-                        value = feature_map_inner(i, j);
-                        if value == 0
-                            continue;
-                        end
-                        if  link_style == 1
-                            pl.link_edges(i, j, 'LineWidth', weight*value);
-                            pl.link_edge_on(i, j);
-                        elseif link_style == 2
-                            pl.arrow_edges(i, j, 'LineWidth', weight*value);
-                            pl.arrow_edge_on(i, j)
-                        else
-                            pl.cylinder_edges(i, j, 'LineWidth', weight*value);
-                            pl.cylinder_edge_on(i, j)
-                        end
-                    end
-                end
-            end
-
-        end
-        function cb_graph_links_settings(~, ~)  % (src, event)
-            link_style = get(ui_link_type, 'Value');
-            if link_style == 1
-                pl.link_edges_settings([], []);
-            elseif link_style == 2
-                pl.arrow_edges_settings([], []);
-            else
-                pl.cylinder_edges_settings([], []);
-            end
-        end
-
-    if nargout > 0
-        brain_graph_panel = fig_graph;
-    end
-end
-function h = getMCRPanel(pl, ui_panel_graph)
-    % sets position of figure
-
-    % variables
-    atlas = pl.get('ATLAS');
-    nn_el = pl.get('NNEL');
-    feature_map = nn_el.get('feature_map');
-    br_axes = pl.h_axes; %#ok<NASGU>
-    FigColor = [.95 .94 .94];
-    pl.f_feature_settings = ui_panel_graph;
-    f = pl.f_feature_settings;
-    BKGCOLOR = [1 .9725 .929];
-    
-    feature_map_inner = [];
-    
-    % initialization %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % measure container panel
-    ui_measure_container_panel = uipanel(f, 'Units', 'normalized', 'BackgroundColor', BKGCOLOR);
-
-    ui_title = uicontrol(f, ...
-        'Style', 'text', ...
-        'String', 'Feature Map', ...
-        'Units', 'normalized', ...
-        'BackgroundColor', BKGCOLOR, ...
-        'HorizontalAlignment', 'left', ...
-        'FontWeight', 'bold', ...
-        'Position', [0.01 .91 0.25 0.08]);
-    
-    if length(feature_map) > 1 %mp
-        layer_id = cellfun(@(x) ['Layer ' num2str(x)] , num2cell([1:length(feature_map)]), 'UniformOutput', false);
-        layer_title_ = uicontrol(ui_measure_container_panel, ...
-            'Style', 'text', ...
-            'Units', 'normalized', ...
-            'string', 'Layer', ...
-            'BackgroundColor', BKGCOLOR, ...            
-            'Position', [0.1 .82 0.2 0.1]);
-        layer_selector = uicontrol(ui_measure_container_panel, ...
-            'Style', 'popupmenu', ...
-            'Units', 'normalized', ...
-            'String', layer_id,...
-            'BackgroundColor', BKGCOLOR, ...            
-            'Position', [0.22 .82 0.2 0.1], ...
-            'Callback', {@cb_layer_sel});
-    else
-        feature_map_inner = feature_map{1};
-    end
-
-    % nodal measure figure options
-    ui_checkbox_meas_symbolsize = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
-    ui_edit_meas_symbolsize = uicontrol(ui_measure_container_panel, 'Style', 'edit');
-    ui_checkbox_meas_sphereradius = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
-    ui_edit_meas_sphereradius = uicontrol(ui_measure_container_panel, 'Style', 'edit');
-    ui_checkbox_meas_spheretransparency = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
-    ui_slider_meas_spheretransparency = uicontrol(ui_measure_container_panel, 'Style', 'slider');
-    ui_checkbox_meas_labelsize = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
-    ui_edit_meas_labelsize = uicontrol(ui_measure_container_panel, 'Style', 'edit');
-
-
-    %% Callback functions
-        function init_measures_panel()
-
-            % feature figure *******************************
-            set(ui_measure_container_panel, 'Position', [.0 .01 1 .99])
-
-            set(ui_checkbox_meas_symbolsize, 'Units', 'normalized')
-            set(ui_checkbox_meas_symbolsize, 'Position', [.01 .7 .30 .08])
-            set(ui_checkbox_meas_symbolsize, 'String', ' Symbol Size ')
-            set(ui_checkbox_meas_symbolsize, 'Value', false)
-            set(ui_checkbox_meas_symbolsize, 'FontWeight', 'bold')
-            set(ui_checkbox_meas_symbolsize, 'TooltipString', 'Shows brain regions by points')
-            set(ui_checkbox_meas_symbolsize, 'Callback', {@cb_checkbox_meas_symbolsize})
-
-            set(ui_edit_meas_symbolsize, 'Units', 'normalized')
-            set(ui_edit_meas_symbolsize, 'String', PlotBrainNN.INIT_SYM_SIZE)
-            set(ui_edit_meas_symbolsize, 'Enable', 'off')
-            set(ui_edit_meas_symbolsize, 'Position', [.31 .7 .6 .08])
-            set(ui_edit_meas_symbolsize, 'HorizontalAlignment', 'center')
-            set(ui_edit_meas_symbolsize, 'FontWeight', 'bold')
-            set(ui_edit_meas_symbolsize, 'Callback', {@cb_edit_meas_symbolsize})
-
-            set(ui_checkbox_meas_sphereradius, 'Units', 'normalized')
-            set(ui_checkbox_meas_sphereradius, 'Position', [.01 0.54 .3 .08])
-            set(ui_checkbox_meas_sphereradius, 'String', ' Sphere Radius ')
-            set(ui_checkbox_meas_sphereradius, 'Value', false)
-            set(ui_checkbox_meas_sphereradius, 'FontWeight', 'bold')
-            set(ui_checkbox_meas_sphereradius, 'TooltipString', 'Shows brain regions by spheres')
-            set(ui_checkbox_meas_sphereradius, 'Callback', {@cb_checkbox_meas_sphereradius})
-
-            set(ui_edit_meas_sphereradius, 'Units', 'normalized')
-            set(ui_edit_meas_sphereradius, 'String', PlotBrainNN.INIT_SPH_R)
-            set(ui_edit_meas_sphereradius, 'Enable', 'off')
-            set(ui_edit_meas_sphereradius, 'Position', [.31 0.54 .6 .08])
-            set(ui_edit_meas_sphereradius, 'HorizontalAlignment', 'center')
-            set(ui_edit_meas_sphereradius, 'FontWeight', 'bold')
-            set(ui_edit_meas_sphereradius, 'Callback', {@cb_edit_meas_sphereradius})
-
-            set(ui_checkbox_meas_spheretransparency, 'Units', 'normalized')
-            set(ui_checkbox_meas_spheretransparency, 'Position', [.01 0.4 .3 .08])
-            set(ui_checkbox_meas_spheretransparency, 'String', ' Sphere Transparency ')
-            set(ui_checkbox_meas_spheretransparency, 'Value', false)
-            set(ui_checkbox_meas_spheretransparency, 'FontWeight', 'bold')
-            set(ui_checkbox_meas_spheretransparency, 'TooltipString', 'Adjust the transparency of spheres')
-            set(ui_checkbox_meas_spheretransparency, 'Callback', {@cb_checkbox_meas_spheretransparency})
-
-            set(ui_slider_meas_spheretransparency, 'Units', 'normalized')
-            set(ui_slider_meas_spheretransparency, 'Min', 0, 'Max', 1, 'Value', PlotBrainNN.INIT_SPH_FACE_ALPHA);
-            set(ui_slider_meas_spheretransparency, 'Enable', 'off')
-            set(ui_slider_meas_spheretransparency, 'Position', [.31 0.4 .6 .08])
-            set(ui_slider_meas_spheretransparency, 'TooltipString', 'Brain region transparency (applied both to faces and edges)')
-            set(ui_slider_meas_spheretransparency, 'Callback', {@cb_slider_meas_spheretransparency})
-
-            set(ui_checkbox_meas_labelsize, 'Units', 'normalized')
-            set(ui_checkbox_meas_labelsize, 'Position', [.01 .26 .3 .08])
-            set(ui_checkbox_meas_labelsize, 'String', ' Value Size ')
-            set(ui_checkbox_meas_labelsize, 'Value', false)
-            set(ui_checkbox_meas_labelsize, 'FontWeight', 'bold')
-            set(ui_checkbox_meas_labelsize, 'TooltipString', 'Shows brain regions by label')
-            set(ui_checkbox_meas_labelsize, 'Callback', {@cb_checkbox_meas_labelsize})
-
-            set(ui_edit_meas_labelsize, 'Units', 'normalized')
-            set(ui_edit_meas_labelsize, 'String', PlotBrainNN.INIT_LAB_FONT_SIZE)
-            set(ui_edit_meas_labelsize, 'Enable', 'off')
-            set(ui_edit_meas_labelsize, 'Position', [.31 .26 .6 .08])
-            set(ui_edit_meas_labelsize, 'HorizontalAlignment', 'center')
-            set(ui_edit_meas_labelsize, 'FontWeight', 'bold')
-            set(ui_edit_meas_labelsize, 'Callback', {@cb_edit_meas_labelsize})
-
-
-        end
-        function cb_layer_sel(~, ~)
-            val = get(layer_selector, 'Value');
-            feature_map_inner = feature_map{val};
-        end
-        function cb_checkbox_meas_symbolsize(~, ~)  %  (src, event)
-            if get(ui_checkbox_meas_symbolsize, 'Value')
-                set(ui_edit_meas_symbolsize, 'Enable', 'on')
-                update_brain_meas_plot()
-            else
-                symbol_size = str2double(get(ui_edit_meas_symbolsize, 'String'));
-                pl.set('SYMS_SIZE', symbol_size);
-                pl.set('SYMS', 0);
-                set(ui_edit_meas_symbolsize, 'Enable', 'off')
-                update_brain_meas_plot()
-            end
-        end
-        function cb_edit_meas_symbolsize(~, ~)  %  (src, event)
-            symbol_size = real(str2double(get(ui_edit_meas_symbolsize, 'String')));
-            if isempty(symbol_size) || symbol_size <= 0
-                set(ui_edit_meas_symbolsize, 'String', '1')
-            end
-            update_brain_meas_plot()
-        end
-        function cb_checkbox_meas_sphereradius(~, ~)  %  (src, event)
-            if get(ui_checkbox_meas_sphereradius, 'Value')
-                set(ui_edit_meas_sphereradius, 'Enable', 'on')
-                update_brain_meas_plot()
-            else
-                R = str2double(get(ui_edit_meas_sphereradius, 'String'));
-                pl.set('SPHS_SIZE', R);
-                pl.set('SPHS', 0);
-                set(ui_edit_meas_sphereradius, 'Enable', 'off')
-                update_brain_meas_plot()
-            end
-        end
-        function cb_edit_meas_sphereradius(~, ~)  %  (src, event)
-            R = real(str2double(get(ui_edit_meas_sphereradius, 'String')));
-            if isempty(R) || R <= 0
-                set(ui_edit_meas_sphereradius, 'String', '1')
-            end
-            update_brain_meas_plot()
-        end
-        function cb_checkbox_meas_spheretransparency(~, ~)  %  (src, event)
-            if get(ui_checkbox_meas_spheretransparency, 'Value')
-                set(ui_slider_meas_spheretransparency, 'Enable', 'on')
-
-                update_brain_meas_plot()
-            else
-                alpha = get(ui_slider_meas_spheretransparency, 'Value');
-                pl.set('SPHS_FACE_ALPHA', alpha);
-                pl.set('SPHS_EDGE_ALPHA', alpha);
-
-                set(ui_slider_meas_spheretransparency, 'Enable', 'off')
-                update_brain_meas_plot()
-            end
-        end
-        function cb_slider_meas_spheretransparency(~, ~)  %  (src, event)
-            update_brain_meas_plot();
-        end
-        function cb_checkbox_meas_labelsize(~, ~)  %  (src, event)
-            if get(ui_checkbox_meas_labelsize, 'Value')
-                set(ui_edit_meas_labelsize, 'Enable', 'on')
-                update_brain_meas_plot()
-            else
-                lab_size = str2double(get(ui_edit_meas_labelsize, 'String'));
-                pl.set('LABS_SIZE', lab_size);
-                pl.set('LABS', 0);
-                set(ui_edit_meas_labelsize, 'Enable', 'off')
-                update_brain_meas_plot()
-            end
-        end
-        function cb_edit_meas_labelsize(~, ~)  %  (src, event)
-            lab_size = real(str2double(get(ui_edit_meas_labelsize, 'String')));
-            if isempty(lab_size) || lab_size <= 0
-                set(ui_edit_meas_labelsize, 'String', '1')
-            end
-            update_brain_meas_plot()
-        end
-        function update_brain_meas_plot()
-            if ~isempty(feature_map_inner)
                 
-
-                if any(isnan(feature_map_inner)) || any(isinf(feature_map_inner))
-                    nan_warn_f = warndlg('A value is not a finite real number.');
-                    set_braph2_icon(nan_warn_f);
-                    return
-                end
-
-                if get(ui_checkbox_meas_symbolsize, 'Value')
-
-                    size_ = str2double(get(ui_edit_meas_symbolsize, 'String')) * feature_map_inner;
-                    size_(isnan(size_)) = 0.1;
-                    size_(size_ <= 0) = 0.1;
-                    pl.set('SYMS_SIZE', size_);
-                    pl.set('SYMS', 1);
-                else
-                    pl.set('SYMS', 0);
-                end
-
-                if get(ui_checkbox_meas_sphereradius, 'Value')
-
-                    R = str2double(get(ui_edit_meas_sphereradius, 'String'));
-                    R = feature_map_inner * R;
-                    R(isnan(R)) = 0.1;
-                    R(R <= 0) = 0.1;
-                    pl.set('SPHS_SIZE', R);
-                    pl.set('SPHS', 1);
-                else
-                    pl.set('SPHS', 0);
-                end
-
-
-                if get(ui_checkbox_meas_spheretransparency, 'Value')
-                    alpha = get(ui_slider_meas_spheretransparency, 'Value');
-
-                    alpha_vec = (feature_map_inner)*alpha;
-                    alpha_vec(isnan(alpha_vec)) = 0;
-                    alpha_vec(alpha_vec < 0) = 0;
-                    alpha_vec(alpha_vec > 1) = 1;
-                    pl.set('SPHS_EDGE_ALPHA', alpha_vec);
-                    pl.set('SPHS_FACE_ALPHA', alpha_vec);
-                    pl.set('SPHS', 1);
-                end
-
-                if get(ui_checkbox_meas_labelsize, 'Value')
-
-                    size_ = str2double(get(ui_edit_meas_labelsize, 'String'));
-                    size_(isnan(size_)) = 0.1;
-                    size_(size_ <= 0) = 0.1;
-                    pl.set( 'LABS_SIZE', size_);
-                    pl.set('LABS', 1);
-                else
-                    pl.set('LABS', 0);
-                end
-
-            end
-            if get(ui_checkbox_meas_labelsize, 'Value')
-                % set labels to values
-                new_labs = cellfun(@(x) num2str(x), num2cell(feature_map_inner), 'UniformOutput', false);
-                brs_dict = pl.get('ATLAS').get('BR_DICT').get('IT_LIST');
-                cellfun(@(x, y) x.set('LABEL', y), brs_dict, new_labs', 'UniformOutput', false)
-            end
-            % draw
-            pl.draw();
-        end
-
-    % draw
-    init_measures_panel()
-    update_brain_meas_plot()
-    set(f, 'Visible', 'on')
-    if nargout > 0
-        h = f;
-    end
-end
+                cb_checkbox_lineweight();
+		
+		    if nargout > 0
+		        brain_graph_panel = fig_graph;
+		    end
+		end
+function h = getMCRPanel(pl, ui_panel_graph)
+		    % sets position of figure
+		
+		    % variables
+		    atlas = pl.get('ATLAS');
+		    nn_el = pl.get('NNEL');
+		    feature_map = nn_el.get('feature_map');
+		    br_axes = pl.h_axes; %#ok<NASGU>
+		    FigColor = [.95 .94 .94];
+		    pl.f_feature_settings = ui_panel_graph;
+		    f = pl.f_feature_settings;
+		    BKGCOLOR = [1 .9725 .929];
+		    
+		    feature_map_inner = [];
+		    
+		    % initialization %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		    % measure container panel
+		    ui_measure_container_panel = uipanel(f, 'Units', 'normalized', 'BackgroundColor', BKGCOLOR);
+		
+		    ui_title = uicontrol(f, ...
+		        'Style', 'text', ...
+		        'String', 'Feature Map', ...
+		        'Units', 'normalized', ...
+		        'BackgroundColor', BKGCOLOR, ...
+		        'HorizontalAlignment', 'left', ...
+		        'FontWeight', 'bold', ...
+		        'Position', [0.01 .91 0.25 0.08]);
+		    
+		    if length(feature_map) > 1 %mp
+		        layer_id = cellfun(@(x) ['Layer ' num2str(x)] , num2cell([1:length(feature_map)]), 'UniformOutput', false);
+		        layer_title_ = uicontrol(ui_measure_container_panel, ...
+		            'Style', 'text', ...
+		            'Units', 'normalized', ...
+		            'string', 'Layer', ...
+		            'BackgroundColor', BKGCOLOR, ...            
+		            'Position', [0.1 .82 0.2 0.1]);
+		        layer_selector = uicontrol(ui_measure_container_panel, ...
+		            'Style', 'popupmenu', ...
+		            'Units', 'normalized', ...
+		            'String', layer_id,...
+		            'BackgroundColor', BKGCOLOR, ...            
+		            'Position', [0.22 .82 0.2 0.1], ...
+		            'Callback', {@cb_layer_sel});
+		    else
+		        feature_map_inner = feature_map{1};
+		    end
+		
+		    % nodal measure figure options
+		    ui_checkbox_meas_symbolsize = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
+		    ui_edit_meas_symbolsize = uicontrol(ui_measure_container_panel, 'Style', 'edit');
+		    ui_checkbox_meas_sphereradius = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
+		    ui_edit_meas_sphereradius = uicontrol(ui_measure_container_panel, 'Style', 'edit');
+		    ui_checkbox_meas_spheretransparency = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
+		    ui_slider_meas_spheretransparency = uicontrol(ui_measure_container_panel, 'Style', 'slider');
+		    ui_checkbox_meas_labelsize = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
+		    ui_edit_meas_labelsize = uicontrol(ui_measure_container_panel, 'Style', 'edit');
+		
+		
+		    %% Callback functions
+		        function init_measures_panel()
+		
+		            % feature figure *******************************
+		            set(ui_measure_container_panel, 'Position', [.0 .01 1 .99])
+		
+		            set(ui_checkbox_meas_symbolsize, 'Units', 'normalized')
+		            set(ui_checkbox_meas_symbolsize, 'Position', [.01 .7 .30 .08])
+		            set(ui_checkbox_meas_symbolsize, 'String', ' Symbol Size ')
+		            set(ui_checkbox_meas_symbolsize, 'Value', false)
+		            set(ui_checkbox_meas_symbolsize, 'FontWeight', 'bold')
+		            set(ui_checkbox_meas_symbolsize, 'TooltipString', 'Shows brain regions by points')
+		            set(ui_checkbox_meas_symbolsize, 'Callback', {@cb_checkbox_meas_symbolsize})
+		
+		            set(ui_edit_meas_symbolsize, 'Units', 'normalized')
+		            set(ui_edit_meas_symbolsize, 'String', PlotBrainNN.INIT_SYM_SIZE)
+		            set(ui_edit_meas_symbolsize, 'Enable', 'off')
+		            set(ui_edit_meas_symbolsize, 'Position', [.31 .7 .6 .08])
+		            set(ui_edit_meas_symbolsize, 'HorizontalAlignment', 'center')
+		            set(ui_edit_meas_symbolsize, 'FontWeight', 'bold')
+		            set(ui_edit_meas_symbolsize, 'Callback', {@cb_edit_meas_symbolsize})
+		
+		            set(ui_checkbox_meas_sphereradius, 'Units', 'normalized')
+		            set(ui_checkbox_meas_sphereradius, 'Position', [.01 0.54 .3 .08])
+		            set(ui_checkbox_meas_sphereradius, 'String', ' Sphere Radius ')
+		            set(ui_checkbox_meas_sphereradius, 'Value', false)
+		            set(ui_checkbox_meas_sphereradius, 'FontWeight', 'bold')
+		            set(ui_checkbox_meas_sphereradius, 'TooltipString', 'Shows brain regions by spheres')
+		            set(ui_checkbox_meas_sphereradius, 'Callback', {@cb_checkbox_meas_sphereradius})
+		
+		            set(ui_edit_meas_sphereradius, 'Units', 'normalized')
+		            set(ui_edit_meas_sphereradius, 'String', PlotBrainNN.INIT_SPH_R)
+		            set(ui_edit_meas_sphereradius, 'Enable', 'off')
+		            set(ui_edit_meas_sphereradius, 'Position', [.31 0.54 .6 .08])
+		            set(ui_edit_meas_sphereradius, 'HorizontalAlignment', 'center')
+		            set(ui_edit_meas_sphereradius, 'FontWeight', 'bold')
+		            set(ui_edit_meas_sphereradius, 'Callback', {@cb_edit_meas_sphereradius})
+		
+		            set(ui_checkbox_meas_spheretransparency, 'Units', 'normalized')
+		            set(ui_checkbox_meas_spheretransparency, 'Position', [.01 0.4 .3 .08])
+		            set(ui_checkbox_meas_spheretransparency, 'String', ' Sphere Transparency ')
+		            set(ui_checkbox_meas_spheretransparency, 'Value', false)
+		            set(ui_checkbox_meas_spheretransparency, 'FontWeight', 'bold')
+		            set(ui_checkbox_meas_spheretransparency, 'TooltipString', 'Adjust the transparency of spheres')
+		            set(ui_checkbox_meas_spheretransparency, 'Callback', {@cb_checkbox_meas_spheretransparency})
+		
+		            set(ui_slider_meas_spheretransparency, 'Units', 'normalized')
+		            set(ui_slider_meas_spheretransparency, 'Min', 0, 'Max', 1, 'Value', PlotBrainNN.INIT_SPH_FACE_ALPHA);
+		            set(ui_slider_meas_spheretransparency, 'Enable', 'off')
+		            set(ui_slider_meas_spheretransparency, 'Position', [.31 0.4 .6 .08])
+		            set(ui_slider_meas_spheretransparency, 'TooltipString', 'Brain region transparency (applied both to faces and edges)')
+		            set(ui_slider_meas_spheretransparency, 'Callback', {@cb_slider_meas_spheretransparency})
+		
+		            set(ui_checkbox_meas_labelsize, 'Units', 'normalized')
+		            set(ui_checkbox_meas_labelsize, 'Position', [.01 .26 .3 .08])
+		            set(ui_checkbox_meas_labelsize, 'String', ' Value Size ')
+		            set(ui_checkbox_meas_labelsize, 'Value', false)
+		            set(ui_checkbox_meas_labelsize, 'FontWeight', 'bold')
+		            set(ui_checkbox_meas_labelsize, 'TooltipString', 'Shows brain regions by label')
+		            set(ui_checkbox_meas_labelsize, 'Callback', {@cb_checkbox_meas_labelsize})
+		
+		            set(ui_edit_meas_labelsize, 'Units', 'normalized')
+		            set(ui_edit_meas_labelsize, 'String', PlotBrainNN.INIT_LAB_FONT_SIZE)
+		            set(ui_edit_meas_labelsize, 'Enable', 'off')
+		            set(ui_edit_meas_labelsize, 'Position', [.31 .26 .6 .08])
+		            set(ui_edit_meas_labelsize, 'HorizontalAlignment', 'center')
+		            set(ui_edit_meas_labelsize, 'FontWeight', 'bold')
+		            set(ui_edit_meas_labelsize, 'Callback', {@cb_edit_meas_labelsize})
+		
+		
+		        end
+		        function cb_layer_sel(~, ~)
+		            val = get(layer_selector, 'Value');
+		            feature_map_inner = feature_map{val};
+		        end
+		        function cb_checkbox_meas_symbolsize(~, ~)  %  (src, event)
+		            if get(ui_checkbox_meas_symbolsize, 'Value')
+		                set(ui_edit_meas_symbolsize, 'Enable', 'on')
+		                update_brain_meas_plot()
+		            else
+		                symbol_size = str2double(get(ui_edit_meas_symbolsize, 'String'));
+		                pl.set('SYMS_SIZE', symbol_size);
+		                pl.set('SYMS', 0);
+		                set(ui_edit_meas_symbolsize, 'Enable', 'off')
+		                update_brain_meas_plot()
+		            end
+		        end
+		        function cb_edit_meas_symbolsize(~, ~)  %  (src, event)
+		            symbol_size = real(str2double(get(ui_edit_meas_symbolsize, 'String')));
+		            if isempty(symbol_size) || symbol_size <= 0
+		                set(ui_edit_meas_symbolsize, 'String', '1')
+		            end
+		            update_brain_meas_plot()
+		        end
+		        function cb_checkbox_meas_sphereradius(~, ~)  %  (src, event)
+		            if get(ui_checkbox_meas_sphereradius, 'Value')
+		                set(ui_edit_meas_sphereradius, 'Enable', 'on')
+		                update_brain_meas_plot()
+		            else
+		                R = str2double(get(ui_edit_meas_sphereradius, 'String'));
+		                pl.set('SPHS_SIZE', R);
+		                pl.set('SPHS', 0);
+		                set(ui_edit_meas_sphereradius, 'Enable', 'off')
+		                update_brain_meas_plot()
+		            end
+		        end
+		        function cb_edit_meas_sphereradius(~, ~)  %  (src, event)
+		            R = real(str2double(get(ui_edit_meas_sphereradius, 'String')));
+		            if isempty(R) || R <= 0
+		                set(ui_edit_meas_sphereradius, 'String', '1')
+		            end
+		            update_brain_meas_plot()
+		        end
+		        function cb_checkbox_meas_spheretransparency(~, ~)  %  (src, event)
+		            if get(ui_checkbox_meas_spheretransparency, 'Value')
+		                set(ui_slider_meas_spheretransparency, 'Enable', 'on')
+		
+		                update_brain_meas_plot()
+		            else
+		                alpha = get(ui_slider_meas_spheretransparency, 'Value');
+		                pl.set('SPHS_FACE_ALPHA', alpha);
+		                pl.set('SPHS_EDGE_ALPHA', alpha);
+		
+		                set(ui_slider_meas_spheretransparency, 'Enable', 'off')
+		                update_brain_meas_plot()
+		            end
+		        end
+		        function cb_slider_meas_spheretransparency(~, ~)  %  (src, event)
+		            update_brain_meas_plot();
+		        end
+		        function cb_checkbox_meas_labelsize(~, ~)  %  (src, event)
+		            if get(ui_checkbox_meas_labelsize, 'Value')
+		                set(ui_edit_meas_labelsize, 'Enable', 'on')
+		                update_brain_meas_plot()
+		            else
+		                lab_size = str2double(get(ui_edit_meas_labelsize, 'String'));
+		                pl.set('LABS_SIZE', lab_size);
+		                pl.set('LABS', 0);
+		                set(ui_edit_meas_labelsize, 'Enable', 'off')
+		                update_brain_meas_plot()
+		            end
+		        end
+		        function cb_edit_meas_labelsize(~, ~)  %  (src, event)
+		            lab_size = real(str2double(get(ui_edit_meas_labelsize, 'String')));
+		            if isempty(lab_size) || lab_size <= 0
+		                set(ui_edit_meas_labelsize, 'String', '1')
+		            end
+		            update_brain_meas_plot()
+		        end
+		        function update_brain_meas_plot()
+		            if ~isempty(feature_map_inner)
+		                
+		
+		                if any(isnan(feature_map_inner)) || any(isinf(feature_map_inner))
+		                    nan_warn_f = warndlg('A value is not a finite real number.');
+		                    set_braph2_icon(nan_warn_f);
+		                    return
+		                end
+		
+		                if get(ui_checkbox_meas_symbolsize, 'Value')
+		
+		                    size_ = str2double(get(ui_edit_meas_symbolsize, 'String')) * feature_map_inner;
+		                    size_(isnan(size_)) = 0.1;
+		                    size_(size_ <= 0) = 0.1;
+		                    pl.set('SYMS_SIZE', size_);
+		                    pl.set('SYMS', 1);
+		                else
+		                    pl.set('SYMS', 0);
+		                end
+		
+		                if get(ui_checkbox_meas_sphereradius, 'Value')
+		
+		                    R = str2double(get(ui_edit_meas_sphereradius, 'String'));
+		                    R = feature_map_inner * R;
+		                    R(isnan(R)) = 0.1;
+		                    R(R <= 0) = 0.1;
+		                    pl.set('SPHS_SIZE', R);
+		                    pl.set('SPHS', 1);
+		                else
+		                    pl.set('SPHS', 0);
+		                end
+		
+		
+		                if get(ui_checkbox_meas_spheretransparency, 'Value')
+		                    alpha = get(ui_slider_meas_spheretransparency, 'Value');
+		
+		                    alpha_vec = (feature_map_inner)*alpha;
+		                    alpha_vec(isnan(alpha_vec)) = 0;
+		                    alpha_vec(alpha_vec < 0) = 0;
+		                    alpha_vec(alpha_vec > 1) = 1;
+		                    pl.set('SPHS_EDGE_ALPHA', alpha_vec);
+		                    pl.set('SPHS_FACE_ALPHA', alpha_vec);
+		                    pl.set('SPHS', 1);
+		                end
+		
+		                if get(ui_checkbox_meas_labelsize, 'Value')
+		
+		                    size_ = str2double(get(ui_edit_meas_labelsize, 'String'));
+		                    size_(isnan(size_)) = 0.1;
+		                    size_(size_ <= 0) = 0.1;
+		                    pl.set( 'LABS_SIZE', size_);
+		                    pl.set('LABS', 1);
+		                else
+		                    pl.set('LABS', 0);
+		                end
+		
+		            end
+		            if get(ui_checkbox_meas_labelsize, 'Value')
+		                % set labels to values
+		                new_labs = cellfun(@(x) num2str(x), num2cell(feature_map_inner), 'UniformOutput', false);
+		                brs_dict = pl.get('ATLAS').get('BR_DICT').get('IT_LIST');
+		                cellfun(@(x, y) x.set('LABEL', y), brs_dict, new_labs', 'UniformOutput', false)
+		            end
+		            % draw
+		            pl.draw();
+		        end
+		
+		    % draw
+		    init_measures_panel()
+		    update_brain_meas_plot()
+		    set(f, 'Visible', 'on')
+		    if nargout > 0
+		        h = f;
+		    end
+		end
 function brain_feature_p = getBrainFeaturePanel(pl, ui_panel_graph)
-    % switch between 
-    el = pl.get('NNEL');
-    % it has have to value at this point
-    feature_map = el.get('feature_map');
-    if size(feature_map{1}, 1) == 1 || size(feature_map{1}, 2) == 1 % nodal
-        tmp_panel = getMCRPanel(ui_panel_graph);
-    else % matrix
-        tmp_panel = getBrainGraphPanel(ui_panel_graph);
-    end
-    if nargout > 1
-        brain_feature_p = tmp_panel;
-    end
-end
+		    % switch between 
+		    el = pl.get('NNEL');
+		    % it has have to value at this point
+		    feature_map = el.get('feature_map');
+		    if size(feature_map{1}, 1) == 1 || size(feature_map{1}, 2) == 1 % nodal
+		        tmp_panel = pl.getMCRPanel(ui_panel_graph);
+		    else % matrix
+		        tmp_panel = pl.getBrainGraphPanel(ui_panel_graph);
+		    end
+		    if nargout > 1
+		        brain_feature_p = tmp_panel;
+		    end
+		end
+	
