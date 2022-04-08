@@ -32,37 +32,36 @@ function nv = getNoValue()
     nv = local_nv;
 end
 
-%TODO: check tests
-% % % %% ¡tests!
-% % % 
-% % % %%% ¡test!
-% % % %%%% ¡name!
-% % % Copy
-% % % %%%% ¡code!
-% % % nv = NoValue.getNoValue();
-% % % 
-% % % nv_copy = nv.copy();
-% % % 
-% % % assert( ...
-% % %     nv == nv_copy, ...
-% % %     [BRAPH2.STR ':NoValue:' BRAPH2.BUG_COPY], ...
-% % %     ['The copy of a NoValue must return a pointer to the persistent NoValue.getNoValue().'] ...
-% % %     )
-% % % 
-% % % %%% ¡test!
-% % % %%%% ¡name!
-% % % Clone
-% % % %%%% ¡code!
-% % % nv = NoValue.getNoValue();
-% % % 
-% % % nv_clone = nv.clone();
-% % % 
-% % % assert( ...
-% % %     nv == nv_clone, ...
-% % %     [BRAPH2.STR ':NoValue:' BRAPH2.BUG_CLONE], ...
-% % %     ['The clone of a NoValue must return a pointer to the persistent NoValue.getNoValue().'] ...
-% % %     )
-% % % 
+%% ¡tests!
+
+%%% ¡test!
+%%%% ¡name!
+Copy
+%%%% ¡code!
+nv = NoValue.getNoValue();
+
+nv_copy = nv.copy();
+
+assert( ...
+    nv == nv_copy, ...
+    [BRAPH2.STR ':NoValue:' BRAPH2.BUG_COPY], ...
+    ['The copy of a NoValue must return a pointer to the persistent NoValue.getNoValue().'] ...
+    )
+
+%%% ¡test!
+%%%% ¡name!
+Clone
+%%%% ¡code!
+nv = NoValue.getNoValue();
+
+nv_clone = nv.clone();
+
+assert( ...
+    nv == nv_clone, ...
+    [BRAPH2.STR ':NoValue:' BRAPH2.BUG_CLONE], ...
+    ['The clone of a NoValue must return a pointer to the persistent NoValue.getNoValue().'] ...
+    )
+
 % % % %%% ¡test!
 % % % %%%% ¡name!
 % % % JSON
