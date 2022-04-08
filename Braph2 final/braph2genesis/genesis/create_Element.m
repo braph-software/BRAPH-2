@@ -1101,7 +1101,7 @@ generate_inspection()
                         if ~isempty(props_update{i}.default)
                             g(4, ['case ' class_name '.' props_update{i}.TAG])
                                 g(5, ['prop_default = ' props_update{i}.default ';'])
-                        end                            
+                        end
                     end
                     if ~strcmp(superclass_name, 'Element')
                         g(4, 'otherwise');
@@ -1133,27 +1133,8 @@ generate_inspection()
                 gs(3, {
                     ['prop = ' class_name '.getPropProp(pointer);']
                      ''
-                	 'switch prop'
+                	['prop_default = ' class_name '.conditioning(prop, ' class_name '.getPropDefault(prop));']
                      })
-                    for i = 1:1:numel(props)
-                        g(4, ['case ' class_name '.' props{i}.TAG])
-                            if ~isempty(props{i}.default)
-                                g(5, ['prop_default = ' class_name '.conditioning(prop, ' props{i}.default ');'])
-                            else
-                                g(5, ['prop_default = ' class_name '.conditioning(prop, Format.getFormatDefault(Format.' props{i}.FORMAT ', ' class_name '.getPropSettings(prop)));'])
-                            end                            
-                    end
-                    for i = 1:1:numel(props_update)
-                        if ~isempty(props_update{i}.default)
-                            g(4, ['case ' class_name '.' props_update{i}.TAG])
-                                g(5, ['prop_default = ' class_name '.conditioning(prop, ' props_update{i}.default ');'])
-                        end                            
-                    end
-                    if ~strcmp(superclass_name, 'Element')
-                        g(4, 'otherwise');
-                            g(5, [ 'prop_default = getPropDefaultConditioned@' superclass_name '(prop);']);
-                    end
-                g(3, 'end')
             g(2, 'end')
 
             % checkProp(pointer, value)

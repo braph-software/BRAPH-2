@@ -1,48 +1,48 @@
 %% ¡header!
-ETC1 < Element (et, test Element C) tests conditioning.
+ETC2 < ETC1 (et, test Element C2) tests conditioning inheritance.
 
 %%% ¡description!
-ETC1 tests conditioning.
+ETC1 tests conditioning inheritance.
 
 %%% ¡seealso!
-Element, Category, Format, ETC2
+Element, Category, Format, ETC1
 
-%% ¡props!
+%% ¡props_update!
 
 %%% ¡prop!
 NM (metadata, scalar) is a scalar, metadata.
 %%%% ¡conditioning!
 value = value(2);
 %%%% ¡default!
-[0:1:10]
+-[0:1:10]
 
 %%% ¡prop!
 NP (parameter, scalar) is a scalar, parameter.
 %%%% ¡conditioning!
 value = value(3);
 %%%% ¡default!
-[0:1:10]
+-[0:1:10]
 
 %%% ¡prop!
 ND (data, scalar) is a scalar, data.
 %%%% ¡conditioning!
 value = value(4);
 %%%% ¡default!
-[0:1:10]
+-[0:1:10]
 
 %%% ¡prop!
 NG (gui, scalar) is a scalar, gui.
 %%%% ¡conditioning!
 value = value(5);
 %%%% ¡default!
-[0:1:10]
+-[0:1:10]
 
 %%% ¡prop!
 NF (figure, scalar) is a scalar, figure.
 %%%% ¡conditioning!
 value = value(6);
 %%%% ¡default!
-[0:1:10]
+-[0:1:10]
 
 %%% ¡prop!
 NR (result, scalar) is a scalar, result.
@@ -51,81 +51,83 @@ if ~isa(value, 'NoValue')
     value = value(7);
 end
 %%%% ¡default!
-[0:1:10]
+-[0:1:10]
 
 %%% ¡prop!
 SM (metadata, string) is a scalar, metadata.
 %%%% ¡conditioning!
-value = 'SM1';
+value = 'SM2';
 
 %%% ¡prop!
 SP (parameter, string) is a scalar, parameter.
 %%%% ¡conditioning!
-value = 'SP1';
+value = 'SP2';
 
 %%% ¡prop!
 SD (data, string) is a scalar, data.
 %%%% ¡conditioning!
-value = 'SD1';
+value = 'SD2';
 
 %%% ¡prop!
 SG (gui, string) is a scalar, gui.
 %%%% ¡conditioning!
-value = 'SG1';
+value = 'SG2';
 
 %%% ¡prop!
 SF (figure, string) is a scalar, figure.
 %%%% ¡conditioning!
-value = 'SF1';
+value = 'SF2';
 
 %%% ¡prop!
 SR (result, string) is a scalar, result.
 %%%% ¡conditioning!
-value = 'SR1';
+value = 'SR2';
+
+%% ¡props!
 
 %%% ¡prop!
-CM (metadata, cvector) is a cvector, metadata.
+RM (metadata, rvector) is a rvector, metadata.
 %%%% ¡conditioning!
 value = value';
 %%%% ¡default!
-[0:1:10]
+[0:1:10]'
 
 %%% ¡prop!
-CP (parameter, cvector) is a cvector, parameter.
+RP (parameter, rvector) is a rvector, parameter.
 %%%% ¡conditioning!
 value = value';
 %%%% ¡default!
-[0:1:20]
+[0:1:20]'
 
 %%% ¡prop!
-CD (data, cvector) is a cvector, data.
+RD (data, rvector) is a rvector, data.
 %%%% ¡conditioning!
 value = value';
 %%%% ¡default!
-[0:1:30]
+[0:1:30]'
 
 %%% ¡prop!
-CG (gui, cvector) is a cvector, gui.
+RG (gui, rvector) is a rvector, gui.
 %%%% ¡conditioning!
 value = value';
 %%%% ¡default!
-[0:1:40]
+[0:1:40]'
 
 %%% ¡prop!
-CF (figure, cvector) is a cvector, figure.
+RF (figure, rvector) is a rvector, figure.
 %%%% ¡conditioning!
 value = value';
 %%%% ¡default!
-[0:1:50]
+[0:1:50]'
 
 %%% ¡prop!
-CR (result, cvector) is a cvector, result.
+RR (result, rvector) is a rvector, result.
 %%%% ¡conditioning!
 if ~isa(value, 'NoValue')
     value = value';
 end
 %%%% ¡default!
-[0:1:60]
+[0:1:60]'
 
 %% ¡tests!
 
@@ -133,25 +135,32 @@ end
 %%%% ¡name!
 Conditioning
 %%%% ¡code!
-et = ETC1();
+et = ETC2();
 
-assert(et.get(ETC1.NM) == 1)
-assert(et.get(ETC1.NP) == 2)
-assert(et.get(ETC1.ND) == 3)
-assert(et.get(ETC1.NG) == 4)
-assert(et.get(ETC1.NF) == 5)
-assert(et.get(ETC1.NR) == 6)
+assert(et.get(ETC2.NM) == -1)
+assert(et.get(ETC2.NP) == -2)
+assert(et.get(ETC2.ND) == -3)
+assert(et.get(ETC2.NG) == -4)
+assert(et.get(ETC2.NF) == -5)
+assert(et.get(ETC2.NR) == -6)
 
-assert(strcmp(et.get(ETC1.SM), 'SM1'))
-assert(strcmp(et.get(ETC1.SP), 'SP1'))
-assert(strcmp(et.get(ETC1.SD), 'SD1'))
-assert(strcmp(et.get(ETC1.SG), 'SG1'))
-assert(strcmp(et.get(ETC1.SF), 'SF1'))
-assert(strcmp(et.get(ETC1.SR), 'SR1'))
+assert(strcmp(et.get(ETC2.SM), 'SM2'))
+assert(strcmp(et.get(ETC2.SP), 'SP2'))
+assert(strcmp(et.get(ETC2.SD), 'SD2'))
+assert(strcmp(et.get(ETC2.SG), 'SG2'))
+assert(strcmp(et.get(ETC2.SF), 'SF2'))
+assert(strcmp(et.get(ETC2.SR), 'SR2'))
 
-assert(isequal(et.get(ETC1.CM), [0:1:10]'))
-assert(isequal(et.get(ETC1.CP), [0:1:20]'))
-assert(isequal(et.get(ETC1.CD), [0:1:30]'))
-assert(isequal(et.get(ETC1.CG), [0:1:40]'))
-assert(isequal(et.get(ETC1.CF), [0:1:50]'))
-assert(isequal(et.get(ETC1.CR), [0:1:60]'))
+assert(isequal(et.get(ETC2.CM), [0:1:10]'))
+assert(isequal(et.get(ETC2.CP), [0:1:20]'))
+assert(isequal(et.get(ETC2.CD), [0:1:30]'))
+assert(isequal(et.get(ETC2.CG), [0:1:40]'))
+assert(isequal(et.get(ETC2.CF), [0:1:50]'))
+assert(isequal(et.get(ETC2.CR), [0:1:60]'))
+
+assert(isequal(et.get(ETC2.RM), [0:1:10]))
+assert(isequal(et.get(ETC2.RP), [0:1:20]))
+assert(isequal(et.get(ETC2.RD), [0:1:30]))
+assert(isequal(et.get(ETC2.RG), [0:1:40]))
+assert(isequal(et.get(ETC2.RF), [0:1:50]))
+assert(isequal(et.get(ETC2.RR), [0:1:60]))
