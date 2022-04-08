@@ -71,7 +71,8 @@ function create_Element(generator_file, target_dir) %TODO: revise
 %   where also the modified prop value is returned.
 %   The conditioned value should be in variable 'value'.
 %  <strong>%%%% ¡postprocessing!</strong>
-%   Postprocessing code (executed after setting, but before checking, value).
+%   Postprocessing code (executed after setting, but before checking,
+%   value), executed on all unlocked props after each set operation.
 %   Can be on multiple lines.
 %   Does not return anything.
 %  <strong>%%%% ¡check_prop!</strong>
@@ -628,6 +629,28 @@ generate_inspection()
                             end
                             for i = 1:1:numel(props)
                                 if strcmp(props{i}.CATEGORY, 'RESULT')
+                                    g(6, [class_name '.' props{i}.TAG])
+                                end
+                            end
+                            g(6, '];')
+                    g(4, 'case Category.GUI')
+                        g(5, 'prop_list = [')
+                            if ~strcmp(superclass_name, 'Element')
+                                g(6, [superclass_name '.getProps(Category.GUI)'])
+                            end
+                            for i = 1:1:numel(props)
+                                if strcmp(props{i}.CATEGORY, 'GUI')
+                                    g(6, [class_name '.' props{i}.TAG])
+                                end
+                            end
+                            g(6, '];')
+                    g(4, 'case Category.FIGURE')
+                        g(5, 'prop_list = [')
+                            if ~strcmp(superclass_name, 'Element')
+                                g(6, [superclass_name '.getProps(Category.FIGURE)'])
+                            end
+                            for i = 1:1:numel(props)
+                                if strcmp(props{i}.CATEGORY, 'FIGURE')
                                     g(6, [class_name '.' props{i}.TAG])
                                 end
                             end
