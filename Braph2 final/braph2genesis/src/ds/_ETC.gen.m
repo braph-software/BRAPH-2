@@ -21,14 +21,14 @@ SM (metadata, string) is a scalar, metadata.
 %%%% ¡conditioning!
 value = tostring(value);
 
-% % % %%% ¡prop!
-% % % NP (parameter, scalar) is a scalar, parameter.
-% % % 
-% % % 
-% % % 
-% % % 
-% % % 
-% % % 
+%%% ¡prop!
+NP (parameter, scalar) is a scalar, parameter.
+%%%% ¡conditioning!
+value = value(3);
+%%%% ¡default!
+[0:1:10]
+
+
 % % % %%% ¡prop!
 % % % ND (data, scalar) is a scalar, data.
 % % % 
