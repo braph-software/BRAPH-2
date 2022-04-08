@@ -100,6 +100,9 @@ if sub_dict.length() == 0
 else
     value = sub_dict.getItem(1).get('FEATURE_MASK');
 end
+%%%% ¡gui!
+pr = PPNNClassifierEvaluator_Feasture_Map('EL', nne, 'PROP', NNClassifierEvaluator.FEATURE_MAP, varargin{:});
+
 
 %% ¡props_update!
 
