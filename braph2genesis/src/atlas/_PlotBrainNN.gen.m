@@ -517,18 +517,21 @@ function link_edges_settings(pl, i_vec, j_vec, varargin)
     set(ui_table, 'ColumnEditable', true)
     set(ui_table, 'Data', data)
     set(ui_table, 'CellEditCallback', {@cb_table_edit});
+    set(ui_table, 'Enable', 'off')
 
     ui_button_show = uicontrol(f, 'Style',  'pushbutton', 'Units', 'normalized');
     set(ui_button_show, 'Position', [.60 .825 .18 .10])
     set(ui_button_show, 'String', 'Show lines')
     set(ui_button_show, 'TooltipString', 'Show selected lines')
     set(ui_button_show, 'Callback', {@cb_show})
+    set(ui_button_show, 'Enable', 'off')
 
     ui_button_hide = uicontrol(f, 'Style',  'pushbutton', 'Units', 'normalized' );
     set(ui_button_hide, 'Position', [.80 .825 .18 .10])
     set(ui_button_hide, 'String', 'Hide lines')
     set(ui_button_hide, 'TooltipString', 'Hide selected lines')
     set(ui_button_hide, 'Callback', {@cb_hide})
+    set(ui_button_hide, 'Enable', 'off')
 
     ui_popup_style = uicontrol(f, 'Units', 'normalized', 'Style',  'popup', 'String', {''});
     set(ui_popup_style, 'Position', [.62 .575 .35 .10])
@@ -536,12 +539,14 @@ function link_edges_settings(pl, i_vec, j_vec, varargin)
     set(ui_popup_style, 'Value', 1)
     set(ui_popup_style, 'TooltipString', 'Select line style');
     set(ui_popup_style, 'Callback', {@cb_style})
+    set(ui_popup_style, 'Enable', 'off')
 
     ui_text_width = uicontrol(f, 'Style', 'text', 'Units', 'normalized');
     set(ui_text_width, 'Position', [.62 .330 .10 .10])
     set(ui_text_width, 'String', 'Link width ')
     set(ui_text_width, 'HorizontalAlignment', 'left')
     set(ui_text_width, 'FontWeight', 'bold')
+    set(ui_text_width, 'Enable', 'off')
 
     ui_edit_width = uicontrol(f, 'Style', 'edit', 'Units', 'normalized');
     set(ui_edit_width, 'Position', [.72 .325 .25 .10])
@@ -549,6 +554,7 @@ function link_edges_settings(pl, i_vec, j_vec, varargin)
     set(ui_edit_width, 'FontWeight', 'bold')
     set(ui_edit_width, 'String', '1')
     set(ui_edit_width, 'Callback', {@cb_width})
+    set(ui_edit_width, 'Enable', 'off')
 
     ui_button_linecolor = uicontrol(f, 'Style',  'pushbutton', 'Units', 'normalized');
     set(ui_button_linecolor, 'ForegroundColor', set_color)
@@ -556,12 +562,14 @@ function link_edges_settings(pl, i_vec, j_vec, varargin)
     set(ui_button_linecolor, 'String', 'Link Color')
     set(ui_button_linecolor, 'TooltipString', 'Select line color')
     set(ui_button_linecolor, 'Callback', {@cb_linecolor})
+    set(ui_button_linecolor, 'Enable', 'off')
 
     ui_button_clearselection = uicontrol(f, 'Style',  'pushbutton', 'Units', 'normalized');
     set(ui_button_clearselection, 'Position', [.03 .075 .54 .10])
     set(ui_button_clearselection, 'String', 'Clear Selection')
     set(ui_button_clearselection, 'TooltipString', 'Clear selected links')
     set(ui_button_clearselection, 'Callback', {@cb_clearselection})
+    set(ui_button_clearselection, 'Enable', 'off')
 
         function cb_table_edit(~, event)  % (src, event)
             i = event.Indices(1);
@@ -1338,12 +1346,14 @@ function cylinder_edges_settings(pl, i_vec, j_vec, varargin)
     set(ui_button_show, 'String', 'Show lines')
     set(ui_button_show, 'TooltipString', 'Show selected cylinders')
     set(ui_button_show, 'Callback', {@cb_show})
+    set(ui_button_show, 'Enable', 'off')
 
     ui_button_hide = uicontrol(f, 'Style',  'pushbutton', 'Units', 'normalized');
     set(ui_button_hide, 'Position', [.80 .825 .18 .10])
     set(ui_button_hide, 'String', 'Hide lines')
     set(ui_button_hide, 'TooltipString', 'Hide selected cylinders')
     set(ui_button_hide, 'Callback', {@cb_hide})
+    set(ui_button_hide, 'Enable', 'off')
 
     ui_button_cylindercolor = uicontrol(f, 'Style',  'pushbutton', 'Units', 'normalized');
     set(ui_button_cylindercolor, 'ForegroundColor', set_color)
@@ -1351,6 +1361,7 @@ function cylinder_edges_settings(pl, i_vec, j_vec, varargin)
     set(ui_button_cylindercolor, 'String', 'Link Color')
     set(ui_button_cylindercolor, 'TooltipString', 'Select cylinder color')
     set(ui_button_cylindercolor, 'Callback', {@cb_cylindercolor})
+    set(ui_button_cylindercolor, 'Enable', 'off')
 
     ui_button_clearselection = uicontrol(f, 'Style',  'pushbutton', 'Units', 'normalized');
     set(ui_button_clearselection, 'Position', [.03 .075 .54 .10])
@@ -1611,6 +1622,7 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
 		            set(ui_link_type, 'Units', 'normalized')
 		            set(ui_link_type, 'Position', [.62 .62 .3 .08])
 		            set(ui_link_type, 'Callback', {@cb_link_type});
+		            set(ui_link_type, 'Visible', 'off');
 		
 		            set(ui_button_graph_show, 'Units', 'normalized')
 		            set(ui_button_graph_show, 'Position', [.1 .45 .4 .08])
@@ -1661,6 +1673,10 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
 		                    for j = 1:1:n
 		                        if i == j
 		                            continue;
+                                end
+                                value = feature_map_inner(i, j);
+		                        if value == 0
+		                            continue;
 		                        end
 		                        pl.link_edges(i, j, 'LineWidth', weight)
 		                    end
@@ -1697,6 +1713,10 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
 		                for i = 1:1:n
 		                    for j = 1:1:n
 		                        if i == j
+		                            continue;
+                                end
+                                value = feature_map_inner(i, j);
+		                        if value == 0
 		                            continue;
 		                        end
 		                        pl.link_edge(i, j, 'Color', color)
