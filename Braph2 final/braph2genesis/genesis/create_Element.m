@@ -391,6 +391,7 @@ generate_header()
              '%  getPropDescription - returns the description of a property'
              '%  getPropSettings - returns the settings of a property'
              '%  getPropDefault - returns the default value of a property'
+             '%  getPropDefaultConditioned - returns the conditione default value of a property'
              '%  checkProp - checks whether a value has the correct format/error'
              '%'
             ['% ' class_name ' methods (category, Static):']
@@ -1079,9 +1080,8 @@ generate_inspection()
                     ['%  DEFAULT = Element.GETPROPDEFAULT(' class_name ', POINTER) returns the default value of POINTER of ' class_name '.']
                     ['%  DEFAULT = ' upper(moniker) '.GETPROPDEFAULT(' class_name ', POINTER) returns the default value of POINTER of ' class_name '.']
                      '%'
-                     '% See also getPropProp, getPropTag, getPropSettings, '
-                     '% getPropCategory, getPropFormat, getPropDescription, '
-                     '% checkProp.'
+                     '% See also getPropDefaultConditioned, getPropProp, getPropTag, getPropSettings, '
+                     '% getPropCategory, getPropFormat, getPropDescription, checkProp.'
                      ''
                     })
                 gs(3, {
@@ -1106,6 +1106,52 @@ generate_inspection()
                     if ~strcmp(superclass_name, 'Element')
                         g(4, 'otherwise');
                             g(5, [ 'prop_default = getPropDefault@' superclass_name '(prop);']);
+                    end
+                g(3, 'end')
+            g(2, 'end')
+
+            % getPropDefaultConditioned(pointer)
+            g(2, 'function prop_default = getPropDefaultConditioned(pointer)')
+              gs(3, {
+                     '%GETPROPDEFAULTCONDITIONED returns the conditioned default value of a property.'
+                     '%'
+                    ['% DEFAULT = ' class_name '.GETPROPDEFAULTCONDITIONED(PROP) returns the conditioned default ']
+                     '%  value of the property PROP.'
+                     '%'
+                    ['% DEFAULT = ' class_name '.GETPROPDEFAULTCONDITIONED(TAG) returns the conditioned default ']
+                     '%  value of the property with tag TAG.'
+                     '%'
+                     '% Alternative forms to call this method are (POINTER = PROP or TAG):'
+                    ['%  DEFAULT = ' upper(moniker) '.GETPROPDEFAULTCONDITIONED(POINTER) returns the conditioned default value of POINTER of ' upper(moniker) '.']
+                    ['%  DEFAULT = Element.GETPROPDEFAULTCONDITIONED(' class_name ', POINTER) returns the conditioned default value of POINTER of ' class_name '.']
+                    ['%  DEFAULT = ' upper(moniker) '.GETPROPDEFAULTCONDITIONED(' class_name ', POINTER) returns the conditioned default value of POINTER of ' class_name '.']
+                     '%'
+                     '% See also getPropDefault, getPropProp, getPropTag, getPropSettings, '
+                     '% getPropCategory, getPropFormat, getPropDescription, checkProp.'
+                     ''
+                    })
+                gs(3, {
+                    ['prop = ' class_name '.getPropProp(pointer);']
+                     ''
+                	 'switch prop'
+                     })
+                    for i = 1:1:numel(props)
+                        g(4, ['case ' class_name '.' props{i}.TAG])
+                            if ~isempty(props{i}.default)
+                                g(5, ['prop_default = ' class_name '.conditioning(prop, ' props{i}.default ');'])
+                            else
+                                g(5, ['prop_default = Format.getFormatDefault(Format.' props{i}.FORMAT ', ' class_name '.getPropSettings(prop));'])
+                            end                            
+                    end
+                    for i = 1:1:numel(props_update)
+                        if ~isempty(props_update{i}.default)
+                            g(4, ['case ' class_name '.' props_update{i}.TAG])
+                                g(5, ['prop_default = ' class_name '.conditioning(prop, ' props_update{i}.default ');'])
+                        end                            
+                    end
+                    if ~strcmp(superclass_name, 'Element')
+                        g(4, 'otherwise');
+                            g(5, [ 'prop_default = getPropDefaultConditioned@' superclass_name '(prop);']);
                     end
                 g(3, 'end')
             g(2, 'end')
@@ -1451,7 +1497,7 @@ generate_conditioning()
         if all(cellfun(@(x) numel(x.conditioning) == 1 && isempty(x.conditioning{1}), props)) && all(cellfun(@(x) numel(x.conditioning) == 1 && isempty(x.conditioning{1}), props_update))
             return
         end
-        g(1, 'methods (Static) % conditioning')
+        g(1, 'methods (Static, Access=protected) % conditioning')
             g(2, ['function value = conditioning(pointer, value)'])
                 gs(3, {
                     ['prop = ' class_name '.getPropProp(pointer);']

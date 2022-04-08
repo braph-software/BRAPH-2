@@ -67,6 +67,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %  getPropDescription - returns the description of a property
     %  getPropSettings - returns the settings of a property
     %  getPropDefault - returns the default value of a property
+    %  getPropDefaultConditioned - returns the conditioned default value of a property
     %  checkProp - checks whether a value has the correct format/error
     %
     % Element methods (category, Static):
@@ -529,9 +530,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %  TAG = Element.GETPROPDEFAULT(CLASS, POINTER) returns the default value of POINTER of CLASS.
             %  TAG = EL.GETPROPDEFAULT(CLASS, POINTER) returns the default value of POINTER of CLASS.
             %
-            % See also getPropProp, getPropTag, getPropSettings,
-            % getPropCategory, getPropFormat, getPropDescription,
-            % checkProp.
+            % See also getPropDefaultConditioned, getPropProp, getPropTag, getPropSettings,
+            % getPropCategory, getPropFormat, getPropDescription, checkProp.
             
             % calls from Element
             if nargin < 2
@@ -541,6 +541,32 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             
             % calls from subclasses of Element
             prop_default = eval([Element.getClass(el) '.getPropDefault(pointer)']);
+        end
+        function prop_default = getPropDefaultConditioned(el, pointer)
+            %GETPROPDEFAULTCONDITIONED returns the conditioned default value of a property.
+            %
+            % DEFAULT = Element.GETPROPDEFAULTCONDITIONED(PROP) returns the conditioned default
+            %   value of the property PROP.
+            %
+            % DEFAULT = Element.GETPROPDEFAULTCONDITIONED(TAG) returns the conditioned default
+            %   value of the property with tag TAG.
+            %
+            % Alternative forms to call this method are (POINTER = PROP or TAG):
+            %  TAG = EL.GETPROPDEFAULTCONDITIONED(POINTER) returns the conditioned default value of POINTER of EL.
+            %  TAG = Element.GETPROPDEFAULTCONDITIONED(CLASS, POINTER) returns the conditioned default value of POINTER of CLASS.
+            %  TAG = EL.GETPROPDEFAULTCONDITIONED(CLASS, POINTER) returns the conditioned default value of POINTER of CLASS.
+            %
+            % See also getPropDefault, getPropProp, getPropTag, getPropSettings,
+            % getPropCategory, getPropFormat, getPropDescription, checkProp.
+            
+            % calls from Element
+            if nargin < 2
+                pointer = el; %#ok<NASGU>
+                el = 'Element';
+            end
+            
+            % calls from subclasses of Element
+            prop_default = eval([Element.getClass(el) '.getPropDefaultConditioned(pointer)']);
         end
         function prop_check = checkProp(el, pointer, value)
             %CHECKPROP checks whether a value has the correct format/error.
@@ -1066,7 +1092,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             end
         end     
     end
-    methods (Static) % conditioning
+    methods (Static, Access=protected) % conditioning
         function value = conditioning(el, pointer, value)
             %CONDITIONING conditions a value before setting a property.
             %

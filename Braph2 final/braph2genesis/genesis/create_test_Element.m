@@ -105,7 +105,7 @@ generate_test1_2_instantation_defaults()
                 g(2, 'case {Category.METADATA, Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE}')
                     g(3, 'assert( ...')
                         gs(4, {
-                            ['isequal(' moniker '.getr(prop), ' class_name '.conditioning(prop, ' class_name '.getPropDefault(prop))), ...']
+                            ['isequal(' moniker '.getr(prop), ' class_name '.getPropDefaultConditioned(prop)), ...']
                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
                             ['[''' class_name '.getr('' int2str(prop) '') must be inizialized to its default value '' ...']
                             ['''given by ' class_name '.getPropDefault('' int2str(prop) ''). '' ...']
@@ -114,7 +114,7 @@ generate_test1_2_instantation_defaults()
                             })
                     g(3, 'assert( ...')
                         gs(4, {
-                            ['isequal(' moniker '.getr(TAG), ' class_name '.conditioning(prop, ' class_name '.getPropDefault(prop))), ...']
+                            ['isequal(' moniker '.getr(TAG), ' class_name '.getPropDefaultConditioned(prop)), ...']
                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
                             ['[''' class_name '.getr('''''' TAG '''''') must be inizialized to its default value '' ...']
                             ['''given by ' class_name '.getPropDefault('' int2str(prop) ''). '' ...']
