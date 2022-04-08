@@ -1590,7 +1590,8 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
 		        
 		
 		    ui_checkbox_graph_lineweight = uicontrol(fig_graph, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
-		    ui_edit_graph_lineweight = uicontrol(fig_graph, 'Style', 'edit');
+		    ui_txt_graph_lineweight = uicontrol(fig_graph, 'Style', 'text');
+            ui_edit_graph_lineweight = uicontrol(fig_graph, 'Style', 'edit');
 		    ui_button_graph_show = uicontrol(fig_graph, 'Style', 'pushbutton');
 		    ui_button_graph_hide = uicontrol(fig_graph, 'Style', 'pushbutton');
 		    ui_button_graph_color = uicontrol(fig_graph, 'Style', 'pushbutton');
@@ -1611,9 +1612,17 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
 		            set(ui_checkbox_graph_lineweight, 'FontWeight', 'bold')
 		            set(ui_checkbox_graph_lineweight, 'TooltipString', 'Shows brain regions by label')
 		            set(ui_checkbox_graph_lineweight, 'Callback', {@cb_checkbox_lineweight})
+                    set(ui_checkbox_graph_lineweight, 'Visible', 'off')
 		
+                    set(ui_txt_graph_lineweight, 'Units', 'normalized');
+		            set(ui_txt_graph_lineweight, 'Position', [.1 .61 .15 .1]);
+		            set(ui_txt_graph_lineweight, 'String', 'Line weight: ');
+		            set(ui_txt_graph_lineweight, 'TooltipString', 'Set line weight.');
+		            set(ui_txt_graph_lineweight, 'FontWeight', 'bold');
+		            set(ui_txt_graph_lineweight, 'Callback', {@cb_edit_lineweight});
+
 		            set(ui_edit_graph_lineweight, 'Units', 'normalized')
-		            set(ui_edit_graph_lineweight, 'Position', [.3 .62 .3 .09])
+		            set(ui_edit_graph_lineweight, 'Position', [.25 .61 .25 .1])
 		            set(ui_edit_graph_lineweight, 'String', '1');
 		            set(ui_edit_graph_lineweight, 'TooltipString', 'Set line weight.');
 		            set(ui_edit_graph_lineweight, 'FontWeight', 'bold')
@@ -1667,7 +1676,8 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
 		            else
 		                set(ui_edit_graph_lineweight, 'Enable', 'off')
 		
-		                weight = str2double(get(ui_edit_graph_lineweight, 'String'));
+		                %weight = str2double(get(ui_edit_graph_lineweight, 'String'));
+                        weight = 1.0;
 		                n = atlas.get('BR_DICT').length();
 		                for i = 1:1:n
 		                    for j = 1:1:n
@@ -1691,7 +1701,7 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
 		            update_graph()
 		        end
 		        function cb_graph_show(~, ~)  % (src, event)
-		            set(ui_edit_graph_lineweight, 'Enable', 'on')
+		            %set(ui_edit_graph_lineweight, 'Enable', 'on')
 		
 		            update_graph()
 		        end
