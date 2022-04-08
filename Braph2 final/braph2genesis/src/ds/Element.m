@@ -889,12 +889,12 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             switch el.getPropCategory(prop)
                 case Category.METADATA
                     if isa(value, 'NoValue')
-                        value = el.getPropDefault(prop);
+                        value = el.getPropDefaultConditioned(prop);
                     end
 
                 case {Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE} %TODO: check that categories GUI and Figure belong here
                     if isa(value, 'NoValue')
-                        value = el.getPropDefault(prop);
+                        value = el.getPropDefaultConditioned(prop);
                     elseif isa(value, 'Callback')
                         value = value.get(Callback.EL).get(value.get(Callback.PROP));
                     end
@@ -1156,7 +1156,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %
             % See also getDefault, set, conditioning, postprocessing, checkValue.
 
-            value = el.getPropDefault(prop);
+            value = el.getPropDefaultConditioned(prop);
         end
     end    
     methods % display
