@@ -9,6 +9,11 @@ The generated NN group can be used to train or test a neural network model.
 %% ¡props_update!
 
 %%% ¡prop!
+INPUT_TYPE (data, option) is the input type for training or testing the NN.
+%%%% ¡settings!
+{'adjacency_matrices' 'graph_measures'}
+
+%%% ¡prop!
 GR (data, item) is a group of subjects defined as SubjectCON class.
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectCON')

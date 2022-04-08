@@ -39,6 +39,11 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 %% ¡props_update!
 
 %%% ¡prop!
+INPUT_TYPE (data, option) is the input type for training or testing the NN.
+%%%% ¡settings!
+{'adjacency_matrices' 'graph_measures'}
+
+%%% ¡prop!
 GR (data, item) is a group of subjects defined as SubjectFUN class.
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectFUN')
