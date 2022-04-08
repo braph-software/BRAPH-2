@@ -1,11 +1,11 @@
 %% ¡header!
-ETC < Element (et, test Element C) tests props.
+ETC1 < Element (et, test Element C) tests props.
 
 %%% ¡description!
-ETC tests conditioning.
+ETC1 tests conditioning.
 
 %%% ¡seealso!
-Element, Category, Format
+Element, Category, Format, ETC2
 
 %% ¡props!
 
@@ -47,7 +47,9 @@ value = value(6);
 %%% ¡prop!
 NR (result, scalar) is a scalar, result.
 %%%% ¡conditioning!
-value = value(7);
+if ~isa(value, 'NoValue')
+    value = value(7);
+end
 %%%% ¡default!
 [0:1:10]
 
@@ -79,4 +81,4 @@ value = tostring(value);
 %%% ¡prop!
 SR (result, string) is a scalar, result.
 %%%% ¡conditioning!
-value = tostring(value);
+value = ['conditioned *' tostring(value) '*'];
