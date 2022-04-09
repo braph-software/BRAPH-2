@@ -659,8 +659,13 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % should be done before creating the element 
             % to ensure reproducibitlity of the random numbers
             for prop = 1:1:el.getPropNumber()
-                el.props{prop}.ensemble = any(ensemble_props == prop);
-                el.props{prop}.value = NoValue.getNoValue();
+                if any(ensemble_props == prop)
+                    el.props{prop}.ensemble = true;
+                    el.props{prop}.values = NoValue.getNoValue();
+                else
+                    el.props{prop}.ensemble = false;
+                    el.props{prop}.value = NoValue.getNoValue();
+                end
                 el.props{prop}.seed = randi(intmax('uint32'));
                 el.props{prop}.checked = true;
                 el.props{prop}.locked = false;
@@ -768,7 +773,11 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                             el.checkProp(prop, value) % check value format
                         end
 
-                        el.props{prop}.value = value;
+                        if el.isEnsemble(prop)
+                            el.props{prop}.values = value;
+                        else
+                            el.props{prop}.value = value;
+                        end
 
                     case {Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE} %TODO: check that categories GUI and Figure belong here
                         if ~el.isLocked(prop)
@@ -789,13 +798,21 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                                         )                                
                                 end
 
-                                el.props{prop}.value = value;
+                                if el.isEnsemble(prop)
+                                    el.props{prop}.values = value;
+                                else
+                                    el.props{prop}.value = value;
+                                end
                             else
                                 if el.isChecked(prop)
                                     el.checkProp(prop, value) % check value format
                                 end
 
-                                el.props{prop}.value = value;
+                                if el.isEnsemble(prop)
+                                    el.props{prop}.values = value;
+                                else
+                                    el.props{prop}.value = value;
+                                end
                             end
                         else
                             warning( ...
@@ -808,7 +825,11 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 
                     case Category.RESULT
                         if isa(value, 'NoValue')
-                            el.props{prop}.value = NoValue.getNoValue();
+                            if el.isEnsemble(prop)
+                                el.props{prop}.values = NoValue.getNoValue();
+                            else
+                                el.props{prop}.value = NoValue.getNoValue();
+                            end
                         else
                             warning( ...
                                 [BRAPH2.STR ':' class(el)], ...
@@ -927,7 +948,11 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 
             prop = el.getPropProp(pointer); % also Element.existsProp(el, prop)
 
-            value = el.props{prop}.value; % raw element value
+            if el.isEnsemble(prop)
+                value = el.props{prop}.values; % raw element value
+            else
+                value = el.props{prop}.value; % raw element value
+            end
         end
         function value = get(el, pointer)
             %GET returns the value of a property.
@@ -991,7 +1016,11 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                                 el.lock()
                             else
                                 el.props = props_backup; % restore props backup
-                                value = el.props{prop}.value; % value is also set to the original NoValue()
+                                if el.isEnsemble(prop)
+                                    value = el.props{prop}.values; % values is also set to the original NoValue()
+                                else
+                                    value = el.props{prop}.value; % value is also set to the original NoValue()
+                                end
                                 warning( ...
                                     [BRAPH2.STR ':' class(el)], ...
                                     [BRAPH2.STR ':' class(el) msg '\n' ...
@@ -1019,7 +1048,11 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             value = el.get(prop);
 
             if isequal(el.getPropCategory(prop), Category.RESULT)
-                el.props{prop}.value = value;
+                if el.isEnsemble(prop)
+                    el.props{prop}.values = value;
+                else
+                    el.props{prop}.value = value;
+                end                    
             end
         end
         function seed = getPropSeed(el, pointer)
