@@ -1413,6 +1413,150 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             end
         end        
     end
+    methods % encodeJSON
+        function [json, struct, el_list] = encodeJSON(el)
+            %ENCODEJSON returns a JSON string encoding the element.
+            %
+            % JSON = ENCODEJSON(EL) returns a JSON string encoding the element EL.
+            %
+            % See also decodeJSON.
+            
+            el_list = el.getElementList();
+            
+            for i = 1:1:length(el_list)
+                el = el_list{i};
+                
+                struct{i}.class = el.getClass(); %#ok<AGROW>
+                
+                for prop = 1:1:el.getPropNumber()
+                    value = el.getr(prop);
+
+                    struct{i}.props{prop}.prop = prop;
+                    struct{i}.props{prop}.tag = el.getPropTag(prop);
+                    
+                    if isa(value, 'NoValue')
+                        struct{i}.props{prop}.value = find(cellfun(@(x) value == x, el_list));
+                    else
+                        switch el.getPropFormat(prop)
+                            case Format.EMPTY
+                                struct{i}.props{prop}.value = regexprep(tostring(value), '''', '''''');
+                            case {Format.STRING, Format.OPTION, Format.CLASS}
+                                struct{i}.props{prop}.value = regexprep(tostring(value), '''', '''''');
+                            case {Format.LOGICAL, Format.SCALAR, Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
+                                struct{i}.props{prop}.value = mat2str(value);
+                            case Format.CLASSLIST
+                                json_str = '{';
+                                for j = 1:1:length(value)
+                                    json_str = [json_str ' ''' value{j} ''' ']; %#ok<AGROW>
+                                end
+                                json_str = [json_str '}']; %#ok<AGROW>
+                                struct{i}.props{prop}.value = json_str;
+                            case {Format.ITEM, Format.IDICT}
+                                struct{i}.props{prop}.value = find(cellfun(@(x) value == x, el_list));
+                            case Format.ITEMLIST
+                                indices = zeros(1, length(value));
+                                for j = 1:1:length(value)
+                                    indices(j) = find(cellfun(@(x) value{j} == x, el_list));
+                                end
+                                struct{i}.props{prop}.value = indices;
+                            case Format.CELL
+                                json_str = '{';
+                                for j = 1:1:size(value, 1)
+                                    for k = 1:1:size(value, 2)
+                                        if k < size(value, 2)
+                                            json_str = [json_str mat2str(value{j, k}) ', ']; %#ok<AGROW>
+                                        elseif j < size(value, 1)
+                                            json_str = [json_str mat2str(value{j, k}) '; ']; %#ok<AGROW>
+                                        else
+                                            json_str = [json_str mat2str(value{j, k})]; %#ok<AGROW>
+                                        end
+                                    end
+                                end
+                                json_str = [json_str '}']; %#ok<AGROW>
+                                struct{i}.props{prop}.value = json_str;
+                        end
+                    end
+                    struct{i}.props{prop}.seed = el.getPropSeed(prop);
+                    struct{i}.props{prop}.locked = el.isLocked(prop);
+                    struct{i}.props{prop}.checked = el.isChecked(prop);
+                end
+            end
+
+            json = jsonencode(struct);
+        end
+    end
+    methods (Static) % decodeJSON
+        function [el, struct, el_list] = decodeJSON(json)
+            %DECODEJSON returns a JSON string encoding the element.
+            %
+            % EL = DECODEJSON(JSON) returns the element EL decoding the a JSON string.
+            %
+            % See also encodeJSON.
+            
+            struct = jsondecode(json);
+            
+            % manages special case when only one element
+            if length(struct) == 1
+                struct_tmp{1}.class = struct.class;
+                if isfield(struct, 'prop')
+                    struct_tmp{1}.props = struct.props;
+                end
+                struct = struct_tmp;
+                clear struct_tmp
+            end
+
+            % creates empty elements
+            el_list = cell(length(struct), 1);
+            for i = 1:1:length(struct)
+                el_class = struct{i}.class;
+                if strcmp(el_class, 'NoValue')
+                    el_list{i} = NoValue.getNoValue();
+                else
+                    el_list{i} = eval([el_class '()']);
+                end
+            end
+            
+            % fills in props
+            for i = 1:1:length(el_list)
+                el = el_list{i};
+
+                for prop = 1:1:el.getPropNumber()
+                    value = struct{i}.props(prop).value;
+                    if isnumeric(value)
+                        if ~isequal(el.getPropFormat(prop), Format.ITEMLIST) || (numel(value) == 1 && isa(el_list{value}, 'NoValue'))
+                            el.props{prop}.value = el_list{value};
+                        else % case Format.ITEMLIST
+                            indices = value;
+                            el.props{prop}.value = el_list(indices)';
+                        end
+                    else
+                        switch el.getPropFormat(prop)
+                            case Format.EMPTY
+                                el.props{prop}.value = eval(value);
+                            case {Format.STRING, Format.OPTION, Format.CLASS}
+                                el.props{prop}.value = eval(value(2:end-1));
+                            case {Format.LOGICAL, Format.SCALAR, Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
+                                el.props{prop}.value = eval(value);
+                            case Format.CLASSLIST
+                                el.props{prop}.value = eval(value);
+                                % case {Format.ITEM, Format.IDICT}
+                                %     el.props{prop}.value = el_list{value};
+                                % case Format.ITEMLIST
+                                %     indices = value;
+                                %     el.props{prop}.value = el_list(indices);
+                            case Format.CELL
+                                el.props{prop}.value = eval(value);
+                        end
+                    end
+                    el.props{prop}.seed = uint32(struct{i}.props(prop).seed);
+                    el.props{prop}.locked = struct{i}.props(prop).locked;
+                    el.props{prop}.checked = struct{i}.props(prop).checked;
+                end
+            end
+            
+            el = el_list{1};
+        end
+    end    
     methods (Access=protected) % deep copy
         %TODO: revise copy
         function el_copy = copyElement(el)
@@ -1543,6 +1687,197 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         end
                     case Category.RESULT
                         el_clone.props{prop}.value = NoValue.getNoValue();
+                end
+            end
+        end
+    end
+    methods % GUI
+% FIXME: gui = GUI ...
+        function fig = getGUI(el, varargin)
+            %GETGUI returns figure with element GUI.
+            %
+            % GETGUI(EL) opens figure with GUI for element EL.
+            %
+            % GETGUI(EL, 'Name', Value, ...) sets the settings of GUI.
+            %
+            % FIG = GETGUI(EL) returns handle with figure with GUI for element EL.
+            %
+            % See also GUI.
+            
+            GUI(el, varargin{:});
+            
+            if nargout == 1
+                fig = gcf();
+            end
+        end
+        function pe = getPlotElement(el, varargin) 
+            %GETPLOTELEMENT returns the element plot.
+            %
+            % PL = GETPLOTELEMENT(EL) returns the plot of element EL.
+            %
+            % PL = GETPLOTELEMENT(EL, 'Name', Value, ...) sets the settings of PlotElement.
+            %
+            % See also PlotElement.
+            
+            pe = PlotElement('EL', el, varargin{:});
+        end
+        function pr = getPlotProp(el, prop, varargin)
+            %GETPLOTPROP returns a prop plot.
+            %
+            % PL = GETPLOTPROP(EL, PROP) returns the plot of prop PROP.
+            %
+            % PL = GETPLOTPROP(EL, PROP, 'Name', Value, ...) sets the settings.
+            %
+            % See also PlotProp, PlotPropCell, PlotPropClass, PlotPropClassList,
+            %  PlotPropIDict, PlotPropItem, PlotPropItemList, PlotPropLogical,
+            %  PlotPropMatrix, PlotPropOption, PlotPropScalar, PlotPropString.
+
+            switch el.getPropFormat(prop)
+                case Format.EMPTY
+                    pr = PlotProp( ...
+                        'ID', el.getPropTag(prop), ...
+                        'EL', el, ...
+                        'PROP', prop, ...
+                        varargin{:});
+                case Format.STRING
+                    pr = PlotPropString( ...
+                        'ID', el.getPropTag(prop), ...
+                        'EL', el, ...
+                        'PROP', prop, ...
+                        varargin{:});
+                case Format.LOGICAL
+                    pr = PlotPropLogical( ...
+                        'ID', el.getPropTag(prop), ...
+                        'EL', el, ...
+                        'PROP', prop, ...
+                        varargin{:});
+                case Format.OPTION
+                    pr = PlotPropOption( ...
+                        'ID', el.getPropTag(prop), ...
+                        'EL', el, ...
+                        'PROP', prop, ...
+                        varargin{:});
+                case Format.CLASS
+                    pr = PlotPropClass( ...
+                        'ID', el.getPropTag(prop), ...
+                        'EL', el, ...
+                        'PROP', prop, ...
+                        varargin{:});
+                case Format.CLASSLIST
+                    pr = PlotPropClassList( ...
+                        'ID', el.getPropTag(prop), ...
+                        'EL', el, ...
+                        'PROP', prop, ...
+                        varargin{:});
+                case Format.ITEM
+                    pr = PlotPropItem( ...
+                        'ID', el.getPropTag(prop), ...
+                        'EL', el, ...
+                        'PROP', prop, ...
+                        varargin{:});
+                case Format.ITEMLIST
+                    pr = PlotPropItemList( ...
+                        'ID', el.getPropTag(prop), ...
+                        'EL', el, ...
+                        'PROP', prop, ...
+                        varargin{:});
+                case Format.IDICT
+                    pr = PlotPropIDict( ...
+                        'ID', el.getPropTag(prop), ...
+                        'EL', el, ...
+                        'PROP', prop, ...
+                        varargin{:});
+                case Format.SCALAR
+                    pr = PlotPropScalar( ...
+                        'ID', el.getPropTag(prop), ...
+                        'EL', el, ...
+                        'PROP', prop, ...
+                        varargin{:});
+                case Format.RVECTOR
+                    pr = PlotPropMatrix( ...
+                        'ID', el.getPropTag(prop), ...
+                        'EL', el, ...
+                        'PROP', prop, ...
+                        varargin{:});
+                case Format.CVECTOR
+                    pr = PlotPropMatrix( ...
+                        'ID', el.getPropTag(prop), ...
+                        'EL', el, ...
+                        'PROP', prop, ...
+                        varargin{:});
+                case Format.MATRIX
+                    pr = PlotPropMatrix( ...
+                        'ID', el.getPropTag(prop), ...
+                        'EL', el, ...
+                        'PROP', prop, ...
+                        varargin{:});
+                case Format.SMATRIX
+                    pr = PlotPropMatrix( ...
+                        'ID', el.getPropTag(prop), ...
+                        'EL', el, ...
+                        'PROP', prop, ...
+                        varargin{:});
+                case Format.CELL
+                    pr = PlotPropCell( ...
+                        'ID', el.getPropTag(prop), ...
+                        'EL', el, ...
+                        'PROP', prop, ...
+                        varargin{:});
+                otherwise
+                    pr = PlotProp( ...
+                        'ID', el.getPropTag(prop), ...
+                        'EL', el, ...
+                        'PROP', prop, ...
+                        varargin{:});
+            end
+        end
+    end
+    methods (Static) % GUI Static
+        function getGUIMenuImport(el, menu_import, pl)
+            %GETGUIMENUIMPORT sets the import submenu gui json.
+            % 
+            % GETGUIMENUIMPORT(EL, UI_MENU, PL) sets the import submenu
+            %  json for the menu UI_MENU for the plot element PL.
+            % 
+            % See also getGUI, getGUIMenuExport, PLotElement.
+            
+            uimenu(menu_import, ...
+                'Label', 'Import JSON ...', ...
+                'Callback', {@cb_import_json})
+                 
+            function cb_import_json(~,~)
+                [file, path, filterindex] = uigetfile('.json', ['Select ' el.getName() ' file location.']);
+                if filterindex
+                    filename = fullfile(path, file);
+                    fid = fopen(filename);
+                    raw = fread(fid, inf);
+                    str = char(raw');
+                    fclose(fid);
+
+                    pl.set('EL', Element.decodeJSON(str)); 
+                    pl.reinit();
+                end
+            end
+        end
+        function getGUIMenuExport(el, menu_export, plot_element)
+            %GETGUIMENUEXPORT sets the export submenu gui json.
+            % 
+            % GETGUIMENUEXPORT(EL, UI_MENU) sets the export submenu for the ui menu UI_MENU.
+            % 
+            % See also getGUI, getGUIMenuImport.
+                     
+            uimenu(menu_export, ...
+                'Label', 'Export JSON ...', ...
+                'Callback', {@cb_export_json})
+          
+            function cb_export_json(~,~)
+                [file, path, filterindex] = uiputfile({'*.json', '*.json'}, ['Select ' el.getName  ' file location.']);
+                if filterindex
+                    filename = fullfile(path, file);
+                    [json, ~, ~] = encodeJSON(plot_element.get('EL'));
+                    fid = fopen(filename, 'w');
+                    fprintf(fid, json);
+                    fclose(fid);
                 end
             end
         end
