@@ -106,39 +106,39 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         %
         % METADATA:
         %  props{prop}.ensemble  - false/true
-        %  props{prop}.value     - NoValue() or value
+        %  props{prop}.value(s)  - NoValue() or value(s)
         %  props{prop}.seed      - seed for rng
-        %  props{prop}.checked 	- true/false
+        %  props{prop}.checked 	 - true/false
         %  props{prop}.locked    - false/true
         %
         % PARAMETER, DATA, GUI, FIGURE:
         %  props{prop}.ensemble  - false/true
-        %  props{prop}.value     - NoValue() or Callback() or value
+        %  props{prop}.value(s)  - NoValue() or Callback() or value(s)
         %  props{prop}.seed      - seed for rng
         %  props{prop}.checked   - true/false
         %  props{prop}.locked    - false/true
         %
         % RESULT:
         %  props{prop}.ensemble  - false/true
-        %  props{prop}.value     - NoValue() or value
+        %  props{prop}.value(s)  - NoValue() or value(s)
         %  props{prop}.seed      - seed for rng
-        %  props{prop}.checked 	- true/false
+        %  props{prop}.checked 	 - true/false
         %  props{prop}.locked    - false/true
         %
         % The PARAMETER and DATA properties of the element get locked the
         %  first time a result is successfully calculated.
         %
         % For single-valued elements, the value is retrieved as
-        %   props{prop}.value{1}
+        %   props{prop}.value
         %
         % For ensemble elements, the values are retrieved as
-        %   props{prop}.value{n}
+        %   props{prop}.values{n}
         %  with n = 1, ..., N, where N is the ensemble cardinality, for
-        %  properties of formats ...
+        %  properties of formats ST, LO, OP, NN, NR, NC, NM, NS, LL,
         %  and as 
-        %   props{prop}.value{n}
-        %  for properties of formats ... , whose corresponding props are
-        %  then iterativelly made ensemble.
+        %   props{prop}.value
+        %  for properties of formats EM, CA, CL, IT, IL, DI, OX,
+        %  whose corresponding props are then iterativelly made ensemble.
         %
         % The ensemble information can only be set at when an element is instanced.
 
@@ -672,6 +672,10 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         function ensemble = isEnsemble(el, pointer)
             %ISENSEMBLE returns whether a property is ensemble.
             %
+            % ENSEMBLE = ISENSEMBLE(EL) returns whether EL is ensemble.
+            %  By definition, EL is ensemble if at least one of its
+            %  properties is ensemble.
+            %
             % ENSEMBLE = ISENSEMBLE(EL, POINTER) returns whether the property POINTER of
             %  element EL is ensemble. POINTER can be either a property number (PROP) or
             %  tag (TAG).
@@ -679,9 +683,13 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % Properties are defined as ensemble when an element is
             %  instantiated and their ensemble property cannot be changed.
 
-            prop = el.getPropProp(pointer);
-
-            ensemble = el.props{prop}.ensemble;
+            if nargin < 2
+                ensemble = any(cellfun(@(x) x.ensemble, el.props));
+            else
+                prop = el.getPropProp(pointer);
+                
+                ensemble = el.props{prop}.ensemble;
+            end
         end
         function el_out = set(el, varargin)
             %TODO: check docs
