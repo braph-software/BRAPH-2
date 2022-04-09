@@ -8,7 +8,7 @@ function check_out = installed(addon, ew)
 %  Error id: [BRAPH2:installed:AddOn].
 %
 % INSTALLED(ADDON, 'warning') throws a warning if ADDON is not installed.
-%  Warning id: [BRAPH2:AddOn].
+%  Warning id: [BRAPH2:installed].
 %
 % BRAPH2 uses the following addons:
 %  - DM: "Parallel Computing Toolbox"
@@ -34,8 +34,8 @@ if nargin > 1 && strcmpi(ew, 'error')
         )
 elseif nargin > 1 && strcmpi(ew, 'warning') && ~check
     warning( ...
-        [BRAPH2.STR ':' BRAPH2.ADDON], ...
-        [BRAPH2.STR ':' BRAPH2.ADDON ' ' ...
+        [BRAPH2.STR ':installed'], ...
+        [BRAPH2.STR ':installed ' ...
         'The addon ' addon ' is not installed. ' ...
         'Some BRAPH2 functionalities might not be available.'])    
 end
