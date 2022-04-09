@@ -1,12 +1,12 @@
 %TEST_ELEMENT
 
-% % % %% Test 1: Inspection methods
-% % % el_class_list = subclasses('Element', [], [], true);
-% % % 
-% % % for i = 1:1:length(el_class_list)
-% % %     el_class = el_class_list{i};
-% % %     el = eval([el_class '()']);
-% % % 
+%% Test 1: Inspection methods
+el_class_list = subclasses('Element', [], [], true);
+
+for i = 1:1:length(el_class_list)
+    el_class = el_class_list{i};
+    el = eval([el_class '()']);
+
 % % %     assert(strcmp(Element.getClass(el_class), el_class) && ...
 % % %         strcmp(Element.getClass(el), el_class) && ...
 % % %         strcmp(eval([el_class '.getClass()']), el_class) && ...
@@ -150,8 +150,8 @@
 % % %         el.checkProp(tag, el.getPropDefaultConditioned(tag))
 % % %         eval([el_class '.checkProp(tag, ' el_class '.getPropDefaultConditioned(tag))'])
 % % %     end
-% % % end
-% % % 
+end
+
 % % % %% Test 2: Deep copy
 % % % el_class_list = subclasses('Element', [], [], true);
 % % % 

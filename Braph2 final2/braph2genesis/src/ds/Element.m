@@ -107,23 +107,20 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         % METADATA:
         %  props{prop}.ensemble  - false/true
         %  props{prop}.value     - NoValue() or value
-        %  props{prop}.values    - NoValue() or values	- only for ensemble
         %  props{prop}.seed      - seed for rng
         %  props{prop}.checked 	 - true/false
         %  props{prop}.locked    - false/true
         %
         % PARAMETER, DATA, FIGURE, GUI:
         %  props{prop}.ensemble  - false/true
-        %  props{prop}.value     - NoValue(), Callback() or value   - only for single-valued
-        %  props{prop}.values    - NoValue(), Callback() or values	- only for ensemble
+        %  props{prop}.value     - NoValue(), Callback() or value
         %  props{prop}.seed      - seed for rng
         %  props{prop}.checked   - true/false
         %  props{prop}.locked    - false/true
         %
         % RESULT:
         %  props{prop}.ensemble  - false/true
-        %  props{prop}.value     - NoValue() or value   - only for single-valued
-        %  props{prop}.values    - NoValue() or values	- only for ensemble
+        %  props{prop}.value     - NoValue() or value
         %  props{prop}.seed      - seed for rng
         %  props{prop}.checked 	 - true/false
         %  props{prop}.locked    - false/true
@@ -136,489 +133,489 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         %
         % For ensemble properties, the values are stored in a cell array as:
         %  - For formats ST, LO, OP, NN, NR, NC, NM, NS, LL:
-        %    props{prop}.values{n} 
+        %    props{prop}.value{n} 
         %    with n = 1, ..., N, where N is the ensemble cardinality
         %  - For formats EM, CA, CL, IT, IL, DI, AI:
-        %    props{prop}.values
+        %    props{prop}.value
         %    whose corresponding properties are then iterativelly made ensemble 
         %    where possible.
 
-        props
+        props = {}
     end
-% % %     methods (Static) % inspection
-% % %         function el_class = getClass(el)
-% % %             %GETCLASS returns the class of the element.
-% % %             %
-% % %             % CLASS = Element.GETCLASS() returns the class 'Element'.
-% % %             %
-% % %             % Alternative forms to call this method are:
-% % %             %  CLASS = EL.GETCLASS() returns the class of the element EL.
-% % %             %  CLASS = Element.GETCLASS(CLASS) returns CLASS.
-% % %             %  CLASS = EL.GETCLASS(CLASS) returns CLASS.
-% % %             %
-% % %             % See also getName, getDescription.
-% % %             
-% % %             % calls from Element
-% % %             if nargin < 1
-% % %                 el_class = 'Element';
-% % %                 return
-% % %             end
-% % %             
-% % %             % calls from subclasses of Element
-% % %             if isa(el, 'Element')
-% % %                 el_class = class(el);
-% % %             else % el should be a string with the element class
-% % %                 el_class = el;
-% % %                 assert( ...
-% % %                     exist(el_class, 'class') == 8, ...
-% % %                     [BRAPH2.STR ':Element:' BRAPH2.WRONG_INPUT], ...
-% % %                     [BRAPH2.STR ':Element:' BRAPH2.WRONG_INPUT ' ' ...
-% % %                     'The value ' tostring(el, 100, '...') ' is not a valid class name.'] ...
-% % %                     )
-% % %             end
-% % %         end
-% % %         function el_name = getName(el)
-% % %             %GETNAME returns the name of the element.
-% % %             %
-% % %             % NAME = Element.GETNAME() returns the name of the element,
-% % %             %  which in this case is 'Base class for all elements.'
-% % %             %
-% % %             % Alternative forms to call this method are:
-% % %             %  NAME = EL.GETNAME() returns the name of the element EL.
-% % %             %  NAME = Element.GETNAME(CLASS) returns the name of CLASS.
-% % %             %  NAME = EL.GETNAME(CLASS) returns the name of CLASS.
-% % %             %
-% % %             % See also getClass, getDescription.
-% % %             
-% % %             % calls from Element
-% % %             if nargin < 1
-% % %                 el_name = 'Base class for all elements.';
-% % %                 return
-% % %             end
-% % %             
-% % %             % calls from subclasses of Element
-% % %             el_name = eval([Element.getClass(el) '.getName()']);
-% % %         end
-% % %         function el_description = getDescription(el)
-% % %             %GETNAME returns the description of the element.
-% % %             %
-% % %             % STR = Element.GETDESCRIPTION() returns the description of the element,
-% % %             %  which in this case is:
-% % %             %
-% % %             %  Element is the base class for all elements.
-% % %             %  Even though it is possible to create instances of Element,
-% % %             %  typically one uses its subclasses.
-% % %             %
-% % %             % Alternative forms to call this method are:
-% % %             %  STR = EL.GETDESCRIPTION() returns the description of the element EL.
-% % %             %  STR = Element.GETDESCRIPTION(CLASS) returns the description of CLASS.
-% % %             %  STR = EL.GETDESCRIPTION(CLASS) returns the description of CLASS.
-% % %             %
-% % %             % See also getClass, getName.
-% % %             
-% % %             % calls from Element
-% % %             if nargin < 1
-% % %                 el_description = [ ...
-% % %                     'Element is the base class for all elements. ' ...
-% % %                     'Even though it is possible to create instances of Element, ' ...
-% % %                     'typically one uses its subclasses.' ...
-% % %                     ];
-% % %                 return
-% % %             end
-% % %             
-% % %             % calls from subclasses of Element
-% % %             el_description = eval([Element.getClass(el) '.getDescription()']);
-% % %         end
-% % %         function prop_list = getProps(el, category)
-% % %             %GETPROPS returns the property list of an element.
-% % %             %
-% % %             % PROPS = Element.GETPROPS() returns the property list of Element.
-% % %             %
-% % %             % PROPS = Element.GETPROPS(CATEGORY) returns the property list
-% % %             %  of category CATEGORY.
-% % %             %
-% % %             % Alternative forms to call this method are:
-% % %             %  PROPS = EL.GETPROPS([CATEGORY]) returns the property list of element EL.
-% % %             %  PROPS = Element.GETPROPS(CLASS[, CATEGORY]) returns the property list of CLASS.
-% % %             %  PROPS = EL.GETPROPS(CLASS[, CATEGORY]) returns the property list of CLASS.
-% % %             %
-% % %             % See also getPropNumber, Category.
-% % %             
-% % %             % calls from Element
-% % %             if nargin < 1 % no arguments
-% % %                 prop_list = [];
-% % %                 return
-% % %             elseif nargin == 1 && Category.existsCategory(el) % el = category argument
-% % %                 prop_list = [];
-% % %                 return
-% % %             end
-% % %             
-% % %             % calls from subclasses of Element
-% % %             if nargin < 2
-% % %                 prop_list = eval([Element.getClass(el) '.getProps()']);
-% % %             else
-% % %                 Category.existsCategory(category);
-% % %                 
-% % %                 prop_list = eval([Element.getClass(el) '.getProps(category)']);
-% % %             end
-% % %         end
-% % %         function prop_number = getPropNumber(el)
-% % %             %GETPROPNUMBER returns the property number of an element.
-% % %             %
-% % %             % N = Element.GETPROPNUMBER() returns the number of properties in Element.
-% % %             %
-% % %             % Alternative forms to call this method are:
-% % %             %  N = EL.GETPROPNUMBER() returns the property number of element EL.
-% % %             %  N = Element.GETPROPNUMBER(CLASS) returns the property number of CLASS.
-% % %             %  N = EL.GETPROPNUMBER(CLASS) returns the property number of CLASS.
-% % %             %
-% % %             % See also getProps.
-% % %             
-% % %             % calls from Element
-% % %             if nargin < 1
-% % %                 prop_number = 0;
-% % %                 return
-% % %             end
-% % %             
-% % %             % calls from subclasses of Element
-% % %             prop_number = eval([Element.getClass(el) '.getPropNumber()']);
-% % %         end
-% % %         function check = existsProp(el, prop)
-% % %             %EXISTSPROP checks whether property exists/error.
-% % %             %
-% % %             % CHECK = Element.EXISTSPROP(PROP) checks whether the property
-% % %             %  PROP exists.
-% % %             %
-% % %             % Alternative forms to call this method are:
-% % %             %  CHECK = EL.EXISTSPROP(PROP) checks PROP for EL.
-% % %             %  CHECK = Element.EXISTSPROP(CLASS, PROP) checks PROP for CLASS.
-% % %             %  CHECK = EL.EXISTSPROP(CLASS, PROP) checks PROP for CLASS.
-% % %             %
-% % %             % Element.EXISTSPROP(PROP) throws an error if the PROP does NOT
-% % %             %  exist.
-% % %             %  Error id: [BRAPH2:Element:WrongInput]
-% % %             %
-% % %             % Alternative forms to call this method are:
-% % %             %  EL.EXISTSPROP(PROP) throws error if PROP does NOT exist for EL.
-% % %             %   Error id: [BRAPH2:Element:WrongInput]
-% % %             %  Element.EXISTSPROP(CLASS, PROP) throws error if PROP does NOT exist for EL.
-% % %             %   Error id: [BRAPH2:CLASS:WrongInput]
-% % %             %  EL.EXISTSPROP(CLASS, PROP) throws error if PROP does NOT exist for EL.
-% % %             %   Error id: [BRAPH2:CLASS:WrongInput]
-% % %             %
-% % %             % See also getProps, existsTag.
-% % %             
-% % %             % calls from Element
-% % %             if nargin < 2
-% % %                 prop = el;
-% % %                 el = 'Element';
-% % %             end
-% % %             
-% % %             % calls from subclasses of Element
-% % %             if nargout == 1
-% % %                 check = any(prop == Element.getProps(el));
-% % %             else
-% % %                 assert( ...
-% % %                     Element.existsProp(el, prop), ...
-% % %                     [BRAPH2.STR ':Element:' BRAPH2.WRONG_INPUT], ...
-% % %                     [BRAPH2.STR ':Element:' BRAPH2.WRONG_INPUT ' ' ...
-% % %                     'The value ' tostring(prop) ' is not a valid prop for ' Element.getClass(el) '.'] ...
-% % %                     )
-% % %             end
-% % %         end
-% % %         function check = existsTag(el, tag)
-% % %             %EXISTSTAG checks whether tag exists/error.
-% % %             %
-% % %             % CHECK = Element.EXISTSTAG(TAG) checks whether tag TAG exists.
-% % %             %
-% % %             % Alternative forms to call this method are:
-% % %             %  CHECK = EL.EXISTSTAG(TAG) checks tag TAG for EL.
-% % %             %  CHECK = Element.EXISTSTAG(CLASS, TAG) checks tag TAG for EL.
-% % %             %  CHECK = EL.EXISTSTAG(CLASS, TAG) checks tag TAG for EL.
-% % %             %
-% % %             % Element.EXISTSTAG(TAG) throws an error if the TAG NOT exist.
-% % %             %  Error id: [BRAPH2:Element:WrongInput]
-% % %             %
-% % %             % Alternative forms to call this method are:
-% % %             %  EL.EXISTSTAG(TAG) throws error if TAG does NOT exist for EL.
-% % %             %   Error id: [BRAPH2:Element:WrongInput]
-% % %             %  Element.EXISTSTAG(CLASS, TAG) throws error if TAG does NOT
-% % %             %   exist for EL. Error id: [BRAPH2:Element:WrongInput]
-% % %             %  Element.EXISTSTAG(CLASS, TAG) throws error if TAG does NOT
-% % %             %   exist for EL. Error id: [BRAPH2:Element:WrongInput]
-% % %             %
-% % %             % See also getProps, existsProp.
-% % %             
-% % %             % calls from Element
-% % %             if nargin < 2
-% % %                 tag = el;
-% % %                 el = 'Element';
-% % %             end
-% % %             
-% % %             % calls from subclasses of Element
-% % %             if nargout == 1
-% % %                 tag_list = cellfun(@(x) Element.getPropTag(el, x), num2cell(Element.getProps(el)'), 'UniformOutput', false);
-% % %                 check = any(strcmpi(tag, tag_list));
-% % %             else
-% % %                 assert( ...
-% % %                     Element.existsTag(el, tag), ...
-% % %                     [BRAPH2.STR ':Element:' BRAPH2.WRONG_INPUT], ...
-% % %                     [BRAPH2.STR ':Element:' BRAPH2.WRONG_INPUT ' ' ...
-% % %                     'The value ''' tag ''' is not a valid tag for ' Element.getClass(el) '.'] ...
-% % %                     )
-% % %             end
-% % %         end
-% % %         function prop_prop = getPropProp(el, pointer)
-% % %             % GETPROPPROP returns the property number of a property.
-% % %             %
-% % %             % PROP = Element.GETPROPPROP(PROP) returns PROP, i.e., the
-% % %             %  property number of the property PROP.
-% % %             %
-% % %             % PROP = Element.GETPROPPROP(TAG) returns the property number
-% % %             %  of the property with tag TAG.
-% % %             %
-% % %             % Alternative forms to call this method are (POINTER = PROP or TAG):
-% % %             %  PROP = EL.GETPROPPROP(POINTER) returns property number of POINTER of EL.
-% % %             %  PROP = Element.GETPROPPROP(CLASS, POINTER) returns property number of POINTER of CLASS.
-% % %             %  PROP = EL.GETPROPPROP(CLASS, POINTER) returns property number of POINTER of CLASS.
-% % %             %
-% % %             % See also getPropFormat, getPropTag, getPropCategory,
-% % %             % getPropDescription, getPropSettings, getPropDefault,
-% % %             % checkProp.
-% % %             
-% % %             % calls from Element
-% % %             if nargin < 2
-% % %                 pointer = el; %#ok<NASGU>
-% % %                 el = 'Element';
-% % %             end
-% % %             
-% % %             % calls from subclasses of Element
-% % %             prop_prop = eval([Element.getClass(el) '.getPropProp(pointer)']);
-% % %         end
-% % %         function prop_tag = getPropTag(el, pointer)
-% % %             % GETPROPTAG returns the tag of a property.
-% % %             %
-% % %             % TAG = Element.GETPROPTAG(PROP) returns the tag TAG of the
-% % %             %  property PROP.
-% % %             %
-% % %             % TAG = Element.GETPROPTAG(TAG) returns TAG, i.e. the tag of
-% % %             %  the property with tag TAG.
-% % %             %
-% % %             % Alternative forms to call this method are (POINTER = PROP or TAG):
-% % %             %  TAG = EL.GETPROPTAG(POINTER) returns tag of POINTER of EL.
-% % %             %  TAG = Element.GETPROPTAG(CLASS, POINTER) returns tag of POINTER of CLASS.
-% % %             %  TAG = EL.GETPROPTAG(CLASS, POINTER) returns tag of POINTER of CLASS.
-% % %             %
-% % %             % See also getPropProp, getPropSettings, getPropCategory,
-% % %             % getPropFormat, getPropDescription, getPropDefault,
-% % %             % checkProp.
-% % %             
-% % %             % calls from Element
-% % %             if nargin < 2
-% % %                 pointer = el; %#ok<NASGU>
-% % %                 el = 'Element';
-% % %             end
-% % %             
-% % %             % calls from subclasses of Element
-% % %             prop_tag = eval([Element.getClass(el) '.getPropTag(pointer)']);
-% % %         end
-% % %         function prop_category = getPropCategory(el, pointer)
-% % %             % GETPROPCATEGORY returns the category of a property.
-% % %             %
-% % %             % CATEGORY = Element.GETPROPCATEGORY(PROP) returns the
-% % %             %  category of the property PROP.
-% % %             %
-% % %             % CATEGORY = Element.GETPROPCATEGORY(TAG) returns the
-% % %             %  category of the property with tag TAG.
-% % %             %
-% % %             % Alternative forms to call this method are (POINTER = PROP or TAG):
-% % %             %  CATEGORY = EL.GETPROPCATEGORY(POINTER) returns category of POINTER of EL.
-% % %             %  CATEGORY = Element.GETPROPCATEGORY(CLASS, POINTER) returns category of POINTER of CLASS.
-% % %             %  CATEGORY = EL.GETPROPCATEGORY(CLASS, POINTER) returns category of POINTER of CLASS.
-% % %             %
-% % %             % See also Category, getPropProp, getPropTag, getPropSettings,
-% % %             % getPropFormat, getPropDescription, getPropDefault,
-% % %             % checkProp.
-% % %             
-% % %             % calls from Element
-% % %             if nargin < 2
-% % %                 pointer = el; %#ok<NASGU>
-% % %                 el = 'Element';
-% % %             end
-% % %             
-% % %             % calls from subclasses of Element
-% % %             prop_category = eval([Element.getClass(el) '.getPropCategory(pointer)']);
-% % %         end
-% % %         function prop_format = getPropFormat(el, pointer)
-% % %             % GETPROPFORMAT returns the format of a property.
-% % %             %
-% % %             % FORMAT = Element.GETPROPFORMAT(PROP) returns the format of
-% % %             %  property PROP.
-% % %             %
-% % %             % FORMAT = Element.GETPROPFORMAT(TAG) returns the format of
-% % %             %  the property with tag TAG.
-% % %             %
-% % %             % Alternative forms to call this method are (POINTER = PROP or TAG):
-% % %             %  FORMAT = EL.GETPROPFORMAT(POINTER) returns format of POINTER of EL.
-% % %             %  FORMAT = Element.GETPROPFORMAT(CLASS, POINTER) returns format of POINTER of CLASS.
-% % %             %  FORMAT = EL.GETPROPFORMAT(CLASS, POINTER) returns format of POINTER of CLASS.
-% % %             %
-% % %             % See also Format, getPropProp, getPropTag, getPropCategory,
-% % %             % getPropDescription, getPropSettings, getPropDefault,
-% % %             % checkProp.
-% % %             
-% % %             % calls from Element
-% % %             if nargin < 2
-% % %                 pointer = el; %#ok<NASGU>
-% % %                 el = 'Element';
-% % %             end
-% % %             
-% % %             % calls from subclasses of Element
-% % %             prop_format = eval([Element.getClass(el) '.getPropFormat(pointer)']);
-% % %         end
-% % %         function prop_description = getPropDescription(el, pointer)
-% % %             % GETPROPDESCRIPTION returns the description of a property.
-% % %             %
-% % %             % DESCRIPTION = Element.GETPROPDESCRIPTION(PROP) returns the
-% % %             %  description of the property PROP.
-% % %             %
-% % %             % DESCRIPTION = Element.GETPROPDESCRIPTION(TAG) returns the
-% % %             %  description of the property with tag TAG.
-% % %             %
-% % %             % Alternative forms to call this method are (POINTER = PROP or TAG):
-% % %             %  DESCRIPTION = EL.GETPROPDESCRIPTION(POINTER) returns description of POINTER of EL.
-% % %             %  DESCRIPTION = Element.GETPROPDESCRIPTION(CLASS, POINTER) returns description of POINTER of CLASS.
-% % %             %  DESCRIPTION = EL.GETPROPDESCRIPTION(CLASS, POINTER) returns description of POINTER of CLASS.
-% % %             %
-% % %             % See also getPropProp, getPropTag, getPropCategory,
-% % %             % getPropFormat, getPropSettings, getPropDefault,
-% % %             % checkProp.
-% % %             
-% % %             % calls from Element
-% % %             if nargin < 2
-% % %                 pointer = el; %#ok<NASGU>
-% % %                 el = 'Element';
-% % %             end
-% % %             
-% % %             % calls from subclasses of Element
-% % %             prop_description = eval([Element.getClass(el) '.getPropDescription(pointer)']);
-% % %         end
-% % %         function prop_settings = getPropSettings(el, pointer)
-% % %             % GETPROPSETTINGS returns the settings of a property.
-% % %             %
-% % %             % SETTINGS = Element.GETPROPSETTINGS(PROP) returns the
-% % %             %  settings of the property PROP.
-% % %             %
-% % %             % SETTINGS = Element.GETPROPSETTINGS(TAG) returns the
-% % %             %  settings of the property with tag TAG.
-% % %             %
-% % %             % Alternative forms to call this method are (POINTER = PROP or TAG):
-% % %             %  SETTINGS = EL.GETPROPSETTINGS(POINTER) returns settings of POINTER of EL.
-% % %             %  SETTINGS = Element.GETPROPSETTINGS(CLASS, POINTER) returns settings of POINTER of CLASS.
-% % %             %  SETTINGS = EL.GETPROPSETTINGS(CLASS, POINTER) returns settings of POINTER of CLASS.
-% % %             %
-% % %             % See also getPropProp, getPropTag, getPropCategory,
-% % %             % getPropFormat, getPropDescription, getPropDefault,
-% % %             % checkProp.
-% % %             
-% % %             % calls from Element
-% % %             if nargin < 2
-% % %                 pointer = el; %#ok<NASGU>
-% % %                 el = 'Element';
-% % %             end
-% % %             
-% % %             % calls from subclasses of Element
-% % %             prop_settings = eval([Element.getClass(el) '.getPropSettings(pointer)']);
-% % %         end
-% % %         function prop_default = getPropDefault(el, pointer)
-% % %             %GETPROPDEFAULT returns the default value of a property.
-% % %             %
-% % %             % DEFAULT = Element.GETPROPDEFAULT(PROP) returns the default
-% % %             %   value of the property PROP.
-% % %             %
-% % %             % DEFAULT = Element.GETPROPDEFAULT(TAG) returns the default
-% % %             %   value of the property with tag TAG.
-% % %             %
-% % %             % Alternative forms to call this method are (POINTER = PROP or TAG):
-% % %             %  TAG = EL.GETPROPDEFAULT(POINTER) returns the default value of POINTER of EL.
-% % %             %  TAG = Element.GETPROPDEFAULT(CLASS, POINTER) returns the default value of POINTER of CLASS.
-% % %             %  TAG = EL.GETPROPDEFAULT(CLASS, POINTER) returns the default value of POINTER of CLASS.
-% % %             %
-% % %             % See also getPropDefaultConditioned, getPropProp, getPropTag, getPropSettings,
-% % %             % getPropCategory, getPropFormat, getPropDescription, checkProp.
-% % %             
-% % %             % calls from Element
-% % %             if nargin < 2
-% % %                 pointer = el; %#ok<NASGU>
-% % %                 el = 'Element';
-% % %             end
-% % %             
-% % %             % calls from subclasses of Element
-% % %             prop_default = eval([Element.getClass(el) '.getPropDefault(pointer)']);
-% % %         end
-% % %         function prop_default = getPropDefaultConditioned(el, pointer)
-% % %             %GETPROPDEFAULTCONDITIONED returns the conditioned default value of a property.
-% % %             %
-% % %             % DEFAULT = Element.GETPROPDEFAULTCONDITIONED(PROP) returns the conditioned default
-% % %             %   value of the property PROP.
-% % %             %
-% % %             % DEFAULT = Element.GETPROPDEFAULTCONDITIONED(TAG) returns the conditioned default
-% % %             %   value of the property with tag TAG.
-% % %             %
-% % %             % Alternative forms to call this method are (POINTER = PROP or TAG):
-% % %             %  TAG = EL.GETPROPDEFAULTCONDITIONED(POINTER) returns the conditioned default value of POINTER of EL.
-% % %             %  TAG = Element.GETPROPDEFAULTCONDITIONED(CLASS, POINTER) returns the conditioned default value of POINTER of CLASS.
-% % %             %  TAG = EL.GETPROPDEFAULTCONDITIONED(CLASS, POINTER) returns the conditioned default value of POINTER of CLASS.
-% % %             %
-% % %             % See also getPropDefault, getPropProp, getPropTag, getPropSettings,
-% % %             % getPropCategory, getPropFormat, getPropDescription, checkProp.
-% % %             
-% % %             % calls from Element
-% % %             if nargin < 2
-% % %                 pointer = el; %#ok<NASGU>
-% % %                 el = 'Element';
-% % %             end
-% % %             
-% % %             % calls from subclasses of Element
-% % %             prop_default = eval([Element.getClass(el) '.getPropDefaultConditioned(pointer)']);
-% % %         end
-% % %         function prop_check = checkProp(el, pointer, value)
-% % %             %CHECKPROP checks whether a value has the correct format/error.
-% % %             %
-% % %             % CHECK = Element.CHECKPROP(POINTER, VALUE) checks whether
-% % %             %  VALUE is an acceptable value for the format of the property
-% % %             %  POINTER (POINTER = PROP or TAG).
-% % %             %
-% % %             % Alternative forms to call this method are:
-% % %             %  CHECK = EL.CHECKPROP(POINTER, VALUE) checks VALUE format for PROP of EL.
-% % %             %  CHECK = Element.CHECKPROP(CLASS, PROP, VALUE) checks VALUE format for PROP of CLASS.
-% % %             %  CHECK = EL.CHECKPROP(CLASS, PROP, VALUE) checks VALUE format for PROP of CLASS.
-% % %             %
-% % %             % Element.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
-% % %             %  NOT an acceptable value for the format of the property POINTER.
-% % %             %  Error id: [BRAPH2:Element:WrongInput]
-% % %             %
-% % %             % Alternative forms to call this method are:
-% % %             %  EL.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of EL.
-% % %             %   Error id: [BRAPH2:Element:WrongInput]
-% % %             %  Element.CHECKPROP(CLASS, PROP, VALUE) throws error if VALUE has not a valid format for PROP of CLASS.
-% % %             %   Error id: [BRAPH2:CLASS:WrongInput]
-% % %             %  EL.CHECKPROP(CLASS, PROP, VALUE) throws error if VALUE has not a valid format for PROP of CLASS.
-% % %             %   Error id: [BRAPH2:CLASS:WrongInput]
-% % %             %
-% % %             % See also Format, getPropProp, getPropTag, getPropSettings,
-% % %             % getPropCategory, getPropFormat, getPropDescription,
-% % %             % getPropDefault.
-% % %             
-% % %             if nargout == 1
-% % %                 prop_check = eval([Element.getClass(el) '.checkProp(pointer, value)']);
-% % %             else
-% % %                 eval([Element.getClass(el) '.checkProp(pointer, value)']);
-% % %             end
-% % %         end
-% % %     end
-% % %     methods % constructor
-% % %         function el = Element(varargin)
+    methods (Static) % inspection
+        function el_class = getClass(el)
+            %GETCLASS returns the class of the element.
+            %
+            % CLASS = Element.GETCLASS() returns the class 'Element'.
+            %
+            % Alternative forms to call this method are:
+            %  CLASS = EL.GETCLASS() returns the class of the element EL.
+            %  CLASS = Element.GETCLASS(CLASS) returns CLASS.
+            %  CLASS = EL.GETCLASS(CLASS) returns CLASS.
+            %
+            % See also getName, getDescription.
+            
+            % calls from Element
+            if nargin < 1
+                el_class = 'Element';
+                return
+            end
+            
+            % calls from subclasses of Element
+            if isa(el, 'Element')
+                el_class = class(el);
+            else % el should be a string with the element class
+                el_class = el;
+                assert( ...
+                    exist(el_class, 'class') == 8, ...
+                    [BRAPH2.STR ':Element:' BRAPH2.WRONG_INPUT], ...
+                    [BRAPH2.STR ':Element:' BRAPH2.WRONG_INPUT ' ' ...
+                    'The value ' tostring(el, 100, '...') ' is not a valid class name.'] ...
+                    )
+            end
+        end
+        function el_name = getName(el)
+            %GETNAME returns the name of the element.
+            %
+            % NAME = Element.GETNAME() returns the name of the element,
+            %  which in this case is 'Base class for all elements.'
+            %
+            % Alternative forms to call this method are:
+            %  NAME = EL.GETNAME() returns the name of the element EL.
+            %  NAME = Element.GETNAME(CLASS) returns the name of CLASS.
+            %  NAME = EL.GETNAME(CLASS) returns the name of CLASS.
+            %
+            % See also getClass, getDescription.
+            
+            % calls from Element
+            if nargin < 1
+                el_name = 'Base class for all elements.';
+                return
+            end
+            
+            % calls from subclasses of Element
+            el_name = eval([Element.getClass(el) '.getName()']);
+        end
+        function el_description = getDescription(el)
+            %GETNAME returns the description of the element.
+            %
+            % STR = Element.GETDESCRIPTION() returns the description of the element,
+            %  which in this case is:
+            %
+            %  Element is the base class for all elements.
+            %  Even though it is possible to create instances of Element,
+            %  typically one uses its subclasses.
+            %
+            % Alternative forms to call this method are:
+            %  STR = EL.GETDESCRIPTION() returns the description of the element EL.
+            %  STR = Element.GETDESCRIPTION(CLASS) returns the description of CLASS.
+            %  STR = EL.GETDESCRIPTION(CLASS) returns the description of CLASS.
+            %
+            % See also getClass, getName.
+            
+            % calls from Element
+            if nargin < 1
+                el_description = [ ...
+                    'Element is the base class for all elements. ' ...
+                    'Even though it is possible to create instances of Element, ' ...
+                    'typically one uses its subclasses.' ...
+                    ];
+                return
+            end
+            
+            % calls from subclasses of Element
+            el_description = eval([Element.getClass(el) '.getDescription()']);
+        end
+        function prop_list = getProps(el, category)
+            %GETPROPS returns the property list of an element.
+            %
+            % PROPS = Element.GETPROPS() returns the property list of Element.
+            %
+            % PROPS = Element.GETPROPS(CATEGORY) returns the property list
+            %  of category CATEGORY.
+            %
+            % Alternative forms to call this method are:
+            %  PROPS = EL.GETPROPS([CATEGORY]) returns the property list of element EL.
+            %  PROPS = Element.GETPROPS(CLASS[, CATEGORY]) returns the property list of CLASS.
+            %  PROPS = EL.GETPROPS(CLASS[, CATEGORY]) returns the property list of CLASS.
+            %
+            % See also getPropNumber, Category.
+            
+            % calls from Element
+            if nargin < 1 % no arguments
+                prop_list = [];
+                return
+            elseif nargin == 1 && Category.existsCategory(el) % el = category argument
+                prop_list = [];
+                return
+            end
+            
+            % calls from subclasses of Element
+            if nargin < 2
+                prop_list = eval([Element.getClass(el) '.getProps()']);
+            else
+                Category.existsCategory(category);
+                
+                prop_list = eval([Element.getClass(el) '.getProps(category)']);
+            end
+        end
+        function prop_number = getPropNumber(el)
+            %GETPROPNUMBER returns the property number of an element.
+            %
+            % N = Element.GETPROPNUMBER() returns the number of properties in Element.
+            %
+            % Alternative forms to call this method are:
+            %  N = EL.GETPROPNUMBER() returns the property number of element EL.
+            %  N = Element.GETPROPNUMBER(CLASS) returns the property number of CLASS.
+            %  N = EL.GETPROPNUMBER(CLASS) returns the property number of CLASS.
+            %
+            % See also getProps.
+            
+            % calls from Element
+            if nargin < 1
+                prop_number = 0;
+                return
+            end
+            
+            % calls from subclasses of Element
+            prop_number = eval([Element.getClass(el) '.getPropNumber()']);
+        end
+        function check = existsProp(el, prop)
+            %EXISTSPROP checks whether property exists/error.
+            %
+            % CHECK = Element.EXISTSPROP(PROP) checks whether the property
+            %  PROP exists.
+            %
+            % Alternative forms to call this method are:
+            %  CHECK = EL.EXISTSPROP(PROP) checks PROP for EL.
+            %  CHECK = Element.EXISTSPROP(CLASS, PROP) checks PROP for CLASS.
+            %  CHECK = EL.EXISTSPROP(CLASS, PROP) checks PROP for CLASS.
+            %
+            % Element.EXISTSPROP(PROP) throws an error if the PROP does NOT
+            %  exist.
+            %  Error id: [BRAPH2:Element:WrongInput]
+            %
+            % Alternative forms to call this method are:
+            %  EL.EXISTSPROP(PROP) throws error if PROP does NOT exist for EL.
+            %   Error id: [BRAPH2:Element:WrongInput]
+            %  Element.EXISTSPROP(CLASS, PROP) throws error if PROP does NOT exist for EL.
+            %   Error id: [BRAPH2:CLASS:WrongInput]
+            %  EL.EXISTSPROP(CLASS, PROP) throws error if PROP does NOT exist for EL.
+            %   Error id: [BRAPH2:CLASS:WrongInput]
+            %
+            % See also getProps, existsTag.
+            
+            % calls from Element
+            if nargin < 2
+                prop = el;
+                el = 'Element';
+            end
+            
+            % calls from subclasses of Element
+            if nargout == 1
+                check = any(prop == Element.getProps(el));
+            else
+                assert( ...
+                    Element.existsProp(el, prop), ...
+                    [BRAPH2.STR ':Element:' BRAPH2.WRONG_INPUT], ...
+                    [BRAPH2.STR ':Element:' BRAPH2.WRONG_INPUT ' ' ...
+                    'The value ' tostring(prop) ' is not a valid prop for ' Element.getClass(el) '.'] ...
+                    )
+            end
+        end
+        function check = existsTag(el, tag)
+            %EXISTSTAG checks whether tag exists/error.
+            %
+            % CHECK = Element.EXISTSTAG(TAG) checks whether tag TAG exists.
+            %
+            % Alternative forms to call this method are:
+            %  CHECK = EL.EXISTSTAG(TAG) checks tag TAG for EL.
+            %  CHECK = Element.EXISTSTAG(CLASS, TAG) checks tag TAG for EL.
+            %  CHECK = EL.EXISTSTAG(CLASS, TAG) checks tag TAG for EL.
+            %
+            % Element.EXISTSTAG(TAG) throws an error if the TAG NOT exist.
+            %  Error id: [BRAPH2:Element:WrongInput]
+            %
+            % Alternative forms to call this method are:
+            %  EL.EXISTSTAG(TAG) throws error if TAG does NOT exist for EL.
+            %   Error id: [BRAPH2:Element:WrongInput]
+            %  Element.EXISTSTAG(CLASS, TAG) throws error if TAG does NOT
+            %   exist for EL. Error id: [BRAPH2:Element:WrongInput]
+            %  Element.EXISTSTAG(CLASS, TAG) throws error if TAG does NOT
+            %   exist for EL. Error id: [BRAPH2:Element:WrongInput]
+            %
+            % See also getProps, existsProp.
+            
+            % calls from Element
+            if nargin < 2
+                tag = el;
+                el = 'Element';
+            end
+            
+            % calls from subclasses of Element
+            if nargout == 1
+                tag_list = cellfun(@(x) Element.getPropTag(el, x), num2cell(Element.getProps(el)'), 'UniformOutput', false);
+                check = any(strcmpi(tag, tag_list));
+            else
+                assert( ...
+                    Element.existsTag(el, tag), ...
+                    [BRAPH2.STR ':Element:' BRAPH2.WRONG_INPUT], ...
+                    [BRAPH2.STR ':Element:' BRAPH2.WRONG_INPUT ' ' ...
+                    'The value ''' tag ''' is not a valid tag for ' Element.getClass(el) '.'] ...
+                    )
+            end
+        end
+        function prop_prop = getPropProp(el, pointer)
+            % GETPROPPROP returns the property number of a property.
+            %
+            % PROP = Element.GETPROPPROP(PROP) returns PROP, i.e., the
+            %  property number of the property PROP.
+            %
+            % PROP = Element.GETPROPPROP(TAG) returns the property number
+            %  of the property with tag TAG.
+            %
+            % Alternative forms to call this method are (POINTER = PROP or TAG):
+            %  PROP = EL.GETPROPPROP(POINTER) returns property number of POINTER of EL.
+            %  PROP = Element.GETPROPPROP(CLASS, POINTER) returns property number of POINTER of CLASS.
+            %  PROP = EL.GETPROPPROP(CLASS, POINTER) returns property number of POINTER of CLASS.
+            %
+            % See also getPropFormat, getPropTag, getPropCategory,
+            % getPropDescription, getPropSettings, getPropDefault,
+            % checkProp.
+            
+            % calls from Element
+            if nargin < 2
+                pointer = el; %#ok<NASGU>
+                el = 'Element';
+            end
+            
+            % calls from subclasses of Element
+            prop_prop = eval([Element.getClass(el) '.getPropProp(pointer)']);
+        end
+        function prop_tag = getPropTag(el, pointer)
+            % GETPROPTAG returns the tag of a property.
+            %
+            % TAG = Element.GETPROPTAG(PROP) returns the tag TAG of the
+            %  property PROP.
+            %
+            % TAG = Element.GETPROPTAG(TAG) returns TAG, i.e. the tag of
+            %  the property with tag TAG.
+            %
+            % Alternative forms to call this method are (POINTER = PROP or TAG):
+            %  TAG = EL.GETPROPTAG(POINTER) returns tag of POINTER of EL.
+            %  TAG = Element.GETPROPTAG(CLASS, POINTER) returns tag of POINTER of CLASS.
+            %  TAG = EL.GETPROPTAG(CLASS, POINTER) returns tag of POINTER of CLASS.
+            %
+            % See also getPropProp, getPropSettings, getPropCategory,
+            % getPropFormat, getPropDescription, getPropDefault,
+            % checkProp.
+            
+            % calls from Element
+            if nargin < 2
+                pointer = el; %#ok<NASGU>
+                el = 'Element';
+            end
+            
+            % calls from subclasses of Element
+            prop_tag = eval([Element.getClass(el) '.getPropTag(pointer)']);
+        end
+        function prop_category = getPropCategory(el, pointer)
+            % GETPROPCATEGORY returns the category of a property.
+            %
+            % CATEGORY = Element.GETPROPCATEGORY(PROP) returns the
+            %  category of the property PROP.
+            %
+            % CATEGORY = Element.GETPROPCATEGORY(TAG) returns the
+            %  category of the property with tag TAG.
+            %
+            % Alternative forms to call this method are (POINTER = PROP or TAG):
+            %  CATEGORY = EL.GETPROPCATEGORY(POINTER) returns category of POINTER of EL.
+            %  CATEGORY = Element.GETPROPCATEGORY(CLASS, POINTER) returns category of POINTER of CLASS.
+            %  CATEGORY = EL.GETPROPCATEGORY(CLASS, POINTER) returns category of POINTER of CLASS.
+            %
+            % See also Category, getPropProp, getPropTag, getPropSettings,
+            % getPropFormat, getPropDescription, getPropDefault,
+            % checkProp.
+            
+            % calls from Element
+            if nargin < 2
+                pointer = el; %#ok<NASGU>
+                el = 'Element';
+            end
+            
+            % calls from subclasses of Element
+            prop_category = eval([Element.getClass(el) '.getPropCategory(pointer)']);
+        end
+        function prop_format = getPropFormat(el, pointer)
+            % GETPROPFORMAT returns the format of a property.
+            %
+            % FORMAT = Element.GETPROPFORMAT(PROP) returns the format of
+            %  property PROP.
+            %
+            % FORMAT = Element.GETPROPFORMAT(TAG) returns the format of
+            %  the property with tag TAG.
+            %
+            % Alternative forms to call this method are (POINTER = PROP or TAG):
+            %  FORMAT = EL.GETPROPFORMAT(POINTER) returns format of POINTER of EL.
+            %  FORMAT = Element.GETPROPFORMAT(CLASS, POINTER) returns format of POINTER of CLASS.
+            %  FORMAT = EL.GETPROPFORMAT(CLASS, POINTER) returns format of POINTER of CLASS.
+            %
+            % See also Format, getPropProp, getPropTag, getPropCategory,
+            % getPropDescription, getPropSettings, getPropDefault,
+            % checkProp.
+            
+            % calls from Element
+            if nargin < 2
+                pointer = el; %#ok<NASGU>
+                el = 'Element';
+            end
+            
+            % calls from subclasses of Element
+            prop_format = eval([Element.getClass(el) '.getPropFormat(pointer)']);
+        end
+        function prop_description = getPropDescription(el, pointer)
+            % GETPROPDESCRIPTION returns the description of a property.
+            %
+            % DESCRIPTION = Element.GETPROPDESCRIPTION(PROP) returns the
+            %  description of the property PROP.
+            %
+            % DESCRIPTION = Element.GETPROPDESCRIPTION(TAG) returns the
+            %  description of the property with tag TAG.
+            %
+            % Alternative forms to call this method are (POINTER = PROP or TAG):
+            %  DESCRIPTION = EL.GETPROPDESCRIPTION(POINTER) returns description of POINTER of EL.
+            %  DESCRIPTION = Element.GETPROPDESCRIPTION(CLASS, POINTER) returns description of POINTER of CLASS.
+            %  DESCRIPTION = EL.GETPROPDESCRIPTION(CLASS, POINTER) returns description of POINTER of CLASS.
+            %
+            % See also getPropProp, getPropTag, getPropCategory,
+            % getPropFormat, getPropSettings, getPropDefault,
+            % checkProp.
+            
+            % calls from Element
+            if nargin < 2
+                pointer = el; %#ok<NASGU>
+                el = 'Element';
+            end
+            
+            % calls from subclasses of Element
+            prop_description = eval([Element.getClass(el) '.getPropDescription(pointer)']);
+        end
+        function prop_settings = getPropSettings(el, pointer)
+            % GETPROPSETTINGS returns the settings of a property.
+            %
+            % SETTINGS = Element.GETPROPSETTINGS(PROP) returns the
+            %  settings of the property PROP.
+            %
+            % SETTINGS = Element.GETPROPSETTINGS(TAG) returns the
+            %  settings of the property with tag TAG.
+            %
+            % Alternative forms to call this method are (POINTER = PROP or TAG):
+            %  SETTINGS = EL.GETPROPSETTINGS(POINTER) returns settings of POINTER of EL.
+            %  SETTINGS = Element.GETPROPSETTINGS(CLASS, POINTER) returns settings of POINTER of CLASS.
+            %  SETTINGS = EL.GETPROPSETTINGS(CLASS, POINTER) returns settings of POINTER of CLASS.
+            %
+            % See also getPropProp, getPropTag, getPropCategory,
+            % getPropFormat, getPropDescription, getPropDefault,
+            % checkProp.
+            
+            % calls from Element
+            if nargin < 2
+                pointer = el; %#ok<NASGU>
+                el = 'Element';
+            end
+            
+            % calls from subclasses of Element
+            prop_settings = eval([Element.getClass(el) '.getPropSettings(pointer)']);
+        end
+        function prop_default = getPropDefault(el, pointer)
+            %GETPROPDEFAULT returns the default value of a property.
+            %
+            % DEFAULT = Element.GETPROPDEFAULT(PROP) returns the default
+            %   value of the property PROP.
+            %
+            % DEFAULT = Element.GETPROPDEFAULT(TAG) returns the default
+            %   value of the property with tag TAG.
+            %
+            % Alternative forms to call this method are (POINTER = PROP or TAG):
+            %  TAG = EL.GETPROPDEFAULT(POINTER) returns the default value of POINTER of EL.
+            %  TAG = Element.GETPROPDEFAULT(CLASS, POINTER) returns the default value of POINTER of CLASS.
+            %  TAG = EL.GETPROPDEFAULT(CLASS, POINTER) returns the default value of POINTER of CLASS.
+            %
+            % See also getPropDefaultConditioned, getPropProp, getPropTag, getPropSettings,
+            % getPropCategory, getPropFormat, getPropDescription, checkProp.
+            
+            % calls from Element
+            if nargin < 2
+                pointer = el; %#ok<NASGU>
+                el = 'Element';
+            end
+            
+            % calls from subclasses of Element
+            prop_default = eval([Element.getClass(el) '.getPropDefault(pointer)']);
+        end
+        function prop_default = getPropDefaultConditioned(el, pointer)
+            %GETPROPDEFAULTCONDITIONED returns the conditioned default value of a property.
+            %
+            % DEFAULT = Element.GETPROPDEFAULTCONDITIONED(PROP) returns the conditioned default
+            %   value of the property PROP.
+            %
+            % DEFAULT = Element.GETPROPDEFAULTCONDITIONED(TAG) returns the conditioned default
+            %   value of the property with tag TAG.
+            %
+            % Alternative forms to call this method are (POINTER = PROP or TAG):
+            %  TAG = EL.GETPROPDEFAULTCONDITIONED(POINTER) returns the conditioned default value of POINTER of EL.
+            %  TAG = Element.GETPROPDEFAULTCONDITIONED(CLASS, POINTER) returns the conditioned default value of POINTER of CLASS.
+            %  TAG = EL.GETPROPDEFAULTCONDITIONED(CLASS, POINTER) returns the conditioned default value of POINTER of CLASS.
+            %
+            % See also getPropDefault, getPropProp, getPropTag, getPropSettings,
+            % getPropCategory, getPropFormat, getPropDescription, checkProp.
+            
+            % calls from Element
+            if nargin < 2
+                pointer = el; %#ok<NASGU>
+                el = 'Element';
+            end
+            
+            % calls from subclasses of Element
+            prop_default = eval([Element.getClass(el) '.getPropDefaultConditioned(pointer)']);
+        end
+        function prop_check = checkProp(el, pointer, value)
+            %CHECKPROP checks whether a value has the correct format/error.
+            %
+            % CHECK = Element.CHECKPROP(POINTER, VALUE) checks whether
+            %  VALUE is an acceptable value for the format of the property
+            %  POINTER (POINTER = PROP or TAG).
+            %
+            % Alternative forms to call this method are:
+            %  CHECK = EL.CHECKPROP(POINTER, VALUE) checks VALUE format for PROP of EL.
+            %  CHECK = Element.CHECKPROP(CLASS, PROP, VALUE) checks VALUE format for PROP of CLASS.
+            %  CHECK = EL.CHECKPROP(CLASS, PROP, VALUE) checks VALUE format for PROP of CLASS.
+            %
+            % Element.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
+            %  NOT an acceptable value for the format of the property POINTER.
+            %  Error id: [BRAPH2:Element:WrongInput]
+            %
+            % Alternative forms to call this method are:
+            %  EL.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of EL.
+            %   Error id: [BRAPH2:Element:WrongInput]
+            %  Element.CHECKPROP(CLASS, PROP, VALUE) throws error if VALUE has not a valid format for PROP of CLASS.
+            %   Error id: [BRAPH2:CLASS:WrongInput]
+            %  EL.CHECKPROP(CLASS, PROP, VALUE) throws error if VALUE has not a valid format for PROP of CLASS.
+            %   Error id: [BRAPH2:CLASS:WrongInput]
+            %
+            % See also Format, getPropProp, getPropTag, getPropSettings,
+            % getPropCategory, getPropFormat, getPropDescription,
+            % getPropDefault.
+            
+            if nargout == 1
+                prop_check = eval([Element.getClass(el) '.checkProp(pointer, value)']);
+            else
+                eval([Element.getClass(el) '.checkProp(pointer, value)']);
+            end
+        end
+    end
+    methods % constructor
+        function el = Element(varargin)
 % % %             % ELEMENT() creates an Element.
 % % %             %
 % % %             % ELEMENT(PROP, VALUE, ...) with property PROP initialized to VALUE.
@@ -633,70 +630,59 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % %             %  POINTER2 are prop pointers.
 % % %             %
 % % %             % See also Category, Format, set, check.
-% % % 
+
 % % %             %CET: COMPUTATIONAL EFFICIENCY TRICK
 % % %             % undocumented trick to avoid inizialization of props
 % % %             % by having a single value (42) in the varargin (e.g. when deep-copying)
 % % %             if length(varargin) == 1 && isequal(varargin{1}, 42)
 % % %                 return
 % % %             end
-% % %             
-% % %             % input ensemble_props
-% % %             if nargin >= 1 && iscell(varargin{1})
-% % %                 ensemble_props = varargin{1};
-% % %                 for i = 1:1:length(ensemble_props)
-% % %                     ensemble_props{i} = el.getPropProp(ensemble_props{i});
-% % %                 end
-% % %                 ensemble_props = cell2mat(ensemble_props);
-% % %                 
-% % %                 varargin = varargin(2:end);
-% % %             else
-% % %                 ensemble_props = [];
-% % %             end
-% % % 
-% % %             %NOTE:
-% % %             % the shuffle of the rng (rng('shuffle', 'twister'))
-% % %             % should be done before creating the element 
-% % %             % to ensure reproducibitlity of the random numbers
-% % %             for prop = 1:1:el.getPropNumber()
-% % %                 if any(ensemble_props == prop)
-% % %                     el.props{prop}.ensemble = true;
-% % %                     el.props{prop}.values = NoValue.getNoValue();
-% % %                 else
-% % %                     el.props{prop}.ensemble = false;
-% % %                     el.props{prop}.value = NoValue.getNoValue();
-% % %                 end
-% % %                 el.props{prop}.seed = randi(intmax('uint32'));
-% % %                 el.props{prop}.checked = true;
-% % %                 el.props{prop}.locked = false;
-% % %             end
-% % % 
-% % %             el.set(varargin{:})
-% % %         end
-% % %     end
-% % % 	methods % set/check/get/seed/locked/checked
-% % %         function ensemble = isEnsemble(el, pointer)
-% % %             %ISENSEMBLE returns whether a property is ensemble.
-% % %             %
-% % %             % ENSEMBLE = ISENSEMBLE(EL) returns whether EL is ensemble.
-% % %             %  By definition, EL is ensemble if at least one of its
-% % %             %  properties is ensemble.
-% % %             %
-% % %             % ENSEMBLE = ISENSEMBLE(EL, POINTER) returns whether the property POINTER of
-% % %             %  element EL is ensemble. POINTER can be either a property number (PROP) or
-% % %             %  tag (TAG).
-% % %             %
-% % %             % Properties are defined as ensemble when an element is
-% % %             %  instantiated and their ensemble property cannot be changed.
-% % % 
-% % %             if nargin < 2
-% % %                 ensemble = any(cellfun(@(x) x.ensemble, el.props));
-% % %             else
-% % %                 prop = el.getPropProp(pointer);
-% % %                 
-% % %                 ensemble = el.props{prop}.ensemble;
-% % %             end
-% % %         end
+            
+            % ensemble_props extraction from inputs
+            if nargin && iscell(varargin{1})
+                ensemble_props = cellfun(@(x) el.getPropProp(x), varargin{1});
+                varargin = varargin(2:end);
+            else
+                ensemble_props = [];
+            end
+
+            %NOTE:
+            % the shuffle of the rng (rng('shuffle', 'twister'))
+            % should be done before creating the element 
+            % to ensure reproducibitlity of the random numbers
+            for prop = 1:1:el.getPropNumber()
+                el.props{prop}.ensemble = any(ensemble_props == prop);
+                el.props{prop}.value = NoValue.getNoValue();
+                el.props{prop}.seed = randi(intmax('uint32'));
+                el.props{prop}.checked = true;
+                el.props{prop}.locked = false;
+            end
+
+            el.set(varargin{:})
+        end
+    end
+	methods % set/check/get/seed/locked/checked
+        function ensemble = isEnsemble(el, pointer)
+            %ISENSEMBLE returns whether an element or property is an ensemble.
+            %
+            % ENSEMBLE = ISENSEMBLE(EL) returns whether EL is an ensemble.
+            %  EL is an ensemble if at least one of its properties is ensemble.
+            %
+            % ENSEMBLE = ISENSEMBLE(EL, POINTER) returns whether the property POINTER 
+            %  of element EL is an ensemble. POINTER can be either a property number
+            %  (PROP) or a tag (TAG).
+            %
+            % Properties are defined as ensemble when an element is created and their
+            %  ensemble property cannot be changed afterwards.
+
+            if nargin < 2
+                ensemble = any(cellfun(@(x) x.ensemble, el.props));
+            else
+                prop = el.getPropProp(pointer);
+                
+                ensemble = el.props{prop}.ensemble;
+            end
+        end
 % % %         function N = getEnsembleNumber(el)
 % % %             %GETENSEMBLENUMBER returns ensemble cardinality.
 % % %             %
@@ -712,7 +698,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % %                 end
 % % %             end
 % % %         end
-% % %         function el_out = set(el, varargin)
+        function el_out = set(el, varargin)
 % % %             %TODO: check docs
 % % %             %SET sets the value of a property.
 % % %             %
@@ -751,35 +737,31 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % %             %
 % % %             % See also get, getr, memorize, check, isChecked, checked, unchecked,
 % % %             % isLocked, lock, Callback.
-% % % 
+
 % % %             % backup properties (if any prop is checked)
 % % %             checked = el.getPropNumber() && any(cellfun(@(x) x.checked, el.props));
 % % %             if checked
 % % %                 props_backup = el.props; % props backup
 % % %             end
-% % % 
-% % %             % set
-% % %             for i = 1:2:length(varargin)
-% % %                 prop = el.getPropProp(varargin{i}); % also Element.existsProp(el, prop)
-% % %                 value = varargin{i+1};
-% % %                 
+
+            % set
+            for i = 1:2:length(varargin)
+                prop = el.getPropProp(varargin{i}); % also Element.existsProp(el, prop)
+                value = varargin{i+1};
+                
 % % %                 if ~isa(value, 'Callback') && el.getPropCategory(prop) ~= Category.RESULT
 % % %                     value = el.conditioning(prop, value);
 % % %                 end
-% % % 
-% % %                 switch el.getPropCategory(prop)
-% % %                     case Category.METADATA
+
+                switch el.getPropCategory(prop)
+                    case Category.METADATA
 % % %                         if el.isChecked(prop)
 % % %                             el.checkProp(prop, value) % check value format
 % % %                         end
-% % % 
-% % %                         if el.isEnsemble(prop)
-% % %                             el.props{prop}.values = value;
-% % %                         else
-% % %                             el.props{prop}.value = value;
-% % %                         end
-% % % 
-% % %                     case {Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE} %TODO: check that categories GUI and Figure belong here
+
+                        el.props{prop}.value = value;
+
+                    case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI} %TODO: check that categories GUI and Figure belong here
 % % %                         if ~el.isLocked(prop)
 % % %                             if isa(value, 'Callback')
 % % %                                 if ~isequal(el.getPropFormat(prop), value.get('EL').getPropFormat(value.get('PROP')))
@@ -798,21 +780,13 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % %                                         )                                
 % % %                                 end
 % % % 
-% % %                                 if el.isEnsemble(prop)
-% % %                                     el.props{prop}.values = value;
-% % %                                 else
 % % %                                     el.props{prop}.value = value;
-% % %                                 end
 % % %                             else
 % % %                                 if el.isChecked(prop)
 % % %                                     el.checkProp(prop, value) % check value format
 % % %                                 end
 % % % 
-% % %                                 if el.isEnsemble(prop)
-% % %                                     el.props{prop}.values = value;
-% % %                                 else
-% % %                                     el.props{prop}.value = value;
-% % %                                 end
+                                    el.props{prop}.value = value;
 % % %                             end
 % % %                         else
 % % %                             warning( ...
@@ -822,31 +796,27 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % %                                 'Hopefully this won''t create problems, but your code shouldn''t let this happen!'] ...
 % % %                                 )                            
 % % %                         end
-% % % 
-% % %                     case Category.RESULT
-% % %                         if isa(value, 'NoValue')
-% % %                             if el.isEnsemble(prop)
-% % %                                 el.props{prop}.values = NoValue.getNoValue();
-% % %                             else
-% % %                                 el.props{prop}.value = NoValue.getNoValue();
-% % %                             end
-% % %                         else
-% % %                             warning( ...
-% % %                                 [BRAPH2.STR ':' class(el)], ...
-% % %                                 [BRAPH2.STR ':' class(el) ' ' ...
-% % %                                 'Rightfully unsuccessful attempt to set result (' el.getPropTag(prop) ') to a value. ' ...
-% % %                                 'Probably not a problem, but shouldn''t happen with well-written code!'] ...
-% % %                                 )
-% % %                         end
-% % %                 end
-% % %             end
-% % % 
+
+                    case Category.RESULT
+                        if isa(value, 'NoValue')
+                                el.props{prop}.value = NoValue.getNoValue();
+                        else
+                            warning( ...
+                                [BRAPH2.STR ':' class(el)], ...
+                                [BRAPH2.STR ':' class(el) ' ' ...
+                                'Rightfully unsuccessful attempt to set result (' el.getPropTag(prop) ') to a value. ' ...
+                                'Probably not a problem, but shouldn''t happen with well-written code!'] ...
+                                )
+                        end
+                end
+            end
+
 % % %             for prop = 1:1:el.getPropNumber()
 % % %                 if ~el.isLocked(prop)
 % % %                     el.postprocessing(prop)
 % % %                 end
 % % %             end
-% % % 
+
 % % %             % check values and restore (if any prop is checked)
 % % %             if checked
 % % %                 [check, msg] = el.check();
@@ -862,12 +832,12 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % %                         )
 % % %                 end
 % % %             end
-% % % 
-% % %             % output
-% % %             if nargout > 0
-% % %                 el_out = el;
-% % %             end
-% % %         end
+
+            % output
+            if nargout > 0
+                el_out = el;
+            end
+        end
 % % %         function [element_check, element_msg] = check(el)
 % % %             %CHECK checks the values of all properties.
 % % %             %
@@ -897,7 +867,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % %                                 value_msg = '';
 % % %                             end
 % % % 
-% % %                         case {Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE} %TODO: check that categories GUI and Figure belong here
+% % %                         case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI} %TODO: check that categories GUI and Figure belong here
 % % %                             while isa(value, 'Callback')
 % % %                                 value = value.get('EL').get(value.get('PROP'));
 % % %                             end
@@ -938,23 +908,19 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % %                     )
 % % %             end
 % % %         end
-% % %         function value = getr(el, pointer)
+        function value = getr(el, pointer)
 % % %             %GETR returns the raw value of a property.
 % % %             %
 % % %             % VALUE = GETR(EL, POINTER) returns the raw value of property POINTER of
 % % %             %  element EL. POINTER can be either a property number (PROP) or tag (TAG).
 % % %             %
 % % %             % See also get, memorize, set, check.
-% % % 
-% % %             prop = el.getPropProp(pointer); % also Element.existsProp(el, prop)
-% % % 
-% % %             if el.isEnsemble(prop)
-% % %                 value = el.props{prop}.values; % raw element value
-% % %             else
-% % %                 value = el.props{prop}.value; % raw element value
-% % %             end
-% % %         end
-% % %         function value = get(el, pointer)
+
+            prop = el.getPropProp(pointer); % also Element.existsProp(el, prop)
+
+            value = el.props{prop}.value; % raw element value
+        end
+        function value = get(el, pointer)
 % % %             %GET returns the value of a property.
 % % %             %
 % % %             % VALUE = GET(EL, POINTER) returns the value of property POINTER of element
@@ -979,25 +945,25 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % %             %  Warning id: [BRAPH2:<Element Class>]
 % % %             % 
 % % %             % See also getr, memorize, set, check, NoValue, Callback, getPropDefault, lock.
-% % % 
-% % %             prop = el.getPropProp(pointer);
-% % % 
-% % %             value = el.getr(prop);
-% % % 
-% % %             switch el.getPropCategory(prop)
-% % %                 case Category.METADATA
+
+            prop = el.getPropProp(pointer);
+
+            value = el.getr(prop);
+
+            switch el.getPropCategory(prop)
+                case Category.METADATA
 % % %                     if isa(value, 'NoValue')
 % % %                         value = el.getPropDefaultConditioned(prop);
 % % %                     end
-% % % 
-% % %                 case {Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE} %TODO: check that categories GUI and Figure belong here
+
+                case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI} %TODO: check that categories GUI and Figure belong here
 % % %                     if isa(value, 'NoValue')
 % % %                         value = el.getPropDefaultConditioned(prop);
 % % %                     elseif isa(value, 'Callback')
 % % %                         value = value.get(Callback.EL).get(value.get(Callback.PROP));
 % % %                     end
-% % % 
-% % %                 case Category.RESULT
+
+                case Category.RESULT
 % % %                     if isa(value, 'NoValue')
 % % % 
 % % %                         % backup properties (if prop is checked)
@@ -1030,8 +996,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % %                             end
 % % %                         end
 % % %                     end
-% % %             end
-% % %         end
+            end
+        end
 % % %         function value = memorize(el, pointer)
 % % %             %MEMORIZE returns and memorizes the value of a property.
 % % %             %
@@ -1070,26 +1036,26 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % % 
 % % %             seed = el.props{prop}.seed;
 % % %         end
-% % %         function locked = isLocked(el, pointer)
-% % %             %ISLOCKED returns whether a property is locked.
-% % %             %
-% % %             % LOCKED = ISLOCKED(EL, POINTER) returns whether the property POINTER of
-% % %             %  element EL is locked. POINTER can be either a property number (PROP) or
-% % %             %  tag (TAG).
-% % %             %
-% % %             % Properties can be locked by the user using the function <a href="matalb:help Element.lock">lock</a>.
-% % %             % All properties with Category.PARAMETER and Category.DATA are
-% % %             %  automatically locked as soon as the first result is calculated.
-% % %             %  Afterwards they cannot be unlocked. 
-% % %             % If an element with unlocked properties is needed, it it possible 
-% % %             %  to clone the element using the function <a href="matalb:help Element.clone">clone</a>.
-% % %             %
-% % %             % See also lock, clone.
-% % % 
-% % %             prop = el.getPropProp(pointer);
-% % % 
-% % %             locked = el.props{prop}.locked;
-% % %         end
+        function locked = isLocked(el, pointer)
+            %ISLOCKED returns whether a property is locked.
+            %
+            % LOCKED = ISLOCKED(EL, POINTER) returns whether the property POINTER of
+            %  element EL is locked. POINTER can be either a property number (PROP) or
+            %  tag (TAG).
+            %
+            % Properties can be locked by the user using the function <a href="matalb:help Element.lock">lock</a>.
+            % All properties with Category.PARAMETER and Category.DATA are
+            %  automatically locked as soon as the first result is calculated.
+            %  Afterwards they cannot be unlocked. 
+            % If an element with unlocked properties is needed, it it possible 
+            %  to clone the element using the function <a href="matalb:help Element.clone">clone</a>.
+            %
+            % See also lock, clone.
+
+            prop = el.getPropProp(pointer);
+
+            locked = el.props{prop}.locked;
+        end
 % % %         function lock(el, pointer)
 % % %             %LOCK locks unreversibly a property.
 % % %             %
@@ -1197,29 +1163,32 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % %                 end
 % % %             end
 % % %         end     
-% % %     end
-% % %     methods % operators
-% % %         function check = isequal(el1, el2)
-% % %             %ISEQUAL determines whether two elements are equal (values, locked).
-% % %             %
-% % %             % CHECK = ISEQUAL(EL1, EL2) determines whether elements EL1 and EL2 are
-% % %             %  equal in terms of values and locked status.
-% % %             %  POINTER can be either a property number (PROP) or tag (TAG).
-% % %             %
-% % %             % Note that, instead, EL1 == EL2 detemines whether the two handles 
-% % %             %  EL1 and EL2 refer to the very same element.
-% % %             
-% % %             check = isa(el2, el1.getClass());
-% % %             
-% % %             if check
-% % %                 for prop = 1:1:el1.getPropNumber()
-% % %                     check = check && isequal(el1.getr(prop), el2.getr(prop)) && (el1.isLocked(prop) == el2.isLocked(prop));
-% % %                 end
-% % %             end
-% % %         end
-% % %     end
-% % %     methods (Static, Access=protected) % conditioning
-% % %         function value = conditioning(el, pointer, value)
+    end
+    methods % operators
+        function check = isequal(el1, el2)
+            %ISEQUAL determines whether two elements are equal (ensemble, values, locked).
+            %
+            % CHECK = ISEQUAL(EL1, EL2) determines whether elements EL1 and EL2 are
+            %  equal in terms of ensemble properties, values and locked statuses.
+            %  POINTER can be either a property number (PROP) or tag (TAG).
+            %
+            % Note that, instead, EL1 == EL2 detemines whether the two handles 
+            %  EL1 and EL2 refer to the very same element.
+            
+            check = isa(el2, el1.getClass());
+            
+            if check
+                for prop = 1:1:el1.getPropNumber()
+                    check = check && ...
+                        (el1.isEnsemble(prop) == el2.isEnsemble(prop)) && ...
+                        isequal(el1.getr(prop), el2.getr(prop)) && ...
+                        (el1.isLocked(prop) == el2.isLocked(prop));
+                end
+            end
+        end
+    end
+    methods (Static, Access=protected) % conditioning
+        function value = conditioning(el, pointer, value)
 % % %             %CONDITIONING conditions a value before setting a property.
 % % %             %
 % % %             % VALUE = CONDITIONING(EL, PROP, VALUE) conditions the value VALUE before
@@ -1228,20 +1197,18 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % %             %  be implemented in the subclasses of Element when needed.
 % % %             %
 % % %             % See also set, postprocessing, calculateValue, checkValue.
-% % %             
-% % %             % calls from Element
-% % %             if nargin < 3
-% % %                 value = pointer;
-% % %                 % pointer = el; %#ok<NASGU>
-% % %                 % el = 'Element'; %#ok<NASGU>
-% % %                 return
-% % %             end
-% % %             
-% % %             % calls from subclasses of Element
-% % %             value = eval([Element.getClass(el) '.conditioning(pointer, value)']);
-% % %         end
-% % %     end
-% % %     methods (Access=protected) % postprocessing
+            
+            % calls from Element
+            if nargin < 3
+                value = pointer;
+                return
+            end
+            
+            % calls from subclasses of Element
+            value = eval([Element.getClass(el) '.conditioning(pointer, value)']);
+        end
+    end
+    methods (Access=protected) % postprocessing
 % % %         function postprocessing(el, prop) %#ok<*INUSD>
 % % %             %POSTPROCESSING postprocesses the value of a prop after it has been set.
 % % %             %
@@ -1255,8 +1222,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % %             %
 % % %             % See also set, conditioning, calculateValue, checkValue.
 % % %         end
-% % %     end
-% % %     methods (Access=protected) % check value
+    end
+    methods (Access=protected) % check value
 % % %         function [value_check, value_msg] = checkValue(el, prop, value)
 % % %             %CHECKVALUE checks the value of a property after it is calculated.
 % % %             %
@@ -1270,8 +1237,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % %             value_check = true;
 % % %             value_msg = '';
 % % %         end
-% % %     end
-% % %     methods (Access=protected) % calculate value
+    end
+    methods (Access=protected) % calculate value
 % % %         function value = calculateValue(el, prop)
 % % %             %CALCULATEVALUE calculates the value of a property.
 % % %             %
@@ -1284,8 +1251,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % % 
 % % %             value = el.getPropDefaultConditioned(prop);
 % % %         end
-% % %     end    
-% % %     methods % display
+    end    
+    methods % display
 % % %         function str = tostring(el, varargin)
 % % %             %TOSTRING string with information about the element.
 % % %             %
@@ -1435,8 +1402,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % %                 disp(txt_el)
 % % %             end
 % % %         end
-% % %     end
-% % %     methods % el_list
+    end
+    methods % el_list
 % % %         function el_list = getElementList(el, el_list)
 % % %             %GETELEMETLIST returns a list with all subelements.
 % % %             %
@@ -1469,8 +1436,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % %                 end
 % % %             end
 % % %         end        
-% % %     end
-% % %     methods % encodeJSON
+    end
+    methods % encodeJSON
 % % %         function [json, struct, el_list] = encodeJSON(el)
 % % %             %ENCODEJSON returns a JSON string encoding the element.
 % % %             %
@@ -1541,8 +1508,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % % 
 % % %             json = jsonencode(struct);
 % % %         end
-% % %     end
-% % %     methods (Static) % decodeJSON
+    end
+    methods (Static) % decodeJSON
 % % %         function [el, struct, el_list] = decodeJSON(json)
 % % %             %DECODEJSON returns a JSON string encoding the element.
 % % %             %
@@ -1613,8 +1580,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % %             
 % % %             el = el_list{1};
 % % %         end
-% % %     end    
-% % %     methods (Access=protected) % deep copy
+    end    
+    methods (Access=protected) % deep copy
 % % %         %TODO: revise copy
 % % %         function el_copy = copyElement(el)
 % % %             %COPYELEMENT copies the element.
@@ -1658,8 +1625,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % %             
 % % %             el_copy = el_copy_list{1};
 % % %         end
-% % %     end
-% % %     methods % clone
+    end
+    methods % clone
 % % %         %TODO: revise clone
 % % %         function el_clone = clone(el)
 % % %             %CLONE clones the element.
@@ -1747,8 +1714,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % %                 end
 % % %             end
 % % %         end
-% % %     end
-% % %     methods % GUI
+    end
+    methods % GUI
 % % % % FIXME: gui = GUI ...
 % % %         function fig = getGUI(el, varargin)
 % % %             %GETGUI returns figure with element GUI.
@@ -1888,8 +1855,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % %                         varargin{:});
 % % %             end
 % % %         end
-% % %     end
-% % %     methods (Static) % GUI Static
+    end
+    methods (Static) % GUI Static
 % % %         function getGUIMenuImport(el, menu_import, pl)
 % % %             %GETGUIMENUIMPORT sets the import submenu gui json.
 % % %             % 
@@ -1938,5 +1905,5 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 % % %                 end
 % % %             end
 % % %         end
-% % %     end
+    end
 end

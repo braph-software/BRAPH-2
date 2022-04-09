@@ -301,7 +301,7 @@ classdef Format < handle %TODO: revise
                     format_name = Format.SMATRIX_NAME;
                 case Format.CELL
                     format_name = Format.CELL_NAME;
-                case Format.ONNX
+                case Format.NET
                     format_name = Format.NET_NAME;
                 otherwise
                     Format.existsFormat(format) % error because format does not exist

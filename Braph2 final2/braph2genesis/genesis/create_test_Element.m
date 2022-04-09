@@ -59,8 +59,16 @@ generate_test1_1_instantation_empty()
         
         gs(0, {[moniker ' = ' class_name '();']; ''})
         
-        g(0, ['prop_number = ' class_name '.getPropNumber();'])
-        g(0, 'for prop = 1:1:prop_number')
+        g(0, 'assert( ...')
+            gs(1, {
+                ['~' moniker '.isEnsemble(), ...']
+                ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+                ['''' class_name ' should not be an ensemble.'' ...']
+                ')'
+                ''
+                })
+        
+        g(0, ['for prop = 1:1:' class_name '.getPropNumber()'])
             g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
             g(1, 'assert( ...')
                 gs(2, {
@@ -86,7 +94,7 @@ generate_test1_2_instantation_defaults()
     function generate_test1_2_instantation_defaults()
         gs(0, {'%% Test 1.2: Instantiation - defaults'; ''})
 
-        gs(0, {['warning(''off'', ''' BRAPH2.STR ':' class_name ''')'], ''})
+        g(0, ['warning(''off'', ''' BRAPH2.STR ':' class_name ''')']) % turns off warnings when trying to set the value of results
         g(0, [moniker ' = ' class_name '( ...'])
             for prop = 1:1:prop_number
                 TAG = upper(eval([class_name '.getPropTag(' int2str(prop) ')']));
@@ -99,10 +107,19 @@ generate_test1_2_instantation_defaults()
             g(1, ');')
         gs(0, {['warning(''on'', ''' BRAPH2.STR ':' class_name ''')'], ''})
 
+        g(0, 'assert( ...')
+            gs(1, {
+                ['~' moniker '.isEnsemble(), ...']
+                ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+                ['''' class_name ' should not be an ensemble.'' ...']
+                ')'
+                ''
+                })
+        
         g(0, ['for prop = 1:1:' class_name '.getPropNumber()'])
             g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
             g(1, ['switch ' class_name '.getPropCategory(prop)'])
-                g(2, 'case {Category.METADATA, Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE}')
+                g(2, 'case {Category.METADATA, Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}')
                     g(3, 'assert( ...')
                         gs(4, {
                             ['isequal(' moniker '.getr(prop), ' class_name '.getPropDefaultConditioned(prop)), ...']
@@ -143,327 +160,325 @@ generate_test1_2_instantation_defaults()
         g(0, '')
     end
 
-generate_test_2_callbacks()
-    function generate_test_2_callbacks()
-        gs(0, {'%% Test 2: Callbacks'; ''})
-        
-        if strcmp(class_name, 'Callback')
-            gs(0, {'% this test is not implemented for Callback'; ''})
-            return
-        end
-
-        % element
-        gs(0, {['warning(''off'', ''' BRAPH2.STR ':' class_name ''')'], ''})
-        g(0, [moniker '_0 = ' class_name '( ...'])
-            for prop = 1:1:prop_number
-                TAG = upper(eval([class_name '.getPropTag(' int2str(prop) ')']));
-                if prop < prop_number
-                    g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG '), ...'])
-                else
-                    g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG ') ...'])
-                end
-            end
-            g(1, ');')
-            g(1, '')
-        gs(0, {['warning(''on'', ''' BRAPH2.STR ':' class_name ''')'], ''})
-
-        % element with 1st callbacks
-        g(0, [moniker '_1 = ' class_name '( ...'])
-            for prop = 1:1:prop_number
-                TAG = upper(eval([class_name '.getPropTag(' int2str(prop) ')']));
-                switch eval([class_name '.getPropCategory(' int2str(prop) ')'])
-                    case Category.METADATA
-                        if prop < prop_number
-                            g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG '), ...'])
-                        else
-                            g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG ') ...'])
-                        end                    
-                    case {Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE}
-                        if prop < prop_number
-                            g(1, [class_name '.' TAG ', Callback(''EL'', ' moniker '_0, ''PROP'', ' int2str(prop) '), ...'])
-                        else
-                            g(1, [class_name '.' TAG ', Callback(''EL'', ' moniker '_0, ''PROP'', ' int2str(prop) ') ...'])
-                        end
-                    case Category.RESULT
-                        if prop < prop_number
-                            g(1, [class_name '.' TAG ', NoValue(), ...'])
-                        else
-                            g(1, [class_name '.' TAG ', NoValue() ...'])
-                        end                    
-                end
-            end
-            g(1, ');')
-            g(1, '')
-        
-        g(0, ['prop_number = ' class_name '.getPropNumber();'])
-        g(0, 'for prop = 1:1:prop_number')
-            g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
-            g(1, ['switch ' class_name '.getPropCategory(prop)'])
-                g(2, 'case {Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE}')
-                    g(3, 'assert( ...')
-                        gs(4, {
-                            ['isa(' moniker '_1.getr(prop),  ''Callback''), ...']
-                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-                            ['[''' class_name '.getr('' int2str(prop) '') must be a callback.''] ...']
-                            ')'
-                            })
-                    g(3, 'assert( ...')
-                        gs(4, {
-                            ['isequal(' moniker '_1.get(prop), ' moniker '_0.get(prop)) && ~isa(' moniker '_1.get(prop), ''Callback''), ...']
-                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-                            ['[''' class_name '.get('' int2str(prop) '') must be the actual property and NOT a callback.''] ...']
-                            ')'
-                            })
-                g(2, 'case {Category.METADATA, Category.RESULT}')
-                    g(3, 'assert( ...')
-                        gs(4, {
-                            ['~isa(' moniker '_1.getr(prop), ''Callback''), ...']
-                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-                            ['[''' class_name '.getr('' int2str(prop) '') must NOT be a callback.''] ...']
-                            ')'
-                            })
-            g(1, 'end')
-        g(0, 'end')
-        
-        % element with 2nd callbacks
-        g(0, [moniker '_2 = ' class_name '( ...'])
-            for prop = 1:1:prop_number
-                TAG = upper(eval([class_name '.getPropTag(' int2str(prop) ')']));
-                switch eval([class_name '.getPropCategory(' int2str(prop) ')'])
-                    case Category.METADATA
-                        if prop < prop_number
-                            g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG '), ...'])
-                        else
-                            g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG ') ...'])
-                        end                    
-                    case {Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE}
-                        if prop < prop_number
-                            g(1, [class_name '.' TAG ', Callback(''EL'', ' moniker '_1, ''PROP'', ' int2str(prop) '), ...'])
-                        else
-                            g(1, [class_name '.' TAG ', Callback(''EL'', ' moniker '_1, ''PROP'', ' int2str(prop) ') ...'])
-                        end
-                    case Category.RESULT
-                        if prop < prop_number
-                            g(1, [class_name '.' TAG ', NoValue(), ...'])
-                        else
-                            g(1, [class_name '.' TAG ', NoValue() ...'])
-                        end                    
-                end
-            end
-            g(1, ');') 
-            g(1, '')
-        
-        g(0, ['prop_number = ' class_name '.getPropNumber();'])
-        g(0, 'for prop = 1:1:prop_number')
-            g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
-            g(1, ['switch ' class_name '.getPropCategory(prop)'])
-                g(2, 'case {Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE}')
-                    g(3, 'assert( ...')
-                        gs(4, {
-                            ['isa(' moniker '_2.getr(prop),  ''Callback''), ...']
-                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-                            ['[''' class_name '.getr('' int2str(prop) '') must be a callback.''] ...']
-                            ')'
-                            })
-                    g(3, 'assert( ...')
-                        gs(4, {
-                            ['isequal(' moniker '_2.get(prop), ' moniker '_0.get(prop)) && ~isa(' moniker '_1.get(prop), ''Callback''), ...']
-                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-                            ['[''' class_name '.get('' int2str(prop) '') must be the actual property and NOT a callback.''] ...']
-                            ')'
-                            })
-                g(2, 'case {Category.METADATA, Category.RESULT}')
-                    g(3, 'assert( ...')
-                        gs(4, {
-                            ['~isa(' moniker '_2.getr(prop), ''Callback''), ...']
-                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-                            ['[''' class_name '.getr('' int2str(prop) '') must NOT be a callback.''] ...']
-                            ')'
-                            })
-            g(1, 'end')
-        g(0, 'end')
-        
-        % element with 3rd callbacks
-        g(0, [moniker '_3 = ' class_name '( ...'])
-            for prop = 1:1:prop_number
-                TAG = upper(eval([class_name '.getPropTag(' int2str(prop) ')']));
-                switch eval([class_name '.getPropCategory(' int2str(prop) ')'])
-                    case Category.METADATA
-                        if prop < prop_number
-                            g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG '), ...'])
-                        else
-                            g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG ') ...'])
-                        end                    
-                    case {Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE}
-                        if prop < prop_number
-                            g(1, [class_name '.' TAG ', Callback(''EL'', ' moniker '_2, ''PROP'', ' int2str(prop) '), ...'])
-                        else
-                            g(1, [class_name '.' TAG ', Callback(''EL'', ' moniker '_2, ''PROP'', ' int2str(prop) ') ...'])
-                        end
-                    case Category.RESULT
-                        if prop < prop_number
-                            g(1, [class_name '.' TAG ', NoValue(), ...'])
-                        else
-                            g(1, [class_name '.' TAG ', NoValue() ...'])
-                        end                    
-                end
-            end
-            g(1, ');')
-            g(1, '')
-        
-        g(0, ['prop_number = ' class_name '.getPropNumber();'])
-        g(0, 'for prop = 1:1:prop_number')
-            g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
-            g(1, ['switch ' class_name '.getPropCategory(prop)'])
-                g(2, 'case {Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE}')
-                    g(3, 'assert( ...')
-                        gs(4, {
-                            ['isa(' moniker '_3.getr(prop),  ''Callback''), ...']
-                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-                            ['[''' class_name '.getr('' int2str(prop) '') must be a callback.''] ...']
-                            ')'
-                            })
-                    g(3, 'assert( ...')
-                        gs(4, {
-                            ['isequal(' moniker '_3.get(prop), ' moniker '_0.get(prop)) && ~isa(' moniker '_1.get(prop), ''Callback''), ...']
-                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-                            ['[''' class_name '.get('' int2str(prop) '') must be the actual property and NOT a callback.''] ...']
-                            ')'
-                            })
-                g(2, 'case {Category.METADATA, Category.RESULT}')
-                    g(3, 'assert( ...')
-                        gs(4, {
-                            ['~isa(' moniker '_3.getr(prop), ''Callback''), ...']
-                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-                            ['[''' class_name '.getr('' int2str(prop) '') must NOT be a callback.''] ...']
-                            ')'
-                            })
-            g(1, 'end')
-        g(0, 'end')
-        g(0, '')
-    end
-
-generate_test_3_result()
-    function generate_test_3_result()
-        gs(0, {'%% Test 3: Result'; ''})
-        
-        gs(0, {['warning(''off'', ''' BRAPH2.STR ':' class_name ''')'], ''})
-        g(0, [moniker ' = ' class_name '( ...'])
-            for prop = 1:1:prop_number
-                TAG = upper(eval([class_name '.getPropTag(' int2str(prop) ')']));
-                if prop < prop_number
-                    g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG '), ...'])
-                else
-                    g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG ') ...'])
-                end
-            end
-            g(1, ');')
-            g(1, '')
-        gs(0, {['warning(''on'', ''' BRAPH2.STR ':' class_name ''')'], ''})
-        
-        g(0, ['prop_number = ' class_name '.getPropNumber();'])
-        g(0, 'for prop = 1:1:prop_number')
-            g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
-            g(1, ['switch ' class_name '.getPropCategory(prop)'])
-                g(2, 'case {Category.METADATA, Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE}')
-                g(2, 'case Category.RESULT')
-                    g(3, 'assert( ...')
-                        gs(4, {
-                            ['~isa(' moniker '.get(prop),  ''NoValue''), ...']
-                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-                            ['[''' class_name '.get('' int2str(prop) '') must NOT be a NoValue, because it should have been calculated.''] ...']
-                            ')'
-                            })
-                    g(3, 'assert( ...')
-                        gs(4, {
-                            ['isa(' moniker '.getr(prop),  ''NoValue''), ...']
-                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-                            ['[''' class_name '.getr('' int2str(prop) '') must be a NoValue, because it has not been memorized.''] ...']
-                            ')'
-                            })                       
-                    g(3, ['if isempty(' moniker '.getPropSettings(prop))'])
-                        g(4, 'assert( ...')
-                            gs(5, {
-                                [moniker '.checkFormat(' moniker '.getPropFormat(prop), ' moniker '.get(prop)), ...']
-                                ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-                                ['[''' class_name '.get('' int2str(prop) '') returns a value with the wrong format.''] ...']
-                                ')'
-                                })
-                    g(3, 'else')
-                        g(4, 'assert( ...')
-                            gs(5, {
-                                [moniker '.checkFormat(' moniker '.getPropFormat(prop), ' moniker '.get(prop), ' moniker '.getPropSettings(prop)), ...']
-                                ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-                                ['[''' class_name '.get('' int2str(prop) '') returns a value with the wrong format.''] ...']
-                                ')'
-                                })
-                    g(3, 'end')
-            g(1, 'end')
-        g(0, 'end')
-        g(0, '')
-    end
-
-generate_test_4_memorize()
-    function generate_test_4_memorize()
-        gs(0, {'%% Test 4: Memorize'; ''})
-
-        gs(0, {['warning(''off'', ''' BRAPH2.STR ':' class_name ''')'], ''})
-        g(0, [moniker ' = ' class_name '( ...'])
-            for prop = 1:1:prop_number
-                TAG = upper(eval([class_name '.getPropTag(' int2str(prop) ')']));
-                if prop < prop_number
-                    g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG '), ...'])
-                else
-                    g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG ') ...'])
-                end
-            end
-            g(1, ');')
-        gs(0, {['warning(''on'', ''' BRAPH2.STR ':' class_name ''')'], ''})
-        
-        g(0, ['for prop = 1:1:' class_name '.getPropNumber()'])
-            g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
-            g(1, ['switch ' class_name '.getPropCategory(prop)'])
-                g(2, 'case {Category.METADATA, Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE}')
-                g(2, 'case Category.RESULT')
-                    g(3, 'assert( ...')
-                        gs(4, {
-                            ['~isa(' moniker '.get(prop),  ''NoValue''), ...']
-                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-                            ['[''' class_name '.get('' int2str(prop) '') must NOT be a NoValue, because it should have been calculated.''] ...']
-                            ')'
-                            })
-                    g(3, 'assert( ...')
-                        gs(4, {
-                            ['isa(' moniker '.getr(prop),  ''NoValue''), ...']
-                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-                            ['[''' class_name '.getr('' int2str(prop) '') must be a NoValue, because it should NOT have been memorized.''] ...']
-                            ')'
-                            })
-                    g(3, 'assert( ...')
-                        gs(4, {
-                            ['~isa(' moniker '.memorize(prop),  ''NoValue''), ...']
-                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-                            ['[''' class_name '.memorize('' int2str(prop) '') must NOT be a NoValue, because it should have been calculated.''] ...']
-                            ')'
-                            })
-                    g(3, 'assert( ...')
-                        gs(4, {
-                            ['~isa(' moniker '.getr(prop),  ''NoValue''), ...']
-                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-                            ['[''' class_name '.getr('' int2str(prop) '') must NOT be a NoValue, because it should have been memorized.''] ...']
-                            ')'
-                            })
-                    g(3, 'assert( ...')
-                        gs(4, {
-                            [moniker '.checkFormat(' moniker '.getPropFormat(prop), ' moniker '.getr(prop),' moniker '.getPropSettings(prop)), ...']
-                            ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-                            ['[''' class_name '.getr('' int2str(prop) '') returns a value with the wrong format.''] ...']
-                            ')'
-                            })
-            g(1, 'end')
-        g(0, 'end')
-        g(0, '')
-    end
+% % % generate_test_2_callbacks()
+% % %     function generate_test_2_callbacks()
+% % %         gs(0, {'%% Test 2: Callbacks'; ''})
+% % %         
+% % %         if strcmp(class_name, 'Callback')
+% % %             gs(0, {'% this test is not implemented for Callback'; ''})
+% % %             return
+% % %         end
+% % % 
+% % %         % element
+% % %         g(0, ['warning(''off'', ''' BRAPH2.STR ':' class_name ''')'])
+% % %         g(0, [moniker '_0 = ' class_name '( ...'])
+% % %             for prop = 1:1:prop_number
+% % %                 TAG = upper(eval([class_name '.getPropTag(' int2str(prop) ')']));
+% % %                 if prop < prop_number
+% % %                     g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG '), ...'])
+% % %                 else
+% % %                     g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG ') ...'])
+% % %                 end
+% % %             end
+% % %             g(1, ');')
+% % %         gs(0, {['warning(''on'', ''' BRAPH2.STR ':' class_name ''')'], ''})
+% % % 
+% % %         % element with 1st callbacks
+% % %         g(0, [moniker '_1 = ' class_name '( ...'])
+% % %             for prop = 1:1:prop_number
+% % %                 TAG = upper(eval([class_name '.getPropTag(' int2str(prop) ')']));
+% % %                 switch eval([class_name '.getPropCategory(' int2str(prop) ')'])
+% % %                     case Category.METADATA
+% % %                         if prop < prop_number
+% % %                             g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG '), ...'])
+% % %                         else
+% % %                             g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG ') ...'])
+% % %                         end                    
+% % %                     case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
+% % %                         if prop < prop_number
+% % %                             g(1, [class_name '.' TAG ', Callback(''EL'', ' moniker '_0, ''PROP'', ' int2str(prop) '), ...'])
+% % %                         else
+% % %                             g(1, [class_name '.' TAG ', Callback(''EL'', ' moniker '_0, ''PROP'', ' int2str(prop) ') ...'])
+% % %                         end
+% % %                     case Category.RESULT
+% % %                         if prop < prop_number
+% % %                             g(1, [class_name '.' TAG ', NoValue(), ...'])
+% % %                         else
+% % %                             g(1, [class_name '.' TAG ', NoValue() ...'])
+% % %                         end                    
+% % %                 end
+% % %             end
+% % %             g(1, ');')
+% % %             g(1, '')
+% % %         
+% % %         g(0, ['prop_number = ' class_name '.getPropNumber();'])
+% % %         g(0, 'for prop = 1:1:prop_number')
+% % %             g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
+% % %             g(1, ['switch ' class_name '.getPropCategory(prop)'])
+% % %                 g(2, 'case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}')
+% % %                     g(3, 'assert( ...')
+% % %                         gs(4, {
+% % %                             ['isa(' moniker '_1.getr(prop),  ''Callback''), ...']
+% % %                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+% % %                             ['[''' class_name '.getr('' int2str(prop) '') must be a callback.''] ...']
+% % %                             ')'
+% % %                             })
+% % %                     g(3, 'assert( ...')
+% % %                         gs(4, {
+% % %                             ['isequal(' moniker '_1.get(prop), ' moniker '_0.get(prop)) && ~isa(' moniker '_1.get(prop), ''Callback''), ...']
+% % %                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+% % %                             ['[''' class_name '.get('' int2str(prop) '') must be the actual property and NOT a callback.''] ...']
+% % %                             ')'
+% % %                             })
+% % %                 g(2, 'case {Category.METADATA, Category.RESULT}')
+% % %                     g(3, 'assert( ...')
+% % %                         gs(4, {
+% % %                             ['~isa(' moniker '_1.getr(prop), ''Callback''), ...']
+% % %                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+% % %                             ['[''' class_name '.getr('' int2str(prop) '') must NOT be a callback.''] ...']
+% % %                             ')'
+% % %                             })
+% % %             g(1, 'end')
+% % %         g(0, 'end')
+% % %         
+% % %         % element with 2nd callbacks
+% % %         g(0, [moniker '_2 = ' class_name '( ...'])
+% % %             for prop = 1:1:prop_number
+% % %                 TAG = upper(eval([class_name '.getPropTag(' int2str(prop) ')']));
+% % %                 switch eval([class_name '.getPropCategory(' int2str(prop) ')'])
+% % %                     case Category.METADATA
+% % %                         if prop < prop_number
+% % %                             g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG '), ...'])
+% % %                         else
+% % %                             g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG ') ...'])
+% % %                         end                    
+% % %                     case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
+% % %                         if prop < prop_number
+% % %                             g(1, [class_name '.' TAG ', Callback(''EL'', ' moniker '_1, ''PROP'', ' int2str(prop) '), ...'])
+% % %                         else
+% % %                             g(1, [class_name '.' TAG ', Callback(''EL'', ' moniker '_1, ''PROP'', ' int2str(prop) ') ...'])
+% % %                         end
+% % %                     case Category.RESULT
+% % %                         if prop < prop_number
+% % %                             g(1, [class_name '.' TAG ', NoValue(), ...'])
+% % %                         else
+% % %                             g(1, [class_name '.' TAG ', NoValue() ...'])
+% % %                         end                    
+% % %                 end
+% % %             end
+% % %             g(1, ');') 
+% % %             g(1, '')
+% % %         
+% % %         g(0, ['prop_number = ' class_name '.getPropNumber();'])
+% % %         g(0, 'for prop = 1:1:prop_number')
+% % %             g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
+% % %             g(1, ['switch ' class_name '.getPropCategory(prop)'])
+% % %                 g(2, 'case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}')
+% % %                     g(3, 'assert( ...')
+% % %                         gs(4, {
+% % %                             ['isa(' moniker '_2.getr(prop),  ''Callback''), ...']
+% % %                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+% % %                             ['[''' class_name '.getr('' int2str(prop) '') must be a callback.''] ...']
+% % %                             ')'
+% % %                             })
+% % %                     g(3, 'assert( ...')
+% % %                         gs(4, {
+% % %                             ['isequal(' moniker '_2.get(prop), ' moniker '_0.get(prop)) && ~isa(' moniker '_1.get(prop), ''Callback''), ...']
+% % %                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+% % %                             ['[''' class_name '.get('' int2str(prop) '') must be the actual property and NOT a callback.''] ...']
+% % %                             ')'
+% % %                             })
+% % %                 g(2, 'case {Category.METADATA, Category.RESULT}')
+% % %                     g(3, 'assert( ...')
+% % %                         gs(4, {
+% % %                             ['~isa(' moniker '_2.getr(prop), ''Callback''), ...']
+% % %                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+% % %                             ['[''' class_name '.getr('' int2str(prop) '') must NOT be a callback.''] ...']
+% % %                             ')'
+% % %                             })
+% % %             g(1, 'end')
+% % %         g(0, 'end')
+% % %         
+% % %         % element with 3rd callbacks
+% % %         g(0, [moniker '_3 = ' class_name '( ...'])
+% % %             for prop = 1:1:prop_number
+% % %                 TAG = upper(eval([class_name '.getPropTag(' int2str(prop) ')']));
+% % %                 switch eval([class_name '.getPropCategory(' int2str(prop) ')'])
+% % %                     case Category.METADATA
+% % %                         if prop < prop_number
+% % %                             g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG '), ...'])
+% % %                         else
+% % %                             g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG ') ...'])
+% % %                         end                    
+% % %                     case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
+% % %                         if prop < prop_number
+% % %                             g(1, [class_name '.' TAG ', Callback(''EL'', ' moniker '_2, ''PROP'', ' int2str(prop) '), ...'])
+% % %                         else
+% % %                             g(1, [class_name '.' TAG ', Callback(''EL'', ' moniker '_2, ''PROP'', ' int2str(prop) ') ...'])
+% % %                         end
+% % %                     case Category.RESULT
+% % %                         if prop < prop_number
+% % %                             g(1, [class_name '.' TAG ', NoValue(), ...'])
+% % %                         else
+% % %                             g(1, [class_name '.' TAG ', NoValue() ...'])
+% % %                         end                    
+% % %                 end
+% % %             end
+% % %             g(1, ');')
+% % %             g(1, '')
+% % %         
+% % %         g(0, ['prop_number = ' class_name '.getPropNumber();'])
+% % %         g(0, 'for prop = 1:1:prop_number')
+% % %             g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
+% % %             g(1, ['switch ' class_name '.getPropCategory(prop)'])
+% % %                 g(2, 'case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}')
+% % %                     g(3, 'assert( ...')
+% % %                         gs(4, {
+% % %                             ['isa(' moniker '_3.getr(prop),  ''Callback''), ...']
+% % %                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+% % %                             ['[''' class_name '.getr('' int2str(prop) '') must be a callback.''] ...']
+% % %                             ')'
+% % %                             })
+% % %                     g(3, 'assert( ...')
+% % %                         gs(4, {
+% % %                             ['isequal(' moniker '_3.get(prop), ' moniker '_0.get(prop)) && ~isa(' moniker '_1.get(prop), ''Callback''), ...']
+% % %                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+% % %                             ['[''' class_name '.get('' int2str(prop) '') must be the actual property and NOT a callback.''] ...']
+% % %                             ')'
+% % %                             })
+% % %                 g(2, 'case {Category.METADATA, Category.RESULT}')
+% % %                     g(3, 'assert( ...')
+% % %                         gs(4, {
+% % %                             ['~isa(' moniker '_3.getr(prop), ''Callback''), ...']
+% % %                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+% % %                             ['[''' class_name '.getr('' int2str(prop) '') must NOT be a callback.''] ...']
+% % %                             ')'
+% % %                             })
+% % %             g(1, 'end')
+% % %         g(0, 'end')
+% % %         g(0, '')
+% % %     end
+% % % 
+% % % generate_test_3_result()
+% % %     function generate_test_3_result()
+% % %         gs(0, {'%% Test 3: Result'; ''})
+% % %         
+% % %         g(0, ['warning(''off'', ''' BRAPH2.STR ':' class_name ''')'])
+% % %         g(0, [moniker ' = ' class_name '( ...'])
+% % %             for prop = 1:1:prop_number
+% % %                 TAG = upper(eval([class_name '.getPropTag(' int2str(prop) ')']));
+% % %                 if prop < prop_number
+% % %                     g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG '), ...'])
+% % %                 else
+% % %                     g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG ') ...'])
+% % %                 end
+% % %             end
+% % %             g(1, ');')
+% % %         gs(0, {['warning(''on'', ''' BRAPH2.STR ':' class_name ''')'], ''})
+% % %         
+% % %         g(0, ['prop_number = ' class_name '.getPropNumber();'])
+% % %         g(0, 'for prop = 1:1:prop_number')
+% % %             g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
+% % %             g(1, ['switch ' class_name '.getPropCategory(prop)'])
+% % %                 g(2, 'case {Category.METADATA, Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}')
+% % %                 g(2, 'case Category.RESULT')
+% % %                     g(3, 'assert( ...')
+% % %                         gs(4, {
+% % %                             ['~isa(' moniker '.get(prop),  ''NoValue''), ...']
+% % %                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+% % %                             ['[''' class_name '.get('' int2str(prop) '') must NOT be a NoValue, because it should have been calculated.''] ...']
+% % %                             ')'
+% % %                             })
+% % %                     g(3, 'assert( ...')
+% % %                         gs(4, {
+% % %                             ['isa(' moniker '.getr(prop),  ''NoValue''), ...']
+% % %                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+% % %                             ['[''' class_name '.getr('' int2str(prop) '') must be a NoValue, because it has not been memorized.''] ...']
+% % %                             ')'
+% % %                             })                       
+% % %                     g(3, ['if isempty(' moniker '.getPropSettings(prop))'])
+% % %                         g(4, 'assert( ...')
+% % %                             gs(5, {
+% % %                                 [moniker '.checkFormat(' moniker '.getPropFormat(prop), ' moniker '.get(prop)), ...']
+% % %                                 ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+% % %                                 ['[''' class_name '.get('' int2str(prop) '') returns a value with the wrong format.''] ...']
+% % %                                 ')'
+% % %                                 })
+% % %                     g(3, 'else')
+% % %                         g(4, 'assert( ...')
+% % %                             gs(5, {
+% % %                                 [moniker '.checkFormat(' moniker '.getPropFormat(prop), ' moniker '.get(prop), ' moniker '.getPropSettings(prop)), ...']
+% % %                                 ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+% % %                                 ['[''' class_name '.get('' int2str(prop) '') returns a value with the wrong format.''] ...']
+% % %                                 ')'
+% % %                                 })
+% % %                     g(3, 'end')
+% % %             g(1, 'end')
+% % %         g(0, 'end')
+% % %         g(0, '')
+% % %     end
+% % % 
+% % % generate_test_4_memorize()
+% % %     function generate_test_4_memorize()
+% % %         gs(0, {'%% Test 4: Memorize'; ''})
+% % % 
+% % %         g(0, ['warning(''off'', ''' BRAPH2.STR ':' class_name ''')'])
+% % %         g(0, [moniker ' = ' class_name '( ...'])
+% % %             for prop = 1:1:prop_number
+% % %                 TAG = upper(eval([class_name '.getPropTag(' int2str(prop) ')']));
+% % %                 if prop < prop_number
+% % %                     g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG '), ...'])
+% % %                 else
+% % %                     g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG ') ...'])
+% % %                 end
+% % %             end
+% % %             g(1, ');')
+% % %         gs(0, {['warning(''on'', ''' BRAPH2.STR ':' class_name ''')'], ''})
+% % %         
+% % %         g(0, ['for prop = 1:1:' class_name '.getPropNumber()'])
+% % %             g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
+% % %             g(1, ['switch ' class_name '.getPropCategory(prop)'])
+% % %                 g(2, 'case {Category.METADATA, Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}')
+% % %                 g(2, 'case Category.RESULT')
+% % %                     g(3, 'assert( ...')
+% % %                         gs(4, {
+% % %                             ['~isa(' moniker '.get(prop),  ''NoValue''), ...']
+% % %                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+% % %                             ['[''' class_name '.get('' int2str(prop) '') must NOT be a NoValue, because it should have been calculated.''] ...']
+% % %                             ')'
+% % %                             })
+% % %                     g(3, 'assert( ...')
+% % %                         gs(4, {
+% % %                             ['isa(' moniker '.getr(prop),  ''NoValue''), ...']
+% % %                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+% % %                             ['[''' class_name '.getr('' int2str(prop) '') must be a NoValue, because it should NOT have been memorized.''] ...']
+% % %                             ')'
+% % %                             })
+% % %                     g(3, 'assert( ...')
+% % %                         gs(4, {
+% % %                             ['~isa(' moniker '.memorize(prop),  ''NoValue''), ...']
+% % %                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+% % %                             ['[''' class_name '.memorize('' int2str(prop) '') must NOT be a NoValue, because it should have been calculated.''] ...']
+% % %                             ')'
+% % %                             })
+% % %                     g(3, 'assert( ...')
+% % %                         gs(4, {
+% % %                             ['~isa(' moniker '.getr(prop),  ''NoValue''), ...']
+% % %                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+% % %                             ['[''' class_name '.getr('' int2str(prop) '') must NOT be a NoValue, because it should have been memorized.''] ...']
+% % %                             ')'
+% % %                             })
+% % %                     g(3, 'assert( ...')
+% % %                         gs(4, {
+% % %                             [moniker '.checkFormat(' moniker '.getPropFormat(prop), ' moniker '.getr(prop),' moniker '.getPropSettings(prop)), ...']
+% % %                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+% % %                             ['[''' class_name '.getr('' int2str(prop) '') returns a value with the wrong format.''] ...']
+% % %                             ')'
+% % %                             })
+% % %             g(1, 'end')
+% % %         g(0, 'end')
+% % %         g(0, '')
+% % %     end
 
 generate_tests()
     function generate_tests()    
