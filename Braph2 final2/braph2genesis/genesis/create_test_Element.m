@@ -63,7 +63,7 @@ generate_test1_1_instantation_empty()
             gs(1, {
                 ['~' moniker '.isEnsemble(), ...']
                 ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-                ['''' class_name ' should not be an ensemble.'' ...']
+                ['''' class_name ' should NOT be an ensemble.'' ...']
                 ')'
                 ''
                 })
@@ -84,6 +84,20 @@ generate_test1_1_instantation_empty()
                     ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
                     ['[''' class_name '.getr('''''' TAG '''''') must be inizialized to NoValue(). '' ...']
                     ['''Or there could be an error in ' class_name '.getr('''''' TAG '''''').''] ...']
+                    ')'
+                    })
+            g(1, 'assert( ...')
+                gs(2, {
+                    ['~' moniker '.isEnsemble(prop), ...']
+                    ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+                    ['['' The property '' int2str(prop) '' of ' class_name ' should NOT be an ensemble.''] ...']
+                    ')'
+                    })
+            g(1, 'assert( ...')
+                gs(2, {
+                    ['~' moniker '.isEnsemble(TAG), ...']
+                    ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+                    ['['' The property '''''' TAG '''''' of ' class_name ' should NOT be an ensemble.''] ...']
                     ')'
                     })
         g(0, 'end')
@@ -111,7 +125,7 @@ generate_test1_2_instantation_defaults()
             gs(1, {
                 ['~' moniker '.isEnsemble(), ...']
                 ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
-                ['''' class_name ' should not be an ensemble.'' ...']
+                ['''' class_name ' should NOT be an ensemble.'' ...']
                 ')'
                 ''
                 })
@@ -156,6 +170,20 @@ generate_test1_2_instantation_defaults()
                             ')'
                             })
             g(1, 'end')
+            g(1, 'assert( ...')
+                gs(2, {
+                    ['~' moniker '.isEnsemble(prop), ...']
+                    ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+                    ['['' The property '' int2str(prop) '' of ' class_name ' should NOT be an ensemble.''] ...']
+                    ')'
+                    })
+            g(1, 'assert( ...')
+                gs(2, {
+                    ['~' moniker '.isEnsemble(TAG), ...']
+                    ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+                    ['['' The property '''''' TAG '''''' of ' class_name ' should NOT be an ensemble.''] ...']
+                    ')'
+                    })            
         g(0, 'end')
         g(0, '')
     end
