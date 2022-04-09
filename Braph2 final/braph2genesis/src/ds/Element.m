@@ -104,31 +104,36 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         % details depend on the property category (YOCO, YADIR):
         %
         % METADATA:
-        % props{prop}.value     - NoValue() or value
-        % props{prop}.seed      - seed for rng
-        % props{prop}.checked 	- true/false
-        % props{prop}.locked    - false/true
+        %  props{prop}.ensemble  - false/true
+        %  props{prop}.value     - NoValue() or value
+        %  props{prop}.seed      - seed for rng
+        %  props{prop}.checked 	- true/false
+        %  props{prop}.locked    - false/true
         %
-        % PARAMETER, DATA:
-        % props{prop}.value     - NoValue() or value or Callback()
-        % props{prop}.seed      - seed for rng
-        % props{prop}.checked   - true/false
-        % props{prop}.locked    - false/true
+        % PARAMETER, DATA, GUI, FIGURE:
+        %  props{prop}.ensemble  - false/true
+        %  props{prop}.value     - NoValue() or Callback() or value
+        %  props{prop}.seed      - seed for rng
+        %  props{prop}.checked   - true/false
+        %  props{prop}.locked    - false/true
         %
         % RESULT:
-        % props{prop}.value     - NoValue() or value
-        % props{prop}.seed      - seed for rng
-        % props{prop}.checked 	- true/false
-        % props{prop}.locked    - false/true
+        %  props{prop}.ensemble  - false/true
+        %  props{prop}.value     - NoValue() or value
+        %  props{prop}.seed      - seed for rng
+        %  props{prop}.checked 	- true/false
+        %  props{prop}.locked    - false/true
         %
-        % GUI, FIGURE:
-        % props{prop}.value     - NoValue() or value or Callback()
-        % props{prop}.seed      - seed for rng
-        % props{prop}.checked 	- true/false
-        % props{prop}.locked    - false/true
+        % The PARAMETER and DATA properties of the element get locked the
+        %  first time a result is successfully calculated.
         %
-        % The parameter and data properties of the element get locked the
-        % first time a result is successfully calculated.
+        % For single-valued elements, the value is retrieved as
+        %  props{prop}.value{1}
+        %
+        % For ensemble elements, the values are retrieved as
+        %  props{prop}.value{n}
+        % with n = 1, ..., N, where N is the ensemble cardinality.
+
         props
     end
     methods (Static) % inspection
