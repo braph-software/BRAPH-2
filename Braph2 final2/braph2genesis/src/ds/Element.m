@@ -132,13 +132,13 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         %  element first created.
         %
         % For ensemble properties, the values are stored in a cell array as:
-        %  - For formats ST, LO, OP, NN, NR, NC, NM, NS, LL:
+% % %         %  - For formats ST, LO, OP, NN, NR, NC, NM, NS, LL:
         %    props{prop}.value{n} 
         %    with n = 1, ..., N, where N is the ensemble cardinality
-        %  - For formats EM, CA, CL, IT, IL, DI, AI:
-        %    props{prop}.value
-        %    whose corresponding properties are then iterativelly made ensemble 
-        %    where possible.
+% % %         %  - For formats EM, CA, CL, IT, IL, DI, AI:
+% % %         %    props{prop}.value
+% % %         %    whose corresponding properties are then iterativelly made ensemble 
+% % %         %    where possible.
 
         props = {}
     end
