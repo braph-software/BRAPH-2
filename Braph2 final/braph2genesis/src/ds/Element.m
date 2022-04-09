@@ -19,6 +19,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %  
     % Element methods:
     %  isEnsemble - returns whether a property is ensemble
+    %  getEnsembleNumber - returns ensemble cardinality
     %  set - sets the value of a property
     %  check - checks the values of all properties
     %  getr - returns the raw value of a property
@@ -689,6 +690,21 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 prop = el.getPropProp(pointer);
                 
                 ensemble = el.props{prop}.ensemble;
+            end
+        end
+        function N = getEnsembleNumber(el)
+            %GETENSEMBLENUMBER returns ensemble cardinality.
+            %
+            % N = GETENSEMBLENUMBER(EL) returns the ensemble cardinality.
+
+            N = 0;
+            for prop = 1:1:el.getPropNumber()
+                if el.isEnsemble(prop)
+                    values = el.getr(prop);
+                    if ~isa(values, 'NoValue')
+                        N = max(N, length(values));
+                    end
+                end
             end
         end
         function el_out = set(el, varargin)
