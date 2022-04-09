@@ -15,8 +15,8 @@ Group('SUB_CLASS', 'SubjectST')
 
 %%% ¡prop!
 INPUT_TYPE (data, option) is the input type for training or testing the NN.
-%%%% ¡default!
-'structural_data'
+%%%% ¡settings!
+{'structural_data'}
 
 %%% ¡prop!
 GR_NN (result, group) is a group of NN subjects.

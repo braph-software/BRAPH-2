@@ -16,6 +16,11 @@ DENSITIES (parameter, rvector) is the vector of densities.
 %% ¡props_update!
 
 %%% ¡prop!
+INPUT_TYPE (data, option) is the input type for training or testing the NN.
+%%%% ¡settings!
+{'adjacency_matrices' 'graph_measures'}
+
+%%% ¡prop!
 G (data, item) is the graph for calculating the graph measures.
 %%%% ¡default!
 MultigraphBUD()

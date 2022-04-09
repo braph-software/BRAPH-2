@@ -52,15 +52,6 @@ else
     value = 0;
 end
 
-%%% ¡prop!
-FEATURE_MAP (result, cell) is a feature map obtained with feature selection analysis.
-%%%% ¡calculate!
-sub_dict = nne.get('GR').get('SUB_DICT');
-if sub_dict.length() == 0
-    value = {};
-else
-    value = sub_dict.getItem(1).get('FEATURE_MASK');
-end
 
 % TODO: visulazie the feature maps for all cases
 % % % selected_idx = nne.get('NNDATA').get('FEATURE_MASK');
