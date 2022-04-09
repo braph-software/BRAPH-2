@@ -1,12 +1,8 @@
 %TEST_FORMAT 
 
-%TODO: revise
-
+%% Test 1: Static methods
 format_list = Format.getFormats();
 
-error_identifier = [BRAPH2.STR ':Format:' BRAPH2.WRONG_INPUT];
-
-%% Test 1: Static methods
 assert(numel(format_list) == Format.getFormatNumber(), ...
     [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT], ...
     ['Format.getFormatNumber() does not return correct number of formats.'])
@@ -36,6 +32,8 @@ for i = 1:1:numel(format_list)
 % % %         [BRAPH2.STR ':Format:' BRAPH2.WRONG_OUTPUT '' ...
 % % %         'Format.checkFormat(' tostring(format) ') should return a char array, when called with the default format.'])
 end
+
+% % % error_identifier = [BRAPH2.STR ':Format:' BRAPH2.WRONG_INPUT];
 
 %TODO: complete format tests
 % % % %% Test 2.EM: Check EMPTY

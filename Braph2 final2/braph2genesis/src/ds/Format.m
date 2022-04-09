@@ -54,8 +54,7 @@ classdef Format < handle %TODO: revise
     %  CELL         Cell is a 2D cell array of numeric data, typically used
     %               for adjaciency matrices and measures.
     %
-    %  ONNX         Onnx is a char array that represents a trained neural
-    %               network in the ONNX format.
+    %  NET          Net is a MatLab neural network object.
     %
     % Format properties (Constant):
     %
@@ -119,9 +118,9 @@ classdef Format < handle %TODO: revise
     %  CELL_NAME = 'cell'
     %  CELL_DESCRIPTION
     %
-    %  ONNX = 'ox'
-    %  ONNX_NAME = 'onnx'
-    %  ONNX_DESCRIPTION
+    %  NET = 'ml'
+    %  NET_NAME = 'ml'
+    %  NET_DESCRIPTION
     %
     % Format methods (Static):
     %  getFormats - returns the list of formats
@@ -196,9 +195,9 @@ classdef Format < handle %TODO: revise
         CELL_NAME = 'cell'
         CELL_DESCRIPTION = 'Cell is a 2D cell array of numeric data, typically used for adjaciency matrices and measures.'
         
-        ONNX = 'ox'
-        ONNX_NAME = 'onnx'
-        ONNX_DESCRIPTION = 'Onnx is a char array that represents a trained neural network in the ONNX format.'
+        NET = 'ml'
+        NET_NAME = 'net'
+        NET_DESCRIPTION = 'Net is a MatLab neural network object.'
     end
     methods (Static)
         function formats = getFormats()
@@ -224,7 +223,7 @@ classdef Format < handle %TODO: revise
                 Format.MATRIX
                 Format.SMATRIX
                 Format.CELL
-                Format.ONNX
+                Format.NET
                 };
         end
         function format_number = getFormatNumber()
@@ -303,7 +302,7 @@ classdef Format < handle %TODO: revise
                 case Format.CELL
                     format_name = Format.CELL_NAME;
                 case Format.ONNX
-                    format_name = Format.ONNX_NAME;
+                    format_name = Format.NET_NAME;
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end
@@ -383,8 +382,8 @@ classdef Format < handle %TODO: revise
                     format_description = Format.SMATRIX_DESCRIPTION;
                 case Format.CELL
                     format_description = Format.CELL_DESCRIPTION;
-                case Format.ONNX
-                    format_description = Format.ONNX_DESCRIPTION;
+                case Format.NET
+                    format_description = Format.NET_DESCRIPTION;
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end
@@ -453,7 +452,7 @@ classdef Format < handle %TODO: revise
                     format_settings = '';
                 case Format.CELL
                     format_settings = '';
-                case Format.ONNX
+                case Format.NET
                     format_settings = '';
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
@@ -529,6 +528,8 @@ classdef Format < handle %TODO: revise
                     format_default = {};
                 case Format.CELL
                     format_default = '';
+                case Format.NET
+                    format_default = network();
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end
@@ -605,8 +606,8 @@ classdef Format < handle %TODO: revise
                     check = isnumeric(value) && ismatrix(value) && size(value, 1) == size(value, 2);
                 case Format.CELL
                     check = iscell(value) && all(cellfun(@(x) isnumeric(x), value(:)));
-                case Format.CELL
-                    check = true; %TODO: complete check for format ONNX
+                case Format.NET
+                    check = isa(value, 'network');
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end

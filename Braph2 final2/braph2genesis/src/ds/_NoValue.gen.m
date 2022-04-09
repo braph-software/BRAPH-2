@@ -6,7 +6,7 @@ Sealed = true
 
 %%% ¡description!
 NoValue is an element without values used to represent a value that has
-not been set (for properties of categories METADATA, PARAMETER, DATA, GUI or FIGURE) 
+not been set (for properties of categories METADATA, PARAMETER, DATA, FIGURE or GUI) 
 or calculated (for properties of category RESULT). 
 For computational efficiency, it is best to use only one instance of NV 
 using NoValue.getNoValue(), instead of creating new instances using the 
@@ -34,33 +34,33 @@ end
 
 %% ¡tests!
 
-%%% ¡test!
-%%%% ¡name!
-Copy
-%%%% ¡code!
-nv = NoValue.getNoValue();
+% % % %%% ¡test!
+% % % %%%% ¡name!
+% % % Copy
+% % % %%%% ¡code!
+% % % nv = NoValue.getNoValue();
+% % % 
+% % % nv_copy = nv.copy();
+% % % 
+% % % assert( ...
+% % %     nv == nv_copy, ...
+% % %     [BRAPH2.STR ':NoValue:' BRAPH2.BUG_COPY], ...
+% % %     ['The copy of a NoValue must return a pointer to the persistent NoValue.getNoValue().'] ...
+% % %     )
 
-nv_copy = nv.copy();
-
-assert( ...
-    nv == nv_copy, ...
-    [BRAPH2.STR ':NoValue:' BRAPH2.BUG_COPY], ...
-    ['The copy of a NoValue must return a pointer to the persistent NoValue.getNoValue().'] ...
-    )
-
-%%% ¡test!
-%%%% ¡name!
-Clone
-%%%% ¡code!
-nv = NoValue.getNoValue();
-
-nv_clone = nv.clone();
-
-assert( ...
-    nv == nv_clone, ...
-    [BRAPH2.STR ':NoValue:' BRAPH2.BUG_CLONE], ...
-    ['The clone of a NoValue must return a pointer to the persistent NoValue.getNoValue().'] ...
-    )
+% % % %%% ¡test!
+% % % %%%% ¡name!
+% % % Clone
+% % % %%%% ¡code!
+% % % nv = NoValue.getNoValue();
+% % % 
+% % % nv_clone = nv.clone();
+% % % 
+% % % assert( ...
+% % %     nv == nv_clone, ...
+% % %     [BRAPH2.STR ':NoValue:' BRAPH2.BUG_CLONE], ...
+% % %     ['The clone of a NoValue must return a pointer to the persistent NoValue.getNoValue().'] ...
+% % %     )
 
 % % % %%% ¡test!
 % % % %%%% ¡name!
