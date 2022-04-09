@@ -296,7 +296,7 @@ PROP_SMATRIX_R_CALC (result, smatrix) is a result, smatrix.
 %%% ¡prop!
 PROP_CELL_R_CALC (result, cell) is a result, cell.
 %%%% ¡conditioning!
-value = NoValue.getNoValue();
+value = {};
 %%%% ¡calculate!
 value = cellfun(@(x) rand(x), {1 2 3; 4 5 6}, 'UniformOutput', false);
 
@@ -405,3 +405,47 @@ assert(et_copy.getr(5) == et.getr(5) && ...
     et.getr(5) ~= NoValue(), ...
     [BRAPH2.STR ':ETA:' BRAPH2.BUG_COPY], ...
     'All NoValue objects must point to the same object instance for computational efficiency.')
+
+%%% ¡test!
+%%%% ¡name!
+Constructor with ensemble
+%%%% ¡code!
+et1 = ETA({});
+for prop = 1:1:et1.getPropNumber()
+    assert(~et1.isEnsemble(prop))
+end
+
+et2 = ETA({}, ...
+    'PROP_STRING_M', 'string1', 'PROP_SCALAR_M', 1, ...
+    'PROP_STRING_P', 'string2', 'PROP_SCALAR_P', 2, ...
+    'PROP_STRING_D', 'string3', 'PROP_SCALAR_D', 3 ...
+    );
+assert(strcmp(et2.get('PROP_STRING_M'), 'string1'))
+assert(strcmp(et2.get('PROP_STRING_P'), 'string2'))
+assert(strcmp(et2.get('PROP_STRING_D'), 'string3'))
+assert(et2.get('PROP_SCALAR_M') == 1)
+assert(et2.get('PROP_SCALAR_P') == 2)
+assert(et2.get('PROP_SCALAR_D') == 3)
+for prop = 1:1:et2.getPropNumber()
+    assert(~et2.isEnsemble(prop))
+end
+
+et3 = ETA({1:1:ETA.getPropNumber()});
+for prop = 1:1:et3.getPropNumber()
+    assert(et3.isEnsemble(prop))
+end
+
+et4 = ETA({1:1:ETA.getPropNumber()}, ...
+    'PROP_STRING_M', 'string1', 'PROP_SCALAR_M', 1, ...
+    'PROP_STRING_P', 'string2', 'PROP_SCALAR_P', 2, ...
+    'PROP_STRING_D', 'string3', 'PROP_SCALAR_D', 3 ...
+    );
+assert(strcmp(et4.get('PROP_STRING_M'), 'string1'))
+assert(strcmp(et4.get('PROP_STRING_P'), 'string2'))
+assert(strcmp(et4.get('PROP_STRING_D'), 'string3'))
+assert(et4.get('PROP_SCALAR_M') == 1)
+assert(et4.get('PROP_SCALAR_P') == 2)
+assert(et4.get('PROP_SCALAR_D') == 3)
+for prop = 1:1:et4.getPropNumber()
+    assert(et4.isEnsemble(prop))
+end

@@ -18,6 +18,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %  Element - constructor
     %  
     % Element methods:
+    %  isEnsemble - returns whether a property is ensemble
     %  set - sets the value of a property
     %  check - checks the values of all properties
     %  getr - returns the raw value of a property
@@ -128,11 +129,18 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         %  first time a result is successfully calculated.
         %
         % For single-valued elements, the value is retrieved as
-        %  props{prop}.value{1}
+        %   props{prop}.value{1}
         %
         % For ensemble elements, the values are retrieved as
-        %  props{prop}.value{n}
-        % with n = 1, ..., N, where N is the ensemble cardinality.
+        %   props{prop}.value{n}
+        %  with n = 1, ..., N, where N is the ensemble cardinality, for
+        %  properties of formats ...
+        %  and as 
+        %   props{prop}.value{n}
+        %  for properties of formats ... , whose corresponding props are
+        %  then iterativelly made ensemble.
+        %
+        % The ensemble information can only be set at when an element is instanced.
 
         props
     end
@@ -619,13 +627,30 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % Multiple properties can be initialized at once identifying
             %  them with either property numbers (PROP) or tags (TAG).
             %
+            % ELEMENT(ENSEMBLE_PROPS, ...) initializes ENSEMBLE_PROPS to ensemble.
+            %  ENSEMBLE_PROPS = {POINTER1, POINTER2, ...} where POINTER1,
+            %  POINTER2 are prop pointers.
+            %
             % See also Category, Format, set, check.
 
             %CET: COMPUTATIONAL EFFICIENCY TRICK
             % undocumented trick to avoid inizialization of props
             % by having a single value (42) in the varargin (e.g. when deep-copying)
-            if length(varargin) == 1 && varargin{1} == 42
+            if length(varargin) == 1 && isequal(varargin{1}, 42)
                 return
+            end
+            
+            % input ensemble_props
+            if nargin >= 1 && iscell(varargin{1})
+                ensemble_props = varargin{1};
+                for i = 1:1:length(ensemble_props)
+                    ensemble_props{i} = el.getPropProp(ensemble_props{i});
+                end
+                ensemble_props = cell2mat(ensemble_props);
+                
+                varargin = varargin(2:end);
+            else
+                ensemble_props = [];
             end
 
             %NOTE:
@@ -633,6 +658,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % should be done before creating the element 
             % to ensure reproducibitlity of the random numbers
             for prop = 1:1:el.getPropNumber()
+                el.props{prop}.ensemble = any(ensemble_props == prop);
                 el.props{prop}.value = NoValue.getNoValue();
                 el.props{prop}.seed = randi(intmax('uint32'));
                 el.props{prop}.checked = true;
@@ -643,6 +669,20 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         end
     end
 	methods % set/check/get/seed/locked/checked
+        function ensemble = isEnsemble(el, pointer)
+            %ISENSEMBLE returns whether a property is ensemble.
+            %
+            % ENSEMBLE = ISENSEMBLE(EL, POINTER) returns whether the property POINTER of
+            %  element EL is ensemble. POINTER can be either a property number (PROP) or
+            %  tag (TAG).
+            %
+            % Properties are defined as ensemble when an element is
+            %  instantiated and their ensemble property cannot be changed.
+
+            prop = el.getPropProp(pointer);
+
+            ensemble = el.props{prop}.ensemble;
+        end
         function el_out = set(el, varargin)
             %TODO: check docs
             %SET sets the value of a property.
@@ -1100,6 +1140,26 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 end
             end
         end     
+    end
+    methods % operators
+        function check = isequal(el1, el2)
+            %ISEQUAL determines whether two elements are equal (values, locked).
+            %
+            % CHECK = ISEQUAL(EL1, EL2) determines whether elements EL1 and EL2 are
+            %  equal in terms of values and locked status.
+            %  POINTER can be either a property number (PROP) or tag (TAG).
+            %
+            % Note that, instead, EL1 == EL2 detemines whether the two handles 
+            %  EL1 and EL2 refer to the very same element.
+            
+            check = isa(el2, el1.getClass());
+            
+            if check
+                for prop = 1:1:el1.getPropNumber()
+                    check = check && isequal(el1.getr(prop), el2.getr(prop)) && (el1.isLocked(prop) == el2.isLocked(prop));
+                end
+            end
+        end
     end
     methods (Static, Access=protected) % conditioning
         function value = conditioning(el, pointer, value)
