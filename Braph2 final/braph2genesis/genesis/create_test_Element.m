@@ -108,7 +108,7 @@ generate_test1_2_instantation_defaults()
                             ['isequal(' moniker '.getr(prop), ' class_name '.getPropDefaultConditioned(prop)), ...']
                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
                             ['[''' class_name '.getr('' int2str(prop) '') must be inizialized to its default value '' ...']
-                            ['''given by ' class_name '.getPropDefault('' int2str(prop) ''). '' ...']
+                            ['''given by ' class_name '.getPropDefaultConditioned('' int2str(prop) ''). '' ...']
                             ['''Or there could be an error in ' class_name '.getr('' int2str(prop) '').''] ...']
                             ')'
                             })
@@ -117,7 +117,7 @@ generate_test1_2_instantation_defaults()
                             ['isequal(' moniker '.getr(TAG), ' class_name '.getPropDefaultConditioned(prop)), ...']
                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
                             ['[''' class_name '.getr('''''' TAG '''''') must be inizialized to its default value '' ...']
-                            ['''given by ' class_name '.getPropDefault('' int2str(prop) ''). '' ...']
+                            ['''given by ' class_name '.getPropDefaultConditioned('' int2str(prop) ''). '' ...']
                             ['''Or there could be an error in ' class_name '.getr('''''' TAG '''''').''] ...']
                             ')'
                             })
