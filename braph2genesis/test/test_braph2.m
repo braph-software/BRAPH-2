@@ -4,6 +4,9 @@
 close all
 clear all %#ok<CLALL>
 
+%% Timer start
+time_start = tic;
+
 %% Identifies test directories
 braph2_dir = fileparts(which('braph2'));
 
@@ -49,3 +52,8 @@ else
     disp('*** Something went wrong! ***')
     failed_results_table = table(results([results(:).Failed])) %#ok<NOPTS>
 end
+
+%% Timer end
+time_end = toc(time_start);
+
+disp(['The test has taken ' int2str(time_end) '.' int2str(mod(time_end, 1) * 10) 's'])
