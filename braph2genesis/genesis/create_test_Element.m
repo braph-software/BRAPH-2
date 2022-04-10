@@ -102,22 +102,22 @@ generate_test1_2_instantation_defaults()
         g(0, ['for prop = 1:1:' class_name '.getPropNumber()'])
             g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
             g(1, ['switch ' class_name '.getPropCategory(prop)'])
-                g(2, 'case {Category.METADATA, Category.PARAMETER, Category.DATA}')
+                g(2, 'case {Category.METADATA, Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE}')
                     g(3, 'assert( ...')
                         gs(4, {
-                            ['isequal(' moniker '.getr(prop), ' class_name '.getPropDefault(prop)), ...']
+                            ['isequal(' moniker '.getr(prop), ' class_name '.getPropDefaultConditioned(prop)), ...']
                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
                             ['[''' class_name '.getr('' int2str(prop) '') must be inizialized to its default value '' ...']
-                            ['''given by ' class_name '.getPropDefault('' int2str(prop) ''). '' ...']
+                            ['''given by ' class_name '.getPropDefaultConditioned('' int2str(prop) ''). '' ...']
                             ['''Or there could be an error in ' class_name '.getr('' int2str(prop) '').''] ...']
                             ')'
                             })
                     g(3, 'assert( ...')
                         gs(4, {
-                            ['isequal(' moniker '.getr(TAG), ' class_name '.getPropDefault(prop)), ...']
+                            ['isequal(' moniker '.getr(TAG), ' class_name '.getPropDefaultConditioned(prop)), ...']
                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
                             ['[''' class_name '.getr('''''' TAG '''''') must be inizialized to its default value '' ...']
-                            ['''given by ' class_name '.getPropDefault('' int2str(prop) ''). '' ...']
+                            ['''given by ' class_name '.getPropDefaultConditioned('' int2str(prop) ''). '' ...']
                             ['''Or there could be an error in ' class_name '.getr('''''' TAG '''''').''] ...']
                             ')'
                             })
@@ -178,7 +178,7 @@ generate_test_2_callbacks()
                         else
                             g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG ') ...'])
                         end                    
-                    case {Category.PARAMETER, Category.DATA}
+                    case {Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE}
                         if prop < prop_number
                             g(1, [class_name '.' TAG ', Callback(''EL'', ' moniker '_0, ''PROP'', ' int2str(prop) '), ...'])
                         else
@@ -199,7 +199,7 @@ generate_test_2_callbacks()
         g(0, 'for prop = 1:1:prop_number')
             g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
             g(1, ['switch ' class_name '.getPropCategory(prop)'])
-                g(2, 'case {Category.PARAMETER, Category.DATA}')
+                g(2, 'case {Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE}')
                     g(3, 'assert( ...')
                         gs(4, {
                             ['isa(' moniker '_1.getr(prop),  ''Callback''), ...']
@@ -236,7 +236,7 @@ generate_test_2_callbacks()
                         else
                             g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG ') ...'])
                         end                    
-                    case {Category.PARAMETER, Category.DATA}
+                    case {Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE}
                         if prop < prop_number
                             g(1, [class_name '.' TAG ', Callback(''EL'', ' moniker '_1, ''PROP'', ' int2str(prop) '), ...'])
                         else
@@ -257,7 +257,7 @@ generate_test_2_callbacks()
         g(0, 'for prop = 1:1:prop_number')
             g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
             g(1, ['switch ' class_name '.getPropCategory(prop)'])
-                g(2, 'case {Category.PARAMETER, Category.DATA}')
+                g(2, 'case {Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE}')
                     g(3, 'assert( ...')
                         gs(4, {
                             ['isa(' moniker '_2.getr(prop),  ''Callback''), ...']
@@ -294,7 +294,7 @@ generate_test_2_callbacks()
                         else
                             g(1, [class_name '.' TAG ', ' class_name '.getPropDefault(' class_name '.' TAG ') ...'])
                         end                    
-                    case {Category.PARAMETER, Category.DATA}
+                    case {Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE}
                         if prop < prop_number
                             g(1, [class_name '.' TAG ', Callback(''EL'', ' moniker '_2, ''PROP'', ' int2str(prop) '), ...'])
                         else
@@ -315,7 +315,7 @@ generate_test_2_callbacks()
         g(0, 'for prop = 1:1:prop_number')
             g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
             g(1, ['switch ' class_name '.getPropCategory(prop)'])
-                g(2, 'case {Category.PARAMETER, Category.DATA}')
+                g(2, 'case {Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE}')
                     g(3, 'assert( ...')
                         gs(4, {
                             ['isa(' moniker '_3.getr(prop),  ''Callback''), ...']
@@ -365,7 +365,7 @@ generate_test_3_result()
         g(0, 'for prop = 1:1:prop_number')
             g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
             g(1, ['switch ' class_name '.getPropCategory(prop)'])
-                g(2, 'case {Category.METADATA, Category.PARAMETER, Category.DATA}')
+                g(2, 'case {Category.METADATA, Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE}')
                 g(2, 'case Category.RESULT')
                     g(3, 'assert( ...')
                         gs(4, {
@@ -423,7 +423,7 @@ generate_test_4_memorize()
         g(0, ['for prop = 1:1:' class_name '.getPropNumber()'])
             g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
             g(1, ['switch ' class_name '.getPropCategory(prop)'])
-                g(2, 'case {Category.METADATA, Category.PARAMETER, Category.DATA}')
+                g(2, 'case {Category.METADATA, Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE}')
                 g(2, 'case Category.RESULT')
                     g(3, 'assert( ...')
                         gs(4, {
