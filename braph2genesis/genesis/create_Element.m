@@ -734,7 +734,7 @@ generate_inspection()
                             [class_name '.existsProp(prop), ...']
                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.WRONG_INPUT], ...']
                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.WRONG_INPUT '' '' ...']
-                            ['''The value '' tostring(prop, 100, '' ...'') '' is not a valid prop for ' class_name '''] ...']
+                            ['''The value '' tostring(prop, 100, '' ...'') '' is not a valid prop for ' class_name '.''] ...']
                              ')'
                              })
                 g(3, 'end')
@@ -1475,11 +1475,11 @@ generate_constructor()
 
 generate_conditioning()
     function generate_conditioning()
-        if all(cellfun(@(x) numel(x.conditioning) == 1 && isempty(x.conditioning{1}), props)) && all(cellfun(@(x) numel(x.conditioning) == 1 && isempty(x.conditioning{1}), props_update))
-            return
-        end
+% % %         if all(cellfun(@(x) numel(x.conditioning) == 1 && isempty(x.conditioning{1}), props)) && all(cellfun(@(x) numel(x.conditioning) == 1 && isempty(x.conditioning{1}), props_update))
+% % %             return
+% % %         end
         g(1, 'methods (Static, Access=protected) % conditioning')
-            g(2, ['function value = conditioning(pointer, value)'])
+            g(2, 'function value = conditioning(pointer, value)')
                 gs(3, {
                     ['prop = ' class_name '.getPropProp(pointer);']
                 	 ''
@@ -1500,7 +1500,9 @@ generate_conditioning()
                         end
                     end
                     g(4, 'otherwise')
-                        gs(5, {['value = conditioning@' superclass_name '(pointer, value);'], ''})
+                        g(5, ['if prop <= ' superclass_name '.getPropNumber()'])
+                            g(6, ['value = conditioning@' superclass_name '(pointer, value);'])
+                        g(5, 'end')
                 g(3, 'end')
             g(2, 'end')
         g(1, 'end')

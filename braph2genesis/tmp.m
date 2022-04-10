@@ -2,15 +2,13 @@ close all
 clear all
 clc
 
-el_class = 'ETA';
-delete([fileparts(which('braph2')) '/src/ds/' el_class '.m'])
-create_Element([fileparts(which('braph2genesis')) '/src/ds/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/ds'])
-create_Element([fileparts(which('braph2genesis')) '/src/ds/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/ds'])
-create_test_Element([fileparts(which('braph2genesis')) '/src/ds/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/ds'])
-test_code = ['test_' el_class]
-eval(test_code)
-
-
+% el_class = 'ETA';
+% delete([fileparts(which('braph2')) '/src/ds/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/src/ds/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/ds'])
+% create_Element([fileparts(which('braph2genesis')) '/src/ds/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/ds'])
+% create_test_Element([fileparts(which('braph2genesis')) '/src/ds/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/ds'])
+% test_code = ['test_' el_class]
+% eval(test_code)
 
 % create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PPPipeline_PSDict.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
 % 
