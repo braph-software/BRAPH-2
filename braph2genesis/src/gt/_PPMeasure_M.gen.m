@@ -163,7 +163,7 @@ function cb_brain_view_fig(pr)
             'Name', [pr.get('el').getClass() ' - ' pr.get('el').get('ID')], ...
             'CloseRequestFcn', {@cb_f_br_close} ...
             );
-        set_braph2_icon(pr.f_br)
+        set_braph2icon(pr.f_br)
         menu_about = BRAPH2.add_menu_about(pr.f_br);
         
         ui_toolbar = findall(pr.f_br, 'Tag', 'FigureToolBar');

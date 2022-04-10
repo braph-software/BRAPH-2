@@ -202,7 +202,7 @@ function cb_edit_value(pr)
 end
 function warning_creator(pr, text)
     warning_figure = warndlg(text);
-    set_braph2_icon(warning_figure);
+    set_braph2icon(warning_figure);
 end
   
 %% ¡tests!

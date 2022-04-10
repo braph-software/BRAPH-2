@@ -43,7 +43,7 @@ Group('SUB_CLASS', 'SubjectCON_FUN_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS'
 %%%% ¡calculate!
 if co.get('WAITBAR')
     wb = waitbar(0, 'Combining subject groups ...', 'Name', BRAPH2.NAME);
-    set_braph2_icon(wb)
+    set_braph2icon(wb)
 end
 
 % creates empty Group

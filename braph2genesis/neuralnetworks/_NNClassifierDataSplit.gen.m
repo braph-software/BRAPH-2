@@ -53,7 +53,7 @@ GR_TRAIN (result, item) is a group of NN subjects for the training set.
 %%%% ¡calculate!
 if nnds.get('WAITBAR')
     wb = waitbar(0, 'Constructing the training set ...', 'Name', BRAPH2.NAME);
-    set_braph2_icon(wb)
+    set_braph2icon(wb)
 end
 
 % init a NNGroup
@@ -157,7 +157,7 @@ GR_VAL (result, item) is a group of NN subjects for the validation set.
 %%%% ¡calculate!
 if nnds.get('WAITBAR')
     wb = waitbar(0, 'Constructing the validation set ...', 'Name', BRAPH2.NAME);
-    set_braph2_icon(wb)
+    set_braph2icon(wb)
 end
 
 % init a NNGroup
@@ -266,7 +266,7 @@ if nnds.get('GR_TRAIN').get('SUB_DICT').length == 0
 else
     if nnds.get('WAITBAR')
         wb = waitbar(0, 'Initialing feature selection on training set ...', 'Name', BRAPH2.NAME);
-        set_braph2_icon(wb)
+        set_braph2icon(wb)
     end
     y = cellfun(@(x) cell2mat(x.get('TARGET')), gr_train.get('SUB_DICT').getItems(), 'UniformOutput', false);
     y = cell2mat(y);

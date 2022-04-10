@@ -155,7 +155,7 @@ function cb_brain_view_fig(pr)
             'Position', [x/screen_w y/screen_h w/screen_w h/screen_h], ...
             'CloseRequestFcn', {@cb_f_br_close} ...
             );
-        set_braph2_icon(pr.f_br)
+        set_braph2icon(pr.f_br)
         menu_about = BRAPH2.add_menu_about(pr.f_br);
         
         ui_toolbar = findall(pr.f_br, 'Tag', 'FigureToolBar');

@@ -77,7 +77,7 @@ f = init();
             'SizeChangedFcn', {@redraw}, ...
             'WindowButtonDownFcn', {@cb_get_objs_id} ...
             );
-        set_braph2_icon(f)
+        set_braph2icon(f)
         
         if close_request
             set(f, 'CloseRequestFcn', {@cb_close})

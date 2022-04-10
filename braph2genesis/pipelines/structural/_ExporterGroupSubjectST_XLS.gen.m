@@ -38,7 +38,7 @@ file = ex.get('FILE');
 if isfolder(fileparts(file))
     if ex.get('WAITBAR')
         wb = waitbar(0, 'Retrieving path ...', 'Name', BRAPH2.NAME);
-        set_braph2_icon(wb)
+        set_braph2icon(wb)
     end
     
     gr = ex.get('GR');

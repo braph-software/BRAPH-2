@@ -48,7 +48,7 @@ if isfolder(directory)
     % sets group props
     if im.get('WAITBAR')
         wb = waitbar(0, 'Reading directory ...', 'Name', BRAPH2.NAME);
-        set_braph2_icon(wb)
+        set_braph2icon(wb)
     end
     [~, name] = fileparts(directory);
     gr.set( ...
