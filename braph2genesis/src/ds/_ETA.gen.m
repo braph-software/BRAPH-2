@@ -71,6 +71,9 @@ PROP_SMATRIX_M (metadata, smatrix) is a metadata, smatrix.
 PROP_CELL_M (metadata, cell) is a metadata, cell.
 
 %%% ¡prop!
+PROP_NET_M (metadata, cell) is a metadata, net.
+
+%%% ¡prop!
 PROP_EMPTY_P (parameter, empty) is a parameter, empty.
 
 %%% ¡prop!
@@ -140,6 +143,9 @@ PROP_SMATRIX_P (parameter, smatrix) is a parameter, smatrix.
 PROP_CELL_P (parameter, cell) is a parameter, cell.
 
 %%% ¡prop!
+PROP_NET_P (parameter, net) is a parameter, net.
+
+%%% ¡prop!
 PROP_EMPTY_D (data, empty) is a data, empty.
 
 %%% ¡prop!
@@ -189,6 +195,9 @@ if isnumeric(value)
 end
 
 %%% ¡prop!
+PROP_NET_D (data, net) is a data, net.
+
+%%% ¡prop!
 PROP_EMPTY_R (result, empty) is a result, empty.
 
 %%% ¡prop!
@@ -232,6 +241,9 @@ PROP_SMATRIX_R (result, smatrix) is a result, smatrix.
 
 %%% ¡prop!
 PROP_CELL_R (result, cell) is a result, cell.
+
+%%% ¡prop!
+PROP_NET_R (result, net) is a result, net.
 
 %%% ¡prop!
 PROP_EMPTY_R_CALC (result, empty) is a result, empty.
@@ -297,6 +309,9 @@ PROP_CELL_R_CALC (result, cell) is a result, cell.
 value = NoValue.getNoValue();
 %%%% ¡calculate!
 value = cellfun(@(x) rand(x), {1 2 3; 4 5 6}, 'UniformOutput', false);
+
+%%% ¡prop!
+PROP_NET_R_CALC (result, net) is a result, net.
 
 %% ¡tests!
 
