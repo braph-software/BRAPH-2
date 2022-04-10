@@ -218,7 +218,7 @@ for run = 1:1:run_number
     for i = 1:1:length(pipelines_dir_list)
         wf_name = pipelines_dir_list(i).name;
         wf_gen_list = getGenerators([source_dir fp 'pipelines' fp wf_name]);
-        for j = 1:1:numel(wf_gen_list)
+        parfor j = 1:numel(wf_gen_list)
             create_Element([source_dir fp 'pipelines' fp wf_name fp wf_gen_list{j}], [target_dir fp 'pipelines' fp wf_name])
         end
     end
@@ -303,7 +303,7 @@ pipelines_dir_list = pipelines_dir_list(~ismember({pipelines_dir_list(:).name}, 
 for i = 1:1:length(pipelines_dir_list)
     wf_name = pipelines_dir_list(i).name;
     wf_gen_list = getGenerators([source_dir fp 'pipelines' fp wf_name]);
-    for j = 1:1:numel(wf_gen_list)
+    parfor j = 1:numel(wf_gen_list)
         create_test_Element([source_dir fp 'pipelines' fp wf_name fp wf_gen_list{j}], [target_dir fp 'pipelines' fp wf_name])
     end
 end
