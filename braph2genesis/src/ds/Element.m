@@ -1,5 +1,4 @@
 classdef Element < Category & Format & matlab.mixin.Copyable
-    %TODO: revise docs
     %Element is the base class for all elements.
     % Element provides the infrastructure necessary for all elements. Even
     %  though it is possible to create instances of Element, typically 
@@ -18,8 +17,6 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %  Element - constructor
     %  
     % Element methods:
-    %  isEnsemble - returns whether a property is ensemble
-    %  getEnsembleNumber - returns ensemble cardinality
     %  set - sets the value of a property
     %  check - checks the values of all properties
     %  getr - returns the raw value of a property
@@ -106,44 +103,27 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         % details depend on the property category (YOCO, YADIR):
         %
         % METADATA:
-        %  props{prop}.ensemble  - false/true
-        %  props{prop}.value(s)  - NoValue() or value(s)
+        %  props{prop}.value  - NoValue() or value
         %  props{prop}.seed      - seed for rng
         %  props{prop}.checked 	 - true/false
         %  props{prop}.locked    - false/true
         %
-        % PARAMETER, DATA, GUI, FIGURE:
-        %  props{prop}.ensemble  - false/true
-        %  props{prop}.value(s)  - NoValue() or Callback() or value(s)
+        % PARAMETER, DATA, FIGURE, GUI:
+        %  props{prop}.value  - NoValue() or Callback() or value
         %  props{prop}.seed      - seed for rng
         %  props{prop}.checked   - true/false
         %  props{prop}.locked    - false/true
         %
         % RESULT:
-        %  props{prop}.ensemble  - false/true
-        %  props{prop}.value(s)  - NoValue() or value(s)
+        %  props{prop}.value  - NoValue() or value
         %  props{prop}.seed      - seed for rng
         %  props{prop}.checked 	 - true/false
         %  props{prop}.locked    - false/true
         %
         % The PARAMETER and DATA properties of the element get locked the
         %  first time a result is successfully calculated.
-        %
-        % For single-valued elements, the value is retrieved as
-        %   props{prop}.value
-        %
-        % For ensemble elements, the values are retrieved as
-        %   props{prop}.values{n}
-        %  with n = 1, ..., N, where N is the ensemble cardinality, for
-        %  properties of formats ST, LO, OP, NN, NR, NC, NM, NS, LL,
-        %  and as 
-        %   props{prop}.value
-        %  for properties of formats EM, CA, CL, IT, IL, DI, OX,
-        %  whose corresponding props are then iterativelly made ensemble.
-        %
-        % The ensemble information can only be set at when an element is instanced.
 
-        props
+        props = {}
     end
     methods (Static) % inspection
         function el_class = getClass(el)
@@ -628,10 +608,6 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % Multiple properties can be initialized at once identifying
             %  them with either property numbers (PROP) or tags (TAG).
             %
-            % ELEMENT(ENSEMBLE_PROPS, ...) initializes ENSEMBLE_PROPS to ensemble.
-            %  ENSEMBLE_PROPS = {POINTER1, POINTER2, ...} where POINTER1,
-            %  POINTER2 are prop pointers.
-            %
             % See also Category, Format, set, check.
 
             %CET: COMPUTATIONAL EFFICIENCY TRICK
@@ -641,31 +617,12 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 return
             end
             
-            % input ensemble_props
-            if nargin >= 1 && iscell(varargin{1})
-                ensemble_props = varargin{1};
-                for i = 1:1:length(ensemble_props)
-                    ensemble_props{i} = el.getPropProp(ensemble_props{i});
-                end
-                ensemble_props = cell2mat(ensemble_props);
-                
-                varargin = varargin(2:end);
-            else
-                ensemble_props = [];
-            end
-
             %NOTE:
             % the shuffle of the rng (rng('shuffle', 'twister'))
             % should be done before creating the element 
             % to ensure reproducibitlity of the random numbers
             for prop = 1:1:el.getPropNumber()
-                if any(ensemble_props == prop)
-                    el.props{prop}.ensemble = true;
-                    el.props{prop}.values = NoValue.getNoValue();
-                else
-                    el.props{prop}.ensemble = false;
-                    el.props{prop}.value = NoValue.getNoValue();
-                end
+                el.props{prop}.value = NoValue.getNoValue();
                 el.props{prop}.seed = randi(intmax('uint32'));
                 el.props{prop}.checked = true;
                 el.props{prop}.locked = false;
@@ -675,43 +632,6 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         end
     end
 	methods % set/check/get/seed/locked/checked
-        function ensemble = isEnsemble(el, pointer)
-            %ISENSEMBLE returns whether a property is ensemble.
-            %
-            % ENSEMBLE = ISENSEMBLE(EL) returns whether EL is ensemble.
-            %  By definition, EL is ensemble if at least one of its
-            %  properties is ensemble.
-            %
-            % ENSEMBLE = ISENSEMBLE(EL, POINTER) returns whether the property POINTER of
-            %  element EL is ensemble. POINTER can be either a property number (PROP) or
-            %  tag (TAG).
-            %
-            % Properties are defined as ensemble when an element is
-            %  instantiated and their ensemble property cannot be changed.
-
-            if nargin < 2
-                ensemble = any(cellfun(@(x) x.ensemble, el.props));
-            else
-                prop = el.getPropProp(pointer);
-                
-                ensemble = el.props{prop}.ensemble;
-            end
-        end
-        function N = getEnsembleNumber(el)
-            %GETENSEMBLENUMBER returns ensemble cardinality.
-            %
-            % N = GETENSEMBLENUMBER(EL) returns the ensemble cardinality.
-
-            N = 0;
-            for prop = 1:1:el.getPropNumber()
-                if el.isEnsemble(prop)
-                    values = el.getr(prop);
-                    if ~isa(values, 'NoValue')
-                        N = max(N, length(values));
-                    end
-                end
-            end
-        end
         function el_out = set(el, varargin)
             %TODO: check docs
             %SET sets the value of a property.
@@ -773,13 +693,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                             el.checkProp(prop, value) % check value format
                         end
 
-                        if el.isEnsemble(prop)
-                            el.props{prop}.values = value;
-                        else
-                            el.props{prop}.value = value;
-                        end
+                        el.props{prop}.value = value;
 
-                    case {Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE} %TODO: check that categories GUI and Figure belong here
+                    case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI} %TODO: check that categories GUI and Figure belong here
                         if ~el.isLocked(prop)
                             if isa(value, 'Callback')
                                 if ~isequal(el.getPropFormat(prop), value.get('EL').getPropFormat(value.get('PROP')))
@@ -798,21 +714,13 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                                         )                                
                                 end
 
-                                if el.isEnsemble(prop)
-                                    el.props{prop}.values = value;
-                                else
-                                    el.props{prop}.value = value;
-                                end
+                                el.props{prop}.value = value;
                             else
                                 if el.isChecked(prop)
                                     el.checkProp(prop, value) % check value format
                                 end
 
-                                if el.isEnsemble(prop)
-                                    el.props{prop}.values = value;
-                                else
-                                    el.props{prop}.value = value;
-                                end
+                                el.props{prop}.value = value;
                             end
                         else
                             warning( ...
@@ -825,11 +733,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 
                     case Category.RESULT
                         if isa(value, 'NoValue')
-                            if el.isEnsemble(prop)
-                                el.props{prop}.values = NoValue.getNoValue();
-                            else
-                                el.props{prop}.value = NoValue.getNoValue();
-                            end
+                            el.props{prop}.value = NoValue.getNoValue();
                         else
                             warning( ...
                                 [BRAPH2.STR ':' class(el)], ...
@@ -897,7 +801,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                                 value_msg = '';
                             end
 
-                        case {Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE} %TODO: check that categories GUI and Figure belong here
+                        case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI} %TODO: check that categories GUI and Figure belong here
                             while isa(value, 'Callback')
                                 value = value.get('EL').get(value.get('PROP'));
                             end
@@ -948,11 +852,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 
             prop = el.getPropProp(pointer); % also Element.existsProp(el, prop)
 
-            if el.isEnsemble(prop)
-                value = el.props{prop}.values; % raw element value
-            else
-                value = el.props{prop}.value; % raw element value
-            end
+            value = el.props{prop}.value; % raw element value
         end
         function value = get(el, pointer)
             %GET returns the value of a property.
@@ -990,7 +890,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         value = el.getPropDefaultConditioned(prop);
                     end
 
-                case {Category.PARAMETER, Category.DATA, Category.GUI, Category.FIGURE} %TODO: check that categories GUI and Figure belong here
+                case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI} %TODO: check that categories GUI and Figure belong here
                     if isa(value, 'NoValue')
                         value = el.getPropDefaultConditioned(prop);
                     elseif isa(value, 'Callback')
@@ -1016,11 +916,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                                 el.lock()
                             else
                                 el.props = props_backup; % restore props backup
-                                if el.isEnsemble(prop)
-                                    value = el.props{prop}.values; % values is also set to the original NoValue()
-                                else
-                                    value = el.props{prop}.value; % value is also set to the original NoValue()
-                                end
+                                value = el.props{prop}.value; % value is also set to the original NoValue()
                                 warning( ...
                                     [BRAPH2.STR ':' class(el)], ...
                                     [BRAPH2.STR ':' class(el) msg '\n' ...
@@ -1048,11 +944,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             value = el.get(prop);
 
             if isequal(el.getPropCategory(prop), Category.RESULT)
-                if el.isEnsemble(prop)
-                    el.props{prop}.values = value;
-                else
-                    el.props{prop}.value = value;
-                end                    
+                el.props{prop}.value = value;
             end
         end
         function seed = getPropSeed(el, pointer)

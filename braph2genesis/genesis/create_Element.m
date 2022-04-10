@@ -636,17 +636,6 @@ generate_inspection()
                                 end
                             end
                             g(6, '];')
-                    g(4, 'case Category.GUI')
-                        g(5, 'prop_list = [')
-                            if ~strcmp(superclass_name, 'Element')
-                                g(6, [superclass_name '.getProps(Category.GUI)'])
-                            end
-                            for i = 1:1:numel(props)
-                                if strcmp(props{i}.CATEGORY, 'GUI')
-                                    g(6, [class_name '.' props{i}.TAG])
-                                end
-                            end
-                            g(6, '];')
                     g(4, 'case Category.FIGURE')
                         g(5, 'prop_list = [')
                             if ~strcmp(superclass_name, 'Element')
@@ -654,6 +643,17 @@ generate_inspection()
                             end
                             for i = 1:1:numel(props)
                                 if strcmp(props{i}.CATEGORY, 'FIGURE')
+                                    g(6, [class_name '.' props{i}.TAG])
+                                end
+                            end
+                            g(6, '];')
+                    g(4, 'case Category.GUI')
+                        g(5, 'prop_list = [')
+                            if ~strcmp(superclass_name, 'Element')
+                                g(6, [superclass_name '.getProps(Category.GUI)'])
+                            end
+                            for i = 1:1:numel(props)
+                                if strcmp(props{i}.CATEGORY, 'GUI')
                                     g(6, [class_name '.' props{i}.TAG])
                                 end
                             end
