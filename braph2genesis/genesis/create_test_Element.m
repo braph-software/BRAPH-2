@@ -86,7 +86,7 @@ generate_test1_2_instantation_defaults()
     function generate_test1_2_instantation_defaults()
         gs(0, {'%% Test 1.2: Instantiation - defaults'; ''})
 
-        gs(0, {['warning(''off'', ''' BRAPH2.STR ':' class_name ''')'], ''})
+        g(0, ['warning(''off'', ''' BRAPH2.STR ':' class_name ''')'])
         g(0, [moniker ' = ' class_name '( ...'])
             for prop = 1:1:prop_number
                 TAG = upper(eval([class_name '.getPropTag(' int2str(prop) ')']));
@@ -153,7 +153,7 @@ generate_test_2_callbacks()
         end
 
         % element
-        gs(0, {['warning(''off'', ''' BRAPH2.STR ':' class_name ''')'], ''})
+        g(0, ['warning(''off'', ''' BRAPH2.STR ':' class_name ''')'])
         g(0, [moniker '_0 = ' class_name '( ...'])
             for prop = 1:1:prop_number
                 TAG = upper(eval([class_name '.getPropTag(' int2str(prop) ')']));
@@ -164,7 +164,6 @@ generate_test_2_callbacks()
                 end
             end
             g(1, ');')
-            g(1, '')
         gs(0, {['warning(''on'', ''' BRAPH2.STR ':' class_name ''')'], ''})
 
         % element with 1st callbacks
@@ -347,7 +346,7 @@ generate_test_3_result()
     function generate_test_3_result()
         gs(0, {'%% Test 3: Result'; ''})
         
-        gs(0, {['warning(''off'', ''' BRAPH2.STR ':' class_name ''')'], ''})
+        g(0, ['warning(''off'', ''' BRAPH2.STR ':' class_name ''')'])
         g(0, [moniker ' = ' class_name '( ...'])
             for prop = 1:1:prop_number
                 TAG = upper(eval([class_name '.getPropTag(' int2str(prop) ')']));
@@ -358,7 +357,6 @@ generate_test_3_result()
                 end
             end
             g(1, ');')
-            g(1, '')
         gs(0, {['warning(''on'', ''' BRAPH2.STR ':' class_name ''')'], ''})
         
         g(0, ['prop_number = ' class_name '.getPropNumber();'])
@@ -407,7 +405,7 @@ generate_test_4_memorize()
     function generate_test_4_memorize()
         gs(0, {'%% Test 4: Memorize'; ''})
 
-        gs(0, {['warning(''off'', ''' BRAPH2.STR ':' class_name ''')'], ''})
+        g(0, ['warning(''off'', ''' BRAPH2.STR ':' class_name ''')'])
         g(0, [moniker ' = ' class_name '( ...'])
             for prop = 1:1:prop_number
                 TAG = upper(eval([class_name '.getPropTag(' int2str(prop) ')']));
