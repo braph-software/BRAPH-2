@@ -305,8 +305,6 @@ PROP_SMATRIX_R_CALC (result, smatrix) is a result, smatrix.
 
 %%% ¡prop!
 PROP_CELL_R_CALC (result, cell) is a result, cell.
-%%%% ¡conditioning!
-value = {};
 %%%% ¡calculate!
 value = cellfun(@(x) rand(x), {1 2 3; 4 5 6}, 'UniformOutput', false);
 
@@ -404,8 +402,6 @@ Cell & conditioning
 assert_with_error('et = ETA(''PROP_SCALAR_P'', rand(5))', ...
     [BRAPH2.STR ':ETA:' BRAPH2.WRONG_INPUT])
 et = ETA('PROP_CELL_D', rand(5));
-
-et = ETA('PROP_CELL_R_CALC', 'whatever, will not produce a warning because of the conditioning');
 
 %%% ¡test!
 %%%% ¡name!
