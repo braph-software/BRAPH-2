@@ -57,6 +57,9 @@ generate_test1_1_instantation_empty()
     function generate_test1_1_instantation_empty()
         gs(0, {'%% Test 1.1: Instantiation - empty'; ''})
         
+        % single-valued
+        gs(0, {'% single-valued', ''})
+        
         gs(0, {[moniker ' = ' class_name '();']; ''})
         
         g(0, 'assert( ...')
@@ -102,11 +105,105 @@ generate_test1_1_instantation_empty()
                     })
         g(0, 'end')
         g(0, '')
+        
+        % ensemble - all props
+        gs(0, {'% ensemble - all props', ''})
+
+        gs(0, {[moniker ' = ' class_name '(num2cell(1:1:' class_name '.getPropNumber()));']; ''})
+        
+        g(0, 'assert( ...')
+            gs(1, {
+                ['~' moniker '.getPropNumber() || ' moniker '.isEnsemble(), ...'] % valid only for elements with properties
+                ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+                ['''' class_name ' should BE an ensemble.'' ...']
+                ')'
+                ''
+                })
+        
+        g(0, ['for prop = 1:1:' class_name '.getPropNumber()'])
+            g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
+            g(1, 'assert( ...')
+                gs(2, {
+                    ['isa(' moniker '.getr(prop), ''NoValue''), ...']
+                    ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+                    ['[''' class_name '.getr('' int2str(prop) '') must be inizialized to NoValue(). '' ...']
+                    ['''Or there could be an error in ' class_name '.getr('' int2str(prop) '').''] ...']
+                    ')'
+                    })
+            g(1, 'assert( ...')
+                gs(2, {
+                    ['isa(' moniker '.getr(TAG), ''NoValue''), ...']
+                    ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+                    ['[''' class_name '.getr('''''' TAG '''''') must be inizialized to NoValue(). '' ...']
+                    ['''Or there could be an error in ' class_name '.getr('''''' TAG '''''').''] ...']
+                    ')'
+                    })
+            g(1, 'assert( ...')
+                gs(2, {
+                    [moniker '.isEnsemble(prop), ...']
+                    ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+                    ['['' The property '' int2str(prop) '' of ' class_name ' should BE an ensemble.''] ...']
+                    ')'
+                    })
+            g(1, 'assert( ...')
+                gs(2, {
+                    [moniker '.isEnsemble(TAG), ...']
+                    ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+                    ['['' The property '''''' TAG '''''' of ' class_name ' should BE an ensemble.''] ...']
+                    ')'
+                    })
+        g(0, 'end')
+        g(0, '')
+        
+        % ensemble - all tags
+        gs(0, {'% ensemble - all tags', ''})
+
+        g(0, [moniker ' = ' class_name '(cellfun(@(x) ' class_name '.getPropTag(x), num2cell(1:1:' class_name '.getPropNumber()), ''UniformOutput'', false));'])
+        g(0, 'assert( ...')
+            gs(1, {
+                ['~' moniker '.getPropNumber() || ' moniker '.isEnsemble(), ...'] % valid only for elements with properties
+                ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+                ['''' class_name ' should BE an ensemble.'' ...']
+                ')'
+                ''
+                })
+
+        % ensemble - single props / tags
+        gs(0, {'% ensemble - single props / tags', ''})
+        
+        g(0, ['for prop = 1:1:' class_name '.getPropNumber()'])
+            g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
+        
+            g(1, [moniker ' = ' class_name '({prop});'])
+            g(1, 'assert( ...')
+                gs(2, {
+                    [moniker '.isEnsemble(), ...']
+                    ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+                    ['''' class_name ' should BE an ensemble.'' ...']
+                    ')'
+                    ''
+                    })
+
+            g(1, [moniker ' = ' class_name '({TAG});'])
+            g(1, 'assert( ...')
+                gs(2, {
+                    [moniker '.isEnsemble(), ...']
+                    ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+                    ['''' class_name ' should BE an ensemble.'' ...']
+                    ')'
+                    ''
+                    })
+
+        g(0, 'end')
+        g(0, '')        
     end
 
 generate_test1_2_instantation_defaults()
     function generate_test1_2_instantation_defaults()
         gs(0, {'%% Test 1.2: Instantiation - defaults'; ''})
+
+        % single-valued
+        gs(0, {'% single-valued', ''})
 
         g(0, ['warning(''off'', ''' BRAPH2.STR ':' class_name ''')']) % turns off warnings when trying to set the value of results
         g(0, [moniker ' = ' class_name '( ...'])
@@ -186,10 +283,88 @@ generate_test1_2_instantation_defaults()
                     })            
         g(0, 'end')
         g(0, '')
+        
+        % ensemble - all
+        gs(0, {'% ensemble - all', ''})
+        
+        g(0, ['warning(''off'', ''' BRAPH2.STR ':' class_name ''')']) % turns off warnings when trying to set the value of results
+        g(0, [moniker ' = ' class_name '(num2cell(1:1:' class_name '.getPropNumber()) ...'])
+            for prop = 1:1:prop_number
+                TAG = upper(eval([class_name '.getPropTag(' int2str(prop) ')']));
+                g(1, [', ' class_name '.' TAG ', {' repmat([class_name '.getPropDefault(' class_name '.' TAG '), '], 1, 5) '} ...'])
+            end
+            g(1, ');')
+        gs(0, {['warning(''on'', ''' BRAPH2.STR ':' class_name ''')'], ''})
+
+        g(0, 'assert( ...')
+            gs(1, {
+                ['~' moniker '.getPropNumber() || ' moniker '.isEnsemble(), ...']
+                ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+                ['''' class_name ' should BE an ensemble.'' ...']
+                ')'
+                ''
+                })
+
+% % %         g(0, ['for prop = 1:1:' class_name '.getPropNumber()'])
+% % %             g(1, ['TAG = upper(' class_name '.getPropTag(prop));'])
+% % %             g(1, ['switch ' class_name '.getPropCategory(prop)'])
+% % %                 g(2, 'case {Category.METADATA, Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}')
+% % %                     g(3, 'assert( ...')
+% % %                         gs(4, {
+% % %                             ['isequal(' moniker '.getr(prop), ' class_name '.getPropDefaultConditioned(prop)), ...']
+% % %                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+% % %                             ['[''' class_name '.getr('' int2str(prop) '') must be inizialized to its default value '' ...']
+% % %                             ['''given by ' class_name '.getPropDefaultConditioned('' int2str(prop) ''). '' ...']
+% % %                             ['''Or there could be an error in ' class_name '.getr('' int2str(prop) '').''] ...']
+% % %                             ')'
+% % %                             })
+% % %                     g(3, 'assert( ...')
+% % %                         gs(4, {
+% % %                             ['isequal(' moniker '.getr(TAG), ' class_name '.getPropDefaultConditioned(prop)), ...']
+% % %                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+% % %                             ['[''' class_name '.getr('''''' TAG '''''') must be inizialized to its default value '' ...']
+% % %                             ['''given by ' class_name '.getPropDefaultConditioned('' int2str(prop) ''). '' ...']
+% % %                             ['''Or there could be an error in ' class_name '.getr('''''' TAG '''''').''] ...']
+% % %                             ')'
+% % %                             })
+% % %                 g(2, 'case Category.RESULT')
+% % %                     g(3, 'assert( ...')
+% % %                         gs(4, {
+% % %                             ['isa(' moniker '.getr(prop), ''NoValue''), ...']
+% % %                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+% % %                             ['[''Being a result, ' class_name '.getr('' int2str(prop) '') must be inizialized to NoValue(). '' ...']
+% % %                             ['''Or there could be an error in ' class_name '.getr('' int2str(prop) '').''] ...']
+% % %                             ')'
+% % %                             })
+% % %                     g(3, 'assert( ...')
+% % %                         gs(4, {
+% % %                             ['isa(' moniker '.getr(TAG), ''NoValue''), ...']
+% % %                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+% % %                             ['[''Being a result, ' class_name '.getr('''''' TAG '''''') must be inizialized to NoValue(). '' ...']
+% % %                             ['''Or there could be an error in ' class_name '.getr('''''' TAG '''''').''] ...']
+% % %                             ')'
+% % %                             })
+% % %             g(1, 'end')
+% % %             g(1, 'assert( ...')
+% % %                 gs(2, {
+% % %                     ['~' moniker '.isEnsemble(prop), ...']
+% % %                     ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+% % %                     ['['' The property '' int2str(prop) '' of ' class_name ' should NOT be an ensemble.''] ...']
+% % %                     ')'
+% % %                     })
+% % %             g(1, 'assert( ...')
+% % %                 gs(2, {
+% % %                     ['~' moniker '.isEnsemble(TAG), ...']
+% % %                     ['[BRAPH2.STR '':' class_name ':'' BRAPH2.BUG_FUNC], ...']
+% % %                     ['['' The property '''''' TAG '''''' of ' class_name ' should NOT be an ensemble.''] ...']
+% % %                     ')'
+% % %                     })            
+% % %         g(0, 'end')
+% % %         g(0, '')            
     end
 
-% % % generate_test_2_callbacks()
-% % %     function generate_test_2_callbacks()
+generate_test_2_callbacks()
+    function generate_test_2_callbacks()
 % % %         gs(0, {'%% Test 2: Callbacks'; ''})
 % % %         
 % % %         if strcmp(class_name, 'Callback')
@@ -385,10 +560,10 @@ generate_test1_2_instantation_defaults()
 % % %             g(1, 'end')
 % % %         g(0, 'end')
 % % %         g(0, '')
-% % %     end
-% % % 
-% % % generate_test_3_result()
-% % %     function generate_test_3_result()
+    end
+
+generate_test_3_result()
+    function generate_test_3_result()
 % % %         gs(0, {'%% Test 3: Result'; ''})
 % % %         
 % % %         g(0, ['warning(''off'', ''' BRAPH2.STR ':' class_name ''')'])
@@ -444,10 +619,10 @@ generate_test1_2_instantation_defaults()
 % % %             g(1, 'end')
 % % %         g(0, 'end')
 % % %         g(0, '')
-% % %     end
-% % % 
-% % % generate_test_4_memorize()
-% % %     function generate_test_4_memorize()
+    end
+
+generate_test_4_memorize()
+    function generate_test_4_memorize()
 % % %         gs(0, {'%% Test 4: Memorize'; ''})
 % % % 
 % % %         g(0, ['warning(''off'', ''' BRAPH2.STR ':' class_name ''')'])
@@ -506,7 +681,7 @@ generate_test1_2_instantation_defaults()
 % % %             g(1, 'end')
 % % %         g(0, 'end')
 % % %         g(0, '')
-% % %     end
+    end
 
 generate_tests()
     function generate_tests()    
