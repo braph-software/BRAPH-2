@@ -26,6 +26,7 @@ classdef BRAPH2
     %  BUG_IO       - bug while loading/saving files
     %  BUG_JSON     - bug in JSON encoding/deconding
     %  BUG_ERR      - bug in the handling of errors
+    %  BUG_LAYOUT   - bug in loading/saving layout
     %
     % Properties (Constant) - BRAPH2 GUI constants:
     %  FONTUNITS    - sets the units of the font
@@ -72,6 +73,7 @@ classdef BRAPH2
         BUG_IO = 'BugIO' % bug while loading/saving files
         BUG_JSON = 'BugJSON' % bug in JSON encoding/deconding
         BUG_ERR = 'BugErr' % bug in the handling of errors
+        BUG_LAYOUT = 'BugLayout' % bug in loading/saving layout
     end
     properties (Constant) % BRAPH2 GUI constants
         FONTUNITS = 'points'
