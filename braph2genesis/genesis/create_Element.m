@@ -342,8 +342,6 @@ generate_header()
             end
         end
         gs(1, {
-             '%  isEnsemble - returns whether a property is ensemble'
-             '%  getEnsembleNumber - returns ensemble cardinality'
              '%  set - sets the value of a property'
              '%  check - checks the values of all properties'
              '%  getr - returns the raw value of a property'
