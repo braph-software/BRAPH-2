@@ -57,6 +57,13 @@ generate_test1_1_instantation_empty()
     function generate_test1_1_instantation_empty()
         gs(0, {'%% Test 1.1: Instantiation - empty'; ''})
         
+        gs(0, {
+            ''
+            '% TRY'
+            'try'
+            ''
+            })
+
         gs(0, {[moniker ' = ' class_name '();']; ''})
         
         g(0, ['prop_number = ' class_name '.getPropNumber();'])
@@ -79,12 +86,33 @@ generate_test1_1_instantation_empty()
                     ')'
                     })
         g(0, 'end')
+
+        gs(0, {
+            ''
+            '% CATCH'
+            'catch e'
+            ''
+            })
+            g(1, 'if BRAPH2.TEST_PARALLEL && strcmp(e.identifier, ''MATLAB:Java:InvalidInput'')')
+                g(2, ['disp(''Test 1.1 - MATLAB:Java:InvalidInput probably due to parallel testing.'')'])
+            g(1, 'else')
+                g(2, 'rethrow(e)')
+            g(1, 'end')
+        g(0, 'end')
+
         g(0, '')
     end
 
 generate_test1_2_instantation_defaults()
     function generate_test1_2_instantation_defaults()
         gs(0, {'%% Test 1.2: Instantiation - defaults'; ''})
+
+        gs(0, {
+            ''
+            '% TRY'
+            'try'
+            ''
+            })
 
         g(0, ['warning(''off'', ''' BRAPH2.STR ':' class_name ''')'])
         g(0, [moniker ' = ' class_name '( ...'])
@@ -140,6 +168,20 @@ generate_test1_2_instantation_defaults()
                             })
             g(1, 'end')
         g(0, 'end')
+
+        gs(0, {
+            ''
+            '% CATCH'
+            'catch e'
+            ''
+            })
+            g(1, 'if BRAPH2.TEST_PARALLEL && strcmp(e.identifier, ''MATLAB:Java:InvalidInput'')')
+                g(2, ['disp(''Test 1.2 - MATLAB:Java:InvalidInput probably due to parallel testing.'')'])
+            g(1, 'else')
+                g(2, 'rethrow(e)')
+            g(1, 'end')
+        g(0, 'end')
+
         g(0, '')
     end
 
@@ -151,6 +193,13 @@ generate_test_2_callbacks()
             gs(0, {'% this test is not implemented for Callback'; ''})
             return
         end
+
+        gs(0, {
+            ''
+            '% TRY'
+            'try'
+            ''
+            })
 
         % element
         g(0, ['warning(''off'', ''' BRAPH2.STR ':' class_name ''')'])
@@ -339,6 +388,20 @@ generate_test_2_callbacks()
                             })
             g(1, 'end')
         g(0, 'end')
+
+        gs(0, {
+            ''
+            '% CATCH'
+            'catch e'
+            ''
+            })
+            g(1, 'if BRAPH2.TEST_PARALLEL && strcmp(e.identifier, ''MATLAB:Java:InvalidInput'')')
+                g(2, ['disp(''Test 2 - MATLAB:Java:InvalidInput probably due to parallel testing.'')'])
+            g(1, 'else')
+                g(2, 'rethrow(e)')
+            g(1, 'end')
+        g(0, 'end')
+
         g(0, '')
     end
 
@@ -346,6 +409,13 @@ generate_test_3_result()
     function generate_test_3_result()
         gs(0, {'%% Test 3: Result'; ''})
         
+        gs(0, {
+            ''
+            '% TRY'
+            'try'
+            ''
+            })
+
         g(0, ['warning(''off'', ''' BRAPH2.STR ':' class_name ''')'])
         g(0, [moniker ' = ' class_name '( ...'])
             for prop = 1:1:prop_number
@@ -398,6 +468,20 @@ generate_test_3_result()
                     g(3, 'end')
             g(1, 'end')
         g(0, 'end')
+
+        gs(0, {
+            ''
+            '% CATCH'
+            'catch e'
+            ''
+            })
+            g(1, 'if BRAPH2.TEST_PARALLEL && strcmp(e.identifier, ''MATLAB:Java:InvalidInput'')')
+                g(2, ['disp(''Test 3 - MATLAB:Java:InvalidInput probably due to parallel testing.'')'])
+            g(1, 'else')
+                g(2, 'rethrow(e)')
+            g(1, 'end')
+        g(0, 'end')
+
         g(0, '')
     end
 
@@ -405,6 +489,13 @@ generate_test_4_memorize()
     function generate_test_4_memorize()
         gs(0, {'%% Test 4: Memorize'; ''})
 
+        gs(0, {
+            ''
+            '% TRY'
+            'try'
+            ''
+            })
+        
         g(0, ['warning(''off'', ''' BRAPH2.STR ':' class_name ''')'])
         g(0, [moniker ' = ' class_name '( ...'])
             for prop = 1:1:prop_number
@@ -460,6 +551,20 @@ generate_test_4_memorize()
                             })
             g(1, 'end')
         g(0, 'end')
+
+        gs(0, {
+            ''
+            '% CATCH'
+            'catch e'
+            ''
+            })
+            g(1, 'if BRAPH2.TEST_PARALLEL && strcmp(e.identifier, ''MATLAB:Java:InvalidInput'')')
+                g(2, ['disp(''Test 4 - MATLAB:Java:InvalidInput probably due to parallel testing.'')'])
+            g(1, 'else')
+                g(2, 'rethrow(e)')
+            g(1, 'end')
+        g(0, 'end')
+
         g(0, '')
     end
 
@@ -469,7 +574,33 @@ generate_tests()
         for i = 1:1:numel(tests)
             test_number = test_number + 1;
             gs(0, {['%% Test ' int2str(test_number) ': ' tests{i}.name]; ''})
+            
+            if ~contains(tests{i}.code, 'function ')
+                gs(0, {
+                    ''
+                    '% TRY'
+                    'try'
+                    ''
+                    })
+            end
+            
             gs(0, tests{i}.code)
+            
+            if ~contains(tests{i}.code, 'function ')
+                gs(0, {
+                    ''
+                    '% CATCH'
+                    'catch e'
+                    ''
+                    })
+                    g(1, 'if BRAPH2.TEST_PARALLEL && strcmp(e.identifier, ''MATLAB:Java:InvalidInput'')')
+                        g(2, ['disp(''Test ' int2str(test_number) ' - MATLAB:Java:InvalidInput probably due to parallel testing.'')'])
+                    g(1, 'else')
+                        g(2, 'rethrow(e)')
+                    g(1, 'end')
+                g(0, 'end')
+            end
+            
             g(0, '')
         end
     end

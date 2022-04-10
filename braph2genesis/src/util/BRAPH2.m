@@ -16,6 +16,10 @@ classdef BRAPH2
     %  EXT_ELEMENT  - BRAPH2 element extension (*.b2)
     %  EXT_PIPELINE - BRAPH2 pipeline extension (*.braph2)
     %
+    % Properties (Constant) - BRAPH2 testing
+    %  TEST_PARALLEL - BRAPH2 test using parallel computing
+    %  TEST_RANDOM  - BRAPH2 random testing
+    %
     % Properties (Constant) - BRAPH2 error codes:
 	%  ADDON        - addon not installed
     %  WRONG_INPUT  - wrong input value or format in a function
@@ -62,6 +66,10 @@ classdef BRAPH2
     properties (Constant) % BRAPH2 extensions
         EXT_ELEMENT = {'*.b2'} % BRAPH2 element extension
         EXT_PIPELINE = {'*.braph2'} % BRAPH2 pipeline extension
+    end
+    properties (Constant) % BRAPH2 testing
+        TEST_PARALLEL = true; % BRAPH2 test using parallel computing
+        TEST_RANDOM = false; % BRAPH2 random testing
     end
     properties (Constant) % BRAPH2 error codes
         ADDON = 'AddOn' % addon not installed
