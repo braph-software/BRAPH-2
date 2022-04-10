@@ -1,8 +1,8 @@
 %TEST_CATEGORY
 
+%% Test 1: Static methods
 category_list = Category.getCategories();
 
-%% Test 1: Static methods
 assert(numel(category_list) == Category.getCategoryNumber(), ...
     [BRAPH2.STR ':Category:' BRAPH2.WRONG_OUTPUT], ...
     'Category.getCategoryNumber() does not return the correct number of categories.')
