@@ -13,7 +13,6 @@
 %  <a href="matlab:help test        ">test</a>          - BRAPH2 test
 
 close all
-clear variables
 clear all %#ok<CLALL>
 clc
 
@@ -34,4 +33,4 @@ disp('BRAPH 2.0 is now fully compiled and ready to be used')
 
 braph2
 
-% test_braph2
+test_braph2
