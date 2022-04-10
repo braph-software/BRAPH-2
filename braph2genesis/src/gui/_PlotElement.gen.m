@@ -90,6 +90,20 @@ check = (length(value) == 3) && all(value >= 0 & value <= 1);
 BRAPH2.COL_R
 
 %%% ¡prop!
+FCOLOR (metadata, rvector) is background color of the figure properties.
+%%%% ¡check_prop!
+check = (length(value) == 3) && all(value >= 0 & value <= 1);
+%%%% ¡default!
+BRAPH2.COL_F
+
+%%% ¡prop!
+GCOLOR (metadata, rvector) is background color of the gui properties.
+%%%% ¡check_prop!
+check = (length(value) == 3) && all(value >= 0 & value <= 1);
+%%%% ¡default!
+BRAPH2.COL_G
+
+%%% ¡prop!
 EL (metadata, item) is the element to be plotted.
 
 %%% ¡prop!
