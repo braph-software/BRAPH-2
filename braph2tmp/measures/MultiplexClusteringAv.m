@@ -33,8 +33,8 @@ classdef MultiplexClusteringAv < MultiplexClustering
 	%  getDescription - returns the description of the average multiplex clustering.
 	%  getName - returns the name of the average multiplex clustering.
 	%  getClass - returns the class of the average multiplex clustering.
-	%  getCompatibleGraphNumber - returns the number (4) of MultiplexClustering compatible graphs.
-	%  getCompatibleGraphList - returns the list of MultiplexClustering compatible graphs.
+	%  getCompatibleGraphNumber - returns the number (4) of MultiplexTriangles compatible graphs.
+	%  getCompatibleGraphList - returns the list of MultiplexTriangles compatible graphs.
 	%  getMeasureParametricity - returns 2 (Non-parametric).
 	%  getMeasureScope - returns 1 (Superglobal).
 	%  getMeasureShape - returns 2 (Nodal).

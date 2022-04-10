@@ -32,10 +32,10 @@ classdef OverlappingDegreeAv < OverlappingDegree
 	%  getDescription - returns the description of the average overlapping degree.
 	%  getName - returns the name of the average overlapping degree.
 	%  getClass - returns the class of the average overlapping degree.
-	%  getCompatibleGraphNumber - returns the number (4) of OverlappingDegree compatible graphs.
-	%  getCompatibleGraphList - returns the list of OverlappingDegree compatible graphs.
+	%  getCompatibleGraphNumber - returns the number (8) of Degree compatible graphs.
+	%  getCompatibleGraphList - returns the list of Degree compatible graphs.
 	%  getMeasureParametricity - returns 2 (Non-parametric).
-	%  getMeasureScope - returns 1 (Superglobal).
+	%  getMeasureScope - returns 2 (Unilayer).
 	%  getMeasureShape - returns 2 (Nodal).
 	%  getList - T returns the list of measures
 	%  is_nonparametric - checks if measure is non-parametric.

@@ -32,10 +32,10 @@ classdef OverlappingInStrengthAv < OverlappingInStrength
 	%  getDescription - returns the description of the average overlapping in-strength.
 	%  getName - returns the name of the average overlapping in-strength.
 	%  getClass - returns the class of the average overlapping in-strength.
-	%  getCompatibleGraphNumber - returns the number (1) of OverlappingInStrength compatible graphs.
-	%  getCompatibleGraphList - returns the list of OverlappingInStrength compatible graphs.
+	%  getCompatibleGraphNumber - returns the number (2) of InStrength compatible graphs.
+	%  getCompatibleGraphList - returns the list of InStrength compatible graphs.
 	%  getMeasureParametricity - returns 2 (Non-parametric).
-	%  getMeasureScope - returns 1 (Superglobal).
+	%  getMeasureScope - returns 2 (Unilayer).
 	%  getMeasureShape - returns 2 (Nodal).
 	%  getList - T returns the list of measures
 	%  is_nonparametric - checks if measure is non-parametric.

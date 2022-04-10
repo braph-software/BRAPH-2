@@ -32,11 +32,11 @@ classdef PathLengthAv < PathLength
 	%  getDescription - returns the description of the average path length.
 	%  getName - returns the name of the average path length.
 	%  getClass - returns the class of the average path length.
-	%  getCompatibleGraphNumber - returns the number (8) of PathLength compatible graphs.
-	%  getCompatibleGraphList - returns the list of PathLength compatible graphs.
-	%  getMeasureParametricity - returns 2 (Non-parametric).
-	%  getMeasureScope - returns 2 (Unilayer).
-	%  getMeasureShape - returns 2 (Nodal).
+	%  getCompatibleGraphNumber - returns the number of compatible graphs.
+	%  getCompatibleGraphList - returns the list of graphs.
+	%  getMeasureParametricity - returns the parametricity of the measure.
+	%  getMeasureScope - returns the measure scope.
+	%  getMeasureShape - returns the measure shape.
 	%  getList - T returns the list of measures
 	%  is_nonparametric - checks if measure is non-parametric.
 	%  is_parametric - checks if measure is parametric.

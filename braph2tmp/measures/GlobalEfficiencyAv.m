@@ -32,11 +32,11 @@ classdef GlobalEfficiencyAv < GlobalEfficiency
 	%  getDescription - returns the description of the average global efficiency.
 	%  getName - returns the name of the average global efficiency.
 	%  getClass - returns the class of the average global efficiency.
-	%  getCompatibleGraphNumber - returns the number (8) of GlobalEfficiency compatible graphs.
-	%  getCompatibleGraphList - returns the list of GlobalEfficiency compatible graphs.
-	%  getMeasureParametricity - returns 2 (Non-parametric).
-	%  getMeasureScope - returns 2 (Unilayer).
-	%  getMeasureShape - returns 2 (Nodal).
+	%  getCompatibleGraphNumber - returns the number of compatible graphs.
+	%  getCompatibleGraphList - returns the list of graphs.
+	%  getMeasureParametricity - returns the parametricity of the measure.
+	%  getMeasureScope - returns the measure scope.
+	%  getMeasureShape - returns the measure shape.
 	%  getList - T returns the list of measures
 	%  is_nonparametric - checks if measure is non-parametric.
 	%  is_parametric - checks if measure is parametric.

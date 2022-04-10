@@ -36,10 +36,10 @@ classdef MultiplexCorePeriphery < Multirichness
 	%  getDescription - returns the description of the multiplex core-periphery.
 	%  getName - returns the name of the multiplex core-periphery.
 	%  getClass - returns the class of the multiplex core-periphery.
-	%  getCompatibleGraphNumber - returns the number (8) of Degree compatible graphs.
-	%  getCompatibleGraphList - returns the list of Degree compatible graphs.
+	%  getCompatibleGraphNumber - returns the number (6) of Multirichness compatible graphs.
+	%  getCompatibleGraphList - returns the list of Multirichness compatible graphs.
 	%  getMeasureParametricity - returns 2 (Non-parametric).
-	%  getMeasureScope - returns 2 (Unilayer).
+	%  getMeasureScope - returns 1 (Superglobal).
 	%  getMeasureShape - returns 2 (Nodal).
 	%  getList - T returns the list of measures
 	%  is_nonparametric - checks if measure is non-parametric.

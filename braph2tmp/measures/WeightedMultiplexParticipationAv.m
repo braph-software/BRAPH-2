@@ -32,11 +32,11 @@ classdef WeightedMultiplexParticipationAv < WeightedMultiplexParticipation
 	%  getDescription - returns the description of the average weighted multiplex participation.
 	%  getName - returns the name of the average weighted multiplex participation.
 	%  getClass - returns the class of the average weighted multiplex participation.
-	%  getCompatibleGraphNumber - returns the number (1) of WeightedMultiplexParticipation compatible graphs.
-	%  getCompatibleGraphList - returns the list of WeightedMultiplexParticipation compatible graphs.
-	%  getMeasureParametricity - returns 2 (Non-parametric).
-	%  getMeasureScope - returns 1 (Superglobal).
-	%  getMeasureShape - returns 2 (Nodal).
+	%  getCompatibleGraphNumber - returns the number of compatible graphs.
+	%  getCompatibleGraphList - returns the list of graphs.
+	%  getMeasureParametricity - returns the parametricity of the measure.
+	%  getMeasureScope - returns the measure scope.
+	%  getMeasureShape - returns the measure shape.
 	%  getList - T returns the list of measures
 	%  is_nonparametric - checks if measure is non-parametric.
 	%  is_parametric - checks if measure is parametric.

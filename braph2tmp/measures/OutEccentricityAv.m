@@ -32,8 +32,8 @@ classdef OutEccentricityAv < OutEccentricity
 	%  getDescription - returns the description of the average out-eccentricity.
 	%  getName - returns the name of the average out-eccentricity.
 	%  getClass - returns the class of the average out-eccentricity.
-	%  getCompatibleGraphNumber - returns the number (4) of OutEccentricity compatible graphs.
-	%  getCompatibleGraphList - returns the list of OutEccentricity compatible graphs.
+	%  getCompatibleGraphNumber - returns the number (8) of Eccentricity compatible graphs.
+	%  getCompatibleGraphList - returns the list of Eccentricity compatible graphs.
 	%  getMeasureParametricity - returns 2 (Non-parametric).
 	%  getMeasureScope - returns 2 (Unilayer).
 	%  getMeasureShape - returns 2 (Nodal).

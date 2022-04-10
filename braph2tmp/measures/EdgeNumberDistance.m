@@ -32,11 +32,11 @@ classdef EdgeNumberDistance < Distance
 	%  getDescription - returns the description of the edge number distance.
 	%  getName - returns the name of the edge number distance.
 	%  getClass - returns the class of the edge number distance.
-	%  getCompatibleGraphNumber - returns the number (12) of Distance compatible graphs.
-	%  getCompatibleGraphList - returns the list of Distance compatible graphs.
-	%  getMeasureParametricity - returns 2 (Non-parametric).
-	%  getMeasureScope - returns 2 (Unilayer).
-	%  getMeasureShape - returns 3 (Binodal).
+	%  getCompatibleGraphNumber - returns the number of compatible graphs.
+	%  getCompatibleGraphList - returns the list of graphs.
+	%  getMeasureParametricity - returns the parametricity of the measure.
+	%  getMeasureScope - returns the measure scope.
+	%  getMeasureShape - returns the measure shape.
 	%  getList - T returns the list of measures
 	%  is_nonparametric - checks if measure is non-parametric.
 	%  is_parametric - checks if measure is parametric.

@@ -33,11 +33,11 @@ classdef CorePeriphery < Richness
 	%  getDescription - returns the description of the core-periphery.
 	%  getName - returns the name of the core-periphery.
 	%  getClass - returns the class of the core-periphery.
-	%  getCompatibleGraphNumber - returns the number of compatible graphs.
-	%  getCompatibleGraphList - returns the list of graphs.
-	%  getMeasureParametricity - returns the parametricity of the measure.
-	%  getMeasureScope - returns the measure scope.
-	%  getMeasureShape - returns the measure shape.
+	%  getCompatibleGraphNumber - returns the number (8) of Degree compatible graphs.
+	%  getCompatibleGraphList - returns the list of Degree compatible graphs.
+	%  getMeasureParametricity - returns 2 (Non-parametric).
+	%  getMeasureScope - returns 2 (Unilayer).
+	%  getMeasureShape - returns 2 (Nodal).
 	%  getList - T returns the list of measures
 	%  is_nonparametric - checks if measure is non-parametric.
 	%  is_parametric - checks if measure is parametric.
