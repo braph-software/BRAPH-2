@@ -36,7 +36,7 @@ clear braph2_dir pipelines_dir pipelines_dir_list i
 %% Runs tests
 global BRAPH2_IS_TESTING
 BRAPH2_IS_TESTING = true; %#ok<NASGU>
-results = runtests(directories_to_test, 'UseParallel', true);
+results = runtests(directories_to_test, 'UseParallel', false);
 BRAPH2_IS_TESTING = false;
 clear BRAPH2_IS_TESTING
 
