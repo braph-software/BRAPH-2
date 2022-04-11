@@ -1,37 +1,63 @@
 close all
-clear all
-clc
+clear all %#ok<CLALL>
 
-create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PPPipeline_PSDict.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+%% Timer start
+time_start = tic;
 
-pip = load('pip_tmp.b2', '-mat').el;
-gui = GUI('PE', pip, 'CLOSEREQ', false);
-gui.draw()
+%% Identifies test directories
+braph2_dir = fileparts(which('braph2'));
 
-%% archived codes
-% delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui/PlotElement.m')
-% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PlotElement.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
-% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PlotElement.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
-% create_test_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PlotElement.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
-% test_PlotElement
+directories_to_test = {[braph2_dir filesep 'measures']};
 
-% delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui/PlotPropString.m')
-% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PlotPropString.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
-% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PlotPropString.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+% directories_to_test = { ...
+%     [braph2_dir filesep 'src' filesep 'util'] ...
+%     [braph2_dir filesep 'src' filesep 'ds'] ...
+%     [braph2_dir filesep 'src' filesep 'atlas'] ... 
+%     [braph2_dir filesep 'src' filesep 'gt'] ...
+%     [braph2_dir filesep 'src' filesep 'cohort'] ...
+%     [braph2_dir filesep 'src' filesep 'analysis'] ...
+%     [braph2_dir filesep 'src' filesep 'gui'] ...
+%     [braph2_dir filesep 'brainsurfs'] ...
+%     [braph2_dir filesep 'graphs'] ...
+%     [braph2_dir filesep 'measures'] ...
+%     [braph2_dir filesep 'neuralnetworks'] ...
+%     };
 
-% delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui/GUI.m')
-% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_GUI.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
-% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_GUI.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
+% pipelines_dir = [fileparts(which('braph2')) filesep 'pipelines'];
+% 
+% addpath(pipelines_dir)
+% pipelines_dir_list = dir(pipelines_dir); % get the folder contents
+% pipelines_dir_list = pipelines_dir_list([pipelines_dir_list(:).isdir] == 1); % remove all files (isdir property is 0)
+% pipelines_dir_list = pipelines_dir_list(~ismember({pipelines_dir_list(:).name}, {'.', '..'})); % remove '.' and '..'
+% for i = 1:1:length(pipelines_dir_list)
+%     directories_to_test{end + 1} = [pipelines_dir filesep pipelines_dir_list(i).name]; %#ok<SAGROW>
+% end
 
-% delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/cohort/PPGroup_SUBDict.m')
-% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/cohort/_PPGroup_SUBDict.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/cohort')
-% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/cohort/_PPGroup_SUBDict.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/cohort')
+clear braph2_dir pipelines_dir pipelines_dir_list i
 
-% delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/atlas/PPBrainAtlas_Surf.m')
-% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/atlas/_PPBrainAtlas_Surf.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/atlas')
-% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/atlas/_PPBrainAtlas_Surf.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/atlas')
+%% Runs tests
+global BRAPH2_IS_TESTING
+BRAPH2_IS_TESTING = true; %#ok<NASGU>
+results = runtests(directories_to_test, 'UseParallel', true);
+BRAPH2_IS_TESTING = false;
+clear BRAPH2_IS_TESTING
 
-% delete('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui/PPPipeline_PSDict.m')
+%% Shows test results
+results_table = table(results) %#ok<NOPTS>
+
+if all([results(:).Passed])
+    disp('*** All good! ***')
+else
+    disp('*** Something went wrong! ***')
+    failed_results_table = table(results([results(:).Failed])) %#ok<NOPTS>
+end
+
+%% Timer end
+time_end = toc(time_start);
+
+disp(['The test has taken ' int2str(time_end) '.' int2str(mod(time_end, 1) * 10) 's'])
+
+
 % create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PPPipeline_PSDict.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
 % create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PPPipeline_PSDict.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
 
