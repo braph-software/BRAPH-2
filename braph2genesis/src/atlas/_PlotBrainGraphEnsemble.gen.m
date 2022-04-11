@@ -1783,9 +1783,14 @@ function h = getMCRPanel(pl, ui_panel_mcr)
     end
     if iscell(layer_element) && size(layer_element, 2) > 1 % mp
         layer_check = 1;
-        layer_dim =  size(layer_element, 2);
+        if Measure.is_superglobal(pl.get('ME').get('measureparam'))% superglobal
+            layer_dim = 1;
+        else
+            layer_dim =  size(layer_element, 2);
+        end
+
     end
-    
+
 
     % initialization %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % measure container panel
@@ -1918,7 +1923,7 @@ function h = getMCRPanel(pl, ui_panel_mcr)
             set(ui_edit_meas_labelsize, 'Position', [.31 .26 .6 .08])
             set(ui_edit_meas_labelsize, 'HorizontalAlignment', 'center')
             set(ui_edit_meas_labelsize, 'FontWeight', 'bold')
-            set(ui_edit_meas_labelsize, 'Callback', {@cb_edit_meas_labelsize})  
+            set(ui_edit_meas_labelsize, 'Callback', {@cb_edit_meas_labelsize})
 
         end
         function cb_layer_selector(~, ~)
@@ -1942,7 +1947,7 @@ function h = getMCRPanel(pl, ui_panel_mcr)
         function cb_edit_meas_symbolsize(~, ~)  %  (src, event)
             size = real(str2double(get(ui_edit_meas_symbolsize, 'String')));
             if isempty(size) || size<=0
-                set(ui_edit_meas_symbolsize, 'String', '1')                
+                set(ui_edit_meas_symbolsize, 'String', '1')
             end
             update_brain_meas_plot()
         end
@@ -1961,7 +1966,7 @@ function h = getMCRPanel(pl, ui_panel_mcr)
         function cb_edit_meas_sphereradius(~, ~)  %  (src, event)
             R = real(str2double(get(ui_edit_meas_sphereradius, 'String')));
             if isempty(R) || R<=0
-                set(ui_edit_meas_sphereradius, 'String', '1')                
+                set(ui_edit_meas_sphereradius, 'String', '1')
             end
             update_brain_meas_plot()
         end
@@ -2015,7 +2020,7 @@ function h = getMCRPanel(pl, ui_panel_mcr)
                         end
                     elseif layer_check && d_t_check % mp and d/t
                         if Measure.is_superglobal(pl.get('ME').get('Measure'))
-                            measure_data_inner = measure_data{get(ui_layer_selector, 'Value')};
+                            measure_data_inner = measure_data{get(d_t_selector, 'Value')};
                         else
                             tmp_diff = layer_dim-get(ui_layer_selector, 'Value');
                             measure_data_inner = measure_data{get(d_t_selector, 'Value')*layer_dim-tmp_diff};
@@ -2025,9 +2030,9 @@ function h = getMCRPanel(pl, ui_panel_mcr)
                     end
                 else
                     measure_warn_f = warndlg('BRAPH 2 only visualize nodal measures.');
-                    set_braph2icon(measure_warn_f);                    
+                    set_braph2icon(measure_warn_f);
                 end
-                
+
                 if any(isnan(measure_data_inner)) || any(isinf(measure_data_inner))
                     nan_warn_f = warndlg('A value is not a finite real number.');
                     set_braph2icon(nan_warn_f);
@@ -2036,10 +2041,10 @@ function h = getMCRPanel(pl, ui_panel_mcr)
 
                 if get(ui_checkbox_meas_symbolsize, 'Value')
 
-                    size_ = str2double(get(ui_edit_meas_symbolsize, 'String'));
+                    size_ = str2double(get(ui_edit_meas_symbolsize, 'String')) * measure_data_inner;
                     size_(isnan(size_)) = 0.1;
                     size_(size_ <= 0) = 0.1;
-                    pl.set('SYMS_SIZE', size_');
+                    pl.set('SYMS_SIZE', size_);
                     pl.set('SYMS', 1);
                 else
                     pl.set('SYMS', 0);
@@ -2048,7 +2053,7 @@ function h = getMCRPanel(pl, ui_panel_mcr)
 
                 if get(ui_checkbox_meas_sphereradius, 'Value')
 
-                    R = str2double(get(ui_edit_meas_sphereradius, 'String'));
+                    R = str2double(get(ui_edit_meas_sphereradius, 'String')) * measure_data_inner;
                     R = measure_data_inner * R;
                     R(isnan(R)) = 0.1;
                     R(R <= 0) = 0.1;
