@@ -223,7 +223,7 @@ function plot_brain_surface(pr)
         'CloseRequestFcn', {@cb_f_pba_close} ...
         );
     
-    set_braph2_icon(pr.f_brain)
+    set_braph2icon(pr.f_brain)
     set(pr.f_brain, 'Name', [pr.get('el').getClass() ' - ' pr.get('el').get('ID')])
     menu_about = BRAPH2.add_menu_about(pr.f_brain);
     ui_toolbar = findall(pr.f_brain, 'Tag', 'FigureToolBar');

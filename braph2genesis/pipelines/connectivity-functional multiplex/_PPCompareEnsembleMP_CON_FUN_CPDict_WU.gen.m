@@ -318,7 +318,7 @@ function cb_measure_calc(pr)
     % calculate
     if pr.get('WAITBAR')
         wb = waitbar(0, ['Calculating ' num2str(length(pr.selected))  ' comparisons ...'], 'Name', BRAPH2.NAME);
-        set_braph2_icon(wb)
+        set_braph2icon(wb)
     end
 
     for i = 1:length(pr.mlist)

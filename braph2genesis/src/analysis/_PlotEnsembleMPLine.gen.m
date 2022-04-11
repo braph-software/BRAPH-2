@@ -141,7 +141,7 @@ function f_settings = settings(pr, varargin)
     % See also draw, figure, isgraphics.
 
     pr.h_settings = settings@Plot(pr, varargin{:});
-    set_braph2_icon(pr.h_settings);
+    set_braph2icon(pr.h_settings);
 
     % constants
     line_style = {'-', '--', ':', ':.', 'none'}; % TODO: move to BRAPH2
@@ -506,7 +506,7 @@ function update_plot(pr)
         is_inf_vector = cellfun(@(x) isinf(x), plot_value);
         if any(is_inf_vector)
             f = warndlg('The measure cannot be plotted because it contains Inf values.');
-            set_braph2_icon(f);
+            set_braph2icon(f);
             return;
         end
         y_ = [plot_value{choosen_layer:layer_number:end}];
@@ -517,7 +517,7 @@ function update_plot(pr)
             tmp_y = tmp(pr.get('NODE1'));
             if isinf(tmp_y)
                 f = warndlg('The measure cannot be plotted because it contains Inf values.');
-                set_braph2_icon(f);
+                set_braph2icon(f);
                 return;
             end
             y_(tmp_index) = tmp_y; %#ok<AGROW>
@@ -530,7 +530,7 @@ function update_plot(pr)
             tmp_y = tmp(pr.get('NODE1'), pr.get('NODE2'));
             if isinf(tmp_y)
                 f = warndlg('The measure cannot be plotted because it contains Inf values.');
-                set_braph2_icon(f);
+                set_braph2icon(f);
                 return;
             end
             y_(tmp_index) = tmp_y; %#ok<AGROW>
@@ -541,7 +541,7 @@ function update_plot(pr)
             is_inf_vector = cellfun(@(x) isinf(x), plot_value);
             if any(is_inf_vector)
                 f = warndlg('The measure cannot be plotted because it contains Inf values.');
-                set_braph2_icon(f);
+                set_braph2icon(f);
                 return;
             end
             y_ = [plot_value{:}];
@@ -552,7 +552,7 @@ function update_plot(pr)
                 tmp_y = tmp(pr.get('NODE1'));
                 if isinf(tmp_y)
                     f = warndlg('The measure cannot be plotted because it contains Inf values.');
-                    set_braph2_icon(f);
+                    set_braph2icon(f);
                     return;
                 end
                 y_(tmp_index) = tmp_y; %#ok<AGROW>
@@ -565,7 +565,7 @@ function update_plot(pr)
                 tmp_y = tmp(pr.get('NODE1'), pr.get('NODE2'));
                 if isinf(tmp_y)
                     f = warndlg('The measure cannot be plotted because it contains Inf values.');
-                    set_braph2_icon(f);
+                    set_braph2icon(f);
                     return;
                 end
                 y_(tmp_index) = tmp_y; %#ok<AGROW>

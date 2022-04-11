@@ -141,14 +141,14 @@ for i = 1:1:length(el_class_list)
             [BRAPH2.STR ':' el_class ':' BRAPH2.WRONG_OUTPUT], ...
             [el_class '.checkProp should return a logical value.'])
         
-        Element.checkProp(el_class, prop, Element.getPropDefault(el_class, prop))
-        Element.checkProp(el, prop, Element.getPropDefault(el, prop))
-        el.checkProp(prop, el.getPropDefault(prop))
-        eval([el_class '.checkProp(prop, ' el_class '.getPropDefault(prop))'])
-        Element.checkProp(el_class, tag, Element.getPropDefault(el_class, tag))
-        Element.checkProp(el, tag, Element.getPropDefault(el, tag))
-        el.checkProp(tag, el.getPropDefault(tag))
-        eval([el_class '.checkProp(tag, ' el_class '.getPropDefault(tag))'])
+        Element.checkProp(el_class, prop, Element.getPropDefaultConditioned(el_class, prop))
+        Element.checkProp(el, prop, Element.getPropDefaultConditioned(el, prop))
+        el.checkProp(prop, el.getPropDefaultConditioned(prop))
+        eval([el_class '.checkProp(prop, ' el_class '.getPropDefaultConditioned(prop))'])
+        Element.checkProp(el_class, tag, Element.getPropDefaultConditioned(el_class, tag))
+        Element.checkProp(el, tag, Element.getPropDefaultConditioned(el, tag))
+        el.checkProp(tag, el.getPropDefaultConditioned(tag))
+        eval([el_class '.checkProp(tag, ' el_class '.getPropDefaultConditioned(tag))'])
     end
 end
 
@@ -392,7 +392,7 @@ end
 idict = IndexedDictionary( ...
     'id', 'idict', ...
     'it_class', 'ETA', ...
-    'it_key', 17, ...
+    'it_key', 18, ...
     'it_list', {ETA()} ...
     );
 

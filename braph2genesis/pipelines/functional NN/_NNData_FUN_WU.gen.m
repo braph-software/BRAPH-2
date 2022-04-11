@@ -62,7 +62,7 @@ NNGroup('SUB_CLASS', 'NNSubject', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNS
 %%%% ¡calculate!
 if nnd.get('WAITBAR')
     wb = waitbar(0, 'Constructing NN input ...', 'Name', BRAPH2.NAME);
-    set_braph2_icon(wb)
+    set_braph2icon(wb)
 end
 
 gr = nnd.get('GR');
