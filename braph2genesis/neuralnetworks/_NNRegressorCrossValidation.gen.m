@@ -84,6 +84,8 @@ if ~isa(nncv.get('GR').getr('SUB_DICT'), 'NoValue')
 end
 
 value = nnds_dict;
+%%%% ¡gui!
+pr = PPNNCrossValidation_NNDict('EL', nncv, 'PROP', NNRegressorCrossValidation.NNDS_DICT, varargin{:});
 
 %%% ¡prop!
 NN_DICT (result, idict) contains the NN regressors for k folds for all repetitions.
@@ -111,6 +113,8 @@ if nncv.memorize('NNDS_DICT').length() > 0
 end
 
 value = nn_dict;
+%%%% ¡gui!
+pr = PPNNCrossValidation_NNDict('EL', nncv, 'PROP', NNRegressorCrossValidation.NN_DICT, varargin{:});
 
 %%% ¡prop!
 NNE_DICT (result, idict) contains the NN evaluators for k folds for all repetitions.
@@ -137,6 +141,8 @@ if nncv.memorize('NN_DICT').length() > 0
 end
 
 value = nne_dict;
+%%%% ¡gui!
+pr = PPNNCrossValidation_NNDict('EL', nncv, 'PROP', NNRegressorCrossValidation.NNE_DICT, varargin{:});
 
 %%% ¡prop!
 GR_PREDICTION (result, item) is a group of NN subjects with prediction from NN.
@@ -170,6 +176,9 @@ else
 end
 
 value = gr_prediction;
+%%%% ¡gui!
+pr = PPNNData_GR_NN('EL', nncv, 'PROP', NNRegressorCrossValidation.GR_PREDICTION, varargin{:});
+
 
 %%% ¡prop!
 RMSE (result, scalar) is the root mean squared error between targets and predictions across k folds for all repeitions.
@@ -185,51 +194,73 @@ else
 end
 
 %%% ¡prop!
-CONTRIBUTION_MAP (result, matrix) is a heat map obtained with feature selection analysis and the AUC value.
+FEATURE_MAP (result, cell) is a heat map obtained with feature selection analysis and the AUC value.
 %%%% ¡calculate!
 nne_dict = nncv.memorize('NNE_DICT');
-heat_map = 0;
-if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('VAL_AUC'))
+heat_map = {};
+if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('AUC')) && ~any(ismember(subclasses('Measure'), nncv.get('GR1').get('SUB_DICT').getItem(1).get('INPUT_LABEL')))
+    tmp_map = nne_dict.getItem(1).get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('FEATURE_MASK');
+    for i = 1:1:length(tmp_map)
+        heat_map{i} = zeros(size(tmp_map{i}));
+    end
     for i = 1:1:nne_dict.length()
         feature_map = nne_dict.getItem(i).get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('FEATURE_MASK');
         auc_val = nne_dict.getItem(i).get('AUC');
-        feature_map(feature_map == 1) = auc_val{1};
-        heat_map = heat_map + feature_map;
+        feature_map_out = feature_map;
+        for j = 1:1:length(feature_map)
+            fm_tmp = feature_map{j};
+            fm_tmp(fm_tmp == 1) = auc_val{1};
+            feature_map_out{j} = fm_tmp;
+        end
+        heat_map = cellfun(@(x, y) x + y, heat_map, feature_map_out, 'UniformOutput', false);
     end
-    heat_map = heat_map / nne_dict.length();
+    heat_map = cellfun(@(x) x / nne_dict.length(), heat_map, 'UniformOutput', false);
     if nncv.get('PLOT_MAP')
-        figure
-        x = [1 size(heat_map, 2)];
-        y = [0 size(heat_map, 1)];
-        image(x, y, heat_map, 'CDataMapping', 'scaled')
-        if string(nne_dict.getItem(i).get('NNData').get('INPUT_TYPE')) == 'graph_measures'
-            ticklabel = nncv.get('MEASURES');
-            fontsize = 12;
-        else
-            ticklabel = 0:size(heat_map, 2);
-            fontsize = 5;
+        for i = 1:1:length(heat_map)
+            heat_map_tmp = heat_map{i};
+            figure
+            x = [1 size(heat_map_tmp, 2)];
+            y = [0 size(heat_map_tmp, 1)];
+            image(x, y, heat_map_tmp, 'CDataMapping', 'scaled')
+            %                                 br_dict = nne_dict.getItem(i).get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('BA').get('br_dict');
+            %                                 br_ids = cell(br_dict.length(), 1);
+            %                                 for i = 1:1:br_dict.length()
+            %                                     br = br_dict.getItem(i);
+            %                                     br_id = br.get(BrainRegion.ID);
+            %                                     if length(br_id) > 10
+            %                                         br_id = [br_id(1:8) '..'];
+            %                                     end
+            %                                     br_ids{i} = br_id;
+            %                                 end
+            %                                 ticklabel = br_dict
+            %                                 xticks([1:size(heat_map_tmp, 2)]);
+            %                                 yticks([1:size(heat_map_tmp, 1)]);
+            %     					    	xticklabels(ticklabel);
+            %                                 if size(heat_map_tmp, 2) > 1
+            %                                     yticklabels(ticklabel);
+            %                                 end
+            %     					        a = get(gca,'XTickLabel');
+            %     					        set(gca, 'XTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
+            %     					        a = get(gca,'YTickLabel');
+            %     					        set(gca, 'YTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
+            colorbar
+            directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
+            if ~exist(directory, 'dir')
+                mkdir(directory)
+            end
+            filename = [directory filesep 'cv_feature_map.svg'];
+            saveas(gcf, filename);
         end
-        xticks([1:size(heat_map, 2)]);
-        yticks([1:size(heat_map, 1)]);
-    	xticklabels(ticklabel);
-        yticklabels(0:size(heat_map, 1));
-        a = get(gca,'XTickLabel');
-        set(gca, 'XTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
-        a = get(gca,'YTickLabel');
-        set(gca, 'YTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
-        colorbar
-        directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
-        if ~exist(directory, 'dir')
-            mkdir(directory)
-        end
-        filename = [directory filesep 'cv_contribution_map.svg'];
-        saveas(gcf, filename);
     end
 
     value = heat_map;
 else
+    braph2msgbox("No visualization for the feature map", "For now, we only provide the feature map visualization for input of adjacency matrix or structural data.")
     value = heat_map;
 end
+%%%% ¡gui!
+pr = PPNNCrossValidation_Feature_Map('EL', nncv, 'PROP', NNRegressorCrossValidation.FEATURE_MAP, varargin{:});
+
 
 %% ¡methods!
 function [avg, CI] = get_CI(nncv, scores)

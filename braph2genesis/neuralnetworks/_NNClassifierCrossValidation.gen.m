@@ -405,6 +405,7 @@ if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('AUC')) && 
 
     value = heat_map;
 else
+    braph2msgbox("No visualization for the feature map", "For now, we only provide the feature map visualization for input of adjacency matrix or structural data.")
     value = heat_map;
 end
 %%%% ¡gui!

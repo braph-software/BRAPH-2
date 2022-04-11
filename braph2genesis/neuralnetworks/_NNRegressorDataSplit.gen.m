@@ -15,7 +15,8 @@ GR (data, item) is a group of NN subjects
 
 %%% ¡prop!
 SPLIT (data, rvector) is a ratio or a vector stating which subjects belong to the validation set.
-%%%% ¡conditioning!
+%%%% ¡postprocessing!
+value = nnds.get('SPLIT');
 if length(value) == 1 & value < 1
     num_val = floor(value * nnds.get('GR').get('SUB_DICT').length());
     num_train = nnds.get('GR').get('SUB_DICT').length() - num_val;
@@ -23,6 +24,7 @@ if length(value) == 1 & value < 1
     value = value(randperm(length(value)));
     value = find(value == 1);
 end
+nnds.set('SPLIT', value);
 %%%% ¡gui!
 pr = PlotPropSmartVector('EL', nnds, 'PROP', NNRegressorDataSplit.SPLIT, 'MAX', 10000000, 'MIN', 0, varargin{:});
 
