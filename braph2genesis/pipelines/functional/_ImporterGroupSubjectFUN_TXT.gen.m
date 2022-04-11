@@ -132,7 +132,7 @@ if isfolder(directory)
     end
     
 elseif ~braph2_testing()
-    error(BRAPH2.IM_ERR);
+    error([BRAPH2.STR ':ImporterGroupSubjectFUN_TXT: ' BRAPH2.BUG_IO]);
 end
 value = gr;
 

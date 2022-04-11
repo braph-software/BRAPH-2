@@ -64,7 +64,7 @@ if isfolder(directory_CON)
         'WAITBAR', im.get('WAITBAR') ...
         );
 elseif ~braph2_testing()
-    error(BRAPH2.IM_ERR);
+    error([BRAPH2.STR ':ImporterGroupSubjectCON_FUN_MP_TXT: ' BRAPH2.BUG_IO]);
 end
 
 % second FUN
@@ -88,7 +88,7 @@ if isfolder(directory_FUN)
         'WAITBAR', im.get('WAITBAR') ...
         );
 elseif ~braph2_testing()
-    error(BRAPH2.IM_ERR);
+    error([BRAPH2.STR ':ImporterGroupSubjectCON_FUN_MP_TXT: ' BRAPH2.BUG_IO]);
 end
 
 if exist('gr_con') && exist('gr_fun')
