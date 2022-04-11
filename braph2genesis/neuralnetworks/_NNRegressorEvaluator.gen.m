@@ -12,6 +12,11 @@ PLOT_MAP (data, logical) is an option for the plot of the feature map.
 false
 
 %%% ¡prop!
+PLOT_SCATTER (data, logical) is an option for the plot of scatter plot.
+%%%% ¡default!
+false
+
+%%% ¡prop!
 RMSE (result, scalar) is the root mean squared error between targets and predictions for validation set.
 %%%% ¡calculate!
 if nne.get('GR_PREDICTION').get('SUB_DICT').length() == 0
@@ -25,7 +30,7 @@ else
 end
 
 %%% ¡prop!
-SCATTER_PLOT (result, matrix) creates a scatter plot with circular markers at the locations specified by predictions and targets.
+SCATTER_CHART (result, matrix) creates a scatter chart with circular markers at the locations specified by predictions and targets.
 %%%% ¡calculate!
 if nne.get('GR_PREDICTION').get('SUB_DICT').length() == 0
     value = 0;
@@ -34,25 +39,26 @@ else
     preds = cell2mat(preds);
     targets = cellfun(@(x) cell2mat(x.get('TARGET')), nne.get('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
     targets = cell2mat(targets);
-    figure
-    scatter(preds, targets);
-    hold on
-    plot([min(preds) max(preds)], [min(targets) max(targets)]);
-    hold off
-    plot()
-    xlabel('Prediction')
-    ylabel('Target')
-    title('Scatter plot for regression')
-    directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
-    if ~exist(directory, 'dir')
-        mkdir(directory)
+    value = [preds' targets'];
+    if nne.get('PLOT_SCATTER')
+        figure
+        scatter(preds, targets);
+        hold on
+        plot([min(preds) max(preds)], [min(targets) max(targets), 'k']);
+        hold off
+        xlabel('Prediction')
+        ylabel('Target')
+        title('Scatter plot for regression')
+        directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
+        if ~exist(directory, 'dir')
+            mkdir(directory)
+        end
+        filename = [directory filesep 'roc.svg'];
+        saveas(gcf, filename);
     end
-    filename = [directory filesep 'roc.svg'];
-    saveas(gcf, filename);
-    value = [preds targets];
 end
 %%%% ¡gui!
-pr = PPNNRegressorEvaluator_Scatter_Plot('EL', nne, 'PROP', NNRegressorEvaluator.SCATTER_PLOT, varargin{:});
+pr = PPNNRegressorEvaluator_Scatter_Chart('EL', nne, 'PROP', NNRegressorEvaluator.SCATTER_CHART, varargin{:});
 
 %% ¡props_update!
 

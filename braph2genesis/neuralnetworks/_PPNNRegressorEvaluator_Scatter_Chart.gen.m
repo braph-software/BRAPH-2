@@ -1,14 +1,14 @@
 %% ¡header!
-PPNNRegressorEvaluator_Scatter_Plot < PlotPropMatrix (pr, plot property scatter plot) plots the scatter plot for neural network analysis.
+PPNNRegressorEvaluator_Scatter_Chart < PlotPropMatrix (pr, plot property scatter plot) plots the scatter chart for neural network analysis.
 
 %%% ¡description!
-PPNNRegressorEvaluator_Scatter_Plot plots scatter plot for neural network analysis.
+PPNNRegressorEvaluator_Scatter_Chart plots scatter plot for neural network analysis.
 
 CALLBACK - This is a callback function:
 
-    pr.<strong>cb_bring_to_front</strong>() - brings to the front the scatter plot
-    pr.<strong>cb_hide</strong>() - hides the scatter plot
-    pr.<strong>cb_close</strong>() - closes the scatter plot
+    pr.<strong>cb_bring_to_front</strong>() - brings to the front the scatter chart
+    pr.<strong>cb_hide</strong>() - hides the scatter chart
+    pr.<strong>cb_close</strong>() - closes the scatter chart
     
 %%% ¡seealso!
 GUI, PlotElement, PlotProp
@@ -18,6 +18,7 @@ p
 c_btn
 d_btn
 f_c
+table_value
 h
 %% ¡methods!
 function h_panel = draw(pr, varargin)
@@ -66,17 +67,15 @@ function h_panel = draw(pr, varargin)
         w = f_ba_w * 1.61;
         
         pr.h = figure('UNITS', 'normalized', 'POSITION', [x/screen_w y/screen_h w/screen_w h/screen_h]);
-        nn = el.get('NN');
         gr = el.get('GR_PREDICTION');
         preds = cellfun(@(x) cell2mat(x.get('PREDICTION'))', gr.get('SUB_DICT').getItems(), 'UniformOutput', false);
         preds = cell2mat(preds);
-        targets = cellfun(@(x) cell2mat(x.get('TARGET')), gr.getItems(), 'UniformOutput', false);
+        targets = cellfun(@(x) cell2mat(x.get('TARGET')), gr.get('SUB_DICT').getItems(), 'UniformOutput', false);
         targets = cell2mat(targets);
         scatter(preds, targets);
         hold on
-        plot([min(preds) max(preds)], [min(targets) max(targets)]);
+        plot([min(preds) max(preds)], [min(targets) max(targets)], 'k');
         hold off
-        plot()
         xlabel('Prediction')
         ylabel('Target')
         title('Scatter plot for regression')
@@ -93,9 +92,20 @@ function update(pr)
     % UPDATE(PR) updates the content and permissions of the pushbutton.
     %
     % See also draw, redraw, refresh, PlotElement.
-
+    
     update@PlotPropMatrix(pr)
     pr.get_buttons();
+    pr_children = get(pr.p, 'Children');
+    for i = 1:length(pr_children)
+        pp_c = pr_children(i);
+        if isequal(pp_c.Tag, 'table_value')
+            pr.table_value = pp_c;
+            set(pr.table_value, ...
+                'ColumnName', ["prediction" "target"] ...
+                )
+            break;
+        end
+    end
 end
 function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.

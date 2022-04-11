@@ -43,7 +43,7 @@ SOLVER (data, option) is an option for the solver.
 {'adam' 'sgdm' 'rmsprop'}
 
 %%% ¡prop!
-VERBOSE (data, logical) is an indicator to display trining progress information.
+VERBOSE (metadata, logical) is an indicator to display trining progress information.
 %%%% ¡default!
 false
 
