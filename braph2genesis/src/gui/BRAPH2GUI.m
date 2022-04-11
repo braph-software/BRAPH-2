@@ -3760,7 +3760,6 @@ descriptions = [];
                 in_splits = in_splits(~cellfun('isempty', in_splits));
                 token = in_splits{1};
                 comments = in_splits{2};
-                comments = comments(2:end);
                 for k = 3:length(in_splits)
                     comments = [comments newline() in_splits{k}]; %#ok<AGROW>
                 end

@@ -18,8 +18,27 @@ function cb_importer_TXT(~, ~)
         'ID', 'Import Group of SubjectConFunMps from TXT', ...
         'WAITBAR', true ...
         );
-    im.uigetdir('DIR_TYPE','DIRECTORY_CON');
-    im.uigetdir('DIR_TYPE','DIRECTORY_FUN');
+    
+    answer = questdlg('Please Upload a Connectivity Group', ...
+        'Dessert Menu', ...
+        'Ok', 'Cancel', 'Ok');
+    switch answer
+        case 'Ok'
+            im.uigetdir('DIR_TYPE','DIRECTORY_CON');
+        case 'Cancel'
+            return;
+    end
+    
+    answerfun = questdlg('Please Upload a Functional Group', ...
+        'Dessert Menu', ...
+        'Ok', 'Cancel', 'Ok');
+    switch answerfun
+        case 'Ok'
+            im.uigetdir('DIR_TYPE','DIRECTORY_FUN');
+        case 'Cancel'
+            return;
+    end
+    
     try
         if isfolder(im.get('DIRECTORY_CON')) && isfolder(im.get('DIRECTORY_FUN'))
             gr = pe.get('EL');
@@ -56,8 +75,24 @@ function cb_importer_XLS(~, ~)
         'ID', 'Import Group of SubjectConFunMps from XLS', ...
         'WAITBAR', true ...
         );
-    im.uigetdir('DIR_TYPE','DIRECTORY_CON');
-    im.uigetdir('DIR_TYPE','DIRECTORY_FUN');
+    answer = questdlg('Please Upload a Connectivity Group', ...
+        'Dessert Menu', ...
+        'Ok', 'Cancel', 'Ok');
+    switch answer
+        case 'Ok'
+            im.uigetdir('DIR_TYPE','DIRECTORY_CON');
+        case 'Cancel'
+            return;
+    end
+    answerfun = questdlg('Please Upload a Functional Group', ...
+        'Dessert Menu', ...
+        'Ok', 'Cancel', 'Ok');
+    switch answerfun
+        case 'Ok'
+            im.uigetdir('DIR_TYPE','DIRECTORY_FUN');
+        case 'Cancel'
+            return;
+    end
     try
         if isfolder(im.get('DIRECTORY_CON')) && isfolder(im.get('DIRECTORY_FUN'))
             gr = pe.get('EL');
