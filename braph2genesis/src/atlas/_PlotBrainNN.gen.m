@@ -2002,7 +2002,7 @@ function h = getMCRPanel(pl, ui_panel_graph)
 		
 		                if any(isnan(feature_map_inner)) || any(isinf(feature_map_inner))
 		                    nan_warn_f = warndlg('A value is not a finite real number.');
-		                    set_braph2_icon(nan_warn_f);
+		                    set_braph2icon(nan_warn_f);
 		                    return
 		                end
 		

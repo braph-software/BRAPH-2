@@ -4,6 +4,9 @@
 close all
 clear all %#ok<CLALL>
 
+%% Timer start
+time_start = tic;
+
 %% Identifies test directories
 braph2_dir = fileparts(which('braph2'));
 
@@ -14,11 +17,11 @@ directories_to_test = { ...
     [braph2_dir filesep 'src' filesep 'gt'] ...
     [braph2_dir filesep 'src' filesep 'cohort'] ...
     [braph2_dir filesep 'src' filesep 'analysis'] ...
+    [braph2_dir filesep 'src' filesep 'gui'] ...
     [braph2_dir filesep 'brainsurfs'] ...
     [braph2_dir filesep 'graphs'] ...
     [braph2_dir filesep 'measures'] ...
     [braph2_dir filesep 'neuralnetworks'] ...
-    [braph2_dir filesep 'src' filesep 'gui'] ...
     };
 
 pipelines_dir = [fileparts(which('braph2')) filesep 'pipelines'];
@@ -36,7 +39,7 @@ clear braph2_dir pipelines_dir pipelines_dir_list i
 %% Runs tests
 global BRAPH2_IS_TESTING
 BRAPH2_IS_TESTING = true; %#ok<NASGU>
-results = runtests(directories_to_test, 'UseParallel', false);
+results = runtests(directories_to_test, 'UseParallel', BRAPH2.TEST_PARALLEL);
 BRAPH2_IS_TESTING = false;
 clear BRAPH2_IS_TESTING
 
@@ -49,3 +52,8 @@ else
     disp('*** Something went wrong! ***')
     failed_results_table = table(results([results(:).Failed])) %#ok<NOPTS>
 end
+
+%% Timer end
+time_end = toc(time_start);
+
+disp(['The test has taken ' int2str(time_end) '.' int2str(mod(time_end, 1) * 10) 's'])

@@ -441,7 +441,7 @@ function cb_measure_calc(pr)
     % calculate
     if pr.get('WAITBAR')
         wb = waitbar(0, ['Calculating ' num2str(length(pr.selected))  ' measures ...'], 'Name', BRAPH2.NAME);
-        set_braph2_icon(wb)
+        set_braph2icon(wb)
     end
 
     for i = 1:length(pr.mlist)
@@ -494,7 +494,7 @@ function cb_graph_ui_figure(pr)
         'Position', [x/screen_w y/screen_h w/screen_w h/screen_h], ...
         'CloseRequestFcn', {@cb_f_pg_close} ...
         );
-        set_braph2_icon(pr.f_pg)
+        set_braph2icon(pr.f_pg)
         menu_about = BRAPH2.add_menu_about(pr.f_pg);
 
         el = pr.get('EL');
@@ -560,7 +560,7 @@ function cb_graph_adj_figure(pr)
             'Position', [x/screen_w y/screen_h w/screen_w h/screen_h], ...
             'CloseRequestFcn', {@cb_f_adj_close} ...
             );
-        set_braph2_icon(pr.f_adj)
+        set_braph2icon(pr.f_adj)
         menu_about = BRAPH2.add_menu_about(pr.f_adj);
         set(pr.f_adj, 'Name', [pr.get('el').getClass() ' - ' pr.get('el').get('ID')])
         el = pr.get('EL');

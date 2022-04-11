@@ -13,9 +13,10 @@
 %  <a href="matlab:help test        ">test</a>          - BRAPH2 test
 
 close all
-clear variables
 clear all %#ok<CLALL>
 clc
+
+time_start = tic;
 
 addpath(fileparts(which('braph2genesis')))
 addpath([fileparts(which('braph2genesis')) filesep 'genesis'])
@@ -30,7 +31,10 @@ end
 
 addpath(target_dir)
 
-disp('BRAPH 2.0 is now fully compiled and ready to be used')
+time_end = toc(time_start);
+
+disp('BRAPH 2.0 is now fully compiled and ready to be used.')
+disp(['Its compilation has taken ' int2str(time_end) '.' int2str(mod(time_end, 1) * 10) 's'])
 
 braph2
 

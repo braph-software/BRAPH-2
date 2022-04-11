@@ -32,7 +32,7 @@ GRS (result, cell) is a idict containing two group of subjects with connectivity
 %%%% ¡calculate!
 if se.get('WAITBAR')
     wb = waitbar(0, 'Separating subject groups ...', 'Name', BRAPH2.NAME);
-    set_braph2_icon(wb)
+    set_braph2icon(wb)
 end
 
 gr = se.get('GR_CON_FUN_MP');

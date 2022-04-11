@@ -161,7 +161,7 @@ function f_settings = settings(pr, varargin)
     % See also draw, figure, isgraphics.
 
     pr.h_settings = settings@Plot(pr, varargin{:});
-    set_braph2_icon(pr.h_settings);
+    set_braph2icon(pr.h_settings);
 
     % constants
     line_style = {'-', '--', ':', ':.', 'none'}; % TODO: move to BRAPH2
