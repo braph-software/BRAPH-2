@@ -47,21 +47,24 @@ num2cell(0.05)
 if ~iscell(value) & isnumeric(value)
     value = num2cell(value);
 end
+%%%% ¡gui!
+pr = PlotPropSmartVector('EL', nncv, 'PROP', NNClassifierCrossValidation.FEATURE_MASK, 'MAX', 10000000, 'MIN', 0, varargin{:});
+
 
 %%% ¡prop!
 PLOT_CM (data, logical) is an option for the plot of the confusion matrix.
 %%%% ¡default!
-true
+false
 
 %%% ¡prop!
 PLOT_MAP (data, logical) is an option for the plot of the heat map.
 %%%% ¡default!
-true
+false
 
 %%% ¡prop!
 PLOT_ROC (data, logical) is an option for the plot of the receiver operating characteristic curve.
 %%%% ¡default!
-true
+false
 
 %%% ¡prop!
 SPLIT_KFOLD_GR1 (result, cell) is a vector stating which subjects belong to each fold.
@@ -123,7 +126,7 @@ if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
         idx_per_fold_gr2 = nncv.get('SPLIT_KFOLD_GR2');
         for j = 1:1:nncv.get('KFOLD')
             nnds = NNClassifierDataSplit( ...
-                'ID', ['kfold ', num2str(j), ' repetition ', num2str(i)], ...
+                'ID', ['NN dataset for fold #', num2str(j), ' in repetition #', num2str(i)], ...
                 'GR1', nncv.get('GR1'), ...
                 'GR2', nncv.get('GR2'), ...
                 'SPLIT_GR1', idx_per_fold_gr1{j}, ...
@@ -131,15 +134,14 @@ if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
                 'FEATURE_MASK', nncv.get('FEATURE_MASK') ...
                 );
 
-            nnds.memorize('GR_VAL_FS');
-            nnds.memorize('GR_TRAIN_FS');
-
             nnds_dict.add(nnds)
         end
     end
 end
 
 value = nnds_dict;
+%%%% ¡gui!
+pr = PPNNCrossValidation_NNDict('EL', nncv, 'PROP', NNClassifierCrossValidation.NNDS_DICT, varargin{:});
 
 %%% ¡prop!
 NN_DICT (result, idict) contains the NN classifiers for k folds for all repetitions.
@@ -155,9 +157,9 @@ if nncv.memorize('NNDS_DICT').length() > 0
         gr_train = nnds.get('GR_TRAIN_FS');
 
         nn = NNClassifierDNN( ...
-                'ID', nnds.get('ID'), ...
+                'ID', ['NN model cooperated with ', nnds.get('ID')], ...
                 'GR', gr_train, ...
-                'VERBOSE', false, ...
+                'VERBOSE', true, ...
                 'PLOT_TRAINING', false, ...
                 'SHUFFLE', 'every-epoch' ...
                 );
@@ -167,6 +169,8 @@ if nncv.memorize('NNDS_DICT').length() > 0
 end
 
 value = nn_dict;
+%%%% ¡gui!
+pr = PPNNCrossValidation_NNDict('EL', nncv, 'PROP', NNClassifierCrossValidation.NN_DICT, varargin{:});
 
 %%% ¡prop!
 NNE_DICT (result, idict) contains the NN evaluators for k folds for all repetitions.
@@ -183,7 +187,7 @@ if nncv.memorize('NN_DICT').length() > 0
         gr_val = nnds.get('GR_VAL_FS');
 
         nne = NNClassifierEvaluator( ...
-                'ID', nn.get('ID'), ...
+                'ID', ['NN evaluator cooperated with ', nnds.get('ID')], ...
                 'GR', gr_val, ...
                 'NN', nn ...
                 );
@@ -193,6 +197,8 @@ if nncv.memorize('NN_DICT').length() > 0
 end
 
 value = nne_dict;
+%%%% ¡gui!
+pr = PPNNCrossValidation_NNDict('EL', nncv, 'PROP', NNClassifierCrossValidation.NNE_DICT, varargin{:});
 
 %%% ¡prop!
 GR_PREDICTION (result, item) is a group of NN subjects with prediction from NN.
@@ -259,6 +265,8 @@ else
 
     value = cm;
 end
+%%%% ¡gui!
+pr = PPNNClassifierCrossValidation_Confusion_Matrix('EL', nncv, 'PROP', NNClassifierCrossValidation.CONFUSION_MATRIX, varargin{:});
 
 %%% ¡prop!
 AUC (result, cell) is the area under the curve scores across k folds for all repetitions.
@@ -309,6 +317,8 @@ if nne_dict.length() > 0
 else
     value = {};
 end
+%%%% ¡gui!
+pr = PPNNClassifierCrossValidation_AUC('EL', nncv, 'PROP', NNClassifierCrossValidation.AUC, varargin{:});
 
 
 %%% ¡prop!
@@ -334,51 +344,72 @@ else
 end
 
 %%% ¡prop!
-CONTRIBUTION_MAP (result, matrix) is a heat map obtained with feature selection analysis and the AUC value.
+FEATURE_MAP (result, cell) is a heat map obtained with feature selection analysis and the AUC value.
 %%%% ¡calculate!
 nne_dict = nncv.memorize('NNE_DICT');
-heat_map = 0;
-if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('VAL_AUC'))
+heat_map = {};
+if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('AUC')) && ~any(ismember(subclasses('Measure'), nncv.get('GR1').get('SUB_DICT').getItem(1).get('INPUT_LABEL')))
+    tmp_map = nne_dict.getItem(1).get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('FEATURE_MASK');
+    for i = 1:1:length(tmp_map)
+        heat_map{i} = zeros(size(tmp_map{i}));
+    end
     for i = 1:1:nne_dict.length()
         feature_map = nne_dict.getItem(i).get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('FEATURE_MASK');
         auc_val = nne_dict.getItem(i).get('AUC');
-        feature_map(feature_map == 1) = auc_val{1};
-        heat_map = heat_map + feature_map;
+        feature_map_out = feature_map;
+        for j = 1:1:length(feature_map)
+            fm_tmp = feature_map{j};
+            fm_tmp(fm_tmp == 1) = auc_val{1};
+            feature_map_out{j} = fm_tmp;
+        end
+        heat_map = cellfun(@(x, y) x + y, heat_map, feature_map_out, 'UniformOutput', false);
     end
-    heat_map = heat_map / nne_dict.length();
+    heat_map = cellfun(@(x) x / nne_dict.length(), heat_map, 'UniformOutput', false);
     if nncv.get('PLOT_MAP')
-        figure
-        x = [1 size(heat_map, 2)];
-        y = [0 size(heat_map, 1)];
-        image(x, y, heat_map, 'CDataMapping', 'scaled')
-        if string(nne_dict.getItem(i).get('NNData').get('INPUT_TYPE')) == 'graph_measures'
-            ticklabel = nncv.get('MEASURES');
-            fontsize = 12;
-        else
-            ticklabel = 0:size(heat_map, 2);
-            fontsize = 5;
+        for i = 1:1:length(heat_map)
+            heat_map_tmp = heat_map{i};
+            figure
+            x = [1 size(heat_map_tmp, 2)];
+            y = [0 size(heat_map_tmp, 1)];
+            image(x, y, heat_map_tmp, 'CDataMapping', 'scaled')
+            %                                 br_dict = nne_dict.getItem(i).get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('BA').get('br_dict');
+            %                                 br_ids = cell(br_dict.length(), 1);
+            %                                 for i = 1:1:br_dict.length()
+            %                                     br = br_dict.getItem(i);
+            %                                     br_id = br.get(BrainRegion.ID);
+            %                                     if length(br_id) > 10
+            %                                         br_id = [br_id(1:8) '..'];
+            %                                     end
+            %                                     br_ids{i} = br_id;
+            %                                 end
+            %                                 ticklabel = br_dict
+            %                                 xticks([1:size(heat_map_tmp, 2)]);
+            %                                 yticks([1:size(heat_map_tmp, 1)]);
+            %     					    	xticklabels(ticklabel);
+            %                                 if size(heat_map_tmp, 2) > 1
+            %                                     yticklabels(ticklabel);
+            %                                 end
+            %     					        a = get(gca,'XTickLabel');
+            %     					        set(gca, 'XTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
+            %     					        a = get(gca,'YTickLabel');
+            %     					        set(gca, 'YTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
+            colorbar
+            directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
+            if ~exist(directory, 'dir')
+                mkdir(directory)
+            end
+            filename = [directory filesep 'cv_feature_map.svg'];
+            saveas(gcf, filename);
         end
-        xticks([1:size(heat_map, 2)]);
-        yticks([1:size(heat_map, 1)]);
-    	xticklabels(ticklabel);
-        yticklabels(0:size(heat_map, 1));
-        a = get(gca,'XTickLabel');
-        set(gca, 'XTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
-        a = get(gca,'YTickLabel');
-        set(gca, 'YTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
-        colorbar
-        directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
-        if ~exist(directory, 'dir')
-            mkdir(directory)
-        end
-        filename = [directory filesep 'cv_contribution_map.svg'];
-        saveas(gcf, filename);
     end
 
     value = heat_map;
 else
     value = heat_map;
 end
+%%%% ¡gui!
+pr = PPNNCrossValidation_Feature_Map('EL', nncv, 'PROP', NNClassifierCrossValidation.FEATURE_MAP, varargin{:});
+
 
 %% ¡methods!
 function [avg, CI] = get_CI(nncv, scores)

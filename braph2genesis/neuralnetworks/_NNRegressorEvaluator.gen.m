@@ -12,6 +12,11 @@ PLOT_MAP (data, logical) is an option for the plot of the feature map.
 false
 
 %%% ¡prop!
+PLOT_SCATTER (data, logical) is an option for the plot of scatter plot.
+%%%% ¡default!
+false
+
+%%% ¡prop!
 RMSE (result, scalar) is the root mean squared error between targets and predictions for validation set.
 %%%% ¡calculate!
 if nne.get('GR_PREDICTION').get('SUB_DICT').length() == 0
@@ -25,7 +30,7 @@ else
 end
 
 %%% ¡prop!
-SCATTER_PLOT (result, scalar) creates a scatter plot with circular markers at the locations specified by predictions and targets.
+SCATTER_CHART (result, matrix) creates a scatter chart with circular markers at the locations specified by predictions and targets.
 %%%% ¡calculate!
 if nne.get('GR_PREDICTION').get('SUB_DICT').length() == 0
     value = 0;
@@ -34,87 +39,26 @@ else
     preds = cell2mat(preds);
     targets = cellfun(@(x) cell2mat(x.get('TARGET')), nne.get('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
     targets = cell2mat(targets);
-    figure
-    scatter(preds, targets);
-    hold on
-    plot([min(preds) max(preds)], [min(targets) max(targets)]);
-    hold off
-    plot()
-    xlabel('Prediction')
-    ylabel('Target')
-    title('Scatter plot for regression')
-    directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
-    if ~exist(directory, 'dir')
-        mkdir(directory)
+    value = [preds' targets'];
+    if nne.get('PLOT_SCATTER')
+        figure
+        scatter(preds, targets);
+        hold on
+        plot([min(preds) max(preds)], [min(targets) max(targets), 'k']);
+        hold off
+        xlabel('Prediction')
+        ylabel('Target')
+        title('Scatter plot for regression')
+        directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
+        if ~exist(directory, 'dir')
+            mkdir(directory)
+        end
+        filename = [directory filesep 'roc.svg'];
+        saveas(gcf, filename);
     end
-    filename = [directory filesep 'roc.svg'];
-    saveas(gcf, filename);
-    value = 0;
 end
-
-
-% TODO: visulazie the feature maps for all cases
-% % % selected_idx = nne.get('NNDATA').get('FEATURE_MASK');
-% % % if length(selected_idx) == 1 && abs(selected_idx) <= 1
-% % %     selected_idx = nne.get('NNDATA').get('FEATURE_MASK_ANALYSIS');
-% % % end
-% % % if ~isempty(selected_idx)
-% % %     switch string(nne.get('NNDATA').get('INPUT_TYPE'))
-% % %         case 'graph_measures'
-% % %             feature = nne.get('NNDATA').get('MEASURES');
-% % %             fm = zeros(1, length(feature));
-% % %             x_ticklabel = feature;
-% % %             y_ticklabel = '';
-% % %             fontsize = 12;
-% % % 
-% % %         case 'adjacency_matrices'
-% % %             feature = nne.get('NNDATA').get('TRAIN_G_DICT').getItem(1).get('A');
-% % %             fm = zeros(length(feature{1}));
-% % %             x_ticklabel = 0:size(fm, 2);
-% % %             y_ticklabel = 0:size(fm, 1);
-% % %             fontsize = 5;
-% % % 
-% % %         case 'structural_data'
-% % %             data = nne.get('NNDATA').data_construction(nne.get('NNDATA').get('GR'));
-% % %             feature = data{1};
-% % %             fm = zeros(1, length(feature));
-% % %             br = nne.get('NNDATA').get('GR').get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').getItems();
-% % %             br = cellfun(@(v)v.get('ID'), br, 'UniformOutput', false);
-% % %             x_ticklabel = br;
-% % %             y_ticklabel = '';
-% % %             fontsize = 5;
-% % %         otherwise
-% % %     end
-% % % 
-% % %     fm(selected_idx) = 1;
-% % % 
-% % %     if nne.get('PLOT_MAP')
-% % %         figure
-% % %         x = [1 size(fm, 2)];
-% % %         y = [0 size(fm, 1)];
-% % %         image(x, y, fm, 'CDataMapping', 'scaled')
-% % % 
-% % %         xticks([1:size(fm, 2)]);
-% % %         yticks([1:size(fm, 1)]);
-% % %         xticklabels(x_ticklabel);
-% % %         yticklabels(y_ticklabel);
-% % %         a = get(gca,'XTickLabel');
-% % %         set(gca, 'XTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
-% % %         a = get(gca,'YTickLabel');
-% % %         set(gca, 'YTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
-% % %         colorbar
-% % %         directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
-% % %         if ~exist(directory, 'dir')
-% % %             mkdir(directory)
-% % %         end
-% % %         filename = [directory filesep 'connection_mask.svg'];
-% % %         saveas(gcf, filename);
-% % %     end
-% % % 
-% % %     value = fm;
-% % % else
-% % %     value = [];
-% % % end
+%%%% ¡gui!
+pr = PPNNRegressorEvaluator_Scatter_Chart('EL', nne, 'PROP', NNRegressorEvaluator.SCATTER_CHART, varargin{:});
 
 %% ¡props_update!
 
