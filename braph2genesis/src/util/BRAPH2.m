@@ -68,7 +68,7 @@ classdef BRAPH2
         EXT_PIPELINE = {'*.braph2'} % BRAPH2 pipeline extension
     end
     properties (Constant) % BRAPH2 testing
-        TEST_PARALLEL = true; % BRAPH2 test using parallel computing
+        TEST_PARALLEL = false; % BRAPH2 test using parallel computing
         TEST_RANDOM = false; % BRAPH2 random testing
     end
     properties (Constant) % BRAPH2 error codes
