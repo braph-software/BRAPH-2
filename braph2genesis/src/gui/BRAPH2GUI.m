@@ -34,7 +34,7 @@ f = init();
             'Color', BKGCOLOR, ...
             'SizeChangedFcn', {@update_position} ...
             );
-        set_braph2_icon(f)
+        set_braph2icon(f)
         
         if close_request
             set(f, 'CloseRequestFcn', {@cb_close})
@@ -3760,7 +3760,6 @@ descriptions = [];
                 in_splits = in_splits(~cellfun('isempty', in_splits));
                 token = in_splits{1};
                 comments = in_splits{2};
-                comments = comments(2:end);
                 for k = 3:length(in_splits)
                     comments = [comments newline() in_splits{k}]; %#ok<AGROW>
                 end
@@ -3867,10 +3866,10 @@ linkbar()
         web(url);
     end
     function cb_license(~, ~)
-        BRAPH2_LICENSE()
+        BRAPH2.license()
     end
     function cb_about(~, ~)
-        BRAPH2_ABOUT();
+        BRAPH2.credits();
     end
     function cb_load_worfklow(~, ~)
         [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, ['Select the .b2 file.']);

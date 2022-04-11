@@ -5,7 +5,9 @@ Callback < Element (cb, callback) is a callback for a property of an element.
 Sealed = true
 
 %%% ¡description!
-A callback refers to a property of another element.
+A callback refers to a property of another element, which are identified 
+by its properties EL and PROP/TAG.
+No element can be a subclass of Callback.
 
 %%% ¡seealso!
 Element
@@ -32,13 +34,24 @@ TAG (data, string) is the callback property tag.
 el = cb.get('EL');
 if ~isa(el, 'NoValue')
     prop = cb.get('PROP');
-    if isempty(cb.get('TAG')) && prop ~=0
+    if isempty(cb.get('TAG')) && prop ~= 0
         cb.set('TAG', el.getPropTag(prop));
     end
 end
 
 %% ¡methods!
 function str = tostring(cb, varargin)
+    %TOSTRING returns a string representing the callback.
+    %
+    % STRING = TOSTRING(CB) returns a string representing the callbck CB.
+    %
+    % STRING = TOSTRING(CB, N) trims the string to the first N characters.
+    %
+    % STRING = TOSTRING(CB, N, ENDING) ends the string with ENDING if it has
+    %  been trimmed.
+    %
+    % See also tostring.
+
     el = cb.get('EL');
     prop = cb.get('PROP');
     tag = cb.get('TAG');

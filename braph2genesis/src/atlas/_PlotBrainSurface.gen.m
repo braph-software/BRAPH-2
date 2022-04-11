@@ -315,7 +315,7 @@ function f_settings = settings(pl, varargin)
     % See also draw, figure, isgraphics.
 
     f = settings@Plot(pl, varargin{:});    
-    set_braph2_icon(f);
+    set_braph2icon(f);
 
     % toolbar
     set(f, 'Toolbar', 'figure')

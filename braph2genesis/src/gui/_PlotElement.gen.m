@@ -90,6 +90,20 @@ check = (length(value) == 3) && all(value >= 0 & value <= 1);
 BRAPH2.COL_R
 
 %%% ¡prop!
+FCOLOR (metadata, rvector) is background color of the figure properties.
+%%%% ¡check_prop!
+check = (length(value) == 3) && all(value >= 0 & value <= 1);
+%%%% ¡default!
+BRAPH2.COL_F
+
+%%% ¡prop!
+GCOLOR (metadata, rvector) is background color of the gui properties.
+%%%% ¡check_prop!
+check = (length(value) == 3) && all(value >= 0 & value <= 1);
+%%%% ¡default!
+BRAPH2.COL_G
+
+%%% ¡prop!
 EL (metadata, item) is the element to be plotted.
 
 %%% ¡prop!
@@ -447,7 +461,7 @@ et = ETA( ...
     'PROP_ITEMLIST_M', {ETA('PROP_STRING_M', 'ETA trial 1'), ETA('PROP_STRING_M', 'ETA trial 2'), ETA('PROP_STRING_M', 'ETA trial 3')}, ...
     'PROP_ITEMLIST_P', {ETB('ID', 'BR trial 1'), ETB('ID', 'BR trial 2'), ETB('ID', 'BR trial 3')}, ...
     'PROP_ITEMLIST_D', {}, ...
-    'PROP_IDICT_M', IndexedDictionary('IT_CLASS', 'ETA', 'IT_KEY', 32), ...
+    'PROP_IDICT_M', IndexedDictionary('IT_CLASS', 'ETA', 'IT_KEY', 34), ...
     'PROP_IDICT_P', IndexedDictionary('IT_CLASS', 'ETB', 'IT_LIST', {ETB('ID', 'BR trial A'), ETB('ID', 'BR trial B'), ETB('ID', 'BR trial C')}), ...
     'PROP_IDICT_D', IndexedDictionary(), ...
     'PROP_SCALAR_M', 1, ...

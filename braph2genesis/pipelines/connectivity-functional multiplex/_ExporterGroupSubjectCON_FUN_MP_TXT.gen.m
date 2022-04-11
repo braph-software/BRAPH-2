@@ -47,7 +47,7 @@ grs = grs_obj.get('GRS');
 if isfolder(directory_con) && length(grs) > 0
     if ex.get('WAITBAR')
         wb = waitbar(0, 'Calling first exporter path ...', 'Name', BRAPH2.NAME);
-        set_braph2_icon(wb)
+        set_braph2icon(wb)
     end
     
     ex_con = ExporterGroupSubjectCON_TXT( ...
@@ -71,7 +71,7 @@ directory_fun = ex.get('DIRECTORY_FUN');
 if isfolder(directory_fun) && length(grs) > 0
     if ex.get('WAITBAR')
         wb = waitbar(0, 'Calling second exporter path ...', 'Name', BRAPH2.NAME);
-        set_braph2_icon(wb)
+        set_braph2icon(wb)
     end
 
     ex_con = ExporterGroupSubjectFUN_TXT( ...

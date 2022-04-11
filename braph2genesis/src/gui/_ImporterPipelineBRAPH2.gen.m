@@ -31,7 +31,7 @@ end
 if isfile(file)
     if im.get('WAITBAR')
         wb = waitbar(0, 'Reading pipeline file ...', 'Name', BRAPH2.NAME);
-        set_braph2_icon(wb)
+        set_braph2icon(wb)
     end
 
     try

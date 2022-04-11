@@ -108,7 +108,7 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     c = cp.get('C');
     if c.get('WAITBAR')
         wb = waitbar(0, 'Comparing ensemble analyses ...', 'Name', BRAPH2.NAME);
-        set_braph2_icon(wb)
+        set_braph2icon(wb)
     end
 
     % Pre-calculate and save measures of all subjects

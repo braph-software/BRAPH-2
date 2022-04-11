@@ -202,7 +202,7 @@ function update(pr)
         if check
             
             set(pr.extra_text, ...
-            'String', [label ' ' num2str(round(get(pr.extra_slider, 'Value') * map_multiplier))]);
+            'String', [label ' ' num2str(round(get(pr.extra_slider, 'Value') * map_multiplier)) ': '  slider_tags{round(get(pr.extra_slider, 'Value') * map_multiplier)}]);
         
             % get the correct index
             l = round(get(pr.slider, 'Value') * map_multiplier); % layer

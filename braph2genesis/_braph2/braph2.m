@@ -9,8 +9,6 @@
 %  <a href="matlab:help pipelines   ">pipelines</a>     - pipelines
 %  <a href="matlab:help test        ">test</a>          - unit testing
 
-% format long
-
 src_dir = [fileparts(which('braph2')) filesep 'src'];
 addpath(src_dir)
 addpath([src_dir filesep 'util'])
@@ -46,12 +44,10 @@ for i = 1:1:length(pipelines_dir_list)
     addpath([pipelines_dir filesep pipelines_dir_list(i).name])
 end
 
-% % % addons = matlab.addons.installedAddons;
-% % % installed = all(ismember(["Deep Learning Toolbox"; "Deep Learning Toolbox Converter for ONNX Model Format"], addons.Name));
-% % % if ~installed
-% % %     warning('Deep Learning Toolboxs are not installed. Please refer to <a href="matlab: web(''https://se.mathworks.com/products/deep-learning.html'') ">Deep Learning Toolbox</a> and <a href="matlab: web(''https://se.mathworks.com/matlabcentral/fileexchange/67296-deep-learning-toolbox-converter-for-onnx-model-format'') ">Deep Learning Toolbox Converter for ONNX Model Format</a>');
-% % % end
+clear src_dir brainsurfs_dir graphs_dir measures_dir neuralnetworks_dir test_dir pipelines_dir pipelines_dir_list i
 
-clear src_dir brainsurfs_dir graphs_dir measures_dir test_dir pipelines_dir pipelines_dir_list i addons installed
+installed('DM', 'warning')
+installed('NN', 'warning')
+installed('ONNXCONVERTER', 'warning')
 
 % % % BRAPH2GUI()
