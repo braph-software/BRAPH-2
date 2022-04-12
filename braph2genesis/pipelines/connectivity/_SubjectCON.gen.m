@@ -9,42 +9,109 @@ Element, Subject
 
 %%% ¡gui!
 %%%% ¡menu_importer!
-calling_class = plot_element.get('El');
-if isa(calling_class, 'Group')
-    importers = {'ImporterGroupSubjectCONTXT', 'ImporterGroupSubjectCONXLS'};
-    for k = 1:length(importers)
-        imp = importers{k};
-        uimenu(ui_menu_import, ...
-            'Label', [imp ' ...'], ...
-            'Callback', {@cb_importers});
+uimenu(menu_import, ...
+    'Label', 'Import TXT ...', ...
+    'Callback', {@cb_importer_TXT});
+function cb_importer_TXT(~, ~)
+    im = ImporterGroupSubjectCON_TXT( ...
+        'ID', 'Import Group of SubjectCons from TXT', ...
+        'WAITBAR', true ...
+        );
+    im.uigetdir();
+    try
+        if isfolder(im.get('DIRECTORY'))
+            gr = pe.get('EL');
+            
+            assert( ...
+                all(cellfun(@(prop) ~gr.isLocked(prop), num2cell(gr.getProps()))), ...
+                [BRAPH2.STR ':SubjectCON:' BRAPH2.BUG_FUNC], ...
+                'To import an element, all its properties must be unlocked.' ...
+                )
+            
+            gr_new = im.get('GR');
+            for prop = 1:1:gr.getPropNumber()
+                if gr.getPropCategory(prop) ~= Category.RESULT
+                    gr.set(prop, gr_new.get(prop))
+                end
+            end
+            
+            pe.reinit(gr_new);
+        end
+    catch e
+        warndlg(['Please, select a valid input Group of SubjectCONs in TXT format. ' newline() ...
+            newline() ...
+            'Error message:' newline() ...
+            newline() ...
+            e.message newline()], 'Warning');
     end
 end
-function cb_importers(src, ~)
-    src_name = erase(src.Text, ' ...');
-    imp_el = eval([src_name '()']);          
-    imp_el.uigetdir();
-    tmp_el = imp_el.get('GR');
-    plot_element.set('El', tmp_el); 
-    plot_element.reinit();
+
+uimenu(menu_import, ...
+    'Label', 'Import XLS ...', ...
+    'Callback', {@cb_importer_XLS});
+function cb_importer_XLS(~, ~)
+    im = ImporterGroupSubjectCON_XLS( ...
+        'ID', 'Import Group of SubjectCons from XLS', ...
+        'WAITBAR', true ...
+        );
+    im.uigetdir();
+    try
+        if isfolder(im.get('DIRECTORY'))
+            gr = pe.get('EL');
+            
+            assert( ...
+                all(cellfun(@(prop) ~gr.isLocked(prop), num2cell(gr.getProps()))), ...
+                [BRAPH2.STR ':SubjectCON:' BRAPH2.BUG_FUNC], ...
+                'To import an element, all its properties must be unlocked.' ...
+                )
+            
+            gr_new = im.get('GR');
+            for prop = 1:1:gr.getPropNumber()
+                if gr.getPropCategory(prop) ~= Category.RESULT
+                    gr.set(prop, gr_new.get(prop))
+                end
+            end
+            
+            pe.reinit(gr_new);
+        end
+    catch e
+        warndlg(['Please, select a valid input Group of SubjectCONs in XLS format. ' newline() ...
+            newline() ...
+            'Error message:' newline() ...
+            newline() ...
+            e.message newline()], 'Warning');
+    end
 end
 
 %%%% ¡menu_exporter!
-calling_class = plot_element.get('El');
-if isa(calling_class, 'Group')
-    exporters = {'ExporterGroupSubjectCONTXT', 'ExporterGroupSubjectCONXLS'};
-    for k = 1:length(exporters)
-        exp = exporters{k};
-        uimenu(ui_menu_export, ...
-            'Label', [exp ' ...'], ...
-            'Callback', {@cb_exporters});
+uimenu(menu_export, ...
+    'Label', 'Export TXT ...', ...
+    'Callback', {@cb_exporter_TXT});
+function cb_exporter_TXT(~, ~)
+    ex = ExporterGroupSubjectCON_TXT( ...
+        'ID', 'Export Brain Group of SubjectCons to TXT', ...
+        'GR', el.copy(), ...
+        'WAITBAR', true ...
+        );
+    ex.uigetdir()
+    if ~strcmp(ex.get('DIRECTORY'), ExporterGroupSubjectCON_TXT.getPropDefault('DIRECTORY'))
+        ex.get('SAVE');
     end
 end
-function cb_exporters(src, ~)
-    src_name = erase(src.Text, ' ...');
-    tmp_el = plot_element.get('EL'); %#ok<NASGU>
-    exmp_el = eval([src_name '(' '''GR''' ', tmp_el)']); % el is a group passed from Group
-    exmp_el.uigetdir();
-    exmp_el.get('SAVE');
+
+uimenu(menu_export, ...
+    'Label', 'Export XLS ...', ...
+    'Callback', {@cb_exporter_XLS});
+function cb_exporter_XLS(~, ~)
+    ex = ExporterGroupSubjectCON_XLS( ...
+        'ID', 'Export Brain Group of SubjectCons to XLS', ...
+        'GR', el.copy(), ...
+        'WAITBAR', true ...
+        );
+    ex.uigetdir()
+    if ~strcmp(ex.get('DIRECTORY'), ExporterGroupSubjectCON_XLS.getPropDefault('DIRECTORY'))
+        ex.get('SAVE');
+    end
 end
 
 %% ¡props!
@@ -67,7 +134,7 @@ else
     msg = ['CON must be a square matrix with the dimensiton equal to the number of brain regions (' int2str(br_number) ').'];
 end
 %%%% ¡gui!
-pl = PPSubjectData('EL', sub, 'PROP', SubjectCON.CON, varargin{:});
+pr = PPSubjectCON_CON('EL', sub, 'PROP', SubjectCON.CON, varargin{:});
  
 %%% ¡prop!
 age (data, scalar) is a scalar number containing the age of the subject.
@@ -87,12 +154,13 @@ sex (data, option) is an option containing the sex of the subject (female/male).
 %%%% ¡name!
 GUI
 %%%% ¡code!
-im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('example_CON_WU')) filesep 'example data CON (DTI)' filesep 'desikan_atlas.xlsx']);
+im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectCON')) filesep 'example data CON (DTI)' filesep 'desikan_atlas.xlsx']);
 ba = im_ba.get('BA');
-im_gr1 = ImporterGroupSubjectCONXLS( ...
-    'DIRECTORY', [fileparts(which('example_CON_WU')) filesep 'example data CON (DTI)' filesep 'xls' filesep 'GroupName1'], ...
+im_gr = ImporterGroupSubjectCON_XLS( ...
+    'DIRECTORY', [fileparts(which('SubjectCON')) filesep 'example data CON (DTI)' filesep 'xls' filesep 'GroupName1'], ...
     'BA', ba ...
     );
-gr1 = im_gr1.get('GR');
-GUI(gr1, 'CloseRequest', false)
+gr = im_gr.get('GR');
+GUI('PE', gr, 'CLOSEREQ', false).draw()
+
 close(gcf)

@@ -19,6 +19,8 @@ LABEL (metadata, string) is an extended label of the graph analysis.
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the graph analysis.
+%%%% ¡gui!
+pr = PlotPropString('EL', a, 'PROP', AnalyzeEnsemble.NOTES, 'LINES', 'multi', 'EDITHEIGHT', 4.5, varargin{:});
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class.
@@ -26,7 +28,7 @@ GR (data, item) is the subject group, which also defines the subject class.
 'Group'
 
 %%% ¡prop!
-G_DICT (result, idict) is the graph enemble obtained from this analysis.
+G_DICT (result, idict) is the graph ensemble obtained from this analysis.
 %%%% ¡settings!
 'Graph'
 %%%% ¡calculate!
@@ -38,8 +40,6 @@ ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
 'MeasureEnsemble'
 %%%% ¡calculate!
 value = IndexedDictionary('IT_CLASS', 'MeasureEnsemble', 'IT_KEY', 4);
-%%%% ¡gui!
-pl = PPAnalyzeEnsembleMeasure('EL', a, 'PROP', AnalyzeEnsemble.ME_DICT, varargin{:});
 
 %% ¡methods!
 function me = getMeasureEnsemble(a, measure_class, varargin)
@@ -50,6 +50,15 @@ function me = getMeasureEnsemble(a, measure_class, varargin)
     %  with properties defined by the graph settings. The user must call
     %  getValue() for the new measure M to retrieve the value of measure M.
 
+    g = a.get('G_DICT').getItem(1);  % works if all graphs are the same
+    m_list = Graph.getCompatibleMeasureList(g);
+    
+    assert( ...
+        contains(measure_class, m_list), ...
+        [BRAPH2.STR ':' a.getClass() ':' BRAPH2.WRONG_INPUT], ...
+        [BRAPH2.STR ':' a.getClass() ':' BRAPH2.WRONG_INPUT ' '], ...
+        [a.getClass() ' utilizes Graphs of type ' g.getClass() '.' measure_class ' is not a compatible Measure with ' g.getClass() '. Please use Graph function getCompatibleMeasureList for more information.']);
+    
     me_dict = a.memorize('ME_DICT');
     if me_dict.containsKey(measure_class)
         me = me_dict.getItem(measure_class);
@@ -58,8 +67,19 @@ function me = getMeasureEnsemble(a, measure_class, varargin)
             'ID', measure_class, ...
             'A', a, ...
             'MEASURE', measure_class, ...
+            'MEASUREPARAM', eval([measure_class '()']), ...
             varargin{:} ...
             );
         me_dict.add(me);
     end
+end
+function pr = getPPCompareEnsemble_CPDict(a, varargin)
+    %GETPPCOMPAREENSEMBLE_CPDICT returns the comparison ensemble plot panel compatible with the analysis.
+    %
+    % PR = GEPPPCOMPAREGROUP_CPDICT(A) returns the comparison ensemble plot panel
+    %  that is compatible with the analyze ensemble.
+    %
+    % See also CompareEnsemble.
+
+    pr = PropPlotIDict(varargin{:});
 end

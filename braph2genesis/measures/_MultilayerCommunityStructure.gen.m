@@ -25,6 +25,7 @@ MultiplexBUT
 MultiplexBD
 MultiplexWU
 MultiplexWD
+OrderedMultiplexWU
 
 %% ¡props!
 %%% ¡prop! 
@@ -113,19 +114,18 @@ end
 if isempty(OM)
     directionality_type =  g.getDirectionalityType(g.layernumber());
     directionality_firstlayer = directionality_type(1, 1);
+    A = cell(L, 1);
+    for i=1:L
+        A_hold = g.get('A');
+        A(i) = {A_hold{i, i}};
+    end
     if g.is_multiplex(g) || g.is_multilayer(g)
-        A = cell(L, 1);
-        for i=1:L
-            A_hold = g.get('A');
-            A(i) = {A_hold{i, i}};
-        end
         if directionality_firstlayer == Graph.UNDIRECTED  % undirected
             [OM, twom] = m.multicat_undirected(A, gamma, omega, N(1), L);
         else  % directed
             [OM, twom] = m.multicat_directed(A, gamma, omega, N(1), L);
         end
     elseif g.is_ordered_multiplex(g) || g.is_ordered_multilayer(g)
-        A = g.get('A'); % 2D-cell array
         if directionality_firstlayer == Graph.UNDIRECTED  % undirected
             [OM, twom] = m.multiord_undirected(A, gamma, omega, N(1), L);
         else  % directed

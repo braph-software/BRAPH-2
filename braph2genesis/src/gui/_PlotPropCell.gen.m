@@ -1,196 +1,193 @@
 %% ¡header!
-PlotPropCell < PlotProp (pl, plot property cell) is a plot of a property cell.
+PlotPropCell < PlotProp (pr, plot property cell) is a plot of a cell property.
 
 %%% ¡description!
-PlotProp plots a property cell of an element in a panel.
+PlotPropCell plots a CELL property of an element in a table.
+It works for all categories.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp
 
 %% ¡properties!
-pp
+p
 table_value_cell
 
 %% ¡methods!
-function h_panel = draw(pl, varargin)
-    %DRAW draws the cell property graphical panel.
+function h_panel = draw(pr, varargin)
+    %DRAW draws the panel of the cell property.
     %
-    % DRAW(PL) draws the cell property graphical panel.
+    % DRAW(PR) draws the panel of the cell property.
     %
-    % H = DRAW(PL) returns a handle to the cell property graphical panel.
+    % H = DRAW(PR) returns a handle to the property panel.
     %
-    % DRAW(PL, 'Property', VALUE, ...) sets the properties of the graphical
-    %  panel with custom property-value couples.
+    % DRAW(PR, 'Property', VALUE, ...) sets the properties of the graphical
+    %  panel with custom Name-Value pairs.
     %  All standard plot properties of uipanel can be used.
     %
     % It is possible to access the properties of the various graphical
-    %  objects from the handle to the brain surface graphical panel H.
+    %  objects from the handle H of the panel.
     %
-    % see also update, redraw, refresh, settings, uipanel, isgraphics.
-
-%     el = pl.get('EL');
-%     prop = pl.get('PROP');
+    % See also update, redraw, refresh, uipanel.
     
-    pl.pp = draw@PlotProp(pl, varargin{:});
+    pr.p = draw@PlotProp(pr, varargin{:});
     
-%     if isempty(pl.table_value) || ~isgraphics(pl.table_value, 'uitable')
-%         pl.table_value = uitable( ...
-%             'Parent', pl.pp, ...
-%             'Units', 'normalized', ...
-%             'Position', [.01 .05 .98 .80], ...
-%             'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-%             'CellEditCallback', {@cb_matrix_value} ...
-%             );
-%     end
-% 
-%     % callback
-%     function cb_matrix_value(src, event)
-%         value = el.get(prop);
-%         value(event.Indices(1), event.Indices(2)) = event.NewData;
-%         el.set(prop, value)
-%    
-%         pl.update()
-%     end
-
     % output
     if nargout > 0
-        h_panel = pl.pp;
+        h_panel = pr.p;
     end
 end
-function update(pl)
-    %UPDATE updates the content of the property graphical panel.
+function update(pr)
+    %UPDATE updates the content and permission of the table.
     %
-    % UPDATE(PL) updates the content of the property graphical panel.
+    % UPDATE(PR) updates the content and permission of the table.
     %
-    % See also draw, redraw, refresh.
+    % See also draw, redraw, refresh, PlotElement.
 
-    update@PlotProp(pl)
+    update@PlotProp(pr)
     
-    el = pl.get('EL');
-    prop = pl.get('PROP');
+    el = pr.get('EL');
+    prop = pr.get('PROP');
     
     value = el.getr(prop);
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')        
-        
+        % don't plot anything for a result not yet calculated
     else
         value_cell = el.get(prop);
-        if isempty(pl.table_value_cell)
-            pl.table_value_cell = cell(size(value_cell));
+        if isempty(pr.table_value_cell) || ~isequal(size(pr.table_value_cell), size(value_cell))
+            pr.table_value_cell = cell(size(value_cell));
         end
-        for i = 1:1:size(pl.table_value_cell, 1)
-            for j = 1:1:size(pl.table_value_cell, 2)
-                if isempty(pl.table_value_cell{i, j}) || ~isgraphics(pl.table_value_cell{i, j}, 'uitable')
-                    pl.table_value_cell{i, j} = uitable('Parent', pl.pp);
+        for r = 1:1:size(pr.table_value_cell, 1)
+            for c = 1:1:size(pr.table_value_cell, 2)
+                if ~check_graphics(pr.table_value_cell{r, c}, 'uitable')
+                    pr.table_value_cell{r, c} = uitable('Parent', pr.p);
                 end
-                set(pl.table_value_cell{i, j}, ...
-                    'Data', value_cell{i, j}, ...
-                    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+                set(pr.table_value_cell{r, c}, ...
+                    'Data', value_cell{r, c}, ...
+                    'Tooltip', [num2str(r) ' ' num2str(c)], ...
                     'FontUnits', BRAPH2.FONTUNITS, ...
                     'FontSize', BRAPH2.FONTSIZE, ...
-                    'CellEditCallback', {@cb_matrix_value, i, j} ...
+                    'ColumnEditable', true, ...
+                    'CellEditCallback', {@cb_table_value_cell, r, c} ...
                     )
             end
         end
         
     end
 
-    % callback
-    function cb_matrix_value(src, event, i, j)
-        el = pl.get('EL');
-        value = el.get(prop);
-        value_ij = value{i, j};
-        value_ij(event.Indices(1), event.Indices(2)) = event.NewData;
-        value{i, j} = value_ij;
-        el.set(prop, value)
-   
-        pl.update()
+    function cb_table_value_cell(~, event, r, c) % (src, event)
+        pr.cb_table_value_cell(r, c, event.Indices(1), event.Indices(2), event.NewData)
     end
-    
-%     if el.isLocked(prop)
-%         set(pl.table_value, ...
-%             'Enable', pl.get('ENABLE'), ...
-%             'ColumnEditable', false ...
-%             )
-%     end
-% 
-%     switch el.getPropCategory(prop)
-%         case Category.METADATA
-%             set(pl.table_value, ...
-%                 'Data', el.get(prop), ...
-%                 'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-%                 'ColumnEditable', true)
-% 
-%         case {Category.PARAMETER, Category.DATA}
-%             set(pl.table_value, ...
-%                 'Data', el.get(prop), ...
-%                 'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-%                 'ColumnEditable', true)
-% 
-%             value = el.getr(prop);
-%             if isa(value, 'Callback')
-%                 set(pl.table_value, ...
-%                 'Enable', pl.get('ENABLE'), ...
-%                 'ColumnEditable', false ...
-%                 )
-%             end
-% 
-%         case Category.RESULT
-%             value = el.getr(prop);
-% 
-%             if isa(value, 'NoValue')
-%                 set(pl.table_value, ...
-%                     'Data', el.getPropDefault(prop), ...
-%                     'ColumnFormat', repmat({'long'}, 1, size(el.getPropDefault(prop), 2)), ...
-%                     'Enable', pl.get('ENABLE'), ...
-%                     'ColumnEditable', false ...
-%                     )
-%             else
-%                 set(pl.table_value, ...
-%                     'Data', el.get(prop), ...
-%                     'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-%                     'Enable', pl.get('ENABLE'), ...
-%                     'ColumnEditable', false ...
-%                     )
-%             end
-%     end
 end
-function redraw(pl, varargin)
-    %REDRAW redraws the element graphical panel.
+function redraw(pr, varargin)
+    %REDRAW resizes the property panel and repositions its graphical objects.
     %
-    % REDRAW(PL) redraws the plot PL.
+    % REDRAW(PR) resizes the property panel and repositions its
+    %   graphical objects. 
+    % 
+    % Important notes:
+    % 1. REDRAW() sets the units 'characters' for panel and all its graphical objects. 
+    % 2. REDRAW() is typically called internally by PlotElement and does not need 
+    %  to be explicitly called in children of PlotProp.
     %
-    % REDRAW(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=3.3).
+    % REDRAW(PR, 'X0', X0, 'Y0', Y0, 'Width', WIDTH)
+    %  repositions the property panel. It is possible to use a
+    %  subset of the Name-Value pairs.
+    %  By default:
+    %  - X0 does not change
+    %  - Y0 does not change
+    %  - WIDTH does not change
+    %  - HEIGHT=1.8 minimum height when no cell to show
+    %  - DHEIGHT=20 additional height when data to show
     %
-    % See also draw, update, refresh.
+    % See also draw, update, refresh, PlotElement.
     
-    el = pl.get('EL');
-    prop = pl.get('PROP');
+    [h, varargin] = get_and_remove_from_varargin(1.8, 'Height', varargin);
+    [Dh, varargin] = get_and_remove_from_varargin(20, 'DHeight', varargin);
+    
+    el = pr.get('EL');
+    prop = pr.get('PROP');
 
     value = el.getr(prop);
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
-        pl.redraw@PlotProp('Height', 1.8, varargin{:})
+        pr.redraw@PlotProp('Height', h, varargin{:})
     else
         value_cell = el.get(prop);
 
         if isempty(value_cell)
-            pl.redraw@PlotProp('Height', 1.8, varargin{:})
+            pr.redraw@PlotProp('Height', h, varargin{:})
         else
-            pl.redraw@PlotProp('Height', 21.8, varargin{:})
+            pr.redraw@PlotProp('Height', h + Dh, varargin{:})
         end
         
-        for i = 1:1:size(value_cell, 1)
-            for j = 1:1:size(value_cell, 2)
-                set(pl.table_value_cell{i, j}, ...
-                    'Units', 'character', ...
+        for r = 1:1:size(value_cell, 1)
+            for c = 1:1:size(value_cell, 2)
+                table_w = (.98 - .01) / size(value_cell, 2);
+                table_h = (Dh / (h + Dh) - .02) / size(value_cell, 1);
+                set(pr.table_value_cell{r, c}, ...
+                    'Units', 'normalized', ...
                     'Position', ...
                         [ ...
-                            (0.01 + (i - 1) * 0.98 / size(pl.table_value_cell, 1)) * Plot.w(pl.pp) ...
-                            (0.01 + (j - 1) * 0.98 / size(pl.table_value_cell, 2)) * (Plot.h(pl.pp) - 1.8) ...
-                            0.98 / size(pl.table_value_cell, 1) * Plot.w(pl.pp) ...
-                            0.98 / size(pl.table_value_cell, 2) * (Plot.h(pl.pp) - 1.8) ...
+                            .01 + (c - 1) * table_w ...
+                            .02 + (size(value_cell, 1) - r) * table_h ...
+                            table_w ...
+                            table_h ...
                         ] ...
                     )
             end
         end
     end    
 end
+function cb_table_value_cell(pr, r, c, i, j, newdata)
+    %CB_TABLE_VALUE_CELL executes callback for the cell tables.
+    %
+    % CB_TABLE_VALUE_CELL(PR, R, C, I, J, NEWDATA) executes callback for the cell tables.
+    %  It updates the value at position (I,J) of the matrix (R,C) with NEWDATA. 
+
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    
+    value = el.get(prop);
+    value_rc = value{r, c};
+    value_rc(i, j) = newdata;
+    value{r, c} = value_rc;
+    el.set(prop, value)
+
+    pr.update()
+end
+
+%% ¡tests!
+
+%%% ¡test!
+%%%% ¡name!
+Example
+%%%% ¡code!
+% draws PlotPropCell and calls update() and redraw()
+% note that it doesn't work for category RESULT 
+% because it needs to be used with PlotElement() and GUI()
+figure('Units', 'normalized', 'Position', [0 .5 1 .5])
+et = ETA( ...
+    'PROP_CELL_M', {rand(10) eye(10); eye(10) rand(10)}, ...
+    'PROP_CELL_P', {3.14 eye(2) rand(3)}, ...
+    'PROP_CELL_D', rand(3) ... % note that this works only because of the conditioning (otherwise not a valid cell input)
+    );
+props = [et.PROP_CELL_M et.PROP_CELL_P et.PROP_CELL_D et.PROP_CELL_R et.PROP_CELL_R_CALC];
+for i = 1:1:length(props)
+    pr{i} = PlotPropCell('EL', et, 'PROP', props(i));
+    pr{i}.draw('BackgroundColor', [i/length(props) .5 (length(props)-i)/length(props)])
+    pr{i}.update()
+    pr{i}.redraw('X0', (i-1)/length(props) * Plot.w(gcf, 'characters'), ...
+        'Width', 1/length(props) * Plot.w(gcf, 'characters'), ...
+        'DHeight', 25)
+end
+close(gcf)
+
+% minimal working version for category RESULT
+figure()
+p = uipanel('Parent', gcf); % needed for the function refresh that is called when the result is calculated
+set(gcf, 'SizeChangedFcn', 'pr_res.update(); pr_res.redraw();') % callback to update panel when figure is resized (in refresh)
+et = ETA();
+pr_res = PlotPropCell('EL', et, 'PROP', et.PROP_CELL_R_CALC);
+pr_res.draw('Parent', p, 'BackgroundColor', [.8 .5 .2])
+pr_res.update()
+pr_res.redraw()
+close(gcf)

@@ -26,7 +26,9 @@ negativity = Graph.NONNEGATIVE * ones(layernumber);
 %% ¡props!
 
 %%% ¡prop!
-THRESHOLDS (data, rvector) is the vector of thresholds.
+THRESHOLDS (parameter, rvector) is the vector of thresholds.
+%%%% ¡gui!
+pr = PlotPropSmartVector('EL', g, 'PROP', MultiplexBUT.THRESHOLDS, 'MAX', 1, 'MIN', 0, varargin{:});
 
 %%% ¡prop!
 NODELABELS (metadata, STRING) is the node labels.

@@ -26,7 +26,9 @@ negativity = Graph.NONNEGATIVE * ones(layernumber);
 %% ¡props!
 
 %%% ¡prop!
-DENSITIES (data, rvector) is the vector of densities.
+DENSITIES (parameter, rvector) is the vector of densities.
+%%%% ¡gui!
+pr = PlotPropSmartVector('EL', g, 'PROP', MultigraphBUD.DENSITIES, 'MAX', 100, 'MIN', 0, varargin{:});
 
 %% ¡props_update!
 

@@ -15,24 +15,21 @@ CORRELATION_RULE (parameter, option) is the correlation type.
 %%%% ¡settings!
 Correlation.CORRELATION_RULE_LIST
 %%%% ¡default!
-Correlation.CORRELATION_RULE_LIST{1}
+Correlation.PEARSON
 
 %%% ¡prop!
 NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
 %%%% ¡settings!
 Correlation.NEGATIVE_WEIGHT_RULE_LIST
 %%%% ¡default!
-Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
-
-%%% ¡prop!
-USE_COVARIATES (parameter, logical) determines the use of covariates in the analysis.
-%%%% ¡default!
-false
+Correlation.ZERO
 
 %%% ¡prop!
 THRESHOLDS (parameter, rvector) is the vector of thresholds.
 %%%% ¡default!
 0
+%%%% ¡gui!
+pr = PlotPropSmartVector('EL', a, 'PROP', AnalyzeGroup_ST_MP_BUT.THRESHOLDS, 'MAX', 1, 'MIN', 0, varargin{:});
 
 %% ¡props_update!
 
@@ -55,7 +52,7 @@ if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
     atlas = gr.get('SUB_DICT').getItem(1).get('BA');
 end
 
-if a.get('USE_COVARIATES')
+if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
     age_list = cellfun(@(x) x.get('age'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
     age = cat(2, age_list{:})';
     sex_list = cellfun(@(x) x.get('sex'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
@@ -90,7 +87,7 @@ else
     
     A = cell(1, L);
     for i = 1:L
-        if a.get('USE_COVARIATES')
+        if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
             A(i) = {Correlation.getAdjacencyMatrix(data{i}, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'), covariates)};
         else
             A(i) = {Correlation.getAdjacencyMatrix(data{i}, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'))};
@@ -108,7 +105,19 @@ g = MultiplexBUT( ...
 
 value = g;
 %%%% ¡gui!
-pl = PPAnalyzeGroupGraph('EL', a, 'PROP', AnalyzeGroup_ST_MP_BUT.G, varargin{:});
+pr = PPAnalyzeGroupMP_G('EL', a, 'PROP', AnalyzeGroup_ST_MP_BUT.G, 'WAITBAR', true, varargin{:});
+
+%% ¡methods!
+function pr = getPPCompareGroup_CPDict(a, varargin) 
+    %GEPPPCOMPAREGROUP_CPDICT returns the comparison plot panel compatible with the analysis.
+    %
+    % PR = GEPPPCOMPAREGROUP_CPDICT(A) returns the comparison plot panel
+    %  that is compatible with the analyze group.
+    %
+    % See also CompareGroup.
+    
+    pr = PPCompareGroup_CPDict_ST_MP_BUT(varargin{:});
+end
 
 %% ¡tests!
 

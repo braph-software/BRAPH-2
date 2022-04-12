@@ -11,6 +11,18 @@ Element
 %% ¡props!
 
 %%% ¡prop!
+ID (data, string) is a few-letter code for the group combiner.
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the group combiner.
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the group combiner.
+
+%%% ¡prop!
+WAITBAR (metadata, logical) detemines whether to show the waitbar.
+
+%%% ¡prop!
 GR1 (data, item) is a group of subjects with connectivity data.
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectCON')
@@ -29,6 +41,11 @@ check = any(strcmp(value.get(Group.SUB_CLASS_TAG), subclasses('SubjectCON_FUN_MP
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectCON_FUN_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON_FUN_MP'))
 %%%% ¡calculate!
+if co.get('WAITBAR')
+    wb = waitbar(0, 'Combining subject groups ...', 'Name', BRAPH2.NAME);
+    set_braph2icon(wb)
+end
+
 % creates empty Group
 gr = Group( ...
     'SUB_CLASS', 'SubjectCON_FUN_MP', ...
@@ -43,7 +60,7 @@ group2 = co.get('GR2');
 assert(isequal(group1.get('SUB_DICT').length(), group2.get('SUB_DICT').length()), ...
     [BRAPH2.STR ':CombineGroups_CON_FUN:' BRAPH2.BUG_ERR], ...
     ['The 2 groups to be combined need to have the same number of subjects while ', ...
-    'group 1 has ' tostring(group1.get('SUB_DICT').length()) 'subjects and group 2 has ' tostring(group2.get('SUB_DICT').length())])
+    'group 1 has ' tostring(group1.get('SUB_DICT').length()) ' subjects and group 2 has ' tostring(group2.get('SUB_DICT').length()) ' subjects.'])
 
 % sets group props
 gr.set( ...
@@ -57,6 +74,10 @@ subdict_gr1 = group1.get('SUB_DICT');
 subdict_gr2 = group2.get('SUB_DICT');
 
 for i = 1:1:group1.get('SUB_DICT').length()
+    if co.get('WAITBAR')
+        waitbar(.30 + .70 * i / group1.get('SUB_DICT').length(), wb, ['Combining subject ' num2str(i) ' of ' num2str(group1.get('SUB_DICT').length()) ' ...'])
+    end
+
     sub1 = subdict_gr1.getItem(i);
     sub2 = subdict_gr2.getItem(i);
     CON_FUN_MP = cell(2, 1);
@@ -77,3 +98,7 @@ end
 gr.set('sub_dict', subdict);
 
 value = gr;
+
+if co.get('WAITBAR')
+    close(wb)
+end

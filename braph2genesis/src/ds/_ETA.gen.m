@@ -17,7 +17,7 @@ PROP_EMPTY_M (metadata, empty) is a metadata, empty.
 %%% ¡prop!
 PROP_STRING_M (metadata, string) is a metadata, string.
 %%%% ¡gui!
-pl = PlotPropString('EL', et, 'PROP', ETA.PROP_STRING_M, varargin{:});
+pr = PlotPropString('EL', et, 'PROP', ETA.PROP_STRING_M, varargin{:});
 
 %%% ¡prop!
 PROP_LOGICAL_M (metadata, logical) is a metadata, logical.
@@ -69,6 +69,9 @@ PROP_SMATRIX_M (metadata, smatrix) is a metadata, smatrix.
 
 %%% ¡prop!
 PROP_CELL_M (metadata, cell) is a metadata, cell.
+
+%%% ¡prop!
+PROP_NET_M (metadata, net) is a metadata, net.
 
 %%% ¡prop!
 PROP_EMPTY_P (parameter, empty) is a parameter, empty.
@@ -140,6 +143,9 @@ PROP_SMATRIX_P (parameter, smatrix) is a parameter, smatrix.
 PROP_CELL_P (parameter, cell) is a parameter, cell.
 
 %%% ¡prop!
+PROP_NET_P (parameter, net) is a parameter, net.
+
+%%% ¡prop!
 PROP_EMPTY_D (data, empty) is a data, empty.
 
 %%% ¡prop!
@@ -189,6 +195,129 @@ if isnumeric(value)
 end
 
 %%% ¡prop!
+PROP_NET_D (data, net) is a data, net.
+
+%%% ¡prop!
+PROP_EMPTY_F (figure, empty) is a figure, empty.
+
+%%% ¡prop!
+PROP_STRING_F (figure, string) is a figure, string.
+
+%%% ¡prop!
+PROP_LOGICAL_F (figure, logical) is a figure, logical.
+
+%%% ¡prop!
+PROP_OPTION_F (figure, option) is a figure, option.
+%%%% ¡settings!
+{'one' 'two' 'three'}
+
+%%% ¡prop!
+PROP_CLASS_F (figure, class) is a figure, class.
+%%%% ¡settings!
+'ETA'
+
+%%% ¡prop!
+PROP_CLASSLIST_F (figure, classlist) is a figure, classlist.
+%%%% ¡settings!
+'ETA'
+
+%%% ¡prop!
+PROP_ITEM_F (figure, item) is a figure, item.
+%%%% ¡settings!
+'ETA'
+
+%%% ¡prop!
+PROP_ITEMLIST_F (figure, itemlist) is a figure, itemlist.
+%%%% ¡settings!
+'ETA'
+
+%%% ¡prop!
+PROP_IDICT_F (figure, idict) is a figure, idict.
+%%%% ¡settings!
+'ETA'
+
+%%% ¡prop!
+PROP_SCALAR_F (figure, scalar) is a figure, scalar.
+
+%%% ¡prop!
+PROP_RVECTOR_F (figure, rvector) is a figure, rvector.
+
+%%% ¡prop!
+PROP_CVECTOR_F (figure, cvector) is a figure, cvector.
+
+%%% ¡prop!
+PROP_MATRIX_F (figure, matrix) is a figure, matrix.
+
+%%% ¡prop!
+PROP_SMATRIX_F (figure, smatrix) is a figure, smatrix.
+
+%%% ¡prop!
+PROP_CELL_F (figure, cell) is a figure, cell.
+
+%%% ¡prop!
+PROP_NET_F (figure, net) is a figure, net.
+
+%%% ¡prop!
+PROP_EMPTY_G (gui, empty) is a gui, empty.
+
+%%% ¡prop!
+PROP_STRING_G (gui, string) is a gui, string.
+
+%%% ¡prop!
+PROP_LOGICAL_G (gui, logical) is a gui, logical.
+
+%%% ¡prop!
+PROP_OPTION_G (gui, option) is a gui, option.
+%%%% ¡settings!
+{'one' 'two' 'three'}
+
+%%% ¡prop!
+PROP_CLASS_G (gui, class) is a gui, class.
+%%%% ¡settings!
+'ETA'
+
+%%% ¡prop!
+PROP_CLASSLIST_G (gui, classlist) is a gui, classlist.
+%%%% ¡settings!
+'ETA'
+
+%%% ¡prop!
+PROP_ITEM_G (gui, item) is a gui, item.
+%%%% ¡settings!
+'ETA'
+
+%%% ¡prop!
+PROP_ITEMLIST_G (gui, itemlist) is a gui, itemlist.
+%%%% ¡settings!
+'ETA'
+
+%%% ¡prop!
+PROP_IDICT_G (gui, idict) is a gui, idict.
+%%%% ¡settings!
+'ETA'
+
+%%% ¡prop!
+PROP_SCALAR_G (gui, scalar) is a gui, scalar.
+
+%%% ¡prop!
+PROP_RVECTOR_G (gui, rvector) is a gui, rvector.
+
+%%% ¡prop!
+PROP_CVECTOR_G (gui, cvector) is a gui, cvector.
+
+%%% ¡prop!
+PROP_MATRIX_G (gui, matrix) is a gui, matrix.
+
+%%% ¡prop!
+PROP_SMATRIX_G (gui, smatrix) is a gui, smatrix.
+
+%%% ¡prop!
+PROP_CELL_G (gui, cell) is a gui, cell.
+
+%%% ¡prop!
+PROP_NET_G (gui, net) is a gui, net.
+
+%%% ¡prop!
 PROP_EMPTY_R (result, empty) is a result, empty.
 
 %%% ¡prop!
@@ -232,6 +361,9 @@ PROP_SMATRIX_R (result, smatrix) is a result, smatrix.
 
 %%% ¡prop!
 PROP_CELL_R (result, cell) is a result, cell.
+
+%%% ¡prop!
+PROP_NET_R (result, net) is a result, net.
 
 %%% ¡prop!
 PROP_EMPTY_R_CALC (result, empty) is a result, empty.
@@ -293,8 +425,11 @@ PROP_SMATRIX_R_CALC (result, smatrix) is a result, smatrix.
 
 %%% ¡prop!
 PROP_CELL_R_CALC (result, cell) is a result, cell.
-%%%% ¡conditioning!
-value = NoValue.getNoValue();
+%%%% ¡calculate!
+value = cellfun(@(x) rand(x), {1 2 3; 4 5 6}, 'UniformOutput', false);
+
+%%% ¡prop!
+PROP_NET_R_CALC (result, net) is a result, net.
 
 %% ¡tests!
 
@@ -387,8 +522,6 @@ Cell & conditioning
 assert_with_error('et = ETA(''PROP_SCALAR_P'', rand(5))', ...
     [BRAPH2.STR ':ETA:' BRAPH2.WRONG_INPUT])
 et = ETA('PROP_CELL_D', rand(5));
-
-et = ETA('PROP_CELL_R_CALC', 'whatever, will not produce a warning because of the conditioning');
 
 %%% ¡test!
 %%%% ¡name!

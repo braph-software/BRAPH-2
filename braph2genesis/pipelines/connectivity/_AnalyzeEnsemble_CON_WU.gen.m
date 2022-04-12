@@ -14,6 +14,11 @@ GR (data, item) is the subject group, which also defines the subject class Subje
 Group('SUB_CLASS', 'SubjectCON')
 
 %%% ¡prop!
+ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
+%%%% ¡gui!
+pr = PPAnalyzeEnsemble_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_CON_WU.ME_DICT, 'WAITBAR', true, varargin{:});
+
+%%% ¡prop!
 G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analysis.
 %%%% ¡settings!
 'GraphWU'
@@ -38,8 +43,17 @@ for i = 1:1:gr.get('SUB_DICT').length()
 end
 
 value = g_dict;
-%%%% ¡gui!
-pl = PPAnalyzeEnsembleGraph('EL', a, 'PROP', AnalyzeEnsemble_CON_WU.G_DICT, varargin{:});
+%% ¡methods!
+function pr = getPPCompareEnsemble_CPDict(a, varargin) 
+    %GETPPCOMPAREENSEMBLE_CPDICT returns the comparison ensemble plot panel compatible with the analysis.
+    %
+    % PR = GETPPCOMPAREENSEMBLE_CPDICT(A) returns the comparison ensemble plot panel
+    %  that is compatible with the analyze ensemble.
+    %
+    % See also CompareEnsemble.
+    
+    pr = PPCompareEnsemble_CPDict_WU(varargin{:});
+end
 
 %% ¡tests!
 

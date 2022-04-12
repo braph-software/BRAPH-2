@@ -9,48 +9,117 @@ For example, structural data can be structural MRI.
 Element, Subject
 
 %%% ¡gui!
+
 %%%% ¡menu_importer!
-calling_class = plot_element.get('El');
-if isa(calling_class, 'Group')
-    importers = {'ImporterGroupSubjectSTTXT', 'ImporterGroupSubjectSTXLS'};
-    for k = 1:length(importers)
-        imp = importers{k};
-        uimenu(ui_menu_import, ...
-            'Label', [imp ' ...'], ...
-            'Callback', {@cb_importers});
+uimenu(menu_import, ...
+    'Label', 'Import TXT ...', ...
+    'Callback', {@cb_importer_TXT});
+function cb_importer_TXT(~, ~)
+    im = ImporterGroupSubjectST_TXT( ...
+        'ID', 'Import Group of SubjectSts from TXT', ...
+        'WAITBAR', true ...
+        );
+    im.uigetfile();
+    try
+        if isfile(im.get('FILE'))
+            % pe.set('EL', im.get('GR')); 
+            % pe.reinit();
+            
+            gr = pe.get('EL');
+            
+            assert( ...
+                all(cellfun(@(prop) ~gr.isLocked(prop), num2cell(gr.getProps()))), ...
+                [BRAPH2.STR ':SubjectST:' BRAPH2.BUG_FUNC], ...
+                'To import an element, all its properties must be unlocked.' ...
+                )
+            
+            gr_new = im.get('GR');
+            for prop = 1:1:gr.getPropNumber()
+                if gr.getPropCategory(prop) ~= Category.RESULT
+                    gr.set(prop, gr_new.get(prop))
+                end
+            end
+            
+            pe.reinit(gr_new);
+        end
+    catch e
+        warndlg(['Please, select a valid input Group of SubjectSts in TXT format. ' newline() ...
+            newline() ...
+            'Error message:' newline() ...
+            newline() ...
+            e.message newline()], 'Warning');
     end
 end
 
-function cb_importers(src, ~)
-    src_name = erase(src.Text, ' ...');
-    imp_el = eval([src_name '()']);          
-    imp_el.uigetfile();
+uimenu(menu_import, ...
+    'Label', 'Import XLS ...', ...
+    'Callback', {@cb_importer_XLS});
+function cb_importer_XLS(~, ~)
+    im = ImporterGroupSubjectST_XLS( ...
+        'ID', 'Import Group of SubjectSts from XLS', ...
+        'WAITBAR', true ...
+        );
+    im.uigetfile();
     try
-        tmp_el = imp_el.get('GR');
-        plot_element.set('El', tmp_el);
-        plot_element.reinit();
+        if isfile(im.get('FILE'))
+            % pe.set('EL', im.get('GR')); 
+            % pe.reinit();
+            
+            gr = pe.get('EL');
+            
+            assert( ...
+                all(cellfun(@(prop) ~gr.isLocked(prop), num2cell(gr.getProps()))), ...
+                [BRAPH2.STR ':SubjectST:' BRAPH2.BUG_FUNC], ...
+                'To import an element, all its properties must be unlocked.' ...
+                )
+            
+            gr_new = im.get('GR');
+            for prop = 1:1:gr.getPropNumber()
+                if gr.getPropCategory(prop) ~= Category.RESULT
+                    gr.set(prop, gr_new.get(prop))
+                end
+            end
+            
+            pe.reinit(gr_new);            
+        end
     catch e
-        warndlg(['Please select a valid input. ' e.message], 'Warning');
-    end    
+        warndlg(['Please, select a valid input Group of SubjectSTs in XLS format. ' newline() ...
+            newline() ...
+            'Error message:' newline() ...
+            newline() ...
+            e.message newline()], 'Warning');
+    end
 end
 
 %%%% ¡menu_exporter!
-calling_class = plot_element.get('El');
-if isa(calling_class, 'Group')
-    exporters = {'ExporterGroupSubjectSTTXT', 'ExporterGroupSubjectSTXLS'};
-    for k = 1:length(exporters)
-        exp = exporters{k};
-        uimenu(ui_menu_export, ...
-            'Label', [exp ' ...'], ...
-            'Callback', {@cb_exporters});
+uimenu(menu_export, ...
+    'Label', 'Export TXT ...', ...
+    'Callback', {@cb_exporter_TXT});
+function cb_exporter_TXT(~, ~)
+    ex = ExporterGroupSubjectST_TXT( ...
+        'ID', 'Export Brain Group of SubjectSTs to TXT', ...
+        'GR', el.copy(), ...
+        'WAITBAR', true ...
+        );
+    ex.uiputfile()
+    if ~strcmp(ex.get('FILE'), ExporterGroupSubjectST_TXT.getPropDefault('FILE'))
+        ex.get('SAVE');
     end
 end
-function cb_exporters(src, ~)
-    src_name = erase(src.Text, ' ...');
-    tmp_el = plot_element.get('EL'); %#ok<NASGU>
-    exmp_el = eval([src_name '(' '''GR''' ', tmp_el)']); % el is a group passed from Group   
-    exmp_el.uiputfile();
-    exmp_el.get('SAVE');
+
+uimenu(menu_export, ...
+    'Label', 'Export XLS ...', ...
+    'Callback', {@cb_exporter_XLS});
+function cb_exporter_XLS(~, ~)
+    ex = ExporterGroupSubjectST_XLS( ...
+        'ID', 'Export Brain Group of SubjectSTs to XLS', ...
+        'GR', el.copy(), ...
+        'WAITBAR', true ...
+        );
+    ex.uiputfile()
+    if ~strcmp(ex.get('FILE'), ExporterGroupSubjectST_XLS.getPropDefault('FILE'))
+        ex.get('SAVE');
+    end
 end
 
 %% ¡props!
@@ -71,7 +140,7 @@ else
     msg = ['ST must be a column vector with the same number of element as the brain regions (' int2str(br_number) ').'];
 end
 %%%% ¡gui!
-pl = PPSubjectData('EL', sub, 'PROP', SubjectST.ST, varargin{:});
+pr = PPSubjectST_ST('EL', sub, 'PROP', SubjectST.ST, varargin{:});
 
 %%% ¡prop!
 age (data, scalar) is a scalar number containing the age of the subject.
@@ -91,12 +160,13 @@ sex (data, option) is an option containing the sex of the subject (female/male).
 %%%% ¡name!
 GUI
 %%%% ¡code!
-im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('example_ST_WU')) filesep 'example data ST (MRI)' filesep 'desikan_atlas.xlsx']);
+im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectST')) filesep 'example data ST (MRI)' filesep 'desikan_atlas.xlsx']);
 ba = im_ba.get('BA');
-im_gr1 = ImporterGroupSubjectSTXLS( ...
-    'FILE', [fileparts(which('example_ST_WU')) filesep 'example data ST (MRI)' filesep 'xls' filesep 'ST_group1.xlsx'], ...
+im_gr = ImporterGroupSubjectST_XLS( ...
+    'FILE', [fileparts(which('SubjectST')) filesep 'example data ST (MRI)' filesep 'xls' filesep 'ST_group1.xlsx'], ...
     'BA', ba ...
     );
-gr1 = im_gr1.get('GR');
-GUI(gr1, 'CloseRequest', false)
+gr = im_gr.get('GR');
+GUI('PE', gr, 'CLOSEREQ', false).draw()
+
 close(gcf)

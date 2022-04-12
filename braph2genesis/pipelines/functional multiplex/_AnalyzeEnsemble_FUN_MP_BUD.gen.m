@@ -40,6 +40,9 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 DENSITIES (parameter, rvector) is the vector of densities.
 %%%% ¡default!
 0
+%%%% ¡gui!
+pr = PlotPropSmartVector('EL', a, 'PROP', AnalyzeEnsemble_FUN_MP_BUD.DENSITIES, 'MAX', 100, 'MIN', 0, varargin{:});
+
 
 %% ¡props_update!
 
@@ -47,6 +50,11 @@ DENSITIES (parameter, rvector) is the vector of densities.
 GR (data, item) is the subject group, which also defines the subject class SubjectFUN_MP.
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectFUN_MP')
+
+%%% ¡prop!
+ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
+%%%% ¡gui!
+pr = PPAnalyzeEnsembleMP_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_FUN_MP_BUD.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %%% ¡prop!
 G_DICT (result, idict) is the graph (MultiplexBUD) ensemble obtained from this analysis.
@@ -98,9 +106,18 @@ for i = 1:1:gr.get('SUB_DICT').length()
 end
 
 value = g_dict;
-%%%% ¡gui!
-pl = PPAnalyzeEnsembleGraph('EL', a, 'PROP', AnalyzeEnsemble_FUN_MP_BUD.G_DICT, varargin{:});
 
+%% ¡methods!
+function pr = getPPCompareEnsemble_CPDict(a, varargin) 
+    %GETPPCOMPAREENSEMBLE_CPDICT returns the comparison ensemble plot panel compatible with the analysis.
+    %
+    % PR = GETPPCOMPAREENSEMBLE_CPDICT(A) returns the comparison ensemble plot panel
+    %  that is compatible with the analyze ensemble.
+    %
+    % See also CompareEnsemble.
+    
+    pr = PPCompareEnsembleMP_FUN_CPDict_BUD(varargin{:});
+end
 %% ¡tests!
 
 %%% ¡test!

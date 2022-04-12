@@ -1,70 +1,72 @@
 %% ¡header!
-PlotPropItemList < PlotProp (pl, plot property item list) is a plot of a property item list.
+PlotPropItemList < PlotProp (pr, plot property item list) is a plot of an item-list property.
 
 %%% ¡description!
-PlotProp plots a property item list of an element in a panel.
+PlotPropItemList plots a ITEMLIST property of an element using a series of pushbuttons to open the elements.
+It works for all categories.
 
 %%% ¡seealso!
 GUI, PlotElement, PlotProp
 
 %% ¡properties!
-pp
+p
 pushbutton_value_list
 
 %% ¡methods!
-function h_panel = draw(pl, varargin)
-    %DRAW draws the item list property graphical panel.
+function h_panel = draw(pr, varargin)
+    %DRAW draws the panel of the item-list property.
     %
-    % DRAW(PL) draws the item list property graphical panel.
+    % DRAW(PR) draws the panel of the item-list property.
     %
-    % H = DRAW(PL) returns a handle to the item list property graphical panel.
+    % H = DRAW(PR) returns a handle to the property panel.
     %
-    % DRAW(PL, 'Property', VALUE, ...) sets the properties of the graphical
-    %  panel with custom property-value couples.
+    % DRAW(PR, 'Property', VALUE, ...) sets the properties of the graphical
+    %  panel with custom Name-Value pairs.
     %  All standard plot properties of uipanel can be used.
     %
     % It is possible to access the properties of the various graphical
-    %  objects from the handle to the brain surface graphical panel H.
+    %  objects from the handle H of the panel.
     %
-    % see also update, redraw, refresh, settings, uipanel, isgraphics.
-
-    pl.pp = draw@PlotProp(pl, varargin{:});
+    % See also update, redraw, refresh, uipanel.
+    
+    pr.p = draw@PlotProp(pr, varargin{:});
 
     % output
     if nargout > 0
-        h_panel = pl.pp;
+        h_panel = pr.p;
     end
 end
-function update(pl)
-    %UPDATE updates the content of the property graphical panel.
+function update(pr)
+    %UPDATE updates the content and permissions of the pushbutton series.
     %
-    % UPDATE(PL) updates the content of the property graphical panel.
+    % UPDATE(PR) updates the content and permissions of the pushbutton series.
     %
-    % See also draw, redraw, refresh.
+    % See also draw, redraw, refresh, PlotElement.
 
-    update@PlotProp(pl)
+    update@PlotProp(pr)
 
-    el = pl.get('EL');
-    prop = pl.get('PROP');
+    el = pr.get('EL');
+    prop = pr.get('PROP');
         
     value = el.getr(prop);
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
         %
     else
         item_list = el.get(prop);
-        if isempty(pl.pushbutton_value_list)
-            pl.pushbutton_value_list = cell(1, length(item_list));
+        if isempty(pr.pushbutton_value_list)
+            pr.pushbutton_value_list = cell(1, length(item_list));
         end
         for i = 1:1:length(item_list)
-            if isempty(pl.pushbutton_value_list{i}) || ~isgraphics(pl.pushbutton_value_list{i}, 'pushbutton')
-                pl.pushbutton_value_list{i} = uicontrol( ...
+            if ~check_graphics(pr.pushbutton_value_list{i}, 'pushbutton')
+                pr.pushbutton_value_list{i} = uicontrol( ...
                     'Style', 'pushbutton', ...
-                    'Parent', pl.pp, ...
+                    'Tag', ['pushbutton_value ' int2str(i)], ...
+                    'Parent', pr.p, ...
                     'FontUnits', BRAPH2.FONTUNITS, ...
                     'FontSize', BRAPH2.FONTSIZE ...
                     );
             end
-            set(pl.pushbutton_value_list{i}, ...
+            set(pr.pushbutton_value_list{i}, ...
                 'String', item_list{i}.tostring(), ...
                 'Tooltip', regexprep(item_list{i}.tree(), {'<strong>', '</strong>'}, {'' ''}), ...
                 'Callback', {@cb_pushbutton_value, item_list{i}} ...
@@ -72,45 +74,90 @@ function update(pl)
         end
     end
     
-    % callback
     function cb_pushbutton_value(~, ~, item)
-        pl.update()
+        pr.update()
         
-        GUI(item)
+        % TODO: check once GUI is finalized
+        GUI('EL', item)
     end
 
 end
-function redraw(pl, varargin)
-    %REDRAW redraws the element graphical panel.
+function redraw(pr, varargin)
+    %REDRAW resizes the property panel and repositions its graphical objects.
     %
-    % REDRAW(PL) redraws the plot PL.
+    % REDRAW(PR) resizes the property panel and repositions its
+    %   graphical objects. 
+    % 
+    % Important notes:
+    % 1. REDRAW() sets the units 'characters' for panel and all its graphical objects. 
+    % 2. REDRAW() is typically called internally by PlotElement and does not need 
+    %  to be explicitly called in children of PlotProp.
     %
-    % REDRAW(PL, 'Height', HEIGHT) sets the height of PL (by default HEIGHT=3.3).
+    % REDRAW(PR, 'X0', X0, 'Y0', Y0, 'Width', WIDTH)
+    %  repositions the property panel. It is possible to use a
+    %  subset of the Name-Value pairs.
+    %  By default:
+    %  - X0 does not change
+    %  - Y0 does not change
+    %  - WIDTH does not change
+    %  
+    % HEIGHT is automatically set by this function and should not be used (it'll be overwritten).
     %
-    % See also draw, update, refresh.
+    % See also draw, update, refresh, PlotElement.
     
-    el = pl.get('EL');
-    prop = pl.get('PROP');
+    el = pr.get('EL');
+    prop = pr.get('PROP');
 
     value = el.getr(prop);
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
-        pl.redraw@PlotProp('Height', 1.8, varargin{:})
+        pr.redraw@PlotProp('Height', 1.8, varargin{:})
     else
         item_list = el.get(prop);
         
-        pl.redraw@PlotProp('Height', 1.8 + 1.5 * length(item_list), varargin{:})
+        pr.redraw@PlotProp('Height', 1.8 + 1.5 * length(item_list), varargin{:})
         
         for i = 1:1:length(item_list)
-            set(pl.pushbutton_value_list{i}, ...
+            set(pr.pushbutton_value_list{i}, ...
                 'Units', 'character', ...
                 'Position', ...
                     [ ...
-                        0.01*Plot.w(pl.pp) ...
+                        .01*Plot.w(pr.p) ...
                         1.5*(length(item_list)-i)+.3 ...
-                        0.98*Plot.w(pl.pp) ...
+                        .98*Plot.w(pr.p) ...
                         1.2 ...
                     ] ...
                 )
         end
     end
 end
+
+%% ¡tests!
+
+%%% ¡test!
+%%%% ¡name!
+Example
+%%%% ¡code!
+% draws PlotPropItemList and calls update() and redraw()
+% note that it doesn't work for category RESULT 
+% because it needs to be used with PlotElement() and GUI()
+figure()
+et = ETA();
+props = [et.PROP_ITEMLIST_M et.PROP_ITEMLIST_P et.PROP_ITEMLIST_D et.PROP_ITEMLIST_R et.PROP_ITEMLIST_R_CALC];
+for i = 1:1:length(props)
+    pr{i} = PlotPropItemList('EL', et, 'PROP', props(i));
+    pr{i}.draw('BackgroundColor', [i/length(props) .5 (length(props)-i)/length(props)])
+    pr{i}.update()
+    pr{i}.redraw('Y0', (length(props) - i)/length(props) * Plot.h(gcf, 'characters'))
+end
+close(gcf)
+
+% minimal working version for category RESULT
+figure()
+p = uipanel('Parent', gcf); % needed for the function refresh that is called when the result is calculated
+set(gcf, 'SizeChangedFcn', 'pr_res.update()') % callback to update panel when figure is resized (in refresh)
+et = ETA();
+pr_res = PlotPropItemList('EL', et, 'PROP', et.PROP_ITEMLIST_R_CALC);
+pr_res.draw('Parent', p, 'BackgroundColor', [.8 .5 .2])
+pr_res.update()
+pr_res.redraw()
+close(gcf)    

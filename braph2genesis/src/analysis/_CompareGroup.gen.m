@@ -18,14 +18,21 @@ LABEL (metadata, string) is an extended label of the comparison.
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the comparison.
+%%%% ¡gui!
+pr = PlotPropString('EL', c, 'PROP', CompareGroup.NOTES, 'LINES', 'multi', 'EDITHEIGHT', 4.5, varargin{:});
+
+%%% ¡prop!
+WAITBAR (metadata, logical) detemines whether to show the waitbar.
 
 %%% ¡prop!
 VERBOSE (metadata, logical) sets whether to write the progress of the comparisons.
+%%%% ¡default!
+false
 
 %%% ¡prop!
 INTERRUPTIBLE (metadata, scalar) sets whether the comparison computation is interruptible for multitasking.
 %%%% ¡default!
-0.001
+.001
 
 %%% ¡prop!
 MEMORIZE (metadata, logical) sets whether to memorize the permuted analysis.
@@ -80,16 +87,19 @@ CP_DICT (result, idict) contains the results of the comparison.
 %%%% ¡calculate!
 value = IndexedDictionary('IT_CLASS', 'ComparisonGroup', 'IT_KEY', 4);
 %%%% ¡gui!
-pl = PPCompareGroupCP('EL', c, 'PROP', CompareGroup.CP_DICT, varargin{:});
+a1 = c.get('A1');
+pr = a1.getPPCompareGroup_CPDict('EL', c, 'PROP', CompareGroup.CP_DICT, 'WAITBAR', true, varargin{:});
 
 %% ¡methods!
 function cp = getComparison(c, measure_class, varargin)
-    %GETComparisonE returns comparison.
+    %GETCOMPARISON returns comparison.
     %
-    % CP = GETMEASURE(G, MEASURE_CLASS) checks if the measure exists in the
-    % property MDICT. If not it creates a new measure M of class MEASURE_CLASS
-    % with properties defined by the graph settings. The user must call
-    % getValue() for the new measure M to retrieve the value of measure M.
+    % CP = GETMEASURE(G, MEASURE_CLASS) checks if the comparison exists in the
+    %  comparison dictionary CP_DICT. If not, it creates a new comparison
+    %  CP of class MEASURE_CLASS. The user must call getValue() for the new
+    %  comparison CP to retrieve the value of the comparison. 
+    %
+    % See also ComparisonGroup.
 
     cp_dict = c.memorize('CP_DICT');
     if cp_dict.containsKey(measure_class)

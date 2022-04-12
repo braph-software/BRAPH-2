@@ -5,19 +5,30 @@ classdef Category < handle
     %
     % The possible categories are:
     %
-    %  METADATA     Metadata NOT used in the calculation of the results
-    %               (does not allow callbacks).
+    %  METADATA     Metadata NOT used in the calculation of the results.
+    %                Does not allow callbacks.
+    %                Not cloned.
     %
-    %  PARAMETER    Parameter used to calculate the results of the element
-    %               (allow incoming and outgoing callbacks, cloned).
+    %  PARAMETER    Parameter used to calculate the results of the element.
+    %                Allows incoming and outgoing callbacks.
+    %                Cloned.
     %
     %  DATA         Data used to calculate the results of the element 
-    %               (can be NoResult when not set, allow incoming and outgoing
-    %               callbacks, not cloned).
+    %                Can be NoValue when not set.
+    %                Allows incoming and outgoing callbacks.
+    %                Not cloned.
     %
-    %  RESULT       Result calculated by the element using parameters and data
-    %               (can be NoResult when not calculated, allows incoming
-    %               callbacks).
+    %  RESULT       Result calculated by the element using parameters and data.
+    %                Can be NoValue when not calculated. 
+    %                Allows incoming callbacks.
+    %
+    %  FIGURE       Parameter used to plot the results in a figure.
+    %                Allows incoming and outgoing callbacks.
+    %                Not cloned.
+    %               
+    %  GUI          Parameter used by the graphical user interface (GUI).
+    %                Allows incoming and outgoing callbacks.
+    %                Not cloned.
     %
     % Category properties (Constant):
     %
@@ -37,6 +48,14 @@ classdef Category < handle
     %  RESULT_NAME = 'result'
     %  RESULT_DESCRIPTION
     %
+    %  FIGURE = 'f'
+    %  FIGURE_NAME = 'figure'
+    %  FIGURE_DESCRIPTION
+    %
+    %  GUI = 'g'
+    %  GUI_NAME = 'gui'
+    %  GUI_DESCRIPTION
+    %
     % Category methods (Static):
     %  getCategories - returns the list of categories
     %  getCategoryNumber - returns the number of categories
@@ -49,19 +68,27 @@ classdef Category < handle
     properties (Constant)
         METADATA = 'm'
         METADATA_NAME = 'metadata'
-        METADATA_DESCRIPTION = 'Metadata NOT used in the calculation of the results (does not allow callbacks).'
+        METADATA_DESCRIPTION = 'Metadata NOT used in the calculation of the results (does not allow callbacks, not cloned).'
         
         PARAMETER = 'p'
         PARAMETER_NAME = 'parameter'
-        PARAMETER_DESCRIPTION = 'Parameter used to calculate the results of the element (allow incoming and outgoing callbacks, cloned).'
+        PARAMETER_DESCRIPTION = 'Parameter used to calculate the results of the element (allows incoming and outgoing callbacks, cloned).'
         
         DATA = 'd'
         DATA_NAME = 'data'
-        DATA_DESCRIPTION = 'Data used to calculate the results of the element (can be NoResult when not set, allow incoming and outgoing callbacks, not cloned).'
+        DATA_DESCRIPTION = 'Data used to calculate the results of the element (can be NoResult when not set, allows incoming and outgoing callbacks, not cloned).'
 
         RESULT = 'r'
         RESULT_NAME = 'result'
         RESULT_DESCRIPTION = 'Result calculated by the element using parameters and data (can be NoResult when not calculated, allows incoming callbacks).'
+
+        FIGURE = 'f'
+        FIGURE_NAME = 'figure'
+        FIGURE_DESCRIPTION = 'Parameter used to plot the results in a figure (allows incoming and outgoing callbacks, not cloned).'
+
+        GUI = 'g'
+        GUI_NAME = 'gui'
+        GUI_DESCRIPTION = 'Parameter used by the graphical user interface (allows incoming and outgoing callbacks, not cloned).'
     end
     methods (Static)
         function categories = getCategories()
@@ -76,16 +103,18 @@ classdef Category < handle
                 Category.PARAMETER
                 Category.DATA
                 Category.RESULT
+                Category.FIGURE
+                Category.GUI
                 };
         end
         function category_number = getCategoryNumber()
             %GETCATEGORYNUMBER returns the number of categories.
             %
-            % N = GETCATEGORYNUMBER() returns the number of categories (4).
+            % N = GETCATEGORYNUMBER() returns the number of categories (6).
             %
             % See also getCategories, existsCategory.
             
-            category_number = numel(Category.getCategories());
+            category_number = 6; % numel(Category.getCategories());
         end
         function check = existsCategory(category)
             %EXISTSCATEGORY returns whether a category exists/error.
@@ -131,6 +160,10 @@ classdef Category < handle
                     category_name = Category.DATA_NAME;
                 case Category.RESULT
                     category_name = Category.RESULT_NAME;
+                case Category.FIGURE
+                    category_name = Category.FIGURE_NAME;
+                case Category.GUI
+                    category_name = Category.GUI_NAME;
                 otherwise
                     Category.existsCategory(category) % error because category does not exist
             end
@@ -155,6 +188,10 @@ classdef Category < handle
                     category_description = Category.DATA_DESCRIPTION;                    
                 case Category.RESULT
                     category_description = Category.RESULT_DESCRIPTION;                    
+                case Category.FIGURE
+                    category_description = Category.FIGURE_DESCRIPTION;                    
+                case Category.GUI
+                    category_description = Category.GUI_DESCRIPTION;                    
                 otherwise
                     Category.existsCategory(category) % error because category does not exist
             end

@@ -44,13 +44,20 @@ function create_Element(generator_file, target_dir)
 %  Lis of compatible graphs with the measure.
 %
 % <strong>%%% ¡gui!</strong>
-%  GUI code to represent the panel of the element. 
-%  Can be on multiple lines.
-%  Should return a Plot object in 'pl'
-%  <strong>%%% ¡menu_import!</strong>
-%   Menu Import for the GUI figure. The menus is ui_menu_import.
-%  <strong>%%% ¡menu_export!</strong>
-%   Menu Export for the GUI figure. The menus is ui_menu_export.
+%  <strong>%%%% ¡panel!</strong>
+%   GUI code to represent the panel of the element. 
+%   Can be on multiple lines.
+%   Should return a Plot object in 'pe'
+%  <strong>%%%% ¡menu_import!</strong>
+%   Menu Import for the GUI figure. 
+%   The element is el.
+%   The menu is menu_import.
+%   The plot element is pe.
+%  <strong>%%%% ¡menu_export!</strong>
+%   Menu Export for the GUI figure. 
+%   The element is el.
+%   The menu is menu_export.
+%   The plot element is pe.
 % 
 %<strong>%% ¡props!</strong>
 % <strong>%%% ¡prop!</strong>
@@ -64,7 +71,8 @@ function create_Element(generator_file, target_dir)
 %   where also the modified prop value is returned.
 %   The conditioned value should be in variable 'value'.
 %  <strong>%%%% ¡postprocessing!</strong>
-%   Postprocessign code (executed after setting, but before checking, value).
+%   Postprocessing code (executed after setting, but before checking,
+%   value), executed on all unlocked props after each set operation.
 %   Can be on multiple lines.
 %   Does not return anything.
 %  <strong>%%%% ¡check_prop!</strong>
@@ -83,10 +91,10 @@ function create_Element(generator_file, target_dir)
 %   Code to calculate prop results (only for category RESULT).
 %   Can be on multiple lines.
 %   The result should be in variable 'value'.
-%  <strong>%%% ¡gui!</strong>
+%  <strong>%%%% ¡gui!</strong>
 %   GUI code for representing the panel of the prop.
 %   Can be on multiple lines.
-%   Should return a Plot object in 'pl'.
+%   Should return a PlotProp object in 'pr'.
 % <strong>%%% ¡prop!</strong>
 %   <tag2> ...
 % 
@@ -146,8 +154,8 @@ txt = fileread(generator_file);
 disp('¡! generator file read')
 
 %% Analysis
-[class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui, gui_menu_import, gui_menu_export] = analyze_header();
-    function [class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui, gui_import, gui_export] = analyze_header()
+[class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui_panel, gui_menu_import, gui_menu_export] = analyze_header();
+    function [class_name, superclass_name, moniker, descriptive_name, header_description, class_attributes, description, seealso, gui_panel, gui_menu_import, gui_menu_export] = analyze_header()
         header = getToken(txt, 'header');
         res = regexp(header, '^\s*(?<class_name>\w*)\s*<\s*(?<superclass_name>\w*)\s*\(\s*(?<moniker>\w*)\s*,\s*(?<descriptive_name>[^)]*)\)\s*(?<header_description>[^.]*)\.', 'names');
         class_name = res.class_name;
@@ -162,10 +170,10 @@ disp('¡! generator file read')
         
         seealso = getToken(txt, 'header', 'seealso');        
 
-        gui = splitlines(getToken(txt, 'header', 'gui'));
+        gui_panel = splitlines(getToken(txt, 'header', 'gui', 'panel'));
         
-        gui_import = splitlines(getToken(txt, 'header', 'gui', 'menu_importer'));        
-        gui_export = splitlines(getToken(txt, 'header', 'gui', 'menu_exporter'));
+        gui_menu_import = splitlines(getToken(txt, 'header', 'gui', 'menu_importer'));        
+        gui_menu_export = splitlines(getToken(txt, 'header', 'gui', 'menu_exporter'));
     end
 
 [graph, connectivity, directionality, selfconnectivity, negativity] = analyze_header_graph(); % only for graphs
@@ -284,7 +292,7 @@ generate_header()
         gs(1, {
              '%'
             ['% ' class_name ' methods (constructor):']
-            ['%  ' class_name ' - constructor']
+            ['% ' class_name ' - constructor']
             })
         if element_class_created
             gs(1, {'%', ['% ' class_name ' methods (Static):']})
@@ -383,6 +391,7 @@ generate_header()
              '%  getPropDescription - returns the description of a property'
              '%  getPropSettings - returns the settings of a property'
              '%  getPropDefault - returns the default value of a property'
+             '%  getPropDefaultConditioned - returns the conditione default value of a property'
              '%  checkProp - checks whether a value has the correct format/error'
              '%'
             ['% ' class_name ' methods (category, Static):']
@@ -403,7 +412,7 @@ generate_header()
              '%  checkFormat - returns whether a value format is correct/error'
              '%'
             ['% ' class_name ' methods (GUI):']
-             '%  getGUI - returns figure with element GUI'
+             '%  getGUI - returns the element GUI'
              '%  getPlotElement - returns the element plot'
              '%  getPlotProp - returns a prop plot'
              '%'
@@ -625,6 +634,28 @@ generate_inspection()
                                 end
                             end
                             g(6, '];')
+                    g(4, 'case Category.FIGURE')
+                        g(5, 'prop_list = [')
+                            if ~strcmp(superclass_name, 'Element')
+                                g(6, [superclass_name '.getProps(Category.FIGURE)'])
+                            end
+                            for i = 1:1:numel(props)
+                                if strcmp(props{i}.CATEGORY, 'FIGURE')
+                                    g(6, [class_name '.' props{i}.TAG])
+                                end
+                            end
+                            g(6, '];')
+                    g(4, 'case Category.GUI')
+                        g(5, 'prop_list = [')
+                            if ~strcmp(superclass_name, 'Element')
+                                g(6, [superclass_name '.getProps(Category.GUI)'])
+                            end
+                            for i = 1:1:numel(props)
+                                if strcmp(props{i}.CATEGORY, 'GUI')
+                                    g(6, [class_name '.' props{i}.TAG])
+                                end
+                            end
+                            g(6, '];')
                     g(4, 'otherwise')
                         g(5, 'prop_list = [')
                             if ~strcmp(superclass_name, 'Element')
@@ -703,7 +734,7 @@ generate_inspection()
                             [class_name '.existsProp(prop), ...']
                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.WRONG_INPUT], ...']
                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.WRONG_INPUT '' '' ...']
-                            ['''The value '' tostring(prop, 100, '' ...'') '' is not a valid prop for ' class_name '''] ...']
+                            ['''The value '' tostring(prop, 100, '' ...'') '' is not a valid prop for ' class_name '.''] ...']
                              ')'
                              })
                 g(3, 'end')
@@ -1049,9 +1080,8 @@ generate_inspection()
                     ['%  DEFAULT = Element.GETPROPDEFAULT(' class_name ', POINTER) returns the default value of POINTER of ' class_name '.']
                     ['%  DEFAULT = ' upper(moniker) '.GETPROPDEFAULT(' class_name ', POINTER) returns the default value of POINTER of ' class_name '.']
                      '%'
-                     '% See also getPropProp, getPropTag, getPropSettings, '
-                     '% getPropCategory, getPropFormat, getPropDescription, '
-                     '% checkProp.'
+                     '% See also getPropDefaultConditioned, getPropProp, getPropTag, getPropSettings, '
+                     '% getPropCategory, getPropFormat, getPropDescription, checkProp.'
                      ''
                     })
                 gs(3, {
@@ -1071,13 +1101,40 @@ generate_inspection()
                         if ~isempty(props_update{i}.default)
                             g(4, ['case ' class_name '.' props_update{i}.TAG])
                                 g(5, ['prop_default = ' props_update{i}.default ';'])
-                        end                            
+                        end
                     end
                     if ~strcmp(superclass_name, 'Element')
                         g(4, 'otherwise');
                             g(5, [ 'prop_default = getPropDefault@' superclass_name '(prop);']);
                     end
                 g(3, 'end')
+            g(2, 'end')
+
+            % getPropDefaultConditioned(pointer)
+            g(2, 'function prop_default = getPropDefaultConditioned(pointer)')
+              gs(3, {
+                     '%GETPROPDEFAULTCONDITIONED returns the conditioned default value of a property.'
+                     '%'
+                    ['% DEFAULT = ' class_name '.GETPROPDEFAULTCONDITIONED(PROP) returns the conditioned default ']
+                     '%  value of the property PROP.'
+                     '%'
+                    ['% DEFAULT = ' class_name '.GETPROPDEFAULTCONDITIONED(TAG) returns the conditioned default ']
+                     '%  value of the property with tag TAG.'
+                     '%'
+                     '% Alternative forms to call this method are (POINTER = PROP or TAG):'
+                    ['%  DEFAULT = ' upper(moniker) '.GETPROPDEFAULTCONDITIONED(POINTER) returns the conditioned default value of POINTER of ' upper(moniker) '.']
+                    ['%  DEFAULT = Element.GETPROPDEFAULTCONDITIONED(' class_name ', POINTER) returns the conditioned default value of POINTER of ' class_name '.']
+                    ['%  DEFAULT = ' upper(moniker) '.GETPROPDEFAULTCONDITIONED(' class_name ', POINTER) returns the conditioned default value of POINTER of ' class_name '.']
+                     '%'
+                     '% See also getPropDefault, getPropProp, getPropTag, getPropSettings, '
+                     '% getPropCategory, getPropFormat, getPropDescription, checkProp.'
+                     ''
+                    })
+                gs(3, {
+                    ['prop = ' class_name '.getPropProp(pointer);']
+                     ''
+                	['prop_default = ' class_name '.conditioning(prop, ' class_name '.getPropDefault(prop));']
+                     })
             g(2, 'end')
 
             % checkProp(pointer, value)
@@ -1418,12 +1475,16 @@ generate_constructor()
 
 generate_conditioning()
     function generate_conditioning()
-        if all(cellfun(@(x) numel(x.conditioning) == 1 && isempty(x.conditioning{1}), props)) && all(cellfun(@(x) numel(x.conditioning) == 1 && isempty(x.conditioning{1}), props_update))
-            return
-        end
-        g(1, 'methods (Access=protected) % conditioning')
-            g(2, ['function value = conditioning(' moniker ', prop, value)'])
-                g(3, 'switch prop')
+% % %         if all(cellfun(@(x) numel(x.conditioning) == 1 && isempty(x.conditioning{1}), props)) && all(cellfun(@(x) numel(x.conditioning) == 1 && isempty(x.conditioning{1}), props_update))
+% % %             return
+% % %         end
+        g(1, 'methods (Static, Access=protected) % conditioning')
+            g(2, 'function value = conditioning(pointer, value)')
+                gs(3, {
+                    ['prop = ' class_name '.getPropProp(pointer);']
+                	 ''
+                	 'switch prop'
+                    })
                     for i = 1:1:numel(props)
                         if numel(props{i}.conditioning) > 1 || ~isempty(props{i}.conditioning{1})
                             g(4, ['case ' class_name '.' props{i}.TAG])
@@ -1439,7 +1500,9 @@ generate_conditioning()
                         end
                     end
                     g(4, 'otherwise')
-                        gs(5, {['value = conditioning@' superclass_name '(' moniker ', prop, value);'], ''})
+                        g(5, ['if prop <= ' superclass_name '.getPropNumber()'])
+                            g(6, ['value = conditioning@' superclass_name '(pointer, value);'])
+                        g(5, 'end')
                 g(3, 'end')
             g(2, 'end')
         g(1, 'end')
@@ -1555,37 +1618,37 @@ generate_methods()
 
 generate_gui()
     function generate_gui()
-        if (numel(gui) == 1 && isempty(gui{1})) && ...
+        if (numel(gui_panel) == 1 && isempty(gui_panel{1})) && ...
                 all(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props)) && ...
                 all(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props_update))
             return
         end
         g(1, 'methods % GUI')
-            if ~(numel(gui) == 1 && isempty(gui{1})) && ...
+            if ~(numel(gui_panel) == 1 && isempty(gui_panel{1})) && ...
                     any(cellfun(@(x) isempty(x), gui_menu_import)) && ...
                     any(cellfun(@(x) isempty(x), gui_menu_export))
-                g(2, ['function pl = getPlotElement(' moniker ', varargin)'])
+                g(2, ['function pe = getPlotElement(' moniker ', varargin)'])
                 gs(3, {
                      '%GETPLOTELEMENT returns the element plot.'
                      '%'
-                     '% PL = GETPLOTELEMENT(EL) returns the plot of element EL.'
+                     '% PE = GETPLOTELEMENT(EL) returns the plot of element EL.'
                      '%'
-                     '% PL = GETPLOTELEMENT(EL, ''Name'', Value, ...) sets the settings of PlotElement.'
+                     '% PE = GETPLOTELEMENT(EL, ''Name'', Value, ...) sets the settings of PlotElement.'
                      '%'
                      '% See also PlotElement.'
                      ''
                     })
-                    gs(3, gui)
+                    gs(3, gui_panel)
                 g(2, 'end')
             end
             if any(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props)) || any(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props_update))
-                g(2, ['function pl = getPlotProp(' moniker ', prop, varargin)'])
+                g(2, ['function pr = getPlotProp(' moniker ', prop, varargin)'])
                 gs(3, {
                     '%GETPLOTPROP returns a prop plot.'
                     '%'
-                    '% PL = GETPLOTPROP(EL, PROP) returns the plot of prop PROP.'
+                    '% PR = GETPLOTPROP(EL, PROP) returns the plot of prop PROP.'
                     '%'
-                    '% PL = GETPLOTPROP(EL, PROP, ''Name'', Value, ...) sets the settings.'
+                    '% PR = GETPLOTPROP(EL, PROP, ''Name'', Value, ...) sets the settings.'
                     '%'
                     '% See also PlotProp, PlotPropCell, PlotPropClass, PlotPropClassList,'
                     '%  PlotPropIDict, PlotPropItem, PlotPropItemList, PlotPropLogical,'
@@ -1608,7 +1671,7 @@ generate_gui()
                     end
                 end
                 g(4, 'otherwise')
-                gs(5, {['pl = getPlotProp@' superclass_name '(' moniker ', prop, varargin{:});'], ''})
+                gs(5, {['pr = getPlotProp@' superclass_name '(' moniker ', prop, varargin{:});'], ''})
                 g(3, 'end')
                 g(2, 'end')
             end            
@@ -1623,17 +1686,18 @@ generate_gui_static()
         end
         g(1, 'methods (Static) % GUI static methods')
         if any(cellfun(@(x) ~isempty(x), gui_menu_import))
-            g(2, 'function getGUIMenuImport(el, ui_menu_import, plot_element)')
+            g(2, 'function getGUIMenuImport(el, menu_import, pe)')
             gs(3, {
                 '%GETGUIMENUIMPORT sets a figure menu.'
                 '%'
-                '% GETGUIMENUIMPORT(EL, MENU, PLOTELEMENT) sets the figure menu import which operates on the element EL.'
+                '% GETGUIMENUIMPORT(EL, MENU, PE) sets the figure menu import'
+                '%  which operates on the element EL in the plot element PE.'
                 '%'
-                '% See also getGUIMenuExporter.'
+                '% See also getGUIMenuExporter, PlotElement.'
                 ''
                 })
                 gs(3, {
-                    'Element.getGUIMenuImport(el, ui_menu_import, plot_element);'
+                    'Element.getGUIMenuImport(el, menu_import, pe);'
                     ''
                     })
             gs(3, gui_menu_import)
@@ -1641,17 +1705,18 @@ generate_gui_static()
             g(2, 'end')
         end
         if  any(cellfun(@(x) ~isempty(x), gui_menu_export))
-            g(2, 'function getGUIMenuExport(el, ui_menu_export, plot_element)')
+            g(2, 'function getGUIMenuExport(el, menu_export, pe)')
             gs(3, {
                 '%GETGUIMENUEXPORT sets a figure menu.'
                 '%'
-                '% GETGUIMENUIMPORT(EL, MENU) sets the figure menu export which operates on the element EL.'
+                '% GETGUIMENUIMPORT(EL, MENU, PE) sets the figure menu export'
+                '%  which operates on the element EL in the plot element PE.'
                 '%'
-                '% See also getGUIMenuImporter.'
+                '% See also getGUIMenuImporter, PlotElement.'
                 ''
                 })
                 gs(3, {
-                    'Element.getGUIMenuExport(el, ui_menu_export, plot_element);'
+                    'Element.getGUIMenuExport(el, menu_export, pe);'
                     ''
                     })
             gs(3, gui_menu_export)

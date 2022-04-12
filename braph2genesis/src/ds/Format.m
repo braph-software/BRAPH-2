@@ -1,4 +1,4 @@
-classdef Format < handle
+classdef Format < handle %TODO: revise
     %Format defines the format of a property.
     % Static class that defines the possible formats of the properties of
     % the elements. It is a subclass of handle.
@@ -14,7 +14,7 @@ classdef Format < handle
     %
     %  OPTION       Option is a char array representing an option within a
     %               set defined in the element. 
-    %               Sttings: cell array of chars representing the options,
+    %               Settings: cell array of chars representing the options,
     %               e.g., {'plus', 'minus', 'zero'}.
     %
     %  CLASS        Class is a char array corresponding to an element class.
@@ -24,7 +24,7 @@ classdef Format < handle
     %  CLASSLIST    ClassList is a cell array with char arrays
     %               corresponding to element classes. 
     %               Settings: class name of a subclass of Element (or
-    %               Element itself).
+    %               Element itself), which represents the base element.
     %
     %  ITEM         Item is a pointer to an element of a class defined in
     %               the element. 
@@ -34,12 +34,12 @@ classdef Format < handle
     %  ITEMLIST     ItemList is a cell array with pointers to elements of a
     %               class defined in the element. 
     %               Settings: class name of a subclass of Element (or
-    %               Element itself).
+    %               Element itself), which represents the base element.
     %
     %  IDICT        Idict is an indexed dictionary of elements of a class
     %               defined in the element. 
     %               Settings: class name of a subclass of Element (or
-    %               Element itself).
+    %               Element itself), which represents the dictionary element.
     %
     %  SCALAR       Scalar is a scalar numerical value.
     %
@@ -54,6 +54,8 @@ classdef Format < handle
     %  CELL         Cell is a 2D cell array of numeric data, typically used
     %               for adjaciency matrices and measures.
     %
+    %  NET          Net is a MatLab neural network object.
+    %
     % Format properties (Constant):
     %
     %  EMPTY = 'em'
@@ -66,7 +68,7 @@ classdef Format < handle
     % 
     %  LOGICAL = 'lo'
     %  LOGICAL_NAME = 'logical'
-    %  LOGICAL_DESCRIPTION = 'Logical is a boolean value.'
+    %  LOGICAL_DESCRIPTION
     % 
     %  OPTION = 'op'
     %  OPTION_NAME = 'option' 
@@ -115,6 +117,10 @@ classdef Format < handle
     %  CELL = 'll'
     %  CELL_NAME = 'cell'
     %  CELL_DESCRIPTION
+    %
+    %  NET = 'ml'
+    %  NET_NAME = 'ml'
+    %  NET_DESCRIPTION
     %
     % Format methods (Static):
     %  getFormats - returns the list of formats
@@ -188,6 +194,10 @@ classdef Format < handle
         CELL = 'll'
         CELL_NAME = 'cell'
         CELL_DESCRIPTION = 'Cell is a 2D cell array of numeric data, typically used for adjaciency matrices and measures.'
+        
+        NET = 'ml'
+        NET_NAME = 'net'
+        NET_DESCRIPTION = 'Net is a MatLab neural network object.'
     end
     methods (Static)
         function formats = getFormats()
@@ -213,6 +223,7 @@ classdef Format < handle
                 Format.MATRIX
                 Format.SMATRIX
                 Format.CELL
+                Format.NET
                 };
         end
         function format_number = getFormatNumber()
@@ -222,7 +233,7 @@ classdef Format < handle
             %
             % See also getFormats, existsFormat.
 
-            format_number = numel(Format.getFormats());
+            format_number = 16; % numel(Format.getFormats());
         end
         function check = existsFormat(format)
             %EXISTSFORMAT returns whether a format exists/error.
@@ -257,8 +268,7 @@ classdef Format < handle
             % A list of all format names can be obtained using
             %  <a href="matlab:cellfun(@(x) Format.getFormatName(x), Format.getFormats(), 'UniformOutput', false)">cellfun(@(x) Format.getFormatName(x), Format.getFormats(), 'UniformOutput', false)</a>
             %
-            % See also getFormats, getFormatDescription, getFormatSettings,
-            % getFormatDefault, checkFormat.
+            % See also getFormats, getFormatDescription, getFormatSettings, getFormatDefault, checkFormat.
 
             switch format
                 case Format.EMPTY
@@ -291,6 +301,8 @@ classdef Format < handle
                     format_name = Format.SMATRIX_NAME;
                 case Format.CELL
                     format_name = Format.CELL_NAME;
+                case Format.NET
+                    format_name = Format.NET_NAME;
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end
@@ -307,8 +319,7 @@ classdef Format < handle
             % A list of all format descriptions with default settings can be obtained using
             %  <a href="matlab:cellfun(@(x) Format.getFormatDescription(x), Format.getFormats(), 'UniformOutput', false)">cellfun(@(x) Format.getFormatDescription(x), Format.getFormats(), 'UniformOutput', false)</a>
             %
-            % See also getFormats, getFormatName, getFormatSettings,
-            % getFormatDefault, checkFormat.
+            % See also getFormats, getFormatName, getFormatSettings, getFormatDefault, checkFormat.
             
             switch format
                 case Format.EMPTY
@@ -371,6 +382,8 @@ classdef Format < handle
                     format_description = Format.SMATRIX_DESCRIPTION;
                 case Format.CELL
                     format_description = Format.CELL_DESCRIPTION;
+                case Format.NET
+                    format_description = Format.NET_DESCRIPTION;
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end
@@ -439,6 +452,8 @@ classdef Format < handle
                     format_settings = '';
                 case Format.CELL
                     format_settings = '';
+                case Format.NET
+                    format_settings = '';
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end            
@@ -450,7 +465,7 @@ classdef Format < handle
             %  for a format FORMAT.
             %
             % DEFAULT = GETFORMATDEFAULT(FORMAT, SETTINGS) returns the
-            %  default value adappted for settings SETTINGS.
+            %  default value adapted for settings SETTINGS.
             % 
             % A list of all format defaults with default settings can be obtained using
             %  <a href="matlab:cellfun(@(x) Format.getFormatDefault(x), Format.getFormats(), 'UniformOutput', false)">cellfun(@(x) Format.getFormatDefault(x), Format.getFormats(), 'UniformOutput', false)</a>
@@ -481,11 +496,7 @@ classdef Format < handle
                     end
                 case Format.CLASSLIST
                     % settings must be a class name of a subclass of Element (or Element itself)
-                    if nargin < 2 || isempty(format_settings)
-                        format_default = {};
-                    else
-                        format_default = {};
-                    end
+                    format_default = {};
                 case Format.ITEM
                     % settings must be a class name of a subclass of Element (or Element itself)
                     if nargin < 2 || isempty(format_settings)
@@ -495,11 +506,7 @@ classdef Format < handle
                     end
                 case Format.ITEMLIST
                     % settings must be a class name of a subclass of Element (or Element itself)
-                    if nargin < 2 || isempty(format_settings)
-                        format_default = {};
-                    else
-                        format_default = {};
-                    end
+                    format_default = {};
                 case Format.IDICT
                     % settings must be a class name of a subclass of Element (or Element itself)
                     if nargin < 2 || isempty(format_settings)
@@ -519,6 +526,10 @@ classdef Format < handle
                     format_default = [];
                 case Format.CELL
                     format_default = {};
+                case Format.CELL
+                    format_default = '';
+                case Format.NET
+                    format_default = network();
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end
@@ -595,6 +606,8 @@ classdef Format < handle
                     check = isnumeric(value) && ismatrix(value) && size(value, 1) == size(value, 2);
                 case Format.CELL
                     check = iscell(value) && all(cellfun(@(x) isnumeric(x), value(:)));
+                case Format.NET
+                    check = isa(value, 'network');
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end

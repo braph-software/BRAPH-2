@@ -11,19 +11,16 @@ whose methods can be used to inspect, add or remove subjects.
 Element, Subject, IndexedDictionary
 
 %%% ¡gui!
+
 %%%% ¡menu_importer!
-imp_sub_menus = get(ui_menu_import, 'Children');
-for i = 1:length(imp_sub_menus)
-    delete(imp_sub_menus(i));
-end
-eval([el.get('SUB_CLASS') '.getGUIMenuImport(el, ui_menu_import, plot_element)']);
+eval([el.get('SUB_CLASS') '.getGUIMenuImport(el, menu_import, pe)']);
+im_sub_menus = get(menu_import, 'Children');
+delete(im_sub_menus(end)); % delete one sub menu to import JSON
 
 %%%% ¡menu_exporter!
-exp_sub_menus = get(ui_menu_export, 'Children');
-for i = 1:length(exp_sub_menus)
-    delete(exp_sub_menus(i));
-end
-eval([el.get('SUB_CLASS') '.getGUIMenuExport(el, ui_menu_export, plot_element)']);
+eval([el.get('SUB_CLASS') '.getGUIMenuExport(el, menu_export, pe)']);
+ex_sub_menus = get(menu_export, 'Children');
+delete(ex_sub_menus(end)); % delete one sub menu to export JSON
 
 %% ¡props!
 
@@ -35,6 +32,8 @@ LABEL (metadata, string) is an extended label of the group of subjects.
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the group of subjects.
+%%%% ¡gui!
+pr = PlotPropString('EL', gr, 'PROP', Group.NOTES, 'LINES', 'multi', 'EDITHEIGHT', 4.5, varargin{:});
 
 %%% ¡prop!
 SUB_CLASS (parameter, class) is the class of the subjects of the group.
@@ -46,7 +45,7 @@ SUB_DICT (data, idict) is an indexed dictionary containing the subjects of the g
 %%%% ¡settings!
 'Subject'
 %%%% ¡gui!
-pl = PPGroupSubjectsIdict('EL', gr, 'PROP', Group.SUB_DICT, varargin{:});
+pr = PPGroup_SUBDict('EL', gr, 'PROP', Group.SUB_DICT, varargin{:});
 
 %% ¡tests!
 

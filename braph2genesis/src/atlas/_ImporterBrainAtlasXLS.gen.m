@@ -7,6 +7,8 @@ The TXT file consists of 6 columns. It reads as follows:
 BrainAtlas ID (column 1), BrainAtlas LABEL (column 2),
 BrainRegions (column 3-5; coordinates x, y, z, one per column) and 
 BrainAtlas NOTES (column 6).
+It will throw an error is problems occur during the import.
+It throws an error is problems occur during the import.
 
 %%% ¡seealso!
 Element, Importer, ExporterBrainAtlasXLS.
@@ -27,19 +29,24 @@ BrainAtlas()
 ba = BrainAtlas();
 % analyzes file
 file = im.memorize('FILE');
-if ~isfile(file) && ~is_braph2_testing()
+if ~isfile(file) && ~braph2_testing()
     im.uigetfile()
     file = im.memorize('FILE');
 end
 if isfile(file)
-    f = waitbar(0, 'Reading File ...', 'Name', BRAPH2.NAME, 'Visible', 'off');
-    set_icon(f)
-    set(f, 'Visible', 'on');
+    if im.get('WAITBAR')
+        wb = waitbar(0, 'Reading File ...', 'Name', BRAPH2.NAME);
+        set_braph2icon(wb)
+    end
+
     try
         [~, ~, raw] = xlsread(file);
         
         % adds props
-        waitbar(.15, f, 'Loading your Brain Atlas ...');
+        if im.get('WAITBAR')
+            waitbar(.15, wb, 'Loading brain atlas file ...');
+        end
+        
         ba.set( ...
             'ID', raw{1, 1}, ...
             'LABEL', raw{2, 1}, ...
@@ -49,9 +56,15 @@ if isfile(file)
         idict = ba.get('BR_DICT');
         
         % adds brain regions
-        waitbar(.45, f, 'Loading your Brain Regions ...')
+        if im.get('WAITBAR')
+            waitbar(.30, wb, 'Extracting brain regions ...')
+        end
+        
         for i = 5:1:size(raw, 1)
-            waitbar(.5, f, ['Loading your Brain Region: ' num2str(i - 4) '/' num2str(size(raw, 1) - 4) ' ...'])
+            if im.get('WAITBAR')
+                waitbar(.30 + .70 * (i - 4) / (size(raw, 1) - 4), wb, ['Loading brain region ' num2str(i - 4) ' of ' num2str(size(raw, 1) - 4) ' ...'])
+            end
+            
             br = BrainRegion( ...
                 'ID', raw{i, 1}, ...
                 'LABEL', raw{i, 2}, ...
@@ -64,22 +77,25 @@ if isfile(file)
         end
         ba.set('br_dict', idict);
     catch e
-        warndlg('Please select a valid group file.', 'Warning');
-        close(f)
+        if im.get('WAITBAR')
+            close(wb)
+        end
+        
+        rethrow(e)
     end
-elseif ~is_braph2_testing()
-    error(BRAPH2.BUG_IO);
+    
+    if im.get('WAITBAR')
+        close(wb)
+    end
+elseif ~braph2_testing()
+    error([BRAPH2.STR ':ImporterBrainAtlasXLS: ' BRAPH2.BUG_IO]);
 end
-if exist('f', 'var')
-    waitbar(1, f, 'Finishing')
-    pause(.5)
-    close(f)
-end
+
 value = ba;
 
 %% ¡methods!
 function uigetfile(im)
-    % UIGETFILE opens a dialog box to set the XLS/XLSX file where to save the brain atlas.
+    % UIGETFILE opens a dialog box to get the XLS/XLSX file from where to load the brain atlas.
     
     [filename, filepath, filterindex] = uigetfile({'*.xlsx';'*.xls'}, 'Select Excel file');
     if filterindex

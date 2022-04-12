@@ -2,9 +2,9 @@ function copydir(source_dir, target_dir, iterate)
 %COPYDIR copies a directory contents.
 %
 % COPYDIR(SOURCE_DIR, TARGET_DIR) copies the files of directory SOURCE_DIR
-%  into directory TARGET_DIR. It does not copy files starticn with "." or "_".
+%  into directory TARGET_DIR. It does not copy files starting with "." or "_".
 %
-% COPYDIR(SOURCE_DIR, TARGET_DIR, ITERATE) copes also the subdirectories up
+% COPYDIR(SOURCE_DIR, TARGET_DIR, ITERATE) copies also the subdirectories up
 %  to level ITERATE.
 %
 % See also genesis.

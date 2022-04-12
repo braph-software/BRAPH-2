@@ -1,5 +1,5 @@
 function str = tostring(value, n, ending)
-%TOSTRING returns a string representing the input value
+%TOSTRING returns a string representing the input value.
 %
 % STRING = TOSTRING(VALUE) returns a string representing VALUE.
 %  The string depends on the type of VALUE. In particular, if VALUE is an
@@ -34,7 +34,17 @@ elseif iscell(value) % cell arrays
 elseif ischar(value) && isempty(value) % empty string
     str = '''''';
 else  % char arrays
-    str = ['''' num2str(value) ''''];
+    if size(value, 1) == 1 % single line char array
+        str = ['''' num2str(value) ''''];
+    else % multiline char array
+        str = '';
+        for i = 1:1:size(value, 1)
+            str = [str strtrim(value(i, :))];
+            if i < size(value, 1)
+                str = [str ' '];
+            end
+        end
+    end
 end
 
 if length(str) > n

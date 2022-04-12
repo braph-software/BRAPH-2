@@ -40,6 +40,8 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 THRESHOLDS (parameter, rvector) is the vector of thresholds.
 %%%% ¡default!
 0
+%%%% ¡gui!
+pr = PlotPropSmartVector('EL', a, 'PROP', AnalyzeEnsemble_CON_FUN_MP_BUT.THRESHOLDS, 'MAX', 1, 'MIN', 0, varargin{:});
 
 %% ¡props_update!
 
@@ -47,6 +49,11 @@ THRESHOLDS (parameter, rvector) is the vector of thresholds.
 GR (data, item) is the subject group, which also defines the subject class SubjectCON_FUN_MP.
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectCON_FUN_MP')
+
+%%% ¡prop!
+ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
+%%%% ¡gui!
+pr = PPAnalyzeEnsembleMP_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_CON_FUN_MP_BUT.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %%% ¡prop!
 G_DICT (result, idict) is the multiplex (MultiplexBUT) ensemble obtained from this analysis.
@@ -99,9 +106,18 @@ for i = 1:1:gr.get('SUB_DICT').length()
 end
 
 value = g_dict;
-%%%% ¡gui!
-pl = PPAnalyzeEnsembleGraph('EL', a, 'PROP', AnalyzeEnsemble_CON_FUN_MP_BUT.G_DICT, varargin{:});
 
+%% ¡methods!
+function pr = getPPCompareEnsemble_CPDict(a, varargin) 
+    %GETPPCOMPAREENSEMBLE_CPDICT returns the comparison ensemble plot panel compatible with the analysis.
+    %
+    % PR = GETPPCOMPAREENSEMBLE_CPDICT(A) returns the comparison ensemble plot panel
+    %  that is compatible with the analyze ensemble.
+    %
+    % See also CompareEnsemble.
+    
+    pr = PPCompareEnsembleMP_CON_FUN_CPDict_BUT(varargin{:});
+end
 %% ¡tests!
 
 %%% ¡test!

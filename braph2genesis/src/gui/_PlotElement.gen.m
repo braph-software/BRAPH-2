@@ -1,13 +1,46 @@
 %% ¡header!
-PlotElement < Plot (pl, plot element) is a plot of an element.
+PlotElement < Plot (pe, plot element) is a plot of an element.
 
 %%% ¡description!
 PlotElement plots all properties of an element in a resizable scrollable panel.
-The high-level graphical panel F has fixed dimensions and contains a scollable panel
-(i.e., a panel P and a slider S). P contains a series of stacked property panels,
-one for each property of the element EL being plotted.
-Each time that F is resized or S scrolled, all contents of P are resized as well.
+ The high-level parent panel PP has fixed dimensions and contains a scollable panel
+ (i.e., a panel P and a slider S). P contains a series of stacked property panels,
+ one for each property of the element EL being plotted.
+ Each time that PP is resized or S scrolled, all contents of P are resized as well.
 
+Importnat notes:
+1. The key methods that need to be called are draw() and reinit().
+2. The methods update(), redraw() and slide() are used internally by PlotElement 
+  and typically do not need to be called explicitly.
+
+CONSTRUCTOR - To construct a PlotElement use the constructor:
+
+    pe = PlotElement(''EL'', <element>)
+    
+DRAW - To create the element panel, call pe.draw():
+
+    pp = pe.<strong>draw</strong>();
+    pp = pe.<strong>draw</strong>(''Parent'', f);
+ 
+ Here, pp is the parent panel (see above).
+ Typically, f is a figure where the parent panel is plotted.
+ It is also possible to use pr.draw() to get the parent panel handle
+  and to set its properties (as in the case of Plot and PlotProp).
+
+REINIT - To reinitialize the element plot with a new element, call:
+
+    pe.reinit(<new element>)
+
+ This function resets both the element and the panel using the new element.
+ Importnatly, the new element must be of exactly the same class as the old element.
+
+
+CALLBACK - This is a callback function:
+
+    pe.<strong>cb_bring_to_front</strong>() - brings to the front the figure with the element panel and its dependent figures
+    pe.<strong>cb_hide</strong>() - hides the figure with the element panel and its dependent figures
+    pe.<strong>cb_close</strong>() - closes the figure with the element panel and its dependent figures
+ 
 %%% ¡seealso!
 GUI, PlotProp
 
@@ -33,87 +66,73 @@ MCOLOR (metadata, rvector) is background color of the metadata properties.
 %%%% ¡check_prop!
 check = (length(value) == 3) && all(value >= 0 & value <= 1);
 %%%% ¡default!
-[.745 .839 .902]
+BRAPH2.COL_M
 
 %%% ¡prop!
 PCOLOR (metadata, rvector) is background color of the parameter properties.
 %%%% ¡check_prop!
 check = (length(value) == 3) && all(value >= 0 & value <= 1);
 %%%% ¡default!
-[.38 .514 .6]
+BRAPH2.COL_P
 
 %%% ¡prop!
 DCOLOR (metadata, rvector) is background color of the data properties.
 %%%% ¡check_prop!
 check = (length(value) == 3) && all(value >= 0 & value <= 1);
 %%%% ¡default!
-[.902 .835 .745] 
+BRAPH2.COL_D
 
 %%% ¡prop!
 RCOLOR (metadata, rvector) is background color of the result properties.
 %%%% ¡check_prop!
 check = (length(value) == 3) && all(value >= 0 & value <= 1);
 %%%% ¡default!
-[.62 .545 .439]
+BRAPH2.COL_R
+
+%%% ¡prop!
+FCOLOR (metadata, rvector) is background color of the figure properties.
+%%%% ¡check_prop!
+check = (length(value) == 3) && all(value >= 0 & value <= 1);
+%%%% ¡default!
+BRAPH2.COL_F
+
+%%% ¡prop!
+GCOLOR (metadata, rvector) is background color of the gui properties.
+%%%% ¡check_prop!
+check = (length(value) == 3) && all(value >= 0 & value <= 1);
+%%%% ¡default!
+BRAPH2.COL_G
 
 %%% ¡prop!
 EL (metadata, item) is the element to be plotted.
 
 %%% ¡prop!
-PP_DICT (result, idict) is a dictionary of the property plots.
+PR_DICT (result, idict) is a dictionary of the property plots.
 %%%% ¡settings!
 'PlotProp'
 %%%% ¡calculate!
-el = pl.get('EL');
+el = pe.get('EL');
 
-gui_files_dir = [fileparts(which('braph2.m')) filesep 'src' filesep 'gui' filesep 'prop_order' filesep];
-gui_files = dir(gui_files_dir); % get the folder contents
-gui_files = gui_files([gui_files(:).isdir] ~= 1); % remove all folders (isdir property is 0)
-gui_files = gui_files(~ismember({gui_files(:).name}, {'.', '..'})); % remove '.' and '..'
-gui_files = {gui_files.name}; % convert to cell;
-gui_files = cellfun(@(x) erase(x, '.mat'), gui_files, 'UniformOutput', false);
+[order, title, visible] = load_layout(el);
+number_visible_prop = sum(visible);
 
-if contains(el.getClass(), gui_files)
-    gui_modified_file = load([gui_files_dir el.getClass()]);
-    load_rule_array = gui_modified_file.visibility;
-    load_order_array = gui_modified_file.order;
-    load_titles = gui_modified_file.title;
-    
-    for prop = 1:el.getPropNumber()
-        load_rule = load_rule_array(prop);
-        load_order = load_order_array(prop);
-        load_title = load_titles{prop};
-        if load_rule
-            switch el.getPropCategory(prop)
-                case Category.METADATA
-                    color = pl.get('MCOLOR');
-                case Category.PARAMETER
-                    color = pl.get('PCOLOR');
-                case Category.DATA
-                    color = pl.get('DCOLOR');
-                case Category.RESULT
-                    color = pl.get('RCOLOR');
-            end
-            pp_list{load_order} = el.getPlotProp(prop, ...
-            'BKGCOLOR', color, ...
-            'TITLE', load_title);
-        end
-    end
-else
-    pp_list = cell(1, el.getPropNumber());
-    for prop = 1:1:el.getPropNumber()
+pr_list = cell(1, number_visible_prop);
+for prop = 1:1:el.getPropNumber()
+    if visible(prop)
         switch el.getPropCategory(prop)
             case Category.METADATA
-                color = pl.get('MCOLOR');
+                color = pe.get('MCOLOR');
             case Category.PARAMETER
-                color = pl.get('PCOLOR');
+                color = pe.get('PCOLOR');
             case Category.DATA
-                color = pl.get('DCOLOR');
+                color = pe.get('DCOLOR');
             case Category.RESULT
-                color = pl.get('RCOLOR');
+                color = pe.get('RCOLOR');
         end
-        
-        pp_list{prop} = el.getPlotProp(prop, ...
+
+        pr_list{order(prop)} = el.getPlotProp(prop, ...
+            'ID', el.getPropTag(prop), ...
+            'TITLE', title{prop}, ...
             'BKGCOLOR', color);
     end
 end
@@ -122,55 +141,58 @@ value = IndexedDictionary( ...
     'ID', el.tostring(), ...
     'IT_CLASS', 'PlotProp', ...
     'IT_KEY', 1, ...
-    'IT_LIST', pp_list ...
+    'IT_LIST', pr_list ...
     );
 
 %% ¡properties!
-f % handle for outer panel
-p % handle for scrollable
+pp % handle for outer (parent) panel
+p % handle for scrollable panel
 s % handle for slider
-pp_list % list of handles for prop panels
+pr_list % list of handles for prop panels
 
 %% ¡methods!
-function h_panel = draw(pl, varargin)
-    %DRAW draws the element graphical panel.
+function h_panel = draw(pe, varargin)
+    %DRAW draws the element panel.
     %
-    % DRAW(PL) draws the element graphical panel.
+    % DRAW(PE) draws the element parent panel, which contains a panel that
+    %  is crollable using a slider.
     %
-    % H = DRAW(PL) returns a handle to the element graphical panel.
+    % H = DRAW(PE) returns a handle to the element parent panel.
     %
-    % DRAW(PL, 'Property', VALUE, ...) sets the properties of the graphical
-    %  panel with custom property-value couples.
+    % DRAW(PE, 'Property', VALUE, ...) sets the properties of the parent
+    %  panel with custom Name-Value pairs.
     %  All standard plot properties of uipanel can be used.
     %
     % It is possible to access the properties of the various graphical
-    %  objects from the handle to the brain surface graphical panel H.
+    %  objects from the handle H of the parent panel.
     %
-    % see also redraw, slide, settings, uipanel, isgraphics.
+    % See also update, redraw, slide, reinit, uipanel.
 
     % initialization
-    pl.f = draw@Plot(pl, ...
+    pe.pp = draw@Plot(pe, ...
         'Visible', 'off', ...
         varargin{:}, ...
         'SizeChangedFcn', {@redraw} ...
         );
     function redraw(~, ~)
-        pl.redraw()
+        pe.redraw()
     end
 
-    if isempty(pl.p) || ~isgraphics(pl.p, 'uipanel')
-        pl.p = uipanel( ...
-            'Parent', pl.f, ...
+    if ~check_graphics(pe.p, 'uipanel')
+        pe.p = uipanel( ...
+            'Parent', pe.pp, ...
+            'Tag', 'scrollable panel', ...
             'Units', 'character', ...
-            'BackgroundColor', pl.get('BKGCOLOR'), ...
+            'BackgroundColor', pe.get('BKGCOLOR'), ...
             'BorderType', 'none' ...
             );
     end
 
-    if isempty(pl.s) || ~isgraphics(pl.s, 'slider')    
-        pl.s = uicontrol( ...
+    if isempty(pe.s) || ~isgraphics(pe.s, 'uicontrol') || ~strcmpi(get(pe.s, 'Style'), 'slider')
+        pe.s = uicontrol( ...
             'Style', 'slider', ...
-            'Parent', pl.f, ....
+            'Tag', 'scrollable panel slider', ...
+            'Parent', pe.pp, ....
             'Units', 'character', ...
             'Min', -eps, ...
             'Max', 0, ...
@@ -179,184 +201,241 @@ function h_panel = draw(pl, varargin)
             );
     end
     function slide(~, ~)
-        pl.slide()
+        pe.slide()
     end
 
-    if isempty(pl.pp_list) || any(cellfun(@(x) ~isgraphics(x, 'uipanel'), pl.pp_list))
-        pl.pp_list = cellfun(@(x) x.draw( ...
-            'Parent', pl.p, ...
+    if isempty(pe.pr_list) || any(cellfun(@(x) ~check_graphics(x, 'uipanel'), pe.pr_list))
+        pe.pr_list = cellfun(@(x) x.draw( ...
+            'Parent', pe.p, ...
             'Units', 'character' ...
             ), ...
-            pl.memorize('PP_DICT').getItems(), 'UniformOutput', false);
+            pe.memorize('PR_DICT').getItems(), 'UniformOutput', false);
     end
-    
-    set(pl.f, ...
-        'UserData', 'update', ... % calls update(), through redraw()
-        'Visible', 'on' ... % calls redraw() and slide()
-        )
+
+    pe.update()
+    set(pe.pp, 'Visible', 'on') % calls also redraw() and slide()
     
     % output
     if nargout > 0
-        h_panel = pl.f;
+        h_panel = pe.pp;
     end
 end
-function update(pl)
-    %UPDATE updates the prop panels and their value.
+function update(pe)
+    %UPDATE updates the content of the prop panels and their graphical objects.
     %
-    % UPDATE(PL) updates the prop panels and their value.
+    % UPDATE(PE) updates the content of the prop panels and their graphical objects.
+    %
+    % Important note:
+    % 1. UPDATE() does not need to be explicitly called from outside code,
+    %  as it is called internally by PlotElement when needed.
     %
     % See also draw, redraw, slide.
 
-    for prop = 1:1:pl.get('PP_DICT').length()
-        pl.get('PP_DICT').getItem(prop).update()
+    for prop = 1:1:pe.get('PR_DICT').length()
+        pe.get('PR_DICT').getItem(prop).update()
     end
 end
-function redraw(pl)
-    %RESIZE redraws the element graphical panel.
+function redraw(pe)
+    %RESIZE resizes, repositions and slides the prop panels.
     %
-    % RESIZE(PL) redraws (includign resizing) the plot PL.
+    % RESIZE(PE) resizes the property panels and repositions their
+    %  graphical objects, and slides the element panel.
+    %
+    % Important note:
+    % 1. REDRAW() does not need to be explicitly called from outside code,
+    %  as it is called internally by PlotElement when needed.
     %
     % See also draw, update, slide.
 
-    f = pl.f;
-    pp_list = pl.pp_list;
-    
-    units = get(f, 'Units');
-    set(f, 'Units', 'character')    
-
-    if strcmpi(get(f, 'UserData'), 'ignore')
-        set(f, 'UserData', [])
-        return
-    elseif strcmpi(get(f, 'UserData'), 'update')
-        set(f, 'UserData', [])
-        pl.update()
-    end
+    pp = pe.pp;
+    pr_list = pe.pr_list;
     
     % redraw prop panels
-    dw = pl.get('DW');   
-    w_s = pl.get('WSLIDER');
-    for prop = 1:1:length(pp_list)
-        pl.get('PP_DICT').getItem(prop).redraw('Width', w(f) - 2 * dw - w_s)
+    dw = pe.get('DW');   
+    w_s = pe.get('WSLIDER');
+    for prop = 1:1:length(pr_list)
+        pe.get('PR_DICT').getItem(prop).redraw('Width', w(pp) - 2 * dw - w_s)
     end
     
     % redraw panel and place prop panels
-    dh = pl.get('DH');
+    dh = pe.get('DH');
 
-    h_pp = cellfun(@(x) h(x), pp_list);
+    h_pp = cellfun(@(x) h(x), pr_list);
     x0_pp = dw;
     y0_pp = sum(h_pp + dh) - cumsum(h_pp + dh) + dh;
 
     % p, s
     h_p = sum(h_pp + dh) + dh;
-    if h_p > h(f)
-        for prop = 1:1:length(pp_list)
-            pp = pp_list{prop};
-            set(pp, 'Position', [x0_pp y0_pp(prop) w(pp) h(pp)])
+    if h_p > h(pp)
+        for prop = 1:1:length(pr_list)
+            pr = pr_list{prop};
+            set(pr, 'Position', [x0_pp y0_pp(prop) w(pr) h(pr)])
         end
     else
-        for prop = 1:1:length(pp_list)
-            pp = pp_list{prop};
-            set(pp, 'Position', [x0_pp y0_pp(prop)+h(f)-h_p w(pp) h(pp)])
+        for prop = 1:1:length(pr_list)
+            pr = pr_list{prop};
+            set(pr, 'Position', [x0_pp y0_pp(prop)+h(pp)-h_p w(pr) h(pr)])
         end
     end    
     
     % slide and adjust panel
-    pl.slide()
-    
-    set(f, 'Units', units)
+    pe.slide()
     
     % auxiliary functions
     function r = x0(h)
-        r = Plot.x0(h);
+        r = Plot.x0(h, 'characters');
     end
     function r = y0(h)
-        r = Plot.y0(h);
+        r = Plot.y0(h, 'characters');
     end
     function r = w(h)
-        r = Plot.w(h);
+        r = Plot.w(h, 'characters');
     end
     function r = h(h)
-        r = Plot.h(h);
-    end    
+        r = Plot.h(h, 'characters');
+    end
 end
-function slide(pl)
+function slide(pe)
     %SLIDE slides the panel vertically.
     %
-    % SLIDE(PL) slides the panel vertically, without redrawing the prop panels.
+    % SLIDE(PE) slides the panel vertically, without redrawing the prop panels.
+    %
+    % Important note:
+    % 1. SLIDE() does not need to be explicitly called from outside code,
+    %  as it is called internally by PlotElement when needed.
     %
     % See also draw, update, redraw.
 
-    f = pl.f;
-    p = pl.p;
-	s = pl.s;
-    pp_list = pl.pp_list;
+    pp = pe.pp;
+    p = pe.p;
+	s = pe.s;
+    pr_list = pe.pr_list;
 
-    units = get(f, 'Units');
-    set(f, 'Units', 'character')
-    
-    w_s = pl.get('WSLIDER');
+    w_s = pe.get('WSLIDER');
 
-    dh = pl.get('DH');
-    h_pp = cellfun(@(x) h(x), pp_list);
+    dh = pe.get('DH');
+    h_pp = cellfun(@(x) h(x), pr_list);
     h_p = sum(h_pp + dh) + dh;
 
-    if h_p > h(f)
+    if h_p > h(pp)
         offset = get(s, 'Value');
-        set(p, 'Position', [0 h(f)-h_p-offset w(f) h_p])
+        set(p, 'Position', [0 h(pp)-h_p-offset w(pp) h_p])
 
         set(s, ...
-            'Position', [w(f)-w_s 0 w_s h(f)], ...
+            'Position', [w(pp)-w_s 0 w_s h(pp)], ...
             'Visible', 'on', ...
-            'Min', h(f) - h(p), ...
-            'Value', max(get(s, 'Value'), h(f) - h(p)) ...
+            'Min', h(pp) - h(p), ...
+            'Value', max(get(s, 'Value'), h(pp) - h(p)) ...
             );
     else
-        set(p, 'Position', [0 0 w(f) h(f)])
+        set(p, 'Position', [0 0 w(pp) h(pp)])
 
         set(s, 'Visible', 'off')            
     end
     
-    set(f, 'Units', units)
-    
     % auxiliary functions
     function r = x0(h)
-        r = Plot.x0(h);
+        r = Plot.x0(h, 'characters');
     end
     function r = y0(h)
-        r = Plot.y0(h);
+        r = Plot.y0(h, 'characters');
     end
     function r = w(h)
-        r = Plot.w(h);
+        r = Plot.w(h, 'characters');
     end
     function r = h(h)
-        r = Plot.h(h);
+        r = Plot.h(h, 'characters');
     end
 end
-function reinit(pl)
-    %REINIT sets el
+function reinit(pe, el)
+    %REINIT resets the element, updates and redraws the element plot.
     %
-    %REINIT sets el in each PlotProp of PlotElement
+    % REINIT(PE, EL) reinitializes the plot element.Specifically:
+    %  1. sets EL as the new element of the PlotElement
+    %  2. reinizalizes PR_DICT
+    %  3. deletes all prop panels
+    %  4. draws anew, updates and redraws
+    % 
+    % Important note:
+    % 1. EL must be of the same class as the previous element in the
+    %  PlotElement, otherwise an error is thrown.
+    %  Error id: [BRAPH2:PlotElement:WrongInput].
     %
     % See also update, draw, redraw.
-    if ~isempty(pl.pp_list) || any(cellfun(@(x) isgraphics(x, 'uipanel'), pl.pp_list))
-        pp_dict = pl.get('PP_DICT');
-        for i = 1:pp_dict.length()
-            pp = pp_dict.getItem(i);
-            el = pl.get('EL');
-            pp.set('EL', el);
-        end
-    end
-    pl.update()
+
+    assert( ...
+        strcmp(pe.get('EL').getClass(), el.getClass()), ...
+        [BRAPH2.STR ':PlotElement:' BRAPH2.WRONG_INPUT], ...
+        [BRAPH2.STR ':PlotElement:' BRAPH2.WRONG_INPUT ' ' ...
+        'The class of the new element (' el.getClass() ') must be exactly the same as that of the old element (' pe.get('EL').getClass() ').'] ...
+        )    
+
+    pe.set('EL', el)
+    pe.set('PR_DICT', NoValue.getNoValue())
+
+    delete(get(pe.p, 'Children'))
+
+    pe.draw()
+    pe.update()
+    pe.redraw()
 end
-function h_f = return_outer_panel(pl)
-h_f = pl.f;
+function cb_bring_to_front(pe)
+    %CB_BRING_TO_FRONT brings to front the figure with the element panel and its dependent figures.
+    %
+    % CB_BRING_TO_FRONT(PE) brings to front the figure with the element and
+    %  its dependent figures by calling the methods cb_bring_to_front() for
+    %  all the PlotProp panels of the PlotElement.
+    %  
+    % Note that it will draw a new the figure if the element panel is currently not plotted. 
+    %
+    % See also cb_hide, cb_close.
+
+    pe.cb_bring_to_front@Plot();
+    
+    pr_dict = pe.get('PR_DICT');
+    for prop = 1:1:pr_dict.length()
+        pr = pr_dict.getItem(prop);
+        pr.cb_bring_to_front()
+    end
+end
+function cb_hide(pe)
+    %CB_HIDE hides the figure with the element panel and its dependent figures.
+    %
+    % CB_HIDE(PE) hides the figure with the element panel and its dependent figures 
+    %  by calling the methods cb_hide() for all the PlotProp panels of the PlotElement.
+    %  
+    % See also cb_bring_to_front, cb_close.
+
+    pe.cb_hide@Plot();
+    
+    pr_dict = pe.get('PR_DICT');
+    for prop = 1:1:pr_dict.length()
+        pr = pr_dict.getItem(prop);
+        pr.cb_hide()
+    end
+end
+function cb_close(pe)
+    %CB_CLOSE closes the figure with the element panel and its dependent figures.
+    %
+    % CB_CLOSE(PE) closes the figure with the element panel and its dependent figures 
+    %  by calling the methods cb_close() for all the PlotProp panels of the PlotElement.
+    %  
+    % See also cb_bring_to_front, cb_hide.
+
+    pe.cb_close@Plot();
+    
+    pr_dict = pe.get('PR_DICT');
+    for prop = 1:1:pr_dict.length()
+        pr = pr_dict.getItem(prop);
+        pr.cb_close()
+    end
 end
 
 %% ¡tests!
 
 %%% ¡test!
 %%%% ¡name!
-Basics
+Example
 %%%% ¡code!
 fig = figure();
 
@@ -377,13 +456,13 @@ et = ETA( ...
     'PROP_CLASSLIST_P', {'Element', 'ETA', 'PlotElement'}, ...
     'PROP_CLASSLIST_D', {}, ...
     'PROP_ITEM_M', ETA('PROP_STRING_M', 'ETA trial'), ...
-    'PROP_ITEM_P', BrainRegion('ID', 'BR trial 2'), ...
-    'PROP_ITEM_D', BrainRegion('ID', 'BR trial 3'), ...
+    'PROP_ITEM_P', ETB('ID', 'BR trial 2'), ...
+    'PROP_ITEM_D', ETB('ID', 'BR trial 3'), ...
     'PROP_ITEMLIST_M', {ETA('PROP_STRING_M', 'ETA trial 1'), ETA('PROP_STRING_M', 'ETA trial 2'), ETA('PROP_STRING_M', 'ETA trial 3')}, ...
-    'PROP_ITEMLIST_P', {BrainRegion('ID', 'BR trial 1'), BrainRegion('ID', 'BR trial 2'), BrainRegion('ID', 'BR trial 3')}, ...
+    'PROP_ITEMLIST_P', {ETB('ID', 'BR trial 1'), ETB('ID', 'BR trial 2'), ETB('ID', 'BR trial 3')}, ...
     'PROP_ITEMLIST_D', {}, ...
-    'PROP_IDICT_M', IndexedDictionary('IT_CLASS', 'ETA', 'IT_KEY', 32), ...
-    'PROP_IDICT_P', IndexedDictionary('IT_CLASS', 'BrainRegion', 'IT_LIST', {BrainRegion('ID', 'BR trial A'), BrainRegion('ID', 'BR trial B'), BrainRegion('ID', 'BR trial C')}), ...
+    'PROP_IDICT_M', IndexedDictionary('IT_CLASS', 'ETA', 'IT_KEY', 34), ...
+    'PROP_IDICT_P', IndexedDictionary('IT_CLASS', 'ETB', 'IT_LIST', {ETB('ID', 'BR trial A'), ETB('ID', 'BR trial B'), ETB('ID', 'BR trial C')}), ...
     'PROP_IDICT_D', IndexedDictionary(), ...
     'PROP_SCALAR_M', 1, ...
     'PROP_SCALAR_P', 3, ...
@@ -405,7 +484,17 @@ et = ETA( ...
     'PROP_CELL_D', {randn(2), randn(2); randn(2), randn(2)} ...
     );
 
-pl = PlotElement('EL', et);
-pl.draw()
+pe = PlotElement('EL', et);
+pe.draw()
 
 close(fig)
+
+%%% ¡test!
+%%%% ¡name!
+Callbacks
+%%%% ¡code!
+pe = PlotElement('EL', ETA());
+pe.draw()
+pe.cb_hide()
+pe.cb_bring_to_front()
+pe.cb_close()

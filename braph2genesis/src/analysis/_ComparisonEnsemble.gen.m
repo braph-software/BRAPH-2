@@ -24,7 +24,7 @@ NOTES (metadata, string) are some specific notes about the ensemble-based compar
 MEASURE (data, string) is the measure class.
 
 %%% ¡prop!
-MEASUREPARAM(data, item) is the example measure parameters 
+MEASUREPARAM(data, item) provides the measure parameters.
 %%%% ¡settings!
 'Measure'
 
@@ -39,39 +39,37 @@ DIFF (result, cell) is the ensemble comparison value.
 [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp);
 value = diff;
 %%%% ¡gui!
-pl = PPComparisonEnsembleDiff('EL', cp, 'PROP', ComparisonEnsemble.DIFF, varargin{:});
+pr = PPComparisonEnsemble_Diff('EL', cp, 'PROP', ComparisonEnsemble.DIFF, varargin{:});
 
 %%% ¡prop!
 P1 (result, cell) is the one-tailed p-value.
 %%%% ¡calculate!
 [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp);
 value = p1;
-%%%% ¡gui!
-pl = PPComparisonEnsembleDiff('EL', cp, 'PROP', ComparisonEnsemble.P1, varargin{:});
+%%%% ¡gui__!
+% % % pl = PPComparisonEnsembleDiff('EL', cp, 'PROP', ComparisonEnsemble.P1, varargin{:});
 
 %%% ¡prop!
 P2 (result, cell) is the two-tailed p-value.
 %%%% ¡calculate!
 [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp);
 value = p2;
-%%%% ¡gui!
-pl = PPComparisonEnsembleDiff('EL', cp, 'PROP', ComparisonEnsemble.P2, varargin{:});
+%%%% ¡gui__!
+% % % pl = PPComparisonEnsembleDiff('EL', cp, 'PROP', ComparisonEnsemble.P2, varargin{:});
 
 %%% ¡prop!
 CIL (result, cell) is the lower value of the 95%% confidence interval.
 %%%% ¡calculate!
 [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp);
 value = ci_lower;
-%%%% ¡gui!
-pl = PPComparisonEnsembleDiff('EL', cp, 'PROP', ComparisonEnsemble.CIL, varargin{:});
+%%%% ¡gui__!
+% % % pl = PPComparisonEnsembleDiff('EL', cp, 'PROP', ComparisonEnsemble.CIL, varargin{:});
 
 %%% ¡prop!
 CIU (result, cell) is the upper value of the 95%% confidence interval.
 %%%% ¡calculate!
 [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp);
 value = ci_upper;
-%%%% ¡gui!
-pl = PPComparisonEnsembleDiff('EL', cp, 'PROP', ComparisonEnsemble.CIU, varargin{:});
 
 %% ¡methods!
 function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
@@ -91,14 +89,9 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
         ci_upper = {};
         return
     end
-    
-    c = cp.get('C');
-    verbose = c.get('VERBOSE');
-    interruptible = c.get('INTERRUPTIBLE');
-    memorize = c.get('MEMORIZE');
-    
+        
+    % get parameters from example measure
     core_measure = cp.get('MEASUREPARAM');
-    % get parameters from core measure
     j = 1;
     varargin = {};
     if Measure.getPropNumber() ~= core_measure.getPropNumber()
@@ -110,6 +103,12 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
             j = j + 2;
         end
         varargin = varargin(~cellfun('isempty', varargin));
+    end
+
+    c = cp.get('C');
+    if c.get('WAITBAR')
+        wb = waitbar(0, 'Comparing ensemble analyses ...', 'Name', BRAPH2.NAME);
+        set_braph2icon(wb)
     end
 
     % Pre-calculate and save measures of all subjects
@@ -157,12 +156,19 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
         m2_perms{1, p} = ms2_av;
         diff_perms{1, p} = cellfun(@(x, y) y - x, m1_perms{1, p}, m2_perms{1, p}, 'UniformOutput', false);
 
-        if interruptible
-            pause(interruptible)
+        if c.get('WAITBAR')
+            waitbar(i / P, wb, ['Permutation ' num2str(i) ' of ' num2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's ...']);
         end
-        if verbose
+        if c.get('VERBOSE')
             disp(['** PERMUTATION TEST - sampling #' int2str(p) '/' int2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's'])
         end
+        if c.get('INTERRUPTIBLE')
+            pause(c.get('INTERRUPTIBLE'))
+        end
+    end
+
+    if c.get('WAITBAR')
+        close(wb)
     end
 
     % Statistical analysis

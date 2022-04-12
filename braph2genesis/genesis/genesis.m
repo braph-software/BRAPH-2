@@ -45,35 +45,35 @@ disp('¡! created target dir')
 % src
 mkdir([target_dir fp 'src' fp 'util'])
 mkdir([target_dir fp 'src' fp 'ds'])
+mkdir([target_dir fp 'src' fp 'gt'])
 mkdir([target_dir fp 'src' fp 'atlas'])
 mkdir([target_dir fp 'src' fp 'cohort'])
-mkdir([target_dir fp 'src' fp 'gt'])
 mkdir([target_dir fp 'src' fp 'analysis'])
-mkdir([target_dir fp 'src' fp 'gui'])
-mkdir([target_dir fp 'src' fp 'gui' fp 'prop_order'])
 mkdir([target_dir fp 'src' fp 'nn'])
+mkdir([target_dir fp 'src' fp 'gui'])
+mkdir([target_dir fp 'src' fp 'gui' fp 'layouts'])
 
 disp('¡! created dir structure - SRC')
-
-% brainsurfs
-mkdir([target_dir fp 'brainsurfs'])
-
-disp('¡! created dir structure - BRAINGRAPHS')
 
 % graphs
 mkdir([target_dir fp 'graphs'])
 
 disp('¡! created dir structure - GRAPHS')
 
-% neural networks
-mkdir([target_dir fp 'neuralnetworks'])
-
-disp('¡! created dir structure - NEURALNETWORKS')
-
 % measures
 mkdir([target_dir fp 'measures'])
 
 disp('¡! created dir structure - MEASURES')
+
+% brainsurfs
+mkdir([target_dir fp 'brainsurfs'])
+
+disp('¡! created dir structure - BRAINSURFS')
+
+% neural networks
+mkdir([target_dir fp 'neuralnetworks'])
+
+disp('¡! created dir structure - NEURALNETWORKS')
 
 % pipelines
 mkdir([target_dir fp 'pipelines'])
@@ -89,7 +89,7 @@ disp(' ')
 
 %% COPY READY FILES
 % braph2.m and license.rtf
-copyfile([source_dir fp 'braph2' fp 'braph2.m'], [target_dir fp 'braph2.m'])
+copyfile([source_dir fp '_braph2' fp 'braph2.m'], [target_dir fp 'braph2.m'])
 copyfile([source_dir fp 'braph2license.rtf'], [target_dir fp 'braph2license.rtf'])
 disp('¡! copied ready files - braph2')
 disp(' ')
@@ -99,20 +99,20 @@ copydir([source_dir fp 'src' fp 'util'], [target_dir fp 'src' fp 'util'])
 disp('¡! copied ready files - util')
 copydir([source_dir fp 'src' fp 'ds'], [target_dir fp 'src' fp 'ds'])
 disp('¡! copied ready files - ds')
-copydir([source_dir fp 'src' fp 'gt'], [target_dir fp 'src' fp 'gt'])
-disp('¡! copied ready files - gt')
 copydir([source_dir fp 'src' fp 'atlas'], [target_dir fp 'src' fp 'atlas'])
 disp('¡! copied ready files - atlas')
+copydir([source_dir fp 'src' fp 'gt'], [target_dir fp 'src' fp 'gt'])
+disp('¡! copied ready files - gt')
 copydir([source_dir fp 'src' fp 'cohort'], [target_dir fp 'src' fp 'cohort'])
 disp('¡! copied ready files - cohort')
 copydir([source_dir fp 'src' fp 'analysis'], [target_dir fp 'src' fp 'analysis'])
 disp('¡! copied ready files - analysis')
-copydir([source_dir fp 'src' fp 'gui'], [target_dir fp 'src' fp 'gui'])
-disp('¡! copied ready files - gui')
-copydir([source_dir fp 'src' fp 'gui' fp 'prop_order'], [target_dir fp 'src' fp 'gui' fp 'prop_order'])
-disp('¡! copied ready files - gui - prop_order')
 copydir([source_dir fp 'src' fp 'nn'], [target_dir fp 'src' fp 'nn'])
 disp('¡! copied ready files - nn')
+copydir([source_dir fp 'src' fp 'gui'], [target_dir fp 'src' fp 'gui'])
+disp('¡! copied ready files - gui')
+copydir([source_dir fp 'src' fp 'gui' fp 'layouts'], [target_dir fp 'src' fp 'gui' fp 'layouts'])
+disp('¡! copied ready files - gui - layouts')
 disp(' ')
 
 % graphs
@@ -125,16 +125,16 @@ copydir([source_dir fp 'measures'], [target_dir fp 'measures'], Inf)
 disp('¡! copied ready files - measures')
 disp(' ')
 
-% neuralnetworks
-copydir([source_dir fp 'neuralnetworks'], [target_dir fp 'neuralnetworks'], Inf)
-disp('¡! copied ready files - neuralnetworks')
-disp(' ')
-    
 % brainsurfs
 copydir([source_dir fp 'brainsurfs'], [target_dir fp 'brainsurfs'], Inf)
 disp('¡! copied ready files - brainsurf')
 disp(' ')
 
+% neuralnetworks
+copydir([source_dir fp 'neuralnetworks'], [target_dir fp 'neuralnetworks'], Inf)
+disp('¡! copied ready files - neuralnetworks')
+disp(' ')
+    
 % pipelines
 copydir([source_dir fp 'pipelines'], [target_dir fp 'pipelines'], Inf)
 disp('¡! copied ready files - brainsurf')
@@ -151,63 +151,63 @@ for run = 1:1:run_number
     disp(['¡! started run number ' int2str(run)])
     
     % src
+    util_gen_list = getGenerators([source_dir fp 'src' fp 'util']);
+    parfor i = 1:numel(util_gen_list)
+        create_Element([source_dir fp 'src' fp 'util' fp util_gen_list{i}], [target_dir fp 'src' fp 'util'])
+    end
+    
     ds_gen_list = getGenerators([source_dir fp 'src' fp 'ds']);
-    for i = 1:1:numel(ds_gen_list)
+    parfor i = 1:numel(ds_gen_list)
         create_Element([source_dir fp 'src' fp 'ds' fp ds_gen_list{i}], [target_dir fp 'src' fp 'ds'])
     end
-
-    util_gen_list = getGenerators([source_dir fp 'src' fp 'util']);
-    for i = 1:1:numel(util_gen_list)
-        create_Element([source_dir fp 'src' fp 'util' fp util_gen_list{i}], [target_dir fp 'src' fp 'util'])
+    
+    gt_gen_list = getGenerators([source_dir fp 'src' fp 'gt']);
+    parfor i = 1:numel(gt_gen_list)
+        create_Element([source_dir fp 'src' fp 'gt' fp gt_gen_list{i}], [target_dir fp 'src' fp 'gt'])
     end
 
     atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
-    for i = 1:1:numel(atlas_gen_list)
+    parfor i = 1:numel(atlas_gen_list)
         create_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
     end
     
     cohort_gen_list = getGenerators([source_dir fp 'src' fp 'cohort']);
-    for i = 1:1:numel(cohort_gen_list)
+    parfor i = 1:numel(cohort_gen_list)
         create_Element([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'cohort'])
     end
     
-    gt_gen_list = getGenerators([source_dir fp 'src' fp 'gt']);
-    for i = 1:1:numel(gt_gen_list)
-        create_Element([source_dir fp 'src' fp 'gt' fp gt_gen_list{i}], [target_dir fp 'src' fp 'gt'])
-    end
-    
     analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
-    for i = 1:1:numel(analysis_gen_list)
+    parfor i = 1:numel(analysis_gen_list)
         create_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
     end
     
     % nn
     nn_gen_list = getGenerators([source_dir fp 'src' fp 'nn']);
-    for i = 1:1:numel(nn_gen_list)
+    parfor i = 1:numel(nn_gen_list)
         create_Element([source_dir fp 'src' fp 'nn' fp nn_gen_list{i}], [target_dir fp 'src' fp 'nn'])
     end
     
     % graphs
     graphs_gen_list = getGenerators([source_dir fp 'graphs']);
-    for i = 1:1:numel(graphs_gen_list)
+    parfor i = 1:numel(graphs_gen_list)
         create_Element([source_dir fp 'graphs' fp graphs_gen_list{i}], [target_dir fp 'graphs'])
     end
     
     % measures
     measures_gen_list = getGenerators([source_dir fp 'measures']);
-    for i = 1:1:numel(measures_gen_list)
+    parfor i = 1:numel(measures_gen_list)
         create_Element([source_dir fp 'measures' fp measures_gen_list{i}], [target_dir fp 'measures'])
     end
     
     % neural networks
     neuralnetworks_gen_list = getGenerators([source_dir fp 'neuralnetworks']);
-    for i = 1:1:numel(neuralnetworks_gen_list)
+    parfor i = 1:numel(neuralnetworks_gen_list)
         create_Element([source_dir fp 'neuralnetworks' fp neuralnetworks_gen_list{i}], [target_dir fp 'neuralnetworks'])
     end
     
     % gui
     gui_gen_list = getGenerators([source_dir fp 'src' fp 'gui']);
-    for i = 1:1:numel(gui_gen_list)
+    parfor i = 1:numel(gui_gen_list)
         create_Element([source_dir fp 'src' fp 'gui' fp gui_gen_list{i}], [target_dir fp 'src' fp 'gui'])
     end
     
@@ -218,7 +218,7 @@ for run = 1:1:run_number
     for i = 1:1:length(pipelines_dir_list)
         wf_name = pipelines_dir_list(i).name;
         wf_gen_list = getGenerators([source_dir fp 'pipelines' fp wf_name]);
-        for j = 1:1:numel(wf_gen_list)
+        parfor j = 1:numel(wf_gen_list)
             create_Element([source_dir fp 'pipelines' fp wf_name fp wf_gen_list{j}], [target_dir fp 'pipelines' fp wf_name])
         end
     end
@@ -236,63 +236,63 @@ end
 
 %% CREATE TEST
 % src
-ds_gen_list = getGenerators([source_dir fp 'src' fp 'ds']);
-for i = 1:1:numel(ds_gen_list)
-    create_test_Element([source_dir fp 'src' fp 'ds' fp ds_gen_list{i}], [target_dir fp 'src' fp 'ds'])
-end
-
 util_gen_list = getGenerators([source_dir fp 'src' fp 'util']);
-for i = 1:1:numel(util_gen_list)
+parfor i = 1:numel(util_gen_list)
     create_test_Element([source_dir fp 'src' fp 'util' fp util_gen_list{i}], [target_dir fp 'src' fp 'util'])
 end
 
+ds_gen_list = getGenerators([source_dir fp 'src' fp 'ds']);
+parfor i = 1:numel(ds_gen_list)
+    create_test_Element([source_dir fp 'src' fp 'ds' fp ds_gen_list{i}], [target_dir fp 'src' fp 'ds'])
+end
+
+gt_gen_list = getGenerators([source_dir fp 'src' fp 'gt']);
+parfor i = 1:numel(gt_gen_list)
+    create_test_Element([source_dir fp 'src' fp 'gt' fp gt_gen_list{i}], [target_dir fp 'src' fp 'gt'])
+end
+
 atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
-for i = 1:1:numel(atlas_gen_list)
+parfor i = 1:numel(atlas_gen_list)
     create_test_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
 end
 
 cohort_gen_list = getGenerators([source_dir fp 'src' fp 'cohort']);
-for i = 1:1:numel(cohort_gen_list)
+parfor i = 1:numel(cohort_gen_list)
     create_test_Element([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'cohort'])
 end
 
-gt_gen_list = getGenerators([source_dir fp 'src' fp 'gt']);
-for i = 1:1:numel(gt_gen_list)
-    create_test_Element([source_dir fp 'src' fp 'gt' fp gt_gen_list{i}], [target_dir fp 'src' fp 'gt'])
-end
-
 analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
-for i = 1:1:numel(analysis_gen_list)
+parfor i = 1:numel(analysis_gen_list)
     create_test_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
 end
 
 % nn
 nn_gen_list = getGenerators([source_dir fp 'src' fp 'nn']);
-for i = 1:1:numel(nn_gen_list)
+parfor i = 1:numel(nn_gen_list)
     create_test_Element([source_dir fp 'src' fp 'nn' fp nn_gen_list{i}], [target_dir fp 'src' fp 'nn'])
 end
 
 % graphs
 graphs_gen_list = getGenerators([source_dir fp 'graphs']);
-for i = 1:1:numel(graphs_gen_list)
+parfor i = 1:numel(graphs_gen_list)
     create_test_Element([source_dir fp 'graphs' fp graphs_gen_list{i}], [target_dir fp 'graphs'])
 end
 
 % measures
 measures_gen_list = getGenerators([source_dir fp 'measures']);
-for i = 1:1:numel(measures_gen_list)
+parfor i = 1:numel(measures_gen_list)
     create_test_Element([source_dir fp 'measures' fp measures_gen_list{i}], [target_dir fp 'measures'])
 end
 
 % neuralnetworks
 neuralnetworks_gen_list = getGenerators([source_dir fp 'neuralnetworks']);
-for i = 1:1:numel(neuralnetworks_gen_list)
+parfor i = 1:numel(neuralnetworks_gen_list)
     create_test_Element([source_dir fp 'neuralnetworks' fp neuralnetworks_gen_list{i}], [target_dir fp 'neuralnetworks'])
 end 
 
 % gui
 gui_gen_list = getGenerators([source_dir fp 'src' fp 'gui']);
-for i = 1:1:numel(gui_gen_list)
+parfor i = 1:numel(gui_gen_list)
     create_test_Element([source_dir fp 'src' fp 'gui' fp gui_gen_list{i}], [target_dir fp 'src' fp 'gui'])
 end
 
@@ -303,7 +303,7 @@ pipelines_dir_list = pipelines_dir_list(~ismember({pipelines_dir_list(:).name}, 
 for i = 1:1:length(pipelines_dir_list)
     wf_name = pipelines_dir_list(i).name;
     wf_gen_list = getGenerators([source_dir fp 'pipelines' fp wf_name]);
-    for j = 1:1:numel(wf_gen_list)
+    parfor j = 1:numel(wf_gen_list)
         create_test_Element([source_dir fp 'pipelines' fp wf_name fp wf_gen_list{j}], [target_dir fp 'pipelines' fp wf_name])
     end
 end

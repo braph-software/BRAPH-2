@@ -24,14 +24,14 @@ NOTES (metadata, string) are some specific notes about the group-based compariso
 MEASURE (data, string) is the measure class.
 
 %%% ¡prop!
+MEASUREPARAM(data, item) provides the measure parameters. 
+%%%% ¡settings!
+'Measure'
+
+%%% ¡prop!
 C (data, item) is the group-based comparison.
 %%%% ¡settings!
 'CompareGroup'
-
-%%% ¡prop!
-MEASUREPARAM(data, item) is the example measure parameters 
-%%%% ¡settings!
-'Measure'
 
 %%% ¡prop!
 DIFF (result, cell) is the group comparison value.
@@ -39,48 +39,49 @@ DIFF (result, cell) is the group comparison value.
 [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp);
 value = diff;
 %%%% ¡gui!
-pl = PPComparisonGroupDiff('EL', cp, 'PROP', ComparisonGroup.DIFF, varargin{:});
+pr = PPComparisonGroup_Diff('EL', cp, 'PROP', ComparisonGroup.DIFF, varargin{:});
 
 %%% ¡prop!
 P1 (result, cell) is the one-tailed p-value.
 %%%% ¡calculate!
 [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp);
 value = p1;
-%%%% ¡gui!
-pl = PPComparisonGroupDiff('EL', cp, 'PROP', ComparisonGroup.P1, varargin{:});
+%%%% ¡gui__!
+% % % pl = PPComparisonGroupDiff('EL', cp, 'PROP', ComparisonGroup.P1, varargin{:});
 
 %%% ¡prop!
 P2 (result, cell) is the two-tailed p-value.
 %%%% ¡calculate!
 [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp);
 value = p2;
-%%%% ¡gui!
-pl = PPComparisonGroupDiff('EL', cp, 'PROP', ComparisonGroup.P2, varargin{:});
+%%%% ¡gui__!
+% % % pl = PPComparisonGroupDiff('EL', cp, 'PROP', ComparisonGroup.P2, varargin{:});
 
 %%% ¡prop!
 CIL (result, cell) is the lower value of the 95%% confidence interval.
 %%%% ¡calculate!
 [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp);
 value = ci_lower;
-%%%% ¡gui!
-pl = PPComparisonGroupDiff('EL', cp, 'PROP', ComparisonGroup.CIL, varargin{:});
+%%%% ¡gui__!
+% % % pl = PPComparisonGroupDiff('EL', cp, 'PROP', ComparisonGroup.CIL, varargin{:});
 
 %%% ¡prop!
 CIU (result, cell) is the upper value of the 95%% confidence interval.
 %%%% ¡calculate!
 [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp);
 value = ci_upper;
-%%%% ¡gui!
-pl = PPComparisonGroupDiff('EL', cp, 'PROP', ComparisonGroup.CIU, varargin{:});
+%%%% ¡gui__!
+% % % pl = PPComparisonGroupDiff('EL', cp, 'PROP', ComparisonGroup.CIU, varargin{:});
 
 %% ¡methods!
 function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     %CALCULATE_RESULTS calculates the comparison results.
     %
-    % [P1, P2, CIL, CIU] = CALCULATE_RESULTS(CP) calcultes the one-talied
-    %  p-value P1, the two-tailed p-value P2, the lower bound of the confidence
-    %  interval CIL, and the the upper bound of the confidence interval.
-    %  Typically, this methos is only called internally.
+    % [DIFF, P1, P2, CIL, CIU] = CALCULATE_RESULTS(CP) calcultes the
+    %  difference, the one-tailed p-value P1, the two-tailed p-value P2,
+    %  the lower bound of the confidence interval CIL, and the the upper
+    %  bound of the confidence interval. 
+    %  Typically, this method is only called internally.
 
     measure_class = cp.get('MEASURE');
     if isempty(cp.get('MEASURE'))
@@ -92,8 +93,8 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
         return
     end
     
+	% get parameters from example measure
     core_measure = cp.get('MEASUREPARAM');
-    % get parameters from core measure
     j = 1;
     varargin = {};
     if Measure.getPropNumber() ~= core_measure.getPropNumber()
@@ -108,9 +109,10 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     end
     
     c = cp.get('C');
-    verbose = c.get('VERBOSE');
-    interruptible = c.get('INTERRUPTIBLE');
-    memorize = c.get('MEMORIZE');
+    if c.get('WAITBAR')
+        wb = waitbar(0, 'Comparing group analyses ...', 'Name', BRAPH2.NAME);
+        set_braph2icon(wb)
+    end    
 
     % Measure for groups 1 and 2, and their difference
     m1 = c.get('A1').get('G').getMeasure(measure_class, varargin{:}).memorize('M');
@@ -126,18 +128,25 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
 
     start = tic;
     for i = 1:1:P
-        [a1_perm, a2_perm] = c.getPerm(i, memorize);
+        [a1_perm, a2_perm] = c.getPerm(i, c.get('MEMORIZE'));
 
         m1_perms{1, i} = a1_perm.memorize('G').getMeasure(measure_class).memorize('M');
         m2_perms{1, i} = a2_perm.memorize('G').getMeasure(measure_class).memorize('M');
         diff_perms{1, i} = cellfun(@(x, y) y - x, m1_perms{1, i}, m2_perms{1, i}, 'UniformOutput', false);
 
-        if interruptible
-            pause(interruptible)
+        if c.get('WAITBAR')
+            waitbar(i / P, wb, ['Permutation ' num2str(i) ' of ' num2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's ...']);
         end
-        if verbose
+        if c.get('VERBOSE')
             disp(['** PERMUTATION TEST - sampling #' int2str(i) '/' int2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's'])
         end
+        if c.get('INTERRUPTIBLE')
+            pause(c.get('INTERRUPTIBLE'))
+        end        
+    end
+    
+    if c.get('WAITBAR')
+        close(wb)
     end
 
     % Statistical analysis

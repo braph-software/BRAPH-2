@@ -12,42 +12,117 @@ BrainAtlas can be imported/exported to .txt, .xls and .json files.
 Element, BrainRegion, BrainSurface, ImporterBrainAtlasXLS, ImporterBrainAtlasTXT, ExporterBrainAtlasXLS, ExporterBrainAtlasTXT
 
 %%% ¡gui!
+
 %%%% ¡menu_importer!
-importers_names = {'ImporterBrainAtlasTXT', 'ImporterBrainAtlasXLS'};
-for k = 1:length(importers_names)
-    imp = importers_names{k};
-    uimenu(ui_menu_import, ...
-        'Label', [imp ' ...'], ...
-        'Callback', {@cb_importers});
+uimenu(menu_import, ...
+    'Label', 'Import TXT ...', ...
+    'Callback', {@cb_importer_TXT});
+function cb_importer_TXT(~, ~)
+    im = ImporterBrainAtlasTXT( ...
+        'ID', 'Import Brain Atlas from TXT', ...
+        'WAITBAR', true ...
+        );
+    im.uigetfile();
+    try
+        if isfile(im.get('FILE'))
+            % pe.set('EL', im.get('PIP')); 
+            % pe.reinit();
+
+            ba = pe.get('EL');
+            
+            assert( ...
+                all(cellfun(@(prop) ~ba.isLocked(prop), num2cell(ba.getProps()))), ...
+                [BRAPH2.STR ':BrainAtlas:' BRAPH2.BUG_FUNC], ...
+                'To import an element, all its properties must be unlocked.' ...
+                )
+            
+            ba_new = im.get('BA');
+            for prop = 1:1:ba.getPropNumber()
+                if ba.getPropCategory(prop) ~= Category.RESULT
+                    ba.set(prop, ba_new.get(prop))
+                end
+            end
+            
+            pe.reinit(ba_new);
+        end
+    catch e
+        warndlg(['Please, select a valid input BrainAtlas in TXT format. ' newline() ...
+            newline() ...
+            'Error message:' newline() ...
+            newline() ...
+            e.message newline()], 'Warning');
+    end
 end
 
-function cb_importers(src, ~)
-    src_name = erase(src.Text, ' ...');
-    imp_el = eval([src_name '(' '''ID''' ',' '''GUI''' ')']);
-    imp_el.uigetfile();
+uimenu(menu_import, ...
+    'Label', 'Import XLS ...', ...
+    'Callback', {@cb_importer_XLS});
+function cb_importer_XLS(~, ~)
+    im = ImporterBrainAtlasXLS( ...
+        'ID', 'Import Brain Atlas from XLS', ...
+        'WAITBAR', true ...
+        );
+    im.uigetfile();
     try
-        tmp_el = imp_el.get('BA');
-        plot_element.set('El', tmp_el);
-        plot_element.reinit();
+        if isfile(im.get('FILE'))
+            % pe.set('EL', im.get('PIP')); 
+            % pe.reinit();
+
+            ba = pe.get('EL');
+            
+            assert( ...
+                all(cellfun(@(prop) ~ba.isLocked(prop), num2cell(ba.getProps()))), ...
+                [BRAPH2.STR ':BrainAtlas:' BRAPH2.BUG_FUNC], ...
+                'To import an element, all its properties must be unlocked.' ...
+                )
+            
+            ba_new = im.get('BA');
+            for prop = 1:1:ba.getPropNumber()
+                if ba.getPropCategory(prop) ~= Category.RESULT
+                    ba.set(prop, ba_new.get(prop))
+                end
+            end
+            
+            pe.reinit(ba_new);
+        end
     catch e
-        warndlg(['Please select a valid input. ' e.message], 'Warning');
+        warndlg(['Please, select a valid input BrainAtlas in XLS format. ' newline() ...
+            newline() ...
+            'Error message:' newline() ...
+            newline() ...
+            e.message newline()], 'Warning');
     end
 end
 
 %%%% ¡menu_exporter!
-exporters_names = {'ExporterBrainAtlasTXT', 'ExporterBrainAtlasXLS'};
-for k = 1:length(exporters_names)
-    exp = exporters_names{k};
-    uimenu(ui_menu_export, ...
-        'Label', [exp ' ...'], ...
-        'Callback', {@cb_exporters});
+uimenu(menu_export, ...
+    'Label', 'Export TXT ...', ...
+    'Callback', {@cb_exporter_TXT});
+function cb_exporter_TXT(~, ~)
+    ex = ExporterBrainAtlasTXT( ...
+        'ID', 'Export Brain Atlas to TXT', ...
+        'BA', el.copy(), ...
+        'WAITBAR', true ...
+        );
+    ex.uiputfile()
+    if ~strcmp(ex.get('FILE'), ExporterBrainAtlasTXT.getPropDefault('FILE'))
+        ex.get('SAVE');
+    end
 end
-function cb_exporters(src, ~)
-    src_name = erase(src.Text, ' ...');
-    tmp_el = plot_element.get('EL'); %#ok<NASGU>
-    exmp_el = eval([src_name '(' '''BA''' ', tmp_el)']);
-    exmp_el.uiputfile();
-    exmp_el.get('SAVE');
+
+uimenu(menu_export, ...
+    'Label', 'Export XLS ...', ...
+    'Callback', {@cb_exporter_XLS});
+function cb_exporter_XLS(~, ~)
+    ex = ExporterBrainAtlasXLS( ...
+        'ID', 'Export Brain Atlas to XLS', ...
+        'BA', el.copy(), ...
+        'WAITBAR', true ...
+        );
+    ex.uiputfile()
+    if ~strcmp(ex.get('FILE'), ExporterBrainAtlasXLS.getPropDefault('FILE'))
+        ex.get('SAVE');
+    end
 end
 
 %% ¡props!
@@ -60,20 +135,24 @@ LABEL (metadata, string) is an extended label of the brain atlas.
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the brain atlas.
+%%%% ¡gui!
+pr = PlotPropString('EL', ba, 'PROP', BrainAtlas.NOTES, 'LINES', 'multi', 'EDITHEIGHT', 4.5, varargin{:});
 
 %%% ¡prop!
 BR_DICT (data, idict) contains the brain regions of the brain atlas.
 %%%% ¡settings!
 'BrainRegion'
 %%%% ¡gui!
-pl = PPBrainAtlasIDict('EL', ba, 'PROP', BrainAtlas.BR_DICT, varargin{:});
+pr = PPBrainAtlas_BRDict('EL', ba, 'PROP', BrainAtlas.BR_DICT, varargin{:});
 
 %%% ¡prop!
 SURF (metadata, item) contains the brain surface of the brain atlas.
 %%%% ¡settings!
 'BrainSurface'
+%%%% ¡default!
+ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF')
 %%%% ¡gui!
-pl = PPBrainAtlasSurf('EL', ba, 'PROP', BrainAtlas.SURF, varargin{:});
+pr = PPBrainAtlas_Surf('EL', ba, 'PROP', BrainAtlas.SURF, varargin{:});
 
 %% ¡tests!
 
@@ -193,6 +272,6 @@ idict_1 = IndexedDictionary( ...
     'it_list', items ...
     );
 ba = BrainAtlas('ID', 'BA1', 'LABEL', 'brain atlas', 'Notes', 'Notes on brain atlas.', 'br_dict', idict_1);
-GUI(ba);
-set(gcf, 'CloseRequestFcn', 'closereq')
+GUI('PE', ba, 'CLOSEREQ', false).draw()
+
 close(gcf)

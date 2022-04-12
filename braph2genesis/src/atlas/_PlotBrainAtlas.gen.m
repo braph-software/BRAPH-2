@@ -65,10 +65,11 @@ f_labs_settings
 
 pp
 h_axes
+
 %% ¡props!
 
 %%% ¡prop!
-ATLAS (metadata, item) is the brain atlas with the brain regions
+ATLAS (metadata, item) is the brain atlas with the brain regions.
 %%%% ¡settings!
 'BrainAtlas'
 
@@ -110,14 +111,14 @@ SYMS_FACE_COLOR (metadata, matrix) is the symbol face color.
 %%%% ¡check_value!
 check = (size(value, 1) == 1 && size(value, 2) == 3)|| (size(value, 1) == pl.get('ATLAS').get('BR_DICT').length() &&  size(value, 2) == 3);
 %%%% ¡default!
-[0.90 0.56 0.15]
+[.90 .56 .15]
 
 %%% ¡prop!
 SYMS_EDGE_COLOR (metadata, matrix) is the symbol edge color.
 %%%% ¡check_value!
 check = (size(value, 1) == 1 && size(value, 2) == 3)|| (size(value, 1) == pl.get('ATLAS').get('BR_DICT').length() &&  size(value, 2) == 3);
 %%%% ¡default!
-[0.90 0.56 0.15]
+[.90 .56 .15]
 
 %%% ¡prop!
 SPHS (metadata, cvector) is sphere visibility.
@@ -255,7 +256,6 @@ LABS_FONT_INTERPRETER (metadata, cvector) is the labs font interpreter.
 check = 1 <= value &&  value <= length(PlotBrainAtlas.PLOT_ID_FONT_INTREPETER);
 %%%% ¡default!
 1
-
 
 %% ¡methods!
 function h_panel = draw(pl, varargin)
@@ -555,14 +555,22 @@ function h_panel = draw(pl, varargin)
                         Y{i} ~= position(2) || ...
                         Z{i} ~= position(3) || ...
                         ~isequal(ID{i}, get(pl.h_ids.h(i), 'String'))
-                    pl.h_ids.h(i) = text(X{i}, Y{i}, Z{i}, ID{i}, 'Parent', pl.h_axes);
+                    delete(pl.h_ids.h(i))
+                    pl.h_ids.h(i) = text(X{i}, Y{i}, Z{i}, ID{i}, ...
+                        'Parent', pl.h_axes, ...
+                        'Visible', 'on', ...
+                        'FontSize', IDS_SIZE(i), ...
+                        'Color' , IDS_FONT_COLOR(i, :), ...
+                        'FontName', pl.get('IDS_FONT_NAME'), ...
+                        'Interpreter', int_ids{1} ...
+                        );
                 end
             end
             % set
             if IDS_SIZE(i) ~= get(pl.h_ids.h(i), 'FontSize') || ...
                     any(isequal(IDS_FONT_COLOR(i, :), get(pl.h_ids.h(i), 'Color'))) || ...
                     any(pl.get('IDS_FONT_NAME') ~= get(pl.h_ids.h(i), 'FontName')) || ...
-                    any(int_ids{1} ~= get(pl.h_ids.h(i), 'Interpreter'))
+                    ~strcmp(int_ids{1},  get(pl.h_ids.h(i), 'Interpreter'))
 
                 set(pl.h_ids.h(i), ...
                     'Visible', 'on', ...
@@ -598,14 +606,22 @@ function h_panel = draw(pl, varargin)
                         Y{i} ~= position(2) || ...
                         Z{i} ~= position(3) || ...
                         ~isequal(LABS{i}, get(pl.h_labs.h(i), 'String'))
-                    pl.h_labs.h(i) = text(X{i}, Y{i}, Z{i}, LABS{i}, 'Parent', pl.h_axes);
+                    delete(pl.h_labs.h(i))
+                    pl.h_labs.h(i) = text(X{i}, Y{i}, Z{i}, LABS{i}, ...
+                        'Parent', pl.h_axes, ...
+                        'Visible', 'on', ...
+                        'FontSize', LABS_SIZE(i), ...
+                        'Color' , LABS_FONT_COLOR(i, :), ...
+                        'FontName', pl.get('LABS_FONT_NAME'), ...
+                        'Interpreter', int_labs{1} ...
+                        );
                 end
             end
             % set
             if LABS_SIZE(i) ~= get(pl.h_labs.h(i), 'FontSize') || ...
-                    any(isequal(LABS_FONT_COLOR(i, :), get(pl.h_labs.h(i), 'Color'))) || ...
+                    ~any(isequal(LABS_FONT_COLOR(i, :), get(pl.h_labs.h(i), 'Color'))) || ...
                     any(pl.get('LABS_FONT_NAME') ~= get(pl.h_labs.h(i), 'FontName')) || ...
-                    any(int_labs{1} ~= get(pl.h_labs.h(i), 'Interpreter'))
+                    ~strcmp(int_labs{1},  get(pl.h_labs.h(i), 'Interpreter'))
 
                 set(pl.h_labs.h(i), ...
                     'Visible', 'on', ...
@@ -643,7 +659,7 @@ function f_settings = settings(pl, varargin)
     %
     % See also draw, figure, isgraphics.
 
-    f_settings = settings@PlotBrainSurface(pl, varargin{:});     
+    f_settings = settings@PlotBrainSurface(pl, varargin{:}); 
 
     ui_toolbar = findall(f_settings, 'Tag', 'FigureToolBar');
     
@@ -715,7 +731,7 @@ function f_out = syms_settings(pl)
 
         set(f, 'units', 'normalized', ...
             'Position', [.60 .50 .30 .30], ...
-            'Color', [1 0.9725 0.929], ...
+            'Color', [1 .9725 .929], ...
             'Name','Brain Region Symbol Settings', ...
             'MenuBar', 'none', ...
             'Toolbar', 'none', ...
@@ -735,7 +751,7 @@ function f_out = syms_settings(pl)
 
         ui_checkbox_id = uicontrol(f, 'Style', 'checkbox');
         set(ui_checkbox_id, 'Units', 'normalized')
-        set(ui_checkbox_id, 'BackgroundColor', [1 0.9725 0.929])
+        set(ui_checkbox_id, 'BackgroundColor', [1 .9725 .929])
         set(ui_checkbox_id, 'Position', [.05 .05 .20 .10])
         set(ui_checkbox_id, 'String', 'id')
         set(ui_checkbox_id, 'Value', true)
@@ -745,7 +761,7 @@ function f_out = syms_settings(pl)
 
         ui_checkbox_label = uicontrol(f, 'Style', 'checkbox');
         set(ui_checkbox_label, 'Units', 'normalized')
-        set(ui_checkbox_label, 'BackgroundColor', [1 0.9725 0.929])
+        set(ui_checkbox_label, 'BackgroundColor', [1 .9725 .929])
         set(ui_checkbox_label, 'Position', [.20 .05 .15 .10])
         set(ui_checkbox_label, 'String', 'label')
         set(ui_checkbox_label, 'Value', false)
@@ -754,7 +770,7 @@ function f_out = syms_settings(pl)
 
         ui_checkbox_xyz = uicontrol(f, 'Style', 'checkbox');
         set(ui_checkbox_xyz, 'Units', 'normalized')
-        set(ui_checkbox_xyz, 'BackgroundColor', [1 0.9725 0.929])
+        set(ui_checkbox_xyz, 'BackgroundColor', [1 .9725 .929])
         set(ui_checkbox_xyz, 'Position', [.35 .05 .15 .10])
         set(ui_checkbox_xyz, 'String', 'xyz')
         set(ui_checkbox_xyz, 'Value', false)
@@ -777,7 +793,7 @@ function f_out = syms_settings(pl)
 
         ui_popup_marker = uicontrol(f, 'Style', 'popup', 'String', {''});
         set(ui_popup_marker, 'Units', 'normalized')
-        set(ui_popup_marker, 'BackgroundColor', [1 0.9725 0.929])
+        set(ui_popup_marker, 'BackgroundColor', [1 .9725 .929])
         set(ui_popup_marker, 'Position', [.50 .50 .45 .10])
         set(ui_popup_marker, 'String', PlotBrainAtlas.PLOT_SYMBOL_NAME)
         set(ui_popup_marker, 'Value', 2)
@@ -786,7 +802,7 @@ function f_out = syms_settings(pl)
 
         ui_text_size = uicontrol(f, 'Style', 'text');
         set(ui_text_size, 'Units', 'normalized')
-        set(ui_text_size, 'BackgroundColor', [1 0.9725 0.929])
+        set(ui_text_size, 'BackgroundColor', [1 .9725 .929])
         set(ui_text_size, 'Position', [.50 .375 .20 .10])
         set(ui_text_size, 'String', 'symbol size ')
         set(ui_text_size, 'HorizontalAlignment', 'left')
@@ -794,7 +810,7 @@ function f_out = syms_settings(pl)
 
         ui_edit_size = uicontrol(f, 'Style', 'edit');
         set(ui_edit_size, 'Units','normalized')
-        set(ui_edit_size, 'BackgroundColor', [1 0.9725 0.929])
+        set(ui_edit_size, 'BackgroundColor', [1 .9725 .929])
         set(ui_edit_size, 'Position', [.70 .40 .25 .10])
         set(ui_edit_size, 'HorizontalAlignment', 'center')
         set(ui_edit_size, 'FontWeight', 'bold')
@@ -997,7 +1013,7 @@ function f_out = sphs_settings(pl)
 
     set(f, 'units', 'normalized', ...
         'Position', [.60 .45 .30 .30], ...
-        'Color', [1 0.9725 0.929], ...
+        'Color', [1 .9725 .929], ...
         'Name','Brain Region Sphere Settings', ...
         'MenuBar', 'none', ...
         'Toolbar', 'none', ...
@@ -1017,7 +1033,7 @@ function f_out = sphs_settings(pl)
 
     ui_checkbox_id = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_id, 'Units','normalized')
-    set(ui_checkbox_id, 'BackgroundColor', [1 0.9725 0.929])
+    set(ui_checkbox_id, 'BackgroundColor', [1 .9725 .929])
     set(ui_checkbox_id, 'Position', [.05 .05 .20 .10])
     set(ui_checkbox_id, 'String', 'id')
     set(ui_checkbox_id, 'Value', true)
@@ -1027,7 +1043,7 @@ function f_out = sphs_settings(pl)
 
     ui_checkbox_label = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_label, 'Units','normalized')
-    set(ui_checkbox_label, 'BackgroundColor', [1 0.9725 0.929])
+    set(ui_checkbox_label, 'BackgroundColor', [1 .9725 .929])
     set(ui_checkbox_label, 'Position', [.20 .05 .15 .10])
     set(ui_checkbox_label, 'String', 'label')
     set(ui_checkbox_label, 'Value', false)
@@ -1036,7 +1052,7 @@ function f_out = sphs_settings(pl)
 
     ui_checkbox_xyz = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_xyz, 'Units','normalized')
-    set(ui_checkbox_xyz, 'BackgroundColor', [1 0.9725 0.929])
+    set(ui_checkbox_xyz, 'BackgroundColor', [1 .9725 .929])
     set(ui_checkbox_xyz, 'Position', [.35 .05 .15 .10])
     set(ui_checkbox_xyz, 'String', 'xyz')
     set(ui_checkbox_xyz, 'Value', false)
@@ -1059,7 +1075,7 @@ function f_out = sphs_settings(pl)
 
     ui_text = uicontrol(f, 'Style', 'text');
     set(ui_text, 'Units','normalized')
-    set(ui_text, 'BackgroundColor', [1 0.9725 0.929])
+    set(ui_text, 'BackgroundColor', [1 .9725 .929])
     set(ui_text, 'String', 'transparency')
     set(ui_text, 'Position', [.70 .60 .25 .10])
     set(ui_text, 'HorizontalAlignment', 'center')
@@ -1075,7 +1091,7 @@ function f_out = sphs_settings(pl)
 
     ui_slider_alpha = uicontrol(f, 'Style', 'slider');
     set(ui_slider_alpha, 'Units','normalized')
-    set(ui_slider_alpha, 'BackgroundColor', [1 0.9725 0.929])
+    set(ui_slider_alpha, 'BackgroundColor', [1 .9725 .929])
     set(ui_slider_alpha, 'Position', [.70 .475 .25 .10])
     set(ui_slider_alpha, 'String', 'Brain region transparency')
     set(ui_slider_alpha, 'Min', 0, 'Max',1, 'Value',.5);
@@ -1092,7 +1108,7 @@ function f_out = sphs_settings(pl)
 
     ui_slider_facealpha = uicontrol(f, 'Style', 'slider');
     set(ui_slider_facealpha, 'Units', 'normalized')
-    set(ui_slider_facealpha, 'BackgroundColor', [1 0.9725 0.929])
+    set(ui_slider_facealpha, 'BackgroundColor', [1 .9725 .929])
     set(ui_slider_facealpha, 'Position', [.70 .325 .25 .10])
     set(ui_slider_facealpha, 'String', 'Brain region transparency')
     set(ui_slider_facealpha, 'Min', 0, 'Max', 1, 'Value', .5)
@@ -1109,7 +1125,7 @@ function f_out = sphs_settings(pl)
 
     ui_slider_edgealpha = uicontrol(f, 'Style', 'slider');
     set(ui_slider_edgealpha, 'Units', 'normalized')
-    set(ui_slider_edgealpha, 'BackgroundColor', [1 0.9725 0.929])
+    set(ui_slider_edgealpha, 'BackgroundColor', [1 .9725 .929])
     set(ui_slider_edgealpha, 'Position', [.70 .175 .25 .10])
     set(ui_slider_edgealpha, 'String', 'Brain transparency')
     set(ui_slider_edgealpha, 'Min', 0, 'Max', 1, 'Value', .5)
@@ -1118,7 +1134,7 @@ function f_out = sphs_settings(pl)
 
     ui_text_radius = uicontrol(f, 'Style', 'text');
     set(ui_text_radius, 'Units', 'normalized')
-    set(ui_text_radius, 'BackgroundColor', [1 0.9725 0.929])
+    set(ui_text_radius, 'BackgroundColor', [1 .9725 .929])
     set(ui_text_radius, 'Position', [.50 .025 .20 .10])
     set(ui_text_radius, 'String', 'sphere radius ')
     set(ui_text_radius, 'HorizontalAlignment', 'left')
@@ -1126,7 +1142,7 @@ function f_out = sphs_settings(pl)
 
     ui_edit_radius = uicontrol(f, 'Style', 'edit');
     set(ui_edit_radius, 'Units', 'normalized')
-    set(ui_edit_radius, 'BackgroundColor', [1 0.9725 0.929])
+    set(ui_edit_radius, 'BackgroundColor', [1 .9725 .929])
     set(ui_edit_radius, 'Position', [.70 .05 .25 .10])
     set(ui_edit_radius, 'HorizontalAlignment', 'center')
     set(ui_edit_radius, 'FontWeight', 'bold')
@@ -1372,7 +1388,7 @@ function f_out = ids_settings(pl)
 
     set(f, 'units', 'normalized', ...
         'Position', [.60 .35 .30 .30], ...
-        'Color', [1 0.9725 0.929], ...
+        'Color', [1 .9725 .929], ...
         'Name','Brain Region Ids Settings', ...
         'MenuBar', 'none', ...
         'Toolbar', 'none', ...
@@ -1392,7 +1408,7 @@ function f_out = ids_settings(pl)
 
     ui_checkbox_id = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_id, 'Units', 'normalized')
-    set(ui_checkbox_id, 'BackgroundColor', [1 0.9725 0.929])
+    set(ui_checkbox_id, 'BackgroundColor', [1 .9725 .929])
     set(ui_checkbox_id, 'Position', [.05 .05 .20 .10])
     set(ui_checkbox_id, 'String', 'id')
     set(ui_checkbox_id, 'Value', true)
@@ -1402,7 +1418,7 @@ function f_out = ids_settings(pl)
 
     ui_checkbox_label = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_label, 'Units', 'normalized')
-    set(ui_checkbox_label, 'BackgroundColor', [1 0.9725 0.929])
+    set(ui_checkbox_label, 'BackgroundColor', [1 .9725 .929])
     set(ui_checkbox_label, 'Position', [.20 .05 .15 .10])
     set(ui_checkbox_label, 'String', 'label')
     set(ui_checkbox_label, 'Value', false)
@@ -1411,7 +1427,7 @@ function f_out = ids_settings(pl)
 
     ui_checkbox_xyz = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_xyz, 'Units', 'normalized')
-    set(ui_checkbox_xyz, 'BackgroundColor', [1 0.9725 0.929])
+    set(ui_checkbox_xyz, 'BackgroundColor', [1 .9725 .929])
     set(ui_checkbox_xyz, 'Position', [.35 .05 .15 .10])
     set(ui_checkbox_xyz, 'String', 'xyz')
     set(ui_checkbox_xyz, 'Value', false)
@@ -1448,7 +1464,7 @@ function f_out = ids_settings(pl)
 
     ui_text_interpreter = uicontrol(f, 'Style', 'text');
     set(ui_text_interpreter, 'Units', 'normalized')
-    set(ui_text_interpreter, 'BackgroundColor', [1 0.9725 0.929])
+    set(ui_text_interpreter, 'BackgroundColor', [1 .9725 .929])
     set(ui_text_interpreter, 'Position', [.50 .175 .20 .10])
     set(ui_text_interpreter, 'String', 'interpreter')
     set(ui_text_interpreter, 'HorizontalAlignment', 'left')
@@ -1456,7 +1472,7 @@ function f_out = ids_settings(pl)
 
     ui_popup_interpreter = uicontrol(f, 'Style', 'popup', 'String', {''});
     set(ui_popup_interpreter, 'Units', 'normalized')
-    set(ui_popup_interpreter, 'BackgroundColor', [1 0.9725 0.929])
+    set(ui_popup_interpreter, 'BackgroundColor', [1 .9725 .929])
     set(ui_popup_interpreter, 'Position', [.75 .20 .20 .10])
     set(ui_popup_interpreter, 'String', {'none', 'tex', 'latex'})
     set(ui_popup_interpreter, 'Value', 2)
@@ -1617,7 +1633,7 @@ function f_out = labs_settings(pl)
 
     set(f, 'units', 'normalized', ...
         'Position', [.60 .40 .30 .30], ...
-        'Color', [1 0.9725 0.929], ...
+        'Color', [1 .9725 .929], ...
         'Name','Brain Region Labels Settings', ...
         'MenuBar', 'none', ...
         'Toolbar', 'none', ...
@@ -1637,7 +1653,7 @@ function f_out = labs_settings(pl)
 
     ui_checkbox_id = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_id, 'Units', 'normalized')
-    set(ui_checkbox_id, 'BackgroundColor', [1 0.9725 0.929])
+    set(ui_checkbox_id, 'BackgroundColor', [1 .9725 .929])
     set(ui_checkbox_id, 'Position', [.05 .05 .20 .10])
     set(ui_checkbox_id, 'String', 'id')
     set(ui_checkbox_id, 'Value', true)
@@ -1647,7 +1663,7 @@ function f_out = labs_settings(pl)
 
     ui_checkbox_label = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_label, 'Units', 'normalized')
-    set(ui_checkbox_label, 'BackgroundColor', [1 0.9725 0.929])
+    set(ui_checkbox_label, 'BackgroundColor', [1 .9725 .929])
     set(ui_checkbox_label, 'Position', [.20 .05 .15 .10])
     set(ui_checkbox_label, 'String', 'label')
     set(ui_checkbox_label, 'Value', false)
@@ -1656,7 +1672,7 @@ function f_out = labs_settings(pl)
 
     ui_checkbox_xyz = uicontrol(f, 'Style', 'checkbox');
     set(ui_checkbox_xyz, 'Units', 'normalized')
-    set(ui_checkbox_xyz, 'BackgroundColor', [1 0.9725 0.929])
+    set(ui_checkbox_xyz, 'BackgroundColor', [1 .9725 .929])
     set(ui_checkbox_xyz, 'Position', [.35 .05 .15 .10])
     set(ui_checkbox_xyz, 'String', 'xyz')
     set(ui_checkbox_xyz, 'Value', false)
@@ -1693,7 +1709,7 @@ function f_out = labs_settings(pl)
 
     ui_text_interpreter = uicontrol(f, 'Style', 'text');
     set(ui_text_interpreter, 'Units', 'normalized')
-    set(ui_text_interpreter, 'BackgroundColor', [1 0.9725 0.929])
+    set(ui_text_interpreter, 'BackgroundColor', [1 .9725 .929])
     set(ui_text_interpreter, 'Position', [.50 .175 .20 .10])
     set(ui_text_interpreter, 'String', 'interpreter')
     set(ui_text_interpreter, 'HorizontalAlignment', 'left')
@@ -1701,7 +1717,7 @@ function f_out = labs_settings(pl)
 
     ui_popup_interpreter = uicontrol(f, 'Style', 'popup', 'String', {''});
     set(ui_popup_interpreter, 'Units', 'normalized')
-    set(ui_popup_interpreter, 'BackgroundColor', [1 0.9725 0.929])
+    set(ui_popup_interpreter, 'BackgroundColor', [1 .9725 .929])
     set(ui_popup_interpreter, 'Position', [.75 .20 .20 .10])
     set(ui_popup_interpreter, 'String', {'none', 'tex', 'latex'})
     set(ui_popup_interpreter, 'Value', 2)
@@ -1837,6 +1853,51 @@ function f_out = labs_settings(pl)
 
     if nargout > 0
         f_out = f;
+    end
+end
+function cb_bring_to_front(pl)
+    %CB_BRING_TO_FRONT brings to front the brain atlas figure and its settings figure.
+    %
+    % CB_BRING_TO_FRONT(PR) brings to front the brain atlas figure and its
+    %  settings figure.
+    %
+    % See also cb_hide, cb_close.
+
+    pl.cb_bring_to_front@Plot();
+    
+    if check_graphics(pl.f_syms_settings, 'figure')
+        set(pl.f_syms_settings, 'Visible' , 'on', 'WindowState', 'normal');
+    end
+    if  check_graphics(pl.f_sphs_settings, 'figure')
+        set(pl.f_sphs_settings, 'Visible' , 'on', 'WindowState', 'normal');
+    end
+    if check_graphics(pl.f_ids_settings, 'figure')
+        set(pl.f_ids_settings, 'Visible' , 'on', 'WindowState', 'normal');
+    end
+    if check_graphics(pl.f_labs_settings, 'figure')
+        set(pl.f_labs_settings, 'Visible' , 'on', 'WindowState', 'normal');
+    end
+end
+function cb_hide(pl)
+    %CB_HIDE hides the brain atlas figure and its settings figure.
+    %
+    % CB_HIDE(PR) hides the brain atlas figure and its settings figure.
+    %
+    % See also cb_bring_to_front, cb_close.
+    
+    pl.cb_hide@Plot();
+    
+    if check_graphics(pl.f_syms_settings, 'figure')
+        set(pl.f_syms_settings, 'Visible' , 'off');
+    end
+    if check_graphics(pl.f_sphs_settings, 'figure')
+        set(pl.f_sphs_settings, 'Visible' , 'off');
+    end
+    if check_graphics(pl.f_ids_settings, 'figure')
+        set(pl.f_ids_settings, 'Visible' , 'off');
+    end
+    if check_graphics(pl.f_labs_settings, 'figure')
+        set(pl.f_labs_settings, 'Visible' , 'off');
     end
 end
 

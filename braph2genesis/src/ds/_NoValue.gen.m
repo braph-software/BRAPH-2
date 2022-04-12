@@ -6,8 +6,8 @@ Sealed = true
 
 %%% ¡description!
 NoValue is an element without values used to represent a value that has
-not been set (for properties of categories PARAMETER AND DATA) or
-calculated (for properties of category RESULT). 
+not been set (for properties of categories METADATA, PARAMETER, DATA, FIGURE or GUI) 
+or calculated (for properties of category RESULT). 
 For computational efficiency, it is best to use only one instance of NV 
 using NoValue.getNoValue(), instead of creating new instances using the 
 constructor NoValue(). 
