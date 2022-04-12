@@ -22,8 +22,8 @@ gr1_fun = ImporterGroupSubjectFUN_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Lo
 gr2_fun = ImporterGroupSubjectFUN_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group FUN 2 from XLS % Group FUN 2
 
 %% Combined Group CON-FUN
-gr1 = CombineGroups_CON_FUN('GR1', gr1_CON, 'GR2', gr1_FUN, 'WAITBAR', true); % Combine CON 1 and FUN 1 % Group CON-FUN 1
-gr2 = CombineGroups_CON_FUN('GR1', gr2_CON, 'GR2', gr2_FUN, 'WAITBAR', true);% Combine CON 2 and FUN 2 % Group CON-FUN 2
+gr1 = CombineGroups_CON_FUN('GR1', gr1_con, 'GR2', gr1_fun, 'WAITBAR', true).get('GR'); % Combine CON 1 and FUN 1 % Group CON-FUN 1
+gr2 = CombineGroups_CON_FUN('GR1', gr2_con, 'GR2', gr2_fun, 'WAITBAR', true).get('GR'); % Combine CON 2 and FUN 2 % Group CON-FUN 2
 
 %% Dataset Construction
 nnd1 = NNData_CON_FUN_MP_WU('GR', gr1, 'TARGET_NAME', gr1.get('ID')); % NN Dataset for Group 1 % NN Group CON-FUN 1
