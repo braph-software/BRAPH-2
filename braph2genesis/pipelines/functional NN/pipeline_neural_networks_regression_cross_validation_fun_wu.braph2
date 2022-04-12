@@ -10,7 +10,7 @@
 ba = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load a Brain Atlas XLS % Brain Atlas
 
 %% Groups
-gr = ImporterGroupSubjectCON_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group FUN from XLS % Group FUN
+gr = ImporterGroupSubjectFUN_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group FUN from XLS % Group FUN
 
 %% Dataset Construction
 nnd = NNData_FUN_WU('GR', gr, 'TARGET_NAME', 'age'); % NN Dataset for Group FUN % NN Group FUN

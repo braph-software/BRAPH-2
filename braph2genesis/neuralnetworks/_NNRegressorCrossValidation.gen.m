@@ -9,6 +9,16 @@ once as a validation while the k-1 remaining folds from the training set.
 The root-mean square error is calculated across folds and repetitions.
 
 %% ¡props!
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the cross validation.
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the cross validation.
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the cross validation.
+
 %%% ¡prop!
 KFOLD (data, scalar) is the number of folds.
 %%%% ¡default!
@@ -32,6 +42,9 @@ num2cell(0.05)
 if ~iscell(value) & isnumeric(value)
     value = num2cell(value);
 end
+%%%% ¡gui!
+pr = PlotPropSmartVector('EL', nncv, 'PROP', NNRegressorCrossValidation.FEATURE_MASK, 'MAX', 10000000, 'MIN', 0, varargin{:});
+
 
 %%% ¡prop!
 SPLIT_KFOLD (result, cell) is a vector stating which subjects belong to each fold.
@@ -69,14 +82,11 @@ if ~isa(nncv.get('GR').getr('SUB_DICT'), 'NoValue')
         idx_per_fold = nncv.get('SPLIT_KFOLD');
         for j = 1:1:nncv.get('KFOLD')
             nnds = NNRegressorDataSplit( ...
-                'ID', ['kfold ', num2str(j), ' repetition ', num2str(i)], ...
+                'ID', ['NN dataset for fold #', num2str(j), ' in repetition #', num2str(i)], ...
                 'GR', nncv.get('GR'), ...
                 'SPLIT', idx_per_fold{j}, ...
                 'FEATURE_MASK', nncv.get('FEATURE_MASK') ...
                 );
-
-            nnds.memorize('GR_VAL_FS');
-            nnds.memorize('GR_TRAIN_FS');
 
             nnds_dict.add(nnds)
         end
@@ -101,9 +111,9 @@ if nncv.memorize('NNDS_DICT').length() > 0
         gr_train = nnds.get('GR_TRAIN_FS');
 
         nn = NNRegressorDNN( ...
-                'ID', nnds.get('ID'), ...
+                'ID', ['NN model cooperated with ', nnds.get('ID')], ...
                 'GR', gr_train, ...
-                'VERBOSE', false, ...
+                'VERBOSE', true, ...
                 'PLOT_TRAINING', false, ...
                 'SHUFFLE', 'every-epoch' ...
                 );
@@ -131,7 +141,7 @@ if nncv.memorize('NN_DICT').length() > 0
         gr_val = nnds.get('GR_VAL_FS');
 
         nne = NNRegressorEvaluator( ...
-                'ID', nn.get('ID'), ...
+                'ID', ['NN evaluator cooperated with ', nnds.get('ID')], ...
                 'GR', gr_val, ...
                 'NN', nn ...
                 );
