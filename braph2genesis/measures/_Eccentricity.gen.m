@@ -258,7 +258,8 @@ assert(isequal(round(calculated_eccentricity{1}(1), 3), round(bct_eccentricity, 
     [BRAPH2.STR ':Eccentricity:' BRAPH2.BUG_ERR], ...
     'Eccentricity is not being calculated correctly for GraphWU.')
 
-%% Functions to calculate Eccentricity from 2019_03_03_BCT
+%%% ¡test_functions!
+% Functions to calculate Eccentricity from 2019_03_03_BCT
 function  [lambda,efficiency,ecc,radius,diameter] = charpath(D,diagonal_dist,infinite_dist)
 %CHARPATH       Characteristic path length, global efficiency and related statistics
 %
