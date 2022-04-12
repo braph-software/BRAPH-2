@@ -20,26 +20,30 @@ GR2 (data, item) is a group of NN subjects.
 
 %%% ¡prop!
 SPLIT_GR1 (data, rvector) is a ratio or a vector stating which subjects belong to the validation set.
-%%%% ¡conditioning!
+%%%% ¡postprocessing!
+value = nnds.get('SPLIT_GR1');
 if length(value) == 1 & value < 1
     num_val = floor(value * nnds.get('GR1').get('SUB_DICT').length());
     num_train = nnds.get('GR1').get('SUB_DICT').length() - num_val;
     value = [ones(1, num_val), zeros(1, num_train)];
     value = value(randperm(length(value)));
     value = find(value == 1);
+    nnds.set('SPLIT_GR1', value);
 end
 %%%% ¡gui!
 pr = PlotPropSmartVector('EL', nnds, 'PROP', NNClassifierDataSplit.SPLIT_GR1, 'MAX', 10000000, 'MIN', 0, varargin{:});
 
 %%% ¡prop!
 SPLIT_GR2 (data, rvector) is a ratio or a vector stating which subjects belong to the validation set.
-%%%% ¡conditioning!
+%%%% ¡postprocessing!
+value = nnds.get('SPLIT_GR2');
 if length(value) == 1 & value < 1
     num_val = floor(value * nnds.get('GR2').get('SUB_DICT').length());
     num_train = nnds.get('GR2').get('SUB_DICT').length() - num_val;
     value = [ones(1, num_val), zeros(1, num_train)];
     value = value(randperm(length(value)));
     value = find(value == 1);
+    nnds.set('SPLIT_GR2', value);
 end
 %%%% ¡gui!
 pr = PlotPropSmartVector('EL', nnds, 'PROP', NNClassifierDataSplit.SPLIT_GR2, 'MAX', 10000000, 'MIN', 0, varargin{:});
@@ -64,9 +68,9 @@ train_nn_gr = NNGroup( ...
     );
 
 train_nn_gr.set( ...
-    'ID', nnds.get(nnGroup).get('ID'), ...
-    'LABEL', nnds.get(nnGroup).get('LABEL'), ...
-    'NOTES', nnds.get(nnGroup).get('NOTES') ...
+    'ID', 'Training set', ...
+    'LABEL', 'Training set', ...
+    'NOTES', 'This training set is used to perform mutual information analysis and train the neural networks.' ...
     );
 
 % setup counter for waitbar
@@ -168,9 +172,9 @@ val_nn_gr = NNGroup( ...
     );
 
 val_nn_gr.set( ...
-    'ID', nnds.get(nnGroup).get('ID'), ...
-    'LABEL', nnds.get(nnGroup).get('LABEL'), ...
-    'NOTES', nnds.get(nnGroup).get('NOTES') ...
+    'ID', 'Validation set', ...
+    'LABEL', 'Validation set', ...
+    'NOTES', 'This validation set is used to test the trained neural networks and it cooperates the feature mask derived from the training set.' ...
     );
 
 % setup counter for waitbar

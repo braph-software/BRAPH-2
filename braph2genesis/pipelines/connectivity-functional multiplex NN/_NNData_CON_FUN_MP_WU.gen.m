@@ -120,12 +120,14 @@ for i = 1:1:gr.get('SUB_DICT').length()
     if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
         adj = g.get('A'); 
         input = {adj{1} adj{4}};
+        input_label = {'MultiplexWU'};
 
     elseif string(nnd.get('INPUT_TYPE')) == "graph_measures"
         input_nodal = [];
         input_binodal = [];
         input_global = [];
         mlist = nnd.get('MEASURES');
+        input_label = mlist;
         for j = 1:length(mlist)
             if Measure.is_nodal(mlist{j})
                 input_nodal = [input_nodal; cell2mat(g.getMeasure(mlist{j}).get('M'))];
@@ -135,7 +137,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
                 input_binodal = [input_binodal; cell2mat(g.getMeasure(mlist{j}).get('M'))];
             end
         end
-        input = {input_nodal input_global input_binodal};
+        input = {input_global input_nodal input_binodal};
     end
 
     nn_sub = NNSubject( ...
@@ -145,6 +147,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
         'sex', sub.get('sex'), ...
         'G', g, ...
         'INPUT', input, ...
+        'INPUT_LABEL', input_label, ...
         'TARGET_NAME', nnd.get('TARGET_NAME') ...
         );
 

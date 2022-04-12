@@ -208,9 +208,9 @@ GR_PREDICTION (result, item) is a group of NN subjects with prediction from NN.
 if nncv.memorize('NNE_DICT').length() > 0
     gr = nncv.get('NNE_DICT').getItem(1).get('GR_PREDICTION');
     gr_prediction = NNGroup( ...
-        'ID', gr.get('ID'), ...
-        'LABEL', gr.get('LABEL'), ...
-        'NOTES', gr.get('NOTES'), ...
+        'ID', 'NN Group with NN prediction', ...
+        'LABEL', 'The predictions are obatined from K-fold cross validation', ...
+        'NOTES', 'All of the predictions are obtained from the validation of each fold', ...
         'SUB_CLASS', gr.get('SUB_CLASS'), ...
         'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject') ...
         );
@@ -348,7 +348,7 @@ FEATURE_MAP (result, cell) is a heat map obtained with feature selection analysi
 %%%% ¡calculate!
 nne_dict = nncv.memorize('NNE_DICT');
 heat_map = {};
-if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('AUC')) && ~any(ismember(subclasses('Measure'), nncv.get('GR1').get('SUB_DICT').getItem(1).get('INPUT_LABEL')))
+if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('AUC')) && ~any(ismember(subclasses('Measure'), nncv.get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('INPUT_LABEL')))
     tmp_map = nne_dict.getItem(1).get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('FEATURE_MASK');
     for i = 1:1:length(tmp_map)
         heat_map{i} = zeros(size(tmp_map{i}));
@@ -405,6 +405,7 @@ if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('AUC')) && 
 
     value = heat_map;
 else
+    braph2msgbox("No visualization for the feature map", "For now, we only provide the feature map visualization for input of adjacency matrix or structural data.")
     value = heat_map;
 end
 %%%% ¡gui!

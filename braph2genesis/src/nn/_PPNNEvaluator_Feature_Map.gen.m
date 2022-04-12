@@ -152,6 +152,13 @@ function redraw(pr, varargin)
         if isgraphics(child_uitable)
             set(child_uitable, 'Visible', 'off');
         end
+        for r = 1:1:size(pr.table_value_cell, 1)
+            for c = 1:1:size(pr.table_value_cell, 2)
+                if isgraphics(pr.table_value_cell{r, c})
+                    set(pr.table_value_cell{r, c}, 'Visible', 'off');
+                end
+            end
+        end
         set(pr.plot_brain_btn, 'Visible', 'off');
         if isgraphics(pr.f_brain)
             delete(pr.f_brain)
@@ -159,7 +166,6 @@ function redraw(pr, varargin)
         pr.redraw@PlotProp('Height', h, varargin{:})
     else
         value_cell = el.get(prop);
-    
         if isempty(value_cell)
             set(pr.plot_brain_btn, 'Visible', 'off');
             if isgraphics(child_uitable)
@@ -180,6 +186,7 @@ function redraw(pr, varargin)
                 table_h = (Dh / (h + Dh) - .01) / size(value_cell, 1);
                 set(pr.table_value_cell{r, c}, ...
                     'Units', 'normalized', ...
+                    'Visible', 'on', ...
                     'Position', ...
                     [ ...
                     .01 + (c - 1) * table_w ...
@@ -189,6 +196,12 @@ function redraw(pr, varargin)
                     ] ...
                     )
             end
+        end
+        input_label = el.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL');
+        if any(ismember(subclasses('Measure'), input_label))
+            set(pr.plot_brain_btn, 'Enable', 'off');
+        else
+            set(pr.plot_brain_btn, 'Enable', 'on');
         end
     end
 end

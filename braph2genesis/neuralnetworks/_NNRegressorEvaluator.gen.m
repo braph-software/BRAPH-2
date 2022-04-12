@@ -53,7 +53,7 @@ else
         if ~exist(directory, 'dir')
             mkdir(directory)
         end
-        filename = [directory filesep 'roc.svg'];
+        filename = [directory filesep 'scatter.svg'];
         saveas(gcf, filename);
     end
 end
