@@ -54,7 +54,7 @@ prop_number = Element.getPropNumber(class_name);
             
             tests{i}.code = splitlines(getToken(tests{i}.token, 'code'));
         end
-        test_functions = getToken(txt, 'tests', 'test_functions');
+        test_functions = splitlines(getToken(txt, 'tests', 'test_functions'));
     end
 
 %% Basic tests
