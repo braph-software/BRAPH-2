@@ -37,7 +37,7 @@ disp('¡! generator file read')
 prop_number = Element.getPropNumber(class_name);
 
 [tests, test_functions] = analyze_tests();
-    function tests = analyze_tests()
+    function [tests, test_functions] = analyze_tests()
         tests = getTokens(txt, 'tests', 'test');
         for i = 1:1:numel(tests)
             tests{i}.name = getToken(tests{i}.token, 'name');
