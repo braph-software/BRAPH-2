@@ -198,18 +198,21 @@ FEATURE_MAP (result, cell) is a heat map obtained with feature selection analysi
 %%%% ¡calculate!
 nne_dict = nncv.memorize('NNE_DICT');
 heat_map = {};
-if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('AUC')) && ~any(ismember(subclasses('Measure'), nncv.get('GR1').get('SUB_DICT').getItem(1).get('INPUT_LABEL')))
+if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('RMSE')) && ~any(ismember(subclasses('Measure'), nncv.get('GR1').get('SUB_DICT').getItem(1).get('INPUT_LABEL')))
     tmp_map = nne_dict.getItem(1).get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('FEATURE_MASK');
     for i = 1:1:length(tmp_map)
         heat_map{i} = zeros(size(tmp_map{i}));
     end
     for i = 1:1:nne_dict.length()
         feature_map = nne_dict.getItem(i).get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('FEATURE_MASK');
-        auc_val = nne_dict.getItem(i).get('AUC');
+        rmse = nne_dict.getItem(i).get('RMSE');
+        if rmse == 0
+            rmse = 0.01;
+        end
         feature_map_out = feature_map;
         for j = 1:1:length(feature_map)
             fm_tmp = feature_map{j};
-            fm_tmp(fm_tmp == 1) = auc_val{1};
+            fm_tmp(fm_tmp == 1) = 1 / rmse;
             feature_map_out{j} = fm_tmp;
         end
         heat_map = cellfun(@(x, y) x + y, heat_map, feature_map_out, 'UniformOutput', false);
