@@ -197,7 +197,7 @@ function redraw(pr, varargin)
                     )
             end
         end
-        input_label = el.get('GR1').get('SUB_DICT').getItem(1).get('INPUT_LABEL');
+        input_label = el.get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('INPUT_LABEL');
         if any(ismember(subclasses('Measure'), input_label))
             set(pr.plot_brain_btn, 'Enable', 'off');
             pr.redraw@PlotProp('Height', h, varargin{:})
