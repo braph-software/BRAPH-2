@@ -45,6 +45,15 @@ end
 %%%% ¡gui!
 pr = PlotPropSmartVector('EL', nncv, 'PROP', NNRegressorCrossValidation.FEATURE_MASK, 'MAX', 10000000, 'MIN', 0, varargin{:});
 
+%%% ¡prop!
+PLOT_MAP (data, logical) is an option for the plot of the feature map.
+%%%% ¡default!
+false
+
+%%% ¡prop!
+PLOT_SCATTER (data, logical) is an option for the plot of scatter plot.
+%%%% ¡default!
+false
 
 %%% ¡prop!
 SPLIT_KFOLD (result, cell) is a vector stating which subjects belong to each fold.
@@ -162,9 +171,9 @@ GR_PREDICTION (result, item) is a group of NN subjects with prediction from NN.
 if nncv.memorize('NNE_DICT').length() > 0
     gr = nncv.get('NNE_DICT').getItem(1).get('GR_PREDICTION');
     gr_prediction = NNGroup( ...
-        'ID', gr.get('ID'), ...
-        'LABEL', gr.get('LABEL'), ...
-        'NOTES', gr.get('NOTES'), ...
+        'ID', 'NN Group with NN prediction', ...
+        'LABEL', 'The predictions are obatined from K-fold cross validation', ...
+        'NOTES', 'All of the predictions are obtained from the validation of each fold', ...
         'SUB_CLASS', gr.get('SUB_CLASS'), ...
         'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject') ...
         );
@@ -189,7 +198,6 @@ value = gr_prediction;
 %%%% ¡gui!
 pr = PPNNData_GR_NN('EL', nncv, 'PROP', NNRegressorCrossValidation.GR_PREDICTION, varargin{:});
 
-
 %%% ¡prop!
 RMSE (result, scalar) is the root mean squared error between targets and predictions across k folds for all repeitions.
 %%%% ¡calculate!
@@ -203,12 +211,44 @@ else
     value = sqrt(mean((preds - targets).^2));
 end
 
+
+%%% ¡prop!
+SCATTER_CHART (result, matrix) creates a scatter chart with circular markers at the locations specified by predictions and targets.
+%%%% ¡calculate!
+if nncv.get('GR_PREDICTION').get('SUB_DICT').length() == 0
+    value = 0;
+else
+    preds = cellfun(@(x) cell2mat(x.get('PREDICTION'))', nncv.get('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
+    preds = cell2mat(preds);
+    targets = cellfun(@(x) cell2mat(x.get('TARGET')), nncv.get('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
+    targets = cell2mat(targets);
+    value = [preds' targets'];
+    if nncv.get('PLOT_SCATTER')
+        figure
+        scatter(preds, targets);
+        hold on
+        plot([min(preds) max(preds)], [min(targets) max(targets), 'k']);
+        hold off
+        xlabel('Prediction')
+        ylabel('Target')
+        title('Scatter plot for regression')
+        directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
+        if ~exist(directory, 'dir')
+            mkdir(directory)
+        end
+        filename = [directory filesep 'scatter.svg'];
+        saveas(gcf, filename);
+    end
+end
+%%%% ¡gui!
+pr = PPNNRegressorEvaluator_Scatter_Chart('EL', nncv, 'PROP', NNRegressorCrossValidation.SCATTER_CHART, varargin{:});
+
 %%% ¡prop!
 FEATURE_MAP (result, cell) is a heat map obtained with feature selection analysis and the AUC value.
 %%%% ¡calculate!
 nne_dict = nncv.memorize('NNE_DICT');
 heat_map = {};
-if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('RMSE')) && ~any(ismember(subclasses('Measure'), nncv.get('GR1').get('SUB_DICT').getItem(1).get('INPUT_LABEL')))
+if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('RMSE')) && ~any(ismember(subclasses('Measure'), nncv.get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('INPUT_LABEL')))
     tmp_map = nne_dict.getItem(1).get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('FEATURE_MASK');
     for i = 1:1:length(tmp_map)
         heat_map{i} = zeros(size(tmp_map{i}));
