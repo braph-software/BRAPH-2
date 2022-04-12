@@ -132,15 +132,14 @@ elseif any(ismember(subclasses('Measure'), pp_el.get('INPUT_LABEL')))
         'ColumnName', mlist_integrated_binodal, ...
         'RowName', br_ids ...
         )
-
-elseif pp_el.get('INPUT_LABEL') == "ST"
+    
+else %% structural data
     for i = 1:1:length(pr.table_value_cell)
         set(pr.table_value_cell{i}, ...
+            'ColumnName', 'ST', ...
             'RowName', br_ids ...
             )
     end
-else %% do nothing
-
 end
 end
 function redraw(pr, varargin)
