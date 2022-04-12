@@ -1615,6 +1615,7 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
                     set(ui_checkbox_graph_lineweight, 'Visible', 'off')
 		
                     set(ui_txt_graph_lineweight, 'Units', 'normalized');
+		            set(ui_txt_graph_lineweight, 'BackgroundColor',BKGCOLOR)
 		            set(ui_txt_graph_lineweight, 'Position', [.1 .61 .15 .1]);
 		            set(ui_txt_graph_lineweight, 'String', 'Line weight: ');
 		            set(ui_txt_graph_lineweight, 'TooltipString', 'Set line weight.');
