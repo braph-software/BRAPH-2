@@ -119,8 +119,12 @@ end
 %%% ¡test!
 %%%% ¡name!
 Delete file TBE
+%%%% ¡probability!
+1
 %%%% ¡code!
+warning('off', 'MATLAB:DELETE:FileNotFound')
 delete([fileparts(which('test_braph2')) filesep 'default_txt_file_to_save_brain_atlas_most_likely_to_be_erased.txt'])
+warning('on', 'MATLAB:DELETE:FileNotFound')
 
 %%% ¡test!
 %%%% ¡name!
