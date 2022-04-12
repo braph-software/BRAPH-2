@@ -99,5 +99,9 @@ end
 %%% ¡test!
 %%%% ¡name!
 Delete file TBE
+%%%% ¡probability!
+1
 %%%% ¡code!
+warning('off', 'MATLAB:DELETE:FileNotFound')
 delete([fileparts(which('test_braph2')) filesep 'default_braph2_file_to_save_pipeline_most_likely_to_be_erased.braph2'])
+warning('on', 'MATLAB:DELETE:FileNotFound')
