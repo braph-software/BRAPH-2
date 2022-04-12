@@ -28,8 +28,8 @@ if length(value) == 1 & value < 1
     value = [ones(1, num_val), zeros(1, num_train)];
     value = value(randperm(length(value)));
     value = find(value == 1);
+    nnds.set('SPLIT_GR1', value);
 end
-nnds.set('SPLIT_GR1', value);
 %%%% ¡gui!
 pr = PlotPropSmartVector('EL', nnds, 'PROP', NNClassifierDataSplit.SPLIT_GR1, 'MAX', 10000000, 'MIN', 0, varargin{:});
 
@@ -43,8 +43,8 @@ if length(value) == 1 & value < 1
     value = [ones(1, num_val), zeros(1, num_train)];
     value = value(randperm(length(value)));
     value = find(value == 1);
+    nnds.set('SPLIT_GR2', value);
 end
-nnds.set('SPLIT_GR2', value);
 %%%% ¡gui!
 pr = PlotPropSmartVector('EL', nnds, 'PROP', NNClassifierDataSplit.SPLIT_GR2, 'MAX', 10000000, 'MIN', 0, varargin{:});
 

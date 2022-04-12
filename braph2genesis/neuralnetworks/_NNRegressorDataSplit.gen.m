@@ -23,8 +23,8 @@ if length(value) == 1 & value < 1
     value = [ones(1, num_val), zeros(1, num_train)];
     value = value(randperm(length(value)));
     value = find(value == 1);
+    nnds.set('SPLIT', value);
 end
-nnds.set('SPLIT', value);
 %%%% ¡gui!
 pr = PlotPropSmartVector('EL', nnds, 'PROP', NNRegressorDataSplit.SPLIT, 'MAX', 10000000, 'MIN', 0, varargin{:});
 
