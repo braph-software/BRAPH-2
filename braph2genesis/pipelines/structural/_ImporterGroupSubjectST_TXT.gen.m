@@ -139,7 +139,7 @@ if isfile(file)
         close(wb)
     end
 elseif ~braph2_testing()
-    error(BRAPH2.IM_ERR);
+    error([BRAPH2.STR ':ImporterGroupSubjectST_TXT: ' BRAPH2.BUG_IO]);
 end
 
 value = gr;

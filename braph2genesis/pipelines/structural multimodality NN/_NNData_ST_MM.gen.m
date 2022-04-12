@@ -15,8 +15,10 @@ Group('SUB_CLASS', 'SubjectST')
 
 %%% ¡prop!
 INPUT_TYPE (data, option) is the input type for training or testing the NN.
-%%%% ¡settings!
+%%%% ¡settings
 {'structural_data'}
+%%%% ¡default!
+'structural_data'
 
 %%% ¡prop!
 GR_NN (result, group) is a group of NN subjects.
@@ -27,7 +29,7 @@ NNGroup('SUB_CLASS', 'NNSubject', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNS
 %%%% ¡calculate!
 if nnd.get('WAITBAR')
     wb = waitbar(0, 'Constructing NN input ...', 'Name', BRAPH2.NAME);
-    set_braph2_icon(wb)
+    set_braph2icon(wb)
 end
 
 gr = nnd.get('GR');
