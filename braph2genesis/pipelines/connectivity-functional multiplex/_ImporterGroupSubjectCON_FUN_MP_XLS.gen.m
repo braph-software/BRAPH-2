@@ -44,14 +44,16 @@ gr = Group( ...
 gr.lock('SUB_CLASS');
 
 % first CON
-answer = questdlg('Please Upload a Connectivity Group', ...
-    'Dessert Menu', ...
-    'Ok', 'Cancel', 'Ok');
-switch answer
-    case 'Ok'
-        directory_CON = im.get('DIRECTORY_CON');
-    case 'Cancel'
-        return;
+if ~braph2_testing()
+    answer = questdlg('Please Upload a Connectivity Group', ...
+        'Dessert Menu', ...
+        'Ok', 'Cancel', 'Ok');
+    switch answer
+        case 'Ok'
+            directory_CON = im.get('DIRECTORY_CON');
+        case 'Cancel'
+            return;
+    end
 end
 if ~isfolder(directory_CON)&& ~braph2_testing()
     im.uigetdir('DIR_TYPE', 'DIRECTORY_CON')
@@ -68,14 +70,16 @@ elseif ~braph2_testing()
 end
 
 % second FUN
-answerfun = questdlg('Please Upload a Functional Group', ...
-    'Dessert Menu', ...
-    'Ok', 'Cancel', 'Ok');
-switch answerfun
-    case 'Ok'
-        directory_FUN = im.get('DIRECTORY_FUN');
-    case 'Cancel'
-        return;
+if ~braph2_testing()
+    answerfun = questdlg('Please Upload a Functional Group', ...
+        'Dessert Menu', ...
+        'Ok', 'Cancel', 'Ok');
+    switch answerfun
+        case 'Ok'
+            directory_FUN = im.get('DIRECTORY_FUN');
+        case 'Cancel'
+            return;
+    end
 end
 if ~isfolder(directory_FUN)&& ~braph2_testing()
     im.uigetdir('DIR_TYPE', 'DIRECTORY_FUN')
