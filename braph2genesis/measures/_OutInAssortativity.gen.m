@@ -204,8 +204,8 @@ assert(isequal(out_in_assortativity, known_out_in_assortativity), ...
     [BRAPH2.STR ':OutInAssortativity:' BRAPH2.BUG_ERR], ...
     'OutInAssortativity is not being calculated correctly for BCT.')
 
-%% Functions to calculate clustering adapted from 2019_03_03_BCT
-
+%%% ¡test_functions!
+% Functions to calculate clustering adapted from 2019_03_03_BCT
 function stdvalue_BD = assortativity_standard_BD(A)
 % directed version
 [id,od] = degrees_dir(A);
@@ -218,7 +218,6 @@ stdvalue_BD = ( sum(degi.*degj)/K - (sum(0.5*(degi+degj))/K)^2 ) / ...
     ( sum(0.5*(degi.^2+degj.^2))/K - (sum(0.5*(degi+degj))/K)^2 );
 stdvalue_BD(isnan(stdvalue_BD)) = 0;  % Should return zeros, not NaN
 end
-
 function stdvalue_WD = assortativity_standard_WD(A)
 % directed version
 [is,os] = strengths_dir(A);
@@ -231,13 +230,11 @@ stdvalue_WD = ( sum(stri.*strj)/K - (sum(0.5*(stri+strj))/K)^2 ) / ...
     ( sum(0.5*(stri.^2+strj.^2))/K - (sum(0.5*(stri+strj))/K)^2 );
 stdvalue_WD(isnan(stdvalue_WD)) = 0;  % Should return zeros, not NaN
 end
-
 function [id,od,deg] = degrees_dir(A)
 id = sum(A,1);    % indegree = column sum of CIJ
 od = sum(A,2)';   % outdegree = row sum of CIJ
 deg = id+od;        % degree = indegree+outdegree
 end
-
 function [is,os,str] = strengths_dir(A)
 is = sum(A,1);    % instrength = column sum of CIJ
 os = sum(A,2)';   % outstrength = row sum of CIJ

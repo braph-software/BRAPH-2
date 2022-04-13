@@ -519,7 +519,7 @@ assert(et_4.get('PROP_SCALAR_R_CALC') == pi + 2)
 %%%% ¡name!
 Cell & conditioning
 %%%% ¡code!
-assert_with_error('et = ETA(''PROP_SCALAR_P'', rand(5))', ...
+assert_with_error('et = ETA(''PROP_SCALAR_P'', rand(5));', ...
     [BRAPH2.STR ':ETA:' BRAPH2.WRONG_INPUT])
 et = ETA('PROP_CELL_D', rand(5));
 

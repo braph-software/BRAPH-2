@@ -7,6 +7,10 @@ clear all %#ok<CLALL>
 %% Timer start
 time_start = tic;
 
+%% Random Seed
+seed = randi(intmax('uint32'));
+rng(seed, 'twister')
+
 %% Identifies test directories
 braph2_dir = fileparts(which('braph2'));
 
@@ -56,4 +60,5 @@ end
 %% Timer end
 time_end = toc(time_start);
 
+disp(['Test performed with random seed ' int2str(seed)])
 disp(['The test has taken ' int2str(time_end) '.' int2str(mod(time_end, 1) * 10) 's'])

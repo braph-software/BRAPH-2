@@ -16,7 +16,8 @@ classdef BRAPH2
     %  EXT_ELEMENT  - BRAPH2 element extension (*.b2)
     %  EXT_PIPELINE - BRAPH2 pipeline extension (*.braph2)
     %
-    % Properties (Constant) - BRAPH2 testing
+    % Properties (Constant) - BRAPH2 check and testing
+    %  CHECKED        - BRAPH2 check global switch
     %  TEST_PARALLEL - BRAPH2 test using parallel computing
     %  TEST_RANDOM  - BRAPH2 random testing
     %
@@ -67,7 +68,8 @@ classdef BRAPH2
         EXT_ELEMENT = {'*.b2'} % BRAPH2 element extension
         EXT_PIPELINE = {'*.braph2'} % BRAPH2 pipeline extension
     end
-    properties (Constant) % BRAPH2 testing
+    properties (Constant) % BRAPH2 check and testing
+        CHECKED = true; % BRAPH2 check global switch
         TEST_PARALLEL = false; % BRAPH2 test using parallel computing
         TEST_RANDOM = false; % BRAPH2 random testing
     end

@@ -1029,7 +1029,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 
             prop = el.getPropProp(pointer);
 
-            checked = el.props{prop}.checked;
+            checked = el.props{prop}.checked && BRAPH2.CHECKED;
         end
         function checked(el, pointer)
             %CHECKED sets a property to checked.
