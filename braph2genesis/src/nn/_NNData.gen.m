@@ -39,7 +39,6 @@ GraphWU()
 %%% ¡prop!
 MEASURES (data, classlist) is the graph measures as input to NN.
 %%%% ¡settings!
-{'Measure'}
 'Measure'
 %%%% ¡default!
 {'DegreeAv', 'Degree'}
