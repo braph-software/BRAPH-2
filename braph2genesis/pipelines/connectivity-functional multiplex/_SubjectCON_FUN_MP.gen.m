@@ -19,24 +19,28 @@ function cb_importer_TXT(~, ~)
         'WAITBAR', true ...
         );
     
-    answer = questdlg('Please Upload a Connectivity Group', ...
-        'Dessert Menu', ...
-        'Ok', 'Cancel', 'Ok');
-    switch answer
-        case 'Ok'
-            im.uigetdir('DIR_TYPE','DIRECTORY_CON');
-        case 'Cancel'
-            return;
+    if ~braph2_testing()
+        answer = questdlg('Please Upload a Connectivity Group', ...
+            'User Request', ...
+            'Ok', 'Cancel', 'Ok');
+        switch answer
+            case 'Ok'
+                im.uigetdir('DIR_TYPE','DIRECTORY_CON');
+            case 'Cancel'
+                return;
+        end
     end
     
-    answerfun = questdlg('Please Upload a Functional Group', ...
-        'Dessert Menu', ...
-        'Ok', 'Cancel', 'Ok');
-    switch answerfun
-        case 'Ok'
-            im.uigetdir('DIR_TYPE','DIRECTORY_FUN');
-        case 'Cancel'
-            return;
+    if ~braph2_testing()
+        answerfun = questdlg('Please Upload a Functional Group', ...
+            'User Request', ...
+            'Ok', 'Cancel', 'Ok');
+        switch answerfun
+            case 'Ok'
+                im.uigetdir('DIR_TYPE','DIRECTORY_FUN');
+            case 'Cancel'
+                return;
+        end
     end
     
     try
