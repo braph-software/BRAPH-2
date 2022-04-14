@@ -27,7 +27,7 @@ M (result, cell) is the modularity.
 %%%% ¡calculate!
 community_structure = calculateValue@CommunityStructure(m, prop);
 Q = 0;
-if ~isempty(community_structure{1})
+if ~isempty(community_structure)
     Q = m.get('quality_function');
 end
 modularity = {Q};  % assign normalized quality function
@@ -46,3 +46,16 @@ m = Modularity('G', g).get('M');
 assert(~isempty(m), ...
     [BRAPH2.STR ':Modularity:' BRAPH2.BUG_ERR], ...
     'Modularity is not being calculated correctly for GraphBU.');
+
+%%% ¡test!
+%%%% ¡name!
+MultigraphBUT
+%%%% ¡code!
+b = rand(10);
+thresholds = [0 1];
+g = MultigraphBUT('B', b, 'THRESHOLDS', thresholds);
+m = Modularity('G', g).get('M');
+
+assert(~isempty(m), ...
+    [BRAPH2.STR ':Modularity:' BRAPH2.BUG_ERR], ...
+    'Modularity is not being calculated correctly for MultigraphBUT.');
