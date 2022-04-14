@@ -768,10 +768,9 @@ wrong_value{1} = '-';
 wrong_value{2} = ':';
 wrong_value{3} = '-.';
 wrong_value{4} = '--';
-wrong_value{5} = '';
-wrong_value{6} = 1;
-wrong_value{7} = {};
-wrong_value{8} = Element();
+wrong_value{5} = 1;
+wrong_value{6} = {};
+wrong_value{7} = Element();
 
 % tests
 for i = 1:1:length(value)
@@ -837,10 +836,9 @@ wrong_value{12} = '>';
 wrong_value{13} = '<';
 wrong_value{14} = 'p';
 wrong_value{15} = 'h';
-wrong_value{16} = '';
-wrong_value{17} = 1;
-wrong_value{18} = {};
-wrong_value{19} = Element();
+wrong_value{16} = 1;
+wrong_value{17} = {};
+wrong_value{18} = Element();
 
 % tests
 for i = 1:1:length(value)
