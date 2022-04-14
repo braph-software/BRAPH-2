@@ -601,57 +601,269 @@ for i = 1:1:length(wrong_value)
     end
 end
 
-% %% Test 2.LL: Check CELL
-% if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
-%     % CELL formats that should be accepted
-%     clear value
-%     value{1} = {rand(5)};
-%     value{2} = {
-%         rand(5) [] []
-%         [] rand(2) []
-%         [] [] rand(1)
-%         };
-%     value{3} = {
-%         rand(4) diag(rand(4, 1)) []
-%         diag(rand(4, 1)) rand(4) diag(rand(4, 1))
-%         [] diag(rand(4, 1)) rand(4)
-%         };
-%     value{4} = {
-%         rand(4) diag(rand(4, 1)) diag(rand(4, 1))
-%         diag(rand(4, 1)) rand(4) diag(rand(4, 1))
-%         diag(rand(4, 1)) diag(rand(4, 1)) rand(4)
-%         };
-%     value{5} = {
-%         rand(3) rand(3, 2) []
-%         rand(2, 3) rand(2) rand(2, 4)
-%         [] rand(4, 2) rand(4)
-%         };
-%     value{6} = {
-%         rand(3) rand(3, 2) rand(3, 4)
-%         rand(2, 3) rand(2) rand(2, 4)
-%         rand(4, 3) rand(4, 2) rand(4)
-%         };
-%     value{7} = {
-%         rand(5) 
-%         rand(2)
-%         rand(1)
-%         };
-%     value{8} = {rand(5) rand(2) rand(1)};
-%     value{9} = {rand(3, 2, 4) 1 2};
-% 
-%     % CELL formats that should NOT be accepted
-%     clear wrong_value
-%     wrong_value{1} = 'String';
-%     wrong_value{2} = true;
-%     wrong_value{3} = rand(5, 3);
-%     wrong_value{4} = rand(4, 3);
-%     wrong_value{5} = rand(3, 4);
-% 
-%     % tests
-%     for i = 1:1:length(value)
-%         Format.checkFormat(Format.CELL, value{i})
-%     end
-%     for i = 1:1:length(wrong_value)
-%     assert_with_error('Format.checkFormat(Format.CELL, varargin{1})', error_identifier, wrong_value{i})
-% end
-% end
+%% Test 2.LL: Check CELL
+% CELL formats that should be accepted
+clear value
+value{1} = {rand(5)};
+value{2} = {
+    rand(5) [] []
+    [] rand(2) []
+    [] [] rand(1)
+    };
+value{3} = {
+    rand(4) diag(rand(4, 1)) []
+    diag(rand(4, 1)) rand(4) diag(rand(4, 1))
+    [] diag(rand(4, 1)) rand(4)
+    };
+value{4} = {
+    rand(4) diag(rand(4, 1)) diag(rand(4, 1))
+    diag(rand(4, 1)) rand(4) diag(rand(4, 1))
+    diag(rand(4, 1)) diag(rand(4, 1)) rand(4)
+    };
+value{5} = {
+    rand(3) rand(3, 2) []
+    rand(2, 3) rand(2) rand(2, 4)
+    [] rand(4, 2) rand(4)
+    };
+value{6} = {
+    rand(3) rand(3, 2) rand(3, 4)
+    rand(2, 3) rand(2) rand(2, 4)
+    rand(4, 3) rand(4, 2) rand(4)
+    };
+value{7} = {
+    rand(5)
+    rand(2)
+    rand(1)
+    };
+value{8} = {rand(5) rand(2) rand(1)};
+value{9} = {rand(3, 2, 4) 1 2};
+
+% CELL formats that should NOT be accepted
+clear wrong_value
+wrong_value{1} = 'String';
+wrong_value{2} = true;
+wrong_value{3} = rand(5, 3);
+wrong_value{4} = rand(4, 3);
+wrong_value{5} = rand(3, 4);
+
+% tests
+for i = 1:1:length(value)
+    if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
+        Format.checkFormat(Format.CELL, value{i})
+    end
+end
+for i = 1:1:length(wrong_value)
+    if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
+        assert_with_error('Format.checkFormat(Format.CELL, varargin{1})', error_identifier, wrong_value{i})
+    end
+end
+
+%% Test 2.ML: Check NET
+% NET formats that should be accepted
+clear value
+value{1} = network();
+
+% NET formats that should NOT be accepted
+clear wrong_value
+wrong_value{1} = 'String';
+wrong_value{2} = 3.14;
+wrong_value{2} = Element();
+
+% tests
+for i = 1:1:length(value)
+    if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
+        Format.checkFormat(Format.NET, value{i})
+    end
+end
+for i = 1:1:length(wrong_value)
+    if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
+        assert_with_error('Format.checkFormat(Format.NET, varargin{1})', error_identifier, wrong_value{i})
+    end
+end
+
+%% Test 2.CO: Check COLOR
+% COLOR formats that should be accepted
+clear value
+value{1} = [0 0 0];
+value{2} = [1 1 1];
+value{3} = [1 0 0];
+value{4} = [0 1 0];
+value{5} = [0 1 1];
+
+% COLOR formats that should NOT be accepted
+clear wrong_value
+wrong_value{1} = 1;
+wrong_value{2} = 'b';
+wrong_value{3} = 'Color';
+wrong_value{4} = [2 2 2];
+wrong_value{5} = [-1 0 0];
+
+% tests
+for i = 1:1:length(value)
+    if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
+        Format.checkFormat(Format.COLOR, value{i})
+    end
+end
+for i = 1:1:length(wrong_value)
+    if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
+        assert_with_error('Format.checkFormat(Format.COLOR, varargin{1})', error_identifier, wrong_value{i})
+    end
+end
+
+%% Test 2.AL: Check ALPHA
+% ALPHA formats that should be accepted
+clear value
+value{1} = 0;
+value{2} = .5;
+value{3} = 1;
+
+% ALPHA formats that should NOT be accepted
+clear wrong_value
+wrong_value{1} = -1;
+wrong_value{2} = 2;
+wrong_value{3} = 'transparent';
+wrong_value{4} = [2 2 2];
+wrong_value{5} = [-1 0 0];
+
+
+% tests
+for i = 1:1:length(value)
+    if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
+        Format.checkFormat(Format.ALPHA, value{i})
+    end
+end
+for i = 1:1:length(wrong_value)
+    if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
+        assert_with_error('Format.checkFormat(Format.ALPHA, varargin{1})', error_identifier, wrong_value{i})
+    end
+end
+
+%% Test 2.MS: Check MARKERSTYLE
+% MARKERSTYLE formats that should be accepted
+clear value
+value{1} = 'o';
+value{2} = '+';
+value{3} = '*';
+value{4} = '.';
+value{5} = 'x';
+value{6} = '_';
+value{7} = '|';
+value{8} = 's';
+value{9} = 'd';
+value{10} = '^';
+value{11} = 'v';
+value{12} = '>';
+value{13} = '<';
+value{14} = 'p';
+value{15} = 'h';
+value{16} = '';
+
+% MARKERSTYLE formats that should NOT be accepted
+clear wrong_value
+wrong_value{1} = '-';
+wrong_value{2} = ':';
+wrong_value{3} = '-.';
+wrong_value{4} = '--';
+wrong_value{5} = '';
+
+% tests
+for i = 1:1:length(value)
+    if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
+        Format.checkFormat(Format.MARKERSTYLE, value{i})
+    end
+end
+for i = 1:1:length(wrong_value)
+    if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
+        assert_with_error('Format.checkFormat(Format.MARKERSTYLE, varargin{1})', error_identifier, wrong_value{i})
+    end
+end
+
+%% Test 2.MS: Check MARKERSIZE
+% MARKERSIZE formats that should be accepted
+clear value
+value{1} = .5;
+value{2} = 1;
+value{3} = 10;
+
+% MARKERSIZE formats that should NOT be accepted
+clear wrong_value
+value{1} = 0;
+value{2} = -1;
+value{3} = 'large';
+
+% tests
+for i = 1:1:length(value)
+    if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
+        Format.checkFormat(Format.MARKERSIZE, value{i})
+    end
+end
+for i = 1:1:length(wrong_value)
+    if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
+        assert_with_error('Format.checkFormat(Format.MARKERSIZE, varargin{1})', error_identifier, wrong_value{i})
+    end
+end
+
+%% Test 2.LS: Check LINESTYLE
+% LINESTYLE formats that should be accepted
+clear value
+value{1} = '-';
+value{2} = ':';
+value{3} = '-.';
+value{4} = '--';
+value{5} = '';
+
+% LINESTYLE formats that should NOT be accepted
+clear wrong_value
+wrong_value{1} = 'o';
+wrong_value{2} = '+';
+wrong_value{3} = '*';
+wrong_value{4} = '.';
+wrong_value{5} = 'x';
+wrong_value{6} = '_';
+wrong_value{7} = '|';
+wrong_value{8} = 's';
+wrong_value{9} = 'd';
+wrong_value{10} = '^';
+wrong_value{11} = 'v';
+wrong_value{12} = '>';
+wrong_value{13} = '<';
+wrong_value{14} = 'p';
+wrong_value{15} = 'h';
+wrong_value{16} = '';
+
+% tests
+for i = 1:1:length(value)
+    if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
+        Format.checkFormat(Format.LINESTYLE, value{i})
+    end
+end
+for i = 1:1:length(wrong_value)
+    if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
+        assert_with_error('Format.checkFormat(Format.LINESTYLE, varargin{1})', error_identifier, wrong_value{i})
+    end
+end
+
+%% Test 2.LW: Check LINEWIDTH
+% LINEWIDTH formats that should be accepted
+clear value
+value{1} = .5;
+value{2} = 1;
+value{3} = 10;
+
+% LINEWIDTH formats that should NOT be accepted
+clear wrong_value
+value{1} = 0;
+value{2} = -1;
+value{3} = 'large';
+
+% tests
+for i = 1:1:length(value)
+    if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
+        Format.checkFormat(Format.LINEWIDTH, value{i})
+    end
+end
+for i = 1:1:length(wrong_value)
+    if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
+        assert_with_error('Format.checkFormat(Format.LINEWIDTH, varargin{1})', error_identifier, wrong_value{i})
+    end
+end
