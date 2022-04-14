@@ -737,11 +737,11 @@ classdef Format < handle
                 case Format.ALPHA
                     check = value >= 0 & value <= 1;
                 case Format.MARKERSTYLE
-                    check = any(strcmp(value, {'-', ':', '-.', '--', ''}));
+                    check = any(strcmp(value, {'o', '+', '*', '.', 'x', '_', '|', 's', 'd', '^', 'v', '>', '<', 'p', 'h', ''}));
                 case Format.MARKERSIZE
                     check = value > 0;
                 case Format.LINESTYLE
-                    check = strcmp(value, {'o', '+', '*', '.', 'x', '_', '|', 's', 'd', '^', 'v', '>', '<', 'p', 'h', ''});
+                    check = any(strcmp(value, {'-', ':', '-.', '--', ''}));
                 case Format.LINEWIDTH
                     check = value > 0;
                 otherwise
