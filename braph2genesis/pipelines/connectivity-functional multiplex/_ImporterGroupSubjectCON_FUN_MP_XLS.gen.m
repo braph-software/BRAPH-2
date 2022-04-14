@@ -54,6 +54,8 @@ if ~braph2_testing()
         case 'Cancel'
             return;
     end
+else
+    directory_CON = im.get('DIRECTORY_CON');
 end
 if ~isfolder(directory_CON)&& ~braph2_testing()
     im.uigetdir('DIR_TYPE', 'DIRECTORY_CON')
@@ -80,6 +82,8 @@ if ~braph2_testing()
         case 'Cancel'
             return;
     end
+else
+    directory_FUN = im.get('DIRECTORY_FUN');
 end
 if ~isfolder(directory_FUN)&& ~braph2_testing()
     im.uigetdir('DIR_TYPE', 'DIRECTORY_FUN')
