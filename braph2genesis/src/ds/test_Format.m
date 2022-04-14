@@ -667,7 +667,8 @@ value{1} = network();
 clear wrong_value
 wrong_value{1} = 'String';
 wrong_value{2} = 3.14;
-wrong_value{2} = Element();
+wrong_value{3} = Element();
+wrong_value{4} = {};
 
 % tests
 for i = 1:1:length(value)
@@ -697,6 +698,8 @@ wrong_value{2} = 'b';
 wrong_value{3} = 'Color';
 wrong_value{4} = [2 2 2];
 wrong_value{5} = [-1 0 0];
+wrong_value{6} = {};
+wrong_value{7} = Element();
 
 % tests
 for i = 1:1:length(value)
@@ -724,7 +727,8 @@ wrong_value{2} = 2;
 wrong_value{3} = 'transparent';
 wrong_value{4} = [2 2 2];
 wrong_value{5} = [-1 0 0];
-
+wrong_value{6} = {};
+wrong_value{7} = Element();
 
 % tests
 for i = 1:1:length(value)
@@ -765,6 +769,9 @@ wrong_value{2} = ':';
 wrong_value{3} = '-.';
 wrong_value{4} = '--';
 wrong_value{5} = '';
+wrong_value{6} = 1;
+wrong_value{7} = {};
+wrong_value{8} = Element();
 
 % tests
 for i = 1:1:length(value)
@@ -790,6 +797,7 @@ clear wrong_value
 value{1} = 0;
 value{2} = -1;
 value{3} = 'large';
+value{4} = Element();
 
 % tests
 for i = 1:1:length(value)
@@ -830,6 +838,9 @@ wrong_value{13} = '<';
 wrong_value{14} = 'p';
 wrong_value{15} = 'h';
 wrong_value{16} = '';
+wrong_value{17} = 1;
+wrong_value{18} = {};
+wrong_value{19} = Element();
 
 % tests
 for i = 1:1:length(value)
@@ -855,6 +866,7 @@ clear wrong_value
 value{1} = 0;
 value{2} = -1;
 value{3} = 'large';
+value{4} = Element();
 
 % tests
 for i = 1:1:length(value)
