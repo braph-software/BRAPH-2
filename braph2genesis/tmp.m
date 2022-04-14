@@ -1,66 +1,6 @@
 close all
 clear all %#ok<CLALL>
 
-%% Timer start
-time_start = tic;
-
-%% Identifies test directories
-braph2_dir = fileparts(which('braph2'));
-
-directories_to_test = {[braph2_dir filesep 'measures']};
-
-% directories_to_test = { ...
-%     [braph2_dir filesep 'src' filesep 'util'] ...
-%     [braph2_dir filesep 'src' filesep 'ds'] ...
-%     [braph2_dir filesep 'src' filesep 'atlas'] ... 
-%     [braph2_dir filesep 'src' filesep 'gt'] ...
-%     [braph2_dir filesep 'src' filesep 'cohort'] ...
-%     [braph2_dir filesep 'src' filesep 'analysis'] ...
-%     [braph2_dir filesep 'src' filesep 'gui'] ...
-%     [braph2_dir filesep 'brainsurfs'] ...
-%     [braph2_dir filesep 'graphs'] ...
-%     [braph2_dir filesep 'measures'] ...
-%     [braph2_dir filesep 'neuralnetworks'] ...
-%     };
-
-% pipelines_dir = [fileparts(which('braph2')) filesep 'pipelines'];
-% 
-% addpath(pipelines_dir)
-% pipelines_dir_list = dir(pipelines_dir); % get the folder contents
-% pipelines_dir_list = pipelines_dir_list([pipelines_dir_list(:).isdir] == 1); % remove all files (isdir property is 0)
-% pipelines_dir_list = pipelines_dir_list(~ismember({pipelines_dir_list(:).name}, {'.', '..'})); % remove '.' and '..'
-% for i = 1:1:length(pipelines_dir_list)
-%     directories_to_test{end + 1} = [pipelines_dir filesep pipelines_dir_list(i).name]; %#ok<SAGROW>
-% end
-
-<<<<<<< HEAD
-clear braph2_dir pipelines_dir pipelines_dir_list i
-
-%% Runs tests
-global BRAPH2_IS_TESTING
-BRAPH2_IS_TESTING = true; %#ok<NASGU>
-results = runtests(directories_to_test, 'UseParallel', true);
-BRAPH2_IS_TESTING = false;
-clear BRAPH2_IS_TESTING
-
-%% Shows test results
-results_table = table(results) %#ok<NOPTS>
-
-if all([results(:).Passed])
-    disp('*** All good! ***')
-else
-    disp('*** Something went wrong! ***')
-    failed_results_table = table(results([results(:).Failed])) %#ok<NOPTS>
-end
-
-%% Timer end
-time_end = toc(time_start);
-
-disp(['The test has taken ' int2str(time_end) '.' int2str(mod(time_end, 1) * 10) 's'])
-
-
-% create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PPPipeline_PSDict.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
-=======
 % el_class = 'ETA';
 % delete([fileparts(which('braph2')) '/src/ds/' el_class '.m'])
 % create_Element([fileparts(which('braph2genesis')) '/src/ds/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/ds'])
@@ -69,7 +9,15 @@ disp(['The test has taken ' int2str(time_end) '.' int2str(mod(time_end, 1) * 10)
 % test_code = ['test_' el_class]
 % eval(test_code)
 
->>>>>>> 3883e8abb977b17e36c6adf41878b5207f75fe48
+el_class = 'IndexedDictionary';
+delete([fileparts(which('braph2')) '/src/ds/' el_class '.m'])
+create_Element([fileparts(which('braph2genesis')) '/src/ds/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/ds'])
+create_Element([fileparts(which('braph2genesis')) '/src/ds/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/ds'])
+create_test_Element([fileparts(which('braph2genesis')) '/src/ds/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/ds'])
+test_code = ['test_' el_class]
+eval(test_code)
+
+
 % create_Element('/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2genesis/src/gui/_PPPipeline_PSDict.gen.m', '/Users/giovannivolpe/Documents/GitHub/Braph-2.0-Matlab/braph2/src/gui')
 % 
 % pip = load('pip_tmp.b2', '-mat').el;

@@ -74,6 +74,24 @@ PROP_CELL_M (metadata, cell) is a metadata, cell.
 PROP_NET_M (metadata, net) is a metadata, net.
 
 %%% ¡prop!
+PROP_COLOR_M (metadata, color) is a metadata, color.
+
+%%% ¡prop!
+PROP_ALPHA_M (metadata, alpha) is a metadata, alpha.
+
+%%% ¡prop!
+PROP_MARKERSTYLE_M (metadata, markerstyle) is a metadata, markerstyle.
+
+%%% ¡prop!
+PROP_MARKERSIZE_M (metadata, markersize) is a metadata, markersize.
+
+%%% ¡prop!
+PROP_LINESTYLE_M (metadata, linestyle) is a metadata, markersize.
+
+%%% ¡prop!
+PROP_LINEWIDTH_M (metadata, linewidth) is a metadata, linewidth.
+
+%%% ¡prop!
 PROP_EMPTY_P (parameter, empty) is a parameter, empty.
 
 %%% ¡prop!
@@ -146,6 +164,24 @@ PROP_CELL_P (parameter, cell) is a parameter, cell.
 PROP_NET_P (parameter, net) is a parameter, net.
 
 %%% ¡prop!
+PROP_COLOR_P (parameter, color) is a parameter, color.
+
+%%% ¡prop!
+PROP_ALPHA_P (parameter, alpha) is a parameter, alpha.
+
+%%% ¡prop!
+PROP_MARKERSTYLE_P (parameter, markerstyle) is a parameter, markerstyle.
+
+%%% ¡prop!
+PROP_MARKERSIZE_P (parameter, markersize) is a parameter, markersize.
+
+%%% ¡prop!
+PROP_LINESTYLE_P (parameter, linestyle) is a parameter, markersize.
+
+%%% ¡prop!
+PROP_LINEWIDTH_P (parameter, linewidth) is a parameter, linewidth.
+
+%%% ¡prop!
 PROP_EMPTY_D (data, empty) is a data, empty.
 
 %%% ¡prop!
@@ -196,6 +232,24 @@ end
 
 %%% ¡prop!
 PROP_NET_D (data, net) is a data, net.
+
+%%% ¡prop!
+PROP_COLOR_D (data, color) is a data, color.
+
+%%% ¡prop!
+PROP_ALPHA_D (data, alpha) is a data, alpha.
+
+%%% ¡prop!
+PROP_MARKERSTYLE_D (data, markerstyle) is a data, markerstyle.
+
+%%% ¡prop!
+PROP_MARKERSIZE_D (data, markersize) is a data, markersize.
+
+%%% ¡prop!
+PROP_LINESTYLE_D (data, linestyle) is a data, markersize.
+
+%%% ¡prop!
+PROP_LINEWIDTH_D (data, linewidth) is a data, linewidth.
 
 %%% ¡prop!
 PROP_EMPTY_F (figure, empty) is a figure, empty.
@@ -258,6 +312,24 @@ PROP_CELL_F (figure, cell) is a figure, cell.
 PROP_NET_F (figure, net) is a figure, net.
 
 %%% ¡prop!
+PROP_COLOR_F (figure, color) is a figure, color.
+
+%%% ¡prop!
+PROP_ALPHA_F (figure, alpha) is a figure, alpha.
+
+%%% ¡prop!
+PROP_MARKERSTYLE_F (figure, markerstyle) is a figure, markerstyle.
+
+%%% ¡prop!
+PROP_MARKERSIZE_F (figure, markersize) is a figure, markersize.
+
+%%% ¡prop!
+PROP_LINESTYLE_F (figure, linestyle) is a figure, markersize.
+
+%%% ¡prop!
+PROP_LINEWIDTH_F (figure, linewidth) is a figure, linewidth.
+
+%%% ¡prop!
 PROP_EMPTY_G (gui, empty) is a gui, empty.
 
 %%% ¡prop!
@@ -318,6 +390,24 @@ PROP_CELL_G (gui, cell) is a gui, cell.
 PROP_NET_G (gui, net) is a gui, net.
 
 %%% ¡prop!
+PROP_COLOR_G (gui, color) is a gui, color.
+
+%%% ¡prop!
+PROP_ALPHA_G (gui, alpha) is a gui, alpha.
+
+%%% ¡prop!
+PROP_MARKERSTYLE_G (gui, markerstyle) is a gui, markerstyle.
+
+%%% ¡prop!
+PROP_MARKERSIZE_G (gui, markersize) is a gui, markersize.
+
+%%% ¡prop!
+PROP_LINESTYLE_G (gui, linestyle) is a gui, markersize.
+
+%%% ¡prop!
+PROP_LINEWIDTH_G (gui, linewidth) is a gui, linewidth.
+
+%%% ¡prop!
 PROP_EMPTY_R (result, empty) is a result, empty.
 
 %%% ¡prop!
@@ -364,6 +454,24 @@ PROP_CELL_R (result, cell) is a result, cell.
 
 %%% ¡prop!
 PROP_NET_R (result, net) is a result, net.
+
+%%% ¡prop!
+PROP_COLOR_R (result, color) is a result, color.
+
+%%% ¡prop!
+PROP_ALPHA_R (result, alpha) is a result, alpha.
+
+%%% ¡prop!
+PROP_MARKERSTYLE_R (result, markerstyle) is a result, markerstyle.
+
+%%% ¡prop!
+PROP_MARKERSIZE_R (result, markersize) is a result, markersize.
+
+%%% ¡prop!
+PROP_LINESTYLE_R (result, linestyle) is a result, markersize.
+
+%%% ¡prop!
+PROP_LINEWIDTH_R (result, linewidth) is a result, linewidth.
 
 %%% ¡prop!
 PROP_EMPTY_R_CALC (result, empty) is a result, empty.
@@ -430,6 +538,24 @@ value = cellfun(@(x) rand(x), {1 2 3; 4 5 6}, 'UniformOutput', false);
 
 %%% ¡prop!
 PROP_NET_R_CALC (result, net) is a result, net.
+
+%%% ¡prop!
+PROP_COLOR_R_CALC (result, color) is a result, color.
+
+%%% ¡prop!
+PROP_ALPHA_R_CALC (result, alpha) is a result, alpha.
+
+%%% ¡prop!
+PROP_MARKERSTYLE_R_CALC (result, markerstyle) is a result, markerstyle.
+
+%%% ¡prop!
+PROP_MARKERSIZE_R_CALC (result, markersize) is a result, markersize.
+
+%%% ¡prop!
+PROP_LINESTYLE_R_CALC (result, linestyle) is a result, markersize.
+
+%%% ¡prop!
+PROP_LINEWIDTH_R_CALC (result, linewidth) is a result, linewidth.
 
 %% ¡tests!
 
