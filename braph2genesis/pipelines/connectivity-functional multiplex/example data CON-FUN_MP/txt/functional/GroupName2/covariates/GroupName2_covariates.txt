@@ -1,6 +1,6 @@
- ID   age     sex
-ID1    90   female
-ID2    62   female
-ID3    85    male
-ID4    55   female
-ID5    75    male
+ID	Age	Sex
+SubjectID1	60	male
+SubjectID2	68	female
+SubjectID3	57	male
+SubjectID4	78	female
+SubjectID5	86	female

@@ -372,27 +372,6 @@ if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('AUC')) && 
             x = [1 size(heat_map_tmp, 2)];
             y = [0 size(heat_map_tmp, 1)];
             image(x, y, heat_map_tmp, 'CDataMapping', 'scaled')
-            %                                 br_dict = nne_dict.getItem(i).get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('BA').get('br_dict');
-            %                                 br_ids = cell(br_dict.length(), 1);
-            %                                 for i = 1:1:br_dict.length()
-            %                                     br = br_dict.getItem(i);
-            %                                     br_id = br.get(BrainRegion.ID);
-            %                                     if length(br_id) > 10
-            %                                         br_id = [br_id(1:8) '..'];
-            %                                     end
-            %                                     br_ids{i} = br_id;
-            %                                 end
-            %                                 ticklabel = br_dict
-            %                                 xticks([1:size(heat_map_tmp, 2)]);
-            %                                 yticks([1:size(heat_map_tmp, 1)]);
-            %     					    	xticklabels(ticklabel);
-            %                                 if size(heat_map_tmp, 2) > 1
-            %                                     yticklabels(ticklabel);
-            %                                 end
-            %     					        a = get(gca,'XTickLabel');
-            %     					        set(gca, 'XTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
-            %     					        a = get(gca,'YTickLabel');
-            %     					        set(gca, 'YTickLabel', a, 'fontsize', fontsize, 'FontWeight', 'bold')
             colorbar
             directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
             if ~exist(directory, 'dir')
@@ -402,12 +381,12 @@ if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('AUC')) && 
             saveas(gcf, filename);
         end
     end
-
-    value = heat_map;
 else
-    braph2msgbox("No visualization for the feature map", "For now, we only provide the feature map visualization for input of adjacency matrix or structural data.")
-    value = heat_map;
+    %TODO: check the msgbox is needed 
+    %braph2msgbox("No visualization for the feature map", "For now, we only provide the feature map visualization for input of adjacency matrix or structural data.")
 end
+
+value = heat_map;
 %%%% ¡gui!
 pr = PPNNCrossValidation_Feature_Map('EL', nncv, 'PROP', NNClassifierCrossValidation.FEATURE_MAP, varargin{:});
 

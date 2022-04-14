@@ -54,7 +54,7 @@ G (data, item) is the graph for calculating the graph measures.
 GraphWU()
 
 %%% ¡prop!
-GR_NN (result, group) is a group of NN subjects.
+GR_NN (result, item) is a group of NN subjects.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡default!
