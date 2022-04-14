@@ -733,17 +733,17 @@ classdef Format < handle
                 case Format.NET
                     check = isa(value, 'network');
                 case Format.COLOR
-                    check = (length(value) == 3) && all(value >= 0 & value <= 1);
+                    check = isnumeric(value) && (length(value) == 3) && all(value >= 0 & value <= 1);
                 case Format.ALPHA
-                    check = value >= 0 & value <= 1;
+                    check = isnumeric(value) && isscalar(value) && value >= 0 && value <= 1;
                 case Format.MARKERSTYLE
-                    check = any(strcmp(value, {'o', '+', '*', '.', 'x', '_', '|', 's', 'd', '^', 'v', '>', '<', 'p', 'h', ''}));
+                    check = ischar(value) && any(strcmp(value, {'o', '+', '*', '.', 'x', '_', '|', 's', 'd', '^', 'v', '>', '<', 'p', 'h', ''}));
                 case Format.MARKERSIZE
-                    check = value > 0;
+                    check = isnumeric(value) && isscalar(value) && value > 0;
                 case Format.LINESTYLE
-                    check = any(strcmp(value, {'-', ':', '-.', '--', ''}));
+                    check = ischar(value) && any(strcmp(value, {'-', ':', '-.', '--', ''}));
                 case Format.LINEWIDTH
-                    check = value > 0;
+                    check = isnumeric(value) && isscalar(value) && value > 0;
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end
