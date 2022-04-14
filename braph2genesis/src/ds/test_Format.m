@@ -793,10 +793,10 @@ value{3} = 10;
 
 % MARKERSIZE formats that should NOT be accepted
 clear wrong_value
-value{1} = 0;
-value{2} = -1;
-value{3} = 'large';
-value{4} = Element();
+wrong_value{1} = 0;
+wrong_value{2} = -1;
+wrong_value{3} = 'large';
+wrong_value{4} = Element();
 
 % tests
 for i = 1:1:length(value)
@@ -861,10 +861,10 @@ value{3} = 10;
 
 % LINEWIDTH formats that should NOT be accepted
 clear wrong_value
-value{1} = 0;
-value{2} = -1;
-value{3} = 'large';
-value{4} = Element();
+wrong_value{1} = 0;
+wrong_value{2} = -1;
+wrong_value{3} = 'large';
+wrong_value{4} = Element();
 
 % tests
 for i = 1:1:length(value)
