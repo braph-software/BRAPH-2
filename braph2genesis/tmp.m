@@ -9,7 +9,7 @@ clear all %#ok<CLALL>
 % test_code = ['test_' el_class]
 % eval(test_code)
 
-el_class = 'IndexedDictionary';
+el_class = 'PlotElement';
 delete([fileparts(which('braph2')) '/src/ds/' el_class '.m'])
 create_Element([fileparts(which('braph2genesis')) '/src/ds/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/ds'])
 create_Element([fileparts(which('braph2genesis')) '/src/ds/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/ds'])
