@@ -23,7 +23,7 @@ assert(isa(et1.get('IT22'), 'ETC2'))
 assert(isa(et1.get('IT23'), 'ETC3'))
 assert(isa(et1.get('IT33'), 'ETC3'))
 
-et2 = ETF1();
+et2 = ETF2();
 assert(isa(et2.get('IT11'), 'ETC1'))
 assert(isa(et2.get('IT12'), 'ETC2'))
 assert(isa(et2.get('IT13'), 'ETC3'))
