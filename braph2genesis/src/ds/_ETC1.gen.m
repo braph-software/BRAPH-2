@@ -1,5 +1,5 @@
 %% ¡header!
-ETC1 < Element (et, test Element C) tests conditioning.
+ETC1 < Element (et, test Element C1) tests conditioning.
 
 %%% ¡description!
 ETC1 tests conditioning.
