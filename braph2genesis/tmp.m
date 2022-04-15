@@ -10,10 +10,10 @@ clear all %#ok<CLALL>
 % eval(test_code)
 
 el_class = 'PlotElement';
-delete([fileparts(which('braph2')) '/src/ds/' el_class '.m'])
-create_Element([fileparts(which('braph2genesis')) '/src/ds/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/ds'])
-create_Element([fileparts(which('braph2genesis')) '/src/ds/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/ds'])
-create_test_Element([fileparts(which('braph2genesis')) '/src/ds/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/ds'])
+delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
+create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+create_test_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
 test_code = ['test_' el_class]
 eval(test_code)
 
