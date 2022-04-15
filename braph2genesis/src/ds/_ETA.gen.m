@@ -562,6 +562,8 @@ PROP_LINEWIDTH_R_CALC (result, linewidth) is a result, linewidth.
 %%% ¡test!
 %%%% ¡name!
 Empty
+%%%% ¡probability!
+.01
 %%%% ¡code!
 et = ETA();
 assert(isempty(et.get('PROP_EMPTY_R_CALC')))
@@ -569,6 +571,8 @@ assert(isempty(et.get('PROP_EMPTY_R_CALC')))
 %%% ¡test!
 %%%% ¡name!
 String
+%%%% ¡probability!
+.01
 %%%% ¡code!
 et = ETA('PROP_STRING_P', 'param', 'PROP_STRING_D', 'data');
 assert(ischar(et.get('PROP_STRING_R_CALC')))
@@ -576,6 +580,8 @@ assert(ischar(et.get('PROP_STRING_R_CALC')))
 %%% ¡test!
 %%%% ¡name!
 Logical
+%%%% ¡probability!
+.01
 %%%% ¡code!
 et = ETA('PROP_LOGICAL_P', true, 'PROP_LOGICAL_D', false);
 assert(islogical(et.get('PROP_LOGICAL_R_CALC')))
@@ -583,6 +589,8 @@ assert(islogical(et.get('PROP_LOGICAL_R_CALC')))
 %%% ¡test!
 %%%% ¡name!
 Option
+%%%% ¡probability!
+.01
 %%%% ¡code!
 et = ETA('PROP_OPTION_P', 'two');
 assert(any(strcmpi(et.get('PROP_OPTION_P'), et.get('PROP_OPTION_R_CALC'))))
@@ -590,6 +598,8 @@ assert(any(strcmpi(et.get('PROP_OPTION_P'), et.get('PROP_OPTION_R_CALC'))))
 %%% ¡test!
 %%%% ¡name!
 Matrix & randomness
+%%%% ¡probability!
+.01
 %%%% ¡code!
 et_1 = ETA();
 value_1 = et_1.get('PROP_MATRIX_R_CALC');
@@ -616,6 +626,8 @@ assert(isequal(value_4, value_4)) % same values!
 %%% ¡test!
 %%%% ¡name!
 Scalar & prop backup
+%%%% ¡probability!
+.01
 %%%% ¡code!
 et_1 = ETA('PROP_SCALAR_D', 2);
 assert(et_1.get('PROP_SCALAR_R_CALC') == pi + 2)
@@ -644,6 +656,8 @@ assert(et_4.get('PROP_SCALAR_R_CALC') == pi + 2)
 %%% ¡test!
 %%%% ¡name!
 Cell & conditioning
+%%%% ¡probability!
+.01
 %%%% ¡code!
 assert_with_error('et = ETA(''PROP_SCALAR_P'', rand(5));', ...
     [BRAPH2.STR ':ETA:' BRAPH2.WRONG_INPUT])
@@ -652,6 +666,8 @@ et = ETA('PROP_CELL_D', rand(5));
 %%% ¡test!
 %%%% ¡name!
 Deep copy NoValue
+%%%% ¡probability!
+.01
 %%%% ¡code!
 et = ETA();
 et_copy = et.copy();

@@ -35,6 +35,8 @@ end
 %%% ¡test!
 %%%% ¡name!
 Multiple values
+%%%% ¡probability!
+.01
 %%%% ¡code!
 et1 = ETD2();
 et1.set('UNO', 1)

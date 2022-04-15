@@ -44,6 +44,8 @@ end
 %%% ¡test!
 %%%% ¡name!
 Multiple values
+%%%% ¡probability!
+.01
 %%%% ¡code!
 et = ETD1();
 

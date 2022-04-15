@@ -134,6 +134,8 @@ end
 %%% ¡test!
 %%%% ¡name!
 Conditioning
+%%%% ¡probability!
+.01
 %%%% ¡code!
 et = ETC2();
 
