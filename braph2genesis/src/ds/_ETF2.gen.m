@@ -5,39 +5,7 @@ ETF2 < ETF1 (et, test Element F2) tests use of settings and default.
 ETF2 tests use of settings and default.
 
 %%% ¡seealso!
-Element, Category, Format, ETF1
-
-%% ¡props_update!
-
-%%% ¡prop!
-IT11 (data, item) is an item.
-%%%% ¡settings!
-'ETC3'
-
-%%% ¡prop!
-IT12 (data, item) is an item.
-%%%% ¡settings!
-'ETC3'
-
-%%% ¡prop!
-IT13 (data, item) is an item.
-%%%% ¡settings!
-'ETC3'
-
-%%% ¡prop!
-IT22 (data, item) is an item.
-%%%% ¡settings!
-'ETC3'
-
-%%% ¡prop!
-IT23 (data, item) is an item.
-%%%% ¡settings!
-'ETC3'
-
-%%% ¡prop!
-IT33 (data, item) is an item.
-%%%% ¡settings!
-'ETC3'
+Element, Category, Format, ETF1, ETF3
 
 %% ¡tests!
 
