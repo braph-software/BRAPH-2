@@ -265,7 +265,8 @@ function f_out = draw(gui, varargin)
         [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
         if filterindex
             filename = fullfile(path, file);
-            tmp = load(filename, '-mat', 'el');
+% % %             tmp = load(filename, '-mat', 'el');
+tmp = BRAPH2.load(filename);
             if strcmp(tmp.el.getClass(), el.getClass())
                 pe.reinit(tmp.el)
                 el = tmp.el; % update local variable 'el' to synchronize it with pe 'el'  
@@ -278,8 +279,9 @@ function f_out = draw(gui, varargin)
     function cb_save(~, ~)
         filename = gui.get('FILE');
         if isfile(filename)
-            build = BRAPH2.BUILD;
-            save(filename, 'el', 'build');
+% % %             build = BRAPH2.BUILD;
+% % %             save(filename, 'el', 'build');
+BRAPH2.save(el, filename)
         else
             cb_saveas();
         end
@@ -290,8 +292,9 @@ function f_out = draw(gui, varargin)
         % save file
         if filterindex
             filename = fullfile(path, file);
-            build = BRAPH2.BUILD;
-            save(filename, 'el', 'build');
+% % %             build = BRAPH2.BUILD;
+% % %             save(filename, 'el', 'build');
+BRAPH2.save(el, filename)
             gui.set('FILE', filename)
             update_filename();
         end
