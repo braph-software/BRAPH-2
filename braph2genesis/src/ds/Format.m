@@ -1,4 +1,4 @@
-classdef Format < handle %TODO: revise
+classdef Format < handle
     %Format defines the format of a property.
     % Static class that defines the possible formats of the properties of
     % the elements. It is a subclass of handle.
@@ -55,6 +55,28 @@ classdef Format < handle %TODO: revise
     %               for adjaciency matrices and measures.
     %
     %  NET          Net is a MatLab neural network object.
+    %
+    %  COLOR        Color is an RGB color.
+    %
+    %  ALPHA        Alpha is a transparency level between 0 and 1.
+    %
+    %  MARKERSTYLE  MarkerStyle represents the marker style.
+    %               It can be 'o' (circle), '+' (plus), '*' (asterisk), 
+    %               '.' (point), 'x' (cross), '_' (horizontal line), 
+    %               '|' (vertical line), 's' (square), 'd' (diamond), 
+    %               '^' (upward triangle), 'v' (downward triangle),
+    %               '>' (right triangle), '<' (left triangle), 
+    %               'p' (pentagram), 'h' (hexagram), '' (no marker).
+    %
+    %  MARKERSIZE   MarkerSize represents the marker size.
+    %               It is a positive numebr (default = 1).
+    %
+    %  LINESTYLE    LineStyle represents the line style.
+    %               It can be '-' (solid), ':' (dotted), '-.' (dashdot),
+    %               '--' (dashed), '' (no line).
+    %
+    %  LINEWIDTH    LineWidth represents the line width.
+    %               It is a positive numebr (default = 1).
     %
     % Format properties (Constant):
     %
@@ -119,8 +141,32 @@ classdef Format < handle %TODO: revise
     %  CELL_DESCRIPTION
     %
     %  NET = 'ml'
-    %  NET_NAME = 'ml'
+    %  NET_NAME = 'net'
     %  NET_DESCRIPTION
+    %
+    %  COLOR = 'co'
+    %  COLOR_NAME = 'color'
+    %  COLOR_DESCRIPTION
+    %
+    %  ALPHA = 'al'
+    %  ALPHA_NAME = 'alpha'
+    %  ALPHA_DESCRIPTION
+    %
+    %  MARKERSTYLE = 'ms'
+    %  MARKERSTYLE_NAME = 'markerstyle'
+    %  MARKERSTYLE_DESCRIPTION
+    %
+    %  MARKERSIZE = 'mw'
+    %  MARKERSIZE_NAME = 'markersize'
+    %  MARKERSIZE_DESCRIPTION
+    %
+    %  LINESTYLE = 'ls'
+    %  LINESTYLE_NAME = 'linestyle'
+    %  LINESTYLE_DESCRIPTION
+    %
+    %  LINEWIDTH = 'lw'
+    %  LINEWIDTH_NAME = 'linewidth'
+    %  LINEWIDTH_DESCRIPTION
     %
     % Format methods (Static):
     %  getFormats - returns the list of formats
@@ -198,6 +244,30 @@ classdef Format < handle %TODO: revise
         NET = 'ml'
         NET_NAME = 'net'
         NET_DESCRIPTION = 'Net is a MatLab neural network object.'
+        
+        COLOR = 'co'
+        COLOR_NAME = 'color'
+        COLOR_DESCRIPTION = 'Color is an RGB color.'
+
+        ALPHA = 'al'
+        ALPHA_NAME = 'alpha'
+        ALPHA_DESCRIPTION = 'Alpha is a transparency level between 0 and 1.'
+
+        MARKERSTYLE = 'ms'
+        MARKERSTYLE_NAME = 'markerstyle'
+        MARKERSTYLE_DESCRIPTION = 'MarkerStyle represents the marker style. It can be ''o'' (circle), ''+'' (plus), ''*'' (asterisk), ''.'' (point), ''x'' (cross), ''_'' (horizontal line), ''|'' (vertical line), ''s'' (square), ''d'' (diamond), ''^'' (upward triangle), ''v'' (downward triangle), ''>'' (right triangle), ''<'' (left triangle), ''p'' (pentagram), ''h'' (hexagram), '''' (no marker).'
+
+        MARKERSIZE = 'mw'
+        MARKERSIZE_NAME = 'markersize'
+        MARKERSIZE_DESCRIPTION = 'MarkerSize represents the marker size. It is a positive numebr (default = 1).'
+
+        LINESTYLE = 'ls'
+        LINESTYLE_NAME = 'linestyle'
+        LINESTYLE_DESCRIPTION = 'LineStyle represents the line style. It can be ''-'' (solid), '':'' (dotted), ''-.'' (dashdot), ''--'' (dashed), '''' (no line).'
+
+        LINEWIDTH = 'lw'
+        LINEWIDTH_NAME = 'linewidth'
+        LINEWIDTH_DESCRIPTION = 'LineWidth represents the line width. It is a positive numebr (default = 1).'
     end
     methods (Static)
         function formats = getFormats()
@@ -224,6 +294,12 @@ classdef Format < handle %TODO: revise
                 Format.SMATRIX
                 Format.CELL
                 Format.NET
+                Format.COLOR
+                Format.ALPHA
+                Format.MARKERSTYLE
+                Format.MARKERSIZE
+                Format.LINESTYLE
+                Format.LINEWIDTH
                 };
         end
         function format_number = getFormatNumber()
@@ -233,7 +309,7 @@ classdef Format < handle %TODO: revise
             %
             % See also getFormats, existsFormat.
 
-            format_number = 16; % numel(Format.getFormats());
+            format_number = 22; % numel(Format.getFormats()); %CET
         end
         function check = existsFormat(format)
             %EXISTSFORMAT returns whether a format exists/error.
@@ -303,6 +379,18 @@ classdef Format < handle %TODO: revise
                     format_name = Format.CELL_NAME;
                 case Format.NET
                     format_name = Format.NET_NAME;
+                case Format.COLOR
+                    format_name = Format.COLOR_NAME;
+                case Format.ALPHA
+                    format_name = Format.ALPHA_NAME;
+                case Format.MARKERSTYLE
+                    format_name = Format.MARKERSTYLE_NAME;
+                case Format.MARKERSIZE
+                    format_name = Format.MARKERSIZE_NAME;
+                case Format.LINESTYLE
+                    format_name = Format.LINESTYLE_NAME;
+                case Format.LINEWIDTH
+                    format_name = Format.LINEWIDTH_NAME;
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end
@@ -384,6 +472,18 @@ classdef Format < handle %TODO: revise
                     format_description = Format.CELL_DESCRIPTION;
                 case Format.NET
                     format_description = Format.NET_DESCRIPTION;
+                case Format.COLOR
+                    format_description = Format.COLOR_DESCRIPTION;
+                case Format.ALPHA
+                    format_description = Format.ALPHA_DESCRIPTION;
+                case Format.MARKERSTYLE
+                    format_description = Format.MARKERSTYLE_DESCRIPTION;
+                case Format.MARKERSIZE
+                    format_description = Format.MARKERSIZE_DESCRIPTION;
+                case Format.LINESTYLE
+                    format_description = Format.LINESTYLE_DESCRIPTION;
+                case Format.LINEWIDTH
+                    format_description = Format.LINEWIDTH_DESCRIPTION;
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end
@@ -453,6 +553,18 @@ classdef Format < handle %TODO: revise
                 case Format.CELL
                     format_settings = '';
                 case Format.NET
+                    format_settings = '';
+                case Format.COLOR
+                    format_settings = '';
+                case Format.ALPHA
+                    format_settings = '';
+                case Format.MARKERSTYLE
+                    format_settings = '';
+                case Format.MARKERSIZE
+                    format_settings = '';
+                case Format.LINESTYLE
+                    format_settings = '';
+                case Format.LINEWIDTH
                     format_settings = '';
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
@@ -530,6 +642,18 @@ classdef Format < handle %TODO: revise
                     format_default = '';
                 case Format.NET
                     format_default = network();
+                case Format.COLOR
+                    format_default = BRAPH2.COL;
+                case Format.ALPHA
+                    format_default = 1;
+                case Format.MARKERSTYLE
+                    format_default = 'o';
+                case Format.MARKERSIZE
+                    format_default = 1;
+                case Format.LINESTYLE
+                    format_default = '-';
+                case Format.LINEWIDTH
+                    format_default = 1;
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end
@@ -608,6 +732,18 @@ classdef Format < handle %TODO: revise
                     check = iscell(value) && all(cellfun(@(x) isnumeric(x), value(:)));
                 case Format.NET
                     check = isa(value, 'network');
+                case Format.COLOR
+                    check = isnumeric(value) && (length(value) == 3) && all(value >= 0 & value <= 1);
+                case Format.ALPHA
+                    check = isnumeric(value) && isscalar(value) && value >= 0 && value <= 1;
+                case Format.MARKERSTYLE
+                    check = ischar(value) && any(strcmp(value, {'o', '+', '*', '.', 'x', '_', '|', 's', 'd', '^', 'v', '>', '<', 'p', 'h', ''}));
+                case Format.MARKERSIZE
+                    check = isnumeric(value) && isscalar(value) && value > 0;
+                case Format.LINESTYLE
+                    check = ischar(value) && any(strcmp(value, {'-', ':', '-.', '--', ''}));
+                case Format.LINEWIDTH
+                    check = isnumeric(value) && isscalar(value) && value > 0;
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end

@@ -1108,6 +1108,9 @@ generate_inspection()
                         if ~isempty(props_update{i}.default)
                             g(4, ['case ' class_name '.' props_update{i}.TAG])
                                 g(5, ['prop_default = ' props_update{i}.default ';'])
+                        elseif ~isempty(props_update{i}.settings)
+                            g(4, ['case ' class_name '.' props_update{i}.TAG])
+                                g(5, ['prop_default = Format.getFormatDefault(Format.' props_update{i}.FORMAT ', ' class_name '.getPropSettings(prop));'])
                         end
                     end
                     if ~strcmp(superclass_name, 'Element')
