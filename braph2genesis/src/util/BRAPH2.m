@@ -205,7 +205,7 @@ classdef BRAPH2
                 end
             end
             
-            if isfile(filename)
+            if ~isempty(filename)
                 build = BRAPH2.BUILD;
                 matlab_release = ver('MATLAB').Version;
                 matlab_release_details = ver();
@@ -216,7 +216,7 @@ classdef BRAPH2
                 saved = false;
             end
         end
-        function [loaded, el, build, matlab_release, matlab_release_details]  = load(filename)
+        function [loaded, el, build, matlab_release, matlab_release_details] = load(filename)
             
             if nargin < 1
                 % select file
@@ -236,6 +236,11 @@ classdef BRAPH2
                 
                 loaded = true;
             else
+                el = [];
+                build  = [];
+                matlab_release = [];
+                matlab_release_details = [];
+
                 loaded = false;
             end
         end
