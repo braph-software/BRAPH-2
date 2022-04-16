@@ -225,7 +225,7 @@ for run = 1:1:run_number
     
     % LOAD BRAPH2
     addpath(target_dir)
-    braph2('warning')
+    braph2(false, 'warning')
 
     disp('¡! loaded BRAPH2')
     disp(' ')
