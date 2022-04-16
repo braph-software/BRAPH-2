@@ -62,17 +62,17 @@ LAYER (metadata, scalar) to set plot line layer
 1
 
 %%% ¡prop!
-LINECOLOR (metadata, rvector) to set plot line color
+COLOR (metadata, rvector) to set plot line color
 %%%% ¡default!
 [0 0 0]
 
 %%% ¡prop!
-LINE_STYLE (metadata, string) to set plot line style
+LINESTYLE (metadata, string) to set plot line style
 %%%% ¡default!
 '-'
 
 %%% ¡prop!
-LINE_WIDTH (metadata, scalar) to set plot line width
+LINEWIDTH (metadata, scalar) to set plot line width
 %%%% ¡default!
 0.5
 
@@ -82,7 +82,7 @@ MARKER (metadata, string) to set plot marker style
 'none'
 
 %%% ¡prop!
-MARKER_SIZE (metadata, scalar) to set plot marker size
+MARKERSIZE (metadata, scalar) to set plot marker size
 %%%% ¡default!
 6
 
@@ -409,7 +409,7 @@ function f_settings = settings(pr, varargin)
         function cb_line_style(~, ~)  % (src, event)
             val = ui_line_style.Value;
             str = ui_line_style.String;
-            pr.set('LINE_STYLE', str{val})
+            pr.set('LINESTYLE', str{val})
             update()
         end
 
@@ -432,7 +432,7 @@ function f_settings = settings(pr, varargin)
         function cb_line_color(~, ~) % (src, event)
             color = uisetcolor;
             if length(color) == 3
-                pr.set('LINECOLOR', color)
+                pr.set('COLOR', color)
                 update()
             end
         end
@@ -453,7 +453,7 @@ function f_settings = settings(pr, varargin)
 
         function cb_line_width(~, ~)  % (src, event)
             value = str2num(ui_line_width.String);
-            pr.set('LINE_WIDTH', value)
+            pr.set('LINEWIDTH', value)
             update()
         end
 
@@ -518,7 +518,7 @@ function f_settings = settings(pr, varargin)
 
         function cb_marker_size(~, ~)  % (src, event)
             value = str2num(ui_line_width.String);
-            pr.set('MARKER_SIZE', value)
+            pr.set('MARKERSIZE', value)
             update()
         end
 
@@ -713,8 +713,8 @@ function f_settings = settings(pr, varargin)
         function cb_minmax_color(~, ~) % (src, event)
             color = uisetcolor;
             if length(color) == 3
-                set(h_p_min, 'LINECOLOR', color)
-                set(h_p_max, 'LINECOLOR', color)
+                set(h_p_min, 'COLOR', color)
+                set(h_p_max, 'COLOR', color)
                 pr.set('CICOLOR', value)
             end
         end
@@ -737,8 +737,8 @@ function f_settings = settings(pr, varargin)
 
         function cb_minmax_line_width(~, ~)  % (src, event)
             value = str2num(cil_ciu_line_width.String);
-            set(h_p_min, 'LINE_WIDTH', value)
-            set(h_p_max, 'LINE_WIDTH', value)
+            set(h_p_min, 'LINEWIDTH', value)
+            set(h_p_max, 'LINEWIDTH', value)
             pr.set('CILINEWIDTH', value)
         end
      % area fill %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -913,12 +913,12 @@ function plotline(pr, x, y)
             x, ...
             y, ...
             'Marker', pr.get('MARKER'), ...
-            'MarkerSize', pr.get('MARKER_SIZE'), ...
+            'MarkerSize', pr.get('MARKERSIZE'), ...
             'MarkerEdgeColor', pr.get('MARKEREDGECOLOR'), ...
             'MarkerFaceColor', pr.get('MARKERFACECOLOR'), ...
-            'LineStyle', pr.get('LINE_STYLE'), ...
-            'LineWidth', pr.get('LINE_WIDTH'), ...
-            'Color', pr.get('LINECOLOR') ...
+            'LineStyle', pr.get('LINESTYLE'), ...
+            'LineWidth', pr.get('LINEWIDTH'), ...
+            'Color', pr.get('COLOR') ...
             );
     else
         set(pr.h_plot, ...
@@ -926,12 +926,12 @@ function plotline(pr, x, y)
             'YDATA', y, ...
             'Visible', 'on', ...
             'Marker', pr.get('MARKER'), ...
-            'MarkerSize', pr.get('MARKER_SIZE'), ...
+            'MarkerSize', pr.get('MARKERSIZE'), ...
             'MarkerEdgeColor', pr.get('MARKEREDGECOLOR'), ...
             'MarkerFaceColor', pr.get('MARKERFACECOLOR'), ...
-            'LineStyle', pr.get('LINE_STYLE'), ...
-            'LineWidth', pr.get('LINE_WIDTH'), ...
-            'Color', pr.get('LINECOLOR') ...
+            'LineStyle', pr.get('LINESTYLE'), ...
+            'LineWidth', pr.get('LINEWIDTH'), ...
+            'Color', pr.get('COLOR') ...
             );
     end
     uistack(pr.h_plot,'top')

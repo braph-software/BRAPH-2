@@ -74,8 +74,6 @@ PROP_CELL_M (metadata, cell) is a metadata, cell.
 %%% ¡test!
 %%%% ¡name!
 JSON
-%%%% ¡probability!
-.01
 %%%% ¡code!
 et = ETB();
 

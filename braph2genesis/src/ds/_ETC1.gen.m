@@ -1,5 +1,5 @@
 %% ¡header!
-ETC1 < Element (et, test Element C1) tests conditioning.
+ETC1 < Element (et, test Element C) tests conditioning.
 
 %%% ¡description!
 ETC1 tests conditioning.
@@ -132,8 +132,6 @@ end
 %%% ¡test!
 %%%% ¡name!
 Conditioning
-%%%% ¡probability!
-.01
 %%%% ¡code!
 et = ETC1();
 
