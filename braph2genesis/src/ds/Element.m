@@ -1559,44 +1559,53 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         end
     end
     methods % clone
-        %TODO: revise clone
-        function el_clone = clone(el)
+        function el_clone = clone(el, cloned_categories, cb_categories, locked_categories)
             %CLONE clones the element.
             %
-            % EL_COPY = CLONE(EL) clones the element EL. The cloning operation makes a
-            %  deep copy of the element including all properties with Category.METADATA
-            %  and Category.PARAMETER and the checked status.
-            %  The properties with Category.DATA and Category.RESULT are set to
-            %  NoValue, the seeds are randomized, and all properties are unlocked.
+            % EL_CLONE = CLONE(EL, CATEGORIES) clones the element EL. 
+            %  The cloning operation makes a deep copy of the element:
+            %  - Properties of category CATEGORIES (by default, METADATA, PARAMETER, FIGURE, GUI):
+            %    VALUE copied
+            %    CHECKED copied
+            %    SEED randomized
+            %    UNLOCKED
+            %  - Properties of all other categories (by default, DATA and RESULT):
+            %    VALUE set to NoValue
+            %    CHECKED copied
+            %    SEED randomized
+            %    UNLOCKED
             %
-            % See also deepclone, copy.
-            
-            % el_clone = el.copy();
-            % 
-            % el_list = el_clone.getElementList();
-            % for i = 1:1:length(el_list)
-            %     el = el_list{i};
-            %     for prop = 1:1:el.getPropNumber()
-            %         switch el.getPropCategory(prop)
-            %             case {Category.METADATA, Category.PARAMETER}
-            %             case {Category.DATA, Category.RESULT}
-            %                 el.props{prop}.value = NoValue.getNoValue();
-            %         end
-            %         el.props{prop}.seed = randi(intmax('uint32'));
-            %         el.props{prop}.locked = false;
-            %     end
-            % end
+            % EL_CLONE = CLONE(EL) uses the default CATEGORIES.
+            %
+            % EL_CLONE = CLONE(EL, [], CB_CATEGORIES) has callbacks for the categories CB_CATEGORIES.
+            %
+            % EL_CLONE = CLONE(EL, [], , [], LOCKED_CATEGORIES) locks the categories LOCKED_CATEGORIES.
+            %
+            % See also deepclone, cbclone, Category.
             
             if isa(el, 'NoValue')
                 el_clone = NoValue.getNoValue();
                 return
             end
             
+            if nargin < 4
+                locked_categories = {};
+            end
+            
+            if nargin < 3 || isempty(cb_categories)
+                cb_categories = {};
+            end
+            
+            if nargin < 2 || isempty(cloned_categories)
+                cloned_categories = {Category.METADATA, Category.PARAMETER, Category.FIGURE. Category.GUI};
+            end
+            
             el_clone = eval(el.getClass());
             
             for prop = 1:1:el_clone.getPropNumber()
+                % VALUE
                 switch el_clone.getPropCategory(prop)
-                    case {Category.METADATA, Category.PARAMETER}
+                    case cloned_categories
                         value = el.getr(prop);
                         
                         if isa(value, 'Element')
@@ -1606,45 +1615,37 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         else
                             el_clone.props{prop}.value = value;
                         end
-                    case {Category.DATA, Category.RESULT}
+                        
+                    otherwise
                         el_clone.props{prop}.value = NoValue.getNoValue();
                 end
+                
+                % CHECKED
+                el_clone.props{prop}.checked = el.props{prop}.checked;
+                
+                % LOCKED
             end
         end
         function el_clone = deepclone(el)
             %DEEPCLONE deep-clones the element.
             %
-            % EL_COPY = DEEPCLONE(EL) deep-clones the element EL. The deep-cloning
-            %  operation makes a deep copy of the element including all properties with
-            %  Category.METADATA, Category.PARAMETER, and Category.DATA and the checked status.
-            %  The properties with Category.RESULT are set to NoValue, the seeds are
-            %  randomized, and all properties are unlocked.
+            % EL_CLONE = DEEPCLONE(EL) deep-clones the element EL. 
+            %  Compared to the cloning operation, also the properties of category DATA are copied.
+            %  More in detail, the deep-cloning operation makes a deep copy of the element:
+            %  - Properties of category METADATA, PARAMETER, DATA, FIGURE, and GUI:
+            %    VALUE copied
+            %    CHECKED copied
+            %    SEED randomized
+            %    UNLOCKED
+            %  - Properties of category RESULT:
+            %    VALUE set to NoValue
+            %    CHECKED copied
+            %    SEED randomized
+            %    UNLOCKED
             %
-            % See also clone, copy.
+            % See also clone, cbclone.
             
-            if isa(el, 'NoValue')
-                el_clone = NoValue.getNoValue();
-                return
-            end
-            
-            el_clone = eval(el.getClass());
-            
-            for prop = 1:1:el_clone.getPropNumber()
-                switch el_clone.getPropCategory(prop)
-                    case {Category.METADATA, Category.PARAMETER, Category.DATA}
-                        value = el.getr(prop);
-                        
-                        if isa(value, 'Element')
-                            el_clone.props{prop}.value = value.clone();
-                        elseif iscell(value) && all(all(cellfun(@(x) isa(x, 'Element'), value)))
-                            el_clone.props{prop}.value = cellfun(@(x) x.clone(), value, 'UniformOutput', false);
-                        else
-                            el_clone.props{prop}.value = value;
-                        end
-                    case Category.RESULT
-                        el_clone.props{prop}.value = NoValue.getNoValue();
-                end
-            end
+            el_clone = el.clone({Category.METADATA, Category.PARAMETER, Category.DATA, Category.FIGURE. Category.GUI});
         end
     end
     methods % GUI
