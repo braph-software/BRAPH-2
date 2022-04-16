@@ -47,7 +47,11 @@ classdef BRAPH2
     %  COL_F            - standard figure prop background color
     %  COL_G            - standard gui prop background color
     %
-    % Methods (Static) - BRAPH2 info panels:
+    % Methods (Static) - BRAPH2 save/load elements
+    %  save             - save BRAPH2 element as b2 file
+    %  load             - load BRAPH2 element from b2 file
+    %
+    % Methods (Static) - BRAPH2 information:
     %  credits          - provides information about the authors of BRAPH2
     %  license          - provides information about the license of BRAPH2
     %  web              - opens the BRAPH2 website
@@ -55,6 +59,8 @@ classdef BRAPH2
     %  twitter          - opens the BRAPH2 Twitter
     %  add_menu_about   - adds the about menu to a figure
     %  add_tool_about   - adds the about tools to a toolbar
+    %
+    % Methods (Static) - BRAPH2 checks:
 	%  checkMatLab      - checks whether the MatLab release is sufficiently new/error
     %  installed        - returns whether an addon is installed/error
     %
@@ -185,7 +191,56 @@ classdef BRAPH2
             col_g = b2.get('COL_G');
         end
     end
-    methods (Static)
+    methods (Static) % BRAPH2 save/load elements
+        function saved = save(el, filename)
+            
+            if nargin < 2
+                % select file
+                [file, path, filterindex] = uiputfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
+                % save file
+                if filterindex
+                    filename = fullfile(path, file);
+                else 
+                    filename = '';
+                end
+            end
+            
+            if isfile(filename)
+                build = BRAPH2.BUILD;
+                matlab_release = ver('MATLAB').Version;
+                matlab_release_details = ver();
+                save(filename, 'el', 'build', 'matlab_release', 'matlab_release_details');
+                
+                saved = true;
+            else
+                saved = false;
+            end
+        end
+        function [loaded, el, build, matlab_release, matlab_release_details]  = load(filename)
+            
+            if nargin < 1
+                % select file
+                [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
+                if filterindex
+                    filename = fullfile(path, file);
+                else 
+                    filename = '';
+                end
+            end
+            
+            if isfile(filename)
+                el = load(filename, '-mat', 'el');
+                build  = load(filename, '-mat', 'build');
+                matlab_release = load(filename, '-mat', 'matlab_release');
+                matlab_release_details = load(filename, '-mat', 'matlab_release_details');
+                
+                loaded = true;
+            else
+                loaded = false;
+            end
+        end
+    end
+    methods (Static) % BRAPH2 information
         function credits()
             %CREDITS provides information about the authors of BRAPH2.
             %
@@ -334,6 +389,8 @@ classdef BRAPH2
                 'CData', imresize(imread('icon_about.png'), [24 24]), ...
                 'ClickedCallback', 'BRAPH2.credits()');
         end
+    end
+    methods (Static) % BRAPH2 checks
         function check_out = checkMatLab(ewm)
             %CHECKMATLAB checks whether the MatLab release is sufficiently new/error.
             %
