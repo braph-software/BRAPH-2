@@ -1597,33 +1597,37 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             end
             
             if nargin < 2 || isempty(cloned_categories)
-                cloned_categories = {Category.METADATA, Category.PARAMETER, Category.FIGURE. Category.GUI};
+                cloned_categories = {Category.METADATA, Category.PARAMETER, Category.FIGURE, Category.GUI};
             end
             
             el_clone = eval(el.getClass());
             
             for prop = 1:1:el_clone.getPropNumber()
                 % VALUE
-                switch el_clone.getPropCategory(prop)
-                    case cloned_categories
-                        value = el.getr(prop);
-                        
-                        if isa(value, 'Element')
-                            el_clone.props{prop}.value = value.clone();
-                        elseif iscell(value) && all(all(cellfun(@(x) isa(x, 'Element'), value)))
-                            el_clone.props{prop}.value = cellfun(@(x) x.clone(), value, 'UniformOutput', false);
+                if any(strcmp(el_clone.getPropCategory(prop), cloned_categories))
+                    value = el.getr(prop);
+                    if isa(value, 'Element')
+                        el_clone.props{prop}.value = value.clone();
+                    elseif iscell(value) && all(all(cellfun(@(x) isa(x, 'Element'), value)))
+                        el_clone.props{prop}.value = cellfun(@(x) x.clone(), value, 'UniformOutput', false);
+                    else
+                        if any(strcmp(el_clone.getPropCategory(prop), callback_categories))
+                            el_clone.props{prop}.value = Callback('EL', el, 'PROP', prop);
                         else
                             el_clone.props{prop}.value = value;
                         end
-                        
-                    otherwise
-                        el_clone.props{prop}.value = NoValue.getNoValue();
+                    end
+                else
+                    el_clone.props{prop}.value = NoValue.getNoValue();
                 end
                 
                 % CHECKED
                 el_clone.props{prop}.checked = el.props{prop}.checked;
                 
                 % LOCKED
+                if any(strcmp(el_clone.getPropCategory(prop), locked_categories))
+                    el_clone.props{prop}.locked = el.props{prop}.true;
+                end
             end
         end
         function el_clone = deepclone(el)
@@ -1645,7 +1649,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %
             % See also clone, cbclone.
             
-            el_clone = el.clone({Category.METADATA, Category.PARAMETER, Category.DATA, Category.FIGURE. Category.GUI});
+            el_clone = el.clone({Category.METADATA, Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI});
         end
     end
     methods % GUI
