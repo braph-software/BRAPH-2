@@ -46,8 +46,9 @@ end
 
 clear src_dir brainsurfs_dir graphs_dir measures_dir neuralnetworks_dir test_dir pipelines_dir pipelines_dir_list i
 
-installed('DM', 'warning')
-installed('NN', 'warning')
-installed('ONNXCONVERTER', 'warning')
+BRAPH2.checkMatLab('msgbox')
+BRAPH2.installed('DM', 'msgbox')
+BRAPH2.installed('NN', 'msgbox')
+BRAPH2.installed('ONNXCONVERTER', 'msgbox')
 
 % % % BRAPH2GUI()
