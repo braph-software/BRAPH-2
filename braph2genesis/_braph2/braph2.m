@@ -1,10 +1,12 @@
 function braph2(ewm)
 %BRAPH2 loads BRAPH 2.0.
 %
-% BRAPH2 loads all packages necessary to use BRAPH 2.0 - BRrain Analysis using graPH theory version 2.0.
+% BRAPH2 loads all packages that are necessary to use 
+%  BRAPH 2.0 - BRrain Analysis using graPH theory version 2.0.
 %
-% BRAPH2('warning'|'error'|'msgbox') throws a warning if the MatLab version
-%  is not sufficiently new, or some necessary addons are not installed.
+% BRAPH2('msgbox'(default)|'warning'|'error') throws a warning if 
+%  the MatLab version is not sufficiently new, 
+%  or some necessary addons are not installed.
 %
 % BRAPH2 uses the following addons:
 %  - DM: "Parallel Computing Toolbox"
@@ -55,7 +57,7 @@ for i = 1:1:length(pipelines_dir_list)
 end
 
 if nargin < 1
-    ewm = 'warning';
+    ewm = 'msgbox';
 end
 BRAPH2.checkMatLab(ewm)
 BRAPH2.installed('DM', ewm)
