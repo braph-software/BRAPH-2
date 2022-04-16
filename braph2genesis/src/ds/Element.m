@@ -1389,9 +1389,11 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         switch el.getPropFormat(prop)
                             case Format.EMPTY
                                 struct{i}.props{prop}.value = regexprep(tostring(value), '''', '''''');
-                            case {Format.STRING, Format.OPTION, Format.CLASS}
+                            case {Format.STRING, Format.OPTION, Format.CLASS, ...
+                                    Format.MARKERSTYLE, Format.LINESTYLE}
                                 struct{i}.props{prop}.value = regexprep(tostring(value), '''', '''''');
-                            case {Format.LOGICAL, Format.SCALAR, Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
+                            case {Format.LOGICAL, Format.SCALAR, Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX, ...
+                                    Format.COLOR, Format.ALPHA, Format.MARKERSIZE, Format.LINEWIDTH}
                                 struct{i}.props{prop}.value = mat2str(value);
                             case Format.CLASSLIST
                                 json_str = '{';
@@ -1484,9 +1486,11 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         switch el.getPropFormat(prop)
                             case Format.EMPTY
                                 el.props{prop}.value = eval(value);
-                            case {Format.STRING, Format.OPTION, Format.CLASS}
+                            case {Format.STRING, Format.OPTION, Format.CLASS, ...
+                                    Format.MARKERSTYLE, Format.LINESTYLE}
                                 el.props{prop}.value = eval(value(2:end-1));
-                            case {Format.LOGICAL, Format.SCALAR, Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
+                            case {Format.LOGICAL, Format.SCALAR, Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX, ...
+                                    Format.COLOR, Format.ALPHA, Format.MARKERSIZE, Format.LINEWIDTH}
                                 el.props{prop}.value = eval(value);
                             case Format.CLASSLIST
                                 el.props{prop}.value = eval(value);
@@ -1509,9 +1513,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             
             el = el_list{1};
         end
-        %TODO: Yu-Wei: add functions 
-        % function onnx_str = net_to_onnx(net)
-        % function net = onnx_to_net(onnx_str)
+        %TODO: Yu-Wei: add function onnx_str = net_to_onnx(net)
+        %TODO: Yu-Wei: add function net = onnx_to_net(onnx_str)
     end    
     methods (Access=protected) % deep copy
         %TODO: revise copy
