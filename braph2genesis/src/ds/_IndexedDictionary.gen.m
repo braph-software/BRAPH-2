@@ -507,6 +507,8 @@ end
 %%% ¡test!
 %%%% ¡name!
 Instantiation with items
+%%%% ¡probability!
+.01
 %%%% ¡code!
 it1 = ETA('PROP_STRING_P', 'item_1');
 it2 = ETA('PROP_STRING_P', 'item_2');
@@ -539,6 +541,8 @@ idict = IndexedDictionary( ...
 %%% ¡test!
 %%%% ¡name!
 Inspection
+%%%% ¡probability!
+.01
 %%%% ¡code!
 it1 = ETA('PROP_STRING_P', 'Key 1');
 it2 = ETA('PROP_STRING_P', 'Key 2');
@@ -628,6 +632,8 @@ assert(isequal(idict.getItem('Key 3'), it3), ...
 %%% ¡test!
 %%%% ¡name!
 Add
+%%%% ¡probability!
+.01
 %%%% ¡code!    
 it1 = ETA('PROP_STRING_P', 'Key 1');
 it2 = ETA('PROP_STRING_P', 'Key 2');
@@ -665,6 +671,8 @@ assert(isequal(idict.getItem(5), it5) && isequal(idict.getItem(6), it6), ...
 %%% ¡test!
 %%%% ¡name!
 Remove
+%%%% ¡probability!
+.01
 %%%% ¡code!
 it1 = ETA('PROP_STRING_P', 'Key 1');
 it2 = ETA('PROP_STRING_P', 'Key 2');
@@ -700,6 +708,8 @@ assert(isequal(idict.getItems(), {it2, it3, it5}), ...
 %%% ¡test!
 %%%% ¡name!
 Replace
+%%%% ¡probability!
+.01
 %%%% ¡code!    
 it1 = ETA('PROP_STRING_P', 'Key 1');
 it2 = ETA('PROP_STRING_P', 'Key 2');
@@ -747,6 +757,8 @@ assert(isequal(idict.getKey(4), 'Key 4') && isequal(idict.getItem(4), it4), ...
 %%% ¡test!
 %%%% ¡name!
 Invert
+%%%% ¡probability!
+.01
 %%%% ¡code!
 it1 = ETA('PROP_STRING_P', 'Key 1');
 it2 = ETA('PROP_STRING_P', 'Key 2');
@@ -777,6 +789,8 @@ assert(isequal(idict.getKeys(), {'Key 4', 'Key 3', 'Key 2', 'Key 1'}), ...
 %%% ¡test!
 %%%% ¡name!
 Move_to
+%%%% ¡probability!
+.01
 %%%% ¡code!
 it1 = ETA('PROP_STRING_P', 'Key 1');
 it2 = ETA('PROP_STRING_P', 'Key 2');
@@ -809,6 +823,8 @@ assert(isequal(idict.getKeys(), {'Key 4', 'Key 3', 'Key 2', 'Key 1'}), ...
 %%% ¡test!
 %%%% ¡name!
 Remove all
+%%%% ¡probability!
+.01
 %%%% ¡code!
 it1 = ETA('PROP_STRING_P', 'Key 1');
 it2 = ETA('PROP_STRING_P', 'Key 2');
@@ -841,6 +857,8 @@ assert(isequal(selected, []), ...
 %%% ¡test!
 %%%% ¡name!
 Move up
+%%%% ¡probability!
+.01
 %%%% ¡code!
 it1 = ETA('PROP_STRING_P', 'Key 1');
 it2 = ETA('PROP_STRING_P', 'Key 2');
@@ -873,6 +891,8 @@ assert(isequal(selected, [1 2 3 5]), ...
 %%% ¡test!
 %%%% ¡name!
 Move down
+%%%% ¡probability!
+.01
 %%%% ¡code!
 it1 = ETA('PROP_STRING_P', 'Key 1');
 it2 = ETA('PROP_STRING_P', 'Key 2');
@@ -905,6 +925,8 @@ assert(isequal(selected, [2 4 5 6]), ...
 %%% ¡test!
 %%%% ¡name!
 Move to top
+%%%% ¡probability!
+.01
 %%%% ¡code!
 it1 = ETA('PROP_STRING_P', 'Key 1');
 it2 = ETA('PROP_STRING_P', 'Key 2');
@@ -937,6 +959,8 @@ assert(isequal(selected, [1 2 3 4]), ...
 %%% ¡test!
 %%%% ¡name!
 Move to bottom
+%%%% ¡probability!
+.01
 %%%% ¡code!
 it1 = ETA('PROP_STRING_P', 'Key 1');
 it2 = ETA('PROP_STRING_P', 'Key 2');
