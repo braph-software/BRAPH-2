@@ -1,10 +1,12 @@
-function braph2(ewm)
+function braph2(gui, ewm)
 %BRAPH2 loads BRAPH 2.0.
 %
 % BRAPH2 loads all packages that are necessary to use 
 %  BRAPH 2.0 - BRrain Analysis using graPH theory version 2.0.
 %
-% BRAPH2('msgbox'(default)|'warning'|'error') throws a warning if 
+% BRAPH2(true(default)|false) determines whether to open the BRAPH2GUI. 
+%
+% BRAPH2([], 'msgbox'(default)|'warning'|'error') throws a warning if 
 %  the MatLab version is not sufficiently new, 
 %  or some necessary addons are not installed.
 %
@@ -20,6 +22,8 @@ function braph2(ewm)
 %  <a href="matlab:help measures    ">measures</a>      - measures
 %  <a href="matlab:help pipelines   ">pipelines</a>     - pipelines
 %  <a href="matlab:help test        ">test</a>          - unit testing
+%
+% See also BRAPH2GUI.
 
 src_dir = [fileparts(which('braph2')) filesep 'src'];
 addpath(src_dir)
@@ -56,7 +60,7 @@ for i = 1:1:length(pipelines_dir_list)
     addpath([pipelines_dir filesep pipelines_dir_list(i).name])
 end
 
-if nargin < 1
+if nargin < 2
     ewm = 'msgbox';
 end
 BRAPH2.checkMatLab(ewm)
@@ -64,6 +68,8 @@ BRAPH2.installed('DM', ewm)
 BRAPH2.installed('NN', ewm)
 BRAPH2.installed('ONNXCONVERTER', ewm)
 
-BRAPH2GUI()
+if nargin < 1 || ~isset(gui) || gui
+    BRAPH2GUI()
+end
 
 end
