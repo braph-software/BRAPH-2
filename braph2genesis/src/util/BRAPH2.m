@@ -255,7 +255,7 @@ classdef BRAPH2
         end
     end
     methods (Static) % BRAPH2 save/load elements
-        function saved = save(el, filename)
+        function saved_out = save(el, filename)
             %SAVE saves BRAPH2 element as b2 file.
             %
             % SAVED = SAVE(EL, FILEMANE) saves the element EL in the file FILENAME.
@@ -284,6 +284,10 @@ classdef BRAPH2
                 saved = true;
             else
                 saved = false;
+            end
+            
+            if nargout
+                saved_out = saved;
             end
         end
         function [el, build, matlab_release, matlab_release_details] = load(filename)
