@@ -134,7 +134,7 @@ net = squeezenet;
 img = rand(net.Layers(1).InputSize);
 pred_from_original_net = predict(net, img);
 
-net_braph = NNBase().to_net(NNBase().from_net(squeezenet));
+net_braph = NNBase().to_net(NNBase().from_net(squeezenet), "classification");
 pred_from_braph = predict(net_braph, img);
 
 assert(max(abs(pred_from_braph - pred_from_original_net)) < 1E-06, ...
