@@ -8,20 +8,22 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     % Each element is essentially a container for a series of properties.
     %  Each propery has a category (see <a href="matlab:help Category">Category</a>) and a format (see <a href="matlab:help Format">Format</a>).
     %  Each subelement can implement the following protected methods:
-    %   conditioning - conditions a value before setting a property
-    %   calculateValue - calculates the value of a property
-    %   checkValue - checks the value of a property after it is calculated
-    %   postprocessing - postprocesses the value of a prop after it has been set
+    %   <strong>conditioning</strong>   - conditions a value before setting a property
+    %   <strong>calculateValue</strong> - (only for results) calculates the value of a property
+    %   <strong>checkValue</strong>     - checks the value of a property 
+    %                    (for a result, after it is calculated)
+    %   <strong>postprocessing</strong> - postprocesses the value of a prop 
+    %                    AFTER all properties have been set
     %
     % Element constructor:
     %  Element - constructor
     %  
     % Element methods:
-    %  set - sets the value of a property
+    %  set - sets values of a property
     %  check - checks the values of all properties
     %  getr - returns the raw value of a property
     %  get - returns the value of a property
-    %  memorize - returns and memorizes the value of a property
+    %  memorize - returns and memorizes (for results) the value of a property
     %  getPropSeed - returns the seed of a property
     %  isLocked - returns whether a property is locked
     %  lock - locks unreversibly a property
@@ -98,27 +100,26 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     % See also Category, Format, NoValue, Callback, IndexedDictionary, handle, matlab.mixin.Copyable.    
     
     properties (Access=private)
-        %TODO: check that the comments are correct
         % props is a private struct containing the element properties whose
         % details depend on the property category (YOCO, YADIR):
         %
         % METADATA:
-        %  props{prop}.value  - NoValue() or value
-        %  props{prop}.seed      - seed for rng
-        %  props{prop}.checked 	 - true/false
-        %  props{prop}.locked    - false/true
+        %  props{prop}.value    - NoValue() or value
+        %  props{prop}.seed     - seed for rng
+        %  props{prop}.checked 	- true (default) | false
+        %  props{prop}.locked   - false (default) | true
         %
         % PARAMETER, DATA, FIGURE, GUI:
-        %  props{prop}.value  - NoValue() or Callback() or value
-        %  props{prop}.seed      - seed for rng
-        %  props{prop}.checked   - true/false
-        %  props{prop}.locked    - false/true
+        %  props{prop}.value    - NoValue() or Callback() or value
+        %  props{prop}.seed     - seed for rng
+        %  props{prop}.checked  - true (default) | false
+        %  props{prop}.locked   - false (default) | true
         %
         % RESULT:
-        %  props{prop}.value  - NoValue() or value
-        %  props{prop}.seed      - seed for rng
-        %  props{prop}.checked 	 - true/false
-        %  props{prop}.locked    - false/true
+        %  props{prop}.value    - NoValue() or value
+        %  props{prop}.seed     - seed for rng
+        %  props{prop}.checked  - true (default) | false
+        %  props{prop}.locked   - false (default) | true
         %
         % The PARAMETER and DATA properties of the element get locked the
         %  first time a result is successfully calculated.
@@ -633,8 +634,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     end
 	methods % set/check/get/seed/locked/checked
         function el_out = set(el, varargin)
-            %TODO: check docs
-            %SET sets the value of a property.
+            %SET sets some values of a property.
             %
             % SET(EL, POINTER1, VALUE1, POINTER2, VALUE2, ...) sets the value of
             %  POINTER1 to VALUE1, POINTER2 to VALUE2, ... where the pointers can be
@@ -655,7 +655,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %  properties is checked. If the check fails an error is thrown.
             %  Error id: [BRAPH2:<Element Class>:WrongInput]
             %
-            % It the property is Category.PARAMETER or Category.DATA, the value is set
+            % If the property is Category.PARAMETER or Category.DATA, the value is set
             %  only if the property is unlocked. If an attempt is made to set a locked
             %  property, no setting occurs and a warning is thrown.
             %  Warning id: [BRAPH2:<Element Class>]
@@ -695,7 +695,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 
                         el.props{prop}.value = value;
 
-                    case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI} %TODO: check that categories GUI and Figure belong here
+                    case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
                         if ~el.isLocked(prop)
                             if isa(value, 'Callback')
                                 if ~isequal(el.getPropFormat(prop), value.get('EL').getPropFormat(value.get('PROP')))
@@ -801,7 +801,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                                 value_msg = '';
                             end
 
-                        case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI} %TODO: check that categories GUI and Figure belong here
+                        case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
                             while isa(value, 'Callback')
                                 value = value.get('EL').get(value.get('PROP'));
                             end
@@ -890,7 +890,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         value = el.getPropDefaultConditioned(prop);
                     end
 
-                case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI} %TODO: check that categories GUI and Figure belong here
+                case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
                     if isa(value, 'NoValue')
                         value = el.getPropDefaultConditioned(prop);
                     elseif isa(value, 'Callback')
@@ -1210,7 +1210,6 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             el.tree(0)
         end
         function txt_output = tree(el, level, prop_list, n, ending)
-            %TODO: revise this function
             %TREE displays the element tree.
             %
             % TREE(EL) displays the first level of the element tree.
@@ -1517,7 +1516,6 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         %TODO: Yu-Wei: add function net = onnx_to_net(onnx_str)
     end    
     methods (Access=protected) % deep copy
-        %TODO: revise copy
         function el_copy = copyElement(el)
             %COPYELEMENT copies the element.
             %
