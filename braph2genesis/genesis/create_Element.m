@@ -1485,9 +1485,6 @@ generate_constructor()
 
 generate_conditioning()
     function generate_conditioning()
-% % %         if all(cellfun(@(x) numel(x.conditioning) == 1 && isempty(x.conditioning{1}), props)) && all(cellfun(@(x) numel(x.conditioning) == 1 && isempty(x.conditioning{1}), props_update))
-% % %             return
-% % %         end
         g(1, 'methods (Static, Access=protected) % conditioning')
             g(2, 'function value = conditioning(pointer, value)')
                 gs(3, {
