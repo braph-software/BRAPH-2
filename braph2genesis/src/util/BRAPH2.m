@@ -193,6 +193,13 @@ classdef BRAPH2
     end
     methods (Static) % BRAPH2 save/load elements
         function saved = save(el, filename)
+            %SAVE saves BRAPH2 element as b2 file.
+            %
+            % SAVED = SAVE(EL, FILEMANE) saves the element EL in the file FILENAME.
+            %
+            % SAVED = SAVE(EL) opens a dialog box to select the file.
+            %
+            % See also load, uiputfile.
             
             if nargin < 2
                 % select file
@@ -216,7 +223,18 @@ classdef BRAPH2
                 saved = false;
             end
         end
-        function [loaded, el, build, matlab_release, matlab_release_details] = load(filename)
+        function [el, build, matlab_release, matlab_release_details] = load(filename)
+            %LOAD loads a BRAPH2 element from a b2 file.
+            %
+            % EL = LOAD(FILENAME) loads the element EL from the file b2 FILENAME. 
+            %  If the element is not loaded, EL = false.
+            %
+            % EL = LOAD() opens a dialog box to select the file to be loaded. 
+            %
+            % [EL, BUILD, R, RD] = LOAD() returns also the BRAPH2 BUILD, the MatLab
+            %  release number, and the details of the MatLab release RD.
+            %
+            % See also save, uigetfile.
             
             if nargin < 1
                 % select file
@@ -234,15 +252,11 @@ classdef BRAPH2
                 build  = tmp.build;
                 matlab_release = tmp.matlab_release;
                 matlab_release_details = tmp.matlab_release_details;
-                
-                loaded = true;
             else
-                el = [];
+                el = false;
                 build  = [];
                 matlab_release = [];
                 matlab_release_details = [];
-
-                loaded = false;
             end
         end
     end
