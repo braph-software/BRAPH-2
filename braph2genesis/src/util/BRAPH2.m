@@ -220,7 +220,7 @@ classdef BRAPH2
             
             if nargin < 1
                 % select file
-                [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
+                [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, 'Select the element file.');
                 if filterindex
                     filename = fullfile(path, file);
                 else 
@@ -229,10 +229,11 @@ classdef BRAPH2
             end
             
             if isfile(filename)
-                el = load(filename, '-mat', 'el');
-                build  = load(filename, '-mat', 'build');
-                matlab_release = load(filename, '-mat', 'matlab_release');
-                matlab_release_details = load(filename, '-mat', 'matlab_release_details');
+                tmp = load(filename, '-mat', 'el', 'build', 'matlab_release', 'matlab_release_details');
+                el = tmp.el;
+                build  = tmp.build;
+                matlab_release = tmp.matlab_release;
+                matlab_release_details = tmp.matlab_release_details;
                 
                 loaded = true;
             else
