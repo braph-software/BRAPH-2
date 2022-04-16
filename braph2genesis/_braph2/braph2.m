@@ -1,5 +1,15 @@
-%BRAPH2 - BRrain Analysis using graPH theory version 2.0
-% This script loads all packages necessary to use BRAPH2.
+function braph2(ewm)
+%BRAPH2 loads BRAPH 2.0.
+%
+% BRAPH2 loads all packages necessary to use BRAPH 2.0 - BRrain Analysis using graPH theory version 2.0.
+%
+% BRAPH2('warning'|'error'|'msgbox') throws a warning if the MatLab version
+%  is not sufficiently new, or some necessary addons are not installed.
+%
+% BRAPH2 uses the following addons:
+%  - DM: "Parallel Computing Toolbox"
+%  - NN: "Deep Learning Toolbox"
+%  - ONNXCONVERTER: "Deep Learning Toolbox Converter for ONNX Model Format"
 %
 % BRAPH2 packages:
 %  <a href="matlab:help src         ">src</a>           - software core
@@ -44,11 +54,14 @@ for i = 1:1:length(pipelines_dir_list)
     addpath([pipelines_dir filesep pipelines_dir_list(i).name])
 end
 
-clear src_dir brainsurfs_dir graphs_dir measures_dir neuralnetworks_dir test_dir pipelines_dir pipelines_dir_list i
+if nargin < 1
+    ewm = 'warning';
+end
+BRAPH2.checkMatLab(ewm)
+BRAPH2.installed('DM', ewm)
+BRAPH2.installed('NN', ewm)
+BRAPH2.installed('ONNXCONVERTER', ewm)
 
-BRAPH2.checkMatLab('msgbox')
-BRAPH2.installed('DM', 'msgbox')
-BRAPH2.installed('NN', 'msgbox')
-BRAPH2.installed('ONNXCONVERTER', 'msgbox')
+BRAPH2GUI()
 
-% % % BRAPH2GUI()
+end
