@@ -100,12 +100,33 @@ classdef BRAPH2
         BUG_LAYOUT = 'BugLayout' % bug in loading/saving layout
     end
     methods (Static) % BRAPH2 GUI constants
+        function b2_out = customize(save)
+            
+            filename = [fileparts(which('braph2.m')) filesep() 'src' filesep() 'braph2.init.b2'];
+            
+            persistent b2
+            if isempty(b2)
+                if isfile(filename)
+                    b2 = BRAPH2.load(filename);
+                else
+                    b2 = BRAPH2Customize();
+                end
+            end
+            
+            if save
+                BRAPH2.save(b2, filename);
+            end
+            
+            if nargout > 0
+                b2_out = b2;
+            end
+        end
         function fontunits = FONTUNITS()
             % FONTUNITS sets the units of the font.
             %
             % See also BRAPH2Constants.
             
-            b2 = BRAPH2Constants();
+            b2 = BRAPH2.customize();
 
             fontunits = b2.get('FONTUNITS');
         end
@@ -114,7 +135,7 @@ classdef BRAPH2
             %
             % See also BRAPH2Constants.
             
-            b2 = BRAPH2Constants();
+            b2 = BRAPH2.customize();
 
             fontsize = b2.get('FONTSIZE');
         end
@@ -123,7 +144,7 @@ classdef BRAPH2
             %
             % See also BRAPH2Constants.
             
-            b2 = BRAPH2Constants();
+            b2 = BRAPH2.customize();
 
             col = b2.get('COL');
         end
@@ -132,7 +153,7 @@ classdef BRAPH2
             %
             % See also BRAPH2Constants.
             
-            b2 = BRAPH2Constants();
+            b2 = BRAPH2.customize();
 
             col_fig = b2.get('COL_FIG');
         end
@@ -141,7 +162,7 @@ classdef BRAPH2
             %
             % See also BRAPH2Constants.
             
-            b2 = BRAPH2Constants();
+            b2 = BRAPH2.customize();
 
             col_m = b2.get('COL_M');
         end
@@ -150,7 +171,7 @@ classdef BRAPH2
             %
             % See also BRAPH2Constants.
             
-            b2 = BRAPH2Constants();
+            b2 = BRAPH2.customize();
 
             col_p = b2.get('COL_P');
         end
@@ -159,7 +180,7 @@ classdef BRAPH2
             %
             % See also BRAPH2Constants.
             
-            b2 = BRAPH2Constants();
+            b2 = BRAPH2.customize();
 
             col_d = b2.get('COL_D');
         end
@@ -168,7 +189,7 @@ classdef BRAPH2
             %
             % See also BRAPH2Constants.
             
-            b2 = BRAPH2Constants();
+            b2 = BRAPH2.customize();
 
             col_r = b2.get('COL_R');
         end
@@ -177,7 +198,7 @@ classdef BRAPH2
             %
             % See also BRAPH2Constants.
             
-            b2 = BRAPH2Constants();
+            b2 = BRAPH2.customize();
 
             col_f = b2.get('COL_F');
         end
@@ -186,7 +207,7 @@ classdef BRAPH2
             %
             % See also BRAPH2Constants.
             
-            b2 = BRAPH2Constants();
+            b2 = BRAPH2.customize();
 
             col_g = b2.get('COL_G');
         end
