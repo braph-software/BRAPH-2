@@ -1423,6 +1423,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                                 end
                                 json_str = [json_str '}']; %#ok<AGROW>
                                 struct{i}.props{prop}.value = json_str;
+                            case Format.NET
+                                %TODO: Yu-Wei (net_to_onnx)
                         end
                     end
                     struct{i}.props{prop}.seed = el.getPropSeed(prop);
@@ -1495,6 +1497,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                                 %     el.props{prop}.value = el_list(indices);
                             case Format.CELL
                                 el.props{prop}.value = eval(value);
+                            case Format.NET
+                                %TODO: Yu-Wei (onnx_to_net)
                         end
                     end
                     el.props{prop}.seed = uint32(struct{i}.props(prop).seed);
@@ -1505,6 +1509,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             
             el = el_list{1};
         end
+        %TODO: Yu-Wei: add functions 
+        % function onnx_str = net_to_onnx(net)
+        % function net = onnx_to_net(onnx_str)
     end    
     methods (Access=protected) % deep copy
         %TODO: revise copy

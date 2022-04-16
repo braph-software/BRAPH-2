@@ -54,7 +54,8 @@ classdef Format < handle
     %  CELL         Cell is a 2D cell array of numeric data, typically used
     %               for adjaciency matrices and measures.
     %
-    %  NET          Net is a MatLab neural network object.
+    %  NET          Net is a MatLab neural network object 
+    %               (SeriesNetwork, DAGNetwork, dlnetwork).
     %
     %  COLOR        Color is an RGB color.
     %
@@ -243,7 +244,7 @@ classdef Format < handle
         
         NET = 'ml'
         NET_NAME = 'net'
-        NET_DESCRIPTION = 'Net is a MatLab neural network object.'
+        NET_DESCRIPTION = 'Net is a MatLab neural network object (SeriesNetwork, DAGNetwork, dlnetwork).'
         
         COLOR = 'co'
         COLOR_NAME = 'color'
@@ -731,7 +732,7 @@ classdef Format < handle
                 case Format.CELL
                     check = iscell(value) && all(cellfun(@(x) isnumeric(x), value(:)));
                 case Format.NET
-                    check = isa(value, 'network');
+                    check = isa(value, 'network') || isa(value, 'SeriesNetwork') || isa(value, 'DAGNetwork') || isa(value, 'dlnetwork');
                 case Format.COLOR
                     check = isnumeric(value) && (length(value) == 3) && all(value >= 0 & value <= 1);
                 case Format.ALPHA
