@@ -266,7 +266,7 @@ function f_out = draw(gui, varargin)
         if filterindex
             filename = fullfile(path, file);
 % % %             tmp = load(filename, '-mat', 'el');
-tmp_el = BRAPH2.loadx(filename);
+tmp_el = BRAPH2.load(filename);
             if strcmp(tmp_el.getClass(), el.getClass())
                 pe.reinit(tmp_el)
                 el = tmp_el; % update local variable 'el' to synchronize it with pe 'el'  
