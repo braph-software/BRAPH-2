@@ -68,7 +68,7 @@ BRAPH2.installed('DM', ewm)
 BRAPH2.installed('NN', ewm)
 BRAPH2.installed('ONNXCONVERTER', ewm)
 
-if nargin < 1 || ~isset(gui) || gui
+if nargin < 1 || isempty(gui) || gui
     BRAPH2GUI()
 end
 
