@@ -109,13 +109,13 @@ function net = to_net(nn, saved_nn, varargin)
         format = varargin{1};
         type = varargin{2};
         class_name = varargin{3};
-        net = importONNXNetwork(filename, "InputDataFormats", format, "OutputLayerType", type, "Classes", class_name);
+        net = importONNXNetwork(filename, 'OutputLayerType', type, 'Classes', class_name);
     elseif length(varargin) == 2
         format = varargin{1};
         type = varargin{2};
-        net = importONNXNetwork(filename, "InputDataFormats", format, "OutputLayerType", type);
+        net = importONNXNetwork(filename, 'OutputLayerType', type);
     else
-        lgraph = importONNXLayers(filename, "InputDataFormats", "BCSS");
+        lgraph = importONNXLayers(filename);
         net = assembleNetwork(lgraph);
     end
     
@@ -134,7 +134,7 @@ net = squeezenet;
 img = rand(net.Layers(1).InputSize);
 pred_from_original_net = predict(net, img);
 
-net_braph = NNBase().to_net(NNBase().from_net(squeezenet));
+net_braph = NNBase().to_net(NNBase().from_net(squeezenet), "BCSS", "classification");
 pred_from_braph = predict(net_braph, img);
 
 assert(max(abs(pred_from_braph - pred_from_original_net)) < 1E-06, ...
