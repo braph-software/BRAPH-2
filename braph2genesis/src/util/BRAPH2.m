@@ -118,6 +118,10 @@ classdef BRAPH2
                     b2 = BRAPH2.load(filename);
                 else
                     b2 = BRAPH2Constants();
+                    %CET: initializes the values with their defaults
+                    for prop = 1:1:BRAPH2Constants.getPropNumber()
+                        b2.set(prop, BRAPH2Constants.getPropDefault(prop))
+                    end
                 end
             end
             
@@ -134,7 +138,10 @@ classdef BRAPH2
             %
             % See also BRAPH2Constants.
             
-            b2 = BRAPH2.customize();
+            persistent b2
+            if isempty(b2)
+                b2 = BRAPH2.customize();
+            end
 
             fontunits = b2.get('FONTUNITS');
         end
@@ -143,7 +150,10 @@ classdef BRAPH2
             %
             % See also BRAPH2Constants.
             
-            b2 = BRAPH2.customize();
+            persistent b2
+            if isempty(b2)
+                b2 = BRAPH2.customize();
+            end
 
             fontsize = b2.get('FONTSIZE');
         end
@@ -152,7 +162,10 @@ classdef BRAPH2
             %
             % See also BRAPH2Constants.
             
-            b2 = BRAPH2.customize();
+            persistent b2
+            if isempty(b2)
+                b2 = BRAPH2.customize();
+            end
 
             col = b2.get('COL');
         end
@@ -161,7 +174,10 @@ classdef BRAPH2
             %
             % See also BRAPH2Constants.
             
-            b2 = BRAPH2.customize();
+            persistent b2
+            if isempty(b2)
+                b2 = BRAPH2.customize();
+            end
 
             col_fig = b2.get('COL_FIG');
         end
@@ -170,7 +186,10 @@ classdef BRAPH2
             %
             % See also BRAPH2Constants.
             
-            b2 = BRAPH2.customize();
+            persistent b2
+            if isempty(b2)
+                b2 = BRAPH2.customize();
+            end
 
             col_m = b2.get('COL_M');
         end
@@ -179,7 +198,10 @@ classdef BRAPH2
             %
             % See also BRAPH2Constants.
             
-            b2 = BRAPH2.customize();
+            persistent b2
+            if isempty(b2)
+                b2 = BRAPH2.customize();
+            end
 
             col_p = b2.get('COL_P');
         end
@@ -188,7 +210,10 @@ classdef BRAPH2
             %
             % See also BRAPH2Constants.
             
-            b2 = BRAPH2.customize();
+            persistent b2
+            if isempty(b2)
+                b2 = BRAPH2.customize();
+            end
 
             col_d = b2.get('COL_D');
         end
@@ -197,7 +222,10 @@ classdef BRAPH2
             %
             % See also BRAPH2Constants.
             
-            b2 = BRAPH2.customize();
+            persistent b2
+            if isempty(b2)
+                b2 = BRAPH2.customize();
+            end
 
             col_r = b2.get('COL_R');
         end
@@ -206,7 +234,10 @@ classdef BRAPH2
             %
             % See also BRAPH2Constants.
             
-            b2 = BRAPH2.customize();
+            persistent b2
+            if isempty(b2)
+                b2 = BRAPH2.customize();
+            end
 
             col_f = b2.get('COL_F');
         end
@@ -215,7 +246,10 @@ classdef BRAPH2
             %
             % See also BRAPH2Constants.
             
-            b2 = BRAPH2.customize();
+            persistent b2
+            if isempty(b2)
+                b2 = BRAPH2.customize();
+            end
 
             col_g = b2.get('COL_G');
         end
