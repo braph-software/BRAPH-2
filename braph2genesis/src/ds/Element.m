@@ -8,20 +8,22 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     % Each element is essentially a container for a series of properties.
     %  Each propery has a category (see <a href="matlab:help Category">Category</a>) and a format (see <a href="matlab:help Format">Format</a>).
     %  Each subelement can implement the following protected methods:
-    %   conditioning - conditions a value before setting a property
-    %   calculateValue - calculates the value of a property
-    %   checkValue - checks the value of a property after it is calculated
-    %   postprocessing - postprocesses the value of a prop after it has been set
+    %   <strong>conditioning</strong>   - conditions a value before setting a property
+    %   <strong>calculateValue</strong> - (only for results) calculates the value of a property
+    %   <strong>checkValue</strong>     - checks the value of a property 
+    %                    (for a result, after it is calculated)
+    %   <strong>postprocessing</strong> - postprocesses the value of a prop 
+    %                    AFTER all properties have been set
     %
     % Element constructor:
     %  Element - constructor
     %  
     % Element methods:
-    %  set - sets the value of a property
+    %  set - sets values of a property
     %  check - checks the values of all properties
     %  getr - returns the raw value of a property
     %  get - returns the value of a property
-    %  memorize - returns and memorizes the value of a property
+    %  memorize - returns and memorizes (for results) the value of a property
     %  getPropSeed - returns the seed of a property
     %  isLocked - returns whether a property is locked
     %  lock - locks unreversibly a property
@@ -98,27 +100,26 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     % See also Category, Format, NoValue, Callback, IndexedDictionary, handle, matlab.mixin.Copyable.    
     
     properties (Access=private)
-        %TODO: check that the comments are correct
         % props is a private struct containing the element properties whose
         % details depend on the property category (YOCO, YADIR):
         %
         % METADATA:
-        %  props{prop}.value  - NoValue() or value
-        %  props{prop}.seed      - seed for rng
-        %  props{prop}.checked 	 - true/false
-        %  props{prop}.locked    - false/true
+        %  props{prop}.value    - NoValue() or value
+        %  props{prop}.seed     - seed for rng
+        %  props{prop}.checked 	- true (default) | false
+        %  props{prop}.locked   - false (default) | true
         %
         % PARAMETER, DATA, FIGURE, GUI:
-        %  props{prop}.value  - NoValue() or Callback() or value
-        %  props{prop}.seed      - seed for rng
-        %  props{prop}.checked   - true/false
-        %  props{prop}.locked    - false/true
+        %  props{prop}.value    - NoValue() or Callback() or value
+        %  props{prop}.seed     - seed for rng
+        %  props{prop}.checked  - true (default) | false
+        %  props{prop}.locked   - false (default) | true
         %
         % RESULT:
-        %  props{prop}.value  - NoValue() or value
-        %  props{prop}.seed      - seed for rng
-        %  props{prop}.checked 	 - true/false
-        %  props{prop}.locked    - false/true
+        %  props{prop}.value    - NoValue() or value
+        %  props{prop}.seed     - seed for rng
+        %  props{prop}.checked  - true (default) | false
+        %  props{prop}.locked   - false (default) | true
         %
         % The PARAMETER and DATA properties of the element get locked the
         %  first time a result is successfully calculated.
@@ -633,8 +634,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     end
 	methods % set/check/get/seed/locked/checked
         function el_out = set(el, varargin)
-            %TODO: check docs
-            %SET sets the value of a property.
+            %SET sets some values of a property.
             %
             % SET(EL, POINTER1, VALUE1, POINTER2, VALUE2, ...) sets the value of
             %  POINTER1 to VALUE1, POINTER2 to VALUE2, ... where the pointers can be
@@ -655,7 +655,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %  properties is checked. If the check fails an error is thrown.
             %  Error id: [BRAPH2:<Element Class>:WrongInput]
             %
-            % It the property is Category.PARAMETER or Category.DATA, the value is set
+            % If the property is Category.PARAMETER or Category.DATA, the value is set
             %  only if the property is unlocked. If an attempt is made to set a locked
             %  property, no setting occurs and a warning is thrown.
             %  Warning id: [BRAPH2:<Element Class>]
@@ -695,7 +695,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 
                         el.props{prop}.value = value;
 
-                    case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI} %TODO: check that categories GUI and Figure belong here
+                    case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
                         if ~el.isLocked(prop)
                             if isa(value, 'Callback')
                                 if ~isequal(el.getPropFormat(prop), value.get('EL').getPropFormat(value.get('PROP')))
@@ -801,7 +801,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                                 value_msg = '';
                             end
 
-                        case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI} %TODO: check that categories GUI and Figure belong here
+                        case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
                             while isa(value, 'Callback')
                                 value = value.get('EL').get(value.get('PROP'));
                             end
@@ -890,7 +890,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         value = el.getPropDefaultConditioned(prop);
                     end
 
-                case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI} %TODO: check that categories GUI and Figure belong here
+                case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
                     if isa(value, 'NoValue')
                         value = el.getPropDefaultConditioned(prop);
                     elseif isa(value, 'Callback')
@@ -1210,7 +1210,6 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             el.tree(0)
         end
         function txt_output = tree(el, level, prop_list, n, ending)
-            %TODO: revise this function
             %TREE displays the element tree.
             %
             % TREE(EL) displays the first level of the element tree.
@@ -1389,9 +1388,11 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         switch el.getPropFormat(prop)
                             case Format.EMPTY
                                 struct{i}.props{prop}.value = regexprep(tostring(value), '''', '''''');
-                            case {Format.STRING, Format.OPTION, Format.CLASS}
+                            case {Format.STRING, Format.OPTION, Format.CLASS, ...
+                                    Format.MARKERSTYLE, Format.LINESTYLE}
                                 struct{i}.props{prop}.value = regexprep(tostring(value), '''', '''''');
-                            case {Format.LOGICAL, Format.SCALAR, Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
+                            case {Format.LOGICAL, Format.SCALAR, Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX, ...
+                                    Format.COLOR, Format.ALPHA, Format.MARKERSIZE, Format.LINEWIDTH}
                                 struct{i}.props{prop}.value = mat2str(value);
                             case Format.CLASSLIST
                                 json_str = '{';
@@ -1484,9 +1485,11 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         switch el.getPropFormat(prop)
                             case Format.EMPTY
                                 el.props{prop}.value = eval(value);
-                            case {Format.STRING, Format.OPTION, Format.CLASS}
+                            case {Format.STRING, Format.OPTION, Format.CLASS, ...
+                                    Format.MARKERSTYLE, Format.LINESTYLE}
                                 el.props{prop}.value = eval(value(2:end-1));
-                            case {Format.LOGICAL, Format.SCALAR, Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
+                            case {Format.LOGICAL, Format.SCALAR, Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX, ...
+                                    Format.COLOR, Format.ALPHA, Format.MARKERSIZE, Format.LINEWIDTH}
                                 el.props{prop}.value = eval(value);
                             case Format.CLASSLIST
                                 el.props{prop}.value = eval(value);
@@ -1509,12 +1512,10 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             
             el = el_list{1};
         end
-        %TODO: Yu-Wei: add functions 
-        % function onnx_str = net_to_onnx(net)
-        % function net = onnx_to_net(onnx_str)
+        %TODO: Yu-Wei: add function onnx_str = net_to_onnx(net)
+        %TODO: Yu-Wei: add function net = onnx_to_net(onnx_str)
     end    
     methods (Access=protected) % deep copy
-        %TODO: revise copy
         function el_copy = copyElement(el)
             %COPYELEMENT copies the element.
             %
@@ -1559,92 +1560,97 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         end
     end
     methods % clone
-        %TODO: revise clone
-        function el_clone = clone(el)
+        function el_clone = clone(el, cloned_categories, cb_categories, locked_categories)
             %CLONE clones the element.
             %
-            % EL_COPY = CLONE(EL) clones the element EL. The cloning operation makes a
-            %  deep copy of the element including all properties with Category.METADATA
-            %  and Category.PARAMETER and the checked status.
-            %  The properties with Category.DATA and Category.RESULT are set to
-            %  NoValue, the seeds are randomized, and all properties are unlocked.
+            % EL_CLONE = CLONE(EL, CATEGORIES) clones the element EL. 
+            %  The cloning operation makes a deep copy of the element:
+            %  - Properties of category CATEGORIES (by default, METADATA, PARAMETER, FIGURE, GUI):
+            %    VALUE copied
+            %    CHECKED copied
+            %    SEED randomized
+            %    UNLOCKED
+            %  - Properties of all other categories (by default, DATA and RESULT):
+            %    VALUE set to NoValue
+            %    CHECKED copied
+            %    SEED randomized
+            %    UNLOCKED
             %
-            % See also deepclone, copy.
-            
-            % el_clone = el.copy();
-            % 
-            % el_list = el_clone.getElementList();
-            % for i = 1:1:length(el_list)
-            %     el = el_list{i};
-            %     for prop = 1:1:el.getPropNumber()
-            %         switch el.getPropCategory(prop)
-            %             case {Category.METADATA, Category.PARAMETER}
-            %             case {Category.DATA, Category.RESULT}
-            %                 el.props{prop}.value = NoValue.getNoValue();
-            %         end
-            %         el.props{prop}.seed = randi(intmax('uint32'));
-            %         el.props{prop}.locked = false;
-            %     end
-            % end
+            % EL_CLONE = CLONE(EL) uses the default CATEGORIES.
+            %
+            % EL_CLONE = CLONE(EL, [], CB_CATEGORIES) has callbacks for the categories CB_CATEGORIES.
+            %
+            % EL_CLONE = CLONE(EL, [], , [], LOCKED_CATEGORIES) locks the categories LOCKED_CATEGORIES.
+            %
+            % See also deepclone, cbclone, Category.
             
             if isa(el, 'NoValue')
                 el_clone = NoValue.getNoValue();
                 return
             end
             
+            if nargin < 4
+                locked_categories = {};
+            end
+            
+            if nargin < 3 || isempty(cb_categories)
+                cb_categories = {};
+            end
+            
+            if nargin < 2 || isempty(cloned_categories)
+                cloned_categories = {Category.METADATA, Category.PARAMETER, Category.FIGURE, Category.GUI};
+            end
+            
             el_clone = eval(el.getClass());
             
             for prop = 1:1:el_clone.getPropNumber()
-                switch el_clone.getPropCategory(prop)
-                    case {Category.METADATA, Category.PARAMETER}
-                        value = el.getr(prop);
-                        
-                        if isa(value, 'Element')
-                            el_clone.props{prop}.value = value.clone();
-                        elseif iscell(value) && all(all(cellfun(@(x) isa(x, 'Element'), value)))
-                            el_clone.props{prop}.value = cellfun(@(x) x.clone(), value, 'UniformOutput', false);
+                % VALUE
+                if any(strcmp(el_clone.getPropCategory(prop), cloned_categories))
+                    value = el.getr(prop);
+                    if isa(value, 'Element')
+                        el_clone.props{prop}.value = value.clone();
+                    elseif iscell(value) && all(all(cellfun(@(x) isa(x, 'Element'), value)))
+                        el_clone.props{prop}.value = cellfun(@(x) x.clone(), value, 'UniformOutput', false);
+                    else
+                        if any(strcmp(el_clone.getPropCategory(prop), cb_categories))
+                            el_clone.props{prop}.value = Callback('EL', el, 'PROP', prop);
                         else
                             el_clone.props{prop}.value = value;
                         end
-                    case {Category.DATA, Category.RESULT}
-                        el_clone.props{prop}.value = NoValue.getNoValue();
+                    end
+                else
+                    el_clone.props{prop}.value = NoValue.getNoValue();
+                end
+                
+                % CHECKED
+                el_clone.props{prop}.checked = el.props{prop}.checked;
+                
+                % LOCKED
+                if any(strcmp(el_clone.getPropCategory(prop), locked_categories))
+                    el_clone.props{prop}.locked = el.props{prop}.true;
                 end
             end
         end
         function el_clone = deepclone(el)
             %DEEPCLONE deep-clones the element.
             %
-            % EL_COPY = DEEPCLONE(EL) deep-clones the element EL. The deep-cloning
-            %  operation makes a deep copy of the element including all properties with
-            %  Category.METADATA, Category.PARAMETER, and Category.DATA and the checked status.
-            %  The properties with Category.RESULT are set to NoValue, the seeds are
-            %  randomized, and all properties are unlocked.
+            % EL_CLONE = DEEPCLONE(EL) deep-clones the element EL. 
+            %  Compared to the cloning operation, also the properties of category DATA are copied.
+            %  More in detail, the deep-cloning operation makes a deep copy of the element:
+            %  - Properties of category METADATA, PARAMETER, DATA, FIGURE, and GUI:
+            %    VALUE copied
+            %    CHECKED copied
+            %    SEED randomized
+            %    UNLOCKED
+            %  - Properties of category RESULT:
+            %    VALUE set to NoValue
+            %    CHECKED copied
+            %    SEED randomized
+            %    UNLOCKED
             %
-            % See also clone, copy.
+            % See also clone, cbclone.
             
-            if isa(el, 'NoValue')
-                el_clone = NoValue.getNoValue();
-                return
-            end
-            
-            el_clone = eval(el.getClass());
-            
-            for prop = 1:1:el_clone.getPropNumber()
-                switch el_clone.getPropCategory(prop)
-                    case {Category.METADATA, Category.PARAMETER, Category.DATA}
-                        value = el.getr(prop);
-                        
-                        if isa(value, 'Element')
-                            el_clone.props{prop}.value = value.clone();
-                        elseif iscell(value) && all(all(cellfun(@(x) isa(x, 'Element'), value)))
-                            el_clone.props{prop}.value = cellfun(@(x) x.clone(), value, 'UniformOutput', false);
-                        else
-                            el_clone.props{prop}.value = value;
-                        end
-                    case Category.RESULT
-                        el_clone.props{prop}.value = NoValue.getNoValue();
-                end
-            end
+            el_clone = el.clone({Category.METADATA, Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI});
         end
     end
     methods % GUI

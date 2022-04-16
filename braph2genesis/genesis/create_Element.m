@@ -72,7 +72,7 @@ function create_Element(generator_file, target_dir)
 %   The conditioned value should be in variable 'value'.
 %  <strong>%%%% ¡postprocessing!</strong>
 %   Postprocessing code (executed after setting, but before checking,
-%   value), executed on all unlocked props after each set operation.
+%   value), executed on ALL unlocked props after each set operation.
 %   Can be on multiple lines.
 %   Does not return anything.
 %  <strong>%%%% ¡check_prop!</strong>
@@ -273,7 +273,7 @@ element_class_created = exist(class_name, 'class') == 8;
         end
     end
 
-CET = '% COMPUTATIONAL EFFICIENCY TRICK';
+CET = '%CET: Computational Efficiency TRick';
 
 %% Generate file
 file_str = [];
@@ -1485,9 +1485,6 @@ generate_constructor()
 
 generate_conditioning()
     function generate_conditioning()
-% % %         if all(cellfun(@(x) numel(x.conditioning) == 1 && isempty(x.conditioning{1}), props)) && all(cellfun(@(x) numel(x.conditioning) == 1 && isempty(x.conditioning{1}), props_update))
-% % %             return
-% % %         end
         g(1, 'methods (Static, Access=protected) % conditioning')
             g(2, 'function value = conditioning(pointer, value)')
                 gs(3, {

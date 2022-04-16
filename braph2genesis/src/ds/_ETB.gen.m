@@ -69,6 +69,27 @@ PROP_SMATRIX_M (metadata, smatrix) is a metadata, smatrix.
 %%% ¡prop!
 PROP_CELL_M (metadata, cell) is a metadata, cell.
 
+%%% ¡prop!
+PROP_NET_M (metadata, net) is a metadata, net.
+
+%%% ¡prop!
+PROP_COLOR_M (metadata, color) is a metadata, color.
+
+%%% ¡prop!
+PROP_ALPHA_M (metadata, alpha) is a metadata, alpha.
+
+%%% ¡prop!
+PROP_MARKERSTYLE_M (metadata, markerstyle) is a metadata, markerstyle.
+
+%%% ¡prop!
+PROP_MARKERSIZE_M (metadata, markersize) is a metadata, markersize.
+
+%%% ¡prop!
+PROP_LINESTYLE_M (metadata, linestyle) is a metadata, markersize.
+
+%%% ¡prop!
+PROP_LINEWIDTH_M (metadata, linewidth) is a metadata, linewidth.
+
 %% ¡tests!
 
 %%% ¡test!
@@ -105,6 +126,13 @@ et.set('PROP_CVECTOR_M', [1:1:10]') % 12
 et.set('PROP_MATRIX_M', [1:1:4]' * [1:1:3]) % 13
 et.set('PROP_SMATRIX_M', eye(10)) % 14
 et.set('PROP_CELL_M', {ones(2), ones(3); ones(4), 1}) % 15
+%TODO: add NET
+et.set('PROP_COLOR_M', [1 0 0]) % 17
+et.set('PROP_ALPHA_M', .5) % 18
+et.set('PROP_MARKERSTYLE_M', '.') % 19
+et.set('PROP_MARKERSIZE_M', 5) % 20
+et.set('PROP_LINESTYLE_M', '--') % 21
+et.set('PROP_LINEWIDTH_M', 5) % 22
 
 [json, struct, el_list] = encodeJSON(et);
 

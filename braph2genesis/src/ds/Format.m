@@ -55,7 +55,7 @@ classdef Format < handle
     %               for adjaciency matrices and measures.
     %
     %  NET          Net is a MatLab neural network object 
-    %               (SeriesNetwork, DAGNetwork, dlnetwork).
+    %               (network, SeriesNetwork, DAGNetwork, dlnetwork).
     %
     %  COLOR        Color is an RGB color.
     %
@@ -244,7 +244,7 @@ classdef Format < handle
         
         NET = 'ml'
         NET_NAME = 'net'
-        NET_DESCRIPTION = 'Net is a MatLab neural network object (SeriesNetwork, DAGNetwork, dlnetwork).'
+        NET_DESCRIPTION = 'Net is a MatLab neural network object (network, SeriesNetwork, DAGNetwork, dlnetwork).'
         
         COLOR = 'co'
         COLOR_NAME = 'color'
