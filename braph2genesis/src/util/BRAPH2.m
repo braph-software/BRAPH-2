@@ -17,7 +17,7 @@ classdef BRAPH2
     %  EXT_ELEMENT      - BRAPH2 element extension (*.b2)
     %  EXT_PIPELINE     - BRAPH2 pipeline extension (*.braph2)
     %
-    % Properties (Customizable) - BRAPH2 check and testing
+    % Properties (Constant) - BRAPH2 check and testing
     %  CHECKED          - BRAPH2 check global switch
     %  TEST_PARALLEL    - BRAPH2 test using parallel computing
     %  TEST_RANDOM      - BRAPH2 random testing
@@ -75,34 +75,10 @@ classdef BRAPH2
         EXT_ELEMENT = {'*.b2'} % BRAPH2 element extension
         EXT_PIPELINE = {'*.braph2'} % BRAPH2 pipeline extension
     end
-    methods (Static) % BRAPH2 check and testing
-        function checked = CHECKED()
-            % CHECKED is the BRAPH2 check global switch.
-            %
-            % See also BRAPH2Constants.
-            
-            b2 = BRAPH2Constants();
-            
-            checked = b2.get('CHECKED');
-        end
-        function test_parallel = TEST_PARALLEL()
-            % TEST_PARALLEL is whether BRAPH2 test uses parallel computing.
-            %
-            % See also BRAPH2Constants.
-            
-            b2 = BRAPH2Constants();
-
-            test_parallel = b2.get('TEST_PARALLEL');
-        end
-        function test_random = TEST_RANDOM()
-            % TEST_RANDOM is whether BRAPH2 tests randomly.
-            %
-            % See also BRAPH2Constants.
-            
-            b2 = BRAPH2Constants();
-
-            test_random = b2.get('TEST_RANDOM');
-        end
+    properties (Constant) % BRAPH2 check and testing
+        CHECKED = true % BRAPH2 check global switch
+        TEST_PARALLEL = false % BRAPH2 test using parallel computing
+        TEST_RANDOM = false % BRAPH2 random test
     end
     properties (Constant) % BRAPH2 error codes
         VER = 'Version' % wrong MatLab or addon version
