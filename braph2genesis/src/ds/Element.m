@@ -1611,7 +1611,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     elseif iscell(value) && all(all(cellfun(@(x) isa(x, 'Element'), value)))
                         el_clone.props{prop}.value = cellfun(@(x) x.clone(), value, 'UniformOutput', false);
                     else
-                        if any(strcmp(el_clone.getPropCategory(prop), callback_categories))
+                        if any(strcmp(el_clone.getPropCategory(prop), cb_categories))
                             el_clone.props{prop}.value = Callback('EL', el, 'PROP', prop);
                         else
                             el_clone.props{prop}.value = value;
