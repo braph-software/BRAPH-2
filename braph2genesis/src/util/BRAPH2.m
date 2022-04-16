@@ -36,6 +36,7 @@ classdef BRAPH2
     %  BUG_LAYOUT       - bug in loading/saving layout
     %
     % Properties (Customizable) - BRAPH2 GUI constants:
+    %  CUSTOMIZE        - returns/saves the customizable constants
     %  FONTUNITS        - sets the units of the font
     %  FONTSIZE         - sets the size of the font
     %  COL              - official BRAPH2 color
@@ -101,6 +102,13 @@ classdef BRAPH2
     end
     methods (Static) % BRAPH2 GUI constants
         function b2_out = customize(save)
+            %CUSTOMIZE returns/saves the customizable constants.
+            %
+            % B2 = CUSTOMIZE() returns the element with the customizable constants.
+            %
+            % CUSTOMIZE(true) saves the element with the customizable constants.
+            %
+            % See also BRAPH2Constants.
             
             filename = [fileparts(which('braph2.m')) filesep() 'src' filesep() 'braph2.init.b2'];
             
@@ -109,11 +117,11 @@ classdef BRAPH2
                 if isfile(filename)
                     b2 = BRAPH2.load(filename);
                 else
-                    b2 = BRAPH2Customize();
+                    b2 = BRAPH2Constants();
                 end
             end
             
-            if save
+            if nargin && save
                 BRAPH2.save(b2, filename);
             end
             
