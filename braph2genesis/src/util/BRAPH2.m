@@ -11,13 +11,13 @@ classdef BRAPH2
     %  COPYRIGHT        - BRAPH2 copyright
     %  WEB              - BRAPH2 website
     %  TWITTER          - BRAPH2 twitter handle
-    %  MATLAB_RELEASE   - Minimal MatLab version
+    %  MATLAB_RELEASE   - Minimal MatLab version (2021a)
     %
     % Properties (Constant) - BRAPH2 extensions
     %  EXT_ELEMENT      - BRAPH2 element extension (*.b2)
     %  EXT_PIPELINE     - BRAPH2 pipeline extension (*.braph2)
     %
-    % Properties (Constant) - BRAPH2 check and testing
+    % Properties (Customizable) - BRAPH2 check and testing
     %  CHECKED          - BRAPH2 check global switch
     %  TEST_PARALLEL    - BRAPH2 test using parallel computing
     %  TEST_RANDOM      - BRAPH2 random testing
@@ -35,7 +35,7 @@ classdef BRAPH2
     %  BUG_ERR          - bug in the handling of errors
     %  BUG_LAYOUT       - bug in loading/saving layout
     %
-    % Properties (Constant) - BRAPH2 GUI constants:
+    % Properties (Customizable) - BRAPH2 GUI constants:
     %  FONTUNITS        - sets the units of the font
     %  FONTSIZE         - sets the size of the font
     %  COL              - official BRAPH2 color
@@ -57,6 +57,8 @@ classdef BRAPH2
     %  add_tool_about   - adds the about tools to a toolbar
 	%  checkMatLab      - checks whether the MatLab release is sufficiently new/error
     %  installed        - returns whether an addon is installed/error
+    %
+    % See also BRAPH2Constants.
     
     properties (Constant) % BRAPH2 ID Card
         NAME = 'Braph 2.0' % BRAPH2 full name
@@ -67,16 +69,40 @@ classdef BRAPH2
         COPYRIGHT = ['Copyright 2014-' datestr(now,'yyyy')]
         WEB = 'braph.org' % BRAPH2 website
         TWITTER = 'braph2software' % BRAPH2 twitter handle
-        MATLAB_RELEASE = '9.11'; % Minimal MatLab release
+        MATLAB_RELEASE = '9.10'; % Minimal MatLab release (2021a)
     end
     properties (Constant) % BRAPH2 extensions
         EXT_ELEMENT = {'*.b2'} % BRAPH2 element extension
         EXT_PIPELINE = {'*.braph2'} % BRAPH2 pipeline extension
     end
-    properties (Constant) % BRAPH2 check and testing
-        CHECKED = true; % BRAPH2 check global switch
-        TEST_PARALLEL = false; % BRAPH2 test using parallel computing
-        TEST_RANDOM = false; % BRAPH2 random testing
+    methods (Static) % BRAPH2 check and testing
+        function checked = CHECKED()
+            % CHECKED is the BRAPH2 check global switch.
+            %
+            % See also BRAPH2Constants.
+            
+            b2 = BRAPH2Constants();
+            
+            checked = b2.get('CHECKED');
+        end
+        function test_parallel = TEST_PARALLEL()
+            % TEST_PARALLEL is whether BRAPH2 test uses parallel computing.
+            %
+            % See also BRAPH2Constants.
+            
+            b2 = BRAPH2Constants();
+
+            test_parallel = b2.get('TEST_PARALLEL');
+        end
+        function test_random = TEST_RANDOM()
+            % TEST_RANDOM is whether BRAPH2 tests randomly.
+            %
+            % See also BRAPH2Constants.
+            
+            b2 = BRAPH2Constants();
+
+            test_random = b2.get('TEST_RANDOM');
+        end
     end
     properties (Constant) % BRAPH2 error codes
         VER = 'Version' % wrong MatLab or addon version
@@ -91,17 +117,97 @@ classdef BRAPH2
         BUG_ERR = 'BugErr' % bug in the handling of errors
         BUG_LAYOUT = 'BugLayout' % bug in loading/saving layout
     end
-    properties (Constant) % BRAPH2 GUI constants
-        FONTUNITS = 'points'
-        FONTSIZE = 12
-        COL = [.9 .4 .1] % official BRAPH2 color
-        COL_FIG = [1 .9725 .929] % standard figure background color
-        COL_M = [.20 .50 .80] % standard metadata prop background color
-        COL_P = [.40 .50 .60] % standard parameter prop background color
-        COL_D = [.60 .50 .40] % standard data prop background color
-        COL_R = [.80 .50 .20] % standard result prop background color
-        COL_F = [.25 .50 .75] % standard figure prop background color
-        COL_G = [.30 .50 .70] % standard gui prop background color
+    methods (Static) % BRAPH2 GUI constants
+        function fontunits = FONTUNITS()
+            % FONTUNITS sets the units of the font.
+            %
+            % See also BRAPH2Constants.
+            
+            b2 = BRAPH2Constants();
+
+            fontunits = b2.get('FONTUNITS');
+        end
+        function fontsize = FONTSIZE()
+            % FONTSIZE sets the size of the font.
+            %
+            % See also BRAPH2Constants.
+            
+            b2 = BRAPH2Constants();
+
+            fontsize = b2.get('FONTSIZE');
+        end
+        function col = COL()
+            % COL is the official BRAPH2 color.
+            %
+            % See also BRAPH2Constants.
+            
+            b2 = BRAPH2Constants();
+
+            col = b2.get('COL');
+        end
+        function col_fig = COL_FIG()
+            % COL_FIG is the standard figure background color.
+            %
+            % See also BRAPH2Constants.
+            
+            b2 = BRAPH2Constants();
+
+            col_fig = b2.get('COL_FIG');
+        end
+        function col_m = COL_M()
+            % COL_M is the standard metadata prop background color.
+            %
+            % See also BRAPH2Constants.
+            
+            b2 = BRAPH2Constants();
+
+            col_m = b2.get('COL_M');
+        end
+        function col_p = COL_P()
+            % COL_P is the standard parameter prop background color.
+            %
+            % See also BRAPH2Constants.
+            
+            b2 = BRAPH2Constants();
+
+            col_p = b2.get('COL_P');
+        end
+        function col_d = COL_D()
+            % COL_D is the standard data prop background color.
+            %
+            % See also BRAPH2Constants.
+            
+            b2 = BRAPH2Constants();
+
+            col_d = b2.get('COL_D');
+        end
+        function col_r = COL_R()
+            % COL_R is the standard result prop background color.
+            %
+            % See also BRAPH2Constants.
+            
+            b2 = BRAPH2Constants();
+
+            col_r = b2.get('COL_R');
+        end
+        function col_f = COL_F()
+            % COL_F is the standard figure prop background color.
+            %
+            % See also BRAPH2Constants.
+            
+            b2 = BRAPH2Constants();
+
+            col_f = b2.get('COL_F');
+        end
+        function col_g = COL_G()
+            % COL_G is the standard gui prop background color.
+            %
+            % See also BRAPH2Constants.
+            
+            b2 = BRAPH2Constants();
+
+            col_g = b2.get('COL_G');
+        end
     end
     methods (Static)
         function credits()
