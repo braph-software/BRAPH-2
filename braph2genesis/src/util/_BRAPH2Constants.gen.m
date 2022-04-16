@@ -7,21 +7,6 @@ BRAPH2
 %% ¡props!
 
 %%% ¡prop!
-CHECKED (metadata, logical) is the BRAPH2 check global switch.
-%%%% ¡default!
-true
-
-%%% ¡prop!
-TEST_PARALLEL (metadata, logical) is whether BRAPH2 tests using parallel computing.
-%%%% ¡default!
-false
-
-%%% ¡prop!
-TEST_RANDOM (metadata, logical) is whether BRAPH2 performs a random testing.
-%%%% ¡default!
-false
-
-%%% ¡prop!
 FONTUNITS (metadata, option) sets the units of the font.
 %%%% ¡settings!
 {'points', 'pixels', 'normalized', 'inches', 'centimeters', 'points', 'characters'}
@@ -66,7 +51,7 @@ COL_R (metadata, color) is the standard result prop background color.
 %%% ¡prop!
 COL_F (metadata, color) is the standard figure prop background color.
 %%%% ¡default!
-[.25 .50 .75];
+[.25 .50 .75]
 
 %%% ¡prop!
 COL_G (metadata, color) is the standard gui prop background color.
