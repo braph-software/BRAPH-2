@@ -586,7 +586,7 @@ classdef BRAPH2
                     ''
                     ['MatLab ' BRAPH2.MATLAB_RELEASE ' is required, while MatLab ' ver('MATLAB').Version ' is installed.']
                     ''
-                    'The addon ' addon ' is not installed. '
+                    ['The addon ' addon ' is not installed. ']
                     'Some BRAPH2 functionalities might not be available, or they might not function correctly.'
                     ''
                     ''};
