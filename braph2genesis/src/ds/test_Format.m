@@ -661,8 +661,15 @@ end
 %% Test 2.ML: Check NET
 % NET formats that should be accepted
 clear value
-value{1} = network(); % network object
 
+% creat network object
+value{1} = network(); 
+
+% switch off the nnet warning
+w = warning('query','MATLAB:mir_warning_unrecognized_pragma');
+warning('off', 'MATLAB:mir_warning_unrecognized_pragma');
+
+% create SeriesNetwork object
 size_x = 28;
 size_y = 28;
 num_channel = 1;
@@ -675,14 +682,20 @@ layers = [
     softmaxLayer('Name', 'softmax')
     classificationLayer('Classes', categorical(1:num_class), 'Name', 'classOutput')
     ];
-value{2} = SeriesNetwork(layers); % SeriesNetwork object
+value{2} = SeriesNetwork(layers); 
 
+% create DAGNetwrok object
 lgraph = layerGraph(layers);
-value{3} = assembleNetwork(lgraph); % DAGNetwork object
+value{3} = assembleNetwork(lgraph); 
 
+% create dlnetwork object
 lgraph = removeLayers(lgraph, 'classOutput');
 value{4} = dlnetwork(lgraph); % dlnetework object
 
+% resume nnet warning status and clear variables 
+warning(w.state, 'MATLAB:mir_warning_unrecognized_pragma')
+vars = {'w', 'size_x', 'size_y', 'num_channel', 'num_neuron', 'num_class', 'layers', 'vars'};
+clear(vars{:})
 
 % NET formats that should NOT be accepted
 clear wrong_value
