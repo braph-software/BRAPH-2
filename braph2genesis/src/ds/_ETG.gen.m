@@ -29,7 +29,7 @@ Test classification model for JSON encoding and decoding
 %%%% ¡probability!
 .1
 %%%% ¡code!
-if BRAPH2.installed('NN', 'warning') && BRAPH2.insatlled('ONNXCONVERTER', 'warning')
+if BRAPH2.installed('NN', 'warning') && BRAPH2.installed('ONNXCONVERTER', 'warning')
     % create neural network objects
     size_x = 28;
     size_y = 28;
@@ -65,7 +65,7 @@ Test regression model for JSON encoding and decoding
 %%%% ¡probability!
 .1
 %%%% ¡code!
-if BRAPH2.installed('NN', 'warning') && BRAPH2.insatlled('ONNXCONVERTER', 'warning')
+if BRAPH2.installed('NN', 'warning') && BRAPH2.installed('ONNXCONVERTER', 'warning')
     % create neural network objects
     size_x = 28;
     size_y = 28;
