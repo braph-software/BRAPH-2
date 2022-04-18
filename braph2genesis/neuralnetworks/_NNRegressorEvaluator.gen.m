@@ -80,9 +80,12 @@ else
     nn = nne.get('NN');
     nn_gr = nne.get('GR');
     inputs = nn.reconstruct_inputs(nn_gr);
-    net = nn.to_net(nn.get('MODEL'));
-    predictions = net.predict(inputs);
-
+    net = nn.get('MODEL');
+    if iscell(net)
+        predictions = zeros(nn_gr.length(), 1)
+    else
+        predictions = net.predict(inputs);
+    end
     nn_gr_pred = NNGroup( ...
         'SUB_CLASS', nn_gr.get('SUB_CLASS'), ...
         'SUB_DICT', IndexedDictionary('IT_CLASS', 'Subject') ...

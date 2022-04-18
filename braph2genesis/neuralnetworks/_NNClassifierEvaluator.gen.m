@@ -112,8 +112,12 @@ else
     nn = nne.get('NN');
     gr = nne.get('GR');
     inputs = nn.reconstruct_inputs(gr);
-    net = nn.to_net(nn.get('MODEL'));
-    predictions = net.predict(inputs);
+    net =nn.get('MODEL');
+    if iscell(net)
+        predictions = zeros(nn_gr.length(), 2)
+    else
+        predictions = net.predict(inputs);
+    end
 
     gr_pred = NNGroup( ...
         'SUB_CLASS', gr.get('SUB_CLASS'), ...

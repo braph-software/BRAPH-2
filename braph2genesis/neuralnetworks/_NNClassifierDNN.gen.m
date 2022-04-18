@@ -65,13 +65,13 @@ INPUT_FORMAT (data, string) is the data format of neural network inputs.
 %% ¡props_update!
 
 %%% ¡prop!
-MODEL (result, cell) is a trained neural network classifier.
+MODEL (result, net) is a trained neural network classifier.
 %%%% ¡calculate!
-if nn.check_nn_toolboxes()
+if BRAPH2.installed('NN', 'msgbox')
     % get inputs
     nn_gr = nn.get('GR');
     if nn_gr.get('SUB_DICT').length() == 0
-        value = {};
+        value = network();
     else
         [inputs, num_features] = nn.reconstruct_inputs(nn_gr);
         [targets, classes] = nn.reconstruct_targets(nn_gr);
@@ -119,9 +119,8 @@ if nn.check_nn_toolboxes()
         net = trainNetwork(inputs, targets, layers, options);
 
         % transform the net object to a cell
-        value = nn.from_net(net);
+        value = net;
     end
-    
 else
     value = {};
 end
