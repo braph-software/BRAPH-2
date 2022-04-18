@@ -69,9 +69,11 @@ function h_panel = draw(pr, varargin)
         w = f_ba_w * 1.61;
         
         pr.h = figure('UNITS', 'normalized', 'POSITION', [x/screen_w y/screen_h w/screen_w h/screen_h]);
-        net = el.get('MODEL');
-        lgraph = layerGraph(net);
-        plot(lgraph)
+        if BRAPH2.installed('NN', 'masgbox')
+            net = el.get('MODEL');
+            lgraph = layerGraph(net);
+            plot(lgraph)
+        end
     end
 
     % output

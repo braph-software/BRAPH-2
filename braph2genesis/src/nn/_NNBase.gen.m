@@ -24,7 +24,11 @@ GR (data, item) is a group of NN subjects containing the information for trainin
 %%% ¡prop!
 MODEL (result, net) is a trained neural network.
 %%%% ¡calculate!
-value = squeezenet;
+if BRAPH2.installed('NN', 'warning')
+    value = squeezenet;
+else
+    value = {};
+end
 %%%% ¡gui!
 pr = PPNNBase_Model('EL', nn, 'PROP', nn.MODEL, varargin{:});
 
@@ -34,13 +38,15 @@ pr = PPNNBase_Model('EL', nn, 'PROP', nn.MODEL, varargin{:});
 %%%% ¡name!
 Net format verification
 %%%% ¡code!
-net = squeezenet;
-img = rand(net.Layers(1).InputSize);
-pred_from_original_net = predict(net, img);
+if BRAPH2.installed('NN', 'warning')
+    net = squeezenet;
+    img = rand(net.Layers(1).InputSize);
+    pred_from_original_net = predict(net, img);
 
-net_braph = NNBase().get('MODEL');
-pred_from_braph = predict(net_braph, img);
+    net_braph = NNBase().get('MODEL');
+    pred_from_braph = predict(net_braph, img);
 
-assert(isequal(pred_from_original_net, pred_from_braph), ...
-    [BRAPH2.STR ':NNBase:' BRAPH2.BUG_ERR], ...
-    'Prediction is not being calculated correctly for saved neural networks.')
+    assert(isequal(pred_from_original_net, pred_from_braph), ...
+        [BRAPH2.STR ':NNBase:' BRAPH2.BUG_ERR], ...
+        'Prediction is not being calculated correctly for saved neural networks.')
+end
