@@ -1527,7 +1527,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             w = warning('query','MATLAB:mir_warning_unrecognized_pragma');
             warning('off', 'MATLAB:mir_warning_unrecognized_pragma');
 
-            if ~BRAPH2.installed('ONNXCONVERTER') || isa(net, 'network') || iscell(net)
+            if ~BRAPH2.installed('ONNXCONVERTER', 'warning') || isa(net, 'network') || iscell(net)
                 onnx_str = '';
             else
                 directory = [fileparts(which('test_braph2')) filesep 'trial_nn_from_matlab_to_be_erased'];
@@ -1564,8 +1564,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             w_nnet = warning('query','nnet_cnn:internal:cnn:analyzer:NetworkAnalyzer:NetworkHasWarnings');
             warning('off','nnet_cnn:internal:cnn:analyzer:NetworkAnalyzer:NetworkHasWarnings');
             
-            if ~BRAPH2.installed('ONNXCONVERTER', 'msgbox') || isempty(onnx_str)
-                if BRAPH2.installed('NN', 'msgbox')
+            if ~BRAPH2.installed('ONNXCONVERTER', 'warning') || isempty(onnx_str)
+                if BRAPH2.installed('NN', 'warning')
                     net = network();
                 else
                     net = {};
