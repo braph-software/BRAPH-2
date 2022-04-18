@@ -67,7 +67,7 @@ INPUT_FORMAT (data, string) is the data format of network inputs.
 %%% ¡prop!
 MODEL (result, net) is a trained neural network regressor.
 %%%% ¡calculate!
-if BRAPH2.installed('NN', 'msgbox')
+if BRAPH2.installed('NN', 'warning')
     % get inputs
     nn_gr = nn.get('GR');
     if nn_gr.get('SUB_DICT').length() == 0
