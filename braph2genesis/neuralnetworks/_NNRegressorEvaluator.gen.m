@@ -81,8 +81,8 @@ else
     nn_gr = nne.get('GR');
     inputs = nn.reconstruct_inputs(nn_gr);
     net = nn.get('MODEL');
-    if iscell(net)
-        predictions = zeros(nn_gr.length(), 1)
+    if iscell(net) || BRAPH2.installed('NN', 'msgbox')
+        predictions = zeros(nn_gr.get('SUB_DICT').length(), 1);
     else
         predictions = net.predict(inputs);
     end
