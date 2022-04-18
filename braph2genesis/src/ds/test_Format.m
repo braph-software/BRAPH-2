@@ -661,7 +661,28 @@ end
 %% Test 2.ML: Check NET
 % NET formats that should be accepted
 clear value
-value{1} = network();
+value{1} = network(); % network object
+
+size_x = 28;
+size_y = 28;
+num_channel = 1;
+num_neuron = 100;
+num_class = 10;
+layers = [
+    imageInputLayer([size_x size_y num_channel], 'Name', 'input', 'Mean', rand(size_x,size_y, num_channel))
+    fullyConnectedLayer(num_neuron, 'Name', 'fc1', 'Weights', rand(num_neuron, size_x*size_y), 'Bias', rand(num_neuron, 1))
+    fullyConnectedLayer(num_class, 'Name', 'fc2', 'Weights', rand(num_class, num_neuron), 'Bias', rand(num_class, 1))
+    softmaxLayer('Name', 'softmax')
+    classificationLayer('Classes', categorical(1:num_class), 'Name', 'classOutput')
+    ];
+value{2} = SeriesNetwork(layers); % SeriesNetwork object
+
+lgraph = layerGraph(layers);
+value{3} = assembleNetwork(lgraph); % DAGNetwork
+
+lgraph = removeLayers(lgraph, 'classOutput');
+value{4} = dlnetwork(lgraph); % dlnetework
+
 
 % NET formats that should NOT be accepted
 clear wrong_value
