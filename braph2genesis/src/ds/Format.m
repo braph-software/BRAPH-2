@@ -732,7 +732,11 @@ classdef Format < handle
                 case Format.CELL
                     check = iscell(value) && all(cellfun(@(x) isnumeric(x), value(:)));
                 case Format.NET
-                    check = isa(value, 'network') || isa(value, 'SeriesNetwork') || isa(value, 'DAGNetwork') || isa(value, 'dlnetwork');
+                    if BRAPH2.installed('NN', 'msgbox')
+                        check = isa(value, 'network') || isa(value, 'SeriesNetwork') || isa(value, 'DAGNetwork') || isa(value, 'dlnetwork');
+                    else
+                        check = iscell(value) && isempty(value);
+                    end
                 case Format.COLOR
                     check = isnumeric(value) && (length(value) == 3) && all(value >= 0 & value <= 1);
                 case Format.ALPHA

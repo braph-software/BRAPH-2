@@ -662,12 +662,12 @@ end
 % NET formats that should be accepted
 clear value
 
-% creat network object
-value{1} = network(); 
-
 % switch off the nnet warning
 w = warning('query','MATLAB:mir_warning_unrecognized_pragma');
 warning('off', 'MATLAB:mir_warning_unrecognized_pragma');
+
+% create network object
+value{1} = network();
 
 % create SeriesNetwork object
 size_x = 28;
