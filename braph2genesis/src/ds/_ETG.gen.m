@@ -30,6 +30,10 @@ Test classification model for JSON encoding and decoding
 .1
 %%%% ¡code!
 if BRAPH2.installed('NN', 'warning') && BRAPH2.installed('ONNXCONVERTER', 'warning')
+    % switch off the nnet warning
+    w = warning('query','MATLAB:mir_warning_unrecognized_pragma');
+    warning('off', 'MATLAB:mir_warning_unrecognized_pragma');
+
     % create neural network objects
     size_x = 28;
     size_y = 28;
@@ -58,6 +62,9 @@ if BRAPH2.installed('NN', 'warning') && BRAPH2.installed('ONNXCONVERTER', 'warni
 
     [json, struct, el_list] = encodeJSON(etg);
     [etg_dec, struct_dec, el_list_dec] = Element.decodeJSON(json);
+
+    % resume nnet warning status 
+    warning(w.state, 'MATLAB:mir_warning_unrecognized_pragma')
 end
 %%% ¡test!
 %%%% ¡name!
@@ -66,6 +73,10 @@ Test regression model for JSON encoding and decoding
 .1
 %%%% ¡code!
 if BRAPH2.installed('NN', 'warning') && BRAPH2.installed('ONNXCONVERTER', 'warning')
+    % switch off the nnet warning
+    w = warning('query','MATLAB:mir_warning_unrecognized_pragma');
+    warning('off', 'MATLAB:mir_warning_unrecognized_pragma');
+
     % create neural network objects
     size_x = 28;
     size_y = 28;
@@ -94,4 +105,7 @@ if BRAPH2.installed('NN', 'warning') && BRAPH2.installed('ONNXCONVERTER', 'warni
 
     [json, struct, el_list] = encodeJSON(etg);
     [etg_dec, struct_dec, el_list_dec] = Element.decodeJSON(json);
+    
+    % resume nnet warning status 
+    warning(w.state, 'MATLAB:mir_warning_unrecognized_pragma')
 end
