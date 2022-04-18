@@ -662,7 +662,7 @@ end
 % NET formats that should be accepted
 clear value
 
-if BRAPH2.installed('NN', 'warning') && BRAPH2.insatlled('ONNXCONVERTER', 'warning')
+if BRAPH2.installed('NN', 'warning') && BRAPH2.installed('ONNXCONVERTER', 'warning')
     % switch off the nnet warning
     w = warning('query','MATLAB:mir_warning_unrecognized_pragma');
     warning('off', 'MATLAB:mir_warning_unrecognized_pragma');
