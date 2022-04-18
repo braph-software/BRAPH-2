@@ -1,5 +1,5 @@
 %% ¡header!
-PPNNBase_Model < PlotPropCell (pr, plot property model) plots the layer of neural networks.
+PPNNBase_Model < PlotProp (pr, plot property model) plots the layer of neural networks.
 
 %%% ¡description!
 PPNNBase_Model plots the NN layers.
@@ -69,7 +69,7 @@ function h_panel = draw(pr, varargin)
         w = f_ba_w * 1.61;
         
         pr.h = figure('UNITS', 'normalized', 'POSITION', [x/screen_w y/screen_h w/screen_w h/screen_h]);
-        net = el.to_net(el.get('MODEL'));
+        net = el.get('MODEL');
         lgraph = layerGraph(net);
         plot(lgraph)
     end
@@ -86,7 +86,7 @@ function update(pr)
     %
     % See also draw, redraw, refresh, PlotElement.
 
-    update@PlotPropCell(pr)
+    update@PlotProp(pr)
     pr.get_buttons();
 end
 function redraw(pr, varargin)
