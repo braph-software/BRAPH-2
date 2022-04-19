@@ -1515,7 +1515,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         function onnx_str = net_to_onnx(net)
             %NET_TO_ONNX saves the newtork object as the binary format of ONNX.
             %
-            % NN_CELL = NET_TO_ONNX(NET) transforms the Matlab build-in neural network
+            % ONNX_STR = NET_TO_ONNX(NET) transforms the Matlab build-in neural network
             %  object NET to a binary format of ONNX. Firstly, the NET is exported to an
             %  ONNX file and then the file is imported as the binary format which
             %  can be saved as a string.
@@ -1524,10 +1524,10 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %
             % See also onnx_to_net.
 
-            w = warning('query','MATLAB:mir_warning_unrecognized_pragma');
-            warning('off', 'MATLAB:mir_warning_unrecognized_pragma');
+            w = warning('query', 'MATLAB:mir_warning_unrecognized_pragma');
+            warning('off', w.identifier);
 
-            if ~BRAPH2.installed('ONNXCONVERTER', 'warning') || isa(net, 'network') || iscell(net)
+            if ~BRAPH2.installed('ONNXCONVERTER', 'warning') || isa(net, 'network') || isa(net, 'NoValue')
                 onnx_str = '';
             else
                 directory = [fileparts(which('test_braph2')) filesep 'trial_nn_from_matlab_to_be_erased'];
@@ -1544,7 +1544,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 
                 rmdir(directory, 's')
             end
-            warning(w.state, 'MATLAB:mir_warning_unrecognized_pragma')
+            warning(w.state, w.identifier);
         end
         function net = onnx_to_net(onnx_str, varargin)
             %ONNX_TO_NET transforms the binary format of ONNX to a build-in neural
@@ -1559,16 +1559,17 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %
             % See also net_to_onnx.
 
-            w_matlab = warning('query','MATLAB:mir_warning_unrecognized_pragma');
-            warning('off', 'MATLAB:mir_warning_unrecognized_pragma');
-            w_nnet = warning('query','nnet_cnn:internal:cnn:analyzer:NetworkAnalyzer:NetworkHasWarnings');
-            warning('off','nnet_cnn:internal:cnn:analyzer:NetworkAnalyzer:NetworkHasWarnings');
+            w_matlab = warning('query', 'MATLAB:mir_warning_unrecognized_pragma');
+            warning('off', w_matlab.identifier);
+
+            w_nnet = warning('query', 'nnet_cnn:internal:cnn:analyzer:NetworkAnalyzer:NetworkHasWarnings');
+            warning('off', w_nnet.identifier);
             
             if ~BRAPH2.installed('ONNXCONVERTER', 'warning') || isempty(onnx_str)
                 if BRAPH2.installed('NN', 'warning')
                     net = network();
                 else
-                    net = {};
+                    net = NoValue();
                 end
             else
                 directory = [fileparts(which('test_braph2')) filesep 'trial_nn_from_braph_to_be_erased'];
@@ -1586,8 +1587,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 net = assembleNetwork(lgraph);
                 rmdir(directory, 's');
             end
-            warning(w_matlab.state, 'MATLAB:mir_warning_unrecognized_pragma');
-            warning(w_nnet.state,'nnet_cnn:internal:cnn:analyzer:NetworkAnalyzer:NetworkHasWarnings');
+            warning(w_matlab.state, w_matlab.identifier);
+            warning(w_nnet.state, w_nnet.identifier);
         end
     end    
     methods (Access=protected) % deep copy
