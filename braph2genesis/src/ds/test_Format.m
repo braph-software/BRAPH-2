@@ -662,10 +662,10 @@ end
 % NET formats that should be accepted
 clear value
 
-if BRAPH2.installed('NN', 'warning') && BRAPH2.installed('ONNXCONVERTER', 'warning')
+if BRAPH2.installed('NN', 'warning')
     % switch off the nnet warning
-    w = warning('query','MATLAB:mir_warning_unrecognized_pragma');
-    warning('off', 'MATLAB:mir_warning_unrecognized_pragma');
+    w = warning('query', 'MATLAB:mir_warning_unrecognized_pragma');
+    warning('off', w.identifier);
 
     % create network object
     value{1} = network();
@@ -694,7 +694,7 @@ if BRAPH2.installed('NN', 'warning') && BRAPH2.installed('ONNXCONVERTER', 'warni
     value{4} = dlnetwork(lgraph); % dlnetework object
 
     % resume nnet warning status and clear variables
-    warning(w.state, 'MATLAB:mir_warning_unrecognized_pragma')
+    warning(w.state, w.identifier)
     vars = {'w', 'size_x', 'size_y', 'num_channel', 'num_neuron', 'num_class', 'layers', 'vars'};
     clear(vars{:})
 
