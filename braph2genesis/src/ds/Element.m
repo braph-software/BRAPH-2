@@ -1425,7 +1425,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                                 json_str = [json_str '}']; %#ok<AGROW>
                                 struct{i}.props{prop}.value = json_str;
                             case Format.NET
-                                %TODO: Yu-Wei (net_to_onnx)
+                                struct{i}.props{prop}.value = Element.net_to_onnx(value);
                         end
                     end
                     struct{i}.props{prop}.seed = el.getPropSeed(prop);
@@ -1450,7 +1450,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % manages special case when only one element
             if length(struct) == 1
                 struct_tmp{1}.class = struct.class;
-                if isfield(struct, 'prop')
+                if isfield(struct, 'props')
                     struct_tmp{1}.props = struct.props;
                 end
                 struct = struct_tmp;
@@ -1501,7 +1501,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                             case Format.CELL
                                 el.props{prop}.value = eval(value);
                             case Format.NET
-                                %TODO: Yu-Wei (onnx_to_net)
+                                el.props{prop}.value = Element.onnx_to_net(value);
                         end
                     end
                     el.props{prop}.seed = uint32(struct{i}.props(prop).seed);
@@ -1512,8 +1512,84 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             
             el = el_list{1};
         end
-        %TODO: Yu-Wei: add function onnx_str = net_to_onnx(net)
-        %TODO: Yu-Wei: add function net = onnx_to_net(onnx_str)
+        function onnx_str = net_to_onnx(net)
+            %NET_TO_ONNX saves the newtork object as the binary format of ONNX.
+            %
+            % ONNX_STR = NET_TO_ONNX(NET) transforms the Matlab build-in neural network
+            %  object NET to a binary format of ONNX. Firstly, the NET is exported to an
+            %  ONNX file and then the file is imported as the binary format which
+            %  can be saved as a string.
+            %  Typically, this method is called internally when a neural network
+            %  model is trained and ready to be exported to the b2 file.
+            %
+            % See also onnx_to_net.
+
+            w = warning('query', 'MATLAB:mir_warning_unrecognized_pragma');
+            warning('off', w.identifier);
+
+            if ~BRAPH2.installed('ONNXCONVERTER', 'warning') || isa(net, 'network') || isa(net, 'NoValue')
+                onnx_str = '';
+            else
+                directory = [fileparts(which('test_braph2')) filesep 'trial_nn_from_matlab_to_be_erased'];
+                if ~exist(directory, 'dir')
+                    mkdir(directory)
+                end
+                filename = [directory filesep 'nn_from_matlab_to_be_erased.onnx'];
+
+                exportONNXNetwork(net, filename);
+
+                fileID = fopen(filename);
+                onnx_str = num2str(fread(fileID));
+                fclose(fileID);
+
+                rmdir(directory, 's')
+            end
+            warning(w.state, w.identifier);
+        end
+        function net = onnx_to_net(onnx_str, varargin)
+            %ONNX_TO_NET transforms the binary format of ONNX to a build-in neural
+            % network object in matlab.
+            %
+            % NET = ONNX_TO_NET(ONNX_STR) transforms the binary format of ONNX
+            %  to a build-in object in matlab. Firstly the onnx string is exported
+            %  as an ONNX file, and then the file is imported as a build-in neural
+            %  network object in matlab.
+            %  Typically, this method is called internally when a neural network
+            %  model is imported from the b2 file.
+            %
+            % See also net_to_onnx.
+
+            w_matlab = warning('query', 'MATLAB:mir_warning_unrecognized_pragma');
+            warning('off', w_matlab.identifier);
+
+            w_nnet = warning('query', 'nnet_cnn:internal:cnn:analyzer:NetworkAnalyzer:NetworkHasWarnings');
+            warning('off', w_nnet.identifier);
+            
+            if ~BRAPH2.installed('ONNXCONVERTER', 'warning') || isempty(onnx_str)
+                if BRAPH2.installed('NN', 'warning')
+                    net = network();
+                else
+                    net = NoValue();
+                end
+            else
+                directory = [fileparts(which('test_braph2')) filesep 'trial_nn_from_braph_to_be_erased'];
+                if ~exist(directory, 'dir')
+                    mkdir(directory)
+                end
+                filename = [directory filesep 'nn_from_braph_to_be_erased.onnx'];
+
+                fileID = fopen(filename, 'w');
+                fwrite(fileID, str2double(onnx_str));
+                fclose(fileID);
+
+                lgraph = importONNXLayers(filename);
+                
+                net = assembleNetwork(lgraph);
+                rmdir(directory, 's');
+            end
+            warning(w_matlab.state, w_matlab.identifier);
+            warning(w_nnet.state, w_nnet.identifier);
+        end
     end    
     methods (Access=protected) % deep copy
         function el_copy = copyElement(el)

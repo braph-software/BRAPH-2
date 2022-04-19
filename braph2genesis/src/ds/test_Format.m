@@ -661,27 +661,62 @@ end
 %% Test 2.ML: Check NET
 % NET formats that should be accepted
 clear value
-value{1} = network();
 
-% NET formats that should NOT be accepted
-clear wrong_value
-wrong_value{1} = 'String';
-wrong_value{2} = 3.14;
-wrong_value{3} = Element();
-wrong_value{4} = {};
+if BRAPH2.installed('NN', 'warning')
+    % switch off the nnet warning
+    w = warning('query', 'MATLAB:mir_warning_unrecognized_pragma');
+    warning('off', w.identifier);
 
-% tests
-for i = 1:1:length(value)
-    if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
-        Format.checkFormat(Format.NET, value{i})
+    % create network object
+    value{1} = network();
+
+    % create SeriesNetwork object
+    size_x = 28;
+    size_y = 28;
+    num_channel = 1;
+    num_neuron = 100;
+    num_class = 10;
+    layers = [
+        imageInputLayer([size_x size_y num_channel], 'Name', 'input', 'Mean', rand(size_x, size_y, num_channel))
+        fullyConnectedLayer(num_neuron, 'Name', 'fc1', 'Weights', rand(num_neuron, size_x * size_y), 'Bias', rand(num_neuron, 1))
+        fullyConnectedLayer(num_class, 'Name', 'fc2', 'Weights', rand(num_class, num_neuron), 'Bias', rand(num_class, 1))
+        softmaxLayer('Name', 'softmax')
+        classificationLayer('Classes', categorical(1:num_class), 'Name', 'classOutput')
+        ];
+    value{2} = SeriesNetwork(layers);
+
+    % create DAGNetwrok object
+    lgraph = layerGraph(layers);
+    value{3} = assembleNetwork(lgraph);
+
+    % create dlnetwork object
+    lgraph = removeLayers(lgraph, 'classOutput');
+    value{4} = dlnetwork(lgraph); % dlnetework object
+
+    % resume nnet warning status and clear variables
+    warning(w.state, w.identifier)
+    vars = {'w', 'size_x', 'size_y', 'num_channel', 'num_neuron', 'num_class', 'layers', 'vars'};
+    clear(vars{:})
+
+    % NET formats that should NOT be accepted
+    clear wrong_value
+    wrong_value{1} = 'String';
+    wrong_value{2} = 3.14;
+    wrong_value{3} = Element();
+    wrong_value{4} = {};
+
+    % tests
+    for i = 1:1:length(value)
+        if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
+            Format.checkFormat(Format.NET, value{i})
+        end
+    end
+    for i = 1:1:length(wrong_value)
+        if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
+            assert_with_error('Format.checkFormat(Format.NET, varargin{1})', error_identifier, wrong_value{i})
+        end
     end
 end
-for i = 1:1:length(wrong_value)
-    if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
-        assert_with_error('Format.checkFormat(Format.NET, varargin{1})', error_identifier, wrong_value{i})
-    end
-end
-
 %% Test 2.CO: Check COLOR
 % COLOR formats that should be accepted
 clear value

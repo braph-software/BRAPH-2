@@ -642,7 +642,11 @@ classdef Format < handle
                 case Format.CELL
                     format_default = '';
                 case Format.NET
-                    format_default = network();
+                    if BRAPH2.installed('NN', 'warning')
+                        format_default = network();
+                    else
+                        format_default = NoValue();
+                    end
                 case Format.COLOR
                     format_default = BRAPH2.COL;
                 case Format.ALPHA
@@ -732,7 +736,11 @@ classdef Format < handle
                 case Format.CELL
                     check = iscell(value) && all(cellfun(@(x) isnumeric(x), value(:)));
                 case Format.NET
-                    check = isa(value, 'network') || isa(value, 'SeriesNetwork') || isa(value, 'DAGNetwork') || isa(value, 'dlnetwork');
+                    if BRAPH2.installed('NN', 'warning')
+                        check = isa(value, 'network') || isa(value, 'SeriesNetwork') || isa(value, 'DAGNetwork') || isa(value, 'dlnetwork');
+                    else
+                        check = isa(value, 'NoValue');
+                    end
                 case Format.COLOR
                     check = isnumeric(value) && (length(value) == 3) && all(value >= 0 & value <= 1);
                 case Format.ALPHA

@@ -65,13 +65,13 @@ INPUT_FORMAT (data, string) is the data format of network inputs.
 %% ¡props_update!
 
 %%% ¡prop!
-MODEL (result, cell) is a trained neural network regressor.
+MODEL (result, net) is a trained neural network regressor.
 %%%% ¡calculate!
-if nn.check_nn_toolboxes()
+if BRAPH2.installed('NN', 'warning')
     % get inputs
     nn_gr = nn.get('GR');
     if nn_gr.get('SUB_DICT').length() == 0
-        value = {};
+        value = network();
     else
         [inputs, num_features] = nn.reconstruct_inputs(nn_gr);
         [targets, classes] = nn.reconstruct_targets(nn_gr);
@@ -116,27 +116,14 @@ if nn.check_nn_toolboxes()
         net = trainNetwork(inputs, targets, layers, options);
 
         % transform the net object to a cell
-        value = nn.from_net(net);
+        value = net;
     end
     
 else
-    value = {};
+    value = NoValue();
 end
 
 %% ¡methods!
-function net = to_net(nn, saved_nn)
-    %TO_NET transforms the saved neural network 
-    % in braph to a build-in object in matlab.
-    %
-    % NET = TO_NET(NN) transforms the saved neural network in braph
-    %  to a build-in object in matlab. Firstly the saved neural network
-    %  in braph is exported as an ONNX file, and then the file is 
-    %  imported as a build-in neural network object in matlab.
-    %  Typically, this method is called internally when a saved neural 
-    %  network model is evaluated by a test data.
-    
-    net = to_net@NNBase(nn, saved_nn, nn.get('INPUT_FORMAT'), "regression");
-end
 function [inputs, num_features] = reconstruct_inputs(nn, gr)
 %RECONSTRUCT_INPUTS reconstructs the inputs for NN
 %

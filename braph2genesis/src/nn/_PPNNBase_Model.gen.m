@@ -1,5 +1,5 @@
 %% ¡header!
-PPNNBase_Model < PlotPropCell (pr, plot property model) plots the layer of neural networks.
+PPNNBase_Model < PlotProp (pr, plot property model) plots the layer of neural networks.
 
 %%% ¡description!
 PPNNBase_Model plots the NN layers.
@@ -69,9 +69,11 @@ function h_panel = draw(pr, varargin)
         w = f_ba_w * 1.61;
         
         pr.h = figure('UNITS', 'normalized', 'POSITION', [x/screen_w y/screen_h w/screen_w h/screen_h]);
-        net = el.to_net(el.get('MODEL'));
-        lgraph = layerGraph(net);
-        plot(lgraph)
+        if BRAPH2.installed('NN', 'masgbox')
+            net = el.get('MODEL');
+            lgraph = layerGraph(net);
+            plot(lgraph)
+        end
     end
 
     % output
@@ -86,7 +88,7 @@ function update(pr)
     %
     % See also draw, redraw, refresh, PlotElement.
 
-    update@PlotPropCell(pr)
+    update@PlotProp(pr)
     pr.get_buttons();
 end
 function redraw(pr, varargin)
@@ -144,8 +146,9 @@ function cb_bring_to_front(pr)
 
     % bring to front settings panel
     pr.cb_bring_to_front@PlotProp();
-
-    set(pr.h, 'Visible', 'on');
+    if isgraphics(pr.h)
+        set(pr.h, 'Visible', 'on');
+    end
 end
 function cb_hide(pr)
     %CB_HIDE hides the brain atlas figure and its settings figure.
@@ -156,8 +159,9 @@ function cb_hide(pr)
 
     % hide settings panel
     pr.cb_hide@PlotProp();
-
-    set(pr.h, 'Visible', 'off');
+    if isgraphics(pr.h)
+        set(pr.h, 'Visible', 'off');
+    end
 end
 function cb_close(pr)
     %CB_CLOSE closes the figure.
