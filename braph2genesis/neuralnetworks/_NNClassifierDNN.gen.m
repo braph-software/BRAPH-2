@@ -122,24 +122,10 @@ if BRAPH2.installed('NN', 'warning')
         value = net;
     end
 else
-    value = {};
+    value = NoValue();
 end
 
 %% ¡methods!
-function net = to_net(nn, saved_nn)
-    %TO_NET transforms the saved neural network 
-    % in braph to a build-in object in matlab.
-    %
-    % NET = TO_NET(NN) transforms the saved neural network in braph
-    %  to a build-in object in matlab. Firstly the saved neural network
-    %  in braph is exported as an ONNX file, and then the file is 
-    %  imported as a build-in neural network object in matlab.
-    %  Typically, this method is called internally when a saved neural 
-    %  network model is evaluated by a test data.
-    
-    [~, classes] = nn.reconstruct_targets(nn.get('GR'));
-    net = to_net@NNBase(nn, saved_nn, nn.get('INPUT_FORMAT'), "classification", classes);
-end
 function [inputs, num_features] = reconstruct_inputs(nn, gr)
 %RECONSTRUCT_INPUTS reconstructs the inputs for NN
 %

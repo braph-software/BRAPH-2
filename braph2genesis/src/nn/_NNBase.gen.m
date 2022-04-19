@@ -27,7 +27,7 @@ MODEL (result, net) is a trained neural network.
 if BRAPH2.installed('NN', 'warning')
     value = squeezenet;
 else
-    value = {};
+    value = NoValue();
 end
 %%%% ¡gui!
 pr = PPNNBase_Model('EL', nn, 'PROP', nn.MODEL, varargin{:});
