@@ -645,7 +645,7 @@ classdef Format < handle
                     if BRAPH2.installed('NN', 'warning')
                         format_default = network();
                     else
-                        format_default = {};
+                        format_default = NoValue();
                     end
                 case Format.COLOR
                     format_default = BRAPH2.COL;
@@ -739,7 +739,7 @@ classdef Format < handle
                     if BRAPH2.installed('NN', 'warning')
                         check = isa(value, 'network') || isa(value, 'SeriesNetwork') || isa(value, 'DAGNetwork') || isa(value, 'dlnetwork');
                     else
-                        check = iscell(value) && isempty(value);
+                        check = isa(value, 'NoValue');
                     end
                 case Format.COLOR
                     check = isnumeric(value) && (length(value) == 3) && all(value >= 0 & value <= 1);
