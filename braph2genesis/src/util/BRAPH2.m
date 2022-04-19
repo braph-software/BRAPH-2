@@ -550,6 +550,7 @@ classdef BRAPH2
             %  - DM: "Parallel Computing Toolbox"
             %  - NN: "Deep Learning Toolbox"
             %  - ONNXCONVERTER: "Deep Learning Toolbox Converter for ONNX Model Format"
+            %  - ST: "Statistics and Machine Learning Toolbox"
             %
             % Some BRAPH2 functionalities might not be available if these addons are
             %  not installed.
