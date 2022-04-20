@@ -64,10 +64,10 @@ if nargin < 2
     ewm = 'msgbox';
 end
 BRAPH2.checkMatLab(ewm)
+BRAPH2.installed('ST', ewm)
 BRAPH2.installed('DM', ewm)
 BRAPH2.installed('NN', ewm)
 BRAPH2.installed('ONNXCONVERTER', ewm)
-BRAPH2.installed('ST', ewm)
 
 if nargin < 1 || isempty(gui) || gui
     BRAPH2GUI()
