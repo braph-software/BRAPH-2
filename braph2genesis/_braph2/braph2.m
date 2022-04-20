@@ -11,6 +11,7 @@ function braph2(gui, ewm)
 %  or some necessary addons are not installed.
 %
 % BRAPH2 uses the following addons:
+%  - ST: "Statistics and Machine Learning Toolbox"
 %  - DM: "Parallel Computing Toolbox"
 %  - NN: "Deep Learning Toolbox"
 %  - ONNXCONVERTER: "Deep Learning Toolbox Converter for ONNX Model Format"
