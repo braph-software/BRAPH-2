@@ -13,10 +13,13 @@ cmap = [BRAPH2.COL_FIG; repmat(BRAPH2.COL, 254, 1); 1 1 1];
 CreateStruct.WindowStyle = 'modal';
 CreateStruct.Interpreter = 'tex';
 
+DefaultUicontrolBackgroundColor_BAK = get(0, 'DefaultUicontrolBackgroundColor');
+set(0, 'DefaultUicontrolBackgroundColor', BRAPH2.COL_FIG)
 f = msgbox(message, title, ...
     'custom', icon, cmap, ...
     CreateStruct);
-set(f, 'Color', BRAPH2.COL_FIG)
+% set(f, 'Color', BRAPH2.COL_FIG)
+set(0, 'DefaultUicontrolBackgroundColor', DefaultUicontrolBackgroundColor_BAK)
 
 set_braph2icon(f)
 
