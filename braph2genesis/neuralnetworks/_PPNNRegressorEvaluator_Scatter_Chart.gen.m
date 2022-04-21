@@ -73,12 +73,16 @@ function h_panel = draw(pr, varargin)
         targets = cellfun(@(x) cell2mat(x.get('TARGET')), gr.get('SUB_DICT').getItems(), 'UniformOutput', false);
         targets = cell2mat(targets);
         scatter(preds, targets);
+        r = corrcoef(preds, targets);
+        str = sprintf('r = %1.2f', r(1, 2));
         hold on
         plot([min(preds) max(preds)], [min(targets) max(targets)], 'k');
         hold off
         xlabel('Prediction')
         ylabel('Target')
         title('Scatter plot for regression')
+        legend(str, 'Location', 'north', 'FontSize', 14);
+        legend boxoff
     end
 
     % output
