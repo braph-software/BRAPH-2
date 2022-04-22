@@ -10,12 +10,14 @@ function wb_out = braph2waitbar(wb, x, msg)
 %
 % See also waitbar.
 
-if nargin == 2 && check_graphics(wb, 'figure')
+if nargin == 2 && strcmpi(x, 'close') && check_graphics(wb, 'figure')
     close(wb)
 end
 
 if islogical(wb) && wb
-    wb = waitbar(x, msg, 'Color', BRAPH2.COL_FIG);
+    wb = waitbar(x, msg, ...
+        'Name', BRAPH2.NAME, ...
+        'Color', BRAPH2.COL_FIG);
     set_braph2icon(wb)
 elseif check_graphics(wb, 'figure')
     waitbar(x, wb, msg)
