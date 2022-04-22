@@ -1539,7 +1539,11 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 exportONNXNetwork(net, filename);
 
                 fileID = fopen(filename);
-                onnx_str = num2str(fread(fileID));
+                onnx_str_tmp = num2str(fread(fileID));
+                outputlayertype = extractBetween(class(net.Layers(end)), 'layer.', 'Out');
+                for i = 1:size(onnx_str_tmp, 2)
+                    onnx_str(:, i) = [char(outputlayertype)'; onnx_str_tmp(:, i)];
+                end
                 fclose(fileID);
 
                 rmdir(directory, 's')
@@ -1565,6 +1569,12 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             w_nnet = warning('query', 'nnet_cnn:internal:cnn:analyzer:NetworkAnalyzer:NetworkHasWarnings');
             warning('off', w_nnet.identifier);
             
+            w_onnx = warning('query', 'nnet_cnn_onnx:onnx:FillingInClassNames');
+            warning('off', w_onnx.identifier);
+            
+            w_sftmax = warning('query', 'nnet_cnn_onnx:onnx:AddingSoftmax');
+            warning('off', w_sftmax.identifier);
+            
             if ~BRAPH2.installed('ONNXCONVERTER', 'warning') || isempty(onnx_str)
                 if BRAPH2.installed('NN', 'warning')
                     net = network();
@@ -1577,18 +1587,27 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     mkdir(directory)
                 end
                 filename = [directory filesep 'nn_from_braph_to_be_erased.onnx'];
-
+                onnx_str_tmp = char(onnx_str);
+                pat = ("Regression"|"Classification");
+                outputlayertype = extract(string(onnx_str_tmp(:, 1)'), pat);
+                match = ["Regression", "Classification"];
+                for i = 1:size(onnx_str_tmp, 2)
+                    onnx_str_tmp_removed(:, i) = char(erase(string(onnx_str_tmp(:, i)'), match))';
+                end
                 fileID = fopen(filename, 'w');
-                fwrite(fileID, str2double(onnx_str));
+                fwrite(fileID, str2double(cellstr(onnx_str_tmp_removed)));
                 fclose(fileID);
 
-                lgraph = importONNXLayers(filename);
-                
-                net = assembleNetwork(lgraph);
+                if isempty(outputlayertype)
+                    outputlayertype = "Classification";
+                end
+                net = importONNXNetwork(filename, 'OutputLayerType', outputlayertype);
                 rmdir(directory, 's');
             end
             warning(w_matlab.state, w_matlab.identifier);
             warning(w_nnet.state, w_nnet.identifier);
+            warning(w_onnx.state, w_onnx.identifier);
+            warning(w_onnx.state, w_sftmax.identifier);
         end
     end    
     methods (Access=protected) % deep copy
