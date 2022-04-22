@@ -1601,6 +1601,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 if isempty(outputlayertype)
                     outputlayertype = "Classification";
                 end
+                if ~isMATLABReleaseOlderThan("R2020b")
+                    outputlayertype = lower(outputlayertype);
+                end
                 net = importONNXNetwork(filename, 'OutputLayerType', outputlayertype);
                 rmdir(directory, 's');
             end
