@@ -18,7 +18,6 @@ set(0, 'DefaultUicontrolBackgroundColor', BRAPH2.COL_FIG)
 f = msgbox(message, title, ...
     'custom', icon, cmap, ...
     CreateStruct);
-% set(f, 'Color', BRAPH2.COL_FIG)
 set(0, 'DefaultUicontrolBackgroundColor', DefaultUicontrolBackgroundColor_BAK)
 
 set_braph2icon(f)
