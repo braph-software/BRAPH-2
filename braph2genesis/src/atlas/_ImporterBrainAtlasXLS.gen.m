@@ -34,10 +34,7 @@ if ~isfile(file) && ~braph2_testing()
     file = im.memorize('FILE');
 end
 if isfile(file)
-    if im.get('WAITBAR')
-        wb = waitbar(0, 'Reading File ...', 'Name', BRAPH2.NAME);
-        set_braph2icon(wb)
-    end
+    wb = braph2waitbar(im.get('WAITBAR'), 0, 'Reading File ...');
 
     try
         [~, ~, raw] = xlsread(file);
