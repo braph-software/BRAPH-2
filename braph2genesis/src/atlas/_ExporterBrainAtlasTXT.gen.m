@@ -51,7 +51,7 @@ if isfolder(fileparts(file))
     br_y = cell(br_dict.length(), 1);
     br_z = cell(br_dict.length(), 1);
     for i = 1:1:br_dict.length()
-        waitbar(wb, .30 + .70 * i / br_dict.length(), ['Saving brain region ' num2str(i) ' of ' num2str(br_dict.length())]);
+        braph2waitbar(wb, .30 + .70 * i / br_dict.length(), ['Saving brain region ' num2str(i) ' of ' num2str(br_dict.length())]);
         
         br = br_dict.getItem(i);
         br_ids{i} = br.get('ID');
@@ -80,7 +80,7 @@ if isfolder(fileparts(file))
         ];
 
     % saves
-    waitbar(wb, 1, 'Finalizing ...')
+    braph2waitbar(wb, 1, 'Finalizing ...')
 
     writetable(tab, file, 'Delimiter', '\t', 'WriteVariableNames', 0);
 

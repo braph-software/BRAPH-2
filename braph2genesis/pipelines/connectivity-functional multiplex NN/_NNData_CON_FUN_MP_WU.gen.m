@@ -150,7 +150,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
 
     nn_sub_dict.add(nn_sub);
 
-    braph2waitbar(.30 + .70 * i / gr.get('SUB_DICT').length(), wb, ['Constructing subject ' num2str(i) ' of ' num2str(gr.get('SUB_DICT').length())  ' in ' gr.get('ID') ' ...'])
+    braph2waitbar(wb, .30 + .70 * i / gr.get('SUB_DICT').length(), ['Constructing subject ' num2str(i) ' of ' num2str(gr.get('SUB_DICT').length())  ' in ' gr.get('ID') ' ...'])
 end
 
 nn_gr.set('sub_dict', nn_sub_dict);

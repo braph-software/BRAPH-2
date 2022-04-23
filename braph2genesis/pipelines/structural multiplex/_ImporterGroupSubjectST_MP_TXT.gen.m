@@ -114,7 +114,7 @@ if isfolder(directory)
                             
         % cycle over subjects, add subjects
         for i = 1:1:size(all_subjects_data, 2)
-            waitbar(wb, .30 + .70 * i / size(all_subjects_data, 2), ['Loading subject ' num2str(i) ' of ' num2str(size(all_subjects_data, 2)) ' ...'])
+            braph2waitbar(wb, .30 + .70 * i / size(all_subjects_data, 2), ['Loading subject ' num2str(i) ' of ' num2str(size(all_subjects_data, 2)) ' ...'])
 
             layer_subject = reshape(all_subjects_data(:, i, :), [layers_number br_number]);
             for l = 1:1:layers_number

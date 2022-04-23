@@ -43,7 +43,7 @@ if isfolder(directory)
         mkdir(gr_directory)
     end
     
-    braph2waitbar(wb, .15, wb, 'Organizing info ...')
+    braph2waitbar(wb, .15, 'Organizing info ...')
     
     sub_dict = gr.get('SUB_DICT');
     sub_number = sub_dict.length();

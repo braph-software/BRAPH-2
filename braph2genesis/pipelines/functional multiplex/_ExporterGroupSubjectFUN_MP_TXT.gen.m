@@ -52,7 +52,7 @@ if isfolder(directory)
     braph2waitbar(wb, .15, 'Organizing info ...')
     
     for i = 1:1:sub_number
-        waitbar(wb, .30 + .70 * i / sub_number, ['Saving subject ' num2str(i) ' of ' num2str(sub_number) ' ...'])
+        braph2waitbar(wb, .30 + .70 * i / sub_number, ['Saving subject ' num2str(i) ' of ' num2str(sub_number) ' ...'])
 
         layers_number = sub_dict.getItem(1).get('L');
         sub = sub_dict.getItem(i);

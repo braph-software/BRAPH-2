@@ -25,7 +25,7 @@ SAVE (result, empty) saves the brain atlas in the selected XLS/XLSX file.
 file = ex.get('FILE');
 
 if isfolder(fileparts(file))
-    wb = braph2waitbar(ex.get('WAITBAR'), 0, 'Retrieving path ...')
+    wb = braph2waitbar(ex.get('WAITBAR'), 0, 'Retrieving path ...');
     
     ba = ex.get('BA');
     ba_id = ba.get('ID');
@@ -41,7 +41,7 @@ if isfolder(fileparts(file))
     end
 
     % gets brain region data
-    braph2waitbar(wb, .15, wb, 'Organizing info ...')
+    braph2waitbar(wb, .15, 'Organizing info ...')
     
     br_dict = ba.get('BR_DICT');
     br_ids = cell(br_dict.length(), 1);

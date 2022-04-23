@@ -70,7 +70,7 @@ if isfile(file)
     end
     
     % sets group props
-    braph2waitbar(wp, .15, 'Loading subject group ...')
+    braph2waitbar(wb, .15, 'Loading subject group ...')
         
     try
         [~, name, ext] = fileparts(file);
@@ -100,7 +100,7 @@ if isfile(file)
         
         % adds subjects
         for i = 1:1:size(raw2, 1)
-            braph2waitbar(wp, .30 + .70 * i / size(raw2, 1), ['Loading subject ' num2str(i) ' of ' num2str(size(raw2, 1)) ' ...'])
+            braph2waitbar(wb, .30 + .70 * i / size(raw2, 1), ['Loading subject ' num2str(i) ' of ' num2str(size(raw2, 1)) ' ...'])
             
             ST = zeros(br_number, 1);
             for j = 1:1:length(ST)
