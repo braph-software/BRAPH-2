@@ -9,7 +9,7 @@ BRAPH2
 %%% ¡prop!
 FONTUNITS (metadata, option) sets the units of the font.
 %%%% ¡settings!
-{'points', 'pixels', 'normalized', 'inches', 'centimeters', 'points', 'characters'}
+{'points', 'pixels', 'normalized', 'inches', 'centimeters', 'characters'}
 %%%% ¡default!
 'points'
 

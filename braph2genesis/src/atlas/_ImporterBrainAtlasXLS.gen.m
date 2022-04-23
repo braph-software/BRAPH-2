@@ -34,18 +34,13 @@ if ~isfile(file) && ~braph2_testing()
     file = im.memorize('FILE');
 end
 if isfile(file)
-    if im.get('WAITBAR')
-        wb = waitbar(0, 'Reading File ...', 'Name', BRAPH2.NAME);
-        set_braph2icon(wb)
-    end
+    wb = braph2waitbar(im.get('WAITBAR'), 0, 'Reading File ...');
 
     try
         [~, ~, raw] = xlsread(file);
         
         % adds props
-        if im.get('WAITBAR')
-            waitbar(.15, wb, 'Loading brain atlas file ...');
-        end
+        braph2waitbar(wb, .15, 'Loading brain atlas file ...');
         
         ba.set( ...
             'ID', raw{1, 1}, ...
@@ -56,14 +51,10 @@ if isfile(file)
         idict = ba.get('BR_DICT');
         
         % adds brain regions
-        if im.get('WAITBAR')
-            waitbar(.30, wb, 'Extracting brain regions ...')
-        end
+        braph2waitbar(wb, .30, 'Extracting brain regions ...')
         
         for i = 5:1:size(raw, 1)
-            if im.get('WAITBAR')
-                waitbar(.30 + .70 * (i - 4) / (size(raw, 1) - 4), wb, ['Loading brain region ' num2str(i - 4) ' of ' num2str(size(raw, 1) - 4) ' ...'])
-            end
+            braph2waitbar(wb, .30 + .70 * (i - 4) / (size(raw, 1) - 4), ['Loading brain region ' num2str(i - 4) ' of ' num2str(size(raw, 1) - 4) ' ...'])
             
             br = BrainRegion( ...
                 'ID', raw{i, 1}, ...
@@ -77,16 +68,12 @@ if isfile(file)
         end
         ba.set('br_dict', idict);
     catch e
-        if im.get('WAITBAR')
-            close(wb)
-        end
-        
+        braph2waitbar(wb, 'close')
+
         rethrow(e)
     end
     
-    if im.get('WAITBAR')
-        close(wb)
-    end
+    braph2waitbar(wb, 'close')
 elseif ~braph2_testing()
     error([BRAPH2.STR ':ImporterBrainAtlasXLS: ' BRAPH2.BUG_IO]);
 end

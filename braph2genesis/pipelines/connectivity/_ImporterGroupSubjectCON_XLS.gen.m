@@ -46,10 +46,7 @@ if ~isfolder(directory) && ~braph2_testing()
 end
 if isfolder(directory)    
     % sets group props
-    if im.get('WAITBAR')
-        wb = waitbar(0, 'Reading directory ...', 'Name', BRAPH2.NAME);
-        set_braph2icon(wb)
-    end
+    wb = braph2waitbar(im.get('WAITBAR'), 0, 'Reading directory ...');
     
     [~, name] = fileparts(directory);
     gr.set( ...
@@ -82,9 +79,7 @@ if isfolder(directory)
             sex = unassigned(ones(length(files), 1));
         end
 
-        if im.get('WAITBAR')
-            waitbar(.15, wb, 'Loading subject group ...');
-        end
+        braph2waitbar(wb, .15, 'Loading subject group ...')
 
         if length(files) > 0
             % brain atlas
@@ -105,9 +100,7 @@ if isfolder(directory)
 
             % adds subjects
             for i = 1:1:length(files)
-                if im.get('WAITBAR')
-                    waitbar(.30 + .70 * i / length(files), wb, ['Loading subject ' num2str(i) ' of ' num2str(length(files)) ' ...'])
-                end
+                braph2waitbar(wb, .30 + .70 * i / length(files), ['Loading subject ' num2str(i) ' of ' num2str(length(files)) ' ...'])
 
                 % read file
                 CON = xlsread(fullfile(directory, files(i).name));
@@ -124,16 +117,12 @@ if isfolder(directory)
             gr.set('sub_dict', subdict);
         end
     catch e
-        if im.get('WAITBAR')
-            close(wb)
-        end
+        braph2waitbar(wb, 'close')
         
         rethrow(e)
     end
     
-    if im.get('WAITBAR')
-        close(wb)
-    end
+    braph2waitbar(wb, 'close')
 elseif ~braph2_testing()
     error([BRAPH2.STR ':ImporterGroupSubjectCON_XLS: ' BRAPH2.BUG_IO]);
 end

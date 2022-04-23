@@ -48,10 +48,7 @@ if ~isfolder(directory) && ~braph2_testing()
     directory = im.get('DIRECTORY');
 end
 if isfolder(directory)
-    if im.get('WAITBAR')
-        wb = waitbar(0, 'Reading directory ...', 'Name', BRAPH2.NAME);
-        set_braph2icon(wb)
-    end
+    wb = braph2waitbar(im.get('WAITBAR'), 0, 'Reading directory ...');
 
     % sets group props
     [~, name] = fileparts(directory);
@@ -81,9 +78,7 @@ if isfolder(directory)
             ba.set('br_dict', idict);
         end
 
-        if im.get('WAITBAR')
-            waitbar(.15, wb, 'Loading subject group ...');
-        end
+        braph2waitbar(wb, .15, 'Loading subject group ...')
 
         subdict = gr.get('SUB_DICT');
         
@@ -119,9 +114,7 @@ if isfolder(directory)
                             
         % cycle over subjects, add subjects
         for i = 1:1:size(all_subjects_data, 2)
-            if im.get('WAITBAR')
-                waitbar(.30 + .70 * i / size(all_subjects_data, 2), wb, ['Loading subject ' num2str(i) ' of ' num2str(size(all_subjects_data, 2)) ' ...'])
-            end
+            braph2waitbar(wb, .30 + .70 * i / size(all_subjects_data, 2), ['Loading subject ' num2str(i) ' of ' num2str(size(all_subjects_data, 2)) ' ...'])
 
             layer_subject = reshape(all_subjects_data(:, i, :), [layers_number br_number]);
             for l = 1:1:layers_number
@@ -144,9 +137,7 @@ if isfolder(directory)
         gr.set('sub_dict', subdict);
     end
 
-    if im.get('WAITBAR')
-        close(wb)
-    end
+    braph2waitbar(wb, 'close')
 end
 
 value = gr;

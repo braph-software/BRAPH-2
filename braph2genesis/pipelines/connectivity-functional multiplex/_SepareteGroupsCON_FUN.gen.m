@@ -30,10 +30,7 @@ Group('SUB_CLASS', 'SubjectCON_FUN_MP')
 %%% ¡prop!
 GRS (result, cell) is a idict containing two group of subjects with connectivity data and functional data.
 %%%% ¡calculate!
-if se.get('WAITBAR')
-    wb = waitbar(0, 'Separating subject groups ...', 'Name', BRAPH2.NAME);
-    set_braph2icon(wb)
-end
+wb = braph2waitbar(se.get('WAITBAR'), 0, 'Separating subject groups ...');
 
 gr = se.get('GR_CON_FUN_MP');
 gr_subdict = gr.get('SUB_DICT');
@@ -54,9 +51,8 @@ if ~isa(gr_subdict, 'NoValue') && gr_subdict.length() > 0
     
     % cycle for data and creation of different groups
     for i = 1:1:gr_subdict.length()
-        if se.get('WAITBAR')
-            waitbar(.30 + .70 * i / gr_subdict.length(), wb, ['Separating subject ' num2str(i) ' of ' num2str(gr.get('SUB_DICT').length()) ' ...'])
-        end
+        braph2waitbar(wb, .30 + .70 * i / gr_subdict.length(), ['Separating subject ' num2str(i) ' of ' num2str(gr.get('SUB_DICT').length()) ' ...'])
+
         sub = gr_subdict.getItem(i);
         sub_data = sub.get('CON_FUN_MP'); 
         sub_con = SubjectCON( ...
@@ -88,9 +84,6 @@ else
     grs = {};
 end
 
-
-if se.get('WAITBAR')
-    close(wb)
-end
+braph2waitbar(wb, 'close')
 
 value = grs;

@@ -45,10 +45,7 @@ grs_obj = SepareteGroupsCON_FUN( ...
 grs = grs_obj.get('GRS');
 
 if isfolder(directory_con) && length(grs) > 0
-    if ex.get('WAITBAR')
-        wb = waitbar(0, 'Calling first exporter path ...', 'Name', BRAPH2.NAME);
-        set_braph2icon(wb)
-    end
+    wb = braph2waitbar(ex.get('WAITBAR'), 0, 'Calling first exporter path ...');
     
     ex_con = ExporterGroupSubjectCON_XLS( ...
         'DIRECTORY', directory_con, ...
@@ -60,19 +57,14 @@ if isfolder(directory_con) && length(grs) > 0
     % sets value to empty
     value = [];
     
-    if ex.get('WAITBAR')
-        close(wb)
-    end
+	braph2waitbar(wb, 'close')
 else
     value = [];
 end
 
 directory_fun = ex.get('DIRECTORY_FUN');
 if isfolder(directory_fun) && length(grs) > 0
-    if ex.get('WAITBAR')
-        wb = waitbar(0, 'Calling second exporter path ...', 'Name', BRAPH2.NAME);
-        set_braph2icon(wb)
-    end
+    wb = braph2waitbar(ex.get('WAITBAR'), 0, 'Calling second exporter path ...');
 
     ex_con = ExporterGroupSubjectFUN_XLS( ...
         'DIRECTORY', directory_fun, ...
@@ -84,9 +76,7 @@ if isfolder(directory_fun) && length(grs) > 0
     % sets value to empty
     value = [];
     
-    if ex.get('WAITBAR')
-        close(wb)
-    end
+    braph2waitbar(wb, 'close')
 else
     value = [];    
 end

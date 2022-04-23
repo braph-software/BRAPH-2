@@ -650,9 +650,12 @@ function cb_close(gui)
     % closes the main GUI
     if check_graphics(gui.f, 'figure')
         if gui.get('CLOSEREQ')
+            DefaultUicontrolBackgroundColor_BAK = get(0, 'DefaultUicontrolBackgroundColor');
+            set(0, 'DefaultUicontrolBackgroundColor', BRAPH2.COL_FIG)
             selection = questdlg(['Do you want to close ' name '?'], ...
                 ['Close ' name], ...
                 'Yes', 'No', 'Yes');
+            set(0, 'DefaultUicontrolBackgroundColor', DefaultUicontrolBackgroundColor_BAK)
         else
             selection = 'Yes';
         end
