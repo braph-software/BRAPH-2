@@ -25,10 +25,7 @@ SAVE (result, empty) saves the pipeline in the selected BRAPH2 file.
 file = ex.get('FILE');
 
 if isfolder(fileparts(file))
-    if ex.get('WAITBAR')
-        wb = waitbar(0, 'Retrieving path ...', 'Name', BRAPH2.NAME);
-        set_braph2icon(wb)
-    end
+    wb = braph2waitbar(ex.get('WAITBAR'), 0, 'Retrieving path ...');
     
     pip = ex.get('PIP');
    
@@ -53,11 +50,9 @@ if isfolder(fileparts(file))
         
         pc_dict = ps.get('PC_DICT');
         for c = 1:1:pc_dict.length()
-            if ex.get('WAITBAR')
-                waitbar(.00 + 1.00 * (s - 1 + c / pc_dict.length()) / ps_dict.length(), wb, ...
-                    ['Saving pipeline section ' num2str(s) ' of ' num2str(ps_dict.length()) ...
-                    ', code line ' num2str(c) ' of ' num2str(pc_dict.length()) ' ...'])
-            end
+            braph2waitbar(wb, .00 + 1.00 * (s - 1 + c / pc_dict.length()) / ps_dict.length(), ...
+                ['Saving pipeline section ' num2str(s) ' of ' num2str(ps_dict.length()) ...
+                ', code line ' num2str(c) ' of ' num2str(pc_dict.length()) ' ...'])
                 
             pc = pc_dict.getItem(c);
             
@@ -76,9 +71,7 @@ if isfolder(fileparts(file))
     % sets value to empty    
     value = [];
     
-    if ex.get('WAITBAR')
-        close(wb)
-    end
+    braph2waitbar(wb, 'close')
 else
     value = ex.getr('SAVE');
 end

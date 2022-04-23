@@ -35,10 +35,7 @@ GR_TRAIN (result, item) is a group of NN subjects for the training set.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡calculate!
-if nnds.get('WAITBAR')
-    wb = waitbar(0, 'Constructing the training set ...', 'Name', BRAPH2.NAME);
-    set_braph2icon(wb)
-end
+wb = braph2waitbar(nnds.get('WAITBAR'), 0, 'Constructing the training set ...');
 
 train_nn_gr = NNGroup( ...
     'SUB_CLASS', nnds.get('GR').get('SUB_CLASS'), ...
@@ -81,17 +78,14 @@ if nnds.get('GR').get('SUB_DICT').length() > 0
             );
         sub_dict.add(sub_copy);
         counter = counter + 1;
-        if nnds.get('WAITBAR')
-            waitbar(.30 + .70 * counter / num_sub_all, wb, ['Constructing training set, ' num2str(100 * counter / num_sub_all, '%.0f') '% done...'])
-        end
+        
+        braph2waitbar(wb, .30 + .70 * counter / num_sub_all, ['Constructing training set, ' num2str(100 * counter / num_sub_all, '%.0f') '% done...'])
     end
 end
 
 train_nn_gr.set('SUB_DICT', sub_dict);
 
-if nnds.get('WAITBAR')
-    close(wb)
-end
+braph2waitbar(wb, 'close')
 
 value = train_nn_gr;
 
@@ -100,10 +94,7 @@ GR_VAL (result, item) is a group of NN subjects for the validation set.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡calculate!
-if nnds.get('WAITBAR')
-    wb = waitbar(0, 'Constructing the validation set ...', 'Name', BRAPH2.NAME);
-    set_braph2icon(wb)
-end
+wb = braph2waitbar(nnds.get('WAITBAR'), 0, 'Constructing the validation set ...');
 
 val_nn_gr = NNGroup( ...
     'SUB_CLASS', nnds.get('GR').get('SUB_CLASS'), ...
@@ -146,17 +137,14 @@ if nnds.get('GR').get('SUB_DICT').length() > 0
             );
         sub_dict.add(sub_copy);
         counter = counter + 1;
-        if nnds.get('WAITBAR')
-            waitbar(.30 + .70 * counter / num_sub_all, wb, ['Constructing validation set, ' num2str(100 * counter / num_sub_all, '%.0f') '% done...'])
-        end
+        
+        braph2waitbar(wb, .30 + .70 * counter / num_sub_all, ['Constructing validation set, ' num2str(100 * counter / num_sub_all, '%.0f') '% done...'])
     end
 end
 
 val_nn_gr.set('SUB_DICT', sub_dict);
 
-if nnds.get('WAITBAR')
-    close(wb)
-end
+braph2waitbar(wb, 'close')
 
 value = val_nn_gr;
 
@@ -170,10 +158,8 @@ data = cellfun(@(x) x.get('INPUT'), gr_train.get('SUB_DICT').getItems(), 'Unifor
 if nnds.get('GR_TRAIN').get('SUB_DICT').length == 0
     value = {};
 else
-    if nnds.get('WAITBAR')
-        wb = waitbar(0, 'Initialing feature selection on training set ...', 'Name', BRAPH2.NAME);
-        set_braph2icon(wb)
-    end
+    wb = braph2waitbar(nnds.get('WAITBAR'), 0, 'Initialing feature selection on training set ...');
+    
     y = cellfun(@(x) cell2mat(x.get('TARGET')), gr_train.get('SUB_DICT').getItems(), 'UniformOutput', false);
     label = cell2mat(y);
     num_feature_cluster = length(data{1});
@@ -199,9 +185,8 @@ else
                     mask(i) = nnds.mutual_information_analysis(data_per_feature, label, 5);
                 end
                 counter = counter + 1;
-                if nnds.get('WAITBAR')
-                    waitbar(.30 + .70 * counter / num_feature_all, wb, ['Performing feature selection, ' num2str(100 * counter / num_feature_all, '%.0f') '% done...'])
-				end
+                
+                braph2waitbar(wb, .30 + .70 * counter / num_feature_all, ['Performing feature selection, ' num2str(100 * counter / num_feature_all, '%.0f') '% done...'])
             end
 
             [~, idx_all] = sort(mask(:), 'descend');
@@ -211,9 +196,8 @@ else
         end
         value{k} = mask;
     end
-    if nnds.get('WAITBAR')
-        close(wb)
-    end
+    
+    braph2waitbar(wb, 'close')
 end
 
 %%% ¡prop!

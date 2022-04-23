@@ -106,10 +106,8 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     end
 
     c = cp.get('C');
-    if c.get('WAITBAR')
-        wb = waitbar(0, 'Comparing ensemble analyses ...', 'Name', BRAPH2.NAME);
-        set_braph2icon(wb)
-    end
+
+    wb = braph2waitbar(c.get('WAITBAR'), 0, 'Comparing ensemble analyses ...');
 
     % Pre-calculate and save measures of all subjects
     ms1 = cellfun(@(x) x.getMeasure(measure_class, varargin{:}).memorize('M'), c.get('A1').memorize('G_DICT').getItems, 'UniformOutput', false);
@@ -156,9 +154,7 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
         m2_perms{1, p} = ms2_av;
         diff_perms{1, p} = cellfun(@(x, y) y - x, m1_perms{1, p}, m2_perms{1, p}, 'UniformOutput', false);
 
-        if c.get('WAITBAR')
-            waitbar(i / P, wb, ['Permutation ' num2str(i) ' of ' num2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's ...']);
-        end
+        braph2waitbar(wb, i / P, ['Permutation ' num2str(i) ' of ' num2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's ...'])
         if c.get('VERBOSE')
             disp(['** PERMUTATION TEST - sampling #' int2str(p) '/' int2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's'])
         end
@@ -167,9 +163,7 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
         end
     end
 
-    if c.get('WAITBAR')
-        close(wb)
-    end
+    braph2waitbar(wb, 'close')
 
     % Statistical analysis
     p1 = cell(size(diff));

@@ -38,10 +38,8 @@ GR_NN (result, item) is a group of NN subjects.
 NNGroup('SUB_CLASS', 'NNSubject', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject'))
 %%%% ¡calculate!
 densities = nnd.get('DENSITIES');
-if nnd.get('WAITBAR')
-    wb = waitbar(0, 'Constructing NN input ...', 'Name', BRAPH2.NAME);
-    set_braph2icon(wb)
-end
+
+wb = braph2waitbar(nnd.get('WAITBAR'), 0, 'Constructing NN input ...');
 
 gr = nnd.get('GR');
 nn_gr = NNGroup( ...
@@ -109,16 +107,12 @@ for i = 1:1:gr.get('SUB_DICT').length()
 
     nn_sub_dict.add(nn_sub);
     
-    if nnd.get('WAITBAR')
-        waitbar(.30 + .70 * i / gr.get('SUB_DICT').length(), wb, ['Constructing subject ' num2str(i) ' of ' num2str(gr.get('SUB_DICT').length())  ' in ' gr.get('ID') ' ...'])
-    end
+	braph2waitbar(wb, .30 + .70 * i / gr.get('SUB_DICT').length(), ['Constructing subject ' num2str(i) ' of ' num2str(gr.get('SUB_DICT').length())  ' in ' gr.get('ID') ' ...'])
 end
 
 nn_gr.set('sub_dict', nn_sub_dict);
 
-if nnd.get('WAITBAR')
-    close(wb)
-end
+braph2waitbar(wb, 'close')
 
 value = nn_gr;
 

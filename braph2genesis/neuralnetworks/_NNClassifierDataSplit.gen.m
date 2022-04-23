@@ -55,10 +55,7 @@ GR_TRAIN (result, item) is a group of NN subjects for the training set.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡calculate!
-if nnds.get('WAITBAR')
-    wb = waitbar(0, 'Constructing the training set ...', 'Name', BRAPH2.NAME);
-    set_braph2icon(wb)
-end
+wb = braph2waitbar(nnds.get('WAITBAR'), 0, 'Constructing the training set ...');
 
 % init a NNGroup
 nnGroup = 'GR1';
@@ -103,9 +100,8 @@ if nnds.get('GR1').get('SUB_DICT').length() > 0
             );
         sub_dict.add(sub_copy);
         counter = counter + 1;
-        if nnds.get('WAITBAR')
-            waitbar(.30 + .70 * counter / num_sub_all, wb, ['Constructing training set, ' num2str(100 * counter / num_sub_all, '%.0f') '% done...'])
-        end
+        
+        braph2waitbar(wb, .30 + .70 * counter / num_sub_all, ['Constructing training set, ' num2str(100 * counter / num_sub_all, '%.0f') '% done...'])
     end
 end
 
@@ -132,15 +128,12 @@ if nnds.get('GR2').get('SUB_DICT').length() > 0
             );
         sub_dict.add(sub_copy);
         counter = counter + 1;
-        if nnds.get('WAITBAR')
-            waitbar(.30 + .70 * counter / num_sub_all, wb, ['Constructing training set, ' num2str(100 * counter / num_sub_all, '%.0f') '% done...'])
-        end
+        
+        braph2waitbar(wb, .30 + .70 * counter / num_sub_all, ['Constructing training set, ' num2str(100 * counter / num_sub_all, '%.0f') '% done...'])
     end
 end
 
-if nnds.get('WAITBAR')
-    close(wb)
-end
+braph2waitbar(wb, 'close')
 
 if sub_dict.length() > 0
     target_names = cellfun(@(x) x.get('TARGET_NAME'), sub_dict.getItems(), 'UniformOutput', false);
@@ -159,10 +152,7 @@ GR_VAL (result, item) is a group of NN subjects for the validation set.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡calculate!
-if nnds.get('WAITBAR')
-    wb = waitbar(0, 'Constructing the validation set ...', 'Name', BRAPH2.NAME);
-    set_braph2icon(wb)
-end
+wb = braph2waitbar(nnds.get('WAITBAR'), 0, 'Constructing the validation set ...');
 
 % init a NNGroup
 nnGroup = 'GR1';
@@ -207,9 +197,8 @@ if nnds.get('GR1').get('SUB_DICT').length() > 0
             );
         sub_dict.add(sub_copy);
         counter = counter + 1;
-        if nnds.get('WAITBAR')
-            waitbar(.30 + .70 * counter / num_sub_all, wb, ['Constructing validation set, ' num2str(100 * counter / num_sub_all, '%.0f') '% done...'])
-        end
+        
+        braph2waitbar(wb, .30 + .70 * counter / num_sub_all, ['Constructing validation set, ' num2str(100 * counter / num_sub_all, '%.0f') '% done...'])
     end
 end
 
@@ -236,9 +225,8 @@ if nnds.get('GR2').get('SUB_DICT').length() > 0
             );
         sub_dict.add(sub_copy);
         counter = counter + 1;
-        if nnds.get('WAITBAR')
-            waitbar(.30 + .70 * counter / num_sub_all, wb, ['Constructing validation set, ' num2str(100 * counter / num_sub_all, '%.0f') '% done...'])
-        end
+        
+        braph2waitbar(wb, .30 + .70 * counter / num_sub_all, ['Constructing validation set, ' num2str(100 * counter / num_sub_all, '%.0f') '% done...'])
     end
 end
 
@@ -252,9 +240,7 @@ end
 
 val_nn_gr.set('SUB_DICT', sub_dict);
 
-if nnds.get('WAITBAR')
-    close(wb)
-end
+braph2waitbar(wb, 'close')
 
 value = val_nn_gr;
 
@@ -268,10 +254,8 @@ data = cellfun(@(x) x.get('INPUT'), gr_train.get('SUB_DICT').getItems(), 'Unifor
 if nnds.get('GR_TRAIN').get('SUB_DICT').length == 0
     value = {};
 else
-    if nnds.get('WAITBAR')
-        wb = waitbar(0, 'Initialing feature selection on training set ...', 'Name', BRAPH2.NAME);
-        set_braph2icon(wb)
-    end
+    wb = braph2waitbar(nnds.get('WAITBAR'), 0, 'Initialing feature selection on training set ...');
+
     y = cellfun(@(x) cell2mat(x.get('TARGET')), gr_train.get('SUB_DICT').getItems(), 'UniformOutput', false);
     y = cell2mat(y);
     label = y(1, :);
@@ -298,9 +282,8 @@ else
                     mask(i) = nnds.mutual_information_analysis(data_per_feature, label, 5);
                 end
                 counter = counter + 1;
-                if nnds.get('WAITBAR')
-                    waitbar(.30 + .70 * counter / num_feature_all, wb, ['Performing feature selection, ' num2str(100 * counter / num_feature_all, '%.0f') '% done...'])
-				end
+                
+                braph2waitbar(wb, .30 + .70 * counter / num_feature_all, ['Performing feature selection, ' num2str(100 * counter / num_feature_all, '%.0f') '% done...'])
             end
 
             [~, idx_all] = sort(mask(:), 'descend');
@@ -310,9 +293,8 @@ else
         end
         value{k} = mask;
     end
-    if nnds.get('WAITBAR')
-        close(wb)
-    end
+    
+    braph2waitbar(wb, 'close')
 end
 
 %%% ¡prop!

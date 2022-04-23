@@ -50,10 +50,7 @@ if ~isfile(file) && ~braph2_testing()
     file = im.memorize('FILE');
 end
 if isfile(file)
-    if im.get('WAITBAR')
-        wb = waitbar(0, 'Reading Directory ...', 'Name', BRAPH2.NAME);
-        set_braph2icon(wb)
-    end
+    wb = braph2waitbar(im.get('WAITBAR'), 0, 'Reading Directory ...');
     
     [~, ~, raw] = xlsread(file);
     
@@ -71,9 +68,8 @@ if isfile(file)
     end
     
     % sets group props
-    if im.get('WAITBAR')
-        waitbar(.15, wb, 'Loading subject group ...');
-    end
+	braph2waitbar(wb, .15, 'Loading subject group ...')
+
     try
         [~, name, ext] = fileparts(file);
         gr.set( ...
@@ -83,9 +79,7 @@ if isfile(file)
             );
         
         % brain atlas
-        if im.get('WAITBAR')
-            waitbar(.30, wb, 'Loading brain atlas ...')
-        end
+        braph2waitbar(wb, .30, 'Loading brain atlas ...')
             
         ba = im.get('BA');
         br_number = size(raw, 2) - 3;
@@ -104,9 +98,7 @@ if isfile(file)
         
         % adds subjects
         for i = 2:1:size(raw, 1)
-            if im.get('WAITBAR')
-                waitbar(.30 + .70 * (i - 1) / size(raw, 1), wb, ['Loading subject ' num2str(i - 1) ' of ' num2str(size(raw, 1) - 1) ' ...'])
-            end
+            braph2waitbar(wb, .30 + .70 * (i - 1) / size(raw, 1), ['Loading subject ' num2str(i - 1) ' of ' num2str(size(raw, 1) - 1) ' ...'])
             
             ST = zeros(br_number, 1);
             for j = 1:1:length(ST)
@@ -125,16 +117,12 @@ if isfile(file)
         end
         gr.set('sub_dict', subdict);
     catch e
-        if im.get('WAITBAR')
-            close(wb)
-        end
+        braph2waitbar(wb, 'close')
 
         rethrow(e)
     end
     
-    if im.get('WAITBAR')
-        close(wb)
-    end
+    braph2waitbar(wb, 'close')
 elseif ~braph2_testing()
     error([BRAPH2.STR ':ImporterGroupSubjectST_XLS: ' BRAPH2.BUG_IO]);
 end

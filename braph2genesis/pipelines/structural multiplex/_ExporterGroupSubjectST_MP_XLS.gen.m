@@ -37,10 +37,7 @@ SAVE (result, empty) saves the group of subjects with structural multiplex data 
 directory = ex.get('DIRECTORY');
 
 if isfolder(directory)
-    if ex.get('WAITBAR')
-        wb = waitbar(0, 'Retrieving path ...', 'Name', BRAPH2.NAME);
-        set_braph2icon(wb)
-    end
+    wb = braph2waitbar(ex.get('WAITBAR'), 0, 'Retrieving path ...');
 
     gr = ex.get('GR');
 
@@ -52,9 +49,7 @@ if isfolder(directory)
     sub_dict = gr.get('SUB_DICT');
     sub_number = sub_dict.length();
 
-    if ex.get('WAITBAR')
-        waitbar(.15, wb, 'Organizing info ...');
-    end
+    braph2waitbar(wb, .15, 'Organizing info ...')
 
     if sub_number ~= 0
         sub = sub_dict.getItem(1);
@@ -83,9 +78,7 @@ if isfolder(directory)
             end             
         end
 
-        if ex.get('WAITBAR')
-            waitbar(.55, wb, 'Saving info ...');
-        end
+        braph2waitbar(wb, .55, 'Saving info ...')
 
         for j = 1:1:layers_number
             gr_id = gr.get('ID');
@@ -122,9 +115,7 @@ if isfolder(directory)
     % sets value to empty
     value = [];
 
-    if ex.get('WAITBAR')
-        close(wb)
-    end
+    braph2waitbar(wb, 'close')
 else
     value = ex.getr('SAVE');    
 end
