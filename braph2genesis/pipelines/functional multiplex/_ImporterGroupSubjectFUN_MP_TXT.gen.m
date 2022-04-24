@@ -45,10 +45,7 @@ if ~isfolder(directory) && ~braph2_testing()
     directory = im.get('DIRECTORY');
 end
 if isfolder(directory)
-    if im.get('WAITBAR')
-        wb = waitbar(0, 'Reading directory ...', 'Name', BRAPH2.NAME);
-        set_braph2icon(wb)
-    end
+    wb = braph2waitbar(im.get('WAITBAR'), 0, 'Reading directory ...');
 
     % sets group props
     [~, name] = fileparts(directory);
@@ -63,9 +60,7 @@ if isfolder(directory)
     subject_folders = subject_folders(~ismember({subject_folders(:).name}, {'.', '..'}));
     
     if length(subject_folders) > 0
-        if im.get('WAITBAR')
-            waitbar(.15, wb, 'Loading subject group ...');
-        end
+        braph2waitbar(wb, .15, 'Loading subject group ...')
 
         % Check if there are covariates to add (age and sex)
         file_cov = dir(fullfile(directory, '*.txt'));
@@ -81,9 +76,7 @@ if isfolder(directory)
         
         % get all layers per subject folder
         for i = 1:1:length(subject_folders)
-            if im.get('WAITBAR')
-                waitbar(.30 + .70 * i / length(subject_folders), wb, ['Loading subject ' num2str(i) ' of ' num2str(length(subject_folders)) ' ...'])
-            end
+            braph2waitbar(wb, .30 + .70 * i / length(subject_folders), ['Loading subject ' num2str(i) ' of ' num2str(length(subject_folders)) ' ...'])
 
             subjects_paths = [directory filesep() subject_folders(i).name];
             % analyzes file
@@ -125,9 +118,7 @@ if isfolder(directory)
         gr.set('sub_dict', subdict);
     end
 
-    if im.get('WAITBAR')
-        close(wb)
-    end
+    braph2waitbar(wb, 'close')
 end
 
 value = gr;

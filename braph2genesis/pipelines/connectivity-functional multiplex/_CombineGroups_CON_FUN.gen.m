@@ -41,10 +41,7 @@ check = any(strcmp(value.get(Group.SUB_CLASS_TAG), subclasses('SubjectCON_FUN_MP
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectCON_FUN_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON_FUN_MP'))
 %%%% ¡calculate!
-if co.get('WAITBAR')
-    wb = waitbar(0, 'Combining subject groups ...', 'Name', BRAPH2.NAME);
-    set_braph2icon(wb)
-end
+wb = braph2waitbar(co.get('WAITBAR'), 0, 'Combining subject groups ...');
 
 % creates empty Group
 gr = Group( ...
@@ -74,9 +71,7 @@ subdict_gr1 = group1.get('SUB_DICT');
 subdict_gr2 = group2.get('SUB_DICT');
 
 for i = 1:1:group1.get('SUB_DICT').length()
-    if co.get('WAITBAR')
-        waitbar(.30 + .70 * i / group1.get('SUB_DICT').length(), wb, ['Combining subject ' num2str(i) ' of ' num2str(group1.get('SUB_DICT').length()) ' ...'])
-    end
+    braph2waitbar(wb, .30 + .70 * i / group1.get('SUB_DICT').length(), ['Combining subject ' num2str(i) ' of ' num2str(group1.get('SUB_DICT').length()) ' ...'])
 
     sub1 = subdict_gr1.getItem(i);
     sub2 = subdict_gr2.getItem(i);
@@ -99,6 +94,4 @@ gr.set('sub_dict', subdict);
 
 value = gr;
 
-if co.get('WAITBAR')
-    close(wb)
-end
+braph2waitbar(wb, 'close')

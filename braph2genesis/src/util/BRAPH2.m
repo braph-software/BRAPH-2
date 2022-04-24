@@ -517,7 +517,7 @@ classdef BRAPH2
                     ['{\color{gray}version ' BRAPH2.VERSION '}']
                     ['{\color{gray}build ' int2str(BRAPH2.BUILD) '}']
                     ''
-                    '{\bf{WARNING} Wrong MatLab version}'
+                    '{\bf{WARNING} - Wrong MatLab version}'
                     ''
                     ['MatLab ' BRAPH2.MATLAB_RELEASE ' is required, while MatLab ' ver('MATLAB').Version ' is installed.']
                     ''
@@ -583,9 +583,7 @@ classdef BRAPH2
                     ['{\color{gray}version ' BRAPH2.VERSION '}']
                     ['{\color{gray}build ' int2str(BRAPH2.BUILD) '}']
                     ''
-                    '{\bf{WARNING} Missing MatLab AddOn}'
-                    ''
-                    ['MatLab ' BRAPH2.MATLAB_RELEASE ' is required, while MatLab ' ver('MATLAB').Version ' is installed.']
+                    '{\bf{WARNING} - Missing MatLab AddOn}'
                     ''
                     ['The addon ' addon ' is not installed. ']
                     'Some BRAPH2 functionalities might not be available, or they might not function correctly.'

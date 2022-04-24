@@ -41,9 +41,12 @@ f = init();
         end
     end
     function cb_close(~, ~)
+        DefaultUicontrolBackgroundColor_BAK = get(0, 'DefaultUicontrolBackgroundColor');
+        set(0, 'DefaultUicontrolBackgroundColor', BRAPH2.COL_FIG)
         selection = questdlg(['Do you want to close ' fig_name '?'], ...
             ['Close ' fig_name], ...
             'Yes', 'No', 'Yes');
+        set(0, 'DefaultUicontrolBackgroundColor', DefaultUicontrolBackgroundColor_BAK)
         switch selection
             case 'Yes'
                 clear pl

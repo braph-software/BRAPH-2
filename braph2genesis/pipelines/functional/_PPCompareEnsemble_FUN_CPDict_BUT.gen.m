@@ -351,10 +351,7 @@ function cb_measure_calc(pr)
     measure_short_list = pr.mlist(pr.selected);
 
     % calculate
-    if pr.get('WAITBAR')
-        wb = waitbar(0, ['Calculating ' num2str(length(pr.selected))  ' comparisons ...'], 'Name', BRAPH2.NAME);
-        set_braph2icon(wb)
-    end
+    wb = braph2waitbar(pr.get('WAITBAR'), 0, ['Calculating ' num2str(length(pr.selected))  ' comparisons ...']);
 
     j = 1;
     for i = 1:length(pr.mlist)
@@ -363,9 +360,9 @@ function cb_measure_calc(pr)
         end
 
         measure = pr.mlist{i};
-        if pr.get('WAITBAR')
-            waitbar(.1 + .20 * j / length(pr.selected), wb, ['Calculating comparison ' measure ]);
-        end
+
+        braph2waitbar(wb, .1 + .20 * j / length(pr.selected), ['Calculating comparison ' measure ])
+
         j = j + 1;
         el.getComparison(measure).memorize('DIFF');
         el.getComparison(measure).get('P1');
@@ -376,9 +373,8 @@ function cb_measure_calc(pr)
     end
 
     % close progress bar
-    if pr.get('WAITBAR')
-        close(wb)
-    end
+    braph2waitbar(wb, 'close')
+
     pr.update();
     pr.redraw();
 end

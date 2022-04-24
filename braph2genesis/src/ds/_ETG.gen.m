@@ -69,14 +69,14 @@ if BRAPH2.installed('NN', 'warning') && BRAPH2.installed('ONNXCONVERTER', 'warni
     pred = predict(etg.get('MODEL_SERIES'), img);
     pred_dec = predict(etg_dec.get('MODEL_SERIES'), img);
 
-    assert(max(abs(pred - pred_dec)) < 1E-06, ...
+    assert(max(abs(pred - pred_dec)) < 1E-04, ...
         [BRAPH2.STR ':ETG:' BRAPH2.BUG_ERR], ...
         'Prediction is not being calculated correctly with the model from JSON.')
 
     pred = predict(etg.get('MODEL_DAG'), img);
     pred_dec = predict(etg_dec.get('MODEL_DAG'), img);
 
-    assert(max(abs(pred - pred_dec)) < 1E-06, ...
+    assert(max(abs(pred - pred_dec)) < 1E-04, ...
         [BRAPH2.STR ':ETG:' BRAPH2.BUG_ERR], ...
         'Prediction is not being calculated correctly with the model from JSON.')
 
@@ -100,12 +100,11 @@ if BRAPH2.installed('NN', 'warning') && BRAPH2.installed('ONNXCONVERTER', 'warni
     size_y = 28;
     num_channel = 1;
     num_neuron = 100;
-    num_class = 10;
+    num_class = 1;
     layers = [
         imageInputLayer([size_x size_y num_channel], 'Name', 'input', 'Mean', rand(size_x, size_y, num_channel))
         fullyConnectedLayer(num_neuron, 'Name', 'fc1', 'Weights', rand(num_neuron, size_x * size_y), 'Bias', rand(num_neuron, 1))
         fullyConnectedLayer(num_class, 'Name', 'fc2', 'Weights', rand(num_class, num_neuron), 'Bias', rand(num_class, 1))
-        softmaxLayer('Name', 'softmax')
         regressionLayer('Name', 'regressOutput')
         ];
     net_series = SeriesNetwork(layers);
@@ -130,14 +129,14 @@ if BRAPH2.installed('NN', 'warning') && BRAPH2.installed('ONNXCONVERTER', 'warni
     pred = predict(etg.get('MODEL_SERIES'), img);
     pred_dec = predict(etg_dec.get('MODEL_SERIES'), img);
 
-    assert(max(abs(pred - pred_dec)) < 1E-06, ...
+    assert(max(abs(pred - pred_dec)) < 1E-04, ...
         [BRAPH2.STR ':ETG:' BRAPH2.BUG_ERR], ...
         'Prediction is not being calculated correctly with the model from JSON.')
 
     pred = predict(etg.get('MODEL_DAG'), img);
     pred_dec = predict(etg_dec.get('MODEL_DAG'), img);
 
-    assert(max(abs(pred - pred_dec)) < 1E-06, ...
+    assert(max(abs(pred - pred_dec)) < 1E-04, ...
         [BRAPH2.STR ':ETG:' BRAPH2.BUG_ERR], ...
         'Prediction is not being calculated correctly with the model from JSON.')
 
@@ -161,12 +160,11 @@ if BRAPH2.installed('NN', 'warning') && BRAPH2.installed('ONNXCONVERTER', 'warni
     size_y = 28;
     num_channel = 1;
     num_neuron = 100;
-    num_class = 10;
+    num_class = 1;
     layers = [
         imageInputLayer([size_x size_y num_channel], 'Name', 'input', 'Mean', rand(size_x, size_y, num_channel))
         fullyConnectedLayer(num_neuron, 'Name', 'fc1', 'Weights', rand(num_neuron, size_x * size_y), 'Bias', rand(num_neuron, 1))
         fullyConnectedLayer(num_class, 'Name', 'fc2', 'Weights', rand(num_class, num_neuron), 'Bias', rand(num_class, 1))
-        softmaxLayer('Name', 'softmax')
         regressionLayer('Name', 'regressOutput')
         ];
     net_series = SeriesNetwork(layers);
@@ -203,14 +201,14 @@ if BRAPH2.installed('NN', 'warning') && BRAPH2.installed('ONNXCONVERTER', 'warni
     pred = predict(etg.get('MODEL_SERIES'), img);
     pred_dec = predict(etg_dec.get('MODEL_SERIES'), img);
 
-    assert(max(abs(pred - pred_dec)) < 1E-06, ...
+    assert(max(abs(pred - pred_dec)) < 1E-04, ...
         [BRAPH2.STR ':ETG:' BRAPH2.BUG_ERR], ...
         'Prediction is not being calculated correctly with the model from b2 file.')
 
     pred = predict(etg.get('MODEL_DAG'), img);
     pred_dec = predict(etg_dec.get('MODEL_DAG'), img);
 
-    assert(max(abs(pred - pred_dec)) < 1E-06, ...
+    assert(max(abs(pred - pred_dec)) < 1E-04, ...
         [BRAPH2.STR ':ETG:' BRAPH2.BUG_ERR], ...
         'Prediction is not being calculated correctly with the model from b2 file.')
 

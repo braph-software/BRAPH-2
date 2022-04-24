@@ -29,10 +29,7 @@ if ~isfile(file) && ~braph2_testing()
     file = im.memorize('FILE');
 end
 if isfile(file)
-    if im.get('WAITBAR')
-        wb = waitbar(0, 'Reading pipeline file ...', 'Name', BRAPH2.NAME);
-        set_braph2icon(wb)
-    end
+    wb = braph2waitbar(im.get('WAITBAR'), 0, 'Reading pipeline file ...');
 
     try
         txt = fileread(file);
@@ -76,11 +73,9 @@ if isfile(file)
             section_txt = section_txt(section_newlines(1):end);
             code_marks = [regexp(section_txt, newline(), 'all') length(section_txt) + 1];
             for c = 1:1:length(code_marks) - 1
-                if im.get('WAITBAR')
-                    waitbar(.00 + 1.00 * (s - 1 + c / (length(code_marks) - 1)) / (length(section_marks) - 1), wb, ...
-                        ['Loading pipeline section ' num2str(s) ' of ' num2str(length(section_marks) - 1) ...
-                        ', code line ' num2str(c) ' of ' num2str(length(code_marks) - 1) ' ...'])
-                end
+                braph2waitbar(wb, .00 + 1.00 * (s - 1 + c / (length(code_marks) - 1)) / (length(section_marks) - 1), ...
+                    ['Loading pipeline section ' num2str(s) ' of ' num2str(length(section_marks) - 1) ...
+                    ', code line ' num2str(c) ' of ' num2str(length(code_marks) - 1) ' ...'])
                 
                 code_txt = strtrim(section_txt(code_marks(c):code_marks(c + 1) - 1));
 
@@ -100,9 +95,7 @@ if isfile(file)
             end
         end
     catch e
-        if im.get('WAITBAR')
-            close(wb)
-        end
+        braph2waitbar(wb, 'close')
         
         rethrow(e)
     end

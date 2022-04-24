@@ -34,10 +34,8 @@ SAVE (result, empty) saves the group of subjects with functional data in TXT fil
 directory = ex.get('DIRECTORY');
 
 if isfolder(directory)
-    if ex.get('WAITBAR')
-        wb = waitbar(0, 'Retrieving path ...', 'Name', BRAPH2.NAME);
-        set_braph2icon(wb)
-    end
+    wb = braph2waitbar(ex.get('WAITBAR'), 0, 'Retrieving path ...');
+
     gr = ex.get('GR');
 
     gr_directory = [directory filesep() gr.get('ID')];
@@ -50,13 +48,12 @@ if isfolder(directory)
     sub_id = cell(sub_number, 1);
     age = cell(sub_number, 1);
     sex = cell(sub_number, 1);
-    if ex.get('WAITBAR')
-        waitbar(.15, wb, 'Organizing info ...');
-    end
+
+    braph2waitbar(wb, .15, 'Organizing info ...')
+
     for i = 1:1:sub_number
-        if ex.get('WAITBAR')
-            waitbar(.30 + .70 * i / sub_number, wb, ['Saving subject ' num2str(i) ' of ' num2str(sub_number) '...']);
-        end
+        braph2waitbar(wb, .30 + .70 * i / sub_number, ['Saving subject ' num2str(i) ' of ' num2str(sub_number) '...'])
+        
         sub = sub_dict.getItem(i);
         sub_id(i) = {sub.get('ID')};
         sub_FUN = sub.get('FUN');
@@ -92,9 +89,8 @@ if isfolder(directory)
     
     % sets value to empty
     value = [];
-    if ex.get('WAITBAR')
-        close(wb)
-    end
+
+    braph2waitbar(wb, 'close')
 else
     value = ex.getr('SAVE');    
 end
