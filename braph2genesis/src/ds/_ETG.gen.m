@@ -41,9 +41,9 @@ if BRAPH2.installed('NN', 'warning') && BRAPH2.installed('ONNXCONVERTER', 'warni
     num_neuron = 100;
     num_class = 10;
     layers = [
-        imageInputLayer([size_x size_y num_channel], 'Name', 'input', 'Mean', rand(size_x, size_y, num_channel))
-        fullyConnectedLayer(num_neuron, 'Name', 'fc1', 'Weights', rand(num_neuron, size_x * size_y), 'Bias', rand(num_neuron, 1))
-        fullyConnectedLayer(num_class, 'Name', 'fc2', 'Weights', rand(num_class, num_neuron), 'Bias', rand(num_class, 1))
+        imageInputLayer([size_x size_y num_channel], 'Name', 'input', 'Mean', rand(size_x, size_y, num_channel, 'single'))
+        fullyConnectedLayer(num_neuron, 'Name', 'fc1', 'Weights', rand(num_neuron, size_x * size_y, 'single'), 'Bias', rand(num_neuron, 1, 'single'))
+        fullyConnectedLayer(num_class, 'Name', 'fc2', 'Weights', rand(num_class, num_neuron, 'single'), 'Bias', rand(num_class, 1, 'single'))
         softmaxLayer('Name', 'softmax')
         classificationLayer('Classes', categorical(1:num_class), 'Name', 'classOutput')
         ];
@@ -102,9 +102,9 @@ if BRAPH2.installed('NN', 'warning') && BRAPH2.installed('ONNXCONVERTER', 'warni
     num_neuron = 100;
     num_class = 1;
     layers = [
-        imageInputLayer([size_x size_y num_channel], 'Name', 'input', 'Mean', rand(size_x, size_y, num_channel))
-        fullyConnectedLayer(num_neuron, 'Name', 'fc1', 'Weights', rand(num_neuron, size_x * size_y), 'Bias', rand(num_neuron, 1))
-        fullyConnectedLayer(num_class, 'Name', 'fc2', 'Weights', rand(num_class, num_neuron), 'Bias', rand(num_class, 1))
+        imageInputLayer([size_x size_y num_channel], 'Name', 'input', 'Mean', rand(size_x, size_y, num_channel, 'single'))
+        fullyConnectedLayer(num_neuron, 'Name', 'fc1', 'Weights', rand(num_neuron, size_x * size_y, 'single'), 'Bias', rand(num_neuron, 1, 'single'))
+        fullyConnectedLayer(num_class, 'Name', 'fc2', 'Weights', rand(num_class, num_neuron, 'single'), 'Bias', rand(num_class, 1, 'single'))
         regressionLayer('Name', 'regressOutput')
         ];
     net_series = SeriesNetwork(layers);
@@ -162,9 +162,9 @@ if BRAPH2.installed('NN', 'warning') && BRAPH2.installed('ONNXCONVERTER', 'warni
     num_neuron = 100;
     num_class = 1;
     layers = [
-        imageInputLayer([size_x size_y num_channel], 'Name', 'input', 'Mean', rand(size_x, size_y, num_channel))
-        fullyConnectedLayer(num_neuron, 'Name', 'fc1', 'Weights', rand(num_neuron, size_x * size_y), 'Bias', rand(num_neuron, 1))
-        fullyConnectedLayer(num_class, 'Name', 'fc2', 'Weights', rand(num_class, num_neuron), 'Bias', rand(num_class, 1))
+        imageInputLayer([size_x size_y num_channel], 'Name', 'input', 'Mean', rand(size_x, size_y, num_channel, 'single'))
+        fullyConnectedLayer(num_neuron, 'Name', 'fc1', 'Weights', rand(num_neuron, size_x * size_y, 'single'), 'Bias', rand(num_neuron, 1, 'single'))
+        fullyConnectedLayer(num_class, 'Name', 'fc2', 'Weights', rand(num_class, num_neuron, 'single'), 'Bias', rand(num_class, 1, 'single'))
         regressionLayer('Name', 'regressOutput')
         ];
     net_series = SeriesNetwork(layers);
