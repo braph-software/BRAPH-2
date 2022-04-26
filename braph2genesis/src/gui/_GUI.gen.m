@@ -311,6 +311,7 @@ BRAPH2.save(el, filename)
             delete(im_menus(i));
         end
         eval([el.getClass() '.getGUIMenuImport(el, gui.menu_import, pe)']);
+        el = pe.get('el');
     end    
 
     if gui.get('MENUBAR') && gui.get('MENU_EXPORT') && ~check_graphics(gui.menu_export, 'uimenu') 
@@ -319,6 +320,7 @@ BRAPH2.save(el, filename)
             'Callback', {@cb_refresh_export_menu});
     end
     function cb_refresh_export_menu(~,~)
+        el = pe.get('el');
         ex_menus = get(gui.menu_export, 'Children');
         for i = 1:length(ex_menus)
             delete(ex_menus(i));
