@@ -737,7 +737,7 @@ classdef Format < handle
                     check = iscell(value) && all(cellfun(@(x) isnumeric(x), value(:)));
                 case Format.NET
                     if BRAPH2.installed('NN', 'warning')
-                        check = isa(value, 'network') || isa(value, 'SeriesNetwork') || isa(value, 'DAGNetwork') || isa(value, 'dlnetwork');
+                        check = isa(value, 'network') || isa(value, 'SeriesNetwork') || isa(value, 'DAGNetwork') || isa(value, 'dlnetwork') || isstruct(value);
                     else
                         check = isa(value, 'NoValue');
                     end
