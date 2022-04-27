@@ -2054,7 +2054,6 @@ function h = getMCRPanel(pl, ui_panel_mcr)
                 if get(ui_checkbox_meas_sphereradius, 'Value')
 
                     R = str2double(get(ui_edit_meas_sphereradius, 'String')) * measure_data_inner;
-                    R = measure_data_inner * R;
                     R(isnan(R)) = 0.1;
                     R(R <= 0) = 0.1;
                     pl.set('SPHS_SIZE', R);
