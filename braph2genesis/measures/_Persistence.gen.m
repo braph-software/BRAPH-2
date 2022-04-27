@@ -96,10 +96,10 @@ A = {A11 A22};
 known_persistence = {1};   
  
 g = MultiplexBU('B', A);
-persistence = CategoricalPersistence('G', g).get('M');
+persistence = Persistence('G', g).get('M');
 
 assert(isequal(persistence, known_persistence), ...
-    [BRAPH2.STR ':CategoricalPersistence:' BRAPH2.BUG_ERR], ...
+    [BRAPH2.STR ':Persistence:' BRAPH2.BUG_ERR], ...
     'CategoricalPersistence is not being calculated correctly for MultiplexBU.')
 
 %%% ¡test!
@@ -123,8 +123,8 @@ A = {A11 A22};
 known_persistence = {1};   
  
 g = MultiplexWD('B', A);
-persistence = CategoricalPersistence('G', g).get('M');
+persistence = Persistence('G', g).get('M');
 
 assert(isequal(persistence, known_persistence), ...
-    [BRAPH2.STR ':CategoricalPersistence:' BRAPH2.BUG_ERR], ...
-    'CategoricalPersistence is not being calculated correctly for MultiplexWD.')
+    [BRAPH2.STR ':Persistence:' BRAPH2.BUG_ERR], ...
+    'Persistence is not being calculated correctly for MultiplexWD.')
