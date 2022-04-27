@@ -2,7 +2,7 @@
 WeightedMultiplexParticipationAv < WeightedMultiplexParticipation (m, average weighted multiplex participation) is the graph average weighted multiplex participation.
 
 %%% ¡description!
-The weighted multiplex participation of a graph is the average heterogeneity
+The weighted multiplex participation of a graph is the average homogeneity
 of its number of neighbours across the layers. 
 
 %%% ¡shape!
