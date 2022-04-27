@@ -2,7 +2,7 @@
 Modularity < CommunityStructure (m, modularity) is the graph modularity.
 
 %%% ¡description!
-The modularity of a graph is the quality of the resulting partition of the network. 
+The modularity of a graph is the quality function Q of the resulting partition of the network. 
 
 %%% ¡shape!
 shape = Measure.GLOBAL;

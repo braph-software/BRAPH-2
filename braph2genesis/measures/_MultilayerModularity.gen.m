@@ -2,8 +2,8 @@
 MultilayerModularity < MultilayerCommunityStructure (m, multilayer modularity) is the graph multilayer modularity.
 
 %%% ¡description!
-The multilayer modularity of a multilayer graph is the quality of the 
-resulting partition of the multilayer network. 
+The multilayer modularity of a multilayer graph is the multilayer 
+quality function Q of the resulting partition of the multilayer network. 
 
 %%% ¡shape!
 shape = Measure.GLOBAL;
