@@ -158,7 +158,7 @@ check = value >= 0 && value <= 1;
 %%% ¡prop!
 LIGHTING (metadata, option) is the lighting value.
 %%%% ¡settings!
-{'phong' 'flat' 'gouraud' 'none'}
+{'none' 'phong' 'flat' 'gouraud'}
 
 %%% ¡prop!
 MATERIAL (metadata, option) is the material value.
@@ -173,7 +173,7 @@ CAMLIGHT (metadata, option) is the camlight value.
 %%% ¡prop!
 SHADING (metadata, option) is the shading value.
 %%%% ¡settings!
-{'interp' 'flat' 'faceted' 'none'}
+{'none' 'interp' 'flat' 'faceted'}
 
 %%% ¡prop!
 COLORMAP (metadata, matrix) is the colormap.
@@ -574,7 +574,7 @@ function f_settings = settings(pl, varargin)
         end
         function cb_alpha(~, ~)  % (src, event)
             pl.set('FACEALPHA', get(ui_slider_alpha, 'Value'), 'EDGEALPHA', get(ui_slider_alpha, 'Value'))
-            pl.draw()
+            set(pl.h_brain, 'FACEALPHA', get(ui_slider_alpha, 'Value'), 'EDGEALPHA', get(ui_slider_alpha, 'Value'))
             set(ui_slider_facealpha, 'Value', get(ui_slider_alpha, 'Value'))
             set(ui_slider_edgealpha, 'Value', get(ui_slider_alpha, 'Value'))
         end
@@ -587,7 +587,7 @@ function f_settings = settings(pl, varargin)
         end
         function cb_facealpha(~, ~)  % (src, event)
             pl.set('FACEALPHA', get(ui_slider_facealpha, 'Value'))
-            pl.draw()
+            set(pl.h_brain, 'FACEALPHA', get(ui_slider_alpha, 'Value'))
         end
         function cb_edgecolor(~, ~)  % (src, event)
             color = uisetcolor;
@@ -598,7 +598,7 @@ function f_settings = settings(pl, varargin)
         end
         function cb_edgealpha(~, ~)  % (src, event)
             pl.set('EDGEALPHA', get(ui_slider_edgealpha, 'Value'))
-            pl.draw()
+            set(pl.h_brain, 'EDGEALPHA', get(ui_slider_alpha, 'Value'))
         end
 
     % lightining
