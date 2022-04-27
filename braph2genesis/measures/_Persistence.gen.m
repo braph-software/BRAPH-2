@@ -3,7 +3,7 @@ Persistence < Measure (m, persistence) is the graph persistence.
 
 %%% ¡description!
 The persistence of a multilayer network is calculated as the normalized 
-sum of the number of nodes that do not change community assigments. It 
+sum of the number of nodes that do not change community assignments. It 
 varies between 0 and 1.
 In categorical multilayer networks, it is the sum over all pairs of layers
 of the number of nodes that do not change community assignments, whereas 
