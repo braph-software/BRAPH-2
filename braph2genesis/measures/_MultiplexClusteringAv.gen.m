@@ -2,9 +2,9 @@
 MultiplexClusteringAv < MultiplexClustering (m, average multiplex clustering) is the graph average multiplex clustering.
 
 %%% ¡description!
-The two-multiplex clustering coefficient of a node i is the fraction
-of two-multiplex triangles (triangles which use edges from two different 
-layers) with a vertex in node i and the number of one-triads centered in i.
+The average multiplex clustering coefficient of a multilayer graph is 
+the average of the two-multiplex clustering coefficients of all nodes. 
+Connection weights are ignored in calculations.
       
 %%% ¡seealso!
 Measure
