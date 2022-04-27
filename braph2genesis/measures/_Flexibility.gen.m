@@ -1,5 +1,5 @@
 %% ¡header!
-Flexibility < Measure (m, flexibility) is the graph flexibility.
+Flexibility < MultilayerCommunityStructure (m, flexibility) is the graph flexibility.
 
 %%% ¡description!
 The flexibility of each node is calculated as the number of times
@@ -25,15 +25,6 @@ MultiplexWU
 MultiplexWD
 OrderedMultiplexWU
 
-%% ¡props!
-
-%%% ¡prop! 
-rule (parameter, OPTION) 
-%%%% ¡settings!
-{ 'louvain' 'newman'}
-%%%% ¡default!
-'louvain'
-
 %% ¡props_update!
 
 %%% ¡prop!
@@ -47,8 +38,7 @@ if isempty(N)
     N(1) = 1;
 end
 N = N(1);
-
-S = MultilayerCommunityStructure('G', g).get('M');
+S = calculateValue@MultilayerCommunityStructure(m, prop);
 S = cell2mat(S');
 flexibility = zeros(N, 1);
 

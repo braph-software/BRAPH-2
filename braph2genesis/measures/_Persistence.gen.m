@@ -1,5 +1,5 @@
 %% ¡header!
-Persistence < Measure (m, persistence) is the graph persistence.
+Persistence < MultilayerCommunityStructure (m, persistence) is the graph persistence.
 
 %%% ¡description!
 The persistence of a multilayer network is calculated as the normalized 
@@ -26,15 +26,6 @@ MultiplexWU
 MultiplexWD
 OrderedMultiplexWU
 
-%% ¡props!
-
-%%% ¡prop! 
-rule (parameter, OPTION) 
-%%%% ¡settings!
-{ 'louvain' 'newman'}
-%%%% ¡default!
-'louvain'
-
 %% ¡props_update!
 
 %%% ¡prop!
@@ -48,8 +39,8 @@ if isempty(N)
     N(1) = 1;
 end
 N = N(1);
-
-S = MultilayerCommunityStructure('G', g).get('M');
+%S = MultilayerCommunityStructure('G', g).get('M');
+S = calculateValue@MultilayerCommunityStructure(m, prop);
 S = cell2mat(S');
 S = {S};
 persistence = zeros(length(S), 1); 

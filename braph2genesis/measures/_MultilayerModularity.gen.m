@@ -24,6 +24,7 @@ MultiplexWD
 OrderedMultiplexWU
 
 %% ¡props_update!
+
 %%% ¡prop!
 M (result, cell) is the multilayer modularity.
 %%%% ¡calculate!
