@@ -1,10 +1,14 @@
 %% ¡header!
-CategoricalPersistence < Measure (m, categorical persistence) is the graph categorical persistence.
+Persistence < Measure (m, persistence) is the graph persistence.
 
 %%% ¡description!
-The categorical persistence of an unordered multilayer network is the 
-sum over all pairs of layers of the number of nodes that 
-do not change community assignments. It varies between 0 and 1.
+The persistence of a multilayer network is calculated as the normalized 
+sum of the number of nodes that do not change community assigments. It 
+varies between 0 and 1.
+In categorical multilayer networks, it is the sum over all pairs of layers
+of the number of nodes that do not change community assignments, whereas 
+in ordinal multilayer networks (e.g. temporal), it is the number of nodes 
+that do not change community assignments between consecutive layers.
 
 %%% ¡shape!
 shape = Measure.GLOBAL;
@@ -16,17 +20,13 @@ scope = Measure.SUPERGLOBAL;
 parametricity = Measure.NONPARAMETRIC;
 
 %%% ¡compatible_graphs!
-MultiplexWU
-MultiplexWD
 MultiplexBU
 MultiplexBD
+MultiplexWU
+MultiplexWD
+OrderedMultiplexWU
 
 %% ¡props!
-
-%%% ¡prop! 
-Ci (data, rvector) is the given multilayer community structure 
-%%%% ¡default!
-[]
 
 %%% ¡prop! 
 rule (parameter, OPTION) 
@@ -51,18 +51,26 @@ N = N(1);
 
 S = MultilayerCommunityStructure('G', g).get('M');
 S = cell2mat(S');
-Ci = S;
-
 S = {S};
-all2all = N*[(-L+1):-1,1:(L-1)];
-A = spdiags(ones(N*L, 2*L-2), all2all, N*L, N*L);
-for i = 1:length(S)
-    G = sparse(1:length(S{i}(:)), S{i}(:), 1);
-    categorical_persistence_l = trace(G'*A*G)/(N*L*(L-1));
-    categorical_persistence = {categorical_persistence_l};
+persistence = zeros(length(S), 1); 
+
+if g.is_multiplex(g) || g.is_multilayer(g)
+    % categorical  
+    all2all = N*[(-L+1):-1,1:(L-1)];
+    A = spdiags(ones(N*L, 2*L-2), all2all, N*L, N*L);
+    for i = 1:length(S)
+        G = sparse(1:length(S{i}(:)), S{i}(:), 1);
+        persistence(i) = trace(G'*A*G)/(N*L*(L-1));
+    end
+  
+elseif g.is_ordered_multiplex(g) || g.is_ordered_multilayer(g)
+    % ordinal
+    for i = 1:length(S)
+        persistence(i) = sum(sum(S{i}(:,1:end-1)==S{i}(:,2:end)))/(N*(L-1));
+    end 
 end
 
-value = categorical_persistence;
+value = {persistence};
 
 %% ¡tests!
 
@@ -85,12 +93,12 @@ A22 = [
       ];
 A = {A11 A22};
  
-known_categorical_persistence = {1};   
+known_persistence = {1};   
  
 g = MultiplexBU('B', A);
-categorical_persistence = CategoricalPersistence('G', g).get('M');
+persistence = CategoricalPersistence('G', g).get('M');
 
-assert(isequal(categorical_persistence, known_categorical_persistence), ...
+assert(isequal(persistence, known_persistence), ...
     [BRAPH2.STR ':CategoricalPersistence:' BRAPH2.BUG_ERR], ...
     'CategoricalPersistence is not being calculated correctly for MultiplexBU.')
 
@@ -112,11 +120,11 @@ A22 = [
       ];
 A = {A11 A22};
  
-known_categorical_persistence = {1};   
+known_persistence = {1};   
  
 g = MultiplexWD('B', A);
-categorical_persistence = CategoricalPersistence('G', g).get('M');
+persistence = CategoricalPersistence('G', g).get('M');
 
-assert(isequal(categorical_persistence, known_categorical_persistence), ...
+assert(isequal(persistence, known_persistence), ...
     [BRAPH2.STR ':CategoricalPersistence:' BRAPH2.BUG_ERR], ...
     'CategoricalPersistence is not being calculated correctly for MultiplexWD.')
