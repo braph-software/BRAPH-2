@@ -184,10 +184,6 @@ function update(pr)
             end
             set(pr.measure_tbl, 'RowName', row_names)
         end
-
-        if ~check_graphics(pr.f_pc, 'figure')
-            set(pr.adj_plot_tgl_btn, 'Enable', 'on');
-        end
     end
 end
 function redraw(pr, varargin)
