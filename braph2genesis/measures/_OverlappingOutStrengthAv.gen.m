@@ -45,11 +45,11 @@ B22 = [
     ];
 B = {B11 B22};
 
-known_overlapping_in_strength_av = {mean([2.2 1.4 2])};
+known_overlapping_out_strength_av = {mean([2.2 1.4 2])};
 
 g = MultiplexWD('B', B);
-overlapping_in_strength_av = OverlappingOutStrengthAv('G', g);
+overlapping_out_strength_av = OverlappingOutStrengthAv('G', g);
 
-assert(isequal(overlapping_in_strength_av.get('M'), known_overlapping_in_strength_av), ...
+assert(isequal(overlapping_out_strength_av.get('M'), known_overlapping_out_strength_av), ...
     [BRAPH2.STR ':OverlappingOutStrengthAv:' BRAPH2.BUG_ERR], ...
     'OverlappingOutStrengthAv is not being calculated correctly for MultiplexWD.')

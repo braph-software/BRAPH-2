@@ -4,7 +4,7 @@ MultilayerCommunityStructure < Measure (m, multilayer community structure) is th
 %%% ¡description!
 The multilayer community structure of a multilayer graph is a subdivision of 
 the network into non-overlapping groups of nodes which maximizes the number 
-of whitin group edges, and minimizes the number of between group edges.
+of within group edges, and minimizes the number of between group edges.
 
 %%% ¡seealso!
 Measure
@@ -59,12 +59,12 @@ S0 (data, cvector) is the initial partition size of the multilayer modularity ma
 []
 
 %%% ¡prop! 
-OM (data, MATRIX) is the multilayer modularity matrix
+OM (data, MATRIX) is the multilayer modularity matrix.
 %%%% ¡default!
 []
 
 %%% ¡prop! 
-QUALITY_FUNCTION(data, MATRIX) is the multilayer modularity matrix
+QUALITY_FUNCTION(data, MATRIX) is the multilayer modularity quality function.
 %%%% ¡default!
 []
 

@@ -2,7 +2,7 @@
 MultiplexInParticipation < Measure (m, multiplex in-participation) is the graph multiplex in-participation.
 
 %%% ¡description!
-The multiplex in-participation is the heterogenerity of the number of inward 
+The multiplex in-participation is the homogeneity of the number of inward 
 neighbours of a node across the layers.
     
 %%% ¡shape!
@@ -66,14 +66,14 @@ B22 = [
     ];
 B = {B11  B22};
 
-known_multiplex_participation = {[8/9 8/9 1]'};
+known_multiplex_in_participation = {[8/9 8/9 1]'};
 
 g = MultiplexBD('B', B);
-multiplex_in_participation = MultiplexParticipation('G', g);
+multiplex_in_participation = MultiplexInParticipation('G', g);
 
-assert(isequal(multiplex_in_participation.get('M'), known_multiplex_participation), ...
-    [BRAPH2.STR ':MultiplexParticipation:' BRAPH2.BUG_ERR], ...
-    'MultiplexParticipation is not being calculated correctly for MultiplexBD.')
+assert(isequal(multiplex_in_participation.get('M'), known_multiplex_in_participation), ...
+    [BRAPH2.STR ':MultiplexInParticipation:' BRAPH2.BUG_ERR], ...
+    'MultiplexInParticipation is not being calculated correctly for MultiplexBD.')
 
 %%% ¡test!
 %%%% ¡name!
@@ -91,11 +91,11 @@ B22 = [
     ];
 B = {B11  B22};
 
-known_multiplex_participation = {[8/9 8/9 1]'};
+known_multiplex_in_participation = {[8/9 8/9 1]'};
 
 g = MultiplexWD('B', B);
-multiplex_in_participation = MultiplexParticipation('G', g);
+multiplex_in_participation = MultiplexInParticipation('G', g);
 
-assert(isequal(multiplex_in_participation.get('M'), known_multiplex_participation), ...
-    [BRAPH2.STR ':MultiplexParticipation:' BRAPH2.BUG_ERR], ...
-    'MultiplexParticipation is not being calculated correctly for MultiplexWD.')
+assert(isequal(multiplex_in_participation.get('M'), known_multiplex_in_participation), ...
+    [BRAPH2.STR ':MultiplexInParticipation:' BRAPH2.BUG_ERR], ...
+    'MultiplexInParticipation is not being calculated correctly for MultiplexWD.')

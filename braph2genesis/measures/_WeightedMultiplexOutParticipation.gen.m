@@ -2,7 +2,7 @@
 WeightedMultiplexOutParticipation < Measure (m, weighted multiplex out-participation) is the graph weighted multiplex out-participation.
 
 %%% ¡description!
-The weighted multiplex out-participation of a graph is the nodal heterogeneity
+The weighted multiplex out-participation of a graph is the nodal homogeneity
 of its number of neighbours across the layers. 
 
 %%% ¡shape!
