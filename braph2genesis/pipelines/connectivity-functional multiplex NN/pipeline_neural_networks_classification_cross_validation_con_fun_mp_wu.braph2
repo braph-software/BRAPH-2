@@ -1,11 +1,11 @@
 %% Pipeline Neural Networks Classification Cross Validation CON-FUN MP WU
 %
-% This is the pipeline script to perform cross validation with classification by neural networks for two groups of subjects with connectivity-functional data and weighted undirected graphs.
+% This is a pipeline script to perform cross validation with classification by neural networks for two groups of subjects with connectivity-functional data and weighted undirected graphs.
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
 % 2. It loads the connectivity data of two groups of subjects from directories containing XLS files.
 % 3. It loads the functional data of two groups of subjects from directories containing XLS files.
 % 4. It combines both of the modalities into single entity.
-% 5. It constructs the dataset using with connectivity-functional matrices (CON-FUN) based on graphs (MP-WU).
+% 5. It constructs the dataset using connectivity-functional matrices (CON-FUN) based on graphs (MP-WU).
 % 6. It performs the cross validation.
 
 %% Brain Atlas
