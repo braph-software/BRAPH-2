@@ -33,7 +33,6 @@ else
     pred = cell2mat(pred);
     nn = nne.get('NN');
     gr = nne.get('GR');
-    [inputs, ~] = nn.reconstruct_inputs(gr);
     [targets, classes] = nn.reconstruct_targets(gr);
     targets = onehotdecode(targets, classes, 1);
     [X, Y, T, auc] = perfcurve(targets, pred(2, :), classes(2));
@@ -71,7 +70,6 @@ else
     % get ground truth
     nn = nne.get('NN');
     gr = nne.get('GR');
-    [inputs, ~] = nn.reconstruct_inputs(gr);
     [targets, classes] = nn.reconstruct_targets(gr);
     % calculate the confusion matrix
 	[cm, order] = confusionmat(targets(2, :), double(pred(2, :)));
