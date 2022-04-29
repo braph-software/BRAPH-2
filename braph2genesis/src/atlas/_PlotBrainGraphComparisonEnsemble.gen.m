@@ -2159,7 +2159,7 @@ function h = getMCRPanel(pl, ui_panel_mcr)
                         end
                     elseif layer_check && d_t_check % mp and d/t
                         if Measure.is_superglobal(m)
-                            measure_data_inner = measure_data{get(ui_layer_selector, 'Value')};
+                            measure_data_inner = measure_data{get(d_t_selector, 'Value')};
                         else
                             tmp_diff = layer_dim-get(ui_layer_selector, 'Value');
                             measure_data_inner = measure_data{get(d_t_selector, 'Value')*layer_dim-tmp_diff};
