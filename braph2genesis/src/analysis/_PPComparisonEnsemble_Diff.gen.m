@@ -537,6 +537,9 @@ function update(pr, sliders_condition)
 
             % set p values mask
             D_T = max(round(get(pr.slider, 'Value') * map_multiplier), 1); % set lower limit to 1
+            if isempty(D_T)
+                D_T = 1;
+            end
             layer_sel = round(get(pr.second_slider, 'Value') * map_multiplier);
             tmp_diff = L2-layer_sel;
             tmp_value = value{D_T*L2-tmp_diff};
