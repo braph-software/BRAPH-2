@@ -499,7 +499,7 @@ function update(pr, sliders_condition)
                 set(pr.comparison_tbl, ...
                     'RowName', br_ids)
             end
-        elseif  L2 > 1 % bud/but
+        elseif  L > 1 % bud/but
             set(pr.slider_text, ...
                 'String', [label ' ' num2str(round(get(pr.slider, 'Value') * map_multiplier))]);
             set(pr.second_slider_text, ...
@@ -507,17 +507,15 @@ function update(pr, sliders_condition)
 
             % set p values mask
             D_T = round(get(pr.slider, 'Value') * map_multiplier);
-            layer_sel = round(get(pr.second_slider, 'Value') * map_multiplier);
-            tmp_diff = L2-layer_sel;
-            tmp_value = value{D_T*L2-tmp_diff};
+            tmp_value = value{D_T};
             p1 = el.memorize('P1');
             p2 = el.memorize('P2');
             cil = el.memorize('cil');
             ciu = el.memorize('ciu');
-            p1 = p1{D_T*L2-tmp_diff};
-            p2 = p2{D_T*L2-tmp_diff};
-            cil = cil{D_T*L2-tmp_diff};
-            ciu = ciu{D_T*L2-tmp_diff};
+            p1 = p1{D_T};
+            p2 = p2{D_T};
+            cil = cil{D_T};
+            ciu = ciu{D_T};
 
             if Measure.is_nodal(el.get('measure'))
                 p1 = p1';
@@ -553,10 +551,10 @@ function update(pr, sliders_condition)
                 full_value = cell(size(tmp_value, 1), 5);
                 for k = 1:size(tmp_value, 1)
                     full_value{k, 1} = tmp_value{k};
-                    full_value{k, 2} = p1{k};
-                    full_value{k, 3} = p2{k};
-                    full_value{k, 4} = ciu{k};
-                    full_value{k, 5} = cil{k};
+                    full_value{k, 2} = p1(k);
+                    full_value{k, 3} = p2(k);
+                    full_value{k, 4} = ciu(k);
+                    full_value{k, 5} = cil(k);
                 end
 
                 set(pr.comparison_tbl, 'Data', full_value)
