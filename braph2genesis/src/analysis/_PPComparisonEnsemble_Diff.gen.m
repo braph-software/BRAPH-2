@@ -211,7 +211,8 @@ function update(pr, sliders_condition)
 
     else
         slider_tags = {'1'};
-        if el.get('C').get('A1').getPropNumber() > 6 &&  el.get('C').get('A1').get('G_DICT').getItem(1).getGraphType() ~= 4
+        lbl_tmp = el.get('C').get('A1').getPropTag(el.get('C').get('A1').getPropNumber());
+        if (strcmp(lbl_tmp, 'thresholds') || strcmp(lbl_tmp, 'densities')) &&  el.get('C').get('A1').get('G_DICT').getItem(1).getGraphType() ~= 4 % unilayer
             label = el.get('C').get('A1').getPropTag(el.get('C').get('A1').getPropNumber());
             if strcmp(label, 'thresholds')
                 label = 'Threshold';
@@ -219,7 +220,7 @@ function update(pr, sliders_condition)
                 label = 'Density';
             end
             slider_tags = compose("%g", round(el.get('C').get('A1').get(el.get('C').get('A1').getPropNumber()), 2));
-        elseif el.get('C').get('A1').getPropNumber() > 11 &&  el.get('C').get('A1').get('G_DICT').getItem(1).getGraphType() == 4
+        elseif (strcmp(lbl_tmp, 'thresholds') || strcmp(lbl_tmp, 'densities')) &&  el.get('C').get('A1').get('G_DICT').getItem(1).getGraphType() == 4 %mp
             label = el.get('C').get('A1').getPropTag(el.get('C').get('A1').getPropNumber());
             if strcmp(label, 'thresholds')
                 label = 'Threshold';
@@ -679,19 +680,19 @@ function update(pr, sliders_condition)
 
         else % wu
             set(pr.slider_text, ...
-                'String', [label ' ' num2str(round(get(pr.slider, 'Value') * map_multiplier))]);
+                'String', label);
 
 
             % set p values mask
-            tmp_value = value{round(get(pr.slider, 'Value') * map_multiplier)};
+            tmp_value = value{1};
             p1 = el.memorize('P1');
             p2 = el.memorize('P2');
             cil = el.memorize('cil');
             ciu = el.memorize('ciu');
-            p1 = p1{round(get(pr.slider, 'Value') * map_multiplier)};
-            p2 = p2{round(get(pr.slider, 'Value') * map_multiplier)};
-            cil = cil{round(get(pr.slider, 'Value') * map_multiplier)};
-            ciu = ciu{round(get(pr.slider, 'Value') * map_multiplier)};
+            p1 = p1{1};
+            p2 = p2{1};
+            cil = cil{1};
+            ciu = ciu{1};
 
             if Measure.is_nodal(el.get('measure'))
                 p1 = p1';
