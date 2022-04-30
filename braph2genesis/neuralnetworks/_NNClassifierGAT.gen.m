@@ -403,7 +403,7 @@ function weights = initializeGlorot(nn, sz, numOut, numIn)
         numIn
     end
     
-    className = 'single'
+    className = 'single';
     Z = 2 * rand(sz, className) - 1;
     bound = sqrt(6 / (numIn + numOut));
     
