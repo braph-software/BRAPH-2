@@ -389,20 +389,18 @@ function [Y, attentionScores] = model(nn, parameters, X, A, numNodes, numHeads)
     end
     Y = sigmoid(Z);
 end
-function weights = initializeGlorot(nn, sz, numOut, numIn, className)
+function weights = initializeGlorot(nn, sz, numOut, numIn)
     %INITIALIZEGLOROT initializes the learnable weights.
     %
-    % WEIGHTS = INITIALIZEGLOROT(NN, SZ, NUMOUT, NUMIN, CLASSNAME)
+    % WEIGHTS = INITIALIZEGLOROT(NN, SZ, NUMOUT, NUMIN)
     %  takes as inputs the size of the weights SZ, the num of output NUMOUT,
-    %  the number of input NUMIN, and the class name CLASSNAME, and returns
-    %  the weights WEIGHTS.
+    %  the number of input NUMIN, and returns the weights WEIGHTS.
 
     arguments
         nn
         sz
         numOut
         numIn
-        className
     end
     
     className = 'single'
@@ -411,10 +409,15 @@ function weights = initializeGlorot(nn, sz, numOut, numIn, className)
     
     weights = bound * Z;
     weights = dlarray(weights);
-    
-    end
-    function outFeatures = globalAveragePool(nn, inFeatures, numNodes)
-    
+end
+function outFeatures = globalAveragePool(nn, inFeatures, numNodes)
+    %GLOBALAVERAGEPOOL averaging the input features with respect to the number of nodes per graph.
+    %
+    % OUTFEATURES = GLOBALAVERAGEPOOL(NN, INFEATURES, NUMNODES)
+    %  takes as inputs a feature representation INFEATURES and the number
+    %  of nodes per graph NUMNODES, and returns an output feature
+    %  representation for each graph.
+
     numGraphs = numel(numNodes);
     numFeatures = size(inFeatures, 2);
     outFeatures = zeros(numGraphs, numFeatures, "like", inFeatures);
