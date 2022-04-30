@@ -135,7 +135,7 @@ if BRAPH2.installed('NN', 'warning')
                 title("Epoch: " + epoch + ", Elapsed: " + string(D))
                 loss = double(extractdata(gather(loss)));
                 if nn.get('PLOT_TRAINING')
-                    addpoints(lineLossTrain,iteration,loss)
+                    addpoints(lineLossTrain, iteration, loss)
                     drawnow
                 end
             end
@@ -182,7 +182,7 @@ function [mbq, ds, numFeatures, numClasses] = reconstruct_dataset(nn, gr)
         sigsqX = zeros(1, numFeatures);
         
         for i = 1:numFeatures
-            X = nonzeros(features(:,i,:));
+            X = nonzeros(features(:, i, :));
             muX(i) = mean(X);
             sigsqX(i) = var(X, 1);
         end
@@ -190,8 +190,8 @@ function [mbq, ds, numFeatures, numClasses] = reconstruct_dataset(nn, gr)
         numGraphs = size(features, 3);
         
         for j = 1:numGraphs
-            validIdx = 1:nnz(features(:,1,j));
-            features(validIdx,:,j) = (features(validIdx,:,j) - muX)./sqrt(sigsqX);
+            validIdx = 1:nnz(features(:, 1, j));
+            features(validIdx, :, j) = (features(validIdx, :, j) - muX)./sqrt(sigsqX);
         end
         
         T = cat(1, labels{:});
@@ -204,12 +204,12 @@ function [mbq, ds, numFeatures, numClasses] = reconstruct_dataset(nn, gr)
         ds = combine(features, adjacency, target);
         
         mbq = minibatchqueue(ds, 4, ...
-            MiniBatchSize = miniBatchSize, ...
-            PartialMiniBatch = "discard", ...
-            MiniBatchFcn = @nn.preprocessMiniBatch, ...
-            OutputCast = "double", ...
-            OutputAsDlarray = [1 0 0 0], ...
-            OutputEnvironment = ["auto" "cpu" "cpu" "cpu"]);
+            'MiniBatchSize', miniBatchSize, ...
+            'PartialMiniBatch', "discard", ...
+            'MiniBatchFcn', @nn.preprocessMiniBatch, ...
+            'OutputCast', "double", ...
+            'OutputAsDlarray', [1 0 0 0], ...
+            'OutputEnvironment', ["auto" "cpu" "cpu" "cpu"]);
     end
 end
 function [targets, classes] = reconstruct_targets(nn, gr)
@@ -292,7 +292,7 @@ function [features, adjacency, numNodes, target] = preprocessMiniBatch(nn, featu
     
     for i = 1:size(adjacencyData, 3)
         % Get the number of nodes in the current graph
-        numNodesInGraph = nnz(featureData(:,1,i));
+        numNodesInGraph = nnz(featureData(:, 1, i));
         numNodes = [numNodes; numNodesInGraph];
     
         % Get the indices of the actual nonzero data
