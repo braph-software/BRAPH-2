@@ -93,7 +93,7 @@ function h_panel = draw(pr, varargin)
                 else
                     header = num2str(i);
                 end
-                h = heatmap(symbolsCount, symbolsCount, map{i}, ColorScaling="scaledrows", Title="Map " + header);
+                h = heatmap(symbolsCount, symbolsCount, map{i}, 'ColorScaling', "scaledrows", 'Title', "Map " + header);
                 h.FontSize = 4;
             end
         end

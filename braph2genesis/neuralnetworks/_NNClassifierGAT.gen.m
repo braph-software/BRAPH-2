@@ -131,7 +131,7 @@ if BRAPH2.installed('NN', 'warning')
                     trailingAvg, trailingAvgSq, iteration, learnRate);
 
                 % Display the training progress.
-                D = duration(0, 0, toc(start), Format = "hh:mm:ss");
+                D = duration(0, 0, toc(start), 'Format', "hh:mm:ss");
                 title("Epoch: " + epoch + ", Elapsed: " + string(D))
                 loss = double(extractdata(gather(loss)));
                 if nn.get('PLOT_TRAINING')
@@ -197,8 +197,8 @@ function [mbq, ds, numFeatures, numClasses] = reconstruct_dataset(nn, gr)
         T = cat(1, labels{:});
         numClasses = size(T, 2);
         
-        features = arrayDatastore(features, IterationDimension = 3);
-        adjacency = arrayDatastore(adjacency, IterationDimension = 3);
+        features = arrayDatastore(features, 'IterationDimension', 3);
+        adjacency = arrayDatastore(adjacency, 'IterationDimension', 3);
         target = arrayDatastore(T);
         
         ds = combine(features, adjacency, target);
@@ -258,7 +258,7 @@ function [outputFeatures, normAttentionCoeff] = attention(nn, inputFeatures, adj
     attentionCoefficients = attentionCoefficients + mask;
     
     % Compute normalized masked attention coefficients
-    normAttentionCoeff = softmax(attentionCoefficients, DataFormat = "BCU");
+    normAttentionCoeff = softmax(attentionCoefficients, 'DataFormat', "BCU");
     
     % Normalize features using normalized masked attention coefficients
     headOutputFeatures = pagemtimes(normAttentionCoeff, value);
@@ -351,7 +351,7 @@ function [loss, gradients, Y] = modelLoss(nn, parameters, X, adjacencyTrain, num
     %  parameters, the corresponding loss LOSS, and the model predictions Y.
     
     Y = nn.model(parameters, X, adjacencyTrain, numNodes, numHeads);
-    loss = crossentropy(Y, T, TargetCategories="independent", DataFormat="BC");
+    loss = crossentropy(Y, T, 'argetCategories', "independent", 'DataFormat', "BC");
     gradients = dlgradient(loss, parameters);
 end
 function [Y, attentionScores] = model(nn, parameters, X, A, numNodes, numHeads)
