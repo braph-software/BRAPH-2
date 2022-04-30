@@ -18,7 +18,9 @@ table_value_cell
 plot_brain_btn
 f_brain
 f_settings
-
+c_btn
+d_btn
+h
 %% ¡methods!
 function h_panel = draw(pr, varargin)
     %DRAW draws the panel of the cell property.
@@ -37,6 +39,7 @@ function h_panel = draw(pr, varargin)
     % See also update, redraw, refresh, uipanel.
     
     pr.p = draw@PlotPropCell(pr, varargin{:});
+    pr.get_buttons();
     
     pr.plot_brain_btn = uicontrol(pr.p, ...
         'Style', 'pushbutton', ...
@@ -52,6 +55,49 @@ function h_panel = draw(pr, varargin)
         pr.plot_brain_surface();
         pr.update()
     end
+
+    set(pr.c_btn, 'Callback', {@cb_button_mod_calc})
+
+    function cb_button_mod_calc(~, ~)
+        
+        el = pr.get('EL');
+        gr = el.get('GR');
+        map = el.get('FEATURE_MAP');
+        if gr.get('SUB_DICT').length > 0 && ~isempty(map) && size(map{1}, 1) == size(map{1}, 2)
+            pr.cb_button_calc()
+
+            f_ba = ancestor(pr.p, 'Figure');
+            f_ba_x = Plot.x0(f_ba, 'pixels');
+            f_ba_y = Plot.y0(f_ba, 'pixels');
+            f_ba_w = Plot.w(f_ba, 'pixels');
+            f_ba_h = Plot.h(f_ba, 'pixels');
+
+            screen_x = Plot.x0(0, 'pixels');
+            screen_y = Plot.y0(0, 'pixels');
+            screen_w = Plot.w(0, 'pixels');
+            screen_h = Plot.h(0, 'pixels');
+
+            % golden ratio is defined as a+b/a = a/b = phi. phi = 1.61
+            x = f_ba_x + f_ba_w;
+            h = f_ba_h / 1.61;
+            y = f_ba_y + f_ba_h - h;
+            w = f_ba_w * 1.61;
+
+            pr.h = figure('UNITS', 'normalized', 'POSITION', [x/screen_w y/screen_h w/screen_w h/screen_h]);
+            
+            tiledlayout("flow")
+            symbolsCount = cellfun(@(x) x.get('ID'), gr.get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').getItems(), 'UniformOutput', false);
+            for i = 1:length(map)
+                if i == 1
+                    header = "";
+                else
+                    header = num2str(i);
+                end
+                h = heatmap(symbolsCount, symbolsCount, map{i}, ColorScaling="scaledrows", Title="Map " + header);
+                h.FontSize = 4;
+            end
+        end
+    end
     
     % output
     if nargout > 0
@@ -66,6 +112,7 @@ function update(pr)
     % See also draw, redraw, refresh, PlotElement.
     
     update@PlotProp(pr)
+    pr.get_buttons();
     el = pr.get('EL');
     prop = pr.get('PROP');
     
@@ -92,6 +139,7 @@ function update(pr)
                     )
             end
         end
+
     end
 
     function cb_table_value_cell(~, event, r, c) % (src, event)
@@ -202,6 +250,27 @@ function redraw(pr, varargin)
             set(pr.plot_brain_btn, 'Enable', 'off');
         else
             set(pr.plot_brain_btn, 'Enable', 'on');
+        end
+    end
+end
+function get_buttons(pr)
+    % GET_BUTTON_CONDITION returns the calculate button state.
+    %
+    % STATE = GET_BUTTON_CONDITION(PR) returns the calculate button state.
+    %
+    % see also is_measure_calculated.
+
+    plot_prop_children = get(pr.p, 'Children');    
+    for i = 1:length(plot_prop_children)
+        pp_c = plot_prop_children(i);
+        if check_graphics(pp_c, 'pushbutton') && isequal(pp_c.Tag, 'button_calc')
+            pr.c_btn = pp_c;
+        end
+        if check_graphics(pp_c, 'pushbutton') && isequal(pp_c.Tag, 'button_del')
+            if isgraphics(pr.h)
+                close(pr.h);
+            end
+            pr.d_btn = pp_c;
         end
     end
 end
