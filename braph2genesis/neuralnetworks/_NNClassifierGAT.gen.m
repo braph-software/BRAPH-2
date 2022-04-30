@@ -402,9 +402,10 @@ function weights = initializeGlorot(nn, sz, numOut, numIn, className)
         sz
         numOut
         numIn
-        className = 'single'
+        className
     end
     
+    className = 'single'
     Z = 2 * rand(sz, className) - 1;
     bound = sqrt(6 / (numIn + numOut));
     
@@ -420,10 +421,10 @@ function weights = initializeGlorot(nn, sz, numOut, numIn, className)
     
     startIdx = 1;
     for i = 1:numGraphs
-    endIdx = startIdx + numNodes(i) - 1;
-    idx = startIdx:endIdx;
-    outFeatures(i, :) = mean(inFeatures(idx, :));
-    startIdx = endIdx + 1;
+        endIdx = startIdx + numNodes(i) - 1;
+        idx = startIdx:endIdx;
+        outFeatures(i, :) = mean(inFeatures(idx, :));
+        startIdx = endIdx + 1;
     end
 end
 function y = elu(nn, x)
