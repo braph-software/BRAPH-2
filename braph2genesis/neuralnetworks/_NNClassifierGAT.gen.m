@@ -351,7 +351,7 @@ function [loss, gradients, Y] = modelLoss(nn, parameters, X, adjacencyTrain, num
     %  parameters, the corresponding loss LOSS, and the model predictions Y.
     
     Y = nn.model(parameters, X, adjacencyTrain, numNodes, numHeads);
-    loss = crossentropy(Y, T, 'argetCategories', "independent", 'DataFormat', "BC");
+    loss = crossentropy(Y, T, 'TargetCategories', "independent", 'DataFormat', "BC");
     gradients = dlgradient(loss, parameters);
 end
 function [Y, attentionScores] = model(nn, parameters, X, A, numNodes, numHeads)
