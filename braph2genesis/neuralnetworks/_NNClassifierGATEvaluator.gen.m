@@ -34,8 +34,10 @@ else
         numHeads.attn1 = 3;
         numHeads.attn2 = 3;
         numHeads.attn3 = 5;
-        predictions = nn.modelPredictions(net, ds, numHeads);
+        [predictions, attentionScores] = nn.modelPredictions(net, ds, numHeads);
         predictions = double(extractdata(gather(predictions)));
+        attention3Scores = double(gather(extractdata(attentionScores.attn3)));
+        attention3Scores = squeeze(num2cell(attention3Scores, [1 2]));
     end
 
     gr_pred = NNGroup( ...
@@ -55,6 +57,7 @@ else
     for i = 1:1:length(subs)
         sub = subs{i}.deepclone();
         sub.set('PREDICTION', {predictions(i, :)});
+        sub.set('FEATURE_MASK', attention3Scores);
         sub_dict.add(sub);
     end
     gr_pred.set('SUB_DICT', sub_dict);
