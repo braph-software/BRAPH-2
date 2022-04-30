@@ -2,7 +2,7 @@
 MultiplexOutParticipation < Measure (m, multiplex out-participation) is the graph multiplex out-participation.
 
 %%% ¡description!
-The multiplex out-participation is the heterogenerity of the number of outward 
+The multiplex out-participation is the homogeneity of the number of outward 
 neighbours of a node across the layers.
     
 %%% ¡shape!
