@@ -1,18 +1,18 @@
 %% ¡header!
-NNClassifierGATCrossValidation < NNClassifierCrossValidation (nncv, cross-validation for neural network classifiers) cross-validate the performance of neural network classifiers with a dataset.
+NNClassifierGATCrossValidation < NNClassifierCrossValidation (nncv, cross-validation for graph attention network classifiers) cross-validate the performance of graph attention network classifiers with a dataset.
 
 %% ¡description!
-This cross validation perform a k-fold cross validation of a neural network
-classifier with desired repetitions on a dataset. The dataset is split into
-k consecutive folds with shuffling by default, and each fold is then used 
-once as a validation while the k-1 remaining folds from the training set. 
-The confusion matrix, ROC curves, AUCs, and weighted contributing maps will
-be calculated across folds and repetitions.
+This cross validation perform a k-fold cross validation of a graph attention
+network classifier with desired repetitions on a dataset. The dataset is 
+split into k consecutive folds with shuffling by default, and each fold is 
+then used once as a validation set while the k-1 remaining folds from the 
+training set. The confusion matrix, ROC curves, AUCs, and weighted 
+contributing maps will be calculated across folds and repetitions.
 
 %% ¡props_update!
 
 %%% ¡prop!
-NN_DICT (result, idict) contains the NN classifiers for k folds for all repetitions.
+NN_DICT (result, idict) contains the NN GAT classifiers for k folds for all repetitions.
 %%%% ¡settings!
 'NNClassifierGAT'
 %%%% ¡default!
@@ -39,7 +39,7 @@ value = nn_dict;
 pr = PPNNCrossValidation_NNDict('EL', nncv, 'PROP', NNClassifierGATCrossValidation.NN_DICT, varargin{:});
 
 %%% ¡prop!
-NNE_DICT (result, idict) contains the NN evaluators for k folds for all repetitions.
+NNE_DICT (result, idict) contains the NN GAY evaluators for k folds for all repetitions.
 %%%% ¡settings!
 'NNClassifierGATEvaluator'
 %%%% ¡default!
@@ -67,7 +67,7 @@ value = nne_dict;
 pr = PPNNCrossValidation_NNDict('EL', nncv, 'PROP', NNClassifierGATCrossValidation.NNE_DICT, varargin{:});
 
 %%% ¡prop!
-FEATURE_MAP (result, cell) is a heat map obtained with feature selection analysis and the AUC value.
+FEATURE_MAP (result, cell) is heat maps obtained with the attention from the NN GAT.
 %%%% ¡calculate!
 nne_dict = nncv.memorize('NNE_DICT');
 heat_map = {};
@@ -78,7 +78,6 @@ if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('AUC')) && 
     end
     for i = 1:1:nne_dict.length()
         feature_map = nne_dict.getItem(i).get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('FEATURE_MASK');
-        auc_val = nne_dict.getItem(i).get('AUC');
         heat_map = cellfun(@(x, y) x + y, heat_map, feature_map, 'UniformOutput', false);
     end
     heat_map = cellfun(@(x) x / nne_dict.length(), heat_map, 'UniformOutput', false);

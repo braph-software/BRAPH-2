@@ -127,12 +127,12 @@ end
 
 %% ¡methods!
 function [inputs, num_features] = reconstruct_inputs(nn, gr)
-%RECONSTRUCT_INPUTS reconstructs the inputs for NN
-%
-% [INPUTS, NUM_FEATURES] = RECONSTRUCT_INPUTS(NN, GR) reconstructs the
-%   inputs from NN group. According to the tyep of this fully-connected NN,
-%   this function will flatten the input into a vector for each datapoint
-%   and return the number of features for input layer as well.
+    %RECONSTRUCT_INPUTS reconstructs the inputs for NN
+    %
+    % [INPUTS, NUM_FEATURES] = RECONSTRUCT_INPUTS(NN, GR) reconstructs the
+    %   inputs from NN group. According to the tyep of this fully-connected NN,
+    %   this function will flatten the input into a vector for each datapoint
+    %   and return the number of features for input layer as well.
 
     if gr.get('SUB_DICT').length() == 0
         inputs = [];
@@ -152,11 +152,11 @@ function [inputs, num_features] = reconstruct_inputs(nn, gr)
     end
 end
 function [targets, classes] = reconstruct_targets(nn, gr)
-%RECONSTRUCT_TARGETS reconstructs the targets for NN
-%
-% [TARGETS, CLASSES] = RECONSTRUCT_TARGETS(NN, GR) reconstructs the targets
-%  from NN group, by concatenating the target of NN Subjects.
-%  CLASSES is the categories name of the unique targets.
+    %RECONSTRUCT_TARGETS reconstructs the targets for NN
+    %
+    % [TARGETS, CLASSES] = RECONSTRUCT_TARGETS(NN, GR) reconstructs the targets
+    %  from NN group, by concatenating the target of NN Subjects.
+    %  CLASSES is the categories name of the unique targets.
 
     if gr.get('SUB_DICT').length() == 0
         targets = [];

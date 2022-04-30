@@ -27,17 +27,20 @@ else
     gr = nne.get('GR');
     [mbq, ds, numFeatures, numClasses] = nn.reconstruct_dataset(gr);
     net = nn.get('MODEL');
+    parameters = net;
+    specified_numHeads = nn.get('ATTENTION_HEAD');
+    numHeads = struct;
+    for i = 1:1:length(specified_numHeads)
+        currentAttention = "attn" + num2str(i);
+        numHeads.(currentAttention) = specified_numHeads(i);
+    end
     if isa(net, 'NoValue') || ~BRAPH2.installed('NN', 'msgbox')
         predictions = zeros(gr.get('SUB_DICT').length(), 2);
     else
-        numHeads = struct;
-        numHeads.attn1 = 3;
-        numHeads.attn2 = 3;
-        numHeads.attn3 = 5;
         [predictions, attentionScores] = nn.modelPredictions(net, ds, numHeads);
         predictions = double(extractdata(gather(predictions)));
-        attention3Scores = double(gather(extractdata(attentionScores.attn3)));
-        attention3Scores = squeeze(num2cell(attention3Scores, [1 2]));
+        attentionLastScores = double(gather(extractdata(attentionScores.(currentAttention))));
+        attentionLastScores = squeeze(num2cell(attentionLastScores, [1 2]));
     end
 
     gr_pred = NNGroup( ...
@@ -57,7 +60,7 @@ else
     for i = 1:1:length(subs)
         sub = subs{i}.deepclone();
         sub.set('PREDICTION', {predictions(i, :)});
-        sub.set('FEATURE_MASK', attention3Scores);
+        sub.set('FEATURE_MASK', attentionLastScores);
         sub_dict.add(sub);
     end
     gr_pred.set('SUB_DICT', sub_dict);

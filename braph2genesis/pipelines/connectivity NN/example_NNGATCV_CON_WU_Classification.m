@@ -1,5 +1,5 @@
-%% EXAMPLE_NNGATCV_CON_WU_CLASSIFICATION_ADJACENCYMATRIX
-% Script example pipeline for GNN classification
+%% EXAMPLE_NNGATCV_CON_WU_CLASSIFICATION
+% Script example pipeline for GAT NN classification
 
 clear variables %#ok<*NASGU>
 
