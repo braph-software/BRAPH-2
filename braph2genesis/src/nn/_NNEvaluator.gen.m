@@ -36,7 +36,7 @@ pr = PPNNData_GR_NN('EL', nne, 'PROP', NNEvaluator.GR_PREDICTION, varargin{:});
 %%% ¡prop!
 FEATURE_MAP (result, cell) is a feature map obtained with feature selection analysis.
 %%%% ¡calculate!
-sub_dict = nne.get('GR').get('SUB_DICT');
+sub_dict = nne.get('GR_PREDICTION').get('SUB_DICT');
 if sub_dict.length() == 0
     value = {};
 else

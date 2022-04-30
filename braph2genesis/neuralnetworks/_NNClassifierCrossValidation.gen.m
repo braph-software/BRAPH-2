@@ -247,7 +247,6 @@ else
     % get ground truth
     nn = nncv.get('NN_DICT').getItem(1);
     gr = nncv.get('GR_PREDICTION');
-    [inputs, ~] = nn.reconstruct_inputs(gr);
     [targets, classes] = nn.reconstruct_targets(gr);
     % calculate the confusion matrix
 	[cm, order] = confusionmat(targets(2, :), double(pred(2, :)));
