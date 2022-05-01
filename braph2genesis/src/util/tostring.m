@@ -35,6 +35,10 @@ elseif ischar(value) && isempty(value) % empty string
     str = '''''';
 else  % char arrays
     if size(value, 1) == 1 % single line char array
+        if isstruct(value)
+            value = fieldnames(value);
+            value = strcat(value{:});
+        end
         str = ['''' num2str(value) ''''];
     else % multiline char array
         str = '';
