@@ -318,7 +318,6 @@ end
 %%%% ¡gui!
 pr = PPNNClassifierCrossValidation_AUC('EL', nncv, 'PROP', NNClassifierCrossValidation.AUC, varargin{:});
 
-
 %%% ¡prop!
 AUC_CIU (result, scalar) is the upper boundary of 95% confident internal for AUC.
 %%%% ¡calculate!

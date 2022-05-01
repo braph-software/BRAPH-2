@@ -12,6 +12,11 @@ contributing maps will be calculated across folds and repetitions.
 %% ¡props_update!
 
 %%% ¡prop!
+FEATURE_MASK (data, cell) is a given mask or a percentile to select relevant features.
+%%%% ¡default!
+num2cell(0.0)
+
+%%% ¡prop!
 NN_DICT (result, idict) contains the NN GAT classifiers for k folds for all repetitions.
 %%%% ¡settings!
 'NNClassifierGAT'
@@ -27,7 +32,7 @@ if nncv.memorize('NNDS_DICT').length() > 0
         nn = NNClassifierGAT( ...
                 'ID', ['NN model cooperated with ', nnds.get('ID')], ...
                 'GR', gr_train, ...
-                'PLOT_TRAINING', false ...
+                'PLOT_TRAINING', true ...
                 );
             
         nn_dict.add(nn)
@@ -76,6 +81,7 @@ if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('AUC')) && 
     for i = 1:1:length(tmp_map)
         heat_map{i} = zeros(size(tmp_map{i}));
     end
+    heat_map = heat_map';
     for i = 1:1:nne_dict.length()
         feature_map = nne_dict.getItem(i).get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('FEATURE_MASK');
         heat_map = cellfun(@(x, y) x + y, heat_map, feature_map, 'UniformOutput', false);

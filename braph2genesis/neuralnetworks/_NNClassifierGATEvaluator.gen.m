@@ -61,6 +61,7 @@ else
         sub = subs{i}.deepclone();
         sub.set('PREDICTION', {predictions(i, :)});
         sub.set('FEATURE_MASK', attentionLastScores);
+        sub.set('BA', subs{i}.get('BA'));
         sub_dict.add(sub);
     end
     gr_pred.set('SUB_DICT', sub_dict);

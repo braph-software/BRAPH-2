@@ -103,6 +103,7 @@ else
     for i = 1:1:length(subs)
         sub = subs{i}.deepclone();
         sub.set('PREDICTION', {predictions(i)});
+        sub.set('BA', subs{i}.get('BA'));
         sub_dict.add(sub);
     end
     nn_gr_pred.set('SUB_DICT', sub_dict);

@@ -84,7 +84,8 @@ function h_panel = draw(pr, varargin)
             w = f_ba_w * 1.61;
 
             pr.h = figure('UNITS', 'normalized', 'POSITION', [x/screen_w y/screen_h w/screen_w h/screen_h]);
-            
+            tabgroup = uitabgroup(pr.h);
+
             tiledlayout("flow")
             symbolsCount = cellfun(@(x) x.get('ID'), gr.get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').getItems(), 'UniformOutput', false);
             for i = 1:length(map)
@@ -93,7 +94,9 @@ function h_panel = draw(pr, varargin)
                 else
                     header = num2str(i);
                 end
-                h = heatmap(symbolsCount, symbolsCount, map{i}, 'ColorScaling', "scaledrows", 'Title', "Map " + header);
+                tab(i) = uitab(tabgroup, 'Title', sprintf('Map %i', i));
+                axes('Parent', tab(i)); % somewhere to plot
+                h = heatmap(symbolsCount, symbolsCount, map{i}, 'Colormap', hot,'ColorScaling', "scaledrows", 'Title', "Map " + header);
                 h.FontSize = 4;
             end
         end
@@ -341,6 +344,9 @@ function cb_bring_to_front(pr)
         set(pr.f_brain, 'Visible', 'on');
         set(pr.f_settings, 'Visible', 'on');
     end
+    if isgraphics(pr.h)
+        set(pr.h, 'Visible', 'on');
+    end
 end
 function cb_hide(pr)
     %CB_HIDE hides the brain atlas figure and its settings figure.
@@ -356,6 +362,9 @@ function cb_hide(pr)
         set(pr.f_brain, 'Visible', 'off');
         set(pr.f_settings, 'Visible', 'off');
     end
+    if isgraphics(pr.h)
+        set(pr.h, 'Visible', 'off');
+    end
 end
 function cb_close(pr)
     %CB_CLOSE closes the figure.
@@ -368,5 +377,8 @@ function cb_close(pr)
 
     if isgraphics(pr.f_brain)
         delete(pr.f_brain);
+    end
+    if isgraphics(pr.h)
+        delete(pr.h);
     end
 end

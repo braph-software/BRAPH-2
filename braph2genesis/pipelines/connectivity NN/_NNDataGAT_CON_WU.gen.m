@@ -1,27 +1,26 @@
 %% ¡header!
-NNData_CON_WU < NNData (nnd, data for neural network) produces a dataset to train or test a neural netowrk model for connectivity data. 
+NNDataGAT_CON_WU < NNData (nnd, data for neural network) produces a dataset to train or test a graph attention netowrk model for connectivity data. 
 
 %% ¡description!
 This NN data generates a group of NN subjects, each of which contains the 
-input as WU adjacency matrices or graph measures from connectivity data. 
-The generated NN group can be used to train or test a neural network model.
+input as WU adjacency matrices and graph measures from connectivity data. 
+The generated NN group can be used to train or test a graph attetion network model.
 
 %% ¡props_update!
 
 %%% ¡prop!
 INPUT_TYPE (data, option) is the input type for training or testing the NN.
 %%%% ¡settings!
-{'adjacency_matrices' 'graph_measures'}
+{'graph_measures'}
 
 %%% ¡prop!
-GR (data, item) is a group of subjects defined as SubjectCON class.
+MEASURES (data, classlist) is the graph measures as input to NN.
+%%%% ¡settings!
+'Measure'
 %%%% ¡default!
-Group('SUB_CLASS', 'SubjectCON')
-
-%%% ¡prop!
-G (data, item) is the graph for calculating the graph measures.
-%%%% ¡default!
-GraphWU()
+{'Degree'}
+%%%% ¡gui!
+pr = PPNNDataGAT_Measures('EL', nnd, 'PROP', NNDataGAT_CON_WU.MEASURES, varargin{:});
 
 %%% ¡prop!
 GR_NN (result, item) is a group of NN subjects.
@@ -60,30 +59,9 @@ for i = 1:1:gr.get('SUB_DICT').length()
         'BRAINATLAS', atlas, ...
         'B', Callback('EL', sub, 'TAG', 'CON') ...
         );
-
-    if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
-        input = g.get('A');
-        input_label = {'GraphWU'};
-
-    elseif string(nnd.get('INPUT_TYPE')) == "graph_measures"
-        input_nodal = [];
-        input_binodal = [];
-        input_global = [];
-        mlist = nnd.get('MEASURES');
-        input_label = mlist;
-        for j = 1:length(mlist)
-            g.get('M_DICT').add(m);
-            if Measure.is_nodal(mlist{j})
-                input_nodal = [input_nodal cell2mat(g.getMeasure(mlist{j}).get('M'))];
-            elseif Measure.is_global(mlist{j})
-                input_global = [input_global cell2mat(g.getMeasure(mlist{j}).get('M'))];
-            else
-                input_binodal = [input_binodal cell2mat(g.getMeasure(mlist{j}).get('M'))];
-            end
-        end
-        input = {input_global input_nodal input_binodal};
-    end
-
+    
+    input_label = {'GraphWU'};
+    
     nn_sub = NNSubject( ...
         'ID', [sub.get('ID') ' in ' gr.get('ID')], ...
         'BA', atlas, ...
@@ -91,7 +69,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
         'sex', sub.get('sex'), ...
         'G', g, ...
         'MEASURES', nnd.get('MEASURES'), ...
-        'INPUT', input, ...
+        'INPUT', g.get('A'), ...
         'INPUT_LABEL', input_label, ...
         'TARGET_NAME', nnd.get('TARGET_NAME') ...
         );
@@ -112,28 +90,10 @@ value = nn_gr;
 %%%% ¡name!
 Example 1
 %%%% ¡code!
-example_NN_CON_WU_Regression_AdjacencyMatrix
+example_NNGAT_CON_WU_Classification
 
 %%% ¡test!
 %%%% ¡name!
 Example 2
 %%%% ¡code!
-example_NN_CON_WU_Classification_AdjacencyMatrix
-
-%%% ¡test!
-%%%% ¡name!
-Example 3
-%%%% ¡code!
-example_NN_CON_WU_Classification_GraphMeasures
-
-%%% ¡test!
-%%%% ¡name!
-Example 4
-%%%% ¡code!
-example_NNCV_CON_WU_Classification_AdjacencyMatrix
-
-%%% ¡test!
-%%%% ¡name!
-Example 5
-%%%% ¡code!
-example_NNCV_CON_WU_Regression_GraphMeasures
+example_NNGATCV_CON_WU_Classification

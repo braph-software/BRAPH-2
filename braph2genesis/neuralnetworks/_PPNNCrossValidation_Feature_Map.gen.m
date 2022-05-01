@@ -18,6 +18,9 @@ table_value_cell
 plot_brain_btn
 f_brain
 f_settings
+c_btn
+d_btn
+h
 
 %% ¡methods!
 function h_panel = draw(pr, varargin)
@@ -53,6 +56,53 @@ function h_panel = draw(pr, varargin)
         pr.update()
     end
     
+    pr.get_buttons();
+    set(pr.c_btn, 'Callback', {@cb_button_mod_calc})
+
+    function cb_button_mod_calc(~, ~)
+
+        el = pr.get('EL');
+        gr = el.get('GR_PREDICTION');
+        map = el.get('FEATURE_MAP');
+        if gr.get('SUB_DICT').length > 0 && ~isempty(map) && size(map{1}, 1) == size(map{1}, 2)
+            pr.cb_button_calc()
+
+            f_ba = ancestor(pr.p, 'Figure');
+            f_ba_x = Plot.x0(f_ba, 'pixels');
+            f_ba_y = Plot.y0(f_ba, 'pixels');
+            f_ba_w = Plot.w(f_ba, 'pixels');
+            f_ba_h = Plot.h(f_ba, 'pixels');
+
+            screen_x = Plot.x0(0, 'pixels');
+            screen_y = Plot.y0(0, 'pixels');
+            screen_w = Plot.w(0, 'pixels');
+            screen_h = Plot.h(0, 'pixels');
+
+            % golden ratio is defined as a+b/a = a/b = phi. phi = 1.61
+            x = f_ba_x + f_ba_w;
+            h = f_ba_h / 1.61;
+            y = f_ba_y + f_ba_h - h;
+            w = f_ba_w * 1.61;
+
+            pr.h = figure('UNITS', 'normalized', 'POSITION', [x/screen_w y/screen_h w/screen_w h/screen_h]);
+            tabgroup = uitabgroup(pr.h);
+
+            tiledlayout("flow")
+            symbolsCount = cellfun(@(x) x.get('ID'), gr.get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').getItems(), 'UniformOutput', false);
+            for i = 1:length(map)
+                if i == 1
+                    header = "";
+                else
+                    header = num2str(i);
+                end
+                tab(i) = uitab(tabgroup, 'Title', sprintf('Map %i', i));
+                axes('Parent', tab(i)); % somewhere to plot
+                h = heatmap(symbolsCount, symbolsCount, map{i}, 'Colormap', hot,'ColorScaling', "scaledrows", 'Title', "Map " + header);
+                h.FontSize = 4;
+            end
+        end
+    end
+    
     % output
     if nargout > 0
         h_panel = pr.p;
@@ -66,6 +116,7 @@ function update(pr)
     % See also draw, redraw, refresh, PlotElement.
     
     update@PlotProp(pr)
+    pr.get_buttons();
     el = pr.get('EL');
     prop = pr.get('PROP');
     
@@ -273,6 +324,9 @@ function cb_bring_to_front(pr)
         set(pr.f_brain, 'Visible', 'on');
         set(pr.f_settings, 'Visible', 'on');
     end
+    if isgraphics(pr.h)
+        set(pr.h, 'Visible', 'on');
+    end
 end
 function cb_hide(pr)
     %CB_HIDE hides the brain atlas figure and its settings figure.
@@ -288,6 +342,9 @@ function cb_hide(pr)
         set(pr.f_brain, 'Visible', 'off');
         set(pr.f_settings, 'Visible', 'off');
     end
+    if isgraphics(pr.h)
+        set(pr.h, 'Visible', 'off');
+    end
 end
 function cb_close(pr)
     %CB_CLOSE closes the figure.
@@ -300,5 +357,29 @@ function cb_close(pr)
 
     if isgraphics(pr.f_brain)
         delete(pr.f_brain);
+    end
+    if isgraphics(pr.h)
+        delete(pr.h);
+    end
+end
+function get_buttons(pr)
+    % GET_BUTTON_CONDITION returns the calculate button state.
+    %
+    % STATE = GET_BUTTON_CONDITION(PR) returns the calculate button state.
+    %
+    % see also is_measure_calculated.
+
+    plot_prop_children = get(pr.p, 'Children');    
+    for i = 1:length(plot_prop_children)
+        pp_c = plot_prop_children(i);
+        if check_graphics(pp_c, 'pushbutton') && isequal(pp_c.Tag, 'button_calc')
+            pr.c_btn = pp_c;
+        end
+        if check_graphics(pp_c, 'pushbutton') && isequal(pp_c.Tag, 'button_del')
+            if isgraphics(pr.h)
+                close(pr.h);
+            end
+            pr.d_btn = pp_c;
+        end
     end
 end

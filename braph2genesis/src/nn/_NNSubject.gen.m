@@ -15,6 +15,11 @@ G (data, item) is a graph obtained from the data of the subject.
 'Graph'
 
 %%% ¡prop!
+MEASURES (data, classlist) is the graph measures as input to NN.
+%%%% ¡settings!
+'Measure'
+
+%%% ¡prop!
 INPUT (data, cell) is an input obtained from the data of subject for the neural network analysis.
 %%%% ¡gui!
 pr = PPNNSubject_Input('EL', sub, 'PROP', NNSubject.INPUT, varargin{:});

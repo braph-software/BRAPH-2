@@ -15,7 +15,7 @@ BATCH (data, scalar) is the size of the mini-batch to use for each training iter
 %%% ¡prop!
 EPOCHS (data, scalar) is a maximum number of epochs.
 %%%% ¡default!
-400
+40
 
 %%% ¡prop!
 HIDDEN_FEATURE_MAPS (data, scalar) is the number of hidden feature maps.
@@ -38,7 +38,7 @@ pr = PlotPropSmartVector('EL', nn, 'PROP', NNClassifierGAT.ATTENTION_HEAD, 'MAX'
 %%% ¡prop!
 PLOT_TRAINING (metadata, logical) is an option for the plot of training-progress.
 %%%% ¡default!
-false
+true
 
 %% ¡props_update!
 
@@ -93,7 +93,10 @@ if BRAPH2.installed('NN', 'warning')
 
         % Initialize the training progress plot.
         if nn.get('PLOT_TRAINING')
-            figure
+            h = get(groot,'CurrentFigure');
+            if ~isequal(h.Name, 'Training progress')
+                h = figure;
+            end
         end
         C = colororder;
         lineLossTrain = animatedline('Color', C(2, :));
@@ -148,6 +151,9 @@ if BRAPH2.installed('NN', 'warning')
 else
     value = NoValue();
 end
+%%%% ¡gui!
+pr = PPNNClassifierGAT_Model('EL', nn, 'PROP', nn.MODEL, varargin{:});
+
 
 %% ¡methods!
 function [mbq, ds, numFeatures, numClasses] = reconstruct_dataset(nn, gr)
@@ -167,14 +173,22 @@ function [mbq, ds, numFeatures, numClasses] = reconstruct_dataset(nn, gr)
         features = [];
         targets = gr.get('TARGETS');
         labels = cellfun(@(x) cell2mat(x'), targets, 'UniformOutput', false);
+        mlist = gr.get('SUB_DICT').getItem(1).get('MEASURES');
+        if isempty(mlist)
+            mlist = Graph.getCompatibleMeasureList(gr.get('SUB_DICT').getItem(1).get('G'));
+        end
+        idx_nodal = cell2mat(cellfun(@(x) Measure.is_nodal(x), mlist, 'UniformOutput', false));
+        mlist = mlist(idx_nodal);
         for i = 1:1:gr.get('SUB_DICT').length()
             sub = gr.get('SUB_DICT').getItem(i);
             adjacency_ind = sub.get('G').get('A');
             adjacency_ind = cell2mat(adjacency_ind);
             adjacency(:, :, i) = adjacency_ind;
-            features_ind = sub.get('G').getMeasure('Degree').get('M');
-            features_ind = cell2mat(features_ind);
-            features(:, 1, i) = features_ind;
+            for j = 1:1:length(mlist)
+                features_ind = sub.get('G').getMeasure(mlist{j}).get('M');
+                features_ind = cell2mat(features_ind);
+                features(:, j, i) = features_ind;
+            end
         end
         
         numFeatures = size(features, 2);
