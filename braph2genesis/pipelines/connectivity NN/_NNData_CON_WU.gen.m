@@ -72,7 +72,6 @@ for i = 1:1:gr.get('SUB_DICT').length()
         mlist = nnd.get('MEASURES');
         input_label = mlist;
         for j = 1:length(mlist)
-            g.get('M_DICT').add(mlist{j});
             if Measure.is_nodal(mlist{j})
                 input_nodal = [input_nodal cell2mat(g.getMeasure(mlist{j}).get('M'))];
             elseif Measure.is_global(mlist{j})
