@@ -94,7 +94,7 @@ if BRAPH2.installed('NN', 'warning')
         % Initialize the training progress plot.
         if nn.get('PLOT_TRAINING')
             h = get(groot,'CurrentFigure');
-            if ~any(isgraphics(h)) && ~isequal(h.Name, 'Training progress')
+            if ~any(isgraphics(h)) || ~isequal(h.Name, 'Training progress')
                 h = figure;
             end
         end
