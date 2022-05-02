@@ -740,7 +740,7 @@ function cb_close(pr)
     for i = 1:length(pr.f_m)
         f_m = pr.f_m{i};
         if check_graphics(f_m, 'figure')
-            close(f_m)
+            delete(f_m)
         end
     end
     
