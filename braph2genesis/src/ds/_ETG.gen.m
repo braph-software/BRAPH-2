@@ -21,6 +21,9 @@ MODEL_DL (data, net) is a net.
 %%% ¡prop!
 MODEL_NETWORK (data, net) is a net.
 
+%%% ¡prop!
+MODEL_STRUCT (data, net) is a net.
+
 %% ¡tests!
 
 %%% ¡test!
@@ -112,16 +115,25 @@ if BRAPH2.installed('NN', 'warning') && BRAPH2.installed('ONNXCONVERTER', 'warni
     net_dag = assembleNetwork(lgraph);
     lgraph = removeLayers(lgraph, 'regressOutput');
     net_dl = dlnetwork(lgraph);
+    net_struct.attn1 = 3;
+    net_struct.attn2 = 3;
+    net_struct.attn3 = 5;
 
     etg = ETG( ...
         'MODEL_SERIES', net_series, ...
         'MODEL_DAG', net_dag, ...
         'MODEL_DL', net_dl, ...
-        'MODEL_NETWORK', network() ...
+        'MODEL_NETWORK', network(), ...
+        'MODEL_STRUCT', net_struct ...
         );
 
     [json, struct, el_list] = encodeJSON(etg);
     [etg_dec, struct_dec, el_list_dec] = Element.decodeJSON(json);
+
+    % test model with struct
+    assert(isequal(etg.get('MODEL_STRUCT'), etg_dec.get('MODEL_STRUCT')), ...
+        [BRAPH2.STR ':ETG:' BRAPH2.BUG_ERR], ...
+        'Model with struct is not being coverted correctly when exporting to JSON file.')
 
     % test the NN prediction
     img = rand(net_series.Layers(1).InputSize);
@@ -172,12 +184,16 @@ if BRAPH2.installed('NN', 'warning') && BRAPH2.installed('ONNXCONVERTER', 'warni
     net_dag = assembleNetwork(lgraph);
     lgraph = removeLayers(lgraph, 'regressOutput');
     net_dl = dlnetwork(lgraph);
+    net_struct.attn1 = 3;
+    net_struct.attn2 = 3;
+    net_struct.attn3 = 5;
 
     etg = ETG( ...
         'MODEL_SERIES', net_series, ...
         'MODEL_DAG', net_dag, ...
         'MODEL_DL', net_dl, ...
-        'MODEL_NETWORK', network() ...
+        'MODEL_NETWORK', network(), ...
+        'MODEL_STRUCT', net_struct ...
         );
 
     directory = [fileparts(which('test_braph2')) filesep 'trial_net_element_to_be_erased'];
@@ -194,6 +210,11 @@ if BRAPH2.installed('NN', 'warning') && BRAPH2.installed('ONNXCONVERTER', 'warni
     [etg_dec, build, matlab_release, matlab_release_details] = BRAPH2.load(filename);
     
     rmdir(directory, 's');
+
+    % test model with struct
+    assert(isequal(etg.get('MODEL_STRUCT'), etg_dec.get('MODEL_STRUCT')), ...
+        [BRAPH2.STR ':ETG:' BRAPH2.BUG_ERR], ...
+        'Model with struct is not being coverted correctly when exporting to b2 file.')
 
     % test the NN prediction
     img = rand(net_series.Layers(1).InputSize);

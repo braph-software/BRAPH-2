@@ -1529,6 +1529,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 
             if ~BRAPH2.installed('ONNXCONVERTER', 'warning') || isa(net, 'network') || isa(net, 'NoValue')
                 onnx_str = '';
+            elseif isstruct(net)
+                onnx_str = jsonencode(net);
             else
                 directory = [fileparts(which('test_braph2')) filesep 'trial_nn_from_matlab_to_be_erased'];
                 if ~exist(directory, 'dir')
@@ -1582,30 +1584,34 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     net = NoValue();
                 end
             else
-                directory = [fileparts(which('test_braph2')) filesep 'trial_nn_from_braph_to_be_erased'];
-                if ~exist(directory, 'dir')
-                    mkdir(directory)
-                end
-                filename = [directory filesep 'nn_from_braph_to_be_erased.onnx'];
-                onnx_str_tmp = char(onnx_str);
-                pat = ("Regression"|"Classification");
-                outputlayertype = extract(string(onnx_str_tmp(:, 1)'), pat);
-                match = ["Regression", "Classification"];
-                for i = 1:size(onnx_str_tmp, 2)
-                    onnx_str_tmp_removed(:, i) = char(erase(string(onnx_str_tmp(:, i)'), match))';
-                end
-                fileID = fopen(filename, 'w');
-                fwrite(fileID, str2double(cellstr(onnx_str_tmp_removed)));
-                fclose(fileID);
+                try isstruct(jsondecode(onnx_str));
+                    net = jsondecode(onnx_str);
+                catch
+                    directory = [fileparts(which('test_braph2')) filesep 'trial_nn_from_braph_to_be_erased'];
+                    if ~exist(directory, 'dir')
+                        mkdir(directory)
+                    end
+                    filename = [directory filesep 'nn_from_braph_to_be_erased.onnx'];
+                    onnx_str_tmp = char(onnx_str);
+                    pat = ("Regression"|"Classification");
+                    outputlayertype = extract(string(onnx_str_tmp(:, 1)'), pat);
+                    match = ["Regression", "Classification"];
+                    for i = 1:size(onnx_str_tmp, 2)
+                        onnx_str_tmp_removed(:, i) = char(erase(string(onnx_str_tmp(:, i)'), match))';
+                    end
+                    fileID = fopen(filename, 'w');
+                    fwrite(fileID, str2double(cellstr(onnx_str_tmp_removed)));
+                    fclose(fileID);
 
-                if isempty(outputlayertype)
-                    outputlayertype = "Classification";
+                    if isempty(outputlayertype)
+                        outputlayertype = "Classification";
+                    end
+                    if ~isMATLABReleaseOlderThan("R2020b")
+                        outputlayertype = lower(outputlayertype);
+                    end
+                    net = importONNXNetwork(filename, 'OutputLayerType', outputlayertype);
+                    rmdir(directory, 's');
                 end
-                if ~isMATLABReleaseOlderThan("R2020b")
-                    outputlayertype = lower(outputlayertype);
-                end
-                net = importONNXNetwork(filename, 'OutputLayerType', outputlayertype);
-                rmdir(directory, 's');
             end
             warning(w_matlab.state, w_matlab.identifier);
             warning(w_nnet.state, w_nnet.identifier);

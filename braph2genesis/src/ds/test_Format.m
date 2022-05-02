@@ -693,6 +693,12 @@ if BRAPH2.installed('NN', 'warning')
     lgraph = removeLayers(lgraph, 'classOutput');
     value{4} = dlnetwork(lgraph); % dlnetework object
 
+    % create struct with weights
+    value{5} = struct;
+    value{5}.attn1 = 3;
+    value{5}.attn2 = 3;
+    value{5}.attn3 = 5;
+
     % resume nnet warning status and clear variables
     warning(w.state, w.identifier)
     vars = {'w', 'size_x', 'size_y', 'num_channel', 'num_neuron', 'num_class', 'layers', 'vars'};
