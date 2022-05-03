@@ -204,7 +204,7 @@ function [mbq, ds, numFeatures, numClasses] = reconstruct_dataset(nn, gr)
         numGraphs = size(features, 3);
         
         for j = 1:numGraphs
-            validIdx = 1:nnz(features(:, 1, j));
+            validIdx = 1:size(features(:, 1, j), 1);
             features(validIdx, :, j) = (features(validIdx, :, j) - muX)./sqrt(sigsqX);
         end
         
@@ -306,7 +306,7 @@ function [features, adjacency, numNodes, target] = preprocessMiniBatch(nn, featu
     
     for i = 1:size(adjacencyData, 3)
         % Get the number of nodes in the current graph
-        numNodesInGraph = nnz(featureData(:, 1, i));
+        numNodesInGraph = size(featureData(:, 1, i), 1);
         numNodes = [numNodes; numNodesInGraph];
     
         % Get the indices of the actual nonzero data
@@ -346,7 +346,7 @@ function [Y, attentionScore] = modelPredictions(nn, parameters, ds, numHeads)
         featureData = data(:, 1);
         adjacencyData = data(:, 2);
         
-        [features,adjacency,numNodes] = nn.preprocessMiniBatch(featureData, adjacencyData);
+        [features, adjacency, numNodes] = nn.preprocessMiniBatch(featureData, adjacencyData);
         
         X = dlarray(features);
         

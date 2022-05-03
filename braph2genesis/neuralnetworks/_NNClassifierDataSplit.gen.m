@@ -255,8 +255,16 @@ percentile = cell2mat(nnds.get('FEATURE_MASK'));
 gr_train = nnds.memorize('GR_TRAIN');
 data = cellfun(@(x) x.get('INPUT'), gr_train.get('SUB_DICT').getItems(), 'UniformOutput', false);
 
-if nnds.get('GR_TRAIN').get('SUB_DICT').length == 0 || percentile == 0
+if nnds.get('GR_TRAIN').get('SUB_DICT').length == 0
     value = {};
+elseif percentile == 0
+    value = cell(size(data{1}));
+    num_feature_cluster = length(data{1});
+    for k = 1:1:num_feature_cluster
+        data_per_cluster = cellfun(@(v)v{k}, data, 'UniformOutput', false);
+        mask = ones(size(data_per_cluster{k}));
+        value{k} = mask;
+    end
 else
     wb = braph2waitbar(nnds.get('WAITBAR'), 0, 'Initialing feature selection on training set ...');
 
