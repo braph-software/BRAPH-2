@@ -3791,8 +3791,8 @@ default_ratio = get_default_ratio();
         
         % logo
         logo_pos = get(panel_logo, 'position');
-        h_logo = adjust * .25;
-        w_logo = adjust * .45;
+        h_logo = (adjust * 0.01) + .25;
+        w_logo = (adjust * 0.01) + .45;
         % set
         set(hContainer, 'units', 'norm', 'position', [0.62 h0_final 0.36  h_final]);
         set(pipeline_list, 'FontUnits',  'normalized', 'FontSize', 0.06);
