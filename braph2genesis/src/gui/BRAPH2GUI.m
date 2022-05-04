@@ -108,20 +108,10 @@ direction = 1;
 
 % logo
 % get dimensions
-    function logo_position = get_position()
-        x0 = Plot.x0(f, 'characters');
-        y0 = Plot.y0(f, 'characters');
-        w_f = Plot.w(f, 'characters');
-        h_f = Plot.h(f, 'characters');
-        
-        logo_position = [w_f-48 h_f-11 45 12];
-    end
-
-logo_position = get_position();
 panel_logo = uipanel( ...
     'Parent', f, ...
-    'Units', 'characters', ...
-    'Position', logo_position, ...
+    'Units', 'normalized', ...
+    'Position', [.575 .7 .45 .25], ...
     'BackgroundColor', BKGCOLOR,...
     'BorderType', 'none');
 logo = imread([fileparts(which('braph2')) filesep 'src' filesep 'util' filesep 'head_braph2.png']);
@@ -165,6 +155,7 @@ jListbox = jScrollPane.getViewport.getComponent(0);
 jListbox = handle(jListbox, 'CallbackProperties');
 set(jListbox, 'MouseMovedCallback', {@mouseMovedCallback, pipeline_list});
 descriptions = [];
+default_ratio = get_default_ratio();
 
     function cb_wf_list_box(~, ~)
         index = get(pipeline_list, 'Value');
@@ -197,9 +188,9 @@ descriptions = [];
                 current_filter = array_filter{i};
                 tmp_filter_index = cell2mat(cellfun(@(x) contains(x, current_filter), clean_pipeline_names, 'UniformOutput', false));
                 if i > 1
-                    holder = tmp_filter+tmp_filter_index;
+                    holder = holder + tmp_filter_index;
                 else
-                    tmp_filter = tmp_filter_index;
+                    holder = tmp_filter_index;
                 end
             end
             if length(array_filter) > 1
@@ -3786,11 +3777,35 @@ descriptions = [];
         
         pipeline_guis{end+1} = GUI('pe', pipe).draw();
     end
-    function update_position(~, ~)
-        logo_position = get_position();
-        set(hContainer, 'units', 'norm', 'position', [0.62 0.65 0.36 .06]);
+    function update_position(~, ~)                
+        % container 
+        current_s_units = Plot.h(0, 'pixels');
+        
+        % figure
+        current_f_units = Plot.h(f, 'pixels');
+        
+        current_ratio = current_f_units/current_s_units;  
+        adjust = default_ratio / current_ratio;
+        h_final = adjust * 0.07;
+        h0_final =  0.64 - (adjust * 0.01);
+        
+        % logo
+        logo_pos = get(panel_logo, 'position');
+        h_logo = (adjust * 0.01) + .25;
+        w_logo = .45 - (adjust * 0.02);
+        % set
+        set(hContainer, 'units', 'norm', 'position', [0.62 h0_final 0.36  h_final]);
         set(pipeline_list, 'FontUnits',  'normalized', 'FontSize', 0.06);
-        set(panel_logo, 'Position', logo_position);
+        set(panel_logo, 'position', [logo_pos(1) logo_pos(2) w_logo h_logo]);
+    end
+    function default_ratio = get_default_ratio()
+        %container 
+        default_s_units = Plot.h(0, 'pixels');
+        
+        %figure
+        default_f_units = Plot.h(f, 'pixels');
+        
+        default_ratio = default_f_units/default_s_units;  
     end
 
 % menu
