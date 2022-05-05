@@ -104,6 +104,7 @@ function h_panel = draw(pl, varargin)
 
     function cb_close_fs(~, ~) % (src, event)
         pl.cb_close_fs()
+        pl.cb_close()
     end
     
     if nargout > 0
