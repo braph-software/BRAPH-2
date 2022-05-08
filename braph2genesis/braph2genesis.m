@@ -36,6 +36,6 @@ time_end = toc(time_start);
 disp('BRAPH 2.0 is now fully compiled and ready to be used.')
 disp(['Its compilation has taken ' int2str(time_end) '.' int2str(mod(time_end, 1) * 10) 's'])
 
-braph2
+braph2(false)
 
 % test_braph2
