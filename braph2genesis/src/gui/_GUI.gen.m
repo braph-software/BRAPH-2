@@ -34,6 +34,10 @@ ID (data, string) is a few-letter code for the GUI.
 NAME (gui, string) is the name of the GUI.
 %%%% ¡default!
 BRAPH2.STR
+%%%% ¡postprocessing!
+if check_graphics(gui.f, 'figure') && ~isequal(get(gui.f, 'Name'), gui.get('NAME'))
+    set(gui.f, 'Name', gui.get('NAME'))
+end
 
 %%% ¡prop!
 POSITION (gui, rvector) is the normalized position of the GUI on the screen.
@@ -41,11 +45,19 @@ POSITION (gui, rvector) is the normalized position of the GUI on the screen.
 check = (length(value) == 4) && all(value(3:4) >= 0);
 %%%% ¡default!
 [.00 .00 .20 1.00]
+%%%% ¡postprocessing!
+if check_graphics(gui.f, 'figure') && ~isequal(get(gui.f, 'Position'), gui.get('POSITION'))
+    set(gui.f, 'Units', 'Normalized', 'Position', gui.get('POSITION'))
+end
 
 %%% ¡prop!
 BKGCOLOR (gui, color) is the GUI background color.
 %%%% ¡default!
 BRAPH2.COL_FIG
+%%%% ¡postprocessing!
+if check_graphics(gui.f, 'figure') && ~isequal(get(gui.f, 'Color'), gui.get('BKGCOLOR'))
+    set(gui.f, 'Color', gui.get('BKGCOLOR'))
+end
 
 %%% ¡prop!
 CLOSEREQ (gui, logical) determines whether to confirm close.
@@ -79,21 +91,19 @@ function f_out = draw(gui, varargin)
     if ~check_graphics(gui.f, 'figure')
         gui.f = uifigure( ...
             'Visible', 'off', ...
+            'UserData', gui, ... % handle to retrieve gui
             'Tag', 'f', ...
+            'Name', gui.get('NAME'), ...
             'Icon', 'braph2icon.png', ...
+            'Units', 'normalized', ...
+            'Position', gui.get('POSITION'), ...
+            'Color', gui.get('BKGCOLOR'), ...
             'CloseRequestFcn', {@cb_close} ...
             );
     end
     if ~isempty(varargin)
         set(gui.f, varargin{:})
     end
-    set(gui.f, ...
-        'UserData', gui, ... % handle to retrieve gui
-        'Name', gui.get('NAME'), ...
-        'Units', 'normalized', ...
-        'Position', gui.get('POSITION'), ...
-        'Color', gui.get('BKGCOLOR') ...
-        )
     
     % callback on close request
     function cb_close(~, ~)
@@ -122,6 +132,7 @@ function f_out = draw(gui, varargin)
     end
 
     % show figure
+    drawnow()
     set(gui.f, 'Visible', 'on')
     
     % output
