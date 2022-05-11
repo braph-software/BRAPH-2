@@ -163,7 +163,7 @@ function cb_hide(gui)
     % See also cb_bring_to_front, cb_close.
 
     if check_graphics(gui.f, 'figure')
-        figure(gui.f)
+        figure(gui.f, 'Visible', 'off')
     end
 end
 function cb_close(gui)
