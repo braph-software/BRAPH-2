@@ -31,24 +31,24 @@ GUIElement, GUIPlot, GUISettings, uifigure
 ID (data, string) is a few-letter code for the GUI.
 
 %%% ¡prop!
-NAME (metadata, string) is the name of the GUI.
+NAME (gui, string) is the name of the GUI.
 %%%% ¡default!
 BRAPH2.STR
 
 %%% ¡prop!
-POSITION (metadata, rvector) is the normalized position of the GUI on the screen.
+POSITION (gui, rvector) is the normalized position of the GUI on the screen.
 %%%% ¡check_prop!
 check = (length(value) == 4) && all(value(3:4) >= 0);
 %%%% ¡default!
 [.00 .00 .20 1.00]
 
 %%% ¡prop!
-BKGCOLOR (metadata, color) is the GUI background color.
+BKGCOLOR (gui, color) is the GUI background color.
 %%%% ¡default!
 BRAPH2.COL_FIG
 
 %%% ¡prop!
-CLOSEREQ (metadata, logical) determines whether to confirm close.
+CLOSEREQ (gui, logical) determines whether to confirm close.
 %%%% ¡default!
 true
 
