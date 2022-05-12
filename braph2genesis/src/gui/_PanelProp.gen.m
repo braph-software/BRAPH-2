@@ -99,23 +99,23 @@ function p_out = draw(pr, varargin)
     el = pr.get('EL');
     prop = pr.get('PROP');
 
-% % %     if ~check_graphics(pr.label_tag, 'uilabel')
-% % %         if ~isempty(pr.get('TITLE'))
-% % %             pr_string_title = pr.get('TITLE');
-% % %         else
-% % %             pr_string_title = upper(el.getPropTag(prop));
-% % %         end
-% % %         
-% % %         pr.label_tag =  uilabel( ...
-% % %             'Parent', pr.p, ...
-% % %             'Tag', 'label_tag', ...
-% % %             'Units', 'characters', ...
-% % %             'String', pr_string_title, ...
-% % %             'HorizontalAlignment', 'left', ...
-% % %             'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-% % %             'BackgroundColor', pr.get('BKGCOLOR') ...
-% % %             );
-% % %     end
+    if ~check_graphics(pr.label_tag, 'uilabel')
+        if ~isempty(pr.get('TITLE'))
+            pr_string_title = pr.get('TITLE');
+        else
+            pr_string_title = upper(el.getPropTag(prop));
+        end
+        
+        pr.label_tag =  uilabel( ...
+            'Parent', pr.p, ...
+            'Tag', 'label_tag', ...
+            'Text', pr_string_title, ...
+            'FontSize', BRAPH2.FONTSIZE, ...
+            'HorizontalAlignment', 'left', ...
+            'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+            'BackgroundColor', pr.get('BKGCOLOR') ...
+            );
+    end
 
 % % %     switch el.getPropCategory(prop)
 % % %         case Category.METADATA
@@ -179,7 +179,7 @@ function p_out = draw(pr, varargin)
         p_out = pr.p;
     end
 end
-% % % function update(pr)
+function update(pr)
 % % %     %UPDATE updates the content of the property panel and its graphical objects.
 % % %     %
 % % %     % UPDATE(PL) updates the content of the property panel and its graphical objects.
@@ -220,8 +220,8 @@ end
 % % %                 set(pr.button_del, 'Enable', 'on')
 % % %             end
 % % %     end
-% % % end
-% % % function redraw(pr, varargin)
+end
+function redraw(pr, varargin)
 % % %     %REDRAW resizes the property panel and repositions its graphical objects.
 % % %     %
 % % %     % REDRAW(PL) resizes the property panel and repositions its
@@ -242,29 +242,26 @@ end
 % % %     %  - HEIGHT=1.4 characters.
 % % %     %
 % % %     % See also draw, update, PanelElement.
-% % % 
-% % %     el = pr.get('EL');
-% % %     prop = pr.get('PROP');
-% % %     
-% % %     p = pr.p;
-% % % 
-% % %     % resizes the width (w) and height (h) of the panel
-% % %     % keeps its initial position (x0, y0) unchanged.
-% % %     x0_p = get_from_varargin(x0(p, 'characters'), 'X0', varargin);
-% % %     y0_p = get_from_varargin(y0(p, 'characters'), 'Y0', varargin);
-% % %     w_p = get_from_varargin(w(p, 'characters'), 'Width', varargin);
-% % %     h_p = get_from_varargin(1.4, 'Height', varargin);
-% % %     set(p, ...
-% % %         'Units', 'characters', ...
-% % %         'Position', [x0_p y0_p w_p h_p] ...
-% % %         )
-% % % 
-% % %     % places label_tag to the top
-% % %     set(pr.label_tag, ...
-% % %         'Units', 'characters', ...
-% % %         'Position', [0 h_p-1 w_p 1] ...
-% % %         )
-% % % 
+
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    
+    p = pr.p;
+
+    % resizes the width (w) and height (h) of the panel
+    % keeps its initial position (x0, y0) unchanged.
+    x0_p = get_from_varargin(x0(p, 'pixels'), 'X0', varargin);
+    y0_p = get_from_varargin(y0(p, 'pixels'), 'Y0', varargin);
+    w_p = get_from_varargin(w(p, 'pixels'), 'Width', varargin);
+    h_p = get_from_varargin(1.4 * BRAPH2.FONTSIZE, 'Height', varargin);
+    set(p, ...
+        'Units', 'pixels', ...
+        'Position', [x0_p y0_p w_p h_p] ...
+        )
+
+    % places label_tag to the top
+    set(pr.label_tag, 'Position', [0 h_p-BRAPH2.FONTSIZE w_p BRAPH2.FONTSIZE])
+
 % % %     % places the relevant buttons (depening on category)
 % % %     switch el.getPropCategory(prop)
 % % %         case Category.METADATA
@@ -286,7 +283,7 @@ end
 % % %                 'Position', [w_p-4 h_p-1.2 3 1] ...
 % % %                 )
 % % %     end
-% % % end
+end
 % % % function cb_button_cb(pr)
 % % %     %CB_BUTTON_CB executes callback for button callback.
 % % %     %
