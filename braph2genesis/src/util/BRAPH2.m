@@ -37,8 +37,8 @@ classdef BRAPH2
     %
     % Properties (Customizable) - BRAPH2 GUI constants:
     %  CUSTOMIZE        - returns/saves the customizable constants
-    %  FONTUNITS        - sets the units of the font
-    %  FONTSIZE         - sets the size of the font
+    %  FONTSIZE         - sets the size of the font in pixels
+    %  S                - sets the scaling factor of the graphical components
     %  COL              - official BRAPH2 color
     %  COL_FIG          - standard figure background color
     %  COL_M            - standard metadata prop background color
@@ -133,20 +133,8 @@ classdef BRAPH2
                 b2_out = b2;
             end
         end
-        function fontunits = FONTUNITS()
-            % FONTUNITS sets the units of the font.
-            %
-            % See also BRAPH2Constants.
-            
-            persistent b2
-            if isempty(b2)
-                b2 = BRAPH2.customize();
-            end
-
-            fontunits = b2.get('FONTUNITS');
-        end
         function fontsize = FONTSIZE()
-            % FONTSIZE sets the size of the font.
+            % FONTSIZE sets the size of the font in pixels.
             %
             % See also BRAPH2Constants.
             
@@ -156,6 +144,18 @@ classdef BRAPH2
             end
 
             fontsize = b2.get('FONTSIZE');
+        end
+        function s = S()
+            % S sets the scaling factor of the graphical components.
+            %
+            % See also BRAPH2Constants.
+            
+            persistent b2
+            if isempty(b2)
+                b2 = BRAPH2.customize();
+            end
+
+            s = b2.get('S');
         end
         function col = COL()
             % COL is the official BRAPH2 color.
