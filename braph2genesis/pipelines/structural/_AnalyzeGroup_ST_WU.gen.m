@@ -2,9 +2,7 @@
 AnalyzeGroup_ST_WU < AnalyzeGroup (a, graph analysis with structural data) is a graph analysis using structural data.
 
 %% ¡description!
-This graph analysis uses structural data and analyzes them using weighted undirected graphs,
-binary undirected multigraphs with fixed thresholds,
-or binary undirected multigraphs with fixed densities.
+This graph analysis uses structural data and analyzes them using weighted undirected graphs.
 
 %% ¡props!
 

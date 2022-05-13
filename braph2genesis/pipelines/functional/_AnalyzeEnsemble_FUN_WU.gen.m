@@ -2,9 +2,7 @@
 AnalyzeEnsemble_FUN_WU < AnalyzeEnsemble (a, graph analysis with functional data) is a graph analysis using functional data.
 
 %% ¡description!
-This graph analysis uses functional data and analyzes them using weighted undirected graphs,
-binary undirected multigraphs with fixed thresholds,
-or binary undirected multigraphs with fixed densities.
+This graph analysis uses functional data and analyzes them using weighted undirected graphs.
 
 %% ¡props!
 %%% ¡prop!
