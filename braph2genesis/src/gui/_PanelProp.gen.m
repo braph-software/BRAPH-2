@@ -180,37 +180,37 @@ function update(pr)
 % % %     %  to be explicitly called in children of PanelProp.
 % % %     %
 % % %     % See also draw, redraw, PanelElement.
-% % % 
-% % %     el = pr.get('EL');
-% % %     prop = pr.get('PROP');
-% % % 
-% % %     switch el.getPropCategory(prop)
-% % %         case Category.METADATA
-% % %             %
-% % % 
-% % %         case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
-% % %             value = el.getr(prop);
-% % %             if isa(value, 'Callback')
-% % %                 set(pr.button_cb, ...
-% % %                     'Tooltip', value.tostring(), ...
-% % %                     'Visible', 'on' ...
-% % %                     )
-% % %             else
-% % %                 set(pr.button_cb, ...
-% % %                     'Visible', 'off' ...
-% % %                     )
-% % %             end
-% % % 
-% % %         case Category.RESULT
-% % %             value = el.getr(prop);
-% % %             if isa(value, 'NoValue')
-% % %                 set(pr.button_calc, 'Enable', 'on')
-% % %                 set(pr.button_del, 'Enable', 'off')
-% % %             else
-% % %                 set(pr.button_calc, 'Enable', 'off')
-% % %                 set(pr.button_del, 'Enable', 'on')
-% % %             end
-% % %     end
+
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+
+    switch el.getPropCategory(prop)
+        case Category.METADATA
+            %
+
+        case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
+            value = el.getr(prop);
+            if isa(value, 'Callback')
+                set(pr.button_cb, ...
+                    'Tooltip', value.tostring(), ...
+                    'Visible', 'on' ...
+                    )
+            else
+                set(pr.button_cb, ...
+                    'Visible', 'off' ...
+                    )
+            end
+
+        case Category.RESULT
+            value = el.getr(prop);
+            if isa(value, 'NoValue')
+                set(pr.button_calc, 'Enable', 'on')
+                set(pr.button_del, 'Enable', 'off')
+            else
+                set(pr.button_calc, 'Enable', 'off')
+                set(pr.button_del, 'Enable', 'on')
+            end
+    end
 end
 function redraw(pr, varargin)
 % % %     %REDRAW resizes the property panel and repositions its graphical objects.
@@ -320,94 +320,95 @@ end
 %%%% ¡name!
 Example
 %%% ¡code!
-% % % draws PanelProp's at once
-% % figure('Color', 'w', 'Units', 'normalized', 'Position', [0 0 1 1])
-% % et1 = ETA();
-% % for category = 1:1:Element.getCategoryNumber() + 1
-% %     for format = 1:1:Element.getFormatNumber()
-% %         prop = (category - 1) * Element.getFormatNumber() + format;
-% %         prs{category, format} = PanelProp('EL', et1, 'PROP', prop);
-% %         prs{category, format}.draw( ...
-% %             'Units', 'normalized', ...
-% %             'Position', [ ...
-% %                 (category-1)/(Element.getCategoryNumber()+1) ...
-% %                 1-format/Element.getFormatNumber() ...
-% %                 .9/(Element.getCategoryNumber()+1) ...
-% %                 .9/Element.getFormatNumber() ...
-% %                 ], ...
-% %             'BackgroundColor', [format/Element.getFormatNumber() category/(Element.getCategoryNumber()+1)] * [1 .5 0; 0 .5 1] ...
-% %             )
-% %         drawnow()
-% %     end
-% % end
-% % close(gcf)
-% % 
-% % % draws PanelProp's with multiple calls to draw()
-% % figure('Color', 'w', 'Units', 'normalized', 'Position', [0 0 1 1])
-% % et2 = ETA();
-% % for category = 1:1:Element.getCategoryNumber() + 1
-% %     for format = 1:1:Element.getFormatNumber()
-% %         prop = (category - 1) * Element.getFormatNumber() + format;
-% %         prs{category, format} = PanelProp('EL', et2, 'PROP', prop);
-% %         prs{category, format}.draw()
-% %         prs{category, format}.draw('Units', 'normalized')
-% %         prs{category, format}.draw('Position', [ ...
-% %                 (category-1)/(Element.getCategoryNumber()+1) ...
-% %                 1-format/Element.getFormatNumber() ...
-% %                 .9/(Element.getCategoryNumber()+1) ...
-% %                 .9/Element.getFormatNumber() ...
-% %                 ])
-% %         prs{category, format}.draw('BackgroundColor', [format/Element.getFormatNumber() category/(Element.getCategoryNumber()+1)] * [1 .5 0; 0 .5 1])
-% %         drawnow()
-% %     end
-% % end
-% % close(gcf)
-% % 
-% % % calls redraw() to resize the property panel and reposition its text
-% % figure('Color', 'w', 'Units', 'normalized', 'Position', [0 0 1 1])
-% % drawnow() % to solve ensure the figure is stable under drawnow()
-% % et3 = ETA();
-% % for category = 1:1:Element.getCategoryNumber() + 1
-% %     for format = 1:1:Element.getFormatNumber()
-% %         prop = (category - 1) * Element.getFormatNumber() + format;
-% %         prs{category, format} = PanelProp('EL', et3, 'PROP', prop);
-% %         prs{category, format}.draw()
-% %         prs{category, format}.draw('Units', 'normalized')
-% %         prs{category, format}.draw('BackgroundColor', [format/Element.getFormatNumber() category/(Element.getCategoryNumber()+1)] * [1 .5 0; 0 .5 1])
-% % 
-% %         prs{category, format}.redraw( ...
-% %             'X0', (category - 1) / (Element.getCategoryNumber() + 1) * w(gcf, 'characters'), ...
-% %             'Y0', (1 - format / Element.getFormatNumber()) * h(gcf, 'characters'), ...
-% %             'Width', .9 / (Element.getCategoryNumber() + 1) * w(gcf, 'characters'), ...
-% %             'Height', .9 / Element.getFormatNumber() * h(gcf, 'characters') ...
-% %             )
-% %         drawnow()
-% %     end
-% % end
-% % close(gcf)
-% % 
-% % % calls update() and redraw()
-% % % note that it doesn't work because it needs to be used with PanelElement() and GUI()
-% % figure('Color', 'w', 'Units', 'normalized', 'Position', [0 0 1 1])
-% % drawnow() % to solve ensure the figure is stable under drawnow()
-% % et3 = ETA();
-% % for category = 1:1:Element.getCategoryNumber() + 1
-% %     for format = 1:1:Element.getFormatNumber()
-% %         prop = (category - 1) * Element.getFormatNumber() + format;
-% %         prs{category, format} = PanelProp('EL', et3, 'PROP', prop);
-% %         prs{category, format}.draw()
-% %         prs{category, format}.draw('Units', 'normalized')
-% %         prs{category, format}.draw('BackgroundColor', [format/Element.getFormatNumber() category/(Element.getCategoryNumber()+1)] * [1 .5 0; 0 .5 1])
-% % 
-% %         prs{category, format}.update()
-% %         
-% %         prs{category, format}.redraw( ...
-% %             'X0', (category - 1) / (Element.getCategoryNumber() + 1) * Panel.w(gcf, 'characters'), ...
-% %             'Y0', (1 - format / Element.getFormatNumber()) * Panel.h(gcf, 'characters'), ...
-% %             'Width', .9 / (Element.getCategoryNumber() + 1) * Panel.w(gcf, 'characters'), ...
-% %             'Height', .9 / Element.getFormatNumber() * Panel.h(gcf, 'characters') ...
-% %             )
-% %         drawnow()
-% %     end
-% % end
-% % close(gcf)
+% draws PanelProp's at once
+fig1 = uifigure('Color', 'w', 'Units', 'normalized', 'Position', [0 0 1 1]);
+et1 = ETA();
+for category = 1:1:Element.getCategoryNumber() + 1
+    for format = 1:1:Element.getFormatNumber()
+        prop = (category - 1) * Element.getFormatNumber() + format;
+        prs{category, format} = PanelProp('EL', et1, 'PROP', prop);
+        prs{category, format}.draw( ...
+            'Parent', fig1, ...
+            'Units', 'normalized', ...
+            'Position', [ ...
+                (category-1)/(Element.getCategoryNumber()+1) ...
+                1-format/Element.getFormatNumber() ...
+                .9/(Element.getCategoryNumber()+1) ...
+                .9/Element.getFormatNumber() ...
+                ], ...
+            'BackgroundColor', [format/Element.getFormatNumber() category/(Element.getCategoryNumber()+1)] * [1 .5 0; 0 .5 1] ...
+            )
+        drawnow()
+    end
+end
+close(fig1)
+
+% draws PanelProp's with multiple calls to draw()
+fig2 = uifigure('Color', 'w', 'Units', 'normalized', 'Position', [0 0 1 1]);
+et2 = ETA();
+for category = 1:1:Element.getCategoryNumber() + 1
+    for format = 1:1:Element.getFormatNumber()
+        prop = (category - 1) * Element.getFormatNumber() + format;
+        prs{category, format} = PanelProp('EL', et2, 'PROP', prop);
+        prs{category, format}.draw('Parent', fig2)
+        prs{category, format}.draw('Units', 'normalized')
+        prs{category, format}.draw('Position', [ ...
+                (category-1)/(Element.getCategoryNumber()+1) ...
+                1-format/Element.getFormatNumber() ...
+                .9/(Element.getCategoryNumber()+1) ...
+                .9/Element.getFormatNumber() ...
+                ])
+        prs{category, format}.draw('BackgroundColor', [format/Element.getFormatNumber() category/(Element.getCategoryNumber()+1)] * [1 .5 0; 0 .5 1])
+        drawnow()
+    end
+end
+close(fig2)
+
+% calls redraw() to resize the property panel and reposition its text
+fig3 = uifigure('Color', 'w', 'Units', 'normalized', 'Position', [0 0 1 1]);
+drawnow() % to ensure the figure is stable under drawnow()
+et3 = ETA();
+for category = 1:1:Element.getCategoryNumber() + 1
+    for format = 1:1:Element.getFormatNumber()
+        prop = (category - 1) * Element.getFormatNumber() + format;
+        prs{category, format} = PanelProp('EL', et3, 'PROP', prop);
+        prs{category, format}.draw('Parent', fig3)
+        prs{category, format}.draw('Units', 'normalized')
+        prs{category, format}.draw('BackgroundColor', [format/Element.getFormatNumber() category/(Element.getCategoryNumber()+1)] * [1 .5 0; 0 .5 1])
+
+        prs{category, format}.redraw( ...
+            'X0', (category - 1) / (Element.getCategoryNumber() + 1) * w(fig3, 'pixels'), ...
+            'Y0', (1 - format / Element.getFormatNumber()) * h(fig3, 'pixels'), ...
+            'Width', .9 / (Element.getCategoryNumber() + 1) * w(fig3, 'pixels'), ...
+            'Height', .9 / Element.getFormatNumber() * h(fig3, 'pixels') ...
+            )
+        drawnow()
+    end
+end
+close(fig3)
+
+% calls update() and redraw()
+% note that it doesn't work because it needs to be used with PanelElement() and GUI()
+fig4 = uifigure('Color', 'w', 'Units', 'normalized', 'Position', [0 0 1 1]);
+drawnow() % to ensure the figure is stable under drawnow()
+et3 = ETA();
+for category = 1:1:Element.getCategoryNumber() + 1
+    for format = 1:1:Element.getFormatNumber()
+        prop = (category - 1) * Element.getFormatNumber() + format;
+        prs{category, format} = PanelProp('EL', et3, 'PROP', prop);
+        prs{category, format}.draw('Parent', fig4)
+        prs{category, format}.draw('Units', 'normalized')
+        prs{category, format}.draw('BackgroundColor', [format/Element.getFormatNumber() category/(Element.getCategoryNumber()+1)] * [1 .5 0; 0 .5 1])
+
+       prs{category, format}.update()
+        
+        prs{category, format}.redraw( ...
+            'X0', (category - 1) / (Element.getCategoryNumber() + 1) * w(fig4, 'pixels'), ...
+            'Y0', (1 - format / Element.getFormatNumber()) * h(fig4, 'pixels'), ...
+            'Width', .9 / (Element.getCategoryNumber() + 1) * w(fig4, 'pixels'), ...
+            'Height', .9 / Element.getFormatNumber() * h(fig4, 'pixels') ...
+            )
+        drawnow()
+    end
+end
+close(fig4)
