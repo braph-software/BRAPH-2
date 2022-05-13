@@ -2,13 +2,13 @@
 PanelProp < Panel (pr, panel property) is a panel of a property.
 
 %%% ¡description!
-% % % PanelProp panels a property of an element in a panel. 
-% % %  It contains a text with the prop tag and a tooltip with the prop description.
-% % %  For parameter and data callback, it also features a callback button.
-% % %  For results, it features calculate and delete buttons.
-% % %  It typically is employed in one of its derived forms, 
-% % %  where also the contents of the element property are shown.
-% % % 
+PanelProp plots a property of an element in a panel. 
+ It contains a text with the prop tag and a tooltip with the prop description.
+ For parameter, data, figure and gui callbacks, it also features a callback button.
+ For results, it features calculate and delete buttons.
+ It typically is employed in one of its derived forms, 
+ where also the contents of the element property are shown.
+
 % % % Important notes:
 % % % 1. PanelProp is intimately connected with GUI (cb_button_cb) and 
 % % %  PanelElement (update, redraw).
@@ -41,10 +41,6 @@ PanelProp < Panel (pr, panel property) is a panel of a property.
 % % % REDRAW - Resizes the panel and repositions its graphical objcts.
 % % %   Typically, it does not need to be called explicitly.
 % % %   It is internally called by PanelElement when needed.
-% % % 
-% % % % % % REFRESH - Updates and resizes the panel and also its parent and siblings.
-% % % % % %   Typically, it does not need to be called explicitly.
-% % % % % %   It is internally called by PanelElement when needed.
 
 %%% ¡seealso!
 GUI, PanelElement
