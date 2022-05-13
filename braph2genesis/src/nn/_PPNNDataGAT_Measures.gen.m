@@ -43,13 +43,18 @@ function h_panel = draw(pr, varargin)
     % See also update, redraw, refresh, uipanel.
 
     pr.p = draw@PlotProp(pr, varargin{:});
-
+    
     el = pr.get('EL');
     prop = pr.get('PROP');
-
+    pr.graph = el.get('G');
+    
     if  isempty(pr.measure_tbl) || ~check_graphics(pr.measure_tbl, 'uitable')
-
-        pr.mlist = [];
+        if isempty(pr.mlist)
+            pr.mlist = Graph.getCompatibleMeasureList(pr.graph);
+        end
+        idx_nodal = cell2mat(cellfun(@(x) Measure.is_nodal(x), pr.mlist, 'UniformOutput', false));
+        pr.mlist = pr.mlist(idx_nodal);
+        pr.selected = find(ismember(string(pr.mlist), string(el.get('MEASURES'))));<<<<<<<<<<<<<<
         pr.measure_tbl = uitable( ...
             'Parent', pr.p, ...
             'Visible', 'on', ...

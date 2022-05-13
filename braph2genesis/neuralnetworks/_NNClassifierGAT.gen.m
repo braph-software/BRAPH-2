@@ -184,11 +184,14 @@ function [mbq, ds, numFeatures, numClasses] = reconstruct_dataset(nn, gr)
             adjacency_ind = sub.get('G').get('A');
             adjacency_ind = cell2mat(adjacency_ind);
             adjacency(:, :, i) = adjacency_ind;
-            for j = 1:1:length(mlist)
-                features_ind = sub.get('G').getMeasure(mlist{j}).get('M');
-                features_ind = cell2mat(features_ind);
-                features(:, j, i) = features_ind;
-            end
+%             for j = 1:1:length(mlist)
+%                 features_ind = sub.get('G').getMeasure(mlist{j}).get('M');
+%                 features_ind = cell2mat(features_ind);
+%                 features(:, j, i) = features_ind;
+%             end
+            features_ind = sub.get('INPUT');
+            features_ind = cell2mat(features_ind);
+            features(:, :, i) = features_ind;
         end
         
         numFeatures = size(features, 2);
