@@ -56,14 +56,6 @@ PR_DICT (result, idict) is a dictionary of the property plots.
 %%%% ¡calculate!
 el = pe.get('EL');
 
-% % % pr_list = cell(1, el.getPropNumber());
-% % % for prop = 1:1:el.getPropNumber()
-% % %     pr_list{prop} = el.getPanelProp(prop, ...
-% % %         'ID', el.getPropTag(prop), ...
-% % %         'TITLE', el.getPropTag(prop), ...
-% % %         'BKGCOLOR', rand(1, 3));
-% % % end
-
 [order, title, visible] = load_layout(el);
 number_visible_prop = sum(visible);
 
@@ -113,6 +105,11 @@ DH (gui, markersize) is the margin along the height in pixels.
 WSLIDER (gui, markersize) is the slider width in pixels.
 %%%% ¡default!
 12
+
+%%% ¡prop!
+MIN_WIDTH (gui, markersize) is the minimal panel width in pixels.
+%%%% ¡default!
+300
 
 %% ¡properties!
 p % handle for scrollable panel
@@ -196,7 +193,7 @@ function redraw(pe, varargin)
     % repositions the panel
     x0_p = ceil(get_from_varargin(x0(p, 'pixels'), 'X0', varargin));
     y0_p = ceil(get_from_varargin(y0(p, 'pixels'), 'Y0', varargin));
-    w_p = ceil(get_from_varargin(w(p, 'pixels'), 'Width', varargin));
+    w_p = ceil(max(get_from_varargin(w(p, 'pixels'), 'Width', varargin), pe.get('MIN_WIDTH')));
     % h_p will be calculated later
     
     % graphics constants
