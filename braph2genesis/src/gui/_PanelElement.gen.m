@@ -56,36 +56,41 @@ PR_DICT (result, idict) is a dictionary of the property plots.
 %%%% ¡calculate!
 el = pe.get('EL');
 
-pr_list = cell(1, el.getPropNumber());
-for prop = 1:1:el.getPropNumber()
-    pr_list{prop} = el.getPanelProp(prop, ...
-        'ID', el.getPropTag(prop), ...
-        'TITLE', el.getPropTag(prop), ...
-        'BKGCOLOR', rand(1, 3));
-end
-% % % [order, title, visible] = load_layout(el);
-% % % number_visible_prop = sum(visible);
-% % % 
-% % % pr_list = cell(1, number_visible_prop);
+% % % pr_list = cell(1, el.getPropNumber());
 % % % for prop = 1:1:el.getPropNumber()
-% % %     if visible(prop)
-% % %         switch el.getPropCategory(prop)
-% % %             case Category.METADATA
-% % %                 color = pe.get('MCOLOR');
-% % %             case Category.PARAMETER
-% % %                 color = pe.get('PCOLOR');
-% % %             case Category.DATA
-% % %                 color = pe.get('DCOLOR');
-% % %             case Category.RESULT
-% % %                 color = pe.get('RCOLOR');
-% % %         end
-% % % 
-% % %         pr_list{order(prop)} = el.getPanelProp(prop, ...
-% % %             'ID', el.getPropTag(prop), ...
-% % %             'TITLE', title{prop}, ...
-% % %             'BKGCOLOR', color);
-% % %     end
+% % %     pr_list{prop} = el.getPanelProp(prop, ...
+% % %         'ID', el.getPropTag(prop), ...
+% % %         'TITLE', el.getPropTag(prop), ...
+% % %         'BKGCOLOR', rand(1, 3));
 % % % end
+
+[order, title, visible] = load_layout(el);
+number_visible_prop = sum(visible);
+
+pr_list = cell(1, number_visible_prop);
+for prop = 1:1:el.getPropNumber()
+    if visible(prop)
+        switch el.getPropCategory(prop)
+            case Category.METADATA
+                color = BRAPH2.COL_M;
+            case Category.PARAMETER
+                color = BRAPH2.COL_P;
+            case Category.DATA
+                color = BRAPH2.COL_D;
+            case Category.RESULT
+                color = BRAPH2.COL_R;
+            case Category.FIGURE
+                color = BRAPH2.COL_F;
+            case Category.GUI
+                color = BRAPH2.COL_G;
+        end
+
+        pr_list{order(prop)} = el.getPanelProp(prop, ...
+            'ID', el.getPropTag(prop), ...
+            'TITLE', title{prop}, ...
+            'BKGCOLOR', color);
+    end
+end
 
 value = IndexedDictionary( ...
     'ID', el.tostring(), ...
