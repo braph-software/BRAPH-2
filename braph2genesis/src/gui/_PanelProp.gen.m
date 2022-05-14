@@ -223,7 +223,7 @@ function redraw(pr, varargin)
     %  - X0 does not change
     %  - Y0 does not change
     %  - WIDTH does not change
-    %  - HEIGHT = 2*BRAPH2.FONTSIZE*BRAPH2.S.
+    %  - HEIGHT = 2 * BRAPH2.FONTSIZE * BRAPH2.S.
     %
     % See also draw, update, PanelElement, BRAPH2.
 
