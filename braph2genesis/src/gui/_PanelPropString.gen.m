@@ -130,7 +130,7 @@ function redraw(pr, varargin)
 % % %     %
 % % %     % See also draw, update, refresh, PanelElement.
 
-    [h_p, varagin] = get_and_remove_from_varargin(4 * BRAPH2.FONTSIZE * BRAPH2.S, 'Height', varargin);
+    [h_p, varagin] = get_and_remove_from_varargin(3.5 * BRAPH2.FONTSIZE * BRAPH2.S, 'Height', varargin);
 
     pr.redraw@PanelProp('Height', h_p, varargin{:})
 
