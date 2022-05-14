@@ -57,9 +57,7 @@ PROP (data, scalar) is the property number.
 TITLE (gui, string) is the property title.
 
 %%% ¡prop!
-ENABLE (gui, option) switches between off and inactive fields.
-%%%% ¡settings!
-{'inactive' 'off'}
+ENABLE (gui, logical) switches between active and inactive ui components.
 
 %%% ¡prop!
 WAITBAR (gui, logical) determines whether to show the waitbar when executing calculations.
