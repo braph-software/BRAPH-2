@@ -5,9 +5,12 @@ function check = check_graphics(h, type)
 %
 % CHECK = CHECK_GRAPHICS(H, TYPE) returns whether the H is a graphic object 
 %  of the kind TYPE = 'figure', 'uipanel', 'axes', 'uitable', 'uimenu',
-%  'uicontextmenu', 'uitoolbar', 'uipushtool', 'pushbutton',
+%  'uicontextmenu', 'uitoolbar', 'uipushtool', 
+%  'uibutton', 'uilabel', 
+%  'pushbutton',
 %  'togglebutton', 'checkbox', 'radiobutton', 'edit', 'text', 'slider',
-%  'listbox', 'popupmenu', or 'line'.
+%  'listbox', 'popupmenu', 
+%  'line'.
 %
 % CHECK_GRAPHICS(H[, TYPE]) throws an error if H is not a correct graphic object.
 %  Error id: [BRAPH2:Format:WrongInput]
@@ -39,6 +42,10 @@ if nargout == 1
                 check = ~isempty(h) && isgraphics(h, 'uipushtool');
             case 'uicontextmenu'
                 check = ~isempty(h) && isgraphics(h, 'uicontextmenu');
+            case 'uibutton'
+                check = ~isempty(h) && isgraphics(h, 'uibutton');
+            case 'uilabel'
+                check = ~isempty(h) && isgraphics(h, 'uilabel');
             case 'pushbutton'
                 check = ~isempty(h) && isgraphics(h, 'uicontrol') && strcmpi(get(h, 'Style'), 'pushbutton');
             case 'togglebutton'
