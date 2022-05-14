@@ -160,3 +160,19 @@ end
 %%%% ¡name!
 Example
 %%%% ¡code!
+% draws PanelPropString and calls update() and redraw()
+% note that it doesn't work for category RESULT 
+% because it needs to be used with PanelElement() and GUI()
+fig1 = uifigure();
+et1 = ETA();
+props = [et1.PROP_STRING_M et1.PROP_STRING_P et1.PROP_STRING_D et1.PROP_STRING_F et1.PROP_STRING_G et1.PROP_STRING_R et1.PROP_STRING_R_CALC];
+for i = 1:1:length(props)
+    pr{i} = PanelPropString('EL', et1, 'PROP', props(i));
+    pr{i}.draw( ...
+        'Parent', fig1, ...
+        'BackgroundColor', [i/length(props) .5 (length(props)-i)/length(props)] ...
+        )
+    pr{i}.update()
+    pr{i}.redraw('Y0', (length(props) - i)/length(props) * h(fig1, 'pixels'))
+end
+close(fig1)
