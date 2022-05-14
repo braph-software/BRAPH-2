@@ -6,44 +6,44 @@ PanelProp plots a property of an element in a panel.
  It contains a text with the prop tag and a tooltip with the prop description.
  For parameter, data, figure and gui callbacks, it also features a callback button.
  For results, it features calculate and delete buttons.
- It typically is employed in one of its derived forms, 
+ It is typically employed in one of its derived forms, 
  where also the contents of the element property are shown.
 
-% % % Important notes:
-% % % 1. PanelProp is intimately connected with GUI (cb_button_cb) and 
-% % %  PanelElement (update, redraw).
-% % % 2. The method redraw() isused internally by PanelElement
-% % %  and typically does not need to be explicitly called in children of PanelProp, 
-% % %  while update() is typically called in callbacks to update the contents.
-% % % 3. Children of PanelProp should implement the methods:
-% % %   - draw() to initially create the panel and its graphical objects
-% % %   - update() to update the information content of the panel and of the element
-% % %   - redraw() to resize the panel and reposition its graphical objcts
-% % % 
-% % % CONSTRUCTOR - To construct a PanelProp use the constructor:
-% % % 
-% % %     pr = Panel(''EL'', <element>, ''PROP'', prop);
-% % %     pr = Panel(''EL'', <element>, ''PROP'', prop, ''ID'', ''id string'', ''TITLE'', ''title string'');
-% % %     
-% % % DRAW - To create the initial graphical objects in the property panel 
-% % %  (title text and buttons), call pr.draw():
-% % % 
-% % %     p = pr.<strong>draw</strong>();
-% % %     p = pr.<strong>draw</strong>(''Parent'', pp);
-% % % 
-% % %  It is also possible to use pr.draw() to get the property panel handle
-% % %   and to set its properties (as in the case of Panel).
-% % % 
-% % % UPDATE - Updates the information content of the panel and of the element.
-% % %   Typically, it does not need to be called explicitly.
-% % %   It is internally called by PanelElement when needed.
-% % % 
-% % % REDRAW - Resizes the panel and repositions its graphical objcts.
-% % %   Typically, it does not need to be called explicitly.
-% % %   It is internally called by PanelElement when needed.
+Important notes:
+1. PanelProp is intimately connected with GUIElement (cb_button_cb) and 
+ PanelElement (update, redraw).
+2. The method redraw() is used internally by PanelElement
+ and typically does not need to be explicitly called in children of PanelProp, 
+ while update() is typically called in callbacks to update the contents.
+3. Children of PanelProp should implement the methods:
+  - draw() to initially create the panel and its graphical objects
+  - update() to update the information content of the panel and of the element
+  - redraw() to resize the panel and reposition its graphical objcts
+
+CONSTRUCTOR - To construct a PanelProp use the constructor:
+
+    pr = Panel(''EL'', <element>, ''PROP'', prop);
+    pr = Panel(''EL'', <element>, ''PROP'', prop, ''ID'', ''id string'', ''TITLE'', ''title string'');
+    
+DRAW - To create the initial graphical objects in the property panel 
+ (title text and buttons), call pr.draw():
+
+    p = pr.<strong>draw</strong>();
+    p = pr.<strong>draw</strong>(''Parent'', pp);
+
+ It is also possible to use pr.draw() to get the property panel handle
+  and to set its properties (as in the case of Panel).
+
+UPDATE - Updates the information content of the panel and of the element.
+  Typically, it does not need to be called explicitly.
+  It is internally called by PanelElement when needed.
+
+REDRAW - Resizes the panel and repositions its graphical objcts.
+  Typically, it does not need to be called explicitly.
+  It is internally called by PanelElement when needed.
 
 %%% ¡seealso!
-GUI, PanelElement
+GUI, GUIElement, PanelElement
 
 %% ¡props!
 
@@ -71,22 +71,22 @@ button_del % only for RESULT
 
 %% ¡methods!
 function p_out = draw(pr, varargin)
-% % %     %DRAW draws the property panel.
-% % %     %
-% % %     % DRAW(PL) draws the property panel with its title and
-% % %     %  action buttons (callback for PARAMETER and DATA; calculate and
-% % %     %  delete for RESULT).
-% % %     %
-% % %     % H = DRAW(PL) returns a handle to the property panel.
-% % %     %
-% % %     % DRAW(PL, 'Property', VALUE, ...) sets the properties of the panel 
-% % %     %  with custom Name-Value pairs.
-% % %     %  All standard panel properties of uipanel can be used.
-% % %     %
-% % %     % It is possible to access the properties of the various graphical
-% % %     %  objects from the handle H of the panel.
-% % %     %
-% % %     % See also update, redraw, settings, uipanel.
+    %DRAW draws the property panel.
+    %
+    % DRAW(PR) draws the property panel with its title and
+    %  action buttons (callback for PARAMETER, DATA, FIGURE, and GUI; 
+    %  calculate and delete for RESULT).
+    %
+    % P = DRAW(PR) returns a handle to the property panel.
+    %
+    % DRAW(PR, 'Property', VALUE, ...) sets the properties of the panel 
+    %  with custom Name-Value pairs.
+    %  All standard panel properties of uipanel can be used.
+    %
+    % It is possible to access the properties of the various graphical
+    %  objects from the handle P of the panel.
+    %
+    % See also update, redraw, uipanel.
 
     pr.p = draw@Panel(pr, varargin{:});
 
@@ -165,15 +165,15 @@ function p_out = draw(pr, varargin)
     end
 end
 function update(pr)
-% % %     %UPDATE updates the content of the property panel and its graphical objects.
-% % %     %
-% % %     % UPDATE(PL) updates the content of the property panel and its graphical objects.
-% % %     %
-% % %     % Important note:
-% % %     % 1. UPDATE() is typically called internally by PanelElement and does not need 
-% % %     %  to be explicitly called in children of PanelProp.
-% % %     %
-% % %     % See also draw, redraw, PanelElement.
+    %UPDATE updates the content of the property panel and its graphical objects.
+    %
+    % UPDATE(PR) updates the content of the property panel and its graphical objects.
+    %
+    % Important note:
+    %  UPDATE() is typically called internally by PanelElement and does not need 
+    %  to be explicitly called in children of PanelProp.
+    %
+    % See also draw, redraw, PanelElement.
 
     el = pr.get('EL');
     prop = pr.get('PROP');
@@ -207,26 +207,25 @@ function update(pr)
     end
 end
 function redraw(pr, varargin)
-% % %     %REDRAW resizes the property panel and repositions its graphical objects.
-% % %     %
-% % %     % REDRAW(PL) resizes the property panel and repositions its
-% % %     %   graphical objects. 
-% % %     % 
-% % %     % Important notes:
-% % %     % 1. REDRAW() sets the units 'characters' for panel and all its graphical objects. 
-% % %     % 2. REDRAW() is typically called internally by PanelElement and does not need 
-% % %     %  to be explicitly called in children of PanelProp.
-% % %     %
-% % %     % REDRAW(PL, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT)
-% % %     %  repositions the property panel. It is possible to use a
-% % %     %  subset of the Name-Value pairs.
-% % %     %  By default:
-% % %     %  - X0 does not change
-% % %     %  - Y0 does not change
-% % %     %  - WIDTH does not change
-% % %     %  - HEIGHT=1.4 characters.
-% % %     %
-% % %     % See also draw, update, PanelElement.
+    %REDRAW resizes the property panel and repositions its graphical objects.
+    %
+    % REDRAW(PR) resizes the property panel and repositions its graphical objects. 
+    % 
+    % Important notes:
+    % 1. REDRAW() sets the units 'pixels' for panel. 
+    % 2. REDRAW() is typically called internally by PanelElement and does not need 
+    %  to be explicitly called in children of PanelProp.
+    %
+    % REDRAW(PL, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT)
+    %  repositions the property panel. It is possible to use a
+    %  subset of the Name-Value pairs.
+    %  By default:
+    %  - X0 does not change
+    %  - Y0 does not change
+    %  - WIDTH does not change
+    %  - HEIGHT = 2*BRAPH2.FONTSIZE*BRAPH2.S.
+    %
+    % See also draw, update, PanelElement, BRAPH2.
 
     el = pr.get('EL');
     prop = pr.get('PROP');
@@ -268,23 +267,24 @@ function redraw(pr, varargin)
             set(pr.button_del, 'Position', [w_p-s25 h_p-s22 s20 s20])
     end
 end
-% % % function cb_button_cb(pr)
-% % %     %CB_BUTTON_CB executes callback for button callback.
-% % %     %
-% % %     % CB_BUTTON_CB(PL) executes callback for button callback.
-% % %     % 
-% % %     % See also GUI.
-% % % 
-% % %     el = pr.get('EL');
-% % %     prop = pr.get('PROP');
-% % %     
-% % %     GUI('EL', el.getr(prop).get('EL')) 
-% % % % % %TODO: check that this is working once GUI is complete
-% % % end
+function cb_button_cb(pr)
+    %CB_BUTTON_CB executes callback for button callback.
+    %
+    % CB_BUTTON_CB(PR) executes callback for button callback.
+    % 
+    % See also GUIElement.
+
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    
+    GUIElement('EL', el.getr(prop).get('EL')) 
+% % %TODO: check that this is working once GUIElement is complete
+% % %TODO: check also that this is managed correctly by the various callbacks (front, hide, close)
+end
 function cb_button_calc(pr)
     %CB_BUTTON_CALC executes callback for button calculate.
     %
-    % CB_BUTTON_CALC(PL) executes callback for button calculate.
+    % CB_BUTTON_CALC(PR) executes callback for button calculate.
     %
     % See also cb_button_del.
 
@@ -301,7 +301,7 @@ end
 function cb_button_del(pr)
     %CB_BUTTON_DEL executes callback for button delete.
     %
-    % CB_BUTTON_DEL(PL) executes callback for button delete.
+    % CB_BUTTON_DEL(PR) executes callback for button delete.
     %
     % See also cb_button_calc.
 
