@@ -202,7 +202,7 @@ function update(pr)
                 set(pr.button_del, 'Enable', 'off')
             else
                 set(pr.button_calc, 'Enable', 'off')
-                set(pr.button_del, 'Editable', 'off')
+                set(pr.button_del, 'Enable', 'off')
             end
     end
 end
