@@ -25,7 +25,7 @@ PanelElement < Panel (pe, panel element) plots the panel of an element.
 % % %  Here, pp is the parent panel (see above).
 % % %  Typically, f is a figure where the parent panel is plotted.
 % % %  It is also possible to use pr.draw() to get the parent panel handle
-% % %   and to set its properties (as in the case of Plot and PlotProp).
+% % %   and to set its properties (as in the case of Plot and PanelProp).
 % % % 
 % % % REINIT - To reinitialize the element plot with a new element, call:
 % % % 
@@ -266,7 +266,7 @@ function cb_bring_to_front(pe)
 % % %     %
 % % %     % CB_BRING_TO_FRONT(PE) brings to front the figure with the element and
 % % %     %  its dependent figures by calling the methods cb_bring_to_front() for
-% % %     %  all the PlotProp panels of the PlotElement.
+% % %     %  all the PanelProp panels of the PlotElement.
 % % %     %  
 % % %     % Note that it will draw a new the figure if the element panel is currently not plotted. 
 % % %     %
@@ -284,7 +284,7 @@ function cb_hide(pe)
 % % %     %CB_HIDE hides the figure with the element panel and its dependent figures.
 % % %     %
 % % %     % CB_HIDE(PE) hides the figure with the element panel and its dependent figures 
-% % %     %  by calling the methods cb_hide() for all the PlotProp panels of the PlotElement.
+% % %     %  by calling the methods cb_hide() for all the PanelProp panels of the PlotElement.
 % % %     %  
 % % %     % See also cb_bring_to_front, cb_close.
 
@@ -300,7 +300,7 @@ function cb_close(pe)
 % % %     %CB_CLOSE closes the figure with the element panel and its dependent figures.
 % % %     %
 % % %     % CB_CLOSE(PE) closes the figure with the element panel and its dependent figures 
-% % %     %  by calling the methods cb_close() for all the PlotProp panels of the PlotElement.
+% % %     %  by calling the methods cb_close() for all the PanelProp panels of the PlotElement.
 % % %     %  
 % % %     % See also cb_bring_to_front, cb_hide.
 
