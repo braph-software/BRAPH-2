@@ -2,47 +2,43 @@
 PanelElement < Panel (pe, panel element) plots the panel of an element.
 
 %%% ¡description!
-% % % PlotElement plots all properties of an element in a resizable scrollable panel.
-% % %  The high-level parent panel PP has fixed dimensions and contains a scollable panel
-% % %  (i.e., a panel P and a slider S). P contains a series of stacked property panels,
-% % %  one for each property of the element EL being plotted.
-% % %  Each time that PP is resized or S scrolled, all contents of P are resized as well.
-% % % 
-% % % Importnat notes:
-% % % 1. The key methods that need to be called are draw() and reinit().
-% % % 2. The methods update(), redraw() and slide() are used internally by PlotElement 
-% % %   and typically do not need to be called explicitly.
-% % % 
-% % % CONSTRUCTOR - To construct a PlotElement use the constructor:
-% % % 
-% % %     pe = PlotElement(''EL'', <element>)
-% % %     
-% % % DRAW - To create the element panel, call pe.draw():
-% % % 
-% % %     pp = pe.<strong>draw</strong>();
-% % %     pp = pe.<strong>draw</strong>(''Parent'', f);
-% % %  
-% % %  Here, pp is the parent panel (see above).
-% % %  Typically, f is a figure where the parent panel is plotted.
-% % %  It is also possible to use pr.draw() to get the parent panel handle
-% % %   and to set its properties (as in the case of Plot and PanelProp).
-% % % 
-% % % REINIT - To reinitialize the element plot with a new element, call:
-% % % 
-% % %     pe.reinit(<new element>)
-% % % 
-% % %  This function resets both the element and the panel using the new element.
-% % %  Importnatly, the new element must be of exactly the same class as the old element.
-% % % 
-% % % 
-% % % CALLBACK - This is a callback function:
-% % % 
-% % %     pe.<strong>cb_bring_to_front</strong>() - brings to the front the figure with the element panel and its dependent figures
-% % %     pe.<strong>cb_hide</strong>() - hides the figure with the element panel and its dependent figures
-% % %     pe.<strong>cb_close</strong>() - closes the figure with the element panel and its dependent figures
+PanelElement plots all properties of an element in a panel P, 
+ which contains a series of stacked property panels,
+ one for each property of the element EL being plotted.
+
+Importnat notes:
+1. The key methods that need to be called are draw() and reinit().
+2. The methods update() and redraw() are used internally by PanelElement 
+  and typically do not need to be called explicitly.
+
+CONSTRUCTOR - To construct a PanelElement use the constructor:
+
+    pe = PanelElement(''EL'', <element>)
+    
+DRAW - To create the element panel, call pe.draw():
+
+    p = pe.<strong>draw</strong>();
+    p = pe.<strong>draw</strong>(''Parent'', f);
+ 
+ Typically, f is a figure where the panel is plotted.
+ It is also possible to use pe.draw() to get the parent panel handle
+  and to set its properties (as in the case of Panel and PanelProp).
+
+REINIT - To reinitialize the element plot with a new element, call:
+
+    pe.reinit(<new element>)
+
+ This function resets both the element and the panel using the new element.
+ Importantly, the new element must be of exactly the same class as the old element.
+
+CALLBACK - These are the callback functions:
+
+    pe.<strong>cb_bring_to_front</strong>() - brings to the front the figure with the element panel and its dependent figures
+    pe.<strong>cb_hide</strong>() - hides the figure with the element panel and its dependent figures
+    pe.<strong>cb_close</strong>() - closes the figure with the element panel and its dependent figures
 
 %%% ¡seealso!
-GUI, PanelProp
+GUI, GUIElement, PanelProp
 
 %% ¡props!
 
@@ -117,21 +113,20 @@ pr_list % list of handles for prop panels
 
 %% ¡methods!
 function p_out = draw(pe, varargin)
-% % %     %DRAW draws the element panel.
-% % %     %
-% % %     % DRAW(PE) draws the element parent panel, which contains a panel that
-% % %     %  is crollable using a slider.
-% % %     %
-% % %     % H = DRAW(PE) returns a handle to the element parent panel.
-% % %     %
-% % %     % DRAW(PE, 'Property', VALUE, ...) sets the properties of the parent
-% % %     %  panel with custom Name-Value pairs.
-% % %     %  All standard plot properties of uipanel can be used.
-% % %     %
-% % %     % It is possible to access the properties of the various graphical
-% % %     %  objects from the handle H of the parent panel.
-% % %     %
-% % %     % See also update, redraw, slide, reinit, uipanel.
+    %DRAW draws the element panel.
+    %
+    % DRAW(PE) draws the element panel.
+    %
+    % P = DRAW(PE) returns a handle to the element parent panel.
+    %
+    % DRAW(PE, 'Property', VALUE, ...) sets the properties of the parent
+    %  panel with custom Name-Value pairs.
+    %  All standard plot properties of uipanel can be used.
+    %
+    % It is possible to access the properties of the various graphical
+    %  objects from the handle H of the parent panel.
+    %
+    % See also update, redraw, reinit, uipanel.
 
     pe.p = draw@Panel(pe, ...
         varargin{:}, ...
@@ -151,40 +146,39 @@ function p_out = draw(pe, varargin)
     end
 end
 function update(pe)
-% % %     %UPDATE updates the content of the prop panels and their graphical objects.
-% % %     %
-% % %     % UPDATE(PE) updates the content of the prop panels and their graphical objects.
-% % %     %
-% % %     % Important note:
-% % %     % 1. UPDATE() does not need to be explicitly called from outside code,
-% % %     %  as it is called internally by PlotElement when needed.
-% % %     %
-% % %     % See also draw, redraw, slide.
+    %UPDATE updates the content of the prop panels and their graphical objects.
+    %
+    % UPDATE(PE) updates the content of the prop panels and their graphical objects.
+    %
+    % Important note:
+    %  UPDATE() does not need to be explicitly called from outside code,
+    %  as it is called internally by PanelElement when needed.
+    %
+    % See also draw, redraw.
 
     for prop = 1:1:pe.get('PR_DICT').length()
         pe.get('PR_DICT').getItem(prop).update()
     end
 end
 function redraw(pe, varargin)
-% % %     %RESIZE resizes, repositions and slides the prop panels.
-% % %     %
-% % %     % RESIZE(PE) resizes the property panels and repositions their
-% % %     %  graphical objects, and slides the element panel.
-% % %     %
-% % %     % REDRAW(PL, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT)
-% % %     %  repositions the property panel. It is possible to use a
-% % %     %  subset of the Name-Value pairs.
-% % %     %  By default:
-% % %     %  - X0 does not change
-% % %     %  - Y0 does not change
-% % %     %  - WIDTH does not change
-% % %     %  - HEIGHT is set automatically.
-% % %     % 
-% % %     % Important note:
-% % %     % 1. REDRAW() does not need to be explicitly called from outside code,
-% % %     %  as it is called internally by PlotElement when needed.
-% % %     %
-% % %     % See also draw, update, slide.
+    %REDRAW resizes and repositions the prop panels.
+    %
+    % REDRAW(PE) resizes the property panels and repositions their graphical objects.
+    %
+    % REDRAW(PL, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT)
+    %  repositions the property panel. It is possible to use a
+    %  subset of the Name-Value pairs.
+    %  By default:
+    %  - X0 does not change
+    %  - Y0 does not change
+    %  - WIDTH does not change
+    %  - HEIGHT is set automatically
+    % 
+    % Important note:
+    %  REDRAW() does not need to be explicitly called from outside code,
+    %  as it is called internally by PanelElement when needed.
+    %
+    % See also draw, update.
 
     p = pe.p;
     pr_list = pe.pr_list;
@@ -226,48 +220,48 @@ function redraw(pe, varargin)
         set(pr, 'Position', [x0_pp y0_pp(prop) w(pr) h(pr)])
     end
 end
-% % % function reinit(pe, el)
-% % %     %REINIT resets the element, updates and redraws the element plot.
-% % %     %
-% % %     % REINIT(PE, EL) reinitializes the plot element.Specifically:
-% % %     %  1. sets EL as the new element of the PlotElement
-% % %     %  2. reinizalizes PR_DICT
-% % %     %  3. deletes all prop panels
-% % %     %  4. draws anew, updates and redraws
-% % %     % 
-% % %     % Important note:
-% % %     % 1. EL must be of the same class as the previous element in the
-% % %     %  PlotElement, otherwise an error is thrown.
-% % %     %  Error id: [BRAPH2:PlotElement:WrongInput].
-% % %     %
-% % %     % See also update, draw, redraw.
-% % % 
-% % %     assert( ...
-% % %         strcmp(pe.get('EL').getClass(), el.getClass()), ...
-% % %         [BRAPH2.STR ':PlotElement:' BRAPH2.WRONG_INPUT], ...
-% % %         [BRAPH2.STR ':PlotElement:' BRAPH2.WRONG_INPUT ' ' ...
-% % %         'The class of the new element (' el.getClass() ') must be exactly the same as that of the old element (' pe.get('EL').getClass() ').'] ...
-% % %         )    
-% % % 
-% % %     pe.set('EL', el)
-% % %     pe.set('PR_DICT', NoValue.getNoValue())
-% % % 
-% % %     delete(get(pe.p, 'Children'))
-% % % 
-% % %     pe.draw()
-% % %     pe.update()
-% % %     pe.redraw()
-% % % end
+function reinit(pe, el)
+    %REINIT resets the element, and updates and redraws the element plot.
+    %
+    % REINIT(PE, EL) reinitializes the plot element.Specifically:
+    %  1. sets EL as the new element of the PanelElement
+    %  2. reinizalizes PR_DICT
+    %  3. deletes all prop panels
+    %  4. draws anew, updates and redraws
+    % 
+    % Important note:
+    %  EL must be of the same class as the previous element in the
+    %  PanelElement, otherwise an error is thrown.
+    %  Error id: [BRAPH2:PanelElement:WrongInput].
+    %
+    % See also update, draw, redraw.
+
+    assert( ...
+        strcmp(pe.get('EL').getClass(), el.getClass()), ...
+        [BRAPH2.STR ':PanelElement:' BRAPH2.WRONG_INPUT], ...
+        [BRAPH2.STR ':PanelElement:' BRAPH2.WRONG_INPUT ' ' ...
+        'The class of the new element (' el.getClass() ') must be exactly the same as that of the old element (' pe.get('EL').getClass() ').'] ...
+        )    
+
+    pe.set('EL', el)
+    pe.set('PR_DICT', NoValue.getNoValue())
+
+    delete(get(pe.p, 'Children'))
+
+    pe.draw()
+    pe.update()
+    pe.redraw()
+end
 function cb_bring_to_front(pe)
-% % %     %CB_BRING_TO_FRONT brings to front the figure with the element panel and its dependent figures.
-% % %     %
-% % %     % CB_BRING_TO_FRONT(PE) brings to front the figure with the element and
-% % %     %  its dependent figures by calling the methods cb_bring_to_front() for
-% % %     %  all the PanelProp panels of the PlotElement.
-% % %     %  
-% % %     % Note that it will draw a new the figure if the element panel is currently not plotted. 
-% % %     %
-% % %     % See also cb_hide, cb_close.
+    %CB_BRING_TO_FRONT brings to front the figure with the element panel and its dependent figures.
+    %
+    % CB_BRING_TO_FRONT(PE) brings to front the figure with the element and
+    %  its dependent figures by calling the methods cb_bring_to_front() for
+    %  all the PanelProp panels of the PanelElement.
+    %  
+    % Note that it will draw a new the figure if the element panel is currently not plotted. 
+    %
+    % See also cb_hide, cb_close.
 
     pe.cb_bring_to_front@Panel();
     
@@ -278,12 +272,12 @@ function cb_bring_to_front(pe)
     end
 end
 function cb_hide(pe)
-% % %     %CB_HIDE hides the figure with the element panel and its dependent figures.
-% % %     %
-% % %     % CB_HIDE(PE) hides the figure with the element panel and its dependent figures 
-% % %     %  by calling the methods cb_hide() for all the PanelProp panels of the PlotElement.
-% % %     %  
-% % %     % See also cb_bring_to_front, cb_close.
+    %CB_HIDE hides the figure with the element panel and its dependent figures.
+    %
+    % CB_HIDE(PE) hides the figure with the element panel and its dependent figures 
+    %  by calling the methods cb_hide() for all the PanelProp panels of the PanelElement.
+    %  
+    % See also cb_bring_to_front, cb_close.
 
     pe.cb_hide@Panel();
     
@@ -294,12 +288,12 @@ function cb_hide(pe)
     end
 end
 function cb_close(pe)
-% % %     %CB_CLOSE closes the figure with the element panel and its dependent figures.
-% % %     %
-% % %     % CB_CLOSE(PE) closes the figure with the element panel and its dependent figures 
-% % %     %  by calling the methods cb_close() for all the PanelProp panels of the PlotElement.
-% % %     %  
-% % %     % See also cb_bring_to_front, cb_hide.
+    %CB_CLOSE closes the figure with the element panel and its dependent figures.
+    %
+    % CB_CLOSE(PE) closes the figure with the element panel and its dependent figures 
+    %  by calling the methods cb_close() for all the PanelProp panels of the PanelElement.
+    %  
+    % See also cb_bring_to_front, cb_hide.
 
     pe.cb_close@Panel();
     
