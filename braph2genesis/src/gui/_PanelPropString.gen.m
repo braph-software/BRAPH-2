@@ -1,5 +1,5 @@
 %% ¡header!
-PanelPropString < PanelProp (pr, panel property string) plots the panel of a string property.
+PanelPropString < PanelProp (pr, panel property string) plots the panel of a property string.
 
 %%% ¡description!
 PanelPropString plots the panel for a STRING property with an edit field.
