@@ -165,7 +165,7 @@ function update(pe)
 % % %     % See also draw, redraw, slide.
 
     for prop = 1:1:pe.get('PR_DICT').length()
-% % %         pe.get('PR_DICT').getItem(prop).update()
+        pe.get('PR_DICT').getItem(prop).update()
     end
 end
 function redraw(pe, varargin)
