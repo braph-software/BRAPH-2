@@ -2,11 +2,10 @@ function r = w(h, units, position)
 %W returns the width of a graphical element.
 %
 % R = W(H) is the distance between the right and left outer edges of the
-%   graphical element H.
-%  in the units of H.
+%  graphical element H in the units of H.
 %
 % R = W(H, UNITS) is in UNITS. All valid units for H can be used
-%  (e.g., 'normalized', 'pixels', 'characters').
+%  (e.g., 'pixels', 'normalized', 'characters').
 %
 % R = W(H, [], POSITION) returns POSITION = 'Position' (default),
 %  'InnerPosition' or 'OuterPosition' in the units of H.

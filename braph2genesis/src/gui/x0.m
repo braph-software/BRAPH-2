@@ -2,11 +2,11 @@ function r = x0(h, units, position)
 %X0 returns the position of the left edge of a graphical element.
 %
 % R = X0(H) is the distance from the inner left edge of the parent
-%  container to the outer left edge of the graphical element H 
-%  in the units of H.
+%  container to the outer left edge of the graphical element H in the units
+%  of H. 
 %
 % R = X0(H, UNITS) is in UNITS. All valid units for H can be used
-%  (e.g., 'normalized', 'pixels', 'characters').
+%  (e.g., 'pixels', 'normalized', 'characters').
 %
 % R = X0(H, [], POSITION) returns POSITION = 'Position' (default),
 %  'InnerPosition' or 'OuterPosition' in the units of H.

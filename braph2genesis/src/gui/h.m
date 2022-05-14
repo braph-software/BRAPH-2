@@ -2,11 +2,10 @@ function r = h(h, units, position)
 %H returns the height of a graphical element.
 %
 % R = H(H) is the distance between the top and bottom outer edges of the
-%  graphical element H.
-%  in the units of H.
+%  graphical element H in the units of H.
 %
 % R = H(H, UNITS) is in UNITS. All valid units for H can be used
-%  (e.g., 'normalized', 'pixels', 'characters').
+%  (e.g., 'pixels', 'normalized', 'characters').
 %
 % R = H(H, [], POSITION) returns POSITION = 'Position' (default),
 %  'InnerPosition' or 'OuterPosition' in the units of H.

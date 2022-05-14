@@ -2,11 +2,11 @@ function r = y0(h, units, position)
 %Y0 returns the position of the bottom edge of a graphical element.
 %
 % R = Y0(H) is the distance from the inner bottom edge of the parent 
-%  container to the outer bottom edge of the graphical element H.
-%  in the units of H.
+%  container to the outer bottom edge of the graphical element H in the
+%  units of H.
 %
 % R = Y0(H, UNITS) is in UNITS. All valid units for H can be used
-%  (e.g., 'normalized', 'pixels', 'characters').
+%  (e.g., 'pixels', 'normalized', 'characters').
 %
 % R = Y0(H, [], POSITION) returns POSITION = 'Position' (default),
 %  'InnerPosition' or 'OuterPosition' in the units of H.
