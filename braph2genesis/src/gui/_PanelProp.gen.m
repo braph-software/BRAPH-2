@@ -235,19 +235,20 @@ function redraw(pr, varargin)
     
     p = pr.p;
 
-    % resizes the width (w) and height (h) of the panel
-    % keeps its initial position (x0, y0) unchanged.
-    x0_p = get_from_varargin(x0(p, 'pixels'), 'X0', varargin) / BRAPH2.S;
-    y0_p = get_from_varargin(y0(p, 'pixels'), 'Y0', varargin) / BRAPH2.S;
-    w_p = get_from_varargin(w(p, 'pixels'), 'Width', varargin) / BRAPH2.S;
-    h_p = get_from_varargin(1.4 * BRAPH2.FONTSIZE, 'Height', varargin);
+    % repositions the panel
+    x0_p = ceil(get_from_varargin(x0(p, 'pixels'), 'X0', varargin));
+    y0_p = ceil(get_from_varargin(y0(p, 'pixels'), 'Y0', varargin));
+    w_p = ceil(get_from_varargin(w(p, 'pixels'), 'Width', varargin));
+    h_p = ceil(get_from_varargin(2 * BRAPH2.FONTSIZE * BRAPH2.S, 'Height', varargin));
     set(p, ...
         'Units', 'pixels', ...
-        'Position', [x0_p y0_p w_p h_p] * BRAPH2.S ...
+        'Position', [x0_p y0_p w_p h_p] ...
         )
 
     % places label_tag to the top
-    set(pr.label_tag, 'Position', [0 h_p-16 w_p 16] * BRAPH2.S)
+    s2 = ceil(2 * BRAPH2.S);
+    s16 = ceil(16 * BRAPH2.S);
+    set(pr.label_tag, 'Position', [s2 h_p-s16 w_p s16])
 
     % places the relevant buttons (depening on category)
     switch el.getPropCategory(prop)
@@ -255,11 +256,18 @@ function redraw(pr, varargin)
             %
 
         case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
-            set(pr.button_cb, 'Position', [w_p-25 h_p-22 20 20] * BRAPH2.S)
+            s20 = ceil(20 * BRAPH2.S);
+            s22 = ceil(22 * BRAPH2.S);
+            s25 = ceil(25 * BRAPH2.S);
+            set(pr.button_cb, 'Position', [w_p-s25 h_p-s22 s20 s20])
 
         case Category.RESULT
-            set(pr.button_calc, 'Position', [w_p-50 h_p-22 20 20] * BRAPH2.S)
-            set(pr.button_del, 'Position', [w_p-25 h_p-22 20 20] * BRAPH2.S)
+            s20 = ceil(20 * BRAPH2.S);
+            s22 = ceil(22 * BRAPH2.S);
+            s25 = ceil(25 * BRAPH2.S);
+            s50 = ceil(50 * BRAPH2.S);
+            set(pr.button_calc, 'Position', [w_p-s50 h_p-s22 s20 s20])
+            set(pr.button_del, 'Position', [w_p-s25 h_p-s22 s20 s20])
     end
 end
 % % % function cb_button_cb(pr)
@@ -275,40 +283,40 @@ end
 % % %     GUI('EL', el.getr(prop).get('EL')) 
 % % % % % %TODO: check that this is working once GUI is complete
 % % % end
-% % % function cb_button_calc(pr)
-% % %     %CB_BUTTON_CALC executes callback for button calculate.
-% % %     %
-% % %     % CB_BUTTON_CALC(PL) executes callback for button calculate.
-% % %     %
-% % %     % See also cb_button_del.
-% % % 
-% % %     el = pr.get('EL');
-% % %     prop = pr.get('PROP');
-% % % 
-% % %     el.memorize(prop);
-% % % 
-% % %     % updates and redraws the parent PanelElement as well as all siblings PanelProp's
-% % %     pe = get(get(get(pr.p, 'Parent'), 'Parent'), 'UserData');
-% % %     pe.update()
-% % %     pe.redraw()
-% % % end
-% % % function cb_button_del(pr)
-% % %     %CB_BUTTON_DEL executes callback for button delete.
-% % %     %
-% % %     % CB_BUTTON_DEL(PL) executes callback for button delete.
-% % %     %
-% % %     % See also cb_button_calc.
-% % % 
-% % %     el = pr.get('EL');
-% % %     prop = pr.get('PROP');
-% % %     
-% % %     el.set(prop, NoValue.getNoValue())
-% % % 
-% % %     % updates and redraws the parent PanelElement as well as all siblings PanelProp's
-% % %     pe = get(get(get(pr.p, 'Parent'), 'Parent'), 'UserData');
-% % %     pe.update()
-% % %     pe.redraw()
-% % % end
+function cb_button_calc(pr)
+    %CB_BUTTON_CALC executes callback for button calculate.
+    %
+    % CB_BUTTON_CALC(PL) executes callback for button calculate.
+    %
+    % See also cb_button_del.
+
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+
+    el.memorize(prop);
+
+    % updates and redraws the parent PanelElement as well as all siblings PanelProp's
+    pe = get(get(pr.p, 'Parent'), 'UserData');
+    pe.update()
+    pe.redraw()
+end
+function cb_button_del(pr)
+    %CB_BUTTON_DEL executes callback for button delete.
+    %
+    % CB_BUTTON_DEL(PL) executes callback for button delete.
+    %
+    % See also cb_button_calc.
+
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    
+    el.set(prop, NoValue.getNoValue())
+
+    % updates and redraws the parent PanelElement as well as all siblings PanelProp's
+    pe = get(get(pr.p, 'Parent'), 'UserData');
+    pe.update()
+    pe.redraw()
+end
 
 %% ¡tests!
 
