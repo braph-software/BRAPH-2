@@ -35,7 +35,7 @@ CALLBACKS - These are callback functions:
     pn.<strong>cb_close</strong>() - closes the figure containing the panel
 
 %%% ¡seealso!
-uipanel, GUI, PanelElement, PanelProp
+uipanel, GUI, GUIElement, PanelElement, PanelProp
 
 %% ¡properties!
 p % panel graphical handle
