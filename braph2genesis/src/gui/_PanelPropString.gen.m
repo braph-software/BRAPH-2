@@ -2,14 +2,11 @@
 PanelPropString < PanelProp (pr, panel property string) plots the panel of a string property.
 
 %%% ¡description!
-% % % PanelPropString plots a STRING property of an element in an edit field.
-% % % It works for all categories.
-% % % It has the following additional properties:
-% % % - ''Lines'', ''single'' (single-line edit field, default) or ''multi'' (multi-line edit field).
-% % % - ''EditHeight'' with the height of the edit field in characters.
+PanelPropString plots the panel for a STRING property with an edit field.
+It works for all categories.
 
 %%% ¡seealso!
-GUI, PanelElement, PanelProp
+GUI, PanelElement, PanelProp, uieditfield
 
 %% ¡properties!
 p
@@ -17,20 +14,20 @@ editfield
 
 %% ¡methods!
 function p_out = draw(pr, varargin)
-% % %     %DRAW draws the panel of the string property.
-% % %     %
-% % %     % DRAW(PR) draws the panel of the string property.
-% % %     %
-% % %     % H = DRAW(PR) returns a handle to the property panel.
-% % %     % 
-% % %     % DRAW(PR, 'Property', VALUE, ...) sets the properties of the graphical
-% % %     %  panel with custom Name-Value pairs.
-% % %     %  All standard plot properties of uipanel can be used.
-% % %     %
-% % %     % It is possible to access the properties of the various graphical
-% % %     %  objects from the handle H of the panel.
-% % %     %
-% % %     % See also update, redraw, refresh, uipanel.
+    %DRAW draws the panel of the string property.
+    %
+    % DRAW(PR) draws the panel of the string property.
+    %
+    % P = DRAW(PR) returns a handle to the property panel.
+    % 
+    % DRAW(PR, 'Property', VALUE, ...) sets the properties of the graphical
+    %  panel with custom Name-Value pairs.
+    %  All standard plot properties of uipanel can be used.
+    %
+    % It is possible to access the properties of the various graphical
+    %  objects from the handle P of the panel.
+    %
+    % See also update, redraw, uipanel.
     
     el = pr.get('EL');
     prop = pr.get('PROP');
@@ -57,11 +54,11 @@ function p_out = draw(pr, varargin)
     end
 end
 function update(pr)
-% % %     %UPDATE updates the content and permissions of the edit field.
-% % %     %
-% % %     % UPDATE(PR) updates the content and permissions of the edit field.
-% % %     %
-% % %     % See also draw, resize, refresh, PanelElement.
+    %UPDATE updates the content and permissions of the edit field.
+    %
+    % UPDATE(PR) updates the content and permissions of the edit field.
+    %
+    % See also draw, redraw, PanelElement.
 
     update@PanelProp(pr)
     
@@ -109,26 +106,25 @@ function update(pr)
     end
 end
 function redraw(pr, varargin)
-% % %     %REDRAW resizes the property panel and repositions its graphical objects.
-% % %     %
-% % %     % REDRAW(PR) resizes the property panel and repositions its
-% % %     %   graphical objects. 
-% % %     % 
-% % %     % Important notes:
-% % %     % 1. REDRAW() sets the units 'characters' for panel and all its graphical objects. 
-% % %     % 2. REDRAW() is typically called internally by PanelElement and does not need 
-% % %     %  to be explicitly called in children of PanelProp.
-% % %     %
-% % %     % REDRAW(PR, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT)
-% % %     %  repositions the property panel. It is possible to use a
-% % %     %  subset of the Name-Value pairs.
-% % %     %  By default:
-% % %     %  - X0 does not change
-% % %     %  - Y0 does not change
-% % %     %  - WIDTH does not change
-% % %     %  - HEIGHT=3.33 characters.
-% % %     %
-% % %     % See also draw, update, refresh, PanelElement.
+    %REDRAW resizes the property panel and repositions its graphical objects.
+    %
+    % REDRAW(PR) resizes the property panel and repositions its graphical objects. 
+    % 
+    % Important notes:
+    % 1. REDRAW() sets the units 'pixels' for panel. 
+    % 2. REDRAW() is typically called internally by PanelElement and does not need 
+    %  to be explicitly called in children of PanelProp.
+    %
+    % REDRAW(PR, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT)
+    %  repositions the property panel. It is possible to use a
+    %  subset of the Name-Value pairs.
+    %  By default:
+    %  - X0 does not change
+    %  - Y0 does not change
+    %  - WIDTH does not change
+    %  - HEIGHT = 3.5 * BRAPH2.FONTSIZE * BRAPH2.S
+    %
+    % See also draw, update, PanelElement, BRAPH2.
 
     [h_p, varagin] = get_and_remove_from_varargin(3.5 * BRAPH2.FONTSIZE * BRAPH2.S, 'Height', varargin);
 
@@ -142,9 +138,9 @@ function redraw(pr, varargin)
         ])
 end
 function cb_editfield(pr)
-% % %     %CB_EDIT_VALUE executes callback for the edit value.
-% % %     %
-% % %     % CB_EDIT_VALUE(PR) executes callback for the edit value.
+    %CB_EDIT_VALUE executes callback for the edit value.
+    %
+    % CB_EDIT_VALUE(PR) executes callback for the edit value.
 
     el = pr.get('EL');
     prop = pr.get('PROP');
