@@ -94,7 +94,7 @@ function create_Element(generator_file, target_dir)
 %  <strong>%%%% ¡gui!</strong>
 %   GUI code for representing the panel of the prop.
 %   Can be on multiple lines.
-%   Should return a PlotProp object in 'pr'.
+%   Should return a PanelProp object in 'pr'.
 % <strong>%%% ¡prop!</strong>
 %   <tag2> ...
 % 
@@ -421,7 +421,7 @@ generate_header()
             ['% ' class_name ' methods (GUI):']
              '%  getGUI - returns the element GUI'
              '%  getPlotElement - returns the element plot'
-             '%  getPlotProp - returns a prop plot'
+             '%  getPanelProp - returns a prop plot'
              '%'
             ['% ' class_name ' methods (GUI, Static):']
              '%  getGUIMenuImport - returns an importer menu'
@@ -1649,17 +1649,17 @@ generate_gui()
                 g(2, 'end')
             end
             if any(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props)) || any(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props_update))
-                g(2, ['function pr = getPlotProp(' moniker ', prop, varargin)'])
+                g(2, ['function pr = getPanelProp(' moniker ', prop, varargin)'])
                 gs(3, {
-                    '%GETPLOTPROP returns a prop plot.'
+                    '%GETPANELPROP returns a prop panel.'
                     '%'
-                    '% PR = GETPLOTPROP(EL, PROP) returns the plot of prop PROP.'
+                    '% PR = GETPANELPROP(EL, PROP) returns the panel of prop PROP.'
                     '%'
-                    '% PR = GETPLOTPROP(EL, PROP, ''Name'', Value, ...) sets the settings.'
+                    '% PR = GETPANELPROP(EL, PROP, ''Name'', Value, ...) sets the settings.'
                     '%'
-                    '% See also PlotProp, PlotPropCell, PlotPropClass, PlotPropClassList,'
-                    '%  PlotPropIDict, PlotPropItem, PlotPropItemList, PlotPropLogical,'
-                    '%  PlotPropMatrix, PlotPropOption, PlotPropScalar, PlotPropString.'
+                    '% See also PanelProp, PanelPropCell, PanelPropClass, PanelPropClassList,'
+                    '%  PanelPropIDict, PanelPropItem, PanelPropItemList, PanelPropLogical,'
+                    '%  PanelPropMatrix, PanelPropOption, PanelPropScalar, PanelPropString.'
                     ''
                     })
                 g(3, 'switch prop')
@@ -1678,7 +1678,7 @@ generate_gui()
                     end
                 end
                 g(4, 'otherwise')
-                gs(5, {['pr = getPlotProp@' superclass_name '(' moniker ', prop, varargin{:});'], ''})
+                gs(5, {['pr = getPanelProp@' superclass_name '(' moniker ', prop, varargin{:});'], ''})
                 g(3, 'end')
                 g(2, 'end')
             end            
