@@ -88,22 +88,22 @@ value = IndexedDictionary( ...
     );
 
 %%% ¡prop!
-DW (gui, markersize) is the margin along the width in pixels.
+DW (gui, size) is the margin along the width in pixels.
 %%%% ¡default!
 5
 
 %%% ¡prop!
-DH (gui, markersize) is the margin along the height in pixels.
+DH (gui, size) is the margin along the height in pixels.
 %%%% ¡default!
 5
 
 %%% ¡prop!
-WSLIDER (gui, markersize) is the slider width in pixels.
+WSLIDER (gui, size) is the slider width in pixels.
 %%%% ¡default!
 12
 
 %%% ¡prop!
-MIN_WIDTH (gui, markersize) is the minimal panel width in pixels.
+MIN_WIDTH (gui, size) is the minimal panel width in pixels.
 %%%% ¡default!
 300
 

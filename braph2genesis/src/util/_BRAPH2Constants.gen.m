@@ -7,12 +7,12 @@ BRAPH2
 %% ¡props!
 
 %%% ¡prop!
-FONTSIZE (gui, markersize) sets the size of the font in pixels.
+FONTSIZE (gui, size) sets the size of the font in pixels.
 %%%% ¡default!
 12
 
 %%% ¡prop!
-S (gui, markersize) sets the scaling factor of the graphical components.
+S (gui, size) sets the scaling factor of the graphical components.
 %%%% ¡default!
 1
 

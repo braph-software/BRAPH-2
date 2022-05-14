@@ -61,7 +61,10 @@ classdef Format < handle
     %
     %  ALPHA        Alpha is a transparency level between 0 and 1.
     %
-    %  MARKERSTYLE  MarkerStyle represents the marker style.
+    %  SIZE         Size represents the size of a graphical componet.
+    %               It is a positive numebr (default = 1).
+    %
+    %  MARKER       Marker represents the marker style.
     %               It can be 'o' (circle), '+' (plus), '*' (asterisk), 
     %               '.' (point), 'x' (cross), '_' (horizontal line), 
     %               '|' (vertical line), 's' (square), 'd' (diamond), 
@@ -69,15 +72,9 @@ classdef Format < handle
     %               '>' (right triangle), '<' (left triangle), 
     %               'p' (pentagram), 'h' (hexagram), '' (no marker).
     %
-    %  MARKERSIZE   MarkerSize represents the marker size.
-    %               It is a positive numebr (default = 1).
-    %
-    %  LINESTYLE    LineStyle represents the line style.
+    %  LINE         Line represents the line style.
     %               It can be '-' (solid), ':' (dotted), '-.' (dashdot),
     %               '--' (dashed), '' (no line).
-    %
-    %  LINEWIDTH    LineWidth represents the line width.
-    %               It is a positive numebr (default = 1).
     %
     % Format properties (Constant):
     %
@@ -153,21 +150,17 @@ classdef Format < handle
     %  ALPHA_NAME = 'alpha'
     %  ALPHA_DESCRIPTION
     %
-    %  MARKERSTYLE = 'ms'
-    %  MARKERSTYLE_NAME = 'markerstyle'
-    %  MARKERSTYLE_DESCRIPTION
+    %  SIZE = 'mw'
+    %  SIZE_NAME = 'size'
+    %  SIZE_DESCRIPTION
     %
-    %  MARKERSIZE = 'mw'
-    %  MARKERSIZE_NAME = 'markersize'
-    %  MARKERSIZE_DESCRIPTION
+    %  MARKER = 'ms'
+    %  MARKER_NAME = 'marker'
+    %  MARKER_DESCRIPTION
     %
-    %  LINESTYLE = 'ls'
-    %  LINESTYLE_NAME = 'linestyle'
-    %  LINESTYLE_DESCRIPTION
-    %
-    %  LINEWIDTH = 'lw'
-    %  LINEWIDTH_NAME = 'linewidth'
-    %  LINEWIDTH_DESCRIPTION
+    %  LINE = 'ls'
+    %  LINE_NAME = 'line'
+    %  LINE_DESCRIPTION
     %
     % Format methods (Static):
     %  getFormats - returns the list of formats
@@ -254,21 +247,17 @@ classdef Format < handle
         ALPHA_NAME = 'alpha'
         ALPHA_DESCRIPTION = 'Alpha is a transparency level between 0 and 1.'
 
-        MARKERSTYLE = 'ms'
-        MARKERSTYLE_NAME = 'markerstyle'
-        MARKERSTYLE_DESCRIPTION = 'MarkerStyle represents the marker style. It can be ''o'' (circle), ''+'' (plus), ''*'' (asterisk), ''.'' (point), ''x'' (cross), ''_'' (horizontal line), ''|'' (vertical line), ''s'' (square), ''d'' (diamond), ''^'' (upward triangle), ''v'' (downward triangle), ''>'' (right triangle), ''<'' (left triangle), ''p'' (pentagram), ''h'' (hexagram), '''' (no marker).'
+        SIZE = 'mw'
+        SIZE_NAME = 'size'
+        SIZE_DESCRIPTION = 'Size represents the size of a graphical component. It is a positive numebr (default = 1).'
 
-        MARKERSIZE = 'mw'
-        MARKERSIZE_NAME = 'markersize'
-        MARKERSIZE_DESCRIPTION = 'MarkerSize represents the marker size. It is a positive numebr (default = 1).'
+        MARKER = 'ms'
+        MARKER_NAME = 'marker'
+        MARKER_DESCRIPTION = 'Marker represents the marker style. It can be ''o'' (circle), ''+'' (plus), ''*'' (asterisk), ''.'' (point), ''x'' (cross), ''_'' (horizontal line), ''|'' (vertical line), ''s'' (square), ''d'' (diamond), ''^'' (upward triangle), ''v'' (downward triangle), ''>'' (right triangle), ''<'' (left triangle), ''p'' (pentagram), ''h'' (hexagram), '''' (no marker).'
 
-        LINESTYLE = 'ls'
-        LINESTYLE_NAME = 'linestyle'
-        LINESTYLE_DESCRIPTION = 'LineStyle represents the line style. It can be ''-'' (solid), '':'' (dotted), ''-.'' (dashdot), ''--'' (dashed), '''' (no line).'
-
-        LINEWIDTH = 'lw'
-        LINEWIDTH_NAME = 'linewidth'
-        LINEWIDTH_DESCRIPTION = 'LineWidth represents the line width. It is a positive numebr (default = 1).'
+        LINE = 'ls'
+        LINE_NAME = 'line'
+        LINE_DESCRIPTION = 'Line represents the line style. It can be ''-'' (solid), '':'' (dotted), ''-.'' (dashdot), ''--'' (dashed), '''' (no line).'
     end
     methods (Static)
         function formats = getFormats()
@@ -297,10 +286,9 @@ classdef Format < handle
                 Format.NET
                 Format.COLOR
                 Format.ALPHA
-                Format.MARKERSTYLE
-                Format.MARKERSIZE
-                Format.LINESTYLE
-                Format.LINEWIDTH
+                Format.SIZE
+                Format.MARKER
+                Format.LINE
                 };
         end
         function format_number = getFormatNumber()
@@ -310,7 +298,7 @@ classdef Format < handle
             %
             % See also getFormats, existsFormat.
 
-            format_number = 22; % numel(Format.getFormats()); %CET
+            format_number = 21; % numel(Format.getFormats()); %CET
         end
         function check = existsFormat(format)
             %EXISTSFORMAT returns whether a format exists/error.
@@ -384,14 +372,12 @@ classdef Format < handle
                     format_name = Format.COLOR_NAME;
                 case Format.ALPHA
                     format_name = Format.ALPHA_NAME;
-                case Format.MARKERSTYLE
-                    format_name = Format.MARKERSTYLE_NAME;
-                case Format.MARKERSIZE
-                    format_name = Format.MARKERSIZE_NAME;
-                case Format.LINESTYLE
-                    format_name = Format.LINESTYLE_NAME;
-                case Format.LINEWIDTH
-                    format_name = Format.LINEWIDTH_NAME;
+                case Format.SIZE
+                    format_name = Format.SIZE_NAME;
+                case Format.MARKER
+                    format_name = Format.MARKER_NAME;
+                case Format.LINE
+                    format_name = Format.LINE_NAME;
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end
@@ -477,14 +463,12 @@ classdef Format < handle
                     format_description = Format.COLOR_DESCRIPTION;
                 case Format.ALPHA
                     format_description = Format.ALPHA_DESCRIPTION;
-                case Format.MARKERSTYLE
-                    format_description = Format.MARKERSTYLE_DESCRIPTION;
-                case Format.MARKERSIZE
-                    format_description = Format.MARKERSIZE_DESCRIPTION;
-                case Format.LINESTYLE
-                    format_description = Format.LINESTYLE_DESCRIPTION;
-                case Format.LINEWIDTH
-                    format_description = Format.LINEWIDTH_DESCRIPTION;
+                case Format.SIZE
+                    format_description = Format.SIZE_DESCRIPTION;
+                case Format.MARKER
+                    format_description = Format.MARKER_DESCRIPTION;
+                case Format.LINE
+                    format_description = Format.LINE_DESCRIPTION;
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end
@@ -559,13 +543,11 @@ classdef Format < handle
                     format_settings = '';
                 case Format.ALPHA
                     format_settings = '';
-                case Format.MARKERSTYLE
+                case Format.SIZE
                     format_settings = '';
-                case Format.MARKERSIZE
+                case Format.MARKER
                     format_settings = '';
-                case Format.LINESTYLE
-                    format_settings = '';
-                case Format.LINEWIDTH
+                case Format.LINE
                     format_settings = '';
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
@@ -651,14 +633,12 @@ classdef Format < handle
                     format_default = BRAPH2.COL;
                 case Format.ALPHA
                     format_default = 1;
-                case Format.MARKERSTYLE
+                case Format.SIZE
+                    format_default = 1;
+                case Format.MARKER
                     format_default = 'o';
-                case Format.MARKERSIZE
-                    format_default = 1;
-                case Format.LINESTYLE
+                case Format.LINE
                     format_default = '-';
-                case Format.LINEWIDTH
-                    format_default = 1;
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end
@@ -745,14 +725,12 @@ classdef Format < handle
                     check = isnumeric(value) && (length(value) == 3) && all(value >= 0 & value <= 1);
                 case Format.ALPHA
                     check = isnumeric(value) && isscalar(value) && value >= 0 && value <= 1;
-                case Format.MARKERSTYLE
+                case Format.SIZE
+                    check = isnumeric(value) && isscalar(value) && value > 0;
+                case Format.MARKER
                     check = ischar(value) && any(strcmp(value, {'o', '+', '*', '.', 'x', '_', '|', 's', 'd', '^', 'v', '>', '<', 'p', 'h', ''}));
-                case Format.MARKERSIZE
-                    check = isnumeric(value) && isscalar(value) && value > 0;
-                case Format.LINESTYLE
+                case Format.LINE
                     check = ischar(value) && any(strcmp(value, {'-', ':', '-.', '--', ''}));
-                case Format.LINEWIDTH
-                    check = isnumeric(value) && isscalar(value) && value > 0;
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end

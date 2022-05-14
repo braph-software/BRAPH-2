@@ -80,16 +80,13 @@ PROP_COLOR_M (metadata, color) is a metadata, color.
 PROP_ALPHA_M (metadata, alpha) is a metadata, alpha.
 
 %%% ¡prop!
-PROP_MARKERSTYLE_M (metadata, markerstyle) is a metadata, markerstyle.
+PROP_SIZE_M (metadata, size) is a metadata, size.
 
 %%% ¡prop!
-PROP_MARKERSIZE_M (metadata, markersize) is a metadata, markersize.
+PROP_MARKER_M (metadata, marker) is a metadata, marker.
 
 %%% ¡prop!
-PROP_LINESTYLE_M (metadata, linestyle) is a metadata, markersize.
-
-%%% ¡prop!
-PROP_LINEWIDTH_M (metadata, linewidth) is a metadata, linewidth.
+PROP_LINE_M (metadata, line) is a metadata, line.
 
 %%% ¡prop!
 PROP_EMPTY_P (parameter, empty) is a parameter, empty.
@@ -170,16 +167,13 @@ PROP_COLOR_P (parameter, color) is a parameter, color.
 PROP_ALPHA_P (parameter, alpha) is a parameter, alpha.
 
 %%% ¡prop!
-PROP_MARKERSTYLE_P (parameter, markerstyle) is a parameter, markerstyle.
+PROP_SIZE_P (parameter, size) is a parameter, size.
 
 %%% ¡prop!
-PROP_MARKERSIZE_P (parameter, markersize) is a parameter, markersize.
+PROP_MARKER_P (parameter, marker) is a parameter, marker.
 
 %%% ¡prop!
-PROP_LINESTYLE_P (parameter, linestyle) is a parameter, markersize.
-
-%%% ¡prop!
-PROP_LINEWIDTH_P (parameter, linewidth) is a parameter, linewidth.
+PROP_LINE_P (parameter, line) is a parameter, line.
 
 %%% ¡prop!
 PROP_EMPTY_D (data, empty) is a data, empty.
@@ -240,16 +234,13 @@ PROP_COLOR_D (data, color) is a data, color.
 PROP_ALPHA_D (data, alpha) is a data, alpha.
 
 %%% ¡prop!
-PROP_MARKERSTYLE_D (data, markerstyle) is a data, markerstyle.
+PROP_SIZE_D (data, size) is a data, size.
 
 %%% ¡prop!
-PROP_MARKERSIZE_D (data, markersize) is a data, markersize.
+PROP_MARKER_D (data, marker) is a data, marker.
 
 %%% ¡prop!
-PROP_LINESTYLE_D (data, linestyle) is a data, markersize.
-
-%%% ¡prop!
-PROP_LINEWIDTH_D (data, linewidth) is a data, linewidth.
+PROP_LINE_D (data, line) is a data, line.
 
 %%% ¡prop!
 PROP_EMPTY_F (figure, empty) is a figure, empty.
@@ -318,16 +309,13 @@ PROP_COLOR_F (figure, color) is a figure, color.
 PROP_ALPHA_F (figure, alpha) is a figure, alpha.
 
 %%% ¡prop!
-PROP_MARKERSTYLE_F (figure, markerstyle) is a figure, markerstyle.
+PROP_SIZE_F (figure, size) is a figure, size.
 
 %%% ¡prop!
-PROP_MARKERSIZE_F (figure, markersize) is a figure, markersize.
+PROP_MARKER_F (figure, marker) is a figure, marker.
 
 %%% ¡prop!
-PROP_LINESTYLE_F (figure, linestyle) is a figure, markersize.
-
-%%% ¡prop!
-PROP_LINEWIDTH_F (figure, linewidth) is a figure, linewidth.
+PROP_LINE_F (figure, line) is a figure, line.
 
 %%% ¡prop!
 PROP_EMPTY_G (gui, empty) is a gui, empty.
@@ -396,16 +384,13 @@ PROP_COLOR_G (gui, color) is a gui, color.
 PROP_ALPHA_G (gui, alpha) is a gui, alpha.
 
 %%% ¡prop!
-PROP_MARKERSTYLE_G (gui, markerstyle) is a gui, markerstyle.
+PROP_SIZE_G (gui, size) is a gui, size.
 
 %%% ¡prop!
-PROP_MARKERSIZE_G (gui, markersize) is a gui, markersize.
+PROP_MARKER_G (gui, marker) is a gui, marker.
 
 %%% ¡prop!
-PROP_LINESTYLE_G (gui, linestyle) is a gui, markersize.
-
-%%% ¡prop!
-PROP_LINEWIDTH_G (gui, linewidth) is a gui, linewidth.
+PROP_LINE_G (gui, line) is a gui, line.
 
 %%% ¡prop!
 PROP_EMPTY_R (result, empty) is a result, empty.
@@ -462,16 +447,13 @@ PROP_COLOR_R (result, color) is a result, color.
 PROP_ALPHA_R (result, alpha) is a result, alpha.
 
 %%% ¡prop!
-PROP_MARKERSTYLE_R (result, markerstyle) is a result, markerstyle.
+PROP_SIZE_R (result, size) is a result, size.
 
 %%% ¡prop!
-PROP_MARKERSIZE_R (result, markersize) is a result, markersize.
+PROP_MARKER_R (result, marker) is a result, marker.
 
 %%% ¡prop!
-PROP_LINESTYLE_R (result, linestyle) is a result, markersize.
-
-%%% ¡prop!
-PROP_LINEWIDTH_R (result, linewidth) is a result, linewidth.
+PROP_LINE_R (result, line) is a result, line.
 
 %%% ¡prop!
 PROP_EMPTY_R_CALC (result, empty) is a result, empty.
@@ -546,16 +528,13 @@ PROP_COLOR_R_CALC (result, color) is a result, color.
 PROP_ALPHA_R_CALC (result, alpha) is a result, alpha.
 
 %%% ¡prop!
-PROP_MARKERSTYLE_R_CALC (result, markerstyle) is a result, markerstyle.
+PROP_SIZE_R_CALC (result, size) is a result, size.
 
 %%% ¡prop!
-PROP_MARKERSIZE_R_CALC (result, markersize) is a result, markersize.
+PROP_MARKER_R_CALC (result, marker) is a result, marker.
 
 %%% ¡prop!
-PROP_LINESTYLE_R_CALC (result, linestyle) is a result, markersize.
-
-%%% ¡prop!
-PROP_LINEWIDTH_R_CALC (result, linewidth) is a result, linewidth.
+PROP_LINE_R_CALC (result, line) is a result, line.
 
 %% ¡tests!
 

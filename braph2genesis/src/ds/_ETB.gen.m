@@ -79,16 +79,13 @@ PROP_COLOR_M (metadata, color) is a metadata, color.
 PROP_ALPHA_M (metadata, alpha) is a metadata, alpha.
 
 %%% ¡prop!
-PROP_MARKERSTYLE_M (metadata, markerstyle) is a metadata, markerstyle.
+PROP_SIZE_M (metadata, size) is a metadata, size.
 
 %%% ¡prop!
-PROP_MARKERSIZE_M (metadata, markersize) is a metadata, markersize.
+PROP_MARKER_M (metadata, marker) is a metadata, marker.
 
 %%% ¡prop!
-PROP_LINESTYLE_M (metadata, linestyle) is a metadata, markersize.
-
-%%% ¡prop!
-PROP_LINEWIDTH_M (metadata, linewidth) is a metadata, linewidth.
+PROP_LINE_M (metadata, line) is a metadata, size.
 
 %% ¡tests!
 
@@ -129,10 +126,9 @@ et.set('PROP_CELL_M', {ones(2), ones(3); ones(4), 1}) % 15
 %TODO: add NET
 et.set('PROP_COLOR_M', [1 0 0]) % 17
 et.set('PROP_ALPHA_M', .5) % 18
-et.set('PROP_MARKERSTYLE_M', '.') % 19
-et.set('PROP_MARKERSIZE_M', 5) % 20
-et.set('PROP_LINESTYLE_M', '--') % 21
-et.set('PROP_LINEWIDTH_M', 5) % 22
+et.set('PROP_SIZE_M', 5) % 19
+et.set('PROP_MARKER_M', '.') % 20
+et.set('PROP_LINE_M', '--') % 21
 
 [json, struct, el_list] = encodeJSON(et);
 
