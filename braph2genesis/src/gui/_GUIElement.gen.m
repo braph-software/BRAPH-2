@@ -67,11 +67,6 @@ true
 MENU_ABOUT (gui, logical) determines whether to show the menu about.
 %%%% ¡default!
 true
-%%%% ¡postprocessing!
-if check_graphics(gui.f, 'figure') && gui.get('MENUBAR') && gui.get('MENU_ABOUT') && ~check_graphics(gui.menu_about, 'uimenu') 
-    gui.menu_about = BRAPH2.add_menu_about(gui.f);
-1    
-end
 
 %%% ¡prop!
 TOOLBAR (gui, logical) determines whether to show the toolbar.
@@ -95,10 +90,6 @@ true
 
 %% ¡properties!
 f % handle for figure 
-pp % handle for parent panel of the element panel
-p % panel element
-
-% % % text_filename % handle for text field filename
 
 % % % menu_file
 % % % menu_import
@@ -107,6 +98,11 @@ p % panel element
 menu_about
 
 % % % toolbar
+
+pp % handle for parent panel of the element panel
+p % panel element
+
+% % % text_filename % handle for text field filename
 
 % % % f_layout % handle to figure with panel to manage layout
 
@@ -145,69 +141,7 @@ function f_out = draw(gui, varargin)
     end
     gui.set('NAME', [el.getClass() ' - ' name ' - ' BRAPH2.STR])
 
-    % Draw text filename
-% % %     if ~check_graphics(gui.text_filename, 'text')
-% % %         gui.text_filename = uicontrol( ...
-% % %             'Parent', gui.f, ...
-% % %             'Tag', 'text_filename', ...
-% % %             'Style','text', ...
-% % %             'Units', 'character', ...
-% % %             'HorizontalAlignment', 'left', ...
-% % %             'String', gui.get('FILE') ...
-% % %             );
-% % %     end
-% % % % FIXME: check whether to bring out the update filename    
-% % %     function update_filename()
-% % %         set(gui.text_filename, 'String', gui.get('FILE'))
-% % %     end
-
-    % Draw panel element (p) contained in a parent panel (pp)
-    if ~check_graphics(gui.pp, 'uipanel')
-        gui.pp = uipanel( ...
-            'Parent', gui.f, ...
-            'Tag', 'pp', ...
-            'BorderType', 'none', ...
-            'Scrollable', 'on', ...
-            'AutoResizeChildren', 'off' ...
-            );
-    end
-    gui.p = pe.draw('Parent', gui.pp);
-
-    % Callback on resize
-    set(gui.f, ...
-        'AutoResizeChildren', 'off', ...
-        'SizeChangedFcn', {@cb_resize} ...
-        );
-    function cb_resize(~, ~) % (src, event)
-        h_filename = ceil(1.5 * BRAPH2.FONTSIZE * BRAPH2.S);
-%         set(gui.text_filename, ...
-%             'Position', [0 0 w(gui.f, 'pixels') h_filename] ...
-%             )
-        set(gui.pp, ...
-            'Units', 'pixels', ...
-            'Position', [0 h_filename w(gui.f, 'pixels') h(gui.f, 'pixels')-h_filename] ...
-            );
-        pe.redraw( ... 
-            'X0', 0, ...
-            'Y0', 0, ...
-            'Width', w(gui.pp, 'pixels') ...
-            )
-    end
-    cb_resize()
-
-
-% % %     %% ELEMENT PANEL
-% % %     % draw element parent panel
-% % %     if ~check_graphics(gui.pp, 'uipanel')
-% % %         gui.pp = uipanel( ...
-% % %             'Parent', gui.f, ...
-% % %             'Tag', 'pp', ...
-% % %             'BorderType', 'none' ...
-% % %             );
-% % %     end
-% % %     pe.draw('Parent', gui.pp)
-% % %     
-% % %     %% Menu
+    % Menu
 % % %     if gui.get('MENUBAR') && gui.get('MENU_FILE') && ~check_graphics(gui.menu_file, 'uimenu')
 % % %         gui.menu_file = uimenu(gui.f, 'Label', 'File');
 % % %         uimenu(gui.menu_file, ...
@@ -414,7 +348,14 @@ function f_out = draw(gui, varargin)
 % % %         end
 % % %     end
 
-% % %     %% Toolbar
+    if gui.get('MENUBAR') && gui.get('MENU_ABOUT') && check_graphics(gui.f, 'figure') && ~check_graphics(gui.menu_about, 'uimenu') 
+        gui.menu_about = BRAPH2.add_menu_about(gui.f);
+    elseif (~gui.get('MENUBAR') || ~gui.get('MENU_ABOUT'))
+        delete(gui.menu_about)
+    end
+
+
+    % Toolbar
 % % %     if gui.get('TOOLBAR') && ~check_graphics(gui.toolbar, 'uitoolbar')
 % % %         set(gui.f, 'Toolbar', 'figure')
 % % % 
@@ -501,6 +442,53 @@ function f_out = draw(gui, varargin)
 % % %             BRAPH2.add_tool_about(gui.toolbar)
 % % %         end
 % % %     end
+
+    % Draw text filename
+% % %     if ~check_graphics(gui.text_filename, 'text')
+% % %         gui.text_filename = uicontrol( ...
+% % %             'Parent', gui.f, ...
+% % %             'Tag', 'text_filename', ...
+% % %             'Style','text', ...
+% % %             'Units', 'character', ...
+% % %             'HorizontalAlignment', 'left', ...
+% % %             'String', gui.get('FILE') ...
+% % %             );
+% % %     end
+% % % % FIXME: check whether to bring out the update filename    
+% % %     function update_filename()
+% % %         set(gui.text_filename, 'String', gui.get('FILE'))
+% % %     end
+
+    % Draw panel element (p) contained in a parent panel (pp)
+    if ~check_graphics(gui.pp, 'uipanel')
+        gui.pp = uipanel( ...
+            'Parent', gui.f, ...
+            'Tag', 'pp', ...
+            'BorderType', 'none', ...
+            'Scrollable', 'on', ...
+            'AutoResizeChildren', 'off' ...
+            );
+    end
+    gui.p = pe.draw('Parent', gui.pp);
+
+    % Callback on resize
+    set(gui.f, 'SizeChangedFcn', {@cb_resize});
+    function cb_resize(~, ~) % (src, event)
+        h_filename = ceil(1.5 * BRAPH2.FONTSIZE * BRAPH2.S);
+%         set(gui.text_filename, ...
+%             'Position', [0 0 w(gui.f, 'pixels') h_filename] ...
+%             )
+        set(gui.pp, ...
+            'Units', 'pixels', ...
+            'Position', [0 h_filename w(gui.f, 'pixels') h(gui.f, 'pixels')-h_filename] ...
+            );
+        pe.redraw( ... 
+            'X0', 0, ...
+            'Y0', 0, ...
+            'Width', w(gui.pp, 'pixels') ...
+            )
+    end
+    cb_resize()
 
     % output
     if nargout > 0
