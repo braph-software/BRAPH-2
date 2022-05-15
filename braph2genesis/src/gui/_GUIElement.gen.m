@@ -126,7 +126,18 @@ function f_out = draw(gui, varargin)
 % % %     %
 % % %     % See also cb_bring_to_front, figure.
 
-    gui.f = uifigure(varargin{:});
+    gui.f = draw@GUI(gui, varargin{:});
+    
+    pe = gui.get('PE');
+    el = pe.get('EL');
+    
+    % Set GUI name
+    if el.existsTag('ID')
+        name = el.get('ID');
+    else
+        name = el.tostring();
+    end
+    gui.set('NAME', [el.getClass() ' - ' name ' - ' BRAPH2.STR])
 
     % Draw text filename
 % % %     if ~check_graphics(gui.text_filename, 'text')
@@ -145,14 +156,12 @@ function f_out = draw(gui, varargin)
 % % %     end
 
     % Draw panel element (p) contained in a parent panel (pp)
-    pe = gui.get('pe');
     if ~check_graphics(gui.pp, 'uipanel')
         gui.pp = uipanel( ...
             'Parent', gui.f, ...
             'Tag', 'pp', ...
             'BorderType', 'none', ...
             'Scrollable', 'on', ...
-'BackgroundColor', 'k', ...
             'AutoResizeChildren', 'off' ...
             );
     end
@@ -633,3 +642,5 @@ end
 % % %         pr.cb_close()
 % % %     end
 % % % end
+
+%% ¡tests!
