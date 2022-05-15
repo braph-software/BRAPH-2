@@ -354,7 +354,6 @@ function f_out = draw(gui, varargin)
         delete(gui.menu_about)
     end
 
-
     % Toolbar
 % % %     if gui.get('TOOLBAR') && ~check_graphics(gui.toolbar, 'uitoolbar')
 % % %         set(gui.f, 'Toolbar', 'figure')
