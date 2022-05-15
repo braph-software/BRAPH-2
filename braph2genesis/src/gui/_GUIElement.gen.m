@@ -38,55 +38,60 @@ end
 %%% ¡prop!
 FILE (data, string) is the B2 file where the element is saved.
 
-% % % %%% ¡prop!
-% % % MENUBAR (gui, logical) determines whether to show the menubar.
-% % % %%%% ¡default!
-% % % true
-% % % 
-% % % %%% ¡prop!
-% % % MENU_FILE (gui, logical) determines whether to show the menu file.
-% % % %%%% ¡default!
-% % % true
-% % % 
-% % % %%% ¡prop!
-% % % MENU_IMPORT (gui, logical) determines whether to show the menu import.
-% % % %%%% ¡default!
-% % % true
-% % % 
-% % % %%% ¡prop!
-% % % MENU_EXPORT (gui, logical) determines whether to show the menu export.
-% % % %%%% ¡default!
-% % % true
-% % % 
-% % % %%% ¡prop!
-% % % MENU_PERSONALIZE (gui, logical) determines whether to show the menu personalize.
-% % % %%%% ¡default!
-% % % true
-% % % 
-% % % %%% ¡prop!
-% % % MENU_ABOUT (gui, logical) determines whether to show the menu about.
-% % % %%%% ¡default!
-% % % true
-% % % 
-% % % %%% ¡prop!
-% % % TOOLBAR (gui, logical) determines whether to show the toolbar.
-% % % %%%% ¡default!
-% % % true
-% % % 
-% % % %%% ¡prop!
-% % % TOOL_FIG (gui, logical) determines whether to show the toolbar figure buttons.
-% % % %%%% ¡default!
-% % % false
-% % % 
-% % % %%% ¡prop!
-% % % TOOL_FILE (gui, logical) determines whether to show the toolbar file buttons.
-% % % %%%% ¡default!
-% % % true
-% % % 
-% % % %%% ¡prop!
-% % % TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons.
-% % % %%%% ¡default!
-% % % true
+%%% ¡prop!
+MENUBAR (gui, logical) determines whether to show the menubar.
+%%%% ¡default!
+true
+
+%%% ¡prop!
+MENU_FILE (gui, logical) determines whether to show the menu file.
+%%%% ¡default!
+true
+
+%%% ¡prop!
+MENU_IMPORT (gui, logical) determines whether to show the menu import.
+%%%% ¡default!
+true
+
+%%% ¡prop!
+MENU_EXPORT (gui, logical) determines whether to show the menu export.
+%%%% ¡default!
+true
+
+%%% ¡prop!
+MENU_PERSONALIZE (gui, logical) determines whether to show the menu personalize.
+%%%% ¡default!
+true
+
+%%% ¡prop!
+MENU_ABOUT (gui, logical) determines whether to show the menu about.
+%%%% ¡default!
+true
+%%%% ¡postprocessing!
+if check_graphics(gui.f, 'figure') && gui.get('MENUBAR') && gui.get('MENU_ABOUT') && ~check_graphics(gui.menu_about, 'uimenu') 
+    gui.menu_about = BRAPH2.add_menu_about(gui.f);
+1    
+end
+
+%%% ¡prop!
+TOOLBAR (gui, logical) determines whether to show the toolbar.
+%%%% ¡default!
+true
+
+%%% ¡prop!
+TOOL_FIG (gui, logical) determines whether to show the toolbar figure buttons.
+%%%% ¡default!
+false
+
+%%% ¡prop!
+TOOL_FILE (gui, logical) determines whether to show the toolbar file buttons.
+%%%% ¡default!
+true
+
+%%% ¡prop!
+TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons.
+%%%% ¡default!
+true
 
 %% ¡properties!
 f % handle for figure 
@@ -94,14 +99,15 @@ pp % handle for parent panel of the element panel
 p % panel element
 
 % % % text_filename % handle for text field filename
-% % % 
-% % % toolbar
+
 % % % menu_file
 % % % menu_import
 % % % menu_export
 % % % menu_personalize
-% % % menu_about
-% % % 
+menu_about
+
+% % % toolbar
+
 % % % f_layout % handle to figure with panel to manage layout
 
 %% ¡methods!
@@ -407,42 +413,7 @@ function f_out = draw(gui, varargin)
 % % %             close(gui.f_layout)
 % % %         end
 % % %     end
-% % % 
-% % %     if gui.get('MENUBAR') && gui.get('MENU_ABOUT') && ~check_graphics(gui.menu_about, 'uimenu') 
-% % % % % %         gui.menu_about = uimenu(gui.f, 'Label', 'About');
-% % % % % %         uimenu(gui.menu_about, ...
-% % % % % %             'Label', 'BRAPH.org ...', ...
-% % % % % %             'Callback', {@cb_web})
-% % % % % %         uimenu(gui.menu_about, ...
-% % % % % %             'Label', 'Forum...', ...
-% % % % % %             'Callback', {@cb_forum})
-% % % % % %         uimenu(gui.menu_about, ...
-% % % % % %             'Label', 'Twitter ...', ...
-% % % % % %             'Callback', {@cb_twitter})
-% % % % % %         uimenu(gui.menu_about, ...
-% % % % % %             'Label', 'License ...', ...
-% % % % % %             'Callback', {@cb_license})
-% % % % % %         uimenu(gui.menu_about, ...
-% % % % % %             'Label', 'Credits ...', ...
-% % % % % %             'Callback', {@cb_credits})
-% % %         gui.menu_about = BRAPH2.add_menu_about(gui.f);
-% % %     end
-% % % % % %     function cb_web(~, ~)
-% % % % % %         BRAPH2.web()
-% % % % % %     end
-% % % % % %     function cb_forum(~, ~)
-% % % % % %         BRAPH2.forum()
-% % % % % %     end
-% % % % % %     function cb_twitter(~, ~)
-% % % % % %         BRAPH2.twitter()
-% % % % % %     end
-% % % % % %     function cb_license(~, ~)
-% % % % % %         BRAPH2.license()
-% % % % % %     end
-% % % % % %     function cb_credits(~, ~)
-% % % % % %         BRAPH2.credits()
-% % % % % %     end
-% % % 
+
 % % %     %% Toolbar
 % % %     if gui.get('TOOLBAR') && ~check_graphics(gui.toolbar, 'uitoolbar')
 % % %         set(gui.f, 'Toolbar', 'figure')
@@ -530,11 +501,7 @@ function f_out = draw(gui, varargin)
 % % %             BRAPH2.add_tool_about(gui.toolbar)
 % % %         end
 % % %     end
-% % % 
-% % %     %% SHOW and OUTPUT
-% % %     % show figure
-% % %     set(gui.f, 'Visible', 'on')
-    
+
     % output
     if nargout > 0
         f_out = gui.f;
@@ -644,3 +611,13 @@ end
 % % % end
 
 %% ¡tests!
+
+%%% ¡test! 
+%%%% ¡name!
+Basic use
+%%%% ¡code!
+et = ETA();
+gui = GUIElement('PE', et);
+f1 = gui.draw();
+f2 = gui.draw();
+close(f2)
