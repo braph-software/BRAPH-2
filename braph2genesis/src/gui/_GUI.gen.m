@@ -117,28 +117,7 @@ function f_out = draw(gui, varargin)
     
     % callback on close request
     function cb_close(~, ~)
-        if check_graphics(gui.f, 'figure')
-
-            name = gui.get('NAME');
-            
-            if gui.get('CLOSEREQ')
-                DefaultUicontrolBackgroundColor_BAK = get(0, 'DefaultUicontrolBackgroundColor');
-                set(0, 'DefaultUicontrolBackgroundColor', BRAPH2.COL_FIG)
-                selection = questdlg(['Do you want to close ' name '?'], ...
-                    ['Close ' name], ...
-                    'Yes', 'No', 'Yes');
-                set(0, 'DefaultUicontrolBackgroundColor', DefaultUicontrolBackgroundColor_BAK)
-            else
-                selection = 'Yes';
-            end
-
-            switch selection
-                case 'Yes'
-                    gui.cb_close()
-                case 'No'
-                    return
-            end
-        end
+        gui.cb_close()
     end
 
     % show figure
@@ -185,5 +164,26 @@ function cb_close(gui)
     %  
     % See also cb_bring_to_front, cb_hide.
     
-    delete(gui.f)
+    if check_graphics(gui.f, 'figure')
+
+        name = gui.get('NAME');
+
+        if gui.get('CLOSEREQ')
+            DefaultUicontrolBackgroundColor_BAK = get(0, 'DefaultUicontrolBackgroundColor');
+            set(0, 'DefaultUicontrolBackgroundColor', BRAPH2.COL_FIG)
+            selection = questdlg(['Do you want to close ' name '?'], ...
+                ['Close ' name], ...
+                'Yes', 'No', 'Yes');
+            set(0, 'DefaultUicontrolBackgroundColor', DefaultUicontrolBackgroundColor_BAK)
+        else
+            selection = 'Yes';
+        end
+
+        switch selection
+            case 'Yes'
+                delete(gui.f)
+            case 'No'
+                return
+        end
+    end
 end
