@@ -213,7 +213,7 @@ function [mbq, ds, numFeatures, numClasses] = reconstruct_dataset(nn, gr)
         
         T = cat(1, labels{:});
         numClasses = size(T, 2);
-        
+        features(isnan(features) | isinf(features)) = 0;
         features = arrayDatastore(features, 'IterationDimension', 3);
         adjacency = arrayDatastore(adjacency, 'IterationDimension', 3);
         target = arrayDatastore(T);
