@@ -188,7 +188,7 @@ function redraw(pe, varargin)
     x0_p = ceil(get_from_varargin(x0(p, 'pixels'), 'X0', varargin));
     y0_p = ceil(get_from_varargin(y0(p, 'pixels'), 'Y0', varargin));
     w_p = ceil(max(get_from_varargin(w(p, 'pixels'), 'Width', varargin), pe.get('MIN_WIDTH')));
-    % h_p will be calculated later
+    h_p = ceil(get_from_varargin(w(p, 'pixels'), 'Height', varargin));
     
     % graphics constants
     dh = ceil(pe.get('DH') * BRAPH2.S);
@@ -206,19 +206,23 @@ function redraw(pe, varargin)
     h_pp = cellfun(@(x) h(x, 'pixels'), pr_list);
     y0_pp = sum(h_pp + dh) - cumsum(h_pp + dh) + dh;
     
-    % reposition prop panels
-    for prop = 1:1:length(pr_list)
-        pr = pr_list{prop};
-        set(pr, 'Position', [x0_pp y0_pp(prop) w(pr) h(pr)])
-    end
-    
     % calculate and set height panel (p)
-    h_p = sum(h_pp + dh) + dh;
+    if sum(h_pp + dh) + dh > h_p
+        h_p = sum(h_pp + dh) + dh;
+    else
+        y0_pp = y0_pp + (h_p - sum(h_pp + dh) + dh);
+    end
 
     set(p, ...
         'Units', 'pixels', ...
         'Position', [x0_p y0_p w_p h_p] ...
         )
+    
+    % reposition prop panels
+    for prop = 1:1:length(pr_list)
+        pr = pr_list{prop};
+        set(pr, 'Position', [x0_pp y0_pp(prop) w(pr) h(pr)])
+    end    
 end
 function reinit(pe, el)
     %REINIT resets the element, and updates and redraws the element plot.
