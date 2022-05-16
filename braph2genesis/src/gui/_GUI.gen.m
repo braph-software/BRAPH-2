@@ -59,12 +59,24 @@ if check_graphics(gui.f, 'figure') && ~isequal(get(gui.f, 'Color'), gui.get('BKG
 end
 
 %%% ¡prop!
+MENUBAR (gui, logical) determines whether to show the menubar.
+%%%% ¡default!
+false
+
+%%% ¡prop!
+TOOLBAR (gui, logical) determines whether to show the toolbar.
+%%%% ¡default!
+false
+
+%%% ¡prop!
 CLOSEREQ (gui, logical) determines whether to confirm close.
 %%%% ¡default!
 true
 
 %% ¡properties!
 f % handle for figure 
+menubar
+toolbar
 
 %% ¡methods!
 function f_out = draw(gui, varargin)
@@ -101,6 +113,12 @@ function f_out = draw(gui, varargin)
             'CloseRequestFcn', {@cb_close}, ...
             varargin{:} ...
             );
+        if gui.get('MENUBAR')
+            gui.menubar = uimenu(gui.f);
+        end
+        if gui.get('TOOLBAR')
+            gui.toolbar = uitoolbar(gui.f);
+        end
     elseif ~isempty(varargin)
         set(gui.f, varargin{:})
     end
