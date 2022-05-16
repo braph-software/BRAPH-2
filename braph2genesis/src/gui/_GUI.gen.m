@@ -98,6 +98,9 @@ function f_out = draw(gui, varargin)
     %
     % See also cb_bring_to_front, uifigure.
 
+    % whether to draw and make the figure visible
+    [draw, varargin] = get_and_remove_from_varargin(true, 'Draw', varargin{:});
+    
     % draw figure
     if ~check_graphics(gui.f, 'figure')
         gui.f = uifigure( ...
@@ -150,8 +153,10 @@ function f_out = draw(gui, varargin)
     end
 
     % show figure
-    drawnow()
-    set(gui.f, 'Visible', 'on')
+    if draw
+        drawnow()
+        set(gui.f, 'Visible', 'on')
+    end
     
     % output
     if nargout > 0
