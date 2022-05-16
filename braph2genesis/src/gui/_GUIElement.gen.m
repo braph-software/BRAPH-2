@@ -39,11 +39,6 @@ end
 FILE (data, string) is the B2 file where the element is saved.
 
 %%% ¡prop!
-MENUBAR (gui, logical) determines whether to show the menubar.
-%%%% ¡default!
-true
-
-%%% ¡prop!
 MENU_FILE (gui, logical) determines whether to show the menu file.
 %%%% ¡default!
 true
@@ -65,11 +60,6 @@ true
 
 %%% ¡prop!
 MENU_ABOUT (gui, logical) determines whether to show the menu about.
-%%%% ¡default!
-true
-
-%%% ¡prop!
-TOOLBAR (gui, logical) determines whether to show the toolbar.
 %%%% ¡default!
 true
 
@@ -487,6 +477,11 @@ function f_out = draw(gui, varargin)
             'Width', w(gui.pp, 'pixels') ...
             )
     end
+% set(gui.f, 'Units', 'pixels')
+% pos = get(gui.f, 'Position');
+% if ~isempty(pos)
+%     set(gui.f, 'Position', pos + 1)
+% end
     cb_resize()
 
     % output
