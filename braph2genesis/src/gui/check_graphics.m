@@ -6,7 +6,7 @@ function check = check_graphics(h, type)
 % CHECK = CHECK_GRAPHICS(H, TYPE) returns whether the H is a graphic object 
 %  of the kind TYPE = 'figure', 'uipanel', 'axes', 'uitable', 'uimenu',
 %  'uicontextmenu', 'uitoolbar', 'uipushtool', 
-%  'uibutton', 'uilabel', 
+%  'uibutton', 'uilabel', 'uieditfield', 'uicheckbox'
 %  'pushbutton',
 %  'togglebutton', 'checkbox', 'radiobutton', 'edit', 'text', 'slider',
 %  'listbox', 'popupmenu', 
@@ -46,6 +46,10 @@ if nargout == 1
                 check = ~isempty(h) && isgraphics(h, 'uibutton');
             case 'uilabel'
                 check = ~isempty(h) && isgraphics(h, 'uilabel');
+            case 'uieditfield'
+                check = ~isempty(h) && isgraphics(h, 'uieditfield');
+            case 'uicheckbox'
+                check = ~isempty(h) && isgraphics(h, 'uicheckbox');
             case 'pushbutton'
                 check = ~isempty(h) && isgraphics(h, 'uicontrol') && strcmpi(get(h, 'Style'), 'pushbutton');
             case 'togglebutton'
