@@ -206,6 +206,12 @@ function redraw(pe, varargin)
     h_pp = cellfun(@(x) h(x, 'pixels'), pr_list);
     y0_pp = sum(h_pp + dh) - cumsum(h_pp + dh) + dh;
     
+    % reposition prop panels
+    for prop = 1:1:length(pr_list)
+        pr = pr_list{prop};
+        set(pr, 'Position', [x0_pp y0_pp(prop) w(pr) h(pr)])
+    end
+    
     % calculate and set height panel (p)
     h_p = sum(h_pp + dh) + dh;
 
@@ -213,12 +219,6 @@ function redraw(pe, varargin)
         'Units', 'pixels', ...
         'Position', [x0_p y0_p w_p h_p] ...
         )
-    
-    % reposition prop panels
-    for prop = 1:1:length(pr_list)
-        pr = pr_list{prop};
-        set(pr, 'Position', [x0_pp y0_pp(prop) w(pr) h(pr)])
-    end
 end
 function reinit(pe, el)
     %REINIT resets the element, and updates and redraws the element plot.
