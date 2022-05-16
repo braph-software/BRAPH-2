@@ -483,7 +483,8 @@ function f_out = draw(gui, varargin)
         pe.redraw( ... 
             'X0', 0, ...
             'Y0', 0, ...
-            'Width', w(gui.pp, 'pixels') ...
+            'Width', w(gui.pp, 'pixels'), ...
+            'Height', h(gui.pp, 'pixels') ...
             )
     end
     cb_resize()
@@ -606,8 +607,13 @@ end
 %%%% ¡name!
 Basic use
 %%%% ¡code!
-et = ETA();
-gui = GUIElement('PE', et);
-f1 = gui.draw();
+et1 = ETA();
+gui1 = GUIElement('PE', et1, 'MENUBAR', true, 'TOOLBAR', true);
+f1a = gui.draw();
+f1b = gui.draw();
+close(f1b)
+
+b2 = BRAPH2Constants();
+gui2 = GUIElement('PE', b2, 'MENUBAR', true, 'TOOLBAR', true);
 f2 = gui.draw();
 close(f2)
