@@ -87,14 +87,14 @@ menu_export
 menu_personalize
 menu_about
 
-% % % toolbar
+toolbar
 
 pp % handle for parent panel of the element panel
 p % panel element
 
-% % % text_filename % handle for text field filename
+text_filename % handle for text field filename
 
-% % % f_layout % handle to figure with panel to manage layout
+f_layout % handle to figure with panel to manage layout
 
 %% ¡methods!
 function f_out = draw(gui, varargin)
@@ -155,45 +155,44 @@ function f_out = draw(gui, varargin)
     elseif (~gui.get('MENUBAR') || ~gui.get('MENU_FILE'))
         delete(gui.menu_file)
     end
-    % % %     function cb_open(~, ~)
-    % % %         % select file
-    % % %         [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
-    % % %         if filterindex
-    % % %             filename = fullfile(path, file);
-    % % % % % %             tmp = load(filename, '-mat', 'el');
-    % % % tmp_el = BRAPH2.load(filename);
-    % % %             if strcmp(tmp_el.getClass(), el.getClass())
-    % % %                 pe.reinit(tmp_el)
-    % % %                 el = tmp_el; % update local variable 'el' to synchronize it with pe 'el'  
-    % % %                 gui.draw()
-    % % %             else
-    % % %                 GUI('PE', tmp.el, 'FILE', filename).draw()
-    % % %             end
-    % % %         end
-    % % %     end
-    % % %     function cb_save(~, ~)
-    % % %         filename = gui.get('FILE');
-    % % %         if isfile(filename)
-    % % % % % %             build = BRAPH2.BUILD;
-    % % % % % %             save(filename, 'el', 'build');
-    % % % BRAPH2.save(el, filename)
-    % % %         else
-    % % %             cb_saveas();
-    % % %         end
-    % % %     end
-    % % %     function cb_saveas(~, ~)
-    % % %         % select file
-    % % %         [file, path, filterindex] = uiputfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
-    % % %         % save file
-    % % %         if filterindex
-    % % %             filename = fullfile(path, file);
-    % % % % % %             build = BRAPH2.BUILD;
-    % % % % % %             save(filename, 'el', 'build');
-    % % % BRAPH2.save(el, filename)
-    % % %             gui.set('FILE', filename)
-    % % %             update_filename();
-    % % %         end
-    % % %     end
+    function cb_open(~, ~)
+    %         % select file
+    %         [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
+    %         if filterindex
+    %             filename = fullfile(path, file);
+    % % % %             tmp = load(filename, '-mat', 'el');
+    % tmp_el = BRAPH2.load(filename);
+    %             if strcmp(tmp_el.getClass(), el.getClass())
+    %                 pe.reinit(tmp_el)
+    %                 el = tmp_el; % update local variable 'el' to synchronize it with pe 'el'  
+    %                 gui.draw()
+    %             else
+    %                 GUI('PE', tmp.el, 'FILE', filename).draw()
+    %             end
+    %         end
+    end
+    function cb_save(~, ~)
+        filename = gui.get('FILE');
+        if isfile(filename)
+            BRAPH2.save(el, filename)
+        else
+            cb_saveas();
+        end
+    end
+    function cb_saveas(~, ~)
+        % select file
+        [file, path, filterindex] = uiputfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
+        % save file
+        if filterindex
+            filename = fullfile(path, file);
+            BRAPH2.save(el, filename)
+            gui.set('FILE', filename)
+            update_filename();
+        end
+    end
+    function cb_close(~, ~)
+        gui.cb_close()
+    end
     
     if gui.get('MENUBAR') && gui.get('MENU_IMPORT') && check_graphics(gui.f, 'figure') && ~check_graphics(gui.menu_import, 'uimenu')
         gui.menu_import = uimenu(gui.f, ...
@@ -202,14 +201,15 @@ function f_out = draw(gui, varargin)
     elseif (~gui.get('MENUBAR') || ~gui.get('MENU_IMPORT'))
         delete(gui.menu_import)
     end
-    % % % % % % % %     function cb_refresh_import_menu(~,~)
+    function cb_refresh_import_menu(~,~)
+disp('refresh import')
     % % % % % % % %         im_menus = get(gui.menu_import, 'Children');
     % % % % % % % %         for i = 1:1:length(im_menus)
     % % % % % % % %             delete(im_menus(i));
     % % % % % % % %         end
     % % % % % % % %         eval([el.getClass() '.getGUIMenuImport(el, gui.menu_import, pe)']);
     % % % % % % % %         el = pe.get('el');
-    % % % % % % % %     end    
+    end    
 
     if gui.get('MENUBAR') && gui.get('MENU_EXPORT') && check_graphics(gui.f, 'figure') && ~check_graphics(gui.menu_export, 'uimenu')
         gui.menu_export = uimenu(gui.f, ...
@@ -218,14 +218,15 @@ function f_out = draw(gui, varargin)
     elseif (~gui.get('MENUBAR') || ~gui.get('MENU_EXPORT'))
         delete(gui.menu_export)
     end
-    % % % % % % % %     function cb_refresh_export_menu(~,~)
+    function cb_refresh_export_menu(~,~)
+disp('refresh export')        
     % % % % % % % %         el = pe.get('el');
     % % % % % % % %         ex_menus = get(gui.menu_export, 'Children');
     % % % % % % % %         for i = 1:length(ex_menus)
     % % % % % % % %             delete(ex_menus(i));
     % % % % % % % %         end
     % % % % % % % %         eval([el.getClass() '.getGUIMenuExport(el, gui.menu_export, pe)']);
-    % % % % % % % %     end
+     end
 
     if gui.get('MENUBAR') && gui.get('MENU_PERSONALIZE') && check_graphics(gui.f, 'figure') && ~check_graphics(gui.menu_personalize, 'uimenu')
         gui.menu_personalize = uimenu(gui.f, 'Label', 'Personalize');
@@ -235,7 +236,8 @@ function f_out = draw(gui, varargin)
     elseif (~gui.get('MENUBAR') || ~gui.get('MENU_PERSONALIZE'))
         delete(gui.menu_personalize)
     end
-    % % % % % % % %     function cb_layout(~, ~)
+    function cb_layout(~, ~)
+disp('layout')        
     % % % % % % % %         if isgraphics(gui.f_layout, 'figure')
     % % % % % % % %             delete(gui.f_layout)
     % % % % % % % %         end
@@ -345,7 +347,7 @@ function f_out = draw(gui, varargin)
     % % % % % % % %         function cb_cancel_edit(~, ~)
     % % % % % % % %             close(gui.f_layout)
     % % % % % % % %         end
-    % % % % % % % %     end
+    end
 
     if gui.get('MENUBAR') && gui.get('MENU_ABOUT') && check_graphics(gui.f, 'figure') && ~check_graphics(gui.menu_about, 'uimenu') 
         gui.menu_about = BRAPH2.add_menu_about(gui.f);
@@ -440,22 +442,23 @@ function f_out = draw(gui, varargin)
 % % % % % % % %             BRAPH2.add_tool_about(gui.toolbar)
 % % % % % % % %         end
 % % % % % % % %     end
-% % % % % 
-% % % % %     % Draw text filename
-% % % % % % % %     if ~check_graphics(gui.text_filename, 'text')
-% % % % % % % %         gui.text_filename = uicontrol( ...
-% % % % % % % %             'Parent', gui.f, ...
-% % % % % % % %             'Tag', 'text_filename', ...
-% % % % % % % %             'Style','text', ...
-% % % % % % % %             'Units', 'character', ...
-% % % % % % % %             'HorizontalAlignment', 'left', ...
-% % % % % % % %             'String', gui.get('FILE') ...
-% % % % % % % %             );
-% % % % % % % %     end
-% % % % % % % % % FIXME: check whether to bring out the update filename    
-% % % % % % % %     function update_filename()
-% % % % % % % %         set(gui.text_filename, 'String', gui.get('FILE'))
-% % % % % % % %     end
+
+    % Draw text filename
+% % %     if ~check_graphics(gui.text_filename, 'uitext')
+% % %         gui.text_filename = uicontrol( ...
+% % %             'Parent', gui.f, ...
+% % %             'Tag', 'text_filename', ...
+% % %             'Style','text', ...
+% % %             'Units', 'character', ...
+% % %             'HorizontalAlignment', 'left', ...
+% % %             'String', gui.get('FILE') ...
+% % %             );
+% % %     end
+% % % % FIXME: check whether to bring out the update filename    
+    function update_filename()
+disp('update filename')
+%         set(gui.text_filename, 'String', gui.get('FILE'))
+    end
 
     % Draw panel element (p) contained in a parent panel (pp)
     if ~check_graphics(gui.pp, 'uipanel')
