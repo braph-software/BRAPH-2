@@ -78,6 +78,18 @@ TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons.
 %%%% ¡default!
 true
 
+%% ¡props_update!
+
+%%% ¡prop!
+MENUBAR (gui, logical) determines whether to show the menubar.
+%%%% ¡default!
+true
+
+%%% ¡prop!
+TOOLBAR (gui, logical) determines whether to show the toolbar.
+%%%% ¡default!
+true
+
 %% ¡properties!
 f % handle for figure 
 
@@ -166,7 +178,7 @@ function f_out = draw(gui, varargin)
                 el = tmp_el; % update local variable 'el' to synchronize it with pe 'el'  
                 gui.draw()
             else
-                GUI('PE', tmp.el, 'FILE', filename).draw()
+                GUI('PE', tmp_el, 'FILE', filename).draw()
             end
         end
     end
