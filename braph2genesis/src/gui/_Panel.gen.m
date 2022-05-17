@@ -50,7 +50,7 @@ BKGCOLOR (gui, color) is the panel background color.
 %%%% ¡default!
 BRAPH2.COL_FIG
 %%%% ¡postprocessing!
-if check_graphics(pn.p, 'uipanel') && ~isequal(get(pn.p, 'Color'), pn.get('BKGCOLOR'))
+if check_graphics(pn.p, 'uipanel') && ~isequal(get(pn.p, 'BackgroundColor'), pn.get('BKGCOLOR'))
     set(pn.p, 'BackgroundColor', pn.get('BKGCOLOR'))
 end
 
