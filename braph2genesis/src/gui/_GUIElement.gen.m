@@ -156,20 +156,19 @@ function f_out = draw(gui, varargin)
         delete(gui.menu_file)
     end
     function cb_open(~, ~)
-    %         % select file
-    %         [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
-    %         if filterindex
-    %             filename = fullfile(path, file);
-    % % % %             tmp = load(filename, '-mat', 'el');
-    % tmp_el = BRAPH2.load(filename);
-    %             if strcmp(tmp_el.getClass(), el.getClass())
-    %                 pe.reinit(tmp_el)
-    %                 el = tmp_el; % update local variable 'el' to synchronize it with pe 'el'  
-    %                 gui.draw()
-    %             else
-    %                 GUI('PE', tmp.el, 'FILE', filename).draw()
-    %             end
-    %         end
+        % select file
+        [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
+        if filterindex
+            filename = fullfile(path, file);
+            tmp_el = BRAPH2.load(filename);
+            if strcmp(tmp_el.getClass(), el.getClass())
+                pe.reinit(tmp_el)
+                el = tmp_el; % update local variable 'el' to synchronize it with pe 'el'  
+                gui.draw()
+            else
+                GUI('PE', tmp.el, 'FILE', filename).draw()
+            end
+        end
     end
     function cb_save(~, ~)
         filename = gui.get('FILE');
@@ -444,20 +443,21 @@ disp('layout')
 % % % % % % % %     end
 
     % Draw text filename
-% % %     if ~check_graphics(gui.text_filename, 'uitext')
-% % %         gui.text_filename = uicontrol( ...
-% % %             'Parent', gui.f, ...
-% % %             'Tag', 'text_filename', ...
-% % %             'Style','text', ...
-% % %             'Units', 'character', ...
-% % %             'HorizontalAlignment', 'left', ...
-% % %             'String', gui.get('FILE') ...
-% % %             );
-% % %     end
-% % % % FIXME: check whether to bring out the update filename    
+    if ~check_graphics(gui.text_filename, 'uilabel')
+        gui.text_filename = uilabel( ...
+            'Parent', gui.f, ...
+            'Tag', 'text_filename', ...
+            'Text', gui.get('FILE'), ...
+            'Tooltip', gui.get('FILE'), ...
+            'FontSize', BRAPH2.FONTSIZE, ...
+            'HorizontalAlignment', 'left' ...
+            );
+    end
     function update_filename()
-disp('update filename')
-%         set(gui.text_filename, 'String', gui.get('FILE'))
+        set(gui.text_filename, ...
+            'Text', gui.get('FILE'), ...
+            'Tooltip', gui.get('FILE') ...
+            )
     end
 
     % Draw panel element (p) contained in a parent panel (pp)
@@ -476,9 +476,9 @@ disp('update filename')
     set(gui.f, 'SizeChangedFcn', {@cb_resize});
     function cb_resize(~, ~) % (src, event)
         h_filename = ceil(1.5 * BRAPH2.FONTSIZE * BRAPH2.S);
-% % % % % %         set(gui.text_filename, ...
-% % % % % %             'Position', [0 0 w(gui.f, 'pixels') h_filename] ...
-% % % % % %             )
+        set(gui.text_filename, ...
+            'Position', [0 0 w(gui.f, 'pixels') h_filename] ...
+            )
         set(gui.pp, ...
             'Units', 'pixels', ...
             'Position', [0 h_filename w(gui.f, 'pixels') h(gui.f, 'pixels')-h_filename] ...
