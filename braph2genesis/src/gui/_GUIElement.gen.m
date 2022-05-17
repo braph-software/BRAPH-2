@@ -178,7 +178,7 @@ function f_out = draw(gui, varargin)
                 el = tmp_el; % update local variable 'el' to synchronize it with pe 'el'  
                 gui.draw()
             else
-                GUI('PE', tmp_el, 'FILE', filename).draw()
+                GUIElement('PE', tmp_el, 'FILE', filename).draw()
             end
         end
     end
