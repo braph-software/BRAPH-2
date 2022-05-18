@@ -11,9 +11,14 @@ clc
 % test_code = ['test_' el_class]
 % eval(test_code)
 
-gui = GUI('MENUBAR', true, 'TOOLBAR', true);
+gui = GUIElement('MENUBAR', true, 'TOOLBAR', true);
 f = gui.draw();
 p = uipanel(f, 'Units', 'normalized', 'Position', [.01 .01 .98 .98]);
+
+
+% gui = GUI('MENUBAR', true, 'TOOLBAR', true);
+% f = gui.draw();
+% p = uipanel(f, 'Units', 'normalized', 'Position', [.01 .01 .98 .98]);
 
 
 % f = uifigure('Visible', 'off', 'Units', 'Normalized', 'Position', [0 0 .2 .5]);
