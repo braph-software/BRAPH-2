@@ -191,9 +191,11 @@ function x_draw(gui, f)
     if ~check_graphics(gui.p, 'uipanel')
         gui.p = pe.draw('Parent', gui.ps);
     end
+    
+    % Callback resize
+    dw = ceil(pe.get('DW') * BRAPH2.S);
+    h_filename = ceil(1.5 * BRAPH2.FONTSIZE * BRAPH2.S);
     function cb_resize(~, ~) % (src, event)
-        dw = ceil(pe.get('DW') * BRAPH2.S);
-        h_filename = ceil(1.5 * BRAPH2.FONTSIZE * BRAPH2.S);
         set(gui.text_filename, ...
             'Position', [1+dw 1 w(gui.pp, 'pixels')-2*dw h_filename] ...
             )
@@ -208,6 +210,8 @@ function x_draw(gui, f)
             'Height', h(gui.ps, 'pixels') ...
             )
     end
+
+    % Callback update filename
     function update_filename()
         set(gui.text_filename, ...
             'Text', gui.get('FILE'), ...
@@ -218,9 +222,9 @@ function x_draw(gui, f)
     % Resize 
     cb_resize()
 
-% % %     % Menu
-% % %     if gui.get('MENUBAR') && gui.get('MENU_FILE') && check_graphics(gui.f, 'figure') && ~check_graphics(gui.menu_file, 'uimenu')
-% % %         gui.menu_file = uimenu(gui.f, 'Label', 'File');
+    % Menu
+% % %     if gui.get('MENUBAR') && gui.get('MENU_FILE') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_file, 'uimenu')
+% % %         gui.menu_file = uimenu(f, 'Label', 'File');
 % % % 
 % % %         uimenu(gui.menu_file, ...
 % % %             'Label', 'Open ...', ...
@@ -280,8 +284,8 @@ function x_draw(gui, f)
 % % %         gui.cb_close()
 % % %     end
 % % %     
-% % %     if gui.get('MENUBAR') && gui.get('MENU_IMPORT') && check_graphics(gui.f, 'figure') && ~check_graphics(gui.menu_import, 'uimenu')
-% % %         gui.menu_import = uimenu(gui.f, ...
+% % %     if gui.get('MENUBAR') && gui.get('MENU_IMPORT') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_import, 'uimenu')
+% % %         gui.menu_import = uimenu(f, ...
 % % %             'Label', 'Import', ...
 % % %             'Callback', {@cb_refresh_import_menu});
 % % %     elseif (~gui.get('MENUBAR') || ~gui.get('MENU_IMPORT'))
@@ -296,8 +300,8 @@ function x_draw(gui, f)
 % % %         el = pe.get('el');
 % % %     end    
 % % % 
-% % %     if gui.get('MENUBAR') && gui.get('MENU_EXPORT') && check_graphics(gui.f, 'figure') && ~check_graphics(gui.menu_export, 'uimenu')
-% % %         gui.menu_export = uimenu(gui.f, ...
+% % %     if gui.get('MENUBAR') && gui.get('MENU_EXPORT') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_export, 'uimenu')
+% % %         gui.menu_export = uimenu(f, ...
 % % %             'Label', 'Export', ...
 % % %             'Callback', {@cb_refresh_export_menu});
 % % %     elseif (~gui.get('MENUBAR') || ~gui.get('MENU_EXPORT'))
@@ -312,8 +316,8 @@ function x_draw(gui, f)
 % % %         eval([el.getClass() '.getGUIMenuExport(el, gui.menu_export, pe)']);
 % % %      end
 % % % 
-% % %     if gui.get('MENUBAR') && gui.get('MENU_PERSONALIZE') && check_graphics(gui.f, 'figure') && ~check_graphics(gui.menu_personalize, 'uimenu')
-% % %         gui.menu_personalize = uimenu(gui.f, 'Label', 'Personalize');
+% % %     if gui.get('MENUBAR') && gui.get('MENU_PERSONALIZE') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_personalize, 'uimenu')
+% % %         gui.menu_personalize = uimenu(f, 'Label', 'Personalize');
 % % %         uimenu(gui.menu_personalize, ...
 % % %             'Label', 'Layout ...', ...
 % % %             'Callback', {@cb_layout});
@@ -327,7 +331,7 @@ function x_draw(gui, f)
 % % % 
 % % %         gui_layout = GUI( ... 
 % % %             'Name', ['Layout ' el.getClass() ' - ' BRAPH2.STR], ...
-% % %             'Position', [x0(gui.f, 'normalized')+w(gui.f, 'normalized') y0(gui.f, 'normalized')+h(gui.f, 'normalized')*2/3 w(gui.f, 'normalized') h(gui.f, 'normalized')/3], ...
+% % %             'Position', [x0(f, 'normalized')+w(f, 'normalized') y0(f, 'normalized')+h(f, 'normalized')*2/3 w(f, 'normalized') h(f, 'normalized')/3], ...
 % % %             'BKGCOLOR', pe.get('BKGCOLOR'), ...
 % % %             'CLOSEREQ', false ...
 % % %             );
@@ -443,17 +447,17 @@ function x_draw(gui, f)
 % % %             close(gui.f_layout)
 % % %         end
 % % %     end
-% % % 
-% % %     if gui.get('MENUBAR') && gui.get('MENU_ABOUT') && check_graphics(gui.f, 'figure') && ~check_graphics(gui.menu_about, 'uimenu') 
-% % %         gui.menu_about = BRAPH2.add_menu_about(gui.f);
-% % %     elseif (~gui.get('MENUBAR') || ~gui.get('MENU_ABOUT'))
-% % %         delete(gui.menu_about)
-% % %     end
-% % % 
-% % %     % Toolbar
-% % %     if gui.get('TOOLBAR') && check_graphics(gui.f, 'figure')
-% % %         gui.toolbar = findall(gui.f, 'Tag', 'ToolBar');
-% % %         
+
+%     if gui.get('MENUBAR') && gui.get('MENU_ABOUT') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_about, 'uimenu') 
+%         gui.menu_about = BRAPH2.add_menu_about(f);
+%     elseif (~gui.get('MENUBAR') || ~gui.get('MENU_ABOUT'))
+%         delete(gui.menu_about)
+%     end
+
+%     % Toolbar
+%     if gui.get('TOOLBAR') && check_graphics(f, 'figure')
+%         gui.toolbar = findall(f, 'Tag', 'ToolBar');
+        
 % % %         if gui.get('TOOL_FILE') && check_graphics(gui.toolbar, 'uitoolbar')
 % % %             % Open
 % % %             uipushtool(gui.toolbar, ...
@@ -468,11 +472,11 @@ function x_draw(gui, f)
 % % %                 'CData', imread('icon_save_ml.png'), ...
 % % %                 'ClickedCallback', {@cb_save});
 % % %         end
-% % %         
-% % %         if gui.get('TOOL_ABOUT') && check_graphics(gui.toolbar, 'uitoolbar')
-% % %             BRAPH2.add_tool_about(gui.toolbar)
-% % %         end
-% % %     end
+        
+%         if gui.get('TOOL_ABOUT') && check_graphics(gui.toolbar, 'uitoolbar')
+%             BRAPH2.add_tool_about(gui.toolbar)
+%         end
+%     end
 end
 function cb_bring_to_front(gui)
 % % %     %CB_BRING_TO_FRONT brings to front the figure and its dependent figures.
