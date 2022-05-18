@@ -337,7 +337,7 @@ function cb_measure_calc(pr)
 
     pr.update();
 end
-function list =  is_measure_calculated(pr)
+function list = is_measure_calculated(pr)
     % IS_MEASURE_CALCULATED checks if a measure has been calculated for the graph.
     % 
     % LIST = IS_MEASURE_CALCULATED(PR) returns an array with the check for
@@ -382,7 +382,6 @@ function state = get_button_condition(pr)
             end
         end
     end
-
 end
 function cb_bring_to_front(pr)
     %CB_BRING_TO_FRONT brings to front the figure and its settings figure.
@@ -404,7 +403,6 @@ function cb_bring_to_front(pr)
             pe.cb_bring_to_front()
         end
     end
-      
 end
 function cb_hide(pr)
     %CB_HIDE hides the figure and its settings figure.
@@ -441,5 +439,4 @@ function cb_close(pr)
             close(f_m)
         end
     end
-    
 end
