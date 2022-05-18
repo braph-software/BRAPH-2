@@ -86,9 +86,6 @@ function f_out = draw(gui, varargin)
     %
     % See also cb_bring_to_front, uifigure.
 
-    % whether to draw and make the figure visible
-    [draw, varargin] = get_and_remove_from_varargin(true, 'Draw', varargin{:});
-    
     % draw figure
     if ~check_graphics(gui.f, 'figure')
         gui.f = uifigure( ...
@@ -96,9 +93,7 @@ function f_out = draw(gui, varargin)
             'Tag', 'f', ...
             'UserData', gui, ... % handle to retrieve gui
             'Icon', 'braph2icon.png', ...
-            'AutoResizeChildren', 'off', ...
-            'CloseRequestFcn', {@cb_close}, ...
-            varargin{:} ...
+            'CloseRequestFcn', {@cb_close} ...
             );
         if gui.get('MENUBAR')
             gui.menubar = uimenu(gui.f, 'Tag', 'MenuBar');
@@ -121,11 +116,9 @@ function f_out = draw(gui, varargin)
     end
 
     % show figure
-    if draw
-        drawnow()
-        set(gui.f, 'Visible', 'on')
-    end
-    
+    drawnow()
+    set(gui.f, 'Visible', 'on')
+
     % output
     if nargout > 0
         f_out = gui.f;
