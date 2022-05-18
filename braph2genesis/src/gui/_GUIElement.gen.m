@@ -523,12 +523,12 @@ end
 Basic use
 %%%% ¡code!
 et1 = ETA();
-gui1 = GUIElement('PE', et1, 'MENUBAR', true, 'TOOLBAR', true);
+gui1 = GUIElement('PE', et1, 'MENUBAR', true, 'TOOLBAR', true, 'CLOSEREQ', false);
 f1a = gui.draw();
 f1b = gui.draw();
 close(f1b)
 
 b2 = BRAPH2Constants();
-gui2 = GUIElement('PE', b2, 'MENUBAR', true, 'TOOLBAR', true);
+gui2 = GUIElement('PE', b2, 'MENUBAR', true, 'TOOLBAR', true, 'CLOSEREQ', false);
 f2 = gui.draw();
 close(f2)
