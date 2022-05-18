@@ -1,5 +1,5 @@
 %% ¡header!
-65NNClassifierGAT < NNBase (nn, classifier with graph attention networks) is a graph neural network classifier.
+NNClassifierGAT < NNBase (nn, classifier with graph attention networks) is a graph neural network classifier.
 
 %% ¡description!
 This classifier is composed of graph attention layers.
