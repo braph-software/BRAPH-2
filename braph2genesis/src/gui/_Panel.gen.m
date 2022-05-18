@@ -120,7 +120,10 @@ function cb_close(pn)
     % See also cb_bring_to_front, cb_hide.
 
     if check_graphics(pn.p, 'uipanel')
-        close(ancestor(pn.p, 'figure'))
+        f = ancestor(pn.p, 'figure');
+        if check_graphics(f, 'figure')
+            close(f)
+        end
     end
 end
 
