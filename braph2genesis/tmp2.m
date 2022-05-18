@@ -3,17 +3,17 @@ delete(findall(0, 'type', 'figure'))
 clear all
 clc
 
-% el_class = 'GUI';
-% delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
-% create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
-% create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
-% create_test_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+el_class = 'GUIElement';
+delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
+create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+create_test_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
 % test_code = ['test_' el_class]
 % eval(test_code)
 
-gui = GUIElement('MENUBAR', true, 'TOOLBAR', true);
+gui = GUIElement('PE', ETA(), 'FILE', 'xxx sss', 'MENUBAR', true, 'TOOLBAR', true);
 f = gui.draw();
-p = uipanel(f, 'Units', 'normalized', 'Position', [.01 .01 .98 .98]);
+% p = uipanel(f, 'Units', 'normalized', 'Position', [.01 .01 .98 .98]);
 
 
 % gui = GUI('MENUBAR', true, 'TOOLBAR', true);
