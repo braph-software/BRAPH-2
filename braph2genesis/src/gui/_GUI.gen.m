@@ -101,6 +101,7 @@ function f_out = draw(gui, varargin)
         if gui.get('TOOLBAR')
             gui.toolbar = uitoolbar(gui.f, 'Tag', 'ToolBar');
         end
+        drawnow() % crucial to ensure the correct sizing of the figure
     end
     set(gui.f, ...
         'Name', gui.get('NAME'), ...
