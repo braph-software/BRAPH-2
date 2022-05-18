@@ -95,6 +95,7 @@ function f_out = draw(gui, varargin)
             'Tag', 'f', ...
             'UserData', gui, ... % handle to retrieve gui
             'Icon', 'braph2icon.png', ...
+            'AutoResizeChildren', false, ...
             'CloseRequestFcn', {@cb_close} ...
             );
         if gui.get('MENUBAR')
@@ -119,7 +120,7 @@ function f_out = draw(gui, varargin)
     end
 
     % specialized draw
-    gui.x_draw()
+    gui.x_draw(gui.f)
 
     % show figure
     drawnow()
@@ -130,7 +131,7 @@ function f_out = draw(gui, varargin)
         f_out = gui.f;
     end
 end
-function x_draw(gui)
+function x_draw(gui, f)
     %X_DRAW undocumented funciton for internal use only.
     
     % X_DRAW is used to draw the contents of a GUI before showing it.
