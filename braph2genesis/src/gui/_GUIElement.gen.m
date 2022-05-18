@@ -125,8 +125,6 @@ function f_out = draw(gui, varargin)
 % % %     %
 % % %     % See also cb_bring_to_front, figure.
 
-    gui.f = draw@GUI(gui, 'Draw', false, varargin{:});
-        
     pe = gui.get('PE');
     el = pe.get('EL');
     
@@ -138,320 +136,337 @@ function f_out = draw(gui, varargin)
     end
     gui.set('NAME', [el.getClass() ' - ' name ' - ' BRAPH2.STR])
 
-    % Menu
-    if gui.get('MENUBAR') && gui.get('MENU_FILE') && check_graphics(gui.f, 'figure') && ~check_graphics(gui.menu_file, 'uimenu')
-        gui.menu_file = uimenu(gui.f, 'Label', 'File');
-
-        uimenu(gui.menu_file, ...
-            'Label', 'Open ...', ...
-            'Accelerator', 'O', ...
-            'Callback', {@cb_open})
-        uimenu(gui.menu_file, ...
-            'Label', 'Save', ...
-            'Accelerator', 'S', ...
-            'Callback', {@cb_save})
-        uimenu(gui.menu_file, ...
-            'Label', 'Save as ...', ...
-            'Accelerator', 'A', ...
-            'Callback', {@cb_saveas})
-        uimenu(gui.menu_file, ...
-            'Separator', 'on', ...
-            'Label', 'Close', ...
-            'Accelerator', 'C', ...
-            'Callback', {@cb_close})
-    elseif (~gui.get('MENUBAR') || ~gui.get('MENU_FILE'))
-        delete(gui.menu_file)
-    end
-    function cb_open(~, ~)
-        % select file
-        [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
-        if filterindex
-            filename = fullfile(path, file);
-            tmp_el = BRAPH2.load(filename);
-            if strcmp(tmp_el.getClass(), el.getClass())
-                pe.reinit(tmp_el)
-                el = tmp_el; % update local variable 'el' to synchronize it with pe 'el'  
-                gui.draw()
-            else
-                GUIElement('PE', tmp_el, 'FILE', filename).draw()
-            end
-        end
-    end
-    function cb_save(~, ~)
-        filename = gui.get('FILE');
-        if isfile(filename)
-            BRAPH2.save(el, filename)
-        else
-            cb_saveas();
-        end
-    end
-    function cb_saveas(~, ~)
-        % select file
-        [file, path, filterindex] = uiputfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
-        % save file
-        if filterindex
-            filename = fullfile(path, file);
-            BRAPH2.save(el, filename)
-            gui.set('FILE', filename)
-            update_filename();
-        end
-    end
-    function cb_close(~, ~)
-        gui.cb_close()
-    end
-    
-    if gui.get('MENUBAR') && gui.get('MENU_IMPORT') && check_graphics(gui.f, 'figure') && ~check_graphics(gui.menu_import, 'uimenu')
-        gui.menu_import = uimenu(gui.f, ...
-            'Label', 'Import', ...
-            'Callback', {@cb_refresh_import_menu});
-    elseif (~gui.get('MENUBAR') || ~gui.get('MENU_IMPORT'))
-        delete(gui.menu_import)
-    end
-    function cb_refresh_import_menu(~,~)
-        im_menus = get(gui.menu_import, 'Children');
-        for i = 1:1:length(im_menus)
-            delete(im_menus(i));
-        end
-        eval([el.getClass() '.getGUIMenuImport(el, gui.menu_import, pe)']);
-        el = pe.get('el');
-    end    
-
-    if gui.get('MENUBAR') && gui.get('MENU_EXPORT') && check_graphics(gui.f, 'figure') && ~check_graphics(gui.menu_export, 'uimenu')
-        gui.menu_export = uimenu(gui.f, ...
-            'Label', 'Export', ...
-            'Callback', {@cb_refresh_export_menu});
-    elseif (~gui.get('MENUBAR') || ~gui.get('MENU_EXPORT'))
-        delete(gui.menu_export)
-    end
-    function cb_refresh_export_menu(~,~)
-        el = pe.get('el');
-        ex_menus = get(gui.menu_export, 'Children');
-        for i = 1:length(ex_menus)
-            delete(ex_menus(i));
-        end
-        eval([el.getClass() '.getGUIMenuExport(el, gui.menu_export, pe)']);
-     end
-
-    if gui.get('MENUBAR') && gui.get('MENU_PERSONALIZE') && check_graphics(gui.f, 'figure') && ~check_graphics(gui.menu_personalize, 'uimenu')
-        gui.menu_personalize = uimenu(gui.f, 'Label', 'Personalize');
-        uimenu(gui.menu_personalize, ...
-            'Label', 'Layout ...', ...
-            'Callback', {@cb_layout});
-    elseif (~gui.get('MENUBAR') || ~gui.get('MENU_PERSONALIZE'))
-        delete(gui.menu_personalize)
-    end
-    function cb_layout(~, ~)
-        if isgraphics(gui.f_layout, 'figure')
-            delete(gui.f_layout)
-        end
-
-        gui_layout = GUI( ... 
-            'Name', ['Layout ' el.getClass() ' - ' BRAPH2.STR], ...
-            'Position', [x0(gui.f, 'normalized')+w(gui.f, 'normalized') y0(gui.f, 'normalized')+h(gui.f, 'normalized')*2/3 w(gui.f, 'normalized') h(gui.f, 'normalized')/3], ...
-            'BKGCOLOR', pe.get('BKGCOLOR'), ...
-            'CLOSEREQ', false ...
-            );
-        gui.f_layout = gui_layout.draw('Draw', false);
-
-        p_layout = uipanel( ...
-            'Parent', gui.f_layout, ...
-            'Units', 'normalized', ...
-            'Position', [0 0 1 1], ...
-            'BackgroundColor', pe.get('BKGCOLOR'), ...
-            'AutoResizeChildren', 'off', ...
-            'SizeChangedFcn', {@cb_resize_layout} ...
-            );
-        function cb_resize_layout(~, ~)
-            set(edit_table, 'Position', ceil([10 10+BRAPH2.FONTSIZE*2+10 w(p_layout, 'pixels')-20 h(p_layout, 'pixels')-10-BRAPH2.FONTSIZE*2-20]))
-        end
-        
-        edit_table = uitable( ...
-            'Parent', p_layout, ...
-            'Tag', 'edit_table', ...
-            'Units', 'pixels', ...
-            'ColumnName', {'Show', 'Order', 'Title', 'Property', 'Category', 'Format'}, ...
-            'ColumnFormat', {'logical', 'char', 'char', 'char', 'char', 'char'}, ...
-            'ColumnEditable', [true true true false false false], ...
-            'CellEditCallback', {@cb_edit_tb} ...
-            );
-        save_edit_btn = uibutton( ...
-            'Parent', p_layout, ...
-            'Tag', 'save_edit_btn', ...
-            'Text', 'Save', ...
-            'FontSize', BRAPH2.FONTSIZE, ...
-            'Position', ceil([10 10 BRAPH2.FONTSIZE*10 BRAPH2.FONTSIZE*2] * BRAPH2.S), ...
-            'ButtonPushedFcn', {@cb_save_edit} ...
-            );
-        cancel_edit_btn = uibutton( ...
-            'Parent', p_layout, ...
-            'Tag', 'save_edit_btn', ...
-            'Text', 'Cancel', ...
-            'FontSize', BRAPH2.FONTSIZE, ...
-            'Position', ceil([10+BRAPH2.FONTSIZE*10+10 10 BRAPH2.FONTSIZE*10 BRAPH2.FONTSIZE*2] * BRAPH2.S), ...
-            'ButtonPushedFcn', {@cb_cancel_edit} ...
-            );
-
-        [order, title, visible] = load_layout(el);
-        VISIBLE = 1;
-        ORDER = 2;
-        TITLE = 3;
-        TAG = 4;
-        CATEGORY = 5;
-        FORMAT = 6;
-        data = cell(el.getPropNumber(), 6);
-        for prop = 1:1:el.getPropNumber()
-            data{prop, VISIBLE} = visible(prop);
-            data{prop, ORDER} = order(prop);
-            data{prop, TITLE} = title{prop};
-            data{prop, TAG} = upper(el.getPropTag(prop));
-            data{prop, CATEGORY} = el.getPropCategory(prop);
-            data{prop, FORMAT} = el.getPropFormat(prop);
-        end        
-        set(edit_table, 'Data', data);
-
-        set(gui.f_layout, 'Visible', 'on');
-
-        function cb_edit_tb(~, event)
-            prop = event.Indices(1);
-            col = event.Indices(2);
-            newdata = event.NewData;
-            data = get(edit_table, 'Data');
-
-            if col == VISIBLE
-                if newdata == true
-                    if any(~isnan(cell2mat(data(:, ORDER))))
-                        data{prop, ORDER} = max(cell2mat(data(:, ORDER))) + 1;
-                    else % all NaN (edge case)
-                        data{prop, ORDER} = 1;
-                    end
-                else % newdata == false
-                    for i = data{prop, ORDER} + 1:1:max(cell2mat(data(:, ORDER)))
-                        data{cell2mat(data(:, ORDER)) == i, ORDER} = i - 1;
-                    end
-                    data{prop, ORDER} = NaN;
-                end
-            end
-
-            if col == ORDER
-                if isnan(newdata)
-                    data{prop, VISIBLE} = false;
-                else
-                    data{prop, VISIBLE} = true;
-                end
-
-                order = cell2mat(data(:, ORDER)) + .00301040106;
-                order(prop) = newdata;
-                for i = 1:1:numel(order) - sum(isnan(order))
-                    min_order_index = find(order == min(order));
-                    data{min_order_index, ORDER} = i;
-                    order(min_order_index) = NaN;
-                end
-            end
-
-            set(edit_table, 'Data', data);
-        end
-        function cb_save_edit(~, ~)
-            data = get(edit_table, 'Data');
-            order = cell2mat(data(:, 2))';
-            title = data(:, 3); title = title';
-            save_layout(el, order, title)
-
-            pe.reinit(el);
-            gui.draw()
-        end
-        function cb_cancel_edit(~, ~)
-            close(gui.f_layout)
-        end
-    end
-
-    if gui.get('MENUBAR') && gui.get('MENU_ABOUT') && check_graphics(gui.f, 'figure') && ~check_graphics(gui.menu_about, 'uimenu') 
-        gui.menu_about = BRAPH2.add_menu_about(gui.f);
-    elseif (~gui.get('MENUBAR') || ~gui.get('MENU_ABOUT'))
-        delete(gui.menu_about)
-    end
-
-    % Toolbar
-    if gui.get('TOOLBAR') && check_graphics(gui.f, 'figure')
-        gui.toolbar = findall(gui.f, 'Tag', 'ToolBar');
-        
-        if gui.get('TOOL_FILE') && check_graphics(gui.toolbar, 'uitoolbar')
-            % Open
-            uipushtool(gui.toolbar, ...
-                'Tag', 'BRAPH2.Open', ...                
-                'Tooltip', ['Open ' el.getName()], ...
-                'CData', imread('icon_open_ml.png'), ...
-                'ClickedCallback', {@cb_open});
-            % Save
-            uipushtool(gui.toolbar, ...
-                'Tag', 'BRAPH2.Save', ...                
-                'Tooltip', ['Save ' el.getName()], ...
-                'CData', imread('icon_save_ml.png'), ...
-                'ClickedCallback', {@cb_save});
-        end
-        
-        if gui.get('TOOL_ABOUT') && check_graphics(gui.toolbar, 'uitoolbar')
-            BRAPH2.add_tool_about(gui.toolbar)
-        end
-    end
-
-    % Draw text filename
-    if ~check_graphics(gui.text_filename, 'uilabel')
-        gui.text_filename = uilabel( ...
-            'Parent', gui.f, ...
-            'Tag', 'text_filename', ...
-            'Text', gui.get('FILE'), ...
-            'Tooltip', gui.get('FILE'), ...
-            'FontSize', BRAPH2.FONTSIZE, ...
-            'HorizontalAlignment', 'left' ...
-            );
-    end
-    function update_filename()
-        set(gui.text_filename, ...
-            'Text', gui.get('FILE'), ...
-            'Tooltip', gui.get('FILE') ...
-            )
-    end
-
-    % Draw panel element (p) contained in a parent panel (pp)
-    if ~check_graphics(gui.pp, 'uipanel')
-        gui.pp = uipanel( ...
-            'Parent', gui.f, ...
-            'Tag', 'pp', ...
-            'BorderType', 'none', ...
-            'Scrollable', 'on', ...
-            'AutoResizeChildren', 'off' ...
-            );
-    end
-    gui.p = pe.draw('Parent', gui.pp);
-
-    % Callback on resize
-    set(gui.f, 'SizeChangedFcn', {@cb_resize});
-    function cb_resize(~, ~) % (src, event)
-        h_filename = ceil(1.5 * BRAPH2.FONTSIZE * BRAPH2.S);
-        set(gui.text_filename, ...
-            'Position', [0 0 w(gui.f, 'pixels') h_filename] ...
-            )
-        set(gui.pp, ...
-            'Units', 'pixels', ...
-            'Position', [0 h_filename w(gui.f, 'pixels') h(gui.f, 'pixels')-h_filename] ...
-            );
-        pe.redraw( ... 
-            'X0', 0, ...
-            'Y0', 0, ...
-            'Width', w(gui.pp, 'pixels'), ...
-            'Height', h(gui.pp, 'pixels') ...
-            )
-    end
-    cb_resize()
-
-    % show figure
-    drawnow()
-    set(gui.f, 'Visible', 'on')
+    gui.f = draw@GUI(gui, varargin{:});
     
     % output
     if nargout > 0
         f_out = gui.f;
     end
+end
+function x_draw(gui, f)
+    %X_DRAW undocumented funciton for internal use only.
+    
+    % X_DRAW is used to draw the contents of a GUI before showing it.
+
+    x_draw@GUI(gui, f)
+
+    pe = gui.get('PE');
+    
+% % %     % Menu
+% % %     if gui.get('MENUBAR') && gui.get('MENU_FILE') && check_graphics(gui.f, 'figure') && ~check_graphics(gui.menu_file, 'uimenu')
+% % %         gui.menu_file = uimenu(gui.f, 'Label', 'File');
+% % % 
+% % %         uimenu(gui.menu_file, ...
+% % %             'Label', 'Open ...', ...
+% % %             'Accelerator', 'O', ...
+% % %             'Callback', {@cb_open})
+% % %         uimenu(gui.menu_file, ...
+% % %             'Label', 'Save', ...
+% % %             'Accelerator', 'S', ...
+% % %             'Callback', {@cb_save})
+% % %         uimenu(gui.menu_file, ...
+% % %             'Label', 'Save as ...', ...
+% % %             'Accelerator', 'A', ...
+% % %             'Callback', {@cb_saveas})
+% % %         uimenu(gui.menu_file, ...
+% % %             'Separator', 'on', ...
+% % %             'Label', 'Close', ...
+% % %             'Accelerator', 'C', ...
+% % %             'Callback', {@cb_close})
+% % %     elseif (~gui.get('MENUBAR') || ~gui.get('MENU_FILE'))
+% % %         delete(gui.menu_file)
+% % %     end
+% % %     function cb_open(~, ~)
+% % %         % select file
+% % %         [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
+% % %         if filterindex
+% % %             filename = fullfile(path, file);
+% % %             tmp_el = BRAPH2.load(filename);
+% % %             if strcmp(tmp_el.getClass(), el.getClass())
+% % %                 pe.reinit(tmp_el)
+% % %                 el = tmp_el; % update local variable 'el' to synchronize it with pe 'el'  
+% % %                 gui.draw()
+% % %             else
+% % %                 GUIElement('PE', tmp_el, 'FILE', filename).draw()
+% % %             end
+% % %         end
+% % %     end
+% % %     function cb_save(~, ~)
+% % %         filename = gui.get('FILE');
+% % %         if isfile(filename)
+% % %             BRAPH2.save(el, filename)
+% % %         else
+% % %             cb_saveas();
+% % %         end
+% % %     end
+% % %     function cb_saveas(~, ~)
+% % %         % select file
+% % %         [file, path, filterindex] = uiputfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
+% % %         % save file
+% % %         if filterindex
+% % %             filename = fullfile(path, file);
+% % %             BRAPH2.save(el, filename)
+% % %             gui.set('FILE', filename)
+% % %             update_filename();
+% % %         end
+% % %     end
+% % %     function cb_close(~, ~)
+% % %         gui.cb_close()
+% % %     end
+% % %     
+% % %     if gui.get('MENUBAR') && gui.get('MENU_IMPORT') && check_graphics(gui.f, 'figure') && ~check_graphics(gui.menu_import, 'uimenu')
+% % %         gui.menu_import = uimenu(gui.f, ...
+% % %             'Label', 'Import', ...
+% % %             'Callback', {@cb_refresh_import_menu});
+% % %     elseif (~gui.get('MENUBAR') || ~gui.get('MENU_IMPORT'))
+% % %         delete(gui.menu_import)
+% % %     end
+% % %     function cb_refresh_import_menu(~,~)
+% % %         im_menus = get(gui.menu_import, 'Children');
+% % %         for i = 1:1:length(im_menus)
+% % %             delete(im_menus(i));
+% % %         end
+% % %         eval([el.getClass() '.getGUIMenuImport(el, gui.menu_import, pe)']);
+% % %         el = pe.get('el');
+% % %     end    
+% % % 
+% % %     if gui.get('MENUBAR') && gui.get('MENU_EXPORT') && check_graphics(gui.f, 'figure') && ~check_graphics(gui.menu_export, 'uimenu')
+% % %         gui.menu_export = uimenu(gui.f, ...
+% % %             'Label', 'Export', ...
+% % %             'Callback', {@cb_refresh_export_menu});
+% % %     elseif (~gui.get('MENUBAR') || ~gui.get('MENU_EXPORT'))
+% % %         delete(gui.menu_export)
+% % %     end
+% % %     function cb_refresh_export_menu(~,~)
+% % %         el = pe.get('el');
+% % %         ex_menus = get(gui.menu_export, 'Children');
+% % %         for i = 1:length(ex_menus)
+% % %             delete(ex_menus(i));
+% % %         end
+% % %         eval([el.getClass() '.getGUIMenuExport(el, gui.menu_export, pe)']);
+% % %      end
+% % % 
+% % %     if gui.get('MENUBAR') && gui.get('MENU_PERSONALIZE') && check_graphics(gui.f, 'figure') && ~check_graphics(gui.menu_personalize, 'uimenu')
+% % %         gui.menu_personalize = uimenu(gui.f, 'Label', 'Personalize');
+% % %         uimenu(gui.menu_personalize, ...
+% % %             'Label', 'Layout ...', ...
+% % %             'Callback', {@cb_layout});
+% % %     elseif (~gui.get('MENUBAR') || ~gui.get('MENU_PERSONALIZE'))
+% % %         delete(gui.menu_personalize)
+% % %     end
+% % %     function cb_layout(~, ~)
+% % %         if isgraphics(gui.f_layout, 'figure')
+% % %             delete(gui.f_layout)
+% % %         end
+% % % 
+% % %         gui_layout = GUI( ... 
+% % %             'Name', ['Layout ' el.getClass() ' - ' BRAPH2.STR], ...
+% % %             'Position', [x0(gui.f, 'normalized')+w(gui.f, 'normalized') y0(gui.f, 'normalized')+h(gui.f, 'normalized')*2/3 w(gui.f, 'normalized') h(gui.f, 'normalized')/3], ...
+% % %             'BKGCOLOR', pe.get('BKGCOLOR'), ...
+% % %             'CLOSEREQ', false ...
+% % %             );
+% % %         gui.f_layout = gui_layout.draw('Draw', false);
+% % % 
+% % %         p_layout = uipanel( ...
+% % %             'Parent', gui.f_layout, ...
+% % %             'Units', 'normalized', ...
+% % %             'Position', [0 0 1 1], ...
+% % %             'BackgroundColor', pe.get('BKGCOLOR'), ...
+% % %             'AutoResizeChildren', 'off', ...
+% % %             'SizeChangedFcn', {@cb_resize_layout} ...
+% % %             );
+% % %         function cb_resize_layout(~, ~)
+% % %             set(edit_table, 'Position', ceil([10 10+BRAPH2.FONTSIZE*2+10 w(p_layout, 'pixels')-20 h(p_layout, 'pixels')-10-BRAPH2.FONTSIZE*2-20]))
+% % %         end
+% % %         
+% % %         edit_table = uitable( ...
+% % %             'Parent', p_layout, ...
+% % %             'Tag', 'edit_table', ...
+% % %             'Units', 'pixels', ...
+% % %             'ColumnName', {'Show', 'Order', 'Title', 'Property', 'Category', 'Format'}, ...
+% % %             'ColumnFormat', {'logical', 'char', 'char', 'char', 'char', 'char'}, ...
+% % %             'ColumnEditable', [true true true false false false], ...
+% % %             'CellEditCallback', {@cb_edit_tb} ...
+% % %             );
+% % %         save_edit_btn = uibutton( ...
+% % %             'Parent', p_layout, ...
+% % %             'Tag', 'save_edit_btn', ...
+% % %             'Text', 'Save', ...
+% % %             'FontSize', BRAPH2.FONTSIZE, ...
+% % %             'Position', ceil([10 10 BRAPH2.FONTSIZE*10 BRAPH2.FONTSIZE*2] * BRAPH2.S), ...
+% % %             'ButtonPushedFcn', {@cb_save_edit} ...
+% % %             );
+% % %         cancel_edit_btn = uibutton( ...
+% % %             'Parent', p_layout, ...
+% % %             'Tag', 'save_edit_btn', ...
+% % %             'Text', 'Cancel', ...
+% % %             'FontSize', BRAPH2.FONTSIZE, ...
+% % %             'Position', ceil([10+BRAPH2.FONTSIZE*10+10 10 BRAPH2.FONTSIZE*10 BRAPH2.FONTSIZE*2] * BRAPH2.S), ...
+% % %             'ButtonPushedFcn', {@cb_cancel_edit} ...
+% % %             );
+% % % 
+% % %         [order, title, visible] = load_layout(el);
+% % %         VISIBLE = 1;
+% % %         ORDER = 2;
+% % %         TITLE = 3;
+% % %         TAG = 4;
+% % %         CATEGORY = 5;
+% % %         FORMAT = 6;
+% % %         data = cell(el.getPropNumber(), 6);
+% % %         for prop = 1:1:el.getPropNumber()
+% % %             data{prop, VISIBLE} = visible(prop);
+% % %             data{prop, ORDER} = order(prop);
+% % %             data{prop, TITLE} = title{prop};
+% % %             data{prop, TAG} = upper(el.getPropTag(prop));
+% % %             data{prop, CATEGORY} = el.getPropCategory(prop);
+% % %             data{prop, FORMAT} = el.getPropFormat(prop);
+% % %         end        
+% % %         set(edit_table, 'Data', data);
+% % % 
+% % %         set(gui.f_layout, 'Visible', 'on');
+% % % 
+% % %         function cb_edit_tb(~, event)
+% % %             prop = event.Indices(1);
+% % %             col = event.Indices(2);
+% % %             newdata = event.NewData;
+% % %             data = get(edit_table, 'Data');
+% % % 
+% % %             if col == VISIBLE
+% % %                 if newdata == true
+% % %                     if any(~isnan(cell2mat(data(:, ORDER))))
+% % %                         data{prop, ORDER} = max(cell2mat(data(:, ORDER))) + 1;
+% % %                     else % all NaN (edge case)
+% % %                         data{prop, ORDER} = 1;
+% % %                     end
+% % %                 else % newdata == false
+% % %                     for i = data{prop, ORDER} + 1:1:max(cell2mat(data(:, ORDER)))
+% % %                         data{cell2mat(data(:, ORDER)) == i, ORDER} = i - 1;
+% % %                     end
+% % %                     data{prop, ORDER} = NaN;
+% % %                 end
+% % %             end
+% % % 
+% % %             if col == ORDER
+% % %                 if isnan(newdata)
+% % %                     data{prop, VISIBLE} = false;
+% % %                 else
+% % %                     data{prop, VISIBLE} = true;
+% % %                 end
+% % % 
+% % %                 order = cell2mat(data(:, ORDER)) + .00301040106;
+% % %                 order(prop) = newdata;
+% % %                 for i = 1:1:numel(order) - sum(isnan(order))
+% % %                     min_order_index = find(order == min(order));
+% % %                     data{min_order_index, ORDER} = i;
+% % %                     order(min_order_index) = NaN;
+% % %                 end
+% % %             end
+% % % 
+% % %             set(edit_table, 'Data', data);
+% % %         end
+% % %         function cb_save_edit(~, ~)
+% % %             data = get(edit_table, 'Data');
+% % %             order = cell2mat(data(:, 2))';
+% % %             title = data(:, 3); title = title';
+% % %             save_layout(el, order, title)
+% % % 
+% % %             pe.reinit(el);
+% % %             gui.draw()
+% % %         end
+% % %         function cb_cancel_edit(~, ~)
+% % %             close(gui.f_layout)
+% % %         end
+% % %     end
+% % % 
+% % %     if gui.get('MENUBAR') && gui.get('MENU_ABOUT') && check_graphics(gui.f, 'figure') && ~check_graphics(gui.menu_about, 'uimenu') 
+% % %         gui.menu_about = BRAPH2.add_menu_about(gui.f);
+% % %     elseif (~gui.get('MENUBAR') || ~gui.get('MENU_ABOUT'))
+% % %         delete(gui.menu_about)
+% % %     end
+% % % 
+% % %     % Toolbar
+% % %     if gui.get('TOOLBAR') && check_graphics(gui.f, 'figure')
+% % %         gui.toolbar = findall(gui.f, 'Tag', 'ToolBar');
+% % %         
+% % %         if gui.get('TOOL_FILE') && check_graphics(gui.toolbar, 'uitoolbar')
+% % %             % Open
+% % %             uipushtool(gui.toolbar, ...
+% % %                 'Tag', 'BRAPH2.Open', ...                
+% % %                 'Tooltip', ['Open ' el.getName()], ...
+% % %                 'CData', imread('icon_open_ml.png'), ...
+% % %                 'ClickedCallback', {@cb_open});
+% % %             % Save
+% % %             uipushtool(gui.toolbar, ...
+% % %                 'Tag', 'BRAPH2.Save', ...                
+% % %                 'Tooltip', ['Save ' el.getName()], ...
+% % %                 'CData', imread('icon_save_ml.png'), ...
+% % %                 'ClickedCallback', {@cb_save});
+% % %         end
+% % %         
+% % %         if gui.get('TOOL_ABOUT') && check_graphics(gui.toolbar, 'uitoolbar')
+% % %             BRAPH2.add_tool_about(gui.toolbar)
+% % %         end
+% % %     end
+
+% % %     % Draw text filename
+% % %     if ~check_graphics(gui.text_filename, 'uilabel')
+% % %         gui.text_filename = uilabel( ...
+% % %             'Parent', gui.f, ...
+% % %             'Tag', 'text_filename', ...
+% % %             'Text', gui.get('FILE'), ...
+% % %             'Tooltip', gui.get('FILE'), ...
+% % %             'FontSize', BRAPH2.FONTSIZE, ...
+% % %             'HorizontalAlignment', 'left' ...
+% % %             );
+% % %     end
+% % %     function update_filename()
+% % %         set(gui.text_filename, ...
+% % %             'Text', gui.get('FILE'), ...
+% % %             'Tooltip', gui.get('FILE') ...
+% % %             )
+% % %     end
+
+    % Draw panel element (p) contained in a parent panel (pp)
+    if ~check_graphics(gui.pp, 'uipanel')
+        gui.pp = uipanel( ...
+            'Parent', f, ...
+            'Tag', 'pp', ...
+            'Units', 'normalized', ...
+            'Position', [0 0 1 1], ...
+'Position', [.01 .01 .98 .98], ...
+'BackgroundColor', 'r', ...
+            'BorderType', 'none', ...
+            'Scrollable', 'on', ...
+            'AutoResizeChildren', false, ...
+            'SizeChangedFcn', {@cb_resize} ...
+            );
+        gui.p = pe.draw('Parent', gui.pp);
+1
+    end
+    function cb_resize(~, ~) % (src, event)
+2
+    end
+% % %     gui.p = pe.draw('Parent', gui.pp);
+
+% % %     % Callback on resize
+% % %     set(gui.f, 'SizeChangedFcn', {@cb_resize});
+% % %     function cb_resize(~, ~) % (src, event)
+% % %         h_filename = ceil(1.5 * BRAPH2.FONTSIZE * BRAPH2.S);
+% % %         set(gui.text_filename, ...
+% % %             'Position', [0 0 w(gui.f, 'pixels') h_filename] ...
+% % %             )
+% % %         set(gui.pp, ...
+% % %             'Units', 'pixels', ...
+% % %             'Position', [0 h_filename w(gui.f, 'pixels') h(gui.f, 'pixels')-h_filename] ...
+% % %             );
+% % %         pe.redraw( ... 
+% % %             'X0', 0, ...
+% % %             'Y0', 0, ...
+% % %             'Width', w(gui.pp, 'pixels'), ...
+% % %             'Height', h(gui.pp, 'pixels') ...
+% % %             )
+% % %     end
+% % %     cb_resize()
 end
 function cb_bring_to_front(gui)
 % % %     %CB_BRING_TO_FRONT brings to front the figure and its dependent figures.
