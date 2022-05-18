@@ -446,15 +446,15 @@ function x_draw(gui, f)
 % % %         end
 % % %     end
 
-%     if gui.get('MENUBAR') && gui.get('MENU_ABOUT') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_about, 'uimenu') 
-%         gui.menu_about = BRAPH2.add_menu_about(f);
-%     elseif (~gui.get('MENUBAR') || ~gui.get('MENU_ABOUT'))
-%         delete(gui.menu_about)
-%     end
+    if gui.get('MENUBAR') && gui.get('MENU_ABOUT') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_about, 'uimenu') 
+        gui.menu_about = BRAPH2.add_menu_about(f);
+    elseif (~gui.get('MENUBAR') || ~gui.get('MENU_ABOUT'))
+        delete(gui.menu_about)
+    end
 
-%     % Toolbar
-%     if gui.get('TOOLBAR') && check_graphics(f, 'figure')
-%         gui.toolbar = findall(f, 'Tag', 'ToolBar');
+    % Toolbar
+    if gui.get('TOOLBAR') && check_graphics(f, 'figure')
+        gui.toolbar = findall(f, 'Tag', 'ToolBar');
         
 % % %         if gui.get('TOOL_FILE') && check_graphics(gui.toolbar, 'uitoolbar')
 % % %             % Open
@@ -471,10 +471,10 @@ function x_draw(gui, f)
 % % %                 'ClickedCallback', {@cb_save});
 % % %         end
         
-%         if gui.get('TOOL_ABOUT') && check_graphics(gui.toolbar, 'uitoolbar')
-%             BRAPH2.add_tool_about(gui.toolbar)
-%         end
-%     end
+        if gui.get('TOOL_ABOUT') && check_graphics(gui.toolbar, 'uitoolbar')
+            BRAPH2.add_tool_about(gui.toolbar)
+        end
+    end
 end
 function cb_bring_to_front(gui)
 % % %     %CB_BRING_TO_FRONT brings to front the figure and its dependent figures.
