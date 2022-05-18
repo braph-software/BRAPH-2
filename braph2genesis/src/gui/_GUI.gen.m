@@ -101,10 +101,10 @@ function f_out = draw(gui, varargin)
             varargin{:} ...
             );
         if gui.get('MENUBAR')
-            gui.menubar = uimenu(gui.f);
+            gui.menubar = uimenu(gui.f, 'Tag', 'MenuBar');
         end
         if gui.get('TOOLBAR')
-            gui.toolbar = uitoolbar(gui.f);
+            gui.toolbar = uitoolbar(gui.f, 'Tag', 'ToolBar');
         end
     end
     set(gui.f, ...
