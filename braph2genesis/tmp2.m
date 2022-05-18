@@ -11,31 +11,35 @@ clc
 % test_code = ['test_' el_class]
 % eval(test_code)
 
+gui = GUI('MENUBAR', true, 'TOOLBAR', true);
+f = gui.draw();
+p = uipanel(f, 'Units', 'normalized', 'Position', [.01 .01 .98 .98]);
 
-f = uifigure('Visible', 'off', 'Units', 'Normalized', 'Position', [0 0 .2 .5]);
-drawnow()
-set(f, 'Position', [0 0 .2 1]);
-drawnow()
-pause(1)
-h_title = h(0, 'pixels') - h(f, 'pixels')
 
-set(f, 'Position', [0 0 .2 .5]);
-menubar = uimenu(f);
-drawnow()
-set(f, 'Position', [0 0 .2 1]);
-drawnow()
-pause(1)
-h_menubar = h(0, 'pixels') - h(f, 'pixels') - h_title
-
-set(f, 'Position', [0 0 .2 .5]);
-toolbar = uitoolbar(f);
-drawnow()
-set(f, 'Position', [0 0 .2 1]);
-drawnow()
-pause(1)
-h_toolbar = h(0, 'pixels') - h(f, 'pixels') - h_title - h_menubar
-
-delete(f)
+% f = uifigure('Visible', 'off', 'Units', 'Normalized', 'Position', [0 0 .2 .5]);
+% drawnow()
+% set(f, 'Position', [0 0 .2 1]);
+% drawnow()
+% pause(1)
+% h_title = h(0, 'pixels') - h(f, 'pixels')
+% 
+% set(f, 'Position', [0 0 .2 .5]);
+% menubar = uimenu(f);
+% drawnow()
+% set(f, 'Position', [0 0 .2 1]);
+% drawnow()
+% pause(1)
+% h_menubar = h(0, 'pixels') - h(f, 'pixels') - h_title
+% 
+% set(f, 'Position', [0 0 .2 .5]);
+% toolbar = uitoolbar(f);
+% drawnow()
+% set(f, 'Position', [0 0 .2 1]);
+% drawnow()
+% pause(1)
+% h_toolbar = h(0, 'pixels') - h(f, 'pixels') - h_title - h_menubar
+% 
+% delete(f)
 
 
 % f = uifigure('Visible', 'off', 'Units', 'Normalized', 'Position', [0 0 .2 .8]);
