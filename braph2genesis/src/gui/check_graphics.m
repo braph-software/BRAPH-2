@@ -5,7 +5,8 @@ function check = check_graphics(h, type)
 %
 % CHECK = CHECK_GRAPHICS(H, TYPE) returns whether the H is a graphic object 
 %  of the kind TYPE = 'figure', 'uipanel', 'axes', 'uitable', 'uimenu',
-%  'uicontextmenu', 'uitoolbar', 'uipushtool', 
+%  'uicontextmenu', 
+%  'uitoolbar', 'uipushtool', 'uitoggletool', 
 %  'uibutton', 'uilabel', 'uieditfield', 'uicheckbox'
 %  'pushbutton',
 %  'togglebutton', 'checkbox', 'radiobutton', 'edit', 'text', 'slider',
