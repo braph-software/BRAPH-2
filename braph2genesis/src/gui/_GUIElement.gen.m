@@ -64,11 +64,6 @@ MENU_ABOUT (gui, logical) determines whether to show the menu about.
 true
 
 %%% ¡prop!
-TOOL_FIG (gui, logical) determines whether to show the toolbar figure buttons.
-%%%% ¡default!
-false
-
-%%% ¡prop!
 TOOL_FILE (gui, logical) determines whether to show the toolbar file buttons.
 %%%% ¡default!
 true
@@ -366,93 +361,29 @@ disp('layout')
         delete(gui.menu_about)
     end
 
-% % % % %     % Toolbar
-% % % % % % % %     if gui.get('TOOLBAR') && ~check_graphics(gui.toolbar, 'uitoolbar')
-% % % % % % % %         set(gui.f, 'Toolbar', 'figure')
-% % % % % % % % 
-% % % % % % % %         gui.toolbar = findall(gui.f, 'Tag', 'FigureToolBar');
-% % % % % % % % 
-% % % % % % % %         delete(findall(gui.toolbar, 'Tag', 'Standard.NewFigure'))
-% % % % % % % %         
-% % % % % % % %         if ~gui.get('TOOL_FIG')
-% % % % % % % %             delete(findall(gui.toolbar, 'Tag', 'Standard.PrintFigure'))
-% % % % % % % %             delete(findall(gui.toolbar, 'Tag', 'Standard.EditPlot'))
-% % % % % % % %             delete(findall(gui.toolbar, 'Tag', 'Standard.OpenInspector'))
-% % % % % % % %             delete(findall(gui.toolbar, 'Tag', 'Exploration.Brushing'))
-% % % % % % % %             delete(findall(gui.toolbar, 'Tag', 'DataManager.Linking'))
-% % % % % % % %             delete(findall(gui.toolbar, 'Tag', 'Annotation.InsertColorbar'))
-% % % % % % % %             delete(findall(gui.toolbar, 'Tag', 'Annotation.InsertLegend'))
-% % % % % % % %             delete(findall(gui.toolbar, 'Tag', 'Plottools.PlottoolsOff'))
-% % % % % % % %             delete(findall(gui.toolbar, 'Tag', 'Plottools.PlottoolsOn'))
-% % % % % % % %         else
-% % % % % % % %             toolbar_print = findall(gui.toolbar, 'Tag', 'Standard.PrintFigure');
-% % % % % % % %             set(toolbar_print, ...
-% % % % % % % %                 'Separator', 'on' ...
-% % % % % % % %                 )
-% % % % % % % %         end
-% % % % % % % % 
-% % % % % % % %         if gui.get('TOOL_FILE')
-% % % % % % % %             % Open
-% % % % % % % %             toolbar_open = findall(gui.toolbar, 'Tag', 'Standard.FileOpen');
-% % % % % % % %             set(toolbar_open, ...
-% % % % % % % %                 'Tag', 'BRAPH2.FileOpen', ...
-% % % % % % % %                 'TooltipString', ['Open ' el.getName()], ...
-% % % % % % % %                 'ClickedCallback', {@cb_open})
-% % % % % % % %             % Save
-% % % % % % % %             toolbar_save = findall(gui.toolbar, 'Tag', 'Standard.SaveFigure');
-% % % % % % % %             set(toolbar_save, ...
-% % % % % % % %                 'Tag', 'BRAPH2.SaveFigure', ...
-% % % % % % % %                 'TooltipString', ['Save ' el.getName()], ...
-% % % % % % % %                 'ClickedCallback', {@cb_save})
-% % % % % % % %         else
-% % % % % % % %             toolbar_open = findall(gui.toolbar, 'Tag', 'Standard.FileOpen');
-% % % % % % % %             delete(findall(gui.toolbar, 'Tag', 'Standard.SaveFigure'))
-% % % % % % % %         end
-% % % % % % % %         
-% % % % % % % %         if gui.get('TOOL_ABOUT')
-% % % % % % % % % % %             uipushtool(gui.toolbar, 'Separator', 'on', 'Visible', 'off')
-% % % % % % % % % % %             uipushtool(gui.toolbar, 'Separator', 'on', 'Visible', 'off')
-% % % % % % % % % % % 
-% % % % % % % % % % %             % Website
-% % % % % % % % % % %             toolbar_web = uipushtool(gui.toolbar, ...
-% % % % % % % % % % %                 'Separator', 'on', ...
-% % % % % % % % % % %                 'TooltipString', 'Link to braph.org', ...
-% % % % % % % % % % %                 'CData', imresize(imread('icon_web.png'), [24 24]), ...
-% % % % % % % % % % %                 'ClickedCallback', {@cb_web});
-% % % % % % % % % % % 
-% % % % % % % % % % %             % Forum
-% % % % % % % % % % %             toolbar_web = uipushtool(gui.toolbar, ...
-% % % % % % % % % % %                 'Separator', 'off', ...
-% % % % % % % % % % %                 'TooltipString', 'Link to the BRAPH 2.0 forum', ...
-% % % % % % % % % % %                 'CData', imresize(imread('icon_forum.png'), [24 24]), ...
-% % % % % % % % % % %                 'ClickedCallback', {@cb_forum});
-% % % % % % % % % % % 
-% % % % % % % % % % %             % Twitter
-% % % % % % % % % % %             toolbar_web = uipushtool(gui.toolbar, ...
-% % % % % % % % % % %                 'Separator', 'off', ...
-% % % % % % % % % % %                 'TooltipString', 'Link to the BRAPH 2.0 Twitter', ...
-% % % % % % % % % % %                 'CData', imresize(imread('icon_twitter.png'), [24 24]), ...
-% % % % % % % % % % %                 'ClickedCallback', {@cb_twitter});
-% % % % % % % % % % % 
-% % % % % % % % % % %             uipushtool(gui.toolbar, 'Separator', 'on', 'Visible', 'off')
-% % % % % % % % % % %             uipushtool(gui.toolbar, 'Separator', 'on', 'Visible', 'off')
-% % % % % % % % % % % 
-% % % % % % % % % % %             % License
-% % % % % % % % % % %             toolbar_web = uipushtool(gui.toolbar, ...
-% % % % % % % % % % %                 'Separator', 'on', ...
-% % % % % % % % % % %                 'TooltipString', 'BRAPH 2.0 License', ...
-% % % % % % % % % % %                 'CData', imresize(imread('icon_license.png'), [24 24]), ...
-% % % % % % % % % % %                 'ClickedCallback', {@cb_license});
-% % % % % % % % % % % 
-% % % % % % % % % % %             % About
-% % % % % % % % % % %             toolbar_web = uipushtool(gui.toolbar, ...
-% % % % % % % % % % %                 'Separator', 'off', ...
-% % % % % % % % % % %                 'TooltipString', 'Informtion about BRAPH 2.0 and credits', ...
-% % % % % % % % % % %                 'CData', imresize(imread('icon_about.png'), [24 24]), ...
-% % % % % % % % % % %                 'ClickedCallback', {@cb_about});
-% % % % % % % %             BRAPH2.add_tool_about(gui.toolbar)
-% % % % % % % %         end
-% % % % % % % %     end
+    % Toolbar
+    if gui.get('TOOLBAR') && check_graphics(gui.f, 'figure')
+        gui.toolbar = findall(gui.f, 'Tag', 'ToolBar');
+        
+        if gui.get('TOOL_FILE') && check_graphics(gui.toolbar, 'uitoolbar')
+            % Open
+            uipushtool(gui.toolbar, ...
+                'Tag', 'BRAPH2.Open', ...                
+                'Tooltip', ['Open ' el.getName()], ...
+                'CData', imread('icon_open_ml.png'), ...
+                'ClickedCallback', {@cb_open});
+            % Save
+            uipushtool(gui.toolbar, ...
+                'Tag', 'BRAPH2.Save', ...                
+                'Tooltip', ['Save ' el.getName()], ...
+                'CData', imread('icon_save_ml.png'), ...
+                'ClickedCallback', {@cb_save});
+        end
+        
+        if gui.get('TOOL_ABOUT') && check_graphics(gui.toolbar, 'uitoolbar')
+            BRAPH2.add_tool_about(gui.toolbar)
+        end
+    end
 
     % Draw text filename
     if ~check_graphics(gui.text_filename, 'uilabel')
