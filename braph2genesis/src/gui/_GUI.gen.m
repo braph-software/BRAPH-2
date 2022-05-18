@@ -14,6 +14,8 @@ DRAW - To create the element figure, call gui.draw():
  
  Here, f is the figure.
  It is also possible to use gui.draw() to get the figure handle and to set its properties.
+ 
+X_DRAW - Undocumented funciton for internal use only, to be used to draw the contents of a GUI before showing it.
   
 CALLBACK - This is a callback function:
 
@@ -101,7 +103,7 @@ function f_out = draw(gui, varargin)
         if gui.get('TOOLBAR')
             gui.toolbar = uitoolbar(gui.f, 'Tag', 'ToolBar');
         end
-        drawnow() % crucial to ensure the correct sizing of the figure
+        drawnow() % crucial to ensure the correct sizing of the 
     end
     set(gui.f, ...
         'Name', gui.get('NAME'), ...
@@ -116,6 +118,9 @@ function f_out = draw(gui, varargin)
         gui.cb_close()
     end
 
+    % specialized draw
+    gui.x_draw()
+
     % show figure
     drawnow()
     set(gui.f, 'Visible', 'on')
@@ -124,6 +129,11 @@ function f_out = draw(gui, varargin)
     if nargout > 0
         f_out = gui.f;
     end
+end
+function x_draw(gui)
+    %X_DRAW undocumented funciton for internal use only.
+    
+    % X_DRAW is used to draw the contents of a GUI before showing it.
 end
 function cb_bring_to_front(gui)
     %CB_BRING_TO_FRONT brings to front the figure and its dependent figures.
