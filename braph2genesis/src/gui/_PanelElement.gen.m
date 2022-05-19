@@ -210,7 +210,7 @@ function redraw(pe, varargin)
     if sum(h_pp + dh) + dh > h_p
         h_p = sum(h_pp + dh) + dh;
     else
-        y0_pp = y0_pp + (h_p - sum(h_pp + dh));
+        y0_pp = y0_pp + (h_p - sum(h_pp + dh) - dh);
     end
 
     set(p, ...
