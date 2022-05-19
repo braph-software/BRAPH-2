@@ -3,30 +3,30 @@ delete(findall(0, 'type', 'figure'))
 clear all
 clc
 
-% el_class = 'GUIElement';
-% delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
-% create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
-% create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
-% create_test_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+el_class = 'GUIElement';
+delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
+create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+create_test_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
 % test_code = ['test_' el_class]
 % eval(test_code)
 
-gui1 = GUIElement('PE', ETA(), 'FILE', 'xxx sss', 'MENUBAR', false, 'TOOLBAR', false, 'CLOSEREQ', false);
+gui1 = GUIElement('PE', ETA(), 'FILE', 'xxx sss', 'MENUBAR', true, 'TOOLBAR', true, 'CLOSEREQ', false);
 f1 = gui1.draw();
 
-gui2 = GUIElement('PE', BRAPH2Constants(), 'FILE', 'xxx sss', 'MENUBAR', false, 'TOOLBAR', true, 'POSITION', [.1 0 .2 1], 'CLOSEREQ', false);
+gui2 = GUIElement('PE', BRAPH2Constants(), 'FILE', 'xxx sss', 'MENUBAR', true, 'TOOLBAR', true, 'POSITION', [.1 0 .2 1], 'CLOSEREQ', false);
 f2 = gui2.draw();
 
-gui3 = GUIElement('PE', ETA(), 'FILE', 'xxx sss', 'MENUBAR', false, 'TOOLBAR', false, 'POSITION', [.2 .2 .2 .78], 'CLOSEREQ', false);
+gui3 = GUIElement('PE', ETA(), 'FILE', 'xxx sss', 'MENUBAR', true, 'TOOLBAR', true, 'POSITION', [.2 .2 .2 .78], 'CLOSEREQ', false);
 f3 = gui3.draw();
 
-gui4 = GUIElement('PE', BRAPH2Constants(), 'FILE', 'xxx sss', 'MENUBAR', false, 'TOOLBAR', false, 'POSITION', [.3 .2 .2 .78], 'CLOSEREQ', false);
+gui4 = GUIElement('PE', BRAPH2Constants(), 'FILE', 'xxx sss', 'MENUBAR', true, 'TOOLBAR', true, 'POSITION', [.3 .2 .2 .78], 'CLOSEREQ', false);
 f4 = gui4.draw();
 
-gui5 = GUIElement('PE', ETA(), 'FILE', 'xxx sss', 'MENUBAR', false, 'TOOLBAR', false, 'POSITION', [.4 .2 .2 .5], 'CLOSEREQ', false);
+gui5 = GUIElement('PE', ETA(), 'FILE', 'xxx sss', 'MENUBAR', true, 'TOOLBAR', true, 'POSITION', [.4 .2 .2 .5], 'CLOSEREQ', false);
 f5 = gui5.draw();
 
-gui6 = GUIElement('PE', BRAPH2Constants(), 'FILE', 'xxx sss', 'MENUBAR', false, 'TOOLBAR', false, 'POSITION', [.5 .2 .2 .5], 'CLOSEREQ', false);
+gui6 = GUIElement('PE', BRAPH2Constants(), 'FILE', 'xxx sss', 'MENUBAR', true, 'TOOLBAR', true, 'POSITION', [.5 .2 .2 .5], 'CLOSEREQ', false);
 f6 = gui6.draw();
 
 % gui = GUI('MENUBAR', true, 'TOOLBAR', true);
