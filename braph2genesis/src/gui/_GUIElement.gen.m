@@ -356,7 +356,9 @@ function x_draw(gui, f)
             'SizeChangedFcn', {@cb_resize_layout} ...
             );
         function cb_resize_layout(~, ~)
-            set(edit_table, 'Position', ceil([10 10+BRAPH2.FONTSIZE*2+10 w(p_layout, 'pixels')-20 h(p_layout, 'pixels')-10-BRAPH2.FONTSIZE*2-20]))
+            if exist('edit_table') && check_graphics(edit_table, 'uitable')
+                set(edit_table, 'Position', ceil([10 10+BRAPH2.FONTSIZE*2+10 w(p_layout, 'pixels')-20 h(p_layout, 'pixels')-10-BRAPH2.FONTSIZE*2-20]))
+            end
         end
         
         edit_table = uitable( ...
@@ -384,6 +386,7 @@ function x_draw(gui, f)
             'Position', ceil([10+BRAPH2.FONTSIZE*10+10 10 BRAPH2.FONTSIZE*10 BRAPH2.FONTSIZE*2] * BRAPH2.S), ...
             'ButtonPushedFcn', {@cb_cancel_edit} ...
             );
+        cb_resize_layout()
 
         [order, title, visible] = load_layout(el);
         VISIBLE = 1;
@@ -445,13 +448,23 @@ function x_draw(gui, f)
             set(edit_table, 'Data', data);
         end
         function cb_save_edit(~, ~)
+            set(gui.pp, 'Visible', 'off')
+            drawnow()
+
             data = get(edit_table, 'Data');
             order = cell2mat(data(:, 2))';
             title = data(:, 3); title = title';
             save_layout(el, order, title)
 
             pe.reinit(el);
+
+            % the motion of the figure is to ensure the correct
+            % rendering of the opened element
+            set(gui.f, 'Position', get(gui.f, 'Position') + [.001 0 0 0])
             gui.draw()
+            set(gui.f, 'Position', get(gui.f, 'Position') - [.001 0 0 0])
+
+            set(gui.pp, 'Visible', 'on')
         end
         function cb_cancel_edit(~, ~)
             close(gui.f_layout)
@@ -502,6 +515,15 @@ function cb_bring_to_front(gui)
     % brings to front the main GUI
     cb_bring_to_front@GUI(gui)
     
+    % brings to fron layout GUI
+    if check_graphics(gui.f_layout, 'figure')
+        figure(gui.f_layout) 
+        set(gui.f_layout, ...
+            'Visible', 'on', ...
+            'WindowState', 'normal' ...
+            )
+    end
+    
     % brings to front the other panels
     pe = gui.get('PE');
     pr_dict = pe.get('PR_DICT');
@@ -521,6 +543,11 @@ function cb_hide(gui)
 
     % hides the main GUI
     cb_hide@GUI(gui)
+        
+    % hides the layout GUI
+    if check_graphics(gui.f_layout, 'figure')
+        figure(gui.f_layout, 'Visible', 'off')
+    end
     
     % hides the other panels
     pe = gui.get('PE');
@@ -541,6 +568,11 @@ function cb_close(gui)
 
     % closes the main GUI
     cb_close@GUI(gui)
+    
+    % closes the layout GUI
+    if check_graphics(gui.f_layout, 'figure')
+        delete(gui.f_layout)
+    end
     
     % closes the other panels
     pe = gui.get('PE');
