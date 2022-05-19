@@ -135,6 +135,8 @@ function x_draw(gui, f)
     %X_DRAW undocumented funciton for internal use only.
     
     % X_DRAW is used to draw the contents of a GUI before showing it.
+    
+    drawnow() % to ensure that the figure is correctly sized    
 end
 function cb_bring_to_front(gui)
     %CB_BRING_TO_FRONT brings to front the figure and its dependent figures.
