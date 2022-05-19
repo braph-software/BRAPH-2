@@ -149,12 +149,11 @@ function x_draw(gui, f)
     
     % X_DRAW is used to draw the contents of a GUI before showing it.
     
-    drawnow() % to ensure that the figure is correctly sized
-
     x_draw@GUI(gui, f)
 
     pe = gui.get('PE');
-        
+    el = pe.get('EL');
+    
     dw = ceil(pe.get('DW') * BRAPH2.S);
     h_filename = ceil(1.5 * BRAPH2.FONTSIZE * BRAPH2.S);
 
@@ -224,108 +223,109 @@ function x_draw(gui, f)
     cb_resize()
 
     % Menu
-% % %     if gui.get('MENUBAR') && gui.get('MENU_FILE') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_file, 'uimenu')
-% % %         gui.menu_file = uimenu(f, 'Label', 'File');
-% % % 
-% % %         uimenu(gui.menu_file, ...
-% % %             'Label', 'Open ...', ...
-% % %             'Accelerator', 'O', ...
-% % %             'Callback', {@cb_open})
-% % %         uimenu(gui.menu_file, ...
-% % %             'Label', 'Save', ...
-% % %             'Accelerator', 'S', ...
-% % %             'Callback', {@cb_save})
-% % %         uimenu(gui.menu_file, ...
-% % %             'Label', 'Save as ...', ...
-% % %             'Accelerator', 'A', ...
-% % %             'Callback', {@cb_saveas})
-% % %         uimenu(gui.menu_file, ...
-% % %             'Separator', 'on', ...
-% % %             'Label', 'Close', ...
-% % %             'Accelerator', 'C', ...
-% % %             'Callback', {@cb_close})
-% % %     elseif (~gui.get('MENUBAR') || ~gui.get('MENU_FILE'))
-% % %         delete(gui.menu_file)
-% % %     end
-% % %     function cb_open(~, ~)
-% % %         % select file
-% % %         [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
-% % %         if filterindex
-% % %             filename = fullfile(path, file);
-% % %             tmp_el = BRAPH2.load(filename);
-% % %             if strcmp(tmp_el.getClass(), el.getClass())
-% % %                 pe.reinit(tmp_el)
-% % %                 el = tmp_el; % update local variable 'el' to synchronize it with pe 'el'  
-% % %                 gui.draw()
-% % %             else
-% % %                 GUIElement('PE', tmp_el, 'FILE', filename).draw()
-% % %             end
-% % %         end
-% % %     end
-% % %     function cb_save(~, ~)
-% % %         filename = gui.get('FILE');
-% % %         if isfile(filename)
-% % %             BRAPH2.save(el, filename)
-% % %         else
-% % %             cb_saveas();
-% % %         end
-% % %     end
-% % %     function cb_saveas(~, ~)
-% % %         % select file
-% % %         [file, path, filterindex] = uiputfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
-% % %         % save file
-% % %         if filterindex
-% % %             filename = fullfile(path, file);
-% % %             BRAPH2.save(el, filename)
-% % %             gui.set('FILE', filename)
-% % %             update_filename();
-% % %         end
-% % %     end
-% % %     function cb_close(~, ~)
-% % %         gui.cb_close()
-% % %     end
-% % %     
-% % %     if gui.get('MENUBAR') && gui.get('MENU_IMPORT') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_import, 'uimenu')
-% % %         gui.menu_import = uimenu(f, ...
-% % %             'Label', 'Import', ...
-% % %             'Callback', {@cb_refresh_import_menu});
-% % %     elseif (~gui.get('MENUBAR') || ~gui.get('MENU_IMPORT'))
-% % %         delete(gui.menu_import)
-% % %     end
-% % %     function cb_refresh_import_menu(~,~)
-% % %         im_menus = get(gui.menu_import, 'Children');
-% % %         for i = 1:1:length(im_menus)
-% % %             delete(im_menus(i));
-% % %         end
-% % %         eval([el.getClass() '.getGUIMenuImport(el, gui.menu_import, pe)']);
-% % %         el = pe.get('el');
-% % %     end    
-% % % 
-% % %     if gui.get('MENUBAR') && gui.get('MENU_EXPORT') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_export, 'uimenu')
-% % %         gui.menu_export = uimenu(f, ...
-% % %             'Label', 'Export', ...
-% % %             'Callback', {@cb_refresh_export_menu});
-% % %     elseif (~gui.get('MENUBAR') || ~gui.get('MENU_EXPORT'))
-% % %         delete(gui.menu_export)
-% % %     end
-% % %     function cb_refresh_export_menu(~,~)
-% % %         el = pe.get('el');
-% % %         ex_menus = get(gui.menu_export, 'Children');
-% % %         for i = 1:length(ex_menus)
-% % %             delete(ex_menus(i));
-% % %         end
-% % %         eval([el.getClass() '.getGUIMenuExport(el, gui.menu_export, pe)']);
-% % %      end
-% % % 
-% % %     if gui.get('MENUBAR') && gui.get('MENU_PERSONALIZE') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_personalize, 'uimenu')
-% % %         gui.menu_personalize = uimenu(f, 'Label', 'Personalize');
-% % %         uimenu(gui.menu_personalize, ...
-% % %             'Label', 'Layout ...', ...
-% % %             'Callback', {@cb_layout});
-% % %     elseif (~gui.get('MENUBAR') || ~gui.get('MENU_PERSONALIZE'))
-% % %         delete(gui.menu_personalize)
-% % %     end
-% % %     function cb_layout(~, ~)
+    if gui.get('MENUBAR') && gui.get('MENU_FILE') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_file, 'uimenu')
+        gui.menu_file = uimenu(f, 'Label', 'File');
+
+        uimenu(gui.menu_file, ...
+            'Label', 'Open ...', ...
+            'Accelerator', 'O', ...
+            'Callback', {@cb_open})
+        uimenu(gui.menu_file, ...
+            'Label', 'Save', ...
+            'Accelerator', 'S', ...
+            'Callback', {@cb_save})
+        uimenu(gui.menu_file, ...
+            'Label', 'Save as ...', ...
+            'Accelerator', 'A', ...
+            'Callback', {@cb_saveas})
+        uimenu(gui.menu_file, ...
+            'Separator', 'on', ...
+            'Label', 'Close', ...
+            'Accelerator', 'C', ...
+            'Callback', {@cb_close})
+    elseif (~gui.get('MENUBAR') || ~gui.get('MENU_FILE'))
+        delete(gui.menu_file)
+    end
+    function cb_open(~, ~)
+        % select file
+        [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
+        if filterindex
+            filename = fullfile(path, file);
+            tmp_el = BRAPH2.load(filename);
+            if strcmp(tmp_el.getClass(), el.getClass())
+                pe.reinit(tmp_el)
+                el = tmp_el; % update local variable 'el' to synchronize it with pe 'el'  
+                gui.draw()
+            else
+                GUIElement('PE', tmp_el, 'FILE', filename).draw()
+            end
+        end
+    end
+    function cb_save(~, ~)
+        filename = gui.get('FILE');
+        if isfile(filename)
+            BRAPH2.save(el, filename)
+        else
+            cb_saveas();
+        end
+    end
+    function cb_saveas(~, ~)
+        % select file
+        [file, path, filterindex] = uiputfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
+        % save file
+        if filterindex
+            filename = fullfile(path, file);
+            BRAPH2.save(el, filename)
+            gui.set('FILE', filename)
+            update_filename();
+        end
+    end
+    function cb_close(~, ~)
+        gui.cb_close()
+    end
+    
+    if gui.get('MENUBAR') && gui.get('MENU_IMPORT') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_import, 'uimenu')
+        gui.menu_import = uimenu(f, ...
+            'Label', 'Import', ...
+            'Callback', {@cb_refresh_import_menu});
+    elseif (~gui.get('MENUBAR') || ~gui.get('MENU_IMPORT'))
+        delete(gui.menu_import)
+    end
+    function cb_refresh_import_menu(~,~)
+        im_menus = get(gui.menu_import, 'Children');
+        for i = 1:1:length(im_menus)
+            delete(im_menus(i));
+        end
+        eval([el.getClass() '.getGUIMenuImport(el, gui.menu_import, pe)']);
+        el = pe.get('el');
+    end    
+
+    if gui.get('MENUBAR') && gui.get('MENU_EXPORT') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_export, 'uimenu')
+        gui.menu_export = uimenu(f, ...
+            'Label', 'Export', ...
+            'Callback', {@cb_refresh_export_menu});
+    elseif (~gui.get('MENUBAR') || ~gui.get('MENU_EXPORT'))
+        delete(gui.menu_export)
+    end
+    function cb_refresh_export_menu(~,~)
+        el = pe.get('el');
+        ex_menus = get(gui.menu_export, 'Children');
+        for i = 1:length(ex_menus)
+            delete(ex_menus(i));
+        end
+        eval([el.getClass() '.getGUIMenuExport(el, gui.menu_export, pe)']);
+     end
+
+    if gui.get('MENUBAR') && gui.get('MENU_PERSONALIZE') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_personalize, 'uimenu')
+        gui.menu_personalize = uimenu(f, 'Label', 'Personalize');
+        uimenu(gui.menu_personalize, ...
+            'Label', 'Layout ...', ...
+            'Callback', {@cb_layout});
+    elseif (~gui.get('MENUBAR') || ~gui.get('MENU_PERSONALIZE'))
+        delete(gui.menu_personalize)
+    end
+    function cb_layout(~, ~)
+disp('layout')
 % % %         if isgraphics(gui.f_layout, 'figure')
 % % %             delete(gui.f_layout)
 % % %         end
@@ -447,7 +447,7 @@ function x_draw(gui, f)
 % % %         function cb_cancel_edit(~, ~)
 % % %             close(gui.f_layout)
 % % %         end
-% % %     end
+    end
 
     if gui.get('MENUBAR') && gui.get('MENU_ABOUT') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_about, 'uimenu') 
         gui.menu_about = BRAPH2.add_menu_about(f);
@@ -459,20 +459,20 @@ function x_draw(gui, f)
     if gui.get('TOOLBAR') && check_graphics(f, 'figure')
         gui.toolbar = findall(f, 'Tag', 'ToolBar');
         
-% % %         if gui.get('TOOL_FILE') && check_graphics(gui.toolbar, 'uitoolbar')
-% % %             % Open
-% % %             uipushtool(gui.toolbar, ...
-% % %                 'Tag', 'BRAPH2.Open', ...                
-% % %                 'Tooltip', ['Open ' el.getName()], ...
-% % %                 'CData', imread('icon_open_ml.png'), ...
-% % %                 'ClickedCallback', {@cb_open});
-% % %             % Save
-% % %             uipushtool(gui.toolbar, ...
-% % %                 'Tag', 'BRAPH2.Save', ...                
-% % %                 'Tooltip', ['Save ' el.getName()], ...
-% % %                 'CData', imread('icon_save_ml.png'), ...
-% % %                 'ClickedCallback', {@cb_save});
-% % %         end
+        if gui.get('TOOL_FILE') && check_graphics(gui.toolbar, 'uitoolbar')
+            % Open
+            uipushtool(gui.toolbar, ...
+                'Tag', 'BRAPH2.Open', ...                
+                'Tooltip', ['Open ' el.getName()], ...
+                'CData', imread('icon_open_ml.png'), ...
+                'ClickedCallback', {@cb_open});
+            % Save
+            uipushtool(gui.toolbar, ...
+                'Tag', 'BRAPH2.Save', ...                
+                'Tooltip', ['Save ' el.getName()], ...
+                'CData', imread('icon_save_ml.png'), ...
+                'ClickedCallback', {@cb_save});
+        end
         
         if gui.get('TOOL_ABOUT') && check_graphics(gui.toolbar, 'uitoolbar')
             BRAPH2.add_tool_about(gui.toolbar)
