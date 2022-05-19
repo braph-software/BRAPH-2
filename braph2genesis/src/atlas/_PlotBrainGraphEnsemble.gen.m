@@ -698,7 +698,7 @@ function h = arrow_edge(pl, i, j, varargin)
     if i == j  % removes diagonal
         return;
     end
-    
+
     % get brain regions
     br_1 = pl.get('ATLAS').get('BR_DICT').getItem(i);
     br_2 = pl.get('ATLAS').get('BR_DICT').getItem(j);
@@ -713,7 +713,7 @@ function h = arrow_edge(pl, i, j, varargin)
 
     % arrow properties
     color = pl.INIT_ARR_COLOR;
-    SWIDTH = pl.INIT_ARR_SWIDTH;
+    SWIDTH = get_from_varargin(1, 'LineWidth', varargin{:});
     HLENGTH = pl.INIT_ARR_HLENGTH;
     HWIDTH = pl.INIT_ARR_HWIDTH;
     HNODE = pl.INIT_ARR_HNODE;
@@ -1575,7 +1575,7 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
     pl.f_graph_settings = ui_panel_graph;
     fig_graph = pl.f_graph_settings;
     color = [1 1 1];
-    
+
     ui_title = uicontrol(fig_graph, ...
         'Style', 'text', ...
         'String', 'Graph Panel', ...
@@ -1599,7 +1599,7 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
     set(fig_graph, 'Visible', 'on');
 
         function init_graph()
-            
+
             set(ui_checkbox_graph_lineweight, 'Units', 'normalized')
             set(ui_checkbox_graph_lineweight, 'BackgroundColor',BKGCOLOR)
             set(ui_checkbox_graph_lineweight, 'Position', [.10 .61 .28 .10])
@@ -1611,15 +1611,15 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
 
             set(ui_edit_graph_lineweight, 'Units', 'normalized')
             set(ui_edit_graph_lineweight, 'Position', [.3 .62 .3 .08])
-            set(ui_edit_graph_lineweight, 'String', '1');
+            set(ui_edit_graph_lineweight, 'String', pl.INIT_ARR_SWIDTH);
             set(ui_edit_graph_lineweight, 'TooltipString', 'Set line weight.');
             set(ui_edit_graph_lineweight, 'FontWeight', 'bold')
             set(ui_edit_graph_lineweight, 'Callback', {@cb_edit_lineweight});
-            
+
             set(ui_link_type, 'Units', 'normalized')
             set(ui_link_type, 'Position', [.62 .62 .3 .08])
             set(ui_link_type, 'Callback', {@cb_link_type});
-            
+
             set(ui_button_graph_show, 'Units', 'normalized')
             set(ui_button_graph_show, 'Position', [.1 .45 .4 .08])
             set(ui_button_graph_show, 'String', ' Show ')
@@ -1652,8 +1652,8 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
             set(ui_button_graph_edge_settings, 'FontSize', 10)
             set(ui_button_graph_edge_settings, 'Callback', {@cb_graph_links_settings})
 
-           
-        end        
+
+        end
         function cb_checkbox_lineweight(~, ~)  % (src, event)
             if get(ui_checkbox_graph_lineweight, 'Value')
                 set(ui_edit_graph_lineweight, 'Enable', 'on')
@@ -1730,13 +1730,13 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
                             continue;
                         end
                         if  link_style == 1
-                            pl.link_edges(i, j, 'LineWidth', weight);
+                            pl.link_edge(i, j, 'LineWidth', weight);
                             pl.link_edge_on(i, j);
                         elseif link_style == 2
-                            pl.arrow_edges(i, j, 'LineWidth', weight);
+                            pl.arrow_edge(i, j, 'LineWidth', weight);
                             pl.arrow_edge_on(i, j)
                         else
-                            pl.cylinder_edges(i, j, 'LineWidth', weight);
+                            pl.cylinder_edge(i, j, 'LineWidth', weight);
                             pl.cylinder_edge_on(i, j)
                         end
                     end
