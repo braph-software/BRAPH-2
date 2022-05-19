@@ -218,6 +218,7 @@ function x_draw(gui, f)
             'Height', h(gui.ps, 'pixels') ...
             )
     end
+    drawnow() % added to ensure that the resize is correct
     cb_resize()
 
     % Menu
