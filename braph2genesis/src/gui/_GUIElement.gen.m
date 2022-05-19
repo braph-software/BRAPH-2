@@ -335,128 +335,127 @@ function x_draw(gui, f)
         delete(gui.menu_personalize)
     end
     function cb_layout(~, ~)
-disp('layout')
-% % %         if isgraphics(gui.f_layout, 'figure')
-% % %             delete(gui.f_layout)
-% % %         end
-% % % 
-% % %         gui_layout = GUI( ... 
-% % %             'Name', ['Layout ' el.getClass() ' - ' BRAPH2.STR], ...
-% % %             'Position', [x0(f, 'normalized')+w(f, 'normalized') y0(f, 'normalized')+h(f, 'normalized')*2/3 w(f, 'normalized') h(f, 'normalized')/3], ...
-% % %             'BKGCOLOR', pe.get('BKGCOLOR'), ...
-% % %             'CLOSEREQ', false ...
-% % %             );
-% % %         gui.f_layout = gui_layout.draw('Draw', false);
-% % % 
-% % %         p_layout = uipanel( ...
-% % %             'Parent', gui.f_layout, ...
-% % %             'Units', 'normalized', ...
-% % %             'Position', [0 0 1 1], ...
-% % %             'BackgroundColor', pe.get('BKGCOLOR'), ...
-% % %             'AutoResizeChildren', 'off', ...
-% % %             'SizeChangedFcn', {@cb_resize_layout} ...
-% % %             );
-% % %         function cb_resize_layout(~, ~)
-% % %             set(edit_table, 'Position', ceil([10 10+BRAPH2.FONTSIZE*2+10 w(p_layout, 'pixels')-20 h(p_layout, 'pixels')-10-BRAPH2.FONTSIZE*2-20]))
-% % %         end
-% % %         
-% % %         edit_table = uitable( ...
-% % %             'Parent', p_layout, ...
-% % %             'Tag', 'edit_table', ...
-% % %             'Units', 'pixels', ...
-% % %             'ColumnName', {'Show', 'Order', 'Title', 'Property', 'Category', 'Format'}, ...
-% % %             'ColumnFormat', {'logical', 'char', 'char', 'char', 'char', 'char'}, ...
-% % %             'ColumnEditable', [true true true false false false], ...
-% % %             'CellEditCallback', {@cb_edit_tb} ...
-% % %             );
-% % %         save_edit_btn = uibutton( ...
-% % %             'Parent', p_layout, ...
-% % %             'Tag', 'save_edit_btn', ...
-% % %             'Text', 'Save', ...
-% % %             'FontSize', BRAPH2.FONTSIZE, ...
-% % %             'Position', ceil([10 10 BRAPH2.FONTSIZE*10 BRAPH2.FONTSIZE*2] * BRAPH2.S), ...
-% % %             'ButtonPushedFcn', {@cb_save_edit} ...
-% % %             );
-% % %         cancel_edit_btn = uibutton( ...
-% % %             'Parent', p_layout, ...
-% % %             'Tag', 'save_edit_btn', ...
-% % %             'Text', 'Cancel', ...
-% % %             'FontSize', BRAPH2.FONTSIZE, ...
-% % %             'Position', ceil([10+BRAPH2.FONTSIZE*10+10 10 BRAPH2.FONTSIZE*10 BRAPH2.FONTSIZE*2] * BRAPH2.S), ...
-% % %             'ButtonPushedFcn', {@cb_cancel_edit} ...
-% % %             );
-% % % 
-% % %         [order, title, visible] = load_layout(el);
-% % %         VISIBLE = 1;
-% % %         ORDER = 2;
-% % %         TITLE = 3;
-% % %         TAG = 4;
-% % %         CATEGORY = 5;
-% % %         FORMAT = 6;
-% % %         data = cell(el.getPropNumber(), 6);
-% % %         for prop = 1:1:el.getPropNumber()
-% % %             data{prop, VISIBLE} = visible(prop);
-% % %             data{prop, ORDER} = order(prop);
-% % %             data{prop, TITLE} = title{prop};
-% % %             data{prop, TAG} = upper(el.getPropTag(prop));
-% % %             data{prop, CATEGORY} = el.getPropCategory(prop);
-% % %             data{prop, FORMAT} = el.getPropFormat(prop);
-% % %         end        
-% % %         set(edit_table, 'Data', data);
-% % % 
-% % %         set(gui.f_layout, 'Visible', 'on');
-% % % 
-% % %         function cb_edit_tb(~, event)
-% % %             prop = event.Indices(1);
-% % %             col = event.Indices(2);
-% % %             newdata = event.NewData;
-% % %             data = get(edit_table, 'Data');
-% % % 
-% % %             if col == VISIBLE
-% % %                 if newdata == true
-% % %                     if any(~isnan(cell2mat(data(:, ORDER))))
-% % %                         data{prop, ORDER} = max(cell2mat(data(:, ORDER))) + 1;
-% % %                     else % all NaN (edge case)
-% % %                         data{prop, ORDER} = 1;
-% % %                     end
-% % %                 else % newdata == false
-% % %                     for i = data{prop, ORDER} + 1:1:max(cell2mat(data(:, ORDER)))
-% % %                         data{cell2mat(data(:, ORDER)) == i, ORDER} = i - 1;
-% % %                     end
-% % %                     data{prop, ORDER} = NaN;
-% % %                 end
-% % %             end
-% % % 
-% % %             if col == ORDER
-% % %                 if isnan(newdata)
-% % %                     data{prop, VISIBLE} = false;
-% % %                 else
-% % %                     data{prop, VISIBLE} = true;
-% % %                 end
-% % % 
-% % %                 order = cell2mat(data(:, ORDER)) + .00301040106;
-% % %                 order(prop) = newdata;
-% % %                 for i = 1:1:numel(order) - sum(isnan(order))
-% % %                     min_order_index = find(order == min(order));
-% % %                     data{min_order_index, ORDER} = i;
-% % %                     order(min_order_index) = NaN;
-% % %                 end
-% % %             end
-% % % 
-% % %             set(edit_table, 'Data', data);
-% % %         end
-% % %         function cb_save_edit(~, ~)
-% % %             data = get(edit_table, 'Data');
-% % %             order = cell2mat(data(:, 2))';
-% % %             title = data(:, 3); title = title';
-% % %             save_layout(el, order, title)
-% % % 
-% % %             pe.reinit(el);
-% % %             gui.draw()
-% % %         end
-% % %         function cb_cancel_edit(~, ~)
-% % %             close(gui.f_layout)
-% % %         end
+        if isgraphics(gui.f_layout, 'figure')
+            delete(gui.f_layout)
+        end
+
+        gui_layout = GUI( ... 
+            'Name', ['Layout ' el.getClass() ' - ' BRAPH2.STR], ...
+            'Position', [x0(f, 'normalized')+w(f, 'normalized') y0(f, 'normalized')+h(f, 'normalized')*2/3 w(f, 'normalized') h(f, 'normalized')/3], ...
+            'BKGCOLOR', pe.get('BKGCOLOR'), ...
+            'CLOSEREQ', false ...
+            );
+        gui.f_layout = gui_layout.draw('Visible', 'off');
+
+        p_layout = uipanel( ...
+            'Parent', gui.f_layout, ...
+            'Units', 'normalized', ...
+            'Position', [0 0 1 1], ...
+            'BackgroundColor', pe.get('BKGCOLOR'), ...
+            'AutoResizeChildren', 'off', ...
+            'SizeChangedFcn', {@cb_resize_layout} ...
+            );
+        function cb_resize_layout(~, ~)
+            set(edit_table, 'Position', ceil([10 10+BRAPH2.FONTSIZE*2+10 w(p_layout, 'pixels')-20 h(p_layout, 'pixels')-10-BRAPH2.FONTSIZE*2-20]))
+        end
+        
+        edit_table = uitable( ...
+            'Parent', p_layout, ...
+            'Tag', 'edit_table', ...
+            'Units', 'pixels', ...
+            'ColumnName', {'Show', 'Order', 'Title', 'Property', 'Category', 'Format'}, ...
+            'ColumnFormat', {'logical', 'char', 'char', 'char', 'char', 'char'}, ...
+            'ColumnEditable', [true true true false false false], ...
+            'CellEditCallback', {@cb_edit_tb} ...
+            );
+        save_edit_btn = uibutton( ...
+            'Parent', p_layout, ...
+            'Tag', 'save_edit_btn', ...
+            'Text', 'Save', ...
+            'FontSize', BRAPH2.FONTSIZE, ...
+            'Position', ceil([10 10 BRAPH2.FONTSIZE*10 BRAPH2.FONTSIZE*2] * BRAPH2.S), ...
+            'ButtonPushedFcn', {@cb_save_edit} ...
+            );
+        cancel_edit_btn = uibutton( ...
+            'Parent', p_layout, ...
+            'Tag', 'save_edit_btn', ...
+            'Text', 'Cancel', ...
+            'FontSize', BRAPH2.FONTSIZE, ...
+            'Position', ceil([10+BRAPH2.FONTSIZE*10+10 10 BRAPH2.FONTSIZE*10 BRAPH2.FONTSIZE*2] * BRAPH2.S), ...
+            'ButtonPushedFcn', {@cb_cancel_edit} ...
+            );
+
+        [order, title, visible] = load_layout(el);
+        VISIBLE = 1;
+        ORDER = 2;
+        TITLE = 3;
+        TAG = 4;
+        CATEGORY = 5;
+        FORMAT = 6;
+        data = cell(el.getPropNumber(), 6);
+        for prop = 1:1:el.getPropNumber()
+            data{prop, VISIBLE} = visible(prop);
+            data{prop, ORDER} = order(prop);
+            data{prop, TITLE} = title{prop};
+            data{prop, TAG} = upper(el.getPropTag(prop));
+            data{prop, CATEGORY} = el.getPropCategory(prop);
+            data{prop, FORMAT} = el.getPropFormat(prop);
+        end        
+        set(edit_table, 'Data', data);
+
+        set(gui.f_layout, 'Visible', 'on');
+
+        function cb_edit_tb(~, event)
+            prop = event.Indices(1);
+            col = event.Indices(2);
+            newdata = event.NewData;
+            data = get(edit_table, 'Data');
+
+            if col == VISIBLE
+                if newdata == true
+                    if any(~isnan(cell2mat(data(:, ORDER))))
+                        data{prop, ORDER} = max(cell2mat(data(:, ORDER))) + 1;
+                    else % all NaN (edge case)
+                        data{prop, ORDER} = 1;
+                    end
+                else % newdata == false
+                    for i = data{prop, ORDER} + 1:1:max(cell2mat(data(:, ORDER)))
+                        data{cell2mat(data(:, ORDER)) == i, ORDER} = i - 1;
+                    end
+                    data{prop, ORDER} = NaN;
+                end
+            end
+
+            if col == ORDER
+                if isnan(newdata)
+                    data{prop, VISIBLE} = false;
+                else
+                    data{prop, VISIBLE} = true;
+                end
+
+                order = cell2mat(data(:, ORDER)) + .00301040106;
+                order(prop) = newdata;
+                for i = 1:1:numel(order) - sum(isnan(order))
+                    min_order_index = find(order == min(order));
+                    data{min_order_index, ORDER} = i;
+                    order(min_order_index) = NaN;
+                end
+            end
+
+            set(edit_table, 'Data', data);
+        end
+        function cb_save_edit(~, ~)
+            data = get(edit_table, 'Data');
+            order = cell2mat(data(:, 2))';
+            title = data(:, 3); title = title';
+            save_layout(el, order, title)
+
+            pe.reinit(el);
+            gui.draw()
+        end
+        function cb_cancel_edit(~, ~)
+            close(gui.f_layout)
+        end
     end
 
     if gui.get('MENUBAR') && gui.get('MENU_ABOUT') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_about, 'uimenu') 
