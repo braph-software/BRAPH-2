@@ -712,8 +712,8 @@ function h = arrow_edge(pl, i, j, varargin)
     Z2 = br_2.get('Z');
 
     % arrow properties
-    color = pl.INIT_ARR_COLOR;
-    SWIDTH = get_from_varargin(1, 'LineWidth', varargin{:});
+    color = get_from_varargin(pl.INIT_ARR_COLOR, 'Color', varargin{:});
+    SWIDTH = get_from_varargin(pl.INIT_ARR_SWIDTH, 'LineWidth', varargin{:});
     HLENGTH = pl.INIT_ARR_HLENGTH;
     HWIDTH = pl.INIT_ARR_HWIDTH;
     HNODE = pl.INIT_ARR_HNODE;
@@ -740,6 +740,8 @@ function h = arrow_edge(pl, i, j, varargin)
         x2 = pl.edges.X2(i, j);
         y2 = pl.edges.Y2(i, j);
         z2 = pl.edges.Z2(i, j);
+        
+        old_color = get(pl.edges.arr(i, j), 'EdgeColor');
 
         if x1 ~= X1 || y1 ~= Y1 || z1 ~= Z1 ...
                 || x2 ~= X2 || y2 ~= Y2 || z2 ~= Z2
@@ -755,6 +757,10 @@ function h = arrow_edge(pl, i, j, varargin)
             set(pl.edges.arr(i, j), 'YData', Y);
             set(pl.edges.arr(i, j), 'ZData', Z);
 
+        end
+        
+        if old_color ~= color
+            set(pl.edges.arr(i, j), 'EdgeColor', color, 'FaceColor', color);
         end
     end
     pl.edges.X1(i, j) = X1;
@@ -1697,6 +1703,7 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
         end
         function cb_graph_color(~, ~)  % (src, event)
             color = uisetcolor();
+            link_style = get(ui_link_type, 'Value');
 
             if length(color)==3
                 n = atlas.get('BR_DICT').length();
@@ -1705,7 +1712,13 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
                         if i == j
                             continue;
                         end
-                        pl.link_edge(i, j, 'Color', color)
+                        if  link_style == 1
+                            pl.link_edge(i, j, 'Color', color)
+                        elseif link_style == 2
+                            pl.arrow_edge(i, j, 'Color', color)
+                        else
+                            pl.cylinder_edge(i, j, 'Color', color)
+                        end
                     end
                 end
             end
