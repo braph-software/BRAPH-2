@@ -148,11 +148,13 @@ function x_draw(gui, f)
     %X_DRAW undocumented funciton for internal use only.
     
     % X_DRAW is used to draw the contents of a GUI before showing it.
+    
+    drawnow() % to ensure that the figure is correctly sized
 
     x_draw@GUI(gui, f)
 
     pe = gui.get('PE');
-    
+        
     dw = ceil(pe.get('DW') * BRAPH2.S);
     h_filename = ceil(1.5 * BRAPH2.FONTSIZE * BRAPH2.S);
 
