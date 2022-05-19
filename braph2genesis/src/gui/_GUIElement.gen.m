@@ -548,13 +548,26 @@ end
 %%%% ¡name!
 Basic use
 %%%% ¡code!
-et1 = ETA();
-gui1 = GUIElement('PE', et1, 'MENUBAR', true, 'TOOLBAR', true, 'CLOSEREQ', false);
-f1a = gui.draw();
-f1b = gui.draw();
-close(f1b)
+gui1 = GUIElement('PE', ETA(), 'FILE', 'xxx sss', 'MENUBAR', true, 'TOOLBAR', true, 'CLOSEREQ', false);
+f1 = gui1.draw();
+close(f1)
 
-b2 = BRAPH2Constants();
-gui2 = GUIElement('PE', b2, 'MENUBAR', true, 'TOOLBAR', true, 'CLOSEREQ', false);
-f2 = gui.draw();
+gui2 = GUIElement('PE', BRAPH2Constants(), 'FILE', 'xxx sss', 'MENUBAR', true, 'TOOLBAR', true, 'POSITION', [.1 0 .2 1], 'CLOSEREQ', false);
+f2 = gui2.draw();
 close(f2)
+
+gui3 = GUIElement('PE', ETA(), 'FILE', 'xxx sss', 'MENUBAR', true, 'TOOLBAR', true, 'POSITION', [.2 .2 .2 .78], 'CLOSEREQ', false);
+f3 = gui3.draw();
+close(f3)
+
+gui4 = GUIElement('PE', BRAPH2Constants(), 'FILE', 'xxx sss', 'MENUBAR', true, 'TOOLBAR', true, 'POSITION', [.3 .2 .2 .78], 'CLOSEREQ', false);
+f4 = gui4.draw();
+close(f4)
+
+gui5 = GUIElement('PE', ETA(), 'FILE', 'xxx sss', 'MENUBAR', true, 'TOOLBAR', true, 'POSITION', [.4 .2 .2 .5], 'CLOSEREQ', false);
+f5 = gui5.draw();
+close(f5)
+
+gui6 = GUIElement('PE', BRAPH2Constants(), 'FILE', 'xxx sss', 'MENUBAR', true, 'TOOLBAR', true, 'POSITION', [.5 .2 .2 .5], 'CLOSEREQ', false);
+f6 = gui6.draw();
+close(f6)
