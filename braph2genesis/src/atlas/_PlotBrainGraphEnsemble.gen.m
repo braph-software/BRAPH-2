@@ -1740,9 +1740,11 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
                 n = atlas.get('BR_DICT').length();
                 weight = str2double(get(ui_edit_graph_lineweight, 'String'));
                 wb = waitbar(0, ['Plotting connections: node 1 - node 2']);
+                k = 1;
                 for i = 1:1:n
                     for j = 1:1:n
-                        waitbar(0, wb, ['Plotting connections: node ' num2str(i) '- node ' num2str(j)]);
+                        k = k+1;
+                        waitbar(k/(n*n), wb, ['Plotting connections: node ' num2str(i) ' - node ' num2str(j)]);
                         if i == j
                             continue;
                         end
