@@ -41,6 +41,8 @@ if nargout == 1
                 check = ~isempty(h) && isgraphics(h, 'uitoolbar');
             case 'uipushtool'
                 check = ~isempty(h) && isgraphics(h, 'uipushtool');
+            case 'uitoggletool'
+                check = ~isempty(h) && isgraphics(h, 'uitoggletool');
             case 'uicontextmenu'
                 check = ~isempty(h) && isgraphics(h, 'uicontextmenu');
             case 'uibutton'
