@@ -1581,6 +1581,7 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
     pl.f_graph_settings = ui_panel_graph;
     fig_graph = pl.f_graph_settings;
     color = [1 1 1];
+    link_style = [];
 
     ui_title = uicontrol(fig_graph, ...
         'Style', 'text', ...
@@ -1724,21 +1725,24 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
             end
         end
         function cb_link_type(~, ~)
-            update_graph()
+           link_style = get(ui_link_type, 'Value');
         end
-        function update_graph()
-            link_style = get(ui_link_type, 'Value');
+        function update_graph()            
 
             pl.link_edges_off([], [])
             pl.arrow_edges_off([],[])
             pl.cylinder_edges_off([],[])
+            
+            
 
             if get(ui_checkbox_graph_lineweight, 'Value')
                 % get measure value
                 n = atlas.get('BR_DICT').length();
                 weight = str2double(get(ui_edit_graph_lineweight, 'String'));
+                wb = waitbar(0, ['Plotting connections: node 1 - node 2']);
                 for i = 1:1:n
                     for j = 1:1:n
+                        waitbar(0, wb, ['Plotting connections: node ' num2str(i) '- node ' num2str(j)]);
                         if i == j
                             continue;
                         end
@@ -1754,6 +1758,8 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
                         end
                     end
                 end
+                
+               close(wb)
             end
 
         end
