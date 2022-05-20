@@ -278,10 +278,10 @@ function cb_button_cb(pr)
 
     persistent time
     if isempty(time)
-        time = 0
+        time = 0;
     end
     if now - time > 0.5 / (24 * 60 * 60)
-        time = now
+        time = now;
 
         set(pr.button_cb, 'Enable', 'off')
 
@@ -347,6 +347,7 @@ function cb_bring_to_front(pr)
     
     % bring to front callback element figure
     if check_graphics(pr.f_cb, 'figure')
+        figure(pr.f_cb)
         set(pr.f_cb, ...
             'Visible', 'on', ...
             'WindowState', 'normal' ...
