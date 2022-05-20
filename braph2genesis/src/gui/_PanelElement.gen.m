@@ -210,7 +210,7 @@ function redraw(pe, varargin)
     if sum(h_pp + dh) + dh > h_p
         h_p = sum(h_pp + dh) + dh;
     else
-        y0_pp = y0_pp + (h_p - sum(h_pp + dh));
+        y0_pp = y0_pp + (h_p - sum(h_pp + dh) - dh);
     end
 
     set(p, ...
@@ -247,8 +247,10 @@ function reinit(pe, el)
         'The class of the new element (' el.getClass() ') must be exactly the same as that of the old element (' pe.get('EL').getClass() ').'] ...
         )    
 
-    pe.set('EL', el)
-    pe.set('PR_DICT', NoValue.getNoValue())
+    pe.set( ...
+        'EL', el, ...
+        'PR_DICT', NoValue.getNoValue() ...
+        )
 
     delete(get(pe.p, 'Children'))
 

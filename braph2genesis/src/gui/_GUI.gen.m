@@ -14,8 +14,10 @@ DRAW - To create the element figure, call gui.draw():
  
  Here, f is the figure.
  It is also possible to use gui.draw() to get the figure handle and to set its properties.
+ 
+X_DRAW - Undocumented funciton for internal use only, to be used to draw the contents of a GUI before showing it.
   
-CALLBACK - This is a callback function:
+CALLBACK - These are the callback functions:
 
     gui.<strong>cb_bring_to_front</strong>() - brings to the front the figure and its dependent figures
     gui.<strong>cb_hide</strong>() - hides the figure and its dependent figures
@@ -68,9 +70,9 @@ toolbar
 
 %% ¡methods!
 function f_out = draw(gui, varargin)
-    %GUI creates and displays a GUI figure.
+    %DRAW displays a GUI figure.
     %
-    % GUI() creates and displays a GUI figure with its basic functionalities.
+    % DRAW() displays a GUI figure with its basic functionalities.
     %
     % F = DRAW(GUI) returns a handle to the GUI figure.
     %
@@ -84,11 +86,8 @@ function f_out = draw(gui, varargin)
     % The GUI can be retrieved as 
     %  GUI = get(F, 'UserData')
     %
-    % See also cb_bring_to_front, uifigure.
+    % See also cb_bring_to_front, cb_hide, cb_close, uifigure.
 
-    % whether to draw and make the figure visible
-    [draw, varargin] = get_and_remove_from_varargin(true, 'Draw', varargin{:});
-    
     % draw figure
     if ~check_graphics(gui.f, 'figure')
         gui.f = uifigure( ...
@@ -96,9 +95,8 @@ function f_out = draw(gui, varargin)
             'Tag', 'f', ...
             'UserData', gui, ... % handle to retrieve gui
             'Icon', 'braph2icon.png', ...
-            'AutoResizeChildren', 'off', ...
-            'CloseRequestFcn', {@cb_close}, ...
-            varargin{:} ...
+            'AutoResizeChildren', false, ...
+            'CloseRequestFcn', {@cb_close} ...
             );
         if gui.get('MENUBAR')
             gui.menubar = uimenu(gui.f, 'Tag', 'MenuBar');
@@ -106,6 +104,7 @@ function f_out = draw(gui, varargin)
         if gui.get('TOOLBAR')
             gui.toolbar = uitoolbar(gui.f, 'Tag', 'ToolBar');
         end
+        drawnow() % crucial to ensure the correct sizing of the 
     end
     set(gui.f, ...
         'Name', gui.get('NAME'), ...
@@ -120,16 +119,24 @@ function f_out = draw(gui, varargin)
         gui.cb_close()
     end
 
+    % specialized draw
+    gui.x_draw(gui.f)
+
     % show figure
-    if draw
-        drawnow()
-        set(gui.f, 'Visible', 'on')
-    end
-    
+    drawnow()
+    set(gui.f, 'Visible', 'on')
+
     % output
     if nargout > 0
         f_out = gui.f;
     end
+end
+function x_draw(gui, f)
+    %X_DRAW undocumented funciton for internal use only.
+    
+    % X_DRAW is used to draw the contents of a GUI before showing it.
+    
+    drawnow() % to ensure that the figure is correctly sized    
 end
 function cb_bring_to_front(gui)
     %CB_BRING_TO_FRONT brings to front the figure and its dependent figures.

@@ -89,9 +89,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %  checkFormat - returns whether a value format is correct/error
     %
     % Element methods (GUI):
-    %  getGUI - returns figure with element GUI
-    %  getPlotElement - returns the element plot
-    %  getPanelProp - returns a prop plot
+    %  getGUIElement - returns figure with element GUI
+    %  getPanelElement - returns the element panel
+    %  getPanelProp - returns a prop panel
     %
     % Element methods (GUI, Static):
     %  getGUIMenuImport - returns a basic import menu
@@ -1752,22 +1752,22 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         end
     end
     methods % GUI
-% FIXME: gui = GUI ...
-        function fig = getGUI(el, varargin)
-            %GETGUI returns figure with element GUI.
+        function f_out = getGUIElement(el, varargin)
+            %GETGUIELEMENT returns figure with element GUI.
             %
-            % GETGUI(EL) opens figure with GUI for element EL.
+            % GETGUIELEMENT(EL) opens figure with GUI for element EL.
             %
-            % GETGUI(EL, 'Name', Value, ...) sets the settings of GUI.
+            % GETGUIELEMENT(EL, 'Name', Value, ...) sets the settings of GUI.
             %
-            % FIG = GETGUI(EL) returns handle with figure with GUI for element EL.
+            % FIG = GETGUIELEMENT(EL) returns handle with figure with GUI for element EL.
             %
-            % See also GUI.
+            % See also GUIElement.
             
-            GUI(el, varargin{:});
+            gui = GUIElement('EL', el, varargin{:});
+            f = gui.draw();
             
             if nargout == 1
-                fig = gcf();
+                f_out = f;
             end
         end
         function pe = getPanelElement(el, varargin) 
@@ -1779,7 +1779,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %
             % See also PanelElement.
             
-            pe = PanelElement('EL', el, varargin{:});
+            pe = PanelElement('PE', el, varargin{:});
         end
         function pr = getPanelProp(el, prop, varargin)
             %GETPANELPROP returns a prop panel.
@@ -1788,10 +1788,11 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %
             % PR = GETPANELPROP(EL, PROP, 'Name', Value, ...) sets the settings.
             %
-            % See also PanelProp, PanelPropCell, PanelPropClass, PanelPropClassList,
-            %  PanelPropIDict, PanelPropItem, PanelPropItemList, PanelPropLogical,
-            %  PanelPropMatrix, PanelPropOption, PanelPropScalar, PanelPropString.
-% % %TODO: complete (check also create_Element)
+            % See also PanelProp, PanelPropAlpha, PanelPropCell, PanelPropClass,
+            %  PanelPropClassList, PanelPropColor, PanelPropIDict, PanelPropItem,
+            %  PanelPropLine, PanelPropItemList, PanelPropLogical, PanelPropMarker, 
+            %  PanelPropMatrix, PanelPropNet, PanelPropOption, PanelPropScalar,
+            %  PanelPropSize, PanelPropString.
 
             switch el.getPropFormat(prop)
                 case Format.EMPTY

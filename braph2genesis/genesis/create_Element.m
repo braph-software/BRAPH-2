@@ -47,7 +47,7 @@ function create_Element(generator_file, target_dir)
 %  <strong>%%%% ¡panel!</strong>
 %   GUI code to represent the panel of the element. 
 %   Can be on multiple lines.
-%   Should return a Plot object in 'pe'
+%   Should return a PanelPlot object in 'pe'
 %  <strong>%%%% ¡menu_import!</strong>
 %   Menu Import for the GUI figure. 
 %   The element is el.
@@ -420,8 +420,8 @@ generate_header()
              '%'
             ['% ' class_name ' methods (GUI):']
              '%  getGUI - returns the element GUI'
-             '%  getPlotElement - returns the element plot'
-             '%  getPanelProp - returns a prop plot'
+             '%  getPanleElement - returns the element panel'
+             '%  getPanelProp - returns a prop panel'
              '%'
             ['% ' class_name ' methods (GUI, Static):']
              '%  getGUIMenuImport - returns an importer menu'
@@ -1634,15 +1634,15 @@ generate_gui()
             if ~(numel(gui_panel) == 1 && isempty(gui_panel{1})) && ...
                     any(cellfun(@(x) isempty(x), gui_menu_import)) && ...
                     any(cellfun(@(x) isempty(x), gui_menu_export))
-                g(2, ['function pe = getPlotElement(' moniker ', varargin)'])
+                g(2, ['function pe = getPanelElement(' moniker ', varargin)'])
                 gs(3, {
-                     '%GETPLOTELEMENT returns the element plot.'
+                     '%GETPANELELEMENT returns the element panel.'
                      '%'
-                     '% PE = GETPLOTELEMENT(EL) returns the plot of element EL.'
+                     '% PE = GETPANELELEMENT(EL) returns the panel of element EL.'
                      '%'
-                     '% PE = GETPLOTELEMENT(EL, ''Name'', Value, ...) sets the settings of PlotElement.'
+                     '% PE = GETPANELELEMENT(EL, ''Name'', Value, ...) sets the settings of PanelElement.'
                      '%'
-                     '% See also PlotElement.'
+                     '% See also PanelElement.'
                      ''
                     })
                     gs(3, gui_panel)
@@ -1657,9 +1657,11 @@ generate_gui()
                     '%'
                     '% PR = GETPANELPROP(EL, PROP, ''Name'', Value, ...) sets the settings.'
                     '%'
-                    '% See also PanelProp, PanelPropCell, PanelPropClass, PanelPropClassList,'
-                    '%  PanelPropIDict, PanelPropItem, PanelPropItemList, PanelPropLogical,'
-                    '%  PanelPropMatrix, PanelPropOption, PanelPropScalar, PanelPropString.'
+                    '% See also PanelProp, PanelPropAlpha, PanelPropCell, PanelPropClass,'
+                    '%  PanelPropClassList, PanelPropColor, PanelPropIDict, PanelPropItem,'
+                    '%  PanelPropLine, PanelPropItemList, PanelPropLogical, PanelPropMarker,'
+                    '%  PanelPropMatrix, PanelPropNet, PanelPropOption, PanelPropScalar,'
+                    '%  PanelPropSize, PanelPropString.'
                     ''
                     })
                 g(3, 'switch prop')
