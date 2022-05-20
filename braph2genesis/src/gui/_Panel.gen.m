@@ -28,11 +28,11 @@ The first time that it is called it generates a new panel. The subsequent times,
  it updates the Name-Value pairs of the uipanel and/or returns the uipanel handle,
  but it does not redraw it (unless it has been deleted).
 
-CALLBACKS - These are callback functions:
+CALLBACKS - These are callback functions (to be implemented by the derived panels):
 
-    pn.<strong>cb_bring_to_front</strong>() - brings to the front the figure with the panel
-    pn.<strong>cb_hide</strong>() - hides the figure containing the panel
-    pn.<strong>cb_close</strong>() - closes the figure containing the panel
+    pn.<strong>cb_bring_to_front</strong>() - brings to the front the figures dependent from the panel
+    pn.<strong>cb_hide</strong>() - hides the figures depedent on the panel
+    pn.<strong>cb_close</strong>() - closes the figure dependent on the panel
 
 %%% ¡seealso!
 uipanel, GUI, GUIElement, PanelElement, PanelProp
@@ -85,46 +85,25 @@ function p_out = draw(pn, varargin)
     end
 end
 function cb_bring_to_front(pn)
-    %CB_BRING_TO_FRONT brings to the front the figure with the panel.
+    %CB_BRING_TO_FRONT brings to the front the figures dependent on the panel.
     %
-    % CB_BRING_TO_FRONT(PN) brings to the front the figure with the panel.
+    % CB_BRING_TO_FRONT(PN) brings to the front the figures dependent on the panel.
     %
     % See also cb_hide, cb_close.
-
-    if check_graphics(pn.p, 'uipanel')
-        fig = ancestor(pn.p, 'figure');
-        figure(fig)
-        set(fig, ...
-            'Visible', 'on', ...
-            'WindowState', 'normal' ...
-            )        
-    end
 end
 function cb_hide(pn)
-    %CB_HIDE hides the figure containing the panel.
+    %CB_HIDE hides the figures dependent on the panel.
     %
-    % CB_HIDE(PN) hides the figure containing the panel.
+    % CB_HIDE(PN) hides the figures dependent on the panel.
     %
     % See also cb_bring_to_front, cb_close.
-    
-    if check_graphics(pn.p, 'uipanel')
-        fig = ancestor(pn.p, 'figure');
-        set(fig, 'Visible', 'off')
-    end
 end
 function cb_close(pn)
-    %CB_CLOSE closes the figure containing the panel.
+    %CB_CLOSE closes the figures dependent on the panel.
     % 
     % CB_CLOSE(PN) closes the figure containing the panel.
     %
     % See also cb_bring_to_front, cb_hide.
-
-    if check_graphics(pn.p, 'uipanel')
-        f = ancestor(pn.p, 'figure');
-        if check_graphics(f, 'figure')
-            close(f)
-        end
-    end
 end
 
 %% ¡tests!
