@@ -69,6 +69,8 @@ button_cb % only for PARAMETER, DATA, FIGURE and GUI
 button_calc % only for RESULT
 button_del % only for RESULT
 
+f_cb % callback figure, only for PARAMETER, DATA, FIGURE and GUI
+
 %% ¡methods!
 function p_out = draw(pr, varargin)
     %DRAW draws the property panel.
@@ -271,15 +273,34 @@ function cb_button_cb(pr)
     %CB_BUTTON_CB executes callback for button callback.
     %
     % CB_BUTTON_CB(PR) executes callback for button callback.
-    % 
+    %
     % See also GUIElement.
 
-    el = pr.get('EL');
-    prop = pr.get('PROP');
-    
-    GUIElement('EL', el.getr(prop).get('EL')) 
-% % %TODO: check that this is working once GUIElement is complete
-% % %TODO: check also that this is managed correctly by the various callbacks (front, hide, close)
+    persistent time
+    if isempty(time)
+        time = 0
+    end
+    if now - time > 0.5 / (24 * 60 * 60)
+        time = now
+
+        set(pr.button_cb, 'Enable', 'off')
+
+        el = pr.get('EL');
+        prop = pr.get('PROP');
+
+        if ~check_graphics(pr.f_cb, 'figure')
+            gui = GUIElement( ...
+                'PE', el.getr(prop).get('EL'), ...
+                'POSITION', [.3 0 .2 .6], ...
+                'CLOSEREQ', false ...
+                );
+            pr.f_cb = gui.draw();
+        else
+            gui = get(pr.f_cb, 'UserData');
+            gui.cb_bring_to_front();
+        end
+        set(pr.button_cb, 'Enable', 'on')
+    end
 end
 function cb_button_calc(pr)
     %CB_BUTTON_CALC executes callback for button calculate.
@@ -314,6 +335,51 @@ function cb_button_del(pr)
     pe = get(get(pr.p, 'Parent'), 'UserData');
     pe.update()
     pe.redraw()
+end
+function cb_bring_to_front(pr)
+    %CB_BRING_TO_FRONT brings to the front the figure with the callback element.
+    %
+    % CB_BRING_TO_FRONT(PR) brings to the front the figure with the callback element.
+    %
+    % See also cb_hide, cb_close.
+
+    cb_bring_to_front@Panel(pr);
+    
+    % bring to front callback element figure
+    if check_graphics(pr.f_cb, 'figure')
+        set(pr.f_cb, ...
+            'Visible', 'on', ...
+            'WindowState', 'normal' ...
+            )        
+    end
+end
+function cb_hide(pr)
+    %CB_HIDE hides the figure with the callback element.
+    %
+    % CB_HIDE(PR) hides the figure with the callback element.
+    %
+    % See also cb_bring_to_front, cb_close.
+    
+    cb_hide@Panel(pr);
+    
+    % hide callback element figure
+    if check_graphics(pr.f_cb, 'figure')
+        set(pr.f_cb, 'Visible', 'off')
+    end
+end
+function cb_close(pr)
+    %CB_CLOSE closes the figure with the callback element
+    % 
+    % CB_CLOSE(PR) closes the figure with the callback element.
+    %
+    % See also cb_bring_to_front, cb_hide.
+    
+    cb_close@Panel(pr);
+
+    % close callback element figure
+    if check_graphics(pr.f_cb, 'figure')
+        close(pr.f_cb)
+    end
 end
 
 %% ¡tests!
