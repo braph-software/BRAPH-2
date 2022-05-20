@@ -87,7 +87,7 @@ end
 function cb_bring_to_front(pn)
     %CB_BRING_TO_FRONT brings to the front the figure with the panel.
     %
-    % CB_BRING_TO_FRONT(PL) brings to the front the figure with the panel.
+    % CB_BRING_TO_FRONT(PN) brings to the front the figure with the panel.
     %
     % See also cb_hide, cb_close.
 
@@ -103,7 +103,7 @@ end
 function cb_hide(pn)
     %CB_HIDE hides the figure containing the panel.
     %
-    % CB_HIDE(PL) hides the figure containing the panel.
+    % CB_HIDE(PN) hides the figure containing the panel.
     %
     % See also cb_bring_to_front, cb_close.
     
