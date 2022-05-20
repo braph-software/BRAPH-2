@@ -17,7 +17,7 @@ DRAW - To create the element figure, call gui.draw():
  
 X_DRAW - Undocumented funciton for internal use only, to be used to draw the contents of a GUI before showing it.
   
-CALLBACK - This is a callback function:
+CALLBACK - These are the callback functions:
 
     gui.<strong>cb_bring_to_front</strong>() - brings to the front the figure and its dependent figures
     gui.<strong>cb_hide</strong>() - hides the figure and its dependent figures
@@ -70,9 +70,9 @@ toolbar
 
 %% ¡methods!
 function f_out = draw(gui, varargin)
-    %GUI creates and displays a GUI figure.
+    %DRAW displays a GUI figure.
     %
-    % GUI() creates and displays a GUI figure with its basic functionalities.
+    % DRAW() displays a GUI figure with its basic functionalities.
     %
     % F = DRAW(GUI) returns a handle to the GUI figure.
     %
@@ -86,7 +86,7 @@ function f_out = draw(gui, varargin)
     % The GUI can be retrieved as 
     %  GUI = get(F, 'UserData')
     %
-    % See also cb_bring_to_front, uifigure.
+    % See also cb_bring_to_front, cb_hide, cb_close, uifigure.
 
     % draw figure
     if ~check_graphics(gui.f, 'figure')
