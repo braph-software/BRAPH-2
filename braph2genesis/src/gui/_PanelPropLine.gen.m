@@ -1,29 +1,29 @@
 %% ¡header!
-PanelPropSize < PanelProp (pr, panel property size) plots the panel of a property size.
+PanelPropLine < PanelProp (pr, panel property line) plots the panel of a property line.
 
 %%% ¡description!
-PanelPropSize plots the panel for a SIZE property with a numeric edit field.
+PanelPropLine plots the panel for an LINE property with a drop-down list.
 It works for all categories.
 
 %%% ¡seealso!
-GUI, PanelElement, PanelProp, uieditfield
+GUI, PanelElement, PanelProp, uidropdown.
 
 %% ¡properties!
 p
-editfield
+dropdown
 axes
 line
 
 %% ¡methods!
 function p_out = draw(pr, varargin)
-    %DRAW draws the panel of the size property.
+    %DRAW draws the panel of the line property.
     %
-    % DRAW(PR) draws the panel of the size property.
+    % DRAW(PR) draws the panel of the line property.
     %
     % P = DRAW(PR) returns a handle to the property panel.
     %
     % DRAW(PR, 'Property', VALUE, ...) sets the properties of the graphical
-    %  panel with custom Name-Value pairs.
+    %  panel with custom property-value couples.
     %  All standard panel properties of uipanel can be used.
     %
     % It is possible to access the properties of the various graphical
@@ -36,20 +36,19 @@ function p_out = draw(pr, varargin)
     
     pr.p = draw@PanelProp(pr, varargin{:});
     
-    if ~check_graphics(pr.editfield, 'uieditfield')
-        pr.editfield = uieditfield('numeric', ...
+    if ~check_graphics(pr.dropdown, 'uidropdown')
+        pr.dropdown = uidropdown( ...
             'Parent', pr.p, ...
-            'Tag', 'editfield', ...
-            'Limits', [0 +Inf], ...
-            'LowerLimitInclusive', false, ...
+            'Tag', 'dropdown', ...
+            'Items', el.getPropSettings(prop), ...
             'FontSize', BRAPH2.FONTSIZE, ...
             'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-            'ValueChangedFcn', {@cb_editfield} ...
+            'ValueChangedFcn', {@cb_dropdown} ...
             );
     end
 
-    function cb_editfield(~, ~) % (src, event)
-        pr.cb_editfield()
+    function cb_dropdown(~, ~) % (src, event)
+        pr.cb_dropdown()
     end
 
     if ~check_graphics(pr.axes, 'uiaxes')
@@ -63,23 +62,23 @@ function p_out = draw(pr, varargin)
     end
     if ~check_graphics(pr.line, 'line')
         pr.line = plot(pr.axes, ...
-            [-100 0 100], ...
-            [0 0 0], ...
-            'Marker', 's', ...
+            [-1 1], ...
+            [0 0], ...
+            'LineWidth', 2, ...
             'Color', 'k');
         xlim(pr.axes, [-1 1])        
         ylim(pr.axes, [-1 1])
     end
-
+    
     % output
     if nargout > 0
         p_out = pr.p;
     end
 end
 function update(pr)
-    %UPDATE updates the content and permissions of the edit field.
+    %UPDATE updates the content and permissions of the drop down.
     %
-    % UPDATE(PR) updates the content and permissions of the edit field.
+    % UPDATE(PR) updates the content and permissions of the drop down.
     %
     % See also draw, redraw, PanelElement.
 
@@ -89,7 +88,7 @@ function update(pr)
     prop = pr.get('PROP');
     
     if el.isLocked(prop)
-        set(pr.editfield, ...
+        set(pr.dropdown, ...
             'Editable', 'off', ...
             'Enable', pr.get('ENABLE') ...
             )
@@ -97,22 +96,16 @@ function update(pr)
 
     switch el.getPropCategory(prop)
         case Category.METADATA
-            set(pr.editfield, 'Value', el.get(prop))
-            set(pr.line, ...
-                'LineWidth', el.get(prop), ...
-                'MarkerSize', el.get(prop) ...
-                )
+            set(pr.dropdown, 'Value', el.get(prop))
+            set(pr.line, 'LineStyle', el.get(prop))
 
         case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
-            set(pr.editfield, 'Value', el.get(prop))
-            set(pr.line, ...
-                'LineWidth', el.get(prop), ...
-                'MarkerSize', el.get(prop) ...
-                )
+            set(pr.dropdown, 'Value', el.get(prop))
+            set(pr.line, 'LineStyle', el.get(prop))
 
             value = el.getr(prop);
             if isa(value, 'Callback')
-                set(pr.editfield, ...
+                set(pr.dropdown, ...
                     'Editable', 'off', ...
                     'Enable', pr.get('ENABLE') ...
                     )
@@ -122,25 +115,17 @@ function update(pr)
             value = el.getr(prop);
 
             if isa(value, 'NoValue')
-                set(pr.editfield, ...
+                set(pr.dropdown, ...
                     'Value', el.getPropDefault(prop), ...
-                    'Editable', 'off', ...
                     'Enable', pr.get('ENABLE') ...
                     )
-                set(pr.line, ...
-                    'LineWidth', el.getPropDefault(prop), ...
-                    'MarkerSize', el.getPropDefault(prop) ...
-                )
+                set(pr.line, 'LineStyle', el.getPropDefault(prop))
             else
-                set(pr.editfield, ...
+                set(pr.dropdown, ...
                     'Value', el.get(prop), ...
-                    'Editable', 'off', ...
                     'Enable', pr.get('ENABLE') ...
                     )
-                set(pr.line, ...
-                    'LineWidth', el.get(prop), ...
-                    'MarkerSize', el.get(prop) ...
-                    )
+                set(pr.line, 'LineStyle', el.get(prop))
             end
     end
 end
@@ -164,12 +149,12 @@ function redraw(pr, varargin)
     %  - HEIGHT = 3.5 * BRAPH2.FONTSIZE * BRAPH2.S
     %
     % See also draw, update, PanelElement, BRAPH2.
-
-    [h_p, varargin] = get_and_remove_from_varargin(ceil(3.5 * BRAPH2.FONTSIZE * BRAPH2.S), 'Height', varargin);
     
+    [h_p, varargin] = get_and_remove_from_varargin(ceil(3.5 * BRAPH2.FONTSIZE * BRAPH2.S), 'Height', varargin);
+
     pr.redraw@PanelProp('Height', h_p, varargin{:})
     
-    set(pr.editfield, 'Position', [ ...
+    set(pr.dropdown, 'Position', [ ...
         ceil(5 * BRAPH2.S) ...
         ceil(.25 * BRAPH2.FONTSIZE * BRAPH2.S) ...
         ceil(w(pr.p, 'pixels') * .15) ...
@@ -183,15 +168,15 @@ function redraw(pr, varargin)
         ceil(1.75 * BRAPH2.FONTSIZE * BRAPH2.S) ...
         ])
 end
-function cb_editfield(pr)
-    %CB_EDITFIELD executes callback for the edit field.
+function cb_dropdown(pr)
+    %CB_DROPDOWN executes callback for the drop down.
     %
-    % CB_EDITFIELD(PR) executes callback for the edit field.
+    % CB_DROPDOWN(PR) executes callback for the drop down.
 
     el = pr.get('EL');
     prop = pr.get('PROP');
     
-    el.set(prop, get(pr.editfield, 'Value'))
+    el.set(prop, get(pr.dropdown, 'Value'))
 
     pr.update()
 end
@@ -202,14 +187,14 @@ end
 %%%% ¡name!
 Example
 %%%% ¡code!
-% draws PanelPropSize and calls update() and redraw()
+% draws PanelPropLine and calls update() and redraw()
 % note that it doesn't work for category RESULT 
 % because it needs to be used with PanelElement() and GUI()
 fig1 = uifigure();
-et = ETA();
-props = [et.PROP_SIZE_M et.PROP_SIZE_P et.PROP_SIZE_D et.PROP_SIZE_F et.PROP_SIZE_G et.PROP_SIZE_R et.PROP_SIZE_R_CALC];
+et1 = ETA();
+props = [et1.PROP_LINE_M et1.PROP_LINE_P et1.PROP_LINE_D et1.PROP_LINE_F et1.PROP_LINE_G et1.PROP_LINE_R et1.PROP_LINE_R_CALC];
 for i = 1:1:length(props)
-    pr{i} = PanelPropSize('EL', et, 'PROP', props(i));
+    pr{i} = PanelPropLine('EL', et1, 'PROP', props(i));
     pr{i}.draw( ...
         'Parent', fig1, ...
         'BackgroundColor', [i/length(props) .5 (length(props)-i)/length(props)] ...

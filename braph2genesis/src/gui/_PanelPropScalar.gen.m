@@ -1,5 +1,5 @@
 %% ¡header!
-PanelPropScalar < PanelProp (pl, panel property scalar) plots the panel of a property scalar.
+PanelPropScalar < PanelProp (pr, panel property scalar) plots the panel of a property scalar.
 
 %%% ¡description!
 PanelPropScalar plots the panel for a SCALAR property with a numeric edit field.

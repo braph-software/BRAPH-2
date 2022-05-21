@@ -546,9 +546,9 @@ classdef Format < handle
                 case Format.SIZE
                     format_settings = '';
                 case Format.MARKER
-                    format_settings = '';
+                    format_settings = {'o', '+', '*', '.', 'x', '_', '|', 's', 'd', '^', 'v', '>', '<', 'p', 'h', '(none)'};
                 case Format.LINE
-                    format_settings = '';
+                    format_settings = {'-', ':', '-.', '--', '(none)'};
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end            
@@ -728,9 +728,9 @@ classdef Format < handle
                 case Format.SIZE
                     check = isnumeric(value) && isscalar(value) && value > 0;
                 case Format.MARKER
-                    check = ischar(value) && any(strcmp(value, {'o', '+', '*', '.', 'x', '_', '|', 's', 'd', '^', 'v', '>', '<', 'p', 'h', ''}));
+                    check = ischar(value) && any(strcmp(value, Format.getFormatSettings(Format.MARKER)));
                 case Format.LINE
-                    check = ischar(value) && any(strcmp(value, {'-', ':', '-.', '--', ''}));
+                    check = ischar(value) && any(strcmp(value, Format.getFormatSettings(Format.LINE)));
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end

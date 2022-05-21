@@ -795,7 +795,7 @@ value{12} = '>';
 value{13} = '<';
 value{14} = 'p';
 value{15} = 'h';
-value{16} = '';
+value{16} = '(none)';
 
 % MARKER formats that should NOT be accepted
 clear wrong_value
@@ -852,7 +852,7 @@ value{1} = '-';
 value{2} = ':';
 value{3} = '-.';
 value{4} = '--';
-value{5} = '';
+value{5} = '(none)';
 
 % LINE formats that should NOT be accepted
 clear wrong_value

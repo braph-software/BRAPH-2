@@ -1,5 +1,5 @@
 %% ¡header!
-PanelPropAlpha < PanelProp (pl, panel property alpha) plots the panel of a property alpha.
+PanelPropAlpha < PanelProp (pr, panel property alpha) plots the panel of a property alpha.
 
 %%% ¡description!
 PanelPropAlpha plots the panel for a ALPHA property with a numeric edit field and a slider.
