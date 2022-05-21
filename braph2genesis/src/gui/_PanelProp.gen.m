@@ -247,7 +247,7 @@ function redraw(pr, varargin)
     % places label_tag to the top
     s2 = ceil(2 * BRAPH2.S);
     s16 = ceil(16 * BRAPH2.S);
-    set(pr.label_tag, 'Position', [s2 h_p-s16 w_p s16])
+    set(pr.label_tag, 'Position', [s2 h_p-s16+1 w_p s16])
 
     % places the relevant buttons (depening on category)
     switch el.getPropCategory(prop)
