@@ -546,9 +546,9 @@ classdef Format < handle
                 case Format.SIZE
                     format_settings = '';
                 case Format.MARKER
-                    format_settings = {'o', '+', '*', '.', 'x', '_', '|', 's', 'd', '^', 'v', '>', '<', 'p', 'h', '(none)'};
+                    format_settings = {'o', '+', '*', '.', 'x', '_', '|', 's', 'd', '^', 'v', '>', '<', 'p', 'h', 'none'};
                 case Format.LINE
-                    format_settings = {'-', ':', '-.', '--', '(none)'};
+                    format_settings = {'-', ':', '-.', '--', 'none'};
                 otherwise
                     Format.existsFormat(format) % error because format does not exist
             end            
