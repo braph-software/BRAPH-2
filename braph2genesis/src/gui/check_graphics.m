@@ -4,7 +4,7 @@ function check = check_graphics(h, type)
 % CHECK = CHECK_GRAPHICS(H) returns whether the H is a graphic object.
 %
 % CHECK = CHECK_GRAPHICS(H, TYPE) returns whether the H is a graphic object 
-%  of the kind TYPE = 'figure', 'uipanel', 'axes', 'uitable', 'uimenu',
+%  of the kind TYPE = 'figure', 'uipanel', 'axes', 'uiaxes', 'uitable', 'uimenu',
 %  'uicontextmenu', 
 %  'uitoolbar', 'uipushtool', 'uitoggletool', 
 %  'uibutton', 'uilabel', 'uieditfield', 'uicheckbox', 'uidropdown',
@@ -34,6 +34,8 @@ if nargout == 1
                 check = ~isempty(h) && isgraphics(h, 'uipanel');
             case 'axes'
                 check = ~isempty(h) && isgraphics(h, 'axes');
+            case 'uiaxes'
+                check = ~isempty(h) && isgraphics(h, 'uiaxes');
             case 'uitable'
                 check = ~isempty(h) && isgraphics(h, 'uitable');
             case 'uimenu'
