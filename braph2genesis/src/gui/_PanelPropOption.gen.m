@@ -25,7 +25,7 @@ function p_out = draw(pr, varargin)
     %  All standard panel properties of uipanel can be used.
     %
     % It is possible to access the properties of the various graphical
-    %  objects from the handle H.
+    %  objects from the handle P of the panel.
     %
     % See also update, redraw, uipanel.
 
