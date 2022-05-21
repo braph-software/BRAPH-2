@@ -7,7 +7,7 @@ function check = check_graphics(h, type)
 %  of the kind TYPE = 'figure', 'uipanel', 'axes', 'uitable', 'uimenu',
 %  'uicontextmenu', 
 %  'uitoolbar', 'uipushtool', 'uitoggletool', 
-%  'uibutton', 'uilabel', 'uieditfield', 'uicheckbox', 'uidropdown', 
+%  'uibutton', 'uilabel', 'uieditfield', 'uicheckbox', 'uidropdown',
 %  'pushbutton',
 %  'togglebutton', 'checkbox', 'radiobutton', 'edit', 'text', 'slider',
 %  'listbox', 'popupmenu', 
