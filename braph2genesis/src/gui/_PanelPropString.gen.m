@@ -126,7 +126,7 @@ function redraw(pr, varargin)
     %
     % See also draw, update, PanelElement, BRAPH2.
 
-    [h_p, varagin] = get_and_remove_from_varargin(3.5 * BRAPH2.FONTSIZE * BRAPH2.S, 'Height', varargin);
+    [h_p, varagin] = get_and_remove_from_varargin(ceil(3.5 * BRAPH2.FONTSIZE * BRAPH2.S), 'Height', varargin);
 
     pr.redraw@PanelProp('Height', h_p, varargin{:})
 
@@ -138,9 +138,9 @@ function redraw(pr, varargin)
         ])
 end
 function cb_editfield(pr)
-    %CB_EDIT_VALUE executes callback for the edit value.
+    %CB_EDITFIELD executes callback for the edit field.
     %
-    % CB_EDIT_VALUE(PR) executes callback for the edit value.
+    % CB_EDITFIELD(PR) executes callback for the edit field.
 
     el = pr.get('EL');
     prop = pr.get('PROP');
