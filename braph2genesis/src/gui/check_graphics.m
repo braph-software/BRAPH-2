@@ -7,7 +7,7 @@ function check = check_graphics(h, type)
 %  of the kind TYPE = 'figure', 'uipanel', 'axes', 'uitable', 'uimenu',
 %  'uicontextmenu', 
 %  'uitoolbar', 'uipushtool', 'uitoggletool', 
-%  'uibutton', 'uilabel', 'uieditfield', 'uicheckbox'
+%  'uibutton', 'uilabel', 'uieditfield', 'uicheckbox', 'uidropdown', 
 %  'pushbutton',
 %  'togglebutton', 'checkbox', 'radiobutton', 'edit', 'text', 'slider',
 %  'listbox', 'popupmenu', 
@@ -53,6 +53,8 @@ if nargout == 1
                 check = ~isempty(h) && isgraphics(h, 'uieditfield');
             case 'uicheckbox'
                 check = ~isempty(h) && isgraphics(h, 'uicheckbox');
+            case 'uidropdown'
+                check = ~isempty(h) && isgraphics(h, 'uidropdown');
             case 'pushbutton'
                 check = ~isempty(h) && isgraphics(h, 'uicontrol') && strcmpi(get(h, 'Style'), 'pushbutton');
             case 'togglebutton'
