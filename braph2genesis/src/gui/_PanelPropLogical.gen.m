@@ -131,9 +131,9 @@ function redraw(pr, varargin)
         ])
 end
 function cb_checkbox(pr)
-    %CB_CHECKBOX_VALUE executes callback for the checkbox value.
+    %CB_CHECKBOX executes callback for the checkbox.
     %
-    % CB_CHECKBOX_VALUE(PR) executes callback for the checkbox value.
+    % CB_CHECKBOX(PR) executes callback for the checkbox.
 
     el = pr.get('EL');
     prop = pr.get('PROP');
