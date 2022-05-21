@@ -151,7 +151,7 @@ function redraw(pr, varargin)
     %  - X0 does not change
     %  - Y0 does not change
     %  - WIDTH does not change
-    %  - HEIGHT = 3.5 * BRAPH2.FONTSIZE * BRAPH2.S
+    %  - HEIGHT = 5 * BRAPH2.FONTSIZE * BRAPH2.S
     %
     % See also draw, update, PanelElement, BRAPH2.
 
@@ -168,7 +168,7 @@ function redraw(pr, varargin)
     
     set(pr.slider, 'Position', [ ...
         ceil(5 * BRAPH2.S) + ceil(w(pr.p, 'pixels') * .15) + ceil(20 * BRAPH2.S) ...
-        ceil(2.5 * BRAPH2.FONTSIZE * BRAPH2.S) ...
+        ceil(2.25 * BRAPH2.FONTSIZE * BRAPH2.S) ...
         ceil(w(pr.p, 'pixels') * .7) ...
         3 ... % the height of a slider cannot be changed
         ])
