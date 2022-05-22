@@ -375,7 +375,7 @@ function cb_hide(pr)
     end
 end
 function cb_close(pr)
-    %CB_CLOSE closes the figure with the callback element
+    %CB_CLOSE closes the figure with the callback element.
     % 
     % CB_CLOSE(PR) closes the figure with the callback element.
     %
