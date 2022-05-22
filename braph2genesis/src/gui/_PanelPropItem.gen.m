@@ -130,9 +130,9 @@ function redraw(pr, varargin)
         ])
 end
 function cb_button(pr)
-    %CB_PUSHBUTTON_VALUE executes callback for the pushbutton.
+    %CB_BUTTON executes callback for the button.
     %
-    % CB_PUSHBUTTON_VALUE(PR) executes callback for the pushbutton.
+    % CB_BUTTON(PR) executes callback for the button.
 
     persistent time
     if isempty(time)
