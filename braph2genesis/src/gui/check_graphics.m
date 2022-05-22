@@ -4,12 +4,13 @@ function check = check_graphics(h, type)
 % CHECK = CHECK_GRAPHICS(H) returns whether the H is a graphic object.
 %
 % CHECK = CHECK_GRAPHICS(H, TYPE) returns whether the H is a graphic object 
-%  of the kind TYPE = 'figure', 'uipanel', 'axes', 'uiaxes', 'uitable', 'uimenu',
-%  'uicontextmenu', 
+%  of the kind TYPE:
+%  figure', 'uipanel', 'axes', 'uiaxes', 'uitable', 'uimenu', 'uicontextmenu', 
 %  'uitoolbar', 'uipushtool', 'uitoggletool', 
 %  'uibutton', 'uilabel', 'uieditfield', 'uicheckbox', 'uidropdown',
-%  'uislider', 'uilistbox'
+%  'uislider', 'uilistbox',
 %  'line'.
+%
 %  Also these legacy graphical objects are checkable:
 %  'pushbutton', 'togglebutton', 'checkbox', 'radiobutton', 'edit', 'text',
 %  'slider', 'listbox', 'popupmenu'.
