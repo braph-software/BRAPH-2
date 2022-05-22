@@ -57,6 +57,7 @@ function update(pr)
         item_list = el.get(prop);
         if isempty(pr.button_list)
             pr.button_list = cell(1, length(item_list));
+            pr.f_item_list = cell(1, length(item_list));
         end
         for i = 1:1:length(item_list)
             if ~check_graphics(pr.button_list{i}, 'uibutton')
@@ -69,17 +70,13 @@ function update(pr)
             set(pr.button_list{i}, ...
                 'Text', item_list{i}.tostring(), ...
                 'Tooltip', regexprep(item_list{i}.tree(), {'<strong>', '</strong>'}, {'' ''}), ...
-                'ButtonPushedFcn', {@cb_button, item_list{i}} ...
+                'ButtonPushedFcn', {@cb_button, i} ...
                 )
         end
     end
     
-    function cb_button(~, ~, item)
-        pr.update()
-        
-% TODO: check once GUI is finalized
-% GUI('EL', item)
-disp('GUI')
+    function cb_button(~, ~, i)
+        pr.cb_button(i)
     end
 
 end
@@ -122,6 +119,96 @@ function redraw(pr, varargin)
                 ceil(w(pr.p, 'pixels') - 60) ...
                 ceil(1.75 * BRAPH2.FONTSIZE * BRAPH2.S) ...
                 ])
+        end
+    end
+end
+function cb_button(pr, i)
+    %CB_BUTTON executes callback for the button.
+    %
+    % CB_BUTTON(PR, I) executes callback for the button on item I.
+
+    persistent time
+    if isempty(time)
+        time = 0;
+    end
+    if now - time > 0.5 / (24 * 60 * 60)
+        time = now;
+
+        set(pr.button_list{i}, 'Enable', 'off')
+
+        el = pr.get('EL');
+        prop = pr.get('PROP');
+        item_list = el.get(prop);
+
+        if ~check_graphics(pr.f_item_list{i}, 'figure')
+            f = ancestor(pr.p, 'figure');
+            gui = GUIElement( ...
+                'PE', item_list{i}, ...
+                'POSITION', [x0(f, 'normalized')+w(f, 'normalized') y0(f, 'normalized') w(f, 'normalized') h(f, 'normalized')], ...
+                'CLOSEREQ', false ...
+                );
+            pr.f_item_list{i} = gui.draw();
+        else
+            gui = get(pr.f_item_list{i}, 'UserData');
+            gui.cb_bring_to_front();
+        end
+        set(pr.button_list{i}, 'Enable', 'on')
+    end
+    
+    % updates and redraws the parent PanelElement as well as all siblings PanelProp's
+    pe = get(get(pr.p, 'Parent'), 'UserData');
+    pe.update()
+    pe.redraw()
+end
+function cb_bring_to_front(pr)
+    %CB_BRING_TO_FRONT brings to the front the item figures.
+    %
+    % CB_BRING_TO_FRONT(PR) brings to the front the item figures.
+    %
+    % See also cb_hide, cb_close.
+
+    cb_bring_to_front@Panel(pr);
+    
+    % bring to front item figures
+    for i = 1:1:length(pr.f_item_list)
+        if check_graphics(pr.f_item_list{i}, 'figure')
+            figure(pr.f_item_list{i})
+            set(pr.f_item_list{i}, ...
+                'Visible', 'on', ...
+                'WindowState', 'normal' ...
+                )
+        end
+    end
+end
+function cb_hide(pr)
+    %CB_HIDE hides the item figures.
+    %
+    % CB_HIDE(PR) hides the item figures.
+    %
+    % See also cb_bring_to_front, cb_close.
+    
+    cb_hide@Panel(pr);
+    
+    % hide callback element figures
+    for i = 1:1:length(pr.f_item_list)
+        if check_graphics(pr.f_item_list{i}, 'figure')
+            set(pr.f_item_list{i}, 'Visible', 'off')
+        end
+    end
+end
+function cb_close(pr)
+    %CB_CLOSE closes the item figures.
+    % 
+    % CB_CLOSE(PR) closes the item figures.
+    %
+    % See also cb_bring_to_front, cb_hide.
+    
+    cb_close@Panel(pr);
+
+    % close callback element figures
+    for i = 1:1:length(pr.f_item_list)
+        if check_graphics(pr.f_item_list{i}, 'figure')
+            close(pr.f_item_list{i})
         end
     end
 end
