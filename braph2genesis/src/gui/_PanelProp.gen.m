@@ -302,6 +302,11 @@ function cb_button_cb(pr)
         end
         set(pr.button_cb, 'Enable', 'on')
     end
+    
+    % updates and redraws the parent PanelElement as well as all siblings PanelProp's
+    pe = get(get(pr.p, 'Parent'), 'UserData');
+    pe.update()
+    pe.redraw()
 end
 function cb_button_calc(pr)
     %CB_BUTTON_CALC executes callback for button calculate.
