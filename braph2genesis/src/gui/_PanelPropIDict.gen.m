@@ -12,6 +12,8 @@ GUI, PanelElement, PanelProp, uibutton
 p
 button
 
+f_idict % idict figure
+
 %% ¡methods!
 function p_out = draw(pr, varargin)
     %DRAW draws the panel of the idict property.
@@ -71,7 +73,7 @@ function update(pr)
                 'Tooltip', regexprep(el.get(prop).tree(), {'<strong>', '</strong>'}, {'' ''}) ...
                 )
             
-        case {Category.PARAMETER, Category.DATA}
+        case {Category.PARAMETER, Category.DATA, Category.Figure, Category.GUI}
             set(pr.button, ...
                 'Text', el.get(prop).tostring(), ...
                 'Tooltip', regexprep(el.get(prop).tree(), {'<strong>', '</strong>'}, {'' ''}) ...
@@ -132,18 +134,83 @@ function cb_button(pr)
     %
     % CB_PUSHBUTTON_VALUE(PR) executes callback for the pushbutton.
 
-    el = pr.get('EL');
-    prop = pr.get('PROP');
-    
-    pr.update()
+    persistent time
+    if isempty(time)
+        time = 0;
+    end
+    if now - time > 0.5 / (24 * 60 * 60)
+        time = now;
 
-% % %     % TODO: check once GUI is finalized
-% % %     value = el.getr(prop);
-% % %     if isa(value, 'NoValue')
-% % %         GUI('PE', el.getPropDefault(prop)).draw()
-% % %     else
-% % %         GUI('PE', el.get(prop)).draw()
-% % %     end
+        set(pr.button, 'Enable', 'off')
+
+        el = pr.get('EL');
+        prop = pr.get('PROP');
+
+        if ~check_graphics(pr.f_idict, 'figure')
+            f = ancestor(pr.p, 'figure');
+            gui = GUIElement( ...
+                'PE', el.getr(prop).get('EL'), ...
+                'POSITION', [x0(f, 'normalized')+w(f, 'normalized') y0(f, 'normalized') w(f, 'normalized') h(f, 'normalized')], ...
+                'CLOSEREQ', false ...
+                );
+            pr.f_idict = gui.draw();
+        else
+            gui = get(pr.f_idict, 'UserData');
+            gui.cb_bring_to_front();
+        end
+        set(pr.button, 'Enable', 'on')
+    end
+    
+    % updates and redraws the parent PanelElement as well as all siblings PanelProp's
+    pe = get(get(pr.p, 'Parent'), 'UserData');
+    pe.update()
+    pe.redraw()    
+end
+function cb_bring_to_front(pr)
+    %CB_BRING_TO_FRONT brings to the front the idict figure.
+    %
+    % CB_BRING_TO_FRONT(PR) brings to the front the idict figure.
+    %
+    % See also cb_hide, cb_close.
+
+    cb_bring_to_front@Panel(pr);
+    
+    % bring to front idict figure
+    if check_graphics(pr.f_idict, 'figure')
+        figure(pr.f_idict)
+        set(pr.f_idict, ...
+            'Visible', 'on', ...
+            'WindowState', 'normal' ...
+            )        
+    end
+end
+function cb_hide(pr)
+    %CB_HIDE hides the idict figure.
+    %
+    % CB_HIDE(PR) hides the idict figure.
+    %
+    % See also cb_bring_to_front, cb_close.
+    
+    cb_hide@Panel(pr);
+    
+    % hide callback element figure
+    if check_graphics(pr.f_idict, 'figure')
+        set(pr.f_idict, 'Visible', 'off')
+    end
+end
+function cb_close(pr)
+    %CB_CLOSE closes the idict figure.
+    % 
+    % CB_CLOSE(PR) closes the idict figure.
+    %
+    % See also cb_bring_to_front, cb_hide.
+    
+    cb_close@Panel(pr);
+
+    % close callback element figure
+    if check_graphics(pr.f_idict, 'figure')
+        close(pr.f_idict)
+    end
 end
 
 %% ¡tests!
