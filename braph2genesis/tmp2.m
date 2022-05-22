@@ -26,6 +26,7 @@ create_test_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.g
 % 
 % return
 
+% % % complete with CELL and NET
 et1 = ETA( ...
     'PROP_STRING_P', 'prova', ...
     'PROP_LOGICAL_P', true, ...
@@ -67,7 +68,8 @@ et2 = ETA( ...
     'PROP_LINE_P', Callback('EL', et1, 'TAG', 'PROP_LINE_P') ...
     );
 gui1 = GUIElement('PE', et2, 'FILE', 'xxx sss', 'MENUBAR', true, 'TOOLBAR', true, 'CLOSEREQ', false);
-f1 = gui1.draw();
+fig1 = gui1.draw();
+close(fig1)
 
 % gui2 = GUIElement('PE', BRAPH2Constants(), 'FILE', 'xxx sss', 'MENUBAR', true, 'TOOLBAR', true, 'POSITION', [.1 0 .2 1], 'CLOSEREQ', false);
 % f2 = gui2.draw();
