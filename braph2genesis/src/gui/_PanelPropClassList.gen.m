@@ -1,22 +1,22 @@
 %% ¡header!
-PanelPropClass < PanelProp (pr, panel property class) plots the panel of a property class.
+PanelPropClassList < PanelProp (pr, panel property class list) plots the panel of a property class-list.
 
 %%% ¡description!
-PanelPropClass plots the panel for a CLASS property with a drop-down list.
+PanelPropClassList plots the panel of a CLASSLIST property with a list box.
 It works for all categories.
 
 %%% ¡seealso!
-GUI, PanelElement, PanelProp, uidropdown
+GUI, PanelElement, PanelProp, uilistbox
 
 %% ¡properties!
 p
-dropdown
+listbox
 
 %% ¡methods!
 function p_out = draw(pr, varargin)
-    %DRAW draws the panel of the class property.
+    %DRAW draws the panel of the class-list property.
     %
-    % DRAW(PR) draws the panel of the class property.
+    % DRAW(PR) draws the panel of the class-list property.
     %
     % P = DRAW(PR) returns a handle to the property panel.
     %
@@ -34,19 +34,21 @@ function p_out = draw(pr, varargin)
     
     pr.p = draw@PanelProp(pr, varargin{:});
     
-    if ~check_graphics(pr.dropdown, 'uidropdown')
-        pr.dropdown = uidropdown( ...
+    if ~check_graphics(pr.listbox, 'uilistbox') 
+        pr.listbox = uilistbox( ...
             'Parent', pr.p, ...
-            'Tag', 'dropdown', ...
+            'Tag', 'listbox', ...
             'Items', subclasses(el.getPropSettings(prop), [], [], true), ...
+            'Multiselect', 'on', ...
             'FontSize', BRAPH2.FONTSIZE, ...
             'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-            'ValueChangedFcn', {@cb_dropdown} ...
+            'ValueChangedFcn', {@cb_listbox} ...
             );
     end
 
-    function cb_dropdown(~, ~) % (src, event)
-        pr.cb_dropdown()
+    % callback
+    function cb_listbox(~, ~) % (src, event)
+        pr.cb_listbox()
     end
 
     % output
@@ -55,9 +57,9 @@ function p_out = draw(pr, varargin)
     end
 end
 function update(pr)
-    %UPDATE updates the content and permission of the drop down.
+    %UPDATE updates the content and permissions of the listbox.
     %
-    % UPDATE(PR) updates the content and permission of the drow down.
+    % UPDATE(PR) updates the content and permissions of the listbox.
     %
     % See also draw, redraw, PanelElement.
 
@@ -67,37 +69,31 @@ function update(pr)
     prop = pr.get('PROP');
     
     if el.isLocked(prop)
-        set(pr.dropdown, ...
-            'Editable', 'off', ...
-            'Enable', pr.get('ENABLE') ...
-            )
+        set(pr.listbox, 'Enable', pr.get('ENABLE'))
     end
 
     switch el.getPropCategory(prop)
         case Category.METADATA
-            set(pr.dropdown, 'Value', el.get(prop))
+            set(pr.listbox, 'Value', el.get(prop))
 
-        case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
-            set(pr.dropdown, 'Value', el.get(prop))
+        case {Category.PARAMETER, Category.DATA}
+            set(pr.listbox, 'Value', el.get(prop))
 
             value = el.getr(prop);
             if isa(value, 'Callback')
-                set(pr.dropdown, ...
-                    'Editable', 'off', ...
-                    'Enable', pr.get('ENABLE') ...
-                    )
+                set(pr.listbox, 'Enable', pr.get('ENABLE'))
             end
- 
+
         case Category.RESULT
             value = el.getr(prop);
 
             if isa(value, 'NoValue')
-                set(pr.dropdown, ...
+                set(pr.listbox, ...
                     'Value', el.getPropDefault(prop), ...
                     'Enable', pr.get('ENABLE') ...
                     )
             else
-                set(pr.dropdown, ...
+                set(pr.listbox, ...
                     'Value', el.get(prop), ...
                     'Enable', pr.get('ENABLE') ...
                     )
@@ -125,26 +121,26 @@ function redraw(pr, varargin)
     %
     % See also draw, update, PanelElement, BRAPH2.
     
-    [h_p, varargin] = get_and_remove_from_varargin(ceil(3.5 * BRAPH2.FONTSIZE * BRAPH2.S), 'Height', varargin);
+    [h_p, varargin] = get_and_remove_from_varargin(ceil(10 * BRAPH2.FONTSIZE * BRAPH2.S), 'Height', varargin);
 
     pr.redraw@PanelProp('Height', h_p, varargin{:})
-    
-    set(pr.dropdown, 'Position', [ ...
+
+    set(pr.listbox, 'Position', [ ...
         ceil(5 * BRAPH2.S) ...
         ceil(.25 * BRAPH2.FONTSIZE * BRAPH2.S) ...
         ceil(w(pr.p, 'pixels') * .7) ...
-        ceil(1.75 * BRAPH2.FONTSIZE * BRAPH2.S) ...
+        ceil(h_p - 2 * BRAPH2.FONTSIZE * BRAPH2.S) ...
         ])    
 end
-function cb_dropdown(pr)
-    %CB_POPUPMENU_VALUE executes callback for the popupmenu.
+function cb_listbox(pr)
+    %CB_LISTBOX_VALUE executes callback for the listbox.
     %
-    % CB_POPUPMENU_VALUE(PR) executes callback for the popupmenu.
+    % CB_LISTBOX_VALUE(PR) executes callback for the listbox.
 
     el = pr.get('EL');
     prop = pr.get('PROP');
-    
-    el.set(prop, get(pr.dropdown, 'Value'))
+
+    el.set(prop, get(pr.listbox, 'Value'))
 
     pr.update()
 end
@@ -155,14 +151,14 @@ end
 %%%% ¡name!
 Example
 %%%% ¡code!
-% draws PanelPropClass and calls update() and redraw()
+% draws PanelPropClassList and calls update() and redraw()
 % note that it doesn't work for category RESULT 
 % because it needs to be used with PanelElement() and GUI()
 fig1 = uifigure();
 et = ETA();
-props = [et.PROP_CLASS_M et.PROP_CLASS_P et.PROP_CLASS_D et.PROP_CLASS_F et.PROP_CLASS_G et.PROP_CLASS_R et.PROP_CLASS_R_CALC];
+props = [et.PROP_CLASSLIST_M et.PROP_CLASSLIST_P et.PROP_CLASSLIST_D et.PROP_CLASSLIST_F et.PROP_CLASSLIST_G et.PROP_CLASSLIST_R et.PROP_CLASSLIST_R_CALC];
 for i = 1:1:length(props)
-    pr{i} = PanelPropClass('EL', et, 'PROP', props(i));
+    pr{i} = PanelPropClassList('EL', et, 'PROP', props(i));
     pr{i}.draw( ...
         'Parent', fig1, ...
         'BackgroundColor', [i/length(props) .5 (length(props)-i)/length(props)] ...

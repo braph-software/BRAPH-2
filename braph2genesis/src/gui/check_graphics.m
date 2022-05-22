@@ -8,11 +8,11 @@ function check = check_graphics(h, type)
 %  'uicontextmenu', 
 %  'uitoolbar', 'uipushtool', 'uitoggletool', 
 %  'uibutton', 'uilabel', 'uieditfield', 'uicheckbox', 'uidropdown',
-%  'uislider',
+%  'uislider', 'uilistbox'
 %  'line'.
 %  Also these legacy graphical objects are checkable:
 %  'pushbutton', 'togglebutton', 'checkbox', 'radiobutton', 'edit', 'text',
-%  'slider', 'listbox', 'popupmenu', 
+%  'slider', 'listbox', 'popupmenu'.
 %
 % CHECK_GRAPHICS(H[, TYPE]) throws an error if H is not a correct graphic object.
 %  Error id: [BRAPH2:Format:WrongInput]
@@ -60,6 +60,8 @@ if nargout == 1
                 check = ~isempty(h) && isgraphics(h, 'uidropdown');
             case 'uislider'
                 check = ~isempty(h) && isgraphics(h, 'uislider');
+            case 'uilistbox'
+                check = ~isempty(h) && isgraphics(h, 'uilistbox');
             case 'pushbutton'
                 check = ~isempty(h) && isgraphics(h, 'uicontrol') && strcmpi(get(h, 'Style'), 'pushbutton');
             case 'togglebutton'
