@@ -389,7 +389,7 @@ classdef Format < handle
             %  of format FORMAT with default settings.
             %
             % STR = GETFORMATDESCRIPTION(FORMAT, SETTINGS) returns the description
-            %  adappted for settings SETTINGS.
+            %  adapted for settings SETTINGS.
             %
             % A list of all format descriptions with default settings can be obtained using
             %  <a href="matlab:cellfun(@(x) Format.getFormatDescription(x), Format.getFormats(), 'UniformOutput', false)">cellfun(@(x) Format.getFormatDescription(x), Format.getFormats(), 'UniformOutput', false)</a>
