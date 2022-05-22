@@ -11,7 +11,14 @@ GUI, PanelElement, PanelProp, uitable
 %% ¡props!
 
 %%% ¡prop!
-TABH (gui, size) is the height of the table.
+TAB_ENABLE (gui, option) switches table between on and off.
+%%%% ¡settings!
+{'on', 'off'}
+%%%% ¡default!
+'off'
+
+%%% ¡prop!
+TAB_H (gui, size) is the height of the table.
 %%%% ¡default!
 20
 
@@ -74,7 +81,7 @@ function update(pr)
     
     if el.isLocked(prop)
         set(pr.table, ...
-            'Enable', pr.get('ENABLE'), ...
+            'Enable', pr.get('TAB_ENABLE'), ...
             'ColumnEditable', false ...
             )
     end
@@ -95,7 +102,7 @@ function update(pr)
             value = el.getr(prop);
             if isa(value, 'Callback')
                 set(pr.table, ...
-                'Enable', pr.get('ENABLE'), ...
+                'Enable', pr.get('TAB_ENABLE'), ...
                 'ColumnEditable', false ...
                 )
             end
@@ -110,7 +117,7 @@ function update(pr)
                 set(pr.table, ...
                     'Data', el.get(prop), ...
                     'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-                    'Enable', pr.get('ENABLE'), ...
+                    'Enable', pr.get('TAB_ENABLE'), ...
                     'ColumnEditable', false, ...
                     'Visible', 'on' ...
                     )
@@ -136,12 +143,12 @@ function redraw(pr, varargin)
     %  - Y0 does not change
     %  - WIDTH does not change
     %  - HEIGHT = 2 * BRAPH2.FONTSIZE * BRAPH2.S (header height)
-    % The table height is set by the properti TABH.
+    % The table height is set by the properti TAB_H.
     %
     % See also draw, update, PanelElement, BRAPH2.
     
     [h, varargin] = get_and_remove_from_varargin(ceil(2 * BRAPH2.FONTSIZE * BRAPH2.S), 'Height', varargin);
-    Dh = ceil(get(pr, 'TABH') * BRAPH2.FONTSIZE * BRAPH2.S);
+    Dh = ceil(get(pr, 'TAB_H') * BRAPH2.FONTSIZE * BRAPH2.S);
     
     el = pr.get('EL');
     prop = pr.get('PROP');
