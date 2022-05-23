@@ -59,17 +59,7 @@ MENU_PERSONALIZE (gui, logical) determines whether to show the menu personalize.
 true
 
 %%% ¡prop!
-MENU_ABOUT (gui, logical) determines whether to show the menu about.
-%%%% ¡default!
-true
-
-%%% ¡prop!
 TOOL_FILE (gui, logical) determines whether to show the toolbar file buttons.
-%%%% ¡default!
-true
-
-%%% ¡prop!
-TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons.
 %%%% ¡default!
 true
 
@@ -81,7 +71,17 @@ MENUBAR (gui, logical) determines whether to show the menubar.
 true
 
 %%% ¡prop!
+MENU_ABOUT (gui, logical) determines whether to show the menu about.
+%%%% ¡default!
+true
+
+%%% ¡prop!
 TOOLBAR (gui, logical) determines whether to show the toolbar.
+%%%% ¡default!
+true
+
+%%% ¡prop!
+TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons.
 %%%% ¡default!
 true
 
@@ -92,7 +92,6 @@ menu_file
 menu_import
 menu_export
 menu_personalize
-menu_about
 
 toolbar
 
@@ -471,12 +470,6 @@ function x_draw(gui, f)
         end
     end
 
-    if gui.get('MENUBAR') && gui.get('MENU_ABOUT') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_about, 'uimenu') 
-        gui.menu_about = BRAPH2.add_menu_about(f);
-    elseif (~gui.get('MENUBAR') || ~gui.get('MENU_ABOUT'))
-        delete(gui.menu_about)
-    end
-
     % Toolbar
     if gui.get('TOOLBAR') && check_graphics(f, 'figure')
         gui.toolbar = findall(f, 'Tag', 'ToolBar');
@@ -494,10 +487,6 @@ function x_draw(gui, f)
                 'Tooltip', ['Save ' el.getName()], ...
                 'CData', imread('icon_save_ml.png'), ...
                 'ClickedCallback', {@cb_save});
-        end
-        
-        if gui.get('TOOL_ABOUT') && check_graphics(gui.toolbar, 'uitoolbar')
-            BRAPH2.add_tool_about(gui.toolbar)
         end
     end
 end

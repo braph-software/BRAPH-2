@@ -54,7 +54,17 @@ MENUBAR (gui, logical) determines whether to show the menubar.
 false
 
 %%% ¡prop!
+MENU_ABOUT (gui, logical) determines whether to show the menu about.
+%%%% ¡default!
+false
+
+%%% ¡prop!
 TOOLBAR (gui, logical) determines whether to show the toolbar.
+%%%% ¡default!
+false
+
+%%% ¡prop!
+TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons.
 %%%% ¡default!
 false
 
@@ -65,7 +75,10 @@ true
 
 %% ¡properties!
 f % handle for figure 
+
 menubar
+menu_about
+
 toolbar
 
 %% ¡methods!
@@ -121,6 +134,22 @@ function f_out = draw(gui, varargin)
 
     % specialized draw
     gui.x_draw(gui.f)
+    
+    % menu about
+    if gui.get('MENUBAR') && gui.get('MENU_ABOUT') && check_graphics(gui.f, 'figure') && ~check_graphics(gui.menu_about, 'uimenu') 
+        gui.menu_about = BRAPH2.add_menu_about(gui.f);
+    elseif (~gui.get('MENUBAR') || ~gui.get('MENU_ABOUT'))
+        delete(gui.menu_about)
+    end
+    
+    % toolbar about
+    if gui.get('TOOLBAR') && check_graphics(gui.f, 'figure')
+        gui.toolbar = findall(gui.f, 'Tag', 'ToolBar');
+        
+        if gui.get('TOOL_ABOUT') && check_graphics(gui.toolbar, 'uitoolbar')
+            BRAPH2.add_tool_about(gui.toolbar)
+        end
+    end
 
     % show figure
     drawnow()
