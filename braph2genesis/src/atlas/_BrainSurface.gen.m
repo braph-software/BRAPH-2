@@ -27,7 +27,7 @@ VERTEX_NUMBER (data, scalar) is the number of triangles vertices.
 check = value >= 0;
 
 %%% ¡prop!
-COORDINATES (data, matrix) is the coordinates of the triangles vertices.
+COORDINATES (data, matrix) are the coordinates of the triangles vertices.
 %%%% ¡check_prop!
 check = isempty(value) || size(value, 2) == 3;
 %%%% ¡check_value!
@@ -44,7 +44,7 @@ TRIANGLES_NUMBER (data, scalar) is the number of triangles.
 check = value >= 0;
 
 %%% ¡prop!
-TRIANGLES (data, matrix) is the triad of coordinates identifiers to create a triangle.
+TRIANGLES (data, matrix) are the triads of coordinates identifiers to create a triangle.
 %%%% ¡check_prop!
 check = isempty(value) || size(value, 2) == 3;
 %%%% ¡check_value!
