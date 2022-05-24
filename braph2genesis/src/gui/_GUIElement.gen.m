@@ -533,7 +533,7 @@ function cb_hide(gui)
         
     % hides the layout GUI
     if check_graphics(gui.f_layout, 'figure')
-        figure(gui.f_layout, 'Visible', 'off')
+        set(gui.f_layout, 'Visible', 'off')
     end
     
     % hides the other panels
