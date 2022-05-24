@@ -60,6 +60,14 @@ f = gui.draw('Units', 'normalized', 'Position', [.1 .4 .4 .4]);
 % % % close(pl.settings())
 % % % close(fig)
 
+return
+
+pf = PanelFig();
+gui = GUIFig('PF', pf, 'FILE', 'xxx sss', 'CLOSEREQ', false);
+f = gui.draw('Units', 'normalized', 'Position', [.1 .4 .4 .4]);
+
+return
+
 % el_class = 'PanelPropClassList';
 % delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
 % create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
