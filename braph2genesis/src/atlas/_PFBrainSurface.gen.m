@@ -233,7 +233,7 @@ function p_out = draw(pf, varargin)
 % % %     %
 % % %     % see also settings, uipanel, isgraphics.
 
-    pf.p = draw@Panel(pf, varargin{:});
+    pf.p = draw@PanelFig(pf, varargin{:});
 
     % axes
     if ~check_graphics(pf.h_axes, 'axes')
