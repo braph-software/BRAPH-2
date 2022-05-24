@@ -204,8 +204,8 @@ function x_draw(gui, f)
             );
         pf.set()
     end
-% % %     drawnow() % added to ensure that the resize is correct
-% % %     cb_resize()
+    drawnow() % added to ensure that the resize is correct
+    cb_resize()
 
     % Menu
     if gui.get('MENUBAR') && gui.get('MENU_FILE') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_file, 'uimenu')
@@ -236,23 +236,11 @@ function x_draw(gui, f)
         [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, ['Select the ' pf.getName() ' file.']);
         if filterindex
             filename = fullfile(path, file);
-            tmp_pf = BRAPH2.load(filename);
-            if strcmp(tmp_pf.getClass(), pf.getClass())
-% % %                 set(gui.pp, 'Visible', 'off')
-% % %                 drawnow()
-                
-                pf.reinit(tmp_pf)
-                pf = tmp_pf; % update local variable 'pf' to synchronize it with pe 'pf'
-
-% % %                 % the motion of the figure is to ensure the correct
-% % %                 % rendering of the opened element
-% % %                 set(gui.f, 'Position', get(gui.f, 'Position') + [.001 0 0 0])
-                gui.draw()
-% % %                 set(gui.f, 'Position', get(gui.f, 'Position') - [.001 0 0 0])
-% % %                 
-% % %                 set(gui.pp, 'Visible', 'on')
+            tmp_el = BRAPH2.load(filename);
+            if strcmp(tmp_el.getClass(), pf.getClass())
+                GUIFig('PF', tmp_el, 'FILE', filename).draw()
             else
-                GUIElement('PE', tmp_pf, 'FILE', filename).draw()
+                GUIElement('PE', tmp_el, 'FILE', filename).draw()
             end
         end
     end
@@ -304,7 +292,7 @@ function x_draw(gui, f)
             'Parent', gui.f_layout, ...
             'Units', 'normalized', ...
             'Position', [0 0 1 1], ...
-            'BackgroundColor', pf.get('BKGCOLOR'), ...
+            'BackgroundColor', gui.get('BKGCOLOR'), ...
             'AutoResizeChildren', 'off', ...
             'SizeChangedFcn', {@cb_resize_layout} ...
             );

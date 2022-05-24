@@ -206,7 +206,7 @@ end
 % % %         set(pr, 'Position', [x0_pp y0_pp(prop) w(pr) h(pr)])
 % % %     end    
 % % % end
-function reinit(pf, new_pf)
+% function reinit(pf, new_pf)
 % % %     %REINIT resets the element, and updates and redraws the element plot.
 % % %     %
 % % %     % REINIT(PE, EL) reinitializes the plot element.Specifically:
@@ -234,13 +234,13 @@ function reinit(pf, new_pf)
 % % %         'PR_DICT', NoValue.getNoValue() ...
 % % %         )
 
-    delete(get(pf.p, 'Children'))
-    
-    pf.draw()
-    pf.set()
+%     delete(get(pf.p, 'Children'))
+%     
+%     pf.draw()
+%     pf.set()
 % % %     pf.update()
 % % %     pf.redraw()
-end
+% end
 % % % function cb_bring_to_front(pe)
 % % %     %CB_BRING_TO_FRONT brings to front the figure with the element panel and its dependent figures.
 % % %     %
