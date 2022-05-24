@@ -2,24 +2,24 @@
 GUIFig < GUI (gui, figure gui) is a GUI for a figure.
 
 %%% ¡description!
-% % % GUIELEMENT plots an element in a figure.
-% % % 
-% % % CONSTRUCTOR - To construct a GUI use the constructor:
-% % % 
-% % %     gui = GUI(''PE'', <element>)
-% % %     
-% % % DRAW - To create the element figure, call gui.draw():
-% % % 
-% % %     f = gui.<strong>draw</strong>();
-% % %  
-% % %  Here, f is the figure.
-% % %  It is also possible to use gui.draw() to get the figure handle and to set its properties.
-% % %   
-% % % CALLBACK - These are the callback functions:
-% % % 
-% % %     gui.<strong>cb_bring_to_front</strong>() - brings to the front the figure and its dependent figures
-% % %     gui.<strong>cb_hide</strong>() - hides the figure and its dependent figures
-% % %     gui.<strong>cb_close</strong>() - closes the figure and its dependent figures
+GUIFIG plots a figure.
+
+CONSTRUCTOR - To construct a GUI use the constructor:
+
+    gui = GUI(''PF'', <panel figure>)
+    
+DRAW - To create the figure, call gui.draw():
+
+    f = gui.<strong>draw</strong>();
+ 
+ Here, f is the figure.
+ It is also possible to use gui.draw() to get the figure handle and to set its properties.
+  
+CALLBACK - These are the callback functions:
+
+    gui.<strong>cb_bring_to_front</strong>() - brings to the front the figure and its dependent figures
+    gui.<strong>cb_hide</strong>() - hides the figure and its dependent figures
+    gui.<strong>cb_close</strong>() - closes the figure and its dependent figures
 
 %%% ¡seealso!
 GUI, PanelFig, uifigure
@@ -99,25 +99,24 @@ f_layout % handle to figure with panel to manage layout
 
 %% ¡methods!
 function f_out = draw(gui, varargin)
-% % %     %DRAW displays the GUI figure for an element.
-% % %     %
-% % %     % DRAW() displays the GUI figure for an element.
-% % %     %
-% % %     % F = DRAW(GUI) returns a handle to the GUI figure.
-% % %     %
-% % %     % DRAW(GUI, 'Property', VALUE, ...) sets the properties of the parent
-% % %     %  panel with custom Name-Value pairs.
-% % %     %  All standard plot properties of figure can be used.
-% % %     %
-% % %     % It is possible to access the properties of the various graphical
-% % %     %  objects from the handle F of the GUI figure.
-% % %     %
-% % %     % The GUI, PanelElement and Element can be retrieved as 
-% % %     %  GUI = get(F, 'UserData')
-% % %     %  PE = GUI.get('PE')
-% % %     %  EL = PE.get('EL')
-% % %     %
-% % %     % See also cb_bring_to_front, cb_hide, cb_close, uifigure.
+    %DRAW displays the GUI figure.
+    %
+    % DRAW() displays the GUI figure.
+    %
+    % F = DRAW(GUI) returns a handle to the GUI figure.
+    %
+    % DRAW(GUI, 'Property', VALUE, ...) sets the properties of the parent
+    %  panel with custom Name-Value pairs.
+    %  All standard plot properties of figure can be used.
+    %
+    % It is possible to access the properties of the various graphical
+    %  objects from the handle F of the GUI figure.
+    %
+    % The GUI and PanelFig can be retrieved as 
+    %  GUI = get(F, 'UserData')
+    %  PF = GUI.get('PF')
+    %
+    % See also cb_bring_to_front, cb_hide, cb_close, uifigure.
 
     pf = gui.get('PF');
     
@@ -137,7 +136,7 @@ function f_out = draw(gui, varargin)
     end
 end
 function x_draw(gui, f)
-    %X_DRAW undocumented funciton for internal use only.
+    %X_DRAW undocumented function for internal use only.
     
     % X_DRAW is used to draw the contents of a GUI before showing it.
     
