@@ -42,6 +42,17 @@ GUI, GUIFig, uipanel
 
 %% ¡props!
 
+%%% ¡prop!
+POSITION (gui, rvector) is the position of the panel in pixels.
+%%%% ¡check_prop!
+check = (length(value) == 4) && all(value(3:4) >= 0);
+%%%% ¡default!
+[1 1 800 600]
+%%%% ¡postprocessing!
+if check_graphics(pf.p, 'uipanel') && ~isequal(get(pf.p, 'Position'), pf.get('POSITION'))
+    set(pf.p, 'Units', 'pixels', 'Position', pf.get('POSITION'))
+end
+
 %% ¡props_update!
 
 %%% ¡prop!
