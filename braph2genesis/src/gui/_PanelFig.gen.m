@@ -43,15 +43,41 @@ GUI, GUIFig, uipanel
 %% ¡props!
 
 %%% ¡prop!
-POSITION (figure, rvector) is the position of the panel in pixels.
-%%%% ¡check_prop!
-check = (length(value) == 4) && all(value(3:4) >= 0);
+AUTOPOS (figure, logical) determines whether the position is adjusted automatically.
 %%%% ¡default!
-[1 1 800 600]
+true
 %%%% ¡postprocessing!
-if check_graphics(pf.p, 'uipanel') && ~isequal(get(pf.p, 'Position'), pf.get('POSITION'))
-    set(pf.p, 'Units', 'pixels', 'Position', pf.get('POSITION'))
+if pf.get('AUTOPOS') && (~strcmpi(get(pf.p, 'Units'), 'normalized') || ~isequal(get(pf.p, 'Position'), [0 0 1 1]))
+    set(pf.p, ...
+        'Units', 'normalized', ...
+        'Position', [0 0 1 1] ...
+        )
+elseif ~pf.get('AUTOPOS') && (~strcmpi(get(pf.p, 'Units'), 'pixels') || ~isequal(get(pf.p, 'Position'), [pf.get('X0') pf.get('Y0') pf.get('WIDTH') pf.get('HEIGHT')]))
+    set(pf.p, ...
+        'Units', 'pixels', ...
+        'Position', [pf.get('X0') pf.get('Y0') pf.get('WIDTH') pf.get('HEIGHT')] ...
+        )
 end
+
+%%% ¡prop!
+X0 (figure, size) is the lower left x-coordinate of the panel in pixels.
+%%%% ¡default!
+1
+
+%%% ¡prop!
+Y0 (figure, size) is the lower-left y-coordinate of the panel in pixels.
+%%%% ¡default!
+1
+
+%%% ¡prop!
+WIDTH (figure, size) is the width of the panel in pixels.
+%%%% ¡default!
+800
+
+%%% ¡prop!
+HEIGHT (figure, size) is the height of the panel in pixels.
+%%%% ¡default!
+600
 
 %% ¡props_update!
 
@@ -180,7 +206,7 @@ end
 % % %         set(pr, 'Position', [x0_pp y0_pp(prop) w(pr) h(pr)])
 % % %     end    
 % % % end
-% % % function reinit(pe, el)
+function reinit(pf, new_pf)
 % % %     %REINIT resets the element, and updates and redraws the element plot.
 % % %     %
 % % %     % REINIT(PE, EL) reinitializes the plot element.Specifically:
@@ -195,25 +221,26 @@ end
 % % %     %  Error id: [BRAPH2:PanelElement:WrongInput].
 % % %     %
 % % %     % See also update, draw, redraw.
-% % % 
+
 % % %     assert( ...
-% % %         strcmp(pe.get('EL').getClass(), el.getClass()), ...
-% % %         [BRAPH2.STR ':PanelElement:' BRAPH2.WRONG_INPUT], ...
-% % %         [BRAPH2.STR ':PanelElement:' BRAPH2.WRONG_INPUT ' ' ...
-% % %         'The class of the new element (' el.getClass() ') must be exactly the same as that of the old element (' pe.get('EL').getClass() ').'] ...
+% % %         strcmp(pf.getClass(), new_pf.getClass()), ...
+% % %         [BRAPH2.STR ':PanelFig:' BRAPH2.WRONG_INPUT], ...
+% % %         [BRAPH2.STR ':PanelFig:' BRAPH2.WRONG_INPUT ' ' ...
+% % %         'The class of the new panel figure (' new_pf.getClass() ') must be exactly the same as that of the old element (' pf.get('EL').getClass() ').'] ...
 % % %         )    
 % % % 
-% % %     pe.set( ...
-% % %         'EL', el, ...
+% % %     pf.set( ...
+% % %         'EL', new_pf, ...
 % % %         'PR_DICT', NoValue.getNoValue() ...
 % % %         )
-% % % 
-% % %     delete(get(pe.p, 'Children'))
-% % % 
-% % %     pe.draw()
-% % %     pe.update()
-% % %     pe.redraw()
-% % % end
+
+    delete(get(pf.p, 'Children'))
+    
+    pf.draw()
+    pf.set()
+% % %     pf.update()
+% % %     pf.redraw()
+end
 % % % function cb_bring_to_front(pe)
 % % %     %CB_BRING_TO_FRONT brings to front the figure with the element panel and its dependent figures.
 % % %     %
