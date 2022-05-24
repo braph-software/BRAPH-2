@@ -161,7 +161,7 @@ function f_out = draw(gui, varargin)
     end
 end
 function x_draw(gui, f)
-    %X_DRAW undocumented funciton for internal use only.
+    %X_DRAW undocumented function for internal use only.
     
     % X_DRAW is used to draw the contents of a GUI before showing it.
     
