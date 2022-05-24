@@ -123,7 +123,7 @@ BrainAtlas.getPropDefault('SURF')
 % % % false
 
 %%% ¡prop!
-BRAIN (gui, logical) determines whether the brain surface is shown.
+BRAIN (figure, logical) determines whether the brain surface is shown.
 %%%% ¡default!
 true
 %%%% ¡postprocessing!
