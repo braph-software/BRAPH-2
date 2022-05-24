@@ -43,7 +43,7 @@ GUI, GUIFig, uipanel
 %% ¡props!
 
 %%% ¡prop!
-POSITION (gui, rvector) is the position of the panel in pixels.
+POSITION (figure, rvector) is the position of the panel in pixels.
 %%%% ¡check_prop!
 check = (length(value) == 4) && all(value(3:4) >= 0);
 %%%% ¡default!
@@ -56,7 +56,7 @@ end
 %% ¡props_update!
 
 %%% ¡prop!
-BKGCOLOR (gui, color) is the panel background color.
+BKGCOLOR (figure, color) is the panel background color.
 %%%% ¡default!
 [1 1 1]
 %%%% ¡postprocessing!
