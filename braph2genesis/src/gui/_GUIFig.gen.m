@@ -165,8 +165,7 @@ function x_draw(gui, f)
         gui.ps = uipanel( ...
             'Parent', gui.pp, ...
             'Tag', 'ps', ...
-            'BackgroundColor', gui.get('BKGCOLOR'), ...
-'BackgroundColor', [.5 .5 .5], ...
+            'BackgroundColor', [.5 .5 .5], ... % gui.get('BKGCOLOR'), ...
             'BorderType', 'none', ...
             'AutoResizeChildren', false, ...
             'Scrollable', 'on' ...
@@ -203,12 +202,7 @@ function x_draw(gui, f)
             'Units', 'pixels', ...
             'Position', [1 1+h_filename w(gui.pp, 'pixels') h(gui.pp, 'pixels')-h_filename] ...
             );
-% % %         pe.redraw( ... 
-% % %             'X0', 1, ...
-% % %             'Y0', 1, ...
-% % %             'Width', w(gui.ps, 'pixels'), ...
-% % %             'Height', h(gui.ps, 'pixels') ...
-% % %             )
+        pf.set()
     end
 % % %     drawnow() % added to ensure that the resize is correct
 % % %     cb_resize()
@@ -238,48 +232,48 @@ function x_draw(gui, f)
         delete(gui.menu_file)
     end
     function cb_open(~, ~)
-% % %         % select file
-% % %         [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
-% % %         if filterindex
-% % %             filename = fullfile(path, file);
-% % %             tmp_el = BRAPH2.load(filename);
-% % %             if strcmp(tmp_el.getClass(), el.getClass())
+        % select file
+        [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, ['Select the ' pf.getName() ' file.']);
+        if filterindex
+            filename = fullfile(path, file);
+            tmp_pf = BRAPH2.load(filename);
+            if strcmp(tmp_pf.getClass(), pf.getClass())
 % % %                 set(gui.pp, 'Visible', 'off')
 % % %                 drawnow()
-% % %                 
-% % %                 pe.reinit(tmp_el)
-% % %                 el = tmp_el; % update local variable 'el' to synchronize it with pe 'el'
-% % % 
+                
+                pf.reinit(tmp_pf)
+                pf = tmp_pf; % update local variable 'pf' to synchronize it with pe 'pf'
+
 % % %                 % the motion of the figure is to ensure the correct
 % % %                 % rendering of the opened element
 % % %                 set(gui.f, 'Position', get(gui.f, 'Position') + [.001 0 0 0])
-% % %                 gui.draw()
+                gui.draw()
 % % %                 set(gui.f, 'Position', get(gui.f, 'Position') - [.001 0 0 0])
 % % %                 
 % % %                 set(gui.pp, 'Visible', 'on')
-% % %             else
-% % %                 GUIElement('PE', tmp_el, 'FILE', filename).draw()
-% % %             end
-% % %         end
+            else
+                GUIElement('PE', tmp_pf, 'FILE', filename).draw()
+            end
+        end
     end
     function cb_save(~, ~)
-% % %         filename = gui.get('FILE');
-% % %         if isfile(filename)
-% % %             BRAPH2.save(el, filename)
-% % %         else
-% % %             cb_saveas();
-% % %         end
+        filename = gui.get('FILE');
+        if isfile(filename)
+            BRAPH2.save(pf, filename)
+        else
+            cb_saveas();
+        end
     end
     function cb_saveas(~, ~)
-% % %         % select file
-% % %         [file, path, filterindex] = uiputfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
-% % %         % save file
-% % %         if filterindex
-% % %             filename = fullfile(path, file);
-% % %             BRAPH2.save(el, filename)
-% % %             gui.set('FILE', filename)
-% % %             update_filename();
-% % %         end
+        % select file
+        [file, path, filterindex] = uiputfile(BRAPH2.EXT_ELEMENT, ['Select the ' pf.getName() ' file.']);
+        % save file
+        if filterindex
+            filename = fullfile(path, file);
+            BRAPH2.save(pf, filename)
+            gui.set('FILE', filename)
+            update_filename();
+        end
     end
     function cb_close(~, ~)
         gui.cb_close()
@@ -301,7 +295,7 @@ function x_draw(gui, f)
         gui_layout = GUI( ... 
             'Name', ['Layout ' pf.getClass() ' - ' BRAPH2.STR], ...
             'Position', [x0(f, 'normalized')+w(f, 'normalized') y0(f, 'normalized')+h(f, 'normalized')*2/3 w(f, 'normalized') h(f, 'normalized')/3], ...
-            'BKGCOLOR', pe.get('BKGCOLOR'), ...
+            'BKGCOLOR', pf.get('BKGCOLOR'), ...
             'CLOSEREQ', false ...
             );
         gui.f_layout = gui_layout.draw('Visible', 'off');
@@ -310,7 +304,7 @@ function x_draw(gui, f)
             'Parent', gui.f_layout, ...
             'Units', 'normalized', ...
             'Position', [0 0 1 1], ...
-            'BackgroundColor', pe.get('BKGCOLOR'), ...
+            'BackgroundColor', pf.get('BKGCOLOR'), ...
             'AutoResizeChildren', 'off', ...
             'SizeChangedFcn', {@cb_resize_layout} ...
             );
@@ -347,7 +341,7 @@ function x_draw(gui, f)
             );
         cb_resize_layout()
 
-        [order, title, visible] = load_layout(el);
+        [order, title, visible] = load_layout(pf);
         VISIBLE = 1;
         ORDER = 2;
         TITLE = 3;
@@ -407,23 +401,23 @@ function x_draw(gui, f)
             set(edit_table, 'Data', data);
         end
         function cb_save_edit(~, ~)
-            set(gui.pp, 'Visible', 'off')
-            drawnow()
+% % %             set(gui.pp, 'Visible', 'off')
+% % %             drawnow()
 
             data = get(edit_table, 'Data');
             order = cell2mat(data(:, 2))';
             title = data(:, 3); title = title';
-            save_layout(el, order, title)
+            save_layout(pf, order, title)
 
-            pe.reinit(el);
-
-            % the motion of the figure is to ensure the correct
-            % rendering of the opened element
-            set(gui.f, 'Position', get(gui.f, 'Position') + [.001 0 0 0])
-            gui.draw()
-            set(gui.f, 'Position', get(gui.f, 'Position') - [.001 0 0 0])
-
-            set(gui.pp, 'Visible', 'on')
+% % %             pf.reinit(pf);
+% % % 
+% % %             % the motion of the figure is to ensure the correct
+% % %             % rendering of the opened element
+% % %             set(gui.f, 'Position', get(gui.f, 'Position') + [.001 0 0 0])
+% % %             gui.draw()
+% % %             set(gui.f, 'Position', get(gui.f, 'Position') - [.001 0 0 0])
+% % % 
+% % %             set(gui.pp, 'Visible', 'on')
         end
         function cb_cancel_edit(~, ~)
             close(gui.f_layout)
@@ -450,7 +444,7 @@ function x_draw(gui, f)
         end
     end
 end
-% % % function cb_bring_to_front(gui)
+function cb_bring_to_front(gui)
 % % %     %CB_BRING_TO_FRONT brings to front the figure and its dependent figures.
 % % %     %
 % % %     % CB_BRING_TO_FRONT(GUI) brings to front the figure and its dependent figures 
@@ -458,28 +452,28 @@ end
 % % %     %  panels of the PanelElement and by bringing to fron the layout figure. 
 % % %     %  
 % % %     % See also cb_hide, cb_close.
-% % % 
-% % %     % brings to front the main GUI
-% % %     cb_bring_to_front@GUI(gui)
-% % %     
-% % %     % brings to fron layout GUI
-% % %     if check_graphics(gui.f_layout, 'figure')
-% % %         figure(gui.f_layout) 
-% % %         set(gui.f_layout, ...
-% % %             'Visible', 'on', ...
-% % %             'WindowState', 'normal' ...
-% % %             )
-% % %     end
-% % %     
+
+    % brings to front the main GUI
+    cb_bring_to_front@GUI(gui)
+    
+    % brings to fron layout GUI
+    if check_graphics(gui.f_layout, 'figure')
+        figure(gui.f_layout) 
+        set(gui.f_layout, ...
+            'Visible', 'on', ...
+            'WindowState', 'normal' ...
+            )
+    end
+    
 % % %     % brings to front the other panels
 % % %     pe = gui.get('PE');
-% % %     pr_dict = pe.get('PR_DICT');
+% % %     pr_dict = pf.get('PR_DICT');
 % % %     for prop = 1:1:pr_dict.length()
 % % %         pr = pr_dict.getItem(prop);
 % % %         pr.cb_bring_to_front()
 % % %     end
-% % % end
-% % % function cb_hide(gui)
+end
+function cb_hide(gui)
 % % %     %CB_HIDE hides the figure and its dependent figures.
 % % %     %
 % % %     % CB_HIDE(GUI) hides the figure and its dependent figures 
@@ -487,24 +481,24 @@ end
 % % %     %  panels of the PanelElement and by hiding the layout figure. 
 % % %     %
 % % %     % See also cb_bring_to_front, cb_close.
-% % % 
-% % %     % hides the main GUI
-% % %     cb_hide@GUI(gui)
-% % %         
-% % %     % hides the layout GUI
-% % %     if check_graphics(gui.f_layout, 'figure')
-% % %         figure(gui.f_layout, 'Visible', 'off')
-% % %     end
-% % %     
+
+    % hides the main GUI
+    cb_hide@GUI(gui)
+        
+    % hides the layout GUI
+    if check_graphics(gui.f_layout, 'figure')
+        set(gui.f_layout, 'Visible', 'off')
+    end
+    
 % % %     % hides the other panels
 % % %     pe = gui.get('PE');
-% % %     pr_dict = pe.get('PR_DICT');
+% % %     pr_dict = pf.get('PR_DICT');
 % % %     for prop = 1:1:pr_dict.length()
 % % %         pr = pr_dict.getItem(prop);
 % % %         pr.cb_hide()
 % % %     end
-% % % end
-% % % function cb_close(gui)
+end
+function cb_close(gui)
 % % %     %CB_CLOSE closes the figure and its dependent figures.
 % % %     %
 % % %     % CB_CLOSE(GUI) closes the figure and its dependent figures 
@@ -512,23 +506,23 @@ end
 % % %     %  panels of the PanelElement and by closing the layout figure. 
 % % %     %  
 % % %     % See also cb_bring_to_front, cb_hide.
-% % % 
-% % %     % closes the main GUI
-% % %     cb_close@GUI(gui)
-% % %     
-% % %     % closes the layout GUI
-% % %     if check_graphics(gui.f_layout, 'figure')
-% % %         delete(gui.f_layout)
-% % %     end
-% % %     
+
+    % closes the main GUI
+    cb_close@GUI(gui)
+    
+    % closes the layout GUI
+    if check_graphics(gui.f_layout, 'figure')
+        delete(gui.f_layout)
+    end
+    
 % % %     % closes the other panels
 % % %     pe = gui.get('PE');
-% % %     pr_dict = pe.get('PR_DICT');
+% % %     pr_dict = pf.get('PR_DICT');
 % % %     for prop = 1:1:pr_dict.length()
 % % %         pr = pr_dict.getItem(prop);
 % % %         pr.cb_close()
 % % %     end
-% % % end
+end
 
 %% ¡tests!
 
