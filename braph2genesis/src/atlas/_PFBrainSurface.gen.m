@@ -140,7 +140,7 @@ if check_graphics(pf.h_axes, 'axes')
                 coordinates(:, 3), ...
                 'Parent', pf.h_axes ...
                 );
-            xlabel(pf.h_axes, 'Sagital')
+            xlabel(pf.h_axes, 'Sagittal')
             ylabel(pf.h_axes, 'Axial')
             zlabel(pf.h_axes, 'Coronal')
             
@@ -237,7 +237,14 @@ function p_out = draw(pf, varargin)
 
     % axes
     if ~check_graphics(pf.h_axes, 'axes')
-        pf.h_axes = uiaxes('Parent', pf.p);
+        pf.h_axes = uiaxes( ...
+            'Parent', pf.p, ...
+            'Tag', 'h_axes', ...
+            'Units', 'normalized', ...
+            'OuterPosition', [0 0 1 1] ...
+            );
+        pf.h_axes.Toolbar.Visible = 'off';
+        pf.h_axes.Interactions = [];
     end
     
 % % %     % brain
@@ -252,7 +259,7 @@ function p_out = draw(pf, varargin)
 % % %                 coordinates(:, 3), ...
 % % %                 'Parent', pl.h_axes ...
 % % %                 );
-% % %             xlabel(pl.h_axes, 'Sagital')
+% % %             xlabel(pl.h_axes, 'Sagittal')
 % % %             ylabel(pl.h_axes, 'Axial')
 % % %             zlabel(pl.h_axes, 'Coronal')
 % % %             h_3d = rotate3d(pl.h_axes);
@@ -331,6 +338,7 @@ function p_out = draw(pf, varargin)
         p_out = pf.p;
     end
 end
+
 % % % function f_settings = settings(pl, varargin)
 % % %     %SETTINGS opens the brain surface property editor GUI.
 % % %     %
