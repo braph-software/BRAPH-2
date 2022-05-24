@@ -27,12 +27,12 @@ GUI, Element, PanelElement, uifigure
 %% ¡props!
 
 %%% ¡prop!
-PE (metadata, item) is the plot element.
+PE (metadata, item) is the panel element.
 %%%% ¡settings!
 'PanelElement'
 %%%% ¡conditioning!
 if ~isa(value, 'PanelElement')
-    value = PanelElement('EL', value, 'ID', ['Plot of ' value.tostring()]);
+    value = PanelElement('EL', value, 'ID', ['Panel of ' value.tostring()]);
 end
 
 %%% ¡prop!

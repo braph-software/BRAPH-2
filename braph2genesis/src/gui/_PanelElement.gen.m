@@ -108,7 +108,7 @@ MIN_WIDTH (gui, size) is the minimal panel width in pixels.
 300
 
 %% ¡properties!
-p % handle for scrollable panel
+p % handle for panel element
 pr_list % list of handles for prop panels
 
 %% ¡methods!

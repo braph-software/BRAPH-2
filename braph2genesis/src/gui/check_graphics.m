@@ -5,11 +5,11 @@ function check = check_graphics(h, type)
 %
 % CHECK = CHECK_GRAPHICS(H, TYPE) returns whether the H is a graphic object 
 %  of the kind TYPE:
-%  figure', 'uipanel', 'axes', 'uiaxes', 'uitable', 'uimenu', 'uicontextmenu', 
-%  'uitoolbar', 'uipushtool', 'uitoggletool', 
+%  'figure', 'uimenu', 'uitoolbar', 'uipushtool', 'uitoggletool'.
+%  'uipanel', 'axes', 'uitable', 'uicontextmenu'.
 %  'uibutton', 'uilabel', 'uieditfield', 'uicheckbox', 'uidropdown',
-%  'uislider', 'uilistbox',
-%  'line'.
+%  'uislider', 'uilistbox'.
+%  'line', 'patch'.
 %
 %  Also these legacy graphical objects are checkable:
 %  'pushbutton', 'togglebutton', 'checkbox', 'radiobutton', 'edit', 'text',
@@ -35,8 +35,6 @@ if nargout == 1
                 check = ~isempty(h) && isgraphics(h, 'uipanel');
             case 'axes'
                 check = ~isempty(h) && isgraphics(h, 'axes');
-            case 'uiaxes'
-                check = ~isempty(h) && isgraphics(h, 'uiaxes');
             case 'uitable'
                 check = ~isempty(h) && isgraphics(h, 'uitable');
             case 'uimenu'
@@ -83,6 +81,8 @@ if nargout == 1
                 check = ~isempty(h) && isgraphics(h, 'uicontrol') && strcmpi(get(h, 'Style'), 'popupmenu');
             case 'line'
                 check = ~isempty(h) && isgraphics(h, 'line');
+            case 'patch'
+                check = ~isempty(h) && isgraphics(h, 'patch');
             otherwise
                 error( ...
                     [BRAPH2.STR ':check_graphics:' BRAPH2.WRONG_INPUT], ...
