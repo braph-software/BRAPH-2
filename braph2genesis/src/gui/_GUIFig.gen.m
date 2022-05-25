@@ -415,7 +415,7 @@ function x_draw(gui, f)
     % Toolbar
     if gui.get('TOOLBAR') && check_graphics(f, 'figure')
         gui.toolbar = findall(f, 'Tag', 'ToolBar');
-        
+
         if gui.get('TOOL_FILE') && check_graphics(gui.toolbar, 'uitoolbar')
             % Open
             uipushtool(gui.toolbar, ...
@@ -430,6 +430,10 @@ function x_draw(gui, f)
                 'CData', imread('icon_save_ml.png'), ...
                 'ClickedCallback', {@cb_save});
         end
+        
+        % reorder tool so that open and save are at the beginning
+        tools = get(gui.toolbar, 'Children');
+        set(gui.toolbar, 'Children', [tools(3:end); tools(1:2)])
     end
 end
 function cb_bring_to_front(gui)
