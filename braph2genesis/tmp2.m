@@ -27,38 +27,40 @@ clc
 
 pf = PFBrainSurface('SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
 gui = GUIFig('PF', pf, 'FILE', 'xxx sss', 'CLOSEREQ', false);
-f = gui.draw('Units', 'normalized', 'Position', [.1 .1 .8 .8]);
+f = gui.draw('Units', 'normalized', 'Position', [.1 .5 .4 .4]);
 
-pf.set('FACECOLOR', [1 0 0 ])
+fs = GUIElement('PE', pf).draw();
 
-pf.set('BRAIN', false)
+% pf.set('FACECOLOR', [1 0 0 ])
+% 
+% pf.set('BRAIN', false)
+% 
+% pf.set('BRAIN', true)
+% 
+% pf.set('GRID', false)
+% 
+% pf.set('GRID', true)
+% 
+% pf.set('AXIS', false)
+% 
+% pf.set('EQUAL', true)
+% 
+% pf.set('TIGHT', true)
+% 
+% pf.set('view', [45 45])
+% 
+% pf.set(...
+%     'LIGHTING', 'phong', ...
+%     'MATERIAL', 'shiny', ...
+%     'CAMLIGHT', 'left', ...
+%     'SHADING', 'interp', ...
+%     'COLORMAP', 'autumn')
+% 
+% return
 
-pf.set('BRAIN', true)
-
-pf.set('GRID', false)
-
-pf.set('GRID', true)
-
-pf.set('AXIS', false)
-
-pf.set('EQUAL', true)
-
-pf.set('TIGHT', true)
-
-pf.set('view', [45 45])
-
-pf.set(...
-    'LIGHTING', 'phong', ...
-    'MATERIAL', 'shiny', ...
-    'CAMLIGHT', 'left', ...
-    'SHADING', 'interp', ...
-    'COLORMAP', 'autumn')
-
-return
-
-pf = PanelFig();
-gui = GUIFig('PF', pf, 'FILE', 'xxx sss', 'CLOSEREQ', false);
-f = gui.draw('Units', 'normalized', 'Position', [.1 .4 .4 .4]);
+% pf = PanelFig();
+% gui = GUIFig('PF', pf, 'FILE', 'xxx sss', 'CLOSEREQ', false);
+% f = gui.draw('Units', 'normalized', 'Position', [.1 .4 .4 .4]);
 
 return
 
