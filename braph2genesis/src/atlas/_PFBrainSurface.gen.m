@@ -140,6 +140,9 @@ if (isempty(varargin) || any(strcmpi(varargin(1:2:end), 'GRID'))) && check_graph
     else
         grid(pf.h_axes, 'off')
     end
+
+    % update state of toggle tool
+    set(findall(pf.toolbar, 'Tag', 'tool.grid'), 'State', pf.get('GRID'))
 end
 
 %%% ¡prop!
@@ -153,6 +156,9 @@ if (isempty(varargin) || any(strcmpi(varargin(1:2:end), 'AXIS'))) && check_graph
     else
         axis(pf.h_axes, 'off')
     end
+    
+    % update state of toggle tool
+    set(findall(pf.toolbar, 'Tag', 'tool.axis'), 'State', pf.get('AXIS'))
 end
 
 %%% ¡prop!
@@ -209,6 +215,9 @@ if (isempty(varargin) || any(strcmpi(varargin(1:2:end), 'BRAIN'))) && check_grap
             set(pf.h_brain, 'Visible', 'off')
         end
     end
+    
+    % update state of toggle tool
+    set(findall(pf.toolbar, 'Tag', 'tool.brain'), 'State', pf.get('BRAIN'))
 end
 
 %%% ¡prop!
@@ -394,7 +403,7 @@ function p_out = draw(pf, varargin)
         % View 3D
         uitoggletool(pf.toolbar, ...
             'Tag', 'tool.view3D', ...
-            'Separator', 'on', ...
+            'Separator', 'on', ... 
             'State', isequal(pf.get('VIEW'), PFBrainSurface.VIEW_3D_AZEL), ...
             'Tooltip', PFBrainSurface.VIEW_3D_CMD, ...
             'CData', imresize(imread('icon_view_3d.png'), [16 16]), ...
