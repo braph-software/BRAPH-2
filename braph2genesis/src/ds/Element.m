@@ -747,7 +747,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 
             for prop = 1:1:el.getPropNumber()
                 if ~el.isLocked(prop)
-                    el.postprocessing(prop)
+                    el.postprocessing(prop, varargin{:})
                 end
             end
 
@@ -1134,11 +1134,11 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         end
     end
     methods (Access=protected) % postprocessing
-        function postprocessing(el, prop) %#ok<*INUSD>
+        function postprocessing(el, prop, varargin) %#ok<*INUSD>
             %POSTPROCESSING postprocesses the value of a prop after it has been set.
             %
-            % POSTPROCESSING(EL, PROP) post processes the value of the
-            %  property PROP after it has been set.
+            % POSTPROCESSING(EL, PROP, POINTER1, VALUE1, POINTER2, VALUE2, ...) 
+            %  post-processes the value of the property PROP after it has been set.
             %  By default, this function does not do anything, so it should
             %  be implemented in the subclasses of Element when needed.
             %

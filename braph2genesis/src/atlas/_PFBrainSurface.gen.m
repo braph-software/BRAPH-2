@@ -90,7 +90,7 @@ check = length(value) == 2;
 %%%% ¡default!
 PFBrainSurface.VIEW_3D_AZEL
 %%%% ¡postprocessing!
-if check_graphics(pf.h_axes, 'axes')
+if (isempty(varargin) || any(strcmpi(varargin(1:2:end), 'VIEW'))) && check_graphics(pf.h_axes, 'axes')
     view(pf.h_axes, pf.get('VIEW'))
 end
 
@@ -98,7 +98,8 @@ end
 AXISCOLOR (figure, color) is the axis background color.
 %%%% ¡default!
 [1 1 1]
-if check_graphics(pf.h_axes, 'axes')
+%%%% ¡postprocessing!
+if (isempty(varargin) || any(strcmpi(varargin(1:2:end), 'AXISCOLOR'))) && check_graphics(pf.h_axes, 'axes')
     if ~isequal(set(pf.h_axes, 'Color'), pf.get('AXISCOLOR'))
         set(pf.h_axes, 'Color', pf.get('AXISCOLOR'))
     end
@@ -109,7 +110,7 @@ HOLD (figure, logical) determines whether hold is on or off.
 %%%% ¡default!
 true
 %%%% ¡postprocessing!
-if check_graphics(pf.h_axes, 'axes')
+if (isempty(varargin) || any(strcmpi(varargin(1:2:end), 'HOLD'))) && check_graphics(pf.h_axes, 'axes')
     if pf.get('HOLD')
         hold(pf.h_axes, 'on')
     else
@@ -122,7 +123,7 @@ GRID (figure, logical) determines whether the grid is shown.
 %%%% ¡default!
 true
 %%%% ¡postprocessing!
-if check_graphics(pf.h_axes, 'axes')
+if (isempty(varargin) || any(strcmpi(varargin(1:2:end), 'GRID'))) && check_graphics(pf.h_axes, 'axes')
     if pf.get('GRID')
         grid(pf.h_axes, 'on')
     else
@@ -135,7 +136,7 @@ AXIS (figure, logical) determines whether the axis is shown.
 %%%% ¡default!
 true
 %%%% ¡postprocessing!
-if check_graphics(pf.h_axes, 'axes')
+if (isempty(varargin) || any(strcmpi(varargin(1:2:end), 'AXIS'))) && check_graphics(pf.h_axes, 'axes')
     if pf.get('AXIS')
         axis(pf.h_axes, 'on')
     else
@@ -148,7 +149,7 @@ EQUAL (figure, logical) determines whether the axis are equal.
 %%%% ¡default!
 true
 %%%% ¡postprocessing!
-if check_graphics(pf.h_axes, 'axes')
+if (isempty(varargin) || any(strcmpi(varargin(1:2:end), 'EQUAL'))) && check_graphics(pf.h_axes, 'axes')
     if pf.get('EQUAL')
         daspect(pf.h_axes, [1 1 1])
     end
@@ -159,7 +160,7 @@ TIGHT (figure, logical) determines whether the axis are tight.
 %%%% ¡default!
 false
 %%%% ¡postprocessing!
-if check_graphics(pf.h_axes, 'axes')
+if (isempty(varargin) || any(strcmpi(varargin(1:2:end), 'TIGHT'))) && check_graphics(pf.h_axes, 'axes')
     if pf.get('TIGHT')
         axis(pf.h_axes, 'tight')
     end
@@ -170,7 +171,7 @@ BRAIN (figure, logical) determines whether the brain surface is shown.
 %%%% ¡default!
 true
 %%%% ¡postprocessing!
-if check_graphics(pf.h_axes, 'axes')
+if (isempty(varargin) || any(strcmpi(varargin(1:2:end), 'BRAIN'))) && check_graphics(pf.h_axes, 'axes')
     if pf.get('BRAIN')
         if ~check_graphics(pf.h_brain, 'patch')
             
@@ -204,7 +205,7 @@ EDGECOLOR (figure, color) is the RGB edge color.
 %%%% ¡default!
 [0 0 0]
 %%%% ¡postprocessing!
-if check_graphics(pf.h_axes, 'axes') && check_graphics(pf.h_brain, 'patch')
+if (isempty(varargin) || any(strcmpi(varargin(1:2:end), 'EDGECOLOR'))) && check_graphics(pf.h_axes, 'axes') && check_graphics(pf.h_brain, 'patch')
     if ~isequal(set(pf.h_brain, 'EdgeColor'), pf.get('EDGECOLOR'))
         set(pf.h_brain, 'EdgeColor', pf.get('EDGECOLOR'))
     end
@@ -215,7 +216,7 @@ EDGEALPHA (figure, alpha) is the edge transparency.
 %%%% ¡default!
 0
 %%%% ¡postprocessing!
-if check_graphics(pf.h_axes, 'axes') && check_graphics(pf.h_brain, 'patch')
+if (isempty(varargin) || any(strcmpi(varargin(1:2:end), 'EDGEALPHA'))) && check_graphics(pf.h_axes, 'axes') && check_graphics(pf.h_brain, 'patch')
     if ~isequal(set(pf.h_brain, 'EdgeAlpha'), pf.get('EDGEALPHA'))
         set(pf.h_brain, 'EdgeAlpha', pf.get('EDGEALPHA'))
     end
@@ -226,7 +227,7 @@ FACECOLOR (figure, color) is the RGB face color.
 %%%% ¡default!
 [.5 .5 .5]
 %%%% ¡postprocessing!
-if check_graphics(pf.h_axes, 'axes') && check_graphics(pf.h_brain, 'patch')
+if (isempty(varargin) || any(strcmpi(varargin(1:2:end), 'FACECOLOR'))) && check_graphics(pf.h_axes, 'axes') && check_graphics(pf.h_brain, 'patch')
     if ~isequal(set(pf.h_brain, 'FaceColor'), pf.get('FACECOLOR'))
         set(pf.h_brain, 'FaceColor', pf.get('FACECOLOR'))
     end
@@ -237,7 +238,7 @@ FACEALPHA (figure, alpha) is the face transparency.
 %%%% ¡default!
 .5
 %%%% ¡postprocessing!
-if check_graphics(pf.h_axes, 'axes') && check_graphics(pf.h_brain, 'patch')
+if (isempty(varargin) || any(strcmpi(varargin(1:2:end), 'FACEALPHA'))) && check_graphics(pf.h_axes, 'axes') && check_graphics(pf.h_brain, 'patch')
     if ~isequal(set(pf.h_brain, 'FaceAlpha'), pf.get('FACEALPHA'))
         set(pf.h_brain, 'FaceAlpha', pf.get('FACEALPHA'))
     end
@@ -248,7 +249,7 @@ LIGHTING (figure, option) is the lighting value.
 %%%% ¡settings!
 {'none' 'phong' 'flat' 'gouraud'}
 %%%% ¡postprocessing!
-if check_graphics(pf.h_axes, 'axes')
+if (isempty(varargin) || any(strcmpi(varargin(1:2:end), 'LIGHTING'))) && check_graphics(pf.h_axes, 'axes')
     lighting(pf.h_axes, pf.get('LIGHTING'))
 end
 
@@ -257,7 +258,7 @@ MATERIAL (figure, option) is the material value.
 %%%% ¡settings!
 {'shiny' 'dull' 'metal'}
 %%%% ¡postprocessing!
-if check_graphics(pf.h_axes, 'axes')
+if (isempty(varargin) || any(strcmpi(varargin(1:2:end), 'MATERIAL'))) && check_graphics(pf.h_axes, 'axes')
     material(pf.h_axes, pf.get('MATERIAL'))
 end
 
@@ -266,7 +267,7 @@ CAMLIGHT (figure, option) is the camlight value.
 %%%% ¡settings!
 {'headlight' 'right' 'left'}
 %%%% ¡postprocessing!
-if check_graphics(pf.h_axes, 'axes')
+if (isempty(varargin) || any(strcmpi(varargin(1:2:end), 'CAMLIGHT'))) && check_graphics(pf.h_axes, 'axes')
     delete(findall(pf.h_axes, 'Type', 'light'));
     camlight(pf.h_axes, pf.get('CAMLIGHT'))
 end
@@ -276,7 +277,7 @@ SHADING (figure, option) is the shading value.
 %%%% ¡settings!
 {'none' 'interp' 'flat' 'faceted'}
 %%%% ¡postprocessing!
-if check_graphics(pf.h_axes, 'axes')
+if (isempty(varargin) || any(strcmpi(varargin(1:2:end), 'SHADING'))) && check_graphics(pf.h_axes, 'axes')
     if ~strcmpi(pf.get('SHADING'), 'none')
         shading(pf.h_axes, pf.get('SHADING'))
     end
@@ -287,7 +288,7 @@ COLORMAP (figure, option) is the colormap.
 %%%% ¡settings!
 {'white', 'parula', 'jet', 'hsv', 'hot', 'cool', 'spring', 'summer', 'autumn', 'winter', 'gray', 'bone', 'copper', 'pink', 'lines', 'colorcube', 'prism', 'flag'}
 %%%% ¡postprocessing!
-if check_graphics(pf.h_axes, 'axes')
+if (isempty(varargin) || any(strcmpi(varargin(1:2:end), 'COLORMAP'))) && check_graphics(pf.h_axes, 'axes')
     if ~strcmpi(pf.get('SHADING'), 'none')
         colormap(pf.h_axes, pf.get('COLORMAP'))
     end

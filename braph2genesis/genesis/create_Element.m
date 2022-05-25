@@ -106,7 +106,7 @@ function create_Element(generator_file, target_dir)
 %  <strong>%%%% ¡conditioning!</strong>
 %   Update value conditioning (before checks and calculation).
 %  <strong>%%%% ¡postprocessing!</strong>
-%   Update value postprocessing (after setting, bur before checking, value).
+%   Update value postprocessing (after setting, but before checking, value).
 %  <strong>%%%% ¡check_prop!</strong>
 %   Updated check prop format (before calculation).
 %  <strong>%%%% ¡check_value!</strong>
@@ -1521,7 +1521,7 @@ generate_postprocessing()
             return
         end
         g(1, 'methods (Access=protected) % postprocessing')
-            g(2, ['function postprocessing(' moniker ', prop)'])
+            g(2, ['function postprocessing(' moniker ', prop, varargin)'])
                 g(3, 'switch prop')
                     for i = 1:1:numel(props)
                         if numel(props{i}.postprocessing) > 1 || ~isempty(props{i}.postprocessing{1})
@@ -1538,7 +1538,7 @@ generate_postprocessing()
                         end
                     end
                     g(4, 'otherwise')
-                        gs(5, {['postprocessing@' superclass_name '(' moniker ', prop);'], ''})
+                        gs(5, {['postprocessing@' superclass_name '(' moniker ', prop, varargin{:});'], ''})
                 g(3, 'end')
             g(2, 'end')
         g(1, 'end')
