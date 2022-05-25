@@ -476,47 +476,33 @@ end
 %%%% ¡name!
 Basics
 %%%% ¡code!
-% % % fig = figure();
-% % % 
-% % % pl = PFBrainSurface('SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
-% % % pf.draw('Units', 'normalized', 'Position', [.1 .1 .8 .8]);
-% % % 
-% % % pf.set('FACECOLOR', [1 0 0 ])
-% % % pf.draw()
-% % % 
-% % % pf.set('BRAIN', false)
-% % % pf.draw()
-% % % 
-% % % pf.set('BRAIN', true)
-% % % pf.draw()
-% % % 
-% % % pf.settings()
-% % % 
-% % % pf.set('GRID', false)
-% % % pf.draw()
-% % % 
-% % % pf.set('GRID', true)
-% % % pf.draw()
-% % % 
-% % % pf.set('AXIS', false)
-% % % pf.draw()
-% % % 
-% % % pf.set('EQUAL', true)
-% % % pf.draw()
-% % % 
-% % % pf.set('TIGHT', true)
-% % % pf.draw()
-% % % 
-% % % pf.set('view', [45 45])
-% % % pf.draw()
-% % % 
-% % % pf.set(...
-% % %     'LIGHTING', 'phong', ...
-% % %     'MATERIAL', 'shiny', ...
-% % %     'CAMLIGHT', 'left', ...
-% % %     'SHADING', 'interp', ...
-% % %     'COLORMAP', autumn)
-% % % pf.draw()
-% % % 
-% % % close(pf.settings())
-% % % close(fig)
+pf = PFBrainSurface('SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
+gui = GUIFig('PF', pf, 'FILE', 'xxx sss', 'CLOSEREQ', false);
+f = gui.draw('Units', 'normalized', 'Position', [.1 .1 .8 .8]);
+
+pl.set('FACECOLOR', [1 0 0 ])
+
+pl.set('BRAIN', false)
+
+pl.set('BRAIN', true)
+
+pl.set('GRID', false)
+
+pl.set('GRID', true)
+
+pl.set('AXIS', false)
+
+pl.set('EQUAL', true)
+
+pl.set('TIGHT', true)
+
+pl.set('view', [45 45])
+
+pl.set(...
+    'LIGHTING', 'phong', ...
+    'MATERIAL', 'shiny', ...
+    'CAMLIGHT', 'left', ...
+    'SHADING', 'interp', ...
+    'COLORMAP', autumn)
+
+close(f)
