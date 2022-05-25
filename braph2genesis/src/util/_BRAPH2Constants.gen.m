@@ -49,9 +49,9 @@ COL_R (gui, color) is the standard result prop background color.
 %%% ¡prop!
 COL_F (gui, color) is the standard figure prop background color.
 %%%% ¡default!
-[.25 .50 .75]
+[.85 .85 .85]
 
 %%% ¡prop!
 COL_G (gui, color) is the standard gui prop background color.
 %%%% ¡default!
-[.30 .50 .70]
+[.70 .70 .70]
