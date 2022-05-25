@@ -1142,10 +1142,26 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %  By default, this function does not do anything, so it should
             %  be implemented in the subclasses of Element when needed.
             %
-            % The postprocessign is applied to all props that are unlocked
+            % The postprocessing is applied to all props that are unlocked
             %  after any value is set.
             %
-            % See also set, conditioning, calculateValue, checkValue.
+            % See also prop_set, set, conditioning, calculateValue, checkValue.
+        end
+        function bool = prop_set(el, pointer, varargin)
+            %PROP_SET returns whether a prop has been set before postprocessing.
+            %
+            % PROP_SET(EL, POINTER, POINTER1, VALUE1, POINTER2, VALUE2, ...) returns
+            %  whether the property POINTER has been set in the current setting cycle.
+            %  POINTER can be either a property number (PROP) or tag (TAG).
+            %  It is typically used with postprocessing.
+            %
+            % See also postprocessing.
+            
+            if length(varargin) == 1
+                varargin = varargin{:};
+            end
+            
+            bool = any(cellfun(@(prop) el.getPropProp(prop), varargin(1:2:end)) == el.getPropProp(pointer));
         end
     end
     methods (Access=protected) % check value
