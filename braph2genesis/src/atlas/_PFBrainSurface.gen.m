@@ -269,7 +269,7 @@ LIGHTING (figure, option) is the lighting value.
 %%%% ¡settings!
 {'none' 'phong' 'flat' 'gouraud'}
 %%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set('LIGHTING', varargin)) && check_graphics(pf.h_axes, 'axes')
+if (isempty(varargin) || pf.prop_set({'LIGHTING', 'MATERIAL', 'CAMLIGHT', 'SHADING', 'COLORMAP'}, varargin)) && check_graphics(pf.h_axes, 'axes')
     lighting(pf.h_axes, pf.get('LIGHTING'))
 end
 
@@ -278,7 +278,7 @@ MATERIAL (figure, option) is the material value.
 %%%% ¡settings!
 {'shiny' 'dull' 'metal'}
 %%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set('MATERIAL', varargin)) && check_graphics(pf.h_axes, 'axes')
+if (isempty(varargin) || pf.prop_set({'LIGHTING', 'MATERIAL', 'CAMLIGHT', 'SHADING', 'COLORMAP'}, varargin)) && check_graphics(pf.h_axes, 'axes')
     material(pf.h_axes, pf.get('MATERIAL'))
 end
 
@@ -287,7 +287,7 @@ CAMLIGHT (figure, option) is the camlight value.
 %%%% ¡settings!
 {'headlight' 'right' 'left'}
 %%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set('CAMLIGHT', varargin)) && check_graphics(pf.h_axes, 'axes')
+if (isempty(varargin) || pf.prop_set({'LIGHTING', 'MATERIAL', 'CAMLIGHT', 'SHADING', 'COLORMAP'}, varargin)) && check_graphics(pf.h_axes, 'axes')
     delete(findall(pf.h_axes, 'Type', 'light'));
     camlight(pf.h_axes, pf.get('CAMLIGHT'))
 end
@@ -297,7 +297,7 @@ SHADING (figure, option) is the shading value.
 %%%% ¡settings!
 {'none' 'interp' 'flat' 'faceted'}
 %%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set('SHADING', varargin)) && check_graphics(pf.h_axes, 'axes')
+if (isempty(varargin) || pf.prop_set({'LIGHTING', 'MATERIAL', 'CAMLIGHT', 'SHADING', 'COLORMAP'}, varargin)) && check_graphics(pf.h_axes, 'axes')
     if ~strcmpi(pf.get('SHADING'), 'none')
         shading(pf.h_axes, pf.get('SHADING'))
     end
@@ -308,7 +308,7 @@ COLORMAP (figure, option) is the colormap.
 %%%% ¡settings!
 {'white', 'parula', 'jet', 'hsv', 'hot', 'cool', 'spring', 'summer', 'autumn', 'winter', 'gray', 'bone', 'copper', 'pink', 'lines', 'colorcube', 'prism', 'flag'}
 %%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set('COLORMAP', varargin)) && check_graphics(pf.h_axes, 'axes')
+if (isempty(varargin) || pf.prop_set({'LIGHTING', 'MATERIAL', 'CAMLIGHT', 'SHADING', 'COLORMAP'}, varargin)) && check_graphics(pf.h_axes, 'axes')
     if ~strcmpi(pf.get('SHADING'), 'none')
         colormap(pf.h_axes, pf.get('COLORMAP'))
     end
