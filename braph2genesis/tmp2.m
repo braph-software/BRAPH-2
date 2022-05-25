@@ -17,62 +17,44 @@ clc
 
 % return
 
-el_class = 'PFBrainSurface';
-delete([fileparts(which('braph2')) '/src/atlas/' el_class '.m'])
-create_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
-create_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
-create_test_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
+% el_class = 'PFBrainSurface';
+% delete([fileparts(which('braph2')) '/src/atlas/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
+% create_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
+% create_test_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
 % test_code = ['test_' el_class]
 % eval(test_code)
 
 pf = PFBrainSurface('SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
 gui = GUIFig('PF', pf, 'FILE', 'xxx sss', 'CLOSEREQ', false);
-f = gui.draw('Units', 'normalized', 'Position', [.1 .4 .4 .4]);
+f = gui.draw('Units', 'normalized', 'Position', [.1 .1 .8 .8]);
 
-% % % fig = figure();
-% % % 
-% % % pl = PlotBrainSurface('SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
-% % % pl.draw('Units', 'normalized', 'Position', [.1 .1 .8 .8]);
-% % % 
-% % % pl.set('FACECOLOR', [1 0 0 ])
-% % % pl.draw()
-% % % 
-% % % pl.set('BRAIN', false)
-% % % pl.draw()
-% % % 
-% % % pl.set('BRAIN', true)
-% % % pl.draw()
-% % % 
-% % % pl.settings()
-% % % 
-% % % pl.set('GRID', false)
-% % % pl.draw()
-% % % 
-% % % pl.set('GRID', true)
-% % % pl.draw()
-% % % 
-% % % pl.set('AXIS', false)
-% % % pl.draw()
-% % % 
-% % % pl.set('EQUAL', true)
-% % % pl.draw()
-% % % 
-% % % pl.set('TIGHT', true)
-% % % pl.draw()
-% % % 
-% % % pl.set('view', [45 45])
-% % % pl.draw()
-% % % 
-% % % pl.set(...
-% % %     'LIGHTING', 'phong', ...
-% % %     'MATERIAL', 'shiny', ...
-% % %     'CAMLIGHT', 'left', ...
-% % %     'SHADING', 'interp', ...
-% % %     'COLORMAP', autumn)
-% % % pl.draw()
-% % % 
-% % % close(pl.settings())
-% % % close(fig)
+pl.set('FACECOLOR', [1 0 0 ])
+
+pl.set('BRAIN', false)
+
+pl.set('BRAIN', true)
+
+pl.set('GRID', false)
+
+pl.set('GRID', true)
+
+pl.set('AXIS', false)
+
+pl.set('EQUAL', true)
+
+pl.set('TIGHT', true)
+
+pl.set('view', [45 45])
+
+pl.set(...
+    'LIGHTING', 'phong', ...
+    'MATERIAL', 'shiny', ...
+    'CAMLIGHT', 'left', ...
+    'SHADING', 'interp', ...
+    'COLORMAP', autumn)
+
+close(f)
 
 return
 
