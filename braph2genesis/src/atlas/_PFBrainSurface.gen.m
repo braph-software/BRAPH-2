@@ -480,29 +480,29 @@ pf = PFBrainSurface('SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').g
 gui = GUIFig('PF', pf, 'FILE', 'xxx sss', 'CLOSEREQ', false);
 f = gui.draw('Units', 'normalized', 'Position', [.1 .1 .8 .8]);
 
-pl.set('FACECOLOR', [1 0 0 ])
+pf.set('FACECOLOR', [1 0 0 ])
 
-pl.set('BRAIN', false)
+pf.set('BRAIN', false)
 
-pl.set('BRAIN', true)
+pf.set('BRAIN', true)
 
-pl.set('GRID', false)
+pf.set('GRID', false)
 
-pl.set('GRID', true)
+pf.set('GRID', true)
 
-pl.set('AXIS', false)
+pf.set('AXIS', false)
 
-pl.set('EQUAL', true)
+pf.set('EQUAL', true)
 
-pl.set('TIGHT', true)
+pf.set('TIGHT', true)
 
-pl.set('view', [45 45])
+pf.set('view', [45 45])
 
-pl.set(...
+pf.set(...
     'LIGHTING', 'phong', ...
     'MATERIAL', 'shiny', ...
     'CAMLIGHT', 'left', ...
     'SHADING', 'interp', ...
-    'COLORMAP', autumn)
+    'COLORMAP', 'autumn')
 
 close(f)
