@@ -1147,7 +1147,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %
             % See also prop_set, set, conditioning, calculateValue, checkValue.
         end
-        function bool = prop_set(el, pointer, varargin)
+        function bool = prop_set(el, pointer_list, varargin)
             %PROP_SET returns whether a prop has been set before postprocessing.
             %
             % PROP_SET(EL, POINTER, POINTER1, VALUE1, POINTER2, VALUE2, ...) returns
@@ -1155,13 +1155,20 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %  POINTER can be either a property number (PROP) or tag (TAG).
             %  It is typically used with postprocessing.
             %
+            % PROP_SET(EL, {POINTERA, POINTERB, POINTERC}, POINTER1, VALUE1, POINTER2, VALUE2, ...) 
+            %  operates to a cell array of pointers.
+            %
             % See also postprocessing.
             
+            if ~iscell(pointer_list)
+                pointer_list = {pointer_list};
+            end
+
             if length(varargin) == 1
                 varargin = varargin{:};
             end
-            
-            bool = any(cellfun(@(prop) el.getPropProp(prop), varargin(1:2:end)) == el.getPropProp(pointer));
+                        
+            bool = any(cellfun(@(pointer1) any(cellfun(@(pointer2) el.getPropProp(pointer2), varargin(1:2:end)) == el.getPropProp(pointer1)), pointer_list));
         end
     end
     methods (Access=protected) % check value
