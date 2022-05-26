@@ -16,7 +16,7 @@ pe = PanelElement('EL', pf, 'VISIBLE', [10 1 5 21 25]);
 pe.get('VISIBLE');
 pe.get('PR_DICT');
 
-guis = GUIElement('PE', pe, 'CLOSEREQ', false);
+guis = GUIElement('PE', pe, 'MENUBAR', false, 'TOOLBAR', false, 'CLOSEREQ', false);
 fs = guis.draw();
 
 return
