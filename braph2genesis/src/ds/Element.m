@@ -1034,7 +1034,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         function checked(el, pointer)
             %CHECKED sets a property to checked.
             %
-            % CHECKED(EL) sets al properties of element EL to checked.
+            % CHECKED(EL) sets all properties of element EL to checked.
             %
             % CHECKED(EL, POINTER) sets the property POINTER of element EL to checked.
             %  POINTER can be either a property number (PROP) or tag (TAG).
