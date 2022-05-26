@@ -49,6 +49,11 @@ TOOL_FILE (gui, logical) determines whether to show the toolbar file buttons.
 %%%% ¡default!
 true
 
+%%% ¡prop!
+TOOL_SETTINGS (gui, logical) determines whether to show the toolbar settings buttons.
+%%%% ¡default!
+true
+
 %% ¡props_update!
 
 %%% ¡prop!
@@ -88,6 +93,9 @@ menu_file
 menu_personalize
 
 toolbar
+tool_open
+tool_save
+tool_settings
 
 pp % handle for parent panel of the element figure
 ps % scrollable panel
@@ -96,6 +104,8 @@ p % panel figure
 text_filename % handle for text field filename
 
 f_layout % handle to figure with panel to manage layout
+
+f_settings % handle to settings figure 
 
 %% ¡methods!
 function f_out = draw(gui, varargin)
@@ -418,22 +428,66 @@ function x_draw(gui, f)
 
         if gui.get('TOOL_FILE') && check_graphics(gui.toolbar, 'uitoolbar')
             % Open
-            uipushtool(gui.toolbar, ...
-                'Tag', 'BRAPH2.Open', ...                
+            gui.tool_open = uipushtool(gui.toolbar, ...
+                'Tag', 'tool_open', ...                
                 'Tooltip', ['Open ' pf.getName()], ...
                 'CData', imread('icon_open_ml.png'), ...
                 'ClickedCallback', {@cb_open});
             % Save
-            uipushtool(gui.toolbar, ...
-                'Tag', 'BRAPH2.Save', ...                
+            gui.tool_save = uipushtool(gui.toolbar, ...
+                'Tag', 'tool_save', ...                
                 'Tooltip', ['Save ' pf.getName()], ...
                 'CData', imread('icon_save_ml.png'), ...
                 'ClickedCallback', {@cb_save});
         end
+
+        if gui.get('TOOL_SETTINGS') && check_graphics(gui.toolbar, 'uitoolbar')
+            % Settings
+            gui.tool_settings = uipushtool(gui.toolbar, ...
+                'Tag', 'tool_settings', ...       
+                'Separator', 'on', ...
+                'Tooltip', ['Settings ' pf.getName()], ... % % %'CData', imread('icon_open_ml.png'), ...
+                'ClickedCallback', {@cb_settings});
+        end
         
         % reorder tool so that open and save are at the beginning
         tools = get(gui.toolbar, 'Children');
-        set(gui.toolbar, 'Children', [tools(3:end); tools(1:2)])
+        set(gui.toolbar, 'Children', [tools(4:end); tools(1:3)])
+    end
+	function cb_settings(~, ~)
+        persistent time
+        if isempty(time)
+            time = 0;
+        end
+        if now - time > 0.5 / (24 * 60 * 60)
+            time = now;
+
+            set(gui.tool_settings, 'Enable', 'off')
+
+            if ~check_graphics(gui.f_settings, 'figure')
+                pe = PanelElement( ...
+                    'EL', pf, ...
+                    'VISIBLE', pf.getProps(Category.FIGURE) ...
+                    );
+                gui_settings = GUIElement( ...
+                    'PE', pe, ...
+                    'POSITION', [ ...
+                        x0(gui.f, 'normalized')+w(gui.f, 'normalized') ...
+                        y0(gui.f, 'normalized') ...
+                        .2 ...
+                        h(gui.f, 'normalized') ...
+                        ], ...
+                    'MENUBAR', false, ...
+                    'TOOLBAR', false, ...
+                    'CLOSEREQ', false ...
+                    );
+                gui.f_settings = gui_settings.draw();
+            else
+                gui_settings = get(gui.f_settings, 'UserData');
+                gui_settings.cb_bring_to_front();
+            end
+            set(gui.tool_settings, 'Enable', 'on')
+        end
     end
 end
 function cb_bring_to_front(gui)
@@ -448,7 +502,7 @@ function cb_bring_to_front(gui)
     % brings to front the main GUI
     cb_bring_to_front@GUI(gui)
     
-    % brings to fron layout GUI
+    % brings to front layout GUI
     if check_graphics(gui.f_layout, 'figure')
         figure(gui.f_layout) 
         set(gui.f_layout, ...
@@ -457,13 +511,11 @@ function cb_bring_to_front(gui)
             )
     end
     
-% % %     % brings to front the other panels
-% % %     pe = gui.get('PE');
-% % %     pr_dict = pf.get('PR_DICT');
-% % %     for prop = 1:1:pr_dict.length()
-% % %         pr = pr_dict.getItem(prop);
-% % %         pr.cb_bring_to_front()
-% % %     end
+    % brings to front settings GUI
+    if check_graphics(gui.f_settings, 'figure')
+        gui_settings = get(gui.f_settings, 'UserData');
+        gui_settings.cb_bring_to_front();
+    end
 end
 function cb_hide(gui)
 % % %     %CB_HIDE hides the figure and its dependent figures.
@@ -482,13 +534,11 @@ function cb_hide(gui)
         set(gui.f_layout, 'Visible', 'off')
     end
     
-% % %     % hides the other panels
-% % %     pe = gui.get('PE');
-% % %     pr_dict = pf.get('PR_DICT');
-% % %     for prop = 1:1:pr_dict.length()
-% % %         pr = pr_dict.getItem(prop);
-% % %         pr.cb_hide()
-% % %     end
+    % hides the settings GUI
+    if check_graphics(gui.f_settings, 'figure')
+        gui_settings = get(gui.f_settings, 'UserData');
+        gui_settings.cb_hide();
+    end
 end
 function cb_close(gui)
 % % %     %CB_CLOSE closes the figure and its dependent figures.
@@ -507,13 +557,11 @@ function cb_close(gui)
         delete(gui.f_layout)
     end
     
-% % %     % closes the other panels
-% % %     pe = gui.get('PE');
-% % %     pr_dict = pf.get('PR_DICT');
-% % %     for prop = 1:1:pr_dict.length()
-% % %         pr = pr_dict.getItem(prop);
-% % %         pr.cb_close()
-% % %     end
+    % closes the settings GUI
+    if check_graphics(gui.f_settings, 'figure')
+        gui_settings = get(gui.f_settings, 'UserData');
+        gui_settings.cb_close();
+    end
 end
 
 %% ¡tests!
