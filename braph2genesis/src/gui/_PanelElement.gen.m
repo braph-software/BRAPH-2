@@ -46,6 +46,9 @@ GUI, GUIElement, PanelProp
 EL (metadata, item) is the element to be plotted.
 
 %%% ¡prop!
+VISIBLE (gui, rvector) is the list of visible property plots.
+
+%%% ¡prop!
 PR_DICT (result, idict) is a dictionary of the property plots.
 %%%% ¡settings!
 'PanelProp'
@@ -53,6 +56,18 @@ PR_DICT (result, idict) is a dictionary of the property plots.
 el = pe.get('EL');
 
 [order, title, visible] = load_layout(el);
+
+if ~isempty(pe.get('VISIBLE'))
+    visible_prop = pe.get('VISIBLE');
+
+    order = zeros(1, el.getPropNumber());
+    visible =  zeros(1, el.getPropNumber());
+    for i = 1:1:length(visible_prop)
+        order(visible_prop(i)) = i;
+        visible(visible_prop(i)) = 1;
+    end
+end
+
 number_visible_prop = sum(visible);
 
 pr_list = cell(1, number_visible_prop);
