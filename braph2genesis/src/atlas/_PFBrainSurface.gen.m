@@ -226,9 +226,9 @@ EDGECOLOR (figure, color) is the RGB edge color.
 [0 0 0]
 %%%% ¡postprocessing!
 if (isempty(varargin) || pf.prop_set('EDGECOLOR', varargin)) && check_graphics(pf.h_axes, 'axes') && check_graphics(pf.h_brain, 'patch')
-    if ~isequal(set(pf.h_brain, 'EdgeColor'), pf.get('EDGECOLOR'))
+% % %     if ~isequal(set(pf.h_brain, 'EdgeColor'), pf.get('EDGECOLOR'))
         set(pf.h_brain, 'EdgeColor', pf.get('EDGECOLOR'))
-    end
+% % %     end
 end
 
 %%% ¡prop!
@@ -237,9 +237,9 @@ EDGEALPHA (figure, alpha) is the edge transparency.
 0
 %%%% ¡postprocessing!
 if (isempty(varargin) || pf.prop_set('EDGEALPHA', varargin)) && check_graphics(pf.h_axes, 'axes') && check_graphics(pf.h_brain, 'patch')
-    if ~isequal(set(pf.h_brain, 'EdgeAlpha'), pf.get('EDGEALPHA'))
+% % %     if ~isequal(set(pf.h_brain, 'EdgeAlpha'), pf.get('EDGEALPHA'))
         set(pf.h_brain, 'EdgeAlpha', pf.get('EDGEALPHA'))
-    end
+% % %     end
 end
 
 %%% ¡prop!
@@ -248,9 +248,9 @@ FACECOLOR (figure, color) is the RGB face color.
 [.5 .5 .5]
 %%%% ¡postprocessing!
 if (isempty(varargin) || pf.prop_set('FACECOLOR', varargin)) && check_graphics(pf.h_axes, 'axes') && check_graphics(pf.h_brain, 'patch')
-    if ~isequal(set(pf.h_brain, 'FaceColor'), pf.get('FACECOLOR'))
+% % %     if ~isequal(set(pf.h_brain, 'FaceColor'), pf.get('FACECOLOR'))
         set(pf.h_brain, 'FaceColor', pf.get('FACECOLOR'))
-    end
+% % %     end
 end
 
 %%% ¡prop!
@@ -259,9 +259,9 @@ FACEALPHA (figure, alpha) is the face transparency.
 .5
 %%%% ¡postprocessing!
 if (isempty(varargin) || pf.prop_set('FACEALPHA', varargin)) && check_graphics(pf.h_axes, 'axes') && check_graphics(pf.h_brain, 'patch')
-    if ~isequal(set(pf.h_brain, 'FaceAlpha'), pf.get('FACEALPHA'))
+% % %     if ~isequal(set(pf.h_brain, 'FaceAlpha'), pf.get('FACEALPHA'))
         set(pf.h_brain, 'FaceAlpha', pf.get('FACEALPHA'))
-    end
+% % %     end
 end
 
 %%% ¡prop!
@@ -285,11 +285,13 @@ end
 %%% ¡prop!
 CAMLIGHT (figure, option) is the camlight value.
 %%%% ¡settings!
-{'headlight' 'right' 'left'}
+{'none' 'headlight' 'right' 'left'}
 %%%% ¡postprocessing!
 if (isempty(varargin) || pf.prop_set({'LIGHTING', 'MATERIAL', 'CAMLIGHT', 'SHADING', 'COLORMAP'}, varargin)) && check_graphics(pf.h_axes, 'axes')
     delete(findall(pf.h_axes, 'Type', 'light'));
-    camlight(pf.h_axes, pf.get('CAMLIGHT'))
+    if ~strcmpi(pf.get('CAMLIGHT'), 'none')
+        camlight(pf.h_axes, pf.get('CAMLIGHT'))
+    end
 end
 
 %%% ¡prop!
