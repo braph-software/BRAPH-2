@@ -47,6 +47,10 @@ EL (metadata, item) is the element to be plotted.
 
 %%% ¡prop!
 VISIBLE (gui, rvector) is the list of visible property plots.
+%%%% ¡conditioning!
+if iscolumn(value)
+    value = value';
+end
 
 %%% ¡prop!
 PR_DICT (result, idict) is a dictionary of the property plots.
