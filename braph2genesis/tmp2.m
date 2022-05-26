@@ -3,6 +3,24 @@ delete(findall(0, 'type', 'figure'))
 clear all
 clc
 
+el_class = 'PanelElement';
+delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
+create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+create_test_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+% test_code = ['test_' el_class]
+% eval(test_code)
+
+pf = PFBrainSurface('SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
+pe = PanelElement('EL', pf, 'VISIBLE', [10 1 5 21 25]);
+pe.get('VISIBLE');
+pe.get('PR_DICT');
+
+guis = GUIElement('PE', pe, 'CLOSEREQ', false);
+fs = guis.draw();
+
+return
+
 % el_class = 'GUIFig';
 % delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
 % create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
@@ -17,11 +35,11 @@ clc
 
 % return
 
-% el_class = 'PFBrainSurface';
-% delete([fileparts(which('braph2')) '/src/atlas/' el_class '.m'])
-% create_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
-% create_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
-% create_test_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
+el_class = 'PFBrainSurface';
+delete([fileparts(which('braph2')) '/src/atlas/' el_class '.m'])
+create_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
+create_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
+create_test_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
 % test_code = ['test_' el_class]
 % eval(test_code)
 
@@ -29,7 +47,8 @@ pf = PFBrainSurface('SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').g
 gui = GUIFig('PF', pf, 'FILE', 'xxx sss', 'CLOSEREQ', false);
 f = gui.draw('Units', 'normalized', 'Position', [.1 .5 .4 .4]);
 
-fs = GUIElement('PE', pf).draw();
+guis = GUIElement('PE', pf, 'CLOSEREQ', false);
+fs = guis.draw();
 
 % pf.set('FACECOLOR', [1 0 0 ])
 % 
