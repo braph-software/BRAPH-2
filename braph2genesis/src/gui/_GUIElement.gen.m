@@ -221,6 +221,7 @@ function x_draw(gui, f)
             )
     end
     drawnow() % added to ensure that the resize is correct
+    cb_resize()
 
     % Menu
     if gui.get('MENUBAR') && gui.get('MENU_FILE') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_file, 'uimenu')

@@ -157,6 +157,7 @@ function p_out = draw(pe, varargin)
     end
 
     pe.update()   
+    pe.redraw()
     
     % output
     if nargout > 0
