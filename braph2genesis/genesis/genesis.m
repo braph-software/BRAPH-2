@@ -70,6 +70,11 @@ mkdir([target_dir fp 'brainsurfs'])
 
 disp('¡! created dir structure - BRAINSURFS')
 
+% brainsurfs
+mkdir([target_dir fp 'atlases'])
+
+disp('¡! created dir structure - ATLASES')
+
 % neural networks
 mkdir([target_dir fp 'neuralnetworks'])
 
@@ -128,6 +133,11 @@ disp(' ')
 % brainsurfs
 copydir([source_dir fp 'brainsurfs'], [target_dir fp 'brainsurfs'], Inf)
 disp('¡! copied ready files - brainsurf')
+disp(' ')
+
+% atlases
+copydir([source_dir fp 'atlases'], [target_dir fp 'atlases'], Inf)
+disp('¡! copied ready files - atlases')
 disp(' ')
 
 % neuralnetworks
