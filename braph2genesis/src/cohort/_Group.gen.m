@@ -33,7 +33,7 @@ LABEL (metadata, string) is an extended label of the group of subjects.
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the group of subjects.
 %%%% ¡gui!
-pr = PlotPropString('EL', gr, 'PROP', Group.NOTES, 'LINES', 'multi', 'EDITHEIGHT', 4.5, varargin{:});
+pr = PlotPropStringTextArea('EL', gr, 'PROP', Group.NOTES, varargin{:});
 
 %%% ¡prop!
 SUB_CLASS (parameter, class) is the class of the subjects of the group.
@@ -44,8 +44,8 @@ SUB_CLASS (parameter, class) is the class of the subjects of the group.
 SUB_DICT (data, idict) is an indexed dictionary containing the subjects of the group.
 %%%% ¡settings!
 'Subject'
-%%%% ¡gui!
-pr = PPGroup_SUBDict('EL', gr, 'PROP', Group.SUB_DICT, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPGroup_SUBDict('EL', gr, 'PROP', Group.SUB_DICT, varargin{:});
 
 %% ¡tests!
 
