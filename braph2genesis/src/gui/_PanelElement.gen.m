@@ -264,18 +264,31 @@ function reinit(pe, el)
         [BRAPH2.STR ':PanelElement:' BRAPH2.WRONG_INPUT], ...
         [BRAPH2.STR ':PanelElement:' BRAPH2.WRONG_INPUT ' ' ...
         'The class of the new element (' el.getClass() ') must be exactly the same as that of the old element (' pe.get('EL').getClass() ').'] ...
-        )    
+        )
+    
+    set(pe.p, 'Visible', 'off')
+    drawnow()
 
     pe.set( ...
         'EL', el, ...
         'PR_DICT', NoValue.getNoValue() ...
         )
-
     delete(get(pe.p, 'Children'))
-
     pe.draw()
     pe.update()
     pe.redraw()
+    
+    % the motion of the figure is to ensure the correct
+    % rendering of the opened element
+    parent_f = ancestor(pe.p, 'figure');
+    set(parent_f, 'Position', get(parent_f, 'Position') + [.001 0 0 0])
+    parent_gui = get(parent_f, 'UserData');
+    if isa(parent_gui, 'GUI')
+        parent_gui.draw()
+    end
+    set(parent_f, 'Position', get(parent_f, 'Position') - [.001 0 0 0])
+
+    set(pe.p, 'Visible', 'on')
 end
 function cb_bring_to_front(pe)
     %CB_BRING_TO_FRONT brings to front the figure with the element panel and its dependent figures.
