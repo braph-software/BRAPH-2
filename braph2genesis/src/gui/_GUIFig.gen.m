@@ -40,12 +40,22 @@ MENU_FILE (gui, logical) determines whether to show the menu file.
 true
 
 %%% ¡prop!
+MENU_PRINT (gui, logical) determines whether to show the print to image file.
+%%%% ¡default!
+true
+
+%%% ¡prop!
 MENU_PERSONALIZE (gui, logical) determines whether to show the menu personalize.
 %%%% ¡default!
 true
 
 %%% ¡prop!
 TOOL_FILE (gui, logical) determines whether to show the toolbar file buttons.
+%%%% ¡default!
+true
+
+%%% ¡prop!
+TOOL_PRINT (gui, logical) determines whether to show the toolbar print button.
 %%%% ¡default!
 true
 
@@ -90,11 +100,13 @@ true
 f % handle for figure 
 
 menu_file
+menu_print
 menu_personalize
 
 toolbar
 tool_open
 tool_save
+tool_print
 tool_settings
 
 pp % handle for parent panel of the element figure
@@ -276,6 +288,57 @@ function x_draw(gui, f)
     function cb_close(~, ~)
         gui.cb_close()
     end
+
+    if gui.get('MENUBAR') && gui.get('MENU_PRINT') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_print, 'uimenu')
+        gui.menu_print = uimenu(f, 'Label', 'Print');
+
+        uimenu(gui.menu_print, ...
+            'Label', 'Print ...', ...
+            'Accelerator', 'P', ...
+            'Callback', {@cb_print})
+        uimenu(gui.menu_print, ...
+            'Label', 'Vectorial ...', ...
+            'Callback', {@cb_print, 'vector'})
+        uimenu(gui.menu_print, ...
+            'Separator', 'on', ...
+            'Label', 'Hi-res (300 dpi) ...', ...
+            'Callback', {@cb_print, 'image', 300})
+        uimenu(gui.menu_print, ...
+            'Label', 'Hi-res (600 dpi) ...', ...
+            'Callback', {@cb_print, 'image', 600})
+        uimenu(gui.menu_print, ...
+            'Label', 'Hi-res (1200 dpi) ...', ...
+            'Callback', {@cb_print, 'image', 1200})
+        uimenu(gui.menu_print, ...
+            'Separator', 'on', ...
+            'Label', 'Grayscale ...', ...
+            'Callback', {@cb_print, [], [], 'gray'})
+        uimenu(gui.menu_print, ...
+            'Label', 'Vectorial grayscale ...', ...
+            'Callback', {@cb_print, 'vector', [], 'gray'})
+        uimenu(gui.menu_print, ...
+            'Separator', 'on', ...
+            'Label', 'CMYK ...', ...
+            'Callback', {@cb_print, [], [], 'cmyk'})
+        uimenu(gui.menu_print, ...
+            'Label', 'Vectorial CMYK ...', ...
+            'Callback', {@cb_print, 'vector', [], 'cmyk'})
+
+    elseif (~gui.get('MENUBAR') || ~gui.get('MENU_PRINT'))
+        delete(gui.menu_print)
+    end
+    function cb_print(~, ~, contenttype, resolution, colorspace)
+        if nargin < 5 || isempty(colorspace)
+            colorspace = 'rgb';
+        end
+        if nargin < 4 || isempty(resolution)
+            resolution = 150;
+        end
+        if nargin < 3 || isempty(contenttype)
+            contenttype = 'auto';
+        end        
+        BRAPH2.print(gui.p, [], 'ContentType', contenttype, 'Resolution', resolution, 'Colorspace', colorspace)
+    end
     
     if gui.get('MENUBAR') && gui.get('MENU_PERSONALIZE') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_personalize, 'uimenu')
         gui.menu_personalize = uimenu(f, 'Label', 'Personalize');
@@ -428,6 +491,15 @@ function x_draw(gui, f)
                 'ClickedCallback', {@cb_save});
         end
 
+        if gui.get('TOOL_PRINT') && check_graphics(gui.toolbar, 'uitoolbar')
+            % Print
+            gui.tool_print = uipushtool(gui.toolbar, ...
+                'Tag', 'tool_print', ...                
+                'Tooltip', ['Print/Export to image file ' pf.getName()], ...
+                'CData', imread('icon_print_ml.png'), ...
+                'ClickedCallback', {@cb_print, 'auto', 300});
+        end
+        
         if gui.get('TOOL_SETTINGS') && check_graphics(gui.toolbar, 'uitoolbar')
             % Settings
             gui.tool_settings = uipushtool(gui.toolbar, ...
@@ -440,7 +512,7 @@ function x_draw(gui, f)
         
         % reorder tool so that open and save are at the beginning
         tools = get(gui.toolbar, 'Children');
-        set(gui.toolbar, 'Children', [tools(4:end); tools(1:3)])
+        set(gui.toolbar, 'Children', [tools(5:end); tools(1:4)])
     end
 	function cb_settings(~, ~)
         persistent time
