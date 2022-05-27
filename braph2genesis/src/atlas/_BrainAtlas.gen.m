@@ -135,15 +135,15 @@ LABEL (metadata, string) is an extended label of the brain atlas.
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the brain atlas.
-%%%% ¡gui!
-pr = PlotPropString('EL', ba, 'PROP', BrainAtlas.NOTES, 'LINES', 'multi', 'EDITHEIGHT', 4.5, varargin{:});
+%%%% ¡gui_!
+% % % pr = PlotPropString('EL', ba, 'PROP', BrainAtlas.NOTES, 'LINES', 'multi', 'EDITHEIGHT', 4.5, varargin{:});
 
 %%% ¡prop!
 BR_DICT (data, idict) contains the brain regions of the brain atlas.
 %%%% ¡settings!
 'BrainRegion'
-%%%% ¡gui!
-pr = PPBrainAtlas_BRDict('EL', ba, 'PROP', BrainAtlas.BR_DICT, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPBrainAtlas_BRDict('EL', ba, 'PROP', BrainAtlas.BR_DICT, varargin{:});
 
 %%% ¡prop!
 SURF (metadata, item) contains the brain surface of the brain atlas.
@@ -151,8 +151,8 @@ SURF (metadata, item) contains the brain surface of the brain atlas.
 'BrainSurface'
 %%%% ¡default!
 ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF')
-%%%% ¡gui!
-pr = PPBrainAtlas_Surf('EL', ba, 'PROP', BrainAtlas.SURF, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPBrainAtlas_Surf('EL', ba, 'PROP', BrainAtlas.SURF, varargin{:});
 
 %% ¡tests!
 
@@ -272,6 +272,6 @@ idict_1 = IndexedDictionary( ...
     'it_list', items ...
     );
 ba = BrainAtlas('ID', 'BA1', 'LABEL', 'brain atlas', 'Notes', 'Notes on brain atlas.', 'br_dict', idict_1);
-GUI('PE', ba, 'CLOSEREQ', false).draw()
+f = GUIElement('PE', ba, 'CLOSEREQ', false).draw();
 
-close(gcf)
+close(f)
