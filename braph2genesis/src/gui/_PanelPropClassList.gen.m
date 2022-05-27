@@ -76,7 +76,7 @@ function update(pr)
         case Category.METADATA
             set(pr.listbox, 'Value', el.get(prop))
 
-        case {Category.PARAMETER, Category.DATA}
+        case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
             set(pr.listbox, 'Value', el.get(prop))
 
             value = el.getr(prop);

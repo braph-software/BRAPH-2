@@ -262,6 +262,9 @@ classdef BRAPH2
             %
             % SAVED = SAVE(EL) opens a dialog box to select the file.
             %
+            % It saves a deep copy of EL to reinitialize private
+            %  properties (e.g., handles of figures).
+            %
             % See also load, uiputfile.
             
             if nargin < 2
@@ -276,6 +279,7 @@ classdef BRAPH2
             end
             
             if ~isempty(filename)
+                el = el.copy();
                 build = BRAPH2.BUILD;
                 matlab_release = ver('MATLAB').Version;
                 matlab_release_details = ver();
@@ -324,6 +328,44 @@ classdef BRAPH2
                 build  = [];
                 matlab_release = [];
                 matlab_release_details = [];
+            end
+        end
+    end
+    methods (Static) % BRAPH2 print graphics
+        function printed_out = print(h, filename, varargin)
+            %PRINT saves BRAPH2 figure in a graphics format.
+            %
+            % PRINTED = PRINT(H, FILEMANE) saves the graphical object H in the file FILENAME.
+            %
+            % PRINTED = PRINT(H) opens a dialog box to select the file.
+            %
+            % PRINTED = PRINT(H, [], 'Name', Value, ...) specifies the Name-Value pairs. 
+            %  All Name-Value arguments of <a href="matlab:help exportgraphics">exportgraphics</a> can be used.
+            %
+            % See also exportgraphics, uiputfile.
+
+            if nargin < 2 || isempty(filename)
+                % select file
+                filter = {'*.jpg';'*.png';'*.tif';'*.gif';'*.pdf';'*.eps'};
+                [file, path, filterindex] = uiputfile(filter, ['Select the figure file.']);
+                % save file
+                if filterindex
+                    filename = fullfile(path, file);
+                else 
+                    filename = '';
+                end
+            end
+
+            if ~isempty(filename)
+                exportgraphics(h, filename, varargin{:});
+
+                saved = true;
+            else
+                saved = false;
+            end
+
+            if nargout
+                printed_out = saved;
             end
         end
     end

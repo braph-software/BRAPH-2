@@ -13,6 +13,7 @@
 %  <a href="matlab:help test        ">test</a>          - BRAPH2 test
 
 close all
+delete(findall(0, 'type', 'figure'))
 clear all %#ok<CLALL>
 clc
 

@@ -747,7 +747,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 
             for prop = 1:1:el.getPropNumber()
                 if ~el.isLocked(prop)
-                    el.postprocessing(prop)
+                    el.postprocessing(prop, varargin{:})
                 end
             end
 
@@ -1034,7 +1034,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         function checked(el, pointer)
             %CHECKED sets a property to checked.
             %
-            % CHECKED(EL) sets al properties of element EL to checked.
+            % CHECKED(EL) sets all properties of element EL to checked.
             %
             % CHECKED(EL, POINTER) sets the property POINTER of element EL to checked.
             %  POINTER can be either a property number (PROP) or tag (TAG).
@@ -1134,18 +1134,41 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         end
     end
     methods (Access=protected) % postprocessing
-        function postprocessing(el, prop) %#ok<*INUSD>
+        function postprocessing(el, prop, varargin) %#ok<*INUSD>
             %POSTPROCESSING postprocesses the value of a prop after it has been set.
             %
-            % POSTPROCESSING(EL, PROP) post processes the value of the
-            %  property PROP after it has been set.
+            % POSTPROCESSING(EL, PROP, POINTER1, VALUE1, POINTER2, VALUE2, ...) 
+            %  post-processes the value of the property PROP after it has been set.
             %  By default, this function does not do anything, so it should
             %  be implemented in the subclasses of Element when needed.
             %
-            % The postprocessign is applied to all props that are unlocked
+            % The postprocessing is applied to all props that are unlocked
             %  after any value is set.
             %
-            % See also set, conditioning, calculateValue, checkValue.
+            % See also prop_set, set, conditioning, calculateValue, checkValue.
+        end
+        function bool = prop_set(el, pointer_list, varargin)
+            %PROP_SET returns whether a prop has been set before postprocessing.
+            %
+            % PROP_SET(EL, POINTER, POINTER1, VALUE1, POINTER2, VALUE2, ...) returns
+            %  whether the property POINTER has been set in the current setting cycle.
+            %  POINTER can be either a property number (PROP) or tag (TAG).
+            %  It is typically used with postprocessing.
+            %
+            % PROP_SET(EL, {POINTERA, POINTERB, POINTERC}, POINTER1, VALUE1, POINTER2, VALUE2, ...) 
+            %  operates to a cell array of pointers.
+            %
+            % See also postprocessing.
+            
+            if ~iscell(pointer_list)
+                pointer_list = {pointer_list};
+            end
+
+            if length(varargin) == 1
+                varargin = varargin{:};
+            end
+                        
+            bool = any(cellfun(@(pointer1) any(cellfun(@(pointer2) el.getPropProp(pointer2), varargin(1:2:end)) == el.getPropProp(pointer1)), pointer_list));
         end
     end
     methods (Access=protected) % check value
@@ -1680,7 +1703,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %
             % EL_CLONE = CLONE(EL, [], , [], LOCKED_CATEGORIES) locks the categories LOCKED_CATEGORIES.
             %
-            % See also deepclone, cbclone, Category.
+            % See also deepclone, Category.
             
             if isa(el, 'NoValue')
                 el_clone = NoValue.getNoValue();
@@ -1746,7 +1769,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %    SEED randomized
             %    UNLOCKED
             %
-            % See also clone, cbclone.
+            % See also clone.
             
             el_clone = el.clone({Category.METADATA, Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI});
         end

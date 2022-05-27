@@ -1,14 +1,14 @@
 %% ¡header!
-GUIElement < GUI (gui, element gui) is a GUI for an element.
+GUIFig < GUI (gui, figure gui) is a GUI for a figure.
 
 %%% ¡description!
-GUIELEMENT plots an element in a figure.
+GUIFIG plots a figure.
 
 CONSTRUCTOR - To construct a GUI use the constructor:
 
-    gui = GUI(''PE'', <element>)
+    gui = GUI(''PF'', <panel figure>)
     
-DRAW - To create the element figure, call gui.draw():
+DRAW - To create the figure, call gui.draw():
 
     f = gui.<strong>draw</strong>();
  
@@ -22,18 +22,14 @@ CALLBACK - These are the callback functions:
     gui.<strong>cb_close</strong>() - closes the figure and its dependent figures
 
 %%% ¡seealso!
-GUI, Element, PanelElement, uifigure
+GUI, PanelFig, uifigure
 
 %% ¡props!
 
 %%% ¡prop!
-PE (metadata, item) is the panel element.
+PF (metadata, item) is the panel figure.
 %%%% ¡settings!
-'PanelElement'
-%%%% ¡conditioning!
-if ~isa(value, 'PanelElement')
-    value = PanelElement('EL', value, 'ID', ['Panel of ' value.tostring()]);
-end
+'PanelFig'
 
 %%% ¡prop!
 FILE (data, string) is the B2 file where the element is saved.
@@ -44,12 +40,7 @@ MENU_FILE (gui, logical) determines whether to show the menu file.
 true
 
 %%% ¡prop!
-MENU_IMPORT (gui, logical) determines whether to show the menu import.
-%%%% ¡default!
-true
-
-%%% ¡prop!
-MENU_EXPORT (gui, logical) determines whether to show the menu export.
+MENU_PRINT (gui, logical) determines whether to show the print to image file.
 %%%% ¡default!
 true
 
@@ -63,7 +54,27 @@ TOOL_FILE (gui, logical) determines whether to show the toolbar file buttons.
 %%%% ¡default!
 true
 
+%%% ¡prop!
+TOOL_PRINT (gui, logical) determines whether to show the toolbar print button.
+%%%% ¡default!
+true
+
+%%% ¡prop!
+TOOL_SETTINGS (gui, logical) determines whether to show the toolbar settings buttons.
+%%%% ¡default!
+true
+
 %% ¡props_update!
+
+%%% ¡prop!
+POSITION (gui, rvector) is the normalized position of the GUI on the screen.
+%%%% ¡default!
+[.30 .40 .39 .47]
+
+%%% ¡prop!
+BKGCOLOR (gui, color) is the GUI background color.
+%%%% ¡default!
+BRAPH2.COL_FIG
 
 %%% ¡prop!
 MENUBAR (gui, logical) determines whether to show the menubar.
@@ -89,27 +100,30 @@ true
 f % handle for figure 
 
 menu_file
-menu_import
-menu_export
+menu_print
 menu_personalize
 
 toolbar
 tool_open
 tool_save
+tool_print
+tool_settings
 
-pp % handle for parent panel of the element panel
+pp % handle for parent panel of the element figure
 ps % scrollable panel
-p % panel element
+p % panel figure
 
 text_filename % handle for text field filename
 
 f_layout % handle to figure with panel to manage layout
 
+f_settings % handle to settings figure 
+
 %% ¡methods!
 function f_out = draw(gui, varargin)
-    %DRAW displays the GUI figure for an element.
+    %DRAW displays the GUI figure.
     %
-    % DRAW() displays the GUI figure for an element.
+    % DRAW() displays the GUI figure.
     %
     % F = DRAW(GUI) returns a handle to the GUI figure.
     %
@@ -120,23 +134,21 @@ function f_out = draw(gui, varargin)
     % It is possible to access the properties of the various graphical
     %  objects from the handle F of the GUI figure.
     %
-    % The GUI, PanelElement and Element can be retrieved as 
+    % The GUI and PanelFig can be retrieved as 
     %  GUI = get(F, 'UserData')
-    %  PE = GUI.get('PE')
-    %  EL = PE.get('EL')
+    %  PF = GUI.get('PF')
     %
     % See also cb_bring_to_front, cb_hide, cb_close, uifigure.
 
-    pe = gui.get('PE');
-    el = pe.get('EL');
+    pf = gui.get('PF');
     
     % Set GUI name
-    if el.existsTag('ID')
-        name = el.get('ID');
+    if pf.existsTag('ID')
+        name = pf.get('ID');
     else
-        name = el.tostring();
+        name = pf.tostring();
     end
-    gui.set('NAME', [el.getClass() ' - ' name ' - ' BRAPH2.STR])
+    gui.set('NAME', [pf.getClass() ' - ' name ' - ' BRAPH2.STR])
 
     gui.f = draw@GUI(gui, varargin{:});
     
@@ -152,10 +164,8 @@ function x_draw(gui, f)
     
     x_draw@GUI(gui, f)
 
-    pe = gui.get('PE');
-    el = pe.get('EL');
+    pf = gui.get('PF');
     
-    dw = ceil(pe.get('DW') * BRAPH2.S);
     h_filename = ceil(1.5 * BRAPH2.FONTSIZE * BRAPH2.S);
 
     % Draw panel element (p) 
@@ -169,7 +179,7 @@ function x_draw(gui, f)
             'Position', [0 0 1 1], ...
             'BackgroundColor', gui.get('BKGCOLOR'), ...
             'BorderType', 'none', ...
-            'AutoResizeChildren', false, ...
+            'AutoResizeChildren', false, ... 
             'SizeChangedFcn', {@cb_resize} ...
             );
     end
@@ -177,14 +187,14 @@ function x_draw(gui, f)
         gui.ps = uipanel( ...
             'Parent', gui.pp, ...
             'Tag', 'ps', ...
-            'BackgroundColor', gui.get('BKGCOLOR'), ...
+            'BackgroundColor', [.5 .5 .5], ... % gui.get('BKGCOLOR'), ...
             'BorderType', 'none', ...
             'AutoResizeChildren', false, ...
             'Scrollable', 'on' ...
         );
     end
     if ~check_graphics(gui.p, 'uipanel')
-        gui.p = pe.draw('Parent', gui.ps);
+        gui.p = pf.draw('Parent', gui.ps);
     end
     if ~check_graphics(gui.text_filename, 'uilabel')
         gui.text_filename = uilabel( ...
@@ -206,19 +216,15 @@ function x_draw(gui, f)
     
     % Callback resize
     function cb_resize(~, ~) % (src, event)
+        s5 = ceil(5 * BRAPH2.S);
         set(gui.text_filename, ...
-            'Position', [1+dw 1 w(gui.pp, 'pixels')-2*dw h_filename] ...
+            'Position', [1+s5 1 w(gui.pp, 'pixels')-2*s5 h_filename] ...
             )
         set(gui.ps, ...
             'Units', 'pixels', ...
             'Position', [1 1+h_filename w(gui.pp, 'pixels') h(gui.pp, 'pixels')-h_filename] ...
             );
-        pe.redraw( ... 
-            'X0', 1, ...
-            'Y0', 1, ...
-            'Width', w(gui.ps, 'pixels'), ...
-            'Height', h(gui.ps, 'pixels') ...
-            )
+        pf.set()
     end
     drawnow() % added to ensure that the resize is correct
     cb_resize()
@@ -249,24 +255,12 @@ function x_draw(gui, f)
     end
     function cb_open(~, ~)
         % select file
-        [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
+        [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, ['Select the ' pf.getName() ' file.']);
         if filterindex
             filename = fullfile(path, file);
             tmp_el = BRAPH2.load(filename);
-            if strcmp(tmp_el.getClass(), el.getClass())
-                set(gui.pp, 'Visible', 'off')
-                drawnow()
-                
-                pe.reinit(tmp_el)
-                el = tmp_el; % update local variable 'el' to synchronize it with pe 'el'
-
-                % the motion of the figure is to ensure the correct
-                % rendering of the opened element
-                set(gui.f, 'Position', get(gui.f, 'Position') + [.001 0 0 0])
-                gui.draw()
-                set(gui.f, 'Position', get(gui.f, 'Position') - [.001 0 0 0])
-                
-                set(gui.pp, 'Visible', 'on')
+            if strcmp(tmp_el.getClass(), pf.getClass())
+                GUIFig('PF', tmp_el, 'FILE', filename).draw()
             else
                 GUIElement('PE', tmp_el, 'FILE', filename).draw()
             end
@@ -275,18 +269,18 @@ function x_draw(gui, f)
     function cb_save(~, ~)
         filename = gui.get('FILE');
         if isfile(filename)
-            BRAPH2.save(el, filename)
+            BRAPH2.save(pf, filename)
         else
             cb_saveas();
         end
     end
     function cb_saveas(~, ~)
         % select file
-        [file, path, filterindex] = uiputfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
+        [file, path, filterindex] = uiputfile(BRAPH2.EXT_ELEMENT, ['Select the ' pf.getName() ' file.']);
         % save file
         if filterindex
             filename = fullfile(path, file);
-            BRAPH2.save(el, filename)
+            BRAPH2.save(pf, filename)
             gui.set('FILE', filename)
             update_filename();
         end
@@ -294,39 +288,58 @@ function x_draw(gui, f)
     function cb_close(~, ~)
         gui.cb_close()
     end
+
+    if gui.get('MENUBAR') && gui.get('MENU_PRINT') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_print, 'uimenu')
+        gui.menu_print = uimenu(f, 'Label', 'Print');
+
+        uimenu(gui.menu_print, ...
+            'Label', 'Print ...', ...
+            'Accelerator', 'P', ...
+            'Callback', {@cb_print})
+        uimenu(gui.menu_print, ...
+            'Label', 'Vectorial ...', ...
+            'Callback', {@cb_print, 'vector'})
+        uimenu(gui.menu_print, ...
+            'Separator', 'on', ...
+            'Label', 'Hi-res (300 dpi) ...', ...
+            'Callback', {@cb_print, 'image', 300})
+        uimenu(gui.menu_print, ...
+            'Label', 'Hi-res (600 dpi) ...', ...
+            'Callback', {@cb_print, 'image', 600})
+        uimenu(gui.menu_print, ...
+            'Label', 'Hi-res (1200 dpi) ...', ...
+            'Callback', {@cb_print, 'image', 1200})
+        uimenu(gui.menu_print, ...
+            'Separator', 'on', ...
+            'Label', 'Grayscale ...', ...
+            'Callback', {@cb_print, [], [], 'gray'})
+        uimenu(gui.menu_print, ...
+            'Label', 'Vectorial grayscale ...', ...
+            'Callback', {@cb_print, 'vector', [], 'gray'})
+        uimenu(gui.menu_print, ...
+            'Separator', 'on', ...
+            'Label', 'CMYK ...', ...
+            'Callback', {@cb_print, [], [], 'cmyk'})
+        uimenu(gui.menu_print, ...
+            'Label', 'Vectorial CMYK ...', ...
+            'Callback', {@cb_print, 'vector', [], 'cmyk'})
+
+    elseif (~gui.get('MENUBAR') || ~gui.get('MENU_PRINT'))
+        delete(gui.menu_print)
+    end
+    function cb_print(~, ~, contenttype, resolution, colorspace)
+        if nargin < 5 || isempty(colorspace)
+            colorspace = 'rgb';
+        end
+        if nargin < 4 || isempty(resolution)
+            resolution = 150;
+        end
+        if nargin < 3 || isempty(contenttype)
+            contenttype = 'auto';
+        end        
+        BRAPH2.print(gui.p, [], 'ContentType', contenttype, 'Resolution', resolution, 'Colorspace', colorspace)
+    end
     
-    if gui.get('MENUBAR') && gui.get('MENU_IMPORT') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_import, 'uimenu')
-        gui.menu_import = uimenu(f, ...
-            'Label', 'Import', ...
-            'Callback', {@cb_refresh_import_menu});
-    elseif (~gui.get('MENUBAR') || ~gui.get('MENU_IMPORT'))
-        delete(gui.menu_import)
-    end
-    function cb_refresh_import_menu(~,~)
-        im_menus = get(gui.menu_import, 'Children');
-        for i = 1:1:length(im_menus)
-            delete(im_menus(i));
-        end
-        eval([el.getClass() '.getGUIMenuImport(el, gui.menu_import, pe)']);
-        el = pe.get('el');
-    end    
-
-    if gui.get('MENUBAR') && gui.get('MENU_EXPORT') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_export, 'uimenu')
-        gui.menu_export = uimenu(f, ...
-            'Label', 'Export', ...
-            'Callback', {@cb_refresh_export_menu});
-    elseif (~gui.get('MENUBAR') || ~gui.get('MENU_EXPORT'))
-        delete(gui.menu_export)
-    end
-    function cb_refresh_export_menu(~,~)
-        el = pe.get('el');
-        ex_menus = get(gui.menu_export, 'Children');
-        for i = 1:length(ex_menus)
-            delete(ex_menus(i));
-        end
-        eval([el.getClass() '.getGUIMenuExport(el, gui.menu_export, pe)']);
-     end
-
     if gui.get('MENUBAR') && gui.get('MENU_PERSONALIZE') && check_graphics(f, 'figure') && ~check_graphics(gui.menu_personalize, 'uimenu')
         gui.menu_personalize = uimenu(f, 'Label', 'Personalize');
         uimenu(gui.menu_personalize, ...
@@ -341,9 +354,9 @@ function x_draw(gui, f)
         end
 
         gui_layout = GUI( ... 
-            'Name', ['Layout ' el.getClass() ' - ' BRAPH2.STR], ...
+            'Name', ['Layout ' pf.getClass() ' - ' BRAPH2.STR], ...
             'Position', [x0(f, 'normalized')+w(f, 'normalized') y0(f, 'normalized')+h(f, 'normalized')*2/3 w(f, 'normalized') h(f, 'normalized')/3], ...
-            'BKGCOLOR', pe.get('BKGCOLOR'), ...
+            'BKGCOLOR', pf.get('BKGCOLOR'), ...
             'CLOSEREQ', false ...
             );
         gui.f_layout = gui_layout.draw('Visible', 'off');
@@ -352,7 +365,7 @@ function x_draw(gui, f)
             'Parent', gui.f_layout, ...
             'Units', 'normalized', ...
             'Position', [0 0 1 1], ...
-            'BackgroundColor', pe.get('BKGCOLOR'), ...
+            'BackgroundColor', gui.get('BKGCOLOR'), ...
             'AutoResizeChildren', 'off', ...
             'SizeChangedFcn', {@cb_resize_layout} ...
             );
@@ -389,21 +402,21 @@ function x_draw(gui, f)
             );
         cb_resize_layout()
 
-        [order, title, visible] = load_layout(el);
+        [order, title, visible] = load_layout(pf);
         VISIBLE = 1;
         ORDER = 2;
         TITLE = 3;
         TAG = 4;
         CATEGORY = 5;
         FORMAT = 6;
-        data = cell(el.getPropNumber(), 6);
-        for prop = 1:1:el.getPropNumber()
+        data = cell(pf.getPropNumber(), 6);
+        for prop = 1:1:pf.getPropNumber()
             data{prop, VISIBLE} = visible(prop);
             data{prop, ORDER} = order(prop);
             data{prop, TITLE} = title{prop};
-            data{prop, TAG} = upper(el.getPropTag(prop));
-            data{prop, CATEGORY} = el.getPropCategory(prop);
-            data{prop, FORMAT} = el.getPropFormat(prop);
+            data{prop, TAG} = upper(pf.getPropTag(prop));
+            data{prop, CATEGORY} = pf.getPropCategory(prop);
+            data{prop, FORMAT} = pf.getPropFormat(prop);
         end        
         set(edit_table, 'Data', data);
 
@@ -449,23 +462,10 @@ function x_draw(gui, f)
             set(edit_table, 'Data', data);
         end
         function cb_save_edit(~, ~)
-            set(gui.pp, 'Visible', 'off')
-            drawnow()
-
             data = get(edit_table, 'Data');
             order = cell2mat(data(:, 2))';
             title = data(:, 3); title = title';
-            save_layout(el, order, title)
-
-            pe.reinit(el);
-
-            % the motion of the figure is to ensure the correct
-            % rendering of the opened element
-            set(gui.f, 'Position', get(gui.f, 'Position') + [.001 0 0 0])
-            gui.draw()
-            set(gui.f, 'Position', get(gui.f, 'Position') - [.001 0 0 0])
-
-            set(gui.pp, 'Visible', 'on')
+            save_layout(pf, order, title)
         end
         function cb_cancel_edit(~, ~)
             close(gui.f_layout)
@@ -475,36 +475,95 @@ function x_draw(gui, f)
     % Toolbar
     if gui.get('TOOLBAR') && check_graphics(f, 'figure')
         gui.toolbar = findall(f, 'Tag', 'ToolBar');
-        
+
         if gui.get('TOOL_FILE') && check_graphics(gui.toolbar, 'uitoolbar')
             % Open
             gui.tool_open = uipushtool(gui.toolbar, ...
                 'Tag', 'tool_open', ...                
-                'Tooltip', ['Open ' el.getName()], ...
+                'Tooltip', ['Open ' pf.getName()], ...
                 'CData', imread('icon_open_ml.png'), ...
                 'ClickedCallback', {@cb_open});
             % Save
             gui.tool_save = uipushtool(gui.toolbar, ...
                 'Tag', 'tool_save', ...                
-                'Tooltip', ['Save ' el.getName()], ...
+                'Tooltip', ['Save ' pf.getName()], ...
                 'CData', imread('icon_save_ml.png'), ...
                 'ClickedCallback', {@cb_save});
+        end
+
+        if gui.get('TOOL_PRINT') && check_graphics(gui.toolbar, 'uitoolbar')
+            % Print
+            gui.tool_print = uipushtool(gui.toolbar, ...
+                'Tag', 'tool_print', ...                
+                'Tooltip', ['Print/Export to image file ' pf.getName()], ...
+                'CData', imread('icon_print_ml.png'), ...
+                'ClickedCallback', {@cb_print, 'auto', 300});
+        end
+        
+        if gui.get('TOOL_SETTINGS') && check_graphics(gui.toolbar, 'uitoolbar')
+            % Settings
+            gui.tool_settings = uipushtool(gui.toolbar, ...
+                'Tag', 'tool_settings', ...       
+                'Separator', 'on', ...
+                'Tooltip', ['Settings ' pf.getName()], ... 
+                'CData', imread('icon_settings_ml.png'), ...
+                'ClickedCallback', {@cb_settings});
+        end
+        
+        % reorder tool so that open and save are at the beginning
+        tools = get(gui.toolbar, 'Children');
+        set(gui.toolbar, 'Children', [tools(5:end); tools(1:4)])
+    end
+	function cb_settings(~, ~)
+        persistent time
+        if isempty(time)
+            time = 0;
+        end
+        if now - time > 0.5 / (24 * 60 * 60)
+            time = now;
+
+            set(gui.tool_settings, 'Enable', 'off')
+
+            if ~check_graphics(gui.f_settings, 'figure')
+                pe = PanelElement( ...
+                    'EL', pf, ...
+                    'VISIBLE', pf.getProps(Category.FIGURE) ...
+                    );
+                gui_settings = GUIElement( ...
+                    'PE', pe, ...
+                    'NAME', ['Seettings - ' gui.get('NAME')], ...
+                    'POSITION', [ ...
+                        x0(gui.f, 'normalized')+w(gui.f, 'normalized')+.01 ...
+                        y0(gui.f, 'normalized')-.01 ...
+                        .2 ...
+                        h(gui.f, 'normalized') ...
+                        ], ...
+                    'MENUBAR', false, ...
+                    'TOOLBAR', false, ...
+                    'CLOSEREQ', false ...
+                    );
+                gui.f_settings = gui_settings.draw();
+            else
+                gui_settings = get(gui.f_settings, 'UserData');
+                gui_settings.cb_bring_to_front();
+            end
+            set(gui.tool_settings, 'Enable', 'on')
         end
     end
 end
 function cb_bring_to_front(gui)
     %CB_BRING_TO_FRONT brings to front the figure and its dependent figures.
     %
-    % CB_BRING_TO_FRONT(GUI) brings to front the figure and its dependent figures 
-    %  by calling the methods cb_bring_to_front() for all the PlotProp
-    %  panels of the PanelElement and by bringing to fron the layout figure. 
+    % CB_BRING_TO_FRONT(GUI) brings to front the figure and its dependent figures
+    %  by calling the method cb_bring_to_front() of the settings GUI
+    %  and by bringing to fron the layout figure. 
     %  
     % See also cb_hide, cb_close.
 
     % brings to front the main GUI
     cb_bring_to_front@GUI(gui)
     
-    % brings to fron layout GUI
+    % brings to front layout GUI
     if check_graphics(gui.f_layout, 'figure')
         figure(gui.f_layout) 
         set(gui.f_layout, ...
@@ -513,20 +572,18 @@ function cb_bring_to_front(gui)
             )
     end
     
-    % brings to front the other panels
-    pe = gui.get('PE');
-    pr_dict = pe.get('PR_DICT');
-    for prop = 1:1:pr_dict.length()
-        pr = pr_dict.getItem(prop);
-        pr.cb_bring_to_front()
+    % brings to front settings GUI
+    if check_graphics(gui.f_settings, 'figure')
+        gui_settings = get(gui.f_settings, 'UserData');
+        gui_settings.cb_bring_to_front();
     end
 end
 function cb_hide(gui)
     %CB_HIDE hides the figure and its dependent figures.
     %
     % CB_HIDE(GUI) hides the figure and its dependent figures 
-    %  by calling the methods cb_hide() for all the PlotProp
-    %  panels of the PanelElement and by hiding the layout figure. 
+    %  by calling the method cb_hide() of the settings GUI
+    %  and by hiding the layout figure.
     %
     % See also cb_bring_to_front, cb_close.
 
@@ -538,20 +595,18 @@ function cb_hide(gui)
         set(gui.f_layout, 'Visible', 'off')
     end
     
-    % hides the other panels
-    pe = gui.get('PE');
-    pr_dict = pe.get('PR_DICT');
-    for prop = 1:1:pr_dict.length()
-        pr = pr_dict.getItem(prop);
-        pr.cb_hide()
+    % hides the settings GUI
+    if check_graphics(gui.f_settings, 'figure')
+        gui_settings = get(gui.f_settings, 'UserData');
+        gui_settings.cb_hide();
     end
 end
 function cb_close(gui)
     %CB_CLOSE closes the figure and its dependent figures.
     %
     % CB_CLOSE(GUI) closes the figure and its dependent figures 
-    %  by calling the methods cb_close() for all the PlotProp
-    %  panels of the PanelElement and by closing the layout figure. 
+    %  by calling the method cb_close() of the settings GUI
+    %  and by closing the layout figure. 
     %  
     % See also cb_bring_to_front, cb_hide.
 
@@ -563,12 +618,10 @@ function cb_close(gui)
         delete(gui.f_layout)
     end
     
-    % closes the other panels
-    pe = gui.get('PE');
-    pr_dict = pe.get('PR_DICT');
-    for prop = 1:1:pr_dict.length()
-        pr = pr_dict.getItem(prop);
-        pr.cb_close()
+    % closes the settings GUI
+    if check_graphics(gui.f_settings, 'figure')
+        gui_settings = get(gui.f_settings, 'UserData');
+        gui_settings.cb_close();
     end
 end
 
@@ -578,75 +631,7 @@ end
 %%%% ¡name!
 Basic use
 %%%% ¡code!
-gui1 = GUIElement('PE', ETA(), 'FILE', 'xxx sss', 'MENUBAR', true, 'TOOLBAR', true, 'CLOSEREQ', false);
-f1 = gui1.draw();
-close(f1)
-
-gui2 = GUIElement('PE', BRAPH2Constants(), 'FILE', 'xxx sss', 'MENUBAR', true, 'TOOLBAR', true, 'POSITION', [.1 0 .2 1], 'CLOSEREQ', false);
-f2 = gui2.draw();
-close(f2)
-
-gui3 = GUIElement('PE', ETA(), 'FILE', 'xxx sss', 'MENUBAR', true, 'TOOLBAR', true, 'POSITION', [.2 .2 .2 .78], 'CLOSEREQ', false);
-f3 = gui3.draw();
-close(f3)
-
-gui4 = GUIElement('PE', BRAPH2Constants(), 'FILE', 'xxx sss', 'MENUBAR', true, 'TOOLBAR', true, 'POSITION', [.3 .2 .2 .78], 'CLOSEREQ', false);
-f4 = gui4.draw();
-close(f4)
-
-gui5 = GUIElement('PE', ETA(), 'FILE', 'xxx sss', 'MENUBAR', true, 'TOOLBAR', true, 'POSITION', [.4 .2 .2 .5], 'CLOSEREQ', false);
-f5 = gui5.draw();
-close(f5)
-
-gui6 = GUIElement('PE', BRAPH2Constants(), 'FILE', 'xxx sss', 'MENUBAR', true, 'TOOLBAR', true, 'POSITION', [.5 .2 .2 .5], 'CLOSEREQ', false);
-f6 = gui6.draw();
-close(f6)
-
-%%% ¡test! 
-%%%% ¡name!
-Callbacks
-%%%% ¡code!
-% % % complete with CELL and NET
-et1 = ETA( ...
-    'PROP_STRING_P', 'prova', ...
-    'PROP_LOGICAL_P', true, ...
-    'PROP_OPTION_P', 'three', ...
-    'PROP_CLASS_P', 'ETA', ...
-    'PROP_CLASSLIST_P', {'ETA', 'Panel', 'GUI'}, ...
-    'PROP_ITEM_P', BRAPH2Constants(), ...
-    'PROP_ITEMLIST_P', {BRAPH2Constants(), ETA()}, ...
-    'PROP_IDICT_P', IndexedDictionary(), ...
-    'PROP_SCALAR_P', pi, ...
-    'PROP_RVECTOR_P', [1 2 3], ...
-    'PROP_CVECTOR_P', [1 2 3]', ...
-    'PROP_MATRIX_P', [1 2 3; 4 5 6], ...
-    'PROP_SMATRIX_P', eye(3), ...
-    'PROP_COLOR_P', [.1 .6 1], ...
-    'PROP_ALPHA_P', .5, ...
-    'PROP_SIZE_P', 10, ...
-    'PROP_MARKER_P', 's', ...
-    'PROP_LINE_P', '--' ...
-    );
-et2 = ETA( ...
-    'PROP_STRING_P', Callback('EL', et1, 'TAG', 'PROP_STRING_P'), ...
-    'PROP_LOGICAL_P', Callback('EL', et1, 'TAG', 'PROP_LOGICAL_P'), ...
-    'PROP_OPTION_P', Callback('EL', et1, 'TAG', 'PROP_OPTION_P'), ...
-    'PROP_CLASS_P', Callback('EL', et1, 'TAG', 'PROP_CLASS_P'), ...
-    'PROP_CLASSLIST_P', Callback('EL', et1, 'TAG', 'PROP_CLASSLIST_P'), ...
-    'PROP_ITEM_P', Callback('EL', et1, 'TAG', 'PROP_ITEM_P'), ...
-    'PROP_ITEMLIST_P', Callback('EL', et1, 'TAG', 'PROP_ITEMLIST_P'), ...
-    'PROP_IDICT_P', Callback('EL', et1, 'TAG', 'PROP_IDICT_P'), ...
-    'PROP_SCALAR_P', Callback('EL', et1, 'TAG', 'PROP_SCALAR_P'), ...
-    'PROP_RVECTOR_P', Callback('EL', et1, 'TAG', 'PROP_RVECTOR_P'), ...
-    'PROP_CVECTOR_P', Callback('EL', et1, 'TAG', 'PROP_CVECTOR_P'), ...
-    'PROP_MATRIX_P', Callback('EL', et1, 'TAG', 'PROP_MATRIX_P'), ...
-    'PROP_SMATRIX_P', Callback('EL', et1, 'TAG', 'PROP_SMATRIX_P'), ...
-    'PROP_COLOR_P', Callback('EL', et1, 'TAG', 'PROP_COLOR_P'), ...
-    'PROP_ALPHA_P', Callback('EL', et1, 'TAG', 'PROP_ALPHA_P'), ...
-    'PROP_SIZE_P', Callback('EL', et1, 'TAG', 'PROP_SIZE_P'), ...
-    'PROP_MARKER_P', Callback('EL', et1, 'TAG', 'PROP_MARKER_P'), ...
-    'PROP_LINE_P', Callback('EL', et1, 'TAG', 'PROP_LINE_P') ...
-    );
-gui = GUIElement('PE', et2, 'FILE', 'xxx sss', 'MENUBAR', true, 'TOOLBAR', true, 'CLOSEREQ', false);
-fig = gui.draw();
-close(fig)
+pf = PanelFig();
+gui = GUIFig('PF', pf, 'FILE', 'xxx sss', 'CLOSEREQ', false);
+f = gui.draw('Units', 'normalized', 'Position', [.1 .4 .4 .4]);
+close(f)
