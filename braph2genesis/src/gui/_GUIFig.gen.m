@@ -399,23 +399,10 @@ function x_draw(gui, f)
             set(edit_table, 'Data', data);
         end
         function cb_save_edit(~, ~)
-% % %             set(gui.pp, 'Visible', 'off')
-% % %             drawnow()
-
             data = get(edit_table, 'Data');
             order = cell2mat(data(:, 2))';
             title = data(:, 3); title = title';
             save_layout(pf, order, title)
-
-% % %             pf.reinit(pf);
-% % % 
-% % %             % the motion of the figure is to ensure the correct
-% % %             % rendering of the opened element
-% % %             set(gui.f, 'Position', get(gui.f, 'Position') + [.001 0 0 0])
-% % %             gui.draw()
-% % %             set(gui.f, 'Position', get(gui.f, 'Position') - [.001 0 0 0])
-% % % 
-% % %             set(gui.pp, 'Visible', 'on')
         end
         function cb_cancel_edit(~, ~)
             close(gui.f_layout)
@@ -446,7 +433,8 @@ function x_draw(gui, f)
             gui.tool_settings = uipushtool(gui.toolbar, ...
                 'Tag', 'tool_settings', ...       
                 'Separator', 'on', ...
-                'Tooltip', ['Settings ' pf.getName()], ... % % %'CData', imread('icon_open_ml.png'), ...
+                'Tooltip', ['Settings ' pf.getName()], ... 
+                'CData', imread('icon_settings_ml.png'), ...
                 'ClickedCallback', {@cb_settings});
         end
         
@@ -473,8 +461,8 @@ function x_draw(gui, f)
                     'PE', pe, ...
                     'NAME', ['Seettings - ' gui.get('NAME')], ...
                     'POSITION', [ ...
-                        x0(gui.f, 'normalized')+w(gui.f, 'normalized') ...
-                        y0(gui.f, 'normalized') ...
+                        x0(gui.f, 'normalized')+w(gui.f, 'normalized')+.01 ...
+                        y0(gui.f, 'normalized')-.01 ...
                         .2 ...
                         h(gui.f, 'normalized') ...
                         ], ...
@@ -492,13 +480,13 @@ function x_draw(gui, f)
     end
 end
 function cb_bring_to_front(gui)
-% % %     %CB_BRING_TO_FRONT brings to front the figure and its dependent figures.
-% % %     %
-% % %     % CB_BRING_TO_FRONT(GUI) brings to front the figure and its dependent figures 
-% % %     %  by calling the methods cb_bring_to_front() for all the PlotProp
-% % %     %  panels of the PanelElement and by bringing to fron the layout figure. 
-% % %     %  
-% % %     % See also cb_hide, cb_close.
+    %CB_BRING_TO_FRONT brings to front the figure and its dependent figures.
+    %
+    % CB_BRING_TO_FRONT(GUI) brings to front the figure and its dependent figures
+    %  by calling the method cb_bring_to_front() of the settings GUI
+    %  and by bringing to fron the layout figure. 
+    %  
+    % See also cb_hide, cb_close.
 
     % brings to front the main GUI
     cb_bring_to_front@GUI(gui)
@@ -519,13 +507,13 @@ function cb_bring_to_front(gui)
     end
 end
 function cb_hide(gui)
-% % %     %CB_HIDE hides the figure and its dependent figures.
-% % %     %
-% % %     % CB_HIDE(GUI) hides the figure and its dependent figures 
-% % %     %  by calling the methods cb_hide() for all the PlotProp
-% % %     %  panels of the PanelElement and by hiding the layout figure. 
-% % %     %
-% % %     % See also cb_bring_to_front, cb_close.
+    %CB_HIDE hides the figure and its dependent figures.
+    %
+    % CB_HIDE(GUI) hides the figure and its dependent figures 
+    %  by calling the method cb_hide() of the settings GUI
+    %  and by hiding the layout figure.
+    %
+    % See also cb_bring_to_front, cb_close.
 
     % hides the main GUI
     cb_hide@GUI(gui)
@@ -542,13 +530,13 @@ function cb_hide(gui)
     end
 end
 function cb_close(gui)
-% % %     %CB_CLOSE closes the figure and its dependent figures.
-% % %     %
-% % %     % CB_CLOSE(GUI) closes the figure and its dependent figures 
-% % %     %  by calling the methods cb_close() for all the PlotProp
-% % %     %  panels of the PanelElement and by closing the layout figure. 
-% % %     %  
-% % %     % See also cb_bring_to_front, cb_hide.
+    %CB_CLOSE closes the figure and its dependent figures.
+    %
+    % CB_CLOSE(GUI) closes the figure and its dependent figures 
+    %  by calling the method cb_close() of the settings GUI
+    %  and by closing the layout figure. 
+    %  
+    % See also cb_bring_to_front, cb_hide.
 
     % closes the main GUI
     cb_close@GUI(gui)
@@ -571,3 +559,7 @@ end
 %%%% ¡name!
 Basic use
 %%%% ¡code!
+pf = PanelFig();
+gui = GUIFig('PF', pf, 'FILE', 'xxx sss', 'CLOSEREQ', false);
+f = gui.draw('Units', 'normalized', 'Position', [.1 .4 .4 .4]);
+close(f)

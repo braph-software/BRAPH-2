@@ -2,13 +2,13 @@
 PFBrainSurface < PanelFig (pf, panel figure brain surface) is a plot of a brain surfce.
 
 %%% ¡description!
-% % % PFBrainSurface manages the brain surface choosen by the user. 
-% % % A collection of brain surfaces in NV format can be found in the folder 
-% % % ./braph2/brainsurfs/.
-% % % This class provides the common methods needed to manage the plot of 
-% % % the surface, via a custom panel called ''Brain Surface Settings'' where
-% % % the user can change lighting, material, camlight, shadning, colormap,
-% % % facecolor, brain color, face color, edge color, and background color. 
+PFBrainSurface manages the plot of the brain surface choosen by the user. 
+A collection of brain surfaces in NV format can be found in the folder 
+./braph2/brainsurfs/.
+This class provides the common methods needed to manage the plot of 
+the surface. In particualr, the user can change lighting, material, 
+camlight, shadning, colormap, facecolor, brain color, face color, 
+edge color, and background color. 
 
 %%% ¡seealso!
 PanelFig, BrainSurface
@@ -328,20 +328,20 @@ end
         
 %% ¡methods!
 function p_out = draw(pf, varargin)
-% % %     %DRAW draws the brain surface graphical panel.
-% % %     %
-% % %     % DRAW(PL) draws the brain surface graphical panel.
-% % %     %
-% % %     % H = DRAW(PL) returns a handle to the brain surface graphical panel.
-% % %     %
-% % %     % DRAW(PL, 'Property', VALUE, ...) sets the properties of the graphical
-% % %     %  panel with custom property-value couples.
-% % %     %  All standard plot properties of uipanel can be used.
-% % %     %
-% % %     % It is possible to access the properties of the various graphical
-% % %     %  objects from the handle to the brain surface graphical panel H.
-% % %     %
-% % %     % see also settings, uipanel, isgraphics.
+    %DRAW draws the brain surface graphical panel.
+    %
+    % DRAW(PF) draws the brain surface graphical panel.
+    %
+    % P = DRAW(PF) returns a handle to the brain surface graphical panel.
+    %
+    % DRAW(PF, 'Property', VALUE, ...) sets the properties of the graphical
+    %  panel with custom property-value couples.
+    %  All standard plot properties of uipanel can be used.
+    %
+    % It is possible to access the properties of the various graphical
+    %  objects from the handle to the brain surface graphical panel F.
+    %
+    % see also uipanel.
 
     pf.p = draw@PanelFig(pf, varargin{:});
 
