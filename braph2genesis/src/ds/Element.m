@@ -1703,7 +1703,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %
             % EL_CLONE = CLONE(EL, [], , [], LOCKED_CATEGORIES) locks the categories LOCKED_CATEGORIES.
             %
-            % See also deepclone, cbclone, Category.
+            % See also deepclone, Category.
             
             if isa(el, 'NoValue')
                 el_clone = NoValue.getNoValue();
@@ -1769,7 +1769,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %    SEED randomized
             %    UNLOCKED
             %
-            % See also clone, cbclone.
+            % See also clone.
             
             el_clone = el.clone({Category.METADATA, Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI});
         end
