@@ -25,9 +25,6 @@ function cb_importer_TXT(~, ~)
     im.uigetfile();
     try
         if isfile(im.get('FILE'))
-            % pe.set('EL', im.get('PIP')); 
-            % pe.reinit();
-
             ba = pe.get('EL');
             
             assert( ...
@@ -65,9 +62,6 @@ function cb_importer_XLS(~, ~)
     im.uigetfile();
     try
         if isfile(im.get('FILE'))
-            % pe.set('EL', im.get('PIP')); 
-            % pe.reinit();
-
             ba = pe.get('EL');
             
             assert( ...

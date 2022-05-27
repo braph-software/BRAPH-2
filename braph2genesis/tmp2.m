@@ -3,25 +3,11 @@ delete(findall(0, 'type', 'figure'))
 clear all
 clc
 
-fig1 = uifigure();
-et1 = ETA();
-props = [et1.PROP_STRING_M et1.PROP_STRING_P et1.PROP_STRING_D et1.PROP_STRING_F et1.PROP_STRING_G et1.PROP_STRING_R et1.PROP_STRING_R_CALC];
-for i = 1:1:length(props)
-    pr{i} = PanelPropStringTextArea('EL', et1, 'PROP', props(i), 'TA_H', 2);
-    pr{i}.draw( ...
-        'Parent', fig1, ...
-        'BackgroundColor', [i/length(props) .5 (length(props)-i)/length(props)] ...
-        )
-    pr{i}.update()
-    pr{i}.redraw('Y0', (length(props) - i)/length(props) * h(fig1, 'pixels'))
-end
-
-
-% el_class = 'BrainAtlas';
-% delete([fileparts(which('braph2')) '/src/atlas/' el_class '.m'])
-% create_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
-% create_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
-% create_test_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
+el_class = 'BrainAtlas';
+delete([fileparts(which('braph2')) '/src/atlas/' el_class '.m'])
+create_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
+create_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
+create_test_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
 % test_code = ['test_' el_class]
 % eval(test_code)
 
