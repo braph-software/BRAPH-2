@@ -7,8 +7,8 @@ function check = check_graphics(h, type)
 %  of the kind TYPE:
 %  'figure', 'uimenu', 'uitoolbar', 'uipushtool', 'uitoggletool',
 %  'uipanel', 'axes', 'uitable', 'uicontextmenu',
-%  'uibutton', 'uilabel', 'uieditfield', 'uicheckbox', 'uidropdown',
-%  'uislider', 'uilistbox'.
+%  'uibutton', 'uilabel', 'uieditfield', 'uitextarea', 'uicheckbox',
+%  'uidropdown', 'uislider', 'uilistbox'.
 %  'line', 'patch'.
 %
 %  Also these legacy graphical objects are checkable:
@@ -53,6 +53,8 @@ if nargout == 1
                 check = ~isempty(h) && isgraphics(h, 'uilabel');
             case 'uieditfield'
                 check = ~isempty(h) && isgraphics(h, 'uieditfield');
+            case 'uitextarea'
+                check = ~isempty(h) && isgraphics(h, 'uitextarea');
             case 'uicheckbox'
                 check = ~isempty(h) && isgraphics(h, 'uicheckbox');
             case 'uidropdown'

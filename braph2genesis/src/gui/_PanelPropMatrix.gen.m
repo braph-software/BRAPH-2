@@ -18,7 +18,7 @@ TAB_ENABLE (gui, option) switches table between on and off.
 'off'
 
 %%% ¡prop!
-TAB_H (gui, size) is the height of the table.
+TAB_H (gui, size) is the height of the table in font size units.
 %%%% ¡default!
 20
 
@@ -143,7 +143,7 @@ function redraw(pr, varargin)
     %  - Y0 does not change
     %  - WIDTH does not change
     %  - HEIGHT = 2 * BRAPH2.FONTSIZE * BRAPH2.S (header height)
-    % The table height is set by the properti TAB_H.
+    % The table height is set by the property TAB_H.
     %
     % See also draw, update, PanelElement, BRAPH2.
     

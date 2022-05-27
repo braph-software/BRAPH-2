@@ -3,6 +3,47 @@ delete(findall(0, 'type', 'figure'))
 clear all
 clc
 
+fig1 = uifigure();
+et1 = ETA();
+props = [et1.PROP_STRING_M et1.PROP_STRING_P et1.PROP_STRING_D et1.PROP_STRING_F et1.PROP_STRING_G et1.PROP_STRING_R et1.PROP_STRING_R_CALC];
+for i = 1:1:length(props)
+    pr{i} = PanelPropStringTextArea('EL', et1, 'PROP', props(i), 'TA_H', 2);
+    pr{i}.draw( ...
+        'Parent', fig1, ...
+        'BackgroundColor', [i/length(props) .5 (length(props)-i)/length(props)] ...
+        )
+    pr{i}.update()
+    pr{i}.redraw('Y0', (length(props) - i)/length(props) * h(fig1, 'pixels'))
+end
+
+
+% el_class = 'BrainAtlas';
+% delete([fileparts(which('braph2')) '/src/atlas/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
+% create_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
+% create_test_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
+% test_code = ['test_' el_class]
+% eval(test_code)
+
+br1 = BrainRegion('ID', 'id1', 'LABEL', 'label1', 'NOTES', 'notes1', 'X', 1, 'Y', 1, 'Z', 1);
+br2 = BrainRegion('ID', 'id2', 'LABEL', 'label2', 'NOTES', 'notes2', 'X', 2, 'Y', 2, 'Z', 2);
+br3 = BrainRegion('ID', 'id3', 'LABEL', 'label3', 'NOTES', 'notes3', 'X', 3, 'Y', 3, 'Z', 3);
+br4 = BrainRegion('ID', 'id4', 'LABEL', 'label4', 'NOTES', 'notes4', 'X', 4, 'Y', 4, 'Z', 4);
+br5 = BrainRegion('ID', 'id5', 'LABEL', 'label5', 'NOTES', 'notes5', 'X', 5, 'Y', 5, 'Z', 5);
+br6 = BrainRegion('ID', 'id6', 'LABEL', 'label6', 'NOTES', 'notes6', 'X', 6, 'Y', 6, 'Z', 6);
+
+items = {br1, br2, br3, br4, br5, br6};
+
+idict_1 = IndexedDictionary( ...
+    'id', 'idict', ...
+    'it_class', 'BrainRegion', ...
+    'it_key', IndexedDictionary.getPropDefault(IndexedDictionary.IT_KEY), ...
+    'it_list', items ...
+    );
+ba = BrainAtlas('ID', 'BA1', 'LABEL', 'brain atlas', 'Notes', 'Notes on brain atlas.', 'br_dict', idict_1);
+f = GUIElement('PE', ba, 'CLOSEREQ', false).draw();
+
+
 % % % el_class = 'PanelElement';
 % % % delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
 % % % create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
@@ -21,11 +62,11 @@ clc
 % % % 
 % % % return
 
-el_class = 'GUIFig';
-delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
-create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
-create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
-create_test_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+% el_class = 'GUIFig';
+% delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+% create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+% create_test_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
 % test_code = ['test_' el_class]
 % eval(test_code)
 
@@ -43,9 +84,9 @@ create_test_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.g
 % test_code = ['test_' el_class]
 % eval(test_code)
 
-pf = PFBrainSurface('SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
-gui = GUIFig('PF', pf, 'FILE', 'xxx sss', 'CLOSEREQ', false);
-f = gui.draw('Units', 'normalized', 'Position', [.1 .5 .4 .4]);
+% pf = PFBrainSurface('SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
+% gui = GUIFig('PF', pf, 'FILE', 'xxx sss', 'CLOSEREQ', false);
+% f = gui.draw('Units', 'normalized', 'Position', [.1 .5 .4 .4]);
 
 % % % guis = GUIElement('PE', pf, 'CLOSEREQ', false);
 % % % fs = guis.draw();
