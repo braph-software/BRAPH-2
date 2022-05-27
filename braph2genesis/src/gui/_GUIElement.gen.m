@@ -140,6 +140,12 @@ function f_out = draw(gui, varargin)
 
     gui.f = draw@GUI(gui, varargin{:});
     
+    % listener to update from source
+    addlistener(el, 'propChangeEl', @callback_update);
+    function callback_update(~, ~)
+        pe.update();
+    end
+    
     % output
     if nargout > 0
         f_out = gui.f;

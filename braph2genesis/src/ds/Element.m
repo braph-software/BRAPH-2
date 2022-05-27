@@ -126,6 +126,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 
         props = {}
     end
+    events
+        propChangeEl
+    end
     methods (Static) % inspection
         function el_class = getClass(el)
             %GETCLASS returns the class of the element.
@@ -766,6 +769,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         )
                 end
             end
+            
+            notify(el, 'propChangeEl') % could put it inside the for loop. did not checked better position.
 
             % output
             if nargout > 0
