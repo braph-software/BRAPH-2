@@ -156,7 +156,7 @@ function p_out = draw(pe, varargin)
         pe.pr_list = cellfun(@(x) x.draw('Parent', pe.p), pe.memorize('PR_DICT').getItems(), 'UniformOutput', false);
     end
 
-    pe.update()   
+    pe.update()
     pe.redraw()
     
     % output
