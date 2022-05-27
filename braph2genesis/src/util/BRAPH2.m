@@ -262,6 +262,9 @@ classdef BRAPH2
             %
             % SAVED = SAVE(EL) opens a dialog box to select the file.
             %
+            % It saves a deep copy of EL to reinitialize private
+            %  properties (e.g., handles of figures).
+            %
             % See also load, uiputfile.
             
             if nargin < 2
@@ -276,6 +279,7 @@ classdef BRAPH2
             end
             
             if ~isempty(filename)
+                el = el.copy();
                 build = BRAPH2.BUILD;
                 matlab_release = ver('MATLAB').Version;
                 matlab_release_details = ver();
