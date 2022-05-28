@@ -137,7 +137,10 @@ BR_DICT (data, idict) contains the brain regions of the brain atlas.
 %%%% ¡settings!
 'BrainRegion'
 %%%% ¡gui!
-pr = PanelPropIDictTable('EL', ba, 'PROP', BrainAtlas.BR_DICT, varargin{:});
+pr = PanelPropIDictTable('EL', ba, 'PROP', BrainAtlas.BR_DICT, ...
+    'IT_PROPS', [0 BrainRegion.ID BrainRegion.LABEL BrainRegion.X BrainRegion.Y BrainRegion.Z BrainRegion.NOTES], ...
+    'ROWNAME', '''numbered''', ...
+    varargin{:});
 
 %%% ¡prop!
 SURF (metadata, item) contains the brain surface of the brain atlas.
