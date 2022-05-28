@@ -137,9 +137,39 @@ BR_DICT (data, idict) contains the brain regions of the brain atlas.
 %%%% ¡settings!
 'BrainRegion'
 %%%% ¡gui!
-pr = PanelPropIDictTable('EL', ba, 'PROP', BrainAtlas.BR_DICT, ...
-    'IT_PROPS', [0 BrainRegion.ID BrainRegion.LABEL BrainRegion.X BrainRegion.Y BrainRegion.Z BrainRegion.NOTES], ...
-    'ROWNAME', '''numbered''', ...
+code = {
+    'switch it_prop'
+    'case pr.get(''SELECTOR'')'
+        'if newdata == 1'
+            'pr.selected = sort(unique([pr.selected(:); i]));'
+        'else'
+            'pr.selected = pr.selected(pr.selected ~= i);'
+        'end'
+    'case BrainRegion.ID'
+        'if ~dict.containsKey(newdata)'
+            '' % change brain region id
+            'dict.getItem(i).set(''ID'', newdata)'
+            '' % change brain region key in idict
+            'oldkey = dict.getKey(i);'
+            'dict.replaceKey(oldkey, newdata);'
+        'end'
+    'case BrainRegion.LABEL'
+        'dict.getItem(i).set(''Label'', newdata)'
+    'case BrainRegion.X'
+        'dict.getItem(i).set(''X'', newdata)'
+    'case BrainRegion.Y'
+        'dict.getItem(i).set(''Y'', newdata)'
+    'case BrainRegion.Z'
+        'dict.getItem(i).set(''Z'', newdata)'
+    'case BrainRegion.NOTES'
+        'dict.getItem(i).set(''Notes'', newdata)'
+    'end'
+    };
+pr = PanelPropIDictTable('EL', ba, 'PROP', BrainAtlas.BR_DICT, ... 
+    'SELECTOR', true, ...
+    'IT_PROPS', [BrainRegion.ID BrainRegion.LABEL BrainRegion.X BrainRegion.Y BrainRegion.Z BrainRegion.NOTES], ...
+    'ROWNAME', '''numbered''', ... 
+    'CB_EDIT', sprintf('%s;', code{:}), ...
     varargin{:});
 
 %%% ¡prop!
