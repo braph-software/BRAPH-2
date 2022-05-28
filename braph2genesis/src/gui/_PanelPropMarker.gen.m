@@ -157,7 +157,7 @@ function redraw(pr, varargin)
     
     set(pr.dropdown, 'Position', [s(.3) s(.3) .15*w(pr.p, 'pixels') s(1.7)])
     
-    set(pr.axes, 'InnerPosition', [s(.3)+.15*w(pr.p, 'pixels')+s(1.7) ceil(.3) .70*w(pr.p, 'pixels') ceil(1.7)])
+    set(pr.axes, 'InnerPosition', [s(.3)+.15*w(pr.p, 'pixels')+s(1.7) s(.3) .70*w(pr.p, 'pixels') s(1.7)])
 end
 function cb_dropdown(pr)
     %CB_DROPDOWN executes callback for the drop down.

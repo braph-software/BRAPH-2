@@ -130,7 +130,7 @@ function f_out = draw(gui, varargin)
     pe = gui.get('PE');
     el = pe.get('EL');
     
-    % Set GUI name
+    % set GUI name
     if el.existsTag('ID')
         name = el.get('ID');
     else
