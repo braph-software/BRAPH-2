@@ -280,7 +280,7 @@ function cb_button_cb(pr)
     if isempty(time)
         time = 0;
     end
-    if now - time > 0.5 / (24 * 60 * 60)
+    if now - time > 1.0 / (24 * 60 * 60)
         time = now;
         set(pr.button_cb, 'Enable', 'off')
         %%% start callback %%%
