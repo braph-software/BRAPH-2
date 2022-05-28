@@ -138,7 +138,7 @@ function cb_button(pr)
     if isempty(time)
         time = 0;
     end
-    if now - time > 0.5 / (24 * 60 * 60)
+    if now - time > 1.0 / (24 * 60 * 60)
         time = now;
         set(pr.button, 'Enable', 'off')
         %%% start callback %%%
@@ -163,10 +163,10 @@ function cb_button(pr)
         set(pr.button, 'Enable', 'on')
     end
     
-    % updates and redraws the parent PanelElement as well as all siblings PanelProp's
-    pe = get(get(pr.p, 'Parent'), 'UserData');
-    pe.update()
-    pe.redraw()
+% % %     % updates and redraws the parent PanelElement as well as all siblings PanelProp's
+% % %     pe = get(get(pr.p, 'Parent'), 'UserData');
+% % %     pe.update()
+% % %     pe.redraw()
 end
 function cb_bring_to_front(pr)
     %CB_BRING_TO_FRONT brings to the front the item figure.
