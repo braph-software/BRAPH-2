@@ -38,6 +38,10 @@ COLUMNFORMAT (gui, string) determines the columns formats (to be evaluated).
 
 %%% ¡prop!
 CB_TAB_EDIT (gui, string) is executed when a cell is updated (to be evaluated).
+%%%% ¡conditioning!
+if iscell(value)
+    value = sprintf('%s;', value{:});
+end
 
 %% ¡properties!
 p
@@ -324,6 +328,9 @@ function cb_table_edit(pr, i, col, newdata)
     if ~isempty(pr.get('CB_TAB_EDIT'))
         eval(pr.get('CB_TAB_EDIT'))
     else
+        cb_table_edit_default()
+    end
+    function cb_table_edit_default()
         if col == pr.SELECTOR
             if newdata == 1
                 pr.selected = sort(unique([pr.selected(:); i]));
@@ -382,7 +389,7 @@ function cb_table_edit(pr, i, col, newdata)
                 % % % case Format.LINE
                 % % %     dict.getItem(i).set(col, newdata)
             end
-        end
+        end        
     end
     
     pr.update()
