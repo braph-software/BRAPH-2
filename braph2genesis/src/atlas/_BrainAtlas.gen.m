@@ -25,9 +25,6 @@ function cb_importer_TXT(~, ~)
     im.uigetfile();
     try
         if isfile(im.get('FILE'))
-            % pe.set('EL', im.get('PIP')); 
-            % pe.reinit();
-
             ba = pe.get('EL');
             
             assert( ...
@@ -65,9 +62,6 @@ function cb_importer_XLS(~, ~)
     im.uigetfile();
     try
         if isfile(im.get('FILE'))
-            % pe.set('EL', im.get('PIP')); 
-            % pe.reinit();
-
             ba = pe.get('EL');
             
             assert( ...
@@ -136,14 +130,31 @@ LABEL (metadata, string) is an extended label of the brain atlas.
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the brain atlas.
 %%%% ¡gui!
-pr = PlotPropString('EL', ba, 'PROP', BrainAtlas.NOTES, 'LINES', 'multi', 'EDITHEIGHT', 4.5, varargin{:});
+pr = PanelPropStringTextArea('EL', ba, 'PROP', BrainAtlas.NOTES, varargin{:});
 
 %%% ¡prop!
 BR_DICT (data, idict) contains the brain regions of the brain atlas.
 %%%% ¡settings!
 'BrainRegion'
 %%%% ¡gui!
-pr = PPBrainAtlas_BRDict('EL', ba, 'PROP', BrainAtlas.BR_DICT, varargin{:});
+cb_tab_edit_code = {
+    'switch col'
+        'case BrainRegion.ID'
+            'if ~dict.containsKey(newdata)'
+                '' % change brain region id
+                'dict.getItem(i).set(''ID'', newdata)'
+                '' % change brain region key in idict
+                'dict.replaceKey(dict.getKey(i), newdata);' % oldkey = dict.getKey(i)
+            'end'
+    'otherwise'
+        'cb_table_edit_default()'
+    'end'
+    };
+pr = PanelPropIDictTable('EL', ba, 'PROP', BrainAtlas.BR_DICT, ... 
+        'COLS', [PanelPropIDictTable.SELECTOR BrainRegion.ID BrainRegion.LABEL BrainRegion.X BrainRegion.Y BrainRegion.Z BrainRegion.NOTES], ...
+        'ROWNAME', '''numbered''', ... 
+        'CB_TAB_EDIT', cb_tab_edit_code, ...
+        varargin{:});
 
 %%% ¡prop!
 SURF (metadata, item) contains the brain surface of the brain atlas.
@@ -151,8 +162,8 @@ SURF (metadata, item) contains the brain surface of the brain atlas.
 'BrainSurface'
 %%%% ¡default!
 ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF')
-%%%% ¡gui!
-pr = PPBrainAtlas_Surf('EL', ba, 'PROP', BrainAtlas.SURF, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPBrainAtlas_Surf('EL', ba, 'PROP', BrainAtlas.SURF, varargin{:});
 
 %% ¡tests!
 
@@ -272,6 +283,6 @@ idict_1 = IndexedDictionary( ...
     'it_list', items ...
     );
 ba = BrainAtlas('ID', 'BA1', 'LABEL', 'brain atlas', 'Notes', 'Notes on brain atlas.', 'br_dict', idict_1);
-GUI('PE', ba, 'CLOSEREQ', false).draw()
+f = GUIElement('PE', ba, 'CLOSEREQ', false).draw();
 
-close(gcf)
+close(f)

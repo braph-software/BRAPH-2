@@ -99,26 +99,21 @@ function redraw(pr, varargin)
     %  - WIDTH does not change
     % HEIGHT is automatically set by this function and should not be used (it'll be overwritten).
     %
-    % See also draw, update, PanelElement, BRAPH2.
+    % See also draw, update, PanelElement.
     
     el = pr.get('EL');
     prop = pr.get('PROP');
 
     value = el.getr(prop);
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
-        pr.redraw@PanelProp('Height', ceil(3.5 * BRAPH2.FONTSIZE * BRAPH2.S), varargin{:})
+        pr.redraw@PanelProp('Height', s(3.5), varargin{:})
     else
         item_list = el.get(prop);
         
-        pr.redraw@PanelProp('Height', ceil((2 + 2 * length(item_list)) * BRAPH2.FONTSIZE * BRAPH2.S), varargin{:})
+        pr.redraw@PanelProp('Height', s(2+2*length(item_list)), varargin{:})
         
         for i = 1:1:length(item_list)
-            set(pr.button_list{i}, 'Position', [ ...
-                ceil(5 * BRAPH2.S) ...
-                ceil((.25+2*(length(item_list)-i)) * BRAPH2.FONTSIZE * BRAPH2.S) ...
-                ceil(w(pr.p, 'pixels') - 60) ...
-                ceil(1.75 * BRAPH2.FONTSIZE * BRAPH2.S) ...
-                ])
+            set(pr.button_list{i}, 'Position', [s(.3) s(.3+2*(length(item_list)-i)) w(pr.p, 'pixels')-s(5) s(1.7)])
         end
     end
 end
@@ -131,11 +126,11 @@ function cb_button(pr, i)
     if isempty(time)
         time = 0;
     end
-    if now - time > 0.5 / (24 * 60 * 60)
+    if now - time > 1.0 / (24 * 60 * 60)
         time = now;
-
         set(pr.button_list{i}, 'Enable', 'off')
-
+        %%% start callback %%%
+        
         el = pr.get('EL');
         prop = pr.get('PROP');
         item_list = el.get(prop);
@@ -152,13 +147,15 @@ function cb_button(pr, i)
             gui = get(pr.f_item_list{i}, 'UserData');
             gui.cb_bring_to_front();
         end
+        
+        %%% end callback %%%
         set(pr.button_list{i}, 'Enable', 'on')
     end
     
-    % updates and redraws the parent PanelElement as well as all siblings PanelProp's
-    pe = get(get(pr.p, 'Parent'), 'UserData');
-    pe.update()
-    pe.redraw()
+% % %     % updates and redraws the parent PanelElement as well as all siblings PanelProp's
+% % %     pe = get(get(pr.p, 'Parent'), 'UserData');
+% % %     pe.update()
+% % %     pe.redraw()
 end
 function cb_bring_to_front(pr)
     %CB_BRING_TO_FRONT brings to the front the item figures.

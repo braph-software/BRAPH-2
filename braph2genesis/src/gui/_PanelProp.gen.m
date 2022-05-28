@@ -225,9 +225,9 @@ function redraw(pr, varargin)
     %  - X0 does not change
     %  - Y0 does not change
     %  - WIDTH does not change
-    %  - HEIGHT = 2 * BRAPH2.FONTSIZE * BRAPH2.S.
+    %  - HEIGHT = s(2)
     %
-    % See also draw, update, PanelElement, BRAPH2.
+    % See also draw, update, PanelElement, s.
 
     el = pr.get('EL');
     prop = pr.get('PROP');
@@ -235,19 +235,17 @@ function redraw(pr, varargin)
     p = pr.p;
 
     % repositions the panel
-    x0_p = ceil(get_from_varargin(x0(p, 'pixels'), 'X0', varargin));
-    y0_p = ceil(get_from_varargin(y0(p, 'pixels'), 'Y0', varargin));
-    w_p = ceil(get_from_varargin(w(p, 'pixels'), 'Width', varargin));
-    h_p = ceil(get_from_varargin(2 * BRAPH2.FONTSIZE * BRAPH2.S, 'Height', varargin));
+    x0_p = get_from_varargin(x0(p, 'pixels'), 'X0', varargin);
+    y0_p = get_from_varargin(y0(p, 'pixels'), 'Y0', varargin);
+    w_p = get_from_varargin(w(p, 'pixels'), 'Width', varargin);
+    h_p = get_from_varargin(s(2), 'Height', varargin);
     set(p, ...
         'Units', 'pixels', ...
         'Position', [x0_p y0_p w_p h_p] ...
         )
 
     % places label_tag to the top
-    s2 = ceil(2 * BRAPH2.S);
-    s16 = ceil(16 * BRAPH2.S);
-    set(pr.label_tag, 'Position', [s2 h_p-s16+1 w_p s16])
+    set(pr.label_tag, 'Position', [s(.3) h_p-s(1.3)+1 w_p s(1.3)])
 
     % places the relevant buttons (depening on category)
     switch el.getPropCategory(prop)
@@ -255,18 +253,11 @@ function redraw(pr, varargin)
             %
 
         case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
-            s20 = ceil(20 * BRAPH2.S);
-            s22 = ceil(22 * BRAPH2.S);
-            s25 = ceil(25 * BRAPH2.S);
-            set(pr.button_cb, 'Position', [w_p-s25 h_p-s22 s20 s20])
+            set(pr.button_cb, 'Position', [w_p-s(2.1) h_p-s(1.9) s(1.7) s(1.7)])
 
         case Category.RESULT
-            s20 = ceil(20 * BRAPH2.S);
-            s22 = ceil(22 * BRAPH2.S);
-            s25 = ceil(25 * BRAPH2.S);
-            s50 = ceil(50 * BRAPH2.S);
-            set(pr.button_calc, 'Position', [w_p-s50 h_p-s22 s20 s20])
-            set(pr.button_del, 'Position', [w_p-s25 h_p-s22 s20 s20])
+            set(pr.button_calc, 'Position', [w_p-s(4.2) h_p-s(1.9) s(1.7) s(1.7)])
+            set(pr.button_del, 'Position', [w_p-s(2.1) h_p-s(1.9) s(1.7) s(1.7)])
     end
 end
 function cb_button_cb(pr)
@@ -280,10 +271,10 @@ function cb_button_cb(pr)
     if isempty(time)
         time = 0;
     end
-    if now - time > 0.5 / (24 * 60 * 60)
+    if now - time > 1.0 / (24 * 60 * 60)
         time = now;
-
         set(pr.button_cb, 'Enable', 'off')
+        %%% start callback %%%
 
         el = pr.get('EL');
         prop = pr.get('PROP');
@@ -300,6 +291,8 @@ function cb_button_cb(pr)
             gui = get(pr.f_cb, 'UserData');
             gui.cb_bring_to_front();
         end
+        
+        %%% end callback %%%
         set(pr.button_cb, 'Enable', 'on')
     end
     

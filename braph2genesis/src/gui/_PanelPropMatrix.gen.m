@@ -18,7 +18,7 @@ TAB_ENABLE (gui, option) switches table between on and off.
 'off'
 
 %%% ¡prop!
-TAB_H (gui, size) is the height of the table.
+TAB_H (gui, size) is the height of the table in font size units.
 %%%% ¡default!
 20
 
@@ -91,20 +91,22 @@ function update(pr)
             set(pr.table, ...
                 'Data', el.get(prop), ...
                 'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-                'ColumnEditable', true)
+                'ColumnEditable', true ...
+                )
 
         case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
             set(pr.table, ...
                 'Data', el.get(prop), ...
                 'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-                'ColumnEditable', true)
+                'ColumnEditable', true ...
+                )
             
             value = el.getr(prop);
             if isa(value, 'Callback')
                 set(pr.table, ...
-                'Enable', pr.get('TAB_ENABLE'), ...
-                'ColumnEditable', false ...
-                )
+                    'Enable', pr.get('TAB_ENABLE'), ...
+                    'ColumnEditable', false ...
+                    )
             end
 
         case Category.RESULT
@@ -142,13 +144,13 @@ function redraw(pr, varargin)
     %  - X0 does not change
     %  - Y0 does not change
     %  - WIDTH does not change
-    %  - HEIGHT = 2 * BRAPH2.FONTSIZE * BRAPH2.S (header height)
-    % The table height is set by the properti TAB_H.
+    %  - HEIGHT = s(2) (header height)
+    % The table height is set by the property TAB_H.
     %
-    % See also draw, update, PanelElement, BRAPH2.
+    % See also draw, update, PanelElement, s.
     
-    [h, varargin] = get_and_remove_from_varargin(ceil(2 * BRAPH2.FONTSIZE * BRAPH2.S), 'Height', varargin);
-    Dh = ceil(get(pr, 'TAB_H') * BRAPH2.FONTSIZE * BRAPH2.S);
+    [h, varargin] = get_and_remove_from_varargin(s(2), 'Height', varargin);
+    Dh = s(pr.get('TAB_H'));
     
     el = pr.get('EL');
     prop = pr.get('PROP');
@@ -157,14 +159,11 @@ function redraw(pr, varargin)
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
         pr.redraw@PanelProp('Height', h, varargin{:})
     else
-        value = el.get(prop);
-
         pr.redraw@PanelProp('Height', h + Dh, varargin{:})
         
-        s5 = ceil(5 * BRAPH2.S);
         set(pr.table, ...
             'Units', 'pixels', ...
-            'Position', [s5 s5 w(pr.p, 'pixels')-s5-s5 Dh-s5-s5] ...
+            'Position', [s(.3) s(.3) w(pr.p, 'pixels')-s(.6) Dh-s(.6)] ...
             )
     end  
 end

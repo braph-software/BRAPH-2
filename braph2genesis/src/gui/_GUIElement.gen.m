@@ -155,8 +155,8 @@ function x_draw(gui, f)
     pe = gui.get('PE');
     el = pe.get('EL');
     
-    dw = ceil(pe.get('DW') * BRAPH2.S);
-    h_filename = ceil(1.5 * BRAPH2.FONTSIZE * BRAPH2.S);
+    dw = s(pe.get('DW') / BRAPH2.FONTSIZE);
+    h_filename = s(1.5);
 
     % Draw panel element (p) 
     % contained in a scrollable panel (ps)
@@ -254,19 +254,19 @@ function x_draw(gui, f)
             filename = fullfile(path, file);
             tmp_el = BRAPH2.load(filename);
             if strcmp(tmp_el.getClass(), el.getClass())
-                set(gui.pp, 'Visible', 'off')
-                drawnow()
-                
+% % %                 set(gui.pp, 'Visible', 'off')
+% % %                 drawnow()
+% % %                 
                 pe.reinit(tmp_el)
                 el = tmp_el; % update local variable 'el' to synchronize it with pe 'el'
-
-                % the motion of the figure is to ensure the correct
-                % rendering of the opened element
-                set(gui.f, 'Position', get(gui.f, 'Position') + [.001 0 0 0])
-                gui.draw()
-                set(gui.f, 'Position', get(gui.f, 'Position') - [.001 0 0 0])
-                
-                set(gui.pp, 'Visible', 'on')
+% % % 
+% % %                 % the motion of the figure is to ensure the correct
+% % %                 % rendering of the opened element
+% % %                 set(gui.f, 'Position', get(gui.f, 'Position') + [.001 0 0 0])
+% % %                 gui.draw()
+% % %                 set(gui.f, 'Position', get(gui.f, 'Position') - [.001 0 0 0])
+% % %                 
+% % %                 set(gui.pp, 'Visible', 'on')
             else
                 GUIElement('PE', tmp_el, 'FILE', filename).draw()
             end
@@ -449,23 +449,23 @@ function x_draw(gui, f)
             set(edit_table, 'Data', data);
         end
         function cb_save_edit(~, ~)
-            set(gui.pp, 'Visible', 'off')
-            drawnow()
-
+% % %             set(gui.pp, 'Visible', 'off')
+% % %             drawnow()
+% % % 
             data = get(edit_table, 'Data');
             order = cell2mat(data(:, 2))';
             title = data(:, 3); title = title';
             save_layout(el, order, title)
 
             pe.reinit(el);
-
-            % the motion of the figure is to ensure the correct
-            % rendering of the opened element
-            set(gui.f, 'Position', get(gui.f, 'Position') + [.001 0 0 0])
-            gui.draw()
-            set(gui.f, 'Position', get(gui.f, 'Position') - [.001 0 0 0])
-
-            set(gui.pp, 'Visible', 'on')
+% % % 
+% % %             % the motion of the figure is to ensure the correct
+% % %             % rendering of the opened element
+% % %             set(gui.f, 'Position', get(gui.f, 'Position') + [.001 0 0 0])
+% % %             gui.draw()
+% % %             set(gui.f, 'Position', get(gui.f, 'Position') - [.001 0 0 0])
+% % % 
+% % %             set(gui.pp, 'Visible', 'on')
         end
         function cb_cancel_edit(~, ~)
             close(gui.f_layout)

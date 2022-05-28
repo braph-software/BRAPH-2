@@ -419,8 +419,8 @@ generate_header()
              '%  checkFormat - returns whether a value format is correct/error'
              '%'
             ['% ' class_name ' methods (GUI):']
-             '%  getGUI - returns the element GUI'
-             '%  getPanleElement - returns the element panel'
+             '%  getGUIElement - returns the element GUI'
+             '%  getPanelElement - returns the element panel'
              '%  getPanelProp - returns a prop panel'
              '%'
             ['% ' class_name ' methods (GUI, Static):']

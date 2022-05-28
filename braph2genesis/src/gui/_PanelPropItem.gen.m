@@ -114,20 +114,15 @@ function redraw(pr, varargin)
     %  - X0 does not change
     %  - Y0 does not change
     %  - WIDTH does not change
-    %  - HEIGHT = 3.5 * BRAPH2.FONTSIZE * BRAPH2.S
+    %  - HEIGHT = s(3.5)
     %
-    % See also draw, update, PanelElement, BRAPH2.
+    % See also draw, update, PanelElement, s.
     
-    [h_p, varagin] = get_and_remove_from_varargin(ceil(3.5 * BRAPH2.FONTSIZE * BRAPH2.S), 'Height', varargin);
+    [h_p, varagin] = get_and_remove_from_varargin(s(3.5), 'Height', varargin);
 
     pr.redraw@PanelProp('Height', h_p, varargin{:})
 
-    set(pr.button, 'Position', [ ...
-        ceil(5 * BRAPH2.S) ...
-        ceil(.25 * BRAPH2.FONTSIZE * BRAPH2.S) ...
-        ceil(w(pr.p, 'pixels') - 60) ...
-        ceil(1.75 * BRAPH2.FONTSIZE * BRAPH2.S) ...
-        ])
+    set(pr.button, 'Position', [s(.3) s(.3) w(pr.p, 'pixels')-s(5) s(1.7)])
 end
 function cb_button(pr)
     %CB_BUTTON executes callback for the button.
@@ -138,10 +133,10 @@ function cb_button(pr)
     if isempty(time)
         time = 0;
     end
-    if now - time > 0.5 / (24 * 60 * 60)
+    if now - time > 1.0 / (24 * 60 * 60)
         time = now;
-
         set(pr.button, 'Enable', 'off')
+        %%% start callback %%%
 
         el = pr.get('EL');
         prop = pr.get('PROP');
@@ -158,13 +153,15 @@ function cb_button(pr)
             gui = get(pr.f_item, 'UserData');
             gui.cb_bring_to_front();
         end
+        
+        %%% end callback %%%
         set(pr.button, 'Enable', 'on')
     end
     
-    % updates and redraws the parent PanelElement as well as all siblings PanelProp's
-    pe = get(get(pr.p, 'Parent'), 'UserData');
-    pe.update()
-    pe.redraw()
+% % %     % updates and redraws the parent PanelElement as well as all siblings PanelProp's
+% % %     pe = get(get(pr.p, 'Parent'), 'UserData');
+% % %     pe.update()
+% % %     pe.redraw()
 end
 function cb_bring_to_front(pr)
     %CB_BRING_TO_FRONT brings to the front the item figure.

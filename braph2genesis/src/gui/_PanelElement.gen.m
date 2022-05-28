@@ -204,15 +204,15 @@ function redraw(pe, varargin)
 
     % get panel (p) position
     % repositions the panel
-    x0_p = ceil(get_from_varargin(x0(p, 'pixels'), 'X0', varargin));
-    y0_p = ceil(get_from_varargin(y0(p, 'pixels'), 'Y0', varargin));
-    w_p = ceil(max(get_from_varargin(w(p, 'pixels'), 'Width', varargin), pe.get('MIN_WIDTH')));
-    h_p = ceil(get_from_varargin(w(p, 'pixels'), 'Height', varargin));
+    x0_p = get_from_varargin(x0(p, 'pixels'), 'X0', varargin);
+    y0_p = get_from_varargin(y0(p, 'pixels'), 'Y0', varargin);
+    w_p = max(get_from_varargin(w(p, 'pixels'), 'Width', varargin), pe.get('MIN_WIDTH'));
+    h_p = get_from_varargin(w(p, 'pixels'), 'Height', varargin);
     
     % graphics constants
-    dh = ceil(pe.get('DH') * BRAPH2.S);
-    dw = ceil(pe.get('DW') * BRAPH2.S);
-    w_s = ceil(pe.get('WSLIDER') * BRAPH2.S);
+    dh = s(pe.get('DH') / BRAPH2.FONTSIZE);
+    dw = s(pe.get('DW') / BRAPH2.FONTSIZE);
+    w_s = s(pe.get('WSLIDER') / BRAPH2.FONTSIZE);
 
     % redraw prop panels (following update)
     w_pp = w_p - 2 * dw - w_s;
@@ -264,18 +264,31 @@ function reinit(pe, el)
         [BRAPH2.STR ':PanelElement:' BRAPH2.WRONG_INPUT], ...
         [BRAPH2.STR ':PanelElement:' BRAPH2.WRONG_INPUT ' ' ...
         'The class of the new element (' el.getClass() ') must be exactly the same as that of the old element (' pe.get('EL').getClass() ').'] ...
-        )    
+        )
+    
+    set(pe.p, 'Visible', 'off')
+    drawnow()
 
     pe.set( ...
         'EL', el, ...
         'PR_DICT', NoValue.getNoValue() ...
         )
-
     delete(get(pe.p, 'Children'))
-
     pe.draw()
     pe.update()
     pe.redraw()
+    
+    % the motion of the figure is to ensure the correct
+    % rendering of the opened element
+    parent_f = ancestor(pe.p, 'figure');
+    set(parent_f, 'Position', get(parent_f, 'Position') + [.001 0 0 0])
+    parent_gui = get(parent_f, 'UserData');
+    if isa(parent_gui, 'GUI')
+        parent_gui.draw()
+    end
+    set(parent_f, 'Position', get(parent_f, 'Position') - [.001 0 0 0])
+
+    set(pe.p, 'Visible', 'on')
 end
 function cb_bring_to_front(pe)
     %CB_BRING_TO_FRONT brings to front the figure with the element panel and its dependent figures.

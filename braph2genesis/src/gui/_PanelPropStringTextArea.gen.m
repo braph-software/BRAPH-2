@@ -1,85 +1,69 @@
 %% ¡header!
-PanelPropMarker < PanelProp (pr, panel property marker) plots the panel of a property marker.
+PanelPropStringTextArea < PanelProp (pr, panel property string) plots the panel of a property string.
 
 %%% ¡description!
-PanelPropMarker plots the panel for an MARKER property with a drop-down list.
+PanelPropStringTextArea plots the panel for a STRING property with a text area.
 It works for all categories.
 
 %%% ¡seealso!
-GUI, PanelElement, PanelProp, uidropdown.
+GUI, PanelElement, PanelProp, uitextarea
+
+%% ¡props!
+
+%%% ¡prop!
+TA_H (gui, size) is the height of the text area in font size units.
+%%%% ¡default!
+5
 
 %% ¡properties!
 p
-dropdown
-axes
-line
+textarea
 
 %% ¡methods!
 function p_out = draw(pr, varargin)
-    %DRAW draws the panel of the marker property.
+    %DRAW draws the panel of the string property.
     %
-    % DRAW(PR) draws the panel of the marker property.
+    % DRAW(PR) draws the panel of the string property.
     %
     % P = DRAW(PR) returns a handle to the property panel.
-    %
+    % 
     % DRAW(PR, 'Property', VALUE, ...) sets the properties of the graphical
-    %  panel with custom property-value couples.
-    %  All standard panel properties of uipanel can be used.
+    %  panel with custom Name-Value pairs.
+    %  All standard plot properties of uipanel can be used.
     %
     % It is possible to access the properties of the various graphical
     %  objects from the handle P of the panel.
     %
     % See also update, redraw, uipanel.
-
+    
     el = pr.get('EL');
     prop = pr.get('PROP');
     
     pr.p = draw@PanelProp(pr, varargin{:});
     
-    if ~check_graphics(pr.dropdown, 'uidropdown')
-        pr.dropdown = uidropdown( ...
+    if ~check_graphics(pr.textarea, 'uitextarea')
+        pr.textarea = uitextarea( ...
             'Parent', pr.p, ...
-            'Tag', 'dropdown', ...
-            'Items', el.getPropSettings(prop), ...
+            'Tag', 'textarea', ...
             'FontSize', BRAPH2.FONTSIZE, ...
             'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-            'ValueChangedFcn', {@cb_dropdown} ...
+            'ValueChangedFcn', {@cb_textarea} ...
             );
     end
 
-    function cb_dropdown(~, ~) % (src, event)
-        pr.cb_dropdown()
+    function cb_textarea(~, ~) % (src, event)
+        pr.cb_textarea()
     end
 
-    if ~check_graphics(pr.axes, 'axes')
-        pr.axes = uiaxes( ...
-            'Parent', pr.p, ...
-            'Tag', 'axes' ...
-            );
-        axis(pr.axes, 'off')
-        pr.axes.Toolbar.Visible = 'off';
-        pr.axes.Interactions = [];
-    end
-    if ~check_graphics(pr.line, 'line')
-        pr.line = plot(pr.axes, ...
-            [0], ...
-            [0], ...
-            'MarkerSize', 10, ...
-            'MarkerFaceColor', 'k', ...
-            'MarkerEdgeColor', 'k');
-        xlim(pr.axes, [-1 1])        
-        ylim(pr.axes, [-1 1])
-    end
-    
     % output
     if nargout > 0
         p_out = pr.p;
     end
 end
 function update(pr)
-    %UPDATE updates the content and permissions of the drop down.
+    %UPDATE updates the content and permissions of the text area.
     %
-    % UPDATE(PR) updates the content and permissions of the drop down.
+    % UPDATE(PR) updates the content and permissions of the text area.
     %
     % See also draw, redraw, PanelElement.
 
@@ -89,7 +73,7 @@ function update(pr)
     prop = pr.get('PROP');
     
     if el.isLocked(prop)
-        set(pr.dropdown, ...
+        set(pr.textarea, ...
             'Editable', 'off', ...
             'Enable', pr.get('ENABLE') ...
             )
@@ -97,16 +81,14 @@ function update(pr)
 
     switch el.getPropCategory(prop)
         case Category.METADATA
-            set(pr.dropdown, 'Value', el.get(prop))
-            set(pr.line, 'Marker', el.get(prop))
+            set(pr.textarea, 'Value', el.get(prop))
 
         case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
-            set(pr.dropdown, 'Value', el.get(prop))
-            set(pr.line, 'Marker', el.get(prop))
+            set(pr.textarea, 'Value', el.get(prop))
 
             value = el.getr(prop);
             if isa(value, 'Callback')
-                set(pr.dropdown, ...
+                set(pr.textarea, ...
                     'Editable', 'off', ...
                     'Enable', pr.get('ENABLE') ...
                     )
@@ -116,17 +98,17 @@ function update(pr)
             value = el.getr(prop);
 
             if isa(value, 'NoValue')
-                set(pr.dropdown, ...
+                set(pr.textarea, ...
                     'Value', el.getPropDefault(prop), ...
+                    'Editable', 'off', ...
                     'Enable', pr.get('ENABLE') ...
                     )
-                set(pr.line, 'Marker', el.getPropDefault(prop))
             else
-                set(pr.dropdown, ...
+                set(pr.textarea, ...
                     'Value', el.get(prop), ...
+                    'Editable', 'off', ...
                     'Enable', pr.get('ENABLE') ...
                     )
-                set(pr.line, 'Marker', el.get(prop))
             end
     end
 end
@@ -147,45 +129,48 @@ function redraw(pr, varargin)
     %  - X0 does not change
     %  - Y0 does not change
     %  - WIDTH does not change
-    %  - HEIGHT = s(3.5)
+    %  - HEIGHT = s(2) (header height)
+    % The text area is set by the property TA_H.
     %
     % See also draw, update, PanelElement, s.
-    
-    [h_p, varargin] = get_and_remove_from_varargin(s(3.5), 'Height', varargin);
 
+    [h, varargin] = get_and_remove_from_varargin(s(2), 'Height', varargin);
+    Dh = s(pr.get('TA_H'));
+
+    h_p = h + Dh;
+    
     pr.redraw@PanelProp('Height', h_p, varargin{:})
-    
-    set(pr.dropdown, 'Position', [s(.3) s(.3) .15*w(pr.p, 'pixels') s(1.7)])
-    
-    set(pr.axes, 'InnerPosition', [s(.3)+.15*w(pr.p, 'pixels')+s(1.7) ceil(.3) .70*w(pr.p, 'pixels') ceil(1.7)])
+
+    set(pr.textarea, 'Position', [s(.3) s(.3) w(pr.p, 'pixels')-s(.6) Dh])
 end
-function cb_dropdown(pr)
-    %CB_DROPDOWN executes callback for the drop down.
+function cb_textarea(pr)
+    %CB_EDITFIELD executes callback for the edit field.
     %
-    % CB_DROPDOWN(PR) executes callback for the drop down.
+    % CB_EDITFIELD(PR) executes callback for the edit field.
 
     el = pr.get('EL');
     prop = pr.get('PROP');
-    
-    el.set(prop, get(pr.dropdown, 'Value'))
+
+    value = get(pr.textarea, 'Value');
+    el.set(prop, sprintf('%s\\n', value{:})) % double \\ to be converted to single \\ in compilation
 
     pr.update()
 end
-
+  
 %% ¡tests!
 
 %%% ¡test!
 %%%% ¡name!
 Example
 %%%% ¡code!
-% draws PanelPropMarker and calls update() and redraw()
+% draws PanelPropStringTextArea and calls update() and redraw()
 % note that it doesn't work for category RESULT 
 % because it needs to be used with PanelElement() and GUI()
 fig1 = uifigure();
 et1 = ETA();
-props = [et1.PROP_MARKER_M et1.PROP_MARKER_P et1.PROP_MARKER_D et1.PROP_MARKER_F et1.PROP_MARKER_G et1.PROP_MARKER_R et1.PROP_MARKER_R_CALC];
+props = [et1.PROP_STRING_M et1.PROP_STRING_P et1.PROP_STRING_D et1.PROP_STRING_F et1.PROP_STRING_G et1.PROP_STRING_R et1.PROP_STRING_R_CALC];
 for i = 1:1:length(props)
-    pr{i} = PanelPropMarker('EL', et1, 'PROP', props(i));
+    pr{i} = PanelPropStringTextArea('EL', et1, 'PROP', props(i), 'TA_H', 2);
     pr{i}.draw( ...
         'Parent', fig1, ...
         'BackgroundColor', [i/length(props) .5 (length(props)-i)/length(props)] ...
