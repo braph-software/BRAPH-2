@@ -101,182 +101,178 @@ function update(pr)
     
     el = pr.get('EL');
     prop = pr.get('PROP');
-    dict = el.get(prop);
-    it_class = dict.get('IT_CLASS');
-
-    % columns to be to be shown in the table
-    % col = pr.SELECTOR for the selector column
-    % col = prop for the prop columns
-    if isempty(pr.get('COLS'))
-        pr.set('COLS', [pr.SELECTOR; Element.getProps(it_class)]);
-    end
-    cols = pr.get('COLS');
     
-    data = cell(dict.length(), length(cols));
-    for i = 1:1:dict.length()
-        for c = 1:1:length(cols)
-            col = cols(c);
-            if col == pr.SELECTOR
-                if any(pr.selected == i)
-                    data{i, c} = true;
-                else
-                    data{i, c} = false;
+    function set_table()
+        dict = el.get(prop);
+        it_class = dict.get('IT_CLASS');
+
+        % columns to be to be shown in the table
+        % col = pr.SELECTOR for the selector column
+        % col = prop for the prop columns
+        if isempty(pr.get('COLS'))
+            pr.set('COLS', [pr.SELECTOR; Element.getProps(it_class)]);
+        end
+        cols = pr.get('COLS');
+
+        data = cell(dict.length(), length(cols));
+        for i = 1:1:dict.length()
+            for c = 1:1:length(cols)
+                col = cols(c);
+                if col == pr.SELECTOR
+                    if any(pr.selected == i)
+                        data{i, c} = true;
+                    else
+                        data{i, c} = false;
+                    end
+                elseif Element.existsProp(it_class, col) % prop = col;
+                    data{i, c} = dict.getItem(i).get(col);
                 end
-            elseif Element.existsProp(it_class, col) % prop = col;
-                data{i, c} = dict.getItem(i).get(col);
             end
         end
-    end
 
-    if ~isempty(pr.get('ROWNAME'))
-        rowname = eval(pr.get('ROWNAME'));
-    else
-        rowname = cellfun(@(it) it.get(dict.get('IT_KEY')), dict.get('IT_LIST'), 'UniformOutput', false);
-    end
-    
-    if ~isempty(pr.get('COLUMNNAME'))
-        columnname = eval(pr.get('COLUMNNAME'));
-    else
-        columnname = repmat({''}, 1, length(cols));
-        for c = 1:1:length(cols)
-            col = cols(c);
-            if col == pr.SELECTOR
-                columnname{c} = '';
-            elseif Element.existsProp(it_class, col) % prop = col;
-                columnname{c} = Element.getPropTag(it_class, col);
+        if ~isempty(pr.get('ROWNAME'))
+            rowname = eval(pr.get('ROWNAME'));
+        else
+            rowname = cellfun(@(it) it.get(dict.get('IT_KEY')), dict.get('IT_LIST'), 'UniformOutput', false);
+        end
+
+        if ~isempty(pr.get('COLUMNNAME'))
+            columnname = eval(pr.get('COLUMNNAME'));
+        else
+            columnname = repmat({''}, 1, length(cols));
+            for c = 1:1:length(cols)
+                col = cols(c);
+                if col == pr.SELECTOR
+                    columnname{c} = '';
+                elseif Element.existsProp(it_class, col) % prop = col;
+                    columnname{c} = Element.getPropTag(it_class, col);
+                end
             end
         end
-    end
 
-    if ~isempty(pr.get('COLUMNWIDTH'))
-        columnwidth = eval(pr.get('COLUMNWIDTH'));
-    else
-        columnwidth = 'auto';
-    end
-    
-    if ~isempty(pr.get('COLUMNWIDTH'))
-        columneditable = eval(pr.get('COLUMNEDITABLE'));
-    else
-        columneditable = true(1, length(cols));
-    end
-    
-    if ~isempty(pr.get('COLUMNFORMAT'))
-        columnformat = pr.get('COLUMNFORMAT');
-    else
-        columnformat = repmat({''}, 1, length(cols));
-        for c = 1:1:length(cols)
-            col = cols(c);
-            if col == pr.SELECTOR
-                columnformat{c} = 'logical';
-            elseif Element.existsProp(it_class, col) % prop = col;
-                switch Element.getPropFormat(it_class, col)
-                    % % % case Format.EMPTY
-                    
-                    case Format.STRING
-                        columnformat{c} = 'char';
+        if ~isempty(pr.get('COLUMNWIDTH'))
+            columnwidth = eval(pr.get('COLUMNWIDTH'));
+        else
+            columnwidth = 'auto';
+        end
 
-                    case Format.LOGICAL
-                        columnformat{c} = 'logical';
+        if ~isempty(pr.get('COLUMNWIDTH'))
+            columneditable = eval(pr.get('COLUMNEDITABLE'));
+        else
+            columneditable = true(1, length(cols));
+        end
 
-                    case Format.OPTION
-                        columnformat{c} = Element.getPropSettings(it_class, col);
+        if ~isempty(pr.get('COLUMNFORMAT'))
+            columnformat = pr.get('COLUMNFORMAT');
+        else
+            columnformat = repmat({''}, 1, length(cols));
+            for c = 1:1:length(cols)
+                col = cols(c);
+                if col == pr.SELECTOR
+                    columnformat{c} = 'logical';
+                elseif Element.existsProp(it_class, col) % prop = col;
+                    switch Element.getPropFormat(it_class, col)
+                        % % % case Format.EMPTY
 
-                    % % % case Format.CLASS
-                    
-                    % % % case Format.CLASSLIST
-                    
-                    % % % case Format.ITEM
-                    
-                    % % % case Format.ITEMLIST
-                    
-                    % % % case Format.IDICT
-                    
-                    case Format.SCALAR
-                        columnformat{c} = 'numeric';
+                        case Format.STRING
+                            columnformat{c} = 'char';
 
-                    % % % case Format.RVECTOR
-                    
-                    % % % case Format.CVECTOR
-                    
-                    % % % case Format.MATRIX
-                    
-                    % % % case Format.SMATRIX
-                    
-                    % % % case Format.CELL
-                    
-                    % % % case Format.NET
-                    
-                    % % % case Format.COLOR
-                    
-                    % % % case Format.ALPHA
-                    % % %     columnformat{c} = 'numeric';
-                    
-                    % % % case Format.SIZE
-                    % % %     columnformat{c} = 'numeric';
-                    
-                    % % % case Format.MARKER
-                    % % %     columnformat{c} = Element.getPropSettings(it_class, col);
-                    
-                    % % % case Format.LINE
-                    % % %     columnformat{c} = Element.getPropSettings(it_class, col);
-                end            
+                        case Format.LOGICAL
+                            columnformat{c} = 'logical';
+
+                        case Format.OPTION
+                            columnformat{c} = Element.getPropSettings(it_class, col);
+
+                        % % % case Format.CLASS
+
+                        % % % case Format.CLASSLIST
+
+                        % % % case Format.ITEM
+
+                        % % % case Format.ITEMLIST
+
+                        % % % case Format.IDICT
+
+                        case Format.SCALAR
+                            columnformat{c} = 'numeric';
+
+                        % % % case Format.RVECTOR
+
+                        % % % case Format.CVECTOR
+
+                        % % % case Format.MATRIX
+
+                        % % % case Format.SMATRIX
+
+                        % % % case Format.CELL
+
+                        % % % case Format.NET
+
+                        % % % case Format.COLOR
+
+                        % % % case Format.ALPHA
+                        % % %     columnformat{c} = 'numeric';
+
+                        % % % case Format.SIZE
+                        % % %     columnformat{c} = 'numeric';
+
+                        % % % case Format.MARKER
+                        % % %     columnformat{c} = Element.getPropSettings(it_class, col);
+
+                        % % % case Format.LINE
+                        % % %     columnformat{c} = Element.getPropSettings(it_class, col);
+                    end            
+                end
             end
         end
+
+        set(pr.table, ...
+            'Data', data, ...
+            'RowName', rowname, ...
+            'ColumnName', columnname, ...
+            'ColumnWidth', columnwidth, ...
+            'ColumnEditable', columneditable, ...
+            'ColumnFormat', columnformat ...
+            )
     end
 
-    set(pr.table, ...
-        'Data', data, ...
-        'RowName', rowname, ...
-        'ColumnName', columnname, ...
-        'ColumnWidth', columnwidth, ...
-        'ColumnEditable', columneditable, ...
-        'ColumnFormat', columnformat ...
-        )
+    if el.isLocked(prop)
+        set(pr.table, ...
+            'Enable', pr.get('TAB_ENABLE'), ...
+            'ColumnEditable', false ...
+            )
+    end
 
-% % % % % %     if el.isLocked(prop)
-% % % % % %         set(pr.table, ...
-% % % % % %             'Enable', pr.get('TAB_ENABLE'), ...
-% % % % % %             'ColumnEditable', false ...
-% % % % % %             )
-% % % % % %     end
-% % % % % % 
-% % % % % %     switch el.getPropCategory(prop)
-% % % % % %         case Category.METADATA
-% % % % % %             set(pr.table, ...
-% % % % % %                 'Data', el.get(prop), ...
-% % % % % %                 'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-% % % % % %                 'ColumnEditable', true)
-% % % % % % 
-% % % % % %         case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
-% % % % % %             set(pr.table, ...
-% % % % % %                 'Data', el.get(prop), ...
-% % % % % %                 'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-% % % % % %                 'ColumnEditable', true)
-% % % % % %             
-% % % % % %             value = el.getr(prop);
-% % % % % %             if isa(value, 'Callback')
-% % % % % %                 set(pr.table, ...
-% % % % % %                 'Enable', pr.get('TAB_ENABLE'), ...
-% % % % % %                 'ColumnEditable', false ...
-% % % % % %                 )
-% % % % % %             end
-% % % % % % 
-% % % % % %         case Category.RESULT
-% % % % % %             value = el.getr(prop);
-% % % % % % 
-% % % % % %             if isa(value, 'NoValue')
-% % % % % %                 % don't plot anything for a result not yet calculated
-% % % % % %                 set(pr.table, 'Visible', 'off')
-% % % % % %             else
-% % % % % %                 set(pr.table, ...
-% % % % % %                     'Data', el.get(prop), ...
-% % % % % %                     'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-% % % % % %                     'Enable', pr.get('TAB_ENABLE'), ...
-% % % % % %                     'ColumnEditable', false, ...
-% % % % % %                     'Visible', 'on' ...
-% % % % % %                     )
-% % % % % %             end
-% % % % % %     end   
+    switch el.getPropCategory(prop)
+        case Category.METADATA
+            set_table()
+
+        case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
+            set_table()
+            
+            value = el.getr(prop);
+            if isa(value, 'Callback')
+                set(pr.table, ...
+                    'Enable', pr.get('TAB_ENABLE'), ...
+                    'ColumnEditable', false ...
+                    )
+            end
+
+        case Category.RESULT
+            value = el.getr(prop);
+
+            if isa(value, 'NoValue')
+                % don't plot anything for a result not yet calculated
+                set(pr.table, 'Visible', 'off')
+            else
+                set_table()
+                set(pr.table, ...
+                    'Enable', pr.get('TAB_ENABLE'), ...
+                    'ColumnEditable', false, ...
+                    'Visible', 'on' ...
+                    )                
+            end
+    end   
 end
 function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
