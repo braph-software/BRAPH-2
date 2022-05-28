@@ -159,8 +159,6 @@ function redraw(pr, varargin)
     if el.getPropCategory(prop) == Category.RESULT && isa(value, 'NoValue')
         pr.redraw@PanelProp('Height', h, varargin{:})
     else
-        value = el.get(prop);
-
         pr.redraw@PanelProp('Height', h + Dh, varargin{:})
         
         set(pr.table, ...
