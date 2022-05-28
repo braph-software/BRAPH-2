@@ -14,6 +14,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %                    (for a result, after it is calculated)
     %   <strong>postprocessing</strong> - postprocesses the value of a prop 
     %                    AFTER all properties have been set
+    %   <strong>prop_set</strong>       - returns whether a prop has been set before postprocessing.
     %
     % Element constructor:
     %  Element - constructor
