@@ -519,7 +519,7 @@ function x_draw(gui, f)
         if isempty(time)
             time = 0;
         end
-        if now - time > 0.5 / (24 * 60 * 60)
+        if now - time > 1.0 / (24 * 60 * 60)
             time = now;
             set(gui.tool_settings, 'Enable', 'off')
             %%% start callback %%%
