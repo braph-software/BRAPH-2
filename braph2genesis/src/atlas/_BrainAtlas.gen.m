@@ -136,8 +136,8 @@ pr = PanelPropStringTextArea('EL', ba, 'PROP', BrainAtlas.NOTES, varargin{:});
 BR_DICT (data, idict) contains the brain regions of the brain atlas.
 %%%% ¡settings!
 'BrainRegion'
-%%%% ¡gui_!
-% % % pr = PPBrainAtlas_BRDict('EL', ba, 'PROP', BrainAtlas.BR_DICT, varargin{:});
+%%%% ¡gui!
+pr = PanelPropIDictTable('EL', ba, 'PROP', BrainAtlas.BR_DICT, varargin{:});
 
 %%% ¡prop!
 SURF (metadata, item) contains the brain surface of the brain atlas.
