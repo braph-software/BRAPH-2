@@ -76,7 +76,6 @@ true
 %% ¡properties!
 f % handle for figure 
 
-menubar
 menu_about
 
 toolbar
@@ -112,7 +111,7 @@ function f_out = draw(gui, varargin)
             'CloseRequestFcn', {@cb_close} ...
             );
         if gui.get('MENUBAR')
-            gui.menubar = uimenu(gui.f, 'Tag', 'MenuBar');
+            menu_tmp = uimenu(gui.f, 'Tag', 'MenuBar'); % empty menu for spacing to be eraseed
         end
         if gui.get('TOOLBAR')
             gui.toolbar = uitoolbar(gui.f, 'Tag', 'ToolBar');
@@ -141,7 +140,8 @@ function f_out = draw(gui, varargin)
     elseif (~gui.get('MENUBAR') || ~gui.get('MENU_ABOUT'))
         delete(gui.menu_about)
     end
-    
+    delete(menu_tmp)
+
     % toolbar about
     if gui.get('TOOLBAR') && check_graphics(gui.f, 'figure')
         gui.toolbar = findall(gui.f, 'Tag', 'ToolBar');
