@@ -139,7 +139,7 @@ BR_DICT (data, idict) contains the brain regions of the brain atlas.
 %%%% ¡gui!
 code = {
     'switch it_prop'
-    'case pr.get(''SELECTOR'')'
+    'case 0'
         'if newdata == 1'
             'pr.selected = sort(unique([pr.selected(:); i]));'
         'else'
@@ -166,7 +166,6 @@ code = {
     'end'
     };
 pr = PanelPropIDictTable('EL', ba, 'PROP', BrainAtlas.BR_DICT, ... 
-    'SELECTOR', true, ...
     'IT_PROPS', [BrainRegion.ID BrainRegion.LABEL BrainRegion.X BrainRegion.Y BrainRegion.Z BrainRegion.NOTES], ...
     'ROWNAME', '''numbered''', ... 
     'CB_EDIT', sprintf('%s;', code{:}), ...
