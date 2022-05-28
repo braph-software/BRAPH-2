@@ -129,7 +129,7 @@ function redraw(pr, varargin)
 
     pr.redraw@PanelProp('Height', h_p, varargin{:})
     
-    set(pr.dropdown, 'Position', [s(.3) s(.25 * BRAPH2.FONTSIZE * BRAPH2.S) .70*w(pr.p, 'pixels') s(1.7)])    
+    set(pr.dropdown, 'Position', [s(.3) s(.3) .70*w(pr.p, 'pixels') s(1.7)])    
 end
 function cb_dropdown(pr)
     %CB_POPUPMENU_VALUE executes callback for the popupmenu.
