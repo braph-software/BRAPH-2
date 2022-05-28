@@ -282,8 +282,8 @@ function cb_button_cb(pr)
     end
     if now - time > 0.5 / (24 * 60 * 60)
         time = now;
-
         set(pr.button_cb, 'Enable', 'off')
+        %%% start callback %%%
 
         el = pr.get('EL');
         prop = pr.get('PROP');
@@ -300,6 +300,8 @@ function cb_button_cb(pr)
             gui = get(pr.f_cb, 'UserData');
             gui.cb_bring_to_front();
         end
+        
+        %%% end callback %%%
         set(pr.button_cb, 'Enable', 'on')
     end
     

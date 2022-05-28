@@ -9,5 +9,5 @@ ba1_xls = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load Brain Atlas f
 ba2_xls = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load Brain Atlas from XLS % Brain Atlas XLS
 
 %% Brain Atlas XLS
-ba1_txt = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load Brain Atlas from TXT % Brain Atlas TXT
-ba2_txt = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load Brain Atlas from TXT % Brain Atlas TXT
+ba1_txt = ImporterBrainAtlasTXT('WAITBAR', true).get('BA'); % Load Brain Atlas from TXT % Brain Atlas TXT
+ba2_txt = ImporterBrainAtlasTXT('WAITBAR', true).get('BA'); % Load Brain Atlas from TXT % Brain Atlas TXT

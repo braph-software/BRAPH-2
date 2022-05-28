@@ -3,6 +3,7 @@ delete(findall(0, 'type', 'figure'))
 clear all
 clc
 
+% el_class = 'GUI';
 el_class = 'PPPipeline_PSDict';
 delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
 create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])

@@ -133,9 +133,9 @@ function cb_button(pr, i)
     end
     if now - time > 0.5 / (24 * 60 * 60)
         time = now;
-
         set(pr.button_list{i}, 'Enable', 'off')
-
+        %%% start callback %%%
+        
         el = pr.get('EL');
         prop = pr.get('PROP');
         item_list = el.get(prop);
@@ -152,6 +152,8 @@ function cb_button(pr, i)
             gui = get(pr.f_item_list{i}, 'UserData');
             gui.cb_bring_to_front();
         end
+        
+        %%% end callback %%%
         set(pr.button_list{i}, 'Enable', 'on')
     end
     

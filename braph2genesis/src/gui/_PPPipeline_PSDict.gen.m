@@ -97,11 +97,24 @@ function p_out = draw(pr, varargin)
     
     % callback
     function cb_pc_btn(src, ~)
-        userdata = get(src, 'UserData');
-        s = userdata(1);
-        c = userdata(2);
-        
-        pr.update('Section', s, 'Code', c)
+        persistent time
+        if isempty(time)
+            time = 0;
+        end
+        if now - time > 1.0 / (24 * 60 * 60)
+            time = now;
+            set(src, 'Enable', 'off')
+            %%% start callback %%%
+
+            userdata = get(src, 'UserData');
+            s = userdata(1);
+            c = userdata(2);
+
+            pr.update('Section', s, 'Code', c)
+
+            %%% end callback %%%
+            set(src, 'Enable', 'on')
+        end
     end
     
     if nargout > 0
@@ -122,7 +135,6 @@ function update(pr, varargin)
     
     pip = pr.get('EL');
 
-% % %
     to_be_executed = {};
     
     s_to_be_calculated = 1;
@@ -138,18 +150,13 @@ function update(pr, varargin)
             % callback code
             if s == s_selected && c == c_selected
                 if isa(code.getr('EL'), 'NoValue') % the code has not been calculated yet -- CALCULATE
-% % %                     codeline = [moniker ' = ' code.get('CODE')];
                     try
                         set(pr.pc_btns{s}{c}, ...
                             'Enable', 'off' ...
                             )
-                            
-% % %    
                         pr.x_update(to_be_executed{:}, ...
                             {moniker, code, [moniker ' = ' code.get('CODE') ';']}, ... % varargin{1}{2} = code
                             {moniker, code, ['varargin{1}{2}.set(''EL'', ' moniker ');']}) % varargin{1}{2} = code
-% % %                         eval(codeline)
-% % %                         code.set('EL', eval([moniker ';']))
                     catch e
                         set(pr.pc_btns{s}{c}, ...
                             'Enable', 'on' ...
@@ -171,7 +178,7 @@ function update(pr, varargin)
                     if length(pr.pc_GUIs) < s || length(pr.pc_GUIs{s}) < c || ~check_graphics(pr.pc_GUIs{s}{c}, 'figure')
                         f_pip = ancestor(pr.p, 'Figure'); % Pipeline GUI
 
-                        pr.pc_GUIs{s}{c} = GUI( ...
+                        pr.pc_GUIs{s}{c} = GUIElement( ...
                             'PE', code.get('EL'), ...
                             'Position', [ ...
                                 x0(f_pip, 'normalized') + .20 ...
@@ -197,10 +204,7 @@ function update(pr, varargin)
             % 2. updates the ID in the btn
             % 3. calculates whether to move to the next section
             if ~isa(code.getr('EL'), 'NoValue')
-% % %  
                 to_be_executed = {to_be_executed{:}, {moniker, code, [moniker ' = varargin{1}{2}.get(''EL'');']}}; % varargin{1}{2} = code
-% % % pr.x_update(to_be_executed{:})
-% % %                 eval([moniker ' = code.get(''EL'');'])
 
                 set(pr.pc_btns{s}{c}, ...
                     'Enable', 'on', ...
@@ -236,13 +240,7 @@ function x_update(varargin)
 
     varargin = varargin(2:end); % eliminates pr from varargin
     
-% % %     for i = 1:1:length(varargin)
-% % %         code = varargin{i}{2};
-% % %         eval(varargin{i}{3})
-% % %     end
-
     while ~isempty(varargin)
-% % %         code = varargin{1}{2};
         eval(varargin{1}{3})
         varargin = varargin(2:end);
     end
@@ -312,7 +310,7 @@ function cb_bring_to_front(pr)
     % CB_BRING_TO_FRONT(PR) brings to the front the figure with the pipeline panel 
     %  but not its dependent figures. 
     %
-    % See also cb_hide, cb_close, cb_close_fs.
+    % See also cb_hide, cb_close.
 
     pr.cb_bring_to_front@Plot()
     

@@ -521,8 +521,8 @@ function x_draw(gui, f)
         end
         if now - time > 0.5 / (24 * 60 * 60)
             time = now;
-
             set(gui.tool_settings, 'Enable', 'off')
+            %%% start callback %%%
 
             if ~check_graphics(gui.f_settings, 'figure')
                 pe = PanelElement( ...
@@ -547,6 +547,8 @@ function x_draw(gui, f)
                 gui_settings = get(gui.f_settings, 'UserData');
                 gui_settings.cb_bring_to_front();
             end
+            
+            %%% end callback %%%
             set(gui.tool_settings, 'Enable', 'on')
         end
     end
