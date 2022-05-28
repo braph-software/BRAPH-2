@@ -15,14 +15,46 @@ TAB_H (gui, size) is the height of the table in font size units.
 %%%% ¡default!
 30
 
+%%% ¡prop!
+IT_PROPS (gui, rvector) is the ordered list of visible props.
+%%%% ¡conditioning!
+if iscolumn(value)
+    value = value';
+end
+
+%%% ¡prop!
+ROWNAME (gui, string) determines the table row names (to be evaluated).
+%%%% ¡default!
+'cellfun(@(it) it.get(dict.get(''IT_KEY'')), dict.get(''IT_LIST''), ''UniformOutput'', false)'
+
+%%% ¡prop!
+COLUMNNAME (gui, string) determines the table column names (to be evaluated).
+%%%% ¡default!
+'cellfun(@(it_prop) Element.getPropTag(it_class, it_prop), num2cell(it_props)'', ''UniformOutput'', false)'
+
+%%% ¡prop!
+COLUMNWIDTH (gui, string) determines the column widths (to be evaluated).
+%%%% ¡default!
+'''auto'''
+
+%%% ¡prop!
+COLUMNEDITABLE (gui, string) determines whether the columns are editable (to be evaluated).
+%%%% ¡default!
+'true(1, length(it_props))'
+
+%%% ¡prop!
+COLUMNFORMAT (gui, string) determines the columns formats (to be evaluated).
+
+%%% ¡prop!
+CB_EDIT (gui, string) is executed when a cell is updated (to be evaluated).
+%%%% ¡default!
+'dict.getItem(i).set(it_prop, newdata)'
+
 %% ¡properties!
 p
 table
+selected
 
-% % % button
-% % % 
-% % % f_idict % idict figure
-% % % 
 %% ¡methods!
 function p_out = draw(pr, varargin)
 % % %     %DRAW draws the panel of the idict property.
@@ -40,9 +72,6 @@ function p_out = draw(pr, varargin)
 % % %     %
 % % %     % See also update, redraw, uipanel.
     
-    el = pr.get('EL');
-    prop = pr.get('PROP');
-    
     pr.p = draw@PanelProp(pr, varargin{:});
     
     if ~check_graphics(pr.table, 'uitable')
@@ -57,18 +86,16 @@ function p_out = draw(pr, varargin)
     end
 
     function cb_table_edit(~, event) % (src, event)
-disp('edit')
-event.Indices(1)
-event.Indices(2)
-event.NewData
-%        pr.cb_table(event.Indices(1), event.Indices(2), event.NewData)
+        it_props = pr.get('IT_PROPS');
+        it_prop = it_props(event.Indices(2));
+        pr.cb_table_edit(event.Indices(1), it_prop, event.NewData)
     end
 
     function cb_table_select(~, event) % (src, event)
-disp('select')
-event.Indices(1)
-event.Indices(2)
-%        pr.cb_table(event.Indices(1), event.Indices(2), event.NewData)
+        % currently not in use
+        % % % props = pr.get('PROPS');
+        % % % prop = props(event.Indices(2));
+        % % % pr.cb_table_select(event.Indices(1), prop)
     end
 
     % output
@@ -88,68 +115,69 @@ function update(pr)
     el = pr.get('EL');
     prop = pr.get('PROP');
     
-% % %     if el.isLocked(prop)
-% % %         set(pr.table, ...
-% % %             'Enable', pr.get('TAB_ENABLE'), ...
-% % %             'ColumnEditable', false ...
-% % %             )
-% % %     end
-
     dict = el.get(prop);
     it_class = dict.get('IT_CLASS');
-		
-    props = Element.getProps(it_class); % item properties to be shown in the table
-        
-    data = cell(dict.length(), length(props));
-    for p = 1:1:length(props)
-        prop = props(p);
+
+    if ~isempty(pr.get('IT_PROPS'))
+        it_props = pr.get('IT_PROPS');
+    else
+        it_props = Element.getProps(it_class); % item properties to be shown in the table
+    end
+    
+    data = cell(dict.length(), length(it_props));
+    for p = 1:1:length(it_props)
+        it_prop = it_props(p);
         for i = 1:1:dict.length()
-            data{i, prop} = dict.getItem(i).get(prop);
+            data{i, p} = dict.getItem(i).get(it_prop);
         end
     end
     
-    rowname = cellfun(@(it) it.get(dict.get('IT_KEY')), dict.get('IT_LIST'), 'UniformOutput', false);
+    rowname = eval(pr.get('ROWNAME'));
     
-    columnname = cellfun(@(prop) Element.getPropTag(it_class, prop), num2cell(props)', 'UniformOutput', false);
+    columnname = eval(pr.get('COLUMNNAME'));
     
-    columnwidth = 'fit';
+    columnwidth = eval(pr.get('COLUMNWIDTH'));
     
-    columneditable = true(1, length(props));
+    columneditable = eval(pr.get('COLUMNEDITABLE'));
     
-    columnformat = repmat({''}, 1, length(props));
-    for p = 1:1:length(props)
-        prop = props(p);
-        switch Element.getPropFormat(it_class, prop)
-% % %             case Format.EMPTY
-            case Format.STRING
-                columnformat{p} = 'char';
-                
-            case Format.LOGICAL
-                columnformat{p} = 'logical';
-                
-            case Format.OPTION
-                columnformat{p} = Element.getPropSettings(it_class, prop);
+    if ~isempty(pr.get('COLUMNFORMAT'))
+        columnformat = pr.get('COLUMNFORMAT');
+    else
+        columnformat = repmat({''}, 1, length(it_props));
+        for p = 1:1:length(it_props)
+            it_prop = it_props(p);
+            switch Element.getPropFormat(it_class, it_prop)
+                % % % case Format.EMPTY
+                case Format.STRING
+                    columnformat{p} = 'char';
 
-% % %             case Format.CLASS
-% % %             case Format.CLASSLIST
-% % %             case Format.ITEM
-% % %             case Format.ITEMLIST
-% % %             case Format.IDICT
-            case Format.SCALAR
-                columnformat{p} = 'numeric';
-                
-% % %             case Format.RVECTOR
-% % %             case Format.CVECTOR
-% % %             case Format.MATRIX
-% % %             case Format.SMATRIX
-% % %             case Format.CELL
-% % %             case Format.NET
-% % %             case Format.COLOR
-% % %             case Format.ALPHA
-% % %             case Format.SIZE
-% % %             case Format.MARKER
-% % %             case Format.LINE
-        end            
+                case Format.LOGICAL
+                    columnformat{p} = 'logical';
+
+                case Format.OPTION
+                    columnformat{p} = Element.getPropSettings(it_class, it_prop);
+
+                % % % case Format.CLASS
+                % % % case Format.CLASSLIST
+                % % % case Format.ITEM
+                % % % case Format.ITEMLIST
+                % % % case Format.IDICT
+                case Format.SCALAR
+                    columnformat{p} = 'numeric';
+
+                % % % case Format.RVECTOR
+                % % % case Format.CVECTOR
+                % % % case Format.MATRIX
+                % % % case Format.SMATRIX
+                % % % case Format.CELL
+                % % % case Format.NET
+                % % % case Format.COLOR
+                % % % case Format.ALPHA
+                % % % case Format.SIZE
+                % % % case Format.MARKER
+                % % % case Format.LINE
+            end            
+        end
     end
 
     set(pr.table, ...
@@ -161,7 +189,13 @@ function update(pr)
         'ColumnFormat', columnformat ...
         )
 
-
+% % %     if el.isLocked(prop)
+% % %         set(pr.table, ...
+% % %             'Enable', pr.get('TAB_ENABLE'), ...
+% % %             'ColumnEditable', false ...
+% % %             )
+% % %     end
+% % % 
 % % %     switch el.getPropCategory(prop)
 % % %         case Category.METADATA
 % % %             set(pr.table, ...
@@ -243,45 +277,50 @@ function redraw(pr, varargin)
             )
     end
 end
-% % % function cb_button(pr)
-% % %     %CB_PUSHBUTTON_VALUE executes callback for the pushbutton.
-% % %     %
-% % %     % CB_PUSHBUTTON_VALUE(PR) executes callback for the pushbutton.
-% % % 
-% % %     persistent time
-% % %     if isempty(time)
-% % %         time = 0;
-% % %     end
-% % %     if now - time > 1.0 / (24 * 60 * 60)
-% % %         time = now;
-% % %         set(pr.button, 'Enable', 'off')
-% % %         %%% start callback %%%
-% % %         
-% % %         el = pr.get('EL');
-% % %         prop = pr.get('PROP');
-% % % 
-% % %         if ~check_graphics(pr.f_idict, 'figure')
-% % %             f = ancestor(pr.p, 'figure');
-% % %             gui = GUIElement( ...
-% % %                 'PE', el.get(prop), ...
-% % %                 'POSITION', [x0(f, 'normalized')+w(f, 'normalized') y0(f, 'normalized') w(f, 'normalized') h(f, 'normalized')], ...
-% % %                 'CLOSEREQ', false ...
-% % %                 );
-% % %             pr.f_idict = gui.draw();
-% % %         else
-% % %             gui = get(pr.f_idict, 'UserData');
-% % %             gui.cb_bring_to_front();
-% % %         end
-% % %         
-% % %         %%% end callback %%%
-% % %         set(pr.button, 'Enable', 'on')
-% % %     end
-% % %     
-% % % % % %     % updates and redraws the parent PanelElement as well as all siblings PanelProp's
-% % % % % %     pe = get(get(pr.p, 'Parent'), 'UserData');
-% % % % % %     pe.update()
-% % % % % %     pe.redraw()    
-% % % end
+function cb_table_edit(pr, i, it_prop, newdata)
+    
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    dict = el.get(prop);
+
+    eval(pr.get('CB_EDIT'))
+    
+    pr.update()
+end
+% function cb_button_(pr)
+%     %CB_PUSHBUTTON_VALUE executes callback for the pushbutton.
+%     %
+%     % CB_PUSHBUTTON_VALUE(PR) executes callback for the pushbutton.
+% 
+%     persistent time
+%     if isempty(time)
+%         time = 0;
+%     end
+%     if now - time > 1.0 / (24 * 60 * 60)
+%         time = now;
+%         set(pr.button, 'Enable', 'off')
+%         %%% start callback %%%
+%         
+%         el = pr.get('EL');
+%         prop = pr.get('PROP');
+% 
+%         if ~check_graphics(pr.f_idict, 'figure')
+%             f = ancestor(pr.p, 'figure');
+%             gui = GUIElement( ...
+%                 'PE', el.get(prop), ...
+%                 'POSITION', [x0(f, 'normalized')+w(f, 'normalized') y0(f, 'normalized') w(f, 'normalized') h(f, 'normalized')], ...
+%                 'CLOSEREQ', false ...
+%                 );
+%             pr.f_idict = gui.draw();
+%         else
+%             gui = get(pr.f_idict, 'UserData');
+%             gui.cb_bring_to_front();
+%         end
+%         
+%         %%% end callback %%%
+%         set(pr.button, 'Enable', 'on')
+%     end
+% end
 % % % function cb_bring_to_front(pr)
 % % %     %CB_BRING_TO_FRONT brings to the front the idict figure.
 % % %     %
