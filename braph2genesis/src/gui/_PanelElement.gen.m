@@ -204,15 +204,15 @@ function redraw(pe, varargin)
 
     % get panel (p) position
     % repositions the panel
-    x0_p = ceil(get_from_varargin(x0(p, 'pixels'), 'X0', varargin));
-    y0_p = ceil(get_from_varargin(y0(p, 'pixels'), 'Y0', varargin));
-    w_p = ceil(max(get_from_varargin(w(p, 'pixels'), 'Width', varargin), pe.get('MIN_WIDTH')));
-    h_p = ceil(get_from_varargin(w(p, 'pixels'), 'Height', varargin));
+    x0_p = get_from_varargin(x0(p, 'pixels'), 'X0', varargin);
+    y0_p = get_from_varargin(y0(p, 'pixels'), 'Y0', varargin);
+    w_p = max(get_from_varargin(w(p, 'pixels'), 'Width', varargin), pe.get('MIN_WIDTH'));
+    h_p = get_from_varargin(w(p, 'pixels'), 'Height', varargin);
     
     % graphics constants
-    dh = ceil(pe.get('DH') * BRAPH2.S);
-    dw = ceil(pe.get('DW') * BRAPH2.S);
-    w_s = ceil(pe.get('WSLIDER') * BRAPH2.S);
+    dh = s(pe.get('DH') / BRAPH2.FONTSIZE);
+    dw = s(pe.get('DW') / BRAPH2.FONTSIZE);
+    w_s = s(pe.get('WSLIDER') / BRAPH2.FONTSIZE);
 
     % redraw prop panels (following update)
     w_pp = w_p - 2 * dw - w_s;

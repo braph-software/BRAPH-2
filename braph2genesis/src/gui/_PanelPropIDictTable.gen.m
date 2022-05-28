@@ -2,7 +2,23 @@
 PanelPropIDictTable < PanelProp (pr, panel property idict) plots the panel of a property idict in a table.
 
 %%% ¡description!
-% % % 
+PanelPropIDictTable plots the panel of an IDICT property with a table.
+It works for all categories.
+
+It provides some standard basic dunctionalities.
+It can be personalized with the following props:
+ COLS - Numerical array with the columns to be visualized. It can include 
+  PanelPropIDictTable.SELECTOR and/or prop numbers of the item class.
+ ROWNAME - Code to generate the row names as per uitable format.
+ COLUMNANME - Code to generate the column names as per uitable format.
+ COLUMNWIDTH - Code to determine the cloumn width as per uitable format.
+ COLUMNEDITABLE - Code to determine the cloumn editability as per uitable format.
+ COLUMNFORMAT - Code to determine the cloumn format as per uitable format.
+ CB_TAB_EDIT - Code in a cell array for the edit callback to be evaluated 
+  by the table edit callback. It can refer to the variables:
+   el, prop, dict, it_class, pr, i, col, newdata
+  and use the standard callback function:
+   cb_table_edit_default()
 
 %%% ¡seealso!
 GUI, PanelPropIDict, uitable
@@ -296,7 +312,7 @@ function redraw(pr, varargin)
     % See also draw, update, PanelElement, s.
 
     [h, varargin] = get_and_remove_from_varargin(s(2), 'Height', varargin);
-    Dh = s(get(pr, 'TAB_H'));
+    Dh = s(pr.get('TAB_H'));
     
     el = pr.get('EL');
     prop = pr.get('PROP');

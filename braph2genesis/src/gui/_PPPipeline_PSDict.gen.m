@@ -2,13 +2,13 @@
 PPPipeline_PSDict < PanelProp (pr, pipeline plot) plots the panel for a pipeline.
 
 %%% ¡description!
-% % % PPPipeline_PCDict plots a pipeline allowing the user to execute it in the correct order.
-% % % 
-% % % CALLBACKS - These are callback functions:
-% % % 
-% % %     pr.<strong>cb_bring_to_front</strong>() - brings to the front the pipeline figure
-% % %     pr.<strong>cb_hide</strong>() - hides the pipeline figure and all dependent figures
-% % %     pr.<strong>cb_close</strong>() - closes the pipeline figure and all dependent figures
+PPPipeline_PCDict plots a pipeline allowing the user to execute it in the correct order.
+
+CALLBACKS - These are callback functions:
+
+    pr.<strong>cb_bring_to_front</strong>() - brings to the front the pipeline figure
+    pr.<strong>cb_hide</strong>() - hides the pipeline figure and all dependent figures
+    pr.<strong>cb_close</strong>() - closes the pipeline figure and all dependent figures
 
 %%% ¡seealso!
 Pipeline, PanelProp
@@ -63,11 +63,11 @@ function p_out = draw(pr, varargin)
     % the checks on the existence of the panels and btns are not necessary
     % because they have been deleted at the beginning of the script
     ps_dict = pip.get('PS_DICT');
-    for s = 1:1:ps_dict.length()
-        ps = ps_dict.getItem(s);
+    for sec = 1:1:ps_dict.length()
+        ps = ps_dict.getItem(sec);
 
         % if length(pl.ps_panels) < s || isempty(pl.ps_panels{s}) || ~isgraphics(pl.ps_panels{s}, 'uipanel')
-            pr.ps_panels{s} = uipanel( ...
+            pr.ps_panels{sec} = uipanel( ...
                 'Parent', pr.p, ...
                 'Title', [ps.get('ID') '. ' ps.get('LABEL')], ...
                 'Tooltip', ps.get('NOTES'), ...
@@ -76,18 +76,18 @@ function p_out = draw(pr, varargin)
                 );
 
             pc_dict = ps.get('PC_DICT');
-            for c = 1:1:pc_dict.length()
-                pc = pc_dict.getItem(c);
+            for cl = 1:1:pc_dict.length()
+                pc = pc_dict.getItem(cl);
 
                 % if length(pl.pc_btns) < s || length(pl.pc_btns{s}) < c || isempty(pl.pc_btns{s}{c}) || ~isgraphics(pl.pc_btns{s}{c}, 'uicontrol') || ~strcmpi(get(pl.pc_btns{s}{c}, 'Style'), 'pushbutton')
-                    pr.pc_btns{s}{c} = uibutton( ...
-                        'Parent', pr.ps_panels{s}, ...
+                    pr.pc_btns{sec}{cl} = uibutton( ...
+                        'Parent', pr.ps_panels{sec}, ...
                         'Tooltip', pc.get('NOTES'), ...
                         'Enable', 'off', ...
                         'Text', pc.get('TEXT_BEFORE_EXEC'), ...
                         'FontAngle', 'italic', ...
                         'FontSize', BRAPH2.FONTSIZE, ...
-                        'UserData', [s c], ...
+                        'UserData', [sec cl], ...
                         'ButtonPushedFcn', {@cb_pc_btn} ...
                         );
                 % end
@@ -107,10 +107,10 @@ function p_out = draw(pr, varargin)
             %%% start callback %%%
 
             userdata = get(src, 'UserData');
-            s = userdata(1);
-            c = userdata(2);
+            sec = userdata(1);
+            cl = userdata(2);
 
-            pr.update('Section', s, 'Code', c)
+            pr.update('Section', sec, 'Code', cl)
 
             %%% end callback %%%
             set(src, 'Enable', 'on')
@@ -139,26 +139,26 @@ function update(pr, varargin)
     
     s_to_be_calculated = 1;
     s_dict = pip.get('PS_DICT');
-    for s = 1:1:s_dict.length()
-        section = s_dict.getItem(s);
+    for sec = 1:1:s_dict.length()
+        section = s_dict.getItem(sec);
         
         code_dict = section.get('PC_DICT');
-        for c = 1:1:code_dict.length()
-            code = code_dict.getItem(c);
+        for cl = 1:1:code_dict.length()
+            code = code_dict.getItem(cl);
             moniker = code.get('MONIKER'); % FIXME send error if moniker equal to varargin
 
             % callback code
-            if s == s_selected && c == c_selected
+            if sec == s_selected && cl == c_selected
                 if isa(code.getr('EL'), 'NoValue') % the code has not been calculated yet -- CALCULATE
                     try
-                        set(pr.pc_btns{s}{c}, ...
+                        set(pr.pc_btns{sec}{cl}, ...
                             'Enable', 'off' ...
                             )
                         pr.x_update(to_be_executed{:}, ...
                             {moniker, code, [moniker ' = ' code.get('CODE') ';']}, ... % varargin{1}{2} = code
                             {moniker, code, ['varargin{1}{2}.set(''EL'', ' moniker ');']}) % varargin{1}{2} = code
                     catch e
-                        set(pr.pc_btns{s}{c}, ...
+                        set(pr.pc_btns{sec}{cl}, ...
                             'Enable', 'on' ...
                             )
 
@@ -175,10 +175,10 @@ function update(pr, varargin)
                 end
                     
                 if ~isa(code.getr('EL'), 'NoValue') % the code has already been calculated -- GUI
-                    if length(pr.pc_GUIs) < s || length(pr.pc_GUIs{s}) < c || ~check_graphics(pr.pc_GUIs{s}{c}, 'figure')
+                    if length(pr.pc_GUIs) < sec || length(pr.pc_GUIs{sec}) < cl || ~check_graphics(pr.pc_GUIs{sec}{cl}, 'figure')
                         f_pip = ancestor(pr.p, 'Figure'); % Pipeline GUI
 
-                        pr.pc_GUIs{s}{c} = GUIElement( ...
+                        pr.pc_GUIs{sec}{cl} = GUIElement( ...
                             'PE', code.get('EL'), ...
                             'Position', [ ...
                                 x0(f_pip, 'normalized') + .20 ...
@@ -189,8 +189,8 @@ function update(pr, varargin)
                                 'CLOSEREQ', false ...
                             ).draw();
                     else
-                        gui = get(pr.pc_GUIs{s}{c}, 'UserData');
-                        if get(pr.pc_GUIs{s}{c}, 'Visible')
+                        gui = get(pr.pc_GUIs{sec}{cl}, 'UserData');
+                        if get(pr.pc_GUIs{sec}{cl}, 'Visible')
                             gui.cb_hide()
                         else
                             gui.cb_bring_to_front()
@@ -206,7 +206,7 @@ function update(pr, varargin)
             if ~isa(code.getr('EL'), 'NoValue')
                 to_be_executed = {to_be_executed{:}, {moniker, code, [moniker ' = varargin{1}{2}.get(''EL'');']}}; % varargin{1}{2} = code
 
-                set(pr.pc_btns{s}{c}, ...
+                set(pr.pc_btns{sec}{cl}, ...
                     'Enable', 'on', ...
                     'Text', [code.get('TEXT_AFTER_EXEC') ' / ' code.get('EL').get('ID')], ...
                     'FontAngle', 'normal', ...
@@ -215,14 +215,14 @@ function update(pr, varargin)
 
                 % if all section codes calculated, updates the section to be calculated
                 if all(cellfun(@(pc) ~isa(pc.getr('EL'), 'NoValue'), code_dict.getItems()))
-                    s_to_be_calculated = s + 1;
+                    s_to_be_calculated = sec + 1;
                 end
             end
             
             % activates the next section that can be calculated
             % (only the codes that have not been calculated yet)
-            if s == s_to_be_calculated && isa(code.getr('EL'), 'NoValue')
-                set(pr.pc_btns{s}{c}, ...
+            if sec == s_to_be_calculated && isa(code.getr('EL'), 'NoValue')
+                set(pr.pc_btns{sec}{cl}, ...
                     'Enable', 'on', ...
                     'FontAngle', 'normal', ...
                     'FontWeight', 'bold' ...
@@ -266,41 +266,28 @@ function redraw(pr, varargin)
     ps_number = ps_dict.length();
     pc_numbers = cellfun(@(ps) ps.get('PC_DICT').length(), ps_dict.getItems());
     
-    h_min = ceil(2 * BRAPH2.FONTSIZE * BRAPH2.S);  % default (minumum) height
-    h_ps_header = ceil(2 * BRAPH2.FONTSIZE * BRAPH2.S); % height section header
-    h_pc = ceil(2.5 * BRAPH2.FONTSIZE * BRAPH2.S); % height code button
-    h_ps_footer = ceil(.5 * BRAPH2.FONTSIZE * BRAPH2.S); % height section footer
-    h_ps_margin = ceil(.5 * BRAPH2.FONTSIZE * BRAPH2.S); % height section margin
+    h_min = s(2);  % default (minumum) height
+    h_ps_header = s(2); % height section header
+    h_pc = s(2.5); % height code button
+    h_ps_footer = s(.5); % height section footer
+    h_ps_margin = s(.5); % height section margin
     h_p = h_min + (h_ps_margin + h_ps_header + h_ps_footer) * ps_number + h_pc * sum(pc_numbers);
     pr.redraw@PanelProp('Height', h_p, varargin{:})
 
-    s5 = ceil(5 * BRAPH2.S);
-    for s = 1:1:ps_number
-        ps_y = h_ps_header * (ps_number - s) ...
-            + h_pc * sum(pc_numbers(s+1:end)) ...
-            + h_ps_footer * (ps_number - s) ...
-            + h_ps_margin * (ps_number - s + 1);
-        ps_h = h_ps_header + h_pc * pc_numbers(s) + h_ps_footer;
+    for sec = 1:1:ps_number
+        ps_y = h_ps_header * (ps_number - sec) ...
+            + h_pc * sum(pc_numbers(sec+1:end)) ...
+            + h_ps_footer * (ps_number - sec) ...
+            + h_ps_margin * (ps_number - sec + 1);
+        ps_h = h_ps_header + h_pc * pc_numbers(sec) + h_ps_footer;
         
-        set(pr.ps_panels{s}, ...
+        set(pr.ps_panels{sec}, ...
             'Units', 'pixels', ...
-            'Position', [ ...
-                s5 ...
-                ps_y ...
-                w(pr.p, 'pixels')-s5-s5 ...
-                ps_h ...
-                ] ...
+            'Position', [s(.3) ps_y w(pr.p, 'pixels')-s(.6) ps_h] ...
             )
         
-        for c = 1:1:pc_numbers(s)
-            set(pr.pc_btns{s}{c}, ...
-                'Position', [ ...
-                    s5 ...
-                    (h_ps_footer+(pc_numbers(s) - c)*h_pc) ...
-                    w(pr.ps_panels{s}, 'pixels')-s5-s5 ...
-                    h_pc ...
-                    ] ...
-               )
+        for cl = 1:1:pc_numbers(sec)
+            set(pr.pc_btns{sec}{cl}, 'Position', [s(.3) (h_ps_footer+(pc_numbers(sec)-cl)*h_pc) w(pr.ps_panels{sec}, 'pixels')-s(.6) h_pc])
         end
     end
 end

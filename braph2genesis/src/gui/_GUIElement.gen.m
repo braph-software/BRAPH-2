@@ -155,8 +155,8 @@ function x_draw(gui, f)
     pe = gui.get('PE');
     el = pe.get('EL');
     
-    dw = ceil(pe.get('DW') * BRAPH2.S);
-    h_filename = ceil(1.5 * BRAPH2.FONTSIZE * BRAPH2.S);
+    dw = s(pe.get('DW') / BRAPH2.FONTSIZE);
+    h_filename = s(1.5);
 
     % Draw panel element (p) 
     % contained in a scrollable panel (ps)

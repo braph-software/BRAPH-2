@@ -166,7 +166,7 @@ function x_draw(gui, f)
 
     pf = gui.get('PF');
     
-    h_filename = ceil(1.5 * BRAPH2.FONTSIZE * BRAPH2.S);
+    h_filename = s(1.5);
 
     % Draw panel element (p) 
     % contained in a scrollable panel (ps)
@@ -216,9 +216,8 @@ function x_draw(gui, f)
     
     % Callback resize
     function cb_resize(~, ~) % (src, event)
-        s5 = ceil(5 * BRAPH2.S);
         set(gui.text_filename, ...
-            'Position', [1+s5 1 w(gui.pp, 'pixels')-2*s5 h_filename] ...
+            'Position', [1+s(.3) 1 w(gui.pp, 'pixels')-s(.6) h_filename] ...
             )
         set(gui.ps, ...
             'Units', 'pixels', ...

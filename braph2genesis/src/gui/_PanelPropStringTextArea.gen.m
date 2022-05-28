@@ -129,24 +129,19 @@ function redraw(pr, varargin)
     %  - X0 does not change
     %  - Y0 does not change
     %  - WIDTH does not change
-    %  - HEIGHT = 2 * BRAPH2.FONTSIZE * BRAPH2.S (header height)
+    %  - HEIGHT = s(2) (header height)
     % The text area is set by the property TA_H.
     %
-    % See also draw, update, PanelElement, BRAPH2.
+    % See also draw, update, PanelElement, s.
 
-    [h, varargin] = get_and_remove_from_varargin(ceil(2 * BRAPH2.FONTSIZE * BRAPH2.S), 'Height', varargin);
-    Dh = ceil(get(pr, 'TA_H') * BRAPH2.FONTSIZE * BRAPH2.S);
+    [h, varargin] = get_and_remove_from_varargin(s(2), 'Height', varargin);
+    Dh = s(pr.get('TA_H'));
 
     h_p = h + Dh;
     
     pr.redraw@PanelProp('Height', h_p, varargin{:})
 
-    set(pr.textarea, 'Position', [ ...
-        ceil(5 * BRAPH2.S) ...
-        ceil(.25 * BRAPH2.FONTSIZE * BRAPH2.S) ...
-        ceil(w(pr.p, 'pixels') - 10 * BRAPH2.S) ...
-        Dh ...
-        ])
+    set(pr.textarea, 'Position', [s(.3) s(.3) w(pr.p, 'pixels')-s(.6) Dh])
 end
 function cb_textarea(pr)
     %CB_EDITFIELD executes callback for the edit field.
