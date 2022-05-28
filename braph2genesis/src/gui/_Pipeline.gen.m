@@ -80,6 +80,6 @@ pr = PanelPropStringTextArea('EL', pip, 'PROP', Pipeline.NOTES, 'TA_H', 8, varar
 PS_DICT (data, idict) is an indexed dictionary with the code sections.
 %%%% ¡settings!
 'PipelineSection'
-%%%% ¡gui_!
-% % %pr = PPPipeline_PSDict('EL', pip, 'PROP', Pipeline.PS_DICT, varargin{:});
+%%%% ¡gui!
+pr = PPPipeline_PSDict('EL', pip, 'PROP', Pipeline.PS_DICT, varargin{:});
 
