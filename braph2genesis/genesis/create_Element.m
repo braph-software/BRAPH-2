@@ -286,7 +286,7 @@ generate_header()
             g(0, ['classdef (' class_attributes ') ' class_name ' < ' superclass_name])
         end
         gs(1, {
-            ['% ' class_name ' ' header_description '.']
+            ['%' class_name ' ' header_description '.']
             ['% It is a subclass of <a href="matlab:help ' superclass_name '">' superclass_name '</a>.']
              '%'
             })
@@ -1461,7 +1461,7 @@ generate_constructor()
         g(1, 'methods % constructor')
             g(2, ['function ' moniker ' = ' class_name '(varargin)'])
                 gs(3, {
-                    ['% ' class_name '() creates a ' descriptive_name '.']
+                    ['%' class_name '() creates a ' descriptive_name '.']
                      '%'
                     ['% ' class_name '(PROP, VALUE, ...) with property PROP initialized to VALUE.']
                      '%'

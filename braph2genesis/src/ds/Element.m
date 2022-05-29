@@ -16,6 +16,12 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %                    AFTER all properties have been set
     %   <strong>prop_set</strong>       - returns whether a prop has been set before postprocessing.
     %
+    % An element notifies the following <a href="matlab:help event">events</a>:
+    %  <strong>PropSet</strong>         - when a property is successfully set 
+    %                    with event data in <a href="matlab:help EventPropSet">EventPropSet</a>
+    %  <strong>ResultMemorized</strong> - when a result is successfully memorized
+    %                    with event data in <a href="matlab:help EventResultMemorized">EventResultMemorized</a>
+    %
     % Element constructor:
     %  Element - constructor
     %  
@@ -126,6 +132,10 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         %  first time a result is successfully calculated.
 
         props = {}
+    end
+    events
+        PropSet
+        ResultMemorized
     end
     methods (Static) % inspection
         function el_class = getClass(el)
@@ -601,7 +611,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     end
     methods % constructor
         function el = Element(varargin)
-            % ELEMENT() creates an Element.
+            %ELEMENT() creates an Element.
             %
             % ELEMENT(PROP, VALUE, ...) with property PROP initialized to VALUE.
             %
@@ -767,6 +777,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         )
                 end
             end
+            
+            % notify event
+            notify(el, 'PropSet', EventPropSet(el, varargin{1:2:end}))
 
             % output
             if nargout > 0
@@ -946,6 +959,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 
             if isequal(el.getPropCategory(prop), Category.RESULT)
                 el.props{prop}.value = value;
+                
+                notify(el, 'ResultMemorized', EventResultMemorized(el, pointer))
             end
         end
         function seed = getPropSeed(el, pointer)
