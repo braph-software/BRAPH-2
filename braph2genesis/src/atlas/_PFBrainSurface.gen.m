@@ -100,7 +100,7 @@ VIEW (figure, rvector) sets the desired view.
 %%%% ¡check_prop!
 check = length(value) == 2;
 %%%% ¡default!
-PFBrainSurface.VIEW_3D_AZEL
+PFBrainSurface.VIEW_SL_AZEL
 %%%% ¡postprocessing!
 if (isempty(varargin) || pf.prop_set('VIEW', varargin)) && check_graphics(pf.h_axes, 'axes')
     view(pf.h_axes, pf.get('VIEW'))
@@ -142,7 +142,7 @@ end
 %%% ¡prop!
 GRID (figure, logical) determines whether the grid is shown.
 %%%% ¡default!
-true
+false
 %%%% ¡postprocessing!
 if (isempty(varargin) || pf.prop_set('GRID', varargin)) && check_graphics(pf.h_axes, 'axes')
     if pf.get('GRID')
@@ -158,7 +158,7 @@ end
 %%% ¡prop!
 AXIS (figure, logical) determines whether the axis is shown.
 %%%% ¡default!
-true
+false
 %%%% ¡postprocessing!
 if (isempty(varargin) || pf.prop_set('AXIS', varargin)) && check_graphics(pf.h_axes, 'axes')
     if pf.get('AXIS')
@@ -266,7 +266,7 @@ end
 %%% ¡prop!
 FACEALPHA (figure, alpha) is the face transparency.
 %%%% ¡default!
-.5
+1
 %%%% ¡postprocessing!
 if (isempty(varargin) || pf.prop_set('FACEALPHA', varargin)) && check_graphics(pf.h_axes, 'axes') && check_graphics(pf.h_brain, 'patch')
 % % %     if ~isequal(set(pf.h_brain, 'FaceAlpha'), pf.get('FACEALPHA'))
@@ -278,6 +278,8 @@ end
 LIGHTING (figure, option) is the lighting value.
 %%%% ¡settings!
 {'none' 'phong' 'flat' 'gouraud'}
+%%%% ¡default!
+'gouraud'
 %%%% ¡postprocessing!
 if (isempty(varargin) || pf.prop_set({'LIGHTING', 'MATERIAL', 'CAMLIGHT', 'SHADING', 'COLORMAP'}, varargin)) && check_graphics(pf.h_axes, 'axes')
     lighting(pf.h_axes, pf.get('LIGHTING'))
@@ -287,6 +289,8 @@ end
 MATERIAL (figure, option) is the material value.
 %%%% ¡settings!
 {'shiny' 'dull' 'metal'}
+%%%% ¡default!
+'shiny'
 %%%% ¡postprocessing!
 if (isempty(varargin) || pf.prop_set({'LIGHTING', 'MATERIAL', 'CAMLIGHT', 'SHADING', 'COLORMAP'}, varargin)) && check_graphics(pf.h_axes, 'axes')
     material(pf.h_axes, pf.get('MATERIAL'))
@@ -296,6 +300,8 @@ end
 CAMLIGHT (figure, option) is the camlight value.
 %%%% ¡settings!
 {'none' 'headlight' 'right' 'left'}
+%%%% ¡default!
+'headlight'
 %%%% ¡postprocessing!
 if (isempty(varargin) || pf.prop_set({'LIGHTING', 'MATERIAL', 'CAMLIGHT', 'SHADING', 'COLORMAP'}, varargin)) && check_graphics(pf.h_axes, 'axes')
     delete(findall(pf.h_axes, 'Type', 'light'));
@@ -308,6 +314,8 @@ end
 SHADING (figure, option) is the shading value.
 %%%% ¡settings!
 {'none' 'interp' 'flat' 'faceted'}
+%%%% ¡default!
+'interp'
 %%%% ¡postprocessing!
 if (isempty(varargin) || pf.prop_set({'LIGHTING', 'MATERIAL', 'CAMLIGHT', 'SHADING', 'COLORMAP'}, varargin)) && check_graphics(pf.h_axes, 'axes')
     if ~strcmpi(pf.get('SHADING'), 'none')
