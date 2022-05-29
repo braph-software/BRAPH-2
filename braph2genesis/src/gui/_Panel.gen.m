@@ -49,7 +49,7 @@ ID (data, string) is a few-letter code for the panel.
 WAITBAR (gui, logical) detemines whether to show the waitbar.
 
 %%% ¡prop!
-BKGCOLOR (gui, color) is the panel background color.
+BKGCOLOR (figure, color) is the panel background color.
 %%%% ¡default!
 BRAPH2.COL_FIG
 %%%% ¡postprocessing!
