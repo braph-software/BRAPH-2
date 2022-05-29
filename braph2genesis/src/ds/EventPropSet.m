@@ -22,7 +22,7 @@ classdef (ConstructOnLoad) EventPropSet < event.EventData
             % See also Element, event.
 
             event.el = el;
-            event.props = cellfun(@(pointer) el.getPropProp(pointer), pointers, 'UniformOutput', false);
+            event.props = cellfun(@(pointer) el.getPropProp(pointer), varargin, 'UniformOutput', false);
         end
     end
 end
