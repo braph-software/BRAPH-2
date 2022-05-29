@@ -180,7 +180,7 @@ function cb_matrix_value(pr, i, j, newdata)
     value(i, j) = newdata;
     el.set(prop, value)
 
-    pr.update()
+% % %     pr.update()
 end
 
 %% ¡tests!

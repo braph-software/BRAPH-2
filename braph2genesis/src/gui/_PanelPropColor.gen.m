@@ -136,7 +136,7 @@ function cb_button(pr)
     if ~isequal(new_color, el.get(prop))
         el.set(prop, new_color)
 
-        pr.update()
+% % %         pr.update()
     end
 end
   

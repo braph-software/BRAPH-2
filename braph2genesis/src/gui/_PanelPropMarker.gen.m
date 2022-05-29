@@ -169,7 +169,7 @@ function cb_dropdown(pr)
     
     el.set(prop, get(pr.dropdown, 'Value'))
 
-    pr.update()
+% % %     pr.update()
 end
 
 %% ¡tests!

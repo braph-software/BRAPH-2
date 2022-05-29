@@ -154,7 +154,7 @@ function cb_textarea(pr)
     value = get(pr.textarea, 'Value');
     el.set(prop, sprintf('%s\\n', value{:})) % double \\ to be converted to single \\ in compilation
 
-    pr.update()
+% % %     pr.update()
 end
   
 %% ¡tests!

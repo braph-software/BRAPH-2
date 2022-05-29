@@ -135,7 +135,7 @@ function cb_checkbox(pr)
     
     el.set(prop, logical(get(pr.checkbox, 'Value')))
    
-    pr.update()
+% % %     pr.update()
 end
 
 %% ¡tests!

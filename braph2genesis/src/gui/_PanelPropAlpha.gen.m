@@ -173,7 +173,7 @@ function cb_editfield(pr)
     
     el.set(prop, get(pr.editfield, 'Value'))
 
-    pr.update()
+% % %     pr.update()
 end
 function cb_slider(pr)
     %CB_SLIDER executes callback for the slider.
@@ -185,7 +185,7 @@ function cb_slider(pr)
     
     el.set(prop, get(pr.slider, 'Value'))
 
-    pr.update()
+% % %     pr.update()
 end
 
 %% ¡tests!

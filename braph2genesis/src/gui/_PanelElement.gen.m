@@ -167,11 +167,34 @@ function p_out = draw(pe, varargin)
     function cb_prop_set(~, event)
         set_props = cell2mat(event.props);
         for i = 1:1:pe.get('PR_DICT').length()
-            if ismember(pe.get('PR_DICT').getItem(i).get('PROP'), set_props)
-                pe.get('PR_DICT').getItem(i).update()
-disp('PE UUU ') % % % 
+            el = pe.get('PR_DICT').getItem(i).get('EL');
+            prop = pe.get('PR_DICT').getItem(i).get('PROP');
+            if ismember(prop, set_props)
+                if el.getPropCategory(prop) == Category.RESULT
+                    pe.update()
+                    pe.redraw()
+disp(['PE UUU ' tostring(prop)]) % % % 
+                else
+                    pe.get('PR_DICT').getItem(i).update()
+disp(['PE RRR ' tostring(prop)]) % % % 
+                end
             end
         end
+    end
+
+    % add listener to result memorized in el
+    pe.l_resultmemorized = listener(pe.get('EL'), 'ResultMemorized', @cb_result_memorized);
+    function cb_result_memorized(~, event)
+        memorized_prop = event.prop;
+        for i = 1:1:pe.get('PR_DICT').length()
+            el = pe.get('PR_DICT').getItem(i).get('EL');
+            prop = pe.get('PR_DICT').getItem(i).get('PROP');
+            if prop == memorized_prop
+                    pe.update()
+                    pe.redraw()
+disp(['PE MMM ' tostring(prop)]) % % % 
+            end
+        end        
     end
 
     % output

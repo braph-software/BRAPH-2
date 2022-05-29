@@ -778,7 +778,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 end
             end
             
-            % notify event
+            % notify event prop set
             notify(el, 'PropSet', EventPropSet(el, varargin{1:2:end}))
 
             % output
@@ -958,9 +958,12 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             value = el.get(prop);
 
             if isequal(el.getPropCategory(prop), Category.RESULT)
-                el.props{prop}.value = value;
-                
-                notify(el, 'ResultMemorized', EventResultMemorized(el, pointer))
+                if isa(el.props{prop}.value, 'NoValue')
+                    el.props{prop}.value = value;
+
+                    % notify event result memorized
+                    notify(el, 'ResultMemorized', EventResultMemorized(el, pointer))
+                end
             end
         end
         function seed = getPropSeed(el, pointer)

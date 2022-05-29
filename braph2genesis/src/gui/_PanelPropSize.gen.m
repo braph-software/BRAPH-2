@@ -183,7 +183,7 @@ function cb_editfield(pr)
     
     el.set(prop, get(pr.editfield, 'Value'))
 
-    pr.update()
+% % %     pr.update()
 end
 
 %% ¡tests!
