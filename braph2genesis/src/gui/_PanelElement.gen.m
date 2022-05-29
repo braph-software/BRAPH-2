@@ -163,8 +163,7 @@ function p_out = draw(pe, varargin)
     addlistener(pe.get('EL'), 'PropSet', @cb_prop_set);
     function cb_prop_set(~, event)
 disp('UUU PE')
-        cellfun(@(prop) pe.get('PR_DICT').getItem(prop).update()
-        , event.props)
+        cellfun(@(prop) pe.get('PR_DICT').getItem(prop).update(), event.props)
 %             props = cellfun(@(pointer) pe.get('EL').getPropProp(pointer), event.varargin{1}(1:2:end), 'UniformOutput', false);
 % 
 %             for i = 1:1:length(props)
