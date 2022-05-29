@@ -162,28 +162,13 @@ function p_out = draw(pe, varargin)
     % add listener to prop set in el
     addlistener(pe.get('EL'), 'PropSet', @cb_prop_set);
     function cb_prop_set(~, event)
-disp('UUU PE')
-        cellfun(@(prop) pe.get('PR_DICT').getItem(prop).update(), event.props)
-%             props = cellfun(@(pointer) pe.get('EL').getPropProp(pointer), event.varargin{1}(1:2:end), 'UniformOutput', false);
-% 
-%             for i = 1:1:length(props)
-%                 prop = props{i};
-%                 pe.get('PR_DICT').getItem(prop).update()
-%             end
-%         end
+        set_props = cell2mat(event.props);
+        for i = 1:1:pe.get('PR_DICT').length()
+            if ismember(pe.get('PR_DICT').getItem(i).get('PROP'), set_props)
+                pe.get('PR_DICT').getItem(i).update()
+            end
+        end
     end
-%     function cb_prop_set(~, event)
-% disp('UUU PE')
-%         addlistener(pe.get('EL'), 'PropSet', @cb_prop_set);
-%         function cb_prop_set(~, event)
-%             props = cellfun(@(pointer) pe.get('EL').getPropProp(pointer), event.varargin{1}(1:2:end), 'UniformOutput', false);
-% 
-%             for i = 1:1:length(props)
-%                 prop = props{i};
-%                 pe.get('PR_DICT').getItem(prop).update()
-%             end
-%         end
-%     end
 
     % output
     if nargout > 0
