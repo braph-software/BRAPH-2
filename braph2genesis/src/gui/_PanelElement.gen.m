@@ -130,6 +130,9 @@ MIN_WIDTH (gui, size) is the minimal panel width in pixels.
 p % handle for panel element
 pr_list % list of handles for prop panels
 
+l_setprop % listener to SetProp
+l_resultmemorized % listener to ResultMemorized
+
 %% ¡methods!
 function p_out = draw(pe, varargin)
     %DRAW draws the element panel.
@@ -160,12 +163,13 @@ function p_out = draw(pe, varargin)
     pe.redraw()    
     
     % add listener to prop set in el
-    addlistener(pe.get('EL'), 'PropSet', @cb_prop_set);
+    pe.l_setprop = listener(pe.get('EL'), 'PropSet', @cb_prop_set);
     function cb_prop_set(~, event)
         set_props = cell2mat(event.props);
         for i = 1:1:pe.get('PR_DICT').length()
             if ismember(pe.get('PR_DICT').getItem(i).get('PROP'), set_props)
                 pe.get('PR_DICT').getItem(i).update()
+disp('PE UUU ') % % % 
             end
         end
     end
@@ -351,6 +355,10 @@ function cb_close(pe)
         pr = pr_dict.getItem(prop);
         pr.cb_close()
     end
+    
+    % delete listeners
+    delete(pe.l_setprop)
+    delete(pe.l_resultmemorized)
 end
 
 %% ¡tests!
