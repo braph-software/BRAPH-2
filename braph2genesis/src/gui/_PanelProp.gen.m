@@ -59,9 +59,6 @@ TITLE (gui, string) is the property title.
 %%% ¡prop!
 ENABLE (gui, logical) switches between active and inactive ui components.
 
-%%% ¡prop!
-WAITBAR (gui, logical) determines whether to show the waitbar when executing calculations.
-
 %% ¡properties!
 p % panel
 label_tag

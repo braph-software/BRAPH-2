@@ -76,6 +76,10 @@ number_visible_prop = sum(visible);
 
 pr_list = cell(1, number_visible_prop);
 for prop = 1:1:el.getPropNumber()
+    
+    pe.wb_state = pe.wb_state + .20 / el.getPropNumber();
+    braph2waitbar(pe.wb, pe.wb_state, ['Analyzing prop ' int2str(prop) ' of ' int2str(el.getPropNumber())])
+    
     if visible(prop)
         switch el.getPropCategory(prop)
             case Category.METADATA
@@ -130,6 +134,9 @@ MIN_WIDTH (gui, size) is the minimal panel width in pixels.
 p % handle for panel element
 pr_list % list of handles for prop panels
 
+wb_state % waitbar state between 0 and 1
+wb % waitbar
+
 l_setprop % listener to SetProp
 l_resultmemorized % listener to ResultMemorized
 
@@ -150,13 +157,25 @@ function p_out = draw(pe, varargin)
     %
     % See also update, redraw, reinit, uipanel.
 
+    pe.wb_state = 0;
+    pe.wb = braph2waitbar(pe.get('WAITBAR'), pe.wb_state, 'Drawing the element panel ...');
+    
     pe.p = draw@Panel(pe, ...
         varargin{:}, ...
         'AutoResizeChildren', 'off' ...
         );
 
     if isempty(pe.pr_list) || any(cellfun(@(x) ~check_graphics(x, 'uipanel'), pe.pr_list))
-        pe.pr_list = cellfun(@(x) x.draw('Parent', pe.p), pe.memorize('PR_DICT').getItems(), 'UniformOutput', false);
+        pe.memorize('PR_DICT');
+        
+        pe.pr_list = cell(1, pe.get('PR_DICT').length());
+        for pri = 1:1:pe.get('PR_DICT').length()
+            
+            pe.wb_state = pe.wb_state + .20 / pe.get('PR_DICT').length();
+            braph2waitbar(pe.wb, pe.wb_state, ['Drawing prop panel ' int2str(pri) ' of ' int2str(pe.get('PR_DICT').length())])
+
+            pe.pr_list{pri} = pe.get('PR_DICT').getItem(pri).draw('Parent', pe.p);
+        end
     end
 
     pe.update()
@@ -166,16 +185,16 @@ function p_out = draw(pe, varargin)
     pe.l_setprop = listener(pe.get('EL'), 'PropSet', @cb_prop_set);
     function cb_prop_set(~, event)
         set_props = cell2mat(event.props);
-        for i = 1:1:pe.get('PR_DICT').length()
-            el = pe.get('PR_DICT').getItem(i).get('EL');
-            prop = pe.get('PR_DICT').getItem(i).get('PROP');
+        for pri = 1:1:pe.get('PR_DICT').length()
+            el = pe.get('PR_DICT').getItem(pri).get('EL');
+            prop = pe.get('PR_DICT').getItem(pri).get('PROP');
             if ismember(prop, set_props)
                 if el.getPropCategory(prop) == Category.RESULT
                     pe.update()
                     pe.redraw()
 disp(['PE UUU ' tostring(prop)]) % % % 
                 else
-                    pe.get('PR_DICT').getItem(i).update()
+                    pe.get('PR_DICT').getItem(pri).update()
 disp(['PE RRR ' tostring(prop)]) % % % 
                 end
             end
@@ -186,9 +205,9 @@ disp(['PE RRR ' tostring(prop)]) % % %
     pe.l_resultmemorized = listener(pe.get('EL'), 'ResultMemorized', @cb_result_memorized);
     function cb_result_memorized(~, event)
         memorized_prop = event.prop;
-        for i = 1:1:pe.get('PR_DICT').length()
-            el = pe.get('PR_DICT').getItem(i).get('EL');
-            prop = pe.get('PR_DICT').getItem(i).get('PROP');
+        for pri = 1:1:pe.get('PR_DICT').length()
+            % el = pe.get('PR_DICT').getItem(i).get('EL');
+            prop = pe.get('PR_DICT').getItem(pri).get('PROP');
             if prop == memorized_prop
                     pe.update()
                     pe.redraw()
@@ -196,6 +215,8 @@ disp(['PE MMM ' tostring(prop)]) % % %
             end
         end        
     end
+
+    braph2waitbar(pe.wb, 'close')
 
     % output
     if nargout > 0
@@ -213,8 +234,12 @@ function update(pe)
     %
     % See also draw, redraw.
 
-    for prop = 1:1:pe.get('PR_DICT').length()
-        pe.get('PR_DICT').getItem(prop).update()
+    for pri = 1:1:pe.get('PR_DICT').length()
+
+        pe.wb_state = pe.wb_state + .20 / pe.get('PR_DICT').length();
+        braph2waitbar(pe.wb, pe.wb_state, ['Updating prop panel ' int2str(pri) ' of ' int2str(pe.get('PR_DICT').length())])
+        
+        pe.get('PR_DICT').getItem(pri).update()
     end
 end
 function redraw(pe, varargin)
@@ -254,8 +279,12 @@ function redraw(pe, varargin)
 
     % redraw prop panels (following update)
     w_pp = w_p - 2 * dw - w_s;
-    for prop = 1:1:length(pr_list)
-        pe.get('PR_DICT').getItem(prop).redraw('Width', w_pp)
+    for pri = 1:1:length(pr_list)
+
+        pe.wb_state = pe.wb_state + .20 / length(pr_list);
+        braph2waitbar(pe.wb, pe.wb_state, ['(Re)drawing prop panel ' int2str(pri) ' of ' int2str(length(pr_list))])
+
+        pe.get('PR_DICT').getItem(pri).redraw('Width', w_pp)
     end
     
     % calculate position prop panels (pp)
@@ -276,9 +305,13 @@ function redraw(pe, varargin)
         )
     
     % reposition prop panels
-    for prop = 1:1:length(pr_list)
-        pr = pr_list{prop};
-        set(pr, 'Position', [x0_pp y0_pp(prop) w(pr) h(pr)])
+    for pri = 1:1:length(pr_list)
+
+        pe.wb_state = pe.wb_state + .20 / length(pr_list);
+        braph2waitbar(pe.wb, pe.wb_state, ['(Re)positioning prop panel ' int2str(pri) ' of ' int2str(length(pr_list))])
+
+        pr = pr_list{pri};
+        set(pr, 'Position', [x0_pp y0_pp(pri) w(pr) h(pr)])
     end    
 end
 function reinit(pe, el)
@@ -342,8 +375,8 @@ function cb_bring_to_front(pe)
     pe.cb_bring_to_front@Panel();
     
     pr_dict = pe.get('PR_DICT');
-    for prop = 1:1:pr_dict.length()
-        pr = pr_dict.getItem(prop);
+    for pri = 1:1:pr_dict.length()
+        pr = pr_dict.getItem(pri);
         pr.cb_bring_to_front()
     end
 end
@@ -358,8 +391,8 @@ function cb_hide(pe)
     pe.cb_hide@Panel();
     
     pr_dict = pe.get('PR_DICT');
-    for prop = 1:1:pr_dict.length()
-        pr = pr_dict.getItem(prop);
+    for pri = 1:1:pr_dict.length()
+        pr = pr_dict.getItem(pri);
         pr.cb_hide()
     end
 end
@@ -374,8 +407,8 @@ function cb_close(pe)
     pe.cb_close@Panel();
     
     pr_dict = pe.get('PR_DICT');
-    for prop = 1:1:pr_dict.length()
-        pr = pr_dict.getItem(prop);
+    for pri = 1:1:pr_dict.length()
+        pr = pr_dict.getItem(pri);
         pr.cb_close()
     end
     

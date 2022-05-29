@@ -46,6 +46,9 @@ p % panel graphical handle
 ID (data, string) is a few-letter code for the panel.
 
 %%% ¡prop!
+WAITBAR (gui, logical) detemines whether to show the waitbar.
+
+%%% ¡prop!
 BKGCOLOR (gui, color) is the panel background color.
 %%%% ¡default!
 BRAPH2.COL_FIG
