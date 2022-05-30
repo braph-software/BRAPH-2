@@ -13,12 +13,6 @@ PanelFig, GUIFig
 ID (data, string) is a few-letter code for the axis settings.
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the axis settings.
-
-%%% ¡prop!
-NOTES (metadata, string) are some specific notes about the axis settings.
-
-%%% ¡prop!
 AXISCOLOR (figure, color) is the axis background color.
 %%%% ¡default!
 [1 1 1]

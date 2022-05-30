@@ -357,7 +357,9 @@ classdef BRAPH2
             end
 
             if ~isempty(filename)
-                exportgraphics(h, filename, varargin{:});
+                exportgraphics(h, filename, ...
+                    'BackgroundColor', 'current', ...
+                    varargin{:});
 
                 saved = true;
             else

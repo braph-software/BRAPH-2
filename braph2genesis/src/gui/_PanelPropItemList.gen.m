@@ -14,6 +14,9 @@ button_list
 
 f_item_list % item figures
 
+l_setprop_list % listeners to SetProp
+l_resultmemorized_list % listeners to ResultMemorized
+
 %% ¡methods!
 function p_out = draw(pr, varargin)
     %DRAW draws the panel of the item-list property.
@@ -79,6 +82,22 @@ function update(pr)
         pr.cb_button(i)
     end
 
+    % add listeners
+    if ~isa(el.getr(prop), 'NoValue')
+        % add listener to prop set in items
+        pr.l_setprop_list = cellfun(@(it) listener(it, 'PropSet', @cb_prop_set), el.get(prop), 'UniformOutput', false);
+
+        % add listener to result memorized in items
+        pr.l_resultmemorized_list = cellfun(@(it) listener(it, 'ResultMemorized', @cb_result_memorized), el.get(prop), 'UniformOutput', false);
+    end
+    function cb_prop_set(~, ~)
+        notify(el, 'PropSet', EventPropSet(el, prop))
+disp(['PPL UUU ' tostring(prop)]) % % %
+    end
+    function cb_result_memorized(~, ~)
+        notify(el, 'PropSet', EventPropSet(el, prop))
+disp(['PPL MMM ' tostring(prop)]) % % %
+    end
 end
 function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
@@ -133,12 +152,13 @@ function cb_button(pr, i)
         
         el = pr.get('EL');
         prop = pr.get('PROP');
-        item_list = el.get(prop);
+        item_list = el.memorize(prop); % ensure that the property is stored
 
         if ~check_graphics(pr.f_item_list{i}, 'figure')
             f = ancestor(pr.p, 'figure');
             gui = GUIElement( ...
                 'PE', item_list{i}, ...
+                'WAITBAR', Callback('EL', pr, 'TAG', 'WAITBAR'), ...
                 'POSITION', [x0(f, 'normalized')+w(f, 'normalized') y0(f, 'normalized') w(f, 'normalized') h(f, 'normalized')], ...
                 'CLOSEREQ', false ...
                 );
@@ -207,6 +227,14 @@ function cb_close(pr)
         if check_graphics(pr.f_item_list{i}, 'figure')
             close(pr.f_item_list{i})
         end
+    end
+    
+    % delete listeners
+    if ~isempty(pr.l_setprop_list)
+        cellfun(@(l_setprop) delete(l_setprop), pr.l_setprop_list, 'UniformOutput', false)
+    end
+    if ~isempty(pr.l_resultmemorized_list)
+        cellfun(@(l_resultmemorized) delete(l_resultmemorized), pr.l_resultmemorized_list, 'UniformOutput', false)
     end
 end
 

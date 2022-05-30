@@ -13,12 +13,6 @@ PanelFig, GUIFig
 ID (data, string) is a few-letter code for the ambient settings.
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the ambient settings.
-
-%%% ¡prop!
-NOTES (metadata, string) are some specific notes about the ambient settings.
-
-%%% ¡prop!
 LIGHTING (figure, option) is the lighting value.
 %%%% ¡settings!
 {'none' 'phong' 'flat' 'gouraud'}

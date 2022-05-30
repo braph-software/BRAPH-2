@@ -13,12 +13,6 @@ PanelFig, GUIFig
 ID (data, string) is a few-letter code for the surface settings.
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the surface settings.
-
-%%% ¡prop!
-NOTES (metadata, string) are some specific notes about the surface settings.
-
-%%% ¡prop!
 EDGECOLOR (figure, color) is the RGB edge color.
 %%%% ¡default!
 [0 0 0]

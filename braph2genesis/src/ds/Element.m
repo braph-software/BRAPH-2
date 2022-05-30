@@ -951,18 +951,29 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % It calls the function <a href="matlab:help Element.check">check</a> and
             %  proceed to save the result if the property is Category.RESULT.
             %
-            % See also get, getr, set, check.
+            % If the property is NOT Category.RESULT and has not been set yet, 
+            %  it sets it to its default value.
+            %
+            % If the property is NOT Category.RESULT and is a Callback, 
+            %  it iteratively memorizes the property of the element in the Callback.
+            %
+            % See also get, getr, set, check, Callback.
 
             prop = el.getPropProp(pointer);
 
-            value = el.get(prop);
-
-            if isequal(el.getPropCategory(prop), Category.RESULT)
+            if isa(el.props{prop}.value, 'Callback')
+                cb = el.props{prop}.value;
+                value = cb.get('EL').memorize(cb.get('PROP'));
+            else
+                value = el.get(prop); % retrieves or calculates the value
+                
                 if isa(el.props{prop}.value, 'NoValue')
                     el.props{prop}.value = value;
-
-                    % notify event result memorized
-                    notify(el, 'ResultMemorized', EventResultMemorized(el, pointer))
+                    
+                    if isequal(el.getPropCategory(prop), Category.RESULT) 
+                        % notify event result memorized
+                        notify(el, 'ResultMemorized', EventResultMemorized(el, pointer))
+                    end
                 end
             end
         end

@@ -13,12 +13,6 @@ PanelFig, GUIFig
 ID (data, string) is a few-letter code for the figure panel settings.
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the figure panel settings.
-
-%%% ¡prop!
-NOTES (metadata, string) are some specific notes about the figure panel settings.
-
-%%% ¡prop!
 AUTOPOS (figure, logical) determines whether the position is adjusted automatically.
 %%%% ¡default!
 true

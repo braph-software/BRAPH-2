@@ -14,6 +14,9 @@ button
 
 f_idict % idict figure
 
+l_setprop % listener to SetProp
+l_resultmemorized % listener to ResultMemorized
+
 %% ¡methods!
 function p_out = draw(pr, varargin)
     %DRAW draws the panel of the idict property.
@@ -96,6 +99,23 @@ function update(pr)
                     )
             end
     end
+    
+    % add listeners
+    if ~isa(el.getr(prop), 'NoValue')
+        % add listener to prop set in el
+        pr.l_setprop = listener(el.get(prop), 'PropSet', @cb_prop_set);
+
+        % add listener to result memorized in el
+        pr.l_resultmemorized = listener(el.get(prop), 'ResultMemorized', @cb_result_memorized);
+    end
+    function cb_prop_set(~, ~)
+        notify(el, 'PropSet', EventPropSet(el, prop))
+disp(['PPD UUU ' tostring(prop)]) % % %
+    end
+    function cb_result_memorized(~, ~)
+        notify(el, 'PropSet', EventPropSet(el, prop))
+disp(['PPD MMM ' tostring(prop)]) % % %
+    end
 end
 function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
@@ -144,7 +164,8 @@ function cb_button(pr)
         if ~check_graphics(pr.f_idict, 'figure')
             f = ancestor(pr.p, 'figure');
             gui = GUIElement( ...
-                'PE', el.get(prop), ...
+                'PE', el.memorize(prop), ... % ensure that the property is stored
+                'WAITBAR', Callback('EL', pr, 'TAG', 'WAITBAR'), ...
                 'POSITION', [x0(f, 'normalized')+w(f, 'normalized') y0(f, 'normalized') w(f, 'normalized') h(f, 'normalized')], ...
                 'CLOSEREQ', false ...
                 );
@@ -208,6 +229,10 @@ function cb_close(pr)
     if check_graphics(pr.f_idict, 'figure')
         close(pr.f_idict)
     end
+    
+    % delete listeners
+    delete(pr.l_setprop)
+    delete(pr.l_resultmemorized)
 end
 
 %% ¡tests!
