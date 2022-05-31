@@ -545,7 +545,11 @@ function x_draw(gui, f)
                 gui.f_settings = gui_settings.draw();
             else
                 gui_settings = get(gui.f_settings, 'UserData');
-                gui_settings.cb_bring_to_front();
+                if get(gui.f_settings, 'Visible')
+                    gui_settings.cb_hide()
+                else
+                    gui_settings.cb_bring_to_front()
+                end
             end
             
             %%% end callback %%%
