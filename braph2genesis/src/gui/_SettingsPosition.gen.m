@@ -1,5 +1,5 @@
 %% ¡header!
-SettingsPosition < Element (st, position settings) contains the figure panel settings.
+SettingsPosition < Settings (st, position settings) contains the figure panel settings.
 
 %%% ¡description!
 % % %
@@ -10,12 +10,22 @@ PanelFig, GUIFig
 %% ¡props!
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the figure panel settings.
-
-%%% ¡prop!
 AUTOPOS (figure, logical) determines whether the position is adjusted automatically.
 %%%% ¡default!
 true
+%%%% ¡postprocessing!
+p = st.h();
+if st.get('AUTOPOS') && (~strcmpi(get(p, 'Units'), 'normalized') || ~isequal(get(p, 'Position'), [0 0 1 1]))
+    set(p, ...
+        'Units', 'normalized', ...
+        'Position', [0 0 1 1] ...
+        )
+elseif ~st.get('AUTOPOS') && (~strcmpi(get(p, 'Units'), 'pixels') || ~isequal(get(p, 'Position'), [st.get('X0') st.get('Y0') st.get('WIDTH') st.get('HEIGHT')]))
+    set(p, ...
+        'Units', 'pixels', ...
+        'Position', [st.get('X0') st.get('Y0') st.get('WIDTH') st.get('HEIGHT')] ...
+        )
+end
 
 %%% ¡prop!
 X0 (figure, size) is the lower left x-coordinate of the panel in pixels.

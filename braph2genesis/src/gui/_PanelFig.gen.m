@@ -32,58 +32,6 @@ GUI, GUIFig, uipanel
 ST_POSITION (figure, item) determines the panel position.
 %%%% ¡settings!
 'SettingsPosition'
-%%%% ¡default!
-SettingsPosition('AUTOPOS', false, 'X0', 1, 'Y0', 1, 'WIDTH', 200, 'HEIGHT', 100)
-%%%% ¡postprocessing!
-st = pf.get('ST_POSITION');
-if st.get('AUTOPOS') && (~strcmpi(get(pf.p, 'Units'), 'normalized') || ~isequal(get(pf.p, 'Position'), [0 0 1 1]))
-    set(pf.p, ...
-        'Units', 'normalized', ...
-        'Position', [0 0 1 1] ...
-        )
-elseif ~st.get('AUTOPOS') && (~strcmpi(get(pf.p, 'Units'), 'pixels') || ~isequal(get(pf.p, 'Position'), [st.get('X0') st.get('Y0') st.get('WIDTH') st.get('HEIGHT')]))
-    set(pf.p, ...
-        'Units', 'pixels', ...
-        'Position', [st.get('X0') st.get('Y0') st.get('WIDTH') st.get('HEIGHT')] ...
-        )
-end
-
-% %%% ¡prop!
-% AUTOPOS (figure, logical) determines whether the position is adjusted automatically.
-% %%%% ¡default!
-% true
-% %%%% ¡postprocessing!
-% if pf.get('AUTOPOS') && (~strcmpi(get(pf.p, 'Units'), 'normalized') || ~isequal(get(pf.p, 'Position'), [0 0 1 1]))
-%     set(pf.p, ...
-%         'Units', 'normalized', ...
-%         'Position', [0 0 1 1] ...
-%         )
-% elseif ~pf.get('AUTOPOS') && (~strcmpi(get(pf.p, 'Units'), 'pixels') || ~isequal(get(pf.p, 'Position'), [pf.get('X0') pf.get('Y0') pf.get('WIDTH') pf.get('HEIGHT')]))
-%     set(pf.p, ...
-%         'Units', 'pixels', ...
-%         'Position', [pf.get('X0') pf.get('Y0') pf.get('WIDTH') pf.get('HEIGHT')] ...
-%         )
-% end
-% 
-% %%% ¡prop!
-% X0 (figure, size) is the lower left x-coordinate of the panel in pixels.
-% %%%% ¡default!
-% 1
-% 
-% %%% ¡prop!
-% Y0 (figure, size) is the lower-left y-coordinate of the panel in pixels.
-% %%%% ¡default!
-% 1
-% 
-% %%% ¡prop!
-% WIDTH (figure, size) is the width of the panel in pixels.
-% %%%% ¡default!
-% 800
-% 
-% %%% ¡prop!
-% HEIGHT (figure, size) is the height of the panel in pixels.
-% %%%% ¡default!
-% 600
 
 %% ¡props_update!
 
@@ -121,6 +69,10 @@ function p_out = draw(pf, varargin)
         'AutoResizeChildren', 'off' ...
         );
     
+    if isa(pf.getr('ST_POSITION'), 'NoValue')
+        pf.memorize('ST_POSITION').set('PANEL', pf, 'UITAG', 'p')
+    end
+        
     % output
     if nargout > 0
         p_out = pf.p;
