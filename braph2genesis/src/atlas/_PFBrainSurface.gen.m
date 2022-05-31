@@ -374,7 +374,7 @@ function p_out = draw(pf, varargin)
     % Toolbar
     pf.toolbar = findall(ancestor(pf.p, 'Figure'), 'Tag', 'ToolBar');
     
-    if check_graphics(pf.toolbar, 'uitoolbar')
+    if check_graphics(pf.toolbar, 'uitoolbar') && ~check_graphics(pf.tool_brain, 'uitoggletool') % implies that also the other tools are not defined
         
         uipushtool(pf.toolbar, 'Separator', 'on', 'Visible', 'off')
 
@@ -416,7 +416,7 @@ function p_out = draw(pf, varargin)
         pf.set('grid', grid);
     end
     
-    if check_graphics(pf.toolbar, 'uitoolbar')
+    if check_graphics(pf.toolbar, 'uitoolbar') && ~check_graphics(pf.tool_view3D, 'uitoggletool') % implies that also the other tools are not defined
 
         uipushtool(pf.toolbar, 'Separator', 'on', 'Visible', 'off')
         
