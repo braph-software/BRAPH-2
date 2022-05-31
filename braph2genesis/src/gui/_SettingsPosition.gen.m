@@ -15,7 +15,7 @@ AUTOPOS (figure, logical) determines whether the position is adjusted automatica
 %%%% ¡default!
 true
 %%%% ¡postprocessing!
-p = st.h();
+p = st.h(); % panel
 if st.get('AUTOPOS') && (~strcmpi(get(p, 'Units'), 'normalized') || ~isequal(get(p, 'Position'), [0 0 1 1]))
     set(p, ...
         'Units', 'normalized', ...

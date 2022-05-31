@@ -116,81 +116,18 @@ if (isempty(varargin) || pf.prop_set('VIEW', varargin)) && check_graphics(pf.h_a
 end
 
 %%% ¡prop!
-AXISCOLOR (figure, color) is the axis background color.
+ST_AXIS (figure, item) determines the axis settings.
+%%%% ¡settings!
+'SettingsAxis'
 %%%% ¡default!
-[1 1 1]
+SettingsAxis('GRID', false, 'AXIS', false)
 %%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set('AXISCOLOR', varargin)) && check_graphics(pf.h_axes, 'axes')
-    if ~isequal(set(pf.h_axes, 'Color'), pf.get('AXISCOLOR'))
-        set(pf.h_axes, 'Color', pf.get('AXISCOLOR'))
-    end
-end
-
-%%% ¡prop!
-HOLD (figure, logical) determines whether hold is on or off.
-%%%% ¡default!
-true
-%%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set('HOLD', varargin)) && check_graphics(pf.h_axes, 'axes')
-    if pf.get('HOLD')
-        hold(pf.h_axes, 'on')
-    else
-        hold(pf.h_axes, 'off')
-    end
-end
-
-%%% ¡prop!
-GRID (figure, logical) determines whether the grid is shown.
-%%%% ¡default!
-false
-%%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set('GRID', varargin)) && check_graphics(pf.h_axes, 'axes')
-    if pf.get('GRID')
-        grid(pf.h_axes, 'on')
-    else
-        grid(pf.h_axes, 'off')
-    end
+if (isempty(varargin) || pf.prop_set('ST_AXIS', varargin)) && check_graphics(pf.h_axes, 'axes')
+    % update state of toggle tool
+    set(pf.tool_grid, 'State', pf.get('ST_AXIS').get('GRID'))
 
     % update state of toggle tool
-    set(pf.tool_grid, 'State', pf.get('GRID'))
-end
-
-%%% ¡prop!
-AXIS (figure, logical) determines whether the axis is shown.
-%%%% ¡default!
-false
-%%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set('AXIS', varargin)) && check_graphics(pf.h_axes, 'axes')
-    if pf.get('AXIS')
-        axis(pf.h_axes, 'on')
-    else
-        axis(pf.h_axes, 'off')
-    end
-    
-    % update state of toggle tool
-    set(pf.tool_axis, 'State', pf.get('AXIS'))
-end
-
-%%% ¡prop!
-EQUAL (figure, logical) determines whether the axis are equal.
-%%%% ¡default!
-true
-%%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set('EQUAL', varargin)) && check_graphics(pf.h_axes, 'axes')
-    if pf.get('EQUAL')
-        daspect(pf.h_axes, [1 1 1])
-    end
-end
-
-%%% ¡prop!
-TIGHT (figure, logical) determines whether the axis are tight.
-%%%% ¡default!
-false
-%%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set('TIGHT', varargin)) && check_graphics(pf.h_axes, 'axes')
-    if pf.get('TIGHT')
-        axis(pf.h_axes, 'tight')
-    end
+    set(pf.tool_axis, 'State', pf.get('ST_AXIS').get('AXIS'))
 end
 
 %%% ¡prop!
@@ -198,32 +135,11 @@ BRAIN (figure, logical) determines whether the brain surface is shown.
 %%%% ¡default!
 true
 %%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set('BRAIN', varargin)) && check_graphics(pf.h_axes, 'axes')
+if (isempty(varargin) || pf.prop_set('BRAIN', varargin)) && check_graphics(pf.h_brain, 'patch')
     if pf.get('BRAIN')
-        if ~check_graphics(pf.h_brain, 'patch')
-            
-            triangles = pf.get('SURF').get('TRIANGLES');
-            coordinates = pf.get('SURF').get('COORDINATES');
-            pf.h_brain = trisurf( ...
-                triangles, ...
-                coordinates(:, 1), ...
-                coordinates(:, 2), ...
-                coordinates(:, 3), ...
-                'Parent', pf.h_axes ...
-                );
-            xlabel(pf.h_axes, 'Sagittal')
-            ylabel(pf.h_axes, 'Axial')
-            zlabel(pf.h_axes, 'Coronal')
-            
-        elseif ~get(pf.h_brain, 'Visible')
-            
-            set(pf.h_brain, 'Visible', 'on')
-            
-        end
+        set(pf.h_brain, 'Visible', 'on')
     else % ~pf.get('BRAIN') 
-        if check_graphics(pf.h_brain, 'patch') && get(pf.h_brain, 'Visible')
-            set(pf.h_brain, 'Visible', 'off')
-        end
+        set(pf.h_brain, 'Visible', 'off')
     end
     
     % update state of toggle tool
@@ -231,108 +147,16 @@ if (isempty(varargin) || pf.prop_set('BRAIN', varargin)) && check_graphics(pf.h_
 end
 
 %%% ¡prop!
-EDGECOLOR (figure, color) is the RGB edge color.
-%%%% ¡default!
-[0 0 0]
-%%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set('EDGECOLOR', varargin)) && check_graphics(pf.h_axes, 'axes') && check_graphics(pf.h_brain, 'patch')
-% % %     if ~isequal(set(pf.h_brain, 'EdgeColor'), pf.get('EDGECOLOR'))
-        set(pf.h_brain, 'EdgeColor', pf.get('EDGECOLOR'))
-% % %     end
-end
-
-%%% ¡prop!
-EDGEALPHA (figure, alpha) is the edge transparency.
-%%%% ¡default!
-0
-%%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set('EDGEALPHA', varargin)) && check_graphics(pf.h_axes, 'axes') && check_graphics(pf.h_brain, 'patch')
-% % %     if ~isequal(set(pf.h_brain, 'EdgeAlpha'), pf.get('EDGEALPHA'))
-        set(pf.h_brain, 'EdgeAlpha', pf.get('EDGEALPHA'))
-% % %     end
-end
-
-%%% ¡prop!
-FACECOLOR (figure, color) is the RGB face color.
-%%%% ¡default!
-[.5 .5 .5]
-%%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set('FACECOLOR', varargin)) && check_graphics(pf.h_axes, 'axes') && check_graphics(pf.h_brain, 'patch')
-% % %     if ~isequal(set(pf.h_brain, 'FaceColor'), pf.get('FACECOLOR'))
-        set(pf.h_brain, 'FaceColor', pf.get('FACECOLOR'))
-% % %     end
-end
-
-%%% ¡prop!
-FACEALPHA (figure, alpha) is the face transparency.
-%%%% ¡default!
-1
-%%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set('FACEALPHA', varargin)) && check_graphics(pf.h_axes, 'axes') && check_graphics(pf.h_brain, 'patch')
-% % %     if ~isequal(set(pf.h_brain, 'FaceAlpha'), pf.get('FACEALPHA'))
-        set(pf.h_brain, 'FaceAlpha', pf.get('FACEALPHA'))
-% % %     end
-end
-
-%%% ¡prop!
-LIGHTING (figure, option) is the lighting value.
+ST_SURFACE (figure, item) determines the surface settings.
 %%%% ¡settings!
-{'none' 'phong' 'flat' 'gouraud'}
-%%%% ¡default!
-'gouraud'
-%%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set({'LIGHTING', 'MATERIAL', 'CAMLIGHT', 'SHADING', 'COLORMAP'}, varargin)) && check_graphics(pf.h_axes, 'axes')
-    lighting(pf.h_axes, pf.get('LIGHTING'))
-end
+'SettingsSurface'
 
 %%% ¡prop!
-MATERIAL (figure, option) is the material value.
+ST_AMBIENT (figure, item) determines the ambient settings.
 %%%% ¡settings!
-{'shiny' 'dull' 'metal'}
+'SettingsAmbient'
 %%%% ¡default!
-'shiny'
-%%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set({'LIGHTING', 'MATERIAL', 'CAMLIGHT', 'SHADING', 'COLORMAP'}, varargin)) && check_graphics(pf.h_axes, 'axes')
-    material(pf.h_axes, pf.get('MATERIAL'))
-end
-
-%%% ¡prop!
-CAMLIGHT (figure, option) is the camlight value.
-%%%% ¡settings!
-{'none' 'headlight' 'right' 'left'}
-%%%% ¡default!
-'headlight'
-%%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set({'LIGHTING', 'MATERIAL', 'CAMLIGHT', 'SHADING', 'COLORMAP'}, varargin)) && check_graphics(pf.h_axes, 'axes')
-    delete(findall(pf.h_axes, 'Type', 'light'));
-    if ~strcmpi(pf.get('CAMLIGHT'), 'none')
-        camlight(pf.h_axes, pf.get('CAMLIGHT'))
-    end
-end
-
-%%% ¡prop!
-SHADING (figure, option) is the shading value.
-%%%% ¡settings!
-{'none' 'interp' 'flat' 'faceted'}
-%%%% ¡default!
-'interp'
-%%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set({'LIGHTING', 'MATERIAL', 'CAMLIGHT', 'SHADING', 'COLORMAP'}, varargin)) && check_graphics(pf.h_axes, 'axes')
-    if ~strcmpi(pf.get('SHADING'), 'none')
-        shading(pf.h_axes, pf.get('SHADING'))
-    end
-end
-
-%%% ¡prop!
-COLORMAP (figure, option) is the colormap.
-%%%% ¡settings!
-{'white', 'parula', 'jet', 'hsv', 'hot', 'cool', 'spring', 'summer', 'autumn', 'winter', 'gray', 'bone', 'copper', 'pink', 'lines', 'colorcube', 'prism', 'flag'}
-%%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set({'LIGHTING', 'MATERIAL', 'CAMLIGHT', 'SHADING', 'COLORMAP'}, varargin)) && check_graphics(pf.h_axes, 'axes')
-    if ~strcmpi(pf.get('SHADING'), 'none')
-        colormap(pf.h_axes, pf.get('COLORMAP'))
-    end
-end
+SettingsAmbient('LIGHTING', 'gouraud', 'MATERIAL', 'shiny', 'CAMLIGHT', 'headlight', 'SHADING', 'interp')
         
 %% ¡methods!
 function p_out = draw(pf, varargin)
@@ -371,6 +195,31 @@ function p_out = draw(pf, varargin)
 % % %         end
     end
     
+    if ~check_graphics(pf.h_brain, 'patch')
+        triangles = pf.get('SURF').get('TRIANGLES');
+        coordinates = pf.get('SURF').get('COORDINATES');
+        pf.h_brain = trisurf( ...
+            triangles, ...
+            coordinates(:, 1), ...
+            coordinates(:, 2), ...
+            coordinates(:, 3), ...
+            'Parent', pf.h_axes ...
+            );
+        xlabel(pf.h_axes, 'Sagittal')
+        ylabel(pf.h_axes, 'Axial')
+        zlabel(pf.h_axes, 'Coronal')
+    end
+
+    if isa(pf.getr('ST_AXIS'), 'NoValue')
+        pf.memorize('ST_AXIS').set('PANEL', pf, 'UITAG', 'h_axes')
+    end
+    if isa(pf.getr('ST_SURFACE'), 'NoValue')
+        pf.memorize('ST_SURFACE').set('PANEL', pf, 'UITAG', 'h_brain')
+    end
+    if isa(pf.getr('ST_AMBIENT'), 'NoValue')
+        pf.memorize('ST_AMBIENT').set('PANEL', pf, 'UITAG', 'h_axes')
+    end
+    
     % Toolbar
     pf.toolbar = findall(ancestor(pf.p, 'Figure'), 'Tag', 'ToolBar');
     
@@ -391,7 +240,7 @@ function p_out = draw(pf, varargin)
         % Axis
         pf.tool_axis = uitoggletool(pf.toolbar, ...
             'Tag', 'tool_axis', ...
-            'State', pf.get('AXIS'), ...
+            'State', pf.get('ST_AXIS').get('AXIS'), ...
             'Tooltip', 'Show axis', ...
             'CData', imresize(imread('icon_axis.png'), [16 16]), ...
             'OnCallback', {@cb_axis, true}, ...
@@ -400,7 +249,7 @@ function p_out = draw(pf, varargin)
         % Grid
         pf.tool_grid = uitoggletool(pf.toolbar, ...
             'Tag', 'tool_grid', ...
-            'State', pf.get('GRID'), ...
+            'State', pf.get('ST_AXIS').get('GRID'), ...
             'Tooltip', 'Show grid', ...
             'CData', imresize(imread('icon_grid.png'), [16 16]), ...
             'OnCallback', {@cb_grid, true}, ...
@@ -410,10 +259,10 @@ function p_out = draw(pf, varargin)
         pf.set('BRAIN', brain)
     end
     function cb_axis(~, ~, axis) % (src, event)
-        pf.set('axis', axis);
+        pf.get('ST_AXIS').set('AXIS', axis);
     end
     function cb_grid(~, ~, grid) % (src, event)
-        pf.set('grid', grid);
+        pf.get('ST_AXIS').set('GRID', grid);
     end
     
     if check_graphics(pf.toolbar, 'uitoolbar') && ~check_graphics(pf.tool_view3D, 'uitoggletool') % implies that also the other tools are not defined
@@ -504,11 +353,11 @@ pf.set('BRAIN', false)
 
 pf.set('BRAIN', true)
 
-pf.set('GRID', false)
+pf.get('ST_AXIS').set('GRID', false)
 
-pf.set('GRID', true)
+pf.get('ST_AXIS').set('GRID', true)
 
-pf.set('AXIS', false)
+pf.get('ST_AXIS').set('AXIS', false)
 
 pf.set('EQUAL', true)
 
