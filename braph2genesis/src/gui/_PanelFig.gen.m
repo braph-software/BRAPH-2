@@ -32,6 +32,8 @@ GUI, GUIFig, uipanel
 ST_POSITION (figure, item) determines the panel position.
 %%%% ¡settings!
 'SettingsPosition'
+%%%% ¡gui!
+pr = SettingsPositionPP('EL', pf, 'PROP', PanelFig.ST_POSITION, varargin{:});
 
 %% ¡props_update!
 

@@ -28,12 +28,12 @@ elseif ~st.get('AUTOPOS') && (~strcmpi(get(p, 'Units'), 'pixels') || ~isequal(ge
 end
 
 %%% ¡prop!
-X0 (figure, size) is the lower left x-coordinate of the panel in pixels.
+X0 (figure, scalar) is the lower left x-coordinate of the panel in pixels.
 %%%% ¡default!
 1
 
 %%% ¡prop!
-Y0 (figure, size) is the lower-left y-coordinate of the panel in pixels.
+Y0 (figure, scalar) is the lower-left y-coordinate of the panel in pixels.
 %%%% ¡default!
 1
 
