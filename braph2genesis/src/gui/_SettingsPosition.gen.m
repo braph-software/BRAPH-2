@@ -2,7 +2,8 @@
 SettingsPosition < Settings (st, position settings) contains the figure panel settings.
 
 %%% ¡description!
-% % %
+SettingsPosition provides the settings for a panel, 
+including autopositioning, x0, y0, height and width.
 
 %%% ¡seealso!
 PanelFig, GUIFig

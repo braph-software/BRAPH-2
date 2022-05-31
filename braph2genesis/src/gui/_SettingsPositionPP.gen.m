@@ -2,10 +2,12 @@
 SettingsPositionPP < PanelProp (pr, settings position panel) is the panel with position settings.
 
 %%% ¡description!
-% % %
+SettingsPositionPP plots the panel for position settings including 
+a checkbox for autopositioning and numeric edit fields for x0, y0, height and width.
+It works for all categories.
 
 %%% ¡seealso!
-SettingsPosition
+SettingsPosition, uicheckbox, uieditfield
 
 %% ¡properties!
 p
@@ -21,20 +23,20 @@ editfield_h
 
 %% ¡methods!
 function p_out = draw(pr, varargin)
-% % %     %DRAW draws the panel of the scalar property.
-% % %     %
-% % %     % DRAW(PR) draws the panel of the scalar property.
-% % %     %
-% % %     % P = DRAW(PR) returns a handle to the property panel.
-% % %     %
-% % %     % DRAW(PR, 'Property', VALUE, ...) sets the properties of the graphical
-% % %     %  panel with custom Name-Value pairs.
-% % %     %  All standard panel properties of uipanel can be used.
-% % %     %
-% % %     % It is possible to access the properties of the various graphical
-% % %     %  objects from the handle P of the panel.
-% % %     %
-% % %     % See also update, redraw, uipanel.
+    %DRAW draws the panel of position settings.
+    %
+    % DRAW(PR) draws the panel of position settings.
+    %
+    % P = DRAW(PR) returns a handle to the property panel.
+    %
+    % DRAW(PR, 'Property', VALUE, ...) sets the properties of the graphical
+    %  panel with custom Name-Value pairs.
+    %  All standard panel properties of uipanel can be used.
+    %
+    % It is possible to access the properties of the various graphical
+    %  objects from the handle P of the panel.
+    %
+    % See also update, redraw, uipanel.
 
     el = pr.get('EL');
     prop = pr.get('PROP');
@@ -163,11 +165,11 @@ function p_out = draw(pr, varargin)
     end
 end
 function update(pr)
-% % %     %UPDATE updates the content and permissions of the edit field.
-% % %     %
-% % %     % UPDATE(PR) updates the content and permissions of the edit field.
-% % %     %
-% % %     % See also draw, redraw, PanelElement.
+    %UPDATE updates the content and permissions of the position settings.
+    %
+    % UPDATE(PR) updates the content and permissions of the position settings.
+    %
+    % See also draw, redraw, PanelElement.
 
     update@PanelProp(pr)
     
@@ -196,7 +198,11 @@ function update(pr)
 
     switch el.getPropCategory(prop)
         case Category.METADATA
-% % %             set(pr.editfield, 'Value', el.get(prop))
+            set(pr.checkbox_autopos, 'Value', el.get(prop).get('AUTOPOS'))
+            set(pr.editfield_x0, 'Value', el.get(prop).get('X0'))
+            set(pr.editfield_y0, 'Value', el.get(prop).get('Y0'))
+            set(pr.editfield_w, 'Value', el.get(prop).get('WIDTH'))
+            set(pr.editfield_h, 'Value', el.get(prop).get('HEIGHT'))
 
         case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
             set(pr.checkbox_autopos, 'Value', el.get(prop).get('AUTOPOS'))
@@ -290,25 +296,25 @@ function update(pr)
     end
 end
 function redraw(pr, varargin)
-% % %     %REDRAW resizes the property panel and repositions its graphical objects.
-% % %     %
-% % %     % REDRAW(PR) resizes the property panel and repositions its graphical objects. 
-% % %     % 
-% % %     % Important notes:
-% % %     % 1. REDRAW() sets the units 'pixels' for panel. 
-% % %     % 2. REDRAW() is typically called internally by PanelElement and does not need 
-% % %     %  to be explicitly called in children of PanelProp.
-% % %     %
-% % %     % REDRAW(PR, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT)
-% % %     %  repositions the property panel. It is possible to use a
-% % %     %  subset of the Name-Value pairs.
-% % %     %  By default:
-% % %     %  - X0 does not change
-% % %     %  - Y0 does not change
-% % %     %  - WIDTH does not change
-% % %     %  - HEIGHT = s(3.5)
-% % %     %
-% % %     % See also draw, update, PanelElement, s.
+    %REDRAW resizes the property panel and repositions its graphical objects.
+    %
+    % REDRAW(PR) resizes the property panel and repositions its graphical objects. 
+    % 
+    % Important notes:
+    % 1. REDRAW() sets the units 'pixels' for panel. 
+    % 2. REDRAW() is typically called internally by PanelElement and does not need 
+    %  to be explicitly called in children of PanelProp.
+    %
+    % REDRAW(PR, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT)
+    %  repositions the property panel. It is possible to use a
+    %  subset of the Name-Value pairs.
+    %  By default:
+    %  - X0 does not change
+    %  - Y0 does not change
+    %  - WIDTH does not change
+    %  - HEIGHT = s(3.5)
+    %
+    % See also draw, update, PanelElement, s.
 
     [h_p, varargin] = get_and_remove_from_varargin(s(3.5), 'Height', varargin);
     
