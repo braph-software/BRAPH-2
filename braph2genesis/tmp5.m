@@ -36,11 +36,11 @@ f0 = gui0.draw('Units', 'normalized', 'Position', [.1 .5 .4 .4]);
 
 return
 
-% pf1 = PFBrainSurface('SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
-% gui1 = GUIFig('PF', pf1, 'FILE', 'xxx sss', 'WAITBAR', true, 'CLOSEREQ', false);
-% f1 = gui1.draw('Units', 'normalized', 'Position', [.1 .5 .4 .4]);
-% 
-% return
+pf1 = PFBrainSurface('SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
+gui1 = GUIFig('PF', pf1, 'FILE', 'xxx sss', 'WAITBAR', true, 'CLOSEREQ', false);
+f1 = gui1.draw('Units', 'normalized', 'Position', [.1 .5 .4 .4]);
+
+return
 
 
 % br1 = BrainRegion('ID', 'id1', 'LABEL', 'label1', 'NOTES', 'notes1', 'X', 1, 'Y', 1, 'Z', 1);
