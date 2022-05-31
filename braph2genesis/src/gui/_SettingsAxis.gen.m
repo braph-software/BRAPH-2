@@ -2,15 +2,13 @@
 SettingsAxis < Element (st, axis settings) contains the axis settings.
 
 %%% ¡description!
-% % %
+SettingsAxis provides the settings for an axis, 
+including axis color, hold on/off, axis on/off, equal on/off, and tight on/off.
 
 %%% ¡seealso!
-PanelFig, GUIFig
+PanelFig, GUIFig, uiaxes
 
 %% ¡props!
-
-%%% ¡prop!
-ID (data, string) is a few-letter code for the axis settings.
 
 %%% ¡prop!
 AXISCOLOR (figure, color) is the axis background color.

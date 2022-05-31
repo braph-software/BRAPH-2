@@ -2,15 +2,13 @@
 SettingsAmbient < Element (st, ambient settings) contains the ambient settings.
 
 %%% ¡description!
-% % %
+SettingsAmbient provides the settings for the ambient lightning and material, 
+including lighting, material, camlight, shading, and colormap.
 
 %%% ¡seealso!
-PanelFig, GUIFig
+PanelFig, GUIFig, uiaxes
 
 %% ¡props!
-
-%%% ¡prop!
-ID (data, string) is a few-letter code for the ambient settings.
 
 %%% ¡prop!
 LIGHTING (figure, option) is the lighting value.

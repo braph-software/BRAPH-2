@@ -6,7 +6,7 @@ SettingsPosition provides the settings for a panel,
 including autopositioning, x0, y0, height and width.
 
 %%% ¡seealso!
-PanelFig, GUIFig
+PanelFig, GUIFig, uipanel
 
 %% ¡props!
 

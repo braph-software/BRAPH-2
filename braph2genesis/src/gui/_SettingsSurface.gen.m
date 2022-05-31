@@ -2,15 +2,13 @@
 SettingsSurface < Element (st, surface settings) contains the surface settings.
 
 %%% ¡description!
-% % %
+SettingsSurface provides the settings for a surface, 
+including face color, face alpha, edge color, and edge alpha.
 
 %%% ¡seealso!
-PanelFig, GUIFig
+PanelFig, GUIFig, patch
 
 %% ¡props!
-
-%%% ¡prop!
-ID (data, string) is a few-letter code for the surface settings.
 
 %%% ¡prop!
 EDGECOLOR (figure, color) is the RGB edge color.
