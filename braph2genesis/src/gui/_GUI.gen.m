@@ -32,6 +32,9 @@ GUIElement, GUIPlot, GUISettings, uifigure
 ID (data, string) is a few-letter code for the GUI.
 
 %%% ¡prop!
+WAITBAR (gui, logical) detemines whether to show the waitbar.
+
+%%% ¡prop!
 NAME (gui, string) is the name of the GUI.
 %%%% ¡default!
 BRAPH2.STR
@@ -80,6 +83,8 @@ menu_tmp
 menu_about
 
 toolbar
+
+wb % waitbar
 
 %% ¡methods!
 function f_out = draw(gui, varargin)

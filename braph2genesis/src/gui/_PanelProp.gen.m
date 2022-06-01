@@ -59,9 +59,6 @@ TITLE (gui, string) is the property title.
 %%% ¡prop!
 ENABLE (gui, logical) switches between active and inactive ui components.
 
-%%% ¡prop!
-WAITBAR (gui, logical) determines whether to show the waitbar when executing calculations.
-
 %% ¡properties!
 p % panel
 label_tag
@@ -313,10 +310,10 @@ function cb_button_calc(pr)
 
     el.memorize(prop);
 
-    % updates and redraws the parent PanelElement as well as all siblings PanelProp's
-    pe = get(get(pr.p, 'Parent'), 'UserData');
-    pe.update()
-    pe.redraw()
+% % %     % updates and redraws the parent PanelElement as well as all siblings PanelProp's
+% % %     pe = get(get(pr.p, 'Parent'), 'UserData');
+% % %     pe.update()
+% % %     pe.redraw()
 end
 function cb_button_del(pr)
     %CB_BUTTON_DEL executes callback for button delete.
@@ -330,10 +327,10 @@ function cb_button_del(pr)
     
     el.set(prop, NoValue.getNoValue())
 
-    % updates and redraws the parent PanelElement as well as all siblings PanelProp's
-    pe = get(get(pr.p, 'Parent'), 'UserData');
-    pe.update()
-    pe.redraw()
+% % %     % updates and redraws the parent PanelElement as well as all siblings PanelProp's
+% % %     pe = get(get(pr.p, 'Parent'), 'UserData');
+% % %     pe.update()
+% % %     pe.redraw()
 end
 function cb_bring_to_front(pr)
     %CB_BRING_TO_FRONT brings to the front the figure with the callback element.

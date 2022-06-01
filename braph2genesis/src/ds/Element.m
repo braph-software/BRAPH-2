@@ -16,6 +16,12 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %                    AFTER all properties have been set
     %   <strong>prop_set</strong>       - returns whether a prop has been set before postprocessing.
     %
+    % An element notifies the following <a href="matlab:help event">events</a>:
+    %  <strong>PropSet</strong>         - when a property is successfully set 
+    %                    with event data in <a href="matlab:help EventPropSet">EventPropSet</a>
+    %  <strong>ResultMemorized</strong> - when a result is successfully memorized
+    %                    with event data in <a href="matlab:help EventResultMemorized">EventResultMemorized</a>
+    %
     % Element constructor:
     %  Element - constructor
     %  
@@ -126,6 +132,10 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         %  first time a result is successfully calculated.
 
         props = {}
+    end
+    events
+        PropSet
+        ResultMemorized
     end
     methods (Static) % inspection
         function el_class = getClass(el)
@@ -601,7 +611,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     end
     methods % constructor
         function el = Element(varargin)
-            % ELEMENT() creates an Element.
+            %ELEMENT() creates an Element.
             %
             % ELEMENT(PROP, VALUE, ...) with property PROP initialized to VALUE.
             %
@@ -767,6 +777,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         )
                 end
             end
+            
+            % notify event prop set
+            notify(el, 'PropSet', EventPropSet(el, varargin{1:2:end}))
 
             % output
             if nargout > 0
@@ -938,14 +951,30 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % It calls the function <a href="matlab:help Element.check">check</a> and
             %  proceed to save the result if the property is Category.RESULT.
             %
-            % See also get, getr, set, check.
+            % If the property is NOT Category.RESULT and has not been set yet, 
+            %  it sets it to its default value.
+            %
+            % If the property is NOT Category.RESULT and is a Callback, 
+            %  it iteratively memorizes the property of the element in the Callback.
+            %
+            % See also get, getr, set, check, Callback.
 
             prop = el.getPropProp(pointer);
 
-            value = el.get(prop);
-
-            if isequal(el.getPropCategory(prop), Category.RESULT)
-                el.props{prop}.value = value;
+            if isa(el.props{prop}.value, 'Callback')
+                cb = el.props{prop}.value;
+                value = cb.get('EL').memorize(cb.get('PROP'));
+            else
+                value = el.get(prop); % retrieves or calculates the value
+                
+                if isa(el.props{prop}.value, 'NoValue')
+                    el.props{prop}.value = value;
+                    
+                    if isequal(el.getPropCategory(prop), Category.RESULT) 
+                        % notify event result memorized
+                        notify(el, 'ResultMemorized', EventResultMemorized(el, pointer))
+                    end
+                end
             end
         end
         function seed = getPropSeed(el, pointer)

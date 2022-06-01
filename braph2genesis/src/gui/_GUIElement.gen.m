@@ -130,6 +130,9 @@ function f_out = draw(gui, varargin)
     pe = gui.get('PE');
     el = pe.get('EL');
     
+    % set panel element waitbar to the same as the GUI waitbar
+    set(pe, 'WAITBAR', Callback('EL', gui, 'TAG', 'WAITBAR'))
+    
     % set GUI name
     if el.existsTag('ID')
         name = el.get('ID');

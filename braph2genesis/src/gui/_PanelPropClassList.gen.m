@@ -142,7 +142,7 @@ function cb_listbox(pr)
 
     el.set(prop, get(pr.listbox, 'Value'))
 
-    pr.update()
+% % %     pr.update()
 end
 
 %% ¡tests!

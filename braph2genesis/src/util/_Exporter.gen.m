@@ -20,4 +20,4 @@ LABEL (metadata, string) is an extended label of the exporter.
 NOTES (metadata, string) are some specific notes about the exporter.
 
 %%% ¡prop!
-WAITBAR (metadata, logical) detemines whether to how the waitbar.
+WAITBAR (metadata, logical) detemines whether to show the waitbar.

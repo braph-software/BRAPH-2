@@ -91,10 +91,10 @@ function update(pr)
                     'Enable', pr.get('ENABLE') ...
                     )
             else
-            set(pr.checkbox, ...
-                'Value', el.get(prop), ...
-                'Enable', pr.get('ENABLE') ...
-                )
+                set(pr.checkbox, ...
+                    'Value', el.get(prop), ...
+                    'Enable', pr.get('ENABLE') ...
+                    )
             end
     end
 end
@@ -135,7 +135,7 @@ function cb_checkbox(pr)
     
     el.set(prop, logical(get(pr.checkbox, 'Value')))
    
-    pr.update()
+% % %     pr.update()
 end
 
 %% ¡tests!
