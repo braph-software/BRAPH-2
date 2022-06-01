@@ -152,7 +152,7 @@ function p_out = draw(pr, varargin)
         pr.label_colormap =  uilabel( ...
             'Parent', pr.p, ...
             'Tag', 'label_colormap', ...
-            'Text', 'lightning', ...
+            'Text', 'colormap', ...
             'Interpreter', 'html', ...
             'FontSize', BRAPH2.FONTSIZE, ...
             'HorizontalAlignment', 'right', ...
@@ -318,20 +318,20 @@ function redraw(pr, varargin)
     
     pr.redraw@PanelProp('Height', h_p, varargin{:})
     
-    set(pr.label_lighting, 'Position', [s(.3) s(8.3) .30*w(pr.p, 'pixels') s(1.7)])
-    set(pr.dropdown_lighting, 'Position', [s(.3)+.30*w(pr.p, 'pixels')+s(.3) s(8.3) .60*w(pr.p, 'pixels') s(1.7)])
+    set(pr.label_lighting, 'Position', [s(.3) s(8.3) s(8) s(1.7)])
+    set(pr.dropdown_lighting, 'Position', [s(8.6) s(8.3) w(pr.p, 'pixels')-s(10) s(1.7)])
 
-    set(pr.label_material, 'Position', [s(.3) s(6.3) .30*w(pr.p, 'pixels') s(1.7)])
-    set(pr.dropdown_material, 'Position', [s(.3)+.30*w(pr.p, 'pixels')+s(.3) s(6.3) .60*w(pr.p, 'pixels') s(1.7)])
+    set(pr.label_material, 'Position', [s(.3) s(6.3) s(8) s(1.7)])
+    set(pr.dropdown_material, 'Position', [s(8.6) s(6.3) w(pr.p, 'pixels')-s(10) s(1.7)])
 
-    set(pr.label_camlight, 'Position', [s(.3) s(4.3) .30*w(pr.p, 'pixels') s(1.7)])
-    set(pr.dropdown_camlight, 'Position', [s(.3)+.30*w(pr.p, 'pixels')+s(.3) s(4.3) .60*w(pr.p, 'pixels') s(1.7)])
+    set(pr.label_camlight, 'Position', [s(.3) s(4.3) s(8) s(1.7)])
+    set(pr.dropdown_camlight, 'Position', [s(8.6) s(4.3) w(pr.p, 'pixels')-s(10) s(1.7)])
 
-    set(pr.label_shading, 'Position', [s(.3) s(2.3) .30*w(pr.p, 'pixels') s(1.7)])
-    set(pr.dropdown_shading, 'Position', [s(.3)+.30*w(pr.p, 'pixels')+s(.3) s(2.3) .60*w(pr.p, 'pixels') s(1.7)])
+    set(pr.label_shading, 'Position', [s(.3) s(2.3) s(8) s(1.7)])
+    set(pr.dropdown_shading, 'Position', [s(8.6) s(2.3) w(pr.p, 'pixels')-s(10) s(1.7)])
 
-    set(pr.label_colormap, 'Position', [s(.3) s(.3) .30*w(pr.p, 'pixels') s(1.7)])
-    set(pr.dropdown_colormap, 'Position', [s(.3)+.30*w(pr.p, 'pixels')+s(.3) s(.3) .60*w(pr.p, 'pixels') s(1.7)])
+    set(pr.label_colormap, 'Position', [s(.3) s(.3) s(8) s(1.7)])
+    set(pr.dropdown_colormap, 'Position', [s(8.6) s(.3) w(pr.p, 'pixels')-s(10) s(1.7)])
 end
 function cb_ambient(pr)
     %CB_AMBIENT executes callback for all fields.

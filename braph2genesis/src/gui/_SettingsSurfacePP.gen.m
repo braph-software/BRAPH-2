@@ -271,7 +271,7 @@ function cb_button_facecolor(pr)
     if ~isequal(new_color, el.get(prop).get('FACECOLOR'))
         el.get(prop).set('FACECOLOR', new_color)
 
-% % %         pr.update()
+        pr.update()
     end
 end
 function cb_editfield_facealpha(pr)
@@ -310,7 +310,7 @@ function cb_button_edgecolor(pr)
     if ~isequal(new_color, el.get(prop).get('EDGECOLOR'))
         el.get(prop).set('EDGECOLOR', new_color)
 
-% % %         pr.update()
+        pr.update()
     end
 end
 function cb_editfield_edgealpha(pr)

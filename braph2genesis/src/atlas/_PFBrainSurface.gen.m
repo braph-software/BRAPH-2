@@ -96,7 +96,7 @@ SURF (metadata, item) is the brain surface to be plotted.
 BrainAtlas.getPropDefault('SURF')
 
 %%% ¡prop!
-VIEW (figure, rvector) sets the desired view.
+VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.
 %%%% ¡check_prop!
 check = length(value) == 2;
 %%%% ¡default!
@@ -114,6 +114,8 @@ if (isempty(varargin) || pf.prop_set('VIEW', varargin)) && check_graphics(pf.h_a
     set(pf.tool_viewCA, 'State', isequal(pf.get('VIEW'), PFBrainSurface.VIEW_CA_AZEL))
     set(pf.tool_viewCP, 'State', isequal(pf.get('VIEW'), PFBrainSurface.VIEW_CP_AZEL))
 end
+%%%% ¡gui!
+pr = PP_View('EL', pf, 'PROP', PFBrainSurface.VIEW, varargin{:});
 
 %%% ¡prop!
 ST_AXIS (figure, item) determines the axis settings.
