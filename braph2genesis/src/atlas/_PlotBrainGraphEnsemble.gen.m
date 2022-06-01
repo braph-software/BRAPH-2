@@ -1746,6 +1746,7 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
                     for j = 1:1:n
                         k = k+1;
                         waitbar(k/(n*n), wb, ['Plotting connections: node ' num2str(i) ' - node ' num2str(j)]);
+                        value = adj(i, j);
                         if i == j || value == 0
                             continue;
                         end
