@@ -349,5 +349,5 @@ function cb_ambient(pr)
         'COLORMAP', get(pr.dropdown_colormap, 'Value') ...
         )
 
-% % %     pr.update()
+    pr.update()
 end

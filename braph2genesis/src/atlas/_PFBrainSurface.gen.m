@@ -152,6 +152,8 @@ end
 ST_SURFACE (figure, item) determines the surface settings.
 %%%% ¡settings!
 'SettingsSurface'
+%%%% ¡gui!
+pr = SettingsSurfacePP('EL', pf, 'PROP', PFBrainSurface.ST_SURFACE, varargin{:});
 
 %%% ¡prop!
 ST_AMBIENT (figure, item) determines the ambient settings.
