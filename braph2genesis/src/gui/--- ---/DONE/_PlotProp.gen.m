@@ -93,7 +93,6 @@ function h_panel = draw(pr, varargin)
     %  objects from the handle H of the panel.
     %
     % See also update, redraw, settings, uipanel.
-% % % disp('d') % FIXME
 
     pr.p = draw@Plot(pr, varargin{:});
 
@@ -191,7 +190,6 @@ function update(pr)
     %  to be explicitly called in children of PlotProp.
     %
     % See also draw, redraw, PlotElement.
-% % % disp('u') % FIXME
 
     el = pr.get('EL');
     prop = pr.get('PROP');
@@ -245,7 +243,6 @@ function redraw(pr, varargin)
     %  - HEIGHT=1.4 characters.
     %
     % See also draw, update, PlotElement.
-% % % disp('r') % FIXME
 
     el = pr.get('EL');
     prop = pr.get('PROP');

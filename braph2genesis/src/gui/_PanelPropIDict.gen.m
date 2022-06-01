@@ -110,11 +110,9 @@ function update(pr)
     end
     function cb_prop_set(~, ~)
         notify(el, 'PropSet', EventPropSet(el, prop))
-disp(['PPD UUU ' tostring(prop)]) % % %
     end
     function cb_result_memorized(~, ~)
         notify(el, 'PropSet', EventPropSet(el, prop))
-disp(['PPD MMM ' tostring(prop)]) % % %
     end
 end
 function redraw(pr, varargin)
