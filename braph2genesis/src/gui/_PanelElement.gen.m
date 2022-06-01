@@ -98,6 +98,7 @@ for prop = 1:1:el.getPropNumber()
 
         pr_list{order(prop)} = el.getPanelProp(prop, ...
             'ID', el.getPropTag(prop), ...
+            'WAITBAR', Callback('EL', pe, 'TAG', 'WAITBAR'), ...
             'TITLE', title{prop}, ...
             'BKGCOLOR', color);
     end
@@ -192,10 +193,8 @@ function p_out = draw(pe, varargin)
                 if el.getPropCategory(prop) == Category.RESULT
                     pe.update()
                     pe.redraw()
-disp(['PE UUU ' tostring(prop)]) % % % 
                 else
                     pe.get('PR_DICT').getItem(pri).update()
-disp(['PE RRR ' tostring(prop)]) % % % 
                 end
             end
         end
@@ -211,7 +210,6 @@ disp(['PE RRR ' tostring(prop)]) % % %
             if prop == memorized_prop
                     pe.update()
                     pe.redraw()
-disp(['PE MMM ' tostring(prop)]) % % % 
             end
         end        
     end

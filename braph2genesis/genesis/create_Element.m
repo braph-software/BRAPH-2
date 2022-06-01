@@ -75,6 +75,9 @@ function create_Element(generator_file, target_dir)
 %   value), executed on ALL unlocked props after each set operation.
 %   Can be on multiple lines.
 %   Does not return anything.
+%   To check whether a prop has been set in the current setting cycle, use
+%    el.prop_set('POINTER1', varargin)
+%    el.prop_set({'POINTER1', 'POINTER2'}, varargin)
 %  <strong>%%%% ¡check_prop!</strong>
 %   Code to check prop format (before calculation).
 %   Can be on multiple lines.

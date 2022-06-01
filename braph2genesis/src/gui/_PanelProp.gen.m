@@ -86,7 +86,7 @@ function p_out = draw(pr, varargin)
     %  objects from the handle P of the panel.
     %
     % See also update, redraw, uipanel.
-disp(['PR D ' tostring(pr.get('PROP')) ' ' tostring(pr.get('EL'))]) % % %
+
     pr.p = draw@Panel(pr, varargin{:});
 
     el = pr.get('EL');
@@ -173,7 +173,7 @@ function update(pr)
     %  to be explicitly called in children of PanelProp.
     %
     % See also draw, redraw, PanelElement.
-disp(['PR U ' tostring(pr.get('PROP')) ' ' tostring(pr.get('EL'))]) % % %
+
     el = pr.get('EL');
     prop = pr.get('PROP');
 
@@ -225,7 +225,7 @@ function redraw(pr, varargin)
     %  - HEIGHT = s(2)
     %
     % See also draw, update, PanelElement, s.
-disp(['PR R ' tostring(pr.get('PROP')) ' ' tostring(pr.get('EL'))]) % % %
+
     el = pr.get('EL');
     prop = pr.get('PROP');
     

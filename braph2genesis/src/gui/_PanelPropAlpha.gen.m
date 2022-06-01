@@ -71,9 +71,9 @@ function p_out = draw(pr, varargin)
     end
 end
 function update(pr)
-    %UPDATE updates the content and permissions of the edit field.
+    %UPDATE updates the content and permissions of the edit field and slider.
     %
-    % UPDATE(PR) updates the content and permissions of the edit field.
+    % UPDATE(PR) updates the content and permissions of the edit field and slider.
     %
     % See also draw, redraw, PanelElement.
 
