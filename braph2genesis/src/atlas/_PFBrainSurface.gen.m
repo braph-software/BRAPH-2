@@ -129,6 +129,8 @@ if (isempty(varargin) || pf.prop_set('ST_AXIS', varargin)) && check_graphics(pf.
     % update state of toggle tool
     set(pf.tool_axis, 'State', pf.get('ST_AXIS').get('AXIS'))
 end
+%%%% ¡gui!
+pr = SettingsAxisPP('EL', pf, 'PROP', PFBrainSurface.ST_AXIS, varargin{:});
 
 %%% ¡prop!
 BRAIN (figure, logical) determines whether the brain surface is shown.

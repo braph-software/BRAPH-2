@@ -125,9 +125,9 @@ function redraw(pr, varargin)
     set(pr.button, 'Position', [s(.3) s(.3) .70*w(pr.p, 'pixels') s(1.7)])
 end
 function cb_button(pr)
-    %CB_EDITFIELD executes callback for the edit field.
+    %CB_BUTTON executes callback for the button.
     %
-    % CB_EDITFIELD(PR) executes callback for the edit field.
+    % CB_BUTTON(PR) executes callback for the button.
 
     el = pr.get('EL');
     prop = pr.get('PROP');

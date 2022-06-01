@@ -3,7 +3,7 @@ SettingsAxis < Settings (st, axis settings) contains the axis settings.
 
 %%% ¡description!
 SettingsAxis provides the settings for an axis, 
-including axis color, hold on/off, axis on/off, equal on/off, and tight on/off.
+including axis color, hold on/off, axis on/off, grid on/off, equal on/off, and tight on/off.
 
 %%% ¡seealso!
 PanelFig, GUIFig, uiaxes
