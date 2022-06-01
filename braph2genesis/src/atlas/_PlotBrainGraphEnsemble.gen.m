@@ -70,7 +70,7 @@ INIT_LIN_COLOR = [0 0 0];
 INIT_ARR_COLOR = [0 0 0];
 INIT_ARR_SWIDTH = .1;
 INIT_ARR_HLENGTH = 1;
-INIT_ARR_HWIDTH = 1;
+INIT_ARR_HWIDTH = 10;
 INIT_ARR_HNODE = .5;
 INIT_ARR_N = 32;
 
@@ -1732,8 +1732,9 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
             pl.link_edges_off([], [])
             pl.arrow_edges_off([],[])
             pl.cylinder_edges_off([],[])
-            
-            
+
+            adj = pl.get('ME').get('A').get('G_DICT').getItem(1).get('A');
+            adj = cell2mat(adj);
 
             if get(ui_checkbox_graph_lineweight, 'Value')
                 % get measure value
@@ -1745,7 +1746,7 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
                     for j = 1:1:n
                         k = k+1;
                         waitbar(k/(n*n), wb, ['Plotting connections: node ' num2str(i) ' - node ' num2str(j)]);
-                        if i == j
+                        if i == j || value == 0
                             continue;
                         end
                         if  link_style == 1
