@@ -156,7 +156,9 @@ ST_AMBIENT (figure, item) determines the ambient settings.
 %%%% ¡settings!
 'SettingsAmbient'
 %%%% ¡default!
-SettingsAmbient('LIGHTING', 'gouraud', 'MATERIAL', 'shiny', 'CAMLIGHT', 'headlight', 'SHADING', 'interp')
+SettingsAmbient('LIGHTING', 'gouraud', 'MATERIAL', 'dull', 'CAMLIGHT', 'headlight', 'SHADING', 'interp')
+%%%% ¡gui!
+pr = SettingsAmbientPP('EL', pf, 'PROP', PFBrainSurface.ST_AMBIENT, varargin{:});
         
 %% ¡methods!
 function p_out = draw(pf, varargin)
@@ -203,7 +205,8 @@ function p_out = draw(pf, varargin)
             coordinates(:, 1), ...
             coordinates(:, 2), ...
             coordinates(:, 3), ...
-            'Parent', pf.h_axes ...
+            'Parent', pf.h_axes, ...
+            'Tag', 'h_brain' ...
             );
         xlabel(pf.h_axes, 'Sagittal')
         ylabel(pf.h_axes, 'Axial')
@@ -213,9 +216,16 @@ function p_out = draw(pf, varargin)
     if isa(pf.getr('ST_AXIS'), 'NoValue')
         pf.memorize('ST_AXIS').set('PANEL', pf, 'UITAG', 'h_axes')
     end
+    listener(pf.get('ST_AXIS'), 'PropSet', @cb_grid_);
+    function cb_grid_(~, ~) % (src, event)
+        set(pf.tool_axis, 'State', pf.get('ST_AXIS').get('AXIS'))
+        set(pf.tool_grid, 'State', pf.get('ST_AXIS').get('GRID'))
+    end
+    
     if isa(pf.getr('ST_SURFACE'), 'NoValue')
         pf.memorize('ST_SURFACE').set('PANEL', pf, 'UITAG', 'h_brain')
     end
+    
     if isa(pf.getr('ST_AMBIENT'), 'NoValue')
         pf.memorize('ST_AMBIENT').set('PANEL', pf, 'UITAG', 'h_axes')
     end
@@ -264,7 +274,7 @@ function p_out = draw(pf, varargin)
     function cb_grid(~, ~, grid) % (src, event)
         pf.get('ST_AXIS').set('GRID', grid);
     end
-    
+
     if check_graphics(pf.toolbar, 'uitoolbar') && ~check_graphics(pf.tool_view3D, 'uitoggletool') % implies that also the other tools are not defined
 
         uipushtool(pf.toolbar, 'Separator', 'on', 'Visible', 'off')

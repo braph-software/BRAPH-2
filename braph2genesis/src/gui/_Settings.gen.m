@@ -15,9 +15,11 @@ The handle to the graphics object can be retrieved as
 Typically, it is used as a prop of a subclass of Panel (pl) and it is 
  initialized in the constructor with this code:
 
-    if isa(pl.getr('SETTINGS_PROP'), 'NoValue')
-        pl.memorize('SETTINGS_PROP').set('PANEL', pl, 'UITAG', 'uitag')
+    if isa(pl.getr(''SETTINGS_PROP''), ''NoValue'')
+        pl.memorize(''SETTINGS_PROP'').set(''PANEL'', pl, ''UITAG'', ''uitag'')
     end
+
+ It might be necessary to add some listeners (e.g., to update toogle buttons).
 
 %%% ¡seealso!
 Panel
