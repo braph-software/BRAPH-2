@@ -74,3 +74,12 @@ clc
 pf1 = PFBrainSurface();
 gui1 = GUIFig('PF', pf1, 'FILE', 'xxx sss', 'WAITBAR', true, 'CLOSEREQ', false);
 f1 = gui1.draw('Units', 'normalized', 'Position', [0 .5 .4 .4]);
+
+
+im = ImporterPipelineBRAPH2(...
+    'FILE', [fileparts(which('Pipeline')) filesep 'pipeline_atlas.braph2'], ...
+    'WAITBAR', true ...
+    ); 
+pip = im.get('PIP');
+gui = GUIElement('PE', pip, 'CLOSEREQ', false);
+f = gui.draw();
