@@ -222,8 +222,8 @@ function p_out = draw(pf, varargin)
     if isa(pf.getr('ST_AXIS'), 'NoValue')
         pf.memorize('ST_AXIS').set('PANEL', pf, 'UITAG', 'h_axes')
     end
-    listener(pf.get('ST_AXIS'), 'PropSet', @cb_grid_);
-    function cb_grid_(~, ~) % (src, event)
+    listener(pf.get('ST_AXIS'), 'PropSet', @cb_st_axis);
+    function cb_st_axis(~, ~) % (src, event)
         set(pf.tool_axis, 'State', pf.get('ST_AXIS').get('AXIS'))
         set(pf.tool_grid, 'State', pf.get('ST_AXIS').get('GRID'))
     end
