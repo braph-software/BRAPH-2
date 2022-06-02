@@ -163,12 +163,18 @@ function cb_button(pr, i)
             pr.f_item_list{i} = gui.draw();
         else
             gui = get(pr.f_item_list{i}, 'UserData');
-            gui.cb_bring_to_front();
+            if get(pr.f_item_list{i}, 'Visible')
+                gui.cb_hide()
+            else
+                gui.cb_bring_to_front()
+            end
         end
         
         %%% end callback %%%
         set(pr.button_list{i}, 'Enable', 'on')
     end
+
+    pr.update()
     
 % % %     % updates and redraws the parent PanelElement as well as all siblings PanelProp's
 % % %     pe = get(get(pr.p, 'Parent'), 'UserData');
