@@ -1,5 +1,5 @@
 %% ¡header!
-PFBrainAtlas < PFBrainSurface (pl, panel figure brain atlas) is a plot of a brain atlas.
+PFBrainAtlas < PFBrainSurface (pf, panel figure brain atlas) is a plot of a brain atlas.
 
 %%% ¡description!
 PFBrainAtlas manages the plot of the brain regions symbols,
@@ -52,6 +52,7 @@ Plot, BrainSurface, PlotBrainSurface
 
 %% ¡properties!
 p  % handle for panel
+h_axes
 
 h_syms % handle for the symbols 
 % % % h_sphs % handle for the spheres 
@@ -71,7 +72,7 @@ h_syms % handle for the symbols
 %% ¡props!
 
 %%% ¡prop!
-ATLAS (metadata, item) is the brain atlas with the brain regions.
+BA (metadata, item) is the brain atlas with the brain regions.
 %%%% ¡settings!
 'BrainAtlas'
 
@@ -79,6 +80,44 @@ ATLAS (metadata, item) is the brain atlas with the brain regions.
 SYM_DICT (figure, idict) contains the symbols of the brain regions.
 %%%% ¡settings!
 'SettingsSymbol'
+%%%% ¡postprocessing!
+if ~isa(pf.getr('BA'), 'NoValue') && ~isa(pf.getr('SYM_DICT'), 'NoValue')
+    sym_dict = pf.get('SYM_DICT');
+    
+    ba = pf.get('BA');
+    br_dict = ba.get('BR_DICT');
+    
+    for bri = 1:1:br_dict.length()
+        key = br_dict.getKey(bri);
+        br = br_dict.getItem(bri);
+        
+        if ~sym_dict.containsKey(key)
+            pf.h_syms{bri} = plot3(0, 0, 0, ...
+                'Parent', pf.h_axes, ...
+                'Tag', ['h_syms ' int2str(bri)] ...
+                );
+
+            item = SettingsSymbol( ...
+                'ID', Callback('EL', br, 'TAG', 'ID'), ...
+                'PANEL', pf, ...
+                'UITAG', ['h_syms ' int2str(bri)], ...
+                'VISIBLE', true, ...
+                'X', Callback('EL', br, 'TAG', 'X'), ...
+                'Y', Callback('EL', br, 'TAG', 'Y'), ...
+                'Z', Callback('EL', br, 'TAG', 'Z') ...
+                );
+            sym_dict.add(item, bri)
+        else
+            % % % add check of alignment of dictionaries
+            % % % 1. check ordering
+            % % % 2. eliminate missing regions
+        end
+    end
+end
+%%%% ¡gui!
+pr = PanelPropIDictTable('EL', pf, 'PROP', PFBrainAtlas.SYM_DICT, ...
+    'COLS', [SettingsSymbol.VISIBLE SettingsSymbol.X SettingsSymbol.Y SettingsSymbol.Z SettingsSymbol.SYMBOL SettingsSymbol.SYMBOLSIZE], ...
+    varargin{:});
 
 % % % %%% ¡prop!
 % % % Parent (data, item) is the plot parent figure
@@ -282,7 +321,19 @@ function p_out = draw(pf, varargin)
 % % %     % see also settings, uipanel, isgraphics.
 
     pf.p = draw@PFBrainSurface(pf, varargin{:});
-
+    
+    if ~check_graphics(pf.h_axes, 'axes')
+        pf.h_axes = findall(pf.p, 'Tag', 'h_axes');
+    end
+    
+    if isa(pf.getr('SYM_DICT'), 'NoValue')
+        pf.memorize('SYM_DICT').set( ...
+            'ID', 'Symbols', ...
+            'IT_CLASS', 'SettingsSymbol', ...
+            'IT_KEY', SettingsSymbol.ID ...
+            )
+    end
+    
 % % %     % initialization
 % % %     if isempty(pl.h_syms) || length(pl.h_syms.h) ~= pl.get('ATLAS').get('BR_DICT').length
 % % %         pl.h_syms.h = NaN(1, pl.get('ATLAS').get('BR_DICT').length);
