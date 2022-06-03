@@ -9,12 +9,6 @@ from PFBrainSurface to integrate the regions to a brain surface.
 %%% ¡seealso!
 Plot, BrainSurface, PlotBrainSurface
 
-% % % PLOT_ID_FONT_INTREPETER = { ...
-% % %     'none' ...
-% % %     'tex' ...
-% % %     'latex' ...
-% % %     }
-
 %% ¡properties!
 p  % handle for panel
 h_axes
@@ -55,7 +49,7 @@ if ~isa(pf.getr('BA'), 'NoValue') && ~isa(pf.getr('SYM_DICT'), 'NoValue')
             item = SettingsSymbol( ...
                 'ID', Callback('EL', br, 'TAG', 'ID'), ...
                 'PANEL', pf, ...
-                'UITAG', ['h_syms ' int2str(bri)], ...
+                'UITAG', get(pf.h_syms{bri}, 'Tag'), ...
                 'VISIBLE', true, ...
                 'X', Callback('EL', br, 'TAG', 'X'), ...
                 'Y', Callback('EL', br, 'TAG', 'Y'), ...
@@ -74,106 +68,93 @@ pr = PanelPropIDictTable('EL', pf, 'PROP', PFBrainAtlas.SYM_DICT, ...
     'COLS', [SettingsSymbol.VISIBLE SettingsSymbol.X SettingsSymbol.Y SettingsSymbol.Z SettingsSymbol.SYMBOL SettingsSymbol.SYMBOLSIZE], ...
     varargin{:});
 
-% % % %%% ¡prop!
-% % % Parent (data, item) is the plot parent figure
-% % % 
-% % % %%% ¡prop!
-% % % SYMS (metadata, cvector) is symbol visibility.
-% % % %%%% ¡check_value!
-% % % check = length(value) == 1 || length(value) == pl.get('ATLAS').get('BR_DICT').length();
-% % % %%%% ¡default!
-% % % 1
-% % % 
-% % % %%% ¡prop!
-% % % SYMS_SIZE (metadata, cvector) is the symbol size.
-% % % %%%% ¡conditioning!
-% % % value = abs(value);
-% % % %%%% ¡check_value!
-% % % check = length(value) == 1 || length(value) == pl.get('ATLAS').get('BR_DICT').length();
-% % % if check 
-% % %     msg = 'All ok!';
-% % % else
-% % %     msg = ['SYMS_SIZE must have length 1 or (' num2str(pl.get('ATLAS').get('BR_DICT').length) ') length while its length ' num2str(length(value)) '.'];
-% % % end
-% % % %%%% ¡default!
-% % % 10
-% % % 
-% % % %%% ¡prop!
-% % % SYMS_MARKER (metadata, cvector) is the symbol option.
-% % % %%%% ¡settings!
-% % % 1:length(PlotBrainAtlas.PLOT_SYMBOL_TAG)
-% % % %%%% ¡check_value!
-% % % check = 1 <= value && value <= length(PlotBrainAtlas.PLOT_SYMBOL_TAG);
-% % % %%%% ¡default!
-% % % 2
-% % % 
-% % % %%% ¡prop!
-% % % SYMS_FACE_COLOR (metadata, matrix) is the symbol face color.
-% % % %%%% ¡check_value!
-% % % check = (size(value, 1) == 1 && size(value, 2) == 3)|| (size(value, 1) == pl.get('ATLAS').get('BR_DICT').length() &&  size(value, 2) == 3);
-% % % %%%% ¡default!
-% % % [.90 .56 .15]
-% % % 
-% % % %%% ¡prop!
-% % % SYMS_EDGE_COLOR (metadata, matrix) is the symbol edge color.
-% % % %%%% ¡check_value!
-% % % check = (size(value, 1) == 1 && size(value, 2) == 3)|| (size(value, 1) == pl.get('ATLAS').get('BR_DICT').length() &&  size(value, 2) == 3);
-% % % %%%% ¡default!
-% % % [.90 .56 .15]
-% % % 
-% % % %%% ¡prop!
-% % % SPHS (metadata, cvector) is sphere visibility.
-% % % %%%% ¡check_value!
-% % % check = length(value) == 1 || length(value) == pl.get('ATLAS').get('BR_DICT').length();
-% % % %%%% ¡default!
-% % % 0
-% % % 
-% % % %%% ¡prop!
-% % % SPHS_SIZE (metadata, cvector) is the sphere size.
-% % % %%%% ¡conditioning!
-% % % value = abs(value);
-% % % %%%% ¡check_value!
-% % % check = length(value) == 1 || length(value) == pl.get('ATLAS').get('BR_DICT').length();
-% % % if check 
-% % %     msg = 'All ok!';
-% % % else
-% % %     msg = ['SPHS_SIZE must have length 1 or (' num2str(pl.get('ATLAS').get('BR_DICT').length) ') length while its length ' num2str(length(value)) '.'];
-% % % end
-% % % %%%% ¡default!
-% % % 1
-% % % 
-% % % %%% ¡prop!
-% % % SPHS_EDGE_COLOR (metadata, matrix) is the sphere edge color.
-% % % %%%% ¡check_value!
-% % % check = (size(value, 1) == 1 && size(value, 2) == 3)|| (size(value, 1) == pl.get('ATLAS').get('BR_DICT').length() &&  size(value, 2) == 3);
-% % % %%%% ¡default!
-% % % [0 0 0]
-% % % 
-% % % %%% ¡prop!
-% % % SPHS_FACE_COLOR (metadata, matrix) is the sphere face color.
-% % % %%%% ¡check_value!
-% % % check = (size(value, 1) == 1 && size(value, 2) == 3)|| (size(value, 1) == pl.get('ATLAS').get('BR_DICT').length() &&  size(value, 2) == 3);
-% % % %%%% ¡default!
-% % % [0 0 0]
-% % % 
-% % % %%% ¡prop!
-% % % SPHS_EDGE_ALPHA (metadata, cvector) is the sphere alpha.
-% % % %%%% ¡conditioning!
-% % % value = abs(value);
-% % % %%%% ¡check_value!
-% % % check = length(value) == 1 || length(value) == pl.get('ATLAS').get('BR_DICT').length();
-% % % %%%% ¡default!
-% % % .5
-% % % 
-% % % %%% ¡prop!
-% % % SPHS_FACE_ALPHA (metadata, cvector) is the sphere alpha.
-% % % %%%% ¡conditioning!
-% % % value = abs(value);
-% % % %%%% ¡check_value!
-% % % check = length(value) == 1 || length(value) == pl.get('ATLAS').get('BR_DICT').length();
-% % % %%%% ¡default!
-% % % .5
-% % % 
+%%% ¡prop!
+SPH_DICT (figure, idict) contains the spheres of the brain regions.
+%%%% ¡settings!
+'SettingsSphere'
+%%%% ¡postprocessing!
+if ~isa(pf.getr('BA'), 'NoValue') && ~isa(pf.getr('SPH_DICT'), 'NoValue')
+    sph_dict = pf.get('SPH_DICT');
+    
+    ba = pf.get('BA');
+    br_dict = ba.get('BR_DICT');
+    
+    for bri = 1:1:br_dict.length()
+        key = br_dict.getKey(bri);
+        br = br_dict.getItem(bri);
+        
+        if ~sph_dict.containsKey(key)
+            pf.h_sphs{bri} = surf([], [], [], ...
+                'Parent', pf.h_axes, ...
+                'Tag', ['h_sphs ' int2str(bri)], ...
+                'Visible', false ...
+                );
+
+            item = SettingsSphere( ...
+                'ID', Callback('EL', br, 'TAG', 'ID'), ...
+                'PANEL', pf, ...
+                'UITAG', get(pf.h_sphs{bri}, 'Tag'), ...
+                'X', Callback('EL', br, 'TAG', 'X'), ...
+                'Y', Callback('EL', br, 'TAG', 'Y'), ...
+                'Z', Callback('EL', br, 'TAG', 'Z') ...
+                );
+            sph_dict.add(item, bri)
+        else
+            % % % add check of alignment of dictionaries
+            % % % 1. check ordering
+            % % % 2. eliminate missing regions
+        end
+    end
+end
+%%%% ¡gui!
+pr = PanelPropIDictTable('EL', pf, 'PROP', PFBrainAtlas.SPH_DICT, ...
+    'COLS', [SettingsSphere.VISIBLE SettingsSphere.X SettingsSphere.Y SettingsSphere.Z SettingsSphere.SPHERESIZE SettingsSphere.FACEALPHA SettingsSphere.EDGEALPHA], ...
+    varargin{:});
+
+%%% ¡prop!
+ID_DICT (figure, idict) contains the ids of the brain regions.
+%%%% ¡settings!
+'SettingsText'
+%%%% ¡postprocessing!
+if ~isa(pf.getr('BA'), 'NoValue') && ~isa(pf.getr('ID_DICT'), 'NoValue')
+    id_dict = pf.get('ID_DICT');
+    
+    ba = pf.get('BA');
+    br_dict = ba.get('BR_DICT');
+    
+    for bri = 1:1:br_dict.length()
+        key = br_dict.getKey(bri);
+        br = br_dict.getItem(bri);
+        
+        if ~id_dict.containsKey(key)
+            pf.h_ids{bri} = text(0, 0, 0, '', ...
+                'Parent', pf.h_axes, ...
+                'Tag', ['h_ids ' int2str(bri)], ...
+                'Visible', false ...
+                );
+
+            item = SettingsText( ...
+                'ID', Callback('EL', br, 'TAG', 'ID'), ...
+                'PANEL', pf, ...
+                'UITAG', get(pf.h_ids{bri}, 'Tag'), ...
+                'X', Callback('EL', br, 'TAG', 'X'), ...
+                'Y', Callback('EL', br, 'TAG', 'Y'), ...
+                'Z', Callback('EL', br, 'TAG', 'Z'), ...
+                'TXT', Callback('EL', br, 'TAG', 'ID') ...
+                );
+            id_dict.add(item, bri)
+        else
+            % % % add check of alignment of dictionaries
+            % % % 1. check ordering
+            % % % 2. eliminate missing regions
+        end
+    end
+end
+%%%% ¡gui!
+pr = PanelPropIDictTable('EL', pf, 'PROP', PFBrainAtlas.ID_DICT, ...
+    'COLS', [SettingsText.VISIBLE SettingsText.X SettingsText.Y SettingsText.Z SettingsText.TXT], ...
+    varargin{:});
+
 % % % %%% ¡prop!
 % % % IDS (metadata, cvector) is the ids visibility.
 % % % %%%% ¡check_value!
@@ -286,6 +267,22 @@ function p_out = draw(pf, varargin)
             'ID', 'Symbols', ...
             'IT_CLASS', 'SettingsSymbol', ...
             'IT_KEY', SettingsSymbol.ID ...
+            )
+    end
+
+    if isa(pf.getr('SPH_DICT'), 'NoValue')
+        pf.memorize('SPH_DICT').set( ...
+            'ID', 'Spheres', ...
+            'IT_CLASS', 'SettingsSphere', ...
+            'IT_KEY', SettingsSphere.ID ...
+            )
+    end
+
+    if isa(pf.getr('ID_DICT'), 'NoValue')
+        pf.memorize('ID_DICT').set( ...
+            'ID', 'IDs', ...
+            'IT_CLASS', 'SettingsText', ...
+            'IT_KEY', SettingsText.ID ...
             )
     end
     

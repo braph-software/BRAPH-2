@@ -25,7 +25,7 @@ if check_graphics(h, 'line') && get(h, 'Visible') ~= st.get('VISIBLE')
 end
 
 %%% ¡prop!
-X (figure, scalar) is the x-coordinate
+X (figure, scalar) is the x-coordinate.
 %%%% ¡postprocessing!
 h = st.h(); % line
 if check_graphics(h, 'line') && get(h, 'XData') ~= st.get('X')
@@ -33,7 +33,7 @@ if check_graphics(h, 'line') && get(h, 'XData') ~= st.get('X')
 end
 
 %%% ¡prop!
-Y (figure, scalar) is the y-coordinate
+Y (figure, scalar) is the y-coordinate.
 %%%% ¡postprocessing!
 h = st.h(); % line
 if check_graphics(h, 'line') && get(h, 'YData') ~= st.get('Y')
@@ -41,7 +41,7 @@ if check_graphics(h, 'line') && get(h, 'YData') ~= st.get('Y')
 end
 
 %%% ¡prop!
-Z (figure, scalar) is the z-coordinate
+Z (figure, scalar) is the z-coordinate.
 %%%% ¡postprocessing!
 h = st.h(); % line
 if check_graphics(h, 'line') && get(h, 'ZData') ~= st.get('Z')
@@ -59,7 +59,7 @@ end
 %%% ¡prop!
 SYMBOLSIZE (figure, size) is the symbol size.
 %%%% ¡default!
-5
+10
 %%%% ¡postprocessing!
 h = st.h(); % line
 if check_graphics(h, 'line') && get(h, 'MarkerSize') ~= st.get('SYMBOLSIZE')
