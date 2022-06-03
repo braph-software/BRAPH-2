@@ -10,7 +10,7 @@ It can be personalized with the following props:
  COLS - Numerical array with the columns to be visualized. It can include 
   PanelPropIDictTable.SELECTOR and/or prop numbers of the item class.
  ROWNAME - Code to generate the row names as per uitable format.
- COLUMNANME - Code to generate the column names as per uitable format.
+ COLUMNAME - Code to generate the column names as per uitable format.
  COLUMNWIDTH - Code to determine the cloumn width as per uitable format.
  COLUMNEDITABLE - Code to determine the cloumn editability as per uitable format.
  COLUMNFORMAT - Code to determine the cloumn format as per uitable format.
@@ -226,17 +226,17 @@ function update(pr)
 
                         % % % case Format.COLOR
 
-                        % % % case Format.ALPHA
-                        % % %     columnformat{c} = 'numeric';
+                        case Format.ALPHA
+                            columnformat{c} = 'numeric';
 
-                        % % % case Format.SIZE
-                        % % %     columnformat{c} = 'numeric';
+                        case Format.SIZE
+                            columnformat{c} = 'numeric';
 
-                        % % % case Format.MARKER
-                        % % %     columnformat{c} = Element.getPropSettings(it_class, col);
+                        case Format.MARKER
+                            columnformat{c} = Element.getPropSettings(it_class, col);
 
-                        % % % case Format.LINE
-                        % % %     columnformat{c} = Element.getPropSettings(it_class, col);
+                        case Format.LINE
+                            columnformat{c} = Element.getPropSettings(it_class, col);
                     end            
                 end
             end
@@ -389,17 +389,17 @@ function cb_table_edit(pr, i, col, newdata)
 
                 % % % case Format.COLOR
 
-                % % % case Format.ALPHA
-                % % %     dict.getItem(i).set(col, newdata)
+                case Format.ALPHA
+                    dict.getItem(i).set(col, newdata)
 
-                % % % case Format.SIZE
-                % % %     dict.getItem(i).set(col, newdata)
+                case Format.SIZE
+                    dict.getItem(i).set(col, newdata)
 
-                % % % case Format.MARKER
-                % % %     dict.getItem(i).set(col, newdata)
+                case Format.MARKER
+                    dict.getItem(i).set(col, newdata)
 
-                % % % case Format.LINE
-                % % %     dict.getItem(i).set(col, newdata)
+                case Format.LINE
+                    dict.getItem(i).set(col, newdata)
             end
         end        
     end
