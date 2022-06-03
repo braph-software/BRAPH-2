@@ -1,12 +1,12 @@
 %% ¡header!
-SettingsSymbol < Settings (st, surface settings) contains the surface settings.
+SettingsSymbol < Settings (st, symbol settings) contains the symbol settings.
 
 %%% ¡description!
-SettingsSymbol provides the settings for a surface, 
-including face color, face alpha, edge color, and edge alpha.
+SettingsSymbol provides the settings for a symbol, 
+including visibility, x, y, z, symbol marker, symbol size, face color, and edge color.
 
 %%% ¡seealso!
-PanelFig, GUIFig, patch
+PanelFig, GUIFig, line
 
 %% ¡props!
 
