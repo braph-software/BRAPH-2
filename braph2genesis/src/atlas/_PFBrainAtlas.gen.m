@@ -33,7 +33,7 @@ BA (metadata, item) is the brain atlas with the brain regions.
 'BrainAtlas'
 
 %%% ¡prop!
-SYM_ON (figure, idict) whether to show the symbols of the brain regions.
+SYM_ON (figure, logical) whether to show the symbols of the brain regions.
 %%%% ¡default!
 true
 
@@ -43,23 +43,33 @@ SYM_DICT (figure, idict) contains the symbols of the brain regions.
 'SettingsSymbol'
 %%%% ¡postprocessing!
 if pf.get('SYM_ON')
-    if ~isa(pf.getr('BA'), 'NoValue') && ~isa(pf.getr('SYM_DICT'), 'NoValue') && pf.get('SYM_DICT').length() == 0
-        br_dict = pf.get('BA').get('BR_DICT');
-        for i = 1:1:br_dict.length()
-            br = br_dict.getItem(i);
-
-            syms{i} = SettingsSymbol( ...
-                'ID', Callback('EL', br, 'TAG', 'ID'), ...
-                'VISIBLE', true, ...
-                'X', Callback('EL', br, 'TAG', 'X'), ...
-                'Y', Callback('EL', br, 'TAG', 'Y'), ...
-                'Z', Callback('EL', br, 'TAG', 'Z') ...
-                ).h(pf.h_syms{i}).set( ...
-                'PANEL', pf, ...
-                'UITAG', ['h_syms{' int2str(i) '}'] ... % same as in h_syms{i}
-                );
+    if ~isa(pf.getr('BA'), 'NoValue')
+        if ~isa(pf.getr('SYM_DICT'), 'NoValue')
+            br_dict = pf.get('BA').get('BR_DICT');
+            if pf.get('SYM_DICT').length() == 0
+                for i = 1:1:br_dict.length()
+                    br = br_dict.getItem(i);
+                    
+                    syms{i} = SettingsSymbol( ...
+                        'ID', Callback('EL', br, 'TAG', 'ID'), ...
+                        'VISIBLE', true, ...
+                        'X', Callback('EL', br, 'TAG', 'X'), ...
+                        'Y', Callback('EL', br, 'TAG', 'Y'), ...
+                        'Z', Callback('EL', br, 'TAG', 'Z') ...
+                        );
+                end
+                pf.get('SYM_DICT').set('IT_LIST', syms)
+            else
+                for i = 1:1:br_dict.length()
+                    if pf.get('SYM_DICT').containsIndex(i)
+                        pf.get('SYM_DICT').getItem(i).h(pf.h_syms{i}).set( ...
+                            'PANEL', pf, ...
+                            'UITAG', ['h_syms{' int2str(i) '}'] ... % same as in h_syms{i}
+                            );
+                    end
+                end
+            end
         end
-        pf.get('SYM_DICT').set('IT_LIST', syms)
     end
 end
 
@@ -227,8 +237,10 @@ function p_out = draw(pf, varargin)
         pf.h_axes = pf.p.Children(1); % findobj(pf.p, 'Tag', 'h_axes');
     end
     
-    if isempty(pf.h_syms)
-        for i = 1:1:pf.memorize('BA').get('BR_DICT').length()
+    if isempty(pf.h_syms) || any(cellfun(@(h_sym) ~check_graphics(h_sym, 'line'), pf.h_syms))
+        L = pf.memorize('BA').get('BR_DICT').length();
+        pf.h_syms = cell(1, L);
+        for i = 1:1:L
             pf.h_syms{i} = plot3(0, 0, 0, ...
                 'Parent', pf.h_axes, ...
                 'Tag', ['h_syms{' int2str(i) '}'] ... % same as in syms{i}
