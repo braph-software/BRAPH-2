@@ -219,25 +219,21 @@ function p_out = draw(pf, varargin)
         zlabel(pf.h_axes, 'Coronal')
     end
 
-    if isa(pf.getr('ST_AXIS'), 'NoValue')
-        pf.memorize('ST_AXIS').set('PANEL', pf, 'UITAG', 'h_axes')
-    end
+    pf.memorize('ST_AXIS').h(pf.h_axes).set('PANEL', pf, 'UITAG', 'h_axes')
     listener(pf.get('ST_AXIS'), 'PropSet', @cb_st_axis);
     function cb_st_axis(~, ~) % (src, event)
         set(pf.tool_axis, 'State', pf.get('ST_AXIS').get('AXIS'))
         set(pf.tool_grid, 'State', pf.get('ST_AXIS').get('GRID'))
     end
     
-    if isa(pf.getr('ST_SURFACE'), 'NoValue')
-        pf.memorize('ST_SURFACE').set('PANEL', pf, 'UITAG', 'h_brain')
-    end
+    pf.memorize('ST_SURFACE').h(pf.h_brain).set('PANEL', pf, 'UITAG', 'h_brain')
     
-    if isa(pf.getr('ST_AMBIENT'), 'NoValue')
-        pf.memorize('ST_AMBIENT').set('PANEL', pf, 'UITAG', 'h_axes')
-    end
+    pf.memorize('ST_AMBIENT').h(pf.h_axes).set('PANEL', pf, 'UITAG', 'h_axes')
     
     % Toolbar
-    pf.toolbar = findall(ancestor(pf.p, 'Figure'), 'Tag', 'ToolBar');
+    if ~check_graphics(pf.toolbar, 'uitoolbar')
+        pf.toolbar = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'ToolBar');
+    end
     
     if check_graphics(pf.toolbar, 'uitoolbar') && ~check_graphics(pf.tool_brain, 'uitoggletool') % implies that also the other tools are not defined
         
