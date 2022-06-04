@@ -70,4 +70,7 @@ gui1 = GUIFig('PF', pf1, 'FILE', 'xxx sss', 'WAITBAR', false, 'CLOSEREQ', false)
 toc
 f1 = gui1.draw('Units', 'normalized', 'Position', [.1 .1 .4 .8]);
 toc
-
+close(f1)
+toc
+f1 = gui1.draw('Units', 'normalized', 'Position', [.1 .1 .4 .8]);
+toc
