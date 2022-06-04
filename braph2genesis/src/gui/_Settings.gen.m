@@ -54,8 +54,10 @@ function handle = h(st)
     % H = HANDLE(ST) sets and returns the handle of the graphics object 
     %  to which the settings are applied.
     
-    if check_graphics(st.p)
-        st.handle = findall(st.p, 'Tag', st.get('UITAG'));
+    if isempty(st.handle) || ~check_graphics(st.handle)
+        if check_graphics(st.p)
+            st.handle = findall(st.p, 'Tag', st.get('UITAG'));
+        end
     end
     
     handle = st.handle;

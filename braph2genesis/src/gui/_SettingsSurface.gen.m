@@ -6,7 +6,7 @@ SettingsSurface provides the settings for a surface,
 including face color, face alpha, edge color, and edge alpha.
 
 %%% ¡seealso!
-PanelFig, GUIFig, patch
+PanelFig, GUIFig, patch, surface
 
 %% ¡props!
 
@@ -16,7 +16,7 @@ EDGECOLOR (figure, color) is the RGB edge color.
 [0 0 0]
 %%%% ¡postprocessing!
 h = st.h(); % patch
-if check_graphics(h, 'patch')
+if check_graphics(h, 'patch') || check_graphics(h, 'surface')
     set(h, 'EdgeColor', st.get('EDGECOLOR'))
 end
 
@@ -26,7 +26,7 @@ EDGEALPHA (figure, alpha) is the edge transparency.
 0
 %%%% ¡postprocessing!
 h = st.h(); % patch
-if check_graphics(h, 'patch')
+if check_graphics(h, 'patch') || check_graphics(h, 'surface')
     set(h, 'EdgeAlpha', st.get('EDGEALPHA'))
 end
 
@@ -36,7 +36,7 @@ FACECOLOR (figure, color) is the RGB face color.
 [.5 .5 .5]
 %%%% ¡postprocessing!
 h = st.h(); % patch
-if check_graphics(h, 'patch')
+if check_graphics(h, 'patch') || check_graphics(h, 'surface')
     set(h, 'FaceColor', st.get('FACECOLOR'))
 end
 
@@ -46,6 +46,6 @@ FACEALPHA (figure, alpha) is the face transparency.
 1
 %%%% ¡postprocessing!
 h = st.h(); % patch
-if check_graphics(h, 'patch')
+if check_graphics(h, 'patch') || check_graphics(h, 'surface')
     set(h, 'FaceAlpha', st.get('FACEALPHA'))
 end
