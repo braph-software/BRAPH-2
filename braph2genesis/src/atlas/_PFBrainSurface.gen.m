@@ -93,7 +93,7 @@ SURF (metadata, item) is the brain surface to be plotted.
 %%%% ¡settings!
 'BrainSurface'
 %%%% ¡default!
-BrainAtlas.getPropDefault('SURF')
+ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF')
 
 %%% ¡prop!
 VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.
