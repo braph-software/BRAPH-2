@@ -42,6 +42,9 @@ SYM_DICT (figure, idict) contains the symbols of the brain regions.
             br_dict = pf.get('BA').get('BR_DICT');
             
             if pf.get('SYM_DICT').length() == 0
+
+                syms = cell(1, br_dict.length());
+
                 for i = 1:1:br_dict.length()
                     br = br_dict.getItem(i);
                     
@@ -96,6 +99,9 @@ SPH_DICT (figure, idict) contains the spheres of the brain regions.
             br_dict = pf.get('BA').get('BR_DICT');
             
             if pf.get('SPH_DICT').length() == 0
+                
+                sphs = cell(1, br_dict.length());
+
                 for i = 1:1:br_dict.length()
                     br = br_dict.getItem(i);
                     
@@ -149,6 +155,9 @@ ID_DICT (figure, idict) contains the ids of the brain regions.
             br_dict = pf.get('BA').get('BR_DICT');
             
             if pf.get('ID_DICT').length() == 0
+
+                ids = cell(1, br_dict.length());
+
                 for i = 1:1:br_dict.length()
                     br = br_dict.getItem(i);
                     
@@ -203,6 +212,9 @@ LAB_DICT (figure, idict) contains the labels of the brain regions.
             br_dict = pf.get('BA').get('BR_DICT');
             
             if pf.get('LAB_DICT').length() == 0
+                
+                labss = cell(1, br_dict.length());
+
                 for i = 1:1:br_dict.length()
                     br = br_dict.getItem(i);
                     
