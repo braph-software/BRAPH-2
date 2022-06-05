@@ -1,0 +1,24 @@
+%% Pipeline Functional Delayed Comparison WD
+
+% This is the pipeline script to compare two groups of subjects using functional data and weighted directed graphs.
+% 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
+% 2. It loads the data of two groups of subjects from a directory containing XLS files (e.g., FUN_group1.xlsx, FUN_group2, FUN_group3.xlsx.xlsx).
+% 3. It analyzes these data using functional analyses (FUN) based on directed graphs (WD).
+% 4. It compares the results of the two analyses.
+
+%% Brain Atlas
+ba = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load a Brain Atlas XLS % Brain Atlas
+
+%% Groups
+gr1 = ImporterGroupSubjectFUN_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group FUN 1 from XLS % Group FUN 1
+gr2 = ImporterGroupSubjectFUN_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group FUN 2 from XLS % Group FUN 2
+gr3 = ImporterGroupSubjectFUN_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group FUN 3 from XLS % Group FUN 2
+
+%% Analysis
+a_WD1 = AnalyzeEnsemble_FUN_D_WD('GR', gr1); % Analyze Group 1 % Group 1 Analysis
+a_WD2 = AnalyzeEnsemble_FUN_D_WD('GR', gr2); % Analyze Group 2 % Group 2 Analysis
+a_WD3 = AnalyzeEnsemble_FUN_D_WD('GR', gr3); % Analyze Group 3 % Group 3 Analysis
+
+%% Comparison
+c_WD1 = CompareEnsemble('P', 10, 'A1', a_WD1, 'A2', a_WD2, 'MEMORIZE', true); % Compare Groups % Group Comparison
+

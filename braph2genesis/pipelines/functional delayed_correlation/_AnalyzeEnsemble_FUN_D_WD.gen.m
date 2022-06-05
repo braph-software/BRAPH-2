@@ -1,16 +1,15 @@
 %% ¡header!
-AnalyzeEnsemble_FUN_WU < AnalyzeEnsemble (a, graph analysis with functional data) is a graph analysis using functional data.
+AnalyzeEnsemble_FUN_D_WD < AnalyzeEnsemble (a, graph analysis with functional data) is a graph analysis using functional data. 
 
 %% ¡description!
-This graph analysis uses functional data and analyzes them using weighted undirected graphs,
-binary undirected multigraphs with fixed thresholds,
-or binary undirected multigraphs with fixed densities.
+This graph analysis uses functional data. The matrices are calculated using delayed correlation method.
+The data will be analyzed using using weighted directed graphs.
 
 %% ¡props!
 %%% ¡prop!
-REPETITION(parameter, scalar) is the number of repetitions
+REPETITION(parameter, scalar) is the number of repetitions (Repetion time for fMRI).
 %%%% ¡default!
-1
+2.7
 %%% ¡prop!
 FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value
 %%%% ¡default!
@@ -19,6 +18,12 @@ FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value
 FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value
 %%%% ¡default!
 Inf
+%%% ¡prop!
+DELAYVALUE(parameter, scalar)is the value of the temporal delay at which matrices are calculated
+%%%% ¡default!
+1
+%%%% ¡conditioning!
+value = abs(floor(value));
 
 %%% ¡prop!
 CORRELATION_RULE (parameter, option) is the correlation type.
@@ -47,18 +52,19 @@ ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
 pr = PPAnalyzeEnsemble_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_FUN_WU.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %%% ¡prop!
-G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analysis.
+G_DICT (result, idict) is the graph (GraphWD) ensemble obtained from this analysis.
 %%%% ¡settings!
-'GraphWU'
+'GraphWD'
 %%%% ¡default!
-IndexedDictionary('IT_CLASS', 'GraphWU')
+IndexedDictionary('IT_CLASS', 'GraphWD')
 %%%% ¡calculate!
-g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
+g_dict = IndexedDictionary('IT_CLASS', 'GraphWD');
 
 gr = a.get('GR');
 T = a.get('REPETITION');
 fmin = a.get('FREQUENCYRULEMIN');
 fmax = a.get('FREQUENCYRULEMAX');
+delta = a.get('DELAYVALUE');
 atlas = BrainAtlas();
 if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
     atlas = gr.get('SUB_DICT').getItem(1).get('BA');
@@ -76,9 +82,34 @@ for i = 1:1:gr.get('SUB_DICT').length()
         data = ifft(ft, NFFT);
     end
     
-    A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
-    
-    g = GraphWU( ...
+    %% Delayed correlation calculation
+    % preallocate the connectivity matrix
+    correlation = zeros(atlas.get('BR_DICT').length());
+        
+    % specify the data length for all outgoing regions
+    conn_region1 = data(1:1:(size(data,1)-delta), :);
+
+    % for each incoming region get the data and calculate
+    % the correlation
+    for j = 1:1:size(data, 2)
+        conn_region2 = data(1+delta:1:size(data,1),j);
+
+        correlation(:,j) = corr(conn_region1, conn_region2,...
+            'type', a.get('CORRELATION_RULE'));
+    end
+
+    % Standard procedures on the matrix
+    % take only the antisymmetric part
+    A = correlation - transpose(correlation);
+
+    % eliminate all the negative connections
+    A(A < 0) = 0;
+
+    % set the diagnoal entries to 0
+    A(1:length(A)+1:numel(A)) = 0;
+
+
+    g = GraphWD( ...
         'ID', ['g ' sub.get('ID')], ...
         'B', A, ...
         'BRAINATLAS', atlas ...
@@ -96,7 +127,7 @@ function pr = getPPCompareEnsemble_CPDict(a, varargin)
     %
     % See also CompareEnsemble.
     
-    pr = PPCompareEnsemble_FUN_CPDict_WU(varargin{:});
+    pr = PPCompareEnsemble_FUN_CPDict_WD(varargin{:});
 end
 %% ¡tests!
 
@@ -104,4 +135,4 @@ end
 %%%% ¡name!
 Example
 %%%% ¡code!
-example_FUN_WU
+example_FUN_WD
