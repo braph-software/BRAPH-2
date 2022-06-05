@@ -25,228 +25,168 @@ BA (metadata, item) is the brain atlas with the brain regions.
 %%%% ¡settings!
 'BrainAtlas'
 
-% % % %%% ¡prop!
-% % % SYM_ON (figure, logical) whether to show the symbols of the brain regions.
-% % % %%%% ¡default!
-% % % true
-
 %%% ¡prop!
 SYM_DICT (figure, idict) contains the symbols of the brain regions.
 %%%% ¡settings!
 'SettingsSymbol'
 %%%% ¡postprocessing!
-% % % if pf.get('SYM_ON')
-    if ~isa(pf.getr('BA'), 'NoValue')
-        if ~isa(pf.getr('SYM_DICT'), 'NoValue')
-            
-            br_dict = pf.get('BA').get('BR_DICT');
-            
-            if pf.get('SYM_DICT').length() == 0
+if ~isa(pf.getr('BA'), 'NoValue')
+    if ~isa(pf.getr('SYM_DICT'), 'NoValue')
 
-                syms = cell(1, br_dict.length());
+        br_dict = pf.get('BA').get('BR_DICT');
 
-                for i = 1:1:br_dict.length()
-                    br = br_dict.getItem(i);
-                    
-                    syms{i} = SettingsSymbol( ...
-                        'ID', Callback('EL', br, 'TAG', 'ID'), ...
-                        'VISIBLE', true, ...
-                        'X', Callback('EL', br, 'TAG', 'X'), ...
-                        'Y', Callback('EL', br, 'TAG', 'Y'), ...
-                        'Z', Callback('EL', br, 'TAG', 'Z') ...
+        if pf.get('SYM_DICT').length() == 0 && br_dict.length()
+
+            for i = 1:1:br_dict.length()
+                br = br_dict.getItem(i);
+
+                syms{i} = SettingsSymbol( ...
+                    'ID', Callback('EL', br, 'TAG', 'ID'), ...
+                    'VISIBLE', true, ...
+                    'X', Callback('EL', br, 'TAG', 'X'), ...
+                    'Y', Callback('EL', br, 'TAG', 'Y'), ...
+                    'Z', Callback('EL', br, 'TAG', 'Z') ...
+                    );
+            end
+
+            pf.get('SYM_DICT').set('IT_LIST', syms)
+        else
+            for i = 1:1:br_dict.length()
+                if pf.get('SYM_DICT').containsIndex(i) && check_graphics(pf.h_syms{i}, 'line')
+                    pf.get('SYM_DICT').getItem(i).h(pf.h_syms{i}).set( ...
+                        'PANEL', pf, ...
+                        'UITAG', ['h_syms{' int2str(i) '}'] ... % same as in h_syms{i}
                         );
-                end
-                
-                pf.get('SYM_DICT').set('IT_LIST', syms)
-            else
-                for i = 1:1:br_dict.length()
-                    if pf.get('SYM_DICT').containsIndex(i) && check_graphics(pf.h_syms{i}, 'line')
-                        pf.get('SYM_DICT').getItem(i).h(pf.h_syms{i}).set( ...
-                            'PANEL', pf, ...
-                            'UITAG', ['h_syms{' int2str(i) '}'] ... % same as in h_syms{i}
-                            );
-                    end
                 end
             end
         end
     end
-% % % else
-% % %     for i = 1:1:length(pf.h_syms)
-% % %         if check_graphics(pf.h_syms{i}, 'line')
-% % %             set(pf.h_syms{i}, 'Visible', false)
-% % %         end
-% % %     end
-% % % end
+end
 %%%% ¡gui!
 pr = PanelPropIDictTable('EL', pf, 'PROP', PFBrainAtlas.SYM_DICT, ...
     'COLS', [SettingsSymbol.VISIBLE SettingsSymbol.X SettingsSymbol.Y SettingsSymbol.Z SettingsSymbol.SYMBOL SettingsSymbol.SYMBOLSIZE], ...
     varargin{:});
-
-% % % %%% ¡prop!
-% % % SPH_ON (figure, logical) whether to show the spheres of the brain regions.
-% % % %%%% ¡default!
-% % % false
 
 %%% ¡prop!
 SPH_DICT (figure, idict) contains the spheres of the brain regions.
 %%%% ¡settings!
 'SettingsSphere'
 %%%% ¡postprocessing!
-% % % if pf.get('SPH_ON')
-    if ~isa(pf.getr('BA'), 'NoValue')
-        if ~isa(pf.getr('SPH_DICT'), 'NoValue')
-            
-            br_dict = pf.get('BA').get('BR_DICT');
-            
-            if pf.get('SPH_DICT').length() == 0
-                
-                sphs = cell(1, br_dict.length());
+if ~isa(pf.getr('BA'), 'NoValue')
+    if ~isa(pf.getr('SPH_DICT'), 'NoValue')
 
-                for i = 1:1:br_dict.length()
-                    br = br_dict.getItem(i);
-                    
-                    sphs{i} = SettingsSphere( ...
-                        'ID', Callback('EL', br, 'TAG', 'ID'), ...
-                        'X', Callback('EL', br, 'TAG', 'X'), ...
-                        'Y', Callback('EL', br, 'TAG', 'Y'), ...
-                        'Z', Callback('EL', br, 'TAG', 'Z') ...
+        br_dict = pf.get('BA').get('BR_DICT');
+
+        if pf.get('SPH_DICT').length() == 0 && br_dict.length()
+
+            for i = 1:1:br_dict.length()
+                br = br_dict.getItem(i);
+
+                sphs{i} = SettingsSphere( ...
+                    'ID', Callback('EL', br, 'TAG', 'ID'), ...
+                    'X', Callback('EL', br, 'TAG', 'X'), ...
+                    'Y', Callback('EL', br, 'TAG', 'Y'), ...
+                    'Z', Callback('EL', br, 'TAG', 'Z') ...
+                    );
+            end
+
+            pf.get('SPH_DICT').set('IT_LIST', sphs)
+        else
+            for i = 1:1:br_dict.length()
+                if pf.get('SPH_DICT').containsIndex(i) && check_graphics(pf.h_sphs{i}, 'surface')
+                    pf.get('SPH_DICT').getItem(i).h(pf.h_sphs{i}).set( ...
+                        'PANEL', pf, ...
+                        'UITAG', ['h_sphs{' int2str(i) '}'] ... % same as in h_sphs{i}
                         );
-                end
-                
-                pf.get('SPH_DICT').set('IT_LIST', sphs)
-            else
-                for i = 1:1:br_dict.length()
-                    if pf.get('SPH_DICT').containsIndex(i) && check_graphics(pf.h_sphs{i}, 'surface')
-                        pf.get('SPH_DICT').getItem(i).h(pf.h_sphs{i}).set( ...
-                            'PANEL', pf, ...
-                            'UITAG', ['h_sphs{' int2str(i) '}'] ... % same as in h_sphs{i}
-                            );
-                    end
                 end
             end
         end
     end
-% % % else
-% % %     for i = 1:1:length(pf.h_sphs)
-% % %         if check_graphics(pf.h_sphs{i}, 'line')
-% % %             set(pf.h_sphs{i}, 'Visible', false)
-% % %         end
-% % %     end
-% % % end
+end
 %%%% ¡gui!
 pr = PanelPropIDictTable('EL', pf, 'PROP', PFBrainAtlas.SPH_DICT, ...
     'COLS', [SettingsSphere.VISIBLE SettingsSphere.X SettingsSphere.Y SettingsSphere.Z SettingsSphere.SPHERESIZE SettingsSphere.FACEALPHA SettingsSphere.EDGEALPHA], ...
     varargin{:});
-
-% % % %%% ¡prop!
-% % % ID_ON (figure, logical) whether to show the ids of the brain regions.
-% % % %%%% ¡default!
-% % % false
 
 %%% ¡prop!
 ID_DICT (figure, idict) contains the ids of the brain regions.
 %%%% ¡settings!
 'SettingsText'
 %%%% ¡postprocessing!
-% % % if pf.get('ID_ON')
-    if ~isa(pf.getr('BA'), 'NoValue')
-        if ~isa(pf.getr('ID_DICT'), 'NoValue')
-            
-            br_dict = pf.get('BA').get('BR_DICT');
-            
-            if pf.get('ID_DICT').length() == 0
+if ~isa(pf.getr('BA'), 'NoValue')
+    if ~isa(pf.getr('ID_DICT'), 'NoValue')
 
-                ids = cell(1, br_dict.length());
+        br_dict = pf.get('BA').get('BR_DICT');
 
-                for i = 1:1:br_dict.length()
-                    br = br_dict.getItem(i);
-                    
-                    ids{i} = SettingsText( ...
-                        'ID', Callback('EL', br, 'TAG', 'ID'), ...
-                        'X', Callback('EL', br, 'TAG', 'X'), ...
-                        'Y', Callback('EL', br, 'TAG', 'Y'), ...
-                        'Z', Callback('EL', br, 'TAG', 'Z'), ...
-                        'TXT', Callback('EL', br, 'TAG', 'ID') ...
+        if pf.get('ID_DICT').length() == 0 && br_dict.length()
+
+            for i = 1:1:br_dict.length()
+                br = br_dict.getItem(i);
+
+                ids{i} = SettingsText( ...
+                    'ID', Callback('EL', br, 'TAG', 'ID'), ...
+                    'X', Callback('EL', br, 'TAG', 'X'), ...
+                    'Y', Callback('EL', br, 'TAG', 'Y'), ...
+                    'Z', Callback('EL', br, 'TAG', 'Z'), ...
+                    'TXT', Callback('EL', br, 'TAG', 'ID') ...
+                    );
+            end
+
+            pf.get('ID_DICT').set('IT_LIST', ids)
+        else
+            for i = 1:1:br_dict.length()
+                if pf.get('ID_DICT').containsIndex(i) && check_graphics(pf.h_ids{i}, 'text')
+                    pf.get('ID_DICT').getItem(i).h(pf.h_ids{i}).set( ...
+                        'PANEL', pf, ...
+                        'UITAG', ['h_ids{' int2str(i) '}'] ... % same as in h_ids{i}
                         );
-                end
-                
-                pf.get('ID_DICT').set('IT_LIST', ids)
-            else
-                for i = 1:1:br_dict.length()
-                    if pf.get('ID_DICT').containsIndex(i) && check_graphics(pf.h_ids{i}, 'text')
-                        pf.get('ID_DICT').getItem(i).h(pf.h_ids{i}).set( ...
-                            'PANEL', pf, ...
-                            'UITAG', ['h_ids{' int2str(i) '}'] ... % same as in h_ids{i}
-                            );
-                    end
                 end
             end
         end
     end
-% % % else
-% % %     for i = 1:1:length(pf.h_ids)
-% % %         if check_graphics(pf.h_ids{i}, 'line')
-% % %             set(pf.h_ids{i}, 'Visible', false)
-% % %         end
-% % %     end
-% % % end
+end
 %%%% ¡gui!
 pr = PanelPropIDictTable('EL', pf, 'PROP', PFBrainAtlas.ID_DICT, ...
     'COLS', [SettingsText.VISIBLE SettingsText.X SettingsText.Y SettingsText.Z SettingsText.TXT SettingsText.FONTNAME SettingsText.FONTSIZE SettingsText.INTERPRETER], ...
     varargin{:});
-
-% % % %%% ¡prop!
-% % % LAB_ON (figure, logical) whether to show the labels of the brain regions.
-% % % %%%% ¡default!
-% % % false
 
 %%% ¡prop!
 LAB_DICT (figure, idict) contains the labels of the brain regions.
 %%%% ¡settings!
 'SettingsText'
 %%%% ¡postprocessing!
-% % % if pf.get('LAB_ON')
-    if ~isa(pf.getr('BA'), 'NoValue')
-        if ~isa(pf.getr('LAB_DICT'), 'NoValue')
-            
-            br_dict = pf.get('BA').get('BR_DICT');
-            
-            if pf.get('LAB_DICT').length() == 0
-                
-                labs = cell(1, br_dict.length());
+if ~isa(pf.getr('BA'), 'NoValue')
+    if ~isa(pf.getr('LAB_DICT'), 'NoValue')
 
-                for i = 1:1:br_dict.length()
-                    br = br_dict.getItem(i);
-                    
-                    labs{i} = SettingsText( ...
-                        'ID', Callback('EL', br, 'TAG', 'ID'), ...
-                        'X', Callback('EL', br, 'TAG', 'X'), ...
-                        'Y', Callback('EL', br, 'TAG', 'Y'), ...
-                        'Z', Callback('EL', br, 'TAG', 'Z'), ...
-                        'TXT', Callback('EL', br, 'TAG', 'LABEL') ...
+        br_dict = pf.get('BA').get('BR_DICT');
+
+        if pf.get('LAB_DICT').length() == 0 && br_dict.length()
+
+            for i = 1:1:br_dict.length()
+                br = br_dict.getItem(i);
+
+                labs{i} = SettingsText( ...
+                    'ID', Callback('EL', br, 'TAG', 'ID'), ...
+                    'X', Callback('EL', br, 'TAG', 'X'), ...
+                    'Y', Callback('EL', br, 'TAG', 'Y'), ...
+                    'Z', Callback('EL', br, 'TAG', 'Z'), ...
+                    'TXT', Callback('EL', br, 'TAG', 'LABEL') ...
+                    );
+            end
+
+            pf.get('LAB_DICT').set('IT_LIST', labs)
+        else
+            for i = 1:1:br_dict.length()
+                if pf.get('LAB_DICT').containsIndex(i) && check_graphics(pf.h_labs{i}, 'text')
+                    pf.get('LAB_DICT').getItem(i).h(pf.h_labs{i}).set( ...
+                        'PANEL', pf, ...
+                        'UITAG', ['h_labs{' int2str(i) '}'] ... % same as in h_labs{i}
                         );
-                end
-                
-                pf.get('LAB_DICT').set('IT_LIST', labs)
-            else
-                for i = 1:1:br_dict.length()
-                    if pf.get('LAB_DICT').containsIndex(i) && check_graphics(pf.h_labs{i}, 'text')
-                        pf.get('LAB_DICT').getItem(i).h(pf.h_labs{i}).set( ...
-                            'PANEL', pf, ...
-                            'UITAG', ['h_labs{' int2str(i) '}'] ... % same as in h_labs{i}
-                            );
-                    end
                 end
             end
         end
     end
-% % % else
-% % %     for i = 1:1:length(pf.h_labs)
-% % %         if check_graphics(pf.h_labs{i}, 'line')
-% % %             set(pf.h_labs{i}, 'Visible', false)
-% % %         end
-% % %     end
-% % % end
+end
 %%%% ¡gui!
 pr = PanelPropIDictTable('EL', pf, 'PROP', PFBrainAtlas.LAB_DICT, ...
     'COLS', [SettingsText.VISIBLE SettingsText.X SettingsText.Y SettingsText.Z SettingsText.TXT SettingsText.FONTNAME SettingsText.FONTSIZE SettingsText.INTERPRETER], ...
