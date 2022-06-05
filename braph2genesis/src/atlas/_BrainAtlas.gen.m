@@ -157,13 +157,15 @@ pr = PanelPropIDictTable('EL', ba, 'PROP', BrainAtlas.BR_DICT, ...
         varargin{:});
 
 %%% ¡prop!
-SURF (metadata, item) contains the brain surface of the brain atlas.
+PFBA (gui, item) contains the panel figure of the brain atlas.
 %%%% ¡settings!
-'BrainSurface'
-%%%% ¡default!
-ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF')
-%%%% ¡gui_!
-% % % pr = PPBrainAtlas_Surf('EL', ba, 'PROP', BrainAtlas.SURF, varargin{:});
+'PFBrainAtlas'
+%%%% ¡postprocessing!
+ba.memorize('PFBA').set('BA', ba)
+%%%% ¡gui!
+pr = PanelPropItem('EL', ba, 'PROP', BrainAtlas.PFBA, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
 
 %% ¡tests!
 
