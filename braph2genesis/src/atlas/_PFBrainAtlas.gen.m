@@ -25,17 +25,17 @@ BA (metadata, item) is the brain atlas with the brain regions.
 %%%% ¡settings!
 'BrainAtlas'
 
-%%% ¡prop!
-SYM_ON (figure, logical) whether to show the symbols of the brain regions.
-%%%% ¡default!
-true
+% % % %%% ¡prop!
+% % % SYM_ON (figure, logical) whether to show the symbols of the brain regions.
+% % % %%%% ¡default!
+% % % true
 
 %%% ¡prop!
 SYM_DICT (figure, idict) contains the symbols of the brain regions.
 %%%% ¡settings!
 'SettingsSymbol'
 %%%% ¡postprocessing!
-if pf.get('SYM_ON')
+% % % if pf.get('SYM_ON')
     if ~isa(pf.getr('BA'), 'NoValue')
         if ~isa(pf.getr('SYM_DICT'), 'NoValue')
             
@@ -57,7 +57,7 @@ if pf.get('SYM_ON')
                 pf.get('SYM_DICT').set('IT_LIST', syms)
             else
                 for i = 1:1:br_dict.length()
-                    if pf.get('SYM_DICT').containsIndex(i)
+                    if pf.get('SYM_DICT').containsIndex(i) && check_graphics(pf.h_syms{i}, 'line')
                         pf.get('SYM_DICT').getItem(i).h(pf.h_syms{i}).set( ...
                             'PANEL', pf, ...
                             'UITAG', ['h_syms{' int2str(i) '}'] ... % same as in h_syms{i}
@@ -67,29 +67,29 @@ if pf.get('SYM_ON')
             end
         end
     end
-else
-    for i = 1:1:length(pf.h_syms)
-        if check_graphics(pf.h_syms{i}, 'line')
-            set(pf.h_syms{i}, 'Visible', false)
-        end
-    end
-end
-% % % %%%% ¡gui!
-% % % pr = PanelPropIDictTable('EL', pf, 'PROP', PFBrainAtlas.SYM_DICT, ...
-% % %     'COLS', [SettingsSymbol.VISIBLE SettingsSymbol.X SettingsSymbol.Y SettingsSymbol.Z SettingsSymbol.SYMBOL SettingsSymbol.SYMBOLSIZE], ...
-% % %     varargin{:});
+% % % else
+% % %     for i = 1:1:length(pf.h_syms)
+% % %         if check_graphics(pf.h_syms{i}, 'line')
+% % %             set(pf.h_syms{i}, 'Visible', false)
+% % %         end
+% % %     end
+% % % end
+%%%% ¡gui!
+pr = PanelPropIDictTable('EL', pf, 'PROP', PFBrainAtlas.SYM_DICT, ...
+    'COLS', [SettingsSymbol.VISIBLE SettingsSymbol.X SettingsSymbol.Y SettingsSymbol.Z SettingsSymbol.SYMBOL SettingsSymbol.SYMBOLSIZE], ...
+    varargin{:});
 
-%%% ¡prop!
-SPH_ON (figure, logical) whether to show the spheres of the brain regions.
-%%%% ¡default!
-false
+% % % %%% ¡prop!
+% % % SPH_ON (figure, logical) whether to show the spheres of the brain regions.
+% % % %%%% ¡default!
+% % % false
 
 %%% ¡prop!
 SPH_DICT (figure, idict) contains the spheres of the brain regions.
 %%%% ¡settings!
 'SettingsSphere'
 %%%% ¡postprocessing!
-if pf.get('SPH_ON')
+% % % if pf.get('SPH_ON')
     if ~isa(pf.getr('BA'), 'NoValue')
         if ~isa(pf.getr('SPH_DICT'), 'NoValue')
             
@@ -110,7 +110,7 @@ if pf.get('SPH_ON')
                 pf.get('SPH_DICT').set('IT_LIST', sphs)
             else
                 for i = 1:1:br_dict.length()
-                    if pf.get('SPH_DICT').containsIndex(i)
+                    if pf.get('SPH_DICT').containsIndex(i) && check_graphics(pf.h_sphs{i}, 'surface')
                         pf.get('SPH_DICT').getItem(i).h(pf.h_sphs{i}).set( ...
                             'PANEL', pf, ...
                             'UITAG', ['h_sphs{' int2str(i) '}'] ... % same as in h_sphs{i}
@@ -120,29 +120,29 @@ if pf.get('SPH_ON')
             end
         end
     end
-else
-    for i = 1:1:length(pf.h_sphs)
-        if check_graphics(pf.h_sphs{i}, 'line')
-            set(pf.h_sphs{i}, 'Visible', false)
-        end
-    end
-end
-% % % %%%% ¡gui!
-% % % pr = PanelPropIDictTable('EL', pf, 'PROP', PFBrainAtlas.SPH_DICT, ...
-% % %     'COLS', [SettingsSphere.VISIBLE SettingsSphere.X SettingsSphere.Y SettingsSphere.Z SettingsSphere.SPHERESIZE SettingsSphere.FACEALPHA SettingsSphere.EDGEALPHA], ...
-% % %     varargin{:});
+% % % else
+% % %     for i = 1:1:length(pf.h_sphs)
+% % %         if check_graphics(pf.h_sphs{i}, 'line')
+% % %             set(pf.h_sphs{i}, 'Visible', false)
+% % %         end
+% % %     end
+% % % end
+%%%% ¡gui!
+pr = PanelPropIDictTable('EL', pf, 'PROP', PFBrainAtlas.SPH_DICT, ...
+    'COLS', [SettingsSphere.VISIBLE SettingsSphere.X SettingsSphere.Y SettingsSphere.Z SettingsSphere.SPHERESIZE SettingsSphere.FACEALPHA SettingsSphere.EDGEALPHA], ...
+    varargin{:});
 
-%%% ¡prop!
-ID_ON (figure, logical) whether to show the ids of the brain regions.
-%%%% ¡default!
-false
+% % % %%% ¡prop!
+% % % ID_ON (figure, logical) whether to show the ids of the brain regions.
+% % % %%%% ¡default!
+% % % false
 
 %%% ¡prop!
 ID_DICT (figure, idict) contains the ids of the brain regions.
 %%%% ¡settings!
 'SettingsText'
 %%%% ¡postprocessing!
-if pf.get('ID_ON')
+% % % if pf.get('ID_ON')
     if ~isa(pf.getr('BA'), 'NoValue')
         if ~isa(pf.getr('ID_DICT'), 'NoValue')
             
@@ -164,7 +164,7 @@ if pf.get('ID_ON')
                 pf.get('ID_DICT').set('IT_LIST', ids)
             else
                 for i = 1:1:br_dict.length()
-                    if pf.get('ID_DICT').containsIndex(i)
+                    if pf.get('ID_DICT').containsIndex(i) && check_graphics(pf.h_ids{i}, 'text')
                         pf.get('ID_DICT').getItem(i).h(pf.h_ids{i}).set( ...
                             'PANEL', pf, ...
                             'UITAG', ['h_ids{' int2str(i) '}'] ... % same as in h_ids{i}
@@ -174,29 +174,29 @@ if pf.get('ID_ON')
             end
         end
     end
-else
-    for i = 1:1:length(pf.h_ids)
-        if check_graphics(pf.h_ids{i}, 'line')
-            set(pf.h_ids{i}, 'Visible', false)
-        end
-    end
-end
-% % % %%%% ¡gui!
-% % % pr = PanelPropIDictTable('EL', pf, 'PROP', PFBrainAtlas.ID_DICT, ...
-% % %     'COLS', [SettingsText.VISIBLE SettingsText.X SettingsText.Y SettingsText.Z SettingsText.TXT SettingsText.FONTNAME SettingsText.FONTSIZE SettingsText.INTERPRETER], ...
-% % %     varargin{:});
+% % % else
+% % %     for i = 1:1:length(pf.h_ids)
+% % %         if check_graphics(pf.h_ids{i}, 'line')
+% % %             set(pf.h_ids{i}, 'Visible', false)
+% % %         end
+% % %     end
+% % % end
+%%%% ¡gui!
+pr = PanelPropIDictTable('EL', pf, 'PROP', PFBrainAtlas.ID_DICT, ...
+    'COLS', [SettingsText.VISIBLE SettingsText.X SettingsText.Y SettingsText.Z SettingsText.TXT SettingsText.FONTNAME SettingsText.FONTSIZE SettingsText.INTERPRETER], ...
+    varargin{:});
 
-%%% ¡prop!
-LAB_ON (figure, logical) whether to show the labels of the brain regions.
-%%%% ¡default!
-false
+% % % %%% ¡prop!
+% % % LAB_ON (figure, logical) whether to show the labels of the brain regions.
+% % % %%%% ¡default!
+% % % false
 
 %%% ¡prop!
 LAB_DICT (figure, idict) contains the labels of the brain regions.
 %%%% ¡settings!
 'SettingsText'
 %%%% ¡postprocessing!
-if pf.get('LAB_ON')
+% % % if pf.get('LAB_ON')
     if ~isa(pf.getr('BA'), 'NoValue')
         if ~isa(pf.getr('LAB_DICT'), 'NoValue')
             
@@ -218,7 +218,7 @@ if pf.get('LAB_ON')
                 pf.get('LAB_DICT').set('IT_LIST', labs)
             else
                 for i = 1:1:br_dict.length()
-                    if pf.get('LAB_DICT').containsIndex(i)
+                    if pf.get('LAB_DICT').containsIndex(i) && check_graphics(pf.h_labs{i}, 'text')
                         pf.get('LAB_DICT').getItem(i).h(pf.h_labs{i}).set( ...
                             'PANEL', pf, ...
                             'UITAG', ['h_labs{' int2str(i) '}'] ... % same as in h_labs{i}
@@ -228,17 +228,17 @@ if pf.get('LAB_ON')
             end
         end
     end
-else
-    for i = 1:1:length(pf.h_labs)
-        if check_graphics(pf.h_labs{i}, 'line')
-            set(pf.h_labs{i}, 'Visible', false)
-        end
-    end
-end
-% % % %%%% ¡gui!
-% % % pr = PanelPropIDictTable('EL', pf, 'PROP', PFBrainAtlas.ID_DICT, ...
-% % %     'COLS', [SettingsText.VISIBLE SettingsText.X SettingsText.Y SettingsText.Z SettingsText.TXT SettingsText.FONTNAME SettingsText.FONTSIZE SettingsText.INTERPRETER], ...
-% % %     varargin{:});
+% % % else
+% % %     for i = 1:1:length(pf.h_labs)
+% % %         if check_graphics(pf.h_labs{i}, 'line')
+% % %             set(pf.h_labs{i}, 'Visible', false)
+% % %         end
+% % %     end
+% % % end
+%%%% ¡gui!
+pr = PanelPropIDictTable('EL', pf, 'PROP', PFBrainAtlas.LAB_DICT, ...
+    'COLS', [SettingsText.VISIBLE SettingsText.X SettingsText.Y SettingsText.Z SettingsText.TXT SettingsText.FONTNAME SettingsText.FONTSIZE SettingsText.INTERPRETER], ...
+    varargin{:});
 
 %% ¡methods!
 function p_out = draw(pf, varargin)
