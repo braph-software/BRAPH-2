@@ -213,7 +213,7 @@ LAB_DICT (figure, idict) contains the labels of the brain regions.
             
             if pf.get('LAB_DICT').length() == 0
                 
-                labss = cell(1, br_dict.length());
+                labs = cell(1, br_dict.length());
 
                 for i = 1:1:br_dict.length()
                     br = br_dict.getItem(i);
