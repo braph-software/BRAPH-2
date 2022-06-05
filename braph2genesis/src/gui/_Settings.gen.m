@@ -2,27 +2,31 @@
 Settings < Element (st, graphics settings) contains some graphics settings.
 
 %%% ¡description!
-% % % Settings provides the base element for all grpahics settings.
-% % %  The graphics objects is identified as a graphics tag (UITAG string) of a Panel element (PANEL item).
-% % %  Typically, only its subclasses are employed.
-% % % 
-% % % The handle to the graphics object can be retrieved as 
-% % %     
-% % %     h = st.<stron>h</strong>()
-% % %     
-% % %  which returns the handle is the Panel element is srt and an empty array otherwise.
-% % % 
-% % % Typically, it is used as a prop of a subclass of Panel (pl) and it is 
-% % %  initialized in the constructor with this code:
-% % % 
-% % %     if isa(pl.getr(''SETTINGS_PROP''), ''NoValue'')
-% % %         pl.memorize(''SETTINGS_PROP'').set(''PANEL'', pl, ''UITAG'', ''uitag'')
-% % %     end
-% % % 
-% % %  It might be necessary to add some listeners (e.g., to update toogle buttons).
+Settings provides the base element for all graphics settings.
+ The graphics objects is identified by its handle h, which can be retrieves as 
+ 
+    h = st.<stron>h</strong>()
+
+ If H is a valid graphic object, it returns the handle; otherwise it retrieves 
+  the hnadle as the graphics tag (UITAG string) of a Panel element (PANEL item).
+
+ The handle can be set as
+ 
+    [st = ]st.<stron>h</strong>(h)
+    
+  or indeirectly setting the graphics tag (UITAG string) ans the Panel element (PANEL item).
+  
+Typically, it is used as a prop of a subclass of Panel (pn) and it is 
+ initialized in the constructor a code smiliar to this:
+
+	pn.memorize(''SETTINGS_PROP'').h(pn.h).set(''PANEL'', pn, ''UITAG'', ''uitag'')
+
+ It might be necessary to add some listeners (e.g., to update toogle buttons).
+  
+Typically, only its subclasses are employed.
 
 %%% ¡seealso!
-Panel
+Panel, listener
 
 %% ¡props!
 
@@ -44,22 +48,20 @@ handle % handle for the graphics object
 
 %% ¡methods!
 function out = h(st, handle)
-% % %     %HANDLE() returns the graphics object handle.
-% % %     %
-% % %     % H = HANDLE(ST) sets and returns the handle of the graphics object 
-% % %     %  to which the settings are applied.
+    %H() sets and returns the graphics object handle.
+    %
+    % HANDLE = H(ST) returns the handle of the graphics object 
+    %  to which the settings are applied.
+    %
+    % H(ST, HANDLE) sets the handle to H.
+    %
+    % ST = H(ST, HANDLE) sets the handle to H and the turns the Settings.
     
     if nargin > 1
         st.handle = handle;
     end
     
     if isempty(st.handle) || ~check_graphics(st.handle)
-% % %         st.handle = st.get('PANEL').panel();
-% % % 
-% % %         uigen = st.get('UIGEN');
-% % %         for g = 1:1:length(uigen)
-% % %             st.handle = st.handle.Children(uigen(g));
-% % %         end
         if check_graphics(st.get('PANEL').panel(), 'uipanel')
             st.handle = findall(st.get('PANEL').panel(), 'Tag', st.get('UITAG'));
         end
