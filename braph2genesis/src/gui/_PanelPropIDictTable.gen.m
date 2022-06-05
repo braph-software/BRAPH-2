@@ -141,7 +141,59 @@ function update(pr)
                         data{i, c} = false;
                     end
                 elseif Element.existsProp(it_class, col) % prop = col;
-                    data{i, c} = dict.getItem(i).get(col);
+                    switch Element.getPropFormat(it_class, col)
+                        % % % case Format.EMPTY
+
+                        case Format.STRING
+                            data{i, c} = dict.getItem(i).get(col);
+
+                        case Format.LOGICAL
+                            data{i, c} = dict.getItem(i).get(col);
+
+                        case Format.OPTION
+                            data{i, c} = dict.getItem(i).get(col);
+
+                        % % % case Format.CLASS
+
+                        % % % case Format.CLASSLIST
+
+                        % % % case Format.ITEM
+
+                        % % % case Format.ITEMLIST
+
+                        % % % case Format.IDICT
+
+                        case Format.SCALAR
+                            data{i, c} = dict.getItem(i).get(col);
+
+                        % % % case Format.RVECTOR
+
+                        % % % case Format.CVECTOR
+
+                        % % % case Format.MATRIX
+
+                        % % % case Format.SMATRIX
+
+                        % % % case Format.CELL
+
+                        % % % case Format.NET
+
+                        case Format.COLOR
+                            rgb = dict.getItem(i).get(col);
+                            data{i, c} = [dec2hex(round(rgb(1) * 255), 2) dec2hex(round(rgb(2) * 255), 2) dec2hex(round(rgb(3) * 255), 2)];
+
+                        case Format.ALPHA
+                            data{i, c} = dict.getItem(i).get(col);
+
+                        case Format.SIZE
+                            data{i, c} = dict.getItem(i).get(col);
+
+                        case Format.MARKER
+                            data{i, c} = dict.getItem(i).get(col);
+
+                        case Format.LINE
+                            data{i, c} = dict.getItem(i).get(col);
+                    end            
                 end
             end
         end
@@ -224,7 +276,8 @@ function update(pr)
 
                         % % % case Format.NET
 
-                        % % % case Format.COLOR
+                        case Format.COLOR
+                            columnformat{c} = 'char';
 
                         case Format.ALPHA
                             columnformat{c} = 'numeric';
@@ -387,7 +440,13 @@ function cb_table_edit(pr, i, col, newdata)
 
                 % % % case Format.NET
 
-                % % % case Format.COLOR
+                case Format.COLOR
+                    try
+                        rgb = [hex2dec(newdata(1:2))/255 hex2dec(newdata(3:4))/255 hex2dec(newdata(5:6))/255];
+                        dict.getItem(i).set(col, rgb)
+                    catch
+                        %
+                    end
 
                 case Format.ALPHA
                     dict.getItem(i).set(col, newdata)
