@@ -60,7 +60,7 @@ function out = h(st, handle)
 % % %         for g = 1:1:length(uigen)
 % % %             st.handle = st.handle.Children(uigen(g));
 % % %         end
-        if check_graphics(st.get('PANEL').panel())
+        if check_graphics(st.get('PANEL').panel(), 'uipanel')
             st.handle = findall(st.get('PANEL').panel(), 'Tag', st.get('UITAG'));
         end
     end
