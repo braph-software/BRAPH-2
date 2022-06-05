@@ -288,10 +288,12 @@ default_ratio = get_default_ratio();
         % Get the currently-hovered list-item
         mousePos = java.awt.Point(jEventData.getX, jEventData.getY);
         hoverIndex = jListbox.locationToIndex(mousePos) + 1;
-        hoverValue = descriptions{hoverIndex};
-        % Modify the tooltip based on the hovered item
-        msgStr = sprintf('%s', hoverValue);
-        set(hListbox, 'Tooltip', msgStr);
+        try
+            hoverValue = descriptions{hoverIndex};
+            msgStr = sprintf('%s', hoverValue);
+            set(hListbox, 'Tooltip', msgStr);
+        catch e 
+        end
     end
     function [handles, levels, parentIdx, listing] = findjobj(container, varargin) %#ok<*CTCH,*ASGLU,*MSNU,*NASGU,*CHARTEN,*STREMP,*SPRINTFN>
         %findjobj Find java objects contained within a specified java container or Matlab GUI handle
