@@ -300,7 +300,7 @@ function cb_bring_to_front(pr)
     %
     % See also cb_hide, cb_close.
 
-    pr.cb_bring_to_front@Plot()
+    pr.cb_bring_to_front@PanelProp()
     
     % code to bring to front the dependent figures, currently not in use
     % for i = 1:1:length(pr.pc_GUIs)
