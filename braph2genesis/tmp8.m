@@ -11,7 +11,7 @@ clc
 % % test_code = ['test_' el_class]
 % % eval(test_code)
 
-% el_class = 'SettingsSymbol';
+% el_class = 'PanelPropItem';
 % delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
 % create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
 % create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
@@ -75,12 +75,19 @@ clc
 % f1 = gui1.draw('Units', 'normalized', 'Position', [.1 .1 .4 .8]);
 % toc
 
-im = ImporterPipelineBRAPH2(...
-    'FILE', [fileparts(which('Pipeline')) filesep 'pipeline_atlas.braph2'], ...
-    'WAITBAR', true ...
-    ); 
-pip = im.get('PIP');
+% im = ImporterPipelineBRAPH2(...
+%     'FILE', [fileparts(which('Pipeline')) filesep 'pipeline_atlas.braph2'], ...
+%     'WAITBAR', true ...
+%     ); 
+% pip = im.get('PIP');
+% 
+% gui = GUIElement('PE', pip, 'CLOSEREQ', false);
+% f = gui.draw();
 
-gui = GUIElement('PE', pip, 'CLOSEREQ', false);
-f = gui.draw();
-
+tic 
+ba1 = ImporterBrainAtlasXLS('FILE', [fileparts(which('braph2')) filesep() 'atlases' filesep() 'aal90_atlas.xlsx']).get('BA');
+toc
+gui1 = GUIElement('PE', ba1);
+toc
+f1  = gui1.draw();
+toc
