@@ -161,7 +161,9 @@ PFBA (gui, item) contains the panel figure of the brain atlas.
 %%%% ¡settings!
 'PFBrainAtlas'
 %%%% ¡postprocessing!
-ba.memorize('PFBA').set('BA', ba)
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    ba.memorize('PFBA').set('BA', ba)
+end
 %%%% ¡gui!
 pr = PanelPropItem('EL', ba, 'PROP', BrainAtlas.PFBA, ...
     'GUICLASS', 'GUIFig', ...
