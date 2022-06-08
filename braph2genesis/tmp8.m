@@ -3,13 +3,13 @@ delete(findall(0, 'type', 'figure'))
 clear all
 clc
 
-% el_class = 'PanelPropIDictTable';
-% delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
-% create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
-% create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
-% % create_test_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
-% % test_code = ['test_' el_class]
-% % eval(test_code)
+el_class = 'GUI';
+delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
+create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+% create_test_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+% test_code = ['test_' el_class]
+% eval(test_code)
 
 % el_class = 'PanelPropItem';
 % delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
@@ -58,22 +58,22 @@ clc
 % gui0 = GUIFig('PF', pf0, 'FILE', 'xxx sss', 'WAITBAR', true, 'CLOSEREQ', false);
 % f0 = gui0.draw('Units', 'normalized', 'Position', [.1 .1 .4 .8]);
 
-% tic 
-% ba1 = ImporterBrainAtlasXLS('FILE', [fileparts(which('braph2')) filesep() 'atlases' filesep() 'aal90_atlas.xlsx']).get('BA');
-% toc 
-% pf1 = PFBrainAtlas(...
-%     'SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'), ...
-%     'BA', ba1 ...
-%     );
-% toc
-% gui1 = GUIFig('PF', pf1, 'FILE', 'xxx sss', 'WAITBAR', false, 'CLOSEREQ', false);
-% toc
-% f1 = gui1.draw('Units', 'normalized', 'Position', [.1 .1 .4 .8]);
-% toc
-% close(f1)
-% toc
-% f1 = gui1.draw('Units', 'normalized', 'Position', [.1 .1 .4 .8]);
-% toc
+tic 
+ba1 = ImporterBrainAtlasXLS('FILE', [fileparts(which('braph2')) filesep() 'atlases' filesep() 'aal90_atlas.xlsx']).get('BA');
+toc 
+pf1 = PFBrainAtlas(...
+    'SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'), ...
+    'BA', ba1 ...
+    );
+toc
+gui1 = GUIFig('PF', pf1, 'FILE', 'xxx sss', 'WAITBAR', false, 'CLOSEREQ', false);
+toc
+f1 = gui1.draw('Units', 'normalized', 'Position', [.1 .1 .4 .8]);
+toc
+close(f1)
+toc
+f1 = gui1.draw('Units', 'normalized', 'Position', [.1 .1 .4 .8]);
+toc
 
 % im = ImporterPipelineBRAPH2(...
 %     'FILE', [fileparts(which('Pipeline')) filesep 'pipeline_atlas.braph2'], ...
