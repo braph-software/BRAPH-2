@@ -89,28 +89,6 @@ tool_viewCP
 %% ¡props!
 
 %%% ¡prop!
-SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.
-%%%% ¡settings!
-{dir([fileparts(which('braph2')) filesep() 'brainsurfs' filesep() '*.nv']).name}
-%%%% ¡default!
-'human_ICBM152.nv'
-%%%% ¡postprocessing!
-if pf.prop_set('SURFFILE', varargin)
-    bs = ImporterBrainSurfaceNV('FILE', pf.get('SURFFILE')).get('SURF');
-    pf.set('SURF', bs)
-    
-    delete(pf.h_brain)
-    pf.draw()
-end
-
-%%% ¡prop!
-SURF (metadata, item) is the brain surface to be plotted.
-%%%% ¡settings!
-'BrainSurface'
-%%%% ¡default!
-ImporterBrainSurfaceNV('FILE', PFBrainSurface.getPropDefault('SURFFILE')).get('SURF')
-
-%%% ¡prop!
 VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.
 %%%% ¡check_prop!
 check = length(value) == 2;
@@ -164,6 +142,28 @@ if (isempty(varargin) || pf.prop_set('BRAIN', varargin)) && check_graphics(pf.h_
     % update state of toggle tool
     set(pf.tool_brain, 'State', pf.get('BRAIN'))
 end
+
+%%% ¡prop!
+SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.
+%%%% ¡settings!
+{dir([fileparts(which('braph2')) filesep() 'brainsurfs' filesep() '*.nv']).name}
+%%%% ¡default!
+'human_ICBM152.nv'
+%%%% ¡postprocessing!
+if pf.prop_set('SURFFILE', varargin)
+    bs = ImporterBrainSurfaceNV('FILE', pf.get('SURFFILE')).get('SURF');
+    pf.set('SURF', bs)
+    
+    delete(pf.h_brain)
+    pf.draw()
+end
+
+%%% ¡prop!
+SURF (metadata, item) is the brain surface to be plotted.
+%%%% ¡settings!
+'BrainSurface'
+%%%% ¡default!
+ImporterBrainSurfaceNV('FILE', PFBrainSurface.getPropDefault('SURFFILE')).get('SURF')
 
 %%% ¡prop!
 ST_SURFACE (figure, item) determines the surface settings.
