@@ -52,6 +52,9 @@ if ~isa(pf.getr('BA'), 'NoValue')
             end
 
             pf.get('SPH_DICT').set('IT_LIST', sphs)
+            
+            % reset the ambient lighting
+            pf.get('ST_AMBIENT').set()
         else
             for i = 1:1:br_dict.length()
                 if pf.get('SPH_DICT').containsIndex(i) && check_graphics(pf.h_sphs{i}, 'surface')
@@ -295,6 +298,9 @@ function p_out = draw(pf, varargin)
             'IT_KEY', SettingsText.ID ...
             )
     end
+    
+    % reset the ambient lighting
+    pf.get('ST_AMBIENT').set()
     
     % output
     if nargout > 0

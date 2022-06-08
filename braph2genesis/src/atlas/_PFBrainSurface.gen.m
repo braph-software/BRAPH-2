@@ -98,6 +98,9 @@ PFBrainSurface.VIEW_SL_AZEL
 if (isempty(varargin) || pf.prop_set('VIEW', varargin)) && check_graphics(pf.h_axes, 'axes')
     view(pf.h_axes, pf.get('VIEW'))
     
+    % reset the ambient lighting
+    pf.get('ST_AMBIENT').set()
+    
     % update state of toggle tools
     set(pf.tool_view3D, 'State', isequal(pf.get('VIEW'), PFBrainSurface.VIEW_3D_AZEL))
     set(pf.tool_viewSL, 'State', isequal(pf.get('VIEW'), PFBrainSurface.VIEW_SL_AZEL))
@@ -177,7 +180,7 @@ ST_AMBIENT (figure, item) determines the ambient settings.
 %%%% ¡settings!
 'SettingsAmbient'
 %%%% ¡default!
-SettingsAmbient('LIGHTING', 'gouraud', 'MATERIAL', 'dull', 'CAMLIGHT', 'headlight', 'SHADING', 'interp')
+SettingsAmbient('LIGHTING', 'gouraud', 'MATERIAL', 'dull', 'CAMLIGHT', 'headlight (x2)', 'SHADING', 'none', 'COLORMAP', 'none')
 %%%% ¡gui!
 pr = SettingsAmbientPP('EL', pf, 'PROP', PFBrainSurface.ST_AMBIENT, varargin{:});
         
