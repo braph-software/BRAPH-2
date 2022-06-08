@@ -195,12 +195,6 @@ function p_out = draw(pf, varargin)
             );
         pf.h_axes.Toolbar.Visible = 'off';
         pf.h_axes.Interactions = [];
-% % %         h_3d = rotate3d(pl.h_axes);
-% % %         h_3d.ActionPostCallback = @cb_rotate_3d;   
-% % %         function cb_rotate_3d(~, ~)
-% % %             view_3d = get(pf.h_axes, 'view');
-% % %             pf.set('View', view_3d);
-% % %         end
     end
     
     if ~check_graphics(pf.h_brain, 'patch')
@@ -347,6 +341,22 @@ function p_out = draw(pf, varargin)
     if nargout > 0
         p_out = pf.p;
     end
+end
+function str = tostring(pf, varargin)
+    %TOSTRING string with information about the brain surface.
+    %
+    % STR = TOSTRING(PF) returns a string with information about the brain surface.
+    %
+    % STR = TOSTRING(PF, N) trims the string to the first N characters.
+    %
+    % STR = TOSTRING(PF, N, ENDING) ends the string with ENDING if it has
+    %  been trimmed.
+    %
+    % See also disp, tree.
+
+    str = 'Plot Brain Surface';
+    str = tostring(str, varargin{:});
+    str = str(2:1:end-1);
 end
 
 %% ¡tests!
