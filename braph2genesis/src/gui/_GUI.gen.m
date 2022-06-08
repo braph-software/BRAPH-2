@@ -158,9 +158,14 @@ function f_out = draw(gui, varargin)
             BRAPH2.add_tool_about(gui.toolbar)
         end
     end
+    
+    % ensure correct rendering of GUI
+    set(gui.f, 'Position', get(gui.f, 'Position') + [0 0 .01 0])
+    drawnow()
+    set(gui.f, 'Position', get(gui.f, 'Position') - [0 0 .01 0])
+    drawnow()
 
     % show figure
-    drawnow()
     set(gui.f, 'Visible', 'on')
 
     % output
