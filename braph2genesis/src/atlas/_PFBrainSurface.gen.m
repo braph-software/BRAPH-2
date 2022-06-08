@@ -89,11 +89,26 @@ tool_viewCP
 %% ¡props!
 
 %%% ¡prop!
+SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.
+%%%% ¡settings!
+{dir([fileparts(which('braph2')) filesep() 'brainsurfs' filesep() '*.nv']).name}
+%%%% ¡default!
+'human_ICBM152.nv'
+%%%% ¡postprocessing!
+if pf.prop_set('SURFFILE', varargin)
+    bs = ImporterBrainSurfaceNV('FILE', pf.get('SURFFILE')).get('SURF');
+    pf.set('SURF', bs)
+    
+    delete(pf.h_brain)
+    pf.draw()
+end
+
+%%% ¡prop!
 SURF (metadata, item) is the brain surface to be plotted.
 %%%% ¡settings!
 'BrainSurface'
 %%%% ¡default!
-ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF')
+ImporterBrainSurfaceNV('FILE', PFBrainSurface.getPropDefault('SURFFILE')).get('SURF')
 
 %%% ¡prop!
 VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.
