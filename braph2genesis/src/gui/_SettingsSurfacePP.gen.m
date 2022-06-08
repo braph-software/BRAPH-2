@@ -244,11 +244,11 @@ function redraw(pr, varargin)
     %  - X0 does not change
     %  - Y0 does not change
     %  - WIDTH does not change
-    %  - HEIGHT = s(6.4)
+    %  - HEIGHT = s(6.7)
     %
     % See also draw, update, PanelElement, s.
 
-    [h_p, varargin] = get_and_remove_from_varargin(s(6.4), 'Height', varargin);
+    [h_p, varargin] = get_and_remove_from_varargin(s(6.7), 'Height', varargin);
     
     pr.redraw@PanelProp('Height', h_p, varargin{:})
     
