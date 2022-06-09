@@ -36,7 +36,7 @@ SPHS (figure, logical) determines whether the spheres are shown.
 %%%% ¡default!
 true
 %%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set('SPHS', varargin))
+if (isempty(varargin) || pf.prop_set('SPHS', varargin)) && ~braph2_testing
     if ~pf.get('SPHS')
         for i = 1:1:length(pf.h_sphs)
             set(pf.h_sphs{i}, 'Visible', false)
@@ -102,7 +102,7 @@ SYMS (figure, logical) determines whether the symbols are shown.
 %%%% ¡default!
 false
 %%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set('SYMS', varargin))
+if (isempty(varargin) || pf.prop_set('SYMS', varargin)) && ~braph2_testing
     if ~pf.get('SYMS')
         for i = 1:1:length(pf.h_sphs)
             set(pf.h_syms{i}, 'Visible', false)
@@ -163,7 +163,7 @@ IDS (figure, logical) determines whether the ids are shown.
 %%%% ¡default!
 false
 %%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set('IDS', varargin))
+if (isempty(varargin) || pf.prop_set('IDS', varargin)) && ~braph2_testing
     if ~pf.get('IDS')
         for i = 1:1:length(pf.h_sphs)
             set(pf.h_ids{i}, 'Visible', false)
@@ -225,7 +225,7 @@ LABS (figure, logical) determines whether the labels are shown.
 %%%% ¡default!
 false
 %%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set('LABS', varargin))
+if (isempty(varargin) || pf.prop_set('LABS', varargin)) && ~braph2_testing
     if ~pf.get('LABS')
         for i = 1:1:length(pf.h_sphs)
             set(pf.h_labs{i}, 'Visible', false)
