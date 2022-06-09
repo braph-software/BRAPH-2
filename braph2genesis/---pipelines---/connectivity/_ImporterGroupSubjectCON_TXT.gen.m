@@ -120,7 +120,7 @@ if isfolder(directory)
     
 	braph2waitbar(wb, 'close')
 elseif ~braph2_testing()
-    error([BRAPH2.STR ':ImporterGroupSubjectCON_TXT: ' BRAPH2.BUG_IO]);
+    error([BRAPH2.STR ':ImporterGroupSubjectCON_TXT:' BRAPH2.BUG_IO]);
 end
 
 value = gr;

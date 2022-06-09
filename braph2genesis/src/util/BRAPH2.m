@@ -92,6 +92,7 @@ classdef BRAPH2
         ADDON = 'AddOn' % addon not installed
         WRONG_INPUT = 'WrongInput' % wrong input value or format in a function
         WRONG_OUTPUT = 'WrongOutput' % wrong output value or format in a function
+        CANCEL_IO = 'CancelIO' % cancelled IO operation by user
         BUG_FUNC = 'BugFunc' % bug in a function (wrong behavior)
         BUG_COPY = 'BugCopy' % bug while deep-copying an object
         BUG_CLONE = 'BugClone' % bug while cloning an object
