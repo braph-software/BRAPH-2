@@ -79,12 +79,14 @@ if pf.get('SPHS') && ~isa(pf.getr('BA'), 'NoValue')
             pf.get('SPH_DICT').set('IT_LIST', sphs)
         end
         
-        for i = 1:1:br_dict.length()
-            if pf.get('SPH_DICT').containsIndex(i) && check_graphics(pf.h_sphs{i}, 'surface')
-                pf.get('SPH_DICT').getItem(i).h(pf.h_sphs{i}).set( ...
-                    'PANEL', pf, ...
-                    'UITAG', ['h_sphs{' int2str(i) '}'] ... % same as in h_sphs{i}
-                    );
+        if ~isempty(pf.h_sphs)
+            for i = 1:1:br_dict.length()
+                if pf.get('SPH_DICT').containsIndex(i) && check_graphics(pf.h_sphs{i}, 'surface')
+                    pf.get('SPH_DICT').getItem(i).h(pf.h_sphs{i}).set( ...
+                        'PANEL', pf, ...
+                        'UITAG', ['h_sphs{' int2str(i) '}'] ... % same as in h_sphs{i}
+                        );
+                end
             end
         end
         
@@ -143,12 +145,14 @@ if pf.get('SYMS') && ~isa(pf.getr('BA'), 'NoValue')
             pf.get('SYM_DICT').set('IT_LIST', syms)
         end
         
-        for i = 1:1:br_dict.length()
-            if pf.get('SYM_DICT').containsIndex(i) && check_graphics(pf.h_syms{i}, 'line')
-                pf.get('SYM_DICT').getItem(i).h(pf.h_syms{i}).set( ...
-                    'PANEL', pf, ...
-                    'UITAG', ['h_syms{' int2str(i) '}'] ... % same as in h_syms{i}
-                    );
+        if ~isempty(pf.h_syms)
+            for i = 1:1:br_dict.length()
+                if pf.get('SYM_DICT').containsIndex(i) && check_graphics(pf.h_syms{i}, 'line')
+                    pf.get('SYM_DICT').getItem(i).h(pf.h_syms{i}).set( ...
+                        'PANEL', pf, ...
+                        'UITAG', ['h_syms{' int2str(i) '}'] ... % same as in h_syms{i}
+                        );
+                end
             end
         end
     end
@@ -205,12 +209,14 @@ if pf.get('IDS') && ~isa(pf.getr('BA'), 'NoValue')
             pf.get('ID_DICT').set('IT_LIST', ids)
         end
         
-        for i = 1:1:br_dict.length()
-            if pf.get('ID_DICT').containsIndex(i) && check_graphics(pf.h_ids{i}, 'text')
-                pf.get('ID_DICT').getItem(i).h(pf.h_ids{i}).set( ...
-                    'PANEL', pf, ...
-                    'UITAG', ['h_ids{' int2str(i) '}'] ... % same as in h_ids{i}
-                    );
+        if ~isempty(pf.h_ids)
+            for i = 1:1:br_dict.length()
+                if pf.get('ID_DICT').containsIndex(i) && check_graphics(pf.h_ids{i}, 'text')
+                    pf.get('ID_DICT').getItem(i).h(pf.h_ids{i}).set( ...
+                        'PANEL', pf, ...
+                        'UITAG', ['h_ids{' int2str(i) '}'] ... % same as in h_ids{i}
+                        );
+                end
             end
         end
     end
@@ -267,12 +273,14 @@ if pf.get('LABS') && ~isa(pf.getr('BA'), 'NoValue')
             pf.get('LAB_DICT').set('IT_LIST', labs)
         end
         
-        for i = 1:1:br_dict.length()
-            if pf.get('LAB_DICT').containsIndex(i) && check_graphics(pf.h_labs{i}, 'text')
-                pf.get('LAB_DICT').getItem(i).h(pf.h_labs{i}).set( ...
-                    'PANEL', pf, ...
-                    'UITAG', ['h_labs{' int2str(i) '}'] ... % same as in h_labs{i}
-                    );
+        if ~isempty(pf.h_labs)
+            for i = 1:1:br_dict.length()
+                if pf.get('LAB_DICT').containsIndex(i) && check_graphics(pf.h_labs{i}, 'text')
+                    pf.get('LAB_DICT').getItem(i).h(pf.h_labs{i}).set( ...
+                        'PANEL', pf, ...
+                        'UITAG', ['h_labs{' int2str(i) '}'] ... % same as in h_labs{i}
+                        );
+                end
             end
         end
     end
