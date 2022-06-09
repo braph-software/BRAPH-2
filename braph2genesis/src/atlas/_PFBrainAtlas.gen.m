@@ -18,12 +18,25 @@ h_syms % handle for the symbols
 h_ids % handle for the id 
 h_labs % handle for the labs 
 
+toolbar
+tool_sphs
+tool_syms
+tool_ids
+tool_labs
+
 %% ¡props!
 
 %%% ¡prop!
 BA (metadata, item) is the brain atlas with the brain regions.
 %%%% ¡settings!
 'BrainAtlas'
+
+%%% ¡prop!
+SPHS (figure, logical) determines whether the spheres are shown.
+%%%% ¡default!
+true
+%%%% ¡postprocessing!
+% % % 
 
 %%% ¡prop!
 SPH_DICT (figure, idict) contains the spheres of the brain regions.
@@ -73,6 +86,13 @@ pr = PanelPropIDictTable('EL', pf, 'PROP', PFBrainAtlas.SPH_DICT, ...
     varargin{:});
 
 %%% ¡prop!
+SYMS (figure, logical) determines whether the symbols are shown.
+%%%% ¡default!
+false
+%%%% ¡postprocessing!
+% % % 
+
+%%% ¡prop!
 SYM_DICT (figure, idict) contains the symbols of the brain regions.
 %%%% ¡settings!
 'SettingsSymbol'
@@ -113,6 +133,13 @@ end
 pr = PanelPropIDictTable('EL', pf, 'PROP', PFBrainAtlas.SYM_DICT, ...
     'COLS', [SettingsSymbol.VISIBLE SettingsSymbol.X SettingsSymbol.Y SettingsSymbol.Z SettingsSymbol.SYMBOL SettingsSymbol.SYMBOLSIZE SettingsSymbol.EDGECOLOR SettingsSymbol.FACECOLOR], ...
     varargin{:});
+
+%%% ¡prop!
+IDS (figure, logical) determines whether the ids are shown.
+%%%% ¡default!
+false
+%%%% ¡postprocessing!
+% % % 
 
 %%% ¡prop!
 ID_DICT (figure, idict) contains the ids of the brain regions.
@@ -156,6 +183,13 @@ end
 pr = PanelPropIDictTable('EL', pf, 'PROP', PFBrainAtlas.ID_DICT, ...
     'COLS', [SettingsText.VISIBLE SettingsText.X SettingsText.Y SettingsText.Z SettingsText.TXT SettingsText.FONTNAME SettingsText.FONTSIZE SettingsText.FONTCOLOR SettingsText.INTERPRETER], ...
     varargin{:});
+
+%%% ¡prop!
+LABS (figure, logical) determines whether the labels are shown.
+%%%% ¡default!
+false
+%%%% ¡postprocessing!
+% % % 
 
 %%% ¡prop!
 LAB_DICT (figure, idict) contains the labels of the brain regions.
@@ -301,6 +335,68 @@ function p_out = draw(pf, varargin)
     
     % reset the ambient lighting
     pf.get('ST_AMBIENT').set()
+    
+    % Toolbar
+    if ~check_graphics(pf.toolbar, 'uitoolbar')
+        pf.toolbar = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'ToolBar');
+    end
+    
+    if check_graphics(pf.toolbar, 'uitoolbar') && ~check_graphics(pf.tool_sphs, 'uitoggletool') % implies that also the other tools are not defined
+        
+        uipushtool(pf.toolbar, 'Separator', 'on', 'Visible', 'off')
+
+        % Spheres
+        pf.tool_sphs = uitoggletool(pf.toolbar, ...
+            'Tag', 'tool_sphs', ...
+            'Separator', 'on', ...
+            'State', pf.get('SPHS'), ...
+            'Tooltip', 'Show Spheres', ...
+            'CData', imread('icon_sphere.png'), ...
+            'OnCallback', {@cb_sphs, true}, ...
+            'OffCallback', {@cb_sphs, false});
+
+        % Symbols
+        pf.tool_syms = uitoggletool(pf.toolbar, ...
+            'Tag', 'tool_syms', ...
+            'Separator', 'on', ...
+            'State', pf.get('SYMS'), ...
+            'Tooltip', 'Show Symbols', ...
+            'CData', imread('icon_symbol.png'), ...
+            'OnCallback', {@cb_syms, true}, ...
+            'OffCallback', {@cb_syms, false});
+
+        % IDs
+        pf.tool_ids = uitoggletool(pf.toolbar, ...
+            'Tag', 'tool_ids', ...
+            'Separator', 'on', ...
+            'State', pf.get('IDS'), ...
+            'Tooltip', 'Show IDs', ...
+            'CData', imread('icon_id.png'), ...
+            'OnCallback', {@cb_ids, true}, ...
+            'OffCallback', {@cb_ids, false});
+
+        % Labels
+        pf.tool_labs = uitoggletool(pf.toolbar, ...
+            'Tag', 'tool_labs', ...
+            'Separator', 'on', ...
+            'State', pf.get('LABS'), ...
+            'Tooltip', 'Show Labels', ...
+            'CData', imread('icon_label.png'), ...
+            'OnCallback', {@cb_labs, true}, ...
+            'OffCallback', {@cb_labs, false});
+    end
+    function cb_sphs(~, ~, sphs) % (src, event)
+        pf.set('SPHS', sphs)
+    end
+    function cb_syms(~, ~, syms) % (src, event)
+        pf.set('SYMS', syms)
+    end
+    function cb_ids(~, ~, ids) % (src, event)
+        pf.set('IDS', ids)
+    end
+    function cb_labs(~, ~, labs) % (src, event)
+        pf.set('LABS', labs)
+    end
     
     % output
     if nargout > 0
