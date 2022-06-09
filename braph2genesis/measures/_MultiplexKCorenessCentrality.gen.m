@@ -49,7 +49,7 @@ else
             ss = sum(m_k_core) > 0;
             multiplex_coreness(ss) = k;
         end
-        multiplex_k_coreness_centrality(li) = {multiplex_coreness'};
+        multiplex_k_coreness_centrality(i) = {multiplex_coreness'};
     end
     value = multiplex_k_coreness_centrality;
 end
@@ -108,7 +108,6 @@ A = {A11 A22};
 
 known_multiplexk_coreness_centrality = {
                         [4 4 4 3]'
-                        [4 4 4 4]'
                         };
 
 g = MultiplexBD('B', A);
@@ -130,7 +129,7 @@ A11 = [
     ];
 
 A22 = [
-    0   .1  1  1; 
+    0   .1  1  0; 
     .1  0   1  .8; 
     1   1   0  0;
     1   .8  0  0
@@ -139,7 +138,6 @@ A = {A11 A22};
              
 known_multiplexk_coreness_centrality = {
                         [2 2 2 1]'
-                        [2 2 2 2]'
                         };        
 
 g = MultiplexWU('B', A);
