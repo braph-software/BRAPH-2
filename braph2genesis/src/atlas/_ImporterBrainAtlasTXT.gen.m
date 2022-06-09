@@ -33,7 +33,7 @@ if ~isfile(file) && ~braph2_testing()
     file = im.memorize('FILE');
 end
 
-if isempty(file)
+if isempty(file) && ~braph2_testing()
     error([BRAPH2.STR ':ImporterBrainAtlasTXT:' BRAPH2.CANCEL_IO], ...
         [BRAPH2.STR ':ImporterBrainAtlasTXT:' BRAPH2.CANCEL_IO]);
 elseif isfile(file)
