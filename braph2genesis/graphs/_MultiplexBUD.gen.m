@@ -41,7 +41,7 @@ A (result, cell) is the cell array containing the multiplex binary adjacency mat
 A_WU = calculateValue@MultiplexWU(g, prop);
 
 densities = g.get('DENSITIES');
-L = length(A_WU); % number of layersof MultiplexWU
+L = length(A_WU); % number of layers of MultiplexWU
 A = cell(length(densities)*L); % the new g.layernumber() will be equal to = L*length(densities)
 
 if L > 0

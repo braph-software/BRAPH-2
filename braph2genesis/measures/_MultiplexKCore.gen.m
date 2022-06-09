@@ -9,7 +9,7 @@ k is set by the user; the default value is equal to 1.
 shape = Measure.BINODAL;
 
 %%% ¡scope!
-scope = Measure.UNILAYER;
+scope = Measure.SUPERGLOBAL;
 
 %%% ¡parametricity!
 parametricity = Measure.NONPARAMETRIC;
@@ -34,98 +34,52 @@ MultiplexKCoreThreshold (parameter, SCALAR) is the multiplex k-core threshold
 M (result, cell) is the multiplex k-core.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
-A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
-L = g.layernumber();
+[l, ls] = g.layernumber();
 
-kcore_threshold = m.get('KCoreThreshold');
-assert(mod(kcore_threshold, 1) == 0, ...
-    [BRAPH2.STR ':KCore:' BRAPH2.WRONG_INPUT], ...
-    ['KCore threshold must be an integer value ' ...
-    'while it is ' tostring(kcore_threshold)])
-
-k_core = cell(L, 1);
-directionality_type =  g.getDirectionalityType(L);
-for li = 1:1:L    
-    Aii = A{li, li};
-    directionality_layer = directionality_type(li, li);   
+if l == 0
+    value = {};
+else
+    A = g.get('A'); % 2D-cell array (for multigraph, multiplex, etc.)
+    N = g.nodenumber();
     
-    iter = 0;
-    subAii = binarize(Aii);
-    while 1
-        % get degrees of matrix
-        if directionality_layer == Graph.UNDIRECTED  % undirected graphs
-            deg = sum(subAii, 1)';  % degree undirected graphs
-        else
-            deg = (sum(subAii, 1)' + sum(subAii, 2));  % degree directed
+    multiplex_kcore_threshold = m.get('MultiplexKCoreThreshold');
+    assert(mod(multiplex_kcore_threshold, 1) == 0, ...
+        [BRAPH2.STR ':MultiplexKCore:' BRAPH2.WRONG_INPUT], ...
+        ['MultiplexKCore threshold must be an integer value ' ...
+        'while it is ' tostring(multiplex_kcore_threshold)])
+    
+    directionality_layer =  g.getDirectionalityType(l);
+    multiplex_k_core = cell(length(ls), 1);
+    for i = 1:1:length(ls)
+        A_sum = zeros(N(1), N(1));
+        for j = 1:1:length(l)
+            A_sum = A_sum + A{j, j};
         end
-        
-        % find nodes with degree < k
-        low_k_nodes = find((deg < kcore_threshold) & (deg > 0));
-        
-        % if none found -> stop
-        if (isempty(low_k_nodes)) break; end; %#ok<SEPEX>
-        
-        % peel away found nodes
-        iter = iter + 1;
-        subAii(low_k_nodes, :) = 0;
-        subAii(:, low_k_nodes) = 0;
+        iter = 0;
+        subAii = binarize(A_sum);
+        while 1
+            if directionality_layer == Graph.UNDIRECTED  % undirected graphs
+                ovdeg = sum(subAii, 1)';   % ov. degree undirected 
+            else
+                ovdeg = (sum(subAii, 1)' + sum(subAii, 2));  % ov. degree directed
+            end
+         
+            % find nodes with degree < k
+            low_k_nodes = find((ovdeg < multiplex_kcore_threshold) & (ovdeg > 0));
+
+            % if none found -> stop
+            if (isempty(low_k_nodes)) break; end; %#ok<SEPEX>
+
+            % peel away found nodes
+            iter = iter + 1;
+            subAii(low_k_nodes, :) = 0;
+            subAii(:, low_k_nodes) = 0;
+        end
+        multiplex_k_core(i) = {subAii};  % add multiplex k-core 
     end
-    k_core(li) = {subAii};  % add k-core of layer li
+    value = multiplex_k_core;
 end
-
-value = k_core;
-
 %% ¡tests!
-
-%%% ¡test!
-%%%% ¡name!
-GraphBU
-%%%% ¡code!
-A = [
-    0  1  1  0; 
-    1  0  1  1; 
-    1  1  0  0;
-    0  1  0  0
-    ];
-
-known_kcore = {[
-                0  1  1  0;
-                1  0  1  0;
-                1  1  0  0;
-                0  0  0  0
-                ]};
-
-g = GraphBU('B', A);
-kcore = KCore('G', g, 'KCoreThreshold', 2).get('M');
-
-assert(isequal(kcore, known_kcore), ...
-    [BRAPH2.STR ':KCore:' BRAPH2.BUG_ERR], ...
-    'KCore is not being calculated correctly for GraphBU.')
-
-%%% ¡test!
-%%%% ¡name!
-GraphBD
-%%%% ¡code!
-A = [
-    0  1  1  1; 
-    1  0  1  1; 
-    1  1  0  0;
-    0  1  0  0
-    ];
-
-known_kcore = {[
-                0  1  1  0;
-                1  0  1  0;
-                1  1  0  0;
-                0  0  0  0
-                ]};
-
-g = GraphBD('B', A);
-kcore = KCore('G', g, 'KCoreThreshold', 4).get('M');
-
-assert(isequal(kcore, known_kcore), ...
-    [BRAPH2.STR ':KCore:' BRAPH2.BUG_ERR], ...
-    'KCore is not being calculated correctly for GraphBD.')
 
 %%% ¡test!
 %%%% ¡name!
@@ -142,29 +96,24 @@ A22 = [
     0   .1  1  1; 
     .1  0   1  .8; 
     1   1   0  0;
-    1   .8  0  0
+    0   .8  0  0
     ];
 A = {A11 A22};
              
-known_kcore(1) = {[
-                0  1  1  0;
-                1  0  1  0;
-                1  1  0  0;
-                0  0  0  0
-                ]};
-known_kcore(2, 1) = {[
+known_mkcore = {[
                 0  1  1  1;
                 1  0  1  1;
                 1  1  0  0;
-                1  1  0  0
-                ]};            
+                0  0  0  0
+                ]};
+                     
 
 g = MultiplexWU('B', A);
-kcore = KCore('G', g, 'KCoreThreshold', 2).get('M');
+mkcore = MultiplexKCore('G', g, 'MultiplexKCoreThreshold', 2).get('M');
 
-assert(isequal(kcore, known_kcore), ...
-    [BRAPH2.STR ':KCore:' BRAPH2.BUG_ERR], ...
-    'KCore is not being calculated correctly for MultiplexGraphWU.')
+assert(isequal(mkcore, known_mkcore), ...
+    [BRAPH2.STR ':MultiplexKCore:' BRAPH2.BUG_ERR], ...
+    'MultiplexKCore is not being calculated correctly for MultiplexGraphWU.')
 
 %%% ¡test!
 %%%% ¡name!
@@ -185,13 +134,7 @@ A22 = [
     ];
 A = {A11 A22};
 
-known_kcore(1) = {[
-                0  1  1  0;
-                1  0  1  0;
-                1  1  0  0;
-                0  0  0  0
-                ]};
-known_kcore(2, 1) = {[
+known_mkcore = {[
                 0  1  1  1;
                 1  0  1  1;
                 1  1  0  0;
@@ -199,8 +142,8 @@ known_kcore(2, 1) = {[
                 ]};            
 
 g = MultiplexWD('B', A);
-kcore = KCore('G', g, 'KCoreThreshold', 4).get('M');
+mkcore = MultiplexKCore('G', g, 'MultiplexKCoreThreshold', 4).get('M');
 
-assert(isequal(kcore, known_kcore), ...
-    [BRAPH2.STR ':KCore:' BRAPH2.BUG_ERR], ...
-    'KCore is not being calculated correctly for MultiplexGraphWD.')
+assert(isequal(mkcore, known_mkcore), ...
+    [BRAPH2.STR ':MultiplexKCore:' BRAPH2.BUG_ERR], ...
+    'MultiplexKCore is not being calculated correctly for MultiplexGraphWD.')
