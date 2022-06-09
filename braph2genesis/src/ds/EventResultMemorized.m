@@ -5,6 +5,9 @@ classdef (ConstructOnLoad) EventResultMemorized < event.EventData
     %  el       - element
     %  prop     - property whose result has been memorized
     %
+    % EventResultMemorized constructor:
+    %  EventResultMemorized - constructor
+    %
     % See also Element, event, listener.
     
     properties

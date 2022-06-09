@@ -36,14 +36,26 @@ SPHS (figure, logical) determines whether the spheres are shown.
 %%%% ¡default!
 true
 %%%% ¡postprocessing!
-% % % 
+if (isempty(varargin) || pf.prop_set('SPHS', varargin))
+    if ~pf.get('SPHS')
+        for i = 1:1:length(pf.h_sphs)
+            set(pf.h_sphs{i}, 'Visible', false)
+        end        
+    end
+    
+    % triggers the update of SPH_DICT
+    pf.set('SPH_DICT', pf.get('SPH_DICT'))
+    
+    % update state of toggle tool
+    set(pf.tool_sphs, 'State', pf.get('SPHS'))
+end
 
 %%% ¡prop!
 SPH_DICT (figure, idict) contains the spheres of the brain regions.
 %%%% ¡settings!
 'SettingsSphere'
 %%%% ¡postprocessing!
-if ~isa(pf.getr('BA'), 'NoValue')
+if pf.get('SPHS') && ~isa(pf.getr('BA'), 'NoValue')
     if ~isa(pf.getr('SPH_DICT'), 'NoValue')
 
         br_dict = pf.get('BA').get('BR_DICT');
@@ -65,19 +77,19 @@ if ~isa(pf.getr('BA'), 'NoValue')
             end
 
             pf.get('SPH_DICT').set('IT_LIST', sphs)
-            
-            % reset the ambient lighting
-            pf.get('ST_AMBIENT').set()
-        else
-            for i = 1:1:br_dict.length()
-                if pf.get('SPH_DICT').containsIndex(i) && check_graphics(pf.h_sphs{i}, 'surface')
-                    pf.get('SPH_DICT').getItem(i).h(pf.h_sphs{i}).set( ...
-                        'PANEL', pf, ...
-                        'UITAG', ['h_sphs{' int2str(i) '}'] ... % same as in h_sphs{i}
-                        );
-                end
+        end
+        
+        for i = 1:1:br_dict.length()
+            if pf.get('SPH_DICT').containsIndex(i) && check_graphics(pf.h_sphs{i}, 'surface')
+                pf.get('SPH_DICT').getItem(i).h(pf.h_sphs{i}).set( ...
+                    'PANEL', pf, ...
+                    'UITAG', ['h_sphs{' int2str(i) '}'] ... % same as in h_sphs{i}
+                    );
             end
         end
+        
+        % reset the ambient lighting
+        pf.get('ST_AMBIENT').set()
     end
 end
 %%%% ¡gui!
@@ -90,14 +102,26 @@ SYMS (figure, logical) determines whether the symbols are shown.
 %%%% ¡default!
 false
 %%%% ¡postprocessing!
-% % % 
+if (isempty(varargin) || pf.prop_set('SYMS', varargin))
+    if ~pf.get('SYMS')
+        for i = 1:1:length(pf.h_sphs)
+            set(pf.h_syms{i}, 'Visible', false)
+        end        
+    end
+    
+    % triggers the update of SYM_DICT
+    pf.set('SYM_DICT', pf.get('SYM_DICT'))
+
+    % update state of toggle tool
+    set(pf.tool_syms, 'State', pf.get('SYMS'))
+end
 
 %%% ¡prop!
 SYM_DICT (figure, idict) contains the symbols of the brain regions.
 %%%% ¡settings!
 'SettingsSymbol'
 %%%% ¡postprocessing!
-if ~isa(pf.getr('BA'), 'NoValue')
+if pf.get('SYMS') && ~isa(pf.getr('BA'), 'NoValue')
     if ~isa(pf.getr('SYM_DICT'), 'NoValue')
 
         br_dict = pf.get('BA').get('BR_DICT');
@@ -108,7 +132,7 @@ if ~isa(pf.getr('BA'), 'NoValue')
                 br = br_dict.getItem(i);
 
                 syms{i} = SettingsSymbol( ...
-                    'VISIBLE', false, ...
+                    'VISIBLE', true, ...
                     'ID', br.get('ID'), ... % Callback('EL', br, 'TAG', 'ID'), ...
                     'X', br.get('X'), ... % Callback('EL', br, 'TAG', 'X'), ...
                     'Y', br.get('Y'), ... % Callback('EL', br, 'TAG', 'Y'), ...
@@ -117,14 +141,14 @@ if ~isa(pf.getr('BA'), 'NoValue')
             end
 
             pf.get('SYM_DICT').set('IT_LIST', syms)
-        else
-            for i = 1:1:br_dict.length()
-                if pf.get('SYM_DICT').containsIndex(i) && check_graphics(pf.h_syms{i}, 'line')
-                    pf.get('SYM_DICT').getItem(i).h(pf.h_syms{i}).set( ...
-                        'PANEL', pf, ...
-                        'UITAG', ['h_syms{' int2str(i) '}'] ... % same as in h_syms{i}
-                        );
-                end
+        end
+        
+        for i = 1:1:br_dict.length()
+            if pf.get('SYM_DICT').containsIndex(i) && check_graphics(pf.h_syms{i}, 'line')
+                pf.get('SYM_DICT').getItem(i).h(pf.h_syms{i}).set( ...
+                    'PANEL', pf, ...
+                    'UITAG', ['h_syms{' int2str(i) '}'] ... % same as in h_syms{i}
+                    );
             end
         end
     end
@@ -139,14 +163,26 @@ IDS (figure, logical) determines whether the ids are shown.
 %%%% ¡default!
 false
 %%%% ¡postprocessing!
-% % % 
+if (isempty(varargin) || pf.prop_set('IDS', varargin))
+    if ~pf.get('IDS')
+        for i = 1:1:length(pf.h_sphs)
+            set(pf.h_ids{i}, 'Visible', false)
+        end        
+    end
+    
+    % triggers the update of ID_DICT
+    pf.set('ID_DICT', pf.get('ID_DICT'))
+
+    % update state of toggle tool
+    set(pf.tool_ids, 'State', pf.get('IDS'))
+end
 
 %%% ¡prop!
 ID_DICT (figure, idict) contains the ids of the brain regions.
 %%%% ¡settings!
 'SettingsText'
 %%%% ¡postprocessing!
-if ~isa(pf.getr('BA'), 'NoValue')
+if pf.get('IDS') && ~isa(pf.getr('BA'), 'NoValue')
     if ~isa(pf.getr('ID_DICT'), 'NoValue')
 
         br_dict = pf.get('BA').get('BR_DICT');
@@ -157,7 +193,7 @@ if ~isa(pf.getr('BA'), 'NoValue')
                 br = br_dict.getItem(i);
 
                 ids{i} = SettingsText( ...
-                    'VISIBLE', false, ...
+                    'VISIBLE', true, ...
                     'ID', br.get('ID'), ... % Callback('EL', br, 'TAG', 'ID'), ...
                     'X', br.get('X'), ... % Callback('EL', br, 'TAG', 'X'), ...
                     'Y', br.get('Y'), ... % Callback('EL', br, 'TAG', 'Y'), ...
@@ -167,14 +203,14 @@ if ~isa(pf.getr('BA'), 'NoValue')
             end
 
             pf.get('ID_DICT').set('IT_LIST', ids)
-        else
-            for i = 1:1:br_dict.length()
-                if pf.get('ID_DICT').containsIndex(i) && check_graphics(pf.h_ids{i}, 'text')
-                    pf.get('ID_DICT').getItem(i).h(pf.h_ids{i}).set( ...
-                        'PANEL', pf, ...
-                        'UITAG', ['h_ids{' int2str(i) '}'] ... % same as in h_ids{i}
-                        );
-                end
+        end
+        
+        for i = 1:1:br_dict.length()
+            if pf.get('ID_DICT').containsIndex(i) && check_graphics(pf.h_ids{i}, 'text')
+                pf.get('ID_DICT').getItem(i).h(pf.h_ids{i}).set( ...
+                    'PANEL', pf, ...
+                    'UITAG', ['h_ids{' int2str(i) '}'] ... % same as in h_ids{i}
+                    );
             end
         end
     end
@@ -189,14 +225,26 @@ LABS (figure, logical) determines whether the labels are shown.
 %%%% ¡default!
 false
 %%%% ¡postprocessing!
-% % % 
+if (isempty(varargin) || pf.prop_set('LABS', varargin))
+    if ~pf.get('LABS')
+        for i = 1:1:length(pf.h_sphs)
+            set(pf.h_labs{i}, 'Visible', false)
+        end        
+    end
+    
+    % triggers the update of LAB_DICT
+    pf.set('LAB_DICT', pf.get('LAB_DICT'))
+
+    % update state of toggle tool
+    set(pf.tool_labs, 'State', pf.get('LABS'))
+end
 
 %%% ¡prop!
 LAB_DICT (figure, idict) contains the labels of the brain regions.
 %%%% ¡settings!
 'SettingsText'
 %%%% ¡postprocessing!
-if ~isa(pf.getr('BA'), 'NoValue')
+if pf.get('LABS') && ~isa(pf.getr('BA'), 'NoValue')
     if ~isa(pf.getr('LAB_DICT'), 'NoValue')
 
         br_dict = pf.get('BA').get('BR_DICT');
@@ -207,7 +255,7 @@ if ~isa(pf.getr('BA'), 'NoValue')
                 br = br_dict.getItem(i);
 
                 labs{i} = SettingsText( ...
-                    'VISIBLE', false, ...
+                    'VISIBLE', true, ...
                     'ID', br.get('ID'), ... % Callback('EL', br, 'TAG', 'ID'), ...
                     'X', br.get('X'), ... % Callback('EL', br, 'TAG', 'X'), ...
                     'Y', br.get('Y'), ... % Callback('EL', br, 'TAG', 'Y'), ...
@@ -217,14 +265,14 @@ if ~isa(pf.getr('BA'), 'NoValue')
             end
 
             pf.get('LAB_DICT').set('IT_LIST', labs)
-        else
-            for i = 1:1:br_dict.length()
-                if pf.get('LAB_DICT').containsIndex(i) && check_graphics(pf.h_labs{i}, 'text')
-                    pf.get('LAB_DICT').getItem(i).h(pf.h_labs{i}).set( ...
-                        'PANEL', pf, ...
-                        'UITAG', ['h_labs{' int2str(i) '}'] ... % same as in h_labs{i}
-                        );
-                end
+        end
+        
+        for i = 1:1:br_dict.length()
+            if pf.get('LAB_DICT').containsIndex(i) && check_graphics(pf.h_labs{i}, 'text')
+                pf.get('LAB_DICT').getItem(i).h(pf.h_labs{i}).set( ...
+                    'PANEL', pf, ...
+                    'UITAG', ['h_labs{' int2str(i) '}'] ... % same as in h_labs{i}
+                    );
             end
         end
     end
@@ -264,7 +312,7 @@ function p_out = draw(pf, varargin)
             pf.h_sphs{i} = surf([], [], [], ...
                 'Parent', pf.h_axes, ...
                 'Tag', ['h_sphs{' int2str(i) '}'], ... % same as in sphs{i}
-                'Visible', true ...
+                'Visible', false ...
                 );
         end
     end
