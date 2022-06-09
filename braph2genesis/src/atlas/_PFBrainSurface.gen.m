@@ -153,7 +153,7 @@ SURFFILE (figure, option) is the name of the file of the brain surface to be plo
 %%%% ¡default!
 'human_ICBM152.nv'
 %%%% ¡postprocessing!
-if pf.prop_set('SURFFILE', varargin)
+if pf.prop_set('SURFFILE', varargin) && ~braph2_testing
     bs = ImporterBrainSurfaceNV('FILE', pf.get('SURFFILE')).get('SURF');
     pf.set('SURF', bs)
     
