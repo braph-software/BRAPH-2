@@ -36,14 +36,15 @@ function p_out = draw(pr, varargin)
     %
     % See also update, redraw, uipanel.
 
-    pr.p = draw@PanelProp(pr, 'DeleteFcn', {@close_GUIs}, varargin{:});
-    function close_GUIs(~, ~)
-        for i = 1:1:length(pr.pc_GUIs)
-            for j = 1:1:length(pr.pc_GUIs{i})
-                delete(pr.pc_GUIs{i}{j})
-            end
-        end
-    end
+    pr.p = draw@PanelProp(pr, varargin{:});
+% % %     pr.p = draw@PanelProp(pr, 'DeleteFcn', {@close_GUIs}, varargin{:});
+% % %     function close_GUIs(~, ~)
+% % %         for i = 1:1:length(pr.pc_GUIs)
+% % %             for j = 1:1:length(pr.pc_GUIs{i})
+% % %                 delete(pr.pc_GUIs{i}{j})
+% % %             end
+% % %         end
+% % %     end
 
     % deletes all graphic objects
     % panels and btns
@@ -54,7 +55,12 @@ function p_out = draw(pr, varargin)
     end
     % GUIs
     if ~isempty(pr.pc_GUIs)
-        close_GUIs()
+% % %         close_GUIs()
+        for i = 1:1:length(pr.pc_GUIs)
+            for j = 1:1:length(pr.pc_GUIs{i})
+                delete(pr.pc_GUIs{i}{j})
+            end
+        end
         pr.pc_GUIs = {};
     end
     
@@ -336,4 +342,13 @@ function cb_close(pr)
     % See also cb_bring_to_front, cb_hide.
 
     pr.cb_close@PanelProp() % this triggers a call for the delete function defined in draw() that deletes the dependent figures
+    
+    for i = 1:1:length(pr.pc_GUIs)
+        for j = 1:1:length(pr.pc_GUIs{i})
+            if check_graphics(pr.pc_GUIs{i}{j}, 'figure')
+                gui = get(pr.pc_GUIs{i}{j}, 'UserData');
+                gui.cb_close()
+            end
+        end
+    end
 end
