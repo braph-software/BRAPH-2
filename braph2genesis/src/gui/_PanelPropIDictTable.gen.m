@@ -303,6 +303,26 @@ function update(pr)
             'ColumnEditable', columneditable, ...
             'ColumnFormat', columnformat ...
             )
+        
+% % %         % styles
+% % %         if isempty(pr.s)
+% % %             for c = 1:1:length(cols)
+% % %                 for i = 1:1:dict.length()
+% % %                     pr.s{i, c} = uistyle();
+% % %                     addStyle(pr.table, pr.s{i, c}, 'cell', [i, c])
+% % %                 end
+% % %             end
+% % %         end
+% % %             
+% % %         % COLOR
+% % %         for c = 1:1:length(cols)
+% % %             col = cols(c);
+% % %             if isequal(Element.getPropFormat(it_class, col), Format.COLOR)
+% % %                 for i = 1:1:dict.length()
+% % %                     pr.s{i, c}.BackgroundColor = dict.getItem(i).get(col);
+% % %                 end
+% % %             end
+% % %         end
     end
 
     if el.isLocked(prop)
@@ -407,8 +427,18 @@ function cb_table_edit(pr, i, col, newdata)
                 % % % case Format.EMPTY
 
                 case Format.STRING
-                    dict.getItem(i).set(col, newdata)
-
+                    if col == dict.get('IT_KEY')
+                        if ~dict.containsKey(newdata)
+                            % change brain region id
+                            dict.getItem(i).set('ID', newdata)
+                            % change brain region key in idict
+                            oldkey = dict.getKey(i);
+                            dict.replaceKey(dict.getKey(i), newdata);
+                        end
+                    else
+                        dict.getItem(i).set(col, newdata)
+                    end
+                    
                 case Format.LOGICAL
                     dict.getItem(i).set(col, newdata)
 
