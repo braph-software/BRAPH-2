@@ -11,7 +11,7 @@ clc
 % % test_code = ['test_' el_class]
 % % eval(test_code)
 
-% el_class = 'PanelPropItem';
+% el_class = 'PanelPropIDictTable';
 % delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
 % create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
 % create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
@@ -19,13 +19,13 @@ clc
 % % test_code = ['test_' el_class]
 % % eval(test_code)
 
-el_class = 'PFBrainAtlas';
-delete([fileparts(which('braph2')) '/src/atlas/' el_class '.m'])
-create_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
-create_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
-% create_test_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
-% test_code = ['test_' el_class]
-% eval(test_code)
+% el_class = 'PFBrainAtlas';
+% delete([fileparts(which('braph2')) '/src/atlas/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
+% create_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
+% % create_test_Element([fileparts(which('braph2genesis')) '/src/atlas/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/atlas'])
+% % test_code = ['test_' el_class]
+% % eval(test_code)
 
 % pf0 = PanelFig();
 % gui0 = GUIFig('PF', pf0, 'FILE', 'xxx sss', 'WAITBAR', true, 'CLOSEREQ', false);
