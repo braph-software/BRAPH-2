@@ -136,9 +136,11 @@ function p_out = draw(pr, varargin)
             'Tag', 'table', ...
             'FontSize', BRAPH2.FONTSIZE, ...
             'ColumnSortable', true, ...
-            'CellEditCallback', {@cb_table_edit}, ...
-            'ContextMenu', pr.contextmenu ...
+            'CellEditCallback', {@cb_table_edit} ...
             );
+    end
+    if ismember(pr.SELECTOR, pr.get('COLS'))
+        set(pr.table, 'ContextMenu', pr.contextmenu)
     end
     function cb_table_edit(~, event) % (src, event)
         if ~get(pr.menu_apply_to_selection, 'Checked')
@@ -159,6 +161,8 @@ function p_out = draw(pr, varargin)
                 pr.cb_table_edit(pr.selected(s), cols(event.Indices(2)), event.NewData)
             end
         end
+        
+        pr.update() % placed here for numerical efficiency
     end
     
     % output
@@ -553,7 +557,7 @@ function cb_table_edit(pr, i, col, newdata)
         end        
     end
     
-    pr.update()
+    % pr.update() % placed above for numerical efficiency
 end
 function cb_select_all(pr)
 
