@@ -64,6 +64,11 @@ p
 table
 selected
 
+contextmenu
+menu_select_all
+menu_clear_selection
+menu_apply_to_selection
+
 %% ¡constants!
 SELECTOR = -1
 
@@ -85,6 +90,45 @@ function p_out = draw(pr, varargin)
     % See also update, redraw, uipanel.
     
     pr.p = draw@PanelProp(pr, varargin{:});
+    
+    if ~check_graphics(pr.contextmenu, 'uicontextmenu')
+        pr.contextmenu = uicontextmenu( ...
+            'Parent', ancestor(pr.p, 'figure'), ...
+            'Tag', 'contextmenu' ...
+            );
+        pr.menu_select_all = uimenu( ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_select_all', ...
+            'Text', 'Select All', ...
+            'MenuSelectedFcn', {@cb_select_all} ...
+            );
+        pr.menu_clear_selection = uimenu( ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_clear_selection', ...
+            'Text', 'Clear Selection', ...
+            'MenuSelectedFcn', {@cb_clear_selection} ...
+            );
+        pr.menu_apply_to_selection = uimenu( ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_apply_to_selection', ...
+            'Text', 'Apply to Selection', ...
+            'Checked', false, ...
+            'MenuSelectedFcn', {@cb_apply_to_selection} ...
+            );
+    end
+    function cb_select_all(~, ~) 
+        pr.cb_select_all()
+    end
+    function cb_clear_selection(~, ~) 
+        pr.cb_clear_selection()
+    end
+    function cb_apply_to_selection(~, ~) 
+        if get(pr.menu_apply_to_selection, 'Checked')
+            pr.cb_apply_to_selection(false)
+        else
+            pr.cb_apply_to_selection(true)
+        end
+    end
 
     if ~check_graphics(pr.table, 'uitable')
         pr.table = uitable( ...
@@ -92,13 +136,29 @@ function p_out = draw(pr, varargin)
             'Tag', 'table', ...
             'FontSize', BRAPH2.FONTSIZE, ...
             'ColumnSortable', true, ...
-            'CellEditCallback', {@cb_table_edit} ...
+            'CellEditCallback', {@cb_table_edit}, ...
+            'ContextMenu', pr.contextmenu ...
             );
     end
-    
     function cb_table_edit(~, event) % (src, event)
-        cols = pr.get('COLS');
-        pr.cb_table_edit(event.Indices(1), cols(event.Indices(2)), event.NewData)
+        if ~get(pr.menu_apply_to_selection, 'Checked')
+            cols = pr.get('COLS');
+            pr.cb_table_edit(event.Indices(1), cols(event.Indices(2)), event.NewData)
+        else
+            cols = pr.get('COLS');
+
+            % adds current item to selected
+            if cols(event.Indices(2)) == pr.SELECTOR
+                pr.cb_table_edit(event.Indices(1), pr.SELECTOR, event.NewData)
+            else
+                pr.cb_table_edit(event.Indices(1), pr.SELECTOR, true)
+            end
+            
+            % updates all selected
+            for s = 1:1:length(pr.selected)
+                pr.cb_table_edit(pr.selected(s), cols(event.Indices(2)), event.NewData)
+            end
+        end
     end
     
     % output
@@ -494,6 +554,26 @@ function cb_table_edit(pr, i, col, newdata)
     end
     
     pr.update()
+end
+function cb_select_all(pr)
+
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    dict = el.get(prop);
+
+    pr.selected = [1:1:dict.length()];
+
+    pr.update()
+end
+function cb_clear_selection(pr)
+
+    pr.selected = [];
+
+    pr.update()
+end
+function cb_apply_to_selection(pr, checked)
+
+    set(pr.menu_apply_to_selection, 'Checked', checked)
 end
 
 %% ¡tests!
