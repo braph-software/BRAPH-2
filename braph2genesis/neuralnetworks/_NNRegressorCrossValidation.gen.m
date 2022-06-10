@@ -223,14 +223,18 @@ else
     targets = cell2mat(targets);
     value = [preds' targets'];
     if nncv.get('PLOT_SCATTER')
+        r = corrcoef(preds, targets);
+        str = sprintf('r = %1.2f', r(1, 2));
         figure
         scatter(preds, targets);
         hold on
-        plot([min(preds) max(preds)], [min(targets) max(targets), 'k']);
+        plot([min(preds) max(preds)], [min(targets) max(targets)], 'k');
         hold off
         xlabel('Prediction')
         ylabel('Target')
         title('Scatter plot for regression')
+        legend(str, 'Location', 'north', 'FontSize', 14);
+        legend boxoff
         directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
         if ~exist(directory, 'dir')
             mkdir(directory)
