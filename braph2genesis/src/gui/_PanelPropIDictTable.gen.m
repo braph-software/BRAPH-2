@@ -67,7 +67,9 @@ selected
 contextmenu
 menu_select_all
 menu_clear_selection
+menu_invert_selection
 menu_apply_to_selection
+menu_colorize_table
 
 %% ¡constants!
 SELECTOR = -1
@@ -108,12 +110,27 @@ function p_out = draw(pr, varargin)
             'Text', 'Clear Selection', ...
             'MenuSelectedFcn', {@cb_clear_selection} ...
             );
+        pr.menu_invert_selection = uimenu( ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_invert_selection', ...
+            'Text', 'Invert Selection', ...
+            'MenuSelectedFcn', {@cb_invert_selection} ...
+            );
         pr.menu_apply_to_selection = uimenu( ...
+            'Separator', 'on', ...
             'Parent', pr.contextmenu, ...
             'Tag', 'menu_apply_to_selection', ...
             'Text', 'Apply to Selection', ...
             'Checked', false, ...
             'MenuSelectedFcn', {@cb_apply_to_selection} ...
+            );
+        pr.menu_colorize_table = uimenu( ...
+            'Separator', 'on', ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_colorize_table', ...
+            'Text', 'Colorize Table', ...
+            'Checked', false, ...
+            'MenuSelectedFcn', {@cb_colorize_table} ...
             );
     end
     function cb_select_all(~, ~) 
@@ -122,11 +139,21 @@ function p_out = draw(pr, varargin)
     function cb_clear_selection(~, ~) 
         pr.cb_clear_selection()
     end
+    function cb_invert_selection(~, ~) 
+        pr.cb_invert_selection()
+    end
     function cb_apply_to_selection(~, ~) 
         if get(pr.menu_apply_to_selection, 'Checked')
             pr.cb_apply_to_selection(false)
         else
             pr.cb_apply_to_selection(true)
+        end
+    end
+    function cb_colorize_table(~, ~) 
+        if get(pr.menu_colorize_table, 'Checked')
+            pr.cb_colorize_table(false)
+        else
+            pr.cb_colorize_table(true)
         end
     end
 
@@ -368,6 +395,17 @@ function update(pr)
             'ColumnFormat', columnformat ...
             )
         
+        % styles
+        
+        % selected
+        styles_row = find(pr.table.StyleConfigurations.Target == 'row');
+        if ~isempty(styles_row)
+            removeStyle(pr.table, styles_row)
+        end
+        if ~isempty(pr.selected)
+            addStyle(pr.table, uistyle('FontWeight', 'bold'), 'row', pr.selected)
+        end
+        
 % % %         % styles
 % % %         if isempty(pr.s)
 % % %             for c = 1:1:length(cols)
@@ -575,9 +613,25 @@ function cb_clear_selection(pr)
 
     pr.update()
 end
+function cb_invert_selection(pr)
+
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    dict = el.get(prop);
+
+    selected_tmp = [1:1:dict.length()];
+    selected_tmp(pr.selected) = [];
+    pr.selected = selected_tmp;
+
+    pr.update()
+end
 function cb_apply_to_selection(pr, checked)
 
     set(pr.menu_apply_to_selection, 'Checked', checked)
+end
+function cb_colorize_table(pr, checked)
+
+    set(pr.menu_colorize_table, 'Checked', checked)
 end
 
 %% ¡tests!
