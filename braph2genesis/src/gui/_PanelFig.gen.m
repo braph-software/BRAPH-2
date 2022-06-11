@@ -71,9 +71,7 @@ function p_out = draw(pf, varargin)
         'AutoResizeChildren', 'off' ...
         );
     
-    if isa(pf.getr('ST_POSITION'), 'NoValue')
-        pf.memorize('ST_POSITION').set('PANEL', pf, 'UITAG', 'p')
-    end
+    pf.memorize('ST_POSITION').h(pf.p).set('PANEL', pf, 'UITAG', 'p')
         
     % output
     if nargout > 0

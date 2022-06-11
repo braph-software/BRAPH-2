@@ -64,6 +64,13 @@ p
 table
 selected
 
+contextmenu
+menu_select_all
+menu_clear_selection
+menu_invert_selection
+menu_apply_to_selection
+menu_colorize_table
+
 %% ¡constants!
 SELECTOR = -1
 
@@ -85,6 +92,70 @@ function p_out = draw(pr, varargin)
     % See also update, redraw, uipanel.
     
     pr.p = draw@PanelProp(pr, varargin{:});
+    
+    if ~check_graphics(pr.contextmenu, 'uicontextmenu')
+        pr.contextmenu = uicontextmenu( ...
+            'Parent', ancestor(pr.p, 'figure'), ...
+            'Tag', 'contextmenu' ...
+            );
+        pr.menu_select_all = uimenu( ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_select_all', ...
+            'Text', 'Select All', ...
+            'MenuSelectedFcn', {@cb_select_all} ...
+            );
+        pr.menu_clear_selection = uimenu( ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_clear_selection', ...
+            'Text', 'Clear Selection', ...
+            'MenuSelectedFcn', {@cb_clear_selection} ...
+            );
+        pr.menu_invert_selection = uimenu( ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_invert_selection', ...
+            'Text', 'Invert Selection', ...
+            'MenuSelectedFcn', {@cb_invert_selection} ...
+            );
+        pr.menu_apply_to_selection = uimenu( ...
+            'Separator', 'on', ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_apply_to_selection', ...
+            'Text', 'Apply to Selection', ...
+            'Checked', false, ...
+            'MenuSelectedFcn', {@cb_apply_to_selection} ...
+            );
+        pr.menu_colorize_table = uimenu( ...
+            'Separator', 'on', ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_colorize_table', ...
+            'Text', 'Colorize Table', ...
+            'Checked', false, ...
+            'MenuSelectedFcn', {@cb_colorize_table} ...
+            );
+    end
+    function cb_select_all(~, ~) 
+        pr.cb_select_all()
+    end
+    function cb_clear_selection(~, ~) 
+        pr.cb_clear_selection()
+    end
+    function cb_invert_selection(~, ~) 
+        pr.cb_invert_selection()
+    end
+    function cb_apply_to_selection(~, ~) 
+        if get(pr.menu_apply_to_selection, 'Checked')
+            pr.cb_apply_to_selection(false)
+        else
+            pr.cb_apply_to_selection(true)
+        end
+    end
+    function cb_colorize_table(~, ~) 
+        if get(pr.menu_colorize_table, 'Checked')
+            pr.cb_colorize_table(false)
+        else
+            pr.cb_colorize_table(true)
+        end
+    end
 
     if ~check_graphics(pr.table, 'uitable')
         pr.table = uitable( ...
@@ -95,10 +166,30 @@ function p_out = draw(pr, varargin)
             'CellEditCallback', {@cb_table_edit} ...
             );
     end
-    
+    if ismember(pr.SELECTOR, pr.get('COLS'))
+        set(pr.table, 'ContextMenu', pr.contextmenu)
+    end
     function cb_table_edit(~, event) % (src, event)
-        cols = pr.get('COLS');
-        pr.cb_table_edit(event.Indices(1), cols(event.Indices(2)), event.NewData)
+        if ~get(pr.menu_apply_to_selection, 'Checked')
+            cols = pr.get('COLS');
+            pr.cb_table_edit(event.Indices(1), cols(event.Indices(2)), event.NewData)
+        else
+            cols = pr.get('COLS');
+
+            % adds current item to selected
+            if cols(event.Indices(2)) == pr.SELECTOR
+                pr.cb_table_edit(event.Indices(1), pr.SELECTOR, event.NewData)
+            else
+                pr.cb_table_edit(event.Indices(1), pr.SELECTOR, true)
+            end
+            
+            % updates all selected
+            for s = 1:1:length(pr.selected)
+                pr.cb_table_edit(pr.selected(s), cols(event.Indices(2)), event.NewData)
+            end
+        end
+        
+        pr.update() % placed here for numerical efficiency
     end
     
     % output
@@ -141,7 +232,59 @@ function update(pr)
                         data{i, c} = false;
                     end
                 elseif Element.existsProp(it_class, col) % prop = col;
-                    data{i, c} = dict.getItem(i).get(col);
+                    switch Element.getPropFormat(it_class, col)
+                        % % % case Format.EMPTY
+
+                        case Format.STRING
+                            data{i, c} = dict.getItem(i).get(col);
+
+                        case Format.LOGICAL
+                            data{i, c} = dict.getItem(i).get(col);
+
+                        case Format.OPTION
+                            data{i, c} = dict.getItem(i).get(col);
+
+                        % % % case Format.CLASS
+
+                        % % % case Format.CLASSLIST
+
+                        % % % case Format.ITEM
+
+                        % % % case Format.ITEMLIST
+
+                        % % % case Format.IDICT
+
+                        case Format.SCALAR
+                            data{i, c} = dict.getItem(i).get(col);
+
+                        % % % case Format.RVECTOR
+
+                        % % % case Format.CVECTOR
+
+                        % % % case Format.MATRIX
+
+                        % % % case Format.SMATRIX
+
+                        % % % case Format.CELL
+
+                        % % % case Format.NET
+
+                        case Format.COLOR
+                            rgb = dict.getItem(i).get(col);
+                            data{i, c} = [dec2hex(round(rgb(1) * 255), 2) dec2hex(round(rgb(2) * 255), 2) dec2hex(round(rgb(3) * 255), 2)];
+
+                        case Format.ALPHA
+                            data{i, c} = dict.getItem(i).get(col);
+
+                        case Format.SIZE
+                            data{i, c} = dict.getItem(i).get(col);
+
+                        case Format.MARKER
+                            data{i, c} = dict.getItem(i).get(col);
+
+                        case Format.LINE
+                            data{i, c} = dict.getItem(i).get(col);
+                    end            
                 end
             end
         end
@@ -224,7 +367,8 @@ function update(pr)
 
                         % % % case Format.NET
 
-                        % % % case Format.COLOR
+                        case Format.COLOR
+                            columnformat{c} = 'char';
 
                         case Format.ALPHA
                             columnformat{c} = 'numeric';
@@ -250,6 +394,57 @@ function update(pr)
             'ColumnEditable', columneditable, ...
             'ColumnFormat', columnformat ...
             )
+        
+        % style SELECTED
+        styles_row = find(pr.table.StyleConfigurations.Target == 'row');
+        if ~isempty(styles_row)
+            removeStyle(pr.table, styles_row)
+        end
+        if ~isempty(pr.selected)
+            addStyle(pr.table, uistyle('FontWeight', 'bold'), 'row', pr.selected)
+        end
+        
+        % style COLOR
+        styles_cell = find(pr.table.StyleConfigurations.Target == 'cell');
+        if get(pr.menu_colorize_table, 'Checked')
+            if isempty(styles_cell)
+                for c = 1:1:length(cols)
+                    col = cols(c);
+                    if col > 0 && isequal(Element.getPropFormat(it_class, col), Format.COLOR)                            
+                        for i = 1:1:dict.length()
+                            addStyle(pr.table, ...
+                                uistyle('FontColor', dict.getItem(i).get(col)), ...
+                                'cell', [i, c] ...
+                                )
+                        end
+                    end
+                end
+            else
+                for c = 1:1:length(cols)
+                    col = cols(c);
+                    if col > 0 && isequal(Element.getPropFormat(it_class, col), Format.COLOR)
+                        for i = 1:1:dict.length()
+                            cell_to_be_removed = find(cellfun(@(x) isequal(x, [i, c]), pr.table.StyleConfigurations.TargetIndex));
+                            if ~isempty(cell_to_be_removed)
+                                current_rgb = pr.table.StyleConfigurations.Style(cell_to_be_removed).FontColor;
+                                new_rgb = dict.getItem(i).get(col);
+                                if ~isequal(current_rgb, new_rgb)
+                                    removeStyle(pr.table, cell_to_be_removed)
+                                    addStyle(pr.table, ...
+                                        uistyle('FontColor', new_rgb), ...
+                                        'cell', [i, c] ...
+                                        )
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        else
+            if ~isempty(styles_cell)
+                removeStyle(pr.table, styles_cell)
+            end
+        end
     end
 
     if el.isLocked(prop)
@@ -354,8 +549,18 @@ function cb_table_edit(pr, i, col, newdata)
                 % % % case Format.EMPTY
 
                 case Format.STRING
-                    dict.getItem(i).set(col, newdata)
-
+                    if col == dict.get('IT_KEY')
+                        if ~dict.containsKey(newdata)
+                            % change brain region id
+                            dict.getItem(i).set('ID', newdata)
+                            % change brain region key in idict
+                            oldkey = dict.getKey(i);
+                            dict.replaceKey(dict.getKey(i), newdata);
+                        end
+                    else
+                        dict.getItem(i).set(col, newdata)
+                    end
+                    
                 case Format.LOGICAL
                     dict.getItem(i).set(col, newdata)
 
@@ -387,7 +592,13 @@ function cb_table_edit(pr, i, col, newdata)
 
                 % % % case Format.NET
 
-                % % % case Format.COLOR
+                case Format.COLOR
+                    try
+                        rgb = [hex2dec(newdata(1:2))/255 hex2dec(newdata(3:4))/255 hex2dec(newdata(5:6))/255];
+                        dict.getItem(i).set(col, rgb)
+                    catch
+                        %
+                    end
 
                 case Format.ALPHA
                     dict.getItem(i).set(col, newdata)
@@ -404,7 +615,45 @@ function cb_table_edit(pr, i, col, newdata)
         end        
     end
     
+    % pr.update() % placed above for numerical efficiency
+end
+function cb_select_all(pr)
+
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    dict = el.get(prop);
+
+    pr.selected = [1:1:dict.length()];
+
     pr.update()
+end
+function cb_clear_selection(pr)
+
+    pr.selected = [];
+
+    pr.update()
+end
+function cb_invert_selection(pr)
+
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    dict = el.get(prop);
+
+    selected_tmp = [1:1:dict.length()];
+    selected_tmp(pr.selected) = [];
+    pr.selected = selected_tmp;
+
+    pr.update()
+end
+function cb_apply_to_selection(pr, checked)
+
+    set(pr.menu_apply_to_selection, 'Checked', checked)
+end
+function cb_colorize_table(pr, checked)
+
+    set(pr.menu_colorize_table, 'Checked', checked)
+    
+    pr.update()    
 end
 
 %% ¡tests!

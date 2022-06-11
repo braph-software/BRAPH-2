@@ -561,17 +561,20 @@ function cb_close(gui)
     % closes the main GUI
     cb_close@GUI(gui)
     
-    % closes the layout GUI
-    if check_graphics(gui.f_layout, 'figure')
-        delete(gui.f_layout)
-    end
-    
-    % closes the other panels
-    pe = gui.get('PE');
-    pr_dict = pe.get('PR_DICT');
-    for prop = 1:1:pr_dict.length()
-        pr = pr_dict.getItem(prop);
-        pr.cb_close()
+    % if closed
+    if ~check_graphics(gui.f, 'figure')
+        % closes the layout GUI
+        if check_graphics(gui.f_layout, 'figure')
+            delete(gui.f_layout)
+        end
+
+        % closes the other panels
+        pe = gui.get('PE');
+        pr_dict = pe.get('PR_DICT');
+        for prop = 1:1:pr_dict.length()
+            pr = pr_dict.getItem(prop);
+            pr.cb_close()
+        end
     end
 end
 

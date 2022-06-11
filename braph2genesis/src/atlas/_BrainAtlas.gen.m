@@ -137,33 +137,36 @@ BR_DICT (data, idict) contains the brain regions of the brain atlas.
 %%%% ¡settings!
 'BrainRegion'
 %%%% ¡gui!
-cb_tab_edit_code = {
-    'switch col'
-        'case BrainRegion.ID'
-            'if ~dict.containsKey(newdata)'
-                '' % change brain region id
-                'dict.getItem(i).set(''ID'', newdata)'
-                '' % change brain region key in idict
-                'dict.replaceKey(dict.getKey(i), newdata);' % oldkey = dict.getKey(i)
-            'end'
-    'otherwise'
-        'cb_table_edit_default()'
-    'end'
-    };
+% % % cb_tab_edit_code = {
+% % %     'switch col'
+% % %         'case BrainRegion.ID'
+% % %             'if ~dict.containsKey(newdata)'
+% % %                 '' % change brain region id
+% % %                 'dict.getItem(i).set(''ID'', newdata)'
+% % %                 '' % change brain region key in idict
+% % %                 'dict.replaceKey(dict.getKey(i), newdata);' % oldkey = dict.getKey(i)
+% % %             'end'
+% % %     'otherwise'
+% % %         'cb_table_edit_default()'
+% % %     'end'
+% % %     };
 pr = PanelPropIDictTable('EL', ba, 'PROP', BrainAtlas.BR_DICT, ... 
         'COLS', [PanelPropIDictTable.SELECTOR BrainRegion.ID BrainRegion.LABEL BrainRegion.X BrainRegion.Y BrainRegion.Z BrainRegion.NOTES], ...
-        'ROWNAME', '''numbered''', ... 
-        'CB_TAB_EDIT', cb_tab_edit_code, ...
+        'ROWNAME', '''numbered''', ... % % % 'CB_TAB_EDIT', cb_tab_edit_code, ...
         varargin{:});
 
 %%% ¡prop!
-SURF (metadata, item) contains the brain surface of the brain atlas.
+PFBA (gui, item) contains the panel figure of the brain atlas.
 %%%% ¡settings!
-'BrainSurface'
-%%%% ¡default!
-ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF')
-%%%% ¡gui_!
-% % % pr = PPBrainAtlas_Surf('EL', ba, 'PROP', BrainAtlas.SURF, varargin{:});
+'PFBrainAtlas'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    ba.memorize('PFBA').set('BA', ba)
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', ba, 'PROP', BrainAtlas.PFBA, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
 
 %% ¡tests!
 

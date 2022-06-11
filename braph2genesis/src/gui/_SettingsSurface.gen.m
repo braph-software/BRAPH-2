@@ -43,7 +43,7 @@ end
 %%% ¡prop!
 FACEALPHA (figure, alpha) is the face transparency.
 %%%% ¡default!
-1
+.5
 %%%% ¡postprocessing!
 h = st.h(); % patch
 if check_graphics(h, 'patch') || check_graphics(h, 'surface')

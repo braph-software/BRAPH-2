@@ -1131,6 +1131,10 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % Note that, instead, EL1 == EL2 detemines whether the two handles 
             %  EL1 and EL2 refer to the very same element.
             
+            % % % IMPORTANT NOTE:
+            % This code does not work for element that contain recursively
+            % other elements (e.g. BA containing PFBA containg BA).
+            
             check = isa(el2, el1.getClass());
             
             if check
@@ -1399,16 +1403,16 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             
             if all(cellfun(@(x) el ~= x, el_list))
                 el_list = [el_list(:); {el}];
-            end
             
-            for prop = 1:1:el.getPropNumber()
-                value = el.getr(prop);
-                
-                if isa(value, 'Element')
-                    el_list = value.getElementList(el_list);
-                elseif iscell(value) && all(all(cellfun(@(x) isa(x, 'Element'), value)))
-                    for i = 1:1:length(value)
-                        el_list = value{i}.getElementList(el_list);
+                for prop = 1:1:el.getPropNumber()
+                    value = el.getr(prop);
+
+                    if isa(value, 'Element')
+                        el_list = value.getElementList(el_list);
+                    elseif iscell(value) && all(all(cellfun(@(x) isa(x, 'Element'), value)))
+                        for i = 1:1:length(value)
+                            el_list = value{i}.getElementList(el_list);
+                        end
                     end
                 end
             end

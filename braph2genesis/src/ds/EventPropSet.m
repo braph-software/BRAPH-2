@@ -5,6 +5,9 @@ classdef (ConstructOnLoad) EventPropSet < event.EventData
     %  el       - element
     %  props    - properties that have been set
     %
+    % EventPropSet constructor:
+    %  EventPropSet - constructor
+    %
     % See also Element, event, listener.
     
     properties

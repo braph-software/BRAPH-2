@@ -8,6 +8,11 @@ including lighting, material, camlight, shading, and colormap.
 %%% ¡seealso!
 PanelFig, GUIFig, uiaxes
 
+%% ¡properties!
+light1 % cam light 1
+light2 % cam light 2
+light3 % cam light 3
+
 %% ¡props!
 
 %%% ¡prop!
@@ -37,15 +42,43 @@ end
 %%% ¡prop!
 CAMLIGHT (figure, option) is the camlight value.
 %%%% ¡settings!
-{'none' 'headlight' 'right' 'left'}
+{'none' 'headlight' 'headlight (x2)' 'headlight (x3)' 'right' 'right (x2)' 'right (x3)' 'left' 'left (x2)' 'left (x3)'}
 %%%% ¡default!
-'headlight'
+'headlight (x2)'
 %%%% ¡postprocessing!
 a = st.h(); % axes
 if check_graphics(a, 'axes')
-    delete(findall(a, 'Type', 'light'));
-    if ~strcmpi(st.get('CAMLIGHT'), 'none')
-        camlight(a, st.get('CAMLIGHT'))
+    delete(st.light1)
+    delete(st.light2)
+    delete(st.light3)
+    switch st.get('CAMLIGHT')
+        case 'headlight' 
+            st.light1 = camlight(a, 'headlight');
+        case 'headlight (x2)'
+            st.light1 = camlight(a, 'headlight');
+            st.light2 = camlight(a, 'headlight');
+        case 'headlight (x3)'
+            st.light1 = camlight(a, 'headlight');
+            st.light2 = camlight(a, 'headlight');
+            st.light3 = camlight(a, 'headlight');
+        case 'right'
+            st.light1 = camlight(a, 'right');
+        case 'right (x2)'
+            st.light1 = camlight(a, 'right');
+            st.light2 = camlight(a, 'right');
+        case 'right (x3)'
+            st.light1 = camlight(a, 'right');
+            st.light2 = camlight(a, 'right');
+            st.light3 = camlight(a, 'right');
+        case 'left'
+            st.light1 = camlight(a, 'left');
+        case 'left (x2)'
+            st.light1 = camlight(a, 'left');
+            st.light2 = camlight(a, 'left');
+        case 'left (x3)'
+            st.light1 = camlight(a, 'left');
+            st.light2 = camlight(a, 'left');
+            st.light3 = camlight(a, 'left');
     end
 end
 
@@ -54,7 +87,7 @@ SHADING (figure, option) is the shading value.
 %%%% ¡settings!
 {'none' 'interp' 'flat' 'faceted'}
 %%%% ¡default!
-'interp'
+'none'
 %%%% ¡postprocessing!
 a = st.h(); % axes
 if check_graphics(a, 'axes')
@@ -66,11 +99,13 @@ end
 %%% ¡prop!
 COLORMAP (figure, option) is the colormap.
 %%%% ¡settings!
-{'white', 'parula', 'jet', 'hsv', 'hot', 'cool', 'spring', 'summer', 'autumn', 'winter', 'gray', 'bone', 'copper', 'pink', 'lines', 'colorcube', 'prism', 'flag'}
+{'none', 'white', 'parula', 'jet', 'hsv', 'hot', 'cool', 'spring', 'summer', 'autumn', 'winter', 'gray', 'bone', 'copper', 'pink', 'lines', 'colorcube', 'prism', 'flag'}
+%%%% ¡default!
+'none'
 %%%% ¡postprocessing!
 a = st.h(); % axes
 if check_graphics(a, 'axes')
-    if ~strcmpi(st.get('SHADING'), 'none')
+    if ~strcmpi(st.get('COLORMAP'), 'none')
         colormap(a, st.get('COLORMAP'))
     end
 end

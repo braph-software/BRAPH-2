@@ -272,6 +272,6 @@ function cb_button_axiscolor(pr)
     if ~isequal(new_color, el.get(prop).get('AXISCOLOR'))
         el.get(prop).set('AXISCOLOR', new_color)
 
-% % %         pr.update()
+        pr.update()
     end
 end

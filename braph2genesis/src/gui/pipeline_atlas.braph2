@@ -4,10 +4,10 @@
 % 1. It loads two brain atlases from XLS files (e.g., desikan_atlas.xlsx, aal90_atlas.xlsx).
 % 2. It loads two brain atlases from TXT files (e.g., desikan_atlas.txt, aal90_atlas.txt).
 
-%% Brain Atlas TXT
+%% Brain Atlas XLS
 ba1_xls = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load Brain Atlas from XLS % Brain Atlas XLS
 ba2_xls = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load Brain Atlas from XLS % Brain Atlas XLS
 
-%% Brain Atlas XLS
+%% Brain Atlas TXT
 ba1_txt = ImporterBrainAtlasTXT('WAITBAR', true).get('BA'); % Load Brain Atlas from TXT % Brain Atlas TXT
 ba2_txt = ImporterBrainAtlasTXT('WAITBAR', true).get('BA'); % Load Brain Atlas from TXT % Brain Atlas TXT

@@ -23,6 +23,10 @@ DRAW - To draw the panel call pn.draw():
 It is also possible to have additional Name-Value pairs accepted by uipanel:
 
     p = pn.<strong>draw</strong>(''Name'', <value>, ... );
+        
+and to obtain the panel handle as:
+
+    p = pn.<strong>draw</strong>();
  
 The first time that it is called it generates a new panel. The subsequent times, 
  it updates the Name-Value pairs of the uipanel and/or returns the uipanel handle,
@@ -86,6 +90,15 @@ function p_out = draw(pn, varargin)
     if nargout > 0
         p_out = pn.p;
     end
+end
+function p = panel(pn)
+    %PANEL returns the graphic handle to the panel.
+    %
+    % P = PANEL(PN) returns the graphic handle P to the panel PN.
+    %
+    % See also uipanel.
+    
+    p = pn.p;
 end
 function cb_bring_to_front(pn)
     %CB_BRING_TO_FRONT brings to the front the figures dependent on the panel.

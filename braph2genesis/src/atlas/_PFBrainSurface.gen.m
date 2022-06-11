@@ -89,13 +89,6 @@ tool_viewCP
 %% ¡props!
 
 %%% ¡prop!
-SURF (metadata, item) is the brain surface to be plotted.
-%%%% ¡settings!
-'BrainSurface'
-%%%% ¡default!
-BrainAtlas.getPropDefault('SURF')
-
-%%% ¡prop!
 VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.
 %%%% ¡check_prop!
 check = length(value) == 2;
@@ -104,6 +97,9 @@ PFBrainSurface.VIEW_SL_AZEL
 %%%% ¡postprocessing!
 if (isempty(varargin) || pf.prop_set('VIEW', varargin)) && check_graphics(pf.h_axes, 'axes')
     view(pf.h_axes, pf.get('VIEW'))
+    
+    % reset the ambient lighting
+    pf.get('ST_AMBIENT').set()
     
     % update state of toggle tools
     set(pf.tool_view3D, 'State', isequal(pf.get('VIEW'), PFBrainSurface.VIEW_3D_AZEL))
@@ -151,6 +147,28 @@ if (isempty(varargin) || pf.prop_set('BRAIN', varargin)) && check_graphics(pf.h_
 end
 
 %%% ¡prop!
+SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.
+%%%% ¡settings!
+{dir([fileparts(which('braph2')) filesep() 'brainsurfs' filesep() '*.nv']).name}
+%%%% ¡default!
+'human_ICBM152.nv'
+%%%% ¡postprocessing!
+if pf.prop_set('SURFFILE', varargin) && ~braph2_testing
+    bs = ImporterBrainSurfaceNV('FILE', pf.get('SURFFILE')).get('SURF');
+    pf.set('SURF', bs)
+    
+    delete(pf.h_brain)
+    pf.draw()
+end
+
+%%% ¡prop!
+SURF (metadata, item) is the brain surface to be plotted.
+%%%% ¡settings!
+'BrainSurface'
+%%%% ¡default!
+ImporterBrainSurfaceNV('FILE', PFBrainSurface.getPropDefault('SURFFILE')).get('SURF')
+
+%%% ¡prop!
 ST_SURFACE (figure, item) determines the surface settings.
 %%%% ¡settings!
 'SettingsSurface'
@@ -162,7 +180,7 @@ ST_AMBIENT (figure, item) determines the ambient settings.
 %%%% ¡settings!
 'SettingsAmbient'
 %%%% ¡default!
-SettingsAmbient('LIGHTING', 'gouraud', 'MATERIAL', 'dull', 'CAMLIGHT', 'headlight', 'SHADING', 'interp')
+SettingsAmbient('LIGHTING', 'gouraud', 'MATERIAL', 'dull', 'CAMLIGHT', 'headlight (x2)', 'SHADING', 'none', 'COLORMAP', 'none')
 %%%% ¡gui!
 pr = SettingsAmbientPP('EL', pf, 'PROP', PFBrainSurface.ST_AMBIENT, varargin{:});
         
@@ -195,12 +213,6 @@ function p_out = draw(pf, varargin)
             );
         pf.h_axes.Toolbar.Visible = 'off';
         pf.h_axes.Interactions = [];
-% % %         h_3d = rotate3d(pl.h_axes);
-% % %         h_3d.ActionPostCallback = @cb_rotate_3d;   
-% % %         function cb_rotate_3d(~, ~)
-% % %             view_3d = get(pf.h_axes, 'view');
-% % %             pf.set('View', view_3d);
-% % %         end
     end
     
     if ~check_graphics(pf.h_brain, 'patch')
@@ -219,25 +231,21 @@ function p_out = draw(pf, varargin)
         zlabel(pf.h_axes, 'Coronal')
     end
 
-    if isa(pf.getr('ST_AXIS'), 'NoValue')
-        pf.memorize('ST_AXIS').set('PANEL', pf, 'UITAG', 'h_axes')
-    end
+    pf.memorize('ST_AXIS').h(pf.h_axes).set('PANEL', pf, 'UITAG', 'h_axes')
     listener(pf.get('ST_AXIS'), 'PropSet', @cb_st_axis);
     function cb_st_axis(~, ~) % (src, event)
         set(pf.tool_axis, 'State', pf.get('ST_AXIS').get('AXIS'))
         set(pf.tool_grid, 'State', pf.get('ST_AXIS').get('GRID'))
     end
     
-    if isa(pf.getr('ST_SURFACE'), 'NoValue')
-        pf.memorize('ST_SURFACE').set('PANEL', pf, 'UITAG', 'h_brain')
-    end
+    pf.memorize('ST_SURFACE').h(pf.h_brain).set('PANEL', pf, 'UITAG', 'h_brain')
     
-    if isa(pf.getr('ST_AMBIENT'), 'NoValue')
-        pf.memorize('ST_AMBIENT').set('PANEL', pf, 'UITAG', 'h_axes')
-    end
+    pf.memorize('ST_AMBIENT').h(pf.h_axes).set('PANEL', pf, 'UITAG', 'h_axes')
     
     % Toolbar
-    pf.toolbar = findall(ancestor(pf.p, 'Figure'), 'Tag', 'ToolBar');
+    if ~check_graphics(pf.toolbar, 'uitoolbar')
+        pf.toolbar = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'ToolBar');
+    end
     
     if check_graphics(pf.toolbar, 'uitoolbar') && ~check_graphics(pf.tool_brain, 'uitoggletool') % implies that also the other tools are not defined
         
@@ -249,7 +257,7 @@ function p_out = draw(pf, varargin)
             'Separator', 'on', ...
             'State', pf.get('BRAIN'), ...
             'Tooltip', 'Show Brain', ...
-            'CData', imresize(imread('icon_brain.png'), [16 16]), ...
+            'CData', imread('icon_brain.png'), ...
             'OnCallback', {@cb_brain, true}, ...
             'OffCallback', {@cb_brain, false});
         
@@ -258,7 +266,7 @@ function p_out = draw(pf, varargin)
             'Tag', 'tool_axis', ...
             'State', pf.get('ST_AXIS').get('AXIS'), ...
             'Tooltip', 'Show axis', ...
-            'CData', imresize(imread('icon_axis.png'), [16 16]), ...
+            'CData', imread('icon_axis.png'), ...
             'OnCallback', {@cb_axis, true}, ...
             'OffCallback', {@cb_axis, false});
         
@@ -267,7 +275,7 @@ function p_out = draw(pf, varargin)
             'Tag', 'tool_grid', ...
             'State', pf.get('ST_AXIS').get('GRID'), ...
             'Tooltip', 'Show grid', ...
-            'CData', imresize(imread('icon_grid.png'), [16 16]), ...
+            'CData', imread('icon_grid.png'), ...
             'OnCallback', {@cb_grid, true}, ...
             'OffCallback', {@cb_grid, false});
     end
@@ -291,7 +299,7 @@ function p_out = draw(pf, varargin)
             'Separator', 'on', ... 
             'State', isequal(pf.get('VIEW'), PFBrainSurface.VIEW_3D_AZEL), ...
             'Tooltip', PFBrainSurface.VIEW_3D_CMD, ...
-            'CData', imresize(imread('icon_view_3d.png'), [16 16]), ...
+            'CData', imread('icon_view_3d.png'), ...
             'ClickedCallback', {@cb_view, PFBrainSurface.VIEW_3D_AZEL});
 
         % View SL
@@ -299,7 +307,7 @@ function p_out = draw(pf, varargin)
             'Tag', 'tool_viewSL', ...
             'State', isequal(pf.get('VIEW'), PFBrainSurface.VIEW_SL_AZEL), ...
             'Tooltip', PFBrainSurface.VIEW_SL_CMD, ...
-            'CData', imresize(imread('icon_view_sl.png'), [16 16]), ...
+            'CData', imread('icon_view_sl.png'), ...
             'ClickedCallback', {@cb_view, PFBrainSurface.VIEW_SL_AZEL});
 
         % View SR
@@ -307,7 +315,7 @@ function p_out = draw(pf, varargin)
             'Tag', 'tool_viewSR', ...
             'State', isequal(pf.get('VIEW'), PFBrainSurface.VIEW_SR_AZEL), ...
             'Tooltip', PFBrainSurface.VIEW_SR_CMD, ...
-            'CData', imresize(imread('icon_view_sr.png'), [16 16]), ...
+            'CData', imread('icon_view_sr.png'), ...
             'ClickedCallback', {@cb_view, PFBrainSurface.VIEW_SR_AZEL});
 
         % View AD
@@ -315,7 +323,7 @@ function p_out = draw(pf, varargin)
             'Tag', 'tool_viewAD', ...
             'State', isequal(pf.get('VIEW'), PFBrainSurface.VIEW_AD_AZEL), ...
             'Tooltip', PFBrainSurface.VIEW_AD_CMD, ...
-            'CData', imresize(imread('icon_view_ad.png'), [16 16]), ...
+            'CData', imread('icon_view_ad.png'), ...
             'ClickedCallback', {@cb_view, PFBrainSurface.VIEW_AD_AZEL});
 
         % View AV
@@ -323,7 +331,7 @@ function p_out = draw(pf, varargin)
             'Tag', 'tool_viewAV', ...
             'State', isequal(pf.get('VIEW'), PFBrainSurface.VIEW_AV_AZEL), ...
             'Tooltip', PFBrainSurface.VIEW_AV_CMD, ...
-            'CData', imresize(imread('icon_view_av.png'), [16 16]), ...
+            'CData', imread('icon_view_av.png'), ...
             'ClickedCallback', {@cb_view, PFBrainSurface.VIEW_AV_AZEL});
 
         % View CA
@@ -331,7 +339,7 @@ function p_out = draw(pf, varargin)
             'Tag', 'tool_viewCA', ...
             'State', isequal(pf.get('VIEW'), PFBrainSurface.VIEW_CA_AZEL), ...
             'Tooltip', PFBrainSurface.VIEW_CA_CMD, ...
-            'CData', imresize(imread('icon_view_ca.png'), [16 16]), ...
+            'CData', imread('icon_view_ca.png'), ...
             'ClickedCallback', {@cb_view, PFBrainSurface.VIEW_CA_AZEL});
 
         % View CP
@@ -339,7 +347,7 @@ function p_out = draw(pf, varargin)
             'Tag', 'tool_viewCP', ...
             'State', isequal(pf.get('VIEW'), PFBrainSurface.VIEW_CP_AZEL), ...
             'Tooltip', PFBrainSurface.VIEW_CP_CMD, ...
-            'CData', imresize(imread('icon_view_cp.png'), [16 16]), ...
+            'CData', imread('icon_view_cp.png'), ...
             'ClickedCallback', {@cb_view, PFBrainSurface.VIEW_CP_AZEL});
 
     end
@@ -351,6 +359,22 @@ function p_out = draw(pf, varargin)
     if nargout > 0
         p_out = pf.p;
     end
+end
+function str = tostring(pf, varargin)
+    %TOSTRING string with information about the brain surface.
+    %
+    % STR = TOSTRING(PF) returns a string with information about the brain surface.
+    %
+    % STR = TOSTRING(PF, N) trims the string to the first N characters.
+    %
+    % STR = TOSTRING(PF, N, ENDING) ends the string with ENDING if it has
+    %  been trimmed.
+    %
+    % See also disp, tree.
+
+    str = 'Plot Brain Surface';
+    str = tostring(str, varargin{:});
+    str = str(2:1:end-1);
 end
 
 %% ¡tests!

@@ -36,14 +36,15 @@ function p_out = draw(pr, varargin)
     %
     % See also update, redraw, uipanel.
 
-    pr.p = draw@PanelProp(pr, 'DeleteFcn', {@close_GUIs}, varargin{:});
-    function close_GUIs(~, ~)
-        for i = 1:1:length(pr.pc_GUIs)
-            for j = 1:1:length(pr.pc_GUIs{i})
-                delete(pr.pc_GUIs{i}{j})
-            end
-        end
-    end
+    pr.p = draw@PanelProp(pr, varargin{:});
+% % %     pr.p = draw@PanelProp(pr, 'DeleteFcn', {@close_GUIs}, varargin{:});
+% % %     function close_GUIs(~, ~)
+% % %         for i = 1:1:length(pr.pc_GUIs)
+% % %             for j = 1:1:length(pr.pc_GUIs{i})
+% % %                 delete(pr.pc_GUIs{i}{j})
+% % %             end
+% % %         end
+% % %     end
 
     % deletes all graphic objects
     % panels and btns
@@ -54,7 +55,12 @@ function p_out = draw(pr, varargin)
     end
     % GUIs
     if ~isempty(pr.pc_GUIs)
-        close_GUIs()
+% % %         close_GUIs()
+        for i = 1:1:length(pr.pc_GUIs)
+            for j = 1:1:length(pr.pc_GUIs{i})
+                delete(pr.pc_GUIs{i}{j})
+            end
+        end
         pr.pc_GUIs = {};
     end
     
@@ -162,7 +168,7 @@ function update(pr, varargin)
                             'Enable', 'on' ...
                             )
 
-                        if ~strcmp(e.message, [BRAPH2.STR ':PPPipeline_PSDict: ' BRAPH2.BUG_IO])
+                        if isempty(regexp(e.message, ['^' BRAPH2.STR ':.*:' BRAPH2.CANCEL_IO '$'], 'once'))
                             warndlg(['An error occurred while trying to execute the code:' newline() ...
                                 newline() ...
                                 moniker ' = ' code.get('CODE') ';' newline() ...
@@ -300,7 +306,7 @@ function cb_bring_to_front(pr)
     %
     % See also cb_hide, cb_close.
 
-    pr.cb_bring_to_front@Plot()
+    pr.cb_bring_to_front@PanelProp()
     
     % code to bring to front the dependent figures, currently not in use
     % for i = 1:1:length(pr.pc_GUIs)
@@ -336,4 +342,13 @@ function cb_close(pr)
     % See also cb_bring_to_front, cb_hide.
 
     pr.cb_close@PanelProp() % this triggers a call for the delete function defined in draw() that deletes the dependent figures
+    
+    for i = 1:1:length(pr.pc_GUIs)
+        for j = 1:1:length(pr.pc_GUIs{i})
+            if check_graphics(pr.pc_GUIs{i}{j}, 'figure')
+                gui = get(pr.pc_GUIs{i}{j}, 'UserData');
+                gui.cb_close()
+            end
+        end
+    end
 end
