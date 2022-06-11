@@ -11,13 +11,13 @@ clc
 % % test_code = ['test_' el_class]
 % % eval(test_code)
 
-% el_class = 'PanelPropIDictTable';
-% delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
-% create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
-% create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
-% % create_test_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
-% % test_code = ['test_' el_class]
-% % eval(test_code)
+el_class = 'PanelPropIDictTable';
+delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
+create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+% create_test_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+% test_code = ['test_' el_class]
+% eval(test_code)
 
 % el_class = 'PFBrainAtlas';
 % delete([fileparts(which('braph2')) '/src/atlas/' el_class '.m'])
@@ -153,3 +153,21 @@ toc
 % pip = load('pipatlas.b2', '-mat').el;
 % gui = GUIElement('PE', pip, 'CLOSEREQ', true);
 % f = gui.draw();
+
+return
+
+f = uifigure();
+t = uitable(f, 'Data', randn(10));
+
+s = uistyle('BackgroundColor', 'r');
+addStyle(t, s, 'column', 2)
+
+s.BackgroundColor = ''
+s.FontWeight = 'bold'
+addStyle(t, s, 'row', 2)
+
+tab = t.StyleConfigurations
+
+char(tab{1,1})
+
+categories(tab.Target)
