@@ -395,9 +395,7 @@ function update(pr)
             'ColumnFormat', columnformat ...
             )
         
-        % styles
-        
-        % selected
+        % style SELECTED
         styles_row = find(pr.table.StyleConfigurations.Target == 'row');
         if ~isempty(styles_row)
             removeStyle(pr.table, styles_row)
@@ -406,25 +404,47 @@ function update(pr)
             addStyle(pr.table, uistyle('FontWeight', 'bold'), 'row', pr.selected)
         end
         
-% % %         % styles
-% % %         if isempty(pr.s)
-% % %             for c = 1:1:length(cols)
-% % %                 for i = 1:1:dict.length()
-% % %                     pr.s{i, c} = uistyle();
-% % %                     addStyle(pr.table, pr.s{i, c}, 'cell', [i, c])
-% % %                 end
-% % %             end
-% % %         end
-% % %             
-% % %         % COLOR
-% % %         for c = 1:1:length(cols)
-% % %             col = cols(c);
-% % %             if isequal(Element.getPropFormat(it_class, col), Format.COLOR)
-% % %                 for i = 1:1:dict.length()
-% % %                     pr.s{i, c}.BackgroundColor = dict.getItem(i).get(col);
-% % %                 end
-% % %             end
-% % %         end
+        % style COLOR
+        styles_cell = find(pr.table.StyleConfigurations.Target == 'cell');
+        if get(pr.menu_colorize_table, 'Checked')
+            if isempty(styles_cell)
+                for c = 1:1:length(cols)
+                    col = cols(c);
+                    if col > 0 && isequal(Element.getPropFormat(it_class, col), Format.COLOR)                            
+                        for i = 1:1:dict.length()
+                            addStyle(pr.table, ...
+                                uistyle('FontColor', dict.getItem(i).get(col)), ...
+                                'cell', [i, c] ...
+                                )
+                        end
+                    end
+                end
+            else
+                for c = 1:1:length(cols)
+                    col = cols(c);
+                    if col > 0 && isequal(Element.getPropFormat(it_class, col), Format.COLOR)
+                        for i = 1:1:dict.length()
+                            cell_to_be_removed = find(cellfun(@(x) isequal(x, [i, c]), pr.table.StyleConfigurations.TargetIndex));
+                            if ~isempty(cell_to_be_removed)
+                                current_rgb = pr.table.StyleConfigurations.Style(cell_to_be_removed).FontColor;
+                                new_rgb = dict.getItem(i).get(col);
+                                if ~isequal(current_rgb, new_rgb)
+                                    removeStyle(pr.table, cell_to_be_removed)
+                                    addStyle(pr.table, ...
+                                        uistyle('FontColor', new_rgb), ...
+                                        'cell', [i, c] ...
+                                        )
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        else
+            if ~isempty(styles_cell)
+                removeStyle(pr.table, styles_cell)
+            end
+        end
     end
 
     if el.isLocked(prop)
@@ -632,6 +652,8 @@ end
 function cb_colorize_table(pr, checked)
 
     set(pr.menu_colorize_table, 'Checked', checked)
+    
+    pr.update()    
 end
 
 %% ¡tests!
