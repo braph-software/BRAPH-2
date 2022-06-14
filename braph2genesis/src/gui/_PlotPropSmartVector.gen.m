@@ -167,35 +167,37 @@ function cb_edit_value(pr)
     allowedChars = "0123456789,:. ";
     pat = characterListPattern(allowedChars); % pattern
     result = extract(tmp_value, pat); % cell array
-    try 
-        if any(contains(result, ':'))
-             proccessed_value = eval([result{:}]);
-        else
-            tmp_r = convertCharsToStrings([result{:}]);
-            tmp_r = strsplit(tmp_r, {' ', ','});
-            holder = [];
-            for i = 1:length(tmp_r)
-                holder = [holder str2double(tmp_r{i})]; %#ok<AGROW>
-            end  
-            proccessed_value = holder;
-        end
+    if ~isempty(result)
+        try
+            if any(contains(result, ':'))
+                proccessed_value = eval([result{:}]);
+            else
+                tmp_r = convertCharsToStrings([result{:}]);
+                tmp_r = strsplit(tmp_r, {' ', ','});
+                holder = [];
+                for i = 1:length(tmp_r)
+                    holder = [holder str2double(tmp_r{i})]; %#ok<AGROW>
+                end
+                proccessed_value = holder;
+            end
 
-        proccessed_value = proccessed_value(proccessed_value <= max);
-        proccessed_value = proccessed_value(proccessed_value >= min);
-    catch e
-        pr.warning_creator(e.message);
+            proccessed_value = proccessed_value(proccessed_value <= max);
+            proccessed_value = proccessed_value(proccessed_value >= min);
+        catch e
+            pr.warning_creator(e.message);
+        end
     end
     % set rvector
-    if isnumeric(proccessed_value)
-        try            
+    if exist('proccessed_value', 'var') && isnumeric(proccessed_value)
+        try
             el.set(prop, proccessed_value);
             % set other analysis if needed
-            
+
         catch e
             pr.warning_creator(e.message);
         end
     else
-        % do nothing
+        pr.warning_creator('The entered value is not valid.');
     end
 
     pr.update()

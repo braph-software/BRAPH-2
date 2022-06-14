@@ -767,8 +767,8 @@ function f_settings = settings(pr, varargin)
         'Callback', {@cb_fill_alpha});
 
         function cb_fill_alpha(~, ~)  % (src, event)
+            set(h_fill_area, 'FaceAlpha', get(fill_area_alpha, 'Value'))
             pr.set('FILLALPHA', get(fill_area_alpha, 'Value'))
-            update()
         end
 
     fill_alpha_id = uicontrol(fill_plot_style_panel, ...
@@ -800,7 +800,8 @@ function f_settings = settings(pr, varargin)
             y2_data = get(Y, 'YData');
             if area_fill_checkbox.Value
                 h_fill_area = [];
-                h_fill_area = fill(pr.h_axes, [x_data, fliplr(x_data)], [y1_data, fliplr(y2_data)], pr.get('FILLCOLOR'), 'FaceAlpha', pr.get('FILLALPHA'));
+                h_fill_area = fill(pr.h_axes, [x_data, fliplr(x_data)], [y1_data, fliplr(y2_data)], pr.get('FILLCOLOR'));
+                set(h_fill_area, 'FaceAlpha', pr.get('FILLALPHA'))
             end
         end
 
