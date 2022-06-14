@@ -19,6 +19,7 @@ MultiplexBU
 MultiplexBUD
 MultiplexBUT
 MultiplexWU
+MultiplexWUD
 
 %% ¡props_update!
 

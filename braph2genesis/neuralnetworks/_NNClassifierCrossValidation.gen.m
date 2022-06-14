@@ -40,7 +40,7 @@ GR2 (data, item) is is a group of subjects.
 'NNGroup'
 
 %%% ¡prop!
-FEATURE_MASK (data, cell) is a given mask or a percentile to select relevant features.
+FEATURE_MASK (parameter, cell) is a given mask or a percentile to select relevant features.
 %%%% ¡default!
 num2cell(0.05)
 %%%% ¡conditioning!

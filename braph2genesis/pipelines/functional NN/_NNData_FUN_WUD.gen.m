@@ -1,10 +1,9 @@
 %% ¡header!
-NNData_CON_FUN_MP_WU < NNData (nnd, data for neural network) produces a dataset to train or test a neural netowrk model for connectivity data and functional data. 
+NNData_FUN_WUD < NNData (nnd, data for neural network) produces a dataset to train or test a neural netowrk model for functional data. 
 
 %% ¡description!
 This NN data generates a group of NN subjects, each of which contains the 
-input as adjacency matrices or graph measures from the multiplex obtained 
-from connectivity data and functional data. 
+input as adjacency matrices or graph measures from functional data. 
 The generated NN group can be used to train or test a neural network model.
 
 %% ¡props!
@@ -37,6 +36,13 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST
 %%%% ¡default!
 Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 
+%%% ¡prop!
+DENSITIES (parameter, rvector) is the vector of densities.
+%%%% ¡default!
+10
+%%%% ¡gui!
+pr = PlotPropSmartVector('EL', nnd, 'PROP', NNData_FUN_WUD.DENSITIES, 'MAX', 100, 'MIN', 0, varargin{:});
+
 %% ¡props_update!
 
 %%% ¡prop!
@@ -45,14 +51,14 @@ INPUT_TYPE (data, option) is the input type for training or testing the NN.
 {'adjacency_matrices' 'graph_measures'}
 
 %%% ¡prop!
-G (data, item) is the graph for calculating the graph measures.
-%%%% ¡default!
-MultiplexWU()
-
-%%% ¡prop!
 GR (data, item) is a group of subjects defined as SubjectFUN class.
 %%%% ¡default!
-Group('SUB_CLASS', 'SubjectCON_FUN_MP')
+Group('SUB_CLASS', 'SubjectFUN')
+
+%%% ¡prop!
+G (data, item) is the graph for calculating the graph measures.
+%%%% ¡default!
+MultigraphWUD()
 
 %%% ¡prop!
 GR_NN (result, item) is a group of NN subjects.
@@ -67,6 +73,7 @@ gr = nnd.get('GR');
 T = nnd.get('REPETITION');
 fmin = nnd.get('FREQUENCYRULEMIN');
 fmax = nnd.get('FREQUENCYRULEMAX');
+densities = nnd.get('DENSITIES');
 nn_gr = NNGroup( ...
     'SUB_CLASS', 'NNSubject', ...
     'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject') ...
@@ -88,15 +95,8 @@ end
 nn_sub_dict = nn_gr.get('SUB_DICT');
 
 for i = 1:1:gr.get('SUB_DICT').length()
-    A = cell(1, 2);
 	sub = gr.get('SUB_DICT').getItem(i);
-    CON_FUN_MP = sub.getr('CON_FUN_MP');
-    
-    % CON data
-    A(1) = CON_FUN_MP(1);
-    
-    % FUN data
-    data = CON_FUN_MP{2};
+    data = sub.getr('FUN');
     fs = 1 / T;
     
     if fmax > fmin && T > 0
@@ -107,17 +107,18 @@ for i = 1:1:gr.get('SUB_DICT').length()
         data = ifft(ft, NFFT);
     end
     
-    A(2) = {Correlation.getAdjacencyMatrix(data, nnd.get('CORRELATION_RULE'), nnd.get('NEGATIVE_WEIGHT_RULE'))};
+    A = Correlation.getAdjacencyMatrix(data, nnd.get('CORRELATION_RULE'), nnd.get('NEGATIVE_WEIGHT_RULE'));
     
-    g = MultiplexWU( ...
+    g = MultigraphWUD( ...
         'ID', ['g ' sub.get('ID')], ...
-        'B', A ...
+        'B', A, ...
+        'DENSITIES', densities, ...
+        'BRAINATLAS', atlas ...
         );
     
     if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
-        adj = g.get('A'); 
-        input = {adj{1} adj{4}};
-        input_label = {'MultiplexWU'};
+        input = {cell2mat(g.get('A'))}; 
+        input_label = {'MultigraphWUD'};
 
     elseif string(nnd.get('INPUT_TYPE')) == "graph_measures"
         input_nodal = [];
@@ -134,7 +135,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
                 input_binodal = [input_binodal; cell2mat(g.getMeasure(mlist{j}).get('M'))];
             end
         end
-        input = {input_global input_nodal input_binodal};
+        input = {input_nodal input_global input_binodal};
     end
 
     nn_sub = NNSubject( ...
@@ -150,7 +151,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
 
     nn_sub_dict.add(nn_sub);
 
-    braph2waitbar(wb, .30 + .70 * i / gr.get('SUB_DICT').length(), ['Constructing subject ' num2str(i) ' of ' num2str(gr.get('SUB_DICT').length())  ' in ' gr.get('ID') ' ...'])
+	braph2waitbar(wb, .30 + .70 * i / gr.get('SUB_DICT').length(), ['Constructing subject ' num2str(i) ' of ' num2str(gr.get('SUB_DICT').length())  ' in ' gr.get('ID') ' ...'])
 end
 
 nn_gr.set('sub_dict', nn_sub_dict);
@@ -164,10 +165,10 @@ value = nn_gr;
 %%%% ¡name!
 Example 1
 %%%% ¡code!
-example_NN_CON_FUN_MP_WU_Classification_GraphMeasures
+example_NN_FUN_WUD_Classification_AdjacencyMatrix
 
 %%% ¡test!
 %%%% ¡name!
 Example 2
 %%%% ¡code!
-example_NNCV_CON_FUN_MP_WU_Classification_AdjacencyMatrix
+example_NNCV_FUN_WUD_Classification_AdjacencyMatrix

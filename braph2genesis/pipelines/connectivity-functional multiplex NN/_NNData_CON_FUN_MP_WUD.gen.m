@@ -126,7 +126,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
     
     if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
         adj = g.get('A'); 
-        input = {cell2mat(adj)};
+        input = {adj{1} adj{4}};
         input_label = {'MultiplexWUD'};
 
     elseif string(nnd.get('INPUT_TYPE')) == "graph_measures"
