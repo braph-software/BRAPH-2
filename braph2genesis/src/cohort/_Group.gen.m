@@ -45,7 +45,9 @@ SUB_DICT (data, idict) is an indexed dictionary containing the subjects of the g
 %%%% ¡settings!
 'Subject'
 %%%% ¡gui!
-pr = PanelPropIDictTable('EL', gr, 'PROP', Group.SUB_DICT, varargin{:});
+pr = PanelPropIDictTable('EL', gr, 'PROP', Group.SUB_DICT, ... 
+    'MENU_OPEN', true, ...
+    varargin{:});
 
 %% ¡tests!
 

@@ -3,13 +3,21 @@ delete(findall(0, 'type', 'figure'))
 clear all
 clc
 
-el_class = 'Group';
-delete([fileparts(which('braph2')) '/src/cohort/' el_class '.m'])
-create_Element([fileparts(which('braph2genesis')) '/src/cohort/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/cohort'])
-create_Element([fileparts(which('braph2genesis')) '/src/cohort/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/cohort'])
-% create_test_Element([fileparts(which('braph2genesis')) '/src/cohort/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/cohort'])
+el_class = 'PanelPropIDictTable';
+delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
+create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+% create_test_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
 % test_code = ['test_' el_class]
 % eval(test_code)
+
+% el_class = 'Group';
+% delete([fileparts(which('braph2')) '/src/cohort/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/src/cohort/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/cohort'])
+% create_Element([fileparts(which('braph2genesis')) '/src/cohort/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/cohort'])
+% % create_test_Element([fileparts(which('braph2genesis')) '/src/cohort/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/cohort'])
+% % test_code = ['test_' el_class]
+% % eval(test_code)
 
 % el_class = 'SubjectST';
 % delete([fileparts(which('braph2')) '/pipelines/structural/' el_class '.m'])
@@ -48,15 +56,15 @@ create_Element([fileparts(which('braph2genesis')) '/src/cohort/_' el_class '.gen
 % % % gui = GUIElement('PE', group, 'CLOSEREQ', false);
 % % % f = gui.draw();
 
-% % % im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectST')) filesep 'example data ST (MRI)' filesep 'desikan_atlas.xlsx']);
-% % % ba = im_ba.get('BA');
-% % % im_gr = ImporterGroupSubjectST_XLS( ...
-% % %     'FILE', [fileparts(which('SubjectST')) filesep 'example data ST (MRI)' filesep 'xls' filesep 'ST_group1.xlsx'], ...
-% % %     'BA', ba ...
-% % %     );
-% % % gr = im_gr.get('GR');
-% % % gui = GUIElement('PE', gr, 'CLOSEREQ', false);
-% % % f = gui.draw();
+im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectST')) filesep 'example data ST (MRI)' filesep 'desikan_atlas.xlsx']);
+ba = im_ba.get('BA');
+im_gr = ImporterGroupSubjectST_XLS( ...
+    'FILE', [fileparts(which('SubjectST')) filesep 'example data ST (MRI)' filesep 'xls' filesep 'ST_group1.xlsx'], ...
+    'BA', ba ...
+    );
+gr = im_gr.get('GR');
+gui = GUIElement('PE', gr, 'CLOSEREQ', false);
+f = gui.draw();
 
 % % % im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectCON')) filesep 'example data CON (DTI)' filesep 'desikan_atlas.xlsx']);
 % % % ba = im_ba.get('BA');
@@ -68,12 +76,12 @@ create_Element([fileparts(which('braph2genesis')) '/src/cohort/_' el_class '.gen
 % % % gui = GUIElement('PE', gr, 'CLOSEREQ', false);
 % % % f = gui.draw();
 
-im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectFUN')) filesep 'example data FUN (fMRI)' filesep 'craddock_atlas.xlsx']);
-ba = im_ba.get('BA');
-im_gr = ImporterGroupSubjectFUN_XLS( ...
-    'DIRECTORY', [fileparts(which('SubjectFUN')) filesep 'example data FUN (fMRI)' filesep 'xls' filesep 'GroupName1'], ...
-    'BA', ba ...
-    );
-gr = im_gr.get('GR');
-gui = GUIElement('PE', gr, 'CLOSEREQ', false);
-f = gui.draw();
+% % % im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectFUN')) filesep 'example data FUN (fMRI)' filesep 'craddock_atlas.xlsx']);
+% % % ba = im_ba.get('BA');
+% % % im_gr = ImporterGroupSubjectFUN_XLS( ...
+% % %     'DIRECTORY', [fileparts(which('SubjectFUN')) filesep 'example data FUN (fMRI)' filesep 'xls' filesep 'GroupName1'], ...
+% % %     'BA', ba ...
+% % %     );
+% % % gr = im_gr.get('GR');
+% % % gui = GUIElement('PE', gr, 'CLOSEREQ', false);
+% % % f = gui.draw();
