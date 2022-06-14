@@ -300,7 +300,8 @@ function update(pr)
 
                         % % % case Format.CLASSLIST
 
-                        % % % case Format.ITEM
+                        case Format.ITEM
+                            data{i, c} = dict.getItem(i).get(col).tostring();
 
                         % % % case Format.ITEMLIST
 
@@ -309,13 +310,9 @@ function update(pr)
                         case Format.SCALAR
                             data{i, c} = dict.getItem(i).get(col);
 
-                        % % % case Format.RVECTOR
-
-                        % % % case Format.CVECTOR
-
-                        % % % case Format.MATRIX
-
-                        % % % case Format.SMATRIX
+                        case {Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
+                            prop_value = dict.getItem(i).get(col);
+                            data{i, c} = [int2str(size(prop_value, 1)) ' x ' int2str(size(prop_value, 2))];
 
                         % % % case Format.CELL
 
@@ -371,6 +368,56 @@ function update(pr)
             columneditable = eval(pr.get('COLUMNEDITABLE'));
         else
             columneditable = true(1, length(cols));
+            for c = 1:1:length(cols)
+                switch Element.getPropFormat(it_class, col)
+                    % % % case Format.EMPTY
+                    
+                    case Format.STRING
+                        columneditable(c) = true;
+                        
+                    case Format.LOGICAL
+                        columneditable(c) = true;
+                        
+                    case Format.OPTION
+                        columneditable(c) = true;
+                        
+                        % % % case Format.CLASS
+                        
+                        % % % case Format.CLASSLIST
+                        
+                    case Format.ITEM
+                        columneditable(c) = false;
+                        
+                        % % % case Format.ITEMLIST
+                        
+                        % % % case Format.IDICT
+                        
+                    case Format.SCALAR
+                        columneditable(c) = true;
+                        
+                    case {Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
+                        columneditable(c) = false;
+                        
+                        % % % case Format.CELL
+                        
+                        % % % case Format.NET
+                        
+                    case Format.COLOR
+                        columneditable(c) = true;
+                        
+                    case Format.ALPHA
+                        columneditable(c) = true;
+                        
+                    case Format.SIZE
+                        columneditable(c) = true;
+                        
+                    case Format.MARKER
+                        columneditable(c) = true;
+                        
+                    case Format.LINE
+                        columneditable(c) = true;
+                end
+            end
         end
 
         if ~isempty(pr.get('COLUMNFORMAT'))
@@ -398,7 +445,8 @@ function update(pr)
 
                         % % % case Format.CLASSLIST
 
-                        % % % case Format.ITEM
+                        case Format.ITEM
+                            columnformat{c} = 'char';
 
                         % % % case Format.ITEMLIST
 
@@ -407,13 +455,8 @@ function update(pr)
                         case Format.SCALAR
                             columnformat{c} = 'numeric';
 
-                        % % % case Format.RVECTOR
-
-                        % % % case Format.CVECTOR
-
-                        % % % case Format.MATRIX
-
-                        % % % case Format.SMATRIX
+                        case {Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
+                            columnformat{c} = 'char';
 
                         % % % case Format.CELL
 
@@ -623,7 +666,8 @@ function cb_table_edit(pr, i, col, newdata)
 
                 % % % case Format.CLASSLIST
 
-                % % % case Format.ITEM
+                case Format.ITEM
+                    %
 
                 % % % case Format.ITEMLIST
 
@@ -632,13 +676,8 @@ function cb_table_edit(pr, i, col, newdata)
                 case Format.SCALAR
                     dict.getItem(i).set(col, newdata)
 
-                % % % case Format.RVECTOR
-
-                % % % case Format.CVECTOR
-
-                % % % case Format.MATRIX
-
-                % % % case Format.SMATRIX
+                case {Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
+                    %
 
                 % % % case Format.CELL
 
