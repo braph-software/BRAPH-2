@@ -68,7 +68,7 @@ create_Element([fileparts(which('braph2genesis')) '/src/cohort/_' el_class '.gen
 % % % gui = GUIElement('PE', gr, 'CLOSEREQ', false);
 % % % f = gui.draw();
 
-im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectFUN')) filesep 'example data FUN (fMRI)' filesep 'desikan_atlas.xlsx']);
+im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectFUN')) filesep 'example data FUN (fMRI)' filesep 'craddock_atlas.xlsx']);
 ba = im_ba.get('BA');
 im_gr = ImporterGroupSubjectFUN_XLS( ...
     'DIRECTORY', [fileparts(which('SubjectFUN')) filesep 'example data FUN (fMRI)' filesep 'xls' filesep 'GroupName1'], ...

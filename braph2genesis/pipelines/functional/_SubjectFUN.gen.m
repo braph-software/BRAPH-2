@@ -154,7 +154,7 @@ sex (data, option) is an option containing the sex of the subject (female/male).
 %%%% ¡name!
 GUI
 %%%% ¡code!
-im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectFUN')) filesep 'example data FUN (fMRI)' filesep 'desikan_atlas.xlsx']);
+im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectFUN')) filesep 'example data FUN (fMRI)' filesep 'craddock_atlas.xlsx']);
 ba = im_ba.get('BA');
 im_gr = ImporterGroupSubjectFUN_XLS( ...
     'DIRECTORY', [fileparts(which('SubjectFUN')) filesep 'example data FUN (fMRI)' filesep 'xls' filesep 'GroupName1'], ...
