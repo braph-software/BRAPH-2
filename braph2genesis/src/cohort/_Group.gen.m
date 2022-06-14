@@ -44,8 +44,8 @@ SUB_CLASS (parameter, class) is the class of the subjects of the group.
 SUB_DICT (data, idict) is an indexed dictionary containing the subjects of the group.
 %%%% ¡settings!
 'Subject'
-%%%% ¡gui_!
-% % % pr = PPGroup_SUBDict('EL', gr, 'PROP', Group.SUB_DICT, varargin{:});
+%%%% ¡gui!
+pr = PanelPropIDictTable('EL', gr, 'PROP', Group.SUB_DICT, varargin{:});
 
 %% ¡tests!
 
