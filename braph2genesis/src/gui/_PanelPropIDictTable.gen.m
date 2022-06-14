@@ -692,10 +692,10 @@ function cb_table_edit(pr, i, col, newdata)
                     end
 
                 case Format.ALPHA
-                    dict.getItem(i).set(col, newdata)
+                    dict.getItem(i).set(col, min(abs(newdata), 1))
 
                 case Format.SIZE
-                    dict.getItem(i).set(col, newdata)
+                    dict.getItem(i).set(col, abs(newdata))
 
                 case Format.MARKER
                     dict.getItem(i).set(col, newdata)
