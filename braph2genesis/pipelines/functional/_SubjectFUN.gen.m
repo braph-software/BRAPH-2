@@ -133,8 +133,11 @@ if check
 else   
     msg = ['FUN must be a matrix with the same number of columns as the brain regions (' int2str(br_number) ').'];
 end
-%%%% ¡gui_!
-% % % pr = PPSubjectFUN_FUN('EL', sub, 'PROP', SubjectFUN.FUN, varargin{:});
+%%%% ¡gui!
+pr = PanelPropMatrix('EL', sub, 'PROP', SubjectFUN.FUN, ...
+    'ROWNAME', 'pr.get(''EL'').get(''BA'').get(''BR_DICT'').getKeys()', ...
+    'COLUMNNAME', '''numbered''', ...
+    varargin{:});
  
 %%% ¡prop!
 age (data, scalar) is a scalar number containing the age of the subject.

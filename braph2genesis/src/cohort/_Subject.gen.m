@@ -19,6 +19,8 @@ LABEL (metadata, string) is an extended label of the subject.
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the subject.
+%%%% ¡gui!
+pr = PanelPropStringTextArea('EL', sub, 'PROP', Subject.NOTES, varargin{:});
 
 %% ¡methods!
 function str = tostring(sub, varargin)

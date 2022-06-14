@@ -133,8 +133,11 @@ if check
 else   
     msg = ['ST must be a column vector with the same number of element as the brain regions (' int2str(br_number) ').'];
 end
-%%%% ¡gui_!
-% % % pr = PPSubjectST_ST('EL', sub, 'PROP', SubjectST.ST, varargin{:});
+%%%% ¡gui!
+pr = PanelPropMatrix('EL', sub, 'PROP', SubjectST.ST, ...
+    'ROWNAME', 'pr.get(''EL'').get(''BA'').get(''BR_DICT'').getKeys()', ...
+    'COLUMNNAME', '{}', ...
+    varargin{:});
 
 %%% ¡prop!
 age (data, scalar) is a scalar number containing the age of the subject.

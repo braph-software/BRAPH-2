@@ -134,9 +134,12 @@ if check
 else   
     msg = ['CON must be a square matrix with the dimensiton equal to the number of brain regions (' int2str(br_number) ').'];
 end
-%%%% ¡gui_!
-% % % pr = PPSubjectCON_CON('EL', sub, 'PROP', SubjectCON.CON, varargin{:});
- 
+%%%% ¡gui!
+pr = PanelPropMatrix('EL', sub, 'PROP', SubjectCON.CON, ...
+    'ROWNAME', 'pr.get(''EL'').get(''BA'').get(''BR_DICT'').getKeys()', ...
+    'COLUMNNAME', 'pr.get(''EL'').get(''BA'').get(''BR_DICT'').getKeys()', ...
+    varargin{:});
+
 %%% ¡prop!
 age (data, scalar) is a scalar number containing the age of the subject.
 %%%% ¡default!
