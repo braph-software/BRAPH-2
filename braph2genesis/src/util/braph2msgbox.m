@@ -20,7 +20,7 @@ f = msgbox(message, title, ...
     CreateStruct);
 set(0, 'DefaultUicontrolBackgroundColor', DefaultUicontrolBackgroundColor_BAK)
 
-set_braph2icon(f)
+% % % set_braph2icon(f)
 
 if nargout > 0
     f_out = f;
