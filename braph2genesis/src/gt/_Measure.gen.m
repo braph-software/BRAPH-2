@@ -31,8 +31,8 @@ G (data, item) is the measure graph.
 M (result, cell) is the measure result.
 %%%% ¡calculate!
 value = {};
-%%%% ¡gui!
-pr = PPMeasure_M('EL', m, 'PROP', Measure.M, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPMeasure_M('EL', m, 'PROP', Measure.M, varargin{:});
 
 %% ¡constants!
 
