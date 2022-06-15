@@ -11,12 +11,16 @@ create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'
 % test_code = ['test_' el_class]
 % eval(test_code)
 
-A = {
+et = ETA( ...
+    'PROP_CELL_M', {
     rand(3) rand(3, 2) []
     rand(2, 3) rand(2) rand(2, 4)
     [] rand(4, 2) rand(4)
-    };
-
-et = ETA();
+    }, ...
+    'PROP_CELL_P', {}, ...
+    'PROP_CELL_D', {}, ...
+    'PROP_CELL_F', {}, ...
+    'PROP_CELL_G', {} ...
+    );
 gui = GUIElement('PE', et);
 f = gui.draw();
