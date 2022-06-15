@@ -27,8 +27,8 @@ negativity = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
 THRESHOLDS (parameter, rvector) is the vector of thresholds.
-%%%% ¡gui!
-pr = PlotPropSmartVector('EL', g, 'PROP', MultigraphBUT.THRESHOLDS, 'MAX', 1, 'MIN', 0, varargin{:});
+%%%% ¡gui_!
+% % % pr = PlotPropSmartVector('EL', g, 'PROP', MultigraphBUT.THRESHOLDS, 'MAX', 1, 'MIN', 0, varargin{:});
 
 %% ¡props_update!
 
