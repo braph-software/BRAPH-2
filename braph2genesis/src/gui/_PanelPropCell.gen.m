@@ -87,9 +87,13 @@ function p_out = draw(pr, varargin)
             'MinorTicks', [], ...
             'FontSize', BRAPH2.FONTSIZE / 2, ...
             'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-            'ValueChangedFcn', {@cb_slider} ...
+            'ValueChangedFcn', {@cb_xslider} ...
             );
     end
+    function cb_xslider(~, ~) % (src, event)
+        pr.cb_xslider()
+    end
+    
     if ~check_graphics(pr.yslider, 'uislider')
         pr.yslider = uislider( ...
             'Parent', pr.p, ...
@@ -101,11 +105,11 @@ function p_out = draw(pr, varargin)
             'MinorTicks', [], ...
             'FontSize', BRAPH2.FONTSIZE / 2, ...
             'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-            'ValueChangedFcn', {@cb_slider} ...
+            'ValueChangedFcn', {@cb_yslider} ...
             );
     end
-    function cb_slider(~, ~) % (src, event)
-        pr.cb_slider()
+    function cb_yslider(~, ~) % (src, event)
+        pr.cb_yslider()
     end
 
     % output
@@ -113,30 +117,30 @@ function p_out = draw(pr, varargin)
         p_out = pr.p;
     end
 end
-% % % function update(pr)
-% % %     %UPDATE updates the content and permissions of the table and sliders.
-% % %     %
-% % %     % UPDATE(PR) updates the content and permissions of the table and sliders.
-% % %     %
-% % %     % See also draw, redraw, PanelElement.
-% % % 
-% % %     update@PanelProp(pr)
-% % %     
-% % % % % %     set(pr.table, ...
-% % % % % %     'RowName', eval(pr.get('ROWNAME')), ...
-% % % % % %     'ColumnName', eval(pr.get('COLUMNNAME')) ...
-% % % % % %     );
-% % % 
-% % %     el = pr.get('EL');
-% % %     prop = pr.get('PROP');
-% % %     
-% % %     if el.isLocked(prop)
-% % %         set(pr.table, ...
-% % %             'Enable', pr.get('TAB_ENABLE'), ...
-% % %             'ColumnEditable', false ...
-% % %             )
-% % %     end
-% % % 
+function update(pr)
+    %UPDATE updates the content and permissions of the table and sliders.
+    %
+    % UPDATE(PR) updates the content and permissions of the table and sliders.
+    %
+    % See also draw, redraw, PanelElement.
+
+    update@PanelProp(pr)
+    
+% % %     set(pr.table, ...
+% % %     'RowName', eval(pr.get('ROWNAME')), ...
+% % %     'ColumnName', eval(pr.get('COLUMNNAME')) ...
+% % %     );
+
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    
+    if el.isLocked(prop)
+        set(pr.table, ...
+            'Enable', pr.get('TAB_ENABLE'), ...
+            'ColumnEditable', false ...
+            )
+    end
+
 % % %     switch el.getPropCategory(prop)
 % % %         case Category.METADATA
 % % %             set(pr.table, ...
@@ -176,7 +180,7 @@ end
 % % %                     )
 % % %             end
 % % %     end
-% % % end
+end
 function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
     %
@@ -216,19 +220,6 @@ function redraw(pr, varargin)
     else
         pr.redraw@PanelProp('Height', h + Dh, varargin{:})
         
-% % %         set(pr.table, ...
-% % %             'Units', 'pixels', ...
-% % %             'Position', [s(.3) s(3.3) w(pr.p, 'pixels')-s(3.6) Dh-s(3.6)], ...
-% % %             'Visible', true ...
-% % %             )
-% % %         set(pr.xslider, ...
-% % %             'Position', [s(.3) s(2.3) w(pr.p, 'pixels')-s(3.6) 3], ...
-% % %             'Visible', true ...
-% % %             )
-% % %         set(pr.yslider, ...
-% % %             'Position', [w(pr.p, 'pixels')-s(2.9) s(3.3) 3 Dh-s(3.6)], ...
-% % %             'Visible', true ...
-% % %             )
         set(pr.table, ...
             'Units', 'pixels', ...
             'Position', [s(3.3) s(.3) w(pr.p, 'pixels')-s(3.6) Dh-s(3.6)], ...
@@ -259,6 +250,14 @@ end
 % % % 
 % % % % % %     pr.update()
 % % % end
+function cb_xslider(pr)
+    
+    pr.update()
+end
+function cb_yslider(pr)
+    
+    pr.update()
+end
 
 %% ¡tests!
 
