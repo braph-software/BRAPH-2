@@ -5,6 +5,10 @@ PanelPropMatrix < PanelProp (pr, panel property matrix) plots the panel of a mat
 PanelPropMatrix plots the panel of a RVECTOR, CVECTOR, MATRIX or SMATRIX property with a table.
 It works for all categories.
 
+It can be personalized with the following props:
+ ROWNAME - Code to generate the row names as per uitable format.
+ COLUMNAME - Code to generate the column names as per uitable format.
+
 %%% ¡seealso!
 GUI, PanelElement, PanelProp, uitable
 
@@ -21,6 +25,16 @@ TAB_ENABLE (gui, option) switches table between on and off.
 TAB_H (gui, size) is the height of the table in font size units.
 %%%% ¡default!
 20
+
+%%% ¡prop!
+ROWNAME (gui, string) determines the table row names (to be evaluated).
+%%%% ¡default!
+'''numbered'''
+
+%%% ¡prop!
+COLUMNNAME (gui, string) determines the table column names (to be evaluated).
+%%%% ¡default!
+'''numbered'''
 
 %% ¡properties!
 p
@@ -76,6 +90,11 @@ function update(pr)
 
     update@PanelProp(pr)
     
+    set(pr.table, ...
+    'RowName', eval(pr.get('ROWNAME')), ...
+    'ColumnName', eval(pr.get('COLUMNNAME')) ...
+    );
+
     el = pr.get('EL');
     prop = pr.get('PROP');
     

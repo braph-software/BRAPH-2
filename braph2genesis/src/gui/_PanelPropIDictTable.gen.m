@@ -59,17 +59,31 @@ if iscell(value)
     value = sprintf('%s;', value{:});
 end
 
+%%% ¡prop!
+MENU_OPEN (gui, logical) determines whether to show the context menu to open the items.
+%%%% ¡default!
+false
+
 %% ¡properties!
 p
 table
 selected
 
 contextmenu
+%
 menu_select_all
 menu_clear_selection
 menu_invert_selection
+%
 menu_apply_to_selection
+%
+menu_open_selection
+menu_hide_selection
+menu_hide_all
+%
 menu_colorize_table
+
+f_its % figures for items
 
 %% ¡constants!
 SELECTOR = -1
@@ -92,6 +106,11 @@ function p_out = draw(pr, varargin)
     % See also update, redraw, uipanel.
     
     pr.p = draw@PanelProp(pr, varargin{:});
+    
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    dict = el.get(prop);
+    it_class = dict.get('IT_CLASS');
     
     if ~check_graphics(pr.contextmenu, 'uicontextmenu')
         pr.contextmenu = uicontextmenu( ...
@@ -124,14 +143,38 @@ function p_out = draw(pr, varargin)
             'Checked', false, ...
             'MenuSelectedFcn', {@cb_apply_to_selection} ...
             );
-        pr.menu_colorize_table = uimenu( ...
-            'Separator', 'on', ...
-            'Parent', pr.contextmenu, ...
-            'Tag', 'menu_colorize_table', ...
-            'Text', 'Colorize Table', ...
-            'Checked', false, ...
-            'MenuSelectedFcn', {@cb_colorize_table} ...
-            );
+        if pr.get('MENU_OPEN')
+            pr.menu_open_selection = uimenu( ...
+                'Separator', 'on', ...
+                'Parent', pr.contextmenu, ...
+                'Tag', 'menu_open_selection', ...
+                'Text', 'Open Selection', ...
+                'MenuSelectedFcn', {@cb_open_selection} ...
+                );
+            pr.menu_hide_selection = uimenu( ...
+                'Parent', pr.contextmenu, ...
+                'Tag', 'menu_hide_selection', ...
+                'Text', 'Hide Selection', ...
+                'MenuSelectedFcn', {@cb_hide_selection} ...
+                );
+            pr.menu_hide_all = uimenu( ...
+                'Parent', pr.contextmenu, ...
+                'Tag', 'menu_hide_all', ...
+                'Text', 'Hide all', ...
+                'MenuSelectedFcn', {@cb_hide_all} ...
+                );
+        end
+        if (isempty(pr.get('COLS')) && any(cellfun(@(prop) isequal(Element.getPropFormat(it_class, prop), Format.COLOR), num2cell(Element.getProps(it_class))))) ...
+                || any(cellfun(@(prop) prop > 0 && isequal(Element.getPropFormat(it_class, prop), Format.COLOR), num2cell(pr.get('COLS'))))
+            pr.menu_colorize_table = uimenu( ...
+                'Separator', 'on', ...
+                'Parent', pr.contextmenu, ...
+                'Tag', 'menu_colorize_table', ...
+                'Text', 'Colorize Table', ...
+                'Checked', false, ...
+                'MenuSelectedFcn', {@cb_colorize_table} ...
+                );
+        end
     end
     function cb_select_all(~, ~) 
         pr.cb_select_all()
@@ -148,6 +191,15 @@ function p_out = draw(pr, varargin)
         else
             pr.cb_apply_to_selection(true)
         end
+    end
+    function cb_open_selection(~, ~) 
+        pr.cb_open_selection()
+    end
+    function cb_hide_selection(~, ~) 
+        pr.cb_hide_selection()
+    end
+    function cb_hide_all(~, ~) 
+        pr.cb_hide_all()
     end
     function cb_colorize_table(~, ~) 
         if get(pr.menu_colorize_table, 'Checked')
@@ -166,7 +218,7 @@ function p_out = draw(pr, varargin)
             'CellEditCallback', {@cb_table_edit} ...
             );
     end
-    if ismember(pr.SELECTOR, pr.get('COLS'))
+    if isempty(pr.get('COLS')) || ismember(pr.SELECTOR, pr.get('COLS'))
         set(pr.table, 'ContextMenu', pr.contextmenu)
     end
     function cb_table_edit(~, event) % (src, event)
@@ -248,7 +300,8 @@ function update(pr)
 
                         % % % case Format.CLASSLIST
 
-                        % % % case Format.ITEM
+                        case Format.ITEM
+                            data{i, c} = dict.getItem(i).get(col).tostring();
 
                         % % % case Format.ITEMLIST
 
@@ -257,13 +310,9 @@ function update(pr)
                         case Format.SCALAR
                             data{i, c} = dict.getItem(i).get(col);
 
-                        % % % case Format.RVECTOR
-
-                        % % % case Format.CVECTOR
-
-                        % % % case Format.MATRIX
-
-                        % % % case Format.SMATRIX
+                        case {Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
+                            prop_value = dict.getItem(i).get(col);
+                            data{i, c} = [int2str(size(prop_value, 1)) ' x ' int2str(size(prop_value, 2))];
 
                         % % % case Format.CELL
 
@@ -319,6 +368,56 @@ function update(pr)
             columneditable = eval(pr.get('COLUMNEDITABLE'));
         else
             columneditable = true(1, length(cols));
+            for c = 1:1:length(cols)
+                switch Element.getPropFormat(it_class, col)
+                    % % % case Format.EMPTY
+                    
+                    case Format.STRING
+                        columneditable(c) = true;
+                        
+                    case Format.LOGICAL
+                        columneditable(c) = true;
+                        
+                    case Format.OPTION
+                        columneditable(c) = true;
+                        
+                        % % % case Format.CLASS
+                        
+                        % % % case Format.CLASSLIST
+                        
+                    case Format.ITEM
+                        columneditable(c) = false;
+                        
+                        % % % case Format.ITEMLIST
+                        
+                        % % % case Format.IDICT
+                        
+                    case Format.SCALAR
+                        columneditable(c) = true;
+                        
+                    case {Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
+                        columneditable(c) = false;
+                        
+                        % % % case Format.CELL
+                        
+                        % % % case Format.NET
+                        
+                    case Format.COLOR
+                        columneditable(c) = true;
+                        
+                    case Format.ALPHA
+                        columneditable(c) = true;
+                        
+                    case Format.SIZE
+                        columneditable(c) = true;
+                        
+                    case Format.MARKER
+                        columneditable(c) = true;
+                        
+                    case Format.LINE
+                        columneditable(c) = true;
+                end
+            end
         end
 
         if ~isempty(pr.get('COLUMNFORMAT'))
@@ -346,7 +445,8 @@ function update(pr)
 
                         % % % case Format.CLASSLIST
 
-                        % % % case Format.ITEM
+                        case Format.ITEM
+                            columnformat{c} = 'char';
 
                         % % % case Format.ITEMLIST
 
@@ -355,13 +455,8 @@ function update(pr)
                         case Format.SCALAR
                             columnformat{c} = 'numeric';
 
-                        % % % case Format.RVECTOR
-
-                        % % % case Format.CVECTOR
-
-                        % % % case Format.MATRIX
-
-                        % % % case Format.SMATRIX
+                        case {Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
+                            columnformat{c} = 'char';
 
                         % % % case Format.CELL
 
@@ -571,7 +666,8 @@ function cb_table_edit(pr, i, col, newdata)
 
                 % % % case Format.CLASSLIST
 
-                % % % case Format.ITEM
+                case Format.ITEM
+                    %
 
                 % % % case Format.ITEMLIST
 
@@ -580,13 +676,8 @@ function cb_table_edit(pr, i, col, newdata)
                 case Format.SCALAR
                     dict.getItem(i).set(col, newdata)
 
-                % % % case Format.RVECTOR
-
-                % % % case Format.CVECTOR
-
-                % % % case Format.MATRIX
-
-                % % % case Format.SMATRIX
+                case {Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
+                    %
 
                 % % % case Format.CELL
 
@@ -601,10 +692,10 @@ function cb_table_edit(pr, i, col, newdata)
                     end
 
                 case Format.ALPHA
-                    dict.getItem(i).set(col, newdata)
+                    dict.getItem(i).set(col, min(abs(newdata), 1))
 
                 case Format.SIZE
-                    dict.getItem(i).set(col, newdata)
+                    dict.getItem(i).set(col, abs(newdata))
 
                 case Format.MARKER
                     dict.getItem(i).set(col, newdata)
@@ -649,11 +740,121 @@ function cb_apply_to_selection(pr, checked)
 
     set(pr.menu_apply_to_selection, 'Checked', checked)
 end
+function cb_open_selection(pr)
+
+    gr = pr.get('EL');
+    prop = pr.get('PROP');
+    it_dict = gr.get(prop);
+
+    f = ancestor(pr.p, 'figure'); % parent GUI 
+    N = ceil(sqrt(it_dict.length())); % number of row and columns of figures
+    
+    for s = 1:1:length(pr.selected)
+        i = pr.selected(s);
+
+        it = it_dict.getItem(pr.selected(s));
+        if length(pr.f_its) < i || ~check_graphics(pr.f_its{i}, 'figure')
+            pr.f_its{i} = GUIElement( ...
+                'PE', it, ... 
+                'POSITION', [ ...
+                    x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ... % x = (f_gr_x + f_gr_w) / screen_w + mod(selected_it - 1, N) * (screen_w - f_gr_x - 2 * f_gr_w) / N / screen_w;
+                    y0(f, 'normalized') ... % y = f_gr_y / screen_h;
+                    w(f, 'normalized') ... % w = f_gr_w / screen_w;
+                    .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ... % h = .5 * f_gr_h / screen_h + .5 * f_gr_h * (N - floor((selected_it - .5) / N)) / N / screen_h;
+                    ], ...
+                'CLOSEREQ', false ...
+                ).draw();
+        else
+            figure(pr.f_its{i})
+        end
+    end
+end
+function cb_hide_selection(pr)
+
+    % hides selected subfigures
+    for s = 1:1:length(pr.selected)
+        i = pr.selected(s);
+        
+        f_it = pr.f_its{i};
+        if check_graphics(f_it, 'figure')
+            gui = get(f_it, 'UserData');
+            gui.cb_hide()
+        end
+    end
+end
+function cb_hide_all(pr)
+
+    % hides subfigures
+    for i = 1:1:length(pr.f_its)
+        f_it = pr.f_its{i};
+        if check_graphics(f_it, 'figure')
+            gui = get(f_it, 'UserData');
+            gui.cb_hide()
+        end
+    end
+end
 function cb_colorize_table(pr, checked)
 
     set(pr.menu_colorize_table, 'Checked', checked)
     
     pr.update()    
+end
+function cb_bring_to_front(pr)
+    %CB_BRING_TO_FRONT brings to front the table figure and its subfigures.
+    %
+    % CB_BRING_TO_FRONT(PR) brings to front the table figure and its subfigures.
+    %
+    % See also cb_hide, cb_close.
+
+    % brings to front settings panel
+    pr.cb_bring_to_front@PanelProp();
+
+    % brings to front subfigures
+    for i = 1:1:length(pr.f_subs)
+        f_sub = pr.f_subs{i};
+        if check_graphics(f_sub, 'figure')
+            gui = get(f_sub, 'UserData');
+            gui.cb_bring_to_front()
+        end
+    end
+end
+function cb_hide(pr)
+    %CB_HIDE hides the table figure and its subfigures.
+    %
+    % CB_HIDE(PR) hides the table figure and its subfigures.
+    %
+    % See also cb_bring_to_front, cb_close.
+
+    % hides settings panel
+    pr.cb_hide@PanelProp();
+
+    % hides subfigures
+    for i = 1:1:length(pr.f_its)
+        f_it = pr.f_its{i};
+        if check_graphics(f_it, 'figure')
+            gui = get(f_it, 'UserData');
+            gui.cb_hide()
+        end
+    end
+end
+function cb_close(pr)
+    %CB_CLOSE closes the table figure and its subfigures.
+    %
+    % CB_CLOSE(PR) closes the table figure and its subfigures.
+    %
+    % See also cb_bring_to_front, cb_hide.
+
+    % closes settings panel
+    pr.cb_close@PanelProp();
+
+    % closes subfigures
+    for i = 1:1:length(pr.f_its)
+        f_it = pr.f_its{i};
+        if check_graphics(f_it, 'figure')
+            gui = get(f_it, 'UserData');
+            gui.cb_close()
+        end
+    end
 end
 
 %% ¡tests!
