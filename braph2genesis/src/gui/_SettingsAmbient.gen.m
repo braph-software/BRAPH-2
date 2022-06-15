@@ -91,7 +91,8 @@ SHADING (figure, option) is the shading value.
 %%%% ¡postprocessing!
 a = st.h(); % axes
 if check_graphics(a, 'axes')
-    if ~strcmpi(st.get('SHADING'), 'none')
+    if ~strcmpi(st.get('SHADING'), 'none') && ~strcmpi(st.get('COLORMAP'), 'none')
+        colormap(a, st.get('COLORMAP'))
         shading(a, st.get('SHADING'))
     end
 end
@@ -105,7 +106,8 @@ COLORMAP (figure, option) is the colormap.
 %%%% ¡postprocessing!
 a = st.h(); % axes
 if check_graphics(a, 'axes')
-    if ~strcmpi(st.get('COLORMAP'), 'none')
+    if ~strcmpi(st.get('SHADING'), 'none') && ~strcmpi(st.get('COLORMAP'), 'none')
         colormap(a, st.get('COLORMAP'))
+        shading(a, st.get('SHADING'))
     end
 end
