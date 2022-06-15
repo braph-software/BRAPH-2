@@ -44,7 +44,7 @@ table
 function p_out = draw(pr, varargin)
     %DRAW draws the panel of the matrix-like property.
     %
-    % DRAW(PR) draws the panel of rthe matrix-like (rvector, cvector, matrix, smatrix) property.
+    % DRAW(PR) draws the panel of the matrix-like (rvector, cvector, matrix, smatrix) property.
     %
     % P = DRAW(PR) returns a handle to the property panel.
     %
@@ -91,9 +91,9 @@ function update(pr)
     update@PanelProp(pr)
     
     set(pr.table, ...
-    'RowName', eval(pr.get('ROWNAME')), ...
-    'ColumnName', eval(pr.get('COLUMNNAME')) ...
-    );
+        'RowName', eval(pr.get('ROWNAME')), ...
+        'ColumnName', eval(pr.get('COLUMNNAME')) ...
+        );
 
     el = pr.get('EL');
     prop = pr.get('PROP');
