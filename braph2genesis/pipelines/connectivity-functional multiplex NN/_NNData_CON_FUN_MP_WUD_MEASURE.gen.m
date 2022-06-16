@@ -1,5 +1,5 @@
 %% ¡header!
-NNData_CON_FUN_MP_WUD < NNData (nnd, data for neural network) produces a dataset to train or test a neural netowrk model for connectivity data and functional data. 
+NNData_CON_FUN_MP_WUD_MEASURE < NNData (nnd, data for neural network) produces a dataset to train or test a neural netowrk model for connectivity data and functional data. 
 
 %% ¡description!
 This NN data generates a group of NN subjects, each of which contains the 
@@ -126,8 +126,14 @@ for i = 1:1:gr.get('SUB_DICT').length()
     
     if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
         adj = g.get('A'); 
-        input = {adj{1} adj{4}};
         input_label = {'MultiplexWUD'};
+        input_nodal = [];
+        mlist = {'MultiplexCorePeriphery' 'MultiplexInParticipation' 'DegreeOverlap' 'MultiplexClustering' 'MultiplexKCorenessCentrality'};
+        input_label = mlist;
+        for j = 1:length(mlist)
+            input_nodal = [input_nodal cell2mat(g.getMeasure(mlist{j}).get('M'))];
+        end
+        input = {adj{1} adj{4} input_nodal};
 
     elseif string(nnd.get('INPUT_TYPE')) == "graph_measures"
         input_nodal = [];

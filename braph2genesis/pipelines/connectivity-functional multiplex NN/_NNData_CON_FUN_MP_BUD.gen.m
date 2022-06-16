@@ -1,5 +1,5 @@
 %% ¡header!
-NNData_CON_FUN_MP_WUD < NNData (nnd, data for neural network) produces a dataset to train or test a neural netowrk model for connectivity data and functional data. 
+NNData_CON_FUN_MP_BUD < NNData (nnd, data for neural network) produces a dataset to train or test a neural netowrk model for connectivity data and functional data. 
 
 %% ¡description!
 This NN data generates a group of NN subjects, each of which contains the 
@@ -55,7 +55,7 @@ INPUT_TYPE (data, option) is the input type for training or testing the NN.
 %%% ¡prop!
 G (data, item) is the graph for calculating the graph measures.
 %%%% ¡default!
-MultiplexWUD()
+MultiplexBUD()
 
 %%% ¡prop!
 GR (data, item) is a group of subjects defined as SubjectFUN class.
@@ -118,7 +118,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
     
     A(2) = {Correlation.getAdjacencyMatrix(data, nnd.get('CORRELATION_RULE'), nnd.get('NEGATIVE_WEIGHT_RULE'))};
     
-    g = MultiplexWUD( ...
+    g = MultiplexBUD( ...
         'ID', ['g ' sub.get('ID')], ...
         'B', A, ...
         'DENSITIES', densities ...
@@ -127,7 +127,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
     if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
         adj = g.get('A'); 
         input = {adj{1} adj{4}};
-        input_label = {'MultiplexWUD'};
+        input_label = {'MultiplexBUD'};
 
     elseif string(nnd.get('INPUT_TYPE')) == "graph_measures"
         input_nodal = [];

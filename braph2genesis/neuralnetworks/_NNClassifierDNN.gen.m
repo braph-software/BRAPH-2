@@ -30,7 +30,7 @@ BATCH (data, scalar) is the size of the mini-batch to use for each training iter
 %%% ¡prop!
 EPOCHS (data, scalar) is a maximum number of epochs.
 %%%% ¡default!
-20
+150
 
 %%% ¡prop!
 SHUFFLE (data, option) is an option for data shuffling.
@@ -85,6 +85,7 @@ if BRAPH2.installed('NN', 'warning')
             layers = [layers
                 fullyConnectedLayer(numLayer(i), 'Name', ['fc' num2str(i)])
                 batchNormalizationLayer('Name', ['batchNormalization' num2str(i)])
+                dropoutLayer('Name', ['dropout' num2str(i)])
                 ];
         end
         layers = [layers
