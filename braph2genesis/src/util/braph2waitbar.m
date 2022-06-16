@@ -18,7 +18,6 @@ if islogical(wb) && wb
     wb = waitbar(x, msg, ...
         'Name', BRAPH2.NAME, ...
         'Color', BRAPH2.COL_FIG);
-% % %     set_braph2icon(wb)
 elseif check_graphics(wb, 'figure')
     waitbar(x, wb, msg)
 end
