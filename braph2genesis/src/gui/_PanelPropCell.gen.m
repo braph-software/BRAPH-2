@@ -255,7 +255,7 @@ function redraw(pr, varargin)
             'Units', 'pixels', ...
             'Position', [s(3.3) s(.3) w(pr.p, 'pixels')-s(3.6) Dh-s(3.6)] ...
             )
-        set(pr.xslider, 'Position', [s(3.3) Dh w(pr.p, 'pixels')-s(3.6) 3])
+        set(pr.xslider, 'Position', [s(3.3) Dh-s(.3) w(pr.p, 'pixels')-s(3.6) 3])
         set(pr.yslider, 'Position', [s(.3) s(.3) 3 Dh-s(3.6)])
     end  
 end
