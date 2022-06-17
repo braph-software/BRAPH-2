@@ -28,6 +28,11 @@ BATCH (data, scalar) is the size of the mini-batch to use for each training iter
 8
 
 %%% ¡prop!
+FEATURE_SELECTION_RATIO (data, scalar) is the ratio of selected features.
+%%%% ¡default!
+1
+
+%%% ¡prop!
 EPOCHS (data, scalar) is a maximum number of epochs.
 %%%% ¡default!
 150
@@ -139,12 +144,22 @@ function [inputs, num_features] = reconstruct_inputs(nn, gr)
         inputs = [];
         num_features = 0;
     else
-        mask = gr.get('SUB_DICT').getItem(1).get('FEATURE_MASK');
+        mask_tmp = gr.get('SUB_DICT').getItem(1).get('FEATURE_MASK');
+        masks = {};
+        for i = 1:1:length(mask_tmp)
+            mask = mask_tmp{i};
+            [~, idx_all] = sort(mask(:), 'descend');
+            percentile = nn.get('FEATURE_SELECTION_RATIO');
+            num_top_idx = ceil(percentile * numel(mask));
+            mask(idx_all(1:num_top_idx)) = 1;
+            mask(idx_all(end - (length(idx_all) - num_top_idx - 1):end)) = 0;
+            masks{i} = mask;
+        end
         inputs = [];
         inputs_tmp = gr.get('INPUTS');
         for i = 1:1:length(inputs_tmp)
             input = inputs_tmp{i};
-            input_per_sub = cellfun(@(x, y) x(y == 1), input, mask, 'UniformOutput', false);
+            input_per_sub = cellfun(@(x, y) x(y == 1), input, masks, 'UniformOutput', false);
             input_per_sub = cell2mat(input_per_sub');
             inputs = [inputs input_per_sub];
         end
