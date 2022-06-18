@@ -20,7 +20,7 @@ LABEL (metadata, string) is an extended label of the graph measure.
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the graph measure.
 %%%% ¡gui!
-pr = PlotPropString('EL', m, 'PROP', Measure.NOTES, 'LINES', 'multi', 'EDITHEIGHT', 4.5, varargin{:});
+pr = PanelPropStringTextArea('EL', m, 'PROP', Measure.NOTES, varargin{:});
 
 %%% ¡prop!
 G (data, item) is the measure graph.

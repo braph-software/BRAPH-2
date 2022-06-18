@@ -3,13 +3,13 @@ delete(findall(0, 'type', 'figure'))
 clear all
 clc
 
-el_class = 'PanelPropIDictTable';
-delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
-create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
-create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
-% create_test_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
-% test_code = ['test_' el_class]
-% eval(test_code)
+% el_class = 'PanelPropIDictTable';
+% delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+% create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+% % create_test_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+% % test_code = ['test_' el_class]
+% % eval(test_code)
 
 % el_class = 'PPPipeline_PSDict';
 % delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
@@ -19,7 +19,7 @@ create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'
 % % test_code = ['test_' el_class]
 % % eval(test_code)
 
-pip = Pipeline();
+pip = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_ST_WU.b2']);
 gui = GUIElement('PE', pip);
 f = gui.draw();
 

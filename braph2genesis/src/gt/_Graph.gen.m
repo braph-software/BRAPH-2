@@ -19,6 +19,8 @@ LABEL (metadata, string) is an extended label of the graph.
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the graph.
+%%%% ¡gui!
+pr = PanelPropStringTextArea('EL', g, 'PROP', Graph.NOTES, varargin{:});
 
 %%% ¡prop!
 BRAINATLAS (data, item) is a atlas associated with the graph.

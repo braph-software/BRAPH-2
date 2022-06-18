@@ -19,7 +19,7 @@ TAB_ENABLE (gui, option) switches table between on and off.
 %%%% ¡settings!
 {'on', 'off'}
 %%%% ¡default!
-'off'
+'on'
 
 %%% ¡prop!
 TAB_H (gui, size) is the height of the table in font size units.
