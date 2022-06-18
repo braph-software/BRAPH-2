@@ -24,6 +24,8 @@ pr = PanelPropStringTextArea('EL', a, 'PROP', AnalyzeGroup.NOTES, varargin{:});
 
 %%% ¡prop!
 WAITBAR (gui, logical) detemines whether to show the waitbar.
+%%%% ¡default!
+true
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class.
