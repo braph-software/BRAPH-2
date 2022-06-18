@@ -438,9 +438,52 @@ function cb_measure_calculate(pr)
 end
 function cb_measure_open_plots(pr) 
 
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    g = el.memorize(prop);
+    
+    mlist = Graph.getCompatibleMeasureList(g);
+    
+    f = ancestor(pr.p, 'figure'); % parent GUI 
+    N = ceil(sqrt(length(mlist))); % number of row and columns of figures
+    
+    for s = 1:1:length(pr.selected)
+        i = pr.selected(s);
+        
+        measure = mlist{i};
+
+        m = g.getMeasure(measure);
+        if length(pr.f_measure_plots) < i || ~check_graphics(pr.f_measure_plots{i}, 'figure')
+            pr.f_measure_plots{i} = GUIFig( ...
+                'PF', m.memorize('PFM'), ... % ensure that the property is stored
+                'WAITBAR', Callback('EL', pr, 'TAG', 'WAITBAR'), ...
+                'POSITION', [ ...
+                    x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ...
+                    y0(f, 'normalized') ...
+                    w(f, 'normalized') * 3 ...
+                    .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ...
+                    ], ...
+                'CLOSEREQ', false ...
+                ).draw();
+        else
+            figure(pr.f_measure_plots{i})
+        end
+    end
 end
 function cb_measure_hide_plots(pr) 
 
+    % hides selected subfigures
+    for s = 1:1:length(pr.selected)
+        i = pr.selected(s);
+        
+        if length(pr.f_measure_elements) >= i
+            f_measure_plot = pr.f_measure_plots{i};
+            if check_graphics(f_measure_plot, 'figure')
+                gui = get(f_measure_plot, 'UserData');
+                gui.cb_hide()
+            end
+        end
+    end
 end
 function cb_measure_open_elements(pr) 
 
@@ -512,11 +555,20 @@ function cb_bring_to_front(pr)
             )        
     end
     
+    % brings to front measure plot subfigures
+    for i = 1:1:length(pr.f_measure_plots)
+        f_measure_plot = pr.f_measure_plots{i};
+        if check_graphics(f_measure_plot, 'figure')
+            gui = get(f_measure_plot, 'UserData');
+            gui.cb_bring_to_front()
+        end
+    end
+    
     % brings to front measure element subfigures
     for i = 1:1:length(pr.f_measure_elements)
-        f_measure_element = pr.f_measure_elements{i};
-        if check_graphics(f_measure_element, 'figure')
-            gui = get(f_measure_element, 'UserData');
+        f_measure_plot = pr.f_measure_elements{i};
+        if check_graphics(f_measure_plot, 'figure')
+            gui = get(f_measure_plot, 'UserData');
             gui.cb_bring_to_front()
         end
     end    
@@ -535,11 +587,20 @@ function cb_hide(pr)
         set(pr.f_graph_element, 'Visible', 'off')
     end
     
+    % hides measure plot subfigures
+    for i = 1:1:length(pr.f_measure_plots)
+        f_measure_plot = pr.f_measure_plots{i};
+        if check_graphics(f_measure_plot, 'figure')
+            gui = get(f_measure_plot, 'UserData');
+            gui.cb_hide()
+        end
+    end
+    
     % hides measure element subfigures
     for i = 1:1:length(pr.f_measure_elements)
-        f_measure_element = pr.f_measure_elements{i};
-        if check_graphics(f_measure_element, 'figure')
-            gui = get(f_measure_element, 'UserData');
+        f_measure_plot = pr.f_measure_elements{i};
+        if check_graphics(f_measure_plot, 'figure')
+            gui = get(f_measure_plot, 'UserData');
             gui.cb_hide()
         end
     end    
@@ -556,6 +617,15 @@ function cb_close(pr)
     % close callback graph element figure
     if check_graphics(pr.f_graph_element, 'figure')
         close(pr.f_graph_element)
+    end
+    
+    % closes measure plot subfigures
+    for i = 1:1:length(pr.f_measure_plots)
+        f_measure_plot = pr.f_measure_plots{i};
+        if check_graphics(f_measure_plot, 'figure')
+            gui = get(f_measure_plot, 'UserData');
+            gui.cb_close()
+        end
     end
     
     % closes measure element subfigures

@@ -23,9 +23,13 @@ NOTES (metadata, string) are some specific notes about the graph.
 pr = PanelPropStringTextArea('EL', g, 'PROP', Graph.NOTES, varargin{:});
 
 %%% ¡prop!
-BRAINATLAS (data, item) is a atlas associated with the graph.
+BAS (data, itemlist) is a list of brain atlases associated with the graph.
 %%%% ¡settings!
 'BrainAtlas'
+%%%% ¡conditioning!
+if isa(value, 'BrainAtlas')
+    value = {value};
+end
 
 %%% ¡prop!
 A (result, cell) is the graph adjacency matrix. 
