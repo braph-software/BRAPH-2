@@ -3,6 +3,22 @@ delete(findall(0, 'type', 'figure'))
 clear all
 clc
 
+% el_class = 'AnalyzeGroup';
+% delete([fileparts(which('braph2')) '/src/analysis/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
+% create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
+% % create_test_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
+% % test_code = ['test_' el_class]
+% % eval(test_code)
+
+el_class = 'PPAnalyzeGroup_G';
+delete([fileparts(which('braph2')) '/src/analysis/' el_class '.m'])
+create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
+create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
+% create_test_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
+% test_code = ['test_' el_class]
+% eval(test_code)
+
 % el_class = 'PanelPropIDictTable';
 % delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
 % create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
@@ -20,6 +36,9 @@ clc
 % % eval(test_code)
 
 pip = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_ST_WU.b2']);
+pip.get('PS_DICT').getItem(3).get('PC_DICT').getItem(1).get('EL').get('G').getMeasure('Degree');
+pip.get('PS_DICT').getItem(3).get('PC_DICT').getItem(1).get('EL').get('G').getMeasure('DegreeAv');
+pip.get('PS_DICT').getItem(3).get('PC_DICT').getItem(1).get('EL').get('G').getMeasure('Distance');
 gui = GUIElement('PE', pip);
 f = gui.draw();
 

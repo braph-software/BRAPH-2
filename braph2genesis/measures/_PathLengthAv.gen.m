@@ -1,8 +1,9 @@
 %% ¡header!
 PathLengthAv < PathLength (m, average path length) is the graph average path length.
 
- The average path length of a graph is the average of the sum of
- the path lengths within each layer.
+%%% ¡description!
+The average path length of a graph is the average of the sum of
+the path lengths within each layer.
 
 %%% ¡shape!
 shape = Measure.GLOBAL;

@@ -23,6 +23,9 @@ NOTES (metadata, string) are some specific notes about the graph analysis.
 pr = PanelPropStringTextArea('EL', a, 'PROP', AnalyzeGroup.NOTES, varargin{:});
 
 %%% ¡prop!
+WAITBAR (gui, logical) detemines whether to show the waitbar.
+
+%%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class.
 %%%% ¡settings!
 'Group'
@@ -33,8 +36,8 @@ G (result, item) is the graph obtained from this analysis.
 'Graph'
 %%%% ¡calculate!
 value = Graph();
-%%%% ¡gui_!
-% % % pr = PPAnalyzeGroup_G('EL', a, 'PROP', AnalyzeGroup.G, 'WAITBAR', true, varargin{:});
+%%%% ¡gui!
+pr = PPAnalyzeGroup_G('EL', a, 'PROP', AnalyzeGroup.G, 'WAITBAR', Callback('EL', a, 'TAG', 'WAITBAR'), varargin{:});
 
 %% ¡methods!
 function pr = getPPCompareGroup_CPDict(a, varargin) 
