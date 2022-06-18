@@ -752,9 +752,9 @@ function cb_apply_to_selection(pr, checked)
 end
 function cb_open_selection(pr)
 
-    gr = pr.get('EL');
+    el = pr.get('EL');
     prop = pr.get('PROP');
-    it_dict = gr.get(prop);
+    it_dict = el.get(prop);
 
     f = ancestor(pr.p, 'figure'); % parent GUI 
     N = ceil(sqrt(it_dict.length())); % number of row and columns of figures
