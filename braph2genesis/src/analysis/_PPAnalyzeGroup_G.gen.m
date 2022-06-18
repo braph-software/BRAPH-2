@@ -35,8 +35,10 @@ menu_clear_selection
 menu_invert_selection
 %
 menu_measure_calculate
-menu_measure_plots
-menu_measure_elements
+menu_measure_open_plots
+menu_measure_hide_plots
+menu_measure_open_elements
+menu_measure_hide_elements
 
 f_graph_plot
 f_graph_element
@@ -398,13 +400,17 @@ function cb_measure_calculate(pr)
     g = el.memorize(prop);
     mlist = Graph.getCompatibleMeasureList(g);
     
-    wb = braph2waitbar(pr.get('WAITBAR'), 0, ['Calculating ' num2str(length(pr.selected))  ' measures ...']);
+    wb = braph2waitbar(el.get('WAITBAR'), 0, ['Calculating ' num2str(length(pr.selected))  ' measures ...']);
 
     for i = 1:1:length(mlist)
         if ismember(i, pr.selected)
-            braph2waitbar(wb, .1 + .20 * i / length(pr.selected), ['Calculating measure ' int2str(i) ' (' mlist{i} ') of ' int2str(length(pr.selected)) ' ...'])
+            measure = mlist{i};
+            
+            braph2waitbar(wb, .1 + .9 * i / length(pr.selected), ['Calculating measure ' int2str(i) ' (' measure ') of ' int2str(length(pr.selected)) ' ...'])
 
-            graph.getMeasure(measure).memorize('M');
+            if isa(g.getMeasure(measure).getr('M'), 'NoValue')
+                g.getMeasure(measure).memorize('M');
+            end
         end
     end
     
