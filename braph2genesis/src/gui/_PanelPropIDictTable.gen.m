@@ -810,10 +810,10 @@ function cb_bring_to_front(pr)
     pr.cb_bring_to_front@PanelProp();
 
     % brings to front subfigures
-    for i = 1:1:length(pr.f_subs)
-        f_sub = pr.f_subs{i};
-        if check_graphics(f_sub, 'figure')
-            gui = get(f_sub, 'UserData');
+    for i = 1:1:length(pr.f_its)
+        f_it = pr.f_its{i};
+        if check_graphics(f_it, 'figure')
+            gui = get(f_it, 'UserData');
             gui.cb_bring_to_front()
         end
     end
