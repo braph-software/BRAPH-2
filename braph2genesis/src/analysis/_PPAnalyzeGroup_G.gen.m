@@ -511,6 +511,15 @@ function cb_bring_to_front(pr)
             'WindowState', 'normal' ...
             )        
     end
+    
+    % brings to front measure element subfigures
+    for i = 1:1:length(pr.f_measure_elements)
+        f_measure_element = pr.f_measure_elements{i};
+        if check_graphics(f_measure_element, 'figure')
+            gui = get(f_measure_element, 'UserData');
+            gui.cb_bring_to_front()
+        end
+    end    
 end
 function cb_hide(pr)
     
@@ -525,6 +534,15 @@ function cb_hide(pr)
     if check_graphics(pr.f_graph_element, 'figure')
         set(pr.f_graph_element, 'Visible', 'off')
     end
+    
+    % hides measure element subfigures
+    for i = 1:1:length(pr.f_measure_elements)
+        f_measure_element = pr.f_measure_elements{i};
+        if check_graphics(f_measure_element, 'figure')
+            gui = get(f_measure_element, 'UserData');
+            gui.cb_hide()
+        end
+    end    
 end
 function cb_close(pr)
     
@@ -538,5 +556,14 @@ function cb_close(pr)
     % close callback graph element figure
     if check_graphics(pr.f_graph_element, 'figure')
         close(pr.f_graph_element)
+    end
+    
+    % closes measure element subfigures
+    for i = 1:1:length(pr.f_measure_elements)
+        f_measure_element = pr.f_measure_elements{i};
+        if check_graphics(f_measure_element, 'figure')
+            gui = get(f_measure_element, 'UserData');
+            gui.cb_close()
+        end
     end
 end
