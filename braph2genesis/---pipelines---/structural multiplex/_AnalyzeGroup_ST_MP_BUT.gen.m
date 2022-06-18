@@ -62,9 +62,9 @@ if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SP
             case 'female'
                 sex(i) = 1;
             case 'male'
-                sex(i) = 0;
-            otherwise
                 sex(i) = -1;
+            otherwise
+                sex(i) = 0;
         end
     end
     covariates = [age, sex];

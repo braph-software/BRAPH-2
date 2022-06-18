@@ -29,6 +29,7 @@ if ~isempty(density)
         sorted_vector = sort(A(:));
     else
         sorted_vector = sort(A(~eye(size(A))));
+        A(1:length(A) + 1:end) = -Inf; % to ensure that the diagonal is removed
     end
     index = round(length(sorted_vector) * (100 - density) / 100);
     if index == 0

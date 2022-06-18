@@ -63,9 +63,9 @@ if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SP
             case 'female'
                 sex(i) = 1;
             case 'male'
-                sex(i) = 0;
-            otherwise
                 sex(i) = -1;
+            otherwise
+                sex(i) = 0;
         end
     end
     A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'), [age, sex]);
@@ -79,7 +79,7 @@ g = MultigraphBUD( ...
     'ID', ['g ' gr.get('ID')], ...
     'B', A, ...
     'DENSITIES', densities, ...
-    'BA', atlas ...
+    'BAS', atlas ...
     );
 
 value = g;
