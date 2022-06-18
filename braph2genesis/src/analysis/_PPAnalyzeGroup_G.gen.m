@@ -26,23 +26,23 @@ table
 selected
 
 contextmenu
+%
+menu_graph_plot
+menu_graph_element
+%
+menu_select_all
+menu_clear_selection
+menu_invert_selection
+%
+menu_measure_calculate
+menu_measure_plots
+menu_measure_elements
 
-% % % p
-% % % measure_tbl
-% % % measure_btn
-% % % graph_btn
-% % % plot_graph_btn
-% % % plot_type_adj
-% % % line_plot_tglbtn % line plot toggle button
-% % % measure_plot_btn
-% % % mlist
-% % % selected
-% % % already_calculated
-% % % graph % internal graph type
-% % % f_m % array of measure class figures
-% % % f_pg % figure for plot graph
-% % % f_adj % figure for plot adj
-% % % f_g % figure for class graph
+f_graph_plot
+f_graph_element
+
+f_measure_plots
+f_measure_elements
 
 %% ¡methods!
 function p_out = draw(pr, varargin)
@@ -71,6 +71,80 @@ function p_out = draw(pr, varargin)
             'Parent', ancestor(pr.p, 'figure'), ...
             'Tag', 'contextmenu' ...
             );
+        pr.menu_graph_plot = uimenu( ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_graph_plot', ...
+            'Text', 'Plot Graph', ...
+            'MenuSelectedFcn', {@cb_graph_plot} ...
+            );
+        pr.menu_graph_element = uimenu( ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_graph_element', ...
+            'Text', 'Extract Data Graph', ...
+            'MenuSelectedFcn', {@cb_graph_element} ...
+            );
+        pr.menu_select_all = uimenu( ...
+            'Separator', 'on', ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_select_all', ...
+            'Text', 'Select All', ...
+            'MenuSelectedFcn', {@cb_select_all} ...
+            );
+        pr.menu_clear_selection = uimenu( ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_clear_selection', ...
+            'Text', 'Clear Selection', ...
+            'MenuSelectedFcn', {@cb_clear_selection} ...
+            );
+        pr.menu_invert_selection = uimenu( ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_invert_selection', ...
+            'Text', 'Invert Selection', ...
+            'MenuSelectedFcn', {@cb_invert_selection} ...
+            );
+        pr.menu_measure_calculate = uimenu( ...
+            'Separator', 'on', ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_measure_calculate', ...
+            'Text', 'Calculate Selected Measures', ...
+            'MenuSelectedFcn', {@cb_measure_calculate} ...
+            );
+        pr.menu_measure_plots = uimenu( ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_graph_plots', ...
+            'Text', 'Plot Selected Measures', ...
+            'MenuSelectedFcn', {@cb_measure_plots} ...
+            );
+        pr.menu_measure_elements = uimenu( ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_measure_elements', ...
+            'Text', 'Extract Data Selected Measures', ...
+            'MenuSelectedFcn', {@cb_measure_elements} ...
+            );
+    end
+    function cb_graph_plot(~, ~) 
+        pr.cb_graph_plot()
+    end
+    function cb_graph_element(~, ~) 
+        pr.cb_graph_element()
+    end
+    function cb_select_all(~, ~) 
+        pr.cb_select_all()
+    end
+    function cb_clear_selection(~, ~) 
+        pr.cb_clear_selection()
+    end
+    function cb_invert_selection(~, ~) 
+        pr.cb_invert_selection()
+    end
+    function cb_measure_calculate(~, ~) 
+        pr.cb_measure_calculate()
+    end
+    function cb_menu_measure_plots(~, ~) 
+        pr.cb_menu_measure_plots()
+    end
+    function cb_menu_measure_elements(~, ~) 
+        pr.cb_menu_measure_elements()
     end
     
     if ~check_graphics(pr.table, 'uitable')
@@ -99,115 +173,7 @@ function p_out = draw(pr, varargin)
         end
         
         pr.update()
-    end        
-    
-% % %     if ~check_graphics(pr.graph_btn, 'pushbutton') &&  ...
-% % %             (isempty(pr.measure_tbl) || ~isgraphics(pr.measure_tbl, 'uitable'))
-% % %         % graph button
-% % %         pr.graph_btn = uicontrol( ...
-% % %             'Style', 'pushbutton', ...
-% % %             'Tag', 'pushbutton_value', ...
-% % %             'Parent', pr.p, ...
-% % %             'Units', 'normalized', ...
-% % %             'String', 'Graph Data', ...
-% % %             'TooltipString', 'Open a GUI for the graph data.', ...
-% % %             'Position', [.79 .76 .2 .15], ...
-% % %             'Visible', 'off', ...
-% % %             'Callback', {@cb_graph_btn} ...
-% % %             );
-% % % 
-% % %         pr.plot_type_adj = uicontrol(...
-% % %             'Style', 'pushbutton', ...
-% % %             'Parent', pr.p, ...
-% % %             'Units', 'normalized', ...
-% % %             'CData', imresize(imread('icon_plot_adj.png'), [40 40]), ...
-% % %             'TooltipString', 'Open a plot for the adjacency matrix.', ...
-% % %             'Position', [.01 .76 .2 .15], ...
-% % %             'Visible', 'off', ...
-% % %             'Callback', {@cb_plot_type_adj} ...
-% % %             );
-% % % 
-% % %         pr.line_plot_tglbtn = uicontrol(...
-% % %             'Style', 'pushbutton', ...
-% % %             'Parent', pr.p, ...
-% % %             'Units', 'normalized', ...
-% % %             'CData', imresize(imread('icon_plot_lines.png'), [40 40]), ...
-% % %             'TooltipString', 'Open a line plot for the measure.', ...
-% % %             'Position', [.23 .76 .2 .15], ...
-% % %             'Visible', 'off', ...
-% % %             'Callback', {@cb_plot_type_line} ...
-% % %             );
-% % % 
-% % %         pr.mlist = [];
-% % % 
-% % %         pr.measure_tbl = uitable( ...
-% % %             'Parent', pr.p, ...
-% % %             'ColumnName', {'SEL', 'Measure', 'Shape', 'Scope', 'Notes'}, ...
-% % %             'ColumnFormat', {'logical',  'char', 'char', 'char', 'char'}, ...
-% % %             'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-% % %             'ColumnEditable', [true false false false false], ...
-% % %             'Visible', 'off', ...
-% % %             'CellEditCallback', {@cb_measure_edit} ...
-% % %             );
-% % % 
-% % %         % measure button
-% % %         pr.measure_btn = uicontrol( ...
-% % %             'Parent', pr.p, ...
-% % %             'Style', 'pushbutton', ...
-% % %             'Tag', 'measure_button', ...
-% % %             'Units', 'normalized', ...
-% % %             'String', 'Calculate Measures', ...
-% % %             'TooltipString', 'Calculate Selected Measures', ...
-% % %             'Position', [.01 .02 .48 .09], ...
-% % %             'Visible', 'off', ...
-% % %             'Callback', {@cb_measure_btn} ...
-% % %             );
-% % % 
-% % %         pr.measure_plot_btn = uicontrol(...
-% % %             'Parent', pr.p, ...
-% % %             'Style', 'pushbutton', ...
-% % %             'Tag', 'measure_plot_button', ...
-% % %             'Units', 'normalized', ...
-% % %             'String', 'Show Measures', ...
-% % %             'TooltipString', 'Show Selected Measures', ...
-% % %             'Position', [.51 .02 .48 .09], ...
-% % %             'Visible', 'off', ...
-% % %             'Callback', {@cb_measure_plot_btn} ...
-% % %             );
-% % %     end
-% % % 
-% % %         function cb_graph_btn(~, ~) % (src, event)
-% % %             pr.cb_graph_value()
-% % %         end
-% % %         function cb_plot_type_adj(~, ~)
-% % %             pr.cb_graph_adj_figure();
-% % %         end
-% % %         function cb_plot_type_line(~, ~)
-% % %             pr.cb_graph_ui_figure();
-% % %         end
-% % %         function cb_measure_edit(~, event)
-% % %             i = event.Indices(1);
-% % %             col = event.Indices(2);
-% % %             newdata = event.NewData;
-% % %             switch col
-% % %                 case 1
-% % %                     if newdata == 1
-% % %                         pr.selected = sort(unique([pr.selected(:); i]));
-% % %                     else
-% % %                         pr.selected = pr.selected(pr.selected ~= i);
-% % %                     end
-% % % 
-% % %                 otherwise
-% % %                     % dont do anything
-% % %             end
-% % %             pr.update()
-% % %         end
-% % %         function cb_measure_btn(~, ~)
-% % %             pr.cb_measure_calc()
-% % %         end
-% % %         function cb_measure_plot_btn(~, ~)
-% % %             pr.cb_measure_gui();
-% % %         end
+    end
 
     % output
     if nargout > 0
@@ -229,9 +195,17 @@ function update(pr)
     function set_table()
         g = el.get(prop);
         mlist = Graph.getCompatibleMeasureList(g);
+        mlist_already_calculated = cellfun(@(x) x.get('ID'), g.get('M_DICT').getItems(), 'UniformOutput', false);
         
+        rowname = cell(length(mlist), 1);
         data = cell(length(mlist), 5);
         for mi = 1:1:length(mlist)
+            if any(cellfun(@(y) isequal(mlist{mi}, y), mlist_already_calculated))
+                rowname{mi} = 'C';
+            else
+                rowname{mi} = '';
+            end                
+            
             if any(pr.selected == mi)
                 data{mi, 1} = true;
             else
@@ -258,7 +232,19 @@ function update(pr)
 
             data{mi, 5} = eval([mlist{mi} '.getDescription()']);
         end
-        set(pr.table, 'Data', data)
+        set(pr.table, ...
+            'RowName', rowname, ...
+            'Data', data ...
+            )
+
+        % style SELECTED
+        styles_row = find(pr.table.StyleConfigurations.Target == 'row');
+        if ~isempty(styles_row)
+            removeStyle(pr.table, styles_row)
+        end
+        if ~isempty(pr.selected)
+            addStyle(pr.table, uistyle('FontWeight', 'bold'), 'row', pr.selected)
+        end        
     end
 
     value = el.getr(prop);
@@ -269,96 +255,6 @@ function update(pr)
         set_table()
         set(pr.table, 'Visible', 'on')
     end
-    
-% % %     update@PlotProp(pr)
-% % % 
-% % %     el = pr.get('EL');
-% % %     prop = pr.get('PROP');
-% % %     button_state = pr.get_button_condition();
-% % % 
-% % %     if ~button_state
-% % %         % visible gui
-% % %         set(pr.line_plot_tglbtn, 'Visible', 'off')
-% % %         set(pr.graph_btn, 'Visible', 'off')
-% % %         set(pr.plot_type_adj, 'Visible', 'off')
-% % %         set(pr.measure_tbl, 'Visible', 'off')
-% % %         set(pr.measure_btn, 'Visible', 'off')
-% % %         set(pr.measure_plot_btn, 'Visible', 'off')
-% % %         pr.graph = [];
-% % %         pr.already_calculated = [];
-% % %     else
-% % %         graph = el.get(prop);
-% % %         pr.graph = graph;
-% % % 
-% % %         % visible gui
-% % %         set(pr.graph_btn, 'Visible', 'on')
-% % %         set(pr.plot_type_adj, 'Visible', 'on')
-% % %         set(pr.measure_tbl, 'Visible', 'on')
-% % %         set(pr.measure_btn, 'Visible', 'on')
-% % %         set(pr.measure_plot_btn, 'Visible', 'on')
-% % % 
-% % %         if  ~isa(graph, 'NoValue') && isa(graph, 'Graph')
-% % %             if isempty(pr.mlist)
-% % %                 pr.mlist = Graph.getCompatibleMeasureList(graph);
-% % %             end
-% % %             pr.already_calculated = pr.is_measure_calculated();
-% % %             data = cell(length(pr.mlist), 5);
-% % %             for mi = 1:1:length(pr.mlist)
-% % %                 if any(pr.selected == mi)
-% % %                     data{mi, 1} = true;
-% % %                 else
-% % %                     data{mi, 1} = false;
-% % %                 end
-% % % 
-% % %                 data{mi, 2} = pr.mlist{mi};
-% % % 
-% % %                 if Measure.is_nodal(pr.mlist{mi})
-% % %                     data{mi, 3} = 'NODAL';
-% % %                 elseif Measure.is_global(pr.mlist{mi})
-% % %                     data{mi, 3} = 'GLOBAL';
-% % %                 else
-% % %                     data{mi, 3} = 'BINODAL';
-% % %                 end
-% % % 
-% % %                 if Measure.is_superglobal(pr.mlist{mi})
-% % %                     data{mi, 4} = 'SUPERGLOBAL';
-% % %                 elseif Measure.is_unilayer(pr.mlist{mi})
-% % %                     data{mi, 4} = 'UNILAYER';
-% % %                 else
-% % %                     data{mi, 4} = 'BILAYER';
-% % %                 end
-% % % 
-% % %                 data{mi, 5} = eval([pr.mlist{mi} '.getDescription()']);
-% % %             end
-% % %             set(pr.measure_tbl, 'Data', data)
-% % %             set(pr.measure_tbl, 'ColumnWidth', {30, 'auto', 'auto', 'auto', 'auto'})
-% % % 
-% % %             row_names = cell(length(pr.already_calculated), 1);
-% % %             for i = 1:length(pr.already_calculated)
-% % %                 if pr.already_calculated{i}
-% % %                     row_names{i} = 'C';
-% % %                 else
-% % %                     row_names{i} = '';
-% % %                 end
-% % %             end
-% % %             set(pr.measure_tbl, 'RowName', row_names)
-% % %         end
-% % %     end
-% % %     
-% % %         function plot_type_rules()
-% % %             if ~isempty(pr.graph) && ~contains(el.getClass(), 'WU') && ~isempty(pr.already_calculated) && ...
-% % %                     any([pr.already_calculated{:}])
-% % %                 set(pr.line_plot_tglbtn, ...
-% % %                     'Enable', 'on', ...
-% % %                     'Visible', 'on');
-% % %             else
-% % %                 set(pr.line_plot_tglbtn, ...
-% % %                     'Enable', 'off', ...
-% % %                     'Visible', 'off');
-% % %             end
-% % %         end
-% % % 
-% % %     plot_type_rules()
 end
 function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
@@ -398,6 +294,178 @@ function redraw(pr, varargin)
             'Units', 'pixels', ...
             'Position', [s(.3) s(.3) w(pr.p, 'pixels')-s(.6) Dh-s(.6)] ...
             )
+    end
+end
+function cb_graph_plot(pr)
+    
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+
+    if ~check_graphics(pr.f_graph_plot, 'figure')
+        f = ancestor(pr.p, 'figure');
+        gui = GUIFig( ...
+            'PF', el.memorize(prop).memorize('PFG'), ... % ensure that the property is stored
+            'WAITBAR', Callback('EL', pr, 'TAG', 'WAITBAR'), ...
+            'POSITION', [ ...
+                x0(f, 'normalized')+w(f, 'normalized') ...
+                y0(f, 'normalized') ...
+                w(0,'normalized')-x0(f, 'normalized')-w(f, 'normalized') ...
+                h(f, 'normalized') ...
+                ], ...
+            'CLOSEREQ', false ...
+            );
+        pr.f_graph_plot = gui.draw();
+    else
+        gui = get(pr.f_graph_plot, 'UserData');
+        if get(pr.f_graph_plot, 'Visible')
+            gui.cb_hide()
+        else
+            gui.cb_bring_to_front()
+        end
+    end
+
+    pr.update()
+end
+function cb_graph_element(pr)
+
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+
+    if ~check_graphics(pr.f_graph_element, 'figure')
+        f = ancestor(pr.p, 'figure');
+        gui = GUIElement( ...
+            'PE', el.memorize(prop), ... % ensure that the property is stored
+            'WAITBAR', Callback('EL', pr, 'TAG', 'WAITBAR'), ...
+            'POSITION', [ ...
+                x0(f, 'normalized')+w(f, 'normalized') ...
+                y0(f, 'normalized') ...
+                w(f, 'normalized') ...
+                h(f, 'normalized') ...
+                ], ...
+            'CLOSEREQ', false ...
+            );
+        pr.f_graph_element = gui.draw();
+    else
+        gui = get(pr.f_graph_element, 'UserData');
+        if get(pr.f_graph_element, 'Visible')
+            gui.cb_hide()
+        else
+            gui.cb_bring_to_front()
+        end
+    end
+        
+    pr.update()
+    
+% % %     % updates and redraws the parent PanelElement as well as all siblings PanelProp's
+% % %     pe = get(get(pr.p, 'Parent'), 'UserData');
+% % %     pe.update()
+% % %     pe.redraw()
+end
+function cb_select_all(pr)
+
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    g = el.get(prop);
+    mlist = Graph.getCompatibleMeasureList(g);
+
+    pr.selected = [1:1:length(mlist)];
+
+    pr.update()
+end
+function cb_clear_selection(pr)
+
+    pr.selected = [];
+
+    pr.update()
+end
+function cb_invert_selection(pr)
+
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    g = el.get(prop);
+    mlist = Graph.getCompatibleMeasureList(g);
+
+    selected_tmp = [1:1:length(mlist)];
+    selected_tmp(pr.selected) = [];
+    pr.selected = selected_tmp;
+
+    pr.update()
+end
+function cb_measure_calculate(pr) 
+
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    g = el.memorize(prop);
+    mlist = Graph.getCompatibleMeasureList(g);
+    
+    wb = braph2waitbar(pr.get('WAITBAR'), 0, ['Calculating ' num2str(length(pr.selected))  ' measures ...']);
+
+    for i = 1:1:length(mlist)
+        if ismember(i, pr.selected)
+            braph2waitbar(wb, .1 + .20 * i / length(pr.selected), ['Calculating measure ' int2str(i) ' (' mlist{i} ') of ' int2str(length(pr.selected)) ' ...'])
+
+            graph.getMeasure(measure).memorize('M');
+        end
+    end
+    
+    braph2waitbar(wb, 'close')
+
+	pr.update();
+end
+function cb_menu_measure_plots(pr) 
+
+end
+function cb_menu_measure_elements(pr) 
+
+end
+function cb_bring_to_front(pr)
+
+    cb_bring_to_front@Panel(pr);
+    
+    % bring to front graph plot figure
+    if check_graphics(pr.f_graph_plot, 'figure')
+        figure(pr.f_graph_plot)
+        set(pr.f_graph_plot, ...
+            'Visible', 'on', ...
+            'WindowState', 'normal' ...
+            )        
+    end
+    
+    % bring to front graph element figure
+    if check_graphics(pr.f_graph_element, 'figure')
+        figure(pr.f_graph_element)
+        set(pr.f_graph_element, ...
+            'Visible', 'on', ...
+            'WindowState', 'normal' ...
+            )        
+    end
+end
+function cb_hide(pr)
+    
+    cb_hide@Panel(pr);
+    
+    % hide callback graph plot figure
+    if check_graphics(pr.f_graph_plot, 'figure')
+        set(pr.f_graph_plot, 'Visible', 'off')
+    end
+    
+    % hide callback graph element figure
+    if check_graphics(pr.f_graph_element, 'figure')
+        set(pr.f_graph_element, 'Visible', 'off')
+    end
+end
+function cb_close(pr)
+    
+    cb_close@Panel(pr);
+
+    % close callback graph plot figure
+    if check_graphics(pr.f_graph_plot, 'figure')
+        close(pr.f_graph_plot)
+    end
+    
+    % close callback graph element figure
+    if check_graphics(pr.f_graph_element, 'figure')
+        close(pr.f_graph_element)
     end
 end
 % % % function cb_graph_value(pr)
@@ -525,36 +593,6 @@ end
 % % %             f_count = f_count + 1;
 % % %         end
 % % %     end
-% % % end
-% % % function cb_measure_calc(pr)
-% % %     el = pr.get('EL');
-% % %     prop = pr.get('PROP');
-% % %     graph = el.memorize(prop);
-% % %     pr.mlist = Graph.getCompatibleMeasureList(graph);
-% % % 
-% % %     measure_short_list = pr.mlist(pr.selected);
-% % % 
-% % %     % calculate
-% % %     wb = braph2waitbar(pr.get('WAITBAR'), 0, ['Calculating ' num2str(length(pr.selected))  ' measures ...']);
-% % % 
-% % %     for i = 1:length(pr.mlist)
-% % %         if ~ismember(pr.mlist(i), measure_short_list)
-% % %             continue;
-% % %         end
-% % % 
-% % %         measure = pr.mlist{i};
-% % % 
-% % %         braph2waitbar(wb, .1 + .20 * i / length(pr.selected), ['Calculating measure ' measure ])
-% % % 
-% % %         result_measure = graph.getMeasure(measure);
-% % %         result_measure.memorize('M');
-% % %         pr.already_calculated{i} = 1;
-% % %     end
-% % % 
-% % %     % close progress bar
-% % % 	braph2waitbar(wb, 'close')
-% % % 
-% % % 	pr.update();
 % % % end
 % % % function cb_graph_ui_figure(pr)
 % % %     % CB_GRAPH_UI_FIGURE draws a new figure to manage a plot graph.
