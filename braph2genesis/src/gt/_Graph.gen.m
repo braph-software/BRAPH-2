@@ -49,6 +49,19 @@ M_DICT (result, idict) contains the calculated measures of the graph.
 %%%% ¡calculate!
 value = IndexedDictionary('IT_CLASS', 'Measure', 'IT_KEY', 1);
 
+%%% ¡prop!
+PFG (gui, item) contains the panel figure of the graph.
+%%%% ¡settings!
+'PFGraph'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    g.memorize('PFG').set('G', g)
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', g, 'PROP', Graph.PFG, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
+
 %% ¡constants!
 
 % Graph types
