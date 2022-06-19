@@ -310,6 +310,12 @@ function cb_button_calc(pr)
 
     el.memorize(prop);
 
+    % ensure correct rendering of GUI
+    f = ancestor(pr.p, 'figure');
+    set(f, 'Position', get(f, 'Position') + [0 0 .01 0])
+    drawnow()
+    set(f, 'Position', get(f, 'Position') - [0 0 .01 0])
+    drawnow()
 % % %     % updates and redraws the parent PanelElement as well as all siblings PanelProp's
 % % %     pe = get(get(pr.p, 'Parent'), 'UserData');
 % % %     pe.update()
@@ -327,6 +333,12 @@ function cb_button_del(pr)
     
     el.set(prop, NoValue.getNoValue())
 
+    % ensure correct rendering of GUI
+    f = ancestor(pr.p, 'figure');
+    set(f, 'Position', get(f, 'Position') + [0 0 .01 0])
+    drawnow()
+    set(f, 'Position', get(f, 'Position') - [0 0 .01 0])
+    drawnow()
 % % %     % updates and redraws the parent PanelElement as well as all siblings PanelProp's
 % % %     pe = get(get(pr.p, 'Parent'), 'UserData');
 % % %     pe.update()

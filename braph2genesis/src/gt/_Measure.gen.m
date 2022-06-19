@@ -20,7 +20,7 @@ LABEL (metadata, string) is an extended label of the graph measure.
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the graph measure.
 %%%% ¡gui!
-pr = PlotPropString('EL', m, 'PROP', Measure.NOTES, 'LINES', 'multi', 'EDITHEIGHT', 4.5, varargin{:});
+pr = PanelPropStringTextArea('EL', m, 'PROP', Measure.NOTES, varargin{:});
 
 %%% ¡prop!
 G (data, item) is the measure graph.
@@ -33,6 +33,19 @@ M (result, cell) is the measure result.
 value = {};
 %%%% ¡gui_!
 % % % pr = PPMeasure_M('EL', m, 'PROP', Measure.M, varargin{:});
+
+%%% ¡prop!
+PFM (gui, item) contains the panel figure of the measure.
+%%%% ¡settings!
+'PFMeasure'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    m.memorize('PFM').set('M', m)
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', m, 'PROP', Measure.PFM, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
 
 %% ¡constants!
 

@@ -19,11 +19,17 @@ LABEL (metadata, string) is an extended label of the graph.
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the graph.
+%%%% ¡gui!
+pr = PanelPropStringTextArea('EL', g, 'PROP', Graph.NOTES, varargin{:});
 
 %%% ¡prop!
-BRAINATLAS (data, item) is a atlas associated with the graph.
+BAS (data, itemlist) is a list of brain atlases associated with the graph.
 %%%% ¡settings!
 'BrainAtlas'
+%%%% ¡conditioning!
+if isa(value, 'BrainAtlas')
+    value = {value};
+end
 
 %%% ¡prop!
 A (result, cell) is the graph adjacency matrix. 
@@ -37,8 +43,6 @@ Graph.checkDirectionality(Graph.getDirectionalityType(g, length(A)), A);
 Graph.checkSelfConnectivity(Graph.getSelfConnectivityType(g, length(A)), A);
 Graph.checkNegativity(Graph.getNegativityType(g, length(A)), A);
 check = true; % only if no error is thrown by the previous code!
-%%%% ¡gui_!
-% % % pr = PPGraph_A('EL', g, 'PROP', Graph.A, varargin{:});
 
 %%% ¡prop!
 M_DICT (result, idict) contains the calculated measures of the graph.
@@ -46,6 +50,19 @@ M_DICT (result, idict) contains the calculated measures of the graph.
 'Measure'
 %%%% ¡calculate!
 value = IndexedDictionary('IT_CLASS', 'Measure', 'IT_KEY', 1);
+
+%%% ¡prop!
+PFG (gui, item) contains the panel figure of the graph.
+%%%% ¡settings!
+'PFGraph'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    g.memorize('PFG').set('G', g)
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', g, 'PROP', Graph.PFG, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
 
 %% ¡constants!
 

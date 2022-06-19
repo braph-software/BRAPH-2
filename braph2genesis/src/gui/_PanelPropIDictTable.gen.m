@@ -364,58 +364,65 @@ function update(pr)
             columnwidth = 'auto';
         end
 
-        if ~isempty(pr.get('COLUMNWIDTH'))
+        if ~isempty(pr.get('COLUMNEDITABLE'))
             columneditable = eval(pr.get('COLUMNEDITABLE'));
         else
-            columneditable = true(1, length(cols));
+            columneditable = false(1, length(cols));
             for c = 1:1:length(cols)
-                switch Element.getPropFormat(it_class, col)
-                    % % % case Format.EMPTY
-                    
-                    case Format.STRING
-                        columneditable(c) = true;
-                        
-                    case Format.LOGICAL
-                        columneditable(c) = true;
-                        
-                    case Format.OPTION
-                        columneditable(c) = true;
-                        
-                        % % % case Format.CLASS
-                        
-                        % % % case Format.CLASSLIST
-                        
-                    case Format.ITEM
-                        columneditable(c) = false;
-                        
-                        % % % case Format.ITEMLIST
-                        
-                        % % % case Format.IDICT
-                        
-                    case Format.SCALAR
-                        columneditable(c) = true;
-                        
-                    case {Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
-                        columneditable(c) = false;
-                        
-                        % % % case Format.CELL
-                        
-                        % % % case Format.NET
-                        
-                    case Format.COLOR
-                        columneditable(c) = true;
-                        
-                    case Format.ALPHA
-                        columneditable(c) = true;
-                        
-                    case Format.SIZE
-                        columneditable(c) = true;
-                        
-                    case Format.MARKER
-                        columneditable(c) = true;
-                        
-                    case Format.LINE
-                        columneditable(c) = true;
+                col = cols(c);
+                if col == pr.SELECTOR
+                    columneditable(c) = true; % always true
+                else
+                    if ~el.isLocked(prop)
+                        switch Element.getPropFormat(it_class, col)
+                            % % % case Format.EMPTY
+
+                            case Format.STRING 
+                                columneditable(c) = true;
+
+                            case Format.LOGICAL 
+                                columneditable(c) = true;
+
+                            case Format.OPTION 
+                                columneditable(c) = true;
+
+                            % % % case Format.CLASS
+
+                            % % % case Format.CLASSLIST
+
+                            case Format.ITEM
+                                columneditable(c) = false;
+
+                                % % % case Format.ITEMLIST
+
+                                % % % case Format.IDICT
+
+                            case Format.SCALAR 
+                                columneditable(c) = true;
+
+                            case {Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
+                                columneditable(c) = false;
+
+                                % % % case Format.CELL
+
+                                % % % case Format.NET
+
+                            case Format.COLOR 
+                                columneditable(c) = true;
+
+                            case Format.ALPHA 
+                                columneditable(c) = true;
+
+                            case Format.SIZE 
+                                columneditable(c) = true;
+
+                            case Format.MARKER 
+                                columneditable(c) = true;
+
+                            case Format.LINE 
+                                columneditable(c) = true;
+                        end                        
+                    end
                 end
             end
         end
@@ -542,12 +549,13 @@ function update(pr)
         end
     end
 
-    if el.isLocked(prop)
-        set(pr.table, ...
-            'Enable', pr.get('TAB_ENABLE'), ...
-            'ColumnEditable', false ...
-            )
-    end
+% % %     if el.isLocked(prop)
+% % %         set(pr.table, 'ColumnEditable', false)
+% % % % % %         set(pr.table, ...
+% % % % % %             'Enable', pr.get('ENABLE'), ...
+% % % % % %             'ColumnEditable', false ...
+% % % % % %             )
+% % %     end
 
     switch el.getPropCategory(prop)
         case Category.METADATA
@@ -558,10 +566,11 @@ function update(pr)
             
             value = el.getr(prop);
             if isa(value, 'Callback')
-                set(pr.table, ...
-                    'Enable', pr.get('TAB_ENABLE'), ...
-                    'ColumnEditable', false ...
-                    )
+                set(pr.table, 'ColumnEditable', false)
+% % %                 set(pr.table, ...
+% % %                     'Enable', pr.get('ENABLE'), ...
+% % %                     'ColumnEditable', false ...
+% % %                     )
             end
 
         case Category.RESULT
@@ -572,11 +581,12 @@ function update(pr)
                 set(pr.table, 'Visible', 'off')
             else
                 set_table()
-                set(pr.table, ...
-                    'Enable', pr.get('TAB_ENABLE'), ...
-                    'ColumnEditable', false, ...
-                    'Visible', 'on' ...
-                    )                
+                set(pr.table, 'Visible', 'on')
+% % %                 set(pr.table, ...
+% % %                     'Enable', pr.get('ENABLE'), ...
+% % %                     'ColumnEditable', false, ...
+% % %                     'Visible', 'on' ...
+% % %                     )                
             end
     end   
 end
@@ -742,9 +752,9 @@ function cb_apply_to_selection(pr, checked)
 end
 function cb_open_selection(pr)
 
-    gr = pr.get('EL');
+    el = pr.get('EL');
     prop = pr.get('PROP');
-    it_dict = gr.get(prop);
+    it_dict = el.get(prop);
 
     f = ancestor(pr.p, 'figure'); % parent GUI 
     N = ceil(sqrt(it_dict.length())); % number of row and columns of figures
@@ -810,10 +820,10 @@ function cb_bring_to_front(pr)
     pr.cb_bring_to_front@PanelProp();
 
     % brings to front subfigures
-    for i = 1:1:length(pr.f_subs)
-        f_sub = pr.f_subs{i};
-        if check_graphics(f_sub, 'figure')
-            gui = get(f_sub, 'UserData');
+    for i = 1:1:length(pr.f_its)
+        f_it = pr.f_its{i};
+        if check_graphics(f_it, 'figure')
+            gui = get(f_it, 'UserData');
             gui.cb_bring_to_front()
         end
     end

@@ -46,6 +46,37 @@ for i = 1:1:length(densities)
 end
 
 value = A;
+%%%% ¡gui!
+bas = g.get('BAS');
+ba = bas{1};
+brs = ba.get('BR_DICT').getItems();
+rowname = '{';
+for bri = 1:1:length(brs)
+    rowname = [rowname ' ''' brs{bri}.get('ID') ''''];
+end
+rowname = [rowname '}'];
+
+densities = g.get('DENSITIES');
+xsliderlabels = '{';
+for i = 1:1:length(densities)
+    xsliderlabels = [xsliderlabels ' ''' num2str(densities(i)) '%'''];
+end
+xsliderlabels = [xsliderlabels '}'];
+ysliderlabels = '{';
+for i = length(densities):-1:1
+    ysliderlabels = [ysliderlabels ' ''' num2str(densities(i)) '%'''];
+end
+ysliderlabels = [ysliderlabels '}'];
+
+pr = PanelPropCell('EL', g, 'PROP', GraphWU.A, ...
+    'TAB_H', 40, ...
+    'XYSLIDERLOCK', true, ... 
+    'XSLIDER', false, 'YSLIDER', true, ...
+    'XSLIDERLABELS', xsliderlabels, 'YSLIDERLABELS', ysliderlabels, ...
+    'XSLIDERHEIGHT', 3, 'YSLIDERWIDTH', 5, ...
+    'ROWNAME', rowname, ...
+    'COLUMNNAME', rowname, ...
+    varargin{:});
 
 %% ¡methods!
 function [l, ls] = layernumber(g)

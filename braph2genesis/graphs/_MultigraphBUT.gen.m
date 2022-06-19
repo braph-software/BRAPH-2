@@ -46,6 +46,37 @@ for i = 1:1:length(thresholds)
 end
 
 value = A;
+%%%% ¡gui!
+bas = g.get('BAS');
+ba = bas{1};
+brs = ba.get('BR_DICT').getItems();
+rowname = '{';
+for bri = 1:1:length(brs)
+    rowname = [rowname ' ''' brs{bri}.get('ID') ''''];
+end
+rowname = [rowname '}'];
+
+thresholds = g.get('THRESHOLDS');
+xsliderlabels = '{';
+for i = 1:1:length(thresholds)
+    xsliderlabels = [xsliderlabels ' ''' num2str(thresholds(i)) ''''];
+end
+xsliderlabels = [xsliderlabels '}'];
+ysliderlabels = '{';
+for i = length(thresholds):-1:1
+    ysliderlabels = [ysliderlabels ' ''' num2str(thresholds(i)) ''''];
+end
+ysliderlabels = [ysliderlabels '}'];
+
+pr = PanelPropCell('EL', g, 'PROP', GraphWU.A, ...
+    'TAB_H', 40, ...
+    'XYSLIDERLOCK', true, ... 
+    'XSLIDER', false, 'YSLIDER', true, ...
+    'XSLIDERLABELS', xsliderlabels, 'YSLIDERLABELS', ysliderlabels, ...
+    'XSLIDERHEIGHT', 3, 'YSLIDERWIDTH', 5, ...
+    'ROWNAME', rowname, ...
+    'COLUMNNAME', rowname, ...
+    varargin{:});
 
 %% ¡methods!
 function [l, ls] = layernumber(g)

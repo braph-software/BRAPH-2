@@ -1,12 +1,11 @@
 %% ¡header!
-AnalyzeGroup_ST_MP_BUT < AnalyzeGroup (a, graph analysis with structural multiplex data of fixed threshold) is a graph analysis using structural multiplex data of fixed threshold.
+AnalyzeGroup_ST_BUT < AnalyzeGroup (a, graph analysis with structural data of fixed threshold) is a graph analysis using structural data of fixed threshold.
 
 %% ¡description!
-This graph analysis uses structural multiplex data of fixed threshold and 
-analyzes them using binary undirected graphs.
+This graph analysis uses structural data of fixed threshold and analyzes them using binary undirected graphs.
 
 %%% ¡seealso!
-AnalyzeGroup_ST_MP_WU, AnalyzeGroup_ST_MP_BUD, Subject_ST_MP, MultiplexBUT.
+AnalyzeGroup_ST_WU, Subject_ST, MultigraphBUT.
 
 %% ¡props!
 
@@ -29,24 +28,26 @@ THRESHOLDS (parameter, rvector) is the vector of thresholds.
 %%%% ¡default!
 0
 %%%% ¡gui!
-pr = PlotPropSmartVector('EL', a, 'PROP', AnalyzeGroup_ST_MP_BUT.THRESHOLDS, 'MAX', 1, 'MIN', 0, varargin{:});
+pr = PlotPropSmartVector('EL', a, 'PROP', AnalyzeGroup_ST_BUT.THRESHOLDS, 'MAX', 1, 'MIN', 0, varargin{:});
 
 %% ¡props_update!
 
 %%% ¡prop!
-GR (data, item) is the subject group, which also defines the subject class SubjectST_MP.
+GR (data, item) is the subject group, which also defines the subject class SubjectST.
 %%%% ¡default!
-Group('SUB_CLASS', 'SubjectST_MP')
+Group('SUB_CLASS', 'SubjectST')
 
 %%% ¡prop!
 G (result, item) is the graph obtained from this analysis.
 %%%% ¡settings!
-'MultiplexBUT'
+'MultigraphBUT'
 %%%% ¡default!
-MultiplexBUT()
+MultigraphBUT()
 %%%% ¡calculate!
 gr = a.get('GR');
-data_list = cellfun(@(x) x.get('ST_MP'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
+node_labels = '';
+data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
+data = cat(2, data_list{:})'; % correlation is a column based operation
 atlas = BrainAtlas();
 if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
     atlas = gr.get('SUB_DICT').getItem(1).get('BA');
@@ -67,36 +68,14 @@ if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SP
                 sex(i) = 0;
         end
     end
-    covariates = [age, sex];
-end
-
-if isempty(data_list)
-    A ={[], []};
+    A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'), [age, sex]);
 else
-    L = gr.get('SUB_DICT').getItem(1).get('L');  % number of layers
-    br_number = gr.get('SUB_DICT').getItem(1).get('ba').get('BR_DICT').length();  % number of regions
-    data = cell(L, 1);
-    for i=1:L
-        data_layer = zeros(length(data_list), br_number);
-        for j=1:length(data_list)
-            sub_cell = data_list{j};
-            data_layer(j, :) = sub_cell{i}';
-        end
-        data(i) = {data_layer};
-    end
-    
-    A = cell(1, L);
-    for i = 1:L
-        if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
-            A(i) = {Correlation.getAdjacencyMatrix(data{i}, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'), covariates)};
-        else
-            A(i) = {Correlation.getAdjacencyMatrix(data{i}, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'))};
-        end
-    end
+    A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
 end
-thresholds = a.get('THRESHOLDS'); % this is a vector
 
-g = MultiplexBUT( ...
+thresholds = a.get('THRESHOLDS'); 
+            
+g = MultigraphBUT( ...
     'ID', ['g ' gr.get('ID')], ...
     'B', A, ...
     'THRESHOLDS', thresholds, ...
@@ -104,8 +83,6 @@ g = MultiplexBUT( ...
     );
 
 value = g;
-%%%% ¡gui!
-pr = PPAnalyzeGroupMP_G('EL', a, 'PROP', AnalyzeGroup_ST_MP_BUT.G, 'WAITBAR', true, varargin{:});
 
 %% ¡methods!
 function pr = getPPCompareGroup_CPDict(a, varargin) 
@@ -116,7 +93,7 @@ function pr = getPPCompareGroup_CPDict(a, varargin)
     %
     % See also CompareGroup.
     
-    pr = PPCompareGroup_CPDict_ST_MP_BUT(varargin{:});
+    pr = PPCompareGroup_CPDict_ST_BUT(varargin{:});
 end
 
 %% ¡tests!
@@ -125,4 +102,4 @@ end
 %%%% ¡name!
 Example
 %%%% ¡code!
-example_ST_MP_BUT
+example_ST_BUT
