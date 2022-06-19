@@ -3,6 +3,22 @@ delete(findall(0, 'type', 'figure'))
 clear all
 clc
 
+el_class = 'PanelPropRVectorSmart';
+delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
+create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+% create_test_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+% test_code = ['test_' el_class]
+% eval(test_code)
+
+el_class = 'AnalyzeGroup_ST_BUD';
+delete([fileparts(which('braph2')) '/pipelines/structural/' el_class '.m'])
+create_Element([fileparts(which('braph2genesis')) '/pipelines/structural/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/structural'])
+create_Element([fileparts(which('braph2genesis')) '/pipelines/structural/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/structural'])
+% create_test_Element([fileparts(which('braph2genesis')) '/pipelines/structural/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/structural'])
+% test_code = ['test_' el_class]
+% eval(test_code)
+
 % el_class = 'MultigraphBUD';
 % delete([fileparts(which('braph2')) '/graphs/' el_class '.m'])
 % create_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
@@ -19,13 +35,13 @@ clc
 % % test_code = ['test_' el_class]
 % % eval(test_code)
 
-el_class = 'PanelPropMatrix';
-delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
-create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
-create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
-% create_test_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
-% test_code = ['test_' el_class]
-% eval(test_code)
+% el_class = 'PanelPropMatrix';
+% delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+% create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+% % create_test_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+% % test_code = ['test_' el_class]
+% % eval(test_code)
 
 % el_class = 'PanelPropCell';
 % delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
@@ -67,15 +83,19 @@ create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'
 % % test_code = ['test_' el_class]
 % % eval(test_code)
 
-% pip = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_ST_WU.b2']);
-pip = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_ST_BUD.b2']);
-% pip = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_ST_BUT.b2']);
-gui = GUIElement('PE', pip);
+% % pip = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_ST_WU.b2']);
+% pip = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_ST_BUD.b2']);
+% % pip = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_ST_BUT.b2']);
+% gui = GUIElement('PE', pip);
+% f = gui.draw();
+% pip.get('PS_DICT').getItem(3).get('PC_DICT').getItem(1).get('EL').get('G').getMeasure('Degree');
+% pip.get('PS_DICT').getItem(3).get('PC_DICT').getItem(1).get('EL').get('G').getMeasure('DegreeAv');
+% pip.get('PS_DICT').getItem(3).get('PC_DICT').getItem(1).get('EL').get('G').getMeasure('Distance');
+% pip.get('PS_DICT').getItem(3).get('PC_DICT').getItem(1).get('EL').get('G').getr('M_DICT')
+
+a = AnalyzeGroup_ST_BUD();
+gui = GUIElement('PE', a);
 f = gui.draw();
-pip.get('PS_DICT').getItem(3).get('PC_DICT').getItem(1).get('EL').get('G').getMeasure('Degree');
-pip.get('PS_DICT').getItem(3).get('PC_DICT').getItem(1).get('EL').get('G').getMeasure('DegreeAv');
-pip.get('PS_DICT').getItem(3).get('PC_DICT').getItem(1).get('EL').get('G').getMeasure('Distance');
-pip.get('PS_DICT').getItem(3).get('PC_DICT').getItem(1).get('EL').get('G').getr('M_DICT')
 
 %% PanelPropCell
 

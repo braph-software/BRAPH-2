@@ -26,9 +26,12 @@ Correlation.ZERO
 %%% ¡prop!
 DENSITIES (parameter, rvector) is the vector of densities.
 %%%% ¡default!
-0
-%%%% ¡gui_!
-% % % pr = PlotPropSmartVector('EL', a, 'PROP', AnalyzeGroup_ST_BUD.DENSITIES, 'MAX', 100, 'MIN', 0, varargin{:});
+[1:1:10]
+%%%% ¡gui!
+pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeGroup_ST_BUD.DENSITIES, ...
+    'MIN', 0, 'MAX', 100, ...
+    'DEFAULT', AnalyzeGroup_ST_BUD.getPropDefault('DENSITIES'), ...
+    varargin{:});
 
 %% ¡props_update!
 
