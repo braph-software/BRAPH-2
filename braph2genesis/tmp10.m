@@ -99,19 +99,32 @@ clc
 % % test_code = ['test_' el_class]
 % % eval(test_code)
 
-% pip = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_ST_WU.b2']);
-pip = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_ST_BUD.b2']);
-% pip = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_ST_BUT.b2']);
-gui = GUIElement('PE', pip);
-f = gui.draw();
-pip.get('PS_DICT').getItem(3).get('PC_DICT').getItem(1).get('EL').get('G').getMeasure('Degree');
-pip.get('PS_DICT').getItem(3).get('PC_DICT').getItem(1).get('EL').get('G').getMeasure('DegreeAv');
-pip.get('PS_DICT').getItem(3).get('PC_DICT').getItem(1).get('EL').get('G').getMeasure('Distance');
-pip.get('PS_DICT').getItem(3).get('PC_DICT').getItem(1).get('EL').get('G').getr('M_DICT')
+% % pip = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_ST_WU.b2']);
+% pip = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_ST_BUD.b2']);
+% % pip = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_ST_BUT.b2']);
+% gui = GUIElement('PE', pip);
+% f = gui.draw();
+% pip.get('PS_DICT').getItem(3).get('PC_DICT').getItem(1).get('EL').get('G').getMeasure('Degree');
+% pip.get('PS_DICT').getItem(3).get('PC_DICT').getItem(1).get('EL').get('G').getMeasure('DegreeAv');
+% pip.get('PS_DICT').getItem(3).get('PC_DICT').getItem(1).get('EL').get('G').getMeasure('Distance');
+% pip.get('PS_DICT').getItem(3).get('PC_DICT').getItem(1).get('EL').get('G').getr('M_DICT')
 
 % a = AnalyzeGroup_ST_BUD();
 % gui = GUIElement('PE', a);
 % f = gui.draw();
+
+pip_ST_WU = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_ST_WU.b2']);
+gui_ST_WU = GUIElement('PE', pip_ST_WU);
+f_ST_WU = gui_ST_WU.draw();
+
+pip_ST_BUD = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_ST_BUD.b2']);
+gui_ST_BUD = GUIElement('PE', pip_ST_BUD);
+f_ST_BUD = gui_ST_BUD.draw();
+
+pip_ST_BUT = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_ST_BUT.b2']);
+gui_ST_BUT = GUIElement('PE', pip_ST_BUT);
+f_ST_BUT = gui_ST_BUT.draw();
+
 
 %% PanelPropCell
 
