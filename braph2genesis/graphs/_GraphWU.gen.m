@@ -26,6 +26,19 @@ negativity = Graph.NONNEGATIVE;
 
 %%% ¡prop!
 B (data, smatrix) is the input graph adjacency matrix.
+%%%% ¡gui!
+bas = g.get('BAS');
+ba = bas{1};
+brs = ba.get('BR_DICT').getItems();
+rowname = '{';
+for bri = 1:1:length(brs)
+    rowname = [rowname ' ''' brs{bri}.get('ID') ''''];
+end
+rowname = [rowname '}'];
+pr = PanelPropMatrix('EL', g, 'PROP', GraphWU.B, ...
+    'ROWNAME', rowname, ...
+    'COLUMNNAME', rowname, ...
+    varargin{:});
 
 %%% ¡prop!
 ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
@@ -52,6 +65,20 @@ B = standardize(B, varargin{:}); %% ensures all weights are between 0 and 1
 
 A = {B};
 value = A;
+%%%% ¡gui!
+bas = g.get('BAS');
+ba = bas{1};
+brs = ba.get('BR_DICT').getItems();
+rowname = '{';
+for bri = 1:1:length(brs)
+    rowname = [rowname ' ''' brs{bri}.get('ID') ''''];
+end
+rowname = [rowname '}'];
+pr = PanelPropCell('EL', g, 'PROP', GraphWU.A, ...
+    'XSLIDER', false, 'YSLIDER', false, ...
+    'ROWNAME', rowname, ...
+    'COLUMNNAME', rowname, ...
+    varargin{:});
 
 %% ¡staticmethods!
 function [random_A, correlation_coefficients] = randomize_A(A, attempts_per_edge, number_of_weights)

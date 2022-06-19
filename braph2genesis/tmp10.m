@@ -3,6 +3,22 @@ delete(findall(0, 'type', 'figure'))
 clear all
 clc
 
+el_class = 'GraphWU';
+delete([fileparts(which('braph2')) '/graphs/' el_class '.m'])
+create_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
+create_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
+% create_test_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
+% test_code = ['test_' el_class]
+% eval(test_code)
+
+el_class = 'PanelPropCell';
+delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
+create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+% create_test_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+% test_code = ['test_' el_class]
+% eval(test_code)
+
 % el_class = 'AnalyzeGroup';
 % delete([fileparts(which('braph2')) '/src/analysis/' el_class '.m'])
 % create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])

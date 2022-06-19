@@ -15,13 +15,6 @@ GUI, PanelElement, PanelProp, uitable, uislider
 %% ¡props!
 
 %%% ¡prop!
-TAB_ENABLE (gui, option) switches table between on and off.
-%%%% ¡settings!
-{'on', 'off'}
-%%%% ¡default!
-'on'
-
-%%% ¡prop!
 TAB_H (gui, size) is the height of the table in font size units.
 %%%% ¡default!
 20
@@ -36,15 +29,15 @@ YSLIDER (gui, logical) determines whether to show the yslider.
 %%%% ¡default!
 true
 
-%%% ¡prop_!
-% % % ROWNAME (gui, string) determines the table row names (to be evaluated).
-% % % %%%% ¡default!
-% % % '''numbered'''
+%%% ¡prop!
+ROWNAME (gui, string) determines the table row names (to be evaluated).
+%%%% ¡default!
+'''numbered'''
 
-%%% ¡prop_!
-% % % COLUMNNAME (gui, string) determines the table column names (to be evaluated).
-% % % %%%% ¡default!
-% % % '''numbered'''
+%%% ¡prop!
+COLUMNNAME (gui, string) determines the table column names (to be evaluated).
+%%%% ¡default!
+'''numbered'''
 
 %% ¡properties!
 p
@@ -171,19 +164,16 @@ function update(pr)
             end            
     end
     
-% % %     set(pr.table, ...
-% % %     'RowName', eval(pr.get('ROWNAME')), ...
-% % %     'ColumnName', eval(pr.get('COLUMNNAME')) ...
-% % %     );
+    set(pr.table, ...
+    'RowName', eval(pr.get('ROWNAME')), ...
+    'ColumnName', eval(pr.get('COLUMNNAME')) ...
+    );
 
     el = pr.get('EL');
     prop = pr.get('PROP');
     
     if el.isLocked(prop)
-        set(pr.table, ...
-            'Enable', pr.get('TAB_ENABLE'), ...
-            'ColumnEditable', false ...
-            )
+        set(pr.table, 'ColumnEditable', false)
     end
 
     switch el.getPropCategory(prop)
@@ -203,10 +193,7 @@ function update(pr)
             
             value = el.getr(prop);
             if isa(value, 'Callback')
-                set(pr.table, ...
-                    'Enable', pr.get('TAB_ENABLE'), ...
-                    'ColumnEditable', false ...
-                    )
+                set(pr.table, 'ColumnEditable', false)
             end
 
         case Category.RESULT
@@ -219,7 +206,6 @@ function update(pr)
                 set(pr.table, ...
                     'Data', set_sliders_and_get_value(), ...
                     'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-                    'Enable', pr.get('TAB_ENABLE'), ...
                     'ColumnEditable', false, ...
                     'Visible', 'on' ...
                     )

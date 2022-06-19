@@ -43,8 +43,6 @@ Graph.checkDirectionality(Graph.getDirectionalityType(g, length(A)), A);
 Graph.checkSelfConnectivity(Graph.getSelfConnectivityType(g, length(A)), A);
 Graph.checkNegativity(Graph.getNegativityType(g, length(A)), A);
 check = true; % only if no error is thrown by the previous code!
-%%%% ¡gui_!
-% % % pr = PPGraph_A('EL', g, 'PROP', Graph.A, varargin{:});
 
 %%% ¡prop!
 M_DICT (result, idict) contains the calculated measures of the graph.
