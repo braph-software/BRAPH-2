@@ -26,9 +26,12 @@ Correlation.ZERO
 %%% ¡prop!
 THRESHOLDS (parameter, rvector) is the vector of thresholds.
 %%%% ¡default!
-0
-%%%% ¡gui_!
-% % % pr = PlotPropSmartVector('EL', a, 'PROP', AnalyzeGroup_ST_BUT.THRESHOLDS, 'MAX', 1, 'MIN', 0, varargin{:});
+[-1:.5:1]
+%%%% ¡gui!
+pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeGroup_ST_BUD.DENSITIES, ...
+    'MIN', -1, 'MAX', 1, ...
+    'DEFAULT', AnalyzeGroup_ST_BUT.getPropDefault('THRESHOLDS'), ...
+    varargin{:});
 
 %% ¡props_update!
 
