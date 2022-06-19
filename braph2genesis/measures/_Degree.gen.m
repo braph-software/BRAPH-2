@@ -37,7 +37,7 @@ degree = cell(g.layernumber(), 1);
 
 for li = 1:1:g.layernumber()
     Aii = A{li, li};
-    Aii = binarize(Aii);  % binarizes the adjacency matrix
+    Aii = binarize(Aii);  % binarizes the adjacency matrix (removing diagonal)
     degree(li) = {sum(Aii, 2)};  % calculates the degree of a node for layer li
 end
 
