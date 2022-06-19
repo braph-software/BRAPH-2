@@ -100,8 +100,8 @@ clc
 % % eval(test_code)
 
 % pip = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_ST_WU.b2']);
-% pip = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_ST_BUD.b2']);
-pip = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_ST_BUT.b2']);
+pip = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_ST_BUD.b2']);
+% pip = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_ST_BUT.b2']);
 gui = GUIElement('PE', pip);
 f = gui.draw();
 pip.get('PS_DICT').getItem(3).get('PC_DICT').getItem(1).get('EL').get('G').getMeasure('Degree');
