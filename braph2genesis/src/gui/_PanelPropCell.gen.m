@@ -25,17 +25,34 @@ XSLIDER (gui, logical) determines whether to show the xslider.
 true
 
 %%% ¡prop!
+XSLIDERLABELS (gui, string) determines the xslider labels (to be evaluated).
+%%%% ¡default!
+'cellfun(@(x) tostring(x), num2cell([1:1:C]), ''UniformOutput'', false)'
+
+%%% ¡prop!
+XSLIDERHEIGHT (gui, size) is the height below the xslider in font size units.
+%%%% ¡default!
+3
+
+%%% ¡prop!
 YSLIDER (gui, logical) determines whether to show the yslider.
 %%%% ¡default!
 true
 
 %%% ¡prop!
+YSLIDERLABELS (gui, string) determines the yslider labels (to be evaluated).
+%%%% ¡default!
+'cellfun(@(x) tostring(x), num2cell([R:-1:1]), ''UniformOutput'', false)'
+
+%%% ¡prop!
+YSLIDERWIDTH (gui, size) is the width to the right of the yslider in font size units.
+%%%% ¡default!
+3
+
+%%% ¡prop!
 XYSLIDERLOCK (gui, logical) determines whether the sliders are locked so that only the diagonal is shown.
 %%%% ¡default!
 false
-
-%%% ¡prop!
-LAYERNAME (gui, string) determines the layer names (to be evaluated).
 
 %%% ¡prop!
 ROWNAME (gui, string) determines the table row names (to be evaluated).
@@ -157,14 +174,14 @@ function update(pr)
                 set(pr.xslider, ...
                     'Limits', [.6 C+.4], ...
                     'MajorTicks', [1:1:C], ...
-                    'MajorTickLabels', cellfun(@(x) tostring(x), num2cell([1:1:C]), 'UniformOutput', false), ...
+                    'MajorTickLabels', eval(pr.get('XSLIDERLABELS')), ...
                     'Value', max(1, min(round(get(pr.xslider, 'Value'), C))), ...
                     'Visible', pr.get('XSLIDER') ...
                     )
                 set(pr.yslider, ...
                     'Limits', [.6 R+.4], ...
                     'MajorTicks', [1:1:R], ...
-                    'MajorTickLabels', cellfun(@(x) tostring(x), num2cell([R:-1:1]), 'UniformOutput', false), ...
+                    'MajorTickLabels', eval(pr.get('YSLIDERLABELS')), ...
                     'Value', max(1, min(round(get(pr.yslider, 'Value'), R))), ...
                     'Visible', pr.get('YSLIDER') ...
                     )
@@ -242,6 +259,7 @@ function redraw(pr, varargin)
     %  - WIDTH does not change
     %  - HEIGHT = s(2) (header height)
     % The table height is set by the property TAB_H.
+    % The slider space is set by the properties XSLIDERHEIGHT and YSLIDERWIDTH.
     %
     % See also draw, update, PanelElement, s.
     
@@ -265,22 +283,22 @@ function redraw(pr, varargin)
         elseif pr.get('XSLIDER') && ~pr.get('YSLIDER')
             set(pr.table, ...
                 'Units', 'pixels', ...
-                'Position', [s(.3) s(.3) w(pr.p, 'pixels')-s(.6) Dh-s(3.6)] ...
+                'Position', [s(.3) s(.3) w(pr.p, 'pixels')-s(.6) Dh-s(.6)-s(pr.get('XSLIDERHEIGHT'))] ...
                 )
             set(pr.xslider, 'Position', [s(.3) Dh-s(.3) w(pr.p, 'pixels')-s(.6) 3])
         elseif ~pr.get('XSLIDER') && pr.get('YSLIDER')
             set(pr.table, ...
                 'Units', 'pixels', ...
-                'Position', [s(3.3) s(.3) w(pr.p, 'pixels')-s(3.6) Dh-s(.6)] ...
+                'Position', [s(.3)+s(pr.get('YSLIDERWIDTH')) s(.3) w(pr.p, 'pixels')-s(.6)-s(pr.get('YSLIDERWIDTH')) Dh-s(.6)] ...
                 )
             set(pr.yslider, 'Position', [s(.3) s(.3) 3 Dh])            
         else % pr.get('XSLIDER') && pr.get('YSLIDER')
             set(pr.table, ...
                 'Units', 'pixels', ...
-                'Position', [s(3.3) s(.3) w(pr.p, 'pixels')-s(3.6) Dh-s(3.6)] ...
+                'Position', [s(.3)+s(pr.get('YSLIDERWIDTH')) s(.3) w(pr.p, 'pixels')-s(.6)-s(pr.get('YSLIDERWIDTH')) Dh-s(.6)-s(pr.get('XSLIDERHEIGHT'))] ...
                 )
-            set(pr.xslider, 'Position', [s(3.3) Dh-s(.3) w(pr.p, 'pixels')-s(3.6) 3])
-            set(pr.yslider, 'Position', [s(.3) s(.3) 3 Dh-s(3.6)])
+            set(pr.xslider, 'Position', [s(.3)+s(pr.get('YSLIDERWIDTH')) Dh-s(.3) w(pr.p, 'pixels')-s(.6)-s(pr.get('YSLIDERWIDTH')) 3])
+            set(pr.yslider, 'Position', [s(.3) s(.3) 3 Dh-s(.6)-s(pr.get('XSLIDERHEIGHT'))])
         end            
     end  
 end
