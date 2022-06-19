@@ -30,6 +30,14 @@ YSLIDER (gui, logical) determines whether to show the yslider.
 true
 
 %%% ¡prop!
+XYSLIDERLOCK (gui, logical) determines whether the sliders are locked so that only the diagonal is shown.
+%%%% ¡default!
+false
+
+%%% ¡prop!
+LAYERNAME (gui, string) determines the layer names (to be evaluated).
+
+%%% ¡prop!
 ROWNAME (gui, string) determines the table row names (to be evaluated).
 %%%% ¡default!
 '''numbered'''
@@ -160,6 +168,11 @@ function update(pr)
                     'Value', max(1, min(round(get(pr.yslider, 'Value'), R))), ...
                     'Visible', pr.get('YSLIDER') ...
                     )
+
+                if pr.get('XYSLIDERLOCK')
+                    set(pr.yslider, 'Value', R + 1 - get(pr.xslider, 'Value'))
+                end
+                
                 value = value{R + 1 - get(pr.yslider, 'Value'), get(pr.xslider, 'Value')};
             end            
     end
@@ -298,11 +311,29 @@ function cb_xslider(pr)
 
     set(pr.xslider, 'Value', round(get(pr.xslider, 'Value')))
     
+% % %     if pr.get('XYSLIDERLOCK')
+% % %         el = pr.get('EL');
+% % %         prop = pr.get('PROP');
+% % %         value = el.get(prop);
+% % %         [R, C] = size(value);
+% % % 
+% % %         set(pr.yslider, 'Value', R + 1 - get(pr.xslider, 'Value'))
+% % %     end
+    
     pr.update()
 end
 function cb_yslider(pr)
     
     set(pr.yslider, 'Value', round(get(pr.yslider, 'Value')))
+    
+    if pr.get('XYSLIDERLOCK')
+        el = pr.get('EL');
+        prop = pr.get('PROP');
+        value = el.get(prop);
+        [R, C] = size(value);
+
+        set(pr.xslider, 'Value', C + 1 - get(pr.yslider, 'Value'))
+    end
 
     pr.update()
 end
