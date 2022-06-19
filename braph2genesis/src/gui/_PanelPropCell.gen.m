@@ -202,21 +202,21 @@ function update(pr)
     el = pr.get('EL');
     prop = pr.get('PROP');
     
-    if el.isLocked(prop)
-        set(pr.table, 'ColumnEditable', false)
-    end
+% % %     if el.isLocked(prop)
+% % %         set(pr.table, 'ColumnEditable', false)
+% % %     end
 
     switch el.getPropCategory(prop)
         case Category.METADATA
             set(pr.table, ...
                 'Data', set_sliders_and_get_value(), ... % % % 'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-                'ColumnEditable', true ...
+                'ColumnEditable', ~el.isLocked(prop) ... % % % true ...
                 )
 
         case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
             set(pr.table, ...
                 'Data', set_sliders_and_get_value(), ... % % % 'ColumnFormat', repmat({'long'}, 1, size(el.get(prop), 2)), ...
-                'ColumnEditable', true ...
+                'ColumnEditable', ~el.isLocked(prop) ... % % % true ...
                 )
             
             value = el.getr(prop);
