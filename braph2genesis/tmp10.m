@@ -3,13 +3,21 @@ delete(findall(0, 'type', 'figure'))
 clear all
 clc
 
-el_class = 'AnalyzeGroup_ST_BUT';
-delete([fileparts(which('braph2')) '/pipelines/structural/' el_class '.m'])
-create_Element([fileparts(which('braph2genesis')) '/pipelines/structural/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/structural'])
-create_Element([fileparts(which('braph2genesis')) '/pipelines/structural/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/structural'])
-% create_test_Element([fileparts(which('braph2genesis')) '/pipelines/structural/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/structural'])
-% test_code = ['test_' el_class]
-% eval(test_code)
+% el_class = 'MultigraphBUT';
+% delete([fileparts(which('braph2')) '/graphs/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
+% create_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
+% % create_test_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
+% % test_code = ['test_' el_class]
+% % eval(test_code)
+
+% el_class = 'AnalyzeGroup_ST_BUT';
+% delete([fileparts(which('braph2')) '/pipelines/structural/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/pipelines/structural/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/structural'])
+% create_Element([fileparts(which('braph2genesis')) '/pipelines/structural/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/structural'])
+% % create_test_Element([fileparts(which('braph2genesis')) '/pipelines/structural/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/structural'])
+% % test_code = ['test_' el_class]
+% % eval(test_code)
 
 % el_class = 'PanelPropRVectorSmart';
 % delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
