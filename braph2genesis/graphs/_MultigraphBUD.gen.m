@@ -27,8 +27,6 @@ negativity = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
 DENSITIES (parameter, rvector) is the vector of densities.
-%%%% ¡gui_!
-% % % pr = PlotPropSmartVector('EL', g, 'PROP', MultigraphBUD.DENSITIES, 'MAX', 100, 'MIN', 0, varargin{:});
 
 %% ¡props_update!
 
@@ -49,12 +47,14 @@ value = A;
 %%%% ¡gui!
 bas = g.get('BAS');
 ba = bas{1};
-brs = ba.get('BR_DICT').getItems();
-rowname = '{';
-for bri = 1:1:length(brs)
-    rowname = [rowname ' ''' brs{bri}.get('ID') ''''];
-end
-rowname = [rowname '}'];
+br_ids = ba.get('BR_DICT').getKeys();
+rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
+% % % brs = ba.get('BR_DICT').getItems();
+% % % rowname = '{';
+% % % for bri = 1:1:length(brs)
+% % %     rowname = [rowname ' ''' brs{bri}.get('ID') ''''];
+% % % end
+% % % rowname = [rowname '}'];
 
 densities = g.get('DENSITIES');
 xsliderlabels = '{';
