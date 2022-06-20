@@ -1,6 +1,12 @@
 %TEXT_CELL2STR
 
 %% Test 1
+cel = {};
+str = cell2str(cel);
+assert(isequal(str, sprintf('')), ...
+	[BRAPH2.STR ':cell2str:' BRAPH2.BUG_FUNC], ...
+	'Error in cell2str().')
+
 cel = {'uno' 'due' 'tre'};
 str = cell2str(cel);
 assert(isequal(str, sprintf('uno\ndue\ntre')), ...

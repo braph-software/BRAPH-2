@@ -6,6 +6,10 @@ function cel = str2cell(str)
 %
 % See also CELL2STR.
 
-cel = splitlines(str);
+if isempty(str)
+    cel = {};
+else
+    cel = splitlines(str);
+end
 
 end
