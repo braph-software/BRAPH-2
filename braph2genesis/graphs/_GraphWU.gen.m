@@ -29,12 +29,13 @@ B (data, smatrix) is the input graph adjacency matrix.
 %%%% ¡gui!
 bas = g.get('BAS');
 ba = bas{1};
-brs = ba.get('BR_DICT').getItems();
-rowname = '{';
-for bri = 1:1:length(brs)
-    rowname = [rowname ' ''' brs{bri}.get('ID') ''''];
-end
-rowname = [rowname '}'];
+rowname = ['{' sprintf('''%s'' ', ba.get('BR_DICT').getKeys()) '}'];
+% % % brs = ba.get('BR_DICT').getItems();
+% % % rowname = '{';
+% % % for bri = 1:1:length(brs)
+% % %     rowname = [rowname ' ''' brs{bri}.get('ID') ''''];
+% % % end
+% % % rowname = [rowname '}'];
 pr = PanelPropMatrix('EL', g, 'PROP', GraphWU.B, ...
     'ROWNAME', rowname, ...
     'COLUMNNAME', rowname, ...
