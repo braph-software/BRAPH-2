@@ -82,6 +82,9 @@ menu_hide_selection
 menu_hide_all
 %
 menu_colorize_table
+% 
+menu_export_data
+cell_selection_table
 
 f_its % figures for items
 
@@ -175,6 +178,12 @@ function p_out = draw(pr, varargin)
                 'MenuSelectedFcn', {@cb_colorize_table} ...
                 );
         end
+        pr.menu_export_data = uimenu( ...
+            'Separator', 'on', ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_export_data', ...
+            'Text', 'Export Data', ...
+            'MenuSelectedFcn', {@cb_export_data});
     end
     function cb_select_all(~, ~) 
         pr.cb_select_all()
@@ -208,6 +217,9 @@ function p_out = draw(pr, varargin)
             pr.cb_colorize_table(true)
         end
     end
+    function cb_export_data(~, ~)
+        pr.cb_export_data()
+    end
 
     if ~check_graphics(pr.table, 'uitable')
         pr.table = uitable( ...
@@ -217,6 +229,9 @@ function p_out = draw(pr, varargin)
             'ColumnSortable', true, ...
             'CellEditCallback', {@cb_table_edit} ...
             );
+        pr.table.SelectionType = 'cell';
+        pr.table.Multiselect = 'on';
+        pr.table.CellSelectionCallback  = @cb_selected_cells; % 2021a function
     end
     if isempty(pr.get('COLS')) || ismember(pr.SELECTOR, pr.get('COLS'))
         set(pr.table, 'ContextMenu', pr.contextmenu)
@@ -242,6 +257,29 @@ function p_out = draw(pr, varargin)
         end
         
         pr.update() % placed here for numerical efficiency
+    end
+    function cb_selected_cells(src, event)
+        indices = event.Indices;
+        table_data = src.Data;
+        table_headers = src.ColumnName;
+        
+        % indices output is a matrix
+        unique_columns = unique([indices(:, 2)]);
+        unique_rows = unique([indices(:, 1)]);
+        wide_tmp_tbl = length(unique_columns);
+        height_tmp_tbl = length(unique_rows);
+        tmp_headers = table_headers(unique_columns);
+        tmp_data = cell(height_tmp_tbl, wide_tmp_tbl);
+        for i = 1: size(indices, 1)
+            tmp_j = find(unique_columns == indices(i, 2));
+            tmp_i = find(unique_rows == indices(i, 1));
+            tmp_data{tmp_i, tmp_j} = table_data{indices(i, 1), indices(i, 2)};
+        end
+        
+        
+        % create table
+        t = cell2table(tmp_data, 'VariableNames', tmp_headers');
+        pr.cell_selection_table = t;
     end
     
     % output
@@ -808,6 +846,17 @@ function cb_colorize_table(pr, checked)
     set(pr.menu_colorize_table, 'Checked', checked)
     
     pr.update()    
+end
+function cb_export_data(pr)
+    % CB_EXPORT_DATA exports selected data from uitable to a xlsx file
+    if ~isempty(pr.cell_selection_table) && istable(pr.cell_selection_table)
+        table_to_export = pr.cell_selection_table;
+        [filename, filepath, filterindex] = uiputfile({'*.xlsx';'*.xls'}, 'Select Excel file');
+        if filterindex
+            file = [filepath filename];
+            writetable(table_to_export, file);
+        end
+    end
 end
 function cb_bring_to_front(pr)
     %CB_BRING_TO_FRONT brings to front the table figure and its subfigures.
