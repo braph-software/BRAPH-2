@@ -23,6 +23,12 @@ NOTES (metadata, string) are some specific notes about the graph.
 pr = PanelPropStringTextArea('EL', g, 'PROP', Graph.NOTES, varargin{:});
 
 %%% ¡prop!
+LAYERTICKS (figure, rvector) are the layer tick positions.
+
+%%% ¡prop!
+LAYERLABELS (figure, string) are the layer labels (newline-separated string).
+
+%%% ¡prop!
 BAS (data, itemlist) is a list of brain atlases associated with the graph.
 %%%% ¡settings!
 'BrainAtlas'
