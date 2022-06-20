@@ -1,16 +1,11 @@
 function str = cell2str(cel)
-%CLEAN_VARARGIN cleans varargin
+%CELL2STR transforms a cell array of strings into a string
 %
-% CLEANED = CLEAN_VARARGIN(HANDLES, VARARGIN) shallow copy of VARARGIN
-%  including only the properties in HANDLES. HANDLES is a cell array with a
-%  list of property names, i.e. HANDLES = {'PropertyName1', 'PropertyName2', ...}.
-%  VARARGIN is passed as a cell array.
+% STR = CELL2STR(CEL) transforms the cell array of strings CEL into a
+%  string with each element of CEL on a different line (separator \n).
+%  Cel cna be either a row or colum cell array.
 %
-% COPY = CLEAN_VARARGIN(HANDLES, 'PropertyName', PROPERTY, ... ) 
-%  VARARGIN can also be passed as a list of couples each including a 
-%  'PropertyName' and a PROPERTY.
-%
-% See also GET_FROM_VARARGIN, COPY_VARARGIN, REMOVE_FROM_VARARGIN, GET_AND_REMOVE_FROM_VARARGIN.
+% See also STR2CELL.
 
 str = sprintf('%s\n', cel{:});
 str = str(1:end-1);

@@ -1,5 +1,5 @@
 function wb_out = braph2waitbar(wb, x, msg)
-%BRAPH2WAITBAR manages a waitbar.
+%BRAPH2WAITBAR manages a waitbar
 %
 % WB = BRAPH2WAITBAR(SWITCH, X, MESSAGE) creates the waitbar WB, if SWITCH = true.
 %  If SWITCH = false, it retuns WB = false.
