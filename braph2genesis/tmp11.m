@@ -34,13 +34,13 @@ clc
 % % test_code = ['test_' el_class]
 % % eval(test_code)
 
-% el_class = 'GraphWU';
-% delete([fileparts(which('braph2')) '/graphs/' el_class '.m'])
-% create_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
-% create_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
-% % create_test_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
-% % test_code = ['test_' el_class]
-% % eval(test_code)
+el_class = 'GraphWU';
+delete([fileparts(which('braph2')) '/graphs/' el_class '.m'])
+create_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
+create_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
+% create_test_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
+% test_code = ['test_' el_class]
+% eval(test_code)
 
 el_class = 'MultigraphBUD';
 delete([fileparts(which('braph2')) '/graphs/' el_class '.m'])
@@ -78,10 +78,10 @@ create_Element([fileparts(which('braph2genesis')) '/pipelines/structural/_' el_c
 % GUIElement('PE', Pipeline()).draw
 
 %% 
-% % pip_ST_WU = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_a_ST_WU.b2']);
-% pip_ST_WU = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_a_ST_WU calc.b2']);
-% gui_ST_WU = GUIElement('PE', pip_ST_WU);
-% f_ST_WU = gui_ST_WU.draw();
+% pip_ST_WU = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_a_ST_WU.b2']);
+pip_ST_WU = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_a_ST_WU calc.b2']);
+gui_ST_WU = GUIElement('PE', pip_ST_WU);
+f_ST_WU = gui_ST_WU.draw();
 
 %%
 % % pip_ST_BUD = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_a_ST_BUD.b2']);
