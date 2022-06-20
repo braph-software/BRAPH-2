@@ -40,7 +40,7 @@ A = cell(length(thresholds));
 
 for i = 1:1:length(thresholds)
     threshold = thresholds(i);
-    A{i, i} = binarize(cell2mat(A_WU), 'threshold', threshold);
+    A{i, i} = dediagonalize(binarize(cell2mat(A_WU), 'threshold', threshold));
 end
 
 value = A;
@@ -56,23 +56,32 @@ rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
 % % % end
 % % % rowname = [rowname '}'];
 
-thresholds = g.get('THRESHOLDS');
-xsliderlabels = '{';
-for i = 1:1:length(thresholds)
-    xsliderlabels = [xsliderlabels ' ''' num2str(thresholds(i)) ''''];
+% % % thresholds = g.get('THRESHOLDS');
+% % % xsliderlabels = '{';
+% % % for i = 1:1:length(thresholds)
+% % %     xsliderlabels = [xsliderlabels ' ''' num2str(thresholds(i)) ''''];
+% % % end
+% % % xsliderlabels = [xsliderlabels '}'];
+% % % ysliderlabels = '{';
+% % % for i = length(thresholds):-1:1
+% % %     ysliderlabels = [ysliderlabels ' ''' num2str(thresholds(i)) ''''];
+% % % end
+% % % ysliderlabels = [ysliderlabels '}'];
+
+if isempty(g.get('LAYERLABELS'))
+    xlayerlabels = PanelPropCell.getPropDefault('XSLIDERLABELS');
+    ylayerlabels = PanelPropCell.getPropDefault('YSLIDERLABELS');
+else
+    layerlabels = str2cell(g.get('LAYERLABELS'));
+    xlayerlabels = ['{' sprintf('''%s'' ', layerlabels{:}) '}'];
+    ylayerlabels = ['{' sprintf('''%s'' ', layerlabels{end:-1:1}) '}'];
 end
-xsliderlabels = [xsliderlabels '}'];
-ysliderlabels = '{';
-for i = length(thresholds):-1:1
-    ysliderlabels = [ysliderlabels ' ''' num2str(thresholds(i)) ''''];
-end
-ysliderlabels = [ysliderlabels '}'];
 
 pr = PanelPropCell('EL', g, 'PROP', GraphWU.A, ...
     'TAB_H', 40, ...
     'XYSLIDERLOCK', true, ... 
     'XSLIDER', false, 'YSLIDER', true, ...
-    'XSLIDERLABELS', xsliderlabels, 'YSLIDERLABELS', ysliderlabels, ...
+    'XSLIDERLABELS', xlayerlabels, 'YSLIDERLABELS', ylayerlabels, ...
     'XSLIDERHEIGHT', 3, 'YSLIDERWIDTH', 5, ...
     'ROWNAME', rowname, ...
     'COLUMNNAME', rowname, ...
