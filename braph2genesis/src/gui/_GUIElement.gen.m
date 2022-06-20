@@ -262,6 +262,10 @@ function x_draw(gui, f)
 % % %                 
                 pe.reinit(tmp_el)
                 el = tmp_el; % update local variable 'el' to synchronize it with pe 'el'
+                
+                gui.set('FILE', filename)
+                update_filename()
+
 % % % 
 % % %                 % the motion of the figure is to ensure the correct
 % % %                 % rendering of the opened element
