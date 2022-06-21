@@ -64,6 +64,11 @@ MENU_OPEN (gui, logical) determines whether to show the context menu to open the
 %%%% ¡default!
 false
 
+%%% ¡prop!
+MENU_EXPORT (gui, logical) determines whether to show the context menu to export data.
+%%%% ¡default!
+true
+
 %% ¡properties!
 p
 table
@@ -83,7 +88,7 @@ menu_hide_all
 %
 menu_colorize_table
 % 
-menu_export_data
+menu_export_to_xls
 cell_selection_table
 
 f_its % figures for items
@@ -178,12 +183,14 @@ function p_out = draw(pr, varargin)
                 'MenuSelectedFcn', {@cb_colorize_table} ...
                 );
         end
-        pr.menu_export_data = uimenu( ...
-            'Separator', 'on', ...
-            'Parent', pr.contextmenu, ...
-            'Tag', 'menu_export_data', ...
-            'Text', 'Export Data', ...
-            'MenuSelectedFcn', {@cb_export_data});
+        if pr.get('MENU_EXPORT')
+            pr.menu_export_to_xls = uimenu( ...
+                'Separator', 'on', ...
+                'Parent', pr.contextmenu, ...
+                'Tag', 'menu_export_to_xls', ...
+                'Text', 'Export to XLS', ...
+                'MenuSelectedFcn', {@cb_export_data});
+        end
     end
     function cb_select_all(~, ~) 
         pr.cb_select_all()
@@ -262,6 +269,7 @@ function p_out = draw(pr, varargin)
         indices = event.Indices;
         table_data = src.Data;
         table_headers = src.ColumnName;
+        table_rowNames = src.RowName;
         
         % indices output is a matrix
         unique_columns = unique([indices(:, 2)]);
@@ -269,6 +277,7 @@ function p_out = draw(pr, varargin)
         wide_tmp_tbl = length(unique_columns);
         height_tmp_tbl = length(unique_rows);
         tmp_headers = table_headers(unique_columns);
+        tmp_rows_names = table_rowNames(unique_rows);
         tmp_data = cell(height_tmp_tbl, wide_tmp_tbl);
         for i = 1: size(indices, 1)
             tmp_j = find(unique_columns == indices(i, 2));
@@ -276,12 +285,18 @@ function p_out = draw(pr, varargin)
             tmp_data{tmp_i, tmp_j} = table_data{indices(i, 1), indices(i, 2)};
         end
         
+        % selection column header
+        if isempty(tmp_headers{1})
+            tmp_headers{1} = 'SEL';
+        end
         
         % create table
-        t = cell2table(tmp_data, 'VariableNames', tmp_headers');
+        t = cell2table(tmp_data, ...
+            'VariableNames', tmp_headers', ...
+            'RowNames', tmp_rows_names);
         pr.cell_selection_table = t;
     end
-    
+
     % output
     if nargout > 0
         p_out = pr.p;
@@ -854,8 +869,40 @@ function cb_export_data(pr)
         [filename, filepath, filterindex] = uiputfile({'*.xlsx';'*.xls'}, 'Select Excel file');
         if filterindex
             file = [filepath filename];
-            writetable(table_to_export, file);
+            writetable(table_to_export, file, 'WriteRowNames',true);
         end
+    elseif isempty(pr.selected)
+        % create table to export
+        data = pr.table.Data;
+        columns = pr.table.ColumName;
+        rows = pr.table.RowName;   
+        columns{1} = 'SEL';
+        t = table(data, ...
+            'VariableNames', columns, ...
+            'RowNames', rows);
+        
+        % put table into file
+        [filename, filepath, filterindex] = uiputfile({'*.xlsx';'*.xls'}, 'Select Excel file');
+        if filterindex
+            file = [filepath filename];
+            writetable(t, file, 'WriteRowNames', true);
+        end
+    else % pr.selected have values
+        data = pr.table.Data(pr.selected, :);
+        columns = pr.table.ColumnName;
+        rows = pr.table.RowName(pr.selected);
+        columns{1} = 'SEL';
+        t = table(data, ...
+            'VariableNames', columns, ...
+            'RowNames', rows);
+        
+        % put table into file
+        [filename, filepath, filterindex] = uiputfile({'*.xlsx';'*.xls'}, 'Select Excel file');
+        if filterindex
+            file = [filepath filename];
+            writetable(t, file, 'WriteRowNames', true);
+        end 
+        
     end
 end
 function cb_bring_to_front(pr)
