@@ -10,6 +10,14 @@ close all
 clear all
 clc
 
+el_class = 'Measure';
+delete([fileparts(which('braph2')) '/src/gt/' el_class '.m'])
+create_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
+create_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
+% create_test_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
+% test_code = ['test_' el_class]
+% eval(test_code)
+
 % el_class = 'GUIElement';
 % delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
 % create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
@@ -42,13 +50,13 @@ clc
 % % test_code = ['test_' el_class]
 % % eval(test_code)
 
-el_class = 'MultigraphBUD';
-delete([fileparts(which('braph2')) '/graphs/' el_class '.m'])
-create_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
-create_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
-% create_test_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
-% test_code = ['test_' el_class]
-% eval(test_code)
+% el_class = 'MultigraphBUD';
+% delete([fileparts(which('braph2')) '/graphs/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
+% create_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
+% % create_test_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
+% % test_code = ['test_' el_class]
+% % eval(test_code)
 
 % el_class = 'AnalyzeGroup_ST_BUD';
 % delete([fileparts(which('braph2')) '/pipelines/structural/' el_class '.m'])
@@ -58,13 +66,13 @@ create_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m']
 % % test_code = ['test_' el_class]
 % % eval(test_code)
 
-el_class = 'MultigraphBUT';
-delete([fileparts(which('braph2')) '/graphs/' el_class '.m'])
-create_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
-create_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
-% create_test_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
-% test_code = ['test_' el_class]
-% eval(test_code)
+% el_class = 'MultigraphBUT';
+% delete([fileparts(which('braph2')) '/graphs/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
+% create_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
+% % create_test_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
+% % test_code = ['test_' el_class]
+% % eval(test_code)
 
 % el_class = 'AnalyzeGroup_ST_BUT';
 % delete([fileparts(which('braph2')) '/pipelines/structural/' el_class '.m'])
