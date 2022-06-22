@@ -89,7 +89,6 @@ menu_hide_all
 menu_colorize_table
 % 
 menu_export_to_xls
-cell_selection_table
 
 f_its % figures for items
 
@@ -189,7 +188,7 @@ function p_out = draw(pr, varargin)
                 'Parent', pr.contextmenu, ...
                 'Tag', 'menu_export_to_xls', ...
                 'Text', 'Export to XLS', ...
-                'MenuSelectedFcn', {@cb_export_data});
+                'MenuSelectedFcn', {@cb_export_to_xls});
         end
     end
     function cb_select_all(~, ~) 
@@ -224,8 +223,8 @@ function p_out = draw(pr, varargin)
             pr.cb_colorize_table(true)
         end
     end
-    function cb_export_data(~, ~)
-        pr.cb_export_data()
+    function cb_export_to_xls(~, ~)
+        pr.cb_export_to_xls()
     end
 
     if ~check_graphics(pr.table, 'uitable')
@@ -862,47 +861,32 @@ function cb_colorize_table(pr, checked)
     
     pr.update()    
 end
-function cb_export_data(pr)
-    % CB_EXPORT_DATA exports selected data from uitable to a xlsx file
-    if ~isempty(pr.cell_selection_table) && istable(pr.cell_selection_table)
-        table_to_export = pr.cell_selection_table;
-        [filename, filepath, filterindex] = uiputfile({'*.xlsx';'*.xls'}, 'Select Excel file');
-        if filterindex
-            file = [filepath filename];
-            writetable(table_to_export, file, 'WriteRowNames',true);
-        end
-    elseif isempty(pr.selected)
-        % create table to export
-        data = pr.table.Data;
-        columns = pr.table.ColumName;
-        rows = pr.table.RowName;   
-        columns{1} = 'SEL';
-        t = table(data, ...
-            'VariableNames', columns, ...
-            'RowNames', rows);
-        
-        % put table into file
-        [filename, filepath, filterindex] = uiputfile({'*.xlsx';'*.xls'}, 'Select Excel file');
-        if filterindex
-            file = [filepath filename];
-            writetable(t, file, 'WriteRowNames', true);
-        end
-    else % pr.selected have values
-        data = pr.table.Data(pr.selected, :);
-        columns = pr.table.ColumnName;
-        rows = pr.table.RowName(pr.selected);
-        columns{1} = 'SEL';
-        t = table(data, ...
-            'VariableNames', columns, ...
-            'RowNames', rows);
-        
-        % put table into file
-        [filename, filepath, filterindex] = uiputfile({'*.xlsx';'*.xls'}, 'Select Excel file');
-        if filterindex
-            file = [filepath filename];
-            writetable(t, file, 'WriteRowNames', true);
-        end 
-        
+function cb_export_to_xls(pr)
+    %CB_EXPORT_DATA exports selected data from uitable to an XLSX file.
+    
+    if isempty(pr.selected)
+        el = pr.get('EL');
+        prop = pr.get('PROP');
+        dict = el.get(prop);
+
+        selected = [1:1:dict.length()];
+    else
+        selected = pr.selected;
+    end
+    
+    % create data table
+    data = pr.table.Data;
+    columns = pr.table.ColumName;
+    rows = pr.table.RowName;
+    t = table(data, ...
+        'VariableNames', columns, ...
+        'RowNames', rows);
+
+    % save file
+    [filename, filepath, filterindex] = uiputfile({'*.xlsx';'*.xls'}, 'Select Excel file');
+    if filterindex
+        file = [filepath filename];
+        writetable(t, file, 'WriteRowNames', true);
     end
 end
 function cb_bring_to_front(pr)
