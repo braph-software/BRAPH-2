@@ -234,10 +234,7 @@ function p_out = draw(pr, varargin)
             'FontSize', BRAPH2.FONTSIZE, ...
             'ColumnSortable', true, ...
             'CellEditCallback', {@cb_table_edit} ...
-            );
-        pr.table.SelectionType = 'cell';
-        pr.table.Multiselect = 'on';
-        pr.table.CellSelectionCallback  = @cb_selected_cells; % 2021a function
+            );       
     end
     if isempty(pr.get('COLS')) || ismember(pr.SELECTOR, pr.get('COLS'))
         set(pr.table, 'ContextMenu', pr.contextmenu)
@@ -264,38 +261,7 @@ function p_out = draw(pr, varargin)
         
         pr.update() % placed here for numerical efficiency
     end
-    function cb_selected_cells(src, event)
-        indices = event.Indices;
-        table_data = src.Data;
-        table_headers = src.ColumnName;
-        table_rowNames = src.RowName;
-        
-        % indices output is a matrix
-        unique_columns = unique([indices(:, 2)]);
-        unique_rows = unique([indices(:, 1)]);
-        wide_tmp_tbl = length(unique_columns);
-        height_tmp_tbl = length(unique_rows);
-        tmp_headers = table_headers(unique_columns);
-        tmp_rows_names = table_rowNames(unique_rows);
-        tmp_data = cell(height_tmp_tbl, wide_tmp_tbl);
-        for i = 1: size(indices, 1)
-            tmp_j = find(unique_columns == indices(i, 2));
-            tmp_i = find(unique_rows == indices(i, 1));
-            tmp_data{tmp_i, tmp_j} = table_data{indices(i, 1), indices(i, 2)};
-        end
-        
-        % selection column header
-        if isempty(tmp_headers{1})
-            tmp_headers{1} = 'SEL';
-        end
-        
-        % create table
-        t = cell2table(tmp_data, ...
-            'VariableNames', tmp_headers', ...
-            'RowNames', tmp_rows_names);
-        pr.cell_selection_table = t;
-    end
-
+    
     % output
     if nargout > 0
         p_out = pr.p;

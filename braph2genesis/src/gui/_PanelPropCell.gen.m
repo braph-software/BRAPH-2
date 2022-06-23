@@ -64,11 +64,20 @@ COLUMNNAME (gui, string) determines the table column names (to be evaluated).
 %%%% ¡default!
 '''numbered'''
 
+%%% ¡prop!
+MENU_EXPORT (gui, logical) determines whether to show the context menu to export data.
+%%%% ¡default!
+true
+
 %% ¡properties!
 p
 table
 xslider
 yslider
+
+contextmenu
+%
+menu_export_to_xls
 
 %% ¡methods!
 function p_out = draw(pr, varargin)
@@ -138,6 +147,22 @@ function p_out = draw(pr, varargin)
     end
     function cb_yslider(~, ~) % (src, event)
         pr.cb_yslider()
+    end
+
+    if ~check_graphics(pr.contextmenu, 'uicontextmenu')
+        pr.contextmenu = uicontextmenu(...
+            'Parent', ancestor(pr.p, 'figure'), ...
+            'Tag', 'contextmenu');
+        if pr.get('MENU_EXPORT')
+            pr.menu_export_to_xls = uimenu( ...
+                'Parent', pr.contextmenu, ...
+                'Tag', 'menu_export_to_xls', ...
+                'Text', 'Export to XLS', ...
+                'MenuSelectedFcn', @{cb_export_to_xls});
+        end
+    end
+    function cb_export_to_xls(~, ~)
+        pr.cb_export_to_xls();
     end
 
     % output
@@ -324,6 +349,25 @@ function cb_cell_value(pr, i, j, newdata)
     el.set(prop, value)
 
 % % %     pr.update()
+end
+function cb_export_to_xls(pr)
+%CB_EXPORT_DATA exports selected data from uitable to an XLSX file.
+    data = pr.table.Data;
+    columns = pr.table.ColumnName;
+    rows = pr.table.RowName;
+    if isequal(rows, 'numbered')
+        rows = cellfun(@(x) num2str(x), num2cell([1:size(data, 1)]), 'UniformOutput', false);
+    end
+    t = cell2table(data, ...
+        'VariableNames', columns, ...
+        'RowNames', rows);
+
+    % save file
+    [filename, filepath, filterindex] = uiputfile({'*.xlsx';'*.xls'}, 'Select Excel file');
+    if filterindex
+        file = [filepath filename];
+        writetable(t, file, 'WriteRowNames', true);
+    end
 end
 function cb_xslider(pr)
 
