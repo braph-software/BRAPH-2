@@ -29,7 +29,7 @@ im_gr2 = ImporterGroupSubjectST_XLS( ...
 gr2 = im_gr2.get('GR');
 
 %% Analysis BUD
-densities = 0:101:100;
+densities = 0:10:100;
 
 a_BUD1 = AnalyzeGroup_ST_BUD('GR', gr1, 'DENSITIES', densities);
 

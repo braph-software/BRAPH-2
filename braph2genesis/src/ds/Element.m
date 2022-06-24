@@ -1735,7 +1735,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %
             % EL_CLONE = CLONE(EL, [], CB_CATEGORIES) has callbacks for the categories CB_CATEGORIES.
             %
-            % EL_CLONE = CLONE(EL, [], , [], LOCKED_CATEGORIES) locks the categories LOCKED_CATEGORIES.
+            % EL_CLONE = CLONE(EL, [], [], LOCKED_CATEGORIES) locks the categories LOCKED_CATEGORIES.
             %
             % See also deepclone, Category.
             
@@ -1782,7 +1782,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 
                 % LOCKED
                 if any(strcmp(el_clone.getPropCategory(prop), locked_categories))
-                    el_clone.props{prop}.locked = el.props{prop}.true;
+                    el_clone.props{prop}.locked = true;
                 end
             end
         end
