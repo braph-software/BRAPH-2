@@ -18,7 +18,7 @@ gr2 = ImporterGroupSubjectST_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Gr
 a_WU1 = AnalyzeGroup_ST_WU('GR', gr1); % Analyze Group 1 % Group 1 Analysis
 
 %% Analysis 2
-a_WU2 = AnalyzeGroup_ST_WU('GR', gr2); % Analyze Group 2 % Group 2 Analysis
+a_WU2 = a_WU1.clone({Category.PARAMETER Category.FIGURE Category.GUI}, {}, {Category.PARAMETER}).set('GR', gr2); % Analyze Group 2 % Group 2 Analysis
 
 %% Comparison
 c_WU = CompareGroup('P', 10, 'A1', a_WU1, 'A2', a_WU2, 'MEMORIZE', true); % Compare Groups % Group Comparison

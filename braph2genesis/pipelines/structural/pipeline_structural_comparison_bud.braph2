@@ -18,7 +18,7 @@ gr2 = ImporterGroupSubjectST_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Gr
 a_BUD1 = AnalyzeGroup_ST_BUD('GR', gr1, 'Densities', [0 20 40 60 80 100]); % Analyze Group 1 % Group 1 Analysis
 
 %% Analysis 2
-a_BUD2 = AnalyzeGroup_ST_BUD('GR', gr2, 'Densities', [0 20 40 60 80 100]); % Analyze Group 2 % Group 2 Analysis
+a_BUD2 = a_BUD1.clone({Category.PARAMETER Category.FIGURE Category.GUI}, {}, {Category.PARAMETER}).set('GR', gr2); % Analyze Group 2 % Group 2 Analysis
 
 %% Comparison
 c_BUD = CompareGroup('P', 10, 'A1', a_BUD1, 'A2', a_BUD2, 'MEMORIZE', true); % Compare Groups % Group Comparison
