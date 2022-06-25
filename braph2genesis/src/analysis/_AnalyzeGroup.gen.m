@@ -23,6 +23,27 @@ NOTES (metadata, string) are some specific notes about the graph analysis.
 pr = PanelPropStringTextArea('EL', a, 'PROP', AnalyzeGroup.NOTES, varargin{:});
 
 %%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'AnalyzeGroup'
+%%%% ¡postprocessing!
+if a.prop_set(AnalyzeGroup.TEMPLATE, varargin{:})
+    varargin = {};
+    
+    parameters = a.getProps(Category.PARAMETER);
+    for i = 1:1:length(parameters)
+        parameter = parameters(i);
+        
+        if parameter ~= AnalyzeGroup.TEMPLATE
+            varargin{length(varargin) + 1} = parameter;
+            varargin{length(varargin) + 1} = Callback('EL', a.get('TEMPLATE'), 'PROP', parameter);
+        end
+    end
+    
+    a.set(varargin{:});
+end
+
+%%% ¡prop!
 WAITBAR (gui, logical) detemines whether to show the waitbar.
 %%%% ¡default!
 true
