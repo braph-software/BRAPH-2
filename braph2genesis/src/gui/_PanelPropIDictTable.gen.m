@@ -841,9 +841,9 @@ function cb_export_to_xls(pr)
     end
     
     % create data table
-    data = pr.table.Data;
+    data = pr.table.Data(selected, :);
     columns = pr.table.ColumnName;
-    rows = pr.table.RowName;
+    rows = pr.table.RowName(selected, :);
     % special rules: selection column, numbered rownames.
     if isempty(columns{1})
         columns{1} = 'sel';
