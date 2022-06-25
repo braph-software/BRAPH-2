@@ -1,7 +1,7 @@
-% file = 'MultigraphBUT.layout'
+% file = 'AnalyzeGroup_ST_WU.layout'
 % load(file, '-mat')
-% order = [order(1:3) NaN NaN order(4:end)]
-% title = {title{1:3} 'LAYERTICKS' 'LAYERLABELS' title{4:end}}
+% order = [order(1:6) NaN order(7:end)]
+% title = {title{1:6} 'A_PARAM' title{7:end}}
 % save(file, 'order', 'title', '-mat')
 
 %%
