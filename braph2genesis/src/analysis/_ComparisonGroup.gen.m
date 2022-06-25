@@ -24,7 +24,7 @@ NOTES (metadata, string) are some specific notes about the group-based compariso
 MEASURE (data, string) is the measure class.
 
 %%% ¡prop!
-MEASUREPARAM(data, item) provides the measure parameters. 
+MEASURE_TEMPLATE(data, item) provides the measure parameters. 
 %%%% ¡settings!
 'Measure'
 
@@ -94,14 +94,14 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     end
     
 	% get parameters from example measure
-    core_measure = cp.get('MEASUREPARAM');
+    core_measure = cp.get('MEASURE_TEMPLATE');
     j = 1;
     varargin = {};
     if Measure.getPropNumber() ~= core_measure.getPropNumber()
-        for i = Measure.getPropNumber() + 1:core_measure.getPropNumber()
-            if ~isa(core_measure.getr(i), 'NoValue')
-                varargin{j} = core_measure.getPropTag(i);
-                varargin{j + 1} = core_measure.getr(i);
+        for j = Measure.getPropNumber() + 1:core_measure.getPropNumber()
+            if ~isa(core_measure.getr(j), 'NoValue')
+                varargin{j} = core_measure.getPropTag(j);
+                varargin{j + 1} = Callback('EL' core_measure, 'PROP', j); % % % core_measure.getr(j);
             end
             j = j + 2;
         end
@@ -125,16 +125,18 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     diff_perms = cell(1, P);
 
     start = tic;
-    for i = 1:1:P
-        [a1_perm, a2_perm] = c.getPerm(i, c.get('MEMORIZE'));
+    for j = 1:20:P
+        parfor i = j:min(j+20, P)
+            [a1_perm, a2_perm] = c.getPerm(i, c.get('MEMORIZE'));
 
-        m1_perms{1, i} = a1_perm.memorize('G').getMeasure(measure_class).memorize('M');
-        m2_perms{1, i} = a2_perm.memorize('G').getMeasure(measure_class).memorize('M');
-        diff_perms{1, i} = cellfun(@(x, y) y - x, m1_perms{1, i}, m2_perms{1, i}, 'UniformOutput', false);
+            m1_perms{1, i} = a1_perm.memorize('G').getMeasure(measure_class).memorize('M');
+            m2_perms{1, i} = a2_perm.memorize('G').getMeasure(measure_class).memorize('M');
+            diff_perms{1, i} = cellfun(@(x, y) y - x, m1_perms{1, i}, m2_perms{1, i}, 'UniformOutput', false);
+        end
 
-        braph2waitbar(wb, i / P, ['Permutation ' num2str(i) ' of ' num2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's ...'])
+        braph2waitbar(wb, j / P, ['Permutation ' num2str(j) ' of ' num2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's ...'])
         if c.get('VERBOSE')
-            disp(['** PERMUTATION TEST - sampling #' int2str(i) '/' int2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's'])
+            disp(['** PERMUTATION TEST - sampling #' int2str(j) '/' int2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's'])
         end
         if c.get('INTERRUPTIBLE')
             pause(c.get('INTERRUPTIBLE'))
@@ -148,13 +150,13 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     p2 = cell(size(diff));
     ci_lower = cell(size(diff));
     ci_upper = cell(size(diff));
-    for i = 1:1:size(diff, 1)
+    for j = 1:1:size(diff, 1)
         for j = 1:1:size(diff, 2)
-            p1(i, j) = pvalue1(diff(i, j), cellfun(@(x) x{i, j}, diff_perms, 'UniformOutput', false));
-            p2(i, j) = pvalue1(diff(i, j), cellfun(@(x) x{i, j}, diff_perms, 'UniformOutput', false));
-            qtl = quantiles(cellfun(@(x) x{i, j}, diff_perms, 'UniformOutput', false), 40);
-            ci_lower(i, j) = {cellfun(@(x) x(2), qtl)};
-            ci_upper(i, j) = {cellfun(@(x) x(40), qtl)};
+            p1(j, j) = pvalue1(diff(j, j), cellfun(@(x) x{j, j}, diff_perms, 'UniformOutput', false));
+            p2(j, j) = pvalue1(diff(j, j), cellfun(@(x) x{j, j}, diff_perms, 'UniformOutput', false));
+            qtl = quantiles(cellfun(@(x) x{j, j}, diff_perms, 'UniformOutput', false), 40);
+            ci_lower(j, j) = {cellfun(@(x) x(2), qtl)};
+            ci_upper(j, j) = {cellfun(@(x) x(40), qtl)};
         end
     end
 end
