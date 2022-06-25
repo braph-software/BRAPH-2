@@ -70,6 +70,10 @@ g = GraphWU( ...
     'BAS', atlas ...
     );
 
+if ~isa(a.getr('TEMPLATE'), 'NoValue')
+    g.set('TEMPLATE', a.get('TEMPLATE').memorize('G'))
+end    
+
 value = g;
 
 % % % %% ¡methods!

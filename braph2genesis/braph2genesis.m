@@ -12,8 +12,8 @@
 %  <a href="matlab:help pipelines   ">pipelines</a>     - BRAPH2 pipelines
 %  <a href="matlab:help test        ">test</a>          - BRAPH2 test
 
-close all
 delete(findall(0, 'type', 'figure'))
+close all
 clear all %#ok<CLALL>
 clc
 
