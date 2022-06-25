@@ -23,6 +23,27 @@ NOTES (metadata, string) are some specific notes about the graph.
 pr = PanelPropStringTextArea('EL', g, 'PROP', Graph.NOTES, varargin{:});
 
 %%% ¡prop!
+TEMPLATE (parameter, item) is the graph template to set the graph and measure parameters.
+%%%% ¡settings!
+'Graph'
+%%%% ¡postprocessing!
+if g.prop_set(Graph.TEMPLATE, varargin{:})
+    varargin = {};
+    
+    parameters = g.getProps(Category.PARAMETER);
+    for i = 1:1:length(parameters)
+        parameter = parameters(i);
+        
+        if parameter ~= AnalyzeGroup.TEMPLATE
+            varargin{length(varargin) + 1} = parameter;
+            varargin{length(varargin) + 1} = Callback('EL', g.get('TEMPLATE'), 'PROP', parameter);
+        end
+    end
+    
+    g.set(varargin{:});
+end
+
+%%% ¡prop!
 LAYERTICKS (figure, rvector) are the layer tick positions.
 
 %%% ¡prop!
@@ -973,6 +994,19 @@ function m = getMeasure(g, measure_class, varargin)
     if m_dict.containsKey(measure_class)
         m = m_dict.getItem(measure_class);
     else
+        if ~isa(g.getr('TEMPLATE'), 'NoValue')
+            m_template = g.get('TEMPLATE').getMeasure(measure_class);
+            
+            parameters = m_template.getProps(Category.PARAMETER);
+            for i = 1:1:length(parameters)
+                parameter = parameters(i);
+
+                if parameter ~= AnalyzeGroup.TEMPLATE
+                    varargin{length(varargin) + 1} = parameter;
+                    varargin{length(varargin) + 1} = Callback('EL', m_template, 'PROP', parameter);
+                end
+            end
+        end
         m = eval([measure_class '(''ID'', measure_class, ''G'', g, varargin{:})']);
         m_dict.add(m);
     end
