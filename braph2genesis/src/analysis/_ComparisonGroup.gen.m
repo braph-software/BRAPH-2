@@ -101,7 +101,7 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
         for j = Measure.getPropNumber() + 1:core_measure.getPropNumber()
             if ~isa(core_measure.getr(j), 'NoValue')
                 varargin{j} = core_measure.getPropTag(j);
-                varargin{j + 1} = Callback('EL' core_measure, 'PROP', j); % % % core_measure.getr(j);
+                varargin{j + 1} = Callback('EL', core_measure, 'PROP', j); % % % core_measure.getr(j);
             end
             j = j + 2;
         end
@@ -110,7 +110,7 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     
     c = cp.get('C');
 
-    wb = braph2waitbar(c.get('WAITBAR'), 0, 'Comparing group analyses ...');
+    wb = braph2waitbar(c.get('WAITBAR'), 0, ['Comparing group ' cp.get('MEASURE') '...']);
 
     % Measure for groups 1 and 2, and their difference
     m1 = c.get('A1').get('G').getMeasure(measure_class, varargin{:}).memorize('M');
@@ -134,7 +134,7 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
             diff_perms{1, i} = cellfun(@(x, y) y - x, m1_perms{1, i}, m2_perms{1, i}, 'UniformOutput', false);
         end
 
-        braph2waitbar(wb, j / P, ['Permutation ' num2str(j) ' of ' num2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's ...'])
+        braph2waitbar(wb, j / P, ['Comparing group ' cp.get('MEASURE') '. Permutation ' num2str(j) ' of ' num2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's ...'])
         if c.get('VERBOSE')
             disp(['** PERMUTATION TEST - sampling #' int2str(j) '/' int2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's'])
         end
