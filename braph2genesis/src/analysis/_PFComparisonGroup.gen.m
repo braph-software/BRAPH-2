@@ -1,5 +1,5 @@
 %% ¡header!
-PFMeasure < PanelFig (pf, panel figure measure) is a plot of a measure.
+PFComparisonGroup < PanelFig (pf, panel figure measure) is a plot of a group comparison.
 
 %%% ¡description!
 % % % PFBrainSurface manages the plot of the brain surface choosen by the user. 
@@ -11,11 +11,11 @@ PFMeasure < PanelFig (pf, panel figure measure) is a plot of a measure.
 % % % edge color, and background color. 
 
 %%% ¡seealso!
-PanelFig, Measure
+PanelFig, ComparisonGroup
 
 %% ¡props!
 
 %%% ¡prop!
-M (metadata, item) is the measure.
+CP (metadata, item) is the group comparison.
 %%%% ¡settings!
-'Measure'
+'ComparisonGroup'

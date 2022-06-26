@@ -10,21 +10,21 @@ close all
 clear all
 clc
 
-el_class = 'CompareGroup';
-delete([fileparts(which('braph2')) '/src/analysis/' el_class '.m'])
-create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
-create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
-% create_test_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
-% test_code = ['test_' el_class]
-% eval(test_code)
+% el_class = 'CompareGroup';
+% delete([fileparts(which('braph2')) '/src/analysis/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
+% create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
+% % create_test_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
+% % test_code = ['test_' el_class]
+% % eval(test_code)
 
-el_class = 'PPCompareGroup_CpDict';
-delete([fileparts(which('braph2')) '/src/analysis/' el_class '.m'])
-create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
-create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
-% create_test_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
-% test_code = ['test_' el_class]
-% eval(test_code)
+% el_class = 'PPCompareGroup_CpDict';
+% delete([fileparts(which('braph2')) '/src/analysis/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
+% create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
+% % create_test_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
+% % test_code = ['test_' el_class]
+% % eval(test_code)
 
 % el_class = 'AnalyzeGroup';
 % delete([fileparts(which('braph2')) '/src/analysis/' el_class '.m'])
@@ -127,3 +127,13 @@ f_ST_BUD = gui_ST_BUD.draw();
 % pip_ST_BUT = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_a_ST_BUT calc.b2']);
 % gui_ST_BUT = GUIElement('PE', pip_ST_BUT);
 % f_ST_BUT = gui_ST_BUT.draw();
+
+%%
+% pip_ST_BUD = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_c_ST_BUD calc.b2']);
+% ba = pip_ST_BUD.get('PS_DICT').getItem(1).get('PC_DICT').getItem(1).get('EL');
+% gr1 = pip_ST_BUD.get('PS_DICT').getItem(2).get('PC_DICT').getItem(1).get('EL');
+% gr2 = pip_ST_BUD.get('PS_DICT').getItem(2).get('PC_DICT').getItem(2).get('EL');
+% a_BUD1 = pip_ST_BUD.get('PS_DICT').getItem(3).get('PC_DICT').getItem(1).get('EL');
+% a_BUD2 = pip_ST_BUD.get('PS_DICT').getItem(4).get('PC_DICT').getItem(1).get('EL');
+% c_BUD = CompareGroup('P', 10, 'A1', a_BUD1, 'A2', a_BUD2, 'MEMORIZE', true);
+% c_BUD.getComparison('Degree').get('DIFF')

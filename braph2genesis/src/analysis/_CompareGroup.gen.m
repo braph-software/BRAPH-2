@@ -23,6 +23,8 @@ pr = PanelPropStringTextArea('EL', c, 'PROP', CompareGroup.NOTES, varargin{:});
 
 %%% ¡prop!
 WAITBAR (gui, logical) detemines whether to show the waitbar.
+%%%% ¡default!
+true
 
 %%% ¡prop!
 VERBOSE (gui, logical) sets whether to write the progress of the comparisons.
@@ -153,7 +155,7 @@ function [a1_perm, a2_perm] = getPerm(c, i, memorize)
         a1_perm.get('GR').set('SUB_DICT', c.get('A1').get('GR').get('SUB_DICT').clone())
         a1_perm.get('GR').get('SUB_DICT').set('IT_LIST', subs1_perm)
 
-        a2_perm = c.get('A2').clone();
+        a2_perm = c.get('A1').clone(); % % % a2_perm = c.get('A2').clone();
         a2_perm.set( ...
             'ID', [c.get('A2').get('ID') ' permutation ' int2str(i)], ...
             'GR', c.get('A2').get('GR').clone() ...

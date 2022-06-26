@@ -73,6 +73,19 @@ value = ci_upper;
 %%%% ¡gui_!
 % % % pl = PPComparisonGroupDiff('EL', cp, 'PROP', ComparisonGroup.CIU, varargin{:});
 
+%%% ¡prop!
+PFC (gui, item) contains the panel figure of the comparison.
+%%%% ¡settings!
+'PFComparisonGroup'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    cp.memorize('PFC').set('CP', cp)
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', cp, 'PROP', ComparisonGroup.PFC, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
+
 %% ¡methods!
 function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     %CALCULATE_RESULTS calculates the comparison results.
@@ -150,13 +163,13 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     p2 = cell(size(diff));
     ci_lower = cell(size(diff));
     ci_upper = cell(size(diff));
-    for j = 1:1:size(diff, 1)
+    for i = 1:1:size(diff, 1)
         for j = 1:1:size(diff, 2)
-            p1(j, j) = pvalue1(diff(j, j), cellfun(@(x) x{j, j}, diff_perms, 'UniformOutput', false));
-            p2(j, j) = pvalue1(diff(j, j), cellfun(@(x) x{j, j}, diff_perms, 'UniformOutput', false));
+            p1(i, j) = pvalue1(diff(i, j), cellfun(@(x) x{i, j}, diff_perms, 'UniformOutput', false));
+            p2(i, j) = pvalue1(diff(i, j), cellfun(@(x) x{i, j}, diff_perms, 'UniformOutput', false));
             qtl = quantiles(cellfun(@(x) x{j, j}, diff_perms, 'UniformOutput', false), 40);
-            ci_lower(j, j) = {cellfun(@(x) x(2), qtl)};
-            ci_upper(j, j) = {cellfun(@(x) x(40), qtl)};
+            ci_lower(i, j) = {cellfun(@(x) x(2), qtl)};
+            ci_upper(i, j) = {cellfun(@(x) x(40), qtl)};
         end
     end
 end
