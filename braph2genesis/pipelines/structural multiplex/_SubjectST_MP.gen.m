@@ -123,9 +123,15 @@ BA (data, item) is a brain atlas.
 'BrainAtlas'
 
 %%% ¡prop!
-L (data, scalar) is the number of layers of subject.
+L (data, scalar) is the number of layers of subject data.
 %%%% ¡default!
 2
+
+%%% ¡prop!
+LAYERTICKS (figure, rvector) are the layer tick positions.
+
+%%% ¡prop!
+LAYERLABELS (figure, string) are the layer labels (newline-separated string).
 
 %%% ¡prop!
 ST_MP (data, cell) is a cell containing L vectors, each with data for each brain region.
@@ -139,7 +145,25 @@ else
     msg = ['ST_MP must be a column vector with the same number of element as the brain regions (' int2str(br_number) ').'];
 end
 %%%% ¡gui!
-pr = PPSubjectST_MP_ST_MP('EL', sub, 'PROP', SubjectST_MP.ST_MP, varargin{:});
+if isempty(sub.get('LAYERLABELS'))
+    xlayerlabels = PanelPropCell.getPropDefault('XSLIDERLABELS');
+else
+    xlayerlabels = str2cell(g.get('LAYERLABELS'));
+    xlayerlabels = ['{' sprintf('''%s'' ', xlayerlabels{end:-1:1}) '}'];
+end
+
+ba = sub.get('BA');
+br_ids = ba.get('BR_DICT').getKeys();
+rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
+
+pr = PanelPropCell('EL', sub, 'PROP', SubjectST_MP.ST_MP, ...
+    'TAB_H', 40, ...
+    'XSLIDER', true, ...
+    'XSLIDERLABELS', xlayerlabels, ...
+    'YSLIDER', false, ...
+    'ROWNAME', rowname, ...
+    'COLUMNNAME', '[]', ...
+    varargin{:});
  
 %%% ¡prop!
 age (data, scalar) is a scalar number containing the age of the subject.
