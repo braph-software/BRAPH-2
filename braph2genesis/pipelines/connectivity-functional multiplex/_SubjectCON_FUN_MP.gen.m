@@ -166,9 +166,9 @@ BA (data, item) is a brain atlas.
 BrainAtlas()
 
 %%% ¡prop!
-L (data, scalar) is the number of multiplex layers of subject.
+LAYERLABELS (figure, string) are the layer labels (newline-separated string).
 %%%% ¡default!
-2
+cell2str({'CON', 'FUN'})
 
 %%% ¡prop!
 CON_FUN_MP (data, cell) is a cell containing with connectivity and functional data.
@@ -183,9 +183,27 @@ else
            'the first with the same number of rows and columns as the brain regions (' int2str(br_number) 'x' int2str(br_number) ', connectivity data), ' ...
            'and the second with the same number of columns as the brain regions (' int2str(br_number) ', functional data).'];
 end
-%%%% ¡gui_!
-% % % pr = PPSubjectCON_FUN_MP_CON_FUN_MP('EL', sub, 'PROP', SubjectCON_FUN_MP.CON_FUN_MP, varargin{:});
- 
+%%%% ¡gui!
+if isempty(sub.get('LAYERLABELS'))
+    xlayerlabels = PanelPropCell.getPropDefault('XSLIDERLABELS');
+else
+    xlayerlabels = str2cell(g.get('LAYERLABELS'));
+    xlayerlabels = ['{' sprintf('''%s'' ', xlayerlabels{end:-1:1}) '}'];
+end
+
+ba = sub.get('BA');
+br_ids = ba.get('BR_DICT').getKeys();
+rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
+
+pr = PanelPropCell('EL', sub, 'PROP', SubjectCON_FUN_MP.CON_FUN_MP, ...
+    'TAB_H', 40, ...
+    'XSLIDER', true, ...
+    'XSLIDERLABELS', xlayerlabels, ...
+    'YSLIDER', false, ...
+    'ROWNAME', rowname, ...
+    'COLUMNNAME', '''numbered''', ...
+    varargin{:});
+
 %%% ¡prop!
 age (data, scalar) is a scalar number containing the age of the subject.
 %%%% ¡default!
