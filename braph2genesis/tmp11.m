@@ -186,6 +186,6 @@ GUIElement('PE', Pipeline()).draw
 % f_ST_MP_BUT = gui_ST_MP_BUT.draw();
 
 %% 
-pip_CON_GA_WU = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_a_CON_GA_WU.b2']);
-gui_CON_GA_WU = GUIElement('PE', pip_CON_GA_WU);
-f_CON_GA_WU = gui_CON_GA_WU.draw();
+% pip_CON_GA_WU = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_a_CON_GA_WU.b2']);
+% gui_CON_GA_WU = GUIElement('PE', pip_CON_GA_WU);
+% f_CON_GA_WU = gui_CON_GA_WU.draw();
