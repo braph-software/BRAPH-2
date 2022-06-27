@@ -176,11 +176,11 @@ create_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m']
 % f_ST_MP_WU = gui_ST_MP_WU.draw();
 
 %% 
-pip_ST_MP_BUD = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_c_ST_MP_BUD.b2']);
-gui_ST_MP_BUD = GUIElement('PE', pip_ST_MP_BUD);
-f_ST_MP_BUD = gui_ST_MP_BUD.draw();
+% pip_ST_MP_BUD = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_c_ST_MP_BUD.b2']);
+% gui_ST_MP_BUD = GUIElement('PE', pip_ST_MP_BUD);
+% f_ST_MP_BUD = gui_ST_MP_BUD.draw();
 
 %% 
-pip_ST_MP_BUT = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_c_ST_MP_BUT.b2']);
-gui_ST_MP_BUT = GUIElement('PE', pip_ST_MP_BUT);
-f_ST_MP_BUT = gui_ST_MP_BUT.draw();
+% pip_ST_MP_BUT = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_c_ST_MP_BUT.b2']);
+% gui_ST_MP_BUT = GUIElement('PE', pip_ST_MP_BUT);
+% f_ST_MP_BUT = gui_ST_MP_BUT.draw();
