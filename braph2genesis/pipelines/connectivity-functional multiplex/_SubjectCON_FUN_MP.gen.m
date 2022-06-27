@@ -174,7 +174,7 @@ cell2str({'CON', 'FUN'})
 CON_FUN_MP (data, cell) is a cell containing with connectivity and functional data.
 %%%% ¡check_value!
 br_number = sub.get('BA').get('BR_DICT').length();
-num_layers = sub.get('L');
+num_layers = 2;
 check = (iscell(value) && isequal(length(value), num_layers)  && isequal(size(value{1}), [br_number, br_number]) && isequal(size(value{2}, 2), br_number)) || (isempty(value) && br_number == 0); 
 if check
     msg = 'All ok!';
