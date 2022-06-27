@@ -1,5 +1,5 @@
 %% ¡header!
-SepareteGroupsCON_FUN < Element (se, separetes the CON subject group and the FUN subject group from a CON_FUN group) separetes a group of subjects with connectivity data with a group of subjects with functional data.
+SepareteGroups_CON_FUN < Element (se, separetes the CON subject group and the FUN subject group from a CON_FUN group) separetes a group of subjects with connectivity data with a group of subjects with functional data.
 %%% ¡description!
 SepareteGroups_CON_FUN separetes a group of subjects with connectivity data with a group of subjects with functional data.
 Separetes the data uploaded through the connectivity and functional workflows. The ID and covariates of subjects are
