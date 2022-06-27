@@ -42,7 +42,7 @@ A_WU = calculateValue@MultiplexWU(g, prop);
 
 densities = g.get('DENSITIES');
 L = length(A_WU); % number of layersof MultiplexWU
-A = cell(length(densities)*L); % the new g.layernumber() will be equal to = L*length(densities)
+A = cell(length(densities) * L); % the new g.layernumber() will be equal to = L*length(densities)
 
 if L > 0
     A(:, :) = {eye(length(A_WU{1, 1}))};
