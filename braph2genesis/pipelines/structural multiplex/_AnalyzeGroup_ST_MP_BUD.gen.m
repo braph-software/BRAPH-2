@@ -50,10 +50,6 @@ MultiplexBUD()
 %%%% ¡calculate!
 gr = a.get('GR');
 data_list = cellfun(@(x) x.get('ST_MP'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
-atlas = BrainAtlas();
-if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-    atlas = gr.get('SUB_DICT').getItem(1).get('BA');
-end
 
 if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
     age_list = cellfun(@(x) x.get('age'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
@@ -102,12 +98,17 @@ else
 end
 densities = a.get('DENSITIES'); % this is a vector
 
+ba = BrainAtlas();
+if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
+    ba = gr.get('SUB_DICT').getItem(1).get('BA');
+end
+
 g = MultiplexBUD( ...
     'ID', ['g ' gr.get('ID')], ...
     'B', A, ...
     'DENSITIES', densities, ... 
     'LAYERLABELS', cell2str(layerlabels), ...
-    'BAS', atlas ...
+    'BAS', ba ...
     );
 
 value = g;
