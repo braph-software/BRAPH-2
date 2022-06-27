@@ -10,13 +10,13 @@ close all
 clear all
 clc
 
-el_class = 'ComparisonGroup';
-delete([fileparts(which('braph2')) '/src/analysis/' el_class '.m'])
-create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
-create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
-% create_test_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
-% test_code = ['test_' el_class]
-% eval(test_code)
+% el_class = 'ComparisonGroup';
+% delete([fileparts(which('braph2')) '/src/analysis/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
+% create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
+% % create_test_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
+% % test_code = ['test_' el_class]
+% % eval(test_code)
 
 % el_class = 'CompareGroup';
 % delete([fileparts(which('braph2')) '/src/analysis/' el_class '.m'])
@@ -115,7 +115,7 @@ create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.g
 % % eval(test_code)
 
 %% 
-% GUIElement('PE', Pipeline()).draw
+GUIElement('PE', Pipeline()).draw
 
 %% 
 % % pip_ST_WU = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_a_ST_WU.b2']);
@@ -124,11 +124,11 @@ create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.g
 % f_ST_WU = gui_ST_WU.draw();
 
 %%
-% pip_ST_BUD = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_a_ST_BUD.b2']);
-% pip_ST_BUD = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_a_ST_BUD calc.b2']);
-pip_ST_BUD = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_c_ST_BUD calc.b2']);
-gui_ST_BUD = GUIElement('PE', pip_ST_BUD);
-f_ST_BUD = gui_ST_BUD.draw();
+% % pip_ST_BUD = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_a_ST_BUD.b2']);
+% % pip_ST_BUD = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_a_ST_BUD calc.b2']);
+% pip_ST_BUD = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_c_ST_BUD calc.b2']);
+% gui_ST_BUD = GUIElement('PE', pip_ST_BUD);
+% f_ST_BUD = gui_ST_BUD.draw();
 
 %%
 % % pip_ST_BUT = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_a_ST_BUT.b2']);
