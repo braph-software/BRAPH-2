@@ -115,7 +115,7 @@ clc
 % % eval(test_code)
 
 %% 
-GUIElement('PE', Pipeline()).draw
+% GUIElement('PE', Pipeline()).draw
 
 %% 
 % % pip_ST_WU = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_a_ST_WU.b2']);
@@ -145,3 +145,8 @@ GUIElement('PE', Pipeline()).draw
 % a_BUD2 = pip_ST_BUD.get('PS_DICT').getItem(4).get('PC_DICT').getItem(1).get('EL');
 % c_BUD = CompareGroup('P', 10, 'A1', a_BUD1, 'A2', a_BUD2, 'MEMORIZE', true);
 % c_BUD.getComparison('Degree').get('DIFF')
+
+%% 
+pip_ST_MP_WU = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_c_ST_MP_WU.b2']);
+gui_ST_MP_WU = GUIElement('PE', pip_ST_MP_WU);
+f_ST_MP_WU = gui_ST_MP_WU.draw();
