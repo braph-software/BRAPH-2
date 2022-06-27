@@ -10,6 +10,14 @@ close all
 clear all
 clc
 
+el_class = 'AnalyzeGroup_FUN_MP_GA_WU';
+delete([fileparts(which('braph2')) '/pipelines/functional multiplex group_average/' el_class '.m'])
+create_Element([fileparts(which('braph2genesis')) '/pipelines/functional multiplex group_average/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/functional multiplex group_average'])
+create_Element([fileparts(which('braph2genesis')) '/pipelines/functional multiplex group_average/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/functional multiplex group_average'])
+% create_test_Element([fileparts(which('braph2genesis')) '/pipelines/functional multiplex group_average/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/functional multiplex group_average'])
+% test_code = ['test_' el_class]
+% eval(test_code)
+
 % el_class = 'MultigraphBUT';
 % delete([fileparts(which('braph2')) '/graphs/' el_class '.m'])
 % create_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
@@ -140,7 +148,7 @@ clc
 % % eval(test_code)
 
 %% 
-% GUIElement('PE', Pipeline()).draw
+GUIElement('PE', Pipeline()).draw
 
 %% 
 % % pip_ST_WU = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_a_ST_WU.b2']);
@@ -190,3 +198,8 @@ clc
 % pip_CON_GA_WU = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_a_CON_GA_WU.b2']);
 % gui_CON_GA_WU = GUIElement('PE', pip_CON_GA_WU);
 % f_CON_GA_WU = gui_CON_GA_WU.draw();
+
+%% 
+% pip_FUN_GA_WU = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_a_FUN_GA_WU.b2']);
+% gui_FUN_GA_WU = GUIElement('PE', pip_FUN_GA_WU);
+% f_FUN_GA_WU = gui_FUN_GA_WU.draw();

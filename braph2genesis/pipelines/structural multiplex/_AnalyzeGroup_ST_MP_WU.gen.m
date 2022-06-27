@@ -41,10 +41,6 @@ MultiplexWU()
 %%%% ¡calculate!
 gr = a.get('GR');
 data_list = cellfun(@(x) x.get('ST_MP'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
-ba = BrainAtlas();
-if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-    ba = gr.get('SUB_DICT').getItem(1).get('BA');
-end
 
 if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
     age_list = cellfun(@(x) x.get('age'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
@@ -89,6 +85,11 @@ else
     end
 end
 
+ba = BrainAtlas();
+if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
+    ba = gr.get('SUB_DICT').getItem(1).get('BA');
+end
+
 g = MultiplexWU( ...
     'ID', ['g ' gr.get('ID')], ...
     'B', A, ... % % % 'LAYERTICKS', [1:1:L], ...
@@ -97,8 +98,6 @@ g = MultiplexWU( ...
     );
 
 value = g;
-%%%% ¡gui_!
-% % % pr = PPAnalyzeGroupMP_G('EL', a, 'PROP', AnalyzeGroup_ST_MP_WU.G, 'WAITBAR', true, varargin{:});
 
 % % % %% ¡methods!
 % % % function pr = getPPCompareGroup_CPDict(a, varargin) 
