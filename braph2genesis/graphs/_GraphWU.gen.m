@@ -28,15 +28,13 @@ negativity = Graph.NONNEGATIVE;
 B (data, smatrix) is the input graph adjacency matrix.
 %%%% ¡gui!
 bas = g.get('BAS');
-ba = bas{1};
-br_ids = ba.get('BR_DICT').getKeys();
-rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
-% % % brs = ba.get('BR_DICT').getItems();
-% % % rowname = '{';
-% % % for bri = 1:1:length(brs)
-% % %     rowname = [rowname ' ''' brs{bri}.get('ID') ''''];
-% % % end
-% % % rowname = [rowname '}'];
+if ~isempty(bas)
+    ba = bas{1};
+    br_ids = ba.get('BR_DICT').getKeys();
+    rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
+else
+    rowname = '{}';
+end
 
 pr = PanelPropMatrix('EL', g, 'PROP', GraphWU.B, ...
     'ROWNAME', rowname, ...
@@ -70,15 +68,13 @@ A = {B};
 value = A;
 %%%% ¡gui!
 bas = g.get('BAS');
-ba = bas{1};
-br_ids = ba.get('BR_DICT').getKeys();
-rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
-% % % brs = ba.get('BR_DICT').getItems();
-% % % rowname = '{';
-% % % for bri = 1:1:length(brs)
-% % %     rowname = [rowname ' ''' brs{bri}.get('ID') ''''];
-% % % end
-% % % rowname = [rowname '}'];
+if ~isempty(bas)
+    ba = bas{1};
+    br_ids = ba.get('BR_DICT').getKeys();
+    rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
+else
+    rowname = '{}';
+end
 
 pr = PanelPropCell('EL', g, 'PROP', GraphWU.A, ...
     'TAB_H', 40, ...

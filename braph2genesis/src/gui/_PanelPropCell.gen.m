@@ -335,6 +335,8 @@ function cb_xslider(pr)
 % % %         value = el.get(prop);
 % % %         [R, C] = size(value);
 % % % 
+% % %         R = max(R, 1); % to manage the case in which C = R = 0 (empty cell)
+% % % 
 % % %         set(pr.yslider, 'Value', R + 1 - get(pr.xslider, 'Value'))
 % % %     end
     
@@ -349,6 +351,8 @@ function cb_yslider(pr)
         prop = pr.get('PROP');
         value = el.get(prop);
         [R, C] = size(value);
+        
+        C = max(C, 1); % to manage the case in which C = R = 0 (empty cell)
 
         set(pr.xslider, 'Value', C + 1 - get(pr.yslider, 'Value'))
     end

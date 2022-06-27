@@ -67,9 +67,13 @@ end
 value = A;
 %%%% ¡gui!
 bas = g.get('BAS');
-ba = bas{1};
-br_ids = ba.get('BR_DICT').getKeys();
-rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
+if ~isempty(bas)
+    ba = bas{1};
+    br_ids = ba.get('BR_DICT').getKeys();
+    rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
+else
+    rowname = '{}';
+end
 
 if isempty(g.get('LAYERLABELS'))
     xlayerlabels = PanelPropCell.getPropDefault('XSLIDERLABELS');
