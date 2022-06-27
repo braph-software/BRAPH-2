@@ -183,8 +183,8 @@ else
            'the first with the same number of rows and columns as the brain regions (' int2str(br_number) 'x' int2str(br_number) ', connectivity data), ' ...
            'and the second with the same number of columns as the brain regions (' int2str(br_number) ', functional data).'];
 end
-%%%% ¡gui!
-pr = PPSubjectCON_FUN_MP_CON_FUN_MP('EL', sub, 'PROP', SubjectCON_FUN_MP.CON_FUN_MP, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPSubjectCON_FUN_MP_CON_FUN_MP('EL', sub, 'PROP', SubjectCON_FUN_MP.CON_FUN_MP, varargin{:});
  
 %%% ¡prop!
 age (data, scalar) is a scalar number containing the age of the subject.
