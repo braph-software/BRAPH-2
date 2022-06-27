@@ -84,13 +84,13 @@ toc
 % gui = GUIElement('PE', pip, 'CLOSEREQ', false);
 % f = gui.draw();
 
-% tic 
-% ba1 = ImporterBrainAtlasXLS('FILE', [fileparts(which('braph2')) filesep() 'atlases' filesep() 'aal90_atlas.xlsx']).get('BA');
-% toc
-% gui1 = GUIElement('PE', ba1);
-% toc
-% f1  = gui1.draw();
-% toc
+tic 
+ba1 = ImporterBrainAtlasXLS('FILE', [fileparts(which('braph2')) filesep() 'atlases' filesep() 'aal90_atlas.xlsx']).get('BA');
+toc
+gui1 = GUIElement('PE', ba1);
+toc
+f1  = gui1.draw();
+toc
 
 % % % ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('braph2')) filesep() 'atlases' filesep() 'aal90_atlas.xlsx']).get('BA');
 % % % pf = PFBrainAtlas(...

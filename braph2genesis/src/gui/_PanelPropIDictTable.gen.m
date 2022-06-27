@@ -64,6 +64,11 @@ MENU_OPEN (gui, logical) determines whether to show the context menu to open the
 %%%% ¡default!
 false
 
+%%% ¡prop!
+MENU_EXPORT (gui, logical) determines whether to show the context menu to export data.
+%%%% ¡default!
+true
+
 %% ¡properties!
 p
 table
@@ -82,6 +87,8 @@ menu_hide_selection
 menu_hide_all
 %
 menu_colorize_table
+% 
+menu_export_to_xls
 
 f_its % figures for items
 
@@ -175,6 +182,14 @@ function p_out = draw(pr, varargin)
                 'MenuSelectedFcn', {@cb_colorize_table} ...
                 );
         end
+        if pr.get('MENU_EXPORT')
+            pr.menu_export_to_xls = uimenu( ...
+                'Separator', 'on', ...
+                'Parent', pr.contextmenu, ...
+                'Tag', 'menu_export_to_xls', ...
+                'Text', 'Export to XLS', ...
+                'MenuSelectedFcn', {@cb_export_to_xls});
+        end
     end
     function cb_select_all(~, ~) 
         pr.cb_select_all()
@@ -208,6 +223,9 @@ function p_out = draw(pr, varargin)
             pr.cb_colorize_table(true)
         end
     end
+    function cb_export_to_xls(~, ~)
+        pr.cb_export_to_xls()
+    end
 
     if ~check_graphics(pr.table, 'uitable')
         pr.table = uitable( ...
@@ -216,7 +234,7 @@ function p_out = draw(pr, varargin)
             'FontSize', BRAPH2.FONTSIZE, ...
             'ColumnSortable', true, ...
             'CellEditCallback', {@cb_table_edit} ...
-            );
+            );       
     end
     if isempty(pr.get('COLS')) || ismember(pr.SELECTOR, pr.get('COLS'))
         set(pr.table, 'ContextMenu', pr.contextmenu)
@@ -808,6 +826,42 @@ function cb_colorize_table(pr, checked)
     set(pr.menu_colorize_table, 'Checked', checked)
     
     pr.update()    
+end
+function cb_export_to_xls(pr)
+    %CB_EXPORT_DATA exports selected data from uitable to an XLSX file.
+    
+    if isempty(pr.selected)
+        el = pr.get('EL');
+        prop = pr.get('PROP');
+        dict = el.get(prop);
+
+        selected = [1:1:dict.length()];
+    else
+        selected = pr.selected;
+    end
+    
+    % create data table
+    data = pr.table.Data(selected, :);
+    columns = pr.table.ColumnName;
+    rows = pr.table.RowName(selected, :);
+    % special rules: selection column, numbered rownames.
+    if isempty(columns{1})
+        columns{1} = 'sel';
+    end
+    if isequal(rows, 'numbered')
+        rows = cellfun(@(x) num2str(x), num2cell([1:size(data, 1)]), 'UniformOutput', false);
+    end
+    
+    t = cell2table(data, ...
+        'VariableNames', columns, ...
+        'RowNames', rows);
+
+    % save file
+    [filename, filepath, filterindex] = uiputfile({'*.xlsx';'*.xls'}, 'Select Excel file');
+    if filterindex
+        file = [filepath filename];
+        writetable(t, file, 'WriteRowNames', true);
+    end
 end
 function cb_bring_to_front(pr)
     %CB_BRING_TO_FRONT brings to front the table figure and its subfigures.
