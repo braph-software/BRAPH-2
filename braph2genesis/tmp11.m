@@ -10,6 +10,14 @@ close all
 clear all
 clc
 
+el_class = 'ComparisonGroup';
+delete([fileparts(which('braph2')) '/src/analysis/' el_class '.m'])
+create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
+create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
+% create_test_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
+% test_code = ['test_' el_class]
+% eval(test_code)
+
 % el_class = 'CompareGroup';
 % delete([fileparts(which('braph2')) '/src/analysis/' el_class '.m'])
 % create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
