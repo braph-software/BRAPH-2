@@ -70,7 +70,7 @@ else
     L = gr.get('SUB_DICT').getItem(1).get('L');  % number of layers
     br_number = gr.get('SUB_DICT').getItem(1).get('ba').get('BR_DICT').length();  % number of regions
     data = cell(L, 1);
-    for i=1:L
+    for i = 1:1:L
         data_layer = zeros(length(data_list), br_number);
         for j=1:length(data_list)
             sub_cell = data_list{j};
@@ -80,7 +80,7 @@ else
     end
 
     A = cell(1, L);
-    for i = 1:L
+    for i = 1:1:L
         if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
             A(i) = {Correlation.getAdjacencyMatrix(data{i}, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'), covariates)};
         else
@@ -91,8 +91,9 @@ end
 
 g = MultiplexWU( ...
     'ID', ['g ' gr.get('ID')], ...
-    'BAS', ba, ...
-    'B', A ...
+    'B', A, ... % % % 'LAYERTICKS', [1:1:L], ...
+    'LAYERLABELS', cell2str(cellfun(@(x) ['L' num2str(x)], num2cell([1:1:L]), 'UniformOutput', false)), ...
+    'BAS', ba ...
     );
 
 value = g;

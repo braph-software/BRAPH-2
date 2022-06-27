@@ -27,9 +27,12 @@ Correlation.ZERO
 %%% ¡prop!
 DENSITIES (parameter, rvector) is the vector of densities.
 %%%% ¡default!
-0
+[1:1:10]
 %%%% ¡gui!
-pr = PlotPropSmartVector('EL', a, 'PROP', AnalyzeGroup_ST_MP_BUD.DENSITIES, 'MAX', 100, 'MIN', 0, varargin{:});
+pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeGroup_ST_BUD.DENSITIES, ...
+    'MIN', 0, 'MAX', 100, ...
+    'DEFAULT', AnalyzeGroup_ST_BUD.getPropDefault('DENSITIES'), ...
+    varargin{:});
 
 %% ¡props_update!
 
@@ -71,12 +74,13 @@ if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SP
 end
 
 if isempty(data_list)
+    layerlabels = {'', ''};
     A ={[], []};
 else
     L = gr.get('SUB_DICT').getItem(1).get('L');  % number of layers
     br_number = gr.get('SUB_DICT').getItem(1).get('ba').get('BR_DICT').length();  % number of regions
     data = cell(L, 1);
-    for i=1:L
+    for i=1:1:L
         data_layer = zeros(length(data_list), br_number);
         for j=1:length(data_list)
             sub_cell = data_list{j};
@@ -85,8 +89,10 @@ else
         data(i) = {data_layer};
     end
     
+    layerlabels = {};
     A = cell(1, L);
-    for i = 1:L
+    for i = 1:1:L
+        layerlabels = [layerlabels, cellfun(@(x) ['L' num2str(i) ' ' num2str(x) '%'], num2cell(a.get('DENSITIES')), 'UniformOutput', false)];
         if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
             A(i) = {Correlation.getAdjacencyMatrix(data{i}, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'), covariates)};
         else
@@ -99,7 +105,8 @@ densities = a.get('DENSITIES'); % this is a vector
 g = MultiplexBUD( ...
     'ID', ['g ' gr.get('ID')], ...
     'B', A, ...
-    'DENSITIES', densities, ...
+    'DENSITIES', densities, ... 
+    'LAYERLABELS', cell2str(layerlabels), ...
     'BAS', atlas ...
     );
 

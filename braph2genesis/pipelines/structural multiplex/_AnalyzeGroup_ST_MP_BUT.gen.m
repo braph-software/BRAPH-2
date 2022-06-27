@@ -27,9 +27,12 @@ Correlation.ZERO
 %%% ¡prop!
 THRESHOLDS (parameter, rvector) is the vector of thresholds.
 %%%% ¡default!
-0
+[-1:.5:1]
 %%%% ¡gui!
-pr = PlotPropSmartVector('EL', a, 'PROP', AnalyzeGroup_ST_MP_BUT.THRESHOLDS, 'MAX', 1, 'MIN', 0, varargin{:});
+pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeGroup_ST_BUD.DENSITIES, ...
+    'MIN', -1, 'MAX', 1, ...
+    'DEFAULT', AnalyzeGroup_ST_BUT.getPropDefault('THRESHOLDS'), ...
+    varargin{:});
 
 %% ¡props_update!
 
@@ -71,6 +74,7 @@ if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SP
 end
 
 if isempty(data_list)
+    layerlabels = {'', ''};
     A ={[], []};
 else
     L = gr.get('SUB_DICT').getItem(1).get('L');  % number of layers
@@ -85,8 +89,10 @@ else
         data(i) = {data_layer};
     end
     
+    layerlabels = {};
     A = cell(1, L);
     for i = 1:L
+        layerlabels = [layerlabels, cellfun(@(x) ['L' num2str(i) ' ' num2str(x)], num2cell(a.get('THRESHOLDS')), 'UniformOutput', false)];
         if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
             A(i) = {Correlation.getAdjacencyMatrix(data{i}, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'), covariates)};
         else
@@ -99,7 +105,8 @@ thresholds = a.get('THRESHOLDS'); % this is a vector
 g = MultiplexBUT( ...
     'ID', ['g ' gr.get('ID')], ...
     'B', A, ...
-    'THRESHOLDS', thresholds, ...
+    'THRESHOLDS', thresholds, ... 
+    'LAYERLABELS', cell2str(layerlabels), ...
     'BAS', atlas ...
     );
 

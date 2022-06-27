@@ -10,6 +10,30 @@ close all
 clear all
 clc
 
+el_class = 'MultiplexWU';
+delete([fileparts(which('braph2')) '/graphs/' el_class '.m'])
+create_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
+create_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
+% create_test_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m'], [fileparts(which('braph2')) '/graphs'])
+% test_code = ['test_' el_class]
+% eval(test_code)
+
+% el_class = 'AnalyzeGroup_ST_MP_BUD';
+% delete([fileparts(which('braph2')) '/pipelines/structural multiplex/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/pipelines/structural multiplex/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/structural multiplex'])
+% create_Element([fileparts(which('braph2genesis')) '/pipelines/structural multiplex/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/structural multiplex'])
+% % create_test_Element([fileparts(which('braph2genesis')) '/pipelines/structural multiplex/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/structural multiplex'])
+% % test_code = ['test_' el_class]
+% % eval(test_code)
+
+% el_class = 'AnalyzeGroup_ST_MP_BUT';
+% delete([fileparts(which('braph2')) '/pipelines/structural multiplex/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/pipelines/structural multiplex/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/structural multiplex'])
+% create_Element([fileparts(which('braph2genesis')) '/pipelines/structural multiplex/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/structural multiplex'])
+% % create_test_Element([fileparts(which('braph2genesis')) '/pipelines/structural multiplex/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/structural multiplex'])
+% % test_code = ['test_' el_class]
+% % eval(test_code)
+
 % el_class = 'ComparisonGroup';
 % delete([fileparts(which('braph2')) '/src/analysis/' el_class '.m'])
 % create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
@@ -147,6 +171,16 @@ clc
 % c_BUD.getComparison('Degree').get('DIFF')
 
 %% 
-pip_ST_MP_WU = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_c_ST_MP_WU.b2']);
-gui_ST_MP_WU = GUIElement('PE', pip_ST_MP_WU);
-f_ST_MP_WU = gui_ST_MP_WU.draw();
+% pip_ST_MP_WU = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_c_ST_MP_WU.b2']);
+% gui_ST_MP_WU = GUIElement('PE', pip_ST_MP_WU);
+% f_ST_MP_WU = gui_ST_MP_WU.draw();
+
+%% 
+pip_ST_MP_BUD = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_c_ST_MP_BUD.b2']);
+gui_ST_MP_BUD = GUIElement('PE', pip_ST_MP_BUD);
+f_ST_MP_BUD = gui_ST_MP_BUD.draw();
+
+%% 
+pip_ST_MP_BUT = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_c_ST_MP_BUT.b2']);
+gui_ST_MP_BUT = GUIElement('PE', pip_ST_MP_BUT);
+f_ST_MP_BUT = gui_ST_MP_BUT.draw();
