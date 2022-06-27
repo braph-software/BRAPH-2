@@ -51,12 +51,8 @@ G (result, item) is the average graph (OrderedMultiplexWU) obtained from this an
 OrderedMultiplexWU()
 %%%% ¡calculate!
 gr = a.get('GR');
-atlas = BrainAtlas();
 subjects_number = gr.get('SUB_DICT').length();
 
-if ~isempty(gr) && ~isa(gr, 'NoValue') && subjects_number > 0
-    atlas = gr.get('SUB_DICT').getItem(1).get('BA');
-end
 T = a.get('REPETITION');
 fmin = a.get('FREQUENCYRULEMIN');
 fmax = a.get('FREQUENCYRULEMAX');
@@ -88,10 +84,16 @@ for i = 1:1:subjects_number
     end
 end
 
+ba = BrainAtlas();
+if ~isempty(gr) && ~isa(gr, 'NoValue') && subjects_number > 0
+    ba = gr.get('SUB_DICT').getItem(1).get('BA');
+end
+
 g = OrderedMultiplexWU( ...
     'ID', ['g ' gr.get('ID')], ...
-    'B', cellfun(@(a) a/subjects_number, A_fun, 'UniformOutput', false), ...
-    'BRAINATLAS', atlas ...
+    'B', cellfun(@(a) a/subjects_number, A_fun, 'UniformOutput', false), ... % % % 'LAYERTICKS', [1:1:L], ...
+    'LAYERLABELS', cell2str(cellfun(@(x) ['L' num2str(x)], num2cell([1:1:L]), 'UniformOutput', false)), ...    
+    'BAS', ba ...
     );
 value = g;
 
