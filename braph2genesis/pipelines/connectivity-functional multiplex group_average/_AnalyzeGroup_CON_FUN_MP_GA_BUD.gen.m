@@ -94,7 +94,12 @@ end
 
 A(1) = {data{1}/gr.get('SUB_DICT').length()};
 A(2) = {data{2}/gr.get('SUB_DICT').length()};
-					
+
+ba = BrainAtlas();
+if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
+    ba = gr.get('SUB_DICT').getItem(1).get('BA');
+end
+                    
 g = MultiplexBUD( ...
     'ID', ['g ' gr.get('ID')], ...
     'B', A, ...
