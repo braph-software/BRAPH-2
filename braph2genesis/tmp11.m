@@ -139,7 +139,7 @@ create_Element([fileparts(which('braph2genesis')) '/graphs/_' el_class '.gen.m']
 % % eval(test_code)
 
 %% 
-% GUIElement('PE', Pipeline()).draw
+GUIElement('PE', Pipeline()).draw
 
 %% 
 % % pip_ST_WU = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_a_ST_WU.b2']);

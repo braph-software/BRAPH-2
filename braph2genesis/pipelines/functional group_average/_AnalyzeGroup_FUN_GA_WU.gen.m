@@ -74,9 +74,15 @@ for i = 1:1:gr.get('SUB_DICT').length()
 end
 A_fun = A_fun/gr.get('SUB_DICT').length();
 
+ba = BrainAtlas();
+if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
+    ba = gr.get('SUB_DICT').getItem(1).get('BA');
+end
+
 g = GraphWU( ...
     'ID', ['g ' gr.get('ID')], ...
-    'B', A_fun ...
+    'B', A_fun, ...
+    'BAS', ba ...
     );
 value = g;
 
