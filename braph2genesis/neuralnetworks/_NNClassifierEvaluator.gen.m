@@ -109,6 +109,17 @@ if nne.get('GR').get('SUB_DICT').length() == 0
 else
     nn = nne.get('NN');
     gr = nne.get('GR');
+    mask_tmp = gr.get('SUB_DICT').getItem(1).get('FEATURE_MASK');
+    masks = {};
+    for i = 1:1:length(mask_tmp)
+        mask = mask_tmp{i};
+        [~, idx_all] = sort(mask(:), 'descend');
+        percentile = nn.get('FEATURE_SELECTION_RATIO');
+        num_top_idx = ceil(percentile * numel(mask));
+        mask(idx_all(1:num_top_idx)) = 1;
+        mask(idx_all(end - (length(idx_all) - num_top_idx - 1):end)) = 0;
+        masks{i} = mask;
+    end
     inputs = nn.reconstruct_inputs(gr);
     net = nn.get('MODEL');
     if isa(net, 'NoValue') || ~BRAPH2.installed('NN', 'msgbox')
@@ -125,7 +136,7 @@ else
     gr_pred.set( ...
         'ID', gr.get('ID'), ...
         'LABEL', gr.get('LABEL'), ...
-        'NOTES', gr.get('NOTES') ...
+        'NOTES', gr.get('NOTES')
         );
 
     % add subejcts from all groups
@@ -133,7 +144,7 @@ else
     subs = gr.get('SUB_DICT').getItems();
     for i = 1:1:length(subs)
         sub = subs{i}.deepclone();
-        sub.set('PREDICTION', {predictions(i, :)});
+        sub.set('PREDICTION', {predictions(i, :)}, 'FEATURE_MASK', masks);
         sub.set('BA', subs{i}.get('BA'));
         sub_dict.add(sub);
     end
