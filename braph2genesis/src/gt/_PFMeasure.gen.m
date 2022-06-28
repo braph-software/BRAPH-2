@@ -34,7 +34,7 @@ ST_AXIS (figure, item) determines the axis settings.
 %%%% ¡settings!
 'SettingsAxis'
 %%%% ¡default!
-SettingsAxis('GRID', false, 'AXIS', true)
+SettingsAxis('GRID', false, 'AXIS', true, 'EQUAL', false)
 %%%% ¡postprocessing!
 if (isempty(varargin) || pf.prop_set('ST_AXIS', varargin)) && check_graphics(pf.h_axes, 'axes')
     % update state of toggle tool
@@ -44,7 +44,7 @@ if (isempty(varargin) || pf.prop_set('ST_AXIS', varargin)) && check_graphics(pf.
     set(pf.tool_axis, 'State', pf.get('ST_AXIS').get('AXIS'))
 end
 %%%% ¡gui!
-pr = SettingsAxisPP('EL', m, 'PROP', PFMeasure.ST_AXIS, varargin{:});
+pr = SettingsAxisPP('EL', pf, 'PROP', PFMeasure.ST_AXIS, varargin{:});
 
 %% ¡methods!
 function p_out = draw(pf, varargin)
@@ -73,8 +73,8 @@ function p_out = draw(pf, varargin)
             'Units', 'normalized', ...
             'OuterPosition', [0 0 1 1] ...
             );
-% % %         pf.h_axes.Toolbar.Visible = 'off';
-% % %         pf.h_axes.Interactions = [];
+        pf.h_axes.Toolbar.Visible = 'off';
+        pf.h_axes.Interactions = [];
     end
     
     % data line
