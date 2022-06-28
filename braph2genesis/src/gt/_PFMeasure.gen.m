@@ -79,7 +79,10 @@ function p_out = draw(pf, varargin)
     
     % data line
     if ~check_graphics(pf.h_line, 'line')
-        pf.h_line = plot(pf.h_axes, [1 2], [1 -1]); % % %
+        pf.h_line = plot([], [], ...
+            'Parent', pf.h_axes, ...
+            'Tag', 'h_line' ...
+            );
     end    
     
     pf.memorize('ST_AXIS').h(pf.h_axes).set('PANEL', pf, 'UITAG', 'h_axes')
