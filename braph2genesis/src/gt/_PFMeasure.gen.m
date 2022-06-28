@@ -28,6 +28,18 @@ tool_grid
 M (metadata, item) is the measure.
 %%%% ¡settings!
 'Measure'
+%%%% ¡postprocessing!
+if isgraphics(pf.h_axes, 'axes')
+    xlabel(pf.h_axes, 'X label') % % %
+    ylabel(pf.h_axes, pf.get('M').get('ID'))
+    
+end
+if isgraphics(pf.h_line, 'line')
+    pf.get('ST_LINE').set( ...
+        'X', pf.get('M').get('G').get('LAYERTICKS'), ...
+        'Y', cell2mat(pf.get('M').get('M')) ...
+        )
+end
 
 %%% ¡prop!
 ST_AXIS (figure, item) determines the axis settings.
@@ -45,6 +57,11 @@ if (isempty(varargin) || pf.prop_set('ST_AXIS', varargin)) && check_graphics(pf.
 end
 %%%% ¡gui!
 pr = SettingsAxisPP('EL', pf, 'PROP', PFMeasure.ST_AXIS, varargin{:});
+
+%%% ¡prop!
+ST_LINE (figure, item) determines the line settings.
+%%%% ¡settings!
+'SettingsLine'
 
 %% ¡methods!
 function p_out = draw(pf, varargin)
@@ -76,21 +93,23 @@ function p_out = draw(pf, varargin)
         pf.h_axes.Toolbar.Visible = 'off';
         pf.h_axes.Interactions = [];
     end
-    
-    % data line
-    if ~check_graphics(pf.h_line, 'line')
-        pf.h_line = plot([], [], ...
-            'Parent', pf.h_axes, ...
-            'Tag', 'h_line' ...
-            );
-    end    
-    
+        
     pf.memorize('ST_AXIS').h(pf.h_axes).set('PANEL', pf, 'UITAG', 'h_axes')
     listener(pf.get('ST_AXIS'), 'PropSet', @cb_st_axis);
     function cb_st_axis(~, ~) % (src, event)
         set(pf.tool_axis, 'State', pf.get('ST_AXIS').get('AXIS'))
         set(pf.tool_grid, 'State', pf.get('ST_AXIS').get('GRID'))
     end
+
+    % data line
+    if ~check_graphics(pf.h_line, 'line')
+        pf.h_line = plot([0 1], [0 1], ...
+            'Parent', pf.h_axes, ...
+            'Tag', 'h_line' ...
+            );
+    end
+    
+    pf.memorize('ST_LINE').h(pf.h_line).set('PANEL', pf, 'UITAG', 'h_line')
 
     % Toolbar
     if ~check_graphics(pf.toolbar, 'uitoolbar')
