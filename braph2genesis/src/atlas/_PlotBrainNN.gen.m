@@ -1584,7 +1584,8 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
 		            'Position', [0.25 .82 0.2 0.1], ...
 		            'Callback', {@cb_layer_sel});
             end
-            feature_map_inner = feature_map{1};
+            %feature_map_inner = feature_map{1};
+            feature_map_inner = fractionate(feature_map{1}, 'density', 0.001); % TODO: make the density configurable
 		
 		    ui_checkbox_graph_lineweight = uicontrol(fig_graph, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
 		    ui_txt_graph_lineweight = uicontrol(fig_graph, 'Style', 'text');
@@ -1834,7 +1835,8 @@ function h = getMCRPanel(pl, ui_panel_graph)
 		            'Position', [0.25 .82 0.2 0.1], ...
 		            'Callback', {@cb_layer_sel});
 		    end
-		    feature_map_inner = feature_map{1};
+		    %feature_map_inner = feature_map{1};
+            feature_map_inner = fractionate(feature_map{1}, 'density', 0.001); % TODO: make the density configurable
 
 		    % nodal measure figure options
 		    ui_checkbox_meas_symbolsize = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
