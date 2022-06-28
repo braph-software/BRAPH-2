@@ -843,18 +843,18 @@ function cb_export_to_xls(pr)
     % create data table
     data = pr.table.Data(selected, :);
     columns = pr.table.ColumnName;
-    rows = pr.table.RowName(selected, :);
+    rows = pr.table.RowName;
     % special rules: selection column, numbered rownames.
     if isempty(columns{1})
         columns{1} = 'sel';
     end
     if isequal(rows, 'numbered')
-        rows = cellfun(@(x) num2str(x), num2cell([1:size(data, 1)]), 'UniformOutput', false);
+        rows = cellfun(@(x) num2str(x), num2cell([1:size(data, 1)]), 'UniformOutput', false)';
     end
     
     t = cell2table(data, ...
         'VariableNames', columns, ...
-        'RowNames', rows);
+        'RowNames', rows(selected, :));
 
     % save file
     [filename, filepath, filterindex] = uiputfile({'*.xlsx';'*.xls'}, 'Select Excel file');
