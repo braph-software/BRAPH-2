@@ -17,10 +17,6 @@ PanelFig, Measure
 p  % handle for panel
 h_axes % handle for the axes
 
-h_title % handle for figure title
-h_xlabel % handle for figure xlabel
-h_ylabel % handle for figure ylabel
-
 toolbar
 tool_axis
 tool_grid
@@ -31,17 +27,13 @@ tool_grid
 M (metadata, item) is the measure.
 %%%% ¡settings!
 'Measure'
-%%%% ¡postprocessing!
-if check_graphics(pf.h_title, 'text')
-    pf.get('ST_TITLE').set('TXT', pf.get('M').get('ID'))
-end
 
 %%% ¡prop!
 ST_AXIS (figure, item) determines the axis settings.
 %%%% ¡settings!
 'SettingsAxis'
 %%%% ¡default!
-SettingsAxis('GRID', false, 'AXIS', true, 'EQUAL', false)
+SettingsAxis('GRID', false, 'AXIS', false, 'EQUAL', false)
 %%%% ¡postprocessing!
 if (isempty(varargin) || pf.prop_set('ST_AXIS', varargin)) && check_graphics(pf.h_axes, 'axes')
     % update state of toggle tool
@@ -52,21 +44,6 @@ if (isempty(varargin) || pf.prop_set('ST_AXIS', varargin)) && check_graphics(pf.
 end
 %%%% ¡gui!
 pr = SettingsAxisPP('EL', pf, 'PROP', PFMeasure.ST_AXIS, varargin{:});
-
-%%% ¡prop!
-ST_TITLE (figure, item) determines the title settings.
-%%%% ¡settings!
-'SettingsText'
-
-%%% ¡prop!
-ST_XLABEL (figure, item) determines the xlabel settings.
-%%%% ¡settings!
-'SettingsText'
-
-%%% ¡prop!
-ST_YLABEL (figure, item) determines the ylabel settings.
-%%%% ¡settings!
-'SettingsText'
 
 %% ¡methods!
 function p_out = draw(pf, varargin)
@@ -105,21 +82,6 @@ function p_out = draw(pf, varargin)
         set(pf.tool_axis, 'State', pf.get('ST_AXIS').get('AXIS'))
         set(pf.tool_grid, 'State', pf.get('ST_AXIS').get('GRID'))
     end
-
-    if ~check_graphics(pf.h_title, 'text')
-        pf.h_title = title(pf.get('M').get('ID'), ...
-            'Parent', pf.h_axes, ...
-            'Tag', 'h_title' ...
-            );
-    end
-    pf.memorize('ST_TITLE').h(pf.h_title).set('PANEL', pf, 'UITAG', 'h_title', ...
-        'VISIBLE', true, ...
-        'X', get(pf.h_title, 'Position') * [1 0 0]', ...
-        'Y', get(pf.h_title, 'Position') * [0 1 0]', ...
-        'Z', get(pf.h_title, 'Position') * [0 0 1]', ...
-        'TXT', get(pf.h_title, 'String'), ...
-        'FONTSIZE', get(pf.h_title, 'FontSize') ...
-        )
 
     % Toolbar
     if ~check_graphics(pf.toolbar, 'uitoolbar')
