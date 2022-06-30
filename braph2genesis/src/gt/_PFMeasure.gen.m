@@ -33,7 +33,7 @@ ST_AXIS (figure, item) determines the axis settings.
 %%%% ¡settings!
 'SettingsAxis'
 %%%% ¡default!
-SettingsAxis('GRID', false, 'AXIS', false, 'EQUAL', false)
+SettingsAxis('GRID', false, 'EQUAL', false)
 %%%% ¡postprocessing!
 if (isempty(varargin) || pf.prop_set('ST_AXIS', varargin)) && check_graphics(pf.h_axes, 'axes')
     % update state of toggle tool

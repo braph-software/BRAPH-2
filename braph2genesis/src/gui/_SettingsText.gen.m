@@ -83,7 +83,7 @@ INTERPRETER (figure, option) is the text interpreter.
 %%% ¡prop!
 HORIZONTALALIGNMENT (figure, option) is the text horizonthal alignment.
 %%%% ¡settings!
-{'left', 'center', 'rigth'}
+{'left', 'center', 'right'}
 
 %%% ¡prop!
 VERTICALALIGNMENT (figure, option) is the text vertical alignment.

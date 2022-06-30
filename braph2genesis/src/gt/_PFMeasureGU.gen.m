@@ -28,23 +28,43 @@ ST_LINE (figure, item) determines the line settings.
 %%%% ¡settings!
 'SettingsLine'
 %%%% ¡postprocessing!
-if isgraphics(pf.h_line, 'line')
+if check_graphics(pf.h_line, 'line')
     pf.get('ST_LINE').set( ...
         'X', pf.get('M').get('G').get('LAYERTICKS'), ...
-        'Y', cell2mat(pf.get('M').get('M')) ...
+        'Y', cell2mat(pf.get('M').get('M')), ...
+        'VISIBLE', true ...
         )
+    pf.get('ST_AXIS').set('AXIS', true)
 end
 
 %%% ¡prop!
 ST_XLABEL (figure, item) determines the xlabel settings.
 %%%% ¡settings!
 'SettingsText'
+%%%% ¡postprocessing!
+if check_graphics(pf.h_ylabel, 'text')
+    st = pf.get('ST_XLABEL');
+    if isa(st.getr('TXT'), 'NoValue')
+        st.set( ...
+            'TXT', pf.get('M').get('G').get('ID') ...
+            )
+    end
+end
 
 %%% ¡prop!
 ST_YLABEL (figure, item) determines the ylabel settings.
 %%%% ¡settings!
 'SettingsText'
-
+%%%% ¡postprocessing!
+if check_graphics(pf.h_ylabel, 'text')
+    st = pf.get('ST_YLABEL');
+    if isa(st.getr('TXT'), 'NoValue')
+        st.set( ...
+            'TXT', pf.get('M').get('ID'), ...
+            'ROTATION', 90 ...
+            )
+    end
+end
 
 %% ¡methods!
 function p_out = draw(pf, varargin)
@@ -63,7 +83,7 @@ function p_out = draw(pf, varargin)
     pf.memorize('ST_LINE').h(pf.h_line).set('PANEL', pf, 'UITAG', 'h_line')
     
     if ~check_graphics(pf.h_xlabel, 'text')
-        pf.h_xlabel = xlabel(pf.get('M').get('G').get('ID'), ...
+        pf.h_xlabel = xlabel(' ', ...
             'Parent', pf.h_axes, ...
             'Tag', 'h_xlabel' ...
             );
@@ -71,7 +91,7 @@ function p_out = draw(pf, varargin)
     pf.memorize('ST_XLABEL').h(pf.h_xlabel).set('PANEL', pf, 'UITAG', 'h_xlabel')
 
     if ~check_graphics(pf.h_ylabel, 'text')
-        pf.h_ylabel = ylabel(pf.get('M').get('ID'), ...
+        pf.h_ylabel = ylabel(' ', ...
             'Parent', pf.h_axes, ...
             'Tag', 'h_ylabel' ...
             );
