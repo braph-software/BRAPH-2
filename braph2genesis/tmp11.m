@@ -18,7 +18,23 @@ clc
 % % test_code = ['test_' el_class]
 % % eval(test_code)
 
+el_class = 'Measure';
+delete([fileparts(which('braph2')) '/src/gt/' el_class '.m'])
+create_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
+create_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
+% create_test_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
+% test_code = ['test_' el_class]
+% eval(test_code)
+
 el_class = 'PFMeasure';
+delete([fileparts(which('braph2')) '/src/gt/' el_class '.m'])
+create_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
+create_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
+% create_test_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
+% test_code = ['test_' el_class]
+% eval(test_code)
+
+el_class = 'PFMeasureGU';
 delete([fileparts(which('braph2')) '/src/gt/' el_class '.m'])
 create_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
 create_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
