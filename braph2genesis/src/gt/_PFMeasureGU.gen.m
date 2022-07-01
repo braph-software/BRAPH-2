@@ -61,7 +61,7 @@ if check_graphics(pf.h_ylabel, 'text')
     end
 end
 %%%% ¡gui!
-pr = SettingsTextPP('EL', pf, 'PROP', PFMeasureGU.ST_XLABEL, varargin{:});
+pr = SettingsPPTable('EL', pf, 'PROP', PFMeasureGU.ST_XLABEL, varargin{:});
 
 %%% ¡prop!
 ST_YLABEL (figure, item) determines the ylabel settings.
