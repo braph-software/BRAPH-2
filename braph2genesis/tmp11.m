@@ -18,6 +18,14 @@ clc
 % % test_code = ['test_' el_class]
 % % eval(test_code)
 
+el_class = 'SettingsPPTable';
+delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
+create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+% create_test_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
+% test_code = ['test_' el_class]
+% eval(test_code)
+
 % el_class = 'SettingsText';
 % delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
 % create_Element([fileparts(which('braph2genesis')) '/src/gui/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gui'])
@@ -42,13 +50,21 @@ clc
 % % test_code = ['test_' el_class]
 % % eval(test_code)
 
-el_class = 'PFMeasure';
-delete([fileparts(which('braph2')) '/src/gt/' el_class '.m'])
-create_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
-create_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
-% create_test_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
-% test_code = ['test_' el_class]
-% eval(test_code)
+% el_class = 'PFMeasure';
+% delete([fileparts(which('braph2')) '/src/gt/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
+% create_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
+% % create_test_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
+% % test_code = ['test_' el_class]
+% % eval(test_code)
+
+% el_class = 'PP_BrainRegion';
+% delete([fileparts(which('braph2')) '/src/gt/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
+% create_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
+% % create_test_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
+% % test_code = ['test_' el_class]
+% % eval(test_code)
 
 el_class = 'PFMeasureGU';
 delete([fileparts(which('braph2')) '/src/gt/' el_class '.m'])
@@ -57,6 +73,22 @@ create_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m']
 % create_test_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
 % test_code = ['test_' el_class]
 % eval(test_code)
+
+% el_class = 'PFMeasureNU';
+% delete([fileparts(which('braph2')) '/src/gt/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
+% create_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
+% % create_test_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
+% % test_code = ['test_' el_class]
+% % eval(test_code)
+
+% el_class = 'PFMeasureBU';
+% delete([fileparts(which('braph2')) '/src/gt/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
+% create_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
+% % create_test_Element([fileparts(which('braph2genesis')) '/src/gt/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/gt'])
+% % test_code = ['test_' el_class]
+% % eval(test_code)
 
 % el_class = 'AnalyzeGroup_FUN_OMP_GA_WU';
 % delete([fileparts(which('braph2')) '/pipelines/functional ordered_multiplex group_average/' el_class '.m'])
