@@ -51,7 +51,7 @@ function p_out = draw(pf, varargin)
     %
     % DRAW(PL) draws the measure graphical panel.
     %
-    % P = DRAW(PF) returns a handle to the brain atlas graphical panel.
+    % P = DRAW(PF) returns a handle to the measure graphical panel.
     %
     % DRAW(PF, 'Property', VALUE, ...) sets the properties of the graphical
     %  panel with custom property-value couples.
