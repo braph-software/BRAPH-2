@@ -462,7 +462,9 @@ function cb_table_edit(pr, i, col, newdata)
                 st.set(col, min(abs(newdata), 1))
 
             case Format.SIZE
-                st.set(col, abs(newdata))
+                if newdata ~= 0
+                    st.set(col, abs(newdata))
+                end
 
             case Format.MARKER
                 st.set(col, newdata)

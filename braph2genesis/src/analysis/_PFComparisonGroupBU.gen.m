@@ -58,6 +58,8 @@ end
 ST_LINE_CIU (figure, item) determines the upper-confidence-interval line settings.
 %%%% ¡settings!
 'SettingsLine'
+%%%% ¡default!
+SettingsLine('SYMBOL', '.')
 %%%% ¡postprocessing!
 if check_graphics(pf.h_line_ciu, 'line')
     bas = pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('BAS');
@@ -68,6 +70,11 @@ if check_graphics(pf.h_line_ciu, 'line')
     end
     br1_id = ba.get('BR_DICT').getIndex(pf.get('BR1_ID'));
     
+    if ~ba.get('BR_DICT').contains(pf.get('BR2_ID'))
+        pf.set('BR2_ID', ba.get('BR_DICT').getItem(1).get('ID'))
+    end
+    br2_id = ba.get('BR_DICT').getIndex(pf.get('BR2_ID'));
+
     pf.get('ST_LINE_CIU').set( ...
         'X', pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('LAYERTICKS'), ...
         'Y', cellfun(@(x) x(br1_id, br2_id), pf.get('CP').get('CIU')), ...
@@ -81,6 +88,8 @@ end
 ST_LINE_CIL (figure, item) determines the lower-confidence-interval line settings.
 %%%% ¡settings!
 'SettingsLine'
+%%%% ¡default!
+SettingsLine('SYMBOL', '.')
 %%%% ¡postprocessing!
 if check_graphics(pf.h_line_cil, 'line')
     bas = pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('BAS');
@@ -91,6 +100,11 @@ if check_graphics(pf.h_line_cil, 'line')
     end
     br1_id = ba.get('BR_DICT').getIndex(pf.get('BR1_ID'));
     
+    if ~ba.get('BR_DICT').contains(pf.get('BR2_ID'))
+        pf.set('BR2_ID', ba.get('BR_DICT').getItem(1).get('ID'))
+    end
+    br2_id = ba.get('BR_DICT').getIndex(pf.get('BR2_ID'));
+
     pf.get('ST_LINE_CIL').set( ...
         'X', pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('LAYERTICKS'), ...
         'Y', cellfun(@(x) x(br1_id, br2_id), pf.get('CP').get('CIL')), ...
@@ -103,14 +117,24 @@ end
 %%% ¡prop!
 BR1_ID (figure, string) is the ID of the first brain region of the binodal measure.
 %%%% ¡gui!
-pr = PP_BrainRegion('EL', pf, 'PROP', PFComparisonGroupBU.BR1_ID, varargin{:});
+bas = pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('BAS');
+ba = bas{1};
+
+pr = PP_BrainRegion('EL', pf, 'PROP', PFComparisonGroupBU.BR1_ID, ...
+    'BA', ba, ...
+    varargin{:});
 
 %% ¡props!
 
 %%% ¡prop!
 BR2_ID (figure, string) is the ID of the second brain region of the binodal measure.
 %%%% ¡gui!
-pr = PP_BrainRegion('EL', pf, 'PROP', PFComparisonGroupBU.BR2_ID, varargin{:});
+bas = pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('BAS');
+ba = bas{1};
+
+pr = PP_BrainRegion('EL', pf, 'PROP', PFComparisonGroupBU.BR2_ID, ...
+    'BA', ba, ...
+    varargin{:});
 
 %% ¡methods!
 function p_out = draw(pf, varargin)

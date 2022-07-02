@@ -49,6 +49,8 @@ pr = SettingsPPTable('EL', pf, 'PROP', PFComparisonGroupGU.ST_LINE_DIFF, ...
 ST_LINE_CIU (figure, item) determines the upper-confidence-interval line settings.
 %%%% ¡settings!
 'SettingsLine'
+%%%% ¡default!
+SettingsLine('SYMBOL', '.')
 %%%% ¡postprocessing!
 if check_graphics(pf.h_line_ciu, 'line')
     pf.get('ST_LINE_CIU').set( ...
@@ -68,6 +70,8 @@ pr = SettingsPPTable('EL', pf, 'PROP', PFComparisonGroupGU.ST_LINE_CIU, ...
 ST_LINE_CIL (figure, item) determines the lower-confidence-interval line settings.
 %%%% ¡settings!
 'SettingsLine'
+%%%% ¡default!
+SettingsLine('SYMBOL', '.')
 %%%% ¡postprocessing!
 if check_graphics(pf.h_line_cil, 'line')
     pf.get('ST_LINE_CIL').set( ...

@@ -53,6 +53,8 @@ end
 ST_LINE_CIU (figure, item) determines the upper-confidence-interval line settings.
 %%%% ¡settings!
 'SettingsLine'
+%%%% ¡default!
+SettingsLine('SYMBOL', '.')
 %%%% ¡postprocessing!
 if check_graphics(pf.h_line_ciu, 'line')
     bas = pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('BAS');
@@ -76,6 +78,8 @@ end
 ST_LINE_CIL (figure, item) determines the lower-confidence-interval line settings.
 %%%% ¡settings!
 'SettingsLine'
+%%%% ¡default!
+SettingsLine('SYMBOL', '.')
 %%%% ¡postprocessing!
 if check_graphics(pf.h_line_cil, 'line')
     bas = pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('BAS');
@@ -100,7 +104,12 @@ end
 %%% ¡prop!
 BR1_ID (figure, string) is the ID of the brain region of the nodal measure.
 %%%% ¡gui!
-pr = PP_BrainRegion('EL', pf, 'PROP', PFComparisonGroupNU.BR1_ID, varargin{:});
+bas = pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('BAS');
+ba = bas{1};
+
+pr = PP_BrainRegion('EL', pf, 'PROP', PFComparisonGroupNU.BR1_ID, ...
+    'BA', ba, ...
+    varargin{:});
 
 %% ¡methods!
 function p_out = draw(pf, varargin)
