@@ -29,7 +29,7 @@ ST_LINE_MID (figure, item) determines the line settings.
 'SettingsLine'
 %%%% ¡postprocessing!
 if check_graphics(pf.h_line, 'line')
-    bas = pf.get('M').get('G').get('BAS');
+    bas = pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('BAS');
     ba = bas{1};
     
     if ~ba.get('BR_DICT').contains(pf.get('BR1_ID'))
@@ -43,8 +43,8 @@ if check_graphics(pf.h_line, 'line')
     br2_id = ba.get('BR_DICT').getIndex(pf.get('BR2_ID'));
     
     pf.get('ST_LINE_MID').set( ...
-        'X', pf.get('M').get('G').get('LAYERTICKS'), ...
-        'Y', cellfun(@(x) x(br1_id, br2_id), pf.get('M').get('M')), ...
+        'X', pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('LAYERTICKS'), ...
+        'Y', cellfun(@(x) x(br1_id, br2_id), pf.get('CP').get('DIFF')), ...
         'VISIBLE', true ...
         )
     pf.get('ST_AXIS').set('AXIS', true)
