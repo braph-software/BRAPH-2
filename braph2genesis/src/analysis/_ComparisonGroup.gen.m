@@ -506,7 +506,19 @@ PFC (gui, item) contains the panel figure of the comparison.
 'PFComparisonGroup'
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
-    cp.memorize('PFC').set('CP', cp)
+    if isa(cp.getr('PFC'), 'NoValue')
+        measure = cp.get('MEASURE');
+        
+        if Measure.is_global(measure) && Measure.is_unilayer(measure)
+            cp.set('PFC', PFComparisonGroupGU('CP', cp))
+        elseif Measure.is_nodal(measure) && Measure.is_unilayer(measure)
+            cp.set('PFC', PFComparisonGroupNU('CP', cp))
+        elseif Measure.is_binodal(measure) && Measure.is_unilayer(measure)
+            cp.set('PFC', PFComparisonGroupBU('CP', cp))
+        else
+            cp.memorize('PFC').set('CP', cp)
+        end
+    end
 end
 %%%% ¡gui!
 pr = PanelPropItem('EL', cp, 'PROP', ComparisonGroup.PFC, ...
