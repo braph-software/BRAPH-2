@@ -51,7 +51,12 @@ end
 %%% ¡prop!
 BR1_ID (figure, string) is the ID of the brain region of the nodal measure.
 %%%% ¡gui!
-pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureNU.BR1_ID, varargin{:});
+bas = pf.get('M').get('G').get('BAS');
+ba = bas{1};
+
+pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureNU.BR1_ID, ...
+    'BA', ba, ...
+    varargin{:});
 
 %% ¡methods!
 function p_out = draw(pf, varargin)

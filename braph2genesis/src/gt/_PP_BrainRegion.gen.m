@@ -13,6 +13,13 @@ BrainRegion, uidropdown, PFMeasureNU, PFMeasureGU
 p
 dropdown
 
+%% ¡props!
+
+%%% ¡prop!
+BA (metadata, item) is the brain atlas.
+%%%% ¡settings!
+'BrainAtlas'
+
 %% ¡methods!
 function p_out = draw(pr, varargin)
 
@@ -51,15 +58,19 @@ function update(pr)
         set(pr.dropdown, 'Enable', pr.get('ENABLE'))
     end
 
-    bas = el.get('M').get('G').get('BAS');
-    ba = bas{1};
+% % %     bas = el.get('M').get('G').get('BAS');
+% % %     ba = bas{1};
+% % %     
+% % %     if ~ba.get('BR_DICT').contains(el.get(prop))
+% % %         el.set(prop, ba.get('BR_DICT').getItem(1).get('ID'))
+% % %     end
     
-    if ~ba.get('BR_DICT').contains(el.get(prop))
-        el.set(prop, ba.get('BR_DICT').getItem(1).get('ID'))
+    if ~pr.get('BA').get('BR_DICT').contains(el.get(prop))
+        el.set(prop, pr.get('BA').get('BR_DICT').getItem(1).get('ID'))
     end
     
     set(pr.dropdown, ...
-        'Items', ba.get('BR_DICT').getKeys(), ...
+        'Items', pr.get('BA').get('BR_DICT').getKeys(), ...
         'Value', el.get(prop) ...
         )
 

@@ -54,14 +54,24 @@ end
 %%% ¡prop!
 BR1_ID (figure, string) is the ID of the first brain region of the binodal measure.
 %%%% ¡gui!
-pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureBU.BR1_ID, varargin{:});
+bas = pf.get('M').get('G').get('BAS');
+ba = bas{1};
+
+pr = PP_BrainRegion('EL', pf, 'PROP', ...
+    'BA', ba, ...
+    PFMeasureBU.BR1_ID, varargin{:});
 
 %% ¡props!
 
 %%% ¡prop!
 BR2_ID (figure, string) is the ID of the second brain region of the binodal measure.
 %%%% ¡gui!
-pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureBU.BR2_ID, varargin{:});
+bas = pf.get('M').get('G').get('BAS');
+ba = bas{1};
+
+pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureBU.BR2_ID, ...
+    'BA', ba, ...
+    varargin{:});
 
 %% ¡methods!
 function p_out = draw(pf, varargin)
