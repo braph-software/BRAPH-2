@@ -17,19 +17,22 @@ PanelFig, Measure
 p  % handle for panel
 h_axes % handle for the axes
 
-h_line % data line
+h_line_diff % measure line
+h_line_ciu % upper CI line
+h_line_cil % lower CI line
+h_area_ci % CI area
 h_xlabel
 h_ylabel
 
 %% ¡props!
 
 %%% ¡prop!
-ST_LINE_MID (figure, item) determines the line settings.
+ST_LINE_DIFF (figure, item) determines the difference line settings.
 %%%% ¡settings!
 'SettingsLine'
 %%%% ¡postprocessing!
-if check_graphics(pf.h_line, 'line')
-    pf.get('ST_LINE_MID').set( ...
+if check_graphics(pf.h_line_diff, 'line')
+    pf.get('ST_LINE_DIFF').set( ...
         'X', pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('LAYERTICKS'), ...
         'Y', cell2mat(pf.get('CP').get('DIFF')), ...
         'VISIBLE', true ...
@@ -38,7 +41,45 @@ if check_graphics(pf.h_line, 'line')
     set(pf.h_axes, 'InnerPosition', [s(6)/w(pf.h_axes, 'pixels') s(6)/h(pf.h_axes, 'pixels') max(.1, 1-s(8)/w(pf.h_axes, 'pixels')) max(.1, 1-s(8)/h(pf.h_axes, 'pixels'))])
 end
 %%%% ¡gui!
-pr = SettingsPPTable('EL', pf, 'PROP', PFComparisonGroupGU.ST_LINE_MID, ...
+pr = SettingsPPTable('EL', pf, 'PROP', PFComparisonGroupGU.ST_LINE_DIFF, ...
+    'COLS', [SettingsLine.VISIBLE, SettingsLine.LINESTYLE, SettingsLine.LINEWIDTH, SettingsLine.LINECOLOR, SettingsLine.SYMBOL, SettingsLine.SYMBOLSIZE, SettingsLine.EDGECOLOR, SettingsLine.FACECOLOR], ...
+    varargin{:});
+
+%%% ¡prop!
+ST_LINE_CIU (figure, item) determines the upper-confidence-interval line settings.
+%%%% ¡settings!
+'SettingsLine'
+%%%% ¡postprocessing!
+if check_graphics(pf.h_line_ciu, 'line')
+    pf.get('ST_LINE_CIU').set( ...
+        'X', pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('LAYERTICKS'), ...
+        'Y', cell2mat(pf.get('CP').get('CIU')), ...
+        'VISIBLE', true ...
+        )
+    pf.get('ST_AXIS').set('AXIS', true)
+    set(pf.h_axes, 'InnerPosition', [s(6)/w(pf.h_axes, 'pixels') s(6)/h(pf.h_axes, 'pixels') max(.1, 1-s(8)/w(pf.h_axes, 'pixels')) max(.1, 1-s(8)/h(pf.h_axes, 'pixels'))])
+end
+%%%% ¡gui!
+pr = SettingsPPTable('EL', pf, 'PROP', PFComparisonGroupGU.ST_LINE_CIU, ...
+    'COLS', [SettingsLine.VISIBLE, SettingsLine.LINESTYLE, SettingsLine.LINEWIDTH, SettingsLine.LINECOLOR, SettingsLine.SYMBOL, SettingsLine.SYMBOLSIZE, SettingsLine.EDGECOLOR, SettingsLine.FACECOLOR], ...
+    varargin{:});
+
+%%% ¡prop!
+ST_LINE_CIL (figure, item) determines the lower-confidence-interval line settings.
+%%%% ¡settings!
+'SettingsLine'
+%%%% ¡postprocessing!
+if check_graphics(pf.h_line_cil, 'line')
+    pf.get('ST_LINE_CIL').set( ...
+        'X', pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('LAYERTICKS'), ...
+        'Y', cell2mat(pf.get('CP').get('CIL')), ...
+        'VISIBLE', true ...
+        )
+    pf.get('ST_AXIS').set('AXIS', true)
+    set(pf.h_axes, 'InnerPosition', [s(6)/w(pf.h_axes, 'pixels') s(6)/h(pf.h_axes, 'pixels') max(.1, 1-s(8)/w(pf.h_axes, 'pixels')) max(.1, 1-s(8)/h(pf.h_axes, 'pixels'))])
+end
+%%%% ¡gui!
+pr = SettingsPPTable('EL', pf, 'PROP', PFComparisonGroupGU.ST_LINE_CIL, ...
     'COLS', [SettingsLine.VISIBLE, SettingsLine.LINESTYLE, SettingsLine.LINEWIDTH, SettingsLine.LINECOLOR, SettingsLine.SYMBOL, SettingsLine.SYMBOLSIZE, SettingsLine.EDGECOLOR, SettingsLine.FACECOLOR], ...
     varargin{:});
 
@@ -99,16 +140,37 @@ function p_out = draw(pf, varargin)
     pf.p = draw@PFComparisonGroup(pf, varargin{:});
     pf.h_axes = pf.get('ST_AXIS').h();
     
-    % data line
-    if ~check_graphics(pf.h_line, 'line')
-        pf.h_line = plot([0 1], [0 1], ...
+    % difference line
+    if ~check_graphics(pf.h_line_diff, 'line')
+        pf.h_line_diff = plot([0 1], [0 1], ...
             'Parent', pf.h_axes, ...
             'Tag', 'h_line' ...
             );
     end
+    pf.memorize('ST_LINE_DIFF').h(pf.h_line_diff).set('PANEL', pf, 'UITAG', 'h_line_diff')
     
-    pf.memorize('ST_LINE_MID').h(pf.h_line).set('PANEL', pf, 'UITAG', 'h_line')
+    % upper-confidence-interval line
+    if ~check_graphics(pf.h_line_ciu, 'line')
+        pf.h_line_ciu = plot([0 1], [0 1], ...
+            'Parent', pf.h_axes, ...
+            'Tag', 'h_line_ciu' ...
+            );
+    end
+    pf.memorize('ST_LINE_CIU').h(pf.h_line_ciu).set('PANEL', pf, 'UITAG', 'h_line_ciu')
+
+    % lower-confidence-interval line
+    if ~check_graphics(pf.h_line_cil, 'line')
+        pf.h_line_cil = plot([0 1], [0 1], ...
+            'Parent', pf.h_axes, ...
+            'Tag', 'h_line_cil' ...
+            );
+    end
+    pf.memorize('ST_LINE_CIL').h(pf.h_line_cil).set('PANEL', pf, 'UITAG', 'h_line_cil')
+
+    % reorders lines
+    set(pf.h_axes, 'Children', flipud(pf.h_axes.Children))
     
+    % x-label
     if ~check_graphics(pf.h_xlabel, 'text')
         pf.h_xlabel = xlabel(' ', ...
             'Parent', pf.h_axes, ...
@@ -117,6 +179,7 @@ function p_out = draw(pf, varargin)
     end
     pf.memorize('ST_XLABEL').h(pf.h_xlabel).set('PANEL', pf, 'UITAG', 'h_xlabel')
 
+    % y-label
     if ~check_graphics(pf.h_ylabel, 'text')
         pf.h_ylabel = ylabel(' ', ...
             'Parent', pf.h_axes, ...
