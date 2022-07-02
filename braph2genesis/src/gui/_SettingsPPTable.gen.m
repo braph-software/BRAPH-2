@@ -30,7 +30,8 @@ function p_out = draw(pr, varargin)
             );       
     end
     function cb_table_edit(~, event) % (src, event)
-        pr.cb_table_edit(cols(event.Indices(1)), cols(event.Indices(2)), event.NewData) % cols(event.Indices(1)) == 1
+        cols = st.getProps(Category.FIGURE);
+        pr.cb_table_edit(event.Indices(1), cols(event.Indices(2)), event.NewData) % cols(event.Indices(1)) == 1
     end
     
     % output
@@ -290,7 +291,7 @@ function update(pr)
 end
 function redraw(pr, varargin)
     [h, varargin] = get_and_remove_from_varargin(s(2), 'Height', varargin);
-    Dh = s(3);
+    Dh = s(5);
     
     el = pr.get('EL');
     prop = pr.get('PROP');
