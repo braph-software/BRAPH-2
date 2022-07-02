@@ -2,10 +2,25 @@
 SettingsPPTable < PanelProp (pr, settings text panel) plots the panel with text settings.
 
 %%% ¡description!
-% % % 
+PanelPropIDictTable plots the panel of a ITEM property containing a Settings element with a 1-row table.
+It works for all categories.
 
+It provides some standard basic functionalities.
+It can be personalized with the following props:
+ COLS - Numerical array with the columns to be visualized.
+ ROWNAME - Code to generate the row names as per uitable format.
+ COLUMNAME - Code to generate the column names as per uitable format.
+ COLUMNWIDTH - Code to determine the cloumn width as per uitable format.
+ COLUMNEDITABLE - Code to determine the cloumn editability as per uitable format.
+ COLUMNFORMAT - Code to determine the cloumn format as per uitable format.
+ CB_TAB_EDIT - Code in a cell array for the edit callback to be evaluated 
+  by the table edit callback. It can refer to the variables:
+   el, prop, dict, it_class, pr, i, col, newdata
+  and use the standard callback function:
+   cb_table_edit_default()
+   
 %%% ¡seealso!
-SettingsText, uitable
+Settings, uitable
 
 %% ¡props!
 
@@ -61,7 +76,7 @@ function p_out = draw(pr, varargin)
             'Parent', pr.p, ...
             'Tag', 'table', ...
             'FontSize', BRAPH2.FONTSIZE, ...
-            'ColumnSortable', true, ...
+            'ColumnSortable', false, ...
             'CellEditCallback', {@cb_table_edit} ...
             );       
     end
