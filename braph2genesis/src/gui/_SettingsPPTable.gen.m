@@ -7,6 +7,41 @@ SettingsPPTable < PanelProp (pr, settings text panel) plots the panel with text 
 %%% ¡seealso!
 SettingsText, uitable
 
+%% ¡props!
+
+%%% ¡prop!
+TAB_H (gui, size) is the height of the table in fontsize units.
+%%%% ¡default!
+5
+
+%%% ¡prop!
+COLS (gui, rvector) is the ordered list of columns.
+%%%% ¡conditioning!
+if iscolumn(value)
+    value = value';
+end
+
+%%% ¡prop!
+ROWNAME (gui, string) determines the table row names (to be evaluated).
+
+%%% ¡prop!
+COLUMNNAME (gui, string) determines the table column names (to be evaluated).
+
+%%% ¡prop!
+COLUMNWIDTH (gui, string) determines the column widths (to be evaluated).
+
+%%% ¡prop!
+COLUMNEDITABLE (gui, string) determines whether the columns are editable (to be evaluated).
+
+%%% ¡prop!
+COLUMNFORMAT (gui, string) determines the columns formats (to be evaluated).
+
+%%% ¡prop!
+CB_TAB_EDIT (gui, string) is executed when a cell is updated (to be evaluated).
+%%%% ¡conditioning!
+if iscell(value)
+    value = sprintf('%s;', value{:});
+end
 
 %% ¡properties!
 p
@@ -19,6 +54,7 @@ function p_out = draw(pr, varargin)
     
     el = pr.get('EL');
     prop = pr.get('PROP');
+    st = el.get(prop);
 
     if ~check_graphics(pr.table, 'uitable')
         pr.table = uitable( ...
@@ -30,7 +66,7 @@ function p_out = draw(pr, varargin)
             );       
     end
     function cb_table_edit(~, event) % (src, event)
-        cols = st.getProps(Category.FIGURE);
+        cols = pr.get('COLS');
         pr.cb_table_edit(event.Indices(1), cols(event.Indices(2)), event.NewData) % cols(event.Indices(1)) == 1
     end
     
@@ -48,7 +84,11 @@ function update(pr)
     st = el.get(prop);
     
     function set_table()
-        cols = st.getProps(Category.FIGURE);
+
+        if isempty(pr.get('COLS'))
+            pr.set('COLS', st.getProps(Category.FIGURE));
+        end
+        cols = pr.get('COLS');
 
         data = cell(1, length(cols));
         for c = 1:1:length(cols)
@@ -102,125 +142,145 @@ function update(pr)
 
                 case Format.LINE
                     data{1, c} = st.get(col);
-            end            
+            end
         end
 
-        rowname = '';
-
-        columnname = repmat({''}, 1, length(cols));
-        for c = 1:1:length(cols)
-            col = cols(c);
-            columnname{c} = st.getPropTag(col);
+        if ~isempty(pr.get('ROWNAME'))
+            rowname = eval(pr.get('ROWNAME'));
+        else
+            rowname = '';
         end
 
-        columnwidth = 'auto';
+        if ~isempty(pr.get('COLUMNNAME'))
+            columnname = eval(pr.get('COLUMNNAME'));
+        else
+            columnname = repmat({''}, 1, length(cols));
+            for c = 1:1:length(cols)
+                col = cols(c);
+                columnname{c} = st.getPropTag(col);
+            end
+        end
 
-        columneditable = false(1, length(cols));
-        for c = 1:1:length(cols)
-            col = cols(c);
-            if ~el.isLocked(prop)
+        if ~isempty(pr.get('COLUMNWIDTH'))
+            columnwidth = eval(pr.get('COLUMNWIDTH'));
+        else
+            columnwidth = 'auto';
+        end
+
+        if ~isempty(pr.get('COLUMNEDITABLE'))
+            columneditable = eval(pr.get('COLUMNEDITABLE'));
+        else
+            columneditable = false(1, length(cols));
+            for c = 1:1:length(cols)
+                col = cols(c);
+                if ~el.isLocked(prop)
+                    switch st.getPropFormat(col)
+                        % % % case Format.EMPTY
+
+                        case Format.STRING 
+                            columneditable(c) = true;
+
+                        case Format.LOGICAL 
+                            columneditable(c) = true;
+
+                        case Format.OPTION 
+                            columneditable(c) = true;
+
+                        % % % case Format.CLASS
+
+                        % % % case Format.CLASSLIST
+
+                        case Format.ITEM
+                            columneditable(c) = false;
+
+                            % % % case Format.ITEMLIST
+
+                            % % % case Format.IDICT
+
+                        case Format.SCALAR 
+                            columneditable(c) = true;
+
+                        case {Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
+                            columneditable(c) = false;
+
+                            % % % case Format.CELL
+
+                            % % % case Format.NET
+
+                        case Format.COLOR 
+                            columneditable(c) = true;
+
+                        case Format.ALPHA 
+                            columneditable(c) = true;
+
+                        case Format.SIZE 
+                            columneditable(c) = true;
+
+                        case Format.MARKER 
+                            columneditable(c) = true;
+
+                        case Format.LINE 
+                            columneditable(c) = true;
+                    end                        
+                end
+            end
+        end
+
+        if ~isempty(pr.get('COLUMNFORMAT'))
+            columnformat = pr.get('COLUMNFORMAT');
+        else
+            columnformat = repmat({''}, 1, length(cols));
+            for c = 1:1:length(cols)
+                col = cols(c);
                 switch st.getPropFormat(col)
                     % % % case Format.EMPTY
 
-                    case Format.STRING 
-                        columneditable(c) = true;
+                    case Format.STRING
+                        columnformat{c} = 'char';
 
-                    case Format.LOGICAL 
-                        columneditable(c) = true;
+                    case Format.LOGICAL
+                        columnformat{c} = 'logical';
 
-                    case Format.OPTION 
-                        columneditable(c) = true;
+                    case Format.OPTION
+                        columnformat{c} = st.getPropSettings(col);
 
                     % % % case Format.CLASS
 
                     % % % case Format.CLASSLIST
 
                     case Format.ITEM
-                        columneditable(c) = false;
+                        columnformat{c} = 'char';
 
-                        % % % case Format.ITEMLIST
+                    % % % case Format.ITEMLIST
 
-                        % % % case Format.IDICT
+                    % % % case Format.IDICT
 
-                    case Format.SCALAR 
-                        columneditable(c) = true;
+                    case Format.SCALAR
+                        columnformat{c} = 'numeric';
 
                     case {Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
-                        columneditable(c) = false;
+                        columnformat{c} = 'char';
 
-                        % % % case Format.CELL
+                    % % % case Format.CELL
 
-                        % % % case Format.NET
+                    % % % case Format.NET
 
-                    case Format.COLOR 
-                        columneditable(c) = true;
+                    case Format.COLOR
+                        columnformat{c} = 'char';
 
-                    case Format.ALPHA 
-                        columneditable(c) = true;
+                    case Format.ALPHA
+                        columnformat{c} = 'numeric';
 
-                    case Format.SIZE 
-                        columneditable(c) = true;
+                    case Format.SIZE
+                        columnformat{c} = 'numeric';
 
-                    case Format.MARKER 
-                        columneditable(c) = true;
+                    case Format.MARKER
+                        columnformat{c} = st.getPropSettings(col);
 
-                    case Format.LINE 
-                        columneditable(c) = true;
-                end                        
+                    case Format.LINE
+                        columnformat{c} = st.getPropSettings(col);
+                end            
             end
-        end
-
-        columnformat = repmat({''}, 1, length(cols));
-        for c = 1:1:length(cols)
-            col = cols(c);
-            switch st.getPropFormat(col)
-                % % % case Format.EMPTY
-
-                case Format.STRING
-                    columnformat{c} = 'char';
-
-                case Format.LOGICAL
-                    columnformat{c} = 'logical';
-
-                case Format.OPTION
-                    columnformat{c} = st.getPropSettings(col);
-
-                % % % case Format.CLASS
-
-                % % % case Format.CLASSLIST
-
-                case Format.ITEM
-                    columnformat{c} = 'char';
-
-                % % % case Format.ITEMLIST
-
-                % % % case Format.IDICT
-
-                case Format.SCALAR
-                    columnformat{c} = 'numeric';
-
-                case {Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
-                    columnformat{c} = 'char';
-
-                % % % case Format.CELL
-
-                % % % case Format.NET
-
-                case Format.COLOR
-                    columnformat{c} = 'char';
-
-                case Format.ALPHA
-                    columnformat{c} = 'numeric';
-
-                case Format.SIZE
-                    columnformat{c} = 'numeric';
-
-                case Format.MARKER
-                    columnformat{c} = st.getPropSettings(col);
-
-                case Format.LINE
-                    columnformat{c} = st.getPropSettings(col);
-            end            
         end
 
         set(pr.table, ...
@@ -237,7 +297,7 @@ function update(pr)
         if isempty(styles_cell)
             for c = 1:1:length(cols)
                 col = cols(c);
-                if col > 0 && isequal(st.getPropFormat(col), Format.COLOR)                            
+                if col > 0 && isequal(st.getPropFormat(col), Format.COLOR)
                     addStyle(pr.table, ...
                         uistyle('FontColor', st.get(col)), ...
                         'cell', [1, c] ...
@@ -290,8 +350,28 @@ function update(pr)
     end   
 end
 function redraw(pr, varargin)
+    %REDRAW resizes the property panel and repositions its graphical objects.
+    %
+    % REDRAW(PR) resizes the property panel and repositions its graphical objects. 
+    % 
+    % Important notes:
+    % 1. REDRAW() sets the units 'characters' for panel. 
+    % 2. REDRAW() is typically called internally by PanelElement and does not need 
+    %  to be explicitly called in children of PanelProp.
+    %
+    % REDRAW(PR, 'X0', X0, 'Y0', Y0, 'Width', WIDTH, 'Height', HEIGHT)
+    %  repositions the property panel. It is possible to use a
+    %  subset of the Name-Value pairs.
+    %  By default:
+    %  - X0 does not change
+    %  - Y0 does not change
+    %  - WIDTH does not change
+    %  - HEIGHT = s(30)
+    %
+    % See also draw, update, PanelElement, s.
+
     [h, varargin] = get_and_remove_from_varargin(s(2), 'Height', varargin);
-    Dh = s(5);
+    Dh = s(pr.get('TAB_H'));
     
     el = pr.get('EL');
     prop = pr.get('PROP');
@@ -315,58 +395,66 @@ function cb_table_edit(pr, i, col, newdata)
     prop = pr.get('PROP');
     st = el.get(prop);
     
-    switch st.getPropFormat(col)
-        % % % case Format.EMPTY
+    if ~isempty(pr.get('CB_TAB_EDIT'))
+        eval(pr.get('CB_TAB_EDIT'))
+    else
+        cb_table_edit_default()
+    end
+    function cb_table_edit_default()
 
-        case Format.STRING
-            st.set(col, newdata)
+        switch st.getPropFormat(col)
+            % % % case Format.EMPTY
 
-        case Format.LOGICAL
-            st.set(col, newdata)
+            case Format.STRING
+                st.set(col, newdata)
 
-        case Format.OPTION
-            st.set(col, newdata)
+            case Format.LOGICAL
+                st.set(col, newdata)
 
-        % % % case Format.CLASS
+            case Format.OPTION
+                st.set(col, newdata)
 
-        % % % case Format.CLASSLIST
+            % % % case Format.CLASS
 
-        case Format.ITEM
-            %
+            % % % case Format.CLASSLIST
 
-        % % % case Format.ITEMLIST
-
-        % % % case Format.IDICT
-
-        case Format.SCALAR
-            st.set(col, newdata)
-
-        case {Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
-            %
-
-        % % % case Format.CELL
-
-        % % % case Format.NET
-
-        case Format.COLOR
-            try
-                rgb = [hex2dec(newdata(1:2))/255 hex2dec(newdata(3:4))/255 hex2dec(newdata(5:6))/255];
-                st.set(col, rgb)
-            catch
+            case Format.ITEM
                 %
-            end
 
-        case Format.ALPHA
-            st.set(col, min(abs(newdata), 1))
+            % % % case Format.ITEMLIST
 
-        case Format.SIZE
-            st.set(col, abs(newdata))
+            % % % case Format.IDICT
 
-        case Format.MARKER
-            st.set(col, newdata)
+            case Format.SCALAR
+                st.set(col, newdata)
 
-        case Format.LINE
-            st.set(col, newdata)
+            case {Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX}
+                %
+
+            % % % case Format.CELL
+
+            % % % case Format.NET
+
+            case Format.COLOR
+                try
+                    rgb = [hex2dec(newdata(1:2))/255 hex2dec(newdata(3:4))/255 hex2dec(newdata(5:6))/255];
+                    st.set(col, rgb)
+                catch
+                    %
+                end
+
+            case Format.ALPHA
+                st.set(col, min(abs(newdata), 1))
+
+            case Format.SIZE
+                st.set(col, abs(newdata))
+
+            case Format.MARKER
+                st.set(col, newdata)
+
+            case Format.LINE
+                st.set(col, newdata)
+        end
     end
     
     pr.update()
