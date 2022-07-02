@@ -612,8 +612,8 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     for i = 1:1:size(diff, 1)
         for j = 1:1:size(diff, 2)
             p1(i, j) = pvalue1(diff(i, j), cellfun(@(x) x{i, j}, diff_perms, 'UniformOutput', false));
-            p2(i, j) = pvalue1(diff(i, j), cellfun(@(x) x{i, j}, diff_perms, 'UniformOutput', false));
-            qtl = quantiles(cellfun(@(x) x{j, j}, diff_perms, 'UniformOutput', false), 40);
+            p2(i, j) = pvalue2(diff(i, j), cellfun(@(x) x{i, j}, diff_perms, 'UniformOutput', false));
+            qtl = quantiles(cellfun(@(x) x{i, j}, diff_perms, 'UniformOutput', false), 40);
             ci_lower(i, j) = {cellfun(@(x) x(2), qtl)};
             ci_upper(i, j) = {cellfun(@(x) x(40), qtl)};
         end
