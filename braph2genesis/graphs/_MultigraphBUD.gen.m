@@ -27,10 +27,13 @@ negativity = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
 DENSITIES (parameter, rvector) is the vector of densities.
-%%%% ¡gui_!
-% % % pr = PlotPropSmartVector('EL', g, 'PROP', MultigraphBUD.DENSITIES, 'MAX', 100, 'MIN', 0, varargin{:});
 
 %% ¡props_update!
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the graph template to set the graph and measure parameters.
+%%%% ¡settings!
+'MultigraphBUD'
 
 %%% ¡prop!
 A (result, cell) is the cell array with the symmetric binary adjacency matrices of the binary undirected multigraph.
@@ -42,37 +45,34 @@ A = cell(length(densities));
 
 for i = 1:1:length(densities)
     density = densities(i);
-    A{i, i} = binarize(cell2mat(A_WU), 'density', density);
+    A{i, i} = dediagonalize(binarize(cell2mat(A_WU), 'density', density));
 end
 
 value = A;
 %%%% ¡gui!
 bas = g.get('BAS');
-ba = bas{1};
-brs = ba.get('BR_DICT').getItems();
-rowname = '{';
-for bri = 1:1:length(brs)
-    rowname = [rowname ' ''' brs{bri}.get('ID') ''''];
+if ~isempty(bas)
+    ba = bas{1};
+    br_ids = ba.get('BR_DICT').getKeys();
+    rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
+else
+    rowname = '{}';
 end
-rowname = [rowname '}'];
 
-densities = g.get('DENSITIES');
-xsliderlabels = '{';
-for i = 1:1:length(densities)
-    xsliderlabels = [xsliderlabels ' ''' num2str(densities(i)) '%'''];
+if isempty(g.get('LAYERLABELS'))
+    xlayerlabels = PanelPropCell.getPropDefault('XSLIDERLABELS');
+    ylayerlabels = PanelPropCell.getPropDefault('YSLIDERLABELS');
+else
+    layerlabels = str2cell(g.get('LAYERLABELS'));
+    xlayerlabels = ['{' sprintf('''%s'' ', layerlabels{:}) '}'];
+    ylayerlabels = ['{' sprintf('''%s'' ', layerlabels{end:-1:1}) '}'];
 end
-xsliderlabels = [xsliderlabels '}'];
-ysliderlabels = '{';
-for i = length(densities):-1:1
-    ysliderlabels = [ysliderlabels ' ''' num2str(densities(i)) '%'''];
-end
-ysliderlabels = [ysliderlabels '}'];
 
 pr = PanelPropCell('EL', g, 'PROP', GraphWU.A, ...
     'TAB_H', 40, ...
     'XYSLIDERLOCK', true, ... 
     'XSLIDER', false, 'YSLIDER', true, ...
-    'XSLIDERLABELS', xsliderlabels, 'YSLIDERLABELS', ysliderlabels, ...
+    'XSLIDERLABELS', xlayerlabels, 'YSLIDERLABELS', ylayerlabels, ...
     'XSLIDERHEIGHT', 3, 'YSLIDERWIDTH', 5, ...
     'ROWNAME', rowname, ...
     'COLUMNNAME', rowname, ...

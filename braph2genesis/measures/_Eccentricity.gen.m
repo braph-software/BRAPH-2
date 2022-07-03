@@ -22,6 +22,7 @@ MultiplexWU
 MultiplexBU
 MultiplexBUD
 MultiplexBUT
+OrderedMultiplexWU
 
 %% ¡props!
 %%% ¡prop! 

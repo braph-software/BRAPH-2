@@ -64,11 +64,20 @@ COLUMNNAME (gui, string) determines the table column names (to be evaluated).
 %%%% ¡default!
 '''numbered'''
 
+%%% ¡prop!
+MENU_EXPORT (gui, logical) determines whether to show the context menu to export data.
+%%%% ¡default!
+true
+
 %% ¡properties!
 p
 table
 xslider
 yslider
+
+contextmenu
+%
+menu_export_to_xls
 
 %% ¡methods!
 function p_out = draw(pr, varargin)
@@ -140,6 +149,22 @@ function p_out = draw(pr, varargin)
         pr.cb_yslider()
     end
 
+    if ~check_graphics(pr.contextmenu, 'uicontextmenu')
+        pr.contextmenu = uicontextmenu(...
+            'Parent', ancestor(pr.p, 'figure'), ...
+            'Tag', 'contextmenu');
+        if pr.get('MENU_EXPORT')
+            pr.menu_export_to_xls = uimenu( ...
+                'Parent', pr.contextmenu, ...
+                'Tag', 'menu_export_to_xls', ...
+                'Text', 'Export to XLS', ...
+                'MenuSelectedFcn', {@cb_export_to_xls});
+        end
+    end
+    function cb_export_to_xls(~, ~)
+        pr.cb_export_to_xls();
+    end
+
     % output
     if nargout > 0
         p_out = pr.p;
@@ -195,9 +220,9 @@ function update(pr)
     end
     
     set(pr.table, ...
-    'RowName', eval(pr.get('ROWNAME')), ...
-    'ColumnName', eval(pr.get('COLUMNNAME')) ...
-    );
+        'RowName', eval(pr.get('ROWNAME')), ...
+        'ColumnName', eval(pr.get('COLUMNNAME')) ...
+        );
 
     el = pr.get('EL');
     prop = pr.get('PROP');
@@ -325,6 +350,25 @@ function cb_cell_value(pr, i, j, newdata)
 
 % % %     pr.update()
 end
+function cb_export_to_xls(pr)
+%CB_EXPORT_DATA exports selected data from uitable to an XLSX file.
+    data = pr.table.Data;
+    columns = pr.table.ColumnName;
+    rows = pr.table.RowName;
+    if isequal(rows, 'numbered')
+        rows = cellfun(@(x) num2str(x), num2cell([1:size(data, 1)]), 'UniformOutput', false);
+    end
+    t = cell2table(data, ...
+        'VariableNames', columns, ...
+        'RowNames', rows);
+
+    % save file
+    [filename, filepath, filterindex] = uiputfile({'*.xlsx';'*.xls'}, 'Select Excel file');
+    if filterindex
+        file = [filepath filename];
+        writetable(t, file, 'WriteRowNames', true);
+    end
+end
 function cb_xslider(pr)
 
     set(pr.xslider, 'Value', round(get(pr.xslider, 'Value')))
@@ -334,6 +378,8 @@ function cb_xslider(pr)
 % % %         prop = pr.get('PROP');
 % % %         value = el.get(prop);
 % % %         [R, C] = size(value);
+% % % 
+% % %         R = max(R, 1); % to manage the case in which C = R = 0 (empty cell)
 % % % 
 % % %         set(pr.yslider, 'Value', R + 1 - get(pr.xslider, 'Value'))
 % % %     end
@@ -349,6 +395,8 @@ function cb_yslider(pr)
         prop = pr.get('PROP');
         value = el.get(prop);
         [R, C] = size(value);
+        
+        C = max(C, 1); % to manage the case in which C = R = 0 (empty cell)
 
         set(pr.xslider, 'Value', C + 1 - get(pr.yslider, 'Value'))
     end

@@ -134,12 +134,14 @@ function f_out = draw(gui, varargin)
     set(pe, 'WAITBAR', Callback('EL', gui, 'TAG', 'WAITBAR'))
     
     % set GUI name
-    if el.existsTag('ID')
-        name = el.get('ID');
-    else
-        name = el.tostring();
+    if isa(gui.get('NAME'), 'NoValue')
+        if el.existsTag('ID')
+            name = el.get('ID');
+        else
+            name = el.tostring();
+        end
+        gui.set('NAME', [el.getClass() ' - ' name ' - ' BRAPH2.STR])
     end
-    gui.set('NAME', [el.getClass() ' - ' name ' - ' BRAPH2.STR])
 
     gui.f = draw@GUI(gui, varargin{:});
     
@@ -262,6 +264,10 @@ function x_draw(gui, f)
 % % %                 
                 pe.reinit(tmp_el)
                 el = tmp_el; % update local variable 'el' to synchronize it with pe 'el'
+                
+                gui.set('FILE', filename)
+                update_filename()
+
 % % % 
 % % %                 % the motion of the figure is to ensure the correct
 % % %                 % rendering of the opened element

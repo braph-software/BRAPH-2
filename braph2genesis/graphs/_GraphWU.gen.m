@@ -28,13 +28,14 @@ negativity = Graph.NONNEGATIVE;
 B (data, smatrix) is the input graph adjacency matrix.
 %%%% ¡gui!
 bas = g.get('BAS');
-ba = bas{1};
-brs = ba.get('BR_DICT').getItems();
-rowname = '{';
-for bri = 1:1:length(brs)
-    rowname = [rowname ' ''' brs{bri}.get('ID') ''''];
+if ~isempty(bas)
+    ba = bas{1};
+    br_ids = ba.get('BR_DICT').getKeys();
+    rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
+else
+    rowname = '{}';
 end
-rowname = [rowname '}'];
+
 pr = PanelPropMatrix('EL', g, 'PROP', GraphWU.B, ...
     'ROWNAME', rowname, ...
     'COLUMNNAME', rowname, ...
@@ -53,6 +54,11 @@ NUMBEROFWEIGHTS (parameter, scalar) specifies the number of weights sorted at th
 %% ¡props_update!
 
 %%% ¡prop!
+TEMPLATE (parameter, item) is the graph template to set the graph and measure parameters.
+%%%% ¡settings!
+'GraphWU'
+
+%%% ¡prop!
 A (result, cell) is the symmetric non-negative adjacency matrix of the weighted undirected graph.
 %%%% ¡calculate!
 B = g.get('B');
@@ -67,13 +73,14 @@ A = {B};
 value = A;
 %%%% ¡gui!
 bas = g.get('BAS');
-ba = bas{1};
-brs = ba.get('BR_DICT').getItems();
-rowname = '{';
-for bri = 1:1:length(brs)
-    rowname = [rowname ' ''' brs{bri}.get('ID') ''''];
+if ~isempty(bas)
+    ba = bas{1};
+    br_ids = ba.get('BR_DICT').getKeys();
+    rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
+else
+    rowname = '{}';
 end
-rowname = [rowname '}'];
+
 pr = PanelPropCell('EL', g, 'PROP', GraphWU.A, ...
     'TAB_H', 40, ...
     'XSLIDER', false, 'YSLIDER', false, ...

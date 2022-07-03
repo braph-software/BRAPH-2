@@ -1184,12 +1184,12 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         function bool = prop_set(el, pointer_list, varargin)
             %PROP_SET returns whether a prop has been set before postprocessing.
             %
-            % PROP_SET(EL, POINTER, POINTER1, VALUE1, POINTER2, VALUE2, ...) returns
+            % BOOL = PROP_SET(EL, POINTER, POINTER1, VALUE1, POINTER2, VALUE2, ...) returns
             %  whether the property POINTER has been set in the current setting cycle.
             %  POINTER can be either a property number (PROP) or tag (TAG).
             %  It is typically used with postprocessing.
             %
-            % PROP_SET(EL, {POINTERA, POINTERB, POINTERC}, POINTER1, VALUE1, POINTER2, VALUE2, ...) 
+            % BOOL = PROP_SET(EL, {POINTERA, POINTERB, POINTERC}, POINTER1, VALUE1, POINTER2, VALUE2, ...) 
             %  operates to a cell array of pointers.
             %
             % See also postprocessing.
@@ -1735,7 +1735,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %
             % EL_CLONE = CLONE(EL, [], CB_CATEGORIES) has callbacks for the categories CB_CATEGORIES.
             %
-            % EL_CLONE = CLONE(EL, [], , [], LOCKED_CATEGORIES) locks the categories LOCKED_CATEGORIES.
+            % EL_CLONE = CLONE(EL, [], [], LOCKED_CATEGORIES) locks the categories LOCKED_CATEGORIES.
             %
             % See also deepclone, Category.
             
@@ -1782,7 +1782,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 
                 % LOCKED
                 if any(strcmp(el_clone.getPropCategory(prop), locked_categories))
-                    el_clone.props{prop}.locked = el.props{prop}.true;
+                    el_clone.props{prop}.locked = true;
                 end
             end
         end

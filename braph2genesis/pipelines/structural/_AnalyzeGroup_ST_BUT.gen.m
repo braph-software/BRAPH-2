@@ -36,6 +36,11 @@ pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeGroup_ST_BUD.DENSITIES, ...
 %% ¡props_update!
 
 %%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'AnalyzeGroup_ST_BUT'
+
+%%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectST.
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectST')
@@ -82,8 +87,14 @@ g = MultigraphBUT( ...
     'ID', ['g ' gr.get('ID')], ...
     'B', A, ...
     'THRESHOLDS', thresholds, ...
+    'LAYERTICKS', thresholds, ...    
+    'LAYERLABELS', cell2str(cellfun(@(x) num2str(x), num2cell(thresholds), 'UniformOutput', false)), ...
     'BAS', atlas ...
     );
+
+if ~isa(a.getr('TEMPLATE'), 'NoValue')
+    g.set('TEMPLATE', a.get('TEMPLATE').memorize('G'))
+end
 
 value = g;
 

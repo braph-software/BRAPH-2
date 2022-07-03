@@ -1,5 +1,5 @@
 function f_out = braph2msgbox(title, message)
-%BRAPH2MSGBOX opens a modal message box.
+%BRAPH2MSGBOX opens a modal message box
 %
 % BRAPH2MSGBOX(TITLE, MESSAGE) opens a modal message box with TITLE and
 %  MESSAGE. 
