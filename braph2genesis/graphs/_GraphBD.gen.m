@@ -1,11 +1,11 @@
 %% ¡header!
-GraphBU < Graph (g, binary undirected graph) is a binary undirected graph.
+GraphBD < Graph (g, binary directed graph) is a binary directed graph.
 
 %%% ¡description!
-In a binary undirected (BU) graph, 
+In a binary directed (BD) graph, 
 the edges can be either 0 (absence of connection) 
-or 1 (existence of connection), and they are undirected. 
-The connectivity matrix is symmetric.
+or 1 (existence of connection), 
+and they are directed.
 
 %%% ¡graph!
 graph = Graph.GRAPH;
@@ -14,7 +14,7 @@ graph = Graph.GRAPH;
 connectivity = Graph.BINARY;
 
 %%% ¡directionality!
-directionality = Graph.UNDIRECTED;
+directionality = Graph.DIRECTED;
 
 %%% ¡selfconnectivity!
 selfconnectivity = Graph.NONSELFCONNECTED;
@@ -26,6 +26,20 @@ negativity = Graph.NONNEGATIVE;
 
 %%% ¡prop!
 B (data, smatrix) is the input graph adjacency matrix.
+%%%% ¡gui!
+bas = g.get('BAS');
+if ~isempty(bas)
+    ba = bas{1};
+    br_ids = ba.get('BR_DICT').getKeys();
+    rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
+else
+    rowname = '{}';
+end
+
+pr = PanelPropMatrix('EL', g, 'PROP', GraphWU.B, ...
+    'ROWNAME', rowname, ...
+    'COLUMNNAME', rowname, ...
+    varargin{:});
 
 %%% ¡prop!
 ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
@@ -35,31 +49,51 @@ ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
 %% ¡props_update!
 
 %%% ¡prop!
-A (result, cell) is the symmetric binary adjacency matrix of the binary undirected graph.
+TEMPLATE (parameter, item) is the graph template to set the graph and measure parameters.
+%%%% ¡settings!
+'GraphBD'
+
+%%% ¡prop!
+A (result, cell) is the binary adjacency matrix of the binary directed graph.
 %%%% ¡calculate!
 B = g.get('B');
 
-varargin = {}; %% TODO add props to manage the relevant properties of symmetrize, dediagonalize, semipositivize, binarize
-B = symmetrize(B, varargin{:}); %% enforces symmetry of adjacency matrix
+varargin = {}; %% TODO add props to manage the relevant properties of dediagonalize, semipositivize, binarize
 B = dediagonalize(B, varargin{:}); %% removes self-connections by removing diagonal from adjacency matrix
 B = semipositivize(B, varargin{:}); %% removes negative weights
 B = binarize(B, varargin{:}); %% enforces binary adjacency matrix
 
 A = {B};
 value = A;
+%%%% ¡gui!
+bas = g.get('BAS');
+if ~isempty(bas)
+    ba = bas{1};
+    br_ids = ba.get('BR_DICT').getKeys();
+    rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
+else
+    rowname = '{}';
+end
+
+pr = PanelPropCell('EL', g, 'PROP', GraphWU.A, ...
+    'TAB_H', 40, ...
+    'XSLIDER', false, 'YSLIDER', false, ...
+    'ROWNAME', rowname, ...
+    'COLUMNNAME', rowname, ...
+    varargin{:});
 
 %% ¡staticmethods!
 function [random_A, swaps] = randomize_A(A, attempts_per_edge)
     % RANDOMIZE_A returns a randomized correlation matrix
     %
-    % RANDOM_A = RANDOMIZE(G) returns the randomized matrix
+    % RANDOM_A = RANDOMIZE_A(G) returns the randomized matrix
     % RANDOM_A. Tries to swap 5 times an edge. The matrix has to
     % contain more than 1 edge.
     %
     % [RANDOM_A, SWAPS] = RANDOMIZE_A(G) attempts to rewire each edge
     % 5 times. Returns the randomized matrix RANDOM_A. Returns the
-    % number of succesful edge swaps.The matrix has to
-    % contain more than 1 edge. This algorithm was proposed
+    % number of succesful edge swaps. The matrix has to
+    % contain more than 1 edge.  This algorithm was proposed
     % by Maslov and Sneppen (Science 296, 910, 2002)
     %
     % [RANDOM_A, SWAPS] = RANDOMIZE_A(G, ATTEMPTS_PER_EDGE) attempts
@@ -67,15 +101,15 @@ function [random_A, swaps] = randomize_A(A, attempts_per_edge)
     % randomized matrix RANDOM_A. Returns the number of succesful edge swaps.
     % The matrix has to contain more than 1 edge.
     %
-    % See also randomize
+    % See also randomize.
 
     if nargin < 2
         attempts_per_edge = 5;
     end
 
     % remove self connections
-    A(1:length(A) + 1:numel(A)) = 0;
-    [I_edges, J_edges] = find(triu(A)); % find the edges
+    A(1:length(A)+1:numel(A)) = 0;
+    [I_edges, J_edges] = find(A); % find all the edges
     E = length(I_edges); % number of edges
 
     if E == 0
@@ -86,10 +120,8 @@ function [random_A, swaps] = randomize_A(A, attempts_per_edge)
 
     if E == 1
         A(I_edges(1), J_edges(1)) = 0;
-        A(J_edges(1), I_edges(1)) = 0;
         selected_nodes = randperm(size(A, 1), 2);
         A(selected_nodes(1), selected_nodes(2)) = 1;
-        A(selected_nodes(2), selected_nodes(1)) = 1;
         random_A = A;
         swaps = 1;
         return
@@ -97,57 +129,42 @@ function [random_A, swaps] = randomize_A(A, attempts_per_edge)
 
     random_A = A;
     swaps = 0; % number of successful edge swaps
-    for attempt = 1:1:attempts_per_edge * E
+    for attempt = 1:1:attempts_per_edge*E
 
         % select two edges
-        selected_edges = randperm(E, 2);
+        selected_edges = randperm(E,2);
         node_start_1 = I_edges(selected_edges(1));
         node_end_1 = J_edges(selected_edges(1));
         node_start_2 = I_edges(selected_edges(2));
         node_end_2 = J_edges(selected_edges(2));
 
-        if rand(1) > .5
-            I_edges(selected_edges(2)) = node_end_2;
-            J_edges(selected_edges(2)) = node_start_2;
-
-            node_start_2 = I_edges(selected_edges(2));
-            node_end_2 = J_edges(selected_edges(2));
-        end
-
         % Swap edges if:
-        % 1) no edge between node_start_1 and node_end_2
-        % 2) no edge between node_start_2 and node_end_1
+        % 1) no edge between node_start_2 and node_end_1
+        % 2) no edge between node_start_1 and node_end_2
         % 3) node_start_1 ~= node_start_2
         % 4) node_end_1 ~= node_end_2
         % 5) node_start_1 ~= node_end_2
         % 6) node_start_2 ~= node_end_1
-
         if ~random_A(node_start_1, node_end_2) && ...
                 ~random_A(node_start_2, node_end_1) && ...
-                node_start_1 ~= node_start_2 && ...
-                node_end_1 ~= node_end_2 && ...
-                node_start_1 ~= node_end_2 && ...
-                node_start_2 ~= node_end_1
+                node_start_1~=node_start_2 && ...
+                node_end_1~=node_end_2 && ...
+                node_start_1~=node_end_2 && ...
+                node_start_2~=node_end_1
 
             % erase old edges
             random_A(node_start_1, node_end_1) = 0;
-            random_A(node_end_1, node_start_1) = 0;
-
             random_A(node_start_2, node_end_2) = 0;
-            random_A(node_end_2, node_start_2) = 0;
 
             % write new edges
             random_A(node_start_1, node_end_2) = 1;
-            random_A(node_end_2, node_start_1) = 1;
-
             random_A(node_start_2, node_end_1) = 1;
-            random_A(node_end_1, node_start_2) = 1;
 
             % update edge list
             J_edges(selected_edges(1)) = node_end_2;
             J_edges(selected_edges(2)) = node_end_1;
 
-            swaps = swaps + 1;
+            swaps = swaps+1;
         end
     end
 end
@@ -167,12 +184,11 @@ function random_g = randomize(g)
     %
     % See also randomize_A
 
-    % get rules
     attempts_per_edge = g.get('ATTEMPTSPEREDGE');
 
     A = cell2mat(g.get('A'));
-    random_A = GraphBU.randomize_A(A, attempts_per_edge);
-    random_g = GraphBU('B', random_A);
+    random_A = GraphBD.randomize_A(A, attempts_per_edge);
+    random_g = GraphBD('B', random_A);
 end
 
 %% ¡tests!
@@ -182,10 +198,10 @@ end
 Constructor
 %%%% ¡code!
 B = rand(randi(10));
-g = GraphBU('B', B);
+g = GraphBD('B', B);
 
-A = {symmetrize(binarize(semipositivize(dediagonalize(B))))};
+A = {binarize(semipositivize(dediagonalize(B)))};
 
 assert(isequal(g.get('A'), A), ...
-       [BRAPH2.STR ':GraphBU:' BRAPH2.BUG_ERR], ...
-       'GraphBU is not constructing well.')
+    [BRAPH2.STR ':GraphBD:' BRAPH2.BUG_ERR], ...
+    'GraphBD is not constructing well.')
