@@ -54,6 +54,11 @@ NUMBEROFWEIGHTS (parameter, scalar) specifies the number of weights sorted at th
 %% ¡props_update!
 
 %%% ¡prop!
+TEMPLATE (parameter, item) is the graph template to set the graph and measure parameters.
+%%%% ¡settings!
+'GraphWU'
+
+%%% ¡prop!
 A (result, cell) is the symmetric non-negative adjacency matrix of the weighted undirected graph.
 %%%% ¡calculate!
 B = g.get('B');

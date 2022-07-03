@@ -9,14 +9,17 @@ fixed density and analyzes them using binary undirected graphs.
 AnalyzeGroup_CON_FUN_MP_WU, SubjectCON_FUN_MP, MultiplexBUD.
 
 %% ¡props!
+
 %%% ¡prop!
 REPETITION(parameter, scalar) is the number of repetitions for functional data
 %%%% ¡default!
 1
+
 %%% ¡prop!
 FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value for functional data
 %%%% ¡default!
 0
+
 %%% ¡prop!
 FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value for functional data
 %%%% ¡default!
@@ -42,6 +45,11 @@ DENSITIES (parameter, rvector) is the vector of densities.
 0
 
 %% ¡props_update!
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'AnalyzeGroup_CON_FUN_MP_GA_BUD'
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectCON_FUN_MP.

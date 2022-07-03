@@ -8,6 +8,11 @@ and analyzes them using weighted undirected graphs.
 %% ¡props_update!
 
 %%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'AnalyzeGroup_CON_GA_WU'
+
+%%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectCON.
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectCON')

@@ -1,0 +1,24 @@
+    {'test_Degree/Test6_GraphBU'                     }    false     true        true         0.013845    {1×1 struct}
+    {'test_Degree/Test10_MultiplexBU'                }    false     true        true         0.012708    {1×1 struct}
+    {'test_DegreeAv/Test6_GraphBU'                   }    false     true        true         0.013872    {1×1 struct}
+    {'test_DegreeAv/Test10_MultiplexBU'              }    false     true        true         0.013257    {1×1 struct}
+    {'test_Diameter/Test6_GraphBU'                   }    false     true        true         0.012809    {1×1 struct}
+    {'test_Diameter/Test8_MultiplexBU'               }    false     true        true         0.012739    {1×1 struct}
+    {'test_Distance/Test6_GraphBU'                   }    false     true        true         0.012804    {1×1 struct}
+    {'test_Distance/Test7_GraphBD'                   }    false     true        true         0.013286    {1×1 struct}
+    {'test_Distance/Test9_GraphWD'                   }    false     true        true         0.012914    {1×1 struct}
+    {'test_Distance/Test12_MultiplexBU'              }    false     true        true        0.0081905    {1×1 struct}
+    {'test_Distance/Test13_MultiplexBD'              }    false     true        true         0.011924    {1×1 struct}
+    {'test_Distance/Test15_MultiplexWD'              }    false     true        true         0.010105    {1×1 struct}
+    {'test_Eccentricity/Test6_GraphBU'               }    false     true        true         0.013353    {1×1 struct}
+    {'test_Eccentricity/Test8_MultiplexBU'           }    false     true        true         0.013788    {1×1 struct}
+    {'test_EccentricityAv/Test6_GraphBU'             }    false     true        true          0.01306    {1×1 struct}
+    {'test_EccentricityAv/Test8_MultiplexBU'         }    false     true        true          0.01132    {1×1 struct}
+    {'test_Radius/Test6_GraphBU'                     }    false     true        true          0.01467    {1×1 struct}
+    {'test_Radius/Test8_MultiplexBU'                 }    false     true        true         0.013199    {1×1 struct}
+    {'test_AnalyzeGroup_FUN_MP_GA_WU/Test4_Result'   }    false     true        true         0.084995    {1×1 struct}
+    {'test_AnalyzeGroup_FUN_MP_GA_WU/Test5_Memorize' }    false     true        true         0.079044    {1×1 struct}
+    {'test_AnalyzeGroup_FUN_OMP_GA_WU/Test4_Result'  }    false     true        true         0.089224    {1×1 struct}
+    {'test_AnalyzeGroup_FUN_OMP_GA_WU/Test5_Memorize'}    false     true        true          0.08626    {1×1 struct}
+    {'test_AnalyzeGroup_ST_MP_WU/Test4_Result'       }    false     true        true         0.059145    {1×1 struct}
+    {'test_AnalyzeGroup_ST_MP_WU/Test5_Memorize'     }    false     true        true         0.070692    {1×1 struct}

@@ -9,14 +9,17 @@ using weighted undirected graphs.
 Subject_FUN_MP, OrderedMultiplexWU, AnalyzeGroup_FUN_MP_GA_WU.
 
 %% ¡props!
+
 %%% ¡prop!
 REPETITION(parameter, scalar) is the number of repetitions
 %%%% ¡default!
 1
+
 %%% ¡prop!
 FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value
 %%%% ¡default!
 0
+
 %%% ¡prop!
 FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value
 %%%% ¡default!
@@ -37,6 +40,11 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST
 Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 
 %% ¡props_update!
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'AnalyzeGroup_FUN_OMP_GA_WU'
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectFUN_MP.
@@ -89,6 +97,7 @@ if ~isempty(gr) && ~isa(gr, 'NoValue') && subjects_number > 0
     ba = gr.get('SUB_DICT').getItem(1).get('BA');
 end
 
+L = length(A_fun);
 g = OrderedMultiplexWU( ...
     'ID', ['g ' gr.get('ID')], ...
     'B', cellfun(@(a) a/subjects_number, A_fun, 'UniformOutput', false), ... % % % 'LAYERTICKS', [1:1:L], ...

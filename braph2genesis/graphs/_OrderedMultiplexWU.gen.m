@@ -45,6 +45,11 @@ NUMBEROFWEIGHTS (parameter, scalar) specifies the number of weights sorted at th
 %% ¡props_update!
 
 %%% ¡prop!
+TEMPLATE (parameter, item) is the graph template to set the graph and measure parameters.
+%%%% ¡settings!
+'OrderedMultiplexWU'
+
+%%% ¡prop!
 A (result, cell) is the cell containing the multiplex weighted adjacency matrices of the multiplex weighted undirected graph.
 %%%% ¡calculate!
 B = g.get('B');

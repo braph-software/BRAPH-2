@@ -31,6 +31,11 @@ DENSITIES (parameter, rvector) is the vector of densities.
 %% ¡props_update!
 
 %%% ¡prop!
+TEMPLATE (parameter, item) is the graph template to set the graph and measure parameters.
+%%%% ¡settings!
+'MultigraphBUD'
+
+%%% ¡prop!
 A (result, cell) is the cell array with the symmetric binary adjacency matrices of the binary undirected multigraph.
 %%%% ¡calculate!
 A_WU = calculateValue@GraphWU(g, prop);

@@ -6,14 +6,17 @@ This graph analysis uses functional data averaged over a group
 and analyzes them using weighted undirected graphs.
 
 %% ¡props!
+
 %%% ¡prop!
 REPETITION(parameter, scalar) is the number of repetitions
 %%%% ¡default!
 1
+
 %%% ¡prop!
 FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value
 %%%% ¡default!
 0
+
 %%% ¡prop!
 FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value
 %%%% ¡default!
@@ -34,6 +37,11 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST
 Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 
 %% ¡props_update!
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'AnalyzeGroup_FUN_GA_WU'
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectFUN.
