@@ -165,6 +165,8 @@ function p_out = draw(pr, varargin)
         pr.cb_export_to_xls();
     end
 
+    set(pr.table, 'ContextMenu', pr.contextmenu)
+
     % output
     if nargout > 0
         p_out = pr.p;
@@ -358,7 +360,11 @@ function cb_export_to_xls(pr)
     if isequal(rows, 'numbered')
         rows = cellfun(@(x) num2str(x), num2cell([1:size(data, 1)]), 'UniformOutput', false);
     end
-    t = cell2table(data, ...
+    if isempty(columns)
+        columns = cellfun(@(x) ['Column ' num2str(x)], num2cell([1:size(data, 2)]), 'UniformOutput', false);
+    end
+    
+    t = array2table(data, ...
         'VariableNames', columns, ...
         'RowNames', rows);
 
