@@ -36,6 +36,11 @@ NODELABELS (metadata, STRING) is the node labels.
 %% ¡props_update!
 
 %%% ¡prop!
+TEMPLATE (parameter, item) is the graph template to set the graph and measure parameters.
+%%%% ¡settings!
+'MultiplexBUT'
+
+%%% ¡prop!
 A (result, cell) is the cell array containing the multiplex binary adjacency matrices of the binary undirected multiplex. 
 %%%% ¡calculate!
 A_WU = calculateValue@MultiplexWU(g, prop);

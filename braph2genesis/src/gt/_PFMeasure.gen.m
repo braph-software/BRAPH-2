@@ -16,7 +16,6 @@ PanelFig, Measure
 %% ¡properties!
 p  % handle for panel
 h_axes % handle for the axes
-h_line % handle for line
 
 toolbar
 tool_axis
@@ -34,7 +33,7 @@ ST_AXIS (figure, item) determines the axis settings.
 %%%% ¡settings!
 'SettingsAxis'
 %%%% ¡default!
-SettingsAxis('GRID', false, 'AXIS', true)
+SettingsAxis('GRID', false, 'EQUAL', false)
 %%%% ¡postprocessing!
 if (isempty(varargin) || pf.prop_set('ST_AXIS', varargin)) && check_graphics(pf.h_axes, 'axes')
     % update state of toggle tool
@@ -44,7 +43,7 @@ if (isempty(varargin) || pf.prop_set('ST_AXIS', varargin)) && check_graphics(pf.
     set(pf.tool_axis, 'State', pf.get('ST_AXIS').get('AXIS'))
 end
 %%%% ¡gui!
-pr = SettingsAxisPP('EL', m, 'PROP', PFMeasure.ST_AXIS, varargin{:});
+pr = SettingsAxisPP('EL', pf, 'PROP', PFMeasure.ST_AXIS, varargin{:});
 
 %% ¡methods!
 function p_out = draw(pf, varargin)
@@ -52,7 +51,7 @@ function p_out = draw(pf, varargin)
     %
     % DRAW(PL) draws the measure graphical panel.
     %
-    % P = DRAW(PF) returns a handle to the brain atlas graphical panel.
+    % P = DRAW(PF) returns a handle to the measure graphical panel.
     %
     % DRAW(PF, 'Property', VALUE, ...) sets the properties of the graphical
     %  panel with custom property-value couples.
@@ -73,15 +72,10 @@ function p_out = draw(pf, varargin)
             'Units', 'normalized', ...
             'OuterPosition', [0 0 1 1] ...
             );
-% % %         pf.h_axes.Toolbar.Visible = 'off';
-% % %         pf.h_axes.Interactions = [];
+        pf.h_axes.Toolbar.Visible = 'off';
+        pf.h_axes.Interactions = [];
     end
-    
-    % data line
-    if ~check_graphics(pf.h_line, 'line')
-        pf.h_line = plot(pf.h_axes, [1 2], [1 -1]); % % %
-    end    
-    
+        
     pf.memorize('ST_AXIS').h(pf.h_axes).set('PANEL', pf, 'UITAG', 'h_axes')
     listener(pf.get('ST_AXIS'), 'PropSet', @cb_st_axis);
     function cb_st_axis(~, ~) % (src, event)
@@ -122,86 +116,6 @@ function p_out = draw(pf, varargin)
     function cb_grid(~, ~, grid) % (src, event)
         pf.get('ST_AXIS').set('GRID', grid);
     end
-
-% % % if Measure.is_global(m)
-% % %     pr.set( ...
-% % %         'TAB_H', 3, ...
-% % %         'ROWNAME', '[]', ...
-% % %         'COLUMNNAME', '[]' ...
-% % %         )
-% % % elseif Measure.is_nodal(m)
-% % %     bas = g.get('BAS');
-% % %     ba = bas{1};
-% % %     br_ids = ba.get('BR_DICT').getKeys();
-% % %     rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
-% % %     
-% % %     pr.set( ...
-% % %         'TAB_H', 40, ...
-% % %         'ROWNAME', rowname, ...
-% % %         'COLUMNNAME', '[]' ...
-% % %         )
-% % % elseif Measure.is_binodal(m)
-% % %     bas = m.get('G').get('BAS');
-% % %     ba = bas{1};
-% % %     br_ids = ba.get('BR_DICT').getKeys();
-% % %     rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
-% % %     
-% % %     pr.set( ...
-% % %         'TAB_H', 40, ...
-% % %         'ROWNAME', rowname, ...
-% % %         'COLUMNNAME', rowname ...
-% % %         )
-% % % end
-% % % 
-% % % if g.layernumber() == 1
-% % %     pr.set( ...
-% % %         'XSLIDER', false, ...
-% % %         'YSLIDER', false ...
-% % %         )
-% % % else % multilayer
-% % %     if  Measure.is_superglobal(m)
-% % %         pr.set( ...
-% % %             'XSLIDER', false, ...
-% % %             'YSLIDER', false ...
-% % %             )
-% % %     elseif Measure.is_unilayer(m)
-% % %         if isempty(g.get('LAYERLABELS'))
-% % %             % xlayerlabels = PanelPropCell.getPropDefault('XSLIDERLABELS');
-% % %             ylayerlabels = PanelPropCell.getPropDefault('YSLIDERLABELS');
-% % %         else
-% % %             layerlabels = str2cell(g.get('LAYERLABELS'));
-% % %             % xlayerlabels = ['{' sprintf('''%s'' ', layerlabels{:}) '}'];
-% % %             ylayerlabels = ['{' sprintf('''%s'' ', layerlabels{end:-1:1}) '}'];
-% % %         end
-% % %         
-% % %         pr.set( ...
-% % %             'TAB_H', max(pr.get('TAB_H'), g.layernumber()), ...
-% % %             'XSLIDER', false, ...
-% % %             'YSLIDER', true, ...
-% % %             'YSLIDERLABELS', ylayerlabels, ...
-% % %             'YSLIDERWIDTH', 5 ...
-% % %             )
-% % %     elseif Measure.is_bilayer(m)
-% % %         if isempty(g.get('LAYERLABELS'))
-% % %             xlayerlabels = PanelPropCell.getPropDefault('XSLIDERLABELS');
-% % %             ylayerlabels = PanelPropCell.getPropDefault('YSLIDERLABELS');
-% % %         else
-% % %             layerlabels = str2cell(g.get('LAYERLABELS'));
-% % %             xlayerlabels = ['{' sprintf('''%s'' ', layerlabels{:}) '}'];
-% % %             ylayerlabels = ['{' sprintf('''%s'' ', layerlabels{end:-1:1}) '}'];
-% % %         end
-% % %         
-% % %         pr.set( ...
-% % %             'TAB_H', max(3 + pr.get('TAB_H'), 3 + g.layernumber()), ...
-% % %             'XSLIDER', true, ...
-% % %             'XSLIDERLABELS', xlayerlabels, ...
-% % %             'XSLIDERHEIGHT', 3, ...
-% % %             'YSLIDER', true, ...
-% % %             'YSLIDERLABELS', ylayerlabels, ...
-% % %             'YSLIDERWIDTH', 5 ...
-% % %             )
-% % %     end
-% % % end
     
     % output
     if nargout > 0

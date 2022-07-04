@@ -37,6 +37,11 @@ pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeGroup_ST_BUD.DENSITIES, ...
 %% ¡props_update!
 
 %%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'AnalyzeGroup_ST_MP_BUD'
+
+%%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectST_MP.
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectST_MP')

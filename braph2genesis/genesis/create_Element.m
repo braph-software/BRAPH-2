@@ -1651,7 +1651,7 @@ generate_gui()
                     gs(3, gui_panel)
                 g(2, 'end')
             end
-            if any(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props)) || any(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props_update))
+            if any(cellfun(@(x) numel(x.gui) >= 1 || ~isempty(x.gui{1}), props)) || any(cellfun(@(x) numel(x.gui) >= 1 || ~isempty(x.gui{1}), props_update))
                 g(2, ['function pr = getPanelProp(' moniker ', prop, varargin)'])
                 gs(3, {
                     '%GETPANELPROP returns a prop panel.'

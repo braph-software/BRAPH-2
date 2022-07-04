@@ -723,7 +723,9 @@ function cb_table_edit(pr, i, col, newdata)
                     dict.getItem(i).set(col, min(abs(newdata), 1))
 
                 case Format.SIZE
-                    dict.getItem(i).set(col, abs(newdata))
+                    if newdata ~= 0
+                        dict.getItem(i).set(col, abs(newdata))
+                    end
 
                 case Format.MARKER
                     dict.getItem(i).set(col, newdata)

@@ -25,6 +25,11 @@ Correlation.ZERO
 %% ¡props_update!
 
 %%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'AnalyzeGroup_ST_WU'
+
+%%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectST.
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectST')

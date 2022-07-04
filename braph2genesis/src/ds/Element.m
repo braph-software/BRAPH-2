@@ -1184,12 +1184,12 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         function bool = prop_set(el, pointer_list, varargin)
             %PROP_SET returns whether a prop has been set before postprocessing.
             %
-            % PROP_SET(EL, POINTER, POINTER1, VALUE1, POINTER2, VALUE2, ...) returns
+            % BOOL = PROP_SET(EL, POINTER, POINTER1, VALUE1, POINTER2, VALUE2, ...) returns
             %  whether the property POINTER has been set in the current setting cycle.
             %  POINTER can be either a property number (PROP) or tag (TAG).
             %  It is typically used with postprocessing.
             %
-            % PROP_SET(EL, {POINTERA, POINTERB, POINTERC}, POINTER1, VALUE1, POINTER2, VALUE2, ...) 
+            % BOOL = PROP_SET(EL, {POINTERA, POINTERB, POINTERC}, POINTER1, VALUE1, POINTER2, VALUE2, ...) 
             %  operates to a cell array of pointers.
             %
             % See also postprocessing.

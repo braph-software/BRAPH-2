@@ -28,6 +28,11 @@ Correlation.ZERO
 %% ¡props_update!
 
 %%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'AnalyzeGroup_ST_MP_WU'
+
+%%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectST_MP.
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectST_MP')
@@ -90,6 +95,7 @@ if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
     ba = gr.get('SUB_DICT').getItem(1).get('BA');
 end
 
+L = length(A);
 g = MultiplexWU( ...
     'ID', ['g ' gr.get('ID')], ...
     'B', A, ... % % % 'LAYERTICKS', [1:1:L], ...

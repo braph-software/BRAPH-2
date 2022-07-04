@@ -506,7 +506,19 @@ PFC (gui, item) contains the panel figure of the comparison.
 'PFComparisonGroup'
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
-    cp.memorize('PFC').set('CP', cp)
+    if isa(cp.getr('PFC'), 'NoValue')
+        measure = cp.get('MEASURE');
+        
+        if ~isempty(measure) && Measure.is_global(measure) && Measure.is_unilayer(measure)
+            cp.set('PFC', PFComparisonGroupGU('CP', cp))
+        elseif ~isempty(measure) && Measure.is_nodal(measure) && Measure.is_unilayer(measure)
+            cp.set('PFC', PFComparisonGroupNU('CP', cp))
+        elseif ~isempty(measure) && Measure.is_binodal(measure) && Measure.is_unilayer(measure)
+            cp.set('PFC', PFComparisonGroupBU('CP', cp))
+        else
+            cp.memorize('PFC').set('CP', cp)
+        end
+    end
 end
 %%%% ¡gui!
 pr = PanelPropItem('EL', cp, 'PROP', ComparisonGroup.PFC, ...
@@ -600,8 +612,8 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     for i = 1:1:size(diff, 1)
         for j = 1:1:size(diff, 2)
             p1(i, j) = pvalue1(diff(i, j), cellfun(@(x) x{i, j}, diff_perms, 'UniformOutput', false));
-            p2(i, j) = pvalue1(diff(i, j), cellfun(@(x) x{i, j}, diff_perms, 'UniformOutput', false));
-            qtl = quantiles(cellfun(@(x) x{j, j}, diff_perms, 'UniformOutput', false), 40);
+            p2(i, j) = pvalue2(diff(i, j), cellfun(@(x) x{i, j}, diff_perms, 'UniformOutput', false));
+            qtl = quantiles(cellfun(@(x) x{i, j}, diff_perms, 'UniformOutput', false), 40);
             ci_lower(i, j) = {cellfun(@(x) x(2), qtl)};
             ci_upper(i, j) = {cellfun(@(x) x(40), qtl)};
         end

@@ -143,12 +143,14 @@ function f_out = draw(gui, varargin)
     pf = gui.get('PF');
     
     % Set GUI name
-    if pf.existsTag('ID')
-        name = pf.get('ID');
-    else
-        name = pf.tostring();
+    if isa(gui.getr('NAME'), 'NoValue')
+        if pf.existsTag('ID')
+            name = pf.get('ID');
+        else
+            name = pf.tostring();
+        end
+        gui.set('NAME', [pf.getClass() ' - ' name ' - ' BRAPH2.STR])
     end
-    gui.set('NAME', [pf.getClass() ' - ' name ' - ' BRAPH2.STR])
 
     gui.f = draw@GUI(gui, varargin{:});
     
