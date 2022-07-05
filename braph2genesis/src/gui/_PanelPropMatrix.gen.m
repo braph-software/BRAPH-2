@@ -67,6 +67,7 @@ function p_out = draw(pr, varargin)
     % See also update, redraw, uipanel.
     
     pr.p = draw@PanelProp(pr, varargin{:});
+    
     el = pr.get('EL');
     prop = pr.get('PROP');   
     
@@ -102,7 +103,9 @@ function p_out = draw(pr, varargin)
         pr.cb_matrix_value(event.Indices(1), event.Indices(2), event.NewData)
     end
 
-    set(pr.table, 'ContextMenu', pr.contextmenu)
+    if pr.get('MENU_EXPORT')
+        set(pr.table, 'ContextMenu', pr.contextmenu)
+    end
 
     % output
     if nargout > 0
@@ -226,7 +229,10 @@ function cb_matrix_value(pr, i, j, newdata)
 % % %     pr.update()
 end
 function cb_export_to_xls(pr)
-%CB_EXPORT_DATA exports selected data from uitable to an XLSX file.
+    %CB_EXPORT_TO_XLS exports data from uitable.
+    %
+    % CB_EXPORT_TO_XLS(PR) exports the uitable data to an XLSX file.
+    
     data = pr.table.Data;
     columns = pr.table.ColumnName;
     rows = pr.table.RowName;

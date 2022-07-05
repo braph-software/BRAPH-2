@@ -830,7 +830,11 @@ function cb_colorize_table(pr, checked)
     pr.update()    
 end
 function cb_export_to_xls(pr)
-    %CB_EXPORT_DATA exports selected data from uitable to an XLSX file.
+    %CB_EXPORT_TO_XLS exports data from uitable.
+    %
+    % CB_EXPORT_TO_XLS(PR) exports the uitable data to an XLSX file.
+    % Important notes:
+    % 1. CB_EXPORT_TO_XLS() will export all data if theres no row selection. 
     
     if isempty(pr.selected)
         el = pr.get('EL');

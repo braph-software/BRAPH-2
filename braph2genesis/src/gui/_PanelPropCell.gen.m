@@ -165,7 +165,9 @@ function p_out = draw(pr, varargin)
         pr.cb_export_to_xls();
     end
 
-    set(pr.table, 'ContextMenu', pr.contextmenu)
+    if pr.get('MENU_EXPORT')
+        set(pr.table, 'ContextMenu', pr.contextmenu)
+    end
 
     % output
     if nargout > 0
@@ -352,29 +354,6 @@ function cb_cell_value(pr, i, j, newdata)
 
 % % %     pr.update()
 end
-function cb_export_to_xls(pr)
-%CB_EXPORT_DATA exports selected data from uitable to an XLSX file.
-    data = pr.table.Data;
-    columns = pr.table.ColumnName;
-    rows = pr.table.RowName;
-    if isequal(rows, 'numbered')
-        rows = cellfun(@(x) num2str(x), num2cell([1:size(data, 1)]), 'UniformOutput', false);
-    end
-    if isempty(columns)
-        columns = cellfun(@(x) ['Column ' num2str(x)], num2cell([1:size(data, 2)]), 'UniformOutput', false);
-    end
-    
-    t = array2table(data, ...
-        'VariableNames', columns, ...
-        'RowNames', rows);
-
-    % save file
-    [filename, filepath, filterindex] = uiputfile({'*.xlsx';'*.xls'}, 'Select Excel file');
-    if filterindex
-        file = [filepath filename];
-        writetable(t, file, 'WriteRowNames', true);
-    end
-end
 function cb_xslider(pr)
 
     set(pr.xslider, 'Value', round(get(pr.xslider, 'Value')))
@@ -408,6 +387,32 @@ function cb_yslider(pr)
     end
 
     pr.update()
+end
+function cb_export_to_xls(pr)
+    %CB_EXPORT_TO_XLS exports data from uitable.
+    %
+    % CB_EXPORT_TO_XLS(PR) exports the uitable data to an XLSX file.
+    
+    data = pr.table.Data;
+    columns = pr.table.ColumnName;
+    rows = pr.table.RowName;
+    if isequal(rows, 'numbered')
+        rows = cellfun(@(x) num2str(x), num2cell([1:size(data, 1)]), 'UniformOutput', false);
+    end
+    if isempty(columns)
+        columns = cellfun(@(x) ['Column ' num2str(x)], num2cell([1:size(data, 2)]), 'UniformOutput', false);
+    end
+    
+    t = array2table(data, ...
+        'VariableNames', columns, ...
+        'RowNames', rows);
+
+    % save file
+    [filename, filepath, filterindex] = uiputfile({'*.xlsx';'*.xls'}, 'Select Excel file');
+    if filterindex
+        file = [filepath filename];
+        writetable(t, file, 'WriteRowNames', true);
+    end
 end
 
 %% ¡tests!
