@@ -852,11 +852,13 @@ function cb_export_to_xls(pr)
     end
     if isequal(rows, 'numbered')
         rows = cellfun(@(x) num2str(x), num2cell(selected), 'UniformOutput', false)';
+    elseif length(selected) ~= length(rows)
+        rows = rows(reshape(selected, [1 length(selected)]));
     end
     
     t = cell2table(data, ...
         'VariableNames', columns, ...
-        'RowNames', rows(reshape(selected, [1 length(selected)]), :));
+        'RowNames', rows);
 
     % save file
     [filename, filepath, filterindex] = uiputfile({'*.xlsx';'*.xls'}, 'Select Excel file');
