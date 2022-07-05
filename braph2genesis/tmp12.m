@@ -29,7 +29,7 @@ create_Element([fileparts(which('braph2genesis')) '/pipelines/connectivity/_' el
 % eval(test_code)
 
 %% 
-GUIElement('PE', Pipeline()).draw
+% GUIElement('PE', Pipeline()).draw
 
 %%
 % pip_CON_WU = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_a_CON_WU.b2']);
