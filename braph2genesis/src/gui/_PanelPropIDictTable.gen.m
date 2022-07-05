@@ -851,12 +851,12 @@ function cb_export_to_xls(pr)
         columns{1} = 'sel';
     end
     if isequal(rows, 'numbered')
-        rows = cellfun(@(x) num2str(x), num2cell([1:size(data, 1)]), 'UniformOutput', false)';
+        rows = cellfun(@(x) num2str(x), num2cell(selected), 'UniformOutput', false)';
     end
     
     t = cell2table(data, ...
         'VariableNames', columns, ...
-        'RowNames', rows(selected, :));
+        'RowNames', rows(reshape(selected, [1 length(selected)]), :));
 
     % save file
     [filename, filepath, filterindex] = uiputfile({'*.xlsx';'*.xls'}, 'Select Excel file');
