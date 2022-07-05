@@ -13,11 +13,19 @@ AnalyzeEnsemble_CON_WU, Subject_CON, MultigraphBUD.
 %%% ¡prop!
 DENSITIES (parameter, rvector) is the vector of densities.
 %%%% ¡default!
-0
+[1:1:10]
 %%%% ¡gui!
-pr = PlotPropSmartVector('EL', a, 'PROP', AnalyzeEnsemble_CON_BUD.DENSITIES, 'MAX', 100, 'MIN', 0, varargin{:});
+pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeEnsemble_CON_BUD.DENSITIES, ...
+    'MIN', 0, 'MAX', 100, ...
+    'DEFAULT', AnalyzeEnsemble_CON_BUD.getPropDefault('DENSITIES'), ...
+    varargin{:});
 
 %% ¡props_update!
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'AnalyzeEnsemble_CON_BUD'
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectCON.
@@ -40,9 +48,10 @@ g_dict = IndexedDictionary('IT_CLASS', 'MultigraphBUD');
 gr = a.get('GR');
 densities = a.get('DENSITIES');
 node_labels = '';
-atlas = BrainAtlas();
+
+ba = BrainAtlas();
 if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-    atlas = gr.get('SUB_DICT').getItem(1).get('BA');
+    ba = gr.get('SUB_DICT').getItem(1).get('BA');
 end
 
 for i = 1:1:gr.get('SUB_DICT').length()
@@ -51,24 +60,24 @@ for i = 1:1:gr.get('SUB_DICT').length()
         'ID', ['g ' sub.get('ID')], ...
         'B', Callback('EL', sub, 'TAG', 'CON'), ...
         'DENSITIES', densities, ...
-        'BRAINATLAS', atlas ...
+        'BRAINATLAS', ba ...
         );
     g_dict.add(g)
 end
 
 value = g_dict;
 
-%% ¡methods!
-function pr = getPPCompareEnsemble_CPDict(a, varargin) 
-    %GETPPCOMPAREENSEMBLE_CPDICT returns the comparison ensemble plot panel compatible with the analysis.
-    %
-    % PR = GETPPCOMPAREENSEMBLE_CPDICT(A) returns the comparison ensemble plot panel
-    %  that is compatible with the analyze ensemble.
-    %
-    % See also CompareEnsemble.
-    
-    pr = PPCompareEnsemble_CPDict_BUD(varargin{:});
-end
+% % % %% ¡methods!
+% % % function pr = getPPCompareEnsemble_CPDict(a, varargin) 
+% % %     %GETPPCOMPAREENSEMBLE_CPDICT returns the comparison ensemble plot panel compatible with the analysis.
+% % %     %
+% % %     % PR = GETPPCOMPAREENSEMBLE_CPDICT(A) returns the comparison ensemble plot panel
+% % %     %  that is compatible with the analyze ensemble.
+% % %     %
+% % %     % See also CompareEnsemble.
+% % %     
+% % %     pr = PPCompareEnsemble_CPDict_BUD(varargin{:});
+% % % end
 
 %% ¡tests!
 

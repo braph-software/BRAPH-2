@@ -9,6 +9,11 @@ or binary undirected multigraphs with fixed densities.
 %% ¡props_update!
 
 %%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'AnalyzeEnsemble_CON_WU'
+
+%%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectCON.
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectCON')
@@ -27,33 +32,35 @@ IndexedDictionary('IT_CLASS', 'GraphWU')
 %%%% ¡calculate!
 g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
 gr = a.get('GR');
-atlas = BrainAtlas();
+
+ba = BrainAtlas();
 if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0 
-    atlas = gr.get('SUB_DICT').getItem(1).get('BA');
+    ba = gr.get('SUB_DICT').getItem(1).get('BA');
 end
+
 gr = a.get('GR');
 for i = 1:1:gr.get('SUB_DICT').length()
 	sub = gr.get('SUB_DICT').getItem(i);
     g = GraphWU( ...
         'ID', ['g ' sub.get('ID')], ...
-        'BRAINATLAS', atlas, ...
+        'BRAINATLAS', ba, ...
         'B', Callback('EL', sub, 'TAG', 'CON') ...
         );
     g_dict.add(g)
 end
 
 value = g_dict;
-%% ¡methods!
-function pr = getPPCompareEnsemble_CPDict(a, varargin) 
-    %GETPPCOMPAREENSEMBLE_CPDICT returns the comparison ensemble plot panel compatible with the analysis.
-    %
-    % PR = GETPPCOMPAREENSEMBLE_CPDICT(A) returns the comparison ensemble plot panel
-    %  that is compatible with the analyze ensemble.
-    %
-    % See also CompareEnsemble.
-    
-    pr = PPCompareEnsemble_CPDict_WU(varargin{:});
-end
+% % % %% ¡methods!
+% % % function pr = getPPCompareEnsemble_CPDict(a, varargin) 
+% % %     %GETPPCOMPAREENSEMBLE_CPDICT returns the comparison ensemble plot panel compatible with the analysis.
+% % %     %
+% % %     % PR = GETPPCOMPAREENSEMBLE_CPDICT(A) returns the comparison ensemble plot panel
+% % %     %  that is compatible with the analyze ensemble.
+% % %     %
+% % %     % See also CompareEnsemble.
+% % %     
+% % %     pr = PPCompareEnsemble_CPDict_WU(varargin{:});
+% % % end
 
 %% ¡tests!
 
