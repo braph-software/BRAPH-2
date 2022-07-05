@@ -20,8 +20,8 @@ Group('SUB_CLASS', 'SubjectCON')
 
 %%% ¡prop!
 ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-%%%% ¡gui!
-pr = PPAnalyzeEnsemble_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_CON_WU.ME_DICT, 'WAITBAR', true, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPAnalyzeEnsemble_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_CON_WU.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %%% ¡prop!
 G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analysis.
@@ -43,7 +43,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
 	sub = gr.get('SUB_DICT').getItem(i);
     g = GraphWU( ...
         'ID', ['g ' sub.get('ID')], ...
-        'BRAINATLAS', ba, ...
+        'BAS', ba, ...
         'B', Callback('EL', sub, 'TAG', 'CON') ...
         );
     g_dict.add(g)
