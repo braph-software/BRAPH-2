@@ -43,9 +43,11 @@ A_WU = calculateValue@GraphWU(g, prop);
 densities = g.get('DENSITIES');
 A = cell(length(densities));
 
-for i = 1:1:length(densities)
-    density = densities(i);
-    A{i, i} = dediagonalize(binarize(cell2mat(A_WU), 'density', density));
+if ~isempty(cell2mat(A_WU))
+    for i = 1:1:length(densities)
+        density = densities(i);
+        A{i, i} = dediagonalize(binarize(cell2mat(A_WU), 'density', density));
+    end
 end
 
 value = A;

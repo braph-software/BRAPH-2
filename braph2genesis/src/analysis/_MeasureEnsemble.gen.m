@@ -69,7 +69,7 @@ value = m_av;
 %%%% ¡gui!
 g = me.get('A').get('GRAPH_TEMPLATE');
 
-pr = PanelPropCell('EL', m, 'PROP', Measure.M, varargin{:});
+pr = PanelPropCell('EL', me, 'PROP', MeasureEnsemble.M, varargin{:});
 
 if Measure.is_global(me.get('MEASURE'))
     pr.set( ...
@@ -155,7 +155,7 @@ end
 PFME (gui, item) contains the panel figure of the measure.
 %%%% ¡settings!
 'PFMeasureEnsemble'
-% ¡postprocessing!
+%%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
     if isa(me.getr('PFME'), 'NoValue')
         if Measure.is_global(me.get('MEASURE')) && Measure.is_unilayer(me.get('MEASURE'))
