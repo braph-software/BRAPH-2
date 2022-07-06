@@ -71,6 +71,8 @@ ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
 'MeasureEnsemble'
 %%%% ¡calculate!
 value = IndexedDictionary('IT_CLASS', 'MeasureEnsemble', 'IT_KEY', MeasureEnsemble.MEASURE);
+%%%% ¡gui!
+pr = PPAnalyzeEnsemble_MeDict('EL', a, 'PROP', AnalyzeEnsemble.ME_DICT, 'WAITBAR', Callback('EL', a, 'TAG', 'WAITBAR'), varargin{:});
 
 %% ¡methods!
 function me = getMeasureEnsemble(a, measure_class, varargin)
@@ -81,7 +83,9 @@ function me = getMeasureEnsemble(a, measure_class, varargin)
     %  with properties defined by the graph settings. The user must call
     %  getValue() for the new measure M to retrieve the value of measure M.
 
-    g = a.get('G_DICT').getItem(1);  % works if all graphs are the same
+    a.memorize('G_DICT');
+    
+    g = a.get('GRAPH_TEMPLATE');
     m_list = Graph.getCompatibleMeasureList(g);
     
     assert( ...

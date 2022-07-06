@@ -55,7 +55,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
     
     if isa(a.getr('TEMPLATE'), 'NoValue')
         if isa(a.getr('GRAPH_TEMPLATE'), 'NoValue')
-            a.memorize('GRAPH_TEMPLATE')
+            a.set('GRAPH_TEMPLATE', GraphWU())
         end
         g.set('TEMPLATE', a.memorize('GRAPH_TEMPLATE'))
     else
