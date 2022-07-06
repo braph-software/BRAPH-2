@@ -158,14 +158,14 @@ PFME (gui, item) contains the panel figure of the measure.
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
     if isa(me.getr('PFME'), 'NoValue')
-        if Measure.is_global(me.get('MEASURE')) && Measure.is_unilayer(me.get('MEASURE'))
+        if ~isempty(me.get('MEASURE')) && Measure.is_global(me.get('MEASURE')) && Measure.is_unilayer(me.get('MEASURE'))
             me.set('PFME', PFMeasureEnsembleGU('ME', me))
-        elseif Measure.is_nodal(me.get('MEASURE')) && Measure.is_unilayer(me.get('MEASURE'))
+        elseif ~isempty(me.get('MEASURE')) && Measure.is_nodal(me.get('MEASURE')) && Measure.is_unilayer(me.get('MEASURE'))
             me.set('PFME', PFMeasureEnsembleNU('ME', me))
-        elseif Measure.is_binodal(me.get('MEASURE')) && Measure.is_unilayer(me.get('MEASURE'))
+        elseif ~isempty(me.get('MEASURE')) && Measure.is_binodal(me.get('MEASURE')) && Measure.is_unilayer(me.get('MEASURE'))
             me.set('PFME', PFMeasureEnsembleBU('ME', me))
         else
-            me.memorize('PFME').set('M', me)
+            me.memorize('PFME').set('ME', me)
         end
     end
 end

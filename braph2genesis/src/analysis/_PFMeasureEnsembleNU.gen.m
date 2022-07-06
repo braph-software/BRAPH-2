@@ -29,7 +29,7 @@ ST_LINE (figure, item) determines the line settings.
 'SettingsLine'
 %%%% ¡postprocessing!
 if check_graphics(pf.h_line, 'line')
-    bas = pf.get('M').get('G').get('BAS');
+    bas = pf.get('ME').get('A').get('GRAPH_TEMPLATE').get('BAS');
     ba = bas{1};
 
     if ~ba.get('BR_DICT').contains(pf.get('BR1_ID'))
@@ -38,8 +38,8 @@ if check_graphics(pf.h_line, 'line')
     br1_id = ba.get('BR_DICT').getIndex(pf.get('BR1_ID'));
     
     pf.get('ST_LINE').set( ...
-        'X', pf.get('M').get('G').get('LAYERTICKS'), ...
-        'Y', cellfun(@(x) x(br1_id), pf.get('M').get('M')), ...
+        'X', pf.get('ME').get('A').get('GRAPH_TEMPLATE').get('LAYERTICKS'), ...
+        'Y', cellfun(@(x) x(br1_id), pf.get('ME').get('M')), ...
         'VISIBLE', true ...
         )
     pf.get('ST_AXIS').set('AXIS', true)
@@ -51,7 +51,7 @@ end
 %%% ¡prop!
 BR1_ID (figure, string) is the ID of the brain region of the nodal measure.
 %%%% ¡gui!
-bas = pf.get('M').get('G').get('BAS');
+bas = pf.get('ME').get('A').get('GRAPH_TEMPLATE').get('BAS');
 ba = bas{1};
 
 pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureEnsembleNU.BR1_ID, ...

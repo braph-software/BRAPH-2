@@ -29,7 +29,7 @@ ST_LINE (figure, item) determines the line settings.
 'SettingsLine'
 %%%% ¡postprocessing!
 if check_graphics(pf.h_line, 'line')
-    bas = pf.get('M').get('G').get('BAS');
+    bas = pf.get('ME').get('A').get('GRAPH_TEMPLATE').get('BAS');
     ba = bas{1};
     
     if ~ba.get('BR_DICT').contains(pf.get('BR1_ID'))
@@ -43,8 +43,8 @@ if check_graphics(pf.h_line, 'line')
     br2_id = ba.get('BR_DICT').getIndex(pf.get('BR2_ID'));
     
     pf.get('ST_LINE').set( ...
-        'X', pf.get('M').get('G').get('LAYERTICKS'), ...
-        'Y', cellfun(@(x) x(br1_id, br2_id), pf.get('M').get('M')), ...
+        'X', pf.get('ME').get('A').get('GRAPH_TEMPLATE').get('LAYERTICKS'), ...
+        'Y', cellfun(@(x) x(br1_id, br2_id), pf.get('ME').get('M')), ...
         'VISIBLE', true ...
         )
     pf.get('ST_AXIS').set('AXIS', true)
@@ -54,7 +54,7 @@ end
 %%% ¡prop!
 BR1_ID (figure, string) is the ID of the first brain region of the binodal measure.
 %%%% ¡gui!
-bas = pf.get('M').get('G').get('BAS');
+bas = pf.get('ME').get('A').get('GRAPH_TEMPLATE').get('BAS');
 ba = bas{1};
 
 pr = PP_BrainRegion('EL', pf, 'PROP', ...
@@ -66,7 +66,7 @@ pr = PP_BrainRegion('EL', pf, 'PROP', ...
 %%% ¡prop!
 BR2_ID (figure, string) is the ID of the second brain region of the binodal measure.
 %%%% ¡gui!
-bas = pf.get('M').get('G').get('BAS');
+bas = pf.get('ME').get('A').get('GRAPH_TEMPLATE').get('BAS');
 ba = bas{1};
 
 pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureEnsembleBU.BR2_ID, ...
