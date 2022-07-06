@@ -31,6 +31,10 @@ TEMPLATE (parameter, item) is the analysis template to set the parameters.
 GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
 %%%% ¡settings!
 'MultigraphBUT'
+%%%% ¡postprocessing!
+if isa(a.getr('GRAPH_TEMPLATE'), 'NoValue')
+    a.set('GRAPH_TEMPLATE', MultigraphBUT('THRESHOLDS',  Callback('EL', a, 'TAG', 'THRESHOLDS')))
+end
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectCON.
@@ -69,9 +73,6 @@ for i = 1:1:gr.get('SUB_DICT').length()
     g_dict.add(g)
     
     if isa(a.getr('TEMPLATE'), 'NoValue')
-        if isa(a.getr('GRAPH_TEMPLATE'), 'NoValue')
-            a.set('GRAPH_TEMPLATE', MultigraphBUT('THRESHOLDS',  Callback('EL', a, 'TAG', 'THRESHOLDS')))
-        end
         g.set('TEMPLATE', a.memorize('GRAPH_TEMPLATE'))
     else
         g.set('TEMPLATE', a.get('TEMPLATE').memorize('GRAPH_TEMPLATE'))        
