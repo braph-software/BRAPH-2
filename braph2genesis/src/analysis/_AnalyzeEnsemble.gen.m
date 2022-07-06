@@ -44,6 +44,11 @@ if a.prop_set(AnalyzeEnsemble.TEMPLATE, varargin{:})
 end
 
 %%% ¡prop!
+GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
+%%%% ¡settings!
+'Graph'
+
+%%% ¡prop!
 WAITBAR (gui, logical) detemines whether to show the waitbar.
 %%%% ¡default!
 true
