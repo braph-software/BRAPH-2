@@ -74,6 +74,19 @@ value = IndexedDictionary('IT_CLASS', 'MeasureEnsemble', 'IT_KEY', MeasureEnsemb
 %%%% ¡gui!
 pr = PPAnalyzeEnsemble_MeDict('EL', a, 'PROP', AnalyzeEnsemble.ME_DICT, 'WAITBAR', Callback('EL', a, 'TAG', 'WAITBAR'), varargin{:});
 
+%%% ¡prop!
+PFGD (gui, item) contains the panel figure of the graph dictionary.
+%%%% ¡settings!
+'PFGraphDict'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    a.memorize('PFGD').set('G_DICT', a.get('G_DICT'))
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', a, 'PROP', AnalyzeEnsemble.PFGD, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
+
 %% ¡methods!
 function me = getMeasureEnsemble(a, measure_class, varargin)
     %GETMEASURE returns measure.

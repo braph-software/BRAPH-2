@@ -319,12 +319,12 @@ end
 function cb_graph_plot(pr)
     
     el = pr.get('EL');
-    prop = pr.get('PROP');
+% % %     prop = pr.get('PROP');
 
     if ~check_graphics(pr.f_graph_plot, 'figure')
         f = ancestor(pr.p, 'figure');
         gui = GUIFig( ...
-            'PF', el.memorize(prop).memorize('PFG'), ... % ensure that the property is stored
+            'PF', el.memorize('PFGD'), ... % ensure that the property is stored
             'WAITBAR', Callback('EL', pr, 'TAG', 'WAITBAR'), ...
             'POSITION', [ ...
                 x0(f, 'normalized')+w(f, 'normalized') ...
