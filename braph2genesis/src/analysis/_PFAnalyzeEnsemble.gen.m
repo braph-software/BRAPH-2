@@ -1,5 +1,5 @@
 %% ¡header!
-PFGraphDict < PanelFig (pf, panel figure graph dictionary) is a plot of a graph dictionary.
+PFAnalyzeEnsemble < PanelFig (pf, panel figure graph dictionary) is a plot of a graph dictionary.
 
 %%% ¡description!
 % % % PFBrainSurface manages the plot of the brain surface choosen by the user. 
@@ -11,11 +11,11 @@ PFGraphDict < PanelFig (pf, panel figure graph dictionary) is a plot of a graph 
 % % % edge color, and background color. 
 
 %%% ¡seealso!
-PanelFig, Graph, IndexedDictionary
+PanelFig, AnalyzeEnsemble, Graph, IndexedDictionary
 
 %% ¡props!
 
 %%% ¡prop!
-G_DICT (metadata, idict) is the graph dictionary.
+A (metadata, idict) is the ensemble analysis containing the graph dictionary.
 %%%% ¡settings!
-'Graph'
+'AnalyzeEnsemble'
