@@ -60,12 +60,16 @@ co_gr2 = CombineGroups_CON_FUN( ...
 gr2 = co_gr2.get('GR');
 
 %% Analysis CON FUN MP BUD
+densities = 0:10:100;
+
 a_BUD1 = AnalyzeEnsemble_CON_FUN_MP_BUD( ...
-    'GR', gr1 ...
+    'GR', gr1, ...
+    'DENSITIES', densities ...
     );
 
 a_BUD2 = AnalyzeEnsemble_CON_FUN_MP_BUD( ...
-    'GR', gr2 ...
+    'GR', gr2, ...
+    'DENSITIES', densities ...
     );
 
 % measure calculation
@@ -77,30 +81,30 @@ degree_BUD2 = a_BUD2.getMeasureEnsemble('Degree').get('M');
 degree_av_BUD2 = a_BUD2.getMeasureEnsemble('DegreeAv').get('M');
 distance_BUD2 = a_BUD2.getMeasureEnsemble('Distance').get('M');
 
-% comparison
-c_BUD = CompareEnsemble( ...
-    'P', 10, ...
-    'A1', a_BUD1, ...
-    'A2', a_BUD2, ...
-    'WAITBAR', true, ...
-    'VERBOSE', false, ...
-    'MEMORIZE', true ...
-    );
-
-degree_BUD_diff = c_BUD.getComparison('Degree').get('DIFF');
-degree_BUD_p1 = c_BUD.getComparison('Degree').get('P1');
-degree_BUD_p2 = c_BUD.getComparison('Degree').get('P2');
-degree_BUD_cil = c_BUD.getComparison('Degree').get('CIL');
-degree_BUD_ciu = c_BUD.getComparison('Degree').get('CIU');
-
-degree_av_BUD_diff = c_BUD.getComparison('DegreeAv').get('DIFF');
-degree_av_BUD_p1 = c_BUD.getComparison('DegreeAv').get('P1');
-degree_av_BUD_p2 = c_BUD.getComparison('DegreeAv').get('P2');
-degree_av_BUD_cil = c_BUD.getComparison('DegreeAv').get('CIL');
-degree_av_BUD_ciu = c_BUD.getComparison('DegreeAv').get('CIU');
-
-distance_BUD_diff = c_BUD.getComparison('Distance').get('DIFF');
-distance_BUD_p1 = c_BUD.getComparison('Distance').get('P1');
-distance_BUD_p2 = c_BUD.getComparison('Distance').get('P2');
-distance_BUD_cil = c_BUD.getComparison('Distance').get('CIL');
-distance_BUD_ciu = c_BUD.getComparison('Distance').get('CIU');
+% % % % comparison
+% % % c_BUD = CompareEnsemble( ...
+% % %     'P', 10, ...
+% % %     'A1', a_BUD1, ...
+% % %     'A2', a_BUD2, ...
+% % %     'WAITBAR', true, ...
+% % %     'VERBOSE', false, ...
+% % %     'MEMORIZE', true ...
+% % %     );
+% % % 
+% % % degree_BUD_diff = c_BUD.getComparison('Degree').get('DIFF');
+% % % degree_BUD_p1 = c_BUD.getComparison('Degree').get('P1');
+% % % degree_BUD_p2 = c_BUD.getComparison('Degree').get('P2');
+% % % degree_BUD_cil = c_BUD.getComparison('Degree').get('CIL');
+% % % degree_BUD_ciu = c_BUD.getComparison('Degree').get('CIU');
+% % % 
+% % % degree_av_BUD_diff = c_BUD.getComparison('DegreeAv').get('DIFF');
+% % % degree_av_BUD_p1 = c_BUD.getComparison('DegreeAv').get('P1');
+% % % degree_av_BUD_p2 = c_BUD.getComparison('DegreeAv').get('P2');
+% % % degree_av_BUD_cil = c_BUD.getComparison('DegreeAv').get('CIL');
+% % % degree_av_BUD_ciu = c_BUD.getComparison('DegreeAv').get('CIU');
+% % % 
+% % % distance_BUD_diff = c_BUD.getComparison('Distance').get('DIFF');
+% % % distance_BUD_p1 = c_BUD.getComparison('Distance').get('P1');
+% % % distance_BUD_p2 = c_BUD.getComparison('Distance').get('P2');
+% % % distance_BUD_cil = c_BUD.getComparison('Distance').get('CIL');
+% % % distance_BUD_ciu = c_BUD.getComparison('Distance').get('CIU');
