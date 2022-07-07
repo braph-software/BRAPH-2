@@ -30,9 +30,6 @@ THRESHOLDS (parameter, rvector) is the vector of thresholds.
 %%%% ¡gui_!
 % % % pr = PlotPropSmartVector('EL', g, 'PROP', MultiplexBUT.THRESHOLDS, 'MAX', 1, 'MIN', 0, varargin{:});
 
-%%% ¡prop!
-NODELABELS (metadata, STRING) is the node labels.
-
 %% ¡props_update!
 
 %%% ¡prop!
@@ -49,7 +46,7 @@ thresholds = g.get('THRESHOLDS');
 L = length(A_WU); % number of layers
 A = cell(length(thresholds)*L);
 
-if L > 0
+if L > 0 && ~isempty(cell2mat(A_WU))
     A(:, :) = {eye(length(A_WU{1, 1}))};
     for i = 1:1:length(thresholds)
         threshold = thresholds(i);

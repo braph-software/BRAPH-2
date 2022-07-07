@@ -65,10 +65,16 @@ if isa(a.getr('GRAPH_TEMPLATE'), 'NoValue')
         a.get('GRAPH_TEMPLATE').set('BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA'))
     end
 end
-a.get('GRAPH_TEMPLATE').set( ...
-    'LAYERTICKS', a.get('DENSITIES'), ...
-    'LAYERLABELS', cell2str(cellfun(@(x) num2str(x), num2cell(a.get('DENSITIES')), 'UniformOutput', false)) ...
-    )
+if a.get('GR').get('SUB_DICT').length() > 0
+    L = a.get('GR').get('SUB_DICT').getItem(1).get('L');  % number of layers
+    
+    layerlabels = {};
+    for i = 1:1:L
+        layerlabels = [layerlabels, cellfun(@(x) ['L' num2str(i) ' ' num2str(x) '%'], num2cell(a.get('DENSITIES')), 'UniformOutput', false)];
+    end
+    
+    a.get('GRAPH_TEMPLATE').set('LAYERLABELS', cell2str(layerlabels))
+end
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectFUN_MP.

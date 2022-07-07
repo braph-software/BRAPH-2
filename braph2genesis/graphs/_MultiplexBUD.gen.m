@@ -30,9 +30,6 @@ DENSITIES (parameter, rvector) is the vector of densities.
 %%%% ¡gui_!
 % % % pr = PlotPropSmartVector('EL', g, 'PROP', MultiplexBUD.DENSITIES, 'MAX', 100, 'MIN', 0, varargin{:});
 
-%%% ¡prop!
-NODELABELS (metadata, STRING) is the node labels.
-
 %% ¡props_update!
 
 %%% ¡prop!
@@ -49,7 +46,7 @@ densities = g.get('DENSITIES');
 L = length(A_WU); % number of layers of MultiplexWU
 A = cell(length(densities) * L); % the new g.layernumber() will be equal to = L*length(densities)
 
-if L > 0
+if L > 0 && ~isempty(cell2mat(A_WU))
     A(:, :) = {eye(length(A_WU{1, 1}))};
     for i = 1:1:length(densities)
         density = densities(i);
