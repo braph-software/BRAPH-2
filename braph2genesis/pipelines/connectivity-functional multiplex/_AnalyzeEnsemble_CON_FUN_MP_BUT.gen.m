@@ -39,11 +39,36 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 %%% ¡prop!
 THRESHOLDS (parameter, rvector) is the vector of thresholds.
 %%%% ¡default!
-0
+[-1:.5:1]
 %%%% ¡gui!
-pr = PlotPropSmartVector('EL', a, 'PROP', AnalyzeEnsemble_CON_FUN_MP_BUT.THRESHOLDS, 'MAX', 1, 'MIN', 0, varargin{:});
+pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeEnsemble_CON_FUN_MP_BUT.THRESHOLDS, ...
+    'MIN', -1, 'MAX', 1, ...
+    'DEFAULT', AnalyzeEnsemble_CON_FUN_MP_BUT.getPropDefault('THRESHOLDS'), ...
+    varargin{:});
 
 %% ¡props_update!
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'AnalyzeEnsemble_CON_FUN_MP_BUT'
+
+%%% ¡prop!
+GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
+%%%% ¡settings!
+'MultiplexBUT'
+%%%% ¡postprocessing!
+if isa(a.getr('GRAPH_TEMPLATE'), 'NoValue')
+    a.set('GRAPH_TEMPLATE', MultigraphBUT('THRESHOLDS',  Callback('EL', a, 'TAG', 'THRESHOLDS')))
+
+    if a.get('GR').get('SUB_DICT').length() > 0
+        a.get('GRAPH_TEMPLATE').set('BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA'))
+    end
+end
+a.get('GRAPH_TEMPLATE').set( ...
+    'LAYERTICKS', a.get('THRESHOLDS'), ...
+    'LAYERLABELS', cell2str(cellfun(@(x) num2str(x), num2cell(a.get('THRESHOLDS')), 'UniformOutput', false)) ...
+    )
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectCON_FUN_MP.
@@ -52,8 +77,8 @@ Group('SUB_CLASS', 'SubjectCON_FUN_MP')
 
 %%% ¡prop!
 ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-%%%% ¡gui!
-pr = PPAnalyzeEnsembleMP_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_CON_FUN_MP_BUT.ME_DICT, 'WAITBAR', true, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPAnalyzeEnsembleMP_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_CON_FUN_MP_BUT.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %%% ¡prop!
 G_DICT (result, idict) is the multiplex (MultiplexBUT) ensemble obtained from this analysis.
@@ -66,8 +91,9 @@ g_dict = IndexedDictionary('IT_CLASS', 'MultiplexBUT');
 node_labels = '';
 gr = a.get('GR');
 
+ba = BrainAtlas();
 if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0   
-    atlas = gr.get('SUB_DICT').getItem(1).get('BA');
+    ba = gr.get('SUB_DICT').getItem(1).get('BA');
 end
 
 T = a.get('REPETITION');
@@ -100,24 +126,31 @@ for i = 1:1:gr.get('SUB_DICT').length()
         'ID', ['g ' sub.get('ID')], ...
         'B', A, ...
         'THRESHOLDS', thresholds, ...
-        'BRAINATLAS', atlas ...
+        'BAS', ba ...
         );
     g_dict.add(g)
+    
+    if isa(a.getr('TEMPLATE'), 'NoValue')
+        g.set('TEMPLATE', a.memorize('GRAPH_TEMPLATE'))
+    else
+        g.set('TEMPLATE', a.get('TEMPLATE').memorize('GRAPH_TEMPLATE'))        
+    end 
 end
 
 value = g_dict;
 
-%% ¡methods!
-function pr = getPPCompareEnsemble_CPDict(a, varargin) 
-    %GETPPCOMPAREENSEMBLE_CPDICT returns the comparison ensemble plot panel compatible with the analysis.
-    %
-    % PR = GETPPCOMPAREENSEMBLE_CPDICT(A) returns the comparison ensemble plot panel
-    %  that is compatible with the analyze ensemble.
-    %
-    % See also CompareEnsemble.
-    
-    pr = PPCompareEnsembleMP_CON_FUN_CPDict_BUT(varargin{:});
-end
+% % % %% ¡methods!
+% % % function pr = getPPCompareEnsemble_CPDict(a, varargin) 
+% % %     %GETPPCOMPAREENSEMBLE_CPDICT returns the comparison ensemble plot panel compatible with the analysis.
+% % %     %
+% % %     % PR = GETPPCOMPAREENSEMBLE_CPDICT(A) returns the comparison ensemble plot panel
+% % %     %  that is compatible with the analyze ensemble.
+% % %     %
+% % %     % See also CompareEnsemble.
+% % %     
+% % %     pr = PPCompareEnsembleMP_CON_FUN_CPDict_BUT(varargin{:});
+% % % end
+
 %% ¡tests!
 
 %%% ¡test!
