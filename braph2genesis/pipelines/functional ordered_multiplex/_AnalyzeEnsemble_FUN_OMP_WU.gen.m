@@ -39,6 +39,24 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 %% ¡props_update!
 
 %%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'AnalyzeEnsemble_FUN_OMP_WU'
+
+%%% ¡prop!
+GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
+%%%% ¡settings!
+'OrderedMultiplexWU'
+%%%% ¡postprocessing!
+if isa(a.getr('GRAPH_TEMPLATE'), 'NoValue')
+    a.set('GRAPH_TEMPLATE', GraphWU())
+
+    if a.get('GR').get('SUB_DICT').length() > 0
+        a.get('GRAPH_TEMPLATE').set('BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA'))
+    end
+end
+
+%%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectFUN_MP.
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectFUN_MP')
@@ -51,12 +69,13 @@ G_DICT (result, idict) is the graph (OrderedMultiplexWU) ensemble obtained from 
 IndexedDictionary('IT_CLASS', 'OrderedMultiplexWU')
 %%%% ¡calculate!
 g_dict = IndexedDictionary('IT_CLASS', 'OrderedMultiplexWU');
-
 gr = a.get('GR');
-atlas = BrainAtlas();
+
+ba = BrainAtlas();
 if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-    atlas = gr.get('SUB_DICT').getItem(1).get('BA');
+    ba = gr.get('SUB_DICT').getItem(1).get('BA');
 end
+
 T = a.get('REPETITION');
 fmin = a.get('FREQUENCYRULEMIN');
 fmax = a.get('FREQUENCYRULEMAX');
@@ -84,7 +103,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
     g = OrderedMultiplexWU( ...
         'ID', ['g ' sub.get('ID')], ...
         'B', A, ...
-        'BRAINATLAS', atlas ...
+        'BAS', ba ...
         );
     g_dict.add(g)
 end
