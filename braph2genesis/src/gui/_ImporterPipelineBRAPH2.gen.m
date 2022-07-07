@@ -114,7 +114,7 @@ value = pip;
 function uigetfile(im)
     % UIGETFILE opens a dialog box to get the BRAPH2 file from where to load the pipeline.
     
-    [filename, filepath, filterindex] = uigetfile(BRAPH2.EXT_PIPELINE, 'Select .braph2 file');
+    [filename, filepath, filterindex] = uigetfile(BRAPH2.EXT_PIPELINE, 'Select BRAPH2 file');
     if filterindex
         file = [filepath filename];
         im.set('FILE', file);
