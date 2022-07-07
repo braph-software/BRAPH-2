@@ -16,6 +16,6 @@ PanelFig, AnalyzeEnsemble, Graph, IndexedDictionary
 %% ¡props!
 
 %%% ¡prop!
-A (metadata, idict) is the ensemble analysis containing the graph dictionary.
+A (metadata, item) is the ensemble analysis containing the graph dictionary.
 %%%% ¡settings!
 'AnalyzeEnsemble'
