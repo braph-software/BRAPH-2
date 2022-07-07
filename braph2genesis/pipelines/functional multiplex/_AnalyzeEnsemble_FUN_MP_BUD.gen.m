@@ -58,22 +58,24 @@ GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and meas
 %%%% ¡settings!
 'MultiplexBUD'
 %%%% ¡postprocessing!
-if isa(a.getr('GRAPH_TEMPLATE'), 'NoValue')
-    a.set('GRAPH_TEMPLATE', MultiplexBUD('DENSITIES',  Callback('EL', a, 'TAG', 'DENSITIES')))
+if ~braph2_testing
+    if isa(a.getr('GRAPH_TEMPLATE'), 'NoValue')
+        a.set('GRAPH_TEMPLATE', MultiplexBUD('DENSITIES',  Callback('EL', a, 'TAG', 'DENSITIES')))
 
+        if a.get('GR').get('SUB_DICT').length() > 0
+            a.get('GRAPH_TEMPLATE').set('BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA'))
+        end
+    end
     if a.get('GR').get('SUB_DICT').length() > 0
-        a.get('GRAPH_TEMPLATE').set('BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA'))
+        L = a.get('GR').get('SUB_DICT').getItem(1).get('L');  % number of layers
+
+        layerlabels = {};
+        for i = 1:1:L
+            layerlabels = [layerlabels, cellfun(@(x) ['L' num2str(i) ' ' num2str(x) '%'], num2cell(a.get('DENSITIES')), 'UniformOutput', false)];
+        end
+
+        a.get('GRAPH_TEMPLATE').set('LAYERLABELS', cell2str(layerlabels))
     end
-end
-if a.get('GR').get('SUB_DICT').length() > 0
-    L = a.get('GR').get('SUB_DICT').getItem(1).get('L');  % number of layers
-    
-    layerlabels = {};
-    for i = 1:1:L
-        layerlabels = [layerlabels, cellfun(@(x) ['L' num2str(i) ' ' num2str(x) '%'], num2cell(a.get('DENSITIES')), 'UniformOutput', false)];
-    end
-    
-    a.get('GRAPH_TEMPLATE').set('LAYERLABELS', cell2str(layerlabels))
 end
 
 %%% ¡prop!

@@ -47,11 +47,13 @@ GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and meas
 %%%% ¡settings!
 'MultiplexWU'
 %%%% ¡postprocessing!
-if isa(a.getr('GRAPH_TEMPLATE'), 'NoValue')
-    a.set('GRAPH_TEMPLATE', MultiplexWU())
+if ~braph2_testing
+    if isa(a.getr('GRAPH_TEMPLATE'), 'NoValue')
+        a.set('GRAPH_TEMPLATE', MultiplexWU())
 
-    if a.get('GR').get('SUB_DICT').length() > 0
-        a.get('GRAPH_TEMPLATE').set('BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA'))
+        if a.get('GR').get('SUB_DICT').length() > 0
+            a.get('GRAPH_TEMPLATE').set('BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA'))
+        end
     end
 end
 
