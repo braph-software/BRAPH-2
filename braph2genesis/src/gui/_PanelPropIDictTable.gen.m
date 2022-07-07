@@ -830,7 +830,11 @@ function cb_colorize_table(pr, checked)
     pr.update()    
 end
 function cb_export_to_xls(pr)
-    %CB_EXPORT_DATA exports selected data from uitable to an XLSX file.
+    %CB_EXPORT_TO_XLS exports data from uitable.
+    %
+    % CB_EXPORT_TO_XLS(PR) exports the uitable data to an XLSX file.
+    % Important notes:
+    % 1. CB_EXPORT_TO_XLS() will export all data if theres no row selection. 
     
     if isempty(pr.selected)
         el = pr.get('EL');
@@ -845,13 +849,15 @@ function cb_export_to_xls(pr)
     % create data table
     data = pr.table.Data(selected, :);
     columns = pr.table.ColumnName;
-    rows = pr.table.RowName(selected, :);
+    rows = pr.table.RowName;
     % special rules: selection column, numbered rownames.
     if isempty(columns{1})
         columns{1} = 'sel';
     end
     if isequal(rows, 'numbered')
-        rows = cellfun(@(x) num2str(x), num2cell([1:size(data, 1)]), 'UniformOutput', false);
+        rows = cellfun(@(x) num2str(x), num2cell(selected), 'UniformOutput', false)';
+    elseif length(selected) ~= length(rows)
+        rows = rows(reshape(selected, [1 length(selected)]));
     end
     
     t = cell2table(data, ...
