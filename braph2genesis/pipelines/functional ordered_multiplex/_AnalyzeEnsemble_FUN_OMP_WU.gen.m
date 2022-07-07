@@ -49,7 +49,7 @@ GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and meas
 'OrderedMultiplexWU'
 %%%% ¡postprocessing!
 if isa(a.getr('GRAPH_TEMPLATE'), 'NoValue')
-    a.set('GRAPH_TEMPLATE', GraphWU())
+    a.set('GRAPH_TEMPLATE', OrderedMultiplexWU())
 
     if a.get('GR').get('SUB_DICT').length() > 0
         a.get('GRAPH_TEMPLATE').set('BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA'))

@@ -59,7 +59,7 @@ GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and meas
 'MultiplexBUT'
 %%%% ¡postprocessing!
 if isa(a.getr('GRAPH_TEMPLATE'), 'NoValue')
-    a.set('GRAPH_TEMPLATE', MultigraphBUT('THRESHOLDS',  Callback('EL', a, 'TAG', 'THRESHOLDS')))
+    a.set('GRAPH_TEMPLATE', MultiplexBUT('THRESHOLDS',  Callback('EL', a, 'TAG', 'THRESHOLDS')))
 
     if a.get('GR').get('SUB_DICT').length() > 0
         a.get('GRAPH_TEMPLATE').set('BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA'))
