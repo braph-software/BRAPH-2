@@ -96,7 +96,10 @@ function me = getMeasureEnsemble(a, measure_class, varargin)
     %  with properties defined by the graph settings. The user must call
     %  getValue() for the new measure M to retrieve the value of measure M.
 
-    a.memorize('G_DICT');
+    g_dict = a.memorize('G_DICT');
+    for i = 1:1:g_dict.length()
+        g_dict.getItem(i).memorize('A');
+    end
     
     g = a.get('GRAPH_TEMPLATE');
     m_list = Graph.getCompatibleMeasureList(g);
