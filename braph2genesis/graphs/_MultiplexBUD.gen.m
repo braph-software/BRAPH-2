@@ -46,7 +46,7 @@ A (result, cell) is the cell array containing the multiplex binary adjacency mat
 A_WU = calculateValue@MultiplexWU(g, prop);
 
 densities = g.get('DENSITIES');
-L = length(A_WU); % number of layersof MultiplexWU
+L = length(A_WU); % number of layers of MultiplexWU
 A = cell(length(densities) * L); % the new g.layernumber() will be equal to = L*length(densities)
 
 if L > 0
@@ -54,14 +54,42 @@ if L > 0
     for i = 1:1:length(densities)
         density = densities(i);
         layer = 1;
-        for j = (i*2) - 1:1: (i*2) + L - 2     
-            A{j, j} = binarize(A_WU{layer, layer}, 'density', density);
+        for j = (i - 1) * L + 1:1:i * L
+            A{j, j} = dediagonalize(binarize(A_WU{layer, layer}, 'density', density));
             layer = layer + 1;
         end
     end
 end
 
 value = A;
+%%%% ¡gui!
+bas = g.get('BAS');
+if ~isempty(bas)
+    ba = bas{1};
+    br_ids = ba.get('BR_DICT').getKeys();
+    rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
+else
+    rowname = '{}';
+end
+
+if isempty(g.get('LAYERLABELS'))
+    xlayerlabels = PanelPropCell.getPropDefault('XSLIDERLABELS');
+    ylayerlabels = PanelPropCell.getPropDefault('YSLIDERLABELS');
+else
+    layerlabels = str2cell(g.get('LAYERLABELS'));
+    xlayerlabels = ['{' sprintf('''%s'' ', layerlabels{:}) '}'];
+    ylayerlabels = ['{' sprintf('''%s'' ', layerlabels{end:-1:1}) '}'];
+end
+
+pr = PanelPropCell('EL', g, 'PROP', GraphWU.A, ...
+    'TAB_H', 40, ...
+    'XYSLIDERLOCK', true, ... 
+    'XSLIDER', false, 'YSLIDER', true, ...
+    'XSLIDERLABELS', xlayerlabels, 'YSLIDERLABELS', ylayerlabels, ...
+    'XSLIDERHEIGHT', 3, 'YSLIDERWIDTH', 5, ...
+    'ROWNAME', rowname, ...
+    'COLUMNNAME', rowname, ...
+    varargin{:});
 
 %% ¡methods!
 function [l, ls] = layernumber(g)
