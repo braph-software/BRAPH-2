@@ -66,10 +66,28 @@ function p_out = draw(pr, varargin)
     %
     % See also update, redraw, uipanel.
     
-    el = pr.get('EL');
-    prop = pr.get('PROP');
-    
     pr.p = draw@PanelProp(pr, varargin{:});
+    
+    el = pr.get('EL');
+    prop = pr.get('PROP');   
+    
+    if ~check_graphics(pr.contextmenu, 'uicontextmenu')
+        pr.contextmenu = uicontextmenu(...
+            'Parent', ancestor(pr.p, 'figure'), ...
+            'Tag', 'contextmenu');
+        tmp_context_menu = uimenu( 'Parent', pr.contextmenu,'Tag','tmp','Text','TMP');
+        if pr.get('MENU_EXPORT')
+            pr.menu_export_to_xls = uimenu( ...
+                'Parent', pr.contextmenu, ...
+                'Tag', 'menu_export_to_xls', ...
+                'Text', 'Export to XLS', ...
+                'MenuSelectedFcn', {@cb_export_to_xls});
+        end
+    end
+    
+    function cb_export_to_xls(~, ~)
+        pr.cb_export_to_xls();
+    end
     
     if ~check_graphics(pr.table, 'uitable')
         pr.table = uitable( ...
@@ -85,20 +103,8 @@ function p_out = draw(pr, varargin)
         pr.cb_matrix_value(event.Indices(1), event.Indices(2), event.NewData)
     end
 
-    if ~check_graphics(pr.contextmenu, 'uicontextmenu')
-        pr.contextmenu = uicontextmenu(...
-            'Parent', ancestor(pr.p, 'figure'), ...
-            'Tag', 'contextmenu');
-        if pr.get('MENU_EXPORT')
-            pr.menu_export_to_xls = uimenu( ...
-                'Parent', pr.contextmenu, ...
-                'Tag', 'menu_export_to_xls', ...
-                'Text', 'Export to XLS', ...
-                'MenuSelectedFcn', {@cb_export_to_xls});
-        end
-    end
-    function cb_export_to_xls(~, ~)
-        pr.cb_export_to_xls();
+    if pr.get('MENU_EXPORT')
+        set(pr.table, 'ContextMenu', pr.contextmenu)
     end
 
     % output
@@ -223,14 +229,21 @@ function cb_matrix_value(pr, i, j, newdata)
 % % %     pr.update()
 end
 function cb_export_to_xls(pr)
-%CB_EXPORT_DATA exports selected data from uitable to an XLSX file.
+    %CB_EXPORT_TO_XLS exports data from uitable.
+    %
+    % CB_EXPORT_TO_XLS(PR) exports the uitable data to an XLSX file.
+    
     data = pr.table.Data;
     columns = pr.table.ColumnName;
     rows = pr.table.RowName;
     if isequal(rows, 'numbered')
         rows = cellfun(@(x) num2str(x), num2cell([1:size(data, 1)]), 'UniformOutput', false);
     end
-    t = cell2table(data, ...
+    if isempty(columns)
+        columns = cellfun(@(x) ['Column ' num2str(x)], num2cell([1:size(data, 2)]), 'UniformOutput', false);
+    end
+    
+    t = array2table(data, ...
         'VariableNames', columns, ...
         'RowNames', rows);
 
