@@ -164,9 +164,4 @@ value = g_dict;
 %%%% ¡name!
 Example
 %%%% ¡code!
-global BRAPH2_IS_TESTING
-BRAPH2_IS_TESTING = false;
-
-example_FUN_MP_BUT
-
-BRAPH2_IS_TESTING = true;
+% % % example_FUN_MP_BUT
