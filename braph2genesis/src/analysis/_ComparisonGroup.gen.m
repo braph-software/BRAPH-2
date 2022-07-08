@@ -26,7 +26,7 @@ pr = PanelPropStringTextArea('EL', cp, 'PROP', ComparisonGroup.NOTES, varargin{:
 MEASURE (data, string) is the measure class.
 
 %%% ¡prop!
-MEASURE_TEMPLATE(data, item) provides the measure parameters. 
+MEASURE_TEMPLATE (data, item) provides the measure parameters. 
 %%%% ¡settings!
 'Measure'
 
