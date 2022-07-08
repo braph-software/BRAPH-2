@@ -118,24 +118,44 @@ clc
 % % test_code = ['test_' el_class]
 % % eval(test_code)
 
-el_class = 'AnalyzeEnsemble_CON_FUN_MP_BUD';
-delete([fileparts(which('braph2')) '/pipelines/connectivity-functional multiplex/' el_class '.m'])
-create_Element([fileparts(which('braph2genesis')) '/pipelines/connectivity-functional multiplex/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/connectivity-functional multiplex'])
-create_Element([fileparts(which('braph2genesis')) '/pipelines/connectivity-functional multiplex/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/connectivity-functional multiplex'])
+% el_class = 'AnalyzeEnsemble_CON_FUN_MP_BUD';
+% delete([fileparts(which('braph2')) '/pipelines/connectivity-functional multiplex/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/pipelines/connectivity-functional multiplex/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/connectivity-functional multiplex'])
+% create_Element([fileparts(which('braph2genesis')) '/pipelines/connectivity-functional multiplex/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/connectivity-functional multiplex'])
 % create_test_Element([fileparts(which('braph2genesis')) '/pipelines/connectivity-functional multiplex/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/connectivity-functional multiplex'])
 % test_code = ['test_' el_class]
+% global BRAPH2_IS_TESTING, BRAPH2_IS_TESTING = true, braph2_testing
 % eval(test_code)
 
-el_class = 'AnalyzeEnsemble_CON_FUN_MP_BUT';
-delete([fileparts(which('braph2')) '/pipelines/connectivity-functional multiplex/' el_class '.m'])
-create_Element([fileparts(which('braph2genesis')) '/pipelines/connectivity-functional multiplex/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/connectivity-functional multiplex'])
-create_Element([fileparts(which('braph2genesis')) '/pipelines/connectivity-functional multiplex/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/connectivity-functional multiplex'])
+% el_class = 'AnalyzeEnsemble_CON_FUN_MP_BUT';
+% delete([fileparts(which('braph2')) '/pipelines/connectivity-functional multiplex/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/pipelines/connectivity-functional multiplex/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/connectivity-functional multiplex'])
+% create_Element([fileparts(which('braph2genesis')) '/pipelines/connectivity-functional multiplex/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/connectivity-functional multiplex'])
 % create_test_Element([fileparts(which('braph2genesis')) '/pipelines/connectivity-functional multiplex/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/connectivity-functional multiplex'])
 % test_code = ['test_' el_class]
+% global BRAPH2_IS_TESTING, BRAPH2_IS_TESTING = true, braph2_testing
 % eval(test_code)
+
+% el_class = 'AnalyzeEnsemble_FUN_MP_BUD';
+% delete([fileparts(which('braph2')) '/pipelines/functional multiplex/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/pipelines/functional multiplex/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/functional multiplex'])
+% create_Element([fileparts(which('braph2genesis')) '/pipelines/functional multiplex/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/functional multiplex'])
+% create_test_Element([fileparts(which('braph2genesis')) '/pipelines/functional multiplex/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/functional multiplex'])
+% test_code = ['test_' el_class]
+% global BRAPH2_IS_TESTING, BRAPH2_IS_TESTING = true, braph2_testing
+% eval(test_code)
+
+el_class = 'AnalyzeEnsemble_FUN_MP_BUT';
+delete([fileparts(which('braph2')) '/pipelines/functional multiplex/' el_class '.m'])
+create_Element([fileparts(which('braph2genesis')) '/pipelines/functional multiplex/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/functional multiplex'])
+create_Element([fileparts(which('braph2genesis')) '/pipelines/functional multiplex/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/functional multiplex'])
+create_test_Element([fileparts(which('braph2genesis')) '/pipelines/functional multiplex/_' el_class '.gen.m'], [fileparts(which('braph2')) '/pipelines/functional multiplex'])
+test_code = ['test_' el_class]
+global BRAPH2_IS_TESTING, BRAPH2_IS_TESTING = true, braph2_testing
+eval(test_code)
 
 %% 
-GUIElement('PE', Pipeline()).draw
+% GUIElement('PE', Pipeline()).draw
 
 %%
 % pip_CON_WU = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_a_CON_WU.b2']);
