@@ -18,19 +18,20 @@ LABEL (metadata, string) is an extended label of the comparison.
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the comparison.
-%%%% ¡gui!
-pr = PlotPropString('EL', c, 'PROP', CompareEnsemble.NOTES, 'LINES', 'multi', 'EDITHEIGHT', 4.5, varargin{:});
+pr = PanelPropStringTextArea('EL', c, 'PROP', CompareEnsemble.NOTES, varargin{:});
 
 %%% ¡prop!
-WAITBAR (metadata, logical) detemines whether to show the waitbar.
+WAITBAR (gui, logical) detemines whether to show the waitbar.
+%%%% ¡default!
+true
 
 %%% ¡prop!
-VERBOSE (metadata, logical) sets whether to write the progress of the comparisons.
+VERBOSE (gui, logical) sets whether to write the progress of the comparisons.
 %%%% ¡default!
 false
 
 %%% ¡prop!
-INTERRUPTIBLE (metadata, scalar) sets whether the comparison computation is interruptible for multitasking.
+INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interruptible for multitasking.
 %%%% ¡default!
 .001
 
@@ -40,7 +41,7 @@ MEMORIZE (metadata, logical) sets whether to memorize the permuted analysis.
 %%% ¡prop!
 P (parameter, scalar) is the permutation number.
 %%%% ¡default!
-1e+4
+1e+3
 %%%% ¡check_prop!
 check = value > 0 && value == round(value);
 
@@ -94,7 +95,7 @@ pr = a1.getPPCompareEnsemble_CPDict('EL', c, 'PROP', CompareEnsemble.CP_DICT, 'W
 function cp = getComparison(c, measure_class, varargin)
     %GETComparisonE returns comparison.
     %
-    % CP = GETMEASURE(G, MEASURE_CLASS) checks if the comparison exists in the
+    % CP = GETCOMPARISON(G, MEASURE_CLASS) checks if the comparison exists in the
     %  comparison dictionary CP_DICT. If not, it creates a new comparison
     %  CP of class MEASURE_CLASS. The user must call getValue() for the new
     %  comparison CP to retrieve the value of the comparison. 
@@ -114,7 +115,7 @@ function cp = getComparison(c, measure_class, varargin)
         cp = ComparisonEnsemble( ...
             'ID', [measure_class ' comparison ' c.get('A1').get('ID') ' vs. ' c.get('A2').get('ID')], ...
             'MEASURE', measure_class, ...
-            'MEASUREPARAM', eval([measure_class '()']), ...
+            'MEASURE_TEMPLATE', c.memorize('A1').memorize('GRAPH_TEMPLATE').getMeasure(measure_class), ...
             'C', c, ...
             varargin{:} ...
             );
@@ -165,7 +166,7 @@ function [a1_perm, a2_perm] = getPerm(c, i, memorize)
         a1_perm.get('GR').get('SUB_DICT').set('IT_LIST', cellfun(@(x) x(1), subs1_gdict1_perm))
         a1_perm.memorize('G_DICT').set('IT_LIST', cellfun(@(x) x(2), subs1_gdict1_perm))
 
-        a2_perm = c.get('A2').clone();
+        a2_perm = c.get('A1').clone(); % a2_perm = c.get('A2').clone();
         a2_perm.set( ...
             'ID', [c.get('A2').get('ID') ' permutation ' int2str(i)], ...
             'GR', c.get('A2').get('GR').clone() ...
