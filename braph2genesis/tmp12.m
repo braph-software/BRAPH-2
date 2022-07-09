@@ -4,25 +4,38 @@ close all
 clear all
 clc
 
-el_class = 'ComparisonEnsemble';
-delete([fileparts(which('braph2')) '/src/analysis/' el_class '.m'])
-create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
-create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
-% create_test_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
-% test_code = ['test_' el_class]
-% eval(test_code)
+% el_class = 'ComparisonEnsemble';
+% delete([fileparts(which('braph2')) '/src/analysis/' el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
+% create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
+% % create_test_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
+% % test_code = ['test_' el_class]
+% % eval(test_code)
+disp('example_FUN_WU')
 example_FUN_WU
+disp('example_FUN_BUD')
 example_FUN_BUD
+disp('example_FUN_BUT')
 example_FUN_BUT
+disp('example_CON_WU')
 example_CON_WU
+disp('example_CON_BUD')
 example_CON_BUD
+disp('example_CON_BUT')
 example_CON_BUT
+disp('example_FUN_MP_WU')
 example_FUN_MP_WU
+disp('example_FUN_MP_BUD')
 example_FUN_MP_BUD
+disp('example_FUN_MP_BUT')
 example_FUN_MP_BUT
+disp('example_FUN_OMP_WU')
 example_FUN_OMP_WU
+disp('example_CON_FUN_MP_WU')
 example_CON_FUN_MP_WU
+disp('example_CON_FUN_MP_BUD')
 example_CON_FUN_MP_BUD
+disp('example_CON_FUN_MP_BUT')
 example_CON_FUN_MP_BUT
 
 % el_class = 'MultiplexBUD';
