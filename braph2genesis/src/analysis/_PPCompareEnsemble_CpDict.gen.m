@@ -188,7 +188,7 @@ function update(pr)
     prop = pr.get('PROP');
     
     function set_table()
-        g = el.get('A1').get('G');
+        g = el.get('A1').get('GRAPH_TEMPLATE');
         cplist = Graph.getCompatibleMeasureList(g);
         cplist_already_calculated = cellfun(@(x) x.get('MEASURE'), el.get(prop).getItems(), 'UniformOutput', false);
 
@@ -296,7 +296,7 @@ function cb_select_all(pr)
     el = pr.get('EL');
     prop = pr.get('PROP');
     
-    g = el.get('A1').get('G');
+    g = el.get('A1').get('GRAPH_TEMPLATE');
     cplist = Graph.getCompatibleMeasureList(g);
 
     pr.selected = [1:1:length(cplist)];
@@ -314,7 +314,7 @@ function cb_invert_selection(pr)
     el = pr.get('EL');
     prop = pr.get('PROP');
     
-    g = el.get('A1').get('G');
+    g = el.get('A1').get('GRAPH_TEMPLATE');
     cplist = Graph.getCompatibleMeasureList(g);
 
     selected_tmp = [1:1:length(cplist)];
@@ -328,7 +328,7 @@ function cb_comparison_calculate(pr)
     el = pr.get('EL');
     prop = pr.get('PROP');
     
-    g = el.get('A1').get('G');
+    g = el.get('A1').get('GRAPH_TEMPLATE');
     cplist = Graph.getCompatibleMeasureList(g);
     
     wb = braph2waitbar(el.get('WAITBAR'), 0, ['Calculating ' num2str(length(pr.selected))  ' comparisons ...']);
@@ -358,7 +358,7 @@ function cb_comparison_open_plots(pr)
     el = pr.get('EL');
     prop = pr.get('PROP');
     
-    g = el.get('A1').get('G');
+    g = el.get('A1').get('GRAPH_TEMPLATE');
     cplist = Graph.getCompatibleMeasureList(g);
     
     f = ancestor(pr.p, 'figure'); % parent GUI 
@@ -408,7 +408,7 @@ function cb_comparison_open_elements(pr)
     el = pr.get('EL');
     prop = pr.get('PROP');
     
-    g = el.get('A1').get('G');
+    g = el.get('A1').get('GRAPH_TEMPLATE');
     cplist = Graph.getCompatibleMeasureList(g);
     
     f = ancestor(pr.p, 'figure'); % parent GUI 

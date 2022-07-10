@@ -500,6 +500,31 @@ else % multilayer
     end
 end
 
+%%% ¡prop!
+PFC (gui, item) contains the panel figure of the comparison.
+%%%% ¡settings!
+'PFComparisonEnsemble'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    if isa(cp.getr('PFC'), 'NoValue')
+        measure = cp.get('MEASURE');
+        
+        if ~isempty(measure) && Measure.is_global(measure) && Measure.is_unilayer(measure)
+            cp.set('PFC', PFComparisonEnsembleGU('CP', cp))
+        elseif ~isempty(measure) && Measure.is_nodal(measure) && Measure.is_unilayer(measure)
+            cp.set('PFC', PFComparisonEnsembleNU('CP', cp))
+        elseif ~isempty(measure) && Measure.is_binodal(measure) && Measure.is_unilayer(measure)
+            cp.set('PFC', PFComparisonEnsembleBU('CP', cp))
+        else
+            cp.memorize('PFC').set('CP', cp)
+        end
+    end
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', cp, 'PROP', ComparisonEnsemble.PFC, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
+
 %% ¡properties!
 diff
 p1
