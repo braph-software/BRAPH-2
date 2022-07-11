@@ -89,6 +89,46 @@ end
 %%%% ¡gui!
 pr = PPNNClassifierEvaluator_Confusion_Matrix('EL', nne, 'PROP', NNClassifierEvaluator.CONFUSION_MATRIX, varargin{:});
 
+%%% ¡prop!
+FEATURE_PERMUTATION_IMPORTANCE (result, cell) is feature importance evaluated by permuting the feature with random numbers
+%%%% ¡calculate!
+if nne.get('GR').get('SUB_DICT').length() == 0
+    value = {};
+else
+    %%%%%%%%
+    nn = nne.get('NN');
+    gr = nne.get('GR');
+    mask_tmp = gr.get('SUB_DICT').getItem(1).get('FEATURE_MASK');
+    masks = {};
+    for i = 1:1:length(mask_tmp)
+        mask = mask_tmp{i};
+        [~, idx_all] = sort(mask(:), 'descend');
+        percentile = nn.get('FEATURE_SELECTION_RATIO');
+        num_top_idx = ceil(percentile * numel(mask));
+        mask(idx_all(1:num_top_idx)) = 1;
+        mask(idx_all(end - (length(idx_all) - num_top_idx - 1):end)) = 0;
+        masks{i} = mask;
+    end
+    [inputs, num_features] = nn.reconstruct_inputs(gr);
+    [targets, classes] = nn.reconstruct_targets(gr);
+    net = nn.get('MODEL');
+    feature_importance = [];
+    original_loss = crossentropy(net.predict(inputs)', targets);
+    if isa(net, 'NoValue') || ~BRAPH2.installed('NN', 'msgbox')
+        feature_importance = 0;
+    else
+        parfor i = 1:1:num_features
+            scram_inputs = inputs;
+            scram_inputs(:, :, i, :) = normrnd(mean(inputs(:, :, i, :)), std(inputs(:, :, i, :)), squeeze(size(inputs(:, :, i, :))));
+            scram_loss = crossentropy(net.predict(scram_inputs)', targets);
+            feature_importance(i)= scram_loss/original_loss;
+        end
+    end
+    feature_importance = rescale(feature_importance);
+    feature_importance = reshape(feature_importance, 246, [])
+
+    value = {rescale(feature_importance)};
+end
 
 %% ¡props_update!
 

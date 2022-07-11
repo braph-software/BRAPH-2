@@ -1550,8 +1550,10 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
 		
 		    % variables
 		    atlas = pl.get('ATLAS');
-		    nn_el = pl.get('NNEL');
-		    feature_map = nn_el.get('feature_map');
+            nn_el = pl.get('NNEL');
+            feature_map = nn_el.get('FEATURE_IMPORTANCE');
+            feature_map{1} = fractionate(feature_map{1}, 'density', 0.05);
+            feature_map{2} = fractionate(feature_map{2}, 'density', 0.05);
 		    br_axes = pl.h_axes; %#ok<NASGU>
 		    BKGCOLOR = [1 .9725 .929];
 		    pl.f_feature_settings = ui_panel_graph;
@@ -1584,8 +1586,8 @@ function brain_graph_panel = getBrainGraphPanel(pl, ui_panel_graph)
 		            'Position', [0.25 .82 0.2 0.1], ...
 		            'Callback', {@cb_layer_sel});
             end
-            %feature_map_inner = feature_map{1};
-            feature_map_inner = fractionate(feature_map{1}, 'density', 0.001); % TODO: make the density configurable
+            feature_map_inner = feature_map{1};
+            %feature_map_inner = fractionate(feature_map{1}, 'density', 0.001); % TODO: make the density configurable
 		
 		    ui_checkbox_graph_lineweight = uicontrol(fig_graph, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
 		    ui_txt_graph_lineweight = uicontrol(fig_graph, 'Style', 'text');
@@ -1795,7 +1797,7 @@ function h = getMCRPanel(pl, ui_panel_graph)
 		    % variables
 		    atlas = pl.get('ATLAS');
 		    nn_el = pl.get('NNEL');
-		    feature_map = nn_el.get('feature_map');
+		    feature_map = nn_el.get('FEATURE_IMPORTANCE');
 		    br_axes = pl.h_axes; %#ok<NASGU>
 		    FigColor = [.95 .94 .94];
 		    pl.f_feature_settings = ui_panel_graph;
@@ -1835,8 +1837,8 @@ function h = getMCRPanel(pl, ui_panel_graph)
 		            'Position', [0.25 .82 0.2 0.1], ...
 		            'Callback', {@cb_layer_sel});
 		    end
-		    %feature_map_inner = feature_map{1};
-            feature_map_inner = fractionate(feature_map{1}, 'density', 0.001); % TODO: make the density configurable
+		    feature_map_inner = feature_map{1};
+            %feature_map_inner = fractionate(feature_map{1}, 'density', 0.001); % TODO: make the density configurable
 
 		    % nodal measure figure options
 		    ui_checkbox_meas_symbolsize = uicontrol(ui_measure_container_panel, 'Style',  'checkbox', 'BackgroundColor', BKGCOLOR);
@@ -2079,7 +2081,7 @@ function brain_feature_p = getBrainFeaturePanel(pl, ui_panel_graph)
 		    % switch between 
 		    el = pl.get('NNEL');
 		    % it has have to value at this point
-		    feature_map = el.get('feature_map');
+		    feature_map = el.get('FEATURE_IMPORTANCE');
 		    if size(feature_map{1}, 1) == 1 || size(feature_map{1}, 2) == 1 % nodal
 		        tmp_panel = pl.getMCRPanel(ui_panel_graph);
 		    else % matrix

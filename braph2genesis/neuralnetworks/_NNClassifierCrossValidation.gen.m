@@ -394,6 +394,26 @@ value = heat_map;
 %%%% ¡gui!
 pr = PPNNCrossValidation_Feature_Map('EL', nncv, 'PROP', NNClassifierCrossValidation.FEATURE_MAP, varargin{:});
 
+%%% ¡prop!
+FEATURE_IMPORTANCE (result, cell) is the feature importance obtained with permutation analysis.
+%%%% ¡calculate!
+nne_dict = nncv.memorize('NNE_DICT');
+feature_importances = [];
+if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('AUC')) && ~any(ismember(subclasses('Measure'), nncv.get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('INPUT_LABEL')))
+    for i = 1:1:nne_dict.length()
+        feature_importance = nne_dict.getItem(i).get('FEATURE_PERMUTATION_IMPORTANCE');
+        feature_importances = cellfun(@(x, y) x + y, feature_importances, feature_importance, 'UniformOutput', false);
+    end
+    feature_importances = cellfun(@(x) x/nne_dict.length, feature_importances, 'UniformOutput', false);
+else
+    %TODO: check the msgbox is needed 
+    %braph2msgbox("No visualization for the feature map", "For now, we only provide the feature map visualization for input of adjacency matrix or structural data.")
+end
+
+value = feature_importances;
+%%%% ¡gui!
+pr = PPNNCrossValidation_Feature_Map('EL', nncv, 'PROP', NNClassifierCrossValidation.FEATURE_IMPORTANCE, varargin{:});
+
 
 %% ¡methods!
 function [avg, CI] = get_CI(nncv, scores)
