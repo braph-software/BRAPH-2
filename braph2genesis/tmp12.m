@@ -223,8 +223,6 @@ pip_CON_WU = BRAPH2.load([fileparts(which('braph2genesis')) '/pip_c_CON_WU.b2'])
 gui_CON_WU = GUIElement('PE', pip_CON_WU);
 f_CON_WU = gui_CON_WU.draw();
 
-    % disp('example_CON_BUT')
-    % example_CON_BUT
     % disp('example_FUN_WU')
     % example_FUN_WU
     % disp('example_FUN_BUD')
