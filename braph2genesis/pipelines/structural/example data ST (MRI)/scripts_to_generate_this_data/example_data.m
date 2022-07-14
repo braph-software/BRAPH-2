@@ -42,6 +42,10 @@ A2(1:length(A2)+1:numel(A2)) = 1;
 A1 = A1*transpose(A1);
 A2 = A2*transpose(A2);
 
+figure(1)
+imshow(A1)
+imshow(A2)
+
 %% These matrices will be covariance matrices for the two groups
 % Specify the mean
 mu_gr1 = ones(1, length(A1));
