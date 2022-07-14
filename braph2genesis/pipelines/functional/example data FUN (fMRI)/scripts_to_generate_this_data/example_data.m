@@ -49,6 +49,9 @@ for i_gr1 = 1:1:N_groups
     % this is needed to make the matrices positive definite
     A_full = A_full*transpose(A_full);
 
+    figure(1)
+    imshow(A_full)
+
     % This matrix will be covariance matrices for the two groups
     % Specify the mean
     mu_gr1 = ones(1, length(A_full));
@@ -98,6 +101,9 @@ for i_gr2 = 1:1:N_groups
 
     % this is needed to make the matrices positive definite
     A_full = A_full*transpose(A_full);
+
+    figure(1)
+    imshow(A_full)
 
     % This matrix will be covariance matrices for the two groups
     % Specify the mean
