@@ -5,29 +5,30 @@ clc
 rng('default')  % For reproducibility
 
 %% Specify the network parameters for the two groups
-N_nodes = 68; % Desikan atlas
+N_nodes = 90; % AAL atlas
 
 %% Specify length of time series 
 N_tslength = 200;
 
 %% Specify number of subjects
-N_groups = 50;
+N_groups = 100;
 
 %% Group 1 properties
-% 4 modules of 17 nodes each
+% 5 modules of 18 nodes each
 
 gr1_ts = cell(1, N_groups);
 
 % initialize values for the WS model
-K1 = [3 4 5 6];
-beta1 = [0.02 0.1 0.5 0.8];
+K1 = [3 4 5 6 7];
+beta1 = [0.02 0.1 0.5 0.8 1.0];
 
 % initialize the indices where the matrices will be placed
-indices1 = 1:1:17;
-indices2 = 18:1:34;
-indices3 = 35:1:51;
-indices4 = 52:1:68;
-indices = {indices1; indices2; indices3; indices4};
+indices1 = 1:1:18;
+indices2 = 19:1:36;
+indices3 = 37:1:54;
+indices4 = 55:1:72;
+indices5 = 73:1:90;
+indices = {indices1; indices2; indices3; indices4; indices5};
 
 % Loop to create ts for each subject
 for i_gr1 = 1:1:N_groups
@@ -40,14 +41,16 @@ for i_gr1 = 1:1:N_groups
     A_full = zeros(N_nodes);
 
     % loop over each module
-    for i_mod = 1:1:4
-        A_full(indices{i_mod},indices{i_mod}) = full(adjacency(WattsStrogatz(17, K_temp(i_mod), beta_temp(i_mod))));
+    for i_mod = 1:1:5
+        A_full(indices{i_mod},indices{i_mod}) = full(adjacency(WattsStrogatz(18, K_temp(i_mod), beta_temp(i_mod))));
     end
     A_full(1:length(A_full)+1:numel(A_full)) = 1;
 
     % this is needed to make the matrices positive definite
     A_full = A_full*transpose(A_full);
-
+    
+    figure(1)
+    imshow(A_full)
     % This matrix will be covariance matrices for the two groups
     % Specify the mean
     mu_gr1 = ones(1, length(A_full));
@@ -66,7 +69,7 @@ for i_gr1 = 1:1:N_groups
 end
 
 %% Group 2 properties
-% 2 modules of 34 nodes each
+% 2 modules of 45 nodes each
 
 gr2_ts = cell(1, N_groups);
 
@@ -75,8 +78,8 @@ K2 = [3 7];
 beta2 = [0.02 0.85];
 
 % initialize the indices where the matrices will be placed
-indices1 = 1:1:34;
-indices2 = 35:1:68;
+indices1 = 1:1:45;
+indices2 = 46:1:90;
 indices = {indices1; indices2};
 
 % Loop to create ts for each subject
@@ -88,16 +91,17 @@ for i_gr2 = 1:1:N_groups
 
     % initialize matrix for the subject
     A_full = zeros(N_nodes);
-
     % loop over each module
     for i_mod = 1:1:2
-        A_full(indices{i_mod},indices{i_mod}) = full(adjacency(WattsStrogatz(34, K_temp(i_mod), beta_temp(i_mod))));
+        A_full(indices{i_mod},indices{i_mod}) = full(adjacency(WattsStrogatz(45, K_temp(i_mod), beta_temp(i_mod))));
     end
     A_full(1:length(A_full)+1:numel(A_full)) = 1;
 
     % this is needed to make the matrices positive definite
     A_full = A_full*transpose(A_full);
-
+    
+    figure(1)
+    imshow(A_full)
     % This matrix will be covariance matrices for the two groups
     % Specify the mean
     mu_gr2 = ones(1, length(A_full));

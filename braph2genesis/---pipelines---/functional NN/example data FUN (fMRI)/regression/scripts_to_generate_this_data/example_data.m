@@ -5,7 +5,7 @@ clc
 rng('default')  % For reproducibility
 
 %% Specify the network parameters for the two groups
-N_nodes = 90; % AAL Desikan atlas
+N_nodes = 90; % AAL atlas
 
 %% Specify length of time series 
 N_tslength = 200;
