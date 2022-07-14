@@ -74,6 +74,11 @@ for i = 1:1:N_groups
     diffA = A3 - r;
     A3(A3 ~= 0) = diffA(A3 ~= 0);
 
+    figure(1)
+    imshow(A1)
+    imshow(A2)
+    imshow(A3)
+
     % place matrices in cells
     gr1_matrices{1, i} = A1;
     gr2_matrices{1, i} = A2;
