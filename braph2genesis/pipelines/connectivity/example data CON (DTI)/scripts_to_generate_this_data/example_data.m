@@ -50,6 +50,19 @@ for i = 1:1:N_groups
     A1(1:length(A1)+1:numel(A1)) = 0;
     A2(1:length(A2)+1:numel(A2)) = 0;
 
+    % make the adjacency matrix weighted
+    r = 0 + (0.5 - 0)*rand(size(A1));
+    diffA = A1 - r;
+    A1(A1 ~= 0) = diffA(A1 ~= 0);
+    r = 0 + (0.5 - 0)*rand(size(A2));
+    diffA = A2 - r;
+    A2(A2 ~= 0) = diffA(A2 ~= 0);
+
+    % show the adj
+    figure(1)
+    imshow(A1)
+    imshow(A2)
+
     % place matrices in cells
     gr1_matrices{1, i} = A1;
     gr2_matrices{1, i} = A2;
