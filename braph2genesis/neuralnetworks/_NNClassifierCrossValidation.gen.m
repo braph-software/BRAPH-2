@@ -42,14 +42,13 @@ GR2 (data, item) is is a group of subjects.
 %%% ¡prop!
 FEATURE_MASK (data, cell) is a given mask or a percentile to select relevant features.
 %%%% ¡default!
-num2cell(0.05)
+{0.05}
 %%%% ¡conditioning!
 if ~iscell(value) & isnumeric(value)
     value = num2cell(value);
 end
 %%%% ¡gui!
 pr = PlotPropSmartVector('EL', nncv, 'PROP', NNClassifierCrossValidation.FEATURE_MASK, 'MAX', 10000000, 'MIN', 0, varargin{:});
-
 
 %%% ¡prop!
 PLOT_CM (data, logical) is an option for the plot of the confusion matrix.
@@ -140,8 +139,8 @@ if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
 end
 
 value = nnds_dict;
-%%%% ¡gui!
-pr = PPNNCrossValidation_NNDict('EL', nncv, 'PROP', NNClassifierCrossValidation.NNDS_DICT, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPNNCrossValidation_NNDict('EL', nncv, 'PROP', NNClassifierCrossValidation.NNDS_DICT, varargin{:});
 
 %%% ¡prop!
 NN_DICT (result, idict) contains the NN classifiers for k folds for all repetitions.
@@ -168,8 +167,8 @@ if nncv.memorize('NNDS_DICT').length() > 0
 end
 
 value = nn_dict;
-%%%% ¡gui!
-pr = PPNNCrossValidation_NNDict('EL', nncv, 'PROP', NNClassifierCrossValidation.NN_DICT, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPNNCrossValidation_NNDict('EL', nncv, 'PROP', NNClassifierCrossValidation.NN_DICT, varargin{:});
 
 %%% ¡prop!
 NNE_DICT (result, idict) contains the NN evaluators for k folds for all repetitions.
@@ -196,8 +195,8 @@ if nncv.memorize('NN_DICT').length() > 0
 end
 
 value = nne_dict;
-%%%% ¡gui!
-pr = PPNNCrossValidation_NNDict('EL', nncv, 'PROP', NNClassifierCrossValidation.NNE_DICT, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPNNCrossValidation_NNDict('EL', nncv, 'PROP', NNClassifierCrossValidation.NNE_DICT, varargin{:});
 
 %%% ¡prop!
 GR_PREDICTION (result, item) is a group of NN subjects with prediction from NN.
@@ -231,8 +230,8 @@ else
 end
 
 value = gr_prediction;
-%%%% ¡gui!
-pr = PPNNData_GR_NN('EL', nncv, 'PROP', NNClassifierCrossValidation.GR_PREDICTION, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPNNData_GR_NN('EL', nncv, 'PROP', NNClassifierCrossValidation.GR_PREDICTION, varargin{:});
 
 %%% ¡prop!
 CONFUSION_MATRIX (result, matrix) is an add-up confusion matrix across k folds for all repeitions.
@@ -264,8 +263,8 @@ else
 
     value = cm;
 end
-%%%% ¡gui!
-pr = PPNNClassifierCrossValidation_Confusion_Matrix('EL', nncv, 'PROP', NNClassifierCrossValidation.CONFUSION_MATRIX, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPNNClassifierCrossValidation_Confusion_Matrix('EL', nncv, 'PROP', NNClassifierCrossValidation.CONFUSION_MATRIX, varargin{:});
 
 %%% ¡prop!
 AUC (result, cell) is the area under the curve scores across k folds for all repetitions.

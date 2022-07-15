@@ -2,8 +2,8 @@
 NNClassifierDNN < NNBase (nn, classifier with dense layers) is a neural network classifier.
 
 %% ¡description!
-This regressor is composed of fully-connected layers.
-The Classifier trains on NN groups which contain the inputs and targets.
+This classifier is composed of fully-connected layers.
+The classifier trains on NN groups which contain the inputs and targets.
 
 %% ¡props!
 
@@ -15,12 +15,12 @@ LAYERS (data, rvector) is a vector representing the number of neurons in each la
 if isempty(nn.get('LAYERS'))
     if nn.get('GR').get('SUB_DICT').length() > 0
         [inputs, num_features] = nn.reconstruct_inputs(nn.get('GR'));
-        value = [floor(1.5 * num_features) floor(1.5 * num_features)];
+        value = [ceil(1.5 * num_features) ceil(1.5 * num_features)];
         nn.set('LAYERS', value);
     end
 end
-%%%% ¡gui!
-pr = PlotPropSmartVector('EL', nn, 'PROP', NNClassifierDNN.LAYERS, 'MAX', 100000, 'MIN', 1, varargin{:});
+%%%% ¡gui_!
+% % % pr = PlotPropSmartVector('EL', nn, 'PROP', NNClassifierDNN.LAYERS, 'MAX', 100000, 'MIN', 1, varargin{:});
 
 %%% ¡prop!
 BATCH (data, scalar) is the size of the mini-batch to use for each training iteration.
