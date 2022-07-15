@@ -355,6 +355,19 @@ function p_out = draw(pf, varargin)
         pf.set('VIEW', azel)
     end
 
+    % roi part
+    uipushtool(pf.toolbar, 'Separator', 'on', 'Visible', 'off')
+    pf.tool_roi = uipushtool(pf.toolbar, ...
+        'Tag', 'tool_roi', ...
+        'Tooltip', 'Open ROI menu', ...
+        'CData', imresize(imread('icon_roi.png'), [16 16]), ...
+        'ClickedCallback', {@cb_roi_menu}  ...
+        );
+    
+    function cb_roi_menu(~, ~)
+        
+    end
+
     % output
     if nargout > 0
         p_out = pf.p;

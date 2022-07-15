@@ -30,6 +30,27 @@ Y (data, scalar) is the y-coordinate of the brain region.
 %%% ¡prop!
 Z (data, scalar) is the z-coordinate of the brain region.
 
+%%% ¡prop!
+VERTEX_NUMBER (data, scalar) is the number of triangles vertices.
+%%%% ¡check_prop!
+check = value >= 0;
+
+%%% ¡prop!
+COORDINATES (data, matrix) are the coordinates of the triangles vertices.
+%%%% ¡check_prop!
+check = isempty(value) || size(value, 2) == 3;
+
+%%% ¡prop!
+TRIANGLES_NUMBER (data, scalar) is the number of triangles.
+%%%% ¡check_prop!
+check = value >= 0;
+
+%%% ¡prop!
+TRIANGLES (data, matrix) are the triads of coordinates identifiers to create a triangle.
+%%%% ¡check_prop!
+check = isempty(value) || size(value, 2) == 3;
+
+
 %% ¡tests!
 
 %%% ¡test!
