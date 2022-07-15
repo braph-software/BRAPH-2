@@ -1,52 +1,52 @@
 %% ¡header!
-ComparisonGroup < Element (cp, group-based comparison results) contains the results of a group-based comparison.
+ComparisonEnsemble < Element (cp, ensemble-based comparison results) contains the results of an ensemble-based comparison.
 
 %%% ¡description!
-ComparisonGroup contains the results of a group-based comparison for a given measure.
+ComparisonEnsemble contains the results of an ensemble-based comparison for a given measure.
 Specifically, it contains the one-tailed and two-tailed p-values 
 and the 95%% confidence interval.
 
 %%% ¡seealso!
-CompareGroup, AnalyzeGroup
+CompareEnsemble, AnalyzeEnsemble
 
 %% ¡props!
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the group-based comparison results.
+ID (data, string) is a few-letter code for the ensemble-based comparison results.
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the group-based comparison results.
+LABEL (metadata, string) is an extended label of the ensemble-based comparison results.
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the group-based comparison results.
+NOTES (metadata, string) are some specific notes about the ensemble-based comparison results.
 %%%% ¡gui!
-pr = PanelPropStringTextArea('EL', cp, 'PROP', ComparisonGroup.NOTES, varargin{:});
+pr = PanelPropStringTextArea('EL', cp, 'PROP', ComparisonEnsemble.NOTES, varargin{:});
 
 %%% ¡prop!
 MEASURE (data, string) is the measure class.
 
 %%% ¡prop!
-MEASURE_TEMPLATE (data, item) provides the measure parameters. 
+MEASURE_TEMPLATE (data, item) provides the measure parameters.
 %%%% ¡settings!
 'Measure'
 
 %%% ¡prop!
-C (data, item) is the group-based comparison.
+C (data, item) is the ensemble-based comparison.
 %%%% ¡settings!
-'CompareGroup'
+'CompareEnsemble'
 
 %%% ¡prop!
-DIFF (result, cell) is the group comparison value.
+DIFF (result, cell) is the ensemble comparison value.
 %%%% ¡calculate!
 if isempty(cp.diff)
     [cp.diff, cp.p1, cp.p2, cp.ci_lower, cp.ci_upper] = calculate_results(cp);
 end
 value = cp.diff;
 %%%% ¡gui!
-g = cp.get('C').get('A1').get('G');
+g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
 measure = cp.get('MEASURE');
 
-pr = PanelPropCell('EL', cp, 'PROP', ComparisonGroup.DIFF, varargin{:});
+pr = PanelPropCell('EL', cp, 'PROP', ComparisonEnsemble.DIFF, varargin{:});
 
 if Measure.is_global(measure)
     pr.set( ...
@@ -136,10 +136,10 @@ if isempty(cp.p1)
 end
 value = cp.p1;
 %%%% ¡gui!
-g = cp.get('C').get('A1').get('G');
+g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
 measure = cp.get('MEASURE');
 
-pr = PanelPropCell('EL', cp, 'PROP', ComparisonGroup.P1, varargin{:});
+pr = PanelPropCell('EL', cp, 'PROP', ComparisonEnsemble.P1, varargin{:});
 
 if Measure.is_global(measure)
     pr.set( ...
@@ -229,10 +229,10 @@ if isempty(cp.p2)
 end
 value = cp.p2;
 %%%% ¡gui!
-g = cp.get('C').get('A1').get('G');
+g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
 measure = cp.get('MEASURE');
 
-pr = PanelPropCell('EL', cp, 'PROP', ComparisonGroup.P2, varargin{:});
+pr = PanelPropCell('EL', cp, 'PROP', ComparisonEnsemble.P2, varargin{:});
 
 if Measure.is_global(measure)
     pr.set( ...
@@ -322,10 +322,10 @@ if isempty(cp.ci_lower)
 end
 value = cp.ci_lower;
 %%%% ¡gui!
-g = cp.get('C').get('A1').get('G');
+g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
 measure = cp.get('MEASURE');
 
-pr = PanelPropCell('EL', cp, 'PROP', ComparisonGroup.CIL, varargin{:});
+pr = PanelPropCell('EL', cp, 'PROP', ComparisonEnsemble.CIL, varargin{:});
 
 if Measure.is_global(measure)
     pr.set( ...
@@ -415,10 +415,10 @@ if isempty(cp.ci_upper)
 end
 value = cp.ci_upper;
 %%%% ¡gui!
-g = cp.get('C').get('A1').get('G');
+g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
 measure = cp.get('MEASURE');
 
-pr = PanelPropCell('EL', cp, 'PROP', ComparisonGroup.CIU, varargin{:});
+pr = PanelPropCell('EL', cp, 'PROP', ComparisonEnsemble.CIU, varargin{:});
 
 if Measure.is_global(measure)
     pr.set( ...
@@ -503,25 +503,25 @@ end
 %%% ¡prop!
 PFC (gui, item) contains the panel figure of the comparison.
 %%%% ¡settings!
-'PFComparisonGroup'
+'PFComparisonEnsemble'
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
     if isa(cp.getr('PFC'), 'NoValue')
         measure = cp.get('MEASURE');
         
         if ~isempty(measure) && Measure.is_global(measure) && Measure.is_unilayer(measure)
-            cp.set('PFC', PFComparisonGroupGU('CP', cp))
+            cp.set('PFC', PFComparisonEnsembleGU('CP', cp))
         elseif ~isempty(measure) && Measure.is_nodal(measure) && Measure.is_unilayer(measure)
-            cp.set('PFC', PFComparisonGroupNU('CP', cp))
+            cp.set('PFC', PFComparisonEnsembleNU('CP', cp))
         elseif ~isempty(measure) && Measure.is_binodal(measure) && Measure.is_unilayer(measure)
-            cp.set('PFC', PFComparisonGroupBU('CP', cp))
+            cp.set('PFC', PFComparisonEnsembleBU('CP', cp))
         else
             cp.memorize('PFC').set('CP', cp)
         end
     end
 end
 %%%% ¡gui!
-pr = PanelPropItem('EL', cp, 'PROP', ComparisonGroup.PFC, ...
+pr = PanelPropItem('EL', cp, 'PROP', ComparisonEnsemble.PFC, ...
     'GUICLASS', 'GUIFig', ...
     varargin{:});
 
@@ -536,11 +536,10 @@ ci_upper
 function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     %CALCULATE_RESULTS calculates the comparison results.
     %
-    % [DIFF, P1, P2, CIL, CIU] = CALCULATE_RESULTS(CP) calcultes the
-    %  difference, the one-tailed p-value P1, the two-tailed p-value P2,
-    %  the lower bound of the confidence interval CIL, and the the upper
-    %  bound of the confidence interval. 
-    %  Typically, this method is only called internally.
+    % [P1, P2, CIL, CIU] = CALCULATE_RESULTS(CP) calcultes the one-talied
+    %  p-value P1, the two-tailed p-value P2, the lower bound of the confidence
+    %  interval CIL, and the the upper bound of the confidence interval.
+    %  Typically, this methos is only called internally.
 
     measure_class = cp.get('MEASURE');
     if isempty(cp.get('MEASURE'))
@@ -551,29 +550,33 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
         ci_upper = {};
         return
     end
-    
-	% get parameters from example measure
+        
+    % get parameters from example measure
     core_measure = cp.get('MEASURE_TEMPLATE');
     j = 1;
     varargin = {};
     if Measure.getPropNumber() ~= core_measure.getPropNumber()
-        for j = Measure.getPropNumber() + 1:core_measure.getPropNumber()
-            if ~isa(core_measure.getr(j), 'NoValue')
-                varargin{j} = core_measure.getPropTag(j);
-                varargin{j + 1} = Callback('EL', core_measure, 'PROP', j); % % % core_measure.getr(j);
+        for i = Measure.getPropNumber() + 1:core_measure.getPropNumber()
+            if ~isa(core_measure.getr(i), 'NoValue')
+                varargin{j} = core_measure.getPropTag(i);
+                varargin{j + 1} = Callback('EL', core_measure, 'PROP', j); % % % core_measure.getr(i);
             end
             j = j + 2;
         end
         varargin = varargin(~cellfun('isempty', varargin));
     end
-    
+
     c = cp.get('C');
 
-    wb = braph2waitbar(c.get('WAITBAR'), 0, ['Comparing group ' cp.get('MEASURE') '...']);
+    wb = braph2waitbar(c.get('WAITBAR'), 0, ['Comparing ensemble ' cp.get('MEASURE') '...']);
 
+    % Pre-calculate and save measures of all subjects
+    ms1 = cellfun(@(x) x.getMeasure(measure_class, varargin{:}).memorize('M'), c.get('A1').memorize('G_DICT').getItems, 'UniformOutput', false);
+    ms2 = cellfun(@(x) x.getMeasure(measure_class, varargin{:}).memorize('M'), c.get('A2').memorize('G_DICT').getItems, 'UniformOutput', false);
+    
     % Measure for groups 1 and 2, and their difference
-    m1 = c.get('A1').get('G').getMeasure(measure_class, varargin{:}).memorize('M');
-    m2 = c.get('A2').get('G').getMeasure(measure_class, varargin{:}).memorize('M');
+    m1 = c.get('A1').getMeasureEnsemble(measure_class).memorize('M');
+    m2 = c.get('A2').getMeasureEnsemble(measure_class).memorize('M');
     diff = cellfun(@(x, y) y - x, m1, m2, 'UniformOutput', false);
 
     % Permutations
@@ -584,26 +587,47 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     diff_perms = cell(1, P);
 
     start = tic;
-    for j = 1:20:P
-        parfor i = j:min(j+20, P)
-            [a1_perm, a2_perm] = c.getPerm(i, c.get('MEMORIZE'));
+    seeds = c.memorize('PERM_SEEDS');
+    for p = 1:20:P
+        parfor q = p:min(p+20, P)
+            % [a1_perm, a2_perm] = c.getPerm(i, memorize);
+            % 
+            % m1_perms{1, i} = a1_perm.getMeasureEnsemble(measure_class).memorize('M');
+            % m2_perms{1, i} = a2_perm.getMeasureEnsemble(measure_class).memorize('M');
+            % diff_perms{1, i} = cellfun(@(x, y) y - x, m1_perms{1, i}, m2_perms{1, i}, 'UniformOutput', false);
 
-            m1_perms{1, i} = a1_perm.memorize('G').getMeasure(measure_class).memorize('M');
-            m2_perms{1, i} = a2_perm.memorize('G').getMeasure(measure_class).memorize('M');
-            diff_perms{1, i} = cellfun(@(x, y) y - x, m1_perms{1, i}, m2_perms{1, i}, 'UniformOutput', false);
+            rng(seeds(q), 'twister')
+
+            [ms1_perm, ms2_perm] = permutation(ms1, ms2, c.get('LONGITUDINAL'));
+
+            ms1_av = cell(size(ms1_perm{1}));
+            ms2_av = cell(size(ms1_perm{1}));
+            for i = 1:1:size(ms1_perm{1}, 1)
+                for j = 1:1:size(ms1_perm{1}, 2)
+
+                    ms1_perm_ij = cellfun(@(x) x{i, j}, ms1_perm, 'UniformOutput', false);
+                    ms1_av{i, j} = mean(cat(ndims(ms1_perm_ij{1}) + 1, ms1_perm_ij{:}), ndims(ms1_perm_ij{1}) + 1);
+
+                    ms2_perm_ij = cellfun(@(x) x{i, j}, ms2_perm, 'UniformOutput', false);
+                    ms2_av{i, j} = mean(cat(ndims(ms2_perm_ij{1}) + 1, ms2_perm_ij{:}), ndims(ms2_perm_ij{1}) + 1);
+                end
+            end
+            m1_perms{1, q} = ms1_av;
+            m2_perms{1, q} = ms2_av;
+            diff_perms{1, q} = cellfun(@(x, y) y - x, m1_perms{1, q}, m2_perms{1, q}, 'UniformOutput', false);
         end
 
-        braph2waitbar(wb, j / P, ['Comparing group ' cp.get('MEASURE') '. Permutation ' num2str(j) ' of ' num2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's ...'])
+        braph2waitbar(wb, p / P, ['Comparing group ' cp.get('MEASURE') '. Permutation ' num2str(p) ' of ' num2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's ...'])
         if c.get('VERBOSE')
-            disp(['** PERMUTATION TEST - sampling #' int2str(j) '/' int2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's'])
+            disp(['** PERMUTATION TEST - sampling #' int2str(p) '/' int2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's'])
         end
         if c.get('INTERRUPTIBLE')
             pause(c.get('INTERRUPTIBLE'))
-        end        
+        end
     end
-    
+
     braph2waitbar(wb, 'close')
-    
+
     % Statistical analysis
     p1 = cell(size(diff));
     p2 = cell(size(diff));

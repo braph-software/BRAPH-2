@@ -1,12 +1,12 @@
 %% ¡header!
-CompareGroup < Element (c, group-based comparison) is a comparison between two group-based analyses.
+CompareEnsemble < Element (c, ensemble-based comparison) is a comparison between two ensemble-based analyses.
 
 %%% ¡description!
-CompareGroup compares two group-based analyses, 
+CompareEnsemble compares two ensemble-based analyses, 
 which need to be of the same class.
 
 %%% ¡seealso!
-AnalyzeGroup, ComparisonGroup
+AnalyzeEnsemble, ComparisonEnsemble
 
 %% ¡props!
 
@@ -18,19 +18,20 @@ LABEL (metadata, string) is an extended label of the comparison.
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the comparison.
-%%%% ¡gui!
-pr = PlotPropString('EL', c, 'PROP', CompareGroup.NOTES, 'LINES', 'multi', 'EDITHEIGHT', 4.5, varargin{:});
+pr = PanelPropStringTextArea('EL', c, 'PROP', CompareEnsemble.NOTES, varargin{:});
 
 %%% ¡prop!
-WAITBAR (metadata, logical) detemines whether to show the waitbar.
+WAITBAR (gui, logical) detemines whether to show the waitbar.
+%%%% ¡default!
+true
 
 %%% ¡prop!
-VERBOSE (metadata, logical) sets whether to write the progress of the comparisons.
+VERBOSE (gui, logical) sets whether to write the progress of the comparisons.
 %%%% ¡default!
 false
 
 %%% ¡prop!
-INTERRUPTIBLE (metadata, scalar) sets whether the comparison computation is interruptible for multitasking.
+INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interruptible for multitasking.
 %%%% ¡default!
 .001
 
@@ -40,7 +41,7 @@ MEMORIZE (metadata, logical) sets whether to memorize the permuted analysis.
 %%% ¡prop!
 P (parameter, scalar) is the permutation number.
 %%%% ¡default!
-1e+4
+1e+3
 %%%% ¡check_prop!
 check = value > 0 && value == round(value);
 
@@ -50,14 +51,14 @@ LONGITUDINAL (parameter, logical) determines whether the comparison is longitudi
 %%% ¡prop!
 A1 (data, item) is the first analysis to compare.
 %%%% ¡settings!
-'AnalyzeGroup'
+'AnalyzeEnsemble'
 %%%% ¡check_value!
 check = isa(value, c.get('A2').getClass());
 
 %%% ¡prop!
 A2 (data, item) is the second analysis to compare.
 %%%% ¡settings!
-'AnalyzeGroup'
+'AnalyzeEnsemble'
 %%%% ¡check_value!
 check = isa(value, c.get('A1').getClass());
 
@@ -69,45 +70,51 @@ value = randi(intmax('uint32'), 1, c.get('P'));
 %%% ¡prop!
 A1_PERM_DICT (result, idict) is the list of permuted analyses for the first analysis.
 %%%% ¡settings!
-'AnalyzeGroup'
+'AnalyzeEnsemble'
 %%%% ¡calculate!
-value = IndexedDictionary('IT_CLASS', 'AnalyzeGroup', 'IT_KEY', 1);
+value = IndexedDictionary('IT_CLASS', 'AnalyzeEnsemble', 'IT_KEY', 1);
 
 %%% ¡prop!
 A2_PERM_DICT (result, idict) is the list of permuted analyses for the second analysis.
 %%%% ¡settings!
-'AnalyzeGroup'
+'AnalyzeEnsemble'
 %%%% ¡calculate!
-value = IndexedDictionary('IT_CLASS', 'AnalyzeGroup', 'IT_KEY', 1);
+value = IndexedDictionary('IT_CLASS', 'AnalyzeEnsemble', 'IT_KEY', 1);
 
 %%% ¡prop!
 CP_DICT (result, idict) contains the results of the comparison.
 %%%% ¡settings!
-'ComparisonGroup'
+'ComparisonEnsemble'
 %%%% ¡calculate!
-value = IndexedDictionary('IT_CLASS', 'ComparisonGroup', 'IT_KEY', 4);
+value = IndexedDictionary('IT_CLASS', 'ComparisonEnsemble', 'IT_KEY', 4);
 %%%% ¡gui!
-a1 = c.get('A1');
-pr = a1.getPPCompareGroup_CPDict('EL', c, 'PROP', CompareGroup.CP_DICT, 'WAITBAR', true, varargin{:});
+pr = PPCompareEnsemble_CpDict('EL', c, 'PROP', CompareEnsemble.CP_DICT, 'WAITBAR', Callback('EL', c, 'TAG', 'WAITBAR'), varargin{:});
 
 %% ¡methods!
 function cp = getComparison(c, measure_class, varargin)
-    %GETCOMPARISON returns comparison.
+    %GETComparisonE returns comparison.
     %
-    % CP = GETMEASURE(G, MEASURE_CLASS) checks if the comparison exists in the
+    % CP = GETCOMPARISON(G, MEASURE_CLASS) checks if the comparison exists in the
     %  comparison dictionary CP_DICT. If not, it creates a new comparison
     %  CP of class MEASURE_CLASS. The user must call getValue() for the new
     %  comparison CP to retrieve the value of the comparison. 
     %
-    % See also ComparisonGroup.
+    % See also ComparisonEnsemble.
+    
+    [wb, varargin] = get_and_remove_from_varargin([], 'waitbar', varargin{:});
+    
+    if ~isempty(wb)
+        c.set('waitbar', true);
+    end
 
     cp_dict = c.memorize('CP_DICT');
     if cp_dict.containsKey(measure_class)
         cp = cp_dict.getItem(measure_class);
     else
-        cp = ComparisonGroup( ...
+        cp = ComparisonEnsemble( ...
             'ID', [measure_class ' comparison ' c.get('A1').get('ID') ' vs. ' c.get('A2').get('ID')], ...
             'MEASURE', measure_class, ...
+            'MEASURE_TEMPLATE', c.memorize('A1').memorize('GRAPH_TEMPLATE').getMeasure(measure_class), ...
             'C', c, ...
             varargin{:} ...
             );
@@ -141,7 +148,13 @@ function [a1_perm, a2_perm] = getPerm(c, i, memorize)
         subs1 = c.get('A1').get('GR').get('SUB_DICT').get('IT_LIST');
         subs2 = c.get('A2').get('GR').get('SUB_DICT').get('IT_LIST');
 
-        [subs1_perm, subs2_perm] = permutation(subs1, subs2, c.get('LONGITUDINAL'));
+        gdict1 = c.get('A1').get('G_DICT').get('IT_LIST');
+        gdict2 = c.get('A2').get('G_DICT').get('IT_LIST');
+        
+        subs1_gdict1 = cellfun(@(x, y) {x, y}, subs1, gdict1, 'UniformOutput', false);
+        subs2_gdict2 = cellfun(@(x, y) {x, y}, subs2, gdict2, 'UniformOutput', false);
+
+        [subs1_gdict1_perm, subs2_gdict2_perm] = permutation(subs1_gdict1, subs2_gdict2, c.get('LONGITUDINAL'));
 
         a1_perm = c.get('A1').clone();
         a1_perm.set( ...
@@ -149,16 +162,18 @@ function [a1_perm, a2_perm] = getPerm(c, i, memorize)
             'GR', c.get('A1').get('GR').clone() ...
             )
         a1_perm.get('GR').set('SUB_DICT', c.get('A1').get('GR').get('SUB_DICT').clone())
-        a1_perm.get('GR').get('SUB_DICT').set('IT_LIST', subs1_perm)
+        a1_perm.get('GR').get('SUB_DICT').set('IT_LIST', cellfun(@(x) x(1), subs1_gdict1_perm))
+        a1_perm.memorize('G_DICT').set('IT_LIST', cellfun(@(x) x(2), subs1_gdict1_perm))
 
-        a2_perm = c.get('A2').clone();
+        a2_perm = c.get('A1').clone(); % a2_perm = c.get('A2').clone();
         a2_perm.set( ...
             'ID', [c.get('A2').get('ID') ' permutation ' int2str(i)], ...
             'GR', c.get('A2').get('GR').clone() ...
             )
         a2_perm.get('GR').set('SUB_DICT', c.get('A2').get('GR').get('SUB_DICT').clone())
-        a2_perm.get('GR').get('SUB_DICT').set('IT_LIST', subs2_perm)
-
+        a2_perm.get('GR').get('SUB_DICT').set('IT_LIST', cellfun(@(x) x(1), subs2_gdict2_perm))
+        a2_perm.memorize('G_DICT').set('IT_LIST', cellfun(@(x) x(2), subs2_gdict2_perm))
+        
         % memorize permutations if required
         if memorize
             a1_perm_dict.add(a1_perm)
