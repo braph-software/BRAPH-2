@@ -30,8 +30,8 @@ GR (data, item) is a group of NN subjects that the NN model will be evaluated on
 GR_PREDICTION (result, item) is a group of NN subjects containing the prediction from the neural network.
 %%%% ¡settings!
 'NNGroup'
-%%%% ¡gui!
-pr = PPNNData_GR_NN('EL', nne, 'PROP', NNEvaluator.GR_PREDICTION, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPNNData_GR_NN('EL', nne, 'PROP', NNEvaluator.GR_PREDICTION, varargin{:});
 
 %%% ¡prop!
 FEATURE_MAP (result, cell) is a feature map obtained with feature selection analysis.
@@ -42,5 +42,5 @@ if sub_dict.length() == 0
 else
     value = sub_dict.getItem(1).get('FEATURE_MASK');
 end
-%%%% ¡gui!
-pr = PPNNEvaluator_Feature_Map('EL', nne, 'PROP', NNEvaluator.FEATURE_MAP, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPNNEvaluator_Feature_Map('EL', nne, 'PROP', NNEvaluator.FEATURE_MAP, varargin{:});

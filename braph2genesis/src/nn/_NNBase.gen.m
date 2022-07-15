@@ -29,8 +29,8 @@ if BRAPH2.installed('NN', 'warning')
 else
     value = NoValue();
 end
-%%%% ¡gui!
-pr = PPNNBase_Model('EL', nn, 'PROP', nn.MODEL, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPNNBase_Model('EL', nn, 'PROP', nn.MODEL, varargin{:});
 
 %% ¡tests!
 

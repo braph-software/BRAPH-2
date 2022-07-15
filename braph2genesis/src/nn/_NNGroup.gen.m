@@ -7,7 +7,7 @@ NNGroup provides the ready-to-use inputs and targets from all NN subjects, for
 performing a neural network analysis.
 
 %%% ¡seealso!
-Group, NNSubject
+NNSubject
 
 %% ¡props!
 
@@ -34,12 +34,14 @@ end
 value = targets;
 
 %%% ¡prop!
-G (result, item) is the graph obtained from this analysis.
+GRAPH_CLASS (result, class) is the graph obtained from this analysis.
+%%%% ¡settings!
+'Graph'
 %%%% ¡calculate!
 sub_dict = gr.get('SUB_DICT');
 if sub_dict.length == 0
-    value = Graph();
+    value = 'Graph';
 else
     sub = sub_dict.getItem(1);
-    value = sub.get('G').clone;
+    value = sub.get('G').getClass();
 end

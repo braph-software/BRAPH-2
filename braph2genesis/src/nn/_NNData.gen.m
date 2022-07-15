@@ -28,8 +28,8 @@ true
 INPUT_TYPE (data, option) is the input type for training or testing the NN.
 %%%% ¡settings!
 {'adjacency_matrices' 'graph_measures' 'structural_data'}
-%%%% ¡gui!
-pr = PPNNData_Input_Type('EL', nnd, 'PROP', NNData.INPUT_TYPE, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPNNData_Input_Type('EL', nnd, 'PROP', NNData.INPUT_TYPE, varargin{:});
 
 %%% ¡prop!
 G (data, item) is the graph for calculating the graph measures.
@@ -42,8 +42,8 @@ MEASURES (data, classlist) is the graph measures as input to NN.
 'Measure'
 %%%% ¡default!
 {'DegreeAv', 'Degree'}
-%%%% ¡gui!
-pr = PPNNData_Measures('EL', nnd, 'PROP', NNData.MEASURES, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPNNData_Measures('EL', nnd, 'PROP', NNData.MEASURES, varargin{:});
 
 %%% ¡prop!
 TARGET_NAME (data, string) is the name of the traget.
@@ -51,7 +51,7 @@ TARGET_NAME (data, string) is the name of the traget.
 'diagnosis'
 
 %%% ¡prop!
-GR (data, item) is a group of subjects defined as SubjectCON class.
+GR (data, item) is a group of subjects defined as subject class.
 %%%% ¡settings!
 'Group'
 %%%% ¡default!

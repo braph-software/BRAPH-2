@@ -24,15 +24,15 @@ true
 GR_TRAIN (result, item) is a group of NN subjects for the training set.
 %%%% ¡settings!
 'NNGroup'
-%%%% ¡gui!
-pr = PPNNData_GR_NN('EL', nnds, 'PROP', NNDataSplit.GR_TRAIN, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPNNData_GR_NN('EL', nnds, 'PROP', NNDataSplit.GR_TRAIN, varargin{:});
 
 %%% ¡prop!
 GR_VAL (result, item) is a group of NN subjects for the validation set.
 %%%% ¡settings!
 'NNGroup'
-%%%% ¡gui!
-pr = PPNNData_GR_NN('EL', nnds, 'PROP', NNDataSplit.GR_VAL, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPNNData_GR_NN('EL', nnds, 'PROP', NNDataSplit.GR_VAL, varargin{:});
 
 %%% ¡prop!
 FEATURE_MASK (data, cell) is a given mask or a percentile to select relevant features.
@@ -42,8 +42,8 @@ num2cell(0.05)
 if ~iscell(value) & isnumeric(value)
     value = num2cell(value);
 end
-%%%% ¡gui!
-pr = PlotPropSmartVector('EL', nnds, 'PROP', NNDataSplit.FEATURE_MASK, 'MAX', 10000000, 'MIN', 0, varargin{:});
+%%%% ¡gui_!
+% % % pr = PlotPropSmartVector('EL', nnds, 'PROP', NNDataSplit.FEATURE_MASK, 'MAX', 10000000, 'MIN', 0, varargin{:});
 
 %%% ¡prop!
 FEATURE_SELECTION_ANALYSIS (result, cell) is an analysis for generating a feature mask.
@@ -54,8 +54,8 @@ GR_TRAIN_FS (result, item) is a group of NN subjects with feature mask for the t
 'NNGroup'
 %%%% ¡default!
 NNGroup('SUB_CLASS', 'NNSubject', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject'))
-%%%% ¡gui!
-pr = PPNNData_GR_NN('EL', nnds, 'PROP', NNDataSplit.GR_TRAIN_FS, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPNNData_GR_NN('EL', nnds, 'PROP', NNDataSplit.GR_TRAIN_FS, varargin{:});
 
 %%% ¡prop!
 GR_VAL_FS (result, item) is a group of NN subjects with feature mask for the validation set.
@@ -63,8 +63,8 @@ GR_VAL_FS (result, item) is a group of NN subjects with feature mask for the val
 'NNGroup'
 %%%% ¡default!
 NNGroup('SUB_CLASS', 'NNSubject', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject'))
-%%%% ¡gui!
-pr = PPNNData_GR_NN('EL', nnds, 'PROP', NNDataSplit.GR_VAL_FS, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPNNData_GR_NN('EL', nnds, 'PROP', NNDataSplit.GR_VAL_FS, varargin{:});
 
 %% ¡methods!
 function score = mutual_information_analysis(nnds, X, Y, n)
