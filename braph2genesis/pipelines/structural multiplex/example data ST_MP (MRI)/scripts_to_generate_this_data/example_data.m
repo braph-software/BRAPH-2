@@ -187,6 +187,9 @@ C_group1 = array2table(gr1_R, 'VariableNames', column_Tags);
 C_group2 = array2table(gr2_R, 'VariableNames', column_Tags);
 
 %% output
+mkdir('GroupName1');
+mkdir('GroupName2');
+
 % Group 1
 writetable(T_group11, 'GroupName1/ST_MP1.xlsx', 'WriteRowNames', true, 'Sheet', 1)
 writetable(C_group1, 'GroupName1/ST_MP1.xlsx', 'WriteRowNames', true, 'Sheet', 2)
