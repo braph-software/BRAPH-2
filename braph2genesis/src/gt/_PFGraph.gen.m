@@ -80,13 +80,13 @@ if check_graphics(pf.h_plot, 'surface')
     set(pf.tool_colorbar, 'State', pf.get('ST_COLORMAP').get('COLORBAR'))
     
     if pf.get('ST_COLORMAP').get('COLORBAR')
-        colorbar('Parent', pf.h_plot, ...
+        colorbar('Parent', pf.p, ...
             'Direction', 'normal', ...
-            'Location', 'auto', ...
+            'Location', 'eastoutside', ...
             'AxisLocation', 'out' ...            
             )
     else
-        colorbar('Parent', pf.h_plot, ...
+        colorbar('Parent', pf.p, ...
             'off')
     end
 end
@@ -160,8 +160,7 @@ function p_out = draw(pf, varargin)
         set(pf.tool_binary, 'State', pf.get('ST_COLORMAP').get('BINARY'))
         set(pf.tool_hist, 'State', pf.get('ST_COLORMAP').get('HIST'))
         set(pf.tool_colorbar, 'State', pf.get('ST_COLORMAP').get('COLORBAR')) 
-        
-        pf.draw();
+       
     end
 
     if check_graphics(pf.toolbar, 'uitoolbar')
@@ -219,11 +218,11 @@ function p_out = draw(pf, varargin)
     % plot
     if ~check_graphics(pf.h_plot, 'surface')
         if pf.get('ST_COLORMAP').get('WEIGHTED')
-            pf.h_colormap = pf.plotw(pf.get('G').get('A'));
+            pf.h_plot = pf.plotw(pf.get('G').get('A'));
         elseif pf.get('ST_COLORMAP').get('BINARY')
-            pf.h_colormap = pf.plotb(pf.get('G').get('A'));
+            pf.h_plot = pf.plotb(pf.get('G').get('A'));
         elseif pf.get('ST_COLORMAP').get('HIST')
-            pf.h_colormap = pf.hist(pf.get('G').get('A'));
+            pf.h_plot = pf.hist(pf.get('G').get('A'));
         else   
         end
     end
@@ -263,6 +262,10 @@ function h = plotw(pf, A, varargin)
     %       ylabels   -   1:1:number of matrix elements (default)
     %
     % See also Graph, plotb, surf.
+    
+    if iscell(A)
+        A = cell2mat(A);
+    end
 
     N = length(A);
 
@@ -344,6 +347,9 @@ function h = plotb(pf, A, varargin)
     %
     % See also Graph, binarize, plotw, surf.
 
+    if iscell(A)
+        A = cell2mat(A);
+    end
     N = length(A);
 
     % threshold
@@ -428,6 +434,10 @@ function h = hist(pf, A, varargin)
     %       diagonal   -   'exclude' (default) | 'include'
     %
     % See also Graph, histogram.
+    
+    if iscell(A)
+        A = cell2mat(A);
+    end
 
     [count, bins, density] = histogram(A, varargin{:});
 
