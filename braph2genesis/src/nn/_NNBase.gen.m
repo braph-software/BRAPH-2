@@ -32,6 +32,40 @@ end
 %%%% ¡gui_!
 % % % pr = PPNNBase_Model('EL', nn, 'PROP', nn.MODEL, varargin{:});
 
+%%% ¡prop!
+PFNN (gui, item) contains the panel figure of the model architecture.
+%%%% ¡settings!
+'PFNeuralNetworks'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    nn.memorize('PFNN').set('NN', nn)
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', nn, 'PROP', NNBase.PFNN, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'NNBase'
+%%%% ¡postprocessing!
+if nn.prop_set(NNBase.TEMPLATE, varargin{:})
+    varargin = {};
+    
+    parameters = nnds.getProps(Category.PARAMETER);
+    for i = 1:1:length(parameters)
+        parameter = parameters(i);
+        
+        if parameter ~= NNData.TEMPLATE
+            varargin{length(varargin) + 1} = parameter;
+            varargin{length(varargin) + 1} = Callback('EL', nn.get('TEMPLATE'), 'PROP', parameter);
+        end
+    end
+    
+    nn.set(varargin{:});
+end
+
 %% ¡tests!
 
 %%% ¡test!

@@ -8,7 +8,7 @@ The classifier trains on NN groups which contain the inputs and targets.
 %% ¡props!
 
 %%% ¡prop!
-LAYERS (data, rvector) is a vector representing the number of neurons in each layer.
+LAYERS (parameter, rvector) is a vector representing the number of neurons in each layer.
 %%%% ¡default!
 []
 %%%% ¡postprocessing!
@@ -19,26 +19,26 @@ if isempty(nn.get('LAYERS'))
         nn.set('LAYERS', value);
     end
 end
-%%%% ¡gui_!
-% % % pr = PlotPropSmartVector('EL', nn, 'PROP', NNClassifierDNN.LAYERS, 'MAX', 100000, 'MIN', 1, varargin{:});
+%%%% ¡gui!
+pr = PanelPropRVectorSmart('EL', nn, 'PROP', NNClassifierDNN.LAYERS, 'MAX', 100000, 'MIN', 1, varargin{:});
 
 %%% ¡prop!
-BATCH (data, scalar) is the size of the mini-batch to use for each training iteration.
+BATCH (parameter, scalar) is the size of the mini-batch to use for each training iteration.
 %%%% ¡default!
 8
 
 %%% ¡prop!
-EPOCHS (data, scalar) is a maximum number of epochs.
+EPOCHS (parameter, scalar) is a maximum number of epochs.
 %%%% ¡default!
 20
 
 %%% ¡prop!
-SHUFFLE (data, option) is an option for data shuffling.
+SHUFFLE (parameter, option) is an option for data shuffling.
 %%%% ¡settings!
 {'once' 'never' 'every-epoch'}
 
 %%% ¡prop!
-SOLVER (data, option) is an option for the solver.
+SOLVER (parameter, option) is an option for the solver.
 %%%% ¡settings!
 {'adam' 'sgdm' 'rmsprop'}
 
@@ -53,12 +53,7 @@ PLOT_TRAINING (metadata, logical) is an option for the plot of training-progress
 true
 
 %%% ¡prop!
-PLOT_LAYERS (metadata, logical) is an option for the plot of the layers.
-%%%% ¡default!
-false
-
-%%% ¡prop!
-INPUT_FORMAT (data, string) is the data format of neural network inputs.
+INPUT_FORMAT (parameter, string) is the data format of neural network inputs.
 %%%% ¡default!
 'BCSS'
 
@@ -93,13 +88,13 @@ if BRAPH2.installed('NN', 'warning')
             softmaxLayer('Name', 'sfmax1')
             classificationLayer('Name', 'output')
             ];
-
-        % plot layers
-        if nn.get('PLOT_LAYERS')
-            figure();
-            lgraph = layerGraph(layers);            
-            plot(lgraph)
-        end
+% % % 
+% % %         % plot layers
+% % %         if nn.get('PLOT_LAYERS')
+% % %             figure();
+% % %             lgraph = layerGraph(layers);            
+% % %             plot(lgraph)
+% % %         end
 
         % specify trianing parameters
         if nn.get('PLOT_TRAINING')
@@ -138,7 +133,8 @@ function [inputs, num_features] = reconstruct_inputs(nn, gr)
         inputs = [];
         num_features = 0;
     else
-        mask = gr.get('SUB_DICT').getItem(1).get('FEATURE_MASK');
+        %mask = gr.get('SUB_DICT').getItem(1).get('FEATURE_MASK');
+        mask = gr.get('FEATURE_SELECTION_MASK');
         inputs = [];
         inputs_tmp = gr.get('INPUTS');
         for i = 1:1:length(inputs_tmp)

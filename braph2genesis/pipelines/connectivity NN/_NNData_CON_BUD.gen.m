@@ -16,12 +16,12 @@ DENSITIES (parameter, rvector) is the vector of densities.
 %% ¡props_update!
 
 %%% ¡prop!
-INPUT_TYPE (data, option) is the input type for training or testing the NN.
+INPUT_TYPE (parameter, option) is the input type for training or testing the NN.
 %%%% ¡settings!
 {'adjacency_matrices' 'graph_measures'}
 
 %%% ¡prop!
-G (data, item) is the graph for calculating the graph measures.
+G (parameter, item) is the graph for calculating the graph measures.
 %%%% ¡default!
 MultigraphBUD()
 
@@ -68,7 +68,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
         'ID', ['g ' sub.get('ID')], ...
         'B', Callback('EL', sub, 'TAG', 'CON'), ...
         'DENSITIES', densities, ...
-        'BRAINATLAS', atlas ...
+        'BAS', atlas ...
         );
 
     if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"

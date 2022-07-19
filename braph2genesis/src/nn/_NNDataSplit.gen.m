@@ -37,7 +37,7 @@ GR_VAL (result, item) is a group of NN subjects for the validation set.
 %%% ¡prop!
 FEATURE_MASK (data, cell) is a given mask or a percentile to select relevant features.
 %%%% ¡default!
-num2cell(0.05)
+{0.05}
 %%%% ¡conditioning!
 if ~iscell(value) & isnumeric(value)
     value = num2cell(value);
@@ -65,6 +65,27 @@ GR_VAL_FS (result, item) is a group of NN subjects with feature mask for the val
 NNGroup('SUB_CLASS', 'NNSubject', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject'))
 %%%% ¡gui_!
 % % % pr = PPNNData_GR_NN('EL', nnds, 'PROP', NNDataSplit.GR_VAL_FS, varargin{:});
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'NNDataSplit'
+%%%% ¡postprocessing!
+if nnds.prop_set(NNDataSplit.TEMPLATE, varargin{:})
+    varargin = {};
+    
+    parameters = nnds.getProps(Category.PARAMETER);
+    for i = 1:1:length(parameters)
+        parameter = parameters(i);
+        
+        if parameter ~= NNData.TEMPLATE
+            varargin{length(varargin) + 1} = parameter;
+            varargin{length(varargin) + 1} = Callback('EL', nnds.get('TEMPLATE'), 'PROP', parameter);
+        end
+    end
+    
+    nnds.set(varargin{:});
+end
 
 %% ¡methods!
 function score = mutual_information_analysis(nnds, X, Y, n)

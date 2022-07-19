@@ -25,19 +25,19 @@ WAITBAR (metadata, logical) detemines whether to show the waitbar.
 true
 
 %%% ¡prop!
-INPUT_TYPE (data, option) is the input type for training or testing the NN.
+INPUT_TYPE (parameter, option) is the input type for training or testing the NN.
 %%%% ¡settings!
 {'adjacency_matrices' 'graph_measures' 'structural_data'}
 %%%% ¡gui_!
 % % % pr = PPNNData_Input_Type('EL', nnd, 'PROP', NNData.INPUT_TYPE, varargin{:});
 
 %%% ¡prop!
-G (data, item) is the graph for calculating the graph measures.
+G (parameter, item) is the graph for calculating the graph measures.
 %%%% ¡default!
 GraphWU()
 
 %%% ¡prop!
-MEASURES (data, classlist) is the graph measures as input to NN.
+MEASURES (parameter, classlist) is the graph measures as input to NN.
 %%%% ¡settings!
 'Measure'
 %%%% ¡default!
@@ -61,5 +61,26 @@ Group()
 GR_NN (result, item) is a group of NN subjects.
 %%%% ¡settings!
 'NNGroup'
-%%%% ¡gui!
-pr = PPNNData_GR_NN('EL', nnd, 'PROP', NNData.GR_NN, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPNNData_GR_NN('EL', nnd, 'PROP', NNData.GR_NN, varargin{:});
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'NNData'
+%%%% ¡postprocessing!
+if nnd.prop_set(NNData.TEMPLATE, varargin{:})
+    varargin = {};
+    
+    parameters = nnd.getProps(Category.PARAMETER);
+    for i = 1:1:length(parameters)
+        parameter = parameters(i);
+        
+        if parameter ~= NNData.TEMPLATE
+            varargin{length(varargin) + 1} = parameter;
+            varargin{length(varargin) + 1} = Callback('EL', nnd.get('TEMPLATE'), 'PROP', parameter);
+        end
+    end
+    
+    nnd.set(varargin{:});
+end

@@ -19,8 +19,8 @@ if isempty(nn.get('LAYERS'))
         nn.set('LAYERS', value);
     end
 end
-%%%% ¡gui!
-pr = PlotPropSmartVector('EL', nn, 'PROP', NNRegressorDNN.LAYERS, 'MAX', 100000, 'MIN', 1, varargin{:});
+%%%% ¡gui_!
+% % % pr = PlotPropSmartVector('EL', nn, 'PROP', NNRegressorDNN.LAYERS, 'MAX', 100000, 'MIN', 1, varargin{:});
 
 %%% ¡prop!
 BATCH (data, scalar) is the size of the mini-batch to use for each training iteration.

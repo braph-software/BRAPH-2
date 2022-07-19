@@ -1,14 +1,14 @@
 %% ¡header!
-NNClassifierDNN < NNBase (nn, classifier with dense layers) is a neural network classifier.
+NNRegressorDNN < NNBase (nn, regressor with dense layers) is a neural network regressor.
 
 %% ¡description!
 This regressor is composed of fully-connected layers.
-The Classifier trains on NN groups which contain the inputs and targets.
+The regressor trains on NN groups which contain the inputs and targets.
 
 %% ¡props!
 
 %%% ¡prop!
-LAYERS (data, rvector) is a vector representing the number of neurons in each layer.
+LAYERS (parameter, rvector) is a vector representing the number of neurons in each layer.
 %%%% ¡default!
 []
 %%%% ¡postprocessing!
@@ -20,25 +20,25 @@ if isempty(nn.get('LAYERS'))
     end
 end
 %%%% ¡gui!
-pr = PlotPropSmartVector('EL', nn, 'PROP', NNClassifierDNN.LAYERS, 'MAX', 100000, 'MIN', 1, varargin{:});
+pr = PanelPropRVectorSmart('EL', nn, 'PROP', NNRegressorDNN.LAYERS, 'MAX', 100000, 'MIN', 1, varargin{:});
 
 %%% ¡prop!
-BATCH (data, scalar) is the size of the mini-batch to use for each training iteration.
+BATCH (parameter, scalar) is the size of the mini-batch to use for each training iteration.
 %%%% ¡default!
-8
+4
 
 %%% ¡prop!
-EPOCHS (data, scalar) is a maximum number of epochs.
+EPOCHS (parameter, scalar) is a maximum number of epochs.
 %%%% ¡default!
-20
+200
 
 %%% ¡prop!
-SHUFFLE (data, option) is an option for data shuffling.
+SHUFFLE (parameter, option) is an option for data shuffling.
 %%%% ¡settings!
 {'once' 'never' 'every-epoch'}
 
 %%% ¡prop!
-SOLVER (data, option) is an option for the solver.
+SOLVER (parameter, option) is an option for the solver.
 %%%% ¡settings!
 {'adam' 'sgdm' 'rmsprop'}
 
@@ -48,24 +48,19 @@ VERBOSE (metadata, logical) is an indicator to display trining progress informat
 false
 
 %%% ¡prop!
-PLOT_TRAINING (metadata, logical) is an option for the plot of training-progress.
+PLOT_TRAINING (data, logical) is an option for the plot of training-progress.
 %%%% ¡default!
 true
 
 %%% ¡prop!
-PLOT_LAYERS (metadata, logical) is an option for the plot of the layers.
-%%%% ¡default!
-false
-
-%%% ¡prop!
-INPUT_FORMAT (data, string) is the data format of neural network inputs.
+INPUT_FORMAT (data, string) is the data format of network inputs.
 %%%% ¡default!
 'BCSS'
 
 %% ¡props_update!
 
 %%% ¡prop!
-MODEL (result, net) is a trained neural network classifier.
+MODEL (result, net) is a trained neural network regressor.
 %%%% ¡calculate!
 if BRAPH2.installed('NN', 'warning')
     % get inputs
@@ -75,8 +70,6 @@ if BRAPH2.installed('NN', 'warning')
     else
         [inputs, num_features] = nn.reconstruct_inputs(nn_gr);
         [targets, classes] = nn.reconstruct_targets(nn_gr);
-        numClasses = length(classes);
-        targets = onehotdecode(targets, classes, 1);
         
         % init layers
         numLayer = nn.get('LAYERS');
@@ -89,17 +82,16 @@ if BRAPH2.installed('NN', 'warning')
         end
         layers = [layers
             reluLayer('Name', 'relu1')
-            fullyConnectedLayer(numClasses, 'Name', 'fc_output')
-            softmaxLayer('Name', 'sfmax1')
-            classificationLayer('Name', 'output')
+            fullyConnectedLayer(1, 'Name', 'fc_output')
+            regressionLayer('Name', 'output')
             ];
 
-        % plot layers
-        if nn.get('PLOT_LAYERS')
-            figure();
-            lgraph = layerGraph(layers);            
-            plot(lgraph)
-        end
+% % %         % plot layers
+% % %         if nn.get('PLOT_LAYERS')
+% % %             lgraph = layerGraph(layers);
+% % %             figure
+% % %             plot(lgraph)
+% % %         end
 
         % specify trianing parameters
         if nn.get('PLOT_TRAINING')
@@ -121,6 +113,7 @@ if BRAPH2.installed('NN', 'warning')
         % transform the net object to a cell
         value = net;
     end
+    
 else
     value = NoValue();
 end
@@ -129,7 +122,7 @@ end
 function [inputs, num_features] = reconstruct_inputs(nn, gr)
 %RECONSTRUCT_INPUTS reconstructs the inputs for NN
 %
-% [INPUTS, NUM_FEATURES] = RECONSTRUCT_INPUTS(NN, GR) reconstructs the
+% [INPUTS, NUM_FEATURES] = RECONSTRUCT_INPUTS(NN, NN_GR) reconstructs the
 %   inputs from NN group. According to the tyep of this fully-connected NN,
 %   this function will flatten the input into a vector for each datapoint
 %   and return the number of features for input layer as well.
@@ -141,7 +134,7 @@ function [inputs, num_features] = reconstruct_inputs(nn, gr)
         mask = gr.get('SUB_DICT').getItem(1).get('FEATURE_MASK');
         inputs = [];
         inputs_tmp = gr.get('INPUTS');
-        for i = 1:1:length(inputs_tmp)
+        for i = 1:1:gr.get('SUB_DICT').length()
             input = inputs_tmp{i};
             input_per_sub = cellfun(@(x, y) x(y == 1), input, mask, 'UniformOutput', false);
             input_per_sub = cell2mat(input_per_sub');
@@ -152,19 +145,20 @@ function [inputs, num_features] = reconstruct_inputs(nn, gr)
     end
 end
 function [targets, classes] = reconstruct_targets(nn, gr)
-%RECONSTRUCT_TARGETS reconstructs the targets for NN
+%RECONSTRUCT_INPUTS reconstructs the targets for NN
 %
 % [TARGETS, CLASSES] = RECONSTRUCT_TARGETS(NN, GR) reconstructs the targets
 %  from NN group, by concatenating the target of NN Subjects.
-%  CLASSES is the categories name of the unique targets.
-
+%  CLASSES is the categories name of the targets.
+    
     if gr.get('SUB_DICT').length() == 0
         targets = [];
         classes = [];
     else
         targets = gr.get('TARGETS');
-        targets = cellfun(@(x) cell2mat(x)', targets, 'UniformOutput', false);
+        targets = cellfun(@(x) cell2mat(x),targets, 'UniformOutput', false);
         targets = cell2mat(targets);
+        targets = targets';
         classes = categories(categorical(cellfun(@(x) x.get('TARGET_NAME'), gr.get('SUB_DICT').getItems(), 'UniformOutput', false)));
     end
 end

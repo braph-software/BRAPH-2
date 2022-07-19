@@ -1,25 +1,20 @@
 %% ¡header!
-NNClassifierDataSplit < NNDataSplit (nnds, data split for a neural network classifier) split a dataset into training set and validation set for classification.  
+NNRegressorDataSplit < NNDataSplit (nnds, data split for a neural network regressor) split a dataset into training set and validation set for regression.  
 
 %% ¡description!
 This NNRegressorDataSplit splits the NN group into two, one for training set,
 and the other for validation set. GR_TRAIN and GR_test can be used to train
-and test NN classifier. A Feature mask is generated from a feature selection
+and test NN regressor. A feature mask is generated from a feature selection
 analysis on training set and applied to validation set. 
 
 %% ¡props!
 %%% ¡prop!
-GR1 (data, item) is a group of NN subjects.
+GR (data, item) is a group of NN subjects
 %%%% ¡settings!
 'NNGroup'
 
 %%% ¡prop!
-GR2 (data, item) is a group of NN subjects.
-%%%% ¡settings!
-'NNGroup'
-
-%%% ¡prop!
-SPLIT_GR1 (data, rvector) is a ratio or a vector stating which subjects belong to the validation set.
+SPLIT (data, rvector) is a ratio or a vector stating which subjects belong to the validation set.
 %%%% ¡conditioning!
 if length(value) > 1
     if all(value < 1)
@@ -33,44 +28,17 @@ else
     end
 end
 %%%% ¡postprocessing!
-value = nnds.get('SPLIT_GR1');
-if length(value) == 1 & value < 1
-    num_val = floor(value * nnds.get('GR1').get('SUB_DICT').length());
-    num_train = nnds.get('GR1').get('SUB_DICT').length() - num_val;
+value = nnds.get('SPLIT');
+if length(value) == 1 & value < 1 
+    num_val = floor(value * nnds.get('GR').get('SUB_DICT').length());
+    num_train = nnds.get('GR').get('SUB_DICT').length() - num_val;
     value = [ones(1, num_val), zeros(1, num_train)];
     value = value(randperm(length(value)));
     value = find(value == 1);
-    nnds.set('SPLIT_GR1', value);
+    nnds.set('SPLIT', value);
 end
 %%%% ¡gui!
-pr = PanelPropRVectorSmart('EL', nnds, 'PROP', NNClassifierDataSplit.SPLIT_GR1, 'MAX', 100000, 'MIN', 0, varargin{:});
-
-%%% ¡prop!
-SPLIT_GR2 (data, rvector) is a ratio or a vector stating which subjects belong to the validation set.
-%%%% ¡conditioning!
-if length(value) > 1
-    if all(value < 1)
-        value = value(1);
-    else 
-        value = abs(ceil(value));
-    end
-else
-    if value == 0
-        value = 0.2;
-    end
-end
-%%%% ¡postprocessing!
-value = nnds.get('SPLIT_GR2');
-if length(value) == 1 & value < 1
-    num_val = floor(value * nnds.get('GR2').get('SUB_DICT').length());
-    num_train = nnds.get('GR2').get('SUB_DICT').length() - num_val;
-    value = [ones(1, num_val), zeros(1, num_train)];
-    value = value(randperm(length(value)));
-    value = find(value == 1);
-    nnds.set('SPLIT_GR2', value);
-end
-%%%% ¡gui!
-pr = PanelPropRVectorSmart('EL', nnds, 'PROP', NNClassifierDataSplit.SPLIT_GR2, 'MAX', 100000, 'MIN', 0, varargin{:});
+pr = PanelPropRVectorSmart('EL', nnds, 'PROP', NNRegressorDataSplit.SPLIT, 'MAX', 100000, 'MIN', 0, varargin{:});
 
 %% ¡props_update!
 
@@ -79,20 +47,15 @@ GR_TRAIN (result, item) is a group of NN subjects for the training set.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡calculate!
-subs1 = nnds.get('GR1').get('SUB_DICT').getItems();
-selected_subs1 = subs1(setdiff(1:length(subs1), nnds.get('SPLIT_GR1')));
-
-subs2 = nnds.get('GR2').get('SUB_DICT').getItems();
-selected_subs2 = subs2(setdiff(1:length(subs2), nnds.get('SPLIT_GR2')));
-
-subs = [selected_subs1 selected_subs2];
+subs = nnds.get('GR').get('SUB_DICT').getItems();
+selected_subs1 = subs1(setdiff(1:length(subs1), nnds.get('SPLIT_GR')));
 
 train_nn_gr = NNGroup( ...
     'ID', 'Training set', ...
     'LABEL', 'Training set', ...
     'NOTES', 'This training set is used to perform mutual information analysis and train the neural networks.', ...
-    'SUB_CLASS', nnds.get('GR1').get('SUB_CLASS'), ...
-    'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject', 'IT_LIST', subs) ...
+    'SUB_CLASS', nnds.get('GR').get('SUB_CLASS'), ...
+    'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject', 'IT_LIST', selected_subs1) ...
     );
 
 sub_dict = train_nn_gr.get('SUB_DICT');
@@ -101,7 +64,7 @@ if sub_dict.length() > 0
     target_names = cellfun(@(x) x.get('TARGET_NAME'), sub_dict.getItems(), 'UniformOutput', false);
     targets = onehotencode(categorical(target_names), 1);
     for i = 1:1:sub_dict.length()
-        sub_dict.getItem(i).set('TARGET', {targets(:, i)'});
+        sub_dict.getItem(i).set('TARGET', num2cell(sub.get(sub.get('TARGET_NAME'))));
     end
 end
 
@@ -112,33 +75,28 @@ GR_VAL (result, item) is a group of NN subjects for the validation set.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡calculate!
-subs1 = nnds.get('GR1').get('SUB_DICT').getItems();
-selected_subs1 = subs1(nnds.get('SPLIT_GR1'));
-
-subs2 = nnds.get('GR2').get('SUB_DICT').getItems();
-selected_subs2 = subs2(nnds.get('SPLIT_GR2'));
-
-subs = [selected_subs1 selected_subs2];
+subs = nnds.get('GR').get('SUB_DICT').getItems();
+selected_subs1 = subs1(setdiff(1:length(subs1), nnds.get('SPLIT_GR')));
 
 val_nn_gr = NNGroup( ...
     'ID', 'Validation set', ...
     'LABEL', 'Validation set', ...
     'NOTES', 'This validation set is used to validate the performance of the neural networks.', ...
-    'SUB_CLASS', nnds.get('GR1').get('SUB_CLASS'), ...
-    'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject', 'IT_LIST', subs) ...
+    'SUB_CLASS', nnds.get('GR').get('SUB_CLASS'), ...
+    'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject', 'IT_LIST', selected_subs1) ...
     );
 
-sub_dict = val_nn_gr.get('SUB_DICT');
+sub_dict = train_nn_gr.get('SUB_DICT');
 
 if sub_dict.length() > 0
     target_names = cellfun(@(x) x.get('TARGET_NAME'), sub_dict.getItems(), 'UniformOutput', false);
     targets = onehotencode(categorical(target_names), 1);
     for i = 1:1:sub_dict.length()
-        sub_dict.getItem(i).set('TARGET', {targets(:, i)'});
+        sub_dict.getItem(i).set('TARGET', num2cell(sub.get(sub.get('TARGET_NAME'))));
     end
 end
 
-value = val_nn_gr;
+value = train_nn_gr;
 
 %%% ¡prop!
 FEATURE_SELECTION_ANALYSIS (result, cell) is an analysis for generating a feature mask.
@@ -151,10 +109,9 @@ if nnds.get('GR_TRAIN').get('SUB_DICT').length == 0
     value = {};
 else
     wb = braph2waitbar(nnds.get('WAITBAR'), 0, 'Initialing feature selection on training set ...');
-
+    
     y = cellfun(@(x) cell2mat(x.get('TARGET')), gr_train.get('SUB_DICT').getItems(), 'UniformOutput', false);
-    y = cell2mat(y);
-    label = y(1, :);
+    label = cell2mat(y);
     num_feature_cluster = length(data{1});
     value = cell(size(data{1}));
     
@@ -185,7 +142,7 @@ else
             [~, idx_all] = sort(mask(:), 'descend');
             num_top_idx = ceil(percentile * numel(mask));
             mask(idx_all(1:num_top_idx)) = 1;
-            mask(idx_all(end - (length(idx_all) - num_top_idx - 1):end)) = 0;
+            mask(idx_all(end-(length(idx_all) - num_top_idx - 1):end)) = 0;
         end
         value{k} = mask;
     end
@@ -215,11 +172,18 @@ else
         'ID', nn_gr.get('ID'), ...
         'LABEL', nn_gr.get('LABEL'), ...
         'NOTES', nn_gr.get('NOTES'), ...
-        'FEATURE_SELECTION_MASK', feature_mask, ...
         'SUB_CLASS',nn_gr.get('SUB_CLASS'), ...
         'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject', 'IT_LIST', subs) ...
         );
     
+    sub_dict = nn_gr_fs.get('SUB_DICT');
+
+    if sub_dict.length() > 0
+        for i = 1:sub_dict.length()
+            sub_dict.getItem(i).set('FEATURE_MASK', feature_mask);
+        end
+    end
+
     value = nn_gr_fs;
 end
 
@@ -239,16 +203,23 @@ end
 if nn_gr.get('SUB_DICT').length() == 0
     value = NNGroup();
 else
-    subs = nnds.get('GR_VAL').get('SUB_DICT').getItems();
+    subs = nnds.get('GR_TRAIN').get('SUB_DICT').getItems();
 
     nn_gr_fs = NNGroup( ...
         'ID', nn_gr.get('ID'), ...
         'LABEL', nn_gr.get('LABEL'), ...
         'NOTES', nn_gr.get('NOTES'), ...
-        'FEATURE_SELECTION_MASK', feature_mask, ...
         'SUB_CLASS',nn_gr.get('SUB_CLASS'), ...
         'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject', 'IT_LIST', subs) ...
         );
-  
+    
+    sub_dict = nn_gr_fs.get('SUB_DICT');
+
+    if sub_dict.length() > 0
+        for i = 1:sub_dict.length()
+            sub_dict.getItem(i).set('FEATURE_MASK', feature_mask);
+        end
+    end
+
     value = nn_gr_fs;
 end

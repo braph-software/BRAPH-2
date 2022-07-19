@@ -6,15 +6,6 @@ This evaluator evaluates the performance of a neural network regressor
 on root mean square error (RMSE).
 
 %% ¡props!
-%%% ¡prop!
-PLOT_MAP (data, logical) is an option for the plot of the feature map.
-%%%% ¡default!
-false
-
-%%% ¡prop!
-PLOT_SCATTER (data, logical) is an option for the plot of scatter plot.
-%%%% ¡default!
-false
 
 %%% ¡prop!
 RMSE (result, scalar) is the root mean squared error between targets and predictions for validation set.
@@ -57,8 +48,34 @@ else
         saveas(gcf, filename);
     end
 end
+%%%% ¡gui_!
+% % % pr = PPNNRegressorEvaluator_Scatter_Chart('EL', nne, 'PROP', NNRegressorEvaluator.SCATTER_CHART, varargin{:});
+
+%%% ¡prop!
+PFSP (gui, item) contains the panel figure of the scatter plot.
+%%%% ¡settings!
+'PFScatterPlot'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    nne.memorize('PFROC').set('NNE', nne)
+end
 %%%% ¡gui!
-pr = PPNNRegressorEvaluator_Scatter_Chart('EL', nne, 'PROP', NNRegressorEvaluator.SCATTER_CHART, varargin{:});
+pr = PanelPropItem('EL', nne, 'PROP', NNRegressorEvaluator.PFSP, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
+
+%%% ¡prop!
+PFFI (gui, item) contains the panel figure of the feature importance.
+%%%% ¡settings!
+'PFFeatureImportance'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    nne.memorize('PFROC').set('NNE', nne)
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', nne, 'PROP', NNRegressorEvaluator.PFFI, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
 
 %% ¡props_update!
 
@@ -94,15 +111,25 @@ else
     nn_gr_pred.set( ...
         'ID', nn_gr.get('ID'), ...
         'LABEL', nn_gr.get('LABEL'), ...
-        'NOTES', nn_gr.get('NOTES') ...
+        'NOTES', nn_gr.get('NOTES'), ...
+        'FEATURE_SELECTION_MASK', gr.get('FEATURE_SELECTION_MASK') ...
         );
 
-    % add subejcts
-    sub_dict = nn_gr_pred.get('SUB_DICT');
-    subs = nn_gr.get('SUB_DICT').getItems();
+    % add subejcts from all groups
+    sub_dict = gr_pred.get('SUB_DICT');
+    subs = gr.get('SUB_DICT').getItems();
     for i = 1:1:length(subs)
-        sub = subs{i}.deepclone();
-        sub.set('PREDICTION', {predictions(i)});
+        sub = NNSubject( ...
+            'ID', [subs{i}.get('ID') ' in ' gr.get('ID')], ...
+            'BA', subs{i}.get('BA'), ...
+            'age', subs{i}.get('age'), ...
+            'sex', subs{i}.get('sex'), ...
+            'input', subs{i}.get('input'), ...
+            'PREDICTION', {predictions(i, :)}, ...
+            'TARGET', subs{i}.get('TARGET'), ...
+            'TARGET_NAME', subs{i}.get('TARGET_NAME') ...
+            );
+        %sub.set('PREDICTION', {predictions(i, :)});
         sub_dict.add(sub);
     end
     nn_gr_pred.set('SUB_DICT', sub_dict);

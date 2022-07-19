@@ -1,5 +1,5 @@
 %% ¡header!
-NNClassifierCrossValidation < Element (nncv, cross-validation for neural network classifiers) cross-validate the performance of neural network classifiers with a dataset.
+NNClassifierCrossValidation < NNClassifierEvaluator (nncv, cross-validation for neural network classifiers) cross-validate the performance of neural network classifiers with a dataset.
 
 %% ¡description!
 This cross validation perform a k-fold cross validation of a neural network
@@ -11,15 +11,7 @@ be calculated across folds and repetitions.
 
 %% ¡props!
 %%% ¡prop!
-ID (data, string) is a few-letter code for the cross validation.
 
-%%% ¡prop!
-LABEL (metadata, string) is an extended label of the cross validation.
-
-%%% ¡prop!
-NOTES (metadata, string) are some specific notes about the cross validation.
-
-%%% ¡prop!
 KFOLD (data, scalar) is the number of folds.
 %%%% ¡default!
 5
@@ -38,32 +30,17 @@ GR1 (data, item) is is a group of subjects.
 GR2 (data, item) is is a group of subjects.
 %%%% ¡settings!
 'NNGroup'
-
-%%% ¡prop!
-FEATURE_MASK (data, cell) is a given mask or a percentile to select relevant features.
-%%%% ¡default!
-{0.05}
-%%%% ¡conditioning!
-if ~iscell(value) & isnumeric(value)
-    value = num2cell(value);
-end
-%%%% ¡gui!
-pr = PlotPropSmartVector('EL', nncv, 'PROP', NNClassifierCrossValidation.FEATURE_MASK, 'MAX', 10000000, 'MIN', 0, varargin{:});
-
-%%% ¡prop!
-PLOT_CM (data, logical) is an option for the plot of the confusion matrix.
-%%%% ¡default!
-false
-
-%%% ¡prop!
-PLOT_MAP (data, logical) is an option for the plot of the heat map.
-%%%% ¡default!
-false
-
-%%% ¡prop!
-PLOT_ROC (data, logical) is an option for the plot of the receiver operating characteristic curve.
-%%%% ¡default!
-false
+% % % 
+% % % %%% ¡prop!
+% % % FEATURE_MASK (data, cell) is a given mask or a percentile to select relevant features.
+% % % %%%% ¡default!
+% % % {0.05}
+% % % %%%% ¡conditioning!
+% % % if ~iscell(value) & isnumeric(value)
+% % %     value = num2cell(value);
+% % % end
+%%%% ¡gui_!
+% % % pr = PlotPropSmartVector('EL', nncv, 'PROP', NNClassifierCrossValidation.FEATURE_MASK, 'MAX', 10000000, 'MIN', 0, varargin{:});
 
 %%% ¡prop!
 SPLIT_KFOLD_GR1 (result, cell) is a vector stating which subjects belong to each fold.
@@ -123,13 +100,23 @@ if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
     for i = 1:1:nncv.get('REPETITION')
         idx_per_fold_gr1 = nncv.get('SPLIT_KFOLD_GR1');
         idx_per_fold_gr2 = nncv.get('SPLIT_KFOLD_GR2');
-        for j = 1:1:nncv.get('KFOLD')
+        nnds_tmp = NNClassifierDataSplit( ...
+                'ID', ['NN dataset for fold #', num2str(1), ' in repetition #', num2str(i)], ...
+                'GR1', nncv.get('GR1'), ...
+                'GR2', nncv.get('GR2'), ...
+                'SPLIT_GR1', idx_per_fold_gr1{j}, ...
+                'SPLIT_GR2', idx_per_fold_gr2{j}, ...
+                'FEATURE_MASK', nncv.get('FEATURE_MASK') ...
+                );
+        nnds_dict.add(nnds_tmp)
+        for j = 2:1:nncv.get('KFOLD')
             nnds = NNClassifierDataSplit( ...
                 'ID', ['NN dataset for fold #', num2str(j), ' in repetition #', num2str(i)], ...
                 'GR1', nncv.get('GR1'), ...
                 'GR2', nncv.get('GR2'), ...
                 'SPLIT_GR1', idx_per_fold_gr1{j}, ...
                 'SPLIT_GR2', idx_per_fold_gr2{j}, ...
+                'TEMPLATE', nnds_tmp, ...
                 'FEATURE_MASK', nncv.get('FEATURE_MASK') ...
                 );
 
@@ -151,7 +138,18 @@ IndexedDictionary('IT_CLASS', 'NNClassifierDNN')
 %%%% ¡calculate!
 nn_dict = IndexedDictionary('IT_CLASS', 'NNClassifierDNN');
 if nncv.memorize('NNDS_DICT').length() > 0
-    for i = 1:1:nncv.get('NNDS_DICT').length()
+    nnds = nncv.get('NNDS_DICT').getItem(1);
+    gr_train = nnds.get('GR_TRAIN_FS');
+
+    nn_tmp = NNClassifierDNN( ...
+        'ID', ['NN model cooperated with ', nnds.get('ID')], ...
+        'GR', gr_train, ...
+        'PLOT_TRAINING', false, ...
+        'SHUFFLE', 'every-epoch' ...
+        );
+
+    nn_dict.add(nn_tmp)
+    for i = 2:1:nncv.get('NNDS_DICT').length()
         nnds = nncv.get('NNDS_DICT').getItem(i);
         gr_train = nnds.get('GR_TRAIN_FS');
 
@@ -159,6 +157,7 @@ if nncv.memorize('NNDS_DICT').length() > 0
                 'ID', ['NN model cooperated with ', nnds.get('ID')], ...
                 'GR', gr_train, ...
                 'PLOT_TRAINING', false, ...
+                'TEMPLATE', nn_tmp, ...
                 'SHUFFLE', 'every-epoch' ...
                 );
             
@@ -197,7 +196,7 @@ end
 value = nne_dict;
 %%%% ¡gui_!
 % % % pr = PPNNCrossValidation_NNDict('EL', nncv, 'PROP', NNClassifierCrossValidation.NNE_DICT, varargin{:});
-
+%% ¡props_update!
 %%% ¡prop!
 GR_PREDICTION (result, item) is a group of NN subjects with prediction from NN.
 %%%% ¡settings!
@@ -208,9 +207,10 @@ if nncv.memorize('NNE_DICT').length() > 0
     gr_prediction = NNGroup( ...
         'ID', 'NN Group with NN prediction', ...
         'LABEL', 'The predictions are obatined from K-fold cross validation', ...
-        'NOTES', 'All of the predictions are obtained from the validation of each fold', ...
+        'NOTES', 'All of the predictions are obtained from the validation set of each fold', ...
         'SUB_CLASS', gr.get('SUB_CLASS'), ...
-        'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject') ...
+        'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject'), ...
+        'FEATURE_SELECTION_MASK', gr.get('FEATURE_SELECTION_MASK') ...
         );
 
     % add subejcts from NNE_DICT
@@ -249,17 +249,15 @@ else
     [inputs, ~] = nn.reconstruct_inputs(gr);
     [targets, classes] = nn.reconstruct_targets(gr);
     % calculate the confusion matrix
-	[cm, order] = confusionmat(targets(2, :), double(pred(2, :)));
-    if nncv.get('PLOT_CM')
-        figure
-        heatmap(classes, classes, cm)
-        directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
-        if ~exist(directory, 'dir')
-            mkdir(directory)
-        end
-        filename = [directory filesep 'confusion_matrix.svg'];
-        saveas(gcf, filename);
+    [cm, order] = confusionmat(targets(2, :), double(pred(2, :)));
+    figure
+    heatmap(classes, classes, cm)
+    directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
+    if ~exist(directory, 'dir')
+        mkdir(directory)
     end
+    filename = [directory filesep 'confusion_matrix.svg'];
+    saveas(gcf, filename);
 
     value = cm;
 end
@@ -267,7 +265,24 @@ end
 % % % pr = PPNNClassifierCrossValidation_Confusion_Matrix('EL', nncv, 'PROP', NNClassifierCrossValidation.CONFUSION_MATRIX, varargin{:});
 
 %%% ¡prop!
-AUC (result, cell) is the area under the curve scores across k folds for all repetitions.
+AUC (result, scalar) is the area under the curve scores across k folds for all repetitions.
+%%%% ¡calculate!
+nne_dict = nncv.memorize('NNE_DICT');
+auc = {};
+if nne_dict.length() > 0
+    for i = 1:1:nne_dict.length()
+        auc_val = nne_dict.getItem(i).get('AUC');
+        auc{i} = auc_val;
+    end
+    value = mean(cell2mat(auc));
+else
+    value = 0;
+end
+%%%% ¡gui_!
+% % % pr = PPNNClassifierCrossValidation_AUC('EL', nncv, 'PROP', NNClassifierCrossValidation.AUC, varargin{:});
+
+%%% ¡prop!
+ROC (result, cell) is a receiver operating characteristic curve across k folds for all repetitions.
 %%%% ¡calculate!
 nne_dict = nncv.memorize('NNE_DICT');
 auc = {};
@@ -281,65 +296,39 @@ if nne_dict.length() > 0
         Y{i} = auc_val{3};
     end
 
-    if nncv.get('PLOT_ROC')
-        intervals = linspace(0, 1, 100);
-        mean_curve = 0;
-        for i = 1:1:nne_dict.length()
-            hline(i) = plot(X{i}, Y{i}, 'k-', 'LineWidth', 1.5);
-            hline(i).Color = [hline(i).Color 0.05];
-            hold on;
-            Xadjusted = zeros(1, length(X{i}));
-            aux= 0.00001;
-            for j = 1 : length(X{i})
-                if j ~= 1
-                    Xadjusted(j) = X{i}(j) + aux;
-                    aux = aux + 0.00001;
-                end
+    intervals = linspace(0, 1, 100);
+    mean_curve = 0;
+    for i = 1:1:nne_dict.length()
+        hline(i) = plot(X{i}, Y{i}, 'k-', 'LineWidth', 1.5);
+        hline(i).Color = [hline(i).Color 0.05];
+        hold on;
+        Xadjusted = zeros(1, length(X{i}));
+        aux= 0.00001;
+        for j = 1 : length(X{i})
+            if j ~= 1
+                Xadjusted(j) = X{i}(j) + aux;
+                aux = aux + 0.00001;
             end
-            mean_curve = mean_curve + (interp1(Xadjusted, Y{i}, intervals))/nne_dict.length();
         end
-        hline(i + 1) = plot(intervals, mean_curve, 'Color', 'Black', 'LineWidth', 3.0);
-        xlabel('False positive rate');
-        ylabel('True positive rate');
-        title('ROC for Classification');
-        legend(hline(i+1), sprintf('average ROCs (AU-ROC = %.2f)', mean(cell2mat(auc))), 'Location', 'southeast', 'FontSize', 12);
-        legend('boxoff');
-        directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
-        if ~exist(directory, 'dir')
-            mkdir(directory)
-        end
-        filename = [directory filesep 'cv_roc.svg'];
-        saveas(gcf, filename);
+        mean_curve = mean_curve + (interp1(Xadjusted, Y{i}, intervals))/nne_dict.length();
     end
-    value = {auc, X, Y};
+    hline(i + 1) = plot(intervals, mean_curve, 'Color', 'Black', 'LineWidth', 3.0);
+    xlabel('False positive rate');
+    ylabel('True positive rate');
+    title('ROC for Classification');
+    legend(hline(i+1), sprintf('average ROCs (AU-ROC = %.2f)', mean(cell2mat(auc))), 'Location', 'southeast', 'FontSize', 12);
+    legend('boxoff');
+    directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
+    if ~exist(directory, 'dir')
+        mkdir(directory)
+    end
+    filename = [directory filesep 'cv_roc.svg'];
+    saveas(gcf, filename);
+    value = {X, Y};
 else
     value = {};
 end
-%%%% ¡gui!
-pr = PPNNClassifierCrossValidation_AUC('EL', nncv, 'PROP', NNClassifierCrossValidation.AUC, varargin{:});
 
-
-%%% ¡prop!
-AUC_CIU (result, scalar) is the upper boundary of 95% confident internal for AUC.
-%%%% ¡calculate!
-auc = nncv.get('AUC');
-if isempty(auc)
-    value = 0;
-else
-    [~, CI] = nncv.get_CI(auc{1});
-    value = CI(2);
-end
-
-%%% ¡prop!
-AUC_CIL (result, scalar) is the lower boundary of 95% confident internal for AUC.
-%%%% ¡calculate!
-auc = nncv.get('AUC');
-if isempty(auc)
-    value = 0;
-else
-    [~, CI] = nncv.get_CI(auc{1});
-    value = CI(1);
-end
 
 %%% ¡prop!
 FEATURE_MAP (result, cell) is a heat map obtained with feature selection analysis and the AUC value.
@@ -363,7 +352,6 @@ if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('AUC')) && 
         heat_map = cellfun(@(x, y) x + y, heat_map, feature_map_out, 'UniformOutput', false);
     end
     heat_map = cellfun(@(x) x / nne_dict.length(), heat_map, 'UniformOutput', false);
-    if nncv.get('PLOT_MAP')
         for i = 1:1:length(heat_map)
             heat_map_tmp = heat_map{i};
             figure
@@ -378,16 +366,54 @@ if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('AUC')) && 
             filename = [directory filesep 'cv_feature_map.svg'];
             saveas(gcf, filename);
         end
-    end
 else
     %TODO: check the msgbox is needed 
     %braph2msgbox("No visualization for the feature map", "For now, we only provide the feature map visualization for input of adjacency matrix or structural data.")
 end
 
 value = heat_map;
-%%%% ¡gui!
-pr = PPNNCrossValidation_Feature_Map('EL', nncv, 'PROP', NNClassifierCrossValidation.FEATURE_MAP, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPNNCrossValidation_Feature_Map('EL', nncv, 'PROP', NNClassifierCrossValidation.FEATURE_MAP, varargin{:});
 
+
+%%% ¡prop!
+PFCM (gui, item) contains the panel figure of the confusion matrix.
+%%%% ¡settings!
+'PFConfusionMatrix'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    nncv.memorize('PFCM').set('NNE', nncv)
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', nne, 'PROP', NNClassifierCrossValidation.PFCM, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
+
+%%% ¡prop!
+PFROC (gui, item) contains the panel figure of the receiver operating characteristic curve.
+%%%% ¡settings!
+'PFReceiverOperatingCharacteristic'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    nncv.memorize('PFROC').set('NNE', nncv)
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', nne, 'PROP', NNClassifierCrossValidation.PFROC, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
+
+%%% ¡prop!
+PFFI (gui, item) contains the panel figure of the feature importance.
+%%%% ¡settings!
+'PFFeatureImportance'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    nncv.memorize('PFROC').set('NNE', nncv)
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', nne, 'PROP', NNClassifierCrossValidation.PFFI, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
 
 %% ¡methods!
 function [avg, CI] = get_CI(nncv, scores)
