@@ -159,11 +159,10 @@ function p_out = draw(pf, varargin)
         set(pf.tool_weighted, 'State', pf.get('ST_COLORMAP').get('WEIGHTED'))
         set(pf.tool_binary, 'State', pf.get('ST_COLORMAP').get('BINARY'))
         set(pf.tool_hist, 'State', pf.get('ST_COLORMAP').get('HIST'))
-        set(pf.tool_colorbar, 'State', pf.get('ST_COLORMAP').get('COLORBAR')) 
-       
+        set(pf.tool_colorbar, 'State', pf.get('ST_COLORMAP').get('COLORBAR'))        
     end
 
-    if check_graphics(pf.toolbar, 'uitoolbar')
+    if check_graphics(pf.toolbar, 'uitoolbar') && ~check_graphics(pf.tool_weighted, 'uitoggletool')
         % WEIGHTED
         pf.tool_weighted = uitoggletool(pf.toolbar, ...
             'Tag', 'tool_weighted', ...
@@ -203,28 +202,44 @@ function p_out = draw(pf, varargin)
     
     function cb_weighted(~, ~, statement) % (src, event)
         pf.get('ST_COLORMAP').set('WEIGHTED', statement);
+        % reverse buttons
+        if statement
+            set(pf.tool_binary, 'State', false)
+            set(pf.tool_hist, 'State', false)
+            pf.draw()
+        end
     end
     function cb_binary(~, ~, statement) % (src, event)
         pf.get('ST_COLORMAP').set('BINARY', statement);
+        % reverse buttons
+        if statement
+            set(pf.tool_weighted, 'State', false)
+            set(pf.tool_hist, 'State', false)
+            pf.draw()
+        end
     end
     function cb_hist(~, ~, statement) % (src, event)
         pf.get('ST_COLORMAP').set('HIST', statement);
+        if statement
+            set(pf.tool_weighted, 'State', false)
+            set(pf.tool_binary, 'State', false)
+            pf.draw()
+        end
     end
     function cb_bar(~, ~, statement) % (src, event)
         pf.get('ST_COLORMAP').set('COLORBAR', statement);
+        if statement
+            pf.draw()
+        end
     end
     
-
     % plot
-    if ~check_graphics(pf.h_plot, 'surface')
-        if pf.get('ST_COLORMAP').get('WEIGHTED')
-            pf.h_plot = pf.plotw(pf.get('G').get('A'));
-        elseif pf.get('ST_COLORMAP').get('BINARY')
-            pf.h_plot = pf.plotb(pf.get('G').get('A'));
-        elseif pf.get('ST_COLORMAP').get('HIST')
-            pf.h_plot = pf.hist(pf.get('G').get('A'));
-        else   
-        end
+    if pf.get('ST_COLORMAP').get('BINARY')
+        pf.h_plot = pf.plotb(pf.get('G').get('A'));
+    elseif pf.get('ST_COLORMAP').get('HIST')
+        pf.h_plot = pf.hist(pf.get('G').get('A'));
+    else
+        pf.h_plot = pf.plotw(pf.get('G').get('A'));
     end
 
     % output
@@ -290,6 +305,8 @@ function h = plotw(pf, A, varargin)
     if ~iscell(ylabels)
         ylabels = {ylabels};
     end
+    
+    cla(pf.h_axes)
 
     ht = surf('Parent', pf.h_axes, ...
         (0:1:N), ...
@@ -381,6 +398,8 @@ function h = plotb(pf, A, varargin)
     end
 
     B = binarize(A, 'threshold', threshold, 'density', density);
+    
+    cla(pf.h_axes)
 
     ht = surf('Parent', pf.h_axes, ...
         (0:1:N), ...
