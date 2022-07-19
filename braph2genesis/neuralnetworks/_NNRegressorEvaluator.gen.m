@@ -30,7 +30,7 @@ else
     preds = cell2mat(preds);
     targets = cellfun(@(x) cell2mat(x.get('TARGET')), nne.get('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
     targets = cell2mat(targets);
-    value = sqrt(mean((preds - targets).^2));
+    value = double(sqrt(mean((preds - targets).^2)));
 end
 
 %%% ¡prop!
@@ -43,12 +43,11 @@ else
     preds = cell2mat(preds);
     targets = cellfun(@(x) cell2mat(x.get('TARGET')), nne.get('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
     targets = cell2mat(targets);
-    value = [preds' targets'];
-    if nne.get('PLOT_SCATTER')
+    value = double([preds' targets']);
         figure
         scatter(preds, targets);
         hold on
-        plot([min(preds) max(preds)], [min(targets) max(targets), 'k']);
+        plot([min(preds) max(preds)], [min(targets) max(targets)]);
         hold off
         xlabel('Prediction')
         ylabel('Target')
@@ -59,7 +58,6 @@ else
         end
         filename = [directory filesep 'scatter.svg'];
         saveas(gcf, filename);
-    end
 end
 %%%% ¡gui_!
 % % % pr = PPNNRegressorEvaluator_Scatter_Chart('EL', nne, 'PROP', NNRegressorEvaluator.SCATTER_CHART, varargin{:});
@@ -112,15 +110,15 @@ else
         'ID', nn_gr.get('ID'), ...
         'LABEL', nn_gr.get('LABEL'), ...
         'NOTES', nn_gr.get('NOTES'), ...
-        'FEATURE_SELECTION_MASK', gr.get('FEATURE_SELECTION_MASK') ...
+        'FEATURE_SELECTION_MASK', nn_gr.get('FEATURE_SELECTION_MASK') ...
         );
 
     % add subejcts from all groups
-    sub_dict = gr_pred.get('SUB_DICT');
-    subs = gr.get('SUB_DICT').getItems();
+    sub_dict = nn_gr_pred.get('SUB_DICT');
+    subs = nn_gr.get('SUB_DICT').getItems();
     for i = 1:1:length(subs)
         sub = NNSubject( ...
-            'ID', [subs{i}.get('ID') ' in ' gr.get('ID')], ...
+            'ID', [subs{i}.get('ID') ' in ' nn_gr.get('ID')], ...
             'BA', subs{i}.get('BA'), ...
             'age', subs{i}.get('age'), ...
             'sex', subs{i}.get('sex'), ...

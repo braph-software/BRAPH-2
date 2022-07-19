@@ -74,17 +74,17 @@ GR_VAL (result, item) is a group of NN subjects for the validation set.
 'NNGroup'
 %%%% ¡calculate!
 subs = nnds.get('GR').get('SUB_DICT').getItems();
-selected_subs1 = subs1(setdiff(1:length(subs1), nnds.get('SPLIT')));
+selected_subs = subs(nnds.get('SPLIT'));
 
 val_nn_gr = NNGroup( ...
     'ID', 'Validation set', ...
     'LABEL', 'Validation set', ...
     'NOTES', 'This validation set is used to validate the performance of the neural networks.', ...
     'SUB_CLASS', nnds.get('GR').get('SUB_CLASS'), ...
-    'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject', 'IT_LIST', selected_subs1) ...
+    'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject', 'IT_LIST', selected_subs) ...
     );
 
-sub_dict = train_nn_gr.get('SUB_DICT');
+sub_dict = val_nn_gr.get('SUB_DICT');
 
 if sub_dict.length() > 0
     for i = 1:1:sub_dict.length()
@@ -92,7 +92,7 @@ if sub_dict.length() > 0
     end
 end
 
-value = train_nn_gr;
+value = val_nn_gr;
 
 %%% ¡prop!
 FEATURE_SELECTION_ANALYSIS (result, cell) is an analysis for generating a feature mask.
@@ -175,11 +175,11 @@ else
     
     sub_dict = nn_gr_fs.get('SUB_DICT');
 
-    if sub_dict.length() > 0
-        for i = 1:sub_dict.length()
-            sub_dict.getItem(i).set('FEATURE_MASK', feature_mask);
-        end
-    end
+%     if sub_dict.length() > 0
+%         for i = 1:sub_dict.length()
+%             sub_dict.getItem(i).set('FEATURE_MASK', feature_mask);
+%         end
+%     end
 
     value = nn_gr_fs;
 end
@@ -200,7 +200,7 @@ end
 if nn_gr.get('SUB_DICT').length() == 0
     value = NNGroup();
 else
-    subs = nnds.get('GR_TRAIN').get('SUB_DICT').getItems();
+    subs = nnds.get('GR_VAL').get('SUB_DICT').getItems();
 
     nn_gr_fs = NNGroup( ...
         'ID', nn_gr.get('ID'), ...
@@ -213,11 +213,11 @@ else
     
     sub_dict = nn_gr_fs.get('SUB_DICT');
 
-    if sub_dict.length() > 0
-        for i = 1:sub_dict.length()
-            sub_dict.getItem(i).set('FEATURE_MASK', feature_mask);
-        end
-    end
+%     if sub_dict.length() > 0
+%         for i = 1:sub_dict.length()
+%             sub_dict.getItem(i).set('FEATURE_MASK', feature_mask);
+%         end
+%     end
 
     value = nn_gr_fs;
 end

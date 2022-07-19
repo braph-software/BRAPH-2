@@ -53,11 +53,11 @@ TEMPLATE (parameter, item) is the analysis template to set the parameters.
 if nn.prop_set(NNBase.TEMPLATE, varargin{:})
     varargin = {};
     
-    parameters = nnds.getProps(Category.PARAMETER);
+    parameters = nn.getProps(Category.PARAMETER);
     for i = 1:1:length(parameters)
         parameter = parameters(i);
         
-        if parameter ~= NNData.TEMPLATE
+        if parameter ~= NNBase.TEMPLATE
             varargin{length(varargin) + 1} = parameter;
             varargin{length(varargin) + 1} = Callback('EL', nn.get('TEMPLATE'), 'PROP', parameter);
         end
