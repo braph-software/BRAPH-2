@@ -63,7 +63,7 @@ ST_COLORMAP (figure, item) determines the colormap settings.
 %%%% ¡settings!
 'SettingsGraph'
 %%%% ¡default!
-SettingsGraphPP('WEIGHTED', true, 'BINARY', false, 'HIST', false, 'COLORBAR', true)
+SettingsGraph('WEIGHTED', true, 'BINARY', false, 'HIST', false, 'COLORBAR', true)
 %%%% ¡postprocessing!
 if check_graphics(pf.h_plot, 'surface')
         
@@ -159,7 +159,9 @@ function p_out = draw(pf, varargin)
         set(pf.tool_weighted, 'State', pf.get('ST_COLORMAP').get('WEIGHTED'))
         set(pf.tool_binary, 'State', pf.get('ST_COLORMAP').get('BINARY'))
         set(pf.tool_hist, 'State', pf.get('ST_COLORMAP').get('HIST'))
-        set(pf.tool_colorbar, 'State', pf.get('ST_COLORMAP').get('COLORBAR'))        
+        set(pf.tool_colorbar, 'State', pf.get('ST_COLORMAP').get('COLORBAR')) 
+        
+        pf.draw();
     end
 
     if check_graphics(pf.toolbar, 'uitoolbar')
@@ -186,7 +188,7 @@ function p_out = draw(pf, varargin)
             'Tag', 'tool_hist', ...
             'State', pf.get('ST_COLORMAP').get('HIST'), ...
             'Tooltip', 'Show histogram plot', ...
-            'CData', imread('icon_h.png'), ...
+            'CData', imread('icon_hist.png'), ...
             'OnCallback', {@cb_hist, true}, ...
             'OffCallback', {@cb_hist, false});
         
@@ -195,7 +197,7 @@ function p_out = draw(pf, varargin)
             'Tag', 'tool_colorbar', ...
             'State', pf.get('ST_COLORMAP').get('COLORBAR'), ...
             'Tooltip', 'Show colorbar', ...
-            'CData', imread('icon_color_bar.png'), ...
+            'CData', imread('icon_colorbar.png'), ...
             'OnCallback', {@cb_bar, true}, ...
             'OffCallback', {@cb_bar, false});
     end
@@ -222,7 +224,8 @@ function p_out = draw(pf, varargin)
             pf.h_colormap = pf.plotb(pf.get('G').get('A'));
         elseif pf.get('ST_COLORMAP').get('HIST')
             pf.h_colormap = pf.hist(pf.get('G').get('A'));
-        else        
+        else   
+        end
     end
 
     % output
