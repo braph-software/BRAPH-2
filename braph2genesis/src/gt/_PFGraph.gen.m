@@ -13,14 +13,15 @@ PanelFig, Graph
 p  % handle for panel
 h_axes % handle for the axes
 
+toolbar
 tool_grid
 tool_axis
 tool_weighted
 tool_binary
 tool_hist
+tool_colorbar
 
 h_plot
-
 
 %% ¡props!
 
@@ -47,11 +48,48 @@ end
 pr = SettingsAxisPP('EL', pf, 'PROP', PFGraph.ST_AXIS, varargin{:});
 
 %%% ¡prop!
-ST_COLORMAP (figure, item) determines the colormap settings.
+STYLE (figure, option) is the x-coordinate.
 %%%% ¡settings!
-'SettingsColormap'
+{'parula', 'turbo', 'hsv', 'hot', 'cool', 'spring', 'summer', 'autumn', 'winter', 'gray', 'bone', 'cooper', 'pink', 'jet', 'lines', 'prism', 'flag', 'white'}
 %%%% ¡default!
-SettingsColormap('STYLE', 'JET', 'BAR', true)
+'jet'
+%%%% ¡postprocessing!
+if pf.prop_set('STYLE', varargin) && ~braph2_testing
+    pf.draw()
+end
+
+%%% ¡prop!
+ST_COLORMAP (figure, item) determines whether the colormap settings.
+%%%% ¡settings!
+'SettingsGraph'
+%%%% ¡default!
+SettingsGraphPP('WEIGHTED', true, 'BINARY', false, 'HIST', false, 'COLORBAR', true)
+%%%% ¡postprocessing!
+if check_graphics(pf.h_plot, 'surface')
+        
+    % update state of toggle tool
+    set(pf.tool_weighted, 'State', pf.get('ST_COLORMAP').get('WEIGHTED'))
+
+    % update state of toggle tool
+    set(pf.tool_binary, 'State', pf.get('ST_COLORMAP').get('BINARY'))
+    
+    % update state of toggle tool
+    set(pf.tool_hist, 'State', pf.get('ST_COLORMAP').get('HIST'))
+    
+    % update state of toggle tool
+    set(pf.tool_colorbar, 'State', pf.get('ST_COLORMAP').get('COLORBAR'))
+    
+    if pf.get('ST_COLORMAP').get('COLORBAR')
+        colorbar('Parent', pf.h_plot, ...
+            'Direction', 'normal', ...
+            'Location', 'auto', ...
+            'AxisLocation', 'out' ...            
+            )
+    else
+        colorbar('Parent', pf.h_plot, ...
+            'off')
+    end
+end
 %%%% ¡gui!
 pr = SettingsColormapPP('EL', pf, 'PROP', PFGraph.ST_COLORMAP, varargin{:});
 
@@ -117,12 +155,73 @@ function p_out = draw(pf, varargin)
     % colormap listener
     listener(pf.get('ST_COLORMAP'), 'PropSet', @cb_st_colormap);
     function cb_st_colormap(~, ~) % (src, event)
-        set(pf.tool_axis, 'State', pf.get('ST_AXIS').get('AXIS'))        
+        set(pf.tool_weighted, 'State', pf.get('ST_COLORMAP').get('WEIGHTED'))
+        set(pf.tool_binary, 'State', pf.get('ST_COLORMAP').get('BINARY'))
+        set(pf.tool_hist, 'State', pf.get('ST_COLORMAP').get('HIST'))
+        set(pf.tool_colorbar, 'State', pf.get('ST_COLORMAP').get('COLORBAR'))        
     end
 
+    if check_graphics(pf.toolbar, 'uitoolbar')
+        % WEIGHTED
+        pf.tool_weighted = uitoggletool(pf.toolbar, ...
+            'Tag', 'tool_weighted', ...
+            'State', pf.get('ST_COLORMAP').get('WEIGHTED'), ...
+            'Tooltip', 'Show weighted plot', ...
+            'CData', imread('icon_weighted.png'), ...
+            'OnCallback', {@cb_weighted, true}, ...
+            'OffCallback', {@cb_weighted, false});
+        
+        % BINARY
+        pf.tool_binary = uitoggletool(pf.toolbar, ...
+            'Tag', 'tool_binary', ...
+            'State', pf.get('ST_COLORMAP').get('BINARY'), ...
+            'Tooltip', 'Show binary plot', ...
+            'CData', imread('icon_binary.png'), ...
+            'OnCallback', {@cb_binary, true}, ...
+            'OffCallback', {@cb_binary, false});
+        
+        % BINARY
+        pf.tool_hist = uitoggletool(pf.toolbar, ...
+            'Tag', 'tool_hist', ...
+            'State', pf.get('ST_COLORMAP').get('HIST'), ...
+            'Tooltip', 'Show histogram plot', ...
+            'CData', imread('icon_h.png'), ...
+            'OnCallback', {@cb_hist, true}, ...
+            'OffCallback', {@cb_hist, false});
+        
+        % COLORBAR
+        pf.tool_colorbar = uitoggletool(pf.toolbar, ...
+            'Tag', 'tool_colorbar', ...
+            'State', pf.get('ST_COLORMAP').get('COLORBAR'), ...
+            'Tooltip', 'Show colorbar', ...
+            'CData', imread('icon_color_bar.png'), ...
+            'OnCallback', {@cb_bar, true}, ...
+            'OffCallback', {@cb_bar, false});
+    end
+    
+    function cb_weighted(~, ~, statement) % (src, event)
+        pf.get('ST_COLORMAP').set('WEIGHTED', statement);
+    end
+    function cb_binary(~, ~, statement) % (src, event)
+        pf.get('ST_COLORMAP').set('BINARY', statement);
+    end
+    function cb_hist(~, ~, statement) % (src, event)
+        pf.get('ST_COLORMAP').set('HIST', statement);
+    end
+    function cb_bar(~, ~, statement) % (src, event)
+        pf.get('ST_COLORMAP').set('COLORBAR', statement);
+    end
+    
+
     % plot
-    if ~check_graphics(pf.h_plot, 'colormap')
-        pf.h_colormap = plotw(pf.get('G').get('A'));
+    if ~check_graphics(pf.h_plot, 'surface')
+        if pf.get('ST_COLORMAP').get('WEIGHTED')
+            pf.h_colormap = pf.plotw(pf.get('G').get('A'));
+        elseif pf.get('ST_COLORMAP').get('BINARY')
+            pf.h_colormap = pf.plotb(pf.get('G').get('A'));
+        elseif pf.get('ST_COLORMAP').get('HIST')
+            pf.h_colormap = pf.hist(pf.get('G').get('A'));
+        else        
     end
 
     % output
@@ -216,7 +315,7 @@ function h = plotw(pf, A, varargin)
             'Rotation', 90);
     end
 
-    colormap(pf.h_axes, 'jet')
+    colormap(pf.h_axes, pf.get('Style'))
 
     % output if needed
     if nargout > 0
