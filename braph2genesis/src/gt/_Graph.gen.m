@@ -87,6 +87,8 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
     if isa(g.getr('PFG'), 'NoValue')
         if Graph.is_graph(g)
             g.set('PFG', PFGraph('G', g))
+        elseif Graph.is_multigraph(g)
+            g.set('PFG', PFGraphMulti('G', g)) % missing
         else
             g.memorize('PFG').set('G', g)
         end
