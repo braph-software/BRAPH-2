@@ -144,7 +144,7 @@ function p_out = draw(pf, varargin)
     pf.memorize('ST_COLORMAP').h(pf.h_axes).set('PANEL', pf, 'UITAG', 'h_axes')
     listener(pf.get('ST_COLORMAP'), 'PropSet', @cb_st_colormap);
         function cb_st_colormap(~, ~) % (src, event)
-            % do something
+            pf.h_plot = pf.plotAdjacency();
         end
 
     if check_graphics(pf.toolbar, 'uitoolbar') && ~check_graphics(pf.tool_weighted, 'uitoggletool')
