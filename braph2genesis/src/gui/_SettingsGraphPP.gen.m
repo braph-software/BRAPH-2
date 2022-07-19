@@ -35,8 +35,7 @@ function p_out = draw(pr, varargin)
     el = pr.get('EL');
     prop = pr.get('PROP');
     
-    pr.p = draw@PanelProp(pr, varargin{:});
-    
+    pr.p = draw@PanelProp(pr, varargin{:});    
 
     if ~check_graphics(pr.checkbox_weighted, 'uicheckbox')
         pr.checkbox_weighted = uicheckbox( ...
