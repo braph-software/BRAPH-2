@@ -84,7 +84,13 @@ PFG (gui, item) contains the panel figure of the graph.
 'PFGraph'
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
-    g.memorize('PFG').set('G', g)
+    if isa(g.getr('PFG'), 'NoValue')
+        if Graph.is_graph(g)
+            g.set('PFG', PFGraph('G', g))
+        else
+            g.memorize('PFG').set('G', g)
+        end
+    end
 end
 %%%% ¡gui!
 pr = PanelPropItem('EL', g, 'PROP', Graph.PFG, ...
