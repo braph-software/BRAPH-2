@@ -67,18 +67,6 @@ SettingsGraph('WEIGHTED', true, 'BINARY', false, 'HIST', false, 'COLORBAR', true
 %%%% ¡postprocessing!
 if check_graphics(pf.h_plot, 'surface')
         
-    % update state of toggle tool
-    set(pf.tool_weighted, 'State', pf.get('ST_COLORMAP').get('WEIGHTED'))
-
-    % update state of toggle tool
-    set(pf.tool_binary, 'State', pf.get('ST_COLORMAP').get('BINARY'))
-    
-    % update state of toggle tool
-    set(pf.tool_hist, 'State', pf.get('ST_COLORMAP').get('HIST'))
-    
-    % update state of toggle tool
-    set(pf.tool_colorbar, 'State', pf.get('ST_COLORMAP').get('COLORBAR'))
-    
     if pf.get('ST_COLORMAP').get('COLORBAR')
         colorbar('Parent', pf.p, ...
             'Direction', 'normal', ...
@@ -156,95 +144,88 @@ function p_out = draw(pf, varargin)
     pf.memorize('ST_COLORMAP').h(pf.h_axes).set('PANEL', pf, 'UITAG', 'h_axes')
     listener(pf.get('ST_COLORMAP'), 'PropSet', @cb_st_colormap);
     function cb_st_colormap(~, ~) % (src, event)
-        set(pf.tool_weighted, 'State', pf.get('ST_COLORMAP').get('WEIGHTED'))
-        set(pf.tool_binary, 'State', pf.get('ST_COLORMAP').get('BINARY'))
-        set(pf.tool_hist, 'State', pf.get('ST_COLORMAP').get('HIST'))
-        set(pf.tool_colorbar, 'State', pf.get('ST_COLORMAP').get('COLORBAR'))        
+        % do something      
     end
 
     if check_graphics(pf.toolbar, 'uitoolbar') && ~check_graphics(pf.tool_weighted, 'uitoggletool')
         % WEIGHTED
-        pf.tool_weighted = uitoggletool(pf.toolbar, ...
+        pf.tool_weighted = uipushtool(pf.toolbar, ...
             'Tag', 'tool_weighted', ...
-            'State', pf.get('ST_COLORMAP').get('WEIGHTED'), ...
             'Tooltip', 'Show weighted plot', ...
             'CData', imread('icon_weighted.png'), ...
-            'OnCallback', {@cb_weighted, true}, ...
-            'OffCallback', {@cb_weighted, false});
+            'ClickedCallback', {@cb_weighted});
         
         % BINARY
-        pf.tool_binary = uitoggletool(pf.toolbar, ...
+        pf.tool_binary = uipushtool(pf.toolbar, ...
             'Tag', 'tool_binary', ...
-            'State', pf.get('ST_COLORMAP').get('BINARY'), ...
             'Tooltip', 'Show binary plot', ...
             'CData', imread('icon_binary.png'), ...
-            'OnCallback', {@cb_binary, true}, ...
-            'OffCallback', {@cb_binary, false});
+            'ClickedCallback', {@cb_binary});
         
         % BINARY
-        pf.tool_hist = uitoggletool(pf.toolbar, ...
-            'Tag', 'tool_hist', ...
-            'State', pf.get('ST_COLORMAP').get('HIST'), ...
+        pf.tool_hist = uipushtool(pf.toolbar, ...
+            'Tag', 'tool_hist', ...            
             'Tooltip', 'Show histogram plot', ...
             'CData', imread('icon_hist.png'), ...
-            'OnCallback', {@cb_hist, true}, ...
-            'OffCallback', {@cb_hist, false});
+            'ClickedCallback', {@cb_hist});
         
         % COLORBAR
-        pf.tool_colorbar = uitoggletool(pf.toolbar, ...
+        pf.tool_colorbar = uipushtool(pf.toolbar, ...
             'Tag', 'tool_colorbar', ...
-            'State', pf.get('ST_COLORMAP').get('COLORBAR'), ...
             'Tooltip', 'Show colorbar', ...
             'CData', imread('icon_colorbar.png'), ...
-            'OnCallback', {@cb_bar, true}, ...
-            'OffCallback', {@cb_bar, false});
+            'ClickedCallback', {@cb_bar});
     end
     
-    function cb_weighted(~, ~, statement) % (src, event)
-        pf.get('ST_COLORMAP').set('WEIGHTED', statement);
+    function cb_weighted(~, ~) % (src, event)
+        current_value = pf.get('ST_COLORMAP').get('WEIGHTED'); 
+        pf.get('ST_COLORMAP').set('WEIGHTED', ~current_value);
         % reverse buttons
-        if statement
-            set(pf.tool_binary, 'State', false)
-            set(pf.tool_hist, 'State', false)
-            pf.draw()
-        end
+        pf.get('ST_COLORMAP').set('BYNARY', false)
+        pf.get('ST_COLORMAP').set('HIST', false)        
+        % plot
+        pf.plotAdjacency()
     end
-    function cb_binary(~, ~, statement) % (src, event)
-        pf.get('ST_COLORMAP').set('BINARY', statement);
+    function cb_binary(~, ~) % (src, event)
+        current_value = pf.get('ST_COLORMAP').get('BINARY'); 
+        pf.get('ST_COLORMAP').set('BINARY', ~current_value);
         % reverse buttons
-        if statement
-            set(pf.tool_weighted, 'State', false)
-            set(pf.tool_hist, 'State', false)
-            pf.draw()
-        end
+        pf.get('ST_COLORMAP').set('WEIGHTED', false)
+        pf.get('ST_COLORMAP').set('HIST', false)        
+        % plot
+        pf.plotAdjacency()
     end
-    function cb_hist(~, ~, statement) % (src, event)
-        pf.get('ST_COLORMAP').set('HIST', statement);
-        if statement
-            set(pf.tool_weighted, 'State', false)
-            set(pf.tool_binary, 'State', false)
-            pf.draw()
-        end
+    function cb_hist(~, ~) % (src, event)
+        current_value = pf.get('ST_COLORMAP').get('HIST'); 
+        pf.get('ST_COLORMAP').set('HIST', ~current_value);
+        % reverse buttons
+        pf.get('ST_COLORMAP').set('BYNARY', false)
+        pf.get('ST_COLORMAP').set('WEIGHTED', false)        
+        % plot
+        pf.plotAdjacency()
     end
-    function cb_bar(~, ~, statement) % (src, event)
-        pf.get('ST_COLORMAP').set('COLORBAR', statement);
-        if statement
-            pf.draw()
-        end
+    function cb_bar(~, ~) % (src, event)
+        current_value = pf.get('ST_COLORMAP').get('COLORBAR'); 
+        pf.get('ST_COLORMAP').set('COLORBAR', ~current_value);
+        pf.plotAdjacency()
     end
-    
+
     % plot
-    if pf.get('ST_COLORMAP').get('BINARY')
-        pf.h_plot = pf.plotb(pf.get('G').get('A'));
-    elseif pf.get('ST_COLORMAP').get('HIST')
-        pf.h_plot = pf.hist(pf.get('G').get('A'));
-    else
-        pf.h_plot = pf.plotw(pf.get('G').get('A'));
-    end
+    pf.h_plot = pf.plotAdjacency()
 
     % output
     if nargout > 0
         p_out = pf.p;
+    end
+end
+function h = plotAdjacency(pf)
+    % plot
+    if pf.get('ST_COLORMAP').get('BINARY')
+        h = pf.plotb(pf.get('G').get('A'));
+    elseif pf.get('ST_COLORMAP').get('HIST')
+        h = pf.hist(pf.get('G').get('A'));
+    else
+        h = pf.plotw(pf.get('G').get('A'));
     end
 end
 function str = tostring(pf, varargin)
