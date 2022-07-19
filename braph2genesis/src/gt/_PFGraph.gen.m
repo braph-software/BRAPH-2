@@ -59,7 +59,7 @@ if pf.prop_set('STYLE', varargin) && ~braph2_testing
 end
 
 %%% ¡prop!
-ST_COLORMAP (figure, item) determines whether the colormap settings.
+ST_COLORMAP (figure, item) determines the colormap settings.
 %%%% ¡settings!
 'SettingsGraph'
 %%%% ¡default!
@@ -91,7 +91,7 @@ if check_graphics(pf.h_plot, 'surface')
     end
 end
 %%%% ¡gui!
-pr = SettingsColormapPP('EL', pf, 'PROP', PFGraph.ST_COLORMAP, varargin{:});
+pr = SettingsGraphPP('EL', pf, 'PROP', PFGraph.ST_COLORMAP, varargin{:});
 
 %% ¡methods!
 function p_out = draw(pf, varargin)
@@ -153,6 +153,7 @@ function p_out = draw(pf, varargin)
 
 
     % colormap listener
+    pf.memorize('ST_COLORMAP').h(pf.h_axes).set('PANEL', pf, 'UITAG', 'h_axes')
     listener(pf.get('ST_COLORMAP'), 'PropSet', @cb_st_colormap);
     function cb_st_colormap(~, ~) % (src, event)
         set(pf.tool_weighted, 'State', pf.get('ST_COLORMAP').get('WEIGHTED'))
