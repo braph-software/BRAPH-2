@@ -13,6 +13,15 @@ PanelFig, Graph
 p  % handle for panel
 h_axes % handle for the axes
 
+tool_grid
+tool_axis
+tool_weighted
+tool_binary
+tool_hist
+
+h_plot
+
+
 %% ¡props!
 
 %%% ¡prop!
@@ -111,6 +120,11 @@ function p_out = draw(pf, varargin)
         set(pf.tool_axis, 'State', pf.get('ST_AXIS').get('AXIS'))        
     end
 
+    % plot
+    if ~check_graphics(pf.h_plot, 'colormap')
+        pf.h_colormap = plotw(pf.get('G').get('A'));
+    end
+
     % output
     if nargout > 0
         p_out = pf.p;
@@ -132,7 +146,7 @@ function str = tostring(pf, varargin)
     str = tostring(str, varargin{:});
     str = str(2:1:end-1);
 end
-function h = plotw(pr, A, varargin)
+function h = plotw(pf, A, varargin)
     % PLOTW plots a weighted matrix
     %
     % H = PLOTW(A) plots the weighted matrix A and returns the handle to
@@ -171,17 +185,17 @@ function h = plotw(pr, A, varargin)
         ylabels = {ylabels};
     end
 
-    ht = surf('Parent', pr.h_axes, ...
+    ht = surf('Parent', pf.h_axes, ...
         (0:1:N), ...
         (0:1:N), ...
         [A, zeros(size(A, 1), 1); zeros(1, size(A, 1) + 1)]);
-    view(pr.h_axes, 2)
-    colorbar(pr.h_axes)
-    shading(pr.h_axes, 'flat')
-    axis(pr.h_axes, 'equal', 'square', 'tight')
-    grid(pr.h_axes, 'off')
-    box(pr.h_axes, 'on')
-    set(pr.h_axes, ...
+    view(pf.h_axes, 2)
+    colorbar(pf.h_axes)
+    shading(pf.h_axes, 'flat')
+    axis(pf.h_axes, 'equal', 'square', 'tight')
+    grid(pf.h_axes, 'off')
+    box(pf.h_axes, 'on')
+    set(pf.h_axes, ...
         'XAxisLocation', 'top', ...
         'XTick', (1:1:N) - .5, ...
         'XTickLabel', {}, ...
@@ -191,25 +205,25 @@ function h = plotw(pr, A, varargin)
         'YTickLabel', ylabels)
 
     if ~verLessThan('matlab', '8.4.0')
-        set(pr.h_axes, ...
+        set(pf.h_axes, ...
             'XTickLabelRotation', 90, ...
             'XTickLabel', xlabels)
     else
-        t = text('Parent', pr.h_axes, (1:1:N) - .5, zeros(1, N), xlabels);
+        t = text('Parent', pf.h_axes, (1:1:N) - .5, zeros(1, N), xlabels);
         set(t, ...
             'HorizontalAlignment', 'left', ...
             'VerticalAlignment', 'middle', ...
             'Rotation', 90);
     end
 
-    colormap(pr.h_axes, 'jet')
+    colormap(pf.h_axes, 'jet')
 
     % output if needed
     if nargout > 0
         h = ht;
     end
 end
-function h = plotb(pr, A, varargin)
+function h = plotb(pf, A, varargin)
     % PLOTB plots a binary matrix
     %
     % H = PLOTB(A) plots the binarized version of weighted matrix A and
@@ -259,17 +273,17 @@ function h = plotb(pr, A, varargin)
 
     B = binarize(A, 'threshold', threshold, 'density', density);
 
-    ht = surf('Parent', pr.h_axes, ...
+    ht = surf('Parent', pf.h_axes, ...
         (0:1:N), ...
         (0:1:N), ...
         [B, zeros(size(B, 1), 1); zeros(1, size(B, 1) + 1)]);
-    view(pr.h_axes, 2)
-    shading(pr.h_axes, 'flat')
-    axis(pr.h_axes, 'equal', 'square', 'tight')
-    grid(pr.h_axes, 'off')
-    colorbar(pr.h_axes)
-    box(pr.h_axes, 'on')
-    set(pr.h_axes, ...
+    view(pf.h_axes, 2)
+    shading(pf.h_axes, 'flat')
+    axis(pf.h_axes, 'equal', 'square', 'tight')
+    grid(pf.h_axes, 'off')
+    colorbar(pf.h_axes)
+    box(pf.h_axes, 'on')
+    set(pf.h_axes, ...
         'XAxisLocation', 'top',  ...
         'XTick', (1:1:N) - .5, ...
         'XTickLabel', {},  ...
@@ -279,25 +293,25 @@ function h = plotb(pr, A, varargin)
         'YTickLabel', ylabels)
 
     if ~verLessThan('matlab',  '8.4.0')
-        set(pr.h_axes, ...
+        set(pf.h_axes, ...
             'XTickLabelRotation',90, ...
             'XTickLabel', xlabels)
     else
-        t = text('Parent', pr.h_axes, (1:1:N) - .5, zeros(1,N), xlabels);
+        t = text('Parent', pf.h_axes, (1:1:N) - .5, zeros(1,N), xlabels);
         set(t, ...
             'HorizontalAlignment', 'left',  ...
             'VerticalAlignment', 'middle',  ...
             'Rotation',90);
     end
 
-    colormap(pr.h_axes, 'bone')
+    colormap(pf.h_axes, 'bone')
 
     % output if needed
     if nargout > 0
         h = ht;
     end
 end
-function h = hist(pr, A, varargin)
+function h = hist(pf, A, varargin)
     % HIST plots the histogram and density of a matrix
     %
     % H = HIST(A) plots the histogram of a matrix A and the associated density and
@@ -318,19 +332,19 @@ function h = hist(pr, A, varargin)
     count = [0 count 0];
     density = [100 density 0];
 
-    hold(pr.h_axes, 'on')
-    cla(pr.h_axes)
-    ht1 = fill(pr.h_axes, bins, count, 'k');
-    ht2 = plot(bins, density, 'b', 'linewidth', 2, 'Parent', pr.h_axes);
-    hold(pr.h_axes, 'off')
-    xlabel(pr.h_axes, 'coefficient values / threshold')
-    ylabel(pr.h_axes, 'coefficient counts / density')
+    hold(pf.h_axes, 'on')
+    cla(pf.h_axes)
+    ht1 = fill(pf.h_axes, bins, count, 'k');
+    ht2 = plot(bins, density, 'b', 'linewidth', 2, 'Parent', pf.h_axes);
+    hold(pf.h_axes, 'off')
+    xlabel(pf.h_axes, 'coefficient values / threshold')
+    ylabel(pf.h_axes, 'coefficient counts / density')
 
-    grid(pr.h_axes, 'off')
-    box(pr.h_axes, 'on')
-    colorbar(pr.h_axes, 'off')
-    axis(pr.h_axes, 'square', 'tight')
-    set(pr.h_axes, ...
+    grid(pf.h_axes, 'off')
+    box(pf.h_axes, 'on')
+    colorbar(pf.h_axes, 'off')
+    axis(pf.h_axes, 'square', 'tight')
+    set(pf.h_axes, ...
         'XAxisLocation', 'bottom',  ...
         'XTickLabelMode', 'auto',  ...
         'XTickMode', 'auto',  ...
