@@ -9,6 +9,20 @@ under the ROC curve (AUC), and the confusion matrix.
 %% ¡props!
 
 %%% ¡prop!
+PFFI (gui, item) contains the panel figure of the feature importance.
+%%%% ¡settings!
+'PFFeatureImportance'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    nne.memorize('PFFI').set('NNE', nne)
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', nne, 'PROP', NNClassifierEvaluator.PFFI, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
+
+
+%%% ¡prop!
 AUC (result, scalar) is an area under the curve score.
 %%%% ¡calculate!
 if nne.get('GR_PREDICTION').get('SUB_DICT').length() == 0
@@ -44,6 +58,24 @@ else
     [X, Y, T, auc] = perfcurve(targets, pred(2, :), classes(2));
     value = {X, Y};
 end
+
+
+%%% ¡prop!
+PFROC (gui, item) contains the panel figure of the receiver operating characteristic curve.
+%%%% ¡settings!
+'PFReceiverOperatingCharacteristic'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    if isa(nne.getr('PFROC'), 'NoValue')
+        nne.memorize('PFROC').set('NNE', nne)
+    else
+        nne.set('PFROC', PFReceiverOperatingCharacteristic('NNE', nne))
+    end    
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', nne, 'PROP', NNClassifierEvaluator.PFROC, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
 
 %%% ¡prop!
 CONFUSION_MATRIX (result, matrix) is a confusion matrix obtained with a cut-off of 0.5.
@@ -86,37 +118,6 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
 end
 %%%% ¡gui!
 pr = PanelPropItem('EL', nne, 'PROP', NNClassifierEvaluator.PFCM, ...
-    'GUICLASS', 'GUIFig', ...
-    varargin{:});
-
-%%% ¡prop!
-PFROC (gui, item) contains the panel figure of the receiver operating characteristic curve.
-%%%% ¡settings!
-'PFReceiverOperatingCharacteristic'
-%%%% ¡postprocessing!
-if ~braph2_testing % to avoid problems with isqual when the element is recursive
-    if isa(nne.getr('PFROC'), 'NoValue')
-        nne.memorize('PFROC').set('NNE', nne)
-    else
-        nne.set('PFROC', PFReceiverOperatingCharacteristic('NNE', nne))
-    end
-    
-end
-%%%% ¡gui!
-pr = PanelPropItem('EL', nne, 'PROP', NNClassifierEvaluator.PFROC, ...
-    'GUICLASS', 'GUIFig', ...
-    varargin{:});
-
-%%% ¡prop!
-PFFI (gui, item) contains the panel figure of the feature importance.
-%%%% ¡settings!
-'PFFeatureImportance'
-%%%% ¡postprocessing!
-if ~braph2_testing % to avoid problems with isqual when the element is recursive
-    nne.memorize('PFROC').set('NNE', nne)
-end
-%%%% ¡gui!
-pr = PanelPropItem('EL', nne, 'PROP', NNClassifierEvaluator.PFFI, ...
     'GUICLASS', 'GUIFig', ...
     varargin{:});
 

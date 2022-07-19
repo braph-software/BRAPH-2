@@ -8,6 +8,19 @@ on root mean square error (RMSE).
 %% ¡props!
 
 %%% ¡prop!
+PFFI (gui, item) contains the panel figure of the feature importance.
+%%%% ¡settings!
+'PFFeatureImportance'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    nne.memorize('PFFI').set('NNE', nne)
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', nne, 'PROP', NNRegressorEvaluator.PFFI, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
+
+%%% ¡prop!
 RMSE (result, scalar) is the root mean squared error between targets and predictions for validation set.
 %%%% ¡calculate!
 if nne.get('GR_PREDICTION').get('SUB_DICT').length() == 0
@@ -57,23 +70,10 @@ PFSP (gui, item) contains the panel figure of the scatter plot.
 'PFScatterPlot'
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
-    nne.memorize('PFROC').set('NNE', nne)
+    nne.memorize('PFSP').set('NNE', nne)
 end
 %%%% ¡gui!
 pr = PanelPropItem('EL', nne, 'PROP', NNRegressorEvaluator.PFSP, ...
-    'GUICLASS', 'GUIFig', ...
-    varargin{:});
-
-%%% ¡prop!
-PFFI (gui, item) contains the panel figure of the feature importance.
-%%%% ¡settings!
-'PFFeatureImportance'
-%%%% ¡postprocessing!
-if ~braph2_testing % to avoid problems with isqual when the element is recursive
-    nne.memorize('PFROC').set('NNE', nne)
-end
-%%%% ¡gui!
-pr = PanelPropItem('EL', nne, 'PROP', NNRegressorEvaluator.PFFI, ...
     'GUICLASS', 'GUIFig', ...
     varargin{:});
 

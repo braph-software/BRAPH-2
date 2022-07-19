@@ -131,7 +131,7 @@ function [inputs, num_features] = reconstruct_inputs(nn, gr)
         inputs = [];
         num_features = 0;
     else
-        mask = gr.get('SUB_DICT').getItem(1).get('FEATURE_MASK');
+        mask = gr.get('FEATURE_SELECTION_MASK');
         inputs = [];
         inputs_tmp = gr.get('INPUTS');
         for i = 1:1:gr.get('SUB_DICT').length()
