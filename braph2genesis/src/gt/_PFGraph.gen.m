@@ -85,7 +85,7 @@ pr = SettingsGraphPP('EL', pf, 'PROP', PFGraph.ST_COLORMAP, varargin{:});
 function p_out = draw(pf, varargin)
 
     pf.p = draw@PanelFig(pf, varargin{:});
-    
+
     % axes
     if ~check_graphics(pf.h_axes, 'axes')
         pf.h_axes = uiaxes( ...
@@ -97,21 +97,21 @@ function p_out = draw(pf, varargin)
         pf.h_axes.Toolbar.Visible = 'off';
         pf.h_axes.Interactions = [];
     end
-    
+
     pf.memorize('ST_AXIS').h(pf.h_axes).set('PANEL', pf, 'UITAG', 'h_axes')
     listener(pf.get('ST_AXIS'), 'PropSet', @cb_st_axis);
-    function cb_st_axis(~, ~) % (src, event)
-        set(pf.tool_axis, 'State', pf.get('ST_AXIS').get('AXIS'))
-        set(pf.tool_grid, 'State', pf.get('ST_AXIS').get('GRID'))
-    end
-    
+        function cb_st_axis(~, ~) % (src, event)
+            set(pf.tool_axis, 'State', pf.get('ST_AXIS').get('AXIS'))
+            set(pf.tool_grid, 'State', pf.get('ST_AXIS').get('GRID'))
+        end
+
     % Toolbar
     if ~check_graphics(pf.toolbar, 'uitoolbar')
         pf.toolbar = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'ToolBar');
     end
-    
+
     if check_graphics(pf.toolbar, 'uitoolbar') && ~check_graphics(pf.tool_axis, 'uitoggletool') % implies that also the other tools are not defined
-        
+
         uipushtool(pf.toolbar, 'Separator', 'on', 'Visible', 'off')
 
         % Axis
@@ -122,7 +122,7 @@ function p_out = draw(pf, varargin)
             'CData', imread('icon_axis.png'), ...
             'OnCallback', {@cb_axis, true}, ...
             'OffCallback', {@cb_axis, false});
-        
+
         % Grid
         pf.tool_grid = uitoggletool(pf.toolbar, ...
             'Tag', 'tool_grid', ...
@@ -132,20 +132,20 @@ function p_out = draw(pf, varargin)
             'OnCallback', {@cb_grid, true}, ...
             'OffCallback', {@cb_grid, false});
     end
-    function cb_axis(~, ~, axis) % (src, event)
-        pf.get('ST_AXIS').set('AXIS', axis);
-    end
-    function cb_grid(~, ~, grid) % (src, event)
-        pf.get('ST_AXIS').set('GRID', grid);
-    end
+        function cb_axis(~, ~, axis) % (src, event)
+            pf.get('ST_AXIS').set('AXIS', axis);
+        end
+        function cb_grid(~, ~, grid) % (src, event)
+            pf.get('ST_AXIS').set('GRID', grid);
+        end
 
 
     % colormap listener
     pf.memorize('ST_COLORMAP').h(pf.h_axes).set('PANEL', pf, 'UITAG', 'h_axes')
     listener(pf.get('ST_COLORMAP'), 'PropSet', @cb_st_colormap);
-    function cb_st_colormap(~, ~) % (src, event)
-        % do something      
-    end
+        function cb_st_colormap(~, ~) % (src, event)
+            % do something
+        end
 
     if check_graphics(pf.toolbar, 'uitoolbar') && ~check_graphics(pf.tool_weighted, 'uitoggletool')
         % WEIGHTED
@@ -154,21 +154,21 @@ function p_out = draw(pf, varargin)
             'Tooltip', 'Show weighted plot', ...
             'CData', imread('icon_weighted.png'), ...
             'ClickedCallback', {@cb_weighted});
-        
+
         % BINARY
         pf.tool_binary = uipushtool(pf.toolbar, ...
             'Tag', 'tool_binary', ...
             'Tooltip', 'Show binary plot', ...
             'CData', imread('icon_binary.png'), ...
             'ClickedCallback', {@cb_binary});
-        
+
         % BINARY
         pf.tool_hist = uipushtool(pf.toolbar, ...
-            'Tag', 'tool_hist', ...            
+            'Tag', 'tool_hist', ...
             'Tooltip', 'Show histogram plot', ...
             'CData', imread('icon_hist.png'), ...
             'ClickedCallback', {@cb_hist});
-        
+
         % COLORBAR
         pf.tool_colorbar = uipushtool(pf.toolbar, ...
             'Tag', 'tool_colorbar', ...
@@ -176,42 +176,42 @@ function p_out = draw(pf, varargin)
             'CData', imread('icon_colorbar.png'), ...
             'ClickedCallback', {@cb_bar});
     end
-    
-    function cb_weighted(~, ~) % (src, event)
-        current_value = pf.get('ST_COLORMAP').get('WEIGHTED'); 
-        pf.get('ST_COLORMAP').set('WEIGHTED', ~current_value);
-        % reverse buttons
-        pf.get('ST_COLORMAP').set('BYNARY', false)
-        pf.get('ST_COLORMAP').set('HIST', false)        
-        % plot
-        pf.plotAdjacency()
-    end
-    function cb_binary(~, ~) % (src, event)
-        current_value = pf.get('ST_COLORMAP').get('BINARY'); 
-        pf.get('ST_COLORMAP').set('BINARY', ~current_value);
-        % reverse buttons
-        pf.get('ST_COLORMAP').set('WEIGHTED', false)
-        pf.get('ST_COLORMAP').set('HIST', false)        
-        % plot
-        pf.plotAdjacency()
-    end
-    function cb_hist(~, ~) % (src, event)
-        current_value = pf.get('ST_COLORMAP').get('HIST'); 
-        pf.get('ST_COLORMAP').set('HIST', ~current_value);
-        % reverse buttons
-        pf.get('ST_COLORMAP').set('BYNARY', false)
-        pf.get('ST_COLORMAP').set('WEIGHTED', false)        
-        % plot
-        pf.plotAdjacency()
-    end
-    function cb_bar(~, ~) % (src, event)
-        current_value = pf.get('ST_COLORMAP').get('COLORBAR'); 
-        pf.get('ST_COLORMAP').set('COLORBAR', ~current_value);
-        pf.plotAdjacency()
-    end
+
+        function cb_weighted(~, ~) % (src, event)
+            current_value = pf.get('ST_COLORMAP').get('WEIGHTED');
+            pf.get('ST_COLORMAP').set('WEIGHTED', ~current_value);
+            % reverse buttons
+            pf.get('ST_COLORMAP').set('BINARY', false)
+            pf.get('ST_COLORMAP').set('HIST', false)
+            % plot
+            pf.plotAdjacency()
+        end
+        function cb_binary(~, ~) % (src, event)
+            current_value = pf.get('ST_COLORMAP').get('BINARY');
+            pf.get('ST_COLORMAP').set('BINARY', ~current_value);
+            % reverse buttons
+            pf.get('ST_COLORMAP').set('WEIGHTED', false)
+            pf.get('ST_COLORMAP').set('HIST', false)
+            % plot
+            pf.plotAdjacency()
+        end
+        function cb_hist(~, ~) % (src, event)
+            current_value = pf.get('ST_COLORMAP').get('HIST');
+            pf.get('ST_COLORMAP').set('HIST', ~current_value);
+            % reverse buttons
+            pf.get('ST_COLORMAP').set('BINARY', false)
+            pf.get('ST_COLORMAP').set('WEIGHTED', false)
+            % plot
+            pf.plotAdjacency()
+        end
+        function cb_bar(~, ~) % (src, event)
+            current_value = pf.get('ST_COLORMAP').get('COLORBAR');
+            pf.get('ST_COLORMAP').set('COLORBAR', ~current_value);
+            pf.plotAdjacency()
+        end
 
     % plot
-    pf.h_plot = pf.plotAdjacency()
+    pf.h_plot = pf.plotAdjacency();
 
     % output
     if nargout > 0
