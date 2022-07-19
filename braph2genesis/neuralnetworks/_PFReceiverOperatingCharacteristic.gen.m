@@ -136,7 +136,7 @@ function p_out = draw(pf, varargin)
 
     pf.p = draw@PanelFig(pf, varargin{:});
     
-    pf.get('ROC_TMP') = pf.memorize('NNE').memorize('ROC');
+    pf.set('ROC_TMP', pf.memorize('NNE').memorize('ROC'));
 
     % axes
     if ~check_graphics(pf.h_axes, 'axes')
