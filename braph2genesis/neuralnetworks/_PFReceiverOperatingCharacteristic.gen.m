@@ -27,13 +27,18 @@ NNE (metadata, item) is the NN evaluator.
 'NNEvaluator'
 
 %%% ¡prop!
+ROC_TMP (metadata, cell) 
+%%%% ¡settings!
+{}
+
+%%% ¡prop!
 ST_AXIS (figure, item) determines the axis settings.
 %%%% ¡settings!
 'SettingsAxis'
 %%%% ¡default!
 SettingsAxis('GRID', false, 'EQUAL', false)
 %%%% ¡postprocessing!
-if (isempty(varargin) || nne.prop_set('ST_AXIS', varargin)) && check_graphics(pf.h_axes, 'axes')
+if (isempty(varargin) || pf.prop_set('ST_AXIS', varargin)) && check_graphics(pf.h_axes, 'axes')
     % update state of toggle tool
     set(pf.tool_grid, 'State', pf.get('ST_AXIS').get('GRID'))
 
@@ -49,14 +54,15 @@ ST_LINE (figure, item) determines the line settings.
 'SettingsLine'
 %%%% ¡postprocessing!
 if check_graphics(pf.h_line, 'line')
+    tt =  pf.get('ROC_TMP');
     pf.get('ST_LINE').set( ...
-        'X', 'X', ...
-        'Y', 'Y', ...
+        'X', tt{1}, ...
+        'Y', tt{2}, ...
         'VISIBLE', true ...
         )
 end
 %%%% ¡gui!
-pr = SettingsPPTable('EL', pf, 'PROP', PFMeasureGU.ST_LINE, ...
+pr = SettingsPPTable('EL', pf, 'PROP', PFReceiverOperatingCharacteristic.ST_LINE, ...
     'COLS', [SettingsLine.VISIBLE, SettingsLine.LINESTYLE, SettingsLine.LINEWIDTH, SettingsLine.LINECOLOR, SettingsLine.SYMBOL, SettingsLine.SYMBOLSIZE, SettingsLine.EDGECOLOR, SettingsLine.FACECOLOR], ...
     varargin{:});
 
@@ -81,7 +87,7 @@ if check_graphics(pf.h_ylabel, 'text')
     end
 end
 %%%% ¡gui!
-pr = SettingsPPTable('EL', pf, 'PROP', PFMeasureGU.ST_XLABEL, ...
+pr = SettingsPPTable('EL', pf, 'PROP', PFReceiverOperatingCharacteristic.ST_XLABEL, ...
     'COLS', [SettingsText.VISIBLE, SettingsText.TXT, SettingsText.X, SettingsText.Y, SettingsText.ROTATION, SettingsText.HORIZONTALALIGNMENT, SettingsText.VERTICALALIGNMENT, SettingsText.FONTSIZE, SettingsText.FONTNAME, SettingsText.FONTCOLOR, SettingsText.INTERPRETER], ...
     varargin{:});
 
@@ -129,6 +135,8 @@ function p_out = draw(pf, varargin)
     % see also settings, uipanel.
 
     pf.p = draw@PanelFig(pf, varargin{:});
+    
+    pf.get('ROC_TMP') = pf.memorize('NNE').memorize('ROC');
 
     % axes
     if ~check_graphics(pf.h_axes, 'axes')
@@ -186,7 +194,7 @@ function p_out = draw(pf, varargin)
     % line stuff
     % data line
     if ~check_graphics(pf.h_line, 'line')
-        roc = pf.get('NNE').get('ROC');
+        roc = pf.get('ROC_TMP');
         x = roc{1};
         y = roc{2};
         
