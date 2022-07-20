@@ -82,7 +82,7 @@ if ~isa(nncv.get('GR').getr('SUB_DICT'), 'NoValue')
                 'TEMPLATE', nnds_tmp ...
                 );
 
-            nnds_dict.add(nnds)
+            nnds_dict.add(nnds);
         end
     end
 end
@@ -121,7 +121,7 @@ if nncv.memorize('NNDS_DICT').length() > 0
                 'TEMPLATE', nn_tmp ...
                 );
             
-        nn_dict.add(nn)
+        nn_dict.add(nn);
     end
 end
 
@@ -149,7 +149,7 @@ if nncv.memorize('NN_DICT').length() > 0
                 'NN', nn ...
                 );
             
-        nne_dict.add(nne)
+        nne_dict.add(nne);
     end
 end
 
@@ -221,20 +221,20 @@ else
     targets = cellfun(@(x) cell2mat(x.get('TARGET')), nncv.get('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
     targets = cell2mat(targets);
     value = [preds' targets'];
-        figure
-        scatter(preds, targets);
-        hold on
-        plot([min(preds) max(preds)], [min(targets) max(targets), 'k']);
-        hold off
-        xlabel('Prediction')
-        ylabel('Target')
-        title('Scatter plot for regression')
-        directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
-        if ~exist(directory, 'dir')
-            mkdir(directory)
-        end
-        filename = [directory filesep 'scatter.svg'];
-        saveas(gcf, filename);
+% % %         figure
+% % %         scatter(preds, targets);
+% % %         hold on
+% % %         plot([min(preds) max(preds)], [min(targets) max(targets), 'k']);
+% % %         hold off
+% % %         xlabel('Prediction')
+% % %         ylabel('Target')
+% % %         title('Scatter plot for regression')
+% % %         directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
+% % %         if ~exist(directory, 'dir')
+% % %             mkdir(directory)
+% % %         end
+% % %         filename = [directory filesep 'scatter.svg'];
+% % %         saveas(gcf, filename);
 end
 %%%% ¡gui_!
 % % % pr = PPNNRegressorEvaluator_Scatter_Chart('EL', nncv, 'PROP', NNRegressorCrossValidation.SCATTER_CHART, varargin{:});

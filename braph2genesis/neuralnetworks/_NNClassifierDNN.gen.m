@@ -50,7 +50,7 @@ false
 %%% ¡prop!
 PLOT_TRAINING (metadata, logical) is an option for the plot of training-progress.
 %%%% ¡default!
-true
+false
 
 %%% ¡prop!
 INPUT_FORMAT (parameter, string) is the data format of neural network inputs.

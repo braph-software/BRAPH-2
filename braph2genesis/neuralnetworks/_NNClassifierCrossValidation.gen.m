@@ -107,7 +107,7 @@ if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
                 'SPLIT_GR1', idx_per_fold_gr1{1}, ...
                 'SPLIT_GR2', idx_per_fold_gr2{1} ...
                 );
-        nnds_dict.add(nnds_tmp)
+        nnds_dict.add(nnds_tmp);
         for j = 2:1:nncv.get('KFOLD')
             nnds = NNClassifierDataSplit( ...
                 'ID', ['NN dataset for fold #', num2str(j), ' in repetition #', num2str(i)], ...
@@ -118,7 +118,7 @@ if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
                 'TEMPLATE', nnds_tmp ...
                 );
 
-            nnds_dict.add(nnds)
+            nnds_dict.add(nnds);
         end
     end
 end
@@ -146,7 +146,7 @@ if nncv.memorize('NNDS_DICT').length() > 0
         'SHUFFLE', 'every-epoch' ...
         );
 
-    nn_dict.add(nn_tmp)
+    nn_dict.add(nn_tmp);
     for i = 2:1:nncv.get('NNDS_DICT').length()
         nnds = nncv.get('NNDS_DICT').getItem(i);
         gr_train = nnds.get('GR_TRAIN_FS');
@@ -157,7 +157,7 @@ if nncv.memorize('NNDS_DICT').length() > 0
                 'TEMPLATE', nn_tmp ...
                 );
             
-        nn_dict.add(nn)
+        nn_dict.add(nn);
     end
 end
 
@@ -185,7 +185,7 @@ if nncv.memorize('NN_DICT').length() > 0
                 'NN', nn ...
                 );
             
-        nne_dict.add(nne)
+        nne_dict.add(nne);
     end
 end
 
@@ -310,19 +310,19 @@ if nne_dict.length() > 0
         all_lines(i, :) = interp1(Xadjusted, Y{i}, intervals);
         mean_curve = mean_curve + (interp1(Xadjusted, Y{i}, intervals))/nne_dict.length();
     end
-    hline(i + 1) = plot(intervals, mean_curve, 'Color', 'Black', 'LineWidth', 3.0);
+    %hline(i + 1) = plot(intervals, mean_curve, 'Color', 'Black', 'LineWidth', 3.0);
     std_curve = std(all_lines, 1);
-    xlabel('False positive rate');
-    ylabel('True positive rate');
-    title('ROC for Classification');
-    legend(hline(i+1), sprintf('average ROCs (AU-ROC = %.2f)', mean(cell2mat(auc))), 'Location', 'southeast', 'FontSize', 12);
-    legend('boxoff');
-    directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
-    if ~exist(directory, 'dir')
-        mkdir(directory)
-    end
-    filename = [directory filesep 'cv_roc.svg'];
-    saveas(gcf, filename);
+    %xlabel('False positive rate');
+    %ylabel('True positive rate');
+    %title('ROC for Classification');
+    %legend(hline(i+1), sprintf('average ROCs (AU-ROC = %.2f)', mean(cell2mat(auc))), 'Location', 'southeast', 'FontSize', 12);
+    %legend('boxoff');
+    %directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
+    %if ~exist(directory, 'dir')
+    %    mkdir(directory)
+    %end
+    %filename = [directory filesep 'cv_roc.svg'];
+    %saveas(gcf, filename);
     value = {intervals, mean_curve, std_curve};
 else
     value = {};

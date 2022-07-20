@@ -30,7 +30,7 @@ BATCH (parameter, scalar) is the size of the mini-batch to use for each training
 %%% ¡prop!
 EPOCHS (parameter, scalar) is a maximum number of epochs.
 %%%% ¡default!
-200
+40
 
 %%% ¡prop!
 SHUFFLE (parameter, option) is an option for data shuffling.
@@ -50,7 +50,7 @@ false
 %%% ¡prop!
 PLOT_TRAINING (data, logical) is an option for the plot of training-progress.
 %%%% ¡default!
-true
+false
 
 %%% ¡prop!
 INPUT_FORMAT (data, string) is the data format of network inputs.
