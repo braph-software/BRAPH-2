@@ -58,10 +58,14 @@ if pf.prop_set('STYLE', varargin) && ~braph2_testing
     pf.draw()
 end
 
-%%%
-
 %%% ¡prop!
-ST_COLORMAP (figure, item) determines the colormap settings.
+SUBJECT (figure, string) is the subject.
+%%%% ¡postprocessing!
+if pf.prop_set('STYLE', varargin) && ~braph2_testing
+    pf.draw()
+end
+%%% ¡prop!
+ST_ADJACENCY (figure, item) determines the colormap settings.
 %%%% ¡settings!
 'SettingsGraph'
 %%%% ¡default!
@@ -69,7 +73,7 @@ SettingsGraph('WEIGHTED', true, 'BINARY', false, 'HIST', false, 'COLORBAR', true
 %%%% ¡postprocessing!
 if check_graphics(pf.h_plot, 'surface')
         
-    if pf.get('ST_COLORMAP').get('COLORBAR')
+    if pf.get('ST_ADJACENCY').get('COLORBAR')
         colorbar('Parent', pf.p, ...
             'Direction', 'normal', ...
             'Location', 'eastoutside', ...
@@ -81,7 +85,7 @@ if check_graphics(pf.h_plot, 'surface')
     end
 end
 %%%% ¡gui!
-pr = SettingsGraphPP('EL', pf, 'PROP', PFGraph.ST_COLORMAP, varargin{:});
+pr = SettingsGraphPP('EL', pf, 'PROP', PFGraph.ST_ADJACENCY, varargin{:});
 
 %% ¡methods!
 function p_out = draw(pf, varargin)
@@ -159,8 +163,8 @@ function p_out = draw(pf, varargin)
 
 
     % colormap listener
-    pf.memorize('ST_COLORMAP').h(pf.h_axes).set('PANEL', pf, 'UITAG', 'h_axes')
-    listener(pf.get('ST_COLORMAP'), 'PropSet', @cb_st_colormap);
+    pf.memorize('ST_ADJACENCY').h(pf.h_axes).set('PANEL', pf, 'UITAG', 'h_axes')
+    listener(pf.get('ST_ADJACENCY'), 'PropSet', @cb_st_colormap);
         function cb_st_colormap(~, ~) % (src, event)
             pf.h_plot = pf.plotAdjacency();
         end
@@ -196,35 +200,35 @@ function p_out = draw(pf, varargin)
     end
 
         function cb_weighted(~, ~) % (src, event)
-            current_value = pf.get('ST_COLORMAP').get('WEIGHTED');
-            pf.get('ST_COLORMAP').set('WEIGHTED', ~current_value);
+            current_value = pf.get('ST_ADJACENCY').get('WEIGHTED');
+            pf.get('ST_ADJACENCY').set('WEIGHTED', ~current_value);
             % reverse buttons
-            pf.get('ST_COLORMAP').set('BINARY', false)
-            pf.get('ST_COLORMAP').set('HIST', false)
+            pf.get('ST_ADJACENCY').set('BINARY', false)
+            pf.get('ST_ADJACENCY').set('HIST', false)
             % plot
             pf.plotAdjacency()
         end
         function cb_binary(~, ~) % (src, event)
-            current_value = pf.get('ST_COLORMAP').get('BINARY');
-            pf.get('ST_COLORMAP').set('BINARY', ~current_value);
+            current_value = pf.get('ST_ADJACENCY').get('BINARY');
+            pf.get('ST_ADJACENCY').set('BINARY', ~current_value);
             % reverse buttons
-            pf.get('ST_COLORMAP').set('WEIGHTED', false)
-            pf.get('ST_COLORMAP').set('HIST', false)
+            pf.get('ST_ADJACENCY').set('WEIGHTED', false)
+            pf.get('ST_ADJACENCY').set('HIST', false)
             % plot
             pf.plotAdjacency()
         end
         function cb_hist(~, ~) % (src, event)
-            current_value = pf.get('ST_COLORMAP').get('HIST');
-            pf.get('ST_COLORMAP').set('HIST', ~current_value);
+            current_value = pf.get('ST_ADJACENCY').get('HIST');
+            pf.get('ST_ADJACENCY').set('HIST', ~current_value);
             % reverse buttons
-            pf.get('ST_COLORMAP').set('BINARY', false)
-            pf.get('ST_COLORMAP').set('WEIGHTED', false)
+            pf.get('ST_ADJACENCY').set('BINARY', false)
+            pf.get('ST_ADJACENCY').set('WEIGHTED', false)
             % plot
             pf.plotAdjacency()
         end
         function cb_bar(~, ~) % (src, event)
-            current_value = pf.get('ST_COLORMAP').get('COLORBAR');
-            pf.get('ST_COLORMAP').set('COLORBAR', ~current_value);
+            current_value = pf.get('ST_ADJACENCY').get('COLORBAR');
+            pf.get('ST_ADJACENCY').set('COLORBAR', ~current_value);
             pf.plotAdjacency()
         end
 
@@ -238,9 +242,9 @@ function p_out = draw(pf, varargin)
 end
 function h = plotAdjacency(pf)
     % plot
-    if pf.get('ST_COLORMAP').get('BINARY')
+    if pf.get('ST_ADJACENCY').get('BINARY')
         h = pf.plotb(pf.get('G').get('A'));
-    elseif pf.get('ST_COLORMAP').get('HIST')
+    elseif pf.get('ST_ADJACENCY').get('HIST')
         h = pf.hist(pf.get('G').get('A'));
     else
         h = pf.plotw(pf.get('G').get('A'));
