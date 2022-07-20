@@ -1,5 +1,5 @@
 %% ¡header!
-PFGraph < PanelFig (pf, panel figure graph) is a plot of a graph.
+PFGraphEnsemble < PanelFig (pf, panel figure graph) is a plot of a graph.
 
 %%% ¡description!
 % % % PFGraph manages the plot of the single layer graph. 
@@ -26,9 +26,9 @@ h_plot
 %% ¡props!
 
 %%% ¡prop!
-G (metadata, item) is the graph.
+A (metadata, item) is the graph.
 %%%% ¡settings!
-'Graph'
+'AnalyzeEnsemble'
 
 %%% ¡prop!
 ST_AXIS (figure, item) determines the axis settings.
@@ -59,6 +59,17 @@ if pf.prop_set('STYLE', varargin) && ~braph2_testing
 end
 
 %%% ¡prop!
+G (figure, string) is the id of the selected graph.
+%%%% ¡default!
+1
+%%%% ¡gui!
+g = pf.get('A').get('G_DICT');
+
+pr = PP_GraphID('EL', pf, 'PROP', PFGraphEnsemble.G, ...
+    'G', g, ...
+    varargin{:});
+
+%%% ¡prop!
 ST_ADJACENCY (figure, item) determines the colormap settings.
 %%%% ¡settings!
 'SettingsGraph'
@@ -79,7 +90,7 @@ if check_graphics(pf.h_plot, 'surface')
     end
 end
 %%%% ¡gui!
-pr = SettingsGraphPP('EL', pf, 'PROP', PFGraph.ST_ADJACENCY, varargin{:});
+pr = SettingsGraphPP('EL', pf, 'PROP', PFGraphEnsemble.ST_ADJACENCY, varargin{:});
 
 %% ¡methods!
 function p_out = draw(pf, varargin)
@@ -219,13 +230,17 @@ function p_out = draw(pf, varargin)
     end
 end
 function h = plotAdjacency(pf)
+    % get correct graph.
+    g_id = pf.get('G');
+    graph = pf.get('A').get('G_DICT').getItem(g_id);
+    adjacency_matrix = graph.get('A');
     % plot
     if pf.get('ST_ADJACENCY').get('BINARY')
-        h = pf.plotb(pf.get('G').get('A'));
+        h = pf.plotb(adjacency_matrix);
     elseif pf.get('ST_ADJACENCY').get('HIST')
-        h = pf.hist(pf.get('G').get('A'));
+        h = pf.hist(adjacency_matrix);
     else
-        h = pf.plotw(pf.get('G').get('A'));
+        h = pf.plotw(adjacency_matrix);
     end
 end
 function str = tostring(pf, varargin)
@@ -240,7 +255,7 @@ function str = tostring(pf, varargin)
     %
     % See also disp, tree.
 
-    str = ['Plot ' pf.get('G').get('ID')];
+    str = ['Plot ' pf.get('A').get('G_DICT').get('ID')];
     str = tostring(str, varargin{:});
     str = str(2:1:end-1);
 end
@@ -378,8 +393,7 @@ function h = plotb(pf, A, varargin)
         ylabels = {ylabels};
     end
 
-    % B = binarize(A, 'threshold', threshold, 'density', density);
-    B = binarize(A, 'density', density);
+    B = binarize(A, 'threshold', threshold, 'density', density);
     
     cla(pf.h_axes)
 
