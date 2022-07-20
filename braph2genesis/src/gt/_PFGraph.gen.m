@@ -221,11 +221,11 @@ end
 function h = plotAdjacency(pf)
     % plot
     if pf.get('ST_ADJACENCY').get('BINARY')
-        h = pf.plotb(pf.get('G').get('B'));
+        h = pf.plotb(pf.get('G').get('A'));
     elseif pf.get('ST_ADJACENCY').get('HIST')
-        h = pf.hist(pf.get('G').get('B'));
+        h = pf.hist(pf.get('G').get('A'));
     else
-        h = pf.plotw(pf.get('G').get('B'));
+        h = pf.plotw(pf.get('G').get('A'));
     end
 end
 function str = tostring(pf, varargin)
