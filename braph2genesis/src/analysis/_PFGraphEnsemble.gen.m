@@ -59,11 +59,16 @@ if pf.prop_set('STYLE', varargin) && ~braph2_testing
 end
 
 %%% ¡prop!
-SUBJECT (figure, string) is the subject.
-%%%% ¡postprocessing!
-if pf.prop_set('STYLE', varargin) && ~braph2_testing
-    pf.draw()
-end
+G (figure, string) is the id of the selected graph.
+%%%% ¡default!
+1
+%%%% ¡gui!
+g = pf.get('A').get('G_DICT');
+
+pr = PP_GraphID('EL', pf, 'PROP', PFGraphEnsemble.G, ...
+    'G', g, ...
+    varargin{:});
+
 %%% ¡prop!
 ST_ADJACENCY (figure, item) determines the colormap settings.
 %%%% ¡settings!
@@ -85,28 +90,12 @@ if check_graphics(pf.h_plot, 'surface')
     end
 end
 %%%% ¡gui!
-pr = SettingsGraphPP('EL', pf, 'PROP', PFGraph.ST_ADJACENCY, varargin{:});
+pr = SettingsGraphPP('EL', pf, 'PROP', PFGraphEnsemble.ST_ADJACENCY, varargin{:});
 
 %% ¡methods!
 function p_out = draw(pf, varargin)
 
     pf.p = draw@PanelFig(pf, varargin{:});
-    
-    % put subjects
-   set(pf.p, 'Units', 'normalized')
-   set(pf.p, 'Position', [0 0 1 .9])
-   
-   f = ancestor(pr.p, 'figure');
-   
-   g_dict = pf.get('A').get('G_DICT');
-   
-   subject_dropdown = uidropdown(f, ...
-       'Units', 'normalized', ...
-       'Position',[0.1 .91 .4 .07], ...
-       'Items', {'Male','Female'});
-   
-   
-   
 
     % axes
     if ~check_graphics(pf.h_axes, 'axes')
@@ -241,13 +230,17 @@ function p_out = draw(pf, varargin)
     end
 end
 function h = plotAdjacency(pf)
+    % get correct graph.
+    g_id = pf.get('G');
+    graph = pf.get('A').get('G_DICT').getItem(g_id);
+    adjacency_matrix = graph.get('B');
     % plot
     if pf.get('ST_ADJACENCY').get('BINARY')
-        h = pf.plotb(pf.get('G').get('A'));
+        h = pf.plotb(adjacency_matrix);
     elseif pf.get('ST_ADJACENCY').get('HIST')
-        h = pf.hist(pf.get('G').get('A'));
+        h = pf.hist(adjacency_matrix);
     else
-        h = pf.plotw(pf.get('G').get('A'));
+        h = pf.plotw(adjacency_matrix);
     end
 end
 function str = tostring(pf, varargin)
@@ -262,7 +255,7 @@ function str = tostring(pf, varargin)
     %
     % See also disp, tree.
 
-    str = ['Plot ' pf.get('G').get('ID')];
+    str = ['Plot ' pf.get('A').get('G_DICT').get('ID')];
     str = tostring(str, varargin{:});
     str = str(2:1:end-1);
 end
