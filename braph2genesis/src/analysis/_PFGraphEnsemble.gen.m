@@ -74,7 +74,7 @@ ST_ADJACENCY (figure, item) determines the colormap settings.
 %%%% ¡settings!
 'SettingsGraph'
 %%%% ¡default!
-SettingsGraph('WEIGHTED', true, 'BINARY', false, 'HIST', false, 'COLORBAR', true)
+SettingsGraph('WEIGHTED', true, 'BINARY', false, 'BINARY_VALUE', 50, 'HIST', false, 'COLORBAR', true)
 %%%% ¡postprocessing!
 if check_graphics(pf.h_plot, 'surface')
         
@@ -369,7 +369,7 @@ function h = plotb(pf, A, varargin)
     threshold = get_from_varargin(0, 'threshold', varargin{:});
 
     % density
-    density = get_from_varargin([], 'density', varargin{:});
+    density = pf.get('ST_ADJACENCY').get('BINARY_VALUE');
 
     % x labels
     xlabels = (1:1:N);

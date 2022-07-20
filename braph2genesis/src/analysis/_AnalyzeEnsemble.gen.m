@@ -83,8 +83,10 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
     if isa(a.getr('PFGD'), 'NoValue')
         tmp_g_dict = a.get('G_DICT').getItems();
         
-        if Graph.is_graph(tmp_g_dict{1})
+        if Graph.is_graph(tmp_g_dict{1}) && ~Graph.is_multigraph(tmp_g_dict{1})
             a.set('PFGD', PFGraphEnsemble('A', a))
+        elseif Graph.is_multigraph(tmp_g_dict{1})
+            a.set('PFGD', PFMultiGraphEnsemble('A', a))
         else
             a.memorize('PFGD').set('A', a)
         end        
