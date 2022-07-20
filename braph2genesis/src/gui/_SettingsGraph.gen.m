@@ -20,6 +20,11 @@ BINARY (figure, logical) determines whether the binary plot is shown.
 1
 
 %%% ¡prop!
+BINARY_VALUE (figure, scalar) determines the value of the binary value.
+%%%% ¡default!
+0
+
+%%% ¡prop!
 HIST (figure, logical) determines whether the histogram plot is shown.
 %%%% ¡default!
 1

@@ -21,7 +21,7 @@ ST_ADJACENCY (figure, item) determines the colormap settings.
 %%%% ¡settings!
 'SettingsGraph'
 %%%% ¡default!
-SettingsGraph('WEIGHTED', true, 'BINARY', false, 'HIST', false, 'COLORBAR', true)
+SettingsGraph('WEIGHTED', true, 'BINARY', false, 'BINARY_VALUE', 50, 'HIST', false, 'COLORBAR', true)
 %%%% ¡postprocessing!
 if check_graphics(pf.h_plot, 'surface')
         

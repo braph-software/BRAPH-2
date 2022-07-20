@@ -15,6 +15,8 @@ checkbox_binary
 checkbox_hist
 checkbox_colorbar
 
+slider_binary
+
 %% ¡methods!
 function p_out = draw(pr, varargin)
     %DRAW draws the panel of graph settings.
@@ -65,6 +67,20 @@ function p_out = draw(pr, varargin)
         pr.cb_graph_s()
     end
 
+    if ~check_graphics(pr.slider_binary, 'uislider')
+        pr.slider_binary = uislider( ...
+            'Parent', pr.p, ...
+            'Tag', 'slider_binary', ...
+            'Limits', [0 100], ...
+            'FontSize', BRAPH2.FONTSIZE / 2, ...
+            'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
+            'ValueChangedFcn', {@cb_slider_binary} ...
+            );
+    end
+        function cb_slider_binary(~, ~) % (src, event)
+            pr.cb_graph_s()
+        end
+
     if ~check_graphics(pr.checkbox_hist, 'uicheckbox')
         pr.checkbox_hist = uicheckbox( ...
             'Parent', pr.p, ...
@@ -93,8 +109,6 @@ function p_out = draw(pr, varargin)
         pr.cb_graph_s()
     end
 
-   
-
     % output
     if nargout > 0
         p_out = pr.p;
@@ -117,6 +131,7 @@ function update(pr)
         set(pr.checkbox_binary, 'Enable', pr.get('ENABLE'))
         set(pr.checkbox_hist, 'Enable', pr.get('ENABLE'))
         set(pr.checkbox_colorbar, 'Enable', pr.get('ENABLE'))
+        set(pr.slider_binary, 'Enable', pr.get('ENABLE'))
     end
 
     switch el.getPropCategory(prop)
@@ -145,6 +160,9 @@ function update(pr)
             if isa(el.getr(prop), 'Callback') || isa(el.get(prop).get('COLORBAR'), 'Callback')
                 set(pr.checkbox_colorbar, 'Enable', pr.get('ENABLE'))
             end
+            if isa(value, 'Callback')
+                set(pr.slider_binary, 'Enable', pr.get('ENABLE'))
+            end
             
         case Category.RESULT
             value = el.getr(prop);
@@ -166,6 +184,7 @@ function update(pr)
                     'Value', el.get(prop).getPropDefault('COLORBAR'), ...
                     'Enable', pr.get('ENABLE') ...
                     )
+                set(pr.slider_binary, 'Enable', pr.get('ENABLE'))
             else
                 set(pr.checkbox_weighted, ...
                     'Value', el.get(prop).get('AXIS'), ...
@@ -183,6 +202,7 @@ function update(pr)
                     'Value', el.get(prop).get('COLORBAR'), ...
                     'Enable', pr.get('ENABLE') ...
                     )
+                set(pr.slider_binary, 'Enable', pr.get('ENABLE'))
             end
     end
 end
@@ -207,12 +227,13 @@ function redraw(pr, varargin)
     %
     % See also draw, update, PanelElement, s.
 
-    [h_p, varargin] = get_and_remove_from_varargin(s(5.5), 'Height', varargin);
+    [h_p, varargin] = get_and_remove_from_varargin(s(7.5), 'Height', varargin);
     
     pr.redraw@PanelProp('Height', h_p, varargin{:})
     
-    set(pr.checkbox_weighted, 'Position', [s(.3) s(2.3) .30*w(pr.p, 'pixels') s(1.7)])
-    set(pr.checkbox_binary, 'Position', [s(.6)+.30*w(pr.p, 'pixels') s(2.3) .30*w(pr.p, 'pixels') s(1.7)])
+    set(pr.checkbox_weighted, 'Position', [s(.3) s(4.3) .30*w(pr.p, 'pixels') s(1.7)])
+    set(pr.checkbox_binary, 'Position', [s(.3) s(2.3) .30*w(pr.p, 'pixels') s(1.7)])
+    set(pr.slider_binary, 'Position', [s(.6)+.35*w(pr.p, 'pixels')+s(1.7) s(4.3) .50*w(pr.p, 'pixels')   3]) % the height of a slider cannot be changed
     set(pr.checkbox_hist, 'Position', [s(.3) s(.3) .30*w(pr.p, 'pixels') s(1.7)])
     set(pr.checkbox_colorbar, 'Position', [s(.6)+.30*w(pr.p, 'pixels') s(.3) .30*w(pr.p, 'pixels') s(1.7)])
 end
@@ -227,6 +248,7 @@ function cb_graph_s(pr)
     el.get(prop).set( ...
         'WEIGHTED', get(pr.checkbox_weighted, 'Value'), ...
         'BINARY', get(pr.checkbox_binary, 'Value'), ...
+        'BINARY_VALUE', get(pr.slider_binary, 'Value'), ...
         'HIST', get(pr.checkbox_hist, 'Value'), ...
         'COLORBAR', get(pr.checkbox_colorbar, 'Value') ...
         )
