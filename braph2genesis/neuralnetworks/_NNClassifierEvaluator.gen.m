@@ -21,7 +21,6 @@ pr = PanelPropItem('EL', nne, 'PROP', NNClassifierEvaluator.PFFI, ...
     'GUICLASS', 'GUIFig', ...
     varargin{:});
 
-
 %%% ¡prop!
 AUC (result, scalar) is an area under the curve score.
 %%%% ¡calculate!
@@ -59,7 +58,6 @@ else
     value = {X, Y};
 end
 
-
 %%% ¡prop!
 PFROC (gui, item) contains the panel figure of the receiver operating characteristic curve.
 %%%% ¡settings!
@@ -94,15 +92,6 @@ else
     [targets, classes] = nn.reconstruct_targets(gr);
     % calculate the confusion matrix
 	[cm, order] = confusionmat(targets(2, :), double(pred(2, :)));
-        figure
-        heatmap(classes, classes, cm)
-        directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
-        if ~exist(directory, 'dir')
-            mkdir(directory)
-        end
-        filename = [directory filesep 'confusion_matrix.svg'];
-        saveas(gcf, filename);
-
     value = cm;
 end
 %%%% ¡gui_!

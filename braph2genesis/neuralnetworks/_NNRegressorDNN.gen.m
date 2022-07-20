@@ -86,11 +86,11 @@ if BRAPH2.installed('NN', 'warning')
             regressionLayer('Name', 'output')
             ];
 
-% % %         % plot layers
+        % plot layers
 % % %         if nn.get('PLOT_LAYERS')
-% % %             lgraph = layerGraph(layers);
-% % %             figure
-% % %             plot(lgraph)
+            lgraph = layerGraph(layers);
+            figure
+            plot(lgraph)
 % % %         end
 
         % specify trianing parameters

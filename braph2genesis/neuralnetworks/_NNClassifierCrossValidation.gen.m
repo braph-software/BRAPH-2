@@ -246,14 +246,14 @@ else
     [targets, classes] = nn.reconstruct_targets(gr);
     % calculate the confusion matrix
     [cm, order] = confusionmat(targets(2, :), double(pred(2, :)));
-    figure
-    heatmap(classes, classes, cm)
-    directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
-    if ~exist(directory, 'dir')
-        mkdir(directory)
-    end
-    filename = [directory filesep 'confusion_matrix.svg'];
-    saveas(gcf, filename);
+% % %     figure
+% % %     heatmap(classes, classes, cm)
+% % %     directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
+% % %     if ~exist(directory, 'dir')
+% % %         mkdir(directory)
+% % %     end
+% % %     filename = [directory filesep 'confusion_matrix.svg'];
+% % %     saveas(gcf, filename);
 
     value = cm;
 end
@@ -287,9 +287,10 @@ Y = {};
 if nne_dict.length() > 0
     for i = 1:1:nne_dict.length()
         auc_val = nne_dict.getItem(i).get('AUC');
-        auc{i} = auc_val{1};
-        X{i} = auc_val{2};
-        Y{i} = auc_val{3};
+        auc{i} = auc_val;
+        roc_val = nne_dict.getItem(i).get('ROC');
+        X{i} = roc_val{1};
+        Y{i} = roc_val{2};
     end
 
     intervals = linspace(0, 1, 100);
@@ -306,9 +307,11 @@ if nne_dict.length() > 0
                 aux = aux + 0.00001;
             end
         end
+        all_lines(i, :) = interp1(Xadjusted, Y{i}, intervals);
         mean_curve = mean_curve + (interp1(Xadjusted, Y{i}, intervals))/nne_dict.length();
     end
     hline(i + 1) = plot(intervals, mean_curve, 'Color', 'Black', 'LineWidth', 3.0);
+    std_curve = std(all_lines, 1);
     xlabel('False positive rate');
     ylabel('True positive rate');
     title('ROC for Classification');
@@ -320,7 +323,7 @@ if nne_dict.length() > 0
     end
     filename = [directory filesep 'cv_roc.svg'];
     saveas(gcf, filename);
-    value = {X, Y};
+    value = {intervals, mean_curve, std_curve};
 else
     value = {};
 end

@@ -71,7 +71,7 @@ ST_XLABEL (figure, item) determines the xlabel settings.
 %%%% ¡settings!
 'SettingsText'
 %%%% ¡postprocessing!
-if check_graphics(pf.h_ylabel, 'text')
+if check_graphics(pf.h_xlabel, 'text')
     st = pf.get('ST_XLABEL');
     if isa(st.getr('TXT'), 'NoValue')
         st.set( ...
@@ -113,7 +113,7 @@ if check_graphics(pf.h_ylabel, 'text')
     end
 end
 %%%% ¡gui!
-pr = SettingsPPTable('EL', pf, 'PROP', PFMeasureGU.ST_YLABEL, ...
+pr = SettingsPPTable('EL', pf, 'PROP', PFReceiverOperatingCharacteristic.ST_YLABEL, ...
     'COLS', [SettingsText.VISIBLE, SettingsText.TXT, SettingsText.X, SettingsText.Y, SettingsText.ROTATION, SettingsText.HORIZONTALALIGNMENT, SettingsText.VERTICALALIGNMENT, SettingsText.FONTSIZE, SettingsText.FONTNAME, SettingsText.FONTCOLOR, SettingsText.INTERPRETER], ...
     varargin{:});
 

@@ -88,13 +88,13 @@ if BRAPH2.installed('NN', 'warning')
             softmaxLayer('Name', 'sfmax1')
             classificationLayer('Name', 'output')
             ];
-% % % 
-% % %         % plot layers
-% % %         if nn.get('PLOT_LAYERS')
-% % %             figure();
-% % %             lgraph = layerGraph(layers);            
-% % %             plot(lgraph)
-% % %         end
+
+        % plot layers
+% %         if nn.get('PLOT_LAYERS')
+            figure();
+            lgraph = layerGraph(layers);            
+            plot(lgraph)
+% %         end
 
         % specify trianing parameters
         if nn.get('PLOT_TRAINING')
