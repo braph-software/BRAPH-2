@@ -9,45 +9,50 @@ under the ROC curve (AUC), and the confusion matrix.
 %% ¡props!
 
 %%% ¡prop!
-FEATURE_PERMUTATION_IMPORTANCE (result, cell) is feature importance evaluated by permuting the feature with random numbers
+FEATURE_PERMUTATION_IMPORTANCE (result, cell) is feature importance evaluated by permuting the features with random numbers
 %%%% ¡calculate!
 if nne.get('GR').get('SUB_DICT').length() == 0
     value = {};
-else
-    %%%%%%%%
+elseif any(strcmp(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Graph', [], [], true))) && nne.get('NN').get('FEATURE_SELECTION_RATIO') == 1
+    % now it only works for (1) input being adj of a graph and (2) no feature selection 
     nn = nne.get('NN');
     gr = nne.get('GR');
-%     mask_tmp = gr.get('SUB_DICT').getItem(1).get('FEATURE_MASK');
-%     masks = {};
-%     for i = 1:1:length(mask_tmp)
-%         mask = mask_tmp{i};
-%         [~, idx_all] = sort(mask(:), 'descend');
-%         percentile = nn.get('FEATURE_SELECTION_RATIO');
-%         num_top_idx = ceil(percentile * numel(mask));
-%         mask(idx_all(1:num_top_idx)) = 1;
-%         mask(idx_all(end - (length(idx_all) - num_top_idx - 1):end)) = 0;
-%         masks{i} = mask;
-%     end
+    net = nn.get('MODEL');
+
     [inputs, num_features] = nn.reconstruct_inputs(gr);
     [targets, classes] = nn.reconstruct_targets(gr);
-    net = nn.get('MODEL');
-    feature_importance = [];
+
     original_loss = crossentropy(net.predict(inputs)', targets);
+
     if isa(net, 'NoValue') || ~BRAPH2.installed('NN', 'msgbox')
-        feature_importance = 0;
+        value = {};
     else
+        % scramble the input feature 1 by 1
         parfor i = 1:1:num_features
-            scram_inputs = inputs;
+            scrambled_inputs = inputs;
             permuted_value = squeeze(normrnd(mean(inputs(:, :, i, :)), std(inputs(:, :, i, :)), squeeze(size(inputs(:, :, i, :)))));
-            scram_inputs(:, :, i, :) = permuted_value;
-            scram_loss = crossentropy(net.predict(scram_inputs)', targets);
-            feature_importance(i)= scram_loss/original_loss;
+            scrambled_inputs(:, :, i, :) = permuted_value;
+            scrambled_loss = crossentropy(net.predict(scrambled_inputs)', targets);
+            feature_importance(i)= scrambled_loss / original_loss;
+        end
+        feature_importance = reshape(feature_importance, gr.get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').length(), []);
+
+        % re-assign the cell array when the input is obtained from a multigraph
+        if size(feature_importance, 1) < size(feature_importance, 2) && mod(size(feature_importance, 2), size(feature_importance, 1)) == 0
+            n = size(feature_importance, 2) / size(feature_importance, 1);
+            feature_importance_tmp = feature_importance;
+            for i = 1:1:n
+                istart = (i - 1) * size(feature_importance_tmp, 1) + 1;
+                iend = i*size(feature_importance_tmp, 1);
+                feature_importance{i} = rescale(feature_importance_tmp(:, istart:iend));
+            end
+            value = {double(feature_importance)};
+        else
+            value = {rescale(double(feature_importance))};
         end
     end
-    feature_importance = rescale(feature_importance);
-    feature_importance = reshape(feature_importance, gr.get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').length(), []);
-
-    value = {rescale(feature_importance)};
+else
+    value = {};
 end
 
 %%% ¡prop!
@@ -77,11 +82,8 @@ else
     [targets, classes] = nn.reconstruct_targets(gr);
     targets = onehotdecode(targets, classes, 1);
     [X, Y, T, auc] = perfcurve(targets, pred(2, :), classes(2));
-
     value = double(auc);
 end
-%%%% ¡gui_!
-% % % pr = PPNNClassifierEvaluator_AUC('EL', nne, 'PROP', NNClassifierEvaluator.AUC, varargin{:});
 
 %%% ¡prop!
 ROC (result, cell) is a receiver operating characteristic curve.
@@ -136,8 +138,11 @@ else
 	[cm, order] = confusionmat(targets(2, :), double(pred(2, :)));
     value = cm;
 end
-%%%% ¡gui_!
-% % % pr = PanelPropCell('EL', nne, 'PROP', NNClassifierEvaluator.CONFUSION_MATRIX, varargin{:});
+%%%% ¡gui!
+pr = PanelPropMatrix('EL', nne, 'PROP', NNRegressorEvaluator.SCATTER_CHART, ...
+    'ROWNAME', classes,...
+    'COLUMNNAME', classes,...
+    varargin{:});
 
 %%% ¡prop!
 PFCM (gui, item) contains the panel figure of the confusion matrix.
@@ -188,7 +193,7 @@ else
         'FEATURE_SELECTION_MASK', gr.get('FEATURE_SELECTION_MASK') ...
         );
 
-    % add subejcts from all groups
+    % add subejcts, it has to be created as new subjects
     sub_dict = gr_pred.get('SUB_DICT');
     subs = gr.get('SUB_DICT').getItems();
     for i = 1:1:length(subs)

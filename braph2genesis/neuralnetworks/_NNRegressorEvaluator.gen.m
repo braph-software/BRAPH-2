@@ -12,41 +12,46 @@ FEATURE_PERMUTATION_IMPORTANCE (result, cell) is feature importance evaluated by
 %%%% ¡calculate!
 if nne.get('GR').get('SUB_DICT').length() == 0
     value = {};
-else
-    %%%%%%%%
+elseif any(strcmp(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Graph', [], [], true))) && nne.get('NN').get('FEATURE_SELECTION_RATIO') == 1
+    % now it only works for (1) input being adj of a graph and (2) no feature selection 
     nn = nne.get('NN');
     gr = nne.get('GR');
-%     mask_tmp = gr.get('SUB_DICT').getItem(1).get('FEATURE_MASK');
-%     masks = {};
-%     for i = 1:1:length(mask_tmp)
-%         mask = mask_tmp{i};
-%         [~, idx_all] = sort(mask(:), 'descend');
-%         percentile = nn.get('FEATURE_SELECTION_RATIO');
-%         num_top_idx = ceil(percentile * numel(mask));
-%         mask(idx_all(1:num_top_idx)) = 1;
-%         mask(idx_all(end - (length(idx_all) - num_top_idx - 1):end)) = 0;
-%         masks{i} = mask;
-%     end
+    net = nn.get('MODEL');
+
     [inputs, num_features] = nn.reconstruct_inputs(gr);
     [targets, classes] = nn.reconstruct_targets(gr);
-    net = nn.get('MODEL');
-    feature_importance = [];
-    original_loss = double(sqrt(mean((net.predict(inputs) - targets).^2)));
+
+    original_loss = crossentropy(net.predict(inputs)', targets);
+
     if isa(net, 'NoValue') || ~BRAPH2.installed('NN', 'msgbox')
-        feature_importance = 0;
+        value = {};
     else
+        % scramble the input feature 1 by 1
         parfor i = 1:1:num_features
-            scram_inputs = inputs;
+            scrambled_inputs = inputs;
             permuted_value = squeeze(normrnd(mean(inputs(:, :, i, :)), std(inputs(:, :, i, :)), squeeze(size(inputs(:, :, i, :)))));
-            scram_inputs(:, :, i, :) = permuted_value;
-            scram_loss = double(sqrt(mean((net.predict(scram_inputs) - targets).^2)));
-            feature_importance(i)= scram_loss/original_loss;
+            scrambled_inputs(:, :, i, :) = permuted_value;
+            scrambled_loss = crossentropy(net.predict(scrambled_inputs)', targets);
+            feature_importance(i)= scrambled_loss / original_loss;
+        end
+        feature_importance = reshape(feature_importance, gr.get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').length(), []);
+
+        % re-assign the cell array when the input is obtained from a multigraph
+        if size(feature_importance, 1) < size(feature_importance, 2) && mod(size(feature_importance, 2), size(feature_importance, 1)) == 0
+            n = size(feature_importance, 2) / size(feature_importance, 1);
+            feature_importance_tmp = feature_importance;
+            for i = 1:1:n
+                istart = (i - 1) * size(feature_importance_tmp, 1) + 1;
+                iend = i*size(feature_importance_tmp, 1);
+                feature_importance{i} = rescale(feature_importance_tmp(:, istart:iend));
+            end
+            value = {double(feature_importance)};
+        else
+            value = {rescale(double(feature_importance))};
         end
     end
-    feature_importance = rescale(feature_importance);
-    feature_importance = reshape(feature_importance, gr.get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').length(), []);
-
-    value = {rescale(feature_importance)};
+else
+    value = {};
 end
 
 %%% ¡prop!
@@ -86,23 +91,12 @@ else
     targets = cellfun(@(x) cell2mat(x.get('TARGET')), nne.get('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
     targets = cell2mat(targets);
     value = double([preds' targets']);
-% % %         figure
-% % %         scatter(preds, targets);
-% % %         hold on
-% % %         plot([min(preds) max(preds)], [min(targets) max(targets)]);
-% % %         hold off
-% % %         xlabel('Prediction')
-% % %         ylabel('Target')
-% % %         title('Scatter plot for regression')
-% % %         directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
-% % %         if ~exist(directory, 'dir')
-% % %             mkdir(directory)
-% % %         end
-% % %         filename = [directory filesep 'scatter.svg'];
-% % %         saveas(gcf, filename);
 end
-%%%% ¡gui_!
-% % % pr = PPNNRegressorEvaluator_Scatter_Chart('EL', nne, 'PROP', NNRegressorEvaluator.SCATTER_CHART, varargin{:});
+%%%% ¡gui!
+pr = PanelPropMatrix('EL', nne, 'PROP', NNRegressorEvaluator.SCATTER_CHART, ...
+    'ROWNAME', {'Prediction', 'Target'},...
+    'COLUMNNAME', {cellfun(@(x) cell2mat(x.get('ID'))', nne.memorize('GR').get('SUB_DICT').getItems(), 'UniformOutput', false)},...
+    varargin{:});
 
 %%% ¡prop!
 PFSP (gui, item) contains the panel figure of the scatter plot.
@@ -155,7 +149,7 @@ else
         'FEATURE_SELECTION_MASK', nn_gr.get('FEATURE_SELECTION_MASK') ...
         );
 
-    % add subejcts from all groups
+    % add subejcts, it has to be created as new subjects
     sub_dict = nn_gr_pred.get('SUB_DICT');
     subs = nn_gr.get('SUB_DICT').getItems();
     for i = 1:1:length(subs)
@@ -169,7 +163,6 @@ else
             'TARGET', subs{i}.get('TARGET'), ...
             'TARGET_NAME', subs{i}.get('TARGET_NAME') ...
             );
-        %sub.set('PREDICTION', {predictions(i, :)});
         sub_dict.add(sub);
     end
     nn_gr_pred.set('SUB_DICT', sub_dict);

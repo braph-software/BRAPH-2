@@ -17,11 +17,6 @@ KFOLD (data, scalar) is the number of folds.
 5
 
 %%% ¡prop!
-REPETITION (data, scalar) is the number of repetitions.
-%%%% ¡default!
-1
-
-%%% ¡prop!
 GR1 (data, item) is is a group of subjects.
 %%%% ¡settings!
 'NNGroup'
@@ -30,17 +25,6 @@ GR1 (data, item) is is a group of subjects.
 GR2 (data, item) is is a group of subjects.
 %%%% ¡settings!
 'NNGroup'
-% % % 
-% % % %%% ¡prop!
-% % % FEATURE_MASK (data, cell) is a given mask or a percentile to select relevant features.
-% % % %%%% ¡default!
-% % % {0.05}
-% % % %%%% ¡conditioning!
-% % % if ~iscell(value) & isnumeric(value)
-% % %     value = num2cell(value);
-% % % end
-%%%% ¡gui_!
-% % % pr = PlotPropSmartVector('EL', nncv, 'PROP', NNClassifierCrossValidation.FEATURE_MASK, 'MAX', 10000000, 'MIN', 0, varargin{:});
 
 %%% ¡prop!
 SPLIT_KFOLD_GR1 (result, cell) is a vector stating which subjects belong to each fold.
@@ -97,35 +81,31 @@ IndexedDictionary('IT_CLASS', 'NNClassifierDataSplit')
 %%%% ¡calculate!
 nnds_dict = IndexedDictionary('IT_CLASS', 'NNClassifierDataSplit');
 if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
-    for i = 1:1:nncv.get('REPETITION')
-        idx_per_fold_gr1 = nncv.get('SPLIT_KFOLD_GR1');
-        idx_per_fold_gr2 = nncv.get('SPLIT_KFOLD_GR2');
-        nnds_tmp = NNClassifierDataSplit( ...
-                'ID', ['NN dataset for fold #', num2str(1), ' in repetition #', num2str(i)], ...
-                'GR1', nncv.get('GR1'), ...
-                'GR2', nncv.get('GR2'), ...
-                'SPLIT_GR1', idx_per_fold_gr1{1}, ...
-                'SPLIT_GR2', idx_per_fold_gr2{1} ...
-                );
-        nnds_dict.add(nnds_tmp);
-        for j = 2:1:nncv.get('KFOLD')
-            nnds = NNClassifierDataSplit( ...
-                'ID', ['NN dataset for fold #', num2str(j), ' in repetition #', num2str(i)], ...
-                'GR1', nncv.get('GR1'), ...
-                'GR2', nncv.get('GR2'), ...
-                'SPLIT_GR1', idx_per_fold_gr1{j}, ...
-                'SPLIT_GR2', idx_per_fold_gr2{j}, ...
-                'TEMPLATE', nnds_tmp ...
-                );
+    idx_per_fold_gr1 = nncv.get('SPLIT_KFOLD_GR1');
+    idx_per_fold_gr2 = nncv.get('SPLIT_KFOLD_GR2');
+    nnds_tmp = NNClassifierDataSplit( ...
+        'ID', ['NN dataset for fold #', num2str(1), ' in repetition #', num2str(i)], ...
+        'GR1', nncv.get('GR1'), ...
+        'GR2', nncv.get('GR2'), ...
+        'SPLIT_GR1', idx_per_fold_gr1{1}, ...
+        'SPLIT_GR2', idx_per_fold_gr2{1} ...
+        );
+    nnds_dict.add(nnds_tmp);
+    for i = 2:1:nncv.get('KFOLD')
+        nnds = NNClassifierDataSplit( ...
+            'ID', ['NN dataset for fold #', num2str(i)], ...
+            'GR1', nncv.get('GR1'), ...
+            'GR2', nncv.get('GR2'), ...
+            'SPLIT_GR1', idx_per_fold_gr1{j}, ...
+            'SPLIT_GR2', idx_per_fold_gr2{j}, ...
+            'TEMPLATE', nnds_tmp ...
+            );
 
-            nnds_dict.add(nnds);
-        end
+        nnds_dict.add(nnds);
     end
 end
 
 value = nnds_dict;
-%%%% ¡gui_!
-% % % pr = PPNNCrossValidation_NNDict('EL', nncv, 'PROP', NNClassifierCrossValidation.NNDS_DICT, varargin{:});
 
 %%% ¡prop!
 NN_DICT (result, idict) contains the NN classifiers for k folds for all repetitions.
@@ -162,8 +142,6 @@ if nncv.memorize('NNDS_DICT').length() > 0
 end
 
 value = nn_dict;
-%%%% ¡gui_!
-% % % pr = PPNNCrossValidation_NNDict('EL', nncv, 'PROP', NNClassifierCrossValidation.NN_DICT, varargin{:});
 
 %%% ¡prop!
 NNE_DICT (result, idict) contains the NN evaluators for k folds for all repetitions.
@@ -190,29 +168,28 @@ if nncv.memorize('NN_DICT').length() > 0
 end
 
 value = nne_dict;
-%%%% ¡gui_!
-% % % pr = PPNNCrossValidation_NNDict('EL', nncv, 'PROP', NNClassifierCrossValidation.NNE_DICT, varargin{:});
 
 %%% ¡prop!
 FEATURE_IMPORTANCE (result, cell) is the feature importance obtained with permutation analysis.
 %%%% ¡calculate!
 nne_dict = nncv.memorize('NNE_DICT');
-feature_importances = [];
-if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('AUC')) && ~any(ismember(subclasses('Measure'), nncv.get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('INPUT_LABEL')))
-    for i = 1:1:nne_dict.length()
-        feature_importance = nne_dict.getItem(i).get('FEATURE_PERMUTATION_IMPORTANCE');
-        feature_importances = cellfun(@(x, y) x + y, feature_importances, feature_importance, 'UniformOutput', false);
+if ~isempty(nne_dict.getItems())
+    feature_importance = nne_dict.getItem(1).get('FEATURE_PERMUTATION_IMPORTANCE');
+    if length(feature_importance) == 0
+        feature_importances = {}
+    else
+        feature_importances = {length(feature_importance)};
+        for i = 1:1:nne_dict.length()
+            feature_importance = nne_dict.getItem(i).get('FEATURE_PERMUTATION_IMPORTANCE');
+            feature_importances = cellfun(@(x, y) x + y, feature_importances, feature_importance, 'UniformOutput', false);
+        end
+        feature_importances = cellfun(@(x) x/nne_dict.length, feature_importances, 'UniformOutput', false);
     end
-    feature_importances = cellfun(@(x) x/nne_dict.length, feature_importances, 'UniformOutput', false);
 else
-    %TODO: check the msgbox is needed 
-    %braph2msgbox("No visualization for the feature map", "For now, we only provide the feature map visualization for input of adjacency matrix or structural data.")
+    feature_importances = {};
 end
 
 value = feature_importances;
-%%%% ¡gui_!
-% % % pr = PPNNCrossValidation_Feature_Map('EL', nncv, 'PROP', NNClassifierCrossValidation.FEATURE_MAP, varargin{:});
-
 
 %% ¡props_update!
 
@@ -262,8 +239,6 @@ else
 end
 
 value = gr_prediction;
-%%%% ¡gui_!
-% % % pr = PPNNData_GR_NN('EL', nncv, 'PROP', NNClassifierCrossValidation.GR_PREDICTION, varargin{:});
 
 %%% ¡prop!
 CONFUSION_MATRIX (result, matrix) is an add-up confusion matrix across k folds for all repeitions.
@@ -275,26 +250,21 @@ else
     pred = cell2mat(pred);
     pred = pred > 0.5;
 
-    % get ground truth
+    % get the label of classes
     nn = nncv.get('NN_DICT').getItem(1);
     gr = nncv.get('GR_PREDICTION');
     [inputs, ~] = nn.reconstruct_inputs(gr);
     [targets, classes] = nn.reconstruct_targets(gr);
+    
     % calculate the confusion matrix
     [cm, order] = confusionmat(targets(2, :), double(pred(2, :)));
-% % %     figure
-% % %     heatmap(classes, classes, cm)
-% % %     directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
-% % %     if ~exist(directory, 'dir')
-% % %         mkdir(directory)
-% % %     end
-% % %     filename = [directory filesep 'confusion_matrix.svg'];
-% % %     saveas(gcf, filename);
-
     value = cm;
 end
-%%%% ¡gui_!
-% % % pr = PPNNClassifierCrossValidation_Confusion_Matrix('EL', nncv, 'PROP', NNClassifierCrossValidation.CONFUSION_MATRIX, varargin{:});
+%%%% ¡gui!
+pr = PanelPropMatrix('EL', nne, 'PROP', NNRegressorEvaluator.SCATTER_CHART, ...
+    'ROWNAME', classes,...
+    'COLUMNNAME', classes,...
+    varargin{:});
 
 %%% ¡prop!
 PFCM (gui, item) contains the panel figure of the confusion matrix.
@@ -308,7 +278,6 @@ end
 pr = PanelPropItem('EL', nncv, 'PROP', NNClassifierCrossValidation.PFCM, ...
     'GUICLASS', 'GUIFig', ...
     varargin{:});
-
 
 %%% ¡prop!
 AUC (result, scalar) is the area under the curve scores across k folds for all repetitions.
@@ -324,8 +293,6 @@ if nne_dict.length() > 0
 else
     value = 0;
 end
-%%%% ¡gui_!
-% % % pr = PPNNClassifierCrossValidation_AUC('EL', nncv, 'PROP', NNClassifierCrossValidation.AUC, varargin{:});
 
 %%% ¡prop!
 ROC (result, cell) is a receiver operating characteristic curve across k folds for all repetitions.
@@ -360,19 +327,6 @@ if nne_dict.length() > 0
         all_lines(i, :) = interp1(Xadjusted, Y{i}, intervals);
         mean_curve = mean_curve + (interp1(Xadjusted, Y{i}, intervals))/nne_dict.length();
     end
-    %hline(i + 1) = plot(intervals, mean_curve, 'Color', 'Black', 'LineWidth', 3.0);
-    std_curve = std(all_lines, 1);
-    %xlabel('False positive rate');
-    %ylabel('True positive rate');
-    %title('ROC for Classification');
-    %legend(hline(i+1), sprintf('average ROCs (AU-ROC = %.2f)', mean(cell2mat(auc))), 'Location', 'southeast', 'FontSize', 12);
-    %legend('boxoff');
-    %directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
-    %if ~exist(directory, 'dir')
-    %    mkdir(directory)
-    %end
-    %filename = [directory filesep 'cv_roc.svg'];
-    %saveas(gcf, filename);
     value = {intervals, mean_curve, std_curve};
 else
     value = {};
@@ -390,19 +344,3 @@ end
 pr = PanelPropItem('EL', nncv, 'PROP', NNClassifierCrossValidation.PFROC, ...
     'GUICLASS', 'GUIFig', ...
     varargin{:});
-
-
-%% ¡methods!
-function [avg, CI] = get_CI(nncv, scores)
-    %GET_CI calculates the 95% confidence interval.
-    % 
-    % [AVG, CI] = GET_CI(NNCV, SCORES) calculates the 95% confidence interval
-    %  of the input scores which are in a form of rvector. AVG is the mean 
-    %  value of the input scores. CI are the upper and lower boundary of
-    %  the corresponding 95% confidence interval.
-
-    avg = mean(scores);
-    SEM = std(scores)/sqrt(length(scores));               
-    ts = tinv([0.025  0.975],length(scores)-1);     
-    CI = avg + ts*SEM;
-end

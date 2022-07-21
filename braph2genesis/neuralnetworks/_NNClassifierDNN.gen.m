@@ -15,7 +15,7 @@ LAYERS (parameter, rvector) is a vector representing the number of neurons in ea
 if isempty(nn.get('LAYERS'))
     if nn.get('GR').get('SUB_DICT').length() > 0
         [inputs, num_features] = nn.reconstruct_inputs(nn.get('GR'));
-        value = [ceil(0.5 * num_features) ceil(0.5 * num_features)];
+        value = [ceil(0.1 * num_features) ceil(0.1 * num_features)];
         nn.set('LAYERS', value);
     end
 end
@@ -49,11 +49,6 @@ FEATURE_SELECTION_RATIO (parameter, scalar) is the ratio of selected features.
 
 %%% ¡prop!
 VERBOSE (metadata, logical) is an indicator to display trining progress information.
-%%%% ¡default!
-false
-
-%%% ¡prop!
-PLOT_TRAINING (metadata, logical) is an option for the plot of training-progress.
 %%%% ¡default!
 false
 
@@ -94,12 +89,13 @@ if BRAPH2.installed('NN', 'warning')
             classificationLayer('Name', 'output')
             ];
 
-        % plot layers
-% %         if nn.get('PLOT_LAYERS')
+        % plot layers 
+        %% TODO: create a panel figure when matlab change this kind of plot to uifigure
+        if nn.get('PLOT_LAYERS')
             figure();
             lgraph = layerGraph(layers);            
             plot(lgraph)
-% %         end
+        end
 
         % specify trianing parameters
         if nn.get('PLOT_TRAINING')
@@ -138,7 +134,7 @@ function [inputs, num_features] = reconstruct_inputs(nn, gr)
         inputs = [];
         num_features = 0;
     else
-        %mask = gr.get('FEATURE_SELECTION_MASK');
+         % get the mask for selecting the relevant input features
         mask_tmp = gr.get('FEATURE_SELECTION_MASK');
         masks = {};
         for i = 1:1:length(mask_tmp)
@@ -150,6 +146,8 @@ function [inputs, num_features] = reconstruct_inputs(nn, gr)
             mask(idx_all(end - (length(idx_all) - num_top_idx - 1):end)) = 0;
             masks{i} = mask;
         end
+
+        % apply the mask to select input features
         inputs = [];
         inputs_tmp = gr.get('INPUTS');
         for i = 1:1:length(inputs_tmp)

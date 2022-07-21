@@ -143,7 +143,6 @@ value = val_nn_gr;
 %%% ¡prop!
 FEATURE_SELECTION_ANALYSIS (result, cell) is an analysis for generating a feature mask.
 %%%% ¡calculate!
-percentile = cell2mat(nnds.get('FEATURE_MASK'));
 gr_train = nnds.memorize('GR_TRAIN');
 data = cellfun(@(x) x.get('INPUT'), gr_train.get('SUB_DICT').getItems(), 'UniformOutput', false);
 
@@ -181,30 +180,21 @@ else
                 
                 braph2waitbar(wb, .30 + .70 * counter / num_feature_all, ['Performing feature selection, ' num2str(100 * counter / num_feature_all, '%.0f') '% done...'])
             end
-
-%             [~, idx_all] = sort(mask(:), 'descend');
-%             num_top_idx = ceil(percentile * numel(mask));
-%             mask(idx_all(1:num_top_idx)) = 1;
-%             mask(idx_all(end - (length(idx_all) - num_top_idx - 1):end)) = 0;
         end
         value{k} = mask;
     end
-    
     braph2waitbar(wb, 'close')
 end
 
 %%% ¡prop!
-GR_TRAIN_FS (result, item) is a group of NN subjects with feature mask for the training set.
+GR_TRAIN_FS (result, item) is a training group of NN subjects with feature selection analysis.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡default!
 NNGroup('SUB_CLASS', 'NNSubject', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject'))
 %%%% ¡calculate!
 nn_gr = nnds.memorize('GR_TRAIN');
-feature_mask = nnds.get('FEATURE_MASK');
-if length(feature_mask) == 1 && length(cell2mat(feature_mask(1))) == 1 % given percentile
-    feature_mask = nnds.memorize('FEATURE_SELECTION_ANALYSIS');
-end
+feature_mask = nnds.memorize('FEATURE_SELECTION_ANALYSIS');
 
 if nn_gr.get('SUB_DICT').length() == 0
     value = NNGroup();
@@ -224,17 +214,14 @@ else
 end
 
 %%% ¡prop!
-GR_VAL_FS (result, item) is a group of NN subjects with feature mask for the validation set.
+GR_VAL_FS (result, item) is a validation group of NN subjects with feature selection analysis.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡default!
 NNGroup('SUB_CLASS', 'NNSubject', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject'))
 %%%% ¡calculate!
 nn_gr = nnds.memorize('GR_VAL');
-feature_mask = nnds.get('FEATURE_MASK');
-if length(feature_mask) == 1 && length(cell2mat(feature_mask(1))) == 1 % given percentile
-    feature_mask = nnds.memorize('FEATURE_SELECTION_ANALYSIS');
-end
+feature_mask = nnds.memorize('FEATURE_SELECTION_ANALYSIS');
 
 if nn_gr.get('SUB_DICT').length() == 0
     value = NNGroup();
