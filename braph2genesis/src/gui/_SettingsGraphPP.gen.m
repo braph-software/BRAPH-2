@@ -45,6 +45,7 @@ function p_out = draw(pr, varargin)
             'Parent', pr.p, ...
             'Tag', 'checkbox_weighted', ...
             'Text', 'weighted', ...
+            'Value', 1, ...
             'FontSize', BRAPH2.FONTSIZE, ...
             'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('WEIGHTED')) ' ' el.get(prop).getPropDescription('WEIGHTED')], ...
             'ValueChangedFcn', {@cb_checkbox_weighted} ...
@@ -77,7 +78,7 @@ function p_out = draw(pr, varargin)
             set(pr.label_binary, 'Visible', false)
             set(pr.slider_binary, 'Visible', false)
         else
-            set(checkbox_colorbar, 'Visible', false)
+            set(pr.checkbox_colorbar, 'Visible', false)
             set(pr.label_binary, 'Visible', true)
             set(pr.slider_binary, 'Visible', true)
         end
@@ -141,6 +142,7 @@ function p_out = draw(pr, varargin)
         pr.cb_graph_s()
     end   
 
+    state_colorbar()
     % output
     if nargout > 0
         p_out = pr.p;
@@ -258,6 +260,7 @@ function redraw(pr, varargin)
     pr.redraw@PanelProp('Height', h_p, varargin{:})
     
     set(pr.checkbox_weighted, 'Position', [s(.3) s(4.3) .30*w(pr.p, 'pixels') s(1.7)])
+    set(pr.checkbox_colorbar, 'Position', [s(.3)+.35*w(pr.p, 'pixels')+s(1.7) s(4.3) .30*w(pr.p, 'pixels') s(1.7)])
     set(pr.checkbox_binary, 'Position', [s(.3) s(2.3) .30*w(pr.p, 'pixels') s(1.7)])
     set(pr.label_binary, 'Position', [s(.6)+.35*w(pr.p, 'pixels')+s(1.7) s(4.3)  .20*w(pr.p, 'pixels')   s(1.7)])
     set(pr.slider_binary, 'Position', [s(.6)+.35*w(pr.p, 'pixels')+s(1.7) s(3.3) .50*w(pr.p, 'pixels')   3]) % the height of a slider cannot be changed

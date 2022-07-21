@@ -77,7 +77,7 @@ pr = PPAnalyzeEnsemble_MeDict('EL', a, 'PROP', AnalyzeEnsemble.ME_DICT, 'WAITBAR
 %%% ¡prop!
 PFGD (gui, item) contains the panel figure of the graph dictionary.
 %%%% ¡settings!
-'PFGraphEnsemble'
+'PFAnalysisEnsemble'
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
     if isa(a.getr('PFGD'), 'NoValue')

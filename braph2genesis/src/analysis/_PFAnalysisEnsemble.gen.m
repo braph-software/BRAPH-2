@@ -45,7 +45,7 @@ if (isempty(varargin) || pf.prop_set('ST_AXIS', varargin)) && check_graphics(pf.
     set(pf.tool_axis, 'State', pf.get('ST_AXIS').get('AXIS'))
 end
 %%%% ¡gui!
-pr = SettingsAxisPP('EL', pf, 'PROP', PFGraph.ST_AXIS, varargin{:});
+pr = SettingsAxisPP('EL', pf, 'PROP', PFAnalysisEnsemble.ST_AXIS, varargin{:});
 
 %%% ¡prop!
 STYLE (figure, option) is the x-coordinate.
@@ -61,7 +61,7 @@ end
 %%% ¡prop!
 G (figure, string) is the id of the selected graph.
 %%%% ¡default!
-'1'
+1
 %%%% ¡gui!
 g = pf.get('A').get('G_DICT');
 
@@ -283,11 +283,10 @@ function h = plotw(pf, A, varargin)
         [A, zeros(size(A, 1), 1); zeros(1, size(A, 1) + 1)]);
     view(pf.h_axes, 2)
     if pf.get('ST_ADJACENCY').get('COLORBAR')
-        colorbar_value = 'on'
+        colorbar(pf.h_axes)
     else
-        colorbar_value = 'off'
+        colorbar(pf.h_axes, 'off')
     end
-    colorbar(pf.h_axes, colorbar_value)
     shading(pf.h_axes, 'flat')
     axis(pf.h_axes, 'equal', 'square', 'tight')
     grid(pf.h_axes, 'off')
