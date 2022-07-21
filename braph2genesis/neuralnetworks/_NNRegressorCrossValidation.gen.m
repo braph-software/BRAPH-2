@@ -157,7 +157,39 @@ value = nne_dict;
 %%%% ¡gui_!
 % % % pr = PPNNCrossValidation_NNDict('EL', nncv, 'PROP', NNRegressorCrossValidation.NNE_DICT, varargin{:});
 
+%%% ¡prop!
+FEATURE_IMPORTANCE (result, cell) is the feature importance obtained with permutation analysis.
+%%%% ¡calculate!
+nne_dict = nncv.memorize('NNE_DICT');
+feature_importances = [];
+if ~isempty(nne_dict.getItems()) && ~any(ismember(subclasses('Measure'), nncv.get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('INPUT_LABEL')))
+    for i = 1:1:nne_dict.length()
+        feature_importance = nne_dict.getItem(i).get('FEATURE_PERMUTATION_IMPORTANCE');
+        feature_importances = cellfun(@(x, y) x + y, feature_importances, feature_importance, 'UniformOutput', false);
+    end
+    feature_importances = cellfun(@(x) x/nne_dict.length, feature_importances, 'UniformOutput', false);
+else
+    %TODO: check the msgbox is needed 
+    %braph2msgbox("No visualization for the feature map", "For now, we only provide the feature map visualization for input of adjacency matrix or structural data.")
+end
+
+value = feature_importances;
+
 %% ¡props_update!
+
+%%% ¡prop!
+PFFI (gui, item) contains the panel figure of the feature importance.
+%%%% ¡settings!
+'PFFeatureImportance'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    nncv.memorize('PFFI').set('NNE', nncv);
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', nncv, 'PROP', NNRegressorCrossValidation.PFFI, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
+
 
 %%% ¡prop!
 GR_PREDICTION (result, item) is a group of NN subjects with prediction from NN.
@@ -240,53 +272,6 @@ end
 % % % pr = PPNNRegressorEvaluator_Scatter_Chart('EL', nncv, 'PROP', NNRegressorCrossValidation.SCATTER_CHART, varargin{:});
 
 %%% ¡prop!
-FEATURE_MAP (result, cell) is a heat map obtained with feature selection analysis and the AUC value.
-%%%% ¡calculate!
-nne_dict = nncv.memorize('NNE_DICT');
-heat_map = {};
-if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('RMSE')) && ~any(ismember(subclasses('Measure'), nncv.get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('INPUT_LABEL')))
-    tmp_map = nne_dict.getItem(1).get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('FEATURE_MASK');
-    for i = 1:1:length(tmp_map)
-        heat_map{i} = zeros(size(tmp_map{i}));
-    end
-    for i = 1:1:nne_dict.length()
-        feature_map = nne_dict.getItem(i).get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('FEATURE_MASK');
-        rmse = nne_dict.getItem(i).get('RMSE');
-        if rmse == 0
-            rmse = 0.01;
-        end
-        feature_map_out = feature_map;
-        for j = 1:1:length(feature_map)
-            fm_tmp = feature_map{j};
-            fm_tmp(fm_tmp == 1) = 1 / rmse;
-            feature_map_out{j} = fm_tmp;
-        end
-        heat_map = cellfun(@(x, y) x + y, heat_map, feature_map_out, 'UniformOutput', false);
-    end
-    heat_map = cellfun(@(x) x / nne_dict.length(), heat_map, 'UniformOutput', false);
-        for i = 1:1:length(heat_map)
-            heat_map_tmp = heat_map{i};
-            figure
-            x = [1 size(heat_map_tmp, 2)];
-            y = [0 size(heat_map_tmp, 1)];
-            image(x, y, heat_map_tmp, 'CDataMapping', 'scaled')
-            colorbar
-            directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
-            if ~exist(directory, 'dir')
-                mkdir(directory)
-            end
-            filename = [directory filesep 'cv_feature_map.svg'];
-            saveas(gcf, filename);
-        end
-else
-    %TODO: check the msgbox is needed 
-    %braph2msgbox("No visualization for the feature map", "For now, we only provide the feature map visualization for input of adjacency matrix or structural data.")
-end
-value = heat_map;
-%%%% ¡gui_!
-% % % pr = PPNNCrossValidation_Feature_Map('EL', nncv, 'PROP', NNRegressorCrossValidation.FEATURE_MAP, varargin{:});
-
-%%% ¡prop!
 PFSP (gui, item) contains the panel figure of the scatter plot.
 %%%% ¡settings!
 'PFScatterPlot'
@@ -299,18 +284,6 @@ pr = PanelPropItem('EL', nncv, 'PROP', NNRegressorCrossValidation.PFSP, ...
     'GUICLASS', 'GUIFig', ...
     varargin{:});
 
-%%% ¡prop!
-PFFI (gui, item) contains the panel figure of the feature importance.
-%%%% ¡settings!
-'PFFeatureImportance'
-%%%% ¡postprocessing!
-if ~braph2_testing % to avoid problems with isqual when the element is recursive
-    nncv.memorize('PFFI').set('NNE', nncv);
-end
-%%%% ¡gui!
-pr = PanelPropItem('EL', nncv, 'PROP', NNRegressorCrossValidation.PFFI, ...
-    'GUICLASS', 'GUIFig', ...
-    varargin{:});
 
 %% ¡methods!
 function [avg, CI] = get_CI(nncv, scores)

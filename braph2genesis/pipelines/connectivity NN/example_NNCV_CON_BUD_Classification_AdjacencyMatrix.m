@@ -60,5 +60,4 @@ nncv = NNClassifierCrossValidation( ...
 gr_cv = nncv.get('GR_PREDICTION');
 auc_test = nncv.get('AUC');
 cm_test = nncv.get('CONFUSION_MATRIX');
-
 close all

@@ -182,10 +182,10 @@ else
                 braph2waitbar(wb, .30 + .70 * counter / num_feature_all, ['Performing feature selection, ' num2str(100 * counter / num_feature_all, '%.0f') '% done...'])
             end
 
-            [~, idx_all] = sort(mask(:), 'descend');
-            num_top_idx = ceil(percentile * numel(mask));
-            mask(idx_all(1:num_top_idx)) = 1;
-            mask(idx_all(end - (length(idx_all) - num_top_idx - 1):end)) = 0;
+%             [~, idx_all] = sort(mask(:), 'descend');
+%             num_top_idx = ceil(percentile * numel(mask));
+%             mask(idx_all(1:num_top_idx)) = 1;
+%             mask(idx_all(end - (length(idx_all) - num_top_idx - 1):end)) = 0;
         end
         value{k} = mask;
     end

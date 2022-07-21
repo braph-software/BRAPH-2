@@ -15,7 +15,7 @@ LAYERS (parameter, rvector) is a vector representing the number of neurons in ea
 if isempty(nn.get('LAYERS'))
     if nn.get('GR').get('SUB_DICT').length() > 0
         [inputs, num_features] = nn.reconstruct_inputs(nn.get('GR'));
-        value = [floor(1.5 * num_features) floor(1.5 * num_features)];
+        value = [floor(0.5 * num_features) floor(0.5 * num_features)];
         nn.set('LAYERS', value);
     end
 end
@@ -41,6 +41,11 @@ SHUFFLE (parameter, option) is an option for data shuffling.
 SOLVER (parameter, option) is an option for the solver.
 %%%% ¡settings!
 {'adam' 'sgdm' 'rmsprop'}
+
+%%% ¡prop!
+FEATURE_SELECTION_RATIO (parameter, scalar) is the ratio of selected features.
+%%%% ¡default!
+1
 
 %%% ¡prop!
 VERBOSE (metadata, logical) is an indicator to display trining progress information.
@@ -131,12 +136,23 @@ function [inputs, num_features] = reconstruct_inputs(nn, gr)
         inputs = [];
         num_features = 0;
     else
-        mask = gr.get('FEATURE_SELECTION_MASK');
+        %%mask = gr.get('FEATURE_SELECTION_MASK');
+        mask_tmp = gr.get('FEATURE_SELECTION_MASK');
+        masks = {};
+        for i = 1:1:length(mask_tmp)
+            mask = mask_tmp{i};
+            [~, idx_all] = sort(mask(:), 'descend');
+            percentile = nn.get('FEATURE_SELECTION_RATIO');
+            num_top_idx = ceil(percentile * numel(mask));
+            mask(idx_all(1:num_top_idx)) = 1;
+            mask(idx_all(end - (length(idx_all) - num_top_idx - 1):end)) = 0;
+            masks{i} = mask;
+        end
         inputs = [];
         inputs_tmp = gr.get('INPUTS');
         for i = 1:1:gr.get('SUB_DICT').length()
             input = inputs_tmp{i};
-            input_per_sub = cellfun(@(x, y) x(y == 1), input, mask, 'UniformOutput', false);
+            input_per_sub = cellfun(@(x, y) x(y == 1), input, masks, 'UniformOutput', false);
             input_per_sub = cell2mat(input_per_sub');
             inputs = [inputs input_per_sub];
         end

@@ -8,6 +8,48 @@ on root mean square error (RMSE).
 %% ¡props!
 
 %%% ¡prop!
+FEATURE_PERMUTATION_IMPORTANCE (result, cell) is feature importance evaluated by permuting the feature with random numbers
+%%%% ¡calculate!
+if nne.get('GR').get('SUB_DICT').length() == 0
+    value = {};
+else
+    %%%%%%%%
+    nn = nne.get('NN');
+    gr = nne.get('GR');
+%     mask_tmp = gr.get('SUB_DICT').getItem(1).get('FEATURE_MASK');
+%     masks = {};
+%     for i = 1:1:length(mask_tmp)
+%         mask = mask_tmp{i};
+%         [~, idx_all] = sort(mask(:), 'descend');
+%         percentile = nn.get('FEATURE_SELECTION_RATIO');
+%         num_top_idx = ceil(percentile * numel(mask));
+%         mask(idx_all(1:num_top_idx)) = 1;
+%         mask(idx_all(end - (length(idx_all) - num_top_idx - 1):end)) = 0;
+%         masks{i} = mask;
+%     end
+    [inputs, num_features] = nn.reconstruct_inputs(gr);
+    [targets, classes] = nn.reconstruct_targets(gr);
+    net = nn.get('MODEL');
+    feature_importance = [];
+    original_loss = double(sqrt(mean((net.predict(inputs) - targets).^2)));
+    if isa(net, 'NoValue') || ~BRAPH2.installed('NN', 'msgbox')
+        feature_importance = 0;
+    else
+        parfor i = 1:1:num_features
+            scram_inputs = inputs;
+            permuted_value = squeeze(normrnd(mean(inputs(:, :, i, :)), std(inputs(:, :, i, :)), squeeze(size(inputs(:, :, i, :)))));
+            scram_inputs(:, :, i, :) = permuted_value;
+            scram_loss = double(sqrt(mean((net.predict(scram_inputs) - targets).^2)));
+            feature_importance(i)= scram_loss/original_loss;
+        end
+    end
+    feature_importance = rescale(feature_importance);
+    feature_importance = reshape(feature_importance, gr.get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').length(), []);
+
+    value = {rescale(feature_importance)};
+end
+
+%%% ¡prop!
 PFFI (gui, item) contains the panel figure of the feature importance.
 %%%% ¡settings!
 'PFFeatureImportance'
