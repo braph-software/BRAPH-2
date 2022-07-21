@@ -15,6 +15,11 @@ WEIGHTED (figure, logical) determines whether the weighted plot is shown.
 1
 
 %%% ¡prop!
+COLORBAR (figure, logical) determines whether the colorbar is shown.
+%%%% ¡default!
+1
+
+%%% ¡prop!
 BINARY (figure, logical) determines whether the binary plot is shown.
 %%%% ¡default!
 1

@@ -11,6 +11,7 @@ SettingsPosition, uicheckbox, uipushbutton
 p
 
 checkbox_weighted
+checkbox_colorbar
 checkbox_binary
 checkbox_hist
 
@@ -53,6 +54,33 @@ function p_out = draw(pr, varargin)
         value = get(pr.checkbox_weighted, 'Value');
         set(pr.checkbox_binary, 'Value', ~value);
         pr.cb_graph_s()
+        state_colorbar()
+    end
+
+    if ~check_graphics(pr.checkbox_colorbar, 'uicheckbox')
+        pr.checkbox_colorbar = uicheckbox( ...
+            'Parent', pr.p, ...
+            'Tag', 'checkbox_weighted', ...
+            'Text', 'colorbar', ...
+            'FontSize', BRAPH2.FONTSIZE, ...
+            'Visible', true, ...
+            'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('WEIGHTED')) ' ' el.get(prop).getPropDescription('WEIGHTED')], ...
+            'ValueChangedFcn', {@cb_checkbox_colorbar} ...
+            );
+    end    
+    function cb_checkbox_colorbar(~, ~) % (src, event)
+        pr.cb_graph_s()
+    end
+    function state_colorbar()
+        if get(pr.checkbox_weighted, 'Value')
+            set(pr.checkbox_colorbar, 'Visible', true)
+            set(pr.label_binary, 'Visible', false)
+            set(pr.slider_binary, 'Visible', false)
+        else
+            set(checkbox_colorbar, 'Visible', false)
+            set(pr.label_binary, 'Visible', true)
+            set(pr.slider_binary, 'Visible', true)
+        end
     end
 
     if ~check_graphics(pr.label_binary, 'uilabel')
@@ -81,7 +109,8 @@ function p_out = draw(pr, varargin)
     function cb_checkbox_binary(~, ~) % (src, event)
         value = get(pr.checkbox_binary, 'Value');
         set(pr.checkbox_weighted, 'Value', ~value);
-        pr.cb_graph_s()        
+        pr.cb_graph_s()  
+        state_colorbar()
     end
 
     if ~check_graphics(pr.slider_binary, 'uislider')
@@ -131,6 +160,7 @@ function update(pr)
     
     if el.isLocked(prop)
         set(pr.checkbox_weighted, 'Enable', pr.get('ENABLE'))
+        set(pr.checkbox_colorbar, 'Enable', pr.get('ENABLE'))
         set(pr.checkbox_binary, 'Enable', pr.get('ENABLE'))
         set(pr.checkbox_hist, 'Enable', pr.get('ENABLE'))
         set(pr.slider_binary, 'Enable', pr.get('ENABLE'))
@@ -139,17 +169,20 @@ function update(pr)
     switch el.getPropCategory(prop)
         case Category.METADATA            
             set(pr.checkbox_weighted, 'Value', el.get(prop).get('WEIGHTED'))
+            set(pr.checkbox_colorbar, 'VALUE', el.get(prop).get('COLORBAR'))
             set(pr.checkbox_binary, 'Value', el.get(prop).get('BINARY'))
             set(pr.checkbox_hist, 'Value', el.get(prop).get('HIST'))
 
         case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
             set(pr.checkbox_weighted, 'Value', el.get(prop).get('WEIGHTED'))
+            set(pr.checkbox_colorbar, 'VALUE', el.get(prop).get('COLORBAR'))
             set(pr.checkbox_binary, 'Value', el.get(prop).get('BINARY'))
             set(pr.checkbox_hist, 'Value', el.get(prop).get('HIST'))
 
 
             if isa(el.getr(prop), 'Callback') || isa(el.get(prop).get('WEIGHTED'), 'Callback')
                 set(pr.checkbox_weighted, 'Enable', pr.get('ENABLE'))
+                set(pr.checkbox_colorbar, 'Enable', pr.get('ENABLE'))
             end
             if isa(el.getr(prop), 'Callback') || isa(el.get(prop).get('BINARY'), 'Callback')
                 set(pr.checkbox_binary, 'Enable', pr.get('ENABLE'))
@@ -169,6 +202,8 @@ function update(pr)
                     'Value', el.get(prop).getPropDefault('WEIGHTED'), ...
                     'Enable', pr.get('ENABLE') ...
                     )
+                set(pr.checkbox_colorbar, 'VALUE', el.get(prop).get('COLORBAR'), ...
+                    'Enable', pr.get('ENABLE'))
                 set(pr.checkbox_binary, ...
                     'Value', el.get(prop).getPropDefault('BINARY'), ...
                     'Enable', pr.get('ENABLE') ...
@@ -183,6 +218,8 @@ function update(pr)
                     'Value', el.get(prop).get('AXIS'), ...
                     'Enable', pr.get('ENABLE') ...
                     )
+                set(pr.checkbox_colorbar, 'VALUE', el.get(prop).get('COLORBAR'), ...
+                    'Enable', pr.get('ENABLE'))
                 set(pr.checkbox_binary, ...
                     'Value', el.get(prop).get('BINARY'), ...
                     'Enable', pr.get('ENABLE') ...
@@ -236,6 +273,7 @@ function cb_graph_s(pr)
     
     el.get(prop).set( ...
         'WEIGHTED', get(pr.checkbox_weighted, 'Value'), ...
+        'COLORBAR', get(pr.checkbox_colorbar, 'Value'), ...
         'BINARY', get(pr.checkbox_binary, 'Value'), ...
         'BINARY_VALUE', get(pr.slider_binary, 'Value'), ...
         'HIST', get(pr.checkbox_hist, 'Value') ...        

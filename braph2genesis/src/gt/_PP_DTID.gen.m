@@ -58,14 +58,7 @@ function update(pr)
     
     if el.isLocked(prop)
         set(pr.dropdown, 'Enable', pr.get('ENABLE'))
-    end
-    
-    
-    if isa(g, 'MultigraphBUD')
-        type = 'Density';
-    else
-        type = 'Threshold';
-    end    
+    end 
     
     labels = cellfun(@(x) num2str(x),num2cell(g.get('LAYERTICKS')), 'UniformOutput', false);
     default_value = el.get(prop);

@@ -1,5 +1,5 @@
 %% ¡header!
-PFMultiplexBinaryGraph < PFMultiGraph (pf, panel figure multiplex) is a plot of a multiplex.
+PFMultiplexBinaryAnalysisEnsemble < PFMultiAnalysisEnsemble (pf, panel figure multiplex) is a plot of a multiplex.
 
 %%% ¡description!
 % % % PFMultiplexGraph manages the plot of the multiplex layer graph. 
@@ -22,15 +22,15 @@ LAYER (figure, string) is the id of the selected layer.
 %%%% ¡default!
 '1'
 %%%% ¡gui!
-g = pf.get('G');
-pr = PP_LayerID('EL', pf, 'PROP', PFMultiGraph.LAYER, ...
+g = pf.get('A').get('G_DICT');
+pr = PP_LayerEnsembleID('EL', pf, 'PROP', PFMultiplexBinaryAnalysisEnsemble.LAYER, ...
     'G', g, ...
     varargin{:});
 
 %% ¡methods!
 function p_out = draw(pf, varargin)
 
-    pf.p = draw@PFMultiGraph(pf, varargin{:});
+    pf.p = draw@PFMultiAnalysisEnsemble(pf, varargin{:});
     % axes
     pf.h_axes = pf.get('ST_AXIS').h();
 
@@ -43,8 +43,9 @@ function h = plotAdjacency(pf)
     
     % select correct matrix, A is a [m m] where m is the number of layers * the number of densities,
     % the diagonal is where the info is kept   
-    g = pf.get('G');
-    multiplex = g.get('A'); 
+    g_id = pf.get('G');
+    graph = pf.get('A').get('G_DICT').getItem(g_id);
+    multiplex = graph.get('A');  
     L = length(g.get('B')); % total layers
     D = length(g.get(14)); % total densities or thresholds
     % choosen values

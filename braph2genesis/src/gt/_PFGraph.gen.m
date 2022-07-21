@@ -271,7 +271,12 @@ function h = plotw(pf, A, varargin)
         (0:1:N), ...
         [A, zeros(size(A, 1), 1); zeros(1, size(A, 1) + 1)]);
     view(pf.h_axes, 2)
-    colorbar(pf.h_axes)
+    if pf.get('ST_ADJACENCY').get('COLORBAR')
+        colorbar_value = 'on'
+    else
+        colorbar_value = 'off'
+    end
+    colorbar(pf.h_axes, colorbar_value)
     shading(pf.h_axes, 'flat')
     axis(pf.h_axes, 'equal', 'square', 'tight')
     grid(pf.h_axes, 'off')

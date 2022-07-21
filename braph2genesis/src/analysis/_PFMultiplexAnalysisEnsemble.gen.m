@@ -1,13 +1,13 @@
 %% ¡header!
-PFMultiplexBinaryGraph < PFMultiGraph (pf, panel figure multiplex) is a plot of a multiplex.
+PFMultiplexAnalysisEnsemble < PFAnalysisEnsemble (pf, panel figure multiplex) is a plot of a multiplex.
 
 %%% ¡description!
-% % % PFMultiplexGraph manages the plot of the multiplex layer graph. 
+% % % PFMultiplexAnalysisEnsemble manages the plot of the multiplex layer graph. 
 % % % This class provides the common methods needed to manage the plot of 
 % % % the graph. 
 
 %%% ¡seealso!
-PanelFig, Graph, MultiplexBUD, MultiplexBUT
+PanelFig, Graph, MultiplexWU
 
 %% ¡properties!
 p  % handle for panel
@@ -22,15 +22,15 @@ LAYER (figure, string) is the id of the selected layer.
 %%%% ¡default!
 '1'
 %%%% ¡gui!
-g = pf.get('G');
-pr = PP_LayerID('EL', pf, 'PROP', PFMultiGraph.LAYER, ...
+g = pf.get('A').get('G_DICT');
+pr = PP_LayerEnsembleID('EL', pf, 'PROP', PFMultiplexAnalysisEnsemble.LAYER, ...
     'G', g, ...
     varargin{:});
 
 %% ¡methods!
 function p_out = draw(pf, varargin)
 
-    pf.p = draw@PFMultiGraph(pf, varargin{:});
+    pf.p = draw@PFAnalysisEnsemble(pf, varargin{:});
     % axes
     pf.h_axes = pf.get('ST_AXIS').h();
 
@@ -41,20 +41,13 @@ function p_out = draw(pf, varargin)
 end
 function h = plotAdjacency(pf)
     
-    % select correct matrix, A is a [m m] where m is the number of layers * the number of densities,
-    % the diagonal is where the info is kept   
-    g = pf.get('G');
-    multiplex = g.get('A'); 
-    L = length(g.get('B')); % total layers
-    D = length(g.get(14)); % total densities or thresholds
-    % choosen values
+    % select correct matrix, A is a [n n] where n is the number of layers,
+    % the diagonal is where the info is kept
+    g_id = pf.get('G');
+    graph = pf.get('A').get('G_DICT').getItem(g_id);
     l = str2double(pf.get('LAYER'));
-    d = str2double(pf.get('DT'));
-
-    % get correct matrix
-    correct = (L*d) - (L-l);   
-    correct_graph = multiplex{correct, correct};
-    
+    multiplex = graph.get('A');    
+    correct_graph = multiplex{l, l};
     % plot
     if pf.get('ST_ADJACENCY').get('BINARY')
         h = pf.plotb(correct_graph);
