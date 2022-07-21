@@ -77,12 +77,14 @@ for i = 1:1:gr.get('SUB_DICT').length()
         for i = 1:length(adj)
             input = [input adj{i, i}];
         end
+        input_label = {'MultigraphBUD'};
 
     elseif string(nnd.get('INPUT_TYPE')) == "graph_measures"
         input_nodal = [];
         input_binodal = [];
         input_global = [];
         mlist = nnd.get('MEASURES');
+        input_label = mlist;
         for j = 1:length(mlist)
             if Measure.is_nodal(mlist{j})
                 input_nodal = [input_nodal; cell2mat(g.getMeasure(mlist{j}).get('M'))];
@@ -102,6 +104,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
         'sex', sub.get('sex'), ...
         'G', g, ...
         'INPUT', input, ...
+        'INPUT_LABEL', input_label, ...
         'TARGET_NAME', nnd.get('TARGET_NAME') ...
         );
 

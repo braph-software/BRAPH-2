@@ -13,7 +13,7 @@ FEATURE_PERMUTATION_IMPORTANCE (result, cell) is feature importance evaluated by
 %%%% ¡calculate!
 if nne.get('GR').get('SUB_DICT').length() == 0
     value = {};
-elseif any(strcmp(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Graph', [], [], true))) && nne.get('NN').get('FEATURE_SELECTION_RATIO') == 1
+elseif any(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Graph', [], [], true))) && nne.get('NN').get('FEATURE_SELECTION_RATIO') == 1
     % now it only works for (1) input being adj of a graph and (2) no feature selection 
     nn = nne.get('NN');
     gr = nne.get('GR');
@@ -44,9 +44,9 @@ elseif any(strcmp(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), s
             for i = 1:1:n
                 istart = (i - 1) * size(feature_importance_tmp, 1) + 1;
                 iend = i*size(feature_importance_tmp, 1);
-                feature_importance{i} = rescale(feature_importance_tmp(:, istart:iend));
+                feature_importances{i} = double(rescale(feature_importance_tmp(:, istart:iend)));
             end
-            value = {double(feature_importance)};
+            value = feature_importances;
         else
             value = {rescale(double(feature_importance))};
         end
@@ -138,11 +138,14 @@ else
 	[cm, order] = confusionmat(targets(2, :), double(pred(2, :)));
     value = cm;
 end
-%%%% ¡gui!
-pr = PanelPropMatrix('EL', nne, 'PROP', NNRegressorEvaluator.SCATTER_CHART, ...
-    'ROWNAME', classes,...
-    'COLUMNNAME', classes,...
-    varargin{:});
+%%%% ¡gui_!
+% % % gr = nne.get('GR');
+% % % nn = nne.get('NN');
+% % % [targets, classes] = nn.reconstruct_targets(gr);
+% % % pr = PanelPropMatrix('EL', nne, 'PROP', NNClassifierEvaluator.CONFUSION_MATRIX, ...
+% % %     'ROWNAME', classes,...
+% % %     'COLUMNNAME', classes,...
+% % %     varargin{:});
 
 %%% ¡prop!
 PFCM (gui, item) contains the panel figure of the confusion matrix.

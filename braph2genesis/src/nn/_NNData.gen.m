@@ -57,8 +57,6 @@ Group()
 GR_NN (result, item) is a group of NN subjects.
 %%%% ¡settings!
 'NNGroup'
-%%%% ¡gui_!
-% % % pr = PPNNData_GR_NN('EL', nnd, 'PROP', NNData.GR_NN, varargin{:});
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the analysis template to set the parameters.

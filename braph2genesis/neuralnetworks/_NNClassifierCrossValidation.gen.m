@@ -84,7 +84,7 @@ if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
     idx_per_fold_gr1 = nncv.get('SPLIT_KFOLD_GR1');
     idx_per_fold_gr2 = nncv.get('SPLIT_KFOLD_GR2');
     nnds_tmp = NNClassifierDataSplit( ...
-        'ID', ['NN dataset for fold #', num2str(1), ' in repetition #', num2str(i)], ...
+        'ID', ['NN dataset for fold #', num2str(1)], ...
         'GR1', nncv.get('GR1'), ...
         'GR2', nncv.get('GR2'), ...
         'SPLIT_GR1', idx_per_fold_gr1{1}, ...
@@ -96,9 +96,8 @@ if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
             'ID', ['NN dataset for fold #', num2str(i)], ...
             'GR1', nncv.get('GR1'), ...
             'GR2', nncv.get('GR2'), ...
-            'SPLIT_GR1', idx_per_fold_gr1{j}, ...
-            'SPLIT_GR2', idx_per_fold_gr2{j}, ...
-            'TEMPLATE', nnds_tmp ...
+            'SPLIT_GR1', idx_per_fold_gr1{i}, ...
+            'SPLIT_GR2', idx_per_fold_gr2{i} ...
             );
 
         nnds_dict.add(nnds);
@@ -174,12 +173,11 @@ FEATURE_IMPORTANCE (result, cell) is the feature importance obtained with permut
 %%%% ¡calculate!
 nne_dict = nncv.memorize('NNE_DICT');
 if ~isempty(nne_dict.getItems())
-    feature_importance = nne_dict.getItem(1).get('FEATURE_PERMUTATION_IMPORTANCE');
-    if length(feature_importance) == 0
-        feature_importances = {}
+    feature_importances = nne_dict.getItem(1).get('FEATURE_PERMUTATION_IMPORTANCE');
+    if length(feature_importances) == 0
+        feature_importances = {};
     else
-        feature_importances = {length(feature_importance)};
-        for i = 1:1:nne_dict.length()
+        for i = 2:1:nne_dict.length()
             feature_importance = nne_dict.getItem(i).get('FEATURE_PERMUTATION_IMPORTANCE');
             feature_importances = cellfun(@(x, y) x + y, feature_importances, feature_importance, 'UniformOutput', false);
         end
@@ -260,11 +258,14 @@ else
     [cm, order] = confusionmat(targets(2, :), double(pred(2, :)));
     value = cm;
 end
-%%%% ¡gui!
-pr = PanelPropMatrix('EL', nne, 'PROP', NNRegressorEvaluator.SCATTER_CHART, ...
-    'ROWNAME', classes,...
-    'COLUMNNAME', classes,...
-    varargin{:});
+%%%% ¡gui_!
+% % % gr = nne.get('GR');
+% % % nn = nne.get('NN');
+% % % [targets, classes] = nn.reconstruct_targets(gr);
+% % % pr = PanelPropMatrix('EL', nne, 'PROP', NNClassifierCrossValidation.CONFUSION_MATRIX, ...
+% % %     'ROWNAME', classes,...
+% % %     'COLUMNNAME', classes,...
+% % %     varargin{:});
 
 %%% ¡prop!
 PFCM (gui, item) contains the panel figure of the confusion matrix.
@@ -313,9 +314,6 @@ if nne_dict.length() > 0
     intervals = linspace(0, 1, 100);
     mean_curve = 0;
     for i = 1:1:nne_dict.length()
-        hline(i) = plot(X{i}, Y{i}, 'k-', 'LineWidth', 1.5);
-        hline(i).Color = [hline(i).Color 0.05];
-        hold on;
         Xadjusted = zeros(1, length(X{i}));
         aux= 0.00001;
         for j = 1 : length(X{i})
@@ -327,6 +325,7 @@ if nne_dict.length() > 0
         all_lines(i, :) = interp1(Xadjusted, Y{i}, intervals);
         mean_curve = mean_curve + (interp1(Xadjusted, Y{i}, intervals))/nne_dict.length();
     end
+    std_curve = std(all_lines, 1);
     value = {intervals, mean_curve, std_curve};
 else
     value = {};

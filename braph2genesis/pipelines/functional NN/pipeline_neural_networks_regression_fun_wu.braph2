@@ -18,7 +18,7 @@ gr = ImporterGroupSubjectFUN_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Gr
 nnd = NNData_FUN_WU('GR', gr, 'TARGET_NAME', 'age'); % NN Dataset for the Group % NN Group FUN
 
 %% Dataset Splitting
-nnds = NNRegressorDataSplit('GR', nnd.get('GR_NN'), 'SPLIT', 0.2, 'FEATURE_MASK', 0.05); % Split the dataset % NN Dataset
+nnds = NNRegressorDataSplit('GR', nnd.get('GR_NN'), 'SPLIT', 0.2); % Split the dataset % NN Dataset
 
 %% Model Training
 regressor = NNRegressorDNN('GR', nnds.get('GR_TRAIN_FS'), 'VERBOSE', true, 'SHUFFLE', 'every-epoch'); % Train the NN % NN Regressor

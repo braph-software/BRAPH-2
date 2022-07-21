@@ -12,7 +12,7 @@ FEATURE_PERMUTATION_IMPORTANCE (result, cell) is feature importance evaluated by
 %%%% ¡calculate!
 if nne.get('GR').get('SUB_DICT').length() == 0
     value = {};
-elseif any(strcmp(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Graph', [], [], true))) && nne.get('NN').get('FEATURE_SELECTION_RATIO') == 1
+elseif any(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Graph', [], [], true))) && nne.get('NN').get('FEATURE_SELECTION_RATIO') == 1
     % now it only works for (1) input being adj of a graph and (2) no feature selection 
     nn = nne.get('NN');
     gr = nne.get('GR');
@@ -21,7 +21,7 @@ elseif any(strcmp(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), s
     [inputs, num_features] = nn.reconstruct_inputs(gr);
     [targets, classes] = nn.reconstruct_targets(gr);
 
-    original_loss = crossentropy(net.predict(inputs)', targets);
+    original_loss = double(sqrt(mean((net.predict(inputs) - targets).^2)));
 
     if isa(net, 'NoValue') || ~BRAPH2.installed('NN', 'msgbox')
         value = {};
@@ -31,7 +31,7 @@ elseif any(strcmp(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), s
             scrambled_inputs = inputs;
             permuted_value = squeeze(normrnd(mean(inputs(:, :, i, :)), std(inputs(:, :, i, :)), squeeze(size(inputs(:, :, i, :)))));
             scrambled_inputs(:, :, i, :) = permuted_value;
-            scrambled_loss = crossentropy(net.predict(scrambled_inputs)', targets);
+            scrambled_loss = double(sqrt(mean((net.predict(scrambled_inputs) - targets).^2)));
             feature_importance(i)= scrambled_loss / original_loss;
         end
         feature_importance = reshape(feature_importance, gr.get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').length(), []);
@@ -43,9 +43,9 @@ elseif any(strcmp(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), s
             for i = 1:1:n
                 istart = (i - 1) * size(feature_importance_tmp, 1) + 1;
                 iend = i*size(feature_importance_tmp, 1);
-                feature_importance{i} = rescale(feature_importance_tmp(:, istart:iend));
+                feature_importances{i} = double(rescale(feature_importance_tmp(:, istart:iend)));
             end
-            value = {double(feature_importance)};
+            value = feature_importances;
         else
             value = {rescale(double(feature_importance))};
         end
@@ -92,11 +92,11 @@ else
     targets = cell2mat(targets);
     value = double([preds' targets']);
 end
-%%%% ¡gui!
-pr = PanelPropMatrix('EL', nne, 'PROP', NNRegressorEvaluator.SCATTER_CHART, ...
-    'ROWNAME', {'Prediction', 'Target'},...
-    'COLUMNNAME', {cellfun(@(x) cell2mat(x.get('ID'))', nne.memorize('GR').get('SUB_DICT').getItems(), 'UniformOutput', false)},...
-    varargin{:});
+%%%% ¡gui_!
+% % % pr = PanelPropMatrix('EL', nne, 'PROP', NNRegressorEvaluator.SCATTER_CHART, ...
+% % %     'ROWNAME', {'Prediction', 'Target'},...
+% % %     'COLUMNNAME', {cellfun(@(x) cell2mat(x.get('ID'))', nne.memorize('GR').get('SUB_DICT').getItems(), 'UniformOutput', false)},...
+% % %     varargin{:});
 
 %%% ¡prop!
 PFSP (gui, item) contains the panel figure of the scatter plot.
