@@ -119,6 +119,7 @@ function cb_dropdown(pr)
     prop = pr.get('PROP');
     
     val = get(pr.dropdown, 'Value');
+    g = pr.get('G');
     labels = cellfun(@(x) num2str(x),num2cell(g.get('LAYERTICKS')), 'UniformOutput', false);
     index = find(contains(labels, val));
     
