@@ -7,7 +7,7 @@ PFMultiplexAnalysisEnsemble < PFAnalysisEnsemble (pf, panel figure multiplex) is
 % % % the graph. 
 
 %%% ¡seealso!
-PanelFig, Graph, MultiplexWU
+PanelFig, AnalysisEnsemble, MultiplexWU
 
 %% ¡properties!
 p  % handle for panel

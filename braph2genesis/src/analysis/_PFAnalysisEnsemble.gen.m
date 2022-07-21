@@ -7,7 +7,7 @@ PFAnalysisEnsemble < PanelFig (pf, panel figure graph) is a plot of a graph.
 % % % the graph. 
 
 %%% ¡seealso!
-PanelFig, Graph
+PanelFig, AnalysisEnsemble
 
 %% ¡properties!
 p  % handle for panel

@@ -7,7 +7,7 @@ PFMultiplexBinaryAnalysisEnsemble < PFMultiAnalysisEnsemble (pf, panel figure mu
 % % % the graph. 
 
 %%% ¡seealso!
-PanelFig, Graph, MultiplexBUD, MultiplexBUT
+PanelFig, AnalysisEnsemble, MultiplexBUD, MultiplexBUT
 
 %% ¡properties!
 p  % handle for panel

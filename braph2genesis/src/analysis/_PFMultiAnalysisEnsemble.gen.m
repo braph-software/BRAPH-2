@@ -7,7 +7,7 @@ PFMultiAnalysisEnsemble < PFAnalysisEnsemble (pf, panel figure multigraph ensemb
 % % % the graph. 
 
 %%% ¡seealso!
-PanelFig, Graph, MultigraphBUT, MultigraphBUT
+PanelFig, AnalysisEnsemble, MultigraphBUT, MultigraphBUT
 
 %% ¡properties!
 p  % handle for panel
