@@ -1,5 +1,5 @@
 %% ¡header!
-PFGraphEnsemble < PanelFig (pf, panel figure graph) is a plot of a graph.
+PFAnalysisEnsemble < PanelFig (pf, panel figure graph) is a plot of a graph.
 
 %%% ¡description!
 % % % PFGraph manages the plot of the single layer graph. 
@@ -65,7 +65,7 @@ G (figure, string) is the id of the selected graph.
 %%%% ¡gui!
 g = pf.get('A').get('G_DICT');
 
-pr = PP_GraphID('EL', pf, 'PROP', PFGraphEnsemble.G, ...
+pr = PP_GraphID('EL', pf, 'PROP', PFAnalysisEnsemble.G, ...
     'G', g, ...
     varargin{:});
 
@@ -74,23 +74,9 @@ ST_ADJACENCY (figure, item) determines the colormap settings.
 %%%% ¡settings!
 'SettingsGraph'
 %%%% ¡default!
-SettingsGraph('WEIGHTED', true, 'BINARY', false, 'BINARY_VALUE', 50, 'HIST', false, 'COLORBAR', true)
-%%%% ¡postprocessing!
-if check_graphics(pf.h_plot, 'surface')
-        
-    if pf.get('ST_ADJACENCY').get('COLORBAR')
-        colorbar('Parent', pf.p, ...
-            'Direction', 'normal', ...
-            'Location', 'eastoutside', ...
-            'AxisLocation', 'out' ...            
-            )
-    else
-        colorbar('Parent', pf.p, ...
-            'off')
-    end
-end
+SettingsGraph('WEIGHTED', true, 'BINARY', false, 'BINARY_VALUE', 50, 'HIST', false)
 %%%% ¡gui!
-pr = SettingsGraphPP('EL', pf, 'PROP', PFGraphEnsemble.ST_ADJACENCY, varargin{:});
+pr = SettingsGraphPP('EL', pf, 'PROP', PFAnalysisEnsemble.ST_ADJACENCY, varargin{:});
 
 %% ¡methods!
 function p_out = draw(pf, varargin)
@@ -150,7 +136,6 @@ function p_out = draw(pf, varargin)
             pf.get('ST_AXIS').set('GRID', grid);
         end
 
-
     % colormap listener
     pf.memorize('ST_ADJACENCY').h(pf.h_axes).set('PANEL', pf, 'UITAG', 'h_axes')
     listener(pf.get('ST_ADJACENCY'), 'PropSet', @cb_st_colormap);
@@ -179,13 +164,6 @@ function p_out = draw(pf, varargin)
             'Tooltip', 'Show histogram plot', ...
             'CData', imread('icon_hist.png'), ...
             'ClickedCallback', {@cb_hist});
-
-        % COLORBAR
-        pf.tool_colorbar = uipushtool(pf.toolbar, ...
-            'Tag', 'tool_colorbar', ...
-            'Tooltip', 'Show colorbar', ...
-            'CData', imread('icon_colorbar.png'), ...
-            'ClickedCallback', {@cb_bar});
     end
 
         function cb_weighted(~, ~) % (src, event)
@@ -213,11 +191,6 @@ function p_out = draw(pf, varargin)
             pf.get('ST_ADJACENCY').set('BINARY', false)
             pf.get('ST_ADJACENCY').set('WEIGHTED', false)
             % plot
-            pf.plotAdjacency()
-        end
-        function cb_bar(~, ~) % (src, event)
-            current_value = pf.get('ST_ADJACENCY').get('COLORBAR');
-            pf.get('ST_ADJACENCY').set('COLORBAR', ~current_value);
             pf.plotAdjacency()
         end
 
@@ -405,7 +378,7 @@ function h = plotb(pf, A, varargin)
     shading(pf.h_axes, 'flat')
     axis(pf.h_axes, 'equal', 'square', 'tight')
     grid(pf.h_axes, 'off')
-    colorbar(pf.h_axes)
+    colorbar(pf.h_axes, 'off')
     box(pf.h_axes, 'on')
     set(pf.h_axes, ...
         'XAxisLocation', 'top',  ...

@@ -1,5 +1,5 @@
 %% ¡header!
-PFMultiGraphEnsemble < PFGraphEnsemble (pf, panel figure multigraph ensemble) is a plot of a multigraph ensemble.
+PFMultiAnalysisEnsemble < PFAnalysisEnsemble (pf, panel figure multigraph ensemble) is a plot of a multigraph ensemble.
 
 %%% ¡description!
 % % % PFGraph manages the plot of the single layer graph. 
@@ -37,7 +37,7 @@ if check_graphics(pf.h_plot, 'surface')
     end
 end
 %%%% ¡gui!
-pr = SettingsGraphPP('EL', pf, 'PROP', PFMultiGraphEnsemble.ST_ADJACENCY, varargin{:});
+pr = SettingsGraphPP('EL', pf, 'PROP', PFMultiAnalysisEnsemble.ST_ADJACENCY, varargin{:});
 
 %% ¡props!
 
@@ -47,14 +47,14 @@ DT (figure, string) is the id of the selected density or layer.
 1
 %%%% ¡gui!
 g = pf.get('A').get('G_DICT');
-pr = PP_DTIDEnsemble('EL', pf, 'PROP', PFMultiGraphEnsemble.DT, ...
+pr = PP_DTIDEnsemble('EL', pf, 'PROP', PFMultiAnalysisEnsemble.DT, ...
     'G', g, ...
     varargin{:});
 
 %% ¡methods!
 function p_out = draw(pf, varargin)
 
-    pf.p = draw@PFGraphEnsemble(pf, varargin{:});
+    pf.p = draw@PFAnalysisEnsemble(pf, varargin{:});
     % axes
     pf.h_axes = pf.get('ST_AXIS').h();
 

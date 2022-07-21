@@ -28,8 +28,3 @@ BINARY_VALUE (figure, scalar) determines the value of the binary value.
 HIST (figure, logical) determines whether the histogram plot is shown.
 %%%% ¡default!
 1
-
-%%% ¡prop!
-COLORBAR (figure, logical) determines whether the colorbar is shown.
-%%%% ¡default!
-1

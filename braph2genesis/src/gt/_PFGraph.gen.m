@@ -63,21 +63,8 @@ ST_ADJACENCY (figure, item) determines the colormap settings.
 %%%% ¡settings!
 'SettingsGraph'
 %%%% ¡default!
-SettingsGraph('WEIGHTED', true, 'BINARY', false, 'BINARY_VALUE', 50, 'HIST', false, 'COLORBAR', true)
-%%%% ¡postprocessing!
-if check_graphics(pf.h_plot, 'surface')
-        
-    if pf.get('ST_ADJACENCY').get('COLORBAR')
-        colorbar('Parent', pf.p, ...
-            'Direction', 'normal', ...
-            'Location', 'eastoutside', ...
-            'AxisLocation', 'out' ...            
-            )
-    else
-        colorbar('Parent', pf.p, ...
-            'off')
-    end
-end
+SettingsGraph('WEIGHTED', true, 'BINARY', false, 'BINARY_VALUE', 50, 'HIST', false)
+
 %%%% ¡gui!
 pr = SettingsGraphPP('EL', pf, 'PROP', PFGraph.ST_ADJACENCY, varargin{:});
 
@@ -169,12 +156,6 @@ function p_out = draw(pf, varargin)
             'CData', imread('icon_hist.png'), ...
             'ClickedCallback', {@cb_hist});
 
-        % COLORBAR
-        pf.tool_colorbar = uipushtool(pf.toolbar, ...
-            'Tag', 'tool_colorbar', ...
-            'Tooltip', 'Show colorbar', ...
-            'CData', imread('icon_colorbar.png'), ...
-            'ClickedCallback', {@cb_bar});
     end
 
         function cb_weighted(~, ~) % (src, event)
@@ -204,11 +185,7 @@ function p_out = draw(pf, varargin)
             % plot
             pf.plotAdjacency()
         end
-        function cb_bar(~, ~) % (src, event)
-            current_value = pf.get('ST_ADJACENCY').get('COLORBAR');
-            pf.get('ST_ADJACENCY').set('COLORBAR', ~current_value);
-            pf.plotAdjacency()
-        end
+
 
     % plot
     pf.h_plot = pf.plotAdjacency();
@@ -391,7 +368,7 @@ function h = plotb(pf, A, varargin)
     shading(pf.h_axes, 'flat')
     axis(pf.h_axes, 'equal', 'square', 'tight')
     grid(pf.h_axes, 'off')
-    colorbar(pf.h_axes)
+    colorbar(pf.h_axes, 'off')
     box(pf.h_axes, 'on')
     set(pf.h_axes, ...
         'XAxisLocation', 'top',  ...
