@@ -117,7 +117,7 @@ function cb_dropdown(pr)
     n = length(pr.get('G').get('B'));
     n_cell = [1:n];
     labels = cellfun(@(x) ['Layer : ' num2str(x)], num2cell(n_cell), 'UniformOutput', false);
-    index = find(contains(labels, val));
+    index = find(contains(labels, val), 1, 'last');
     el.set(prop, num2str(index))
     el.plotAdjacency()
 end

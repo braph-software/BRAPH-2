@@ -46,8 +46,8 @@ function h = plotAdjacency(pf)
     g_id = pf.get('G');
     graph = pf.get('A').get('G_DICT').getItem(g_id);
     multiplex = graph.get('A');  
-    L = length(g.get('B')); % total layers
-    D = length(g.get(14)); % total densities or thresholds
+    L = length(graph.get('B')); % total layers
+    D = length(graph.get(14)); % total densities or thresholds
     % choosen values
     l = str2double(pf.get('LAYER'));
     d = str2double(pf.get('DT'));
