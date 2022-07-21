@@ -1,5 +1,5 @@
 %% ¡header!
-PFMultiGraphEnsemble < PFGraphEnsemble (pf, panel figure multigraph ensemble) is a plot of a multigraph ensemble.
+PFMultiAnalysisEnsemble < PFAnalysisEnsemble (pf, panel figure multigraph ensemble) is a plot of a multigraph ensemble.
 
 %%% ¡description!
 % % % PFGraph manages the plot of the single layer graph. 
@@ -7,7 +7,7 @@ PFMultiGraphEnsemble < PFGraphEnsemble (pf, panel figure multigraph ensemble) is
 % % % the graph. 
 
 %%% ¡seealso!
-PanelFig, Graph, MultigraphBUT, MultigraphBUT
+PanelFig, AnalysisEnsemble, MultigraphBUT, MultigraphBUT
 
 %% ¡properties!
 p  % handle for panel
@@ -37,24 +37,24 @@ if check_graphics(pf.h_plot, 'surface')
     end
 end
 %%%% ¡gui!
-pr = SettingsGraphPP('EL', pf, 'PROP', PFMultiGraphEnsemble.ST_ADJACENCY, varargin{:});
+pr = SettingsGraphPP('EL', pf, 'PROP', PFMultiAnalysisEnsemble.ST_ADJACENCY, varargin{:});
 
 %% ¡props!
 
 %%% ¡prop!
 DT (figure, string) is the id of the selected density or layer.
 %%%% ¡default!
-1
+'1'
 %%%% ¡gui!
 g = pf.get('A').get('G_DICT');
-pr = PP_DTIDEnsemble('EL', pf, 'PROP', PFMultiGraphEnsemble.DT, ...
+pr = PP_DTIDEnsemble('EL', pf, 'PROP', PFMultiAnalysisEnsemble.DT, ...
     'G', g, ...
     varargin{:});
 
 %% ¡methods!
 function p_out = draw(pf, varargin)
 
-    pf.p = draw@PFGraphEnsemble(pf, varargin{:});
+    pf.p = draw@PFAnalysisEnsemble(pf, varargin{:});
     % axes
     pf.h_axes = pf.get('ST_AXIS').h();
 
@@ -71,14 +71,7 @@ function h = plotAdjacency(pf)
     multigraph = graph.get('A');
     
     % select correct matrix from the multigraph
-    d_t = pf.get('DT');
-    layerticks = graph.get(14);
-    labels = cellfun(@(x) num2str(x),num2cell(layerticks), 'UniformOutput', false);
-    if isa(d_t, 'double')
-        index = d_t;
-    else
-        index = find(contains(labels, d_t));
-    end
+    index = str2double(pf.get('DT'));
     correct_graph = multigraph{index, index};
     
     % plot

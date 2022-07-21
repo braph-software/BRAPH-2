@@ -58,21 +58,14 @@ function update(pr)
     
     if el.isLocked(prop)
         set(pr.dropdown, 'Enable', pr.get('ENABLE'))
-    end
-    
-    
-    if isa(g, 'MultigraphBUD')
-        type = 'Density';
-    else
-        type = 'Threshold';
-    end    
+    end 
     
     labels = cellfun(@(x) num2str(x),num2cell(g.get('LAYERTICKS')), 'UniformOutput', false);
     default_value = el.get(prop);
     
     set(pr.dropdown, ...
         'Items', labels, ...
-        'Value', labels(default_value) ...
+        'Value', labels(str2double(default_value)) ...
         )
 
     value = el.getr(prop);
@@ -118,6 +111,11 @@ function cb_dropdown(pr)
     el = pr.get('EL');
     prop = pr.get('PROP');
     
-    el.set(prop, get(pr.dropdown, 'Value'))
+    val = get(pr.dropdown, 'Value');
+    g = pr.get('G');
+    labels = cellfun(@(x) num2str(x),num2cell(g.get('LAYERTICKS')), 'UniformOutput', false);
+    index = find(contains(labels, val), 1, 'last');
+    
+    el.set(prop, num2str(index))
     el.plotAdjacency()
 end
