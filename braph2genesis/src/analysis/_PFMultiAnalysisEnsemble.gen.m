@@ -71,14 +71,7 @@ function h = plotAdjacency(pf)
     multigraph = graph.get('A');
     
     % select correct matrix from the multigraph
-    d_t = pf.get('DT');
-    layerticks = graph.get(14);
-    labels = cellfun(@(x) num2str(x),num2cell(layerticks), 'UniformOutput', false);
-    if isa(d_t, 'double')
-        index = d_t;
-    else
-        index = find(contains(labels, d_t));
-    end
+    index = str2double(pf.get('DT'));
     correct_graph = multigraph{index, index};
     
     % plot

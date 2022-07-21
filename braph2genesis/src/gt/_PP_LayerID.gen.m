@@ -1,8 +1,8 @@
 %% ¡header!
-PP_DTIDEnsemble < PanelProp (pr, panel property density_threshold id) plots the panel of a density or threshold id option.
+PP_LayerID < PanelProp (pr, panel property layer id) plots the panel of a layer id option.
 
 %%% ¡description!
-PP_DTID plots the panel for a density or threshold id option with a drop-down list.
+PP_LayerID plots the panel for a layer id option with a drop-down list.
 It works only for the category figure and elements derived 
 from PFGraphEnsemble.
 
@@ -16,9 +16,9 @@ dropdown
 %% ¡props!
 
 %%% ¡prop!
-G (metadata, item) is the g dict.
+G (metadata, item) is the graph.
 %%%% ¡settings!
-'IndexedDictionary'
+'Graph'
 
 %% ¡methods!
 function p_out = draw(pr, varargin)
@@ -54,21 +54,15 @@ function update(pr)
     el = pr.get('EL');
     prop = pr.get('PROP');
     
-    g_dict = pr.get('G');
+    g = pr.get('G');
     
     if el.isLocked(prop)
         set(pr.dropdown, 'Enable', pr.get('ENABLE'))
-    end
+    end 
     
-    g = g_dict.getItem(1);
-    
-    if isa(g, 'MultigraphBUD')
-        type = 'Density';
-    else
-        type = 'Threshold';
-    end    
-    
-    labels = cellfun(@(x) num2str(x),num2cell(g.get(14)), 'UniformOutput', false);
+    n = length(g.get('B'));
+    n_cell = [1:n];
+    labels = cellfun(@(x) ['Layer : ' num2str(x)],num2cell(n_cell), 'UniformOutput', false);
     default_value = el.get(prop);
     
     set(pr.dropdown, ...
@@ -119,13 +113,11 @@ function cb_dropdown(pr)
     el = pr.get('EL');
     prop = pr.get('PROP');
     
-    g_dict = pr.get('G');
-    g = g_dict.getItem(1);
-    
     val = get(pr.dropdown, 'Value');
-    labels = cellfun(@(x) num2str(x),num2cell(g.get(14)), 'UniformOutput', false);
+    n = length(pr.get('G').get('B'));
+    n_cell = [1:n];
+    labels = cellfun(@(x) ['Layer : ' num2str(x)], num2cell(n_cell), 'UniformOutput', false);
     index = find(contains(labels, val));
-    
-    el.set(prop, num2str(index))
+    el.set(prop, num2stgr(index))
     el.plotAdjacency()
 end

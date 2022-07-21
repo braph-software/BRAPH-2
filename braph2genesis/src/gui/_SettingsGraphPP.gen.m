@@ -220,11 +220,11 @@ function redraw(pr, varargin)
     
     pr.redraw@PanelProp('Height', h_p, varargin{:})
     
-    set(pr.checkbox_weighted, 'Position', [s(.3) s(6.3) .30*w(pr.p, 'pixels') s(1.7)])
-    set(pr.checkbox_binary, 'Position', [s(.3) s(4.3) .30*w(pr.p, 'pixels') s(1.7)])
-    set(pr.label_binary, 'Position', [s(.3) s(2.3)  .20*w(pr.p, 'pixels')   s(1.7)])
+    set(pr.checkbox_weighted, 'Position', [s(.3) s(4.3) .30*w(pr.p, 'pixels') s(1.7)])
+    set(pr.checkbox_binary, 'Position', [s(.3) s(2.3) .30*w(pr.p, 'pixels') s(1.7)])
+    set(pr.label_binary, 'Position', [s(.6)+.35*w(pr.p, 'pixels')+s(1.7) s(4.3)  .20*w(pr.p, 'pixels')   s(1.7)])
     set(pr.slider_binary, 'Position', [s(.6)+.35*w(pr.p, 'pixels')+s(1.7) s(3.3) .50*w(pr.p, 'pixels')   3]) % the height of a slider cannot be changed
-    set(pr.checkbox_hist, 'Position', [s(.3) s(.3) .30*w(pr.p, 'pixels') s(1.7)])    
+    set(pr.checkbox_hist, 'Position', [s(.3) s(.3) .30*w(pr.p, 'pixels') s(1.7)])
 end
 function cb_graph_s(pr)
     %CB_AXIS executes callback for all checkboxes.

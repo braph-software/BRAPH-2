@@ -1,13 +1,13 @@
 %% ¡header!
-PFMultiGraph < PFGraph (pf, panel figure multigraph) is a plot of a multigraph.
+PFMultiplexGraph < PFGraph (pf, panel figure multiplex) is a plot of a multiplex.
 
 %%% ¡description!
-% % % PFGraph manages the plot of the single layer graph. 
+% % % PFMultiplexGraph manages the plot of the multiplex layer graph. 
 % % % This class provides the common methods needed to manage the plot of 
 % % % the graph. 
 
 %%% ¡seealso!
-PanelFig, Graph, MultigraphBUT, MultigraphBUT
+PanelFig, Graph, MultiplexWU
 
 %% ¡properties!
 p  % handle for panel
@@ -15,25 +15,15 @@ h_axes % handle for the axes
 
 h_plot
 
-%% ¡props_update!
-%%% ¡prop!
-ST_ADJACENCY (figure, item) determines the colormap settings.
-%%%% ¡settings!
-'SettingsGraph'
-%%%% ¡default!
-SettingsGraph('WEIGHTED', true, 'BINARY', false, 'BINARY_VALUE', 50, 'HIST', false)
-%%%% ¡gui!
-pr = SettingsGraphPP('EL', pf, 'PROP', PFMultiGraph.ST_ADJACENCY, varargin{:});
-
 %% ¡props!
 
 %%% ¡prop!
-DT (figure, string) is the id of the selected density or layer.
+LAYER (figure, string) is the id of the selected layer.
 %%%% ¡default!
 1
 %%%% ¡gui!
 g = pf.get('G');
-pr = PP_DTID('EL', pf, 'PROP', PFMultiGraph.DT, ...
+pr = PP_LayerID('EL', pf, 'PROP', PFMultiGraph.DT, ...
     'G', g, ...
     varargin{:});
 
@@ -51,10 +41,11 @@ function p_out = draw(pf, varargin)
 end
 function h = plotAdjacency(pf)
     
-    % select correct matrix
-    index = str2double(pf.get('DT'));
-    multigraph = pf.get('G').get('A');
-    correct_graph = multigraph{index, index};
+    % select correct matrix, A is a [n n] where n is the number of layers,
+    % the diagonal is where the info is kept
+    l = str2double(pf.get('LAYER'));
+    multiplex = pf.get('G').get('A');    
+    correct_graph = multiplex{l, l};
     % plot
     if pf.get('ST_ADJACENCY').get('BINARY')
         h = pf.plotb(correct_graph);

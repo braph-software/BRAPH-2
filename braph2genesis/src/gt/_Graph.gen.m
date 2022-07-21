@@ -85,10 +85,14 @@ PFG (gui, item) contains the panel figure of the graph.
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
     if isa(g.getr('PFG'), 'NoValue')
-        if Graph.is_graph(g)
+        if Graph.is_graph(g) % graph
             g.set('PFG', PFGraph('G', g))
-        elseif Graph.is_multigraph(g)
-            g.set('PFG', PFMultiGraph('G', g)) % missing
+        elseif Graph.is_multigraph(g) % multigraph BUD BUT
+            g.set('PFG', PFMultiGraph('G', g))
+        elseif Graph.is_multiplex(g) && Graph.is_weighted(g) % multiplexWU
+            g.set('PFG', PFMultiplexGraph('G', g))
+        elseif Graph.is_multiplex(g) && Graph.is_binary(g)
+            g.set('PFG', PFMultiplexBinaryGraph('G', g))
         else
             g.memorize('PFG').set('G', g)
         end

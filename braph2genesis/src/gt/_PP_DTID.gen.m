@@ -118,6 +118,10 @@ function cb_dropdown(pr)
     el = pr.get('EL');
     prop = pr.get('PROP');
     
-    el.set(prop, get(pr.dropdown, 'Value'))
+    val = get(pr.dropdown, 'Value');
+    labels = cellfun(@(x) num2str(x),num2cell(g.get('LAYERTICKS')), 'UniformOutput', false);
+    index = find(contains(labels, val));
+    
+    el.set(prop, num2str(index))
     el.plotAdjacency()
 end
