@@ -17,7 +17,7 @@ gr2 = ImporterGroupSubjectFUN_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load G
 %% Analysis 1
 a_WU1 = AnalyzeEnsemble_FUN_WU('GR', gr1); % Analyze Group 1 % Group 1 Analysis
 
-%% Analysis 1
+%% Analysis 2
 a_WU2 = AnalyzeEnsemble_FUN_WU('GR', gr2, 'TEMPLATE', a_WU1); % Analyze Group 2 % Group 2 Analysis
 
 %% Comparison
