@@ -30,7 +30,7 @@ pr = SettingsGraphPP('EL', pf, 'PROP', PFMultiGraph.ST_ADJACENCY, varargin{:});
 %%% ¡prop!
 DT (figure, string) is the id of the selected density or layer.
 %%%% ¡default!
-1
+'1'
 %%%% ¡gui!
 g = pf.get('G');
 pr = PP_DTID('EL', pf, 'PROP', PFMultiGraph.DT, ...

@@ -44,7 +44,7 @@ pr = SettingsGraphPP('EL', pf, 'PROP', PFMultiAnalysisEnsemble.ST_ADJACENCY, var
 %%% ¡prop!
 DT (figure, string) is the id of the selected density or layer.
 %%%% ¡default!
-1
+'1'
 %%%% ¡gui!
 g = pf.get('A').get('G_DICT');
 pr = PP_DTIDEnsemble('EL', pf, 'PROP', PFMultiAnalysisEnsemble.DT, ...

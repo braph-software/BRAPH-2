@@ -20,7 +20,7 @@ h_plot
 %%% ¡prop!
 LAYER (figure, string) is the id of the selected layer.
 %%%% ¡default!
-1
+'1'
 %%%% ¡gui!
 g = pf.get('G');
 pr = PP_LayerID('EL', pf, 'PROP', PFMultiGraph.DT, ...
