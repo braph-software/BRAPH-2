@@ -76,6 +76,12 @@ function p_out = draw(pr, varargin)
             );
     end
     function cb_checkbox_link(~, ~) % (src, event)
+        value = get(pr.checkbox_link, 'Value');
+        if value
+            set(pr.checkbox_arrow, 'Value', ~value);
+            set(pr.checkbox_cylinder, 'Value', ~value);
+        end
+        
         state_checkboxes()
         pr.cb_brain_edges()        
     end
@@ -144,6 +150,12 @@ function p_out = draw(pr, varargin)
             );
     end    
     function cb_checkbox_arrow(~, ~) % (src, event)
+        value = get(pr.checkbox_arrow, 'Value');
+        if value
+            set(pr.checkbox_link, 'Value', ~value);
+            set(pr.checkbox_cylinder, 'Value', ~value);
+        end
+        state_checkboxes()
         pr.cb_brain_edges()
     end
 
@@ -280,7 +292,7 @@ function p_out = draw(pr, varargin)
         pr.cb_brain_edges()
     end
 
-    % cylinder
+    % cylinder %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     if ~check_graphics(pr.checkbox_cylinder, 'uicheckbox')
         pr.checkbox_cylinder = uicheckbox( ...
             'Parent', pr.p, ...
@@ -288,13 +300,18 @@ function p_out = draw(pr, varargin)
             'Text', 'binary', ...
             'FontSize', BRAPH2.FONTSIZE, ...
             'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('BINARY')) ' ' el.get(prop).getPropDescription('BINARY')], ...
-            'ValueChangedFcn', {@cb_checkbox_binary} ...
+            'ValueChangedFcn', {@cb_checkbox_cylinder} ...
             );
     end
     
-    function cb_checkbox_binary(~, ~) % (src, event)
-        pr.cb_brain_edges()  
+    function cb_checkbox_cylinder(~, ~) % (src, event)
+        value = get(pr.checkbox_cylinder, 'Value');
+        if value
+            set(pr.checkbox_link, 'Value', ~value);
+            set(pr.checkbox_arrow, 'Value', ~value);
+        end
         state_checkboxes()
+        pr.cb_brain_edges()
     end
 
     if ~check_graphics(pr.button_cylinder_color, 'uibutton')
@@ -375,14 +392,82 @@ function p_out = draw(pr, varargin)
 
     % general functions
     function state_checkboxes()
-        if get(pr.checkbox_link, 'Value')
-            set(pr.checkbox_arrow, 'Visible', true)
-            set(pr.label_link_w, 'Visible', false)
-            set(pr.slider_binary, 'Visible', false)
-        else
-            set(pr.checkbox_arrow, 'Visible', false)
+        if get(pr.checkbox_link, 'Value') % link
+            % activate
+            set(pr.button_link_color, 'Visible', true)
+            set(pr.dropdown_link, 'Visible', true)
             set(pr.label_link_w, 'Visible', true)
-            set(pr.slider_binary, 'Visible', true)
+            set(pr.edit_link_w, 'Visible', true)           
+
+            % deactivate
+            set(pr.button_arrow_color, 'Visible', false)
+            set(pr.button_cylinder_color, 'Visible', false)
+            set(pr.label_arrow_sw, 'Visible', false)
+            set(pr.edit_arrow_sw, 'Visible', false)
+            set(pr.label_arrow_hl, 'Visible', false)
+            set(pr.edit_arrow_hl, 'Visible', false)
+            set(pr.label_arrow_hw, 'Visible', false)
+            set(pr.edit_arrow_hw, 'Visible', false)
+            set(pr.label_arrow_node, 'Visible', false)
+            set(pr.edit_arrow_node, 'Visible', false)
+            set(pr.label_arrow_n, 'Visible', false)
+            set(pr.edit_arrow_n, 'Visible', false)
+            set(pr.label_cylinder_r, 'Visible', false)
+            set(pr.edit_cylinder_r, 'Visible', false)
+            set(pr.label_cylinder_n, 'Visible', false)
+            set(pr.edit_cylinder_n, 'Visible', false)            
+            
+        elseif get(pr.checkbox_arrow, 'Value') % arrow
+            % activate
+            set(pr.button_arrow_color, 'Visible', true)
+            set(pr.label_arrow_sw, 'Visible', true)
+            set(pr.edit_arrow_sw, 'Visible', true)
+            set(pr.label_arrow_hl, 'Visible', true)
+            set(pr.edit_arrow_hl, 'Visible', true)
+            set(pr.label_arrow_hw, 'Visible', true)
+            set(pr.edit_arrow_hw, 'Visible', true)
+            set(pr.label_arrow_node, 'Visible', true)
+            set(pr.edit_arrow_node, 'Visible', true)
+            set(pr.label_arrow_n, 'Visible', true)
+            set(pr.edit_arrow_n, 'Visible', true)
+
+            % deactivate            
+            set(pr.button_cylinder_color, 'Visible', false)
+            set(pr.button_link_color, 'Visible', false)
+            set(pr.dropdown_link, 'Visible', false)
+            set(pr.label_link_w, 'Visible', false)
+            set(pr.edit_link_w, 'Visible', false)             
+            set(pr.label_cylinder_r, 'Visible', false)
+            set(pr.edit_cylinder_r, 'Visible', false)
+            set(pr.label_cylinder_n, 'Visible', false)
+            set(pr.edit_cylinder_n, 'Visible', false)    
+        elseif get(pr.checkbox_cylinder, 'Value') % cylinder
+            % activate            
+            set(pr.button_cylinder_color, 'Visible', true)
+            set(pr.label_cylinder_r, 'Visible', true)
+            set(pr.edit_cylinder_r, 'Visible', true)
+            set(pr.label_cylinder_n, 'Visible', true)
+            set(pr.edit_cylinder_n, 'Visible', true) 
+
+            % deactivate            
+            set(pr.button_arrow_color, 'Visible', false)
+            set(pr.label_arrow_sw, 'Visible', false)
+            set(pr.edit_arrow_sw, 'Visible', false)
+            set(pr.label_arrow_hl, 'Visible', false)
+            set(pr.edit_arrow_hl, 'Visible', false)
+            set(pr.label_arrow_hw, 'Visible', false)
+            set(pr.edit_arrow_hw, 'Visible', false)
+            set(pr.label_arrow_node, 'Visible', false)
+            set(pr.edit_arrow_node, 'Visible', false)
+            set(pr.label_arrow_n, 'Visible', false)
+            set(pr.edit_arrow_n, 'Visible', false)
+            set(pr.button_link_color, 'Visible', false)
+            set(pr.dropdown_link, 'Visible', false)
+            set(pr.label_link_w, 'Visible', false)
+            set(pr.edit_link_w, 'Visible', false)             
+            
+        else % texts
+            
         end
     end
 
@@ -572,18 +657,19 @@ function redraw(pr, varargin)
     %
     % See also draw, update, PanelElement, s.
 
-    [h_p, varargin] = get_and_remove_from_varargin(s(10.5), 'Height', varargin);
+    [h_p, varargin] = get_and_remove_from_varargin(s(12.3), 'Height', varargin);
     
     pr.redraw@PanelProp('Height', h_p, varargin{:})
     
     % left column 2.3
-    set(pr.checkbox_link, 'Position', [s(.3) s(7.8) .30*w(pr.p, 'pixels') s(1.7)])
-    set(pr.checkbox_arrow, 'Position', [s(.3) s(5.3) .30*w(pr.p, 'pixels') s(1.7)])
-    set(pr.checkbox_cylinder, 'Position', [s(.3) s(2.8) .30*w(pr.p, 'pixels') s(1.7)])
+    set(pr.checkbox_link, 'Position', [s(.3) s(9.8) .30*w(pr.p, 'pixels') s(1.7)])
+    set(pr.checkbox_arrow, 'Position', [s(.3) s(6.3) .30*w(pr.p, 'pixels') s(1.7)])
+    set(pr.checkbox_cylinder, 'Position', [s(.3) s(3.8) .30*w(pr.p, 'pixels') s(1.7)])
     set(pr.checkbox_text, 'Position', [s(.3) s(.3) .30*w(pr.p, 'pixels') s(1.7)])
     
     % right column
-    % links    
+    % links   
+    set(pr.dropdown_link, 'Position', [s(8.6) s(8.3) w(pr.p, 'pixels')-s(10) s(1.7)])
     set(pr.label_link_w, 'Position', [s(.6)+.35*w(pr.p, 'pixels')+s(1.7) s(6.2) .1*w(pr.p, 'pixels')  s(1.7)])
     set(pr.edit_link_w, 'Position', [s(.6)+.35*w(pr.p, 'pixels')+s(1.7) s(4.2) .30*w(pr.p, 'pixels')  s(1.7)])
     
@@ -600,19 +686,15 @@ function redraw(pr, varargin)
     set(pr.edit_arrow_n, 'Position', [.5*w(pr.p, 'pixels')+s(1.7) s(.3) .30*w(pr.p, 'pixels')  s(1.7)])
 
     % cyl
-    set(pr.label_cylinder_r, 'Position', [s(.6)+.35*w(pr.p, 'pixels')+s(1.7) s(7.8)  .20*w(pr.p, 'pixels')   s(1.7)])
-    set(pr.edit_cylinder_r, 'Position', [s(.6)+.35*w(pr.p, 'pixels')+s(1.7) s(5.3)  .20*w(pr.p, 'pixels')   s(1.7)])
-    set(pr.label_cylinder_n, 'Position', [s(.6)+.35*w(pr.p, 'pixels')+s(1.7) s(2.8)  .20*w(pr.p, 'pixels')   s(1.7)])
-    set(pr.edit_cylinder_n, 'Position', [s(.6)+.35*w(pr.p, 'pixels')+s(1.7) s(.3)  .20*w(pr.p, 'pixels')   s(1.7)])
+    set(pr.label_cylinder_r, 'Position', [s(.6)+.35*w(pr.p, 'pixels')+s(1.7) s(8.3)  .20*w(pr.p, 'pixels')   s(1.7)])
+    set(pr.edit_cylinder_r, 'Position', [s(.6)+.35*w(pr.p, 'pixels')+s(1.7) s(8.3)  .20*w(pr.p, 'pixels')   s(1.7)])
+    set(pr.label_cylinder_n, 'Position', [s(.6)+.35*w(pr.p, 'pixels')+s(1.7) s(6.3)  .20*w(pr.p, 'pixels')   s(1.7)])
+    set(pr.edit_cylinder_n, 'Position', [s(.6)+.35*w(pr.p, 'pixels')+s(1.7) s(6.3)  .20*w(pr.p, 'pixels')   s(1.7)])
     
-    
-    
-    
-    % arrow h 4.3
-    
-    
-    
-    
+    % colorbuttons
+    set(pr.button_link_color, 'Position', [s(.9)+.60*w(pr.p, 'pixels') s(10.3) .30*w(pr.p, 'pixels') s(1.7)])
+    set(pr.button_arrow_color, 'Position', [s(.9)+.60*w(pr.p, 'pixels') s(10.3) .30*w(pr.p, 'pixels') s(1.7)])
+    set(pr.button_cylinder_color, 'Position', [s(.9)+.60*w(pr.p, 'pixels') s(10.3) .30*w(pr.p, 'pixels') s(1.7)])
     
 end
 function cb_brain_edges(pr)
