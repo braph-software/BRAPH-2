@@ -137,14 +137,13 @@ ST_EDGES (figure, item) determines the edge settings.
 %%%% ¡settings!
 'SettingsEdges'
 %%%% ¡default!
-SettingsEdges('LINKS', 1, 'ARROWS', 0, 'CYLINDERS', 0, 'TEXTS', 0, ...
-    'EDGECOLOR', PFBrainGraph.INIT_LIN_COLOR, 'EDGELINESTYLE', PFBrainGraph.INIT_LIN_STYLE, 'EDGELINEWIDTH', PFBrainGraph.INIT_LIN_WIDTH, ...
-    'ARROWCOLOR', PFBrainGraph.INIT_ARR_COLOR, 'ARROWSWIDTH', PFBrainGraph.INIT_ARR_SWIDTH, 'ARROWHLENGTH', PFBrainGraph.INIT_ARR_HLENGTH, 'ARROWHWIDTH', PFBrainGraph.INIT_ARR_HWIDTH, 'ARROWHNODE', PFBrainGraph.INIT_ARR_HNODE, 'ARROWN', PFBrainGraph.INIT_ARR_N, ...
-    'CYLCOLOR', PFBrainGraph.INIT_CYL_COLOR, 'CYLR', PFBrainGraph.INIT_CYL_R,'CYLN', PFBrainGraph.INIT_CYL_N)
+SettingsEdges('LINKS', 0, 'LINKSCOLOR', PFBrainGraph.INIT_LIN_COLOR, 'LINKLINESTYLE', PFBrainGraph.INIT_LIN_STYLE, 'LINKLINEWIDTH', PFBrainGraph.INIT_LIN_WIDTH, ...
+    'ARROWS', 0, 'ARROWCOLOR', PFBrainGraph.INIT_ARR_COLOR, 'ARROWSWIDTH', PFBrainGraph.INIT_ARR_SWIDTH, 'ARROWHLENGTH', PFBrainGraph.INIT_ARR_HLENGTH, 'ARROWHWIDTH', PFBrainGraph.INIT_ARR_HWIDTH, 'ARROWHNODE', PFBrainGraph.INIT_ARR_HNODE, 'ARROWN', PFBrainGraph.INIT_ARR_N, ...
+    'CYLINDERS', 0, 'CYLCOLOR', PFBrainGraph.INIT_CYL_COLOR, 'CYLR', PFBrainGraph.INIT_CYL_R,'CYLN', PFBrainGraph.INIT_CYL_N, ...
+    'TEXTS', 0)
 
 %%%% ¡gui!
 pr = SettingsEdgesPP('EL', pf, 'PROP', PFBrainGraph.ST_EDGES, varargin{:});
-
 
 %% ¡methods!
 function h_panel = draw(pf, varargin)
@@ -221,6 +220,8 @@ function h_panel = draw(pf, varargin)
         pf.set('EDGES', edges)
     end
 
+    % listener to changes in 
+
     % output
     if nargout > 0
         h_panel = pf.p;
@@ -283,9 +284,9 @@ function h = link_edge(pf, i, j)
                 [X1 X2], ...
                 [Y1 Y2], ...
                 [Z1 Z2], ...
-                'Color', pf.get('ST_EDGES').get('EDGECOLOR'), ...
-                'LineStyle', pf.get('ST_EDGES').get('EDGELINESTYLE'), ...
-                'LineWidth', pf.get('ST_EDGES').get('EDGELINEWIDTH'));
+                'Color', pf.get('ST_EDGES').get('LINKSCOLOR'), ...
+                'LineStyle', pf.get('ST_EDGES').get('LINKLINESTYLE'), ...
+                'LineWidth', pf.get('ST_EDGES').get('LINKLINEWIDTH'));
         else
             x1 = pf.edges.X1(i, j);
             y1 = pf.edges.Y1(i, j);
@@ -315,9 +316,9 @@ function h = link_edge(pf, i, j)
     pf.edges.Z2(i, j) = Z2;
 
     % sets properties
-    set(pf.edges.links(i, j), 'LineStyle', pf.get('ST_EDGES').get('EDGELINESTYLE'));
-    set(pf.edges.links(i, j),'LineWidth', pf.get('ST_EDGES').get('EDGELINEWIDTH'));
-    set(pf.edges.links(i, j),'Color', pf.get('ST_EDGES').get('EDGECOLOR'));
+    set(pf.edges.links(i, j), 'LineStyle', pf.get('ST_EDGES').get('LINKLINESTYLE'));
+    set(pf.edges.links(i, j),'LineWidth', pf.get('ST_EDGES').get('LINKLINEWIDTH'));
+    set(pf.edges.links(i, j),'Color', pf.get('ST_EDGES').get('LINKSCOLOR'));
 
     if nargout>0
         h = pf.edges.links(i, j);
@@ -537,7 +538,7 @@ function h = arrow_edge(pf, i, j, varargin)
 
     % sets properties
     set(pf.edges.arr(i, j), 'FACECOLOR', pf.get('ST_EDGES').get('ARROWFACECOLOR'));
-    set(pf.edges.arr(i, j), 'EDGECOLOR', pf.get('ST_EDGES').get('ARROWEDGECOLOR'));
+    set(pf.edges.arr(i, j), 'LINKSCOLOR', pf.get('ST_EDGES').get('ARROWEDGECOLOR'));
     
     if nargout>0
         h = pf.edges.arr(i, j);
