@@ -573,9 +573,9 @@ function cb_measure_open_brain_graph(pr)
 
         m = g.getMeasure(measure);
         if Measure.is_nodal(m)
-            if length(pr.f_measure_plots) < i || ~check_graphics(pr.f_measure_plots{i}, 'figure')
-                pr.f_measure_plots{i} = GUIFig( ...
-                    'PF', m.memorize('PFM'), ... % ensure that the property is stored
+            if length(pr.f_brain_graphs) < i || ~check_graphics(pr.f_brain_graphs{i}, 'figure')
+                pr.f_brain_graphs{i} = GUIFig( ...
+                    'PF', m.memorize('PFBG'), ... % ensure that the property is stored
                     'WAITBAR', Callback('EL', pr, 'TAG', 'WAITBAR'), ...
                     'NAME', ['Figure - ' m.get('ID') '@' el.get('ID') ' - ' BRAPH2.STR], ...
                     'POSITION', [ ...
@@ -587,19 +587,19 @@ function cb_measure_open_brain_graph(pr)
                     'CLOSEREQ', false ...
                     ).draw();
             else
-                figure(pr.f_measure_plots{i})
+                figure(pr.f_brain_graphs{i})
             end
         end        
     end
 end
-function cb_measure_hide_elements(pr) 
+function cb_measure_hide_brain_graph(pr) 
 
     % hides selected subfigures
     for s = 1:1:length(pr.selected)
         i = pr.selected(s);
         
         if length(pr.f_brain_graphs) >= i
-            f_measure_brain_graph = pr.f_measure_elements{i};
+            f_measure_brain_graph = pr.f_brain_graphs{i};
             if check_graphics(f_measure_brain_graph, 'figure')
                 gui = get(f_measure_brain_graph, 'UserData');
                 gui.cb_hide()

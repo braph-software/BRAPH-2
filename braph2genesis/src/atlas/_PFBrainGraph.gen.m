@@ -1,5 +1,5 @@
 %% ¡header!
-PFBrainGraph < PFBrainAtlas (pl, plot brain graph) is a plot of a brain graph.
+PFBrainGraph < PFBrainAtlas (pf, plot brain graph) is a plot of a brain graph.
 
 %%% ¡description!
 PFBrainGraph manages the plot of the graph edges, arrows and cylinders.
@@ -64,7 +64,7 @@ MEASURES (figure, logical) determines whether the measures affect the brain regi
 %%%% ¡default!
 true
 %%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set('MEASURES', varargin)) && ~braph2_testing
+if ~braph2_testing
     if pf.get('MEASURES')
         measures = pf.get('ME');
         % increase br size by measure value
@@ -106,9 +106,9 @@ if (isempty(varargin) || pf.prop_set('MEASURES', varargin)) && ~braph2_testing
         end        
     end
     
-    % triggers the update of SPH_DICT
-    pf.set('SPH_DICT', pf.get('SPH_DICT'))
-    pf.set('SYM_DICT', pf.get('SYM_DICT'))
+    % triggers the update of SPH_DICT this causes loop
+    %pf.set('SPH_DICT', pf.get('SPH_DICT'))
+    %pf.set('SYM_DICT', pf.get('SYM_DICT'))
     
     % update state of toggle tool
     set(pf.toolbar_measure, 'State', pf.get('MEASURES'))
