@@ -319,29 +319,25 @@ pr = PanelPropMatrix('EL', nncv, 'PROP', NNClassifierCrossValidation.CONFUSION_M
     varargin{:});
 
 %%% ¡prop!
-CLASS_NAME1 (result, string) is the class name for group 1.
-%%%% ¡calculate!
-if isa(nncv.get('NNE_DICT'), 'NoValue') || isa(nncv.get('NN_DICT'), 'NoValue')
-    value = 'Group1';
-else
-    nn = nncv.get('NN_DICT').getItem(1);
-    gr = nncv.get('NNE_DICT').getItem(1).get('GR');
-    [inputs, ~] = nn.reconstruct_inputs(gr);
-    [targets, classes] = nn.reconstruct_targets(gr);
-    value = classes{1};
+CLASS_NAME1 (metadata, string) is the class name for group 1.
+%%%% ¡postprocessing!
+if isempty(nncv.get('CLASS_NAME1'))
+    if isa(nncv.getr('GR1'), 'NoValue')
+        nncv.set('CLASS_NAME1', 'Group1');
+    else
+        nncv.set('CLASS_NAME1', nncv.get('GR1').get('SUB_DICT').getItem(1).get('TARGET_NAME'));
+    end
 end
 
 %%% ¡prop!
-CLASS_NAME2 (result, string) is the class name for group 2.
-%%%% ¡calculate!
-if isa(nncv.get('NNE_DICT'), 'NoValue') || isa(nncv.get('NN_DICT'), 'NoValue')
-    value = 'Group1';
-else
-    nn = nncv.get('NN_DICT').getItem(1);
-    gr = nncv.get('NNE_DICT').getItem(1).get('GR');
-    [inputs, ~] = nn.reconstruct_inputs(gr);
-    [targets, classes] = nn.reconstruct_targets(gr);
-    value = classes{2};
+CLASS_NAME2 (metadata, string) is the class name for group 2.
+%%%% ¡postprocessing!
+if isempty(nncv.get('CLASS_NAME2'))
+    if isa(nncv.getr('GR2'), 'NoValue')
+        nncv.set('CLASS_NAME2', 'Group2');
+    else
+        nncv.set('CLASS_NAME2', nncv.get('GR2').get('SUB_DICT').getItem(1).get('TARGET_NAME'));
+    end
 end
 
 %%% ¡prop!

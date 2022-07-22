@@ -142,29 +142,33 @@ pr = PanelPropMatrix('EL', nne, 'PROP', NNClassifierEvaluator.CONFUSION_MATRIX, 
     varargin{:});
 
 %%% ¡prop!
-CLASS_NAME1 (result, string) is the class name for group 1.
-%%%% ¡calculate!
-if isa(nne.get('NN'), 'NoValue') || isa(nne.get('GR'), 'NoValue')
-    value = 'Group1';
-else
-    nn = nne.get('NN');
-    gr = nne.get('GR');
-    [inputs, ~] = nn.reconstruct_inputs(gr);
-    [targets, classes] = nn.reconstruct_targets(gr);
-    value = classes{1};
+CLASS_NAME1 (metadata, string) is the class name for group 1.
+%%%% ¡postprocessing!
+if isempty(nne.get('CLASS_NAME1'))
+    if isa(nne.get('NN'), 'NoValue') || isa(nne.get('GR'), 'NoValue')
+        nne.set('CLASS_NAME1', 'Group1');
+    else
+        nn = nne.get('NN');
+        gr = nne.get('GR');
+        [inputs, ~] = nn.reconstruct_inputs(gr);
+        [targets, classes] = nn.reconstruct_targets(gr);
+        nne.set('CLASS_NAME1', classes{1});
+    end
 end
 
 %%% ¡prop!
-CLASS_NAME2 (result, string) is the class name for group 2.
-%%%% ¡calculate!
-if isa(nne.get('NN'), 'NoValue') || isa(nne.get('GR'), 'NoValue')
-    value = 'Group1';
-else
-    nn = nne.get('NN');
-    gr = nne.get('GR');
-    [inputs, ~] = nn.reconstruct_inputs(gr);
-    [targets, classes] = nn.reconstruct_targets(gr);
-    value = classes{2};
+CLASS_NAME2 (metadata, string) is the class name for group 2.
+%%%% ¡postprocessing!
+if isempty(nne.get('CLASS_NAME2'))
+    if isa(nne.get('NN'), 'NoValue') || isa(nne.get('GR'), 'NoValue')
+        nne.set('CLASS_NAME2', 'Group2');
+    else
+        nn = nne.get('NN');
+        gr = nne.get('GR');
+        [inputs, ~] = nn.reconstruct_inputs(gr);
+        [targets, classes] = nn.reconstruct_targets(gr);
+        nne.set('CLASS_NAME2', classes{2});
+    end
 end
 
 %%% ¡prop!
