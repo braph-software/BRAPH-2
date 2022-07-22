@@ -26,43 +26,34 @@ PLOT_LINESTYLE_NAME = { ...
     'none' ...
     };
 
-% Symbols
-INIT_SYM_MARKER = 'o';
-INIT_SYM_SIZE = 1;
-INIT_SYM_EDGE_COLOR = 'b';
-INIT_SYM_FACE_COLOR = 'b';
+% edge line
+INIT_LIN_COLOR = [0 0 0];
+INIT_LIN_STYLE = PFBrainGraph.PLOT_LINESTYLE_TAG{1};
+INIT_LIN_WIDTH  = .1;
 
-% Spheres
-INIT_SPH_EDGE_COLOR = 'none';
-INIT_SPH_EDGE_ALPHA = .5;
-INIT_SPH_FACE_COLOR = [.9 .4 .1];
-INIT_SPH_FACE_ALPHA = .5;
-INIT_SPH_R = 1;
+% Arrows
+INIT_ARR_COLOR = [0 0 0];
+INIT_ARR_SWIDTH = .1;
+INIT_ARR_HLENGTH = 1;
+INIT_ARR_HWIDTH = 1;
+INIT_ARR_HNODE = .5;
+INIT_ARR_N = 32;
 
-% IDs
-INIT_ID_FONT_SIZE = 1;
-INIT_ID_FONT_NAME = 'helvetica';
-INIT_ID_FONT_COLOR = [0 0 0];
-INIT_ID_FONT_INTERPRETER = 'none';
+% Cylinders
+INIT_CYL_COLOR = [0 0 0];
+INIT_CYL_R = .1;
+INIT_CYL_N = 32;
 
-% Labels
-INIT_LAB_FONT_SIZE = 1;
-INIT_LAB_FONT_NAME = 'helvetica';
-INIT_LAB_FONT_COLOR = [0 0 0];
-INIT_LAB_FONT_INTERPRETER = 'none';
 
 %% ¡properties!
 p % handle for panel
 h_axes % handle for axes
-h_links % handle for link edges
-h_arrows % handle for arrow edges
-h_cylinders % handle for cylinder edge
+
+edges % struct for edges
 
 toolbar
 toolbar_measure
-toolbar_links
-toolbar_arrows
-toolbar_cylinders
+toolbar_edges
 
 %% ¡props!
 %%% ¡prop!
@@ -124,79 +115,39 @@ if (isempty(varargin) || pf.prop_set('MEASURES', varargin)) && ~braph2_testing
 end
 
 %%% ¡prop!
-LINKS (figure, logical) determines whether the edges are shown as a link.
+EDGES (figure, logical) determines whether the edges are shown as a edge.
 %%%% ¡default!
 true
 %%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set('LINKS', varargin)) && ~braph2_testing
-    if ~pf.get('LINKS')
-        for i = 1:length(pf.h_links)
-            set(pf.h_links{i}, 'Visible', false)
+if (isempty(varargin) || pf.prop_set('EDGES', varargin)) && ~braph2_testing
+    if ~pf.get('EDGES')
+        for i = 1:size(pf.edges.h_links)
+            pf.link_edges_off([], [])
+            pf.arrow_edges_off([], [])
+            pf.cylinder_edges_off([],[])
         end
     end
     
-    % triggers the update of SPH_DICT
-    pf.set('LINK_DICT', pf.get('LINK_DICT'))
-    
     % update state of toggle tool
-    set(pf.toolbar_edges, 'State', pf.get('LINKS'))
+    set(pf.toolbar_edges, 'State', pf.get('EDGES'))
 end
 
 %%% ¡prop!
-LINK_DICT (figure, idict) contains the edge connections between brain regions.
+ST_EDGES (figure, item) determines the edge settings.
 %%%% ¡settings!
-'SettingsLinks'
-%%%% ¡postprocessing!
-if pf.get('LINKS') && ~isa(pf.getr('BA'), 'NoValue')
-    if ~isa(pf.getr('LINK_DICT'), 'NoValue')
+'SettingsEdges'
+%%%% ¡default!
+SettingsEdges('LINKS', 1, 'ARROWS', 0, 'CYLINDERS', 0, 'TEXTS', 0, ...
+    'EDGECOLOR', PFBrainGraph.INIT_LIN_COLOR, 'EDGELINESTYLE', PFBrainGraph.INIT_LIN_STYLE, 'EDGELINEWIDTH', PFBrainGraph.INIT_LIN_WIDTH, ...
+    'ARROWCOLOR', PFBrainGraph.INIT_ARR_COLOR, 'ARROWSWIDTH', PFBrainGraph.INIT_ARR_SWIDTH, 'ARROWHLENGTH', PFBrainGraph.INIT_ARR_HLENGTH, 'ARROWHWIDTH', PFBrainGraph.INIT_ARR_HWIDTH, 'ARROWHNODE', PFBrainGraph.INIT_ARR_HNODE, 'ARROWN', PFBrainGraph.INIT_ARR_N, ...
+    'CYLCOLOR', PFBrainGraph.INIT_CYL_COLOR, 'CYLR', PFBrainGraph.INIT_CYL_R,'CYLN', PFBrainGraph.INIT_CYL_N)
 
-        br_dict = pf.get('BA').get('BR_DICT');
-
-        if pf.get('LINK_DICT').length() == 0 && br_dict.length()
-
-            for i = 1:1:br_dict.length()
-                br = br_dict.getItem(i);
-
-                edges{i} = SettingsLinks( ...
-                    'VISIBLE', true, ...
-                    'ID', [ij], ...
-                    'H', 0, ...                    
-                    'XDATA', 0, ... % Callback('EL', br, 'TAG', 'X1'), ...
-                    'YDATA', 0, ... % Callback('EL', br, 'TAG', 'Y1'), ...
-                    'Z1', 0, ... % Callback('EL', br, 'TAG', 'Z1') ...
-                    'X2', 0, ... % Callback('EL', br, 'TAG', 'X2'), ...
-                    'Y2', 0, ... % Callback('EL', br, 'TAG', 'Y2'), ...
-                    'Z2', 0, ... % Callback('EL', br, 'TAG', 'Z2') ...
-                    'FACECOLOR', BRAPH2.COL, ...
-                    'FACEALPHA', 1 ...
-                    );
-            end
-
-            pf.get('LINK_DICT').set('IT_LIST', edges)
-        end
-        
-        if ~isempty(pf.h_sphs)
-            for i = 1:1:br_dict.length()
-                if pf.get('SPH_DICT').containsIndex(i) && check_graphics(pf.h_sphs{i}, 'surface')
-                    pf.get('SPH_DICT').getItem(i).h(pf.h_sphs{i}).set( ...
-                        'PANEL', pf, ...
-                        'UITAG', ['h_sphs{' int2str(i) '}'] ... % same as in h_sphs{i}
-                        );
-                end
-            end
-        end
-        
-        % reset the ambient lighting
-        pf.get('ST_AMBIENT').set()
-    end
-end
 %%%% ¡gui!
-pr = PanelPropIDictTable('EL', pf, 'PROP', PFBrainAtlas.SPH_DICT, ...
-    'COLS', [PanelPropIDictTable.SELECTOR SettingsSphere.VISIBLE SettingsSphere.X SettingsSphere.Y SettingsSphere.Z SettingsSphere.SPHERESIZE SettingsSphere.FACECOLOR SettingsSphere.FACEALPHA SettingsSphere.EDGECOLOR SettingsSphere.EDGEALPHA], ...
-    varargin{:});
+pr = SettingsEdgesPP('EL', pf, 'PROP', PFBrainGraph.ST_EDGES, varargin{:});
+
 
 %% ¡methods!
-function h_panel = draw(pl, varargin)
+function h_panel = draw(pf, varargin)
     %DRAW draws the brain atlas graph graphical panel.
     %
     % DRAW(PL) draws the brain atlas graph graphical panel.
@@ -212,11 +163,24 @@ function h_panel = draw(pl, varargin)
     %
     % see also settings, uipanel, isgraphics.
 
-    pl.p = draw@PFBrainAtlas(pl, varargin{:});
+    pf.p = draw@PFBrainAtlas(pf, varargin{:});
+    
+    % init edge struct
+    brain_regions_length = pf.get('BA').get('BR_DICT').length();
+    pf.edges.links = NaN(brain_regions_length);
+    pf.edges.arr = NaN(brain_regions_length);
+    pf.edges.cyl = NaN(brain_regions_length);
+    pf.edges.texts = NaN(brain_regions_length);
+    pf.edges.X1 = zeros(brain_regions_length, 1);
+    pf.edges.Y1 = zeros(brain_regions_length, 1);
+    pf.edges.Z1 = zeros(brain_regions_length, 1);
+    pf.edges.X2 = zeros(brain_regions_length, 1);
+    pf.edges.Y2 = zeros(brain_regions_length, 1);
+    pf.edges.Z2 = zeros(brain_regions_length, 1);
 
     % get axes
     if ~check_graphics(pf.h_axes, 'axes')
-        pl.h_axes =  pf.p.Children(1);
+        pf.h_axes =  pf.p.Children(1);
     end
 
     % get toolbar
@@ -240,25 +204,758 @@ function h_panel = draw(pl, varargin)
             'OffCallback', {@cb_measures, false});
         
         % links
-        pf.toolbar_links = uitoggletool(pf.toolbar, ...
-            'Tag', 'toolbar_links', ...
+        pf.toolbar_edges = uitoggletool(pf.toolbar, ...
+            'Tag', 'toolbar_edges', ...
             'Separator', 'on', ...
-            'State', pf.get('LINKS'), ...
+            'State', pf.get('EDGES'), ...
             'Tooltip', 'Show Edges', ...
             'CData', imread('icon_graph_panel.png'), ...
-            'OnCallback', {@cb_links, true}, ...
-            'OffCallback', {@cb_links, false});
+            'OnCallback', {@cb_edges, true}, ...
+            'OffCallback', {@cb_edges, false});
     end
     
     function cb_measures(~, ~, measures) % (src, event)
         pf.set('MEASURES', measures)
     end
-    function cb_links(~, ~, edges) % (src, event)
-        pf.set('LINKS', edges)
+    function cb_edges(~, ~, edges) % (src, event)
+        pf.set('EDGES', edges)
     end
 
     % output
     if nargout > 0
-        h_panel = pl.p;
+        h_panel = pf.p;
     end
+end
+function str = tostring(pf, varargin)
+    %TOSTRING string with information about the brain atlas.
+    %
+    % STR = TOSTRING(PF) returns a string with information about the brain atlas.
+    %
+    % STR = TOSTRING(PF, N) trims the string to the first N characters.
+    %
+    % STR = TOSTRING(PF, N, ENDING) ends the string with ENDING if it has
+    %  been trimmed.
+    %
+    % See also disp, tree.
+
+    str = 'Plot Brain Graph';
+    str = tostring(str, varargin{:});
+    str = str(2:1:end-1);
+end
+
+function h = link_edge(pf, i, j)
+    % LINK_EDGE plots edge edge as line
+    %
+    % LINK_EDGE(BG, I, J) plots the edge edge from the brain regions
+    % I to J as a line, if not plotted.
+    %
+    % H = LINK_EDGE(BG, I, J) returns the handle to the edge edge
+    % from the brain region I to J.
+    %
+    % LINK_EDGE(BG, I, J, PROPERTY, VALUE, ...) sets the property
+    % of the edge edge line PROPERTY to VALUE.
+    % All standard plot properties of plot3 can be used.
+    % The line properties can also be changed when hidden.
+    %
+    % See also PlotBrainGraph, plot3, link_edges, text_edge.
+
+    if i == j  % removes diagonal
+        return;
+    end
+    % get brain regions
+
+    br_1 = pf.get('BA').get('BR_DICT').getItem(i);
+    br_2 = pf.get('BA').get('BR_DICT').getItem(j);
+    % get coordinates
+    X1 = br_1.get('X');
+    Y1 = br_1.get('Y');
+    Z1 = br_1.get('Z');
+
+    X2 = br_2.get('X');
+    Y2 = br_2.get('Y');
+    Z2 = br_2.get('Z');
+
+    if ~ishandle(pf.edges.links(j, i))
+        if ~ishandle(pf.edges.links(i, j))
+
+            pf.edges.links(i, j) = plot3( ...
+                pf.get_axes(), ...
+                [X1 X2], ...
+                [Y1 Y2], ...
+                [Z1 Z2], ...
+                'Color', pf.get('ST_EDGES').get('EDGECOLOR'), ...
+                'LineStyle', pf.get('ST_EDGES').get('EDGELINESTYLE'), ...
+                'LineWidth', pf.get('ST_EDGES').get('EDGELINEWIDTH'));
+        else
+            x1 = pf.edges.X1(i, j);
+            y1 = pf.edges.Y1(i, j);
+            z1 = pf.edges.Z1(i, j);
+
+            x2 = pf.edges.X2(i, j);
+            y2 = pf.edges.Y2(i, j);
+            z2 = pf.edges.Z2(i, j);
+
+            if x1 ~= X1 || y1 ~= Y1 || z1 ~= Z1 ...
+                    || x2 ~= X2 || y2 ~= Y2 || z2 ~= Z2
+
+                set(pf.edges.links(i, j), 'XData', [X1 X2]);
+                set(pf.edges.links(i, j), 'YData', [Y1 Y2]);
+                set(pf.edges.links(i, j), 'ZData', [Z1 Z2]);
+            end
+        end
+    else
+        pf.edges.links(i, j) = pf.edges.links(j, i);
+    end
+    pf.edges.X1(i, j) = X1;
+    pf.edges.Y1(i, j) = Y1;
+    pf.edges.Z1(i, j) = Z1;
+
+    pf.edges.X2(i, j) = X2;
+    pf.edges.Y2(i, j) = Y2;
+    pf.edges.Z2(i, j) = Z2;
+
+    % sets properties
+    set(pf.edges.links(i, j), 'LineStyle', pf.get('ST_EDGES').get('EDGELINESTYLE'));
+    set(pf.edges.links(i, j),'LineWidth', pf.get('ST_EDGES').get('EDGELINEWIDTH'));
+    set(pf.edges.links(i, j),'Color', pf.get('ST_EDGES').get('EDGECOLOR'));
+
+    if nargout>0
+        h = pf.edges.links(i, j);
+    end
+end
+function link_edge_on(pf, i, j)
+    % LINK_EDGE_ON shows a edge edge
+    %
+    % LINK_EDGE_ON(BG, I, J) shows the edge edge from the brain
+    % region I to J.
+    %
+    % See also PlotBrainGraph, link_edge, link_edge_off.
+
+    if ishandle(pf.edges.links(i, j))
+        set(pf.edges.links(i, j), 'Visible', 'on')
+    end
+end
+function link_edge_off(pf, i, j)
+    % LINK_EDGE_OFF hides a edge edge
+    %
+    % LINK_EDGE_OFF(BG, I, J) hides the edge edge from the brain
+    % region I to J.
+    %
+    % See also PlotBrainGraph, link_edge, link_edge_on.
+
+    if ishandle(pf.edges.links(i, j))
+        set(pf.edges.links(i, j), 'Visible', 'off')
+    end
+end
+function link_edges(pf, i_vec, j_vec, varargin)
+    % LINK_EDGES plots multiple edge links as lines
+    %
+    % LINK_EDGES(BG, I_VEC, J_VEC) plots the edge links from the
+    % brain regions specified in I_VEC to the ones specified in
+    % J_VEC, if not plotted. I_VEC and J_VEC need not be the same
+    % size.
+    %
+    % LINK_EDGES(BG, [], []) plots the edge links between all
+    % possible brain region combinations.
+    %
+    % LINK_EDGES(BG, I_VEC, J_VEC, PROPERTY, RULE) sets the property
+    % of the multiple edge links' PROPERTY to RULE.
+    % All standard plot properties of plot3 can be used.
+    % The line properties can also be changed when hidden.
+    %
+    % See also PlotBrainGraph, plot3, link_edge.
+
+    if nargin < 2 || isempty(i_vec) || isempty(j_vec)
+        for i = 1:1:pf.get('BA').get('BR_DICT').length()
+            for j = 1:1:pf.get('BA').get('BR_DICT').length()
+                pf.link_edge(i, j, varargin{:})
+            end
+        end
+    else
+        if length(i_vec) == 1
+            i_vec = i_vec * ones(size(j_vec));
+        end
+        if length(j_vec) == 1
+            j_vec = j_vec * ones(size(i_vec));
+        end
+
+        for m = 1:1:length(i_vec)
+            pf.link_edge(i_vec(m), j_vec(m), varargin{:})
+        end
+    end
+end
+function link_edges_on(pf, i_vec, j_vec)
+    % LINK_EDGES_ON shows multiple edge edge
+    %
+    % LINK_EDGES_ON(BG, I, J) shows multiple edge edge from the brain
+    % region I to J.
+    %
+    % See also PlotBrainGraph, link_edges, link_edges_off.
+
+    if nargin<2 || isempty(i_vec) || isempty(j_vec)
+        for i = 1:1:pf.get('BA').get('BR_DICT').length()
+            for j = 1:1:pf.get('BA').get('BR_DICT').length()
+                pf.link_edge_on(i, j)
+            end
+        end
+    else
+        if length(i_vec) == 1
+            i_vec = i_vec * ones(size(j_vec));
+        end
+        if length(j_vec) == 1
+            j_vec = j_vec * ones(size(i_vec));
+        end
+
+        for m = 1:1:length(i_vec)
+            pf.link_edge_on(i_vec(m), j_vec(m))
+        end
+    end
+end
+function link_edges_off(pf, i_vec, j_vec)
+    % LINK_EDGES_OFF hides multiple edge links
+    %
+    % LINK_EDGES_OFF(BG, I, J) hides multiple edge links from the brain
+    % region I to J.
+    %
+    % See also PlotBrainGraph, link_edge, link_edge_on.
+
+    if nargin<2 || isempty(i_vec) || isempty(j_vec)
+        for i = 1:1:pf.get('BA').get('BR_DICT').length()
+            for j = 1:1:pf.get('BA').get('BR_DICT').length()
+                pf.link_edge_off(i, j)
+            end
+        end
+    else
+        if length(i_vec) == 1
+            i_vec = i_vec * ones(size(j_vec));
+        end
+        if length(j_vec) == 1
+            j_vec = j_vec * ones(size(i_vec));
+        end
+
+        for m = 1:1:length(i_vec)
+            pf.link_edge_off(i_vec(m), j_vec(m))
+        end
+    end
+end
+function bool = link_edge_is_on(pf, i, j)
+    % LINK_EDGE_IS_ON checks if line edge is visible
+    %
+    % BOOL = LINK_EDGE_IS_ON(BG, I, J) returns true if the line edge
+    % from the brain regions I to J is visible and false otherwise.
+    %
+    % See also PlotBrainGraph.
+
+    bool = ishandle(pf.edges.links(i, j)) && strcmpi(get(pf.edges.links(i, j), 'Visible'), 'on');
+end
+
+function h = arrow_edge(pf, i, j, varargin)
+    % ARROW_EDGE plots edge edge as an arrow
+    %
+    % ARROW_EDGE(BG, I, J) plots the edge edge from the brain regions
+    % I to J as a line, if not plotted.
+    %
+    % H = ARROW_EDGE(BG, I, J) returns the handle to the edge edge
+    % from the brain region I to J.
+    %
+    % ARROW_EDGE(BG, I, J, PROPERTY, VALUE, ...) sets the property
+    % of the edge edge line PROPERTY to VALUE.
+    % All standard plot properties of plot3 can be used.
+    % The line properties can also be changed when hidden.
+    %
+    % See also PlotBrainGraph, plot3, link_edges.
+
+    if i == j  % removes diagonal
+        return;
+    end
+    
+    % get brain regions
+    br_1 = pf.get('BA').get('BR_DICT').getItem(i);
+    br_2 = pf.get('BA').get('BR_DICT').getItem(j);
+    % get coordinates
+    X1 = br_1.get('X');
+    Y1 = br_1.get('Y');
+    Z1 = br_1.get('Z');
+
+    X2 = br_2.get('X');
+    Y2 = br_2.get('Y');
+    Z2 = br_2.get('Z');
+
+    % arrow properties
+    color = pf.get('ST_EDGES').get('ARROWCOLOR');
+    SWIDTH = pf.get('ST_EDGES').get('ARROWSWIDTH');
+    HLENGTH = pf.get('ST_EDGES').get('ARROWHLENGTH');
+    HWIDTH = pf.get('ST_EDGES').get('ARROWHWIDTH');
+    HNODE = pf.get('ST_EDGES').get('ARROWHNODE');
+    N = pf.get('ST_EDGES').get('ARROWN');
+
+    if ~ishandle(pf.edges.arr(i, j))
+
+        [X, Y, Z] = arrow3d(X1, Y1, Z1, X2, Y2, Z2,...
+            'StemWidth', SWIDTH, ...
+            'HeadLength', HLENGTH, ...
+            'HeadWidth', HWIDTH, ...
+            'HeadNode', HNODE, ...
+            'N', N);
+
+        pf.edges.arr(i, j) = surf(X, Y, Z,...
+            'EdgeColor', color,...
+            'FaceColor', color,...
+            'Parent', pf.get_axes());
+    else
+        x1 = pf.edges.X1(i, j);
+        y1 = pf.edges.Y1(i, j);
+        z1 = pf.edges.Z1(i, j);
+
+        x2 = pf.edges.X2(i, j);
+        y2 = pf.edges.Y2(i, j);
+        z2 = pf.edges.Z2(i, j);
+
+        if x1 ~= X1 || y1 ~= Y1 || z1 ~= Z1 ...
+                || x2 ~= X2 || y2 ~= Y2 || z2 ~= Z2
+
+            [X, Y, Z] = arrow3d(X1, Y1, Z1, X2, Y2, Z2,...
+                'StemWidth', SWIDTH, ...
+                'HeadLength', HLENGTH, ...
+                'HeadWidth', HWIDTH, ...
+                'HeadNode', HNODE, ...
+                'N', N);
+
+            set(pf.edges.arr(i, j), 'XData', X);
+            set(pf.edges.arr(i, j), 'YData', Y);
+            set(pf.edges.arr(i, j), 'ZData', Z);
+
+        end
+    end
+    pf.edges.X1(i, j) = X1;
+    pf.edges.Y1(i, j) = Y1;
+    pf.edges.Z1(i, j) = Z1;
+
+    pf.edges.X2(i, j) = X2;
+    pf.edges.Y2(i, j) = Y2;
+    pf.edges.Z2(i, j) = Z2;
+
+    % sets properties
+    set(pf.edges.arr(i, j), 'FACECOLOR', pf.get('ST_EDGES').get('ARROWFACECOLOR'));
+    set(pf.edges.arr(i, j), 'EDGECOLOR', pf.get('ST_EDGES').get('ARROWEDGECOLOR'));
+    
+    if nargout>0
+        h = pf.edges.arr(i, j);
+    end
+end
+function arrow_edge_on(pf, i, j)
+    % ARROW_EDGE_ON shows a edge edge
+    %
+    % ARROW_EDGE_ON(BG, I, J) shows the edge edge from the brain
+    % region I to J.
+    %
+    % See also PlotBrainGraph, link_edge, link_edge_off.
+
+    if ishandle(pf.edges.arr(i, j))
+        set(pf.edges.arr(i, j), 'Visible', 'on')
+    end
+end
+function arrow_edge_off(pf, i, j)
+    % ARROW_EDGE_OFF hides a edge edge
+    %
+    % ARROW_EDGE_OFF(BG, I, J) hides the edge edge from the brain
+    % region I to J.
+    %
+    % See also PlotBrainGraph, link_edge, link_edge_on.
+
+    if ishandle(pf.edges.arr(i, j))
+        set(pf.edges.arr(i, j), 'Visible', 'off')
+    end
+end
+function arrow_edges(pf, i_vec, j_vec, varargin)
+    % ARROW_EDGES plots multiple edge links as lines
+    %
+    % ARROW_EDGES(BG, I_VEC, J_VEC) plots the edge links from the
+    % brain regions specified in I_VEC to the ones specified in
+    % J_VEC, if not plotted. I_VEC and J_VEC need not be the same
+    % size.
+    %
+    % ARROW_EDGES(BG, [], []) plots the edge links between all
+    % possible brain region combinations.
+    %
+    % ARROW_LINS(BG, I_VEC, J_VEC, PROPERTY, RULE) sets the property
+    % of the multiple edge links' PROPERTY to RULE.
+    % All standard plot properties of plot3 can be used.
+    % The line properties can also be changed when hidden.
+    %
+    % See also PlotBrainGraph, plot3, link_edge.
+
+    if nargin < 2 || isempty(i_vec) || isempty(j_vec)
+        for i = 1:1:pf.get('BA').get('BR_DICT').length()
+            for j = 1:1:pf.get('BA').get('BR_DICT').length()
+                pf.arrow_edge(i, j, varargin{:})
+            end
+        end
+    else
+        if length(i_vec) == 1
+            i_vec = i_vec * ones(size(j_vec));
+        end
+        if length(j_vec) == 1
+            j_vec = j_vec * ones(size(i_vec));
+        end
+
+        for m = 1:1:length(i_vec)
+            pf.arrow_edge(i_vec(m), j_vec(m), varargin{:})
+        end
+    end
+end
+function arrow_edges_on(pf, i_vec, j_vec)
+    % ARROW_EDGES_ON shows multiple edge edge
+    %
+    % ARROW_EDGES_ON(BG, I, J) shows multiple edge edge from the brain
+    % region I to J.
+    %
+    % See also PlotBrainGraph, link_edges, link_edges_off.
+
+    if nargin<2 || isempty(i_vec) || isempty(j_vec)
+        for i = 1:1:pf.get('BA').get('BR_DICT').length()
+            for j = 1:1:pf.get('BA').get('BR_DICT').length()
+                pf.arrow_edge_on(i, j)
+            end
+        end
+    else
+        if length(i_vec) == 1
+            i_vec = i_vec * ones(size(j_vec));
+        end
+        if length(j_vec) == 1
+            j_vec = j_vec * ones(size(i_vec));
+        end
+
+        for m = 1:1:length(i_vec)
+            pf.arrow_edge_on(i_vec(m), j_vec(m))
+        end
+    end
+end
+function arrow_edges_off(pf, i_vec, j_vec)
+    % ARROW_EDGES_OFF hides multiple edge links
+    %
+    % ARROW_EDGES_OFF(BG, I, J) hides multiple edge links from the brain
+    % region I to J.
+    %
+    % See also PlotBrainGraph, link_edge, link_edge_on.
+
+    if nargin<2 || isempty(i_vec) || isempty(j_vec)
+        for i = 1:1:pf.get('BA').get('BR_DICT').length()
+            for j = 1:1:pf.get('BA').get('BR_DICT').length()
+                pf.arrow_edge_off(i, j)
+            end
+        end
+    else
+        if length(i_vec) == 1
+            i_vec = i_vec * ones(size(j_vec));
+        end
+        if length(j_vec) == 1
+            j_vec = j_vec * ones(size(i_vec));
+        end
+
+        for m = 1:1:length(i_vec)
+            pf.arrow_edge_off(i_vec(m), j_vec(m))
+        end
+    end
+end
+function bool = arrow_edge_is_on(pf, i, j)
+    % ARROW_EDGE_IS_ON checks if line edge is visible
+    %
+    % BOOL = ARROW_EDGE_IS_ON(BG, I, J) returns true if the line arrow edge
+    % from the brain regions I to J is visible and false otherwise.
+    %
+    % See also PlotBrainGraph.
+
+    bool = ishandle(pf.edges.arr(i, j)) && strcmpi(get(pf.edges.arr(i, j), 'Visible'), 'on');
+end
+
+function h = cylinder_edge(pf, i, j, varargin)
+    % CYLINDER_EDGE plots edge edge as an cylinder
+    %
+    % CYLINDER_EDGE(BG, I, J) plots the edge edge from the brain regions
+    % I to J as a line, if not plotted.
+    %
+    % H = CYLINDER_EDGE(BG, I, J) returns the handle to the edge edge
+    % from the brain region I to J.
+    %
+    % CYLINDER_EDGE(BG, I, J, PROPERTY, VALUE, ...) sets the property
+    % of the edge edge line PROPERTY to VALUE.
+    % All standard plot properties of plot3 can be used.
+    % The line properties can also be changed when hidden.
+    %
+    % See also PlotBrainGraph, plot3, link_edges.
+
+    if i == j  % removes diagonal
+        return;
+    end
+    
+    % get brain regions
+    br_1 = pf.get('BA').get('BR_DICT').getItem(i);
+    br_2 = pf.get('BA').get('BR_DICT').getItem(j);
+    % get coordinates
+    X1 = br_1.get('X');
+    Y1 = br_1.get('Y');
+    Z1 = br_1.get('Z');
+
+    X2 = br_2.get('X');
+    Y2 = br_2.get('Y');
+    Z2 = br_2.get('Z');
+
+    % cylinder properties
+    color = pf.get('ST_EDGES').get('CYLCOLOR');
+    R = pf.get('ST_EDGES').get('CYLR');
+    N = pf.get('ST_EDGES').get('CYLN');
+
+    if ~ishandle(pf.edges.cyl(i, j))
+
+        [X, Y, Z] = cylinder3d(X1, Y1, Z1, X2, Y2, Z2,...
+            'R', R, ...
+            'N', N);
+
+        pf.edges.cyl(i, j) = surf(X, Y, Z,...
+            'EdgeColor', color, ...
+            'FaceColor', color, ...
+            'Parent', pf.get_axes());
+    else
+        x1 = pf.edges.X1(i, j);
+        y1 = pf.edges.Y1(i, j);
+        z1 = pf.edges.Z1(i, j);
+
+        x2 = pf.edges.X2(i, j);
+        y2 = pf.edges.Y2(i, j);
+        z2 = pf.edges.Z2(i, j);
+
+        if x1 ~= X1 || y1 ~= Y1 || z1 ~= Z1 ...
+                || x2 ~= X2 || y2 ~= Y2 || z2 ~= Z2
+
+            [X, Y, Z] = cylinder3d(X1, Y1, Z1, X2, Y2, Z2,...
+                'Color', color,...
+                'LineStyle', '-');
+
+            set(pf.edges.cyl(i, j), 'XData', X);
+            set(pf.edges.cyl(i, j), 'YData', Y);
+            set(pf.edges.cyl(i, j), 'ZData', Z);
+        end
+    end
+    pf.edges.X1(i, j) = X1;
+    pf.edges.Y1(i, j) = Y1;
+    pf.edges.Z1(i, j) = Z1;
+
+    pf.edges.X2(i, j) = X2;
+    pf.edges.Y2(i, j) = Y2;
+    pf.edges.Z2(i, j) = Z2;
+
+    % sets properties
+    set(pf.edges.cyl(i, j), 'FaceColor', color);
+    set(pf.edges.cyl(i, j), 'EdgeColor', color);
+   
+    if nargout>0
+        h = pf.edges.cyl(i, j);
+    end
+end
+function cylinder_edge_on(pf, i, j)
+    % CYLINDER_EDGE_ON shows a edge edge
+    %
+    % CYLINDER_EDGE_ON(BG, I, J) shows the edge edge from the brain
+    % region I to J.
+    %
+    % See also PlotBrainGraph, link_edge, link_edge_off.
+
+    if ishandle(pf.edges.cyl(i, j))
+        set(pf.edges.cyl(i, j), 'Visible', 'on')
+    end
+end
+function cylinder_edge_off(pf, i, j)
+    % CYLINDER_EDGE_OFF hides a edge edge
+    %
+    % CYLINDER_EDGE_OFF(BG, I, J) hides the edge edge from the brain
+    % region I to J.
+    %
+    % See also PlotBrainGraph, link_edge, link_edge_on.
+
+    if ishandle(pf.edges.cyl(i, j))
+        set(pf.edges.cyl(i, j), 'Visible', 'off')
+    end
+end
+function cylinder_edges(pf, i_vec, j_vec, varargin)
+    % CYLINDER_EDGES plots multiple edge links as lines
+    %
+    % CYLINDER_EDGES(BG, I_VEC, J_VEC) plots the edge links from the
+    % brain regions specified in I_VEC to the ones specified in
+    % J_VEC, if not plotted. I_VEC and J_VEC need not be the same
+    % size.
+    %
+    % CYLINDER_EDGES(BG, [], []) plots the edge links between all
+    % possible brain region combinations.
+    %
+    % CYLINDER_LINS(BG, I_VEC, J_VEC, PROPERTY, RULE) sets the property
+    % of the multiple edge links' PROPERTY to RULE.
+    % All standard plot properties of plot3 can be used.
+    % The line properties can also be changed when hidden.
+    %
+    % See also PlotBrainGraph, plot3, link_edge.
+
+    if nargin < 2 || isempty(i_vec) || isempty(j_vec)
+        for i = 1:1:pf.get('BA').get('BR_DICT').length()
+            for j = 1:1:pf.get('BA').get('BR_DICT').length()
+                pf.cylinder_edge(i, j, varargin{:})
+            end
+        end
+    else
+        if length(i_vec) == 1
+            i_vec = i_vec * ones(size(j_vec));
+        end
+        if length(j_vec) == 1
+            j_vec = j_vec * ones(size(i_vec));
+        end
+
+        for m = 1:1:length(i_vec)
+            pf.cylinder_edge(i_vec(m), j_vec(m), varargin{:})
+        end
+    end
+end
+function cylinder_edges_on(pf, i_vec, j_vec)
+    % CYLINDER_EDGES_ON shows multiple edge edge
+    %
+    % CYLINDER_EDGES_ON(BG, I, J) shows multiple edge edge from the brain
+    % region I to J.
+    %
+    % See also PlotBrainGraph, link_edges, link_edges_off.
+
+    if nargin<2 || isempty(i_vec) || isempty(j_vec)
+        for i = 1:1:pf.get('BA').get('BR_DICT').length()
+            for j = 1:1:pf.get('BA').get('BR_DICT').length()
+                pf.cylinder_edge_on(i, j)
+            end
+        end
+    else
+        if length(i_vec) == 1
+            i_vec = i_vec * ones(size(j_vec));
+        end
+        if length(j_vec) == 1
+            j_vec = j_vec * ones(size(i_vec));
+        end
+
+        for m = 1:1:length(i_vec)
+            pf.cylinder_edge_on(i_vec(m), j_vec(m))
+        end
+    end
+end
+function cylinder_edges_off(pf, i_vec, j_vec)
+    % CYLINDER_EDGES_OFF hides multiple edge links
+    %
+    % CYLINDER_EDGES_OFF(BG, I, J) hides multiple edge links from the brain
+    % region I to J.
+    %
+    % See also PlotBrainGraph, link_edge, link_edge_on.
+
+    if nargin<2 || isempty(i_vec) || isempty(j_vec)
+        for i = 1:1:pf.get('BA').get('BR_DICT').length()
+            for j = 1:1:pf.get('BA').get('BR_DICT').length()
+                pf.cylinder_edge_off(i, j)
+            end
+        end
+    else
+        if length(i_vec) == 1
+            i_vec = i_vec * ones(size(j_vec));
+        end
+        if length(j_vec) == 1
+            j_vec = j_vec * ones(size(i_vec));
+        end
+
+        for m = 1:1:length(i_vec)
+            pf.cylinder_edge_off(i_vec(m), j_vec(m))
+        end
+    end
+end
+function bool = cylinder_edge_is_on(pf, i, j)
+    % CYLINDER_EDGE_IS_ON checks if cylinder edge is visible
+    %
+    % BOOL = CYLINDER_EDGE_IS_ON(BG, I, J) returns true if the cylinder edge
+    % from the brain regions I to J is visible and false otherwise.
+    %
+    % See also PlotBrainGraph.
+
+    bool = ishandle(pf.edges.cyl(i, j)) && strcmpi(get(pf.edges.cyl(i, j), 'Visible'), 'on');
+end
+
+function h = text_edge(pf, graph_axes, i, j , text_value, varargin)
+    % TEXT_EDGE plots the edge value as a text
+    %
+    % TEXT_EDGE(BG, I, J) plots the edge value as a text.
+    %
+    % H = TEXT_EDGE(BG, I, J) returns the handle to the edge value
+    % from the brain region I to J.
+    %
+    % See also link_edge, arrow_edge, cylinder_edge.
+
+    if i == j  % removes diagonal
+        return;
+    end
+
+    
+    br_1 = pf.get('BA').get('BR_DICT').getItem(i);
+    br_2 = pf.get('BA').get('BR_DICT').getItem(j);
+    % get coordinates
+    X1 = br_1.get('X');
+    Y1 = br_1.get('Y');
+    Z1 = br_1.get('Z');
+
+    X2 = br_2.get('X');
+    Y2 = br_2.get('Y');
+    Z2 = br_2.get('Z');
+
+    % equidistant point
+    X3 = (X1 + X2) / 2;
+    Y3 = (Y1 + Y2) / 2;
+    Z3 = (Z1 + Z2) / 2;
+    pf.edges.texts(i, j) =  text(graph_axes, X3, Y3, Z3, text_value);
+
+    if nargout > 0
+        h = pf.edges.texts(i, j);
+    end
+end
+function text_edge_on(pf, i, j)
+    % TEXT_EDGE_ON shows a edge text
+    %
+    % TEXT_EDGE_ON(BG, I, J) shows the edge text from the brain
+    % region I to J.
+    %
+    % See also PlotBrainGraph, text_edge, text_edge_off.
+
+    if ishandle(pf.edges.texts(i, j))
+        set(pf.edges.texts(i, j), 'Visible', 'on')
+    end
+end
+function text_edge_off(pf, i, j)
+    % TEXT_EDGE_OFF hides a edge text
+    %
+    % TEXT_EDGE_OFF(BG, I, J) hides the edge text from the brain
+    % region I to J.
+    %
+    % See also PlotBrainGraph, text_edge, text_edge_on.
+
+    if ishandle(pf.edges.texts(i, j))
+        set(pf.edges.texts(i, j), 'Visible', 'off')
+    end
+end
+function bool = text_edge_is_on(pf, i, j)
+    % TEXT_EDGE_IS_ON checks if the edge text is visible
+    %
+    % BOOL = TEXT_EDGE_IS_ON(BG, I, J) returns true if the edge text
+    % from the brain regions I to J is visible and false otherwise.
+    %
+    % See also PlotBrainGraph, text_edge, tex_edge_is_off.
+
+    bool = ishandle(pf.edges.texts(i, j)) && strcmpi(get(pf.edges.texts(i, j), 'Visible'), 'on');
+end
+function bool = tex_edge_is_off(pf, i, j)
+    % TEXT_EDGE_IS_Off checks if the edge text is not visible
+    %
+    % BOOL = TEXT_EDGE_IS_Off(BG, I, J) returns true if the edge text
+    % from the brain regions I to J is not visible and false otherwise.
+    %
+    % See also PlotBrainGraph, text_edge, tex_edge_is_off.
+
+    bool = ishandle(pf.edges.texts(i, j)) && strcmpi(get(pf.edges.texts(i, j), 'Visible'), 'off');
 end
