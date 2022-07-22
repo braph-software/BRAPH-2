@@ -78,6 +78,7 @@ if BRAPH2.installed('NN', 'warning')
             layers = [layers
                 fullyConnectedLayer(numLayer(i), 'Name', ['fc' num2str(i)])
                 batchNormalizationLayer('Name', ['batchNormalization' num2str(i)])
+                dropoutLayer('Name', ['dropout' num2str(i)])
                 ];
         end
         layers = [layers
