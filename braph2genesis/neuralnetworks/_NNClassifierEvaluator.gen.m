@@ -134,18 +134,22 @@ else
     gr = nne.get('GR');
     [inputs, ~] = nn.reconstruct_inputs(gr);
     [targets, classes] = nn.reconstruct_targets(gr);
+    nn.set('yuwei', cellstr(classes))
     % calculate the confusion matrix
 	[cm, order] = confusionmat(targets(2, :), double(pred(2, :)));
     value = cm;
 end
 %%%% ¡gui_!
-% % % gr = nne.get('GR');
-% % % nn = nne.get('NN');
-% % % [targets, classes] = nn.reconstruct_targets(gr);
-% % % pr = PanelPropMatrix('EL', nne, 'PROP', NNClassifierEvaluator.CONFUSION_MATRIX, ...
-% % %     'ROWNAME', classes,...
-% % %     'COLUMNNAME', classes,...
-% % %     varargin{:});
+gr = nne.get('GR');
+nn = nne.get('NN');
+[targets, classes] = nn.reconstruct_targets(gr);
+pr = PanelPropMatrix('EL', nne, 'PROP', NNClassifierEvaluator.CONFUSION_MATRIX, ...
+    'ROWNAME', nn.get('yuwei'),...
+    'COLUMNNAME', nn.get('yuwei'),...
+    varargin{:});
+
+%%% ¡prop!
+YUWEI (fig, cell)
 
 %%% ¡prop!
 PFCM (gui, item) contains the panel figure of the confusion matrix.
