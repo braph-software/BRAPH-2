@@ -409,35 +409,70 @@ function update(pr)
         set(pr.checkbox_arrow, 'Enable', pr.get('ENABLE'))
         set(pr.checkbox_cylinder, 'Enable', pr.get('ENABLE'))
         set(pr.checkbox_text, 'Enable', pr.get('ENABLE'))
-        set(pr.slider_binary, 'Enable', pr.get('ENABLE'))
+        
+        set(pr.button_link_color, 'Enable', pr.get('ENABLE'))
+        set(pr.button_arrow_color, 'Enable', pr.get('ENABLE'))
+        set(pr.button_cylinder_color, 'Enable', pr.get('ENABLE'))
+        
+        set(pr.dropdown_link, 'Enable', pr.get('ENABLE'))
+        
+        set(pr.edit_link_w, 'Enable', pr.get('ENABLE'))
+        set(pr.edit_arrow_sw, 'Enable', pr.get('ENABLE'))
+        set(pr.edit_arrow_hl, 'Enable', pr.get('ENABLE'))
+        set(pr.edit_arrow_hw, 'Enable', pr.get('ENABLE'))
+        set(pr.edit_arrow_node, 'Enable', pr.get('ENABLE'))
+        set(pr.edit_arrow_n, 'Enable', pr.get('ENABLE'))        
+        set(pr.edit_cylinder_r, 'Enable', pr.get('ENABLE'))
+        set(pr.edit_cylinder_n, 'Enable', pr.get('ENABLE'))
     end
 
     switch el.getPropCategory(prop)
         case Category.METADATA            
             set(pr.checkbox_link, 'Value', el.get(prop).get('LINKS'))
-            set(pr.checkbox_arrow, 'VALUE', el.get(prop).get('COLORBAR'))
-            set(pr.checkbox_cylinder, 'Value', el.get(prop).get('BINARY'))
-            set(pr.checkbox_text, 'Value', el.get(prop).get('HIST'))
+            set(pr.checkbox_arrow, 'VALUE', el.get(prop).get('ARROWS'))
+            set(pr.checkbox_cylinder, 'Value', el.get(prop).get('CYLINDERS'))
+            set(pr.checkbox_text, 'Value', el.get(prop).get('TEXTS'))
+            
+            set(pr.dropdown_link, 'Value', el.get(prop).get('LINKLINESTYLE'))
+            
+            set(pr.edit_link_w, 'Value', el.get(prop).get('LINKLINEWIDTH'))
+            set(pr.edit_arrow_sw, 'Value', el.get(prop).get('ARROWSWIDTH'))
+            set(pr.edit_arrow_hl, 'Value', el.get(prop).get('ARROWHLENGTH'))
+            set(pr.edit_arrow_hw, 'Value', el.get(prop).get('ARROWHWIDTH'))
+            set(pr.edit_arrow_node, 'Value', el.get(prop).get('ARROWHNODE'))
+            set(pr.edit_arrow_n, 'Value', el.get(prop).get('ARROWN'))
+            set(pr.edit_cylinder_r, 'Value', el.get(prop).get('CYLR'))
+            set(pr.edit_cylinder_n, 'Value', el.get(prop).get('CYLN'))
 
         case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
             set(pr.checkbox_link, 'Value', el.get(prop).get('LINKS'))
-            set(pr.checkbox_arrow, 'VALUE', el.get(prop).get('COLORBAR'))
-            set(pr.checkbox_cylinder, 'Value', el.get(prop).get('BINARY'))
-            set(pr.checkbox_text, 'Value', el.get(prop).get('HIST'))
+            set(pr.checkbox_arrow, 'VALUE', el.get(prop).get('ARROWS'))
+            set(pr.checkbox_cylinder, 'Value', el.get(prop).get('CYLINDERS'))
+            set(pr.checkbox_text, 'Value', el.get(prop).get('TEXTS'))
+            
+            set(pr.dropdown_link, 'Value', el.get(prop).get('LINKLINESTYLE'))
+            
+            set(pr.edit_link_w, 'Value', el.get(prop).get('LINKLINEWIDTH'))
+            set(pr.edit_arrow_sw, 'Value', el.get(prop).get('ARROWSWIDTH'))
+            set(pr.edit_arrow_hl, 'Value', el.get(prop).get('ARROWHLENGTH'))
+            set(pr.edit_arrow_hw, 'Value', el.get(prop).get('ARROWHWIDTH'))
+            set(pr.edit_arrow_node, 'Value', el.get(prop).get('ARROWHNODE'))
+            set(pr.edit_arrow_n, 'Value', el.get(prop).get('ARROWN'))
+            set(pr.edit_cylinder_r, 'Value', el.get(prop).get('CYLR'))
+            set(pr.edit_cylinder_n, 'Value', el.get(prop).get('CYLN'))
 
 
             if isa(el.getr(prop), 'Callback') || isa(el.get(prop).get('LINKS'), 'Callback')
-                set(pr.checkbox_link, 'Enable', pr.get('ENABLE'))
+                set(pr.checkbox_link, 'Enable', pr.get('ENABLE'))                
+            end
+            if isa(el.getr(prop), 'Callback') || isa(el.get(prop).get('ARROWS'), 'Callback')
                 set(pr.checkbox_arrow, 'Enable', pr.get('ENABLE'))
             end
-            if isa(el.getr(prop), 'Callback') || isa(el.get(prop).get('BINARY'), 'Callback')
+            if isa(el.getr(prop), 'Callback') || isa(el.get(prop).get('CYLINDERS'), 'Callback')
                 set(pr.checkbox_cylinder, 'Enable', pr.get('ENABLE'))
             end
-            if isa(el.getr(prop), 'Callback') || isa(el.get(prop).get('HIST'), 'Callback')
+            if isa(el.getr(prop), 'Callback') || isa(el.get(prop).get('TEXTS'), 'Callback')
                 set(pr.checkbox_text, 'Enable', pr.get('ENABLE'))
-            end
-            if isa(el.getr(prop), 'Callback')
-                set(pr.slider_binary, 'Enable', pr.get('ENABLE'))
             end
             
         case Category.RESULT
@@ -448,33 +483,71 @@ function update(pr)
                     'Value', el.get(prop).getPropDefault('LINKS'), ...
                     'Enable', pr.get('ENABLE') ...
                     )
-                set(pr.checkbox_arrow, 'VALUE', el.get(prop).get('COLORBAR'), ...
+                set(pr.checkbox_arrow, 'VALUE', el.get(prop).get('ARROWS'), ...
                     'Enable', pr.get('ENABLE'))
                 set(pr.checkbox_cylinder, ...
-                    'Value', el.get(prop).getPropDefault('BINARY'), ...
+                    'Value', el.get(prop).getPropDefault('CYLINDERS'), ...
                     'Enable', pr.get('ENABLE') ...
                     )
                 set(pr.checkbox_text, ...
-                    'Value', el.get(prop).getPropDefault('HIST'), ...
+                    'Value', el.get(prop).getPropDefault('TEXTS'), ...
                     'Enable', pr.get('ENABLE') ...
                     )
-                set(pr.slider_binary, 'Enable', pr.get('ENABLE'))
+                
+                set(pr.dropdown_link, 'Value', el.get(prop).get('LINKLINESTYLE'), ...
+                    'Enable', pr.get('ENABLE'))
+            
+                set(pr.edit_link_w, 'Value', el.get(prop).get('LINKLINEWIDTH'), ...
+                    'Enable', pr.get('ENABLE'))
+                set(pr.edit_arrow_sw, 'Value', el.get(prop).get('ARROWSWIDTH'), ...
+                    'Enable', pr.get('ENABLE'))
+                set(pr.edit_arrow_hl, 'Value', el.get(prop).get('ARROWHLENGTH'), ...
+                    'Enable', pr.get('ENABLE'))
+                set(pr.edit_arrow_hw, 'Value', el.get(prop).get('ARROWHWIDTH'), ...
+                    'Enable', pr.get('ENABLE'))
+                set(pr.edit_arrow_node, 'Value', el.get(prop).get('ARROWHNODE'), ...
+                    'Enable', pr.get('ENABLE'))
+                set(pr.edit_arrow_n, 'Value', el.get(prop).get('ARROWN'), 'Enable', ...
+                    pr.get('ENABLE'))
+                set(pr.edit_cylinder_r, 'Value', el.get(prop).get('CYLR'), 'Enable', ...
+                    pr.get('ENABLE'))
+                set(pr.edit_cylinder_n, 'Value', el.get(prop).get('CYLN'), 'Enable', ...
+                    pr.get('ENABLE'))
             else
                 set(pr.checkbox_link, ...
                     'Value', el.get(prop).get('AXIS'), ...
                     'Enable', pr.get('ENABLE') ...
                     )
-                set(pr.checkbox_arrow, 'VALUE', el.get(prop).get('COLORBAR'), ...
+                set(pr.checkbox_arrow, 'VALUE', el.get(prop).get('ARROWS'), ...
                     'Enable', pr.get('ENABLE'))
                 set(pr.checkbox_cylinder, ...
-                    'Value', el.get(prop).get('BINARY'), ...
+                    'Value', el.get(prop).get('CYLINDERS'), ...
                     'Enable', pr.get('ENABLE') ...
                     )
                 set(pr.checkbox_text, ...
-                    'Value', el.get(prop).get('HIST'), ...
+                    'Value', el.get(prop).get('TEXTS'), ...
                     'Enable', pr.get('ENABLE') ...
                     )
-                set(pr.slider_binary, 'Enable', pr.get('ENABLE'))
+                
+                set(pr.dropdown_link, 'Value', el.get(prop).get('LINKLINESTYLE'), ...
+                    'Enable', pr.get('ENABLE'))
+            
+                set(pr.edit_link_w, 'Value', el.get(prop).get('LINKLINEWIDTH'), ...
+                    'Enable', pr.get('ENABLE'))
+                set(pr.edit_arrow_sw, 'Value', el.get(prop).get('ARROWSWIDTH'), ...
+                    'Enable', pr.get('ENABLE'))
+                set(pr.edit_arrow_hl, 'Value', el.get(prop).get('ARROWHLENGTH'), ...
+                    'Enable', pr.get('ENABLE'))
+                set(pr.edit_arrow_hw, 'Value', el.get(prop).get('ARROWHWIDTH'), ...
+                    'Enable', pr.get('ENABLE'))
+                set(pr.edit_arrow_node, 'Value', el.get(prop).get('ARROWHNODE'), ...
+                    'Enable', pr.get('ENABLE'))
+                set(pr.edit_arrow_n, 'Value', el.get(prop).get('ARROWN'), 'Enable', ...
+                    pr.get('ENABLE'))
+                set(pr.edit_cylinder_r, 'Value', el.get(prop).get('CYLR'), 'Enable', ...
+                    pr.get('ENABLE'))
+                set(pr.edit_cylinder_n, 'Value', el.get(prop).get('CYLN'), 'Enable', ...
+                    pr.get('ENABLE'))
             end
     end
 end
@@ -499,16 +572,48 @@ function redraw(pr, varargin)
     %
     % See also draw, update, PanelElement, s.
 
-    [h_p, varargin] = get_and_remove_from_varargin(s(8.5), 'Height', varargin);
+    [h_p, varargin] = get_and_remove_from_varargin(s(10.5), 'Height', varargin);
     
     pr.redraw@PanelProp('Height', h_p, varargin{:})
     
-    set(pr.checkbox_link, 'Position', [s(.3) s(4.3) .30*w(pr.p, 'pixels') s(1.7)])
-    set(pr.checkbox_arrow, 'Position', [s(.3)+.35*w(pr.p, 'pixels')+s(1.7) s(4.3) .30*w(pr.p, 'pixels') s(1.7)])
-    set(pr.checkbox_cylinder, 'Position', [s(.3) s(2.3) .30*w(pr.p, 'pixels') s(1.7)])
-    set(pr.label_link_w, 'Position', [s(.6)+.35*w(pr.p, 'pixels')+s(1.7) s(4.3)  .20*w(pr.p, 'pixels')   s(1.7)])
-    set(pr.slider_binary, 'Position', [s(.6)+.35*w(pr.p, 'pixels')+s(1.7) s(3.3) .50*w(pr.p, 'pixels')   3]) % the height of a slider cannot be changed
+    % left column 2.3
+    set(pr.checkbox_link, 'Position', [s(.3) s(7.8) .30*w(pr.p, 'pixels') s(1.7)])
+    set(pr.checkbox_arrow, 'Position', [s(.3) s(5.3) .30*w(pr.p, 'pixels') s(1.7)])
+    set(pr.checkbox_cylinder, 'Position', [s(.3) s(2.8) .30*w(pr.p, 'pixels') s(1.7)])
     set(pr.checkbox_text, 'Position', [s(.3) s(.3) .30*w(pr.p, 'pixels') s(1.7)])
+    
+    % right column
+    % links    
+    set(pr.label_link_w, 'Position', [s(.6)+.35*w(pr.p, 'pixels')+s(1.7) s(6.2) .1*w(pr.p, 'pixels')  s(1.7)])
+    set(pr.edit_link_w, 'Position', [s(.6)+.35*w(pr.p, 'pixels')+s(1.7) s(4.2) .30*w(pr.p, 'pixels')  s(1.7)])
+    
+    % arrows
+    set(pr.label_arrow_sw, 'Position', [.35*w(pr.p, 'pixels')+s(1.7) s(8.3) .1*w(pr.p, 'pixels')  s(1.7)])
+    set(pr.edit_arrow_sw, 'Position', [.5*w(pr.p, 'pixels')+s(1.7) s(8.3) .30*w(pr.p, 'pixels')  s(1.7)])
+    set(pr.label_arrow_hl, 'Position', [.35*w(pr.p, 'pixels')+s(1.7) s(6.3) .1*w(pr.p, 'pixels')  s(1.7)])
+    set(pr.edit_arrow_hl, 'Position', [.5*w(pr.p, 'pixels')+s(1.7) s(6.3) .30*w(pr.p, 'pixels')  s(1.7)])
+    set(pr.label_arrow_hw, 'Position', [.35*w(pr.p, 'pixels')+s(1.7) s(4.3) .1*w(pr.p, 'pixels')  s(1.7)])
+    set(pr.edit_arrow_hw, 'Position', [.5*w(pr.p, 'pixels')+s(1.7) s(4.3) .30*w(pr.p, 'pixels')  s(1.7)])
+    set(pr.label_arrow_node, 'Position', [.35*w(pr.p, 'pixels')+s(1.7) s(2.3) .1*w(pr.p, 'pixels')  s(1.7)])
+    set(pr.edit_arrow_node, 'Position', [.5*w(pr.p, 'pixels')+s(1.7) s(2.3) .30*w(pr.p, 'pixels')  s(1.7)])
+    set(pr.label_arrow_n, 'Position', [.35*w(pr.p, 'pixels')+s(1.7) s(.3) .1*w(pr.p, 'pixels')  s(1.7)])
+    set(pr.edit_arrow_n, 'Position', [.5*w(pr.p, 'pixels')+s(1.7) s(.3) .30*w(pr.p, 'pixels')  s(1.7)])
+
+    % cyl
+    set(pr.label_cylinder_r, 'Position', [s(.6)+.35*w(pr.p, 'pixels')+s(1.7) s(7.8)  .20*w(pr.p, 'pixels')   s(1.7)])
+    set(pr.edit_cylinder_r, 'Position', [s(.6)+.35*w(pr.p, 'pixels')+s(1.7) s(5.3)  .20*w(pr.p, 'pixels')   s(1.7)])
+    set(pr.label_cylinder_n, 'Position', [s(.6)+.35*w(pr.p, 'pixels')+s(1.7) s(2.8)  .20*w(pr.p, 'pixels')   s(1.7)])
+    set(pr.edit_cylinder_n, 'Position', [s(.6)+.35*w(pr.p, 'pixels')+s(1.7) s(.3)  .20*w(pr.p, 'pixels')   s(1.7)])
+    
+    
+    
+    
+    % arrow h 4.3
+    
+    
+    
+    
+    
 end
 function cb_brain_edges(pr)
     %CB_AXIS executes callback for all checkboxes.
@@ -520,10 +625,18 @@ function cb_brain_edges(pr)
     
     el.get(prop).set( ...
         'LINKS', get(pr.checkbox_link, 'Value'), ...
-        'COLORBAR', get(pr.checkbox_arrow, 'Value'), ...
-        'BINARY', get(pr.checkbox_cylinder, 'Value'), ...
-        'BINARY_VALUE', get(pr.slider_binary, 'Value'), ...
-        'HIST', get(pr.checkbox_text, 'Value') ...        
+        'LINKLINESTYLE', get(pr.dropdown_link, 'Value'), ...
+        'LINKLINEWIDTH', get(pr.edit_link_w, 'Value'), ...
+        'ARROWS', get(pr.checkbox_arrow, 'Value'), ...
+        'ARROWSWIDTH', get(pr.edit_arrow_sw, 'Value'), ...
+        'ARROWHLENGTH', get(pr.edit_arrow_hl, 'Value'), ...
+        'ARROWHWIDTH', get(pr.edit_arrow_hw, 'Value'), ...
+        'ARROWHNODE', get(pr.edit_arrow_node, 'Value'), ...
+        'ARROWN', get(pr.edit_arrow_n, 'Value'), ...
+        'CYLINDERS', get(pr.checkbox_cylinder, 'Value'), ...
+        'CYLR', get(pr.edit_cylinder_r, 'Value'), ...
+        'CYLN', get(pr.edit_cylinder_n, 'Value'), ...
+        'TEXTS', get(pr.checkbox_text, 'Value') ...        
         )
 
 end
