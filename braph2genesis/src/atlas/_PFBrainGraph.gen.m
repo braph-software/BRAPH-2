@@ -974,6 +974,7 @@ function text_edges(pf, i_vec, j_vec)
         for m = 1:1:length(i_vec)
             pf.text_edge(i_vec(m), j_vec(m))
         end
+    end
 end
 function text_edge_on(pf, i, j)
     % TEXT_EDGE_ON shows a edge text
