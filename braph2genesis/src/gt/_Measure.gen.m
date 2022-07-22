@@ -147,8 +147,11 @@ PFBG (gui, item) contains the panel figure of the brain graph.
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
     if isa(m.getr('PFBG'), 'NoValue')
         g = m.get('G');
-        if Graph.is_graph(g) % graph
-            m.set('PFBG', PFBrainGraph('ME', m))
+        if Graph.is_graph(g) % graph            
+            m.memorize('PFBG').set('ME', m)
+            ba_list = g.get('BAS');
+            m.memorize('PFBG').set('BA', ba_list{1})
+            
         elseif Graph.is_multigraph(g) % multigraph BUD BUT
             %g.set('PFBG', PFMultiGraph('G', g))
         elseif Graph.is_multiplex(g) && Graph.is_weighted(g) % multiplexWU
@@ -156,7 +159,7 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
         elseif Graph.is_multiplex(g) && Graph.is_binary(g)
             %g.set('PFBG', PFMultiplexBinaryGraph('G', g))
         else
-            g.memorize('PFBG').set('ME', m)
+            m.memorize('PFBG').set('ME', m)
         end
     end
 end

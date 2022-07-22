@@ -12,7 +12,7 @@ PanelFig, GUIFig, uiaxes
 %%% ¡prop!
 LINKS (figure, logical) determines whether the links are shown.
 %%%% ¡default!
-0
+false
 
 %%% ¡prop!
 LINKSCOLOR (figure, color) is the link RGB color.
@@ -32,7 +32,7 @@ LINKLINEWIDTH (figure, size) is the symbol size.
 %%% ¡prop!
 ARROWS (figure, logical) determines whether the arrows are shown.
 %%%% ¡default!
-0
+false
 
 %%% ¡prop!
 ARROWCOLOR (figure, color) is the arrow RGB color.
@@ -67,7 +67,7 @@ ARROWN (figure, scalar) is the arrow N.
 %%% ¡prop!
 CYLINDERS (figure, logical) determines whether the cylinders are shown.
 %%%% ¡default!
-0
+false
 
 %%% ¡prop!
 CYLCOLOR (figure, color) is the cylinder RGB color.
@@ -87,6 +87,6 @@ CYLN (figure, scalar) is the arrow N.
 %%% ¡prop!
 TEXTS (figure, logical) determines whether the texts are shown.
 %%%% ¡default!
-0
+false
 
 

@@ -62,7 +62,7 @@ ME (metadata, item) is the measure.
 %%% ¡prop!
 MEASURES (figure, logical) determines whether the measures affect the brain region.
 %%%% ¡default!
-true
+false
 %%%% ¡postprocessing!
 if ~braph2_testing
     if pf.get('MEASURES')
@@ -117,11 +117,11 @@ end
 %%% ¡prop!
 EDGES (figure, logical) determines whether the edges are shown as a edge.
 %%%% ¡default!
-true
+false
 %%%% ¡postprocessing!
 if (isempty(varargin) || pf.prop_set('EDGES', varargin)) && ~braph2_testing
-    if ~pf.get('EDGES')
-        for i = 1:size(pf.edges.h_links)
+    if ~pf.get('EDGES') && ~isempty(pf.edges)
+        for i = 1:size(pf.edges.links)
             pf.link_edges_off([], [])
             pf.arrow_edges_off([], [])
             pf.cylinder_edges_off([],[])
@@ -140,10 +140,10 @@ ST_EDGES (figure, item) determines the edge settings.
 %%%% ¡settings!
 'SettingsEdges'
 %%%% ¡default!
-SettingsEdges('LINKS', 0, 'LINKSCOLOR', PFBrainGraph.INIT_LIN_COLOR, 'LINKLINESTYLE', PFBrainGraph.INIT_LIN_STYLE, 'LINKLINEWIDTH', PFBrainGraph.INIT_LIN_WIDTH, ...
-    'ARROWS', 0, 'ARROWCOLOR', PFBrainGraph.INIT_ARR_COLOR, 'ARROWSWIDTH', PFBrainGraph.INIT_ARR_SWIDTH, 'ARROWHLENGTH', PFBrainGraph.INIT_ARR_HLENGTH, 'ARROWHWIDTH', PFBrainGraph.INIT_ARR_HWIDTH, 'ARROWHNODE', PFBrainGraph.INIT_ARR_HNODE, 'ARROWN', PFBrainGraph.INIT_ARR_N, ...
-    'CYLINDERS', 0, 'CYLCOLOR', PFBrainGraph.INIT_CYL_COLOR, 'CYLR', PFBrainGraph.INIT_CYL_R,'CYLN', PFBrainGraph.INIT_CYL_N, ...
-    'TEXTS', 0)
+SettingsEdges('LINKS', false, 'LINKSCOLOR', PFBrainGraph.INIT_LIN_COLOR, 'LINKLINESTYLE', PFBrainGraph.INIT_LIN_STYLE, 'LINKLINEWIDTH', PFBrainGraph.INIT_LIN_WIDTH, ...
+    'ARROWS', false, 'ARROWCOLOR', PFBrainGraph.INIT_ARR_COLOR, 'ARROWSWIDTH', PFBrainGraph.INIT_ARR_SWIDTH, 'ARROWHLENGTH', PFBrainGraph.INIT_ARR_HLENGTH, 'ARROWHWIDTH', PFBrainGraph.INIT_ARR_HWIDTH, 'ARROWHNODE', PFBrainGraph.INIT_ARR_HNODE, 'ARROWN', PFBrainGraph.INIT_ARR_N, ...
+    'CYLINDERS', false, 'CYLCOLOR', PFBrainGraph.INIT_CYL_COLOR, 'CYLR', PFBrainGraph.INIT_CYL_R,'CYLN', PFBrainGraph.INIT_CYL_N, ...
+    'TEXTS', false)
 
 %%%% ¡gui!
 pr = SettingsEdgesPP('EL', pf, 'PROP', PFBrainGraph.ST_EDGES, varargin{:});
