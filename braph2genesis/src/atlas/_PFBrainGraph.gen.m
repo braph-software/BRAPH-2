@@ -126,6 +126,9 @@ if (isempty(varargin) || pf.prop_set('EDGES', varargin)) && ~braph2_testing
             pf.arrow_edges_off([], [])
             pf.cylinder_edges_off([],[])
         end
+    else
+        % trigger listener
+        pf.set('ST_EDGES', pf.get('ST_EDGES'));        
     end
     
     % update state of toggle tool
@@ -181,6 +184,26 @@ function h_panel = draw(pf, varargin)
     if ~check_graphics(pf.h_axes, 'axes')
         pf.h_axes =  pf.p.Children(1);
     end
+    
+    pf.memorize('ST_EDGES').h(pf.h_axes).set('PANEL', pf, 'UITAG', 'h_axes')
+    listener(pf.get('ST_EDGES'), 'PropSet', @cb_st_edges);
+        function cb_st_edges(~, ~) % (src, event)
+            if pf.get('ST_EDGES').get('LINKS')
+                pf.link_edges([], [])
+                pf.set('EDGES', true)
+            elseif pf.get('ST_EDGES').get('ARROWS')
+                pf.arrow_edges([], [])
+                pf.set('EDGES', true)
+            elseif pf.get('ST_EDGES').get('CYLINDERS')
+                pf.cylinder_edges([], [])
+                pf.set('EDGES', true)
+            elseif pf.get('ST_EDGES').get('TEXTS')% texts
+                pf.text_edges([], [])
+                pf.set('EDGES', true)
+            else
+                pf.set('EDGES', false)
+            end
+        end
 
     % get toolbar
     if ~check_graphics(pf.toolbar, 'uitoolbar')
@@ -915,6 +938,42 @@ function h = text_edge(pf, graph_axes, i, j , text_value, varargin)
     if nargout > 0
         h = pf.edges.texts(i, j);
     end
+end
+function text_edges(pf, i_vec, j_vec)
+    % TEXTS_EDGES plots multiple edge texts as lines
+    %
+    % TEXTS_EDGES(BG, I_VEC, J_VEC) plots the edge texts from the
+    % brain regions specified in I_VEC to the ones specified in
+    % J_VEC, if not plotted. I_VEC and J_VEC need not be the same
+    % size.
+    %
+    % TEXTS_EDGES(BG, [], []) plots the edge texts between all
+    % possible brain region combinations.
+    %
+    % TEXTS_LINS(BG, I_VEC, J_VEC, PROPERTY, RULE) sets the property
+    % of the multiple edge texts' PROPERTY to RULE.
+    % All standard plot properties of plot3 can be used.
+    % The line properties can also be changed when hidden.
+    %
+    % See also PlotBrainGraph, plot3, link_edge.
+    
+    if nargin < 2 || isempty(i_vec) || isempty(j_vec)
+        for i = 1:1:pf.get('BA').get('BR_DICT').length()
+            for j = 1:1:pf.get('BA').get('BR_DICT').length()
+                pf.text_edge(i, j)
+            end
+        end
+    else
+        if length(i_vec) == 1
+            i_vec = i_vec * ones(size(j_vec));
+        end
+        if length(j_vec) == 1
+            j_vec = j_vec * ones(size(i_vec));
+        end
+
+        for m = 1:1:length(i_vec)
+            pf.text_edge(i_vec(m), j_vec(m))
+        end
 end
 function text_edge_on(pf, i, j)
     % TEXT_EDGE_ON shows a edge text
