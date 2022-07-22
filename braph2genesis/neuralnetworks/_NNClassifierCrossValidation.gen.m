@@ -312,14 +312,37 @@ else
     [cm, order] = confusionmat(targets(2, :), double(pred(2, :)));
     value = cm;
 end
-%%%% ¡gui_!
-% % % gr = nne.get('GR');
-% % % nn = nne.get('NN');
-% % % [targets, classes] = nn.reconstruct_targets(gr);
-% % % pr = PanelPropMatrix('EL', nne, 'PROP', NNClassifierCrossValidation.CONFUSION_MATRIX, ...
-% % %     'ROWNAME', classes,...
-% % %     'COLUMNNAME', classes,...
-% % %     varargin{:});
+%%%% ¡gui!
+pr = PanelPropMatrix('EL', nncv, 'PROP', NNClassifierCrossValidation.CONFUSION_MATRIX, ...
+    'ROWNAME', char("{pr.get('EL').get('CLASS_NAME1') pr.get('EL').get('CLASS_NAME2')}"),...
+    'COLUMNNAME', char("{pr.get('EL').get('CLASS_NAME1') pr.get('EL').get('CLASS_NAME2')}"),...
+    varargin{:});
+
+%%% ¡prop!
+CLASS_NAME1 (result, string) is the class name for group 1.
+%%%% ¡calculate!
+if isa(nncv.get('NNE_DICT'), 'NoValue') || isa(nncv.get('NN_DICT'), 'NoValue')
+    value = 'Group1';
+else
+    nn = nncv.get('NN_DICT').getItem(1);
+    gr = nncv.get('NNE_DICT').getItem(1).get('GR');
+    [inputs, ~] = nn.reconstruct_inputs(gr);
+    [targets, classes] = nn.reconstruct_targets(gr);
+    value = classes{1};
+end
+
+%%% ¡prop!
+CLASS_NAME2 (result, string) is the class name for group 2.
+%%%% ¡calculate!
+if isa(nncv.get('NNE_DICT'), 'NoValue') || isa(nncv.get('NN_DICT'), 'NoValue')
+    value = 'Group1';
+else
+    nn = nncv.get('NN_DICT').getItem(1);
+    gr = nncv.get('NNE_DICT').getItem(1).get('GR');
+    [inputs, ~] = nn.reconstruct_inputs(gr);
+    [targets, classes] = nn.reconstruct_targets(gr);
+    value = classes{2};
+end
 
 %%% ¡prop!
 PFCM (gui, item) contains the panel figure of the confusion matrix.
