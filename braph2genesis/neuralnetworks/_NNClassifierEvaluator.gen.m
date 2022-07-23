@@ -108,11 +108,7 @@ PFROC (gui, item) contains the panel figure of the receiver operating characteri
 'PFReceiverOperatingCharacteristic'
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
-    if isa(nne.getr('PFROC'), 'NoValue')
-        nne.memorize('PFROC').set('NNE', nne)
-    else
-        nne.set('PFROC', PFReceiverOperatingCharacteristic('NNE', nne))
-    end    
+    nne.memorize('PFROC').set('NNE', nne)  
 end
 %%%% ¡gui!
 pr = PanelPropItem('EL', nne, 'PROP', NNClassifierEvaluator.PFROC, ...
@@ -134,18 +130,46 @@ else
     gr = nne.get('GR');
     [inputs, ~] = nn.reconstruct_inputs(gr);
     [targets, classes] = nn.reconstruct_targets(gr);
+
     % calculate the confusion matrix
 	[cm, order] = confusionmat(targets(2, :), double(pred(2, :)));
     value = cm;
 end
-%%%% ¡gui_!
-% % % gr = nne.get('GR');
-% % % nn = nne.get('NN');
-% % % [targets, classes] = nn.reconstruct_targets(gr);
-% % % pr = PanelPropMatrix('EL', nne, 'PROP', NNClassifierEvaluator.CONFUSION_MATRIX, ...
-% % %     'ROWNAME', classes,...
-% % %     'COLUMNNAME', classes,...
-% % %     varargin{:});
+%%%% ¡gui!
+pr = PanelPropMatrix('EL', nne, 'PROP', NNClassifierEvaluator.CONFUSION_MATRIX, ...
+    'ROWNAME', char("{pr.get('EL').get('CLASS_NAME1') pr.get('EL').get('CLASS_NAME2')}"),...
+    'COLUMNNAME', char("{pr.get('EL').get('CLASS_NAME1') pr.get('EL').get('CLASS_NAME2')}"),...
+    varargin{:});
+
+%%% ¡prop!
+CLASS_NAME1 (metadata, string) is the class name for group 1.
+%%%% ¡postprocessing!
+if isempty(nne.get('CLASS_NAME1'))
+    if isa(nne.get('NN'), 'NoValue') || isa(nne.get('GR'), 'NoValue')
+        nne.set('CLASS_NAME1', 'Group1');
+    else
+        nn = nne.get('NN');
+        gr = nne.get('GR');
+        [inputs, ~] = nn.reconstruct_inputs(gr);
+        [targets, classes] = nn.reconstruct_targets(gr);
+        nne.set('CLASS_NAME1', classes{1});
+    end
+end
+
+%%% ¡prop!
+CLASS_NAME2 (metadata, string) is the class name for group 2.
+%%%% ¡postprocessing!
+if isempty(nne.get('CLASS_NAME2'))
+    if isa(nne.get('NN'), 'NoValue') || isa(nne.get('GR'), 'NoValue')
+        nne.set('CLASS_NAME2', 'Group2');
+    else
+        nn = nne.get('NN');
+        gr = nne.get('GR');
+        [inputs, ~] = nn.reconstruct_inputs(gr);
+        [targets, classes] = nn.reconstruct_targets(gr);
+        nne.set('CLASS_NAME2', classes{2});
+    end
+end
 
 %%% ¡prop!
 PFCM (gui, item) contains the panel figure of the confusion matrix.
@@ -180,6 +204,7 @@ else
     nn = nne.get('NN');
     gr = nne.get('GR');
     inputs = nn.reconstruct_inputs(gr);
+    [targets, classes] = nn.reconstruct_targets(gr);
     net = nn.get('MODEL');
     if isa(net, 'NoValue') || ~BRAPH2.installed('NN', 'msgbox')
         predictions = zeros(gr.get('SUB_DICT').length(), 2);

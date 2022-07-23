@@ -28,6 +28,8 @@ true
 INPUT_TYPE (parameter, option) is the input type for training or testing the NN.
 %%%% ¡settings!
 {'adjacency_matrices' 'graph_measures' 'structural_data'}
+%%%% ¡gui!
+pr = PPNNDataInputType('EL', nnd, 'PROP', NNData.INPUT_TYPE, 'WAITBAR', Callback('EL', nnd, 'TAG', 'WAITBAR'), varargin{:});
 
 %%% ¡prop!
 G (parameter, item) is the graph for calculating the graph measures.
@@ -40,6 +42,8 @@ MEASURES (parameter, classlist) is the graph measures as input to NN.
 'Measure'
 %%%% ¡default!
 {'DegreeAv', 'Degree'}
+%%%% ¡gui!
+pr = PPNNDataMeasures('EL', nnd, 'PROP', NNData.G, 'WAITBAR', Callback('EL', nnd, 'TAG', 'WAITBAR'), varargin{:});
 
 %%% ¡prop!
 TARGET_NAME (data, string) is the name of the traget.

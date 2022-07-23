@@ -10,8 +10,55 @@ The confusion matrix, ROC curves, AUCs, and weighted contributing maps will
 be calculated across folds and repetitions.
 
 %% ¡props!
-%%% ¡prop!
 
+%%% ¡prop!
+LAYERS (parameter, rvector) is a vector representing the number of neurons in each layer.
+%%%% ¡default!
+[100 100]
+%%%% ¡gui!
+pr = PanelPropRVectorSmart('EL', nncv, 'PROP', NNClassifierCrossValidation.LAYERS, 'MAX', 100000, 'MIN', 1, varargin{:});
+
+%%% ¡prop!
+BATCH (parameter, scalar) is the size of the mini-batch to use for each training iteration.
+%%%% ¡default!
+8
+
+%%% ¡prop!
+EPOCHS (parameter, scalar) is a maximum number of epochs.
+%%%% ¡default!
+20
+
+%%% ¡prop!
+SHUFFLE (parameter, option) is an option for data shuffling.
+%%%% ¡settings!
+{'once' 'never' 'every-epoch'}
+
+%%% ¡prop!
+SOLVER (parameter, option) is an option for the solver.
+%%%% ¡settings!
+{'adam' 'sgdm' 'rmsprop'}
+
+%%% ¡prop!
+FEATURE_SELECTION_RATIO (parameter, scalar) is the ratio of selected features.
+%%%% ¡default!
+1
+
+%%% ¡prop!
+VERBOSE (metadata, logical) is an indicator to display trining progress information.
+%%%% ¡default!
+false
+
+%%% ¡prop!
+PLOT_TRAINING (metadata, logical) is an option for the plot of training-progress.
+%%%% ¡default!
+false
+
+%%% ¡prop!
+PLOT_LAYERS (metadata, logical) is an option for the plot of layer architecture.
+%%%% ¡default!
+false
+
+%%% ¡prop!
 KFOLD (data, scalar) is the number of folds.
 %%%% ¡default!
 5
@@ -121,8 +168,15 @@ if nncv.memorize('NNDS_DICT').length() > 0
     nn_tmp = NNClassifierDNN( ...
         'ID', ['NN model cooperated with ', nnds.get('ID')], ...
         'GR', gr_train, ...
-        'PLOT_TRAINING', false, ...
-        'SHUFFLE', 'every-epoch' ...
+        'LAYERS', nncv.get('LAYERS'), ...
+        'BATCH', nncv.get('BATCH'), ...
+        'EPOCHS', nncv.get('EPOCHS'), ...
+        'SHUFFLE', nncv.get('SHUFFLE'), ...
+        'SOLVER', nncv.get('SOLVER'), ...
+        'FEATURE_SELECTION_RATIO', nncv.get('FEATURE_SELECTION_RATIO'), ...
+        'VERBOSE', nncv.get('VERBOSE'), ...
+        'PLOT_TRAINING', nncv.get('PLOT_TRAINING'), ...
+        'PLOT_LAYERS', nncv.get('PLOT_LAYERS') ...
         );
 
     nn_dict.add(nn_tmp);
@@ -258,14 +312,33 @@ else
     [cm, order] = confusionmat(targets(2, :), double(pred(2, :)));
     value = cm;
 end
-%%%% ¡gui_!
-% % % gr = nne.get('GR');
-% % % nn = nne.get('NN');
-% % % [targets, classes] = nn.reconstruct_targets(gr);
-% % % pr = PanelPropMatrix('EL', nne, 'PROP', NNClassifierCrossValidation.CONFUSION_MATRIX, ...
-% % %     'ROWNAME', classes,...
-% % %     'COLUMNNAME', classes,...
-% % %     varargin{:});
+%%%% ¡gui!
+pr = PanelPropMatrix('EL', nncv, 'PROP', NNClassifierCrossValidation.CONFUSION_MATRIX, ...
+    'ROWNAME', char("{pr.get('EL').get('CLASS_NAME1') pr.get('EL').get('CLASS_NAME2')}"),...
+    'COLUMNNAME', char("{pr.get('EL').get('CLASS_NAME1') pr.get('EL').get('CLASS_NAME2')}"),...
+    varargin{:});
+
+%%% ¡prop!
+CLASS_NAME1 (metadata, string) is the class name for group 1.
+%%%% ¡postprocessing!
+if isempty(nncv.get('CLASS_NAME1'))
+    if isa(nncv.getr('GR1'), 'NoValue')
+        nncv.set('CLASS_NAME1', 'Group1');
+    else
+        nncv.set('CLASS_NAME1', nncv.get('GR1').get('SUB_DICT').getItem(1).get('TARGET_NAME'));
+    end
+end
+
+%%% ¡prop!
+CLASS_NAME2 (metadata, string) is the class name for group 2.
+%%%% ¡postprocessing!
+if isempty(nncv.get('CLASS_NAME2'))
+    if isa(nncv.getr('GR2'), 'NoValue')
+        nncv.set('CLASS_NAME2', 'Group2');
+    else
+        nncv.set('CLASS_NAME2', nncv.get('GR2').get('SUB_DICT').getItem(1).get('TARGET_NAME'));
+    end
+end
 
 %%% ¡prop!
 PFCM (gui, item) contains the panel figure of the confusion matrix.

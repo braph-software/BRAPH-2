@@ -11,6 +11,53 @@ The root-mean square error is calculated across folds and repetitions.
 %% ¡props!
 
 %%% ¡prop!
+LAYERS (parameter, rvector) is a vector representing the number of neurons in each layer.
+%%%% ¡default!
+[100 100]
+%%%% ¡gui!
+pr = PanelPropRVectorSmart('EL', nncv, 'PROP', NNRegressorCrossValidation.LAYERS, 'MAX', 100000, 'MIN', 1, varargin{:});
+
+%%% ¡prop!
+BATCH (parameter, scalar) is the size of the mini-batch to use for each training iteration.
+%%%% ¡default!
+8
+
+%%% ¡prop!
+EPOCHS (parameter, scalar) is a maximum number of epochs.
+%%%% ¡default!
+20
+
+%%% ¡prop!
+SHUFFLE (parameter, option) is an option for data shuffling.
+%%%% ¡settings!
+{'once' 'never' 'every-epoch'}
+
+%%% ¡prop!
+SOLVER (parameter, option) is an option for the solver.
+%%%% ¡settings!
+{'adam' 'sgdm' 'rmsprop'}
+
+%%% ¡prop!
+FEATURE_SELECTION_RATIO (parameter, scalar) is the ratio of selected features.
+%%%% ¡default!
+1
+
+%%% ¡prop!
+VERBOSE (metadata, logical) is an indicator to display trining progress information.
+%%%% ¡default!
+false
+
+%%% ¡prop!
+PLOT_TRAINING (metadata, logical) is an option for the plot of training-progress.
+%%%% ¡default!
+false
+
+%%% ¡prop!
+PLOT_LAYERS (metadata, logical) is an option for the plot of layer architecture.
+%%%% ¡default!
+false
+
+%%% ¡prop!
 KFOLD (data, scalar) is the number of folds.
 %%%% ¡default!
 5
@@ -87,8 +134,15 @@ if nncv.memorize('NNDS_DICT').length() > 0
     nn_tmp = NNRegressorDNN( ...
         'ID', ['NN model cooperated with ', nnds.get('ID')], ...
         'GR', gr_train, ...
-        'PLOT_TRAINING', false, ...
-        'SHUFFLE', 'every-epoch' ...
+        'LAYERS', nncv.get('LAYERS'), ...
+        'BATCH', nncv.get('BATCH'), ...
+        'EPOCHS', nncv.get('EPOCHS'), ...
+        'SHUFFLE', nncv.get('SHUFFLE'), ...
+        'SOLVER', nncv.get('SOLVER'), ...
+        'FEATURE_SELECTION_RATIO', nncv.get('FEATURE_SELECTION_RATIO'), ...
+        'VERBOSE', nncv.get('VERBOSE'), ...
+        'PLOT_TRAINING', nncv.get('PLOT_TRAINING'), ...
+        'PLOT_LAYERS', nncv.get('PLOT_LAYERS') ...
         );
     nn_dict.add(nn_tmp)
 
@@ -215,7 +269,7 @@ else
     preds = cell2mat(preds);
     targets = cellfun(@(x) cell2mat(x.get('TARGET')), nncv.get('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
     targets = cell2mat(targets);
-    value = sqrt(mean((preds - targets).^2));
+    value = double(sqrt(mean((preds - targets).^2)));
 end
 
 %%% ¡prop!
@@ -228,13 +282,13 @@ else
     preds = cell2mat(preds);
     targets = cellfun(@(x) cell2mat(x.get('TARGET')), nncv.get('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
     targets = cell2mat(targets);
-    value = [preds' targets'];
+    value = double([preds' targets']);
 end
-%%%% ¡gui_!
-% % % pr = PanelPropMatrix('EL', nne, 'PROP', NNRegressorEvaluator.SCATTER_CHART, ...
-% % %     'ROWNAME', {'Prediction', 'Target'},...
-% % %     'COLUMNNAME', {cellfun(@(x) cell2mat(x.get('ID'))', nne.memorize('GR').get('SUB_DICT').getItems(), 'UniformOutput', false)},...
-% % %     varargin{:});
+%%%% ¡gui!
+pr = PanelPropMatrix('EL', nncv, 'PROP', NNRegressorCrossValidation.SCATTER_CHART, ...
+    'ROWNAME', char("cellfun(@(x) x.get('ID'), pr.get('EL').memorize('GR').get('SUB_DICT').getItems(), 'UniformOutput', false)"), ...
+    'COLUMNNAME', char("{'Prediction', 'Target'}"), ...
+    varargin{:});
 
 %%% ¡prop!
 PFSP (gui, item) contains the panel figure of the scatter plot.
