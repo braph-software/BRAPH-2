@@ -66,15 +66,18 @@ false
 %%%% ¡postprocessing!
 if ~braph2_testing
     if pf.get('MEASURES')
-        measures = pf.get('ME');
+        measure = pf.get('ME');
+        val = measure.get('M');
+        val = val{1};
         % increase br size by measure value
         if pf.get('SPHS')
             sph_dict = pf.get('SPH_DICT');
             for i = 1:sph_dict.length
                 sph = sph_dict.getItem(i);
                 m = measures(i);
+                val = m.get('M');
                 default_value = sph.get('SPHERESIZE');
-                sph.set('SPHERESIZE', default_value * m);
+                sph.set('SPHERESIZE', default_value * val(i));
             end
         end
         if pf.get('SYMS')
@@ -82,8 +85,9 @@ if ~braph2_testing
             for i = 1:sym_dict.length
                 sym = sym_dict.getItem(i);
                 m = measures(i);
+                val = m.get('M');
                 default_value = sym.get('SYMSIZE');
-                sym.set('SYMSIZE', default_value * m);
+                sym.set('SYMSIZE', default_value * val(i));
             end            
         end
     else
