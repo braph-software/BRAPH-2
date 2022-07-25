@@ -248,6 +248,9 @@ function h_panel = draw(pf, varargin)
         h_panel = pf.p;
     end
 end
+function edges = retrieves_edges(pf)
+    edges = pf.edges;
+end
 function str = tostring(pf, varargin)
     %TOSTRING string with information about the brain atlas.
     %
