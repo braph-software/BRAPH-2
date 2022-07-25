@@ -18,8 +18,6 @@ toolbar_measure
 toolbar_edges
 
 %% ¡props_update!
-%%% ¡prop!
-NNE (metadata, item) is the evaluator.
 
 %%% ¡prop!
 MEASURES (figure, logical) determines whether the measures affect the brain region.
@@ -78,6 +76,9 @@ if ~braph2_testing
 end
 
 %% ¡props!
+
+%%% ¡prop!
+NNE (metadata, item) is the evaluator.
 
 %%% ¡prop!
 TMP_VAR (figure, string) is the id of the selected layer.
