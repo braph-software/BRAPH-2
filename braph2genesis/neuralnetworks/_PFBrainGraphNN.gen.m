@@ -19,7 +19,7 @@ toolbar_edges
 
 %% ¡props_update!
 %%% ¡prop!
-ME (metadata, cell) is the measure.
+NNE (metadata, item) is the evaluator.
 
 %%% ¡prop!
 MEASURES (figure, logical) determines whether the measures affect the brain region.
@@ -28,7 +28,8 @@ false
 %%%% ¡postprocessing!
 if ~braph2_testing
     if pf.get('MEASURES')
-        val = pf.get('ME'); 
+        nn = pf.get('NNE');
+        val = nn.get('FEATURE_PERMUTATION_IMPORTANCE'); 
         index = pf.get('TMP_VAR');
         thrshold = pf.get('THRESHOLD');
         val = val{index};
@@ -83,8 +84,10 @@ TMP_VAR (figure, string) is the id of the selected layer.
 %%%% ¡default!
 '1'
 %%%% ¡gui!
+nn = pf.get('NNE');
+cell_var = nn.get('FEATURE_PERMUTATION_IMPORTANCE');
 pr = PP_TMP_VAR('EL', pf, 'PROP', PFBrainGraphNN.TMP_VAR, ...
-    'ME', pf.get('ME'), ...
+    'ME', cell_var, ...
     varargin{:});
 
 %%% ¡prop!
@@ -121,8 +124,8 @@ function h_panel = draw(pf, varargin)
         pf.toolbar_edges = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'toolbar_edges');
     end
     
-    listener(pf.get('TMP_VAR'), 'PropSet', @cb_st_tmp_var);
-    function cb_st_tmp_var(~, ~) % (src, event)
+    listener(pf.get('THRESHOLD'), 'PropSet', @cb_st_threshold);
+    function cb_st_threshold(~, ~) % (src, event)
         if pf.get('MEASURES')
             set('MEASURES', pf.get('MEASURES'))
         end

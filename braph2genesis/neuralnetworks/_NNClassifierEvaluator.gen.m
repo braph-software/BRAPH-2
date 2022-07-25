@@ -61,7 +61,7 @@ PFFI (gui, item) contains the panel figure of the feature importance.
 'PFFeatureImportance'
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
-    nne.memorize('PFFI').set('NNE', nne)
+    nne.set('PFFI', PFBrainGraphNN('NNE', nne))
 end
 %%%% ¡gui!
 pr = PanelPropItem('EL', nne, 'PROP', NNClassifierEvaluator.PFFI, ...
