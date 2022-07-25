@@ -303,7 +303,7 @@ function h = link_edge(pf, i, j)
         if ~ishandle(pf.edges.links(i, j))
 
             pf.edges.links(i, j) = plot3( ...
-                pf.get_axes(), ...
+                pf.h_axes, ...
                 [X1 X2], ...
                 [Y1 Y2], ...
                 [Z1 Z2], ...
@@ -525,7 +525,7 @@ function h = arrow_edge(pf, i, j, varargin)
         pf.edges.arr(i, j) = surf(X, Y, Z,...
             'EdgeColor', color,...
             'FaceColor', color,...
-            'Parent', pf.get_axes());
+            'Parent', pf.h_axes);
     else
         x1 = pf.edges.X1(i, j);
         y1 = pf.edges.Y1(i, j);
@@ -739,7 +739,7 @@ function h = cylinder_edge(pf, i, j, varargin)
         pf.edges.cyl(i, j) = surf(X, Y, Z,...
             'EdgeColor', color, ...
             'FaceColor', color, ...
-            'Parent', pf.get_axes());
+            'Parent', pf.h_axes);
     else
         x1 = pf.edges.X1(i, j);
         y1 = pf.edges.Y1(i, j);
@@ -903,7 +903,7 @@ function bool = cylinder_edge_is_on(pf, i, j)
     bool = ishandle(pf.edges.cyl(i, j)) && strcmpi(get(pf.edges.cyl(i, j), 'Visible'), 'on');
 end
 
-function h = text_edge(pf, graph_axes, i, j , text_value, varargin)
+function h = text_edge(pf, i, j , text_value, varargin)
     % TEXT_EDGE plots the edge value as a text
     %
     % TEXT_EDGE(BG, I, J) plots the edge value as a text.
@@ -933,7 +933,7 @@ function h = text_edge(pf, graph_axes, i, j , text_value, varargin)
     X3 = (X1 + X2) / 2;
     Y3 = (Y1 + Y2) / 2;
     Z3 = (Z1 + Z2) / 2;
-    pf.edges.texts(i, j) =  text(graph_axes, X3, Y3, Z3, text_value);
+    pf.edges.texts(i, j) =  text(pf.h_axes, X3, Y3, Z3, text_value);
 
     if nargout > 0
         h = pf.edges.texts(i, j);
