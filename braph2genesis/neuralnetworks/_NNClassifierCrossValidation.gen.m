@@ -321,7 +321,7 @@ pr = PanelPropMatrix('EL', nncv, 'PROP', NNClassifierCrossValidation.CONFUSION_M
 %%% ¡prop!
 CLASS_NAME1 (metadata, string) is the class name for group 1.
 %%%% ¡postprocessing!
-if isempty(nncv.get('CLASS_NAME1'))
+if isempty(nncv.get('CLASS_NAME1')) && ~braph2_testing
     if isa(nncv.getr('GR1'), 'NoValue')
         nncv.set('CLASS_NAME1', 'Group1');
     else
@@ -332,7 +332,7 @@ end
 %%% ¡prop!
 CLASS_NAME2 (metadata, string) is the class name for group 2.
 %%%% ¡postprocessing!
-if isempty(nncv.get('CLASS_NAME2'))
+if isempty(nncv.get('CLASS_NAME2')) && ~braph2_testing
     if isa(nncv.getr('GR2'), 'NoValue')
         nncv.set('CLASS_NAME2', 'Group2');
     else

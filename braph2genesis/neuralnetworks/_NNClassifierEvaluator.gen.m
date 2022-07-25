@@ -144,7 +144,7 @@ pr = PanelPropMatrix('EL', nne, 'PROP', NNClassifierEvaluator.CONFUSION_MATRIX, 
 %%% ¡prop!
 CLASS_NAME1 (metadata, string) is the class name for group 1.
 %%%% ¡postprocessing!
-if isempty(nne.get('CLASS_NAME1'))
+if isempty(nne.get('CLASS_NAME1')) && ~braph2_testing
     if isa(nne.get('NN'), 'NoValue') || isa(nne.get('GR'), 'NoValue')
         nne.set('CLASS_NAME1', 'Group1');
     else
@@ -159,7 +159,7 @@ end
 %%% ¡prop!
 CLASS_NAME2 (metadata, string) is the class name for group 2.
 %%%% ¡postprocessing!
-if isempty(nne.get('CLASS_NAME2'))
+if isempty(nne.get('CLASS_NAME2')) && ~braph2_testing
     if isa(nne.get('NN'), 'NoValue') || isa(nne.get('GR'), 'NoValue')
         nne.set('CLASS_NAME2', 'Group2');
     else

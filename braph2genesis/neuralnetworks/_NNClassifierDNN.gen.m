@@ -58,6 +58,10 @@ INPUT_FORMAT (parameter, string) is the data format of neural network inputs.
 'BCSS'
 
 %% ¡props_update!
+%%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'NNClassifierDNN'
 
 %%% ¡prop!
 MODEL (result, net) is a trained neural network classifier.
