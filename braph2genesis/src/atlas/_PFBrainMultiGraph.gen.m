@@ -31,6 +31,8 @@ if ~braph2_testing
         val = measure.get('M');
         index = str2double(pf.get('DT'));
         val = val{index};
+        val(isnan(val)) = 0.1;
+        val(val <= 0) = 0.1;
         % increase br size by measure value
         if pf.get('SPHS')
             sph_dict = pf.get('SPH_DICT');
