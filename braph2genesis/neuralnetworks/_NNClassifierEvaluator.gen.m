@@ -58,7 +58,7 @@ end
 %%% ¡prop!
 PFFI (gui, item) contains the panel figure of the feature importance.
 %%%% ¡settings!
-'PFFeatureImportance'
+'PFBrainGraphNN'
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
     nne.set('PFFI', PFBrainGraphNN('NNE', nne))
