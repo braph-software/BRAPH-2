@@ -124,12 +124,10 @@ EDGES (figure, logical) determines whether the edges are shown as a edge.
 false
 %%%% ¡postprocessing!
 if (isempty(varargin) || pf.prop_set('EDGES', varargin)) && ~braph2_testing
-    if ~pf.get('EDGES') && ~isempty(pf.edges)
-        for i = 1:size(pf.edges.links)
-            pf.link_edges_off([], [])
-            pf.arrow_edges_off([], [])
-            pf.cylinder_edges_off([],[])
-        end
+    if ~pf.get('EDGES') && ~isempty(pf.edges)        
+        pf.link_edges_off([], [])
+        pf.arrow_edges_off([], [])
+        pf.cylinder_edges_off([],[])        
     else
         % trigger listener
         pf.set('ST_EDGES', pf.get('ST_EDGES'));        
@@ -170,7 +168,7 @@ function h_panel = draw(pf, varargin)
     % see also settings, uipanel, isgraphics.
 
     pf.p = draw@PFBrainAtlas(pf, varargin{:});
-    
+
     % init edge struct
     brain_regions_length = pf.get('BA').get('BR_DICT').length();
     pf.edges.links = NaN(brain_regions_length);
@@ -188,24 +186,22 @@ function h_panel = draw(pf, varargin)
     if ~check_graphics(pf.h_axes, 'axes')
         pf.h_axes =  pf.p.Children(1);
     end
-    
+
     pf.memorize('ST_EDGES').h(pf.h_axes).set('PANEL', pf, 'UITAG', 'h_axes')
     listener(pf.get('ST_EDGES'), 'PropSet', @cb_st_edges);
         function cb_st_edges(~, ~) % (src, event)
-            if pf.get('ST_EDGES').get('LINKS')
-                pf.link_edges([], [])
-                pf.set('EDGES', true)
-            elseif pf.get('ST_EDGES').get('ARROWS')
-                pf.arrow_edges([], [])
-                pf.set('EDGES', true)
-            elseif pf.get('ST_EDGES').get('CYLINDERS')
-                pf.cylinder_edges([], [])
-                pf.set('EDGES', true)
-            elseif pf.get('ST_EDGES').get('TEXTS')% texts
-                pf.text_edges([], [])
-                pf.set('EDGES', true)
-            else
-                pf.set('EDGES', false)
+            if pf.get('EDGES')
+                if pf.get('ST_EDGES').get('LINKS')
+                    pf.link_edges([], [])
+                elseif pf.get('ST_EDGES').get('ARROWS')
+                    pf.arrow_edges([], [])
+                elseif pf.get('ST_EDGES').get('CYLINDERS')
+                    pf.cylinder_edges([], [])
+                elseif pf.get('ST_EDGES').get('TEXTS')% texts
+                    pf.text_edges([], [])
+                else
+                    % do nothing
+                end
             end
         end
 
@@ -213,10 +209,10 @@ function h_panel = draw(pf, varargin)
     if ~check_graphics(pf.toolbar, 'uitoolbar')
         pf.toolbar = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'ToolBar');
     end
-    
+
     % set new toogletools
-    if ~check_graphics(pf.toolbar_measure, 'uitoggletool') 
-        
+    if ~check_graphics(pf.toolbar_measure, 'uitoggletool')
+
         uipushtool(pf.toolbar, 'Separator', 'on', 'Visible', 'off')
 
         % measures
@@ -228,7 +224,7 @@ function h_panel = draw(pf, varargin)
             'CData', imread('icon_measure_panel.png'), ...
             'OnCallback', {@cb_measures, true}, ...
             'OffCallback', {@cb_measures, false});
-        
+
         % links
         pf.toolbar_edges = uitoggletool(pf.toolbar, ...
             'Tag', 'toolbar_edges', ...
@@ -239,15 +235,15 @@ function h_panel = draw(pf, varargin)
             'OnCallback', {@cb_edges, true}, ...
             'OffCallback', {@cb_edges, false});
     end
-    
-    function cb_measures(~, ~, measures) % (src, event)
-        pf.set('MEASURES', measures)
-    end
-    function cb_edges(~, ~, edges) % (src, event)
-        pf.set('EDGES', edges)
-    end
 
-    % listener to changes in 
+        function cb_measures(~, ~, measures) % (src, event)
+            pf.set('MEASURES', measures)
+        end
+        function cb_edges(~, ~, edges) % (src, event)
+            pf.set('EDGES', edges)
+        end
+
+    % listener to changes in
 
     % output
     if nargout > 0
@@ -564,8 +560,8 @@ function h = arrow_edge(pf, i, j, varargin)
     pf.edges.Z2(i, j) = Z2;
 
     % sets properties
-    set(pf.edges.arr(i, j), 'FACECOLOR', pf.get('ST_EDGES').get('ARROWFACECOLOR'));
-    set(pf.edges.arr(i, j), 'LINKSCOLOR', pf.get('ST_EDGES').get('ARROWEDGECOLOR'));
+    set(pf.edges.arr(i, j), 'FACECOLOR', pf.get('ST_EDGES').get('ARROWCOLOR'));
+    set(pf.edges.arr(i, j), 'EDGECOLOR', pf.get('ST_EDGES').get('ARROWCOLOR'));
     
     if nargout>0
         h = pf.edges.arr(i, j);
