@@ -13,6 +13,8 @@ Plot, BrainAtlas, PFBrainSurface, PFBrainAtlas.
 p % handle for panel
 h_axes % handle for axes
 
+edges
+
 toolbar
 toolbar_measure
 toolbar_edges
@@ -34,71 +36,72 @@ EDGES (figure, logical) determines whether the edges are shown as a edge.
 false
 %%%% ¡postprocessing!
 if (isempty(varargin) || pf.prop_set('EDGES', varargin)) && ~braph2_testing
-    if ~pf.get('EDGES') && ~isempty(pf.edges)        
+    if ~pf.get('EDGES') && ~isempty(pf.retrieve_edges())        
         pf.link_edges_off([], [])
         pf.arrow_edges_off([], [])
         pf.cylinder_edges_off([],[])        
     else
-        % trigger listener
-        nn = pf.get('NNE');
-        cell_var = nn.get('FEATURE_PERMUTATION_IMPORTANCE');
-        conn_matrix = cell_var{TMP_VAR};
-        t = pf.get('THRESHOLD');
-        
-        if pf.get('ST_EDGES').get('LINKS')
-            for i = 1:size(conn_matrix, 1)
-                for j = 1:size(conn_matrix, 2)
-                    tmp_val = conn_matrix(i, j);
-                    tmp_val(tmp_val <= t) = 0;
-                    conn_matrix(i, j) = tmp_val;
-                    if conn_matrix(i, j) == 0
-                        pf.link_edge_off(i, j)
-                    else
-                        % do nothing 
+        if ~isempty(pf.retrieve_edges())
+            nn = pf.get('NNE');
+            cell_var = nn.get('FEATURE_PERMUTATION_IMPORTANCE');
+            TMP_VAR = str2double(pf.get('TMP_VAR'));
+            conn_matrix = cell_var{TMP_VAR};
+            t = str2double(pf.get('THRESHOLD'));
+            
+            if pf.get('ST_EDGES').get('LINKS')
+                for i = 1:size(conn_matrix, 1)
+                    for j = 1:size(conn_matrix, 2)
+                        tmp_val = conn_matrix(i, j);
+                        tmp_val(tmp_val <= t) = 0;
+                        conn_matrix(i, j) = tmp_val;
+                        if conn_matrix(i, j) == 0
+                            pf.link_edge_off(i, j)
+                        else
+                            % do nothing
+                        end
+                    end
+                end
+            elseif pf.get('ST_EDGES').get('ARROWS')
+                for i = 1:size(conn_matrix, 1)
+                    for j = 1:size(conn_matrix, 2)
+                        tmp_val = conn_matrix(i, j);
+                        tmp_val(tmp_val <= t) = 0;
+                        conn_matrix(i, j) = tmp_val;
+                        if conn_matrix(i, j) == 0
+                            pf.arrow_edge_off(i, j)
+                        else
+                            % do nothing
+                        end
+                    end
+                end
+            elseif pf.get('ST_EDGES').get('CYLINDERS')
+                for i = 1:size(conn_matrix, 1)
+                    for j = 1:size(conn_matrix, 2)
+                        tmp_val = conn_matrix(i, j);
+                        tmp_val(tmp_val <= t) = 0;
+                        conn_matrix(i, j) = tmp_val;
+                        if conn_matrix(i, j) == 0
+                            pf.cylinder_edge_off(i, j)
+                        else
+                            % do nothing
+                        end
+                    end
+                end
+            elseif pf.get('ST_EDGES').get('TEXTS')
+                for i = 1:size(conn_matrix, 1)
+                    for j = 1:size(conn_matrix, 2)
+                        tmp_val = conn_matrix(i, j);
+                        tmp_val(tmp_val <= t) = 0;
+                        conn_matrix(i, j) = tmp_val;
+                        if conn_matrix(i, j) == 0
+                            pf.text_edge_off(i, j)
+                        else
+                            % do nothing
+                        end
                     end
                 end
             end
-        elseif pf.get('ST_EDGES').get('ARROWS')
-            for i = 1:size(conn_matrix, 1)
-                for j = 1:size(conn_matrix, 2)
-                    tmp_val = conn_matrix(i, j);
-                    tmp_val(tmp_val <= t) = 0;
-                    conn_matrix(i, j) = tmp_val;
-                    if conn_matrix(i, j) == 0
-                        pf.arrow_edge_off(i, j)
-                    else
-                        % do nothing 
-                    end
-                end
-            end
-        elseif pf.get('ST_EDGES').get('CYLINDERS')
-            for i = 1:size(conn_matrix, 1)
-                for j = 1:size(conn_matrix, 2)
-                    tmp_val = conn_matrix(i, j);
-                    tmp_val(tmp_val <= t) = 0;
-                    conn_matrix(i, j) = tmp_val;
-                    if conn_matrix(i, j) == 0
-                        pf.cylinder_edge_off(i, j)
-                    else
-                        % do nothing 
-                    end
-                end
-            end
-        elseif pf.get('ST_EDGES').get('TEXTS')            
-            for i = 1:size(conn_matrix, 1)
-                for j = 1:size(conn_matrix, 2)
-                    tmp_val = conn_matrix(i, j);
-                    tmp_val(tmp_val <= t) = 0;
-                    conn_matrix(i, j) = tmp_val;
-                    if conn_matrix(i, j) == 0
-                        pf.text_edge_off(i, j)
-                    else
-                        % do nothing 
-                    end
-                end
-            end
-        end
-
+        end       
     end
     
     % update state of toggle tool
