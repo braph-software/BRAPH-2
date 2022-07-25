@@ -141,5 +141,5 @@ function cb_editfield(pr)
     prop = pr.get('PROP');
 
     el.set(prop, get(pr.editfield, 'Value'))
-    el.plot_TMP_VAR()
+    el.plot_EDGES()
 end

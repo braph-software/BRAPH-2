@@ -1,8 +1,8 @@
 %% ¡header!
-PP_TMP_VAR < PanelProp (pr, panel property nn id) plots the panel of a nn id option.
+PP_INDEX_LAYER < PanelProp (pr, panel property nn id) plots the panel of a nn id option.
 
 %%% ¡description!
-PP_TMP_VAR plots the panel for a density or threshold id option with a drop-down list.
+PP_INDEX_LAYER plots the panel for a density or threshold id option with a drop-down list.
 It works only for the category figure and elements derived 
 from PFGraphEnsemble.
 
@@ -16,7 +16,7 @@ dropdown
 %% ¡props!
 
 %%% ¡prop!
-TMP_VAR (metadata, cell) is the graph.
+FEATURE_IMPORTANCE (metadata, cell) is the feature importance.
 
 %% ¡methods!
 function p_out = draw(pr, varargin)
@@ -52,14 +52,14 @@ function update(pr)
     el = pr.get('EL');
     prop = pr.get('PROP');
     
-    tmp_Var = pr.get('TMP_VAR');
+    tmp_Var = pr.get('FEATURE_IMPORTANCE');
     
     if el.isLocked(prop)
         set(pr.dropdown, 'Enable', pr.get('ENABLE'))
     end 
     
     n_layers = [1:size(tmp_Var, 2)];
-    labels = cellfun(@(x) ['Layer : ' num2str(x)],num2cell(n_layers), 'UniformOutput', false);
+    labels = cellfun(@(x) ['Layer: ' num2str(x)],num2cell(n_layers), 'UniformOutput', false);
     default_value = el.get(prop);
     
     set(pr.dropdown, ...
@@ -111,11 +111,11 @@ function cb_dropdown(pr)
     prop = pr.get('PROP');
     
     val = get(pr.dropdown, 'Value');
-    tmp_Var = pr.get('TMP_VAR');
+    tmp_Var = pr.get('FEATURE_IMPORTANCE');
     n_layers = [1:size(tmp_Var, 2)];
-    labels = cellfun(@(x) ['Layer : ' num2str(x)],num2cell(n_layers), 'UniformOutput', false);
+    labels = cellfun(@(x) ['Layer: ' num2str(x)],num2cell(n_layers), 'UniformOutput', false);
     index = find(contains(labels, val), 1, 'last');
     
     el.set(prop, num2str(index))
-    el.plot_TMP_VAR()
+    el.plot_EDGES();
 end

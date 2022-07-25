@@ -58,10 +58,10 @@ end
 %%% ¡prop!
 PFFI (gui, item) contains the panel figure of the feature importance.
 %%%% ¡settings!
-'PFBrainGraphNN'
+'PFFeatureImportance'
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
-   nne.memorize('PFFI').set('NNE', nne, 'BA', nne.get('GR').get('SUB_DICT').getItem(1).get('BA'))
+   nne.memorize('PFFI').set('NNE', nne, 'PROP', NNClassifierEvaluator.FEATURE_PERMUTATION_IMPORTANCE, 'BA', nne.get('GR').get('SUB_DICT').getItem(1).get('BA'))
 end
 %%%% ¡gui!
 pr = PanelPropItem('EL', nne, 'PROP', NNClassifierEvaluator.PFFI, ...
@@ -72,7 +72,7 @@ pr = PanelPropItem('EL', nne, 'PROP', NNClassifierEvaluator.PFFI, ...
 AUC (result, scalar) is an area under the curve score.
 %%%% ¡calculate!
 if nne.get('GR_PREDICTION').get('SUB_DICT').length() == 0
-    value = {};
+    value = 0;
 else
     pred = cellfun(@(x) cell2mat(x.get('PREDICTION'))', nne.memorize('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
     pred = cell2mat(pred);

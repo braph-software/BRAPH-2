@@ -161,7 +161,7 @@ NN_DICT (result, idict) contains the NN classifiers for k folds for all repetiti
 IndexedDictionary('IT_CLASS', 'NNClassifierDNN')
 %%%% ¡calculate!
 nn_dict = IndexedDictionary('IT_CLASS', 'NNClassifierDNN');
-if nncv.memorize('NNDS_DICT').length() > 0
+if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
     nnds = nncv.get('NNDS_DICT').getItem(1);
     gr_train = nnds.get('GR_TRAIN_FS');
 
@@ -204,7 +204,7 @@ NNE_DICT (result, idict) contains the NN evaluators for k folds for all repetiti
 IndexedDictionary('IT_CLASS', 'NNClassifierEvaluator')
 %%%% ¡calculate!
 nne_dict = IndexedDictionary('IT_CLASS', 'NNClassifierEvaluator');
-if nncv.memorize('NN_DICT').length() > 0
+if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
     for i = 1:1:nncv.get('NN_DICT').length()
         nn = nncv.get('NN_DICT').getItem(i);
         nnds = nncv.get('NNDS_DICT').getItem(i);
@@ -225,8 +225,8 @@ value = nne_dict;
 %%% ¡prop!
 FEATURE_IMPORTANCE (result, cell) is the feature importance obtained with permutation analysis.
 %%%% ¡calculate!
-nne_dict = nncv.memorize('NNE_DICT');
-if ~isempty(nne_dict.getItems())
+if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
+    nne_dict = nncv.memorize('NNE_DICT');
     feature_importances = nne_dict.getItem(1).get('FEATURE_PERMUTATION_IMPORTANCE');
     if length(feature_importances) == 0
         feature_importances = {};
@@ -263,7 +263,7 @@ GR_PREDICTION (result, item) is a group of NN subjects with prediction from NN.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡calculate!
-if nncv.memorize('NNE_DICT').length() > 0
+if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
     gr = nncv.get('NNE_DICT').getItem(1).get('GR_PREDICTION');
     gr_prediction = NNGroup( ...
         'ID', 'NN Group with NN prediction', ...
@@ -295,7 +295,7 @@ value = gr_prediction;
 %%% ¡prop!
 CONFUSION_MATRIX (result, matrix) is an add-up confusion matrix across k folds for all repeitions.
 %%%% ¡calculate!
-if nncv.memorize('GR_PREDICTION').get('SUB_DICT').length() == 0
+if isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
     value = [];
 else
     pred = cellfun(@(x) cell2mat(x.get('PREDICTION'))', nncv.get('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
@@ -356,9 +356,9 @@ pr = PanelPropItem('EL', nncv, 'PROP', NNClassifierCrossValidation.PFCM, ...
 %%% ¡prop!
 AUC (result, scalar) is the area under the curve scores across k folds for all repetitions.
 %%%% ¡calculate!
-nne_dict = nncv.memorize('NNE_DICT');
 auc = {};
-if nne_dict.length() > 0
+if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
+    nne_dict = nncv.memorize('NNE_DICT');
     for i = 1:1:nne_dict.length()
         auc_val = nne_dict.getItem(i).get('AUC');
         auc{i} = auc_val;
@@ -371,11 +371,11 @@ end
 %%% ¡prop!
 ROC (result, cell) is a receiver operating characteristic curve across k folds for all repetitions.
 %%%% ¡calculate!
-nne_dict = nncv.memorize('NNE_DICT');
 auc = {};
 X = {};
 Y = {};
-if nne_dict.length() > 0
+if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
+    nne_dict = nncv.memorize('NNE_DICT');
     for i = 1:1:nne_dict.length()
         auc_val = nne_dict.getItem(i).get('AUC');
         auc{i} = auc_val;

@@ -126,7 +126,7 @@ NN_DICT (result, idict) contains the NN regressors for k folds for all repetitio
 IndexedDictionary('IT_CLASS', 'NNRegressorDNN')
 %%%% ¡calculate!
 nn_dict = IndexedDictionary('IT_CLASS', 'NNRegressorDNN');
-if nncv.memorize('NNDS_DICT').length() > 0
+if ~isa(nncv.get('GR').getr('SUB_DICT'), 'NoValue')
     nnds = nncv.get('NNDS_DICT').getItem(1);
     gr_train = nnds.get('GR_TRAIN_FS');
     
@@ -171,7 +171,7 @@ NNE_DICT (result, idict) contains the NN evaluators for k folds for all repetiti
 IndexedDictionary('IT_CLASS', 'NNRegressorEvaluator')
 %%%% ¡calculate!
 nne_dict = IndexedDictionary('IT_CLASS', 'NNRegressorEvaluator');
-if nncv.memorize('NN_DICT').length() > 0
+if ~isa(nncv.get('GR').getr('SUB_DICT'), 'NoValue')
     for i = 1:1:nncv.get('NN_DICT').length()
         nn = nncv.get('NN_DICT').getItem(i);
         nnds = nncv.get('NNDS_DICT').getItem(i);
@@ -192,8 +192,8 @@ value = nne_dict;
 %%% ¡prop!
 FEATURE_IMPORTANCE (result, cell) is the feature importance obtained with permutation analysis.
 %%%% ¡calculate!
-nne_dict = nncv.memorize('NNE_DICT');
-if ~isempty(nne_dict.getItems())
+if ~isa(nncv.get('GR').getr('SUB_DICT'), 'NoValue')
+    nne_dict = nncv.memorize('NNE_DICT');
     feature_importances = nne_dict.getItem(1).get('FEATURE_PERMUTATION_IMPORTANCE');
     if length(feature_importances) == 0
         feature_importances = {};
@@ -230,7 +230,7 @@ GR_PREDICTION (result, item) is a group of NN subjects with prediction from NN.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡calculate!
-if nncv.memorize('NNE_DICT').length() > 0
+if ~isa(nncv.get('GR').getr('SUB_DICT'), 'NoValue')
     gr = nncv.get('NNE_DICT').getItem(1).get('GR_PREDICTION');
     gr_prediction = NNGroup( ...
         'ID', 'NN Group with NN prediction', ...
@@ -275,8 +275,8 @@ end
 %%% ¡prop!
 SCATTER_CHART (result, matrix) creates a scatter chart with circular markers at the locations specified by predictions and targets.
 %%%% ¡calculate!
-if nncv.get('GR_PREDICTION').get('SUB_DICT').length() == 0
-    value = 0;
+if isa(nncv.get('GR').getr('SUB_DICT'), 'NoValue')
+    value = [];
 else
     preds = cellfun(@(x) cell2mat(x.get('PREDICTION'))', nncv.get('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
     preds = cell2mat(preds);
