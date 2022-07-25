@@ -59,7 +59,7 @@ if nnds.prop_set(NNDataSplit.TEMPLATE, varargin{:})
     for i = 1:1:length(parameters)
         parameter = parameters(i);
         
-        if parameter ~= NNData.TEMPLATE
+        if parameter ~= NNDataSplit.TEMPLATE
             varargin{length(varargin) + 1} = parameter;
             varargin{length(varargin) + 1} = Callback('EL', nnds.get('TEMPLATE'), 'PROP', parameter);
         end
