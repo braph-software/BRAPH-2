@@ -36,8 +36,6 @@ if ~braph2_testing
             sph_dict = pf.get('SPH_DICT');
             for i = 1:sph_dict.length
                 sph = sph_dict.getItem(i);
-                m = measures(i);
-                val = m.get('M');
                 default_value = sph.get('SPHERESIZE');
                 sph.set('SPHERESIZE', default_value * val(i));
             end
@@ -46,8 +44,6 @@ if ~braph2_testing
             sym_dict = pf.get('SYM_DICT');            
             for i = 1:sym_dict.length
                 sym = sym_dict.getItem(i);
-                m = measures(i);
-                val = m.get('M');
                 default_value = sym.get('SYMBOLSIZE');
                 sym.set('SYMBOLSIZE', default_value * val(i));
             end            
@@ -83,7 +79,7 @@ DT (figure, string) is the id of the selected density or layer.
 %%%% ¡default!
 '1'
 %%%% ¡gui!
-g = pf.get('M').get('G');
+g = pf.get('ME').get('G');
 pr = PP_DTID('EL', pf, 'PROP', PFBrainMultiGraph.DT, ...
     'G', g, ...
     varargin{:});
