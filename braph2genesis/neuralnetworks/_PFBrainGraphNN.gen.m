@@ -27,9 +27,10 @@ false
 if ~braph2_testing
     if pf.get('MEASURES')
         nn = pf.get('NNE');
-        val = nn.get('FEATURE_PERMUTATION_IMPORTANCE'); 
-        index = pf.get('TMP_VAR');
-        thrshold = pf.get('THRESHOLD');
+        val = nn.get('FEATURE_PERMUTATION_IMPORTANCE');
+        index = str2double(pf.get('TMP_VAR'));
+        thrshold = str2double(pf.get('THRESHOLD'));
+        val = val{index};
         val = val{index};
         val(isnan(val)) = 0.1;
         val(val <= 0) = 0.1;
@@ -88,11 +89,18 @@ TMP_VAR (figure, string) is the id of the selected layer.
 nn = pf.get('NNE');
 cell_var = nn.get('FEATURE_PERMUTATION_IMPORTANCE');
 pr = PP_TMP_VAR('EL', pf, 'PROP', PFBrainGraphNN.TMP_VAR, ...
-    'ME', cell_var, ...
+    'tmp_var', cell_var, ...
     varargin{:});
 
 %%% ¡prop!
-THRESHOLD (figure, scalar) is the thesgold of the selected layer.
+THRESHOLD (figure, string) is the thesgold of the selected layer.
+%%%% ¡default!
+'1'
+%%%% ¡gui!
+nn = pf.get('NNE');
+cell_var = nn.get('FEATURE_PERMUTATION_IMPORTANCE');
+pr = PP_THRESHOLD('EL', pf, 'PROP', PFBrainGraphNN.THRESHOLD, ...    
+    varargin{:});
 
 %% ¡methods!
 function h_panel = draw(pf, varargin)
@@ -123,14 +131,7 @@ function h_panel = draw(pf, varargin)
         pf.toolbar = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'ToolBar');
         pf.toolbar_measure = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'toolbar_measure');
         pf.toolbar_edges = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'toolbar_edges');
-    end
-    
-    listener(pf.get('THRESHOLD'), 'PropSet', @cb_st_threshold);
-    function cb_st_threshold(~, ~) % (src, event)
-        if pf.get('MEASURES')
-            set('MEASURES', pf.get('MEASURES'))
-        end
-    end
+    end    
   
     % output
     if nargout > 0
