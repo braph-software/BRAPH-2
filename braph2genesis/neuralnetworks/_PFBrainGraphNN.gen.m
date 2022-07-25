@@ -25,55 +25,84 @@ MEASURES (figure, logical) determines whether the measures affect the brain regi
 false
 %%%% ¡postprocessing!
 if ~braph2_testing
-    if pf.get('MEASURES')
-        nn = pf.get('NNE');
-        val = nn.get('FEATURE_PERMUTATION_IMPORTANCE');
-        index = str2double(pf.get('TMP_VAR'));
-        thrshold = str2double(pf.get('THRESHOLD'));
-        val = val{index};
-        val = val{index};
-        val(isnan(val)) = 0.1;
-        val(val <= 0) = 0.1;
-        val(val <= thrshold) = 0;
-        % increase br size by measure value
-        if pf.get('SPHS')
-            sph_dict = pf.get('SPH_DICT');
-            for i = 1:sph_dict.length
-                sph = sph_dict.getItem(i);
-                default_value = sph.get('SPHERESIZE');
-                sph.set('SPHERESIZE', default_value * val(i));
-            end
-        end
-        if pf.get('SYMS')
-            sym_dict = pf.get('SYM_DICT');            
-            for i = 1:sym_dict.length
-                sym = sym_dict.getItem(i);
-                default_value = sym.get('SYMBOLSIZE');
-                sym.set('SYMBOLSIZE', default_value * val(i));
-            end            
-        end
+    % do nothing
+end
+
+%%% ¡prop!
+EDGES (figure, logical) determines whether the edges are shown as a edge.
+%%%% ¡default!
+false
+%%%% ¡postprocessing!
+if (isempty(varargin) || pf.prop_set('EDGES', varargin)) && ~braph2_testing
+    if ~pf.get('EDGES') && ~isempty(pf.edges)        
+        pf.link_edges_off([], [])
+        pf.arrow_edges_off([], [])
+        pf.cylinder_edges_off([],[])        
     else
-        % restore default values
-        if pf.get('SPHS')
-            sph_dict = pf.get('SPH_DICT');
-            for i = 1:sph_dict.length
-                sph = sph_dict.getItem(i);
-                default_value = sph.get('SPHERESIZE');
-                sph.set('SPHERESIZE', default_value);
+        % trigger listener
+        nn = pf.get('NNE');
+        cell_var = nn.get('FEATURE_PERMUTATION_IMPORTANCE');
+        conn_matrix = cell_var{TMP_VAR};
+        t = pf.get('THRESHOLD');
+        
+        if pf.get('ST_EDGES').get('LINKS')
+            for i = 1:size(conn_matrix, 1)
+                for j = 1:size(conn_matrix, 2)
+                    tmp_val = conn_matrix(i, j);
+                    tmp_val(tmp_val <= t) = 0;
+                    conn_matrix(i, j) = tmp_val;
+                    if conn_matrix(i, j) == 0
+                        pf.link_edge_off(i, j)
+                    else
+                        % do nothing 
+                    end
+                end
+            end
+        elseif pf.get('ST_EDGES').get('ARROWS')
+            for i = 1:size(conn_matrix, 1)
+                for j = 1:size(conn_matrix, 2)
+                    tmp_val = conn_matrix(i, j);
+                    tmp_val(tmp_val <= t) = 0;
+                    conn_matrix(i, j) = tmp_val;
+                    if conn_matrix(i, j) == 0
+                        pf.arrow_edge_off(i, j)
+                    else
+                        % do nothing 
+                    end
+                end
+            end
+        elseif pf.get('ST_EDGES').get('CYLINDERS')
+            for i = 1:size(conn_matrix, 1)
+                for j = 1:size(conn_matrix, 2)
+                    tmp_val = conn_matrix(i, j);
+                    tmp_val(tmp_val <= t) = 0;
+                    conn_matrix(i, j) = tmp_val;
+                    if conn_matrix(i, j) == 0
+                        pf.cylinder_edge_off(i, j)
+                    else
+                        % do nothing 
+                    end
+                end
+            end
+        elseif pf.get('ST_EDGES').get('TEXTS')            
+            for i = 1:size(conn_matrix, 1)
+                for j = 1:size(conn_matrix, 2)
+                    tmp_val = conn_matrix(i, j);
+                    tmp_val(tmp_val <= t) = 0;
+                    conn_matrix(i, j) = tmp_val;
+                    if conn_matrix(i, j) == 0
+                        pf.text_edge_off(i, j)
+                    else
+                        % do nothing 
+                    end
+                end
             end
         end
-        if pf.get('SYMS')
-            sym_dict = pf.get('SYM_DICT');
-            for i = 1:sym_dict.length
-                sym = sym_dict.getItem(i);
-                default_value = sym.get('SYMBOLSIZE');
-                sym.set('SYMBOLSIZE', default_value);
-            end            
-        end        
-    end    
+
+    end
     
     % update state of toggle tool
-    set(pf.toolbar_measure, 'State', pf.get('MEASURES'))
+    set(pf.toolbar_edges, 'State', pf.get('EDGES'))
 end
 
 %% ¡props!
@@ -130,6 +159,7 @@ function h_panel = draw(pf, varargin)
     if ~check_graphics(pf.h_axes, 'uitoolbar')        
         pf.toolbar = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'ToolBar');
         pf.toolbar_measure = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'toolbar_measure');
+        set(pf.toolbar_measure, 'ENABLE', false);        
         pf.toolbar_edges = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'toolbar_edges');
     end    
   
