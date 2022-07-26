@@ -218,7 +218,7 @@ PFFI (gui, item) contains the panel figure of the feature importance.
 'PFFeatureImportance'
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
-    nncv.memorize('PFFI').set('NNE', nncv);
+    nncv.memorize('PFFI').set('NNE', nncv, 'PROP', NNRegressorCrossValidation.FEATURE_IMPORTANCE, 'BA', nncv.get('GR').get('SUB_DICT').getItem(1).get('BA'))
 end
 %%%% ¡gui!
 pr = PanelPropItem('EL', nncv, 'PROP', NNRegressorCrossValidation.PFFI, ...

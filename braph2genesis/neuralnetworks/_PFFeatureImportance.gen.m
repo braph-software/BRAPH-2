@@ -42,21 +42,22 @@ if (isempty(varargin) || pf.prop_set('EDGES', varargin)) && ~braph2_testing
         if ~isempty(pf.retrieve_edges())
             nn = pf.get('NNE');
             prop = pf.get('PROP');
-            fi = nn.get(prop);
+            fi = nn.memorize(prop);
             index_layer = str2double(pf.get('INDEX_LAYER'));
             fi_current = fi{index_layer};
             t = str2double(pf.get('THRESHOLD'));
             [~, idx_all] = sort(fi_current(:), 'descend');
-            num_top_idx = ceil(threshold * numel(fi));
-            fi_current(num_top_idx + 1:end) = 0;
-
+            num_top_idx = ceil(t * numel(fi_current));
+            fi_current(idx_all(num_top_idx + 1:end)) = 0;
+            pf.edges = pf.retrieve_edges();
+            
             if pf.get('ST_EDGES').get('LINKS')
                 for i = 1:size(fi_current, 1)
                     for j = 1:size(fi_current, 2)
                         if fi_current(i, j) == 0
                             pf.link_edge_off(i, j)
                         else
-                            % do nothing
+                            pf.link_edge_on(i, j)
                         end
                     end
                 end
@@ -66,7 +67,7 @@ if (isempty(varargin) || pf.prop_set('EDGES', varargin)) && ~braph2_testing
                         if fi_current(i, j) == 0
                             pf.arrow_edge_off(i, j)
                         else
-                            % do nothing
+                            pf.arrow_edge_on(i, j)
                         end
                     end
                 end
@@ -76,7 +77,7 @@ if (isempty(varargin) || pf.prop_set('EDGES', varargin)) && ~braph2_testing
                         if fi_current(i, j) == 0
                             pf.cylinder_edge_off(i, j)
                         else
-                            % do nothing
+                           pf.cylinder_edge_on(i, j)
                         end
                     end
                 end
@@ -113,7 +114,7 @@ INDEX_LAYER (figure, string) is the index of the selected layer.
 %%%% ¡gui!
 nn = pf.get('NNE');
 prop = pf.get('PROP');
-fi = nn.get(prop);
+fi = nn.memorize(prop);
 pr = PP_INDEX_LAYER('EL', pf, 'PROP', PFFeatureImportance.INDEX_LAYER, ...
     'FEATURE_IMPORTANCE', fi, ...
     varargin{:});
