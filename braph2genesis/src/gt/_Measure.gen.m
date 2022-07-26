@@ -148,14 +148,20 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
     if isa(m.getr('PFBG'), 'NoValue')
         g = m.get('G');
         if Graph.is_graph(g) % graph            
-            m.memorize('PFBG').set('ME', m)
             ba_list = g.get('BAS');
-            m.memorize('PFBG').set('BA', ba_list{1})
+            if ~isempty(ba_list)
+                m.memorize('PFBG').set('ME', m, 'BA', ba_list{1})
+            else
+                m.memorize('PFBG').set('ME', m);
+            end
             
         elseif Graph.is_multigraph(g) % multigraph BUD BUT
-            m.set('PFBG', PFBrainMultiGraph('ME', m))
             ba_list = g.get('BAS');
-            m.memorize('PFBG').set('BA', ba_list{1})
+            if ~isempty(ba_list)
+                m.set('PFBG', PFBrainMultiGraph('ME', m, 'BA', ba_list{1}));
+            else
+                m.set('PFBG', PFBrainMultiGraph('ME', m));
+            end            
         elseif Graph.is_multiplex(g) && Graph.is_weighted(g) % multiplexWU
             %m.set('PFBG', PFMultiplexGraph('G', g))
         elseif Graph.is_multiplex(g) && Graph.is_binary(g)

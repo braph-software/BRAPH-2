@@ -39,12 +39,16 @@ menu_measure_open_plots
 menu_measure_hide_plots
 menu_measure_open_elements
 menu_measure_hide_elements
+menu_measure_open_brain_graph
+menu_measure_close_brain_graph
 
 f_graph_plot
 f_graph_element
 
 f_measure_plots
 f_measure_elements
+
+f_brain_graphs
 
 %% ¡methods!
 function p_out = draw(pr, varargin)
@@ -135,6 +139,18 @@ function p_out = draw(pr, varargin)
             'Text', 'Hide Selected Data', ...
             'MenuSelectedFcn', {@cb_measure_hide_elements} ...
             );
+        pr.menu_measure_open_brain_graph = uimenu( ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_measure_open_brain_graph', ...
+            'Text', 'Plot Selected Measures Brain Graph', ...
+            'MenuSelectedFcn', {@cb_measure_open_brain_graph} ...
+            );
+        pr.menu_measure_close_brain_graph = uimenu( ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_measure_close_brain_graph', ...
+            'Text', 'Hide Selected Plots Brain Graph', ...
+            'MenuSelectedFcn', {@cb_measure_hide_brain_graph} ...
+            );
     end
     function cb_graph_plot(~, ~) 
         pr.cb_graph_plot()
@@ -165,6 +181,12 @@ function p_out = draw(pr, varargin)
     end
     function cb_measure_hide_elements(~, ~) 
         pr.cb_measure_hide_elements()
+    end
+    function cb_measure_open_brain_graph(~, ~)
+        pr.cb_measure_open_brain_graph()
+    end
+    function cb_measure_hide_brain_graph(~, ~)
+        pr.cb_measure_hide_brain_graph()
     end
     
     if ~check_graphics(pr.table, 'uitable')
@@ -529,6 +551,55 @@ function cb_measure_hide_elements(pr)
             f_measure_element = pr.f_measure_elements{i};
             if check_graphics(f_measure_element, 'figure')
                 gui = get(f_measure_element, 'UserData');
+                gui.cb_hide()
+            end
+        end
+    end
+end
+function cb_measure_open_brain_graph(pr)
+    a = pr.get('EL');
+    
+    mlist = Graph.getCompatibleMeasureList(a.get('GRAPH_TEMPLATE'));
+    
+    f = ancestor(pr.p, 'figure'); % parent GUI 
+    N = ceil(sqrt(length(mlist))); % number of row and columns of figures
+    
+    for s = 1:1:length(pr.selected)
+        i = pr.selected(s);
+        
+        measure = mlist{i};
+
+        m = a.getMeasureEnsemble(measure);
+        if Measure.is_nodal(m.get('measure'))
+            if length(pr.f_brain_graphs) < i || ~check_graphics(pr.f_brain_graphs{i}, 'figure')
+                pr.f_brain_graphs{i} = GUIFig( ...
+                    'PF', m.memorize('PFBG'), ... % ensure that the property is stored
+                    'WAITBAR', Callback('EL', pr, 'TAG', 'WAITBAR'), ...
+                    'NAME', ['Figure - ' m.get('ID') '@' a.get('ID') ' - ' BRAPH2.STR], ...
+                    'POSITION', [ ...
+                    x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ...
+                    y0(f, 'normalized') ...
+                    w(f, 'normalized') * 3 ...
+                    .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ...
+                    ], ...
+                    'CLOSEREQ', false ...
+                    ).draw();
+            else
+                figure(pr.f_brain_graphs{i})
+            end
+        end        
+    end
+end
+function cb_measure_hide_brain_graph(pr) 
+
+    % hides selected subfigures
+    for s = 1:1:length(pr.selected)
+        i = pr.selected(s);
+        
+        if length(pr.f_brain_graphs) >= i
+            f_measure_brain_graph = pr.f_brain_graphs{i};
+            if check_graphics(f_measure_brain_graph, 'figure')
+                gui = get(f_measure_brain_graph, 'UserData');
                 gui.cb_hide()
             end
         end

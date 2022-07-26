@@ -173,3 +173,40 @@ end
 pr = PanelPropItem('EL', me, 'PROP', MeasureEnsemble.PFME, ...
     'GUICLASS', 'GUIFig', ...
     varargin{:});
+
+%%% ¡prop!
+PFBG (gui, item) contains the panel figure of the brain graph.
+%%%% ¡settings!
+'PFBrainGraph'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    if isa(me.getr('PFBG'), 'NoValue')
+        g = me.get('a').get('g_dict').getItem(1);
+        if Graph.is_graph(g) % graph            
+            ba_list = g.get('BAS');
+            if ~isempty(ba_list)
+                me.memorize('PFBG').set('ME', me, 'BA', ba_list{1})
+            else
+                me.memorize('PFBG').set('ME', me);
+            end
+            
+        elseif Graph.is_multigraph(g) % multigraph BUD BUT
+            ba_list = g.get('BAS');
+            if ~isempty(ba_list)
+                me.set('PFBG', PFBrainMultiGraph('ME', me, 'BA', ba_list{1}));
+            else
+                me.set('PFBG', PFBrainMultiGraph('ME', me));
+            end            
+        elseif Graph.is_multiplex(g) && Graph.is_weighted(g) % multiplexWU
+            %me.set('PFBG', PFMultiplexGraph('G', g))
+        elseif Graph.is_multiplex(g) && Graph.is_binary(g)
+            %me.set('PFBG', PFMultiplexBinaryGraph('G', g))
+        else
+            me.memorize('PFBG').set('ME', me)
+        end
+    end
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', me, 'PROP', MeasureEnsemble.PFBG, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
