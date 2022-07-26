@@ -162,8 +162,8 @@ IndexedDictionary('IT_CLASS', 'NNClassifierDNN')
 %%%% ¡calculate!
 nn_dict = IndexedDictionary('IT_CLASS', 'NNClassifierDNN');
 if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
-    nnds = nncv.get('NNDS_DICT').getItem(1);
-    gr_train = nnds.get('GR_TRAIN_FS');
+    nnds = nncv.memorize('NNDS_DICT').getItem(1);
+    gr_train = nnds.memorize('GR_TRAIN_FS');
 
     nn_tmp = NNClassifierDNN( ...
         'ID', ['NN model cooperated with ', nnds.get('ID')], ...
@@ -181,7 +181,7 @@ if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
 
     nn_dict.add(nn_tmp);
     for i = 2:1:nncv.get('NNDS_DICT').length()
-        nnds = nncv.get('NNDS_DICT').getItem(i);
+        nnds = nncv.memorize('NNDS_DICT').getItem(i);
         gr_train = nnds.get('GR_TRAIN_FS');
 
         nn = NNClassifierDNN( ...
@@ -206,9 +206,9 @@ IndexedDictionary('IT_CLASS', 'NNClassifierEvaluator')
 nne_dict = IndexedDictionary('IT_CLASS', 'NNClassifierEvaluator');
 if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
     for i = 1:1:nncv.get('NN_DICT').length()
-        nn = nncv.get('NN_DICT').getItem(i);
-        nnds = nncv.get('NNDS_DICT').getItem(i);
-        gr_val = nnds.get('GR_VAL_FS');
+        nn = nncv.memorize('NN_DICT').getItem(i);
+        nnds = nncv.memorize('NNDS_DICT').getItem(i);
+        gr_val = nnds.memorize('GR_VAL_FS');
 
         nne = NNClassifierEvaluator( ...
                 'ID', ['NN evaluator cooperated with ', nnds.get('ID')], ...
