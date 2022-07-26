@@ -124,14 +124,14 @@ TEMPLATE (parameter, item) is the analysis template to set the parameters.
 %%%% ¡settings!
 'NNData_CON_BUD'
 %%%% ¡postprocessing!
-if nnd.prop_set(NNData.TEMPLATE, varargin{:})
+if nnd.prop_set(NNData_CON_BUD.TEMPLATE, varargin{:})
     varargin = {};
     
     parameters = nnd.getProps(Category.PARAMETER);
     for i = 1:1:length(parameters)
         parameter = parameters(i);
         
-        if parameter ~= NNData.TEMPLATE
+        if parameter ~= NNData_CON_BUD.TEMPLATE
             varargin{length(varargin) + 1} = parameter;
             varargin{length(varargin) + 1} = Callback('EL', nnd.get('TEMPLATE'), 'PROP', parameter);
         end
