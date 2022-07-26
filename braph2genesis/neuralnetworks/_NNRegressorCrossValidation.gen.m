@@ -126,9 +126,9 @@ NN_DICT (result, idict) contains the NN regressors for k folds for all repetitio
 IndexedDictionary('IT_CLASS', 'NNRegressorDNN')
 %%%% ¡calculate!
 nn_dict = IndexedDictionary('IT_CLASS', 'NNRegressorDNN');
-if nncv.memorize('NNDS_DICT').length() > 0
-    nnds = nncv.get('NNDS_DICT').getItem(1);
-    gr_train = nnds.get('GR_TRAIN_FS');
+if ~isa(nncv.get('GR').getr('SUB_DICT'), 'NoValue')
+    nnds = nncv.memorize('NNDS_DICT').getItem(1);
+    gr_train = nnds.memorize('GR_TRAIN_FS');
     
     % create the 1st nn and act as a template
     nn_tmp = NNRegressorDNN( ...
@@ -148,8 +148,8 @@ if nncv.memorize('NNDS_DICT').length() > 0
 
     % create the following nn and use that template
     for i = 2:1:nncv.get('NNDS_DICT').length()
-        nnds = nncv.get('NNDS_DICT').getItem(i);
-        gr_train = nnds.get('GR_TRAIN_FS');
+        nnds = nncv.memorize('NNDS_DICT').getItem(i);
+        gr_train = nnds.memorize('GR_TRAIN_FS');
 
         nn = NNRegressorDNN( ...
                 'ID', ['NN model cooperated with ', nnds.get('ID')], ...
@@ -171,11 +171,11 @@ NNE_DICT (result, idict) contains the NN evaluators for k folds for all repetiti
 IndexedDictionary('IT_CLASS', 'NNRegressorEvaluator')
 %%%% ¡calculate!
 nne_dict = IndexedDictionary('IT_CLASS', 'NNRegressorEvaluator');
-if nncv.memorize('NN_DICT').length() > 0
+if ~isa(nncv.get('GR').getr('SUB_DICT'), 'NoValue')
     for i = 1:1:nncv.get('NN_DICT').length()
-        nn = nncv.get('NN_DICT').getItem(i);
-        nnds = nncv.get('NNDS_DICT').getItem(i);
-        gr_val = nnds.get('GR_VAL_FS');
+        nn = nncv.memorize('NN_DICT').getItem(i);
+        nnds = nncv.memorize('NNDS_DICT').getItem(i);
+        gr_val = nnds.memorize('GR_VAL_FS');
 
         nne = NNRegressorEvaluator( ...
                 'ID', ['NN evaluator cooperated with ', nnds.get('ID')], ...
@@ -192,8 +192,8 @@ value = nne_dict;
 %%% ¡prop!
 FEATURE_IMPORTANCE (result, cell) is the feature importance obtained with permutation analysis.
 %%%% ¡calculate!
-nne_dict = nncv.memorize('NNE_DICT');
-if ~isempty(nne_dict.getItems())
+if ~isa(nncv.get('GR').getr('SUB_DICT'), 'NoValue')
+    nne_dict = nncv.memorize('NNE_DICT');
     feature_importances = nne_dict.getItem(1).get('FEATURE_PERMUTATION_IMPORTANCE');
     if length(feature_importances) == 0
         feature_importances = {};
@@ -218,7 +218,7 @@ PFFI (gui, item) contains the panel figure of the feature importance.
 'PFFeatureImportance'
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
-    nncv.memorize('PFFI').set('NNE', nncv);
+    nncv.memorize('PFFI').set('NNE', nncv, 'PROP', NNRegressorCrossValidation.FEATURE_IMPORTANCE, 'BA', nncv.get('GR').get('SUB_DICT').getItem(1).get('BA'))
 end
 %%%% ¡gui!
 pr = PanelPropItem('EL', nncv, 'PROP', NNRegressorCrossValidation.PFFI, ...
@@ -230,7 +230,7 @@ GR_PREDICTION (result, item) is a group of NN subjects with prediction from NN.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡calculate!
-if nncv.memorize('NNE_DICT').length() > 0
+if ~isa(nncv.get('GR').getr('SUB_DICT'), 'NoValue')
     gr = nncv.get('NNE_DICT').getItem(1).get('GR_PREDICTION');
     gr_prediction = NNGroup( ...
         'ID', 'NN Group with NN prediction', ...
@@ -275,8 +275,8 @@ end
 %%% ¡prop!
 SCATTER_CHART (result, matrix) creates a scatter chart with circular markers at the locations specified by predictions and targets.
 %%%% ¡calculate!
-if nncv.get('GR_PREDICTION').get('SUB_DICT').length() == 0
-    value = 0;
+if isa(nncv.get('GR').getr('SUB_DICT'), 'NoValue')
+    value = [];
 else
     preds = cellfun(@(x) cell2mat(x.get('PREDICTION'))', nncv.get('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
     preds = cell2mat(preds);

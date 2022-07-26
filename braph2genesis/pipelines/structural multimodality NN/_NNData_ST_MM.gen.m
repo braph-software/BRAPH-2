@@ -15,7 +15,7 @@ Group('SUB_CLASS', 'SubjectST')
 
 %%% ¡prop!
 INPUT_TYPE (data, option) is the input type for training or testing the NN.
-%%%% ¡settings
+%%%% ¡settings!
 {'structural_data'}
 %%%% ¡default!
 'structural_data'
@@ -71,6 +71,28 @@ nn_gr.set('sub_dict', nn_sub_dict);
 braph2waitbar(wb, 'close')
 
 value = nn_gr;
+
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'NNData_ST_MM'
+%%%% ¡postprocessing!
+if nnd.prop_set(NNData_ST_MM.TEMPLATE, varargin{:})
+    varargin = {};
+    
+    parameters = nnd.getProps(Category.PARAMETER);
+    for i = 1:1:length(parameters)
+        parameter = parameters(i);
+        
+        if parameter ~= NNData_ST_MM.TEMPLATE
+            varargin{length(varargin) + 1} = parameter;
+            varargin{length(varargin) + 1} = Callback('EL', nnd.get('TEMPLATE'), 'PROP', parameter);
+        end
+    end
+    
+    nnd.set(varargin{:});
+end
 
 %% ¡tests!
 %%% ¡test!

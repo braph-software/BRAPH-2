@@ -26,8 +26,6 @@ true
 
 %%% ¡prop!
 INPUT_TYPE (parameter, option) is the input type for training or testing the NN.
-%%%% ¡settings!
-{'adjacency_matrices' 'graph_measures' 'structural_data'}
 %%%% ¡gui!
 pr = PPNNDataInputType('EL', nnd, 'PROP', NNData.INPUT_TYPE, 'WAITBAR', Callback('EL', nnd, 'TAG', 'WAITBAR'), varargin{:});
 

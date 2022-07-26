@@ -61,7 +61,7 @@ PFFI (gui, item) contains the panel figure of the feature importance.
 'PFFeatureImportance'
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
-    nne.memorize('PFFI').set('NNE', nne)
+    nne.memorize('PFFI').set('NNE', nne, 'PROP', NNClassifierEvaluator.FEATURE_PERMUTATION_IMPORTANCE, 'BA', nne.get('GR').get('SUB_DICT').getItem(1).get('BA'))
 end
 %%%% ¡gui!
 pr = PanelPropItem('EL', nne, 'PROP', NNClassifierEvaluator.PFFI, ...
@@ -72,7 +72,7 @@ pr = PanelPropItem('EL', nne, 'PROP', NNClassifierEvaluator.PFFI, ...
 AUC (result, scalar) is an area under the curve score.
 %%%% ¡calculate!
 if nne.get('GR_PREDICTION').get('SUB_DICT').length() == 0
-    value = {};
+    value = 0;
 else
     pred = cellfun(@(x) cell2mat(x.get('PREDICTION'))', nne.memorize('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
     pred = cell2mat(pred);
@@ -144,7 +144,7 @@ pr = PanelPropMatrix('EL', nne, 'PROP', NNClassifierEvaluator.CONFUSION_MATRIX, 
 %%% ¡prop!
 CLASS_NAME1 (metadata, string) is the class name for group 1.
 %%%% ¡postprocessing!
-if isempty(nne.get('CLASS_NAME1'))
+if isempty(nne.get('CLASS_NAME1')) && ~braph2_testing
     if isa(nne.get('NN'), 'NoValue') || isa(nne.get('GR'), 'NoValue')
         nne.set('CLASS_NAME1', 'Group1');
     else
@@ -159,7 +159,7 @@ end
 %%% ¡prop!
 CLASS_NAME2 (metadata, string) is the class name for group 2.
 %%%% ¡postprocessing!
-if isempty(nne.get('CLASS_NAME2'))
+if isempty(nne.get('CLASS_NAME2')) && ~braph2_testing
     if isa(nne.get('NN'), 'NoValue') || isa(nne.get('GR'), 'NoValue')
         nne.set('CLASS_NAME2', 'Group2');
     else

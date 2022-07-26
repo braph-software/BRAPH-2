@@ -261,7 +261,6 @@ function p_out = draw(pf, varargin)
     
     listener(pf.get('ST_YLABEL'), 'PropSet', @cb_st_ylabel);
     function cb_st_ylabel(~, ~) % (src, event)
-        set(pf.h_ylabel, 'State', pf.get('ST_AXIS').get('AXIS'))
         set(pf.tool_grid, 'State', pf.get('ST_AXIS').get('GRID'))
     end
     % output

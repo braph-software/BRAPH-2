@@ -161,9 +161,9 @@ NN_DICT (result, idict) contains the NN classifiers for k folds for all repetiti
 IndexedDictionary('IT_CLASS', 'NNClassifierDNN')
 %%%% ¡calculate!
 nn_dict = IndexedDictionary('IT_CLASS', 'NNClassifierDNN');
-if nncv.memorize('NNDS_DICT').length() > 0
-    nnds = nncv.get('NNDS_DICT').getItem(1);
-    gr_train = nnds.get('GR_TRAIN_FS');
+if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
+    nnds = nncv.memorize('NNDS_DICT').getItem(1);
+    gr_train = nnds.memorize('GR_TRAIN_FS');
 
     nn_tmp = NNClassifierDNN( ...
         'ID', ['NN model cooperated with ', nnds.get('ID')], ...
@@ -181,7 +181,7 @@ if nncv.memorize('NNDS_DICT').length() > 0
 
     nn_dict.add(nn_tmp);
     for i = 2:1:nncv.get('NNDS_DICT').length()
-        nnds = nncv.get('NNDS_DICT').getItem(i);
+        nnds = nncv.memorize('NNDS_DICT').getItem(i);
         gr_train = nnds.get('GR_TRAIN_FS');
 
         nn = NNClassifierDNN( ...
@@ -204,11 +204,11 @@ NNE_DICT (result, idict) contains the NN evaluators for k folds for all repetiti
 IndexedDictionary('IT_CLASS', 'NNClassifierEvaluator')
 %%%% ¡calculate!
 nne_dict = IndexedDictionary('IT_CLASS', 'NNClassifierEvaluator');
-if nncv.memorize('NN_DICT').length() > 0
+if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
     for i = 1:1:nncv.get('NN_DICT').length()
-        nn = nncv.get('NN_DICT').getItem(i);
-        nnds = nncv.get('NNDS_DICT').getItem(i);
-        gr_val = nnds.get('GR_VAL_FS');
+        nn = nncv.memorize('NN_DICT').getItem(i);
+        nnds = nncv.memorize('NNDS_DICT').getItem(i);
+        gr_val = nnds.memorize('GR_VAL_FS');
 
         nne = NNClassifierEvaluator( ...
                 'ID', ['NN evaluator cooperated with ', nnds.get('ID')], ...
@@ -225,8 +225,8 @@ value = nne_dict;
 %%% ¡prop!
 FEATURE_IMPORTANCE (result, cell) is the feature importance obtained with permutation analysis.
 %%%% ¡calculate!
-nne_dict = nncv.memorize('NNE_DICT');
-if ~isempty(nne_dict.getItems())
+if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
+    nne_dict = nncv.memorize('NNE_DICT');
     feature_importances = nne_dict.getItem(1).get('FEATURE_PERMUTATION_IMPORTANCE');
     if length(feature_importances) == 0
         feature_importances = {};
@@ -251,7 +251,7 @@ PFFI (gui, item) contains the panel figure of the feature importance.
 'PFFeatureImportance'
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
-    nncv.memorize('PFROC').set('NNE', nncv)
+    nncv.memorize('PFFI').set('NNE', nncv, 'PROP', NNClassifierCrossValidation.FEATURE_IMPORTANCE, 'BA', nncv.get('GR1').get('SUB_DICT').getItem(1).get('BA'))
 end
 %%%% ¡gui!
 pr = PanelPropItem('EL', nncv, 'PROP', NNClassifierCrossValidation.PFFI, ...
@@ -263,7 +263,7 @@ GR_PREDICTION (result, item) is a group of NN subjects with prediction from NN.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡calculate!
-if nncv.memorize('NNE_DICT').length() > 0
+if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
     gr = nncv.get('NNE_DICT').getItem(1).get('GR_PREDICTION');
     gr_prediction = NNGroup( ...
         'ID', 'NN Group with NN prediction', ...
@@ -295,7 +295,7 @@ value = gr_prediction;
 %%% ¡prop!
 CONFUSION_MATRIX (result, matrix) is an add-up confusion matrix across k folds for all repeitions.
 %%%% ¡calculate!
-if nncv.memorize('GR_PREDICTION').get('SUB_DICT').length() == 0
+if isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
     value = [];
 else
     pred = cellfun(@(x) cell2mat(x.get('PREDICTION'))', nncv.get('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
@@ -321,7 +321,7 @@ pr = PanelPropMatrix('EL', nncv, 'PROP', NNClassifierCrossValidation.CONFUSION_M
 %%% ¡prop!
 CLASS_NAME1 (metadata, string) is the class name for group 1.
 %%%% ¡postprocessing!
-if isempty(nncv.get('CLASS_NAME1'))
+if isempty(nncv.get('CLASS_NAME1')) && ~braph2_testing
     if isa(nncv.getr('GR1'), 'NoValue')
         nncv.set('CLASS_NAME1', 'Group1');
     else
@@ -332,7 +332,7 @@ end
 %%% ¡prop!
 CLASS_NAME2 (metadata, string) is the class name for group 2.
 %%%% ¡postprocessing!
-if isempty(nncv.get('CLASS_NAME2'))
+if isempty(nncv.get('CLASS_NAME2')) && ~braph2_testing
     if isa(nncv.getr('GR2'), 'NoValue')
         nncv.set('CLASS_NAME2', 'Group2');
     else
@@ -356,9 +356,9 @@ pr = PanelPropItem('EL', nncv, 'PROP', NNClassifierCrossValidation.PFCM, ...
 %%% ¡prop!
 AUC (result, scalar) is the area under the curve scores across k folds for all repetitions.
 %%%% ¡calculate!
-nne_dict = nncv.memorize('NNE_DICT');
 auc = {};
-if nne_dict.length() > 0
+if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
+    nne_dict = nncv.memorize('NNE_DICT');
     for i = 1:1:nne_dict.length()
         auc_val = nne_dict.getItem(i).get('AUC');
         auc{i} = auc_val;
@@ -371,11 +371,11 @@ end
 %%% ¡prop!
 ROC (result, cell) is a receiver operating characteristic curve across k folds for all repetitions.
 %%%% ¡calculate!
-nne_dict = nncv.memorize('NNE_DICT');
 auc = {};
 X = {};
 Y = {};
-if nne_dict.length() > 0
+if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
+    nne_dict = nncv.memorize('NNE_DICT');
     for i = 1:1:nne_dict.length()
         auc_val = nne_dict.getItem(i).get('AUC');
         auc{i} = auc_val;

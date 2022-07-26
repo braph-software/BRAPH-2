@@ -60,6 +60,11 @@ INPUT_FORMAT (data, string) is the data format of network inputs.
 %% ¡props_update!
 
 %%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'NNRegressorDNN'
+
+%%% ¡prop!
 MODEL (result, net) is a trained neural network regressor.
 %%%% ¡calculate!
 if BRAPH2.installed('NN', 'warning')
