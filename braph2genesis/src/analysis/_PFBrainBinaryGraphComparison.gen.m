@@ -1,5 +1,5 @@
 %% ¡header!
-PFBrainBinaryGraphComparison < PFBrainGraph (pf, plot brain multigraph) is a plot of a brain multigraph.
+PFBrainBinaryGraphComparison < PFBrainGraphComparison (pf, plot brain multigraph) is a plot of a brain multigraph.
 
 %%% ¡description!
 PFBrainBinaryGraphComparison manages the plot of the graph edges, arrows and cylinders.
@@ -103,7 +103,7 @@ function h_panel = draw(pf, varargin)
     %
     % see also settings, uipanel, isgraphics.
 
-    pf.p = draw@PFBrainGraph(pf, varargin{:});
+    pf.p = draw@PFBrainGraphComparison(pf, varargin{:});
 
     
     % get axes
