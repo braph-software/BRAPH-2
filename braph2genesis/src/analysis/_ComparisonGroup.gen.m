@@ -525,6 +525,44 @@ pr = PanelPropItem('EL', cp, 'PROP', ComparisonGroup.PFC, ...
     'GUICLASS', 'GUIFig', ...
     varargin{:});
 
+%%% ¡prop!
+PFBG (gui, item) contains the panel figure of the brain graph.
+%%%% ¡settings!
+'PFBrainGraphComparison'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    if isa(cp.getr('PFBG'), 'NoValue')
+        c = cp.get('C');
+        g = c.get('A1').get('G');
+        if Graph.is_graph(g) % graph            
+            ba_list = g.get('BAS');
+            if ~isempty(ba_list)
+                cp.memorize('PFBG').set('ME', cp, 'BA', ba_list{1})
+            else
+                cp.memorize('PFBG').set('ME', cp);
+            end
+            
+        elseif Graph.is_multigraph(g) % multigraph BUD BUT
+            ba_list = g.get('BAS');
+            if ~isempty(ba_list)
+                cp.set('PFBG', PFBrainBinaryGraphComparison('ME', cp, 'BA', ba_list{1}));
+            else
+                cp.set('PFBG', PFBrainBinaryGraphComparison('ME', cp));
+            end            
+        elseif Graph.is_multiplex(g) && Graph.is_weighted(g) % multiplexWU
+            %m.set('PFBG', PFMultiplexGraph('G', g))
+        elseif Graph.is_multiplex(g) && Graph.is_binary(g)
+            %m.set('PFBG', PFMultiplexBinaryGraph('G', g))
+        else
+            m.memorize('PFBG').set('ME', m)
+        end
+    end
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', m, 'PROP', Measure.PFBG, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
+
 %% ¡properties!
 diff
 p1

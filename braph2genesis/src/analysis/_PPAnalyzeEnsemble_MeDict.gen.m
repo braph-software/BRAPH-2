@@ -644,6 +644,15 @@ function cb_bring_to_front(pr)
             gui.cb_bring_to_front()
         end
     end    
+    
+    % brings to front measure element subfigures
+    for i = 1:1:length(pr.f_brain_graphs)
+        f_brain_graph = pr.f_brain_graphs{i};
+        if check_graphics(f_brain_graph, 'figure')
+            gui = get(f_brain_graph, 'UserData');
+            gui.cb_bring_to_front()
+        end
+    end  
 end
 function cb_hide(pr)
     
@@ -676,6 +685,15 @@ function cb_hide(pr)
             gui.cb_hide()
         end
     end    
+    
+    % hides measure element subfigures
+    for i = 1:1:length(pr.f_brain_graphs)
+        f_brain_graph = pr.f_brain_graphs{i};
+        if check_graphics(f_brain_graph, 'figure')
+            gui = get(f_brain_graph, 'UserData');
+            gui.cb_hide()
+        end
+    end 
 end
 function cb_close(pr)
     
@@ -705,6 +723,15 @@ function cb_close(pr)
         f_measure_element = pr.f_measure_elements{i};
         if check_graphics(f_measure_element, 'figure')
             gui = get(f_measure_element, 'UserData');
+            gui.cb_close()
+        end
+    end
+    
+    % closes measure element subfigures
+    for i = 1:1:length(pr.f_brain_graphs)
+        f_brain_graph = pr.f_brain_graphs{i};
+        if check_graphics(f_brain_graph, 'figure')
+            gui = get(f_brain_graph, 'UserData');
             gui.cb_close()
         end
     end

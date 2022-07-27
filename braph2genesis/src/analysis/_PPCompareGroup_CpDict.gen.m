@@ -36,9 +36,12 @@ menu_comparison_open_plots
 menu_comparison_hide_plots
 menu_comparison_open_elements
 menu_comparison_hide_elements
+menu_measure_open_brain_graph
+menu_measure_close_brain_graph
 
 f_comparison_plots
 f_comparison_elements
+f_brain_graphs
 
 %% ¡methods!
 function p_out = draw(pr, varargin)
@@ -115,6 +118,18 @@ function p_out = draw(pr, varargin)
             'Tag', 'menu_comparison_hide_elements', ...
             'Text', 'Hide Selected Data', ...
             'MenuSelectedFcn', {@cb_comparison_hide_elements} ...
+            );
+        pr.menu_measure_open_brain_graph = uimenu( ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_measure_open_brain_graph', ...
+            'Text', 'Plot Selected Measures Brain Graph', ...
+            'MenuSelectedFcn', {@cb_measure_open_brain_graph} ...
+            );
+        pr.menu_measure_close_brain_graph = uimenu( ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_measure_close_brain_graph', ...
+            'Text', 'Hide Selected Plots Brain Graph', ...
+            'MenuSelectedFcn', {@cb_measure_hide_brain_graph} ...
             );
     end
     function cb_select_all(~, ~) 
@@ -451,6 +466,57 @@ function cb_comparison_hide_elements(pr)
         end
     end
 end
+function cb_measure_open_brain_graph(pr)
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    g = el.get('A1').get('G');
+    
+    mlist = Graph.getCompatibleMeasureList(g);
+    
+    f = ancestor(pr.p, 'figure'); % parent GUI 
+    N = ceil(sqrt(length(mlist))); % number of row and columns of figures
+    
+    for s = 1:1:length(pr.selected)
+        i = pr.selected(s);
+        
+        measure = mlist{i};
+
+        cp = el.getComparison(measure);
+        if Measure.is_nodal(cp)
+            if length(pr.f_brain_graphs) < i || ~check_graphics(pr.f_brain_graphs{i}, 'figure')
+                pr.f_brain_graphs{i} = GUIFig( ...
+                    'PF', cp.memorize('PFBG'), ... % ensure that the property is stored
+                    'WAITBAR', Callback('EL', pr, 'TAG', 'WAITBAR'), ...
+                    'NAME', ['Figure - ' cp.get('ID') '@' el.get('ID') ' - ' BRAPH2.STR], ...
+                    'POSITION', [ ...
+                    x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ...
+                    y0(f, 'normalized') ...
+                    w(f, 'normalized') * 3 ...
+                    .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ...
+                    ], ...
+                    'CLOSEREQ', false ...
+                    ).draw();
+            else
+                figure(pr.f_brain_graphs{i})
+            end
+        end        
+    end
+end
+function cb_measure_hide_brain_graph(pr) 
+
+    % hides selected subfigures
+    for s = 1:1:length(pr.selected)
+        i = pr.selected(s);
+        
+        if length(pr.f_brain_graphs) >= i
+            f_measure_brain_graph = pr.f_brain_graphs{i};
+            if check_graphics(f_measure_brain_graph, 'figure')
+                gui = get(f_measure_brain_graph, 'UserData');
+                gui.cb_hide()
+            end
+        end
+    end
+end
 function cb_bring_to_front(pr)
 
     cb_bring_to_front@Panel(pr);
@@ -471,7 +537,16 @@ function cb_bring_to_front(pr)
             gui = get(f_comparison_plot, 'UserData');
             gui.cb_bring_to_front()
         end
-    end    
+    end   
+    
+    % brings to front comparison element subfigures
+    for i = 1:1:length(pr.f_brain_graphs)
+        f_brain_graph = pr.f_brain_graphs{i};
+        if check_graphics(f_brain_graph, 'figure')
+            gui = get(f_brain_graph, 'UserData');
+            gui.cb_bring_to_front()
+        end
+    end  
 end
 function cb_hide(pr)
     
@@ -494,6 +569,15 @@ function cb_hide(pr)
             gui.cb_hide()
         end
     end    
+    
+     % hides comparison element subfigures
+    for i = 1:1:length(pr.f_brain_graphs)
+        f_brain_graph = pr.f_brain_graphs{i};
+        if check_graphics(f_brain_graph, 'figure')
+            gui = get(f_brain_graph, 'UserData');
+            gui.cb_hide()
+        end
+    end   
 end
 function cb_close(pr)
     
@@ -513,6 +597,15 @@ function cb_close(pr)
         f_comparison_element = pr.f_comparison_elements{i};
         if check_graphics(f_comparison_element, 'figure')
             gui = get(f_comparison_element, 'UserData');
+            gui.cb_close()
+        end
+    end
+    
+    % closes comparison element subfigures
+    for i = 1:1:length(pr.f_brain_graphs)
+        f_brain_graph = pr.f_brain_graphs{i};
+        if check_graphics(f_brain_graph, 'figure')
+            gui = get(f_brain_graph, 'UserData');
             gui.cb_close()
         end
     end
