@@ -156,6 +156,12 @@ function p_out = draw(pr, varargin)
     function cb_comparison_hide_elements(~, ~) 
         pr.cb_comparison_hide_elements()
     end
+    function cb_measure_open_brain_graph(~, ~)
+        pr.cb_measure_open_brain_graph()
+    end
+    function cb_measure_hide_brain_graph(~, ~)
+        pr.cb_measure_hide_brain_graph()
+    end
     
     if ~check_graphics(pr.table, 'uitable')
         pr.table = uitable( ...
@@ -469,7 +475,7 @@ end
 function cb_measure_open_brain_graph(pr)
     el = pr.get('EL');
     prop = pr.get('PROP');
-    g = el.get('A1').get('G');
+    g = el.get('A1').get('G_DICT').getItem(1);
     
     mlist = Graph.getCompatibleMeasureList(g);
     

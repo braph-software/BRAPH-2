@@ -83,13 +83,13 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
     if isa(a.getr('PFGD'), 'NoValue')
         tmp_g_dict = a.get('G_DICT').getItems();
         
-        if Graph.is_graph(tmp_g_dict{1}) && ~Graph.is_multigraph(tmp_g_dict{1})
+        if ~isempty(tmp_g_dict) && Graph.is_graph(tmp_g_dict{1}) && ~Graph.is_multigraph(tmp_g_dict{1})
             a.set('PFGD', PFAnalysisEnsemble('A', a))
-        elseif Graph.is_multigraph(tmp_g_dict{1})
+        elseif ~isempty(tmp_g_dict) && Graph.is_multigraph(tmp_g_dict{1})
             a.set('PFGD', PFMultiAnalysisEnsemble('A', a))
-        elseif Graph.is_multiplex(tmp_g_dict{1}) && Graph.is_weighted(tmp_g_dict{1})
+        elseif ~isempty(tmp_g_dict) && Graph.is_multiplex(tmp_g_dict{1}) && Graph.is_weighted(tmp_g_dict{1})
             a.set('PFGD', PFMultiplexAnalysisEnsemble('A', a))
-        elseif Graph.is_multiplex(tmp_g_dict{1}) && Graph.is_binary(tmp_g_dict{1})
+        elseif ~isempty(tmp_g_dict) && Graph.is_multiplex(tmp_g_dict{1}) && Graph.is_binary(tmp_g_dict{1})
             a.set('PFGD', PFMultiplexBinaryAnalysisEnsemble('A', a))
         else
             a.memorize('PFGD').set('A', a)
