@@ -81,8 +81,17 @@ DT (figure, string) is the id of the selected density or layer.
 %%%% ¡default!
 '1'
 %%%% ¡gui!
-g = pf.get('ME').get('G');
-pr = PP_DTID('EL', pf, 'PROP', PFBrainMultiGraph.DT, ...
+me = pf.get('ME');
+if isa(me, 'Measure')
+    g = pf.get('ME').get('G');
+    
+else % comparison
+    g_dict = me.get('C').get('a1').get('g_dict');
+    g = g_dict.getItem(1);
+   
+end
+
+pr = PP_DTID('EL', pf, 'PROP', PFBrainBinaryGraphComparison.DT, ...
     'G', g, ...
     varargin{:});
 

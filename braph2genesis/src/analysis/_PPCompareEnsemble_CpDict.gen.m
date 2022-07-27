@@ -490,7 +490,7 @@ function cb_measure_open_brain_graph(pr)
         measure = mlist{i};
 
         cp = el.getComparison(measure);
-        if Measure.is_nodal(cp)
+        if Measure.is_nodal(measure)
             if length(pr.f_brain_graphs) < i || ~check_graphics(pr.f_brain_graphs{i}, 'figure')
                 pr.f_brain_graphs{i} = GUIFig( ...
                     'PF', cp.memorize('PFBG'), ... % ensure that the property is stored
