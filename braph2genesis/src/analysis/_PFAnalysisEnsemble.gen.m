@@ -61,7 +61,7 @@ end
 %%% ¡prop!
 G (figure, string) is the id of the selected graph.
 %%%% ¡default!
-1
+'1'
 %%%% ¡gui!
 g = pf.get('A').get('G_DICT');
 
