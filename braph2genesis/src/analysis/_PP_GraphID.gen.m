@@ -19,8 +19,7 @@ dropdown
 G (metadata, item) is the graph dictionary.
 %%%% ¡settings!
 'IndexedDictionary'
-%%%% ¡default!
-1
+
 
 %% ¡methods!
 function p_out = draw(pr, varargin)
