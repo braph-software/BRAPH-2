@@ -63,6 +63,8 @@ function update(pr)
         el.set(prop, pr.get('G').getItem(1).get('ID'))
     end
     
+    
+    
     set(pr.dropdown, ...
         'Items', pr.get('G').getKeys(), ...
         'Value', pr.get('G').getItem(el.get(prop)).get('ID') ...
@@ -111,6 +113,7 @@ function cb_dropdown(pr)
     el = pr.get('EL');
     prop = pr.get('PROP');
     
-    el.set(prop, get(pr.dropdown, 'Value'))
+    index = pr.get('G').getIndex(get(pr.dropdown, 'Value'))
+    el.set(prop, index)
     el.plotAdjacency()
 end

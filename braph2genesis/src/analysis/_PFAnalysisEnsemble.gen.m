@@ -204,7 +204,7 @@ function p_out = draw(pf, varargin)
 end
 function h = plotAdjacency(pf)
     % get correct graph.
-    g_id = pf.get('G');
+    g_id = str2double(pf.get('G')); 
     graph = pf.get('A').get('G_DICT').getItem(g_id);
     adjacency_matrix = graph.get('A');
     % plot
