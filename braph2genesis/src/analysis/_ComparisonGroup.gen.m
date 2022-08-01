@@ -501,6 +501,11 @@ else % multilayer
 end
 
 %%% ¡prop!
+PVALUE (metadata, scalar) is the selected pvalue threshold.
+%%%% ¡default!
+0.05
+
+%%% ¡prop!
 PFC (gui, item) contains the panel figure of the comparison.
 %%%% ¡settings!
 'PFComparisonGroup'
@@ -533,9 +538,9 @@ PFBG (gui, item) contains the panel figure of the brain graph.
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
     if isa(cp.getr('PFBG'), 'NoValue')
         c = cp.get('C');
-        g_dict = c.get('A1').get('G_DICT');
-        if ~isempty(g_dict) && ~isa(g_dict, 'NoValue') && g_dict.length >= 1
-            g = g_dict.getItem(1)
+        g = c.get('A1').get('G');
+        if ~isempty(g) && ~isa(g, 'NoValue')
+            
             if Graph.is_graph(g) % graph
                 ba_list = g.get('BAS');
                 if ~isempty(ba_list)
