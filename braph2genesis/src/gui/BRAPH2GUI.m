@@ -22,7 +22,7 @@ pipeline_guis = [];
 % init
 f = init();
     function f = init()
-        f = figure(...
+        f = figure(...            
             'Visible', 'off', ...
             'NumberTitle', 'off', ...
             'Name', fig_name, ...
@@ -34,7 +34,6 @@ f = init();
             'Color', BKGCOLOR, ...
             'SizeChangedFcn', {@update_position} ...
             );
-        set_braph2icon(f)
         
         if close_request
             set(f, 'CloseRequestFcn', {@cb_close})
@@ -75,16 +74,14 @@ panel_rotate = uipanel( ...
     'BorderType', 'none');
 
 ui_checkbox_bottom_animation = uicontrol(f, 'Style', 'checkbox', 'Visible', 'off', 'Value', true);
-pl = PlotBrainSurface('SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
-pl.set(...
-    'AXESCOLOR', BKGCOLOR, ...
-    'LIGHTING', 'phong', ...
-    'MATERIAL', 'shiny', ...
-    'CAMLIGHT', 'left', ...
-    'SHADING', 'interp', ...
-    'GRID', false, ...
-    'AXIS', false, ...
-    'COLORMAP', autumn)
+pl = PFBrainSurface('SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'));
+pl.get('ST_AMBIENT').set(...
+		    'LIGHTING', 'phong', ...
+		    'MATERIAL', 'shiny', ...
+		    'CAMLIGHT', 'left', ...
+		    'SHADING', 'interp', ...
+		    'COLORMAP', 'autumn')
+
 h_panel = pl.draw('Parent', panel_rotate, 'Units', 'normalized', 'Position', [.0 .0 1 1], 'BackgroundColor', BKGCOLOR, 'BorderType', 'none');
 pl_axes = get(h_panel, 'Children');
 count = 0;
@@ -3775,14 +3772,15 @@ default_ratio = get_default_ratio();
             'File', file ...
             ).get('Pip');
         
-        pipeline_guis{end+1} = GUI('pe', pipe).draw();
+        pipeline_guis{end+1} = GUIElement('PE', Pipeline()).draw();
     end
-    function update_position(~, ~)                
-        % container 
-        current_s_units = Plot.h(0, 'pixels');
-        
-        % figure
-        current_f_units = Plot.h(f, 'pixels');
+    function update_position(~, ~)  
+        backup_units = get(0, 'Units');
+        set(0, 'Units', 'pixels')
+        current_s_units = get(0, 'ScreenSize');%Plot.h(0, 'pixels');
+        current_f_units = get(f, 'Position');
+        current_ratio = current_f_units/current_s_units;  
+        set(0, 'Units', backup_units);    
         
         current_ratio = current_f_units/current_s_units;  
         adjust = default_ratio / current_ratio;
@@ -3800,19 +3798,16 @@ default_ratio = get_default_ratio();
     end
     function default_ratio = get_default_ratio()
         %container 
-        default_s_units = Plot.h(0, 'pixels');
-        
-        %figure
-        default_f_units = Plot.h(f, 'pixels');
-        
+        backup_units = get(0, 'Units');
+        set(0, 'Units', 'pixels')
+        default_s_units = get(0, 'ScreenSize');%Plot.h(0, 'pixels');
+        default_f_units = get(f, 'Position');
         default_ratio = default_f_units/default_s_units;  
+        set(0, 'Units', backup_units);        
     end
 
 % menu
-menu()
-    function menu()
-        % nothing
-    end
+BRAPH2.add_menu_about(f);
 % toolbar
 toolbar()
     function toolbar()
@@ -3872,16 +3867,13 @@ linkbar()
             'Callback', {@cb_about});
     end
     function cb_website_btn(~, ~)
-        url = 'http://braph.org/';
-        web(url);
+        BRAPH2.web()
     end
     function cb_twitter_btn(~, ~)
-        url = 'https://twitter.com/braph2software'; % create a BRAPH 2 twitter.
-        web(url);
+        BRAPH2.twitter()
     end
     function cb_forum_btn(~, ~)
-        url = 'http://braph.org/forum/';
-        web(url);
+        BRAPH2.forum()
     end
     function cb_license(~, ~)
         BRAPH2.license()
@@ -3894,7 +3886,8 @@ linkbar()
         if filterindex
             filename = fullfile(path, file);
             tmp = load(filename, '-mat', 'el');
-            GUI('PE', tmp.el, 'FILE', filename).draw()
+            GUIElement('PE', tmp.el, 'FILE', filename).draw();
+            
         end
     end
     function cb_load_pipeline(~, ~)
@@ -3908,7 +3901,7 @@ linkbar()
                 'File', filename ...
                 ).get('Pip');
             
-            pipeline_guis{end+1} = GUI('pe', pipe).draw();
+            pipeline_guis{end+1} =  GUIElement('PE', pipe, 'FILE', filename).draw();
         end
     end
 % auxiliary
