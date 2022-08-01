@@ -34,7 +34,7 @@ A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for m
 N = g.nodenumber(); 
 eigenvector_centrality = cell(g.layernumber(), 1);
 
-for li = 1:1:g.layernumber()    
+parfor li = 1:1:g.layernumber()    
     Aii = A{li, li};   
     
     if N(li) < 1000

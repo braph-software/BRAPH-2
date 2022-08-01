@@ -29,7 +29,7 @@ A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for 
 
 out_strength = cell(g.layernumber(), 1);
 
-for li = 1:1:g.layernumber()    
+parfor li = 1:1:g.layernumber()    
     Aii = A{li, li};
     out_strength(li) = {sum(Aii, 2)};  % calculates the out-strength of a node for layer li
 end

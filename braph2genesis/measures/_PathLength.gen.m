@@ -47,7 +47,7 @@ path_length_rule = m.get('rule');
 
 distance = Distance('G', g).get('M');
 
-for li = 1:1:L
+parfor li = 1:1:L
     path_length_layer = zeros(N(1), 1);
     distance_layer = distance{li};
 

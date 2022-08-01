@@ -30,7 +30,7 @@ A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for m
 
 in_degree = cell(g.layernumber(), 1);
 
-for li = 1:1:g.layernumber()
+parfor li = 1:1:g.layernumber()
     Aii = A{li, li};
     Aii = binarize(Aii);  % binarizes the adjacency matrix
     in_degree(li) = {sum(Aii, 1)'};  % calculates the in-degree of a node for layer li

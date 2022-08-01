@@ -33,7 +33,7 @@ g = m.get('G');  % graph from measure class
 L = g.layernumber();
 global_efficiency = calculateValue@GlobalEfficiency(m, prop);
 global_efficiency_av = cell(L, 1);
-for li = 1:1:length(global_efficiency_av)
+parfor li = 1:1:length(global_efficiency_av)
     global_efficiency_av(li) = {mean(global_efficiency{li})};
 end
 

@@ -42,7 +42,7 @@ A = g.get('A'); % cell matrix for graph, multigraph, or multiplex, etc
 distance = Distance('G', g).get('M'); 
 eccentricity_rule = m.get('rule');
 eccentricity = cell(g.layernumber(), 1);
-for li = 1:1:g.layernumber()
+parfor li = 1:1:g.layernumber()
     switch lower(eccentricity_rule)
         case {'subgraphs'}
             eccentricity(li)  = {max(distance{li}.*(distance{li}~=Inf), [], 2)};

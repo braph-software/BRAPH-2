@@ -37,7 +37,7 @@ g = m.get('G'); % graph from measure class
 
 eccentricity_av = cell(g.layernumber(), 1);
 
-for li = 1:1:g.layernumber()
+parfor li = 1:1:g.layernumber()
     eccentricity_av(li) = {mean(eccentricity{li})};
 end
 

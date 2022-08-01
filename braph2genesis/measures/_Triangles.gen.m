@@ -53,7 +53,7 @@ L = g.layernumber();
 triangles = cell(g.layernumber(), 1);
             
 directionality_type =  g.getDirectionalityType(g.layernumber());
-for li = 1:1:L        
+parfor li = 1:1:L        
     Aii = A{li, li};    
     
     if directionality_type == Graph.UNDIRECTED  % undirected graphs
