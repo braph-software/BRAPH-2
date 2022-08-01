@@ -113,7 +113,7 @@ function cb_dropdown(pr)
     el = pr.get('EL');
     prop = pr.get('PROP');
     
-    index = pr.get('G').getIndex(get(pr.dropdown, 'Value'))
+    index = pr.get('G').getIndex(get(pr.dropdown, 'Value'));
     el.set(prop, num2str(index))
     el.plotAdjacency()
 end
