@@ -265,6 +265,18 @@ function update(pr)
                     'ColumnEditable', false, ...
                     'Visible', 'on' ...
                     )
+                if isa(el, 'ComparisonGroup') && isequal(el.getPropTag(12), 'pvalue')
+                    tmp_data = el.get('P1');
+                    
+                    [~, mask] = fdr(tmp_data{1}, el.get(12));
+                    [rows, cols] = find(mask);                   
+                    
+                    if ~isempty(rows) && ~isempty(cols)
+                        s = uistyle('BackgroundColor',[1 0.6 0.6]);
+                        addStyle(pr.table, s, 'cell', [rows, cols]);
+                    end
+                    
+                end
             end
     end
 end
