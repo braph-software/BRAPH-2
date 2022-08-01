@@ -37,7 +37,7 @@ g = m.get('G'); % graph from measure class
 clustering  = calculateValue@Clustering(m, prop);
 
 clustering_av = cell(g.layernumber(), 1);
-for li = 1:1:length(clustering)
+parfor li = 1:1:length(clustering)
     clustering_av(li) = {mean(clustering{li})};
 end
 

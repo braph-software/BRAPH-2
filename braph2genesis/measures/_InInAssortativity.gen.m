@@ -33,7 +33,7 @@ L = g.layernumber();
 N = g.nodenumber();
 in_in_assortativity = cell(L, 1);
 connectivity_types = g.getConnectivityType(L);    
-for li = 1:1:L
+parfor li = 1:1:L
     
     Aii = A{li, li};
     connectivity_type = connectivity_types(li, li);

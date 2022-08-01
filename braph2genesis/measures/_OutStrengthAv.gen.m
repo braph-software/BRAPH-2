@@ -27,7 +27,7 @@ out_strength = calculateValue@OutStrength(m, prop);
 g = m.get('G');  % graph from measure class
 
 out_strength_av = cell(g.layernumber(), 1);
-for li = 1:1:length(out_strength_av)
+parfor li = 1:1:length(out_strength_av)
     out_strength_av(li) = {mean(out_strength{li})};
 end
 

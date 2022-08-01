@@ -542,7 +542,6 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
         c = cp.get('C');
         g = c.get('A1').get('G');
         if ~isempty(g) && ~isa(g, 'NoValue')
-            
             if Graph.is_graph(g) % graph
                 ba_list = g.get('BAS');
                 if ~isempty(ba_list)

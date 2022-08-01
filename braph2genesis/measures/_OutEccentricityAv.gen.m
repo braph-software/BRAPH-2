@@ -29,7 +29,7 @@ eccentricity_rule = m.get('rule');
 out_eccentricity = OutEccentricity('G', g, 'rule', eccentricity_rule).get('M'); 
 
 out_eccentricity_av = cell(L, 1);
-for li = 1:1:L
+parfor li = 1:1:L
     out_eccentricity_av(li) = {mean(out_eccentricity{li})};
 end
 value = out_eccentricity_av;

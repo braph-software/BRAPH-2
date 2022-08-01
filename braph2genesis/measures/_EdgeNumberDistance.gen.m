@@ -30,7 +30,7 @@ A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for m
 
 edge_number_distance = cell(g.layernumber(), 1);
 
-for li = 1:1:g.layernumber()
+parfor li = 1:1:g.layernumber()
     Aii = A{li, li};
     edge_number_distance(li) = {m.getEdgeNumberDistance(Aii)};
 end
