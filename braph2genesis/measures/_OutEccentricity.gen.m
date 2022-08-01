@@ -30,7 +30,7 @@ L = g.layernumber();
 D = Distance('G', g).get('M'); 
 eccentricity_rule = m.get('rule');
 out_eccentricity = cell(L, 1);
-for li = 1:1:L
+parfor li = 1:1:L
     switch lower(eccentricity_rule)
         case {'subgraphs'}
             out_eccentricity(li)  = {max(D{li}.*(D{li}~=Inf), [], 2)}; 

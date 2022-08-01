@@ -32,7 +32,7 @@ L = g.layernumber();
 distance = Distance('G', g).get('M');
 
 in_global_efficiency = cell(L, 1);
-for li = 1:1:L
+parfor li = 1:1:L
     inverse_distance = distance{li}.^-1;  % inverse distance
     inverse_distance(1:N(li)+1:end) = 0;
     global_efficiency_layer = (sum(inverse_distance, 2) / (N(li)-1));

@@ -29,7 +29,7 @@ g = m.get('G');  % graph from measure class
 
 out_path_length = calculateValue@OutPathLength(m, prop);
 out_path_length_av = cell(g.layernumber(), 1);
-for li = 1:1:length(out_path_length_av)
+parfor li = 1:1:length(out_path_length_av)
     out_path_length_av(li) = {mean(out_path_length{li})};
 end
 value = out_path_length_av;
