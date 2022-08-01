@@ -501,6 +501,13 @@ else % multilayer
 end
 
 %%% ¡prop!
+QVALUE (metadata, scalar) is the selected qvalue threshold.
+%%%% ¡default!
+0.05
+%%%% ¡gui!
+pr = PPQValue('EL', cp, 'PROP', ComparisonGroup.QVALUE, varargin{:});
+
+%%% ¡prop!
 PFC (gui, item) contains the panel figure of the comparison.
 %%%% ¡settings!
 'PFComparisonGroup'
@@ -534,7 +541,7 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
     if isa(cp.getr('PFBG'), 'NoValue')
         c = cp.get('C');
         g = c.get('A1').get('G');
-        if ~isempty(g) && ~isa(g, 'NoValue') 
+        if ~isempty(g) && ~isa(g, 'NoValue')
             if Graph.is_graph(g) % graph
                 ba_list = g.get('BAS');
                 if ~isempty(ba_list)
