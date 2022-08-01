@@ -501,9 +501,11 @@ else % multilayer
 end
 
 %%% ¡prop!
-PVALUE (metadata, scalar) is the selected pvalue threshold.
+QVALUE (metadata, scalar) is the selected qvalue threshold.
 %%%% ¡default!
 0.05
+%%%% ¡gui!
+pr = PPQValue('EL', cp, 'PROP', ComparisonGroup.QVALUE, varargin{:});
 
 %%% ¡prop!
 PFC (gui, item) contains the panel figure of the comparison.
