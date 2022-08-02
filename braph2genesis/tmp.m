@@ -3,9 +3,9 @@ clear all %#ok<CLALL>
 
 el_class = 'PFAnalysisEnsemble';
 delete([fileparts(which('braph2')) '/src/gui/' el_class '.m'])
-create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
-create_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
-create_test_Element([fileparts(which('braph2genesis')) '/src/analysis/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/analysis'])
+create_Element([fileparts(which('braph2genesis')) '/src/measures/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/measures'])
+create_Element([fileparts(which('braph2genesis')) '/src/measures/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/measures'])
+create_test_Element([fileparts(which('braph2genesis')) '/src/measures/_' el_class '.gen.m'], [fileparts(which('braph2')) '/src/measures'])
 test_code = ['test_' el_class]
 eval(test_code)
 
