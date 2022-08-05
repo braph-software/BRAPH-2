@@ -558,9 +558,19 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
                     cp.set('PFBG', PFBrainBinaryGraphComparison('ME', cp));
                 end
             elseif Graph.is_multiplex(g) && Graph.is_weighted(g) % multiplexWU
-                %m.set('PFBG', PFMultiplexGraph('G', g))
+                ba_list = g.get('BAS');
+                if ~isempty(ba_list)
+                    cp.set('PFBG', PFBrainMultiplexGraphComparison('ME', cp, 'BA', ba_list{1}));
+                else
+                    cp.set('PFBG', PFBrainMultiplexGraphComparison('ME', cp));
+                end
             elseif Graph.is_multiplex(g) && Graph.is_binary(g)
-                %m.set('PFBG', PFMultiplexBinaryGraph('G', g))
+                ba_list = g.get('BAS');
+                if ~isempty(ba_list)
+                    cp.set('PFBG', PFBrainMultiplexBinaryGraphComparison('ME', cp, 'BA', ba_list{1}));
+                else
+                    cp.set('PFBG', PFBrainMultiplexBinaryGraphComparison('ME', cp));
+                end
             end
                 
         else
