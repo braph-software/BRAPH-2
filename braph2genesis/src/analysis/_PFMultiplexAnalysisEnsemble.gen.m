@@ -43,7 +43,10 @@ function h = plotAdjacency(pf)
     
     % select correct matrix, A is a [n n] where n is the number of layers,
     % the diagonal is where the info is kept
-    g_id = pf.get('G');
+    g_id = str2double(pf.get('G'));
+    if isnan(g_id)
+        g_id = pf.get('G');
+    end
     graph = pf.get('A').get('G_DICT').getItem(g_id);
     l = str2double(pf.get('LAYER'));
     multiplex = graph.get('A');    
