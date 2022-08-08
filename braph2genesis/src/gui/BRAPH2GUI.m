@@ -3772,7 +3772,7 @@ default_ratio = get_default_ratio();
             'File', file ...
             ).get('Pip');
         
-        pipeline_guis{end+1} = GUIElement('PE', Pipeline()).draw();
+        pipeline_guis{end+1} = GUIElement('PE', pipe).draw();
     end
     function update_position(~, ~)  
         backup_units = get(0, 'Units');

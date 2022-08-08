@@ -81,7 +81,14 @@ LAYER (figure, string) is the id of the selected layer.
 %%%% ¡default!
 '1'
 %%%% ¡gui!
-g = pf.get('ME').get('G');
+me = pf.get('ME');
+if isa(me, 'Measure')
+    g = pf.get('ME').get('G');
+    
+else % ensemble
+    g_dict = me.get('A').get('g_dict');
+    g = g_dict.getItem(1);   
+end
 pr = PP_LayerID('EL', pf, 'PROP', PFBrainMultiplexGraph.LAYER, ...
     'G', g, ...
     varargin{:});

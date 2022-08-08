@@ -206,7 +206,7 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
                     me.set('PFBG', PFBrainMultiplexGraph('ME', me, 'BA', ba_list{1}));
                 else
                     me.set('PFBG', PFBrainMultiplexGraph('ME', me));
-                end)
+                end
             elseif Graph.is_multiplex(g) && Graph.is_binary(g)
                 ba_list = g.get('BAS');
                 if ~isempty(ba_list)
