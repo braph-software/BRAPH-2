@@ -181,12 +181,12 @@ PFBG (gui, item) contains the panel figure of the brain graph.
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
     if isa(me.getr('PFBG'), 'NoValue')
-        g_dict = me.get('a').get('g_dict');
+        g_dict = me.memorize('a').memorize('g_dict');
         if ~isempty(g_dict) && ~isa(g_dict, 'NoValue') && g_dict.length >= 1
             
             g = g_dict.getItem(1);
             if Graph.is_graph(g) % graph
-                ba_list = g.get('BAS');
+                ba_list = g.memorize('BAS');
                 if ~isempty(ba_list)
                     me.memorize('PFBG').set('ME', me, 'BA', ba_list{1})
                 else
@@ -194,21 +194,21 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
                 end
                 
             elseif Graph.is_multigraph(g) % multigraph BUD BUT
-                ba_list = g.get('BAS');
+                ba_list = g.memorize('BAS');
                 if ~isempty(ba_list)
                     me.set('PFBG', PFBrainMultiGraph('ME', me, 'BA', ba_list{1}));
                 else
                     me.set('PFBG', PFBrainMultiGraph('ME', me));
                 end
             elseif Graph.is_multiplex(g) && Graph.is_weighted(g) % multiplexWU
-                ba_list = g.get('BAS');
+                ba_list = g.memorize('BAS');
                 if ~isempty(ba_list)
                     me.set('PFBG', PFBrainMultiplexGraph('ME', me, 'BA', ba_list{1}));
                 else
                     me.set('PFBG', PFBrainMultiplexGraph('ME', me));
                 end
             elseif Graph.is_multiplex(g) && Graph.is_binary(g)
-                ba_list = g.get('BAS');
+                ba_list = g.memorize('BAS');
                 if ~isempty(ba_list)
                     me.set('PFBG', PFBrainMultiplexBinaryGraph('ME', me, 'BA', ba_list{1}));
                 else
