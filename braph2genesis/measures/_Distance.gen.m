@@ -39,7 +39,7 @@ A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for m
 
 distance = cell(g.layernumber(), 1);
 connectivity_type =  g.getConnectivityType(g.layernumber());
-for li = 1:1:g.layernumber()
+parfor li = 1:1:g.layernumber()
 
     Aii = A{li, li};
     connectivity_layer = connectivity_type(li, li);

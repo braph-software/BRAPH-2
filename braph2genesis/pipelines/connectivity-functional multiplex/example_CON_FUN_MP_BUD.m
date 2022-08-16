@@ -4,7 +4,9 @@
 clear variables %#ok<*NASGU>
 
 %% Load BrainAtlas
-im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('example_CON_FUN_MP_BUD')) filesep 'example data CON-FUN_MP' filesep 'desikan_atlas.xlsx']);
+im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('example_CON_FUN_MP_BUD')) filesep 'example data CON-FUN_MP' filesep 'aal90_atlas.xlsx'], ...
+    'WAITBAR', true ...
+    );
 
 ba = im_ba.get('BA');
 

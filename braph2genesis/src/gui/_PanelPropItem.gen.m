@@ -227,11 +227,8 @@ function cb_bring_to_front(pr)
     
     % bring to front item figure
     if check_graphics(pr.f_item, 'figure')
-        figure(pr.f_item)
-        set(pr.f_item, ...
-            'Visible', 'on', ...
-            'WindowState', 'normal' ...
-            )        
+        gui = get(pr.f_item, 'UserData');
+        gui.cb_bring_to_front()
     end
 end
 function cb_hide(pr)
@@ -245,7 +242,8 @@ function cb_hide(pr)
     
     % hide callback element figure
     if check_graphics(pr.f_item, 'figure')
-        set(pr.f_item, 'Visible', 'off')
+        gui = get(pr.f_item, 'UserData');
+        gui.cb_hide()         
     end
 end
 function cb_close(pr)
@@ -259,7 +257,8 @@ function cb_close(pr)
 
     % close callback element figure
     if check_graphics(pr.f_item, 'figure')
-        close(pr.f_item)
+        gui = get(pr.f_item, 'UserData');
+        gui.cb_close()
     end
     
     % delete listeners

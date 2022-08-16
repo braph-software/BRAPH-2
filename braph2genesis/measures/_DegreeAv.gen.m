@@ -36,7 +36,7 @@ degree = calculateValue@Degree(m, prop);
 g = m.get('G');  % graph from measure class
 
 degree_av = cell(g.layernumber(), 1);
-for li = 1:1:g.layernumber()
+parfor li = 1:1:g.layernumber()
     degree_av(li) = {mean(degree{li})};
 end
 

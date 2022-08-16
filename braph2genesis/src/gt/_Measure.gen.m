@@ -139,6 +139,57 @@ pr = PanelPropItem('EL', m, 'PROP', Measure.PFM, ...
     'GUICLASS', 'GUIFig', ...
     varargin{:});
 
+%%% ¡prop!
+PFBG (gui, item) contains the panel figure of the brain graph.
+%%%% ¡settings!
+'PFBrainGraph'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    if isa(m.getr('PFBG'), 'NoValue')
+        g = m.memorize('G');
+        if ~isempty(g) && ~isa(g, 'NoValue')
+            if Graph.is_graph(g) % graph
+                ba_list = g.memorize('BAS');
+                if ~isempty(ba_list)
+                    m.memorize('PFBG').set('ME', m, 'BA', ba_list{1})
+                else
+                    m.memorize('PFBG').set('ME', m);
+                end
+                
+            elseif Graph.is_multigraph(g) % multigraph BUD BUT
+                ba_list = g.memorize('BAS');
+                if ~isempty(ba_list)
+                    m.set('PFBG', PFBrainMultiGraph('ME', m, 'BA', ba_list{1}));
+                else
+                    m.set('PFBG', PFBrainMultiGraph('ME', m));
+                end
+            elseif Graph.is_multiplex(g) && Graph.is_weighted(g) % multiplexWU
+                ba_list = g.memorize('BAS');
+                if ~isempty(ba_list)
+                    m.set('PFBG', PFBrainMultiplexGraph('ME', m, 'BA', ba_list{1}));
+                else
+                    m.set('PFBG', PFBrainMultiplexGraph('ME', m));
+                end
+            elseif Graph.is_multiplex(g) && Graph.is_binary(g)
+                ba_list = g.memorize('BAS');
+                if ~isempty(ba_list)
+                    m.set('PFBG', PFBrainMultiplexBinaryGraph('ME', m, 'BA', ba_list{1}));
+                else
+                    m.set('PFBG', PFBrainMultiplexBinaryGraph('ME', m));
+                end
+            end
+        
+        else
+            m.memorize('PFBG').set('ME', m)
+        end
+    end
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', m, 'PROP', Measure.PFBG, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
+
+
 %% ¡constants!
 
 % Measure shape

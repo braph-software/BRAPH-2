@@ -501,6 +501,13 @@ else % multilayer
 end
 
 %%% ¡prop!
+QVALUE (metadata, scalar) is the selected qvalue threshold.
+%%%% ¡default!
+0.05
+%%%% ¡gui!
+pr = PPQValue('EL', cp, 'PROP', ComparisonGroup.QVALUE, varargin{:});
+
+%%% ¡prop!
 PFC (gui, item) contains the panel figure of the comparison.
 %%%% ¡settings!
 'PFComparisonGroup'
@@ -522,6 +529,57 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
 end
 %%%% ¡gui!
 pr = PanelPropItem('EL', cp, 'PROP', ComparisonGroup.PFC, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
+
+%%% ¡prop!
+PFBG (gui, item) contains the panel figure of the brain graph.
+%%%% ¡settings!
+'PFBrainGraphComparison'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    if isa(cp.getr('PFBG'), 'NoValue')
+        c = cp.get('C');
+        g = c.get('A1').get('G');
+        if ~isempty(g) && ~isa(g, 'NoValue')
+            if Graph.is_graph(g) % graph
+                ba_list = g.get('BAS');
+                if ~isempty(ba_list)
+                    cp.memorize('PFBG').set('ME', cp, 'BA', ba_list{1})
+                else
+                    cp.memorize('PFBG').set('ME', cp);
+                end
+                
+            elseif Graph.is_multigraph(g) % multigraph BUD BUT
+                ba_list = g.get('BAS');
+                if ~isempty(ba_list)
+                    cp.set('PFBG', PFBrainBinaryGraphComparison('ME', cp, 'BA', ba_list{1}));
+                else
+                    cp.set('PFBG', PFBrainBinaryGraphComparison('ME', cp));
+                end
+            elseif Graph.is_multiplex(g) && Graph.is_weighted(g) % multiplexWU
+                ba_list = g.get('BAS');
+                if ~isempty(ba_list)
+                    cp.set('PFBG', PFBrainMultiplexGraphComparison('ME', cp, 'BA', ba_list{1}));
+                else
+                    cp.set('PFBG', PFBrainMultiplexGraphComparison('ME', cp));
+                end
+            elseif Graph.is_multiplex(g) && Graph.is_binary(g)
+                ba_list = g.get('BAS');
+                if ~isempty(ba_list)
+                    cp.set('PFBG', PFBrainMultiplexBinaryGraphComparison('ME', cp, 'BA', ba_list{1}));
+                else
+                    cp.set('PFBG', PFBrainMultiplexBinaryGraphComparison('ME', cp));
+                end
+            end
+                
+        else
+            m.memorize('PFBG').set('ME', m)
+        end
+    end
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', cp, 'PROP', ComparisonGroup.PFBG, ...
     'GUICLASS', 'GUIFig', ...
     varargin{:});
 

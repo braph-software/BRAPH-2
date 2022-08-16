@@ -223,6 +223,13 @@ function update(pr)
             end            
     end
     
+    function pval = get_p_value()
+        value = el.get('P1');
+        [R, ~] = size(value);
+        pval = value{R + 1 - get(pr.yslider, 'Value'), get(pr.xslider, 'Value')};
+    end
+   
+    
     set(pr.table, ...
         'RowName', eval(pr.get('ROWNAME')), ...
         'ColumnName', eval(pr.get('COLUMNNAME')) ...
@@ -265,6 +272,19 @@ function update(pr)
                     'ColumnEditable', false, ...
                     'Visible', 'on' ...
                     )
+                if isa(el, 'ComparisonGroup') && isequal(el.getPropTag(12), 'qvalue')
+                    
+                    tmp_data = get_p_value();
+                    
+                    [~, mask] = fdr(tmp_data, el.get(12));
+                    [rows, cols] = find(mask);                   
+                    
+                    if ~isempty(rows) && ~isempty(cols)
+                        s = uistyle('BackgroundColor',[1 0.6 0.6]);
+                        addStyle(pr.table, s, 'cell', [rows, cols]);
+                    end
+                    
+                end
             end
     end
 end

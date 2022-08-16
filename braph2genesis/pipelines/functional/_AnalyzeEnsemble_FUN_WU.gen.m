@@ -23,7 +23,7 @@ Inf
 %%% ¡prop!
 CORRELATION_RULE (parameter, option) is the correlation type.
 %%%% ¡settings!
-Correlation.CORRELATION_RULE_LIST
+Correlation.CORRELATION_RULE_LIST(1:3)
 %%%% ¡default!
 Correlation.CORRELATION_RULE_LIST{1}
 
@@ -47,11 +47,11 @@ GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and meas
 'GraphWU'
 %%%% ¡postprocessing!
 if ~braph2_testing
-    if isa(a.getr('GRAPH_TEMPLATE'), 'NoValue')
-        a.set('GRAPH_TEMPLATE', GraphWU())
-
+    if isa(a.getr('GRAPH_TEMPLATE'), 'NoValue')        
         if a.get('GR').get('SUB_DICT').length() > 0
-            a.get('GRAPH_TEMPLATE').set('BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA'))
+            a.set('GRAPH_TEMPLATE', GraphWU('BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA')));
+        else
+            a.set('GRAPH_TEMPLATE', GraphWU());
         end
     end
 end
@@ -96,7 +96,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
         f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
         ft(f < fmin | f > fmax, :) = 0;
         data = ifft(ft, NFFT);
-    end
+    end    
     
     A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
     
