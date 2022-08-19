@@ -44,6 +44,7 @@ disp('¡! created target dir')
 
 % src
 mkdir([target_dir fp 'src' fp 'util'])
+mkdir([target_dir fp 'src' fp 'util' fp 'private'])
 mkdir([target_dir fp 'src' fp 'ds'])
 mkdir([target_dir fp 'src' fp 'gt'])
 mkdir([target_dir fp 'src' fp 'atlas'])
@@ -101,6 +102,8 @@ disp(' ')
 
 % src
 copydir([source_dir fp 'src' fp 'util'], [target_dir fp 'src' fp 'util'])
+disp('¡! copied ready files - util')
+copydir([source_dir fp 'src' fp 'util' fp 'private'], [target_dir fp 'src' fp 'util' fp 'private'])
 disp('¡! copied ready files - util')
 copydir([source_dir fp 'src' fp 'ds'], [target_dir fp 'src' fp 'ds'])
 disp('¡! copied ready files - ds')
