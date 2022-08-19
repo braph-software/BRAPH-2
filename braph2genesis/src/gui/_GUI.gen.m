@@ -152,7 +152,7 @@ function f_out = draw(gui, varargin)
 
     % toolbar about
     if gui.get('TOOLBAR') && check_graphics(gui.f, 'figure')
-        gui.toolbar = findall(gui.f, 'Tag', 'ToolBar');
+        toolbar = findall(gui.f, 'Tag', 'ToolBar');
         
         if gui.get('TOOL_ABOUT') && check_graphics(gui.toolbar, 'uitoolbar')
             BRAPH2.add_tool_about(gui.toolbar)
