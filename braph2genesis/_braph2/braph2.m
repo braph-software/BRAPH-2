@@ -50,6 +50,9 @@ addpath(brainsurfs_dir)
 brainsurfs_dir = [fileparts(which('braph2')) filesep 'atlases'];
 addpath(brainsurfs_dir)
 
+rois_dir = [fileparts(which('braph2')) filesep 'rois'];
+addpath(rois_dir)
+
 neuralnetworks_dir = [fileparts(which('braph2')) filesep 'neuralnetworks'];
 addpath(neuralnetworks_dir)
 

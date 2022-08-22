@@ -30,8 +30,3 @@ check = isempty(value) || size(value, 2) == 3;
 VERTICES (data, matrix) are the triads of coordinates identifiers to create a isosurface.
 %%%% ¡check_prop!
 check = isempty(value) || size(value, 2) == 3;
-
-%%% ¡prop!
-COLOR (metadata, vector) is the color of the surface
-%%%% ¡check_prop!
-check = isempty(value) || size(value, 2) == 3;

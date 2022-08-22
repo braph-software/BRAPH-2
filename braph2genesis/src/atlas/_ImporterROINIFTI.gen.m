@@ -35,8 +35,7 @@ elseif isfile(file)
     wb = braph2waitbar(im.get('WAITBAR'), .15, 'Reading brain roi file ...');
     
     % get data
-    data = niftiread('aal.nii');
-    info = niftiinfo('aal.nii');
+    data = niftiread('aal.nii');    
     
     % create rois and fill dictionary of rois
     n = length(data);
@@ -47,12 +46,10 @@ elseif isfile(file)
         tmp_data(tmp_data==(i)) = 1;
         smoth_data = smooth3(tmp_data);
         iss_data = isosurface(smoth_data);
-        if ~isempty(iss_data.faces) && ~isempty(iss_data.vertices)
-            color = [randi(225)/225 randi(225)/225 randi(225)/225];
+        if ~isempty(iss_data.faces) && ~isempty(iss_data.vertices)            
             b_roi = BrainROISurface('ID', num2str(i), ...
                 'FACES', iss_data.faces, ...
-                'VERTICES', iss_data.vertices, ...
-                'COLOR', color);
+                'VERTICES', iss_data.vertices);
             roi_dict.add(b_roi);
         end
     end
