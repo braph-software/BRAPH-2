@@ -12,7 +12,7 @@ Element, Importer.
 %% ¡props!
 
 %%% ¡prop!
-FILE (data, string) is the NIFTI file from where to load the brain roi.
+FILE (metadata, string) is the NIFTI file from where to load the brain roi.
 
 %%% ¡prop!
 ROI_DICT (result, idict) is a brain roi dictionary.
@@ -25,6 +25,8 @@ roi_dict = IndexedDictionary('IT_CLASS', 'BrainROISurface', 'IT_KEY', 1);
 % analyzes file
 file = im.get('FILE');
 if ~isfile(file)
+    im.uigetfile();
+    file = im.get('FILE');
     file = [fileparts(which('braph2')) filesep 'rois' filesep file];
 end
 
