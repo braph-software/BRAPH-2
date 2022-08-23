@@ -189,6 +189,57 @@ pr = PanelPropItem('EL', m, 'PROP', Measure.PFBG, ...
     'GUICLASS', 'GUIFig', ...
     varargin{:});
 
+%%% ¡prop!
+PFROI (gui, item) contains the panel figure of the brain graph.
+%%%% ¡settings!
+'PFBrainROI'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    if isa(m.getr('PFROI'), 'NoValue')
+        g = m.memorize('G');
+        if ~isempty(g) && ~isa(g, 'NoValue')
+            if Graph.is_graph(g) % graph
+                ba_list = g.memorize('BAS');
+                if ~isempty(ba_list)
+                    m.memorize('PFROI').set('ME', m, 'BA', ba_list{1})
+                else
+                    m.memorize('PFROI').set('ME', m);
+                end
+                
+            elseif Graph.is_multigraph(g) % multigraph BUD BUT
+                ba_list = g.memorize('BAS');
+                if ~isempty(ba_list)
+                    m.set('PFROI', PFBrainMultiROI('ME', m, 'BA', ba_list{1}));
+                else
+                    m.set('PFROI', PFBrainMultiROI('ME', m));
+                end
+            elseif Graph.is_multiplex(g) && Graph.is_weighted(g) % multiplexWU
+                ba_list = g.memorize('BAS');
+                if ~isempty(ba_list)
+                    m.set('PFROI', PFBrainMultiplexROI('ME', m, 'BA', ba_list{1}));
+                else
+                    m.set('PFROI', PFBrainMultiplexROI('ME', m));
+                end
+            elseif Graph.is_multiplex(g) && Graph.is_binary(g)
+                ba_list = g.memorize('BAS');
+                if ~isempty(ba_list)
+                    m.set('PFROI', PFBrainMultiplexBinaryROI('ME', m, 'BA', ba_list{1}));
+                else
+                    m.set('PFROI', PFBrainMultiplexBinaryROI('ME', m));
+                end
+            end
+        
+        else
+            m.memorize('PFROI').set('ME', m)
+        end
+    end
+end
+
+%%%% ¡gui!
+pr = PanelPropItem('EL', m, 'PROP', Measure.PFROI, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
+
 
 %% ¡constants!
 

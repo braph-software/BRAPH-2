@@ -50,6 +50,8 @@ f_measure_elements
 
 f_brain_graphs
 
+f_brain_rois
+
 %% ¡methods!
 function p_out = draw(pr, varargin)
     %DRAW draws the panel of the graph property and the measure table.
@@ -151,6 +153,20 @@ function p_out = draw(pr, varargin)
             'Text', 'Hide Selected Plots Brain Graph', ...
             'MenuSelectedFcn', {@cb_measure_hide_brain_graph} ...
             );
+        
+        pr.menu_measure_open_brain_graph = uimenu( ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_measure_open_brain_roi', ...
+            'Text', 'Plot Selected Measures on Brain ROI', ...
+            'MenuSelectedFcn', {@cb_measure_open_brain_roi} ...
+            );
+        pr.menu_measure_close_brain_graph = uimenu( ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_measure_close_brain_roi', ...
+            'Text', 'Hide Selected Measures ROI plots', ...
+            'MenuSelectedFcn', {@cb_measure_hide_brain_roi} ...
+            );
+        
     end
     function cb_graph_plot(~, ~) 
         pr.cb_graph_plot()
@@ -187,6 +203,12 @@ function p_out = draw(pr, varargin)
     end
     function cb_measure_hide_brain_graph(~, ~)
         pr.cb_measure_hide_brain_graph()
+    end
+    function cb_measure_open_brain_roi(~, ~)
+        pr.cb_measure_open_brain_roi()
+    end
+    function cb_measure_hide_brain_roi(~, ~)
+        pr.cb_measure_hide_brain_roi()
     end
     
     if ~check_graphics(pr.table, 'uitable')
@@ -607,6 +629,57 @@ function cb_measure_hide_brain_graph(pr)
         end
     end
 end
+function cb_measure_open_brain_roi(pr)
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    g = el.memorize(prop);
+    
+    mlist = Graph.getCompatibleMeasureList(g);
+    
+    f = ancestor(pr.p, 'figure'); % parent GUI 
+    N = ceil(sqrt(length(mlist))); % number of row and columns of figures
+    
+    for s = 1:1:length(pr.selected)
+        i = pr.selected(s);
+        
+        measure = mlist{i};
+
+        m = g.getMeasure(measure);
+        if Measure.is_nodal(m)
+            if length(pr.f_brain_graphs) < i || ~check_graphics(pr.f_brain_graphs{i}, 'figure')
+                pr.f_brain_rois{i} = GUIFig( ...
+                    'PF', m.memorize('PFROI'), ... % ensure that the property is stored
+                    'WAITBAR', Callback('EL', pr, 'TAG', 'WAITBAR'), ...
+                    'NAME', ['Figure - ' m.get('ID') '@' el.get('ID') ' - ' BRAPH2.STR], ...
+                    'POSITION', [ ...
+                    x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ...
+                    y0(f, 'normalized') ...
+                    w(f, 'normalized') * 3 ...
+                    .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ...
+                    ], ...
+                    'CLOSEREQ', false ...
+                    ).draw();
+            else
+                figure(pr.f_brain_rois{i})
+            end
+        end        
+    end
+end
+function cb_measure_hide_brain_roi(pr) 
+
+    % hides selected subfigures
+    for s = 1:1:length(pr.selected)
+        i = pr.selected(s);
+        
+        if length(pr.f_brain_rois) >= i
+            f_brain_roi = pr.f_brain_rois{i};
+            if check_graphics(f_brain_roi, 'figure')
+                gui = get(f_brain_roi, 'UserData');
+                gui.cb_hide()
+            end
+        end
+    end
+end
 function cb_bring_to_front(pr)
 
     cb_bring_to_front@Panel(pr);
@@ -655,6 +728,15 @@ function cb_bring_to_front(pr)
             gui.cb_bring_to_front()
         end
     end 
+    
+    % brings to front measure element subfigures
+    for i = 1:1:length(pr.f_brian_rois)
+        f_brian_roi = pr.f_brian_rois{i};
+        if check_graphics(f_brian_roi, 'figure')
+            gui = get(f_brian_roi, 'UserData');
+            gui.cb_bring_to_front()
+        end
+    end 
 end
 function cb_hide(pr)
     
@@ -696,6 +778,14 @@ function cb_hide(pr)
             gui.cb_hide()
         end
     end   
+    
+    for i = 1:1:length(pr.f_brian_rois)
+        f_brian_roi = pr.f_brian_rois{i};
+        if check_graphics(f_brian_roi, 'figure')
+            gui = get(f_brian_roi, 'UserData');
+            gui.cb_hide()
+        end
+    end 
 end
 function cb_close(pr)
     
@@ -737,4 +827,12 @@ function cb_close(pr)
             gui.cb_close()
         end
     end
+    
+    for i = 1:1:length(pr.f_brian_rois)
+        f_brian_roi = pr.f_brian_rois{i};
+        if check_graphics(f_brian_roi, 'figure')
+            gui = get(f_brian_roi, 'UserData');
+            gui.cb_close()
+        end
+    end 
 end
