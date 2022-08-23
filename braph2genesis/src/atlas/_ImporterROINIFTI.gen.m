@@ -24,10 +24,9 @@ roi_dict = IndexedDictionary('IT_CLASS', 'BrainROISurface', 'IT_KEY', 1);
 
 % analyzes file
 file = im.get('FILE');
-if ~isfile(file)
+if ~isfile(file) && ~braph2_testing
     im.uigetfile();
     file = im.get('FILE');
-    file = [fileparts(which('braph2')) filesep 'rois' filesep file];
 end
 
 if isempty(file)

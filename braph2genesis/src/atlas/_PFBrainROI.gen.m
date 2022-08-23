@@ -18,6 +18,8 @@ toolbar_roi
 
 h_rois
 
+brain_roi_dict
+
 %% ¡props!
 %%% ¡prop!
 ME (metadata, item) is the measure.
@@ -25,7 +27,7 @@ ME (metadata, item) is the measure.
 %%% ¡prop!
 ROIS (figure, logical) determines whether the rois are showned.
 %%%% ¡default!
-true
+false
 %%%% ¡postprocessing!
 if (isempty(varargin) || pf.prop_set('ROIS', varargin)) && ~braph2_testing
    if ~pf.get('ROIS')
@@ -45,13 +47,6 @@ end
 ROI_DICT (figure, idict) contians the rois.
 %%%% ¡settings!
 'SettingsROIS'
-%%%% ¡postprocessing!
-if pf.get('ROIS') 
-    if isa(pf.getr('ROI_DICT'), 'NoValue')
-        roi_dict = ImporterROINIFTI().get('ROI_DICT');
-        pf.set('ROI_DICT', roi_dict);
-    end
-end
 %%%% ¡gui!
 pr = PanelPropIDictTable('EL', pf, 'PROP', PFBrainROI.ROI_DICT, ...
     'COLS', [PanelPropIDictTable.SELECTOR SettingsROIS.VISIBLE SettingsROIS.FACECOLOR SettingsROIS.FACEALPHA SettingsROIS.EDGECOLOR SettingsROIS.EDGEALPHA], ...
@@ -87,16 +82,37 @@ function h_panel = draw(pf, varargin)
         pf.h_axes.Toolbar.Visible = 'off';
         pf.h_axes.Interactions = [];
     end
-    
+
     %plot
-    if isempty(pf.h_rois) && ~isempty(pf.roi_dict)
-        for i = 1:pf.roi_dict.length()
-            roi = pf.roi_dict.getItem(i);
+    
+    % check dict
+    if isempty(pf.brain_roi_dict) 
+       % might wanna check up one by one
+        pf.brain_roi_dict = ImporterROINIFTI().get('ROI_DICT');
+    end
+    roi_dict = pf.get('ROI_DICT');
+    
+    if isempty(pf.h_rois)
+        for i = 1:pf.brain_roi_dict.length()
+            % variables
+            roi = pf.brain_roi_dict.getItem(i);
             vert = roi.get('vertices');
-            pf.h_rois{i} = trisurf(roi.get('faces'), vert(:, 1), vert(:, 2), vert(:,3));
             color = [randi(225)/225 randi(225)/225 randi(225)/225];
-            set(pf.h_rois{i}, 'FaceColor', color, 'EdgeAlpha', 0.1);
+            
+            % setting
+            r_s{i} = SettingsROIS(...
+                    'VISIBLE', true, ...
+                    'FACECOLOR', color, ...
+                    'FACEALPHA', 1, ...
+                    'EDGECOLOR', color, ...
+                    'EDGEALPHA', 0.1...
+                    );            
+            
+            pf.h_rois{i} = trisurf(pf.h_axes, roi.get('faces'), vert(:, 1), vert(:, 2), vert(:,3), 'UITAG', ['h_rois{' num2str(i) '}']);
+            
+            set(pf.h_rois{i}, 'FaceColor', color, 'FACEALPHA', 1, 'EDGECOLOR', color, 'EdgeAlpha', 0.1);
         end
+        roi_dict.set('IT_LIST', r_s);
     end
 
     % get toolbar
@@ -113,9 +129,9 @@ function h_panel = draw(pf, varargin)
         pf.toolbar_roi = uitoggletool(pf.toolbar, ...
             'Tag', 'toolbar_roi', ...
             'Separator', 'on', ...
-            'State', pf.get('ROI'), ...
+            'State', pf.get('ROIS'), ...
             'Tooltip', 'Show ROIS', ...
-            'CData', imread('icon_measure_roi.png'), ...
+            'CData', imread('icon_brain.png'), ...
             'OnCallback', {@cb_rois, true}, ...
             'OffCallback', {@cb_rois, false});
 
@@ -124,7 +140,7 @@ function h_panel = draw(pf, varargin)
         function cb_rois(~, ~, measures) % (src, event)
             pf.set('ROI', measures)
         end
-        
+
 
     % listener to changes in
 
