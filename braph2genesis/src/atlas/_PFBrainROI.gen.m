@@ -108,8 +108,8 @@ function h_panel = draw(pf, varargin)
                     'EDGEALPHA', 0.1...
                     );            
             
-            pf.h_rois{i} = trisurf(pf.h_axes, roi.get('faces'), vert(:, 1), vert(:, 2), vert(:,3), 'UITAG', ['h_rois{' num2str(i) '}']);
-            
+            pf.h_rois{i} = trisurf(roi.get('faces'), vert(:, 1), vert(:, 2), vert(:,3), 'Parent', pf.h_axes);
+            hold(pf.h_axes, 'on');
             set(pf.h_rois{i}, 'FaceColor', color, 'FACEALPHA', 1, 'EDGECOLOR', color, 'EdgeAlpha', 0.1);
         end
         roi_dict.set('IT_LIST', r_s);
