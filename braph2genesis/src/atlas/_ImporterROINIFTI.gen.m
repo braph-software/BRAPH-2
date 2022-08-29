@@ -36,7 +36,7 @@ elseif isfile(file)
     wb = braph2waitbar(im.get('WAITBAR'), .15, 'Reading brain roi file ...');
     
     % get data
-    data = niftiread('aal.nii');    
+    data = niftiread(file);    
     
     % create rois and fill dictionary of rois
     n = length(data);

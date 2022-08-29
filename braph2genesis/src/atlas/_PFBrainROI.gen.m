@@ -32,7 +32,10 @@ false
 if (isempty(varargin) || pf.prop_set('ROIS', varargin)) && ~braph2_testing
    if ~pf.get('ROIS')
         for i = 1:1:length(pf.h_rois)
-            set(pf.h_rois{i}, 'Visible', false)
+            tmp_h = pf.h_rois{i}
+            if check_graphics(tmp_h, 'patch')
+                set(tmp_h, 'Visible', false)
+            end
         end        
    end
     
@@ -51,6 +54,13 @@ ROI_DICT (figure, idict) contians the rois.
 pr = PanelPropIDictTable('EL', pf, 'PROP', PFBrainROI.ROI_DICT, ...
     'COLS', [PanelPropIDictTable.SELECTOR SettingsROIS.VISIBLE SettingsROIS.FACECOLOR SettingsROIS.FACEALPHA SettingsROIS.EDGECOLOR SettingsROIS.EDGEALPHA], ...
     varargin{:});
+
+%%% ¡prop!
+COLORSTYLE (figure, string) contians the colormap.
+%%%% ¡default!
+'jet'
+%%%% ¡gui!
+% something
 
 %% ¡methods!
 function h_panel = draw(pf, varargin)
@@ -83,36 +93,10 @@ function h_panel = draw(pf, varargin)
         pf.h_axes.Interactions = [];
     end
 
-    %plot
-    
     % check dict
     if isempty(pf.brain_roi_dict) 
        % might wanna check up one by one
         pf.brain_roi_dict = ImporterROINIFTI().get('ROI_DICT');
-    end
-    roi_dict = pf.get('ROI_DICT');
-    
-    if isempty(pf.h_rois)
-        for i = 1:pf.brain_roi_dict.length()
-            % variables
-            roi = pf.brain_roi_dict.getItem(i);
-            vert = roi.get('vertices');
-            color = [randi(225)/225 randi(225)/225 randi(225)/225];
-            
-            % setting
-            r_s{i} = SettingsROIS(...
-                    'VISIBLE', true, ...
-                    'FACECOLOR', color, ...
-                    'FACEALPHA', 1, ...
-                    'EDGECOLOR', color, ...
-                    'EDGEALPHA', 0.1...
-                    );            
-            
-            pf.h_rois{i} = trisurf(roi.get('faces'), vert(:, 1), vert(:, 2), vert(:,3), 'Parent', pf.h_axes);
-            hold(pf.h_axes, 'on');
-            set(pf.h_rois{i}, 'FaceColor', color, 'FACEALPHA', 1, 'EDGECOLOR', color, 'EdgeAlpha', 0.1);
-        end
-        roi_dict.set('IT_LIST', r_s);
     end
 
     % get toolbar
@@ -137,10 +121,11 @@ function h_panel = draw(pf, varargin)
 
     end
 
-        function cb_rois(~, ~, measures) % (src, event)
-            pf.set('ROI', measures)
+        function cb_rois(~, ~, statement) % (src, event)
+            pf.set('ROIS', statement)
         end
 
+    pf.paint_rois();
 
     % listener to changes in
 
@@ -165,4 +150,43 @@ function str = tostring(pf, varargin)
     str = tostring(str, varargin{:});
     str = str(2:1:end-1);
 end
+function paint_rois(pf)
+    roi_dict = pf.get('ROI_DICT');
 
+    % get measure values to calculate colors
+    m = pf.get('ME');
+    m_val = m.get('M');
+    m_val = [m_val{:}];
+
+    m_val_sorted = sort(m_val);
+
+    col_style = pf.get('COLORSTYLE');
+    n = length(m_val_sorted);
+    color_scale = eval([col_style '(' num2str(n) ')']);
+
+    if isempty(pf.h_rois)
+        for i = 1:pf.brain_roi_dict.length()
+            % variables
+            roi = pf.brain_roi_dict.getItem(i);
+            vert = roi.get('vertices');
+            color_index = find(m_val_sorted==m_val(i), 1);
+            color = color_scale(color_index, :);
+
+            % setting
+            r_s{i} = SettingsROIS(...
+                'VISIBLE', true, ...
+                'FACECOLOR', color, ...
+                'FACEALPHA', 1, ...
+                'EDGECOLOR', color, ...
+                'EDGEALPHA', 0.1...
+                ); %#ok<AGROW>
+
+            pf.h_rois{i} = trisurf(roi.get('faces'), vert(:, 1), vert(:, 2), vert(:,3), 'Parent', pf.h_axes);
+            hold(pf.h_axes, 'on');
+            set(pf.h_rois{i}, 'FaceColor', color, 'FACEALPHA', 1, 'EDGECOLOR', color, 'EdgeAlpha', 0.1);
+        end
+        roi_dict.set('IT_LIST', r_s);
+    end
+
+    legend(pf.h_axes, [pf.h_rois{:}], pf.brain_roi_dict.getKeys());
+end
