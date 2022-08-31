@@ -27,7 +27,7 @@ ME (metadata, item) is the measure.
 %%% ¡prop!
 ROIS (figure, logical) determines whether the rois are showned.
 %%%% ¡default!
-false
+true
 %%%% ¡postprocessing!
 if (isempty(varargin) || pf.prop_set('ROIS', varargin)) && ~braph2_testing
    if ~pf.get('ROIS')
