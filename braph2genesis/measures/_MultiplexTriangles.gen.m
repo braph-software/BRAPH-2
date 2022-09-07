@@ -2,8 +2,8 @@
 MultiplexTriangles < Measure (m, multiplex triangles) is the graph multiplex triangles.
 
 %%% ¡description!
-The multiplex triangles are calculated as the total number of a nodes neighbor 
-pairs that are connected to each other between each pair of layers. 
+The multiplex triangles are calculated as the number of neighbors of a node
+that are also neighbors of each other between each pair of layers. 
 In weighted graphs, the multiplex triangles are calculated as geometric mean 
 of the weights of the edges forming the multiplex triangle.
 
@@ -40,12 +40,12 @@ if l == 0
 else
     multiplex_triangles = cell(length(ls), 1);
     count = 1;
-    for p = 1:1:length(ls)
+    for p = 1:1:length(ls) % for each density
         multiplex_triangles_partition = zeros(N(1), 1);
-        %for i=1:1:ls(p)-1
+         % loop thorugh pairs of layers
         for i = count:1:ls(p) + count - 2
             B11 = A{i, i};
-            for j=i+1:1:ls(p)
+            for j = i+1:1:ls(p) + count - 1
                 B22 = A{j, j};
                 multiplex_triangles_partition = multiplex_triangles_partition + diag(B11.^(1/3)*B22.^(1/3)*B11.^(1/3) + B22.^(1/3)*B11.^(1/3)*B22.^(1/3));
             end
