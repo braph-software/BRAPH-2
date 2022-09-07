@@ -44,12 +44,9 @@ else
     count = 1;
     for p = 1:1:length(ls)
         multiplex_clustering_degree = zeros(N(1), 1);
-        for i = count:1:ls(p) + count - 2
-            k1 = degree{i};
-            for j=i+1:1:ls(p)
-                k2 = degree{j};
-                multiplex_clustering_degree = multiplex_clustering_degree + (k1 .* (k1 - 1) + k2 .* (k2 - 1));
-            end
+        for i = count:1:ls(p) + count - 1
+            k = degree{i};
+            multiplex_clustering_degree = multiplex_clustering_degree + (k .* (k - 1));
         end
         multiplex_clustering_partition = multiplex_triangles{p}./ ((ls(p)-1)*multiplex_clustering_degree);
         multiplex_clustering_partition(isnan(multiplex_clustering_partition)) = 0;  % Should return zeros, not NaN
@@ -76,10 +73,16 @@ B22 = [
       1 0 0 0;
       1 0 0 0;
       1 0 0 0
+      ];  
+B33 = [
+      0 0 0 1;
+      0 0 0 1;
+      0 0 0 1;
+      1 1 1 0
       ];
-B = {B11 B22};
+B = {B11 B22 B33};
 
-known_multiplex_clustering = [2 2 2 0]'./ [12, 2, 2, 0]';
+known_multiplex_clustering = [5 1 1 5]'./ [12, 2, 2, 6]';
 known_multiplex_clustering(isnan(known_multiplex_clustering)) = 0;
 known_multiplex_clustering = {
                  known_multiplex_clustering
