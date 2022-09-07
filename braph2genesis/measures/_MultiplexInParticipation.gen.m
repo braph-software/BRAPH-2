@@ -32,13 +32,8 @@ else
     
     N = g.nodenumber();
     in_degree = InDegree('G', g).get('M');
-    overlapping_in_degree = OverlappingInDegree('G', g).get('M');
-
-    if L > 0   
-        multiplex_in_participation =  zeros(N(1), 1);
-    else
-        multiplex_in_participation =  zeros(1);
-    end
+    overlapping_in_degree = OverlappingInDegree('G', g).get('M');  
+    multiplex_in_participation =  zeros(N(1), 1);
 
     for li = 1:1:L
         multiplex_in_participation = multiplex_in_participation + (in_degree{li}./overlapping_in_degree{1}).^2;
