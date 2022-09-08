@@ -50,7 +50,7 @@ end
 MultiplexBD
 %%%% ¡code!
 B11 = [
-    0   1   1
+    0   1   0
     1   0   0
     1   0   0
     ];
@@ -59,14 +59,19 @@ B22 = [
     1   0   1
     0   1   0
     ];
-B = {B11  B22};
+B33 = [
+    0   1   0
+    1   0   0
+    0   1   0
+    ];
+B = {B11 B22 B33};
 
-known_multiplex_in_participation = {[8/9 8/9 1]'};
+known_multiplex_in_participation = {[15/16 24/25 0]'};
 
 g = MultiplexBD('B', B);
 multiplex_in_participation = MultiplexInParticipation('G', g);
 
-assert(isequal(multiplex_in_participation.get('M'), known_multiplex_in_participation), ...
+assert(isequal(cellfun(@(x)round(x,4),multiplex_in_participation.get('M'),'UniformOutput',false), known_multiplex_in_participation), ...
     [BRAPH2.STR ':MultiplexInParticipation:' BRAPH2.BUG_ERR], ...
     'MultiplexInParticipation is not being calculated correctly for MultiplexBD.')
 

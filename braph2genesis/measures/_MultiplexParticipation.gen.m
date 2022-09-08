@@ -101,13 +101,18 @@ B22 = [
     1   0   1
     0   1   0
     ];
-B = {B11  B22};
+B33 = [
+    0   1   0
+    1   0   0
+    0   0   0
+    ];
+B = {B11 B22 B33};
 
 known_multiplex_participation = {...
-                                [8/9 8/9 1]'
+                                [15/16 15/16 3/4]'
                                 [0, 0, 0]'
                                 };
-
+                            
 g = MultiplexBUT('B', B, 'THRESHOLDS', [0 1]);
 multiplex_participation_partition = MultiplexParticipation('G', g);
 

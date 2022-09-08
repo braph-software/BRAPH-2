@@ -50,7 +50,7 @@ end
 MultiplexBD
 %%%% ¡code!
 B11 = [
-    0   1   1
+    0   1   0
     1   0   0
     1   0   0
     ];
@@ -59,9 +59,14 @@ B22 = [
     1   0   1
     0   1   0
     ];
-B = {B11  B22};
+B33 = [
+    0   1   0
+    1   0   0
+    0   1   0
+    ];
+B = {B11 B22 B33};
 
-known_multiplex_out_participation = {[8/9 8/9 1]'};
+known_multiplex_out_participation = {[1 15/16 1]'};
 
 g = MultiplexBD('B', B);
 multiplex_out_participation = MultiplexOutParticipation('G', g);
