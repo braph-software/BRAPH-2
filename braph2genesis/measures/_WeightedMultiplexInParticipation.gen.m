@@ -3,7 +3,7 @@ WeightedMultiplexInParticipation < Measure (m, weighted multiplex in-participati
 
 %%% ¡description!
 The weighted multiplex in-participation of a graph is the nodal homogeneity
-of its number of neighbours across the layers. 
+of its number of inward neighbours across the layers. 
 
 %%% ¡shape!
 shape = Measure.NODAL;
@@ -54,12 +54,12 @@ B11 = [
     ];
 B22 = [
     0   1   0
-    1   0   .5
+    1   0   0
     0   .5  0
     ];
 B = {B11  B22};
 
-known_weighted_multiplex_in_participation = {[24/25 3/4 8/9]'};
+known_weighted_multiplex_in_participation = {[24/25 3/4 0]'};
 
 g = MultiplexWD('B', B);
 weighted_multiplex_in_participation = WeightedMultiplexInParticipation('G', g);
