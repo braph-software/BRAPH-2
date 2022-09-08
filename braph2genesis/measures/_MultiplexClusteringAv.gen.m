@@ -4,7 +4,6 @@ MultiplexClusteringAv < MultiplexClustering (m, average multiplex clustering) is
 %%% ¡description!
 The average multiplex clustering coefficient of a multilayer graph is 
 the average of the two-multiplex clustering coefficients of all nodes. 
-Connection weights are ignored in calculations.
       
 %%% ¡seealso!
 Measure
