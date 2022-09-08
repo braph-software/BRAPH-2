@@ -110,10 +110,16 @@ B22 = [
       1 0 0 0;
       1 0 0 0;
       1 0 0 0
+      ];  
+B33 = [
+      0 0 0 1;
+      0 0 0 1;
+      0 0 0 1;
+      1 1 1 0
       ];
-B = {B11 B22};
+B = {B11 B22 B33};
 
-known_multiplex_clustering = [2 2 2 0]'./ [12, 2, 2, 0]';
+known_multiplex_clustering = [5 1 1 5]'./ [12, 2, 2, 6]';
 known_multiplex_clustering(isnan(known_multiplex_clustering)) = 0;
 known_multiplex_clustering = {
                  known_multiplex_clustering
