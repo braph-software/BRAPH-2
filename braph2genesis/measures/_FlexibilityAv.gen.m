@@ -2,7 +2,7 @@
 FlexibilityAv < Flexibility (m, average flexibility) is the graph average flexibility.
 
 %%% ¡description!
-The average flexibility of a graph is the average of the flexibility 
+The average flexibility of a multilayer graph is the average of the flexibility 
 of all nodes. 
 
 %%% ¡shape!
