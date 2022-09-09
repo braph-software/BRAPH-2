@@ -3,7 +3,7 @@ WeightedMultiplexOutParticipation < Measure (m, weighted multiplex out-participa
 
 %%% ¡description!
 The weighted multiplex out-participation of a graph is the nodal homogeneity
-of its number of neighbours across the layers. 
+of its number of outward neighbours across the layers. 
 
 %%% ¡shape!
 shape = Measure.NODAL;
@@ -54,12 +54,12 @@ B11 = [
     ];
 B22 = [
     0   1   0
-    1   0   .5
+    1   0   0
     0   .5  0
     ];
 B = {B11  B22};
 
-known_weighted_multiplex_out_participation = {[24/25 3/4 8/9]'};
+known_weighted_multiplex_out_participation = {[24/25 8/9 8/9]'};
 
 g = MultiplexWD('B', B);
 weighted_multiplex_out_participation = WeightedMultiplexOutParticipation('G', g);

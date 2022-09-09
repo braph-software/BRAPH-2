@@ -54,15 +54,16 @@ N = g.nodenumber();
 participation = cell(L, 1);        
 directionality_type =  g.getDirectionalityType(L);
 connectivity_type =  g.getConnectivityType(L);
+if L == 1
+    S = CommunityStructure('G', g).get('M');
+else
+    S = MultilayerCommunityStructure('G', g).get('M');
+end
+    
 for li = 1:1:L
-   connectivity_layer = connectivity_type(li, li);
-   directionality_layer = directionality_type(li, li);
-    if L == 1 
-        S = CommunityStructure('G', g).get('M');
-    else
-        S = MultilayerCommunityStructure('G', g).get('M');
-    end
-    Aii = A{li, li};    
+    connectivity_layer = connectivity_type(li, li);
+    directionality_layer = directionality_type(li, li);
+    Aii = A{li, li};
     m.set('CI', cell2mat(S));
    
     if connectivity_layer == Graph.WEIGHTED  % weighted graphs
@@ -72,9 +73,9 @@ for li = 1:1:L
 
             directed_participation_rule = m.get('rule');
             switch lower(directed_participation_rule)
-                case {'in'}  % in-degree rule                   
+                case {'in'}  % in-strength rule                   
                     ko = InStrength('G', g).get('M');                   
-                otherwise  % {'out'}  % out-degree rule
+                otherwise  % {'out'}  % out-strength rule
                     ko = OutStrength('G', g).get('M');
             end
         end

@@ -2,8 +2,8 @@
 Triangles < Measure (m, triangles) is the graph triangles.
 
 %%% ¡description!
-The triangles are calculated as the number of a nodes neighbor pairs that are
-connected to each other within a layer. In weighted graphs, the triangles are
+The triangles are calculated as the number of neighbors of a node that are 
+also neighbors of each other within a layer. In weighted graphs, the triangles are
 calculated as geometric mean of the weights of the edges forming the triangle.
 
 %%% ¡seealso!
@@ -35,7 +35,7 @@ MultiplexBD
 %% ¡props!
 
 %%% ¡prop! 
-rule (parameter, OPTION) is the rule to determine what is a triangle.
+rule (parameter, OPTION) is the rule to determine what is a triangle in directed networks.
 %%%% ¡settings!
 {'all' 'middleman' 'in' 'out' 'cycle'}
 %%%% ¡default!
@@ -75,6 +75,7 @@ parfor li = 1:1:L
             otherwise  % {'cycle'}  % cycle rule
                 triangles_layer = diag((Aii.^(1/3))^3);
         end
+        triangles_layer(isnan(triangles_layer)) = 0;  % Should return zeros, not NaN
         triangles(li) = {triangles_layer};
     end
 end
@@ -149,7 +150,12 @@ assert(isequal(triangles.get('M'), known_triangles_default_cycle), ...
     'Triangles is not being calculated correctly for GraphBD.')
 
 % in rule 
-known_triangles_in = {[0 0 0]'};
+B = [
+    0 1 0; 
+    0 0 0; 
+    1 1 0 
+    ];
+known_triangles_in = {[0 1 0]'};
 
 g = GraphBD('B', B);
 triangles = Triangles('G', g, 'rule', 'in');
@@ -159,7 +165,12 @@ assert(isequal(triangles.get('M'), known_triangles_in), ...
     'Triangles is not being calculated correctly for GraphBD.')
 
 % out rule 
-known_triangles_out = {[0 0 0]'};
+B = [
+    0 1 0; 
+    0 0 0; 
+    1 1 0 
+    ];
+known_triangles_out = {[0 0 1]'};
 
 g = GraphBD('B', B);
 triangles = Triangles('G', g, 'rule',  'out');
@@ -169,8 +180,13 @@ assert(isequal(triangles.get('M'), known_triangles_out), ...
     'Triangles is not being calculated correctly for GraphBD.')
 
 % middleman rule
-known_triangles_middleman = {[0 0 0]'};
 
+known_triangles_middleman = {[1 0 0]'};
+B = [
+    0 1 0; 
+    0 0 0; 
+    1 1 0 
+    ];
 g = GraphBD('B', B);
 triangles = Triangles('G', g, 'rule', 'middleman');
 
@@ -179,6 +195,11 @@ assert(isequal(triangles.get('M'), known_triangles_middleman), ...
     'Triangles is not being calculated correctly for GraphBD.')
 
 % all rule 
+B = [
+    0 0 1; 
+    1 0 0; 
+    0 1 0 
+    ];
 known_triangles_all = {[1 1 1]'};
 
 g = GraphBD('B', B);
