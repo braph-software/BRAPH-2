@@ -72,7 +72,7 @@ classdef BRAPH2
         VERSION = '2.0' % BRAPH2 version
         STR = 'BRAPH2' % BRAPH2 short string
         BUILD = 1 % BRAPH2 build number
-        AUTHORS = 'Giovanni Volpe, Emiliano Gomez Ruiz, Anna Canal Garcia, Yu-Wei Chang, Mite Mijalkov, Joana Braga Pereira, Ehsan Kakaei, Eric Westman, et al.'
+        AUTHORS = 'Giovanni Volpe, Emiliano Gomez Ruiz, Anna Canal Garcia, Yu-Wei Chang, Mite Mijalkov, Daniel Vereb, Joana Braga Pereira, Ehsan Kakaei, Eric Westman, et al.'
         COPYRIGHT = ['Copyright 2014-' datestr(now,'yyyy')]
         WEB = 'braph.org' % BRAPH2 website
         TWITTER = 'braph2software' % BRAPH2 twitter handle
