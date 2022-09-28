@@ -55,7 +55,7 @@ if ~braph2_testing
             sph_dict = pf.get('SPH_DICT');
             for i = 1:sph_dict.length
                 sph = sph_dict.getItem(i);
-                default_value = sph.get('SPHERESIZE');
+                default_value = sph.getPropDefault('SPHERESIZE');
                 sph.set('SPHERESIZE', default_value);
             end
         end
@@ -63,7 +63,7 @@ if ~braph2_testing
             sym_dict = pf.get('SYM_DICT');
             for i = 1:sym_dict.length
                 sym = sym_dict.getItem(i);
-                default_value = sym.get('SYMBOLSIZE');
+                default_value = sym.getPropDefault('SYMBOLSIZE');
                 sym.set('SYMBOLSIZE', default_value);
             end            
         end        
