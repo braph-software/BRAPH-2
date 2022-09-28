@@ -94,7 +94,7 @@ if ~braph2_testing
             sph_dict = pf.get('SPH_DICT');
             for i = 1:sph_dict.length
                 sph = sph_dict.getItem(i);
-                default_value = sym.getPropDefault('SPHERESIZE');
+                default_value = sph.getPropDefault('SPHERESIZE');
                 sph.set('SPHERESIZE', default_value);
             end
         end
