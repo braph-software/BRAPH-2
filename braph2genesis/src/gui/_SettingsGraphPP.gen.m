@@ -74,7 +74,6 @@ function p_out = draw(pr, varargin)
             );
     end    
     function cb_checkbox_colorbar(~, ~) % (src, event)
-        state_checkboxes()
         pr.cb_graph_s()
     end
     function state_colorbar()
