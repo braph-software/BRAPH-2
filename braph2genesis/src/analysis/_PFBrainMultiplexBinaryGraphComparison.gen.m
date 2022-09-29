@@ -72,7 +72,7 @@ if ~braph2_testing
     end
     
     % update state of toggle tool
-    set(pf.toolbar_measure, 'State', pf.get('MEASURES'))
+%     set(pf.toolbar_measure, 'State', pf.get('MEASURES'))
 end
 
 %% ¡props!
@@ -116,7 +116,7 @@ function h_panel = draw(pf, varargin)
     % get toolbars
     if ~check_graphics(pf.h_axes, 'uitoolbar')        
         pf.toolbar = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'ToolBar');
-        pf.toolbar_measure = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'toolbar_measure');
+%         pf.toolbar_measure = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'toolbar_measure');
         pf.toolbar_edges = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'toolbar_edges');
     end
 

@@ -52,7 +52,7 @@ h_axes % handle for axes
 edges % struct for edges
 
 toolbar
-toolbar_measure
+% toolbar_measure
 toolbar_edges
 
 %% ¡props!
@@ -112,8 +112,8 @@ if ~braph2_testing
     %pf.set('SPH_DICT', pf.get('SPH_DICT'))
     %pf.set('SYM_DICT', pf.get('SYM_DICT'))
     
-    % update state of toggle tool
-    set(pf.toolbar_measure, 'State', pf.get('MEASURES'))
+    % update state of toggle tool .... enters infinite loop
+%     set(pf.toolbar_measure, 'State', pf.get('MEASURES'))
 end
 
 %%% ¡prop!
@@ -209,19 +209,19 @@ function h_panel = draw(pf, varargin)
     end
 
     % set new toogletools
-    if ~check_graphics(pf.toolbar_measure, 'uitoggletool')
+    if ~check_graphics(pf.toolbar_edges, 'uitoggletool')
 
         uipushtool(pf.toolbar, 'Separator', 'on', 'Visible', 'off')
 
         % measures
-        pf.toolbar_measure = uitoggletool(pf.toolbar, ...
-            'Tag', 'toolbar_measure', ...
-            'Separator', 'on', ...
-            'State', pf.get('MEASURES'), ...
-            'Tooltip', 'Show Measures', ...
-            'CData', imread('icon_measure_panel.png'), ...
-            'OnCallback', {@cb_measures, true}, ...
-            'OffCallback', {@cb_measures, false});
+%         pf.toolbar_measure = uitoggletool(pf.toolbar, ...
+%             'Tag', 'toolbar_measure', ...
+%             'Separator', 'on', ...
+%             'State', pf.get('MEASURES'), ...
+%             'Tooltip', 'Show Measures', ...
+%             'CData', imread('icon_measure_panel.png'), ...
+%             'OnCallback', {@cb_measures, true}, ...
+%             'OffCallback', {@cb_measures, false});
 
         % links
         pf.toolbar_edges = uitoggletool(pf.toolbar, ...
@@ -234,9 +234,9 @@ function h_panel = draw(pf, varargin)
             'OffCallback', {@cb_edges, false});
     end
 
-        function cb_measures(~, ~, measures) % (src, event)
-            pf.set('MEASURES', measures)
-        end
+%         function cb_measures(~, ~, measures) % (src, event)
+%             pf.set('MEASURES', measures)
+%         end
         function cb_edges(~, ~, edges) % (src, event)
             pf.set('EDGES', edges)
         end
