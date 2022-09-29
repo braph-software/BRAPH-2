@@ -476,14 +476,8 @@ function cb_measure_open_brain_graph(pr)
     el = pr.get('EL');
     prop = pr.get('PROP');
     
-    try 
-        if el.existsTag('G')
-            g = el.get('A1').get('G');
-        end
-    catch e
-        g = el.get('A1').get('G_DICT').getItem(1);
-    end    
-    
+    g = el.get('A1').get('G');
+        
     mlist = Graph.getCompatibleMeasureList(g);
     
     f = ancestor(pr.p, 'figure'); % parent GUI 
