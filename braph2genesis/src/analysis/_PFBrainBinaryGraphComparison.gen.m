@@ -89,6 +89,10 @@ if ~braph2_testing
         index = str2double(pf.get('DT'));
         val = val{index};
         
+        if size(val, 1) > size(val, 2)
+            val = val';
+        end
+        
         [~, mask] = fdr(val, q_val);
         
         if pf.get('SPHS')

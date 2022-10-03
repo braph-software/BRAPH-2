@@ -91,6 +91,10 @@ if ~braph2_testing
         index_l = str2double(pf.get('LAYER'));
         val = val{index_d, index_l};
         
+        if size(val, 1) > size(val, 2)
+            val = val';
+        end
+        
         [~, mask] = fdr(val, q_val);
         
         if pf.get('SPHS')
