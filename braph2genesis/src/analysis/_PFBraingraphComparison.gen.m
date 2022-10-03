@@ -86,10 +86,10 @@ if ~braph2_testing
         % get fdr q value.
         measure = pf.get('ME'); % comparison
         q_val = pf.get('QVAL');
-        val = measure.get('P1');
+        val = measure.get('P2');
         val = val{1};
         
-        [~, mask] = fdr(val, q_val);
+        [~, mask] = fdr(val', q_val);
         
         if pf.get('SPHS')
             sph_dict = pf.get('SPH_DICT');
