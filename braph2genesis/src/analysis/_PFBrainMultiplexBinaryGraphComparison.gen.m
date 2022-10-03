@@ -75,6 +75,61 @@ if ~braph2_testing
 %     set(pf.toolbar_measure, 'State', pf.get('MEASURES'))
 end
 
+%%% ¡prop!
+FDRSHOW (figure, logical) determines whether the nodes are shown based on fdr correction.
+%%%% ¡default!
+false
+%%%% ¡postprocessing!
+if ~braph2_testing
+    if pf.get('FDRSHOW')
+        % remove values that do no pass fdr
+        % get fdr q value.
+        measure = pf.get('ME'); % comparison
+        q_val = pf.get('QVAL');
+        val = measure.get('P1');
+        index_d = strdouble(pf.get('DT'));
+        index_l = str2double(pf.get('LAYER'));
+        val = val{index_d, index_l};
+        
+        [~, mask] = fdr(val, q_val);
+        
+        if pf.get('SPHS')
+            sph_dict = pf.get('SPH_DICT');
+            for i = 1:sph_dict.length
+                sph = sph_dict.getItem(i);
+                if ~mask(i)
+                    set(sph, 'Visible', false);
+                end
+            end
+        end
+        if pf.get('SYMS')
+            sym_dict = pf.get('SYM_DICT');
+            for i = 1:sym_dict.length
+                sym = sym_dict.getItem(i);
+                if ~mask(i)
+                    set(sym, 'Visible', false);
+                end
+            end
+        end
+    else
+        % show everything
+        if pf.get('SPHS')
+            sph_dict = pf.get('SPH_DICT');
+            for i = 1:sph_dict.length
+                sph = sph_dict.getItem(i);
+                set(sph, 'Visible', true);
+            end
+        end
+        if pf.get('SYMS')
+            sym_dict = pf.get('SYM_DICT');
+            for i = 1:sym_dict.length
+                sym = sym_dict.getItem(i);
+                set(sym, 'Visible', true);
+            end
+        end        
+    end
+end
+
 %% ¡props!
 
 %%% ¡prop!
