@@ -3886,6 +3886,7 @@ linkbar()
         if filterindex
             filename = fullfile(path, file);
             tmp = load(filename, '-mat', 'el');
+            set(ui_checkbox_bottom_animation, 'Value', false)
             GUIElement('PE', tmp.el, 'FILE', filename).draw();
             
         end
@@ -3900,7 +3901,7 @@ linkbar()
                 'WAITBAR', true, ...
                 'File', filename ...
                 ).get('Pip');
-            
+            set(ui_checkbox_bottom_animation, 'Value', false)
             pipeline_guis{end+1} =  GUIElement('PE', pipe, 'FILE', filename).draw();
         end
     end
