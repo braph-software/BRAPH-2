@@ -232,7 +232,7 @@ function str = tostring(pf, varargin)
     %
     % See also disp, tree.
 
-    str = ['Plot ' pf.get('A').get('G_DICT').get('ID')];
+    str = ['Plot ' pf.get('A').get('ID')];
     str = tostring(str, varargin{:});
     str = str(2:1:end-1);
 end
