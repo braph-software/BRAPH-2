@@ -272,18 +272,20 @@ function update(pr)
                     'ColumnEditable', false, ...
                     'Visible', 'on' ...
                     )
-                if isa(el, 'ComparisonGroup') && isequal(el.getPropTag(12), 'qvalue')
+                
+                
+                
+                if (isa(el, 'ComparisonGroup') | isa(el, 'ComparisonEnsemble')) && el.existsTag('QVALUE')
                     
                     tmp_data = get_p_value();
                     
-                    [~, mask] = fdr(tmp_data, el.get(12));
+                    [~, mask] = fdr(tmp_data, el.get('QVALUE'));
                     [rows, cols] = find(mask);                   
                     
                     if ~isempty(rows) && ~isempty(cols)
                         s = uistyle('BackgroundColor',[1 0.6 0.6]);
                         addStyle(pr.table, s, 'cell', [rows, cols]);
                     end
-                    
                 end
             end
     end
