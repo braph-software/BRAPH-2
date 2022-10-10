@@ -43,12 +43,7 @@ function h = plotAdjacency(pf)
     
     % select correct matrix, A is a [m m] where m is the number of layers * the number of densities,
     % the diagonal is where the info is kept   
-    g_id = str2double(pf.get('G'));
-    if isnan(g_id)
-        g_id = pf.get('G');
-    end
-    graph = pf.get('A').get('G_DICT').getItem(g_id);
-    multiplex = graph.get('A');  
+    g_id = pf.get('G');
     L = length(graph.get('B')); % total layers
     D = length(graph.get(14)); % total densities or thresholds
     % choosen values
@@ -57,7 +52,27 @@ function h = plotAdjacency(pf)
 
     % get correct matrix
     correct = (L*d) - (L-l);   
-    correct_graph = multiplex{correct, correct};
+
+    if isequal(g_id, 'Mean Graph')
+        g_dict = pf.get('A').get('G_DICT');
+        adjacency_matrix = 0;
+        for i = 1:g_dict.length()
+            g_temp = g_dict.getItem(i);
+            multigraph = g_temp.get('A');
+            correct_graph = multigraph{correct, correct};
+            adjacency_matrix = adjacency_matrix + correct_graph;
+        end
+        correct_graph = adjacency_matrix ./ g_dict.length();
+    elseif isnan(str2double(pf.get('G')))
+        g_id = pf.get('G');
+        graph = pf.get('A').get('G_DICT').getItem(g_id);
+        multigraph = graph.get('A');
+        correct_graph = multigraph{correct, correct};
+    else
+        graph = pf.get('A').get('G_DICT').getItem(g_id);
+        multigraph = graph.get('A');
+        correct_graph = multigraph{correct, correct};
+    end
     
     % plot
     if pf.get('ST_ADJACENCY').get('BINARY')
