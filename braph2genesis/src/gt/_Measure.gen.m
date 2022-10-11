@@ -129,6 +129,18 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
             m.set('PFM', PFMeasureNU('M', m))
         elseif Measure.is_binodal(m) && Measure.is_unilayer(m)
             m.set('PFM', PFMeasureBU('M', m))
+        elseif Measure.is_global(m) && Measure.is_superglobal(m)
+            m.set('PFM', PFMeasureGUS('M', m))
+        elseif Measure.is_nodal(m) && Measure.is_superglobal(m)
+            m.set('PFM', PFMeasureNUS('M', m))
+        elseif Measure.is_binodal(m) && Measure.is_superglobal(m)
+            m.set('PFM', PFMeasureBUS('M', m))
+        elseif Measure.is_global(m) && Measure.is_bilayer(m)
+            m.set('PFM', PFMeasureGUB('M', m))
+        elseif Measure.is_nodal(m) && Measure.is_bilayer(m)
+            m.set('PFM', PFMeasureNUB('M', m))
+        elseif Measure.is_binodal(m) && Measure.is_bilayer(m)
+            m.set('PFM', PFMeasureBUB('M', m))
         else
             m.memorize('PFM').set('M', m)
         end
