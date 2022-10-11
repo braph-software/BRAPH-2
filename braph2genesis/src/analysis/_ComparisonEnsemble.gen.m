@@ -516,11 +516,17 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
     if isa(cp.getr('PFC'), 'NoValue')
         measure = cp.get('MEASURE');
         
-        if ~isempty(measure) && Measure.is_global(measure) && Measure.is_unilayer(measure)
+        if ~isempty(measure) && ...
+                ((Measure.is_global(measure) && Measure.is_unilayer(measure)) || ...
+                (Measure.is_global(measure) && Measure.is_superglobal(measure)))
             cp.set('PFC', PFComparisonEnsembleGU('CP', cp))
-        elseif ~isempty(measure) && Measure.is_nodal(measure) && Measure.is_unilayer(measure)
+        elseif ~isempty(measure) && ...
+                ((Measure.is_nodal(measure) && Measure.is_unilayer(measure)) || ...
+                (Measure.is_nodal(measure) && Measure.is_superglobal(measure)))                
             cp.set('PFC', PFComparisonEnsembleNU('CP', cp))
-        elseif ~isempty(measure) && Measure.is_binodal(measure) && Measure.is_unilayer(measure)
+        elseif ~isempty(measure) && ...
+                ((Measure.is_binodal(measure) && Measure.is_unilayer(measure)) || ...
+                (Measure.is_binodal(measure) && Measure.is_superglobal(measure)))
             cp.set('PFC', PFComparisonEnsembleBU('CP', cp))
         else
             cp.memorize('PFC').set('CP', cp)
