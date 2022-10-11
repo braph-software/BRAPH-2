@@ -222,7 +222,7 @@ function h = plotAdjacency(pf)
         graph = pf.get('A').get('G_DICT').getItem(g_id);
         adjacency_matrix = graph.get('A');
     else
-        graph = pf.get('A').get('G_DICT').getItem(g_id);
+        graph = pf.get('A').get('G_DICT').getItem(str2double(pf.get('G')));
         adjacency_matrix = graph.get('A');
     end
    

@@ -85,7 +85,7 @@ function h = plotAdjacency(pf)
         multigraph = graph.get('A');
         correct_graph = multigraph{index, index};
     else
-        graph = pf.get('A').get('G_DICT').getItem(g_id);
+        graph = pf.get('A').get('G_DICT').getItem(str2double(pf.get('G')));
         multigraph = graph.get('A');
         correct_graph = multigraph{index, index};
     end
