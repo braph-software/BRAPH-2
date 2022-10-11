@@ -58,7 +58,7 @@ if ~braph2_testing
             sph_dict = pf.get('SPH_DICT');
             for i = 1:sph_dict.length
                 sph = sph_dict.getItem(i);
-                default_value = sph.get('SPHERESIZE');
+                default_value = sph.getPropDefault('SPHERESIZE');
                 sph.set('SPHERESIZE', default_value);
             end
         end
@@ -66,14 +66,14 @@ if ~braph2_testing
             sym_dict = pf.get('SYM_DICT');
             for i = 1:sym_dict.length
                 sym = sym_dict.getItem(i);
-                default_value = sym.get('SYMBOLSIZE');
+                default_value = sym.getPropDefault('SYMBOLSIZE');
                 sym.set('SYMBOLSIZE', default_value);
             end            
         end        
     end
     
     % update state of toggle tool
-    set(pf.toolbar_measure, 'State', pf.get('MEASURES'))
+%     set(pf.toolbar_measure, 'State', pf.get('MEASURES'))
 end
 
 %% ¡props!
@@ -123,7 +123,7 @@ function h_panel = draw(pf, varargin)
     % get toolbars
     if ~check_graphics(pf.h_axes, 'uitoolbar')        
         pf.toolbar = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'ToolBar');
-        pf.toolbar_measure = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'toolbar_measure');
+%         pf.toolbar_measure = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'toolbar_measure');
         pf.toolbar_edges = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'toolbar_edges');
     end
 

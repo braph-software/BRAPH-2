@@ -59,15 +59,22 @@ function update(pr)
         set(pr.dropdown, 'Enable', pr.get('ENABLE'))
     end
     
-    if ~pr.get('G').contains(el.get(prop))
+    if ~strcmp(el.get(prop), 'Mean Graph') && ~pr.get('G').contains(el.get(prop))
         el.set(prop, pr.get('G').getItem(1).get('ID'))
     end
     
+    full_item_vector = [{'Mean Graph'} pr.get('G').getKeys()];
+    inner_value = el.get(prop);
     
+    if (isa(inner_value, 'numeric') && inner_value == 1) || strcmp(inner_value, 'Mean Graph')
+        val_tmp = 'Mean Graph';
+    else
+        val_tmp = pr.get('G').getItem(inner_value).get('ID');
+    end
     
     set(pr.dropdown, ...
-        'Items', pr.get('G').getKeys(), ...
-        'Value', pr.get('G').getItem(el.get(prop)).get('ID') ...
+        'Items', full_item_vector, ...
+        'Value', val_tmp ...
         )
 
     value = el.getr(prop);

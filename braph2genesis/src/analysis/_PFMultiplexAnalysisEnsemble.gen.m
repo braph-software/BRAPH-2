@@ -43,14 +43,31 @@ function h = plotAdjacency(pf)
     
     % select correct matrix, A is a [n n] where n is the number of layers,
     % the diagonal is where the info is kept
-    g_id = str2double(pf.get('G'));
-    if isnan(g_id)
-        g_id = pf.get('G');
-    end
-    graph = pf.get('A').get('G_DICT').getItem(g_id);
+    % get subject graph
+    g_id = pf.get('G');
     l = str2double(pf.get('LAYER'));
-    multiplex = graph.get('A');    
-    correct_graph = multiplex{l, l};
+
+    if isequal(g_id, 'Mean Graph')
+        g_dict = pf.get('A').get('G_DICT');
+        adjacency_matrix = 0;
+        for i = 1:g_dict.length()
+            g_temp = g_dict.getItem(i);
+            multigraph = g_temp.get('A');
+            correct_graph = multigraph{l, l};
+            adjacency_matrix = adjacency_matrix + correct_graph;
+        end
+        correct_graph = adjacency_matrix ./ g_dict.length();
+    elseif isnan(str2double(pf.get('G')))
+        g_id = pf.get('G');
+        graph = pf.get('A').get('G_DICT').getItem(g_id);
+        multigraph = graph.get('A');
+        correct_graph = multigraph{l, l};
+    else
+        graph = pf.get('A').get('G_DICT').getItem(g_id);
+        multigraph = graph.get('A');
+        correct_graph = multigraph{l, l};
+    end
+
     % plot
     if pf.get('ST_ADJACENCY').get('BINARY')
         h = pf.plotb(correct_graph);

@@ -15,7 +15,7 @@ p % handle for panel
 h_axes % handle for axes
 
 toolbar
-toolbar_measure
+% toolbar_measure
 toolbar_edges
 
 %% ¡props_update!
@@ -56,7 +56,7 @@ if ~braph2_testing
             sph_dict = pf.get('SPH_DICT');
             for i = 1:sph_dict.length
                 sph = sph_dict.getItem(i);
-                default_value = sph.get('SPHERESIZE');
+                default_value = sph.getPropDefault('SPHERESIZE');
                 sph.set('SPHERESIZE', default_value);
             end
         end
@@ -64,14 +64,72 @@ if ~braph2_testing
             sym_dict = pf.get('SYM_DICT');
             for i = 1:sym_dict.length
                 sym = sym_dict.getItem(i);
-                default_value = sym.get('SYMBOLSIZE');
+                default_value = sym.getPropDefault('SYMBOLSIZE');
                 sym.set('SYMBOLSIZE', default_value);
             end            
         end        
     end
     
     % update state of toggle tool
-    set(pf.toolbar_measure, 'State', pf.get('MEASURES'))
+%     set(pf.toolbar_measure, 'State', pf.get('MEASURES'))
+end
+
+%%% ¡prop!
+FDRSHOW (figure, logical) determines whether the nodes are shown based on fdr correction.
+%%%% ¡default!
+false
+%%%% ¡postprocessing!
+if ~braph2_testing
+    if pf.get('FDRSHOW')
+        % remove values that do no pass fdr
+        % get fdr q value.
+        measure = pf.get('ME'); % comparison
+        q_val = pf.get('QVAL');
+        val = measure.get('P1');
+        index = str2double(pf.get('DT'));
+        val = val{index};
+        
+        if size(val, 1) > size(val, 2)
+            val = val';
+        end
+        
+        [~, mask] = fdr(val, q_val);
+        
+        if pf.get('SPHS')
+            sph_dict = pf.get('SPH_DICT');
+            for i = 1:sph_dict.length
+                sph = sph_dict.getItem(i);
+                if ~mask(i)
+                    set(sph, 'Visible', false);
+                end
+            end
+        end
+        if pf.get('SYMS')
+            sym_dict = pf.get('SYM_DICT');
+            for i = 1:sym_dict.length
+                sym = sym_dict.getItem(i);
+                if ~mask(i)
+                    set(sym, 'Visible', false);
+                end
+            end
+        end
+    else
+        % show everything
+        if pf.get('SPHS')
+            sph_dict = pf.get('SPH_DICT');
+            for i = 1:sph_dict.length
+                sph = sph_dict.getItem(i);
+                set(sph, 'Visible', true);
+            end
+        end
+        if pf.get('SYMS')
+            sym_dict = pf.get('SYM_DICT');
+            for i = 1:sym_dict.length
+                sym = sym_dict.getItem(i);
+                set(sym, 'Visible', true);
+            end
+        end        
+    end
 end
 
 %% ¡props!
@@ -123,7 +181,7 @@ function h_panel = draw(pf, varargin)
     % get toolbars
     if ~check_graphics(pf.h_axes, 'uitoolbar')        
         pf.toolbar = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'ToolBar');
-        pf.toolbar_measure = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'toolbar_measure');
+%         pf.toolbar_measure = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'toolbar_measure');
         pf.toolbar_edges = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'toolbar_edges');
     end
 

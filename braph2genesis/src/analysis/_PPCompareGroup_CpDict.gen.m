@@ -475,8 +475,9 @@ end
 function cb_measure_open_brain_graph(pr)
     el = pr.get('EL');
     prop = pr.get('PROP');
-    g = el.get('A1').get('G_DICT').getItem(1);
     
+    g = el.get('A1').get('G');
+        
     mlist = Graph.getCompatibleMeasureList(g);
     
     f = ancestor(pr.p, 'figure'); % parent GUI 
@@ -488,7 +489,7 @@ function cb_measure_open_brain_graph(pr)
         measure = mlist{i};
 
         cp = el.getComparison(measure);
-        if Measure.is_nodal(cp)
+        if Measure.is_nodal(cp.get('MEASURE_TEMPLATE'))
             if length(pr.f_brain_graphs) < i || ~check_graphics(pr.f_brain_graphs{i}, 'figure')
                 pr.f_brain_graphs{i} = GUIFig( ...
                     'PF', cp.memorize('PFBG'), ... % ensure that the property is stored

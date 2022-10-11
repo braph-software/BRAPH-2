@@ -53,7 +53,11 @@ function p_out = draw(pr, varargin)
     end
     function cb_checkbox_weighted(~, ~) % (src, event)
         value = get(pr.checkbox_weighted, 'Value');
-        set(pr.checkbox_binary, 'Value', ~value);
+        if value
+            set(pr.checkbox_binary, 'Value', ~value);
+            set(pr.checkbox_hist, 'Value', ~value);
+            
+        end
         pr.cb_graph_s()
         state_colorbar()
     end
@@ -109,7 +113,10 @@ function p_out = draw(pr, varargin)
     
     function cb_checkbox_binary(~, ~) % (src, event)
         value = get(pr.checkbox_binary, 'Value');
-        set(pr.checkbox_weighted, 'Value', ~value);
+        if value
+            set(pr.checkbox_weighted, 'Value', ~value);
+            set(pr.checkbox_hist, 'Value', ~value);
+        end
         pr.cb_graph_s()  
         state_colorbar()
     end
@@ -139,6 +146,12 @@ function p_out = draw(pr, varargin)
             );
     end
     function cb_checkbox_hist(~, ~) % (src, event)
+        value = get(pr.checkbox_hist, 'Value');
+        if value
+            set(pr.checkbox_weighted, 'Value', ~value);
+            set(pr.checkbox_binary, 'Value', ~value);
+            
+        end
         pr.cb_graph_s()
     end   
 

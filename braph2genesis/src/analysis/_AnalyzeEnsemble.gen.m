@@ -81,15 +81,15 @@ PFGD (gui, item) contains the panel figure of the graph dictionary.
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
     if isa(a.getr('PFGD'), 'NoValue')
-        tmp_g_dict = a.get('G_DICT').getItems();
+        tmp_g = a.get('graph_template');
         
-        if ~isempty(tmp_g_dict) && Graph.is_graph(tmp_g_dict{1}) && ~Graph.is_multigraph(tmp_g_dict{1})
+        if ~isempty(tmp_g) && Graph.is_graph(tmp_g) && ~Graph.is_multigraph(tmp_g)
             a.set('PFGD', PFAnalysisEnsemble('A', a))
-        elseif ~isempty(tmp_g_dict) && Graph.is_multigraph(tmp_g_dict{1})
+        elseif ~isempty(tmp_g) && Graph.is_multigraph(tmp_g)
             a.set('PFGD', PFMultiAnalysisEnsemble('A', a))
-        elseif ~isempty(tmp_g_dict) && Graph.is_multiplex(tmp_g_dict{1}) && Graph.is_weighted(tmp_g_dict{1})
+        elseif ~isempty(tmp_g) && Graph.is_multiplex(tmp_g) && Graph.is_weighted(tmp_g)
             a.set('PFGD', PFMultiplexAnalysisEnsemble('A', a))
-        elseif ~isempty(tmp_g_dict) && Graph.is_multiplex(tmp_g_dict{1}) && Graph.is_binary(tmp_g_dict{1})
+        elseif ~isempty(tmp_g) && Graph.is_multiplex(tmp_g) && Graph.is_binary(tmp_g)
             a.set('PFGD', PFMultiplexBinaryAnalysisEnsemble('A', a))
         else
             a.memorize('PFGD').set('A', a)

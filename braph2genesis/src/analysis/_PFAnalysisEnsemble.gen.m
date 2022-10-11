@@ -209,8 +209,23 @@ function h = plotAdjacency(pf)
     if isnan(g_id)
         g_id = pf.get('G');
     end
-    graph = pf.get('A').get('G_DICT').getItem(g_id);
-    adjacency_matrix = graph.get('A');
+    if isequal(g_id, 'Mean Graph')
+        g_dict = pf.get('A').get('G_DICT');
+        adjacency_matrix = 0;
+        for i = 1:g_dict.length()
+            g_temp = g_dict.getItem(i);
+            adjacency_matrix = adjacency_matrix + g_temp.get('A');
+        end
+        adjacency_matrix = adjacency_matrix ./ g_dict.length();
+    elseif isnan(g_id)
+        g_id = pf.get('G');
+        graph = pf.get('A').get('G_DICT').getItem(g_id);
+        adjacency_matrix = graph.get('A');
+    else
+        graph = pf.get('A').get('G_DICT').getItem(g_id);
+        adjacency_matrix = graph.get('A');
+    end
+   
     % plot
     if pf.get('ST_ADJACENCY').get('BINARY')
         h = pf.plotb(adjacency_matrix);
@@ -232,7 +247,7 @@ function str = tostring(pf, varargin)
     %
     % See also disp, tree.
 
-    str = ['Plot ' pf.get('A').get('G_DICT').get('ID')];
+    str = ['Plot ' pf.get('A').get('ID')];
     str = tostring(str, varargin{:});
     str = str(2:1:end-1);
 end
