@@ -73,11 +73,11 @@ for i = 1:1:gr.get('SUB_DICT').length()
         input_label = mlist;
         for j = 1:length(mlist)
             if Measure.is_nodal(mlist{j})
-                input_nodal = [input_nodal cell2mat(g.getMeasure(mlist{j}).get('M'))];
+                input_nodal = [input_nodal; cell2mat(g.getMeasure(mlist{j}).get('M'))];
             elseif Measure.is_global(mlist{j})
-                input_global = [input_global cell2mat(g.getMeasure(mlist{j}).get('M'))];
+                input_global = [input_global; cell2mat(g.getMeasure(mlist{j}).get('M'))];
             else
-                input_binodal = [input_binodal cell2mat(g.getMeasure(mlist{j}).get('M'))];
+                input_binodal = [input_binodal; cell2mat(g.getMeasure(mlist{j}).get('M'))];
             end
         end
         input = {input_global input_nodal input_binodal};

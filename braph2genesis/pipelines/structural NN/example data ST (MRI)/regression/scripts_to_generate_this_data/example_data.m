@@ -12,13 +12,18 @@ N_nodes = 68; % Desikan atlas
 N_groups = 100;
 
 for i = 1:1:N_groups
-    deviation = 1 + (2 - 1)*rand(1);
-    mean(i) = 1 + (25 - 1)*rand(1);
-    R(i, :) = deviation.*randn(N_nodes, 1) + mean(i);
+    %deviation = 1 + (2 - 1)*rand(1);
+    mean_all(i) = 30 + (10 - 1)*rand(1);
+    %R(i, :) = deviation.*randn(N_nodes, 1) + mean_all(i);
+    R_ind = randn(N_nodes, 1) + mean_all(i);
+    R_ind(R_ind < 0) = 0;
+    mean_all(i) = mean(R_ind, 'all');
+    R(i, :) = R_ind;
 end
 
 %% We need only positive values
-R = R + abs(min(min(R)));
+%R = R + abs(min(min(R)));
+%R(R < 0) = 0;
 
 %% The subjects will be saved in a table - Specify row and column names
 % row
@@ -49,10 +54,10 @@ T_group = array2table(R, 'VariableNames', reg_Tags);
 
 %% Create covariates
 % Age - radnomly drawn between 50 and 80 years old
-Age_init = 50;
+Age_init = 10;
 Age_fin  = 80;
-Gr_Age = rescale(mean, Age_init, Age_fin);
-
+Gr_Age = rescale(mean_all, Age_init, Age_fin);
+%Gr_Age = mean_all;
 % Sex
 gr_randsex = randn(N_groups, 1);
 Gr_Sex = num2cell(gr_randsex);

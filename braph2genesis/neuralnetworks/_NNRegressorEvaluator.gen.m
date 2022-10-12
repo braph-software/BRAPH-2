@@ -16,7 +16,7 @@ elseif any(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'),
     % now it only works for (1) input being adj of a graph and (2) no feature selection 
     nn = nne.get('NN');
     gr = nne.get('GR');
-    net = nn.get('MODEL');
+    net = nn.memorize('MODEL');
 
     [inputs, num_features] = nn.reconstruct_inputs(gr);
     [targets, classes] = nn.reconstruct_targets(gr);

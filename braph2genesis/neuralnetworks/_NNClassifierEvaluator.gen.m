@@ -205,7 +205,7 @@ else
     gr = nne.get('GR');
     inputs = nn.reconstruct_inputs(gr);
     [targets, classes] = nn.reconstruct_targets(gr);
-    net = nn.get('MODEL');
+    net = nn.memorize('MODEL');
     if isa(net, 'NoValue') || ~BRAPH2.installed('NN', 'msgbox')
         predictions = zeros(gr.get('SUB_DICT').length(), 2);
     else

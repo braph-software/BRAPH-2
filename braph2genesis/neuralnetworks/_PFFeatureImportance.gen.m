@@ -57,6 +57,7 @@ if (isempty(varargin) || pf.prop_set('EDGES', varargin)) && ~braph2_testing
                         if fi_current(i, j) == 0
                             pf.link_edge_off(i, j)
                         else
+                            pf.link_edge(i,j)
                             pf.link_edge_on(i, j)
                         end
                     end
