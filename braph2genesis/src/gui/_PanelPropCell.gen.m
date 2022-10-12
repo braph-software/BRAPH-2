@@ -279,6 +279,10 @@ function update(pr)
                     
                     tmp_data = get_p_value();
                     
+                    if size(tmp_data, 1) > size(tmp_data, 2)
+                        tmp_data = tmp_data';
+                    end
+                    
                     [~, mask] = fdr(tmp_data, el.get('QVALUE'));
                     [rows, cols] = find(mask);                   
                     
