@@ -26,6 +26,20 @@ negativity = Graph.NONNEGATIVE;
 
 %%% ¡prop!
 B (data, smatrix) is the input graph adjacency matrix.
+%%%% ¡gui!
+bas = g.get('BAS');
+if ~isempty(bas)
+    ba = bas{1};
+    br_ids = ba.get('BR_DICT').getKeys();
+    rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
+else
+    rowname = '{}';
+end
+
+pr = PanelPropMatrix('EL', g, 'PROP', GraphWU.B, ...
+    'ROWNAME', rowname, ...
+    'COLUMNNAME', rowname, ...
+    varargin{:});
 
 %%% ¡prop!
 ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
@@ -40,6 +54,11 @@ NUMBEROFWEIGHTS (parameter, scalar) specifies the number of weights sorted at th
 %% ¡props_update!
 
 %%% ¡prop!
+TEMPLATE (parameter, item) is the graph template to set the graph and measure parameters.
+%%%% ¡settings!
+'GraphWU'
+
+%%% ¡prop!
 A (result, cell) is the symmetric non-negative adjacency matrix of the weighted undirected graph.
 %%%% ¡calculate!
 B = g.get('B');
@@ -52,6 +71,22 @@ B = standardize(B, varargin{:}); %% ensures all weights are between 0 and 1
 
 A = {B};
 value = A;
+%%%% ¡gui!
+bas = g.get('BAS');
+if ~isempty(bas)
+    ba = bas{1};
+    br_ids = ba.get('BR_DICT').getKeys();
+    rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
+else
+    rowname = '{}';
+end
+
+pr = PanelPropCell('EL', g, 'PROP', GraphWU.A, ...
+    'TAB_H', 40, ...
+    'XSLIDER', false, 'YSLIDER', false, ...
+    'ROWNAME', rowname, ...
+    'COLUMNNAME', rowname, ...
+    varargin{:});
 
 %% ¡staticmethods!
 function [random_A, correlation_coefficients] = randomize_A(A, attempts_per_edge, number_of_weights)

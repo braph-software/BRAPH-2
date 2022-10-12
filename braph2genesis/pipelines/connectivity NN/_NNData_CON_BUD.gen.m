@@ -16,12 +16,12 @@ DENSITIES (parameter, rvector) is the vector of densities.
 %% ¡props_update!
 
 %%% ¡prop!
-INPUT_TYPE (data, option) is the input type for training or testing the NN.
+INPUT_TYPE (parameter, option) is the input type for training or testing the NN.
 %%%% ¡settings!
 {'adjacency_matrices' 'graph_measures'}
 
 %%% ¡prop!
-G (data, item) is the graph for calculating the graph measures.
+G (parameter, item) is the graph for calculating the graph measures.
 %%%% ¡default!
 MultigraphBUD()
 
@@ -68,21 +68,23 @@ for i = 1:1:gr.get('SUB_DICT').length()
         'ID', ['g ' sub.get('ID')], ...
         'B', Callback('EL', sub, 'TAG', 'CON'), ...
         'DENSITIES', densities, ...
-        'BRAINATLAS', atlas ...
+        'BAS', atlas ...
         );
 
     if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
         adj = g.get('A'); 
         input = {};
-        for i = 1:length(adj)
-            input = [input adj{i, i}];
+        for j = 1:length(adj)
+            input = [input adj{j, j}];
         end
+        input_label = {'MultigraphBUD'};
 
     elseif string(nnd.get('INPUT_TYPE')) == "graph_measures"
         input_nodal = [];
         input_binodal = [];
         input_global = [];
         mlist = nnd.get('MEASURES');
+        input_label = mlist;
         for j = 1:length(mlist)
             if Measure.is_nodal(mlist{j})
                 input_nodal = [input_nodal; cell2mat(g.getMeasure(mlist{j}).get('M'))];
@@ -102,6 +104,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
         'sex', sub.get('sex'), ...
         'G', g, ...
         'INPUT', input, ...
+        'INPUT_LABEL', input_label, ...
         'TARGET_NAME', nnd.get('TARGET_NAME') ...
         );
 
@@ -115,6 +118,27 @@ nn_gr.set('sub_dict', nn_sub_dict);
 braph2waitbar(wb, 'close')
 
 value = nn_gr;
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'NNData_CON_BUD'
+%%%% ¡postprocessing!
+if nnd.prop_set(NNData_CON_BUD.TEMPLATE, varargin{:})
+    varargin = {};
+    
+    parameters = nnd.getProps(Category.PARAMETER);
+    for i = 1:1:length(parameters)
+        parameter = parameters(i);
+        
+        if parameter ~= NNData_CON_BUD.TEMPLATE
+            varargin{length(varargin) + 1} = parameter;
+            varargin{length(varargin) + 1} = Callback('EL', nnd.get('TEMPLATE'), 'PROP', parameter);
+        end
+    end
+    
+    nnd.set(varargin{:});
+end
 
 %% ¡tests!
 %%% ¡test!

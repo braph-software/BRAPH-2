@@ -2,12 +2,12 @@
 Flexibility < MultilayerCommunityStructure (m, flexibility) is the graph flexibility.
 
 %%% ¡description!
-The flexibility of each node is calculated as the number of times
-that it changes community assignment, normalized by the total possible 
-number of changes. In ordered multilayer networks (e.g. temporal, changes 
-are possible only between adjacent layers, whereas in categorical 
-multilayer networks, community assignment changes are possible between 
-any pairs of layers.
+The flexibility of each node in a multilayer network is calculated 
+as the number of times that it changes community assignment, 
+normalized by the total possible number of changes. In ordered 
+multilayer networks (e.g. temporal, changes are possible only between 
+adjacent layers, whereas in categorical multilayer networks,  
+community assignment changes are possible between any pairs of layers.
 
 %%% ¡shape!
 shape = Measure.NODAL;

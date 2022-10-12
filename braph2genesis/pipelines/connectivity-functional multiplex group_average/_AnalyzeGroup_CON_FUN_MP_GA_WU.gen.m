@@ -11,14 +11,17 @@ or binary undirected multigraphs with fixed densities.
 AnalyzeGroup_CON_FUN_MP_BUD, SubjectCON_FUN_MP, MultiplexWU.
 
 %% ¡props!
+
 %%% ¡prop!
 REPETITION(parameter, scalar) is the number of repetitions for functional data
 %%%% ¡default!
 1
+
 %%% ¡prop!
 FREQUENCYRULEMIN(parameter, scalar) is the minimum frequency value for functional data
 %%%% ¡default!
 0
+
 %%% ¡prop!
 FREQUENCYRULEMAX(parameter, scalar) is the maximum frequency value for functional data
 %%%% ¡default!
@@ -39,6 +42,11 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST
 Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 
 %% ¡props_update!
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'AnalyzeGroup_CON_FUN_MP_GA_WU'
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectCON_FUN_MP.
@@ -90,10 +98,17 @@ end
 
 A(1) = {data{1}/gr.get('SUB_DICT').length()};
 A(2) = {data{2}/gr.get('SUB_DICT').length()};
-					
+
+ba = BrainAtlas();
+if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
+    ba = gr.get('SUB_DICT').getItem(1).get('BA');
+end
+
 g = MultiplexWU( ...
     'ID', ['g ' gr.get('ID')], ...
-    'B', A ...
+    'B', A, ... % % % 'LAYERTICKS', [1:1:L], ...
+    'LAYERLABELS', cell2str({'CON', 'FUN'}), ...
+    'BAS', ba ...
     );
 
 value = g;

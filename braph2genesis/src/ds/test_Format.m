@@ -777,8 +777,8 @@ for i = 1:1:length(wrong_value)
     end
 end
 
-%% Test 2.MS: Check MARKERSTYLE
-% MARKERSTYLE formats that should be accepted
+%% Test 2.MS: Check MARKER
+% MARKER formats that should be accepted
 clear value
 value{1} = 'o';
 value{2} = '+';
@@ -795,9 +795,9 @@ value{12} = '>';
 value{13} = '<';
 value{14} = 'p';
 value{15} = 'h';
-value{16} = '';
+value{16} = 'none';
 
-% MARKERSTYLE formats that should NOT be accepted
+% MARKER formats that should NOT be accepted
 clear wrong_value
 wrong_value{1} = '-';
 wrong_value{2} = ':';
@@ -810,23 +810,23 @@ wrong_value{7} = Element();
 % tests
 for i = 1:1:length(value)
     if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
-        Format.checkFormat(Format.MARKERSTYLE, value{i})
+        Format.checkFormat(Format.MARKER, value{i})
     end
 end
 for i = 1:1:length(wrong_value)
     if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
-        assert_with_error('Format.checkFormat(Format.MARKERSTYLE, varargin{1})', error_identifier, wrong_value{i})
+        assert_with_error('Format.checkFormat(Format.MARKER, varargin{1})', error_identifier, wrong_value{i})
     end
 end
 
-%% Test 2.MS: Check MARKERSIZE
-% MARKERSIZE formats that should be accepted
+%% Test 2.MS: Check SIZE
+% SIZE formats that should be accepted
 clear value
 value{1} = .5;
 value{2} = 1;
 value{3} = 10;
 
-% MARKERSIZE formats that should NOT be accepted
+% SIZE formats that should NOT be accepted
 clear wrong_value
 wrong_value{1} = 0;
 wrong_value{2} = -1;
@@ -836,25 +836,25 @@ wrong_value{4} = Element();
 % tests
 for i = 1:1:length(value)
     if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
-        Format.checkFormat(Format.MARKERSIZE, value{i})
+        Format.checkFormat(Format.SIZE, value{i})
     end
 end
 for i = 1:1:length(wrong_value)
     if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
-        assert_with_error('Format.checkFormat(Format.MARKERSIZE, varargin{1})', error_identifier, wrong_value{i})
+        assert_with_error('Format.checkFormat(Format.SIZE, varargin{1})', error_identifier, wrong_value{i})
     end
 end
 
-%% Test 2.LS: Check LINESTYLE
-% LINESTYLE formats that should be accepted
+%% Test 2.LS: Check LINE
+% LINE formats that should be accepted
 clear value
 value{1} = '-';
 value{2} = ':';
 value{3} = '-.';
 value{4} = '--';
-value{5} = '';
+value{5} = 'none';
 
-% LINESTYLE formats that should NOT be accepted
+% LINE formats that should NOT be accepted
 clear wrong_value
 wrong_value{1} = 'o';
 wrong_value{2} = '+';
@@ -878,37 +878,11 @@ wrong_value{18} = Element();
 % tests
 for i = 1:1:length(value)
     if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
-        Format.checkFormat(Format.LINESTYLE, value{i})
+        Format.checkFormat(Format.LINE, value{i})
     end
 end
 for i = 1:1:length(wrong_value)
     if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
-        assert_with_error('Format.checkFormat(Format.LINESTYLE, varargin{1})', error_identifier, wrong_value{i})
-    end
-end
-
-%% Test 2.LW: Check LINEWIDTH
-% LINEWIDTH formats that should be accepted
-clear value
-value{1} = .5;
-value{2} = 1;
-value{3} = 10;
-
-% LINEWIDTH formats that should NOT be accepted
-clear wrong_value
-wrong_value{1} = 0;
-wrong_value{2} = -1;
-wrong_value{3} = 'large';
-wrong_value{4} = Element();
-
-% tests
-for i = 1:1:length(value)
-    if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
-        Format.checkFormat(Format.LINEWIDTH, value{i})
-    end
-end
-for i = 1:1:length(wrong_value)
-    if rand() >= (1 - test_probability) * BRAPH2.TEST_RANDOM
-        assert_with_error('Format.checkFormat(Format.LINEWIDTH, varargin{1})', error_identifier, wrong_value{i})
+        assert_with_error('Format.checkFormat(Format.LINE, varargin{1})', error_identifier, wrong_value{i})
     end
 end

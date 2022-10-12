@@ -104,7 +104,8 @@ if isfile(file)
         close(wb)
     end
 elseif ~braph2_testing()
-    error([BRAPH2.STR ':ImporterPipelineBRAPH2: ' BRAPH2.BUG_IO]);
+    error([BRAPH2.STR ':ImporterPipelineBRAPH2:' BRAPH2.BUG_IO], ...
+        [BRAPH2.STR ':ImporterPipelineBRAPH2:' BRAPH2.BUG_IO]);
 end
 
 value = pip;
@@ -113,7 +114,7 @@ value = pip;
 function uigetfile(im)
     % UIGETFILE opens a dialog box to get the BRAPH2 file from where to load the pipeline.
     
-    [filename, filepath, filterindex] = uigetfile(BRAPH2.EXT_PIPELINE, 'Select TXT file');
+    [filename, filepath, filterindex] = uigetfile(BRAPH2.EXT_PIPELINE, 'Select BRAPH2 file');
     if filterindex
         file = [filepath filename];
         im.set('FILE', file);
@@ -127,7 +128,7 @@ end
 Example
 %%%% ¡code!
 im = ImporterPipelineBRAPH2(...
-    'FILE', [fileparts(which('SubjectST')) filesep 'pipeline_structural_comparison_wu.braph2'], ...
+    'FILE', [fileparts(which('Pipeline')) filesep 'pipeline_atlas.braph2'], ...
     'WAITBAR', true ...
     ); 
 pip = im.get('PIP');

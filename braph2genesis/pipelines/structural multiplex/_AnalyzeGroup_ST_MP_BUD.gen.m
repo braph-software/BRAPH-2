@@ -27,11 +27,19 @@ Correlation.ZERO
 %%% ¡prop!
 DENSITIES (parameter, rvector) is the vector of densities.
 %%%% ¡default!
-0
+[1:1:10]
 %%%% ¡gui!
-pr = PlotPropSmartVector('EL', a, 'PROP', AnalyzeGroup_ST_MP_BUD.DENSITIES, 'MAX', 100, 'MIN', 0, varargin{:});
+pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeGroup_ST_BUD.DENSITIES, ...
+    'MIN', 0, 'MAX', 100, ...
+    'DEFAULT', AnalyzeGroup_ST_BUD.getPropDefault('DENSITIES'), ...
+    varargin{:});
 
 %% ¡props_update!
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'AnalyzeGroup_ST_MP_BUD'
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectST_MP.
@@ -47,10 +55,6 @@ MultiplexBUD()
 %%%% ¡calculate!
 gr = a.get('GR');
 data_list = cellfun(@(x) x.get('ST_MP'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
-atlas = BrainAtlas();
-if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-    atlas = gr.get('SUB_DICT').getItem(1).get('BA');
-end
 
 if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
     age_list = cellfun(@(x) x.get('age'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
@@ -62,21 +66,22 @@ if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SP
             case 'female'
                 sex(i) = 1;
             case 'male'
-                sex(i) = 0;
-            otherwise
                 sex(i) = -1;
+            otherwise
+                sex(i) = 0;
         end
     end
     covariates = [age, sex];
 end
 
 if isempty(data_list)
+    layerlabels = {'', ''};
     A ={[], []};
 else
     L = gr.get('SUB_DICT').getItem(1).get('L');  % number of layers
     br_number = gr.get('SUB_DICT').getItem(1).get('ba').get('BR_DICT').length();  % number of regions
     data = cell(L, 1);
-    for i=1:L
+    for i=1:1:L
         data_layer = zeros(length(data_list), br_number);
         for j=1:length(data_list)
             sub_cell = data_list{j};
@@ -85,8 +90,10 @@ else
         data(i) = {data_layer};
     end
     
+    layerlabels = {};
     A = cell(1, L);
-    for i = 1:L
+    for i = 1:1:L
+        layerlabels = [layerlabels, cellfun(@(x) ['L' num2str(i) ' ' num2str(x) '%'], num2cell(a.get('DENSITIES')), 'UniformOutput', false)];
         if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
             A(i) = {Correlation.getAdjacencyMatrix(data{i}, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'), covariates)};
         else
@@ -96,28 +103,35 @@ else
 end
 densities = a.get('DENSITIES'); % this is a vector
 
+ba = BrainAtlas();
+if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
+    ba = gr.get('SUB_DICT').getItem(1).get('BA');
+end
+
 g = MultiplexBUD( ...
     'ID', ['g ' gr.get('ID')], ...
     'B', A, ...
-    'DENSITIES', densities, ...
-    'BRAINATLAS', atlas ...
+    'DENSITIES', densities, ... 
+    'LAYERTICKS', densities, ...
+    'LAYERLABELS', cell2str(layerlabels), ...
+    'BAS', ba ...
     );
 
 value = g;
-%%%% ¡gui!
-pr = PPAnalyzeGroupMP_G('EL', a, 'PROP', AnalyzeGroup_ST_MP_BUD.G, 'WAITBAR', true, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPAnalyzeGroupMP_G('EL', a, 'PROP', AnalyzeGroup_ST_MP_BUD.G, 'WAITBAR', true, varargin{:});
 
-%% ¡methods!
-function pr = getPPCompareGroup_CPDict(a, varargin) 
-    %GEPPPCOMPAREGROUP_CPDICT returns the comparison plot panel compatible with the analysis.
-    %
-    % PR = GEPPPCOMPAREGROUP_CPDICT(A) returns the comparison plot panel
-    %  that is compatible with the analyze group.
-    %
-    % See also CompareGroup.
-    
-    pr = PPCompareGroup_CPDict_ST_MP_BUD(varargin{:});
-end
+% % % %% ¡methods!
+% % % function pr = getPPCompareGroup_CPDict(a, varargin) 
+% % %     %GEPPPCOMPAREGROUP_CPDICT returns the comparison plot panel compatible with the analysis.
+% % %     %
+% % %     % PR = GEPPPCOMPAREGROUP_CPDICT(A) returns the comparison plot panel
+% % %     %  that is compatible with the analyze group.
+% % %     %
+% % %     % See also CompareGroup.
+% % %     
+% % %     pr = PPCompareGroup_CPDict_ST_MP_BUD(varargin{:});
+% % % end
 
 %% ¡tests!
 

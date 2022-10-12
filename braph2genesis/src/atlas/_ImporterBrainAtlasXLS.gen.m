@@ -33,7 +33,11 @@ if ~isfile(file) && ~braph2_testing()
     im.uigetfile()
     file = im.memorize('FILE');
 end
-if isfile(file)
+
+if isempty(file) && ~braph2_testing()
+    error([BRAPH2.STR ':ImporterBrainAtlasXLS:' BRAPH2.CANCEL_IO], ...
+        [BRAPH2.STR ':ImporterBrainAtlasXLS:' BRAPH2.CANCEL_IO]);
+elseif isfile(file)
     wb = braph2waitbar(im.get('WAITBAR'), 0, 'Reading File ...');
 
     try
@@ -75,7 +79,8 @@ if isfile(file)
     
     braph2waitbar(wb, 'close')
 elseif ~braph2_testing()
-    error([BRAPH2.STR ':ImporterBrainAtlasXLS: ' BRAPH2.BUG_IO]);
+    error([BRAPH2.STR ':ImporterBrainAtlasXLS:' BRAPH2.BUG_IO], ...
+        [BRAPH2.STR ':ImporterBrainAtlasXLS:' BRAPH2.BUG_IO]);
 end
 
 value = ba;

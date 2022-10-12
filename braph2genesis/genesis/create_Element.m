@@ -47,7 +47,7 @@ function create_Element(generator_file, target_dir)
 %  <strong>%%%% ¡panel!</strong>
 %   GUI code to represent the panel of the element. 
 %   Can be on multiple lines.
-%   Should return a Plot object in 'pe'
+%   Should return a PanelPlot object in 'pe'
 %  <strong>%%%% ¡menu_import!</strong>
 %   Menu Import for the GUI figure. 
 %   The element is el.
@@ -75,6 +75,9 @@ function create_Element(generator_file, target_dir)
 %   value), executed on ALL unlocked props after each set operation.
 %   Can be on multiple lines.
 %   Does not return anything.
+%   To check whether a prop has been set in the current setting cycle, use
+%    el.prop_set('POINTER1', varargin)
+%    el.prop_set({'POINTER1', 'POINTER2'}, varargin)
 %  <strong>%%%% ¡check_prop!</strong>
 %   Code to check prop format (before calculation).
 %   Can be on multiple lines.
@@ -94,7 +97,7 @@ function create_Element(generator_file, target_dir)
 %  <strong>%%%% ¡gui!</strong>
 %   GUI code for representing the panel of the prop.
 %   Can be on multiple lines.
-%   Should return a PlotProp object in 'pr'.
+%   Should return a PanelProp object in 'pr'.
 % <strong>%%% ¡prop!</strong>
 %   <tag2> ...
 % 
@@ -106,7 +109,7 @@ function create_Element(generator_file, target_dir)
 %  <strong>%%%% ¡conditioning!</strong>
 %   Update value conditioning (before checks and calculation).
 %  <strong>%%%% ¡postprocessing!</strong>
-%   Update value postprocessing (after setting, bur before checking, value).
+%   Update value postprocessing (after setting, but before checking, value).
 %  <strong>%%%% ¡check_prop!</strong>
 %   Updated check prop format (before calculation).
 %  <strong>%%%% ¡check_value!</strong>
@@ -286,7 +289,7 @@ generate_header()
             g(0, ['classdef (' class_attributes ') ' class_name ' < ' superclass_name])
         end
         gs(1, {
-            ['% ' class_name ' ' header_description '.']
+            ['%' class_name ' ' header_description '.']
             ['% It is a subclass of <a href="matlab:help ' superclass_name '">' superclass_name '</a>.']
              '%'
             })
@@ -419,9 +422,9 @@ generate_header()
              '%  checkFormat - returns whether a value format is correct/error'
              '%'
             ['% ' class_name ' methods (GUI):']
-             '%  getGUI - returns the element GUI'
-             '%  getPlotElement - returns the element plot'
-             '%  getPlotProp - returns a prop plot'
+             '%  getGUIElement - returns the element GUI'
+             '%  getPanelElement - returns the element panel'
+             '%  getPanelProp - returns a prop panel'
              '%'
             ['% ' class_name ' methods (GUI, Static):']
              '%  getGUIMenuImport - returns an importer menu'
@@ -1461,7 +1464,7 @@ generate_constructor()
         g(1, 'methods % constructor')
             g(2, ['function ' moniker ' = ' class_name '(varargin)'])
                 gs(3, {
-                    ['% ' class_name '() creates a ' descriptive_name '.']
+                    ['%' class_name '() creates a ' descriptive_name '.']
                      '%'
                     ['% ' class_name '(PROP, VALUE, ...) with property PROP initialized to VALUE.']
                      '%'
@@ -1521,7 +1524,7 @@ generate_postprocessing()
             return
         end
         g(1, 'methods (Access=protected) % postprocessing')
-            g(2, ['function postprocessing(' moniker ', prop)'])
+            g(2, ['function postprocessing(' moniker ', prop, varargin)'])
                 g(3, 'switch prop')
                     for i = 1:1:numel(props)
                         if numel(props{i}.postprocessing) > 1 || ~isempty(props{i}.postprocessing{1})
@@ -1538,7 +1541,7 @@ generate_postprocessing()
                         end
                     end
                     g(4, 'otherwise')
-                        gs(5, {['postprocessing@' superclass_name '(' moniker ', prop);'], ''})
+                        gs(5, {['postprocessing@' superclass_name '(' moniker ', prop, varargin{:});'], ''})
                 g(3, 'end')
             g(2, 'end')
         g(1, 'end')
@@ -1634,32 +1637,34 @@ generate_gui()
             if ~(numel(gui_panel) == 1 && isempty(gui_panel{1})) && ...
                     any(cellfun(@(x) isempty(x), gui_menu_import)) && ...
                     any(cellfun(@(x) isempty(x), gui_menu_export))
-                g(2, ['function pe = getPlotElement(' moniker ', varargin)'])
+                g(2, ['function pe = getPanelElement(' moniker ', varargin)'])
                 gs(3, {
-                     '%GETPLOTELEMENT returns the element plot.'
+                     '%GETPANELELEMENT returns the element panel.'
                      '%'
-                     '% PE = GETPLOTELEMENT(EL) returns the plot of element EL.'
+                     '% PE = GETPANELELEMENT(EL) returns the panel of element EL.'
                      '%'
-                     '% PE = GETPLOTELEMENT(EL, ''Name'', Value, ...) sets the settings of PlotElement.'
+                     '% PE = GETPANELELEMENT(EL, ''Name'', Value, ...) sets the settings of PanelElement.'
                      '%'
-                     '% See also PlotElement.'
+                     '% See also PanelElement.'
                      ''
                     })
                     gs(3, gui_panel)
                 g(2, 'end')
             end
-            if any(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props)) || any(cellfun(@(x) numel(x.gui) == 1 && isempty(x.gui{1}), props_update))
-                g(2, ['function pr = getPlotProp(' moniker ', prop, varargin)'])
+            if any(cellfun(@(x) numel(x.gui) >= 1 || ~isempty(x.gui{1}), props)) || any(cellfun(@(x) numel(x.gui) >= 1 || ~isempty(x.gui{1}), props_update))
+                g(2, ['function pr = getPanelProp(' moniker ', prop, varargin)'])
                 gs(3, {
-                    '%GETPLOTPROP returns a prop plot.'
+                    '%GETPANELPROP returns a prop panel.'
                     '%'
-                    '% PR = GETPLOTPROP(EL, PROP) returns the plot of prop PROP.'
+                    '% PR = GETPANELPROP(EL, PROP) returns the panel of prop PROP.'
                     '%'
-                    '% PR = GETPLOTPROP(EL, PROP, ''Name'', Value, ...) sets the settings.'
+                    '% PR = GETPANELPROP(EL, PROP, ''Name'', Value, ...) sets the settings.'
                     '%'
-                    '% See also PlotProp, PlotPropCell, PlotPropClass, PlotPropClassList,'
-                    '%  PlotPropIDict, PlotPropItem, PlotPropItemList, PlotPropLogical,'
-                    '%  PlotPropMatrix, PlotPropOption, PlotPropScalar, PlotPropString.'
+                    '% See also PanelProp, PanelPropAlpha, PanelPropCell, PanelPropClass,'
+                    '%  PanelPropClassList, PanelPropColor, PanelPropIDict, PanelPropItem,'
+                    '%  PanelPropLine, PanelPropItemList, PanelPropLogical, PanelPropMarker,'
+                    '%  PanelPropMatrix, PanelPropNet, PanelPropOption, PanelPropScalar,'
+                    '%  PanelPropSize, PanelPropString.'
                     ''
                     })
                 g(3, 'switch prop')
@@ -1678,7 +1683,7 @@ generate_gui()
                     end
                 end
                 g(4, 'otherwise')
-                gs(5, {['pr = getPlotProp@' superclass_name '(' moniker ', prop, varargin{:});'], ''})
+                gs(5, {['pr = getPanelProp@' superclass_name '(' moniker ', prop, varargin{:});'], ''})
                 g(3, 'end')
                 g(2, 'end')
             end            

@@ -22,6 +22,7 @@ MultiplexBU
 MultiplexBUD
 MultiplexBUT
 MultiplexWU
+OrderedMultiplexWU
 
 %% ¡props!
 %%% ¡prop! 
@@ -41,7 +42,7 @@ A = g.get('A'); % cell matrix for graph, multigraph, or multiplex, etc
 eccentricity = Eccentricity('G', g, 'RULE', m.get('rule')).get('M');
 diameter = cell(g.layernumber(), 1);
 
-for li = 1:1:g.layernumber()
+parfor li = 1:1:g.layernumber()
     diameter(li) = {max(eccentricity{li})};
 end
 

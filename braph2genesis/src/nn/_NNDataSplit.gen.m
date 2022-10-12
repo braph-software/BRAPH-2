@@ -24,47 +24,49 @@ true
 GR_TRAIN (result, item) is a group of NN subjects for the training set.
 %%%% ¡settings!
 'NNGroup'
-%%%% ¡gui!
-pr = PPNNData_GR_NN('EL', nnds, 'PROP', NNDataSplit.GR_TRAIN, varargin{:});
 
 %%% ¡prop!
 GR_VAL (result, item) is a group of NN subjects for the validation set.
 %%%% ¡settings!
 'NNGroup'
-%%%% ¡gui!
-pr = PPNNData_GR_NN('EL', nnds, 'PROP', NNDataSplit.GR_VAL, varargin{:});
-
-%%% ¡prop!
-FEATURE_MASK (data, cell) is a given mask or a percentile to select relevant features.
-%%%% ¡default!
-num2cell(0.05)
-%%%% ¡conditioning!
-if ~iscell(value) & isnumeric(value)
-    value = num2cell(value);
-end
-%%%% ¡gui!
-pr = PlotPropSmartVector('EL', nnds, 'PROP', NNDataSplit.FEATURE_MASK, 'MAX', 10000000, 'MIN', 0, varargin{:});
 
 %%% ¡prop!
 FEATURE_SELECTION_ANALYSIS (result, cell) is an analysis for generating a feature mask.
 
 %%% ¡prop!
-GR_TRAIN_FS (result, item) is a group of NN subjects with feature mask for the training set.
+GR_TRAIN_FS (result, item) is a training group of NN subjects with feature selection analysis.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡default!
 NNGroup('SUB_CLASS', 'NNSubject', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject'))
-%%%% ¡gui!
-pr = PPNNData_GR_NN('EL', nnds, 'PROP', NNDataSplit.GR_TRAIN_FS, varargin{:});
 
 %%% ¡prop!
-GR_VAL_FS (result, item) is a group of NN subjects with feature mask for the validation set.
+GR_VAL_FS (result, item) is a validation group of NN subjects with feature selection analysis.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡default!
 NNGroup('SUB_CLASS', 'NNSubject', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject'))
-%%%% ¡gui!
-pr = PPNNData_GR_NN('EL', nnds, 'PROP', NNDataSplit.GR_VAL_FS, varargin{:});
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'NNDataSplit'
+%%%% ¡postprocessing!
+if nnds.prop_set(NNDataSplit.TEMPLATE, varargin{:})
+    varargin = {};
+    
+    parameters = nnds.getProps(Category.PARAMETER);
+    for i = 1:1:length(parameters)
+        parameter = parameters(i);
+        
+        if parameter ~= NNDataSplit.TEMPLATE
+            varargin{length(varargin) + 1} = parameter;
+            varargin{length(varargin) + 1} = Callback('EL', nnds.get('TEMPLATE'), 'PROP', parameter);
+        end
+    end
+    
+    nnds.set(varargin{:});
+end
 
 %% ¡methods!
 function score = mutual_information_analysis(nnds, X, Y, n)

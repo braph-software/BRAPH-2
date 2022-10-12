@@ -73,6 +73,27 @@ braph2waitbar(wb, 'close')
 
 value = nn_gr;
 
+%%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'NNData_ST'
+%%%% ¡postprocessing!
+if nnd.prop_set(NNData_ST.TEMPLATE, varargin{:})
+    varargin = {};
+    
+    parameters = nnd.getProps(Category.PARAMETER);
+    for i = 1:1:length(parameters)
+        parameter = parameters(i);
+        
+        if parameter ~= NNData_ST.TEMPLATE
+            varargin{length(varargin) + 1} = parameter;
+            varargin{length(varargin) + 1} = Callback('EL', nnd.get('TEMPLATE'), 'PROP', parameter);
+        end
+    end
+    
+    nnd.set(varargin{:});
+end
+
 %% ¡tests!
 %%% ¡test!
 %%%% ¡name!
@@ -89,11 +110,5 @@ example_NN_ST_Classification
 %%% ¡test!
 %%%% ¡name!
 Example 3
-%%%% ¡code!
-example_NNCV_ST_Regression
-
-%%% ¡test!
-%%%% ¡name!
-Example 4
 %%%% ¡code!
 example_NNCV_ST_Classification

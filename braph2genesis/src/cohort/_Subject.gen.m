@@ -13,14 +13,14 @@ Element, BrainAtlas, Group
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the subject.
-%%%% ¡gui!
-pr = PPSubject_ID('EL', sub, 'PROP', Subject.ID, varargin{:});
 
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the subject.
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the subject.
+%%%% ¡gui!
+pr = PanelPropStringTextArea('EL', sub, 'PROP', Subject.NOTES, varargin{:});
 
 %% ¡methods!
 function str = tostring(sub, varargin)

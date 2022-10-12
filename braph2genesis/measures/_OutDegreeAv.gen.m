@@ -29,7 +29,7 @@ g = m.get('G'); % graph from measure class
 
 out_degree_av = cell(g.layernumber(), 1);
 
-for li = 1:1:g.layernumber()
+parfor li = 1:1:g.layernumber()
     out_degree_av(li) = {mean(out_degree{li})};
 end
 

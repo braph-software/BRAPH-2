@@ -27,10 +27,13 @@ negativity = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
 DENSITIES (parameter, rvector) is the vector of densities.
-%%%% ¡gui!
-pr = PlotPropSmartVector('EL', g, 'PROP', MultigraphBUD.DENSITIES, 'MAX', 100, 'MIN', 0, varargin{:});
 
 %% ¡props_update!
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the graph template to set the graph and measure parameters.
+%%%% ¡settings!
+'MultigraphBUD'
 
 %%% ¡prop!
 A (result, cell) is the cell array with the symmetric binary adjacency matrices of the binary undirected multigraph.
@@ -40,12 +43,42 @@ A_WU = calculateValue@GraphWU(g, prop);
 densities = g.get('DENSITIES');
 A = cell(length(densities));
 
-for i = 1:1:length(densities)
-    density = densities(i);
-    A{i, i} = binarize(cell2mat(A_WU), 'density', density);
+if ~isempty(cell2mat(A_WU))
+    for i = 1:1:length(densities)
+        density = densities(i);
+        A{i, i} = dediagonalize(binarize(cell2mat(A_WU), 'density', density));
+    end
 end
 
 value = A;
+%%%% ¡gui!
+bas = g.get('BAS');
+if ~isempty(bas)
+    ba = bas{1};
+    br_ids = ba.get('BR_DICT').getKeys();
+    rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
+else
+    rowname = '{}';
+end
+
+if isempty(g.get('LAYERLABELS'))
+    xlayerlabels = PanelPropCell.getPropDefault('XSLIDERLABELS');
+    ylayerlabels = PanelPropCell.getPropDefault('YSLIDERLABELS');
+else
+    layerlabels = str2cell(g.get('LAYERLABELS'));
+    xlayerlabels = ['{' sprintf('''%s'' ', layerlabels{:}) '}'];
+    ylayerlabels = ['{' sprintf('''%s'' ', layerlabels{end:-1:1}) '}'];
+end
+
+pr = PanelPropCell('EL', g, 'PROP', GraphWU.A, ...
+    'TAB_H', 40, ...
+    'XYSLIDERLOCK', true, ... 
+    'XSLIDER', false, 'YSLIDER', true, ...
+    'XSLIDERLABELS', xlayerlabels, 'YSLIDERLABELS', ylayerlabels, ...
+    'XSLIDERHEIGHT', 3, 'YSLIDERWIDTH', 5, ...
+    'ROWNAME', rowname, ...
+    'COLUMNNAME', rowname, ...
+    varargin{:});
 
 %% ¡methods!
 function [l, ls] = layernumber(g)

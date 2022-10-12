@@ -166,15 +166,15 @@ BA (data, item) is a brain atlas.
 BrainAtlas()
 
 %%% ¡prop!
-L (data, scalar) is the number of multiplex layers of subject.
+LAYERLABELS (figure, string) are the layer labels (newline-separated string).
 %%%% ¡default!
-2
+cell2str({'CON', 'FUN'})
 
 %%% ¡prop!
 CON_FUN_MP (data, cell) is a cell containing with connectivity and functional data.
 %%%% ¡check_value!
 br_number = sub.get('BA').get('BR_DICT').length();
-num_layers = sub.get('L');
+num_layers = 2;
 check = (iscell(value) && isequal(length(value), num_layers)  && isequal(size(value{1}), [br_number, br_number]) && isequal(size(value{2}, 2), br_number)) || (isempty(value) && br_number == 0); 
 if check
     msg = 'All ok!';
@@ -184,8 +184,26 @@ else
            'and the second with the same number of columns as the brain regions (' int2str(br_number) ', functional data).'];
 end
 %%%% ¡gui!
-pr = PPSubjectCON_FUN_MP_CON_FUN_MP('EL', sub, 'PROP', SubjectCON_FUN_MP.CON_FUN_MP, varargin{:});
- 
+if isempty(sub.get('LAYERLABELS'))
+    xlayerlabels = PanelPropCell.getPropDefault('XSLIDERLABELS');
+else
+    xlayerlabels = str2cell(g.get('LAYERLABELS'));
+    xlayerlabels = ['{' sprintf('''%s'' ', xlayerlabels{end:-1:1}) '}'];
+end
+
+ba = sub.get('BA');
+br_ids = ba.get('BR_DICT').getKeys();
+rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
+
+pr = PanelPropCell('EL', sub, 'PROP', SubjectCON_FUN_MP.CON_FUN_MP, ...
+    'TAB_H', 40, ...
+    'XSLIDER', true, ...
+    'XSLIDERLABELS', xlayerlabels, ...
+    'YSLIDER', false, ...
+    'ROWNAME', rowname, ...
+    'COLUMNNAME', '''numbered''', ...
+    varargin{:});
+
 %%% ¡prop!
 age (data, scalar) is a scalar number containing the age of the subject.
 %%%% ¡default!

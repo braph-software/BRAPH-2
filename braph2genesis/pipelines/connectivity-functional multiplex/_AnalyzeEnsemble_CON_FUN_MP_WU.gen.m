@@ -38,14 +38,35 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 %% ¡props_update!
 
 %%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'AnalyzeEnsemble_CON_FUN_MP_WU'
+
+%%% ¡prop!
+GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
+%%%% ¡settings!
+'MultiplexWU'
+%%%% ¡postprocessing!
+if ~braph2_testing
+    if isa(a.getr('GRAPH_TEMPLATE'), 'NoValue')
+
+        if a.get('GR').get('SUB_DICT').length() > 0
+            a.set('GRAPH_TEMPLATE', MultiplexWU('BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA')));
+        else
+             a.set('GRAPH_TEMPLATE', MultiplexWU());
+        end
+    end
+end
+
+%%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectCON_FUN_MP.
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectCON_FUN_MP')
 
 %%% ¡prop!
 ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-%%%% ¡gui!
-pr = PPAnalyzeEnsembleMP_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_CON_FUN_MP_WU.ME_DICT, 'WAITBAR', true, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPAnalyzeEnsembleMP_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_CON_FUN_MP_WU.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %%% ¡prop!
 G_DICT (result, idict) is the multiplex (MultiplexWU) ensemble obtained from this analysis.
@@ -55,8 +76,13 @@ G_DICT (result, idict) is the multiplex (MultiplexWU) ensemble obtained from thi
 IndexedDictionary('IT_CLASS', 'MultiplexWU')
 %%%% ¡calculate!
 g_dict = IndexedDictionary('IT_CLASS', 'MultiplexWU');
-
 gr = a.get('GR');
+
+ba = BrainAtlas();
+if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
+    ba = gr.get('SUB_DICT').getItem(1).get('BA');
+end
+
 T = a.get('REPETITION');
 fmin = a.get('FREQUENCYRULEMIN');
 fmax = a.get('FREQUENCYRULEMAX');
@@ -84,24 +110,25 @@ for i = 1:1:gr.get('SUB_DICT').length()
     
     g = MultiplexWU( ...
         'ID', ['g ' sub.get('ID')], ...
-        'B', A ...
+        'B', A, ...
+        'BAS', ba ...
         );
     g_dict.add(g)
 end
 
 value = g_dict;
 
-%% ¡methods!
-function pr = getPPCompareEnsemble_CPDict(a, varargin) 
-    %GETPPCOMPAREENSEMBLE_CPDICT returns the comparison ensemble plot panel compatible with the analysis.
-    %
-    % PR = GETPPCOMPAREENSEMBLE_CPDICT(A) returns the comparison ensemble plot panel
-    %  that is compatible with the analyze ensemble.
-    %
-    % See also CompareEnsemble.
-    
-    pr = PPCompareEnsembleMP_CON_FUN_CPDict_WU(varargin{:});
-end
+% % % %% ¡methods!
+% % % function pr = getPPCompareEnsemble_CPDict(a, varargin) 
+% % %     %GETPPCOMPAREENSEMBLE_CPDICT returns the comparison ensemble plot panel compatible with the analysis.
+% % %     %
+% % %     % PR = GETPPCOMPAREENSEMBLE_CPDICT(A) returns the comparison ensemble plot panel
+% % %     %  that is compatible with the analyze ensemble.
+% % %     %
+% % %     % See also CompareEnsemble.
+% % %     
+% % %     pr = PPCompareEnsembleMP_CON_FUN_CPDict_WU(varargin{:});
+% % % end
 
 %% ¡tests!
 

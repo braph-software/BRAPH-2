@@ -134,7 +134,10 @@ else
     msg = ['FUN must be a matrix with the same number of columns as the brain regions (' int2str(br_number) ').'];
 end
 %%%% ¡gui!
-pr = PPSubjectFUN_FUN('EL', sub, 'PROP', SubjectFUN.FUN, varargin{:});
+pr = PanelPropMatrix('EL', sub, 'PROP', SubjectFUN.FUN, ...
+    'ROWNAME', '''numbered''', ...
+    'COLUMNNAME', 'pr.get(''EL'').get(''BA'').get(''BR_DICT'').getKeys()', ...
+    varargin{:});
  
 %%% ¡prop!
 age (data, scalar) is a scalar number containing the age of the subject.
@@ -154,13 +157,13 @@ sex (data, option) is an option containing the sex of the subject (female/male).
 %%%% ¡name!
 GUI
 %%%% ¡code!
-im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectFUN')) filesep 'example data FUN (fMRI)' filesep 'desikan_atlas.xlsx']);
+im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectFUN')) filesep 'example data FUN (fMRI)' filesep 'craddock_atlas.xlsx']);
 ba = im_ba.get('BA');
 im_gr = ImporterGroupSubjectFUN_XLS( ...
     'DIRECTORY', [fileparts(which('SubjectFUN')) filesep 'example data FUN (fMRI)' filesep 'xls' filesep 'GroupName1'], ...
     'BA', ba ...
     );
 gr = im_gr.get('GR');
-GUI('PE', gr, 'CLOSEREQ', false).draw()
+f = GUIElement('PE', gr, 'CLOSEREQ', false).draw();
 
-close(gcf)
+close(f)

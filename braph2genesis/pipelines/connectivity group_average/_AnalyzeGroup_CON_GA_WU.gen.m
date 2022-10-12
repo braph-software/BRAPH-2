@@ -8,6 +8,11 @@ and analyzes them using weighted undirected graphs.
 %% ¡props_update!
 
 %%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'AnalyzeGroup_CON_GA_WU'
+
+%%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectCON.
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectCON')
@@ -31,9 +36,15 @@ for i = 1:1:gr.get('SUB_DICT').length()
     end
 end
 
+ba = BrainAtlas();
+if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
+    ba = gr.get('SUB_DICT').getItem(1).get('BA');
+end
+
 g = GraphWU( ...
     'ID', ['g ' gr.get('ID')], ...
-    'B', A/gr.get('SUB_DICT').length() ...
+    'B', A/gr.get('SUB_DICT').length(), ...
+    'BAS', ba ...
     );
 value = g;
 

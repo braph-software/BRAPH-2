@@ -45,7 +45,7 @@ gr.lock('SUB_CLASS');
 
 % first CON
 if ~braph2_testing()
-    answer = questdlg('Please Upload a Connectivity Group', ...
+    answer = questdlg('Please, first selecte the folder with the connectivity data', ...
         'User Request', ...
         'Ok', 'Cancel', 'Ok');
     switch answer
@@ -68,12 +68,13 @@ if isfolder(directory_CON)
         'WAITBAR', im.get('WAITBAR') ...
         );
 elseif ~braph2_testing()
-    error([BRAPH2.STR ':ImporterGroupSubjectCON_FUN_MP_TXT: ' BRAPH2.BUG_IO]);
+    error([BRAPH2.STR ':ImporterGroupSubjectCON_FUN_MP_TXT:' BRAPH2.BUG_IO], ...
+        [BRAPH2.STR ':ImporterGroupSubjectCON_FUN_MP_TXT:' BRAPH2.BUG_IO]);
 end
 
 % second FUN
 if ~braph2_testing()
-    answerfun = questdlg('Please Upload a Functional Group', ...
+    answerfun = questdlg('Then, select the folder with the functional data', ...
         'User Request', ...
         'Ok', 'Cancel', 'Ok');
     switch answerfun
@@ -96,7 +97,8 @@ if isfolder(directory_FUN)
         'WAITBAR', im.get('WAITBAR') ...
         );
 elseif ~braph2_testing()
-    error([BRAPH2.STR ':ImporterGroupSubjectCON_FUN_MP_TXT: ' BRAPH2.BUG_IO]);
+    error([BRAPH2.STR ':ImporterGroupSubjectCON_FUN_MP_TXT:' BRAPH2.BUG_IO], ...
+        [BRAPH2.STR ':ImporterGroupSubjectCON_FUN_MP_TXT:' BRAPH2.BUG_IO]);
 end
 
 if exist('gr_con') && exist('gr_fun')

@@ -22,9 +22,6 @@ function cb_importer_TXT(~, ~)
     im.uigetfile();
     try
         if isfile(im.get('FILE'))
-            % pe.set('EL', im.get('GR')); 
-            % pe.reinit();
-            
             gr = pe.get('EL');
             
             assert( ...
@@ -62,9 +59,6 @@ function cb_importer_XLS(~, ~)
     im.uigetfile();
     try
         if isfile(im.get('FILE'))
-            % pe.set('EL', im.get('GR')); 
-            % pe.reinit();
-            
             gr = pe.get('EL');
             
             assert( ...
@@ -140,7 +134,10 @@ else
     msg = ['ST must be a column vector with the same number of element as the brain regions (' int2str(br_number) ').'];
 end
 %%%% ¡gui!
-pr = PPSubjectST_ST('EL', sub, 'PROP', SubjectST.ST, varargin{:});
+pr = PanelPropMatrix('EL', sub, 'PROP', SubjectST.ST, ...
+    'ROWNAME', 'pr.get(''EL'').get(''BA'').get(''BR_DICT'').getKeys()', ...
+    'COLUMNNAME', '{}', ...
+    varargin{:});
 
 %%% ¡prop!
 age (data, scalar) is a scalar number containing the age of the subject.
@@ -167,6 +164,6 @@ im_gr = ImporterGroupSubjectST_XLS( ...
     'BA', ba ...
     );
 gr = im_gr.get('GR');
-GUI('PE', gr, 'CLOSEREQ', false).draw()
+f = GUIElement('PE', gr, 'CLOSEREQ', false).draw();
 
-close(gcf)
+close(f)

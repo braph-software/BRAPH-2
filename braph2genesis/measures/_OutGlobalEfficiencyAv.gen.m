@@ -31,7 +31,7 @@ L = g.layernumber();
 out_global_efficiency = calculateValue@OutGlobalEfficiency(m, prop);
 
 out_global_efficiency_av = cell(L, 1);
-for li = 1:1:L
+parfor li = 1:1:L
     out_global_efficiency_av(li) = {mean(out_global_efficiency{li})};
 end
 value = out_global_efficiency_av;

@@ -57,9 +57,14 @@ B22 = [
     1   0   1
     0   1   0
     ];
-B = {B11  B22};
+B33 = [
+    0   1   0
+    1   0   0
+    0   0   0
+    ];
+B = {B11 B22 B33};
 
-known_multiplex_participation_av = {mean([8/9 8/9 1])};
+known_multiplex_participation_av = {mean([15/16 15/16 3/4])};
 
 g = MultiplexBU('B', B);
 multiplex_participation_av = MultiplexParticipationAv('G', g);

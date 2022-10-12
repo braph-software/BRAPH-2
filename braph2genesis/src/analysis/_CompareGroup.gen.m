@@ -19,18 +19,20 @@ LABEL (metadata, string) is an extended label of the comparison.
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the comparison.
 %%%% ¡gui!
-pr = PlotPropString('EL', c, 'PROP', CompareGroup.NOTES, 'LINES', 'multi', 'EDITHEIGHT', 4.5, varargin{:});
+pr = PanelPropStringTextArea('EL', c, 'PROP', CompareGroup.NOTES, varargin{:});
 
 %%% ¡prop!
-WAITBAR (metadata, logical) detemines whether to show the waitbar.
+WAITBAR (gui, logical) detemines whether to show the waitbar.
+%%%% ¡default!
+true
 
 %%% ¡prop!
-VERBOSE (metadata, logical) sets whether to write the progress of the comparisons.
+VERBOSE (gui, logical) sets whether to write the progress of the comparisons.
 %%%% ¡default!
 false
 
 %%% ¡prop!
-INTERRUPTIBLE (metadata, scalar) sets whether the comparison computation is interruptible for multitasking.
+INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interruptible for multitasking.
 %%%% ¡default!
 .001
 
@@ -40,7 +42,7 @@ MEMORIZE (metadata, logical) sets whether to memorize the permuted analysis.
 %%% ¡prop!
 P (parameter, scalar) is the permutation number.
 %%%% ¡default!
-1e+4
+1e+3
 %%%% ¡check_prop!
 check = value > 0 && value == round(value);
 
@@ -87,14 +89,13 @@ CP_DICT (result, idict) contains the results of the comparison.
 %%%% ¡calculate!
 value = IndexedDictionary('IT_CLASS', 'ComparisonGroup', 'IT_KEY', 4);
 %%%% ¡gui!
-a1 = c.get('A1');
-pr = a1.getPPCompareGroup_CPDict('EL', c, 'PROP', CompareGroup.CP_DICT, 'WAITBAR', true, varargin{:});
+pr = PPCompareGroup_CpDict('EL', c, 'PROP', CompareGroup.CP_DICT, 'WAITBAR', Callback('EL', c, 'TAG', 'WAITBAR'), varargin{:});
 
 %% ¡methods!
 function cp = getComparison(c, measure_class, varargin)
     %GETCOMPARISON returns comparison.
     %
-    % CP = GETMEASURE(G, MEASURE_CLASS) checks if the comparison exists in the
+    % CP = GETCOMPARISON(G, MEASURE_CLASS) checks if the comparison exists in the
     %  comparison dictionary CP_DICT. If not, it creates a new comparison
     %  CP of class MEASURE_CLASS. The user must call getValue() for the new
     %  comparison CP to retrieve the value of the comparison. 
@@ -108,6 +109,7 @@ function cp = getComparison(c, measure_class, varargin)
         cp = ComparisonGroup( ...
             'ID', [measure_class ' comparison ' c.get('A1').get('ID') ' vs. ' c.get('A2').get('ID')], ...
             'MEASURE', measure_class, ...
+            'MEASURE_TEMPLATE', c.memorize('A1').memorize('G').getMeasure(measure_class), ...
             'C', c, ...
             varargin{:} ...
             );
@@ -151,7 +153,7 @@ function [a1_perm, a2_perm] = getPerm(c, i, memorize)
         a1_perm.get('GR').set('SUB_DICT', c.get('A1').get('GR').get('SUB_DICT').clone())
         a1_perm.get('GR').get('SUB_DICT').set('IT_LIST', subs1_perm)
 
-        a2_perm = c.get('A2').clone();
+        a2_perm = c.get('A1').clone(); % % % a2_perm = c.get('A2').clone();
         a2_perm.set( ...
             'ID', [c.get('A2').get('ID') ' permutation ' int2str(i)], ...
             'GR', c.get('A2').get('GR').clone() ...

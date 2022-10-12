@@ -19,11 +19,44 @@ LABEL (metadata, string) is an extended label of the graph.
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the graph.
+%%%% ¡gui!
+pr = PanelPropStringTextArea('EL', g, 'PROP', Graph.NOTES, varargin{:});
 
 %%% ¡prop!
-BRAINATLAS (data, item) is a atlas associated with the graph.
+TEMPLATE (parameter, item) is the graph template to set the graph and measure parameters.
+%%%% ¡settings!
+'Graph'
+%%%% ¡postprocessing!
+if g.prop_set(Graph.TEMPLATE, varargin{:})
+    varargin = {};
+    
+    parameters = g.getProps(Category.PARAMETER);
+    for i = 1:1:length(parameters)
+        parameter = parameters(i);
+        
+        if parameter ~= AnalyzeGroup.TEMPLATE
+            varargin{length(varargin) + 1} = parameter;
+            varargin{length(varargin) + 1} = Callback('EL', g.get('TEMPLATE'), 'PROP', parameter);
+        end
+    end
+    
+    g.set(varargin{:});
+end
+
+%%% ¡prop!
+LAYERTICKS (figure, rvector) are the layer tick positions.
+
+%%% ¡prop!
+LAYERLABELS (figure, string) are the layer labels (newline-separated string).
+
+%%% ¡prop!
+BAS (data, itemlist) is a list of brain atlases associated with the graph.
 %%%% ¡settings!
 'BrainAtlas'
+%%%% ¡conditioning!
+if isa(value, 'BrainAtlas')
+    value = {value};
+end
 
 %%% ¡prop!
 A (result, cell) is the graph adjacency matrix. 
@@ -37,8 +70,6 @@ Graph.checkDirectionality(Graph.getDirectionalityType(g, length(A)), A);
 Graph.checkSelfConnectivity(Graph.getSelfConnectivityType(g, length(A)), A);
 Graph.checkNegativity(Graph.getNegativityType(g, length(A)), A);
 check = true; % only if no error is thrown by the previous code!
-%%%% ¡gui__!
-pr = PPGraph_A('EL', g, 'PROP', Graph.A, varargin{:});
 
 %%% ¡prop!
 M_DICT (result, idict) contains the calculated measures of the graph.
@@ -46,6 +77,31 @@ M_DICT (result, idict) contains the calculated measures of the graph.
 'Measure'
 %%%% ¡calculate!
 value = IndexedDictionary('IT_CLASS', 'Measure', 'IT_KEY', 1);
+
+%%% ¡prop!
+PFG (gui, item) contains the panel figure of the graph.
+%%%% ¡settings!
+'PFGraph'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    if isa(g.getr('PFG'), 'NoValue')
+        if Graph.is_graph(g) % graph
+            g.set('PFG', PFGraph('G', g))
+        elseif Graph.is_multigraph(g) % multigraph BUD BUT
+            g.set('PFG', PFMultiGraph('G', g))
+        elseif Graph.is_multiplex(g) && Graph.is_weighted(g) % multiplexWU
+            g.set('PFG', PFMultiplexGraph('G', g))
+        elseif Graph.is_multiplex(g) && Graph.is_binary(g)
+            g.set('PFG', PFMultiplexBinaryGraph('G', g))
+        else
+            g.memorize('PFG').set('G', g)
+        end
+    end
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', g, 'PROP', Graph.PFG, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
 
 %% ¡constants!
 
@@ -529,7 +585,7 @@ function checkA(graph_type, A)
                 [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
                 'In a multiplex, all submatrices must be square.')
             % check they are all submatrices have same dimensions.
-            assert(all(cellfun(@(a) size(a, 1), A(:)) == cellfun(@(a) size(a, 1), A(1, 1))), ...
+            assert(isempty(A) || all(cellfun(@(a) size(a, 1), A(:)) == cellfun(@(a) size(a, 1), A(1, 1))), ...
                 [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
                 'In a multiplex, all submatrices must have the same dimensions.')
 
@@ -950,6 +1006,19 @@ function m = getMeasure(g, measure_class, varargin)
     if m_dict.containsKey(measure_class)
         m = m_dict.getItem(measure_class);
     else
+        if ~isa(g.getr('TEMPLATE'), 'NoValue')
+            m_template = g.get('TEMPLATE').getMeasure(measure_class);
+            
+            parameters = m_template.getProps(Category.PARAMETER);
+            for i = 1:1:length(parameters)
+                parameter = parameters(i);
+
+                if parameter ~= AnalyzeGroup.TEMPLATE
+                    varargin{length(varargin) + 1} = parameter;
+                    varargin{length(varargin) + 1} = Callback('EL', m_template, 'PROP', parameter);
+                end
+            end
+        end
         m = eval([measure_class '(''ID'', measure_class, ''G'', g, varargin{:})']);
         m_dict.add(m);
     end

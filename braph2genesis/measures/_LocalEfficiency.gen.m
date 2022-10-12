@@ -35,7 +35,7 @@ N = g.nodenumber();
 L = g.layernumber();
 
 local_efficiency = cell(L, 1);
-for li = 1:1:L    
+parfor li = 1:1:L    
     Aii = A{li, li};    
     local_efficiency_layer = zeros(N(li), 1);
     for i = 1:1:N(li)

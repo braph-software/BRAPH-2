@@ -25,6 +25,11 @@ Correlation.ZERO
 %% ¡props_update!
 
 %%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'AnalyzeGroup_ST_WU'
+
+%%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectST.
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectST')
@@ -39,10 +44,6 @@ GraphWU()
 gr = a.get('GR');
 data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
 data = cat(2, data_list{:})'; % correlation is a column based operation
-atlas = BrainAtlas();
-if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-    atlas = gr.get('SUB_DICT').getItem(1).get('BA');
-end
 
 if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
     age_list = cellfun(@(x) x.get('age'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
@@ -64,25 +65,34 @@ else
     A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
 end
 
+ba = BrainAtlas();
+if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
+    ba = gr.get('SUB_DICT').getItem(1).get('BA');
+end
+
 g = GraphWU( ...
     'ID', ['g ' gr.get('ID')], ...
     'B', A, ...
-    'BRAINATLAS', atlas ...
+    'BAS', ba ...
     );
+
+if ~isa(a.getr('TEMPLATE'), 'NoValue')
+    g.set('TEMPLATE', a.get('TEMPLATE').memorize('G'))
+end    
 
 value = g;
 
-%% ¡methods!
-function pr = getPPCompareGroup_CPDict(a, varargin) 
-    %GEPPPCOMPAREGROUP_CPDICT returns the comparison plot panel compatible with the analysis.
-    %
-    % PR = GEPPPCOMPAREGROUP_CPDICT(A) returns the comparison plot panel
-    %  that is compatible with the analyze group.
-    %
-    % See also CompareGroup.
-    
-    pr = PPCompareGroup_CPDict_ST_WU(varargin{:});
-end
+% % % %% ¡methods!
+% % % function pr = getPPCompareGroup_CPDict(a, varargin) 
+% % %     %GEPPPCOMPAREGROUP_CPDICT returns the comparison plot panel compatible with the analysis.
+% % %     %
+% % %     % PR = GEPPPCOMPAREGROUP_CPDICT(A) returns the comparison plot panel
+% % %     %  that is compatible with the analyze group.
+% % %     %
+% % %     % See also CompareGroup.
+% % %     
+% % %     pr = PPCompareGroup_CPDict_ST_WU(varargin{:});
+% % % end
 
 %% ¡tests!
 

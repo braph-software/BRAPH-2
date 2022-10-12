@@ -1,5 +1,5 @@
 %% ¡header!
-NNRegressorCrossValidation < Element (nncv, cross-validation for neural network regressor) cross-validate the performance of neural network regressors with a dataset.
+NNRegressorCrossValidation < NNRegressorEvaluator (nncv, cross-validation for neural network regressor) cross-validate the performance of neural network regressors with a dataset.
 
 %% ¡description!
 This cross validation perform a k-fold cross validation of neural network
@@ -11,49 +11,56 @@ The root-mean square error is calculated across folds and repetitions.
 %% ¡props!
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the cross validation.
+LAYERS (parameter, rvector) is a vector representing the number of neurons in each layer.
+%%%% ¡default!
+[100 100]
+%%%% ¡gui!
+pr = PanelPropRVectorSmart('EL', nncv, 'PROP', NNRegressorCrossValidation.LAYERS, 'MAX', 100000, 'MIN', 1, varargin{:});
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the cross validation.
+BATCH (parameter, scalar) is the size of the mini-batch to use for each training iteration.
+%%%% ¡default!
+8
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the cross validation.
+EPOCHS (parameter, scalar) is a maximum number of epochs.
+%%%% ¡default!
+20
+
+%%% ¡prop!
+SHUFFLE (parameter, option) is an option for data shuffling.
+%%%% ¡settings!
+{'once' 'never' 'every-epoch'}
+
+%%% ¡prop!
+SOLVER (parameter, option) is an option for the solver.
+%%%% ¡settings!
+{'adam' 'sgdm' 'rmsprop'}
+
+%%% ¡prop!
+FEATURE_SELECTION_RATIO (parameter, scalar) is the ratio of selected features.
+%%%% ¡default!
+1
+
+%%% ¡prop!
+VERBOSE (metadata, logical) is an indicator to display trining progress information.
+%%%% ¡default!
+false
+
+%%% ¡prop!
+PLOT_TRAINING (metadata, logical) is an option for the plot of training-progress.
+%%%% ¡default!
+false
+
+%%% ¡prop!
+PLOT_LAYERS (metadata, logical) is an option for the plot of layer architecture.
+%%%% ¡default!
+false
 
 %%% ¡prop!
 KFOLD (data, scalar) is the number of folds.
 %%%% ¡default!
 5
-
-%%% ¡prop!
-REPETITION (data, scalar) is the number of repetitions.
-%%%% ¡default!
-1
-
-%%% ¡prop!
-GR (data, item) is is a group of subjects.
-%%%% ¡settings!
-'NNGroup'
-
-%%% ¡prop!
-FEATURE_MASK (data, cell) is a given mask or a percentile to select relevant features.
-%%%% ¡default!
-num2cell(0.05)
-%%%% ¡conditioning!
-if ~iscell(value) & isnumeric(value)
-    value = num2cell(value);
-end
-%%%% ¡gui!
-pr = PlotPropSmartVector('EL', nncv, 'PROP', NNRegressorCrossValidation.FEATURE_MASK, 'MAX', 10000000, 'MIN', 0, varargin{:});
-
-%%% ¡prop!
-PLOT_MAP (data, logical) is an option for the plot of the feature map.
-%%%% ¡default!
-false
-
-%%% ¡prop!
-PLOT_SCATTER (data, logical) is an option for the plot of scatter plot.
-%%%% ¡default!
-false
 
 %%% ¡prop!
 SPLIT_KFOLD (result, cell) is a vector stating which subjects belong to each fold.
@@ -87,24 +94,29 @@ IndexedDictionary('IT_CLASS', 'NNRegressorDataSplit')
 %%%% ¡calculate!
 nnds_dict = IndexedDictionary('IT_CLASS', 'NNRegressorDataSplit');
 if ~isa(nncv.get('GR').getr('SUB_DICT'), 'NoValue')
-    for i = 1:1:nncv.get('REPETITION')
-        idx_per_fold = nncv.get('SPLIT_KFOLD');
-        for j = 1:1:nncv.get('KFOLD')
-            nnds = NNRegressorDataSplit( ...
-                'ID', ['NN dataset for fold #', num2str(j), ' in repetition #', num2str(i)], ...
-                'GR', nncv.get('GR'), ...
-                'SPLIT', idx_per_fold{j}, ...
-                'FEATURE_MASK', nncv.get('FEATURE_MASK') ...
-                );
+    idx_per_fold = nncv.get('SPLIT_KFOLD');
 
-            nnds_dict.add(nnds)
-        end
+    % create the 1st nnds and act as a template
+    nnds_tmp = NNRegressorDataSplit( ...
+        'ID', ['NN dataset for fold #', num2str(1)], ...
+        'GR', nncv.get('GR'), ...
+        'SPLIT', idx_per_fold{1} ...
+        );
+    nnds_dict.add(nnds_tmp)
+
+    % create the following nnds and use that template
+    for i = 2:1:nncv.get('KFOLD')
+        nnds = NNRegressorDataSplit( ...
+            'ID', ['NN dataset for fold #', num2str(i)], ...
+            'GR', nncv.get('GR'), ...
+            'SPLIT', idx_per_fold{i} ...
+            );
+
+        nnds_dict.add(nnds);
     end
 end
 
 value = nnds_dict;
-%%%% ¡gui!
-pr = PPNNCrossValidation_NNDict('EL', nncv, 'PROP', NNRegressorCrossValidation.NNDS_DICT, varargin{:});
 
 %%% ¡prop!
 NN_DICT (result, idict) contains the NN regressors for k folds for all repetitions.
@@ -114,25 +126,42 @@ NN_DICT (result, idict) contains the NN regressors for k folds for all repetitio
 IndexedDictionary('IT_CLASS', 'NNRegressorDNN')
 %%%% ¡calculate!
 nn_dict = IndexedDictionary('IT_CLASS', 'NNRegressorDNN');
-if nncv.memorize('NNDS_DICT').length() > 0
-    for i = 1:1:nncv.get('NNDS_DICT').length()
-        nnds = nncv.get('NNDS_DICT').getItem(i);
-        gr_train = nnds.get('GR_TRAIN_FS');
+if ~isa(nncv.get('GR').getr('SUB_DICT'), 'NoValue')
+    nnds = nncv.memorize('NNDS_DICT').getItem(1);
+    gr_train = nnds.memorize('GR_TRAIN_FS');
+    
+    % create the 1st nn and act as a template
+    nn_tmp = NNRegressorDNN( ...
+        'ID', ['NN model cooperated with ', nnds.get('ID')], ...
+        'GR', gr_train, ...
+        'LAYERS', nncv.get('LAYERS'), ...
+        'BATCH', nncv.get('BATCH'), ...
+        'EPOCHS', nncv.get('EPOCHS'), ...
+        'SHUFFLE', nncv.get('SHUFFLE'), ...
+        'SOLVER', nncv.get('SOLVER'), ...
+        'FEATURE_SELECTION_RATIO', nncv.get('FEATURE_SELECTION_RATIO'), ...
+        'VERBOSE', nncv.get('VERBOSE'), ...
+        'PLOT_TRAINING', nncv.get('PLOT_TRAINING'), ...
+        'PLOT_LAYERS', nncv.get('PLOT_LAYERS') ...
+        );
+    nn_dict.add(nn_tmp)
+
+    % create the following nn and use that template
+    for i = 2:1:nncv.get('NNDS_DICT').length()
+        nnds = nncv.memorize('NNDS_DICT').getItem(i);
+        gr_train = nnds.memorize('GR_TRAIN_FS');
 
         nn = NNRegressorDNN( ...
                 'ID', ['NN model cooperated with ', nnds.get('ID')], ...
                 'GR', gr_train, ...
-                'PLOT_TRAINING', false, ...
-                'SHUFFLE', 'every-epoch' ...
+                'TEMPLATE', nn_tmp ...
                 );
             
-        nn_dict.add(nn)
+        nn_dict.add(nn);
     end
 end
 
 value = nn_dict;
-%%%% ¡gui!
-pr = PPNNCrossValidation_NNDict('EL', nncv, 'PROP', NNRegressorCrossValidation.NN_DICT, varargin{:});
 
 %%% ¡prop!
 NNE_DICT (result, idict) contains the NN evaluators for k folds for all repetitions.
@@ -142,11 +171,11 @@ NNE_DICT (result, idict) contains the NN evaluators for k folds for all repetiti
 IndexedDictionary('IT_CLASS', 'NNRegressorEvaluator')
 %%%% ¡calculate!
 nne_dict = IndexedDictionary('IT_CLASS', 'NNRegressorEvaluator');
-if nncv.memorize('NN_DICT').length() > 0
+if ~isa(nncv.get('GR').getr('SUB_DICT'), 'NoValue')
     for i = 1:1:nncv.get('NN_DICT').length()
-        nn = nncv.get('NN_DICT').getItem(i);
-        nnds = nncv.get('NNDS_DICT').getItem(i);
-        gr_val = nnds.get('GR_VAL_FS');
+        nn = nncv.memorize('NN_DICT').getItem(i);
+        nnds = nncv.memorize('NNDS_DICT').getItem(i);
+        gr_val = nnds.memorize('GR_VAL_FS');
 
         nne = NNRegressorEvaluator( ...
                 'ID', ['NN evaluator cooperated with ', nnds.get('ID')], ...
@@ -154,27 +183,62 @@ if nncv.memorize('NN_DICT').length() > 0
                 'NN', nn ...
                 );
             
-        nne_dict.add(nne)
+        nne_dict.add(nne);
     end
 end
 
 value = nne_dict;
+
+%%% ¡prop!
+FEATURE_IMPORTANCE (result, cell) is the feature importance obtained with permutation analysis.
+%%%% ¡calculate!
+if ~isa(nncv.get('GR').getr('SUB_DICT'), 'NoValue')
+    nne_dict = nncv.memorize('NNE_DICT');
+    feature_importances = nne_dict.getItem(1).get('FEATURE_PERMUTATION_IMPORTANCE');
+    if length(feature_importances) == 0
+        feature_importances = {};
+    else
+        for i = 2:1:nne_dict.length()
+            feature_importance = nne_dict.getItem(i).get('FEATURE_PERMUTATION_IMPORTANCE');
+            feature_importances = cellfun(@(x, y) x + y, feature_importances, feature_importance, 'UniformOutput', false);
+        end
+        feature_importances = cellfun(@(x) x/nne_dict.length, feature_importances, 'UniformOutput', false);
+    end
+else
+    feature_importances = {};
+end
+
+value = feature_importances;
+
+%% ¡props_update!
+
+%%% ¡prop!
+PFFI (gui, item) contains the panel figure of the feature importance.
+%%%% ¡settings!
+'PFFeatureImportance'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    nncv.memorize('PFFI').set('NNE', nncv, 'PROP', NNRegressorCrossValidation.FEATURE_IMPORTANCE, 'BA', nncv.get('GR').get('SUB_DICT').getItem(1).get('BA'))
+end
 %%%% ¡gui!
-pr = PPNNCrossValidation_NNDict('EL', nncv, 'PROP', NNRegressorCrossValidation.NNE_DICT, varargin{:});
+pr = PanelPropItem('EL', nncv, 'PROP', NNRegressorCrossValidation.PFFI, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
 
 %%% ¡prop!
 GR_PREDICTION (result, item) is a group of NN subjects with prediction from NN.
 %%%% ¡settings!
 'NNGroup'
 %%%% ¡calculate!
-if nncv.memorize('NNE_DICT').length() > 0
+if ~isa(nncv.get('GR').getr('SUB_DICT'), 'NoValue')
     gr = nncv.get('NNE_DICT').getItem(1).get('GR_PREDICTION');
     gr_prediction = NNGroup( ...
         'ID', 'NN Group with NN prediction', ...
         'LABEL', 'The predictions are obatined from K-fold cross validation', ...
         'NOTES', 'All of the predictions are obtained from the validation of each fold', ...
         'SUB_CLASS', gr.get('SUB_CLASS'), ...
-        'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject') ...
+        'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject'), ...
+        'FEATURE_SELECTION_MASK', gr.get('FEATURE_SELECTION_MASK') ...
         );
 
     % add subejcts from NNE_DICT
@@ -194,8 +258,6 @@ else
 end
 
 value = gr_prediction;
-%%%% ¡gui!
-pr = PPNNData_GR_NN('EL', nncv, 'PROP', NNRegressorCrossValidation.GR_PREDICTION, varargin{:});
 
 %%% ¡prop!
 RMSE (result, scalar) is the root mean squared error between targets and predictions across k folds for all repeitions.
@@ -207,102 +269,36 @@ else
     preds = cell2mat(preds);
     targets = cellfun(@(x) cell2mat(x.get('TARGET')), nncv.get('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
     targets = cell2mat(targets);
-    value = sqrt(mean((preds - targets).^2));
+    value = double(sqrt(mean((preds - targets).^2)));
 end
-
 
 %%% ¡prop!
 SCATTER_CHART (result, matrix) creates a scatter chart with circular markers at the locations specified by predictions and targets.
 %%%% ¡calculate!
-if nncv.get('GR_PREDICTION').get('SUB_DICT').length() == 0
-    value = 0;
+if isa(nncv.get('GR').getr('SUB_DICT'), 'NoValue')
+    value = [];
 else
     preds = cellfun(@(x) cell2mat(x.get('PREDICTION'))', nncv.get('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
     preds = cell2mat(preds);
     targets = cellfun(@(x) cell2mat(x.get('TARGET')), nncv.get('GR_PREDICTION').get('SUB_DICT').getItems(), 'UniformOutput', false);
     targets = cell2mat(targets);
-    value = [preds' targets'];
-    if nncv.get('PLOT_SCATTER')
-        figure
-        scatter(preds, targets);
-        hold on
-        plot([min(preds) max(preds)], [min(targets) max(targets), 'k']);
-        hold off
-        xlabel('Prediction')
-        ylabel('Target')
-        title('Scatter plot for regression')
-        directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
-        if ~exist(directory, 'dir')
-            mkdir(directory)
-        end
-        filename = [directory filesep 'scatter.svg'];
-        saveas(gcf, filename);
-    end
+    value = double([preds' targets']);
 end
 %%%% ¡gui!
-pr = PPNNRegressorEvaluator_Scatter_Chart('EL', nncv, 'PROP', NNRegressorCrossValidation.SCATTER_CHART, varargin{:});
+pr = PanelPropMatrix('EL', nncv, 'PROP', NNRegressorCrossValidation.SCATTER_CHART, ...
+    'ROWNAME', char("cellfun(@(x) x.get('ID'), pr.get('EL').memorize('GR').get('SUB_DICT').getItems(), 'UniformOutput', false)"), ...
+    'COLUMNNAME', char("{'Prediction', 'Target'}"), ...
+    varargin{:});
 
 %%% ¡prop!
-FEATURE_MAP (result, cell) is a heat map obtained with feature selection analysis and the AUC value.
-%%%% ¡calculate!
-nne_dict = nncv.memorize('NNE_DICT');
-heat_map = {};
-if ~isempty(nne_dict.getItems()) && ~isempty(nne_dict.getItem(1).get('RMSE')) && ~any(ismember(subclasses('Measure'), nncv.get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('INPUT_LABEL')))
-    tmp_map = nne_dict.getItem(1).get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('FEATURE_MASK');
-    for i = 1:1:length(tmp_map)
-        heat_map{i} = zeros(size(tmp_map{i}));
-    end
-    for i = 1:1:nne_dict.length()
-        feature_map = nne_dict.getItem(i).get('GR_PREDICTION').get('SUB_DICT').getItem(1).get('FEATURE_MASK');
-        rmse = nne_dict.getItem(i).get('RMSE');
-        if rmse == 0
-            rmse = 0.01;
-        end
-        feature_map_out = feature_map;
-        for j = 1:1:length(feature_map)
-            fm_tmp = feature_map{j};
-            fm_tmp(fm_tmp == 1) = 1 / rmse;
-            feature_map_out{j} = fm_tmp;
-        end
-        heat_map = cellfun(@(x, y) x + y, heat_map, feature_map_out, 'UniformOutput', false);
-    end
-    heat_map = cellfun(@(x) x / nne_dict.length(), heat_map, 'UniformOutput', false);
-    if nncv.get('PLOT_MAP')
-        for i = 1:1:length(heat_map)
-            heat_map_tmp = heat_map{i};
-            figure
-            x = [1 size(heat_map_tmp, 2)];
-            y = [0 size(heat_map_tmp, 1)];
-            image(x, y, heat_map_tmp, 'CDataMapping', 'scaled')
-            colorbar
-            directory = [fileparts(which('test_braph2')) filesep 'NN_saved_figures'];
-            if ~exist(directory, 'dir')
-                mkdir(directory)
-            end
-            filename = [directory filesep 'cv_feature_map.svg'];
-            saveas(gcf, filename);
-        end
-    end
-else
-    %TODO: check the msgbox is needed 
-    %braph2msgbox("No visualization for the feature map", "For now, we only provide the feature map visualization for input of adjacency matrix or structural data.")
+PFSP (gui, item) contains the panel figure of the scatter plot.
+%%%% ¡settings!
+'PFScatterPlot'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    nncv.memorize('PFSP').set('NNE', nncv);
 end
-value = heat_map;
 %%%% ¡gui!
-pr = PPNNCrossValidation_Feature_Map('EL', nncv, 'PROP', NNRegressorCrossValidation.FEATURE_MAP, varargin{:});
-
-
-%% ¡methods!
-function [avg, CI] = get_CI(nncv, scores)
-    %GET_CI calculates the 95% confidence interval.
-    % 
-    % [AVG, CI] = GET_CI(NNCV, SCORES) calculates the 95% confidence interval
-    %  of the input scores which are in a form of rvector. AVG is the mean 
-    %  value of the input scores. CI are the upper and lower boundary of
-    %  the corresponding 95% confidence interval.
-
-    avg = mean(scores);
-    SEM = std(scores)/sqrt(length(scores));               
-    ts = tinv([0.025  0.975],length(scores)-1);     
-    CI = avg + ts*SEM;
-end
+pr = PanelPropItem('EL', nncv, 'PROP', NNRegressorCrossValidation.PFSP, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});

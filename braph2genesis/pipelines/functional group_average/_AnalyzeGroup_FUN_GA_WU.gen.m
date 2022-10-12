@@ -6,14 +6,17 @@ This graph analysis uses functional data averaged over a group
 and analyzes them using weighted undirected graphs.
 
 %% ¡props!
+
 %%% ¡prop!
 REPETITION(parameter, scalar) is the number of repetitions
 %%%% ¡default!
 1
+
 %%% ¡prop!
 FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value
 %%%% ¡default!
 0
+
 %%% ¡prop!
 FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value
 %%%% ¡default!
@@ -22,7 +25,7 @@ Inf
 %%% ¡prop!
 CORRELATION_RULE (parameter, option) is the correlation type.
 %%%% ¡settings!
-Correlation.CORRELATION_RULE_LIST
+Correlation.CORRELATION_RULE_LIST(1:3)
 %%%% ¡default!
 Correlation.CORRELATION_RULE_LIST{1}
 
@@ -34,6 +37,11 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST
 Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 
 %% ¡props_update!
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'AnalyzeGroup_FUN_GA_WU'
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectFUN.
@@ -74,13 +82,17 @@ for i = 1:1:gr.get('SUB_DICT').length()
 end
 A_fun = A_fun/gr.get('SUB_DICT').length();
 
+ba = BrainAtlas();
+if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
+    ba = gr.get('SUB_DICT').getItem(1).get('BA');
+end
+
 g = GraphWU( ...
     'ID', ['g ' gr.get('ID')], ...
-    'B', A_fun ...
+    'B', A_fun, ...
+    'BAS', ba ...
     );
 value = g;
-%%%% ¡gui!
-% % % pl = PPAnalyzeGroupGraph('EL', a, 'PROP', AnalyzeGroup_FUN_WU.G, varargin{:});
 
 %% ¡tests!
 

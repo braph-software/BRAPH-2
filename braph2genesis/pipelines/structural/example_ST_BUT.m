@@ -5,7 +5,7 @@ clear variables %#ok<*NASGU>
 
 %% Load BrainAtlas
 im_ba = ImporterBrainAtlasXLS( ...
-    'FILE', [fileparts(which('example_ST_WU')) filesep 'example data ST (MRI)' filesep 'desikan_atlas.xlsx'], ...
+    'FILE', [fileparts(which('example_ST_WU')) filesep 'example data ST (MRI)' filesep 'destrieux_atlas.xlsx'], ...
     'WAITBAR', true ...
     );
 
@@ -29,9 +29,11 @@ im_gr2 = ImporterGroupSubjectST_XLS( ...
 gr2 = im_gr2.get('GR');
 
 %% Analysis BUT
-a_BUT1 = AnalyzeGroup_ST_BUT('GR', gr1, 'Thresholds', [.5 .6]);
+thresholds = 0:.2:1;
 
-a_BUT2 = AnalyzeGroup_ST_BUT('GR', gr2, 'Thresholds', [.5 .6]);
+a_BUT1 = AnalyzeGroup_ST_BUT('GR', gr1, 'Thresholds', thresholds);
+
+a_BUT2 = AnalyzeGroup_ST_BUT('GR', gr2, 'Thresholds', thresholds);
 
 % measure calculation
 g_BUT1 = a_BUT1.get('G');

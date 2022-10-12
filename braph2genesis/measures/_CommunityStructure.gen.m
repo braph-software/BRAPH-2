@@ -71,7 +71,7 @@ N = g.nodenumber();
 gamma = m.get('gamma');
 community_structure_algorithm = m.get('rule');
 
-for li = 1:1:g.layernumber()
+parfor li = 1:1:g.layernumber()
     Aii = A{li, li};
     community_structure(li) =  m.community(Aii, N(li), gamma, community_structure_algorithm);
 end

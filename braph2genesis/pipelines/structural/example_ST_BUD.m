@@ -5,7 +5,7 @@ clear variables %#ok<*NASGU>
 
 %% Load BrainAtlas
 im_ba = ImporterBrainAtlasXLS( ...
-    'FILE', [fileparts(which('example_ST_WU')) filesep 'example data ST (MRI)' filesep 'desikan_atlas.xlsx'], ...
+    'FILE', [fileparts(which('example_ST_WU')) filesep 'example data ST (MRI)' filesep 'destrieux_atlas.xlsx'], ...
     'WAITBAR', true ...
     );
 
@@ -29,7 +29,8 @@ im_gr2 = ImporterGroupSubjectST_XLS( ...
 gr2 = im_gr2.get('GR');
 
 %% Analysis BUD
-densities = [0 100];
+densities = 0:10:100;
+
 a_BUD1 = AnalyzeGroup_ST_BUD('GR', gr1, 'DENSITIES', densities);
 
 a_BUD2 = AnalyzeGroup_ST_BUD('GR', gr2, 'DENSITIES', densities);

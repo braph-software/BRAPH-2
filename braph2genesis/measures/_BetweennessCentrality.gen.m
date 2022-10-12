@@ -41,7 +41,7 @@ N = g.nodenumber();
 betweenness_centrality = cell(g.layernumber(), 1);
 connectivity_layer =  g.getConnectivityType(g.layernumber());
 
-for li = 1:1:g.layernumber()
+parfor li = 1:1:g.layernumber()
     Aii = A{li, li};
 
     if connectivity_layer == Graph.WEIGHTED  % weighted graphs

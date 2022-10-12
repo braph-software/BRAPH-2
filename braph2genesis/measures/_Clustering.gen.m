@@ -44,7 +44,7 @@ directionality_type =  g.getDirectionalityType(L);
 
 triangles = calculateValue@Triangles(m, prop);
 
-for li = 1:1:L
+parfor li = 1:1:L
     Aii = A{li, li};
     if directionality_type == Graph.UNDIRECTED              
         degree = Degree('G', g).get('M');

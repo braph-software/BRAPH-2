@@ -27,7 +27,7 @@ in_strength = calculateValue@InStrength(m, prop);
 g = m.get('G');  % graph from measure class
 
 in_strength_av = cell(g.layernumber(), 1);
-for li = 1:1:length(in_strength_av)
+parfor li = 1:1:length(in_strength_av)
     in_strength_av(li) = {mean(in_strength{li})};
 end
 

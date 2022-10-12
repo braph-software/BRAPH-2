@@ -26,11 +26,19 @@ Correlation.ZERO
 %%% ¡prop!
 DENSITIES (parameter, rvector) is the vector of densities.
 %%%% ¡default!
-0
+[1:1:10]
 %%%% ¡gui!
-pr = PlotPropSmartVector('EL', a, 'PROP', AnalyzeGroup_ST_BUD.DENSITIES, 'MAX', 100, 'MIN', 0, varargin{:});
+pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeGroup_ST_BUD.DENSITIES, ...
+    'MIN', 0, 'MAX', 100, ...
+    'DEFAULT', AnalyzeGroup_ST_BUD.getPropDefault('DENSITIES'), ...
+    varargin{:});
 
 %% ¡props_update!
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'AnalyzeGroup_ST_BUD'
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectST.
@@ -63,9 +71,9 @@ if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SP
             case 'female'
                 sex(i) = 1;
             case 'male'
-                sex(i) = 0;
-            otherwise
                 sex(i) = -1;
+            otherwise
+                sex(i) = 0;
         end
     end
     A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'), [age, sex]);
@@ -79,23 +87,28 @@ g = MultigraphBUD( ...
     'ID', ['g ' gr.get('ID')], ...
     'B', A, ...
     'DENSITIES', densities, ...
-    'BRAINATLAS', atlas ...
+    'LAYERTICKS', densities, ...
+    'LAYERLABELS', cell2str(cellfun(@(x) [num2str(x) '%'], num2cell(densities), 'UniformOutput', false)), ...
+    'BAS', atlas ...
     );
+
+if ~isa(a.getr('TEMPLATE'), 'NoValue')
+    g.set('TEMPLATE', a.get('TEMPLATE').memorize('G'))
+end    
 
 value = g;
 
-%% ¡methods!
-function pr = getPPCompareGroup_CPDict(a, varargin) 
-    %GEPPPCOMPAREGROUP_CPDICT returns the comparison plot panel compatible with the analysis.
-    %
-    % PR = GEPPPCOMPAREGROUP_CPDICT(A) returns the comparison plot panel
-    %  that is compatible with the analyze group.
-    %
-    % See also CompareGroup.
-    
-    pr = PPCompareGroup_CPDict_ST_BUD(varargin{:});
-end
-
+% % % %% ¡methods!
+% % % function pr = getPPCompareGroup_CPDict(a, varargin) 
+% % %     %GEPPPCOMPAREGROUP_CPDICT returns the comparison plot panel compatible with the analysis.
+% % %     %
+% % %     % PR = GEPPPCOMPAREGROUP_CPDICT(A) returns the comparison plot panel
+% % %     %  that is compatible with the analyze group.
+% % %     %
+% % %     % See also CompareGroup.
+% % %     
+% % %     pr = PPCompareGroup_CPDict_ST_BUD(varargin{:});
+% % % end
 
 %% ¡tests!
 

@@ -41,14 +41,12 @@ a_WU2 = AnalyzeGroup_ST_MP_WU( ...
 
 % measure calculation
 g_WU1 = a_WU1.get('G');
-degree_WU1 = g_WU1.getMeasure('Degree').get('M');
-degree_av_WU1 = g_WU1.getMeasure('DegreeAv').get('M');
-distance_WU1 = g_WU1.getMeasure('Distance').get('M');
+ovstrength_WU1 = g_WU1.getMeasure('OverlappingStrength').get('M');
+ovstrength_av_WU1 = g_WU1.getMeasure('OverlappingStrengthAv').get('M');
 
 g_WU2 = a_WU2.get('G');
-degree_WU2 = g_WU2.getMeasure('Degree').get('M');
-degree_av_WU2 = g_WU2.getMeasure('DegreeAv').get('M');
-distance_WU2 = g_WU2.getMeasure('Distance').get('M');
+ovstrength_WU2 = g_WU2.getMeasure('OverlappingStrength').get('M');
+ovstrength_av_WU2 = g_WU2.getMeasure('OverlappingStrengthAv').get('M');
 
 % comparison
 c_WU = CompareGroup( ...
@@ -60,20 +58,14 @@ c_WU = CompareGroup( ...
     'MEMORIZE', true ...
     );
 
-degree_WU_diff = c_WU.getComparison('Degree').get('DIFF');
-degree_WU_p1 = c_WU.getComparison('Degree').get('P1');
-degree_WU_p2 = c_WU.getComparison('Degree').get('P2');
-degree_WU_cil = c_WU.getComparison('Degree').get('CIL');
-degree_WU_ciu = c_WU.getComparison('Degree').get('CIU');
+ovstrength_WU_diff = c_WU.getComparison('OverlappingStrength').get('DIFF');
+ovstrength_WU_p1 = c_WU.getComparison('OverlappingStrength').get('P1');
+ovstrength_WU_p2 = c_WU.getComparison('OverlappingStrength').get('P2');
+ovstrength_WU_cil = c_WU.getComparison('OverlappingStrength').get('CIL');
+ovstrength_WU_ciu = c_WU.getComparison('OverlappingStrength').get('CIU');
 
-degree_av_WU_diff = c_WU.getComparison('DegreeAv').get('DIFF');
-degree_av_WU_p1 = c_WU.getComparison('DegreeAv').get('P1');
-degree_av_WU_p2 = c_WU.getComparison('DegreeAv').get('P2');
-degree_av_WU_cil = c_WU.getComparison('DegreeAv').get('CIL');
-degree_av_WU_ciu = c_WU.getComparison('DegreeAv').get('CIU');
-
-distance_WU_diff = c_WU.getComparison('Distance').get('DIFF');
-distance_WU_p1 = c_WU.getComparison('Distance').get('P1');
-distance_WU_p2 = c_WU.getComparison('Distance').get('P2');
-distance_WU_cil = c_WU.getComparison('Distance').get('CIL');
-distance_WU_ciu = c_WU.getComparison('Distance').get('CIU');
+ovstrength_av_WU_diff = c_WU.getComparison('OverlappingStrengthAv').get('DIFF');
+ovstrength_av_WU_p1 = c_WU.getComparison('OverlappingStrengthAv').get('P1');
+ovstrength_av_WU_p2 = c_WU.getComparison('OverlappingStrengthAv').get('P2');
+ovstrength_av_WU_cil = c_WU.getComparison('OverlappingStrengthAv').get('CIL');
+ovstrength_av_WU_ciu = c_WU.getComparison('OverlappingStrengthAv').get('CIU');

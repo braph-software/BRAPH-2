@@ -9,7 +9,7 @@ The generated NN group can be used to train or test a neural network model.
 %% ¡props_update!
 
 %%% ¡prop!
-INPUT_TYPE (data, option) is the input type for training or testing the NN.
+INPUT_TYPE (parameter, option) is the input type for training or testing the NN.
 %%%% ¡settings!
 {'adjacency_matrices' 'graph_measures'}
 
@@ -19,7 +19,7 @@ GR (data, item) is a group of subjects defined as SubjectCON class.
 Group('SUB_CLASS', 'SubjectCON')
 
 %%% ¡prop!
-G (data, item) is the graph for calculating the graph measures.
+G (parameter, item) is the graph for calculating the graph measures.
 %%%% ¡default!
 GraphWU()
 
@@ -57,7 +57,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
     sub = gr.get('SUB_DICT').getItem(i);
     g = GraphWU( ...
         'ID', ['g ' sub.get('ID')], ...
-        'BRAINATLAS', atlas, ...
+        'BAS', atlas, ...
         'B', Callback('EL', sub, 'TAG', 'CON') ...
         );
 

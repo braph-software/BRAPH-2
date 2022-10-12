@@ -51,7 +51,7 @@ assert(mod(kcore_threshold, 1) == 0, ...
 
 k_core = cell(L, 1);
 directionality_type =  g.getDirectionalityType(L);
-for li = 1:1:L    
+parfor li = 1:1:L    
     Aii = A{li, li};
     directionality_layer = directionality_type(li, li);   
     

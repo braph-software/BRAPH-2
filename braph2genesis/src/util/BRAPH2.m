@@ -37,8 +37,8 @@ classdef BRAPH2
     %
     % Properties (Customizable) - BRAPH2 GUI constants:
     %  CUSTOMIZE        - returns/saves the customizable constants
-    %  FONTUNITS        - sets the units of the font
-    %  FONTSIZE         - sets the size of the font
+    %  FONTSIZE         - sets the size of the font in pixels
+    %  S                - sets the scaling factor of the graphical components
     %  COL              - official BRAPH2 color
     %  COL_FIG          - standard figure background color
     %  COL_M            - standard metadata prop background color
@@ -72,7 +72,7 @@ classdef BRAPH2
         VERSION = '2.0' % BRAPH2 version
         STR = 'BRAPH2' % BRAPH2 short string
         BUILD = 1 % BRAPH2 build number
-        AUTHORS = 'Giovanni Volpe, Emiliano Gomez Ruiz, Anna Canal Garcia, Yu-Wei Chang, Mite Mijalkov, Joana Braga Pereira, Ehsan Kakaei, Eric Westman, et al.'
+        AUTHORS = 'Giovanni Volpe, Emiliano Gomez Ruiz, Anna Canal Garcia, Yu-Wei Chang, Mite Mijalkov, Daniel Vereb, Joana Braga Pereira, Ehsan Kakaei, Eric Westman, et al.'
         COPYRIGHT = ['Copyright 2014-' datestr(now,'yyyy')]
         WEB = 'braph.org' % BRAPH2 website
         TWITTER = 'braph2software' % BRAPH2 twitter handle
@@ -92,6 +92,7 @@ classdef BRAPH2
         ADDON = 'AddOn' % addon not installed
         WRONG_INPUT = 'WrongInput' % wrong input value or format in a function
         WRONG_OUTPUT = 'WrongOutput' % wrong output value or format in a function
+        CANCEL_IO = 'CancelIO' % cancelled IO operation by user
         BUG_FUNC = 'BugFunc' % bug in a function (wrong behavior)
         BUG_COPY = 'BugCopy' % bug while deep-copying an object
         BUG_CLONE = 'BugClone' % bug while cloning an object
@@ -133,20 +134,8 @@ classdef BRAPH2
                 b2_out = b2;
             end
         end
-        function fontunits = FONTUNITS()
-            % FONTUNITS sets the units of the font.
-            %
-            % See also BRAPH2Constants.
-            
-            persistent b2
-            if isempty(b2)
-                b2 = BRAPH2.customize();
-            end
-
-            fontunits = b2.get('FONTUNITS');
-        end
         function fontsize = FONTSIZE()
-            % FONTSIZE sets the size of the font.
+            % FONTSIZE sets the size of the font in pixels.
             %
             % See also BRAPH2Constants.
             
@@ -156,6 +145,18 @@ classdef BRAPH2
             end
 
             fontsize = b2.get('FONTSIZE');
+        end
+        function s = S()
+            % S sets the scaling factor of the graphical components.
+            %
+            % See also BRAPH2Constants.
+            
+            persistent b2
+            if isempty(b2)
+                b2 = BRAPH2.customize();
+            end
+
+            s = b2.get('S');
         end
         function col = COL()
             % COL is the official BRAPH2 color.
@@ -262,6 +263,9 @@ classdef BRAPH2
             %
             % SAVED = SAVE(EL) opens a dialog box to select the file.
             %
+            % It saves a deep copy of EL to reinitialize private
+            %  properties (e.g., handles of figures).
+            %
             % See also load, uiputfile.
             
             if nargin < 2
@@ -276,6 +280,7 @@ classdef BRAPH2
             end
             
             if ~isempty(filename)
+                el = el.copy();
                 build = BRAPH2.BUILD;
                 matlab_release = ver('MATLAB').Version;
                 matlab_release_details = ver();
@@ -324,6 +329,46 @@ classdef BRAPH2
                 build  = [];
                 matlab_release = [];
                 matlab_release_details = [];
+            end
+        end
+    end
+    methods (Static) % BRAPH2 print graphics
+        function printed_out = print(h, filename, varargin)
+            %PRINT saves BRAPH2 figure in a graphics format.
+            %
+            % PRINTED = PRINT(H, FILEMANE) saves the graphical object H in the file FILENAME.
+            %
+            % PRINTED = PRINT(H) opens a dialog box to select the file.
+            %
+            % PRINTED = PRINT(H, [], 'Name', Value, ...) specifies the Name-Value pairs. 
+            %  All Name-Value arguments of <a href="matlab:help exportgraphics">exportgraphics</a> can be used.
+            %
+            % See also exportgraphics, uiputfile.
+
+            if nargin < 2 || isempty(filename)
+                % select file
+                filter = {'*.jpg';'*.png';'*.tif';'*.gif';'*.pdf';'*.eps'};
+                [file, path, filterindex] = uiputfile(filter, ['Select the figure file.']);
+                % save file
+                if filterindex
+                    filename = fullfile(path, file);
+                else 
+                    filename = '';
+                end
+            end
+
+            if ~isempty(filename)
+                exportgraphics(h, filename, ...
+                    'BackgroundColor', 'current', ...
+                    varargin{:});
+
+                saved = true;
+            else
+                saved = false;
+            end
+
+            if nargout
+                printed_out = saved;
             end
         end
     end
@@ -438,24 +483,24 @@ classdef BRAPH2
             uipushtool(toolbar, ...
                 'Tag', 'BRAPH2.Web', ...                
                 'Separator', 'on', ...
-                'TooltipString', 'Link to braph.org', ...
-                'CData', imresize(imread('icon_web.png'), [24 24]), ...
+                'Tooltip', 'Link to braph.org', ...
+                'CData', imread('icon_web.png'), ...
                 'ClickedCallback', 'BRAPH2.web()');
             
             % Forum
             uipushtool(toolbar, ...
                 'Tag', 'BRAPH2.Forum', ...                
                 'Separator', 'off', ...
-                'TooltipString', 'Link to the BRAPH 2.0 forums', ...
-                'CData', imresize(imread('icon_forum.png'), [24 24]), ...
+                'Tooltip', 'Link to the BRAPH 2.0 forums', ...
+                'CData', imread('icon_forum.png'), ...
                 'ClickedCallback', 'BRAPH2.forum()');
             
             % Twitter
             uipushtool(toolbar, ...
                 'Tag', 'BRAPH2.Twitter', ...                
                 'Separator', 'off', ...
-                'TooltipString', 'Link to the BRAPH 2.0 Twitter', ...
-                'CData', imresize(imread('icon_twitter.png'), [24 24]), ...
+                'Tooltip', 'Link to the BRAPH 2.0 Twitter', ...
+                'CData', imread('icon_twitter.png'), ...
                 'ClickedCallback', 'BRAPH2.twitter()');
             
             uipushtool(toolbar, 'Separator', 'on', 'Visible', 'off')
@@ -464,16 +509,16 @@ classdef BRAPH2
             uipushtool(toolbar, ...
                 'Tag', 'BRAPH2.License', ...                
                 'Separator', 'on', ...
-                'TooltipString', 'BRAPH 2.0 License', ...
-                'CData', imresize(imread('icon_license.png'), [24 24]), ...
+                'Tooltip', 'BRAPH 2.0 License', ...
+                'CData', imread('icon_license.png'), ...
                 'ClickedCallback', 'BRAPH2.license()');
             
             % Credits
             uipushtool(toolbar, ...
                 'Tag', 'BRAPH2.Credits', ...                
                 'Separator', 'off', ...
-                'TooltipString', 'Informtion about BRAPH 2.0 and credits', ...
-                'CData', imresize(imread('icon_about.png'), [24 24]), ...
+                'Tooltip', 'Informtion about BRAPH 2.0 and credits', ...
+                'CData', imread('icon_about.png'), ...
                 'ClickedCallback', 'BRAPH2.credits()');
         end
     end

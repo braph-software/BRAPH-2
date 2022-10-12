@@ -8,52 +8,47 @@ The regressor trains on NN groups which contain the inputs and targets.
 %% ¡props!
 
 %%% ¡prop!
-LAYERS (data, rvector) is a vector representing the number of neurons in each layer.
+LAYERS (parameter, rvector) is a vector representing the number of neurons in each layer.
 %%%% ¡default!
 []
 %%%% ¡postprocessing!
 if isempty(nn.get('LAYERS'))
     if nn.get('GR').get('SUB_DICT').length() > 0
         [inputs, num_features] = nn.reconstruct_inputs(nn.get('GR'));
-        value = [floor(1.5 * num_features) floor(1.5 * num_features)];
+        value = [floor(0.1 * num_features) floor(0.1 * num_features)];
         nn.set('LAYERS', value);
     end
 end
 %%%% ¡gui!
-pr = PlotPropSmartVector('EL', nn, 'PROP', NNRegressorDNN.LAYERS, 'MAX', 100000, 'MIN', 1, varargin{:});
+pr = PanelPropRVectorSmart('EL', nn, 'PROP', NNRegressorDNN.LAYERS, 'MAX', 100000, 'MIN', 1, varargin{:});
 
 %%% ¡prop!
-BATCH (data, scalar) is the size of the mini-batch to use for each training iteration.
+BATCH (parameter, scalar) is the size of the mini-batch to use for each training iteration.
 %%%% ¡default!
 4
 
 %%% ¡prop!
-EPOCHS (data, scalar) is a maximum number of epochs.
+EPOCHS (parameter, scalar) is a maximum number of epochs.
 %%%% ¡default!
-200
+40
 
 %%% ¡prop!
-SHUFFLE (data, option) is an option for data shuffling.
+SHUFFLE (parameter, option) is an option for data shuffling.
 %%%% ¡settings!
 {'once' 'never' 'every-epoch'}
 
 %%% ¡prop!
-SOLVER (data, option) is an option for the solver.
+SOLVER (parameter, option) is an option for the solver.
 %%%% ¡settings!
 {'adam' 'sgdm' 'rmsprop'}
 
 %%% ¡prop!
+FEATURE_SELECTION_RATIO (parameter, scalar) is the ratio of selected features.
+%%%% ¡default!
+1
+
+%%% ¡prop!
 VERBOSE (metadata, logical) is an indicator to display trining progress information.
-%%%% ¡default!
-false
-
-%%% ¡prop!
-PLOT_TRAINING (data, logical) is an option for the plot of training-progress.
-%%%% ¡default!
-true
-
-%%% ¡prop!
-PLOT_LAYERS (data, logical) is an option for the plot of the layers.
 %%%% ¡default!
 false
 
@@ -63,6 +58,11 @@ INPUT_FORMAT (data, string) is the data format of network inputs.
 'BCSS'
 
 %% ¡props_update!
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'NNRegressorDNN'
 
 %%% ¡prop!
 MODEL (result, net) is a trained neural network regressor.
@@ -83,6 +83,7 @@ if BRAPH2.installed('NN', 'warning')
             layers = [layers
                 fullyConnectedLayer(numLayer(i), 'Name', ['fc' num2str(i)])
                 batchNormalizationLayer('Name', ['batchNormalization' num2str(i)])
+                dropoutLayer('Name', ['dropout' num2str(i)])
                 ];
         end
         layers = [layers
@@ -92,6 +93,7 @@ if BRAPH2.installed('NN', 'warning')
             ];
 
         % plot layers
+        %% TODO: create a panel figure when matlab change this kind of plot to uifigure
         if nn.get('PLOT_LAYERS')
             lgraph = layerGraph(layers);
             figure
@@ -136,12 +138,25 @@ function [inputs, num_features] = reconstruct_inputs(nn, gr)
         inputs = [];
         num_features = 0;
     else
-        mask = gr.get('SUB_DICT').getItem(1).get('FEATURE_MASK');
+        % get the mask for selecting the relevant input features
+        mask_tmp = gr.get('FEATURE_SELECTION_MASK');
+        masks = {};
+        for i = 1:1:length(mask_tmp)
+            mask = mask_tmp{i};
+            [~, idx_all] = sort(mask(:), 'descend');
+            percentile = nn.get('FEATURE_SELECTION_RATIO');
+            num_top_idx = ceil(percentile * numel(mask));
+            mask(idx_all(1:num_top_idx)) = 1;
+            mask(idx_all(end - (length(idx_all) - num_top_idx - 1):end)) = 0;
+            masks{i} = mask;
+        end
+
+        % apply the mask to select input features
         inputs = [];
         inputs_tmp = gr.get('INPUTS');
         for i = 1:1:gr.get('SUB_DICT').length()
             input = inputs_tmp{i};
-            input_per_sub = cellfun(@(x, y) x(y == 1), input, mask, 'UniformOutput', false);
+            input_per_sub = cellfun(@(x, y) x(y == 1), input, masks, 'UniformOutput', false);
             input_per_sub = cell2mat(input_per_sub');
             inputs = [inputs input_per_sub];
         end

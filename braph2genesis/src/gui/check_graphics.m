@@ -4,15 +4,21 @@ function check = check_graphics(h, type)
 % CHECK = CHECK_GRAPHICS(H) returns whether the H is a graphic object.
 %
 % CHECK = CHECK_GRAPHICS(H, TYPE) returns whether the H is a graphic object 
-%  of the kind TYPE = 'figure', 'uipanel', 'axes', 'uitable', 'uimenu',
-%  'uicontextmenu', 'uitoolbar', 'uipushtool', 'pushbutton',
-%  'togglebutton', 'checkbox', 'radiobutton', 'edit', 'text', 'slider',
-%  'listbox', 'popupmenu', or 'line'.
+%  of the kind TYPE:
+%  'figure', 'uimenu', 'uitoolbar', 'uipushtool', 'uitoggletool',
+%  'uipanel', 'axes', 'uitable', 'uicontextmenu',
+%  'uibutton', 'uilabel', 'uieditfield', 'uitextarea', 'uicheckbox',
+%  'uidropdown', 'uislider', 'uilistbox'.
+%  'text', 'line', 'surface', 'patch', 'light'.
+%
+%  Also these legacy graphical objects are checkable:
+%  'pushbutton', 'togglebutton', 'checkbox', 'radiobutton', 'edit', 'text',
+%  'slider', 'listbox', 'popupmenu'.
 %
 % CHECK_GRAPHICS(H[, TYPE]) throws an error if H is not a correct graphic object.
 %  Error id: [BRAPH2:Format:WrongInput]
 %
-% See also isgraphics.
+% See also isgraphics, uifigure.
 
 if nargin < 2
     type = [];
@@ -25,20 +31,48 @@ if nargout == 1
         switch type
             case 'figure'
                 check = ~isempty(h) && isgraphics(h) && isgraphics(h, 'figure');
-            case 'uipanel'
-                check = ~isempty(h) && isgraphics(h, 'uipanel');
-            case 'axes'
-                check = ~isempty(h) && isgraphics(h, 'axes');
-            case 'uitable'
-                check = ~isempty(h) && isgraphics(h, 'uitable');
             case 'uimenu'
                 check = ~isempty(h) && isgraphics(h, 'uimenu');
             case 'uitoolbar'
                 check = ~isempty(h) && isgraphics(h, 'uitoolbar');
             case 'uipushtool'
                 check = ~isempty(h) && isgraphics(h, 'uipushtool');
+            case 'uitoggletool'
+                check = ~isempty(h) && isgraphics(h, 'uitoggletool');
+            case 'uipanel'
+                check = ~isempty(h) && isgraphics(h, 'uipanel');
+            case 'axes'
+                check = ~isempty(h) && isgraphics(h, 'axes');
+            case 'uitable'
+                check = ~isempty(h) && isgraphics(h, 'uitable');
             case 'uicontextmenu'
                 check = ~isempty(h) && isgraphics(h, 'uicontextmenu');
+            case 'uibutton'
+                check = ~isempty(h) && isgraphics(h, 'uibutton');
+            case 'uilabel'
+                check = ~isempty(h) && isgraphics(h, 'uilabel');
+            case 'uieditfield'
+                check = ~isempty(h) && isgraphics(h, 'uieditfield');
+            case 'uitextarea'
+                check = ~isempty(h) && isgraphics(h, 'uitextarea');
+            case 'uicheckbox'
+                check = ~isempty(h) && isgraphics(h, 'uicheckbox');
+            case 'uidropdown'
+                check = ~isempty(h) && isgraphics(h, 'uidropdown');
+            case 'uislider'
+                check = ~isempty(h) && isgraphics(h, 'uislider');
+            case 'uilistbox'
+                check = ~isempty(h) && isgraphics(h, 'uilistbox');
+            case 'text'
+                check = ~isempty(h) && isgraphics(h, 'text');
+            case 'line'
+                check = ~isempty(h) && isgraphics(h, 'line');
+            case 'surface'
+                check = ~isempty(h) && isgraphics(h, 'surface');
+            case 'patch'
+                check = ~isempty(h) && isgraphics(h, 'patch');
+            case 'light'
+                check = ~isempty(h) && isgraphics(h, 'light');
             case 'pushbutton'
                 check = ~isempty(h) && isgraphics(h, 'uicontrol') && strcmpi(get(h, 'Style'), 'pushbutton');
             case 'togglebutton'
@@ -57,8 +91,6 @@ if nargout == 1
                 check = ~isempty(h) && isgraphics(h, 'uicontrol') && strcmpi(get(h, 'Style'), 'listbox');
             case 'popupmenu'
                 check = ~isempty(h) && isgraphics(h, 'uicontrol') && strcmpi(get(h, 'Style'), 'popupmenu');
-            case 'line'
-                check = ~isempty(h) && isgraphics(h, 'line');
             otherwise
                 error( ...
                     [BRAPH2.STR ':check_graphics:' BRAPH2.WRONG_INPUT], ...

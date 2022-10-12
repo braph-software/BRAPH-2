@@ -92,7 +92,7 @@ B = {B11 B22};
 
 known_overlapping_degree = { ...
                             [0, 0, 0]'
-                            [6, 6, 6]'
+                            [4, 4, 4]'
                             };
 
 g = MultiplexBUD('B', B, 'DENSITIES', [0 100]);

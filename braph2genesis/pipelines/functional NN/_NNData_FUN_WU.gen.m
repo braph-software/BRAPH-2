@@ -104,7 +104,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
     g = GraphWU( ...
         'ID', ['g ' sub.get('ID')], ...
         'B', A, ...
-        'BRAINATLAS', atlas ...
+        'BAS', atlas ...
         );
     
     if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
@@ -150,6 +150,27 @@ nn_gr.set('sub_dict', nn_sub_dict);
 braph2waitbar(wb, 'close')
 
 value = nn_gr;
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'NNData_FUN_WU'
+%%%% ¡postprocessing!
+if nnd.prop_set(NNData_FUN_WU.TEMPLATE, varargin{:})
+    varargin = {};
+    
+    parameters = nnd.getProps(Category.PARAMETER);
+    for i = 1:1:length(parameters)
+        parameter = parameters(i);
+        
+        if parameter ~= NNData_FUN_WU.TEMPLATE
+            varargin{length(varargin) + 1} = parameter;
+            varargin{length(varargin) + 1} = Callback('EL', nnd.get('TEMPLATE'), 'PROP', parameter);
+        end
+    end
+    
+    nnd.set(varargin{:});
+end
 
 %% ¡tests!
 %%% ¡test!

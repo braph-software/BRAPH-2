@@ -28,7 +28,10 @@ if ~isfile(file)
     file = [fileparts(which('braph2')) filesep 'brainsurfs' filesep file];
 end
 
-if isfile(file)
+if isempty(file)
+    error([BRAPH2.STR ':ImporterBrainSurfaceNV:' BRAPH2.CANCEL_IO], ...
+        [BRAPH2.STR ':ImporterBrainSurfaceNV:' BRAPH2.CANCEL_IO]);
+elseif isfile(file)
     wb = braph2waitbar(im.get('WAITBAR'), .15, 'Reading brain surface file ...');
     
     fid = fopen(file);

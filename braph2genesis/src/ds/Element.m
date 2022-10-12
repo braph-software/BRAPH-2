@@ -14,6 +14,13 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %                    (for a result, after it is calculated)
     %   <strong>postprocessing</strong> - postprocesses the value of a prop 
     %                    AFTER all properties have been set
+    %   <strong>prop_set</strong>       - returns whether a prop has been set before postprocessing.
+    %
+    % An element notifies the following <a href="matlab:help event">events</a>:
+    %  <strong>PropSet</strong>         - when a property is successfully set 
+    %                    with event data in <a href="matlab:help EventPropSet">EventPropSet</a>
+    %  <strong>ResultMemorized</strong> - when a result is successfully memorized
+    %                    with event data in <a href="matlab:help EventResultMemorized">EventResultMemorized</a>
     %
     % Element constructor:
     %  Element - constructor
@@ -89,9 +96,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %  checkFormat - returns whether a value format is correct/error
     %
     % Element methods (GUI):
-    %  getGUI - returns figure with element GUI
-    %  getPlotElement - returns the element plot
-    %  getPlotProp - returns a prop plot
+    %  getGUIElement - returns figure with element GUI
+    %  getPanelElement - returns the element panel
+    %  getPanelProp - returns a prop panel
     %
     % Element methods (GUI, Static):
     %  getGUIMenuImport - returns a basic import menu
@@ -125,6 +132,10 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         %  first time a result is successfully calculated.
 
         props = {}
+    end
+    events
+        PropSet
+        ResultMemorized
     end
     methods (Static) % inspection
         function el_class = getClass(el)
@@ -600,7 +611,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     end
     methods % constructor
         function el = Element(varargin)
-            % ELEMENT() creates an Element.
+            %ELEMENT() creates an Element.
             %
             % ELEMENT(PROP, VALUE, ...) with property PROP initialized to VALUE.
             %
@@ -747,7 +758,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 
             for prop = 1:1:el.getPropNumber()
                 if ~el.isLocked(prop)
-                    el.postprocessing(prop)
+                    el.postprocessing(prop, varargin{:})
                 end
             end
 
@@ -766,6 +777,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         )
                 end
             end
+            
+            % notify event prop set
+            notify(el, 'PropSet', EventPropSet(el, varargin{1:2:end}))
 
             % output
             if nargout > 0
@@ -937,14 +951,30 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % It calls the function <a href="matlab:help Element.check">check</a> and
             %  proceed to save the result if the property is Category.RESULT.
             %
-            % See also get, getr, set, check.
+            % If the property is NOT Category.RESULT and has not been set yet, 
+            %  it sets it to its default value.
+            %
+            % If the property is NOT Category.RESULT and is a Callback, 
+            %  it iteratively memorizes the property of the element in the Callback.
+            %
+            % See also get, getr, set, check, Callback.
 
             prop = el.getPropProp(pointer);
 
-            value = el.get(prop);
-
-            if isequal(el.getPropCategory(prop), Category.RESULT)
-                el.props{prop}.value = value;
+            if isa(el.props{prop}.value, 'Callback')
+                cb = el.props{prop}.value;
+                value = cb.get('EL').memorize(cb.get('PROP'));
+            else
+                value = el.get(prop); % retrieves or calculates the value
+                
+                if isa(el.props{prop}.value, 'NoValue')
+                    el.props{prop}.value = value;
+                    
+                    if isequal(el.getPropCategory(prop), Category.RESULT) 
+                        % notify event result memorized
+                        notify(el, 'ResultMemorized', EventResultMemorized(el, pointer))
+                    end
+                end
             end
         end
         function seed = getPropSeed(el, pointer)
@@ -1034,7 +1064,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         function checked(el, pointer)
             %CHECKED sets a property to checked.
             %
-            % CHECKED(EL) sets al properties of element EL to checked.
+            % CHECKED(EL) sets all properties of element EL to checked.
             %
             % CHECKED(EL, POINTER) sets the property POINTER of element EL to checked.
             %  POINTER can be either a property number (PROP) or tag (TAG).
@@ -1101,6 +1131,10 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % Note that, instead, EL1 == EL2 detemines whether the two handles 
             %  EL1 and EL2 refer to the very same element.
             
+            % % % IMPORTANT NOTE:
+            % This code does not work for element that contain recursively
+            % other elements (e.g. BA containing PFBA containg BA).
+            
             check = isa(el2, el1.getClass());
             
             if check
@@ -1134,18 +1168,41 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         end
     end
     methods (Access=protected) % postprocessing
-        function postprocessing(el, prop) %#ok<*INUSD>
+        function postprocessing(el, prop, varargin) %#ok<*INUSD>
             %POSTPROCESSING postprocesses the value of a prop after it has been set.
             %
-            % POSTPROCESSING(EL, PROP) post processes the value of the
-            %  property PROP after it has been set.
+            % POSTPROCESSING(EL, PROP, POINTER1, VALUE1, POINTER2, VALUE2, ...) 
+            %  post-processes the value of the property PROP after it has been set.
             %  By default, this function does not do anything, so it should
             %  be implemented in the subclasses of Element when needed.
             %
-            % The postprocessign is applied to all props that are unlocked
+            % The postprocessing is applied to all props that are unlocked
             %  after any value is set.
             %
-            % See also set, conditioning, calculateValue, checkValue.
+            % See also prop_set, set, conditioning, calculateValue, checkValue.
+        end
+        function bool = prop_set(el, pointer_list, varargin)
+            %PROP_SET returns whether a prop has been set before postprocessing.
+            %
+            % BOOL = PROP_SET(EL, POINTER, POINTER1, VALUE1, POINTER2, VALUE2, ...) returns
+            %  whether the property POINTER has been set in the current setting cycle.
+            %  POINTER can be either a property number (PROP) or tag (TAG).
+            %  It is typically used with postprocessing.
+            %
+            % BOOL = PROP_SET(EL, {POINTERA, POINTERB, POINTERC}, POINTER1, VALUE1, POINTER2, VALUE2, ...) 
+            %  operates to a cell array of pointers.
+            %
+            % See also postprocessing.
+            
+            if ~iscell(pointer_list)
+                pointer_list = {pointer_list};
+            end
+
+            if length(varargin) == 1
+                varargin = varargin{:};
+            end
+                        
+            bool = any(cellfun(@(pointer1) any(cellfun(@(pointer2) el.getPropProp(pointer2), varargin(1:2:end)) == el.getPropProp(pointer1)), pointer_list));
         end
     end
     methods (Access=protected) % check value
@@ -1346,16 +1403,16 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             
             if all(cellfun(@(x) el ~= x, el_list))
                 el_list = [el_list(:); {el}];
-            end
             
-            for prop = 1:1:el.getPropNumber()
-                value = el.getr(prop);
-                
-                if isa(value, 'Element')
-                    el_list = value.getElementList(el_list);
-                elseif iscell(value) && all(all(cellfun(@(x) isa(x, 'Element'), value)))
-                    for i = 1:1:length(value)
-                        el_list = value{i}.getElementList(el_list);
+                for prop = 1:1:el.getPropNumber()
+                    value = el.getr(prop);
+
+                    if isa(value, 'Element')
+                        el_list = value.getElementList(el_list);
+                    elseif iscell(value) && all(all(cellfun(@(x) isa(x, 'Element'), value)))
+                        for i = 1:1:length(value)
+                            el_list = value{i}.getElementList(el_list);
+                        end
                     end
                 end
             end
@@ -1389,10 +1446,10 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                             case Format.EMPTY
                                 struct{i}.props{prop}.value = regexprep(tostring(value), '''', '''''');
                             case {Format.STRING, Format.OPTION, Format.CLASS, ...
-                                    Format.MARKERSTYLE, Format.LINESTYLE}
+                                    Format.MARKER, Format.LINE}
                                 struct{i}.props{prop}.value = regexprep(tostring(value), '''', '''''');
                             case {Format.LOGICAL, Format.SCALAR, Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX, ...
-                                    Format.COLOR, Format.ALPHA, Format.MARKERSIZE, Format.LINEWIDTH}
+                                    Format.COLOR, Format.ALPHA, Format.SIZE}
                                 struct{i}.props{prop}.value = mat2str(value);
                             case Format.CLASSLIST
                                 json_str = '{';
@@ -1486,10 +1543,10 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                             case Format.EMPTY
                                 el.props{prop}.value = eval(value);
                             case {Format.STRING, Format.OPTION, Format.CLASS, ...
-                                    Format.MARKERSTYLE, Format.LINESTYLE}
+                                    Format.MARKER, Format.LINE}
                                 el.props{prop}.value = eval(value(2:end-1));
                             case {Format.LOGICAL, Format.SCALAR, Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX, ...
-                                    Format.COLOR, Format.ALPHA, Format.MARKERSIZE, Format.LINEWIDTH}
+                                    Format.COLOR, Format.ALPHA, Format.SIZE}
                                 el.props{prop}.value = eval(value);
                             case Format.CLASSLIST
                                 el.props{prop}.value = eval(value);
@@ -1678,9 +1735,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %
             % EL_CLONE = CLONE(EL, [], CB_CATEGORIES) has callbacks for the categories CB_CATEGORIES.
             %
-            % EL_CLONE = CLONE(EL, [], , [], LOCKED_CATEGORIES) locks the categories LOCKED_CATEGORIES.
+            % EL_CLONE = CLONE(EL, [], [], LOCKED_CATEGORIES) locks the categories LOCKED_CATEGORIES.
             %
-            % See also deepclone, cbclone, Category.
+            % See also deepclone, Category.
             
             if isa(el, 'NoValue')
                 el_clone = NoValue.getNoValue();
@@ -1725,7 +1782,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 
                 % LOCKED
                 if any(strcmp(el_clone.getPropCategory(prop), locked_categories))
-                    el_clone.props{prop}.locked = el.props{prop}.true;
+                    el_clone.props{prop}.locked = true;
                 end
             end
         end
@@ -1746,145 +1803,183 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %    SEED randomized
             %    UNLOCKED
             %
-            % See also clone, cbclone.
+            % See also clone.
             
             el_clone = el.clone({Category.METADATA, Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI});
         end
     end
     methods % GUI
-% FIXME: gui = GUI ...
-        function fig = getGUI(el, varargin)
-            %GETGUI returns figure with element GUI.
+        function f_out = getGUIElement(el, varargin)
+            %GETGUIELEMENT returns figure with element GUI.
             %
-            % GETGUI(EL) opens figure with GUI for element EL.
+            % GETGUIELEMENT(EL) opens figure with GUI for element EL.
             %
-            % GETGUI(EL, 'Name', Value, ...) sets the settings of GUI.
+            % GETGUIELEMENT(EL, 'Name', Value, ...) sets the settings of GUI.
             %
-            % FIG = GETGUI(EL) returns handle with figure with GUI for element EL.
+            % FIG = GETGUIELEMENT(EL) returns handle with figure with GUI for element EL.
             %
-            % See also GUI.
+            % See also GUIElement.
             
-            GUI(el, varargin{:});
+            gui = GUIElement('EL', el, varargin{:});
+            f = gui.draw();
             
             if nargout == 1
-                fig = gcf();
+                f_out = f;
             end
         end
-        function pe = getPlotElement(el, varargin) 
-            %GETPLOTELEMENT returns the element plot.
+        function pe = getPanelElement(el, varargin) 
+            %GETPANELELEMENT returns the element plot.
             %
-            % PL = GETPLOTELEMENT(EL) returns the plot of element EL.
+            % PE = GETPANELELEMENT(EL) returns the panel for element EL.
             %
-            % PL = GETPLOTELEMENT(EL, 'Name', Value, ...) sets the settings of PlotElement.
+            % PE = GETPANELELEMENT(EL, 'Name', Value, ...) sets the settings of PanelElement.
             %
-            % See also PlotElement.
+            % See also PanelElement.
             
-            pe = PlotElement('EL', el, varargin{:});
+            pe = PanelElement('PE', el, varargin{:});
         end
-        function pr = getPlotProp(el, prop, varargin)
-            %GETPLOTPROP returns a prop plot.
+        function pr = getPanelProp(el, prop, varargin)
+            %GETPANELPROP returns a prop panel.
             %
-            % PL = GETPLOTPROP(EL, PROP) returns the plot of prop PROP.
+            % PR = GETPANELPROP(EL, PROP) returns the panel of prop PROP.
             %
-            % PL = GETPLOTPROP(EL, PROP, 'Name', Value, ...) sets the settings.
+            % PR = GETPANELPROP(EL, PROP, 'Name', Value, ...) sets the settings.
             %
-            % See also PlotProp, PlotPropCell, PlotPropClass, PlotPropClassList,
-            %  PlotPropIDict, PlotPropItem, PlotPropItemList, PlotPropLogical,
-            %  PlotPropMatrix, PlotPropOption, PlotPropScalar, PlotPropString.
+            % See also PanelProp, PanelPropAlpha, PanelPropCell, PanelPropClass,
+            %  PanelPropClassList, PanelPropColor, PanelPropIDict, PanelPropItem,
+            %  PanelPropLine, PanelPropItemList, PanelPropLogical, PanelPropMarker, 
+            %  PanelPropMatrix, PanelPropNet, PanelPropOption, PanelPropScalar,
+            %  PanelPropSize, PanelPropString.
 
             switch el.getPropFormat(prop)
                 case Format.EMPTY
-                    pr = PlotProp( ...
+                    pr = PanelProp( ...
                         'ID', el.getPropTag(prop), ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
                 case Format.STRING
-                    pr = PlotPropString( ...
+                    pr = PanelPropString( ...
                         'ID', el.getPropTag(prop), ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
                 case Format.LOGICAL
-                    pr = PlotPropLogical( ...
+                    pr = PanelPropLogical( ...
                         'ID', el.getPropTag(prop), ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
                 case Format.OPTION
-                    pr = PlotPropOption( ...
+                    pr = PanelPropOption( ...
                         'ID', el.getPropTag(prop), ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
                 case Format.CLASS
-                    pr = PlotPropClass( ...
+                    pr = PanelPropClass( ...
                         'ID', el.getPropTag(prop), ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
                 case Format.CLASSLIST
-                    pr = PlotPropClassList( ...
+                    pr = PanelPropClassList( ...
                         'ID', el.getPropTag(prop), ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
                 case Format.ITEM
-                    pr = PlotPropItem( ...
+                    pr = PanelPropItem( ...
                         'ID', el.getPropTag(prop), ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
                 case Format.ITEMLIST
-                    pr = PlotPropItemList( ...
+                    pr = PanelPropItemList( ...
                         'ID', el.getPropTag(prop), ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
                 case Format.IDICT
-                    pr = PlotPropIDict( ...
+                    pr = PanelPropIDict( ...
                         'ID', el.getPropTag(prop), ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
                 case Format.SCALAR
-                    pr = PlotPropScalar( ...
+                    pr = PanelPropScalar( ...
                         'ID', el.getPropTag(prop), ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
                 case Format.RVECTOR
-                    pr = PlotPropMatrix( ...
+                    pr = PanelPropMatrix( ...
                         'ID', el.getPropTag(prop), ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
                 case Format.CVECTOR
-                    pr = PlotPropMatrix( ...
+                    pr = PanelPropMatrix( ...
                         'ID', el.getPropTag(prop), ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
                 case Format.MATRIX
-                    pr = PlotPropMatrix( ...
+                    pr = PanelPropMatrix( ...
                         'ID', el.getPropTag(prop), ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
                 case Format.SMATRIX
-                    pr = PlotPropMatrix( ...
+                    pr = PanelPropMatrix( ...
                         'ID', el.getPropTag(prop), ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
                 case Format.CELL
-                    pr = PlotPropCell( ...
+                    pr = PanelPropCell( ...
+                        'ID', el.getPropTag(prop), ...
+                        'EL', el, ...
+                        'PROP', prop, ...
+                        varargin{:});
+% % %                 case Format.NET
+% % %                     pr = PanelPropNet( ...
+% % %                         'ID', el.getPropTag(prop), ...
+% % %                         'EL', el, ...
+% % %                         'PROP', prop, ...
+% % %                         varargin{:});
+                case Format.COLOR
+                    pr = PanelPropColor( ...
+                        'ID', el.getPropTag(prop), ...
+                        'EL', el, ...
+                        'PROP', prop, ...
+                        varargin{:});
+                case Format.ALPHA
+                    pr = PanelPropAlpha( ...
+                        'ID', el.getPropTag(prop), ...
+                        'EL', el, ...
+                        'PROP', prop, ...
+                        varargin{:});
+                case Format.SIZE
+                    pr = PanelPropSize( ...
+                        'ID', el.getPropTag(prop), ...
+                        'EL', el, ...
+                        'PROP', prop, ...
+                        varargin{:});
+                case Format.MARKER
+                    pr = PanelPropMarker( ...
+                        'ID', el.getPropTag(prop), ...
+                        'EL', el, ...
+                        'PROP', prop, ...
+                        varargin{:});
+                case Format.LINE
+                    pr = PanelPropLine( ...
                         'ID', el.getPropTag(prop), ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
                 otherwise
-                    pr = PlotProp( ...
+                    pr = PanelProp( ...
                         'ID', el.getPropTag(prop), ...
                         'EL', el, ...
                         'PROP', prop, ...

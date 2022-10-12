@@ -1,5 +1,5 @@
 function f_out = braph2msgbox(title, message)
-%BRAPH2MSGBOX opens a modal message box.
+%BRAPH2MSGBOX opens a modal message box
 %
 % BRAPH2MSGBOX(TITLE, MESSAGE) opens a modal message box with TITLE and
 %  MESSAGE. 
@@ -19,8 +19,6 @@ f = msgbox(message, title, ...
     'custom', icon, cmap, ...
     CreateStruct);
 set(0, 'DefaultUicontrolBackgroundColor', DefaultUicontrolBackgroundColor_BAK)
-
-set_braph2icon(f)
 
 if nargout > 0
     f_out = f;

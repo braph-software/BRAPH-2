@@ -19,6 +19,7 @@ function braph2(gui, ewm)
 % BRAPH2 packages:
 %  <a href="matlab:help src         ">src</a>           - software core
 %  <a href="matlab:help brainsurfs  ">brainsurfs</a>    - brain surfaces
+%  <a href="matlab:help atlases     ">atlases</a>       - brain atlases
 %  <a href="matlab:help graphs      ">graphs</a>        - graphs
 %  <a href="matlab:help measures    ">measures</a>      - measures
 %  <a href="matlab:help pipelines   ">pipelines</a>     - pipelines
@@ -44,6 +45,9 @@ measures_dir = [fileparts(which('braph2')) filesep 'measures'];
 addpath(measures_dir)
 
 brainsurfs_dir = [fileparts(which('braph2')) filesep 'brainsurfs'];
+addpath(brainsurfs_dir)
+
+brainsurfs_dir = [fileparts(which('braph2')) filesep 'atlases'];
 addpath(brainsurfs_dir)
 
 neuralnetworks_dir = [fileparts(which('braph2')) filesep 'neuralnetworks'];

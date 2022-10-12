@@ -69,10 +69,10 @@ D_A = binarize(A, 'density', D);
 assert(isequal(D_A, ...
     [
     0, 0, 1, 1, 1;
+    1, 0, 1, 0, 0;
+    0, 1, 0, 1, 0;
     1, 1, 1, 0, 0;
-    0, 1, 1, 1, 0;
-    1, 1, 1, 0, 0;
-    1, 1, 0, 0, 1;
+    1, 1, 0, 0, 0;
     ]), ...
     [BRAPH2.STR ':binarize:' BRAPH2.WRONG_OUTPUT], ...
     'density does not work correctly.')

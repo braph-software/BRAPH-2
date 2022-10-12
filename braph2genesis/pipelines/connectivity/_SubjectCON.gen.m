@@ -8,6 +8,7 @@ Subject with a connectivity matrix (e.g. obtained from DTI).
 Element, Subject
 
 %%% ¡gui!
+
 %%%% ¡menu_importer!
 uimenu(menu_import, ...
     'Label', 'Import TXT ...', ...
@@ -134,8 +135,11 @@ else
     msg = ['CON must be a square matrix with the dimensiton equal to the number of brain regions (' int2str(br_number) ').'];
 end
 %%%% ¡gui!
-pr = PPSubjectCON_CON('EL', sub, 'PROP', SubjectCON.CON, varargin{:});
- 
+pr = PanelPropMatrix('EL', sub, 'PROP', SubjectCON.CON, ...
+    'ROWNAME', 'pr.get(''EL'').get(''BA'').get(''BR_DICT'').getKeys()', ...
+    'COLUMNNAME', 'pr.get(''EL'').get(''BA'').get(''BR_DICT'').getKeys()', ...
+    varargin{:});
+
 %%% ¡prop!
 age (data, scalar) is a scalar number containing the age of the subject.
 %%%% ¡default!
@@ -161,6 +165,6 @@ im_gr = ImporterGroupSubjectCON_XLS( ...
     'BA', ba ...
     );
 gr = im_gr.get('GR');
-GUI('PE', gr, 'CLOSEREQ', false).draw()
+f = GUIElement('PE', gr, 'CLOSEREQ', false).draw();
 
-close(gcf)
+close(f)

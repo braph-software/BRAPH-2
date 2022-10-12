@@ -17,6 +17,16 @@ LABEL (metadata, string) is an extended label of the neural network.
 NOTES (metadata, string) are some specific notes about the neural network.
 
 %%% ¡prop!
+PLOT_TRAINING (metadata, logical) is an option for the plot of training-progress.
+%%%% ¡default!
+false
+
+%%% ¡prop!
+PLOT_LAYERS (metadata, logical) is an option for the plot of layer architecture.
+%%%% ¡default!
+false
+
+%%% ¡prop!
 GR (data, item) is a group of NN subjects containing the information for training the neural network.
 %%%% ¡settings!
 'NNGroup'
@@ -29,8 +39,42 @@ if BRAPH2.installed('NN', 'warning')
 else
     value = NoValue();
 end
-%%%% ¡gui!
-pr = PPNNBase_Model('EL', nn, 'PROP', nn.MODEL, varargin{:});
+
+%% TODO: plotting the model architecture. 
+%% Now it cannot be done because this kind of plot is a "figure" rather than a "uifigure".
+% % % %%% ¡prop!
+% % % PFNN (gui, item) contains the panel figure of the model architecture.
+% % % %%%% ¡settings!
+% % % 'PFNeuralNetworks'
+% % % %%%% ¡postprocessing!
+% % % if ~braph2_testing % to avoid problems with isqual when the element is recursive
+% % %     nn.memorize('PFNN').set('NN', nn)
+% % % end
+% % % %%%% ¡gui!
+% % % pr = PanelPropItem('EL', nn, 'PROP', NNBase.PFNN, ...
+% % %     'GUICLASS', 'GUIFig', ...
+% % %     varargin{:});
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'NNBase'
+%%%% ¡postprocessing!
+if nn.prop_set(NNBase.TEMPLATE, varargin{:})
+    varargin = {};
+    
+    parameters = nn.getProps(Category.PARAMETER);
+    for i = 1:1:length(parameters)
+        parameter = parameters(i);
+        
+        if parameter ~= NNBase.TEMPLATE
+            varargin{length(varargin) + 1} = parameter;
+            varargin{length(varargin) + 1} = Callback('EL', nn.get('TEMPLATE'), 'PROP', parameter);
+        end
+    end
+    
+    nn.set(varargin{:});
+end
 
 %% ¡tests!
 

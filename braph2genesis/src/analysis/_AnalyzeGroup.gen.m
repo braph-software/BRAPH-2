@@ -20,7 +20,33 @@ LABEL (metadata, string) is an extended label of the graph analysis.
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the graph analysis.
 %%%% ¡gui!
-pr = PlotPropString('EL', a, 'PROP', AnalyzeGroup.NOTES, 'LINES', 'multi', 'EDITHEIGHT', 4.5, varargin{:});
+pr = PanelPropStringTextArea('EL', a, 'PROP', AnalyzeGroup.NOTES, varargin{:});
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'AnalyzeGroup'
+%%%% ¡postprocessing!
+if a.prop_set(AnalyzeGroup.TEMPLATE, varargin{:})
+    varargin = {};
+    
+    parameters = a.getProps(Category.PARAMETER);
+    for i = 1:1:length(parameters)
+        parameter = parameters(i);
+        
+        if parameter ~= AnalyzeGroup.TEMPLATE
+            varargin{length(varargin) + 1} = parameter;
+            varargin{length(varargin) + 1} = Callback('EL', a.get('TEMPLATE'), 'PROP', parameter);
+        end
+    end
+    
+    a.set(varargin{:});
+end
+
+%%% ¡prop!
+WAITBAR (gui, logical) detemines whether to show the waitbar.
+%%%% ¡default!
+true
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class.
@@ -34,16 +60,16 @@ G (result, item) is the graph obtained from this analysis.
 %%%% ¡calculate!
 value = Graph();
 %%%% ¡gui!
-pr = PPAnalyzeGroup_G('EL', a, 'PROP', AnalyzeGroup.G, 'WAITBAR', true, varargin{:});
+pr = PPAnalyzeGroup_G('EL', a, 'PROP', AnalyzeGroup.G, 'WAITBAR', Callback('EL', a, 'TAG', 'WAITBAR'), varargin{:});
 
-%% ¡methods!
-function pr = getPPCompareGroup_CPDict(a, varargin) 
-    %GEPPPCOMPAREGROUP_CPDICT returns the comparison plot panel compatible with the analysis.
-    %
-    % PR = GEPPPCOMPAREGROUP_CPDICT(A) returns the comparison plot panel
-    %  that is compatible with the analyze group.
-    %
-    % See also CompareGroup.
-    
-    pr = PropPlotIDict(varargin{:});
-end
+% % % %% ¡methods!
+% % % function pr = getPPCompareGroup_CPDict(a, varargin) 
+% % %     %GEPPPCOMPAREGROUP_CPDICT returns the comparison plot panel compatible with the analysis.
+% % %     %
+% % %     % PR = GEPPPCOMPAREGROUP_CPDICT(A) returns the comparison plot panel
+% % %     %  that is compatible with the analyze group.
+% % %     %
+% % %     % See also CompareGroup.
+% % %     
+% % %     pr = PropPlotIDict(varargin{:});
+% % % end

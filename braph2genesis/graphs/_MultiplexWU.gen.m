@@ -43,6 +43,11 @@ NUMBEROFWEIGHTS (parameter, scalar) specifies the number of weights sorted at th
 %% ¡props_update!
 
 %%% ¡prop!
+TEMPLATE (parameter, item) is the graph template to set the graph and measure parameters.
+%%%% ¡settings!
+'MultiplexWU'
+
+%%% ¡prop!
 A (result, cell) is the cell containing the multiplex weighted adjacency matrices of the multiplex weighted undirected graph.
 %%%% ¡calculate!
 B = g.get('B');
@@ -65,6 +70,34 @@ for i = 1:1:L
 end
 
 value = A;
+%%%% ¡gui!
+bas = g.get('BAS');
+if ~isempty(bas)
+    ba = bas{1};
+    br_ids = ba.get('BR_DICT').getKeys();
+    rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
+else
+    rowname = '{}';
+end
+
+if isempty(g.get('LAYERLABELS'))
+    xlayerlabels = PanelPropCell.getPropDefault('XSLIDERLABELS');
+    ylayerlabels = PanelPropCell.getPropDefault('YSLIDERLABELS');
+else
+    layerlabels = str2cell(g.get('LAYERLABELS'));
+    xlayerlabels = ['{' sprintf('''%s'' ', layerlabels{:}) '}'];
+    ylayerlabels = ['{' sprintf('''%s'' ', layerlabels{end:-1:1}) '}'];
+end
+
+pr = PanelPropCell('EL', g, 'PROP', MultiplexWU.A, ...
+    'TAB_H', 40, ...
+    'XYSLIDERLOCK', true, ... 
+    'XSLIDER', false, 'YSLIDER', true, ...
+    'XSLIDERLABELS', xlayerlabels, 'YSLIDERLABELS', ylayerlabels, ...
+    'XSLIDERHEIGHT', 3, 'YSLIDERWIDTH', 7, ...
+    'ROWNAME', rowname, ...
+    'COLUMNNAME', rowname, ...
+    varargin{:});
 
 %% ¡methods!
 function random_g = randomize(g)
