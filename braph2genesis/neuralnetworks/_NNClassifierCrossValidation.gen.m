@@ -44,17 +44,17 @@ FEATURE_SELECTION_RATIO (parameter, scalar) is the ratio of selected features.
 1
 
 %%% ¡prop!
-VERBOSE (metadata, logical) is an indicator to display trining progress information.
+VERBOSE (parameter, logical) is an indicator to display trining progress information.
 %%%% ¡default!
 false
 
 %%% ¡prop!
-PLOT_TRAINING (metadata, logical) is an option for the plot of training-progress.
+PLOT_TRAINING (parameter, logical) is an option for the plot of training-progress.
 %%%% ¡default!
 false
 
 %%% ¡prop!
-PLOT_LAYERS (metadata, logical) is an option for the plot of layer architecture.
+PLOT_LAYERS (parameter, logical) is an option for the plot of layer architecture.
 %%%% ¡default!
 false
 
