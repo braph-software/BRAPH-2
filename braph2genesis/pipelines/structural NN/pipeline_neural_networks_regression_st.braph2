@@ -15,7 +15,7 @@ ba = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load a Brain Atlas XLS 
 gr = ImporterGroupSubjectST_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group ST from XLS % Group ST
 
 %% Dataset Construction
-nnd = NNData_ST('GR', gr, 'TARGET_NAME', gr1.get('AGE')); % NN Dataset for Group % NN Group ST
+nnd = NNData_ST('GR', gr, 'TARGET_NAME', 'age'); % NN Dataset for Group % NN Group ST
 
 %% Dataset Splitting
 nnds = NNRegressorDataSplit('GR', nnd.get('GR_NN'), 'SPLIT', 0.2); % Split the dataset % NN Dataset
