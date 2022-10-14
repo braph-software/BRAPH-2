@@ -29,7 +29,7 @@ if ~braph2_testing
     if pf.get('MEASURES')
         comparison = pf.get('ME'); % this is a comparison        
         val = comparison.get('DIFF');
-        index_d = strdouble(pf.get('DT'));
+        index_d = str2double(pf.get('DT'));
         index_l = str2double(pf.get('LAYER'));
         val = val{index_d, index_l};
         val(isnan(val)) = 0.1;
@@ -87,7 +87,7 @@ if ~braph2_testing
         measure = pf.get('ME'); % comparison
         q_val = pf.get('QVAL');
         val = measure.get('P1');
-        index_d = strdouble(pf.get('DT'));
+        index_d = str2double(pf.get('DT'));
         index_l = str2double(pf.get('LAYER'));
         val = val{index_d, index_l};
         
