@@ -144,8 +144,12 @@ if isa(me, 'Measure')
     g = pf.get('ME').get('G');
     
 else % comparison
-    g_dict = me.get('C').get('a1').get('g_dict');
-    g = g_dict.getItem(1);
+    if me.get('C').get('A1').existsTag('g')
+        g =  me.get('C').get('a1').get('g');
+    else
+        g_dict = me.get('C').get('a1').get('g_dict');
+        g = g_dict.getItem(1);
+    end
    
 end
 
