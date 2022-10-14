@@ -52,7 +52,7 @@ if ~braph2_testing
         end
     else
         % restore default values
-        if (strcmp(pf.getPropTag(varargin{1}), 'measures')) && pf.get('SPHS')
+        if  size(varargin, 2) > 0 && (strcmp(pf.getPropTag(varargin{1}), 'measures')) && pf.get('SPHS')
             sph_dict = pf.get('SPH_DICT');
             for i = 1:sph_dict.length
                 sph = sph_dict.getItem(i);
@@ -60,7 +60,7 @@ if ~braph2_testing
                 sph.set('SPHERESIZE', default_value);
             end
         end
-        if (strcmp(pf.getPropTag(varargin{1}), 'measures')) && pf.get('SYMS')
+        if  size(varargin, 2) > 0 && (strcmp(pf.getPropTag(varargin{1}), 'measures')) && pf.get('SYMS')
             sym_dict = pf.get('SYM_DICT');
             for i = 1:sym_dict.length
                 sym = sym_dict.getItem(i);
