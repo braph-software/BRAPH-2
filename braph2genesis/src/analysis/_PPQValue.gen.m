@@ -143,10 +143,6 @@ function cb_editfield(pr)
     
     % update diff panel
     fig = ancestor(pr.p, 'figure');
-    childs = get(fig, 'Children');
-    for i = 1:length(childs)
-        child = childs(i);
-        if check_graphics(child, 'table')
-        end
-     end
+    g_ele = fig.UserData;
+    g_ele.get('PE').update();
 end

@@ -13,7 +13,7 @@ beta1 = 0.08; % Rewiring probability - group 1
 
 K21 = K11; % degree (mean node degree is 2K) - group 2 layer 1
 K22 = 2; % degree (mean node degree is 2K) - group 2 layer 2
-beta2 = 0.7; % Rewiring probability - group 2
+beta2 = 0.9; % Rewiring probability - group 2
 
 %% Create the four graphs
 h11 = WattsStrogatz(N_nodes, K11, beta1);
@@ -90,21 +90,21 @@ R21 = mvnrnd(mu_gr21, A21, N_groups);
 R22 = mvnrnd(mu_gr22, A22, N_groups);
 
 %% Normalize the time series
-mean_R11 = mean(R11);
-std_R11 = std(R11);
-R11 = (R11 - mean(R11)) ./ std(R11);
-
-mean_R12 = mean(R12);
-std_R12 = std(R12);
-R12 = (R12 - mean(R12)) ./ std(R12);
-
-mean_R21 = mean(R21);
-std_R21 = std(R21);
-R21 = (R21 - mean(R21)) ./ std(R21);
-
-mean_R22 = mean(R22);
-std_R22 = std(R22);
-R22 = (R22 - mean(R22)) ./ std(R22);
+% % % mean_R11 = mean(R11);
+% % % std_R11 = std(R11);
+% % % R11 = (R11 - mean(R11)) ./ std(R11);
+% % % 
+% % % mean_R12 = mean(R12);
+% % % std_R12 = std(R12);
+% % % R12 = (R12 - mean(R12)) ./ std(R12);
+% % % 
+% % % mean_R21 = mean(R21);
+% % % std_R21 = std(R21);
+% % % R21 = (R21 - mean(R21)) ./ std(R21);
+% % % 
+% % % mean_R22 = mean(R22);
+% % % std_R22 = std(R22);
+% % % R22 = (R22 - mean(R22)) ./ std(R22);
 
 
 %% We need only positive values
