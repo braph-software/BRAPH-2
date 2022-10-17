@@ -22,11 +22,11 @@ An object-oriented software that provides pipelines for conventional brain conne
 
 # Installation
 
-BRAPH 2.0 requires at least MATLAB 2020b. BRAPH 2.0 requires Statistics and Machine Learning Toolbox. For deep learning analysis, Deep Learning Toolbox and Deep Learning Toolbox Converter for ONNX Model Format are also needed. We strongly recommend the Parallel Computing Toolbox to speed up BRAPH 2.0.
+BRAPH 2 requires at least MATLAB 2020b. BRAPH 2 requires Statistics and Machine Learning Toolbox. For deep learning analysis, Deep Learning Toolbox and Deep Learning Toolbox Converter for ONNX Model Format are also needed. We strongly recommend the Parallel Computing Toolbox to speed up BRAPH 2.
 
-To install BRAPH 2.0, first clone this repository or download via zip. 
-Once inside MATLAB go to the folder of BRAPH 2.0 and run braph2genesis (you may have to add it to the path). This will create a braph2 folder with the executable code, it may take a while.
-This will be only needed once, or every time you add a new functionality to BRAPH 2.0.
+To install BRAPH 2, first clone this repository or download via zip. 
+Once inside MATLAB go to the folder of BRAPH 2 and run braph2genesis (you may have to add it to the path). This will create a braph2 folder with the executable code, it may take a while.
+This will be only needed once, or every time you add a new functionality to BRAPH 2.
 
 # Using-braph2
 
@@ -34,15 +34,15 @@ Each provided pipeline comes with an example folder where you can run the exampl
 
 # Learning-braph-2
 
-BRAPH 2.0 is a powerful tool that transforms scripts to pipelines. Please check the tutorial section on our website <a href="http://braph.org/tutorials/"></a>
+BRAPH 2 is a powerful tool that transforms scripts to pipelines. Please check the tutorial section on our website <a href="http://braph.org/tutorials/"></a>
 
 ## Cite us!
-If you use BRAPH 2.0 in your project, please cite us here:
+If you use BRAPH 2 in your project, please cite us here:
 
 ```
 Emiliano Gomez-Ruiz, Anna Canal-Garcia, Yu-Wei Chang, Daniel Vereb, 
 Eric Westman, Mite Mijalkov, Joana Pereira, Giovanni Volpe
-BRAPH 2.0: A software for brain connectivity analysis 
+BRAPH 2: A software for brain connectivity analysis 
 with multilayer graphs and deep learning.
 ```
 
