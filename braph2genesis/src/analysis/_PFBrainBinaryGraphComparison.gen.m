@@ -17,7 +17,8 @@ h_axes % handle for axes
 toolbar
 % toolbar_measure
 toolbar_edges
-
+% community color
+community_colors
 %% ¡props_update!
 
 %%% ¡prop!
@@ -34,21 +35,49 @@ if ~braph2_testing
         val(isnan(val)) = 0.1;
         val(val <= 0) = 0.1;
         % increase br size by measure value
-        if pf.get('SPHS')
-            sph_dict = pf.get('SPH_DICT');
-            for i = 1:sph_dict.length
-                sph = sph_dict.getItem(i);
-                default_value = sph.get('SPHERESIZE');
-                sph.set('SPHERESIZE', default_value * val(i));
+        if isequal(comparison.get('MEASURE_TEMPLATE'), 'CommunityStructure')
+            unique_vals = unique(val);
+            n_unique_vals = length(unique_vals);
+            % produce enough colors
+            if isempty(pf.community_colors)
+                for cc = 1:n_unique_vals
+                    pf.community_colors{cc} = [randi(256)/256 randi(256)/256 randi(256)/256];
+                end
             end
-        end
-        if pf.get('SYMS')
-            sym_dict = pf.get('SYM_DICT');            
-            for i = 1:sym_dict.length
-                sym = sym_dict.getItem(i);
-                default_value = sym.get('SYMBOLSIZE');
-                sym.set('SYMBOLSIZE', default_value * val(i));
-            end            
+            % set spheres or syms with colors
+            if pf.get('SPHS')
+                sph_dict = pf.get('SPH_DICT');
+                for i = 1:sph_dict.length
+                    sph = sph_dict.getItem(i);
+                    index_of_color = find(unique_vals == val(i));
+                    set(sph, 'FaceColor', community_colors{index_of_color}); %#ok<FNDSB>
+                end
+            end
+            if pf.get('SYMS')
+                sym_dict = pf.get('SYM_DICT');
+                for i = 1:sym_dict.length
+                    sym = sym_dict.getItem(i);
+                    index_of_color = find(unique_vals == val(i));
+                    set(sym, 'FaceColor', community_colors{index_of_color}); %#ok<FNDSB>
+                end
+            end
+        else
+            if pf.get('SPHS')
+                sph_dict = pf.get('SPH_DICT');
+                for i = 1:sph_dict.length
+                    sph = sph_dict.getItem(i);
+                    default_value = sph.get('SPHERESIZE');
+                    sph.set('SPHERESIZE', default_value * val(i));
+                end
+            end
+            if pf.get('SYMS')
+                sym_dict = pf.get('SYM_DICT');
+                for i = 1:sym_dict.length
+                    sym = sym_dict.getItem(i);
+                    default_value = sym.get('SYMBOLSIZE');
+                    sym.set('SYMBOLSIZE', default_value * val(i));
+                end
+            end
         end
     else
         % restore default values
