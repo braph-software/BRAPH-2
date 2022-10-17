@@ -202,14 +202,24 @@ function update(pr)
         end
     end
 
-    set_table();
-    
-    condition = el.get('INPUT_TYPE') == "graph_measures" && isa(el.getr('TEMPLATE'), 'NoValue');
+condition = el.get('INPUT_TYPE') == "graph_measures" && isa(el.getr('TEMPLATE'), 'NoValue');
+
+if isa(el.getr('TEMPLATE'), 'NoValue')
+    condition = el.get('INPUT_TYPE') == "graph_measures";
     if condition
+        if isempty(pr.selected)
+            pr.selected = find(ismember(pr.mlist, el.get('Measures')));
+        end
         set(pr.table, 'Enable', 'on')
     else
+        pr.selected = [];
         set(pr.table, 'Enable', 'off')
     end
+else
+    set(pr.table, 'Enable', 'off')
+end
+
+set_table();
 end
 function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
