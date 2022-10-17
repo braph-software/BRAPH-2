@@ -141,8 +141,12 @@ LAYER (figure, string) is the id of the selected layer.
 %%%% ¡default!
 '1'
 %%%% ¡gui!
-cp = pf.get('ME');
-g = cp.get('C').get('A1').get('G');
+if cp.get('C').get('A1').existsTag('g')
+    g = cp.get('C').get('A1').get('G');
+else
+    g_dict = cp.get('C').get('A1').get('G_DICT');
+    g = g_dict.getItem(1);
+end
 pr = PP_LayerID('EL', pf, 'PROP', PFBrainMultiplexBinaryGraphComparison.LAYER, ...
     'G', g, ...
     varargin{:});
