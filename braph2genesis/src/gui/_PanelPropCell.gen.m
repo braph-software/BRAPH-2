@@ -284,11 +284,11 @@ function update(pr)
                     end
                     
                     [~, mask] = fdr(tmp_data, el.get('QVALUE'));
-                    [rows, cols] = find(mask);                   
+                    [cols, rows] = find(mask);                   
                     
                     if ~isempty(rows) && ~isempty(cols)
                         s = uistyle('BackgroundColor',[1 0.6 0.6]);
-                        addStyle(pr.table, s, 'cell', [rows, cols]);
+                        addStyle(pr.table, s, 'cell', [rows', cols']);
                     end
                 end
             end
