@@ -40,10 +40,10 @@ BRAPH 2.0 is a powerful tool that transforms scripts to pipelines. Please check 
 If you use BRAPH 2.0 in your project, please cite us here:
 
 ```
-Emiliano Gomez-Ruiz, Anna Canal-Garcia, Yu-Wei Chang, Mite Mijalkov, Daniel Vereb, Eric Westman, Joana Pereira, Giovanni Volpe.
-"BRAPH 2.0: A software for brain connectivity analysis with multilayer graphs and deep learning."
-JOURNAL
-DOI
+Emiliano Gomez-Ruiz, Anna Canal-Garcia, Yu-Wei Chang, Daniel Vereb, 
+Eric Westman, Mite Mijalkov, Joana Pereira, Giovanni Volpe
+BRAPH 2.0: A software for brain connectivity analysis 
+with multilayer graphs and deep learning.
 ```
 
 See also:
