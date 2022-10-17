@@ -141,6 +141,7 @@ LAYER (figure, string) is the id of the selected layer.
 %%%% ¡default!
 '1'
 %%%% ¡gui!
+cp = pf.get('ME');
 if cp.get('C').get('A1').existsTag('g')
     g = cp.get('C').get('A1').get('G');
 else
