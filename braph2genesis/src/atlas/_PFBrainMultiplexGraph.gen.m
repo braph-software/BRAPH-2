@@ -39,10 +39,8 @@ if ~braph2_testing
             unique_vals = unique(val);
             n_unique_vals = length(unique_vals);
             % produce enough colors
-            if isempty(pf.community_colors)
-                for cc = 1:n_unique_vals
-                    pf.community_colors{cc} = [randi(256)/256 randi(256)/256 randi(256)/256];
-                end
+            if isempty(pf.community_colors)                
+                pf.community_colors = BRAPH2.COMMUNITY_COLORS(n_unique_vals);               
             end
             % set spheres or syms with colors
             if pf.get('SPHS')
@@ -52,6 +50,7 @@ if ~braph2_testing
                     index_of_color = find(unique_vals == val(i));
                     sph.set('FaceColor',  pf.community_colors{index_of_color});
                 end
+                pf.update_gui_tbl_sph()
             end
             if pf.get('SYMS')
                 sym_dict = pf.get('SYM_DICT');
@@ -60,6 +59,7 @@ if ~braph2_testing
                     index_of_color = find(unique_vals == val(i));
                     sym.set('FaceColor',  pf.community_colors{index_of_color});
                 end
+                pf.update_gui_tbl_sym()
             end
         else
             if pf.get('SPHS')
@@ -69,6 +69,7 @@ if ~braph2_testing
                     default_value = sph.get('SPHERESIZE');
                     sph.set('SPHERESIZE', default_value * val(i));
                 end
+                pf.update_gui_tbl_sph()
             end
             if pf.get('SYMS')
                 sym_dict = pf.get('SYM_DICT');
@@ -77,6 +78,7 @@ if ~braph2_testing
                     default_value = sym.get('SYMBOLSIZE');
                     sym.set('SYMBOLSIZE', default_value * val(i));
                 end
+                pf.update_gui_tbl_sym()
             end
         end
     else
@@ -89,6 +91,7 @@ if ~braph2_testing
                 sph.set('SPHERESIZE', default_value);
                 sph.set('FaceColor',  BRAPH2.COL);
             end
+            pf.update_gui_tbl_sph()
         end
         if  size(varargin, 2) > 0 && (strcmp(pf.getPropTag(varargin{1}), 'measures')) && pf.get('SYMS')
             sym_dict = pf.get('SYM_DICT');
@@ -97,7 +100,8 @@ if ~braph2_testing
                 default_value = sym.getPropDefault('SYMBOLSIZE');
                 sym.set('SYMBOLSIZE', default_value);
                 sym.set('FaceColor',  BRAPH2.COL);
-            end            
+            end 
+            pf.update_gui_tbl_sym()
         end        
     end
     
@@ -179,4 +183,10 @@ function str = tostring(pf, varargin)
     str = 'Plot Brain Multiplex Graph';
     str = tostring(str, varargin{:});
     str = str(2:1:end-1);
+end
+function update_gui_tbl_sph(pf)
+    update_gui_tbl_sph@PFBrainAtlas(pf);
+end
+function update_gui_tbl_sym(pf)
+    update_gui_tbl_sym@PFBrainAtlas(pf);
 end

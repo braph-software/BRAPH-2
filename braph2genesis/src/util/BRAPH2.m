@@ -254,6 +254,26 @@ classdef BRAPH2
 
             col_g = b2.get('COL_G');
         end
+        function community_colors = COMMUNITY_COLORS(n)
+            community_colors{1} = [0 0 1]; % blue
+            community_colors{2} = [1 0 0]; % red
+            community_colors{3} = [0.8706 0.4784 0.0353]; % orange
+            community_colors{4} = [0.4941 0.1843 0.5569]; % purple
+            community_colors{5} = [0.9 0.7 1]; % yellow
+            community_colors{6} = [102/255 178/255 1]; % light blue
+            community_colors{7} = [1 1 127/255]; % pink
+            community_colors{8} = [153/255 153/255 1]; % kaki
+            community_colors{9} = [64/255 164/255 64/255]; % dark
+            community_colors{10} = [204/255 153/255 1]; % light purple
+            
+            % if more needed we produce random colors
+            if n > length(communty_colors)
+                for i = 1:n-length(communtiy_color)
+                    community_colors{end+1} = [randi(256)/256 randi(256)/256 randi(256)/256]; %#ok<AGROW>
+                end
+            end
+            
+        end
     end
     methods (Static) % BRAPH2 save/load elements
         function saved_out = save(el, filename)
