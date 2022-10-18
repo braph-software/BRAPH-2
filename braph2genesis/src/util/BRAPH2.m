@@ -267,8 +267,8 @@ classdef BRAPH2
             community_colors{10} = [204/255 153/255 1]; % light purple
             
             % if more needed we produce random colors
-            if n > length(communty_colors)
-                for i = 1:n-length(communtiy_color)
+            if n > length(community_colors)
+                for i = 1:n-length(community_colors)
                     community_colors{end+1} = [randi(256)/256 randi(256)/256 randi(256)/256]; %#ok<AGROW>
                 end
             end
