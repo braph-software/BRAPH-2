@@ -50,7 +50,7 @@ if ~braph2_testing
                 for i = 1:sph_dict.length
                     sph = sph_dict.getItem(i);
                     index_of_color = find(unique_vals == val(i));
-                    set(sph, 'FaceColor', pf.community_colors{index_of_color}); %#ok<FNDSB>
+                    sph.set('FaceColor',  pf.community_colors{index_of_color});
                 end
             end
             if pf.get('SYMS')
@@ -58,7 +58,7 @@ if ~braph2_testing
                 for i = 1:sym_dict.length
                     sym = sym_dict.getItem(i);
                     index_of_color = find(unique_vals == val(i));
-                    set(sym, 'FaceColor', pf.community_colors{index_of_color}); %#ok<FNDSB>
+                    sym.set('FaceColor',  pf.community_colors{index_of_color});
                 end
             end
         else
