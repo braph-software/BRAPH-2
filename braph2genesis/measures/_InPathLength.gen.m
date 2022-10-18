@@ -24,9 +24,9 @@ MultiplexWD
 %%% ¡prop! 
 rule (parameter, OPTION) 
 %%%% ¡settings!
-{'subgraphs' 'harmonic' 'default'}
+{'subgraphs' 'harmonic' 'pl_default'}
 %%%% ¡default!
-'default'
+'pl_default'
 
 %% ¡props_update!
 
