@@ -24,6 +24,10 @@ tool_syms
 tool_ids
 tool_labs
 
+% update tables when postprocess only for gui
+tbl_sph
+tbl_sym
+
 %% ¡props!
 
 %%% ¡prop!
@@ -48,6 +52,7 @@ if (isempty(varargin) || pf.prop_set('SPHS', varargin)) && ~braph2_testing
     
     % update state of toggle tool
     set(pf.tool_sphs, 'State', pf.get('SPHS'))
+    
 end
 
 %%% ¡prop!
@@ -98,6 +103,7 @@ end
 pr = PanelPropIDictTable('EL', pf, 'PROP', PFBrainAtlas.SPH_DICT, ...
     'COLS', [PanelPropIDictTable.SELECTOR SettingsSphere.VISIBLE SettingsSphere.X SettingsSphere.Y SettingsSphere.Z SettingsSphere.SPHERESIZE SettingsSphere.FACECOLOR SettingsSphere.FACEALPHA SettingsSphere.EDGECOLOR SettingsSphere.EDGEALPHA], ...
     varargin{:});
+pf.tbl_sph = pr;
 
 %%% ¡prop!
 SYMS (figure, logical) determines whether the symbols are shown.
@@ -161,6 +167,7 @@ end
 pr = PanelPropIDictTable('EL', pf, 'PROP', PFBrainAtlas.SYM_DICT, ...
     'COLS', [PanelPropIDictTable.SELECTOR SettingsSymbol.VISIBLE SettingsSymbol.X SettingsSymbol.Y SettingsSymbol.Z SettingsSymbol.SYMBOL SettingsSymbol.SYMBOLSIZE SettingsSymbol.EDGECOLOR SettingsSymbol.FACECOLOR], ...
     varargin{:});
+pf.tbl_sym = pr;
 
 %%% ¡prop!
 IDS (figure, logical) determines whether the ids are shown.
@@ -474,6 +481,12 @@ function str = tostring(pf, varargin)
     str = 'Plot Brain Atlas';
     str = tostring(str, varargin{:});
     str = str(2:1:end-1);
+end
+function update_gui_tbl_sph(pf)
+    pf.tbl_sph.update()
+end
+function update_gui_tbl_sym(pf)
+    pf.tbl_sym.update()
 end
 
 %% ¡tests!
