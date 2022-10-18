@@ -89,7 +89,7 @@ if ~braph2_testing
                 sph = sph_dict.getItem(i);
                 default_value = sph.getPropDefault('SPHERESIZE');
                 sph.set('SPHERESIZE', default_value);
-                set(sph, 'FACECOLOR', BRAPH2.COL);
+                sph.set('FaceColor',  BRAPH2.COL);
             end
         end
         if size(varargin, 2) > 0 && (strcmp(pf.getPropTag(varargin{1}), 'measures')) && pf.get('SYMS')
@@ -98,7 +98,7 @@ if ~braph2_testing
                 sym = sym_dict.getItem(i);
                 default_value = sym.getPropDefault('SYMBOLSIZE');
                 sym.set('SYMBOLSIZE', default_value);
-                set(sym, 'FACECOLOR', BRAPH2.COL);
+                sym.set('FaceColor',  BRAPH2.COL);
             end            
         end        
     end
