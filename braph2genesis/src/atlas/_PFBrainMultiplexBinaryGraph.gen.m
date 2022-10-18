@@ -37,7 +37,7 @@ if ~braph2_testing
         val(isnan(val)) = 0.1;
         val(val <= 0) = 0.1;
         % increase br size by measure value
-        if isa(measure, 'MultilayerCommunityStructure')
+        if isa(measure, 'MultilayerCommunityStructure')  || (isa(measure, 'MeasureEnsemble') && isa(measure.get('Measure_Template') , 'MultilayerCommunityStructure'))
             unique_vals = unique(val);
             n_unique_vals = length(unique_vals);
             % produce enough colors
