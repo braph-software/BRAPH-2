@@ -35,7 +35,7 @@ if ~braph2_testing
         val(isnan(val)) = 0.1;
         val(val <= 0) = 0.1;
         % increase br size by measure value
-        if isa(measure, 'CommunityStructure')
+        if isa(measure, 'MultilayerCommunityStructure')
             unique_vals = unique(val);
             n_unique_vals = length(unique_vals);
             % produce enough colors
@@ -68,6 +68,7 @@ if ~braph2_testing
                     sph = sph_dict.getItem(i);
                     default_value = sph.get('SPHERESIZE');
                     sph.set('SPHERESIZE', default_value * val(i));
+                    set(sph, 'FACECOLOR', BRAPH2.COL);
                 end
             end
             if pf.get('SYMS')
@@ -76,6 +77,7 @@ if ~braph2_testing
                     sym = sym_dict.getItem(i);
                     default_value = sym.get('SYMBOLSIZE');
                     sym.set('SYMBOLSIZE', default_value * val(i));
+                    set(sym, 'FACECOLOR', BRAPH2.COL);
                 end
             end
         end
