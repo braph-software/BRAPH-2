@@ -60,7 +60,7 @@ clustering_av_random = mean(clustering_av_random, 2);
 small_worldness = cell(L, 1);
 for li = 1:1:L
     small_worldness_layer = (clustering_av{li}/clustering_av_random(li)) / (path_length_av{li}/ path_length_av_random(li));
-    small_worldness_layer(isnan(small_worldness_layer)) = 1;  % node NaN corresponds to 0/0 or Inf/Inf from path length
+    small_worldness_layer(isnan(small_worldness_layer)) = 0;  % node NaN corresponds to 0/0 or Inf/Inf from path length (disconnected nodes)
     small_worldness(li) = {small_worldness_layer};
 end
 
