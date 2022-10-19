@@ -67,9 +67,8 @@ parfor li = 1:1:L
                 Du = distance_layer(:, u);
                 path_length_layer(u) = mean(Du(Du~=0));
             end
-    end
-    path_length_layer(isinf(path_length_layer)) = 0;  % node Inf corresponds to isolated nodes, pathlength is 0
-    path_length(li) = {path_length_layer};
+    end 
+    path_length(li) = {path_length_layer}; % node Inf corresponds to isolated nodes
 end
 value = path_length;
 
