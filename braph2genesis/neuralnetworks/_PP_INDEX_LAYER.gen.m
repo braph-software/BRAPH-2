@@ -53,6 +53,9 @@ function update(pr)
     prop = pr.get('PROP');
     
     tmp_Var = pr.get('FEATURE_IMPORTANCE');
+    if isempty(tmp_Var)
+        tmp_Var = {zeros(el.get('BA').get('BR_DICT').length)};
+    end
     
     if el.isLocked(prop)
         set(pr.dropdown, 'Enable', pr.get('ENABLE'))
@@ -112,6 +115,9 @@ function cb_dropdown(pr)
     
     val = get(pr.dropdown, 'Value');
     tmp_Var = pr.get('FEATURE_IMPORTANCE');
+    if isempty(tmp_Var)
+        tmp_Var = {zeros(el.get('BA').get('BR_DICT').length)};
+    end
     n_layers = [1:size(tmp_Var, 2)];
     labels = cellfun(@(x) ['Layer: ' num2str(x)],num2cell(n_layers), 'UniformOutput', false);
     index = find(contains(labels, val), 1, 'last');

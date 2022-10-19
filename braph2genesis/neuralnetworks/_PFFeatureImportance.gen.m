@@ -43,6 +43,9 @@ if (isempty(varargin) || pf.prop_set('EDGES', varargin)) && ~braph2_testing
             nn = pf.get('NNE');
             prop = pf.get('PROP');
             fi = nn.memorize(prop);
+            if isempty(fi)
+                fi = {zeros(pf.get('BA').get('BR_DICT').length)};
+            end
             index_layer = str2double(pf.get('INDEX_LAYER'));
             fi_current = fi{index_layer};
             t = str2double(pf.get('THRESHOLD'));
