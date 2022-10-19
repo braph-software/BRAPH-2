@@ -28,9 +28,9 @@ MultiplexWU
 %%% ¡prop! 
 rule (parameter, OPTION) is the path length algorithm
 %%%% ¡settings!
-{'subgraphs' 'harmonic' 'default'}
+{'subgraphs' 'harmonic' 'pl_default'}
 %%%% ¡default!
-'default'
+'pl_default'
 
 %% ¡props_update!
 
