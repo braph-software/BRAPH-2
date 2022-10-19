@@ -133,12 +133,32 @@ function random_g = randomize(g)
     L = g.layernumber();
     random_multi_A = cell(1, L);
 
-    for li = 1:1:L
-        Aii = A{li, li};
-        random_A = GraphWU.randomize_A(Aii, attempts_per_edge, number_of_weights);
-        random_multi_A(li) = {random_A};
+    % special case for multiplexBUD and multiplexBUT
+    if Graph.is_binary(g)
+        tmp_b = g.get('B');
+        tmp_g = MultiplexWU('B', tmp_b);
+        tmp_A = tmp_g.get('A');
+        
+        for li = 1:1:L
+            Aii = tmp_A{li, li};
+            random_A = GraphWU.randomize_A(Aii, attempts_per_edge, number_of_weights);
+            random_multi_A(li) = {random_A};
+        end
+        if isa(g, 'MultiplexBUD')
+            random_g = MultiplexBUD('B', random_multi_A, 'Densities', g.get('Densities'));
+        else
+            random_g = MultiplexBUT('B', random_multi_A, 'Thresholds', g.get('Thresholds'));
+        end
+        
+    else % multiplexWU
+        
+        for li = 1:1:L
+            Aii = A{li, li};
+            random_A = GraphWU.randomize_A(Aii, attempts_per_edge, number_of_weights);
+            random_multi_A(li) = {random_A};
+        end
+        random_g = MultiplexWU('B', random_multi_A);
     end
-    random_g = MultiplexWU('B', random_multi_A);
 end
 
 
