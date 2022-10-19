@@ -25,7 +25,7 @@ authors:
     affiliation: Gothenburg University
     orcid: 'https://orcid.org/0000-0002-5388-7712'
   - given-names: Anna
-    family-names: ' Canal-Garcia'
+    family-names: Canal-Garcia
     email: anna.canal@ki.se
     affiliation: Karolinska Institute
     orcid: 'https://orcid.org/0000-0001-7460-741X'
@@ -34,7 +34,7 @@ authors:
     email: yu-wei.chang@physics.gu.se
     affiliation: Gothenburg University
     orcid: 'https://orcid.org/0000-0001-9598-2278'
-  - given-names: 'Mite '
+  - given-names: Mite
     family-names: Mijalkov
     email: mite.mijalkov@ki.se
     affiliation: Karolinksa Institute
