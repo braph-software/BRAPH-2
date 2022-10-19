@@ -1,37 +1,37 @@
 {
     "creators": [
         {
-            "orcid": "0000-0001-5057-1846"
+            "orcid": "0000-0001-5057-1846",
             "affiliation": "Gothenburg University",
             "name": "Volpe, Giovanni"
         },
         {
-            "orcid": "0000-0002-5388-7712"
+            "orcid": "0000-0002-5388-7712",
             "affiliation": "Gothenburg University",
             "name": "Gómez-Ruiz, Emiliano"
         }, 
         {
-            "orcid": "0000-0001-9598-2278"
+            "orcid": "0000-0001-9598-2278",
             "affiliation": "Gothenburg University",
             "name": "Chang, Yu-Wei"
         }, 
         {
-            "orcid": "0000-0002-4604-2711"
+            "orcid": "0000-0002-4604-2711",
             "affiliation": "Karolinksa Institute",
             "name": "Pereira, Joana"
         }, 
         {
-            "orcid": "0000-0001-7460-741X"
+            "orcid": "0000-0001-7460-741X",
             "affiliation": "Karolinksa Institute",
             "name": "Canal-Garcia, Anna"
         }, 
         {
-            "orcid": "0000-0002-9844-4413"
+            "orcid": "0000-0002-9844-4413",
             "affiliation": "Karolinksa Institute",
             "name": "Mijalkov, Mite"
         }, 
         {
-            "orcid": "0000-0003-2077-5252"
+            "orcid": "0000-0003-2077-5252",
             "affiliation": "Karolinksa Institute",
             "name": "Véreb, Dániel"
         } 
@@ -48,11 +48,12 @@
         }
     ],
 
-    "keywords": ["Brain", "Software", "Graph", "MATLAB", "Neuroimaging"],
+    "keywords": ["Brain", "Software", "Graph", "Multigraph", "Multiplex Graph", "MATLAB", "Neuroimaging", "Deep Learning"],
 
     "upload_type": "software",
 
     "communities": [
-        {"identifier": "www.braph.org"}
+        {"identifier": "www.braph.org"},
+        {"identifier": "https://github.com/softmatterlab/BRAPH-2-Matlab"}
     ]
 }
