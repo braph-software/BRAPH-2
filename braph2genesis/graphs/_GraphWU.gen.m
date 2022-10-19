@@ -202,9 +202,22 @@ function random_g = randomize(g)
     number_of_weights = g.get('NUMBEROFWEIGHTS');
     attempts_per_edge = g.get('ATTEMPTSPEREDGE');
 
-    A = cell2mat(g.get('A'));
-    random_A = GraphWU.randomize_A(A, attempts_per_edge, number_of_weights);
-    random_g = GraphWU('B', random_A);
+    % correction for multigraphs
+    if Graph.is_multigraph(g)
+        tmp_b = g.get('B');
+        tmp_g = GraphWU('B', tmp_b);
+        tmp_A = cell2mat(tmp_g.get('A'));
+        random_B = GraphWU.randomize_A(tmp_A, attempts_per_edge, number_of_weights);
+        if isa(g, 'MultigraphBUD')
+            random_g = MultigraphBUD('B', random_B, 'Densities', g.get('Densities'));
+        else
+            random_g = MultigraphBUT('B', random_B, 'Thresholds', g.get('Thresholds'));
+        end
+    else
+        A = cell2mat(g.get('A'));
+        random_A = GraphWU.randomize_A(A, attempts_per_edge, number_of_weights);
+        random_g = GraphWU('B', random_A);
+    end
 end
 
 %% ¡tests!
