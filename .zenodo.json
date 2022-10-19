@@ -47,6 +47,8 @@
             "resource_type": "publication-article"
         }
     ],
+    
+    "description": "An object-oriented software that provides pipelines for conventional brain connectivity analysis as well as more advanced methods, including multilayer networks and deep learning methods." ,
 
     "keywords": ["Brain", "Software", "Graph", "Multigraph", "Multiplex Graph", "MATLAB", "Neuroimaging", "Deep Learning"],
 
