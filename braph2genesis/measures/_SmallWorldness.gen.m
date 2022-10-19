@@ -38,7 +38,8 @@ end
 L = g.layernumber();
 
 clustering_av = ClusteringAv('G', g).get('M');
-path_length_av = PathLengthAv('G', g).get('M');
+path_length_av = calculateValue@PathLengthAv(m, prop)
+path_length_rule = m.get('rule');
 
 M = 100;  % number of random graphs
 clustering_av_random = cell(1, M);
@@ -47,7 +48,7 @@ for r = 1:1:M
     g_random = g.randomize();
 
     clustering_av_random(r) = {ClusteringAv('G', g_random).get('M')};
-    path_length_av_random(r) = {calculateValue@PathLengthAv(m, prop)}; 
+    path_length_av_random(r) = {PathLengthAv('G', g_random, 'rule', path_length_rule).get('M')}; 
     
 end
 path_length_av_random = cellfun(@(x) cell2mat(x), path_length_av_random, 'UniformOutput', false);
