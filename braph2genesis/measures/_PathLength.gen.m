@@ -56,8 +56,7 @@ parfor li = 1:1:L
             for u = 1:1:N
                 Du = distance_layer(:, u);
                 path_length_layer(u) = mean(Du(Du~=Inf & Du~=0));
-            end
-            path_length_layer(isnan(path_length_layer)) = 0;  % node Nan corresponds to isolated nodes, pathlength is 0
+            end 
         case {'harmonic'}
             for u = 1:1:N
                 Du = distance_layer(:, u);
@@ -69,6 +68,7 @@ parfor li = 1:1:L
                 path_length_layer(u) = mean(Du(Du~=0));
             end
     end
+    path_length_layer(isinf(path_length_layer)) = 0;  % node Inf corresponds to isolated nodes, pathlength is 0
     path_length(li) = {path_length_layer};
 end
 value = path_length;
