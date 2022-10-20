@@ -825,18 +825,26 @@ switch Graph.getGraphType(g)
     case Graph.GRAPH
         B = A{1};
         B = B(nodes{1}, nodes{1});
+        sg = eval([g.getClass() '(''B'', B)']);
         
-    otherwise  % multigraph, multiplex 
+    case Graph.MULTIGRAPH
+        temp_B = g.get('B');
+        B2 = temp_B(nodes{1}, nodes{1});
+        if isa(g, 'MultigraphBUD')
+            sg = MultigraphBUD('B', B2, 'Densities', g.get('Densities'));
+        else
+            sg = MultigraphBUT('B', B2, 'Thresholds', g.get('Thresholds'));
+        end
+        
+    otherwise  % multiplex
         for li = 1:1:L
             Aii = A{li, li};
             if ~isempty(Aii)
                 B(li) = {Aii(nodes{li}, nodes{li})};
             end
         end
-end
-
-sg = eval([g.getClass() '(''B'', B)']);
-
+        sg = eval([g.getClass() '(''B'', B)']);
+        
 end
 function ga = nodeattack(g, nodes, layernumbers)
     %NODEATTACK removes given nodes from a graph
