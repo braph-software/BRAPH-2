@@ -846,6 +846,7 @@ switch Graph.getGraphType(g)
         sg = eval([g.getClass() '(''B'', B)']);
         
 end
+end
 function ga = nodeattack(g, nodes, layernumbers)
     %NODEATTACK removes given nodes from a graph
     %
