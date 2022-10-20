@@ -1013,7 +1013,7 @@ function m = getMeasure(g, measure_class, varargin)
             for i = 1:1:length(parameters)
                 parameter = parameters(i);
 
-                if parameter ~= AnalyzeGroup.TEMPLATE
+                if parameter ~= AnalyzeGroup.TEMPLATE && (numel(varargin) > 1 && parameter ~= m_template.getPropProp(varargin{1}))
                     varargin{length(varargin) + 1} = parameter;
                     varargin{length(varargin) + 1} = Callback('EL', m_template, 'PROP', parameter);
                 end
