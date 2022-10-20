@@ -79,7 +79,7 @@ if Measure.is_global(me.get('MEASURE'))
         )
 elseif Measure.is_nodal(me.get('MEASURE'))
     bas = g.get('BAS');
-    if ~isempty(ba)
+    if ~isempty(bas)
         ba = bas{1};
         br_ids = ba.get('BR_DICT').getKeys();
         rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
