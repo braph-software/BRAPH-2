@@ -2,8 +2,8 @@
 MultiRichClubStrength < RichClubStrength (m, multi rich-club strength) is the graph multi rich-club strength.
 
 %%% ¡description!
-The multi rich-club strength of a node at level s is the sum of the
-weighted edges that connect nodes of strength s or higher in all layers.
+The multi rich-club strength of a node at level s is the sum of the 
+weighted edges that connect nodes of strength s or higher in all layers. 
 The relevance of each layer is controlled by the coefficients c that are 
 between 0 and 1; the default coefficients are (1/layernumber).
 

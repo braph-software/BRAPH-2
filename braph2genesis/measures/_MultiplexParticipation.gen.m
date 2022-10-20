@@ -3,11 +3,11 @@ MultiplexParticipation < Measure (m, multiplex participation) is the graph multi
 
 %%% ¡description!
 The multiplex participation is the nodal homogeneity of the number of 
-neighbours of a node across the layers.
-It is calculated as: Pi = L/(L - 1) [1 - sum_{l=1}^{L} (ki(l)/oi)^2]
-where L is the number of layers, ki(l) is the degree in the l-th
-layer and oi is the overlapping degree of the node.
-Pi = 1 when the degree is the same in all layers and Pi = 0 when a
+neighbours of a node across the layers. 
+It is calculated as: Pi = L/(L - 1) [1 - sum_{l=1}^{L} (ki(l)/oi)^2] 
+where L is the number of layers, ki(l) is the degree in the l-th 
+layer and oi is the overlapping degree of the node. 
+Pi = 1 when the degree is the same in all layers and Pi = 0 when a 
 node has non-zero degree in only one layer.
     
 %%% ¡shape!

@@ -2,8 +2,8 @@
 Clustering < Triangles (m, clustering) is the graph clustering.
 
 %%% ¡description!
-The clustering coefficient of a node is the fraction of triangles present
-around a node. The clustering coefficient is calculated as the ratio between
+The clustering coefficient of a node is the fraction of triangles present 
+around a node. The clustering coefficient is calculated as the ratio between 
 the number of triangles present around a node and the maximum number of 
 triangles that could possibly be formed around that node.
 

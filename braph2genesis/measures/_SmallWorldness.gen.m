@@ -3,7 +3,7 @@ SmallWorldness < PathLengthAv (m, small-worldness) is the graph small-worldness.
 
 %%% ¡description!
 The small-worldness coefficient is the fraction of the clustering coefficient 
-and average path length of each layer and the clustering coefficient and
+and average path length of each layer and the clustering coefficient and 
 average path length of 100 random graphs.
 
 %%% ¡shape!

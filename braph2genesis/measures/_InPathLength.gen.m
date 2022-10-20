@@ -2,7 +2,7 @@
 InPathLength < Measure (m, in-path length) is the graph in-path length.
 
 %%% ¡description!
-The in-path length is the average shortest in-path length of one
+The in-path length is the average shortest in-path length of one 
 node to all other nodes within a layer.
 
 %%% ¡shape!

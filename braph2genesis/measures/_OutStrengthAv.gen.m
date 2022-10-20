@@ -2,7 +2,7 @@
 OutStrengthAv < OutStrength (m, average out-strength) is the graph average out-strength.
 
 %%% ¡description!
-The average out-strength of a graph is the average of the sum of all weights of
+The average out-strength of a graph is the average of the sum of all weights of 
 the outward edges connected to a node within a layer. 
 
 %%% ¡shape!

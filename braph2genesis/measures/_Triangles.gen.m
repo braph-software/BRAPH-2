@@ -3,7 +3,7 @@ Triangles < Measure (m, triangles) is the graph triangles.
 
 %%% ¡description!
 The triangles are calculated as the number of neighbors of a node that are 
-also neighbors of each other within a layer. In weighted graphs, the triangles are
+also neighbors of each other within a layer. In weighted graphs, the triangles are 
 calculated as geometric mean of the weights of the edges forming the triangle.
 
 %%% ¡seealso!

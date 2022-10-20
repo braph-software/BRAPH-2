@@ -2,7 +2,7 @@
 OverlappingDegree < Degree (m, overlapping degree) is the graph overlapping degree.
 
 %%% ¡description!
-The overlapping degree of a graph is the sum of the degrees of a node in
+The overlapping degree of a graph is the sum of the degrees of a node in 
 all layers. 
 
 %%% ¡shape!

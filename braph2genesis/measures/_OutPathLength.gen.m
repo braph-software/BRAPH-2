@@ -2,7 +2,7 @@
 OutPathLength < Measure (m, out-path length) is the graph out-path length.
 
 %%% ¡description!
-The out-path length is the average shortest out-path lengths of one
+The out-path length is the average shortest out-path lengths of one 
 node to all other nodes without a layer.
 
 %%% ¡shape!

@@ -2,7 +2,7 @@
 WeightedMultiplexParticipation < Measure (m, weighted multiplex participation) is the graph weighted multiplex participation.
 
 %%% ¡description!
-The weighted multiplex participation of a graph is the nodal homogeneity
+The weighted multiplex participation of a graph is the nodal homogeneity 
 of its number of neighbours across the layers. 
 
 %%% ¡shape!

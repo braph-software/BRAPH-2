@@ -2,9 +2,9 @@
 InInAssortativity < Measure (m, in-in-assortativity) is the graph in-in-assortativity.
 
 %%% ¡description!
-The in-in-assortativity coefficient of a graph is the correlation coefficient between
-the degrees/strengths of all nodes on two opposite ends of an edge within a layer.
-The corresponding coefficient for directed and weighted networks is calculated by
+The in-in-assortativity coefficient of a graph is the correlation coefficient between 
+the degrees/strengths of all nodes on two opposite ends of an edge within a layer. 
+The corresponding coefficient for directed and weighted networks is calculated by 
 using the weighted and directed variants of in-degree/in-strength.
 
 %%% ¡shape!

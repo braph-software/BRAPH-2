@@ -2,7 +2,7 @@
 InStrengthAv < InStrength (m, average in-strength) is the graph average in-strength.
 
 %%% ¡description!
-The average in-strength of a graph is the average of the sum of all weights of
+The average in-strength of a graph is the average of the sum of all weights of 
 the inward edges connected to a node within a layer. 
 
 %%% ¡shape!

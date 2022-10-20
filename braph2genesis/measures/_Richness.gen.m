@@ -2,7 +2,7 @@
 Richness < Degree (m, richness) is the graph richness.
 
 %%% ¡description!
-The richness of a node is the sum of the edges that connect nodes
+The richness of a node is the sum of the edges that connect nodes 
 of higher degree within a layer.
 
 %%% ¡shape!

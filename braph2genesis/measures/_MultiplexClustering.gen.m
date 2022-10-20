@@ -2,7 +2,7 @@
 MultiplexClustering < MultiplexTriangles (m, multiplex clustering) is the graph multiplex clustering.
 
 %%% ¡description!
-The two-multiplex clustering coefficient of a node i is the fraction
+The two-multiplex clustering coefficient of a node i is the fraction 
 of two-multiplex triangles (triangles which use edges from two different 
 layers) with a vertex in node i and the number of one-triads centered in i.
       

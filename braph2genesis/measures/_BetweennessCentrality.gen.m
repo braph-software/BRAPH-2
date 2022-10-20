@@ -3,7 +3,7 @@ BetweennessCentrality < Measure (m, betweenness centrality) is the graph between
 
 %%% ¡description!
 The betweenness centrality of a graph is the fraction of all shortest paths in the 
-graph that pass through a given node. Nodes with high values of betweenness
+graph that pass through a given node. Nodes with high values of betweenness 
 centrality participate in a large number of shortest paths.
 
 %%% ¡shape!

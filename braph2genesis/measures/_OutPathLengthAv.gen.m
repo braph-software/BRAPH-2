@@ -2,7 +2,7 @@
 OutPathLengthAv < OutPathLength (m, average out-path length) is the graph average out-path length.
 
 %%% ¡description!
-The average out-path length of a graph is the average of the sum of the
+The average out-path length of a graph is the average of the sum of the 
 out-path lengths within each layer. 
 
 %%% ¡shape!
