@@ -2,7 +2,7 @@
 MultiplexKCorenessCentrality < Measure (m, multiplex k-coreness centrality) is the graph multiplex k-coreness centrality.
 
 %%% ¡description!
-The multiplex k-coreness centrality of a node is k if the node belongs to the k-core
+The multiplex k-coreness centrality of a node is k if the node belongs to the k-core 
 but not to the (k+1)-core.
 
 %%% ¡shape!

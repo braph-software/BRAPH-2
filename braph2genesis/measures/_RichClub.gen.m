@@ -3,8 +3,8 @@ RichClub < Degree (m, rich-club) is the graph rich-club coefficient.
 
 %%% ¡description!
 The rich-club coefficient of a node at level k is the fraction of 
-the edges that connect nodes of degree k or higher out of the
-maxium number of edges that such nodes might share within a
+the edges that connect nodes of degree k or higher out of the 
+maxium number of edges that such nodes might share within a 
 layer. k is set by the user, the default value is equal to 1.
 
 %%% ¡shape!

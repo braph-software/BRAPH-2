@@ -2,7 +2,7 @@
 OverlappingStrength < Strength (m, overlapping strength) is the graph overlapping strength.
 
 %%% ¡description!
-The overlapping strength of a graph is the sum of the strengths of a node in
+The overlapping strength of a graph is the sum of the strengths of a node in 
 all layers. 
   
 %%% ¡shape!

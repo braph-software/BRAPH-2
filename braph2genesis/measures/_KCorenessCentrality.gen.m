@@ -2,7 +2,7 @@
 KCorenessCentrality < Measure (m, k-coreness centrality) is the graph k-coreness centrality.
 
 %%% ¡description!
-The k-coreness centrality of a node is k if the node belongs to the k-core
+The k-coreness centrality of a node is k if the node belongs to the k-core 
 but not to the (k+1)-core.
 
 %%% ¡shape!

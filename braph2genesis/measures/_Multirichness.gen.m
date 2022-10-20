@@ -2,7 +2,7 @@
 Multirichness < Richness (m, multirichness) is the graph multirichness.
 
 %%% ¡description!
-The multirichness of a node is the sum of the edges that connect nodes
+The multirichness of a node is the sum of the edges that connect nodes 
 of degree k or higher in all layers. The relevance of each layer is 
 controlled by the coefficients c that are between 0 and 1; 
 the default coefficients are (1/layernumber).

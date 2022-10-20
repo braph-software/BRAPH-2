@@ -2,7 +2,7 @@
 InGlobalEfficiencyAv < InGlobalEfficiency (m, average in-global efficiency) is the graph average in-global efficiency.
 
 %%% ¡description!
-The average in-global efficiency is the average of the in-global efficiency
+The average in-global efficiency is the average of the in-global efficiency 
 within each layer.
 
 %%% ¡shape!

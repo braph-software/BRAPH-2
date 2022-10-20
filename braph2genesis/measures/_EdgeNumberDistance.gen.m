@@ -2,7 +2,7 @@
 EdgeNumberDistance < Distance (m, edge number distance) is the graph edge number distance.
 
 %%% ¡description!
-The edge distance number of a graph is the number of edges in the shortest
+The edge distance number of a graph is the number of edges in the shortest 
 weighted path between two nodes within a layer.
 
 %%% ¡shape!

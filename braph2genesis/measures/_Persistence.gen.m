@@ -4,8 +4,8 @@ Persistence < MultilayerCommunityStructure (m, persistence) is the graph persist
 %%% ¡description!
 The persistence of a multilayer network is calculated as the normalized 
 sum of the number of nodes that do not change community assignments. It 
-varies between 0 and 1.
-In categorical multilayer networks, it is the sum over all pairs of layers
+varies between 0 and 1. 
+In categorical multilayer networks, it is the sum over all pairs of layers 
 of the number of nodes that do not change community assignments, whereas 
 in ordinal multilayer networks (e.g. temporal), it is the number of nodes 
 that do not change community assignments between consecutive layers.

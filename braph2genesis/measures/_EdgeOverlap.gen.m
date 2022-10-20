@@ -2,7 +2,7 @@
 EdgeOverlap < Measure (m, edge overlap) is the graph edge overlap.
 
 %%% ¡description!
-The edge overlap of a graph is the fraction of layers in which an edge between
+The edge overlap of a graph is the fraction of layers in which an edge between 
 a pair of nodes exists. Connection weights are ignored in calculations.
     
 %%% ¡shape!

@@ -2,7 +2,7 @@
 OutGlobalEfficiencyAv < OutGlobalEfficiency (m, average out-global efficiency) is the graph average out-global efficiency.
 
 %%% ¡description!
-The average out-global efficiency is the average of the out-global efficiency
+The average out-global efficiency is the average of the out-global efficiency 
 without each layer.
 
 %%% ¡shape!

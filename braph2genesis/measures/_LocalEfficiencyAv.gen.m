@@ -2,7 +2,7 @@
 LocalEfficiencyAv < LocalEfficiency (m, average local efficiency) is the graph average local efficiency.
 
 %%% ¡description!
-The average local efficiency is the average of all the local efficiencies
+The average local efficiency is the average of all the local efficiencies 
 within each layer.
 
 %%% ¡shape!

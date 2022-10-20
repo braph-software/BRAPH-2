@@ -2,8 +2,8 @@
 CommunityStructure < Measure (m, community structure) is the graph community structure.
 
 %%% ¡description!
-The community structure of a graph is a subdivision of the network into
-non-overlapping groups of nodes which maximizes the number of whitin group
+The community structure of a graph is a subdivision of the network into 
+non-overlapping groups of nodes which maximizes the number of whitin group 
 edges, and minimizes the number of between group edges.
 
 %%% ¡seealso!

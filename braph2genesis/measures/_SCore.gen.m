@@ -2,7 +2,7 @@
 SCore < Measure (m, s-core) is the graph s-core.
 
 %%% ¡description!
-The s-core of a graph is the largest subnetwork comprising nodes of strength
+The s-core of a graph is the largest subnetwork comprising nodes of strength 
 s or higher. s is set by the user; the default value is equal to 1.
 
 %%% ¡shape!

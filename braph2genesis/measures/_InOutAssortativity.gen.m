@@ -2,9 +2,9 @@
 InOutAssortativity < Measure (m, InOutAssortativity) is the graph in-out-assortativity.
 
 %%% ¡description!
-The in-out-assortativity coefficient of a graph is the correlation coefficient between
-the degrees/strengths of all nodes on two opposite ends of an edge within a layer.
-The corresponding coefficient for directed and weighted networks is calculated by
+The in-out-assortativity coefficient of a graph is the correlation coefficient between 
+the degrees/strengths of all nodes on two opposite ends of an edge within a layer. 
+The corresponding coefficient for directed and weighted networks is calculated by 
 using the weighted and directed variants of in-out-degree/in-out-strength.
 
 %%% ¡shape!

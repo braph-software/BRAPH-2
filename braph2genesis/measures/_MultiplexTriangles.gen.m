@@ -2,7 +2,7 @@
 MultiplexTriangles < Measure (m, multiplex triangles) is the graph multiplex triangles.
 
 %%% ¡description!
-The multiplex triangles are calculated as the number of neighbors of a node
+The multiplex triangles are calculated as the number of neighbors of a node 
 that are also neighbors of each other between each pair of layers. 
 In weighted graphs, the multiplex triangles are calculated as geometric mean 
 of the weights of the edges forming the multiplex triangle.

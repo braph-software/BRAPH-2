@@ -2,7 +2,7 @@
 GlobalEfficiency < Measure (m, global efficiency) is the graph global efficiency.
 
 %%% ¡description!
-The global efficiency is the average inverse shortest path length within each layer.
+The global efficiency is the average inverse shortest path length within each layer. 
 It is inversely related to the characteristic path length.
 
 %%% ¡shape!

@@ -2,7 +2,7 @@
 WeightedMultiplexInParticipation < Measure (m, weighted multiplex in-participation) is the graph weighted multiplex in-participation.
 
 %%% ¡description!
-The weighted multiplex in-participation of a graph is the nodal homogeneity
+The weighted multiplex in-participation of a graph is the nodal homogeneity 
 of its number of inward neighbours across the layers. 
 
 %%% ¡shape!

@@ -2,7 +2,7 @@
 GlobalEfficiencyAv < GlobalEfficiency (m, average global efficiency) is the graph average global efficiency.
 
 %%% ¡description!
-The average global efficiency is the average of the
+The average global efficiency is the average of the 
 global efficiency within each layer.
 
 %%% ¡shape!
