@@ -91,7 +91,7 @@ elseif Measure.is_nodal(me.get('MEASURE'))
             )
     end
 elseif Measure.is_binodal(me.get('MEASURE'))
-    bas = g.get('BAS');'
+    bas = g.get('BAS');
     if ~isempty(bas)
         ba = bas{1};
         br_ids = ba.get('BR_DICT').getKeys();
