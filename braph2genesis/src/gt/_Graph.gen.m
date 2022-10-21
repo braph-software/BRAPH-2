@@ -837,13 +837,28 @@ switch Graph.getGraphType(g)
         end
         
     otherwise  % multiplex
-        for li = 1:1:L
-            Aii = A{li, li};
-            if ~isempty(Aii)
-                B(li) = {Aii(nodes{li}, nodes{li})};
+        if isa(g, 'MultiplexBUD') || isa(g, 'MultiplexBUT')
+            temp_B = g.get('B');
+            for li = 1:1:length(temp_B)
+                Aii = temp_B{li};
+                if ~isempty(Aii)
+                    B(li) = {Aii(nodes{li}, nodes{li})};
+                end
             end
+            if isa(g, 'MultiplexBUD')
+                sg = MultiplexBUD('B', B, 'Densities', g.get('Densities'));
+            else
+                sg = MultiplexBUT('B', B, 'Thresholds', g.get('Thresholds'));
+            end
+        else
+            for li = 1:1:L
+                Aii = A{li, li};
+                if ~isempty(Aii)
+                    B(li) = {Aii(nodes{li}, nodes{li})};
+                end
+            end
+            sg = eval([g.getClass() '(''B'', B)']);
         end
-        sg = eval([g.getClass() '(''B'', B)']);
         
 end
 end
