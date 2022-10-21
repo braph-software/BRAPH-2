@@ -711,3 +711,17 @@ assert(~isempty(mcs), ...
     [BRAPH2.STR ':MultilayerCommunityStructure:' BRAPH2.BUG_ERR], ...
     'MultilayerCommunityStructure is not being calculated correctly for MultiplexBU.')
 
+%%% ¡test!
+%%%% ¡name!
+MultiplexBUT
+%%%% ¡code!
+
+A = rand(5, 5);
+B = {A A};
+g = MultiplexBUT('B', B, 'THRESHOLDS', [0 1]);
+mcs = MultilayerCommunityStructure('G', g).get('M');
+
+assert(~isempty(mcs), ...
+    [BRAPH2.STR ':MultilayerCommunityStructure:' BRAPH2.BUG_ERR], ...
+    'MultilayerCommunityStructure is not being calculated correctly for MultiplexBUT.')
+
