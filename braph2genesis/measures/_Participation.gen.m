@@ -137,6 +137,33 @@ assert(isequal(participation, known_participation), ...
 
 %%% ¡test!
 %%%% ¡name!
+GraphBU
+%%%% ¡code!
+
+A = [
+    0 1 1 1 0 0 0 0;
+    0 0 1 0 1 0 0 0;
+    0 0 0 0 1 0 0 0;
+    0 0 1 0 1 0 0 0;
+    0 0 0 0 0 1 1 0;
+    0 0 0 0 0 0 0 1;
+    0 0 0 0 0 0 0 1;
+    0 0 0 0 0 0 0 0
+    ];
+
+known_participation = {...
+    [0 4/9 3/8 4/9 12/25 0 0 0]'
+    [0 0   0   0   0     0 0 0]'};
+
+g = MultigraphBUT('B', A, 'THRESHOLDS', [0 1]);
+participation = Participation('G', g).get('M');
+
+assert(isequal(participation, known_participation), ...
+    [BRAPH2.STR ':Participation:' BRAPH2.BUG_ERR], ...
+    'Participation is not being calculated correctly for MultigraphBUT.')
+
+%%% ¡test!
+%%%% ¡name!
 GraphBD
 %%%% ¡code!
 
