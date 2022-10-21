@@ -136,7 +136,7 @@ if ~braph2_testing
         measure = pf.get('ME'); % comparison
 
         q_val = pf.get('QVAL');
-        val = measure.get('P1');
+        val = measure.get('P2');
         index = str2double(pf.get('DT'));
         val = val{index};
         
