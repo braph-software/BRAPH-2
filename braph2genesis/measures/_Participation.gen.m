@@ -48,13 +48,13 @@ M (result, cell) is the participation.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
-L = g.layernumber();
+[l, ls] = g.layernumber();
 N = g.nodenumber();
 
-participation = cell(L, 1);        
-directionality_type =  g.getDirectionalityType(L);
-connectivity_type =  g.getConnectivityType(L);
-if L == 1
+participation = cell(l, 1);        
+directionality_type =  g.getDirectionalityType(l);
+connectivity_type =  g.getConnectivityType(l);
+if ls(1) == 1
     S = CommunityStructure('G', g).get('M');
 else
     S = MultilayerCommunityStructure('G', g).get('M');
