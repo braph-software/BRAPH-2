@@ -77,7 +77,7 @@ if ~braph2_testing
                 sph_dict = pf.get('SPH_DICT');
                 for i = 1:sph_dict.length
                     sph = sph_dict.getItem(i);
-                    default_value = sph.get('SPHERESIZE');
+                    default_value = sph.getPropDefault('SPHERESIZE');
                     diff_val = (abs(val(i)) + lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
                     sph.set('SPHERESIZE', default_value * diff_val);
                     sph.set('FaceColor',  C_plot(i, :));
@@ -88,7 +88,7 @@ if ~braph2_testing
                 sym_dict = pf.get('SYM_DICT');
                 for i = 1:sym_dict.length
                     sym = sym_dict.getItem(i);
-                    default_value = sym.get('SYMBOLSIZE');
+                    default_value = sym.getPropDefault('SYMBOLSIZE');
                     diff_val = (abs(val(i)) + lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
                     sym.set('SPHERESIZE', default_value * diff_val);
                     sym.set('FaceColor',  C_plot(i, :));
@@ -136,7 +136,7 @@ if ~braph2_testing
         measure = pf.get('ME'); % comparison
 
         q_val = pf.get('QVAL');
-        val = measure.get('P2');
+        val = measure.get('P1');
         index = str2double(pf.get('DT'));
         val = val{index};
         
@@ -152,6 +152,8 @@ if ~braph2_testing
                 sph = sph_dict.getItem(i);
                 if ~mask(i)
                     set(sph, 'Visible', false);
+                else
+                    set(sph, 'Visible', true);
                 end
             end
         end
@@ -161,6 +163,8 @@ if ~braph2_testing
                 sym = sym_dict.getItem(i);
                 if ~mask(i)
                     set(sym, 'Visible', false);
+                else
+                    set(sym, 'Visible', true);
                 end
             end
         end
