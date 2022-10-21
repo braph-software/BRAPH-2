@@ -88,7 +88,7 @@ known_local_efficiency = {...
                          [5/6 1 5/6 1]'
                          [0   0 0   0]'};
 
-g = MultigraphBUT('B', A, 'THRESHOLDS', [0 1]);
+g = MultigraphBUT('B', B, 'THRESHOLDS', [0 1]);
 local_efficiency = LocalEfficiency('G', g).get('M');
 
 assert(isequal(local_efficiency, known_local_efficiency), ...
