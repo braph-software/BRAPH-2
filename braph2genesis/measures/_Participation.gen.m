@@ -137,7 +137,7 @@ assert(isequal(participation, known_participation), ...
 
 %%% ¡test!
 %%%% ¡name!
-GraphBU
+MultigraphBUT
 %%%% ¡code!
 
 A = [
