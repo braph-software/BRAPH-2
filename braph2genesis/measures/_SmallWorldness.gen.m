@@ -86,6 +86,21 @@ assert(isequal(smallworldness, known_smallworldness), ...
 
 %%% ¡test!
 %%%% ¡name!
+MultigraphBUT
+%%%% ¡code!
+A = rand(20);
+
+known_smallworldness = {1; 0};
+
+g = MultigraphBUT('B', A, 'THRESHOLDS', [0 1]);
+smallworldness = SmallWorldness('G', g).get('M');
+
+assert(isequal(smallworldness, known_smallworldness), ...
+    [BRAPH2.STR ':SmallWorldness:' BRAPH2.BUG_ERR], ...
+    'SmallWorldness is not being calculated correctly for MultigraphBUT.')
+
+%%% ¡test!
+%%%% ¡name!
 MultiplexWU
 %%%% ¡code!
 A11 = rand(20);
