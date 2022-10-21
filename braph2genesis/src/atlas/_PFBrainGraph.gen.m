@@ -115,8 +115,8 @@ if ~braph2_testing
                 for i = 1:sph_dict.length
                     sph = sph_dict.getItem(i);
                     default_value = sph.get('SPHERESIZE');
-                    meas_val = (val(i) + lim_min) /(lim_max-lim_min);  % size normalized by minimum and maximum value of the measure result
-                    sph.set('SPHERESIZE', default_value*meas_val);
+                    meas_val = (val(i) + lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
+                    sph.set('SPHERESIZE', default_value * meas_val);
                     sph.set('FaceColor',  rgb_meas(i, :));
                 end
                 pf.update_gui_tbl_sph()
@@ -126,8 +126,8 @@ if ~braph2_testing
                 for i = 1:sym_dict.length
                     sym = sym_dict.getItem(i);
                     default_value = sym.get('SYMBOLSIZE');
-                    meas_val = (val(i) + lim_min) /(lim_max-lim_min);  % size normalized by minimum and maximum value of the measure result
-                    sym.set('SYMBOLSIZE', default_value*meas_val);
+                    meas_val = (val(i) + lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
+                    sym.set('SYMBOLSIZE', default_value * meas_val);
                     sym.set('FaceColor',  rgb_meas(i, :));
                 end
                 
