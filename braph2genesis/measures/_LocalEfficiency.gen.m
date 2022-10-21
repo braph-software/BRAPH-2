@@ -75,6 +75,28 @@ assert(isequal(local_efficiency, known_local_efficiency), ...
 
 %%% ¡test!
 %%%% ¡name!
+MultigraphBUT
+%%%% ¡code!
+B = [
+    0  1  1  1
+    1  0  1  0
+    1  1  0  1
+    1  0  1  0
+    ];
+
+known_local_efficiency = {...
+                         [5/6 1 5/6 1]'
+                         [0   0 0   0]'};
+
+g = MultigraphBUT('B', A, 'THRESHOLDS', [0 1]);
+local_efficiency = LocalEfficiency('G', g).get('M');
+
+assert(isequal(local_efficiency, known_local_efficiency), ...
+    [BRAPH2.STR ':LocalEfficiency:' BRAPH2.BUG_ERR], ...
+    'LocalEfficiency is not being calculated correctly for MultigraphBUT.')
+
+%%% ¡test!
+%%%% ¡name!
 GraphWU
 %%%% ¡code!
 B = [
