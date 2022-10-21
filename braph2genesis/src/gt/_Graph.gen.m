@@ -825,18 +825,42 @@ switch Graph.getGraphType(g)
     case Graph.GRAPH
         B = A{1};
         B = B(nodes{1}, nodes{1});
+        sg = eval([g.getClass() '(''B'', B)']);
         
-    otherwise  % multigraph, multiplex 
-        for li = 1:1:L
-            Aii = A{li, li};
-            if ~isempty(Aii)
-                B(li) = {Aii(nodes{li}, nodes{li})};
-            end
+    case Graph.MULTIGRAPH
+        temp_B = g.get('B');
+        B2 = temp_B(nodes{1}, nodes{1});
+        if isa(g, 'MultigraphBUD')
+            sg = MultigraphBUD('B', B2, 'Densities', g.get('Densities'));
+        else
+            sg = MultigraphBUT('B', B2, 'Thresholds', g.get('Thresholds'));
         end
+        
+    otherwise  % multiplex
+        if isa(g, 'MultiplexBUD') || isa(g, 'MultiplexBUT')
+            temp_B = g.get('B');
+            for li = 1:1:length(temp_B)
+                Aii = temp_B{li};
+                if ~isempty(Aii)
+                    B(li) = {Aii(nodes{li}, nodes{li})};
+                end
+            end
+            if isa(g, 'MultiplexBUD')
+                sg = MultiplexBUD('B', B, 'Densities', g.get('Densities'));
+            else
+                sg = MultiplexBUT('B', B, 'Thresholds', g.get('Thresholds'));
+            end
+        else
+            for li = 1:1:L
+                Aii = A{li, li};
+                if ~isempty(Aii)
+                    B(li) = {Aii(nodes{li}, nodes{li})};
+                end
+            end
+            sg = eval([g.getClass() '(''B'', B)']);
+        end
+        
 end
-
-sg = eval([g.getClass() '(''B'', B)']);
-
 end
 function ga = nodeattack(g, nodes, layernumbers)
     %NODEATTACK removes given nodes from a graph
@@ -1013,7 +1037,7 @@ function m = getMeasure(g, measure_class, varargin)
             for i = 1:1:length(parameters)
                 parameter = parameters(i);
 
-                if parameter ~= AnalyzeGroup.TEMPLATE
+                if parameter ~= AnalyzeGroup.TEMPLATE && (numel(varargin) > 1 && parameter ~= m_template.getPropProp(varargin{1}))
                     varargin{length(varargin) + 1} = parameter;
                     varargin{length(varargin) + 1} = Callback('EL', m_template, 'PROP', parameter);
                 end
