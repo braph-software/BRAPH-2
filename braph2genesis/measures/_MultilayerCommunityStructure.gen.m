@@ -115,8 +115,8 @@ if isempty(OM)
     directionality_type =  g.getDirectionalityType(g.layernumber());
     directionality_firstlayer = directionality_type(1, 1);
     A = cell(L, 1);
+    A_hold = g.get('A');
     for i=1:L
-        A_hold = g.get('A');
         A(i) = {A_hold{i, i}};
     end
     if g.is_multiplex(g) || g.is_multilayer(g)
@@ -710,4 +710,18 @@ mcs = MultilayerCommunityStructure('G', g).get('M');
 assert(~isempty(mcs), ...
     [BRAPH2.STR ':MultilayerCommunityStructure:' BRAPH2.BUG_ERR], ...
     'MultilayerCommunityStructure is not being calculated correctly for MultiplexBU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBUT
+%%%% ¡code!
+
+A = rand(5, 5);
+B = {A A};
+g = MultiplexBUT('B', B, 'THRESHOLDS', [0 1]);
+mcs = MultilayerCommunityStructure('G', g).get('M');
+
+assert(~isempty(mcs), ...
+    [BRAPH2.STR ':MultilayerCommunityStructure:' BRAPH2.BUG_ERR], ...
+    'MultilayerCommunityStructure is not being calculated correctly for MultiplexBUT.')
 

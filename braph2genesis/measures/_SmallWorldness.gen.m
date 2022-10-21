@@ -86,6 +86,24 @@ assert(isequal(smallworldness, known_smallworldness), ...
 
 %%% ¡test!
 %%%% ¡name!
+MultigraphBUT
+%%%% ¡code!
+A = rand(20);
+
+known_smallworldness = {
+                       1
+                       0
+                       };
+
+g = MultigraphBUT('B', A, 'THRESHOLDS', [0 1]);
+smallworldness = SmallWorldness('G', g).get('M');
+
+assert(isequal(smallworldness, known_smallworldness), ...
+    [BRAPH2.STR ':SmallWorldness:' BRAPH2.BUG_ERR], ...
+    'SmallWorldness is not being calculated correctly for MultigraphBUT.')
+
+%%% ¡test!
+%%%% ¡name!
 MultiplexWU
 %%%% ¡code!
 A11 = rand(20);
@@ -105,6 +123,30 @@ smallworldness = cellfun(@(s) round(s, 1), smallworldness, 'UniformOutput', fals
 assert(isequal(smallworldness, known_smallworldness), ...
     [BRAPH2.STR ':SmallWorldness:' BRAPH2.BUG_ERR], ...
     'SmallWorldness is not being calculated correctly for MultiplexWU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBUT
+%%%% ¡code!
+A11 = rand(20);
+
+A22 = rand(20);
+A = {A11 A22};
+
+known_smallworldness = {
+                       1
+                       1
+                       0
+                       0
+                       };
+
+g = MultiplexBUT('B', A, 'THRESHOLDS', [0 1]);
+smallworldness = SmallWorldness('G', g).get('M');
+smallworldness = cellfun(@(s) round(s, 1), smallworldness, 'UniformOutput', false);
+
+assert(isequal(smallworldness, known_smallworldness), ...
+    [BRAPH2.STR ':SmallWorldness:' BRAPH2.BUG_ERR], ...
+    'SmallWorldness is not being calculated correctly for MultiplexBUT.')
 
 %%% ¡test!
 %%%% ¡name!

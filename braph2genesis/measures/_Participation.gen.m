@@ -48,19 +48,19 @@ M (result, cell) is the participation.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
-L = g.layernumber();
+[l, ls] = g.layernumber();
 N = g.nodenumber();
 
-participation = cell(L, 1);        
-directionality_type =  g.getDirectionalityType(L);
-connectivity_type =  g.getConnectivityType(L);
-if L == 1
+participation = cell(l, 1);        
+directionality_type =  g.getDirectionalityType(l);
+connectivity_type =  g.getConnectivityType(l);
+if ls(1) == 1
     S = CommunityStructure('G', g).get('M');
 else
     S = MultilayerCommunityStructure('G', g).get('M');
 end
     
-for li = 1:1:L
+for li = 1:1:l
     connectivity_layer = connectivity_type(li, li);
     directionality_layer = directionality_type(li, li);
     Aii = A{li, li};
@@ -134,6 +134,33 @@ participation = Participation('G', g).get('M');
 assert(isequal(participation, known_participation), ...
     [BRAPH2.STR ':Participation:' BRAPH2.BUG_ERR], ...
     'Participation is not being calculated correctly for GraphBU.')
+
+%%% ¡test!
+%%%% ¡name!
+MultigraphBUT
+%%%% ¡code!
+
+A = [
+    0 1 1 1 0 0 0 0;
+    0 0 1 0 1 0 0 0;
+    0 0 0 0 1 0 0 0;
+    0 0 1 0 1 0 0 0;
+    0 0 0 0 0 1 1 0;
+    0 0 0 0 0 0 0 1;
+    0 0 0 0 0 0 0 1;
+    0 0 0 0 0 0 0 0
+    ];
+
+known_participation = {...
+    [0 4/9 3/8 4/9 12/25 0 0 0]'
+    [0 0   0   0   0     0 0 0]'};
+
+g = MultigraphBUT('B', A, 'THRESHOLDS', [0 1]);
+participation = Participation('G', g).get('M');
+
+assert(isequal(participation, known_participation), ...
+    [BRAPH2.STR ':Participation:' BRAPH2.BUG_ERR], ...
+    'Participation is not being calculated correctly for MultigraphBUT.')
 
 %%% ¡test!
 %%%% ¡name!
