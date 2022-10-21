@@ -33,7 +33,11 @@ if ~braph2_testing
         val = comparison.get('DIFF');
         index_d = str2double(pf.get('DT'));
         index_l = str2double(pf.get('LAYER'));
-        val = val{index_d, index_l};
+        if index_d == 1
+            val = val{index_l};
+        else
+            val = val{index_l + index_d};
+        end
         % increase br size by measure value
         if isequal(comparison.get('MEASURE_TEMPLATE'), 'MultilayerCommunityStructure')
             unique_vals = unique(val);
