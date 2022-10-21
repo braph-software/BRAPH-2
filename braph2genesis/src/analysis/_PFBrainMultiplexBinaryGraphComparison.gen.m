@@ -33,11 +33,10 @@ if ~braph2_testing
         val = comparison.get('DIFF');
         index_d = str2double(pf.get('DT'));
         index_l = str2double(pf.get('LAYER'));
-        if index_d == 1
-            val = val{index_l};
-        else
-            val = val{index_l + index_d};
-        end
+        [l, ls] = comparison.get('C').get('A1').get('G').layernumber();
+        total_l = ls(1);
+        val = val{(total_l * (index_d - 1)) + index_l };
+        
         % increase br size by measure value
         if isequal(comparison.get('MEASURE_TEMPLATE'), 'MultilayerCommunityStructure')
             unique_vals = unique(val);
@@ -139,12 +138,14 @@ if ~braph2_testing
     if pf.get('FDRSHOW')
         % remove values that do no pass fdr
         % get fdr q value.
-        measure = pf.get('ME'); % comparison
+        comparison = pf.get('ME'); % comparison
         q_val = pf.get('QVAL');
-        val = measure.get('P1');
+        val = comparison.get('P2');
         index_d = str2double(pf.get('DT'));
         index_l = str2double(pf.get('LAYER'));
-        val = val{index_d, index_l};
+        [l, ls] = comparison.get('C').get('A1').get('G').layernumber();
+        total_l = ls(1);
+        val = val{(total_l * (index_d - 1)) + index_l };
         
         if size(val, 1) > size(val, 2)
             val = val';
