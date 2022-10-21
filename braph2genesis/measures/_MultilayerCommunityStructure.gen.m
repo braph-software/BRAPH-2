@@ -115,8 +115,8 @@ if isempty(OM)
     directionality_type =  g.getDirectionalityType(g.layernumber());
     directionality_firstlayer = directionality_type(1, 1);
     A = cell(L, 1);
+    A_hold = g.get('A');
     for i=1:L
-        A_hold = g.get('A');
         A(i) = {A_hold{i, i}};
     end
     if g.is_multiplex(g) || g.is_multilayer(g)
