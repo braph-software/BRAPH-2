@@ -60,7 +60,7 @@ else
     S = MultilayerCommunityStructure('G', g).get('M');
 end
     
-for li = 1:1:L
+for li = 1:1:l
     connectivity_layer = connectivity_type(li, li);
     directionality_layer = directionality_type(li, li);
     Aii = A{li, li};
