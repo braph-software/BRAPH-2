@@ -34,8 +34,6 @@ if ~braph2_testing
         index_d = str2double(pf.get('DT'));
         index_l = str2double(pf.get('LAYER'));
         val = val{index_d, index_l};
-        val(isnan(val)) = 0.1;
-        val(val <= 0) = 0.1;
         % increase br size by measure value
         if isequal(comparison.get('MEASURE_TEMPLATE'), 'MultilayerCommunityStructure')
             unique_vals = unique(val);
@@ -64,23 +62,40 @@ if ~braph2_testing
                  pf.update_gui_tbl_sym()
             end
         else
+            lim_min = min(abs(val));  % minimum difference
+            lim_max = max(abs(val));  % maximum difference
+            % Blue color for group 1 > group 2
+            % Red color for group 2 > group 1
+            index_neg = find(val<0);
+            val(isnan(val)) = 0.01;
+            val(val == 0) = 0.01;
+            C_plot = zeros(length(val), 3);
+            C_plot(:, 1) = ones(length(val), 1); % red (RED difference G2 > G1);
+            C_temp(:, 3) =  ones(length(val), 1);  % blue;
+            % for the negative index, substitute red colors with blue (BLUE NEGATIVE difference G1 > G2)
+            C_plot(index_neg, :) = C_temp(index_neg, :);
+            
             if pf.get('SPHS')
                 sph_dict = pf.get('SPH_DICT');
                 for i = 1:sph_dict.length
                     sph = sph_dict.getItem(i);
                     default_value = sph.get('SPHERESIZE');
-                    sph.set('SPHERESIZE', default_value * val(i));
+                    diff_val = (abs(val(i)) + lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
+                    sph.set('SPHERESIZE', default_value * diff_val);
+                    sph.set('FaceColor',  C_plot(i, :));
                 end
-                 pf.update_gui_tbl_sph()
+                pf.update_gui_tbl_sph()
             end
             if pf.get('SYMS')
                 sym_dict = pf.get('SYM_DICT');
                 for i = 1:sym_dict.length
                     sym = sym_dict.getItem(i);
                     default_value = sym.get('SYMBOLSIZE');
-                    sym.set('SYMBOLSIZE', default_value * val(i));
+                    diff_val = (abs(val(i)) + lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
+                    sym.set('SPHERESIZE', default_value * diff_val);
+                    sym.set('FaceColor',  C_plot(i, :));
                 end
-                 pf.update_gui_tbl_sym()
+                pf.update_gui_tbl_sym()
             end
         end
     else
