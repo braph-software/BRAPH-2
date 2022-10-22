@@ -32,8 +32,6 @@ if ~braph2_testing
         val = measure.get('M');
         index = str2double(pf.get('DT'));
         val = val{index};
-        val(isnan(val)) = 0.1;
-        val(val <= 0) = 0.1;
         % increase br size by measure value
         if isa(measure, 'CommunityStructure')  || (isa(measure, 'MeasureEnsemble') && isa(measure.get('Measure_Template') , 'CommunityStructure'))
             unique_vals = unique(val);
@@ -62,12 +60,29 @@ if ~braph2_testing
                 pf.update_gui_tbl_sym()
             end
         else
+            % Make colorbar
+            lim_min = min(val);  % minimum of measure result
+            lim_max = max(val);  % maximum of measure result
+            val(isnan(val)) = 0.1;
+            val(val <= 0) = 0.1;
+            if lim_min == 0 && lim_max == 0
+                caxis auto
+                cmap_temp = colormap(jet);
+                rgb_meas = zeros(size(cmap_temp));
+            else
+                caxis([lim_min lim_max]);
+                cmap_temp = colormap(jet);
+                rgb_meas = interp1(linspace(lim_min, lim_max, size(cmap_temp, 1)), ...
+                    cmap_temp, val); % colorbar from minimum to maximum value of the measure result
+            end
             if pf.get('SPHS')
                 sph_dict = pf.get('SPH_DICT');
                 for i = 1:sph_dict.length
                     sph = sph_dict.getItem(i);
-                    default_value = sph.get('SPHERESIZE');
-                    sph.set('SPHERESIZE', default_value * val(i));
+                    default_value = sph.getPropDefault('SPHERESIZE');
+                    meas_val = (val(i) + lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
+                    sph.set('SPHERESIZE', default_value * meas_val);
+                    sph.set('FaceColor',  rgb_meas(i, :));
                 end
                 pf.update_gui_tbl_sph()
             end
@@ -75,8 +90,10 @@ if ~braph2_testing
                 sym_dict = pf.get('SYM_DICT');
                 for i = 1:sym_dict.length
                     sym = sym_dict.getItem(i);
-                    default_value = sym.get('SYMBOLSIZE');
-                    sym.set('SYMBOLSIZE', default_value * val(i));
+                    default_value = sym.getPropDefault('SYMBOLSIZE');
+                    meas_val = (val(i) + lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
+                    sym.set('SYMBOLSIZE', default_value * meas_val);
+                    sym.set('FaceColor',  rgb_meas(i, :));
                 end
                 pf.update_gui_tbl_sym()
             end
