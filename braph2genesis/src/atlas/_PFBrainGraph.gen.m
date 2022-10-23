@@ -176,8 +176,36 @@ if (isempty(varargin) || pf.prop_set('EDGES', varargin)) && ~braph2_testing
         pf.arrow_edges_off([], [])
         pf.cylinder_edges_off([],[])        
     else
-        % trigger listener
-        pf.set('ST_EDGES', pf.get('ST_EDGES'));        
+        if pf.get('EDGES')
+            if pf.get('ST_EDGES').get('LINKS')
+                if isempty(pf.edges.links) || any(isnan(pf.edges.links),'all')
+                    pf.link_edges([], []);
+                else
+                    pf.link_edges_on([], []);
+                end
+            elseif pf.get('ST_EDGES').get('ARROWS')
+                if isempty(pf.edges.arr) || any(isnan(pf.edges.arr),'all')
+                    pf.arrow_edges([], []);
+                else
+                    pf.arrow_edges_on([], []);
+                end
+            elseif pf.get('ST_EDGES').get('CYLINDERS')
+                if isempty(pf.edges.cyl) || any(isnan(pf.edges.cyl),'all')
+                    pf.cylinder_edges([], []);
+                else
+                    pf.cylinder_edges_on([], []);
+                end
+            elseif pf.get('ST_EDGES').get('TEXTS')% texts
+                if isempty(pf.edges.texts) || any(isnan(pf.edges.texts),'all')
+                    pf.text_edges([], [])
+                else
+                    %   pf.text_edges_on([], [])
+                end
+                
+            else
+                % do nothing
+            end
+        end
     end
     
     % update state of toggle tool
