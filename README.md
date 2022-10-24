@@ -33,7 +33,7 @@ You can also follow the <a href="http://braph.org/software/braph-2/">Installatio
 
 # BRAPH 2 usage examples
 
-BRAPH 2 is a powerful tool that transforms scripts to pipelines. We provide example data in order to test the different analyses and comparisons from the provided pipelines. Please check the <a href="http://braph.org/tutorials/">Tutorials</a> section for the step-by-step instructions and more details on our website.
+BRAPH 2 is a powerful tool that transforms scripts to pipelines. We provide example data in order to test the different analyses and comparisons from the provided pipelines. Please check the <a href="http://braph.org/tutorials/">Tutorials</a> section from our website for the step-by-step instructions and more details.
 
 # Cite us!
 If you use BRAPH 2 in your project, please cite us here:
