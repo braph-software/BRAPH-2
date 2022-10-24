@@ -29,9 +29,18 @@ ST_LINE (figure, item) determines the line settings.
 'SettingsLine'
 %%%% ¡postprocessing!
 if check_graphics(pf.h_line, 'line')
+    if( Graph.is_multiplex(pf.get('M').get('G')))
+        data = cell2mat(pf.get('M').get('M'));
+        [l, ls] = pf.get('M').get('G').layernumber();
+        index_l = str2double(pf.get('LAYER'));
+        total_l = ls(1);
+        data_to_plot = data(index_l:total_l:end);
+    else
+        data_to_plot = cell2mat(pf.get('CP').get('DIFF'));
+    end
     pf.get('ST_LINE').set( ...
         'X', pf.get('M').get('G').get('LAYERTICKS'), ...
-        'Y', cell2mat(pf.get('M').get('M')), ...
+        'Y', data_to_plot, ...
         'VISIBLE', true ...
         )
     pf.get('ST_AXIS').set('AXIS', true)
@@ -91,6 +100,16 @@ end
 %%%% ¡gui!
 pr = SettingsPPTable('EL', pf, 'PROP', PFMeasureGU.ST_YLABEL, ...
     'COLS', [SettingsText.VISIBLE, SettingsText.TXT, SettingsText.X, SettingsText.Y, SettingsText.ROTATION, SettingsText.HORIZONTALALIGNMENT, SettingsText.VERTICALALIGNMENT, SettingsText.FONTSIZE, SettingsText.FONTNAME, SettingsText.FONTCOLOR, SettingsText.INTERPRETER], ...
+    varargin{:});
+
+%%% ¡prop!
+LAYER (figure, string) is the id of the selected layer.
+%%%% ¡default!
+'1'
+%%%% ¡gui!
+g =  pf.get('G').get('G');
+pr = PP_LayerID('EL', pf, 'PROP', PFMeasureGU.LAYER, ...
+    'G', g, ...
     varargin{:});
 
 %% ¡methods!
