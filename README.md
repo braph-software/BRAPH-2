@@ -11,7 +11,7 @@
 </p>
 <p align="center">
   <a href="#installation">Installation</a> •
-  <a href="#examples-of-applications-using-braph-2">Examples</a> •
+  <a href="#braph-2-usage-examples">Examples</a> •
   <a href="#cite-us">Cite us</a> •
   <a href="https://github.com/softmatterlab/BRAPH-2-Matlab/blob/develop/LICENSE">License</a> 
 </p>
