@@ -177,27 +177,28 @@ if (isempty(varargin) || pf.prop_set('EDGES', varargin)) && ~braph2_testing
         pf.cylinder_edges_off([],[])        
     else
         if pf.get('EDGES')
+            [r, c] = pf.obtain_connections();
             if pf.get('ST_EDGES').get('LINKS')
                 if isempty(pf.edges.links) || any(isnan(pf.edges.links),'all')
-                    pf.link_edges([], []);
+                    pf.link_edges(r, c);
                 else
-                    pf.link_edges_on([], []);
+                    pf.link_edges_on(r, c);
                 end
             elseif pf.get('ST_EDGES').get('ARROWS')
                 if isempty(pf.edges.arr) || any(isnan(pf.edges.arr),'all')
-                    pf.arrow_edges([], []);
+                    pf.arrow_edges(r, c);
                 else
-                    pf.arrow_edges_on([], []);
+                    pf.arrow_edges_on(r, c);
                 end
             elseif pf.get('ST_EDGES').get('CYLINDERS')
                 if isempty(pf.edges.cyl) || any(isnan(pf.edges.cyl),'all')
-                    pf.cylinder_edges([], []);
+                    pf.cylinder_edges(r, c);
                 else
-                    pf.cylinder_edges_on([], []);
+                    pf.cylinder_edges_on(r, c);
                 end
             elseif pf.get('ST_EDGES').get('TEXTS')% texts
                 if isempty(pf.edges.texts) || any(isnan(pf.edges.texts),'all')
-                    pf.text_edges([], [])
+                    pf.text_edges(r, c)
                 else
                     %   pf.text_edges_on([], [])
                 end
@@ -265,18 +266,34 @@ function h_panel = draw(pf, varargin)
     pf.memorize('ST_EDGES').h(pf.h_axes).set('PANEL', pf, 'UITAG', 'h_axes')
     listener(pf.get('ST_EDGES'), 'PropSet', @cb_st_edges);
         function cb_st_edges(~, ~) % (src, event)
-            if pf.get('EDGES')
-                if pf.get('ST_EDGES').get('LINKS')
-                    pf.link_edges([], [])
-                elseif pf.get('ST_EDGES').get('ARROWS')
-                    pf.arrow_edges([], [])
-                elseif pf.get('ST_EDGES').get('CYLINDERS')
-                    pf.cylinder_edges([], [])
-                elseif pf.get('ST_EDGES').get('TEXTS')% texts
-                    pf.text_edges([], [])
+            [r, c] = pf.obain_connections();
+            if pf.get('ST_EDGES').get('LINKS')
+                if isempty(pf.edges.links) || any(isnan(pf.edges.links),'all')
+                    pf.link_edges(r, c);
                 else
-                    % do nothing
+                    pf.link_edges_on(r, c);
                 end
+            elseif pf.get('ST_EDGES').get('ARROWS')
+                if isempty(pf.edges.arr) || any(isnan(pf.edges.arr),'all')
+                    pf.arrow_edges(r, c);
+                else
+                    pf.arrow_edges_on(r, c);
+                end
+            elseif pf.get('ST_EDGES').get('CYLINDERS')
+                if isempty(pf.edges.cyl) || any(isnan(pf.edges.cyl),'all')
+                    pf.cylinder_edges(r, c);
+                else
+                    pf.cylinder_edges_on(r, c);
+                end
+            elseif pf.get('ST_EDGES').get('TEXTS')% texts
+                if isempty(pf.edges.texts) || any(isnan(pf.edges.texts),'all')
+                    pf.text_edges(r, c)
+                else
+                    %   pf.text_edges_on([], [])
+                end
+                
+            else
+                % do nothing
             end
         end
 
@@ -349,6 +366,17 @@ function update_gui_tbl_sph(pf)
 end
 function update_gui_tbl_sym(pf)
     update_gui_tbl_sym@PFBrainAtlas(pf);
+end
+function [r, c] = obtain_connections(pf)
+    % obtain true connections
+    if isa(pf.get('me'), 'MeasureEnsemble')
+        b = pf.get('me').get('A').get('g_dict').getItem(1);
+    else
+        b = pf.get('me').get('g');
+    end
+    
+    a = b.get('A');
+    [r, c] = find(a{1});
 end
 
 function h = link_edge(pf, i, j)

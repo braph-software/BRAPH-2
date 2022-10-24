@@ -250,3 +250,14 @@ end
 function update_gui_tbl_sym(pf)
     update_gui_tbl_sym@PFBrainAtlas(pf);
 end
+function [r, c] = obtain_connections(pf)
+    % obtain true connections
+    if isa(pf.get('me').get('c').get('a1'), 'AnalyzeGroup')
+        b = pf.get('me').get('C').get('A1').get('G');
+    else
+        b = pf.get('me').get('C').get('A1').get('g_dict').getItem(1);
+    end
+    
+    a = b.get('A');
+    [r, c] = find(a{1});
+end

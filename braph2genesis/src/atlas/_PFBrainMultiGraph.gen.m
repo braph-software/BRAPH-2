@@ -208,3 +208,14 @@ end
 function update_gui_tbl_sym(pf)
     update_gui_tbl_sym@PFBrainAtlas(pf);
 end
+function [r, c] = obtain_connections(pf)
+    % obtain true connections
+    if isa(pf.get('me'), 'MeasureEnsemble')
+        b = pf.get('me').get('A').get('g_dict').getItem(1);
+    else
+        b = pf.get('me').get('g');
+    end
+    a = b.get('A');
+    index = str2double(pf.get('DT'));
+    [r, c] = find(a{index});
+end
