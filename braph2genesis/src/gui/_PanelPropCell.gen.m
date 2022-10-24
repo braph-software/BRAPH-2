@@ -224,7 +224,7 @@ function update(pr)
     end
     
     function pval = get_p_value()
-        value = el.get('P1');
+        value = el.get('P2');
         [R, ~] = size(value);
         pval = value{R + 1 - get(pr.yslider, 'Value'), get(pr.xslider, 'Value')};
     end
