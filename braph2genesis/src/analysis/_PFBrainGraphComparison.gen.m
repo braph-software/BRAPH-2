@@ -79,10 +79,10 @@ if ~braph2_testing
                     default_value = sph.getPropDefault('SPHERESIZE');
                     diff_val = val(i);
                     if diff_val ~= 0.01
-                        diff_val = (abs(val(i)) - lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
+                        diff_val = (abs(val(i)) - lim_min) / (lim_max - lim_min) + 1;  % size normalized by minimum and maximum value of the measure result
                         diff_val(isnan(diff_val)) = 0.01;
                     end
-                    sph.set('SPHERESIZE', default_value * (diff_val + 1));
+                    sph.set('SPHERESIZE', default_value * diff_val);
                     sph.set('FaceColor',  C_plot(i, :));
                 end
                 pf.update_gui_tbl_sph()
@@ -94,10 +94,10 @@ if ~braph2_testing
                     default_value = sym.getPropDefault('SYMBOLSIZE');
                     diff_val = val(i);
                     if diff_val ~= 0.01
-                        diff_val = (abs(val(i)) - lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
+                        diff_val = (abs(val(i)) - lim_min) / (lim_max - lim_min) + 1;  % size normalized by minimum and maximum value of the measure result
                         diff_val(isnan(diff_val)) = 0.01;
                     end
-                    sym.set('SPHERESIZE', default_value * (diff_val + 1));
+                    sym.set('SPHERESIZE', default_value * diff_val);
                     sym.set('FaceColor',  C_plot(i, :));
                 end
                 pf.update_gui_tbl_sym()
