@@ -11,7 +11,7 @@
 </p>
 <p align="center">
   <a href="#installation">Installation</a> •
-  <a href="#using-braph-2">Examples</a> •
+  <a href="#examples-of-applications-using-braph-2">Examples</a> •
   <a href="#cite-us">Cite us</a> •
   <a href="https://github.com/softmatterlab/BRAPH-2-Matlab/blob/develop/LICENSE">License</a> 
 </p>
@@ -28,7 +28,7 @@ After launching MATLAB, change the current folder to **braph2genesis** and run *
 The installation will be only needed once, or every time you add a new functionality to BRAPH 2.
 You can also check the <a href="http://braph.org/software/braph-2/ ">installation section</a> on our website.
 
-# Using BRAPH 2
+# Examples of applications using BRAPH 2
 
 BRAPH 2 is a powerful tool that transforms scripts to pipelines.
 Each provided pipeline comes with an example folder where you can run the example script to perform the analysis/comparison on the example data.
