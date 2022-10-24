@@ -33,7 +33,11 @@ if ~braph2_testing
         val = comparison.get('DIFF');
         index_d = str2double(pf.get('DT'));
         index_l = str2double(pf.get('LAYER'));
-        [l, ls] = comparison.get('C').get('A1').get('G').layernumber();
+        if isa(comparison.get('C').get('A1'), 'AnalyzeGroup')
+            [l, ls] = comparison.get('C').get('A1').get('G').layernumber();
+        else
+            [l, ls] = comparison.get('C').get('A1').get('g_dict').layernumber();
+        end
         total_l = ls(1);
         val = val{(total_l * (index_d - 1)) + index_l };
         
@@ -145,7 +149,11 @@ if ~braph2_testing
         val = comparison.get('P2');
         index_d = str2double(pf.get('DT'));
         index_l = str2double(pf.get('LAYER'));
-        [l, ls] = comparison.get('C').get('A1').get('G').layernumber();
+        if isa(comparison.get('C').get('A1'), 'AnalyzeGroup')
+            [l, ls] = comparison.get('C').get('A1').get('G').layernumber();
+        else
+            [l, ls] = comparison.get('C').get('A1').get('g_dict').layernumber();
+        end
         total_l = ls(1);
         val = val{(total_l * (index_d - 1)) + index_l };
         
@@ -273,11 +281,14 @@ function [r, c] = obtain_connections(pf)
     % obtain true connections
     if isa(pf.get('me').get('c').get('a1'), 'AnalyzeGroup')
         b = pf.get('me').get('C').get('A1').get('G');
+        [l, ls] = pf.get('ME').get('C').get('A1').get('G').layernumber();
     else
         b = pf.get('me').get('C').get('A1').get('g_dict').getItem(1);
+        [l, ls] = pf.get('ME').get('C').get('A1').get('g_dict').layernumber();
     end
     a = b.get('A');
     index_d = str2double(pf.get('DT'));
     index_l = str2double(pf.get('LAYER'));
-    [r, c] = find(a{index_d, index_l});
+    total_l = ls(1);
+    [r, c] = find(a{(total_l * (index_d - 1)) + index_l , (total_l * (index_d - 1)) + index_l });
 end
