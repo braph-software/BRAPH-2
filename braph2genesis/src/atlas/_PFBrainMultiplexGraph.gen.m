@@ -63,20 +63,26 @@ if ~braph2_testing
             % Make colorbar
             lim_min = min(val);  % minimum of measure result
             lim_max = max(val);  % maximum of measure result
-            val(isnan(val)) = 0.1;
-            val(val <= 0) = 0.1;
-            caxis([lim_min lim_max]);
-            cmap_temp = colormap(jet);
-            rgb_meas = interp1(linspace(lim_min, lim_max, size(cmap_temp, 1)), ...
-                cmap_temp, val); % colorbar from minimum to maximum value of the measure result
+            if lim_min == lim_max
+                caxis auto
+                cmap_temp = colormap(jet);
+                rgb_meas = zeros(size(cmap_temp));
+            else
+                caxis([lim_min lim_max]);
+                cmap_temp = colormap(jet);
+                rgb_meas = interp1(linspace(lim_min, lim_max, size(cmap_temp, 1)), ...
+                    cmap_temp, val); % colorbar from minimum to maximum value of the measure result
+            end
             
             if pf.get('SPHS')
                 sph_dict = pf.get('SPH_DICT');
                 for i = 1:sph_dict.length
                     sph = sph_dict.getItem(i);
-                    default_value = sph.get('SPHERESIZE');
-                    meas_val = (val(i) + lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
-                    sph.set('SPHERESIZE', default_value * meas_val);
+                    default_value = sph.getPropDefault('SPHERESIZE');
+                    meas_val = (val(i) - lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
+                    meas_val(isnan(meas_val)) = 0.1;
+                    meas_val(meas_val <= 0) = 0.1;
+                    sph.set('SPHERESIZE', default_value * (meas_val + 1));
                     sph.set('FaceColor',  rgb_meas(i, :));
                 end
                 pf.update_gui_tbl_sph()
@@ -85,9 +91,11 @@ if ~braph2_testing
                 sym_dict = pf.get('SYM_DICT');
                 for i = 1:sym_dict.length
                     sym = sym_dict.getItem(i);
-                    default_value = sym.get('SYMBOLSIZE');
-                    meas_val = (val(i) + lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
-                    sym.set('SYMBOLSIZE', default_value * meas_val);
+                    default_value = sym.getPropDefault('SYMBOLSIZE');
+                    meas_val = (val(i) - lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
+                    meas_val(isnan(meas_val)) = 0.1;
+                    meas_val(meas_val <= 0) = 0.1;
+                    sym.set('SYMBOLSIZE', default_value * (meas_val + 1));
                     sym.set('FaceColor',  rgb_meas(i, :));
                 end
                 pf.update_gui_tbl_sym()
@@ -201,4 +209,15 @@ function update_gui_tbl_sph(pf)
 end
 function update_gui_tbl_sym(pf)
     update_gui_tbl_sym@PFBrainAtlas(pf);
+end
+function [r, c] = obtain_connections(pf)
+    % obtain true connections
+    if isa(pf.get('me'), 'MeasureEnsemble')
+        b = pf.get('me').get('A').get('g_dict').getItem(1);
+    else
+        b = pf.get('me').get('g');
+    end
+    a = b.get('A');
+    index_l = str2double(pf.get('LAYER'));
+    [r, c] = find(a{index_l, index_l});
 end

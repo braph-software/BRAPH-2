@@ -103,20 +103,26 @@ if ~braph2_testing
             % Make colorbar
             lim_min = min(val);  % minimum of measure result
             lim_max = max(val);  % maximum of measure result
-            val(isnan(val)) = 0.1;
-            val(val <= 0) = 0.1;
-            caxis([lim_min lim_max]);
-            cmap_temp = colormap(jet);
-            rgb_meas = interp1(linspace(lim_min, lim_max, size(cmap_temp, 1)), ...
-                cmap_temp, val); % colorbar from minimum to maximum value of the measure result
+            if lim_min == lim_max
+                caxis auto
+                cmap_temp = colormap(jet);
+                rgb_meas = zeros(size(cmap_temp));
+            else
+                caxis([lim_min lim_max]);
+                cmap_temp = colormap(jet);
+                rgb_meas = interp1(linspace(lim_min, lim_max, size(cmap_temp, 1)), ...
+                    cmap_temp, val); % colorbar from minimum to maximum value of the measure result
+            end
             
             if pf.get('SPHS')
                 sph_dict = pf.get('SPH_DICT');
                 for i = 1:sph_dict.length
                     sph = sph_dict.getItem(i);
-                    default_value = sph.get('SPHERESIZE');
-                    meas_val = (val(i) + lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
-                    sph.set('SPHERESIZE', default_value * meas_val);
+                    default_value = sph.getPropDefault('SPHERESIZE');
+                    meas_val = (val(i) - lim_min)/(lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
+                    meas_val(isnan(meas_val)) = 0.1;
+                    meas_val(meas_val <= 0) = 0.1;
+                    sph.set('SPHERESIZE', default_value * (meas_val + 1));
                     sph.set('FaceColor',  rgb_meas(i, :));
                 end
                 pf.update_gui_tbl_sph()
@@ -125,9 +131,11 @@ if ~braph2_testing
                 sym_dict = pf.get('SYM_DICT');
                 for i = 1:sym_dict.length
                     sym = sym_dict.getItem(i);
-                    default_value = sym.get('SYMBOLSIZE');
-                    meas_val = (val(i) + lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
-                    sym.set('SYMBOLSIZE', default_value * meas_val);
+                    default_value = sym.getPropDefault('SYMBOLSIZE');
+                    meas_val = (val(i) - lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
+                    meas_val(isnan(meas_val)) = 0.1;
+                    meas_val(meas_val <= 0) = 0.1;
+                    sym.set('SYMBOLSIZE', default_value * (meas_val + 1));
                     sym.set('FaceColor',  rgb_meas(i, :));
                 end
                 
@@ -176,8 +184,37 @@ if (isempty(varargin) || pf.prop_set('EDGES', varargin)) && ~braph2_testing
         pf.arrow_edges_off([], [])
         pf.cylinder_edges_off([],[])        
     else
-        % trigger listener
-        pf.set('ST_EDGES', pf.get('ST_EDGES'));        
+        if pf.get('EDGES')
+            [r, c] = pf.obtain_connections();
+            if pf.get('ST_EDGES').get('LINKS')
+                if isempty(pf.edges.links) || any(isnan(pf.edges.links),'all')
+                    pf.link_edges(r, c);
+                else
+                    pf.link_edges_on(r, c);
+                end
+            elseif pf.get('ST_EDGES').get('ARROWS')
+                if isempty(pf.edges.arr) || any(isnan(pf.edges.arr),'all')
+                    pf.arrow_edges(r, c);
+                else
+                    pf.arrow_edges_on(r, c);
+                end
+            elseif pf.get('ST_EDGES').get('CYLINDERS')
+                if isempty(pf.edges.cyl) || any(isnan(pf.edges.cyl),'all')
+                    pf.cylinder_edges(r, c);
+                else
+                    pf.cylinder_edges_on(r, c);
+                end
+            elseif pf.get('ST_EDGES').get('TEXTS')% texts
+                if isempty(pf.edges.texts) || any(isnan(pf.edges.texts),'all')
+                    pf.text_edges(r, c)
+                else
+                    %   pf.text_edges_on([], [])
+                end
+                
+            else
+                % do nothing
+            end
+        end
     end
     
     % update state of toggle tool
@@ -237,18 +274,34 @@ function h_panel = draw(pf, varargin)
     pf.memorize('ST_EDGES').h(pf.h_axes).set('PANEL', pf, 'UITAG', 'h_axes')
     listener(pf.get('ST_EDGES'), 'PropSet', @cb_st_edges);
         function cb_st_edges(~, ~) % (src, event)
-            if pf.get('EDGES')
-                if pf.get('ST_EDGES').get('LINKS')
-                    pf.link_edges([], [])
-                elseif pf.get('ST_EDGES').get('ARROWS')
-                    pf.arrow_edges([], [])
-                elseif pf.get('ST_EDGES').get('CYLINDERS')
-                    pf.cylinder_edges([], [])
-                elseif pf.get('ST_EDGES').get('TEXTS')% texts
-                    pf.text_edges([], [])
+            [r, c] = pf.obain_connections();
+            if pf.get('ST_EDGES').get('LINKS')
+                if isempty(pf.edges.links) || any(isnan(pf.edges.links),'all')
+                    pf.link_edges(r, c);
                 else
-                    % do nothing
+                    pf.link_edges_on(r, c);
                 end
+            elseif pf.get('ST_EDGES').get('ARROWS')
+                if isempty(pf.edges.arr) || any(isnan(pf.edges.arr),'all')
+                    pf.arrow_edges(r, c);
+                else
+                    pf.arrow_edges_on(r, c);
+                end
+            elseif pf.get('ST_EDGES').get('CYLINDERS')
+                if isempty(pf.edges.cyl) || any(isnan(pf.edges.cyl),'all')
+                    pf.cylinder_edges(r, c);
+                else
+                    pf.cylinder_edges_on(r, c);
+                end
+            elseif pf.get('ST_EDGES').get('TEXTS')% texts
+                if isempty(pf.edges.texts) || any(isnan(pf.edges.texts),'all')
+                    pf.text_edges(r, c)
+                else
+                    %   pf.text_edges_on([], [])
+                end
+                
+            else
+                % do nothing
             end
         end
 
@@ -322,6 +375,17 @@ end
 function update_gui_tbl_sym(pf)
     update_gui_tbl_sym@PFBrainAtlas(pf);
 end
+function [r, c] = obtain_connections(pf)
+    % obtain true connections
+    if isa(pf.get('me'), 'MeasureEnsemble')
+        b = pf.get('me').get('A').get('g_dict').getItem(1);
+    else
+        b = pf.get('me').get('g');
+    end
+    
+    a = b.get('A');
+    [r, c] = find(a{1});
+end
 
 function h = link_edge(pf, i, j)
     % LINK_EDGE plots edge edge as line
@@ -365,6 +429,7 @@ function h = link_edge(pf, i, j)
                 [Z1 Z2], ...
                 'Color', pf.get('ST_EDGES').get('LINKSCOLOR'), ...
                 'LineStyle', pf.get('ST_EDGES').get('LINKLINESTYLE'), ...
+                'Visible', 'on', ...
                 'LineWidth', pf.get('ST_EDGES').get('LINKLINEWIDTH'));
         else
             x1 = pf.edges.X1(i, j);
@@ -581,6 +646,7 @@ function h = arrow_edge(pf, i, j, varargin)
         pf.edges.arr(i, j) = surf(X, Y, Z,...
             'EdgeColor', color,...
             'FaceColor', color,...
+            'Visible', 'on', ...
             'Parent', pf.h_axes);
     else
         x1 = pf.edges.X1(i, j);
@@ -795,6 +861,7 @@ function h = cylinder_edge(pf, i, j, varargin)
         pf.edges.cyl(i, j) = surf(X, Y, Z,...
             'EdgeColor', color, ...
             'FaceColor', color, ...
+            'Visible', 'on', ...
             'Parent', pf.h_axes);
     else
         x1 = pf.edges.X1(i, j);
@@ -989,7 +1056,7 @@ function h = text_edge(pf, i, j , text_value, varargin)
     X3 = (X1 + X2) / 2;
     Y3 = (Y1 + Y2) / 2;
     Z3 = (Z1 + Z2) / 2;
-    pf.edges.texts(i, j) =  text(pf.h_axes, X3, Y3, Z3, text_value);
+    pf.edges.texts(i, j) =  text(pf.h_axes, X3, Y3, Z3, text_value, 'Visible', 'on');
 
     if nargout > 0
         h = pf.edges.texts(i, j);

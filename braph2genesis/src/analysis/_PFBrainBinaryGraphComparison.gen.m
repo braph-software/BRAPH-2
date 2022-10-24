@@ -65,7 +65,6 @@ if ~braph2_testing
             % Blue color for group 1 > group 2
             % Red color for group 2 > group 1
             index_neg = find(val<0);
-            val(isnan(val)) = 0.01;
             val(val == 0) = 0.01;
             C_plot = zeros(length(val), 3);
             C_plot(:, 1) = ones(length(val), 1); % red (RED difference G2 > G1);
@@ -78,7 +77,11 @@ if ~braph2_testing
                 for i = 1:sph_dict.length
                     sph = sph_dict.getItem(i);
                     default_value = sph.getPropDefault('SPHERESIZE');
-                    diff_val = (abs(val(i)) + lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
+                    diff_val = val(i);
+                    if diff_val ~= 0.01
+                        diff_val = (abs(val(i)) - lim_min) / (lim_max - lim_min) + 1;  % size normalized by minimum and maximum value of the measure result
+                        diff_val(isnan(diff_val)) = 0.01;
+                    end
                     sph.set('SPHERESIZE', default_value * diff_val);
                     sph.set('FaceColor',  C_plot(i, :));
                 end
@@ -89,7 +92,11 @@ if ~braph2_testing
                 for i = 1:sym_dict.length
                     sym = sym_dict.getItem(i);
                     default_value = sym.getPropDefault('SYMBOLSIZE');
-                    diff_val = (abs(val(i)) + lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
+                    diff_val = val(i);
+                    if diff_val ~= 0.01
+                        diff_val = (abs(val(i)) - lim_min) / (lim_max - lim_min) + 1;  % size normalized by minimum and maximum value of the measure result
+                        diff_val(isnan(diff_val)) = 0.01;
+                    end
                     sym.set('SPHERESIZE', default_value * diff_val);
                     sym.set('FaceColor',  C_plot(i, :));
                 end
@@ -275,4 +282,15 @@ function update_gui_tbl_sph(pf)
 end
 function update_gui_tbl_sym(pf)
     update_gui_tbl_sym@PFBrainAtlas(pf);
+end
+function [r, c] = obtain_connections(pf)
+    % obtain true connections
+    if isa(pf.get('me').get('c').get('a1'), 'AnalyzeGroup')
+        b = pf.get('me').get('C').get('A1').get('G');
+    else
+        b = pf.get('me').get('C').get('A1').get('g_dict').getItem(1);
+    end
+    a = b.get('A');
+    index = str2double(pf.get('DT'));
+    [r, c] = find(a{index, index});
 end
