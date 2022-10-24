@@ -26,13 +26,13 @@ BRAPH 2 requires at least **MATLAB R2021a**. BRAPH 2 requires both **Statistics 
 To install BRAPH 2, first clone this repository or download via zip. 
 After launching MATLAB, change the current folder to **braph2genesis** and run *braph2genesis* (you may have to add it to the path). This installation takes around 5 minutes.
 The installation will be only needed once, or every time you add a new functionality to BRAPH 2.
-You can also check the <a href="http://braph.org/software/braph-2/ ">installation section</a> on our website.
+You can also check the <a href="http://braph.org/software/braph-2/ ">Installation</a> section on our website.
 
 # Examples of applications using BRAPH 2
 
 BRAPH 2 is a powerful tool that transforms scripts to pipelines.
 Each provided pipeline comes with an example folder where you can run the example script to perform the analysis/comparison on the example data.
-Please check the <a href="http://braph.org/tutorials/">tutorial section</a> for the step-by-step instructions and more details on our website.
+Please check the <a href="http://braph.org/tutorials/">Tutorials</a> section for the step-by-step instructions and more details on our website.
 
 # Cite us!
 If you use BRAPH 2 in your project, please cite us here:
