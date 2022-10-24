@@ -70,7 +70,7 @@ if ~braph2_testing
             % Make colorbar
             lim_min = min(val);  % minimum of measure result
             lim_max = max(val);  % maximum of measure result
-            if lim_min == 0 && lim_max == 0
+            if lim_min == lim_max
                 caxis auto
                 cmap_temp = colormap(jet);
                 rgb_meas = zeros(size(cmap_temp));
