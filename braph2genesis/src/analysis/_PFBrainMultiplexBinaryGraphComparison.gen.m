@@ -87,7 +87,7 @@ if ~braph2_testing
                     sph = sph_dict.getItem(i);
                     default_value = sph.getPropDefault('SPHERESIZE');
                     diff_val = val(i);
-                    if diff_val > 0.01
+                    if diff_val ~= 0.01
                         diff_val = (abs(val(i)) - lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
                         diff_val(isnan(diff_val)) = 0.01;
                     end
@@ -102,7 +102,7 @@ if ~braph2_testing
                     sym = sym_dict.getItem(i);
                     default_value = sym.getPropDefault('SYMBOLSIZE');
                     diff_val = val(i);
-                    if diff_val > 0.01
+                    if diff_val ~= 0.01
                         diff_val = (abs(val(i)) - lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
                         diff_val(isnan(diff_val)) = 0.01;
                     end
