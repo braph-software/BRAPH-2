@@ -36,7 +36,7 @@ if ~braph2_testing
         if isa(comparison.get('C').get('A1'), 'AnalyzeGroup')
             [l, ls] = comparison.get('C').get('A1').get('G').layernumber();
         else
-            [l, ls] = comparison.get('C').get('A1').get('g_dict').layernumber();
+            [l, ls] = comparison.get('C').get('A1').get('G_DICT').getItem(1).layernumber();
         end
         total_l = ls(1);
         val = val{(total_l * (index_d - 1)) + index_l };
