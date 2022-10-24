@@ -50,5 +50,5 @@ See also:
 ```
 Mite Mijalkov, Ehsan Kakaei, Joana B Pereira, Eric Westman, Giovanni Volpe
 BRAPH: A graph theory software for the analysis of brain connectivity.
-PLOS ONE 12, e0178798 (2017)..
+PLOS ONE 12, e0178798 (2017).
 ```
