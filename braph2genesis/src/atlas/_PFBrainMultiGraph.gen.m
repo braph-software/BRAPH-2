@@ -219,5 +219,5 @@ function [r, c] = obtain_connections(pf)
     end
     a = b.get('A');
     index = str2double(pf.get('DT'));
-    [r, c] = find(a{index});
+    [r, c] = find(a{index, index});
 end
