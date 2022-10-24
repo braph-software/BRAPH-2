@@ -31,11 +31,9 @@ After unzipping the downloaded file into the desired directory and launching MAT
 The installation will be only needed once.
 You can also follow the <a href="http://braph.org/software/braph-2/">Installation</a> section from our website.
 
-# Examples of applications using BRAPH 2
+# BRAPH 2 usage examples
 
-BRAPH 2 is a powerful tool that transforms scripts to pipelines.
-Each provided pipeline comes with an example folder where you can run the example script to perform the analysis/comparison on the example data.
-Please check the <a href="http://braph.org/tutorials/">Tutorials</a> section for the step-by-step instructions and more details on our website.
+BRAPH 2 is a powerful tool that transforms scripts to pipelines. We provide example data in order to test the different analyses and comparisons from the provided pipelines. Please check the <a href="http://braph.org/tutorials/">Tutorials</a> section for the step-by-step instructions and more details on our website.
 
 # Cite us!
 If you use BRAPH 2 in your project, please cite us here:
