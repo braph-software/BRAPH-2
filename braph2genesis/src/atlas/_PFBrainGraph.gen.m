@@ -116,7 +116,7 @@ if ~braph2_testing
                     meas_val = (val(i) - lim_min)/(lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
                     meas_val(isnan(val)) = 0.1;
                     meas_val(val <= 0) = 0.1;
-                    sph.set('SPHERESIZE', default_value + meas_val);
+                    sph.set('SPHERESIZE', default_value * (meas_val + 1));
                     sph.set('FaceColor',  rgb_meas(i, :));
                 end
                 pf.update_gui_tbl_sph()
@@ -129,7 +129,7 @@ if ~braph2_testing
                     meas_val = (val(i) - lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
                     meas_val(isnan(val)) = 0.1;
                     meas_val(val <= 0) = 0.1;
-                    sym.set('SYMBOLSIZE', default_value * meas_val);
+                    sym.set('SYMBOLSIZE', default_value * (meas_val + 1));
                     sym.set('FaceColor',  rgb_meas(i, :));
                 end
                 
