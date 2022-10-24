@@ -32,11 +32,7 @@ if ~braph2_testing
         val = measure.get('M');
         index_d = str2double(pf.get('DT')); 
         index_l = str2double(pf.get('LAYER')); 
-        if isa(measure.get('C').get('A1'), 'AnalyzeGroup')
-            [l, ls] = measure.get('C').get('A1').get('G').layernumber();
-        else
-            [l, ls] = measure.get('C').get('A1').get('g_dict').layernumber();
-        end
+        [l, ls] = measure.get('G').layernumber();
         total_l = ls(1);
         val = val{(total_l * (index_d - 1)) + index_l };
         % increase br size by measure value
