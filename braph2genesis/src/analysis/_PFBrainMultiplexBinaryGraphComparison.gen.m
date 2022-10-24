@@ -74,6 +74,7 @@ if ~braph2_testing
             % Blue color for group 1 > group 2
             % Red color for group 2 > group 1
             index_neg = find(val<0);
+            val(val == 0) = 0.01;
             C_plot = zeros(length(val), 3);
             C_plot(:, 1) = ones(length(val), 1); % red (RED difference G2 > G1);
             C_temp(:, 3) =  ones(length(val), 1);  % blue;
@@ -85,9 +86,11 @@ if ~braph2_testing
                 for i = 1:sph_dict.length
                     sph = sph_dict.getItem(i);
                     default_value = sph.getPropDefault('SPHERESIZE');
-                    diff_val = (abs(val(i)) - lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
-                    diff_val(isnan(diff_val)) = 0.01;
-                    diff_val(diff_val <= 0) = 0.01;
+                    diff_val = val(i);
+                    if diff_val > 0.01
+                        diff_val = (abs(val(i)) - lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
+                        diff_val(isnan(diff_val)) = 0.01;
+                    end
                     sph.set('SPHERESIZE', default_value * (diff_val + 1));
                     sph.set('FaceColor',  C_plot(i, :));
                 end
@@ -98,9 +101,11 @@ if ~braph2_testing
                 for i = 1:sym_dict.length
                     sym = sym_dict.getItem(i);
                     default_value = sym.getPropDefault('SYMBOLSIZE');
-                    diff_val = (abs(val(i)) - lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
-                    diff_val(isnan(diff_val)) = 0.01;
-                    diff_val(diff_val <= 0) = 0.01;
+                    diff_val = val(i);
+                    if diff_val > 0.01
+                        diff_val = (abs(val(i)) - lim_min) / (lim_max - lim_min);  % size normalized by minimum and maximum value of the measure result
+                        diff_val(isnan(diff_val)) = 0.01;
+                    end
                     sym.set('SPHERESIZE', default_value * (diff_val + 1));
                     sym.set('FaceColor',  C_plot(i, :));
                 end
