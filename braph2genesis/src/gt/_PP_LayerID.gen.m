@@ -60,11 +60,13 @@ function update(pr)
         set(pr.dropdown, 'Enable', pr.get('ENABLE'))
     end 
     
-    n = length(g.get('B'));
-    n_cell = [1:n];
+    [l, ls] = pr.get('G').layernumber();
+    n_cell = [1:ls(1)];
     labels = cellfun(@(x) ['Layer : ' num2str(x)],num2cell(n_cell), 'UniformOutput', false);
     default_value = el.get(prop);
-    
+    if isempty(default_value)
+        default_value = '1';
+    end
     set(pr.dropdown, ...
         'Items', labels, ...
         'Value', labels(str2double(default_value)) ...
@@ -114,8 +116,8 @@ function cb_dropdown(pr)
     prop = pr.get('PROP');
     
     val = get(pr.dropdown, 'Value');
-    n = length(pr.get('G').get('B'));
-    n_cell = [1:n];
+    [l, ls] = pr.get('G').layernumber();
+    n_cell = [1:ls(1)];
     labels = cellfun(@(x) ['Layer : ' num2str(x)], num2cell(n_cell), 'UniformOutput', false);
     index = find(contains(labels, val), 1, 'last');
     el.set(prop, num2str(index))

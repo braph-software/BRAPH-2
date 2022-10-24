@@ -36,7 +36,7 @@ if check_graphics(pf.h_line, 'line')
         total_l = ls(1);
         data_to_plot = data(index_l:total_l:end);
     else
-        data_to_plot = cell2mat(pf.get('CP').get('DIFF'));
+        data_to_plot = cell2mat(pf.get('M').get('M'));
     end
     pf.get('ST_LINE').set( ...
         'X', pf.get('M').get('G').get('LAYERTICKS'), ...
