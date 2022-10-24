@@ -32,8 +32,13 @@ if ~braph2_testing
         val = measure.get('M');
         index_d = str2double(pf.get('DT')); 
         index_l = str2double(pf.get('LAYER')); 
-        % this is missing layer selection but I cant find a measure that involves layer
-        val = val{index_d, index_l}; % have to check with more measures
+        if isa(comparison.get('C').get('A1'), 'AnalyzeGroup')
+            [l, ls] = comparison.get('C').get('A1').get('G').layernumber();
+        else
+            [l, ls] = comparison.get('C').get('A1').get('g_dict').layernumber();
+        end
+        total_l = ls(1);
+        val = val{(total_l * (index_d - 1)) + index_l };
         % increase br size by measure value
         if isa(measure, 'MultilayerCommunityStructure')  || (isa(measure, 'MeasureEnsemble') && isa(measure.get('Measure_Template') , 'MultilayerCommunityStructure'))
             unique_vals = unique(val);
