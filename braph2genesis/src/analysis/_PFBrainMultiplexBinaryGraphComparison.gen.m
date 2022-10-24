@@ -281,10 +281,10 @@ function [r, c] = obtain_connections(pf)
     % obtain true connections
     if isa(pf.get('me').get('c').get('a1'), 'AnalyzeGroup')
         b = pf.get('me').get('C').get('A1').get('G');
-        [l, ls] = pf.get('ME').get('C').get('A1').get('G').layernumber();
+        [l, ls] = b.layernumber();
     else
         b = pf.get('me').get('C').get('A1').get('g_dict').getItem(1);
-        [l, ls] = pf.get('ME').get('C').get('A1').get('g_dict').layernumber();
+        [l, ls] = b.layernumber();
     end
     a = b.get('A');
     index_d = str2double(pf.get('DT'));
