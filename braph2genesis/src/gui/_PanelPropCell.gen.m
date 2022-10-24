@@ -284,10 +284,15 @@ function update(pr)
                     end
                     
                     [~, mask] = fdr(tmp_data, el.get('QVALUE'));
-                    [cols, rows] = find(mask);                   
+                    [cols, rows] = find(mask);
                     
                     if ~isempty(rows) && ~isempty(cols)
-                        s = uistyle('BackgroundColor',[1 0.6 0.6]);
+                        s = uistyle('BackgroundColor',[146/255 179/255 175/255]);
+                        addStyle(pr.table, s, 'cell', [rows', cols']);
+                    else
+                        non_sign = ones(size(mask));
+                        [cols, rows] = find(non_sign - mask);
+                        s = uistyle('BackgroundColor', [1 1 1]); % default color, no significance
                         addStyle(pr.table, s, 'cell', [rows', cols']);
                     end
                 end
