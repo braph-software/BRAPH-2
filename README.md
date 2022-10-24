@@ -22,12 +22,12 @@ An object-oriented software that provides pipelines for conventional brain conne
 
 # Installation
 
-BRAPH 2 requires at least MATLAB 2021a. BRAPH 2 requires both *Statistics and Machine Learning Toolbox* and *Parallel Computing Toolbox*. For deep learning analysis, *Deep Learning Toolbox* and *Deep Learning Toolbox Converter for ONNX Model Format* are also needed.
+BRAPH 2 requires at least **MATLAB R2021a**. BRAPH 2 requires both **Statistics and Machine Learning Toolbox** and **Parallel Computing Toolbox**. For deep learning analysis, **Deep Learning Toolbox** and **Deep Learning Toolbox Converter for ONNX Model Format** are also needed.
 
 To install BRAPH 2, first clone this repository or download via zip. 
-After launching MATLAB, change the current folder to *braph2genesis* and run braph2genesis (you may have to add it to the path). This installation takes around 5 minutes.
+After launching MATLAB, change the current folder to **braph2genesis** and run *braph2genesis* (you may have to add it to the path). This installation takes around 5 minutes.
 This installation will be only needed once, or every time you add a new functionality to BRAPH 2.
-You can also check the instruction for installation on our website <a href="http://braph.org/software/braph-2/ "></a>.
+You can also check the <a href="http://braph.org/software/braph-2/ ">installation section</a> on our website.
 
 # Using BRAPH 2
 
@@ -35,7 +35,7 @@ Each provided pipeline comes with an example folder where you can run the exampl
 
 # Learning BRAPH 2
 
-BRAPH 2 is a powerful tool that transforms scripts to pipelines. Please check the tutorial section on our website <a href="http://braph.org/tutorials/"></a>
+BRAPH 2 is a powerful tool that transforms scripts to pipelines. Please check the <a href="http://braph.org/tutorials/">tutorial section</a> on our website.
 
 ## Cite us!
 If you use BRAPH 2 in your project, please cite us here:
