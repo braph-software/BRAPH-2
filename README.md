@@ -2,7 +2,7 @@
   <img width="350" src=https://github.com/softmatterlab/BRAPH-2-Matlab/blob/develop/braph2genesis/src/util/braph2icon.png>
 </p>
 
-<h3 align="center">Brain Analysis using Graph Theory</h3>
+<h3 align="center">Brain Analysis using Graph Theory.</h3>
 <p align="center">
   <a href="https://twitter.com/braph2software" alt="tweeter"><img src="https://img.shields.io/twitter/url?label=BRAPH%202&style=social&url=https%3A%2F%2Ftwitter.com%2Fbraph2software"></a>
   <a href="http://braph.org/" alt="website"><img src="https://img.shields.io/website?up_message=braph.org&url=http%3A%2F%2Fbraph.org%2F"></a>
