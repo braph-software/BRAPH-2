@@ -220,10 +220,10 @@ function h = plotAdjacency(pf)
     elseif isnan(g_id)
         g_id = pf.get('G');
         graph = pf.get('A').get('G_DICT').getItem(g_id);
-        adjacency_matrix = cell2mat(graph.get('A'));
+        adjacency_matrix = graph.get('A');
     else
         graph = pf.get('A').get('G_DICT').getItem(g_id);
-        adjacency_matrix = cell2mat(graph.get('A'));
+        adjacency_matrix = graph.get('A');
     end
     
     % plot
