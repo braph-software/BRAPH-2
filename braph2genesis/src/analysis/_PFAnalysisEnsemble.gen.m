@@ -214,7 +214,7 @@ function h = plotAdjacency(pf)
         adjacency_matrix = 0;
         for i = 1:g_dict.length()
             g_temp = g_dict.getItem(i);
-            adjacency_matrix = adjacency_matrix + g_temp.get('A');
+            adjacency_matrix = adjacency_matrix + cell2mat(g_temp.get('A'));
         end
         adjacency_matrix = adjacency_matrix ./ g_dict.length();
     elseif isnan(g_id)
@@ -222,10 +222,10 @@ function h = plotAdjacency(pf)
         graph = pf.get('A').get('G_DICT').getItem(g_id);
         adjacency_matrix = graph.get('A');
     else
-        graph = pf.get('A').get('G_DICT').getItem(str2double(pf.get('G')));
+        graph = pf.get('A').get('G_DICT').getItem(g_id);
         adjacency_matrix = graph.get('A');
     end
-   
+    
     % plot
     if pf.get('ST_ADJACENCY').get('BINARY')
         h = pf.plotb(adjacency_matrix);
