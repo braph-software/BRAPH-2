@@ -57,9 +57,9 @@ BR1_ID (figure, string) is the ID of the first brain region of the binodal measu
 bas = pf.get('M').get('G').get('BAS');
 ba = bas{1};
 
-pr = PP_BrainRegion('EL', pf, 'PROP', ...
+pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureBU.BR1_ID, ...
     'BA', ba, ...
-    PFMeasureBU.BR1_ID, varargin{:});
+    varargin{:});
 
 %% ¡props!
 
