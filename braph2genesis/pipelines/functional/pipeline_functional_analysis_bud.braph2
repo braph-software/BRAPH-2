@@ -12,4 +12,4 @@ ba = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load Brain Atlas from X
 gr = ImporterGroupSubjectFUN_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group FUN from XLS % Group FUN
 
 %% Analysis
-a_BUD = AnalyzeEnsemble_FUN_BUD('GR', gr, 'DENSITIES', [0:10:100]); % Analyze Group % Group Analysis
+a_BUD = AnalyzeEnsemble_FUN_BUD('GR', gr, 'DENSITIES', [10 15 20 25 30]); % Analyze Group % Group Analysis
