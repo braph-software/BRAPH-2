@@ -62,7 +62,7 @@ function update(pr)
     
     [l, ls] = pr.get('G').layernumber();
     n_cell = [1:ls(1)];
-    labels = cellfun(@(x) ['Layer : ' num2str(x)],num2cell(n_cell), 'UniformOutput', false);
+    labels = cellfun(@(x) ['Layer: ' num2str(x)],num2cell(n_cell), 'UniformOutput', false);
     default_value = el.get(prop);
     if isempty(default_value)
         default_value = '1';
