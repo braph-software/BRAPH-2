@@ -121,7 +121,7 @@ function cb_dropdown(pr)
     labels = cellfun(@(x) ['Layer : ' num2str(x)], num2cell(n_cell), 'UniformOutput', false);
     index = find(contains(labels, val), 1, 'last');
     el.set(prop, num2str(index))
-    if ~isa(el, 'PFComparisonGroupGU') && ~isa(el, 'PFMeasureGU')
+    if ~isa(el, 'PFComparisonGroup') && ~isa(el, 'PFMeasure')
         el.plotAdjacency()
     end
 end
