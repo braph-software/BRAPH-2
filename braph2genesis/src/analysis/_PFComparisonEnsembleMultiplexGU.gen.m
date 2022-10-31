@@ -59,9 +59,15 @@ ST_LINE_CIU (figure, item) determines the upper-confidence-interval line setting
 SettingsLine('SYMBOL', '.')
 %%%% ¡postprocessing!
 if check_graphics(pf.h_line_ciu, 'line')
+    
+    data = cell2mat(pf.get('CP').get('CIU'));
+    [l, ls] = pf.get('CP').get('C').get('A1').get('G_DICT').getItem(1).layernumber();
+    index_l = str2double(pf.get('LAYER'));
+    total_l = ls(1);
+    
     pf.get('ST_LINE_CIU').set( ...
         'X', pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('LAYERTICKS'), ...
-        'Y', cell2mat(pf.get('CP').get('CIU')), ...
+        'Y', data(index_l:total_l:end), ...
         'VISIBLE', true ...
         )
     pf.get('ST_AXIS').set('AXIS', true)
@@ -80,9 +86,15 @@ ST_LINE_CIL (figure, item) determines the lower-confidence-interval line setting
 SettingsLine('SYMBOL', '.')
 %%%% ¡postprocessing!
 if check_graphics(pf.h_line_cil, 'line')
+        
+    data = cell2mat(pf.get('CP').get('CIL'));
+    [l, ls] = pf.get('CP').get('C').get('A1').get('G_DICT').getItem(1).layernumber();
+    index_l = str2double(pf.get('LAYER'));
+    total_l = ls(1);
+    
     pf.get('ST_LINE_CIL').set( ...
         'X', pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('LAYERTICKS'), ...
-        'Y', cell2mat(pf.get('CP').get('CIL')), ...
+        'Y', data(index_l:total_l:end), ...
         'VISIBLE', true ...
         )
     pf.get('ST_AXIS').set('AXIS', true)
