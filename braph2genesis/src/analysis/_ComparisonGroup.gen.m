@@ -519,7 +519,7 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
         
         if ~isempty(measure) && Measure.is_global(measure) && ...
                 (Measure.is_unilayer(measure) || Measure.is_superglobal(measure))
-            if Graph.is_multiplex(g)
+            if Graph.is_multiplex(g) && Measure.is_unilayer(measure)
                 cp.set('PFC', PFComparisonGroupMultiplexGU('CP', cp))
             else
                 cp.set('PFC', PFComparisonGroupGU('CP', cp))
