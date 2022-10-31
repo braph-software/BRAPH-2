@@ -118,7 +118,7 @@ function cb_dropdown(pr)
     val = get(pr.dropdown, 'Value');
     [l, ls] = pr.get('G').layernumber();
     n_cell = [1:ls(1)];
-    labels = cellfun(@(x) ['Layer : ' num2str(x)], num2cell(n_cell), 'UniformOutput', false);
+    labels = cellfun(@(x) ['Layer: ' num2str(x)], num2cell(n_cell), 'UniformOutput', false);
     index = find(contains(labels, val), 1, 'last');
     el.set(prop, num2str(index))
     if ~isa(el, 'PFComparisonGroup') && ~isa(el, 'PFMeasure')
