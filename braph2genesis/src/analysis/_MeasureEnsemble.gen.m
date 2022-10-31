@@ -162,9 +162,15 @@ PFME (gui, item) contains the panel figure of the measure.
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
     if isa(me.getr('PFME'), 'NoValue')
+        g_dict = me.memorize('a').memorize('g_dict');
         if ~isempty(me.get('MEASURE')) && Measure.is_global(me.get('MEASURE')) && ...
                 (Measure.is_unilayer(me.get('MEASURE')) || Measure.is_superglobal(me.get('MEASURE')))
-            me.set('PFME', PFMeasureEnsembleGU('ME', me))
+            g = g_dict.getItem(1);
+            if Graph.is_multiple(g)
+                me.set('PFME', PFMeasureEnsembleMultiplexGU('ME', me))
+            else
+                me.set('PFME', PFMeasureEnsembleGU('ME', me))
+            end
         elseif ~isempty(me.get('MEASURE')) && Measure.is_nodal(me.get('MEASURE')) && ...
                 (Measure.is_unilayer(me.get('MEASURE')) || Measure.is_superglobal(me.get('MEASURE')))
             me.set('PFME', PFMeasureEnsembleNU('ME', me))
