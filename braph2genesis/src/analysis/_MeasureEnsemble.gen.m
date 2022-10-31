@@ -166,7 +166,7 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
         if ~isempty(me.get('MEASURE')) && Measure.is_global(me.get('MEASURE')) && ...
                 (Measure.is_unilayer(me.get('MEASURE')) || Measure.is_superglobal(me.get('MEASURE')))
             g = g_dict.getItem(1);
-            if Graph.is_multiple(g)
+            if Graph.is_multiplex(g)
                 me.set('PFME', PFMeasureEnsembleMultiplexGU('ME', me))
             else
                 me.set('PFME', PFMeasureEnsembleGU('ME', me))

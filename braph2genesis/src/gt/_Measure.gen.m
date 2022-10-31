@@ -129,10 +129,12 @@ PFM (gui, item) contains the panel figure of the measure.
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
     if isa(m.getr('PFM'), 'NoValue')
         g = m.memorize('G');
-        if Measure.is_global(m) && Measure.is_unilayer(m) && Graph.is_multiplex(g)
-            m.set('PFM', PFMeasureMultiplexGU('M', m))
-        elseif Measure.is_global(m) && Measure.is_unilayer(m) 
-            m.set('PFM', PFMeasureGU('M', m))
+        if Measure.is_global(m) && Measure.is_unilayer(m)
+            if Graph.is_multiplex(g)
+                m.set('PFM', PFMeasureMultiplexGU('M', m))
+            else
+                m.set('PFM', PFMeasureGU('M', m))
+            end  
         elseif Measure.is_nodal(m) && Measure.is_unilayer(m)
             m.set('PFM', PFMeasureNU('M', m))
         elseif Measure.is_binodal(m) && Measure.is_unilayer(m)
