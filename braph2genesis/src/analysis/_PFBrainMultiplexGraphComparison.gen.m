@@ -32,7 +32,13 @@ if ~braph2_testing
         comparison = pf.get('ME'); % this is a comparison        
         val = comparison.get('DIFF');
         index = str2double(pf.get('LAYER'));
-        val = val{index};
+        
+        if Measure.is_superglobal(comparison.get('MEASURE'))
+            val = val{1};
+        else
+            val = val{index};
+        end
+        
         % increase br size by measure value
         if isequal(comparison.get('MEASURE_TEMPLATE'), 'MultilayerCommunityStructure')
             unique_vals = unique(val);
@@ -145,7 +151,11 @@ if ~braph2_testing
         q_val = pf.get('QVAL');
         val = measure.get('P2');
         index = str2double(pf.get('LAYER'));
-        val = val{index};
+        if Measure.is_superglobal(comparison.get('MEASURE'))
+            val = val{1};
+        else
+            val = val{index};
+        end
         
         if size(val, 1) > size(val, 2)
             val = val';

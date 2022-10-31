@@ -40,7 +40,7 @@ if ~braph2_testing
         end
         [l, ls] = g.layernumber();
         total_l = ls(1);
-        if comparison.get('MEASURE')
+        if Measure.is_superglobal(comparison.get('MEASURE'))
             val = val{index_d};
         else
             val = val{(total_l * (index_d - 1)) + index_l };
@@ -165,7 +165,11 @@ if ~braph2_testing
             [l, ls] = comparison.get('C').get('A1').get('G_DICT').getItem(1).layernumber();
         end
         total_l = ls(1);
-        val = val{(total_l * (index_d - 1)) + index_l };
+        if Measure.is_superglobal(comparison.get('MEASURE'))
+            val = val{index_d};
+        else
+            val = val{(total_l * (index_d - 1)) + index_l };
+        end
         
         if size(val, 1) > size(val, 2)
             val = val';
