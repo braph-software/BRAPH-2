@@ -38,7 +38,12 @@ if ~braph2_testing
             [l, ls] = measure.get('A').get('G_DICT').getItem(1).layernumber();
         end
         total_l = ls(1);
-        val = val{(total_l * (index_d - 1)) + index_l };
+        if Measure.is_superglobal(measure)
+            val = val{index_d};
+        else
+            val = val{(total_l * (index_d - 1)) + index_l };
+        end
+        
         % increase br size by measure value
         if isa(measure, 'MultilayerCommunityStructure')  || (isa(measure, 'MeasureEnsemble') && isa(measure.get('Measure_Template') , 'MultilayerCommunityStructure'))
             unique_vals = unique(val);

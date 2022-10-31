@@ -31,7 +31,11 @@ if ~braph2_testing
         measure = pf.get('ME');
         val = measure.get('M');
         index = str2double(pf.get('LAYER'));
-        val = val{index};
+        if Measure.is_superglobal(measure)
+            val = val{1};
+        else
+            val = val{index};
+        end
         % increase br size by measure value
         if isa(measure, 'MultilayerCommunityStructure') || (isa(measure, 'MeasureEnsemble') && isa(measure.get('Measure_Template') , 'MultilayerCommunityStructure'))
             unique_vals = unique(val);
