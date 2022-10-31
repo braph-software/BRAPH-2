@@ -515,10 +515,15 @@ PFC (gui, item) contains the panel figure of the comparison.
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
     if isa(cp.getr('PFC'), 'NoValue')
         measure = cp.get('MEASURE');
+        g = c.get('A1').get('G');
         
         if ~isempty(measure) && Measure.is_global(measure) && ...
                 (Measure.is_unilayer(measure) || Measure.is_superglobal(measure))
-            cp.set('PFC', PFComparisonGroupGU('CP', cp))
+            if Graph.is_multiplex(g)
+                cp.set('PFC', PFComparisonGroupMultiplexGU('CP', cp))
+            else
+                cp.set('PFC', PFComparisonGroupGU('CP', cp))
+            end
         elseif ~isempty(measure) && Measure.is_nodal(measure) && ...
                 (Measure.is_unilayer(measure) || Measure.is_superglobal(measure))
             cp.set('PFC', PFComparisonGroupNU('CP', cp))
