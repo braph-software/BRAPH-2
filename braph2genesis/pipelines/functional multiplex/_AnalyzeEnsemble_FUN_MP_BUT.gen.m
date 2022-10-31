@@ -68,10 +68,10 @@ if ~braph2_testing
     end
     if a.get('GR').get('SUB_DICT').length() > 0
         L = a.get('GR').get('SUB_DICT').getItem(1).get('L');  % number of layers
-
+        thresholds = a.get('THRESHOLDS');
         layerlabels = {};
-        for i = 1:1:L
-            layerlabels = [layerlabels, cellfun(@(x) ['L' num2str(i) ' ' num2str(x)], num2cell(a.get('THRESHOLDS')), 'UniformOutput', false)];
+        for i = 1:length(thresholds)
+            layerlabels = [layerlabels, cellfun(@(x) ['L' num2str(x) ' ' num2str(thresholds(i))], num2cell(1:L), 'UniformOutput', false)];
         end
 
         a.get('GRAPH_TEMPLATE').set('LAYERLABELS', cell2str(layerlabels))
