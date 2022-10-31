@@ -521,14 +521,14 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
                 ((Measure.is_global(measure) && Measure.is_unilayer(measure)) || ...
                 (Measure.is_global(measure) && Measure.is_superglobal(measure)))
             g = g_dict.getItem(1);
-            if Graph.is_multiplex(g)
+            if Graph.is_multiplex(g) && Measure.is_unilayer(measure))
                 cp.set('PFC', PFComparisonEnsembleMultiplexGU('CP', cp))
             else
                 cp.set('PFC', PFComparisonEnsembleGU('CP', cp))
             end
         elseif ~isempty(measure) && ...
                 ((Measure.is_nodal(measure) && Measure.is_unilayer(measure)) || ...
-                (Measure.is_nodal(measure) && Measure.is_superglobal(measure)))                
+                (Measure.is_nodal(measure) && Measure.is_superglobal(measure)))
             cp.set('PFC', PFComparisonEnsembleNU('CP', cp))
         elseif ~isempty(measure) && ...
                 ((Measure.is_binodal(measure) && Measure.is_unilayer(measure)) || ...
