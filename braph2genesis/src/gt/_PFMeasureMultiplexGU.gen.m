@@ -1,5 +1,5 @@
 %% ¡header!
-PFMultiplexMeasureGU < PFMeasure (pf, panel figure measure multiplex GU) is a plot of a global unilayer measure for multiplex graphs.
+PFMeasureMultiplexGU < PFMeasure (pf, panel figure measure multiplex GU) is a plot of a global unilayer measure for multiplex graphs.
 
 %%% ¡description!
 % % % PFBrainSurface manages the plot of the brain surface choosen by the user. 
