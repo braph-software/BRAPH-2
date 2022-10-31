@@ -66,10 +66,13 @@ if ~braph2_testing
             a.get('GRAPH_TEMPLATE').set('BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA'))
         end
     end
-    layerlabels = [ ...
-        cellfun(@(x) ['C ' num2str(x)], num2cell(a.get('THRESHOLDS')), 'UniformOutput', false), ...
-        cellfun(@(x) ['F ' num2str(x)], num2cell(a.get('THRESHOLDS')), 'UniformOutput', false) ...
-        ];
+    thresholds = a.get('THRESHOLDS');
+    layerlabels = {};
+    for i = 1:length(thresholds)
+        layerlabels = [...
+            layerlabels, ['C ' num2str(thresholds(i))], ...
+            ['F ' num2str(thresholds(i))]];
+    end
     a.get('GRAPH_TEMPLATE').set('LAYERLABELS', cell2str(layerlabels))
 end
 
