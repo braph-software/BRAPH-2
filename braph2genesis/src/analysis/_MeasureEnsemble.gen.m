@@ -166,7 +166,7 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
         if ~isempty(me.get('MEASURE')) && Measure.is_global(me.get('MEASURE')) && ...
                 (Measure.is_unilayer(me.get('MEASURE')) || Measure.is_superglobal(me.get('MEASURE')))
             g = g_dict.getItem(1);
-            if Graph.is_multiplex(g)
+            if Graph.is_multiplex(g) && Measure.is_unilayer(me.get('MEASURE')) 
                 me.set('PFME', PFMeasureEnsembleMultiplexGU('ME', me))
             else
                 me.set('PFME', PFMeasureEnsembleGU('ME', me))
@@ -174,7 +174,7 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
         elseif ~isempty(me.get('MEASURE')) && Measure.is_nodal(me.get('MEASURE')) && ...
                 (Measure.is_unilayer(me.get('MEASURE')) || Measure.is_superglobal(me.get('MEASURE')))
             g = g_dict.getItem(1);
-            if Graph.is_multiplex(g)
+            if Graph.is_multiplex(g) && Measure.is_unilayer(me.get('MEASURE'))
                 me.set('PFME', PFMeasureEnsembleMultiplexNU('ME', me))
             else
                 me.set('PFME', PFMeasureEnsembleNU('ME', me))
@@ -182,7 +182,7 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
         elseif ~isempty(me.get('MEASURE')) && Measure.is_binodal(me.get('MEASURE')) && ...
                 (Measure.is_unilayer(me.get('MEASURE')) || Measure.is_superglobal(me.get('MEASURE')))
             g = g_dict.getItem(1);
-            if Graph.is_multiplex(g)
+            if Graph.is_multiplex(g) && Measure.is_unilayer(me.get('MEASURE'))
                 me.set('PFME', PFMeasureEnsembleMultiplexBU('ME', me))
             else
                 me.set('PFME', PFMeasureEnsembleBU('ME', me))
