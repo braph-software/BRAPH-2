@@ -31,7 +31,12 @@ if ~braph2_testing
         measure = pf.get('ME');
         val = measure.get('M');
         index = str2double(pf.get('LAYER'));
-        if Measure.is_superglobal(measure)
+        if isa(measure,  'Measure')
+            measure_to_check = measure;
+        else
+            measure_to_check = measure.get('MEASURE');
+        end
+        if Measure.is_superglobal(measure_to_check)
             val = val{1};
         else
             val = val{index};
