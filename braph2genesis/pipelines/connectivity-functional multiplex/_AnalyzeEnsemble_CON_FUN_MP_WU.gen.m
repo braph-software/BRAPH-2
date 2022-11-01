@@ -59,7 +59,7 @@ if ~braph2_testing
     if a.get('GR').get('SUB_DICT').length() > 0
         layerlabels = cell2str({'CON', 'FUN'});
         
-        a.get('GRAPH_TEMPLATE').set('LAYERLABELS', cell2str(layerlabels))
+        a.get('GRAPH_TEMPLATE').set('LAYERLABELS', layerlabels)
     end
 end
 
