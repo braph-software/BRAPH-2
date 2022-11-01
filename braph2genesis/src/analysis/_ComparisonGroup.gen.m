@@ -515,7 +515,7 @@ PFC (gui, item) contains the panel figure of the comparison.
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
     if isa(cp.getr('PFC'), 'NoValue')
         measure = cp.get('MEASURE');
-        g = c.get('A1').get('G');
+        g = cp.get('A1').get('G');
         
         if ~isempty(measure) && Measure.is_global(measure) && ...
                 (Measure.is_unilayer(measure) || Measure.is_superglobal(measure))
