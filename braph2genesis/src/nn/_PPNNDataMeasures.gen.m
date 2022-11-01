@@ -30,6 +30,9 @@ menu_select_all
 menu_clear_selection
 menu_invert_selection
 menu_set_selection
+menu_measure_open_elements
+menu_measure_hide_elements
+f_measure_elements
 %% ¡methods!
 function p_out = draw(pr, varargin)
     %DRAW draws the panel of the graph property and the measure table.
@@ -54,7 +57,7 @@ function p_out = draw(pr, varargin)
     g = el.get(prop);
 
     pr.mlist = Graph.getCompatibleMeasureList(g);
-    pr.selected = find(ismember(pr.mlist, el.get('Measures')));
+    pr.selected = find(ismember(pr.mlist, el.get('Measures').getItems()));
 
     if ~check_graphics(pr.contextmenu, 'uicontextmenu')
         pr.contextmenu = uicontextmenu( ...
@@ -86,6 +89,18 @@ function p_out = draw(pr, varargin)
             'Text', 'Set selected measures', ...
             'MenuSelectedFcn', {@cb_set_selection} ...
             );
+        pr.menu_measure_open_elements = uimenu( ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_measure_open_elements', ...
+            'Text', 'Data Selected Measures', ...
+            'MenuSelectedFcn', {@cb_measure_open_elements} ...
+            );
+        pr.menu_measure_hide_elements = uimenu( ...
+            'Parent', pr.contextmenu, ...
+            'Tag', 'menu_measure_hide_elements', ...
+            'Text', 'Hide Selected Data', ...
+            'MenuSelectedFcn', {@cb_measure_hide_elements} ...
+            );
     end
 
     function cb_select_all(~, ~) 
@@ -99,6 +114,12 @@ function p_out = draw(pr, varargin)
     end
     function cb_set_selection(~, ~)
         pr.cb_set_measures()
+    end
+    function cb_measure_open_elements(~, ~)
+        pr.cb_measure_open_elements()
+    end
+    function cb_measure_hide_elements(~, ~)
+        pr.cb_measure_hide_elements()
     end
     
     if ~check_graphics(pr.table, 'uitable')
@@ -204,7 +225,7 @@ function update(pr)
 
     if el.get('INPUT_TYPE') == "graph_measures"
         if isempty(pr.selected)
-            pr.selected = find(ismember(pr.mlist, el.get('Measures')));
+            pr.selected = find(ismember(pr.mlist, el.get('Measures').getItems()));
         end
         set(pr.table, 'Enable', 'on')
     else
@@ -287,7 +308,102 @@ function cb_show_table(pr)
 end
 function cb_set_measures(pr)
     el = pr.get('EL');
-    measure_short_list = pr.mlist(pr.selected);
-    el.set('Measures', measure_short_list); 
+    me_dict = el.memorize('ME_DICT');
+    for i = 1:1:length(pr.mlist)
+        measure = pr.mlist{i};
+        if ismember(i, pr.selected)
+            el.getMeasureEnsemble(measure);
+        else
+            if me_dict.containsKey(measure)
+                el.get('ME_DICT').remove(me_dict.getIndex(measure));
+            end
+        end
+    end
     pr.update();
+end
+function cb_measure_open_elements(pr) 
+
+    a = pr.get('EL');
+% % %     prop = pr.get('PROP');
+% % %     g = a.memorize(prop);
+    
+    mlist = Graph.getCompatibleMeasureList(a.get('GRAPH_TEMPLATE'));
+    
+    f = ancestor(pr.p, 'figure'); % parent GUI 
+    N = ceil(sqrt(length(mlist))); % number of row and columns of figures
+    
+    for s = 1:1:length(pr.selected)
+        i = pr.selected(s);
+        
+        measure = mlist{i};
+
+        me = a.getMeasureEnsemble(measure);
+        if length(pr.f_measure_elements) < i || ~check_graphics(pr.f_measure_elements{i}, 'figure')
+            pr.f_measure_elements{i} = GUIElement( ...
+                'PE', me, ... 
+                'POSITION', [ ...
+                    x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ... % x = (f_gr_x + f_gr_w) / screen_w + mod(selected_it - 1, N) * (screen_w - f_gr_x - 2 * f_gr_w) / N / screen_w;
+                    y0(f, 'normalized') ... % y = f_gr_y / screen_h;
+                    w(f, 'normalized') ... % w = f_gr_w / screen_w;
+                    .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ... % h = .5 * f_gr_h / screen_h + .5 * f_gr_h * (N - floor((selected_it - .5) / N)) / N / screen_h;
+                    ], ...
+                'CLOSEREQ', false ...
+                ).draw();
+        else
+            figure(pr.f_measure_elements{i})
+        end
+    end
+end
+function cb_measure_hide_elements(pr) 
+
+    % hides selected subfigures
+    for s = 1:1:length(pr.selected)
+        i = pr.selected(s);
+        
+        if length(pr.f_measure_elements) >= i
+            f_measure_element = pr.f_measure_elements{i};
+            if check_graphics(f_measure_element, 'figure')
+                gui = get(f_measure_element, 'UserData');
+                gui.cb_hide()
+            end
+        end
+    end
+end
+function cb_bring_to_front(pr)
+
+    cb_bring_to_front@Panel(pr);
+    
+    % brings to front measure element subfigures
+    for i = 1:1:length(pr.f_measure_elements)
+        f_measure_plot = pr.f_measure_elements{i};
+        if check_graphics(f_measure_plot, 'figure')
+            gui = get(f_measure_plot, 'UserData');
+            gui.cb_bring_to_front()
+        end
+    end    
+end
+function cb_hide(pr)
+    
+    cb_hide@Panel(pr);
+   
+    % hides measure element subfigures
+    for i = 1:1:length(pr.f_measure_elements)
+        f_measure_plot = pr.f_measure_elements{i};
+        if check_graphics(f_measure_plot, 'figure')
+            gui = get(f_measure_plot, 'UserData');
+            gui.cb_hide()
+        end
+    end    
+end
+function cb_close(pr)
+    
+    cb_close@Panel(pr);
+    % closes measure element subfigures
+    for i = 1:1:length(pr.f_measure_elements)
+        f_measure_element = pr.f_measure_elements{i};
+        if check_graphics(f_measure_element, 'figure')
+            gui = get(f_measure_element, 'UserData');
+            gui.cb_close()
+        end
+    end
 end
