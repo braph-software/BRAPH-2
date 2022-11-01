@@ -20,7 +20,7 @@ if isempty(nn.get('LAYERS'))
     end
 end
 %%%% ¡gui!
-pr = PanelPropRVectorSmart('EL', nn, 'PROP', NNClassifierDNN.LAYERS, 'MAX', 100000, 'MIN', 1, varargin{:});
+pr = PanelPropRVectorSmart('EL', nn, 'PROP', NNClassifierDNN.LAYERS, 'MAX', 100000, 'MIN', 1, 'UNIQUE_VALUE', false, varargin{:});
 
 %%% ¡prop!
 BATCH (parameter, scalar) is the size of the mini-batch to use for each training iteration.
