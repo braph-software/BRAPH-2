@@ -40,12 +40,11 @@ if check_graphics(pf.h_line_diff, 'line')
     end
     br1_id = ba.get('BR_DICT').getIndex(pf.get('BR1_ID'));
     
-    data = cell2mat(pf.get('CP').get('DIFF'));
-%     data = cellfun(@(x) x(br1_id), pf.get('CP').get('DIFF'));
+    data = pf.get('CP').get('DIFF');
     [l, ls] = pf.get('CP').get('C').get('A1').get('G').layernumber();
     index_l = str2double(pf.get('LAYER'));
     total_l = ls(1);
-    data_to_plot = data(index_l:total_l:end);
+    data_to_plot = cell2mat(data(index_l:total_l:end));
     
     pf.get('ST_LINE_DIFF').set( ...
         'X', pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('LAYERTICKS'), ...
@@ -72,12 +71,11 @@ if check_graphics(pf.h_line_ciu, 'line')
     end
     br1_id = ba.get('BR_DICT').getIndex(pf.get('BR1_ID'));
     
-    data = cell2mat(pf.get('CP').get('CIU'));
-    %     data = cellfun(@(x) x(br1_id), pf.get('CP').get('CIU'));
+    data = pf.get('CP').get('CIU');
     [l, ls] = pf.get('CP').get('C').get('A1').get('G').layernumber();
     index_l = str2double(pf.get('LAYER'));
     total_l = ls(1);
-    data_to_plot = data(index_l:total_l:end);
+    data_to_plot = cell2mat(data(index_l:total_l:end));
     
     pf.get('ST_LINE_CIU').set( ...
         'X', pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('LAYERTICKS'), ...
@@ -104,12 +102,11 @@ if check_graphics(pf.h_line_cil, 'line')
     end
     br1_id = ba.get('BR_DICT').getIndex(pf.get('BR1_ID'));
     
-    data = cell2mat(pf.get('CP').get('CIL'));
-    %     data = cellfun(@(x) x(br1_id), pf.get('CP').get('CIL'));
+    data = pf.get('CP').get('CIL');
     [l, ls] = pf.get('CP').get('C').get('A1').get('G').layernumber();
     index_l = str2double(pf.get('LAYER'));
     total_l = ls(1);
-    data_to_plot = data(index_l:total_l:end);
+    data_to_plot = cell2mat(data(index_l:total_l:end));
     
     pf.get('ST_LINE_CIL').set( ...
         'X', pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('LAYERTICKS'), ...

@@ -37,12 +37,11 @@ if check_graphics(pf.h_line, 'line')
     end
     br1_id = ba.get('BR_DICT').getIndex(pf.get('BR1_ID'));
     
-    %data = cellfun(@(x) x(br1_id), pf.get('ME').get('M'));
-    data = cell2mat(pf.get('ME').get('M'));
+    data = pf.get('ME').get('M');
     [l, ls] = pf.get('ME').get('A').get('g_dict').getItem(1).layernumber();
     index_l = str2double(pf.get('LAYER'));
     total_l = ls(1);
-    data_to_plot = data(index_l:total_l:end);
+    data_to_plot = cell2mat(data(index_l:total_l:end));
     
     pf.get('ST_LINE').set( ...
         'X', pf.get('ME').get('A').get('GRAPH_TEMPLATE').get('LAYERTICKS'), ...
