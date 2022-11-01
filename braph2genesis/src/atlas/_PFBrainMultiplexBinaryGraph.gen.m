@@ -34,11 +34,13 @@ if ~braph2_testing
         index_l = str2double(pf.get('LAYER'));
         if isa(measure,  'Measure')
             [l, ls] = measure.get('G').layernumber();
+            measure_to_check = measure;
         else
             [l, ls] = measure.get('A').get('G_DICT').getItem(1).layernumber();
+            measure_to_check = measure.get('MEASURE');
         end
         total_l = ls(1);
-        if Measure.is_superglobal(measure)
+        if Measure.is_superglobal(measure_to_check)
             val = val{index_d};
         else
             val = val{(total_l * (index_d - 1)) + index_l };
