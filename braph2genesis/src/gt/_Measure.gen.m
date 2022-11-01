@@ -130,19 +130,19 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
     if isa(m.getr('PFM'), 'NoValue')
         g = m.memorize('G');
         if Measure.is_global(m) && (Measure.is_unilayer(m) || Measure.is_superglobal(m))
-            if Graph.is_multiplex(g) && (Measure.is_unilayer(m)
+            if Graph.is_multiplex(g) && Measure.is_unilayer(m)
                 m.set('PFM', PFMeasureMultiplexGU('M', m))
             else
                 m.set('PFM', PFMeasureGU('M', m))
             end  
         elseif Measure.is_nodal(m) && (Measure.is_unilayer(m) || Measure.is_superglobal(m))
-            if Graph.is_multiplex(g) && (Measure.is_unilayer(m)
+            if Graph.is_multiplex(g) && Measure.is_unilayer(m)
                 m.set('PFM', PFMeasureMultiplexNU('M', m))
             else
                 m.set('PFM', PFMeasureNU('M', m))
             end  
         elseif Measure.is_binodal(m) && (Measure.is_unilayer(m) || Measure.is_superglobal(m))
-            if Graph.is_multiplex(g) && (Measure.is_unilayer(m)
+            if Graph.is_multiplex(g) && Measure.is_unilayer(m)
                 m.set('PFM', PFMeasureMultiplexBU('M', m))
             else
                 m.set('PFM', PFMeasureBU('M', m))
