@@ -136,7 +136,11 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
                 m.set('PFM', PFMeasureGU('M', m))
             end  
         elseif Measure.is_nodal(m) && Measure.is_unilayer(m)
-            m.set('PFM', PFMeasureNU('M', m))
+            if Graph.is_multiplex(g)
+                m.set('PFM', PFMeasureMultiplexNU('M', m))
+            else
+                m.set('PFM', PFMeasureNU('M', m))
+            end  
         elseif Measure.is_binodal(m) && Measure.is_unilayer(m)
             m.set('PFM', PFMeasureBU('M', m))
         elseif Measure.is_global(m) && Measure.is_superglobal(m)

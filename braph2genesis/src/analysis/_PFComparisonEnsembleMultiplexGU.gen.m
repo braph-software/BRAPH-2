@@ -1,5 +1,5 @@
 %% ¡header!
-PFComparisonEnsembleMultiplexGU < PFComparisonEnsemble (pf, panel figure group comparison GU) is a plot of a global unilayer group comparison for multiplex graphs.
+PFComparisonEnsembleMultiplexGU < PFComparisonEnsemble (pf, panel figure group comparison multiplex GU) is a plot of a global unilayer group comparison for multiplex graphs.
 
 %%% ¡description!
 % % % PFBrainSurface manages the plot of the brain surface choosen by the user. 

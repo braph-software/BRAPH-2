@@ -173,7 +173,12 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
             end
         elseif ~isempty(me.get('MEASURE')) && Measure.is_nodal(me.get('MEASURE')) && ...
                 (Measure.is_unilayer(me.get('MEASURE')) || Measure.is_superglobal(me.get('MEASURE')))
-            me.set('PFME', PFMeasureEnsembleNU('ME', me))
+            g = g_dict.getItem(1);
+            if Graph.is_multiplex(g)
+                me.set('PFME', PFMeasureEnsembleMultiplexNU('ME', me))
+            else
+                me.set('PFME', PFMeasureEnsembleNU('ME', me))
+            end
         elseif ~isempty(me.get('MEASURE')) && Measure.is_binodal(me.get('MEASURE')) && ...
                 (Measure.is_unilayer(me.get('MEASURE')) || Measure.is_superglobal(me.get('MEASURE')))
             me.set('PFME', PFMeasureEnsembleBU('ME', me))
