@@ -1,8 +1,8 @@
 %% ¡header!
-PFMeasureBUS < PFMeasureNU (pf, panel figure measure GU) is a plot of a binodal unilayer measure.
+PFMeasureBS < PFMeasureNU (pf, panel figure measure BS) is a plot of a binodal and superglobal measure.
 
 %%% ¡description!
-% % % PFMeasureBUS manages the plot of the binodal superglobal measure choosen by the user.
+% % % PFMeasureBS manages the plot of the binodal superglobal measure choosen by the user.
 
 %%% ¡seealso!
 PanelFig, Measure
@@ -53,7 +53,7 @@ ba = bas{1};
 
 pr = PP_BrainRegion('EL', pf, 'PROP', ...
     'BA', ba, ...
-    PFMeasureBUS.BR1_ID, varargin{:});
+    PFMeasureBS.BR1_ID, varargin{:});
 
 %% ¡props!
 
@@ -63,7 +63,7 @@ BR2_ID (figure, string) is the ID of the second brain region of the binodal meas
 bas = pf.get('M').get('G').get('BAS');
 ba = bas{1};
 
-pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureBUS.BR2_ID, ...
+pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureBS.BR2_ID, ...
     'BA', ba, ...
     varargin{:});
 

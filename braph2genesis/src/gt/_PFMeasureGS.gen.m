@@ -1,8 +1,8 @@
 %% ¡header!
-PFMeasureGUS < PFMeasure (pf, panel figure measure GU) is a plot of a global and superglobal measure.
+PFMeasureGS < PFMeasure (pf, panel figure measure GS) is a plot of a global and superglobal measure.
 
 %%% ¡description!
-% % % PFMeasureGUS manages the plot of the measure. 
+% % % PFMeasureGS manages the plot of the measure. 
 
 %%% ¡seealso!
 PanelFig, Measure, PFMeasure
@@ -32,7 +32,7 @@ if check_graphics(pf.h_line, 'line')
     set(pf.h_axes, 'InnerPosition', [s(6)/w(pf.h_axes, 'pixels') s(6)/h(pf.h_axes, 'pixels') max(.1, 1-s(8)/w(pf.h_axes, 'pixels')) max(.1, 1-s(8)/h(pf.h_axes, 'pixels'))])
 end
 %%%% ¡gui!
-pr = SettingsPPTable('EL', pf, 'PROP', PFMeasureGUS.ST_LINE, ...
+pr = SettingsPPTable('EL', pf, 'PROP', PFMeasureGS.ST_LINE, ...
     'COLS', [SettingsLine.VISIBLE, SettingsLine.LINESTYLE, SettingsLine.LINEWIDTH, SettingsLine.LINECOLOR, SettingsLine.SYMBOL, SettingsLine.SYMBOLSIZE, SettingsLine.EDGECOLOR, SettingsLine.FACECOLOR], ...
     varargin{:});
 
@@ -57,7 +57,7 @@ if check_graphics(pf.h_ylabel, 'text')
     end
 end
 %%%% ¡gui!
-pr = SettingsPPTable('EL', pf, 'PROP', PFMeasureGUS.ST_XLABEL, ...
+pr = SettingsPPTable('EL', pf, 'PROP', PFMeasureGS.ST_XLABEL, ...
     'COLS', [SettingsText.VISIBLE, SettingsText.TXT, SettingsText.X, SettingsText.Y, SettingsText.ROTATION, SettingsText.HORIZONTALALIGNMENT, SettingsText.VERTICALALIGNMENT, SettingsText.FONTSIZE, SettingsText.FONTNAME, SettingsText.FONTCOLOR, SettingsText.INTERPRETER], ...
     varargin{:});
 
@@ -83,7 +83,7 @@ if check_graphics(pf.h_ylabel, 'text')
     end
 end
 %%%% ¡gui!
-pr = SettingsPPTable('EL', pf, 'PROP', PFMeasureGUS.ST_YLABEL, ...
+pr = SettingsPPTable('EL', pf, 'PROP', PFMeasureGS.ST_YLABEL, ...
     'COLS', [SettingsText.VISIBLE, SettingsText.TXT, SettingsText.X, SettingsText.Y, SettingsText.ROTATION, SettingsText.HORIZONTALALIGNMENT, SettingsText.VERTICALALIGNMENT, SettingsText.FONTSIZE, SettingsText.FONTNAME, SettingsText.FONTCOLOR, SettingsText.INTERPRETER], ...
     varargin{:});
 

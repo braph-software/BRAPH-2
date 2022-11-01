@@ -1,8 +1,8 @@
 %% ¡header!
-PFMeasureNUS < PFMeasureGU (pf, panel figure measure GU) is a plot of a nodal and superglobal measure.
+PFMeasureNS < PFMeasureGU (pf, panel figure measure NS) is a plot of a nodal and superglobal measure.
 
 %%% ¡description!
-% % % PFMeasureNUS manages the plot of the nodal superglobal measure choosen by the user. 
+% % % PFMeasureNS manages the plot of the nodal superglobal measure choosen by the user. 
 
 %%% ¡seealso!
 PanelFig, Measure
@@ -48,7 +48,7 @@ BR1_ID (figure, string) is the ID of the brain region of the nodal measure.
 bas = pf.get('M').get('G').get('BAS');
 ba = bas{1};
 
-pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureNUS.BR1_ID, ...
+pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureNS.BR1_ID, ...
     'BA', ba, ...
     varargin{:});
 
