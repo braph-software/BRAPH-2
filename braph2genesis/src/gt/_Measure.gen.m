@@ -142,19 +142,23 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
                 m.set('PFM', PFMeasureNU('M', m))
             end  
         elseif Measure.is_binodal(m) && Measure.is_unilayer(m)
-            m.set('PFM', PFMeasureBU('M', m))
+            if Graph.is_multiplex(g)
+                m.set('PFM', PFMeasureMultiplexBU('M', m))
+            else
+                m.set('PFM', PFMeasureBU('M', m))
+            end
         elseif Measure.is_global(m) && Measure.is_superglobal(m)
-            m.set('PFM', PFMeasureGUS('M', m))
+            m.set('PFM', PFMeasureGS('M', m))
         elseif Measure.is_nodal(m) && Measure.is_superglobal(m)
-            m.set('PFM', PFMeasureNUS('M', m))
+            m.set('PFM', PFMeasureNS('M', m))
         elseif Measure.is_binodal(m) && Measure.is_superglobal(m)
-            m.set('PFM', PFMeasureBUS('M', m))
+            m.set('PFM', PFMeasureBS('M', m))
         elseif Measure.is_global(m) && Measure.is_bilayer(m)
-            m.set('PFM', PFMeasureGUB('M', m))
+            m.set('PFM', PFMeasureGB('M', m))
         elseif Measure.is_nodal(m) && Measure.is_bilayer(m)
-            m.set('PFM', PFMeasureNUB('M', m))
+            m.set('PFM', PFMeasureNB('M', m))
         elseif Measure.is_binodal(m) && Measure.is_bilayer(m)
-            m.set('PFM', PFMeasureBUB('M', m))
+            m.set('PFM', PFMeasureBB('M', m))
         else
             m.memorize('PFM').set('M', m)
         end
