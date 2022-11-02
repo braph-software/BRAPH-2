@@ -39,6 +39,30 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 %% ¡props_update!
 
 %%% ¡prop!
+ANALYZE_ENSEMBLE (result, item) contains the graphs of the group.
+%%%% ¡settings!
+'AnalyzeEnsemble_FUN_WU'
+%%%% ¡default!
+AnalyzeEnsemble_FUN_WU()
+%%%% ¡calculate!
+value = AnalyzeEnsemble_FUN_WU('GR', nnd.get('GR'));
+
+%%% ¡prop!
+GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
+%%%% ¡settings!
+'GraphWU'
+%%%% ¡postprocessing!
+if ~braph2_testing
+    if isa(nnd.getr('GRAPH_TEMPLATE'), 'NoValue')
+        if nnd.get('GR').get('SUB_DICT').length() > 0
+            nnd.set('GRAPH_TEMPLATE', GraphWU('BAS', nnd.get('GR').get('SUB_DICT').getItem(1).get('BA')));
+        else
+            nnd.set('GRAPH_TEMPLATE', GraphWU());
+        end
+    end
+end
+
+%%% ¡prop!
 INPUT_TYPE (data, option) is the input type for training or testing the NN.
 %%%% ¡settings!
 {'adjacency_matrices' 'graph_measures'}
@@ -115,15 +139,16 @@ for i = 1:1:gr.get('SUB_DICT').length()
         input_nodal = [];
         input_binodal = [];
         input_global = [];
-        mlist = nnd.get('MEASURES');
+        mlist = cellfun(@(x) x.get('ID'), nnd.get('Measures').getItems(), 'UniformOutput', false);
         input_label = mlist;
         for j = 1:length(mlist)
+            m_value = nnd.getCalculatedMeasure(g, mlist{j});
             if Measure.is_nodal(mlist{j})
-                input_nodal = [input_nodal; cell2mat(g.getMeasure(mlist{j}).get('M'))];
+                input_nodal = [input_nodal; cell2mat(m_value)];
             elseif Measure.is_global(mlist{j})
-                input_global = [input_global; cell2mat(g.getMeasure(mlist{j}).get('M'))];
+                input_global = [input_global; cell2mat(m_value)];
             else
-                input_binodal = [input_binodal; cell2mat(g.getMeasure(mlist{j}).get('M'))];
+                input_binodal = [input_binodal; cell2mat(m_value)];
             end
         end
         input = {input_nodal input_global input_binodal};
