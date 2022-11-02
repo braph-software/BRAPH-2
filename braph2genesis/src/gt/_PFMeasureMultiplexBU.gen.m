@@ -1,8 +1,14 @@
 %% ¡header!
-PFMeasureBUS < PFMeasureNU (pf, panel figure measure GU) is a plot of a binodal unilayer measure.
+PFMeasureMultiplexBU < PFMeasureNU (pf, panel figure measure multiplex GU) is a plot of a binodal unilayer measure for multiplex graphs.
 
 %%% ¡description!
-% % % PFMeasureBUS manages the plot of the binodal superglobal measure choosen by the user.
+% % % PFBrainSurface manages the plot of the brain surface choosen by the user. 
+% % % A collection of brain surfaces in NV format can be found in the folder 
+% % % ./braph2/brainsurfs/.
+% % % This class provides the common methods needed to manage the plot of 
+% % % the surface. In particualr, the user can change lighting, material, 
+% % % camlight, shadning, colormap, facecolor, brain color, face color, 
+% % % edge color, and background color. 
 
 %%% ¡seealso!
 PanelFig, Measure
@@ -36,9 +42,15 @@ if check_graphics(pf.h_line, 'line')
     end
     br2_id = ba.get('BR_DICT').getIndex(pf.get('BR2_ID'));
     
+    data = pf.get('M').get('M');
+    [l, ls] = pf.get('M').get('G').layernumber();
+    index_l = str2double(pf.get('LAYER'));
+    total_l = ls(1);
+    data_to_plot = data(index_l:total_l:end);
+    
     pf.get('ST_LINE').set( ...
         'X', pf.get('M').get('G').get('LAYERTICKS'), ...
-        'Y', cellfun(@(x) x(br1_id, br2_id), pf.get('M').get('M')), ...
+        'Y', cellfun(@(x) x(br1_id, br2_id), data_to_plot), ...
         'VISIBLE', true ...
         )
     pf.get('ST_AXIS').set('AXIS', true)
@@ -51,9 +63,9 @@ BR1_ID (figure, string) is the ID of the first brain region of the binodal measu
 bas = pf.get('M').get('G').get('BAS');
 ba = bas{1};
 
-pr = PP_BrainRegion('EL', pf, 'PROP', ...
+pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureMultiplexBU.BR1_ID, ...
     'BA', ba, ...
-    PFMeasureBUS.BR1_ID, varargin{:});
+    varargin{:});
 
 %% ¡props!
 
@@ -63,8 +75,18 @@ BR2_ID (figure, string) is the ID of the second brain region of the binodal meas
 bas = pf.get('M').get('G').get('BAS');
 ba = bas{1};
 
-pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureBUS.BR2_ID, ...
+pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureMultiplexBU.BR2_ID, ...
     'BA', ba, ...
+    varargin{:});
+
+%%% ¡prop!
+LAYER (figure, string) is the id of the selected layer.
+%%%% ¡default!
+'1'
+%%%% ¡gui!
+g =  pf.get('M').get('G');
+pr = PP_LayerID('EL', pf, 'PROP', PFMeasureMultiplexBU.LAYER, ...
+    'G', g, ...
     varargin{:});
 
 %% ¡methods!

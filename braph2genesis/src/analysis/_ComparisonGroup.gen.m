@@ -85,9 +85,19 @@ if g.layernumber() == 1
         )
 else % multilayer
     if  Measure.is_superglobal(measure)
+        if isempty(g.get('LAYERTICKS'))
+            ylayerlabels = PanelPropCell.getPropDefault('LAYERTICKS');
+        else
+            layerlabels = num2cell(g.get('LAYERTICKS'));
+            ylayerlabels = ['{' sprintf('''%d'' ', layerlabels{end:-1:1}) '}'];
+        end
+        
         pr.set( ...
+            'TAB_H', max(pr.get('TAB_H'), length(layerlabels)), ...
             'XSLIDER', false, ...
-            'YSLIDER', true ...
+            'YSLIDER', true, ...
+            'YSLIDERLABELS', ylayerlabels, ...
+            'YSLIDERWIDTH', 5 ...
             )
     elseif Measure.is_unilayer(measure)
         if isempty(g.get('LAYERLABELS'))
@@ -178,9 +188,19 @@ if g.layernumber() == 1
         )
 else % multilayer
     if  Measure.is_superglobal(measure)
+        if isempty(g.get('LAYERTICKS'))
+            ylayerlabels = PanelPropCell.getPropDefault('LAYERTICKS');
+        else
+            layerlabels = num2cell(g.get('LAYERTICKS'));
+            ylayerlabels = ['{' sprintf('''%d'' ', layerlabels{end:-1:1}) '}'];
+        end
+        
         pr.set( ...
+            'TAB_H', max(pr.get('TAB_H'), length(layerlabels)), ...
             'XSLIDER', false, ...
-            'YSLIDER', false ...
+            'YSLIDER', true, ...
+            'YSLIDERLABELS', ylayerlabels, ...
+            'YSLIDERWIDTH', 5 ...
             )
     elseif Measure.is_unilayer(measure)
         if isempty(g.get('LAYERLABELS'))
@@ -271,9 +291,19 @@ if g.layernumber() == 1
         )
 else % multilayer
     if  Measure.is_superglobal(measure)
+        if isempty(g.get('LAYERTICKS'))
+            ylayerlabels = PanelPropCell.getPropDefault('LAYERTICKS');
+        else
+            layerlabels = num2cell(g.get('LAYERTICKS'));
+            ylayerlabels = ['{' sprintf('''%d'' ', layerlabels{end:-1:1}) '}'];
+        end
+        
         pr.set( ...
+            'TAB_H', max(pr.get('TAB_H'), length(layerlabels)), ...
             'XSLIDER', false, ...
-            'YSLIDER', false ...
+            'YSLIDER', true, ...
+            'YSLIDERLABELS', ylayerlabels, ...
+            'YSLIDERWIDTH', 5 ...
             )
     elseif Measure.is_unilayer(measure)
         if isempty(g.get('LAYERLABELS'))
@@ -364,9 +394,19 @@ if g.layernumber() == 1
         )
 else % multilayer
     if  Measure.is_superglobal(measure)
+        if isempty(g.get('LAYERTICKS'))
+            ylayerlabels = PanelPropCell.getPropDefault('LAYERTICKS');
+        else
+            layerlabels = num2cell(g.get('LAYERTICKS'));
+            ylayerlabels = ['{' sprintf('''%d'' ', layerlabels{end:-1:1}) '}'];
+        end
+        
         pr.set( ...
+            'TAB_H', max(pr.get('TAB_H'), length(layerlabels)), ...
             'XSLIDER', false, ...
-            'YSLIDER', false ...
+            'YSLIDER', true, ...
+            'YSLIDERLABELS', ylayerlabels, ...
+            'YSLIDERWIDTH', 5 ...
             )
     elseif Measure.is_unilayer(measure)
         if isempty(g.get('LAYERLABELS'))
@@ -457,9 +497,19 @@ if g.layernumber() == 1
         )
 else % multilayer
     if  Measure.is_superglobal(measure)
+        if isempty(g.get('LAYERTICKS'))
+            ylayerlabels = PanelPropCell.getPropDefault('LAYERTICKS');
+        else
+            layerlabels = num2cell(g.get('LAYERTICKS'));
+            ylayerlabels = ['{' sprintf('''%d'' ', layerlabels{end:-1:1}) '}'];
+        end
+        
         pr.set( ...
+            'TAB_H', max(pr.get('TAB_H'), length(layerlabels)), ...
             'XSLIDER', false, ...
-            'YSLIDER', false ...
+            'YSLIDER', true, ...
+            'YSLIDERLABELS', ylayerlabels, ...
+            'YSLIDERWIDTH', 5 ...
             )
     elseif Measure.is_unilayer(measure)
         if isempty(g.get('LAYERLABELS'))
@@ -515,16 +565,29 @@ PFC (gui, item) contains the panel figure of the comparison.
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
     if isa(cp.getr('PFC'), 'NoValue')
         measure = cp.get('MEASURE');
+        g = cp.get('C').get('A1').get('G');
         
         if ~isempty(measure) && Measure.is_global(measure) && ...
                 (Measure.is_unilayer(measure) || Measure.is_superglobal(measure))
-            cp.set('PFC', PFComparisonGroupGU('CP', cp))
+            if Graph.is_multiplex(g) && Measure.is_unilayer(measure)
+                cp.set('PFC', PFComparisonGroupMultiplexGU('CP', cp))
+            else
+                cp.set('PFC', PFComparisonGroupGU('CP', cp))
+            end
         elseif ~isempty(measure) && Measure.is_nodal(measure) && ...
                 (Measure.is_unilayer(measure) || Measure.is_superglobal(measure))
-            cp.set('PFC', PFComparisonGroupNU('CP', cp))
+            if Graph.is_multiplex(g) && Measure.is_unilayer(measure)
+                cp.set('PFC', PFComparisonGroupMultiplexNU('CP', cp))
+            else
+                cp.set('PFC', PFComparisonGroupNU('CP', cp))
+            end
         elseif ~isempty(measure) && Measure.is_binodal(measure) && ...
                 (Measure.is_unilayer(measure) || Measure.is_superglobal(measure))
-            cp.set('PFC', PFComparisonGroupBU('CP', cp))
+            if Graph.is_multiplex(g) && Measure.is_unilayer(measure)
+                cp.set('PFC', PFComparisonGroupMultiplexBU('CP', cp))
+            else
+                cp.set('PFC', PFComparisonGroupBU('CP', cp))
+            end
         else
             cp.memorize('PFC').set('CP', cp)
         end

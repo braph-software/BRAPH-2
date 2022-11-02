@@ -1,5 +1,5 @@
 %% ¡header!
-PFComparisonGroupGU < PFComparisonGroup (pf, panel figure group comparison GU) is a plot of a global unilayer group comparison.
+PFComparisonGroupMultiplexGU < PFComparisonGroup (pf, panel figure group comparison multiplex GU) is a plot of a global unilayer group comparison for multiplex graphs.
 
 %%% ¡description!
 % % % PFBrainSurface manages the plot of the brain surface choosen by the user. 
@@ -32,10 +32,14 @@ ST_LINE_DIFF (figure, item) determines the difference line settings.
 'SettingsLine'
 %%%% ¡postprocessing!
 if check_graphics(pf.h_line_diff, 'line')
-    
+    data = cell2mat(pf.get('CP').get('DIFF'));
+    [l, ls] = pf.get('CP').get('C').get('A1').get('G').layernumber();
+    index_l = str2double(pf.get('LAYER'));
+    total_l = ls(1);
+
     pf.get('ST_LINE_DIFF').set( ...
         'X', pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('LAYERTICKS'), ...
-        'Y', cell2mat(pf.get('CP').get('DIFF')), ...
+        'Y', data(index_l:total_l:end), ...
         'VISIBLE', true ...
         )
     pf.get('ST_AXIS').set('AXIS', true)
@@ -54,9 +58,14 @@ ST_LINE_CIU (figure, item) determines the upper-confidence-interval line setting
 SettingsLine('SYMBOL', '.')
 %%%% ¡postprocessing!
 if check_graphics(pf.h_line_ciu, 'line')
+    data = cell2mat(pf.get('CP').get('CIU'));
+    [l, ls] = pf.get('CP').get('C').get('A1').get('G').layernumber();
+    index_l = str2double(pf.get('LAYER'));
+    total_l = ls(1);
+    
     pf.get('ST_LINE_CIU').set( ...
         'X', pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('LAYERTICKS'), ...
-        'Y', cell2mat(pf.get('CP').get('CIU')), ...
+        'Y', data(index_l:total_l:end), ...
         'VISIBLE', true ...
         )
     pf.get('ST_AXIS').set('AXIS', true)
@@ -75,9 +84,13 @@ ST_LINE_CIL (figure, item) determines the lower-confidence-interval line setting
 SettingsLine('SYMBOL', '.')
 %%%% ¡postprocessing!
 if check_graphics(pf.h_line_cil, 'line')
+    data = cell2mat(pf.get('CP').get('CIL'));
+    [l, ls] = pf.get('CP').get('C').get('A1').get('G').layernumber();
+    index_l = str2double(pf.get('LAYER'));
+    total_l = ls(1);
     pf.get('ST_LINE_CIL').set( ...
         'X', pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('LAYERTICKS'), ...
-        'Y', cell2mat(pf.get('CP').get('CIL')), ...
+        'Y', data(index_l:total_l:end), ...
         'VISIBLE', true ...
         )
     pf.get('ST_AXIS').set('AXIS', true)
@@ -137,6 +150,16 @@ end
 %%%% ¡gui!
 pr = SettingsPPTable('EL', pf, 'PROP', PFComparisonGroupGU.ST_YLABEL, ...
     'COLS', [SettingsText.VISIBLE, SettingsText.TXT, SettingsText.X, SettingsText.Y, SettingsText.ROTATION, SettingsText.HORIZONTALALIGNMENT, SettingsText.VERTICALALIGNMENT, SettingsText.FONTSIZE, SettingsText.FONTNAME, SettingsText.FONTCOLOR, SettingsText.INTERPRETER], ...
+    varargin{:});
+
+%%% ¡prop!
+LAYER (figure, string) is the id of the selected layer.
+%%%% ¡default!
+'1'
+%%%% ¡gui!
+g =  pf.get('CP').get('C').get('A1').get('G');
+pr = PP_LayerID('EL', pf, 'PROP', PFComparisonGroupMultiplexGU.LAYER, ...
+    'G', g, ...
     varargin{:});
 
 %% ¡methods!

@@ -16,7 +16,7 @@ gr1 = ImporterGroupSubjectCON_FUN_MP_XLS('BA', ba, 'WAITBAR', true).get('GR'); %
 gr2 = ImporterGroupSubjectCON_FUN_MP_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group CON_FUN_MP 2 from XLS % Group CON_FUN_MP 2
 
 %% Analysis 1
-a_BUD1 = AnalyzeGroup_CON_FUN_MP_GA_BUD('GR', gr1, 'DENSITIES', [0:10:100]); % Analyze Group 1 % Group 1 Analysis
+a_BUD1 = AnalyzeGroup_CON_FUN_MP_GA_BUD('GR', gr1, 'DENSITIES', [10 15 20 25 30]); % Analyze Group 1 % Group 1 Analysis
 
 %% Analysis 2
 a_BUD2 = AnalyzeGroup_CON_FUN_MP_GA_BUD('GR', gr2, 'TEMPLATE', a_BUD1); % Analyze Group 2 % Group 2 Analysis

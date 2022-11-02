@@ -96,8 +96,11 @@ else
     
     layerlabels = {};
     A = cell(1, L);
+    thresholds = a.get('THRESHOLDS'); 
+    for i = 1:length(thresholds)
+        layerlabels = [layerlabels, cellfun(@(x) ['L' num2str(x) ' ' num2str(thresholds(i))], num2cell(1:L), 'UniformOutput', false)];
+    end
     for i = 1:L
-        layerlabels = [layerlabels, cellfun(@(x) ['L' num2str(i) ' ' num2str(x)], num2cell(a.get('THRESHOLDS')), 'UniformOutput', false)];
         if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
             A(i) = {Correlation.getAdjacencyMatrix(data{i}, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'), covariates)};
         else

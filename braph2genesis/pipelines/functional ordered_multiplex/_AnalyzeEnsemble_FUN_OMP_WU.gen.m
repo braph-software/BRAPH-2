@@ -56,6 +56,12 @@ if ~braph2_testing
             a.get('GRAPH_TEMPLATE').set('BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA'))
         end
     end
+    if a.get('GR').get('SUB_DICT').length() > 0
+        L = a.get('GR').get('SUB_DICT').getItem(1).get('L');  % number of layers
+        layerlabels = cell2str(cellfun(@(x) ['L' num2str(x)], num2cell([1:1:L]), 'UniformOutput', false));
+        
+        a.get('GRAPH_TEMPLATE').set('LAYERLABELS', cell2str(layerlabels))
+    end
 end
 
 %%% ¡prop!

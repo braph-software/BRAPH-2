@@ -68,13 +68,15 @@ if ~braph2_testing
     end
     if a.get('GR').get('SUB_DICT').length() > 0
         L = a.get('GR').get('SUB_DICT').getItem(1).get('L');  % number of layers
-
+        densities = a.get('DENSITIES');
         layerlabels = {};
-        for i = 1:1:L
-            layerlabels = [layerlabels, cellfun(@(x) ['L' num2str(i) ' ' num2str(x) '%'], num2cell(a.get('DENSITIES')), 'UniformOutput', false)];
+        
+        for i = 1:length(densities)
+            layerlabels = [layerlabels, cellfun(@(x) ['L' num2str(x) ' ' num2str(densities(i)) '%'], num2cell(1:L), 'UniformOutput', false)];
         end
 
         a.get('GRAPH_TEMPLATE').set('LAYERLABELS', cell2str(layerlabels))
+        a.get('GRAPH_TEMPLATE').set('LAYERTICKS', densities)
     end
 end
 
@@ -133,7 +135,6 @@ for i = 1:1:gr.get('SUB_DICT').length()
         'ID', ['g ' sub.get('ID')], ...
         'B', A, ...
         'DENSITIES', densities, ...
-        'LAYERTICKS', densities, ... 
         'BAS', ba ...
         );
     g_dict.add(g)

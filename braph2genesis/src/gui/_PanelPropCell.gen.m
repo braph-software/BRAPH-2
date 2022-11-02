@@ -284,16 +284,25 @@ function update(pr)
                     end
                     
                     [~, mask] = fdr(tmp_data, el.get('QVALUE'));
-                    [cols, rows] = find(mask);
+                    [rows, cols] = find(mask==1);
                     
                     if ~isempty(rows) && ~isempty(cols)
                         s = uistyle('BackgroundColor',[146/255 179/255 175/255]);
-                        addStyle(pr.table, s, 'cell', [rows', cols']);
+                        if isvector(mask)
+                            addStyle(pr.table, s, 'cell', [cols', rows']);
+                        else
+                            addStyle(pr.table, s, 'cell', [rows, cols]);
+                        end
                     else
                         non_sign = ones(size(mask));
-                        [cols, rows] = find(non_sign - mask);
+                        a_temp = non_sign - mask;
+                        [rows, cols] = find(a_temp == 1);
                         s = uistyle('BackgroundColor', [1 1 1]); % default color, no significance
-                        addStyle(pr.table, s, 'cell', [rows', cols']);
+                        if isvector(a_temp)
+                            addStyle(pr.table, s, 'cell', [cols', rows']);
+                        else
+                            addStyle(pr.table, s, 'cell', [rows, cols]);
+                        end
                     end
                 end
             end

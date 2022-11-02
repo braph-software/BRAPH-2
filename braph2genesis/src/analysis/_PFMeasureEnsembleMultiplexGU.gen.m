@@ -1,11 +1,17 @@
 %% ¡header!
-PFMeasureGUS < PFMeasure (pf, panel figure measure GU) is a plot of a global and superglobal measure.
+PFMeasureEnsembleMultiplexGU < PFMeasureEnsemble (pf, panel figure measure multiplex GU) is a plot of a global unilayer measure for multiplex graphs.
 
 %%% ¡description!
-% % % PFMeasureGUS manages the plot of the measure. 
+% % % PFBrainSurface manages the plot of the brain surface choosen by the user. 
+% % % A collection of brain surfaces in NV format can be found in the folder 
+% % % ./braph2/brainsurfs/.
+% % % This class provides the common methods needed to manage the plot of 
+% % % the surface. In particualr, the user can change lighting, material, 
+% % % camlight, shadning, colormap, facecolor, brain color, face color, 
+% % % edge color, and background color. 
 
 %%% ¡seealso!
-PanelFig, Measure, PFMeasure
+PanelFig, MeasureEnsemble
 
 %% ¡properties!
 p  % handle for panel
@@ -23,16 +29,21 @@ ST_LINE (figure, item) determines the line settings.
 'SettingsLine'
 %%%% ¡postprocessing!
 if check_graphics(pf.h_line, 'line')
+    data = cell2mat(pf.get('ME').get('M'));
+    [l, ls] = pf.get('ME').get('A').get('g_dict').getItem(1).layernumber();
+    index_l = str2double(pf.get('LAYER'));
+    total_l = ls(1);
+
     pf.get('ST_LINE').set( ...
-        'X', pf.get('M').get('G').get('LAYERTICKS'), ...
-        'Y', cell2mat(pf.get('M').get('M')), ...
+        'X', pf.get('ME').get('A').get('GRAPH_TEMPLATE').get('LAYERTICKS'), ...
+        'Y', data(index_l:total_l:end), ...
         'VISIBLE', true ...
         )
     pf.get('ST_AXIS').set('AXIS', true)
     set(pf.h_axes, 'InnerPosition', [s(6)/w(pf.h_axes, 'pixels') s(6)/h(pf.h_axes, 'pixels') max(.1, 1-s(8)/w(pf.h_axes, 'pixels')) max(.1, 1-s(8)/h(pf.h_axes, 'pixels'))])
 end
 %%%% ¡gui!
-pr = SettingsPPTable('EL', pf, 'PROP', PFMeasureGUS.ST_LINE, ...
+pr = SettingsPPTable('EL', pf, 'PROP', PFMeasureEnsembleGU.ST_LINE, ...
     'COLS', [SettingsLine.VISIBLE, SettingsLine.LINESTYLE, SettingsLine.LINEWIDTH, SettingsLine.LINECOLOR, SettingsLine.SYMBOL, SettingsLine.SYMBOLSIZE, SettingsLine.EDGECOLOR, SettingsLine.FACECOLOR], ...
     varargin{:});
 
@@ -45,7 +56,7 @@ if check_graphics(pf.h_ylabel, 'text')
     st = pf.get('ST_XLABEL');
     if isa(st.getr('TXT'), 'NoValue')
         st.set( ...
-            'TXT', pf.get('M').get('G').get('ID'), ...
+            'TXT', pf.get('ME').get('A').get('ID'), ...
             'FONTSIZE', s(2), ...
             'HORIZONTALALIGNMENT', 'center', ...
             'X', mean(get(pf.h_axes, 'XLim')), ...
@@ -57,7 +68,7 @@ if check_graphics(pf.h_ylabel, 'text')
     end
 end
 %%%% ¡gui!
-pr = SettingsPPTable('EL', pf, 'PROP', PFMeasureGUS.ST_XLABEL, ...
+pr = SettingsPPTable('EL', pf, 'PROP', PFMeasureEnsembleGU.ST_XLABEL, ...
     'COLS', [SettingsText.VISIBLE, SettingsText.TXT, SettingsText.X, SettingsText.Y, SettingsText.ROTATION, SettingsText.HORIZONTALALIGNMENT, SettingsText.VERTICALALIGNMENT, SettingsText.FONTSIZE, SettingsText.FONTNAME, SettingsText.FONTCOLOR, SettingsText.INTERPRETER], ...
     varargin{:});
 
@@ -70,7 +81,7 @@ if check_graphics(pf.h_ylabel, 'text')
     st = pf.get('ST_YLABEL');
     if isa(st.getr('TXT'), 'NoValue')
         st.set( ...
-            'TXT', pf.get('M').get('ID'), ...
+            'TXT', pf.get('ME').get('ID'), ...
             'FONTSIZE', s(2), ...
             'ROTATION', 90, ...
             'HORIZONTALALIGNMENT', 'center', ...
@@ -83,14 +94,25 @@ if check_graphics(pf.h_ylabel, 'text')
     end
 end
 %%%% ¡gui!
-pr = SettingsPPTable('EL', pf, 'PROP', PFMeasureGUS.ST_YLABEL, ...
+pr = SettingsPPTable('EL', pf, 'PROP', PFMeasureEnsembleGU.ST_YLABEL, ...
     'COLS', [SettingsText.VISIBLE, SettingsText.TXT, SettingsText.X, SettingsText.Y, SettingsText.ROTATION, SettingsText.HORIZONTALALIGNMENT, SettingsText.VERTICALALIGNMENT, SettingsText.FONTSIZE, SettingsText.FONTNAME, SettingsText.FONTCOLOR, SettingsText.INTERPRETER], ...
+    varargin{:});
+
+%%% ¡prop!
+LAYER (figure, string) is the id of the selected layer.
+%%%% ¡default!
+'1'
+%%%% ¡gui!
+g_dict =  pf.get('ME').get('A').get('g_dict');
+g = g_dict.getItem(1); 
+pr = PP_LayerID('EL', pf, 'PROP', PFMeasureEnsembleMultiplexGU.LAYER, ...
+    'G', g, ...
     varargin{:});
 
 %% ¡methods!
 function p_out = draw(pf, varargin)
 
-    pf.p = draw@PFMeasure(pf, varargin{:});
+    pf.p = draw@PFMeasureEnsemble(pf, varargin{:});
     pf.h_axes = pf.get('ST_AXIS').h();
     
     % data line
