@@ -9,17 +9,13 @@ The generated NN group can be used to train or test a neural network model.
 %% ¡props_update!
 
 %%% ¡prop!
-ANALYZE_ENSEMBLE (parameter, item) contains the graphs of the group.
+ANALYZE_ENSEMBLE (result, item) contains the graphs of the group.
 %%%% ¡settings!
 'AnalyzeEnsemble_CON_WU'
 %%%% ¡default!
 AnalyzeEnsemble_CON_WU()
-%%%% ¡postprocessing!
-if ~braph2_testing
-    if isa(nnd.getr('GR'), 'NoValue')
-        nnd.set('ANALYZE_ENSEMBLE', AnalyzeEnsemble_CON_WU('GR', nnd.get('GR')));
-    end
-end
+%%%% ¡calculate!
+value = AnalyzeEnsemble_CON_WU('GR', nnd.get('GR'));
 
 %%% ¡prop!
 GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
@@ -79,6 +75,10 @@ if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
     atlas = gr.get('SUB_DICT').getItem(1).get('BA');
 end
 
+% get analyzeEnsemble
+
+
+
 nn_sub_dict = nn_gr.get('SUB_DICT');
 
 for i = 1:1:gr.get('SUB_DICT').length()
@@ -97,15 +97,16 @@ for i = 1:1:gr.get('SUB_DICT').length()
         input_nodal = [];
         input_binodal = [];
         input_global = [];
-        mlist = nnd.get('MEASURES');
+        mlist = cellfun(@(x) x.get('ID'), nnd.get('Measures').getItems(), 'UniformOutput', false);
         input_label = mlist;
         for j = 1:length(mlist)
+            m_value = nnd.getCalculatedMeasure(g, mlist{j});
             if Measure.is_nodal(mlist{j})
-                input_nodal = [input_nodal; cell2mat(g.getMeasure(mlist{j}).get('M'))];
+                input_nodal = [input_nodal; cell2mat(m_value)];
             elseif Measure.is_global(mlist{j})
-                input_global = [input_global; cell2mat(g.getMeasure(mlist{j}).get('M'))];
+                input_global = [input_global; cell2mat(m_value)];
             else
-                input_binodal = [input_binodal; cell2mat(g.getMeasure(mlist{j}).get('M'))];
+                input_binodal = [input_binodal; cell2mat(m_value)];
             end
         end
         input = {input_global input_nodal input_binodal};
@@ -132,40 +133,6 @@ nn_gr.set('sub_dict', nn_sub_dict);
 braph2waitbar(wb, 'close')
 
 value = nn_gr;
-
-%% ¡methods!
-function me = getMeasureEnsemble(nnd, measure_class, varargin)
-    %GETMEASURE returns measure.
-    %
-    % ME = GETMEASURE(NND, MEASURE_CLASS) checks if the measure ensemble exists in the
-    %  property ME_DICT. If not it creates a new measure M of class MEASURE_CLASS
-    %  with properties defined by the graph settings. The user must call
-    %  getValue() for the new measure M to retrieve the value of measure M.
-  
-    g = nnd.get('GRAPH_TEMPLATE');
-    m_list = Graph.getCompatibleMeasureList(g);
-    a = nnd.get('ANALYZE_ENSEMBLE');
-    
-    assert( ...
-        contains(measure_class, m_list), ...
-        [BRAPH2.STR ':' a.getClass() ':' BRAPH2.WRONG_INPUT], ...
-        [BRAPH2.STR ':' a.getClass() ':' BRAPH2.WRONG_INPUT ' '], ...
-        [a.getClass() ' utilizes Graphs of type ' g.getClass() '.' measure_class ' is not a compatible Measure with ' g.getClass() '. Please use Graph function getCompatibleMeasureList for more information.']);
-    
-    me_dict = nnd.memorize('MEASURES');
-    
-    if me_dict.containsKey(measure_class)
-        me = me_dict.getItem(measure_class);
-    else
-        me = MeasureEnsemble( ...
-            'ID', measure_class, ...
-            'A', a, ...
-            'MEASURE', measure_class, ...
-            'MEASURE_TEMPLATE', eval([measure_class '(varargin{:})']) ...
-            );
-        me_dict.add(me);
-    end
-end
 
 %% ¡tests!
 %%% ¡test!

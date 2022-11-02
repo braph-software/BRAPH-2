@@ -174,8 +174,9 @@ function update(pr)
         rowname = cell(length(pr.mlist), 1);
         data = cell(length(pr.mlist), 5);
         for mi = 1:1:length(pr.mlist)
-            if any(cellfun(@(y) isequal(pr.mlist{mi}, y), mlist_already_calculated)) && ~isa(g.getMeasure(pr.mlist{mi}).getr('M'), 'NoValue')
-                rowname{mi} = 'C';
+            mlist_already_set = cellfun(@(x) x.get('ID'), el.get('Measures').getItems(), 'UniformOutput', false);
+            if any(cellfun(@(y) isequal(pr.mlist{mi}, y), mlist_already_set))
+                rowname{mi} = 'S';
             else
                 rowname{mi} = '';
             end
@@ -234,6 +235,10 @@ function update(pr)
     end
     
     if ~isa(el.getr('TEMPLATE'), 'NoValue')
+        set(pr.table, 'Enable', 'off')
+    end
+
+    if el.isLocked(prop)
         set(pr.table, 'Enable', 'off')
     end
     
