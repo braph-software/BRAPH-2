@@ -152,7 +152,8 @@ function me = getMeasureEnsemble(nnd, measure_class, varargin)
         [BRAPH2.STR ':' a.getClass() ':' BRAPH2.WRONG_INPUT ' '], ...
         [a.getClass() ' utilizes Graphs of type ' g.getClass() '.' measure_class ' is not a compatible Measure with ' g.getClass() '. Please use Graph function getCompatibleMeasureList for more information.']);
     
-    me_dict = nnd.memorize('ME_DICT');
+    me_dict = nnd.memorize('MEASURES');
+    
     if me_dict.containsKey(measure_class)
         me = me_dict.getItem(measure_class);
     else

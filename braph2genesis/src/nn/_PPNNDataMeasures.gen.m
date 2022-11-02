@@ -57,7 +57,7 @@ function p_out = draw(pr, varargin)
     g = el.get(prop);
 
     pr.mlist = Graph.getCompatibleMeasureList(g);
-    pr.selected = find(ismember(pr.mlist, el.get('Measures').getItems()));
+    pr.selected = find(ismember(pr.mlist, cellfun(@(x) x.get('ID'), el.get('Measures').getItems(), 'UniformOutput', false)));
 
     if ~check_graphics(pr.contextmenu, 'uicontextmenu')
         pr.contextmenu = uicontextmenu( ...
