@@ -42,8 +42,8 @@ if check_graphics(pf.h_line, 'line')
     end
     br2_id = ba.get('BR_DICT').getIndex(pf.get('BR2_ID'));
     
-    data = pf.get('ME').get('M');
-    [l, ls] = pf.get('ME').get('A').get('g_dict').getItem(1).layernumber();
+    data = pf.get('M').get('M');
+    [l, ls] = pf.get('M').get('G').layernumber();
     index_l = str2double(pf.get('LAYER'));
     total_l = ls(1);
     data_to_plot = data(index_l:total_l:end);
