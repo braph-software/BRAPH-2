@@ -308,14 +308,14 @@ function cb_show_table(pr)
 end
 function cb_set_measures(pr)
     el = pr.get('EL');
-    me_dict = el.memorize('ME_DICT');
+    me_dict = el.memorize('MEASURES');
     for i = 1:1:length(pr.mlist)
         measure = pr.mlist{i};
         if ismember(i, pr.selected)
             el.getMeasureEnsemble(measure);
         else
             if me_dict.containsKey(measure)
-                el.get('ME_DICT').remove(me_dict.getIndex(measure));
+                el.get('MEASURES').remove(me_dict.getIndex(measure));
             end
         end
     end
