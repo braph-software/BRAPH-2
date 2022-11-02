@@ -225,9 +225,6 @@ function update(pr)
     end
 
     if el.get('INPUT_TYPE') == "graph_measures"
-        if isempty(pr.selected)
-            pr.selected = find(ismember(pr.mlist, el.get('Measures').getItems()));
-        end
         set(pr.table, 'Enable', 'on')
     else
         pr.selected = [];
