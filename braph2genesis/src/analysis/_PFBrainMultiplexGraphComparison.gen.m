@@ -147,9 +147,9 @@ if ~braph2_testing
     if pf.get('FDRSHOW')
         % remove values that do no pass fdr
         % get fdr q value.
-        measure = pf.get('ME'); % comparison
+        comparison = pf.get('ME'); % comparison
         q_val = pf.get('QVAL');
-        val = measure.get('P2');
+        val = comparison.get('P2');
         index = str2double(pf.get('LAYER'));
         if Measure.is_superglobal(comparison.get('MEASURE'))
             val = val{1};
