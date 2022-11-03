@@ -49,7 +49,7 @@ IndexedDictionary('IT_CLASS', 'MeasureEnsemble', 'IT_KEY', MeasureEnsemble.MEASU
 pr = PPNNDataMeasures('EL', nnd, 'PROP', NNData.G, 'WAITBAR', Callback('EL', nnd, 'TAG', 'WAITBAR'), varargin{:});
 
 %%% ¡prop!
-ANALYZE_ENSEMBLE (result, item) contains the graphs of the group.
+ANALYZE_ENSEMBLE (data, item) contains the graphs of the group.
 %%%% ¡settings!
 'AnalyzeEnsemble'
 %%%% ¡default!
@@ -104,7 +104,7 @@ function me = getMeasureEnsemble(nnd, measure_class, varargin)
   
     g = nnd.get('GRAPH_TEMPLATE');
     m_list = Graph.getCompatibleMeasureList(g);
-	a = nnd.getPropDefault('ANALYZE_ENSEMBLE');
+	a = nnd.get('ANALYZE_ENSEMBLE');
 
     assert( ...
         contains(measure_class, m_list), ...

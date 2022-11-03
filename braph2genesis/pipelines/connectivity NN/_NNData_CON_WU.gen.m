@@ -9,13 +9,15 @@ The generated NN group can be used to train or test a neural network model.
 %% ¡props_update!
 
 %%% ¡prop!
-ANALYZE_ENSEMBLE (result, item) contains the graphs of the group.
+ANALYZE_ENSEMBLE (data, item) contains the graphs of the group.
 %%%% ¡settings!
 'AnalyzeEnsemble_CON_WU'
 %%%% ¡default!
 AnalyzeEnsemble_CON_WU()
-%%%% ¡calculate!
-value = AnalyzeEnsemble_CON_WU('GR', nnd.get('GR'));
+%%%% ¡postprocessing!
+if ~isa(nnd.get('GR'), 'NoValue')
+    nnd.memorize('ANALYZE_ENSEMBLE').set('GR', nnd.get('GR'));
+end
 
 %%% ¡prop!
 GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.

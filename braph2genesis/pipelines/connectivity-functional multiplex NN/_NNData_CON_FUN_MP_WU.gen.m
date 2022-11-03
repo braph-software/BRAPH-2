@@ -45,8 +45,10 @@ ANALYZE_ENSEMBLE (result, item) contains the graphs of the group.
 'AnalyzeEnsemble_CON_FUN_MP_WU'
 %%%% ¡default!
 AnalyzeEnsemble_CON_FUN_MP_WU()
-%%%% ¡calculate!
-value = AnalyzeEnsemble_CON_FUN_MP_WU('GR', nnd.get('GR'));
+%%%% ¡postprocessing!
+if ~isa(nnd.get('GR'), 'NoValue')
+    nnd.memorize('ANALYZE_ENSEMBLE').set('GR', nnd.get('GR'));
+end
 
 %%% ¡prop!
 INPUT_TYPE (data, option) is the input type for training or testing the NN.

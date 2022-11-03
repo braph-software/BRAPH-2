@@ -16,13 +16,15 @@ DENSITIES (parameter, rvector) is the vector of densities.
 %% ¡props_update!
 
 %%% ¡prop!
-ANALYZE_ENSEMBLE (result, item) contains the graphs of the group.
+ANALYZE_ENSEMBLE (data, item) contains the graphs of the group.
 %%%% ¡settings!
 'AnalyzeEnsemble_CON_BUD'
 %%%% ¡default!
 AnalyzeEnsemble_CON_BUD()
-%%%% ¡calculate!
-value = AnalyzeEnsemble_CON_BUD('GR', nnd.get('GR'), 'DENSITIES', nnd.get('DENSITIES'));
+%%%% ¡postprocessing!
+if ~isa(nnd.get('GR'), 'NoValue')
+    nnd.memorize('ANALYZE_ENSEMBLE').set('GR', nnd.get('GR'));
+end
 
 %%% ¡prop!
 GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
