@@ -28,9 +28,9 @@ MultiplexWU
 %%% ¡prop! 
 rule (parameter, OPTION) is the path length algorithm
 %%%% ¡settings!
-{'subgraphs' 'harmonic' 'pl_default'}
+{'subgraphs' 'harmonic' 'mean'}
 %%%% ¡default!
-'pl_default'
+'harmonic'
 
 %% ¡props_update!
 
@@ -56,16 +56,16 @@ parfor li = 1:1:L
             for u = 1:1:N
                 Du = distance_layer(:, u);
                 path_length_layer(u) = mean(Du(Du~=Inf & Du~=0));
-            end 
-        case {'harmonic'}
-            for u = 1:1:N
-                Du = distance_layer(:, u);
-                path_length_layer(u) = harmmean(Du(Du~=0));
             end
-        otherwise  % 'default'
+        case {'mean'}
             for u = 1:1:N
                 Du = distance_layer(:, u);
                 path_length_layer(u) = mean(Du(Du~=0));
+            end
+        otherwise  % 'harmonic' 'default'
+            for u = 1:1:N
+                Du = distance_layer(:, u);
+                path_length_layer(u) = harmmean(Du(Du~=0));
             end
     end 
     path_length(li) = {path_length_layer}; % node Inf corresponds to isolated nodes

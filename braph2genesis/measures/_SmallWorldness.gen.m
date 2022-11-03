@@ -37,9 +37,9 @@ if isempty(g.get('A'))
 end
 L = g.layernumber();
 
+path_length_rule = m.get('rule');
 clustering_av = ClusteringAv('G', g).get('M');
 path_length_av = calculateValue@PathLengthAv(m, prop);
-path_length_rule = m.get('rule');
 
 M = 100;  % number of random graphs
 clustering_av_random = cell(1, M);
