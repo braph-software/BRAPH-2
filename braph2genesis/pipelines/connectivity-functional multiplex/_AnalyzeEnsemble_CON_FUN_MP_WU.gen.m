@@ -56,6 +56,11 @@ if ~braph2_testing
              a.set('GRAPH_TEMPLATE', MultiplexWU());
         end
     end
+    if a.get('GR').get('SUB_DICT').length() > 0
+        layerlabels = cell2str({'CON', 'FUN'});
+        
+        a.get('GRAPH_TEMPLATE').set('LAYERLABELS', layerlabels)
+    end
 end
 
 %%% ¡prop!

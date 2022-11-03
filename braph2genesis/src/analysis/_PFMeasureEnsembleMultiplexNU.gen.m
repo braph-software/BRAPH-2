@@ -1,5 +1,5 @@
 %% ¡header!
-PFMeasureEnsembleNU < PFMeasureEnsembleGU (pf, panel figure measure NU) is a plot of a nodal unilayer/superglobal measure.
+PFMeasureEnsembleMultiplexNU < PFMeasureEnsembleGU (pf, panel figure measure multiplex GU) is a plot of a nodal unilayer measure for multiplex graphs.
 
 %%% ¡description!
 % % % PFBrainSurface manages the plot of the brain surface choosen by the user. 
@@ -37,9 +37,15 @@ if check_graphics(pf.h_line, 'line')
     end
     br1_id = ba.get('BR_DICT').getIndex(pf.get('BR1_ID'));
     
+    data = pf.get('ME').get('M');
+    [l, ls] = pf.get('ME').get('A').get('g_dict').getItem(1).layernumber();
+    index_l = str2double(pf.get('LAYER'));
+    total_l = ls(1);
+    data_to_plot = data(index_l:total_l:end);
+    
     pf.get('ST_LINE').set( ...
         'X', pf.get('ME').get('A').get('GRAPH_TEMPLATE').get('LAYERTICKS'), ...
-        'Y', cellfun(@(x) x(br1_id), pf.get('ME').get('M')), ...
+        'Y', cellfun(@(x) x(br1_id), data_to_plot), ...
         'VISIBLE', true ...
         )
     pf.get('ST_AXIS').set('AXIS', true)
@@ -49,12 +55,23 @@ end
 %% ¡props!
 
 %%% ¡prop!
+LAYER (figure, string) is the id of the selected layer.
+%%%% ¡default!
+'1'
+%%%% ¡gui!
+g_dict =  pf.get('ME').get('A').get('g_dict');
+g = g_dict.getItem(1); 
+pr = PP_LayerID('EL', pf, 'PROP', PFMeasureEnsembleMultiplexNU.LAYER, ...
+    'G', g, ...
+    varargin{:});
+
+%%% ¡prop!
 BR1_ID (figure, string) is the ID of the brain region of the nodal measure.
 %%%% ¡gui!
 bas = pf.get('ME').get('A').get('GRAPH_TEMPLATE').get('BAS');
 ba = bas{1};
 
-pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureEnsembleNU.BR1_ID, ...
+pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureEnsembleMultiplexNU.BR1_ID, ...
     'BA', ba, ...
     varargin{:});
 

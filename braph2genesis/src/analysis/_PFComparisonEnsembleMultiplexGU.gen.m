@@ -1,5 +1,5 @@
 %% ¡header!
-PFComparisonGroupGU < PFComparisonGroup (pf, panel figure group comparison GU) is a plot of a global unilayer group comparison.
+PFComparisonEnsembleMultiplexGU < PFComparisonEnsemble (pf, panel figure group comparison multiplex GU) is a plot of a global unilayer group comparison for multiplex graphs.
 
 %%% ¡description!
 % % % PFBrainSurface manages the plot of the brain surface choosen by the user. 
@@ -11,7 +11,7 @@ PFComparisonGroupGU < PFComparisonGroup (pf, panel figure group comparison GU) i
 % % % edge color, and background color. 
 
 %%% ¡seealso!
-PanelFig, Measure
+PanelFig, MeasureEnsemble
 
 %% ¡properties!
 p  % handle for panel
@@ -33,16 +33,21 @@ ST_LINE_DIFF (figure, item) determines the difference line settings.
 %%%% ¡postprocessing!
 if check_graphics(pf.h_line_diff, 'line')
     
+    data = cell2mat(pf.get('CP').get('DIFF'));
+    [l, ls] = pf.get('CP').get('C').get('A1').get('G_DICT').getItem(1).layernumber();
+    index_l = str2double(pf.get('LAYER'));
+    total_l = ls(1);
+
     pf.get('ST_LINE_DIFF').set( ...
         'X', pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('LAYERTICKS'), ...
-        'Y', cell2mat(pf.get('CP').get('DIFF')), ...
+        'Y', data(index_l:total_l:end), ...
         'VISIBLE', true ...
         )
     pf.get('ST_AXIS').set('AXIS', true)
     set(pf.h_axes, 'InnerPosition', [s(6)/w(pf.h_axes, 'pixels') s(6)/h(pf.h_axes, 'pixels') max(.1, 1-s(8)/w(pf.h_axes, 'pixels')) max(.1, 1-s(8)/h(pf.h_axes, 'pixels'))])
 end
 %%%% ¡gui!
-pr = SettingsPPTable('EL', pf, 'PROP', PFComparisonGroupGU.ST_LINE_DIFF, ...
+pr = SettingsPPTable('EL', pf, 'PROP', PFComparisonEnsembleGU.ST_LINE_DIFF, ...
     'COLS', [SettingsLine.VISIBLE, SettingsLine.LINESTYLE, SettingsLine.LINEWIDTH, SettingsLine.LINECOLOR, SettingsLine.SYMBOL, SettingsLine.SYMBOLSIZE, SettingsLine.EDGECOLOR, SettingsLine.FACECOLOR], ...
     varargin{:});
 
@@ -54,16 +59,22 @@ ST_LINE_CIU (figure, item) determines the upper-confidence-interval line setting
 SettingsLine('SYMBOL', '.')
 %%%% ¡postprocessing!
 if check_graphics(pf.h_line_ciu, 'line')
+    
+    data = cell2mat(pf.get('CP').get('CIU'));
+    [l, ls] = pf.get('CP').get('C').get('A1').get('G_DICT').getItem(1).layernumber();
+    index_l = str2double(pf.get('LAYER'));
+    total_l = ls(1);
+    
     pf.get('ST_LINE_CIU').set( ...
         'X', pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('LAYERTICKS'), ...
-        'Y', cell2mat(pf.get('CP').get('CIU')), ...
+        'Y', data(index_l:total_l:end), ...
         'VISIBLE', true ...
         )
     pf.get('ST_AXIS').set('AXIS', true)
     set(pf.h_axes, 'InnerPosition', [s(6)/w(pf.h_axes, 'pixels') s(6)/h(pf.h_axes, 'pixels') max(.1, 1-s(8)/w(pf.h_axes, 'pixels')) max(.1, 1-s(8)/h(pf.h_axes, 'pixels'))])
 end
 %%%% ¡gui!
-pr = SettingsPPTable('EL', pf, 'PROP', PFComparisonGroupGU.ST_LINE_CIU, ...
+pr = SettingsPPTable('EL', pf, 'PROP', PFComparisonEnsembleGU.ST_LINE_CIU, ...
     'COLS', [SettingsLine.VISIBLE, SettingsLine.LINESTYLE, SettingsLine.LINEWIDTH, SettingsLine.LINECOLOR, SettingsLine.SYMBOL, SettingsLine.SYMBOLSIZE, SettingsLine.EDGECOLOR, SettingsLine.FACECOLOR], ...
     varargin{:});
 
@@ -75,16 +86,22 @@ ST_LINE_CIL (figure, item) determines the lower-confidence-interval line setting
 SettingsLine('SYMBOL', '.')
 %%%% ¡postprocessing!
 if check_graphics(pf.h_line_cil, 'line')
+        
+    data = cell2mat(pf.get('CP').get('CIL'));
+    [l, ls] = pf.get('CP').get('C').get('A1').get('G_DICT').getItem(1).layernumber();
+    index_l = str2double(pf.get('LAYER'));
+    total_l = ls(1);
+    
     pf.get('ST_LINE_CIL').set( ...
         'X', pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('LAYERTICKS'), ...
-        'Y', cell2mat(pf.get('CP').get('CIL')), ...
+        'Y', data(index_l:total_l:end), ...
         'VISIBLE', true ...
         )
     pf.get('ST_AXIS').set('AXIS', true)
     set(pf.h_axes, 'InnerPosition', [s(6)/w(pf.h_axes, 'pixels') s(6)/h(pf.h_axes, 'pixels') max(.1, 1-s(8)/w(pf.h_axes, 'pixels')) max(.1, 1-s(8)/h(pf.h_axes, 'pixels'))])
 end
 %%%% ¡gui!
-pr = SettingsPPTable('EL', pf, 'PROP', PFComparisonGroupGU.ST_LINE_CIL, ...
+pr = SettingsPPTable('EL', pf, 'PROP', PFComparisonEnsembleGU.ST_LINE_CIL, ...
     'COLS', [SettingsLine.VISIBLE, SettingsLine.LINESTYLE, SettingsLine.LINEWIDTH, SettingsLine.LINECOLOR, SettingsLine.SYMBOL, SettingsLine.SYMBOLSIZE, SettingsLine.EDGECOLOR, SettingsLine.FACECOLOR], ...
     varargin{:});
 
@@ -109,7 +126,7 @@ if check_graphics(pf.h_ylabel, 'text')
     end
 end
 %%%% ¡gui!
-pr = SettingsPPTable('EL', pf, 'PROP', PFComparisonGroupGU.ST_XLABEL, ...
+pr = SettingsPPTable('EL', pf, 'PROP', PFComparisonEnsembleGU.ST_XLABEL, ...
     'COLS', [SettingsText.VISIBLE, SettingsText.TXT, SettingsText.X, SettingsText.Y, SettingsText.ROTATION, SettingsText.HORIZONTALALIGNMENT, SettingsText.VERTICALALIGNMENT, SettingsText.FONTSIZE, SettingsText.FONTNAME, SettingsText.FONTCOLOR, SettingsText.INTERPRETER], ...
     varargin{:});
 
@@ -135,14 +152,24 @@ if check_graphics(pf.h_ylabel, 'text')
     end
 end
 %%%% ¡gui!
-pr = SettingsPPTable('EL', pf, 'PROP', PFComparisonGroupGU.ST_YLABEL, ...
+pr = SettingsPPTable('EL', pf, 'PROP', PFComparisonEnsembleGU.ST_YLABEL, ...
     'COLS', [SettingsText.VISIBLE, SettingsText.TXT, SettingsText.X, SettingsText.Y, SettingsText.ROTATION, SettingsText.HORIZONTALALIGNMENT, SettingsText.VERTICALALIGNMENT, SettingsText.FONTSIZE, SettingsText.FONTNAME, SettingsText.FONTCOLOR, SettingsText.INTERPRETER], ...
+    varargin{:});
+
+%%% ¡prop!
+LAYER (figure, string) is the id of the selected layer.
+%%%% ¡default!
+'1'
+%%%% ¡gui!
+g =  pf.get('CP').get('C').get('A1').get('G_DICT').getItem(1);
+pr = PP_LayerID('EL', pf, 'PROP', PFComparisonEnsembleMultiplexGU.LAYER, ...
+    'G', g, ...
     varargin{:});
 
 %% ¡methods!
 function p_out = draw(pf, varargin)
 
-    pf.p = draw@PFComparisonGroup(pf, varargin{:});
+    pf.p = draw@PFComparisonEnsemble(pf, varargin{:});
     pf.h_axes = pf.get('ST_AXIS').h();
     
     % difference line
