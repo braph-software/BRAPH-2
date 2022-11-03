@@ -31,16 +31,18 @@ M (result, cell) is the average path length.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 
-path_length = calculateValue@PathLength(m, prop);            
+path_length = calculateValue@PathLength(m, prop);
 path_length_av = cell(g.layernumber(), 1);
 path_length_rule = m.get('rule');
 parfor li = 1:1:length(path_length_av)
     switch lower(path_length_rule)
-        case {'harmonic'}
-            path_length_av(li) = {harmmean(path_length{li})};
-            
-        otherwise  % 'mean' or 'subgraphs'
+        case {'subgraphs'}
+            player = path_length{li};
+            path_length_av(li) = {mean(player(player~=Inf))};
+        case {'mean'}
             path_length_av(li) = {mean(path_length{li})};
+        otherwise  % 'harmonic' 'default'
+            path_length_av(li) = {harmmean(path_length{li})};
     end
 end
 value = path_length_av;
