@@ -13,13 +13,13 @@ FEATURE_PERMUTATION_IMPORTANCE (result, cell) is feature importance evaluated by
 %%%% ¡calculate!
 if nne.get('GR').get('SUB_DICT').length() == 0
     value = {};
-elseif any(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Graph', [], [], true))) && nne.get('NN').get('FEATURE_SELECTION_RATIO') == 1
+elseif any(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Graph', [], [], true))) %&& nne.get('NN').get('FEATURE_SELECTION_RATIO') == 1
     % now it only works for (1) input being adj of a graph and (2) no feature selection 
     nn = nne.get('NN');
     gr = nne.get('GR');
     net = nn.get('MODEL');
 
-    [inputs, num_features] = nn.reconstruct_inputs(gr);
+    [inputs, num_features, masks] = nn.reconstruct_inputs(gr);
     [targets, classes] = nn.reconstruct_targets(gr);
 
     original_loss = crossentropy(net.predict(inputs)', targets);
@@ -35,8 +35,14 @@ elseif any(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'),
             scrambled_loss = crossentropy(net.predict(scrambled_inputs)', targets);
             feature_importance(i)= scrambled_loss / original_loss;
         end
-        feature_importance = reshape(feature_importance, gr.get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').length(), []);
-
+        if nne.get('NN').get('FEATURE_SELECTION_RATIO') == 1
+            feature_importance = reshape(feature_importance, gr.get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').length(), []);
+        else
+            f = zeors(size(masks{1}));
+            f(find(masks{1})) = feature_importance;
+            feature_importance = f;
+        end
+        
         % re-assign the cell array when the input is obtained from a multigraph
         if size(feature_importance, 1) < size(feature_importance, 2) && mod(size(feature_importance, 2), size(feature_importance, 1)) == 0
             n = size(feature_importance, 2) / size(feature_importance, 1);
