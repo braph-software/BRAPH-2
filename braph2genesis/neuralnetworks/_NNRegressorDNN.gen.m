@@ -143,6 +143,7 @@ function [inputs, num_features] = reconstruct_inputs(nn, gr)
         masks = {};
         for i = 1:1:length(mask_tmp)
             mask = mask_tmp{i};
+            mask = rescale(mask);
             [~, idx_all] = sort(mask(:), 'descend');
             percentile = nn.get('FEATURE_SELECTION_RATIO');
             num_top_idx = ceil(percentile * numel(mask));

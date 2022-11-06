@@ -25,7 +25,78 @@ MEASURES (figure, logical) determines whether the measures affect the brain regi
 false
 %%%% ¡postprocessing!
 if ~braph2_testing
-    % do nothing
+    if pf.get('MEASURES')
+        nn = pf.get('NNE');
+        prop = pf.get('PROP');
+        fi = nn.memorize(prop);
+        if isempty(fi)
+            fi = {zeros(pf.get('BA').get('BR_DICT').length)};
+        end
+        index_layer = str2double(pf.get('INDEX_LAYER'));
+        val = fi{index_layer};
+        
+        % Make colorbar
+        lim_min = min(val);  % minimum of measure result
+        lim_max = max(val);  % maximum of measure result
+        if lim_min == lim_max
+            caxis auto
+            cmap_temp = colormap(jet);
+            rgb_meas = zeros(size(cmap_temp));
+            meas_val = val./val;
+            meas_val(isnan(meas_val)) = 0.1;
+        else
+            caxis([lim_min lim_max]);
+            cmap_temp = colormap(jet);
+            rgb_meas = interp1(linspace(lim_min, lim_max, size(cmap_temp, 1)), ...
+                cmap_temp, val); % colorbar from minimum to maximum value of the measure result
+            meas_val = (val - lim_min)./(lim_max - lim_min) + 1;  % size normalized by minimum and maximum value of the measure result
+            meas_val(isnan(meas_val)) = 0.1;
+            meas_val(meas_val <= 0) = 0.1;
+        end
+
+        if pf.get('SPHS')
+            sph_dict = pf.get('SPH_DICT');
+            for i = 1:sph_dict.length
+                sph = sph_dict.getItem(i);
+                default_value = sph.getPropDefault('SPHERESIZE');
+                sph.set('SPHERESIZE', default_value * meas_val(i));
+                sph.set('FaceColor',  rgb_meas(i, :));
+            end
+            pf.update_gui_tbl_sph()
+        end
+        if pf.get('SYMS')
+            sym_dict = pf.get('SYM_DICT');
+            for i = 1:sym_dict.length
+                sym = sym_dict.getItem(i);
+                default_value = sym.getPropDefault('SYMBOLSIZE');
+                sym.set('SYMBOLSIZE', default_value * meas_val(i));
+                sym.set('FaceColor',  rgb_meas(i, :));
+            end
+            pf.update_gui_tbl_sym()
+        end
+    else
+        % restore default values
+        if size(varargin, 2) > 0 && (strcmp(pf.getPropTag(varargin{1}), 'measures')) && pf.get('SPHS')
+            sph_dict = pf.get('SPH_DICT');
+            for i = 1:sph_dict.length
+                sph = sph_dict.getItem(i);
+                default_value = sph.getPropDefault('SPHERESIZE');
+                sph.set('SPHERESIZE', default_value);
+                sph.set('FaceColor',  BRAPH2.COL);
+            end
+            pf.update_gui_tbl_sph()
+        end
+        if  size(varargin, 2) > 0 && (strcmp(pf.getPropTag(varargin{1}), 'measures')) && pf.get('SYMS')
+            sym_dict = pf.get('SYM_DICT');
+            for i = 1:sym_dict.length
+                sym = sym_dict.getItem(i);
+                default_value = sym.getPropDefault('SYMBOLSIZE');
+                sym.set('SYMBOLSIZE', default_value);
+                sym.set('FaceColor',  BRAPH2.COL);
+            end
+            pf.update_gui_tbl_sym()
+        end
+    end
 end
 
 %%% ¡prop!
@@ -185,7 +256,10 @@ function str = tostring(pf, varargin)
     %
     % See also disp, tree.
 
-    str = 'Plot Brain Graph Feature Importance';
+    str = 'Plot Brain Feature Importance';
     str = tostring(str, varargin{:});
     str = str(2:1:end-1);
+end
+function update_gui_tbl_sym(pf)
+    update_gui_tbl_sym@PFBrainAtlas(pf);
 end

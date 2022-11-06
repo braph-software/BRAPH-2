@@ -79,8 +79,6 @@ end
 
 % get analyzeEnsemble
 
-
-
 nn_sub_dict = nn_gr.get('SUB_DICT');
 
 for i = 1:1:gr.get('SUB_DICT').length()
