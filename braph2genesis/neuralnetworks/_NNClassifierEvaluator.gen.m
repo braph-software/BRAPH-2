@@ -65,8 +65,6 @@ elseif ~any(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL')
             value = {rescale(double(feature_importance))};
         end
     end
-elseif nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL') == 'structral data'
-
 else
     value = {};
 end
