@@ -66,6 +66,16 @@ elseif ~any(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL')
 else
     value = {};
 end
+%%%% ¡gui!
+if ~braph2_testing && ~isa(nne.get('GR').get('SUB_DICT'), 'NoValue')
+    if string(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_TYPE')) == 'structural_data'
+        pr = PPNNEvaluatorFeatureImportanceStructuralData('EL', nne, 'PROP', NNEvaluator.FEATURE_PERMUTATION_IMPORTANCE, varargin{:});
+    elseif string(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_TYPE')) == 'adjacency_matrices'
+        pr = PPNNEvaluatorFeatureImportanceAdjacency('EL', nne, 'PROP', NNEvaluator.FEATURE_PERMUTATION_IMPORTANCE, varargin{:});
+    else
+        pr = PanelPropCell('EL', nne, 'PROP', NNEvaluator.FEATURE_PERMUTATION_IMPORTANCE, varargin{:});
+    end
+end
 
 %%% ¡prop!
 PFFI (gui, item) contains the panel figure of the feature importance.

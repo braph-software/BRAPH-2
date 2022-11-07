@@ -209,6 +209,16 @@ else
 end
 
 value = feature_importances;
+%%%% ¡gui!
+if ~braph2_testing && ~isa(nncv.get('GR').get('SUB_DICT'), 'NoValue')
+    if string(nncv.get('GR').get('SUB_DICT').getItem(1).get('INPUT_TYPE')) == 'structural_data'
+        pr = PPNNEvaluatorFeatureImportanceStructuralData('EL', nncv, 'PROP', NNRegressorCrossValidation.FEATURE_IMPORTANCE, varargin{:});
+    elseif string(nncv.get('GR').get('SUB_DICT').getItem(1).get('INPUT_TYPE')) == 'adjacency_matrices'
+        pr = PPNNEvaluatorFeatureImportanceAdjacency('EL', nncv, 'PROP', NNRegressorCrossValidation.FEATURE_IMPORTANCE, varargin{:});
+    else
+        pr = PanelPropCell('EL', nncv, 'PROP', NNRegressorCrossValidation.FEATURE_IMPORTANCE, varargin{:});
+    end
+end
 
 %% ¡props_update!
 

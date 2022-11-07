@@ -1,5 +1,5 @@
 %% ¡header!
-PanelPropCell_NN < PanelPropCell (pr, panel property cell) plots the panel of a cell property in a table with sliders.
+PPNNEvaluatorFeatureImportanceStructuralData < PanelPropCell (pr, panel property cell) plots the panel of a cell property in a table with sliders.
 
 %%% ¡description!
 PanelPropCell plots the panel of a CELL property with a table with sliders.
@@ -44,7 +44,7 @@ function p_out = draw(pr, varargin)
     
     pr.p = draw@PanelPropCell(pr, varargin{:});
     
-    childs = children(pr.p);
+    childs = get(pr.p, 'Children');
 
     % we have now the t, sliders
     for i = 1:length(childs)
@@ -60,7 +60,8 @@ function p_out = draw(pr, varargin)
         end
     end
 
-    set(pr.xlider, 'ValueChangedFcn', {@cb_xslider_nn});
+    set(pr.xslider, 'ValueChangedFcn', {@cb_xslider_nn});
+    set(pr.yslider, 'ValueChangedFcn', {@cb_xslider_nn});
 
     function cb_xslider_nn(~, ~)
         pr.cb_xslider_nn()
@@ -104,26 +105,15 @@ function redraw(pr, varargin)
     %
     % See also draw, update, PanelElement, s.
 
-    redraw@PanelPropCell(varargin{:})
-
+    redraw@PanelPropCell(pr)
+    pr.cb_xslider_nn()
 end
 function cb_xslider_nn(pr)
-
     set(pr.xslider, 'Value', round(get(pr.xslider, 'Value')))
+    pr.update();
     el = pr.get('el');
-
-    if pr.xslider.Value == 'nodal'
-        measure_labels = el.get('Input_Label');
-        nodal_measures = cellfun(@(x) Measure.is_nodal(x), measure_labels, 'UniformOutput',false);
-        measure_labels(nodal_measures);
-        measure_labels(cellfun( @isempty, measure_labels)) = [];
-        set(pr.table, 'ColumnNames', measure_labels);
-    else
-        % tmp for bin, globa
-    end
-   
-    
-    pr.update()
+    set(pr.table, 'columnname', eval(pr.getPropDefault('COLUMNNAME')));
+    set(pr.table, 'rowname', el.get('GR').get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').getKeys());
 end
 
 function p = return_p(pr)
