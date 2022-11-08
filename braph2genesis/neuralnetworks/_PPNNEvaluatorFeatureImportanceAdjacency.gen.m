@@ -112,8 +112,8 @@ function cb_xslider_nn(pr)
     set(pr.xslider, 'Value', round(get(pr.xslider, 'Value')))
     pr.update();
     el = pr.get('el');
-    set(pr.table, 'columnname', el.get('BA').get('BR_DICT').getKeys());
-    set(pr.table, 'rowname', el.get('BA').get('BR_DICT').getKeys());
+    set(pr.table, 'columnname', el.get('GR').get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').getKeys());
+    set(pr.table, 'rowname', el.get('GR').get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').getKeys());
 end
 
 function p = return_p(pr)
