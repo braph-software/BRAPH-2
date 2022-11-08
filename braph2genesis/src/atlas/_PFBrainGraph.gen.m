@@ -251,8 +251,8 @@ function h_panel = draw(pf, varargin)
     % see also settings, uipanel, isgraphics.
 
     % nodal filer, so we ensure everywhere
-    el = pf.get('el');
-    me = el.get('me');
+    
+    me = pf.get('me');
     filter_pass = false;
     if isa(me, 'Measure')
         if Measure.is_nodal(me)
