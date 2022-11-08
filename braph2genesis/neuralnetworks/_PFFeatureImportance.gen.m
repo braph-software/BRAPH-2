@@ -27,7 +27,7 @@ false
 if ~braph2_testing
     if pf.get('MEASURES') && ...
         ~isempty(pf.retrieve_edges()) && ...
-        string(pf.get('NNE').get('GR').get('SUB_DICT').getItem(1).get('INPUT_TYPE')) == 'structural_data'
+        string(pf.get('INPUT_TYPE')) == 'structural_data'
         nn = pf.get('NNE');
         prop = pf.get('PROP');
         fi = nn.memorize(prop);
@@ -109,7 +109,7 @@ false
 if (isempty(varargin) || pf.prop_set('EDGES', varargin)) && ~braph2_testing && pf.get('EDGES')
     if ~isa(pf.get('NNE').get('GR'), 'NoValue') && ...
             ~isempty(pf.retrieve_edges()) && ...
-            string(pf.get('NNE').get('GR').get('SUB_DICT').getItem(1).get('INPUT_TYPE')) == 'adjacency_matrices'
+            string(pf.get('INPUT_TYPE')) == 'adjacency_matrices'
         nn = pf.get('NNE');
         prop = pf.get('PROP');
         fi = nn.memorize(prop);
@@ -178,6 +178,9 @@ end
 
 %%% ¡prop!
 NNE (metadata, item) is the evaluator.
+
+%%% ¡prop!
+INPUT_TYPE (metadata, string) determines the input type.
 
 %%% ¡prop!
 PROP (metadata, scalar) is the property number. 
