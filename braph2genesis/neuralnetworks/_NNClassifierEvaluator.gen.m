@@ -35,6 +35,7 @@ elseif ~any(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL')
             scrambled_loss = crossentropy(net.predict(scrambled_inputs)', targets);
             feature_importance(i)= scrambled_loss / original_loss;
         end
+        feature_importance =  double(rescale(feature_importance));
         if nne.get('NN').get('FEATURE_SELECTION_RATIO') == 1
             feature_importance = reshape(feature_importance, gr.get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').length(), []);
         else
@@ -51,18 +52,18 @@ elseif ~any(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL')
             for i = 1:1:n
                 istart = (i - 1) * size(feature_importance_tmp, 1) + 1;
                 iend = i*size(feature_importance_tmp, 1);
-                feature_importances{i} = double(rescale(feature_importance_tmp(:, istart:iend)));
+                feature_importances{i} = feature_importance_tmp(:, istart:iend);
             end
             value = feature_importances;
         elseif size(feature_importance, 1) > size(feature_importance, 2) && size(feature_importance, 1) ~= 1 %% structural data
             n = size(feature_importance, 2);
             feature_importance_tmp = feature_importance;
             for i = 1:1:n
-                feature_importances{i} = double(rescale(feature_importance_tmp(:, i)));
+                feature_importances{i} = feature_importance_tmp(:, i);
             end
             value = feature_importances;
         else
-            value = {rescale(double(feature_importance))};
+            value = {feature_importance};
         end
     end
 else
