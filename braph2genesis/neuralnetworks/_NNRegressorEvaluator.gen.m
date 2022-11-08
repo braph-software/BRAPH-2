@@ -19,7 +19,7 @@ elseif ~any(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL')
     net = nn.memorize('MODEL');
 
     [inputs, num_features] = nn.reconstruct_inputs(gr);
-    [targets, classes] = nn.reconstruct_targets(gr);
+    [targets, classes, masks] = nn.reconstruct_targets(gr);
 
     original_loss = double(sqrt(mean((net.predict(inputs) - targets).^2)));
 
