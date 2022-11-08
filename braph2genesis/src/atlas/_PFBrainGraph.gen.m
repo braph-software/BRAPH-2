@@ -250,6 +250,21 @@ function h_panel = draw(pf, varargin)
     %
     % see also settings, uipanel, isgraphics.
 
+    % nodal filer, so we ensure everywhere
+    el = pf.get('el');
+    me = el.get('me');
+    filter_pass = false;
+    if isa(me, 'Measure')
+        if Measure.is_nodal(me)
+            filter_pass = true;
+        end
+    else % measureensemble, comparisonensemble, comparisongroup
+        m = me.get('MEASURE_TEMPLATE');
+        if Measure.is_nodal(m)
+            filter_pass = true;
+        end
+    end
+
     pf.p = draw@PFBrainAtlas(pf, varargin{:});
 
     % init edge struct
@@ -342,7 +357,13 @@ function h_panel = draw(pf, varargin)
             pf.set('EDGES', edges)
         end
 
-    % listener to changes in
+    if ~filter_pass
+        f = warndlg('Only Nodal Measures can be visualized in the brain grid.', 'Wrong Measure');
+        set(pf.p, 'Enable', 'off')
+        tmpf = ancestor(pf.p, 'figure');
+        fig_obj = get(tmpf, 'UserData');
+        fig_obj.set('Toolbar', false);
+    end
 
     % output
     if nargout > 0
