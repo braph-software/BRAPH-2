@@ -126,7 +126,7 @@ else
 end
 
 %% ¡methods!
-function [inputs, num_features] = reconstruct_inputs(nn, gr)
+function [inputs, num_features, masks] = reconstruct_inputs(nn, gr)
 %RECONSTRUCT_INPUTS reconstructs the inputs for NN
 %
 % [INPUTS, NUM_FEATURES] = RECONSTRUCT_INPUTS(NN, NN_GR) reconstructs the
