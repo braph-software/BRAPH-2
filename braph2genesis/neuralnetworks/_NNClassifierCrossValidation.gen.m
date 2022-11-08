@@ -256,6 +256,15 @@ end
 %% ¡props_update!
 
 %%% ¡prop!
+GR (data, item) is a group of NN subjects.
+%%%% ¡settings!
+'NNGroup'
+%%%% ¡postprocessing!
+if isa(nncv.get('GR'), 'NoValue')
+    nncv.set('GR', nncv.get('GR1'));
+end
+
+%%% ¡prop!
 PFFI (gui, item) contains the panel figure of the feature importance.
 %%%% ¡settings!
 'PFFeatureImportance'

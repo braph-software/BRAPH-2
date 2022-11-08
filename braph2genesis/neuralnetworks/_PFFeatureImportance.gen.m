@@ -25,7 +25,9 @@ MEASURES (figure, logical) determines whether the measures affect the brain regi
 false
 %%%% ¡postprocessing!
 if ~braph2_testing
-    if pf.get('MEASURES')
+    if pf.get('MEASURES') && ...
+        ~isempty(pf.retrieve_edges()) && ...
+        string(pf.get('NNE').get('GR').get('SUB_DICT').getItem(1).get('INPUT_TYPE')) == 'structural_data'
         nn = pf.get('NNE');
         prop = pf.get('PROP');
         fi = nn.memorize(prop);
