@@ -44,7 +44,7 @@ for li = 1:g.layernumber()
     Aii_tmp{li} = A{li, li}; %#ok<AGROW>
 end
 parfor li = 1:g.layernumber()
-    Aii = A{li, li};
+    Aii = Aii_tmp{li};
     connectivity_layer = connectivity_type(li);
 
     if connectivity_layer == Graph.WEIGHTED  % weighted graphs
