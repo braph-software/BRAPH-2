@@ -39,13 +39,16 @@ A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for m
 
 distance = cell(g.layernumber(), 1);
 connectivity_type =  g.getConnectivityType(g.layernumber());
-parfor li = 1:1:g.layernumber()
-
+connectivity_type = diag(connectivity_type);
+for li = 1:g.layernumber()
+    Aii_tmp{li} = A{li, li}; %#ok<AGROW>
+end
+parfor li = 1:g.layernumber()
     Aii = A{li, li};
-    connectivity_layer = connectivity_type(li, li);
+    connectivity_layer = connectivity_type(li);
 
     if connectivity_layer == Graph.WEIGHTED  % weighted graphs
-        distance(li) = {m.getWeightedCalculation(Aii)};
+        distance(li) = {m.getWeightedCalculation(Aii)}; %#ok<PFBNS> 
     else  % binary graphs
         distance(li) = {m.getBinaryCalculation(Aii)};
     end
@@ -54,7 +57,7 @@ end
 value = distance;
 
 %% ¡methods!
-function weighted_distance = getWeightedCalculation(m, A)
+function weighted_distance = getWeightedCalculation(~, A)
     %GETWEIGHTEDCALCULATION calculates the distance value of a weighted adjacency matrix.
     %
     % WEIGHTED_DISTANCE = GETWEIGHTEDCALCULATION(M, A) returns the value of the
@@ -77,9 +80,9 @@ function weighted_distance = getWeightedCalculation(m, A)
 
             for v = V
                 T = find(L1(v, :)); % neighbours of shortest nodes
-                [d, wi] = min([D(u, T);D(u, v)+L1(v, T)]);
+                [d, ~] = min([D(u, T);D(u, v)+L1(v, T)]);
                 D(u, T) = d; % smallest of old/new path lengths
-                ind = T(wi==2); % indices of lengthened paths
+                % ind = T(wi==2); % indices of lengthened paths
             end
 
             minD = min(D(u, S));
@@ -92,7 +95,7 @@ function weighted_distance = getWeightedCalculation(m, A)
     end
     weighted_distance = D;
 end
-function binary_distance = getBinaryCalculation(m, A)
+function binary_distance = getBinaryCalculation(~, A)
     %GETBINARYCALCULATION calculates the distance value of a binary adjacency matrix.
     %
     % BINARY_DISTANCE = GETBINARYCALCULATION(A) returns the value of the
