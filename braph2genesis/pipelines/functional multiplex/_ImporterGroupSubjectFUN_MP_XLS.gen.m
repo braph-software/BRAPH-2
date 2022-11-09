@@ -2,9 +2,10 @@
 ImporterGroupSubjectFUN_MP_XLS < Importer (im, importer of FUN MP subject group from XLS/XLSX) imports a group of subjects with functional multiplex data from a series of XLS/XLSX file.
 
 %%% ¡description!
-ImporterGroupSubjectFUN_MP_XLS imports a group of subjects with functional multiplex data from a series of XLS/XLSX file and their covariates (optional) from another XLS/XLSX file.
-All these files must be in the same folder; also, no other files should be in the folder.
-Each file contains a table with each row correspoding to a time serie and each column to a brain region.
+ImporterGroupSubjectFUN_MP_XLS imports a group of subjects with functional multiplex data from a series of XLS/XLSX files and their covariates (optional) from another XLS/XLSX file.
+All these files must be in the same subject folder; also, no other files should be in the folder.
+Inside each subject folder, there should be a file for each layer containing 
+a table with each row corresponding to a time serie and each column to a brain region.
 The XLS/XLSX file containing the covariates must be in the same group directory 
 and consists of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
@@ -16,7 +17,7 @@ Element, Importer, ExporterGroupSubjectFUN_MP_XLS
 %% ¡props!
 
 %%% ¡prop!
-DIRECTORY (data, string) is the directory containing the FUN MP subject group files from which to load the subject group.
+DIRECTORY (data, string) is the directory containing the FUN MP subject folders from which to load the L layers of the group.
 
 %%% ¡prop!
 BA (data, item) is a brain atlas.
