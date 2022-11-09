@@ -64,8 +64,10 @@ function p_out = draw(pr, varargin)
     set(pr.yslider, 'ValueChangedFcn', {@cb_xslider_nn});
 
     function cb_xslider_nn(~, ~)
-        pr.cb_xslider_nn()
+        pr.cb_xslider_nn();
     end
+
+    pr.cb_xslider_nn();
 
     % output
     if nargout > 0
@@ -79,7 +81,7 @@ function update(pr)
     %
     % See also draw, redraw, PanelElement.
 
-    update@PanelPropCell(pr)
+    update@PanelPropCell(pr);
 end
 function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
