@@ -85,7 +85,7 @@ B = [
     0   0   .1  0
     ];
 
-known_path_length = {[2 4/3 4/3 2]'};
+known_path_length = {[18/11 18/15 18/15 18/11]'};
 
 g = GraphBU('B', B);
 path_length = PathLength('G', g).get('M');
@@ -108,8 +108,8 @@ B = [
 thresholds = [0 1];
 
 known_path_length = { ...
-    [2   4/3  4/3  2]'
-    [Inf Inf  Inf  Inf]'
+    [18/11 18/15 18/15 18/11]'
+    [Inf   Inf   Inf   Inf]'
     };
 
 g = MultigraphBUT('B', B, 'THRESHOLDS', thresholds);
@@ -140,8 +140,8 @@ A22 = [
 B = { A11  A22};
 
 known_path_length = {
-                    [2 4/3 4/3 2]'
-                    [2 4/3 4/3 2]'
+                    [18/11 18/15 18/15 18/11]'
+                    [18/11 18/15 18/15 18/11]'
                     };
 
 g = MultiplexBU('B', B);

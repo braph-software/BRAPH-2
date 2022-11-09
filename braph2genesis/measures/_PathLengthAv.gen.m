@@ -60,7 +60,7 @@ A = [
     0   0   .1  0
     ];
 
-known_path_length_av = {mean([2 4/3 4/3 2])};
+known_path_length_av = {mean([18/11 18/15 18/15 18/11])};
 
 g = GraphBU('B', A);
 path_length_av = PathLengthAv('G', g).get('M');
@@ -88,8 +88,8 @@ A22 = [
 A = {A11  A22};
 
 known_path_length_av = {
-                       mean([2 4/3 4/3 2])
-                       mean([2 4/3 4/3 2])
+                       mean([18/11 18/15 18/15 18/11])
+                       mean([18/11 18/15 18/15 18/11])
                        };
 
 g = MultiplexBU('B', A);
