@@ -119,11 +119,11 @@ for i = 1:1:gr.get('SUB_DICT').length()
         for j = 1:length(mlist)
             m_value = nnd.getCalculatedMeasure(g, mlist{j});
             if Measure.is_nodal(mlist{j})
-                input_nodal = [input_nodal; cell2mat(m_value)];
+                input_nodal = [input_nodal cell2mat(m_value)];
             elseif Measure.is_global(mlist{j})
-                input_global = [input_global; cell2mat(m_value)];
+                input_global = [input_global cell2mat(m_value)];
             else
-                input_binodal = [input_binodal; cell2mat(m_value)];
+                input_binodal = [input_binodal cell2mat(m_value)];
             end
         end
         input = {input_global input_nodal input_binodal};

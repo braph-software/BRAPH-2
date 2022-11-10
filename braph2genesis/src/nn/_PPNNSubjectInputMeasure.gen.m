@@ -41,7 +41,13 @@ function p_out = draw(pr, varargin)
     
     el = pr.get('EL');
     prop = pr.get('PROP');
-    
+
+    if size(el.get(prop), 1) == 1
+        pr.set('YSLIDERLABELS', 'pr.oneLayerLabel()');
+    elseif size(el.get(prop), 1) == 2
+        pr.set('YSLIDERLABELS', 'pr.twoLayerLabel()');
+    end
+
     pr.p = draw@PanelPropCell(pr, varargin{:});
     
     childs = get(pr.p, 'Children');
@@ -61,12 +67,17 @@ function p_out = draw(pr, varargin)
     end
 
     set(pr.xslider, 'ValueChangedFcn', {@cb_xslider_nn});
-    set(pr.yslider, 'ValueChangedFcn', {@cb_xslider_nn});
+    set(pr.yslider, 'ValueChangedFcn', {@cb_yslider_nn});
 
     function cb_xslider_nn(~, ~)
+        pr.cb_xslider();
         pr.cb_xslider_nn();
     end
 
+    function cb_yslider_nn(~, ~)
+        pr.cb_yslider();
+        pr.cb_xslider_nn();
+    end
     pr.cb_xslider_nn();
 
     % output
@@ -146,4 +157,10 @@ function x_slider = return_x_slider(pr)
 end
 function y_slider = return_y_slider(pr)
     y_slider = pr.yslider
+end
+function lbls = oneLayerLabel(pr)
+    lbls = {'L1'};
+end
+function lbls = twoLayerLabel(pr)
+    lbls = {'L2', 'L1'};
 end
