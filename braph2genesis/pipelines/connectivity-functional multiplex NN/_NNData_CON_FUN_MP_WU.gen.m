@@ -51,6 +51,21 @@ if ~isa(nnd.get('GR'), 'NoValue')
 end
 
 %%% ¡prop!
+GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
+%%%% ¡settings!
+'MultiplexWU'
+%%%% ¡postprocessing!
+if ~braph2_testing
+    if isa(nnd.getr('GRAPH_TEMPLATE'), 'NoValue')
+        if nnd.get('GR').get('SUB_DICT').length() > 0
+            nnd.set('GRAPH_TEMPLATE', MultiplexWU('BAS', nnd.get('GR').get('SUB_DICT').getItem(1).get('BA')));
+        else
+            nnd.set('GRAPH_TEMPLATE', MultiplexWU());
+        end
+    end
+end
+
+%%% ¡prop!
 INPUT_TYPE (data, option) is the input type for training or testing the NN.
 %%%% ¡settings!
 {'adjacency_matrices' 'graph_measures'}
