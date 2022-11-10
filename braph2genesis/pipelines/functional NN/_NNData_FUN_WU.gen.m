@@ -153,7 +153,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
                 input_binodal = [input_binodal; cell2mat(m_value)];
             end
         end
-        input = {input_nodal input_global input_binodal};
+        input = {input_global input_nodal input_binodal};
     end
 
     nn_sub = NNSubject( ...

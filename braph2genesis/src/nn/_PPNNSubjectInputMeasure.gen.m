@@ -107,6 +107,7 @@ function redraw(pr, varargin)
     %
     % See also draw, update, PanelElement, s.
 
+    pr.cb_xslider_nn();
     redraw@PanelPropCell(pr, varargin{:});
 end
 function cb_xslider_nn(pr)

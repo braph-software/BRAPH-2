@@ -106,7 +106,8 @@ function redraw(pr, varargin)
     % The slider space is set by the properties XSLIDERHEIGHT and YSLIDERWIDTH.
     %
     % See also draw, update, PanelElement, s.
-
+    
+    pr.cb_xslider_nn();
     redraw@PanelPropCell(pr, varargin{:});
 end
 function cb_xslider_nn(pr)
