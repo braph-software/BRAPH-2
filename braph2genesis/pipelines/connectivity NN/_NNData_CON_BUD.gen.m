@@ -111,6 +111,10 @@ for i = 1:1:gr.get('SUB_DICT').length()
         input_binodal = [];
         input_global = [];
         mlist = cellfun(@(x) x.get('ID'), nnd.get('Measures').getItems(), 'UniformOutput', false);
+        if isempty(mlist)
+            nnd.getMeasureEnsemble('Degree');
+            mlist = cellfun(@(x) x.get('ID'), nnd.get('Measures').getItems(), 'UniformOutput', false);
+        end
         input_label = mlist;
         for j = 1:length(mlist)
             m_value = nnd.getCalculatedMeasure(g, mlist{j});

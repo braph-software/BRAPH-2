@@ -45,6 +45,10 @@ MEASURES (parameter, idict) is the graph measures as input to NN.
 'MeasureEnsemble'
 %%%% ¡default!
 IndexedDictionary('IT_CLASS', 'MeasureEnsemble', 'IT_KEY', MeasureEnsemble.MEASURE);
+%%%% ¡postprocessing!
+if isempty(nnd.get('MEASURES').get('IT_LIST'))
+    nnd.getMeasureEnsemble('Degree');
+end
 %%%% ¡gui!
 pr = PPNNDataMeasures('EL', nnd, 'PROP', NNData.G, 'WAITBAR', Callback('EL', nnd, 'TAG', 'WAITBAR'), varargin{:});
 
@@ -104,7 +108,8 @@ function me = getMeasureEnsemble(nnd, measure_class, varargin)
   
     g = nnd.get('GRAPH_TEMPLATE');
     m_list = Graph.getCompatibleMeasureList(g);
-	a = nnd.get('ANALYZE_ENSEMBLE');
+    a = nnd.getPropDefault('ANALYZE_ENSEMBLE');
+    a.set('GR', nnd.get('GR'));
 
     assert( ...
         contains(measure_class, m_list), ...
