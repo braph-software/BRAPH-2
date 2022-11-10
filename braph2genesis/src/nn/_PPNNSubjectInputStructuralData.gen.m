@@ -42,6 +42,12 @@ function p_out = draw(pr, varargin)
     el = pr.get('EL');
     prop = pr.get('PROP');
     
+    if size(el.get(prop), 1) == 1
+        pr.set('XSLIDERLABELS', 'pr.oneLayerLabel()');
+    elseif size(el.get(prop), 1) == 2
+        pr.set('XSLIDERLABELS', 'pr.twoLayerLabel()');
+    end
+
     pr.p = draw@PanelPropCell(pr, varargin{:});
     
     childs = get(pr.p, 'Children');
@@ -61,13 +67,17 @@ function p_out = draw(pr, varargin)
     end
 
     set(pr.xslider, 'ValueChangedFcn', {@cb_xslider_nn});
-    set(pr.yslider, 'ValueChangedFcn', {@cb_xslider_nn});
+    set(pr.yslider, 'ValueChangedFcn', {@cb_yslider_nn});
 
     function cb_xslider_nn(~, ~)
-        pr.cb_xslider_nn();
+    pr.cb_xslider();
+    pr.cb_xslider_nn();
     end
 
+    function cb_yslider_nn(~, ~)
+    pr.cb_yslider();
     pr.cb_xslider_nn();
+    end
 
     % output
     if nargout > 0
@@ -126,4 +136,10 @@ function x_slider = return_x_slider(pr)
 end
 function y_slider = return_y_slider(pr)
     y_slider = pr.yslider
+end
+function lbls = oneLayerLabel(pr)
+    lbls = {'Modality 1'};
+end
+function lbls = twoLayerLabel(pr)
+    lbls = {'Modality 1', 'Modality 2'};
 end
