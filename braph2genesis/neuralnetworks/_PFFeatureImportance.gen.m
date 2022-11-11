@@ -201,6 +201,8 @@ pr = PP_INDEX_LAYER('EL', pf, 'PROP', PFFeatureImportance.INDEX_LAYER, ...
 THRESHOLD (figure, string) is the theshold to show the proportional of links in the heatmap.
 %%%% ¡default!
 '0.05'
+%%%% ¡postprocessing!
+pf.plot_EDGES();
 %%%% ¡gui!
 nn = pf.get('NNE');
 prop = pf.get('PROP');
