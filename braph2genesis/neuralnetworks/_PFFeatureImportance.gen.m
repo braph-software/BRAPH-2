@@ -106,7 +106,7 @@ EDGES (figure, logical) determines whether the edges are shown as a edge.
 %%%% ¡default!
 false
 %%%% ¡postprocessing!
-if (isempty(varargin) || pf.prop_set('EDGES', varargin)) && ~braph2_testing && pf.get('EDGES')
+if (~isempty(varargin) || pf.prop_set('EDGES', varargin)) && ~braph2_testing && pf.get('EDGES')
     if ~isa(pf.get('NNE').get('GR'), 'NoValue') && ...
             ~isempty(pf.retrieve_edges()) && ...
             string(pf.get('INPUT_TYPE')) == 'adjacency_matrices'
@@ -168,7 +168,7 @@ if (isempty(varargin) || pf.prop_set('EDGES', varargin)) && ~braph2_testing && p
         end
     end
     set(pf.toolbar_edges, 'State', pf.get('EDGES'))
-elseif ~isempty(pf.retrieve_edges())
+elseif ~isempty(pf.retrieve_edges()) && varargin{1} == 23
     pf.link_edges_off([], [])
     pf.arrow_edges_off([], [])
     pf.cylinder_edges_off([],[])
