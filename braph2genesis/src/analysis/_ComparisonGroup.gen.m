@@ -716,9 +716,9 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
     j = 1;
     varargin = {};
     if Measure.getPropNumber() ~= core_measure.getPropNumber()
-        for j = Measure.getPropNumber() + 1:core_measure.getPropNumber()
-            if ~isa(core_measure.getr(j), 'NoValue')
-                varargin{j} = core_measure.getPropTag(j);
+        for i = Measure.getPropNumber() + 1:core_measure.getPropNumber()
+            if ~isa(core_measure.getr(i), 'NoValue')
+                varargin{j} = core_measure.getPropTag(i);
                 varargin{j + 1} = Callback('EL', core_measure, 'PROP', i); % % % core_measure.getr(j);
             end
             j = j + 2;
