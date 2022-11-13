@@ -95,7 +95,11 @@ else % multilayer
                 ylayerlabels = PanelPropCell.getPropDefault('LAYERTICKS');
             else
                 layerlabels = num2cell(g.get('LAYERTICKS'));
-                ylayerlabels = ['{' sprintf('''%d'' ', layerlabels{end:-1:1}) '}'];
+                if isa(g, "MultiplexBUD")
+                    ylayerlabels = ['{' sprintf('''%d'' ', layerlabels{end:-1:1}) '}'];
+                else
+                    ylayerlabels = ['{' sprintf('''%.2f'' ', layerlabels{end:-1:1}) '}'];
+                end
             end
             
             pr.set( ...
@@ -205,7 +209,11 @@ else % multilayer
                 ylayerlabels = PanelPropCell.getPropDefault('LAYERTICKS');
             else
                 layerlabels = num2cell(g.get('LAYERTICKS'));
-                ylayerlabels = ['{' sprintf('''%d'' ', layerlabels{end:-1:1}) '}'];
+                if isa(g, "MultiplexBUD")
+                    ylayerlabels = ['{' sprintf('''%d'' ', layerlabels{end:-1:1}) '}'];
+                else
+                    ylayerlabels = ['{' sprintf('''%.2f'' ', layerlabels{end:-1:1}) '}'];
+                end
             end
             
             pr.set( ...
@@ -314,8 +322,12 @@ else % multilayer
             if isempty(g.get('LAYERTICKS'))
                 ylayerlabels = PanelPropCell.getPropDefault('LAYERTICKS');
             else
-                layerlabels = num2cell(g.get('LAYERTICKS'));
-                ylayerlabels = ['{' sprintf('''%d'' ', layerlabels{end:-1:1}) '}'];
+                layerlabels = num2cell(g.get('LAYERTICKS')); 
+                if isa(g, "MultiplexBUD")
+                    ylayerlabels = ['{' sprintf('''%d'' ', layerlabels{end:-1:1}) '}'];
+                else
+                    ylayerlabels = ['{' sprintf('''%.2f'' ', layerlabels{end:-1:1}) '}'];
+                end
             end
             
             pr.set( ...
@@ -425,7 +437,11 @@ else % multilayer
                 ylayerlabels = PanelPropCell.getPropDefault('LAYERTICKS');
             else
                 layerlabels = num2cell(g.get('LAYERTICKS'));
-                ylayerlabels = ['{' sprintf('''%d'' ', layerlabels{end:-1:1}) '}'];
+                if isa(g, "MultiplexBUD")
+                    ylayerlabels = ['{' sprintf('''%d'' ', layerlabels{end:-1:1}) '}'];
+                else
+                    ylayerlabels = ['{' sprintf('''%.2f'' ', layerlabels{end:-1:1}) '}'];
+                end
             end
             
             pr.set( ...
@@ -535,7 +551,11 @@ else % multilayer
                 ylayerlabels = PanelPropCell.getPropDefault('LAYERTICKS');
             else
                 layerlabels = num2cell(g.get('LAYERTICKS'));
-                ylayerlabels = ['{' sprintf('''%d'' ', layerlabels{end:-1:1}) '}'];
+                if isa(g, "MultiplexBUD")
+                    ylayerlabels = ['{' sprintf('''%d'' ', layerlabels{end:-1:1}) '}'];
+                else
+                    ylayerlabels = ['{' sprintf('''%.2f'' ', layerlabels{end:-1:1}) '}'];
+                end
             end
             
             pr.set( ...
