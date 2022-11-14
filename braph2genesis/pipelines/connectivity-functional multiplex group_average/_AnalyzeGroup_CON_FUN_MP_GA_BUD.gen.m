@@ -74,6 +74,7 @@ data = cell(1, 2);
 for i = 1:1:gr.get('SUB_DICT').length()
     sub = gr.get('SUB_DICT').getItem(i);
     CON_FUN_MP = sub.getr('CON_FUN_MP');
+    layerlabels = {};
     
     % FUN data
     data_fun = CON_FUN_MP{2};
@@ -98,7 +99,6 @@ for i = 1:1:gr.get('SUB_DICT').length()
         data(2) = {data{2} + A_fun};
     end
     
-    layerlabels = {};
     for i = 1:length(densities)
         layerlabels = [...
             layerlabels, ['C ' num2str(densities(i)) '%'], ...
