@@ -483,10 +483,14 @@ function str = tostring(pf, varargin)
     str = str(2:1:end-1);
 end
 function update_gui_tbl_sph(pf)
-    pf.tbl_sph.update()
+    if ~isempty(pf.tbl_sph) && check_graphics(pf.tbl_sph, 'uitable')
+        pf.tbl_sph.update()
+    end
 end
 function update_gui_tbl_sym(pf)
-    pf.tbl_sym.update()
+    if ~isempty(pf.tbl_sym) && check_graphics(pf.tbl_sym, 'uitable')
+        pf.tbl_sym.update()
+    end
 end
 
 %% ¡tests!

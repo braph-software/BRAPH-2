@@ -112,10 +112,31 @@ if g.layernumber() == 1
         )
 else % multilayer
     if  Measure.is_superglobal(me.get('MEASURE'))
-        pr.set( ...
-            'XSLIDER', false, ...
-            'YSLIDER', true ...
-            )
+        if Graph.is_weighted(g)
+            pr.set( ...
+                'XSLIDER', false, ...
+                'YSLIDER', false ...
+                )
+        else
+            if isempty(g.get('LAYERTICKS'))
+                ylayerlabels = PanelPropCell.getPropDefault('LAYERTICKS');
+            else
+                layerlabels = num2cell(g.get('LAYERTICKS'));
+                if isa(g, "MultiplexBUD")
+                    ylayerlabels = ['{' sprintf('''%d'' ', layerlabels{end:-1:1}) '}'];
+                else
+                    ylayerlabels = ['{' sprintf('''%.2f'' ', layerlabels{end:-1:1}) '}'];
+                end
+            end
+
+            pr.set( ...
+                'TAB_H', max(pr.get('TAB_H'), length(layerlabels)), ...
+                'XSLIDER', false, ...
+                'YSLIDER', true, ...
+                'YSLIDERLABELS', ylayerlabels, ...
+                'YSLIDERWIDTH', 5 ...
+                )
+        end
     elseif Measure.is_unilayer(me.get('MEASURE'))
         if isempty(g.get('LAYERLABELS'))
             % xlayerlabels = PanelPropCell.getPropDefault('XSLIDERLABELS');
@@ -162,15 +183,31 @@ PFME (gui, item) contains the panel figure of the measure.
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
     if isa(me.getr('PFME'), 'NoValue')
+        g_dict = me.memorize('a').memorize('g_dict');
         if ~isempty(me.get('MEASURE')) && Measure.is_global(me.get('MEASURE')) && ...
                 (Measure.is_unilayer(me.get('MEASURE')) || Measure.is_superglobal(me.get('MEASURE')))
-            me.set('PFME', PFMeasureEnsembleGU('ME', me))
+            g = g_dict.getItem(1);
+            if Graph.is_multiplex(g) && Measure.is_unilayer(me.get('MEASURE')) 
+                me.set('PFME', PFMeasureEnsembleMultiplexGU('ME', me))
+            else
+                me.set('PFME', PFMeasureEnsembleGU('ME', me))
+            end
         elseif ~isempty(me.get('MEASURE')) && Measure.is_nodal(me.get('MEASURE')) && ...
                 (Measure.is_unilayer(me.get('MEASURE')) || Measure.is_superglobal(me.get('MEASURE')))
-            me.set('PFME', PFMeasureEnsembleNU('ME', me))
+            g = g_dict.getItem(1);
+            if Graph.is_multiplex(g) && Measure.is_unilayer(me.get('MEASURE'))
+                me.set('PFME', PFMeasureEnsembleMultiplexNU('ME', me))
+            else
+                me.set('PFME', PFMeasureEnsembleNU('ME', me))
+            end
         elseif ~isempty(me.get('MEASURE')) && Measure.is_binodal(me.get('MEASURE')) && ...
                 (Measure.is_unilayer(me.get('MEASURE')) || Measure.is_superglobal(me.get('MEASURE')))
-            me.set('PFME', PFMeasureEnsembleBU('ME', me))
+            g = g_dict.getItem(1);
+            if Graph.is_multiplex(g) && Measure.is_unilayer(me.get('MEASURE'))
+                me.set('PFME', PFMeasureEnsembleMultiplexBU('ME', me))
+            else
+                me.set('PFME', PFMeasureEnsembleBU('ME', me))
+            end
         else
             me.memorize('PFME').set('ME', me)
         end

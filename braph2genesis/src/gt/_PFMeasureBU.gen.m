@@ -59,7 +59,7 @@ ba = bas{1};
 
 pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureBU.BR1_ID, ...
     'BA', ba, ...
-     varargin{:});
+    varargin{:});
 
 %% ¡props!
 
