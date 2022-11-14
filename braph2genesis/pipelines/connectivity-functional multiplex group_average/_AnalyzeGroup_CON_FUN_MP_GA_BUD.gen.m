@@ -70,6 +70,7 @@ fmax = a.get('FREQUENCYRULEMAX');
 densities = a.get('DENSITIES'); % this is a vector
 A = cell(1, 2);
 data = cell(1, 2);
+layerlabels = {};
 
 for i = 1:1:gr.get('SUB_DICT').length()
     sub = gr.get('SUB_DICT').getItem(i);
@@ -98,7 +99,6 @@ for i = 1:1:gr.get('SUB_DICT').length()
         data(2) = {data{2} + A_fun};
     end
     
-    layerlabels = {};
     for i = 1:length(densities)
         layerlabels = [...
             layerlabels, ['C ' num2str(densities(i)) '%'], ...
