@@ -1,0 +1,16 @@
+%% Pipeline Structural Multiplex Analysis BUT
+
+% This is the pipeline script to analyze a group of subjects using structural multiplex data and a binary undirected graph using thresholds.
+% 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
+% 2. It loads the data of a group of subjects from a directory containing XLS files (e.g., FUN_group1.xlsx and FUN_group2.xlsx).
+% 3. It analyzes the data using structural multiplex analysis (ST_MP) based on a binary undirected graph using thresholds.
+
+%% Brain Atlas
+ba = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load Brain Atlas XLS % Brain Atlas
+
+%% Group
+gr = ImporterGroupSubjectST_MP_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group ST MP XLS % Group ST MP
+
+%% Analysis
+a_BUT = AnalyzeGroup_ST_MP_BUT('GR', gr, 'THRESHOLDS', [-1:.25:1]); % Analyze Group % Analyzed Group
+

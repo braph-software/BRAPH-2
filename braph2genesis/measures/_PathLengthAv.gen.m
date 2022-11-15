@@ -27,14 +27,23 @@ MultiplexWU
 %% ¡props_update!
 
 %%% ¡prop!
-M (result, cell) is the path length.
+M (result, cell) is the average path length.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 
-path_length = calculateValue@PathLength(m, prop);            
+path_length = calculateValue@PathLength(m, prop);
 path_length_av = cell(g.layernumber(), 1);
+path_length_rule = m.get('rule');
 parfor li = 1:1:length(path_length_av)
-    path_length_av(li) = {mean(path_length{li})};
+    switch lower(path_length_rule)
+        case {'subgraphs'}
+            player = path_length{li};
+            path_length_av(li) = {mean(player(player~=Inf))};
+        case {'mean'}
+            path_length_av(li) = {mean(path_length{li})};
+        otherwise  % 'harmonic' 'default'
+            path_length_av(li) = {harmmean(path_length{li})};
+    end
 end
 value = path_length_av;
 
@@ -51,7 +60,7 @@ A = [
     0   0   .1  0
     ];
 
-known_path_length_av = {mean([2 4/3 4/3 2])};
+known_path_length_av = {harmmean([18/11 18/15 18/15 18/11])};
 
 g = GraphBU('B', A);
 path_length_av = PathLengthAv('G', g).get('M');
@@ -79,8 +88,8 @@ A22 = [
 A = {A11  A22};
 
 known_path_length_av = {
-                       mean([2 4/3 4/3 2])
-                       mean([2 4/3 4/3 2])
+                       harmmean([18/11 18/15 18/15 18/11])
+                       harmmean([18/11 18/15 18/15 18/11])
                        };
 
 g = MultiplexBU('B', A);

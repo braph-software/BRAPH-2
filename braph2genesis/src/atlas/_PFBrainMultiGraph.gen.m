@@ -140,7 +140,9 @@ if isa(me, 'Measure')
     
 else % ensemble
     g_dict = me.get('A').get('g_dict');
-    g = g_dict.getItem(1);   
+    g = g_dict.getItem(1);
+    layerticks = g.get('TEMPLATE').get('LAYERTICKS');
+    g.set('LAYERTICKS', layerticks)
 end
 
 pr = PP_DTID('EL', pf, 'PROP', PFBrainMultiGraph.DT, ...

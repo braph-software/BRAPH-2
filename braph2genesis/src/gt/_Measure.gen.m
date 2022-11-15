@@ -78,10 +78,31 @@ if g.layernumber() == 1
         )
 else % multilayer
     if  Measure.is_superglobal(m)
-        pr.set( ...
-            'XSLIDER', false, ...
-            'YSLIDER', true ...
-            )
+        if Graph.is_weighted(g)
+            pr.set( ...
+                'XSLIDER', false, ...
+                'YSLIDER', false ...
+                )
+        else
+            if isempty(g.get('LAYERTICKS'))
+                ylayerlabels = PanelPropCell.getPropDefault('LAYERTICKS');
+            else
+                layerlabels = num2cell(g.get('LAYERTICKS'));
+                if isa(g, "MultiplexBUD")
+                    ylayerlabels = ['{' sprintf('''%d'' ', layerlabels{end:-1:1}) '}'];
+                else
+                    ylayerlabels = ['{' sprintf('''%.2f'' ', layerlabels{end:-1:1}) '}'];
+                end
+            end
+
+            pr.set( ...
+                'TAB_H', max(pr.get('TAB_H'), length(layerlabels)), ...
+                'XSLIDER', false, ...
+                'YSLIDER', true, ...
+                'YSLIDERLABELS', ylayerlabels, ...
+                'YSLIDERWIDTH', 5 ...
+                )
+        end
     elseif Measure.is_unilayer(m)
         if isempty(g.get('LAYERLABELS'))
             % xlayerlabels = PanelPropCell.getPropDefault('XSLIDERLABELS');
@@ -128,24 +149,31 @@ PFM (gui, item) contains the panel figure of the measure.
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
     if isa(m.getr('PFM'), 'NoValue')
-        if Measure.is_global(m) && Measure.is_unilayer(m)
-            m.set('PFM', PFMeasureGU('M', m))
-        elseif Measure.is_nodal(m) && Measure.is_unilayer(m)
-            m.set('PFM', PFMeasureNU('M', m))
-        elseif Measure.is_binodal(m) && Measure.is_unilayer(m)
-            m.set('PFM', PFMeasureBU('M', m))
-        elseif Measure.is_global(m) && Measure.is_superglobal(m)
-            m.set('PFM', PFMeasureGUS('M', m))
-        elseif Measure.is_nodal(m) && Measure.is_superglobal(m)
-            m.set('PFM', PFMeasureNUS('M', m))
-        elseif Measure.is_binodal(m) && Measure.is_superglobal(m)
-            m.set('PFM', PFMeasureBUS('M', m))
+        g = m.memorize('G');
+        if Measure.is_global(m) && (Measure.is_unilayer(m) || Measure.is_superglobal(m))
+            if Graph.is_multiplex(g) && Measure.is_unilayer(m)
+                m.set('PFM', PFMeasureMultiplexGU('M', m))
+            else
+                m.set('PFM', PFMeasureGU('M', m))
+            end  
+        elseif Measure.is_nodal(m) && (Measure.is_unilayer(m) || Measure.is_superglobal(m))
+            if Graph.is_multiplex(g) && Measure.is_unilayer(m)
+                m.set('PFM', PFMeasureMultiplexNU('M', m))
+            else
+                m.set('PFM', PFMeasureNU('M', m))
+            end  
+        elseif Measure.is_binodal(m) && (Measure.is_unilayer(m) || Measure.is_superglobal(m))
+            if Graph.is_multiplex(g) && Measure.is_unilayer(m)
+                m.set('PFM', PFMeasureMultiplexBU('M', m))
+            else
+                m.set('PFM', PFMeasureBU('M', m))
+            end
         elseif Measure.is_global(m) && Measure.is_bilayer(m)
-            m.set('PFM', PFMeasureGUB('M', m))
+            m.set('PFM', PFMeasureGB('M', m))
         elseif Measure.is_nodal(m) && Measure.is_bilayer(m)
-            m.set('PFM', PFMeasureNUB('M', m))
+            m.set('PFM', PFMeasureNB('M', m))
         elseif Measure.is_binodal(m) && Measure.is_bilayer(m)
-            m.set('PFM', PFMeasureBUB('M', m))
+            m.set('PFM', PFMeasureBB('M', m))
         else
             m.memorize('PFM').set('M', m)
         end

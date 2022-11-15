@@ -34,12 +34,17 @@ if ~braph2_testing
         index_d = str2double(pf.get('DT'));
         index_l = str2double(pf.get('LAYER'));
         if isa(comparison.get('C').get('A1'), 'AnalyzeGroup')
-            [l, ls] = comparison.get('C').get('A1').get('G').layernumber();
+            g  = comparison.get('C').get('A1').get('G');
         else
-            [l, ls] = comparison.get('C').get('A1').get('G_DICT').getItem(1).layernumber();
+            g  = comparison.get('C').get('A1').get('G_DICT').getItem(1);  
         end
+        [l, ls] = g.layernumber();
         total_l = ls(1);
-        val = val{(total_l * (index_d - 1)) + index_l };
+        if Measure.is_superglobal(comparison.get('MEASURE'))
+            val = val{index_d};
+        else
+            val = val{(total_l * (index_d - 1)) + index_l };
+        end
         
         % increase br size by measure value
         if isequal(comparison.get('MEASURE_TEMPLATE'), 'MultilayerCommunityStructure')
@@ -157,10 +162,14 @@ if ~braph2_testing
         if isa(comparison.get('C').get('A1'), 'AnalyzeGroup')
             [l, ls] = comparison.get('C').get('A1').get('G').layernumber();
         else
-            [l, ls] = comparison.get('C').get('A1').get('g_dict').layernumber();
+            [l, ls] = comparison.get('C').get('A1').get('G_DICT').getItem(1).layernumber();
         end
         total_l = ls(1);
-        val = val{(total_l * (index_d - 1)) + index_l };
+        if Measure.is_superglobal(comparison.get('MEASURE'))
+            val = val{index_d};
+        else
+            val = val{(total_l * (index_d - 1)) + index_l };
+        end
         
         if size(val, 1) > size(val, 2)
             val = val';

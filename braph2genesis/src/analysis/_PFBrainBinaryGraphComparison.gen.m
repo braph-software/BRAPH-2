@@ -213,6 +213,8 @@ else % comparison
     else
         g_dict = me.get('C').get('a1').get('g_dict');
         g = g_dict.getItem(1);
+        layerticks = g.get('TEMPLATE').get('LAYERTICKS');
+        g.set('LAYERTICKS', layerticks)
     end
    
 end

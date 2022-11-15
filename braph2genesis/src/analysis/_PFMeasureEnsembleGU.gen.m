@@ -1,5 +1,5 @@
 %% ¡header!
-PFMeasureEnsembleGU < PFMeasureEnsemble (pf, panel figure measure GU) is a plot of a global unilayer measure.
+PFMeasureEnsembleGU < PFMeasureEnsemble (pf, panel figure measure GU) is a plot of a global unilayer/superglobal measure.
 
 %%% ¡description!
 % % % PFBrainSurface manages the plot of the brain surface choosen by the user. 

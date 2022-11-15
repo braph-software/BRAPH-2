@@ -250,6 +250,21 @@ function h_panel = draw(pf, varargin)
     %
     % see also settings, uipanel, isgraphics.
 
+    % nodal filer, so we ensure everywhere
+    
+    me = pf.get('me');
+    filter_pass = false;
+    if isa(me, 'Measure')
+        if Measure.is_nodal(me)
+            filter_pass = true;
+        end
+    else % measureensemble, comparisonensemble, comparisongroup
+        m = me.get('MEASURE_TEMPLATE');
+        if Measure.is_nodal(m)
+            filter_pass = true;
+        end
+    end
+
     pf.p = draw@PFBrainAtlas(pf, varargin{:});
 
     % init edge struct
@@ -273,7 +288,7 @@ function h_panel = draw(pf, varargin)
     pf.memorize('ST_EDGES').h(pf.h_axes).set('PANEL', pf, 'UITAG', 'h_axes')
     listener(pf.get('ST_EDGES'), 'PropSet', @cb_st_edges);
         function cb_st_edges(~, ~) % (src, event)
-            [r, c] = pf.obain_connections();
+            [r, c] = pf.obtain_connections();
             if pf.get('ST_EDGES').get('LINKS')
                 if isempty(pf.edges.links) || any(isnan(pf.edges.links),'all')
                     pf.link_edges(r, c);
@@ -342,7 +357,13 @@ function h_panel = draw(pf, varargin)
             pf.set('EDGES', edges)
         end
 
-    % listener to changes in
+    if ~filter_pass
+        f = warndlg('Only Nodal Measures have a brain surface visualization.', 'Visualization Not Available for this Measure');
+        set(pf.p, 'Enable', 'off')
+        tmpf = ancestor(pf.p, 'figure');
+        fig_obj = get(tmpf, 'UserData');
+        fig_obj.set('Toolbar', false);
+    end
 
     % output
     if nargout > 0

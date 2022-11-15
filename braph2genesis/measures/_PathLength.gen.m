@@ -28,9 +28,9 @@ MultiplexWU
 %%% ¡prop! 
 rule (parameter, OPTION) is the path length algorithm
 %%%% ¡settings!
-{'subgraphs' 'harmonic' 'pl_default'}
+{'subgraphs' 'harmonic' 'mean'}
 %%%% ¡default!
-'pl_default'
+'harmonic'
 
 %% ¡props_update!
 
@@ -56,22 +56,21 @@ parfor li = 1:1:L
             for u = 1:1:N
                 Du = distance_layer(:, u);
                 path_length_layer(u) = mean(Du(Du~=Inf & Du~=0));
-            end 
-        case {'harmonic'}
-            for u = 1:1:N
-                Du = distance_layer(:, u);
-                path_length_layer(u) = harmmean(Du(Du~=0));
             end
-        otherwise  % 'default'
+        case {'mean'}
             for u = 1:1:N
                 Du = distance_layer(:, u);
                 path_length_layer(u) = mean(Du(Du~=0));
+            end
+        otherwise  % 'harmonic' 'default'
+            for u = 1:1:N
+                Du = distance_layer(:, u);
+                path_length_layer(u) = harmmean(Du(Du~=0));
             end
     end 
     path_length(li) = {path_length_layer}; % node Inf corresponds to isolated nodes
 end
 value = path_length;
-
 
 %% ¡tests!
 
@@ -86,7 +85,7 @@ B = [
     0   0   .1  0
     ];
 
-known_path_length = {[2 4/3 4/3 2]'};
+known_path_length = {[18/11 18/15 18/15 18/11]'};
 
 g = GraphBU('B', B);
 path_length = PathLength('G', g).get('M');
@@ -109,8 +108,8 @@ B = [
 thresholds = [0 1];
 
 known_path_length = { ...
-    [2   4/3  4/3  2]'
-    [Inf Inf  Inf  Inf]'
+    [18/11 18/15 18/15 18/11]'
+    [Inf   Inf   Inf   Inf]'
     };
 
 g = MultigraphBUT('B', B, 'THRESHOLDS', thresholds);
@@ -141,8 +140,8 @@ A22 = [
 B = { A11  A22};
 
 known_path_length = {
-                    [2 4/3 4/3 2]'
-                    [2 4/3 4/3 2]'
+                    [18/11 18/15 18/15 18/11]'
+                    [18/11 18/15 18/15 18/11]'
                     };
 
 g = MultiplexBU('B', B);

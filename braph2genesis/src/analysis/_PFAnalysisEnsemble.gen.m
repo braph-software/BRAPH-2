@@ -225,7 +225,7 @@ function h = plotAdjacency(pf)
         graph = pf.get('A').get('G_DICT').getItem(g_id);
         adjacency_matrix = graph.get('A');
     end
-    
+   
     % plot
     if pf.get('ST_ADJACENCY').get('BINARY')
         h = pf.plotb(adjacency_matrix);
