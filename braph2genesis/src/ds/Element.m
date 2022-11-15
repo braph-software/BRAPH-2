@@ -1450,7 +1450,18 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                                 struct{i}.props{prop}.value = regexprep(tostring(value), '''', '''''');
                             case {Format.LOGICAL, Format.SCALAR, Format.RVECTOR, Format.CVECTOR, Format.MATRIX, Format.SMATRIX, ...
                                     Format.COLOR, Format.ALPHA, Format.SIZE}
-                                struct{i}.props{prop}.value = mat2str(value);
+                                try 
+                                    struct{i}.props{prop}.value = mat2str(value);
+                                catch
+                                    struct{i}.props{prop}.value = regexprep(tostring(value), '''', '''''');
+                                end
+
+                                % OR 
+                                % if isa(value, 'Callback')
+                                %    struct{i}.props{prop}.value = regexprep(tostring(value), '''', '''''');
+                                % else
+                                %    struct{i}.props{prop}.value = mat2str(value);
+                                % end
                             case Format.CLASSLIST
                                 json_str = '{';
                                 for j = 1:1:length(value)
