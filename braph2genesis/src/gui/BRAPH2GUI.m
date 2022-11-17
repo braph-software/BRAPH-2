@@ -86,6 +86,7 @@ h_panel = pl.draw('Parent', panel_rotate, 'Units', 'normalized', 'Position', [.0
 pl_axes = get(h_panel, 'Children');
 count = 0;
 direction = 1;
+axis(pl_axes, 'manual')
     function rotate()
         try
             while get(ui_checkbox_bottom_animation, 'Value')
@@ -93,7 +94,7 @@ direction = 1;
                     direction  = direction * -1;
                     count = 0;
                 end
-                camorbit(pl_axes, 3 * direction, 3 * direction, 'camera')
+                camorbit(pl_axes, 3, 3, 'data', [direction direction 0])
                 drawnow
                 pause(0.1)
                 count = count + 1;
