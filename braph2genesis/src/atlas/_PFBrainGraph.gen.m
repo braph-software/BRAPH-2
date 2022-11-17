@@ -404,7 +404,27 @@ function [r, c] = obtain_connections(pf)
     end
     
     a = b.get('A');
-    [r, c] = find(a{1});
+    [r_temp, c_temp] = find(a{1});
+
+    if pf.get('SPHS')
+        temp_dict = pf.get('sph_dict');
+    elseif pf.get('SYMS')
+        temp_dict = pf.get('sym_dict');
+    end
+
+    dic_items = temp_dict.getItems();
+    show_values = cellfun(@(x) x.get('Visible'), dic_items, 'UniformOutput', false);
+    for i=1:length(show_values)
+        show_val = show_values{i};
+        if show_val == true
+            % nothing
+        else % remove from showing
+            r_temp(r_temp == i) = [];
+            c_temp(c_temp == i) = [];
+        end
+    end
+    r = r_temp;
+    c = c_temp;
 end
 
 function h = link_edge(pf, i, j)
