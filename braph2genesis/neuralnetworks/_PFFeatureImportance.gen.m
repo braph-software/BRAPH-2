@@ -168,7 +168,7 @@ if (~isempty(varargin) || pf.prop_set('EDGES', varargin)) && ~braph2_testing && 
         end
     end
     set(pf.toolbar_edges, 'State', pf.get('EDGES'))
-elseif ~isempty(pf.retrieve_edges()) && varargin{1} == 23
+elseif elseif ~isempty(pf.retrieve_edges()) && ~isempty(varargin)  && isstring(varargin{1}) && varargin{1} == 23
     pf.link_edges_off([], [])
     pf.arrow_edges_off([], [])
     pf.cylinder_edges_off([],[])
@@ -202,7 +202,9 @@ THRESHOLD (figure, string) is the theshold to show the proportional of links in 
 %%%% ¡default!
 '0.05'
 %%%% ¡postprocessing!
-pf.plot_EDGES();
+if (~isempty(varargin) || pf.prop_set('THRESHOLD', varargin)) && ~braph2_testing && strcmp(varargin{1}, 'threshold')
+    pf.plot_EDGES();
+end
 %%%% ¡gui!
 nn = pf.get('NNE');
 prop = pf.get('PROP');

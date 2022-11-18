@@ -360,7 +360,7 @@ function h_panel = draw(pf, varargin)
         end
 
     if ~filter_pass
-        f = warndlg('Only Nodal Measures have a brain surface visualization.', 'Wrong Measure');
+        f = warndlg('Only Nodal Measures have a brain surface visualization.', 'Visualization Not Available for this Measure');
         set(pf.p, 'Enable', 'off')
         tmpf = ancestor(pf.p, 'figure');
         fig_obj = get(tmpf, 'UserData');
