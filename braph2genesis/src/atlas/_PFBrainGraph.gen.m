@@ -290,7 +290,7 @@ function h_panel = draw(pf, varargin)
     pf.memorize('ST_EDGES').h(pf.h_axes).set('PANEL', pf, 'UITAG', 'h_axes')
     listener(pf.get('ST_EDGES'), 'PropSet', @cb_st_edges);
         function cb_st_edges(~, ~) % (src, event)
-            [r, c] = pf.obain_connections();
+            [r, c] = pf.obtain_connections();
             if pf.get('ST_EDGES').get('LINKS')
                 if isempty(pf.edges.links) || any(isnan(pf.edges.links),'all')
                     pf.link_edges(r, c);
