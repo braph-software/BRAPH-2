@@ -168,7 +168,7 @@ if (~isempty(varargin) || pf.prop_set('EDGES', varargin)) && ~braph2_testing && 
         end
     end
     set(pf.toolbar_edges, 'State', pf.get('EDGES'))
-elseif elseif ~isempty(pf.retrieve_edges()) && ~isempty(varargin)  && isstring(varargin{1}) && varargin{1} == 23
+elseif ~isempty(pf.retrieve_edges()) && ~isempty(varargin)  && isstring(varargin{1}) && varargin{1} == 23
     pf.link_edges_off([], [])
     pf.arrow_edges_off([], [])
     pf.cylinder_edges_off([],[])
