@@ -168,10 +168,12 @@ if (~isempty(varargin) || pf.prop_set('EDGES', varargin)) && ~braph2_testing && 
         end
     end
     set(pf.toolbar_edges, 'State', pf.get('EDGES'))
-elseif ~isempty(pf.retrieve_edges()) && ~isempty(varargin)  && isstring(varargin{1}) && varargin{1} == 23
-    pf.link_edges_off([], [])
-    pf.arrow_edges_off([], [])
-    pf.cylinder_edges_off([],[])
+elseif ~isempty(pf.retrieve_edges()) && ~isempty(varargin)  && ~ischar(varargin{1})
+    if varargin{1} == pf.getPropProp('THRESHOLD') || varargin{1} == pf.getPropProp('EDGES')
+        pf.link_edges_off([], [])
+        pf.arrow_edges_off([], [])
+        pf.cylinder_edges_off([],[])
+    end
 end
 
 %% ¡props!
@@ -242,7 +244,7 @@ function h_panel = draw(pf, varargin)
         set(pf.toolbar_measure, 'ENABLE', false);        
         pf.toolbar_edges = findobj(ancestor(pf.p, 'Figure'), 'Tag', 'toolbar_edges');
     end    
-  
+
     % output
     if nargout > 0
         h_panel = pf.p;
@@ -250,6 +252,12 @@ function h_panel = draw(pf, varargin)
 end
 function plot_EDGES(pf)
     pf.set('EDGES', pf.get('EDGES'))
+end
+function [r, c] = obtain_connections(pf)
+    % obtain true connections
+    r = [];
+    c = [];
+    pf.plot_EDGES()
 end
 function str = tostring(pf, varargin)
     %TOSTRING string with information about the brain atlas.
