@@ -35,13 +35,29 @@ G (parameter, item) is the graph for calculating the graph measures.
 GraphWU()
 
 %%% ¡prop!
-MEASURES (parameter, classlist) is the graph measures as input to NN.
+GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
 %%%% ¡settings!
-'Measure'
+'Graph'
+
+%%% ¡prop!
+MEASURES (parameter, idict) is the graph measures as input to NN.
+%%%% ¡settings!
+'MeasureEnsemble'
 %%%% ¡default!
-{'DegreeAv', 'Degree'}
+IndexedDictionary('IT_CLASS', 'MeasureEnsemble', 'IT_KEY', MeasureEnsemble.MEASURE);
+%%%% ¡postprocessing!
+if isempty(nnd.get('MEASURES').get('IT_LIST'))
+    nnd.getMeasureEnsemble('Degree');
+end
 %%%% ¡gui!
 pr = PPNNDataMeasures('EL', nnd, 'PROP', NNData.G, 'WAITBAR', Callback('EL', nnd, 'TAG', 'WAITBAR'), varargin{:});
+
+%%% ¡prop!
+ANALYZE_ENSEMBLE (data, item) contains the graphs of the group.
+%%%% ¡settings!
+'AnalyzeEnsemble'
+%%%% ¡default!
+AnalyzeEnsemble()
 
 %%% ¡prop!
 TARGET_NAME (data, string) is the name of the traget.
@@ -79,4 +95,68 @@ if nnd.prop_set(NNData.TEMPLATE, varargin{:})
     end
     
     nnd.set(varargin{:});
+end
+
+%% ¡methods!
+function me = getMeasureEnsemble(nnd, measure_class, varargin)
+    %GETMEASURE returns measure.
+    %
+    % ME = GETMEASURE(NND, MEASURE_CLASS) checks if the measure ensemble exists in the
+    %  property ME_DICT. If not it creates a new measure M of class MEASURE_CLASS
+    %  with properties defined by the graph settings. The user must call
+    %  getValue() for the new measure M to retrieve the value of measure M.
+  
+    g = nnd.get('GRAPH_TEMPLATE');
+    m_list = Graph.getCompatibleMeasureList(g);
+    a = nnd.getPropDefault('ANALYZE_ENSEMBLE');
+    a.set('GR', nnd.get('GR'));
+
+    assert( ...
+        contains(measure_class, m_list), ...
+        [BRAPH2.STR ':' a.getClass() ':' BRAPH2.WRONG_INPUT], ...
+        [BRAPH2.STR ':' a.getClass() ':' BRAPH2.WRONG_INPUT ' '], ...
+        [a.getClass() ' utilizes Graphs of type ' g.getClass() '.' measure_class ' is not a compatible Measure with ' g.getClass() '. Please use Graph function getCompatibleMeasureList for more information.']);
+    
+    me_dict = nnd.memorize('MEASURES');
+    if me_dict.containsKey(measure_class)
+        me = me_dict.getItem(measure_class);
+    else
+        me = MeasureEnsemble( ...
+            'ID', measure_class, ...
+            'A', a, ...
+            'MEASURE', measure_class, ...
+            'MEASURE_TEMPLATE', eval([measure_class '(varargin{:})']) ...
+            );
+        me_dict.add(me);
+    end
+end
+function m_value = getCalculatedMeasure(nnd, g, measure_class)
+    me_dict = nnd.get('MEASURES');
+    if me_dict.containsKey(measure_class)
+        me = me_dict.getItem(measure_class);
+    else
+        me = MeasureEnsemble( ...
+            'ID', measure_class, ...
+            'A', nnd.get('ANALYZE_ENSEMBLE'), ...
+            'MEASURE', measure_class, ...
+            'MEASURE_TEMPLATE', eval([measure_class '(varargin{:})']) ...
+            );
+        me_dict.add(me);
+    end
+    core_measure = me.get('MEASURE_TEMPLATE');
+    % get parameters from core measure
+    j = 1;
+    varargin = {};
+    if Measure.getPropNumber() ~= core_measure.getPropNumber()
+        for i = Measure.getPropNumber() + 1:core_measure.getPropNumber()
+            if ~isa(core_measure.getr(i), 'NoValue')
+                varargin{j} = core_measure.getPropTag(i);
+                varargin{j + 1} = core_measure.getr(i);
+            end
+            j = j + 2;
+        end
+        varargin = varargin(~cellfun('isempty', varargin));
+    end
+    
+    m_value = g.getMeasure(me.get('MEASURE'), varargin{:}).get('M');
 end

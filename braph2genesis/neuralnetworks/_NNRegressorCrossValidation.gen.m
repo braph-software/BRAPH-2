@@ -209,6 +209,16 @@ else
 end
 
 value = feature_importances;
+%%%% ¡gui!
+if ~braph2_testing && ~isa(nncv.get('GR').get('SUB_DICT'), 'NoValue')
+    if string(nncv.get('GR').get('SUB_DICT').getItem(1).get('INPUT_TYPE')) == 'structural_data'
+        pr = PPNNEvaluatorFeatureImportanceStructuralData('EL', nncv, 'PROP', NNRegressorCrossValidation.FEATURE_IMPORTANCE, varargin{:});
+    elseif string(nncv.get('GR').get('SUB_DICT').getItem(1).get('INPUT_TYPE')) == 'adjacency_matrices'
+        pr = PPNNEvaluatorFeatureImportanceAdjacency('EL', nncv, 'PROP', NNRegressorCrossValidation.FEATURE_IMPORTANCE, varargin{:});
+    else
+        pr = PanelPropCell('EL', nncv, 'PROP', NNRegressorCrossValidation.FEATURE_IMPORTANCE, varargin{:});
+    end
+end
 
 %% ¡props_update!
 
@@ -218,7 +228,10 @@ PFFI (gui, item) contains the panel figure of the feature importance.
 'PFFeatureImportance'
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
-    nncv.memorize('PFFI').set('NNE', nncv, 'PROP', NNRegressorCrossValidation.FEATURE_IMPORTANCE, 'BA', nncv.get('GR').get('SUB_DICT').getItem(1).get('BA'))
+    nncv.memorize('PFFI').set('NNE', nncv, ...
+        'PROP', NNRegressorCrossValidation.FEATURE_IMPORTANCE, ...
+        'INPUT_TYPE', nncv.get('GR').get('SUB_DICT').getItem(1).get('INPUT_TYPE'), ...
+        'BA', nncv.get('GR').get('SUB_DICT').getItem(1).get('BA'))
 end
 %%%% ¡gui!
 pr = PanelPropItem('EL', nncv, 'PROP', NNRegressorCrossValidation.PFFI, ...

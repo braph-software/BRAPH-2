@@ -258,11 +258,13 @@ function h_panel = draw(pf, varargin)
         if Measure.is_nodal(me)
             filter_pass = true;
         end
-    else % measureensemble, comparisonensemble, comparisongroup
+    elseif isa(me, 'MeasureEnsemble') || isa(me, 'ComparisonEnsemble') || isa(me, 'ComparisonGroup')
         m = me.get('MEASURE_TEMPLATE');
         if Measure.is_nodal(m)
             filter_pass = true;
         end
+    else
+        filter_pass = true;
     end
 
     pf.p = draw@PFBrainAtlas(pf, varargin{:});
@@ -358,7 +360,7 @@ function h_panel = draw(pf, varargin)
         end
 
     if ~filter_pass
-        f = warndlg('Only Nodal Measures have a brain surface visualization.', 'Wrong Measure');
+        f = warndlg('Only Nodal Measures have a brain surface visualization.', 'Visualization Not Available for this Measure');
         set(pf.p, 'Enable', 'off')
         tmpf = ancestor(pf.p, 'figure');
         fig_obj = get(tmpf, 'UserData');

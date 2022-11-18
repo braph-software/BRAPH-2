@@ -92,5 +92,4 @@ function lock_measures_prop(pr)
     pe = ancestor(pr.p, 'figure').UserData.get('PE');
     measure_panel = pe.get('pr_dict').getItem('measures');
     measure_panel.update();
-    pe.redraw();
 end
