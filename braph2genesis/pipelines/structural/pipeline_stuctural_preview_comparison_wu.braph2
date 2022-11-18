@@ -1,0 +1,16 @@
+%% Pipeline Structural Preview Comparison WU
+
+% This is the pipeline script to preview values a group of subjects using structural data and a weighted undirected graph.
+% 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
+% 2. It loads the data of two groups of subjects from an XLS file (e.g., ST_group1.xlsx and ST_group2.xlsx).
+% 3. It previews a comparison of the data using a structural based network and a modified graph (WU).
+
+%% Brain Atlas
+ba = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load Brain Atlas from XLS % Brain Atlas
+
+%% Group
+gr1 = ImporterGroupSubjectST_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group ST 1 from XLS % Group ST 1
+gr2 = ImporterGroupSubjectST_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group ST 2 from XLS % Group ST 2
+
+%% Analysis
+a_Prev = PreviewGroups_ST_WU('GR1', gr1, 'GR2', gr2); % Preview Groups % Preview
