@@ -46,26 +46,31 @@ if ~braph2_testing
             caxis auto
             cmap_temp = colormap(jet);
             rgb_meas = zeros(size(cmap_temp));
-            meas_val = val./val;
-            meas_val(isnan(meas_val)) = 0.1;
+%             meas_val = val./val;
+%             meas_val(isnan(meas_val)) = 0.1;
         else
             caxis([lim_min lim_max]);
             cmap_temp = colormap(jet);
             rgb_meas = interp1(linspace(lim_min, lim_max, size(cmap_temp, 1)), ...
                 cmap_temp, val); % colorbar from minimum to maximum value of the measure result
-            if val ~= 0.01
-                meas_val = (val - lim_min)./(lim_max - lim_min) + 1;  % size normalized by minimum and maximum value of the measure result
-            else
-                meas_val = val;
-            end
+%             if val ~= 0.01
+%                 meas_val = (val - lim_min)./(lim_max - lim_min) + 1;  % size normalized by minimum and maximum value of the measure result
+%             else
+%                 meas_val = val;
+%             end
         end
 
         if pf.get('SPHS')
             sph_dict = pf.get('SPH_DICT');
             for i = 1:sph_dict.length
                 sph = sph_dict.getItem(i);
+                meas_val = val(i);
+                if meas_val ~= 0.01
+                    meas_val = (abs(val(i)) - lim_min) / (lim_max - lim_min) + 1;  % size normalized by minimum and maximum value of the measure result
+                    meas_val(isnan(meas_val)) = 1;
+                end
                 default_value = sph.getPropDefault('SPHERESIZE');
-                sph.set('SPHERESIZE', default_value * meas_val(i));
+                sph.set('SPHERESIZE', default_value * meas_val);
                 sph.set('FaceColor',  rgb_meas(i, :));
             end
             pf.update_gui_tbl_sph()
@@ -74,6 +79,11 @@ if ~braph2_testing
             sym_dict = pf.get('SYM_DICT');
             for i = 1:sym_dict.length
                 sym = sym_dict.getItem(i);
+                meas_val = val(i);
+                if meas_val ~= 0.01
+                    meas_val = (abs(val(i)) - lim_min) / (lim_max - lim_min) + 1;  % size normalized by minimum and maximum value of the measure result
+                    meas_val(isnan(meas_val)) = 1;
+                end
                 default_value = sym.getPropDefault('SYMBOLSIZE');
                 sym.set('SYMBOLSIZE', default_value * meas_val(i));
                 sym.set('FaceColor',  rgb_meas(i, :));
