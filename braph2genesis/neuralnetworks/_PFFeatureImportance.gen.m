@@ -40,6 +40,8 @@ if ~braph2_testing
         % Make colorbar
         lim_min = min(val);  % minimum of measure result
         lim_max = max(val);  % maximum of measure result
+        val(val == 0) = 0.01;
+        val(isnan(val)) = 0.01;
         if lim_min == lim_max
             caxis auto
             cmap_temp = colormap(jet);
@@ -51,9 +53,11 @@ if ~braph2_testing
             cmap_temp = colormap(jet);
             rgb_meas = interp1(linspace(lim_min, lim_max, size(cmap_temp, 1)), ...
                 cmap_temp, val); % colorbar from minimum to maximum value of the measure result
-            meas_val = (val - lim_min)./(lim_max - lim_min) + 1;  % size normalized by minimum and maximum value of the measure result
-            meas_val(isnan(meas_val)) = 0.1;
-            meas_val(meas_val <= 0) = 0.1;
+            if val ~= 0.01
+                meas_val = (val - lim_min)./(lim_max - lim_min) + 1;  % size normalized by minimum and maximum value of the measure result
+            else
+                meas_val = val;
+            end
         end
 
         if pf.get('SPHS')
