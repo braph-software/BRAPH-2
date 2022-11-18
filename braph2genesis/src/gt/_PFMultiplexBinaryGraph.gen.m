@@ -41,19 +41,19 @@ function p_out = draw(pf, varargin)
 end
 function h = plotAdjacency(pf)
     
-    % select correct matrix, A is a [m m] where m is the number of layers * the number of densities,
-    % the diagonal is where the info is kept   
-    g = pf.get('G');
-    multiplex = g.get('A'); 
-    L = length(g.get('B')); % total layers
-    D = length(g.get(14)); % total densities or thresholds
+    g = str2double(pf.get('G'));
+    if isnan(g)
+        g = pf.get('G');
+    end
+    [l, ls] = g.layernumber();
+    total_l = ls(1); % total multi-layers
     % choosen values
     l = str2double(pf.get('LAYER'));
     d = str2double(pf.get('DT'));
-
-    % get correct matrix
-    correct = (L*d) - (L-l);   
-    correct_graph = multiplex{correct, correct};
+    % get correct index matrix
+    index = total_l * (d - 1) + l;
+    multiplex = g.get('A'); 
+    correct_graph = multiplex{index, index};
     
     % plot
     if pf.get('ST_ADJACENCY').get('BINARY')
