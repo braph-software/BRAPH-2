@@ -88,11 +88,7 @@ else % multilayer
                 ylayerlabels = PanelPropCell.getPropDefault('LAYERTICKS');
             else
                 layerlabels = num2cell(g.get('LAYERTICKS'));
-                if isa(g, "MultiplexBUD")
-                    ylayerlabels = ['{' sprintf('''%d'' ', layerlabels{end:-1:1}) '}'];
-                else
-                    ylayerlabels = ['{' sprintf('''%.2f'' ', layerlabels{end:-1:1}) '}'];
-                end
+                ylayerlabels = ['{' sprintf('''%d'' ', layerlabels{end:-1:1}) '}'];
             end
 
             pr.set( ...

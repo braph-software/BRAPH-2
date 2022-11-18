@@ -42,12 +42,7 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 %%% ¡prop!
 DENSITIES (parameter, rvector) is the vector of densities.
 %%%% ¡default!
-[1:1:10]
-%%%% ¡gui!
-pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeGroup_CON_FUN_MP_GA_BUD.DENSITIES, ...
-    'MIN', 0, 'MAX', 100, ...
-    'DEFAULT', AnalyzeGroup_CON_FUN_MP_GA_BUD.getPropDefault('DENSITIES'), ...
-    varargin{:});
+0
 
 %% ¡props_update!
 
@@ -75,7 +70,6 @@ fmax = a.get('FREQUENCYRULEMAX');
 densities = a.get('DENSITIES'); % this is a vector
 A = cell(1, 2);
 data = cell(1, 2);
-layerlabels = {};
 
 for i = 1:1:gr.get('SUB_DICT').length()
     sub = gr.get('SUB_DICT').getItem(i);
