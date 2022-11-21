@@ -9,7 +9,7 @@ or binary undirected multigraphs with fixed densities.
 %% ¡props!
 
 %%% ¡prop!
-AVERAGE (result, cell) is the group  average.
+AVERAGE (result, matrix) is the group  average.
 %%%% ¡calculate!
 gr = a.get('GR');
 data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
@@ -17,7 +17,7 @@ data = cat(2, data_list{:})';
 value = mean(data);
 
 %%% ¡prop!
-STD (result, cell) is the group  std.
+STD (result, matrix) is the group  std.
 %%%% ¡calculate!
 gr = a.get('GR');
 data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
