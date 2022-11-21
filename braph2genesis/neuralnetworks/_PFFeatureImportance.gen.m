@@ -84,7 +84,11 @@ if ~braph2_testing
             pf.update_gui_tbl_sym()
         end
     else
-        % restore default values
+        if ~isempty(varargin)&& ~ischar(varargin{1}) && varargin{1} == pf.getPropProp('MEASURES') && pf.get('MEASURES')
+            questdlg('MEASURES visualization applies for the input of structural data only.', ...
+                'User Request', ...
+                'Ok', 'Ok');
+        end
         if size(varargin, 2) > 0 && (strcmp(pf.getPropTag(varargin{1}), 'measures')) && pf.get('SPHS')
             sph_dict = pf.get('SPH_DICT');
             for i = 1:sph_dict.length
@@ -176,6 +180,11 @@ if (~isempty(varargin) || pf.prop_set('EDGES', varargin)) && ~braph2_testing && 
     end
     set(pf.toolbar_edges, 'State', pf.get('EDGES'))
 elseif ~isempty(pf.retrieve_edges()) && ~isempty(varargin)  && ~ischar(varargin{1})
+    if varargin{1} == pf.getPropProp('EDGES') && pf.get('EDGES')
+        questdlg('EDGES visualization applies for the input of adjacency matrix only.', ...
+            'User Request', ...
+            'Ok', 'Ok');
+    end
     if varargin{1} == pf.getPropProp('THRESHOLD') || varargin{1} == pf.getPropProp('EDGES')
         pf.link_edges_off([], [])
         pf.arrow_edges_off([], [])

@@ -22,6 +22,17 @@ contextmenu
 %
 menu_export_to_xls
 
+%% ¡props!
+%%% ¡prop!
+BA (data, item) is a brain atlas.
+%%%% ¡settings!
+'BrainAtlas'
+%%%% ¡default!
+BrainAtlas()
+
+%%% ¡prop!
+INPUT_LABEL (data, classlist) represents the the label of input, which can be either graph or measure.
+
 %% ¡methods!
 function p_out = draw(pr, varargin)
     %DRAW draws the panel of the cell property.
@@ -125,11 +136,11 @@ function cb_xslider_nn(pr)
     set(pr.xslider, 'Value', round(get(pr.xslider, 'Value')))
     pr.update();
     el = pr.get('el');
-    measure_labels = el.get('Input_Label');
+    measure_labels = pr.get('Input_Label');
     if string(pr.xslider.MajorTickLabels(pr.xslider.Value)) == 'nodal'
         idx_nodal_measures = cellfun(@(x) Measure.is_nodal(x), measure_labels, 'UniformOutput',false);
         set(pr.table, 'columnname', measure_labels(cell2mat(idx_nodal_measures)));
-        set(pr.table, 'rowname', el.get('BA').get('BR_DICT').getKeys());
+        set(pr.table, 'rowname', pr.get('BA').get('BR_DICT').getKeys());
     elseif string(pr.xslider.MajorTickLabels(pr.xslider.Value)) == 'global'
         idx_global_measures = cellfun(@(x) Measure.is_global(x), measure_labels, 'UniformOutput',false);
         set(pr.table, 'columnname', measure_labels(cell2mat(idx_global_measures)));
@@ -139,10 +150,10 @@ function cb_xslider_nn(pr)
         measures_binodal = measure_labels(cell2mat(idx_binodal_measures));
         measures_binodal_all = {};
         for i = 1:length(measures_binodal)
-            measures_binodal_all = [measures_binodal_all, strcat(measures_binodal(i), el.get('BA').get('BR_DICT').getKeys())];
+            measures_binodal_all = [measures_binodal_all, strcat(measures_binodal(i), pr.get('BA').get('BR_DICT').getKeys())];
         end
         set(pr.table, 'columnname', measures_binodal_all);
-        set(pr.table, 'rowname', el.get('BA').get('BR_DICT').getKeys());
+        set(pr.table, 'rowname', pr.get('BA').get('BR_DICT').getKeys());
     else
         set(pr.table, 'columnname', eval(pr.getPropDefault('COLUMNNAME')));
         set(pr.table, 'rowname', eval(pr.getPropDefault('ROWNAME')));

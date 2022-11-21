@@ -135,7 +135,6 @@ function [inputs, num_features, masks] = reconstruct_inputs(nn, gr)
 %   this function will flatten the input into a vector for each datapoint
 %   and return the number of features for input layer as well.
     
-    
     if gr.get('SUB_DICT').length() == 0
         inputs = [];
         num_features = 0;
