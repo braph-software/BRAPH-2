@@ -52,7 +52,7 @@ A (result, cell) is the symmetric non-negative adjacency matrix of the weighted 
 B = g.get('B');
 
 varargin = {}; %% TODO add props to manage the relevant properties of symmetrize, dediagonalize, semipositivize, standardize
-B = diag(B, varargin{:}); %% preserve only diagonal values 
+% B = diag(B, varargin{:}); %% this does not make sense, nor its like braph 1
 B = semipositivize(B, varargin{:}); %% removes negative weights
 B = standardize(B, varargin{:}); %% ensures all weights are between 0 and 1
 
