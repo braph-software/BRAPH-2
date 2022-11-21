@@ -22,7 +22,7 @@ negativity = Graph.NONNEGATIVE;
 %% ¡props!
 
 %%% ¡prop!
-B (data, smatrix) is the input graph adjacency matrix.
+B (data, matrix) is the input graph adjacency matrix.
 %%%% ¡gui!
 bas = g.get('BAS');
 if ~isempty(bas)
