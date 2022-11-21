@@ -1,4 +1,4 @@
-%% Pipeline Neural Networks Regression Cross Validation ST
+%% Pipeline Neural Networks Regression Cross Validation Structural Data
 %
 % This is the pipeline script to perform cross validation on regression by neural networks for one group of subjects with structural data.
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).

@@ -1,4 +1,4 @@
-%% Pipeline Neural Networks Classification CON WU
+%% Pipeline Neural Networks Classification Connectivity WU
 %
 % This is the pipeline script to perform classification by neural networks for two groups of subjects with connectivity data and weighted undirected graphs.
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).

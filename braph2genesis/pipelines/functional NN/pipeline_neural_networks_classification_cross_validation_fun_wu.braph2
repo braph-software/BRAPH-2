@@ -1,4 +1,4 @@
-%% Pipeline Neural Networks Classification Cross Validation FUN WU
+%% Pipeline Neural Networks Classification Cross Validation Functional WU
 %
 % This is the pipeline script to perform cross validation on classification with sex by neural networks for two groups of subjects with functional data and weighted undirected graphs.
 % 1. It loads a brain atlas from an XLS file (e.g., craddock_atlas.xlsx).
