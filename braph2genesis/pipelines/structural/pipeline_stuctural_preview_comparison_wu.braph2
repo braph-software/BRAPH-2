@@ -12,5 +12,11 @@ ba = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load Brain Atlas from X
 gr1 = ImporterGroupSubjectST_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group ST 1 from XLS % Group ST 1
 gr2 = ImporterGroupSubjectST_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group ST 2 from XLS % Group ST 2
 
-%% Analysis
-a_Prev = PreviewGroups_ST_WU('GR1', gr1, 'GR2', gr2); % Preview Groups % Preview
+%% Analysis 1
+a_PREV1 = AnalyzeGroup_ST_Preview('GR', gr1); % Analyze Group 1 % Group 1 Analysis
+
+%% Analysis 2
+a_PREV2 = AnalyzeGroup_ST_Preview('GR', gr2, 'TEMPLATE', a_WU1); % Analyze Group 2 % Group 2 Analysis
+
+%% Preview
+a_Prev = CompareGroup('P', 1000, 'A1', a_PREV1, 'A2', a_PREV2, 'MEMORIZE', true); % Preview Groups % Preview

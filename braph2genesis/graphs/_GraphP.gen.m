@@ -1,4 +1,4 @@
-% ¡header!
+%% ¡header!
 GraphP < Graph (g, preview weighted undirected graph) is a preview weighted undirected graph.
 
 %% ¡description!
