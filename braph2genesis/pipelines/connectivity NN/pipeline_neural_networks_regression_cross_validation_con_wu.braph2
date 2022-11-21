@@ -1,4 +1,4 @@
-%% Pipeline Neural Networks Regression Cross Validation CON WU
+%% Pipeline Neural Networks Regression Cross Validation Connectivity WU
 %
 % This is the pipeline script to perform cross validation on regression with age by neural networks for one group of subjects with connectivity data and weighted undirected graphs.
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).

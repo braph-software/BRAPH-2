@@ -15,7 +15,7 @@ LAYERS (parameter, rvector) is a vector representing the number of neurons in ea
 %%%% ¡default!
 [100 100]
 %%%% ¡gui!
-pr = PanelPropRVectorSmart('EL', nncv, 'PROP', NNRegressorCrossValidation.LAYERS, 'MAX', 100000, 'MIN', 1, varargin{:});
+pr = PanelPropRVectorSmart('EL', nncv, 'PROP', NNRegressorCrossValidation.LAYERS, 'MAX', 100000, 'MIN', 1, 'UNIQUE_VALUE', false, varargin{:});
 
 %%% ¡prop!
 BATCH (parameter, scalar) is the size of the mini-batch to use for each training iteration.

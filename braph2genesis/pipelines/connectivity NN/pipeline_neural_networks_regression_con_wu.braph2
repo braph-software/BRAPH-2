@@ -1,4 +1,4 @@
-%% Pipeline Neural Networks Regression CON WU
+%% Pipeline Neural Networks Regression Connectivity WU
 %
 % This is the pipeline script to perform regression on age by neural networks for one group of subjects with connectivity data and weighted undirected graphs.
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).

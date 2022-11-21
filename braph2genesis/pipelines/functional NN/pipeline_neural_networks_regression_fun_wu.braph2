@@ -1,4 +1,4 @@
-%% Pipeline Neural Networks Regression FUN WU
+%% Pipeline Neural Networks Regression Functional WU
 %
 % This is the pipeline script to perform regression on age by neural networks for one group of subjects with functional data and weighted undirected graphs.
 % 1. It loads a brain atlas from an XLS file (e.g., craddock_atlas.xlsx).

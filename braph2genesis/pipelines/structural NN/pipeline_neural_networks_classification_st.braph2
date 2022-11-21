@@ -1,4 +1,4 @@
-%% Pipeline Neural Networks Classification ST
+%% Pipeline Neural Networks Classification Structural Data
 %
 % This is the pipeline script to perform classification by neural networks for two groups of subjects with structural data.
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
