@@ -42,10 +42,12 @@ function p_out = draw(pr, varargin)
     el = pr.get('EL');
     prop = pr.get('PROP');
 
-    if size(el.get(prop), 2) == 1
-        pr.set('XSLIDERLABELS', 'pr.oneLayerLabel()');
-    elseif size(el.get(prop), 2) == 2
-        pr.set('XSLIDERLABELS', 'pr.twoLayerLabel()');
+    if ~isa(el.getr(prop), 'NoValue')
+        if size(el.get(prop), 2) == 1
+            pr.set('XSLIDERLABELS', 'pr.oneLayerLabel()');
+        elseif size(el.get(prop), 2) == 2
+            pr.set('XSLIDERLABELS', 'pr.twoLayerLabel()');
+        end
     end
     
     pr.p = draw@PanelPropCell(pr, varargin{:});
@@ -118,6 +120,15 @@ function redraw(pr, varargin)
     % See also draw, update, PanelElement, s.
     
     pr.cb_xslider_nn();
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    if ~isa(el.getr(prop), 'NoValue')
+        if size(el.get(prop), 2) == 1
+            pr.set('XSLIDERLABELS', 'pr.oneLayerLabel()');
+        elseif size(el.get(prop), 2) == 2
+            pr.set('XSLIDERLABELS', 'pr.twoLayerLabel()');
+        end
+    end
     redraw@PanelPropCell(pr, varargin{:});
 end
 function cb_xslider_nn(pr)
