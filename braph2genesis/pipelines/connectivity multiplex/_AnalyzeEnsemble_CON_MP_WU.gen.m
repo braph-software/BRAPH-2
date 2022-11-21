@@ -63,11 +63,9 @@ if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
 end
 
 for i = 1:1:gr.get('SUB_DICT').length()
-    A = {};
 	sub = gr.get('SUB_DICT').getItem(i);
     CON_MP = sub.getr('CON_MP');
-    L = sub.get('L');
-    
+
     g = MultiplexWU( ...
         'ID', ['g ' sub.get('ID')], ...
         'BAS', ba, ...
