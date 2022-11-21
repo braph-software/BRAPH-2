@@ -137,7 +137,7 @@ CON_MP (data, cell) is a cell containing L matrices corresponding connectivity m
 %%%% ¡check_value!
 br_number = sub.get('BA').get('BR_DICT').length();
 num_layers = sub.get('L');
-check = (iscell(value) && isequal(length(value), num_layers)  && isequal( cellfun(@(v) size(v), value), [br_number, br_number])) || (isempty(value) && br_number == 0);
+check = (iscell(value) && isequal(length(value), num_layers)  && isequal( cellfun(@(v) size(v, 1), value), ones(1, num_layers)*br_number)  && isequal( cellfun(@(v) size(v, 2), value), ones(1, num_layers)*br_number)) || (isempty(value) && br_number == 0);
 if check
     msg = 'All ok!';
 else   
