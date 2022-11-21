@@ -52,7 +52,6 @@ A (result, cell) is the symmetric non-negative adjacency matrix of the weighted 
 B = g.get('B');
 
 varargin = {}; %% TODO add props to manage the relevant properties of symmetrize, dediagonalize, semipositivize, standardize
-B = symmetrize(B, varargin{:}); %% enforces symmetry of adjacency matrix
 B = diag(B, varargin{:}); %% preserve only diagonal values 
 B = semipositivize(B, varargin{:}); %% removes negative weights
 B = standardize(B, varargin{:}); %% ensures all weights are between 0 and 1
