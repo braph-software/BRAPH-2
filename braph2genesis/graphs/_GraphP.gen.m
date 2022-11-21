@@ -1,29 +1,29 @@
 %% ¡header!
 GraphP < Graph (g, preview weighted undirected graph) is a preview weighted undirected graph.
 
-%% ¡description!
+%%% ¡description!
 In a graph with weighted values in the diagonal
 
-%% ¡graph!
+%%% ¡graph!
 graph = Graph.GRAPH;
 
-%% ¡connectivity!
+%%% ¡connectivity!
 connectivity = Graph.WEIGHTED;
 
-%% ¡directionality!
+%%% ¡directionality!
 directionality = Graph.UNDIRECTED;
 
-%% ¡selfconnectivity!
+%%% ¡selfconnectivity!
 selfconnectivity = Graph.NONSELFCONNECTED;
 
-%% ¡negativity!
+%%% ¡negativity!
 negativity = Graph.NONNEGATIVE;
 
-% ¡props!
+%% ¡props!
 
-%% ¡prop!
+%%% ¡prop!
 B (data, smatrix) is the input graph adjacency matrix.
-%%% ¡gui!
+%%%% ¡gui!
 bas = g.get('BAS');
 if ~isempty(bas)
     ba = bas{1};
@@ -39,16 +39,16 @@ pr = PanelPropMatrix('EL', g, 'PROP', GraphP.B, ...
     varargin{:});
 
 
-% ¡props_update!
+%% ¡props_update!
 
-%% ¡prop!
+%%% ¡prop!
 TEMPLATE (parameter, item) is the graph template to set the graph and measure parameters.
-%%% ¡settings!
+%%%% ¡settings!
 'GraphP'
 
-%% ¡prop!
+%%% ¡prop!
 A (result, cell) is the symmetric non-negative adjacency matrix of the weighted undirected graph.
-%%% ¡calculate!
+%%%% ¡calculate!
 B = g.get('B');
 
 varargin = {}; %% TODO add props to manage the relevant properties of symmetrize, dediagonalize, semipositivize, standardize
@@ -59,7 +59,7 @@ B = standardize(B, varargin{:}); %% ensures all weights are between 0 and 1
 
 A = {B};
 value = A;
-%%% ¡gui!
+%%%% ¡gui!
 bas = g.get('BAS');
 if ~isempty(bas)
     ba = bas{1};
