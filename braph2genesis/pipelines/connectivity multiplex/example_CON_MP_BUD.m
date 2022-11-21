@@ -1,0 +1,79 @@
+%EXAMPLE_CON_MP_BUD
+% Script example pipeline CON MP BUD
+
+clear variables %#ok<*NASGU>
+
+%% Load BrainAtlas
+im_ba = ImporterBrainAtlasXLS( ...
+    'FILE', [fileparts(which('example_CON_MP_BUD')) filesep 'example data CON_MP' filesep 'aal90_atlas.xlsx'], ...
+    'WAITBAR', true ...
+    );
+
+ba = im_ba.get('BA');
+
+%% Load Groups of SubjectCON_MP
+im_gr1 = ImporterGroupSubjectCON_MP_XLS( ...
+    'DIRECTORY', [fileparts(which('example_CON_MP_BUD')) filesep 'example data CON_MP' filesep 'xls' filesep 'GroupName1'], ...
+    'BA', ba, ...
+    'WAITBAR', true ...
+    );
+
+gr1 = im_gr1.get('GR');
+
+im_gr2 = ImporterGroupSubjectCON_MP_XLS( ...
+    'DIRECTORY', [fileparts(which('example_CON_MP_BUD')) filesep 'example data CON_MP' filesep 'xls' filesep 'GroupName2'], ...
+    'BA', ba, ...
+    'WAITBAR', true ...
+    );
+
+gr2 = im_gr2.get('GR');
+
+%% Analysis CON MP BUD
+densities = 0:10:100;
+
+a_BUD1 = AnalyzeEnsemble_CON_MP_BUD( ...
+    'GR', gr1, ...
+    'DENSITIES', densities ...
+    );
+
+a_BUD2 = AnalyzeEnsemble_CON_MP_BUD( ...
+    'GR', gr2, ...
+    'DENSITIES', densities ...
+    );
+
+% measure calculation
+overlappingdegree_BUD1 = a_BUD1.getMeasureEnsemble('OverlappingDegree').get('M');
+overlappingdegree_av_BUD1 = a_BUD1.getMeasureEnsemble('OverlappingDegreeAv').get('M');
+edgeoverlap_BUD1 = a_BUD1.getMeasureEnsemble('EdgeOverlap').get('M');
+
+overlappingdegree_BUD2 = a_BUD2.getMeasureEnsemble('OverlappingDegree').get('M');
+overlappingdegree_av_BUD2 = a_BUD2.getMeasureEnsemble('OverlappingDegreeAv').get('M');
+edgeoverlap_BUD2 = a_BUD2.getMeasureEnsemble('EdgeOverlap').get('M');
+
+% comparison
+c_BUD = CompareEnsemble( ...
+    'P', 10, ...
+    'A1', a_BUD1, ...
+    'A2', a_BUD2, ...
+    'WAITBAR', true, ...
+    'VERBOSE', false, ...
+    'MEMORIZE', true ...
+    );
+
+overlappingdegree_BUD_diff = c_BUD.getComparison('OverlappingDegree').get('DIFF');
+overlappingdegree_BUD_p1 = c_BUD.getComparison('OverlappingDegree').get('P1');
+overlappingdegree_BUD_p2 = c_BUD.getComparison('OverlappingDegree').get('P2');
+overlappingdegree_BUD_cil = c_BUD.getComparison('OverlappingDegree').get('CIL');
+overlappingdegree_BUD_ciu = c_BUD.getComparison('OverlappingDegree').get('CIU');
+
+overlappingdegree_av_BUD_diff = c_BUD.getComparison('OverlappingDegreeAv').get('DIFF');
+overlappingdegree_av_BUD_p1 = c_BUD.getComparison('OverlappingDegreeAv').get('P1');
+overlappingdegree_av_BUD_p2 = c_BUD.getComparison('OverlappingDegreeAv').get('P2');
+overlappingdegree_av_BUD_cil = c_BUD.getComparison('OverlappingDegreeAv').get('CIL');
+overlappingdegree_av_BUD_ciu = c_BUD.getComparison('OverlappingDegreeAv').get('CIU');
+
+edgeoverlap_BUD_diff = c_BUD.getComparison('EdgeOverlap').get('DIFF');
+edgeoverlap_BUD_p1 = c_BUD.getComparison('EdgeOverlap').get('P1');
+edgeoverlap_BUD_p2 = c_BUD.getComparison('EdgeOverlap').get('P2');
+edgeoverlap_BUD_cil = c_BUD.getComparison('EdgeOverlap').get('CIL');
+edgeoverlap_BUD_ciu = c_BUD.getComparison('EdgeOverlap').get('CIU');
