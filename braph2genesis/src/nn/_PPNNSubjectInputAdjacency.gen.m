@@ -50,9 +50,9 @@ function p_out = draw(pr, varargin)
     el = pr.get('EL');
     prop = pr.get('PROP');
 
-    if size(el.get(prop), 2) == 1
+    if size(el.getr(prop), 2) == 1
         pr.set('XSLIDERLABELS', 'pr.oneLayerLabel()');
-    elseif size(el.get(prop), 2) == 2
+    elseif size(el.getr(prop), 2) == 2
         pr.set('XSLIDERLABELS', 'pr.twoLayerLabel()');
     end
     
