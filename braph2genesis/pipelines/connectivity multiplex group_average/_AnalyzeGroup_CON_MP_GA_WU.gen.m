@@ -36,7 +36,7 @@ if ~isempty(gr) && ~isa(gr, 'NoValue') && subjects_number > 0
     ba = gr.get('SUB_DICT').getItem(1).get('BA');
 end
 
-A_conmp = [];
+A_conmp = cell(1, 2);
 for i = 1:1:subjects_number
     sub = gr.get('SUB_DICT').getItem(i);
     CON_MP = sub.getr('CON_MP');
