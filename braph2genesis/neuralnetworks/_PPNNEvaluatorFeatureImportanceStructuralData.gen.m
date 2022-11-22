@@ -133,8 +133,10 @@ function y_slider = return_y_slider(pr)
     y_slider = pr.yslider
 end
 function lbls = oneLayerLabel(pr)
-    lbls = {'Modality 1'};
+    lbls = {'L1'};
 end
-function lbls = twoLayerLabel(pr)
-    lbls = {'Modality 1', 'Modality 2'};
+function lbls = LayerLabel(pr)
+    el = pr.get('EL');
+    L = size(el.get(prop), 1);
+    lbls = cellfun(@(x) ['L' num2str(x)], num2cell(1:L), 'UniformOutput', false);
 end

@@ -1,7 +1,7 @@
 %% Pipeline Neural Networks Classification Functional WU
 %
 % This is the pipeline script to perform classification by neural networks for two groups of subjects with functional data and weighted undirected graphs.
-% 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
+% 1. It loads a brain atlas from an XLS file (e.g., aal90_atlas.xlsx).
 % 2. It loads the data of two groups of subjects from two directories (e.g., GroupName1 and GroupName2) containing XLS files of each subject.
 % 3. It constructs the dataset using with functional matrices (FUN) based on graphs (WU).
 % 4. It splits the dataset into training set and testing set.

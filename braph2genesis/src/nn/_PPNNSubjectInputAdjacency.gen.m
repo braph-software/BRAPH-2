@@ -53,7 +53,7 @@ function p_out = draw(pr, varargin)
     if size(el.getr(prop), 2) == 1
         pr.set('XSLIDERLABELS', 'pr.oneLayerLabel()');
     elseif size(el.getr(prop), 2) == 2
-        pr.set('XSLIDERLABELS', 'pr.twoLayerLabel()');
+        pr.set('XSLIDERLABELS', 'pr.LayerLabel()');
     end
     
     pr.p = draw@PanelPropCell(pr, varargin{:});
@@ -147,6 +147,8 @@ end
 function lbls = oneLayerLabel(pr)
     lbls = {'L1'};
 end
-function lbls = twoLayerLabel(pr)
-    lbls = {'L1', 'L2'};
+function lbls = LayerLabel(pr)
+    el = pr.get('EL');
+    L = size(el.getr(prop), 2);
+    lbls = cellfun(@(x) ['L' num2str(x)], num2cell(1:L), 'UniformOutput', false);
 end
