@@ -22,6 +22,14 @@ contextmenu
 %
 menu_export_to_xls
 
+%% ¡props!
+%%% ¡prop!
+BA (data, item) is a brain atlas.
+%%%% ¡settings!
+'BrainAtlas'
+%%%% ¡default!
+BrainAtlas()
+
 %% ¡methods!
 function p_out = draw(pr, varargin)
     %DRAW draws the panel of the cell property.
@@ -42,9 +50,9 @@ function p_out = draw(pr, varargin)
     el = pr.get('EL');
     prop = pr.get('PROP');
 
-    if size(el.get(prop), 2) == 1
+    if size(el.getr(prop), 2) == 1
         pr.set('XSLIDERLABELS', 'pr.oneLayerLabel()');
-    elseif size(el.get(prop), 2) == 2
+    elseif size(el.getr(prop), 2) == 2
         pr.set('XSLIDERLABELS', 'pr.twoLayerLabel()');
     end
     
@@ -123,9 +131,8 @@ end
 function cb_xslider_nn(pr)
     set(pr.xslider, 'Value', round(get(pr.xslider, 'Value')))
     pr.update();
-    el = pr.get('el');
-    set(pr.table, 'columnname', el.get('BA').get('BR_DICT').getKeys());
-    set(pr.table, 'rowname', el.get('BA').get('BR_DICT').getKeys());
+    set(pr.table, 'columnname', pr.get('BA').get('BR_DICT').getKeys());
+    set(pr.table, 'rowname', pr.get('BA').get('BR_DICT').getKeys());
 end
 
 function p = return_p(pr)

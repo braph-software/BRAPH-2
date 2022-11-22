@@ -8,6 +8,45 @@ on root mean square error (RMSE).
 %% ¡props!
 
 %%% ¡prop!
+FEATURE_MASK (result, cell) is a feature mask generated in accordance with mutual information analysis.
+%%%% ¡calculate!
+if nne.get('GR').get('SUB_DICT').length() == 0
+    value = {};
+else
+    ratio = nne.get('NN').get('FEATURE_SELECTION_RATIO');
+    mask_tmp = nne.get('GR').get('FEATURE_SELECTION_MASK');
+    if isempty(mask_tmp)
+        value = {};
+    else
+        for i = 1:1:numel(mask_tmp)
+            mask = mask_tmp{i};
+            mask = rescale(mask);
+            [~, idx_all] = sort(mask(:), 'descend');
+            percentile = nne.get('NN').get('FEATURE_SELECTION_RATIO');
+            num_top_idx = ceil(percentile * numel(mask));
+            mask(idx_all(1:num_top_idx)) = 1;
+            mask(idx_all(end - (length(idx_all) - num_top_idx - 1):end)) = 0;
+            masks{i} = mask;
+        end
+        value = masks;
+    end
+end
+%%%% ¡gui!
+if ~braph2_testing && nne.get('GR').get('SUB_DICT').length() > 0
+    ba = nne.get('GR').get('SUB_DICT').getItem(1).get('BA');
+    if string(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_TYPE')) == 'graph_measures'
+        pr = PPNNSubjectInputMeasure('EL', nne, 'PROP', NNClassifierEvaluator.FEATURE_MASK, 'BA', ba, 'INPUT_LABEL', nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), varargin{:});
+        pr.set('XSLIDERLABELS', 'el.measure_types()');
+    elseif string(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_TYPE')) == 'structural_data'
+        pr = PPNNSubjectInputStructuralData('EL', nne, 'PROP', NNClassifierEvaluator.FEATURE_MASK, 'BA', ba, varargin{:});
+    elseif string(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_TYPE')) == 'adjacency_matrices'
+        pr = PPNNSubjectInputAdjacency('EL', nne, 'PROP', NNClassifierEvaluator.FEATURE_MASK, 'BA', ba, varargin{:});
+    else
+        pr = PanelPropCell('EL', nne, 'PROP', NNClassifierEvaluator.FEATURE_MASK, varargin{:});
+    end
+end
+
+%%% ¡prop!
 FEATURE_PERMUTATION_IMPORTANCE (result, cell) is feature importance evaluated by permuting the feature with random numbers
 %%%% ¡calculate!
 if nne.get('GR').get('SUB_DICT').length() == 0
@@ -27,6 +66,7 @@ elseif ~any(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL')
         value = {};
     else
         % scramble the input feature 1 by 1
+        wb = braph2waitbar(nne.get('WAITBAR'), 0, 'Obtaining feature importance in parallel, please wait...');
         parfor i = 1:1:num_features
             scrambled_inputs = inputs;
             permuted_value = squeeze(normrnd(mean(inputs(:, :, i, :)), std(inputs(:, :, i, :)), squeeze(size(inputs(:, :, i, :)))));
@@ -34,6 +74,7 @@ elseif ~any(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL')
             scrambled_loss = double(sqrt(mean((net.predict(scrambled_inputs) - targets).^2)));
             feature_importance(i)= scrambled_loss / original_loss;
         end
+        braph2waitbar(wb, 'close')
         feature_importance =  double(rescale(feature_importance));
         if nne.get('NN').get('FEATURE_SELECTION_RATIO') == 1
             feature_importance = reshape(feature_importance, gr.get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').length(), []);
@@ -186,6 +227,8 @@ else
             'age', subs{i}.get('age'), ...
             'sex', subs{i}.get('sex'), ...
             'input', subs{i}.get('input'), ...
+            'INPUT_TYPE', subs{i}.get('INPUT_TYPE'), ...
+            'INPUT_LABEL', subs{i}.get('INPUT_LABEL'), ...
             'PREDICTION', {predictions(i, :)}, ...
             'TARGET', subs{i}.get('TARGET'), ...
             'TARGET_NAME', subs{i}.get('TARGET_NAME') ...
@@ -195,4 +238,9 @@ else
     nn_gr_pred.set('SUB_DICT', sub_dict);
 
     value = nn_gr_pred;
+end
+
+%% ¡staticmethods!
+function lbls = measure_types()
+    lbls = {'Global', 'Nodal', 'Binodal'};
 end
