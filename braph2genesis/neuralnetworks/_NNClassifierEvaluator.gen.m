@@ -16,17 +16,21 @@ if nne.get('GR').get('SUB_DICT').length() == 0
 else
     ratio = nne.get('NN').get('FEATURE_SELECTION_RATIO');
     mask_tmp = nne.get('GR').get('FEATURE_SELECTION_MASK');
-    for i = 1:1:numel(mask_tmp)
-        mask = mask_tmp{i};
-        mask = rescale(mask);
-        [~, idx_all] = sort(mask(:), 'descend');
-        percentile = nne.get('NN').get('FEATURE_SELECTION_RATIO');
-        num_top_idx = ceil(percentile * numel(mask));
-        mask(idx_all(1:num_top_idx)) = 1;
-        mask(idx_all(end - (length(idx_all) - num_top_idx - 1):end)) = 0;
-        masks{i} = mask;
+    if isempty(mask_tmp)
+        value = {};
+    else
+        for i = 1:1:numel(mask_tmp)
+            mask = mask_tmp{i};
+            mask = rescale(mask);
+            [~, idx_all] = sort(mask(:), 'descend');
+            percentile = nne.get('NN').get('FEATURE_SELECTION_RATIO');
+            num_top_idx = ceil(percentile * numel(mask));
+            mask(idx_all(1:num_top_idx)) = 1;
+            mask(idx_all(end - (length(idx_all) - num_top_idx - 1):end)) = 0;
+            masks{i} = mask;
+        end
+        value = masks;
     end
-    value = masks;
 end
 %%%% ¡gui!
 if ~braph2_testing && nne.get('GR').get('SUB_DICT').length() > 0
