@@ -102,5 +102,5 @@ SEX (data, option) is an option containing the sex of the subject (female/male).
 
 %% ¡staticmethods!
 function lbls = measure_types()
-    lbls = {'global', 'nodal', 'binodal'};
+    lbls = {'Global', 'Nodal', 'Binodal'};
 end

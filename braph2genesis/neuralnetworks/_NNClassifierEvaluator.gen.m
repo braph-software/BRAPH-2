@@ -308,3 +308,8 @@ else
 
     value = gr_pred;
 end
+
+%% ¡staticmethods!
+function lbls = measure_types()
+    lbls = {'Global', 'Nodal', 'Binodal'};
+end

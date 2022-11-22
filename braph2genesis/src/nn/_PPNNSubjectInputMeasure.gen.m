@@ -137,15 +137,15 @@ function cb_xslider_nn(pr)
     pr.update();
     el = pr.get('el');
     measure_labels = pr.get('Input_Label');
-    if string(pr.xslider.MajorTickLabels(pr.xslider.Value)) == 'nodal'
+    if pr.xslider.Value > 0 && string(pr.xslider.MajorTickLabels(pr.xslider.Value)) == 'Nodal'
         idx_nodal_measures = cellfun(@(x) Measure.is_nodal(x), measure_labels, 'UniformOutput',false);
         set(pr.table, 'columnname', measure_labels(cell2mat(idx_nodal_measures)));
         set(pr.table, 'rowname', pr.get('BA').get('BR_DICT').getKeys());
-    elseif string(pr.xslider.MajorTickLabels(pr.xslider.Value)) == 'global'
+    elseif pr.xslider.Value > 0 && string(pr.xslider.MajorTickLabels(pr.xslider.Value)) == 'Global'
         idx_global_measures = cellfun(@(x) Measure.is_global(x), measure_labels, 'UniformOutput',false);
         set(pr.table, 'columnname', measure_labels(cell2mat(idx_global_measures)));
         set(pr.table, 'rowname', eval(pr.getPropDefault('ROWNAME')));
-    elseif string(pr.xslider.MajorTickLabels(pr.xslider.Value)) == 'binodal'
+    elseif pr.xslider.Value > 0 && string(pr.xslider.MajorTickLabels(pr.xslider.Value)) == 'Binodal'
         idx_binodal_measures = cellfun(@(x) Measure.is_binodal(x), measure_labels, 'UniformOutput',false);
         measures_binodal = measure_labels(cell2mat(idx_binodal_measures));
         measures_binodal_all = {};
