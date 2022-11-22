@@ -87,6 +87,15 @@ function update(pr)
     % See also draw, redraw, PanelElement.
 
     update@PanelPropCell(pr);
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    if ~isa(el.getr(prop), 'NoValue')
+        if size(el.get(prop), 2) == 1
+            pr.set('XSLIDERLABELS', 'pr.oneLayerLabel()');
+        else
+            pr.set('XSLIDERLABELS', 'pr.LayerLabel()');
+        end
+    end
 end
 function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
