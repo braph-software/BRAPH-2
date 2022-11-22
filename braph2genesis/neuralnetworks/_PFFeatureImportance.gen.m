@@ -176,11 +176,11 @@ if (~isempty(varargin) || pf.prop_set('EDGES', varargin)) && ~braph2_testing && 
                     end
                 end
             end
-        elseif varargin{1} == pf.getPropProp('EDGES')
-            questdlg('EDGES visualization only applies to the input of adjacency matrix.', ...
-                'User Request', ...
-                'Ok', 'Ok');
         end
+    elseif varargin{1} == pf.getPropProp('EDGES')
+        questdlg('EDGES visualization only applies to the input of adjacency matrix.', ...
+            'User Request', ...
+            'Ok', 'Ok');
     end
     set(pf.toolbar_edges, 'State', pf.get('EDGES'))
 elseif ~isempty(pf.retrieve_edges()) && ~isempty(varargin)  && ~ischar(varargin{1})
@@ -270,8 +270,8 @@ function plot_EDGES(pf)
 end
 function [r, c] = obtain_connections(pf)
     % obtain true connections
-    r = [];
-    c = [];
+    r = 0;
+    c = 0;
     pf.plot_EDGES()
 end
 function str = tostring(pf, varargin)

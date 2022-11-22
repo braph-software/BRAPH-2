@@ -87,6 +87,15 @@ function update(pr)
     % See also draw, redraw, PanelElement.
 
     update@PanelPropCell(pr);
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    if ~isa(el.getr(prop), 'NoValue')
+        if size(el.get(prop), 2) == 1
+            pr.set('XSLIDERLABELS', 'pr.oneLayerLabel()');
+        else
+            pr.set('XSLIDERLABELS', 'pr.LayerLabel()');
+        end
+    end
 end
 function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
@@ -117,7 +126,6 @@ function redraw(pr, varargin)
 end
 function cb_xslider_nn(pr)
     set(pr.xslider, 'Value', round(get(pr.xslider, 'Value')))
-    pr.update();
     el = pr.get('el');
     set(pr.table, 'columnname', 'Value');
     set(pr.table, 'rowname', el.get('GR').get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').getKeys());
@@ -137,6 +145,7 @@ function lbls = oneLayerLabel(pr)
 end
 function lbls = LayerLabel(pr)
     el = pr.get('EL');
-    L = size(el.get(prop), 1);
+    prop = pr.get('PROP');
+    L = size(el.get(prop), 2);
     lbls = cellfun(@(x) ['L' num2str(x)], num2cell(1:L), 'UniformOutput', false);
 end
