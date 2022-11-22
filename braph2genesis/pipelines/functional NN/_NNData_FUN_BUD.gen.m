@@ -1,9 +1,9 @@
 %% ¡header!
-NNData_CON_BUD < NNData (nnd, data for neural network) produces a dataset to train or test a neural netowrk model for connectivity data. 
+NNData_FUN_BUD < NNData (nnd, data for neural network) produces a dataset to train or test a neural netowrk model for functional data. 
 
 %% ¡description!
 This NN data generates a group of NN subjects, each of which contains the 
-input as adjacency matrices or graph measures from connectivity data. 
+input as adjacency matrices or graph measures from functional data. 
 The generated NN group can be used to train or test a neural network model.
 
 %% ¡props!
@@ -13,14 +13,42 @@ DENSITIES (parameter, rvector) is the vector of densities.
 %%%% ¡default!
 50
 
+%%% ¡prop!
+REPETITION(parameter, scalar) is the number of repetitions.
+%%%% ¡default!
+1
+
+%%% ¡prop!
+FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value.
+%%%% ¡default!
+0
+%%% ¡prop!
+FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value.
+%%%% ¡default!
+Inf
+
+%%% ¡prop!
+CORRELATION_RULE (parameter, option) is the correlation type.
+%%%% ¡settings!
+Correlation.CORRELATION_RULE_LIST
+%%%% ¡default!
+Correlation.CORRELATION_RULE_LIST{1}
+
+%%% ¡prop!
+NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
+%%%% ¡settings!
+Correlation.NEGATIVE_WEIGHT_RULE_LIST
+%%%% ¡default!
+Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
+
 %% ¡props_update!
 
 %%% ¡prop!
 ANALYZE_ENSEMBLE (data, item) contains the graphs of the group.
 %%%% ¡settings!
-'AnalyzeEnsemble_CON_BUD'
+'AnalyzeEnsemble_FUN_BUD'
 %%%% ¡default!
-AnalyzeEnsemble_CON_BUD()
+AnalyzeEnsemble_FUN_BUD()
 %%%% ¡postprocessing!
 if ~isa(nnd.get('GR'), 'NoValue')
     nnd.memorize('ANALYZE_ENSEMBLE').set('GR', nnd.get('GR'));
@@ -41,21 +69,20 @@ if ~braph2_testing
     end
 end
 
-
 %%% ¡prop!
-INPUT_TYPE (parameter, option) is the input type for training or testing the NN.
+INPUT_TYPE (data, option) is the input type for training or testing the NN.
 %%%% ¡settings!
 {'adjacency_matrices' 'graph_measures'}
 
 %%% ¡prop!
-G (parameter, item) is the graph for calculating the graph measures.
+GR (data, item) is a group of subjects defined as SubjectFUN class.
 %%%% ¡default!
-MultigraphBUD()
+Group('SUB_CLASS', 'SubjectFUN')
 
 %%% ¡prop!
-GR (data, item) is a group of subjects defined as SubjectCON class.
+G (data, item) is the graph for calculating the graph measures.
 %%%% ¡default!
-Group('SUB_CLASS', 'SubjectCON')
+MultigraphBUD()
 
 %%% ¡prop!
 GR_NN (result, item) is a group of NN subjects.
@@ -64,11 +91,13 @@ GR_NN (result, item) is a group of NN subjects.
 %%%% ¡default!
 NNGroup('SUB_CLASS', 'NNSubject', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject'))
 %%%% ¡calculate!
-densities = nnd.get('DENSITIES');
-
 wb = braph2waitbar(nnd.get('WAITBAR'), 0, 'Constructing NN input ...');
 
+densities = nnd.get('DENSITIES');
 gr = nnd.get('GR');
+T = nnd.get('REPETITION');
+fmin = nnd.get('FREQUENCYRULEMIN');
+fmax = nnd.get('FREQUENCYRULEMAX');
 nn_gr = NNGroup( ...
     'SUB_CLASS', 'NNSubject', ...
     'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject') ...
@@ -90,20 +119,29 @@ end
 nn_sub_dict = nn_gr.get('SUB_DICT');
 
 for i = 1:1:gr.get('SUB_DICT').length()
-    sub = gr.get('SUB_DICT').getItem(i);
+	sub = gr.get('SUB_DICT').getItem(i);
+    data = sub.getr('FUN');
+    fs = 1 / T;
+    
+    if fmax > fmin && T > 0
+        NFFT = 2 * ceil(size(data, 1) / 2);
+        ft = fft(data, NFFT);  % Fourier transform
+        f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
+        ft(f < fmin | f > fmax, :) = 0;
+        data = ifft(ft, NFFT);
+    end
+    
+    A = Correlation.getAdjacencyMatrix(data, nnd.get('CORRELATION_RULE'), nnd.get('NEGATIVE_WEIGHT_RULE'));
+    
     g = MultigraphBUD( ...
         'ID', ['g ' sub.get('ID')], ...
-        'B', Callback('EL', sub, 'TAG', 'CON'), ...
+        'B', A, ...
         'DENSITIES', densities, ...
         'BAS', atlas ...
         );
-
+    
     if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
-        adj = g.get('A'); 
-        input = {};
-        for j = 1:length(adj)
-            input = [input adj{j, j}];
-        end
+        input = g.get('A'); 
         input_label = {'MultigraphBUD'};
 
     elseif string(nnd.get('INPUT_TYPE')) == "graph_measures"
@@ -142,7 +180,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
         );
 
     nn_sub_dict.add(nn_sub);
-    
+
 	braph2waitbar(wb, .30 + .70 * i / gr.get('SUB_DICT').length(), ['Constructing subject ' num2str(i) ' of ' num2str(gr.get('SUB_DICT').length())  ' in ' gr.get('ID') ' ...'])
 end
 
@@ -155,16 +193,16 @@ value = nn_gr;
 %%% ¡prop!
 TEMPLATE (parameter, item) is the analysis template to set the parameters.
 %%%% ¡settings!
-'NNData_CON_BUD'
+'NNData_FUN_BUD'
 %%%% ¡postprocessing!
-if nnd.prop_set(NNData_CON_BUD.TEMPLATE, varargin{:})
+if nnd.prop_set(NNData_FUN_BUD.TEMPLATE, varargin{:})
     varargin = {};
     
     parameters = nnd.getProps(Category.PARAMETER);
     for i = 1:1:length(parameters)
         parameter = parameters(i);
         
-        if parameter ~= NNData_CON_BUD.TEMPLATE
+        if parameter ~= NNData_FUN_BUD.TEMPLATE
             varargin{length(varargin) + 1} = parameter;
             varargin{length(varargin) + 1} = Callback('EL', nnd.get('TEMPLATE'), 'PROP', parameter);
         end
@@ -178,10 +216,10 @@ end
 %%%% ¡name!
 Example 1
 %%%% ¡code!
-example_NNCV_CON_BUD_Regression_GraphMeasures
+example_NN_FUN_BUD_Classification_GraphMeasures
 
 %%% ¡test!
 %%%% ¡name!
 Example 2
 %%%% ¡code!
-example_NNCV_CON_BUD_Classification_AdjacencyMatrix
+example_NNCV_FUN_BUD_Classification_GraphMeasures
