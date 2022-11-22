@@ -227,16 +227,20 @@ FEATURE_IMPORTANCE (result, cell) is the feature importance obtained with permut
 %%%% ¡calculate!
 if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
     nne_dict = nncv.memorize('NNE_DICT');
+    wb = braph2waitbar(nncv.get('WAITBAR'), 0, 'Analysing feature importance...');
     feature_importances = nne_dict.getItem(1).get('FEATURE_PERMUTATION_IMPORTANCE');
+    braph2waitbar(wb, .30 + .70 * 1 / nne_dict.length, ['Analysing feature importance for the fold, ' num2str(1) 'out of', num2str(nne_dict.length)]);
     if length(feature_importances) == 0
         feature_importances = {};
     else
         for i = 2:1:nne_dict.length()
             feature_importance = nne_dict.getItem(i).get('FEATURE_PERMUTATION_IMPORTANCE');
             feature_importances = cellfun(@(x, y) x + y, feature_importances, feature_importance, 'UniformOutput', false);
+            braph2waitbar(wb, .30 + .70 * i / nne_dict.length, ['Analysing feature importance for the fold, ' num2str(i) 'out of', num2str(nne_dict.length)]);
         end
         feature_importances = cellfun(@(x) x/nne_dict.length, feature_importances, 'UniformOutput', false);
     end
+    braph2waitbar(wb, 'close')
 else
     feature_importances = {};
 end

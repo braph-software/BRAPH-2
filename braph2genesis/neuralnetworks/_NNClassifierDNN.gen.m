@@ -48,7 +48,7 @@ FEATURE_SELECTION_RATIO (parameter, scalar) is the ratio of selected features.
 1
 
 %%% ¡prop!
-VERBOSE (parameter, logical) is an indicator to display trining progress information.
+VERBOSE (parameter, logical) is an indicator to display training progress information.
 %%%% ¡default!
 false
 

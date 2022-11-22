@@ -85,7 +85,7 @@ if ~braph2_testing
         end
     else
         if ~isempty(varargin)&& ~ischar(varargin{1}) && varargin{1} == pf.getPropProp('MEASURES') && pf.get('MEASURES')
-            questdlg('MEASURES visualization only applies for the input of structural data.', ...
+            questdlg('MEASURES visualization only applies to the input of structural data.', ...
                 'User Request', ...
                 'Ok', 'Ok');
         end
@@ -176,15 +176,14 @@ if (~isempty(varargin) || pf.prop_set('EDGES', varargin)) && ~braph2_testing && 
                     end
                 end
             end
+        elseif varargin{1} == pf.getPropProp('EDGES')
+            questdlg('EDGES visualization only applies to the input of adjacency matrix.', ...
+                'User Request', ...
+                'Ok', 'Ok');
         end
     end
     set(pf.toolbar_edges, 'State', pf.get('EDGES'))
 elseif ~isempty(pf.retrieve_edges()) && ~isempty(varargin)  && ~ischar(varargin{1})
-    if varargin{1} == pf.getPropProp('EDGES') && pf.get('EDGES')
-        questdlg('EDGES visualization only applies for the input of adjacency matrix.', ...
-            'User Request', ...
-            'Ok', 'Ok');
-    end
     if varargin{1} == pf.getPropProp('THRESHOLD') || varargin{1} == pf.getPropProp('EDGES')
         pf.link_edges_off([], [])
         pf.arrow_edges_off([], [])

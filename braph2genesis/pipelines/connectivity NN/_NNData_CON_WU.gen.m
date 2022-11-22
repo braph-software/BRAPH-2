@@ -56,7 +56,7 @@ GR_NN (result, item) is a group of NN subjects.
 %%%% ¡default!
 NNGroup('SUB_CLASS', 'NNSubject', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'NNSubject'))
 %%%% ¡calculate!
-wb = braph2waitbar(nnd.get('WAITBAR'), 0, 'Constructing NN input ...');
+wb = braph2waitbar(nnd.get('WAITBAR'), 0, 'Constructing NN input...');
 
 gr = nnd.get('GR');
 nn_gr = NNGroup( ...

@@ -69,7 +69,7 @@ elseif ~any(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL')
         wb = braph2waitbar(nne.get('WAITBAR'), 0, 'Obtaining feature importance in parallel, please wait...');
         parfor i = 1:1:num_features
             scrambled_inputs = inputs;
-            permuted_value = squeeze(normrnd(mean(inputs(:, :, i, :)), std(inputs(:, :, i, :)), squeeze(size(inputs(:, :, i, :)))));
+            permuted_value = squeeze(normrnd(mean(inputs(:, :, i, :)), std(inputs(:, :, i, :)), squeeze(size(inputs(:, :, i, :))))) + squeeze(randn(size(inputs(:, :, i, :)))) + mean(inputs(:, :, i, :));
             scrambled_inputs(:, :, i, :) = permuted_value;
             scrambled_loss = double(sqrt(mean((net.predict(scrambled_inputs) - targets).^2)));
             feature_importance(i)= scrambled_loss / original_loss;
