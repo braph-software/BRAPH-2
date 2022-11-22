@@ -50,9 +50,9 @@ function p_out = draw(pr, varargin)
     el = pr.get('EL');
     prop = pr.get('PROP');
     
-    if size(el.getr(prop), 1) == 1
+    if size(el.getr(prop), 2) == 1
         pr.set('XSLIDERLABELS', 'pr.oneLayerLabel()');
-    elseif size(el.getr(prop), 1) == 2
+    else
         pr.set('XSLIDERLABELS', 'pr.LayerLabel()');
     end
 
@@ -100,6 +100,15 @@ function update(pr)
     % See also draw, redraw, PanelElement.
 
     update@PanelPropCell(pr);
+    el = pr.get('EL');
+    prop = pr.get('PROP');
+    if ~isa(el.getr(prop), 'NoValue')
+        if size(el.get(prop), 2) == 1
+            pr.set('XSLIDERLABELS', 'pr.oneLayerLabel()');
+        else
+            pr.set('XSLIDERLABELS', 'pr.LayerLabel()');
+        end
+    end
 end
 function redraw(pr, varargin)
     %REDRAW resizes the property panel and repositions its graphical objects.
@@ -139,16 +148,17 @@ function p = return_p(pr)
     p = pr.p;
 end
 function x_slider = return_x_slider(pr)
-    x_slider = pr.xslider   
+    x_slider = pr.xslider; 
 end
 function y_slider = return_y_slider(pr)
-    y_slider = pr.yslider
+    y_slider = pr.yslider;
 end
 function lbls = oneLayerLabel(pr)
     lbls = {'L1'};
 end
 function lbls = LayerLabel(pr)
     el = pr.get('EL');
-    L = size(el.getr(prop), 1);
+    prop = pr.get('PROP');
+    L = size(el.get(prop), 2);
     lbls = cellfun(@(x) ['L' num2str(x)], num2cell(1:L), 'UniformOutput', false);
 end

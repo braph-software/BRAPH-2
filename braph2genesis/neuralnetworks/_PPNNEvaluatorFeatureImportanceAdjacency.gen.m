@@ -143,16 +143,17 @@ function p = return_p(pr)
     p = pr.p;
 end
 function x_slider = return_x_slider(pr)
-    x_slider = pr.xslider   
+    x_slider = pr.xslider;   
 end
 function y_slider = return_y_slider(pr)
-    y_slider = pr.yslider
+    y_slider = pr.yslider;
 end
 function lbls = oneLayerLabel(pr)
     lbls = {'L1'};
 end
 function lbls = LayerLabel(pr)
     el = pr.get('EL');
+    prop = pr.get('PROP');
     L = size(el.get(prop), 2);
     lbls = cellfun(@(x) ['L' num2str(x)], num2cell(1:L), 'UniformOutput', false);
 end

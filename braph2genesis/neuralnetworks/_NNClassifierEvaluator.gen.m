@@ -109,6 +109,11 @@ elseif ~any(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL')
     end
 else
     value = {};
+    if ~braph2_testing
+        questdlg('Feature importance analysis does not apply to the input of graph measures.', ...
+                'User Request', ...
+                'Ok', 'Ok');
+    end
 end
 %%%% ¡gui!
 if ~braph2_testing && ~isa(nne.get('GR').get('SUB_DICT'), 'NoValue')

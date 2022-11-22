@@ -31,8 +31,10 @@ pr = PPNNDataInputType('EL', nnd, 'PROP', NNData.INPUT_TYPE, 'WAITBAR', Callback
 
 %%% ¡prop!
 G (parameter, item) is the graph for calculating the graph measures.
+%%%% ¡settings!
+'Graph'
 %%%% ¡default!
-GraphWU()
+Graph()
 
 %%% ¡prop!
 GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
@@ -46,7 +48,7 @@ MEASURES (parameter, idict) is the graph measures as input to NN.
 %%%% ¡default!
 IndexedDictionary('IT_CLASS', 'MeasureEnsemble', 'IT_KEY', MeasureEnsemble.MEASURE);
 %%%% ¡postprocessing!
-if isempty(nnd.get('MEASURES').get('IT_LIST'))
+if ~braph2_testing && isempty(nnd.get('MEASURES').get('IT_LIST'))
     if ~strcmp(nnd.get('INPUT_TYPE'), 'structural_data')
         nnd.getMeasureEnsemble('Degree');
     end
@@ -112,13 +114,16 @@ function me = getMeasureEnsemble(nnd, measure_class, varargin)
     m_list = Graph.getCompatibleMeasureList(g);
     a = nnd.getPropDefault('ANALYZE_ENSEMBLE');
     a.set('GR', nnd.get('GR'));
-
-    assert( ...
-        contains(measure_class, m_list), ...
-        [BRAPH2.STR ':' a.getClass() ':' BRAPH2.WRONG_INPUT], ...
-        [BRAPH2.STR ':' a.getClass() ':' BRAPH2.WRONG_INPUT ' '], ...
-        [a.getClass() ' utilizes Graphs of type ' g.getClass() '.' measure_class ' is not a compatible Measure with ' g.getClass() '. Please use Graph function getCompatibleMeasureList for more information.']);
     
+    if ~isempty(m_list)
+        assert( ...
+            contains(measure_class, m_list), ...
+            [BRAPH2.STR ':' a.getClass() ':' BRAPH2.WRONG_INPUT], ...
+            [BRAPH2.STR ':' a.getClass() ':' BRAPH2.WRONG_INPUT ' '], ...
+            [a.getClass() ' utilizes Graphs of type ' g.getClass() '.' measure_class ' is not a compatible Measure with ' g.getClass() '. Please use Graph function getCompatibleMeasureList for more information.']);
+    else
+        return
+    end
     me_dict = nnd.memorize('MEASURES');
     if me_dict.containsKey(measure_class)
         me = me_dict.getItem(measure_class);

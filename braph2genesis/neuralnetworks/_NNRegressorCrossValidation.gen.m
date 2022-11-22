@@ -220,6 +220,9 @@ if ~braph2_testing && ~isa(nncv.get('GR').get('SUB_DICT'), 'NoValue')
     elseif string(nncv.get('GR').get('SUB_DICT').getItem(1).get('INPUT_TYPE')) == 'adjacency_matrices'
         pr = PPNNEvaluatorFeatureImportanceAdjacency('EL', nncv, 'PROP', NNRegressorCrossValidation.FEATURE_IMPORTANCE, varargin{:});
     else
+        questdlg('Feature importance analysis does not apply to the input of graph measures.', ...
+                'User Request', ...
+                'Ok', 'Ok');
         pr = PanelPropCell('EL', nncv, 'PROP', NNRegressorCrossValidation.FEATURE_IMPORTANCE, varargin{:});
     end
 end
