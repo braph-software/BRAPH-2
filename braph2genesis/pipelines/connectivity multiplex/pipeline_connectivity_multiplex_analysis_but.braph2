@@ -10,7 +10,7 @@
 ba = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load Brain Atlas XLS % Brain Atlas
 
 %% Group
-gr = ImporterGroupSubjectCON_MP_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group CON MP XLS 
+gr = ImporterGroupSubjectCON_MP_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group CON MP XLS % Group CON MP
 
 %% Analysis
-a_BUT = AnalyzeEnsemble_CON_MP_BUT('GR', gr, 'THRESHOLDS', [-1:.25:1]); % Analyze Ensemble
+a_BUT = AnalyzeEnsemble_CON_MP_BUT('GR', gr, 'THRESHOLDS', [-1:.25:1]); % Analyze Group % Analyzed Group

@@ -10,8 +10,8 @@
 ba = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load a Brain Atlas XLS % Brain Atlas
 
 %% Groups
-gr1 = ImporterGroupSubjectST_MP_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group ST 1 from XLS % Group ST 1
-gr2 = ImporterGroupSubjectST_MP_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group ST 2 from XLS % Group ST 2
+gr1 = ImporterGroupSubjectST_MP_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group ST MP 1 from XLS % Group ST 1
+gr2 = ImporterGroupSubjectST_MP_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group ST MP 2 from XLS % Group ST 2
 
 %% Dataset Construction
 nnd1 = NNData_ST_MM('GR', gr1, 'TARGET_NAME', gr1.get('ID')); % NN Dataset for Group 1 % NN Group ST 1
