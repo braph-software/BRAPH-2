@@ -24,9 +24,9 @@ FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value.
 Inf
 
 %%% ¡prop!
-CORRELATION_RULE (parameter, option) is the correlation type.
+CORRELATION_RULE (parameter, option) is the correlation type for functional data.
 %%%% ¡settings!
-Correlation.CORRELATION_RULE_LIST
+Correlation.CORRELATION_RULE_LIST(1:3)
 %%%% ¡default!
 Correlation.CORRELATION_RULE_LIST{1}
 
