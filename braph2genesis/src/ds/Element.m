@@ -1121,27 +1121,69 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         end     
     end
     methods % operators
-        function check = isequal(el1, el2)
+        function check = isequal(el1, el2, level)
             %ISEQUAL determines whether two elements are equal (values, locked).
             %
             % CHECK = ISEQUAL(EL1, EL2) determines whether elements EL1 and EL2 are
             %  equal in terms of values and locked status.
-            %  POINTER can be either a property number (PROP) or tag (TAG).
             %
             % Note that, instead, EL1 == EL2 detemines whether the two handles 
             %  EL1 and EL2 refer to the very same element.
+            %
+            % See also getElementList.
+
+            check = false;
+
+            if nargin > 2 && level > 6
+                 check = true; % break infinite loops
+                 return;
+            end
+
+            if nargin <= 2
+                level = 1;
+            end
             
-            % % % IMPORTANT NOTE:
-            % This code does not work for element that contain recursively
-            % other elements (e.g. BA containing PFBA containg BA).
-            
-            check = isa(el2, el1.getClass());
-            
-            if check
-                for prop = 1:1:el1.getPropNumber()
-                    check = check && isequal(el1.getr(prop), el2.getr(prop)) && (el1.isLocked(prop) == el2.isLocked(prop));
+            if ~isa(el2, 'Element') || ~strcmp(el1.getClass(), el2.getClass()) % isequal is called by el1, which thus must be an Element
+                return % check = false;
+            else
+                el1_list = el1.getElementList();
+                el2_list = el2.getElementList();
+                
+                if length(el1_list) ~= length(el2_list)
+                    return % check = false;
+                else
+                    sub_element = {};
+                    count = 1;
+                    for i = 1:1:length(el1_list)
+                        if ~strcmp(el1_list{i}.getClass(), el2_list{i}.getClass())
+                            return % check = false;
+                        else 
+                            for prop = 1:1:el1_list{i}.getPropNumber()
+                                % get same names subelements
+                                if contains([Format.ITEM Format.ITEMLIST Format.IDICT], el1_list{i}.getPropFormat(prop)) ...
+                                        && ~strcmp(el1_list{i}.getPropTag(prop), 'template') % template is no required imho
+                                   
+                                    % i want to skip tags of type item
+                                    % previously checked, so it is not
+                                    % recursive
+                                    if any(contains(sub_element,el2_list{i}.getPropTag(prop)))
+                                        continue;
+                                    end
+                                    sub_element{count} = el2_list{i}.getPropTag(prop); %#ok<AGROW> % lets add tags to a list
+                                    count = count + 1;
+
+                                    if ~isequal(el1_list{i}.getr(prop), el2_list{i}.getr(prop), level+1) ...
+                                            && el1_list{i}.isLocked(prop) ~= el2_list{i}.isLocked(prop) ...
+                                            return;  % check = false;
+                                    end
+                                end
+                            end
+                        end
+                    end
                 end
             end
+            
+            check = true; % only if all tests have been passed
         end
     end
     methods (Static, Access=protected) % conditioning
