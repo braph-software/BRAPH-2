@@ -49,7 +49,7 @@ ANALYZE_ENSEMBLE (result, item) contains the graphs of the group.
 %%%% ¡settings!
 'AnalyzeEnsemble_CON_FUN_MP_BUD'
 %%%% ¡postprocessing!
-if ~isa(nnd.get('GR'), 'NoValue')
+if ~braph2_testing && ~isa(nnd.get('GR'), 'NoValue')
     nnd.memorize('ANALYZE_ENSEMBLE').set('GR', nnd.get('GR'));
 end
 
