@@ -43,8 +43,6 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 ANALYZE_ENSEMBLE (result, item) contains the graphs of the group.
 %%%% ¡settings!
 'AnalyzeEnsemble_CON_FUN_MP_WU'
-%%%% ¡default!
-AnalyzeEnsemble_CON_FUN_MP_WU()
 %%%% ¡postprocessing!
 if ~isa(nnd.get('GR'), 'NoValue')
     nnd.memorize('ANALYZE_ENSEMBLE').set('GR', nnd.get('GR'));
@@ -72,8 +70,8 @@ INPUT_TYPE (data, option) is the input type for training or testing the NN.
 
 %%% ¡prop!
 G (data, item) is the graph for calculating the graph measures.
-%%%% ¡default!
-MultiplexWU()
+%%%% ¡settings!
+'MultiplexWU'
 
 %%% ¡prop!
 GR (data, item) is a group of subjects defined as SubjectFUN class.

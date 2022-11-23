@@ -25,6 +25,27 @@ WAITBAR (metadata, logical) detemines whether to show the waitbar.
 true
 
 %%% ¡prop!
+TEMPLATE (parameter, item) is the analysis template to set the parameters.
+%%%% ¡settings!
+'NNData'
+%%%% ¡postprocessing!
+if nnd.prop_set(NNData.TEMPLATE, varargin{:})
+    varargin = {};
+    
+    parameters = nnd.getProps(Category.PARAMETER);
+    for i = 1:1:length(parameters)
+        parameter = parameters(i);
+        
+        if parameter ~= NNData.TEMPLATE
+            varargin{length(varargin) + 1} = parameter;
+            varargin{length(varargin) + 1} = Callback('EL', nnd.get('TEMPLATE'), 'PROP', parameter);
+        end
+    end
+    
+    nnd.set(varargin{:});
+end
+
+%%% ¡prop!
 INPUT_TYPE (parameter, option) is the input type for training or testing the NN.
 %%%% ¡gui!
 pr = PPNNDataInputType('EL', nnd, 'PROP', NNData.INPUT_TYPE, 'WAITBAR', Callback('EL', nnd, 'TAG', 'WAITBAR'), varargin{:});
@@ -33,8 +54,6 @@ pr = PPNNDataInputType('EL', nnd, 'PROP', NNData.INPUT_TYPE, 'WAITBAR', Callback
 G (parameter, item) is the graph for calculating the graph measures.
 %%%% ¡settings!
 'Graph'
-%%%% ¡default!
-Graph()
 
 %%% ¡prop!
 GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
@@ -60,8 +79,6 @@ pr = PPNNDataMeasures('EL', nnd, 'PROP', NNData.G, 'WAITBAR', Callback('EL', nnd
 ANALYZE_ENSEMBLE (data, item) contains the graphs of the group.
 %%%% ¡settings!
 'AnalyzeEnsemble'
-%%%% ¡default!
-AnalyzeEnsemble()
 
 %%% ¡prop!
 TARGET_NAME (data, string) is the name of the traget.
@@ -72,34 +89,11 @@ TARGET_NAME (data, string) is the name of the traget.
 GR (data, item) is a group of subjects defined as subject class.
 %%%% ¡settings!
 'Group'
-%%%% ¡default!
-Group()
 
 %%% ¡prop!
 GR_NN (result, item) is a group of NN subjects.
 %%%% ¡settings!
 'NNGroup'
-
-%%% ¡prop!
-TEMPLATE (parameter, item) is the analysis template to set the parameters.
-%%%% ¡settings!
-'NNData'
-%%%% ¡postprocessing!
-if nnd.prop_set(NNData.TEMPLATE, varargin{:})
-    varargin = {};
-    
-    parameters = nnd.getProps(Category.PARAMETER);
-    for i = 1:1:length(parameters)
-        parameter = parameters(i);
-        
-        if parameter ~= NNData.TEMPLATE
-            varargin{length(varargin) + 1} = parameter;
-            varargin{length(varargin) + 1} = Callback('EL', nnd.get('TEMPLATE'), 'PROP', parameter);
-        end
-    end
-    
-    nnd.set(varargin{:});
-end
 
 %% ¡methods!
 function me = getMeasureEnsemble(nnd, measure_class, varargin)

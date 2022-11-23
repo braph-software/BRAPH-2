@@ -22,6 +22,7 @@ REPETITION(parameter, scalar) is the number of repetitions.
 FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value.
 %%%% ¡default!
 0
+
 %%% ¡prop!
 FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value.
 %%%% ¡default!
@@ -47,8 +48,6 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 ANALYZE_ENSEMBLE (data, item) contains the graphs of the group.
 %%%% ¡settings!
 'AnalyzeEnsemble_FUN_BUD'
-%%%% ¡default!
-AnalyzeEnsemble_FUN_BUD()
 %%%% ¡postprocessing!
 if ~isa(nnd.get('GR'), 'NoValue')
     nnd.memorize('ANALYZE_ENSEMBLE').set('GR', nnd.get('GR'));
@@ -57,7 +56,7 @@ end
 %%% ¡prop!
 GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
 %%%% ¡settings!
-'GraphWU'
+'MultigraphBUD'
 %%%% ¡postprocessing!
 if ~braph2_testing
     if isa(nnd.getr('GRAPH_TEMPLATE'), 'NoValue')
@@ -81,8 +80,8 @@ Group('SUB_CLASS', 'SubjectFUN')
 
 %%% ¡prop!
 G (data, item) is the graph for calculating the graph measures.
-%%%% ¡default!
-MultigraphBUD()
+%%%% ¡settings!
+'MultigraphBUD'
 
 %%% ¡prop!
 GR_NN (result, item) is a group of NN subjects.

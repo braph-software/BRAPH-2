@@ -42,8 +42,6 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 ANALYZE_ENSEMBLE (data, item) contains the graphs of the group.
 %%%% ¡settings!
 'AnalyzeEnsemble_FUN_WU'
-%%%% ¡default!
-AnalyzeEnsemble_FUN_WU()
 %%%% ¡postprocessing!
 if ~isa(nnd.get('GR'), 'NoValue')
     nnd.memorize('ANALYZE_ENSEMBLE').set('GR', nnd.get('GR'));
@@ -76,8 +74,8 @@ Group('SUB_CLASS', 'SubjectFUN')
 
 %%% ¡prop!
 G (data, item) is the graph for calculating the graph measures.
-%%%% ¡default!
-GraphWU()
+%%%% ¡settings!
+'GraphWU'
 
 %%% ¡prop!
 GR_NN (result, item) is a group of NN subjects.

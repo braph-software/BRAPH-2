@@ -12,8 +12,6 @@ The generated NN group can be used to train or test a neural network model.
 ANALYZE_ENSEMBLE (data, item) contains the graphs of the group.
 %%%% ¡settings!
 'AnalyzeEnsemble_CON_WU'
-%%%% ¡default!
-AnalyzeEnsemble_CON_WU()
 %%%% ¡postprocessing!
 if ~isa(nnd.get('GR'), 'NoValue')
     nnd.memorize('ANALYZE_ENSEMBLE').set('GR', nnd.get('GR'));
@@ -46,8 +44,7 @@ Group('SUB_CLASS', 'SubjectCON')
 
 %%% ¡prop!
 G (parameter, item) is the graph for calculating the graph measures.
-%%%% ¡default!
-GraphWU()
+'GraphWU'
 
 %%% ¡prop!
 GR_NN (result, item) is a group of NN subjects.

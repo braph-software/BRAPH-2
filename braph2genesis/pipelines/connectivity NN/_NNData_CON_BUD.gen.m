@@ -19,8 +19,6 @@ DENSITIES (parameter, rvector) is the vector of densities.
 ANALYZE_ENSEMBLE (data, item) contains the graphs of the group.
 %%%% ¡settings!
 'AnalyzeEnsemble_CON_BUD'
-%%%% ¡default!
-AnalyzeEnsemble_CON_BUD()
 %%%% ¡postprocessing!
 if ~isa(nnd.get('GR'), 'NoValue')
     nnd.memorize('ANALYZE_ENSEMBLE').set('GR', nnd.get('GR'));
@@ -29,7 +27,7 @@ end
 %%% ¡prop!
 GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
 %%%% ¡settings!
-'GraphWU'
+'MultigraphBUD'
 %%%% ¡postprocessing!
 if ~braph2_testing
     if isa(nnd.getr('GRAPH_TEMPLATE'), 'NoValue')
@@ -49,8 +47,8 @@ INPUT_TYPE (parameter, option) is the input type for training or testing the NN.
 
 %%% ¡prop!
 G (parameter, item) is the graph for calculating the graph measures.
-%%%% ¡default!
-MultigraphBUD()
+%%%% ¡settings!
+'MultigraphBUD'
 
 %%% ¡prop!
 GR (data, item) is a group of subjects defined as SubjectCON class.
