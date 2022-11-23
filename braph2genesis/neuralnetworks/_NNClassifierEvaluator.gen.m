@@ -16,6 +16,7 @@ if nne.get('GR').get('SUB_DICT').length() == 0
 else
     ratio = nne.get('NN').get('FEATURE_SELECTION_RATIO');
     mask_tmp = nne.get('GR').get('FEATURE_SELECTION_MASK');
+    masks = cell(size(mask_tmp));
     if isempty(mask_tmp)
         value = {};
     else
