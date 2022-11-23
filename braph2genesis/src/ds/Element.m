@@ -1160,18 +1160,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         else 
                             for prop = 1:1:el1_list{i}.getPropNumber()
                                 % get same names subelements
-                                if contains([Format.ITEM Format.ITEMLIST Format.IDICT], el1_list{i}.getPropFormat(prop)) ...
-                                        && ~strcmp(el1_list{i}.getPropTag(prop), 'template') % template is no required imho
-                                   
-                                    % i want to skip tags of type item
-                                    % previously checked, so it is not
-                                    % recursive
-                                    if any(contains(sub_element,el2_list{i}.getPropTag(prop)))
-                                        continue;
-                                    end
-                                    sub_element{count} = el2_list{i}.getPropTag(prop); %#ok<AGROW> % lets add tags to a list
-                                    count = count + 1;
-
+                                if contains([Format.ITEM Format.ITEMLIST Format.IDICT], el1_list{i}.getPropFormat(prop))                                   
                                     if ~isequal(el1_list{i}.getr(prop), el2_list{i}.getr(prop), level+1) ...
                                             && el1_list{i}.isLocked(prop) ~= el2_list{i}.isLocked(prop) ...
                                             return;  % check = false;
