@@ -1,6 +1,6 @@
-%% Pipeline Neural Networks Classification Cross Validation Multimodality Structural Data
+%% Pipeline Neural Networks Classification Cross Validation Multiple Structural Data
 %
-% This is the pipeline script to perform cross validation on classification by neural networks for two groups of subjects with structural data.
+% This is the pipeline script to perform cross validation on classification by neural networks for two groups of subjects with multiple structural data.
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
 % 2. It loads the data of two groups of subjects from two directories (e.g., GroupName1 and GroupName2) containing XLS files of each subject.
 % 3. It constructs the dataset using structural data.

@@ -1,6 +1,6 @@
-%% Pipeline Neural Networks Classification Multimodality Structural Data
+%% Pipeline Neural Networks Classification Multiple Structural Data
 %
-% This is the pipeline script to perform classification by neural networks for two groups of subjects with multimodality structural data.
+% This is the pipeline script to perform classification by neural networks for two groups of subjects with multiple structural data.
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
 % 2. It loads the data of two groups of subjects from XLS files.
 % 3. It constructs the dataset using structural data.
