@@ -1127,52 +1127,35 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % CHECK = ISEQUAL(EL1, EL2) determines whether elements EL1 and EL2 are
             %  equal in terms of values and locked status.
             %
-            % Note that, instead, EL1 == EL2 detemines whether the two handles 
+            % Note that, instead, EL1 == EL2 detemines whether the two handles
             %  EL1 and EL2 refer to the very same element.
             %
             % See also getElementList.
 
-            check = false;
+            check = isa(el2, el1.getClass());
 
-            if nargin > 2 && level > 6
-                 check = true; % break infinite loops
-                 return;
+            if nargin > 2 && level > 8
+                check = true; % break infinite loops
+                return;
             end
 
             if nargin <= 2
                 level = 1;
             end
-            
-            if ~isa(el2, 'Element') || ~strcmp(el1.getClass(), el2.getClass()) % isequal is called by el1, which thus must be an Element
-                return % check = false;
-            else
-                el1_list = el1.getElementList();
-                el2_list = el2.getElementList();
-                
-                if length(el1_list) ~= length(el2_list)
-                    return % check = false;
-                else
-                    sub_element = {};
-                    count = 1;
-                    for i = 1:1:length(el1_list)
-                        if ~strcmp(el1_list{i}.getClass(), el2_list{i}.getClass())
-                            return % check = false;
-                        else 
-                            for prop = 1:1:el1_list{i}.getPropNumber()
-                                % get same names subelements
-                                if contains([Format.ITEM Format.ITEMLIST Format.IDICT], el1_list{i}.getPropFormat(prop))                                   
-                                    if ~isequal(el1_list{i}.getr(prop), el2_list{i}.getr(prop), level+1) ...
-                                            && el1_list{i}.isLocked(prop) ~= el2_list{i}.isLocked(prop) ...
-                                            return;  % check = false;
-                                    end
-                                end
-                            end
+
+            if check
+                for prop = 1:1:el1.getPropNumber()
+                    if check && contains([Format.ITEM Format.ITEMLIST Format.IDICT], el1.getPropFormat(prop))
+                        if ~isequal(el1.getr(prop), el2.getr(prop), level+1) ...
+                                && el1.isLocked(prop) ~= el2.isLocked(prop) ...
+                                check = false;  % check = false;
                         end
+                    else
+                        check = check && isequal(el1.getr(prop), el2.getr(prop)) && (el1.isLocked(prop) == el2.isLocked(prop));
                     end
+
                 end
             end
-            
-            check = true; % only if all tests have been passed
         end
     end
     methods (Static, Access=protected) % conditioning
