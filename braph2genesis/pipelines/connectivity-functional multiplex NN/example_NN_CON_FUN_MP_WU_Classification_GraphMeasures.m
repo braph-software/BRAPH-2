@@ -69,7 +69,7 @@ nnd1 = NNData_CON_FUN_MP_WU( ...
     'TARGET_NAME', gr1.get('ID') ...
     );
 nnd1.getMeasureEnsemble('Degree');
-nnd1.getMeasureEnsemble('PathLength', 'Rule', 'subgraph');
+nnd1.getMeasureEnsemble('PathLength', 'Rule', 'subgraphs');
 
 gr1_nn = nnd1.get('GR_NN');
 

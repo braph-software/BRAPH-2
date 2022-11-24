@@ -241,10 +241,10 @@ end
 %%%% ¡name!
 Example 1
 %%%% ¡code!
-example_NN_CON_FUN_MP_BUD_Regression_GraphMeasures
+example_NN_CON_FUN_MP_BUD_Classification_GraphMeasures
 
 %%% ¡test!
 %%%% ¡name!
 Example 2
 %%%% ¡code!
-example_NNCV_CON_FUN_MP_BUD_Regression_AdjacencyMatrix
+example_NNCV_CON_FUN_MP_BUD_Classification_GraphMeasures
