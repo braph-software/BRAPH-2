@@ -44,6 +44,7 @@ Group('SUB_CLASS', 'SubjectCON')
 
 %%% ¡prop!
 G (parameter, item) is the graph for calculating the graph measures.
+%%%% ¡settings!
 'GraphWU'
 
 %%% ¡prop!
