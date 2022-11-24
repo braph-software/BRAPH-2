@@ -159,11 +159,3 @@ value = g_dict;
 % % %     
 % % %     pr = PPCompareEnsembleMP_FUN_CPDict_BUD(varargin{:});
 % % % end
-
-%% ¡tests!
-
-%%% ¡test!
-%%%% ¡name!
-Example
-%%%% ¡code!
-% % % example_FUN_MP_BUD

@@ -100,11 +100,3 @@ for i = 1:1:gr.get('SUB_DICT').length()
 end
 
 value = g_dict;
-
-%% ¡tests!
-
-%%% ¡test!
-%%%% ¡name!
-Example
-%%%% ¡code!
-% % % example_CON_MP_BUD
