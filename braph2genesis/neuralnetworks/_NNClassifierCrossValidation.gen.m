@@ -226,21 +226,29 @@ value = nne_dict;
 FEATURE_IMPORTANCE (result, cell) is the feature importance obtained with permutation analysis.
 %%%% ¡calculate!
 if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
-    nne_dict = nncv.memorize('NNE_DICT');
-    wb = braph2waitbar(nncv.get('WAITBAR'), 0, 'Analysing feature importance...');
-    feature_importances = nne_dict.getItem(1).get('FEATURE_PERMUTATION_IMPORTANCE');
-    braph2waitbar(wb, .30 + .70 * 1 / nne_dict.length, ['Analysing feature importance for the fold ' num2str(1) ' out of ', num2str(nne_dict.length), '...']);
-    if length(feature_importances) == 0
-        feature_importances = {};
-    else
-        for i = 2:1:nne_dict.length()
-            feature_importance = nne_dict.getItem(i).get('FEATURE_PERMUTATION_IMPORTANCE');
-            feature_importances = cellfun(@(x, y) x + y, feature_importances, feature_importance, 'UniformOutput', false);
-            braph2waitbar(wb, .30 + .70 * i / nne_dict.length, ['Analysing feature importance for the fold ' num2str(i) ' out of ', num2str(nne_dict.length), '...']);
+    if any(ismember(nncv.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Measure', [], [], true)))
+        if ~braph2_testing
+            questdlg('Feature importance analysis does not apply to the input of graph measures.', ...
+                'User Request', ...
+                'Ok', 'Ok');
         end
-        feature_importances = cellfun(@(x) x/nne_dict.length, feature_importances, 'UniformOutput', false);
+    else
+        nne_dict = nncv.memorize('NNE_DICT');
+        wb = braph2waitbar(nncv.get('WAITBAR'), 0, 'Analysing feature importance...');
+        feature_importances = nne_dict.getItem(1).get('FEATURE_PERMUTATION_IMPORTANCE');
+        braph2waitbar(wb, .30 + .70 * 1 / nne_dict.length, ['Analysing feature importance for the fold ' num2str(1) ' out of ', num2str(nne_dict.length), '...']);
+        if length(feature_importances) == 0
+            feature_importances = {};
+        else
+            for i = 2:1:nne_dict.length()
+                feature_importance = nne_dict.getItem(i).get('FEATURE_PERMUTATION_IMPORTANCE');
+                feature_importances = cellfun(@(x, y) x + y, feature_importances, feature_importance, 'UniformOutput', false);
+                braph2waitbar(wb, .30 + .70 * i / nne_dict.length, ['Analysing feature importance for the fold ' num2str(i) ' out of ', num2str(nne_dict.length), '...']);
+            end
+            feature_importances = cellfun(@(x) x/nne_dict.length, feature_importances, 'UniformOutput', false);
+        end
+        braph2waitbar(wb, 'close')
     end
-    braph2waitbar(wb, 'close')
 else
     feature_importances = {};
 end
@@ -253,9 +261,6 @@ if ~braph2_testing && ~isa(nncv.get('GR').get('SUB_DICT'), 'NoValue')
     elseif string(nncv.get('GR1').get('SUB_DICT').getItem(1).get('INPUT_TYPE')) == 'adjacency_matrices'
         pr = PPNNEvaluatorFeatureImportanceAdjacency('EL', nncv, 'PROP', NNClassifierCrossValidation.FEATURE_IMPORTANCE, varargin{:});
     else
-        questdlg('Feature importance analysis does not apply to the input of graph measures.', ...
-                'User Request', ...
-                'Ok', 'Ok');
         pr = PanelPropCell('EL', nncv, 'PROP', NNClassifierCrossValidation.FEATURE_IMPORTANCE, varargin{:});
     end
 end
