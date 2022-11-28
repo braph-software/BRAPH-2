@@ -33,8 +33,8 @@ Group('SUB_CLASS', 'SubjectCON')
 
 %%% ¡prop!
 ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-%%%% ¡gui!
-% % % pr = PPAnalyzeEnsemble_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_CON_WD.ME_DICT, 'WAITBAR', true, varargin{:});
+%%%% ¡gui_!
+% % % pr = PPAnalyzeEnsembleMP_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_CON_WD.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %%% ¡prop!
 G_DICT (result, idict) is the graph (GraphWD) ensemble obtained from this analysis.
@@ -67,18 +67,6 @@ for i = 1:1:gr.get('SUB_DICT').length()
 end
 
 value = g_dict;
-
-% % % %% ¡methods!
-% % % function pr = getPPCompareEnsemble_CPDict(a, varargin) 
-% % %     %GETPPCOMPAREENSEMBLE_CPDICT returns the comparison ensemble plot panel compatible with the analysis.
-% % %     %
-% % %     % PR = GETPPCOMPAREENSEMBLE_CPDICT(A) returns the comparison ensemble plot panel
-% % %     %  that is compatible with the analyze ensemble.
-% % %     %
-% % %     % See also CompareEnsemble.
-% % %     
-% % %     pr = PPCompareEnsemble_CPDict_WD(varargin{:});
-% % % end
 
 %% ¡tests!
 
