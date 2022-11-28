@@ -75,12 +75,12 @@ a_WU2 = AnalyzeGroup_CON_FUN_MP_GA_WU( ...
 g_WU1 = a_WU1.get('G');
 wmpc_WU1 = g_WU1.getMeasure('WeightedMultiplexParticipation').get('M');
 wmpc_av_WU1 = g_WU1.getMeasure('WeightedMultiplexParticipationAv').get('M');
-edgeov_WU1 = g_WU1.getMeasure('EdgeOverlap').get('M');
+wedgeov_WU1 = g_WU1.getMeasure('WeightedEdgeOverlap').get('M');
 
 g_WU2 = a_WU2.get('G');
 wmpc_WU2 = g_WU2.getMeasure('WeightedMultiplexParticipation').get('M');
 wmpc_av_WU2 = g_WU2.getMeasure('WeightedMultiplexParticipationAv').get('M');
-edgeov_WU2 = g_WU2.getMeasure('EdgeOverlap').get('M');
+wedgeov_WU2 = g_WU2.getMeasure('WeightedEdgeOverlap').get('M');
 
 % comparison
 c_WU = CompareGroup( ...

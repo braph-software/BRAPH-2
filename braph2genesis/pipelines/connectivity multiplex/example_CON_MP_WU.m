@@ -40,11 +40,11 @@ a_WU2 = AnalyzeEnsemble_CON_MP_WU( ...
 % measure calculation
 overlappingdegree_WU1 = a_WU1.getMeasureEnsemble('OverlappingDegree').get('M');
 overlappingdegree_av_WU1 = a_WU1.getMeasureEnsemble('OverlappingDegreeAv').get('M');
-edgeoverlap_WU1 = a_WU1.getMeasureEnsemble('EdgeOverlap').get('M');
+wedgeoverlap_WU1 = a_WU1.getMeasureEnsemble('WeightedEdgeOverlap').get('M');
 
 overlappingdegree_WU2 = a_WU2.getMeasureEnsemble('OverlappingDegree').get('M');
 overlappingdegree_av_WU2 = a_WU2.getMeasureEnsemble('OverlappingDegreeAv').get('M');
-edgeoverlap_WU2 = a_WU2.getMeasureEnsemble('EdgeOverlap').get('M');
+wedgeoverlap_WU2 = a_WU2.getMeasureEnsemble('WeightedEdgeOverlap').get('M');
 
 % comparison
 c_WU = CompareEnsemble( ...
@@ -67,9 +67,3 @@ overlappingdegree_av_WU_p1 = c_WU.getComparison('OverlappingDegreeAv').get('P1')
 overlappingdegree_av_WU_p2 = c_WU.getComparison('OverlappingDegreeAv').get('P2');
 overlappingdegree_av_WU_cil = c_WU.getComparison('OverlappingDegreeAv').get('CIL');
 overlappingdegree_av_WU_ciu = c_WU.getComparison('OverlappingDegreeAv').get('CIU');
-
-edgeoverlap_WU_diff = c_WU.getComparison('EdgeOverlap').get('DIFF');
-edgeoverlap_WU_p1 = c_WU.getComparison('EdgeOverlap').get('P1');
-edgeoverlap_WU_p2 = c_WU.getComparison('EdgeOverlap').get('P2');
-edgeoverlap_WU_cil = c_WU.getComparison('EdgeOverlap').get('CIL');
-edgeoverlap_WU_ciu = c_WU.getComparison('EdgeOverlap').get('CIU');

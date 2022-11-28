@@ -39,14 +39,14 @@ a_WU2 = AnalyzeGroup_FUN_OMP_GA_WU( ...
 
 % measure calculation
 g_WU1 = a_WU1.get('G');
-degree_WU1 = g_WU1.getMeasure('Degree').get('M');
-degree_av_WU1 = g_WU1.getMeasure('DegreeAv').get('M');
-distance_WU1 = g_WU1.getMeasure('Distance').get('M');
+wmpc_WU1 = g_WU1.getMeasure('WeightedMultiplexParticipation').get('M');
+wmpc_av_WU1 = g_WU1.getMeasure('WeightedMultiplexParticipationAv').get('M');
+weo_WU1 = g_WU1.getMeasure('WeightedEdgeOverlap').get('M');
 
 g_WU2 = a_WU2.get('G');
-degree_WU2 = g_WU2.getMeasure('Degree').get('M');
-degree_av_WU2 = g_WU2.getMeasure('DegreeAv').get('M');
-distance_WU2 = g_WU2.getMeasure('Distance').get('M');
+wmpc_WU2 = g_WU2.getMeasure('WeightedMultiplexParticipation').get('M');
+wmpc_av_WU2 = g_WU2.getMeasure('WeightedMultiplexParticipationAv').get('M');
+weo_WU2 = g_WU2.getMeasure('WeightedEdgeOverlap').get('M');
 
 % comparison
 c_WU = CompareGroup( ...
@@ -58,20 +58,14 @@ c_WU = CompareGroup( ...
     'MEMORIZE', true ...
     );
 
-degree_WU_diff = c_WU.getComparison('Degree').get('DIFF');
-degree_WU_p1 = c_WU.getComparison('Degree').get('P1');
-degree_WU_p2 = c_WU.getComparison('Degree').get('P2');
-degree_WU_cil = c_WU.getComparison('Degree').get('CIL');
-degree_WU_ciu = c_WU.getComparison('Degree').get('CIU');
+wmpc_WU_diff = c_WU.getComparison('WeightedMultiplexParticipation').get('DIFF');
+wmpc_WU_p1 = c_WU.getComparison('WeightedMultiplexParticipation').get('P1');
+wmpc_WU_p2 = c_WU.getComparison('WeightedMultiplexParticipation').get('P2');
+wmpc_WU_cil = c_WU.getComparison('WeightedMultiplexParticipation').get('CIL');
+wmpc_WU_ciu = c_WU.getComparison('WeightedMultiplexParticipation').get('CIU');
 
-degree_av_WU_diff = c_WU.getComparison('DegreeAv').get('DIFF');
-degree_av_WU_p1 = c_WU.getComparison('DegreeAv').get('P1');
-degree_av_WU_p2 = c_WU.getComparison('DegreeAv').get('P2');
-degree_av_WU_cil = c_WU.getComparison('DegreeAv').get('CIL');
-degree_av_WU_ciu = c_WU.getComparison('DegreeAv').get('CIU');
-
-distance_WU_diff = c_WU.getComparison('Distance').get('DIFF');
-distance_WU_p1 = c_WU.getComparison('Distance').get('P1');
-distance_WU_p2 = c_WU.getComparison('Distance').get('P2');
-distance_WU_cil = c_WU.getComparison('Distance').get('CIL');
-distance_WU_ciu = c_WU.getComparison('Distance').get('CIU');
+wmpc_av_WU_diff = c_WU.getComparison('WeightedMultiplexParticipationAv').get('DIFF');
+wmpc_av_WU_p1 = c_WU.getComparison('WeightedMultiplexParticipationAv').get('P1');
+wmpc_av_WU_p2 = c_WU.getComparison('WeightedMultiplexParticipationAv').get('P2');
+wmpc_av_WU_cil = c_WU.getComparison('WeightedMultiplexParticipationAv').get('CIL');
+wmpc_av_WU_ciu = c_WU.getComparison('WeightedMultiplexParticipationAv').get('CIU');
