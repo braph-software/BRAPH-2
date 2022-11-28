@@ -72,13 +72,13 @@ a_WU2 = AnalyzeEnsemble_CON_FUN_MP_WU( ...
     );
 
 % measure calculation
-multiplexparticipation_WU1 = a_WU1.getMeasureEnsemble('MultiplexParticipation').get('M');
-multiplexparticipation_av_WU1 = a_WU1.getMeasureEnsemble('MultiplexParticipationAv').get('M');
-distance_WU1 = a_WU1.getMeasureEnsemble('Distance').get('M');
+wmultiplexparticipation_WU1 = a_WU1.getMeasureEnsemble('WeightedMultiplexParticipation').get('M');
+wmultiplexparticipation_av_WU1 = a_WU1.getMeasureEnsemble('WeightedMultiplexParticipationAv').get('M');
+edgeov_WU1 = a_WU1.getMeasureEnsemble('EdgeOverlap').get('M');
 
-multiplexparticipation_WU2 = a_WU2.getMeasureEnsemble('MultiplexParticipation').get('M');
-multiplexparticipation_av_WU2 = a_WU2.getMeasureEnsemble('MultiplexParticipationAv').get('M');
-distance_WU2 = a_WU2.getMeasureEnsemble('Distance').get('M');
+wmultiplexparticipation_WU2 = a_WU2.getMeasureEnsemble('WeightedMultiplexParticipation').get('M');
+wmultiplexparticipation_av_WU2 = a_WU2.getMeasureEnsemble('WeightedMultiplexParticipationAv').get('M');
+edgeov_WU2 = a_WU2.getMeasureEnsemble('EdgeOverlap').get('M');
 
 % comparison
 c_WU = CompareEnsemble( ...
@@ -90,20 +90,14 @@ c_WU = CompareEnsemble( ...
     'MEMORIZE', true ...
     );
 
-multiplexparticipation_WU_diff = c_WU.getComparison('MultiplexParticipation').get('DIFF');
-multiplexparticipation_WU_p1 = c_WU.getComparison('MultiplexParticipation').get('P1');
-multiplexparticipation_WU_p2 = c_WU.getComparison('MultiplexParticipation').get('P2');
-multiplexparticipation_WU_cil = c_WU.getComparison('MultiplexParticipation').get('CIL');
-multiplexparticipation_WU_ciu = c_WU.getComparison('MultiplexParticipation').get('CIU');
+wmultiplexparticipation_WU_diff = c_WU.getComparison('WeightedMultiplexParticipation').get('DIFF');
+wmultiplexparticipation_WU_p1 = c_WU.getComparison('WeightedMultiplexParticipation').get('P1');
+wmultiplexparticipation_WU_p2 = c_WU.getComparison('WeightedMultiplexParticipation').get('P2');
+wmultiplexparticipation_WU_cil = c_WU.getComparison('WeightedMultiplexParticipation').get('CIL');
+wmultiplexparticipation_WU_ciu = c_WU.getComparison('WeightedMultiplexParticipation').get('CIU');
 
-multiplexparticipation_av_WU_diff = c_WU.getComparison('MultiplexParticipationAv').get('DIFF');
-multiplexparticipation_av_WU_p1 = c_WU.getComparison('MultiplexParticipationAv').get('P1');
-multiplexparticipation_av_WU_p2 = c_WU.getComparison('MultiplexParticipationAv').get('P2');
-multiplexparticipation_av_WU_cil = c_WU.getComparison('MultiplexParticipationAv').get('CIL');
-multiplexparticipation_av_WU_ciu = c_WU.getComparison('MultiplexParticipationAv').get('CIU');
-
-distance_WU_diff = c_WU.getComparison('Distance').get('DIFF');
-distance_WU_p1 = c_WU.getComparison('Distance').get('P1');
-distance_WU_p2 = c_WU.getComparison('Distance').get('P2');
-distance_WU_cil = c_WU.getComparison('Distance').get('CIL');
-distance_WU_ciu = c_WU.getComparison('Distance').get('CIU');
+wmultiplexparticipation_av_WU_diff = c_WU.getComparison('WeightedMultiplexParticipationAv').get('DIFF');
+wmultiplexparticipation_av_WU_p1 = c_WU.getComparison('WeightedMultiplexParticipationAv').get('P1');
+wmultiplexparticipation_av_WU_p2 = c_WU.getComparison('WeightedMultiplexParticipationAv').get('P2');
+wmultiplexparticipation_av_WU_cil = c_WU.getComparison('WeightedMultiplexParticipationAv').get('CIL');
+wmultiplexparticipation_av_WU_ciu = c_WU.getComparison('WeightedMultiplexParticipationAv').get('CIU');
