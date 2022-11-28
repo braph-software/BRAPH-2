@@ -18,7 +18,7 @@ gr2 = ImporterGroupSubjectCON_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load G
 a_WD1 = AnalyzeEnsemble_CON_WD('GR', gr1); % Analyze Group 1 % Group 1 Analysis
 
 %% Analysis 2
-a_WU2 = AnalyzeEnsemble_CON_WD('GR', gr2, 'TEMPLATE', a_WU1); % Analyze Group 2 % Group 2 Analysis
+a_WD2 = AnalyzeEnsemble_CON_WD('GR', gr2, 'TEMPLATE', a_WD1); % Analyze Group 2 % Group 2 Analysis
 
 %% Comparison
 c_WD = CompareEnsemble('P', 10, 'A1', a_WD1, 'A2', a_WD2, 'MEMORIZE', true); % Compare Groups % Group Comparison
