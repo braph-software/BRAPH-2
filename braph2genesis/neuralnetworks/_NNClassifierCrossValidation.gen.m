@@ -226,7 +226,7 @@ value = nne_dict;
 FEATURE_IMPORTANCE (result, cell) is the feature importance obtained with permutation analysis.
 %%%% ¡calculate!
 if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
-    if any(ismember(nncv.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Measure', [], [], true)))
+    if any(ismember(nncv.get('GR1').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Measure', [], [], true)))
         if ~braph2_testing
             questdlg('Feature importance analysis does not apply to the input of graph measures.', ...
                 'User Request', ...
