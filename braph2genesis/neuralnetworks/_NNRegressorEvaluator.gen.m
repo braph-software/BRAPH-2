@@ -202,7 +202,7 @@ GR_PREDICTION (result, item) is a group of NN subjects containing the prediction
 if nne.get('GR').get('SUB_DICT').length() == 0
     value = NNGroup();
 else
-    nn = nne.get('NN');
+    nn = nne.memorize('NN');
     nn_gr = nne.get('GR');
     inputs = nn.reconstruct_inputs(nn_gr);
     net = nn.get('MODEL');
