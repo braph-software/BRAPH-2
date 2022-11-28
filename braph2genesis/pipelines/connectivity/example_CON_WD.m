@@ -38,12 +38,12 @@ a_WD2 = AnalyzeEnsemble_CON_WD( ...
     );
 
 % measure calculation
-degree_WD1 = a_WD1.getMeasureEnsemble('OutDegree').get('M');
-degree_av_WD1 = a_WD1.getMeasureEnsemble('InDegreeAv').get('M');
+outdegree_WD1 = a_WD1.getMeasureEnsemble('OutDegree').get('M');
+indegree_av_WD1 = a_WD1.getMeasureEnsemble('InDegreeAv').get('M');
 distance_WD1 = a_WD1.getMeasureEnsemble('Distance').get('M');
 
-degree_WD2 = a_WD2.getMeasureEnsemble('OutDegree').get('M');
-degree_av_WD2 = a_WD2.getMeasureEnsemble('InDegreeAv').get('M');
+outdegree_WD2 = a_WD2.getMeasureEnsemble('OutDegree').get('M');
+indegree_av_WD2 = a_WD2.getMeasureEnsemble('InDegreeAv').get('M');
 distance_WD2 = a_WD2.getMeasureEnsemble('Distance').get('M');
 
 % comparison
@@ -67,9 +67,3 @@ in_degree_av_WD_p1 = c_WD.getComparison('InDegreeAv').get('P1');
 in_degree_av_WD_p2 = c_WD.getComparison('InDegreeAv').get('P2');
 in_degree_av_WD_cil = c_WD.getComparison('InDegreeAv').get('CIL');
 in_degree_av_WD_ciu = c_WD.getComparison('InDegreeAv').get('CIU');
-
-distance_WU_diff = c_WD.getComparison('Distance').get('DIFF');
-distance_WU_p1 = c_WD.getComparison('Distance').get('P1');
-distance_WU_p2 = c_WD.getComparison('Distance').get('P2');
-distance_WU_cil = c_WD.getComparison('Distance').get('CIL');
-distance_WU_ciu = c_WD.getComparison('Distance').get('CIU');

@@ -29,7 +29,7 @@ im_gr2 = ImporterGroupSubjectFUN_XLS( ...
 gr2 = im_gr2.get('GR');
 
 %% Analysis FUN BUD
-densities = 0:10:100;
+densities = 5:5:20;
 
 a_BUD1 = AnalyzeEnsemble_FUN_BUD( ...
     'GR', gr1, ...
@@ -66,14 +66,8 @@ degree_BUD_p2 = c_BUD.getComparison('Degree').get('P2');
 degree_BUD_cil = c_BUD.getComparison('Degree').get('CIL');
 degree_BUD_ciu = c_BUD.getComparison('Degree').get('CIU');
 
-degree_av_BUD_diff = c_BUD.getComparison('DegreeAv').get('DIFF');
-degree_av_BUD_p1 = c_BUD.getComparison('DegreeAv').get('P1');
-degree_av_BUD_p2 = c_BUD.getComparison('DegreeAv').get('P2');
-degree_av_BUD_cil = c_BUD.getComparison('DegreeAv').get('CIL');
-degree_av_BUD_ciu = c_BUD.getComparison('DegreeAv').get('CIU');
-
-distance_BUD_diff = c_BUD.getComparison('Distance').get('DIFF');
-distance_BUD_p1 = c_BUD.getComparison('Distance').get('P1');
-distance_BUD_p2 = c_BUD.getComparison('Distance').get('P2');
-distance_BUD_cil = c_BUD.getComparison('Distance').get('CIL');
-distance_BUD_ciu = c_BUD.getComparison('Distance').get('CIU');
+modularity_BUD_diff = c_BUD.getComparison('Modularity').get('DIFF');
+modularity_av_BUD_p1 = c_BUD.getComparison('Modularity').get('P1');
+modularity_av_BUD_p2 = c_BUD.getComparison('Modularity').get('P2');
+modularity_av_BUD_cil = c_BUD.getComparison('Modularity').get('CIL');
+modularity_av_BUD_ciu = c_BUD.getComparison('Modularity').get('CIU');
