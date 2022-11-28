@@ -58,6 +58,10 @@ for i = 1:1:N_groups
     diffA = A2 - r;
     A2(A2 ~= 0) = diffA(A2 ~= 0);
 
+    % make the adjacency matrix symmetric
+    A1 = max(A1, transpose(A1));
+    A2 = max(A2, transpose(A2));
+    
     % show the adj
     figure(1)
     imshow(A1)
@@ -79,8 +83,6 @@ sub_Tags = strings(N_groups, 1);
 for i_sub = 1:1:length(sub_Tags)
     sub_Tags(i_sub) = string(['subject' num2str(i_sub)]);
 end
-
-
 
 %% Create the table - Group 1
 tables_gr1 = cell(size(gr1_matrices));
