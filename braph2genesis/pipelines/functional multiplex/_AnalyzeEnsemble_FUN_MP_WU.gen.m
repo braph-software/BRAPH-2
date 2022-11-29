@@ -138,8 +138,8 @@ value = g_dict;
 
 %% ¡tests!
 
-%%% ¡test!
-%%%% ¡name!
-Example
-%%%% ¡code!
-example_FUN_MP_WU
+% % % %%% ¡test!
+% % % %%%% ¡name!
+% % % Example
+% % % %%%% ¡code!
+% % % example_FUN_MP_WU
