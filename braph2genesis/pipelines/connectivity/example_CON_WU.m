@@ -38,12 +38,12 @@ a_WU2 = AnalyzeEnsemble_CON_WU( ...
     );
 
 % measure calculation
-degree_WU1 = a_WU1.getMeasureEnsemble('Degree').get('M');
-degree_av_WU1 = a_WU1.getMeasureEnsemble('DegreeAv').get('M');
+strength_WU1 = a_WU1.getMeasureEnsemble('Strength').get('M');
+strength_av_WU1 = a_WU1.getMeasureEnsemble('StrengthAv').get('M');
 distance_WU1 = a_WU1.getMeasureEnsemble('Distance').get('M');
 
-degree_WU2 = a_WU2.getMeasureEnsemble('Degree').get('M');
-degree_av_WU2 = a_WU2.getMeasureEnsemble('DegreeAv').get('M');
+strength_WU2 = a_WU2.getMeasureEnsemble('Strength').get('M');
+strength_av_WU2 = a_WU2.getMeasureEnsemble('StrengthAv').get('M');
 distance_WU2 = a_WU2.getMeasureEnsemble('Distance').get('M');
 
 % measure parameter setting
@@ -59,20 +59,14 @@ c_WU = CompareEnsemble( ...
     'MEMORIZE', true ...
     );
 
-degree_WU_diff = c_WU.getComparison('Degree').get('DIFF');
-degree_WU_p1 = c_WU.getComparison('Degree').get('P1');
-degree_WU_p2 = c_WU.getComparison('Degree').get('P2');
-degree_WU_cil = c_WU.getComparison('Degree').get('CIL');
-degree_WU_ciu = c_WU.getComparison('Degree').get('CIU');
+strength_WU_diff = c_WU.getComparison('Strength').get('DIFF');
+strength_WU_p1 = c_WU.getComparison('Strength').get('P1');
+strength_WU_p2 = c_WU.getComparison('Strength').get('P2');
+strength_WU_cil = c_WU.getComparison('Strength').get('CIL');
+strength_WU_ciu = c_WU.getComparison('Strength').get('CIU');
 
-degree_av_WU_diff = c_WU.getComparison('DegreeAv').get('DIFF');
-degree_av_WU_p1 = c_WU.getComparison('DegreeAv').get('P1');
-degree_av_WU_p2 = c_WU.getComparison('DegreeAv').get('P2');
-degree_av_WU_cil = c_WU.getComparison('DegreeAv').get('CIL');
-degree_av_WU_ciu = c_WU.getComparison('DegreeAv').get('CIU');
-
-distance_WU_diff = c_WU.getComparison('Distance').get('DIFF');
-distance_WU_p1 = c_WU.getComparison('Distance').get('P1');
-distance_WU_p2 = c_WU.getComparison('Distance').get('P2');
-distance_WU_cil = c_WU.getComparison('Distance').get('CIL');
-distance_WU_ciu = c_WU.getComparison('Distance').get('CIU');
+strength_av_WU_diff = c_WU.getComparison('StrengthAv').get('DIFF');
+strength_av_WU_p1 = c_WU.getComparison('StrengthAv').get('P1');
+strength_av_WU_p2 = c_WU.getComparison('StrengthAv').get('P2');
+strength_av_WU_cil = c_WU.getComparison('StrengthAv').get('CIL');
+strength_av_WU_ciu = c_WU.getComparison('StrengthAv').get('CIU');
