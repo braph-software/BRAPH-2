@@ -19,6 +19,7 @@ MultiplexWU
 MultiplexWD
 MultiplexBU
 MultiplexBD
+OrderedMultiplexWU
 
 %% ¡props_update!
 

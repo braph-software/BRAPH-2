@@ -20,7 +20,7 @@ if isempty(nn.get('LAYERS'))
     end
 end
 %%%% ¡gui!
-pr = PanelPropRVectorSmart('EL', nn, 'PROP', NNRegressorDNN.LAYERS, 'MAX', 100000, 'MIN', 1, varargin{:});
+pr = PanelPropRVectorSmart('EL', nn, 'PROP', NNRegressorDNN.LAYERS, 'MAX', 100000, 'MIN', 1, 'UNIQUE_VALUE', false, varargin{:});
 
 %%% ¡prop!
 BATCH (parameter, scalar) is the size of the mini-batch to use for each training iteration.
@@ -48,7 +48,7 @@ FEATURE_SELECTION_RATIO (parameter, scalar) is the ratio of selected features.
 1
 
 %%% ¡prop!
-VERBOSE (parameter, logical) is an indicator to display trining progress information.
+VERBOSE (parameter, logical) is an indicator to display training progress information.
 %%%% ¡default!
 false
 
@@ -126,7 +126,7 @@ else
 end
 
 %% ¡methods!
-function [inputs, num_features] = reconstruct_inputs(nn, gr)
+function [inputs, num_features, masks] = reconstruct_inputs(nn, gr)
 %RECONSTRUCT_INPUTS reconstructs the inputs for NN
 %
 % [INPUTS, NUM_FEATURES] = RECONSTRUCT_INPUTS(NN, NN_GR) reconstructs the
@@ -140,9 +140,10 @@ function [inputs, num_features] = reconstruct_inputs(nn, gr)
     else
         % get the mask for selecting the relevant input features
         mask_tmp = gr.get('FEATURE_SELECTION_MASK');
-        masks = {};
-        for i = 1:1:length(mask_tmp)
+        masks = cell(size(mask_tmp));
+        for i = 1:1:numel(mask_tmp)
             mask = mask_tmp{i};
+            mask = rescale(mask);
             [~, idx_all] = sort(mask(:), 'descend');
             percentile = nn.get('FEATURE_SELECTION_RATIO');
             num_top_idx = ceil(percentile * numel(mask));
@@ -154,10 +155,19 @@ function [inputs, num_features] = reconstruct_inputs(nn, gr)
         % apply the mask to select input features
         inputs = [];
         inputs_tmp = gr.get('INPUTS');
-        for i = 1:1:gr.get('SUB_DICT').length()
+        for i = 1:1:length(inputs_tmp)
             input = inputs_tmp{i};
-            input_per_sub = cellfun(@(x, y) x(y == 1), input, masks, 'UniformOutput', false);
-            input_per_sub = cell2mat(input_per_sub');
+            input_per_sub = cellfun(@(x, y) transpose(x(y == 1)), input, masks, 'UniformOutput', false);
+            for j = 1:1:numel(input_per_sub)
+                data = input_per_sub{j};
+                data(isnan(data)) = 0;
+                data(isinf(data)) = 0;
+                if size(data, 1) < size(data, 2)
+                    data = data';
+                end
+                input_per_sub_vector{j} = data;
+            end
+            input_per_sub = cell2mat(input_per_sub_vector');
             inputs = [inputs input_per_sub];
         end
         num_features = length(inputs(:, 1));

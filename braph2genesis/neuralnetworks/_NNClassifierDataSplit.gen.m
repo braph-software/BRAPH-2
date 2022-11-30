@@ -154,7 +154,7 @@ else
     y = cellfun(@(x) cell2mat(x.get('TARGET')), gr_train.get('SUB_DICT').getItems(), 'UniformOutput', false);
     y = cell2mat(y);
     label = y(1, :);
-    num_feature_cluster = length(data{1});
+    num_feature_cluster = numel(data{1});
     value = cell(size(data{1}));
     
     % setup counter for waitbar
@@ -171,7 +171,7 @@ else
         if ~isempty(mask)
             for i = 1:numel(mask)
                 data_per_feature = cellfun(@(v)v(i), data_per_cluster);
-                if(any(isinf(data_per_feature)))
+                if(any(isinf(data_per_feature)) || any(isnan(data_per_feature)))
                     mask(i) = 0;
                 else
                     mask(i) = nnds.mutual_information_analysis(data_per_feature, label, 5);

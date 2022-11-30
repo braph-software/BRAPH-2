@@ -1121,25 +1121,39 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         end     
     end
     methods % operators
-        function check = isequal(el1, el2)
+        function check = isequal(el1, el2, level)
             %ISEQUAL determines whether two elements are equal (values, locked).
             %
             % CHECK = ISEQUAL(EL1, EL2) determines whether elements EL1 and EL2 are
             %  equal in terms of values and locked status.
-            %  POINTER can be either a property number (PROP) or tag (TAG).
             %
-            % Note that, instead, EL1 == EL2 detemines whether the two handles 
+            % Note that, instead, EL1 == EL2 detemines whether the two handles
             %  EL1 and EL2 refer to the very same element.
-            
-            % % % IMPORTANT NOTE:
-            % This code does not work for element that contain recursively
-            % other elements (e.g. BA containing PFBA containg BA).
-            
+            %
+            % See also getElementList.
+
             check = isa(el2, el1.getClass());
-            
+
+            if nargin > 2 && level > 8
+                check = true; % break infinite loops
+                return;
+            end
+
+            if nargin <= 2
+                level = 1;
+            end
+
             if check
                 for prop = 1:1:el1.getPropNumber()
-                    check = check && isequal(el1.getr(prop), el2.getr(prop)) && (el1.isLocked(prop) == el2.isLocked(prop));
+                    if check && contains([Format.ITEM Format.ITEMLIST Format.IDICT], el1.getPropFormat(prop))
+                        if ~isequal(el1.getr(prop), el2.getr(prop), level+1) ...
+                                && el1.isLocked(prop) ~= el2.isLocked(prop) ...
+                                check = false;  % check = false;
+                        end
+                    else
+                        check = check && isequal(el1.getr(prop), el2.getr(prop)) && (el1.isLocked(prop) == el2.isLocked(prop));
+                    end
+
                 end
             end
         end

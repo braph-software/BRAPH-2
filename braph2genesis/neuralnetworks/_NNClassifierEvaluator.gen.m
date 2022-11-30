@@ -9,17 +9,57 @@ under the ROC curve (AUC), and the confusion matrix.
 %% ¡props!
 
 %%% ¡prop!
+FEATURE_MASK (result, cell) is a feature mask generated in accordance with mutual information analysis.
+%%%% ¡calculate!
+if nne.get('GR').get('SUB_DICT').length() == 0
+    value = {};
+else
+    ratio = nne.get('NN').get('FEATURE_SELECTION_RATIO');
+    mask_tmp = nne.get('GR').get('FEATURE_SELECTION_MASK');
+    masks = cell(size(mask_tmp));
+    if isempty(mask_tmp)
+        value = {};
+    else
+        for i = 1:1:numel(mask_tmp)
+            mask = mask_tmp{i};
+            mask = rescale(mask);
+            [~, idx_all] = sort(mask(:), 'descend');
+            percentile = nne.get('NN').get('FEATURE_SELECTION_RATIO');
+            num_top_idx = ceil(percentile * numel(mask));
+            mask(idx_all(1:num_top_idx)) = 1;
+            mask(idx_all(end - (length(idx_all) - num_top_idx - 1):end)) = 0;
+            masks{i} = mask;
+        end
+        value = masks;
+    end
+end
+%%%% ¡gui!
+if ~braph2_testing && nne.get('GR').get('SUB_DICT').length() > 0
+    ba = nne.get('GR').get('SUB_DICT').getItem(1).get('BA');
+    if string(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_TYPE')) == 'graph_measures'
+        pr = PPNNSubjectInputMeasure('EL', nne, 'PROP', NNClassifierEvaluator.FEATURE_MASK, 'BA', ba, 'INPUT_LABEL', nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), varargin{:});
+        pr.set('XSLIDERLABELS', 'el.measure_types()');
+    elseif string(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_TYPE')) == 'structural_data'
+        pr = PPNNSubjectInputStructuralData('EL', nne, 'PROP', NNClassifierEvaluator.FEATURE_MASK, 'BA', ba, varargin{:});
+    elseif string(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_TYPE')) == 'adjacency_matrices'
+        pr = PPNNSubjectInputAdjacency('EL', nne, 'PROP', NNClassifierEvaluator.FEATURE_MASK, 'BA', ba, varargin{:});
+    else
+        pr = PanelPropCell('EL', nne, 'PROP', NNClassifierEvaluator.FEATURE_MASK, varargin{:});
+    end
+end
+
+%%% ¡prop!
 FEATURE_PERMUTATION_IMPORTANCE (result, cell) is feature importance evaluated by permuting the features with random numbers
 %%%% ¡calculate!
 if nne.get('GR').get('SUB_DICT').length() == 0
     value = {};
-elseif any(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Graph', [], [], true))) && nne.get('NN').get('FEATURE_SELECTION_RATIO') == 1
+elseif ~any(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Measure', [], [], true)))
     % now it only works for (1) input being adj of a graph and (2) no feature selection 
     nn = nne.get('NN');
     gr = nne.get('GR');
     net = nn.get('MODEL');
 
-    [inputs, num_features] = nn.reconstruct_inputs(gr);
+    [inputs, num_features, masks] = nn.reconstruct_inputs(gr);
     [targets, classes] = nn.reconstruct_targets(gr);
 
     original_loss = crossentropy(net.predict(inputs)', targets);
@@ -28,15 +68,25 @@ elseif any(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'),
         value = {};
     else
         % scramble the input feature 1 by 1
+        wb = braph2waitbar(nne.get('WAITBAR'), 0, 'Obtaining feature importance in parallel, please wait...');
         parfor i = 1:1:num_features
             scrambled_inputs = inputs;
-            permuted_value = squeeze(normrnd(mean(inputs(:, :, i, :)), std(inputs(:, :, i, :)), squeeze(size(inputs(:, :, i, :)))));
+            permuted_value = squeeze(normrnd(mean(inputs(:, :, i, :)), std(inputs(:, :, i, :)), squeeze(size(inputs(:, :, i, :))))) + squeeze(randn(size(inputs(:, :, i, :)))) + mean(inputs(:, :, i, :));
             scrambled_inputs(:, :, i, :) = permuted_value;
             scrambled_loss = crossentropy(net.predict(scrambled_inputs)', targets);
             feature_importance(i)= scrambled_loss / original_loss;
         end
-        feature_importance = reshape(feature_importance, gr.get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').length(), []);
-
+        braph2waitbar(wb, 'close')
+        feature_importance =  double(rescale(feature_importance));
+        if nne.get('NN').get('FEATURE_SELECTION_RATIO') == 1
+            feature_importance = reshape(feature_importance, gr.get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').length(), []);
+        else
+            masks_3D = cell2mat(masks);
+            f = zeros(size(masks_3D));
+            f(find(masks_3D)) = feature_importance;
+            feature_importance = f;
+        end
+        
         % re-assign the cell array when the input is obtained from a multigraph
         if size(feature_importance, 1) < size(feature_importance, 2) && mod(size(feature_importance, 2), size(feature_importance, 1)) == 0
             n = size(feature_importance, 2) / size(feature_importance, 1);
@@ -44,15 +94,37 @@ elseif any(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'),
             for i = 1:1:n
                 istart = (i - 1) * size(feature_importance_tmp, 1) + 1;
                 iend = i*size(feature_importance_tmp, 1);
-                feature_importances{i} = double(rescale(feature_importance_tmp(:, istart:iend)));
+                feature_importances{i} = feature_importance_tmp(:, istart:iend);
+            end
+            value = feature_importances;
+        elseif size(feature_importance, 1) > size(feature_importance, 2) && size(feature_importance, 1) ~= 1 %% structural data
+            n = size(feature_importance, 2);
+            feature_importance_tmp = feature_importance;
+            for i = 1:1:n
+                feature_importances{i} = feature_importance_tmp(:, i);
             end
             value = feature_importances;
         else
-            value = {rescale(double(feature_importance))};
+            value = {feature_importance};
         end
     end
 else
     value = {};
+    if ~braph2_testing
+        questdlg('Feature importance analysis does not apply to the input of graph measures.', ...
+                'User Request', ...
+                'Ok', 'Ok');
+    end
+end
+%%%% ¡gui!
+if ~braph2_testing && ~isa(nne.get('GR').get('SUB_DICT'), 'NoValue')
+    if string(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_TYPE')) == 'structural_data'
+        pr = PPNNEvaluatorFeatureImportanceStructuralData('EL', nne, 'PROP', NNClassifierEvaluator.FEATURE_PERMUTATION_IMPORTANCE, varargin{:});
+    elseif string(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_TYPE')) == 'adjacency_matrices'
+        pr = PPNNEvaluatorFeatureImportanceAdjacency('EL', nne, 'PROP', NNClassifierEvaluator.FEATURE_PERMUTATION_IMPORTANCE, varargin{:});
+    else
+        pr = PanelPropCell('EL', nne, 'PROP', NNClassifierEvaluator.FEATURE_PERMUTATION_IMPORTANCE, varargin{:});
+    end
 end
 
 %%% ¡prop!
@@ -61,7 +133,10 @@ PFFI (gui, item) contains the panel figure of the feature importance.
 'PFFeatureImportance'
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
-    nne.memorize('PFFI').set('NNE', nne, 'PROP', NNClassifierEvaluator.FEATURE_PERMUTATION_IMPORTANCE, 'BA', nne.get('GR').get('SUB_DICT').getItem(1).get('BA'))
+    nne.memorize('PFFI').set('NNE', nne, ...
+        'PROP', NNClassifierEvaluator.FEATURE_PERMUTATION_IMPORTANCE, ...
+        'INPUT_TYPE', nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_TYPE'), ...
+        'BA', nne.get('GR').get('SUB_DICT').getItem(1).get('BA'))
 end
 %%%% ¡gui!
 pr = PanelPropItem('EL', nne, 'PROP', NNClassifierEvaluator.PFFI, ...
@@ -201,7 +276,7 @@ GR_PREDICTION (result, item) is a group of NN subjects containing the prediction
 if nne.get('GR').get('SUB_DICT').length() == 0
     value = NNGroup();
 else
-    nn = nne.get('NN');
+    nn = nne.memorize('NN');
     gr = nne.get('GR');
     inputs = nn.reconstruct_inputs(gr);
     [targets, classes] = nn.reconstruct_targets(gr);
@@ -231,6 +306,8 @@ else
             'age', subs{i}.get('age'), ...
             'sex', subs{i}.get('sex'), ...
             'input', subs{i}.get('input'), ...
+            'INPUT_TYPE', subs{i}.get('INPUT_TYPE'), ...
+            'INPUT_LABEL', subs{i}.get('INPUT_LABEL'), ...
             'PREDICTION', {predictions(i, :)}, ...
             'TARGET', subs{i}.get('TARGET'), ...
             'TARGET_NAME', subs{i}.get('TARGET_NAME') ...
@@ -240,4 +317,9 @@ else
     gr_pred.set('SUB_DICT', sub_dict);
 
     value = gr_pred;
+end
+
+%% ¡staticmethods!
+function lbls = measure_types()
+    lbls = {'Global', 'Nodal', 'Binodal'};
 end

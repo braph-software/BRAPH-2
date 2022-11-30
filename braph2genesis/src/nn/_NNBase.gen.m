@@ -17,12 +17,12 @@ LABEL (metadata, string) is an extended label of the neural network.
 NOTES (metadata, string) are some specific notes about the neural network.
 
 %%% ¡prop!
-PLOT_TRAINING (metadata, logical) is an option for the plot of training-progress.
+PLOT_TRAINING (parameter, logical) is an option for the plot of training-progress.
 %%%% ¡default!
 false
 
 %%% ¡prop!
-PLOT_LAYERS (metadata, logical) is an option for the plot of layer architecture.
+PLOT_LAYERS (parameter, logical) is an option for the plot of layer architecture.
 %%%% ¡default!
 false
 

@@ -23,6 +23,7 @@ MultiplexBUD
 MultiplexBUT
 MultiplexWD
 MultiplexWU
+OrderedMultiplexWU
 
 %% ¡props!
 

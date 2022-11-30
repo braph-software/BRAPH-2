@@ -11,13 +11,13 @@ N_nodes = 90; % AAL atlas
 N_tslength = 200;
 
 %% Specify number of subjects
-N_groups = 50;
+N_subjects = 50;
 
 %% Group 1 properties
 % 5 modules of 18 nodes each
 
-gr1_ts1 = cell(1, N_groups);
-gr1_ts2 = cell(1, N_groups);
+gr1_ts1 = cell(1, N_subjects);
+gr1_ts2 = cell(1, N_subjects);
 
 % initialize values for the WS model
 K1 = [3 4 5 6 7];
@@ -32,7 +32,7 @@ indices5 = 73:1:90;
 indices = {indices1; indices2; indices3; indices4; indices5};
 
 % Loop to create ts for each subject
-for i_gr1 = 1:1:N_groups
+for i_gr1 = 1:1:N_subjects
 
     % randomize the parameters
     K_temp = K1(randperm(length(K1)));
@@ -68,7 +68,10 @@ for i_gr1 = 1:1:N_groups
     r = 0 + (0.5 - 0)*rand(size(A_full2));
     diffA = A_full2 - r;
     A_full2(A_full2 ~= 0) = diffA(A_full2 ~= 0);
-
+    
+    % make the adjacency matrix symmetric
+    A_full2 = max(A_full2, transpose(A_full2));
+    
     figure(1)
     imshow(A_full1)
     figure(2)
@@ -96,8 +99,8 @@ end
 %% Group 2 properties
 % 2 modules of 45 nodes each
 
-gr2_ts1 = cell(1, N_groups);
-gr2_ts2 = cell(1, N_groups);
+gr2_ts1 = cell(1, N_subjects);
+gr2_ts2 = cell(1, N_subjects);
 
 % initialize values for the WS model
 K2 = [3 7];
@@ -109,7 +112,7 @@ indices2 = 46:1:90;
 indices = {indices1; indices2};
 
 % Loop to create ts for each subject
-for i_gr2 = 1:1:N_groups
+for i_gr2 = 1:1:N_subjects
 
     % randomize the parameters
     K_temp = K2(randperm(length(K2)));
@@ -147,6 +150,9 @@ for i_gr2 = 1:1:N_groups
     diffA = A_full2 - r;
     A_full2(A_full2 ~= 0) = diffA(A_full2 ~= 0);
 
+    % make the adjacency matrix symmetric
+    A_full2 = max(A_full2, transpose(A_full2));
+    
     figure(1)
     imshow(A_full1)
     figure(2)
@@ -188,7 +194,7 @@ tables_gr21 = cell(size(gr2_ts1));
 mkdir('Functional/GroupName1');
 mkdir('Functional/GroupName2');
 
-for i_tab = 1:1:N_groups
+for i_tab = 1:1:N_subjects
 
     % create the tables - group 1
     T_gr11 = array2table(gr1_ts1{i_tab});
@@ -209,7 +215,7 @@ tables_gr22 = cell(size(gr2_ts2));
 mkdir('Connectivity/GroupName1');
 mkdir('Connectivity/GroupName2');
 
-for i_tab = 1:1:N_groups
+for i_tab = 1:1:N_subjects
 
     % create the tables - group 1
     T_gr12 = array2table(gr1_ts2{i_tab});

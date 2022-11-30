@@ -19,6 +19,7 @@ parametricity = Measure.PARAMETRIC;
 %%% ¡compatible_graphs!
 MultiplexWD
 MultiplexWU
+OrderedMultiplexWU
 
 %% ¡props!
 

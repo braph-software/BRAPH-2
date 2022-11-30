@@ -27,6 +27,11 @@ MIN (parameter, scalar) is the min value acceptable as input.
 -Inf
 
 %%% ¡prop!
+UNIQUE_VALUE (parameter, logical) determines if sorting the data with no repetitions.
+%%%% ¡default!
+true
+
+%%% ¡prop!
 DEFAULT (parameter, rvector) is the default value.
 
 %% ¡methods!
@@ -109,7 +114,9 @@ function cb_editfield(pr)
 
     try 
         value = eval(['[' get(pr.editfield, 'Value') ']']);
-        value = unique(value(:)'); % sort done by unique
+        if pr.get('UNIQUE_VALUE')
+            value = unique(value(:)'); % sort done by unique
+        end
         value(value < pr.get('MIN')) = pr.get('MIN');
         value(value > pr.get('MAX')) = pr.get('MAX');
         

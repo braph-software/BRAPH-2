@@ -109,8 +109,8 @@ value = g;
 
 %% ¡tests!
 
-%%% ¡test!
-%%%% ¡name!
-Example
-%%%% ¡code!
-example_FUN_MP_GA_WU
+% % % %%% ¡test!
+% % % %%%% ¡name!
+% % % Example
+% % % %%%% ¡code!
+% % % example_FUN_MP_GA_WU

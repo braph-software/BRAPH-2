@@ -322,7 +322,7 @@ else % multilayer
             if isempty(g.get('LAYERTICKS'))
                 ylayerlabels = PanelPropCell.getPropDefault('LAYERTICKS');
             else
-                layerlabels = num2cell(g.get('LAYERTICKS')); 
+                layerlabels = num2cell(g.get('LAYERTICKS'));
                 if isa(g, "MultiplexBUD")
                     ylayerlabels = ['{' sprintf('''%d'' ', layerlabels{end:-1:1}) '}'];
                 else
@@ -731,7 +731,7 @@ function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
         return
     end
     
-		% get parameters from example measure
+	% get parameters from example measure
     core_measure = cp.get('MEASURE_TEMPLATE');
     j = 1;
     varargin = {};
