@@ -29,15 +29,19 @@ im_gr2 = ImporterGroupSubjectST_XLS( ...
 gr2 = im_gr2.get('GR');
 
 %% Analysis ST WU
-a_PREV1 = AnalyzeGroup_ST_Preview('GR', gr1, 'CORRELATION_RULE', Correlation.PEARSON_CV);
-a_PREV2 = AnalyzeGroup_ST_Preview('GR', gr2, 'CORRELATION_RULE', Correlation.PEARSON_CV);
+a_PREV1 = AnalyzeGroup_ST_Preview('GR', gr1);
+a_PREV2 = AnalyzeGroup_ST_Preview('GR', gr2);
 
 % measure calculation
 g_WU1 = a_PREV1.get('G');
 preview_WU1 = g_WU1.getMeasure('Preview').get('M');
+mean_prev_1 = a_PREV1.get('AVERAGE');
+std_preve_1 = a_PREV1.get('STD');
 
 g_WU2 = a_PREV2.get('G');
 preview_WU2 = g_WU2.getMeasure('Preview').get('M');
+mean_prev_2 = a_PREV2.get('AVERAGE');
+std_preve_2 = a_PREV2.get('STD');
 
 % comparison
 c_WU = CompareGroup( ...

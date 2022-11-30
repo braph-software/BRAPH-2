@@ -14,7 +14,7 @@ AVERAGE (result, matrix) is the group  average.
 gr = a.get('GR');
 data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
 data = cat(2, data_list{:})'; 
-value = mean(data);
+value = mean(data, 2);
 
 %%% ¡prop!
 STD (result, matrix) is the group  std.
