@@ -17,6 +17,11 @@ LABEL (metadata, string) is an extended label of the evaluator.
 NOTES (metadata, string) are some specific notes about the evaluator.
 
 %%% ¡prop!
+WAITBAR (metadata, logical) detemines whether to show the waitbar.
+%%%% ¡default!
+true
+
+%%% ¡prop!
 NN (data, item) is a neural network model to be evaluated.
 %%%% ¡settings!
 'NNBase'

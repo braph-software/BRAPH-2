@@ -258,11 +258,13 @@ function h_panel = draw(pf, varargin)
         if Measure.is_nodal(me)
             filter_pass = true;
         end
-    else % measureensemble, comparisonensemble, comparisongroup
+    elseif isa(me, 'MeasureEnsemble') || isa(me, 'ComparisonEnsemble') || isa(me, 'ComparisonGroup')
         m = me.get('MEASURE_TEMPLATE');
         if Measure.is_nodal(m)
             filter_pass = true;
         end
+    else
+        filter_pass = true;
     end
 
     pf.p = draw@PFBrainAtlas(pf, varargin{:});

@@ -15,7 +15,7 @@ LAYERS (parameter, rvector) is a vector representing the number of neurons in ea
 %%%% ¡default!
 [100 100]
 %%%% ¡gui!
-pr = PanelPropRVectorSmart('EL', nncv, 'PROP', NNRegressorCrossValidation.LAYERS, 'MAX', 100000, 'MIN', 1, varargin{:});
+pr = PanelPropRVectorSmart('EL', nncv, 'PROP', NNRegressorCrossValidation.LAYERS, 'MAX', 100000, 'MIN', 1, 'UNIQUE_VALUE', false, varargin{:});
 
 %%% ¡prop!
 BATCH (parameter, scalar) is the size of the mini-batch to use for each training iteration.
@@ -193,22 +193,45 @@ value = nne_dict;
 FEATURE_IMPORTANCE (result, cell) is the feature importance obtained with permutation analysis.
 %%%% ¡calculate!
 if ~isa(nncv.get('GR').getr('SUB_DICT'), 'NoValue')
-    nne_dict = nncv.memorize('NNE_DICT');
-    feature_importances = nne_dict.getItem(1).get('FEATURE_PERMUTATION_IMPORTANCE');
-    if length(feature_importances) == 0
+    if any(ismember(nncv.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Measure', [], [], true)))
         feature_importances = {};
-    else
-        for i = 2:1:nne_dict.length()
-            feature_importance = nne_dict.getItem(i).get('FEATURE_PERMUTATION_IMPORTANCE');
-            feature_importances = cellfun(@(x, y) x + y, feature_importances, feature_importance, 'UniformOutput', false);
+        if ~braph2_testing
+            questdlg('Feature importance analysis does not apply to the input of graph measures.', ...
+                'User Request', ...
+                'Ok', 'Ok');
         end
-        feature_importances = cellfun(@(x) x/nne_dict.length, feature_importances, 'UniformOutput', false);
+    else
+        nne_dict = nncv.memorize('NNE_DICT');
+        wb = braph2waitbar(nncv.get('WAITBAR'), 0, 'Analysing feature importance...');
+        feature_importances = nne_dict.getItem(1).get('FEATURE_PERMUTATION_IMPORTANCE');
+        braph2waitbar(wb, .30 + .70 * 1 / nne_dict.length, ['Analysing feature importance for the fold ' num2str(1) ' out of ', num2str(nne_dict.length), '...']);
+        if length(feature_importances) == 0
+            feature_importances = {};
+        else
+            for i = 2:1:nne_dict.length()
+                feature_importance = nne_dict.getItem(i).get('FEATURE_PERMUTATION_IMPORTANCE');
+                feature_importances = cellfun(@(x, y) x + y, feature_importances, feature_importance, 'UniformOutput', false);
+                braph2waitbar(wb, .30 + .70 * i / nne_dict.length, ['Analysing feature importance for the fold ' num2str(i) ' out of ', num2str(nne_dict.length), '...']);
+            end
+            feature_importances = cellfun(@(x) x/nne_dict.length, feature_importances, 'UniformOutput', false);
+        end
+        braph2waitbar(wb, 'close')
     end
 else
     feature_importances = {};
 end
 
 value = feature_importances;
+%%%% ¡gui!
+if ~braph2_testing && ~isa(nncv.get('GR').get('SUB_DICT'), 'NoValue')
+    if string(nncv.get('GR').get('SUB_DICT').getItem(1).get('INPUT_TYPE')) == 'structural_data'
+        pr = PPNNEvaluatorFeatureImportanceStructuralData('EL', nncv, 'PROP', NNRegressorCrossValidation.FEATURE_IMPORTANCE, varargin{:});
+    elseif string(nncv.get('GR').get('SUB_DICT').getItem(1).get('INPUT_TYPE')) == 'adjacency_matrices'
+        pr = PPNNEvaluatorFeatureImportanceAdjacency('EL', nncv, 'PROP', NNRegressorCrossValidation.FEATURE_IMPORTANCE, varargin{:});
+    else
+        pr = PanelPropCell('EL', nncv, 'PROP', NNRegressorCrossValidation.FEATURE_IMPORTANCE, varargin{:});
+    end
+end
 
 %% ¡props_update!
 
@@ -218,7 +241,10 @@ PFFI (gui, item) contains the panel figure of the feature importance.
 'PFFeatureImportance'
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
-    nncv.memorize('PFFI').set('NNE', nncv, 'PROP', NNRegressorCrossValidation.FEATURE_IMPORTANCE, 'BA', nncv.get('GR').get('SUB_DICT').getItem(1).get('BA'))
+    nncv.memorize('PFFI').set('NNE', nncv, ...
+        'PROP', NNRegressorCrossValidation.FEATURE_IMPORTANCE, ...
+        'INPUT_TYPE', nncv.get('GR').get('SUB_DICT').getItem(1).get('INPUT_TYPE'), ...
+        'BA', nncv.get('GR').get('SUB_DICT').getItem(1).get('BA'))
 end
 %%%% ¡gui!
 pr = PanelPropItem('EL', nncv, 'PROP', NNRegressorCrossValidation.PFFI, ...
@@ -231,7 +257,7 @@ GR_PREDICTION (result, item) is a group of NN subjects with prediction from NN.
 'NNGroup'
 %%%% ¡calculate!
 if ~isa(nncv.get('GR').getr('SUB_DICT'), 'NoValue')
-    gr = nncv.get('NNE_DICT').getItem(1).get('GR_PREDICTION');
+    gr = nncv.memorize('NNE_DICT').getItem(1).memorize('GR_PREDICTION');
     gr_prediction = NNGroup( ...
         'ID', 'NN Group with NN prediction', ...
         'LABEL', 'The predictions are obatined from K-fold cross validation', ...
