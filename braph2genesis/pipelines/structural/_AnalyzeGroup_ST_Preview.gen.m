@@ -1,5 +1,5 @@
 %% ¡header!
-AnalyzeGroup_ST_Preview < AnalyzeGroup (a, graph analysis with structural data) is a graph analysis using structural data.
+AnalyzeGroup_ST_RawData < AnalyzeGroup (a, graph analysis with structural data) is a graph analysis using structural data.
 
 %% ¡description!
 This graph analysis uses structural data and analyzes them using weighted undirected graphs,
@@ -30,7 +30,7 @@ value = std(data);
 %%% ¡prop!
 TEMPLATE (parameter, item) is the analysis template to set the parameters.
 %%%% ¡settings!
-'AnalyzeGroup_ST_Preview'
+'AnalyzeGroup_ST_RawData'
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectST.
