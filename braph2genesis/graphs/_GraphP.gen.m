@@ -11,10 +11,10 @@ graph = Graph.GRAPH;
 connectivity = Graph.WEIGHTED;
 
 %%% ¡directionality!
-directionality = Graph.UNDIRECTED;
+directionality = Graph.DIRECTED;
 
 %%% ¡selfconnectivity!
-selfconnectivity = Graph.NONSELFCONNECTED;
+selfconnectivity = Graph.SELFCONNECTED;
 
 %%% ¡negativity!
 negativity = Graph.NONNEGATIVE;
