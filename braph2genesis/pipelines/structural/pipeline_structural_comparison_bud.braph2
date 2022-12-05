@@ -3,7 +3,7 @@
 % This is the pipeline script to compare two groups of subjects using structural data and binary undirected graphs at fixed densities.
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
 % 2. It loads the data of two groups of subjects from XLS files (e.g., ST_group1.xlsx and ST_group2.xlsx).
-% 3. It analyzes the first group using structural analyses (ST) based on dbinary undirected graphs at fixed densities (BUD).
+% 3. It analyzes the first group using structural analyses (ST) based on binary undirected graphs at fixed densities (BUD).
 % 4. It analyzes the second group using the same parameters selected for the first group.
 % 5. It compares the results of the two analyses.
 
