@@ -2,8 +2,8 @@
 
 % This is the pipeline script to analyze a group of subjects using connectivity-functional multiplex data and weighted undirected graphs.
 % 1. It loads a brain atlas from an XLS file (e.g., aal90_atlas.xlsx).
-% 2.1 It loads the connectivity data of one group of subjects from two directories (e.g., GroupName1 and GroupName2) containing XLS files of each subject.
-% 2.2 It loads the functional data of one group of subjects from two directories (e.g., GroupName1 and GroupName2) containing XLS files of each subject.
+% 2.1 It loads the connectivity data of one group of subjects from a directory (e.g., GroupName1) containing XLS files of each subject.
+% 2.2 It loads the functional data of one group of subjects from a directory (e.g., GroupName1) containing XLS files of each subject.
 % 3. It analyzes the data using connectivity-functional multiplex analysis (CON_FUN_MP) based on weighted undirected graphs (WU).
 
 %% Brain Atlas

@@ -5,7 +5,7 @@
 % 2. It loads the data of group of subjects from XLS files.
 % 3. It constructs the dataset using structural data.
 % 4. It splits the dataset into training set and validation set.
-% 5. It trains the neural netork model.
+% 5. It trains the neural network model.
 % 6. It evaluates the performance on the training set and the validation set.
 
 %% Brain Atlas
