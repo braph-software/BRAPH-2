@@ -4,9 +4,8 @@ WeightedRichClub < Strength (m, weighted rich-club) is the graph weighted rich-c
 %%% ¡description!
 The weighted rich-club coefficient of a node at level s is the fraction of the 
 edges weights that connect nodes of strength s or higher out of the 
-maxium number of edges weights that such nodes might share within a layer. 
-s is set by the user and it can be a vector containting all the 
-strength thresholds; the default value is equal to 1.
+maximum number of edges weights that such nodes might share within a layer. 
+s is set by the user and it can be a vector containing all the strength thresholds; the default value is equal to 1.
 
 %%% ¡shape!
 shape = Measure.GLOBAL;
