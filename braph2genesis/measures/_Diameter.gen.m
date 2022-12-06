@@ -2,7 +2,7 @@
 Diameter < Measure (m, diameter) is the graph diameter.
 
 %%% ¡description!
-The diameter is the maximum eccentricity among the vertice within a layer.
+The diameter is the maximum eccentricity among the vertices within a layer.
 
 %%% ¡shape!
 shape = Measure.GLOBAL;
