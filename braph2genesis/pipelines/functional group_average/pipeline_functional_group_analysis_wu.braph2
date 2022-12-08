@@ -2,7 +2,7 @@
 
 % This is the pipeline script to analyze a group of subjects using functional data averaged by group and a weighted undirected graph.
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
-% 2. It loads the data of one group of subjects from a directory (e.g., GroupName1) containing XLS files of each subject.
+% 2. It loads the functional data of one group of subjects from a directory (e.g., GroupName1) containing one folder per each subject (e.g., subject1) containing XLS files of each layer.
 % 3. It analyzes these data using a functional analysis (FUN) based on a weighted undirected graph (WU) averaged by group (GA).
 
 %% Brain Atlas

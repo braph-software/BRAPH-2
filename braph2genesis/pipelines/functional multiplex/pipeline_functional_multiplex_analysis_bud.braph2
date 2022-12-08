@@ -2,7 +2,7 @@
 
 % This is the pipeline script to analyze a group of subjects using functional multiplex data and a binary undirected graph at fixed densities.
 % 1. It loads a brain atlas from an XLS file (e.g., aal90_atlas.xlsx).
-% 2. It loads the functional data of one group of subjects from a directory (e.g., GroupName1) containing XLS files of each subject.
+% 2. It loads the functional data of one group of subjects from a directory (e.g., GroupName1) containing one folder per each subject (e.g., subject1) containing XLS files of each layer.
 % 3. It analyzes the data using functional multiplex analysis (FUN_MP) based on a binary undirected graph at fixed densities (BUD).
 
 %% Brain Atlas

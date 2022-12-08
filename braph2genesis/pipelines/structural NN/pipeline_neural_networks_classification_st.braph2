@@ -2,7 +2,7 @@
 %
 % This is the pipeline script to perform classification by neural networks for two groups of subjects with structural data.
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
-% 2. It loads the data of two groups of subjects from XLS files.
+% 2. It loads the data of two groups of subjects from a directory containing XLS files (e.g., ST_MP_1.xlsx).
 % 3. It constructs the dataset using structural data.
 % 4. It splits the dataset into training set and validation set.
 % 5. It trains the neural network model.
