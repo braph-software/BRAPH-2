@@ -28,7 +28,7 @@ Inf
 %%% ¡prop!
 CORRELATION_RULE (parameter, option) is the correlation type for functional data.
 %%%% ¡settings!
-Correlation.CORRELATION_RULE_LIST
+Correlation.CORRELATION_RULE_LIST(1:3)
 %%%% ¡default!
 Correlation.CORRELATION_RULE_LIST{1}
 
@@ -42,7 +42,12 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 %%% ¡prop!
 DENSITIES (parameter, rvector) is the vector of densities.
 %%%% ¡default!
-0
+[1:1:10]
+%%%% ¡gui!
+pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeGroup_CON_FUN_MP_GA_BUD.DENSITIES, ...
+    'MIN', 0, 'MAX', 100, ...
+    'DEFAULT', AnalyzeGroup_CON_FUN_MP_GA_BUD.getPropDefault('DENSITIES'), ...
+    varargin{:});
 
 %% ¡props_update!
 
@@ -70,6 +75,7 @@ fmax = a.get('FREQUENCYRULEMAX');
 densities = a.get('DENSITIES'); % this is a vector
 A = cell(1, 2);
 data = cell(1, 2);
+layerlabels = {};
 
 for i = 1:1:gr.get('SUB_DICT').length()
     sub = gr.get('SUB_DICT').getItem(i);
@@ -98,6 +104,11 @@ for i = 1:1:gr.get('SUB_DICT').length()
         data(2) = {data{2} + A_fun};
     end
     
+    for i = 1:length(densities)
+        layerlabels = [...
+            layerlabels, ['C ' num2str(densities(i)) '%'], ...
+            ['F ' num2str(densities(i)) '%']];
+    end   
 end
 
 A(1) = {data{1}/gr.get('SUB_DICT').length()};
@@ -112,7 +123,8 @@ g = MultiplexBUD( ...
     'ID', ['g ' gr.get('ID')], ...
     'B', A, ...
     'DENSITIES', densities, ... 
-    'LAYERLABELS', cell2str({'CON' 'FUN'}), ...
+    'LAYERTICKS', densities, ...
+    'LAYERLABELS', cell2str(layerlabels), ...
     'BAS', ba ...
     );
 

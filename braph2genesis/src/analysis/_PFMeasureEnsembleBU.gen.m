@@ -1,5 +1,5 @@
 %% ¡header!
-PFMeasureEnsembleBU < PFMeasureEnsembleNU (pf, panel figure measure GU) is a plot of a binodal unilayer measure.
+PFMeasureEnsembleBU < PFMeasureEnsembleNU (pf, panel figure measure BU) is a plot of a binodal unilayer/superglobal measure.
 
 %%% ¡description!
 % % % PFBrainSurface manages the plot of the brain surface choosen by the user. 
@@ -57,9 +57,8 @@ BR1_ID (figure, string) is the ID of the first brain region of the binodal measu
 bas = pf.get('ME').get('A').get('GRAPH_TEMPLATE').get('BAS');
 ba = bas{1};
 
-pr = PP_BrainRegion('EL', pf, 'PROP', ...
-    'BA', ba, ...
-    PFMeasureEnsembleBU.BR1_ID, varargin{:});
+pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureEnsembleBU.BR1_ID, ...
+    'BA', ba, varargin{:});
 
 %% ¡props!
 

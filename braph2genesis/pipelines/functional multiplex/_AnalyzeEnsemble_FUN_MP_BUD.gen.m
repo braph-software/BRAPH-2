@@ -25,7 +25,7 @@ Inf
 %%% ¡prop!
 CORRELATION_RULE (parameter, option) is the correlation type.
 %%%% ¡settings!
-Correlation.CORRELATION_RULE_LIST
+Correlation.CORRELATION_RULE_LIST(1:3)
 %%%% ¡default!
 Correlation.CORRELATION_RULE_LIST{1}
 
@@ -68,13 +68,15 @@ if ~braph2_testing
     end
     if a.get('GR').get('SUB_DICT').length() > 0
         L = a.get('GR').get('SUB_DICT').getItem(1).get('L');  % number of layers
-
+        densities = a.get('DENSITIES');
         layerlabels = {};
-        for i = 1:1:L
-            layerlabels = [layerlabels, cellfun(@(x) ['L' num2str(i) ' ' num2str(x) '%'], num2cell(a.get('DENSITIES')), 'UniformOutput', false)];
+        
+        for i = 1:length(densities)
+            layerlabels = [layerlabels, cellfun(@(x) ['L' num2str(x) ' ' num2str(densities(i)) '%'], num2cell(1:L), 'UniformOutput', false)];
         end
 
         a.get('GRAPH_TEMPLATE').set('LAYERLABELS', cell2str(layerlabels))
+        a.get('GRAPH_TEMPLATE').set('LAYERTICKS', densities)
     end
 end
 
@@ -157,11 +159,3 @@ value = g_dict;
 % % %     
 % % %     pr = PPCompareEnsembleMP_FUN_CPDict_BUD(varargin{:});
 % % % end
-
-%% ¡tests!
-
-%%% ¡test!
-%%%% ¡name!
-Example
-%%%% ¡code!
-% % % example_FUN_MP_BUD

@@ -5,7 +5,7 @@ clear variables %#ok<*NASGU>
 
 %% Load BrainAtlas
 im_ba = ImporterBrainAtlasXLS( ...
-    'FILE', [fileparts(which('example_CON_FUN_MP_WU')) filesep 'example data CON-FUN_MP' filesep 'desikan_atlas.xlsx'], ...
+    'FILE', [fileparts(which('example_CON_FUN_MP_WU')) filesep 'example data CON-FUN_MP' filesep 'aal90_atlas.xlsx'], ...
     'WAITBAR', true ...
     );
 
@@ -72,13 +72,13 @@ a_WU2 = AnalyzeEnsemble_CON_FUN_MP_WU( ...
     );
 
 % measure calculation
-degree_WU1 = a_WU1.getMeasureEnsemble('Degree').get('M');
-degree_av_WU1 = a_WU1.getMeasureEnsemble('DegreeAv').get('M');
-distance_WU1 = a_WU1.getMeasureEnsemble('Distance').get('M');
+wmultiplexparticipation_WU1 = a_WU1.getMeasureEnsemble('WeightedMultiplexParticipation').get('M');
+wmultiplexparticipation_av_WU1 = a_WU1.getMeasureEnsemble('WeightedMultiplexParticipationAv').get('M');
+wedgeov_WU1 = a_WU1.getMeasureEnsemble('WeightedEdgeOverlap').get('M');
 
-degree_WU2 = a_WU2.getMeasureEnsemble('Degree').get('M');
-degree_av_WU2 = a_WU2.getMeasureEnsemble('DegreeAv').get('M');
-distance_WU2 = a_WU2.getMeasureEnsemble('Distance').get('M');
+wmultiplexparticipation_WU2 = a_WU2.getMeasureEnsemble('WeightedMultiplexParticipation').get('M');
+wmultiplexparticipation_av_WU2 = a_WU2.getMeasureEnsemble('WeightedMultiplexParticipationAv').get('M');
+wedgeov_WU2 = a_WU2.getMeasureEnsemble('WeightedEdgeOverlap').get('M');
 
 % comparison
 c_WU = CompareEnsemble( ...
@@ -90,20 +90,14 @@ c_WU = CompareEnsemble( ...
     'MEMORIZE', true ...
     );
 
-degree_WU_diff = c_WU.getComparison('Degree').get('DIFF');
-degree_WU_p1 = c_WU.getComparison('Degree').get('P1');
-degree_WU_p2 = c_WU.getComparison('Degree').get('P2');
-degree_WU_cil = c_WU.getComparison('Degree').get('CIL');
-degree_WU_ciu = c_WU.getComparison('Degree').get('CIU');
+wmultiplexparticipation_WU_diff = c_WU.getComparison('WeightedMultiplexParticipation').get('DIFF');
+wmultiplexparticipation_WU_p1 = c_WU.getComparison('WeightedMultiplexParticipation').get('P1');
+wmultiplexparticipation_WU_p2 = c_WU.getComparison('WeightedMultiplexParticipation').get('P2');
+wmultiplexparticipation_WU_cil = c_WU.getComparison('WeightedMultiplexParticipation').get('CIL');
+wmultiplexparticipation_WU_ciu = c_WU.getComparison('WeightedMultiplexParticipation').get('CIU');
 
-degree_av_WU_diff = c_WU.getComparison('DegreeAv').get('DIFF');
-degree_av_WU_p1 = c_WU.getComparison('DegreeAv').get('P1');
-degree_av_WU_p2 = c_WU.getComparison('DegreeAv').get('P2');
-degree_av_WU_cil = c_WU.getComparison('DegreeAv').get('CIL');
-degree_av_WU_ciu = c_WU.getComparison('DegreeAv').get('CIU');
-
-distance_WU_diff = c_WU.getComparison('Distance').get('DIFF');
-distance_WU_p1 = c_WU.getComparison('Distance').get('P1');
-distance_WU_p2 = c_WU.getComparison('Distance').get('P2');
-distance_WU_cil = c_WU.getComparison('Distance').get('CIL');
-distance_WU_ciu = c_WU.getComparison('Distance').get('CIU');
+wmultiplexparticipation_av_WU_diff = c_WU.getComparison('WeightedMultiplexParticipationAv').get('DIFF');
+wmultiplexparticipation_av_WU_p1 = c_WU.getComparison('WeightedMultiplexParticipationAv').get('P1');
+wmultiplexparticipation_av_WU_p2 = c_WU.getComparison('WeightedMultiplexParticipationAv').get('P2');
+wmultiplexparticipation_av_WU_cil = c_WU.getComparison('WeightedMultiplexParticipationAv').get('CIL');
+wmultiplexparticipation_av_WU_ciu = c_WU.getComparison('WeightedMultiplexParticipationAv').get('CIU');

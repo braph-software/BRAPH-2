@@ -25,7 +25,7 @@ Inf
 %%% ¡prop!
 CORRELATION_RULE (parameter, option) is the correlation type.
 %%%% ¡settings!
-Correlation.CORRELATION_RULE_LIST
+Correlation.CORRELATION_RULE_LIST(1:3)
 %%%% ¡default!
 Correlation.CORRELATION_RULE_LIST{1}
 
@@ -55,6 +55,12 @@ if ~braph2_testing
         if a.get('GR').get('SUB_DICT').length() > 0
             a.get('GRAPH_TEMPLATE').set('BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA'))
         end
+    end
+    if a.get('GR').get('SUB_DICT').length() > 0
+        L = a.get('GR').get('SUB_DICT').getItem(1).get('L');  % number of layers
+        layerlabels = cell2str(cellfun(@(x) ['L' num2str(x)], num2cell([1:1:L]), 'UniformOutput', false));
+        
+        a.get('GRAPH_TEMPLATE').set('LAYERLABELS', layerlabels)
     end
 end
 

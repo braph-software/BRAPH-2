@@ -5,7 +5,7 @@ clear variables %#ok<*NASGU>
 
 %% Load BrainAtlas
 im_ba = ImporterBrainAtlasXLS( ...
-    'FILE', [fileparts(which('example_FUN_MP_BUT')) filesep 'example data FUN_MP (fMRI)' filesep 'craddock_atlas.xlsx'], ...
+    'FILE', [fileparts(which('example_FUN_MP_BUT')) filesep 'example data FUN_MP' filesep 'aal90_atlas.xlsx'], ...
     'WAITBAR', true ...
     );
 
@@ -14,7 +14,7 @@ ba = im_ba.get('BA');
 %% Load Groups of SubjectFUN_MP
 
 im_gr1 = ImporterGroupSubjectFUN_MP_XLS( ...
-    'DIRECTORY', [fileparts(which('example_FUN_MP_BUT')) filesep 'example data FUN_MP (fMRI)' filesep 'xls' filesep 'GroupName1'], ...
+    'DIRECTORY', [fileparts(which('example_FUN_MP_BUT')) filesep 'example data FUN_MP' filesep 'xls' filesep 'GroupName1'], ...
     'BA', ba, ...
     'WAITBAR', true ...
     );
@@ -22,7 +22,7 @@ im_gr1 = ImporterGroupSubjectFUN_MP_XLS( ...
 gr1 = im_gr1.get('GR');
 
 im_gr2 = ImporterGroupSubjectFUN_MP_XLS( ...
-    'DIRECTORY', [fileparts(which('example_FUN_MP_BUT')) filesep 'example data FUN_MP (fMRI)' filesep 'xls' filesep 'GroupName2'], ...
+    'DIRECTORY', [fileparts(which('example_FUN_MP_BUT')) filesep 'example data FUN_MP' filesep 'xls' filesep 'GroupName2'], ...
     'BA', ba, ...
     'WAITBAR', true ...
     );
@@ -30,7 +30,7 @@ im_gr2 = ImporterGroupSubjectFUN_MP_XLS( ...
 gr2 = im_gr2.get('GR');
 
 %% Analysis FUN MP BUT
-thresholds = 0:.2:1;
+thresholds = .7:.1:.9;
 
 a_BUT1 = AnalyzeEnsemble_FUN_MP_BUT( ...
     'GR', gr1, ...
@@ -43,13 +43,13 @@ a_BUT2 = AnalyzeEnsemble_FUN_MP_BUT( ...
     );
 
 % measure calculation
-degree_BUT1 = a_BUT1.getMeasureEnsemble('Degree').get('M');
-degree_av_BUT1 = a_BUT1.getMeasureEnsemble('DegreeAv').get('M');
-distance_BUT1 = a_BUT1.getMeasureEnsemble('Distance').get('M');
+mpc_BUT1 = a_BUT1.getMeasureEnsemble('MultiplexParticipation').get('M');
+mpc_av_BUT1 = a_BUT1.getMeasureEnsemble('MultiplexParticipationAv').get('M');
+edgeov_BUT1 = a_BUT1.getMeasureEnsemble('EdgeOverlap').get('M');
 
-degree_BUT2 = a_BUT2.getMeasureEnsemble('Degree').get('M');
-degree_av_BUT2 = a_BUT2.getMeasureEnsemble('DegreeAv').get('M');
-distance_BUT2 = a_BUT2.getMeasureEnsemble('Distance').get('M');
+degree_BUT2 = a_BUT2.getMeasureEnsemble('MultiplexParticipation').get('M');
+degree_av_BUT2 = a_BUT2.getMeasureEnsemble('MultiplexParticipationAv').get('M');
+edgeov_BUT2 = a_BUT2.getMeasureEnsemble('EdgeOverlap').get('M');
 
 % comparison
 c_BUT = CompareEnsemble( ...
@@ -61,20 +61,14 @@ c_BUT = CompareEnsemble( ...
     'MEMORIZE', true ...
     );
 
-degree_BUT_diff = c_BUT.getComparison('Degree').get('DIFF');
-degree_BUT_p1 = c_BUT.getComparison('Degree').get('P1');
-degree_BUT_p2 = c_BUT.getComparison('Degree').get('P2');
-degree_BUT_cil = c_BUT.getComparison('Degree').get('CIL');
-degree_BUT_ciu = c_BUT.getComparison('Degree').get('CIU');
+mpc_BUT_diff = c_BUT.getComparison('MultiplexParticipation').get('DIFF');
+mpc_BUT_p1 = c_BUT.getComparison('MultiplexParticipation').get('P1');
+mpc_BUT_p2 = c_BUT.getComparison('MultiplexParticipation').get('P2');
+mpc_BUT_cil = c_BUT.getComparison('MultiplexParticipation').get('CIL');
+mpc_BUT_ciu = c_BUT.getComparison('MultiplexParticipation').get('CIU');
 
-degree_av_BUT_diff = c_BUT.getComparison('DegreeAv').get('DIFF');
-degree_av_BUT_p1 = c_BUT.getComparison('DegreeAv').get('P1');
-degree_av_BUT_p2 = c_BUT.getComparison('DegreeAv').get('P2');
-degree_av_BUT_cil = c_BUT.getComparison('DegreeAv').get('CIL');
-degree_av_BUT_ciu = c_BUT.getComparison('DegreeAv').get('CIU');
-
-distance_BUT_diff = c_BUT.getComparison('Distance').get('DIFF');
-distance_BUT_p1 = c_BUT.getComparison('Distance').get('P1');
-distance_BUT_p2 = c_BUT.getComparison('Distance').get('P2');
-distance_BUT_cil = c_BUT.getComparison('Distance').get('CIL');
-distance_BUT_ciu = c_BUT.getComparison('Distance').get('CIU');
+mpc_av_BUT_diff = c_BUT.getComparison('MultiplexParticipationAv').get('DIFF');
+mpc_av_BUT_p1 = c_BUT.getComparison('MultiplexParticipationAv').get('P1');
+mpc_av_BUT_p2 = c_BUT.getComparison('MultiplexParticipationAv').get('P2');
+mpc_av_BUT_cil = c_BUT.getComparison('MultiplexParticipationAv').get('CIL');
+mpc_av_BUT_ciu = c_BUT.getComparison('MultiplexParticipationAv').get('CIU');

@@ -26,7 +26,7 @@ Inf
 %%% ¡prop!
 CORRELATION_RULE (parameter, option) is the correlation type.
 %%%% ¡settings!
-Correlation.CORRELATION_RULE_LIST
+Correlation.CORRELATION_RULE_LIST(1:3)
 %%%% ¡default!
 Correlation.CORRELATION_RULE_LIST{1}
 
@@ -61,10 +61,12 @@ GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and meas
 %%%% ¡postprocessing!
 if ~braph2_testing
     if isa(a.getr('GRAPH_TEMPLATE'), 'NoValue')
-        a.set('GRAPH_TEMPLATE', MultigraphBUT('THRESHOLDS',  Callback('EL', a, 'TAG', 'THRESHOLDS')))
-
         if a.get('GR').get('SUB_DICT').length() > 0
-            a.get('GRAPH_TEMPLATE').set('BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA'))
+            a.set('GRAPH_TEMPLATE', ...
+                MultigraphBUT('THRESHOLDS',  Callback('EL', a, 'TAG', 'THRESHOLDS'), ...
+                'BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA')));
+        else
+            a.set('GRAPH_TEMPLATE', MultigraphBUT('THRESHOLDS',  Callback('EL', a, 'TAG', 'THRESHOLDS')));
         end
     end
     a.get('GRAPH_TEMPLATE').set( ...
@@ -121,6 +123,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
         'ID', ['g ' sub.get('ID')], ...
         'B', A, ...
         'THRESHOLDS', thresholds, ...
+        'LAYERTICKS', thresholds, ...  
         'BAS', ba ...
         );
     g_dict.add(g)

@@ -396,7 +396,7 @@ end
 %%% ¡test!
 %%%% ¡name!
 Example
-%%% ¡code!
+%%%% ¡code!
 % draws PanelProp's at once
 fig1 = uifigure('Color', 'w', 'Units', 'normalized', 'Position', [0 0 1 1]);
 et1 = ETA();

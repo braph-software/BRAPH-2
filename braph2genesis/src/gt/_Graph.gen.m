@@ -84,7 +84,19 @@ PFG (gui, item) contains the panel figure of the graph.
 'PFGraph'
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
-    g.memorize('PFG').set('G', g)
+    if isa(g.getr('PFG'), 'NoValue')
+        if Graph.is_graph(g) % graph
+            g.set('PFG', PFGraph('G', g))
+        elseif Graph.is_multigraph(g) % multigraph BUD BUT
+            g.set('PFG', PFMultiGraph('G', g))
+        elseif Graph.is_multiplex(g) && Graph.is_weighted(g) % multiplexWU
+            g.set('PFG', PFMultiplexGraph('G', g))
+        elseif Graph.is_multiplex(g) && Graph.is_binary(g)
+            g.set('PFG', PFMultiplexBinaryGraph('G', g))
+        else
+            g.memorize('PFG').set('G', g)
+        end
+    end
 end
 %%%% ¡gui!
 pr = PanelPropItem('EL', g, 'PROP', Graph.PFG, ...
@@ -813,18 +825,42 @@ switch Graph.getGraphType(g)
     case Graph.GRAPH
         B = A{1};
         B = B(nodes{1}, nodes{1});
+        sg = eval([g.getClass() '(''B'', B)']);
         
-    otherwise  % multigraph, multiplex 
-        for li = 1:1:L
-            Aii = A{li, li};
-            if ~isempty(Aii)
-                B(li) = {Aii(nodes{li}, nodes{li})};
-            end
+    case Graph.MULTIGRAPH
+        temp_B = g.get('B');
+        B2 = temp_B(nodes{1}, nodes{1});
+        if isa(g, 'MultigraphBUD')
+            sg = MultigraphBUD('B', B2, 'Densities', g.get('Densities'));
+        else
+            sg = MultigraphBUT('B', B2, 'Thresholds', g.get('Thresholds'));
         end
+        
+    otherwise  % multiplex
+        if isa(g, 'MultiplexBUD') || isa(g, 'MultiplexBUT')
+            temp_B = g.get('B');
+            for li = 1:1:length(temp_B)
+                Aii = temp_B{li};
+                if ~isempty(Aii)
+                    B(li) = {Aii(nodes{li}, nodes{li})};
+                end
+            end
+            if isa(g, 'MultiplexBUD')
+                sg = MultiplexBUD('B', B, 'Densities', g.get('Densities'));
+            else
+                sg = MultiplexBUT('B', B, 'Thresholds', g.get('Thresholds'));
+            end
+        else
+            for li = 1:1:L
+                Aii = A{li, li};
+                if ~isempty(Aii)
+                    B(li) = {Aii(nodes{li}, nodes{li})};
+                end
+            end
+            sg = eval([g.getClass() '(''B'', B)']);
+        end
+        
 end
-
-sg = eval([g.getClass() '(''B'', B)']);
-
 end
 function ga = nodeattack(g, nodes, layernumbers)
     %NODEATTACK removes given nodes from a graph
@@ -1001,7 +1037,7 @@ function m = getMeasure(g, measure_class, varargin)
             for i = 1:1:length(parameters)
                 parameter = parameters(i);
 
-                if parameter ~= AnalyzeGroup.TEMPLATE
+                if parameter ~= AnalyzeGroup.TEMPLATE && (numel(varargin) > 1 && parameter ~= m_template.getPropProp(varargin{1}))
                     varargin{length(varargin) + 1} = parameter;
                     varargin{length(varargin) + 1} = Callback('EL', m_template, 'PROP', parameter);
                 end

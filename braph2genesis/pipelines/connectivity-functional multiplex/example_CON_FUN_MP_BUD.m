@@ -4,7 +4,9 @@
 clear variables %#ok<*NASGU>
 
 %% Load BrainAtlas
-im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('example_CON_FUN_MP_BUD')) filesep 'example data CON-FUN_MP' filesep 'desikan_atlas.xlsx']);
+im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('example_CON_FUN_MP_BUD')) filesep 'example data CON-FUN_MP' filesep 'aal90_atlas.xlsx'], ...
+    'WAITBAR', true ...
+    );
 
 ba = im_ba.get('BA');
 
@@ -60,7 +62,7 @@ co_gr2 = CombineGroups_CON_FUN( ...
 gr2 = co_gr2.get('GR');
 
 %% Analysis CON FUN MP BUD
-densities = 0:10:100;
+densities = 5:5:15;
 
 a_BUD1 = AnalyzeEnsemble_CON_FUN_MP_BUD( ...
     'GR', gr1, ...
@@ -73,13 +75,13 @@ a_BUD2 = AnalyzeEnsemble_CON_FUN_MP_BUD( ...
     );
 
 % measure calculation
-degree_BUD1 = a_BUD1.getMeasureEnsemble('Degree').get('M');
-degree_av_BUD1 = a_BUD1.getMeasureEnsemble('DegreeAv').get('M');
-distance_BUD1 = a_BUD1.getMeasureEnsemble('Distance').get('M');
+multiplexparticipation_BUD1 = a_BUD1.getMeasureEnsemble('MultiplexParticipation').get('M');
+ovdegree_av_BUD1 = a_BUD1.getMeasureEnsemble('OverlappingDegreeAv').get('M');
+edgeov_BUD1 = a_BUD1.getMeasureEnsemble('EdgeOverlap').get('M');
 
-degree_BUD2 = a_BUD2.getMeasureEnsemble('Degree').get('M');
-degree_av_BUD2 = a_BUD2.getMeasureEnsemble('DegreeAv').get('M');
-distance_BUD2 = a_BUD2.getMeasureEnsemble('Distance').get('M');
+multiplexparticipation_BUD2 = a_BUD2.getMeasureEnsemble('MultiplexParticipation').get('M');
+ovdegree_av_BUD2 = a_BUD2.getMeasureEnsemble('DegreeAv').get('M');
+edgeov_BUD2 = a_BUD2.getMeasureEnsemble('EdgeOverlap').get('M');
 
 % comparison
 c_BUD = CompareEnsemble( ...
@@ -91,20 +93,14 @@ c_BUD = CompareEnsemble( ...
     'MEMORIZE', true ...
     );
 
-degree_BUD_diff = c_BUD.getComparison('Degree').get('DIFF');
-degree_BUD_p1 = c_BUD.getComparison('Degree').get('P1');
-degree_BUD_p2 = c_BUD.getComparison('Degree').get('P2');
-degree_BUD_cil = c_BUD.getComparison('Degree').get('CIL');
-degree_BUD_ciu = c_BUD.getComparison('Degree').get('CIU');
+multiplexparticipation_BUD_diff = c_BUD.getComparison('MultiplexParticipation').get('DIFF');
+multiplexparticipation_BUD_p1 = c_BUD.getComparison('MultiplexParticipation').get('P1');
+multiplexparticipation_BUD_p2 = c_BUD.getComparison('MultiplexParticipation').get('P2');
+multiplexparticipation_BUD_cil = c_BUD.getComparison('MultiplexParticipation').get('CIL');
+multiplexparticipation_BUD_ciu = c_BUD.getComparison('MultiplexParticipation').get('CIU');
 
-degree_av_BUD_diff = c_BUD.getComparison('DegreeAv').get('DIFF');
-degree_av_BUD_p1 = c_BUD.getComparison('DegreeAv').get('P1');
-degree_av_BUD_p2 = c_BUD.getComparison('DegreeAv').get('P2');
-degree_av_BUD_cil = c_BUD.getComparison('DegreeAv').get('CIL');
-degree_av_BUD_ciu = c_BUD.getComparison('DegreeAv').get('CIU');
-
-distance_BUD_diff = c_BUD.getComparison('Distance').get('DIFF');
-distance_BUD_p1 = c_BUD.getComparison('Distance').get('P1');
-distance_BUD_p2 = c_BUD.getComparison('Distance').get('P2');
-distance_BUD_cil = c_BUD.getComparison('Distance').get('CIL');
-distance_BUD_ciu = c_BUD.getComparison('Distance').get('CIU');
+ovdegree_av_BUD_diff = c_BUD.getComparison('OverlappingDegreeAv').get('DIFF');
+ovdegree_av_BUD_p1 = c_BUD.getComparison('OverlappingDegreeAv').get('P1');
+ovdegree_av_BUD_p2 = c_BUD.getComparison('OverlappingDegreeAv').get('P2');
+ovdegree_av_BUD_cil = c_BUD.getComparison('OverlappingDegreeAv').get('CIL');
+ovdegree_av_BUD_ciu = c_BUD.getComparison('OverlappingDegreeAv').get('CIU');

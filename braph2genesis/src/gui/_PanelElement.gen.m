@@ -194,7 +194,9 @@ function p_out = draw(pe, varargin)
                     pe.update()
                     pe.redraw()
                 else
-                    pe.get('PR_DICT').getItem(pri).update()
+                    if ~isempty(pe.p) && check_graphics(pe.p, 'uipanel')
+                        pe.get('PR_DICT').getItem(pri).update()
+                    end
                 end
             end
         end

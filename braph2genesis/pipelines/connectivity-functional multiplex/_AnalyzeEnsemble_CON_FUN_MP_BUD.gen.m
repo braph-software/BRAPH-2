@@ -25,7 +25,7 @@ Inf
 %%% ¡prop!
 CORRELATION_RULE (parameter, option) is the correlation type for functional data.
 %%%% ¡settings!
-Correlation.CORRELATION_RULE_LIST
+Correlation.CORRELATION_RULE_LIST(1:3)
 %%%% ¡default!
 Correlation.CORRELATION_RULE_LIST{1}
 
@@ -66,11 +66,15 @@ if ~braph2_testing
             a.get('GRAPH_TEMPLATE').set('BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA'))
         end
     end
-    layerlabels = [ ...
-        cellfun(@(x) ['C ' num2str(x) '%'], num2cell(a.get('DENSITIES')), 'UniformOutput', false), ...
-        cellfun(@(x) ['F ' num2str(x) '%'], num2cell(a.get('DENSITIES')), 'UniformOutput', false) ...
-        ];
+    densities = a.get('DENSITIES');
+    layerlabels = {};
+    for i = 1:length(densities)
+        layerlabels = [...
+            layerlabels, ['C ' num2str(densities(i)) '%'], ...
+            ['F ' num2str(densities(i)) '%']];
+    end
     a.get('GRAPH_TEMPLATE').set('LAYERLABELS', cell2str(layerlabels))
+    a.get('GRAPH_TEMPLATE').set('LAYERTICKS', densities)
 end
 
 %%% ¡prop!

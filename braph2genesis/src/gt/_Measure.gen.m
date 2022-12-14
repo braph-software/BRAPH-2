@@ -44,26 +44,31 @@ if Measure.is_global(m)
         )
 elseif Measure.is_nodal(m)
     bas = g.get('BAS');
-    ba = bas{1};
-    br_ids = ba.get('BR_DICT').getKeys();
-    rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
+    if ~isempty(bas)
+        ba = bas{1};
+        br_ids = ba.get('BR_DICT').getKeys();
+        rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
+        
+        pr.set( ...
+            'TAB_H', 40, ...
+            'ROWNAME', rowname, ...
+            'COLUMNNAME', '[]' ...
+            )
+    end
     
-    pr.set( ...
-        'TAB_H', 40, ...
-        'ROWNAME', rowname, ...
-        'COLUMNNAME', '[]' ...
-        )
 elseif Measure.is_binodal(m)
     bas = m.get('G').get('BAS');
-    ba = bas{1};
-    br_ids = ba.get('BR_DICT').getKeys();
-    rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
-    
-    pr.set( ...
-        'TAB_H', 40, ...
-        'ROWNAME', rowname, ...
-        'COLUMNNAME', rowname ...
-        )
+    if ~isempty(bas)
+        ba = bas{1};
+        br_ids = ba.get('BR_DICT').getKeys();
+        rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
+        
+        pr.set( ...
+            'TAB_H', 40, ...
+            'ROWNAME', rowname, ...
+            'COLUMNNAME', rowname ...
+            )
+    end   
 end
 
 if g.layernumber() == 1
@@ -73,10 +78,31 @@ if g.layernumber() == 1
         )
 else % multilayer
     if  Measure.is_superglobal(m)
-        pr.set( ...
-            'XSLIDER', false, ...
-            'YSLIDER', false ...
-            )
+        if Graph.is_weighted(g)
+            pr.set( ...
+                'XSLIDER', false, ...
+                'YSLIDER', false ...
+                )
+        else
+            if isempty(g.get('LAYERTICKS'))
+                ylayerlabels = PanelPropCell.getPropDefault('LAYERTICKS');
+            else
+                layerlabels = num2cell(g.get('LAYERTICKS'));
+                if isa(g, "MultiplexBUD")
+                    ylayerlabels = ['{' sprintf('''%d'' ', layerlabels{end:-1:1}) '}'];
+                else
+                    ylayerlabels = ['{' sprintf('''%.2f'' ', layerlabels{end:-1:1}) '}'];
+                end
+            end
+
+            pr.set( ...
+                'TAB_H', max(pr.get('TAB_H'), length(layerlabels)), ...
+                'XSLIDER', false, ...
+                'YSLIDER', true, ...
+                'YSLIDERLABELS', ylayerlabels, ...
+                'YSLIDERWIDTH', 5 ...
+                )
+        end
     elseif Measure.is_unilayer(m)
         if isempty(g.get('LAYERLABELS'))
             % xlayerlabels = PanelPropCell.getPropDefault('XSLIDERLABELS');
@@ -123,12 +149,31 @@ PFM (gui, item) contains the panel figure of the measure.
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
     if isa(m.getr('PFM'), 'NoValue')
-        if Measure.is_global(m) && Measure.is_unilayer(m)
-            m.set('PFM', PFMeasureGU('M', m))
-        elseif Measure.is_nodal(m) && Measure.is_unilayer(m)
-            m.set('PFM', PFMeasureNU('M', m))
-        elseif Measure.is_binodal(m) && Measure.is_unilayer(m)
-            m.set('PFM', PFMeasureBU('M', m))
+        g = m.memorize('G');
+        if Measure.is_global(m) && (Measure.is_unilayer(m) || Measure.is_superglobal(m))
+            if Graph.is_multiplex(g) && Measure.is_unilayer(m)
+                m.set('PFM', PFMeasureMultiplexGU('M', m))
+            else
+                m.set('PFM', PFMeasureGU('M', m))
+            end  
+        elseif Measure.is_nodal(m) && (Measure.is_unilayer(m) || Measure.is_superglobal(m))
+            if Graph.is_multiplex(g) && Measure.is_unilayer(m)
+                m.set('PFM', PFMeasureMultiplexNU('M', m))
+            else
+                m.set('PFM', PFMeasureNU('M', m))
+            end  
+        elseif Measure.is_binodal(m) && (Measure.is_unilayer(m) || Measure.is_superglobal(m))
+            if Graph.is_multiplex(g) && Measure.is_unilayer(m)
+                m.set('PFM', PFMeasureMultiplexBU('M', m))
+            else
+                m.set('PFM', PFMeasureBU('M', m))
+            end
+        elseif Measure.is_global(m) && Measure.is_bilayer(m)
+            m.set('PFM', PFMeasureGB('M', m))
+        elseif Measure.is_nodal(m) && Measure.is_bilayer(m)
+            m.set('PFM', PFMeasureNB('M', m))
+        elseif Measure.is_binodal(m) && Measure.is_bilayer(m)
+            m.set('PFM', PFMeasureBB('M', m))
         else
             m.memorize('PFM').set('M', m)
         end
@@ -138,6 +183,57 @@ end
 pr = PanelPropItem('EL', m, 'PROP', Measure.PFM, ...
     'GUICLASS', 'GUIFig', ...
     varargin{:});
+
+%%% ¡prop!
+PFBG (gui, item) contains the panel figure of the brain graph.
+%%%% ¡settings!
+'PFBrainGraph'
+%%%% ¡postprocessing!
+if ~braph2_testing % to avoid problems with isqual when the element is recursive
+    if isa(m.getr('PFBG'), 'NoValue')
+        g = m.memorize('G');
+        if ~isempty(g) && ~isa(g, 'NoValue')
+            if Graph.is_graph(g) % graph
+                ba_list = g.memorize('BAS');
+                if ~isempty(ba_list)
+                    m.memorize('PFBG').set('ME', m, 'BA', ba_list{1})
+                else
+                    m.memorize('PFBG').set('ME', m);
+                end
+                
+            elseif Graph.is_multigraph(g) % multigraph BUD BUT
+                ba_list = g.memorize('BAS');
+                if ~isempty(ba_list)
+                    m.set('PFBG', PFBrainMultiGraph('ME', m, 'BA', ba_list{1}));
+                else
+                    m.set('PFBG', PFBrainMultiGraph('ME', m));
+                end
+            elseif Graph.is_multiplex(g) && Graph.is_weighted(g) % multiplexWU
+                ba_list = g.memorize('BAS');
+                if ~isempty(ba_list)
+                    m.set('PFBG', PFBrainMultiplexGraph('ME', m, 'BA', ba_list{1}));
+                else
+                    m.set('PFBG', PFBrainMultiplexGraph('ME', m));
+                end
+            elseif Graph.is_multiplex(g) && Graph.is_binary(g)
+                ba_list = g.memorize('BAS');
+                if ~isempty(ba_list)
+                    m.set('PFBG', PFBrainMultiplexBinaryGraph('ME', m, 'BA', ba_list{1}));
+                else
+                    m.set('PFBG', PFBrainMultiplexBinaryGraph('ME', m));
+                end
+            end
+        
+        else
+            m.memorize('PFBG').set('ME', m)
+        end
+    end
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', m, 'PROP', Measure.PFBG, ...
+    'GUICLASS', 'GUIFig', ...
+    varargin{:});
+
 
 %% ¡constants!
 

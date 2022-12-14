@@ -77,10 +77,24 @@ pr = PPAnalyzeEnsemble_MeDict('EL', a, 'PROP', AnalyzeEnsemble.ME_DICT, 'WAITBAR
 %%% ¡prop!
 PFGD (gui, item) contains the panel figure of the graph dictionary.
 %%%% ¡settings!
-'PFAnalyzeEnsemble'
+'PFAnalysisEnsemble'
 %%%% ¡postprocessing!
 if ~braph2_testing % to avoid problems with isqual when the element is recursive
-    a.memorize('PFGD').set('A', a)
+    if isa(a.getr('PFGD'), 'NoValue')
+        tmp_g = a.get('graph_template');
+        
+        if ~isempty(tmp_g) && Graph.is_graph(tmp_g) && ~Graph.is_multigraph(tmp_g)
+            a.set('PFGD', PFAnalysisEnsemble('A', a))
+        elseif ~isempty(tmp_g) && Graph.is_multigraph(tmp_g)
+            a.set('PFGD', PFMultiAnalysisEnsemble('A', a))
+        elseif ~isempty(tmp_g) && Graph.is_multiplex(tmp_g) && Graph.is_weighted(tmp_g)
+            a.set('PFGD', PFMultiplexAnalysisEnsemble('A', a))
+        elseif ~isempty(tmp_g) && Graph.is_multiplex(tmp_g) && Graph.is_binary(tmp_g)
+            a.set('PFGD', PFMultiplexBinaryAnalysisEnsemble('A', a))
+        else
+            a.memorize('PFGD').set('A', a)
+        end        
+    end
 end
 %%%% ¡gui!
 pr = PanelPropItem('EL', a, 'PROP', AnalyzeEnsemble.PFGD, ...
@@ -118,8 +132,7 @@ function me = getMeasureEnsemble(a, measure_class, varargin)
             'ID', measure_class, ...
             'A', a, ...
             'MEASURE', measure_class, ...
-            'MEASURE_TEMPLATE', eval([measure_class '()']), ...
-            varargin{:} ...
+            'MEASURE_TEMPLATE', eval([measure_class '(varargin{:})']) ...
             );
         me_dict.add(me);
     end

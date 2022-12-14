@@ -5,7 +5,7 @@ clear variables %#ok<*NASGU>
 
 %% Load BrainAtlas
 im_ba = ImporterBrainAtlasXLS( ...
-    'FILE', [fileparts(which('SubjectCON_FUN_MP')) filesep 'example data CON-FUN_MP' filesep 'desikan_atlas.xlsx'], ...
+    'FILE', [fileparts(which('SubjectCON_FUN_MP')) filesep 'example data CON-FUN_MP' filesep 'aal90_atlas.xlsx'], ...
     'WAITBAR', true ...
     );
 
@@ -63,7 +63,7 @@ co_gr2 = CombineGroups_CON_FUN( ...
 gr2 = co_gr2.get('GR');
 
 %% Analysis CON FUN MP GA BUD
-densities = [0 100];
+densities = 5:5:15;
 
 a_BUD1 = AnalyzeGroup_CON_FUN_MP_GA_BUD( ...
     'GR', gr1, ...
@@ -77,14 +77,14 @@ a_BUD2 = AnalyzeGroup_CON_FUN_MP_GA_BUD( ...
 
 % measure calculation
 g_BUD1 = a_BUD1.get('G');
-degree_BUD1 = g_BUD1.getMeasure('Degree').get('M');
-degree_av_BUD1 = g_BUD1.getMeasure('DegreeAv').get('M');
-distance_BUD1 = g_BUD1.getMeasure('Distance').get('M');
+mpc_BUD1 = g_BUD1.getMeasure('MultiplexParticipation').get('M');
+mpc_av_BUD1 = g_BUD1.getMeasure('MultiplexParticipationAv').get('M');
+edgeov_BUD1 = g_BUD1.getMeasure('EdgeOverlap').get('M');
 
 g_BUD2 = a_BUD2.get('G');
-degree_BUD2 = g_BUD2.getMeasure('Degree').get('M');
-degree_av_BUD2 = g_BUD2.getMeasure('DegreeAv').get('M');
-distance_BUD2 = g_BUD2.getMeasure('Distance').get('M');
+mpc_BUD2 = g_BUD2.getMeasure('MultiplexParticipation').get('M');
+mpc_av_BUD2 = g_BUD2.getMeasure('MultiplexParticipationAv').get('M');
+edgeov_BUD2 = g_BUD2.getMeasure('EdgeOverlap').get('M');
 
 % comparison
 c_BUD = CompareGroup( ...
@@ -96,20 +96,14 @@ c_BUD = CompareGroup( ...
     'MEMORIZE', true ...
     );
 
-degree_BUD_diff = c_BUD.getComparison('Degree').get('DIFF');
-degree_BUD_p1 = c_BUD.getComparison('Degree').get('P1');
-degree_BUD_p2 = c_BUD.getComparison('Degree').get('P2');
-degree_BUD_cil = c_BUD.getComparison('Degree').get('CIL');
-degree_BUD_ciu = c_BUD.getComparison('Degree').get('CIU');
+mpc_BUD_diff = c_BUD.getComparison('MultiplexParticipation').get('DIFF');
+mpc_BUD_p1 = c_BUD.getComparison('MultiplexParticipation').get('P1');
+mpc_BUD_p2 = c_BUD.getComparison('MultiplexParticipation').get('P2');
+mpc_BUD_cil = c_BUD.getComparison('MultiplexParticipation').get('CIL');
+mpc_BUD_ciu = c_BUD.getComparison('MultiplexParticipation').get('CIU');
 
-degree_av_BUD_diff = c_BUD.getComparison('DegreeAv').get('DIFF');
-degree_av_BUD_p1 = c_BUD.getComparison('DegreeAv').get('P1');
-degree_av_BUD_p2 = c_BUD.getComparison('DegreeAv').get('P2');
-degree_av_BUD_cil = c_BUD.getComparison('DegreeAv').get('CIL');
-degree_av_BUD_ciu = c_BUD.getComparison('DegreeAv').get('CIU');
-
-distance_BUD_diff = c_BUD.getComparison('Distance').get('DIFF');
-distance_BUD_p1 = c_BUD.getComparison('Distance').get('P1');
-distance_BUD_p2 = c_BUD.getComparison('Distance').get('P2');
-distance_BUD_cil = c_BUD.getComparison('Distance').get('CIL');
-distance_BUD_ciu = c_BUD.getComparison('Distance').get('CIU');
+mpc_av_BUD_diff = c_BUD.getComparison('MultiplexParticipationAv').get('DIFF');
+mpc_av_BUD_p1 = c_BUD.getComparison('MultiplexParticipationAv').get('P1');
+mpc_av_BUD_p2 = c_BUD.getComparison('MultiplexParticipationAv').get('P2');
+mpc_av_BUD_cil = c_BUD.getComparison('MultiplexParticipationAv').get('CIL');
+mpc_av_BUD_ciu = c_BUD.getComparison('MultiplexParticipationAv').get('CIU');

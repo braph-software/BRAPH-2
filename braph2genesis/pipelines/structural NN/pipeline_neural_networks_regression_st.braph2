@@ -1,0 +1,28 @@
+%% Pipeline Neural Networks Regression Structural Data
+%
+% This is the pipeline script to perform regression by neural networks for group of subjects with structural data.
+% 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
+% 2. It loads the data of group of subjects from XLS files.
+% 3. It constructs the dataset using structural data.
+% 4. It splits the dataset into training set and validation set.
+% 5. It trains the neural netork model.
+% 6. It evaluates the performance on the training set and the validation set.
+
+%% Brain Atlas
+ba = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load a Brain Atlas XLS % Brain Atlas
+
+%% Groups
+gr = ImporterGroupSubjectST_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group ST from XLS % Group ST
+
+%% Dataset Construction
+nnd = NNData_ST('GR', gr, 'TARGET_NAME', 'age'); % NN Dataset for Group % NN Group ST
+
+%% Dataset Splitting
+nnds = NNRegressorDataSplit('GR', nnd.get('GR_NN'), 'SPLIT', 0.2); % Split the dataset % NN Dataset
+
+%% Model Training
+regressor = NNRegressorDNN('GR', nnds.get('GR_TRAIN_FS'), 'VERBOSE', true, 'SHUFFLE', 'every-epoch'); % Train the NN % NN Regressor
+
+%% Model Evaluation
+nne_train = NNRegressorEvaluator('GR', nnds.get('GR_TRAIN_FS'), 'NN', regressor); % Evaluate on Training Set % Training Set
+nne_val = NNRegressorEvaluator('GR', nnds.get('GR_VAL_FS'), 'NN', regressor); % Evaluate on Validation Set % Validation Set

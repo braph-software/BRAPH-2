@@ -223,6 +223,13 @@ function update(pr)
             end            
     end
     
+    function pval = get_p_value()
+        value = el.get('P2');
+        [R, ~] = size(value);
+        pval = value{R + 1 - get(pr.yslider, 'Value'), get(pr.xslider, 'Value')};
+    end
+   
+    
     set(pr.table, ...
         'RowName', eval(pr.get('ROWNAME')), ...
         'ColumnName', eval(pr.get('COLUMNNAME')) ...
@@ -265,6 +272,39 @@ function update(pr)
                     'ColumnEditable', false, ...
                     'Visible', 'on' ...
                     )
+                
+                
+                
+                if (isa(el, 'ComparisonGroup') | isa(el, 'ComparisonEnsemble')) && el.existsTag('QVALUE')
+                    
+                    tmp_data = get_p_value();
+                    
+                    if size(tmp_data, 1) > size(tmp_data, 2)
+                        tmp_data = tmp_data';
+                    end
+                    
+                    [~, mask] = fdr(tmp_data, el.get('QVALUE'));
+                    [rows, cols] = find(mask==1);
+                    
+                    if ~isempty(rows) && ~isempty(cols)
+                        s = uistyle('BackgroundColor',[146/255 179/255 175/255]);
+                        if isvector(mask)
+                            addStyle(pr.table, s, 'cell', [cols', rows']);
+                        else
+                            addStyle(pr.table, s, 'cell', [rows, cols]);
+                        end
+                    else
+                        non_sign = ones(size(mask));
+                        a_temp = non_sign - mask;
+                        [rows, cols] = find(a_temp == 1);
+                        s = uistyle('BackgroundColor', [1 1 1]); % default color, no significance
+                        if isvector(a_temp)
+                            addStyle(pr.table, s, 'cell', [cols', rows']);
+                        else
+                            addStyle(pr.table, s, 'cell', [rows, cols]);
+                        end
+                    end
+                end
             end
     end
 end

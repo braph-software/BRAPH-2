@@ -29,7 +29,7 @@ Inf
 %%% ¡prop!
 CORRELATION_RULE (parameter, option) is the correlation type.
 %%%% ¡settings!
-Correlation.CORRELATION_RULE_LIST
+Correlation.CORRELATION_RULE_LIST(1:3)
 %%%% ¡default!
 Correlation.CORRELATION_RULE_LIST{1}
 
@@ -109,8 +109,8 @@ value = g;
 
 %% ¡tests!
 
-%%% ¡test!
-%%%% ¡name!
-Example
-%%%% ¡code!
-example_FUN_MP_GA_WU
+% % % %%% ¡test!
+% % % %%%% ¡name!
+% % % Example
+% % % %%%% ¡code!
+% % % example_FUN_MP_GA_WU

@@ -1,5 +1,5 @@
 %% ¡header!
-PFMeasureEnsembleNU < PFMeasureEnsembleGU (pf, panel figure measure GU) is a plot of a nodal unilayer measure.
+PFMeasureEnsembleNU < PFMeasureEnsembleGU (pf, panel figure measure NU) is a plot of a nodal unilayer/superglobal measure.
 
 %%% ¡description!
 % % % PFBrainSurface manages the plot of the brain surface choosen by the user. 

@@ -385,8 +385,16 @@ function redraw(pr, varargin)
     %
     % See also draw, update, PanelElement, s.
 
-    [h, varargin] = get_and_remove_from_varargin(s(2), 'Height', varargin);
-    Dh = s(pr.get('TAB_H'));
+    if ismac
+        hy = 2;
+        h_plus = 0;
+    else
+        hy = 4;
+        h_plus = 5;
+    end
+    
+    [h, varargin] = get_and_remove_from_varargin(s(hy), 'Height', varargin);
+    Dh = s(pr.get('TAB_H')) + h_plus;
     
     el = pr.get('EL');
     prop = pr.get('PROP');
