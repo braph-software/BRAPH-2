@@ -4,8 +4,8 @@ ImporterBrainAtlasTXT < Importer (im, importer of brain atlas from TXT) imports 
 %%% ¡description!
 ImporterBrainAtlasTXT imports a brain atlas from a TXT file.
 The TXT file consists of 6 columns and many rows.
-The first 4 rows: BrainAtlas ID (row 1, column 1), Brain Atlas LABEL 
-(row 2, column 1), BrainAtlas NOTES (row 3, column 1), Brain Surface Name 
+The first 4 rows: BrainAtlas ID (row 1, column 1), BrainAtlas LABEL 
+(row 2, column 1), BrainAtlas NOTES (row 3, column 1), BrainSurface Name 
 (row 4, column 1).
 And from row 5 to the end, the following columns: BrainRegion ID (column 1),
 BrainRegion LABEL (column 2), BrainRegions (column 3 to column 5; 
