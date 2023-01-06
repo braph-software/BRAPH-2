@@ -30,7 +30,7 @@ Q = 0;
 if ~isempty(community_structure)
     Q = m.get('quality_function');
 end
-modularity = {Q};  % assign normalized quality function
+modularity = Q;  % assign normalized quality function
 value = modularity;
 
 %% ¡tests!

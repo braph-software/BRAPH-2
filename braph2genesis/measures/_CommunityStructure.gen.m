@@ -57,7 +57,7 @@ OM_TYPE (data, OPTION) is the objective-function type algorithm (Louvain).
 'modularity'
 
 %%% ¡prop! 
-QUALITY_FUNCTION (metadata, SCALAR) 
+QUALITY_FUNCTION (metadata, CELL) 
 
 %% ¡props_update!
 
@@ -73,13 +73,13 @@ community_structure_algorithm = m.get('rule');
 
 parfor li = 1:1:g.layernumber()
     Aii = A{li, li};
-    community_structure(li) =  m.community(Aii, N(li), gamma, community_structure_algorithm);
+    [community_structure(li), QUALITY_FUNCTION{li}] =  m.community(Aii, N(li), gamma, community_structure_algorithm);
 end
-
+m.set('QUALITY_FUNCTION', QUALITY_FUNCTION);
 value = community_structure;
 
 %% ¡methods!
-function comm_str = community(m, A, N, gamma, community_structure_algorithm)
+function [comm_str, quality_function] = community(m, A, N, gamma, community_structure_algorithm)
 A = A;
 N = N;
 gamma = gamma;
@@ -160,7 +160,7 @@ community_structure_algorithm = community_structure_algorithm;
                 Ci_corrected(n_perm) = Ci;  % return order of nodes to the order used at the input stage.
                 Ci = Ci_corrected;  % output corrected community assignments
 
-                m.set('QUALITY_FUNCTION', Q);   % save normalized quality function/modularity
+                quality_function = Q;   % save normalized quality function/modularity
                 community_structure = {Ci};
 
             else  % directed graphs
@@ -228,7 +228,7 @@ community_structure_algorithm = community_structure_algorithm;
                 Ci_corrected(n_perm) = Ci;  % return order of nodes to the order used at the input stage.
                 Ci = Ci_corrected;  % output corrected community assignments
 
-                m.set('QUALITY_FUNCTION', Q); % save normalized quality function/modularity
+                quality_function = Q; % save normalized quality function/modularity
                 community_structure = {Ci};
             end
 
@@ -335,7 +335,7 @@ community_structure_algorithm = community_structure_algorithm;
                 Q0 = Q;
                 Q = trace(OM)/s;  % compute modularity
             end
-            m.set('QUALITY_FUNCTION', Q);  % save normalized quality function/modularity
+            quality_function = Q;  % save normalized quality function/modularity
             community_structure = {M};
     end
     comm_str = community_structure;
