@@ -316,7 +316,7 @@ function remove(idict, pointer)
     % See also add, replace.
 
     if isa(pointer, 'char')  % pointer is a key
-        index = idict.getKeyIndex(pointer);
+        index = idict.getIndexFromKey(pointer);
     elseif isa(pointer, 'numeric')  % pointer is an index
         index = pointer;
     elseif isa(pointer, idict.get('IT_CLASS'))  % pointer is a item
