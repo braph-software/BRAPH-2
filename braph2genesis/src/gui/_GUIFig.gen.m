@@ -74,7 +74,7 @@ POSITION (gui, rvector) is the normalized position of the GUI on the screen.
 %%% ¡prop!
 BKGCOLOR (gui, color) is the GUI background color.
 %%%% ¡default!
-BRAPH2.COL_FIG
+BRAPH2.COL_F
 
 %%% ¡prop!
 MENUBAR (gui, logical) determines whether to show the menubar.
