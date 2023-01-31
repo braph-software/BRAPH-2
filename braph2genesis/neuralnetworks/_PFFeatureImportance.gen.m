@@ -26,8 +26,9 @@ false
 %%%% ¡postprocessing!
 if ~braph2_testing
     if pf.get('MEASURES') && ...
-        ~isempty(pf.retrieve_edges()) && ...
-        string(pf.get('INPUT_TYPE')) == 'structural_data'
+         ~isempty(pf.retrieve_edges())
+        %~isempty(pf.retrieve_edges()) && ...
+        %string(pf.get('INPUT_TYPE')) == 'structural_data'
         nn = pf.get('NNE');
         prop = pf.get('PROP');
         fi = nn.memorize(prop);
@@ -35,20 +36,39 @@ if ~braph2_testing
             fi = {zeros(pf.get('BA').get('BR_DICT').length)};
         end
         index_layer = str2double(pf.get('INDEX_LAYER'));
-        val = fi{index_layer};
         
-        % Make colorbar
-        lim_min = min(val);  % minimum of measure result
-        lim_max = max(val);  % maximum of measure result
+        
+        %% check if input type is measure
+        if all(ismember(nn.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Measure', [], [], true))) && all(cell2mat(cellfun(@(x) Measure.is_nodal(x), nn.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), 'UniformOutput', false)))
+            fi = cell2mat(fi);
+            c = length(nn.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'));
+            fi = fi(:, 1:c);
+            [~, idx_all] = sort(fi(:), 'descend');
+            thre = str2double(pf.get('THRESHOLD'));
+            num_top_idx = ceil(thre * numel(fi));
+            fi(idx_all(num_top_idx + 1:end)) = 0;
+            val = fi(:, index_layer);
+        else
+            fi = cell2mat(fi);
+            [~, idx_all] = sort(fi(:), 'descend');
+            thre = str2double(pf.get('THRESHOLD'));
+            num_top_idx = ceil(thre * numel(fi));
+            fi(idx_all(num_top_idx + 1:end)) = 0;
+            val = fi(:, index_layer);
+         end
+
+         % Make colorbar
+         lim_min = fi(idx_all(num_top_idx));  % minimum of measure result
+         lim_max = fi(idx_all(1));  % maximum of measure result
         val(val == 0) = 0.01;
         val(isnan(val)) = 0.01;
         if lim_min == lim_max
-            caxis auto
+            %clim auto
             cmap_temp = colormap(jet);
             rgb_meas = zeros(size(cmap_temp));
         else
-            caxis([lim_min lim_max]);
-            cmap_temp = colormap(jet);
+            %caxis([lim_min lim_max]);
+            cmap_temp = colormap(pf.h_axes, jet);;
             rgb_meas = interp1(linspace(lim_min, lim_max, size(cmap_temp, 1)), ...
                 cmap_temp, val); % colorbar from minimum to maximum value of the measure result
         end
@@ -61,10 +81,11 @@ if ~braph2_testing
                 if meas_val ~= 0.01
                     meas_val = (abs(val(i)) - lim_min) / (lim_max - lim_min) + 1;  % size normalized by minimum and maximum value of the measure result
                     meas_val(isnan(meas_val)) = 1;
+                    sph.set('FaceColor',  rgb_meas(i, :));
                 end
                 default_value = sph.getPropDefault('SPHERESIZE');
                 sph.set('SPHERESIZE', default_value * meas_val);
-                sph.set('FaceColor',  rgb_meas(i, :));
+                %sph.set('FaceColor',  rgb_meas(i, :));
             end
             pf.update_gui_tbl_sph()
         end
@@ -76,19 +97,19 @@ if ~braph2_testing
                 if meas_val ~= 0.01
                     meas_val = (abs(val(i)) - lim_min) / (lim_max - lim_min) + 1;  % size normalized by minimum and maximum value of the measure result
                     meas_val(isnan(meas_val)) = 1;
+                    sym.set('FaceColor',  rgb_meas(i, :));
                 end
                 default_value = sym.getPropDefault('SYMBOLSIZE');
                 sym.set('SYMBOLSIZE', default_value * meas_val(i));
-                sym.set('FaceColor',  rgb_meas(i, :));
             end
             pf.update_gui_tbl_sym()
         end
     else
-        if ~isempty(varargin)&& ~ischar(varargin{1}) && varargin{1} == pf.getPropProp('MEASURES') && pf.get('MEASURES')
-            questdlg('MEASURES visualization only applies to the input of structural data.', ...
-                'User Request', ...
-                'Ok', 'Ok');
-        end
+% %         if ~isempty(varargin)&& ~ischar(varargin{1}) && varargin{1} == pf.getPropProp('MEASURES') && pf.get('MEASURES')
+% %             questdlg('MEASURES visualization only applies to the input of structural data.', ...
+% %                 'User Request', ...
+% %                 'Ok', 'Ok');
+% %         end
         if size(varargin, 2) > 0 && (strcmp(pf.getPropTag(varargin{1}), 'measures')) && pf.get('SPHS')
             sph_dict = pf.get('SPH_DICT');
             for i = 1:sph_dict.length

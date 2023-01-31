@@ -62,7 +62,11 @@ function update(pr)
     end 
     
     n_layers = [1:size(tmp_Var, 2)];
-    labels = cellfun(@(x) ['Layer: ' num2str(x)],num2cell(n_layers), 'UniformOutput', false);
+    if all(ismember(el.get('NNE').get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Measure', [], [], true)))
+        labels = el.get('NNE').get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL');
+    else
+        labels = cellfun(@(x) ['Layer: ' num2str(x)], num2cell(n_layers), 'UniformOutput', false);
+    end
     default_value = el.get(prop);
     
     set(pr.dropdown, ...
@@ -119,7 +123,11 @@ function cb_dropdown(pr)
         tmp_Var = {zeros(el.get('BA').get('BR_DICT').length)};
     end
     n_layers = [1:size(tmp_Var, 2)];
-    labels = cellfun(@(x) ['Layer: ' num2str(x)],num2cell(n_layers), 'UniformOutput', false);
+    if all(ismember(el.get('NNE').get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Measure', [], [], true)))
+        labels = el.get('NNE').get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL');
+    else
+        labels = cellfun(@(x) ['Layer: ' num2str(x)], num2cell(n_layers), 'UniformOutput', false);
+    end
     index = find(contains(labels, val), 1, 'last');
     
     el.set(prop, num2str(index))
