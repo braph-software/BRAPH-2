@@ -109,6 +109,9 @@ function me = getMeasureEnsemble(nnd, measure_class, varargin)
     m_list = Graph.getCompatibleMeasureList(g);
     a = nnd.getPropDefault('ANALYZE_ENSEMBLE');
     a.set('GR', nnd.get('GR'));
+    if isempty(a.get('G_DICT').getItems)
+        a.memorize('G_DICT').add(g);
+    end
     
     if ~isempty(m_list)
         assert( ...
