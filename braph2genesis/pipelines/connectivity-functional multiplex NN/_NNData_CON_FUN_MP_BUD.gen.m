@@ -12,7 +12,12 @@ The generated NN group can be used to train or test a neural network model.
 %%% ¡prop!
 DENSITIES (parameter, rvector) is the vector of densities.
 %%%% ¡default!
-50
+5
+%%%% ¡gui!
+pr = PanelPropRVectorSmart('EL', nnd, 'PROP', NNData_CON_FUN_MP_BUD.DENSITIES, ...
+    'MIN', 0, 'MAX', 100, ...
+    'DEFAULT', NNData_CON_FUN_MP_BUD.getPropDefault('DENSITIES'), ...
+    varargin{:});
 
 %%% ¡prop!
 REPETITION(parameter, scalar) is the number of repetitions.
