@@ -226,14 +226,14 @@ value = nne_dict;
 FEATURE_IMPORTANCE (result, cell) is the feature importance obtained with permutation analysis.
 %%%% ¡calculate!
 if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
-% %     if any(ismember(nncv.get('GR1').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Measure', [], [], true)))
-% %         feature_importances = {};
-% %         if ~braph2_testing
-% %             questdlg('Feature importance analysis does not apply to the input of graph measures.', ...
-% %                 'User Request', ...
-% %                 'Ok', 'Ok');
-% %         end
-% %     else
+    if any(ismember(nncv.get('GR1').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Measure', [], [], true))) && all(cell2mat(cellfun(@(x) ~Measure.is_nodal(x), nncv.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), 'UniformOutput', false)))
+        feature_importances = {};
+        if ~braph2_testing
+            questdlg('Feature importance analysis does not apply to the input of global or binodal graph measures.', ...
+                'User Request', ...
+                'Ok', 'Ok');
+        end
+    else
         nne_dict = nncv.memorize('NNE_DICT');
         wb = braph2waitbar(nncv.get('WAITBAR'), 0, 'Analysing feature importance...');
         feature_importances = nne_dict.getItem(1).get('FEATURE_PERMUTATION_IMPORTANCE');
@@ -249,7 +249,7 @@ if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
             feature_importances = cellfun(@(x) x/nne_dict.length, feature_importances, 'UniformOutput', false);
         end
         braph2waitbar(wb, 'close')
-%    end
+    end
 else
     feature_importances = {};
 end

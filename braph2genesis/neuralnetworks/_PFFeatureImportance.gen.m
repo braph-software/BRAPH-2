@@ -26,9 +26,8 @@ false
 %%%% ¡postprocessing!
 if ~braph2_testing
     if pf.get('MEASURES') && ...
-         ~isempty(pf.retrieve_edges())
-        %~isempty(pf.retrieve_edges()) && ...
-        %string(pf.get('INPUT_TYPE')) == 'structural_data'
+            ~isempty(pf.retrieve_edges()) && ...
+            string(pf.get('INPUT_TYPE')) ~= 'adjacency_matrices'
         nn = pf.get('NNE');
         prop = pf.get('PROP');
         fi = nn.memorize(prop);
