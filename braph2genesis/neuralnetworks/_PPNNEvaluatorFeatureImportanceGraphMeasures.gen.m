@@ -152,7 +152,7 @@ end
 function lbls = oneLayerLabel(pr)
     lbls = {'L1'};
 end
-function lbls = LayerLabel(pr)
+function lbls_out = LayerLabel(pr)
     el = pr.get('EL');
     measure_labels = el.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL');
     lbls_out = {};
@@ -163,11 +163,8 @@ function lbls = LayerLabel(pr)
             lbls = strcat(lbls, [' for ' measure_labels{i}]);
             lbls_out = [lbls_out lbls];
         end
+        lbls_out = cellstr(lbls_out);
     else
-        for i = 1:length(measure_labels)
-            lbls = strcat(lbls, measure_labels{i});
-            lbls_out = [lbls_out lbls];
-        end
+        lbls_out = measure_labels;
     end
-    lbls_out = cellstr(lbls_out);
 end
