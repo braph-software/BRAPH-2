@@ -102,10 +102,10 @@ for i = 1:1:gr.get('SUB_DICT').length()
         );
 
     if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
-        adj = g.get('A'); 
+        adj = g.get('A');
         input = {};
-        for j = 1:length(adj)
-            input = [input adj{j, j}];
+        for j = 1:1:length(adj)
+            input{j} = adj{j,j};
         end
         input_label = {'MultigraphBUD'};
 
