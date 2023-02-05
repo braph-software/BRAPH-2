@@ -128,14 +128,14 @@ function cb_xslider_nn(pr)
     pr.update();
     set(pr.xslider, 'Value', round(get(pr.xslider, 'Value')))
     el = pr.get('EL');
-    [R, C] = size(el.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'));
-    set(pr.xslider, ...
-        'Limits', [.6 C+.4], ...
-        'MajorTicks', [1:1:C], ...
-        'MajorTickLabels', eval(pr.get('XSLIDERLABELS')), ...
-        'Value', max(1, min(round(get(pr.xslider, 'Value'), C))), ...
-        'Visible', pr.get('XSLIDER') ...
-        )
+% % %     [R, C] = size(el.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'));
+% % %     set(pr.xslider, ...
+% % %         'Limits', [.6 C+.4], ...
+% % %         'MajorTicks', [1:1:C], ...
+% % %         'MajorTickLabels', eval(pr.get('XSLIDERLABELS')), ...
+% % %         'Value', max(1, min(round(get(pr.xslider, 'Value'), C))), ...
+% % %         'Visible', pr.get('XSLIDER') ...
+% % %         )
     set(pr.table, 'columnname', 'Value');
     set(pr.table, 'rowname', el.get('GR').get('SUB_DICT').getItem(1).get('BA').get('BR_DICT').getKeys());
 end
@@ -154,5 +154,20 @@ function lbls = oneLayerLabel(pr)
 end
 function lbls = LayerLabel(pr)
     el = pr.get('EL');
-    lbls = el.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL');
+    measure_labels = el.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL');
+    lbls_out = {};
+    if isa(el.get('GR').get('SUB_DICT').getItem(1).get('G'), 'MultigraphBUD') || isa(el.get('GR').get('SUB_DICT').getItem(1).get('G'), 'MultiplexBUD')
+        densities = el.get('GR').get('SUB_DICT').getItem(1).get('G').get('DENSITIES');
+        for i = 1:length(measure_labels)
+            lbls = strcat(["DT "], string(densities));
+            lbls = strcat(lbls, [' for ' measure_labels{i}]);
+            lbls_out = [lbls_out lbls];
+        end
+    else
+        for i = 1:length(measure_labels)
+            lbls = strcat(lbls, measure_labels{i});
+            lbls_out = [lbls_out lbls];
+        end
+    end
+    lbls_out = cellstr(lbls_out);
 end

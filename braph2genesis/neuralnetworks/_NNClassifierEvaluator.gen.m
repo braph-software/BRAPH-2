@@ -104,7 +104,11 @@ elseif ~any(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL')
             for i = 1:1:n
                 feature_importances{i} = feature_importance_tmp(:, i);
             end
-            value = feature_importances;
+            if isa(gr.get('SUB_DICT').getItem(1).get('G'), 'MultiplexBUD') && gr.get('SUB_DICT').getItem(1).get('G').layernumber / length(gr.get('SUB_DICT').getItem(1).get('G').get('DENSITIES')) == 2
+                value = reshape(feature_importances, gr.get('SUB_DICT').getItem(1).get('G').layernumber / length(gr.get('SUB_DICT').getItem(1).get('G').get('DENSITIES')), []);
+            else
+                value = feature_importances;
+            end
         else
             value = {feature_importance};
         end
