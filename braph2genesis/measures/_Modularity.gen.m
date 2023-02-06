@@ -26,7 +26,7 @@ MultigraphBUT
 M (result, cell) is the modularity.
 %%%% ¡calculate!
 community_structure = calculateValue@CommunityStructure(m, prop);
-Q = 0;
+Q = {0};
 if ~isempty(community_structure)
     Q = m.get('quality_function');
 end
