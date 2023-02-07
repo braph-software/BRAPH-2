@@ -226,7 +226,7 @@ value = nne_dict;
 FEATURE_IMPORTANCE (result, cell) is the feature importance obtained with permutation analysis.
 %%%% ¡calculate!
 if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
-    if any(ismember(nncv.get('GR1').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Measure', [], [], true))) && all(cell2mat(cellfun(@(x) ~Measure.is_nodal(x), nncv.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), 'UniformOutput', false)))
+    if any(ismember(nncv.get('GR1').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Measure', [], [], true))) && all(cell2mat(cellfun(@(x) ~Measure.is_nodal(x), nncv.get('GR1').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), 'UniformOutput', false)))
         feature_importances = {};
         if ~braph2_testing
             questdlg('Feature importance analysis does not apply to the input of global or binodal graph measures.', ...
