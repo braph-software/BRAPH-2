@@ -71,11 +71,12 @@ N = g.nodenumber();
 gamma = m.get('gamma');
 community_structure_algorithm = m.get('rule');
 
+q_function = {};
 parfor li = 1:1:g.layernumber()
     Aii = A{li, li};
-    [community_structure(li), QUALITY_FUNCTION{li}] =  m.community(Aii, N(li), gamma, community_structure_algorithm);
+    [community_structure(li), q_function{li}] =  m.community(Aii, N(li), gamma, community_structure_algorithm);
 end
-m.set('QUALITY_FUNCTION', QUALITY_FUNCTION);
+m.set('QUALITY_FUNCTION', q_function);
 value = community_structure;
 
 %% ¡methods!
@@ -92,6 +93,7 @@ community_structure_algorithm = community_structure_algorithm;
                     ['M0 initial community affiliation vector must have the same length than the number of nodes' ...
                     '(' tostring(size(1:N, 2)) ') while its length is ' tostring(size(M0, 2))])
             community_structure = {M0'};
+            quality_function = 1;
 
         case {'newman'}  % Newman algorithm
             if g.is_directed(g)  % directed graphs

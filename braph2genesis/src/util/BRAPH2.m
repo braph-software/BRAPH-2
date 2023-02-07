@@ -304,7 +304,7 @@ classdef BRAPH2
                 build = BRAPH2.BUILD;
                 matlab_release = ver('MATLAB').Version;
                 matlab_release_details = ver();
-                save(filename, 'el', 'build', 'matlab_release', 'matlab_release_details');
+                save(filename, 'el', 'build', 'matlab_release', 'matlab_release_details', '-v7.3');
                 
                 saved = true;
             else

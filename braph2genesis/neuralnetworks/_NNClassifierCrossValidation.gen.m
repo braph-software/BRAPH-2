@@ -226,10 +226,10 @@ value = nne_dict;
 FEATURE_IMPORTANCE (result, cell) is the feature importance obtained with permutation analysis.
 %%%% ¡calculate!
 if ~isa(nncv.get('GR1').getr('SUB_DICT'), 'NoValue')
-    if any(ismember(nncv.get('GR1').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Measure', [], [], true)))
+    if any(ismember(nncv.get('GR1').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Measure', [], [], true))) && all(cell2mat(cellfun(@(x) ~Measure.is_nodal(x), nncv.get('GR1').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), 'UniformOutput', false)))
         feature_importances = {};
         if ~braph2_testing
-            questdlg('Feature importance analysis does not apply to the input of graph measures.', ...
+            questdlg('Feature importance analysis does not apply to the input of global or binodal graph measures.', ...
                 'User Request', ...
                 'Ok', 'Ok');
         end
@@ -261,6 +261,8 @@ if ~braph2_testing && ~isa(nncv.get('GR').get('SUB_DICT'), 'NoValue')
         pr = PPNNEvaluatorFeatureImportanceStructuralData('EL', nncv, 'PROP', NNClassifierCrossValidation.FEATURE_IMPORTANCE, varargin{:});
     elseif string(nncv.get('GR1').get('SUB_DICT').getItem(1).get('INPUT_TYPE')) == 'adjacency_matrices'
         pr = PPNNEvaluatorFeatureImportanceAdjacency('EL', nncv, 'PROP', NNClassifierCrossValidation.FEATURE_IMPORTANCE, varargin{:});
+    elseif string(nncv.get('GR1').get('SUB_DICT').getItem(1).get('INPUT_TYPE')) == 'graph_measures' && all(cell2mat(cellfun(@(x) Measure.is_nodal(x), nncv.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), 'UniformOutput', false)))
+        pr = PPNNEvaluatorFeatureImportanceGraphMeasures('EL', nncv, 'PROP', NNClassifierCrossValidation.FEATURE_IMPORTANCE, varargin{:});
     else
         pr = PanelPropCell('EL', nncv, 'PROP', NNClassifierCrossValidation.FEATURE_IMPORTANCE, varargin{:});
     end

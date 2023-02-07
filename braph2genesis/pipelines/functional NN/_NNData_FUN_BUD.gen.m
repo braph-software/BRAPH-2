@@ -11,7 +11,12 @@ The generated NN group can be used to train or test a neural network model.
 %%% ¡prop!
 DENSITIES (parameter, rvector) is the vector of densities.
 %%%% ¡default!
-50
+5
+%%%% ¡gui!
+pr = PanelPropRVectorSmart('EL', nnd, 'PROP', NNData_FUN_BUD.DENSITIES, ...
+    'MIN', 0, 'MAX', 100, ...
+    'DEFAULT', NNData_FUN_BUD.getPropDefault('DENSITIES'), ...
+    varargin{:});
 
 %%% ¡prop!
 REPETITION(parameter, scalar) is the number of repetitions.
@@ -140,7 +145,11 @@ for i = 1:1:gr.get('SUB_DICT').length()
         );
     
     if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
-        input = g.get('A'); 
+        adj = g.get('A');
+        input = {};
+        for j = 1:1:length(adj)
+            input{j} = adj{j,j};
+        end
         input_label = {'MultigraphBUD'};
 
     elseif string(nnd.get('INPUT_TYPE')) == "graph_measures"

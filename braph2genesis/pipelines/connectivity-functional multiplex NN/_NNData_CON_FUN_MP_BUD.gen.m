@@ -12,7 +12,12 @@ The generated NN group can be used to train or test a neural network model.
 %%% ¡prop!
 DENSITIES (parameter, rvector) is the vector of densities.
 %%%% ¡default!
-50
+5
+%%%% ¡gui!
+pr = PanelPropRVectorSmart('EL', nnd, 'PROP', NNData_CON_FUN_MP_BUD.DENSITIES, ...
+    'MIN', 0, 'MAX', 100, ...
+    'DEFAULT', NNData_CON_FUN_MP_BUD.getPropDefault('DENSITIES'), ...
+    varargin{:});
 
 %%% ¡prop!
 REPETITION(parameter, scalar) is the number of repetitions.
@@ -146,8 +151,11 @@ for i = 1:1:gr.get('SUB_DICT').length()
         );
     
     if string(nnd.get('INPUT_TYPE')) == "adjacency_matrices"
-        adj = g.get('A'); 
-        input = {adj{1} adj{4}};
+        adj = g.get('A');
+        input = {};
+        for j = 1:1:length(adj)
+            input{j} = adj{j,j};
+        end
         input_label = {'MultiplexBUD'};
 
     elseif string(nnd.get('INPUT_TYPE')) == "graph_measures"
@@ -165,26 +173,33 @@ for i = 1:1:gr.get('SUB_DICT').length()
         input_label = mlist;
         for j = 1:length(mlist)
             m_value = nnd.getCalculatedMeasure(g, mlist{j});
-            if Measure.is_nodal(mlist{j})
-                input_nodal = [input_nodal cell2mat(m_value(1))];
+            for k = 1:1:length(densities)
                 if Measure.is_unilayer(mlist{j})
-                    input_nodal_L2 = [input_nodal_L2 cell2mat(m_value(2))];
+                    idx_k = 2 * k - 1; %2 is the number of MP, in this case, CON and FUN, so 2
                 else
-                    input_nodal_L2 = [input_nodal_L2 NaN(size(cell2mat(m_value(1))))];
+                    idx_k = k;
                 end
-            elseif Measure.is_global(mlist{j})
-                input_global = [input_global cell2mat(m_value(1))];
-                if Measure.is_unilayer(mlist{j})
-                    input_global_L2 = [input_global_L2 cell2mat(m_value(2))];
+                if Measure.is_nodal(mlist{j})
+                    input_nodal = [input_nodal cell2mat(m_value(idx_k))];
+                    if Measure.is_unilayer(mlist{j})
+                        input_nodal_L2 = [input_nodal_L2 cell2mat(m_value(idx_k + 1))];
+                    else
+                        input_nodal_L2 = [input_nodal_L2 NaN(size(cell2mat(m_value(1))))];
+                    end
+                elseif Measure.is_global(mlist{j})
+                    input_global = [input_global cell2mat(m_value(idx_k))];
+                    if Measure.is_unilayer(mlist{j})
+                        input_global_L2 = [input_global_L2 cell2mat(m_value(idx_k + 1))];
+                    else
+                        input_global_L2 = [input_global_L2 NaN(size(cell2mat(m_value(1))))];
+                    end
                 else
-                    input_global_L2 = [input_global_L2 NaN(size(cell2mat(m_value(1))))];
-                end
-            else
-                input_binodal = [input_binodal cell2mat(m_value(1))];
-                if Measure.is_unilayer(mlist{j})
-                    input_binodal_L2 = [input_binodal_L2 cell2mat(m_value(2))];
-                else
-                    input_binodal_L2 = [input_binodal_L2 NaN(size(cell2mat(m_value(1))))];
+                    input_binodal = [input_binodal cell2mat(m_value(idx_k))];
+                    if Measure.is_unilayer(mlist{j})
+                        input_binodal_L2 = [input_binodal_L2 cell2mat(m_value(idx_k + 1))];
+                    else
+                        input_binodal_L2 = [input_binodal_L2 NaN(size(cell2mat(m_value(1))))];
+                    end
                 end
             end
         end

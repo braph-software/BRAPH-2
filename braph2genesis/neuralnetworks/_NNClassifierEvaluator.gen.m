@@ -53,7 +53,8 @@ FEATURE_PERMUTATION_IMPORTANCE (result, cell) is feature importance evaluated by
 %%%% ¡calculate!
 if nne.get('GR').get('SUB_DICT').length() == 0
     value = {};
-elseif ~any(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Measure', [], [], true)))
+elseif ~any(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Measure', [], [], true))) || ...
+        (all(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), subclasses('Measure', [], [], true))) && all(cell2mat(cellfun(@(x) Measure.is_nodal(x), nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL'), 'UniformOutput', false))))
     % now it only works for (1) input being adj of a graph and (2) no feature selection 
     nn = nne.get('NN');
     gr = nne.get('GR');
@@ -103,7 +104,11 @@ elseif ~any(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL')
             for i = 1:1:n
                 feature_importances{i} = feature_importance_tmp(:, i);
             end
-            value = feature_importances;
+            if isa(gr.get('SUB_DICT').getItem(1).get('G'), 'MultiplexBUD') && gr.get('SUB_DICT').getItem(1).get('G').layernumber / length(gr.get('SUB_DICT').getItem(1).get('G').get('DENSITIES')) == 2
+                value = reshape(feature_importances, gr.get('SUB_DICT').getItem(1).get('G').layernumber / length(gr.get('SUB_DICT').getItem(1).get('G').get('DENSITIES')), []);
+            else
+                value = feature_importances;
+            end
         else
             value = {feature_importance};
         end
@@ -111,7 +116,7 @@ elseif ~any(ismember(nne.get('GR').get('SUB_DICT').getItem(1).get('INPUT_LABEL')
 else
     value = {};
     if ~braph2_testing
-        questdlg('Feature importance analysis does not apply to the input of graph measures.', ...
+        questdlg('Feature importance analysis does not apply to the input of global or binodal graph measures.', ...
                 'User Request', ...
                 'Ok', 'Ok');
     end
