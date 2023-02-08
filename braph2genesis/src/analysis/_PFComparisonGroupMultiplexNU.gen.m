@@ -124,35 +124,34 @@ ST_FILL (figure, item) determines the fill area settings.
 %%%% ¡default!
 SettingsFill('Visible', true, 'FACEALPHA', 0.3, 'FACECOLOR', [0 0 0])
 %%%% ¡postprocessing!
-if check_graphics(pf.h_area_ci, 'patch')
-    bas = pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('BAS');
-    ba = bas{1};
+bas = pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('BAS');
+ba = bas{1};
 
-    if ~ba.get('BR_DICT').contains(pf.get('BR1_ID'))
-        pf.set('BR1_ID', ba.get('BR_DICT').getItem(1).get('ID'))
-    end
-    br1_id = ba.get('BR_DICT').getIndex(pf.get('BR1_ID'));
-
-    % upper
-    data = pf.get('CP').get('CIU');
-    [u, us] = pf.get('CP').get('C').get('A1').get('G_DICT').getItem(1).layernumber();
-    index_u = str2double(pf.get('LAYER'));
-    total_u = us(1);
-    data_to_plot_u = data(index_u:total_u:end);
-    
-    % lower
-    data = pf.get('CP').get('CIL');
-    [l, ls] = pf.get('CP').get('C').get('A1').get('G_DICT').getItem(1).layernumber();
-    index_l = str2double(pf.get('LAYER'));
-    total_l = ls(1);
-    data_to_plot_l = data(index_l:total_l:end);
-
-    pf.get('ST_FILL').set( ...
-        'X', pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('LAYERTICKS'), ...
-        'Y_UPPER', cellfun(@(x) x(br1_id), data_to_plot_u) , ...
-        'Y_LOWER', cellfun(@(x) x(br1_id), data_to_plot_l) ...
-        )
+if ~ba.get('BR_DICT').contains(pf.get('BR1_ID'))
+    pf.set('BR1_ID', ba.get('BR_DICT').getItem(1).get('ID'))
 end
+br1_id = ba.get('BR_DICT').getIndex(pf.get('BR1_ID'));
+
+% upper
+data = pf.get('CP').get('CIU');
+[u, us] = pf.get('CP').get('C').get('A1').get('G_DICT').getItem(1).layernumber();
+index_u = str2double(pf.get('LAYER'));
+total_u = us(1);
+data_to_plot_u = data(index_u:total_u:end);
+
+% lower
+data = pf.get('CP').get('CIL');
+[l, ls] = pf.get('CP').get('C').get('A1').get('G_DICT').getItem(1).layernumber();
+index_l = str2double(pf.get('LAYER'));
+total_l = ls(1);
+data_to_plot_l = data(index_l:total_l:end);
+
+pf.get('ST_FILL').set( ...
+    'X', pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('LAYERTICKS'), ...
+    'Y_UPPER', cellfun(@(x) x(br1_id), data_to_plot_u) , ...
+    'Y_LOWER', cellfun(@(x) x(br1_id), data_to_plot_l) ...
+    )
+
 %%%% ¡gui!
 pr = SettingsFillPP('EL', pf, 'PROP', PFComparisonGroupMultiplexNU.ST_FILL, ...    
     varargin{:});
