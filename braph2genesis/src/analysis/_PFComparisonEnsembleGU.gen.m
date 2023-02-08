@@ -100,8 +100,6 @@ if check_graphics(pf.h_area_ci, 'patch')
         'Y_UPPER', cell2mat(pf.get('CP').get('CIU')), ...
         'Y_LOWER', cell2mat(pf.get('CP').get('CIL')) ...
         )
-    pf.get('ST_FILL').set('AXIS', true)
-    set(pf.h_axes, 'InnerPosition', [s(6)/w(pf.h_axes, 'pixels') s(6)/h(pf.h_axes, 'pixels') max(.1, 1-s(8)/w(pf.h_axes, 'pixels')) max(.1, 1-s(8)/h(pf.h_axes, 'pixels'))])
 end
 %%%% ¡gui!
 pr = SettingsFillPP('EL', pf, 'PROP', PFComparisonEnsembleGU.ST_FILL, ...    
@@ -214,7 +212,7 @@ function p_out = draw(pf, varargin)
     
     % fill part
     if ~check_graphics(pf.h_area_ci, 'patch')
-        pf.h_area_ci = fill([0 1], [0 1]);
+        pf.h_area_ci = fill(pf.h_axes, [0 1 1 0], [0 0 1 1], [0 0 0], 'tag', 'h_area_ci');
     end
     pf.memorize('ST_FILL').h(pf.h_area_ci).set('PANEL', pf, 'UITAG', 'h_area_ci')
     
