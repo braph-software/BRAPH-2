@@ -115,6 +115,36 @@ if check_graphics(pf.h_line_cil, 'line')
 end
 
 %%% ¡prop!
+ST_FILL (figure, item) determines the fill area settings.
+%%%% ¡settings!
+'SettingsFill'
+%%%% ¡default!
+SettingsFill('Visible', true, 'FACEALPHA', 0.3, 'FACECOLOR', [0 0 0])
+%%%% ¡postprocessing!
+if check_graphics(pf.h_area_ci, 'patch')
+    bas = pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('BAS');
+    ba = bas{1};
+
+    if ~ba.get('BR_DICT').contains(pf.get('BR1_ID'))
+        pf.set('BR1_ID', ba.get('BR_DICT').getItem(1).get('ID'))
+    end
+    br1_id = ba.get('BR_DICT').getIndex(pf.get('BR1_ID'));
+    
+    if ~ba.get('BR_DICT').contains(pf.get('BR2_ID'))
+        pf.set('BR2_ID', ba.get('BR_DICT').getItem(1).get('ID'))
+    end
+    br2_id = ba.get('BR_DICT').getIndex(pf.get('BR2_ID'));
+    pf.get('ST_FILL').set( ...
+        'X', pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('LAYERTICKS'), ...
+        'Y_UPPER', cellfun(@(x) x(br1_id, br2_id), pf.get('CP').get('CIU')), ...
+        'Y_LOWER', cellfun(@(x) x(br1_id, br2_id), pf.get('CP').get('CIL'))) ...
+        )
+end
+%%%% ¡gui!
+pr = SettingsFillPP('EL', pf, 'PROP', PFComparisonEnsembleGU.ST_FILL, ...    
+    varargin{:});
+
+%%% ¡prop!
 BR1_ID (figure, string) is the ID of the first brain region of the binodal measure.
 %%%% ¡gui!
 bas = pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('BAS');
