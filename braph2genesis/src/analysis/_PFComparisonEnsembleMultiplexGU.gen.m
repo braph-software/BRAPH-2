@@ -117,7 +117,7 @@ if check_graphics(pf.h_area_ci, 'patch')
     data = cell2mat(pf.get('CP').get('CIU'));
     [u, us] = pf.get('CP').get('C').get('A1').get('G_DICT').getItem(1).layernumber();
     index_u = str2double(pf.get('LAYER'));
-    total_u = ls(1);
+    total_u = us(1);
     %lower
     data = cell2mat(pf.get('CP').get('CIL'));
     [l, ls] = pf.get('CP').get('C').get('A1').get('G_DICT').getItem(1).layernumber();
