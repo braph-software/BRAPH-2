@@ -248,6 +248,12 @@ function p_out = draw(pf, varargin)
             );
     end
     pf.memorize('ST_YLABEL').h(pf.h_ylabel).set('PANEL', pf, 'UITAG', 'h_ylabel')
+
+    % fill part
+    if ~check_graphics(pf.h_area_ci, 'patch')
+        pf.h_area_ci = fill(pf.h_axes, [0 1 1 0], [0 0 1 1], [0 0 0], 'tag', 'h_area_ci');
+    end
+    pf.memorize('ST_FILL').h(pf.h_area_ci).set('PANEL', pf, 'UITAG', 'h_area_ci')
     
     % output
     if nargout > 0

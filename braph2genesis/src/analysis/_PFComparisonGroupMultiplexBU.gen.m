@@ -218,6 +218,7 @@ function p_out = draw(pf, varargin)
     pf.h_line_diff = pf.get('ST_LINE_DIFF').h();
     pf.h_line_ciu = pf.get('ST_LINE_CIU').h();
     pf.h_line_cil = pf.get('ST_LINE_CIL').h();
+    pf.h_area_ci = pf.get('ST_FILL').h();
         
     % output
     if nargout > 0
