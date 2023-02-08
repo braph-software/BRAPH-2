@@ -174,7 +174,7 @@ if check_graphics(pf.h_area_ci, 'patch')
         )
 end
 %%%% ¡gui!
-pr = SettingsFillPP('EL', pf, 'PROP', PFComparisonEnsembleGU.ST_FILL, ...    
+pr = SettingsFillPP('EL', pf, 'PROP', PFComparisonEnsembleMultiplexBU.ST_FILL, ...    
     varargin{:});
 
 

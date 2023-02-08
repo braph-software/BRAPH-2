@@ -88,6 +88,25 @@ pr = SettingsPPTable('EL', pf, 'PROP', PFComparisonGroupGU.ST_LINE_CIL, ...
     'COLS', [SettingsLine.VISIBLE, SettingsLine.LINESTYLE, SettingsLine.LINEWIDTH, SettingsLine.LINECOLOR, SettingsLine.SYMBOL, SettingsLine.SYMBOLSIZE, SettingsLine.EDGECOLOR, SettingsLine.FACECOLOR], ...
     varargin{:});
 
+
+%%% ¡prop!
+ST_FILL (figure, item) determines the fill area settings.
+%%%% ¡settings!
+'SettingsFill'
+%%%% ¡default!
+SettingsFill('Visible', true, 'FACEALPHA', 0.3, 'FACECOLOR', [0 0 0])
+%%%% ¡postprocessing!
+if check_graphics(pf.h_area_ci, 'patch')
+    pf.get('ST_FILL').set( ...
+        'X', pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('LAYERTICKS'), ...
+        'Y_UPPER', cell2mat(pf.get('CP').get('CIU')), ...
+        'Y_LOWER', cell2mat(pf.get('CP').get('CIL')) ...
+        )
+end
+%%%% ¡gui!
+pr = SettingsFillPP('EL', pf, 'PROP', PFComparisonGroupGU.ST_FILL, ...    
+    varargin{:});
+
 %%% ¡prop!
 ST_XLABEL (figure, item) determines the xlabel settings.
 %%%% ¡settings!
