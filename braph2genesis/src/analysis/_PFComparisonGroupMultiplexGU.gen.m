@@ -110,12 +110,12 @@ SettingsFill('Visible', true, 'FACEALPHA', 0.3, 'FACECOLOR', [0 0 0])
 %%%% ¡postprocessing!
 %upper
 data_u = cell2mat(pf.get('CP').get('CIU'));
-[u, us] = pf.get('CP').get('C').get('A1').get('G_DICT').getItem(1).layernumber();
+[u, us] = pf.get('CP').get('C').get('A1').get('G').layernumber();
 index_u = str2double(pf.get('LAYER'));
 total_u = us(1);
 %lower
 data_l = cell2mat(pf.get('CP').get('CIL'));
-[l, ls] = pf.get('CP').get('C').get('A1').get('G_DICT').getItem(1).layernumber();
+[l, ls] = pf.get('CP').get('C').get('A1').get('G').layernumber();
 index_l = str2double(pf.get('LAYER'));
 total_l = ls(1);
 

@@ -154,14 +154,14 @@ br2_id = ba.get('BR_DICT').getIndex(pf.get('BR2_ID'));
 
 % upper
 data_u = pf.get('CP').get('CIU');
-[u, us] = pf.get('CP').get('C').get('A1').get('G_DICT').getItem(1).layernumber();
+[u, us] = pf.get('CP').get('C').get('A1').get('G').layernumber();
 index_u = str2double(pf.get('LAYER'));
 total_u = us(1);
 data_to_plot_u = data_u(index_u:total_u:end);
 
 % lower
 data_l = pf.get('CP').get('CIL');
-[l, ls] = pf.get('CP').get('C').get('A1').get('G_DICT').getItem(1).layernumber();
+[l, ls] = pf.get('CP').get('C').get('A1').get('G').layernumber();
 index_l = str2double(pf.get('LAYER'));
 total_l = ls(1);
 data_to_plot_l = data_l(index_l:total_l:end);
