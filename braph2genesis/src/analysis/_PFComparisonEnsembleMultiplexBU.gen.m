@@ -157,7 +157,7 @@ data_u = pf.get('CP').get('CIU');
 [u, us] = pf.get('CP').get('C').get('A1').get('G_DICT').getItem(1).layernumber();
 index_u = str2double(pf.get('LAYER'));
 total_u = us(1);
-data_to_plot_u = data(index_u:total_u:end);
+data_to_plot_u = data_u(index_u:total_u:end);
 
 % lower
 data = pf.get('CP').get('CIL');
