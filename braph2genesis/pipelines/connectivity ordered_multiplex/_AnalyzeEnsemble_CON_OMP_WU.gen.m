@@ -1,29 +1,30 @@
 %% ¡header!
-AnalyzeEnsemble_CON_MP_WU < AnalyzeEnsemble (a, graph analysis with connectivity multiplex data) is a graph analysis using connectivity multiplex data.
+AnalyzeEnsemble_CON_OMP_WU < AnalyzeEnsemble (a, graph analysis with connectivity ordinal multiplex data) is a graph analysis using connectivity ordinal multiplex data.
 
 %% ¡description!
-This graph analysis uses connectivity multiplex data and analyzes them using weighted undirected graphs,
+This graph analysis uses connectivity ordinal multiplex data and 
+analyzes them using weighted undirected graphs,
 binary undirected multigraphs with fixed thresholds,
 or binary undirected multigraphs with fixed densities.
 
 %%% ¡seealso!
-AnalyzeEnsemble_CON_MP_BUD, AnalyzeEnsemble_CON_MP_BUT, SubjectCON_MP, MultiplexWU.
+SubjectCON_MP, OrderedMultiplexWU, AnalyzeEnsemble_CON_MP_WU.
 
 %% ¡props_update!
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the analysis template to set the parameters.
 %%%% ¡settings!
-'AnalyzeEnsemble_CON_MP_WU'
+'AnalyzeEnsemble_CON_OMP_WU'
 
 %%% ¡prop!
 GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
 %%%% ¡settings!
-'MultiplexWU'
+'OrderedMultiplexWU'
 %%%% ¡postprocessing!
 if ~braph2_testing
     if isa(a.getr('GRAPH_TEMPLATE'), 'NoValue')
-        a.set('GRAPH_TEMPLATE', MultiplexWU())
+        a.set('GRAPH_TEMPLATE', OrderedMultiplexWU())
 
         if a.get('GR').get('SUB_DICT').length() > 0
             a.get('GRAPH_TEMPLATE').set('BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA'))
@@ -48,13 +49,13 @@ ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
 % % % pr = PPAnalyzeEnsembleMP_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_CON_MP_WU.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %%% ¡prop!
-G_DICT (result, idict) is the graph (MultiplexWU) ensemble obtained from this analysis.
+G_DICT (result, idict) is the graph (OrderedMultiplexWU) ensemble obtained from this analysis.
 %%%% ¡settings!
 'MultiplexWU'
 %%%% ¡default!
-IndexedDictionary('IT_CLASS', 'MultiplexWU')
+IndexedDictionary('IT_CLASS', 'OrderedMultiplexWU')
 %%%% ¡calculate!
-g_dict = IndexedDictionary('IT_CLASS', 'MultiplexWU');
+g_dict = IndexedDictionary('IT_CLASS', 'OrderedMultiplexWU');
 gr = a.get('GR');
 
 ba = BrainAtlas();
@@ -66,7 +67,7 @@ for i = 1:1:gr.get('SUB_DICT').length()
 	sub = gr.get('SUB_DICT').getItem(i);
     CON_MP = sub.getr('CON_MP');
 
-    g = MultiplexWU( ...
+    g = OrderedMultiplexWU( ...
         'ID', ['g ' sub.get('ID')], ...
         'BAS', ba, ...
         'B', Callback('EL', sub, 'TAG', 'CON_MP') ...
@@ -88,4 +89,4 @@ value = g_dict;
 %%%% ¡name!
 Example
 %%%% ¡code!
-example_CON_MP_WU
+example_CON_OMP_WU
