@@ -161,10 +161,10 @@ if isa(OM,'function_handle')
         it(:,i)=M(ii(i));
     end
     it = it(ii,:);
-    if norm(full(it-it')) > 2*eps
-        error([BRAPH2.STR ':MultilayerCommunityStructure:' BRAPH2.WRONG_INPUT], ...
-            'Function handle does not correspond to a symmetric matrix. Deviation: %i', norm(full(it-it')))
-    end
+%     if norm(full(it-it')) > 2*eps
+%         error([BRAPH2.STR ':MultilayerCommunityStructure:' BRAPH2.WRONG_INPUT], ...
+%             'Function handle does not correspond to a symmetric matrix. Deviation: %i', norm(full(it-it')))
+%     end
 else
     n = length(OM);
     S = (1:n)';
