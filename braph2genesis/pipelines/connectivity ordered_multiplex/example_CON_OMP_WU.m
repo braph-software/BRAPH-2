@@ -1,5 +1,5 @@
-%EXAMPLE_CON_MP_WU
-% Script example pipeline CON MP WU
+%EXAMPLE_CON_OMP_WU
+% Script example pipeline CON OMP WU
 
 clear variables %#ok<*NASGU>
 
@@ -28,12 +28,12 @@ im_gr2 = ImporterGroupSubjectCON_MP_XLS( ...
 
 gr2 = im_gr2.get('GR');
 
-%% Analysis CON_MP WU
-a_WU1 = AnalyzeEnsemble_CON_MP_WU( ...
+%% Analysis CON_OMP WU
+a_WU1 = AnalyzeEnsemble_CON_OMP_WU( ...
     'GR', gr1 ...
     );
 
-a_WU2 = AnalyzeEnsemble_CON_MP_WU( ...
+a_WU2 = AnalyzeEnsemble_CON_OMP_WU( ...
     'GR', gr2 ...
     );
 
