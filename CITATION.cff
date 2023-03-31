@@ -39,8 +39,28 @@ authors:
     email: mite.mijalkov@ki.se
     affiliation: Karolinksa Institute
     orcid: 'https://orcid.org/0000-0002-9844-4413'
+  - given-names: Eric
+    family-names: Westman
+    email: eric.westman@ki.se
+    affiliation: Karolinska Institute
+    orcid: 'https://orcid.org/0000-0002-3115-2977'
   - given-names: Dániel
     family-names: Véreb
     email: daniel.vereb@ki.se
     affiliation: Karolinska Institute
     orcid: 'https://orcid.org/0000-0003-2077-5252'
+  - given-names: Hang
+    family-names: Zhao
+    email: hang.zhao@physics.gu.se
+    affiliation: Gothenburg University
+    orcid: 'https://orcid.org/'
+  - given-names: Blanca
+    family-names: Zufiria Gerbolés
+    email: blanca.zufiria@ki.se
+    affiliation: Karolinska Institute
+    orcid: 'https://orcid.org/0000-0001-7756-630X'
+  - given-names: Jiawei
+    family-names: Sun
+    email: jiawei.sun@ki.se
+    affiliation: Karolinska Institute
+    orcid: 'https://orcid.org/'
