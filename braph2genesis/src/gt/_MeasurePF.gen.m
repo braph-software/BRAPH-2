@@ -305,7 +305,7 @@ ST_TITLE (figure, item) determines the title settings.
 %%%% ¡settings!
 'SettingsText'
 %%%% ¡default!
-SettingsText('VISIBLE', true, 'FONTSIZE', s(2), 'HORIZONTALALIGNMENT', 'center', 'VERTICALALIGNMENT', 'middle')
+SettingsText('VISIBLE', true, 'FONTSIZE', s(2), 'HALIGN', 'center', 'VALIGN', 'middle')
 %%%% ¡gui!
 pr = SettingsTextPP('EL', pf, 'PROP', MeasurePF.ST_TITLE, varargin{:});
 
@@ -331,7 +331,7 @@ ST_XLABEL (figure, item) determines the x-label settings.
 %%%% ¡settings!
 'SettingsText'
 %%%% ¡default!
-SettingsText('VISIBLE', true, 'FONTSIZE', s(2), 'HORIZONTALALIGNMENT', 'center', 'VERTICALALIGNMENT', 'middle')
+SettingsText('VISIBLE', true, 'FONTSIZE', s(2), 'HALIGN', 'center', 'VALIGN', 'middle')
 %%%% ¡gui!
 pr = SettingsTextPP('EL', pf, 'PROP', MeasurePF.ST_XLABEL, varargin{:});
 
@@ -357,7 +357,7 @@ ST_YLABEL (figure, item) determines the y-label settings.
 %%%% ¡settings!
 'SettingsText'
 %%%% ¡default!
-SettingsText('VISIBLE', true, 'FONTSIZE', s(2), 'HORIZONTALALIGNMENT', 'center', 'VERTICALALIGNMENT', 'middle', 'ROTATION', 90)
+SettingsText('VISIBLE', true, 'FONTSIZE', s(2), 'HALIGN', 'center', 'VALIGN', 'middle', 'ROTATION', 90)
 %%%% ¡gui!
 pr = SettingsTextPP('EL', pf, 'PROP', MeasurePF.ST_YLABEL, varargin{:});
 
