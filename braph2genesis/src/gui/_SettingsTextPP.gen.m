@@ -379,14 +379,14 @@ if value
     set(pr.get('BUTTON_FONTCOLOR'),   'Position', [s(.3)            s(3.2)  .20*w_p   s(1.7)])
     set(pr.get('EDITFIELD_FONTSIZE'), 'Position', [s(.6)+.20*w_p	s(3.2)  .15*w_p   s(1.7)])
     set(pr.get('SLIDER_FONTSIZE'),    'Position', [s(.9)+.35*w_p	s(4.75) .20*w_p   3]) % the height of a slider cannot be changed
-    set(pr.get('EDITFIELD_ROTATION'), 'Position', [s(1.2)+.55*w_p	s(3.2)  .15*w_p   s(1.7)])
-    set(pr.get('SLIDER_ROTATION'),    'Position', [s(1.5)+.75*w_p	s(4.75) .20*w_p   3]) % the height of a slider cannot be changed
+    set(pr.get('EDITFIELD_ROTATION'), 'Position', [s(1.5)+.55*w_p	s(3.2)  .15*w_p   s(1.7)])
+    set(pr.get('SLIDER_ROTATION'),    'Position', [s(1.8)+.70*w_p	s(4.75) .20*w_p   3]) % the height of a slider cannot be changed
     
-    set(pr.get('EDITFIELD_FONTNAME'),   'Position', [s(.3)          s(.3)   .30*w_p     s(1.75)])    
-    set(pr.get('DROPDOWN_FONTWEIGHT'),  'Position', [s(.6)+.30*w_p  s(.3)   .15*w_p     s(1.75)])    
-    set(pr.get('DROPDOWN_INTERPRETER'), 'Position', [s(.9)+.45*w_p  s(.3)   .15*w_p     s(1.75)])    
-    set(pr.get('DROPDOWN_HALIGN'),      'Position', [s(1.2)+.60*w_p	s(.3)   .15*w_p     s(1.75)])    
-    set(pr.get('DROPDOWN_VALIGN'),      'Position', [s(1.5)+.75*w_p	s(.3)   .15*w_p     s(1.75)])    
+    set(pr.get('EDITFIELD_FONTNAME'),   'Position', [s(.3)          s(.3)   .20*w_p     s(1.75)])    
+    set(pr.get('DROPDOWN_FONTWEIGHT'),  'Position', [s(.6)+.20*w_p  s(.3)   .18*w_p     s(1.75)])    
+    set(pr.get('DROPDOWN_INTERPRETER'), 'Position', [s(.9)+.38*w_p  s(.3)   .18*w_p     s(1.75)])    
+    set(pr.get('DROPDOWN_HALIGN'),      'Position', [s(1.2)+.56*w_p	s(.3)   .18*w_p     s(1.75)])    
+    set(pr.get('DROPDOWN_VALIGN'),      'Position', [s(1.5)+.74*w_p	s(.3)   .18*w_p     s(1.75)])    
 end
 
 %%% ¡prop!
@@ -637,7 +637,7 @@ function cb_slider_rotation(~, ~)
     el = pr.get('EL');
     prop = pr.get('PROP');
     
-    el.get(prop).set('ROTATION', max(0.01, get(pr.get('SLIDER_ROTATION'), 'Value')))
+    el.get(prop).set('ROTATION', get(pr.get('SLIDER_ROTATION'), 'Value'))
 
 	pr.get('UPDATE')
 end
