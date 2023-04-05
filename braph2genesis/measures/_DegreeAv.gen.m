@@ -54,7 +54,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%% ¡default!
-{'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU'}
+{'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU' 'OrdMxBUD'}
 
 %%% ¡prop!
 M (result, cell) is the average degree.
@@ -409,3 +409,43 @@ assert(isequal(m_inside_g.get('M'), known_degree), ...
     [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 
+%%% ¡test!
+%%%% ¡name!
+OrdMxBUD
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B = [
+    0   .2   .7
+    .2   0   .1
+    .7  .1   0
+    ];
+
+densities = [0 33 67 100];
+
+known_degree = { ...
+    mean([0 0 0])
+    mean([0 0 0])
+    mean([0 0 0])
+    mean([1 0 1])
+    mean([1 0 1])
+    mean([1 0 1])
+    mean([2 1 1])
+    mean([2 1 1])
+    mean([2 1 1])
+    mean([2 2 2])
+    mean([2 2 2])
+    mean([2 2 2])
+    };
+
+g = OrdMxBUD('B', {B B B}, 'DENSITIES', densities);
+
+m_outside_g = DegreeAv('G', g);
+assert(isequal(m_outside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'DegreeAv');
+assert(isequal(m_inside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
