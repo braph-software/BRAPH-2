@@ -58,7 +58,7 @@ X_DRAW (query, logical) draws the property panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value
-pr.memorize('DROPDOWN')
+    pr.memorize('LISTBOX')
 end
 
 %%% ¡prop!
