@@ -1,64 +1,64 @@
 %% ¡header!
-PanelPropClass < PanelProp (pr, panel property class) plots the panel of a property class.
+PanelPropClassList < PanelProp (pr, panel property class) plots the panel of a property class list.
 
 %%% ¡description!
-PanelPropClass plots the panel for a CLASS property with a drop-down list.
+PanelPropClassList plots the panel for a CLASSLIST property with a listbox.
 It works for all categories.
 
 %%% ¡seealso!
-uidropdown, GUI, PanelElement, PanelProp
+uilistbox, GUI, PanelElement, PanelProp
 
 %% ¡props_update!
 
 %%% ¡prop!
 NAME (constant, string) is the name of the class property panel.
 %%%% ¡default!
-'PanelPropClass'
+'PanelPropClassList'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the class property panel.
+DESCRIPTION (constant, string) is the description of the class list property panel.
 %%%% ¡default!
-'PanelPropClass plots the panel for a CLASS property with a drop-down list. It works for all categories.'
+'PanelPropClassList plots the panel for a CLASSLIST property with a listbox. It works for all categories.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the class property panel.
+TEMPLATE (parameter, item) is the template of the class list property panel.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the class property panel.
+ID (data, string) is a few-letter code for the class list property panel.
 %%%% ¡default!
-'PanelPropClass ID'
+'PanelPropClassList ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the class property panel.
+LABEL (metadata, string) is an extended label of the class list property panel.
 %%%% ¡default!
-'PanelPropClass label'
+'PanelPropClassList label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the class property panel.
+NOTES (metadata, string) are some specific notes about the class list property panel.
 %%%% ¡default!
-'PanelPropClass notes'
+'PanelPropClassList notes'
 
 %%% ¡prop!
 EL (data, item) is the element.
 %%%% ¡default!
-IndexedDictionary()
+Measure()
 
 %%% ¡prop!
 PROP (data, scalar) is the property number.
 %%%% ¡default!
-IndexedDictionary.IT_CLASS
+Measure.COMPATIBLE_GRAPHS
 
 %%% ¡prop!
 HEIGHT (gui, size) is the pixel height of the property panel.
 %%%% ¡default!
-s(4)
-
+s(10)
+ 
 %%% ¡prop!
 X_DRAW (query, logical) draws the property panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value
-    pr.memorize('DROPDOWN')
+    pr.memorize('LISTBOX')
 end
 
 %%% ¡prop!
@@ -71,36 +71,36 @@ if value
     
     switch el.getPropCategory(prop)
         case Category.CONSTANT % __Category.CONSTANT__
-            set(pr.get('DROPDOWN'), ...
+            set(pr.get('LISTBOX'), ...
                 'Value', el.get(prop), ...
                 'Enable', 'off' ...
                 )
             
         case Category.METADATA % __Category.METADATA__
-            set(pr.get('DROPDOWN'), 'Value', el.get(prop))
+            set(pr.get('LISTBOX'), 'Value', el.get(prop))
 
             if el.isLocked(prop)
-                set(pr.get('DROPDOWN'), 'Enable', 'off')
+                set(pr.get('LISTBOX'), 'Enable', 'off')
             end
             
         case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI} % {__Category.PARAMETER__ __Category.DATA__ __Category.FIGURE__ __Category.GUI__}
-            set(pr.get('DROPDOWN'), 'Value', el.get(prop))
+            set(pr.get('LISTBOX'), 'Value', el.get(prop))
 
             prop_value = el.getr(prop);
             if el.isLocked(prop) || isa(prop_value, 'Callback')
-                set(pr.get('DROPDOWN'), 'Enable', 'off')
+                set(pr.get('LISTBOX'), 'Enable', 'off')
             end
 
         case {Category.RESULT Category.QUERY Category.EVANESCENT} % {__Category.RESULT__ __Category.QUERY__ __Category.EVANESCENT__}
             prop_value = el.getr(prop);
 
             if isa(prop_value, 'NoValue')
-                set(pr.get('DROPDOWN'), 'Value', el.getPropDefault(prop))
+                set(pr.get('v'), 'Value', el.getPropDefault(prop))
             else
-                set(pr.get('DROPDOWN'), 'Value', el.get(prop))
+                set(pr.get('LISTBOX'), 'Value', el.get(prop))
             end
             
-            set(pr.get('DROPDOWN'), 'Enable', 'off')
+            set(pr.get('LISTBOX'), 'Enable', 'off')
     end
 end
 
@@ -109,9 +109,9 @@ REDRAW (query, logical) resizes the property panel and repositions its graphical
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 if value
-    w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
-    
-    set(pr.get('DROPDOWN'), 'Position', [s(.3) s(.3) .70*w_p s(1.75)])
+	w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
+
+    set(pr.get('LISTBOX'), 'Position', [s(.3) s(.3) .70*w_p s(8)])
 end
 
 %%% ¡prop!
@@ -119,36 +119,37 @@ DELETE (query, logical) resets the handles when the panel is deleted.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.DELETE, varargin{:}); % also warning
 if value
-    pr.set('DROPDOWN', Element.getNoValue())
+    pr.set('LISTBOX', Element.getNoValue())
 end
 
 %% ¡props!
 
 %%% ¡prop!
-DROPDOWN (evanescent, handle) is the logical value dropdown.
+LISTBOX (evanescent, handle) is the logical value listbox.
 %%%% ¡calculate!
 el = pr.get('EL');
 prop = pr.get('PROP');
 
-dropdown = uidropdown( ...
+listbox = uilistbox( ...
     'Parent', pr.memorize('H'), ... % H = p for Panel
-    'Tag', 'DROPDOWN', ...
+    'Tag', 'LISTBOX', ...
     'Items', Element.getSubclasses(el.getPropSettings(prop)), ...
+    'MultiSelect', 'on', ...
     'FontSize', BRAPH2.FONTSIZE, ...
     'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-    'ValueChangedFcn', {@cb_dropdown} ...
+    'ValueChangedFcn', {@cb_listbox} ...
     );
 
-value = dropdown;
+value = listbox;
 %%%% ¡calculate_callbacks!
-function cb_dropdown(~, ~)
-    pr.get('EL').set(pr.get('PROP'), get(pr.get('DROPDOWN'), 'Value'))
+function cb_listbox(~, ~)
+    pr.get('EL').set(pr.get('PROP'), get(pr.get('LISTBOX'), 'Value'))
 end
 
 %% ¡tests!
 
 %%% ¡excluded_props!
-[PanelPropClass.PARENT PanelPropClass.H PanelPropClass.LISTENER_CB PanelPropClass.DROPDOWN]
+[PanelPropClassList.PARENT PanelPropClassList.H PanelPropClassList.LISTENER_CB PanelPropClassList.LISTBOX]
 
 %%% ¡warning_off!
 true
@@ -159,7 +160,7 @@ Remove Figures
 %%%% ¡parallel!
 false
 %%%% ¡code!
-warning('off', [BRAPH2.STR ':PanelPropClass'])
+warning('off', [BRAPH2.STR ':PanelPropClassList'])
 assert(length(findall(0, 'type', 'figure')) == 1)
 delete(findall(0, 'type', 'figure'))
-warning('on', [BRAPH2.STR ':PanelPropClass'])
+warning('on', [BRAPH2.STR ':PanelPropClassList'])

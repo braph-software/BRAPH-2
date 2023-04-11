@@ -187,7 +187,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
 %     eval(['test_' el_class])
 % end
-el_class_list = {'SettingsTextPP'} % 'SettingsLine' 'SettingsArea' 'SettingsLinePP' 'SettingsAreaPP' 'PanelPropStringList' 'PanelPropIDictTable'
+el_class_list = {'PanelPropClassList'} % 'SettingsLine' 'SettingsArea' 'SettingsLinePP' 'SettingsAreaPP' 'SettingsTextPP' 'PanelPropStringList' 'PanelPropIDictTable'
 for i = 1:1:length(el_class_list)
     el_class = el_class_list{i};
     el_path = '/src/gui';
