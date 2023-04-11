@@ -51,7 +51,7 @@ Measure.COMPATIBLE_GRAPHS
 %%% ¡prop!
 HEIGHT (gui, size) is the pixel height of the property panel.
 %%%% ¡default!
-s(4)
+s(10)
  
 %%% ¡prop!
 X_DRAW (query, logical) draws the property panel.
@@ -111,7 +111,7 @@ value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warn
 if value
 	w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 
-    set(pr.get('LISTBOX'), 'Position', [s(.3) s(.3) .70*w_p s(1.75)])
+    set(pr.get('LISTBOX'), 'Position', [s(.3) s(.3) .70*w_p s(8)])
 end
 
 %%% ¡prop!
