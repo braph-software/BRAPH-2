@@ -70,20 +70,20 @@ if value
     prop = pr.get('PROP');
     
     switch el.getPropCategory(prop)
-        case Category.CONSTANT
+        case Category.CONSTANT % __Category.CONSTANT__
             set(pr.get('DROPDOWN'), ...
                 'Value', el.get(prop), ...
                 'Enable', 'off' ...
                 )
             
-        case Category.METADATA
+        case Category.METADATA % __Category.METADATA__
             set(pr.get('DROPDOWN'), 'Value', el.get(prop))
 
             if el.isLocked(prop)
                 set(pr.get('DROPDOWN'), 'Enable', 'off')
             end
             
-        case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
+        case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI} % {__Category.PARAMETER__ __Category.DATA__ __Category.FIGURE__ __Category.GUI__}
             set(pr.get('DROPDOWN'), 'Value', el.get(prop))
 
             prop_value = el.getr(prop);
@@ -91,7 +91,7 @@ if value
                 set(pr.get('DROPDOWN'), 'Enable', 'off')
             end
 
-        case {Category.RESULT Category.QUERY Category.EVANESCENT}
+        case {Category.RESULT Category.QUERY Category.EVANESCENT} % {__Category.RESULT__ __Category.QUERY__ __Category.EVANESCENT__}
             prop_value = el.getr(prop);
 
             if isa(prop_value, 'NoValue')
