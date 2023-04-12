@@ -3,9 +3,7 @@ AnalyzeEnsemble_CON_OMP_WU < AnalyzeEnsemble (a, graph analysis with connectivit
 
 %% ¡description!
 This graph analysis uses connectivity ordinal multiplex data and 
-analyzes them using weighted undirected graphs,
-binary undirected multigraphs with fixed thresholds,
-or binary undirected multigraphs with fixed densities.
+analyzes them using weighted undirected graphs.
 
 %%% ¡seealso!
 SubjectCON_MP, OrderedMultiplexWU, AnalyzeEnsemble_CON_MP_WU.
@@ -51,7 +49,7 @@ ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
 %%% ¡prop!
 G_DICT (result, idict) is the graph (OrderedMultiplexWU) ensemble obtained from this analysis.
 %%%% ¡settings!
-'MultiplexWU'
+'OrderedMultiplexWU'
 %%%% ¡default!
 IndexedDictionary('IT_CLASS', 'OrderedMultiplexWU')
 %%%% ¡calculate!
