@@ -6,7 +6,7 @@ This graph analysis uses functional ordinal multiplex data and analyzes them
 using weighted undirected graphs.
 
 %%% ¡seealso!
-Subject_FUN_MP, OrderedMultiplexWU, AnalyzeGroup_FUN_MP_GA_WU.
+SubjectFUN_MP, OrderedMultiplexWU, AnalyzeGroup_FUN_MP_GA_WU.
 
 %% ¡props!
 
