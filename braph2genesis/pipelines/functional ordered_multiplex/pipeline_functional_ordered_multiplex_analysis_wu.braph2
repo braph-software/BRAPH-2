@@ -10,7 +10,7 @@
 ba = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load Brain Atlas from XLS % Brain Atlas
 
 %% Group
-gr = ImporterGroupSubjectFUN_MP_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group FUN OMP from XLS % Group FUN
+gr = ImporterGroupSubjectFUN_MP_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group FUN OMP from XLS % Group FUN OMP
 
 %% Analysis
 a_WU = AnalyzeEnsemble_FUN_OMP_WU('GR', gr); % Analyze Group % Group Analysis
