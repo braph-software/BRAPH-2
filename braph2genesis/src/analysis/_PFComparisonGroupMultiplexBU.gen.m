@@ -133,6 +133,51 @@ if check_graphics(pf.h_line_cil, 'line')
 end
 
 %%% ¡prop!
+ST_FILL (figure, item) determines the fill area settings.
+%%%% ¡settings!
+'SettingsFill'
+%%%% ¡default!
+SettingsFill('Visible', true, 'FACEALPHA', 0.3, 'FACECOLOR', [0 0 0])
+%%%% ¡postprocessing!
+bas = pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('BAS');
+ba = bas{1};
+
+if ~ba.get('BR_DICT').contains(pf.get('BR1_ID'))
+    pf.set('BR1_ID', ba.get('BR_DICT').getItem(1).get('ID'))
+end
+br1_id = ba.get('BR_DICT').getIndex(pf.get('BR1_ID'));
+
+if ~ba.get('BR_DICT').contains(pf.get('BR2_ID'))
+    pf.set('BR2_ID', ba.get('BR_DICT').getItem(1).get('ID'))
+end
+br2_id = ba.get('BR_DICT').getIndex(pf.get('BR2_ID'));
+
+% upper
+data_u = pf.get('CP').get('CIU');
+[u, us] = pf.get('CP').get('C').get('A1').get('G').layernumber();
+index_u = str2double(pf.get('LAYER'));
+total_u = us(1);
+data_to_plot_u = data_u(index_u:total_u:end);
+
+% lower
+data_l = pf.get('CP').get('CIL');
+[l, ls] = pf.get('CP').get('C').get('A1').get('G').layernumber();
+index_l = str2double(pf.get('LAYER'));
+total_l = ls(1);
+data_to_plot_l = data_l(index_l:total_l:end);
+
+pf.get('ST_FILL').set( ...
+    'X', pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('LAYERTICKS'), ...
+    'Y_UPPER', cellfun(@(x) x(br1_id, br2_id), data_to_plot_u) , ...
+    'Y_LOWER', cellfun(@(x) x(br1_id, br2_id), data_to_plot_l) ...
+    )
+
+%%%% ¡gui!
+pr = SettingsFillPP('EL', pf, 'PROP', PFComparisonGroupMultiplexBU.ST_FILL, ...    
+    varargin{:});
+
+
+%%% ¡prop!
 BR1_ID (figure, string) is the ID of the first brain region of the binodal measure.
 %%%% ¡gui!
 bas = pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('BAS');
@@ -172,6 +217,7 @@ function p_out = draw(pf, varargin)
     pf.h_line_diff = pf.get('ST_LINE_DIFF').h();
     pf.h_line_ciu = pf.get('ST_LINE_CIU').h();
     pf.h_line_cil = pf.get('ST_LINE_CIL').h();
+    pf.h_area_ci = pf.get('ST_FILL').h();
         
     % output
     if nargout > 0

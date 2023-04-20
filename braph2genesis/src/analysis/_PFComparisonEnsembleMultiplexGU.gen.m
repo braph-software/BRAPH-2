@@ -106,6 +106,34 @@ pr = SettingsPPTable('EL', pf, 'PROP', PFComparisonEnsembleGU.ST_LINE_CIL, ...
     varargin{:});
 
 %%% ¡prop!
+ST_FILL (figure, item) determines the fill area settings.
+%%%% ¡settings!
+'SettingsFill'
+%%%% ¡default!
+SettingsFill('Visible', true, 'FACEALPHA', 0.3, 'FACECOLOR', [0 0 0])
+%%%% ¡postprocessing!
+%upper
+data_u = cell2mat(pf.get('CP').get('CIU'));
+[u, us] = pf.get('CP').get('C').get('A1').get('G_DICT').getItem(1).layernumber();
+index_u = str2double(pf.get('LAYER'));
+total_u = us(1);
+%lower
+data_l = cell2mat(pf.get('CP').get('CIL'));
+[l, ls] = pf.get('CP').get('C').get('A1').get('G_DICT').getItem(1).layernumber();
+index_l = str2double(pf.get('LAYER'));
+total_l = ls(1);
+
+pf.get('ST_FILL').set( ...
+    'X', pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('LAYERTICKS'), ...
+    'Y_UPPER', data_u(index_u:total_u:end), ...
+    'Y_LOWER', data_l(index_l:total_l:end))
+
+%%%% ¡gui!
+pr = SettingsFillPP('EL', pf, 'PROP', PFComparisonEnsembleMultiplexGU.ST_FILL, ...    
+    varargin{:});
+
+
+%%% ¡prop!
 ST_XLABEL (figure, item) determines the xlabel settings.
 %%%% ¡settings!
 'SettingsText'
@@ -219,6 +247,12 @@ function p_out = draw(pf, varargin)
             );
     end
     pf.memorize('ST_YLABEL').h(pf.h_ylabel).set('PANEL', pf, 'UITAG', 'h_ylabel')
+
+    % fill part
+    if ~check_graphics(pf.h_area_ci, 'patch')
+        pf.h_area_ci = fill(pf.h_axes, [0 1 1 0], [0 0 1 1], [0 0 0], 'tag', 'h_area_ci');
+    end
+    pf.memorize('ST_FILL').h(pf.h_area_ci).set('PANEL', pf, 'UITAG', 'h_area_ci')
     
     % output
     if nargout > 0

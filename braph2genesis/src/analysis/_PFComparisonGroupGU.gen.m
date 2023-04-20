@@ -88,6 +88,24 @@ pr = SettingsPPTable('EL', pf, 'PROP', PFComparisonGroupGU.ST_LINE_CIL, ...
     'COLS', [SettingsLine.VISIBLE, SettingsLine.LINESTYLE, SettingsLine.LINEWIDTH, SettingsLine.LINECOLOR, SettingsLine.SYMBOL, SettingsLine.SYMBOLSIZE, SettingsLine.EDGECOLOR, SettingsLine.FACECOLOR], ...
     varargin{:});
 
+
+%%% ¡prop!
+ST_FILL (figure, item) determines the fill area settings.
+%%%% ¡settings!
+'SettingsFill'
+%%%% ¡default!
+SettingsFill('Visible', true, 'FACEALPHA', 0.3, 'FACECOLOR', [0 0 0])
+%%%% ¡postprocessing!
+pf.get('ST_FILL').set( ...
+    'X', pf.get('CP').get('MEASURE_TEMPLATE').get('G').get('LAYERTICKS'), ...
+    'Y_UPPER', cell2mat(pf.get('CP').get('CIU')), ...
+    'Y_LOWER', cell2mat(pf.get('CP').get('CIL')) ...
+    )
+
+%%%% ¡gui!
+pr = SettingsFillPP('EL', pf, 'PROP', PFComparisonGroupGU.ST_FILL, ...    
+    varargin{:});
+
 %%% ¡prop!
 ST_XLABEL (figure, item) determines the xlabel settings.
 %%%% ¡settings!
@@ -192,6 +210,12 @@ function p_out = draw(pf, varargin)
             );
     end
     pf.memorize('ST_YLABEL').h(pf.h_ylabel).set('PANEL', pf, 'UITAG', 'h_ylabel')
+
+     % fill part
+    if ~check_graphics(pf.h_area_ci, 'patch')
+        pf.h_area_ci = fill(pf.h_axes, [0 1 1 0], [0 0 1 1], [0 0 0], 'tag', 'h_area_ci');
+    end
+    pf.memorize('ST_FILL').h(pf.h_area_ci).set('PANEL', pf, 'UITAG', 'h_area_ci')
     
     % output
     if nargout > 0
