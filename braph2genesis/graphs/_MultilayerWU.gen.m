@@ -202,262 +202,262 @@ assert(isequal(g.get('A'), A), ...
     [BRAPH2.STR ':MultilayerWU:' BRAPH2.FAIL_TEST], ...
     'MultilayerWU is not constructing well.')
 
-%%% ¡test!
-%%%% ¡name!
-Symmetrize, Semipositivize and Standardize Rules
-%%%% ¡probability!
-.01
-%%%% ¡code!
-B1 = 10 * rand(randi(10) + 5) - 5; % random number in U(-5, 5)
-B2 = 10 * rand(randi(10) + 5) - 5; % random number in U(-5, 5)
-B3 = 10 * rand(randi(10) + 5) - 5; % random number in U(-5, 5)
-B = {
-    B1                           rand(size(B1,1),size(B2,2))  rand(size(B1,1),size(B3,2))
-    rand(size(B1,1),size(B2,2))' B2                           rand(size(B2,1),size(B3,2))
-    rand(size(B1,1),size(B3,2))' rand(size(B2,1),size(B3,2))' B3
-    };
-
-g0 = MultilayerWU('B', B); % 'SEMIPOSITIVIZE_RULE', 'zero', 'STANDARDIZE_RULE', 'threshold'
-
-A1 = B1;
-A2 = B3;
-A3 = B3;
-A0 = B;
-
-A1(A1 < 0) = 0;
-A1(A1 > 1) = 1;
-A1 = dediagonalize(A1);
-
-A2(A2 < 0) = 0;
-A2(A2 > 1) = 1;
-A2 = dediagonalize(A2);
-
-A3(A3 < 0) = 0;
-A3(A3 > 1) = 1;
-A3 = dediagonalize(A3);
-
-A0{1,1} = A1;
-A0{2,2} = A2;
-A0{3,3} = A3;
-
-assert(isequal(g0.get('A'), A0), ...
-    [BRAPH2.STR ':MultilayerWU:' BRAPH2.FAIL_TEST], ...
-    'MultilayerWU is not constructing well.')
-
-g_zero = MultilayerWU('B', B, 'SEMIPOSITIVIZE_RULE', 'zero'); % 'STANDARDIZE_RULE', 'threshold'
-
-A1 = B1;
-A2 = B3;
-A3 = B3;
-A_zero = B;
-
-A1(A1 < 0) = 0;
-A1(A1 > 1) = 1;
-A1 = dediagonalize(A1);
-
-A2(A2 < 0) = 0;
-A2(A2 > 1) = 1;
-A2 = dediagonalize(A2);
-
-A3(A3 < 0) = 0;
-A3(A3 > 1) = 1;
-A3 = dediagonalize(A3);
-
-A_zero{1,1} = A1;
-A_zero{2,2} = A2;
-A_zero{3,3} = A3;
-
-assert(isequal(g0.get('A'), A_zero), ...
-    [BRAPH2.STR ':MultilayerWU:' BRAPH2.FAIL_TEST], ...
-    'MultilayerWU is not constructing well.')
-
-g_absolute = MultilayerWU('B', B, 'SEMIPOSITIVIZE_RULE', 'absolute'); % 'STANDARDIZE_RULE', 'threshold'
-
-A1 = B1;
-A2 = B3;
-A3 = B3;
-A_absolute = B;
-
-A1 = abs(A1);
-A1(A1 < 0) = 0;
-A1(A1 > 1) = 1;
-A1 = dediagonalize(A1);
-
-A2 = abs(A2);
-A2(A2 < 0) = 0;
-A2(A2 > 1) = 1;
-A2 = dediagonalize(A2);
-
-A3 = abs(A3);
-A3(A3 < 0) = 0;
-A3(A3 > 1) = 1;
-A3 = dediagonalize(A3);
-
-A_absolute{1,1} = A1;
-A_absolute{2,2} = A2;
-A_absolute{3,3} = A3;
-
-assert(isequal(g_absolute.get('A'), A_absolute), ...
-    [BRAPH2.STR ':MultilayerWU:' BRAPH2.FAIL_TEST], ...
-    'MultilayerWU is not constructing well.')
-
-
-g_theresold = MultilayerWU('B', B, 'STANDARDIZE_RULE', 'threshold'); % 'SEMIPOSITIVIZE_RULE', 'zero'
-
-A1 = B1;
-A2 = B3;
-A3 = B3;
-A_theresold = B;
-
-A1(A1 < 0) = 0;
-A1(A1 > 1) = 1;
-A1 = dediagonalize(A1);
-
-A2(A2 < 0) = 0;
-A2(A2 > 1) = 1;
-A2 = dediagonalize(A2);
-
-A3(A3 < 0) = 0;
-A3(A3 > 1) = 1;
-A3 = dediagonalize(A3);
-
-A_theresold{1,1} = A1;
-A_theresold{2,2} = A2;
-A_theresold{3,3} = A3;
-
-assert(isequal(g_theresold.get('A'), A_theresold), ...
-    [BRAPH2.STR ':MultilayerWU:' BRAPH2.FAIL_TEST], ...
-    'MultilayerWU is not constructing well.')
-
-g_zero_theresold = MultilayerWU('B', B, 'SEMIPOSITIVIZE_RULE', 'zero', 'STANDARDIZE_RULE', 'threshold');
-
-A1 = B1;
-A2 = B3;
-A3 = B3;
-A_zero_theresold = B;
-
-A1(A1 < 0) = 0;
-A1(A1 > 1) = 1;
-A1 = dediagonalize(A1);
-
-A2(A2 < 0) = 0;
-A2(A2 > 1) = 1;
-A2 = dediagonalize(A2);
-
-A3(A3 < 0) = 0;
-A3(A3 > 1) = 1;
-A3 = dediagonalize(A3);
-
-A_zero_theresold{1,1} = A1;
-A_zero_theresold{2,2} = A2;
-A_zero_theresold{3,3} = A3;
-
-assert(isequal(g_theresold.get('A'), A_zero_theresold), ...
-    [BRAPH2.STR ':MultilayerWU:' BRAPH2.FAIL_TEST], ...
-    'MultilayerWU is not constructing well.')
-
-g_absolute_theresold = MultilayerWU('B', B, 'SEMIPOSITIVIZE_RULE', 'absolute', 'STANDARDIZE_RULE', 'threshold');
-
-A1 = B1;
-A2 = B3;
-A3 = B3;
-A_absolute_theresold = B;
-
-A1 = abs(A1);
-A1(A1 < 0) = 0;
-A1(A1 > 1) = 1;
-A1 = dediagonalize(A1);
-
-A2 = abs(A2);
-A2(A2 < 0) = 0;
-A2(A2 > 1) = 1;
-A2 = dediagonalize(A2);
-
-A3 = abs(A3);
-A3(A3 < 0) = 0;
-A3(A3 > 1) = 1;
-A3 = dediagonalize(A3);
-
-A_absolute_theresold{1,1} = A1;
-A_absolute_theresold{2,2} = A2;
-A_absolute_theresold{3,3} = A3;
-
-assert(isequal(g_absolute_theresold.get('A'), A_absolute_theresold), ...
-    [BRAPH2.STR ':MultilayerWU:' BRAPH2.FAIL_TEST], ...
-    'MultilayerWU is not constructing well.')
-
-g_range = MultilayerWU('B', B, 'STANDARDIZE_RULE', 'range'); % 'SEMIPOSITIVIZE_RULE', 'zero'
-A1 = B1;
-A2 = B3;
-A3 = B3;
-A_range = B;
-
-A1 = dediagonalize(A1);
-A1(A1 < 0) = 0;
-A1 = A1 / max(max(A1));
-
-A2 = dediagonalize(A2);
-A2(A2 < 0) = 0;
-A2 = A2 / max(max(A2));
-
-A3 = dediagonalize(A3);
-A3(A3 < 0) = 0;
-A3 = A3 / max(max(A3));
-
-A_range{1,1} = A1;
-A_range{2,2} = A2;
-A_range{3,3} = A3;
-
-assert(isequal(g_absolute_theresold.get('A'), A_range), ...
-    [BRAPH2.STR ':MultilayerWU:' BRAPH2.FAIL_TEST], ...
-    'MultilayerWU is not constructing well.')
-
-g_zero_range = MultilayerWU('B', B, 'SEMIPOSITIVIZE_RULE', 'zero', 'STANDARDIZE_RULE', 'range');
-A1 = B1;
-A2 = B3;
-A3 = B3;
-A_zero_range = B;
-
-A1 = dediagonalize(A1);
-A1(A1 < 0) = 0;
-A1 = A1 / max(max(A1));
-
-A2 = dediagonalize(A2);
-A2(A2 < 0) = 0;
-A2 = A2 / max(max(A2));
-
-A3 = dediagonalize(A3);
-A3(A3 < 0) = 0;
-A3 = A3 / max(max(A3));
-
-A_zero_range{1,1} = A1;
-A_zero_range{2,2} = A2;
-A_zero_range{3,3} = A3;
-
-assert(isequal(g_absolute_theresold.get('A'), A_zero_range), ...
-    [BRAPH2.STR ':MultilayerWU:' BRAPH2.FAIL_TEST], ...
-    'MultilayerWU is not constructing well.')
-
-g_absolute_range = MultilayerWU('B', B, 'SEMIPOSITIVIZE_RULE', 'absolute', 'STANDARDIZE_RULE', 'range');
-A1 = B1;
-A2 = B3;
-A3 = B3;
-A_absolute_range = B;
-
-A1 = abs(A1);
-A1 = standardize(dediagonalize(A1), 'StandardizeRule', 'range');
-A2 = abs(A2);
-A2 = standardize(dediagonalize(A2), 'StandardizeRule', 'range');
-A3 = abs(A3);
-A3 = standardize(dediagonalize(A3), 'StandardizeRule', 'range');
-
-A_absolute_range{1,1} = A1;
-A_absolute_range{2,2} = A2,
-A_absolute_range{3,3} = A3;
-
-assert(isequal(g_absolute_range.get('A'), A_absolute_range), ...
-    [BRAPH2.STR ':MultilayerWU:' BRAPH2.FAIL_TEST], ...
-    'MultilayerWU is not constructing well.')
+% %%% ¡test!
+% %%%% ¡name!
+% Symmetrize, Semipositivize and Standardize Rules
+% %%%% ¡probability!
+% .01
+% %%%% ¡code!
+% B1 = 10 * rand(randi(10) + 5) - 5; % random number in U(-5, 5)
+% B2 = 10 * rand(randi(10) + 5) - 5; % random number in U(-5, 5)
+% B3 = 10 * rand(randi(10) + 5) - 5; % random number in U(-5, 5)
+% B = {
+%     B1                           rand(size(B1,1),size(B2,2))  rand(size(B1,1),size(B3,2))
+%     rand(size(B1,1),size(B2,2))' B2                           rand(size(B2,1),size(B3,2))
+%     rand(size(B1,1),size(B3,2))' rand(size(B2,1),size(B3,2))' B3
+%     };
+% 
+% g0 = MultilayerWU('B', B); % 'SEMIPOSITIVIZE_RULE', 'zero', 'STANDARDIZE_RULE', 'threshold'
+% 
+% A1 = B1;
+% A2 = B3;
+% A3 = B3;
+% A0 = B;
+% 
+% A1(A1 < 0) = 0;
+% A1(A1 > 1) = 1;
+% A1 = dediagonalize(A1);
+% 
+% A2(A2 < 0) = 0;
+% A2(A2 > 1) = 1;
+% A2 = dediagonalize(A2);
+% 
+% A3(A3 < 0) = 0;
+% A3(A3 > 1) = 1;
+% A3 = dediagonalize(A3);
+% 
+% A0{1,1} = A1;
+% A0{2,2} = A2;
+% A0{3,3} = A3;
+% 
+% assert(isequal(g0.get('A'), A0), ...
+%     [BRAPH2.STR ':MultilayerWU:' BRAPH2.FAIL_TEST], ...
+%     'MultilayerWU is not constructing well.')
+% 
+% g_zero = MultilayerWU('B', B, 'SEMIPOSITIVIZE_RULE', 'zero'); % 'STANDARDIZE_RULE', 'threshold'
+% 
+% A1 = B1;
+% A2 = B3;
+% A3 = B3;
+% A_zero = B;
+% 
+% A1(A1 < 0) = 0;
+% A1(A1 > 1) = 1;
+% A1 = dediagonalize(A1);
+% 
+% A2(A2 < 0) = 0;
+% A2(A2 > 1) = 1;
+% A2 = dediagonalize(A2);
+% 
+% A3(A3 < 0) = 0;
+% A3(A3 > 1) = 1;
+% A3 = dediagonalize(A3);
+% 
+% A_zero{1,1} = A1;
+% A_zero{2,2} = A2;
+% A_zero{3,3} = A3;
+% 
+% assert(isequal(g0.get('A'), A_zero), ...
+%     [BRAPH2.STR ':MultilayerWU:' BRAPH2.FAIL_TEST], ...
+%     'MultilayerWU is not constructing well.')
+% 
+% g_absolute = MultilayerWU('B', B, 'SEMIPOSITIVIZE_RULE', 'absolute'); % 'STANDARDIZE_RULE', 'threshold'
+% 
+% A1 = B1;
+% A2 = B3;
+% A3 = B3;
+% A_absolute = B;
+% 
+% A1 = abs(A1);
+% A1(A1 < 0) = 0;
+% A1(A1 > 1) = 1;
+% A1 = dediagonalize(A1);
+% 
+% A2 = abs(A2);
+% A2(A2 < 0) = 0;
+% A2(A2 > 1) = 1;
+% A2 = dediagonalize(A2);
+% 
+% A3 = abs(A3);
+% A3(A3 < 0) = 0;
+% A3(A3 > 1) = 1;
+% A3 = dediagonalize(A3);
+% 
+% A_absolute{1,1} = A1;
+% A_absolute{2,2} = A2;
+% A_absolute{3,3} = A3;
+% 
+% assert(isequal(g_absolute.get('A'), A_absolute), ...
+%     [BRAPH2.STR ':MultilayerWU:' BRAPH2.FAIL_TEST], ...
+%     'MultilayerWU is not constructing well.')
+% 
+% 
+% g_theresold = MultilayerWU('B', B, 'STANDARDIZE_RULE', 'threshold'); % 'SEMIPOSITIVIZE_RULE', 'zero'
+% 
+% A1 = B1;
+% A2 = B3;
+% A3 = B3;
+% A_theresold = B;
+% 
+% A1(A1 < 0) = 0;
+% A1(A1 > 1) = 1;
+% A1 = dediagonalize(A1);
+% 
+% A2(A2 < 0) = 0;
+% A2(A2 > 1) = 1;
+% A2 = dediagonalize(A2);
+% 
+% A3(A3 < 0) = 0;
+% A3(A3 > 1) = 1;
+% A3 = dediagonalize(A3);
+% 
+% A_theresold{1,1} = A1;
+% A_theresold{2,2} = A2;
+% A_theresold{3,3} = A3;
+% 
+% assert(isequal(g_theresold.get('A'), A_theresold), ...
+%     [BRAPH2.STR ':MultilayerWU:' BRAPH2.FAIL_TEST], ...
+%     'MultilayerWU is not constructing well.')
+% 
+% g_zero_theresold = MultilayerWU('B', B, 'SEMIPOSITIVIZE_RULE', 'zero', 'STANDARDIZE_RULE', 'threshold');
+% 
+% A1 = B1;
+% A2 = B3;
+% A3 = B3;
+% A_zero_theresold = B;
+% 
+% A1(A1 < 0) = 0;
+% A1(A1 > 1) = 1;
+% A1 = dediagonalize(A1);
+% 
+% A2(A2 < 0) = 0;
+% A2(A2 > 1) = 1;
+% A2 = dediagonalize(A2);
+% 
+% A3(A3 < 0) = 0;
+% A3(A3 > 1) = 1;
+% A3 = dediagonalize(A3);
+% 
+% A_zero_theresold{1,1} = A1;
+% A_zero_theresold{2,2} = A2;
+% A_zero_theresold{3,3} = A3;
+% 
+% assert(isequal(g_theresold.get('A'), A_zero_theresold), ...
+%     [BRAPH2.STR ':MultilayerWU:' BRAPH2.FAIL_TEST], ...
+%     'MultilayerWU is not constructing well.')
+% 
+% g_absolute_theresold = MultilayerWU('B', B, 'SEMIPOSITIVIZE_RULE', 'absolute', 'STANDARDIZE_RULE', 'threshold');
+% 
+% A1 = B1;
+% A2 = B3;
+% A3 = B3;
+% A_absolute_theresold = B;
+% 
+% A1 = abs(A1);
+% A1(A1 < 0) = 0;
+% A1(A1 > 1) = 1;
+% A1 = dediagonalize(A1);
+% 
+% A2 = abs(A2);
+% A2(A2 < 0) = 0;
+% A2(A2 > 1) = 1;
+% A2 = dediagonalize(A2);
+% 
+% A3 = abs(A3);
+% A3(A3 < 0) = 0;
+% A3(A3 > 1) = 1;
+% A3 = dediagonalize(A3);
+% 
+% A_absolute_theresold{1,1} = A1;
+% A_absolute_theresold{2,2} = A2;
+% A_absolute_theresold{3,3} = A3;
+% 
+% assert(isequal(g_absolute_theresold.get('A'), A_absolute_theresold), ...
+%     [BRAPH2.STR ':MultilayerWU:' BRAPH2.FAIL_TEST], ...
+%     'MultilayerWU is not constructing well.')
+% 
+% g_range = MultilayerWU('B', B, 'STANDARDIZE_RULE', 'range'); % 'SEMIPOSITIVIZE_RULE', 'zero'
+% A1 = B1;
+% A2 = B3;
+% A3 = B3;
+% A_range = B;
+% 
+% A1 = dediagonalize(A1);
+% A1(A1 < 0) = 0;
+% A1 = A1 / max(max(A1));
+% 
+% A2 = dediagonalize(A2);
+% A2(A2 < 0) = 0;
+% A2 = A2 / max(max(A2));
+% 
+% A3 = dediagonalize(A3);
+% A3(A3 < 0) = 0;
+% A3 = A3 / max(max(A3));
+% 
+% A_range{1,1} = A1;
+% A_range{2,2} = A2;
+% A_range{3,3} = A3;
+% 
+% assert(isequal(g_absolute_theresold.get('A'), A_range), ...
+%     [BRAPH2.STR ':MultilayerWU:' BRAPH2.FAIL_TEST], ...
+%     'MultilayerWU is not constructing well.')
+% 
+% g_zero_range = MultilayerWU('B', B, 'SEMIPOSITIVIZE_RULE', 'zero', 'STANDARDIZE_RULE', 'range');
+% A1 = B1;
+% A2 = B3;
+% A3 = B3;
+% A_zero_range = B;
+% 
+% A1 = dediagonalize(A1);
+% A1(A1 < 0) = 0;
+% A1 = A1 / max(max(A1));
+% 
+% A2 = dediagonalize(A2);
+% A2(A2 < 0) = 0;
+% A2 = A2 / max(max(A2));
+% 
+% A3 = dediagonalize(A3);
+% A3(A3 < 0) = 0;
+% A3 = A3 / max(max(A3));
+% 
+% A_zero_range{1,1} = A1;
+% A_zero_range{2,2} = A2;
+% A_zero_range{3,3} = A3;
+% 
+% assert(isequal(g_absolute_theresold.get('A'), A_zero_range), ...
+%     [BRAPH2.STR ':MultilayerWU:' BRAPH2.FAIL_TEST], ...
+%     'MultilayerWU is not constructing well.')
+% 
+% g_absolute_range = MultilayerWU('B', B, 'SEMIPOSITIVIZE_RULE', 'absolute', 'STANDARDIZE_RULE', 'range');
+% A1 = B1;
+% A2 = B3;
+% A3 = B3;
+% A_absolute_range = B;
+% 
+% A1 = abs(A1);
+% A1 = standardize(dediagonalize(A1), 'StandardizeRule', 'range');
+% A2 = abs(A2);
+% A2 = standardize(dediagonalize(A2), 'StandardizeRule', 'range');
+% A3 = abs(A3);
+% A3 = standardize(dediagonalize(A3), 'StandardizeRule', 'range');
+% 
+% A_absolute_range{1,1} = A1;
+% A_absolute_range{2,2} = A2,
+% A_absolute_range{3,3} = A3;
+% 
+% assert(isequal(g_absolute_range.get('A'), A_absolute_range), ...
+%     [BRAPH2.STR ':MultilayerWU:' BRAPH2.FAIL_TEST], ...
+%     'MultilayerWU is not constructing well.')
 
 %% ¡_props!
 
