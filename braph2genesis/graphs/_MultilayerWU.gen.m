@@ -11,6 +11,7 @@ There are connections between layers connecting the corresponding nodes.
 %% ¡props_update!
 
 %%% ¡prop!
+
 NAME (constant, string) is the name of the multilayer weighted undirected graph.
 %%%% ¡default!
 'MultilayerWU'
@@ -98,7 +99,7 @@ for i = 1:1:L
     M = dediagonalize(M); % removes self-connections by removing diagonal from adjacency matrix, equivalent to dediagonalize(M, 'DediagonalizeRule', 0)
     M = semipositivize(M, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
     M = standardize(M, 'StandardizeRule', g.get('STANDARDIZE_RULE')); % rescales adjacency matrix
-    B{i, i} = {M};
+    B(i, i) = {M};
 end
 A = B;
 value = A;
@@ -139,7 +140,7 @@ getCompatibleMeasures('MultilayerWU')
 %%% ¡prop!
 B (data, cell) is the input cell containing the multilayer adjacency matrices on the diagonal.
 %%%% ¡default!
-{[] []}
+{[] []; [] []}
 %%%% ¡gui!
 pr = PanelPropCell('EL', g, 'PROP', MultilayerWU.B, ...
     'TABLE_HEIGHT', s(40), ...
@@ -180,10 +181,13 @@ Constructor - Full
 B1 = rand(randi(10));
 B2 = rand(randi(10));
 B3 = rand(randi(10));
+B12 = rand(size(B1,1),size(B2,2));
+B13 = rand(size(B1,1),size(B3,2));
+B23 = rand(size(B2,1),size(B3,2));
 B = {
-    B1                           rand(size(B1,1),size(B2,2))  rand(size(B1,1),size(B3,2))
-    rand(size(B1,1),size(B2,2))' B2                           rand(size(B2,1),size(B3,2))
-    rand(size(B1,1),size(B3,2))' rand(size(B2,1),size(B3,2))' B3
+    B1                           B12                            B13
+    B12'                         B2                             B23
+    B13'                         B23'                           B3
     };
 g = MultilayerWU('B', B);
 g.get('A_CHECK')
