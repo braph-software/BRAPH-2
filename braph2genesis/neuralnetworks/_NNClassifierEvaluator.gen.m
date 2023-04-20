@@ -46,6 +46,8 @@ if ~braph2_testing && nne.get('GR').get('SUB_DICT').length() > 0
     else
         pr = PanelPropCell('EL', nne, 'PROP', NNClassifierEvaluator.FEATURE_MASK, varargin{:});
     end
+else
+    pr = PanelPropCell('EL', nne, 'PROP', NNClassifierEvaluator.FEATURE_MASK, varargin{:});
 end
 
 %%% ¡prop!
@@ -130,6 +132,8 @@ if ~braph2_testing && ~isa(nne.get('GR').get('SUB_DICT'), 'NoValue')
     else
         pr = PanelPropCell('EL', nne, 'PROP', NNClassifierEvaluator.FEATURE_PERMUTATION_IMPORTANCE, varargin{:});
     end
+else
+    pr = PanelPropCell('EL', nne, 'PROP', NNClassifierEvaluator.FEATURE_PERMUTATION_IMPORTANCE, varargin{:});
 end
 
 %%% ¡prop!
