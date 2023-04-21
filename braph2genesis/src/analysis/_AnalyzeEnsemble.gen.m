@@ -87,9 +87,9 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
             a.set('PFGD', PFAnalysisEnsemble('A', a))
         elseif ~isempty(tmp_g) && Graph.is_multigraph(tmp_g)
             a.set('PFGD', PFMultiAnalysisEnsemble('A', a))
-        elseif ~isempty(tmp_g) && Graph.is_multiplex(tmp_g) && Graph.is_weighted(tmp_g)
+        elseif ~isempty(tmp_g) && Graph.is_multiplex(tmp_g) && Graph.is_ordered_multiplex(tmp_g) && Graph.is_weighted(tmp_g)
             a.set('PFGD', PFMultiplexAnalysisEnsemble('A', a))
-        elseif ~isempty(tmp_g) && Graph.is_multiplex(tmp_g) && Graph.is_binary(tmp_g)
+        elseif ~isempty(tmp_g) && Graph.is_multiplex(tmp_g) && Graph.is_ordered_multiplex(tmp_g) && Graph.is_binary(tmp_g)
             a.set('PFGD', PFMultiplexBinaryAnalysisEnsemble('A', a))
         else
             a.memorize('PFGD').set('A', a)
