@@ -138,7 +138,7 @@ function create_Element(generator_file, target_dir)
 % 
 % ----------
 % 
-% See also genesis, create_test_Element, create_Layout, hard_code_constants.
+% See also genesis, create_Layout, create_test_Element, hard_code_constants.
 
 txt = fileread(generator_file);
 
