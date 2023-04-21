@@ -21,6 +21,15 @@ function create_Element(generator_file, target_dir)
 % <strong>%%% ¡seealso!</strong>
 %  Related functions and classes in a single line, coma-separated and without fullstop.
 %
+%<strong>%% ¡layout!</strong>
+% <strong>%%% ¡prop!</strong>
+%  <strong>%%% ¡id!</strong>
+%   Prop id, e.g., Element.TAG, ordered as they should appead.
+%  <strong>%%% ¡title!</strong>
+%   String containing the title of the prop panel.
+% <strong>%%% ¡prop!</strong>
+%  ...
+%
 %<strong>%% ¡constants!</strong>
 % Constants.
 %
@@ -129,7 +138,7 @@ function create_Element(generator_file, target_dir)
 % 
 % ----------
 % 
-% See also genesis, create_test_Element, hard_code_constants.
+% See also genesis, create_Layout, create_test_Element, hard_code_constants.
 
 txt = fileread(generator_file);
 
