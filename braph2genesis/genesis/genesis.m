@@ -19,7 +19,7 @@ function [target_dir, source_dir] = genesis(target_dir, source_dir, run_number, 
 %  development examples (by default it does NOT compile them).
 %
 % See also braph2genesis, create_Element, create_test_Element,
-%  hard_code_constants.
+%  create_layout, hard_code_constants.
 
 fp = filesep();
 
