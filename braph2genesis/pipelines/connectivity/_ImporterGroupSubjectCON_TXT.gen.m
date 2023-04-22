@@ -131,7 +131,7 @@ if isfolder(directory)
                 for j = 1:1:br_number
                     br_id = ['br' int2str(j)];
                     br = BrainRegion('ID', br_id);
-                    idict.add(br)
+                    idict.get('ADD', br)
                 end
                 ba.set('br_dict', idict);
             end
@@ -150,7 +150,7 @@ if isfolder(directory)
                     'BA', ba, ... % % %                     'age', age(i), ... % % %                     'sex', sex{i}, ...
                     'CON', CON ...
                 );
-                subdict.add(sub);
+                subdict.get('ADD', sub);
             end
             gr.set('sub_dict', subdict);
         end
