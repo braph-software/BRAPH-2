@@ -15,32 +15,32 @@ Group, SunbjectCON, ImporterGroupSubjectCON_XLS
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the brain atlas exporter in XLS.
+NAME (constant, string) is the name of the CON subject group exporter in XLS/XLSX.
 %%%% ¡default!
-'ExporterBrainAtlasXLS'
+'ExporterGroupSubjectCON_XLS'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the brain atlas exporter in XLS.
+DESCRIPTION (constant, string) is the description of the CON subject group exporter in XLS/XLSX.
 %%%% ¡default!
-'ExporterBrainAtlasXLS exports a brain atlas to an XLS/XLSX file.'
+'ExporterGroupSubjectCON_XLS exports a group of subjects with connectivity data to a series of XLSX file and their covariates (if existing).'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the brain surface.
+TEMPLATE (parameter, item) is the template of the CON subject group exporter in XLS/XLSX.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the brain atlas exporter in XLS.
+ID (data, string) is a few-letter code for the CON subject group exporter in XLS/XLSX.
 %%%% ¡default!
-'ExporterBrainAtlasXLS ID'
+'ExporterGroupSubjectCON_XLS ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the brain atlas exporter in XLS.
+LABEL (metadata, string) is an extended label of the CON subject group exporter in XLS/XLSX.
 %%%% ¡default!
-'ExporterBrainAtlasXLS label'
+'ExporterGroupSubjectCON_XLS label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the brain atlas exporter in XLS.
+NOTES (metadata, string) are some specific notes about the CON subject group exporter in XLS/XLSX.
 %%%% ¡default!
-'ExporterBrainAtlasXLS notes'
+'ExporterGroupSubjectCON_XLS notes'
 
 %% ¡props!
 
@@ -57,6 +57,17 @@ Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'Subj
 DIRECTORY (data, string) is the directory name where to save the group of subjects with connectivity data.
 %%%% ¡default!
 fileparts(which('test_braph2'))
+
+%%% ¡prop!
+PUT_DIR (query, item) opens a dialog box to set the directory where to save the group of subjects with connectivity data.
+%%%% ¡settings!
+'ExporterGroupSubjectCON_XLS'
+%%%% ¡calculate!
+directory = uigetdir('Select directory');
+if ischar(directory) && isfolder(directory)
+    ex.set('DIRECTORY', directory);
+end
+value = ex;
 
 %%% ¡prop!
 SAVE (result, empty) saves the group of subjects with connectivity data in XLS/XLSX files in the selected directory.
@@ -82,13 +93,13 @@ if isfolder(directory)
     sex = cell(sub_number, 1);
 
     for i = 1:1:sub_number
-        braph2waitbar(wb, .30 + .70 * i / sub_number, ['Saving subject ' num2str(i) ' of ' num2str(sub_number) ' ...'])
+        braph2waitbar(wb, .25 + .75 * i / sub_number, ['Saving subject ' num2str(i) ' of ' num2str(sub_number) ' ...'])
         
         sub = sub_dict.getItem(i);
         sub_id(i) = {sub.get('ID')};
         sub_CON = sub.get('CON');
-        age{i} =  sub.get('AGE');
-        sex{i} =  sub.get('SEX'); 
+% % %         age{i} =  sub.get('AGE');
+% % %         sex{i} =  sub.get('SEX'); 
         
         tab = table(sub_CON);
 
@@ -98,48 +109,51 @@ if isfolder(directory)
         writetable(tab, sub_file, 'Sheet', 1, 'WriteVariableNames', 0);
     end
         
-    % if covariates save them in another file
-    if sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
-        tab2 = cell(1 + sub_number, 3);
-        tab2{1, 1} = 'ID';
-        tab2{1, 2} = 'Age';
-        tab2{1, 3} = 'Sex';
-        tab2(2:end, 1) = sub_id;
-        tab2(2:end, 2) = age;
-        tab2(2:end, 3) = sex;
-        tab2 = table(tab2);
-        
-        % save
-        cov_directory = [gr_directory filesep() 'covariates'];
-        if ~exist(cov_directory, 'dir')
-            mkdir(cov_directory)
-        end
-        writetable(tab2, [cov_directory filesep() gr.get('ID') '_covariates.xlsx'], 'Sheet', 1, 'WriteVariableNames', 0);
-    end
+% % %     % if covariates save them in another file
+% % %     if sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
+% % %         tab2 = cell(1 + sub_number, 3);
+% % %         tab2{1, 1} = 'ID';
+% % %         tab2{1, 2} = 'Age';
+% % %         tab2{1, 3} = 'Sex';
+% % %         tab2(2:end, 1) = sub_id;
+% % %         tab2(2:end, 2) = age;
+% % %         tab2(2:end, 3) = sex;
+% % %         tab2 = table(tab2);
+% % %         
+% % %         % save
+% % %         cov_directory = [gr_directory filesep() 'covariates'];
+% % %         if ~exist(cov_directory, 'dir')
+% % %             mkdir(cov_directory)
+% % %         end
+% % %         writetable(tab2, [cov_directory filesep() gr.get('ID') '_covariates.xlsx'], 'Sheet', 1, 'WriteVariableNames', 0);
+% % %     end
     
-    % sets value to empty
-    value = [];
-
     braph2waitbar(wb, 'close')
-else
-    value = ex.getr('SAVE');    
 end
 
-%% ¡methods!
-function uigetdir(ex)
-    % UIGETDIR opens a dialog box to set the directory where to save the group of subjects with connectivity data.
-    
-    directory = uigetdir('Select directory');
-    if ischar(directory) && isfolder(directory)
-        ex.set('DIRECTORY', directory);
-    end
-end
+% sets value to empty
+value = [];
 
 %% ¡tests!
 
+%%% ¡excluded_props!
+[ExporterGroupSubjectCON_XLS.PUT_DIR]
+
 %%% ¡test!
 %%%% ¡name!
-export and import
+Delete directory TBE
+%%%% ¡probability!
+1
+%%%% ¡code!
+warning('off', 'MATLAB:DELETE:FileNotFound')
+rmdir([fileparts(which('test_braph2')) filesep 'trial_group_subjects_CON_to_be_erased'], 's')
+warning('on', 'MATLAB:DELETE:FileNotFound')
+
+%%% ¡test!
+%%%% ¡probability!
+.01
+%%%% ¡name!
+Export and import
 %%%% ¡code!
 br1 = BrainRegion( ...
     'ID', 'ISF', ...
@@ -193,27 +207,21 @@ sub1 = SubjectCON( ...
     'ID', 'SUB CON 1', ...
     'LABEL', 'Subejct CON 1', ...
     'NOTES', 'Notes on subject CON 1', ...
-    'BA', ba, ...
-    'age', 75, ...
-    'sex', 'female', ...
+    'BA', ba, ... % % %     'age', 75, ... % % %     'sex', 'female', ...
     'CON', rand(ba.get('BR_DICT').length()) ...
     );
 sub2 = SubjectCON( ...
     'ID', 'SUB CON 2', ...
     'LABEL', 'Subejct CON 2', ...
     'NOTES', 'Notes on subject CON 2', ...
-    'BA', ba, ...
-    'age', 70, ...
-    'sex', 'male', ...
+    'BA', ba, ... % % %     'age', 70, ... % % %     'sex', 'male', ...
     'CON', rand(ba.get('BR_DICT').length()) ...
     );
 sub3 = SubjectCON( ...
     'ID', 'SUB CON 3', ...
     'LABEL', 'Subejct CON 3', ...
     'NOTES', 'Notes on subject CON 3', ...
-    'BA', ba, ...
-    'age', 50, ...
-    'sex', 'female', ...
+    'BA', ba, ... % % %     'age', 50, ... % % %     'sex', 'female', ...
     'CON', rand(ba.get('BR_DICT').length()) ...
     );
 
@@ -274,7 +282,7 @@ for i = 1:1:max(gr.get('SUB_DICT').length(), gr_loaded2.get('SUB_DICT').length()
     assert( ...
         isequal(sub.get('ID'), sub_loaded.get('ID')) & ...
         ~isequal(sub.get('BA').get('ID'), sub_loaded.get('BA').get('ID')) & ...
-        isequal(sub.get('CON'), sub_loaded.get('CON')), ...
+        isequal(sub.get('CON'), sub_loaded.get('CON')), ... % % % check also covariates
         [BRAPH2.STR ':ExporterGroupSubjectCON_XLS:' BRAPH2.BUG_IO], ...
         'Problems saving or loading a group.')    
 end
