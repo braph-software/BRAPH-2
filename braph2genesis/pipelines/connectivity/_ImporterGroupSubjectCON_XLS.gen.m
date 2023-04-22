@@ -105,60 +105,58 @@ if isfolder(directory)
         files_XLS = dir(fullfile(directory, '*.xls'));
         files = [files_XLSX; files_XLS];
 
-        % Check if there are covariates to add (age and sex)
-        cov_folder = dir(directory);
-        cov_folder = cov_folder([cov_folder(:).isdir] == 1);
-        cov_folder = cov_folder(~ismember({cov_folder(:).name}, {'.', '..'}));
-        if ~isempty(cov_folder)
-            file_cov_XLSX = dir(fullfile([directory filesep() cov_folder.name], '*.xlsx'));
-            file_cov_XLS = dir(fullfile([directory filesep() cov_folder.name], '*.xls'));
-            file_cov = [file_cov_XLSX; file_cov_XLS];
-            [~, ~, raw_covariates] = xlsread(fullfile([directory filesep() cov_folder.name], file_cov.name));
-            age = raw_covariates(2:end, 2);
-            sex = raw_covariates(2:end, 3);
-        else
-            age = {[0]};
-            age = age(ones(length(files), 1));
-            unassigned =  {'unassigned'};
-            sex = unassigned(ones(length(files), 1));
-        end
+% % %         % Check if there are covariates to add (age and sex)
+% % %         cov_folder = dir(directory);
+% % %         cov_folder = cov_folder([cov_folder(:).isdir] == 1);
+% % %         cov_folder = cov_folder(~ismember({cov_folder(:).name}, {'.', '..'}));
+% % %         if ~isempty(cov_folder)
+% % %             file_cov_XLSX = dir(fullfile([directory filesep() cov_folder.name], '*.xlsx'));
+% % %             file_cov_XLS = dir(fullfile([directory filesep() cov_folder.name], '*.xls'));
+% % %             file_cov = [file_cov_XLSX; file_cov_XLS];
+% % %             [~, ~, raw_covariates] = xlsread(fullfile([directory filesep() cov_folder.name], file_cov.name));
+% % %             age = raw_covariates(2:end, 2);
+% % %             sex = raw_covariates(2:end, 3);
+% % %         else
+% % %             age = {[0]};
+% % %             age = age(ones(length(files), 1));
+% % %             unassigned =  {'unassigned'};
+% % %             sex = unassigned(ones(length(files), 1));
+% % %         end
 
         braph2waitbar(wb, .15, 'Loading subject group ...')
 
-        if length(files) > 0
+        if ~isempty(files)
             % brain atlas
             ba = im.get('BA');
             br_number = size(xlsread(fullfile(directory, files(1).name)), 1);
-            if ba.get('BR_DICT').length ~= br_number
+            if ba.get('BR_DICT').get('LENGTH') ~= br_number
                 ba = BrainAtlas();
-                idict = ba.get('BR_DICT');
+                br_dict = ba.get('BR_DICT');
                 for j = 1:1:br_number
                     br_id = ['br' int2str(j)];
                     br = BrainRegion('ID', br_id);
-                    idict.add(br)
+                    br_dict.get('ADD', br)
                 end
-                ba.set('br_dict', idict);
+                ba.set('BR_DICT', br_dict);
             end
 
-            subdict = gr.get('SUB_DICT');
+            sub_dict = gr.get('SUB_DICT');
 
             % adds subjects
             for i = 1:1:length(files)
-                braph2waitbar(wb, .30 + .70 * i / length(files), ['Loading subject ' num2str(i) ' of ' num2str(length(files)) ' ...'])
+                braph2waitbar(wb, .325 + .75 * i / length(files), ['Loading subject ' num2str(i) ' of ' num2str(length(files)) ' ...'])
 
                 % read file
                 CON = xlsread(fullfile(directory, files(i).name));
                 [~, sub_id] = fileparts(files(i).name);
                 sub = SubjectCON( ...
                     'ID', sub_id, ...
-                    'BA', ba, ...
-                    'age', age{i}, ...
-                    'sex', sex{i}, ...
+                    'BA', ba, ... % % % 'age', age{i}, ... % % % 'sex', sex{i}, ...
                     'CON', CON ...
                 );
-                subdict.add(sub);
+                sub_dict.get('ADD', sub);
             end
-            gr.set('sub_dict', subdict);
+            gr.set('SUB_DICT', sub_dict);
         end
     catch e
         braph2waitbar(wb, 'close')
