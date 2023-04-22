@@ -56,7 +56,7 @@ Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'Subj
 %%% ¡prop!
 DIRECTORY (data, string) is the directory name where to save the group of subjects with connectivity data.
 %%%% ¡default!
-fileparts(which('test_braph2'))
+[fileparts(which('test_braph2')) filesep 'default_group_subjects_CON_most_likely_to_be_erased']
 
 %%% ¡prop!
 PUT_DIR (query, item) opens a dialog box to set the directory where to save the group of subjects with connectivity data.
@@ -146,7 +146,7 @@ Delete directory TBE
 1
 %%%% ¡code!
 warning('off', 'MATLAB:DELETE:FileNotFound')
-dir_to_be_erased = [fileparts(which('test_braph2')) filesep 'trial_group_subjects_CON_to_be_erased'];
+dir_to_be_erased = ExporterGroupSubjectCON_XLS.getPropDefault('DIRECTORY');
 if isfolder(dir_to_be_erased)
     rmdir(dir_to_be_erased, 's')
 end
