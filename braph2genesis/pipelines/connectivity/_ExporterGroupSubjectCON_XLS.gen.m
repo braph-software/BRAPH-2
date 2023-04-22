@@ -146,7 +146,10 @@ Delete directory TBE
 1
 %%%% ¡code!
 warning('off', 'MATLAB:DELETE:FileNotFound')
-rmdir([fileparts(which('test_braph2')) filesep 'trial_group_subjects_CON_to_be_erased'], 's')
+dir_to_be_erased = [fileparts(which('test_braph2')) filesep 'trial_group_subjects_CON_to_be_erased'];
+if isfolder(dir_to_be_erased)
+    rmdir(dir_to_be_erased, 's')
+end
 warning('on', 'MATLAB:DELETE:FileNotFound')
 
 %%% ¡test!
