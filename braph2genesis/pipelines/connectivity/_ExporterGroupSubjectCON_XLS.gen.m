@@ -153,10 +153,10 @@ end
 warning('on', 'MATLAB:DELETE:FileNotFound')
 
 %%% ¡test!
-%%%% ¡probability!
-.01
 %%%% ¡name!
 Export and import
+%%%% ¡probability!
+.01
 %%%% ¡code!
 br1 = BrainRegion( ...
     'ID', 'ISF', ...
