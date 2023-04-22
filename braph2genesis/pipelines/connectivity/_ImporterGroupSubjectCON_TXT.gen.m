@@ -133,7 +133,7 @@ if isfolder(directory)
                     br = BrainRegion('ID', br_id);
                     idict.get('ADD', br)
                 end
-                ba.set('br_dict', idict);
+                ba.set('BR_DICT', idict);
             end
 
             subdict = gr.get('SUB_DICT');
@@ -152,7 +152,7 @@ if isfolder(directory)
                 );
                 subdict.get('ADD', sub);
             end
-            gr.set('sub_dict', subdict);
+            gr.set('SUB_DICT', subdict);
         end
     catch e
         braph2waitbar(wb, 'close')
