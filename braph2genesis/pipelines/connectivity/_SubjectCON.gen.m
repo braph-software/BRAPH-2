@@ -165,8 +165,8 @@ else
 end
 %%%% ¡gui!
 pr = PanelPropMatrix('EL', sub, 'PROP', SubjectCON.CON, ...
-    'ROWNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), % % % 'pr.get(''EL'').get(''BA'').get(''BR_DICT'').getKeys()', ... %TBE
-    'COLUMNNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), % % % 'pr.get(''EL'').get(''BA'').get(''BR_DICT'').getKeys()', ... %TBE
+    'ROWNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ... % % % 'pr.get(''EL'').get(''BA'').get(''BR_DICT'').getKeys()', ... %TBE
+    'COLUMNNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ... % % % 'pr.get(''EL'').get(''BA'').get(''BR_DICT'').getKeys()', ... %TBE
     varargin{:});
 
 %%% ¡_prop!
@@ -190,7 +190,7 @@ pr = PanelPropMatrix('EL', sub, 'PROP', SubjectCON.CON, ...
 % % % im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectCON')) filesep 'example data CON (DTI)' filesep 'desikan_atlas.xlsx']);
 % % % ba = im_ba.get('BA');
 % % % im_gr = ImporterGroupSubjectCON_XLS( ...
-% % %     'DIRECTORY', [fileparts(which('SubjectCON')) filesep 'example data CON (DTI)' filesep 'xls' filesep 'GroupName1'], ...
+% % %     'DIRECTORY', [fileparts(which('SubjectCON')) filesep 'example data CON' filesep 'xls' filesep 'GroupCON1'], ...
 % % %     'BA', ba ...
 % % %     );
 % % % gr = im_gr.get('GR');
