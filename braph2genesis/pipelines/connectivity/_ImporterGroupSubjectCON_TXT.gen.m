@@ -11,12 +11,53 @@ Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 
 %%% ¡seealso!
-Element, Importer, ExporterGroupSubjectCON_TXT
+Group, SunbjectCON, ExporterGroupSubjectCON_TXT
+
+%% ¡props_update!
+
+%%% ¡prop!
+NAME (constant, string) is the name of the CON subject group importer from TXT.
+%%%% ¡default!
+'ImporterGroupSubjectCON_TXT'
+
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the CON subject group importer from TXT.
+%%%% ¡default!
+'ImporterGroupSubjectCON_TXT imports a group of subjects with connectivity data from a series of TXT file and their covariates (optional) from another TXT file.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the CON subject group importer from TXT.
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the CON subject group importer from TXT.
+%%%% ¡default!
+'ImporterGroupSubjectCON_TXT ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the CON subject group importer from TXT.
+%%%% ¡default!
+'ImporterGroupSubjectCON_TXT label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the CON subject group importer from TXT.
+%%%% ¡default!
+'ImporterGroupSubjectCON_TXT notes'
 
 %% ¡props!
 
 %%% ¡prop!
 DIRECTORY (data, string) is the directory containing the CON subject group files from which to load the subject group.
+
+%%% ¡prop!
+GET_DIR (query, item) opens a dialog box to set the directory from where to load the TXT files of the CON subject group.
+%%%% ¡settings!
+'ImporterGroupSubjectCON_TXT'
+%%%% ¡calculate!
+directory = uigetdir('Select directory');
+if ischar(directory) && isfolder(directory)
+	im.set('DIRECTORY', directory);
+end
+value = im;
 
 %%% ¡prop!
 BA (data, item) is a brain atlas.
@@ -39,11 +80,8 @@ gr = Group( ...
     );
 
 gr.lock('SUB_CLASS');
+
 directory = im.get('DIRECTORY');
-if ~isfolder(directory)&& ~braph2_testing()
-    im.uigetdir()
-    directory = im.get('DIRECTORY');
-end
 if isfolder(directory)  
     wb = braph2waitbar(im.get('WAITBAR'), 0, 'Reading directory ...');
     
@@ -59,29 +97,29 @@ if isfolder(directory)
         % analyzes file
         files = dir(fullfile(directory, '*.txt'));
 
-        % Check if there are covariates to add (age and sex)
-        cov_folder = dir(directory);
-        cov_folder = cov_folder([cov_folder(:).isdir] == 1);
-        cov_folder = cov_folder(~ismember({cov_folder(:).name}, {'.', '..'}));
-        if ~isempty(cov_folder)
-            file_cov = dir(fullfile([directory filesep() cov_folder.name], '*.txt'));
-            raw_covariates = readtable([directory filesep() cov_folder.name filesep() file_cov.name], 'Delimiter', '	');
-            age = raw_covariates{:, 2};
-            sex = raw_covariates{:, 3};
-        else
-            age = ones(length(files), 1);
-            unassigned =  {'unassigned'};
-            sex = unassigned(ones(length(files), 1));
-        end
+% % %         % Check if there are covariates to add (age and sex)
+% % %         cov_folder = dir(directory);
+% % %         cov_folder = cov_folder([cov_folder(:).isdir] == 1);
+% % %         cov_folder = cov_folder(~ismember({cov_folder(:).name}, {'.', '..'}));
+% % %         if ~isempty(cov_folder)
+% % %             file_cov = dir(fullfile([directory filesep() cov_folder.name], '*.txt'));
+% % %             raw_covariates = readtable([directory filesep() cov_folder.name filesep() file_cov.name], 'Delimiter', '	');
+% % %             age = raw_covariates{:, 2};
+% % %             sex = raw_covariates{:, 3};
+% % %         else
+% % %             age = ones(length(files), 1);
+% % %             unassigned =  {'unassigned'};
+% % %             sex = unassigned(ones(length(files), 1));
+% % %         end
 
         braph2waitbar(wb, .15, 'Loading subjecy group ...')
 
-        if length(files) > 0
+        if ~isempty(files)
             % brain atlas
             ba = im.get('BA');
             raw = readtable(fullfile(directory, files(1).name), 'Delimiter', '	');
             br_number = size(raw, 1);  
-            if ba.get('BR_DICT').length ~= br_number
+            if ba.get('BR_DICT').get('LENGTH') ~= br_number
                 ba = BrainAtlas();
                 idict = ba.get('BR_DICT');
                 for j = 1:1:br_number
@@ -96,16 +134,14 @@ if isfolder(directory)
 
             % adds subjects
             for i = 1:1:length(files)
-                braph2waitbar(wb, .30 + .70 * i / length(files), ['Loading subject ' num2str(i) ' of ' num2str(length(files)) ' ...'])
+                braph2waitbar(wb, .25 + .75 * i / length(files), ['Loading subject ' num2str(i) ' of ' num2str(length(files)) ' ...'])
 
                 % read file
                 CON = table2array(readtable(fullfile(directory, files(i).name), 'Delimiter', '	'));
                 [~, sub_id] = fileparts(files(i).name);
                 sub = SubjectCON( ...
                     'ID', sub_id, ...
-                    'BA', ba, ...
-                    'age', age(i), ...
-                    'sex', sex{i}, ...
+                    'BA', ba, ... % % %                     'age', age(i), ... % % %                     'sex', sex{i}, ...
                     'CON', CON ...
                 );
                 subdict.add(sub);
@@ -121,17 +157,14 @@ if isfolder(directory)
 	braph2waitbar(wb, 'close')
 elseif ~braph2_testing()
     error([BRAPH2.STR ':ImporterGroupSubjectCON_TXT:' BRAPH2.BUG_IO], ...
-        [BRAPH2.STR ':ImporterGroupSubjectCON_TXT:' BRAPH2.BUG_IO]);
+        [BRAPH2.STR ':ImporterGroupSubjectCON_TXT:' BRAPH2.BUG_IO '\\n' ...
+        'The prop DIRECTORY must be an existing directory, but it is ''' directory '''.'] ...
+        );
 end
 
 value = gr;
 
-%% ¡methods!
-function uigetdir(im)
-    % UIGETDIR opens a dialog box to set the directory from where to load the TXT files of the CON subject group.
+%% ¡tests!
 
-    directory = uigetdir('Select directory');
-    if ischar(directory) && isfolder(directory)
-        im.set('DIRECTORY', directory);
-    end
-end
+%%% ¡excluded_props!
+[ImporterGroupSubjectCON_TXT.GET_DIR]
