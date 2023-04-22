@@ -906,7 +906,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 % gui.get('SHOW')
 
 %% Subjects
-el_class_list = {'ExporterGroupSubjectCON_XLS'} % 'ImporterGroupSubjectCON_XLS'
+el_class_list = {'ImporterGroupSubjectCON_TXT' 'ExporterGroupSubjectCON_TXT'} % {'ImporterGroupSubjectCON_XLS' 'ExporterGroupSubjectCON_XLS' 'ImporterGroupSubjectCON_TXT' 'ExporterGroupSubjectCON_TXT'}
 for i = 1:1:length(el_class_list)
     el_class = el_class_list{i};
     el_path = '/pipelines/connectivity';
