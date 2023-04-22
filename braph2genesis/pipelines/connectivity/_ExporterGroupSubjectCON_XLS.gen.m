@@ -87,7 +87,7 @@ if isfolder(directory)
 	braph2waitbar(wb, .15, 'Organizing info ...')
     
     sub_dict = gr.get('SUB_DICT');
-    sub_number = sub_dict.length();
+    sub_number = sub_dict.get('LENGTH');
     sub_id = cell(sub_number, 1);
     age = cell(sub_number, 1);
     sex = cell(sub_number, 1);
