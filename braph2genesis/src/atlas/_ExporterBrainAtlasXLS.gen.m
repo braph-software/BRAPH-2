@@ -20,7 +20,7 @@ DESCRIPTION (constant, string) is the description of the brain atlas exporter in
 'ExporterBrainAtlasXLS exports a brain atlas to an XLS/XLSX file.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the brain surface.
+TEMPLATE (parameter, item) is the template of the brain atlas exporter in XLS.
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the brain atlas exporter in XLS.
