@@ -855,52 +855,78 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 % assert(~check_graphics(f_layout, 'figure'))
 
 %% GUILayout
-% % el_class = 'GUILayout';
-% % el_path = '/src/gui/';
-% % delete([fileparts(which('braph2')) el_path el_class '.m'])
-% % create_Element([fileparts(which('braph2genesis')) el_path '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-% % create_Element([fileparts(which('braph2genesis')) el_path '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-% % create_test_Element([fileparts(which('braph2genesis')) el_path '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-% % eval(['test_' el_class])
+% el_class = 'GUILayout';
+% el_path = '/src/gui/';
+% delete([fileparts(which('braph2')) el_path el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) el_path '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+% create_Element([fileparts(which('braph2genesis')) el_path '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+% create_test_Element([fileparts(which('braph2genesis')) el_path '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+% eval(['test_' el_class])
+
+% gui = GUILayout( ...
+%     'EL_CLASS', IndexedDictionary(), ...
+%     'POSITION', [.3 .3 .4 .4], ...
+%     'BKGCOLOR', [1 0 0] ...
+%     );
+% assert(strcmp(gui.get('EL_CLASS'), 'IndexedDictionary'))
 % 
-% % gui = GUILayout( ...
-% %     'EL_CLASS', IndexedDictionary(), ...
-% %     'POSITION', [.3 .3 .4 .4], ...
-% %     'BKGCOLOR', [1 0 0] ...
-% %     );
-% % assert(strcmp(gui.get('EL_CLASS'), 'IndexedDictionary'))
-% % 
-% % gui.get('DRAW')
-% % gui.get('SHOW')
+% gui.get('DRAW')
+% gui.get('SHOW')
 
 %% create_layout
-el_class = 'BrainAtlas';
-el_path = '/src/atlas/';
-delete([fileparts(which('braph2')) el_path el_class '.m'])
-create_Element([fileparts(which('braph2genesis')) el_path '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-create_Element([fileparts(which('braph2genesis')) el_path '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-create_test_Element([fileparts(which('braph2genesis')) el_path '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-create_layout([fileparts(which('braph2genesis')) el_path '_' el_class '.gen.m'], [fileparts(which('braph2')) filesep() 'src' filesep() 'gui' filesep() 'layouts' filesep()])
-eval(['test_' el_class])
+% el_class = 'BrainAtlas';
+% el_path = '/src/atlas/';
+% delete([fileparts(which('braph2')) el_path el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) el_path '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+% create_Element([fileparts(which('braph2genesis')) el_path '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+% create_test_Element([fileparts(which('braph2genesis')) el_path '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+% create_layout([fileparts(which('braph2genesis')) el_path '_' el_class '.gen.m'], [fileparts(which('braph2')) filesep() 'src' filesep() 'gui' filesep() 'layouts' filesep()])
+% eval(['test_' el_class])
+% 
+% br1 = BrainRegion('ID', 'id1', 'LABEL', 'label1', 'NOTES', 'notes1', 'X', 1, 'Y', 1, 'Z', 1);
+% br2 = BrainRegion('ID', 'id2', 'LABEL', 'label2', 'NOTES', 'notes2', 'X', 2, 'Y', 2, 'Z', 2);
+% br3 = BrainRegion('ID', 'id3', 'LABEL', 'label3', 'NOTES', 'notes3', 'X', 3, 'Y', 3, 'Z', 3);
+% br4 = BrainRegion('ID', 'id4', 'LABEL', 'label4', 'NOTES', 'notes4', 'X', 4, 'Y', 4, 'Z', 4);
+% br5 = BrainRegion('ID', 'id5', 'LABEL', 'label5', 'NOTES', 'notes5', 'X', 5, 'Y', 5, 'Z', 5);
+% items = {br1, br2, br3, br4, br5};
+% idict_1 = IndexedDictionary( ...
+%     'ID', 'idict', ...
+%     'IT_CLASS', 'BrainRegion', ...
+%     'IT_KEY', IndexedDictionary.getPropDefault(IndexedDictionary.IT_KEY), ...
+%     'IT_LIST', items ...
+%     );
+% ba = BrainAtlas('ID', 'BA1', 'LABEL', 'brain atlas', 'NOTES', 'Notes on brain atlas.', 'BR_DICT', idict_1);
+% 
+% gui = GUIElement( ...
+%     'PE', ba, ...
+%     'WAITBAR', true, ...
+%     'CLOSEREQ', false ...
+%     );
+% gui.get('DRAW')
+% gui.get('SHOW')
 
-br1 = BrainRegion('ID', 'id1', 'LABEL', 'label1', 'NOTES', 'notes1', 'X', 1, 'Y', 1, 'Z', 1);
-br2 = BrainRegion('ID', 'id2', 'LABEL', 'label2', 'NOTES', 'notes2', 'X', 2, 'Y', 2, 'Z', 2);
-br3 = BrainRegion('ID', 'id3', 'LABEL', 'label3', 'NOTES', 'notes3', 'X', 3, 'Y', 3, 'Z', 3);
-br4 = BrainRegion('ID', 'id4', 'LABEL', 'label4', 'NOTES', 'notes4', 'X', 4, 'Y', 4, 'Z', 4);
-br5 = BrainRegion('ID', 'id5', 'LABEL', 'label5', 'NOTES', 'notes5', 'X', 5, 'Y', 5, 'Z', 5);
-items = {br1, br2, br3, br4, br5};
-idict_1 = IndexedDictionary( ...
-    'ID', 'idict', ...
-    'IT_CLASS', 'BrainRegion', ...
-    'IT_KEY', IndexedDictionary.getPropDefault(IndexedDictionary.IT_KEY), ...
-    'IT_LIST', items ...
-    );
-ba = BrainAtlas('ID', 'BA1', 'LABEL', 'brain atlas', 'NOTES', 'Notes on brain atlas.', 'BR_DICT', idict_1);
+%% Subjects
+el_class_list = {'ExporterGroupSubjectCON_XLS'} % 'ImporterGroupSubjectCON_XLS'
+for i = 1:1:length(el_class_list)
+    el_class = el_class_list{i};
+    el_path = '/pipelines/connectivity';
+    delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    eval(['test_' el_class])
+end
 
-gui = GUIElement( ...
-    'PE', ba, ...
-    'WAITBAR', true, ...
-    'CLOSEREQ', false ...
+im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectCON')) filesep 'example data CON' filesep 'desikan_atlas.xlsx']);
+ba = im_ba.get('BA');
+im_gr = ImporterGroupSubjectCON_XLS( ...
+    'DIRECTORY', [fileparts(which('SubjectCON')) filesep 'example data CON' filesep 'xls' filesep 'GroupCON1'], ...
+    'BA', ba ...
     );
+gr = im_gr.get('GR');
+
+gui = GUIElement('PE', gr, 'CLOSEREQ', false);
 gui.get('DRAW')
 gui.get('SHOW')
+
+gui.get('CLOSE')
