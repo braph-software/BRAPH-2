@@ -181,19 +181,23 @@ pr = PanelPropMatrix('EL', sub, 'PROP', SubjectCON.CON, ...
 % % % %%%% ¡_settings!
 % % % {'Female', 'Male', 'unassigned'}
 
-%% ¡_tests!
+%% ¡tests!
 
-% % % %%% ¡test!
-% % % %%%% ¡name!
-% % % GUI
-% % % %%%% ¡code!
-% % % im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectCON')) filesep 'example data CON (DTI)' filesep 'desikan_atlas.xlsx']);
-% % % ba = im_ba.get('BA');
-% % % im_gr = ImporterGroupSubjectCON_XLS( ...
-% % %     'DIRECTORY', [fileparts(which('SubjectCON')) filesep 'example data CON' filesep 'xls' filesep 'GroupCON1'], ...
-% % %     'BA', ba ...
-% % %     );
-% % % gr = im_gr.get('GR');
-% % % f = GUIElement('PE', gr, 'CLOSEREQ', false).draw();
-% % % 
-% % % close(f)
+%%% ¡test!
+%%%% ¡name!
+GUI
+%%%% ¡code!
+im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectCON')) filesep 'example data CON' filesep 'desikan_atlas.xlsx']);
+ba = im_ba.get('BA');
+im_gr = ImporterGroupSubjectCON_XLS( ...
+    'DIRECTORY', [fileparts(which('SubjectCON')) filesep 'example data CON' filesep 'xls' filesep 'GroupCON1'], ...
+    'BA', ba, ...
+    'WAITBAR', true ...
+    );
+gr = im_gr.get('GR');
+
+gui = GUIElement('PE', gr, 'CLOSEREQ', false);
+gui.get('DRAW')
+gui.get('SHOW')
+
+gui.get('CLOSE')
