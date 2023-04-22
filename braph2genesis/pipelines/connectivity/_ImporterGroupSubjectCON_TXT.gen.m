@@ -47,6 +47,8 @@ NOTES (metadata, string) are some specific notes about the CON subject group imp
 
 %%% ¡prop!
 DIRECTORY (data, string) is the directory containing the CON subject group files from which to load the subject group.
+%%%% ¡default!
+[fileparts(which('SubjectCON')) filesep 'example data CON' filesep 'xls' filesep 'GroupCON1']
 
 %%% ¡prop!
 GET_DIR (query, item) opens a dialog box to set the directory from where to load the TXT files of the CON subject group.
@@ -82,6 +84,10 @@ gr = Group( ...
 gr.lock('SUB_CLASS');
 
 directory = im.get('DIRECTORY');
+if ~isfolder(directory)
+    directory = ImporterGroupSubjectCON_XLS.getPropDefault('DIRECTORY');
+end
+
 if isfolder(directory)  
     wb = braph2waitbar(im.get('WAITBAR'), 0, 'Reading directory ...');
     
