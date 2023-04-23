@@ -48,12 +48,12 @@ NOTES (metadata, string) are some specific notes about the CON subject group imp
 %%% ¡prop!
 DIRECTORY (data, string) is the directory containing the CON subject group files from which to load the subject group.
 %%%% ¡default!
-[fileparts(which('SubjectCON')) filesep 'example data CON' filesep 'xls' filesep 'Group_CON_1']
+[fileparts(which('SubjectCON')) filesep 'example data CON' filesep 'xls' filesep 'FUN_Group_1']
 
 %%% ¡prop!
 GET_DIR (query, item) opens a dialog box to set the directory from where to load the XLS/XLSX files of the CON subject group.
 %%%% ¡settings!
-'ImporterBrainAtlasXLS'
+'ImporterGroupSubjectCON_XLS'
 %%%% ¡calculate!
 directory = uigetdir('Select directory');
 if ischar(directory) && isfolder(directory)
