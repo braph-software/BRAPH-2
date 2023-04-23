@@ -48,7 +48,7 @@ NOTES (metadata, string) are some specific notes about the FUN subject group imp
 %%% ¡prop!
 DIRECTORY (data, string) is the directory containing the FUN subject group files from which to load the subject group.
 %%%% ¡default!
-[fileparts(which('SubjectFUN')) filesep 'example data FUN' filesep 'xls' filesep 'FUN_Group_1']
+fileparts(which('test_braph2'))
 
 %%% ¡prop!
 GET_DIR (query, item) opens a dialog box to set the directory from where to load the XLS/XLSX files of the FUN subject group.
@@ -84,10 +84,6 @@ gr = Group( ...
 gr.lock('SUB_CLASS');
 
 directory = im.get('DIRECTORY');
-if ~isfolder(directory)
-    directory = ImporterGroupSubjectFUN_XLS.getPropDefault('DIRECTORY');
-end
-
 if isfolder(directory)    
     wb = braph2waitbar(im.get('WAITBAR'), 0, 'Reading directory ...');
 

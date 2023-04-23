@@ -106,7 +106,7 @@ if isfolder(fileparts(file))
         end
 
         for i = 1:1:sub_number
-            sub = sub_dict.getItem(i);
+            sub = sub_dict.get('IT', i);
 
             tab{1 + i, 1} = sub.get('ID');
             tab{1 + i, 2} = sub.get('LABEL');

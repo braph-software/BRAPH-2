@@ -87,7 +87,7 @@ if isfolder(directory)
     braph2waitbar(wb, .15, 'Organizing info ...')
 
     sub_dict = gr.get('SUB_DICT');
-    sub_number = sub_dict.length();
+    sub_number = sub_dict.get('LENGTH');
     sub_id = cell(sub_number, 1);
 % % %     age = cell(sub_number, 1);
 % % %     sex = cell(sub_number, 1);
@@ -95,7 +95,7 @@ if isfolder(directory)
     for i = 1:1:sub_number
         braph2waitbar(wb, .25 + .75 * i / sub_number, ['Saving subject ' num2str(i) ' of ' num2str(sub_number) '...'])
         
-        sub = sub_dict.getItem(i);
+        sub = sub_dict.get('IT', i);
         sub_id(i) = {sub.get('ID')};
         sub_FUN = sub.get('FUN');
 % %         age{i} =  sub.get('AGE');

@@ -89,9 +89,9 @@ if isfolder(fileparts(file))
     if sub_number == 0
         tab = {'ID', 'Label', 'Notes'};
     else
-        sub = sub_dict.getItem(1);
+        sub = sub_dict.get('IT', 1);
         ba = sub.get('BA');
-        br_list = cellfun(@(i) ba.get('BR_DICT').getItem(i), ...
+        br_list = cellfun(@(i) ba.get('BR_DICT').get('IT', i), ...
             num2cell([1:1:ba.get('BR_DICT').get('LENGTH')]), 'UniformOutput', false);
         br_labels = cellfun(@(br) br.get('ID'), br_list, 'UniformOutput', false);
         
@@ -106,7 +106,7 @@ if isfolder(fileparts(file))
         end
 
         for i = 1:1:sub_number
-            sub = sub_dict.getItem(i);
+            sub = sub_dict.get('IT', i);
 
             tab{1 + i, 1} = sub.get('ID');
             tab{1 + i, 2} = sub.get('LABEL');
