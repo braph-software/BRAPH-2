@@ -12,7 +12,37 @@ Subject ID (column 1), Subject AGE (column 2), and, Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 
 %%% ¡seealso!
-Element, Exporter, ImporterGroupSubjectST_TXT
+Group, SubjectST, ImporterGroupSubjectST_TXT
+
+%% ¡props_update!
+
+%%% ¡prop!
+NAME (constant, string) is the name of the ST subject group exporter in TXT.
+%%%% ¡default!
+'ExporterGroupSubjectST_TXT'
+
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the ST subject group exporter in TXT.
+%%%% ¡default!
+'ExporterGroupSubjectST_TXT exports a group of subjects with structural data to an TXT file and their covariates (if existing) to another TXT file.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the ST subject group exporter in TXT.
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the ST subject group exporter in TXT.
+%%%% ¡default!
+'ExporterGroupSubjectST_TXT ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the ST subject group exporter in TXT.
+%%%% ¡default!
+'ExporterGroupSubjectST_TXT label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the ST subject group exporter in TXT.
+%%%% ¡default!
+'ExporterGroupSubjectST_TXT notes'
 
 %% ¡props!
 
@@ -26,9 +56,21 @@ check = any(strcmp(value.get(Group.SUB_CLASS_TAG), subclasses('SubjectST', [], [
 Group('SUB_CLASS', 'SubjectST', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST'))
 
 %%% ¡prop!
-FILE (data, string) is the file name where to save the group of subjects with structural data.
+FILE (data, string) is the TXT file name where to save the group of subjects with structural data.
 %%%% ¡default!
 [fileparts(which('test_braph2')) filesep 'default_txt_file_to_save_group_ST_most_likely_to_be_erased.txt']
+
+%%% ¡prop!
+PUT_FILE (query, item) opens a dialog box to set the TXT file where to save the group of subjects with structural data.
+%%%% ¡settings!
+'ExporterGroupSubjectST_TXT'
+%%%% ¡calculate!
+[filename, filepath, filterindex] = uiputfile('*.txt', 'Select TXT file');
+if filterindex
+    file = [filepath filename];
+    ex.set('FILE', file);
+end
+value = ex;
 
 %%% ¡prop!
 SAVE (result, empty) saves the group of subjects with structural data in the selected TXT file.
@@ -40,21 +82,21 @@ if isfolder(fileparts(file))
         
     gr = ex.get('GR');
     sub_dict = gr.get('SUB_DICT');
-    sub_number = sub_dict.length();
+    sub_number = sub_dict.get('LENGTH');
     
 	braph2waitbar(wb, .15, 'Organizing info ...')
         
     if sub_number == 0
         tab = {'ID', 'Label', 'Notes'};
     else
-        sub = sub_dict.getItem(1);
+        sub = sub_dict.get('IT', 1);
         ba = sub.get('BA');
-        br_list = cellfun(@(i) ba.get('BR_DICT').getItem(i), ...
-            num2cell([1:1:ba.get('BR_DICT').length()]), 'UniformOutput', false);
+        br_list = cellfun(@(i) ba.get('BR_DICT').get('IT', i), ...
+            num2cell([1:1:ba.get('BR_DICT').get('LENGTH')]), 'UniformOutput', false);
         br_labels = cellfun(@(br) br.get('ID'), br_list, 'UniformOutput', false);
 
-        age = cell(sub_number, 1);
-        sex = cell(sub_number, 1);
+% % %         age = cell(sub_number, 1);
+% % %         sex = cell(sub_number, 1);
         tab = cell(1 + sub_number, 3 + numel(br_labels));
         tab{1, 1} = 'ID';
         tab{1, 2} = 'Label';
@@ -69,8 +111,8 @@ if isfolder(fileparts(file))
             tab{1 + i, 1} = sub.get('ID');
             tab{1 + i, 2} = sub.get('LABEL');
             tab{1 + i, 3} = sub.get('NOTES');
-            age{i} =  sub.get('AGE');
-            sex{i} =  sub.get('SEX');
+% %             age{i} =  sub.get('AGE');
+% %             sex{i} =  sub.get('SEX');
             
             sub_ST = sub.get('ST');
             for j = 1:1:length(sub_ST)
@@ -84,43 +126,33 @@ if isfolder(fileparts(file))
         
     writetable(table(tab), file, 'Delimiter', '\t', 'WriteVariableNames', 0);
     
-    % if covariates save them in another file
-    if sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
-        tab2 = cell(1 + sub_number, 3);
-        tab2{1, 1} = 'ID';
-        tab2{1, 2} = 'Age';
-        tab2{1, 3} = 'Sex';
-        tab2(2:end, 1) = tab(2:end, 1);
-        tab2(2:end, 2) = age;
-        tab2(2:end, 3) = sex;
-        tab2 = table(tab2);
+% % %     % if covariates save them in another file
+% % %     if sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
+% % %         tab2 = cell(1 + sub_number, 3);
+% % %         tab2{1, 1} = 'ID';
+% % %         tab2{1, 2} = 'Age';
+% % %         tab2{1, 3} = 'Sex';
+% % %         tab2(2:end, 1) = tab(2:end, 1);
+% % %         tab2(2:end, 2) = age;
+% % %         tab2(2:end, 3) = sex;
+% % %         tab2 = table(tab2);
+% % %         
+% % %         % save
+% % %         [filepath, filename, ~] = fileparts(file);
+% % %         writetable(tab2, [filepath filesep() filename '_covariates.txt'], 'Delimiter', '	', 'WriteVariableNames', 0);
+% % %         warning('off', 'MATLAB:xlswrite:AddSheet');
+% % %     end
         
-        % save
-        [filepath, filename, ~] = fileparts(file);
-        writetable(tab2, [filepath filesep() filename '_covariates.txt'], 'Delimiter', '	', 'WriteVariableNames', 0);
-        warning('off', 'MATLAB:xlswrite:AddSheet');
-    end
-    
-    % sets value to empty
-    value = [];
-    
     braph2waitbar(wb, 'close')
-else
-    value = ex.getr('SAVE');
 end
 
-%% ¡methods!
-function uiputfile(ex)
-    % UIPUTFILE opens a dialog box to set the TXT file where to save the group of subjects with structural data.
-
-    [filename, filepath, filterindex] = uiputfile('*.txt', 'Select TXT file');
-    if filterindex
-        file = [filepath filename];
-        ex.set('FILE', file);
-    end
-end
+% sets value to empty
+value = [];
 
 %% ¡tests!
+
+%%% ¡excluded_props!
+[ExporterGroupSubjectST_TXT.PUT_FILE]
 
 %%% ¡test!
 %%%% ¡name!
@@ -135,6 +167,8 @@ warning('on', 'MATLAB:DELETE:FileNotFound')
 %%% ¡test!
 %%%% ¡name!
 Export and import
+%%%% ¡probability!
+.01
 %%%% ¡code!
 br1 = BrainRegion( ...
     'ID', 'ISF', ...
@@ -188,28 +222,22 @@ sub1 = SubjectST( ...
     'ID', 'SUB ST 1', ...
     'LABEL', 'Subejct ST 1', ...
     'NOTES', 'Notes on subject ST 1', ...
-    'BA', ba, ...
-    'age', 30, ...
-    'sex', 'female', ...
-    'ST', rand(ba.get('BR_DICT').length(), 1) ...
+    'BA', ba, ... % % %     'age', 30, ... % % %     'sex', 'female', ...
+    'ST', rand(ba.get('BR_DICT').get('LENGTH'), 1) ...
     );
 sub2 = SubjectST( ...
     'ID', 'SUB ST 2', ...
     'LABEL', 'Subejct ST 2', ...
     'NOTES', 'Notes on subject ST 2', ...
-    'BA', ba, ...
-    'age', 50, ...
-    'sex', 'male', ...
-    'ST', rand(ba.get('BR_DICT').length(), 1) ...
+    'BA', ba, ... % % %     'age', 50, ... % % %     'sex', 'male', ...
+    'ST', rand(ba.get('BR_DICT').get('LENGTH'), 1) ...
     );
 sub3 = SubjectST( ...
     'ID', 'SUB ST 3', ...
     'LABEL', 'Subejct ST 3', ...
     'NOTES', 'Notes on subject ST 3', ...
-    'BA', ba, ...
-    'age', 60, ...
-    'sex', 'female', ...
-    'ST', rand(ba.get('BR_DICT').length(), 1) ...
+    'BA', ba, ... % % %     'age', 60, ... % % %     'sex', 'female', ...
+    'ST', rand(ba.get('BR_DICT').get('LENGTH'), 1) ...
     );
 
 gr = Group( ...
@@ -235,21 +263,19 @@ im1 = ImporterGroupSubjectST_TXT( ...
     );
 gr_loaded1 = im1.get('GR');
 
-assert(gr.get('SUB_DICT').length() == gr_loaded1.get('SUB_DICT').length(), ...
-	[BRAPH2.STR ':ExporterGroupSubjectST_TXT:' BRAPH2.BUG_IO], ...
+assert(gr.get('SUB_DICT').get('LENGTH') == gr_loaded1.get('SUB_DICT').get('LENGTH'), ...
+	[BRAPH2.STR ':ExporterGroupSubjectST_TXT:' BRAPH2.FAIL_TEST], ...
     'Problems saving or loading a group.')
-for i = 1:1:max(gr.get('SUB_DICT').length(), gr_loaded1.get('SUB_DICT').length())
-    sub = gr.get('SUB_DICT').getItem(i);
-    sub_loaded = gr_loaded1.get('SUB_DICT').getItem(i);    
+for i = 1:1:max(gr.get('SUB_DICT').get('LENGTH'), gr_loaded1.get('SUB_DICT').get('LENGTH'))
+    sub = gr.get('SUB_DICT').get('IT', i);
+    sub_loaded = gr_loaded1.get('SUB_DICT').get('IT', i);    
     assert( ...
         isequal(sub.get('ID'), sub_loaded.get('ID')) & ...
         isequal(sub.get('LABEL'), sub_loaded.get('LABEL')) & ...
         isequal(sub.get('NOTES'), sub_loaded.get('NOTES')) & ...
-        isequal(sub.get('BA'), sub_loaded.get('BA')) & ...
-        isequal(sub.get('AGE'), sub_loaded.get('AGE')) & ...
-        isequal(sub.get('SEX'), sub_loaded.get('SEX')) & ...
+        isequal(sub.get('BA'), sub_loaded.get('BA')) & ... % % %         isequal(sub.get('AGE'), sub_loaded.get('AGE')) & ... % % %         isequal(sub.get('SEX'), sub_loaded.get('SEX')) & ...
         isequal(round(sub.get('ST'), 10), round(sub_loaded.get('ST'), 10)), ...
-        [BRAPH2.STR ':ExporterGroupSubjectST_TXT:' BRAPH2.BUG_IO], ...
+        [BRAPH2.STR ':ExporterGroupSubjectST_TXT:' BRAPH2.FAIL_TEST], ...
         'Problems saving or loading a group.')    
 end
 
@@ -259,21 +285,19 @@ im2 = ImporterGroupSubjectST_TXT( ...
     );
 gr_loaded2 = im2.get('GR');
 
-assert(gr.get('SUB_DICT').length() == gr_loaded2.get('SUB_DICT').length(), ...
-	[BRAPH2.STR ':ExporterGroupSubjectST_TXT:' BRAPH2.BUG_IO], ...
+assert(gr.get('SUB_DICT').get('LENGTH') == gr_loaded2.get('SUB_DICT').get('LENGTH'), ...
+	[BRAPH2.STR ':ExporterGroupSubjectST_TXT:' BRAPH2.FAIL_TEST], ...
     'Problems saving or loading a group.')
-for i = 1:1:max(gr.get('SUB_DICT').length(), gr_loaded2.get('SUB_DICT').length())
-    sub = gr.get('SUB_DICT').getItem(i);
-    sub_loaded = gr_loaded2.get('SUB_DICT').getItem(i);    
+for i = 1:1:max(gr.get('SUB_DICT').get('LENGTH'), gr_loaded2.get('SUB_DICT').get('LENGTH'))
+    sub = gr.get('SUB_DICT').get('IT', i);
+    sub_loaded = gr_loaded2.get('SUB_DICT').get('IT', i);    
     assert( ...
         isequal(sub.get('ID'), sub_loaded.get('ID')) & ...
         isequal(sub.get('LABEL'), sub_loaded.get('LABEL')) & ...
         isequal(sub.get('NOTES'), sub_loaded.get('NOTES')) & ...
-        ~isequal(sub.get('BA').get('ID'), sub_loaded.get('BA').get('ID')) & ...
-        isequal(sub.get('AGE'), sub_loaded.get('AGE')) & ...
-        isequal(sub.get('SEX'), sub_loaded.get('SEX')) & ...
+        ~isequal(sub.get('BA').get('ID'), sub_loaded.get('BA').get('ID')) & ... % % %         isequal(sub.get('AGE'), sub_loaded.get('AGE')) & ... % % %         isequal(sub.get('SEX'), sub_loaded.get('SEX')) & ...
         isequal(round(sub.get('ST'), 10), round(sub_loaded.get('ST'), 10)), ...
-        [BRAPH2.STR ':ExporterGroupSubjectST_TXT:' BRAPH2.BUG_IO], ...
+        [BRAPH2.STR ':ExporterGroupSubjectST_TXT:' BRAPH2.FAIL_TEST], ...
         'Problems saving or loading a group.')    
 end
 

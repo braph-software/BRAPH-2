@@ -10,7 +10,7 @@ BrainAtlas, ImporterBrainAtlasTXT
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the brain surface.
+NAME (constant, string) is the name of the brain atlas exporter in TXT.
 %%%% ¡default!
 'ExporterBrainAtlasTXT'
 
@@ -50,7 +50,7 @@ FILE (data, string) is the TXT file where to save the brain atlas.
 [fileparts(which('test_braph2')) filesep 'default_txt_file_to_save_brain_atlas_most_likely_to_be_erased.txt']
 
 %%% ¡prop!
-PUT_FILE (query, logical) opens a dialog box to set the TXT file where to save the brain atlas.
+PUT_FILE (query, item) opens a dialog box to set the TXT file where to save the brain atlas.
 %%%% ¡settings!
 'ExporterBrainAtlasTXT'
 %%%% ¡calculate!
