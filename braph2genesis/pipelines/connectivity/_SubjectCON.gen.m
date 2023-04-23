@@ -150,8 +150,6 @@ NOTES (metadata, string) are some specific notes about the subject.
 BA (data, item) is a brain atlas.
 %%%% ¡settings!
 'BrainAtlas'
-%%%% ¡_default! %TBE?
-% % % BrainAtlas()
 
 %%% ¡prop!
 CON (data, smatrix) is an adjacency matrix.
@@ -165,8 +163,8 @@ else
 end
 %%%% ¡gui!
 pr = PanelPropMatrix('EL', sub, 'PROP', SubjectCON.CON, ...
-    'ROWNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ... % % % 'pr.get(''EL'').get(''BA'').get(''BR_DICT'').getKeys()', ... %TBE
-    'COLUMNNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ... % % % 'pr.get(''EL'').get(''BA'').get(''BR_DICT'').getKeys()', ... %TBE
+    'ROWNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
+    'COLUMNNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
     varargin{:});
 
 %%% ¡_prop!
