@@ -129,7 +129,7 @@ if isfile(file)
             for j = 4:1:size(raw2, 2)
                 br_id = raw{j, 1};
                 br = BrainRegion('ID', br_id);
-                br_dict.add(br)
+                br_dict.get('ADD', br)
             end
             ba.set('BR_DICT', br_dict);
         end
