@@ -59,6 +59,7 @@ directory = uigetdir('Select directory');
 if ischar(directory) && isfolder(directory)
 	im.set('DIRECTORY', directory);
 end
+value = im;
 
 %%% ¡prop!
 BA (data, item) is a brain atlas.
