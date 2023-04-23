@@ -88,20 +88,20 @@ end
 tables_gr1 = cell(size(gr1_matrices));
 tables_gr2 = cell(size(gr1_matrices));
 
-mkdir('GroupCON1');
-mkdir('GroupCON2');
+mkdir('CON_Group_1');
+mkdir('CON_Group_2');
 
 for i_tab = 1:1:N_groups
 
     % create the table - group 1
     T_gr1 = array2table(gr1_matrices{i_tab});
     tables_gr1{i_tab} = T_gr1;
-    file_name = strcat("GroupCON1/", sub_Tags(i_tab), ".xlsx");
+    file_name = strcat("CON_Group_1/", sub_Tags(i_tab), ".xlsx");
     writetable(T_gr1, file_name, 'WriteRowNames', false, 'WriteVariableNames', false)
 
     % create the table - group 2
     T_gr2 = array2table(gr2_matrices{i_tab});
     tables_gr2{i_tab} = T_gr2;
-    file_name = strcat("GroupCON2/", sub_Tags(i_tab), ".xlsx");
+    file_name = strcat("CON_Group_2/", sub_Tags(i_tab), ".xlsx");
     writetable(T_gr2, file_name, 'WriteRowNames', false, 'WriteVariableNames', false)
 end
