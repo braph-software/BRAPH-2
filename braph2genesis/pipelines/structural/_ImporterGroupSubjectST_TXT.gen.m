@@ -14,7 +14,37 @@ The first row contains the headers and each subsequent row the values for each s
 It throws an error if problems occur during the import.
 
 %%% ¡seealso!
-Element, Importer, ExporterGroupSubjectST_TXT
+Group, SubjectFUN, ExporterGroupSubjectST_TXT
+
+%% ¡props_update!
+
+%%% ¡prop!
+NAME (constant, string) is the name of the ST subject group importer from TXT.
+%%%% ¡default!
+'ImporterGroupSubjectST_TXT'
+
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the ST subject group importer from TXT.
+%%%% ¡default!
+'ImporterGroupSubjectST_TXT imports a group of subjects with structural data from an TXT file and their covariates from another TXT file.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the ST subject group importer from TXT.
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the ST subject group importer from TXT.
+%%%% ¡default!
+'ImporterGroupSubjectST_TXT ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the ST subject group importer from TXT.
+%%%% ¡default!
+'ImporterGroupSubjectST_TXT label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the ST subject group importer from TXT.
+%%%% ¡default!
+'ImporterGroupSubjectST_TXT notes'
 
 %% ¡props!
 
@@ -22,6 +52,18 @@ Element, Importer, ExporterGroupSubjectST_TXT
 FILE (data, string) is the TXT file from where to load the ST subject group.
 %%%% ¡default!
 ''
+
+%%% ¡prop!
+GET_FILE (query, item) opens a dialog box to set the TXT file from where to load the ST subject group.
+%%%% ¡settings!
+'ImporterGroupSubjectST_TXT'
+%%%% ¡calculate!
+[filename, filepath, filterindex] = uigetfile('*.txt', 'Select TXT file');
+if filterindex
+    file = [filepath filename];
+	im.set('FILE', file);
+end
+value = im;
 
 %%% ¡prop!
 BA (data, item) is a brain atlas.
@@ -46,10 +88,6 @@ gr = Group( ...
 gr.lock('SUB_CLASS');
 % analyzes file
 file = im.get('FILE');
-if ~isfile(file) && ~braph2_testing()
-    im.uigetfile()
-    file = im.memorize('FILE');
-end
 if isfile(file)
     wb = braph2waitbar(im.get('WAITBAR'), 0, 'Reading File ...');
     
@@ -57,17 +95,17 @@ if isfile(file)
     raw = raw(~cellfun('isempty', raw));  % remove empty cells
     raw2 = readtable(file, 'Delimiter', '\t');
     
-    % Check if there are covariates to add (age and sex)
-    [filepath, filename, ~] = fileparts(file);
-    if isfile([filepath filesep() filename '_covariates.txt'])
-        raw_covariates = readtable([filepath filesep() filename '_covariates.txt'], 'Delimiter', '\t');
-        age = raw_covariates{:, 2};
-        sex = raw_covariates{:, 3};
-    else
-        age = ones(size(raw2, 1),1);
-        unassigned =  {'unassigned'};
-        sex = unassigned(ones(size(raw2, 1), 1));
-    end
+% % %     % Check if there are covariates to add (age and sex)
+% % %     [filepath, filename, ~] = fileparts(file);
+% % %     if isfile([filepath filesep() filename '_covariates.txt'])
+% % %         raw_covariates = readtable([filepath filesep() filename '_covariates.txt'], 'Delimiter', '\t');
+% % %         age = raw_covariates{:, 2};
+% % %         sex = raw_covariates{:, 3};
+% % %     else
+% % %         age = ones(size(raw2, 1),1);
+% % %         unassigned =  {'unassigned'};
+% % %         sex = unassigned(ones(size(raw2, 1), 1));
+% % %     end
     
     % sets group props
     braph2waitbar(wb, .15, 'Loading subject group ...')
@@ -81,7 +119,7 @@ if isfile(file)
             );
         
         % brain atlas
-        braph2waitbar(wb, .30, 'Loading brain atlas ...')
+        braph2waitbar(wb, .25, 'Loading brain atlas ...')
         
         ba = im.get('BA');
         br_number = size(raw2, 2) - 3;
@@ -96,11 +134,11 @@ if isfile(file)
             ba.set('br_dict', idict);
         end
         
-        subdict = gr.get('SUB_DICT');
+        sub_dict = gr.get('SUB_DICT');
         
         % adds subjects
         for i = 1:1:size(raw2, 1)
-            braph2waitbar(wb, .30 + .70 * i / size(raw2, 1), ['Loading subject ' num2str(i) ' of ' num2str(size(raw2, 1)) ' ...'])
+            braph2waitbar(wb, .25 + .75 * i / size(raw2, 1), ['Loading subject ' num2str(i) ' of ' num2str(size(raw2, 1)) ' ...'])
             
             ST = zeros(br_number, 1);
             for j = 1:1:length(ST)
@@ -111,13 +149,11 @@ if isfile(file)
                 'LABEL', char(raw2{i, 2}), ...
                 'NOTES', char(raw2{i, 3}), ...
                 'BA', ba, ...
-                'ST', ST, ...
-                'age', age(i), ...
-                'sex', sex{i} ...
+                'ST', ST, ... % % % 'age', age(i), ... % % % 'sex', sex{i} ...
                 );
-            subdict.add(sub);
+            sub_dict.get('ADD', sub);
         end
-        gr.set('sub_dict', subdict);
+        gr.set('sub_dict', sub_dict);
     catch e
         braph2waitbar(wb, 'close')
         
@@ -125,20 +161,16 @@ if isfile(file)
     end
     
     braph2waitbar(wb, 'close')
-elseif ~braph2_testing()
-    error([BRAPH2.STR ':ImporterGroupSubjectST_TXT:' BRAPH2.BUG_IO], ...
-        [BRAPH2.STR ':ImporterGroupSubjectST_TXT:' BRAPH2.BUG_IO]);
+else
+    error([BRAPH2.STR ':ImporterGroupSubjectST_TXT:' BRAPH2.CANCEL_IO], ...
+        [BRAPH2.STR ':ImporterGroupSubjectST_TXT:' BRAPH2.CANCEL_IO '\\n' ...
+        'The prop FILE must be an existing file, but it is ''' file '''.'] ...
+        );
 end
 
 value = gr;
 
-%% ¡methods!
-function uigetfile(im)
-    % UIGETFILE opens a dialog box to set the TXT file from where to load the ST subject group.
-    
-    [filename, filepath, filterindex] = uigetfile('*.txt', 'Select TXT file');
-    if filterindex
-        file = [filepath filename];
-        im.set('FILE', file);
-    end
-end
+%% ¡tests!
+
+%%% ¡excluded_props!
+[ImporterGroupSubjectST_TXT.GET_FILE]
