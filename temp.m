@@ -953,16 +953,16 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 % gui.get('DRAW')
 % gui.get('SHOW')
 
-el_class_list = {'SubjectST'} % {'SubjectST' 'ImporterGroupSubjectST_XLS' 'ImporterGroupSubjectST_TXT' 'ExporterGroupSubjectST_XLS' 'ExporterGroupSubjectST_TXT'}
-for i = 1:1:length(el_class_list)
-    el_class = el_class_list{i};
-    el_path = '/pipelines/structural';
-    delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
-    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    eval(['test_' el_class])
-end
+% el_class_list = {'ExporterGroupSubjectST_TXT'} % {'SubjectST' 'ImporterGroupSubjectST_XLS' 'ImporterGroupSubjectST_TXT' 'ExporterGroupSubjectST_XLS' 'ExporterGroupSubjectST_TXT'}
+% for i = 1:1:length(el_class_list)
+%     el_class = el_class_list{i};
+%     el_path = '/pipelines/structural';
+%     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     eval(['test_' el_class])
+% end
 % 
 % im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectST')) filesep 'example data ST' filesep 'destrieux_atlas.xlsx']);
 % ba = im_ba.get('BA');
