@@ -906,7 +906,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 % gui.get('SHOW')
 
 %% Subjects
-el_class_list = {'ImporterGroupSubjectCON_TXT' 'ExporterGroupSubjectCON_TXT'} % {'ImporterGroupSubjectCON_XLS' 'ExporterGroupSubjectCON_XLS' 'ImporterGroupSubjectCON_TXT' 'ExporterGroupSubjectCON_TXT'}
+el_class_list = {'ImporterGroupSubjectCON_XLS'} % 'SubjectCON' 'ImporterGroupSubjectCON_XLS' 'ExporterGroupSubjectCON_XLS' 'ImporterGroupSubjectCON_TXT' 'ExporterGroupSubjectCON_TXT'
 for i = 1:1:length(el_class_list)
     el_class = el_class_list{i};
     el_path = '/pipelines/connectivity';
@@ -917,16 +917,38 @@ for i = 1:1:length(el_class_list)
     eval(['test_' el_class])
 end
 
-im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectCON')) filesep 'example data CON' filesep 'desikan_atlas.xlsx']);
-ba = im_ba.get('BA');
-im_gr = ImporterGroupSubjectCON_XLS( ...
-    'DIRECTORY', [fileparts(which('SubjectCON')) filesep 'example data CON' filesep 'xls' filesep 'CON_Group_1'], ...
-    'BA', ba ...
-    );
-gr = im_gr.get('GR');
+% im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectCON')) filesep 'example data CON' filesep 'desikan_atlas.xlsx']);
+% ba = im_ba.get('BA');
+% im_gr = ImporterGroupSubjectCON_XLS( ...
+%     'DIRECTORY', [fileparts(which('SubjectCON')) filesep 'example data CON' filesep 'xls' filesep 'CON_Group_1'], ...
+%     'BA', ba ...
+%     );
+% gr = im_gr.get('GR');
+% 
+% gui = GUIElement('PE', gr, 'CLOSEREQ', false);
+% gui.get('DRAW')
+% gui.get('SHOW')
+% 
+% gui.get('CLOSE')
 
-gui = GUIElement('PE', gr, 'CLOSEREQ', false);
-gui.get('DRAW')
-gui.get('SHOW')
+% el_class_list = {'ImporterGroupSubjectFUN_XLS'} % 'SubjectFUN' 'ImporterGroupSubjectFUN_XLS' 'ImporterGroupSubjectFUN_TXT' 'ExporterGroupSubjectFUN_XLS' 'ExporterGroupSubjectFUN_TXT'
+% for i = 1:1:length(el_class_list)
+%     el_class = el_class_list{i};
+%     el_path = '/pipelines/functional';
+%     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     eval(['test_' el_class])
+% end
 
-gui.get('CLOSE')
+% el_class_list = {} % 'SubjectST' 'ImporterGroupSubjectST_XLS' 'ImporterGroupSubjectST_TXT' 'ExporterGroupSubjectST_XLS' 'ExporterGroupSubjectST_TXT'
+% for i = 1:1:length(el_class_list)
+%     el_class = el_class_list{i};
+%     el_path = '/pipelines/functional';
+%     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     eval(['test_' el_class])
+% end

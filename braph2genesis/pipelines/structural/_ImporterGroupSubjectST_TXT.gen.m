@@ -125,13 +125,13 @@ if isfile(file)
         br_number = size(raw2, 2) - 3;
         if ba.get('BR_DICT').length ~= br_number
             ba = BrainAtlas();
-            idict = ba.get('BR_DICT');
+            br_dict = ba.get('BR_DICT');
             for j = 4:1:size(raw2, 2)
                 br_id = raw{j, 1};
                 br = BrainRegion('ID', br_id);
-                idict.add(br)
+                br_dict.add(br)
             end
-            ba.set('br_dict', idict);
+            ba.set('BR_DICT', br_dict);
         end
         
         sub_dict = gr.get('SUB_DICT');
@@ -153,7 +153,7 @@ if isfile(file)
                 );
             sub_dict.get('ADD', sub);
         end
-        gr.set('sub_dict', sub_dict);
+        gr.set('SUB_DICT', sub_dict);
     catch e
         braph2waitbar(wb, 'close')
         

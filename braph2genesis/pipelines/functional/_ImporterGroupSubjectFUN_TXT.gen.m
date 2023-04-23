@@ -137,13 +137,13 @@ if isfolder(directory)
                 br_number = size(FUN, 2);
                 if ba.get('BR_DICT').length ~= br_number
                     ba = BrainAtlas();
-                    idict = ba.get('BR_DICT');
+                    br_dict = ba.get('BR_DICT');
                     for j = 1:1:br_number
                         br_id = ['br' int2str(j)];
                         br = BrainRegion('ID', br_id);
-                        idict.get('ADD', br)
+                        br_dict.get('ADD', br)
                     end
-                    ba.set('br_dict', idict);
+                    ba.set('BR_DICT', br_dict);
                 end
                 sub_dict = gr.get('SUB_DICT');
                 
@@ -156,7 +156,7 @@ if isfolder(directory)
                 sub.set('FUN', FUN);
                 sub_dict.get('ADD', sub);
             end
-            gr.set('sub_dict', sub_dict);
+            gr.set('SUB_DICT', sub_dict);
         end
     catch e
         braph2waitbar(wb, 'close')
