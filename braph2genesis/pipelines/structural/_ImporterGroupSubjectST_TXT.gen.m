@@ -123,7 +123,7 @@ if isfile(file)
         
         ba = im.get('BA');
         br_number = size(raw2, 2) - 3;
-        if ba.get('BR_DICT').length ~= br_number
+        if ba.get('BR_DICT').get('LENGTH') ~= br_number
             ba = BrainAtlas();
             br_dict = ba.get('BR_DICT');
             for j = 4:1:size(raw2, 2)

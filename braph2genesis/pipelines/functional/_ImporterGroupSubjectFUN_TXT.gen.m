@@ -132,7 +132,7 @@ if isfolder(directory)
                 % brain atlas
                 ba = im.get('BA');
                 br_number = size(FUN, 2);
-                if ba.get('BR_DICT').length ~= br_number
+                if ba.get('BR_DICT').get('LENGTH') ~= br_number
                     ba = BrainAtlas();
                     br_dict = ba.get('BR_DICT');
                     for j = 1:1:br_number
