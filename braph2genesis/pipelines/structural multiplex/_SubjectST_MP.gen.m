@@ -157,16 +157,21 @@ L (data, scalar) is the number of layers of subject data.
 %%%% ¡default!
 2
 
-%%% ¡prop!
-LAYERTICKS (figure, rvector) are the layer tick positions.
+%%% ¡_prop!
+% % % LAYERTICKS (figure, rvector) are the layer tick positions.
 
 %%% ¡prop!
-LAYERLABELS (figure, string) are the layer labels (newline-separated string).
+LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
+
+%%% ¡prop!
+ALAYERLABELS (query, stringlist) returns the processed layer labels.
+%%%% ¡calculate!
+value = g.get('LAYERLABELS');
 
 %%% ¡prop!
 ST_MP (data, cell) is a cell containing L vectors, each with data for each brain region.
 %%%% ¡check_value!
-br_number = sub.get('BA').get('BR_DICT').length();
+br_number = sub.get('BA').get('BR_DICT').get('LENGTH');
 num_layers = sub.get('L');
 check = (iscell(value) && isequal(length(value), num_layers)  && isequal( cellfun(@(v) size(v, 1), value), ones(1, num_layers) * br_number)) || (isempty(value) && br_number == 0); 
 if check
@@ -175,34 +180,42 @@ else
     msg = ['ST_MP must be a column vector with the same number of element as the brain regions (' int2str(br_number) ').'];
 end
 %%%% ¡gui!
-if isempty(sub.get('LAYERLABELS'))
-    xlayerlabels = PanelPropCell.getPropDefault('XSLIDERLABELS');
-else
-    xlayerlabels = str2cell(g.get('LAYERLABELS'));
-    xlayerlabels = ['{' sprintf('''%s'' ', xlayerlabels{end:-1:1}) '}'];
-end
-
-ba = sub.get('BA');
-br_ids = ba.get('BR_DICT').getKeys();
-rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
-
 pr = PanelPropCell('EL', sub, 'PROP', SubjectST_MP.ST_MP, ...
-    'TAB_H', 40, ...
-    'XSLIDER', true, ...
-    'XSLIDERLABELS', xlayerlabels, ...
-    'YSLIDER', false, ...
-    'ROWNAME', rowname, ...
-    'COLUMNNAME', '[]', ...
+    'TABLE_HEIGHT', s(40), ...
+    'XSLIDERSHOW', true, ...
+    'XSLIDERLABELS', sub.getCallback('LAYERLABELS'), ...
+    'YSLIDERSHOW', false, ...
+    'ROWNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
+    'COLUMNNAME', {}, ...
     varargin{:});
+% % % if isempty(sub.get('LAYERLABELS'))
+% % %     xlayerlabels = PanelPropCell.getPropDefault('XSLIDERLABELS');
+% % % else
+% % %     xlayerlabels = str2cell(g.get('LAYERLABELS'));
+% % %     xlayerlabels = ['{' sprintf('''%s'' ', xlayerlabels{end:-1:1}) '}'];
+% % % end
+% % % 
+% % % ba = sub.get('BA');
+% % % br_ids = ba.get('BR_DICT').getKeys();
+% % % rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
+% % % 
+% % % pr = PanelPropCell('EL', sub, 'PROP', SubjectST_MP.ST_MP, ...
+% % %     'TAB_H', 40, ...
+% % %     'XSLIDER', true, ...
+% % %     'XSLIDERLABELS', xlayerlabels, ...
+% % %     'YSLIDER', false, ...
+% % %     'ROWNAME', rowname, ...
+% % %     'COLUMNNAME', '[]', ...
+% % %     varargin{:});
  
-%%% ¡prop!
-age (data, scalar) is a scalar number containing the age of the subject.
-%%%% ¡default!
-0
+%%% ¡_prop!
+% % % age (data, scalar) is a scalar number containing the age of the subject.
+% % % %%%% ¡default!
+% % % 0
 
-%%% ¡prop!
-sex (data, option) is an option containing the sex of the subject (female/male).
-%%%% ¡default!
-'unassigned'
-%%%% ¡settings!
-{'Female', 'Male', 'unassigned'}
+%%% ¡_prop!
+% % % sex (data, option) is an option containing the sex of the subject (female/male).
+% % % %%%% ¡default!
+% % % 'unassigned'
+% % % %%%% ¡settings!
+% % % {'Female', 'Male', 'unassigned'}
