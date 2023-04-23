@@ -13,7 +13,37 @@ The first row contains the headers and each subsequent row the values for each s
 It throws an error is problems occur during the import.
 
 %%% ¡seealso!
-Element, Importer, ExporterGroupSubjectST_XLS
+Group, SubjectST, ExporterGroupSubjectST_XLS
+
+%% ¡props_update!
+
+%%% ¡prop!
+NAME (constant, string) is the name of the ST subject group importer from XLS/XLSX.
+%%%% ¡default!
+'ImporterGroupSubjectST_XLS'
+
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the ST subject group importer from XLS/XLSX.
+%%%% ¡default!
+'ImporterGroupSubjectST_XLS imports a group of subjects with structural data and their covariates (optional) from an XLS/XLSX file.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the ST subject group importer from XLS/XLSX.
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the ST subject group importer from XLS/XLSX.
+%%%% ¡default!
+'ImporterGroupSubjectST_XLS ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the ST subject group importer from XLS/XLSX.
+%%%% ¡default!
+'ImporterGroupSubjectST_XLS label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the ST subject group importer from XLS/XLSX.
+%%%% ¡default!
+'ImporterGroupSubjectST_XLS notes'
 
 %% ¡props!
 
@@ -21,6 +51,18 @@ Element, Importer, ExporterGroupSubjectST_XLS
 FILE (data, string) is the XLS/XLSX file from where to load the ST subject group.
 %%%% ¡default!
 ''
+
+%%% ¡prop!
+GET_FILE (query, item) opens a dialog box to set the XLS/XLSX file from where to load the ST subject group.
+%%%% ¡settings!
+'ImporterGroupSubjectST_XLS'
+%%%% ¡calculate!
+[filename, filepath, filterindex] = uigetfile({'*.xlsx';'*.xls'}, 'Select Excel file');
+if filterindex
+    file = [filepath filename];
+    im.set('FILE', file);
+end
+value = im;
 
 %%% ¡prop!
 BA (data, item) is a brain atlas.
@@ -43,29 +85,26 @@ gr = Group( ...
     );
 
 gr.lock('SUB_CLASS');
+
 % analyzes file
-file = im.memorize('FILE');
-if ~isfile(file) && ~braph2_testing()
-    im.uigetfile()
-    file = im.memorize('FILE');
-end
+file = im.get('FILE');
 if isfile(file)
     wb = braph2waitbar(im.get('WAITBAR'), 0, 'Reading Directory ...');
     
     [~, ~, raw] = xlsread(file);
     
-    % Check if there are covariates to add (age and sex)
-    sheets = sheetnames(file);
-    if length(sheets) > 1
-        [~, ~, raw_covariates] = xlsread(file, 2);
-        age = raw_covariates(2:end, 2);
-        sex = raw_covariates(2:end, 3);
-    else
-        age = {[0]};
-        age = age(ones(size(raw, 1)-1,1));
-        unassigned =  {'unassigned'};
-        sex = unassigned(ones(size(raw, 1)-1, 1));
-    end
+% % %     % Check if there are covariates to add (age and sex)
+% % %     sheets = sheetnames(file);
+% % %     if length(sheets) > 1
+% % %         [~, ~, raw_covariates] = xlsread(file, 2);
+% % %         age = raw_covariates(2:end, 2);
+% % %         sex = raw_covariates(2:end, 3);
+% % %     else
+% % %         age = {[0]};
+% % %         age = age(ones(size(raw, 1)-1,1));
+% % %         unassigned =  {'unassigned'};
+% % %         sex = unassigned(ones(size(raw, 1)-1, 1));
+% % %     end
     
     % sets group props
 	braph2waitbar(wb, .15, 'Loading subject group ...')
@@ -79,26 +118,26 @@ if isfile(file)
             );
         
         % brain atlas
-        braph2waitbar(wb, .30, 'Loading brain atlas ...')
+        braph2waitbar(wb, .25, 'Loading brain atlas ...')
             
         ba = im.get('BA');
         br_number = size(raw, 2) - 3;
-        if ba.get('BR_DICT').length ~= br_number
+        if ba.get('BR_DICT').get('LENGTH') ~= br_number
             ba = BrainAtlas();
             idict = ba.get('BR_DICT');
             for j = 4:1:length(raw)
                 br_id = raw{1, j};
                 br = BrainRegion('ID', br_id);
-                idict.add(br)
+                idict.get('ADD', br)
             end
             ba.set('br_dict', idict);
         end
         
-        subdict = gr.get('SUB_DICT');
+        sub_dict = gr.get('SUB_DICT');
         
         % adds subjects
         for i = 2:1:size(raw, 1)
-            braph2waitbar(wb, .30 + .70 * (i - 1) / size(raw, 1), ['Loading subject ' num2str(i - 1) ' of ' num2str(size(raw, 1) - 1) ' ...'])
+            braph2waitbar(wb, .25 + .75 * (i - 1) / size(raw, 1), ['Loading subject ' num2str(i - 1) ' of ' num2str(size(raw, 1) - 1) ' ...'])
             
             ST = zeros(br_number, 1);
             for j = 1:1:length(ST)
@@ -109,13 +148,11 @@ if isfile(file)
                 'LABEL', num2str(raw{i, 2}), ...
                 'NOTES', num2str(raw{i, 3}), ...
                 'BA', ba, ...
-                'ST', ST, ...
-                'age', age{i-1}, ...
-                'sex', sex{i-1} ...
+                'ST', ST, ... % % % 'age', age{i-1}, ... % % % 'sex', sex{i-1} ...
                 );
-            subdict.add(sub);
+            sub_dict.get('ADD', sub);
         end
-        gr.set('sub_dict', subdict);
+        gr.set('sub_dict', sub_dict);
     catch e
         braph2waitbar(wb, 'close')
 
@@ -123,20 +160,16 @@ if isfile(file)
     end
     
     braph2waitbar(wb, 'close')
-elseif ~braph2_testing()
-    error([BRAPH2.STR ':ImporterGroupSubjectST_XLS:' BRAPH2.BUG_IO], ...
-        [BRAPH2.STR ':ImporterGroupSubjectST_XLS:' BRAPH2.BUG_IO]);
+else
+    error([BRAPH2.STR ':ImporterGroupSubjectST_XLS:' BRAPH2.CANCEL_IO], ...
+        [BRAPH2.STR ':ImporterGroupSubjectST_XLS:' BRAPH2.CANCEL_IO] '\\n' ...
+        'The prop FILE must be an existing file, but it is ''' file '''.'] ...
+        );
 end
 
 value = gr;
 
-%% ¡methods!
-function uigetfile(im)
-    % UIGETFILE opens a dialog box to set the XLS/XLSX file from where to load the ST subject group.
-    
-    [filename, filepath, filterindex] = uigetfile({'*.xlsx';'*.xls'}, 'Select Excel file');
-    if filterindex
-        file = [filepath filename];
-        im.set('FILE', file);
-    end
-end
+%% ¡tests!
+
+%%% ¡excluded_props!
+[ImporterGroupSubjectST_XLS.GET_FILE]
