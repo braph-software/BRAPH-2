@@ -89,8 +89,8 @@ if isfolder(directory)
     sub_dict = gr.get('SUB_DICT');
     sub_number = sub_dict.get('LENGTH');
     sub_id = cell(sub_number, 1);
-    age = cell(sub_number, 1);
-    sex = cell(sub_number, 1);
+% % %     age = cell(sub_number, 1);
+% % %     sex = cell(sub_number, 1);
 
     for i = 1:1:sub_number
         braph2waitbar(wb, .25 + .75 * i / sub_number, ['Saving subject ' num2str(i) ' of ' num2str(sub_number) ' ...'])
