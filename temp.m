@@ -976,3 +976,36 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 % gui = GUIElement('PE', gr, 'CLOSEREQ', false);
 % gui.get('DRAW')
 % gui.get('SHOW')
+
+el_class_list = {'SubjectCON_MP'} % {'SubjectCON_MP' 'ImporterGroupSubjectCON_MP_XLS' 'ImporterGroupSubjectCON_MP_TXT' 'ExporterGroupSubjectCON_MP_XLS' 'ExporterGroupSubjectCON_MP_TXT'}
+for i = 1:1:length(el_class_list)
+    el_class = el_class_list{i};
+    el_path = '/pipelines/connectivity multiplex';
+    delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    eval(['test_' el_class])
+end
+
+el_class_list = {'SubjectFUN_MP'} % {'SubjectFUN_MP' 'ImporterGroupSubjectFUN_MP_XLS' 'ImporterGroupSubjectFUN_MP_TXT' 'ExporterGroupSubjectFUN_MP_XLS' 'ExporterGroupSubjectFUN_MP_TXT'}
+for i = 1:1:length(el_class_list)
+    el_class = el_class_list{i};
+    el_path = '/pipelines/functional multiplex';
+    delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    eval(['test_' el_class])
+end
+
+el_class_list = {'SubjectST_MP'} % {'SubjectST_MP' 'ImporterGroupSubjectST_MP_XLS' 'ImporterGroupSubjectST_MP_TXT' 'ExporterGroupSubjectST_MP_XLS' 'ExporterGroupSubjectST_MP_TXT'}
+for i = 1:1:length(el_class_list)
+    el_class = el_class_list{i};
+    el_path = '/pipelines/structural multiplex';
+    delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    eval(['test_' el_class])
+end
