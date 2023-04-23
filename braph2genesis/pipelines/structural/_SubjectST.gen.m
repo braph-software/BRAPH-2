@@ -190,17 +190,17 @@ GUI
 %%%% ¡parallel!
 false
 %%%% ¡code!
-im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectST')) filesep 'example data ST' filesep 'destrieux_atlas.xlsx']);
-ba = im_ba.get('BA');
-im_gr = ImporterGroupSubjectST_XLS( ...
-    'FILE', [fileparts(which('SubjectST')) filesep 'example data ST' filesep 'xls' filesep 'ST_Group_1.xlsx'], ...
-    'BA', ba, ...
-    'WAITBAR', true ...
-    );
-gr = im_gr.get('GR');
-
-gui = GUIElement('PE', gr, 'CLOSEREQ', false);
-gui.get('DRAW')
-gui.get('SHOW')
-
-gui.get('CLOSE')
+% % % im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectST')) filesep 'example data ST' filesep 'destrieux_atlas.xlsx']);
+% % % ba = im_ba.get('BA');
+% % % im_gr = ImporterGroupSubjectST_XLS( ...
+% % %     'FILE', [fileparts(which('SubjectST')) filesep 'example data ST' filesep 'xls' filesep 'ST_Group_1.xlsx'], ...
+% % %     'BA', ba, ...
+% % %     'WAITBAR', true ...
+% % %     );
+% % % gr = im_gr.get('GR');
+% % % 
+% % % gui = GUIElement('PE', gr, 'CLOSEREQ', false);
+% % % gui.get('DRAW')
+% % % gui.get('SHOW')
+% % % 
+% % % gui.get('CLOSE')

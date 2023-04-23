@@ -165,7 +165,7 @@ LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
 %%% ¡prop!
 ALAYERLABELS (query, stringlist) returns the processed layer labels.
 %%%% ¡calculate!
-value = g.get('LAYERLABELS');
+value = sub.get('LAYERLABELS');
 
 %%% ¡prop!
 CON_MP (data, cell) is a cell containing L matrices corresponding connectivity matrices of each layer.
@@ -218,3 +218,28 @@ pr = PanelPropCell('EL', sub, 'PROP', SubjectCON_MP.CON_MP, ...
 % % % 'unassigned'
 % % % %%%% ¡settings!
 % % % {'Female', 'Male', 'unassigned'}
+
+%% ¡tests!
+
+%%% ¡test!
+%%%% ¡name!
+GUI
+%%%% ¡probability!
+.01
+%%%% ¡parallel!
+false
+%%%% ¡code!
+% % % im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectCON')) filesep 'example data CON' filesep 'desikan_atlas.xlsx']);
+% % % ba = im_ba.get('BA');
+% % % im_gr = ImporterGroupSubjectCON_XLS( ...
+% % %     'DIRECTORY', [fileparts(which('SubjectCON')) filesep 'example data CON' filesep 'xls' filesep 'CON_Group_1'], ...
+% % %     'BA', ba, ...
+% % %     'WAITBAR', true ...
+% % %     );
+% % % gr = im_gr.get('GR');
+% % % 
+% % % gui = GUIElement('PE', gr, 'CLOSEREQ', false);
+% % % gui.get('DRAW')
+% % % gui.get('SHOW')
+% % % 
+% % % gui.get('CLOSE')

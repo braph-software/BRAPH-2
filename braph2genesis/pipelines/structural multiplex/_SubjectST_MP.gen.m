@@ -166,7 +166,7 @@ LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
 %%% ¡prop!
 ALAYERLABELS (query, stringlist) returns the processed layer labels.
 %%%% ¡calculate!
-value = g.get('LAYERLABELS');
+value = sub.get('LAYERLABELS');
 
 %%% ¡prop!
 ST_MP (data, cell) is a cell containing L vectors, each with data for each brain region.
@@ -219,3 +219,26 @@ pr = PanelPropCell('EL', sub, 'PROP', SubjectST_MP.ST_MP, ...
 % % % 'unassigned'
 % % % %%%% ¡settings!
 % % % {'Female', 'Male', 'unassigned'}
+
+%%% ¡test!
+%%%% ¡name!
+GUI
+%%%% ¡probability!
+.01
+%%%% ¡parallel!
+false
+%%%% ¡code!
+% % % im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectST')) filesep 'example data ST' filesep 'destrieux_atlas.xlsx']);
+% % % ba = im_ba.get('BA');
+% % % im_gr = ImporterGroupSubjectST_XLS( ...
+% % %     'FILE', [fileparts(which('SubjectST')) filesep 'example data ST' filesep 'xls' filesep 'ST_Group_1.xlsx'], ...
+% % %     'BA', ba, ...
+% % %     'WAITBAR', true ...
+% % %     );
+% % % gr = im_gr.get('GR');
+% % % 
+% % % gui = GUIElement('PE', gr, 'CLOSEREQ', false);
+% % % gui.get('DRAW')
+% % % gui.get('SHOW')
+% % % 
+% % % gui.get('CLOSE')
