@@ -190,7 +190,7 @@ GUI
 %%%% ¡parallel!
 false
 %%%% ¡code!
-im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectST')) filesep 'example data ST' filesep 'desikan_atlas.xlsx']);
+im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectST')) filesep 'example data ST' filesep 'destrieux_atlas.xlsx']);
 ba = im_ba.get('BA');
 im_gr = ImporterGroupSubjectST_XLS( ...
     'FILE', [fileparts(which('SubjectST')) filesep 'example data ST' filesep 'xls' filesep 'ST_Group_1.xlsx'], ...
