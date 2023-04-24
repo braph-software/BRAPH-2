@@ -105,8 +105,8 @@ if isfolder(directory)
 
         sub_id(i) = {sub.get('ID')};
         sub_FUN_MP = sub.get('FUN_MP');
-        age{i} =  sub.get('AGE');
-        sex{i} =  sub.get('SEX');
+% % %         age{i} =  sub.get('AGE');
+% % %         sex{i} =  sub.get('SEX');
         
         for j = 1:1:layers_number
             tab = table(sub_FUN_MP{j});
