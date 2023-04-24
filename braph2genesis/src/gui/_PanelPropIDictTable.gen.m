@@ -162,7 +162,7 @@ function set_table()
                         data{i, c} = dict.get('IT', i).get(col);
                         
                     case Format.STRINGLIST % __Format.STRINGLIST__
-                        %%%__WARN_TBI__
+                        data{i, c} = cell2str(dict.get('IT', i).get(col));
                         
                     case Format.LOGICAL % __Format.LOGICAL__
                         data{i, c} = dict.get('IT', i).get(col);
@@ -174,8 +174,7 @@ function set_table()
                         %%%__WARN_TBI__
 
                     case Format.CLASSLIST % __Format.CLASSLIST__
-                        prop_value = dict.get('IT', i).get(col);
-                        data{i, c} = cell2str(prop_value);
+                        data{i, c} = cell2str(dict.get('IT', i).get(col));
                         
                     case Format.ITEM % __Format.ITEM__
                         data{i, c} = dict.get('IT', i).get(col).tostring(); % % % %TODO Add property STRING to ContreteElement and here use get('STRING')?
@@ -502,7 +501,7 @@ if isempty(value)
                         columneditable(c) = true;
                     
                     case Format.STRINGLIST % __Format.STRINGLIST__
-                        %%%__WARN_TBI__
+                        columneditable(c) = false;
                         
                     case Format.LOGICAL % __Format.LOGICAL__
                         columneditable(c) = true;
@@ -594,7 +593,7 @@ if isempty(value)
                     columnformat{c} = 'char';
 
                 case Format.STRINGLIST % __Format.STRINGLIST__
-                    %%%__WARN_TBI__
+                    columnformat{c} = 'char';
                     
                 case Format.LOGICAL % __Format.LOGICAL__
                     columnformat{c} = 'logical';
@@ -745,7 +744,7 @@ function cb_table(~, event) % (src, event)
                         end
                         
                     case Format.STRINGLIST % __Format.STRINGLIST__
-                        %%%__WARN_TBI__
+                        %
                     
                     case Format.LOGICAL % __Format.LOGICAL__
                         dict.get('IT', i).set(col, newdata)
