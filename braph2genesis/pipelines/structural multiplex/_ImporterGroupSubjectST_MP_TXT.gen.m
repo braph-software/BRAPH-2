@@ -173,7 +173,7 @@ if isfolder(directory)
                     );
                 sub_dict.get('ADD', sub);
             end
-            gr.set('sub_dict', sub_dict);
+            gr.set('SUB_DICT', sub_dict);
         end
     catch e
         braph2waitbar(wb, 'close')
