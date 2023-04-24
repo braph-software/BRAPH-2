@@ -116,7 +116,7 @@ if isfolder(directory)
                     br = BrainRegion('ID', br_id);
                     idict.get('ADD', br)
                 end
-                ba.set('br_dict', idict);
+                ba.set('BR_DICT', idict);
             end
 
             braph2waitbar(wb, .15, 'Loading subject group ...')

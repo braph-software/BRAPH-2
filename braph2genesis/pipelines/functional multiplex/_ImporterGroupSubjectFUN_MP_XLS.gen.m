@@ -147,7 +147,7 @@ if isfolder(directory)
                         br = BrainRegion('ID', br_id);
                         idict.get('ADD', br)
                     end
-                    ba.set('br_dict', idict);
+                    ba.set('BR_DICT', idict);
                 end
 
                 sub_dict = gr.get('SUB_DICT');           
