@@ -64,7 +64,7 @@ DIRECTORY (data, string) is the directory name where to save the group of subjec
 %%% ¡prop!
 PUT_DIR (query, item) opens a dialog box to set the directory where to save the group of subjects with structural multiplex data.
 %%%% ¡settings!
-'ExporterGroupSubjectST_ML_TXT'
+'ExporterGroupSubjectST_MP_TXT'
 %%%% ¡calculate!
 directory = uigetdir('Select directory');
 if ischar(directory) && isfolder(directory)
