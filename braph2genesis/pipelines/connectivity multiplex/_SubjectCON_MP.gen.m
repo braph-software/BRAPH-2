@@ -229,17 +229,25 @@ GUI
 %%%% ¡parallel!
 false
 %%%% ¡code!
-% % % im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectCON')) filesep 'example data CON' filesep 'desikan_atlas.xlsx']);
-% % % ba = im_ba.get('BA');
-% % % im_gr = ImporterGroupSubjectCON_XLS( ...
-% % %     'DIRECTORY', [fileparts(which('SubjectCON')) filesep 'example data CON' filesep 'xls' filesep 'CON_Group_1'], ...
-% % %     'BA', ba, ...
-% % %     'WAITBAR', true ...
-% % %     );
-% % % gr = im_gr.get('GR');
-% % % 
-% % % gui = GUIElement('PE', gr, 'CLOSEREQ', false);
-% % % gui.get('DRAW')
-% % % gui.get('SHOW')
-% % % 
-% % % gui.get('CLOSE')
+im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectCON_MP')) filesep 'example data CON_MP' filesep 'aal90_atlas.xlsx']);
+ba = im_ba.get('BA');
+
+gr = Group('SUB_CLASS', 'SubjectCON_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON_MP'));
+for i = 1:1:10
+    sub = SubjectCON_MP( ...
+        'ID', ['SUB CON_MP ' int2str(i)], ...
+        'LABEL', ['Subejct CON_MP ' int2str(i)], ...
+        'NOTES', ['Notes on subject CON_MP ' int2str(i)], ...
+        'BA', ba, ... % % %     'age', 75, ... % % %     'sex', 'female', ...
+        'L', 3, ...
+        'LAYERLABELS', {'L1' 'L2' 'L3'}, ...
+        'CON_MP', {rand(ba.get('BR_DICT').get('LENGTH')), rand(ba.get('BR_DICT').get('LENGTH')), rand(ba.get('BR_DICT').get('LENGTH'))} ...
+        );
+    gr.get('SUB_DICT').get('ADD', sub)
+end
+
+gui = GUIElement('PE', gr, 'CLOSEREQ', false);
+gui.get('DRAW')
+gui.get('SHOW')
+
+gui.get('CLOSE')
