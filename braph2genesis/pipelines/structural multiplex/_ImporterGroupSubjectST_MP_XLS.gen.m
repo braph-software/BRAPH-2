@@ -75,14 +75,14 @@ if isfolder(directory)
             for j = 1:1:br_number
                 br_id = ['br' int2str(j)];
                 br = BrainRegion('ID', br_id);
-                idict.add(br)
+                idict.get('ADD', br)
             end
             ba.set('br_dict', idict);
         end
         
         braph2waitbar(wb, .15, 'Loading subject group ...');
         
-        subdict = gr.get('SUB_DICT');
+        sub_dict = gr.get('SUB_DICT');
         
         % Check if there are covariates to add (age and sex)
         sheets = sheetnames(fullfile(directory, files(1).name));
@@ -133,7 +133,7 @@ if isfolder(directory)
                 'age', age{i}, ...
                 'sex', sex{i} ...
             );
-            subdict.add(sub);
+            subdict.get('ADD', sub);
         end
         gr.set('sub_dict', subdict);
     end
