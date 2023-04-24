@@ -12,7 +12,7 @@ Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 
 %%% ¡seealso!
-Element, Importer, ExporterGroupSubjectFUN_MP_XLS
+Group, SubjectFUN_MP, ExporterGroupSubjectFUN_MP_XLS
 
 %% ¡props!
 
