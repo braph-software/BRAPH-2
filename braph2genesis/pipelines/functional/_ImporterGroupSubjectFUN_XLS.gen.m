@@ -162,7 +162,6 @@ if isfolder(directory)
     end
     
     braph2waitbar(wb, 'close')
-    
 else
     error([BRAPH2.STR ':ImporterGroupSubjectFUN_XLS:' BRAPH2.CANCEL_IO], ...
         [BRAPH2.STR ':ImporterGroupSubjectFUN_XLS:' BRAPH2.CANCEL_IO '\\n' ...

@@ -12,6 +12,36 @@ The first row contains the headers and each subsequent row the values for each s
 %%% ¡seealso!
 Group, SubjectFUN_MP, ImporterGroupSubjectFUN_MP_XLS
 
+%% ¡props_update!
+
+%%% ¡prop!
+NAME (constant, string) is the name of the FUN MP subject group exporter in XLS/XLSX.
+%%%% ¡default!
+'ExporterGroupSubjectFUN_MP_XLS'
+
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the FUN MP subject group exporter in XLS/XLSX.
+%%%% ¡default!
+'ExporterGroupSubjectFUN_MP_XLS exports a group of subjects with functional multiplex data to a series of XLSX file and their covariates (if existing).'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the FUN MP subject group exporter in XLS/XLSX.
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the FUN MP subject group exporter in XLS/XLSX.
+%%%% ¡default!
+'ExporterGroupSubjectFUN_MP_XLS ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the FUN MP subject group exporter in XLS/XLSX.
+%%%% ¡default!
+'ExporterGroupSubjectFUN_MP_XLS label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the FUN MP subject group exporter in XLS/XLSX.
+%%%% ¡default!
+'ExporterGroupSubjectFUN_MP_XLS notes'
+
 %% ¡props!
 
 %%% ¡prop!
@@ -26,7 +56,18 @@ Group('SUB_CLASS', 'SubjectFUN_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'S
 %%% ¡prop!
 DIRECTORY (data, string) is the directory name where to save the group of subjects with functional multiplex data.
 %%%% ¡default!
-fileparts(which('test_braph2'))
+[fileparts(which('test_braph2')) filesep 'default_group_subjects_FUN_MP_most_likely_to_be_erased']
+
+%%% ¡prop!
+PUT_DIR (query, item) opens a dialog box to set the directory where to save the group of subjects with functional data.
+%%%% ¡settings!
+'ExporterGroupSubjectFUN_MP_XLS'
+%%%% ¡calculate!
+directory = uigetdir('Select directory');
+if ischar(directory) && isfolder(directory)
+    ex.set('DIRECTORY', directory);
+end
+value = ex;
 
 %%% ¡prop!
 SAVE (result, empty) saves the group of subjects with functional multiplex data in XLS/XLSX files in the selected directory.
@@ -44,7 +85,7 @@ if isfolder(directory)
     end
     
     sub_dict = gr.get('SUB_DICT');
-    sub_number = sub_dict.length();
+    sub_number = sub_dict.get('LENGTH');
     sub_id = cell(sub_number, 1);
     age = cell(sub_number, 1);
     sex = cell(sub_number, 1);
@@ -52,10 +93,10 @@ if isfolder(directory)
 	braph2waitbar(wb, .15, 'Organizing info ...')
 
     for i = 1:1:sub_number
-        braph2waitbar(wb, .30 + .70 * i / sub_number, ['Saving subject ' num2str(i) ' of ' num2str(sub_number) ' ...'])
+        braph2waitbar(wb, .25 + .75 * i / sub_number, ['Saving subject ' num2str(i) ' of ' num2str(sub_number) ' ...'])
 
-        layers_number = sub_dict.getItem(1).get('L');
-        sub = sub_dict.getItem(i);
+        layers_number = sub_dict.get('IT', 1).get('L');
+        sub = sub_dict.get('IT', i);
         
         sub_directory = [gr_directory filesep() sub.get('ID')];
         if ~exist(sub_directory, 'dir')
@@ -67,7 +108,7 @@ if isfolder(directory)
         age{i} =  sub.get('AGE');
         sex{i} =  sub.get('SEX');
         
-        for j=1:1:layers_number
+        for j = 1:1:layers_number
             tab = table(sub_FUN_MP{j});
             
             sub_file = [sub_directory filesep() sub_id{i} '_' int2str(j) '.xlsx'];
@@ -77,44 +118,50 @@ if isfolder(directory)
         end
     end
     
-    % if covariates save them in another file
-    if sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
-        tab2 = cell(1 + sub_number, 3);
-        tab2{1, 1} = 'ID';
-        tab2{1, 2} = 'Age';
-        tab2{1, 3} = 'Sex';
-        tab2(2:end, 1) = sub_id;
-        tab2(2:end, 2) = age;
-        tab2(2:end, 3) = sex;
-        tab2 = table(tab2);
-        
-        % save
-        writetable(tab2, [gr_directory filesep() gr.get('ID') '_covariates.xlsx'], 'Sheet', 1, 'WriteVariableNames', 0);
-    end
+% % %     % if covariates save them in another file
+% % %     if sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
+% % %         tab2 = cell(1 + sub_number, 3);
+% % %         tab2{1, 1} = 'ID';
+% % %         tab2{1, 2} = 'Age';
+% % %         tab2{1, 3} = 'Sex';
+% % %         tab2(2:end, 1) = sub_id;
+% % %         tab2(2:end, 2) = age;
+% % %         tab2(2:end, 3) = sex;
+% % %         tab2 = table(tab2);
+% % %         
+% % %         % save
+% % %         writetable(tab2, [gr_directory filesep() gr.get('ID') '_covariates.xlsx'], 'Sheet', 1, 'WriteVariableNames', 0);
+% % %     end
     
-    % sets value to empty
-    value = [];
-
     braph2waitbar(wb, 'close')
-else
-    value = ex.getr('SAVE');    
 end
 
-%% ¡methods!
-function uigetdir(ex)
-    % UIGETDIR opens a dialog box to set the directory where to save the group of subjects with functional data.
-
-    directory = uigetdir('Select directory');
-    if ischar(directory) && isfolder(directory)
-        ex.set('DIRECTORY', directory);
-    end
-end
+% sets value to empty
+value = [];
 
 %% ¡tests!
 
+%%% ¡excluded_props!
+[ExporterGroupSubjectFUN_MP_XLS.PUT_DIR]
+
 %%% ¡test!
 %%%% ¡name!
-export and import
+Delete directory TBE
+%%%% ¡probability!
+1
+%%%% ¡code!
+warning('off', 'MATLAB:DELETE:FileNotFound')
+dir_to_be_erased = ExporterGroupSubjectFUN_MP_XLS.getPropDefault('DIRECTORY');
+if isfolder(dir_to_be_erased)
+    rmdir(dir_to_be_erased, 's')
+end
+warning('on', 'MATLAB:DELETE:FileNotFound')
+
+%%% ¡test!
+%%%% ¡name!
+Export and import
+%%%% ¡probability!
+.01
 %%%% ¡code!
 br1 = BrainRegion( ...
     'ID', 'ISF', ...
@@ -168,31 +215,25 @@ sub1 = SubjectFUN_MP( ...
     'ID', 'SUB FUN 1', ...
     'LABEL', 'Subejct FUN 1', ...
     'NOTES', 'Notes on subject FUN 1', ...
-    'BA', ba, ...
-    'age', 75, ...
-    'sex', 'female', ...
+    'BA', ba, ... % % %     'age', 75, ... % % %     'sex', 'female', ...
     'L', 2, ...
-    'FUN_MP', {rand(10, ba.get('BR_DICT').length()), rand(10, ba.get('BR_DICT').length())} ...
+    'FUN_MP', {rand(10, ba.get('BR_DICT').get('LENGTH')), rand(10, ba.get('BR_DICT').get('LENGTH'))} ...
     );
 sub2 = SubjectFUN_MP( ...
     'ID', 'SUB FUN 2', ...
     'LABEL', 'Subejct FUN 2', ...
     'NOTES', 'Notes on subject FUN 2', ...
-    'BA', ba, ...
-    'age', 70, ...
-    'sex', 'male', ...
+    'BA', ba, ... % % %     'age', 70, ... % % %     'sex', 'male', ...
     'L', 2, ...
-    'FUN_MP', {rand(10, ba.get('BR_DICT').length()), rand(10, ba.get('BR_DICT').length())} ...
+    'FUN_MP', {rand(10, ba.get('BR_DICT').get('LENGTH')), rand(10, ba.get('BR_DICT').get('LENGTH'))} ...
     );
 sub3 = SubjectFUN_MP( ...
     'ID', 'SUB FUN 3', ...
     'LABEL', 'Subejct FUN 3', ...
     'NOTES', 'Notes on subject FUN 3', ...
-    'BA', ba, ...
-    'age', 50, ...
-    'sex', 'female', ...
+    'BA', ba, ... % % %     'age', 50, ... % % %     'sex', 'female', ...
     'L', 2, ...
-    'FUN_MP', {rand(10, ba.get('BR_DICT').length()), rand(10, ba.get('BR_DICT').length())} ...
+    'FUN_MP', {rand(10, ba.get('BR_DICT').get('LENGTH')), rand(10, ba.get('BR_DICT').get('LENGTH'))} ...
     );
 
 gr = Group( ...
@@ -221,20 +262,18 @@ im1 = ImporterGroupSubjectFUN_MP_XLS( ...
     );
 gr_loaded1 = im1.get('GR');
 
-assert(gr.get('SUB_DICT').length() == gr_loaded1.get('SUB_DICT').length(), ...
-	[BRAPH2.STR ':ExporterGroupSubjectFUN_MP_XLS:' BRAPH2.BUG_IO], ...
+assert(gr.get('SUB_DICT').get('LENGTH') == gr_loaded1.get('SUB_DICT').get('LENGTH'), ...
+	[BRAPH2.STR ':ExporterGroupSubjectFUN_MP_XLS:' BRAPH2.FAIL_TEST], ...
     'Problems saving or loading a group.')
-for i = 1:1:max(gr.get('SUB_DICT').length(), gr_loaded1.get('SUB_DICT').length())
-    sub = gr.get('SUB_DICT').getItem(i);
-    sub_loaded = gr_loaded1.get('SUB_DICT').getItem(i);    
+for i = 1:1:max(gr.get('SUB_DICT').get('LENGTH'), gr_loaded1.get('SUB_DICT').get('LENGTH'))
+    sub = gr.get('SUB_DICT').get('IT', i);
+    sub_loaded = gr_loaded1.get('SUB_DICT').get('IT', i);    
     assert( ...
         isequal(sub.get('ID'), sub_loaded.get('ID')) & ...
-        isequal(sub.get('BA'), sub_loaded.get('BA')) & ...
-        isequal(sub.get('AGE'), sub_loaded.get('AGE')) & ...
-        isequal(sub.get('SEX'), sub_loaded.get('SEX')) & ...
+        isequal(sub.get('BA'), sub_loaded.get('BA')) & ... % % %         isequal(sub.get('AGE'), sub_loaded.get('AGE')) & ... % % %         isequal(sub.get('SEX'), sub_loaded.get('SEX')) & ...
         isequal(sub.get('L'), sub_loaded.get('L')) & ...
         isequal(sub.get('FUN_MP'), sub_loaded.get('FUN_MP')), ...
-        [BRAPH2.STR ':ExporterGroupSubjectFUN_MP_XLS:' BRAPH2.BUG_IO], ...
+        [BRAPH2.STR ':ExporterGroupSubjectFUN_MP_XLS:' BRAPH2.FAIL_TEST], ...
         'Problems saving or loading a group.')    
 end
 
@@ -245,19 +284,17 @@ im2 = ImporterGroupSubjectFUN_MP_XLS( ...
     );
 gr_loaded2 = im2.get('GR');
 
-assert(gr.get('SUB_DICT').length() == gr_loaded2.get('SUB_DICT').length(), ...
-	[BRAPH2.STR ':ExporterGroupSubjectFUN_MP_XLS:' BRAPH2.BUG_IO], ...
+assert(gr.get('SUB_DICT').get('LENGTH') == gr_loaded2.get('SUB_DICT').get('LENGTH'), ...
+	[BRAPH2.STR ':ExporterGroupSubjectFUN_MP_XLS:' BRAPH2.FAIL_TEST], ...
     'Problems saving or loading a group.')
-for i = 1:1:max(gr.get('SUB_DICT').length(), gr_loaded2.get('SUB_DICT').length())
-    sub = gr.get('SUB_DICT').getItem(i);
-    sub_loaded = gr_loaded2.get('SUB_DICT').getItem(i);
+for i = 1:1:max(gr.get('SUB_DICT').get('LENGTH'), gr_loaded2.get('SUB_DICT').get('LENGTH'))
+    sub = gr.get('SUB_DICT').get('IT', i);
+    sub_loaded = gr_loaded2.get('SUB_DICT').get('IT', i);
     assert( ...
-        isequal(sub.get('ID'), sub_loaded.get('ID')) & ...
-        isequal(sub.get('AGE'), sub_loaded.get('AGE')) & ...
-        isequal(sub.get('SEX'), sub_loaded.get('SEX')) & ...
+        isequal(sub.get('ID'), sub_loaded.get('ID')) & ... % % %         isequal(sub.get('AGE'), sub_loaded.get('AGE')) & ... % % %         isequal(sub.get('SEX'), sub_loaded.get('SEX')) & ...
         isequal(sub.get('L'), sub_loaded.get('L')) & ...
         isequal(sub.get('FUN_MP'), sub_loaded.get('FUN_MP')), ...
-        [BRAPH2.STR ':ExporterGroupSubjectFUN_MP_XLS:' BRAPH2.BUG_IO], ...
+        [BRAPH2.STR ':ExporterGroupSubjectFUN_MP_XLS:' BRAPH2.FAIL_TEST], ...
         'Problems saving or loading a group.')    
 end
 
