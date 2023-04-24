@@ -266,6 +266,8 @@ if ~braph2_testing && ~isa(nncv.get('GR').get('SUB_DICT'), 'NoValue')
     else
         pr = PanelPropCell('EL', nncv, 'PROP', NNClassifierCrossValidation.FEATURE_IMPORTANCE, varargin{:});
     end
+else
+    pr = PanelPropCell('EL', nncv, 'PROP', NNClassifierCrossValidation.FEATURE_IMPORTANCE, varargin{:});
 end
 
 %% ¡props_update!

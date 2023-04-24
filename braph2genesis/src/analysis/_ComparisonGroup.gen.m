@@ -624,21 +624,21 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
         
         if ~isempty(measure) && Measure.is_global(measure) && ...
                 (Measure.is_unilayer(measure) || Measure.is_superglobal(measure))
-            if Graph.is_multiplex(g) && Measure.is_unilayer(measure)
+            if (Graph.is_multiplex(g) || Graph.is_ordered_multiplex(g)) && Measure.is_unilayer(measure)
                 cp.set('PFC', PFComparisonGroupMultiplexGU('CP', cp))
             else
                 cp.set('PFC', PFComparisonGroupGU('CP', cp))
             end
         elseif ~isempty(measure) && Measure.is_nodal(measure) && ...
                 (Measure.is_unilayer(measure) || Measure.is_superglobal(measure))
-            if Graph.is_multiplex(g) && Measure.is_unilayer(measure)
+            if (Graph.is_multiplex(g) || Graph.is_ordered_multiplex(g)) && Measure.is_unilayer(measure)
                 cp.set('PFC', PFComparisonGroupMultiplexNU('CP', cp))
             else
                 cp.set('PFC', PFComparisonGroupNU('CP', cp))
             end
         elseif ~isempty(measure) && Measure.is_binodal(measure) && ...
                 (Measure.is_unilayer(measure) || Measure.is_superglobal(measure))
-            if Graph.is_multiplex(g) && Measure.is_unilayer(measure)
+            if (Graph.is_multiplex(g) || Graph.is_ordered_multiplex(g)) && Measure.is_unilayer(measure)
                 cp.set('PFC', PFComparisonGroupMultiplexBU('CP', cp))
             else
                 cp.set('PFC', PFComparisonGroupBU('CP', cp))
@@ -678,14 +678,14 @@ if ~braph2_testing % to avoid problems with isqual when the element is recursive
                 else
                     cp.set('PFBG', PFBrainBinaryGraphComparison('ME', cp));
                 end
-            elseif Graph.is_multiplex(g) && Graph.is_weighted(g) % multiplexWU
+            elseif (Graph.is_multiplex(g) || Graph.is_ordered_multiplex(g)) && Graph.is_weighted(g) % multiplexWU
                 ba_list = g.get('BAS');
                 if ~isempty(ba_list)
                     cp.set('PFBG', PFBrainMultiplexGraphComparison('ME', cp, 'BA', ba_list{1}));
                 else
                     cp.set('PFBG', PFBrainMultiplexGraphComparison('ME', cp));
                 end
-            elseif Graph.is_multiplex(g) && Graph.is_binary(g)
+            elseif (Graph.is_multiplex(g) || Graph.is_ordered_multiplex(g)) && Graph.is_binary(g)
                 ba_list = g.get('BAS');
                 if ~isempty(ba_list)
                     cp.set('PFBG', PFBrainMultiplexBinaryGraphComparison('ME', cp, 'BA', ba_list{1}));
