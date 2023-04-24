@@ -15,6 +15,36 @@ The first row contains the headers and each subsequent row the values for each s
 %%% ¡seealso!
 Group, SubjectST_MP, ImporterGroupSubjectST_MP_TXT
 
+%% ¡props_update!
+
+%%% ¡prop!
+NAME (constant, string) is the name of the ST subject group exporter in TXT.
+%%%% ¡default!
+'ExporterGroupSubjectST_MP_TXT'
+
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the ST subject group exporter in TXT.
+%%%% ¡default!
+'ExporterGroupSubjectST_MP_TXT exports a group of subjects with structural multiplex data to an TXT file and their covariates age and sex (if existing) to another TXT file.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the ST subject group exporter in TXT.
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the ST subject group exporter in TXT.
+%%%% ¡default!
+'ExporterGroupSubjectST_MP_TXT ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the ST subject group exporter in TXT.
+%%%% ¡default!
+'ExporterGroupSubjectST_MP_TXT label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the ST subject group exporter in TXT.
+%%%% ¡default!
+'ExporterGroupSubjectST_MP_TXT notes'
+
 %% ¡props!
 
 %%% ¡prop!
@@ -29,7 +59,18 @@ Group('SUB_CLASS', 'SubjectST_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'Su
 %%% ¡prop!
 DIRECTORY (data, string) is the directory name where to save the group of subjects with structural multiplex data.
 %%%% ¡default!
-fileparts(which('test_braph2'))
+[fileparts(which('test_braph2')) filesep 'default_group_subjects_ST_ML_most_likely_to_be_erased']
+
+%%% ¡prop!
+PUT_DIR (query, item) opens a dialog box to set the directory where to save the group of subjects with structural multiplex data.
+%%%% ¡settings!
+'ExporterGroupSubjectST_ML_TXT'
+%%%% ¡calculate!
+directory = uigetdir('Select directory');
+if ischar(directory) && isfolder(directory)
+    ex.set('DIRECTORY', directory);
+end
+value = ex;
 
 %%% ¡prop!
 SAVE (result, empty) saves the group of subjects with structural multiplex data in TXT files in the selected directory.
@@ -94,48 +135,54 @@ if isfolder(directory)
         end
     end
         
-    % if covariates save them in another file
-    if sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
-        tab2 = cell(1 + sub_number, 3);
-        tab2{1, 1} = 'ID';
-        tab2{1, 2} = 'Age';
-        tab2{1, 3} = 'Sex';
-        tab2(2:end, 1) = tab{:, 1};
-        tab2(2:end, 2) = age;
-        tab2(2:end, 3) = sex;
-        tab2 = table(tab2);
-        
-        % save
-        cov_directory = [gr_directory filesep() 'covariates'];
-        if ~exist(cov_directory, 'dir')
-            mkdir(cov_directory)
-        end
-        writetable(tab2, [cov_directory filesep() gr_id '_covariates.txt'], 'Delimiter', '\t', 'WriteVariableNames', 0);
-    end
+% % %     % if covariates save them in another file
+% % %     if sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
+% % %         tab2 = cell(1 + sub_number, 3);
+% % %         tab2{1, 1} = 'ID';
+% % %         tab2{1, 2} = 'Age';
+% % %         tab2{1, 3} = 'Sex';
+% % %         tab2(2:end, 1) = tab{:, 1};
+% % %         tab2(2:end, 2) = age;
+% % %         tab2(2:end, 3) = sex;
+% % %         tab2 = table(tab2);
+% % %         
+% % %         % save
+% % %         cov_directory = [gr_directory filesep() 'covariates'];
+% % %         if ~exist(cov_directory, 'dir')
+% % %             mkdir(cov_directory)
+% % %         end
+% % %         writetable(tab2, [cov_directory filesep() gr_id '_covariates.txt'], 'Delimiter', '\t', 'WriteVariableNames', 0);
+% % %     end
     
-    % sets value to empty
-    value = [];
-
     braph2waitbar(wb, 'close')
-else
-    value = ex.getr('SAVE');    
 end
 
-%% ¡methods!
-function uigetdir(ex)
-    % UIGETDIR opens a dialog box to set the directory where to save the group of subjects with structural multiplex data.
-
-    directory = uigetdir('Select directory');
-    if ischar(directory) && isfolder(directory)
-        ex.set('DIRECTORY', directory);
-    end
-end
+% sets value to empty
+value = [];
 
 %% ¡tests!
+
+%%% ¡excluded_props!
+[ExporterGroupSubjectST_MP_TXT.PUT_DIR]
+
+%%% ¡test!
+%%%% ¡name!
+Delete directory TBE
+%%%% ¡probability!
+1
+%%%% ¡code!
+warning('off', 'MATLAB:DELETE:FileNotFound')
+dir_to_be_erased = ExporterGroupSubjectST_MP_TXT.getPropDefault('DIRECTORY');
+if isfolder(dir_to_be_erased)
+    rmdir(dir_to_be_erased, 's')
+end
+warning('on', 'MATLAB:DELETE:FileNotFound')
 
 %%% ¡test!
 %%%% ¡name!
 Export and import
+%%%% ¡probability!
+.01
 %%%% ¡code!
 br1 = BrainRegion( ...
     'ID', 'ISF', ...
@@ -189,9 +236,7 @@ sub1 = SubjectST_MP( ...
     'ID', 'SUB ST 1', ...
     'LABEL', 'Subejct ST 1', ...
     'NOTES', 'Notes on subject ST 1', ...
-    'BA', ba, ...
-    'age', 30, ...
-    'sex', 'female', ...
+    'BA', ba, ... % % %     'age', 30, ... % % %     'sex', 'female', ...
     'L', 2, ...
     'ST_MP', {rand(ba.get('BR_DICT').get('LENGTH'), 1), rand(ba.get('BR_DICT').get('LENGTH'), 1)} ...
     );
@@ -199,9 +244,7 @@ sub2 = SubjectST_MP( ...
     'ID', 'SUB ST 2', ...
     'LABEL', 'Subejct ST 2', ...
     'NOTES', 'Notes on subject ST 2', ...
-    'BA', ba, ...
-    'age', 40, ...
-    'sex', 'male', ...
+    'BA', ba, ... % % %     'age', 40, ... % % %     'sex', 'male', ...
     'L', 2, ...
     'ST_MP', {rand(ba.get('BR_DICT').get('LENGTH'), 1), rand(ba.get('BR_DICT').get('LENGTH'), 1)} ...
     );
@@ -209,9 +252,7 @@ sub3 = SubjectST_MP( ...
     'ID', 'SUB ST 3', ...
     'LABEL', 'Subejct ST 3', ...
     'NOTES', 'Notes on subject ST 3', ...
-    'BA', ba, ...
-    'age', 50, ...
-    'sex', 'female', ...
+    'BA', ba, ... % % %     'age', 50, ... % % %     'sex', 'female', ...
     'L', 2, ...
     'ST_MP', {rand(ba.get('BR_DICT').get('LENGTH'), 1), rand(ba.get('BR_DICT').get('LENGTH'), 1)} ...
     );
@@ -252,9 +293,7 @@ for i = 1:1:max(gr.get('SUB_DICT').get('LENGTH'), gr_loaded1.get('SUB_DICT').get
         isequal(sub.get('ID'), sub_loaded.get('ID')) & ...
         isequal(sub.get('LABEL'), sub_loaded.get('LABEL')) & ...
         isequal(sub.get('NOTES'), sub_loaded.get('NOTES')) & ...
-        isequal(sub.get('BA'), sub_loaded.get('BA')) & ...
-        isequal(sub.get('AGE'), sub_loaded.get('AGE')) & ...
-        isequal(sub.get('SEX'), sub_loaded.get('SEX')) & ...
+        isequal(sub.get('BA'), sub_loaded.get('BA')) & ... % % %         isequal(sub.get('AGE'), sub_loaded.get('AGE')) & ... % % %         isequal(sub.get('SEX'), sub_loaded.get('SEX')) & ...
         isequal(sub.get('L'), sub_loaded.get('L')) & ...
         isequal(cellfun(@(v) round(v, 10), sub.get('ST_MP'), 'UniformOutput', false), cellfun(@(v) round(v, 10), sub_loaded.get('ST_MP'), 'UniformOutput', false)), ...
         [BRAPH2.STR ':ExporterGroupSubjectST_MP_TXT:' BRAPH2.FAIL_TEST], ...
@@ -277,9 +316,7 @@ for i = 1:1:max(gr.get('SUB_DICT').get('LENGTH'), gr_loaded2.get('SUB_DICT').get
         isequal(sub.get('ID'), sub_loaded.get('ID')) & ...
         isequal(sub.get('LABEL'), sub_loaded.get('LABEL')) & ...
         isequal(sub.get('NOTES'), sub_loaded.get('NOTES')) & ...
-        ~isequal(sub.get('BA').get('ID'), sub_loaded.get('BA').get('ID')) & ...
-        isequal(sub.get('AGE'), sub_loaded.get('AGE')) & ...
-        isequal(sub.get('SEX'), sub_loaded.get('SEX')) & ...
+        ~isequal(sub.get('BA').get('ID'), sub_loaded.get('BA').get('ID')) & ... % % %         isequal(sub.get('AGE'), sub_loaded.get('AGE')) & ... % % %         isequal(sub.get('SEX'), sub_loaded.get('SEX')) & ...
         isequal(sub.get('L'), sub_loaded.get('L')) & ...
         isequal(cellfun(@(v) round(v, 10), sub.get('ST_MP'), 'UniformOutput', false), cellfun(@(v) round(v, 10), sub_loaded.get('ST_MP'), 'UniformOutput', false)), ...
         [BRAPH2.STR ':ExporterGroupSubjectST_MP_TXT:' BRAPH2.FAIL_TEST], ...

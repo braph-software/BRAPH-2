@@ -16,10 +16,53 @@ The first row contains the headers and each subsequent row the values for each s
 %%% ¡seealso!
 Group, SubjectST_MP, ExporterGroupSubjectST_MP_TXT
 
+%% ¡props_update!
+
+%%% ¡prop!
+NAME (constant, string) is the name of the ST MP subject group importer from TXT.
+%%%% ¡default!
+'ImporterGroupSubjectST_MP_TXT'
+
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the ST MP subject group importer from TXT.
+%%%% ¡default!
+'ImporterGroupSubjectST_MP_TXT imports a group of subjects with structural multiplex data from an TXT file and their covariates from another TXT file.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the ST MP subject group importer from TXT.
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the ST MP subject group importer from TXT.
+%%%% ¡default!
+'ImporterGroupSubjectST_MP_TXT ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the ST MP subject group importer from TXT.
+%%%% ¡default!
+'ImporterGroupSubjectST_MP_TXT label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the ST MP subject group importer from TXT.
+%%%% ¡default!
+'ImporterGroupSubjectST_MP_TXT notes'
+
 %% ¡props!
 
 %%% ¡prop!
 DIRECTORY (data, string) is the directory containing the ST MP subject group files from which to load the L layers of the subject group.
+%%%% ¡default!
+fileparts(which('test_braph2'))
+
+%%% ¡prop!
+GET_DIR (query, item) opens a dialog box to set the directory from where to load the TXT files of the ST MP subject group with L layers.
+%%%% ¡settings!
+'ImporterGroupSubjectST_MP_TXT'
+%%%% ¡calculate!
+directory = uigetdir('Select directory');
+if ischar(directory) && isfolder(directory)
+    im.set('DIRECTORY', directory);
+end
+value = im;
 
 %%% ¡prop!
 BA (data, item) is a brain atlas.
@@ -42,11 +85,8 @@ gr = Group( ...
     );
 
 gr.lock('SUB_CLASS');
+
 directory = im.get('DIRECTORY');
-if ~isfolder(directory) && ~braph2_testing()
-    im.uigetdir()
-    directory = im.get('DIRECTORY');
-end
 if isfolder(directory)
     wb = braph2waitbar(im.get('WAITBAR'), 0, 'Reading directory ...');
 
@@ -58,106 +98,100 @@ if isfolder(directory)
         'NOTES', ['Group loaded from ' directory] ...
     );
 
-    % analyzes files
-    files = dir(fullfile(directory, '*.txt'));
-    
-    if length(files) > 0
-        % brain atlas
-        ba = im.get('BA');
-        raw_tmp = readtable(fullfile(directory, files(1).name), 'Delimiter', '	');
-        br_number = size(raw_tmp, 2) - 3;
-        subjects_number = size(raw_tmp, 1);
-        if ba.get('BR_DICT').length ~= br_number
-            ba = BrainAtlas();
-            idict = ba.get('BR_DICT');
-            for j = 1:1:br_number
-                br_id = ['br' int2str(j)];
-                br = BrainRegion('ID', br_id);
-                idict.get('ADD', br)
+    try
+        % analyzes files
+        files = dir(fullfile(directory, '*.txt'));
+
+        if ~isempty(files)
+            % brain atlas
+            ba = im.get('BA');
+            raw_tmp = readtable(fullfile(directory, files(1).name), 'Delimiter', '	');
+            br_number = size(raw_tmp, 2) - 3;
+            subjects_number = size(raw_tmp, 1);
+            if ba.get('BR_DICT').get('LENGTH') ~= br_number
+                ba = BrainAtlas();
+                idict = ba.get('BR_DICT');
+                for j = 1:1:br_number
+                    br_id = ['br' int2str(j)];
+                    br = BrainRegion('ID', br_id);
+                    idict.get('ADD', br)
+                end
+                ba.set('br_dict', idict);
             end
-            ba.set('br_dict', idict);
+
+            braph2waitbar(wb, .15, 'Loading subject group ...')
+
+            sub_dict = gr.get('SUB_DICT');
+
+% % %             % Check if there are covariates to add (age and sex)
+% % %             cov_folder = dir(directory);
+% % %             cov_folder = cov_folder([cov_folder(:).isdir] == 1);
+% % %             cov_folder = cov_folder(~ismember({cov_folder(:).name}, {'.', '..'}));
+% % %             if ~isempty(cov_folder)
+% % %                 raw_covariates = readtable([directory filesep() cov_folder.name filesep() name '_covariates.txt'], 'Delimiter', '\t');
+% % %                 age = raw_covariates{:, 2};
+% % %                 sex = raw_covariates{:, 3};
+% % %             else
+% % %                 age = ones(subjects_number,1);
+% % %                 unassigned =  {'unassigned'};
+% % %                 sex = unassigned(ones(subjects_number, 1));
+% % %             end
+
+            % multiplex data, subjects, number of layers
+            all_subjects_data = cell(length(files), subjects_number, br_number);
+            subjects_info = cell(subjects_number, 3);
+            layers_number = length(files);
+
+            for i = 1:1:length(files)
+                raw = readtable(fullfile(directory, files(i).name), 'Delimiter', '	');
+                if i == 1  % just 1 time
+                    % info
+                    subjects_info(:, :) = table2cell(raw(:, 1:3));
+                end
+                % multiplex data
+                data = table2cell(raw(:, 4: size(raw, 2)));  % we remove id, labl, notes (column 1 to 3)
+                all_subjects_data(i, :, :) = reshape(data, [1 subjects_number br_number]);
+            end
+
+            % cycle over subjects, add subjects
+            for i = 1:1:size(all_subjects_data, 2)
+                braph2waitbar(wb, .25 + .75 * i / size(all_subjects_data, 2), ['Loading subject ' num2str(i) ' of ' num2str(size(all_subjects_data, 2)) ' ...'])
+
+                layer_subject = reshape(all_subjects_data(:, i, :), [layers_number br_number]);
+                for l = 1:1:layers_number
+                    ST_MP(l) = {cell2mat(layer_subject(l, :)')};
+                end
+
+                % create subject
+                sub = SubjectST_MP( ...
+                    'ID', subjects_info{i, 1}, ...
+                    'LABEL', subjects_info{i, 2}, ...
+                    'NOTES', subjects_info{i, 3}, ...
+                    'BA', ba, ...
+                    'L', layers_number, ...
+                    'ST_MP', ST_MP, ... % % % 'age', age(i), ... % % % 'sex', sex{i} ...
+                    );
+                sub_dict.get('ADD', sub);
+            end
+            gr.set('sub_dict', sub_dict);
         end
-
-        braph2waitbar(wb, .15, 'Loading subject group ...')
-
-        sub_dict = gr.get('SUB_DICT');
+    catch e
+        braph2waitbar(wb, 'close')
         
-        % Check if there are covariates to add (age and sex)
-        cov_folder = dir(directory);
-        cov_folder = cov_folder([cov_folder(:).isdir] == 1);
-        cov_folder = cov_folder(~ismember({cov_folder(:).name}, {'.', '..'}));
-        if ~isempty(cov_folder)
-            raw_covariates = readtable([directory filesep() cov_folder.name filesep() name '_covariates.txt'], 'Delimiter', '\t');
-            age = raw_covariates{:, 2};
-            sex = raw_covariates{:, 3};
-        else
-            age = ones(subjects_number,1);
-            unassigned =  {'unassigned'};
-            sex = unassigned(ones(subjects_number, 1));
-        end
-
-        % multiplex data, subjects, number of layers
-        all_subjects_data = cell(length(files), subjects_number, br_number);
-        subjects_info = cell(subjects_number, 3);
-        layers_number = length(files);
-        
-        for i = 1:1:length(files)
-            raw = readtable(fullfile(directory, files(i).name), 'Delimiter', '	');
-            if i == 1  % just 1 time
-                % info
-                subjects_info(:, :) = table2cell(raw(:, 1:3));
-            end
-            % multiplex data
-            data = table2cell(raw(:, 4: size(raw, 2)));  % we remove id, labl, notes (column 1 to 3)
-            all_subjects_data(i, :, :) = reshape(data, [1 subjects_number br_number]);
-        end
-                            
-        % cycle over subjects, add subjects
-        for i = 1:1:size(all_subjects_data, 2)
-            braph2waitbar(wb, .30 + .70 * i / size(all_subjects_data, 2), ['Loading subject ' num2str(i) ' of ' num2str(size(all_subjects_data, 2)) ' ...'])
-
-            layer_subject = reshape(all_subjects_data(:, i, :), [layers_number br_number]);
-            for l = 1:1:layers_number
-                ST_MP(l) = {cell2mat(layer_subject(l, :)')};
-            end
-            
-            % create subject
-            sub = SubjectST_MP( ...
-                'ID', subjects_info{i, 1}, ...
-                'LABEL', subjects_info{i, 2}, ...
-                'NOTES', subjects_info{i, 3}, ...
-                'BA', ba, ...
-                'L', layers_number, ...
-                'ST_MP', ST_MP, ...
-                'age', age(i), ...
-                'sex', sex{i} ...
-                );
-            sub_dict.get('ADD', sub);
-        end
-        gr.set('sub_dict', sub_dict);
+        rethrow(e)
     end
-
+    
     braph2waitbar(wb, 'close')
+else
+    error([BRAPH2.STR ':ImporterGroupSubjectST_MP_TXT:' BRAPH2.CANCEL_IO], ...
+        [BRAPH2.STR ':ImporterGroupSubjectST_MP_TXT:' BRAPH2.CANCEL_IO '\\n' ...
+        'The prop DIRECTORY must be an existing directory, but it is ''' directory '''.'] ...
+        );
 end
 
 value = gr;
 
-%% ¡methods!
-function uigetdir(im)
-    % UIGETDIR opens a dialog box to set the directory from where to load the TXT files of the ST MP subject group with L layers.
+%% ¡tests!
 
-    directory = uigetdir('Select directory');
-    if ischar(directory) && isfolder(directory)
-        im.set('DIRECTORY', directory);
-    end
-end
-
-function uigetfile(im)
-    % UIGETFILE opens a dialog box to set the TXT file from where to load the ST MP subject group.
-    
-    [filename, filepath, filterindex] = uigetfile('*.txt', 'Select TXT file');
-    if filterindex
-        file = [filepath filename];
-        im.set('FILE', file);
-    end
-end
+%%% ¡excluded_props!
+[ImporterGroupSubjectST_MP_TXT.GET_DIR]

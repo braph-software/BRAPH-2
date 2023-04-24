@@ -15,6 +15,36 @@ The first row contains the headers and each subsequent row the values for each s
 %%% ¡seealso!
 Group, SubjectST_MP, ImporterGroupSubjectST_MP_XLS
 
+%% ¡props_update!
+
+%%% ¡prop!
+NAME (constant, string) is the name of the ST MP subject group exporter in XLS/XLSX.
+%%%% ¡default!
+'ExporterGroupSubjectST_MP_XLS'
+
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the ST MP subject group exporter in XLS/XLSX.
+%%%% ¡default!
+'ExporterGroupSubjectST_MP_XLS exports a group of subjects with structural multiplex data  and their covariates (if existing) to an XLSX file.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the ST MP subject group exporter in XLS/XLSX.
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the ST MP subject group exporter in XLS/XLSX.
+%%%% ¡default!
+'ExporterGroupSubjectST_MP_XLS ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the ST MP subject group exporter in XLS/XLSX.
+%%%% ¡default!
+'ExporterGroupSubjectST_MP_XLS label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the ST MP subject group exporter in XLS/XLSX.
+%%%% ¡default!
+'ExporterGroupSubjectST_MP_XLS notes'
+
 %% ¡props!
 
 %%% ¡prop!
@@ -29,7 +59,18 @@ Group('SUB_CLASS', 'SubjectST_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'Su
 %%% ¡prop!
 DIRECTORY (data, string) is the directory name where to save the group of subjects with structural multiplex data.
 %%%% ¡default!
-fileparts(which('test_braph2'))
+[fileparts(which('test_braph2')) filesep 'default_group_subjects_ST_MP_most_likely_to_be_erased']
+
+%%% ¡prop!
+PUT_DIR (query, item) opens a dialog box to set the directory where to save the group of subjects with structural multiplex data.
+%%%% ¡settings!
+'ExporterGroupSubjectST_MP_XLS'
+%%%% ¡calculate!
+directory = uigetdir('Select directory');
+if ischar(directory) && isfolder(directory)
+    ex.set('DIRECTORY', directory);
+end
+value = ex;
 
 %%% ¡prop!
 SAVE (result, empty) saves the group of subjects with structural multiplex data in XLS/XLSX files in the selected directory.
@@ -69,8 +110,8 @@ if isfolder(directory)
             subjects_info{i, 1} = sub.get('ID');
             subjects_info{i, 2} = sub.get('LABEL');
             subjects_info{i, 3} = sub.get('NOTES');
-            age{i} =  sub.get('AGE');
-            sex{i} =  sub.get('SEX');
+% % %             age{i} =  sub.get('AGE');
+% % %             sex{i} =  sub.get('SEX');
             
             for k = 1:1:layers_number
                 data_val = sub.get('ST_MP');
@@ -94,47 +135,55 @@ if isfolder(directory)
         end
     end
     
-    % if covariates save them in another file
-    if sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
-        tab2 = cell(1 + sub_number, 3);
-        tab2{1, 1} = 'ID';
-        tab2{1, 2} = 'Age';
-        tab2{1, 3} = 'Sex';
-        tab2(2:end, 1) = tab_id{:, 1};
-        tab2(2:end, 2) = age;
-        tab2(2:end, 3) = sex;
-        tab2 = table(tab2);
-        
-        % save
-        warning_query = warning( 'query', 'MATLAB:xlswrite:AddSheet');
-        warning('off', 'MATLAB:xlswrite:AddSheet')
-        writetable(tab2, [gr_directory filesep() gr_id  '_1.xlsx'], 'Sheet', 2, 'WriteVariableNames', 0);
-        warning(warning_query.state, 'MATLAB:xlswrite:AddSheet')
-    end
+% % %     % if covariates save them in another file
+% % %     if sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
+% % %         tab2 = cell(1 + sub_number, 3);
+% % %         tab2{1, 1} = 'ID';
+% % %         tab2{1, 2} = 'Age';
+% % %         tab2{1, 3} = 'Sex';
+% % %         tab2(2:end, 1) = tab_id{:, 1};
+% % %         tab2(2:end, 2) = age;
+% % %         tab2(2:end, 3) = sex;
+% % %         tab2 = table(tab2);
+% % %         
+% % %         % save
+% % %         warning_query = warning( 'query', 'MATLAB:xlswrite:AddSheet');
+% % %         warning('off', 'MATLAB:xlswrite:AddSheet')
+% % %         writetable(tab2, [gr_directory filesep() gr_id  '_1.xlsx'], 'Sheet', 2, 'WriteVariableNames', 0);
+% % %         warning(warning_query.state, 'MATLAB:xlswrite:AddSheet')
+% % %     end
     
-    % sets value to empty
-    value = [];
-
     braph2waitbar(wb, 'close')
-else
-    value = ex.getr('SAVE');    
 end
 
-%% ¡methods!
-function uigetdir(ex)
-    % UIGETDIR opens a dialog box to set the directory where to save the group of subjects with structural multiplex data.
-
-    directory = uigetdir('Select directory');
-    if ischar(directory) && isfolder(directory)
-        ex.set('DIRECTORY', directory);
-    end
-end
+% sets value to empty
+value = [];
 
 %% ¡tests!
+
+%% ¡tests!
+
+%%% ¡excluded_props!
+[ExporterGroupSubjectST_MP_XLS.PUT_DIR]
+
+%%% ¡test!
+%%%% ¡name!
+Delete directory TBE
+%%%% ¡probability!
+1
+%%%% ¡code!
+warning('off', 'MATLAB:DELETE:FileNotFound')
+dir_to_be_erased = ExporterGroupSubjectST_MP_XLS.getPropDefault('DIRECTORY');
+if isfolder(dir_to_be_erased)
+    rmdir(dir_to_be_erased, 's')
+end
+warning('on', 'MATLAB:DELETE:FileNotFound')
 
 %%% ¡test!
 %%%% ¡name!
 Export and import
+%%%% ¡probability!
+.01
 %%%% ¡code!
 br1 = BrainRegion( ...
     'ID', 'ISF', ...
@@ -188,9 +237,7 @@ sub1 = SubjectST_MP( ...
     'ID', 'SUB ST 1', ...
     'LABEL', 'Subejct ST 1', ...
     'NOTES', 'Notes on subject ST 1', ...
-    'BA', ba, ...
-    'age', 30, ...
-    'sex', 'female', ...
+    'BA', ba, ... % % %     'age', 30, ... % % %     'sex', 'female', ...
     'L', 2, ...
     'ST_MP', {rand(ba.get('BR_DICT').get('LENGTH'), 1), rand(ba.get('BR_DICT').get('LENGTH'), 1)} ...
     );
@@ -198,9 +245,7 @@ sub2 = SubjectST_MP( ...
     'ID', 'SUB ST 2', ...
     'LABEL', 'Subejct ST 2', ...
     'NOTES', 'Notes on subject ST 2', ...
-    'BA', ba, ...
-    'age', 40, ...
-    'sex', 'male', ...
+    'BA', ba, ... % % %     'age', 40, ... % % %     'sex', 'male', ...
     'L', 2, ...
     'ST_MP', {rand(ba.get('BR_DICT').get('LENGTH'), 1), rand(ba.get('BR_DICT').get('LENGTH'), 1)} ...
     );
@@ -208,9 +253,7 @@ sub3 = SubjectST_MP( ...
     'ID', 'SUB ST 3', ...
     'LABEL', 'Subejct ST 3', ...
     'NOTES', 'Notes on subject ST 3', ...
-    'BA', ba, ...
-    'age', 50, ...
-    'sex', 'female', ...
+    'BA', ba, ... % % %     'age', 50, ... % % %     'sex', 'female', ...
     'L', 2, ...
     'ST_MP', {rand(ba.get('BR_DICT').get('LENGTH'), 1), rand(ba.get('BR_DICT').get('LENGTH'), 1)} ...
     );
