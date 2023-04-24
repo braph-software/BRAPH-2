@@ -161,8 +161,6 @@ value = [];
 
 %% ¡tests!
 
-%% ¡tests!
-
 %%% ¡excluded_props!
 [ExporterGroupSubjectST_MP_XLS.PUT_DIR]
 
