@@ -190,17 +190,23 @@ GUI
 %%%% ¡parallel!
 false
 %%%% ¡code!
-% % % im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectST')) filesep 'example data ST' filesep 'destrieux_atlas.xlsx']);
-% % % ba = im_ba.get('BA');
-% % % im_gr = ImporterGroupSubjectST_XLS( ...
-% % %     'FILE', [fileparts(which('SubjectST')) filesep 'example data ST' filesep 'xls' filesep 'ST_Group_1.xlsx'], ...
-% % %     'BA', ba, ...
-% % %     'WAITBAR', true ...
-% % %     );
-% % % gr = im_gr.get('GR');
-% % % 
-% % % gui = GUIElement('PE', gr, 'CLOSEREQ', false);
-% % % gui.get('DRAW')
-% % % gui.get('SHOW')
-% % % 
-% % % gui.get('CLOSE')
+im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectST')) filesep 'example data ST' filesep 'destrieux_atlas.xlsx']);
+ba = im_ba.get('BA');
+
+gr = Group('SUB_CLASS', 'SubjectST', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST'));
+for i = 1:1:50
+    sub = SubjectST( ...
+        'ID', ['SUB ST ' int2str(i)], ...
+        'LABEL', ['Subejct ST ' int2str(i)], ...
+        'NOTES', ['Notes on subject ST ' int2str(i)], ...
+        'BA', ba, ... % % %     'age', 75, ... % % %     'sex', 'female', ...
+        'ST', rand(ba.get('BR_DICT').get('LENGTH'), 1) ...
+        );
+    gr.get('SUB_DICT').get('ADD', sub)
+end
+
+gui = GUIElement('PE', gr, 'CLOSEREQ', false);
+gui.get('DRAW')
+gui.get('SHOW')
+
+gui.get('CLOSE')
