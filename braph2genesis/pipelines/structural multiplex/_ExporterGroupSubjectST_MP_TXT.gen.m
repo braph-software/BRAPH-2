@@ -110,8 +110,8 @@ if isfolder(directory)
             subjects_info{i, 1} = sub.get('ID');
             subjects_info{i, 2} = sub.get('LABEL');
             subjects_info{i, 3} = sub.get('NOTES');
-            age{i} =  sub.get('AGE');
-            sex{i} =  sub.get('SEX');
+% % %             age{i} =  sub.get('AGE');
+% % %             sex{i} =  sub.get('SEX');
             
             for k = 1:1:layers_number
                 data_val = sub.get('ST_MP');
