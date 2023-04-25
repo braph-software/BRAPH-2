@@ -192,6 +192,8 @@ N = ba.get('LENGTH');
 K1 = 2; % degree (mean node degree is 2K) - group 1
 beta1 = 0.3; % Rewiring probability - group 1
 for i = 1:1:50 % subject number
+    sub_id = ['SubjectCON_' num2str(i)];
+    
     h1 = WattsStrogatz(N, K1, beta1); % create two WS graph
     % figure(1) % Plot the two graphs to double-check
     % plot(h1, 'NodeColor',[1 0 0], 'EdgeColor',[0 0 0], 'EdgeAlpha',0.1, 'Layout','circle');
@@ -206,13 +208,18 @@ for i = 1:1:50 % subject number
 
     gr1_dir = [data_dir filesep() 'CON_Group_1_XLS'];
     mkdir(gr1_dir);
-    writetable(array2table(A1), [gr1_dir filesep() 'SubjectCON_' num2str(i) '.xlsx'], 'WriteRowNames', false, 'WriteVariableNames', false)
+    writetable(array2table(A1), [gr1_dir filesep() sub_id '.xlsx'], 'WriteRowNames', false, 'WriteVariableNames', false)
+    
+    % variables of interest
+    
 end
 
 % Group 2
 K2 = 2; % degree (mean node degree is 2K) - group 2
 beta2 = 0.85; % Rewiring probability - group 2
-for i = 1:1:50
+for i = 51:1:100
+    sub_id = ['SubjectCON_' num2str(i)];
+
     h2 = WattsStrogatz(N, K2, beta2);
     % figure(2)
     % plot(h2, 'NodeColor',[1 0 0], 'EdgeColor',[0 0 0], 'EdgeAlpha',0.1, 'Layout','circle');
@@ -228,6 +235,37 @@ for i = 1:1:50
     gr2_dir = [data_dir filesep() 'CON_Group_2_XLS'];
     mkdir(gr2_dir);
     writetable(array2table(A2), [gr2_dir filesep() 'SubjectCON_' num2str(i) '.xlsx'], 'WriteRowNames', false, 'WriteVariableNames', false)
+    
+    % variables of interest
+end
+
+%%% ¡test_functions!
+function h = WattsStrogatz(N,K,beta)
+% H = WattsStrogatz(N,K,beta) returns a Watts-Strogatz model graph with N
+% nodes, N*K edges, mean node degree 2*K, and rewiring probability beta.
+%
+% beta = 0 is a ring lattice, and beta = 1 is a random graph.
+
+% Connect each node to its K next and previous neighbors. This constructs
+% indices for a ring lattice.
+s = repelem((1:N)',1,K);
+t = s + repmat(1:K,N,1);
+t = mod(t-1,N)+1;
+
+% Rewire the target node of each edge with probability beta
+for source=1:N
+    switchEdge = rand(K, 1) < beta;
+    
+    newTargets = rand(N, 1);
+    newTargets(source) = 0;
+    newTargets(s(t==source)) = 0;
+    newTargets(t(source, ~switchEdge)) = 0;
+    
+    [~, ind] = sort(newTargets, 'descend');
+    t(source, switchEdge) = ind(1:nnz(switchEdge));
+end
+
+h = graph(s,t);
 end
 
 %%% ¡test!
