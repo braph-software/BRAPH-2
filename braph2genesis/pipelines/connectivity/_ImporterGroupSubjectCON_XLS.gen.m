@@ -243,12 +243,12 @@ for i = 1:1:50 % subject number
     r = 0 + (0.5 - 0)*rand(size(A1)); diffA = A1 - r; A1(A1 ~= 0) = diffA(A1 ~= 0); % make the adjacency matrix weighted
     A1 = max(A1, transpose(A1)); % make the adjacency matrix symmetric
 
-    writetable(array2table(A1), [gr1_dir filesep() sub_id '.xlsx'], 'WriteRowNames', false, 'WriteVariableNames', false)
+    writetable(array2table(A1), [gr1_dir filesep() sub_id '.xlsx'], 'WriteVariableNames', false)
     
     % variables of interest
     vois1 = [vois1; {sub_id, randi(90), sex_options(randi(2))}];
 end
-writetable(table(vois1), [data_dir filesep() gr1_name '_vois.xlsx'], 'WriteRowNames', false, 'WriteVariableNames', false)
+writetable(table(vois1), [data_dir filesep() gr1_name '_vois.xlsx'], 'WriteVariableNames', false)
 
 % Group 2
 K2 = 2; % degree (mean node degree is 2K) - group 2
@@ -275,12 +275,12 @@ for i = 51:1:100
     r = 0 + (0.5 - 0)*rand(size(A2)); diffA = A2 - r; A2(A2 ~= 0) = diffA(A2 ~= 0);
     A2 = max(A2, transpose(A2));
 
-    writetable(array2table(A2), [gr2_dir filesep() 'SubjectCON_' num2str(i) '.xlsx'], 'WriteRowNames', false, 'WriteVariableNames', false)
+    writetable(array2table(A2), [gr2_dir filesep() 'SubjectCON_' num2str(i) '.xlsx'], 'WriteVariableNames', false)
     
     % variables of interest
     vois2 = [vois2; {sub_id, randi(90), sex_options(randi(2))}];
 end
-writetable(table(vois2), [data_dir filesep() gr2_name '_vois.xlsx'], 'WriteRowNames', false, 'WriteVariableNames', false)
+writetable(table(vois2), [data_dir filesep() gr2_name '_vois.xlsx'], 'WriteVariableNames', false)
 
 % reset RNG
 rng(rng_settings_)
