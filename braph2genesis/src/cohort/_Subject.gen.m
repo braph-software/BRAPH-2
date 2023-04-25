@@ -43,31 +43,12 @@ NOTES (metadata, string) are some specific notes about the subject.
 
 %% ¡props!
 
-%%% ¡props!
+%%% ¡prop!
 VOI_DICT (data, idict) contains the variables of interest of the subject.
 %%%% ¡settings!
 'VOI'
 %%%% ¡gui!
-pr = PanelPropIDictTable('EL', sub, 'PROP', SUBJECT.VOI_DICT, ... 
+pr = PanelPropIDictTable('EL', sub, 'PROP', Subject.VOI_DICT, ... 
     'COLS', [VOI.LABEL VOI.V], ...
     'ROWNAME', 'numbered', ...
     varargin{:});
-
-%% ¡_methods! %TBE
-% % % function str = tostring(sub, varargin)
-% % %     %TOSTRING string with information about the subject.
-% % %     %
-% % %     % STR = TOSTRING(SUB) returns a string with information about the subject.
-% % %     %
-% % %     % STR = TOSTRING(SUB, N) trims the string to the first N characters.
-% % %     %
-% % %     % STR = TOSTRING(SUB, N, ENDING) ends the string with ENDING if it has
-% % %     %  been trimmed.
-% % %     %
-% % %     % See also disp, tree.
-% % % 
-% % %     str = [class(sub) ' ' sub.getPropTag(1) ' = ' tostring(sub.get(1)) '.'];
-% % % 
-% % %     str = tostring(str, varargin{:});
-% % %     str = str(2:1:end-1);
-% % % end
