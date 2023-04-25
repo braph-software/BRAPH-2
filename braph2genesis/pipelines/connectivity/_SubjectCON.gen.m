@@ -177,8 +177,8 @@ GUI
 %%%% ¡parallel!
 false
 %%%% ¡code!
-im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectCON')) filesep 'example data CON' filesep 'desikan_atlas.xlsx']);
-ba = im_ba.get('BA');
+ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx');
+ba = ba.get('BA');
 
 gr = Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON'));
 for i = 1:1:50
@@ -190,7 +190,7 @@ for i = 1:1:50
         'CON', rand(ba.get('BR_DICT').get('LENGTH')) ...
         );
     sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
-    sub.memorize('VOI_DICT').get('ADD', VOICategorical('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randn() > 0))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
     gr.get('SUB_DICT').get('ADD', sub)
 end
 
