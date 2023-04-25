@@ -2,13 +2,14 @@
 ImporterGroupSubjectCON_XLS < Importer (im, importer of CON subject group from XLS/XLSX) imports a group of subjects with connectivity data from a series of XLS/XLSX file.
 
 %%% ¡description!
-ImporterGroupSubjectCON_XLS imports a group of subjects with connectivity data from a series of XLS/XLSX file and their covariates (optional) from another XLS/XLSX file.
-All these files must be in the same folder; also, no other files should be in the folder.
-Each file contains a table of values corresponding to the adjacency matrix.
-The XLS/XLSX file containing the covariates must be inside another folder in the same group directory 
-and consists of the following columns:
-Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
-The first row contains the headers and each subsequent row the values for each subject.
+ImporterGroupSubjectCON_XLS imports a group of subjects with connectivity 
+ data from a series of XLS/XLSX file. All these files must be in the same 
+ folder; also, no other files should be in the folder. Each file contains a 
+ table of values corresponding to the adjacency matrix.
+The variables of interest can be loaded from another XLS/XLSX consisting of 
+ the following columns: Subject ID (column 1), covariates (subsequent columns). 
+ The 1st row contains the headers, the 2nd row a string with the categorical
+ variables of interewsy, and each subsequent row the values for each subject.
 
 %%% ¡seealso!
 Group, SubjectCON, ExporterGroupSubjectCON_XLS
@@ -174,6 +175,21 @@ value = gr;
 
 %%% ¡excluded_props!
 [ImporterGroupSubjectCON_XLS.GET_DIR]
+
+%%% ¡test!
+%%%% ¡name!
+Create example files
+%%%% ¡code!
+data_dir = [fileparts(which('SubjectCON')) filesep 'Example data CON XLS'];
+mkdir(data_dir);
+
+% Brain Atlas
+ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx');
+ExporterBrainAtlasXLS('FILE', [data_dir filesep() 'desikan_atlas.xlsx'])
+
+% Group 1
+
+% Group 2
 
 %%% ¡test!
 %%%% ¡name!
