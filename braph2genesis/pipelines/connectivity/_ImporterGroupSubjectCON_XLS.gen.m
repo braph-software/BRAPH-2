@@ -85,23 +85,19 @@ gr = Group( ...
 gr.lock('SUB_CLASS');
 
 directory = im.get('DIRECTORY');
-if isfolder(directory)    
-    % sets group props
+if isfolder(directory)
     wb = braph2waitbar(im.get('WAITBAR'), 0, 'Reading directory ...');
     
-    [~, name] = fileparts(directory);
+    [~, gr_name] = fileparts(directory);
     gr.set( ...
-        'ID', name, ...
-        'LABEL', name, ...
+        'ID', gr_name, ...
+        'LABEL', gr_name, ...
         'NOTES', ['Group loaded from ' directory] ...
     );
 
     try
-        % analyzes file
-        files_XLSX = dir(fullfile(directory, '*.xlsx'));
-        files_XLS = dir(fullfile(directory, '*.xls'));
-        files = [files_XLSX; files_XLS];
-
+        braph2waitbar(wb, .15, 'Loading subject group ...')
+        
 % % %         % Check if there are covariates to add (age and sex)
 % % %         cov_folder = dir(directory);
 % % %         cov_folder = cov_folder([cov_folder(:).isdir] == 1);
@@ -120,37 +116,46 @@ if isfolder(directory)
 % % %             sex = unassigned(ones(length(files), 1));
 % % %         end
 
-        braph2waitbar(wb, .15, 'Loading subject group ...')
-
+        % analyzes file
+        files = [dir(fullfile(directory, '*.xlsx')); dir(fullfile(directory, '*.xls'))];
+        
         if ~isempty(files)
             % brain atlas
             ba = im.get('BA');
-            br_number = size(xlsread(fullfile(directory, files(1).name)), 1);
-            if ba.get('BR_DICT').get('LENGTH') ~= br_number
-                ba = BrainAtlas();
-                br_dict = ba.get('BR_DICT');
+            if ba.get('BR_DICT').get('LENGTH') == 0
+                % adds the number of regions of the first file to the brain atlas
+                br_number = size(xlsread(fullfile(directory, files(1).name)), 1);
+                br_dict = ba.memorize('BR_DICT');
                 for j = 1:1:br_number
-                    br_id = ['br' int2str(j)];
-                    br = BrainRegion('ID', br_id);
-                    br_dict.get('ADD', br)
+                    br_dict.get('ADD', BrainRegion('ID', ['br' int2str(j)]))
                 end
-                ba.set('BR_DICT', br_dict);
             end
 
-            sub_dict = gr.get('SUB_DICT');
-
             % adds subjects
+            sub_dict = gr.get('SUB_DICT');
             for i = 1:1:length(files)
-                braph2waitbar(wb, .325 + .75 * i / length(files), ['Loading subject ' num2str(i) ' of ' num2str(length(files)) ' ...'])
+                braph2waitbar(wb, .15 + .85 * i / length(files), ['Loading subject ' num2str(i) ' of ' num2str(length(files)) ' ...'])
 
                 % read file
-                CON = xlsread(fullfile(directory, files(i).name));
                 [~, sub_id] = fileparts(files(i).name);
+                
+                CON = xlsread(fullfile(directory, files(i).name));
+                if size(CON, 1) ~= ba.get('BR_DICT').get('LENGTH') || size(CON, 2) ~= ba.get('BR_DICT').get('LENGTH')
+                    error( ...
+                        [BRAPH2.STR ':' class(im) ':' BRAPH2.ERR_IO], ...
+                        [BRAPH2.STR ':' class(im) ':' BRAPH2.ERR_IO '\\n' ...
+                        'The file ' sub_id ' should contain a matrix ' int2str(ba.get('BR_DICT').get('LENGTH')) 'x' int2str(ba.get('BR_DICT').get('LENGTH')) ', ' ...
+                        'while it is ' int2str(size(CON, 1)) 'x' int2str(size(CON, 2)) '.'] ...
+                        )
+                end
+                
                 sub = SubjectCON( ...
                     'ID', sub_id, ...
-                    'BA', ba, ... % % % 'age', age{i}, ... % % % 'sex', sex{i}, ...
+                    'BA', ba, ...
                     'CON', CON ...
                 );
+            
+                % % % 'age', age{i}, ... % % % 'sex', sex{i}, ...
                 sub_dict.get('ADD', sub);
             end
             gr.set('SUB_DICT', sub_dict);
@@ -184,13 +189,30 @@ data_dir = [fileparts(which('SubjectCON')) filesep 'Example data CON XLS'];
 mkdir(data_dir);
 
 % Brain Atlas
-ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx');
-ExporterBrainAtlasXLS('FILE', [data_dir filesep() 'desikan_atlas.xlsx'])
-N = ba.get('LENGTH');
+im_ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx');
+ba = im_ba.get('BA');
+ex_ba = ExporterBrainAtlasXLS( ...
+    'BA', ba, ...
+    'FILE', [data_dir filesep() 'atlas.xlsx'] ...
+    );
+ex_ba.get('SAVE')
+N = ba.get('BR_DICT').get('LENGTH');
+
+% saves RNG
+rng_settings_ = rng(); rng('default')
+
+sex_options = {'Female' 'Male'};
 
 % Group 1
 K1 = 2; % degree (mean node degree is 2K) - group 1
 beta1 = 0.3; % Rewiring probability - group 1
+gr1_name = 'CON_Group_1_XLS';
+gr1_dir = [data_dir filesep() gr1_name];
+mkdir(gr1_dir);
+vois1 = [
+    {{'Subject ID'} {'Age'} {'Sex'}}
+    {{} {} cell2str(sex_options)}
+    ];
 for i = 1:1:50 % subject number
     sub_id = ['SubjectCON_' num2str(i)];
     
@@ -206,17 +228,23 @@ for i = 1:1:50 % subject number
     r = 0 + (0.5 - 0)*rand(size(A1)); diffA = A1 - r; A1(A1 ~= 0) = diffA(A1 ~= 0); % make the adjacency matrix weighted
     A1 = max(A1, transpose(A1)); % make the adjacency matrix symmetric
 
-    gr1_dir = [data_dir filesep() 'CON_Group_1_XLS'];
-    mkdir(gr1_dir);
     writetable(array2table(A1), [gr1_dir filesep() sub_id '.xlsx'], 'WriteRowNames', false, 'WriteVariableNames', false)
     
     % variables of interest
-    
+    vois1 = [vois1; {sub_id, randi(90), sex_options(randi(2))}];
 end
+writetable(table(vois1), [data_dir filesep() gr1_name '_vois.xlsx'], 'WriteRowNames', false, 'WriteVariableNames', false)
 
 % Group 2
 K2 = 2; % degree (mean node degree is 2K) - group 2
 beta2 = 0.85; % Rewiring probability - group 2
+gr2_name = 'CON_Group_2_XLS';
+gr2_dir = [data_dir filesep() gr2_name];
+mkdir(gr2_dir);
+vois2 = [
+    {{'Subject ID'} {'Age'} {'Sex'}}
+    {{} {} cell2str(sex_options)}
+    ];
 for i = 51:1:100
     sub_id = ['SubjectCON_' num2str(i)];
 
@@ -232,12 +260,15 @@ for i = 51:1:100
     r = 0 + (0.5 - 0)*rand(size(A2)); diffA = A2 - r; A2(A2 ~= 0) = diffA(A2 ~= 0);
     A2 = max(A2, transpose(A2));
 
-    gr2_dir = [data_dir filesep() 'CON_Group_2_XLS'];
-    mkdir(gr2_dir);
     writetable(array2table(A2), [gr2_dir filesep() 'SubjectCON_' num2str(i) '.xlsx'], 'WriteRowNames', false, 'WriteVariableNames', false)
     
     % variables of interest
+    vois2 = [vois2; {sub_id, randi(90), sex_options(randi(2))}];
 end
+writetable(table(vois2), [data_dir filesep() gr2_name '_vois.xlsx'], 'WriteRowNames', false, 'WriteVariableNames', false)
+
+% reset RNG
+rng(rng_settings_)
 
 %%% ¡test_functions!
 function h = WattsStrogatz(N,K,beta)
@@ -276,10 +307,11 @@ GUI
 %%%% ¡parallel!
 false
 %%%% ¡code!
-im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectCON')) filesep 'example data CON' filesep 'desikan_atlas.xlsx']);
+im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectCON')) filesep 'Example data CON XLS' filesep 'atlas.xlsx']);
 ba = im_ba.get('BA');
+
 im_gr = ImporterGroupSubjectCON_XLS( ...
-    'DIRECTORY', [fileparts(which('SubjectCON')) filesep 'example data CON' filesep 'xls' filesep 'CON_Group_1'], ...
+    'DIRECTORY', [fileparts(which('SubjectCON')) filesep 'Example data CON XLS' filesep 'CON_Group_1_XLS'], ...
     'BA', ba, ...
     'WAITBAR', true ...
     );
