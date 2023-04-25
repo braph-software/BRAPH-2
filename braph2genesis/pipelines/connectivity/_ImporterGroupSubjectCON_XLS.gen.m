@@ -6,7 +6,7 @@ ImporterGroupSubjectCON_XLS imports a group of subjects with connectivity
  data from a series of XLS/XLSX file. All these files must be in the same 
  folder; also, no other files should be in the folder. Each file contains a 
  table of values corresponding to the adjacency matrix.
-The variables of interest can be loaded from another XLS/XLSX consisting of 
+The variables of interest can be loaded from another XLS/XLSX file consisting of 
  the following columns: Subject ID (column 1), covariates (subsequent columns). 
  The 1st row contains the headers, the 2nd row a string with the categorical
  variables of interewsy, and each subsequent row the values for each subject.
@@ -24,7 +24,7 @@ NAME (constant, string) is the name of the CON subject group importer from XLS/X
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the CON subject group importer from XLS/XLSX.
 %%%% ¡default!
-'ImporterGroupSubjectCON_XLS imports a group of subjects with connectivity data from a series of XLS/XLSX file and their covariates (optional) from another XLS/XLSX file.'
+'ImporterGroupSubjectCON_XLS imports a group of subjects with connectivity data from a series of XLS/XLSX file. The variables of interest can be loaded from another XLS/XLSX file.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the CON subject group importer from XLS/XLSX.
