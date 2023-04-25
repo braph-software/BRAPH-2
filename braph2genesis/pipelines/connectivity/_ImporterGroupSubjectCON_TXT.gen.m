@@ -3,12 +3,12 @@ ImporterGroupSubjectCON_TXT < Importer (im, importer of CON subject group from T
 
 %%% ¡description!
 ImporterGroupSubjectCON_TXT imports a group of subjects with connectivity 
- data from a series of TXT files contained in a folder named "GROUP_ID". 
- All these files must be in the same folder; also, no other files should be 
- in the folder. Each file contains a table of values corresponding to the 
- adjacency matrix.
-The variables of interest are from another TXT file named "GROUP_ID_void.txt" 
- (if exisitng) consisting of the following columns: 
+ data from a series of tab-separated TXT files contained in a folder named 
+ "GROUP_ID". All these files must be in the same folder; also, no other 
+ files should be in the folder. Each file contains a table of values 
+ corresponding to the adjacency matrix.
+The variables of interest are from another tab-separated TXT file named 
+ "GROUP_ID_void.txt" (if exisitng) consisting of the following columns: 
  Subject ID (column 1), covariates (subsequent columns). 
  The 1st row contains the headers, the 2nd row a string with the categorical
  variables of interest, and each subsequent row the values for each subject.
