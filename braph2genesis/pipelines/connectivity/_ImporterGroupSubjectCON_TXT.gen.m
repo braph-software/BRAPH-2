@@ -2,13 +2,16 @@
 ImporterGroupSubjectCON_TXT < Importer (im, importer of CON subject group from TXT) imports a group of subjects with connectivity data from a series of TXT file.
 
 %%% ¡description!
-ImporterGroupSubjectCON_TXT imports a group of subjects with connectivity data from a series of TXT file and their covariates (optional) from another TXT file.
-All these files must be in the same folder; also, no other files should be in the folder.
-Each file contains a table of values corresponding to the adjacency matrix.
-The TXT file containing the covariates must be inside another folder in the same group directory 
-and consists of the following columns:
-Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
-The first row contains the headers and each subsequent row the values for each subject.
+ImporterGroupSubjectCON_TXT imports a group of subjects with connectivity 
+ data from a series of TXT files contained in a folder named "GROUP_ID". 
+ All these files must be in the same folder; also, no other files should be 
+ in the folder. Each file contains a table of values corresponding to the 
+ adjacency matrix.
+The variables of interest are from another TXT file named "GROUP_ID_void.txt" 
+ (if exisitng) consisting of the following columns: 
+ Subject ID (column 1), covariates (subsequent columns). 
+ The 1st row contains the headers, the 2nd row a string with the categorical
+ variables of interest, and each subsequent row the values for each subject.
 
 %%% ¡seealso!
 Group, SunbjectCON, ExporterGroupSubjectCON_TXT
@@ -96,59 +99,78 @@ if isfolder(directory)
     );
 
     try
+        braph2waitbar(wb, .15, 'Loading subjecy group ...')
+
         % analyzes file
         files = dir(fullfile(directory, '*.txt'));
-
-% % %         % Check if there are covariates to add (age and sex)
-% % %         cov_folder = dir(directory);
-% % %         cov_folder = cov_folder([cov_folder(:).isdir] == 1);
-% % %         cov_folder = cov_folder(~ismember({cov_folder(:).name}, {'.', '..'}));
-% % %         if ~isempty(cov_folder)
-% % %             file_cov = dir(fullfile([directory filesep() cov_folder.name], '*.txt'));
-% % %             raw_covariates = readtable([directory filesep() cov_folder.name filesep() file_cov.name], 'Delimiter', '	');
-% % %             age = raw_covariates{:, 2};
-% % %             sex = raw_covariates{:, 3};
-% % %         else
-% % %             age = ones(length(files), 1);
-% % %             unassigned =  {'unassigned'};
-% % %             sex = unassigned(ones(length(files), 1));
-% % %         end
-
-        braph2waitbar(wb, .15, 'Loading subjecy group ...')
 
         if ~isempty(files)
             % brain atlas
             ba = im.get('BA');
-            raw = readtable(fullfile(directory, files(1).name), 'Delimiter', '	');
-            br_number = size(raw, 1);  
-            if ba.get('BR_DICT').get('LENGTH') ~= br_number
-                ba = BrainAtlas();
-                idict = ba.get('BR_DICT');
+            if ba.get('BR_DICT').get('LENGTH') == 0
+                % adds the number of regions of the first file to the brain atlas
+                br_number = size(readtable(fullfile(directory, files(1).name), 'Delimiter', '\t'), 1);
+                br_dict = ba.memorize('BR_DICT');
                 for j = 1:1:br_number
-                    br_id = ['br' int2str(j)];
-                    br = BrainRegion('ID', br_id);
-                    idict.get('ADD', br)
+                    br_dict.get('ADD', BrainRegion('ID', ['br' int2str(j)]))
                 end
-                ba.set('BR_DICT', idict);
             end
-
-            subdict = gr.get('SUB_DICT');
 
             % adds subjects
+            sub_dict = gr.memorize('SUB_DICT');
             for i = 1:1:length(files)
-                braph2waitbar(wb, .25 + .75 * i / length(files), ['Loading subject ' num2str(i) ' of ' num2str(length(files)) ' ...'])
+                braph2waitbar(wb, .15 + .85 * i / length(files), ['Loading subject ' num2str(i) ' of ' num2str(length(files)) ' ...'])
 
                 % read file
-                CON = table2array(readtable(fullfile(directory, files(i).name), 'Delimiter', '	'));
                 [~, sub_id] = fileparts(files(i).name);
+
+                CON = table2array(readtable(fullfile(directory, files(i).name), 'Delimiter', '\t'));
+                if size(CON, 1) ~= ba.get('BR_DICT').get('LENGTH') || size(CON, 2) ~= ba.get('BR_DICT').get('LENGTH')
+                    error( ...
+                        [BRAPH2.STR ':' class(im) ':' BRAPH2.ERR_IO], ...
+                        [BRAPH2.STR ':' class(im) ':' BRAPH2.ERR_IO '\\n' ...
+                        'The file ' sub_id ' should contain a matrix ' int2str(ba.get('BR_DICT').get('LENGTH')) 'x' int2str(ba.get('BR_DICT').get('LENGTH')) ', ' ...
+                        'while it is ' int2str(size(CON, 1)) 'x' int2str(size(CON, 2)) '.'] ...
+                        )
+                end
+                
                 sub = SubjectCON( ...
                     'ID', sub_id, ...
-                    'BA', ba, ... % % %                     'age', age(i), ... % % %                     'sex', sex{i}, ...
+                    'BA', ba, ...
                     'CON', CON ...
                 );
-                subdict.get('ADD', sub);
+                sub_dict.get('ADD', sub);
             end
-            gr.set('SUB_DICT', subdict);
+            
+            % variables of interest
+            if isfile([directory '_vois.txt'])
+                vois = textread([directory '_vois.txt'], '%s', 'delimiter', '\t', 'whitespace', '');
+                vois = reshape(vois, find(strcmp('', vois), 1) - 1, [])';
+                for i = 3:1:size(vois, 1)
+                    sub_id = vois{i, 1};
+                    sub = sub_dict.get('IT', sub_id);
+                    for v = 2:1:size(vois, 2)
+                        voi_id = vois{1, v};
+                        if isempty(vois{2, v}) % VOINumeric
+                            sub.memorize('VOI_DICT').get('ADD', ...
+                                VOINumeric( ...
+                                    'ID', voi_id, ...
+                                    'V', str2num(vois{i, v}) ...
+                                    ) ...
+                                );
+                        elseif ~isempty(vois{2, v}) % VOICategoric
+                            categories = eval(vois{2, v});
+                            sub.memorize('VOI_DICT').get('ADD', ...
+                                VOICategoric( ...
+                                    'ID', voi_id, ...
+                                    'CATEGORIES', str2cell(categories), ...
+                                    'V', find(strcmp(vois{i, v}, categories)) ...
+                                    ) ...
+                                );
+                        end                        
+                    end
+                end
+            end
         end
     catch e
         braph2waitbar(wb, 'close')
@@ -250,12 +272,12 @@ for i = 51:1:100
     r = 0 + (0.5 - 0)*rand(size(A2)); diffA = A2 - r; A2(A2 ~= 0) = diffA(A2 ~= 0);
     A2 = max(A2, transpose(A2));
 
-    writetable(array2table(A2), [gr2_dir filesep() 'SubjectCON_' num2str(i) '.txt'], 'WriteVariableNames', false)
+    writetable(array2table(A2), [gr2_dir filesep() 'SubjectCON_' num2str(i) '.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
     
     % variables of interest
     vois2 = [vois2; {sub_id, randi(90), sex_options(randi(2))}];
 end
-writetable(table(vois2), [data_dir filesep() gr2_name '_vois.txt'], 'WriteVariableNames', false)
+writetable(table(vois2), [data_dir filesep() gr2_name '_vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
 
 % reset RNG
 rng(rng_settings_)

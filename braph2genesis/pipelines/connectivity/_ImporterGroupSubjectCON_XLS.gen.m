@@ -11,7 +11,7 @@ The variables of interest are from another XLS/XLSX file named "GROUP_ID_void.xl
  (if exisitng) consisting of the following columns: 
  Subject ID (column 1), covariates (subsequent columns). 
  The 1st row contains the headers, the 2nd row a string with the categorical
- variables of interewsy, and each subsequent row the values for each subject.
+ variables of interest, and each subsequent row the values for each subject.
 
 %%% ¡seealso!
 Group, SubjectCON, ExporterGroupSubjectCON_XLS
@@ -116,7 +116,7 @@ if isfolder(directory)
             end
 
             % adds subjects
-            sub_dict = gr.get('SUB_DICT');
+            sub_dict = gr.memorize('SUB_DICT');
             for i = 1:1:length(files)
                 braph2waitbar(wb, .15 + .85 * i / length(files), ['Loading subject ' num2str(i) ' of ' num2str(length(files)) ' ...'])
 
@@ -140,7 +140,6 @@ if isfolder(directory)
                 );
                 sub_dict.get('ADD', sub);
             end
-            gr.set('SUB_DICT', sub_dict);
             
             % variables of interest
             vois = [];
