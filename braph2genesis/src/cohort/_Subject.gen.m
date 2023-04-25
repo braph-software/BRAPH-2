@@ -3,8 +3,8 @@ Subject < ConcreteElement (sub, subject) is a subject.
 
 %%% ¡description!
 Subject provides the methods necessary for all subjects. 
-Instances of this element should not be created. 
-Use one of its subelements instead.
+ Instances of this element should not be created. 
+ Use one of its subelements instead.
 
 %%% ¡seealso!
 Group
@@ -40,6 +40,18 @@ LABEL (metadata, string) is an extended label of the subject.
 NOTES (metadata, string) are some specific notes about the subject.
 %%%% ¡default!
 'Subject notes'
+
+%% ¡props!
+
+%%% ¡props!
+VOI_DICT (data, idict) contains the variables of interest of the subject.
+%%%% ¡settings!
+'VOI'
+%%%% ¡gui!
+pr = PanelPropIDictTable('EL', sub, 'PROP', SUBJECT.VOI_DICT, ... 
+    'COLS', [VOI.LABEL VOI.V], ...
+    'ROWNAME', 'numbered', ...
+    varargin{:});
 
 %% ¡_methods! %TBE
 % % % function str = tostring(sub, varargin)
