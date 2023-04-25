@@ -105,7 +105,7 @@ if isfolder(directory)
         sub_file = [gr_directory filesep() sub_id{i} '.xlsx'];
 
         % save file
-        writetable(tab, sub_file, 'Sheet', 1, 'WriteVariableNames', 0);
+        writetable(tab, sub_file, 'WriteVariableNames', false);
     end
     
     % variables of interest
@@ -120,20 +120,24 @@ if isfolder(directory)
         vois(1, 2:end) = voi_ids;
         for i = 1:1:sub_number
             sub = sub_dict.get('IT', i);
+            vois{2 + i, 1} = sub.get('ID');
+            
             voi_dict = sub.get('VOI_DICT');
             for v = 1:1:voi_dict.get('LENGTH')
                 voi = voi_dict.get('IT', v);
                 voi_id = voi.get('ID');
                 if isa(voi, 'VOINumeric') % Numeric
-% vois{2 + sub_number, 1 + find(strcmp(voi_id, voi_ids))} = voi.get('V');
+                    vois{2 + i, 1 + find(strcmp(voi_id, voi_ids))} = voi.get('V');
                 elseif isa(voi, 'VOICategoric') % Categoric
-% vois{2 + sub_number, 1 + find(strcmp(voi_id, voi_ids))} = cell2str(voi.get('CATEGORIES'));
-% vois{2, 1 + find(strcmp(voi_id, voi_ids))} = find(strcmp(voi.get('V'), voi.get('CATEGORIES')));
+                    categories = voi.get('CATEGORIES');
+                    vois{2, 1 + find(strcmp(voi_id, voi_ids))} = cell2str(categories);
+                    vois{2 + i, 1 + find(strcmp(voi_id, voi_ids))} = categories{voi.get('V')};
                 end
             end
         end
+        writetable(table(vois), [gr_directory '_vois.xlsx'], 'WriteVariableNames', false)
     end
-        
+
     braph2waitbar(wb, 'close')
 end
 
