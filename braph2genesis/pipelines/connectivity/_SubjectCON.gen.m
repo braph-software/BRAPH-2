@@ -190,6 +190,7 @@ for i = 1:1:50
         'CON', rand(ba.get('BR_DICT').get('LENGTH')) ...
         );
     sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategorical('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randn() > 0))
     gr.get('SUB_DICT').get('ADD', sub)
 end
 
