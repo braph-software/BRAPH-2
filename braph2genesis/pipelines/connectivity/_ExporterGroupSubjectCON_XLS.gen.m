@@ -1,13 +1,16 @@
 %% ¡header!
-ExporterGroupSubjectCON_XLS < Exporter (ex, exporter of CON subject group in XLS/XLSX) exports a group of subjects with connectivity data to a series of XLSX file.
+ExporterGroupSubjectCON_XLS < Exporter (ex, exporter of CON subject group in XLSX) exports a group of subjects with connectivity data to a series of XLSX file.
 
 %%% ¡description!
-ExporterGroupSubjectCON_XLS exports a group of subjects with connectivity data to a series of XLSX file and their covariates (if existing).
-All these files are saved in the same folder.
-Each file contains a table of values corresponding to the adjacency matrix.
-The XLS/XLSX file containing the covariates consists of the following columns:
-Subject ID (column 1), Subject AGE (column 2), and, Subject SEX (column 3).
-The first row contains the headers and each subsequent row the values for each subject.
+ExporterGroupSubjectCON_XLS exports a group of subjects with connectivity 
+ data to a series of XLSX files contained in a folder named "GROUP_ID". 
+ All these files are saved in the same folder. Each file contains a table 
+ of values corresponding to the adjacency matrix.
+The variables of interest (if existing) are saved in another XLSX file 
+ named "GROUP_ID_void.xlsx" consisting of the following columns: 
+ Subject ID (column 1), covariates (subsequent columns). 
+ The 1st row contains the headers, the 2nd row a string with the categorical
+ variables of interewsy, and each subsequent row the values for each subject.
 
 %%% ¡seealso!
 Group, SunbjectCON, ImporterGroupSubjectCON_XLS
@@ -15,30 +18,30 @@ Group, SunbjectCON, ImporterGroupSubjectCON_XLS
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the CON subject group exporter in XLS/XLSX.
+NAME (constant, string) is the name of the CON subject group exporter in XLSX.
 %%%% ¡default!
 'ExporterGroupSubjectCON_XLS'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the CON subject group exporter in XLS/XLSX.
+DESCRIPTION (constant, string) is the description of the CON subject group exporter in XLSX.
 %%%% ¡default!
-'ExporterGroupSubjectCON_XLS exports a group of subjects with connectivity data to a series of XLSX file and their covariates (if existing).'
+'ExporterGroupSubjectCON_XLS exports a group of subjects with connectivity data to a series of XLSX files. The variables of interest (if existing) are saved in another XLSX file.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the CON subject group exporter in XLS/XLSX.
+TEMPLATE (parameter, item) is the template of the CON subject group exporter in XLSX.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the CON subject group exporter in XLS/XLSX.
+ID (data, string) is a few-letter code for the CON subject group exporter in XLSX.
 %%%% ¡default!
 'ExporterGroupSubjectCON_XLS ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the CON subject group exporter in XLS/XLSX.
+LABEL (metadata, string) is an extended label of the CON subject group exporter in XLSX.
 %%%% ¡default!
 'ExporterGroupSubjectCON_XLS label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the CON subject group exporter in XLS/XLSX.
+NOTES (metadata, string) are some specific notes about the CON subject group exporter in XLSX.
 %%%% ¡default!
 'ExporterGroupSubjectCON_XLS notes'
 
@@ -70,7 +73,7 @@ end
 value = ex;
 
 %%% ¡prop!
-SAVE (result, empty) saves the group of subjects with connectivity data in XLS/XLSX files in the selected directory.
+SAVE (result, empty) saves the group of subjects with connectivity data in XLSX files in the selected directory.
 %%%% ¡calculate!
 directory = ex.get('DIRECTORY');
 
@@ -89,8 +92,6 @@ if isfolder(directory)
     sub_dict = gr.get('SUB_DICT');
     sub_number = sub_dict.get('LENGTH');
     sub_id = cell(sub_number, 1);
-% % %     age = cell(sub_number, 1);
-% % %     sex = cell(sub_number, 1);
 
     for i = 1:1:sub_number
         braph2waitbar(wb, .25 + .75 * i / sub_number, ['Saving subject ' num2str(i) ' of ' num2str(sub_number) ' ...'])
@@ -98,8 +99,6 @@ if isfolder(directory)
         sub = sub_dict.get('IT', i);
         sub_id(i) = {sub.get('ID')};
         sub_CON = sub.get('CON');
-% % %         age{i} =  sub.get('AGE');
-% % %         sex{i} =  sub.get('SEX'); 
         
         tab = table(sub_CON);
 
@@ -109,25 +108,6 @@ if isfolder(directory)
         writetable(tab, sub_file, 'Sheet', 1, 'WriteVariableNames', 0);
     end
         
-% % %     % if covariates save them in another file
-% % %     if sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
-% % %         tab2 = cell(1 + sub_number, 3);
-% % %         tab2{1, 1} = 'ID';
-% % %         tab2{1, 2} = 'Age';
-% % %         tab2{1, 3} = 'Sex';
-% % %         tab2(2:end, 1) = sub_id;
-% % %         tab2(2:end, 2) = age;
-% % %         tab2(2:end, 3) = sex;
-% % %         tab2 = table(tab2);
-% % %         
-% % %         % save
-% % %         cov_directory = [gr_directory filesep() 'covariates'];
-% % %         if ~exist(cov_directory, 'dir')
-% % %             mkdir(cov_directory)
-% % %         end
-% % %         writetable(tab2, [cov_directory filesep() gr.get('ID') '_covariates.xlsx'], 'Sheet', 1, 'WriteVariableNames', 0);
-% % %     end
-    
     braph2waitbar(wb, 'close')
 end
 
