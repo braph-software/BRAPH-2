@@ -167,18 +167,6 @@ pr = PanelPropMatrix('EL', sub, 'PROP', SubjectCON.CON, ...
     'COLUMNNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
     varargin{:});
 
-%%% ¡_prop!
-% % % age (data, scalar) is a scalar number containing the age of the subject.
-% % % %%%% ¡_default!
-% % % 0
-
-%%% ¡_prop!
-% % % sex (data, option) is an option containing the sex of the subject (female/male).
-% % % %%%% ¡_default!
-% % % 'unassigned'
-% % % %%%% ¡_settings!
-% % % {'Female', 'Male', 'unassigned'}
-
 %% ¡tests!
 
 %%% ¡test!
@@ -198,9 +186,10 @@ for i = 1:1:50
         'ID', ['SUB CON ' int2str(i)], ...
         'LABEL', ['Subejct CON ' int2str(i)], ...
         'NOTES', ['Notes on subject CON ' int2str(i)], ...
-        'BA', ba, ... % % %     'age', 75, ... % % %     'sex', 'female', ...
+        'BA', ba, ...
         'CON', rand(ba.get('BR_DICT').get('LENGTH')) ...
         );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
     gr.get('SUB_DICT').get('ADD', sub)
 end
 
