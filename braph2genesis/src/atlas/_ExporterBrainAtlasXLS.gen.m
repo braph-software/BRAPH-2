@@ -93,7 +93,7 @@ if isfolder(fileparts(file))
     br_y = cell(br_dict.get('LENGTH'), 1);
     br_z = cell(br_dict.get('LENGTH'), 1);
     for i = 1:1:br_dict.get('LENGTH')
-    braph2waitbar(wb, .25 + .75 * i / br_dict.get('LENGTH'), ['Saving brain region ' num2str(i) ' of ' num2str(br_dict.get('LENGTH'))])
+        braph2waitbar(wb, .25 + .75 * i / br_dict.get('LENGTH'), ['Saving brain region ' num2str(i) ' of ' num2str(br_dict.get('LENGTH'))])
         
         br = br_dict.get('IT', i);
         br_ids{i} = br.get('ID');
