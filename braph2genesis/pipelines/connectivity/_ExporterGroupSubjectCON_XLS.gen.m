@@ -125,9 +125,10 @@ if isfolder(directory)
                 voi = voi_dict.get('IT', v);
                 voi_id = voi.get('ID');
                 if isa(voi, 'VOINumeric') % Numeric
-                    
+% vois{2 + sub_number, 1 + find(strcmp(voi_id, voi_ids))} = voi.get('V');
                 elseif isa(voi, 'VOICategoric') % Categoric
-                    
+% vois{2 + sub_number, 1 + find(strcmp(voi_id, voi_ids))} = cell2str(voi.get('CATEGORIES'));
+% vois{2, 1 + find(strcmp(voi_id, voi_ids))} = find(strcmp(voi.get('V'), voi.get('CATEGORIES')));
                 end
             end
         end
