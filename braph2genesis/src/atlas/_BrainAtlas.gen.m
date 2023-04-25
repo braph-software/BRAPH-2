@@ -9,7 +9,7 @@ thus, it has access to all IndexedDictionary methods.
 BrainAtlas can be imported/exported to .txt, .xls and .json files.
 
 %%% ¡seealso!
-Element, BrainRegion, BrainSurface, ImporterBrainAtlasXLS, ImporterBrainAtlasTXT, ExporterBrainAtlasXLS, ExporterBrainAtlasTXT
+BrainRegion, BrainSurface, ImporterBrainAtlasXLS, ImporterBrainAtlasTXT, ExporterBrainAtlasXLS, ExporterBrainAtlasTXT
 
 %%% ¡_gui_!
 
