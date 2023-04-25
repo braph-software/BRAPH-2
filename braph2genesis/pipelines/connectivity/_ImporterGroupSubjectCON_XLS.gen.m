@@ -98,24 +98,6 @@ if isfolder(directory)
     try
         braph2waitbar(wb, .15, 'Loading subject group ...')
         
-% % %         % Check if there are covariates to add (age and sex)
-% % %         cov_folder = dir(directory);
-% % %         cov_folder = cov_folder([cov_folder(:).isdir] == 1);
-% % %         cov_folder = cov_folder(~ismember({cov_folder(:).name}, {'.', '..'}));
-% % %         if ~isempty(cov_folder)
-% % %             file_cov_XLSX = dir(fullfile([directory filesep() cov_folder.name], '*.xlsx'));
-% % %             file_cov_XLS = dir(fullfile([directory filesep() cov_folder.name], '*.xls'));
-% % %             file_cov = [file_cov_XLSX; file_cov_XLS];
-% % %             [~, ~, raw_covariates] = xlsread(fullfile([directory filesep() cov_folder.name], file_cov.name));
-% % %             age = raw_covariates(2:end, 2);
-% % %             sex = raw_covariates(2:end, 3);
-% % %         else
-% % %             age = {[0]};
-% % %             age = age(ones(length(files), 1));
-% % %             unassigned =  {'unassigned'};
-% % %             sex = unassigned(ones(length(files), 1));
-% % %         end
-
         % analyzes file
         files = [dir(fullfile(directory, '*.xlsx')); dir(fullfile(directory, '*.xls'))];
         
@@ -154,11 +136,42 @@ if isfolder(directory)
                     'BA', ba, ...
                     'CON', CON ...
                 );
-            
-                % % % 'age', age{i}, ... % % % 'sex', sex{i}, ...
                 sub_dict.get('ADD', sub);
             end
             gr.set('SUB_DICT', sub_dict);
+            
+            % variables of interest
+            vois = [];
+            if isfile([directory '_voi.xls'])
+                [~, ~, vois] = xlsread([directory '_voi.xls']);
+            elseif isfile([directory '_voi.xlsx'])
+                [~, ~, vois] = xlsread([directory '_voi.xlsx']);
+            end
+            if ~isempty(vois)
+                for i = 3:1:size(vois, 1)
+                    sub_id = vois{i, 1};
+                    sub = sub_dict.get('IT', sub_id);
+                    for v = 2:1:size(vois, 2)
+                        voi_id = vois{1, v};
+                        if isnumeric(vois{2, v}) % VOINumeric
+                            sub.memorize('VOI_DICT').get('ADD', ...
+                                VOINumeric( ...
+                                    'ID', voi_id, ...
+                                    'V', vois{i, v} ...
+                                    ) ...
+                                );
+                        elseif ischar(vois{2, v}) % VOICategoric
+                            sub.memorize('VOI_DICT').get('ADD', ...
+                                VOICategoric( ...
+                                    'ID', voi_id, ...
+                                    'CATEGORIES', str2cell(vois{2, v}), ...
+                                    'V', find(strcmp(vois{i, v}, str2cell(vois{2, v}))) ...
+                                    ) ...
+                                );
+                        end                        
+                    end
+                end
+            end
         end
     catch e
         braph2waitbar(wb, 'close')
@@ -168,8 +181,8 @@ if isfolder(directory)
     
     braph2waitbar(wb, 'close')
 else
-    error([BRAPH2.STR ':ImporterGroupSubjectCON_XLS:' BRAPH2.CANCEL_IO], ...
-        [BRAPH2.STR ':ImporterGroupSubjectCON_XLS:' BRAPH2.CANCEL_IO '\\n' ...
+    error([BRAPH2.STR ':ImporterGroupSubjectCON_XLS:' BRAPH2.ERR_IO], ...
+        [BRAPH2.STR ':ImporterGroupSubjectCON_XLS:' BRAPH2.ERR_IO '\\n' ...
         'The prop DIRECTORY must be an existing directory, but it is ''' directory '''.'] ...
         );
 end
