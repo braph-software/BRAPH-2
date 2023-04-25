@@ -107,6 +107,23 @@ if isfolder(directory)
         % save file
         writetable(tab, sub_file, 'Sheet', 1, 'WriteVariableNames', 0);
     end
+    
+    % variables of interest
+    voi_ids = {};
+    for i = 1:1:sub_number
+        sub = sub_dict.get('IT', i);
+        voi_ids = unique([voi_ids, sub.get('VOI_DICT').get('KEYS')]);
+    end
+    if ~isempty(voi_ids)
+        vois = [{'Subject ID'} voi_ids];
+        for i = 1:1:sub_number
+            sub = sub_dict.get('IT', i);
+            voi_dict = sub.get('VOI_DICT');
+            for v = 1:1:voi_dict.get('LENGTH')
+                
+            end
+        end
+    end
         
     braph2waitbar(wb, 'close')
 end
@@ -194,7 +211,7 @@ sub1 = SubjectCON( ...
     'CON', rand(ba.get('BR_DICT').get('LENGTH')) ...
     );
 sub1.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 75))
-sub1.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', 'Female'))
+sub1.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', find(strcmp('Female', {'Female', 'Male'}))))
 
 sub2 = SubjectCON( ...
     'ID', 'SUB CON 2', ...
@@ -203,8 +220,8 @@ sub2 = SubjectCON( ...
     'BA', ba, ...
     'CON', rand(ba.get('BR_DICT').get('LENGTH')) ...
     );
-sub1.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 70))
-sub1.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', 'Male'))
+sub2.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 70))
+sub2.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', find(strcmp('Male', {'Female', 'Male'}))))
 
 sub3 = SubjectCON( ...
     'ID', 'SUB CON 3', ...
@@ -213,8 +230,8 @@ sub3 = SubjectCON( ...
     'BA', ba, ...
     'CON', rand(ba.get('BR_DICT').get('LENGTH')) ...
     );
-sub1.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 50))
-sub1.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', 'Female'))
+sub3.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 50))
+sub3.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', find(strcmp('Female', {'Female', 'Male'}))))
 
 gr = Group( ...
     'ID', 'GR CON', ...
