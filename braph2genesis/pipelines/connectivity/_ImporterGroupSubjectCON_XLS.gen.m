@@ -142,10 +142,10 @@ if isfolder(directory)
             
             % variables of interest
             vois = [];
-            if isfile([directory '_voi.xls'])
-                [~, ~, vois] = xlsread([directory '_voi.xls']);
-            elseif isfile([directory '_voi.xlsx'])
-                [~, ~, vois] = xlsread([directory '_voi.xlsx']);
+            if isfile([directory '_vois.xls'])
+                [~, ~, vois] = xlsread([directory '_vois.xls']);
+            elseif isfile([directory '_vois.xlsx'])
+                [~, ~, vois] = xlsread([directory '_vois.xlsx']);
             end
             if ~isempty(vois)
                 for i = 3:1:size(vois, 1)
