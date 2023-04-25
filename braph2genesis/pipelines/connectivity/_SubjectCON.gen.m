@@ -177,8 +177,8 @@ GUI
 %%%% ¡parallel!
 false
 %%%% ¡code!
-ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx');
-ba = ba.get('BA');
+im_ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx');
+ba = im_ba.get('BA');
 
 gr = Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON'));
 for i = 1:1:50
