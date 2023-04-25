@@ -917,16 +917,16 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     eval(['test_' el_class])
 % end
 
-el_class_list = {'SubjectCON'} % {'SubjectCON' 'ImporterGroupSubjectCON_XLS' 'ExporterGroupSubjectCON_XLS' 'ImporterGroupSubjectCON_TXT' 'ExporterGroupSubjectCON_TXT'}
-for i = 1:1:length(el_class_list)
-    el_class = el_class_list{i};
-    el_path = '/pipelines/connectivity';
-    delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
-    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    eval(['test_' el_class])
-end
+% el_class_list = {'SubjectCON'} % {'SubjectCON' 'ImporterGroupSubjectCON_XLS' 'ExporterGroupSubjectCON_XLS' 'ImporterGroupSubjectCON_TXT' 'ExporterGroupSubjectCON_TXT'}
+% for i = 1:1:length(el_class_list)
+%     el_class = el_class_list{i};
+%     el_path = '/pipelines/connectivity';
+%     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     eval(['test_' el_class])
+% end
 
 % ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx');
 % ba = ba.get('BA');
@@ -948,6 +948,76 @@ end
 % gui = GUIElement('PE', gr, 'CLOSEREQ', false);
 % gui.get('DRAW')
 % gui.get('SHOW')
+
+data_dir = [fileparts(which('SubjectCON')) filesep 'Example data CON XLS'];
+mkdir(data_dir);
+
+% Brain Atlas
+im_ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx');
+ba = im_ba.get('BA');
+ex_ba = ExporterBrainAtlasXLS( ...
+    'BA', ba, ...
+    'FILE', [data_dir filesep() 'desikan_atlas.xlsx'] ...
+    );
+ex_ba.get('SAVE')
+N = ba.get('BR_DICT').get('LENGTH');
+
+% saves RNG
+rng_settings_ = rng(); rng('default')
+
+% Group 1
+K1 = 2; % degree (mean node degree is 2K) - group 1
+beta1 = 0.3; % Rewiring probability - group 1
+gr1_dir = [data_dir filesep() 'CON_Group_1_XLS'];
+mkdir(gr1_dir);
+for i = 1:1:50 % subject number
+    sub_id = ['SubjectCON_' num2str(i)];
+    
+    h1 = WattsStrogatz(N, K1, beta1); % create two WS graph
+    % figure(1) % Plot the two graphs to double-check
+    % plot(h1, 'NodeColor',[1 0 0], 'EdgeColor',[0 0 0], 'EdgeAlpha',0.1, 'Layout','circle');
+    % title(['Group 1: Graph with $N = $ ' num2str(N_nodes) ...
+    %     ' nodes, $K = $ ' num2str(K1) ', and $\beta = $ ' num2str(beta1)], ...
+    %     'Interpreter','latex')
+    % axis equal
+
+    A1 = full(adjacency(h1)); A1(1:length(A1)+1:numel(A1)) = 0; % extract the adjacency matrix
+    r = 0 + (0.5 - 0)*rand(size(A1)); diffA = A1 - r; A1(A1 ~= 0) = diffA(A1 ~= 0); % make the adjacency matrix weighted
+    A1 = max(A1, transpose(A1)); % make the adjacency matrix symmetric
+
+    writetable(array2table(A1), [gr1_dir filesep() sub_id '.xlsx'], 'WriteRowNames', false, 'WriteVariableNames', false)
+    
+    % variables of interest
+    
+end
+
+% reset RNG
+rng(rng_settings_)
+
+% Group 2
+K2 = 2; % degree (mean node degree is 2K) - group 2
+beta2 = 0.85; % Rewiring probability - group 2
+gr2_dir = [data_dir filesep() 'CON_Group_2_XLS'];
+mkdir(gr2_dir);
+for i = 51:1:100
+    sub_id = ['SubjectCON_' num2str(i)];
+
+    h2 = WattsStrogatz(N, K2, beta2);
+    % figure(2)
+    % plot(h2, 'NodeColor',[1 0 0], 'EdgeColor',[0 0 0], 'EdgeAlpha',0.1, 'Layout','circle');
+    % title(['Group 2: Graph with $N = $ ' num2str(N_nodes) ...
+    %     ' nodes, $K = $ ' num2str(K2) ', and $\beta = $ ' num2str(beta2)], ...
+    %     'Interpreter','latex')
+    % axis equal
+
+    A2 = full(adjacency(h2)); A2(1:length(A2)+1:numel(A2)) = 0;
+    r = 0 + (0.5 - 0)*rand(size(A2)); diffA = A2 - r; A2(A2 ~= 0) = diffA(A2 ~= 0);
+    A2 = max(A2, transpose(A2));
+
+    writetable(array2table(A2), [gr2_dir filesep() 'SubjectCON_' num2str(i) '.xlsx'], 'WriteRowNames', false, 'WriteVariableNames', false)
+    
+    % variables of interest
+end
 
 % el_class_list = {'ExporterGroupSubjectFUN_TXT'} % {'SubjectFUN' 'ImporterGroupSubjectFUN_XLS' 'ImporterGroupSubjectFUN_TXT' 'ExporterGroupSubjectFUN_XLS' 'ExporterGroupSubjectFUN_TXT'}
 % for i = 1:1:length(el_class_list)
