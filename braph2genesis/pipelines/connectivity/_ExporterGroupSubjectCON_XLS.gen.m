@@ -94,7 +94,7 @@ if isfolder(directory)
     sub_id = cell(sub_number, 1);
 
     for i = 1:1:sub_number
-        braph2waitbar(wb, .15 + .75 * i / sub_number, ['Saving subject ' num2str(i) ' of ' num2str(sub_number) ' ...'])
+        braph2waitbar(wb, .15 + .85 * i / sub_number, ['Saving subject ' num2str(i) ' of ' num2str(sub_number) ' ...'])
         
         sub = sub_dict.get('IT', i);
         sub_id(i) = {sub.get('ID')};
