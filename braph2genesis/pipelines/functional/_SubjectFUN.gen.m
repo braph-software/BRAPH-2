@@ -22,7 +22,7 @@ function cb_importer_TXT(~, ~)
             'ID', 'Import Group of SubjectCons from TXT', ...
             'WAITBAR', true ...
             ).get('GET_DIR');
-        gr = pe.get('EL');
+        gr = im.get('GR');
         gui = GUIElement('PE', gr);
         gui.get('DRAW')
         gui.get('SHOW')
@@ -48,7 +48,7 @@ function cb_importer_XLS(~, ~)
             'ID', 'Import Group of SubjectCons from XLS', ...
             'WAITBAR', true ...
             ).get('GET_DIR');
-        gr = pe.get('EL');
+        gr = im.get('GR');
         gui = GUIElement('PE', gr);
         gui.get('DRAW')
         gui.get('SHOW')

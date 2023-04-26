@@ -20,7 +20,7 @@ function cb_importer_BRAPH2(~, ~)
             'ID', 'Import BRAPH2 Pipeline', ...
             'WAITBAR', true ...
             ).get('GET_FILE');
-        pip = pe.get('EL');
+        pip = im.get('PIP');
         gui = GUIElement('PE', pip);
         gui.get('DRAW')
         gui.get('SHOW')
