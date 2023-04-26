@@ -237,6 +237,14 @@ for i = 1:1:length(symmetrize_rules)
     end
 end
 
+
+
+
+
+
+
+
+
 %% ¡_props!
 
 %%% ¡_prop!
