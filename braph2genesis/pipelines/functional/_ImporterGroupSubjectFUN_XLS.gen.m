@@ -124,12 +124,12 @@ if isfolder(directory)
                 [~, sub_id] = fileparts(files(i).name);
 
                 FUN = xlsread(fullfile(directory, files(i).name));
-                if size(CON, 2) ~= ba.get('BR_DICT').get('LENGTH')
+                if size(FUN, 2) ~= ba.get('BR_DICT').get('LENGTH')
                     error( ...
                         [BRAPH2.STR ':' class(im) ':' BRAPH2.ERR_IO], ...
                         [BRAPH2.STR ':' class(im) ':' BRAPH2.ERR_IO '\\n' ...
                         'The file ' sub_id ' should contain a matrix with ' int2str(ba.get('BR_DICT').get('LENGTH')) ' columns corresponding to the brain regions, ' ...
-                        'while it contains ' int2str(size(CON, 2)) ' columns.'] ...
+                        'while it contains ' int2str(size(FUN, 2)) ' columns.'] ...
                         )
                 end
 
@@ -291,7 +291,7 @@ vois2 = [
     {{} {} cell2str(sex_options)}
     ];
 for i = 51:1:100
-    sub_id = ['SubjectCON_' num2str(i)];
+    sub_id = ['SubjectFUN_' num2str(i)];
 
     % randomize the parameters
     K_temp = K2(randperm(length(K2)));
@@ -323,7 +323,7 @@ for i = 51:1:100
     std_R2 = std(R2);
     R2 = (R2 - mean(R2)) ./ std(R2);
 
-    writetable(array2table(R2), [gr2_dir filesep() 'SubjectCON_' num2str(i) '.xlsx'], 'WriteVariableNames', false)
+    writetable(array2table(R2), [gr2_dir filesep() 'SubjectFUN_' num2str(i) '.xlsx'], 'WriteVariableNames', false)
     
     % variables of interest
     vois2 = [vois2; {sub_id, randi(90), sex_options(randi(2))}];
@@ -374,7 +374,7 @@ im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectFUN')) filesep 'E
 ba = im_ba.get('BA');
 
 im_gr = ImporterGroupSubjectFUN_XLS( ...
-    'DIRECTORY', [fileparts(which('SubjectFUN')) filesep 'Example data FUN XLS' filesep 'xls' filesep 'FUN_Group_1_XLS'], ...
+    'DIRECTORY', [fileparts(which('SubjectFUN')) filesep 'Example data FUN XLS' filesep 'FUN_Group_1_XLS'], ...
     'BA', ba, ...
     'WAITBAR', true ...
     );
