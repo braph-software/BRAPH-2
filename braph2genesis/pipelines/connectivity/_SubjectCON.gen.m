@@ -18,7 +18,10 @@ if isa(el, 'Group')
 end
 function cb_importer_TXT(~, ~)
     try
-        im = ImporterGroupSubjectCON_TXT('ID', 'Import Group of SubjectCons from TXT', 'WAITBAR', true).get('GET_FILE');
+        im = ImporterGroupSubjectCON_TXT( ...
+            'ID', 'Import Group of SubjectCons from TXT', ...
+            'WAITBAR', true ...
+            ).get('GET_DIR');
         gr = pe.get('EL');
         gui = GUIElement('PE', ba);
         gui.get('DRAW')
@@ -41,7 +44,10 @@ if isa(el, 'Group')
 end
 function cb_importer_XLS(~, ~)
     try
-        im = ImporterGroupSubjectCON_XLS('ID', 'Import Group of SubjectCons from XLS', 'WAITBAR', true).get('GET_FILE');
+        im = ImporterGroupSubjectCON_XLS( ...
+            'ID', 'Import Group of SubjectCons from XLS', ...
+            'WAITBAR', true ...
+            ).get('GET_DIR');
         gr = pe.get('EL');
         gui = GUIElement('PE', ba);
         gui.get('DRAW')
@@ -64,7 +70,11 @@ if isa(el, 'Group')
         'Callback', {@cb_exporter_TXT});
 end
 function cb_exporter_TXT(~, ~)
-    ex = ExporterGroupSubjectCON_TXT('ID', 'Export Brain Group of SubjectCons to TXT', 'GR', el.copy(), 'WAITBAR', true).get('PUT_DIR');
+    ex = ExporterGroupSubjectCON_TXT( ...
+        'ID', 'Export Brain Group of SubjectCons to TXT', ...
+        'GR', el.copy(), ...
+        'WAITBAR', true ...
+        ).get('PUT_DIR');
     if ~strcmp(ex.get('DIRECTORY'), ExporterGroupSubjectCON_TXT.getPropDefault('DIRECTORY'))
         ex.get('SAVE');
     end
@@ -77,7 +87,11 @@ if isa(el, 'Group')
         'Callback', {@cb_exporter_XLS});
 end
 function cb_exporter_XLS(~, ~)
-    ex = ExporterGroupSubjectCON_XLS('ID', 'Export Brain Group of SubjectCons to XLS', 'GR', el.copy(), 'WAITBAR', true).get('PUT_DIR');
+    ex = ExporterGroupSubjectCON_XLS( ...
+        'ID', 'Export Brain Group of SubjectCons to XLS', ...
+        'GR', el.copy(), ...
+        'WAITBAR', true ...
+        ).get('PUT_DIR');
     if ~strcmp(ex.get('DIRECTORY'), ExporterGroupSubjectCON_XLS.getPropDefault('DIRECTORY'))
         ex.get('SAVE');
     end
