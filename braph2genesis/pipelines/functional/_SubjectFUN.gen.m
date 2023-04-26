@@ -23,7 +23,7 @@ function cb_importer_TXT(~, ~)
             'WAITBAR', true ...
             ).get('GET_DIR');
         gr = pe.get('EL');
-        gui = GUIElement('PE', ba);
+        gui = GUIElement('PE', gr);
         gui.get('DRAW')
         gui.get('SHOW')
     catch e
@@ -49,7 +49,7 @@ function cb_importer_XLS(~, ~)
             'WAITBAR', true ...
             ).get('GET_DIR');
         gr = pe.get('EL');
-        gui = GUIElement('PE', ba);
+        gui = GUIElement('PE', gr);
         gui.get('DRAW')
         gui.get('SHOW')
     catch e

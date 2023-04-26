@@ -21,7 +21,7 @@ function cb_importer_BRAPH2(~, ~)
             'WAITBAR', true ...
             ).get('GET_FILE');
         pip = pe.get('EL');
-        gui = GUIElement('PE', ba);
+        gui = GUIElement('PE', pip);
         gui.get('DRAW')
         gui.get('SHOW')
     catch e
