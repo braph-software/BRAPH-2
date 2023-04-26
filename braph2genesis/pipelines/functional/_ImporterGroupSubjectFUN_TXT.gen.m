@@ -196,13 +196,13 @@ value = gr;
 %%%% ¡name!
 Create example files
 %%%% ¡code!
-data_dir = [fileparts(which('SubjectFUN')) filesep 'Example data FUN XLS'];
+data_dir = [fileparts(which('SubjectFUN')) filesep 'Example data FUN TXT'];
 mkdir(data_dir);
 
 % Brain Atlas
-im_ba = ImporterBrainAtlasXLS('FILE', 'aal90_atlas.xlsx');
+im_ba = ImporterBrainAtlasTXT('FILE', 'aal90_atlas.xlsx');
 ba = im_ba.get('BA');
-ex_ba = ExporterBrainAtlasXLS( ...
+ex_ba = ExporterBrainAtlasTXT( ...
     'BA', ba, ...
     'FILE', [data_dir filesep() 'atlas.xlsx'] ...
     );
@@ -227,7 +227,7 @@ indices3 = 37:1:54;
 indices4 = 55:1:72;
 indices5 = 73:1:90;
 indices = {indices1; indices2; indices3; indices4; indices5};
-gr1_name = 'FUN_Group_1_XLS';
+gr1_name = 'FUN_Group_1_TXT';
 gr1_dir = [data_dir filesep() gr1_name];
 mkdir(gr1_dir);
 vois1 = [
@@ -280,7 +280,7 @@ beta2 = [0.02 0.85];
 indices1 = 1:1:45;
 indices2 = 46:1:90;
 indices = {indices1; indices2};
-gr2_name = 'FUN_Group_2_XLS';
+gr2_name = 'FUN_Group_2_TXT';
 gr2_dir = [data_dir filesep() gr2_name];
 mkdir(gr2_dir);
 vois2 = [
@@ -367,11 +367,11 @@ GUI
 %%%% ¡parallel!
 false
 %%%% ¡code!
-im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectFUN')) filesep 'Example data FUN XLS' filesep 'atlas.xlsx']);
+im_ba = ImporterBrainAtlasTXT('FILE', [fileparts(which('SubjectFUN')) filesep 'Example data FUN TXT' filesep 'atlas.xlsx']);
 ba = im_ba.get('BA');
 
-im_gr = ImporterGroupSubjectFUN_XLS( ...
-    'DIRECTORY', [fileparts(which('SubjectFUN')) filesep 'Example data FUN XLS' filesep 'FUN_Group_1_XLS'], ...
+im_gr = ImporterGroupSubjectFUN_TXT( ...
+    'DIRECTORY', [fileparts(which('SubjectFUN')) filesep 'Example data FUN TXT' filesep 'FUN_Group_1_TXT'], ...
     'BA', ba, ...
     'WAITBAR', true ...
     );
