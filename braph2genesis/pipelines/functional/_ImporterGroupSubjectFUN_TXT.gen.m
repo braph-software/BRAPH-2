@@ -2,7 +2,7 @@
 ImporterGroupSubjectFUN_TXT < Importer (im, importer of FUN subject group from TXT) imports a group of subjects with connectivity data from a series of TXT file.
 
 %%% ¡description!
-ImporterGroupSubjectCON_TXT imports a group of subjects with functional 
+ImporterGroupSubjectFUN_TXT imports a group of subjects with functional 
  data from a series of tab-separated TXT files contained in a folder named 
  "GROUP_ID". All these files must be in the same folder; also, no other 
  files should be in the folder. Each file contains a table with each row 
@@ -124,12 +124,12 @@ if isfolder(directory)
                 [~, sub_id] = fileparts(files(i).name);
                 
                 FUN = table2array(readtable(fullfile(directory, files(i).name), 'Delimiter', '\t'));
-                if size(CON, 1) ~= ba.get('BR_DICT').get('LENGTH') || size(CON, 2) ~= ba.get('BR_DICT').get('LENGTH')
+                if size(FUN, 2) ~= ba.get('BR_DICT').get('LENGTH')
                     error( ...
                         [BRAPH2.STR ':' class(im) ':' BRAPH2.ERR_IO], ...
                         [BRAPH2.STR ':' class(im) ':' BRAPH2.ERR_IO '\\n' ...
-                        'The file ' sub_id ' should contain a matrix ' int2str(ba.get('BR_DICT').get('LENGTH')) 'x' int2str(ba.get('BR_DICT').get('LENGTH')) ', ' ...
-                        'while it is ' int2str(size(CON, 1)) 'x' int2str(size(CON, 2)) '.'] ...
+                        'The file ' sub_id ' should contain a matrix with ' int2str(ba.get('BR_DICT').get('LENGTH')) ' columns corresponding to the brain regions, ' ...
+                        'while it contains ' int2str(size(FUN, 2)) ' columns.'] ...
                         )
                 end
                 
@@ -200,11 +200,11 @@ data_dir = [fileparts(which('SubjectFUN')) filesep 'Example data FUN TXT'];
 mkdir(data_dir);
 
 % Brain Atlas
-im_ba = ImporterBrainAtlasTXT('FILE', 'aal90_atlas.xlsx');
+im_ba = ImporterBrainAtlasTXT('FILE', 'aal90_atlas.txt');
 ba = im_ba.get('BA');
 ex_ba = ExporterBrainAtlasTXT( ...
     'BA', ba, ...
-    'FILE', [data_dir filesep() 'atlas.xlsx'] ...
+    'FILE', [data_dir filesep() 'atlas.txt'] ...
     );
 ex_ba.get('SAVE')
 N = ba.get('BR_DICT').get('LENGTH');
@@ -232,7 +232,7 @@ gr1_dir = [data_dir filesep() gr1_name];
 mkdir(gr1_dir);
 vois1 = [
     {{'Subject ID'} {'Age'} {'Sex'}}
-    {{} {} cell2str(sex_options)}
+    {{} {} {['{' sprintf(' ''%s'' ', sex_options{:}) '}']}}
     ];
 for i = 1:1:50 % subject number
     sub_id = ['SubjectFUN_' num2str(i)];
@@ -285,7 +285,7 @@ gr2_dir = [data_dir filesep() gr2_name];
 mkdir(gr2_dir);
 vois2 = [
     {{'Subject ID'} {'Age'} {'Sex'}}
-    {{} {} cell2str(sex_options)}
+    {{} {} {['{' sprintf(' ''%s'' ', sex_options{:}) '}']}}
     ];
 for i = 51:1:100
     sub_id = ['SubjectFUN_' num2str(i)];
@@ -367,7 +367,7 @@ GUI
 %%%% ¡parallel!
 false
 %%%% ¡code!
-im_ba = ImporterBrainAtlasTXT('FILE', [fileparts(which('SubjectFUN')) filesep 'Example data FUN TXT' filesep 'atlas.xlsx']);
+im_ba = ImporterBrainAtlasTXT('FILE', [fileparts(which('SubjectFUN')) filesep 'Example data FUN TXT' filesep 'atlas.txt']);
 ba = im_ba.get('BA');
 
 im_gr = ImporterGroupSubjectFUN_TXT( ...
