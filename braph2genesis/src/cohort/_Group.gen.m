@@ -10,17 +10,17 @@ whose methods can be used to inspect, add or remove subjects.
 %%% ¡seealso!
 Subject, IndexedDictionary
 
-%%% ¡_gui!
+%% ¡gui!
 
-% % % %%%% ¡_menu_importer!
-% % % eval([el.get('SUB_CLASS') '.getGUIMenuImport(el, menu_import, pe)']);
-% % % im_sub_menus = get(menu_import, 'Children');
-% % % delete(im_sub_menus(end)); % delete one sub menu to import JSON
-% % % 
-% % % %%%% ¡_menu_exporter!
-% % % eval([el.get('SUB_CLASS') '.getGUIMenuExport(el, menu_export, pe)']);
-% % % ex_sub_menus = get(menu_export, 'Children');
-% % % delete(ex_sub_menus(end)); % delete one sub menu to export JSON
+%%% ¡menu_import!
+eval([el.get('SUB_CLASS') '.getGUIMenuImport(el, menu_import, pe)']);
+im_sub_menus = get(menu_import, 'Children');
+delete(im_sub_menus(end)); % delete one sub menu to import JSON
+
+%%% ¡menu_export!
+eval([el.get('SUB_CLASS') '.getGUIMenuExport(el, menu_export, pe)']);
+ex_sub_menus = get(menu_export, 'Children');
+delete(ex_sub_menus(end)); % delete one sub menu to export JSON
 
 %% ¡props_update!
 

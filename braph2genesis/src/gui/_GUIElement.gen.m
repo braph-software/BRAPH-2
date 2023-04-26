@@ -65,6 +65,12 @@ value = {};
 if gui.get('MENU_FILE')
     value = [value, gui.memorize('H_MENU_FILE')];
 end
+if gui.get('MENU_IMPORT')
+    value = [value, gui.memorize('H_MENU_IMPORT')];
+end
+if gui.get('MENU_EXPORT')
+    value = [value, gui.memorize('H_MENU_EXPORT')];
+end
 if gui.get('MENU_PERSONALIZE')
     value = [value, gui.memorize('H_MENU_PERSONALIZE')];
 end
@@ -234,6 +240,8 @@ if gui.get('DRAWN')
     gui.set('TEXT_FILE', Element.getNoValue())
 
     gui.set('H_MENU_FILE', Element.getNoValue())
+    gui.set('H_MENU_IMPORT', Element.getNoValue())
+    gui.set('H_MENU_EXPORT', Element.getNoValue())
     gui.set('H_MENU_PERSONALIZE', Element.getNoValue())
     
     value = calculateValue@GUI(gui, GUI.DELETE, varargin{:});
@@ -449,15 +457,59 @@ MENU_FILE (gui, logical) determines whether to show the menu file.
 %%%% ¡default!
 true   ; % % % %TBD
 
-% % % %%% ¡prop!
-% % % MENU_IMPORT (gui, logical) determines whether to show the menu import.
-% % % %%%% ¡default!
-% % % true
+%%% ¡prop!
+H_MENU_IMPORT (evanescent, handle) is the handle of the menu import.
+%%%% ¡calculate!
+menu_import = uimenu(gui.memorize('H'), ... % f for figure
+    'Tag', 'MENU.Import', ...
+    'Label', 'Import', ...
+    'Callback', {@cb_refresh_import_menu});
+value = menu_import;
+%%%% ¡calculate_callbacks!
+function cb_refresh_import_menu(~, ~)
+    menu_import = gui.get('H_MENU_IMPORT');
+    
+    im_menus = get(menu_import, 'Children');
+    for i = 1:1:length(im_menus)
+        delete(im_menus(i));
+    end
+    
+    pe = gui.get('PE');
+    el = pe.get('EL');
+    eval([el.getClass() '.getGUIMenuImport(el, menu_import, pe)']);
+end    
 
-% % % %%% ¡prop!
-% % % MENU_EXPORT (gui, logical) determines whether to show the menu export.
-% % % %%%% ¡default!
-% % % true
+%%% ¡prop!
+MENU_IMPORT (gui, logical) determines whether to show the menu import.
+%%%% ¡default!
+true
+
+%%% ¡prop!
+H_MENU_EXPORT (evanescent, handle) is the handle of the menu export.
+%%%% ¡calculate!
+menu_export = uimenu(gui.memorize('H'), ... % f for figure
+    'Tag', 'MENU.Export', ...
+	'Label', 'Export', ...
+	'Callback', {@cb_refresh_export_menu});
+value = menu_export;
+%%%% ¡calculate_callbacks!
+function cb_refresh_export_menu(~, ~)
+    menu_export = gui.get('H_MENU_EXPORT');
+    
+    ex_menus = get(menu_export, 'Children');
+    for i = 1:1:length(ex_menus)
+        delete(ex_menus(i));
+    end
+    
+    pe = gui.get('PE');
+    el = pe.get('EL');
+    eval([el.getClass() '.getGUIMenuExport(el, menu_export, pe)']);
+end    
+
+%%% ¡prop!
+MENU_EXPORT (gui, logical) determines whether to show the menu export.
+%%%% ¡default!
+true
 
 %%% ¡prop!
 H_MENU_PERSONALIZE (evanescent, handle) is the handle of the menu personalize.
