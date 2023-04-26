@@ -4,6 +4,9 @@ SubjectCON < Subject (sub, subject with connectivity matrix) is a subject with c
 %%% ¡description!
 Subject with a connectivity matrix (e.g. obtained from DTI).
 
+%%% ¡seealso!
+ImporterGroupSubjectCON_TXT, ExporterGroupSubjectCON_TXT, ImporterGroupSubjectCON_XLS, ExporterGroupSubjectCON_XLS
+
 %% ¡gui!
 
 %%% ¡menu_import!
