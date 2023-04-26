@@ -4,6 +4,9 @@ SubjectFUN < Subject (sub, subject with functional matrix) is a subject with fun
 %%% ¡description!
 Subject with a functional matrix (e.g. obtained from fMRI).
 
+%%% ¡seealso!
+ImporterGroupSubjectFUN_TXT, ExporterGroupSubjectFUN_TXT, ImporterGroupSubjectFUN_XLS, ExporterGroupSubjectFUN_XLS
+
 %% ¡gui!
 
 %%% ¡menu_import!
