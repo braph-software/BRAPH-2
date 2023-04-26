@@ -946,7 +946,6 @@ assert(isequal(m_inside_g.get('M'), known_distance), ...
     [BRAPH2.STR ':Distance:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 
-
 %%% ¡test!
 %%%% ¡name!
 MultilayerBD

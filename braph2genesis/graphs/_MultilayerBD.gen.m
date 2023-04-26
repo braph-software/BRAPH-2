@@ -89,25 +89,27 @@ end
 value = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
-A (result, cell) is the cell containing the multiplex binary adjacency matrices of the multilayer binary directed graph.
+A (result, cell) is the cell containing the multilayer binary adjacency matrices of the multilayer binary directed graph.
 %%%% ¡calculate!
 B = g.get('B'); %#ok<PROPLC>
 L = length(B); %#ok<PROPLC> % number of layers
-A = cell(L, L);
-
 for i = 1:1:L
-    M = dediagonalize(B{i}); %#ok<PROPLC> % removes self-connections by removing diagonal from adjacency matrix, equivalent to dediagonalize(B{i}, 'DediagonalizeRule', 0)
+    M = dediagonalize(B{i,i}); % removes self-connections by removing diagonal from adjacency matrix, equivalent to dediagonalize(M, 'DediagonalizeRule', 0)
     M = semipositivize(M, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
     M = binarize(M, varargin{:}); % enforces binary adjacency matrix, equivalent to binarize(M, 'threshold', 0, 'bins', [-1:.001:1])
-    A(i, i) = {M};
+    B(i, i) = {M};
     if ~isempty(A{1, 1})
         for j = i+1:1:L
-            A(i, j) = {eye(length(A{1, 1}))};
-            A(j, i) = {eye(length(A{1, 1}))};
+            M = semipositivize(B{i,j}, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
+            M = binarize(M, varargin{:}); % enforces binary adjacency matrix, equivalent to binarize(M, 'threshold', 0, 'bins', [-1:.001:1])
+            B(i, j) = {M};
+            M = semipositivize(B{j,i}, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
+            M = binarize(M, varargin{:}); % enforces binary adjacency matrix, equivalent to binarize(M, 'threshold', 0, 'bins', [-1:.001:1])
+            B(j, i) = {M};
         end
     end
 end
-
+A = B;
 value = A;
 
 %%%% ¡gui!
@@ -176,24 +178,39 @@ Constructor - Full
 .01
 %%%% ¡code!
 B1 = rand(randi(10));
-B2 = rand(size(B1,1),size(B1,2));
-B3 = rand(size(B1,1),size(B1,2));
+B2 = rand(randi(10));
+B3 = rand(randi(10));
 B12 = rand(size(B1,1),size(B2,2));
 B13 = rand(size(B1,1),size(B3,2));
 B23 = rand(size(B2,1),size(B3,2));
+B21 = rand(size(B2,1),size(B1,2));
+B31 = rand(size(B3,1),size(B1,2));
+B32 = rand(size(B3,1),size(B2,2));
 B = {
     B1                           B12                            B13
-    B12'                         B2                             B23
-    B13'                         B23'                           B3
+    B21                          B2                             B23
+    B31                          B32                            B3
     };
 g = MultilayerBD('B', B);
 g.get('A_CHECK')
 A1 = binarize(semipositivize(dediagonalize(B1)));
 A2 = binarize(semipositivize(dediagonalize(B2)));
 A3 = binarize(semipositivize(dediagonalize(B3)));
+A12 = binarize(semipositivize(B12));
+A13 = binarize(semipositivize(B13));
+A23 = binarize(semipositivize(B23));
+A21 = binarize(semipositivize(B21));
+A31 = binarize(semipositivize(B31));
+A32 = binarize(semipositivize(B32));
 B{1,1} = A1;
 B{2,2} = A2;
 B{3,3} = A3;
+B{1,2} = A12;
+B{1,3} = A13;
+B{2,3} = A23;
+B{2,1} = A21;
+B{3,1} = A31;
+B{3,2} = A32;
 A = B
 assert(isequal(g.get('A'), A), ...
     [BRAPH2.STR ':MultilayerBD:' BRAPH2.FAIL_TEST], ...
