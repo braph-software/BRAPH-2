@@ -1831,7 +1831,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             
             if nargin < 2
                 % select file
-                [file, path, filterindex] = uiputfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
+                [file, path, filterindex] = uiputfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.get('NAME') ' file.']);
                 % save file
                 if filterindex
                     filename = fullfile(path, file);
@@ -2248,7 +2248,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 'Callback', {@cb_export_json})
           
             function cb_export_json(~,~)
-                [file, path, filterindex] = uiputfile({'*.json', '*.json'}, ['Select ' el.getName  ' file location.']);
+                [file, path, filterindex] = uiputfile({'*.json', '*.json'}, ['Select ' el.get('NAME')  ' file location.']);
                 if filterindex
                     filename = fullfile(path, file);
                     [json, ~, ~] = encodeJSON(pe.get('EL'));
