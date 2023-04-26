@@ -20,10 +20,12 @@ function cb_importer_BRAPH2(~, ~)
             'ID', 'Import BRAPH2 Pipeline', ...
             'WAITBAR', true ...
             ).get('GET_FILE');
-        pip = im.get('PIP');
-        gui = GUIElement('PE', pip);
-        gui.get('DRAW')
-        gui.get('SHOW')
+        if ~isa(im.getr('FILE'), 'NoValue')
+            pip = im.get('PIP');
+            gui = GUIElement('PE', pip);
+            gui.get('DRAW')
+            gui.get('SHOW')
+        end
     catch e
         % % % %TODO implement and use braph2msgbox instead of warndlg
         warndlg(['Please, select a valid input Pipeline in BRAPH2 format. ' newline() ...

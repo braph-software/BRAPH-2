@@ -24,10 +24,12 @@ function cb_importer_TXT(~, ~)
             'ID', 'Import Brain Atlas from TXT', ...
             'WAITBAR', true ...
             ).get('GET_FILE');
-        ba = im.get('BA');
-        gui = GUIElement('PE', ba);
-        gui.get('DRAW')
-        gui.get('SHOW')
+        if ~isa(im.getr('FILE'), 'NoValue')
+            ba = im.get('BA');
+            gui = GUIElement('PE', ba);
+            gui.get('DRAW')
+            gui.get('SHOW')
+        end
     catch e
         % % % %TODO implement and use braph2msgbox instead of warndlg
         warndlg(['Please, select a valid input BrainAtlas in TXT format. ' newline() ...
@@ -48,10 +50,12 @@ function cb_importer_XLS(~, ~)
             'ID', 'Import Brain Atlas from XLS', ...
             'WAITBAR', true ...
             ).get('GET_FILE');
-        ba = im.get('BA');
-        gui = GUIElement('PE', ba);
-        gui.get('DRAW')
-        gui.get('SHOW')
+        if ~isa(im.getr('FILE'), 'NoValue')
+            ba = im.get('BA');
+            gui = GUIElement('PE', ba);
+            gui.get('DRAW')
+            gui.get('SHOW')
+        end
     catch e
         % % % %TODO implement and use braph2msgbox instead of warndlg
         warndlg(['Please, select a valid input BrainAtlas in XLS format. ' newline() ...

@@ -22,10 +22,12 @@ function cb_importer_TXT(~, ~)
             'ID', 'Import Group of SubjectCons from TXT', ...
             'WAITBAR', true ...
             ).get('GET_DIR');
-        gr = im.get('GR');
-        gui = GUIElement('PE', gr);
-        gui.get('DRAW')
-        gui.get('SHOW')
+        if ~isa(im.getr('DIRECTORY'), 'NoValue')
+            gr = im.get('GR');
+            gui = GUIElement('PE', gr);
+            gui.get('DRAW')
+            gui.get('SHOW')
+        end
     catch e
         % % % %TODO implement and use braph2msgbox instead of warndlg
         warndlg(['Please, select a valid input Group of SubjectCONs in TXT format. ' newline() ...
@@ -48,10 +50,12 @@ function cb_importer_XLS(~, ~)
             'ID', 'Import Group of SubjectCons from XLS', ...
             'WAITBAR', true ...
             ).get('GET_DIR');
-        gr = im.get('GR');
-        gui = GUIElement('PE', gr);
-        gui.get('DRAW')
-        gui.get('SHOW')
+        if ~isa(im.getr('DIRECTORY'), 'NoValue')
+            gr = im.get('GR');
+            gui = GUIElement('PE', gr);
+            gui.get('DRAW')
+            gui.get('SHOW')
+        end
     catch e
         % % % %TODO implement and use braph2msgbox instead of warndlg
         warndlg(['Please, select a valid input Group of SubjectCONs in XLS format. ' newline() ...
