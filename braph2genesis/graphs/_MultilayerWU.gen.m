@@ -500,34 +500,15 @@ function random_g = randomize(g)
         attempts_per_edge = 5;
     end
 
-            % get A
-            A = g.get('A');
-            [l, ls] = g.layernumber();
-              
-            % special case for multiplexBUD and multiplexBUT
-            if Graph.is_binary(g)
-                tmp_b = g.get('B');
-                tmp_g = MultilayerWU('B', tmp_b);
-                tmp_A = tmp_g.get('A');
-                random_multi_A = cell(1, ls(1));
-                for li = 1:1:ls(1)
-                    Aii = tmp_A{li, li};
-                    random_A = GraphWU.randomize_A(Aii, attempts_per_edge, number_of_weights);
-                    random_multi_A(li) = {random_A};
-                end
-                if isa(g, 'MultiplexBUD')
-                    random_g = MultiplexBUD('B', random_multi_A, 'Densities', g.get('Densities'));
-                else
-                    random_g = MultiplexBUT('B', random_multi_A, 'Thresholds', g.get('Thresholds'));
-                end
-                
-            else % MultilayerWU
-                random_multi_A = cell(1, l);
-                for li = 1:1:l
-                    Aii = A{li, li};
-                    random_A = GraphWU.randomize_A(Aii, attempts_per_edge, number_of_weights);
-                    random_multi_A(li) = {random_A};
-                end
-                random_g = MultilayerWU('B', random_multi_A);
-            end
+    % get A
+    A = g.get('A');
+    [l, ls] = g.layernumber();
+
+    random_multi_A = cell(l, l);
+    for li = 1:1:l
+        Aii = A{li, li};
+        random_A = GraphWU.randomize_A(Aii, attempts_per_edge, number_of_weights);
+        random_multi_A(li,li) = {random_A};
+    end
+    random_g = MultilayerWU('B', random_multi_A);
 end

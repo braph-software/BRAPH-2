@@ -55,7 +55,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'GraphBD' 'GraphBU' 'GraphWD' 'GraphWU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexBD' 'MultiplexBU' 'MultiplexWD' 'MultiplexWU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxBD' 'OrdMxBU' 'OrdMxWD' 'OrdMxWU' 'OrdMxBUD' 'MultilayerWU'}
+{'GraphBD' 'GraphBU' 'GraphWD' 'GraphWU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexBD' 'MultiplexBU' 'MultiplexWD' 'MultiplexWU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxBD' 'OrdMxBU' 'OrdMxWD' 'OrdMxWU' 'OrdMxBUD' 'MultilayerWU' 'OrdMlWU'}
 
 %%% ¡prop!
 M (result, cell) is the distance.
@@ -1080,6 +1080,62 @@ known_distance = {
     };
 
 g = MultilayerWU('B', B);
+
+m_outside_g = Distance('G', g);
+assert(isequal(m_outside_g.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Distance');
+assert(isequal(m_inside_g.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+OrdMlWU
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B11 = [
+    0       .1  .2  .25  0  0;
+    .125    0   0   0    0  0;
+    .2      .5  0   .25  0  0;
+    .125    10  0   0    0  0;
+    0       0   0   0    0  0;
+    0       0   0   0    0  0 
+    ];
+B22 = [
+    0       .1  .2  .25  0;
+    .125    0   0   0    0;
+    .2      .5  0   .25  0;
+    .125    10  0   0    0;
+    0       0   0   0    0;
+    ];
+B12 = rand(size(B11,1),size(B22,2));
+B21 = B12';
+B= {B11 B12;
+    B21 B22};
+
+known_distance = {
+    [
+    0   5   5   4   Inf Inf;
+    5   0   2   1   Inf Inf;
+    5   2   0   3   Inf Inf;
+    4   1   3   0   Inf Inf;
+    Inf Inf Inf Inf 0   Inf;
+    Inf Inf Inf Inf Inf   0;
+	]
+    [
+    0   5   5   4   Inf;
+    5   0   2   1   Inf;
+    5   2   0   3   Inf;
+    4   1   3   0   Inf;
+    Inf Inf Inf Inf 0;
+	]
+    };
+
+g = OrdMlWU('B', B);
 
 m_outside_g = Distance('G', g);
 assert(isequal(m_outside_g.get('M'), known_distance), ...
