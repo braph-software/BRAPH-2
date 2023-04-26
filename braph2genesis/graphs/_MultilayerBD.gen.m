@@ -3,7 +3,7 @@ MultilayerBD < Graph (g, multilayer binary directed graph) is a multilayer binar
 
 %%% ¡description!
 In a multilayer binary directed (BD) graph, layers have different number 
- of nodes with within-layer directed edgeseither 0 (absence of connection) 
+ of nodes with within-layer directed edges either 0 (absence of connection) 
  or 1 (existence of connection).
 There are connections between layers connecting the corresponding nodes.
 
@@ -89,17 +89,25 @@ end
 value = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
-A (result, cell) is the cell containing the multilayer weighted adjacency matrices of the multilayer weighted undirected graph.
+A (result, cell) is the cell containing the multiplex binary adjacency matrices of the multilayer binary directed graph.
 %%%% ¡calculate!
 B = g.get('B'); %#ok<PROPLC>
 L = length(B); %#ok<PROPLC> % number of layers
+A = cell(L, L);
+
 for i = 1:1:L
-    M = dediagonalize(B{i}); % removes self-connections by removing diagonal from adjacency matrix, equivalent to dediagonalize(M, 'DediagonalizeRule', 0)
+    M = dediagonalize(B{i}); %#ok<PROPLC> % removes self-connections by removing diagonal from adjacency matrix, equivalent to dediagonalize(B{i}, 'DediagonalizeRule', 0)
     M = semipositivize(M, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
     M = binarize(M, varargin{:}); % enforces binary adjacency matrix, equivalent to binarize(M, 'threshold', 0, 'bins', [-1:.001:1])
-    B(i, i) = {M};
+    A(i, i) = {M};
+    if ~isempty(A{1, 1})
+        for j = i+1:1:L
+            A(i, j) = {eye(length(A{1, 1}))};
+            A(j, i) = {eye(length(A{1, 1}))};
+        end
+    end
 end
-A = B;
+
 value = A;
 
 %%%% ¡gui!
@@ -168,8 +176,8 @@ Constructor - Full
 .01
 %%%% ¡code!
 B1 = rand(randi(10));
-B2 = rand(randi(10));
-B3 = rand(randi(10));
+B2 = rand(size(B1,1),size(B1,2));
+B3 = rand(size(B1,1),size(B1,2));
 B12 = rand(size(B1,1),size(B2,2));
 B13 = rand(size(B1,1),size(B3,2));
 B23 = rand(size(B2,1),size(B3,2));
