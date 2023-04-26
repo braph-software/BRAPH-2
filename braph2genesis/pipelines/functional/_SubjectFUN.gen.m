@@ -91,8 +91,7 @@ function cb_exporter_XLS(~, ~)
         'ID', 'Export Brain Group of SubjectCons to XLS', ...
         'GR', el.copy(), ...
         'WAITBAR', true ...
-        );
-    ex.uigetdir()
+        ).get('PUT_DIR');;
     if ~strcmp(ex.get('DIRECTORY'), ExporterGroupSubjectFUN_XLS.getPropDefault('DIRECTORY'))
         ex.get('SAVE');
     end
