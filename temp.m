@@ -573,6 +573,24 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     'IT_LIST', items ...
 %     );
 % ba0 = BrainAtlas('ID', 'BA1', 'LABEL', 'brain atlas', 'NOTES', 'Notes on brain atlas.', 'BR_DICT', idict);
+% gui = GUIElement('PE', ba0, 'CLOSEREQ', false);
+% gui.get('DRAW')
+% gui.get('SHOW')
+
+% br1 = BrainRegion('ID', 'id1', 'LABEL', 'label1', 'NOTES', 'notes1', 'X', 1, 'Y', 1, 'Z', 1);
+% br2 = BrainRegion('ID', 'id2', 'LABEL', 'label2', 'NOTES', 'notes2', 'X', 2, 'Y', 2, 'Z', 2);
+% br3 = BrainRegion('ID', 'id3', 'LABEL', 'label3', 'NOTES', 'notes3', 'X', 3, 'Y', 3, 'Z', 3);
+% br4 = BrainRegion('ID', 'id4', 'LABEL', 'label4', 'NOTES', 'notes4', 'X', 4, 'Y', 4, 'Z', 4);
+% br5 = BrainRegion('ID', 'id5', 'LABEL', 'label5', 'NOTES', 'notes5', 'X', 5, 'Y', 5, 'Z', 5);
+% br6 = BrainRegion('ID', 'id6', 'LABEL', 'label6', 'NOTES', 'notes6', 'X', 6, 'Y', 6, 'Z', 6);
+% items = {br1, br2, br3, br4, br5, br6};
+% idict = IndexedDictionary( ...
+%     'ID', 'idict', ...
+%     'IT_CLASS', 'BrainRegion', ...
+%     'IT_KEY', IndexedDictionary.getPropDefault(IndexedDictionary.IT_KEY), ...
+%     'IT_LIST', items ...
+%     );
+% ba0 = BrainAtlas('ID', 'BA1', 'LABEL', 'brain atlas', 'NOTES', 'Notes on brain atlas.', 'BR_DICT', idict);
 % pf0 = BrainAtlasPF(...
 %     'SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'), ...
 %     'BA', ba0 ...
@@ -580,7 +598,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 % gui0 = GUIFig('PF', pf0, 'FILE', 'xxx sss', 'POSITION', [.1 .1 .4 .8], 'CLOSEREQ', false); % % % gui0 = GUIFig('PF', pf0, 'FILE', 'xxx sss', 'WAITBAR', true, 'CLOSEREQ', false); %TODO add waitbar
 % gui0.get('DRAW')
 % gui0.get('SHOW')
-% 
+
 % gui0_settings = gui0.memorize('GUI_SETTINGS');
 % gui0_settings.set('POSITION', [0 0 .3 .5])
 % gui0_settings.get('DRAW')
@@ -917,7 +935,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     eval(['test_' el_class])
 % end
 
-el_class_list = {'ImporterGroupSubjectCON_TXT'} % {'SubjectCON' 'ImporterGroupSubjectCON_XLS' 'ExporterGroupSubjectCON_XLS' 'ImporterGroupSubjectCON_TXT' 'ExporterGroupSubjectCON_TXT'}
+el_class_list = {'SubjectCON'} % {'SubjectCON' 'ImporterGroupSubjectCON_XLS' 'ExporterGroupSubjectCON_XLS' 'ImporterGroupSubjectCON_TXT' 'ExporterGroupSubjectCON_TXT'}
 for i = 1:1:length(el_class_list)
     el_class = el_class_list{i};
     el_path = '/pipelines/connectivity';
@@ -927,20 +945,6 @@ for i = 1:1:length(el_class_list)
     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
     eval(['test_' el_class])
 end
-
-im_ba = ImporterBrainAtlasTXT('FILE', [fileparts(which('SubjectCON')) filesep 'Example data CON TXT' filesep 'atlas.txt']);
-ba = im_ba.get('BA');
-
-im_gr = ImporterGroupSubjectCON_TXT( ...
-    'DIRECTORY', [fileparts(which('SubjectCON')) filesep 'Example data CON TXT' filesep 'CON_Group_1_TXT'], ...
-    'BA', ba, ...
-    'WAITBAR', true ...
-    );
-gr = im_gr.get('GR');
-
-gui = GUIElement('PE', gr, 'CLOSEREQ', false);
-gui.get('DRAW')
-gui.get('SHOW')
 
 % ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx');
 % ba = ba.get('BA');
@@ -1048,17 +1052,19 @@ gui.get('SHOW')
 % % % % % % reset RNG
 % % % % % rng(rng_settings_)
 
-% el_class_list = {'ExporterGroupSubjectFUN_TXT'} % {'SubjectFUN' 'ImporterGroupSubjectFUN_XLS' 'ImporterGroupSubjectFUN_TXT' 'ExporterGroupSubjectFUN_XLS' 'ExporterGroupSubjectFUN_TXT'}
-% for i = 1:1:length(el_class_list)
-%     el_class = el_class_list{i};
-%     el_path = '/pipelines/functional';
-%     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
-%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-%     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-%     eval(['test_' el_class])
-% end
-% 
+el_class_list = {} % {'SubjectFUN' 'ImporterGroupSubjectFUN_XLS' 'ImporterGroupSubjectFUN_TXT' 'ExporterGroupSubjectFUN_XLS' 'ExporterGroupSubjectFUN_TXT'}
+for i = 1:1:length(el_class_list)
+    el_class = el_class_list{i};
+    el_path = '/pipelines/functional';
+    delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    eval(['test_' el_class])
+end
+
+gr = Group(); gui = GUIElement('PE', gr); gui.get('DRAW'), gui.get('SHOW')
+
 % im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectFUN')) filesep 'example data FUN' filesep 'aal90_atlas.xlsx']);
 % ba = im_ba.get('BA');
 % im_gr = ImporterGroupSubjectFUN_XLS( ...
