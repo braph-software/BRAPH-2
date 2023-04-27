@@ -93,23 +93,23 @@ A (result, cell) is the cell containing the multilayer binary adjacency matrices
 %%%% ¡calculate!
 B = g.get('B'); %#ok<PROPLC>
 L = length(B); %#ok<PROPLC> % number of layers
+A = cell(L, L);
 for i = 1:1:L
     M = dediagonalize(B{i,i}); % removes self-connections by removing diagonal from adjacency matrix, equivalent to dediagonalize(M, 'DediagonalizeRule', 0)
     M = semipositivize(M, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
     M = binarize(M, varargin{:}); % enforces binary adjacency matrix, equivalent to binarize(M, 'threshold', 0, 'bins', [-1:.001:1])
-    B(i, i) = {M};
-    if ~isempty(A{1, 1})
+    A(i, i) = {M};
+    if ~isempty(A{i, i})
         for j = i+1:1:L
             M = semipositivize(B{i,j}, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
             M = binarize(M, varargin{:}); % enforces binary adjacency matrix, equivalent to binarize(M, 'threshold', 0, 'bins', [-1:.001:1])
-            B(i, j) = {M};
+            A(i, j) = {M};
             M = semipositivize(B{j,i}, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
             M = binarize(M, varargin{:}); % enforces binary adjacency matrix, equivalent to binarize(M, 'threshold', 0, 'bins', [-1:.001:1])
-            B(j, i) = {M};
+            A(j, i) = {M};
         end
     end
 end
-A = B;
 value = A;
 
 %%%% ¡gui!
