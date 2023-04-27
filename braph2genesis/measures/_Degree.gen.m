@@ -53,7 +53,11 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
+<<<<<<< Updated upstream
 {'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU'}
+=======
+{'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU' 'OrdMxBUD' 'MultilayerWU' 'MultilayerBU'}
+>>>>>>> Stashed changes
 
 %%% ¡prop!
 M (result, cell) is the degree.
@@ -413,3 +417,125 @@ m_inside_g = g.get('MEASURE', 'Degree');
 assert(isequal(m_inside_g.get('M'), known_degree), ...
     [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+<<<<<<< Updated upstream
+=======
+
+%%% ¡test!
+%%%% ¡name!
+OrdMxBUD
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B = [
+    0   .2   .7
+    .2   0   .1
+    .7  .1   0
+    ];
+
+densities = [0 33 67 100];
+
+known_degree = { ...
+    [0 0 0]'
+    [0 0 0]'
+    [0 0 0]'
+    [1 0 1]'
+    [1 0 1]'
+    [1 0 1]'
+    [2 1 1]'
+    [2 1 1]'
+    [2 1 1]'
+    [2 2 2]'
+    [2 2 2]'
+    [2 2 2]'
+    };
+
+g = OrdMxBUD('B', {B B B}, 'DENSITIES', densities);
+
+m_outside_g = Degree('G', g);
+assert(isequal(m_outside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Degree');
+assert(isequal(m_inside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+MultilayerWU
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B11 = [
+    0   .2  1
+    .2  0   0
+    1   0   0
+    ];
+B22 = [
+    0   1   0  .2  
+    1   0   .3  .1
+    0  .3   0   0
+   .2  .1   0   0
+    ];
+B12 = rand(size(B11,1),size(B22,2));
+B21 = B12';
+B= {B11 B12;
+    B21 B22};
+
+known_degree = {
+    [2 1 1]'
+    [2 3 1 2]'
+    };
+
+g = MultilayerWU('B', B);
+
+m_outside_g = Degree('G', g);
+assert(isequal(m_outside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Degree');
+assert(isequal(m_inside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+MultilayerBU
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B11 = [
+    0   1   1
+    1   0   0
+    1   0   0
+    ];
+B22 = [
+    0   1   0	1
+    1   0   1   1
+    0   1   0   0
+    1   1   0   0
+    ];
+B12 = rand(size(B11,1),size(B22,2));
+B21 = B12';
+B= {B11 B12;
+    B21 B22};
+
+known_degree = {
+    [2 1 1]'
+    [2 3 1 2]'
+    };
+
+g = MultilayerBU('B', B);
+
+m_outside_g = Degree('G', g);
+assert(isequal(m_outside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Degree');
+assert(isequal(m_inside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+>>>>>>> Stashed changes
