@@ -53,7 +53,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU'}
+{'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU' 'OrdMxBUT'}
 
 %%% ¡prop!
 M (result, cell) is the degree.
@@ -403,6 +403,45 @@ known_degree = {
     };
 
 g = OrdMxBU('B', B);
+
+m_outside_g = Degree('G', g);
+assert(isequal(m_outside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Degree');
+assert(isequal(m_inside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+
+%%% ¡test!
+%%%% ¡name!
+OrdMxBUT
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B = [
+    0   .2   .7
+    .2   0   0
+    .7   0   0
+    ];
+
+thresholds = [0 .5 1];
+
+known_degree = { ...
+    [2 1 1]'
+    [2 1 1]'
+    [2 1 1]'
+    [1 0 1]'
+    [1 0 1]'
+    [1 0 1]'
+    [0 0 0]'
+    [0 0 0]'
+    [0 0 0]'
+    };
+
+g = OrdMxBUT('B', {B B B}, 'THRESHOLDS', thresholds);
 
 m_outside_g = Degree('G', g);
 assert(isequal(m_outside_g.get('M'), known_degree), ...

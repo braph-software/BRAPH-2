@@ -55,7 +55,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'GraphBD' 'GraphBU' 'GraphWD' 'GraphWU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexBD' 'MultiplexBU' 'MultiplexWD' 'MultiplexWU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxBD' 'OrdMxBU' 'OrdMxWD' 'OrdMxWU'}
+{'GraphBD' 'GraphBU' 'GraphWD' 'GraphWU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexBD' 'MultiplexBU' 'MultiplexWD' 'MultiplexWU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxBD' 'OrdMxBU' 'OrdMxWD' 'OrdMxWU' 'OrdMxBUT'}
 
 %%% ¡prop!
 M (result, cell) is the distance.
@@ -935,6 +935,81 @@ known_distance = {
     };
 
 g = OrdMxBU('B', B);
+
+m_outside_g = Distance('G', g);
+assert(isequal(m_outside_g.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Distance');
+assert(isequal(m_inside_g.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+
+%%% ¡test!
+%%%% ¡name!
+OrdMxBUT
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B = [
+    0   .2   .7
+    .2   0   0
+    .7   0   0
+    ];
+
+thresholds = [0 .5 1];
+
+known_distance = {
+    [
+    0   1   1
+    1   0   2
+    1   2   0
+    ]
+    [
+    0   1   1
+    1   0   2
+    1   2   0
+    ]
+    [
+    0   1   1
+    1   0   2
+    1   2   0
+    ]
+    [
+    0   Inf 1
+    Inf 0   Inf
+    1 Inf 0
+    ]
+    [
+    0   Inf 1
+    Inf 0   Inf
+    1 Inf 0
+    ]
+    [
+    0   Inf 1
+    Inf 0   Inf
+    1 Inf 0
+    ]
+    [
+    0   Inf Inf
+    Inf 0   Inf
+    Inf Inf 0
+    ]
+    [
+    0   Inf Inf
+    Inf 0   Inf
+    Inf Inf 0
+    ]
+    [
+    0   Inf Inf
+    Inf 0   Inf
+    Inf Inf 0
+    ]
+    };
+
+g = OrdMxBUT('B', {B B B}, 'THRESHOLDS', thresholds);
 
 m_outside_g = Distance('G', g);
 assert(isequal(m_outside_g.get('M'), known_distance), ...
