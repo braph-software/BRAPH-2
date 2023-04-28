@@ -151,7 +151,7 @@ if isfolder(directory)
 % % %         if ~exist(cov_directory, 'dir')
 % % %             mkdir(cov_directory)
 % % %         end
-% % %         writetable(tab2, [cov_directory filesep() gr_id '_covariates.txt'], 'Delimiter', '\t', 'WriteVariableNames', 0);
+% % %         writetable(tab2, [cov_directory filesep() gr_id '_covariates.txt'], 'Delimiter', '\t', 'WriteVariableNames', false);
 % % %     end
     
     braph2waitbar(wb, 'close')

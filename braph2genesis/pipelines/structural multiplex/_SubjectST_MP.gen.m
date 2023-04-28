@@ -2,8 +2,7 @@
 SubjectST_MP < Subject (sub, subject with structural multiplex data) is a subject with structural multiplex data (e.g. multiplex sMRI).
 
 %%% ¡description!
-Subject with data for each brain region correspponding to L structural layers (e.g. cortical thickness).
-For example, structural data can be structural MRI.
+Subject with data for each brain region correspponding to L structural layers (e.g. cortical thickness obtained from structural MRI).
 
 %%% ¡seealso!
 ImporterGroupSubjectST_MP_TXT, ExporterGroupSubjectST_MP_TXT, ImporterGroupSubjectST_MP_XLS, ExporterGroupSubjectST_MP_XLS
@@ -112,7 +111,7 @@ NAME (constant, string) is the name of the subject.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the subject.
 %%%% ¡default!
-'Subject with data for each brain region correspponding to L structural layers (e.g. cortical thickness). For example, structural data can be structural MRI.'
+'Subject with data for each brain region correspponding to L structural layers (e.g. cortical thickness obtained from structural MRI).'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the subject.
@@ -145,9 +144,6 @@ BA (data, item) is a brain atlas.
 L (data, scalar) is the number of layers of subject data.
 %%%% ¡default!
 2
-
-%%% ¡_prop!
-% % % LAYERTICKS (figure, rvector) are the layer tick positions.
 
 %%% ¡prop!
 LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.

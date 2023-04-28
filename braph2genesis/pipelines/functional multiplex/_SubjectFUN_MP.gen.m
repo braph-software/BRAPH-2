@@ -2,8 +2,7 @@
 SubjectFUN_MP < Subject (sub, subject with functional multiplex data) is a subject with functional multiplex data (e.g. multiplex fMRI).
 
 %%% ¡description!
-Subject with data for each brain region corresponding to L functional layers (e.g. activation timeseries).
-For example, functional data can be fMRI or EEG.
+Subject with data for each brain region corresponding to L functional layers (e.g. activation timeseries obtaiend from fMRI or EEG).
 
 %%% ¡seealso!
 ImporterGroupSubjectFUN_MP_TXT, ExporterGroupSubjectFUN_MP_TXT, ImporterGroupSubjectFUN_MP_XLS, ExporterGroupSubjectFUN_MP_XLS
@@ -112,7 +111,7 @@ NAME (constant, string) is the name of the subject.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the subject.
 %%%% ¡default!
-'Subject with data for each brain region corresponding to L functional layers (e.g. activation timeseries). For example, functional data can be fMRI or EEG.'
+'Subject with data for each brain region corresponding to L functional layers (e.g. activation timeseries obtaiend from fMRI or EEG).'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the subject.
@@ -145,9 +144,6 @@ BA (data, item) is a brain atlas.
 L (data, scalar) is the number of layers of subject data.
 %%%% ¡default!
 2
-
-%%% ¡_prop!
-% % % LAYERTICKS (figure, rvector) are the layer tick positions.
 
 %%% ¡prop!
 LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.

@@ -145,9 +145,6 @@ L (data, scalar) is the number of layers of subject data.
 %%%% ¡default!
 2
 
-%%% ¡_prop!
-% % % LAYERTICKS (figure, rvector) are the layer tick positions.
-
 %%% ¡prop!
 LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
 

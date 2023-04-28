@@ -86,7 +86,6 @@ if isfolder(directory)
     
     sub_dict = gr.get('SUB_DICT');
     sub_number = sub_dict.get('LENGTH');
-    sub_id = cell(sub_number, 1);
 % % %     age = cell(sub_number, 1);
 % % %     sex = cell(sub_number, 1);
 
@@ -103,7 +102,7 @@ if isfolder(directory)
             mkdir(sub_directory)
         end
 
-        sub_id(i) = {sub.get('ID')};
+        sub_id = sub.get('ID');
         sub_FUN_MP = sub.get('FUN_MP');
 % % %         age{i} =  sub.get('AGE');
 % % %         sex{i} =  sub.get('SEX');
@@ -111,10 +110,10 @@ if isfolder(directory)
         for j = 1:1:layers_number
             tab = table(sub_FUN_MP{j});
             
-            sub_file = [sub_directory filesep() sub_id{i} '_' int2str(j) '.xlsx'];
+            sub_file = [sub_directory filesep() sub_id '_' int2str(j) '.xlsx'];
             
             % save file
-            writetable(tab, sub_file, 'Sheet', 1, 'WriteVariableNames', 0);
+            writetable(tab, sub_file, 'Sheet', 1, 'WriteVariableNames', false);
         end
     end
     
@@ -130,7 +129,7 @@ if isfolder(directory)
 % % %         tab2 = table(tab2);
 % % %         
 % % %         % save
-% % %         writetable(tab2, [gr_directory filesep() gr.get('ID') '_covariates.xlsx'], 'Sheet', 1, 'WriteVariableNames', 0);
+% % %         writetable(tab2, [gr_directory filesep() gr.get('ID') '_covariates.xlsx'], 'Sheet', 1, 'WriteVariableNames', false);
 % % %     end
     
     braph2waitbar(wb, 'close')

@@ -124,7 +124,7 @@ if isfolder(fileparts(file))
     % save
     braph2waitbar(wb, 1, 'Finalizing ...')
     
-    writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
+    writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', false);
 
     braph2waitbar(wb, 'close')
 end

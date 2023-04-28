@@ -149,7 +149,7 @@ if isfolder(directory)
 % % %         % save
 % % %         warning_query = warning( 'query', 'MATLAB:xlswrite:AddSheet');
 % % %         warning('off', 'MATLAB:xlswrite:AddSheet')
-% % %         writetable(tab2, [gr_directory filesep() gr_id  '_1.xlsx'], 'Sheet', 2, 'WriteVariableNames', 0);
+% % %         writetable(tab2, [gr_directory filesep() gr_id  '_1.xlsx'], 'Sheet', 2, 'WriteVariableNames', false);
 % % %         warning(warning_query.state, 'MATLAB:xlswrite:AddSheet')
 % % %     end
     

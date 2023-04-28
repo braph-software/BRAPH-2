@@ -12,7 +12,7 @@ The variables of interest (if existing) are saved in another XLSX file
  named "GROUP_ID_void.xlsx" consisting of the following columns: 
  Subject ID (column 1), covariates (subsequent columns). 
  The 1st row contains the headers, the 2nd row a string with the categorical
- variables of interewsy, and each subsequent row the values for each subject.
+ variables of interest, and each subsequent row the values for each subject.
 
 %%% ¡seealso!
 Group, SubjectST, ImporterGroupSubjectST_XLS

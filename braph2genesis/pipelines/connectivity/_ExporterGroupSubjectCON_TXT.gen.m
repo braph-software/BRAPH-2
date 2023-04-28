@@ -10,7 +10,7 @@ The variables of interest (if existing) are saved in another tab-separated
  TXT file named "GROUP_ID_void.txt" consisting of the following columns: 
  Subject ID (column 1), covariates (subsequent columns). 
  The 1st row contains the headers, the 2nd row a string with the categorical
- variables of interewsy, and each subsequent row the values for each subject.
+ variables of interest, and each subsequent row the values for each subject.
 
 %%% ¡seealso!
 Group, SunbjectCON, ImporterGroupSubjectCON_TXT
@@ -91,23 +91,22 @@ if isfolder(directory)
     
     sub_dict = gr.get('SUB_DICT');
     sub_number = sub_dict.get('LENGTH');
-    sub_id = cell(sub_number, 1);
     
     for i = 1:1:sub_number
         braph2waitbar(wb, .15 + .85 * i / sub_number, ['Saving subject ' num2str(i) ' of ' num2str(sub_number) '...'])
         
         sub = sub_dict.get('IT', i);
-        sub_id(i) = {sub.get('ID')};
+        sub_id = sub.get('ID');
         sub_CON = sub.get('CON');
 
         tab = table(sub_CON);
 
-        sub_file = [gr_directory filesep() sub_id{i} '.txt'];
+        sub_file = [gr_directory filesep() sub_id '.txt'];
 
         % save file
-        writetable(tab, sub_file, 'Delimiter', '\t', 'WriteVariableNames', 0);
+        writetable(tab, sub_file, 'Delimiter', '\t', 'WriteVariableNames', false);
     end
-        
+    
     % variables of interest
     voi_ids = {};
     for i = 1:1:sub_number
@@ -230,7 +229,7 @@ sub2 = SubjectCON( ...
     'ID', 'SUB CON 2', ...
     'LABEL', 'Subejct CON 2', ...
     'NOTES', 'Notes on subject CON 2', ...
-    'BA', ba, ... % % %     'age', 70, ... % % %     'sex', 'male', ...
+    'BA', ba, ...
     'CON', rand(ba.get('BR_DICT').get('LENGTH')) ...
     );
 sub2.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 70))
@@ -240,7 +239,7 @@ sub3 = SubjectCON( ...
     'ID', 'SUB CON 3', ...
     'LABEL', 'Subejct CON 3', ...
     'NOTES', 'Notes on subject CON 3', ...
-    'BA', ba, ... % % %     'age', 50, ... % % %     'sex', 'female', ...
+    'BA', ba, ...
     'CON', rand(ba.get('BR_DICT').get('LENGTH')) ...
     );
 sub3.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 50))

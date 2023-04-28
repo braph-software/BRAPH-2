@@ -10,7 +10,7 @@ The variables of interest (if existing) are saved in another XLSX file
  named "GROUP_ID_void.xlsx" consisting of the following columns: 
  Subject ID (column 1), covariates (subsequent columns). 
  The 1st row contains the headers, the 2nd row a string with the categorical
- variables of interewsy, and each subsequent row the values for each subject.
+ variables of interest, and each subsequent row the values for each subject.
 
 %%% ¡seealso!
 Group, SunbjectFUN, ImporterGroupSubjectFUN_XLS
@@ -91,21 +91,20 @@ if isfolder(directory)
 
     sub_dict = gr.get('SUB_DICT');
     sub_number = sub_dict.get('LENGTH');
-    sub_id = cell(sub_number, 1);
             
     for i = 1:1:sub_number
         braph2waitbar(wb, .15 + .85 * i / sub_number, ['Saving subject ' num2str(i) ' of ' num2str(sub_number) ' ...'])
 
         sub = sub_dict.get('IT', i);
-        sub_id(i) = {sub.get('ID')};
+        sub_id = sub.get('ID');
         sub_FUN = sub.get('FUN');
 
         tab = table(sub_FUN);
 
-        sub_file = [gr_directory filesep() sub_id{i} '.xlsx'];
+        sub_file = [gr_directory filesep() sub_id '.xlsx'];
 
         % save file
-        writetable(tab, sub_file, 'Sheet', 1, 'WriteVariableNames', 0);
+        writetable(tab, sub_file, 'Sheet', 1, 'WriteVariableNames', false);
     end
     
     % variables of interest
