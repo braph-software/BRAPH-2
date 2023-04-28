@@ -79,7 +79,7 @@ function cb_exporter_TXT(~, ~)
         'GR', el, ... % % % el.copy(), ...
         'WAITBAR', true ...
         ).get('PUT_DIR');
-    if ~strcmp(ex.get('DIRECTORY'), ExporterGroupSubjectCON_TXT.getPropDefault('DIRECTORY'))
+    if ~is(ex.get('DIRECTORY'), 'NoValue') % % % ~strcmp(ex.get('DIRECTORY'), ExporterGroupSubjectCON_TXT.getPropDefault('DIRECTORY'))
         ex.get('SAVE');
     end
 end
@@ -96,7 +96,7 @@ function cb_exporter_XLS(~, ~)
         'GR', el, ... % % % el.copy(), ...
         'WAITBAR', true ...
         ).get('PUT_DIR');
-    if ~strcmp(ex.get('DIRECTORY'), ExporterGroupSubjectCON_XLS.getPropDefault('DIRECTORY'))
+    if ~is(ex.get('DIRECTORY'), 'NoValue') % % % ~strcmp(ex.get('DIRECTORY'), ExporterGroupSubjectCON_XLS.getPropDefault('DIRECTORY'))
         ex.get('SAVE');
     end
 end
