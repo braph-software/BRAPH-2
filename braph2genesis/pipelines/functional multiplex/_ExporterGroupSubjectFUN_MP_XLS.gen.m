@@ -1,11 +1,11 @@
 %% ¡header!
-ExporterGroupSubjectFUN_MP_XLS < Exporter (ex, exporter of FUN MP subject group in XLS/XLSX) exports a group of subjects with functional multiplex data to a series of XLSX file.
+ExporterGroupSubjectFUN_MP_XLS < Exporter (ex, exporter of FUN MP subject group in XLSX) exports a group of subjects with functional multiplex data to a series of XLSX file.
 
 %%% ¡description!
 ExporterGroupSubjectFUN_MP_XLS exports a group of subjects with functional multiplex data to a series of XLSX file and their covariates (if existing).
 All these files are saved in the same folder.
 Each file contains a table with each row correspoding to a time serie and each column to a brain region.
-The XLS/XLSX file containing the covariates consists of the following columns:
+The XLSX file containing the covariates consists of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and, Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 
@@ -15,30 +15,30 @@ Group, SubjectFUN_MP, ImporterGroupSubjectFUN_MP_XLS
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the FUN MP subject group exporter in XLS/XLSX.
+NAME (constant, string) is the name of the FUN MP subject group exporter in XLSX.
 %%%% ¡default!
 'ExporterGroupSubjectFUN_MP_XLS'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the FUN MP subject group exporter in XLS/XLSX.
+DESCRIPTION (constant, string) is the description of the FUN MP subject group exporter in XLSX.
 %%%% ¡default!
 'ExporterGroupSubjectFUN_MP_XLS exports a group of subjects with functional multiplex data to a series of XLSX file and their covariates (if existing).'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the FUN MP subject group exporter in XLS/XLSX.
+TEMPLATE (parameter, item) is the template of the FUN MP subject group exporter in XLSX.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the FUN MP subject group exporter in XLS/XLSX.
+ID (data, string) is a few-letter code for the FUN MP subject group exporter in XLSX.
 %%%% ¡default!
 'ExporterGroupSubjectFUN_MP_XLS ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the FUN MP subject group exporter in XLS/XLSX.
+LABEL (metadata, string) is an extended label of the FUN MP subject group exporter in XLSX.
 %%%% ¡default!
 'ExporterGroupSubjectFUN_MP_XLS label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the FUN MP subject group exporter in XLS/XLSX.
+NOTES (metadata, string) are some specific notes about the FUN MP subject group exporter in XLSX.
 %%%% ¡default!
 'ExporterGroupSubjectFUN_MP_XLS notes'
 
@@ -70,7 +70,7 @@ end
 value = ex;
 
 %%% ¡prop!
-SAVE (result, empty) saves the group of subjects with functional multiplex data in XLS/XLSX files in the selected directory.
+SAVE (result, empty) saves the group of subjects with functional multiplex data in XLSX files in the selected directory.
 %%%% ¡calculate!
 directory = ex.get('DIRECTORY');
 

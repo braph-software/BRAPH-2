@@ -1,14 +1,14 @@
 %% ¡header!
-ExporterGroupSubjectST_MP_XLS < Exporter (ex, exporter of ST MP subject group in XLS/XLSX) exports a group of subjects with structural multiplex data to an XLSX file.
+ExporterGroupSubjectST_MP_XLS < Exporter (ex, exporter of ST MP subject group in XLSX) exports a group of subjects with structural multiplex data to an XLSX file.
 
 %%% ¡description!
 ExporterGroupSubjectST_MP_XLS exports a group of subjects with structural multiplex data  and their covariates (if existing) to an XLSX file.
 The files from the same group containing the data from L layers are saved in the same folder.
-Each XLS/XLSX file consists of the following columns: 
+Each XLSX file consists of the following columns: 
 Subject ID (column 1), Subject LABEL (column 2), Subject NOTES (column 3) and
 BrainRegions of that layer (column 4-end; one brainregion value per column).
 The first row contains the headers and each subsequent row the values for each subject.
-The XLS/XLSX file containing the covariates consists of the following columns:
+The XLSX file containing the covariates consists of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and, Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 
@@ -18,30 +18,30 @@ Group, SubjectST_MP, ImporterGroupSubjectST_MP_XLS
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the ST MP subject group exporter in XLS/XLSX.
+NAME (constant, string) is the name of the ST MP subject group exporter in XLSX.
 %%%% ¡default!
 'ExporterGroupSubjectST_MP_XLS'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the ST MP subject group exporter in XLS/XLSX.
+DESCRIPTION (constant, string) is the description of the ST MP subject group exporter in XLSX.
 %%%% ¡default!
 'ExporterGroupSubjectST_MP_XLS exports a group of subjects with structural multiplex data  and their covariates (if existing) to an XLSX file.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the ST MP subject group exporter in XLS/XLSX.
+TEMPLATE (parameter, item) is the template of the ST MP subject group exporter in XLSX.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the ST MP subject group exporter in XLS/XLSX.
+ID (data, string) is a few-letter code for the ST MP subject group exporter in XLSX.
 %%%% ¡default!
 'ExporterGroupSubjectST_MP_XLS ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the ST MP subject group exporter in XLS/XLSX.
+LABEL (metadata, string) is an extended label of the ST MP subject group exporter in XLSX.
 %%%% ¡default!
 'ExporterGroupSubjectST_MP_XLS label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the ST MP subject group exporter in XLS/XLSX.
+NOTES (metadata, string) are some specific notes about the ST MP subject group exporter in XLSX.
 %%%% ¡default!
 'ExporterGroupSubjectST_MP_XLS notes'
 
@@ -73,7 +73,7 @@ end
 value = ex;
 
 %%% ¡prop!
-SAVE (result, empty) saves the group of subjects with structural multiplex data in XLS/XLSX files in the selected directory.
+SAVE (result, empty) saves the group of subjects with structural multiplex data in XLSX files in the selected directory.
 %%%% ¡calculate!
 directory = ex.get('DIRECTORY');
 

@@ -1,13 +1,13 @@
 %% ¡header!
-ExporterGroupSubjectST_XLS < Exporter (ex, exporter of ST subject group in XLS/XLSX) exports a group of subjects with structural data to an XLSX file.
+ExporterGroupSubjectST_XLS < Exporter (ex, exporter of ST subject group in XLSX) exports a group of subjects with structural data to an XLSX file.
 
 %%% ¡description!
 ExporterGroupSubjectST_XLS exports a group of subjects with structural data and their covariates (if existing) to another XLSX file.
-The XLS/XLSX file containing the data consists of of the following columns (Sheet 1):
+The XLSX file containing the data consists of of the following columns (Sheet 1):
 Subject ID (column 1), Subject LABEL (column 2), Subject NOTES (column 3) and
 BrainRegions (column 4-end; one brainregion value per column).
 The first row contains the headers and each subsequent row the values for each subject.
-The covariates are on the second Sheet of the same XLS/XLSX file. Sheet 2 consists of the following columns:
+The covariates are on the second Sheet of the same XLSX file. Sheet 2 consists of the following columns:
 Subject ID (column 1), Subject AGE (column 2), and, Subject SEX (column 3).
 The first row contains the headers and each subsequent row the values for each subject.
 
@@ -17,30 +17,30 @@ Group, SubjectST, ImporterGroupSubjectST_XLS
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the ST subject group exporter in XLS/XLSX.
+NAME (constant, string) is the name of the ST subject group exporter in XLSX.
 %%%% ¡default!
 'ExporterGroupSubjectST_XLS'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the ST subject group exporter in XLS/XLSX.
+DESCRIPTION (constant, string) is the description of the ST subject group exporter in XLSX.
 %%%% ¡default!
 'ExporterGroupSubjectST_XLS exports a group of subjects with structural data and their covariates (if existing) to another XLSX file.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the ST subject group exporter in XLS/XLSX.
+TEMPLATE (parameter, item) is the template of the ST subject group exporter in XLSX.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the ST subject group exporter in XLS/XLSX.
+ID (data, string) is a few-letter code for the ST subject group exporter in XLSX.
 %%%% ¡default!
 'ExporterGroupSubjectST_XLS ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the ST subject group exporter in XLS/XLSX.
+LABEL (metadata, string) is an extended label of the ST subject group exporter in XLSX.
 %%%% ¡default!
 'ExporterGroupSubjectST_XLS label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the ST subject group exporter in XLS/XLSX.
+NOTES (metadata, string) are some specific notes about the ST subject group exporter in XLSX.
 %%%% ¡default!
 'ExporterGroupSubjectST_XLS notes'
 
@@ -56,12 +56,12 @@ check = any(strcmp(value.get(Group.SUB_CLASS_TAG), subclasses('SubjectST', [], [
 Group('SUB_CLASS', 'SubjectST', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST'))
 
 %%% ¡prop!
-FILE (data, string) is the XLS/XLSX file name where to save the group of subjects with structural data.
+FILE (data, string) is the XLSX file name where to save the group of subjects with structural data.
 %%%% ¡default!
 [fileparts(which('test_braph2')) filesep 'default_xls_file_to_save_group_ST_most_likely_to_be_erased.xlsx']
 
 %%% ¡prop!
-PUT_FILE (query, item) opens a dialog box to set the XLS/XLSX file where to save the group of subjects with structural data.
+PUT_FILE (query, item) opens a dialog box to set the XLSX file where to save the group of subjects with structural data.
 %%%% ¡settings!
 'ExporterGroupSubjectST_XLS'
 %%%% ¡calculate!
@@ -73,7 +73,7 @@ end
 value = ex;
 
 %%% ¡prop!
-SAVE (result, empty) saves the group of subjects with structural data in the selected XLS/XLSX file.
+SAVE (result, empty) saves the group of subjects with structural data in the selected XLSX file.
 %%%% ¡calculate!
 file = ex.get('FILE');
 
