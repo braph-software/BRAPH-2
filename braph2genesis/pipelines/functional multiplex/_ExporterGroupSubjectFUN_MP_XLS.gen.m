@@ -2,12 +2,17 @@
 ExporterGroupSubjectFUN_MP_XLS < Exporter (ex, exporter of FUN MP subject group in XLSX) exports a group of subjects with functional multiplex data to a series of XLSX file.
 
 %%% ¡description!
-ExporterGroupSubjectFUN_MP_XLS exports a group of subjects with functional multiplex data to a series of XLSX file and their covariates (if existing).
-All these files are saved in the same folder.
-Each file contains a table with each row correspoding to a time serie and each column to a brain region.
-The XLSX file containing the covariates consists of the following columns:
-Subject ID (column 1), Subject AGE (column 2), and, Subject SEX (column 3).
-The first row contains the headers and each subsequent row the values for each subject.
+ExporterGroupSubjectFUN_MP_XLS exports a group of subjects with functional
+ multiplex data to a series of XLSX files contained in a folder named 
+ "GROUP_ID". All these files are saved in the same folder. Each file 
+ contains a table with each row correspoding to a time serie and 
+ each column to a brain region. Files should be labeled with the layer 
+ number indicated as, e.g., "SUBJECT_ID.1.xlsx" and "SUBJECT_ID.2.xlsx".
+The variables of interest (if existing) are saved in another XLSX file 
+ named "GROUP_ID_void.xlsx" consisting of the following columns: Subject ID 
+ (column 1), covariates (subsequent columns). The 1st row contains the 
+ headers, the 2nd row a string with the categorical variables of interest, 
+ and each subsequent row the values for each subject.
 
 %%% ¡seealso!
 Group, SubjectFUN_MP, ImporterGroupSubjectFUN_MP_XLS

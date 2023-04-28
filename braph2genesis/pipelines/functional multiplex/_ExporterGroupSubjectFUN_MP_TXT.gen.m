@@ -2,12 +2,17 @@
 ExporterGroupSubjectFUN_MP_TXT < Exporter (ex, exporter of FUN MP subject group in TXT) exports a group of subjects with functional multiplex data to a series of TXT file.
 
 %%% ¡description!
-ExporterGroupSubjectFUN_MP_TXT exports a group of subjects with functional multiplex data to a series of TXT file and their covariates age and sex (if existing) to another TXT file.
-All these files are saved in the same folder.
-Each file contains a table with each row correspoding to a time serie and each column to a brain region.
-The TXT file containing the covariates consists of the following columns:
-Subject ID (column 1), Subject AGE (column 2), and, Subject SEX (column 3).
-The first row contains the headers and each subsequent row the values for each subject.
+ExporterGroupSubjectFUN_MP_TXT exports a group of subjects with functional
+ multiplex data to a series of tab-separated TXT files contained in a folder 
+ named "GROUP_ID". All these files are saved in the same folder. Each file 
+ contains a table with each row correspoding to a time serie and 
+ each column to a brain region. Files should be labeled with the layer 
+ number indicated as, e.g., "SUBJECT_ID.1.txt" and "SUBJECT_ID.2.txt".
+The variables of interest (if existing) are saved in another tab-separated 
+ TXT file named "GROUP_ID_void.txt" consisting of the following columns: 
+ Subject ID (column 1), covariates (subsequent columns). 
+ The 1st row contains the headers, the 2nd row a string with the categorical
+ variables of interest, and each subsequent row the values for each subject.
 
 %%% ¡seealso!
 Group, SubjectFUN_MP, ImporterGroupSubjectFUN_MP_TXT
