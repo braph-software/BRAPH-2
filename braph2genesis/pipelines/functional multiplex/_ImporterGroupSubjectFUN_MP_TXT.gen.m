@@ -125,14 +125,14 @@ if isfolder(directory)
                 [~, sub_id_layer_no] = fileparts(files(i).name);
                 splits = regexp(sub_id_layer_no, '(.+)\\.(\\d+)', 'tokens');
                 sub_ids = [sub_ids, splits{1}{1}];
-                L = max(L, int32(str2double(splits{1}{2})));
+                L = max(L, str2double(splits{1}{2}));
             end
             sub_ids = unique(sub_ids);
             
             % adds subjects
             sub_dict = gr.memorize('SUB_DICT');
             for i = 1:1:length(sub_ids)
-                braph2waitbar(wb, .15 + .85 * i / length(files), ['Loading subject ' num2str(i) ' of ' num2str(length(files)) ' ...'])
+                braph2waitbar(wb, .15 + .85 * i / length(sub_ids), ['Loading subject ' num2str(i) ' of ' num2str(length(sub_ids)) ' ...'])
 
                 % read files
                 sub_id = sub_ids{i};
