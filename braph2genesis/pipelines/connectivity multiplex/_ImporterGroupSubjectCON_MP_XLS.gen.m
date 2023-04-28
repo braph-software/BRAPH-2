@@ -135,7 +135,7 @@ if isfolder(directory)
                 % read files
                 CON_MP = {};
                 for l = 1:1:L
-                    filename = fullfile(directory, [sub_ids{i} '.' int2str() '.xls']);
+                    filename = fullfile(directory, [sub_ids{i} '.' int2str(l) '.xls']);
                     if isfile(filename)
                         CON = xlsread(filename);
                     else
