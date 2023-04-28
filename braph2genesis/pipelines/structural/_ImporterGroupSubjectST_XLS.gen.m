@@ -151,10 +151,10 @@ if isfile(file)
         
         % variables of interest
         vois = [];
-        if isfile([name '_vois.xls'])
-            [~, ~, vois] = xlsread([name '_vois.xls']);
-        elseif isfile([name '_vois.xlsx'])
-            [~, ~, vois] = xlsread([name '_vois.xlsx']);
+        if isfile([fileparts(file) filesep() name '_vois.xls'])
+            [~, ~, vois] = xlsread([fileparts(file) filesep() name '_vois.xls']);
+        elseif isfile([fileparts(file) filesep() name '_vois.xlsx'])
+            [~, ~, vois] = xlsread([fileparts(file) filesep() name '_vois.xlsx']);
         end
         if ~isempty(vois)
             for i = 3:1:size(vois, 1)
