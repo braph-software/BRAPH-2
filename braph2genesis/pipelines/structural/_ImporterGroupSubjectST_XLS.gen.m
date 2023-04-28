@@ -5,7 +5,7 @@ ImporterGroupSubjectST_XLS < Importer (im, importer of ST subject group from XLS
 ImporterGroupSubjectST_XLS imports a group of subjects with structural data 
  from an XLS/XLSX file named "GROUP_ID.xlsx". This file contains the 
  following columns: Subject ID (column 1), Subject LABEL (column 2), 
- Subject NOTES (column 3) and BrainRegions (columns 4-end; one brainregion 
+ Subject NOTES (column 3) and BrainRegions (columns 4-end; one brain region 
  value per column). The first row contains the headers and each subsequent 
  row the values for each subject.
 The variables of interest are from another XLS/XLSX file named "GROUP_ID_void.xlsx" 
