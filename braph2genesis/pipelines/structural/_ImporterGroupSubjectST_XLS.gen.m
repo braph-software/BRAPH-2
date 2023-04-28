@@ -2,15 +2,17 @@
 ImporterGroupSubjectST_XLS < Importer (im, importer of ST subject group from XLS/XLSX) imports a group of subjects with structural data from an XLS/XLSX file.
 
 %%% ¡description!
-ImporterGroupSubjectST_XLS imports a group of subjects with structural data and their covariates (optional) from an XLS/XLSX file.
-The XLS/XLSX file consists of the following columns (Sheet 1): 
-Subject ID (column 1), Subject LABEL (column 2), Subject NOTES (column 3) and
-BrainRegions (column 4-end; one brainregion value per column).
-The first row contains the headers and each subsequent row the values for each subject.
-The covariates must be on the second Sheet of the same XLS/XLSX file. Sheet 2 consists of the following columns:
-Subject ID (column 1), Subject AGE (column 2), and Subject SEX (column 3).
-The first row contains the headers and each subsequent row the values for each subject.
-It throws an error is problems occur during the import.
+ImporterGroupSubjectST_XLS imports a group of subjects with structural data 
+ from an XLS/XLSX file named "GROUP_ID.xlsx". This file contains the 
+ following columns: Subject ID (column 1), Subject LABEL (column 2), 
+ Subject NOTES (column 3) and BrainRegions (columns 4-end; one brainregion 
+ value per column). The first row contains the headers and each subsequent 
+ row the values for each subject.
+The variables of interest are from another XLS/XLSX file named "GROUP_ID_void.xlsx" 
+ (if existing) consisting of the following columns: 
+ Subject ID (column 1), covariates (subsequent columns). 
+ The 1st row contains the headers, the 2nd row a string with the categorical
+ variables of interest, and each subsequent row the values for each subject.
 
 %%% ¡seealso!
 Group, SubjectST, ExporterGroupSubjectST_XLS
@@ -25,7 +27,7 @@ NAME (constant, string) is the name of the ST subject group importer from XLS/XL
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ST subject group importer from XLS/XLSX.
 %%%% ¡default!
-'ImporterGroupSubjectST_XLS imports a group of subjects with structural data and their covariates (optional) from an XLS/XLSX file.'
+'ImporterGroupSubjectST_XLS imports a group of subjects with structural data and their covariates (optional) from another XLS/XLSX file.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ST subject group importer from XLS/XLSX.
@@ -92,24 +94,10 @@ if isfile(file)
     wb = braph2waitbar(im.get('WAITBAR'), 0, 'Reading Directory ...');
     
     [~, ~, raw] = xlsread(file);
-    
-% % %     % Check if there are covariates to add (age and sex)
-% % %     sheets = sheetnames(file);
-% % %     if length(sheets) > 1
-% % %         [~, ~, raw_covariates] = xlsread(file, 2);
-% % %         age = raw_covariates(2:end, 2);
-% % %         sex = raw_covariates(2:end, 3);
-% % %     else
-% % %         age = {[0]};
-% % %         age = age(ones(size(raw, 1)-1,1));
-% % %         unassigned =  {'unassigned'};
-% % %         sex = unassigned(ones(size(raw, 1)-1, 1));
-% % %     end
-    
-    % sets group props
-	braph2waitbar(wb, .15, 'Loading subject group ...')
-
+        
     try
+        braph2waitbar(wb, .15, 'Loading subject group ...')
+        
         [~, name, ext] = fileparts(file);
         gr.set( ...
             'ID', name, ...
@@ -119,23 +107,31 @@ if isfile(file)
         
         % brain atlas
         braph2waitbar(wb, .25, 'Loading brain atlas ...')
-            
+
+        % brain atlas
         ba = im.get('BA');
         br_number = size(raw, 2) - 3;
-        if ba.get('BR_DICT').get('LENGTH') ~= br_number
+        if ba.get('BR_DICT').get('LENGTH') == 0
+            % adds the number of regions of the first file to the brain atlas
             ba = BrainAtlas();
-            br_dict = ba.get('BR_DICT');
+            br_dict = ba.memorize('BR_DICT');
             for j = 4:1:length(raw)
                 br_id = raw{1, j};
                 br = BrainRegion('ID', br_id);
                 br_dict.get('ADD', br)
             end
-            ba.set('BR_DICT', br_dict);
         end
-        
-        sub_dict = gr.get('SUB_DICT');
-        
+        if br_number ~= ba.get('BR_DICT').get('LENGTH')
+            error( ...
+                [BRAPH2.STR ':' class(im) ':' BRAPH2.ERR_IO], ...
+                [BRAPH2.STR ':' class(im) ':' BRAPH2.ERR_IO '\\n' ...
+                'The file ' name '.' ext ' should contain a matrix with ' int2str(ba.get('BR_DICT').get('LENGTH')) ' columns corresponding to the brain regions, ' ...
+                'while it contains ' int2str(br_number) ' columns.'] ...
+                )
+        end
+                
         % adds subjects
+        sub_dict = gr.memorize('SUB_DICT');
         for i = 2:1:size(raw, 1)
             braph2waitbar(wb, .25 + .75 * (i - 1) / size(raw, 1), ['Loading subject ' num2str(i - 1) ' of ' num2str(size(raw, 1) - 1) ' ...'])
             
@@ -148,11 +144,43 @@ if isfile(file)
                 'LABEL', num2str(raw{i, 2}), ...
                 'NOTES', num2str(raw{i, 3}), ...
                 'BA', ba, ...
-                'ST', ST ... % % % 'age', age{i-1}, ... % % % 'sex', sex{i-1} ...
+                'ST', ST ...
                 );
             sub_dict.get('ADD', sub);
         end
-        gr.set('SUB_DICT', sub_dict);
+        
+        % variables of interest
+        vois = [];
+        if isfile([name '_vois.xls'])
+            [~, ~, vois] = xlsread([name '_vois.xls']);
+        elseif isfile([name '_vois.xlsx'])
+            [~, ~, vois] = xlsread([name '_vois.xlsx']);
+        end
+        if ~isempty(vois)
+            for i = 3:1:size(vois, 1)
+                sub_id = vois{i, 1};
+                sub = sub_dict.get('IT', sub_id);
+                for v = 2:1:size(vois, 2)
+                    voi_id = vois{1, v};
+                    if isnumeric(vois{2, v}) % VOINumeric
+                        sub.memorize('VOI_DICT').get('ADD', ...
+                            VOINumeric( ...
+                                'ID', voi_id, ...
+                                'V', vois{i, v} ...
+                                ) ...
+                            );
+                    elseif ischar(vois{2, v}) % VOICategoric
+                        sub.memorize('VOI_DICT').get('ADD', ...
+                            VOICategoric( ...
+                                'ID', voi_id, ...
+                                'CATEGORIES', str2cell(vois{2, v}), ...
+                                'V', find(strcmp(vois{i, v}, str2cell(vois{2, v}))) ...
+                                ) ...
+                            );
+                    end                        
+                end
+            end
+        end
     catch e
         braph2waitbar(wb, 'close')
 
@@ -161,8 +189,8 @@ if isfile(file)
     
     braph2waitbar(wb, 'close')
 elseif ~isempty(file)
-    error([BRAPH2.STR ':ImporterGroupSubjectST_XLS:' BRAPH2.CANCEL_IO], ...
-        [BRAPH2.STR ':ImporterGroupSubjectST_XLS:' BRAPH2.CANCEL_IO '\\n' ...
+    error([BRAPH2.STR ':ImporterGroupSubjectST_XLS:' BRAPH2.ERR_IO], ...
+        [BRAPH2.STR ':ImporterGroupSubjectST_XLS:' BRAPH2.ERR_IO '\\n' ...
         'The prop FILE must be an existing file, but it is ''' file '''.'] ...
         );
 end
@@ -176,16 +204,178 @@ value = gr;
 
 %%% ¡test!
 %%%% ¡name!
+Create example files
+%%%% ¡code!
+data_dir = [fileparts(which('SubjectST')) filesep 'Example data ST XLS'];
+mkdir(data_dir);
+
+% Brain Atlas
+im_ba = ImporterBrainAtlasXLS('FILE', 'destrieux_atlas.xlsx');
+ba = im_ba.get('BA');
+ex_ba = ExporterBrainAtlasXLS( ...
+    'BA', ba, ...
+    'FILE', [data_dir filesep() 'atlas.xlsx'] ...
+    );
+ex_ba.get('SAVE')
+N = ba.get('BR_DICT').get('LENGTH');
+
+% saves RNG
+rng_settings_ = rng(); rng('default')
+
+N_subjects = 50;
+
+sex_options = {'Female' 'Male'};
+
+% Group 1
+K1 = 4; % degree (mean node degree is 2K) - group 1
+beta1 = 0.08; % Rewiring probability - group 1
+
+h1 = WattsStrogatz(N, K1, beta1); % create graph
+% figure(1)
+% plot(h1, 'NodeColor',[1 0 0], 'EdgeColor',[0 0 0], 'EdgeAlpha',0.1, 'Layout','circle');
+% title(['Group 1: Graph with $N = $ ' num2str(N) ...
+%     ' nodes, $K = $ ' num2str(K1) ', and $\beta = $ ' num2str(beta1)], ...
+%     'Interpreter','latex')
+% axis equal
+
+A1 = full(adjacency(h1)); A1(1:length(A1)+1:numel(A1)) = 1; % Extract the adjacency matrix
+A1 = A1*transpose(A1); % this is needed to make the matrices positive definite
+% imshow(A1)
+
+% These matrices will be covariance matrices for the two groups
+mu_gr1 = ones(1, length(A1)); % Specify the mean
+R1 = mvnrnd(mu_gr1, A1, N_subjects); % Create time series for the two groups
+mean_R1 = mean(R1); std_R1 = std(R1); R1 = (R1 - mean(R1)) ./ std(R1); % Normalize the time series
+R1 = R1 + abs(min(min(R1))); % We need only positive values
+
+% row
+sub_Tags1 = strings(size(R1, 1), 1);
+for i_sub = 1:1:length(sub_Tags1)
+    sub_Tags1(i_sub) = string(['sub_' num2str(i_sub)]);
+end
+label_Tags1 = strings(size(R1, 1), 1);
+for i_sub = 1:1:length(label_Tags1)
+    label_Tags1(i_sub) = string(['Label ' num2str(i_sub)]);
+end
+note_Tags1 = strings(size(R1, 1), 1);
+for i_sub = 1:1:length(note_Tags1)
+    note_Tags1(i_sub) = string(['Note ' num2str(i_sub)]);
+end
+
+% column
+reg_Tags = strings(1, size(R1,2) + 3);
+reg_Tags(1, 1) = 'ID';
+reg_Tags(1, 2) = 'Label';
+reg_Tags(1, 3) = 'Notes';
+for i_reg = 4:1:length(reg_Tags)
+    reg_Tags(1, i_reg) = string(['Region_' num2str(i_reg - 3)]);
+end
+
+% create the table
+writetable(array2table([cellstr(sub_Tags1) cellstr(label_Tags1) cellstr(note_Tags1) num2cell(R1)], 'VariableNames', reg_Tags), [data_dir filesep() 'ST_Group_1.xlsx'], 'WriteRowNames', true)
+
+% variables of interest
+vois1 = [
+    {{'Subject ID'} {'Age'} {'Sex'}}
+    {{} {} cell2str(sex_options)}
+    ];
+for i = 1:1:N_subjects
+    vois1 = [vois1; {sub_Tags1{i}, randi(90), sex_options(randi(2))}];
+end
+writetable(table(vois1), [data_dir filesep() 'ST_Group_1_vois.xlsx'], 'WriteVariableNames', false)
+
+% Group 2
+K2 = K1; % degree (mean node degree is 2K) - group 2
+beta2 = 0.7; % Rewiring probability - group 2
+
+h2 = WattsStrogatz(N, K2, beta2);
+% figure(2)
+% plot(h2, 'NodeColor',[1 0 0], 'EdgeColor',[0 0 0], 'EdgeAlpha',0.1, 'Layout','circle');
+% title(['Group 2: Graph with $N = $ ' num2str(N) ...
+%     ' nodes, $K = $ ' num2str(K2) ', and $\beta = $ ' num2str(beta2)], ...
+%     'Interpreter','latex')
+% axis equal
+
+A2 = full(adjacency(h1)); A2(1:length(A2)+1:numel(A2)) = 1;
+A2 = A2*transpose(A2);
+% imshow(A2)
+
+mu_gr2 = ones(1, length(A2));
+R2 = mvnrnd(mu_gr2, A2, N_subjects);
+mean_R2 = mean(R2); std_R2 = std(R2); R2 = (R2 - mean(R2)) ./ std(R2);
+R2 = R2 + abs(min(min(R2)));
+
+% row
+sub_Tags2 = strings(size(R1, 1), 1);
+for i_sub = 1:1:length(sub_Tags2)
+    sub_Tags2(i_sub) = string(['sub_' num2str(i_sub + N_subjects)]);
+end
+label_Tags2 = strings(size(R1, 1), 1);
+for i_sub = 1:1:length(label_Tags2)
+    label_Tags2(i_sub) = string(['Label ' num2str(i_sub + N_subjects)]);
+end
+note_Tags2 = strings(size(R1, 1), 1);
+for i_sub = 1:1:length(note_Tags2)
+    note_Tags2(i_sub) = string(['Note ' num2str(i_sub + N_subjects)]);
+end
+
+writetable(array2table([cellstr(sub_Tags2) cellstr(label_Tags2) cellstr(note_Tags2) num2cell(R2)], 'VariableNames', reg_Tags), [data_dir filesep() 'ST_Group_2.xlsx'], 'WriteRowNames', true)
+
+% variables of interest
+vois2 = [
+    {{'Subject ID'} {'Age'} {'Sex'}}
+    {{} {} cell2str(sex_options)}
+    ];
+for i = 1:1:N_subjects
+    vois2 = [vois2; {sub_Tags2{i}, randi(90), sex_options(randi(2))}];
+end
+writetable(table(vois2), [data_dir filesep() 'ST_Group_2_vois.xlsx'], 'WriteVariableNames', false)
+
+% reset RNG
+rng(rng_settings_)
+
+%%% ¡test_functions!
+function h = WattsStrogatz(N,K,beta)
+% H = WattsStrogatz(N,K,beta) returns a Watts-Strogatz model graph with N
+% nodes, N*K edges, mean node degree 2*K, and rewiring probability beta.
+%
+% beta = 0 is a ring lattice, and beta = 1 is a random graph.
+
+% Connect each node to its K next and previous neighbors. This constructs
+% indices for a ring lattice.
+s = repelem((1:N)',1,K);
+t = s + repmat(1:K,N,1);
+t = mod(t-1,N)+1;
+
+% Rewire the target node of each edge with probability beta
+for source=1:N
+    switchEdge = rand(K, 1) < beta;
+    
+    newTargets = rand(N, 1);
+    newTargets(source) = 0;
+    newTargets(s(t==source)) = 0;
+    newTargets(t(source, ~switchEdge)) = 0;
+    
+    [~, ind] = sort(newTargets, 'descend');
+    t(source, switchEdge) = ind(1:nnz(switchEdge));
+end
+
+h = graph(s,t);
+end
+
+%%% ¡test!
+%%%% ¡name!
 GUI
 %%%% ¡probability!
 .01
 %%%% ¡parallel!
 false
 %%%% ¡code!
-im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectST')) filesep 'example data ST' filesep 'destrieux_atlas.xlsx']);
+im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectST')) filesep 'Example data ST XLS' filesep 'atlas.xlsx']);
 ba = im_ba.get('BA');
+
 im_gr = ImporterGroupSubjectST_XLS( ...
-    'FILE', [fileparts(which('SubjectST')) filesep 'example data ST' filesep 'xls' filesep 'ST_Group_1.xlsx'], ...
+    'FILE', [fileparts(which('SubjectST')) filesep 'Example data ST XLS' filesep 'ST_Group_1.xlsx'], ...
     'BA', ba, ...
     'WAITBAR', true ...
     );
