@@ -153,7 +153,7 @@ if isfolder(fileparts(file))
             end
         end
         [dir, name, ext] = fileparts(file);
-        writetable(table(vois), [dir filesep() name filesep() '_vois.xlsx'], 'WriteVariableNames', false)
+        writetable(table(vois), [dir filesep() name '_vois.xlsx'], 'WriteVariableNames', false)
     end
     
     braph2waitbar(wb, 'close')
