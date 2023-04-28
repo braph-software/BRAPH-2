@@ -274,7 +274,7 @@ for i = 51:1:100
     r = 0 + (0.5 - 0)*rand(size(A2)); diffA = A2 - r; A2(A2 ~= 0) = diffA(A2 ~= 0);
     A2 = max(A2, transpose(A2));
 
-    writetable(array2table(A2), [gr2_dir filesep() 'SubjectCON_' num2str(i) '.xlsx'], 'WriteVariableNames', false)
+    writetable(array2table(A2), [gr2_dir filesep() sub_id num2str(i) '.xlsx'], 'WriteVariableNames', false)
     
     % variables of interest
     vois2 = [vois2; {sub_id, randi(90), sex_options(randi(2))}];
