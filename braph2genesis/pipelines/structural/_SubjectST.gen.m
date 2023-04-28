@@ -4,6 +4,9 @@ SubjectST < Subject (sub, subject with structural data) is a subject with struct
 %%% ¡description!
 Subject with structural data (e.g. cortical thickness obtaibed from strcutural MRI) for each brain region.
 
+%%% ¡seealso!
+ImporterGroupSubjectST_TXT, ExporterGroupSubjectST_TXT, ImporterGroupSubjectST_XLS, ExporterGroupSubjectST_XLS
+
 %% ¡gui!
 
 %%% ¡menu_import!
