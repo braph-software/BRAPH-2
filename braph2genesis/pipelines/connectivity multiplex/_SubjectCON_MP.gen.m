@@ -176,18 +176,6 @@ pr = PanelPropCell('EL', sub, 'PROP', SubjectCON_MP.CON_MP, ...
     'ROWNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
     'COLUMNNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
     varargin{:});
- 
-%%% ¡_prop!
-% % % age (data, scalar) is a scalar number containing the age of the subject.
-% % % %%%% ¡default!
-% % % 0
-
-%%% ¡_prop!
-% % % sex (data, option) is an option containing the sex of the subject (female/male).
-% % % %%%% ¡default!
-% % % 'unassigned'
-% % % %%%% ¡settings!
-% % % {'Female', 'Male', 'unassigned'}
 
 %% ¡tests!
 
