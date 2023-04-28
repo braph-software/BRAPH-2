@@ -2,7 +2,7 @@
 ImporterGroupSubjectCON_MP_XLS < Importer (im, importer of CON MP subject group from XLS/XLSX) imports a group of subjects with connectivity multiplex data from a series of XLS/XLSX file.
 
 %%% ¡description!
-ImporterGroupSubjectCON_XLS imports a group of subjects with connectivity 
+ImporterGroupSubjectCON_MP_XLS imports a group of subjects with connectivity 
  multiplex data from a series of XLS/XLSX files contained in a folder named 
  "GROUP_ID". All these files must be in the same folder; also, no other 
  files should be in the folder. Each file contains a table of values 
@@ -260,7 +260,7 @@ vois1 = [
     {{} {} cell2str(sex_options)}
     ];
 for i = 1:1:50 % subject number
-    sub_id = ['SubjectCON_' num2str(i)];
+    sub_id = ['SubjectCON_MP_' num2str(i)];
 
     % randomize the parameters
     K_temp = K1(randperm(length(K1)));
