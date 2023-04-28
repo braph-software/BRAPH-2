@@ -97,7 +97,7 @@ if isfolder(directory)
         'ID', name, ...
         'LABEL', name, ...
         'NOTES', ['Group loaded from ' directory] ...
-    );
+        );
 
     try
         braph2waitbar(wb, .15, 'Loading subject group ...')
@@ -368,8 +368,8 @@ for i = 51:1:100
     % figure(2)
     % imshow(A_full2)
 
-    writetable(array2table(A_full1), [gr2_dir filesep() sub_id num2str(i) '.1.xlsx'], 'WriteVariableNames', false)
-    writetable(array2table(A_full2), [gr2_dir filesep() sub_id num2str(i) '.2.xlsx'], 'WriteVariableNames', false)
+    writetable(array2table(A_full1), [gr2_dir filesep() sub_id '.1.xlsx'], 'WriteVariableNames', false)
+    writetable(array2table(A_full2), [gr2_dir filesep() sub_id '.2.xlsx'], 'WriteVariableNames', false)
     
     % variables of interest
     vois2 = [vois2; {sub_id, randi(90), sex_options(randi(2))}];
