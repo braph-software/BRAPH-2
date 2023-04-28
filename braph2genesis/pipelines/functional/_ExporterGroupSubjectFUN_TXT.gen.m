@@ -2,15 +2,19 @@
 ExporterGroupSubjectFUN_TXT < Exporter (ex, exporter of FUN subject group in TXT) exports a group of subjects with functional data to a series of TXT file.
 
 %%% ¡description!
-ExporterGroupSubjectFUN_TXT exports a group of subjects with functional data to a series of TXT file and their covariates age and sex (if existing) to another TXT file.
-All these files are saved in the same folder.
-Each file contains a table with each row correspoding to a time serie and each column to a brain region.
-The TXT file containing the covariates consists of the following columns:
-Subject ID (column 1), Subject AGE (column 2), and, Subject SEX (column 3).
-The first row contains the headers and each subsequent row the values for each subject.
+ExporterGroupSubjectFUN_TXT exports a group of subjects with functional 
+ data to a series of tab-separated TXT files contained in a folder named 
+ "GROUP_ID". All these files are saved in the same folder. Each file 
+ contains a table with each row correspoding to a time serie and each 
+ column to a brain region.
+The variables of interest (if existing) are saved in another tab-separated 
+ TXT file named "GROUP_ID_void.txt" consisting of the following columns: 
+ Subject ID (column 1), covariates (subsequent columns). 
+ The 1st row contains the headers, the 2nd row a string with the categorical
+ variables of interewsy, and each subsequent row the values for each subject.
 
 %%% ¡seealso!
-Group, SunbjectCON, ImporterGroupSubjectFUN_TXT
+Group, SunbjectFUN, ImporterGroupSubjectFUN_TXT
 
 %% ¡props_update!
 
@@ -89,17 +93,13 @@ if isfolder(directory)
     sub_dict = gr.get('SUB_DICT');
     sub_number = sub_dict.get('LENGTH');
     sub_id = cell(sub_number, 1);
-% % %     age = cell(sub_number, 1);
-% % %     sex = cell(sub_number, 1);
 
     for i = 1:1:sub_number
-        braph2waitbar(wb, .25 + .75 * i / sub_number, ['Saving subject ' num2str(i) ' of ' num2str(sub_number) '...'])
+        braph2waitbar(wb, .15 + .85 * i / sub_number, ['Saving subject ' num2str(i) ' of ' num2str(sub_number) '...'])
         
         sub = sub_dict.get('IT', i);
         sub_id(i) = {sub.get('ID')};
         sub_FUN = sub.get('FUN');
-% %         age{i} =  sub.get('AGE');
-% %         sex{i} =  sub.get('SEX');
                 
         tab = table(sub_FUN);
         
@@ -109,25 +109,36 @@ if isfolder(directory)
         writetable(tab, sub_file, 'Delimiter', '\t', 'WriteVariableNames', 0);
     end
     
-% % %     % if covariates save them in another file
-% % %     if sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
-% % %         tab2 = cell(1 + sub_number, 3);
-% % %         tab2{1, 1} = 'ID';
-% % %         tab2{1, 2} = 'Age';
-% % %         tab2{1, 3} = 'Sex';
-% % %         tab2(2:end, 1) = sub_id;
-% % %         tab2(2:end, 2) = age;
-% % %         tab2(2:end, 3) = sex;
-% % %         tab2 = table(tab2);
-% % %         
-% % %         % save
-% % %         cov_directory = [gr_directory filesep() 'covariates'];
-% % %         if ~exist(cov_directory, 'dir')
-% % %             mkdir(cov_directory)
-% % %         end
-% % %         writetable(tab2, [cov_directory filesep() gr.get('ID') '_covariates.txt'], 'Delimiter', '\t', 'WriteVariableNames', 0);
-% % %     end
-    
+    % variables of interest
+    voi_ids = {};
+    for i = 1:1:sub_number
+        sub = sub_dict.get('IT', i);
+        voi_ids = unique([voi_ids, sub.get('VOI_DICT').get('KEYS')]);
+    end
+    if ~isempty(voi_ids)
+        vois = cell(2 + sub_number, 1 + length(voi_ids));
+        vois{1, 1} = 'Subject ID';
+        vois(1, 2:end) = voi_ids;
+        for i = 1:1:sub_number
+            sub = sub_dict.get('IT', i);
+            vois{2 + i, 1} = sub.get('ID');
+            
+            voi_dict = sub.get('VOI_DICT');
+            for v = 1:1:voi_dict.get('LENGTH')
+                voi = voi_dict.get('IT', v);
+                voi_id = voi.get('ID');
+                if isa(voi, 'VOINumeric') % Numeric
+                    vois{2 + i, 1 + find(strcmp(voi_id, voi_ids))} = voi.get('V');
+                elseif isa(voi, 'VOICategoric') % Categoric
+                    categories = voi.get('CATEGORIES');
+                    vois{2, 1 + find(strcmp(voi_id, voi_ids))} = {['{' sprintf(' ''%s'' ', categories{:}) '}']};
+                    vois{2 + i, 1 + find(strcmp(voi_id, voi_ids))} = categories{voi.get('V')};
+                end
+            end
+        end
+        writetable(table(vois), [gr_directory '_vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
+    end
+
     braph2waitbar(wb, 'close')
 end
 
@@ -210,23 +221,31 @@ sub1 = SubjectFUN( ...
     'ID', 'SUB FUN 1', ...
     'LABEL', 'Subejct FUN 1', ...
     'NOTES', 'Notes on subject FUN 1', ...
-    'BA', ba, ... % % %     'age', 75, ... % % %     'sex', 'female', ...
+    'BA', ba, ...
     'FUN', rand(10, ba.get('BR_DICT').get('LENGTH')) ...
     );
+sub1.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 75))
+sub1.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', find(strcmp('Female', {'Female', 'Male'}))))
+
 sub2 = SubjectFUN( ...
     'ID', 'SUB FUN 2', ...
     'LABEL', 'Subejct FUN 2', ...
     'NOTES', 'Notes on subject FUN 2', ...
-    'BA', ba, ... % % %     'age', 70, ... % % %     'sex', 'male', ...
+    'BA', ba, ...
     'FUN', rand(10, ba.get('BR_DICT').get('LENGTH')) ...
     );
+sub2.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 70))
+sub2.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', find(strcmp('Male', {'Female', 'Male'}))))
+
 sub3 = SubjectFUN( ...
     'ID', 'SUB FUN 3', ...
     'LABEL', 'Subejct FUN 3', ...
     'NOTES', 'Notes on subject FUN 3', ...
-    'BA', ba, ... % % %     'age', 50, ... % % %     'sex', 'female', ...
+    'BA', ba, ...
     'FUN', rand(10, ba.get('BR_DICT').get('LENGTH')) ...
     );
+sub3.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 50))
+sub3.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', find(strcmp('Female', {'Female', 'Male'}))))
 
 gr = Group( ...
     'ID', 'GR FUN', ...
@@ -262,7 +281,9 @@ for i = 1:1:max(gr.get('SUB_DICT').get('LENGTH'), gr_loaded1.get('SUB_DICT').get
     sub_loaded = gr_loaded1.get('SUB_DICT').get('IT', i);    
     assert( ...
         isequal(sub.get('ID'), sub_loaded.get('ID')) & ...
-        isequal(sub.get('BA'), sub_loaded.get('BA')) & ... % % %         isequal(sub.get('AGE'), sub_loaded.get('AGE')) & ... % % %         isequal(sub.get('SEX'), sub_loaded.get('SEX')) & ...
+        isequal(sub.get('BA'), sub_loaded.get('BA')) & ...
+        isequal(sub.get('VOI_DICT').get('IT', 'Age').get('V'), sub_loaded.get('VOI_DICT').get('IT', 'Age').get('V')) & ... 
+        isequal(sub.get('VOI_DICT').get('IT', 'Sex').get('V'), sub_loaded.get('VOI_DICT').get('IT', 'Sex').get('V')) & ...        
         isequal(round(sub.get('FUN'), 10), round(sub_loaded.get('FUN'), 10)), ...
         [BRAPH2.STR ':ExporterGroupSubjectFUN_TXT:' BRAPH2.FAIL_TEST], ...
         'Problems saving or loading a group.')    
@@ -270,8 +291,7 @@ end
 
 % import with new brain atlas
 im2 = ImporterGroupSubjectFUN_TXT( ...
-    'DIRECTORY', [directory filesep() gr.get(Group.ID)], ...
-    'BA', ba ...
+    'DIRECTORY', [directory filesep() gr.get(Group.ID)] ...
     );
 gr_loaded2 = im2.get('GR');
 
@@ -282,7 +302,10 @@ for i = 1:1:max(gr.get('SUB_DICT').get('LENGTH'), gr_loaded2.get('SUB_DICT').get
     sub = gr.get('SUB_DICT').get('IT', i);
     sub_loaded = gr_loaded2.get('SUB_DICT').get('IT', i);    
     assert( ...
-        isequal(sub.get('ID'), sub_loaded.get('ID')) & ...        
+        isequal(sub.get('ID'), sub_loaded.get('ID')) & ...
+        ~isequal(sub.get('BA').get('ID'), sub_loaded.get('BA').get('ID')) & ...
+        isequal(round(sub.get('FUN'), 10), round(sub_loaded.get('FUN'), 10)), ...
+        isequal(sub.get('VOI_DICT').get('IT', 'Age').get('V'), sub_loaded.get('VOI_DICT').get('IT', 'Age').get('V')) & ...         
         isequal(round(sub.get('FUN'), 10), round(sub_loaded.get('FUN'), 10)), ...
         [BRAPH2.STR ':ExporterGroupSubjectFUN_TXT:' BRAPH2.FAIL_TEST], ...
         'Problems saving or loading a group.')    
