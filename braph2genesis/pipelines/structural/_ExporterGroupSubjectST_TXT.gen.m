@@ -2,14 +2,17 @@
 ExporterGroupSubjectST_TXT < Exporter (ex, exporter of ST subject group in TXT) exports a group of subjects with structural data to an TXT file.
 
 %%% ¡description!
-ExporterGroupSubjectST_TXT exports a group of subjects with structural data to an TXT file and their covariates (if existing) to another TXT file.
-The TXT file consists of 6 columns. It reads as follows: 
-Group ID (column 1), Group LABEL (column 2), Group NOTES (column 3) and
-BrainRegions (column 4-end; one brainregion value per column).
-The first row contains the headers and each subsequent row the values for each subject.
-The TXT file containing the covariates consists of the following columns:
-Subject ID (column 1), Subject AGE (column 2), and, Subject SEX (column 3).
-The first row contains the headers and each subsequent row the values for each subject.
+ExporterGroupSubjectTXT_XLS exports a group of subjects with connectivity 
+ data to a TXT file with name "GROUP_ID.txt". This file contains a table 
+ with the following columns: Subject ID (column 1), Subject LABEL (column 2), 
+ Subject NOTES (column 3) and BrainRegions (columns 4-end; one brain region 
+ value per column). The first row contains the headers and each subsequent 
+ row the values for each subject.
+The variables of interest (if existing) are saved in another XLSX file 
+ named "GROUP_ID_void.txt" consisting of the following columns: 
+ Subject ID (column 1), covariates (subsequent columns). 
+ The 1st row contains the headers, the 2nd row a string with the categorical
+ variables of interewsy, and each subsequent row the values for each subject.
 
 %%% ¡seealso!
 Group, SubjectST, ImporterGroupSubjectST_TXT
@@ -95,8 +98,6 @@ if isfolder(fileparts(file))
             num2cell([1:1:ba.get('BR_DICT').get('LENGTH')]), 'UniformOutput', false);
         br_labels = cellfun(@(br) br.get('ID'), br_list, 'UniformOutput', false);
 
-% % %         age = cell(sub_number, 1);
-% % %         sex = cell(sub_number, 1);
         tab = cell(1 + sub_number, 3 + numel(br_labels));
         tab{1, 1} = 'ID';
         tab{1, 2} = 'Label';
@@ -111,8 +112,6 @@ if isfolder(fileparts(file))
             tab{1 + i, 1} = sub.get('ID');
             tab{1 + i, 2} = sub.get('LABEL');
             tab{1 + i, 3} = sub.get('NOTES');
-% %             age{i} =  sub.get('AGE');
-% %             sex{i} =  sub.get('SEX');
             
             sub_ST = sub.get('ST');
             for j = 1:1:length(sub_ST)
@@ -124,25 +123,39 @@ if isfolder(fileparts(file))
     % save
     braph2waitbar(wb, 1, 'Finalizing ...')
         
-    writetable(table(tab), file, 'Delimiter', '\t', 'WriteVariableNames', 0);
+    writetable(table(tab), file, 'Delimiter', '\t', 'WriteVariableNames', false);
     
-% % %     % if covariates save them in another file
-% % %     if sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
-% % %         tab2 = cell(1 + sub_number, 3);
-% % %         tab2{1, 1} = 'ID';
-% % %         tab2{1, 2} = 'Age';
-% % %         tab2{1, 3} = 'Sex';
-% % %         tab2(2:end, 1) = tab(2:end, 1);
-% % %         tab2(2:end, 2) = age;
-% % %         tab2(2:end, 3) = sex;
-% % %         tab2 = table(tab2);
-% % %         
-% % %         % save
-% % %         [filepath, filename, ~] = fileparts(file);
-% % %         writetable(tab2, [filepath filesep() filename '_covariates.txt'], 'Delimiter', '	', 'WriteVariableNames', 0);
-% % %         warning('off', 'MATLAB:xlswrite:AddSheet');
-% % %     end
-        
+    % variables of interest
+    voi_ids = {};
+    for i = 1:1:sub_number
+        sub = sub_dict.get('IT', i);
+        voi_ids = unique([voi_ids, sub.get('VOI_DICT').get('KEYS')]);
+    end
+    if ~isempty(voi_ids)
+        vois = cell(2 + sub_number, 1 + length(voi_ids));
+        vois{1, 1} = 'Subject ID';
+        vois(1, 2:end) = voi_ids;
+        for i = 1:1:sub_number
+            sub = sub_dict.get('IT', i);
+            vois{2 + i, 1} = sub.get('ID');
+            
+            voi_dict = sub.get('VOI_DICT');
+            for v = 1:1:voi_dict.get('LENGTH')
+                voi = voi_dict.get('IT', v);
+                voi_id = voi.get('ID');
+                if isa(voi, 'VOINumeric') % Numeric
+                    vois{2 + i, 1 + find(strcmp(voi_id, voi_ids))} = voi.get('V');
+                elseif isa(voi, 'VOICategoric') % Categoric
+                    categories = voi.get('CATEGORIES');
+                    vois{2, 1 + find(strcmp(voi_id, voi_ids))} = {['{' sprintf(' ''%s'' ', categories{:}) '}']};
+                    vois{2 + i, 1 + find(strcmp(voi_id, voi_ids))} = categories{voi.get('V')};
+                end
+            end
+        end
+        [dir, name, ext] = fileparts(file);
+        writetable(table(vois), [dir filesep() name '_vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
+    end
+    
     braph2waitbar(wb, 'close')
 end
 
@@ -222,23 +235,31 @@ sub1 = SubjectST( ...
     'ID', 'SUB ST 1', ...
     'LABEL', 'Subejct ST 1', ...
     'NOTES', 'Notes on subject ST 1', ...
-    'BA', ba, ... % % %     'age', 30, ... % % %     'sex', 'female', ...
+    'BA', ba, ...
     'ST', rand(ba.get('BR_DICT').get('LENGTH'), 1) ...
     );
+sub1.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 75))
+sub1.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', find(strcmp('Female', {'Female', 'Male'}))))
+
 sub2 = SubjectST( ...
     'ID', 'SUB ST 2', ...
     'LABEL', 'Subejct ST 2', ...
     'NOTES', 'Notes on subject ST 2', ...
-    'BA', ba, ... % % %     'age', 50, ... % % %     'sex', 'male', ...
+    'BA', ba, ...
     'ST', rand(ba.get('BR_DICT').get('LENGTH'), 1) ...
     );
+sub2.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 70))
+sub2.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', find(strcmp('Male', {'Female', 'Male'}))))
+
 sub3 = SubjectST( ...
     'ID', 'SUB ST 3', ...
     'LABEL', 'Subejct ST 3', ...
     'NOTES', 'Notes on subject ST 3', ...
-    'BA', ba, ... % % %     'age', 60, ... % % %     'sex', 'female', ...
+    'BA', ba, ...
     'ST', rand(ba.get('BR_DICT').get('LENGTH'), 1) ...
     );
+sub3.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 50))
+sub3.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', find(strcmp('Female', {'Female', 'Male'}))))
 
 gr = Group( ...
     'ID', 'GR ST', ...
@@ -273,7 +294,9 @@ for i = 1:1:max(gr.get('SUB_DICT').get('LENGTH'), gr_loaded1.get('SUB_DICT').get
         isequal(sub.get('ID'), sub_loaded.get('ID')) & ...
         isequal(sub.get('LABEL'), sub_loaded.get('LABEL')) & ...
         isequal(sub.get('NOTES'), sub_loaded.get('NOTES')) & ...
-        isequal(sub.get('BA'), sub_loaded.get('BA')) & ... % % %         isequal(sub.get('AGE'), sub_loaded.get('AGE')) & ... % % %         isequal(sub.get('SEX'), sub_loaded.get('SEX')) & ...
+        isequal(sub.get('BA'), sub_loaded.get('BA')) & ...
+        isequal(sub.get('VOI_DICT').get('IT', 'Age').get('V'), sub_loaded.get('VOI_DICT').get('IT', 'Age').get('V')) & ... 
+        isequal(sub.get('VOI_DICT').get('IT', 'Sex').get('V'), sub_loaded.get('VOI_DICT').get('IT', 'Sex').get('V')) & ...
         isequal(round(sub.get('ST'), 10), round(sub_loaded.get('ST'), 10)), ...
         [BRAPH2.STR ':ExporterGroupSubjectST_TXT:' BRAPH2.FAIL_TEST], ...
         'Problems saving or loading a group.')    
@@ -296,6 +319,8 @@ for i = 1:1:max(gr.get('SUB_DICT').get('LENGTH'), gr_loaded2.get('SUB_DICT').get
         isequal(sub.get('LABEL'), sub_loaded.get('LABEL')) & ...
         isequal(sub.get('NOTES'), sub_loaded.get('NOTES')) & ...
         ~isequal(sub.get('BA').get('ID'), sub_loaded.get('BA').get('ID')) & ... % % %         isequal(sub.get('AGE'), sub_loaded.get('AGE')) & ... % % %         isequal(sub.get('SEX'), sub_loaded.get('SEX')) & ...
+        isequal(sub.get('VOI_DICT').get('IT', 'Age').get('V'), sub_loaded.get('VOI_DICT').get('IT', 'Age').get('V')) & ... 
+        isequal(sub.get('VOI_DICT').get('IT', 'Sex').get('V'), sub_loaded.get('VOI_DICT').get('IT', 'Sex').get('V')) & ...
         isequal(round(sub.get('ST'), 10), round(sub_loaded.get('ST'), 10)), ...
         [BRAPH2.STR ':ExporterGroupSubjectST_TXT:' BRAPH2.FAIL_TEST], ...
         'Problems saving or loading a group.')    
