@@ -133,9 +133,10 @@ if isfolder(directory)
                 braph2waitbar(wb, .15 + .85 * i / length(files), ['Loading subject ' num2str(i) ' of ' num2str(length(files)) ' ...'])
 
                 % read files
+                sub_id = sub_ids{i};
                 CON_MP = {};
                 for l = 1:1:L
-                    filename = fullfile(directory, [sub_ids{i} '.' int2str(l) '.xls']);
+                    filename = fullfile(directory, [sub_id '.' int2str(l) '.xls']);
                     if isfile(filename)
                         CON = xlsread(filename);
                     else
@@ -152,7 +153,7 @@ if isfolder(directory)
                     CON_MP = [CON_MP, CON];
                 end
                 
-                sub = SubjectCON( ...
+                sub = SubjectCON_MP( ...
                     'ID', sub_id, ...
                     'BA', ba, ...
                     'L', L, ...
