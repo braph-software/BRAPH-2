@@ -107,8 +107,6 @@ if isfile(file)
         
         % brain atlas
         braph2waitbar(wb, .25, 'Loading brain atlas ...')
-
-        % brain atlas
         ba = im.get('BA');
         br_number = size(raw, 2) - 3;
         if ba.get('BR_DICT').get('LENGTH') == 0
