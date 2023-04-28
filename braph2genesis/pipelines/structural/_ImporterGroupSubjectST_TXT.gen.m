@@ -130,7 +130,7 @@ if isfile(file)
         % adds subjects
         sub_dict = gr.memorize('SUB_DICT');
         for i = 1:1:size(raw, 1)
-            braph2waitbar(wb, .25 + .75 * i / size(raw2, 1), ['Loading subject ' num2str(i) ' of ' num2str(size(raw2, 1)) ' ...'])
+            braph2waitbar(wb, .25 + .75 * i / size(raw, 1), ['Loading subject ' num2str(i) ' of ' num2str(size(raw, 1)) ' ...'])
             
             ST = zeros(br_number, 1);
             for j = 1:1:length(ST)
