@@ -113,6 +113,36 @@ if isfolder(directory)
         end
     end
     
+    % variables of interest
+    voi_ids = {};
+    for i = 1:1:sub_number
+        sub = sub_dict.get('IT', i);
+        voi_ids = unique([voi_ids, sub.get('VOI_DICT').get('KEYS')]);
+    end
+    if ~isempty(voi_ids)
+        vois = cell(2 + sub_number, 1 + length(voi_ids));
+        vois{1, 1} = 'Subject ID';
+        vois(1, 2:end) = voi_ids;
+        for i = 1:1:sub_number
+            sub = sub_dict.get('IT', i);
+            vois{2 + i, 1} = sub.get('ID');
+            
+            voi_dict = sub.get('VOI_DICT');
+            for v = 1:1:voi_dict.get('LENGTH')
+                voi = voi_dict.get('IT', v);
+                voi_id = voi.get('ID');
+                if isa(voi, 'VOINumeric') % Numeric
+                    vois{2 + i, 1 + find(strcmp(voi_id, voi_ids))} = voi.get('V');
+                elseif isa(voi, 'VOICategoric') % Categoric
+                    categories = voi.get('CATEGORIES');
+                    vois{2, 1 + find(strcmp(voi_id, voi_ids))} = {['{' sprintf(' ''%s'' ', categories{:}) '}']};
+                    vois{2 + i, 1 + find(strcmp(voi_id, voi_ids))} = categories{voi.get('V')};
+                end
+            end
+        end
+        writetable(table(vois), [gr_directory '_vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
+    end
+    
     braph2waitbar(wb, 'close')
 end
 
