@@ -6,7 +6,7 @@ CombineGroups_CON_FUN_MP combines a group of subjects with connectivity
  data (SubjectCON) with a group of subjects with functional data (SubjectFUN)
  into a group of subjects with connectivity and functional data 
  (SubjectCON_FUN_MP). The subject ids of the two groups must match.
-The variables of interest are copied from the SubjectCON group.
+The brain atlas and variables of interest are copied from the SubjectCON group.
 
 %%% ¡seealso!
 SubjectCON_FUN_MP, SubjectCON, SubjectFUN, SeparateGroups_CON_FUN
@@ -21,7 +21,7 @@ NAME (constant, string) is the name of the combiner of CON and FUN subject group
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the combiner of CON and FUN subject groups.
 %%%% ¡default!
-'CombineGroups_CON_FUN_MP combines a group of subjects with connectivity data (SubjectCON) with a group of subjects with functional data (SubjectFUN) into a group of subjects with connectivity and functional data (SubjectCON_FUN_MP). The subject ids of the two groups must match. The variables of interest are copied from the SubjectCON group.'
+'CombineGroups_CON_FUN_MP combines a group of subjects with connectivity data (SubjectCON) with a group of subjects with functional data (SubjectFUN) into a group of subjects with connectivity and functional data (SubjectCON_FUN_MP). The subject ids of the two groups must match. The brain atlas and variables of interest are copied from the SubjectCON group.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the combiner of CON and FUN subject groups.
@@ -49,21 +49,29 @@ NOTES (metadata, string) are some specific notes about the combiner of CON and F
 WAITBAR (metadata, logical) detemines whether to show the waitbar.
 
 %%% ¡prop!
-GR1 (data, item) is a group of subjects with connectivity data.
+GR_CON (data, item) is a group of subjects with connectivity data.
+%%%% ¡settings!
+'Group'
 %%%% ¡default!
-Group('SUB_CLASS', 'SubjectCON')
+Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON'))
+%%%% ¡check_prop!
+check = any(strcmp(value.get('SUB_CLASS'), SubjectCON.getSubclasses());
 
 %%% ¡prop!
-GR2 (data, item) is a group of subjects with functional data.
+GR_FUN (data, item) is a group of subjects with functional data.
+%%%% ¡settings!
+'Group'
 %%%% ¡default!
-Group('SUB_CLASS', 'SubjectFUN')
+Group('SUB_CLASS', 'SubjectFUN', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectFUN'))
+%%%% ¡check_prop!
+check = any(strcmp(value.get('SUB_CLASS'), SubjectFUN.getSubclasses());
 
 %%% ¡prop!
 GR (result, item) is a group of subjects with connectivity and functional data.
 %%%% ¡settings!
 'Group'
 %%%% ¡check_value!
-check = any(strcmp(value.get(Group.SUB_CLASS_TAG), subclasses('SubjectCON_FUN_MP', [], [], true)));
+check = any(strcmp(value.get('SUB_CLASS'), SubjectCON_FUN_MP.getSubclasses());
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectCON_FUN_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON_FUN_MP'))
 %%%% ¡calculate!
