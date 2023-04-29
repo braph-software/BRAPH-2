@@ -118,7 +118,7 @@ if isfolder(directory)
                 end
             end
             
-            % determines the numebr of layers and the subjects
+            % determines the number of layers and the subjects
             L = 0;
             sub_ids = {};
             for i = 1:1:length(files)
