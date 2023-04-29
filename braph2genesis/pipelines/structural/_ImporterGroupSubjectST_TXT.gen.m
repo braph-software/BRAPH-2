@@ -8,7 +8,7 @@ ImporterGroupSubjectST_XLS imports a group of subjects with structural data
  Subject NOTES (column 3) and BrainRegions (columns 4-end; one brainregion 
  value per column). The first row contains the headers and each subsequent 
  row the values for each subject.
-The variables of interest are from another TXT file named "GROUP_ID_void.txt" 
+The variables of interest are from another TXT file named "GROUP_ID.vois.txt" 
  (if existing) consisting of the following columns: 
  Subject ID (column 1), covariates (subsequent columns). 
  The 1st row contains the headers, the 2nd row a string with the categorical
@@ -147,8 +147,8 @@ if isfile(file)
         end
         
         % variables of interest
-        if isfile([fileparts(file) filesep() name  '_vois.txt'])
-            vois = textread([fileparts(file) filesep() name  '_vois.txt'], '%s', 'delimiter', '\t', 'whitespace', '');
+        if isfile([fileparts(file) filesep() name  '.vois.txt'])
+            vois = textread([fileparts(file) filesep() name  '.vois.txt'], '%s', 'delimiter', '\t', 'whitespace', '');
             vois = reshape(vois, find(strcmp('', vois), 1) - 1, [])';
             for i = 3:1:size(vois, 1)
                 sub_id = vois{i, 1};
@@ -276,7 +276,7 @@ vois1 = [
 for i = 1:1:N_subjects
     vois1 = [vois1; {sub_Tags1{i}, randi(90), sex_options(randi(2))}];
 end
-writetable(table(vois1), [data_dir filesep() 'ST_Group_1_vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
+writetable(table(vois1), [data_dir filesep() 'ST_Group_1.vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
 
 % Group 2
 K2 = K1; % degree (mean node degree is 2K) - group 2
@@ -323,7 +323,7 @@ vois2 = [
 for i = 1:1:N_subjects
     vois2 = [vois2; {sub_Tags2{i}, randi(90), sex_options(randi(2))}];
 end
-writetable(table(vois2), [data_dir filesep() 'ST_Group_2_vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
+writetable(table(vois2), [data_dir filesep() 'ST_Group_2.vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
 
 % reset RNG
 rng(rng_settings_)

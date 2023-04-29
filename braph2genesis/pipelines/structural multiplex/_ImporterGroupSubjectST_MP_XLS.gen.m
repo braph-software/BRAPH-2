@@ -12,7 +12,7 @@ ImporterGroupSubjectST_MP_XLS imports a group of subjects with structural
  LABEL (column 2), Subject NOTES (column 3) and BrainRegions 
  (columns 4-end; one brain region value per column). The first row contains 
  the headers and each subsequent row the values for each subject.
-The variables of interest are from another XLS/XLSX file named "GROUP_ID.void.xlsx" 
+The variables of interest are from another XLS/XLSX file named "GROUP_ID.vois.xlsx" 
  (if exisitng) consisting of the following columns: 
  Subject ID (column 1), covariates (subsequent columns). 
  The 1st row contains the headers, the 2nd row a string with the categorical
@@ -344,8 +344,8 @@ T_group12 = array2table(R12, 'VariableNames', reg_Tags);
 % create the table
 gr1_dir = [data_dir filesep() 'ST_MP_Group_1_XLS'];
 mkdir(gr1_dir)
-writetable(T_group11, [gr1_dir filesep() 'ST_MP_Group_1.1.xlsx'], 'WriteRowNames', true)
-writetable(T_group12, [gr1_dir filesep() 'ST_MP_Group_1.2.xlsx'], 'WriteRowNames', true)
+writetable(T_group11, [gr1_dir filesep() 'ST_MP_Group_1_XLS.1.xlsx'], 'WriteRowNames', true)
+writetable(T_group12, [gr1_dir filesep() 'ST_MP_Group_1_XLS.2.xlsx'], 'WriteRowNames', true)
 
 % variables of interest
 vois1 = [
@@ -439,8 +439,8 @@ T_group22 = array2table(R22, 'VariableNames', reg_Tags);
 % create the table
 gr2_dir = [data_dir filesep() 'ST_MP_Group_2_XLS'];
 mkdir(gr2_dir)
-writetable(T_group21, [gr2_dir filesep() 'ST_MP_Group_2.1.xlsx'], 'WriteRowNames', true)
-writetable(T_group22, [gr2_dir filesep() 'ST_MP_Group_2.2.xlsx'], 'WriteRowNames', true)
+writetable(T_group21, [gr2_dir filesep() 'ST_MP_Group_2_XLS.1.xlsx'], 'WriteRowNames', true)
+writetable(T_group22, [gr2_dir filesep() 'ST_MP_Group_2_XLS.2.xlsx'], 'WriteRowNames', true)
 
 % variables of interest
 vois2 = [

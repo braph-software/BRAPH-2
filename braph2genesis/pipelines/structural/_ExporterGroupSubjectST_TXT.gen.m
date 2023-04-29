@@ -9,7 +9,7 @@ ExporterGroupSubjectTXT_XLS exports a group of subjects with connectivity
  value per column). The first row contains the headers and each subsequent 
  row the values for each subject.
 The variables of interest (if existing) are saved in another XLSX file 
- named "GROUP_ID_void.txt" consisting of the following columns: 
+ named "GROUP_ID.vois.txt" consisting of the following columns: 
  Subject ID (column 1), covariates (subsequent columns). 
  The 1st row contains the headers, the 2nd row a string with the categorical
  variables of interest, and each subsequent row the values for each subject.
@@ -153,7 +153,7 @@ if isfolder(fileparts(file))
             end
         end
         [dir, name, ext] = fileparts(file);
-        writetable(table(vois), [dir filesep() name '_vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
+        writetable(table(vois), [dir filesep() name '.vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
     end
     
     braph2waitbar(wb, 'close')

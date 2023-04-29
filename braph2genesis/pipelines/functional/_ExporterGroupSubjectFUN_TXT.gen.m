@@ -8,7 +8,7 @@ ExporterGroupSubjectFUN_TXT exports a group of subjects with functional
  contains a table with each row correspoding to a time serie and each 
  column to a brain region.
 The variables of interest (if existing) are saved in another tab-separated 
- TXT file named "GROUP_ID_void.txt" consisting of the following columns: 
+ TXT file named "GROUP_ID.vois.txt" consisting of the following columns: 
  Subject ID (column 1), covariates (subsequent columns). 
  The 1st row contains the headers, the 2nd row a string with the categorical
  variables of interest, and each subsequent row the values for each subject.
@@ -135,7 +135,7 @@ if isfolder(directory)
                 end
             end
         end
-        writetable(table(vois), [gr_directory '_vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
+        writetable(table(vois), [gr_directory '.vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
     end
 
     braph2waitbar(wb, 'close')

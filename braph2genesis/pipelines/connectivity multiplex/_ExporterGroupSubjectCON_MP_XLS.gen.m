@@ -9,7 +9,7 @@ ExporterGroupSubjectCON_MP_XLS exports a group of subjects with connectivity
  should be labeled with the layer number indicated as, e.g., 
  "SUBJECT_ID.1.xlsx" and "SUBJECT_ID.2.xlsx".
 The variables of interest (if existing) are saved in another tab-separated 
- XLSX file named "GROUP_ID_void.xlsx" consisting of the following columns: 
+ XLSX file named "GROUP_ID.vois.xlsx" consisting of the following columns: 
  Subject ID (column 1), covariates (subsequent columns). 
  The 1st row contains the headers, the 2nd row a string with the categorical
  variables of interest, and each subsequent row the values for each subject.
@@ -140,7 +140,7 @@ if isfolder(directory)
                 end
             end
         end
-        writetable(table(vois), [gr_directory '_vois.xlsx'], 'WriteVariableNames', false)
+        writetable(table(vois), [gr_directory '.vois.xlsx'], 'WriteVariableNames', false)
     end
     
     braph2waitbar(wb, 'close')

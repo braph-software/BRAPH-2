@@ -7,7 +7,7 @@ ImporterGroupSubjectFUN_XLS imports a group of subjects with functional
  All these files must be in the same folder; also, no other files should be 
  in the folder. Each file contains a table with each row correspoding to a 
  time serie and each column to a brain region.
-The variables of interest are from another XLS/XLSX file named "GROUP_ID_void.xlsx" 
+The variables of interest are from another XLS/XLSX file named "GROUP_ID.vois.xlsx" 
  (if exisitng) consisting of the following columns: 
  Subject ID (column 1), covariates (subsequent columns). 
  The 1st row contains the headers, the 2nd row a string with the categorical
@@ -143,10 +143,10 @@ if isfolder(directory)
             
             % variables of interest
             vois = [];
-            if isfile([directory '_vois.xls'])
-                [~, ~, vois] = xlsread([directory '_vois.xls']);
-            elseif isfile([directory '_vois.xlsx'])
-                [~, ~, vois] = xlsread([directory '_vois.xlsx']);
+            if isfile([directory '.vois.xls'])
+                [~, ~, vois] = xlsread([directory '.vois.xls']);
+            elseif isfile([directory '.vois.xlsx'])
+                [~, ~, vois] = xlsread([directory '.vois.xlsx']);
             end
             if ~isempty(vois)
                 for i = 3:1:size(vois, 1)
@@ -273,7 +273,7 @@ for i = 1:1:50 % subject number
     % variables of interest
     vois1 = [vois1; {sub_id, randi(90), sex_options(randi(2))}];
 end
-writetable(table(vois1), [data_dir filesep() gr1_name '_vois.xlsx'], 'WriteVariableNames', false)
+writetable(table(vois1), [data_dir filesep() gr1_name '.vois.xlsx'], 'WriteVariableNames', false)
 
 % Group 2 - 2 modules of 45 nodes each
 % initialize values for the WS model
@@ -328,7 +328,7 @@ for i = 51:1:100
     % variables of interest
     vois2 = [vois2; {sub_id, randi(90), sex_options(randi(2))}];
 end
-writetable(table(vois2), [data_dir filesep() gr2_name '_vois.xlsx'], 'WriteVariableNames', false)
+writetable(table(vois2), [data_dir filesep() gr2_name '.vois.xlsx'], 'WriteVariableNames', false)
 
 % reset RNG
 rng(rng_settings_)

@@ -8,7 +8,7 @@ ImporterGroupSubjectCON_TXT imports a group of subjects with connectivity
  files should be in the folder. Each file contains a table of values 
  corresponding to the adjacency matrix.
 The variables of interest are from another tab-separated TXT file named 
- "GROUP_ID_void.txt" (if exisitng) consisting of the following columns: 
+ "GROUP_ID.vois.txt" (if exisitng) consisting of the following columns: 
  Subject ID (column 1), covariates (subsequent columns). 
  The 1st row contains the headers, the 2nd row a string with the categorical
  variables of interest, and each subsequent row the values for each subject.
@@ -142,8 +142,8 @@ if isfolder(directory)
             end
             
             % variables of interest
-            if isfile([directory '_vois.txt'])
-                vois = textread([directory '_vois.txt'], '%s', 'delimiter', '\t', 'whitespace', '');
+            if isfile([directory '.vois.txt'])
+                vois = textread([directory '.vois.txt'], '%s', 'delimiter', '\t', 'whitespace', '');
                 vois = reshape(vois, find(strcmp('', vois), 1) - 1, [])';
                 for i = 3:1:size(vois, 1)
                     sub_id = vois{i, 1};
@@ -244,7 +244,7 @@ for i = 1:1:50 % subject number
     % variables of interest
     vois1 = [vois1; {sub_id, randi(90), sex_options(randi(2))}];
 end
-writetable(table(vois1), [data_dir filesep() gr1_name '_vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
+writetable(table(vois1), [data_dir filesep() gr1_name '.vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
 
 % Group 2
 K2 = 2; % degree (mean node degree is 2K) - group 2
@@ -276,7 +276,7 @@ for i = 51:1:100
     % variables of interest
     vois2 = [vois2; {sub_id, randi(90), sex_options(randi(2))}];
 end
-writetable(table(vois2), [data_dir filesep() gr2_name '_vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
+writetable(table(vois2), [data_dir filesep() gr2_name '.vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
 
 % reset RNG
 rng(rng_settings_)
