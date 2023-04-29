@@ -327,3 +327,4 @@ for i = 1:1:max(gr.get('SUB_DICT').get('LENGTH'), gr_loaded2.get('SUB_DICT').get
 end
 
 delete(file)
+delete([file(1:end-4) '.vois.txt'])
