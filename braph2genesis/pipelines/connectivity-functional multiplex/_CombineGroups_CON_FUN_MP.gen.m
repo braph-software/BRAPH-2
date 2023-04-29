@@ -55,7 +55,7 @@ GR_CON (data, item) is a group of subjects with connectivity data.
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON'))
 %%%% ¡check_prop!
-check = any(strcmp(value.get('SUB_CLASS'), SubjectCON.getSubclasses());
+check = any(strcmp(value.get('SUB_CLASS'), SubjectCON.getSubclasses()));
 
 %%% ¡prop!
 GR_FUN (data, item) is a group of subjects with functional data.
@@ -64,14 +64,14 @@ GR_FUN (data, item) is a group of subjects with functional data.
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectFUN', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectFUN'))
 %%%% ¡check_prop!
-check = any(strcmp(value.get('SUB_CLASS'), SubjectFUN.getSubclasses());
+check = any(strcmp(value.get('SUB_CLASS'), SubjectFUN.getSubclasses()));
 
 %%% ¡prop!
 GR_CON_FUN_MP (result, item) is a group of subjects with connectivity and functional data.
 %%%% ¡settings!
 'Group'
 %%%% ¡check_value!
-check = any(strcmp(value.get('SUB_CLASS'), SubjectCON_FUN_MP.getSubclasses());
+check = any(strcmp(value.get('SUB_CLASS'), SubjectCON_FUN_MP.getSubclasses()));
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectCON_FUN_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON_FUN_MP'))
 %%%% ¡calculate!
@@ -92,7 +92,7 @@ end
 % creates empty group
 gr = Group( ...
     'SUB_CLASS', 'SubjectCON_FUN_MP', ...
-    'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON_FUN_MP') ...
+    'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON_FUN_MP'), ...
     'ID', [gr_CON.get('ID') ' + ' gr_FUN.get('ID')], ...
     'LABEL', [gr_CON.get('LABEL') ' -- ' gr_FUN.get('LABEL')], ...
     'NOTES', ['Group combining the connectivigy group ' gr_CON.get('ID') ' and the functional group ' gr_FUN.get('ID')] ...
