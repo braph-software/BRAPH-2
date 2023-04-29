@@ -144,7 +144,7 @@ if isfolder(directory)
             
             % adds subjects
             sub_dict = gr.memorize('SUB_DICT');
-            for i = 2:1:size(raw, 1)
+            for i = 1:1:size(raw, 1)
                 braph2waitbar(wb, .25 + .75 * (i - 1) / size(raw, 1), ['Loading subject ' num2str(i - 1) ' of ' num2str(size(raw, 1) - 1) ' ...'])
                 
                 % read files
