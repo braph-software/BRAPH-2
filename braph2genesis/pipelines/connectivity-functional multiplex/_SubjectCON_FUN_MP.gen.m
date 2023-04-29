@@ -113,8 +113,6 @@ gui_FUN.get('SHOW')
 
 gui_FUN.get('CLOSE')
 
-%% ¡tests!
-
 %%% ¡test!
 %%%% ¡name!
 Create example files XLS
