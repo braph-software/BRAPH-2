@@ -1,45 +1,47 @@
 %% ¡header!
-CombineGroups_CON_FUN < Element (co, combiner of CON and FUN subject groups) combines a group of subjects with connectivity data with a group of subjects with functional data.
+CombineGroups_CON_FUN_MP < Element (co, combiner of CON and FUN subject groups) combines a group of subjects with connectivity data with a group of subjects with functional data.
 
 %%% ¡description!
-CombineGroups_CON_FUN combines a group of subjects with connectivity data with a group of subjects with functional data.
-Combines the data uploaded through the connectivity and functional workflows. The ID and covariates of subjects are
-copied from the first group, in this case connectivity.
+CombineGroups_CON_FUN_MP combines a group of subjects with connectivity 
+ data (SubjectCON) with a group of subjects with functional data (SubjectFUN)
+ into a group of subjects with connectivity and functional data 
+ (SubjectCON_FUN_MP). The subject ids of the two groups must match.
+The variables of interest are copied from the SubjectCON group.
 
 %%% ¡seealso!
-SubjectCON_FUN_MP, SeparateGroups_CON_FUN
+SubjectCON_FUN_MP, SubjectCON, SubjectFUN, SeparateGroups_CON_FUN
 
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the subject.
+NAME (constant, string) is the name of the combiner of CON and FUN subject groups.
 %%%% ¡default!
-'SubjectCON_FUN_MP'
+'CombineGroups_CON_FUN_MP'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the subject.
+DESCRIPTION (constant, string) is the description of the combiner of CON and FUN subject groups.
 %%%% ¡default!
-'Subject with connectivity and functional data (e.g. obtained from DTI and fMRI). The first layer contains a connectivity matrix and the second layer contains functional data.'
+'CombineGroups_CON_FUN_MP combines a group of subjects with connectivity data (SubjectCON) with a group of subjects with functional data (SubjectFUN) into a group of subjects with connectivity and functional data (SubjectCON_FUN_MP). The subject ids of the two groups must match. The variables of interest are copied from the SubjectCON group.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the subject.
+TEMPLATE (parameter, item) is the template of the combiner of CON and FUN subject groups.
 %%% ¡settings!
-'SubjectCON_FUN_MP'
+'CombineGroups_CON_FUN_MP'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the subject.
+ID (data, string) is a few-letter code for the combiner of CON and FUN subject groups.
 %%%% ¡default!
-'SubjectCON_FUN_MP ID'
+'CombineGroups_CON_FUN_MP ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the subject.
+LABEL (metadata, string) is an extended label of the combiner of CON and FUN subject groups.
 %%%% ¡default!
-'SubjectCON_FUN_MP label'
+'CombineGroups_CON_FUN_MP label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the subject.
+NOTES (metadata, string) are some specific notes about the combiner of CON and FUN subject groups.
 %%%% ¡default!
-'SubjectCON_FUN_MP notes'
+'CombineGroups_CON_FUN_MP notes'
 
 %% ¡props!
 

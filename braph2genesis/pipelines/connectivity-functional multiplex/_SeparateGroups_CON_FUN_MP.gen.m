@@ -3,43 +3,43 @@ SeparateGroups_CON_FUN_MP < Element (se, separator of a CON_FUN_MP subject group
 
 %%% ¡description!
 SeparateGroups_CON_FUN_MP separates a group of subjects with connectivity 
-and functional data (SubjectCON_FUN_MP) into groups of SubjectCON and 
-SubjectCON_FUN.
+ and functional data (SubjectCON_FUN_MP) into groups of SubjectCON and 
+ SubjectCON_FUN.
 
 %%% ¡seealso!
-SubjectCON_FUN_MP, CombineGroups_CON_FUN
+SubjectCON_FUN_MP, SubjectCON, SubjectFUN, CombineGroups_CON_FUN
 
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the subject.
+NAME (constant, string) is the name of the separator of a CON_FUN_MP subject group.
 %%%% ¡default!
-'SubjectCON_FUN_MP'
+'SeparateGroups_CON_FUN_MP'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the subject.
+DESCRIPTION (constant, string) is the description of the separator of a CON_FUN_MP subject group.
 %%%% ¡default!
-'Subject with connectivity and functional data (e.g. obtained from DTI and fMRI). The first layer contains a connectivity matrix and the second layer contains functional data.'
+'SeparateGroups_CON_FUN_MP separates a group of subjects with connectivity and functional data (SubjectCON_FUN_MP) into groups of SubjectCON and SubjectCON_FUN.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the subject.
+TEMPLATE (parameter, item) is the template of the separator of a CON_FUN_MP subject group.
 %%% ¡settings!
-'SubjectCON_FUN_MP'
+'SeparateGroups_CON_FUN_MP'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the subject.
+ID (data, string) is a few-letter code for the separator of a CON_FUN_MP subject group.
 %%%% ¡default!
-'SubjectCON_FUN_MP ID'
+'SeparateGroups_CON_FUN_MP ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the subject.
+LABEL (metadata, string) is an extended label of the separator of a CON_FUN_MP subject group.
 %%%% ¡default!
-'SubjectCON_FUN_MP label'
+'SeparateGroups_CON_FUN_MP label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the subject.
+NOTES (metadata, string) are some specific notes about the separator of a CON_FUN_MP subject group.
 %%%% ¡default!
-'SubjectCON_FUN_MP notes'
+'SeparateGroups_CON_FUN_MP notes'
 
 %% ¡props!
 
