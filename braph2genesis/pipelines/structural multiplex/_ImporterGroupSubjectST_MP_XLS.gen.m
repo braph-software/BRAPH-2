@@ -7,7 +7,7 @@ ImporterGroupSubjectST_MP_XLS imports a group of subjects with structural
  "GROUP_ID". All these files must be in the same folder; also, no other 
  files should be in the folder. Each file corresponds to a layer of the 
  multiplex and should be labeled with the layer number indicated as, e.g., 
- "SUBJECT_ID.1.xlsx" and "SUBJECT_ID.2.xlsx". 
+ "GROUP_ID.1.xlsx" and "GROUP_ID.2.xlsx". 
  Each file contains the following columns: Subject ID (column 1), Subject 
  LABEL (column 2), Subject NOTES (column 3) and BrainRegions 
  (columns 4-end; one brain region value per column). The first row contains 

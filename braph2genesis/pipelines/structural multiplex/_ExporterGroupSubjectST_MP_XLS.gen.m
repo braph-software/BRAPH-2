@@ -2,15 +2,20 @@
 ExporterGroupSubjectST_MP_XLS < Exporter (ex, exporter of ST MP subject group in XLSX) exports a group of subjects with structural multiplex data to an XLSX file.
 
 %%% ¡description!
-ExporterGroupSubjectST_MP_XLS exports a group of subjects with structural multiplex data  and their covariates (if existing) to an XLSX file.
-The files from the same group containing the data from L layers are saved in the same folder.
-Each XLSX file consists of the following columns: 
-Subject ID (column 1), Subject LABEL (column 2), Subject NOTES (column 3) and
-BrainRegions of that layer (column 4-end; one brainregion value per column).
-The first row contains the headers and each subsequent row the values for each subject.
-The XLSX file containing the covariates consists of the following columns:
-Subject ID (column 1), Subject AGE (column 2), and, Subject SEX (column 3).
-The first row contains the headers and each subsequent row the values for each subject.
+ExporterGroupSubjectST_MP_XLS exports a group of subjects with structural 
+ multiplex data to a series of XLSX files contained in a folder named 
+ "GROUP_ID". Each file corresponds to a layer of the multiplex and is 
+ labeled with the layer number indicated as, e.g., "GROUP_ID.1.xlsx" and 
+ "GROUP_ID.2.xlsx". 
+ Each file contains the following columns: Subject ID (column 1), Subject 
+ LABEL (column 2), Subject NOTES (column 3) and BrainRegions 
+ (columns 4-end; one brain region value per column). The first row contains 
+ the headers and each subsequent row the values for each subject.
+The variables of interest are from another XLSX file named "GROUP_ID.vois.xlsx" 
+ (if exisitng) consisting of the following columns: 
+ Subject ID (column 1), covariates (subsequent columns). 
+ The 1st row contains the headers, the 2nd row a string with the categorical
+ variables of interest, and each subsequent row the values for each subject.
 
 %%% ¡seealso!
 Group, SubjectST_MP, ImporterGroupSubjectST_MP_XLS
@@ -87,10 +92,10 @@ if isfolder(directory)
         mkdir(gr_directory)
     end
 
+    braph2waitbar(wb, .15, 'Organizing info ...')
+
     sub_dict = gr.get('SUB_DICT');
     sub_number = sub_dict.get('LENGTH');
-
-    braph2waitbar(wb, .15, 'Organizing info ...')
 
     if sub_number ~= 0
         sub = sub_dict.get('IT', 1);
@@ -135,23 +140,36 @@ if isfolder(directory)
         end
     end
     
-% % %     % if covariates save them in another file
-% % %     if sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
-% % %         tab2 = cell(1 + sub_number, 3);
-% % %         tab2{1, 1} = 'ID';
-% % %         tab2{1, 2} = 'Age';
-% % %         tab2{1, 3} = 'Sex';
-% % %         tab2(2:end, 1) = tab_id{:, 1};
-% % %         tab2(2:end, 2) = age;
-% % %         tab2(2:end, 3) = sex;
-% % %         tab2 = table(tab2);
-% % %         
-% % %         % save
-% % %         warning_query = warning( 'query', 'MATLAB:xlswrite:AddSheet');
-% % %         warning('off', 'MATLAB:xlswrite:AddSheet')
-% % %         writetable(tab2, [gr_directory filesep() gr_id  '_1.xlsx'], 'Sheet', 2, 'WriteVariableNames', false);
-% % %         warning(warning_query.state, 'MATLAB:xlswrite:AddSheet')
-% % %     end
+    % variables of interest
+    voi_ids = {};
+    for i = 1:1:sub_number
+        sub = sub_dict.get('IT', i);
+        voi_ids = unique([voi_ids, sub.get('VOI_DICT').get('KEYS')]);
+    end
+    if ~isempty(voi_ids)
+        vois = cell(2 + sub_number, 1 + length(voi_ids));
+        vois{1, 1} = 'Subject ID';
+        vois(1, 2:end) = voi_ids;
+        for i = 1:1:sub_number
+            sub = sub_dict.get('IT', i);
+            vois{2 + i, 1} = sub.get('ID');
+            
+            voi_dict = sub.get('VOI_DICT');
+            for v = 1:1:voi_dict.get('LENGTH')
+                voi = voi_dict.get('IT', v);
+                voi_id = voi.get('ID');
+                if isa(voi, 'VOINumeric') % Numeric
+                    vois{2 + i, 1 + find(strcmp(voi_id, voi_ids))} = voi.get('V');
+                elseif isa(voi, 'VOICategoric') % Categoric
+                    categories = voi.get('CATEGORIES');
+                    vois{2, 1 + find(strcmp(voi_id, voi_ids))} = cell2str(categories);
+                    vois{2 + i, 1 + find(strcmp(voi_id, voi_ids))} = categories{voi.get('V')};
+                end
+            end
+        end
+        [dir, name, ext] = fileparts(file);
+        writetable(table(vois), [dir filesep() name '.vois.xlsx'], 'WriteVariableNames', false)
+    end
     
     braph2waitbar(wb, 'close')
 end

@@ -2,15 +2,20 @@
 ExporterGroupSubjectST_MP_TXT < Exporter (ex, exporter of ST MP subject group in TXT) exports a group of subjects with structural multiplex data to an TXT file.
 
 %%% ¡description!
-ExporterGroupSubjectST_MP_TXT exports a group of subjects with structural multiplex data to an TXT file and their covariates age and sex (if existing) to another TXT file.
-The files from the same group containing the data from L layers are saved in the same folder.
-Each TXT file consists of the following columns: 
-Group ID (column 1), Group LABEL (column 2), Group NOTES (column 3) and
-BrainRegions of that layer (column 4-end; one brainregion value per column).
-The first row contains the headers and each subsequent row the values for each subject.
-The TXT file containing the covariates consists of the following columns:
-Subject ID (column 1), Subject AGE (column 2), and, Subject SEX (column 3).
-The first row contains the headers and each subsequent row the values for each subject.
+ExporterGroupSubjectST_MP_TXT exports a group of subjects with structural 
+ multiplex data to a series of TXT files contained in a folder named 
+ "GROUP_ID". Each file corresponds to a layer of the multiplex and is 
+ labeled with the layer number indicated as, e.g., "GROUP_ID.1.txt" and 
+ "GROUP_ID.2.txt". 
+ Each file contains the following columns: Subject ID (column 1), Subject 
+ LABEL (column 2), Subject NOTES (column 3) and BrainRegions 
+ (columns 4-end; one brain region value per column). The first row contains 
+ the headers and each subsequent row the values for each subject.
+The variables of interest are from another XLSX file named "GROUP_ID.vois.txt" 
+ (if exisitng) consisting of the following columns: 
+ Subject ID (column 1), covariates (subsequent columns). 
+ The 1st row contains the headers, the 2nd row a string with the categorical
+ variables of interest, and each subsequent row the values for each subject.
 
 %%% ¡seealso!
 Group, SubjectST_MP, ImporterGroupSubjectST_MP_TXT
