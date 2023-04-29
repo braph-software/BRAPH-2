@@ -2,17 +2,17 @@
 
 %%% ¡test!
 %%%% ¡name!
-% % % Create example files XLS
+% % % Create example files TXT
 %%%% ¡code!
-data_dir = [fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_MP XLS'];
+data_dir = [fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_MP TXT'];
 mkdir(data_dir);
 
 % Brain Atlas
-im_ba = ImporterBrainAtlasXLS('FILE', 'aal90_atlas.xlsx');
+im_ba = ImporterBrainAtlasTXT('FILE', 'aal90_atlas.txt');
 ba = im_ba.get('BA');
-ex_ba = ExporterBrainAtlasXLS( ...
+ex_ba = ExporterBrainAtlasTXT( ...
     'BA', ba, ...
-    'FILE', [data_dir filesep() 'atlas.xlsx'] ...
+    'FILE', [data_dir filesep() 'atlas.txt'] ...
     );
 ex_ba.get('SAVE')
 N = ba.get('BR_DICT').get('LENGTH');
@@ -25,7 +25,7 @@ sex_options = {'Female' 'Male'};
 T = 200; % Length of the time series
 
 % Group 1 directories
-gr1_name = 'CON_FUN_MP_Group_1_XLS';
+gr1_name = 'CON_FUN_MP_Group_1_TXT';
 gr1_dir = [data_dir filesep() gr1_name];
 mkdir([gr1_dir '.CON']);
 mkdir([gr1_dir '.FUN']);
@@ -35,7 +35,7 @@ K1 = 2; % degree (mean node degree is 2K) - group 1
 beta1 = 0.3; % Rewiring probability - group 1
 vois1 = [
     {{'Subject ID'} {'Age'} {'Sex'}}
-    {{} {} cell2str(sex_options)}
+    {{} {} {['{' sprintf(' ''%s'' ', sex_options{:}) '}']}}
     ];
 for i = 1:1:50 % subject number
     sub_id = ['SubjectCON_FUN_MP_' num2str(i)];
@@ -52,15 +52,15 @@ for i = 1:1:50 % subject number
     r = 0 + (0.5 - 0)*rand(size(A1)); diffA = A1 - r; A1(A1 ~= 0) = diffA(A1 ~= 0); % make the adjacency matrix weighted
     A1 = max(A1, transpose(A1)); % make the adjacency matrix symmetric
 
-    writetable(array2table(A1), [gr1_dir '.CON' filesep() sub_id '.CON.xlsx'], 'WriteVariableNames', false)
+    writetable(array2table(A1), [gr1_dir '.CON' filesep() sub_id '.CON.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
     
     % variables of interest
     vois1 = [vois1; {sub_id, randi(90), sex_options(randi(2))}];
 end
-writetable(table(vois1), [data_dir filesep() gr1_name '.vois.xlsx'], 'WriteVariableNames', false)
+writetable(table(vois1), [data_dir filesep() gr1_name '.vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
 
 % Group 1 directories
-gr2_name = 'CON_FUN_MP_Group_2_XLS';
+gr2_name = 'CON_FUN_MP_Group_2_TXT';
 gr2_dir = [data_dir filesep() gr2_name];
 mkdir([gr2_dir '.CON']);
 mkdir([gr2_dir '.FUN']);
@@ -70,7 +70,7 @@ K2 = 2; % degree (mean node degree is 2K) - group 2
 beta2 = 0.85; % Rewiring probability - group 2
 vois2 = [
     {{'Subject ID'} {'Age'} {'Sex'}}
-    {{} {} cell2str(sex_options)}
+    {{} {} {['{' sprintf(' ''%s'' ', sex_options{:}) '}']}}
     ];
 for i = 51:1:100
     sub_id = ['SubjectCON_FUN_MP_' num2str(i)];
@@ -87,12 +87,12 @@ for i = 51:1:100
     r = 0 + (0.5 - 0)*rand(size(A2)); diffA = A2 - r; A2(A2 ~= 0) = diffA(A2 ~= 0);
     A2 = max(A2, transpose(A2));
 
-    writetable(array2table(A2), [gr2_dir '.CON' filesep() sub_id '.CON.xlsx'], 'WriteVariableNames', false)
+    writetable(array2table(A2), [gr2_dir '.CON' filesep() sub_id '.CON.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
     
     % variables of interest
     vois2 = [vois2; {sub_id, randi(90), sex_options(randi(2))}];
 end
-writetable(table(vois2), [data_dir filesep() gr2_name '.vois.xlsx'], 'WriteVariableNames', false)
+writetable(table(vois2), [data_dir filesep() gr2_name '.vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
 
 % Group 1 - FUN - 5 modules of 18 nodes each
 % initialize values for the WS model
@@ -136,7 +136,7 @@ for i = 1:1:50 % subject number
     std_R1 = std(R1);
     R1 = (R1 - mean(R1)) ./ std(R1);
     
-    writetable(array2table(R1), [gr1_dir '.FUN' filesep() sub_id '.FUN.xlsx'], 'WriteVariableNames', false)
+    writetable(array2table(R1), [gr1_dir '.FUN' filesep() sub_id '.FUN.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
 end
 
 % Group 2 - FUN - 2 modules of 45 nodes each
@@ -180,7 +180,7 @@ for i = 51:1:100
     std_R2 = std(R2);
     R2 = (R2 - mean(R2)) ./ std(R2);
 
-    writetable(array2table(R2), [gr2_dir '.FUN' filesep() sub_id '.FUN.xlsx'], 'WriteVariableNames', false)
+    writetable(array2table(R2), [gr2_dir '.FUN' filesep() sub_id '.FUN.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
 end
 
 % reset RNG
