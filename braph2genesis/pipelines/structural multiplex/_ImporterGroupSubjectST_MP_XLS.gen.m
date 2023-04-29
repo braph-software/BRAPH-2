@@ -112,6 +112,7 @@ if isfolder(directory)
             % brain atlas
             braph2waitbar(wb, .25, 'Loading brain atlas ...')
             ba = im.get('BA');
+            [~, ~, raw] = xlsread(fullfile(directory, files(1).name));
             br_number = size(raw, 2) - 3;
             if ba.get('BR_DICT').get('LENGTH') == 0
                 % adds the number of regions of the first file to the brain atlas
@@ -214,8 +215,8 @@ if isfolder(directory)
     
     braph2waitbar(wb, 'close')
 else
-    error([BRAPH2.STR ':ImporterGroupSubjectST_MP_XLS:' BRAPH2.CANCEL_IO], ...
-        [BRAPH2.STR ':ImporterGroupSubjectST_MP_XLS:' BRAPH2.CANCEL_IO '\\n' ...
+    error([BRAPH2.STR ':ImporterGroupSubjectST_MP_XLS:' BRAPH2.ERR_IO], ...
+        [BRAPH2.STR ':ImporterGroupSubjectST_MP_XLS:' BRAPH2.ERR_IO '\\n' ...
         'The prop DIRECTORY must be an existing directory, but it is ''' directory '''.'] ...
         );
 end
@@ -354,7 +355,7 @@ vois1 = [
 for i = 1:1:N_subjects
     vois1 = [vois1; {sub_Tags1{i}, randi(90), sex_options(randi(2))}];
 end
-writetable(table(vois1), [data_dir filesep() 'ST_MP_Group_1.vois.xlsx'], 'WriteVariableNames', false)
+writetable(table(vois1), [data_dir filesep() 'ST_MP_Group_1_XLS.vois.xlsx'], 'WriteVariableNames', false)
 
 % Group 2
 K21 = K11; % degree (mean node degree is 2K) - group 2 layer 1
@@ -449,7 +450,7 @@ vois2 = [
 for i = 1:1:N_subjects
     vois2 = [vois2; {sub_Tags2{i}, randi(90), sex_options(randi(2))}];
 end
-writetable(table(vois2), [data_dir filesep() 'ST_MP_Group_2.vois.xlsx'], 'WriteVariableNames', false)
+writetable(table(vois2), [data_dir filesep() 'ST_MP_Group_2_XLS.vois.xlsx'], 'WriteVariableNames', false)
 
 % reset RNG
 rng(rng_settings_)
@@ -491,7 +492,7 @@ GUI
 %%%% ¡parallel!
 false
 %%%% ¡code!
-im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectST_MP')) filesep 'Example data CST_MP XLS' filesep 'atlas.xlsx']);
+im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectST_MP')) filesep 'Example data ST_MP XLS' filesep 'atlas.xlsx']);
 ba = im_ba.get('BA');
 
 im_gr = ImporterGroupSubjectST_MP_XLS( ...
