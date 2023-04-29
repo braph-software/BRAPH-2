@@ -8,7 +8,7 @@ data_dir = [fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_
 mkdir(data_dir);
 
 % Brain Atlas
-im_ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx');
+im_ba = ImporterBrainAtlasXLS('FILE', 'aal90_atlas.xlsx');
 ba = im_ba.get('BA');
 ex_ba = ExporterBrainAtlasXLS( ...
     'BA', ba, ...
