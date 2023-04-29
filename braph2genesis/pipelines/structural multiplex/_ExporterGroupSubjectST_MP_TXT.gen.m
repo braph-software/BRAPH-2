@@ -165,8 +165,7 @@ if isfolder(directory)
                 end
             end
         end
-        [dir, name, ext] = fileparts(file);
-        writetable(table(vois), [dir filesep() name '.vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
+        writetable(table(vois), [gr_directory '.vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
     end
     
     braph2waitbar(wb, 'close')
