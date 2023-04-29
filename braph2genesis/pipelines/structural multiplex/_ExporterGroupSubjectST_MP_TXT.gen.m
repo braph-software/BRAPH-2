@@ -92,72 +92,82 @@ if isfolder(directory)
         mkdir(gr_directory)
     end
 
+    braph2waitbar(wb, .15, 'Organizing info ...')
+
     sub_dict = gr.get('SUB_DICT');
     sub_number = sub_dict.get('LENGTH');
 
-    braph2waitbar(wb, .15, 'Organizing info ...')
-
-    if sub_number ~= 0
-        sub = sub_dict.get('IT', 1);
-        ba = sub.get('BA');
-        br_list = cellfun(@(i) ba.get('BR_DICT').get('IT', i), ...
-            num2cell([1:1:ba.get('BR_DICT').get('LENGTH')]), 'UniformOutput', false);
-        br_labels = cellfun(@(br) br.get('ID'), br_list, 'UniformOutput', false);
-        layers_number = sub_dict.get('IT', 1).get('L');
-        br_number = length(br_labels);
-        all_data = cell(layers_number, sub_number, br_number);
-        subjects_info = cell(sub_number, 3);
-        age = cell(sub_number, 1);
-        sex = cell(sub_number, 1);
+	L = sub_dict.get('IT', 1).get('L');
+    for l = 1:1:L
+        braph2waitbar(wb, .25 + .75 * l / L, ['Saving layer ' num2str(l) ' of ' num2str(L) ' ...'])
         
+        if sub_number == 0
+            tab = {'ID', 'Label', 'Notes'};
+        else
+            sub = sub_dict.get('IT', 1);
+            ba = sub.get('BA');
+            br_list = cellfun(@(i) ba.get('BR_DICT').get('IT', i), ...
+                num2cell([1:1:ba.get('BR_DICT').get('LENGTH')]), 'UniformOutput', false);
+            br_labels = cellfun(@(br) br.get('ID'), br_list, 'UniformOutput', false);
+
+            tab = cell(1 + sub_number, 3 + numel(br_labels));
+            tab{1, 1} = 'ID';
+            tab{1, 2} = 'Label';
+            tab{1, 3} = 'Notes';
+            for j = 1:1:length(br_labels)
+                tab{1, 3 + j} = br_labels{j};
+            end
+
+            for i = 1:1:sub_number
+                sub = sub_dict.get('IT', i);
+
+                tab{1 + i, 1} = sub.get('ID');
+                tab{1 + i, 2} = sub.get('LABEL');
+                tab{1 + i, 3} = sub.get('NOTES');
+
+                sub_ST_MP = sub.get('ST_MP');
+                sub_ST = sub_ST_MP{l};
+                for j = 1:1:length(sub_ST)
+                    tab{1 + i, 3 + j} = sub_ST(j);
+                end
+            end
+        end
+        
+        layer_file = [gr_directory filesep() gr.get('ID') '.' int2str(l) '.txt'];
+
+        writetable(table(tab), layer_file, 'Delimiter', '\t', 'WriteVariableNames', false);        
+    end
+    
+    % variables of interest
+    voi_ids = {};
+    for i = 1:1:sub_number
+        sub = sub_dict.get('IT', i);
+        voi_ids = unique([voi_ids, sub.get('VOI_DICT').get('KEYS')]);
+    end
+    if ~isempty(voi_ids)
+        vois = cell(2 + sub_number, 1 + length(voi_ids));
+        vois{1, 1} = 'Subject ID';
+        vois(1, 2:end) = voi_ids;
         for i = 1:1:sub_number
             sub = sub_dict.get('IT', i);
-            subjects_info{i, 1} = sub.get('ID');
-            subjects_info{i, 2} = sub.get('LABEL');
-            subjects_info{i, 3} = sub.get('NOTES');
-% % %             age{i} =  sub.get('AGE');
-% % %             sex{i} =  sub.get('SEX');
+            vois{2 + i, 1} = sub.get('ID');
             
-            for k = 1:1:layers_number
-                data_val = sub.get('ST_MP');
-                all_data(k, i, :) = num2cell(data_val{k}');
-            end             
+            voi_dict = sub.get('VOI_DICT');
+            for v = 1:1:voi_dict.get('LENGTH')
+                voi = voi_dict.get('IT', v);
+                voi_id = voi.get('ID');
+                if isa(voi, 'VOINumeric') % Numeric
+                    vois{2 + i, 1 + find(strcmp(voi_id, voi_ids))} = voi.get('V');
+                elseif isa(voi, 'VOICategoric') % Categoric
+                    categories = voi.get('CATEGORIES');
+                    vois{2, 1 + find(strcmp(voi_id, voi_ids))} = {['{' sprintf(' ''%s'' ', categories{:}) '}']};
+                    vois{2 + i, 1 + find(strcmp(voi_id, voi_ids))} = categories{voi.get('V')};
+                end
+            end
         end
-        
-        braph2waitbar(wb, .55, 'Saving info ...')
-
-        for j = 1:1:layers_number
-            gr_id = gr.get('ID');
-            % save id label notes
-            tab_id = cell2table(subjects_info);
-            tab_id.Properties.VariableNames = {'ID', 'Label', 'Notes'};
-            
-            % save data
-            tab_data =  cell2table(reshape(all_data(j, :, :), [sub_number, br_number]));
-            tab_data.Properties.VariableNames = br_labels;
-            tab = [tab_id tab_data];
-            writetable(tab, [gr_directory filesep() gr_id  '_' num2str(j) '.txt'], 'Delimiter', '	', 'WriteVariableNames', 1);
-        end
+        [dir, name, ext] = fileparts(file);
+        writetable(table(vois), [dir filesep() name '.vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
     end
-        
-% % %     % if covariates save them in another file
-% % %     if sub_number ~= 0 && ~isequal(sex{:}, 'unassigned')  && ~isequal(age{:},  0) 
-% % %         tab2 = cell(1 + sub_number, 3);
-% % %         tab2{1, 1} = 'ID';
-% % %         tab2{1, 2} = 'Age';
-% % %         tab2{1, 3} = 'Sex';
-% % %         tab2(2:end, 1) = tab{:, 1};
-% % %         tab2(2:end, 2) = age;
-% % %         tab2(2:end, 3) = sex;
-% % %         tab2 = table(tab2);
-% % %         
-% % %         % save
-% % %         cov_directory = [gr_directory filesep() 'covariates'];
-% % %         if ~exist(cov_directory, 'dir')
-% % %             mkdir(cov_directory)
-% % %         end
-% % %         writetable(tab2, [cov_directory filesep() gr_id '_covariates.txt'], 'Delimiter', '\t', 'WriteVariableNames', false);
-% % %     end
     
     braph2waitbar(wb, 'close')
 end
