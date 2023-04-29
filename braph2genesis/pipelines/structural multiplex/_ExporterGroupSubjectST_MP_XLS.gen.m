@@ -133,7 +133,7 @@ if isfolder(directory)
             end
         end
         
-        layer_file = [gr_directory filesep() gr_id '.' int2str(l) '.xlsx'];
+        layer_file = [gr_directory filesep() gr.get('ID') '.' int2str(l) '.xlsx'];
 
         writetable(table(tab), layer_file, 'WriteVariableNames', false);        
     end
