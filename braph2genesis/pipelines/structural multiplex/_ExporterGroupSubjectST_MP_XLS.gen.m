@@ -97,47 +97,45 @@ if isfolder(directory)
     sub_dict = gr.get('SUB_DICT');
     sub_number = sub_dict.get('LENGTH');
 
-    if sub_number ~= 0
-        sub = sub_dict.get('IT', 1);
-        ba = sub.get('BA');
-        br_list = cellfun(@(i) ba.get('BR_DICT').get('IT', i), ...
-            num2cell([1:1:ba.get('BR_DICT').get('LENGTH')]), 'UniformOutput', false);
-        br_labels = cellfun(@(br) br.get('ID'), br_list, 'UniformOutput', false);
-        layers_number = sub_dict.get('IT', 1).get('L');
-        br_number = length(br_labels);
-        all_data = cell(layers_number, sub_number, br_number);
-        subjects_info = cell(sub_number, 3);
-        age = cell(sub_number, 1);
-        sex = cell(sub_number, 1);
+	L = sub_dict.get('IT', 1).get('L');
+    for l = 1:1:L
+        braph2waitbar(wb, .25 + .75 * l / L, ['Saving layer ' num2str(l) ' of ' num2str(L) ' ...'])
         
-        for i = 1:1:sub_number
-            sub = sub_dict.get('IT', i);
-            subjects_info{i, 1} = sub.get('ID');
-            subjects_info{i, 2} = sub.get('LABEL');
-            subjects_info{i, 3} = sub.get('NOTES');
-% % %             age{i} =  sub.get('AGE');
-% % %             sex{i} =  sub.get('SEX');
-            
-            for k = 1:1:layers_number
-                data_val = sub.get('ST_MP');
-                all_data(k, i, :) = num2cell(data_val{k}');
-            end             
-        end
+        if sub_number == 0
+            tab = {'ID', 'Label', 'Notes'};
+        else
+            sub = sub_dict.get('IT', 1);
+            ba = sub.get('BA');
+            br_list = cellfun(@(i) ba.get('BR_DICT').get('IT', i), ...
+                num2cell([1:1:ba.get('BR_DICT').get('LENGTH')]), 'UniformOutput', false);
+            br_labels = cellfun(@(br) br.get('ID'), br_list, 'UniformOutput', false);
 
-        braph2waitbar(wb, .55, 'Saving info ...')
+            tab = cell(1 + sub_number, 3 + numel(br_labels));
+            tab{1, 1} = 'ID';
+            tab{1, 2} = 'Label';
+            tab{1, 3} = 'Notes';
+            for j = 1:1:length(br_labels)
+                tab{1, 3 + j} = br_labels{j};
+            end
 
-        for j = 1:1:layers_number
-            gr_id = gr.get('ID');
-            % save id label notes
-            tab_id = cell2table(subjects_info);
-            tab_id.Properties.VariableNames = {'ID', 'Label', 'Notes'};
-            writetable(tab_id, [gr_directory filesep() gr_id  '_' num2str(j) '.xlsx'], 'Sheet', 1, 'WriteVariableNames', 1, 'Range', 'A1');
-            
-            % save data
-            tab_data =  cell2table(reshape(all_data(j, :, :), [sub_number, br_number]));
-            tab_data.Properties.VariableNames = br_labels;
-            writetable(tab_data, [gr_directory filesep() gr_id  '_' num2str(j) '.xlsx'], 'Sheet', 1, 'WriteVariableNames', 1, 'Range', 'D1');
+            for i = 1:1:sub_number
+                sub = sub_dict.get('IT', i);
+
+                tab{1 + i, 1} = sub.get('ID');
+                tab{1 + i, 2} = sub.get('LABEL');
+                tab{1 + i, 3} = sub.get('NOTES');
+
+                sub_ST_MP = sub.get('ST_MP');
+                sub_ST = sub_ST_MP{l};
+                for j = 1:1:length(sub_ST)
+                    tab{1 + i, 3 + j} = sub_ST(j);
+                end
+            end
         end
+        
+        layer_file = [gr_directory filesep() gr_id '.' int2str(l) '.xlsx'];
+
+        writetable(table(tab), layer_file, 'WriteVariableNames', false);        
     end
     
     % variables of interest
@@ -167,8 +165,7 @@ if isfolder(directory)
                 end
             end
         end
-        [dir, name, ext] = fileparts(file);
-        writetable(table(vois), [dir filesep() name '.vois.xlsx'], 'WriteVariableNames', false)
+        writetable(table(vois), [gr_directory '.vois.xlsx'], 'WriteVariableNames', false)
     end
     
     braph2waitbar(wb, 'close')
