@@ -22,12 +22,15 @@ rng_settings_ = rng(); rng('default')
 
 sex_options = {'Female' 'Male'};
 
+% Group 1 directories
+gr1_name = 'CON_FUN_MP_Group_1_XLS';
+gr1_dir = [data_dir filesep() gr1_name];
+mkdir([gr1_dir '.CON']);
+mkdir([gr1_dir '.FUN']);
+
 % Group 1 - CON + VOIS
 K1 = 2; % degree (mean node degree is 2K) - group 1
 beta1 = 0.3; % Rewiring probability - group 1
-gr1_name = 'CON_FUN_MP_Group_1_XLS';
-gr1_dir = [data_dir filesep() gr1_name];
-mkdir(gr1_dir);
 vois1 = [
     {{'Subject ID'} {'Age'} {'Sex'}}
     {{} {} cell2str(sex_options)}
@@ -47,19 +50,22 @@ for i = 1:1:50 % subject number
     r = 0 + (0.5 - 0)*rand(size(A1)); diffA = A1 - r; A1(A1 ~= 0) = diffA(A1 ~= 0); % make the adjacency matrix weighted
     A1 = max(A1, transpose(A1)); % make the adjacency matrix symmetric
 
-    writetable(array2table(A1), [gr1_dir filesep() sub_id '.CON.xlsx'], 'WriteVariableNames', false)
+    writetable(array2table(A1), [gr1_dir '.CON' filesep() sub_id '.CON.xlsx'], 'WriteVariableNames', false)
     
     % variables of interest
     vois1 = [vois1; {sub_id, randi(90), sex_options(randi(2))}];
 end
 writetable(table(vois1), [data_dir filesep() gr1_name '.vois.xlsx'], 'WriteVariableNames', false)
 
+% Group 1 directories
+gr2_name = 'CON_FUN_MP_Group_2_XLS';
+gr2_dir = [data_dir filesep() gr2_name];
+mkdir([gr2_dir '.CON']);
+mkdir([gr2_dir '.FUN']);
+
 % Group 2 - CON + VOIS
 K2 = 2; % degree (mean node degree is 2K) - group 2
 beta2 = 0.85; % Rewiring probability - group 2
-gr2_name = 'CON_FUN_MP_Group_2_XLS';
-gr2_dir = [data_dir filesep() gr2_name];
-mkdir(gr2_dir);
 vois2 = [
     {{'Subject ID'} {'Age'} {'Sex'}}
     {{} {} cell2str(sex_options)}
@@ -79,7 +85,7 @@ for i = 51:1:100
     r = 0 + (0.5 - 0)*rand(size(A2)); diffA = A2 - r; A2(A2 ~= 0) = diffA(A2 ~= 0);
     A2 = max(A2, transpose(A2));
 
-    writetable(array2table(A2), [gr2_dir filesep() sub_id '.CON.xlsx'], 'WriteVariableNames', false)
+    writetable(array2table(A2), [gr2_dir '.CON' filesep() sub_id '.CON.xlsx'], 'WriteVariableNames', false)
     
     % variables of interest
     vois2 = [vois2; {sub_id, randi(90), sex_options(randi(2))}];
