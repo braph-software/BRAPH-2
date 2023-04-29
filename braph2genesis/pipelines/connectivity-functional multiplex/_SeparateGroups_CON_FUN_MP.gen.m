@@ -50,8 +50,8 @@ WAITBAR (metadata, logical) determines whether to show the waitbar.
 GR_CON_FUN_MP (data, item) is a group of subjects with functional and connectivity data.
 %%%% ¡settings!
 'Group'
-%%%% ¡check_value!
-check = any(strcmp(value.get('SUB_CLASS'), SubjectCON_FUN_MP.getSubclasses());
+%%%% ¡check_prop!
+check = any(strcmp(value.get('SUB_CLASS'), SubjectCON_FUN_MP.getSubclasses()));
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectCON_FUN_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON_FUN_MP'))
 
@@ -61,8 +61,8 @@ GR_CON (result, item) is a group of subjects with connectivity data.
 'Group'
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON'))
-%%%% ¡check_prop!
-check = any(strcmp(value.get('SUB_CLASS'), SubjectCON.getSubclasses());
+%%%% ¡check_value!
+check = any(strcmp(value.get('SUB_CLASS'), SubjectCON.getSubclasses()));
 %%%% ¡calculate!
 wb = braph2waitbar(se.get('WAITBAR'), 0, 'Extracting the connectivity group ...');
 
@@ -98,8 +98,8 @@ GR_FUN (result, item) is a group of subjects with functional data.
 'Group'
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectFUN', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectFUN'))
-%%%% ¡check_prop!
-check = any(strcmp(value.get('SUB_CLASS'), SubjectFUN.getSubclasses());
+%%%% ¡check_value!
+check = any(strcmp(value.get('SUB_CLASS'), SubjectFUN.getSubclasses()));
 %%%% ¡calculate!
 wb = braph2waitbar(se.get('WAITBAR'), 0, 'Extracting the functional group ...');
 
