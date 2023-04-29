@@ -6,7 +6,7 @@ Subject with connectivity and functional data (e.g. obtained from DTI and fMRI).
 The first layer contains a connectivity matrix and the second layer contains functional data.
 
 %%% ¡seealso!
-ImporterGroupSubjectCON_FUN_TXT, ExporterGroupSubjectCON_FUN_TXT, ImporterGroupSubjectCON_FUN_XLS, ExporterGroupSubjectCON_FUN_XLS
+CombineGroups_CON_FUN_MP, SeparateGroups_CON_FUN_MP
 
 %% ¡props_update!
 
