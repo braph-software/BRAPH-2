@@ -111,74 +111,93 @@ if isfolder(directory)
 
         if ~isempty(files)
             % brain atlas
+            braph2waitbar(wb, .25, 'Loading brain atlas ...')
             ba = im.get('BA');
-            raw_tmp = readtable(fullfile(directory, files(1).name), 'Delimiter', '	');
-            br_number = size(raw_tmp, 2) - 3;
-            subjects_number = size(raw_tmp, 1);
-            if ba.get('BR_DICT').get('LENGTH') ~= br_number
+            raw = readtable(fullfile(directory, files(1).name), 'Delimiter', '	');
+            br_number = size(raw, 2) - 3;
+            if ba.get('BR_DICT').get('LENGTH') == 0
                 ba = BrainAtlas();
-                idict = ba.get('BR_DICT');
+                br_dict = ba.memorize('BR_DICT');
                 for j = 1:1:br_number
-                    br_id = ['br' int2str(j)];
+                    br_id = raw.Properties.VariableNames{j};
                     br = BrainRegion('ID', br_id);
                     idict.get('ADD', br)
                 end
-                ba.set('BR_DICT', idict);
             end
-
-            sub_dict = gr.get('SUB_DICT');
-
-% % %             % Check if there are covariates to add (age and sex)
-% % %             cov_folder = dir(directory);
-% % %             cov_folder = cov_folder([cov_folder(:).isdir] == 1);
-% % %             cov_folder = cov_folder(~ismember({cov_folder(:).name}, {'.', '..'}));
-% % %             if ~isempty(cov_folder)
-% % %                 raw_covariates = readtable([directory filesep() cov_folder.name filesep() name '_covariates.txt'], 'Delimiter', '\t');
-% % %                 age = raw_covariates{:, 2};
-% % %                 sex = raw_covariates{:, 3};
-% % %             else
-% % %                 age = ones(subjects_number,1);
-% % %                 unassigned =  {'unassigned'};
-% % %                 sex = unassigned(ones(subjects_number, 1));
-% % %             end
-
-            % multiplex data, subjects, number of layers
-            all_subjects_data = cell(length(files), subjects_number, br_number);
-            subjects_info = cell(subjects_number, 3);
-            layers_number = length(files);
-
+            if br_number ~= ba.get('BR_DICT').get('LENGTH')
+                error( ...
+                    [BRAPH2.STR ':' class(im) ':' BRAPH2.ERR_IO], ...
+                    [BRAPH2.STR ':' class(im) ':' BRAPH2.ERR_IO '\\n' ...
+                    'The file ' files(1).name ' should contain a matrix with ' int2str(ba.get('BR_DICT').get('LENGTH')) ' columns corresponding to the brain regions, ' ...
+                    'while it contains ' int2str(br_number) ' columns.'] ...
+                    )
+            end
+            
+            % determines the number of layers
+            L = 0;
             for i = 1:1:length(files)
-                raw = readtable(fullfile(directory, files(i).name), 'Delimiter', '	');
-                if i == 1  % just 1 time
-                    % info
-                    subjects_info(:, :) = table2cell(raw(:, 1:3));
-                end
-                % multiplex data
-                data = table2cell(raw(:, 4: size(raw, 2)));  % we remove id, labl, notes (column 1 to 3)
-                all_subjects_data(i, :, :) = reshape(data, [1 subjects_number br_number]);
+                [~, gr_id_layer_no] = fileparts(files(i).name);
+                splits = regexp(gr_id_layer_no, '(.+)\\.(\\d+)', 'tokens');
+                gr_id = splits{1}{1};
+                L = max(L, str2double(splits{1}{2}));
             end
-
-            % cycle over subjects, add subjects
-            for i = 1:1:size(all_subjects_data, 2)
-                braph2waitbar(wb, .25 + .75 * i / size(all_subjects_data, 2), ['Loading subject ' num2str(i) ' of ' num2str(size(all_subjects_data, 2)) ' ...'])
-
-                layer_subject = reshape(all_subjects_data(:, i, :), [layers_number br_number]);
-                for l = 1:1:layers_number
-                    ST_MP(l) = {cell2mat(layer_subject(l, :)')};
+            
+            % adds subjects
+            sub_dict = gr.memorize('SUB_DICT');
+            for i = 2:1:size(raw, 1)
+                braph2waitbar(wb, .25 + .75 * (i - 1) / size(raw, 1), ['Loading subject ' num2str(i - 1) ' of ' num2str(size(raw, 1) - 1) ' ...'])
+                
+                % read files
+                ST_MP = {};
+                for l = 1:1:L
+                    raw = readtable(fullfile(directory, [gr_id '.' int2str(l) '.txt']), 'Delimiter', '\t');
+                    ST = zeros(br_number, 1);
+                    for j = 1:1:length(ST)
+                        ST(j) = raw{i, 3 + j};
+                    end
+                    ST_MP = [ST_MP, ST];
                 end
-
-                % create subject
+                
                 sub = SubjectST_MP( ...
-                    'ID', subjects_info{i, 1}, ...
-                    'LABEL', subjects_info{i, 2}, ...
-                    'NOTES', subjects_info{i, 3}, ...
+                    'ID', char(raw{i, 1}), ...
+                    'LABEL', char(raw{i, 2}), ...
+                    'NOTES', char(raw{i, 3}), ...
                     'BA', ba, ...
-                    'L', layers_number, ...
-                    'ST_MP', ST_MP ... % % % 'age', age(i), ... % % % 'sex', sex{i} ...
-                    );
+                    'L', L, ...
+                    'ST_MP', ST_MP ...
+                );
                 sub_dict.get('ADD', sub);
             end
-            gr.set('SUB_DICT', sub_dict);
+            
+            % variables of interest
+            if isfile([directory '.vois.txt'])
+                vois = textread([directory '.vois.txt'], '%s', 'delimiter', '\t', 'whitespace', '');
+                vois = reshape(vois, find(strcmp('', vois), 1) - 1, [])';
+                for i = 3:1:size(vois, 1)
+                    sub_id = vois{i, 1};
+                    sub = sub_dict.get('IT', sub_id);
+                    for v = 2:1:size(vois, 2)
+                        voi_id = vois{1, v};
+                        if isempty(vois{2, v}) % VOINumeric
+                            sub.memorize('VOI_DICT').get('ADD', ...
+                                VOINumeric( ...
+                                    'ID', voi_id, ...
+                                    'V', str2num(vois{i, v}) ...
+                                    ) ...
+                                );
+                        elseif ~isempty(vois{2, v}) % VOICategoric
+                            categories = eval(vois{2, v});
+                            sub.memorize('VOI_DICT').get('ADD', ...
+                                VOICategoric( ...
+                                    'ID', voi_id, ...
+                                    'CATEGORIES', str2cell(categories), ...
+                                    'V', find(strcmp(vois{i, v}, categories)) ...
+                                    ) ...
+                                );
+                        end                        
+                    end
+                end
+            end
         end
     catch e
         braph2waitbar(wb, 'close')
