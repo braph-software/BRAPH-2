@@ -1,5 +1,5 @@
 %% ¡header!
-SeparateGroups_CON_FUN_MP < Element (se, separator of a CON_FUN_MP subject group) separates a group of subjects with connectivity and functiona data.
+SeparateGroups_CON_FUN_MP < ConcreteElement (se, separator of a CON_FUN_MP subject group) separates a group of subjects with connectivity and functiona data.
 
 %%% ¡description!
 SeparateGroups_CON_FUN_MP separates a group of subjects with connectivity 
