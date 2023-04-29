@@ -1,5 +1,5 @@
 %% ¡header!
-CombineGroups_CON_FUN_MP < Element (co, combiner of CON and FUN subject groups) combines a group of subjects with connectivity data with a group of subjects with functional data.
+CombineGroups_CON_FUN_MP < ConcreteElement (co, combiner of CON and FUN subject groups) combines a group of subjects with connectivity data with a group of subjects with functional data.
 
 %%% ¡description!
 CombineGroups_CON_FUN_MP combines a group of subjects with connectivity 
