@@ -121,7 +121,7 @@ if isfolder(directory)
                 for j = 1:1:br_number
                     br_id = raw.Properties.VariableNames{j};
                     br = BrainRegion('ID', br_id);
-                    idict.get('ADD', br)
+                    br_dict.get('ADD', br)
                 end
             end
             if br_number ~= ba.get('BR_DICT').get('LENGTH')
