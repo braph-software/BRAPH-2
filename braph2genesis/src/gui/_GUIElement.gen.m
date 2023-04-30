@@ -299,28 +299,6 @@ else
         )
     value = false;
 end
-% % % if gui.get('DRAWN')
-% % % 
-% % %     % panel element
-% % %     gui.get('PE').get('CLOSE', 'CloseParentFigure', false)
-% % % 
-% % %     % figure layout editor
-% % %     if isa(gui.getr('LAYOUT'), 'GUILayout') && gui.get('LAYOUT').get('DRAWN')
-% % %         gui.get('LAYOUT').get('CLOSE')
-% % %     end
-% % %     
-% % %     value = calculateValue@GUI(gui, GUI.CLOSE, varargin{:});
-% % %     
-% % % else
-% % %     warning( ...
-% % %         [BRAPH2.STR ':' class(gui)], ...
-% % %         [BRAPH2.STR ':' class(gui) '\\n' ...
-% % %         'The call gui.get(''CLOSE'') has NOT been executed.\\n' ...
-% % %         'First, the panel ' gui.get('ID') ' should be drawn calling gui.get(''DRAW'').\\n' ...
-% % %         'Probably, not a big deal, but this shouldn''t happen with well-written code!'] ...
-% % %         )
-% % %     value = false;
-% % % end
 
 %% ¡props!
 
@@ -455,7 +433,7 @@ end
 %%% ¡prop!
 MENU_FILE (gui, logical) determines whether to show the menu file.
 %%%% ¡default!
-true   ; % % % %TBD
+true
 
 %%% ¡prop!
 H_MENU_IMPORT (evanescent, handle) is the handle of the menu import.

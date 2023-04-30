@@ -20,7 +20,7 @@ NAME (constant, string) is the name of the settings text panel.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the settings text panel.
 %%%% ¡default!
-'SettingsTextPP % % %.'
+'SettingsTextPP plots the panel for text settings including text, x, y, and z position, font color, size, rotation and weight, interpreter, horizontal and vertical alignment.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the settings text panel.

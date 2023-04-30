@@ -247,16 +247,6 @@ if value
 	gui.set('H_MENU_PRINT', Element.getNoValue())
  	gui.set('H_MENU_GUI_SETTINGS', Element.getNoValue())
  	gui.set('H_MENU_PERSONALIZE', Element.getNoValue())
-     
-% % %     % figure layout editor
-% % %     if isa(gui.getr('GUI_LAYOUT'), 'GUILayout') && gui.get('GUI_LAYOUT').get('DRAWN')
-% % %         gui.get('GUI_LAYOUT').get('CLOSE')
-% % %     end
-% % %     
-% % %     % figure settings
-% % %     if isa(gui.getr('GUI_SETTINGS'), 'GUIElement') && gui.get('GUI_SETTINGS').get('DRAWN')
-% % %         gui.get('GUI_SETTINGS').get('CLOSE')
-% % %     end
 end
 
 %%% ¡prop!
@@ -304,18 +294,6 @@ else
         )
     value = false;
 end
-% % % value = calculateValue@GUI(gui, GUI.CLOSE, varargin{:}); % also warning
-% % % if value
-% % %     % figure layout editor
-% % %     if isa(gui.getr('GUI_LAYOUT'), 'GUILayout') && gui.get('GUI_LAYOUT').get('DRAWN')
-% % %         gui.get('GUI_LAYOUT').get('CLOSE')
-% % %     end
-% % %     
-% % %     % figure settings
-% % %     if isa(gui.getr('GUI_SETTINGS'), 'GUIElement') && gui.get('GUI_SETTINGS').get('DRAWN')
-% % %         gui.get('GUI_SETTINGS').get('CLOSE')
-% % %     end
-% % % end
 
 %% ¡props!
 
@@ -398,9 +376,6 @@ if isa(value.getr('PE'), 'NoValue') % i.e., default initialization
         'WAITBAR', gui.getCallback('WAITBAR'), ...
         'CLOSEREQ', false ...
         );
-    % % % gui.set('GUI_SETTINGS', gui_settings);
-    % % % gui_settings.get('DRAW')
-    % % % gui_settings.get('SHOW')
 end
 
 %%% ¡prop!
