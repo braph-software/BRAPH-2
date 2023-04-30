@@ -301,7 +301,7 @@ rng(rng_settings_)
 
 %%% ¡test!
 %%%% ¡name!
-% % % Create example files TXT
+Create example files TXT
 %%%% ¡code!
 data_dir = [fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_MP TXT'];
 mkdir(data_dir);

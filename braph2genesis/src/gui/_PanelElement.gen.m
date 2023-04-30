@@ -294,7 +294,7 @@ value = IndexedDictionary( ...
 %%% ¡prop!
 MIN_WIDTH (gui, size) is the minimal panel width in pixels.
 %%%% ¡default!
-300   ; % % % %TBD
+300
 
 %%% ¡prop!
 RESIZEX (query, logical) resizes the x-extension of the element panel and its prop panels.
