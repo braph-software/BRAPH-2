@@ -1135,7 +1135,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     eval(['test_' el_class])
 % end
 
-el_class_list = {'SubjectCON_FUN_MP'} % {'SubjectCON_FUN_MP' 'CombineGroups_CON_FUN_MP' 'SeparateGroups_CON_FUN_MP'}
+el_class_list = {'CombineGroups_CON_FUN_MP' 'SeparateGroups_CON_FUN_MP'} % {'SubjectCON_FUN_MP' 'CombineGroups_CON_FUN_MP' 'SeparateGroups_CON_FUN_MP'}
 for i = 1:1:length(el_class_list)
     el_class = el_class_list{i};
     el_path = '/pipelines/connectivity-functional multiplex';
