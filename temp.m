@@ -355,6 +355,29 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 % gui1.get('DRAW')
 % gui1.get('SHOW')
 % 
+% B1 = rand(randi(10));
+% B2 = rand(randi(10));
+% B3 = rand(randi(10));
+% B12 = rand(size(B1,1),size(B2,2));
+% B13 = rand(size(B1,1),size(B3,2));
+% B23 = rand(size(B2,1),size(B3,2));
+% B21 = rand(size(B2,1),size(B1,2));
+% B31 = rand(size(B3,1),size(B1,2));
+% B32 = rand(size(B3,1),size(B2,2));
+% B = {
+%     B1                           B12                            B13
+%     B21                          B2                             B23
+%     B31                          B32                            B3
+%     };
+% g2 = OrdMlWD( ...
+%     'B', B ...
+%     );
+% gui2 = GUIElement( ...
+%     'PE', g2, ...
+%     'WAITBAR', true ...
+%     );
+% gui2.get('DRAW')
+% gui2.get('SHOW')
 % g2 = OrdMultiWU( ...
 %     'B', {randn(5) randn(5) randn(5)} ...
 %     );

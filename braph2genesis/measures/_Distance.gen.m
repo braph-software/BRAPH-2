@@ -55,7 +55,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'GraphBD' 'GraphBU' 'GraphWD' 'GraphWU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexBD' 'MultiplexBU' 'MultiplexWD' 'MultiplexWU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxBD' 'OrdMxBU' 'OrdMxWD' 'OrdMxWU' 'MultilayerWD'}
+{'GraphBD' 'GraphBU' 'GraphWD' 'GraphWU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexBD' 'MultiplexBU' 'MultiplexWD' 'MultiplexWU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxBD' 'OrdMxBU' 'OrdMxWD' 'OrdMxWU' 'MultilayerWD' 'OrdMlWD'}
 
 %%% ¡prop!
 M (result, cell) is the distance.
@@ -990,6 +990,61 @@ known_distance = {
     };
 
 g = MultilayerWD('B', B);
+
+m_outside_g = Distance('G', g);
+assert(isequal(m_outside_g.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Distance');
+assert(isequal(m_inside_g.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+OrdMlWD
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B11 = [
+    0       .1  .2  .25  0;
+    .125    0   0   0    0;
+    .2      .5  0   .25  0;
+    .125    10  0   0    0;
+    0       0   0   0    0;
+    ];
+B22 = [
+    0       .1  .2  .25  0;
+    .125    0   0   0    0;
+    .2      .5  0   .25  0;
+    .125    10  0   0    0;
+    0       0   0   0    0;
+    ];
+
+B12 = rand(size(B11,1),size(B22,2));
+B21 = B12';
+B= {B11 B12;
+    B21 B22};
+
+known_distance = {
+    [
+    0   5   5   4   Inf;
+    8   0   13  12  Inf;
+    5   2   0   4   Inf;
+    8   1   13  0   Inf;
+    Inf Inf Inf Inf 0;
+    ]
+    [
+    0   5   5   4   Inf;
+    8   0   13  12  Inf;
+    5   2   0   4   Inf;
+    8   1   13  0   Inf;
+    Inf Inf Inf Inf 0;
+    ]
+    };
+
+g = OrdMlWD('B', B);
 
 m_outside_g = Distance('G', g);
 assert(isequal(m_outside_g.get('M'), known_distance), ...
