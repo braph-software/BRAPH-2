@@ -264,7 +264,7 @@ if gui.get('DRAWN')
     title = gui.get('TITLE');
 
     if gui.get('CLOSEREQ')
-        % % % %TODO implement and use braph2msgbox instead of uiconfirm
+        %TODO implement and use braph2msgbox instead of uiconfirm
         selection = uiconfirm(gui.get('H'), ...
             ['Do you want to close ' title '?'], ...
             ['Close ' title], ...
@@ -403,7 +403,7 @@ function cb_open(~, ~)
     if filterindex
         filename = fullfile(path, file);
         tmp_el = Element.load(filename);
-        % % % %TODO: add checks for BRAPH2 version
+        %TODO: add checks for BRAPH2 version
         gui = GUIElement('PE', tmp_el, 'FILE', filename, 'WAITBAR', gui.get('WAITBAR'));
         gui.get('DRAW')
         gui.get('SHOW')
