@@ -1095,4 +1095,4 @@ delete(findall(0, 'type', 'figure'))
 warning('on', [BRAPH2.STR ':PanelPropIDictTable'])
 
 
-% % % %TODO Add GTA_DI_Table with relative tests
+%TODO Add GTA_DI_Table with relative tests

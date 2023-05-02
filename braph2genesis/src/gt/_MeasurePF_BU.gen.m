@@ -16,7 +16,7 @@ NAME (constant, string) is the name of the panel figure binodal unilayer measure
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel figure binodal unilayer measure.
-%%%% ¡_default!
+%%%% ¡default!
 'MeasurePF_BU manages the basic functionalities to plot of a binodal unilayer measure.'
 
 %%% ¡prop!

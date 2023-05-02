@@ -19,10 +19,6 @@ DESCRIPTION (constant, string) is the description of the binary directed graph.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the binary directed graph.
-%%% ¡_prop!
-% % % TEMPLATE (parameter, item) is the graph template to set the graph and measure parameters.
-% % % %%%% ¡_settings!
-% % % 'GraphBD'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the binary directed graph.

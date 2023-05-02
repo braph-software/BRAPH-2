@@ -16,7 +16,7 @@ NAME (constant, string) is the name of the panel figure graph histogram.
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel figure graph histogram.
-%%%% ¡_default!
+%%%% ¡default!
 'GraphHistPF manages the plot of the histogram of an adjaciency matrix.'
 
 %%% ¡prop!

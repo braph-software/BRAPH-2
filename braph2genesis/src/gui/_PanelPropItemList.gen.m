@@ -1073,4 +1073,4 @@ delete(findall(0, 'type', 'figure'))
 warning('on', [BRAPH2.STR ':PanelPropItemList'])
 
 
-% % % %TODO Add GTA_IL with relative tests
+%TODO Add GTA_IL with relative tests

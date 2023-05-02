@@ -16,7 +16,7 @@ NAME (constant, string) is the name of the panel figure binodal bilayer measure.
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel figure binodal bilayer measure.
-%%%% ¡_default!
+%%%% ¡default!
 'MeasurePF_BB manages the basic functionalities to plot of a binodal bilayer measure.'
 
 %%% ¡prop!

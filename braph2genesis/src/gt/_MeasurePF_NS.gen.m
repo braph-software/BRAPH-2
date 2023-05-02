@@ -16,7 +16,7 @@ NAME (constant, string) is the name of the panel figure nodal superglobal measur
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel figure nodal superglobal measure.
-%%%% ¡_default!
+%%%% ¡default!
 'MeasurePF_NS manages the basic functionalities to plot of a nodal superglobal measure.'
 
 %%% ¡prop!
