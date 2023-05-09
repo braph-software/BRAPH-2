@@ -23,7 +23,7 @@ DESCRIPTION (constant, string) is the description of the distance.
 TEMPLATE (parameter, item) is the template of the distance.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the distance.
+ID (data, string) is a few-letter code for the distance.
 %%%% ¡default!
 'Distance ID'
 
@@ -55,7 +55,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'GraphBD' 'GraphBU' 'GraphWD' 'GraphWU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexBD' 'MultiplexBU' 'MultiplexWD' 'MultiplexWU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxBD' 'OrdMxBU' 'OrdMxWD' 'OrdMxWU' 'OrdMxBUT' 'MultilayerWD' 'MultilayerBD'} % % % add tests for 'MultilayerWD' 'MultilayerBD'
+{'GraphBD' 'GraphBU' 'GraphWD' 'GraphWU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexBD' 'MultiplexBU' 'MultiplexWD' 'MultiplexWU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxBD' 'OrdMxBU' 'OrdMxWD' 'OrdMxWU' 'MultilayerWU' 'MultilayerBUD' 'OrdMlBU' 'OrdMlWU' 'OrdMlBUD' 'OrdMlBUT'}
 
 %%% ¡prop!
 M (result, cell) is the distance.
@@ -146,7 +146,7 @@ end
 %% ¡tests!
 
 %%% ¡excluded_props!
-[Distance.PFM]
+[Distance.TEMPLATE Distance.PFM]
 
 %%% ¡test!
 %%%% ¡name!
@@ -948,33 +948,373 @@ assert(isequal(m_inside_g.get('M'), known_distance), ...
 
 %%% ¡test!
 %%%% ¡name!
-OrdMxBUT
+MultilayerWU
 %%%% ¡probability!
 .01
 %%%% ¡code!
-B = [
-    0   .2   .7
-    .2   0   0
-    .7   0   0
+B11 = [
+    0       .1  .2  .25  0  0;
+    .125    0   0   0    0  0;
+    .2      .5  0   .25  0  0;
+    .125    10  0   0    0  0;
+    0       0   0   0    0  0;
+    0       0   0   0    0  0 
     ];
+B22 = [
+    0       .1  .2  .25  0;
+    .125    0   0   0    0;
+    .2      .5  0   .25  0;
+    .125    10  0   0    0;
+    0       0   0   0    0;
+    ];
+B12 = rand(size(B11,1),size(B22,2));
+B21 = B12';
+B= {B11 B12;
+    B21 B22};
+
+known_distance = {
+    [
+    0   5   5   4   Inf Inf;
+    5   0   2   1   Inf Inf;
+    5   2   0   3   Inf Inf;
+    4   1   3   0   Inf Inf;
+    Inf Inf Inf Inf 0   Inf;
+    Inf Inf Inf Inf Inf   0;
+	]
+    [
+    0   5   5   4   Inf;
+    5   0   2   1   Inf;
+    5   2   0   3   Inf;
+    4   1   3   0   Inf;
+    Inf Inf Inf Inf 0;
+	]
+    };
+
+g = MultilayerWU('B', B);
+
+m_outside_g = Distance('G', g);
+assert(isequal(m_outside_g.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Distance');
+assert(isequal(m_inside_g.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+MultilayerBUD
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B11 = [
+    0   .2   .7
+    .2   0   .1
+    .7  .1   0
+    ];
+
+B22 = [    
+    0   .2   .7 .5
+    .2   0   .1 .5
+    .7  .1   0  .5
+    .5  .5  .5  0
+    ];
+B12 = rand(size(B11,1),size(B22,2));
+B21 = B12';
+B= {B11 B12;
+    B21 B22};
+densities = [0 33 67 100];
+
+known_distance = {
+    [
+    0   Inf Inf
+    Inf 0   Inf
+    Inf Inf 0    
+    ]
+    [
+    0   Inf Inf Inf
+    Inf 0   Inf Inf
+    Inf Inf 0   Inf
+    Inf Inf Inf 0
+    ]
+    [
+    0   Inf 1
+    Inf 0   Inf
+    1 Inf 0    
+    ]
+    [
+    0 Inf 1 Inf
+    Inf 0 Inf Inf
+    1 Inf 0 Inf
+    Inf Inf Inf 0
+    ]
+    [
+    0	1	1
+    1	0	2
+    1   2	0
+    ]
+    [
+    0 2 1 1
+    2 0 2 1
+    1 2 0 1
+    1 1 1 0
+    ]
+    [
+    0 1 1
+    1 0 1
+    1 1 0
+    ]
+    [
+    0 1 1 1
+    1 0 1 1
+    1 1 0 1
+    1 1 1 0
+    ]
+    };
+
+g = MultilayerBUD('B', B, 'DENSITIES', densities);
+
+m_outside_g = Distance('G', g);
+assert(isequal(m_outside_g.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Distance');
+assert(isequal(m_inside_g.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+OrdMlBU
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B11 = [
+    0	1   1   0   0   0;
+    1   0   0   0	0   0; 
+    1   1   0   1   0   0;
+    1	1   0   0   0   0;
+    0   0   0   0   0   0;
+    0   0   0   0   0   0;
+    ];
+B22 = [
+    0	1   1   1   0;
+    1   0   0   0	0; 
+    1   1   0   1   0;
+    1	1   0   0   0;
+    0   0   0   0   0;
+    ];
+B12 = rand(size(B11,1),size(B22,2));
+B21 = B12';
+B= {B11 B12;
+    B21 B22};
+known_distance = {
+    [
+    0   1   1   1   Inf   Inf;
+    1   0   1   1   Inf   Inf;
+    1   1   0   1   Inf   Inf;
+    1   1   1   0   Inf   Inf;
+    Inf Inf Inf Inf 0   Inf;
+    Inf Inf Inf Inf Inf  0;
+    ]
+    [
+    0   1   1   1   Inf;
+    1   0   1   1   Inf;
+    1   1   0   1   Inf;
+    1   1   1   0   Inf;
+    Inf Inf Inf Inf 0;
+    ]
+    };
+
+g = OrdMlBU('B', B);
+
+m_outside_g = Distance('G', g);
+assert(isequal(m_outside_g.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Distance');
+assert(isequal(m_inside_g.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+OrdMlWU
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B11 = [
+    0       .1  .2  .25  0  0;
+    .125    0   0   0    0  0;
+    .2      .5  0   .25  0  0;
+    .125    10  0   0    0  0;
+    0       0   0   0    0  0;
+    0       0   0   0    0  0 
+    ];
+B22 = [
+    0       .1  .2  .25  0;
+    .125    0   0   0    0;
+    .2      .5  0   .25  0;
+    .125    10  0   0    0;
+    0       0   0   0    0;
+    ];
+B12 = rand(size(B11,1),size(B22,2));
+B21 = B12';
+B= {B11 B12;
+    B21 B22};
+
+known_distance = {
+    [
+    0   5   5   4   Inf Inf;
+    5   0   2   1   Inf Inf;
+    5   2   0   3   Inf Inf;
+    4   1   3   0   Inf Inf;
+    Inf Inf Inf Inf 0   Inf;
+    Inf Inf Inf Inf Inf   0;
+	]
+    [
+    0   5   5   4   Inf;
+    5   0   2   1   Inf;
+    5   2   0   3   Inf;
+    4   1   3   0   Inf;
+    Inf Inf Inf Inf 0;
+	]
+    };
+
+g = OrdMlWU('B', B);
+
+m_outside_g = Distance('G', g);
+assert(isequal(m_outside_g.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Distance');
+assert(isequal(m_inside_g.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+OrdMlBUD
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B11 = [
+    0   .2   .7
+    .2   0   .1
+    .7  .1   0
+    ];
+
+B22 = [    
+    0   .2   .7 .5
+    .2   0   .1 .5
+    .7  .1   0  .5
+    .5  .5  .5  0
+    ];
+B12 = rand(size(B11,1),size(B22,2));
+B21 = B12';
+B= {B11 B12;
+    B21 B22};
+densities = [0 33 67 100];
+
+known_distance = {
+    [
+    0   Inf Inf
+    Inf 0   Inf
+    Inf Inf 0    
+    ]
+    [
+    0   Inf Inf Inf
+    Inf 0   Inf Inf
+    Inf Inf 0   Inf
+    Inf Inf Inf 0
+    ]
+    [
+    0   Inf 1
+    Inf 0   Inf
+    1 Inf 0    
+    ]
+    [
+    0 Inf 1 Inf
+    Inf 0 Inf Inf
+    1 Inf 0 Inf
+    Inf Inf Inf 0
+    ]
+    [
+    0	1	1
+    1	0	2
+    1   2	0
+    ]
+    [
+    0 2 1 1
+    2 0 2 1
+    1 2 0 1
+    1 1 1 0
+    ]
+    [
+    0 1 1
+    1 0 1
+    1 1 0
+    ]
+    [
+    0 1 1 1
+    1 0 1 1
+    1 1 0 1
+    1 1 1 0
+    ]
+    };
+
+g = OrdMlBUD('B', B, 'DENSITIES', densities);
+
+m_outside_g = Distance('G', g);
+assert(isequal(m_outside_g.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Distance');
+assert(isequal(m_inside_g.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+OrdMlBUT
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B11 = [
+    0   .2   .7
+    .2   0   .1
+    .7  .1   0
+    ];
+
+B22 = [    
+    0   .2   .7 .5
+    .2   0   .1 .5
+    .7  .1   0  .5
+    .5  .5  .5  0
+    ];
+B12 = rand(size(B11,1),size(B22,2));
+B21 = B12';
+B= {B11 B12;
+    B21 B22};
 
 thresholds = [0 .5 1];
 
 known_distance = {
     [
     0   1   1
-    1   0   2
-    1   2   0
+    1   0   1
+    1   1   0
     ]
     [
-    0   1   1
-    1   0   2
-    1   2   0
-    ]
-    [
-    0   1   1
-    1   0   2
-    1   2   0
+    0   1   1	1
+    1   0   1   1
+    1   1   0   1
+    1   1   1   0
     ]
     [
     0   Inf 1
@@ -982,33 +1322,25 @@ known_distance = {
     1 Inf 0
     ]
     [
-    0   Inf 1
-    Inf 0   Inf
-    1 Inf 0
+    0 Inf 1 Inf
+    Inf 0 Inf Inf
+    1 Inf 0 Inf
+    Inf Inf Inf 0
     ]
     [
-    0   Inf 1
-    Inf 0   Inf
-    1 Inf 0
+    0  Inf  Inf
+    Inf  0  Inf
+    Inf  Inf  0
     ]
     [
-    0   Inf Inf
-    Inf 0   Inf
-    Inf Inf 0
-    ]
-    [
-    0   Inf Inf
-    Inf 0   Inf
-    Inf Inf 0
-    ]
-    [
-    0   Inf Inf
-    Inf 0   Inf
-    Inf Inf 0
+    0 Inf Inf Inf
+    Inf 0 Inf Inf
+    Inf Inf 0 Inf
+    Inf Inf Inf 0
     ]
     };
 
-g = OrdMxBUT('B', {B B B}, 'THRESHOLDS', thresholds);
+g = OrdMlBUT('B', B, 'THRESHOLDS', thresholds);
 
 m_outside_g = Distance('G', g);
 assert(isequal(m_outside_g.get('M'), known_distance), ...
