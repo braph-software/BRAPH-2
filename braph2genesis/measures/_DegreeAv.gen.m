@@ -590,7 +590,7 @@ B33 = [
    .2  .1   0   0
     ];
 
-thresholds = [0 .5 1];
+thresholds = [0 .5 .8];
 
 known_degree = { ...
     mean([1 1])

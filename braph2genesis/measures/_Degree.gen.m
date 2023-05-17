@@ -591,7 +591,7 @@ B33 = [
    .2  .1   0   0
     ];
 
-thresholds = [0 .5 1];
+thresholds = [0 .5 0.8];
 
 known_degree = { ...
     [1 1]'

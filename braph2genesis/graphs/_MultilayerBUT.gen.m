@@ -27,17 +27,17 @@ TEMPLATE (parameter, item) is the template of the multilayer binarized at differ
 % % % 'MultilayerBUT'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the multilayer binary  undirected with fixed threaholds graph.
+ID (data, string) is a few-letter code for the multilayer binary  undirected with fixed thresholds graph.
 %%%% ¡default!
 'MultilayerBUT ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the multilayer binary  undirected with fixed threaholds graph.
+LABEL (metadata, string) is an extended label of the multilayer binary  undirected with fixed thresholds graph.
 %%%% ¡default!
 'MultilayerBUT label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the multilayer binary undirected with fixed threaholds graph.
+NOTES (metadata, string) are some specific notes about the multilayer binary undirected with fixed thresholds graph.
 %%%% ¡default!
 'MultilayerBUT notes'
 
@@ -100,10 +100,12 @@ if L > 0 && ~isempty(cell2mat(A_WU))
     A(:, :) = {eye(length(A_WU{1, 1}))};
     for i = 1:1:length(thresholds)
         threshold = thresholds(i);
+        layer = 1;
         for j = (i - 1) * L + 1:1:i * L
 	        for k = (i - 1) * L + 1:1:i * L
-                A{j, k} = dediagonalize(binarize(A_WU{j, k}, 'threshold', threshold));
+                A{j, k} = dediagonalize(binarize(A_WU{layer, layer}, 'threshold', threshold));
             end
+            layer = layer + 1;
         end
     end
 end
@@ -159,6 +161,8 @@ getCompatibleMeasures('MultilayerBUT')
 
 %%% ¡prop!
 THRESHOLDS (parameter, rvector) is the vector of thresholds.
+%%%% ¡default!
+[0 0 0 0]
 %%%% ¡gui!
 pr = PanelPropRVectorSmart('EL', g, 'PROP', MultilayerBUT.THRESHOLDS, 'MAX', 1, 'MIN', -1, varargin{:});
 
@@ -173,28 +177,34 @@ Constructor - Full
 %%%% ¡probability!
 .01
 %%%% ¡code!
-B1 = [
-     0 .1 .2 .3 .4 
-    .1 0 .1 .2 .3
-    .2 .1 0 .1 .2
-    .3 .2 .1 0 .1
-    .4 .3 .2 .1 0
+B11 = [
+    0   1   0  .2
+    1   0   .3  .1
+    0  .3   0   0
+    .2  .1   0   0
     ];
-B = {B1, B1, B1};
-thresholds = [0 .1 .2 .3 .4];
-g = MultilayerBUT('B', B, 'THRESHOLDS', thresholds);
 
+B12 = rand(size(B11,1),size(B11,2));
+
+B= {B11 B12 B12;
+    B12 B11 B12;
+    B12 B12 B11};
+thresholds = [0 .5 1];
+g = MultilayerBUT('B', B, 'THRESHOLDS', thresholds); 
 g.get('A_CHECK')
-
 A = g.get('A');
+
+L = length(B); % number of layers
 
 for i = 1:1:length(thresholds)
     threshold = thresholds(i);
-    for j = (i - 1) * length(B) + 1:1:i * length(B)
-        for k = (i - 1) * length(B) + 1:1:i * length(B)
-            assert(isequal(A{i, j}, binarize(B1, 'threshold', threshold)), ...
+    layer = 1; 
+    for j = (i - 1) * L + 1:1:i * L
+        for k = (i - 1) * L + 1:1:i * L
+            assert(isequal(A{j, k}, dediagonalize(binarize(B{layer, layer}, 'threshold', threshold))), ...
                 [BRAPH2.STR ':MultilayerBUT:' BRAPH2.FAIL_TEST], ...
-                'MultilayerBUT is not constructing well.')      
+                'MultilayerBUT is not constructing well.')
         end
+        layer = layer + 1;
     end
 end
