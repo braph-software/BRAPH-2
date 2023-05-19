@@ -2,7 +2,7 @@
 OrdMlWU < Graph (g, ordinal multilayer weighted undirected graph) is an ordinal multilayer weighted undirected graph.
 
 %%% ¡description!
-In an ordinal multilayer weighted undirected (WU) graph, layers have different number 
+In an ordinal multilayer weighted undirected (WU) graph, layers could have different number 
  of nodes with within-layer weighted undirected edges, associated with a real 
  number between 0 and 1 and indicating the strength of the connection.
 The connectivity matrices are symmetric.
@@ -20,7 +20,7 @@ NAME (constant, string) is the name of the ordinal multilayer weighted undirecte
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ordinal multilayer weighted undirected graph.
 %%%% ¡default!
-'In an ordinal multilayer weighted undirected (WU) graph, layers have different number of nodes with within-layer weighted undirected edges, associated with a real number between 0 and 1 and indicating the strength of the connection. The connectivity matrices are symmetric. There are connections between layers connecting the corresponding nodes.The layers are connected in an ordinal fashion.'
+'In an ordinal multilayer weighted undirected (WU) graph, layers could have different number of nodes with within-layer weighted undirected edges, associated with a real number between 0 and 1 and indicating the strength of the connection. The connectivity matrices are symmetric. There are connections between layers connecting the corresponding nodes.The layers are connected in an ordinal fashion.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ordinal multilayer weighted undirected graph.
