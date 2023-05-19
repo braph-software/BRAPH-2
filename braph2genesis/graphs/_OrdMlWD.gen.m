@@ -2,7 +2,7 @@
 OrdMlWD < Graph (g, multilayer weighted directed graph) is an ordinal multilayer weighted directed graph.
 
 %%% ¡description!
-In an ordinal multilayer weighted directed (WD) graph, layers have different number 
+In an ordinal multilayer weighted directed (WD) graph, layers could have different number 
  of nodes with within-layer weighted directed edges, associated with a real 
  number between 0 and 1 and indicating the strength of the connection.
 There are connections between layers connecting the corresponding nodes.
@@ -19,7 +19,7 @@ NAME (constant, string) is the name of the ordinal multilayer weighted directed 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ordinal multilayer weighted directed graph.
 %%%% ¡default!
-'In an ordinal multilayer weighted directed (BD) graph, layers have different number of nodes with within-layer weighted directed edges, associated with a real number between 0 and 1 and indicating the strength of the connection. There are connections between layers connecting the corresponding nodes.'
+'In an ordinal multilayer weighted directed (BD) graph, layers could have different number of nodes with within-layer weighted directed edges, associated with a real number between 0 and 1 and indicating the strength of the connection. There are connections between layers connecting the corresponding nodes.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ordinal multilayer weighted directed graph.
