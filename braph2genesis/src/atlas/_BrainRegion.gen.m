@@ -8,7 +8,7 @@ BrainRegion contains and manages the id, label, x coordinate, y
 coordinate, and z coordinate of a brain region. 
     
 %%% ¡seealso!
-Element, BrainAtlas, BrainSurface
+BrainAtlas, BrainSurface
 
 %% ¡props_update!
 

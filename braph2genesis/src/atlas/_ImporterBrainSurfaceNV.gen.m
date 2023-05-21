@@ -71,7 +71,7 @@ if ~isfile(file)
 end
 
 if isfile(file)
-% % %     wb = braph2waitbar(im.get('WAITBAR'), .15, 'Reading brain surface file ...');
+	wb = braph2waitbar(im.get('WAITBAR'), .15, 'Reading brain surface file ...');
     
     fid = fopen(file);
     vertex_number = fscanf(fid, '%f', 1);
@@ -89,7 +89,7 @@ if isfile(file)
     bs.set('TRIANGLES_NUMBER', tri_number);
     bs.set('TRIANGLES', tri);
     
-% % %     braph2waitbar(wb, 'close')
+	braph2waitbar(wb, 'close')
 else
     error([BRAPH2.STR ':ImporterBrainSurfaceNV:' BRAPH2.CANCEL_IO], ...
         [BRAPH2.STR ':ImporterBrainSurfaceNV:' BRAPH2.CANCEL_IO '\\n' ...
