@@ -16,7 +16,7 @@ NAME (constant, string) is the name of the panel figure nodal bilayer measure.
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel figure nodal bilayer measure.
-%%%% ¡_default!
+%%%% ¡default!
 'MeasurePF_NB manages the basic functionalities to plot of a nodal bilayer measure.'
 
 %%% ¡prop!

@@ -2,27 +2,7 @@
 GraphPP_MDict < PanelProp (pr, measure dictionary plot) plots the measure dictionary property of a graph.
 
 %%% ¡description!
-% % % PanelPropIDictTable plots the panel of an IDICT property with a table.
-% % % It works for all categories.
-% % % 
-% % % It can be personalized with the following props:
-% % %   COLS - Numerical array with the columns to be visualized. It can include 
-% % %          PanelPropIDictTable.SELECTOR and/or prop numbers of the item class.
-% % %   ROWNAME - String list with the row names as per uitable format.
-% % %          It can be a string list or 'numbered' or {} (to reset it).
-% % %   COLUMNAME - String list with the column names as per uitable format.
-% % %          It can be a string list or 'numbered'.
-% % %   COLUMNWIDTH - String list with the cloumn width as per uitable format.
-% % %          It can be a string list (e.g. {'1x' '2x'}) or 'auto'.
-% % %   COLUMNEDITABLE - Row vector to determine the cloumn editability as per uitable format.
-% % %          It can be a row vector of booleans.
-% % %   COLUMNFORMAT - Code to determine the column format as per uitable format.
-% % %          The format should be, e.g., {'char' 'logical' 'numeric' {'op1' 'op2'}}.
-% % %   CB_TAB_EDIT - Code in a cell array for the edit callback to be evaluated 
-% % %          by the table edit callback. It can refer to the variables:
-% % %           el, prop, dict, it_class, pr, i, col, newdata
-% % %          and use the standard callback function:
-% % %           cb_table_edit_default()
+GraphPP_MDict plors the panel of the M_DICT property of Graph.
 It is intended to be used only with the property M_DICT of Graph.
 
 %%% ¡seealso!
@@ -37,7 +17,7 @@ NAME (constant, string) is the name of the measure dictionary plot.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the measure dictionary plot.
 %%%% ¡default!
-'% % %'
+'GraphPP_MDict plors the panel of the M_DICT property of Graph.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the measure dictionary plot.

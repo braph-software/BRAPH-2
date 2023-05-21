@@ -349,7 +349,7 @@ assert(isequal(m_inside_g.get('M'), known_degree), ...
 OrdMxWU
 %%%% ¡probability!
 .01
-%%%% ¡_code!
+%%%% ¡code!
 B11 = [
     0   .2  1
     .2  0   0

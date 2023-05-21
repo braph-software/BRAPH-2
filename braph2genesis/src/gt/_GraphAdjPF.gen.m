@@ -16,7 +16,7 @@ NAME (constant, string) is the name of the panel figure graph adjacency matrix.
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel figure graph adjacency matrix.
-%%%% ¡_default!
+%%%% ¡default!
 'GraphAdjPF manages the plot of an adjacency matrix.'
 
 %%% ¡prop!
