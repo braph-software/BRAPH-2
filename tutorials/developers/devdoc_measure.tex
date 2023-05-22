@@ -323,71 +323,88 @@ For weighted graphs, the distance is calculated with the Dijkstra algorithm usin
 		\expand{cd:m:degree:prop_update}
 	}
 ]
-%% ¡props_update!
+¤%% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the degree.
+NAME (constant, string) is the name of the ¤distance¤.
 %%%% ¡default!
-'Degree'
+¤'Distance'¤
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the degree.
+DESCRIPTION (constant, string) is the description of the ¤distance¤.
 %%%% ¡default!
-'The degree of a node is the number of edges connected to the node within a layer. Connection weights are ignored in calculations.'
+¤'The distance of a graph is the shortest path between all pairs of nodes within a layer of the graph. For weighted graphs, the distance is calculated with the Dijkstra algorithm using the inverse weight as the distance associated to the edge.'¤
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the degree.
+TEMPLATE (parameter, item) is the template of the ¤distance¤.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the degree.
+ID (data, string) is a few-letter code of the ¤distance¤.
 %%%% ¡default!
-'Degree ID'
+¤'Distance ID'¤
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the degree.
+LABEL (metadata, string) is an extended label of the ¤distance¤.
 %%%% ¡default!
-'Degree label'
+¤'Distance label'¤
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the degree.
+NOTES (metadata, string) are some specific notes about the ¤distance¤.
 %%%% ¡default!
-'Degree notes'
+¤'Distance notes'¤
 
 %%% ¡prop!
-SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
+SHAPE (constant, scalar) is the measure shape ¤__Measure.BINODAL__¤.
 %%%% ¡default!
-Measure.NODAL
+¤Measure.BINODAL¤
 
 %%% ¡prop!
-SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.
+SCOPE (constant, scalar) is the measure scope ¤__Measure.UNILAYER__¤.
 %%%% ¡default!
-Measure.UNILAYER
+¤Measure.UNILAYER¤
 
 %%% ¡prop!
-PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.
+PARAMETRICITY (constant, scalar) is the parametricity of the measure ¤__Measure.NONPARAMETRIC__¤.
 %%%% ¡default!
-Measure.NONPARAMETRIC
+¤Measure.NONPARAMETRIC¤
 
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU'}
+¤{'GraphBD' 'GraphBU' 'GraphWD' 'GraphWU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexBD' 'MultiplexBU' 'MultiplexWD' 'MultiplexWU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxBD' 'OrdMxBU' 'OrdMxWD' 'OrdMxWU'}¤
 
 %%% ¡prop!
-M (result, cell) is the degree.
+M (result, cell) is the ¤distance¤.
 %%%% ¡calculate!
-g = m.get('G');
+¤g = m.get('G');
 A = g.get('A');
 
-degree = cell(g.get('LAYERNUMBER'), 1);
+distance = cell(g.get('LAYERNUMBER'), 1);
+connectivity_type =  g.get('CONNECTIVITY_TYPE', g.get('LAYERNUMBER'));
+connectivity_type = diag(connectivity_type);
+Aii_tmp = {};
+for li = 1:1:g.get('LAYERNUMBER')
+    Aii_tmp{li} = A{li, li};
+end
+for li = 1:1:g.get('LAYERNUMBER')
+    Aii = Aii_tmp{li};
+    connectivity_layer = connectivity_type(li);
 
-parfor li = 1:1:g.get('LAYERNUMBER')
-    Aii = A{li, li};
-    Aii = binarize(Aii);
-    degree(li) = {sum(Aii, 2)};
+    if connectivity_layer == Graph.WEIGHTED  % weighted graphs
+        distance(li) = {getWeightedCalculation(Aii)}; ¥\circled{1}\twocirclednotes{1}{2}{call some callback functions that are provided below in \circled{3}.}¥
+    else  % binary (i.e., non-weighted) graphs
+        distance(li) = {getBinaryCalculation(Aii)}; ¥\circled{2}¥
+    end
 end
 
-value = degree;
+value = distance;
+%%%% ¡calculate_callbacks! ¥\circled{3}\circlednote{3}{This section contains the callback functions for the calculation of the measure.}¥
+function weighted_distance = getWeightedCalculation(A)
+    ...
+end
+function binary_distance = getBinaryCalculation(A)
+    ...
+end
 \end{lstlisting}
 
 \begin{lstlisting}[
@@ -398,10 +415,10 @@ value = degree;
 		\expand{cd:m:degree:tests}
 	}
 ]
-%% ¡tests!
+¤%% ¡tests!
 
 %%% ¡excluded_props!
-[Degree.TEMPLATE Degree.PFM] 
+¤[Distance.TEMPLATE Distance.PFM]¤
 
 %%% ¡test!
 %%%% ¡name!
@@ -409,27 +426,35 @@ GraphWU
 %%%% ¡probability!
 .01
 %%%% ¡code!
-B = [
-    0   .6  1
-    .6  0   0
-    1   0   0
+¤B = [
+    0     .1    .2  .25  0
+    .125  0     0   0    0
+    .2    .5    0   .25  0
+    .125  10    0   0    0
+    0     0     0   0    0
     ];
 
-known_degree = {[2 1 1]'};
+known_distance = {[
+    0   5   5   4   Inf
+    5   0   2   1   Inf
+    5   2   0   3   Inf
+    4   1   3   0   Inf
+    Inf Inf Inf Inf 0
+    ]};¤
 
 g = GraphWU('B', B);
 
-m_outside_g = Degree('G', g);
-assert(isequal(m_outside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+m_outside_g = ¤Distance¤('G', g);
+assert(isequal(m_outside_g.get('M'), ¤known_distance¤), ...
+    [BRAPH2.STR ':¤Distance¤:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 
-m_inside_g = g.get('MEASURE', 'Degree');
-assert(isequal(m_inside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+m_inside_g = g.get('MEASURE', ¤'Distance'¤);
+assert(isequal(m_inside_g.get('M'), ¤known_distance¤), ...
+    [BRAPH2.STR ':¤Distance¤:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 
-¤...¤
+...¤
 \end{lstlisting}
 
 %\bibliography{biblio}
