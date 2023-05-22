@@ -16,6 +16,10 @@ This is the developer tutorial for implementing a new measure.
 In this Tutorial, we will explain how to create the generator file \fn{*.gen.m} for a new measure which can the be compiled by \code{braph2genesis}, using the measures \code{Degree}, \code{DegreeAv}, and \code{Distance} as examples.
 \end{abstract}
 
+\tableofcontents
+
+%%%%% %%%%% %%%%% %%%%% %%%%%
+\clearpage
 \section{Implementation of Degree}
 
 We will start by implementing in detail the measure \code{Degree}, which applies to most graphs and is a direct extension of the element \code{Measure}.
@@ -151,6 +155,8 @@ assert(isequal(m_inside_g.get('M'), known_degree), ... ¥\circled{8}\circlednote
 ¤...¤
 \end{lstlisting}
 
+%%%%% %%%%% %%%%% %%%%% %%%%%
+\clearpage
 \section{Implementation of DegreeAv}
 
 We can now use \code{Degree} as the basis to implement the global measure \code{DegreeAv}.
@@ -287,6 +293,8 @@ assert(isequal(m_inside_g.get('M'), ¤known_degree_av¤), ...
 ...¤
 \end{lstlisting}
 
+%%%%% %%%%% %%%%% %%%%% %%%%%
+\clearpage
 \section{Implementation of Distance}
 
 Now we implement the binodal measure \code{Distance}, again highlighting the differences.
