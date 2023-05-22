@@ -177,7 +177,7 @@ for run = 1:1:run_number
 
     % src
     util_gen_list = getGenerators([source_dir fp 'src' fp 'util']);
-    parfor i = 1:numel(util_gen_list)
+    for i = 1:numel(util_gen_list)
         create_Element([source_dir fp 'src' fp 'util' fp util_gen_list{i}], [target_dir fp 'src' fp 'util'])
     end
 
