@@ -185,70 +185,70 @@ for run = 1:1:run_number
     if exist('Format', 'class') == 8, hard_code_constants([target_dir fp 'src' fp 'ds' fp 'Format.m']), end
 	if exist('Element', 'class') == 8, hard_code_constants([target_dir fp 'src' fp 'ds' fp 'Element.m']), end
 	ds_gen_list = getGenerators([source_dir fp 'src' fp 'ds']);
-    parfor i = 1:numel(ds_gen_list)
+    for i = 1:numel(ds_gen_list)
         create_Element([source_dir fp 'src' fp 'ds' fp ds_gen_list{i}], [target_dir fp 'src' fp 'ds'])
     end
 
     if develop
         ds_examples_gen_list = getGenerators([source_dir fp 'src' fp 'ds' fp 'examples']);
-        parfor i = 1:numel(ds_examples_gen_list)
+        for i = 1:numel(ds_examples_gen_list)
             create_Element([source_dir fp 'src' fp 'ds' fp 'examples' fp ds_examples_gen_list{i}], [target_dir fp 'src' fp 'ds' fp 'examples'])
         end
     end
     
     atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
-    parfor i = 1:numel(atlas_gen_list)
+    for i = 1:numel(atlas_gen_list)
         create_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
     end
 
     gt_gen_list = getGenerators([source_dir fp 'src' fp 'gt']);
-    parfor i = 1:numel(gt_gen_list)
+    for i = 1:numel(gt_gen_list)
         create_Element([source_dir fp 'src' fp 'gt' fp gt_gen_list{i}], [target_dir fp 'src' fp 'gt'])
     end
 
     cohort_gen_list = getGenerators([source_dir fp 'src' fp 'cohort']);
-	parfor i = 1:numel(cohort_gen_list)
+	for i = 1:numel(cohort_gen_list)
         create_Element([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'cohort'])
 	end
 
 % % %     analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
-% % %     parfor i = 1:numel(analysis_gen_list)
+% % %     for i = 1:numel(analysis_gen_list)
 % % %         create_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
 % % %     end
     
     % nn
 % % %     nn_gen_list = getGenerators([source_dir fp 'src' fp 'nn']);
-% % %     parfor i = 1:numel(nn_gen_list)
+% % %     for i = 1:numel(nn_gen_list)
 % % %         create_Element([source_dir fp 'src' fp 'nn' fp nn_gen_list{i}], [target_dir fp 'src' fp 'nn'])
 % % %     end
 
     % graphs
     graphs_gen_list = getGenerators([source_dir fp 'graphs']);
-    parfor i = 1:numel(graphs_gen_list)
+    for i = 1:numel(graphs_gen_list)
         create_Element([source_dir fp 'graphs' fp graphs_gen_list{i}], [target_dir fp 'graphs'])
     end
 
     % measures
     measures_gen_list = getGenerators([source_dir fp 'measures']);
-    parfor i = 1:numel(measures_gen_list)
+    for i = 1:numel(measures_gen_list)
         create_Element([source_dir fp 'measures' fp measures_gen_list{i}], [target_dir fp 'measures'])
     end
 
     % neural networks
 % % %     neuralnetworks_gen_list = getGenerators([source_dir fp 'neuralnetworks']);
-% % %     parfor i = 1:numel(neuralnetworks_gen_list)
+% % %     for i = 1:numel(neuralnetworks_gen_list)
 % % %         create_Element([source_dir fp 'neuralnetworks' fp neuralnetworks_gen_list{i}], [target_dir fp 'neuralnetworks'])
 % % %     end
 
     % gui
     gui_gen_list = getGenerators([source_dir fp 'src' fp 'gui']);
-    parfor i = 1:numel(gui_gen_list)
+    for i = 1:numel(gui_gen_list)
         create_Element([source_dir fp 'src' fp 'gui' fp gui_gen_list{i}], [target_dir fp 'src' fp 'gui'])
     end
 
     if develop
         gui_examples_gen_list = getGenerators([source_dir fp 'src' fp 'gui' fp 'examples']);
-        parfor i = 1:numel(gui_examples_gen_list)
+        for i = 1:numel(gui_examples_gen_list)
             create_Element([source_dir fp 'src' fp 'gui' fp 'examples' fp gui_examples_gen_list{i}], [target_dir fp 'src' fp 'gui' fp 'examples'])
         end
     end
@@ -260,7 +260,7 @@ for run = 1:1:run_number
     for i = 1:1:length(pipelines_dir_list)
         wf_name = pipelines_dir_list(i).name;
         wf_gen_list = getGenerators([source_dir fp 'pipelines' fp wf_name]);
-        parfor j = 1:numel(wf_gen_list)
+        for j = 1:numel(wf_gen_list)
             create_Element([source_dir fp 'pipelines' fp wf_name fp wf_gen_list{j}], [target_dir fp 'pipelines' fp wf_name])
         end
     end
