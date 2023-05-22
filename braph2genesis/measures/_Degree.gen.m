@@ -72,11 +72,9 @@ end
 value = degree;
 
 %% ¡tests!
-%%% ¡excluded_props!
-[Degree.PFM]
 
 %%% ¡excluded_props!
-[Degree.TEMPLATE Degree.PFM]
+[Degree.PFM]
 
 %%% ¡test!
 %%%% ¡name!

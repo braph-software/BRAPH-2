@@ -73,7 +73,7 @@ value = degree_av;
 %% ¡tests!
 
 %%% ¡excluded_props!
-[DegreeAv.TEMPLATE DegreeAv.PFM]
+[DegreeAv.PFM]
 
 %%% ¡test!
 %%%% ¡name!
