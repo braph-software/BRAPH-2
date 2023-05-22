@@ -78,5 +78,12 @@
 \newcommand*\expand[1]{\color{codedark}{$\leftarrow$ \Coderef{#1}}}
 \newcommand*\expands[1]{\color{codedark}{$\leftarrow$ \Codesref{#1}}}
 
+%%
+% circled notes
 \usepackage{tikz}
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+\newcommand*\circlednote[2]{\marginnote{\circled{#1} #2}}
+\newcommand*\twocirclednotes[3]{\marginnote{\circled{#1} and \circled{#2} #3}}
+\newcommand*\threecirclednotes[4]{\marginnote{\circled{#1}, \circled{#2}, and \circled{#3} #4}}
+\newcommand*\fourcirclednotes[5]{\marginnote{\circled{#1}, \circled{#2}, \circled{#3}, and \circled{#4} #5}}
+\newcommand*\rangecirclednotes[3]{\marginnote{\circled{#1}---\circled{#2} #3}}
