@@ -156,22 +156,22 @@ assert(isequal(m_inside_g.get('M'), known_degree), ... ¥\circled{8}\circlednote
 
 We can now use \code{Degree} as the basis to implement the global measure \code{DegreeAv}.
 
-%\begin{lstlisting}[
-%	label=cd:m:degreeav:header,
-%	caption={
-%		{\bf DegreeAv element header.}
-%		The \code{header} section of generator code for \fn{\_DegreeAv.gen.m} provides the general information about the \code{DegreeAv} element.
-%	}
-%]
-%%% ¡header!
-%Degree < Measure (m, degree) is the graph degree. ¥\circled{1}\circlednote{1}{The element \code{Degree} is defined as a subclass of \code{Measure}. The moniker will be \code{m}.}¥
-%
-%%%% ¡description!
-%The degree of a node is the number of edges connected 
-% to the node within a layer. 
-%Connection weights are ignored in calculations.
-%\end{lstlisting}
-%
+\begin{lstlisting}[
+	label=cd:m:degreeav:header,
+	caption={
+		{\bf DegreeAv element header.}
+		The \code{header} section of generator code for \fn{\_DegreeAv.gen.m} provides the general information about the \code{DegreeAv} element.
+	}
+]
+%% ¡header!
+Degree < Measure (m, degree) is the graph degree.
+
+%%% ¡description!
+The degree of a node is the number of edges connected 
+ to the node within a layer. 
+Connection weights are ignored in calculations.
+\end{lstlisting}
+
 %\begin{lstlisting}[
 %	label=cd:m:degree:prop_update,
 %	caption={
