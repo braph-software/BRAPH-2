@@ -118,7 +118,7 @@ value = degree; ¥\circled{11}\circlednote{11}{returns the calcualted value of t
 	caption={
 		{\bf Degree element tests.}
 		The \code{tests} section from the element generator \fn{\_Degree.gen.m}.
-		A test should be prepared for each graph with which the measure is compatible. The test should at least verify in some simple cases that the value of the measure is correct 
+		A test should be prepared for each graph with which the measure is compatible. The test should at least verify in some simple cases that the value of the measure is correct.
 	}
 ]
 %% ¡tests!
@@ -300,25 +300,27 @@ assert(isequal(m_inside_g.get('M'), ¤known_degree_av¤), ...
 Now we implement the binodal measure \code{Distance}, again highlighting the differences.
 
 \begin{lstlisting}[
-	label=cd:m:degree:header,
+	label=cd:m:distance:header,
 	caption={
-		{\bf Degree element header.}
-		The \code{header} section of generator code for \fn{\_Degree.gen.m} provides the general information about the \code{Degree} element.
+		{\bf Distance element header.}
+		The \code{header} section of generator code for \fn{\_Distance.gen.m} provides the general information about the \code{Distance} element.
+		\expand{cd:m:degree:header}
 	}
 ]
-%% ¡header!
-Degree < Measure (m, degree) is the graph degree. ¥\circled{1}\circlednote{1}{The element \code{Degree} is defined as a subclass of \code{Measure}. The moniker will be \code{m}.}¥
+¤%% ¡header!¤
+Distance ¤< Measure (m, ¤distance¤) ¤is the distance.
 
-%%% ¡description!
-The degree of a node is the number of edges connected to the node within a layer. 
-Connection weights are ignored in calculations.
+¤%%% ¡description!¤
+The distance of a graph is the shortest path between all pairs of nodes within a layer of the graph.
+For weighted graphs, the distance is calculated with the Dijkstra algorithm using the inverse weight as the distance associated to the edge.
 \end{lstlisting}
 
 \begin{lstlisting}[
-	label=cd:m:degree:prop_update,
+	label=cd:m:distance:prop_update,
 	caption={
-		{\bf Degree element prop update.}
-		The \code{props\_update} section of generator code for \fn{\_Degree.gen.m} updates the properties of the \code{Measure} element. This defines the core properties of the measure.
+		{\bf Distance element prop update.}
+		The \code{props\_update} section of generator code for \fn{\_Distance.gen.m} updates the properties of the \code{Measure} element.
+		\expand{cd:m:degree:prop_update}
 	}
 ]
 %% ¡props_update!
@@ -351,60 +353,60 @@ NOTES (metadata, string) are some specific notes about the degree.
 %%%% ¡default!
 'Degree notes'
 
-%%% ¡prop! ¥\circled{1}\circlednote{1}{Measures have a \emph{shape}: \code{Measure.GLOBAL} (a value for the whole brain graph, e.g., average degree), \code{Measure.NODAL} (a value for each brain region, e.g., degree, or \code{Measure.BINODAL} (a value for each couple of brain regions, e.g., distance between couples of nodes).}¥
+%%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
 %%%% ¡default!
 Measure.NODAL
 
-%%% ¡prop! ¥\circled{2}\circlednote{2}{Measures have a \emph{scope}: \code{Measure.SUPERGLOBAL} (a result for the whole multi-layer graph, e.g., overlapping strength), \code{Measure.UNILAYER} (a result for each layer, e.g., average strength), or \code{Measure.BILAYER} (a result for each couple of layers).}¥
+%%% ¡prop!
 SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.
 %%%% ¡default!
 Measure.UNILAYER
 
-%%% ¡prop! ¥\circled{3}\circlednote{3}{Measures are either \code{Measure.NONPARAMETRIC} (the usual case) or \code{Measure.PARAMETRIC} (depending on some parameter).}¥
+%%% ¡prop!
 PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.
 %%%% ¡default!
 Measure.NONPARAMETRIC
 
-%%% ¡prop! ¥\circled{4}\circlednote{4}{Each measure has a list of compatible graphs for which the measure can be used.}¥
+%%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
 {'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU'}
 
-%%% ¡prop! ¥\circled{5}\circlednote{5}{The property \code{M} contains the code to be executed to calculate the measure. Here is where most of the action happens.}¥
+%%% ¡prop!
 M (result, cell) is the degree.
 %%%% ¡calculate!
-g = m.get('G'); ¥\circled{6}\circlednote{6}{retrieves the graph from the property \code{G} of the measure \code{m}.}¥
-A = g.get('A'); ¥\circled{7}\circlednote{7}{retrieves the cell with the adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.).}¥
+g = m.get('G');
+A = g.get('A');
 
-degree = cell(g.get('LAYERNUMBER'), 1); ¥\circled{8}\circlednote{8}{preallocates the variable to contain the result of the measure calculation.}¥
+degree = cell(g.get('LAYERNUMBER'), 1);
 
 parfor li = 1:1:g.get('LAYERNUMBER')
     Aii = A{li, li};
-    Aii = binarize(Aii); ¥\circled{9}\circlednote{9}{binarizes the adjacency matrix (removing diagonal).}¥
-    degree(li) = {sum(Aii, 2)}; ¥\circled{10}\circlednote{10}{calculates the degree of the node for layer \code{li}.}¥
+    Aii = binarize(Aii);
+    degree(li) = {sum(Aii, 2)};
 end
 
-value = degree; ¥\circled{11}\circlednote{11}{returns the calcualted value of the measure \code{degree} assigning it to the output variable \code{value}.}¥
+value = degree;
 \end{lstlisting}
 
 \begin{lstlisting}[
-	label=cd:m:degree:tests,
+	label=cd:m:distance:tests,
 	caption={
-		{\bf Degree element tests.}
-		The \code{tests} section from the element generator \fn{\_Degree.gen.m}.
-		A test should be prepared for each graph with which the measure is compatible. The test should at least verify in some simple cases that the value of the measure is correct 
+		{\bf Distance element tests.}
+		The \code{tests} section from the element generator \fn{\_Distance.gen.m}.
+		\expand{cd:m:degree:tests}
 	}
 ]
 %% ¡tests!
 
-%%% ¡excluded_props! ¥\circled{1}\circlednote{1}{List of properties that are excluded from testing.}¥
+%%% ¡excluded_props!
 [Degree.TEMPLATE Degree.PFM] 
 
-%%% ¡test! ¥\circled{2}\circlednote{2}{Test for \code{GraphWU}. Similar tests should be implemented for each graph compatible with the measure.}¥
+%%% ¡test!
 %%%% ¡name!
 GraphWU
-%%%% ¡probability! ¥\circled{3}\circlednote{3}{assings a low test execution probability.}¥
+%%%% ¡probability!
 .01
 %%%% ¡code!
 B = [
@@ -413,24 +415,24 @@ B = [
     1   0   0
     ];
 
-known_degree = {[2 1 1]'}; ¥\circled{4}\circlednote{4}{is the expected value of the measure calculated by external means.}¥
+known_degree = {[2 1 1]'};
 
-g = GraphWU('B', B); ¥\circled{5}\circlednote{5}{creates the graph.}¥
+g = GraphWU('B', B);
 
-m_outside_g = Degree('G', g); ¥\circled{6}\circlednote{6}{creates the measure.}¥
-assert(isequal(m_outside_g.get('M'), known_degree), ... ¥\circled{7}\circlednote{7}{tests that the value of the measure coicides with its expected value.}¥ 
+m_outside_g = Degree('G', g);
+assert(isequal(m_outside_g.get('M'), known_degree), ...
     [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 
-m_inside_g = g.get('MEASURE', 'Degree'); ¥\circled{8}\circlednote{8}{extracts the measure from the graph.}¥
-assert(isequal(m_inside_g.get('M'), known_degree), ... ¥\circled{8}\circlednote{8}{tests that the value of the measure extracted from the graph coicides with its expected value.}¥
+m_inside_g = g.get('MEASURE', 'Degree');
+assert(isequal(m_inside_g.get('M'), known_degree), ...
     [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 
 ¤...¤
 \end{lstlisting}
 
-%\bibliography{sample-handout}
+%\bibliography{biblio}
 %\bibliographystyle{plainnat}
 
 \end{document}
