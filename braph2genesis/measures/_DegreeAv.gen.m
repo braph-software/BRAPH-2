@@ -22,7 +22,7 @@ DESCRIPTION (constant, string) is the description of the average degree.
 TEMPLATE (parameter, item) is the template of the average degree.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the average degree.
+ID (data, string) is a few-letter code of the average degree.
 %%%% ¡default!
 'DegreeAv ID'
 
@@ -53,7 +53,7 @@ Measure.NONPARAMETRIC
 
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-%%% ¡default!
+%%%% ¡default!
 {'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU'}
 
 %%% ¡prop!
