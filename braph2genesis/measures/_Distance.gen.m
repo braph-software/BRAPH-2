@@ -146,7 +146,7 @@ end
 %% ¡tests!
 
 %%% ¡excluded_props!
-[Distance.TEMPLATE Distance.PFM]
+[Distance.PFM]
 
 %%% ¡test!
 %%%% ¡name!
