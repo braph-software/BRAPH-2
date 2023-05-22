@@ -1,0 +1,471 @@
+\documentclass{tufte-handout}
+\usepackage{braph2_devdoc}
+%\geometry{showframe} % display margins for debugging page layout
+
+\title{Implement a new Measure}
+
+\author[The BRAPH~2 Developers]{The BRAPH~2 Developers}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\noindent
+This is the developer tutorial for implementing a new measure. 
+In this Tutorial, we will explain how to create the generator file \fn{*.gen.m} for a new measure which can the be compiled by \code{braph2genesis}, using the measure \code{Degree} as an example.
+\end{abstract}
+
+\section{Implementation of Degree}
+
+\begin{lstlisting}[
+	label=cd:L03:CL_PT,
+	caption={
+		{\bf Degree element header.}
+		The \code{header} section of generator code for \fn{\_degree.gen.m} provides the general information about the \code{Degree} element.
+	}
+]
+%% ¡header!
+Degree < Measure (m, degree) is the graph degree. ¥\circled{1}\circlednote{1}{The element \code{Degree} is defined as a subclass of \code{Measure}. The moniker will be \code{m}.}¥
+
+%%% ¡description!
+The degree of a node is the number of edges connected 
+ to the node within a layer. 
+Connection weights are ignored in calculations.
+\end{lstlisting}
+
+\begin{lstlisting}[
+	label=cd:L03:CL_PT,
+	caption={
+		{\bf Degree element prop update.}
+		The \code{props\_update} section of generator code for \fn{\_degree.gen.m} updates the properties of the \code{Measure} element. This defines the core properties of the measure.
+	}
+]
+%% ¡props_update!
+
+%%% ¡prop!
+NAME (constant, string) is the name of the degree.
+%%%% ¡default!
+'Degree'
+
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the degree.
+%%%% ¡default!
+'The degree of a node is the number of edges connected to the node within a layer. Connection weights are ignored in calculations.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the degree.
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the degree.
+%%%% ¡default!
+'Degree ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the degree.
+%%%% ¡default!
+'Degree label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the degree.
+%%%% ¡default!
+'Degree notes'
+
+%%% ¡prop! ¥\circled{1}\circlednote{1}{Measures have a \emph{shape}: \code{Measure.GLOBAL} (a value for the whole brain graph, e.g., average degree), \code{Measure.NODAL} (a value for each brain region, e.g., degree, or \code{Measure.BINODAL} (a value for each couple of brain regions, e.g., distance between couples of nodes).}¥
+SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
+%%%% ¡default!
+Measure.NODAL
+
+%%% ¡prop! ¥\circled{2}\circlednote{2}{Measures have a \emph{scope}: \code{Measure.SUPERGLOBAL} (a result for the whole multi-layer graph, e.g., overlapping strength), \code{Measure.UNILAYER} (a result for each layer, e.g., average strength), or \code{Measure.BILAYER} (a result for each couple of layers).}¥
+SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.
+%%%% ¡default!
+Measure.UNILAYER
+
+%%% ¡prop! ¥\circled{3}\circlednote{3}{Measures are either \code{Measure.NONPARAMETRIC} (the usual case) or \code{Measure.PARAMETRIC} (depending on some parameter).}¥
+PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.
+%%%% ¡default!
+Measure.NONPARAMETRIC
+
+%%% ¡prop! ¥\circled{4}\circlednote{4}{Each measure has a list of compatible graphs for which the measure can be used.}¥
+COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+%%%% ¡default!
+{'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU'}
+
+%%% ¡prop! ¥\circled{5}\circlednote{5}{The property \code{M} contains the code to be executed to calculate the measure. Here is where most of the action happens.}¥
+M (result, cell) is the degree.
+%%%% ¡calculate!
+g = m.get('G'); ¥\circled{6}\circlednote{6}{retrieves the graph from the property \code{G} of the measure \code{m}.}¥
+A = g.get('A'); ¥\circled{7}\circlednote{7}{retrieves the cell with the adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.).}¥
+
+degree = cell(g.get('LAYERNUMBER'), 1); ¥\circled{8}\circlednote{8}{preallocates the variable to contain the result of the measure calculation.}¥
+
+parfor li = 1:1:g.get('LAYERNUMBER')
+    Aii = A{li, li};
+    Aii = binarize(Aii); ¥\circled{9}\circlednote{9}{binarizes the adjacency matrix (removing diagonal).}¥
+    degree(li) = {sum(Aii, 2)}; ¥\circled{10}\circlednote{10}{calculates the degree of the node for layer \code{li}.}¥
+end
+
+value = degree; ¥\circled{11}\circlednote{11}{returns the calcualted value of the measure \code{degree} assigning it to the output variable \code{value}.}¥
+\end{lstlisting}
+
+
+
+
+
+
+\begin{lstlisting}[
+	label=cd:L03:CL_PT,
+	caption={
+		{\bf Degree element tests.}
+		The \code{tests} section from the element generator \fn{\_degree.gen.m}.
+		A test should be prepared for each graph with which the measure is compatible. The test should at least verify in some simple cases that the value of the measure is correct 
+	}
+]
+%% ¡tests!
+
+%%% ¡excluded_props! ¥\circled{1}\circlednote{1}{List of properties that are excluded from testing.}¥
+[Degree.TEMPLATE Degree.PFM] 
+
+%%% ¡test! ¥\circled{2}\circlednote{2}{}¥
+%%%% ¡name!
+GraphWU
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B = [
+    0   .6  1
+    .6  0   0
+    1   0   0
+    ];
+
+known_degree = {[2 1 1]'};
+
+g = GraphWU('B', B);
+
+m_outside_g = Degree('G', g);
+assert(isequal(m_outside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Degree');
+assert(isequal(m_inside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+GraphBU
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B = [
+    0   1   1
+    1   0   0
+    1   0   0
+    ];
+
+known_degree = {[2 1 1]'};
+
+g = GraphBU('B', B);
+
+m_outside_g = Degree('G', g);
+assert(isequal(m_outside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Degree');
+assert(isequal(m_inside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+MultigraphBUD
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B = [
+    0   .2   .7
+    .2   0   .1
+    .7  .1   0
+    ];
+
+densities = [0 33 67 100];
+
+known_degree = { ...
+    [0 0 0]'
+    [1 0 1]'
+    [2 1 1]'
+    [2 2 2]'
+    };
+
+g = MultigraphBUD('B', B, 'DENSITIES', densities);
+
+m_outside_g = Degree('G', g);
+assert(isequal(m_outside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Degree');
+assert(isequal(m_inside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+MultigraphBUT
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B = [
+    0   .2   .7
+    .2   0   0
+    .7   0   0
+    ];
+
+thresholds = [0 .5 1];
+
+known_degree = { ...
+    [2 1 1]'
+    [1 0 1]'
+    [0 0 0]'
+    };
+
+g = MultigraphBUT('B', B, 'THRESHOLDS', thresholds);
+
+m_outside_g = Degree('G', g);
+assert(isequal(m_outside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Degree');
+assert(isequal(m_inside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexWU
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B11 = [
+    0   .2  1
+    .2  0   0
+    1   0   0
+    ];
+B22 = [
+    0   1   0
+    1   0   .3
+    0   .3  0
+    ];
+B= {B11 B22};
+
+known_degree = {
+    [2 1 1]'
+    [1 2 1]'
+    };
+
+g = MultiplexWU('B', B);
+
+m_outside_g = Degree('G', g);
+assert(isequal(m_outside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Degree');
+assert(isequal(m_inside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBU
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B11 = [
+    0   1   1
+    1   0   0
+    1   0   0
+    ];
+B22 = [
+    0   1   0
+    1   0   1
+    0   1   0
+    ];
+B = {B11 B22};
+
+known_degree = {
+    [2 1 1]'
+    [1 2 1]'
+    };
+
+g = MultiplexBU('B', B);
+
+m_outside_g = Degree('G', g);
+assert(isequal(m_outside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Degree');
+assert(isequal(m_inside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBUD
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B = [
+    0   .2   .7
+    .2   0   .1
+    .7  .1   0
+    ];
+
+densities = [0 33 67 100];
+
+known_degree = { ...
+    [0 0 0]'
+    [0 0 0]'
+    [0 0 0]'
+    [1 0 1]'
+    [1 0 1]'
+    [1 0 1]'
+    [2 1 1]'
+    [2 1 1]'
+    [2 1 1]'
+    [2 2 2]'
+    [2 2 2]'
+    [2 2 2]'
+    };
+
+g = MultiplexBUD('B', {B B B}, 'DENSITIES', densities);
+
+m_outside_g = Degree('G', g);
+assert(isequal(m_outside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Degree');
+assert(isequal(m_inside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBUT
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B = [
+    0   .2   .7
+    .2   0   0
+    .7   0   0
+    ];
+
+thresholds = [0 .5 1];
+
+known_degree = { ...
+    [2 1 1]'
+    [2 1 1]'
+    [2 1 1]'
+    [1 0 1]'
+    [1 0 1]'
+    [1 0 1]'
+    [0 0 0]'
+    [0 0 0]'
+    [0 0 0]'
+    };
+
+g = MultiplexBUT('B', {B B B}, 'THRESHOLDS', thresholds);
+
+m_outside_g = Degree('G', g);
+assert(isequal(m_outside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Degree');
+assert(isequal(m_inside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+OrdMxWU
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B11 = [
+    0   .2  1
+    .2  0   0
+    1   0   0
+    ];
+B22 = [
+    0   1   0
+    1   0   .3
+    0   .3  0
+    ];
+B= {B11 B22};
+
+known_degree = {
+    [2 1 1]'
+    [1 2 1]'
+    };
+
+g = OrdMxWU('B', B);
+
+m_outside_g = Degree('G', g);
+assert(isequal(m_outside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Degree');
+assert(isequal(m_inside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+OrdMxBU
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B11 = [
+    0   1   1
+    1   0   0
+    1   0   0
+    ];
+B22 = [
+    0   1   0
+    1   0   1
+    0   1   0
+    ];
+B = {B11 B22};
+
+known_degree = {
+    [2 1 1]'
+    [1 2 1]'
+    };
+
+g = OrdMxBU('B', B);
+
+m_outside_g = Degree('G', g);
+assert(isequal(m_outside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Degree');
+assert(isequal(m_inside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+\end{lstlisting}
+
+%%% Add discussion of how to add also some parameters
+
+%\bibliography{sample-handout}
+%\bibliographystyle{plainnat}
+
+\end{document}
