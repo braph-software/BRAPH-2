@@ -154,6 +154,7 @@ assert(isequal(m_inside_g.get('M'), known_degree), ... ¥\circled{8}\circlednote
 \section{Implementation of DegreeAv}
 
 We can now use \code{Degree} as the basis to implement the global measure \code{DegreeAv}.
+The parts of the code that are modified are highlighted.
 
 \begin{lstlisting}[
 	label=cd:m:degreeav:header,
@@ -177,114 +178,111 @@ Connection weights are ignored in calculations.
 		The \code{props\_update} section of generator code for \fn{\_DegreeAv.gen.m} updates the properties of the \code{Degree} element.
 	}
 ]
-%% ¡props_update!
+¤%% ¡props_update!¤
 
-%%% ¡prop!
-NAME (constant, string) is the name of the degree.
-%%%% ¡default!
-'Degree'
+¤%%% ¡prop!
+NAME (constant, string) is the name of the ¤average degree¤.
+%%%% ¡default!¤
+'DegreeAv'
 
-%%% ¡prop!
-DESCRIPTION (constant, string) is the description of the degree.
-%%%% ¡default!
-'The degree of a node is the number of edges connected to the node within a layer. Connection weights are ignored in calculations.'
+¤%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the ¤average degree¤.
+%%%% ¡default!¤
+'The average degree of a graph is the average of all number of edges connected to a node within a layer. Connection weights are ignored in calculations.'
 
-%%% ¡prop!
-TEMPLATE (parameter, item) is the template of the degree.
+¤%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the ¤average degree¤.¤
 
-%%% ¡prop!
-ID (data, string) is a few-letter code for the degree.
-%%%% ¡default!
-'Degree ID'
+¤%%% ¡prop!
+ID (data, string) is a few-letter code of the ¤average degree¤.
+%%%% ¡default!¤
+'DegreeAv ID'
 
-%%% ¡prop!
-LABEL (metadata, string) is an extended label of the degree.
-%%%% ¡default!
-'Degree label'
+¤%%% ¡prop!
+LABEL (metadata, string) is an extended label of the ¤average degree¤.
+%%%% ¡default!¤
+'DegreeAv label'
 
-%%% ¡prop!
-NOTES (metadata, string) are some specific notes about the degree.
-%%%% ¡default!
-'Degree notes'
+¤%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the ¤average degree¤.
+%%%% ¡default!¤
+'DegreeAv notes'
 
-%%% ¡prop!
-SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
-%%%% ¡default!
-Measure.NODAL
+¤%%% ¡prop!
+SHAPE (constant, scalar) is the measure shape ¤__Measure.GLOBAL__¤.
+%%%% ¡default!¤
+Measure.GLOBAL
 
-%%% ¡prop!
-SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.
-%%%% ¡default!
+¤%%% ¡prop!
+SCOPE (constant, scalar) is the measure scope ¤__Measure.UNILAYER__¤.
+%%%% ¡default!¤
 Measure.UNILAYER
 
-%%% ¡prop!
-PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.
-%%%% ¡default!
+¤%%% ¡prop!
+PARAMETRICITY (constant, scalar) is the parametricity of the measure ¤__Measure.NONPARAMETRIC__¤.
+%%%% ¡default!¤
 Measure.NONPARAMETRIC
 
-%%% ¡prop!
+¤%%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-%%%% ¡default!
+%%%% ¡default!¤
 {'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU'}
 
-%%% ¡prop!
-M (result, cell) is the degree.
-%%%% ¡calculate!
-g = m.get('G'); 
-A = g.get('A');
+¤%%% ¡prop!
+M (result, cell) is the ¤average degree¤.
+%%%% ¡calculate!¤
+degree = calculateValue@Degree(m, prop); ¥\circled{1}\circlednote{1}{calculates the value of the degree calling its parent \code{Degree}.}¥
 
-degree = cell(g.get('LAYERNUMBER'), 1);
+g = m.get('G');
 
+degree_av = cell(g.get('LAYERNUMBER'), 1);
 parfor li = 1:1:g.get('LAYERNUMBER')
-    Aii = A{li, li};
-    Aii = binarize(Aii);
-    degree(li) = {sum(Aii, 2)};
+    degree_av(li) = {mean(degree{li})};
 end
 
-value = degree;
+value = degree_av;
 \end{lstlisting}
 
-%\begin{lstlisting}[
-%	label=cd:m:degree:tests,
-%	caption={
-%		{\bf Degree element tests.}
-%		The \code{tests} section from the element generator \fn{\_degree.gen.m}.
-%		A test should be prepared for each graph with which the measure is compatible. The test should at least verify in some simple cases that the value of the measure is correct 
-%	}
-%]
-%%% ¡tests!
-%
-%%%% ¡excluded_props! ¥\circled{1}\circlednote{1}{List of properties that are excluded from testing.}¥
-%[Degree.TEMPLATE Degree.PFM] 
-%
-%%%% ¡test! ¥\circled{2}\circlednote{2}{Test for \code{GraphWU}. Similar tests should be implemented for each graph compatible with the measure.}¥
-%%%%% ¡name!
-%GraphWU
-%%%%% ¡probability! ¥\circled{3}\circlednote{3}{assings a low test execution probability.}¥
-%.01
-%%%%% ¡code!
-%B = [
-%    0   .6  1
-%    .6  0   0
-%    1   0   0
-%    ];
-%
-%known_degree = {[2 1 1]'}; ¥\circled{4}\circlednote{4}{is the expected value of the measure calculated by external means.}¥
-%
-%g = GraphWU('B', B); ¥\circled{5}\circlednote{5}{creates the graph.}¥
-%
-%m_outside_g = Degree('G', g); ¥\circled{6}\circlednote{6}{creates the measure.}¥
-%assert(isequal(m_outside_g.get('M'), known_degree), ... ¥\circled{7}\circlednote{7}{tests that the value of the measure coicides with its expected value.}¥ 
-%    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
-%    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
-%
-%m_inside_g = g.get('MEASURE', 'Degree'); ¥\circled{8}\circlednote{8}{extracts the measure from the graph.}¥
-%assert(isequal(m_inside_g.get('M'), known_degree), ... ¥\circled{8}\circlednote{8}{tests that the value of the measure extracted from the graph coicides with its expected value.}¥
-%    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
-%    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
-%
-%¤...¤
-%\end{lstlisting}
+\begin{lstlisting}[
+	label=cd:m:degree:tests,
+	caption={
+		{\bf DegreeAv element tests.}
+		The \code{tests} section from the element generator \fn{\_DegreeAv.gen.m}.
+	}
+]
+%% ¡tests!
+
+%%% ¡excluded_props!
+[Degree.TEMPLATE Degree.PFM] 
+
+%%% ¡test!
+%%%% ¡name!
+GraphWU
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B = [
+    0   .6  1
+    .6  0   0
+    1   0   0
+    ];
+
+known_degree = {[2 1 1]'}; ¥\circled{4}\circlednote{4}{is the expected value of the measure calculated by external means.}¥
+
+g = GraphWU('B', B); ¥\circled{5}\circlednote{5}{creates the graph.}¥
+
+m_outside_g = Degree('G', g); ¥\circled{6}\circlednote{6}{creates the measure.}¥
+assert(isequal(m_outside_g.get('M'), known_degree), ... ¥\circled{7}\circlednote{7}{tests that the value of the measure coicides with its expected value.}¥ 
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Degree'); ¥\circled{8}\circlednote{8}{extracts the measure from the graph.}¥
+assert(isequal(m_inside_g.get('M'), known_degree), ... ¥\circled{8}\circlednote{8}{tests that the value of the measure extracted from the graph coicides with its expected value.}¥
+    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+¤...¤
+\end{lstlisting}
 
 \section{Implementation of Distance}
 
