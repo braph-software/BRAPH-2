@@ -90,7 +90,7 @@ end
 value = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
-A (result, cell) is the cell array containing the multiplex binary adjacency matrices of the binary undirected multiplex with fixed thresholds (BUT) and the ordinal connections between layers.
+A (result, cell) is the cell array containing the multiplex binary supra-adjacency matrices of the binary undirected multiplex with fixed thresholds (BUT) and the ordinal connections between layers.
 %%%% ¡calculate!
 A_WU = calculateValue@OrdMxWU(g, prop);
 
