@@ -2,10 +2,11 @@
 MultilayerWD < Graph (g, multilayer weighted directed graph) is a multilayer weighted directed graph.
 
 %%% ¡description!
-In a multilayer weighted directed (WD) graph, layers have different number 
- of nodes with within-layer weighted directed edges, associated with a real 
- number between 0 and 1 and indicating the strength of the connection.
-There are connections between layers connecting the corresponding nodes.
+In a multilayer weighted directed (WD) graph, layers could have different number 
+of nodes with within-layer weighted directed edges, associated with a real 
+number between 0 and 1 and indicating the strength of the connection.
+The connectivity matrices are symmetric (within layer).
+All node connections are allowed between layers.
 
 %% ¡props_update!
 
@@ -18,7 +19,7 @@ NAME (constant, string) is the name of the multilayer weighted directed graph.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the multilayer weighted directed graph.
 %%%% ¡default!
-'In a multilayer weighted directed (BD) graph, layers have different number of nodes with within-layer weighted directed edges, associated with a real number between 0 and 1 and indicating the strength of the connection. There are connections between layers connecting the corresponding nodes.'
+'In a multilayer weighted directed (WD) graph, layers could have different number  of nodes with within-layer weighted directed edges, associated with a real  number between 0 and 1 and indicating the strength of the connection. The connectivity matrices are symmetric (within layer). All node connections are allowed between layers.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the multilayer weighted directed graph.
@@ -89,7 +90,7 @@ end
 value = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
-A (result, cell) is the cell containing the multilayer weighted adjacency matrices of the multilayer weighted directed graph.
+A (result, cell) is the cell containing the within-layer weighted adjacency matrices of the multilayer weighted directed graph and the connections between layers.
 %%%% ¡calculate!
 B = g.get('B'); %#ok<PROPLC>
 L = length(B); %#ok<PROPLC> % number of layers
