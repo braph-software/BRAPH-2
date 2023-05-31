@@ -2,10 +2,10 @@
 MultilayerBD < Graph (g, multilayer binary directed graph) is a multilayer binary directed graph.
 
 %%% ¡description!
-In a multilayer binary directed (BD) graph, layers have different number 
- of nodes with within-layer directed edges either 0 (absence of connection) 
- or 1 (existence of connection).
-There are connections between layers connecting the corresponding nodes.
+In a multilayer binary directed (BD) graph, layers could have different number 
+of nodes with within-layer directed edges. Edges can be either 0 (absence of connection) 
+or 1 (existence of connection).
+All node connections are allowed between layers.
 
 %% ¡props_update!
 
@@ -18,7 +18,7 @@ NAME (constant, string) is the name of the multilayer weighted undirected graph.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the multilayer weighted undirected graph.
 %%%% ¡default!
-'In a multilayer binary directed (BD) graph, layers have different number of nodes with within-layer directed edgeseither 0 (absence of connection) or 1 (existence of connection). There are connections between layers connecting the corresponding nodes.'
+'In a multilayer binary directed (BD) graph, layers could have different number of nodes with within-layer directed edges. Edges can be either 0 (absence of connection) or 1 (existence of connection). All node connections are allowed between layers.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the multilayer binary directed graph.
@@ -89,7 +89,7 @@ end
 value = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
-A (result, cell) is the cell containing the multilayer binary adjacency matrices of the multilayer binary directed graph.
+A (result, cell) is the cell containing the within-layer binary adjacency matrices of the multilayer binary directed graph and the connections between layers.
 %%%% ¡calculate!
 B = g.get('B'); %#ok<PROPLC>
 L = length(B); %#ok<PROPLC> % number of layers
