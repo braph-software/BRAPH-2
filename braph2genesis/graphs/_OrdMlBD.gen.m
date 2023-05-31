@@ -2,10 +2,11 @@
 OrdMlBD < Graph (g, ordinal multilayer binary directed graph) is a ordinal multilayer binary directed graph.
 
 %%% ¡description!
-In an ordinal multilayer binary directed (BD) graph, all layers have the same number 
- of nodes with within-layer directed edges either 0 (absence of connection) 
- or 1 (existence of connection).
-There are connections between layers connecting the corresponding nodes.
+In an ordinal multilayer binary directed (BD) graph, layers could have the different number 
+ of nodes with within-layer directed edges. Edges can be either 0 (absence of connection) 
+or 1 (existence of connection).
+All node connections are allowed between layers.
+The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.
 
 %% ¡props_update!
 
@@ -17,7 +18,7 @@ NAME (constant, string) is the name of the ordinal multilayer binary directed gr
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ordinal multilayer binary directed graph.
 %%%% ¡default!
-'In an ordinal multilayer binary directed (BD) graph, all layers have the same number of nodes with within-layer directed edges either 0 (absence of connection) or 1 (existence of connection). There are connections between layers connecting the corresponding nodes.'
+'In an ordinal multilayer binary directed (BD) graph, layers could have the different number  of nodes with within-layer directed edges. Edges can be either 0 (absence of connection)  or 1 (existence of connection). All node connections are allowed between layers. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ordinal multilayer binary directed graph.
@@ -88,7 +89,7 @@ end
 value = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
-A (result, cell) is the cell containing the multilayer binary adjacency matrices of the multilayer binary directed graph.
+A (result, cell) is the cell containing the within-layer binary adjacency matrices of the multilayer binary directed graph and the connections between layers.
 %%%% ¡calculate!
 B = g.get('B'); %#ok<PROPLC>
 L = length(B); %#ok<PROPLC> % number of layers
