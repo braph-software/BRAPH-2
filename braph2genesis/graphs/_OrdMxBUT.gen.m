@@ -2,10 +2,12 @@
 OrdMxBUT < OrdMxWU (g, ordinal multiplex binary undirected with fixed thresholds) is a binary undirected ordinal multiplex with fixed thresholds.
 
 %%% ¡description!
-In a binary undirected multiplex with fixed thresholds (BUT), the layers are 
- those of binary undirected (BU) multiplex graphs derived from the same 
- weighted supra-connectivity matrices binarized at different thresholds.
+In a binary undirected multiplex with fixed thresholds (BUT), 
+all the layers consist of binary undirected (BU) multiplex graphs 
+derived from the same weighted supra-connectivity matrices 
+binarized at different thresholds.
 The supra-connectivity matrix has a number of partitions equal to the number of thresholds.
+The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.
 
 %% ¡props_update!
 
@@ -17,7 +19,7 @@ NAME (constant, string) is the name of the binary undirected ordinal multiplex w
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the binary undirected multiplex with fixed thresholds.
 %%%% ¡default!
-'In a binary undirected ordinal multiplex with fixed thresholds (BUT), the layers are those of binary undirected (BU) multiplex graphs derived from the same weighted supra-connectivity matrices binarized at different thresholds. The supra-connectivity matrix has a number of partitions equal to the number of thresholds.The layers are connected in an ordinal fashion, where just consecutive layers are connected.'
+'In a binary undirected multiplex with fixed thresholds (BUT),  all the layers consist of binary undirected (BU) multiplex graphs  derived from the same weighted supra-connectivity matrices  binarized at different thresholds. The supra-connectivity matrix has a number of partitions equal to the number of thresholds. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the binary undirected ordinal multiplex with fixed thresholds.
@@ -88,7 +90,7 @@ end
 value = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
-A (result, cell) is the cell array containing the multiplex binary adjacency matrices of the binary undirected multiplex. 
+A (result, cell) is the cell array containing the multiplex binary adjacency matrices of the binary undirected multiplex with fixed thresholds (BUT) and the ordinal connections between layers.
 %%%% ¡calculate!
 A_WU = calculateValue@OrdMxWU(g, prop);
 
