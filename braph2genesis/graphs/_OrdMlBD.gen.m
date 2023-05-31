@@ -89,7 +89,7 @@ end
 value = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
-A (result, cell) is the cell containing the within-layer binary adjacency matrices of the multilayer binary directed graph and the connections between layers.
+A (result, cell) is the cell containing the within-layer binary adjacency matrices of the multilayer binary directed graph and the ordinal connections between layers..
 %%%% ¡calculate!
 B = g.get('B'); %#ok<PROPLC>
 L = length(B); %#ok<PROPLC> % number of layers
