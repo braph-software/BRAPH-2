@@ -2,9 +2,13 @@
 MultilayerBUT < MultilayerWU (g, multilayer binary undirected with fixed threaholds graph) is a multilayer binary undirected with fixed threaholds graph.
 
 %%% ¡description!
-In a multilayer binary undirected with fixed threaholds (BUT) graph, layers have different number 
- of nodes with within-layer binary undirected (BU) edged matrix  at different thresholds.
-There are connections between layers connecting the corresponding nodes.
+In a multilayer binary undirected with fixed thresholds (BUT) graph, layers 
+consist of binary undirected (BU) multilayer graphs derived from the same
+weighted supra-connectivity matrices binarized at different thresholds. Layers 
+within the binary undirected (BU) multilayer graphs could have different number of nodes
+with within-layer binary undirected edges. Edges can be either 0 (absence of connection)
+or 1 (existence of connection).
+All node connections are allowed between layers.
 
 %% ¡props_update!
 
@@ -17,7 +21,7 @@ NAME (constant, string) is the name of the multilayer undirected with fixed thre
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the multilayer undirected with fixed threaholds graph.
 %%%% ¡default!
-'In a multilayer binary undirected with fixed threaholds (BUT) graph, layers have different number of nodes with within-layer undirected weighted edges binarized at different thresholds. There are connections between layers connecting the corresponding nodes.'
+'In a multilayer binary undirected with fixed thresholds (BUT) graph, layers  consist of binary undirected (BU) multilayer graphs derived from the same weighted supra-connectivity matrices binarized at different thresholds. Layers  within the binary undirected (BU) multilayer graphs could have different number of nodes. Edges can be either 0 (absence of connection) or 1 (existence of connection). All node connections are allowed between layers'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the multilayer binarized at different thresholds graph.
@@ -88,7 +92,7 @@ end
 value = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
-A (result, cell) is the cell containing the multilayer binary adjacency matrices of the multilayer binary undirected with fixed threaholds graph.
+A (result, cell) is the cell containing the within-layer binary undirected multilayer graphs of the multilayer binary undirected with fixed threaholds graph.
 %%%% ¡calculate!
 A_WU = calculateValue@MultilayerWU(g, prop);
 
