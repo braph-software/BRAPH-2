@@ -20,7 +20,9 @@ In this Tutorial, we will explain how to create the generator file \fn{*.gen.m} 
 
 %%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
-\section{Implementation of Degree}
+\section{Implementation of Unilayer Measures}
+
+\subsection{Nodal Unilayer Measure (Degree)}
 
 We will start by implementing in detail the measure \code{Degree}, which applies to most graphs and is a direct extension of the element \code{Measure}.
 
@@ -157,7 +159,7 @@ assert(isequal(m_inside_g.get('M'), known_degree), ... ¥\circled{8}\circlednote
 
 %%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
-\section{Implementation of DegreeAv}
+\subsection{Global Unilayer Measure (DegreeAv)}
 
 We can now use \code{Degree} as the basis to implement the global measure \code{DegreeAv}.
 The parts of the code that are modified are highlighted.
@@ -295,7 +297,7 @@ assert(isequal(m_inside_g.get('M'), ¤known_degree_av¤), ...
 
 %%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
-\section{Implementation of Distance}
+\subsection{Binodal Unilayer Measure (Distance)}
 
 Now we implement the binodal measure \code{Distance}, again highlighting the differences.
 
@@ -459,8 +461,9 @@ assert(isequal(m_inside_g.get('M'), ¤known_distance¤), ...
 
 %%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
-\section{Implementation of Triangles}
-Now we implement the nodal measure \code{Triangles}, again highlighting the differences.
+\section{Implementation of Measure Parameters (Triangles)}
+
+Now, we implement the (nodal unilayer) measure \code{Triangles}, which depends on a parameter \code{RULE}, which we add as a property of category \code{parameter}.
 The parts of the code that are modified are highlighted.
 
 \begin{lstlisting}[
@@ -512,7 +515,7 @@ L = g.get('LAYERNUMBER');
 
 triangles = cell(L, 1);
 
-directionality\_type =   g.get('DIRECTIONALITY\_TYPE', L);
+directionality_type =   g.get('DIRECTIONALITY\_TYPE', L);
 for li = 1:1:L        
 Aii = A{li, li};    
 
