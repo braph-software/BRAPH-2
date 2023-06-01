@@ -5,8 +5,8 @@ OrdMlWD < Graph (g, multilayer weighted directed graph) is an ordinal multilayer
 In an ordinal multilayer weighted directed (WD) graph, layers could have different number 
  of nodes with within-layer weighted directed edges, associated with a real 
  number between 0 and 1 and indicating the strength of the connection.
-There are connections between layers connecting the corresponding nodes.
-The layers are connected in an ordinal fashion.
+All nodes are allowed between layers.
+The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.
 
 %% ¡props_update!
 
@@ -19,7 +19,7 @@ NAME (constant, string) is the name of the ordinal multilayer weighted directed 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ordinal multilayer weighted directed graph.
 %%%% ¡default!
-'In an ordinal multilayer weighted directed (BD) graph, layers could have different number of nodes with within-layer weighted directed edges, associated with a real number between 0 and 1 and indicating the strength of the connection. There are connections between layers connecting the corresponding nodes.'
+'In an ordinal multilayer weighted directed (BD) graph, layers could have different number of nodes with within-layer weighted directed edges, associated with a real number between 0 and 1 and indicating the strength of the connection. All nodes are allowed between layers. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ordinal multilayer weighted directed graph.
@@ -90,7 +90,7 @@ end
 value = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
-A (result, cell) is the cell containing the multilayer weighted adjacency matrices of the multilayer weighted directed graph.
+A (result, cell) is the cell containing the within-layer weighted adjacency matrices of the multilayer weighted directed graph and the ordinal connections between layers.
 %%%% ¡calculate!
 B = g.get('B'); %#ok<PROPLC>
 L = length(B); %#ok<PROPLC> % number of layers
@@ -187,12 +187,12 @@ Constructor - Full
 B1 = rand(randi(10));
 B2 = rand(randi(10));
 B3 = rand(randi(10));
-B12 = rand(size(B1,1),size(B2,2));
-B13 = rand(size(B1,1),size(B3,2));
-B23 = rand(size(B2,1),size(B3,2));
-B21 = rand(size(B2,1),size(B1,2));
-B31 = rand(size(B3,1),size(B1,2));
-B32 = rand(size(B3,1),size(B2,2));
+B12 = rand(size(B1, 1),size(B2, 2));
+B13 = rand(size(B1, 1),size(B3, 2));
+B23 = rand(size(B2, 1),size(B3, 2));
+B21 = rand(size(B2, 1),size(B1, 2));
+B31 = rand(size(B3, 1),size(B1, 2));
+B32 = rand(size(B3, 1),size(B2, 2));
 B = {
     B1                           B12                            B13
     B21                          B2                             B23
@@ -209,15 +209,15 @@ A23 = standardize(semipositivize(B23));
 A21 = standardize(semipositivize(B21));
 A31 = standardize(semipositivize(B31));
 A32 = standardize(semipositivize(B32));
-B{1,1} = A1;
-B{2,2} = A2;
-B{3,3} = A3;
-B{1,2} = A12;
-B{1,3} = A13;
-B{2,3} = A23;
-B{2,1} = A21;
-B{3,1} = A31;
-B{3,2} = A32;
+B{1, 1} = A1;
+B{2, 2} = A2;
+B{3, 3} = A3;
+B{1, 2} = A12;
+B{1, 3} = A13;
+B{2, 3} = A23;
+B{2, 1} = A21;
+B{3, 1} = A31;
+B{3, 2} = A32;
 A = B
 assert(isequal(g.get('A'), A), ...
     [BRAPH2.STR ':OrdMlWD:' BRAPH2.FAIL_TEST], ...
