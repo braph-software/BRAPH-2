@@ -83,7 +83,7 @@ B = [
     1   0   0
     ];
 
-known_in_degree_av = {mean([1 1 2]')};};
+known_in_degree_av = {mean([1 1 2]')};
 
 g = GraphBD('B', B);
 
