@@ -2,10 +2,10 @@
 OrdMxBUD < OrdMxWU (g, binary undirected multiplex with fixed densities) is a ordinal multiplex binary undirected with fixed densities.
 
 %%% ¡description!
-In a ordinal binary undirected multiplex with fixed densities (BUD), the layers are 
+In an ordinal binary undirected multiplex with fixed densities (BUD), the layers are 
  those of binary undirected (BU) multiplex graphs derived from the same 
- weighted supra-connectivity matrices binarized at different densities.
-The supra-connectivity matrix has a number of partitions equal to the number of densities.
+ weighted supra-adjacency matrices binarized at different densities.
+The supra-adjacency matrix has a number of partitions equal to the number of densities.
 The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.
 %% ¡props_update!
 
