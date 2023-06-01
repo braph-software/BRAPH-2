@@ -76,8 +76,8 @@ parfor li = 1:1:L
         clustering_layer = 2 * triangles{li} ./ (degree{li} .* (degree{li} - 1));
 
     else %% directed graphs    
-        in_degree = InDegree('G', g).get('M');
-        out_degree = OutDegree('G', g).get('M');
+        in_degree = DegreeIn('G', g).get('M');
+        out_degree = DegreeOut('G', g).get('M');
         directed_triangles_rule = m.get('RULE');
         switch lower(directed_triangles_rule)
             case {'all'}  % all rule

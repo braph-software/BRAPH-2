@@ -66,6 +66,8 @@ parfor li = 1:1:length(clustering)
     clustering_av(li) = {mean(clustering{li})};
 end
 
+value = clustering_av
+
 %% ¡tests!
 
 %%% ¡excluded_props!
@@ -81,15 +83,15 @@ B_BU = [
     1 1 0 1; 
     1 0 1 0
     ];
-clustering_BU = {[2/3 1 2/3 1]'};
+clustering_BU = {mean([2/3 1 2/3 1]')};
 g = GraphBU('B', B_BU);
 m_outside_g = ClusteringAv('G', g);
-assert(isequal(m_outside_g.get('M'), {mean(clustering_BU)}), ...
+assert(isequal(m_outside_g.get('M'), clustering_BU), ...
     [BRAPH2.STR ':ClusteringAv:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 
 m_inside_g = g.get('MEASURE', 'ClusteringAv');
-assert(isequal(m_inside_g.get('M'), {mean(clustering_BU)}), ...
+assert(isequal(m_inside_g.get('M'), clustering_BU), ...
     [BRAPH2.STR ':ClusteringAv:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 
@@ -103,17 +105,17 @@ B_BD = [
     1 0 0; 
     0 1 0 
     ];
-clustering_BD_out = {[0 0 0]'};  % out rule
+clustering_BD_out = {mean([0 0 0]')};  % out rule
 
 g = GraphBD('B', B_BD);
 m_outside_g = ClusteringAv('G', g, 'RULE', 'out');
-assert(isequal(m_outside_g.get('M'), {mean(clustering_BD_out)}), ...
+assert(isequal(m_outside_g.get('M'), clustering_BD_out), ...
     [BRAPH2.STR ':ClusteringAv:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 
 m_inside_g = g.get('MEASURE', 'ClusteringAv');
 m_inside_g.set('RULE', 'out');
-assert(isequal(m_inside_g.get('M'), {mean(clustering_BD_out)}), ...
+assert(isequal(m_inside_g.get('M'), clustering_BD_out), ...
     [BRAPH2.STR ':ClusteringAv:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 
