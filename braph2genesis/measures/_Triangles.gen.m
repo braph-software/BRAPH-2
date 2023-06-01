@@ -3,8 +3,8 @@ Triangles < Measure(m, triangles) is the graph triangles.
 
 %%% ¡description!
 The triangles are calculated as the number of neighbors of a node that are 
-also neighbors of each other within a layer. In weighted graphs, the triangles are 
-calculated as geometric mean of the weights of the edges forming the triangle.
+ also neighbors of each other within a layer. In weighted graphs, the triangles are 
+ calculated as geometric mean of the weights of the edges forming the triangle.
 
 %% ¡props_update!
 
@@ -54,7 +54,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'GraphWU' 'GraphWD' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'GraphBD' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'MultiplexBD' 'OrdMxWU' 'OrdMxBU'}
+{'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'MultiplexBD' 'OrdMxWU' 'OrdMxBU'}
 
 %%% ¡prop!
 M (result, cell) is the triangles.
@@ -96,7 +96,7 @@ value = triangles;
 
 %% ¡props!
 %%% ¡prop! 
-rule (parameter, OPTION) is the rule to determine what is a triangle in directed networks.
+rule (parameter, option) is the rule to determine what is a triangle in directed networks.
 %%%% ¡settings!
 {'all' 'middleman' 'in' 'out' 'cycle'}
 %%%% ¡default!
@@ -120,6 +120,7 @@ B = [
 
 known_triangles = diag((B.^(1/3))^3); % formula for cycle triangles
 known_triangles = known_triangles / 2  ; % because since its undirected we only need the upper or lower connections of the matrix
+
 g = GraphWU('B', B);
 m_outside_g = Triangles('G', g);
 assert(isequal(cell2mat(m_outside_g.get('M')), known_triangles), ...
@@ -131,7 +132,6 @@ m_inside_g = cell2mat(m_inside_g.get('M'));
 assert(isequal(m_inside_g, known_triangles), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g)  ' is not being calculated correctly for ' class(g) '.'])
-
 
 %%% ¡test!
 %%%% ¡name!
@@ -175,13 +175,11 @@ known_triangles = { ...
     [0 0 0 0]'
     };
 
-
 g = MultigraphBUT('B', B, 'THRESHOLDS', thresholds);
 m_outside_g = Triangles('G', g).get('M');
 assert(isequal(m_outside_g, known_triangles), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g)  ' is not being calculated correctly for ' class(g) '.'])
-
 
 m_inside_g = g.get('MEASURE', 'Triangles');
 assert(isequal(m_inside_g.get('M'), known_triangles), ...
@@ -207,19 +205,12 @@ assert(isequal(m_outside_g.get('M'), known_triangles_default_cycle), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g)  ' is not being calculated correctly for ' class(g) '.'])
 
-
 m_inside_g = g.get('MEASURE', 'Triangles');
 assert(isequal(m_inside_g.get('M'), known_triangles_default_cycle), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g)  ' is not being calculated correctly for ' class(g) '.'])
 
-
 % in rule 
-B = [
-    0 1 0; 
-    0 0 0; 
-    1 1 0 
-    ];
 known_triangles_in = {[0 1 0]'};
 
 g = GraphBD('B', B);
@@ -236,11 +227,6 @@ assert(isequal(m_inside_g.get('M'), known_triangles_in), ...
     [class(m_inside_g)  ' is not being calculated correctly for ' class(g) '.'])
 
 % out rule 
-B = [
-    0 1 0; 
-    0 0 0; 
-    1 1 0 
-    ];
 known_triangles_out = {[0 0 1]'};
 
 g = GraphBD('B', B);
@@ -249,7 +235,6 @@ assert(isequal(m_outside_g.get('M'), known_triangles_out), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g)  ' is not being calculated correctly for ' class(g) '.'])
 
-
 m_inside_g = g.get('MEASURE', 'Triangles');
 m_inside_g.set('RULE', 'out');
 assert(isequal(m_inside_g.get('M'), known_triangles_out), ...
@@ -257,13 +242,8 @@ assert(isequal(m_inside_g.get('M'), known_triangles_out), ...
     [class(m_inside_g)  ' is not being calculated correctly for ' class(g) '.'])
 
 % middleman rule
-
 known_triangles_middleman = {[1 0 0]'};
-B = [
-    0 1 0; 
-    0 0 0; 
-    1 1 0 
-    ];
+
 g = GraphBD('B', B);
 m_outside_g = Triangles('G', g, 'RULE', 'middleman');
 assert(isequal(m_outside_g.get('M'), known_triangles_middleman), ...
@@ -278,11 +258,6 @@ assert(isequal(m_inside_g.get('M'), known_triangles_middleman), ...
     [class(m_inside_g)  ' is not being calculated correctly for ' class(g) '.'])
 
 % all rule 
-B = [
-    0 0 1; 
-    1 0 0; 
-    0 1 0 
-    ];
 known_triangles_all = {[1 1 1]'};
 
 g = GraphBD('B', B);
@@ -290,7 +265,6 @@ m_outside_g = Triangles('G', g, 'RULE', 'all');
 assert(isequal(m_outside_g.get('M'), known_triangles_all), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g)  ' is not being calculated correctly for ' class(g) '.'])
-
 
 m_inside_g = g.get('MEASURE', 'Triangles');
 m_inside_g.set('RULE', 'all');
@@ -327,7 +301,6 @@ m_outside_g = Triangles('G', g);
 assert(isequal(m_outside_g.get('M'), known_triangles), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g)  ' is not being calculated correctly for ' class(g) '.'])
-
 
 m_inside_g = g.get('MEASURE', 'Triangles');
 assert(isequal(m_inside_g.get('M'), known_triangles), ...
