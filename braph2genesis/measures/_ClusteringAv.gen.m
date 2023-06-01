@@ -66,7 +66,7 @@ parfor li = 1:1:length(clustering)
     clustering_av(li) = {mean(clustering{li})};
 end
 
-value = clustering_av
+value = clustering_av;
 
 %% ¡tests!
 
