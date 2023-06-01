@@ -5,8 +5,8 @@ MultilayerWU < Graph (g, multilayer weighted undirected graph) is a multilayer w
 In a multilayer weighted undirected (WU) graph, layers could have different number 
  of nodes with within-layer weighted undirected edges, associated with a real 
  number between 0 and 1 and indicating the strength of the connection.
-The connectivity matrices are symmetric.
-There are connections between layers connecting the corresponding nodes.
+The connectivity matrices are symmetric (within layer).
+All node connections are allowed between layers.
 
 %% ¡props_update!
 
@@ -19,7 +19,7 @@ NAME (constant, string) is the name of the multilayer weighted undirected graph.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the multilayer weighted undirected graph.
 %%%% ¡default!
-'In a multilayer weighted undirected (WU) graph, layers could have different number of nodes with within-layer weighted undirected edges, associated with a real number between 0 and 1 and indicating the strength of the connection. The connectivity matrices are symmetric. There are connections between layers connecting the corresponding nodes.'
+'In a multilayer weighted undirected (WU) graph, layers could have different number of nodes with within-layer weighted undirected edges, associated with a real number between 0 and 1 and indicating the strength of the connection. The connectivity matrices are symmetric (within layer). All node connections are allowed between layers.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the multilayer weighted undirected graph.
@@ -90,7 +90,7 @@ end
 value = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
-A (result, cell) is the cell containing the multilayer weighted adjacency matrices of the multilayer weighted undirected graph.
+A (result, cell) is the cell containing the multilayer weighted supra-adjacency matrices of the multilayer weighted undirected graph.
 %%%% ¡calculate!
 B = g.get('B'); %#ok<PROPLC>
 L = length(B); %#ok<PROPLC> % number of layers
