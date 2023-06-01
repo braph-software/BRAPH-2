@@ -17,7 +17,7 @@ NAME (constant, string) is the name of the ordinal binary undirected multiplex w
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ordinal binary undirected multiplex with fixed densities.
 %%%% ¡default!
-'In a ordinal binary undirected multiplex with fixed densities (BUD), the layers are those of binary undirected (BU) multiplex graphs derived from the same weighted supra-connectivity matrices binarized at different densities. The supra-connectivity matrix has a number of partitions equal to the number of densities.The layers are connected in an ordinal fashion, where just consecutive layers are connected'
+'In an ordinal binary undirected multiplex with fixed densities (BUD), the layers are those of binary undirected (BU) multiplex graphs derived from the same weighted supra-adjacency matrix binarized at different densities. The supra-adjacency matrix has a number of partitions equal to the number of densities.The layers are connected in an ordinal fashion, where just consecutive layers are connected'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ordinal binary undirected multiplex with fixed densities.
@@ -88,7 +88,7 @@ end
 value = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
-A (result, cell) is the cell array containing the multiplex binary adjacency matrices of the binary undirected multiplex. 
+A (result, cell) is the cell array containing the multiplex binary supra-adjacency matrices of the binary undirected multiplex. 
 %%%% ¡calculate!
 A_WU = calculateValue@OrdMxWU(g, prop);
 
