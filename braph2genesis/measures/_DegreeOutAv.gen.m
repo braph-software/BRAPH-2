@@ -88,12 +88,12 @@ know_out_degree_av = {mean([2 1 1])};
 g = GraphBD('B', B);
 
 m_outside_g = DegreeOutAv('G', g);
-assert(isequal(m_outside_g.get('M'), known_in_degree), ...
+assert(isequal(m_outside_g.get('M'), know_out_degree_av), ...
    [BRAPH2.STR ':DegreeOutAv:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 
 m_inside_g = g.get('MEASURE', 'DegreeOutAv');
-assert(isequal(m_inside_g.get('M'), known_in_degree), ...
+assert(isequal(m_inside_g.get('M'), know_out_degree_av), ...
     [BRAPH2.STR ':DegreeOutAv:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 
@@ -115,7 +115,7 @@ B22 = [
 B = {B11 B22};
 
 known_in_degree = { 
-                  mean([2 1 1]')
+                  mean([2 0 1]')
                   mean([1 2 2]')
                   };
 
@@ -147,19 +147,19 @@ B22 = [
       ];
 B = {B11 B22};
 
-known_in_degree = {
-    mean([2 1 1]')
-    mean([2 2 1]')
-    };
+known_out_degree_av = {
+                      mean([2 1 1]')
+                      mean([2 2 1]')
+                      };
 
 g = MultiplexWD('B', B);
 
 m_outside_g = DegreeOutAv('G', g);
-assert(isequal(m_outside_g.get('M'), known_in_degree), ...
+assert(isequal(m_outside_g.get('M'), known_out_degree_av), ...
    [BRAPH2.STR ':DegreeOutAv:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 
 m_inside_g = g.get('MEASURE', 'DegreeOutAv');
-assert(isequal(m_inside_g.get('M'), known_in_degree), ...
+assert(isequal(m_inside_g.get('M'), known_out_degree_av), ...
     [BRAPH2.STR ':DegreeOutAv:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
