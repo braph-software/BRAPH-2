@@ -146,7 +146,7 @@ B = [
 
 known_triangles = diag((B.^(1/3))^3); % formula for cycle triangles
 
-g = GraphWU('B', B);
+g = GraphWD('B', B);
 m_outside_g = Triangles('G', g);
 assert(isequal(cell2mat(m_outside_g.get('M')), known_triangles), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.FAIL_TEST], ...
@@ -352,7 +352,7 @@ known_triangles = {
                  [2 1 2 1]'
                  [2 1 2 1]'
                  [2 1 2 1]'
-                 };   % it does not survive the density
+                 };   
 
 g = MultigraphBUT('B', B, 'THRESHOLDS', thresholds);
 
@@ -366,6 +366,39 @@ assert(isequal(m_inside_g.get('M'), known_triangles), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g)  ' is not being calculated correctly for ' class(g) '.'])
 
+%%% ¡test!
+%%%% ¡name!
+MultiplexWU
+%%%% ¡code!
+B11 = [
+    0 .2 .3 .4;
+    .2 0 .5 0;
+    .3 .5 0 .6;
+    .4 0 .6 0
+    ];
+B22 = [
+    0 .2 .3 .4;
+    .2 0 .5 0;
+    .3 .5 0 .6;
+    .4 0 .6 0
+    ];
+B = {B11 B22};
+
+known_triangles = {
+    diag((B11.^(1/3))^3)/2
+    diag((B22.^(1/3))^3)/2
+    };
+
+g = MultiplexWU('B', B);
+m_outside_g = Triangles('G', g);
+assert(isequal(m_outside_g.get('M'), known_triangles), ...
+    [BRAPH2.STR ':Triangles:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g)  ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Triangles');
+assert(isequal(m_inside_g.get('M'), known_triangles), ...
+    [BRAPH2.STR ':Triangles:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g)  ' is not being calculated correctly for ' class(g) '.'])
 
 %%% ¡test!
 %%%% ¡name!
@@ -391,6 +424,121 @@ known_triangles = {
                  };      
 
 g = MultiplexBU('B', B);
+
+m_outside_g = Triangles('G', g);
+assert(isequal(m_outside_g.get('M'), known_triangles), ...
+    [BRAPH2.STR ':Triangles:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g)  ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Triangles');
+assert(isequal(m_inside_g.get('M'), known_triangles), ...
+    [BRAPH2.STR ':Triangles:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g)  ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBD
+%%%% ¡code!
+B11 = [
+    0 0 1;
+    1 0 0;
+    0 1 0
+    ];
+B22 = [
+    0 0 1;
+    1 0 0;
+    0 1 0
+    ];
+B = {B11 B22};
+
+known_triangles = {
+                 [1 1 1]'
+                 [1 1 1]'
+                 };      
+
+g = MultiplexBD('B', B);
+
+m_outside_g = Triangles('G', g);
+assert(isequal(m_outside_g.get('M'), known_triangles), ...
+    [BRAPH2.STR ':Triangles:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g)  ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Triangles');
+assert(isequal(m_inside_g.get('M'), known_triangles), ...
+    [BRAPH2.STR ':Triangles:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g)  ' is not being calculated correctly for ' class(g) '.'])
+%%% ¡test!
+%%%% ¡name!
+MultiplexBUD
+%%%% ¡code!
+densities = [70 80 90];
+B11 = [
+      0 1 1 1;
+      1 0 1 0;
+      1 1 0 1;
+      1 0 1 0
+      ];
+B22 = [
+      0 1 1 1;
+      1 0 1 0;
+      1 1 0 1;
+      1 0 1 0
+      ];
+
+B = {B11 B22};
+
+known_triangles = {
+                 [0 0 0 0]'
+                 [0 0 0 0]'
+                 [2 1 2 1]'
+                 [2 1 2 1]'                 
+                 [2 1 2 1]'
+                 [2 1 2 1]'
+                 }; % this is because it is calculted per density first
+
+g = MultiplexBUD('B', B, 'DENSITIES', densities);
+
+m_outside_g = Triangles('G', g);
+assert(isequal(m_outside_g.get('M'), known_triangles), ...
+    [BRAPH2.STR ':Triangles:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g)  ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Triangles');
+assert(isequal(m_inside_g.get('M'), known_triangles), ...
+    [BRAPH2.STR ':Triangles:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g)  ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBUT
+%%%% ¡code!
+thresholds = [.1 .2 .3];
+B11 = [
+      0 1 1 1;
+      1 0 1 0;
+      1 1 0 1;
+      1 0 1 0
+      ];
+
+B22 = [
+      0 1 1 1;
+      1 0 1 0;
+      1 1 0 1;
+      1 0 1 0
+      ];
+
+B = {B11 B22};
+
+known_triangles = {
+                 [2 1 2 1]'
+                 [2 1 2 1]'
+                 [2 1 2 1]'
+                 [2 1 2 1]'
+                 [2 1 2 1]'
+                 [2 1 2 1]'
+                 };   
+
+g = MultiplexBUT('B', B, 'THRESHOLDS', thresholds);
 
 m_outside_g = Triangles('G', g);
 assert(isequal(m_outside_g.get('M'), known_triangles), ...
