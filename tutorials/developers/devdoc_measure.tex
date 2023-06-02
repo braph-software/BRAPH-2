@@ -517,36 +517,38 @@ triangles = cell(L, 1);
 
 directionality_type =   g.get('DIRECTIONALITY\_TYPE', L);
 for li = 1:1:L        
-Aii = A{li, li};    
+	Aii = A{li, li};    
+	
+	if directionality_type == Graph.UNDIRECTED  % undirected graphs
+		triangles_layer = diag((Aii.^(1/3))^3) / 2;
+		triangles_layer(isnan(triangles_layer)) = 0;  % Should return zeros, not NaN
+		triangles(li) = {triangles_layer};
+	
+	else  % directed graphs
+		directed_triangles_rule = m.get('RULE'); ¥\circled{1}\circlednote{1}{get the algorithm rule to calculte measure Triangle. Please observe in \circled{2} 		how we define the property rule.}¥
+		switch lower(directed_triangles_rule)
+			case 'all'  % all rule
+				triangles_layer = diag((Aii.^(1/3) + transpose(Aii).^(1/3))^3) / 2;
+			case 'middleman'  % middleman rule
+				triangles_layer = diag(Aii.^(1/3) * ...
+							transpose(Aii).^(1/3) * Aii.^(1/3));
+			case 'in'  % in rule
+				triangles_layer = diag(transpose(Aii).^(1/3) * (Aii.^(1/3))^2);
+			case 'out'  % out rule
+				triangles_layer = diag((Aii.^(1/3))^2 * transpose(Aii).^(1/3));
+			otherwise  % {'cycle'}  % cycle rule
+				triangles_layer = diag((Aii.^(1/3))^3);
+		end
+		triangles_layer(isnan(triangles_layer)) = 0;  % Should return zeros, not NaN
+		triangles(li) = {triangles_layer};
+	end
+end
 
-if directionality_type == Graph.UNDIRECTED  % undirected graphs
-triangles_layer = diag((Aii.^(1/3))^3) / 2;
-triangles_layer(isnan(triangles_layer)) = 0;  % Should return zeros, not NaN
-triangles(li) = {triangles_layer};
-
-else  % directed graphs
-directed_triangles_rule = m.get('RULE'); ¥\circled{1}\circlednote{1}{check for measure Triangle rules in \circled{2}.}¥
-switch lower(directed_triangles_rule)
-case 'all'  % all rule
-triangles_layer = diag((Aii.^(1/3) + transpose(Aii).^(1/3))^3) / 2;
-case 'middleman'  % middleman rule
-triangles_layer = diag(Aii.^(1/3) * transpose(Aii).^(1/3) * Aii.^(1/3));
-case 'in'  % in rule
-triangles_layer = diag(transpose(Aii).^(1/3) * (Aii.^(1/3))^2);
-case 'out'  % out rule
-triangles_layer = diag((Aii.^(1/3))^2 * transpose(Aii).^(1/3));
-otherwise  % {'cycle'}  % cycle rule
-triangles_layer = diag((Aii.^(1/3))^3);
-end
-triangles_layer(isnan(triangles_layer)) = 0;  % Should return zeros, not NaN
-triangles(li) = {triangles_layer};
-end
-end
 value = triangles;¤
 
 ¤%% ¡props!
 %%% ¡prop! 
-rule (parameter, OPTION) is the rule to determine what is a triangle in directed networks. ¥\circled{2}\circlednote{2}{these are the available triangle rules.}¥
+rule (parameter, option) is the rule to determine what is a triangle in directed networks. ¥\circled{2}\circlednote{2}{these are the available triangle rule options.}¥
 %%%% ¡settings!
 {'all' 'middleman' 'in' 'out' 'cycle'}
 %%%% ¡default!
