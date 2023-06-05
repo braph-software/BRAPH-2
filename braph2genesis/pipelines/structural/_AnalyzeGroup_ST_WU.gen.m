@@ -2,30 +2,53 @@
 AnalyzeGroup_ST_WU < AnalyzeGroup (a, graph analysis with structural data) is a graph analysis using structural data.
 
 %% ¡description!
-This graph analysis uses structural data and analyzes them using weighted undirected graphs.
+AnalyzeGroup_ST_WU uses structural data and analyzes them using weighted undirected graphs.
 
 %% ¡seealso!
 SubjectST, GraphWU
 
 %% ¡props_update!
 
-% % % %%% ¡prop!
-% % % TEMPLATE (parameter, item) is the analysis template to set the parameters.
-% % % %%%% ¡settings!
-% % % 'AnalyzeGroup_ST_WU'
-% % % 
-% % % %%% ¡prop!
-% % % GR (data, item) is the subject group, which also defines the subject class SubjectST.
-% % % %%%% ¡default!
-% % % Group('SUB_CLASS', 'SubjectST')
-% % % 
-% % % %%% ¡prop!
-% % % G (result, item) is the graph obtained from this analysis.
-% % % %%%% ¡settings!
-% % % 'GraphWU'
-% % % %%%% ¡default!
-% % % GraphWU()
-% % % %%%% ¡calculate!
+%%% ¡prop!
+NAME (constant, string) is the name of the group-based graph analysis with structural data.
+%%%% ¡default!
+'AnalyzeGroup_ST_WU'
+
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the group-based graph analysis with structural data.
+%%%% ¡default!
+'AnalyzeGroup_ST_WU uses structural data and analyzes them using weighted undirected graphs.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the group-based graph analysis with structural data.
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the group-based graph analysis with structural data.
+%%%% ¡default!
+'AnalyzeGroup_ST_WU ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the group-based graph analysis with structural data.
+%%%% ¡default!
+'AnalyzeGroup_ST_WU label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the group-based graph analysis with structural data.
+%%%% ¡default!
+'AnalyzeGroup_ST_WU notes'
+
+%%% ¡prop!
+GR (data, item) is the subject group, which also defines the subject class SubjectST.
+%%%% ¡default!
+Group('SUB_CLASS', 'SubjectST')
+
+%%% ¡prop!
+G (result, item) is the graph obtained from this analysis.
+%%%% ¡settings!
+'GraphWU'
+%%%% ¡default!
+GraphWU()
+%%%% ¡_calculate!
 % % % gr = a.get('GR');
 % % % data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
 % % % data = cat(2, data_list{:})'; % correlation is a column based operation
@@ -66,18 +89,6 @@ SubjectST, GraphWU
 % % % end    
 % % % 
 % % % value = g;
-% % % 
-% % % % % % %% ¡methods!
-% % % % % % function pr = getPPCompareGroup_CPDict(a, varargin) 
-% % % % % %     %GEPPPCOMPAREGROUP_CPDICT returns the comparison plot panel compatible with the analysis.
-% % % % % %     %
-% % % % % %     % PR = GEPPPCOMPAREGROUP_CPDICT(A) returns the comparison plot panel
-% % % % % %     %  that is compatible with the analyze group.
-% % % % % %     %
-% % % % % %     % See also CompareGroup.
-% % % % % %     
-% % % % % %     pr = PPCompareGroup_CPDict_ST_WU(varargin{:});
-% % % % % % end
 
 %% ¡props!
 

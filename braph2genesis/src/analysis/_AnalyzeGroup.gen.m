@@ -13,12 +13,12 @@ CompareGroup
 %%% ¡prop!
 NAME (constant, string) is the name of the group-based graph analysis.
 %%%% ¡default!
-'AnalyzeGroup provides the methods necessary for all group-based analysis subclasses. Instances of this class should not be created; Use one of its subclasses instead.'
+'AnalyzeGroup'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the group-based graph analysis.
 %%%% ¡default!
-''
+'AnalyzeGroup provides the methods necessary for all group-based analysis subclasses. Instances of this class should not be created; Use one of its subclasses instead.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the group-based graph analysis.

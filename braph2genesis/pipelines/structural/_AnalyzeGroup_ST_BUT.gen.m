@@ -2,30 +2,53 @@
 AnalyzeGroup_ST_BUT < AnalyzeGroup (a, graph analysis with structural data at fixed threshold) is a graph analysis using structural data at fixed threshold.
 
 %% ¡description!
-This graph analysis uses structural data at fixed threshold and analyzes them using binary undirected graphs.
+AnalyzeGroup_ST_BUT uses structural data at fixed threshold and analyzes them using binary undirected graphs.
 
 %%% ¡seealso!
 SubjectST, MultigraphBUT
 
 %% ¡props_update!
 
-% % % %%% ¡prop!
-% % % TEMPLATE (parameter, item) is the analysis template to set the parameters.
-% % % %%%% ¡settings!
-% % % 'AnalyzeGroup_ST_BUT'
-% % % 
-% % % %%% ¡prop!
-% % % GR (data, item) is the subject group, which also defines the subject class SubjectST.
-% % % %%%% ¡default!
-% % % Group('SUB_CLASS', 'SubjectST')
-% % % 
-% % % %%% ¡prop!
-% % % G (result, item) is the graph obtained from this analysis.
-% % % %%%% ¡settings!
-% % % 'MultigraphBUT'
-% % % %%%% ¡default!
-% % % MultigraphBUT()
-% % % %%%% ¡calculate!
+%%% ¡prop!
+NAME (constant, string) is the name of the group-based graph analysis with structural data at fixed threshold.
+%%%% ¡default!
+'AnalyzeGroup_ST_BUT'
+
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the group-based graph analysis with structural data at fixed threshold.
+%%%% ¡default!
+'AnalyzeGroup_ST_BUT uses structural data at fixed threshold and analyzes them using binary undirected graphs.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the group-based graph analysis with structural data at fixed threshold.
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the group-based graph analysis with structural data at fixed threshold.
+%%%% ¡default!
+'AnalyzeGroup_ST_BUT ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the group-based graph analysis with structural data at fixed threshold.
+%%%% ¡default!
+'AnalyzeGroup_ST_BUT label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the group-based graph analysis with structural data at fixed threshold.
+%%%% ¡default!
+'AnalyzeGroup_ST_BUT notes'
+
+%%% ¡prop!
+GR (data, item) is the subject group, which also defines the subject class SubjectST.
+%%%% ¡default!
+Group('SUB_CLASS', 'SubjectST')
+
+%%% ¡prop!
+G (result, item) is the graph obtained from this analysis.
+%%%% ¡settings!
+'MultigraphBUT'
+%%%% ¡default!
+MultigraphBUT()
+%%%% ¡_calculate!
 % % % gr = a.get('GR');
 % % % node_labels = '';
 % % % data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
@@ -71,18 +94,6 @@ SubjectST, MultigraphBUT
 % % % end
 % % % 
 % % % value = g;
-% % % 
-% % % % % % %% ¡methods!
-% % % % % % function pr = getPPCompareGroup_CPDict(a, varargin) 
-% % % % % %     %GEPPPCOMPAREGROUP_CPDICT returns the comparison plot panel compatible with the analysis.
-% % % % % %     %
-% % % % % %     % PR = GEPPPCOMPAREGROUP_CPDICT(A) returns the comparison plot panel
-% % % % % %     %  that is compatible with the analyze group.
-% % % % % %     %
-% % % % % %     % See also CompareGroup.
-% % % % % %     
-% % % % % %     pr = PPCompareGroup_CPDict_ST_BUT(varargin{:});
-% % % % % % end
 
 %% ¡props!
 
