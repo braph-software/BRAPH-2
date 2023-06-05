@@ -39,66 +39,66 @@ NOTES (metadata, string) are some specific notes about the group-based compariso
 
 %% ¡props!
 
-% % % %%% ¡prop!
-% % % WAITBAR (gui, logical) detemines whether to show the waitbar.
-% % % %%%% ¡default!
-% % % true
+%%% ¡prop!
+WAITBAR (gui, logical) detemines whether to show the waitbar.
+%%%% ¡default!
+true
 
-% % % %%% ¡prop!
-% % % VERBOSE (gui, logical) sets whether to write the progress of the comparisons.
-% % % %%%% ¡default!
-% % % false
+%%% ¡prop!
+VERBOSE (gui, logical) sets whether to write the progress of the comparisons.
+%%%% ¡default!
+false
 
-% % % %%% ¡prop!
-% % % INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interruptible for multitasking.
-% % % %%%% ¡default!
-% % % .001
+%%% ¡prop!
+INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interruptible for multitasking.
+%%%% ¡default!
+.001
 
-% % % %%% ¡prop!
-% % % MEMORIZE (metadata, logical) sets whether to memorize the permuted analysis.
+%%% ¡prop!
+MEMORIZE (metadata, logical) sets whether to memorize the permuted analysis.
 
-% % % %%% ¡prop!
-% % % P (parameter, scalar) is the permutation number.
-% % % %%%% ¡default!
-% % % 1e+3
-% % % %%%% ¡check_prop!
-% % % check = value > 0 && value == round(value);
+%%% ¡prop!
+P (parameter, scalar) is the permutation number.
+%%%% ¡default!
+1e+4
+%%%% ¡check_prop!
+check = value > 0 && value == round(value);
 
-% % % %%% ¡prop!
-% % % LONGITUDINAL (parameter, logical) determines whether the comparison is longitudinal.
+%%% ¡prop!
+LONGITUDINAL (parameter, logical) determines whether the comparison is longitudinal.
 
-% % % %%% ¡prop!
-% % % A1 (data, item) is the first analysis to compare.
-% % % %%%% ¡settings!
-% % % 'AnalyzeGroup'
-% % % %%%% ¡check_value!
-% % % check = isa(value, c.get('A2').getClass());
+%%% ¡prop!
+A1 (data, item) is the first analysis to compare.
+%%%% ¡settings!
+'AnalyzeGroup'
+%%%% ¡check_value!
+check = isa(value, c.get('A2').getClass());
 
-% % % %%% ¡prop!
-% % % A2 (data, item) is the second analysis to compare.
-% % % %%%% ¡settings!
-% % % 'AnalyzeGroup'
-% % % %%%% ¡check_value!
-% % % check = isa(value, c.get('A1').getClass());
+%%% ¡prop!
+A2 (data, item) is the second analysis to compare.
+%%%% ¡settings!
+'AnalyzeGroup'
+%%%% ¡check_value!
+check = isa(value, c.get('A1').getClass());
 
-% % % %%% ¡prop!
-% % % PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
-% % % %%%% ¡calculate!
-% % % value = randi(intmax('uint32'), 1, c.get('P'));
+%%% ¡prop!
+PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
+%%%% ¡calculate!
+value = randi(intmax('uint32'), 1, c.get('P'));
 
-% % % %%% ¡prop!
-% % % A1_PERM_DICT (result, idict) is the list of permuted analyses for the first analysis.
-% % % %%%% ¡settings!
-% % % 'AnalyzeGroup'
-% % % %%%% ¡calculate!
-% % % value = IndexedDictionary('IT_CLASS', 'AnalyzeGroup', 'IT_KEY', 1);
+%%% ¡prop!
+A1_PERM_DICT (result, idict) is the list of permuted analyses for the first analysis.
+%%%% ¡settings!
+'AnalyzeGroup'
+%%%% ¡calculate!
+value = IndexedDictionary('IT_CLASS', 'AnalyzeGroup');
 
-% % % %%% ¡prop!
-% % % A2_PERM_DICT (result, idict) is the list of permuted analyses for the second analysis.
-% % % %%%% ¡settings!
-% % % 'AnalyzeGroup'
-% % % %%%% ¡calculate!
-% % % value = IndexedDictionary('IT_CLASS', 'AnalyzeGroup', 'IT_KEY', 1);
+%%% ¡prop!
+A2_PERM_DICT (result, idict) is the list of permuted analyses for the second analysis.
+%%%% ¡settings!
+'AnalyzeGroup'
+%%%% ¡calculate!
+value = IndexedDictionary('IT_CLASS', 'AnalyzeGroup');
 
 % % % %%% ¡prop!
 % % % CP_DICT (result, idict) contains the results of the comparison.
