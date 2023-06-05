@@ -168,7 +168,7 @@ DIFF (result, cell) is the group comparison value.
 % % % end
 
 %%% ¡prop!
-% % % P1 (result, cell) is the one-tailed p-value.
+P1 (result, cell) is the one-tailed p-value.
 %%%% ¡_calculate!
 % % % if isempty(cp.p1)
 % % %     [cp.diff, cp.p1, cp.p2, cp.ci_lower, cp.ci_upper] = calculate_results(cp);
@@ -731,7 +731,7 @@ PFBG (gui, item) contains the panel figure of the brain graph.
 
 %%% ¡prop!
 CALCULATE_RESULTS (query, cell) calculates the comparison results.
-%%%% ¡_calcualte!
+%%%% ¡_calculate!
 % % % function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
 % % %     %CALCULATE_RESULTS calculates the comparison results.
 % % %     %
