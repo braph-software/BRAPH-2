@@ -1744,7 +1744,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                                 if  el1_list{i}.getPropCategory(prop) ~= Category.EVANESCENT ... % __Category.EVANESCENT__
                                         && all(el1_list{i}.getPropFormat(prop) ~= [Format.ITEM Format.ITEMLIST Format.IDICT]) ... % [__Format.ITEM__ __Format.ITEMLIST__ __Format.IDICT__]
                                         && ~isa(el1_list{i}.getr(prop), 'Callback')
-                                    if ~isequal(el1_list{i}.getr(prop), el2_list{i}.getr(prop)) ...
+                                    if ~isequaln(el1_list{i}.getr(prop), el2_list{i}.getr(prop)) ...
                                             || el1_list{i}.isLocked(prop) ~= el2_list{i}.isLocked(prop)
                                         return  % check = false;
                                     end

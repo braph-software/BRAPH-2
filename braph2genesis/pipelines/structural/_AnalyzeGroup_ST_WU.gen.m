@@ -51,6 +51,11 @@ gr = a.get('GR');
 data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').get('IT_LIST'), 'UniformOutput', false);
 data = cat(2, data_list{:})'; % correlation is a column based operation
 
+% % % ba = BrainAtlas();
+% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
+% % %     ba = gr.get('SUB_DICT').getItem(1).get('BA');
+% % % end
+
 % % % if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
 % % %     age_list = cellfun(@(x) x.get('age'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
 % % %     age = cat(2, age_list{:})';
@@ -69,11 +74,6 @@ data = cat(2, data_list{:})'; % correlation is a column based operation
 % % %     A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'), [age, sex]);
 % % % else
     A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
-% % % end
-
-% % % ba = BrainAtlas();
-% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-% % %     ba = gr.get('SUB_DICT').getItem(1).get('BA');
 % % % end
 
 g = GraphWU( ...

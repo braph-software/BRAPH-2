@@ -48,16 +48,16 @@ G (result, item) is the graph obtained from this analysis.
 %%%% ¡settings!
 'MultigraphBUD'
 %%%% ¡calculate!
-value = MultigraphBUD(); % % % TBE
-% % % gr = a.get('GR');
+gr = a.get('GR');
 % % % node_labels = '';
-% % % data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
-% % % data = cat(2, data_list{:})'; % correlation is a column based operation
+data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').get('IT_LIST'), 'UniformOutput', false);
+data = cat(2, data_list{:})'; % correlation is a column based operation
+
 % % % atlas = BrainAtlas();
 % % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
 % % %     atlas = gr.get('SUB_DICT').getItem(1).get('BA');
 % % % end
-% % % 
+
 % % % if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
 % % %     age_list = cellfun(@(x) x.get('age'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
 % % %     age = cat(2, age_list{:})';
@@ -75,25 +75,22 @@ value = MultigraphBUD(); % % % TBE
 % % %     end
 % % %     A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'), [age, sex]);
 % % % else
-% % %     A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
+    A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
 % % % end
-% % % 
-% % % densities = a.get('DENSITIES'); % this is a vector
-% % % 
-% % % g = MultigraphBUD( ...
-% % %     'ID', ['g ' gr.get('ID')], ...
-% % %     'B', A, ...
-% % %     'DENSITIES', densities, ...
-% % %     'LAYERTICKS', densities, ...
-% % %     'LAYERLABELS', cell2str(cellfun(@(x) [num2str(x) '%'], num2cell(densities), 'UniformOutput', false)), ...
-% % %     'BAS', atlas ...
-% % %     );
-% % % 
+
+densities = a.get('DENSITIES'); % this is a vector
+
+g = MultigraphBUD( ...
+    'ID', ['g ' gr.get('ID')], ...
+    'B', A, ...
+    'DENSITIES', densities ... % % %     'LAYERTICKS', densities, ... % % %     'LAYERLABELS', cell2str(cellfun(@(x) [num2str(x) '%'], num2cell(densities), 'UniformOutput', false)), ... % % %     'BAS', atlas ...
+    );
+
 % % % if ~isa(a.getr('TEMPLATE'), 'NoValue')
 % % %     g.set('TEMPLATE', a.get('TEMPLATE').memorize('G'))
 % % % end    
-% % % 
-% % % value = g;
+
+value = g;
 
 %% ¡props!
 
