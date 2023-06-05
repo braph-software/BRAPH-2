@@ -79,30 +79,6 @@ value = degreeout;
 
 %%% ¡test!
 %%%% ¡name!
-GraphBD
-%%%% ¡code!
-B = [
-    0   1   1
-    0   0   0
-    1   0   0
-    ];
-
-know_out_degree = {[2 0 1]'};
-
-g = GraphBD('B', B);
-
-m_outside_g = DegreeOut('G', g);
-assert(isequal(m_outside_g.get('M'), know_out_degree), ...
-   [BRAPH2.STR ':DegreeOut:' BRAPH2.FAIL_TEST], ...
-    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
-
-m_inside_g = g.get('MEASURE', 'DegreeOut');
-assert(isequal(m_inside_g.get('M'), know_out_degree), ...
-    [BRAPH2.STR ':DegreeOut:' BRAPH2.FAIL_TEST], ...
-    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
-
-%%% ¡test!
-%%%% ¡name!
 GraphWD
 %%%% ¡code!
 B = [
@@ -127,26 +103,17 @@ assert(isequal(m_inside_g.get('M'), know_out_degree), ...
 
 %%% ¡test!
 %%%% ¡name!
-MultiplexBD
+GraphBD
 %%%% ¡code!
-B11 = [
-      0  1  1
-      0  0  0
-      1  0  0
-      ];
-B22 = [
-       0  1  0
-       1  0  1
-       1  1  0
-       ];
-B = {B11 B22};
+B = [
+    0   1   1
+    0   0   0
+    1   0   0
+    ];
 
-know_out_degree = { 
-                  [2 0 1]'
-                  [1 2 2]'
-                  };
+know_out_degree = {[2 0 1]'};
 
-g = MultiplexBD('B', B);
+g = GraphBD('B', B);
 
 m_outside_g = DegreeOut('G', g);
 assert(isequal(m_outside_g.get('M'), know_out_degree), ...
@@ -180,6 +147,39 @@ know_out_degree = {
                   };
 
 g = MultiplexWD('B', B);
+
+m_outside_g = DegreeOut('G', g);
+assert(isequal(m_outside_g.get('M'), know_out_degree), ...
+   [BRAPH2.STR ':DegreeOut:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'DegreeOut');
+assert(isequal(m_inside_g.get('M'), know_out_degree), ...
+    [BRAPH2.STR ':DegreeOut:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBD
+%%%% ¡code!
+B11 = [
+      0  1  1
+      0  0  0
+      1  0  0
+      ];
+B22 = [
+       0  1  0
+       1  0  1
+       1  1  0
+       ];
+B = {B11 B22};
+
+know_out_degree = { 
+                  [2 0 1]'
+                  [1 2 2]'
+                  };
+
+g = MultiplexBD('B', B);
 
 m_outside_g = DegreeOut('G', g);
 assert(isequal(m_outside_g.get('M'), know_out_degree), ...
