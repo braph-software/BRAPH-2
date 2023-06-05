@@ -109,4 +109,8 @@ Correlation.ZERO
 %%%% ¡name!
 Example
 %%%% ¡code!
+if ~isfile([fileparts(which('example_ST_WU')) filesep 'Example data ST XLS' filesep 'atlas.xlsx'])
+    test_ImporterGroupSubjectST_XLS % create example files
+end
+
 example_ST_WU
