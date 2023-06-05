@@ -120,8 +120,8 @@ pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeGroup_ST_BUD.DENSITIES, ...
 
 %% ¡tests!
 
-% % % %%% ¡test!
-% % % %%%% ¡name!
-% % % Example
-% % % %%%% ¡code!
-% % % example_ST_BUD
+%%% ¡test!
+%%%% ¡name!
+Example
+%%%% ¡code!
+example_ST_BUD

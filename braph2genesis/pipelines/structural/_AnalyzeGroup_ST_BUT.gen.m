@@ -119,8 +119,8 @@ pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeGroup_ST_BUT.THRESHOLDS, ...
 
 %% ¡tests!
 
-% % % %%% ¡test!
-% % % %%%% ¡name!
-% % % Example
-% % % %%%% ¡code!
-% % % example_ST_BUT
+%%% ¡test!
+%%%% ¡name!
+Example
+%%%% ¡code!
+example_ST_BUT

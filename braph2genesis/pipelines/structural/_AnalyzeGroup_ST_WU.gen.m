@@ -105,8 +105,8 @@ Correlation.ZERO
 
 %% ¡tests!
 
-% % % %%% ¡test!
-% % % %%%% ¡name!
-% % % Example
-% % % %%%% ¡code!
-% % % example_ST_WU
+%%% ¡test!
+%%%% ¡name!
+Example
+%%%% ¡code!
+example_ST_WU
