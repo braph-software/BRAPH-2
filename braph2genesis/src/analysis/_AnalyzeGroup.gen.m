@@ -58,16 +58,3 @@ G (result, item) is the graph obtained from this analysis.
 value = Graph();
 %%%% ¡_gui!
 % % % pr = PPAnalyzeGroup_G('EL', a, 'PROP', AnalyzeGroup.G, 'WAITBAR', Callback('EL', a, 'TAG', 'WAITBAR'), varargin{:});
-
-% % % TBE
-% % % % % % %% ¡methods!
-% % % % % % function pr = getPPCompareGroup_CPDict(a, varargin) 
-% % % % % %     %GEPPPCOMPAREGROUP_CPDICT returns the comparison plot panel compatible with the analysis.
-% % % % % %     %
-% % % % % %     % PR = GEPPPCOMPAREGROUP_CPDICT(A) returns the comparison plot panel
-% % % % % %     %  that is compatible with the analyze group.
-% % % % % %     %
-% % % % % %     % See also CompareGroup.
-% % % % % %     
-% % % % % %     pr = PropPlotIDict(varargin{:});
-% % % % % % end

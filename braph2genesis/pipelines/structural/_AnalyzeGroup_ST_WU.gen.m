@@ -47,11 +47,10 @@ G (result, item) is the graph obtained from this analysis.
 %%%% ¡settings!
 'GraphWU'
 %%%% ¡calculate!
-value = GraphWU(); % % % TBE
-% % % gr = a.get('GR');
-% % % data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
-% % % data = cat(2, data_list{:})'; % correlation is a column based operation
-% % % 
+gr = a.get('GR');
+data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').get('IT_LIST'), 'UniformOutput', false);
+data = cat(2, data_list{:})'; % correlation is a column based operation
+
 % % % if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
 % % %     age_list = cellfun(@(x) x.get('age'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
 % % %     age = cat(2, age_list{:})';
@@ -69,25 +68,24 @@ value = GraphWU(); % % % TBE
 % % %     end
 % % %     A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'), [age, sex]);
 % % % else
-% % %     A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
+    A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
 % % % end
-% % % 
+
 % % % ba = BrainAtlas();
 % % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
 % % %     ba = gr.get('SUB_DICT').getItem(1).get('BA');
 % % % end
-% % % 
-% % % g = GraphWU( ...
-% % %     'ID', ['g ' gr.get('ID')], ...
-% % %     'B', A, ...
-% % %     'BAS', ba ...
-% % %     );
-% % % 
+
+g = GraphWU( ...
+    'ID', ['GR ' gr.get('ID')], ...
+    'B', A ... % % %     'BAS', ba ...
+    );
+
 % % % if ~isa(a.getr('TEMPLATE'), 'NoValue')
 % % %     g.set('TEMPLATE', a.get('TEMPLATE').memorize('G'))
 % % % end    
-% % % 
-% % % value = g;
+
+value = g;
 
 %% ¡props!
 
