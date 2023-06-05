@@ -47,9 +47,8 @@ Group('SUB_CLASS', 'SubjectST')
 G (result, item) is the graph obtained from this analysis.
 %%%% ¡settings!
 'MultigraphBUD'
-%%%% ¡default!
-MultigraphBUD()
-%%%% ¡_calculate!
+%%%% ¡calculate!
+value = MultigraphBUD(); % % % TBE
 % % % gr = a.get('GR');
 % % % node_labels = '';
 % % % data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);

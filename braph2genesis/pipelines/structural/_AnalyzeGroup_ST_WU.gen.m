@@ -46,9 +46,8 @@ Group('SUB_CLASS', 'SubjectST')
 G (result, item) is the graph obtained from this analysis.
 %%%% ¡settings!
 'GraphWU'
-%%%% ¡default!
-GraphWU()
-%%%% ¡_calculate!
+%%%% ¡calculate!
+value = GraphWU(); % % % TBE
 % % % gr = a.get('GR');
 % % % data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
 % % % data = cat(2, data_list{:})'; % correlation is a column based operation
