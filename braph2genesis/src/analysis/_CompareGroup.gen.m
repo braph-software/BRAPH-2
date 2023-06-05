@@ -100,40 +100,63 @@ A2_PERM_DICT (result, idict) is the list of permuted analyses for the second ana
 %%%% ¡calculate!
 value = IndexedDictionary('IT_CLASS', 'AnalyzeGroup');
 
-% % % %%% ¡prop!
-% % % CP_DICT (result, idict) contains the results of the comparison.
-% % % %%%% ¡settings!
-% % % 'ComparisonGroup'
-% % % %%%% ¡calculate!
-% % % value = IndexedDictionary('IT_CLASS', 'ComparisonGroup', 'IT_KEY', 4);
-% % % %%%% ¡gui!
+%%% ¡prop!
+CP_DICT (result, idict) contains the results of the comparison.
+%%%% ¡settings!
+'ComparisonGroup'
+%%%% ¡calculate!
+value = IndexedDictionary('IT_CLASS', 'ComparisonGroup', 'IT_KEY', ComparisonGroup.MEASURE);
+%%%% ¡_gui!
 % % % pr = PPCompareGroup_CpDict('EL', c, 'PROP', CompareGroup.CP_DICT, 'WAITBAR', Callback('EL', c, 'TAG', 'WAITBAR'), varargin{:});
 
-% % % function cp = getComparison(c, measure_class, varargin)
-% % %     %GETCOMPARISON returns comparison.
-% % %     %
-% % %     % CP = GETCOMPARISON(G, MEASURE_CLASS) checks if the comparison exists in the
-% % %     %  comparison dictionary CP_DICT. If not, it creates a new comparison
-% % %     %  CP of class MEASURE_CLASS. The user must call getValue() for the new
-% % %     %  comparison CP to retrieve the value of the comparison. 
-% % %     %
-% % %     % See also ComparisonGroup.
-% % % 
-% % %     cp_dict = c.memorize('CP_DICT');
-% % %     if cp_dict.containsKey(measure_class)
-% % %         cp = cp_dict.getItem(measure_class);
-% % %     else
-% % %         cp = ComparisonGroup( ...
-% % %             'ID', [measure_class ' comparison ' c.get('A1').get('ID') ' vs. ' c.get('A2').get('ID')], ...
-% % %             'MEASURE', measure_class, ...
-% % %             'MEASURE_TEMPLATE', c.memorize('A1').memorize('G').getMeasure(measure_class), ...
-% % %             'C', c, ...
-% % %             varargin{:} ...
-% % %             );
-% % %         cp_dict.add(cp);
-% % %     end
-% % % end
+%%% ¡prop!
+COMPARISON (query, item) returns a comparison.
+%%%% ¡settings!
+'ComparisonGroup'
+%%%% ¡calculate!
+% CP = C.GET(''COMPARISON'', MEASURE_CLASS) checks if the comparison exists in the
+%  comparison dictionary CP_DICT. If not, it creates a new comparison
+%  CP of class MEASURE_CLASS. The user must call getValue() for the new
+%  comparison CP to retrieve the value of the comparison. 
+if isempty(varargin)
+    value = ComparisonGroup();
+    
+    % % Warning commented because it most likely will lead to an error anyways
+    % warning( ...
+    %     [BRAPH2.STR ':' class(g)], ...
+    %     [BRAPH2.STR ':' class(g) '\\n' ...
+    %     'Missing argument MEASURE_CLASS when using CompareGroup.get(''COMPARISON'', MEASURE_CLASS).'] ...
+    %     )
+    
+    return
+end
+measure_class = varargin{1};
 
+m_list = g.get('COMPATIBLE_MEASURES');
+assert( ...
+    contains(measure_class, m_list), ...
+    [BRAPH2.STR ':AnalyzeGroup:' BRAPH2.WRONG_INPUT], ...
+    [BRAPH2.STR ':AnalyzeGroup:' BRAPH2.WRONG_INPUT ' '], ...
+    [measure_class ' is not a compatible Measure with the graph employed by ' a.getClass() '.'])
+
+cp_dict = c.memorize('CP_DICT');
+if cp_dict.get('CONTAINS_KEY', measure_class)
+    cp = cp_dict.get('IT', measure_class);
+else
+    cp = ComparisonGroup( ...
+        'ID', [measure_class ' comparison ' c.get('A1').get('ID') ' vs. ' c.get('A2').get('ID')], ...
+        'MEASURE', measure_class, ...
+        'MEASURE_TEMPLATE', c.memorize('A1').memorize('G').get('MEASURE', measure_class), ... % % % Check whether to improve how to deal with template for measure
+        'C', c, ...
+        varargin{:} ...
+        );
+    
+    cp_dict.add(cp);
+end
+
+%%% ¡prop!
+PERM (query, itemlist) returns the permuted analyses.
+%%%% ¡_calculate!
 % % % function [a1_perm, a2_perm] = getPerm(c, i, memorize)
 % % %     %GETPERM returns the permuted analyses.
 % % %     %

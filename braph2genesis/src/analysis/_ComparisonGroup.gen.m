@@ -40,27 +40,27 @@ NOTES (metadata, string) are some specific notes about the group-based compariso
 
 %% ¡props!
 
-% % % %%% ¡prop!
-% % % MEASURE (data, string) is the measure class.
+%%% ¡prop!
+MEASURE (data, string) is the measure class.
 
-% % % %%% ¡prop!
-% % % MEASURE_TEMPLATE (data, item) provides the measure parameters. 
-% % % %%%% ¡settings!
-% % % 'Measure'
+%%% ¡prop!
+MEASURE_TEMPLATE (data, item) provides the measure parameters. 
+%%%% ¡settings!
+'Measure'
 
-% % % %%% ¡prop!
-% % % C (data, item) is the group-based comparison.
-% % % %%%% ¡settings!
-% % % 'CompareGroup'
+%%% ¡prop!
+C (data, item) is the group-based comparison.
+%%%% ¡settings!
+'CompareGroup'
 
-% % % %%% ¡prop!
-% % % DIFF (result, cell) is the group comparison value.
-% % % %%%% ¡calculate!
+%%% ¡prop!
+DIFF (result, cell) is the group comparison value.
+%%%% ¡_calculate!
 % % % if isempty(cp.diff)
 % % %     [cp.diff, cp.p1, cp.p2, cp.ci_lower, cp.ci_upper] = calculate_results(cp);
 % % % end
 % % % value = cp.diff;
-% % % %%%% ¡gui!
+%%%% ¡_gui!
 % % % g = cp.get('C').get('A1').get('G');
 % % % measure = cp.get('MEASURE');
 % % % 
@@ -167,14 +167,14 @@ NOTES (metadata, string) are some specific notes about the group-based compariso
 % % %     end
 % % % end
 
-% % % %%% ¡prop!
+%%% ¡prop!
 % % % P1 (result, cell) is the one-tailed p-value.
-% % % %%%% ¡calculate!
+%%%% ¡_calculate!
 % % % if isempty(cp.p1)
 % % %     [cp.diff, cp.p1, cp.p2, cp.ci_lower, cp.ci_upper] = calculate_results(cp);
 % % % end
 % % % value = cp.p1;
-% % % %%%% ¡gui!
+%%%% ¡gui!
 % % % g = cp.get('C').get('A1').get('G');
 % % % measure = cp.get('MEASURE');
 % % % 
@@ -281,14 +281,14 @@ NOTES (metadata, string) are some specific notes about the group-based compariso
 % % %     end
 % % % end
 
-% % % %%% ¡prop!
-% % % P2 (result, cell) is the two-tailed p-value.
-% % % %%%% ¡calculate!
+%%% ¡prop!
+P2 (result, cell) is the two-tailed p-value.
+%%%% ¡_calculate!
 % % % if isempty(cp.p2)
 % % %     [cp.diff, cp.p1, cp.p2, cp.ci_lower, cp.ci_upper] = calculate_results(cp);
 % % % end
 % % % value = cp.p2;
-% % % %%%% ¡gui!
+%%%% ¡_gui!
 % % % g = cp.get('C').get('A1').get('G');
 % % % measure = cp.get('MEASURE');
 % % % 
@@ -395,14 +395,14 @@ NOTES (metadata, string) are some specific notes about the group-based compariso
 % % %     end
 % % % end
 
-% % % %%% ¡prop!
-% % % CIL (result, cell) is the lower value of the 95%% confidence interval.
-% % % %%%% ¡calculate!
+%%% ¡prop!
+CIL (result, cell) is the lower value of the 95%% confidence interval.
+%%%% ¡_calculate!
 % % % if isempty(cp.ci_lower)
 % % %     [cp.diff, cp.p1, cp.p2, cp.ci_lower, cp.ci_upper] = calculate_results(cp);
 % % % end
 % % % value = cp.ci_lower;
-% % % %%%% ¡gui!
+%%%% ¡_gui!
 % % % g = cp.get('C').get('A1').get('G');
 % % % measure = cp.get('MEASURE');
 % % % 
@@ -509,14 +509,14 @@ NOTES (metadata, string) are some specific notes about the group-based compariso
 % % %     end
 % % % end
 
-% % % %%% ¡prop!
-% % % CIU (result, cell) is the upper value of the 95%% confidence interval.
-% % % %%%% ¡calculate!
+%%% ¡prop!
+CIU (result, cell) is the upper value of the 95%% confidence interval.
+%%%% ¡_calculate!
 % % % if isempty(cp.ci_upper)
 % % %     [cp.diff, cp.p1, cp.p2, cp.ci_lower, cp.ci_upper] = calculate_results(cp);
 % % % end
 % % % value = cp.ci_upper;
-% % % %%%% ¡gui!
+%%%% ¡_gui!
 % % % g = cp.get('C').get('A1').get('G');
 % % % measure = cp.get('MEASURE');
 % % % 
@@ -623,18 +623,18 @@ NOTES (metadata, string) are some specific notes about the group-based compariso
 % % %     end
 % % % end
 
-% % % %%% ¡prop!
-% % % QVALUE (metadata, scalar) is the selected qvalue threshold.
-% % % %%%% ¡default!
-% % % 0.05
-% % % %%%% ¡gui!
+%%% ¡prop!
+QVALUE (metadata, scalar) is the selected qvalue threshold.
+%%%% ¡default!
+0.05
+%%%% ¡_gui!
 % % % pr = PPQValue('EL', cp, 'PROP', ComparisonGroup.QVALUE, varargin{:});
 
-% % % %%% ¡prop!
-% % % PFC (gui, item) contains the panel figure of the comparison.
-% % % %%%% ¡settings!
+%%% ¡prop!
+PFC (gui, item) contains the panel figure of the comparison.
+%%%% ¡_settings!
 % % % 'PFComparisonGroup'
-% % % %%%% ¡postprocessing!
+%%%% ¡_postprocessing!
 % % % if ~braph2_testing % to avoid problems with isqual when the element is recursive
 % % %     if isa(cp.getr('PFC'), 'NoValue')
 % % %         measure = cp.get('MEASURE');
@@ -666,16 +666,16 @@ NOTES (metadata, string) are some specific notes about the group-based compariso
 % % %         end
 % % %     end
 % % % end
-% % % %%%% ¡gui!
+%%%% ¡_gui!
 % % % pr = PanelPropItem('EL', cp, 'PROP', ComparisonGroup.PFC, ...
 % % %     'GUICLASS', 'GUIFig', ...
 % % %     varargin{:});
 
-% % % %%% ¡prop!
-% % % PFBG (gui, item) contains the panel figure of the brain graph.
-% % % %%%% ¡settings!
+%%% ¡prop!
+PFBG (gui, item) contains the panel figure of the brain graph.
+%%%% ¡_settings!
 % % % 'PFBrainGraphComparison'
-% % % %%%% ¡postprocessing!
+%%%% ¡_postprocessing!
 % % % if ~braph2_testing % to avoid problems with isqual when the element is recursive
 % % %     if isa(cp.getr('PFBG'), 'NoValue')
 % % %         c = cp.get('C');
@@ -717,7 +717,7 @@ NOTES (metadata, string) are some specific notes about the group-based compariso
 % % %         end
 % % %     end
 % % % end
-% % % %%%% ¡gui!
+%%%% ¡_gui!
 % % % pr = PanelPropItem('EL', cp, 'PROP', ComparisonGroup.PFBG, ...
 % % %     'GUICLASS', 'GUIFig', ...
 % % %     varargin{:});
@@ -728,8 +728,10 @@ NOTES (metadata, string) are some specific notes about the group-based compariso
 % % % p2
 % % % ci_lower
 % % % ci_upper
-% % % 
-% % % %% ¡methods!
+
+%%% ¡prop!
+CALCULATE_RESULTS (query, cell) calculates the comparison results.
+%%%% ¡_calcualte!
 % % % function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
 % % %     %CALCULATE_RESULTS calculates the comparison results.
 % % %     %
