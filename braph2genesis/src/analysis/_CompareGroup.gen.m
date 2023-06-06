@@ -156,9 +156,11 @@ else
     cp_dict.get('ADD', cp);
 end
 
+value = cp;
+
 %%% ¡prop!
 PERM (query, itemlist) returns the permuted analyses.
-%%%% ¡_calculate!
+%%%% ¡calculate!
 % [A1P, A2P] = g.get('PERM', I) retunrs the I-th permutations for the analysis
 %  A1P and A2P. The number of perutations must be smaller than the
 %  permutation number P, which is one of the properties of the comparison.
@@ -189,20 +191,24 @@ else
 
     [subs1_perm, subs2_perm] = permutation(subs1, subs2, c.get('LONGITUDINAL'));
 
-    a1_perm = c.get('A1').clone();
+    a1 = c.get('A1');
+    gr1 = a1.get('GR');
+    a1_perm = eval([a1.getClass() '(''TEMPLATE'', a1)']); % % % a1_perm = c.get('A1').clone();
     a1_perm.set( ...
-        'ID', [c.get('A1').get('ID') ' permutation ' int2str(i)], ...
-        'GR', c.get('A1').get('GR').clone() ...
+        'ID', [a1.get('ID') ' permutation ' int2str(i)], ...
+        'GR', Group('TEMPLATE', gr1) ... % % % a1.get('GR').clone() ...
         )
-    a1_perm.get('GR').set('SUB_DICT', c.get('A1').get('GR').get('SUB_DICT').clone())
+    a1_perm.get('GR').set('SUB_DICT', IndexedDictionary('TEMPLATE', gr1.get('SUB_DICT'))) % % % a1_perm.get('GR').set('SUB_DICT', c.get('A1').get('GR').get('SUB_DICT').clone())
     a1_perm.get('GR').get('SUB_DICT').set('IT_LIST', subs1_perm)
 
-    a2_perm = c.get('A1').clone(); % % % a2_perm = c.get('A2').clone();
+    a2 = c.get('A2');
+    gr2 = a2.get('GR');
+    a2_perm = eval([a2.getClass() '(''TEMPLATE'', a2)']); % % % a2_perm = c.get('A1').clone(); % % % a2_perm = c.get('A2').clone();
     a2_perm.set( ...
-        'ID', [c.get('A2').get('ID') ' permutation ' int2str(i)], ...
-        'GR', c.get('A2').get('GR').clone() ...
+        'ID', [a2.get('ID') ' permutation ' int2str(i)], ...
+        'GR', Group('TEMPLATE', gr2) ... % % % c.get('A2').get('GR').clone() ...
         )
-    a2_perm.get('GR').set('SUB_DICT', c.get('A2').get('GR').get('SUB_DICT').clone())
+    a2_perm.get('GR').set('SUB_DICT', IndexedDictionary('TEMPLATE', gr2.get('SUB_DICT'))) % % % a2_perm.get('GR').set('SUB_DICT', c.get('A2').get('GR').get('SUB_DICT').clone())
     a2_perm.get('GR').get('SUB_DICT').set('IT_LIST', subs2_perm)
 
     % memorize permutations if required
