@@ -737,7 +737,7 @@ function cb_table(~, event) % (src, event)
                                 dict.get('IT', i).set('ID', newdata)
                                 % change item key in idict
                                 oldkey = dict.get('KEY', i);
-                                dict.replaceKey(dict.getKey(i), newdata);
+                                dict.get('REPLACE_KEY', dict.get('KEY', i), newdata);
                             end
                         else
                             dict.get('IT', i).set(col, newdata)
