@@ -1147,18 +1147,18 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 % end
 
 %% AnalyzeGroup
-el_class_list = {'Graph'}
-for i = 1:1:length(el_class_list)
-    el_class = el_class_list{i};
-    el_path = '/src/gt';
-    delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
-    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    eval(['test_' el_class])
-end
+% el_class_list = {'Graph'}
+% for i = 1:1:length(el_class_list)
+%     el_class = el_class_list{i};
+%     el_path = '/src/gt';
+%     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     eval(['test_' el_class])
+% end
 
-el_class_list = {'CompareGroup'}
+el_class_list = {'CompareGroup' 'ComparisonGroup'}
 for i = 1:1:length(el_class_list)
     el_class = el_class_list{i};
     el_path = '/src/analysis';
@@ -1179,3 +1179,4 @@ end
 %     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
 %     eval(['test_' el_class])
 % end
+
