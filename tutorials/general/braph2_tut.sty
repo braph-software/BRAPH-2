@@ -90,3 +90,45 @@
 \newcommand*\threecirclednotes[4]{\marginnote{\circled{#1}, \circled{#2}, and \circled{#3} #4}}
 \newcommand*\fourcirclednotes[5]{\marginnote{\circled{#1}, \circled{#2}, \circled{#3}, and \circled{#4} #5}}
 \newcommand*\rangecirclednotes[3]{\marginnote{\circled{#1}---\circled{#2} #3}}
+
+%%
+% For graphics / images
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+
+\newcommand{\fig}[5]
+{
+\begin{#1}
+	#3
+	\caption[#4]{{\bf #4.}#5}
+	\label{#2}
+\end{#1}
+}
+
+\newcommand{\Figref}[1]{Figure~\ref{#1}}
+\newcommand{\Figsref}[1]{Figures~\ref{#1}}
+
+\newcommand{\Eqref}[1]{Eq.~\eqref{#1}}
+\newcommand{\Eqsref}[1]{Eqs.~\eqref{#1}}
+
+% The fancyvrb package lets us customize the formatting of verbatim
+% environments.  We use a slightly smaller font.
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+
+%%
+% Prints argument within hanging parentheses (i.e., parentheses that take
+% up no horizontal space).  Useful in tabular environments.
+\newcommand{\hangp}[1]{\makebox[0pt][r]{(}#1\makebox[0pt][l]{)}}
+
+%%
+% Prints an asterisk that takes up no horizontal space.
+% Useful in tabular environments.
+\newcommand{\hangstar}{\makebox[0pt][l]{*}}
+
+%%
+% Prints a trailing space in a smart way.
+\usepackage{xspace}
+
+% Prints the month name (e.g., January) and the year (e.g., 2008)
+\newcommand{\monthyear}{\ifcase\month\or January\or February\or March\or April\or May\or June\or July\or August\or September\or October\or November\or December\fi\space\number\year}
