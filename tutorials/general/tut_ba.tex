@@ -10,11 +10,54 @@
 
 \maketitle
 
+\fig{figure*}
+	{fig:xxx}
+	{
+	[b!]
+	\includegraphics{tut_ba/fig1.png}
+	}
+	{Brain Atlas GUI.}
+	{
+	Graphical user interface to work with brain atlases. 
+	}
+	
 \begin{abstract}
 \noindent
 This is the tutorial to work with the Graphical User Interface of Brain Atlas, which is the first step that is required to perform an analysis in BRAPH 2.0. 
 In this Tutorial, we will explain you how to create a new atlas or upload an atlas that is already prepared.
+\end{abstract}
 
+%%%%% %%%%% %%%%% %%%%% %%%%%
+\clearpage
+\section{Example figures}
+
+\fig{marginfigure}
+	{fig:xxx}
+	{\includegraphics{tut_ba/fig1.png}}
+	{TITLE}
+	{
+	caption
+	}
+
+\fig{figure}
+	{fig:xxx}
+	{\includegraphics{tut_ba/fig1.png}}
+	{TITLE}
+	{
+	caption
+	}
+
+\fig{figure*}
+	{fig:xxx}
+	{\includegraphics{tut_ba/fig1.png}}
+	{TITLE}
+	{
+	caption
+	}
+
+
+%%%%% %%%%% %%%%% %%%%% %%%%%
+\clearpage
 \section{Prepared Brain Atlases}
 
 Currently we provide several brain atlases that are commonly used in the literature and that can be downloaded from our website, specifically: http://braph.org/software/brain-atlases/:
@@ -117,7 +160,6 @@ Finally the codes for different colors in the FACECOLOR column correspond to the
  
 
 the generator file \fn{*.gen.m} for a new measure which can the be compiled by \code{braph2genesis}, using the measures \code{Degree}, \code{DegreeAv}, and \code{Distance} as examples.
-\end{abstract}
 
 \tableofcontents
 
