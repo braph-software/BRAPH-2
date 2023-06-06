@@ -730,7 +730,7 @@ PFBG (gui, item) contains the panel figure of the brain graph.
 % % % ci_upper
 
 %%% ¡prop!
-CALCULATE_RESULTS (query, cell) calculates the comparison results.
+CALCULATE_RESULTS (evanescent, cell) calculates the comparison results {diff, p1, p2, ci_lower, ci_upper}.
 %%%% ¡_calculate!
 % % % function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
 % % %     %CALCULATE_RESULTS calculates the comparison results.
