@@ -44,23 +44,29 @@ g_WU2 = a_WU2.get('G');
 distance_WU2 = g_WU2.get('MEASURE', 'Distance').get('M');
 
 % comparison
-% % % c_WU = CompareGroup( ...
-% % %     'P', 10, ...
-% % %     'A1', a_WU1, ...
-% % %     'A2', a_WU2, ...
-% % %     'WAITBAR', true, ...
-% % %     'VERBOSE', false, ...
-% % %     'MEMORIZE', true ...
-% % %     );
-% % % 
-% % % strength_WU_diff = c_WU.getComparison('Strength').get('DIFF');
-% % % strength_WU_p1 = c_WU.getComparison('Strength').get('P1');
-% % % strength_WU_p2 = c_WU.getComparison('Strength').get('P2');
-% % % strength_WU_cil = c_WU.getComparison('Strength').get('CIL');
-% % % strength_WU_ciu = c_WU.getComparison('Strength').get('CIU');
-% % % 
-% % % strength_av_WU_diff = c_WU.getComparison('StrengthAv').get('DIFF');
-% % % strength_av_WU_p1 = c_WU.getComparison('StrengthAv').get('P1');
-% % % strength_av_WU_p2 = c_WU.getComparison('StrengthAv').get('P2');
-% % % strength_av_WU_cil = c_WU.getComparison('StrengthAv').get('CIL');
-% % % strength_av_WU_ciu = c_WU.getComparison('StrengthAv').get('CIU');
+c_WU = CompareGroup( ...
+    'P', 10, ...
+    'A1', a_WU1, ...
+    'A2', a_WU2, ...
+    'WAITBAR', true, ...
+    'VERBOSE', false, ...
+    'MEMORIZE', true ...
+    );
+
+% % % strength_WU_diff = c_WU.get('COMPARISON', 'Strength').get('DIFF');
+% % % strength_WU_p1 = c_WU.get('COMPARISON', 'Strength').get('P1');
+% % % strength_WU_p2 = c_WU.get('COMPARISON', 'Strength').get('P2');
+% % % strength_WU_cil = c_WU.get('COMPARISON', 'Strength').get('CIL');
+% % % strength_WU_ciu = c_WU.get('COMPARISON', 'Strength').get('CIU');
+
+% % % strength_av_WU_diff = c_WU.get('COMPARISON', 'StrengthAv').get('DIFF');
+% % % strength_av_WU_p1 = c_WU.get('COMPARISON', 'StrengthAv').get('P1');
+% % % strength_av_WU_p2 = c_WU.get('COMPARISON', 'StrengthAv').get('P2');
+% % % strength_av_WU_cil = c_WU.get('COMPARISON', 'StrengthAv').get('CIL');
+% % % strength_av_WU_ciu = c_WU.get('COMPARISON', 'StrengthAv').get('CIU');
+
+distance_WU_diff = c_WU.get('COMPARISON', 'Distance').get('DIFF');
+distance_WU_p1 = c_WU.get('COMPARISON', 'Distance').get('P1');
+distance_WU_p2 = c_WU.get('COMPARISON', 'Distance').get('P2');
+distance_WU_cil = c_WU.get('COMPARISON', 'Distance').get('CIL');
+distance_WU_ciu = c_WU.get('COMPARISON', 'Distance').get('CIU');
