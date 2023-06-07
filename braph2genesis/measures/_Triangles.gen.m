@@ -96,7 +96,7 @@ value = triangles;
 
 %% ¡props!
 %%% ¡prop! 
-rule (parameter, option) is the rule to determine what is a triangle in directed networks.
+RULE (parameter, option) is the rule to determine what is a triangle in directed networks.
 %%%% ¡settings!
 {'all' 'middleman' 'in' 'out' 'cycle'}
 %%%% ¡default!
