@@ -2,11 +2,15 @@
 OrdMlBUD < OrdMlWU (g, binary undirected multilayer with fixed densities) is a ordinal multilayer binary undirected with fixed densities.
 
 %%% ¡description!
-In a ordinal binary undirected multilayer with fixed densities (BUD), the layers are 
- those of binary undirected (BU) multilayer graphs derived from the same 
- weighted supra-connectivity matrices binarized at different densities.
+In an ordinal binary undirected multilayer with fixed densities (BUD) graph, layers 
+ consist of binary undirected (BU) multilayer graphs derived from the same 
+ weighted supra-connectivity matrices binarized at different densities. Layers 
+ within the binary undirected (BU) multilayer graphs could have different number of nodes 
+ with within-layer binary undirected edges. Edges can be either 0 (absence of connection) 
+ or 1 (existence of connection).
 The supra-connectivity matrix has a number of partitions equal to the number of densities.
 The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.
+
 %% ¡props_update!
 
 %%% ¡prop!
@@ -17,7 +21,7 @@ NAME (constant, string) is the name of the ordinal binary undirected multilayer 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ordinal binary undirected multilayer with fixed densities.
 %%%% ¡default!
-'In a ordinal binary undirected multilayer with fixed densities (BUD), the layers are those of binary undirected (BU) multilayer graphs derived from the same weighted supra-connectivity matrices binarized at different densities. The supra-connectivity matrix has a number of partitions equal to the number of densities.The layers are connected in an ordinal fashion, where just consecutive layers are connected'
+'In an ordinal binary undirected multilayer with fixed densities (BUD) graph, layers consist of binary undirected (BU) multilayer graphs derived from the same weighted supra-connectivity matrices binarized at different densities. Layers within the binary undirected (BU) multilayer graphs could have different number of nodes with within-layer binary undirected edges. Edges can be either 0 (absence of connection) or 1 (existence of connection). The supra-connectivity matrix has a number of partitions equal to the number of densities. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ordinal binary undirected multilayer with fixed densities.
@@ -176,9 +180,9 @@ Constructor - Full
 B1 = rand(randi(10));
 B2 = rand(randi(10));
 B3 = rand(randi(10));
-B12 = rand(size(B1,1),size(B2,2));
-B13 = zeros(size(B1,1),size(B3,2));
-B23 = rand(size(B2,1),size(B3,2));
+B12 = rand(size(B1, 1),size(B2, 2));
+B13 = zeros(size(B1, 1),size(B3, 2));
+B23 = rand(size(B2, 1),size(B3, 2));
 B = {
     B1                           B12                            B13
     B12'                         B2                             B23
