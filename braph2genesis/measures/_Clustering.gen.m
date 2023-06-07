@@ -55,7 +55,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'MultiplexBD'}
+{'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT'}
 
 %%% ¡prop!
 M (result, cell) is the clustering.
@@ -106,6 +106,52 @@ value = clustering;
 
 %%% ¡test!
 %%%% ¡name!
+GraphWU
+%%%% ¡code!
+B_WU = [
+    0 .1 .2 .1; 
+    1 0 .3 0; 
+    .2 .3 0 .4; 
+    1 0 .4 0
+    ];
+
+clustering_WU = [.2741 .3915 .2741 .4309]';
+g = GraphWU('B', B_WU);
+m_outside_g = Clustering('G', g);
+assert(isequal(round(cell2mat(m_outside_g.get('M')), 4), clustering_WU), ...
+    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Clustering');
+assert(isequal(round(cell2mat(m_inside_g.get('M')), 4), clustering_WU), ...
+    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+GraphWD
+%%%% ¡code!
+B_WD = [
+    0 .1 .2 .1; 
+    1 0 .3 0; 
+    .2 .4 0 .3; 
+    1 0 .4 0
+    ];
+clustering_WD = [.1375 .1621 .1381 .1565]';
+g = GraphWD('B', B_WD);
+m_outside_g = Clustering('G', g);
+assert(isequal(round(cell2mat(m_outside_g.get('M')),4), clustering_WD), ...
+		    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
+		    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+		
+		m_inside_g = g.get('MEASURE', 'Clustering');
+		assert(isequal(round(cell2mat(m_inside_g.get('M')),4), clustering_WD), ...
+		    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
+		    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+
+%%% ¡test!
+%%%% ¡name!
 GraphBU
 %%%% ¡code!
 B_BU = [
@@ -125,7 +171,6 @@ m_inside_g = g.get('MEASURE', 'Clustering');
 assert(isequal(m_inside_g.get('M'), clustering_BU), ...
     [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
-
 
 %%% ¡test!
 %%%% ¡name!
@@ -147,6 +192,37 @@ assert(isequal(m_outside_g.get('M'), clustering_BD_out), ...
 m_inside_g = g.get('MEASURE', 'Clustering');
 m_inside_g.set('RULE', 'out');
 assert(isequal(m_inside_g.get('M'), clustering_BD_out), ...
+    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+MultigraphBUD
+%%%% ¡code!
+B = [
+    0 1 1 1; 
+    1 0 1 0; 
+    1 1 0 1; 
+    1 0 1 0
+    ];
+
+densities = [70 80 90];
+
+known_clustering = {
+    [0 0 0 0]'
+    [2/3 1 2/3 1]'
+    [2/3 1 2/3 1]'
+    };
+
+g = MultigraphBUD('B', B, 'DENSITIES', densities);
+
+m_outside_g = Clustering('G', g);
+assert(isequal(m_outside_g.get('M'), known_clustering), ...
+    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Clustering');
+assert(isequal(m_inside_g.get('M'), known_clustering), ...
     [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 
@@ -182,6 +258,71 @@ assert(isequal(m_inside_g.get('M'), known_clustering), ...
 
 %%% ¡test!
 %%%% ¡name!
+MultiplexWU
+%%%% ¡code!
+B11 = [
+    0 .1 .2 .1;
+    1 0 .3 0;
+    .2 .3 0 .4;
+    1 0 .4 0
+    ];
+B22 = [
+    0 .1 .2 .1;
+    1 0 .3 0;
+    .2 .3 0 .4;
+    1 0 .4 0
+    ];
+B  = {B11 B22};
+
+known_clustering = [
+		                 [.2741 .3915 .2741 .4309]'
+		                 [.2741 .3915 .2741 .4309]'
+		                 ];      
+		
+		g = MultiplexWU('B', B);
+		m_outside_g = Clustering('G', g);
+		assert(isequal(round(cell2mat(m_outside_g.get('M')),4), known_clustering), ...
+		    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
+		    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+		
+		m_inside_g = g.get('MEASURE', 'Clustering');
+		assert(isequal(round(cell2mat(m_inside_g.get('M')),4), known_clustering), ...
+		    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
+		    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexWD
+%%%% ¡code!
+B11 = [
+    0 .1 .2 .1;
+    1 0 .3 0;
+    .2 .4 0 .3;
+    1 0 .4 0
+    ];
+B22 = [
+    0 .1 .2 .1;
+    1 0 .3 0;
+    .2 .4 0 .3;
+    1 0 .4 0
+    ];
+B  = {B11 B22};
+
+clustering_WD = [.1375 .1621 .1381 .1565 .1375 .1621 .1381 .1565]';   
+
+g = MultiplexWD('B', B);
+m_outside_g = Clustering('G', g);
+assert(isequal(round(cell2mat(m_outside_g.get('M')),4), clustering_WD), ...
+		    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
+		    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+		
+		m_inside_g = g.get('MEASURE', 'Clustering');
+		assert(isequal(round(cell2mat(m_inside_g.get('M')),4), clustering_WD), ...
+		    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
+		    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
 MultiplexBU
 %%%% ¡code!
 B11 = [
@@ -204,43 +345,6 @@ known_clustering = {
                  };      
 
 g = MultiplexBU('B', B);
-m_outside_g = Clustering('G', g);
-assert(isequal(m_outside_g.get('M'), known_clustering), ...
-    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
-    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
-
-m_inside_g = g.get('MEASURE', 'Clustering');
-assert(isequal(m_inside_g.get('M'), known_clustering), ...
-    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
-    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
-
-%%% ¡test!
-%%%% ¡name!
-MultiplexBUT
-%%%% ¡code!
-B11 = [
-      0 1 1 1;
-      1 0 1 0;
-      1 1 0 1;
-      1 0 1 0
-      ];
-B22 = [
-      0 1 1 1;
-      1 0 1 0;
-      1 1 0 1;
-      1 0 1 0
-      ];
-B  = {B11 B22};
-
-thresholds = [0 1];
-known_clustering = {
-                 [2/3 1 2/3 1]'
-                 [2/3 1 2/3 1]'
-                 [0 0 0 0]'
-                 [0 0 0 0]'
-                 };      
-
-g = MultiplexBUT('B', B, 'THRESHOLDS', thresholds);
 m_outside_g = Clustering('G', g);
 assert(isequal(m_outside_g.get('M'), known_clustering), ...
     [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
@@ -281,6 +385,84 @@ assert(isequal(m_outside_g.get('M'), known_clustering), ...
 
 m_inside_g = g.get('MEASURE', 'Clustering');
 m_inside_g.set('RULE', 'cycle');
+assert(isequal(m_inside_g.get('M'), known_clustering), ...
+    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBUD
+%%%% ¡code!
+B11 = [
+      0 1 1 1;
+      1 0 1 0;
+      1 1 0 1;
+      1 0 1 0
+      ];
+B22 = [
+      0 1 1 1;
+      1 0 1 0;
+      1 1 0 1;
+      1 0 1 0
+      ];
+B  = {B11 B22};
+
+densities = [70 80 90];
+known_clustering = {
+    [0 0 0 0]'
+    [0 0 0 0]'
+    [2/3 1 2/3 1]'
+    [2/3 1 2/3 1]'
+    [2/3 1 2/3 1]'
+    [2/3 1 2/3 1]'
+    };
+
+g = MultiplexBUD('B', B, 'DENSITIES', densities);
+m_outside_g = Clustering('G', g);
+assert(isequal(m_outside_g.get('M'), known_clustering), ...
+    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Clustering');
+assert(isequal(m_inside_g.get('M'), known_clustering), ...
+    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+
+
+%%% ¡test!
+%%%% ¡name!
+MultiplexBUT
+%%%% ¡code!
+B11 = [
+      0 1 1 1;
+      1 0 1 0;
+      1 1 0 1;
+      1 0 1 0
+      ];
+B22 = [
+      0 1 1 1;
+      1 0 1 0;
+      1 1 0 1;
+      1 0 1 0
+      ];
+B  = {B11 B22};
+
+thresholds = [0 1];
+known_clustering = {
+                 [2/3 1 2/3 1]'
+                 [2/3 1 2/3 1]'
+                 [0 0 0 0]'
+                 [0 0 0 0]'
+                 };      
+
+g = MultiplexBUT('B', B, 'THRESHOLDS', thresholds);
+m_outside_g = Clustering('G', g);
+assert(isequal(m_outside_g.get('M'), known_clustering), ...
+    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Clustering');
 assert(isequal(m_inside_g.get('M'), known_clustering), ...
     [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
