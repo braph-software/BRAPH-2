@@ -10,7 +10,7 @@
 
 \maketitle
 
-\fig{figure*}
+\fig{figure}
 	{fig:xxx}
 	{
 	[b!]
@@ -26,6 +26,170 @@
 This is the tutorial to work with the Graphical User Interface of Brain Atlas, which is the first step that is required to perform an analysis in BRAPH 2.0. 
 In this Tutorial, we will explain you how to create a new atlas or upload an atlas that is already prepared.
 \end{abstract}
+
+
+\clearpage
+\section{Upload a Brain Atlas}
+
+Currently we provide several brain atlases that are commonly used in the field of brain connectomics, which can be downloaded from our website (http://braph.org/software/brain-atlases/) and include the following ones:
+
+
+- AAL90 (Automated Anatomical Labelling atlas with 90 cortical and subcortical regions)
+
+
+- AAL116 (Automated Anatomical Labelling atlas with 116 cortical and subcortical regions, including cerebellar areas)
+
+
+- BNA (Brainnetome atlas with 246 cortical and subcortical regions)
+
+
+- Craddock (Functional atlas with 200 cortical and subcortical regions)
+
+
+- Desikan (Anatomical atlas with 68 cortical and 14 subcortical gray matter regions derived from the FreeSurfer software)
+
+
+-  Destrieux (Anatomical atlas with 148 cortical and 14 subcortical gray matter regions derived from the FreeSurfer software)
+
+
+- Schaefer (Functional brain atlas with 200 cortical regions that belong to 7 different resting-state fMRI networks)
+
+
+
+
+\section{Create a New Brain Atlas}
+
+To prepare a Brain Atlas in BRAPH 2.0 format, you should create a new excel file (.xls or .xlsx) and write the following information in the first 4 rows:
+
+- Brain Atlas ID (row 1, column 1).
+For example: Desikan FreeSurfer
+
+
+- Brain Atlas LABEL (row 2, column 1).
+For example: Desikan FreeSurfer Labels
+
+
+- Brain Atlas NOTES (row 3, column 1).
+For example: Desikan FreeSurfer Nodes
+
+
+- Brain Surface Name (row 4, column 1).
+For example: BrainMeshICBM152.nv
+
+
+Then, from row 5, you should include the IDs of the regions of your atlas (1st column), the Labels of the regions of your atlas (2nd column), the X, Y and Z coordinates (3rd, 4th and 5th columns) and the brain hemisphere or any notes you would like to add (6th column). Take a look at the following snapshot for a quick overview of the information that should be included in a newly created Brain Atlas:
+
+
+\section{Upload the Brain Atlas}
+
+To open the Graphical User Interface and Upload the Brain Atlas, you can do it from the command line by typing the following information:
+
+
+1) Create the object Brain Atlas
+
+ba = BrainAtlas();
+
+
+2) Create a Graphical User Interface (GUI) to upload the Brain Atlas
+
+gui = GUIElement('PE', ba);
+
+
+3) Draw the Graphical User Interface
+
+gui.get('DRAW')
+
+
+4) Show  the Graphical User Interface
+
+gui.get('SHOW')
+
+
+You can also do it by typing braph2, which will open the Graphical User Interface of the BRAPH 2.0 software. Here you must first select a Pipeline containing the analyses steps that you want to apply to your data. Once a Pipeline has been selected, the first window will allow you to upload the Brain Atlas, as shown in the snapshot below:
+
+ 
+In this window you have a Menu that you can use to Open a File (File -> Open) and select a Brain Atlas that is already prepared or Import (Import -> File) a Brain Atlas you have created in excel or text format. If you Import a Brain Atlas you have created and an error message appears, check again your Brain Atlas file for missing or incorrect information based on the format for new Brain Atlases we describe above. This is what you should see:
+
+\fig{figure}
+	{fig:xxx}
+	{
+	[b!]
+	\includegraphics{tut_ba/fig7.png}
+	}
+	{Brain Atlas GUI.}
+	{
+	Graphical user interface to work with brain atlases. 
+	}
+
+Once you have uploaded a Brain Atlas, you will notice that the information regarding the Brain Atlas ID, Brain Atlas NAME and Brain Regions sections are now filled with the information of the atlas. You can edit the information included in any of these sections. 
+
+\fig{figure}
+	{fig:xxx}
+	{
+	[b!]
+	\includegraphics{tut_ba/fig8.png}
+	}
+	{Brain Atlas GUI.}
+	{
+	Graphical user interface to work with brain atlases. 
+	}
+
+Once you are satisfied you can proceed with the option "Plot Brain Atlas", which will open a brain surface that contains the nodes corresponding to the regions of your atlas.
+
+\fig{figure}
+	{fig:xxx}
+	{
+	[b!]
+	\includegraphics{tut_ba/fig2.png}
+	}
+	{Brain Atlas GUI.}
+	{
+	Graphical user interface to work with brain atlases. 
+	}
+	
+This new window has a large menu that allows you to change its visualization. We suggest you try the different options to understand how they change the figure. Importantly, within this menu there is one option called Settings Brain Surface which, when selected, will open another window, as can be seen in the snapshot below:
+
+\fig{figure*}
+	{fig:xxx}
+	{
+	[b!]
+	\includegraphics{tut_ba/fig3.png}
+	}
+	{Brain Atlas GUI.}
+	{
+	Graphical user interface to work with brain atlases. 
+	}
+
+This window allows you to change different visualization options, which are important to create a final figure with all the nodes included in your analysis, which is often included within the 1st Figure of a manuscript.
+
+
+Most things in this panel are intuitive and again we suggest that you try different options until you achieve the visualization you desire, for example:
+
+ \fig{figure*}
+	{fig:xxx}
+	{
+	[b!]
+	\includegraphics{tut_ba/fig4.png}
+	}
+	{Brain Atlas GUI.}
+	{
+	Graphical user interface to work with brain atlases. 
+	}
+
+
+Some things that might not be intuitive is the difference between spheres and symbols (the first one is the geometrical structure of a node, whereas the second is just a dot inside the sphere that denotes the presence of a region). 
+
+
+If you wish to change the size of the spheres of all nodes, you need to change the size of one node, select other nodes in the first column, right click to select Apply to Selection.
+
+
+Finally the codes for different colours in the FACECOLOR column correspond to the hexadecimal form of RGB colors, which can be found online.
+
+
+
+
+
+
 
 %%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
@@ -55,128 +219,3 @@ In this Tutorial, we will explain you how to create a new atlas or upload an atl
 	caption
 	}
 
-
-%%%%% %%%%% %%%%% %%%%% %%%%%
-\clearpage
-\section{Prepared Brain Atlases}
-
-Currently we provide several brain atlases that are commonly used in the literature and that can be downloaded from our website, specifically: http://braph.org/software/brain-atlases/:
-
-
-- AAL90 (automated anatomical labeling with 90 regions)
-
-
-- AAL116 (automated anatomical labeling with 116 regions)
-
-
-- BNA (Brainnetome with 246 regions)
-
-
-- Craddock (functional atlas with 200 regions)
-
-
-- Desikan (anatomical atlas with 68 cortical and 14 subcortical gray matter regions from the FreeSurfer software)
-
-
--  Destrieux (anatomical atlas with 148 cortical and 14 subcortical gray matter regions from the FreeSurfer software)
-
-
-- Schaefer (functional brain atlas with 200 regions that belong to 7 different resting-state networks)
-
-
-\section{Create a New Brain Atlas}
-
-To prepare a Brain Atlas in BRAPH 2.0 format, you should open a new excel file (.xls or .xlsx) and write the following information in the first 4 rows:
-
-- Brain Atlas ID (row 1, column 1).
-For example: Desikan FreeSurfer
-
-
-- Brain Atlas LABEL (row 2, column 1).
-For example: Desikan FreeSurfer Labels
-
-
-- Brain Atlas NOTES (row 3, column 1).
-For example: Desikan FreeSurfer Nodes
-
-
-- Brain Surface Name (row 4, column 1).
-For example: BrainMeshICBM152.nv
-
-
-Then, from row 5, you should include the short IDs of the regions of your atlas (1st column), the full Labels of the  regions of your atlas (2nd column), the x, y and z coordinates (3rd, 4th and 5th columns), the brain hemisphere (6th column) and any notes you would like to add (7th column). Take a look at the following snapshot for a quick overview of this information:
-
-
-\section{Upload the Brain Atlas}
-
-To open the Graphical User Interface and Upload the Brain Atlas, you can do it from the command line by typing the following information:
-
-
-1) Create the object Brain Atlas
-ba = BrainAtlas();
-
-
-2) Create a Graphical User Interface (GUI) to upload the Brain Atlas
-gui = GUIElement('PE', ba);
-
-
-3) Draw the Graphical User Interface
-gui.get('DRAW')
-
-
-4) Show  the Graphical User Interface
-gui.get('SHOW')
-
-
-You can also do it by typing braph2, which will open the Graphical User Interface of the BRAPH 2.0 software. Here you must first select a Pipeline containing the analyses steps that you want to apply to your data. Once a Pipeline has been selected, the first window will allow you to upload the Brain Atlas, as shown in the snapshot below:
-
- 
-In this window you have a Menu that you can use to Open a File (File -> Open) and select a Brain Atlas that is already prepared or Import a Brain Atlas you have created in excel or text format. If you Import a Brain Atlas you have created and an error message appears, check again your Brain Atlas file for missing or incorrectly included information based on the format described above.
-
-
-Once you have uploaded a Brain Atlas, you will notice that the information regarding the Brain Atlas ID, Brain Atlas NAME and Brain Regions sections are now filled with the information of the atlas. You can edit the information in any of these sections. Once you are satisfied you can proceed with the option "Plot Brain Atlas", which will open a brain surface with the nodes corresponding to the regions of your atlas.
-
-
-This new window has a large menu that allows you to change the visualization of the figure. We suggest you try the different options to understand how they change the figure. Importantly, within this menu there is one option called Settings Brain Surface that will open another window when selected, as can be seen in the snapshot below:
-
-
-This window allows you to change different visualization options, which are important to create a final figure with all the nodes included in your analysis, which is often included within the 1st Figure of a manuscript.
-
-
-Most things in this panel are intuitive and again we suggest that you try different options until you achieve the desired results. Some things that might not be intuitive is the difference between spheres and symbols (the first one is the geometrical structure of a node, whereas the second is just a dot inside the sphere that denotes the presence of a region). 
-
-
-If you wish to change the size of the spheres of all nodes, you need to change the size of one node, select other nodes in the first column and using the right click of your mouse select Apply to Selection.
-
-
-Finally the codes for different colors in the FACECOLOR column correspond to the hexadecimal form of RGB colors, which can be found online.
-
-
-
-
- - explain diff symbols regions
- - // select 1 apply to all
- - change colors
- 
-
-the generator file \fn{*.gen.m} for a new measure which can the be compiled by \code{braph2genesis}, using the measures \code{Degree}, \code{DegreeAv}, and \code{Distance} as examples.
-
-\tableofcontents
-
-%%%%% %%%%% %%%%% %%%%% %%%%%
-\clearpage
-\section{Implementation of Degree}
-
-xxx
-
-\subsection{Implementation of Degree}
-
-\begin{enumerate}
-\item
-\item
-\end{enumerate}
-
-%\bibliography{biblio}
-%\bibliographystyle{plainnat}
-
-\end{document}
