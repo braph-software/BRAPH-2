@@ -4,7 +4,7 @@ Triangles < Measure(m, triangles) is the graph triangles.
 %%% ¡description!
 The triangles are calculated as the number of neighbors of a node that are 
  also neighbors of each other within a layer. In weighted graphs, the triangles are 
- calculated as geometric mean of the weights of the edges forming the triangle.
+ calculated as the geometric mean of the weights of the edges forming the triangle.
 
 %% ¡props_update!
 
@@ -16,7 +16,7 @@ NAME (constant, string) is the name of the triangles.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the triangles.
 %%%% ¡default!
-'The triangles are calculated as the number of neighbors of a node that are also neighbors of each other within a layer. In weighted graphs, the triangles are calculated as geometric mean of the weights of the edges forming the triangle.'
+'The triangles are calculated as the number of neighbors of a node that are also neighbors of each other within a layer. In weighted graphs, the triangles are calculated as the geometric mean of the weights of the edges forming the triangle.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the triangles.
@@ -95,8 +95,9 @@ end
 value = triangles;
 
 %% ¡props!
+
 %%% ¡prop! 
-RULE (parameter, option) is the rule to determine what is a triangle in directed networks.
+RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.
 %%%% ¡settings!
 {'all' 'middleman' 'in' 'out' 'cycle'}
 %%%% ¡default!
@@ -110,16 +111,18 @@ RULE (parameter, option) is the rule to determine what is a triangle in directed
 %%% ¡test!
 %%%% ¡name!
 GraphWU
+%%%% ¡probability!
+.01
 %%%% ¡code!
 B = [
-    0 .2 .3 .4;
-    .2 0 .5 0;
-    .3 .5 0 .6;
-    .4 0 .6 0
-    ];
+	0 .2 .3 .4;
+	.2 0 .5 0;
+	.3 .5 0 .6;
+	.4 0 .6 0
+	];
 
 known_triangles = diag((B.^(1/3))^3); % formula for cycle triangles
-known_triangles = known_triangles / 2  ; % because since its undirected we only need the upper or lower connections of the matrix
+known_triangles = known_triangles / 2; % because since the graph is undirected, we only need the upper or lower connections of the matrix
 
 g = GraphWU('B', B);
 m_outside_g = Triangles('G', g);
@@ -136,6 +139,8 @@ assert(isequal(m_inside_g, known_triangles), ...
 %%% ¡test!
 %%%% ¡name!
 GraphWD
+%%%% ¡probability!
+.01
 %%%% ¡code!
 B = [
     0 .2 .3 .4;
@@ -161,6 +166,8 @@ assert(isequal(m_inside_g, known_triangles), ...
 %%% ¡test!
 %%%% ¡name!
 GraphBU
+%%%% ¡probability!
+.01
 %%%% ¡code!
 B = [
     0 1 1 1;
@@ -185,6 +192,8 @@ assert(isequal(m_inside_g.get('M'), known_triangles), ...
 %%% ¡test!
 %%%% ¡name!
 GraphBD
+%%%% ¡probability!
+.01
 %%%% ¡code!
 B = [
     0 0 1; 
@@ -280,6 +289,8 @@ assert(isequal(m_inside_g.get('M'), known_triangles_all), ...
 %%% ¡test!
 %%%% ¡name!
 MultigraphBUT
+%%%% ¡probability!
+.01
 %%%% ¡code!
 B = [
     0 1 1 1;
@@ -309,6 +320,8 @@ assert(isequal(m_inside_g.get('M'), known_triangles), ...
 %%% ¡test!
 %%%% ¡name!
 MultigraphBUD
+%%%% ¡probability!
+.01
 %%%% ¡code!
 densities = [70 80 90];
 B = [
@@ -339,6 +352,8 @@ assert(isequal(m_inside_g.get('M'), known_triangles), ...
 %%% ¡test!
 %%%% ¡name!
 MultigraphBUT
+%%%% ¡probability!
+.01
 %%%% ¡code!
 thresholds = [.1 .2 .3];
 B = [
@@ -369,6 +384,8 @@ assert(isequal(m_inside_g.get('M'), known_triangles), ...
 %%% ¡test!
 %%%% ¡name!
 MultiplexWU
+%%%% ¡probability!
+.01
 %%%% ¡code!
 B11 = [
     0 .2 .3 .4;
@@ -403,6 +420,8 @@ assert(isequal(m_inside_g.get('M'), known_triangles), ...
 %%% ¡test!
 %%%% ¡name!
 MultiplexBU
+%%%% ¡probability!
+.01
 %%%% ¡code!
 B11 = [
       0 1 1 1;
@@ -438,6 +457,8 @@ assert(isequal(m_inside_g.get('M'), known_triangles), ...
 %%% ¡test!
 %%%% ¡name!
 MultiplexBD
+%%%% ¡probability!
+.01
 %%%% ¡code!
 B11 = [
     0 0 1;
@@ -467,9 +488,12 @@ m_inside_g = g.get('MEASURE', 'Triangles');
 assert(isequal(m_inside_g.get('M'), known_triangles), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g)  ' is not being calculated correctly for ' class(g) '.'])
+
 %%% ¡test!
 %%%% ¡name!
 MultiplexBUD
+%%%% ¡probability!
+.01
 %%%% ¡code!
 densities = [70 80 90];
 B11 = [
@@ -511,6 +535,8 @@ assert(isequal(m_inside_g.get('M'), known_triangles), ...
 %%% ¡test!
 %%%% ¡name!
 MultiplexBUT
+%%%% ¡probability!
+.01
 %%%% ¡code!
 thresholds = [.1 .2 .3];
 B11 = [
