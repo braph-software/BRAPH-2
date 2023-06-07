@@ -109,6 +109,7 @@ if L > 0 && ~isempty(cell2mat(A_WU))
 end
 
 value = A;
+
 %%%% ¡gui!
 pr = PanelPropCell('EL', g, 'PROP', MultilayerBUD.A, ...
     'TABLE_HEIGHT', s(40), ...
