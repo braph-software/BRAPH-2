@@ -1,8 +1,8 @@
 %% ¡header!
-OrdMlBUT < OrdMlWU (g, ordinal multilayer binary undirected with fixed thresholds) is a binary undirected ordinal multilayer with fixed thresholds.
+OrdMlBUT < OrdMlWU (g, binary undirected multilayer with fixed thresholds) is an ordinal multilayer binary undirected with fixed thresholds.
 
 %%% ¡description!
-In a multilayer binary undirected with fixed thresholds (BUT) graph, layers 
+In an ordinal binary undirected multilayer with fixed thresholds (BUT) graph, layers 
  consist of binary undirected (BU) multilayer graphs derived from the same 
  weighted supra-connectivity matrices binarized at different thresholds. Layers 
  within the binary undirected (BU) multilayer graphs could have different number of nodes 
@@ -21,7 +21,7 @@ NAME (constant, string) is the name of the binary undirected ordinal multilayer 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the binary undirected multilayer with fixed thresholds.
 %%%% ¡default!
-'In a multilayer binary undirected with fixed thresholds (BUT) graph, layers consist of binary undirected (BU) multilayer graphs derived from the same weighted supra-connectivity matrices binarized at different thresholds. Layers within the binary undirected (BU) multilayer graphs could have different number of nodes with within-layer binary undirected edges. Edges can be either 0 (absence of connection) or 1 (existence of connection). The supra-connectivity matrix has a number of partitions equal to the number of thresholds. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.'
+'In an ordinal binary undirected multilayer with fixed thresholds (BUT) graph, layers consist of binary undirected (BU) multilayer graphs derived from the same weighted supra-connectivity matrices binarized at different thresholds. Layers within the binary undirected (BU) multilayer graphs could have different number of nodes with within-layer binary undirected edges. Edges can be either 0 (absence of connection) or 1 (existence of connection). The supra-connectivity matrix has a number of partitions equal to the number of thresholds. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the binary undirected ordinal multilayer with fixed thresholds.
@@ -92,7 +92,7 @@ end
 value = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
-A (result, cell) is the cell array containing the multilayer binary adjacency matrices of the binary undirected multilayer. 
+A (result, cell) is the cell array containing the multilayer binary supra-adjacency matrices of the binary undirected multilayer. 
 %%%% ¡calculate!
 A_WU = calculateValue@OrdMlWU(g, prop);
 

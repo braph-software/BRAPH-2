@@ -1,5 +1,5 @@
 %% ¡header!
-OrdMlBUD < OrdMlWU (g, binary undirected multilayer with fixed densities) is a ordinal multilayer binary undirected with fixed densities.
+OrdMlBUD < OrdMlWU (g, binary undirected multilayer with fixed densities) is an ordinal multilayer binary undirected with fixed densities.
 
 %%% ¡description!
 In an ordinal binary undirected multilayer with fixed densities (BUD) graph, layers 
@@ -22,7 +22,6 @@ NAME (constant, string) is the name of the ordinal binary undirected multilayer 
 DESCRIPTION (constant, string) is the description of the ordinal binary undirected multilayer with fixed densities.
 %%%% ¡default!
 'In an ordinal binary undirected multilayer with fixed densities (BUD) graph, layers consist of binary undirected (BU) multilayer graphs derived from the same weighted supra-connectivity matrices binarized at different densities. Layers within the binary undirected (BU) multilayer graphs could have different number of nodes with within-layer binary undirected edges. Edges can be either 0 (absence of connection) or 1 (existence of connection). The supra-connectivity matrix has a number of partitions equal to the number of densities. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.'
-
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ordinal binary undirected multilayer with fixed densities.
 %%% ¡_prop!
@@ -92,7 +91,7 @@ end
 value = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
-A (result, cell) is the cell array containing the multilayer binary adjacency matrices of the binary undirected multilayer. 
+A (result, cell) is the cell array containing the multilayer binary supra-adjacency matrices of the binary undirected multilayer. 
 %%%% ¡calculate!
 A_WU = calculateValue@OrdMlWU(g, prop);
 

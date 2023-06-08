@@ -2,11 +2,11 @@
 OrdMlBU < Graph (g, ordinal multilayer binary undirected graph) is an ordinal multilayer binary undirected graph.
 
 %%% ¡description!
-In an ordinal multilayer binary undirected (BU) graph, layers have different number 
+In an ordinal multilayer binary undirected (BU) graph, layers could have different number 
  of nodes with within-layer undirected edges either 0 (absence of connection) 
  or 1 (existence of connection).
-The connectivity matrices are symmetric.
-There are connections between layers connecting the corresponding nodes.
+The connectivity matrices are symmetric (within layer).
+All node connections are allowed between layers.
 The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.
 
 %% ¡props_update!
@@ -19,7 +19,7 @@ NAME (constant, string) is the name of the ordinal multilayer binary undirected 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ordinal multilayer binary undirected graph.
 %%%% ¡default!
-'In an ordinal multilayer binary undirected (BU) graph, layers have different number of nodes with within-layer undirected edges either 0 (absence of connection) or 1 (existence of connection). The connectivity matrices are symmetric. There are connections between layers connecting the corresponding nodes.'
+'In an ordinal multilayer binary undirected (BU) graph, layers could have different number of nodes with within-layer undirected edges either 0 (absence of connection) or 1 (existence of connection). The connectivity matrices are symmetric (within layer). All node connections are allowed between layers. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ordinal multilayer binary undirected graph.
@@ -90,7 +90,7 @@ end
 value = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
-A (result, cell) is the cell containing the multilayer binary adjacency matrices of the multilayer binary undirected graph.
+A (result, cell) is the cell containing the within-layer binary adjacency matrices of the multilayer binary undirected graph and the ordinal connections between layers.
 %%%% ¡calculate!
 B = g.get('B'); %#ok<PROPLC>
 L = length(B); %#ok<PROPLC> % number of layers
