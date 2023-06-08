@@ -61,8 +61,9 @@ M (result, cell) is the average path length.
 g = m.get('G');  % graph from measure class
 
 path_length = calculateValue@PathLength(m, prop);
-path_length_av = cell(g.layernumber(), 1);
-path_length_rule = m.get('rule');
+L = g.get('LAYERNUMBER');
+path_length_av = cell(L, 1);
+path_length_rule = m.get('RULE');
 parfor li = 1:1:length(path_length_av)
     switch lower(path_length_rule)
         case {'subgraphs'}
@@ -81,6 +82,7 @@ value = path_length_av;
 %%% ¡excluded_props!
 [DegreeAv.PFM]
 
+
 %%% ¡test!
 %%%% ¡name!
 GraphWU
@@ -88,49 +90,50 @@ GraphWU
 .01
 %%%% ¡code!
 B = [
-    0   .6  1
-    .6  0   0
-    1   0   0
+    0   .1  0   0
+    .1  0   0  0
+    0   0  0   .1
+    0   0   .1  0
     ];
 
-known_degree_av = {mean([2 1 1])};
+known_path_length = {mean([30 30 30 30]')};
 
 g = GraphWU('B', B);
 
-m_outside_g = DegreeAv('G', g);
-assert(isequal(m_outside_g.get('M'), known_degree_av), ...
-    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+m_outside_g = PathLengthAv('G', g);
+assert(isequal(m_outside_g.get('M'), known_path_length), ...
+    [BRAPH2.STR ':PathLengthAv:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 
-m_inside_g = g.get('MEASURE', 'DegreeAv');
-assert(isequal(m_inside_g.get('M'), known_degree_av), ...
-    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+m_inside_g = g.get('MEASURE', 'PathLengthAv');
+assert(isequal(m_inside_g.get('M'), known_path_length), ...
+    [BRAPH2.STR ':PathLengthAv:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 
 %%% ¡test!
 %%%% ¡name!
 GraphBU
-%%%% ¡probability!
-.01
 %%%% ¡code!
 B = [
-    0   1   1
-    1   0   0
-    1   0   0
+    0   .1  0   0
+    .2  0   .1  0
+    0   .1  0   .2
+    0   0   .1  0
     ];
 
-known_degree_av = {mean([2 1 1])};
+known_path_length = {harmmean([18/11 18/15 18/15 18/11]')};
 
 g = GraphBU('B', B);
+path_length = PathLengthAv('G', g).get('M');
 
-m_outside_g = DegreeAv('G', g);
-assert(isequal(m_outside_g.get('M'), known_degree_av), ...
-    [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
+m_outside_g = PathLengthAv('G', g);
+assert(isequal(m_outside_g.get('M'), known_path_length), ...
+    [BRAPH2.STR ':PathLengthAv:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 
-m_inside_g = g.get('MEASURE', 'DegreeAv');
-assert(isequal(m_inside_g.get('M'), known_degree_av), ...
-    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+m_inside_g = g.get('MEASURE', 'PathLengthAv');
+assert(isequal(m_inside_g.get('M'), known_path_length), ...
+    [BRAPH2.STR ':PathLengthAv:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 
 %%% ¡test!
@@ -140,60 +143,64 @@ MultigraphBUD
 .01
 %%%% ¡code!
 B = [
-    0   .2   .7
-    .2   0   .1
-    .7  .1   0
+     0   .1  0   0
+    .2  0   .1  0
+    0   .1  0   .2
+    0   0   .1  0
     ];
 
-densities = [0 33 67 100];
+densities = [33 67 100];
 
-known_degree = { ...
-    mean([0 0 0])
-    mean([1 0 1])
-    mean([2 1 1])
-    mean([2 2 2])
+known_path_length = { ...
+    mean([3   3   3   3]')
+    1.38
+    mean([1 1 1 1]')
     };
 
 g = MultigraphBUD('B', B, 'DENSITIES', densities);
 
-m_outside_g = DegreeAv('G', g);
-assert(isequal(m_outside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+m_outside_g = PathLengthAv('G', g);
+pl_answer = cellfun(@(x) round(x, 2), m_outside_g.get('M'), 'UniformOutput', false);
+assert(isequal(pl_answer, known_path_length), ...
+    [BRAPH2.STR ':PathLengthAv:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 
-m_inside_g = g.get('MEASURE', 'DegreeAv');
-assert(isequal(m_inside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+m_inside_g = g.get('MEASURE', 'PathLengthAv');
+pl_answer = cellfun(@(x) round(x, 2), m_inside_g.get('M'), 'UniformOutput', false);
+assert(isequal(pl_answer, known_path_length), ...
+    [BRAPH2.STR ':PathLengthAv:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 
 %%% ¡test!
 %%%% ¡name!
 MultigraphBUT
+%%%% ¡probability!
+.01
 %%%% ¡code!
 B = [
-    0   .2   .7
-    .2   0   0
-    .7   0   0
+     0   .1  0   0
+    .2  0   .1  0
+    0   .1  0   .2
+    0   0   .1  0
     ];
 
-thresholds = [0 .5 1];
+thresholds = [0 1];
 
-known_degree = { ...
-    mean([2 1 1])
-    mean([1 0 1])
-    mean([0 0 0])
+known_path_length = { ...
+    harmmean([18/11 18/15 18/15 18/11]')
+    Inf
     };
 
 g = MultigraphBUT('B', B, 'THRESHOLDS', thresholds);
 
-m_outside_g = DegreeAv('G', g);
-assert(isequal(m_outside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+m_outside_g = PathLengthAv('G', g);
+assert(isequal(m_outside_g.get('M'), known_path_length), ...
+    [BRAPH2.STR ':PathLengthAv:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 
-m_inside_g = g.get('MEASURE', 'DegreeAv');
-assert(isequal(m_inside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+m_inside_g = g.get('MEASURE', 'PathLengthAv');
+assert(isequal(m_inside_g.get('M'), known_path_length), ...
+    [BRAPH2.STR ':PathLengthAv:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 
 %%% ¡test!
@@ -202,33 +209,37 @@ MultiplexWU
 %%%% ¡probability!
 .01
 %%%% ¡code!
-B11 = [
-    0   .2  1
-    .2  0   0
-    1   0   0
+A11 = [
+    0   .1  0   0
+    .1  0   0  0
+    0   0  0   .1
+    0   0   .1  0
     ];
-B22 = [
-    0   1   0
-    1   0   .3
-    0   .3  0
-    ];
-B= {B11 B22};
 
-known_degree = {
-    mean([2 1 1])
-    mean([1 2 1])
+A22 = [
+    0   .1  0   0
+    .1  0   0  0
+    0   0  0   .1
+    0   0   .1  0
+    ];
+
+B = {A11  A22};
+
+known_path_length = {
+    mean([30 30 30 30]')
+    mean([30 30 30 30]')
     };
 
 g = MultiplexWU('B', B);
 
-m_outside_g = DegreeAv('G', g);
-assert(isequal(m_outside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+m_outside_g = PathLengthAv('G', g);
+assert(isequal(m_outside_g.get('M'), known_path_length), ...
+    [BRAPH2.STR ':PathLengthAv:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 
-m_inside_g = g.get('MEASURE', 'DegreeAv');
-assert(isequal(m_inside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+m_inside_g = g.get('MEASURE', 'PathLengthAv');
+assert(isequal(m_inside_g.get('M'), known_path_length), ...
+    [BRAPH2.STR ':PathLengthAv:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 
 %%% ¡test!
@@ -237,33 +248,36 @@ MultiplexBU
 %%%% ¡probability!
 .01
 %%%% ¡code!
-B11 = [
-    0   1   1
-    1   0   0
-    1   0   0
-    ];
-B22 = [
-    0   1   0
-    1   0   1
-    0   1   0
-    ];
-B = {B11 B22};
+A11 = [
+      0   .1  0   0
+      .2  0   .1  0
+      0   .1  0   .2
+      0   0   .1  0
+      ];
 
-known_degree = {
-    mean([2 1 1])
-    mean([1 2 1])
+A22 = [
+      0   .1  0   0
+      .2  0   .1  0
+      0   .1  0   .2
+      0   0   .1  0
+      ];
+B = { A11  A22};
+
+known_path_length = {
+    harmmean([18/11 18/15 18/15 18/11]')
+    harmmean([18/11 18/15 18/15 18/11]')
     };
 
 g = MultiplexBU('B', B);
 
-m_outside_g = DegreeAv('G', g);
-assert(isequal(m_outside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+m_outside_g = PathLengthAv('G', g);
+assert(isequal(m_outside_g.get('M'), known_path_length), ...
+    [BRAPH2.STR ':PathLengthAv:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 
-m_inside_g = g.get('MEASURE', 'DegreeAv');
-assert(isequal(m_inside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+m_inside_g = g.get('MEASURE', 'PathLengthAv');
+assert(isequal(m_inside_g.get('M'), known_path_length), ...
+    [BRAPH2.STR ':PathLengthAv:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 
 %%% ¡test!
@@ -273,38 +287,38 @@ MultiplexBUD
 .01
 %%%% ¡code!
 B = [
-    0   .2   .7
-    .2   0   .1
-    .7  .1   0
+    0   .1  0   0
+    .2  0   .1  0
+    0   .1  0   .2
+    0   0   .1  0
     ];
 
-densities = [0 33 67 100];
+densities = [33 67 100];
 
-known_degree = { ...
-    mean([0 0 0])
-    mean([0 0 0])
-    mean([0 0 0])
-    mean([1 0 1])
-    mean([1 0 1])
-    mean([1 0 1])
-    mean([2 1 1])
-    mean([2 1 1])
-    mean([2 1 1])
-    mean([2 2 2])
-    mean([2 2 2])
-    mean([2 2 2])
+known_path_length = { ...
+    mean([3   3   3   3]')
+    mean([3   3   3   3]')
+    mean([3   3   3   3]')
+    1.38
+    1.38
+    1.38
+    mean([1 1 1 1]')
+    mean([1 1 1 1]')
+    mean([1 1 1 1]')
     };
 
 g = MultiplexBUD('B', {B B B}, 'DENSITIES', densities);
 
-m_outside_g = DegreeAv('G', g);
-assert(isequal(m_outside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+m_outside_g = PathLengthAv('G', g);
+pl_answer = cellfun(@(x) round(x, 2), m_outside_g.get('M'), 'UniformOutput', false);
+assert(isequal(pl_answer, known_path_length), ...
+    [BRAPH2.STR ':PathLengthAv:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 
-m_inside_g = g.get('MEASURE', 'DegreeAv');
-assert(isequal(m_inside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+m_inside_g = g.get('MEASURE', 'PathLengthAv');
+pl_answer = cellfun(@(x) round(x, 2), m_inside_g.get('M'), 'UniformOutput', false);
+assert(isequal(pl_answer, known_path_length), ...
+    [BRAPH2.STR ':PathLengthAv:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 
 %%% ¡test!
@@ -314,104 +328,33 @@ MultiplexBUT
 .01
 %%%% ¡code!
 B = [
-    0   .2   .7
-    .2   0   0
-    .7   0   0
+    0   .1  0   0
+    .2  0   .1  0
+    0   .1  0   .2
+    0   0   .1  0
     ];
 
-thresholds = [0 .5 1];
+thresholds = [0 1];
 
-known_degree = { ...
-    mean([2 1 1])
-    mean([2 1 1])
-    mean([2 1 1])
-    mean([1 0 1])
-    mean([1 0 1])
-    mean([1 0 1])
-    mean([0 0 0])
-    mean([0 0 0])
-    mean([0 0 0])
+known_path_length = { ...
+    1.38
+    1.38
+    1.38
+    Inf
+    Inf
+    Inf
     };
 
 g = MultiplexBUT('B', {B B B}, 'THRESHOLDS', thresholds);
 
-m_outside_g = DegreeAv('G', g);
-assert(isequal(m_outside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+m_outside_g = PathLengthAv('G', g);
+pl_answer = cellfun(@(x) round(x, 2), m_outside_g.get('M'), 'UniformOutput', false);
+assert(isequal(pl_answer, known_path_length), ...
+    [BRAPH2.STR ':PathLengthAv:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 
-m_inside_g = g.get('MEASURE', 'DegreeAv');
-assert(isequal(m_inside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+m_inside_g = g.get('MEASURE', 'PathLengthAv');
+pl_answer = cellfun(@(x) round(x, 2), m_inside_g.get('M'), 'UniformOutput', false);
+assert(isequal(pl_answer, known_path_length), ...
+    [BRAPH2.STR ':PathLengthAv:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
-
-%%% ¡test!
-%%%% ¡name!
-OrdMxWU
-%%%% ¡probability!
-.01
-%%%% ¡code!
-B11 = [
-    0   .2  1
-    .2  0   0
-    1   0   0
-    ];
-B22 = [
-    0   1   0
-    1   0   .3
-    0   .3  0
-    ];
-B= {B11 B22};
-
-known_degree = {
-    mean([2 1 1])
-    mean([1 2 1])
-    };
-
-g = OrdMxWU('B', B);
-
-m_outside_g = DegreeAv('G', g);
-assert(isequal(m_outside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
-    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
-
-m_inside_g = g.get('MEASURE', 'DegreeAv');
-assert(isequal(m_inside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
-    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
-
-%%% ¡test!
-%%%% ¡name!
-OrdMxBU
-%%%% ¡probability!
-.01
-%%%% ¡code!
-B11 = [
-    0   1   1
-    1   0   0
-    1   0   0
-    ];
-B22 = [
-    0   1   0
-    1   0   1
-    0   1   0
-    ];
-B = {B11 B22};
-
-known_degree = {
-    mean([2 1 1])
-    mean([1 2 1])
-    };
-
-g = OrdMxBU('B', B);
-
-m_outside_g = DegreeAv('G', g);
-assert(isequal(m_outside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
-    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
-
-m_inside_g = g.get('MEASURE', 'DegreeAv');
-assert(isequal(m_inside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
-    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
-

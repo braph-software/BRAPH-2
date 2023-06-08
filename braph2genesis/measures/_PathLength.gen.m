@@ -176,7 +176,6 @@ B = [
 densities = [33 67 100];
 
 known_path_length = { ...
-    [Inf   Inf   Inf   Inf]'
     [3   3   3   3]'
     [1.64   1.2   1.2  1.64]'
     [1 1 1 1]'
@@ -186,13 +185,13 @@ g = MultigraphBUD('B', B, 'DENSITIES', densities);
 
 m_outside_g = PathLength('G', g);
 pl_answer = cellfun(@(x) round(x, 2), m_outside_g.get('M'), 'UniformOutput', false);
-assert(isequal(m_outside_g.get('M'), known_path_length), ...
+assert(isequal(pl_answer, known_path_length), ...
     [BRAPH2.STR ':PathLength:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 
 m_inside_g = g.get('MEASURE', 'PathLength');
 pl_answer = cellfun(@(x) round(x, 2), m_inside_g.get('M'), 'UniformOutput', false);
-assert(isequal(m_inside_g.get('M'), known_path_length), ...
+assert(isequal(pl_answer, known_path_length), ...
     [BRAPH2.STR ':PathLength:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 
@@ -321,12 +320,15 @@ B = [
 densities = [33 67 100];
 
 known_path_length = { ...
-    [18/11 18/15 18/15 18/11]'
-    [Inf   Inf   Inf   Inf]'
-    [18/11 18/15 18/15 18/11]'
-    [Inf   Inf   Inf   Inf]'
-    [18/11 18/15 18/15 18/11]'
-    [Inf   Inf   Inf   Inf]'
+    [3   3   3   3]'
+    [3   3   3   3]'
+    [3   3   3   3]'
+    [1.64   1.2   1.2  1.64]'
+    [1.64   1.2   1.2  1.64]'
+    [1.64   1.2   1.2  1.64]'
+    [1 1 1 1]'
+    [1 1 1 1]'
+    [1 1 1 1]'
     };
 
 g = MultiplexBUD('B', {B B B}, 'DENSITIES', densities);
@@ -359,90 +361,24 @@ B = [
 thresholds = [0 1];
 
 known_path_length = { ...
-    [18/11 18/15 18/15 18/11]'
-    [Inf   Inf   Inf   Inf]'
-    [18/11 18/15 18/15 18/11]'
-    [Inf   Inf   Inf   Inf]'
-    };
-
-g = MultiplexBUT('B', {B B B}, 'THRESHOLDS', thresholds);
-
-m_outside_g = PathLength('G', g);
-assert(isequal(m_outside_g.get('M'), known_path_length), ...
-    [BRAPH2.STR ':PathLength:' BRAPH2.FAIL_TEST], ...
-    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
-
-m_inside_g = g.get('MEASURE', 'PathLength');
-assert(isequal(m_inside_g.get('M'), known_path_length), ...
-    [BRAPH2.STR ':PathLength:' BRAPH2.FAIL_TEST], ...
-    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
-
-%%% ¡test!
-%%%% ¡name!
-OrdMxWU
-%%%% ¡probability!
-.01
-%%%% ¡code!
-B11 = [
-    0   .2  1
-    .2  0   0
-    1   0   0
-    ];
-B22 = [
-    0   1   0
-    1   0   .3
-    0   .3  0
-    ];
-B= {B11 B22};
-
-known_degree = {
-    [2 1 1]'
-    [1 2 1]'
-    };
-
-g = OrdMxWU('B', B);
-
-m_outside_g = PathLength('G', g);
-assert(isequal(m_outside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':PathLength:' BRAPH2.FAIL_TEST], ...
-    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
-
-m_inside_g = g.get('MEASURE', 'PathLength');
-assert(isequal(m_inside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':PathLength:' BRAPH2.FAIL_TEST], ...
-    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
-
-%%% ¡test!
-%%%% ¡name!
-OrdMxBU
-%%%% ¡probability!
-.01
-%%%% ¡code!
-B11 = [
-    0   1   1
-    1   0   0
-    1   0   0
-    ];
-B22 = [
-    0   1   0
-    1   0   1
-    0   1   0
-    ];
-B = {B11 B22};
-
-known_degree = {
-    [2 1 1]'
-    [1 2 1]'
-    };
-
-g = OrdMxBU('B', B);
-
-m_outside_g = PathLength('G', g);
-assert(isequal(m_outside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':PathLength:' BRAPH2.FAIL_TEST], ...
-    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
-
-m_inside_g = g.get('MEASURE', 'PathLength');
-assert(isequal(m_inside_g.get('M'), known_degree), ...
-    [BRAPH2.STR ':PathLength:' BRAPH2.FAIL_TEST], ...
-    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+		    [1.64   1.2   1.2  1.64]'
+            [1.64   1.2   1.2  1.64]'
+            [1.64   1.2   1.2  1.64]'
+		    [Inf   Inf   Inf   Inf]'
+		    [Inf   Inf   Inf   Inf]'
+            [Inf   Inf   Inf   Inf]'
+		    };
+		
+		g = MultiplexBUT('B', {B B B}, 'THRESHOLDS', thresholds);
+		
+		m_outside_g = PathLength('G', g);
+        pl_answer = cellfun(@(x) round(x, 2), m_outside_g.get('M'), 'UniformOutput', false);
+		assert(isequal(pl_answer, known_path_length), ...
+		    [BRAPH2.STR ':PathLength:' BRAPH2.FAIL_TEST], ...
+		    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+		
+		m_inside_g = g.get('MEASURE', 'PathLength');
+        pl_answer = cellfun(@(x) round(x, 2), m_inside_g.get('M'), 'UniformOutput', false);
+		assert(isequal(pl_answer, known_path_length), ...
+		    [BRAPH2.STR ':PathLength:' BRAPH2.FAIL_TEST], ...
+		    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
