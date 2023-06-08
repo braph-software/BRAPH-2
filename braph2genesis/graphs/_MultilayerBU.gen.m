@@ -90,7 +90,7 @@ end
 value = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
-A (result, cell) is the cell containing the multilayer binary supra-adjacency matrices of the multilayer binary undirected graph.
+A (result, cell) is the cell containing the binary supra-adjacency matrix of the multilayer binary undirected graph.
 %%%% ¡calculate!
 B = g.get('B'); %#ok<PROPLC>
 L = length(B); %#ok<PROPLC> % number of layers
