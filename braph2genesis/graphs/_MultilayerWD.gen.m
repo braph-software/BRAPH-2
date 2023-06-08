@@ -3,7 +3,7 @@ MultilayerWD < Graph (g, multilayer weighted directed graph) is a multilayer wei
 
 %%% ¡description!
 In a multilayer weighted directed (WD) graph, layers could have different number 
-of nodes with within-layer weighted directed edges, associated with a real 
+of nodes with within-layer weighted directed edges, associated with a real
 number between 0 and 1 and indicating the strength of the connection.
 The connectivity matrices are symmetric (within layer).
 All node connections are allowed between layers.
