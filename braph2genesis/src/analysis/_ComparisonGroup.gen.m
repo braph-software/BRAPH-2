@@ -723,6 +723,7 @@ if isempty(cp.get('MEASURE'))
     p2 = {};
     ci_lower = {};
     ci_upper = {};
+    value = {diff, p1, p2, ci_lower, ci_upper};
     return
 end
     
@@ -779,3 +780,8 @@ for i = 1:1:size(diff, 1)
 end
 
 value = {diff, p1, p2, ci_lower, ci_upper};
+
+%% ¡tests!
+
+%%% ¡excluded_props!
+[ComparisonGroup.CALCULATE_RESULTS]
