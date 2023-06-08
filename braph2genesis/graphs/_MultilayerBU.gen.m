@@ -19,7 +19,7 @@ NAME (constant, string) is the name of the multilayer binary undirected graph.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the multilayer binary undirected graph.
 %%%% ¡default!
-'In a multilayer binary undirected (BU) graph, layers could have different numberof nodes with within-layer undirected edges either 0 (absence of connection) or 1 (existence of connection). The connectivity matrices are symmetric (within layer). All node connections are allowed between layers.'
+'In a multilayer binary undirected (BU) graph, layers could have different number of nodes with within-layer undirected edges either 0 (absence of connection) or 1 (existence of connection). The connectivity matrices are symmetric (within layer). All node connections are allowed between layers.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the multilayer binary undirected graph.
