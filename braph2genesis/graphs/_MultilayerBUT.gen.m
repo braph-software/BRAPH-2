@@ -1,10 +1,10 @@
 %% ¡header!
-MultilayerBUT < MultilayerWU (g, multilayer binary undirected with fixed threaholds graph) is a multilayer binary undirected with fixed threaholds graph.
+MultilayerBUT < MultilayerWU (g, multilayer binary undirected with fixed thresholds graph) is a multilayer binary undirected with fixed thresholds graph.
 
 %%% ¡description!
-In a multilayer binary undirected with fixed thresholds (BUT) graph, layers 
-consist of binary undirected (BU) multilayer graphs derived from the same
-weighted supra-connectivity matrices binarized at different thresholds. Layers 
+In a multilayer binary undirected with fixed thresholds (BUT) graph, the layers are those of binary undirected (BU)
+multiplex graphs derived from the same weighted supra-adjacency matrix binarized at different thresholds. 
+The supra-adjacency matrix has a number of partitions equal to the number of thresholds. Layers
 within the binary undirected (BU) multilayer graphs could have different number of nodes
 with within-layer binary undirected edges. Edges can be either 0 (absence of connection)
 or 1 (existence of connection).
@@ -14,14 +14,14 @@ All node connections are allowed between layers.
 
 %%% ¡prop!
 
-NAME (constant, string) is the name of the multilayer undirected with fixed threaholds graph.
+NAME (constant, string) is the name of the multilayer undirected with fixed thresholds graph.
 %%%% ¡default!
 'MultilayerBUT'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the multilayer undirected with fixed threaholds graph.
+DESCRIPTION (constant, string) is the description of the multilayer undirected with fixed thresholds graph.
 %%%% ¡default!
-'In a multilayer binary undirected with fixed thresholds (BUT) graph, layers  consist of binary undirected (BU) multilayer graphs derived from the same weighted supra-connectivity matrices binarized at different thresholds. Layers  within the binary undirected (BU) multilayer graphs could have different number of nodes. Edges can be either 0 (absence of connection) or 1 (existence of connection). All node connections are allowed between layers'
+'In a multilayer binary undirected with fixed thresholds (BUT) graph, the layers are those of binary undirected (BU) multiplex graphs derived from the same weighted supra-adjacency matrix binarized at different thresholds. The supra-adjacency matrix has a number of partitions equal to the number of thresholds. Layers within the binary undirected (BU) multilayer graphs could have different number of nodes with within-layer binary undirected edges. Edges can be either 0 (absence of connection) or 1 (existence of connection). All node connections are allowed between layers.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the multilayer binarized at different thresholds graph.
@@ -92,7 +92,7 @@ end
 value = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
-A (result, cell) is the cell containing the within-layer binary undirected multilayer graphs of the multilayer binary undirected with fixed threaholds graph.
+A (result, cell) is the cell array containing the binary supra-adjacency matrix of the multilayer binary undirected with fixed thresholds (BUT) graph.
 %%%% ¡calculate!
 A_WU = calculateValue@MultilayerWU(g, prop);
 
