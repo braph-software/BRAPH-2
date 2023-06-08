@@ -5,8 +5,8 @@ MultilayerBU < Graph (g, multilayer binary undirected graph) is a multilayer bin
 In a multilayer binary undirected (BU) graph, layers could have different number
  of nodes with within-layer undirected edges either 0 (absence of connection) 
  or 1 (existence of connection).
-The connectivity matrices are symmetric.
-There are connections between layers connecting the corresponding nodes.
+The connectivity matrices are symmetric (within layer).
+All node connections are allowed between layers.
 
 %% ¡props_update!
 
@@ -19,7 +19,7 @@ NAME (constant, string) is the name of the multilayer binary undirected graph.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the multilayer binary undirected graph.
 %%%% ¡default!
-'In a multilayer binary undirected (BU) graph, layers could have different number of nodes with within-layer undirected edges either 0 (absence of connection)  or 1 (existence of connection).The connectivity matrices are symmetric.There are connections between layers connecting the corresponding nodes.'
+'In a multilayer binary undirected (BU) graph, layers could have different numberof nodes with within-layer undirected edges either 0 (absence of connection) or 1 (existence of connection). The connectivity matrices are symmetric (within layer). All node connections are allowed between layers.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the multilayer binary undirected graph.
@@ -90,7 +90,7 @@ end
 value = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
-A (result, cell) is the cell containing the multilayer binary adjacency matrices of the multilayer binary undirected graph.
+A (result, cell) is the cell containing the multilayer binary supra-adjacency matrices of the multilayer binary undirected graph.
 %%%% ¡calculate!
 B = g.get('B'); %#ok<PROPLC>
 L = length(B); %#ok<PROPLC> % number of layers
