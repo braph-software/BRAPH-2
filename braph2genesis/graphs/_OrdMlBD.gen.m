@@ -18,7 +18,7 @@ NAME (constant, string) is the name of the ordinal multilayer binary directed gr
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ordinal multilayer binary directed graph.
 %%%% ¡default!
-'In an ordinal multilayer binary directed (BD) graph, layers could have the different number  of nodes with within-layer directed edges. Edges can be either 0 (absence of connection)  or 1 (existence of connection). All node connections are allowed between layers. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.'
+'In an ordinal multilayer binary directed (BD) graph, layers could have different number  of nodes with within-layer directed edges. Edges can be either 0 (absence of connection)  or 1 (existence of connection). All node connections are allowed between layers. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ordinal multilayer binary directed graph.
@@ -89,7 +89,7 @@ end
 value = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
-A (result, cell) is the cell containing the within-layer binary adjacency matrices of the multilayer binary directed graph and the ordinal connections between layers..
+A (result, cell) is the cell containing the within-layer binary adjacency matrices of the multilayer binary directed graph and the ordinal connections between layers.
 %%%% ¡calculate!
 B = g.get('B'); %#ok<PROPLC>
 L = length(B); %#ok<PROPLC> % number of layers
