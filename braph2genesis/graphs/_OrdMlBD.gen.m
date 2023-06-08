@@ -2,7 +2,7 @@
 OrdMlBD < Graph (g, ordinal multilayer binary directed graph) is a ordinal multilayer binary directed graph.
 
 %%% ¡description!
-In an ordinal multilayer binary directed (BD) graph, layers could have the different number 
+In an ordinal multilayer binary directed (BD) graph, layers could have different number 
  of nodes with within-layer directed edges. Edges can be either 0 (absence of connection) 
 or 1 (existence of connection).
 All node connections are allowed between layers.
