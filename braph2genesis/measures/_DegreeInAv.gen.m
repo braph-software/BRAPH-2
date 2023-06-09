@@ -55,7 +55,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD'}
 
 %%% ¡prop!
-M (result, cell) is the degreeinav.
+M (result, cell) is the cell containing the degree-inav value.
 %%%% ¡calculate!
 in_degree = calculateValue@DegreeIn(m, prop);	
 g = m.get('G'); % graph from measure class

@@ -57,7 +57,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 
 
 %%% ¡prop!
-M (result, cell) is the degree-in.
+M (result, cell) is the cell containing the degree-in value.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
