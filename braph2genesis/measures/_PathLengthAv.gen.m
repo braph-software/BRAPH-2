@@ -56,7 +56,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT'}
 
 %%% ¡prop!
-M (result, cell) is the average path length.
+M (result, cell) is the cell containing the average path length.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 
