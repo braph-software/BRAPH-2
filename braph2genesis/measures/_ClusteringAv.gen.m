@@ -56,7 +56,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'MultiplexBD'}
 
 %%% ¡prop!
-M (result, cell) is the clusteringav.
+M (result, cell) is the cell containing the clusteringav.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 clustering  = calculateValue@Clustering(m, prop);
