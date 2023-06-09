@@ -1158,7 +1158,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     eval(['test_' el_class])
 % end
 
-el_class_list = {'CompareGroup'} % {'CompareGroup' 'ComparisonGroup'}
+el_class_list = {'CompareGroup' 'ComparisonGroup'} % {'CompareGroup' 'ComparisonGroup'}
 for i = 1:1:length(el_class_list)
     el_class = el_class_list{i};
     el_path = '/src/analysis';

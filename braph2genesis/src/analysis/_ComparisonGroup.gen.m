@@ -746,7 +746,9 @@ diff_perms = cell(1, P);
 start = tic;
 for j = 1:20:P
     parfor i = j:min(j+20, P)
-        [a1_perm, a2_perm] = c.getPerm(i, c.get('MEMORIZE'));
+        a1_a2_perms = c.get('PERM', i, c.get('MEMORIZE'));
+        a1_perm = a1_a2_perms{1};
+        a2_perm = a1_a2_perms{2};
 
         m1_perms{1, i} = a1_perm.memorize('G').get('MEASURE', measure_class).memorize('M');
         m2_perms{1, i} = a2_perm.memorize('G').get('MEASURE', measure_class).memorize('M');
