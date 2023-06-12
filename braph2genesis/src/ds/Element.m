@@ -86,6 +86,10 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     % Element methods (GUI):
     %  getPanelProp - returns a prop panel
     %
+    % Element methods (GUI, Static):
+    %  getGUIMenuImport - returns the basic import menu
+    %  getGUIMenuExport - returns the basic export menu
+    %
     % Element methods (category, Static):
     %  getCategories - returns the list of categories
     %  getCategoryNumber - returns the number of categories
@@ -1827,7 +1831,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             
             if nargin < 2
                 % select file
-                [file, path, filterindex] = uiputfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.getName() ' file.']);
+                [file, path, filterindex] = uiputfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.get('NAME') ' file.']);
                 % save file
                 if filterindex
                     filename = fullfile(path, file);
@@ -2201,5 +2205,58 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         varargin{:});
             end
         end        
+    end  
+    methods (Static) % GUI Static
+        function getGUIMenuImport(el, menu_import, pe)
+            %GETGUIMENUIMPORT sets the import submenu gui json.
+            % 
+            % GETGUIMENUIMPORT(EL, UI_MENU, PL) sets the import submenu
+            %  json for the menu UI_MENU for the plot element PL.
+            % 
+            % See also getGUI, getGUIMenuExport, PLotElement.
+            
+            uimenu(menu_import, ...
+                'Tag', 'MENU.Import.JSON', ...
+                'Label', 'Import JSON ...', ...
+                'Callback', {@cb_import_json})
+                 
+            function cb_import_json(~,~)
+                [file, path, filterindex] = uigetfile('.json', ['Select ' el.get('NAME') ' file location.']);
+                if filterindex
+                    filename = fullfile(path, file);
+                    fid = fopen(filename);
+                    raw = fread(fid, inf);
+                    str = char(raw');
+                    fclose(fid);
+
+                    gui = GUIElement('PE', Element.decodeJSON(str));
+                    gui.get('DRAW')
+                    gui.get('SHOW')
+                end
+            end
+        end
+        function getGUIMenuExport(el, menu_export, pe)
+            %GETGUIMENUEXPORT sets the export submenu gui json.
+            % 
+            % GETGUIMENUEXPORT(EL, UI_MENU) sets the export submenu for the ui menu UI_MENU.
+            % 
+            % See also getGUI, getGUIMenuImport.
+                     
+            uimenu(menu_export, ...
+                'Tag', 'MENU.Export.JSON', ...
+                'Label', 'Export JSON ...', ...
+                'Callback', {@cb_export_json})
+          
+            function cb_export_json(~,~)
+                [file, path, filterindex] = uiputfile({'*.json', '*.json'}, ['Select ' el.get('NAME')  ' file location.']);
+                if filterindex
+                    filename = fullfile(path, file);
+                    [json, ~, ~] = encodeJSON(pe.get('EL'));
+                    fid = fopen(filename, 'w');
+                    fprintf(fid, json);
+                    fclose(fid);
+                end
+            end
+        end
     end    
 end

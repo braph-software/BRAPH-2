@@ -8,7 +8,7 @@ BrainSurface contains and manages the vertex_number, coordinates,
 triangles_number, and triangles of a brain surface. 
     
 %%% ¡seealso!
-Element, BrainAtlas, BrainRegion, BrainSurfacePF
+BrainAtlas, BrainRegion, BrainSurfacePF
 
 %% ¡props_update!
 

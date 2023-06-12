@@ -16,7 +16,7 @@ NAME (constant, string) is the name of the panel figure nodal unilayer measure.
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel figure nodal unilayer measure.
-%%%% ¡_default!
+%%%% ¡default!
 'MeasurePF_NU manages the basic functionalities to plot of a nodal unilayer measure.'
 
 %%% ¡prop!

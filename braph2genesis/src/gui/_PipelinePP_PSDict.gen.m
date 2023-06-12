@@ -80,8 +80,15 @@ if value
         code_dict = section.get('PC_DICT');
         for cl = 1:1:code_dict.get('LENGTH')
             code = code_dict.get('IT', cl);
-            moniker = code.get('MONIKER'); % % % %FIXME send error if moniker equal to varargin
-
+            moniker = code.get('MONIKER');
+            if strcmpi(moniker, 'varargin')
+                error( ...
+                    [BRAPH2.STR ':' pr.getClass() ':' BRAPH2.WRONG_INPUT], ...
+                    [BRAPH2.STR ':' pr.getClass() ':' BRAPH2.WRONG_INPUT '\\n' ...
+                    'The moniker should not be ''varagin''.'] ...
+                    )
+            end
+            
             % callback code
             if sec == s_selected && cl == c_selected
                 if isa(code.getr('EL'), 'NoValue') % the code has not been calculated yet -- CALCULATE
@@ -94,7 +101,7 @@ if value
                         set(pr.get('PC_BTN', sec, cl), 'Enable', 'on')
 
                         if isempty(regexp(e.message, ['^' BRAPH2.STR ':.*:' BRAPH2.CANCEL_IO '$'], 'once'))
-                            % % % %TODO make this with braph2message
+                            %TODO make this with braph2message
                             warndlg(['An error occurred while trying to execute the code:' newline() ...
                                 newline() ...
                                 moniker ' = ' code.get('CODE') ';' newline() ...
