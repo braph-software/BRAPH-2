@@ -41,7 +41,7 @@ CORRELATION RULE
 
 %%% ¡prop!
 %%%% ¡id!
-AnalyzeGroup_ST_WU.NEGATIVE_WEIGHTS_RULE
+AnalyzeGroup_ST_WU.NEGATIVE_WEIGHT_RULE
 %%%% ¡title!
 NEGATIVE WEIGHTS RULE
 
