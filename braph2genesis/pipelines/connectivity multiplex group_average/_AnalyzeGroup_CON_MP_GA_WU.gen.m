@@ -1,5 +1,5 @@
 %% ¡header!
-AnalyzeGroup_CON_MP_GA_WU < AnalyzeGroup (a, graph analysis with connectivity multiplex data) is a graph analysis using connectivity multiplex data.
+AnalyzeGroup_CON_MP_GA_WU < AnalyzeGroup (a, group-based graph analysis with connectivity multiplex data) is a graph analysis using connectivity multiplex data.
 
 %% ¡description!
 This graph analysis uses connectivity multiplex data and analyzes them using weighted undirected graphs,
@@ -12,32 +12,32 @@ SubjectCON_MP, MultiplexWU.
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the group-based graph analysis with structural data.
+NAME (constant, string) is the name of the group-based graph analysis with connectivity multiplex data.
 %%%% ¡default!
-'AnalyzeGroup_ST_WU'
+'AnalyzeGroup_CON_MP_GA_WU'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the group-based graph analysis with structural data.
+DESCRIPTION (constant, string) is the description of the group-based graph analysis with connectivity multiplex data.
 %%%% ¡default!
-'AnalyzeGroup_ST_WU uses structural data and analyzes them using weighted undirected graphs.'
+'This graph analysis uses connectivity multiplex data and analyzes them using weighted undirected graphs, binary undirected multigraphs with fixed thresholds, or binary undirected multigraphs with fixed densities.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the group-based graph analysis with structural data.
+TEMPLATE (parameter, item) is the template of the group-based graph analysis with connectivity multiplex data.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the group-based graph analysis with structural data.
+ID (data, string) is a few-letter code for the group-based graph analysis with connectivity multiplex data.
 %%%% ¡default!
-'AnalyzeGroup_ST_WU ID'
+'AnalyzeGroup_CON_MP_GA_WU ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the group-based graph analysis with structural data.
+LABEL (metadata, string) is an extended label of the group-based graph analysis with connectivity multiplex data.
 %%%% ¡default!
-'AnalyzeGroup_ST_WU label'
+'AnalyzeGroup_CON_MP_GA_WU label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the group-based graph analysis with structural data.
+NOTES (metadata, string) are some specific notes about the group-based graph analysis with connectivity multiplex data.
 %%%% ¡default!
-'AnalyzeGroup_ST_WU notes'
+'AnalyzeGroup_CON_MP_GA_WU notes'
 
 
 

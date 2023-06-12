@@ -11,32 +11,32 @@ SubjectFUN_MP, OrderedMultiplexWU.
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the group-based graph analysis with structural data.
+NAME (constant, string) is the name of the graph analysis with functional ordinal multiplex data.
 %%%% ¡default!
-'AnalyzeGroup_ST_WU'
+'AnalyzeGroup_FUN_OMP_GA_WU'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the group-based graph analysis with structural data.
+DESCRIPTION (constant, string) is the description of the graph analysis with functional ordinal multiplex data.
 %%%% ¡default!
-'AnalyzeGroup_ST_WU uses structural data and analyzes them using weighted undirected graphs.'
+'This graph analysis uses functional ordinal multiplex data and analyzes them using weighted undirected graphs.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the group-based graph analysis with structural data.
+TEMPLATE (parameter, item) is the template of the graph analysis with functional ordinal multiplex data.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the group-based graph analysis with structural data.
+ID (data, string) is a few-letter code for the graph analysis with functional ordinal multiplex data.
 %%%% ¡default!
-'AnalyzeGroup_ST_WU ID'
+'AnalyzeGroup_FUN_OMP_GA_WU ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the group-based graph analysis with structural data.
+LABEL (metadata, string) is an extended label of the graph analysis with functional ordinal multiplex data.
 %%%% ¡default!
-'AnalyzeGroup_ST_WU label'
+'AnalyzeGroup_FUN_OMP_GA_WU label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the group-based graph analysis with structural data.
+NOTES (metadata, string) are some specific notes about the graph analysis with functional ordinal multiplex data.
 %%%% ¡default!
-'AnalyzeGroup_ST_WU notes'
+'AnalyzeGroup_FUN_OMP_GA_WU notes'
 
 
 

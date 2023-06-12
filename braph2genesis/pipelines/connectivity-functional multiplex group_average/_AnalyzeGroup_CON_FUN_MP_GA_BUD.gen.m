@@ -11,32 +11,32 @@ SubjectCON_FUN_MP, MultiplexBUD.
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the group-based graph analysis with structural data.
+NAME (constant, string) is the name of the graph analysis with connectivity and functional multiplex data of fixed density.
 %%%% ¡default!
-'AnalyzeGroup_ST_WU'
+'AnalyzeGroup_CON_FUN_MP_GA_BUD'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the group-based graph analysis with structural data.
+DESCRIPTION (constant, string) is the description of the graph analysis with connectivity and functional multiplex data of fixed density.
 %%%% ¡default!
-'AnalyzeGroup_ST_WU uses structural data and analyzes them using weighted undirected graphs.'
+'This graph analysis uses connectivity and functional multiplex data of fixed density and analyzes them using binary undirected graphs.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the group-based graph analysis with structural data.
+TEMPLATE (parameter, item) is the template of the graph analysis with connectivity and functional multiplex data of fixed density.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the group-based graph analysis with structural data.
+ID (data, string) is a few-letter code for the graph analysis with connectivity and functional multiplex data of fixed density.
 %%%% ¡default!
-'AnalyzeGroup_ST_WU ID'
+'AnalyzeGroup_CON_FUN_MP_GA_BUD ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the group-based graph analysis with structural data.
+LABEL (metadata, string) is an extended label of the graph analysis with connectivity and functional multiplex data of fixed density.
 %%%% ¡default!
-'AnalyzeGroup_ST_WU label'
+'AnalyzeGroup_CON_FUN_MP_GA_BUD label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the group-based graph analysis with structural data.
+NOTES (metadata, string) are some specific notes about the graph analysis with connectivity and functional multiplex data of fixed density.
 %%%% ¡default!
-'AnalyzeGroup_ST_WU notes'
+'AnalyzeGroup_CON_FUN_MP_GA_BUD notes'
 
 
 
