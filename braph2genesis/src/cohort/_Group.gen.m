@@ -22,6 +22,38 @@ eval([el.get('SUB_CLASS') '.getGUIMenuExport(el, menu_export, pe)']);
 ex_sub_menus = get(menu_export, 'Children');
 delete(ex_sub_menus(end)); % delete one sub menu to export JSON
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+Group.ID
+%%%% ¡title!
+Group ID
+
+%%% ¡prop!
+%%%% ¡id!
+Group.LABEL
+%%%% ¡title!
+Group NAME
+
+%%% ¡prop!
+%%%% ¡id!
+Group.SUB_CLASS
+%%%% ¡title!
+Group SUBJECT CLASS
+
+%%% ¡prop!
+%%%% ¡id!
+Group.SUB_DICT
+%%%% ¡title!
+Group SUBJECTS
+
+%%% ¡prop!
+%%%% ¡id!
+Group.NOTES
+%%%% ¡title!
+Group NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!
