@@ -3,7 +3,7 @@ MultilayerBUT < MultilayerWU (g, multilayer binary undirected with fixed thresho
 
 %%% ¡description!
 In a multilayer binary undirected with fixed thresholds (BUT) graph, the layers are those of binary undirected (BU)
-multiplex graphs derived from the same weighted supra-adjacency matrix binarized at different thresholds. 
+multilayer graphs derived from the same weighted supra-adjacency matrix binarized at different thresholds. 
 The supra-adjacency matrix has a number of partitions equal to the number of thresholds. Layers
 within the binary undirected (BU) multilayer graphs could have different number of nodes
 with within-layer binary undirected edges. Edges can be either 0 (absence of connection)
@@ -21,7 +21,7 @@ NAME (constant, string) is the name of the multilayer undirected with fixed thre
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the multilayer undirected with fixed thresholds graph.
 %%%% ¡default!
-'In a multilayer binary undirected with fixed thresholds (BUT) graph, the layers are those of binary undirected (BU) multiplex graphs derived from the same weighted supra-adjacency matrix binarized at different thresholds. The supra-adjacency matrix has a number of partitions equal to the number of thresholds. Layers within the binary undirected (BU) multilayer graphs could have different number of nodes with within-layer binary undirected edges. Edges can be either 0 (absence of connection) or 1 (existence of connection). All node connections are allowed between layers.'
+'In a multilayer binary undirected with fixed thresholds (BUT) graph, the layers are those of binary undirected (BU) multilayer graphs derived from the same weighted supra-adjacency matrix binarized at different thresholds. The supra-adjacency matrix has a number of partitions equal to the number of thresholds. Layers within the binary undirected (BU) multilayer graphs could have different number of nodes with within-layer binary undirected edges. Edges can be either 0 (absence of connection) or 1 (existence of connection). All node connections are allowed between layers.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the multilayer binarized at different thresholds graph.
