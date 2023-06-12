@@ -89,7 +89,7 @@ end
 value = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
-A (result, cell) is the cell containing the multilayer weighted adjacency matrices of the multilayer weighted directed graph.
+A (result, cell) is the cell containing the weighted supra-adjacency matrix of the multilayer weighted directed graph.
 %%%% ¡calculate!
 B = g.get('B'); %#ok<PROPLC>
 L = length(B); %#ok<PROPLC> % number of layers
