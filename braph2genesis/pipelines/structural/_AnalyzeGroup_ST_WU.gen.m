@@ -7,6 +7,56 @@ AnalyzeGroup_ST_WU uses structural data and analyzes them using weighted undirec
 %%% ¡seealso!
 SubjectST, GraphWU
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_WU.ID
+%%%% ¡title!
+Analysis ID
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_WU.LABEL
+%%%% ¡title!
+Analysis NAME
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_WU.WAITBAR
+%%%% ¡title!
+WAITBAR ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_WU.GR
+%%%% ¡title!
+Subject Group
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_WU.CORRELATION_RULE
+%%%% ¡title!
+CORRELATION RULE
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_WU.NEGATIVE_WEIGHTS_RULE
+%%%% ¡title!
+NEGATIVE WEIGHTS RULE
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_WU.G
+%%%% ¡title!
+MEASURES
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_WU.NOTES
+%%%% ¡title!
+Analysis NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!
