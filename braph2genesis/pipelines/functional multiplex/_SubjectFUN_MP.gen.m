@@ -141,7 +141,7 @@ Layer Labels
 
 %%% ¡prop!
 %%%% ¡id!
-SubjectCON_MP.FUN_MP
+SubjectFUN_MP.FUN_MP
 %%%% ¡title!
 Functional DATA LAYERS
 
