@@ -117,74 +117,12 @@ if check_graphics(pe.memorize('H'), 'uigridlayout') % H = gl for grid layout
         
         pr = pr_dict.get('IT', pri);
         pr.get('DRAW')
-% % % % %         pr_p = pr.get('H');
     end
     
     pe.memorize('LISTENER_PPHEIGHT')
     
     braph2waitbar(wb, 'close')
     pe.set('H_WAITBAR', Element.getNoValue())
-
-% % % % %     pe.get('UPDATE')
-% % % % %     pe.get('RESIZE')
-    
-% % %     pe.wb_state = 0;
-% % %     pe.wb = (pe.get('WAITBAR'), pe.wb_state, 'Drawing the element panel ...');
-% % %     
-% % %     pe.p = draw@Panel(pe, ...
-% % %         varargin{:}, ...
-% % %         'AutoResizeChildren', 'off' ...
-% % %         );
-% % % 
-% % %     if isempty(pe.pr_list) || any(cellfun(@(x) ~check_graphics(x, 'uipanel'), pe.pr_list))
-% % %         pe.memorize('PR_DICT');
-% % %         
-% % %         pe.pr_list = cell(1, pe.get('PR_DICT').length());
-% % %         for pri = 1:1:pe.get('PR_DICT').length()
-% % %             
-% % %             pe.wb_state = pe.wb_state + .20 / pe.get('PR_DICT').length();
-% % %             braph2waitbar(pe.wb, pe.wb_state, ['Drawing prop panel ' int2str(pri) ' of ' int2str(pe.get('PR_DICT').length())])
-% % % 
-% % %             pe.pr_list{pri} = pe.get('PR_DICT').getItem(pri).draw('Parent', pe.p);
-% % %         end
-% % %     end
-% % % 
-% % %     pe.update()
-% % %     pe.redraw()    
-% % %     
-% % %     % add listener to prop set in el
-% % %     pe.l_setprop = listener(pe.get('EL'), 'PropSet', @cb_prop_set);
-% % %     function cb_prop_set(~, event)
-% % %         set_props = cell2mat(event.props);
-% % %         for pri = 1:1:pe.get('PR_DICT').length()
-% % %             el = pe.get('PR_DICT').getItem(pri).get('EL');
-% % %             prop = pe.get('PR_DICT').getItem(pri).get('PROP');
-% % %             if ismember(prop, set_props)
-% % %                 if el.getPropCategory(prop) == Category.RESULT
-% % %                     pe.update()
-% % %                     pe.redraw()
-% % %                 else
-% % %                     pe.get('PR_DICT').getItem(pri).update()
-% % %                 end
-% % %             end
-% % %         end
-% % %     end
-% % % 
-% % %     % add listener to result memorized in el
-% % %     pe.l_resultmemorized = listener(pe.get('EL'), 'ResultMemorized', @cb_result_memorized);
-% % %     function cb_result_memorized(~, event)
-% % %         memorized_prop = event.prop;
-% % %         for pri = 1:1:pe.get('PR_DICT').length()
-% % %             % el = pe.get('PR_DICT').getItem(i).get('EL');
-% % %             prop = pe.get('PR_DICT').getItem(pri).get('PROP');
-% % %             if prop == memorized_prop
-% % %                     pe.update()
-% % %                     pe.redraw()
-% % %             end
-% % %         end        
-% % %     end
-% % % 
-% % %     braph2waitbar(pe.wb, 'close')
     
     value = true;
 else
@@ -353,32 +291,10 @@ value = IndexedDictionary( ...
     'IT_LIST', pr_list ...
     );
 
-% % % wb_state % waitbar state between 0 and 1
-% % % wb % waitbar
-
 %%% ¡prop!
 MIN_WIDTH (gui, size) is the minimal panel width in pixels.
 %%%% ¡default!
-300   ; % % % %TBD
-
-% % % % % %%% ¡prop!
-% % % % % UPDATE (query, logical) updates the content of the element panel and its graphical objects.
-% % % % % %%%% ¡calculate!
-% % % % % if check_graphics(pe.getr('H'), 'uigridlayout')
-% % % % %     
-% % % % %     pr_dict = pe.get('PR_DICT');
-% % % % %     
-% % % % %     for pri = 1:1:pr_dict.get('LENGTH')
-% % % % % % % %         pe.wb_state = pe.wb_state + .20 / pe.get('PR_DICT').length();
-% % % % % % % %         braph2waitbar(pe.wb, pe.wb_state, ['Updating prop panel ' int2str(pri) ' of ' int2str(pe.get('PR_DICT').length())])
-% % % % % 
-% % % % %         pr_dict.get('IT', pri).get('UPDATE')
-% % % % %     end
-% % % % %     
-% % % % %     value = true;
-% % % % % else
-% % % % %     value = false;
-% % % % % end
+300
 
 %%% ¡prop!
 RESIZEX (query, logical) resizes the x-extension of the element panel and its prop panels.
@@ -390,64 +306,9 @@ if pe.get('DRAWN')
     set(pe.get('H'), 'ColumnWidth', {column_width})
 
     for pri = 1:1:pr_dict.get('LENGTH')
-% % %         pe.wb_state = pe.wb_state + .20 / length(pr_list);
-% % %         braph2waitbar(pe.wb, pe.wb_state, ['(Re)drawing prop panel ' int2str(pri) ' of ' int2str(length(pr_list))])
-
         pr_dict.get('IT', pri).get('REDRAW', 'Width', column_width)
     end
-    
-% % %     p = pe.p;
-% % %     pr_list = pe.pr_list;
-% % % 
-% % %     % get panel (p) position
-% % %     % repositions the panel
-% % %     x0_p = get_from_varargin(x0(p, 'pixels'), 'X0', varargin);
-% % %     y0_p = get_from_varargin(y0(p, 'pixels'), 'Y0', varargin);
-% % %     w_p = max(get_from_varargin(w(p, 'pixels'), 'Width', varargin), pe.get('MIN_WIDTH'));
-% % %     h_p = get_from_varargin(w(p, 'pixels'), 'Height', varargin);
-% % %     
-% % %     % graphics constants
-% % %     dh = s(pe.get('DH') / BRAPH2.FONTSIZE);
-% % %     dw = s(pe.get('DW') / BRAPH2.FONTSIZE);
-% % %     w_s = s(pe.get('WSLIDER') / BRAPH2.FONTSIZE);
-% % % 
-% % %     % redraw prop panels (following update)
-% % %     w_pp = w_p - 2 * dw - w_s;
-% % %     for pri = 1:1:length(pr_list)
-% % % 
-% % %         pe.wb_state = pe.wb_state + .20 / length(pr_list);
-% % %         braph2waitbar(pe.wb, pe.wb_state, ['(Re)drawing prop panel ' int2str(pri) ' of ' int2str(length(pr_list))])
-% % % 
-% % %         pe.get('PR_DICT').getItem(pri).redraw('Width', w_pp)
-% % %     end
-% % %     
-% % %     % calculate position prop panels (pp)
-% % %     x0_pp = dw;
-% % %     h_pp = cellfun(@(x) h(x, 'pixels'), pr_list);
-% % %     y0_pp = sum(h_pp + dh) - cumsum(h_pp + dh) + dh;
-% % %     
-% % %     % calculate and set height panel (p)
-% % %     if sum(h_pp + dh) + dh > h_p
-% % %         h_p = sum(h_pp + dh) + dh;
-% % %     else
-% % %         y0_pp = y0_pp + (h_p - sum(h_pp + dh) - dh);
-% % %     end
-% % % 
-% % %     set(p, ...
-% % %         'Units', 'pixels', ...
-% % %         'Position', [x0_p y0_p w_p h_p] ...
-% % %         )
-% % %     
-% % %     % reposition prop panels
-% % %     for pri = 1:1:length(pr_list)
-% % % 
-% % %         pe.wb_state = pe.wb_state + .20 / length(pr_list);
-% % %         braph2waitbar(pe.wb, pe.wb_state, ['(Re)positioning prop panel ' int2str(pri) ' of ' int2str(length(pr_list))])
-% % % 
-% % %         pr = pr_list{pri};
-% % %         set(pr, 'Position', [x0_pp y0_pp(pri) w(pr) h(pr)])
-% % %     end    
-
+   
     value = true;
 else
     warning( ...

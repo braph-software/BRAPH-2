@@ -176,12 +176,7 @@ if value
     
     pr.set('LISTENER_SET', Element.getNoValue())
     pr.set('LISTENER_MEMORIZED', Element.getNoValue())
-    pr.set('LISTENER_LOCKED', Element.getNoValue())
-    
-% % %     % figure cb
-% % %     if isa(pr.getr('GUI_CB'), 'GUI') && pr.get('GUI_CB').get('DRAWN')
-% % %         pr.get('GUI_CB').get('CLOSE')
-% % %     end    
+    pr.set('LISTENER_LOCKED', Element.getNoValue())   
 end
 
 %%% ¡prop!

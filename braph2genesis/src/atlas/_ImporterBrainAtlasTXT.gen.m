@@ -55,7 +55,7 @@ FILE (data, string) is the TXT file from where to load the brain atlas.
 GET_FILE (query, item) opens a dialog box to get the TXT file from where to load the brain atlas.
 %%%% ¡settings!
 'ImporterBrainAtlasTXT'
-%%%% ¡calculate!    
+%%%% ¡calculate!
 [filename, filepath, filterindex] = uigetfile('*.txt', 'Select TXT file');
 if filterindex
     file = [filepath filename];

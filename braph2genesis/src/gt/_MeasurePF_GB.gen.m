@@ -16,7 +16,7 @@ NAME (constant, string) is the name of the panel figure global bilayer measure.
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel figure global bilayer measure.
-%%%% ¡_default!
+%%%% ¡default!
 'MeasurePF_GB manages the basic functionalities to plot of a global bilayer measure.'
 
 %%% ¡prop!

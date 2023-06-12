@@ -102,21 +102,6 @@ if value
                     )
             end
     end
-    
-% % %     % add listeners
-% % %     if ~isa(el.getr(prop), 'NoValue')
-% % %         % add listener to prop set in el
-% % %         pr.l_setprop = listener(el.get(prop), 'PropSet', @cb_prop_set);
-% % % 
-% % %         % add listener to result memorized in el
-% % %         pr.l_resultmemorized = listener(el.get(prop), 'ResultMemorized', @cb_result_memorized);
-% % %     end
-% % %     function cb_prop_set(~, ~)
-% % %         notify(el, 'PropSet', EventPropSet(el, prop))
-% % %     end
-% % %     function cb_result_memorized(~, ~)
-% % %         notify(el, 'PropSet', EventPropSet(el, prop))
-% % %     end
 end
 
 %%% ¡prop!
@@ -157,11 +142,6 @@ DELETE (query, logical) resets the handles and closes the dependent figures when
 value = calculateValue@PanelProp(pr, PanelProp.DELETE, varargin{:}); % also warning
 if value
     pr.set('BUTTON', Element.getNoValue())
-    
-% % %     % figure item
-% % %     if isa(pr.getr('GUI_ITEM'), 'GUI') && pr.get('GUI_ITEM').get('DRAWN')
-% % %         pr.get('GUI_ITEM').get('CLOSE')
-% % %     end
 end
 
 %%% ¡prop!

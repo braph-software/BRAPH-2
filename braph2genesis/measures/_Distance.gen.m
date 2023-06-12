@@ -23,7 +23,7 @@ DESCRIPTION (constant, string) is the description of the distance.
 TEMPLATE (parameter, item) is the template of the distance.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the distance.
+ID (data, string) is a few-letter code of the distance.
 %%%% ¡default!
 'Distance ID'
 
@@ -146,7 +146,7 @@ end
 %% ¡tests!
 
 %%% ¡excluded_props!
-[Distance.TEMPLATE Distance.PFM]
+[Distance.PFM]
 
 %%% ¡test!
 %%%% ¡name!
@@ -945,7 +945,6 @@ m_inside_g = g.get('MEASURE', 'Distance');
 assert(isequal(m_inside_g.get('M'), known_distance), ...
     [BRAPH2.STR ':Distance:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
-
 
 %%% ¡test!
 %%%% ¡name!

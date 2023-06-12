@@ -22,7 +22,7 @@ DESCRIPTION (constant, string) is the description of the average degree.
 TEMPLATE (parameter, item) is the template of the average degree.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the average degree.
+ID (data, string) is a few-letter code of the average degree.
 %%%% ¡default!
 'DegreeAv ID'
 
@@ -73,7 +73,7 @@ value = degree_av;
 %% ¡tests!
 
 %%% ¡excluded_props!
-[DegreeAv.TEMPLATE DegreeAv.PFM]
+[DegreeAv.PFM]
 
 %%% ¡test!
 %%%% ¡name!

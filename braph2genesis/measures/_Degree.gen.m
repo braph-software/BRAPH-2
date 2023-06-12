@@ -21,7 +21,7 @@ DESCRIPTION (constant, string) is the description of the degree.
 TEMPLATE (parameter, item) is the template of the degree.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the degree.
+ID (data, string) is a few-letter code of the degree.
 %%%% ¡default!
 'Degree ID'
 
@@ -72,11 +72,9 @@ end
 value = degree;
 
 %% ¡tests!
-%%% ¡excluded_props!
-[Degree.PFM]
 
 %%% ¡excluded_props!
-[Degree.TEMPLATE Degree.PFM]
+[Degree.PFM]
 
 %%% ¡test!
 %%%% ¡name!
@@ -349,7 +347,7 @@ assert(isequal(m_inside_g.get('M'), known_degree), ...
 OrdMxWU
 %%%% ¡probability!
 .01
-%%%% ¡_code!
+%%%% ¡code!
 B11 = [
     0   .2  1
     .2  0   0
@@ -413,7 +411,6 @@ m_inside_g = g.get('MEASURE', 'Degree');
 assert(isequal(m_inside_g.get('M'), known_degree), ...
     [BRAPH2.STR ':Degree:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
-
 
 %%% ¡test!
 %%%% ¡name!

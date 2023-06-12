@@ -6,6 +6,11 @@
             "name": "Volpe, Giovanni"
         },
         {
+            "orcid": "0000-0002-4604-2711",
+            "affiliation": "Karolinksa Institute",
+            "name": "Pereira, Joana"
+        }, 
+        {
             "orcid": "0000-0002-5388-7712",
             "affiliation": "Gothenburg University",
             "name": "Gómez-Ruiz, Emiliano"
@@ -14,11 +19,6 @@
             "orcid": "0000-0001-9598-2278",
             "affiliation": "Gothenburg University",
             "name": "Chang, Yu-Wei"
-        }, 
-        {
-            "orcid": "0000-0002-4604-2711",
-            "affiliation": "Karolinksa Institute",
-            "name": "Pereira, Joana"
         }, 
         {
             "orcid": "0000-0001-7460-741X",
@@ -39,6 +39,21 @@
             "orcid": "0000-0002-3115-2977",
             "affiliation": "Karolinksa Institute",
             "name": "Westman, Eric"
+        },
+        {
+            "orcid": "0009-0009-3797-1162",
+            "affiliation": "Gothenburg University",
+            "name": "Zhao, Hang"
+        },
+        {
+            "orcid": "0000-0001-7756-630X",
+            "affiliation": "Karolinksa Institute",
+            "name": "Zufiria Gerbolés, Blanca"
+        },
+        {
+            "orcid": "0000-0002-2986-2734",
+            "affiliation": "Karolinksa Institute",
+            "name": "Sun, Jiawei"
         }
     ],
 

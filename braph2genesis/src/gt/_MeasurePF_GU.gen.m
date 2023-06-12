@@ -16,7 +16,7 @@ NAME (constant, string) is the name of the panel figure global unilayer measure.
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel figure global unilayer measure.
-%%%% ¡_default!
+%%%% ¡default!
 'MeasurePF_GU manages the basic functionalities to plot of a global unilayer measure.'
 
 %%% ¡prop!

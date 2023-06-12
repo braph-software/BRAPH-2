@@ -16,7 +16,7 @@ NAME (constant, string) is the name of the panel figure global superglobal measu
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel figure global superglobal measure.
-%%%% ¡_default!
+%%%% ¡default!
 'MeasurePF_GS manages the basic functionalities to plot of a global superglobal measure.'
 
 %%% ¡prop!
