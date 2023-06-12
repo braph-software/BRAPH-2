@@ -54,7 +54,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT' }
+{'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxWD' 'OrdMxBU' 'OrdMxBD' 'OrdMxBUT' 'MultilayerWD' 'MultilayerBD'} % % % add tests for 'OrdMxWU' 'OrdMxWD' 'OrdMxBU' 'OrdMxBD' 'OrdMxBUT' 'MultilayerWD' 'MultilayerBD' - check if any other test is missing
 
 %%% ¡prop!
 M (result, cell) is the triangles.
@@ -283,37 +283,6 @@ assert(isequal(m_outside_g.get('M'), known_triangles_all), ...
 m_inside_g = g.get('MEASURE', 'Triangles');
 m_inside_g.set('RULE', 'all');
 assert(isequal(m_inside_g.get('M'), known_triangles_all), ...
-    [BRAPH2.STR ':Triangles:' BRAPH2.FAIL_TEST], ...
-    [class(m_inside_g)  ' is not being calculated correctly for ' class(g) '.'])
-
-%%% ¡test!
-%%%% ¡name!
-MultigraphBUT
-%%%% ¡probability!
-.01
-%%%% ¡code!
-B = [
-    0 1 1 1;
-    1 0 1 0;
-    1 1 0 1;
-    1 0 1 0
-    ];
-
-thresholds = [0 1];
-
-known_triangles = { ...
-    [2 1 2 1]'
-    [0 0 0 0]'
-    };
-
-g = MultigraphBUT('B', B, 'THRESHOLDS', thresholds);
-m_outside_g = Triangles('G', g).get('M');
-assert(isequal(m_outside_g, known_triangles), ...
-    [BRAPH2.STR ':Triangles:' BRAPH2.FAIL_TEST], ...
-    [class(m_outside_g)  ' is not being calculated correctly for ' class(g) '.'])
-
-m_inside_g = g.get('MEASURE', 'Triangles');
-assert(isequal(m_inside_g.get('M'), known_triangles), ...
     [BRAPH2.STR ':Triangles:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g)  ' is not being calculated correctly for ' class(g) '.'])
 

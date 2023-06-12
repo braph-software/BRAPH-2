@@ -53,7 +53,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD'}
+{'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD' 'OrdMxWD' 'OrdMxBD'} % % % add any missing tests
 
 %%% ¡prop!
 M (result, cell) is the cell containing the in-degree value.
