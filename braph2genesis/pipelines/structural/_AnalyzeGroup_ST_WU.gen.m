@@ -31,7 +31,7 @@ WAITBAR ON/OFF
 %%%% ¡id!
 AnalyzeGroup_ST_WU.GR
 %%%% ¡title!
-Subject Group
+SUBJECT GROUP
 
 %%% ¡prop!
 %%%% ¡id!
