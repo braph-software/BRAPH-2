@@ -1,7 +1,7 @@
 %% ¡header!
 AnalyzeGroup_FUN_MP_GA_WU < AnalyzeGroup (a, graph analysis with functional multiplex data) is a graph analysis using functional multiplex data.
 
-%% ¡description!
+%%% ¡description!
 This graph analysis uses functional multiplex data and analyzes them using weighted undirected graphs,
 binary undirected multigraphs with fixed thresholds,
 or binary undirected multigraphs with fixed densities.

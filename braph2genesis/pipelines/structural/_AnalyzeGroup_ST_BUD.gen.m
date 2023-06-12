@@ -1,7 +1,7 @@
 %% ¡header!
 AnalyzeGroup_ST_BUD < AnalyzeGroup (a, graph analysis with structural data at fixed density) is a graph analysis using structural data at fixed density.
 
-%% ¡description!
+%%% ¡description!
 AnalyzeGroup_ST_BUD uses structural data at fixed density and analyzes them using binary undirected graphs.
 
 %%% ¡seealso!

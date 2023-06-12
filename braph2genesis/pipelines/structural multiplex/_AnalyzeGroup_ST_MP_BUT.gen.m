@@ -1,7 +1,7 @@
 %% ¡header!
 AnalyzeGroup_ST_MP_BUT < AnalyzeGroup (a, graph analysis with structural multiplex data of fixed threshold) is a graph analysis using structural multiplex data of fixed threshold.
 
-%% ¡description!
+%%% ¡description!
 This graph analysis uses structural multiplex data of fixed threshold and 
 analyzes them using binary undirected graphs.
 

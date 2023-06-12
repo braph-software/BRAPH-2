@@ -1,10 +1,10 @@
 %% ¡header!
 AnalyzeGroup_ST_WU < AnalyzeGroup (a, graph analysis with structural data) is a graph analysis using structural data.
 
-%% ¡description!
+%%% ¡description!
 AnalyzeGroup_ST_WU uses structural data and analyzes them using weighted undirected graphs.
 
-%% ¡seealso!
+%%% ¡seealso!
 SubjectST, GraphWU
 
 %% ¡props_update!

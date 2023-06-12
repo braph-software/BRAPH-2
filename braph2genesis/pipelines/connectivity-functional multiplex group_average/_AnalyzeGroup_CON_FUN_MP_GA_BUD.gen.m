@@ -1,7 +1,7 @@
 %% ¡header!
 AnalyzeGroup_CON_FUN_MP_GA_BUD < AnalyzeGroup (a, graph analysis with connectivity and functional multiplex data of fixed density) is a graph analysis using connectivity and functional multiplex data of fixed density.
 
-%% ¡description!
+%%% ¡description!
 This graph analysis uses connectivity and functional multiplex data of 
 fixed density and analyzes them using binary undirected graphs.
 

@@ -1,7 +1,7 @@
 %% ¡header!
 AnalyzeGroup_ST_BUT < AnalyzeGroup (a, graph analysis with structural data at fixed threshold) is a graph analysis using structural data at fixed threshold.
 
-%% ¡description!
+%%% ¡description!
 AnalyzeGroup_ST_BUT uses structural data at fixed threshold and analyzes them using binary undirected graphs.
 
 %%% ¡seealso!

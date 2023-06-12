@@ -1,7 +1,7 @@
 %% ¡header!
 AnalyzeGroup_ST_MP_WU < AnalyzeGroup (a, graph analysis with structural multiplex data) is a graph analysis using structural multiplex data.
 
-%% ¡description!
+%%% ¡description!
 This graph analysis uses structural multiplex data and analyzes them using 
 weighted undirected multiplexes, binary undirected multiplexes with fixed thresholds,
 or binary undirected multiplexes with fixed densities.

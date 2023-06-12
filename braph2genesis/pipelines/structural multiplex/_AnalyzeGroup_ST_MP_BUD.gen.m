@@ -1,7 +1,7 @@
 %% ¡header!
 AnalyzeGroup_ST_MP_BUD < AnalyzeGroup (a, graph analysis with structural multiplex data of fixed density) is a graph analysis using structural multiplex data of fixed density.
 
-%% ¡description!
+%%% ¡description!
 This graph analysis uses structural multiplex data of fixed density and 
 analyzes them using binary undirected graphs.
 
