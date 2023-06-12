@@ -2,15 +2,41 @@
 AnalyzeGroup_CON_GA_WU < AnalyzeGroup (a, graph analysis with averaged connectivity data) is a graph analysis using connectivity data averaged by group.
 
 %% ¡description!
-This graph analysis uses connectivity data averaged by group 
+AnalyzeGroup_CON_GA_WU uses connectivity data averaged by group 
 and analyzes them using weighted undirected graphs.
+
+%% ¡seealso!
+SubjectCON, GraphWU
 
 %% ¡props_update!
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the analysis template to set the parameters.
-%%%% ¡settings!
+NAME (constant, string) is the name of the graph analysis with averaged connectivity data.
+%%%% ¡default!
 'AnalyzeGroup_CON_GA_WU'
+
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the graph analysis with averaged connectivity data.
+%%%% ¡default!
+'AnalyzeGroup_CON_GA_WU uses connectivity data averaged by group and analyzes them using weighted undirected graphs.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the graph analysis with averaged connectivity data.
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the graph analysis with averaged connectivity data.
+%%%% ¡default!
+'AnalyzeGroup_CON_GA_WU ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the graph analysis with averaged connectivity data.
+%%%% ¡default!
+'AnalyzeGroup_CON_GA_WU label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the graph analysis with averaged connectivity data.
+%%%% ¡default!
+'AnalyzeGroup_CON_GA_WU notes'
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectCON.
@@ -18,16 +44,14 @@ GR (data, item) is the subject group, which also defines the subject class Subje
 Group('SUB_CLASS', 'SubjectCON')
 
 %%% ¡prop!
-G (result, item) is the average graph obtained from this analysis.
+G (result, item) is the graph obtained from this analysis.
 %%%% ¡settings!
 'GraphWU'
-%%%% ¡default!
-GraphWU()
 %%%% ¡calculate!
 gr = a.get('GR');
 A = [];
-for i = 1:1:gr.get('SUB_DICT').length()
-	sub = gr.get('SUB_DICT').getItem(i);
+for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
+	sub = gr.get('SUB_DICT').get('IT', i);
 
     if i == 1
         A = sub.get('CON');
@@ -35,17 +59,18 @@ for i = 1:1:gr.get('SUB_DICT').length()
         A = A + sub.get('CON');
     end
 end
+A = A / gr.get('SUB_DICT').get('LENGTH')
 
-ba = BrainAtlas();
-if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-    ba = gr.get('SUB_DICT').getItem(1).get('BA');
-end
+% % % ba = BrainAtlas();
+% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
+% % %     ba = gr.get('SUB_DICT').getItem(1).get('BA');
+% % % end
 
 g = GraphWU( ...
     'ID', ['g ' gr.get('ID')], ...
-    'B', A/gr.get('SUB_DICT').length(), ...
-    'BAS', ba ...
+    'B', A ... % % % 'BAS', ba ...
     );
+
 value = g;
 
 %% ¡tests!
