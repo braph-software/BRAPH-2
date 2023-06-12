@@ -1,36 +1,36 @@
 %% ¡header!
-DegreeInAv < DegreeIn (m, degreeinav) is the graph degreeinav.
+DegreeInAv < DegreeIn (m, average in-degree) is the graph average in-degree.
 
 %%% ¡description!
-The average degreeinav of a graph is the average of all number of inward edges connected to a node within a layer. 
+The average in-degree (DegreeInAv) of a graph is the average of all number of inward edges connected to a node within a layer. 
 
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the degreeinav.
+NAME (constant, string) is the name of the average in-degree.
 %%%% ¡default!
 'DegreeInAv'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the degreeinav.
+DESCRIPTION (constant, string) is the description of the average in-degree.
 %%%% ¡default!
-'The average degreeinav of a graph is the average of all number of inward edges connected to a node within a layer.'
+'The average in-degree (DegreeInAv) of a graph is the average of all number of inward edges connected to a node within a layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the degreeinav.
+TEMPLATE (parameter, item) is the template of the average in-degree.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the degreeinav.
+ID (data, string) is a few-letter code of the average in-degree.
 %%%% ¡default!
 'DegreeInAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the degreeinav.
+LABEL (metadata, string) is an extended label of the average in-degree.
 %%%% ¡default!
 'DegreeInAv label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the degreeinav.
+NOTES (metadata, string) are some specific notes about the average in-degree.
 %%%% ¡default!
 'DegreeInAv notes'
 
@@ -59,10 +59,10 @@ M (result, cell) is the cell containing the degree-inav value.
 %%%% ¡calculate!
 in_degree = calculateValue@DegreeIn(m, prop);	
 g = m.get('G'); % graph from measure class
-layerNumber = g.get('LAYERNUMBER');
-in_degree_av = cell(layerNumber, 1);
+L = g.get('LAYERNUMBER');
+in_degree_av = cell(L, 1);
 
-parfor li = 1:1:layerNumber
+parfor li = 1:1:L
     in_degree_av(li) = {mean(in_degree{li})};
 end
 

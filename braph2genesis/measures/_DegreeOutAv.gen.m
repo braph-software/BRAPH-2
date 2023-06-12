@@ -1,36 +1,36 @@
 %% ¡header!
-DegreeOutAv < DegreeOut (m, degreeoutav) is the graph degreeoutav.
+DegreeOutAv < DegreeOut (m, average out-degree) is the graph average out-degree.
 
 %%% ¡description!
-The average degreeoutav of a graph is the average of all number of outward edges connected to a node within a layer. 
+The average out-degree (DegreeOutAv) of a graph is the average of all number of outward edges connected to a node within a layer. 
 
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the degreeoutav.
+NAME (constant, string) is the name of the average out-degree.
 %%%% ¡default!
 'DegreeOutAv'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the degreeoutav.
+DESCRIPTION (constant, string) is the description of the average out-degree.
 %%%% ¡default!
-'The average degreeoutav of a graph is the average of all number of outward edges connected to a node within a layer.'
+'The average out-degree (DegreeOutAv) of a graph is the average of all number of outward edges connected to a node within a layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the degreeoutav.
+TEMPLATE (parameter, item) is the template of the average out-degree.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the degreeoutav.
+ID (data, string) is a few-letter code of the average out-degree.
 %%%% ¡default!
 'DegreeOutAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the degreeoutav.
+LABEL (metadata, string) is an extended label of the average out-degree.
 %%%% ¡default!
 'DegreeOutAv label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the degreeoutav.
+NOTES (metadata, string) are some specific notes about the average out-degree.
 %%%% ¡default!
 'DegreeOutAv notes'
 
@@ -59,10 +59,10 @@ M (result, cell) is the cell containing the degree-outav.
 %%%% ¡calculate!
 out_degree = calculateValue@DegreeOut(m, prop);	
 g = m.get('G'); % graph from measure class
-layerNumber = g.get('LAYERNUMBER');
-degree_out_av = cell(layerNumber, 1);
+L = g.get('LAYERNUMBER');
+degree_out_av = cell(L, 1);
 
-parfor li = 1:1:layerNumber
+parfor li = 1:1:L
     degree_out_av(li) = {mean(out_degree{li})};
 end
 

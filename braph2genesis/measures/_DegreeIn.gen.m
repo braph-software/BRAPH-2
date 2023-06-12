@@ -1,37 +1,37 @@
 %% ¡header!
-DegreeIn < Measure (m, degreein) is the graph degree-in.
+DegreeIn < Measure (m, in-degree) is the graph in-degree.
 
 %%% ¡description!
-The degree-in of a node is the number of inward edges connected to a node within a layer. 
+The in-degree (DegreeIn) of a node is the number of inward edges connected to a node within a layer. 
 Connection weights are ignored in calculations.
 
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the degree-in.
+NAME (constant, string) is the name of the in-degree.
 %%%% ¡default!
 'DegreeIn'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the degree-in.
+DESCRIPTION (constant, string) is the description of the in-degree.
 %%%% ¡default!
-'The degree-in of a node is the number of inward edges connected to a node within a layer. Connection weights are ignored in calculations.'
+'The in-degree (DegreeIn) of a node is the number of inward edges connected to a node within a layer. Connection weights are ignored in calculations.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the degree-in.
+TEMPLATE (parameter, item) is the template of the in-degree.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the degree-in.
+ID (data, string) is a few-letter code of the in-degree.
 %%%% ¡default!
 'DegreeIn ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the degree-in.
+LABEL (metadata, string) is an extended label of the in-degree.
 %%%% ¡default!
 'DegreeIn label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the degree-in.
+NOTES (metadata, string) are some specific notes about the in-degree.
 %%%% ¡default!
 'DegreeIn notes'
 
@@ -55,22 +55,21 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
 {'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD'}
 
-
 %%% ¡prop!
-M (result, cell) is the cell containing the degree-in value.
+M (result, cell) is the cell containing the in-degree value.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
-layerNumber = g.get('LAYERNUMBER');
-degree_in = cell(layerNumber, 1);
+L = g.get('LAYERNUMBER');
+in_degree = cell(L, 1);
 
-parfor li = 1:1:layerNumber
+parfor li = 1:1:L
     Aii = A{li, li};
     Aii = binarize(Aii);  % binarizes the adjacency matrix
-    degree_in(li) = {sum(Aii, 1)'};  % calculates the degree-in of a node for layer li
+    in_degree(li) = {sum(Aii, 1)'};  % calculates the in-degree of a node for layer li
 end
 
-value = degree_in;
+value = in_degree;
 
 %% ¡tests!
 

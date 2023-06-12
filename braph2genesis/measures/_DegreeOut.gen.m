@@ -1,37 +1,37 @@
 %% ¡header!
-DegreeOut < Measure (m, outdegree) is the graph degreeout.
+DegreeOut < Measure (m, out-degree) is the graph out-degree.
 
 %%% ¡description!
-The degreeout of a node is the number of outward edges connected to a node within a layer. 
+The out-degree (DegreeOut) of a node is the number of outward edges connected to a node within a layer. 
 Connection weights are ignored in calculations.
 
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the degreeout.
+NAME (constant, string) is the name of the out-degree.
 %%%% ¡default!
 'DegreeOut'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the degreeout.
+DESCRIPTION (constant, string) is the description of the out-degree.
 %%%% ¡default!
-'The degreeout of a node is the number of outward edges connected to a node within a layer. Connection weights are ignored in calculations.'
+'The out-degree (DegreeOut) of a node is the number of outward edges connected to a node within a layer. Connection weights are ignored in calculations.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the degreeout.
+TEMPLATE (parameter, item) is the template of the out-degree.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the degreeout.
+ID (data, string) is a few-letter code of the out-degree.
 %%%% ¡default!
 'DegreeOut ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the degreeout.
+LABEL (metadata, string) is an extended label of the out-degree.
 %%%% ¡default!
 'DegreeOut label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the degreeout.
+NOTES (metadata, string) are some specific notes about the out-degree.
 %%%% ¡default!
 'DegreeOut notes'
 
@@ -55,22 +55,21 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
 {'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD'}
 
-
 %%% ¡prop!
 M (result, cell) is the cell containing the degree-out value.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
-layerNumber = g.get('LAYERNUMBER');
-degreeout = cell(layerNumber, 1);
+L = g.get('LAYERNUMBER');
+out_degree = cell(L, 1);
 
-parfor li = 1:1:layerNumber
+parfor li = 1:1:L
     Aii = A{li, li};
     Aii = binarize(Aii);  % binarizes the adjacency matrix
-    degreeout(li) = {sum(Aii, 2)};  % calculates the degreeout of a node for layer li
+    out_degree(li) = {sum(Aii, 2)};  % calculates the out-degree of a node for layer li
 end
 
-value = degreeout;
+value = out_degree;
 
 %% ¡tests!
 
