@@ -6,55 +6,43 @@ This graph analysis uses connectivity and functional multiplex data of
 fixed density and analyzes them using binary undirected graphs.
 
 %%% ¡seealso!
-AnalyzeGroup_CON_FUN_MP_WU, SubjectCON_FUN_MP, MultiplexBUD.
-
-%% ¡props!
-
-%%% ¡prop!
-REPETITION(parameter, scalar) is the number of repetitions for functional data
-%%%% ¡default!
-1
-
-%%% ¡prop!
-FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value for functional data
-%%%% ¡default!
-0
-
-%%% ¡prop!
-FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value for functional data
-%%%% ¡default!
-Inf
-
-%%% ¡prop!
-CORRELATION_RULE (parameter, option) is the correlation type for functional data.
-%%%% ¡settings!
-Correlation.CORRELATION_RULE_LIST(1:3)
-%%%% ¡default!
-Correlation.CORRELATION_RULE_LIST{1}
-
-%%% ¡prop!
-NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights of functional data.
-%%%% ¡settings!
-Correlation.NEGATIVE_WEIGHT_RULE_LIST
-%%%% ¡default!
-Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
-
-%%% ¡prop!
-DENSITIES (parameter, rvector) is the vector of densities.
-%%%% ¡default!
-[1:1:10]
-%%%% ¡gui!
-pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeGroup_CON_FUN_MP_GA_BUD.DENSITIES, ...
-    'MIN', 0, 'MAX', 100, ...
-    'DEFAULT', AnalyzeGroup_CON_FUN_MP_GA_BUD.getPropDefault('DENSITIES'), ...
-    varargin{:});
+SubjectCON_FUN_MP, MultiplexBUD.
 
 %% ¡props_update!
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the analysis template to set the parameters.
-%%%% ¡settings!
-'AnalyzeGroup_CON_FUN_MP_GA_BUD'
+NAME (constant, string) is the name of the group-based graph analysis with structural data.
+%%%% ¡default!
+'AnalyzeGroup_ST_WU'
+
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the group-based graph analysis with structural data.
+%%%% ¡default!
+'AnalyzeGroup_ST_WU uses structural data and analyzes them using weighted undirected graphs.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the group-based graph analysis with structural data.
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the group-based graph analysis with structural data.
+%%%% ¡default!
+'AnalyzeGroup_ST_WU ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the group-based graph analysis with structural data.
+%%%% ¡default!
+'AnalyzeGroup_ST_WU label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the group-based graph analysis with structural data.
+%%%% ¡default!
+'AnalyzeGroup_ST_WU notes'
+
+
+
+
+
+
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectCON_FUN_MP.
@@ -130,17 +118,46 @@ g = MultiplexBUD( ...
 
 value = g;
 
-%% ¡methods!
-function pr = getPPCompareGroup_CPDict(a, varargin) 
-    %GEPPPCOMPAREGROUP_CPDICT returns the comparison plot panel compatible with the analysis.
-    %
-    % PR = GEPPPCOMPAREGROUP_CPDICT(A) returns the comparison plot panel
-    %  that is compatible with the analyze group.
-    %
-    % See also CompareGroup.
-    
-    pr = PPCompareGroup_CPDict_CON_FUN_MP_GA_BUD(varargin{:});
-end
+%% ¡props!
+
+%%% ¡prop!
+REPETITION(parameter, scalar) is the number of repetitions for functional data
+%%%% ¡default!
+1
+
+%%% ¡prop!
+FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value for functional data
+%%%% ¡default!
+0
+
+%%% ¡prop!
+FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value for functional data
+%%%% ¡default!
+Inf
+
+%%% ¡prop!
+CORRELATION_RULE (parameter, option) is the correlation type for functional data.
+%%%% ¡settings!
+Correlation.CORRELATION_RULE_LIST(1:3)
+%%%% ¡default!
+Correlation.CORRELATION_RULE_LIST{1}
+
+%%% ¡prop!
+NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights of functional data.
+%%%% ¡settings!
+Correlation.NEGATIVE_WEIGHT_RULE_LIST
+%%%% ¡default!
+Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
+
+%%% ¡prop!
+DENSITIES (parameter, rvector) is the vector of densities.
+%%%% ¡default!
+[1:1:10]
+%%%% ¡gui!
+pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeGroup_CON_FUN_MP_GA_BUD.DENSITIES, ...
+    'MIN', 0, 'MAX', 100, ...
+    'DEFAULT', AnalyzeGroup_CON_FUN_MP_GA_BUD.getPropDefault('DENSITIES'), ...
+    varargin{:});
 
 %% ¡tests!
 

@@ -7,45 +7,42 @@ binary undirected multigraphs with fixed thresholds,
 or binary undirected multigraphs with fixed densities.
 
 %%% ¡seealso!
-AnalyzeGroup_FUN_MP_BUD, AnalyzeGroup_FUN_MP_BUT, Subject_FUN_MP, MultiplexWU.
-
-%% ¡props!
-
-%%% ¡prop!
-REPETITION(parameter, scalar) is the number of repetitions
-%%%% ¡default!
-1
-
-%%% ¡prop!
-FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value
-%%%% ¡default!
-0
-
-%%% ¡prop!
-FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value
-%%%% ¡default!
-Inf
-
-%%% ¡prop!
-CORRELATION_RULE (parameter, option) is the correlation type.
-%%%% ¡settings!
-Correlation.CORRELATION_RULE_LIST(1:3)
-%%%% ¡default!
-Correlation.CORRELATION_RULE_LIST{1}
-
-%%% ¡prop!
-NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
-%%%% ¡settings!
-Correlation.NEGATIVE_WEIGHT_RULE_LIST
-%%%% ¡default!
-Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
+SubjectFUN_MP, MultiplexWU.
 
 %% ¡props_update!
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the analysis template to set the parameters.
-%%%% ¡settings!
-'AnalyzeGroup_FUN_MP_GA_WU'
+NAME (constant, string) is the name of the group-based graph analysis with structural data.
+%%%% ¡default!
+'AnalyzeGroup_ST_WU'
+
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the group-based graph analysis with structural data.
+%%%% ¡default!
+'AnalyzeGroup_ST_WU uses structural data and analyzes them using weighted undirected graphs.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the group-based graph analysis with structural data.
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the group-based graph analysis with structural data.
+%%%% ¡default!
+'AnalyzeGroup_ST_WU ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the group-based graph analysis with structural data.
+%%%% ¡default!
+'AnalyzeGroup_ST_WU label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the group-based graph analysis with structural data.
+%%%% ¡default!
+'AnalyzeGroup_ST_WU notes'
+
+
+
+
+
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectFUN_MP.
@@ -106,6 +103,37 @@ g = MultiplexWU( ...
     'BAS', ba ...
     );
 value = g;
+
+%% ¡props!
+
+%%% ¡prop!
+REPETITION(parameter, scalar) is the number of repetitions
+%%%% ¡default!
+1
+
+%%% ¡prop!
+FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value
+%%%% ¡default!
+0
+
+%%% ¡prop!
+FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value
+%%%% ¡default!
+Inf
+
+%%% ¡prop!
+CORRELATION_RULE (parameter, option) is the correlation type.
+%%%% ¡settings!
+Correlation.CORRELATION_RULE_LIST(1:3)
+%%%% ¡default!
+Correlation.CORRELATION_RULE_LIST{1}
+
+%%% ¡prop!
+NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
+%%%% ¡settings!
+Correlation.NEGATIVE_WEIGHT_RULE_LIST
+%%%% ¡default!
+Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 
 %% ¡tests!
 

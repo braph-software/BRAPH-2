@@ -6,14 +6,44 @@ This graph analysis uses connectivity ordinal multiplex data and
 analyzes them using weighted undirected graphs.
 
 %%% ¡seealso!
-SubjectCON_MP, OrderedMultiplexWU, AnalyzeEnsemble_CON_MP_GA_WU.
+SubjectCON_MP, OrderedMultiplexWU.
 
 %% ¡props_update!
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the analysis template to set the parameters.
-%%%% ¡settings!
-'AnalyzeGroup_CON_OMP_GA_WU'
+NAME (constant, string) is the name of the group-based graph analysis with structural data.
+%%%% ¡default!
+'AnalyzeGroup_ST_WU'
+
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the group-based graph analysis with structural data.
+%%%% ¡default!
+'AnalyzeGroup_ST_WU uses structural data and analyzes them using weighted undirected graphs.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the group-based graph analysis with structural data.
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the group-based graph analysis with structural data.
+%%%% ¡default!
+'AnalyzeGroup_ST_WU ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the group-based graph analysis with structural data.
+%%%% ¡default!
+'AnalyzeGroup_ST_WU label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the group-based graph analysis with structural data.
+%%%% ¡default!
+'AnalyzeGroup_ST_WU notes'
+
+
+
+
+
+
+
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectCON_MP.
