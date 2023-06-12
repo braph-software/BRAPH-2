@@ -2,46 +2,41 @@
 AnalyzeGroup_FUN_GA_WU < AnalyzeGroup (a, graph analysis with averaged functional data) is a graph analysis using averaged functional data.
 
 %% ¡description!
-This graph analysis uses functional data averaged over a group 
+AnalyzeGroup_FUN_GA_WU uses functional data averaged over a group 
 and analyzes them using weighted undirected graphs.
 
-%% ¡props!
-
-%%% ¡prop!
-REPETITION(parameter, scalar) is the number of repetitions
-%%%% ¡default!
-1
-
-%%% ¡prop!
-FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value
-%%%% ¡default!
-0
-
-%%% ¡prop!
-FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value
-%%%% ¡default!
-Inf
-
-%%% ¡prop!
-CORRELATION_RULE (parameter, option) is the correlation type.
-%%%% ¡settings!
-Correlation.CORRELATION_RULE_LIST(1:3)
-%%%% ¡default!
-Correlation.CORRELATION_RULE_LIST{1}
-
-%%% ¡prop!
-NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
-%%%% ¡settings!
-Correlation.NEGATIVE_WEIGHT_RULE_LIST
-%%%% ¡default!
-Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
+%% ¡seealso!
+SubjectFUN, GraphWU
 
 %% ¡props_update!
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the analysis template to set the parameters.
-%%%% ¡settings!
-'AnalyzeGroup_FUN_GA_WU'
+NAME (constant, string) is the name of the graph analysis with averaged functional data.
+%%%% ¡default!
+'AnalyzeGroup_CON_GA_WU'
+
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the graph analysis with averaged functional data.
+%%%% ¡default!
+'AnalyzeGroup_FUN_GA_WU uses functional data averaged over a group and analyzes them using weighted undirected graphs.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the graph analysis with averaged functional data.
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the graph analysis with averaged functional data.
+%%%% ¡default!
+'AnalyzeGroup_CON_GA_WU ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the graph analysis with averaged functional data.
+%%%% ¡default!
+'AnalyzeGroup_CON_GA_WU label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the graph analysis with averaged functional data.
+%%%% ¡default!
+'AnalyzeGroup_CON_GA_WU notes'
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectFUN.
@@ -57,11 +52,11 @@ GraphWU()
 %%%% ¡calculate!
 gr = a.get('GR');
 T = a.get('REPETITION');
-fmin = a.get('FREQUENCYRULEMIN');
-fmax = a.get('FREQUENCYRULEMAX');
+fmin = a.get('F_MIN');
+fmax = a.get('F_MAX');
 A_fun = [];
-for i = 1:1:gr.get('SUB_DICT').length()
-	sub = gr.get('SUB_DICT').getItem(i);
+for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
+	sub = gr.get('SUB_DICT').get('IT', i);
     data = sub.getr('FUN');
     fs = 1 / T;
     
@@ -80,19 +75,50 @@ for i = 1:1:gr.get('SUB_DICT').length()
         A_fun = A_fun + A;
     end    
 end
-A_fun = A_fun/gr.get('SUB_DICT').length();
+A_fun = A_fun / gr.get('SUB_DICT').get('LENGTH');
 
-ba = BrainAtlas();
-if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-    ba = gr.get('SUB_DICT').getItem(1).get('BA');
-end
+% % % ba = BrainAtlas();
+% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
+% % %     ba = gr.get('SUB_DICT').getItem(1).get('BA');
+% % % end
 
 g = GraphWU( ...
     'ID', ['g ' gr.get('ID')], ...
-    'B', A_fun, ...
-    'BAS', ba ...
+    'B', A_fun ... % % % 'BAS', ba ...
     );
+
 value = g;
+
+%% ¡props!
+
+%%% ¡prop!
+REPETITION (parameter, scalar) is the number of repetitions
+%%%% ¡default!
+1
+
+%%% ¡prop!
+F_MIN (parameter, scalar)is the minimum frequency value
+%%%% ¡default!
+0
+
+%%% ¡prop!
+F_MAX (parameter, scalar)is the maximum frequency value
+%%%% ¡default!
+Inf
+
+%%% ¡prop!
+CORRELATION_RULE (parameter, option) is the correlation type.
+%%%% ¡settings!
+Correlation.CORRELATION_RULE_LIST(1:3)
+%%%% ¡default!
+Correlation.CORRELATION_RULE_LIST{1}
+
+%%% ¡prop!
+NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
+%%%% ¡settings!
+Correlation.NEGATIVE_WEIGHT_RULE_LIST
+%%%% ¡default!
+Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 
 %% ¡tests!
 
