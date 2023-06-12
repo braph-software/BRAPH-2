@@ -102,21 +102,6 @@ if value
             end
     end
     
-% % %     % add listeners
-% % %     if ~isa(el.getr(prop), 'NoValue')
-% % %         % add listener to prop set in el
-% % %         pr.l_setprop = listener(el.get(prop), 'PropSet', @cb_prop_set);
-% % % 
-% % %         % add listener to result memorized in el
-% % %         pr.l_resultmemorized = listener(el.get(prop), 'ResultMemorized', @cb_result_memorized);
-% % %     end
-% % %     function cb_prop_set(~, ~)
-% % %         notify(el, 'PropSet', EventPropSet(el, prop))
-% % %     end
-% % %     function cb_result_memorized(~, ~)
-% % %         notify(el, 'PropSet', EventPropSet(el, prop))
-% % %     end
-    
     value = true;
 end
 

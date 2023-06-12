@@ -20,4 +20,4 @@ mp_WD = MultiplexWD('NODELABELS', ba, 'B', {randn(ba.get('BR_DICT').get('LENGTH'
 mp_WU = MultiplexWU('NODELABELS', ba, 'B', {randn(ba.get('BR_DICT').get('LENGTH')) randn(ba.get('BR_DICT').get('LENGTH')) randn(ba.get('BR_DICT').get('LENGTH'))}); % Create MultiplexWU % MultiplexWU
 omp_WU = OrdMultiWU('NODELABELS', ba, 'B', {randn(ba.get('BR_DICT').get('LENGTH')) randn(ba.get('BR_DICT').get('LENGTH')) randn(ba.get('BR_DICT').get('LENGTH'))}); % Create OrdMultiWU % OrdMultiWU
 mp_BUD = MultiplexBUD('NODELABELS', ba, 'B', {randn(ba.get('BR_DICT').get('LENGTH')) randn(ba.get('BR_DICT').get('LENGTH')) randn(ba.get('BR_DICT').get('LENGTH'))}); % Create MultiplexBUD % MultiplexBUD
-mp_BUT = MultiplexBUD('NODELABELS', ba, 'B', {randn(ba.get('BR_DICT').get('LENGTH')) randn(ba.get('BR_DICT').get('LENGTH')) randn(ba.get('BR_DICT').get('LENGTH'))}); % Create MultiplexBUT % MultiplexBUT
+mp_BUT = MultiplexBUT('NODELABELS', ba, 'B', {randn(ba.get('BR_DICT').get('LENGTH')) randn(ba.get('BR_DICT').get('LENGTH')) randn(ba.get('BR_DICT').get('LENGTH'))}); % Create MultiplexBUT % MultiplexBUT

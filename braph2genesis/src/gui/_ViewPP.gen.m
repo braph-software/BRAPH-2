@@ -247,8 +247,6 @@ function cb_editfield_az(~, ~)
     elevation = old_v(2);
     
     el.set(prop, [azimuth, elevation])
-
-% % %     pr.update()
 end
 
 %%% ¡prop!
@@ -277,8 +275,6 @@ function cb_slider_az(~, ~)
     elevation = old_v(2);
     
     el.set(prop, [azimuth, elevation])
-
-% % %     pr.update()
 end
 
 %%% ¡prop!
@@ -323,8 +319,6 @@ function cb_editfield_el(~, ~) % (src, event)
     elevation = get(pr.get('EDITFIELD_EL'), 'Value');
     
     el.set(prop, [azimuth, elevation])
-
-% % %     pr.update()    
 end
 
 %%% ¡prop!
@@ -353,8 +347,6 @@ function cb_slider_el(~, ~)
     elevation = get(pr.get('SLIDER_EL'), 'Value');
     
     el.set(prop, [azimuth, elevation])
-
-% % %     pr.update()
 end
 
 %% ¡tests!

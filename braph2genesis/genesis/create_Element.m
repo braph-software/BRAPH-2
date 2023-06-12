@@ -30,6 +30,18 @@ function create_Element(generator_file, target_dir)
 % <strong>%%% ¡prop!</strong>
 %  ...
 %
+%<strong>%% ¡gui!</strong>
+% <strong>%%% ¡menu_import!</strong>
+%  Menu Import for the GUI figure. 
+%  The element is el.
+%  The menu is menu_import.
+%  The plot element is pe.
+% <strong>%%% ¡menu_export!</strong>
+%  Menu Export for the GUI figure. 
+%  The element is el.
+%  The menu is menu_export.
+%  The plot element is pe.
+%
 %<strong>%% ¡constants!</strong>
 % Constants.
 %
@@ -172,6 +184,12 @@ disp('¡! generator file read')
     end
 
 element_created = exist(class_name, 'class') == 8;
+
+[gui_menu_import, gui_menu_export] = analyze_gui();
+    function [gui_menu_import, gui_menu_export] = analyze_gui()
+        gui_menu_import = splitlines(getToken(txt, 'gui', 'menu_import'));
+        gui_menu_export = splitlines(getToken(txt, 'gui', 'menu_export'));
+    end
 
 constants = splitlines(getToken(txt, 'constants'));
 
@@ -494,6 +512,10 @@ generate_header()
                  '%'
                 ['% ' class_name ' methods (GUI):']
                  '%  getPanelProp - returns a prop panel'
+                 '%'
+                ['% ' class_name ' methods (GUI, Static):']
+                 '%  getGUIMenuImport - returns the importer menu'
+                 '%  getGUIMenuExport - returns the exporter menu'
                  '%'
                 ['% ' class_name ' methods (category, Static):']
                  '%  getCategories - returns the list of categories'
@@ -1758,25 +1780,41 @@ generate_calculateValue()
                     })
                 g(3, 'switch prop')
                     for i = 1:1:numel(props)
-                        if any(strcmp(props{i}.CATEGORY, {'RESULT', 'QUERY', 'EVANESCENT'}))
+                        if any(strcmp(props{i}.CATEGORY, {'QUERY' 'EVANESCENT'}))
                             if ~isequal(props{i}.calculate, {''})
                                 g(4, ['case ' class_name '.' props{i}.TAG ' % __' class_name '.' props{i}.TAG '__'])
-                                    g(5, ['rng(' moniker '.getPropSeed(' class_name '.' props{i}.TAG '), ''twister'')'])
+                                    gs(5, props{i}.calculate)
+                                    g(5, '')
+                            end
+                        elseif any(strcmp(props{i}.CATEGORY, 'RESULT'))
+                            if ~isequal(props{i}.calculate, {''})
+                                g(4, ['case ' class_name '.' props{i}.TAG ' % __' class_name '.' props{i}.TAG '__'])
+                                    g(5, ['rng_settings_ = rng(); rng(' moniker '.getPropSeed(' class_name '.' props{i}.TAG '), ''twister'')'])
                                     g(5, '')
                                     gs(5, props{i}.calculate)
+                                    g(5, '')
+                                    g(5, 'rng(rng_settings_)')
                                     g(5, '')
                             end
                         end
                     end
                     for i = 1:1:numel(props_update)
-                        if any(strcmp(props_update{i}.CATEGORY, {'RESULT', 'QUERY', 'EVANESCENT'}))
+                        if any(strcmp(props_update{i}.CATEGORY, {'QUERY' 'EVANESCENT'}))
                             if ~isequal(props_update{i}.calculate, {''})
                                 g(4, ['case ' class_name '.' props_update{i}.TAG ' % __' class_name '.' props_update{i}.TAG '__'])
-                                    g(5, ['rng(' moniker '.getPropSeed(' class_name '.' props_update{i}.TAG '), ''twister'')'])
-                                    g(5, '')
                                     gs(5, props_update{i}.calculate)
                                     g(5, '')
                             end
+                        elseif strcmp(props_update{i}.CATEGORY, 'RESULT')
+                            if ~isequal(props_update{i}.calculate, {''})
+                                g(4, ['case ' class_name '.' props_update{i}.TAG ' % __' class_name '.' props_update{i}.TAG '__'])
+                                    g(5, ['rng_settings_ = rng(); rng(' moniker '.getPropSeed(' class_name '.' props_update{i}.TAG '), ''twister'')'])
+                                    g(5, '')
+                                    gs(5, props_update{i}.calculate)
+                                    g(5, '')
+                                    g(5, 'rng(rng_settings_)')
+                                    g(5, '')
+                            end                            
                         end
                     end
                         g(4, 'otherwise')
@@ -1911,6 +1949,53 @@ generate_gui()
                     g(3, 'end')
                 g(2, 'end')
             end            
+        g(1, 'end')
+    end
+
+generate_gui_static()
+    function generate_gui_static()
+        if isequal(gui_menu_import, {''}) && isequal(gui_menu_export, {''})
+            return
+        end
+        g(1, 'methods (Static) % GUI static methods')
+            if ~isequal(gui_menu_import, {''})
+                g(2, 'function getGUIMenuImport(el, menu_import, pe)')
+                    gs(3, {
+                        '%GETGUIMENUIMPORT sets a figure menu.'
+                        '%'
+                        '% GETGUIMENUIMPORT(EL, MENU, PE) sets the figure menu import'
+                        '%  which operates on the element EL in the plot element PE.'
+                        '%'
+                        '% See also getGUIMenuExporter, PlotElement.'
+                        ''
+                        })
+                    gs(3, {
+                        'Element.getGUIMenuImport(el, menu_import, pe);'
+                        ''
+                        })
+                    gs(3, gui_menu_import)
+                    g(3, '')
+                g(2, 'end')
+            end
+            if ~isequal(gui_menu_export, {''})
+                g(2, 'function getGUIMenuExport(el, menu_export, pe)')
+                    gs(3, {
+                        '%GETGUIMENUEXPORT sets a figure menu.'
+                        '%'
+                        '% GETGUIMENUIMPORT(EL, MENU, PE) sets the figure menu export'
+                        '%  which operates on the element EL in the plot element PE.'
+                        '%'
+                        '% See also getGUIMenuImporter, PlotElement.'
+                        ''
+                        })
+                    gs(3, {
+                        'Element.getGUIMenuExport(el, menu_export, pe);'
+                        ''
+                        })
+                    gs(3, gui_menu_export)
+                    g(3, '')
+                g(2, 'end')
+            end
         g(1, 'end')
     end
 
