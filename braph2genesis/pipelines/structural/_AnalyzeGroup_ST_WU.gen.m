@@ -49,7 +49,7 @@ NEGATIVE WEIGHTS RULE
 %%%% ¡id!
 AnalyzeGroup_ST_WU.G
 %%%% ¡title!
-MEASURES
+GRAPH & MEASURES
 
 %%% ¡prop!
 %%%% ¡id!
