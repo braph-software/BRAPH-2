@@ -185,12 +185,12 @@ Constructor - Full
 B1 = rand(randi(10));
 B2 = rand(randi(10));
 B3 = rand(randi(10));
-B12 = rand(size(B1,1),size(B2,2));
-B13 = rand(size(B1,1),size(B3,2));
-B23 = rand(size(B2,1),size(B3,2));
-B21 = rand(size(B2,1),size(B1,2));
-B31 = rand(size(B3,1),size(B1,2));
-B32 = rand(size(B3,1),size(B2,2));
+B12 = rand(size(B1, 1),size(B2, 2));
+B13 = rand(size(B1, 1),size(B3, 2));
+B23 = rand(size(B2, 1),size(B3, 2));
+B21 = rand(size(B2, 1),size(B1, 2));
+B31 = rand(size(B3, 1),size(B1, 2));
+B32 = rand(size(B3, 1),size(B2, 2));
 B = {
     B1                           B12                            B13
     B21                          B2                             B23
@@ -207,15 +207,15 @@ A23 = standardize(semipositivize(B23));
 A21 = standardize(semipositivize(B21));
 A31 = standardize(semipositivize(B31));
 A32 = standardize(semipositivize(B32));
-B{1,1} = A1;
-B{2,2} = A2;
-B{3,3} = A3;
-B{1,2} = A12;
-B{1,3} = A13;
-B{2,3} = A23;
-B{2,1} = A21;
-B{3,1} = A31;
-B{3,2} = A32;
+B{1, 1} = A1;
+B{2, 2} = A2;
+B{3, 3} = A3;
+B{1, 2} = A12;
+B{1, 3} = A13;
+B{2, 3} = A23;
+B{2, 1} = A21;
+B{3, 1} = A31;
+B{3, 2} = A32;
 A = B
 assert(isequal(g.get('A'), A), ...
     [BRAPH2.STR ':MultilayerWD:' BRAPH2.FAIL_TEST], ...
