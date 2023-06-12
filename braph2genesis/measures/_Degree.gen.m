@@ -53,7 +53,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU' 'OrdMxBUD'}
+{'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU' 'OrdMxBUT'}
 
 %%% ¡prop!
 M (result, cell) is the degree.
@@ -414,34 +414,31 @@ assert(isequal(m_inside_g.get('M'), known_degree), ...
 
 %%% ¡test!
 %%%% ¡name!
-OrdMxBUD
+OrdMxBUT
 %%%% ¡probability!
 .01
 %%%% ¡code!
 B = [
     0   .2   .7
-    .2   0   .1
-    .7  .1   0
+    .2   0   0
+    .7   0   0
     ];
 
-densities = [0 33 67 100];
+thresholds = [0 .5 1];
 
 known_degree = { ...
-    [0 0 0]'
-    [0 0 0]'
-    [0 0 0]'
-    [1 0 1]'
-    [1 0 1]'
-    [1 0 1]'
     [2 1 1]'
     [2 1 1]'
     [2 1 1]'
-    [2 2 2]'
-    [2 2 2]'
-    [2 2 2]'
+    [1 0 1]'
+    [1 0 1]'
+    [1 0 1]'
+    [0 0 0]'
+    [0 0 0]'
+    [0 0 0]'
     };
 
-g = OrdMxBUD('B', {B B B}, 'DENSITIES', densities);
+g = OrdMxBUT('B', {B B B}, 'THRESHOLDS', thresholds);
 
 m_outside_g = Degree('G', g);
 assert(isequal(m_outside_g.get('M'), known_degree), ...
