@@ -8,6 +8,50 @@ The first layer contains a connectivity matrix and the second layer contains fun
 %%% ¡seealso!
 CombineGroups_CON_FUN_MP, SeparateGroups_CON_FUN_MP
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+SubjectCON_FUN_MP.ID
+%%%% ¡title!
+Subject ID
+
+%%% ¡prop!
+%%%% ¡id!
+SubjectCON_FUN_MP.LABEL
+%%%% ¡title!
+Subject LABEL
+
+%%% ¡prop!
+%%%% ¡id!
+SubjectCON_FUN_MP.BA
+%%%% ¡title!
+Brain Atlas
+
+%%% ¡prop!
+%%%% ¡id!
+SubjectCON_FUN_MP.VOI_DICT
+%%%% ¡title!
+Variables of Interest
+
+%%% ¡prop!
+%%%% ¡id!
+SubjectCON_FUN_MP.CON
+%%%% ¡title!
+Connectivity DATA
+
+%%% ¡prop!
+%%%% ¡id!
+SubjectCON_FUN_MP.FUN
+%%%% ¡title!
+Functional DATA
+
+%%% ¡prop!
+%%%% ¡id!
+SubjectCON_FUN_MP.NOTES
+%%%% ¡title!
+Subject NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!
