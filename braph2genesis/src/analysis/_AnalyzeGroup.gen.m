@@ -56,5 +56,9 @@ G (result, item) is the graph obtained from this analysis.
 'Graph'
 %%%% ¡calculate!
 value = Graph();
-%%%% ¡_gui!
+%%%% ¡gui!
+pr = PanelPropItem('EL', a, 'PROP', AnalyzeGroup.G, ...
+    'GUICLASS', 'GUIElement', ...
+    'BUTTON_TEXT', 'Graph & Measures', ...
+    varargin{:});
 % % % pr = PPAnalyzeGroup_G('EL', a, 'PROP', AnalyzeGroup.G, 'WAITBAR', Callback('EL', a, 'TAG', 'WAITBAR'), varargin{:});
