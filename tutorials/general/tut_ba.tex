@@ -80,6 +80,18 @@ For example: BrainMeshICBM152.nv
 Then, from row 5, you should include the IDs of the regions of your atlas (1st column), the Labels of the regions of your atlas (2nd column), the X, Y and Z coordinates (3rd, 4th and 5th columns) and the brain hemisphere or any notes you would like to add (6th column). Take a look at the following snapshot for a quick overview of the information that should be included in a newly created Brain Atlas:
 
 
+\fig{figure}
+	{fig:xxx}
+	{
+	[b!]
+	\includegraphics{tut_ba/fig9.png}
+	}
+	{Brain Atlas GUI.}
+	{
+	Graphical user interface to work with brain atlases. 
+	}
+	
+	
 \section{Upload the Brain Atlas}
 
 To open the Graphical User Interface and Upload the Brain Atlas, you can do it from the command line by typing the following information:
@@ -107,9 +119,6 @@ gui.get('SHOW')
 
 You can also do it by typing braph2, which will open the Graphical User Interface of the BRAPH 2.0 software. Here you must first select a Pipeline containing the analyses steps that you want to apply to your data. Once a Pipeline has been selected, the first window will allow you to upload the Brain Atlas, as shown in the snapshot below:
 
- 
-In this window you have a Menu that you can use to Open a File (File -> Open) and select a Brain Atlas that is already prepared or Import (Import -> File) a Brain Atlas you have created in excel or text format. If you Import a Brain Atlas you have created and an error message appears, check again your Brain Atlas file for missing or incorrect information based on the format for new Brain Atlases we describe above. This is what you should see:
-
 \fig{figure}
 	{fig:xxx}
 	{
@@ -121,6 +130,7 @@ In this window you have a Menu that you can use to Open a File (File -> Open) an
 	Graphical user interface to work with brain atlases. 
 	}
 
+In this window you have a Menu that you can use to Open a File (File -> Open) and select a Brain Atlas that is already prepared or Import (Import -> File) a Brain Atlas you have created in excel or text format. If you Import a Brain Atlas you have created and an error message appears, check again your Brain Atlas file for missing or incorrect information based on the format for new Brain Atlases we describe above. 
 Once you have uploaded a Brain Atlas, you will notice that the information regarding the Brain Atlas ID, Brain Atlas NAME and Brain Regions sections are now filled with the information of the atlas. You can edit the information included in any of these sections. 
 
 \fig{figure}
@@ -146,7 +156,6 @@ Once you are satisfied you can proceed with the option "Plot Brain Atlas", which
 	{
 	Graphical user interface to work with brain atlases. 
 	}
-	
 This new window has a large menu that allows you to change its visualization. We suggest you try the different options to understand how they change the figure. Importantly, within this menu there is one option called Settings Brain Surface which, when selected, will open another window, as can be seen in the snapshot below:
 
 \fig{figure*}
@@ -185,6 +194,8 @@ If you wish to change the size of the spheres of all nodes, you need to change t
 
 Finally the codes for different colours in the FACECOLOR column correspond to the hexadecimal form of RGB colors, which can be found online.
 
+
+\end{document} 
 
 
 
