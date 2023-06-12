@@ -125,5 +125,7 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 %%% ¡test!
 %%%% ¡name!
 Example
+%%%% ¡probability!
+.01
 %%%% ¡code!
 example_FUN_GA_WU

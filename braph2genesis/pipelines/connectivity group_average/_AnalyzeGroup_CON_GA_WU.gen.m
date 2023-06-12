@@ -78,5 +78,7 @@ value = g;
 %%% ¡test!
 %%%% ¡name!
 Example
+%%%% ¡probability!
+.01
 %%%% ¡code!
 example_CON_GA_WU

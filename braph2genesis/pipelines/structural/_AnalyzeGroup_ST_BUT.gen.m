@@ -122,6 +122,8 @@ pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeGroup_ST_BUT.THRESHOLDS, ...
 %%% ¡test!
 %%%% ¡name!
 Example
+%%%% ¡probability!
+.01
 %%%% ¡code!
 if ~isfile([fileparts(which('example_ST_WU')) filesep 'Example data ST XLS' filesep 'atlas.xlsx'])
     test_ImporterGroupSubjectST_XLS % create example files
