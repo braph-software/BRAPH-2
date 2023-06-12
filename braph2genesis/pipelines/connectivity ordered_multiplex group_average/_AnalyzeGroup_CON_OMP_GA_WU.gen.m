@@ -38,13 +38,6 @@ NOTES (metadata, string) are some specific notes about the graph analysis with c
 %%%% ¡default!
 'AnalyzeGroup_CON_OMP_GA_WU notes'
 
-
-
-
-
-
-
-
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectCON_MP.
 %%%% ¡default!
@@ -58,11 +51,11 @@ G (result, item) is the average graph (OrderedMultiplexWU) obtained from this an
 OrderedMultiplexWU()
 %%%% ¡calculate!
 gr = a.get('GR');
-subjects_number = gr.get('SUB_DICT').length();
+subjects_number = gr.get('SUB_DICT').get('LENGTH');
 
 A_conmp = cell(1, 2);
 for i = 1:1:subjects_number
-    sub = gr.get('SUB_DICT').getItem(i);
+    sub = gr.get('SUB_DICT').get('IT', i);
     CON_MP = sub.getr('CON_MP');
     L = sub.get('L');
     
@@ -77,18 +70,17 @@ for i = 1:1:subjects_number
     end
 end
 
-ba = BrainAtlas();
-if ~isempty(gr) && ~isa(gr, 'NoValue') && subjects_number > 0
-    ba = gr.get('SUB_DICT').getItem(1).get('BA');
-end
+% % % ba = BrainAtlas();
+% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && subjects_number > 0
+% % %     ba = gr.get('SUB_DICT').getItem(1).get('BA');
+% % % end
 
 L = length(A_conmp);
 g = OrderedMultiplexWU( ...
     'ID', ['g ' gr.get('ID')], ...
-    'B', cellfun(@(a) a/subjects_number, A_conmp, 'UniformOutput', false), ... % % % 'LAYERTICKS', [1:1:L], ...
-    'LAYERLABELS', cell2str(cellfun(@(x) ['L' num2str(x)], num2cell([1:1:L]), 'UniformOutput', false)), ...
-    'BAS', ba ...
+    'B', cellfun(@(a) a/subjects_number, A_conmp, 'UniformOutput', false) ... % % % 'LAYERTICKS', [1:1:L], ... % % % 'LAYERLABELS', cell2str(cellfun(@(x) ['L' num2str(x)], num2cell([1:1:L]), 'UniformOutput', false)), ... % % % 'BAS', ba ...
     );
+
 value = g;
 
 %% ¡tests!
@@ -96,5 +88,7 @@ value = g;
 %%% ¡test!
 %%%% ¡name!
 Example
+%%%% ¡probability!
+.01
 %%%% ¡code!
 example_CON_OMP_GA_WU

@@ -38,12 +38,6 @@ NOTES (metadata, string) are some specific notes about the graph analysis with c
 %%%% ¡default!
 'AnalyzeGroup_CON_FUN_MP_GA_BUD notes'
 
-
-
-
-
-
-
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectCON_FUN_MP.
 %%%% ¡default!
@@ -58,15 +52,15 @@ MultiplexBUD()
 %%%% ¡calculate!
 gr = a.get('GR');
 T = a.get('REPETITION');
-fmin = a.get('FREQUENCYRULEMIN');
-fmax = a.get('FREQUENCYRULEMAX');
+fmin = a.get('F_MIN');
+fmax = a.get('F_MAX');
 densities = a.get('DENSITIES'); % this is a vector
 A = cell(1, 2);
 data = cell(1, 2);
 layerlabels = {};
 
-for i = 1:1:gr.get('SUB_DICT').length()
-    sub = gr.get('SUB_DICT').getItem(i);
+for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
+    sub = gr.get('SUB_DICT').get('IT', i);
     CON_FUN_MP = sub.getr('CON_FUN_MP');
     
     % FUN data
@@ -102,18 +96,15 @@ end
 A(1) = {data{1}/gr.get('SUB_DICT').length()};
 A(2) = {data{2}/gr.get('SUB_DICT').length()};
 
-ba = BrainAtlas();
-if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-    ba = gr.get('SUB_DICT').getItem(1).get('BA');
-end
+% % % ba = BrainAtlas();
+% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
+% % %     ba = gr.get('SUB_DICT').getItem(1).get('BA');
+% % % end
                     
 g = MultiplexBUD( ...
     'ID', ['g ' gr.get('ID')], ...
     'B', A, ...
-    'DENSITIES', densities, ... 
-    'LAYERTICKS', densities, ...
-    'LAYERLABELS', cell2str(layerlabels), ...
-    'BAS', ba ...
+    'DENSITIES', densities ... % % % 'LAYERTICKS', densities, ... % % % 'LAYERLABELS', cell2str(layerlabels), ... % % % 'BAS', ba ...
     );
 
 value = g;
@@ -121,17 +112,17 @@ value = g;
 %% ¡props!
 
 %%% ¡prop!
-REPETITION(parameter, scalar) is the number of repetitions for functional data
+REPETITION (parameter, scalar) is the number of repetitions for functional data
 %%%% ¡default!
 1
 
 %%% ¡prop!
-FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value for functional data
+F_MIN (parameter, scalar)is the minimum frequency value for functional data
 %%%% ¡default!
 0
 
 %%% ¡prop!
-FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value for functional data
+F_MAX (parameter, scalar)is the maximum frequency value for functional data
 %%%% ¡default!
 Inf
 
@@ -164,5 +155,7 @@ pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeGroup_CON_FUN_MP_GA_BUD.DENSI
 %%% ¡test!
 %%%% ¡name!
 Example
+%%%% ¡probability!
+.01
 %%%% ¡code!
 example_CON_FUN_MP_GA_BUD

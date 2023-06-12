@@ -39,11 +39,6 @@ NOTES (metadata, string) are some specific notes about the graph analysis with f
 %%%% ¡default!
 'AnalyzeGroup_FUN_MP_GA_WU notes'
 
-
-
-
-
-
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectFUN_MP.
 %%%% ¡default!
@@ -57,14 +52,14 @@ G (result, item) is the average graph (MultiplexWU) obtained from this analysis.
 MultiplexWU()
 %%%% ¡calculate!
 gr = a.get('GR');
-subjects_number = gr.get('SUB_DICT').length();
+subjects_number = gr.get('SUB_DICT').get('LENGTH');
 
 T = a.get('REPETITION');
-fmin = a.get('FREQUENCYRULEMIN');
-fmax = a.get('FREQUENCYRULEMAX');
+fmin = a.get('F_MIN');
+fmax = a.get('F_MAX');
 A_fun = cell(1, 2);
 for i = 1:1:subjects_number
-	sub = gr.get('SUB_DICT').getItem(i);
+	sub = gr.get('SUB_DICT').get('IT', i);
     FUN_MP = sub.getr('FUN_MP');
     L = sub.get('L');
     
@@ -90,34 +85,33 @@ for i = 1:1:subjects_number
     end
 end
 
-ba = BrainAtlas();
-if ~isempty(gr) && ~isa(gr, 'NoValue') && subjects_number > 0
-    ba = gr.get('SUB_DICT').getItem(1).get('BA');
-end
+% % % ba = BrainAtlas();
+% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && subjects_number > 0
+% % %     ba = gr.get('SUB_DICT').getItem(1).get('BA');
+% % % end
 
 L = length(A_fun);
 g = MultiplexWU( ...
     'ID', ['g ' gr.get('ID')], ...
-    'B', cellfun(@(a) a/subjects_number, A_fun, 'UniformOutput', false), ... % % % 'LAYERTICKS', [1:1:L], ...
-    'LAYERLABELS', cell2str(cellfun(@(x) ['L' num2str(x)], num2cell([1:1:L]), 'UniformOutput', false)), ...
-    'BAS', ba ...
+    'B', cellfun(@(a) a/subjects_number, A_fun, 'UniformOutput', false) ... % % % 'LAYERTICKS', [1:1:L], ... % % % 'LAYERLABELS', cell2str(cellfun(@(x) ['L' num2str(x)], num2cell([1:1:L]), 'UniformOutput', false)), ... % % % 'BAS', ba ...
     );
+
 value = g;
 
 %% ¡props!
 
 %%% ¡prop!
-REPETITION(parameter, scalar) is the number of repetitions
+REPETITION (parameter, scalar) is the number of repetitions
 %%%% ¡default!
 1
 
 %%% ¡prop!
-FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value
+F_MIN (parameter, scalar)is the minimum frequency value
 %%%% ¡default!
 0
 
 %%% ¡prop!
-FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value
+F_MAX (parameter, scalar)is the maximum frequency value
 %%%% ¡default!
 Inf
 
@@ -137,8 +131,10 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 
 %% ¡tests!
 
-% % % %%% ¡test!
-% % % %%%% ¡name!
-% % % Example
-% % % %%%% ¡code!
-% % % example_FUN_MP_GA_WU
+%%% ¡test!
+%%%% ¡name!
+Example
+%%%% ¡probability!
+.01
+%%%% ¡code!
+example_FUN_MP_GA_WU
