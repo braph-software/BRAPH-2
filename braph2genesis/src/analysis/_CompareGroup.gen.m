@@ -7,6 +7,62 @@ CompareGroup compares two group-based analyses, which need to be of the same cla
 %%% ¡seealso!
 AnalyzeGroup, ComparisonGroup
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+CompareGroup.ID
+%%%% ¡title!
+Comparison ID
+
+%%% ¡prop!
+%%%% ¡id!
+CompareGroup.LABEL
+%%%% ¡title!
+Comparison NAME
+
+%%% ¡prop!
+%%%% ¡id!
+CompareGroup.WAITBAR
+%%%% ¡title!
+WAITBAR ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+CompareGroup.VERBOSE
+%%%% ¡title!
+VERBOSE ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+CompareGroup.P
+%%%% ¡title!
+PERMUTATION NUMBER
+
+%%% ¡prop!
+%%%% ¡id!
+CompareGroup.LONGITUDINAL
+%%%% ¡title!
+LONGITUDINAL COMPARISON
+
+%%% ¡prop!
+%%%% ¡id!
+CompareGroup.CP_DICT
+%%%% ¡title!
+COMPARISONS
+
+%%% ¡prop!
+%%%% ¡id!
+CompareGroup.NOTES
+%%%% ¡title!
+Comparison NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+CompareGroup.MEMORIZE
+%%%% ¡title!
+Memorize Intermediate Results
+
 %% ¡props_update!
 
 %%% ¡prop!
