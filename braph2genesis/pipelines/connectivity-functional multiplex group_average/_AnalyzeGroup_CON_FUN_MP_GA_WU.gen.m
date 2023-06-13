@@ -10,6 +10,74 @@ or binary undirected multigraphs with fixed densities.
 %%% ¡seealso!
 SubjectCON_FUN_MP, MultiplexWU
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_CON_FUN_MP_GA_WU.ID
+%%%% ¡title!
+Analysis ID
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_CON_FUN_MP_GA_WU.LABEL
+%%%% ¡title!
+Analysis NAME
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_CON_FUN_MP_GA_WU.WAITBAR
+%%%% ¡title!
+WAITBAR ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_CON_FUN_MP_GA_WU.GR
+%%%% ¡title!
+SUBJECT GROUP
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_CON_FUN_MP_GA_WU.REPETITION
+%%%% ¡title!
+REPETITION TIME [s]
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_CON_FUN_MP_GA_WU.F_MIN
+%%%% ¡title!
+MIN FREQUENCY [Hz]
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_CON_FUN_MP_GA_WU.F_MAX
+%%%% ¡title!
+MAX FREQUENCY [Hz]
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_CON_FUN_MP_GA_WU.CORRELATION_RULE
+%%%% ¡title!
+CORRELATION RULE
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_CON_FUN_MP_GA_WU.NEGATIVE_WEIGHT_RULE
+%%%% ¡title!
+NEGATIVE WEIGHTS RULE
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_CON_FUN_MP_GA_WU.G
+%%%% ¡title!
+GRAPH & MEASURES
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_CON_FUN_MP_GA_WU.NOTES
+%%%% ¡title!
+Analysis NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!
@@ -142,5 +210,9 @@ Example
 %%%% ¡probability!
 .01
 %%%% ¡code!
+if ~isfile([fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_MP XLS' filesep 'atlas.xlsx'])
+    test_SubjectCON_FUN_MP % create example files
+end
+
 example_CON_FUN_MP_GA_WU
     
