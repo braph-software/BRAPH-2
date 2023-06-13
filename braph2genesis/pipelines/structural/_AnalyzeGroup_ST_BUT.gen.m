@@ -7,6 +7,62 @@ AnalyzeGroup_ST_BUT uses structural data at fixed threshold and analyzes them us
 %%% ¡seealso!
 SubjectST, MultigraphBUT
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_BUT.ID
+%%%% ¡title!
+Analysis ID
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_BUT.LABEL
+%%%% ¡title!
+Analysis NAME
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_BUT.WAITBAR
+%%%% ¡title!
+WAITBAR ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_BUT.GR
+%%%% ¡title!
+SUBJECT GROUP
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_BUT.CORRELATION_RULE
+%%%% ¡title!
+CORRELATION RULE
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_BUT.NEGATIVE_WEIGHT_RULE
+%%%% ¡title!
+NEGATIVE WEIGHTS RULE
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_BUT.THRESHOLDS
+%%%% ¡title!
+THRESHOLDS [-1 ... 1]
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_BUT.G
+%%%% ¡title!
+GRAPH & MEASURES
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_BUT.NOTES
+%%%% ¡title!
+Analysis NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!
@@ -130,3 +186,93 @@ if ~isfile([fileparts(which('example_ST_WU')) filesep 'Example data ST XLS' file
 end
 
 example_ST_BUT
+
+%%% ¡test!
+%%%% ¡name!
+GUI - Analysis
+%%%% ¡probability!
+.01
+%%%% ¡parallel!
+false
+%%%% ¡code!
+im_ba = ImporterBrainAtlasXLS('FILE', 'destrieux_atlas.xlsx');
+ba = im_ba.get('BA');
+
+gr = Group('SUB_CLASS', 'SubjectST', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST'));
+for i = 1:1:50
+    sub = SubjectST( ...
+        'ID', ['SUB ST ' int2str(i)], ...
+        'LABEL', ['Subejct ST ' int2str(i)], ...
+        'NOTES', ['Notes on subject ST ' int2str(i)], ...
+        'BA', ba, ...
+        'ST', rand(ba.get('BR_DICT').get('LENGTH'), 1) ...
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr.get('SUB_DICT').get('ADD', sub)
+end
+
+a = AnalyzeGroup_ST_BUT('GR', gr, 'THRESHOLDS', .4:.2:1);
+
+gui = GUIElement('PE', a, 'CLOSEREQ', false);
+gui.get('DRAW')
+gui.get('SHOW')
+
+gui.get('CLOSE')
+
+%%% ¡test!
+%%%% ¡name!
+GUI - Comparison
+%%%% ¡probability!
+.01
+%%%% ¡parallel!
+false
+%%%% ¡code!
+im_ba = ImporterBrainAtlasXLS('FILE', 'destrieux_atlas.xlsx');
+ba = im_ba.get('BA');
+
+gr1 = Group('SUB_CLASS', 'SubjectST', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST'));
+for i = 1:1:50
+    sub = SubjectST( ...
+        'ID', ['SUB ST ' int2str(i)], ...
+        'LABEL', ['Subejct ST ' int2str(i)], ...
+        'NOTES', ['Notes on subject ST ' int2str(i)], ...
+        'BA', ba, ...
+        'ST', rand(ba.get('BR_DICT').get('LENGTH'), 1) ...
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr1.get('SUB_DICT').get('ADD', sub)
+end
+
+gr2 = Group('SUB_CLASS', 'SubjectST', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST'));
+for i = 1:1:50
+    sub = SubjectST( ...
+        'ID', ['SUB ST ' int2str(i)], ...
+        'LABEL', ['Subejct ST ' int2str(i)], ...
+        'NOTES', ['Notes on subject ST ' int2str(i)], ...
+        'BA', ba, ...
+        'ST', rand(ba.get('BR_DICT').get('LENGTH'), 1) ...
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr2.get('SUB_DICT').get('ADD', sub)
+end
+
+a1 = AnalyzeGroup_ST_BUT('GR', gr1, 'THRESHOLDS', .4:.2:1);
+a2 = AnalyzeGroup_ST_BUT('GR', gr2, 'THRESHOLDS', a1.getCallback('THRESHOLDS'));
+
+c = CompareGroup( ...
+    'P', 10, ...
+    'A1', a1, ...
+    'A2', a2, ...
+    'WAITBAR', true, ...
+    'VERBOSE', false, ...
+    'MEMORIZE', true ...
+    );
+
+gui = GUIElement('PE', c, 'CLOSEREQ', false);
+gui.get('DRAW')
+gui.get('SHOW')
+
+gui.get('CLOSE')
