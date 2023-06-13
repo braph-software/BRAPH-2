@@ -124,3 +124,93 @@ if ~isfile([fileparts(which('SubjectCON')) filesep 'Example data CON XLS' filese
 end
 
 example_CON_GA_WU
+
+%%% ¡test!
+%%%% ¡name!
+GUI - Analysis
+%%%% ¡probability!
+.01
+%%%% ¡parallel!
+false
+%%%% ¡code!
+im_ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx');
+ba = im_ba.get('BA');
+
+gr = Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON'));
+for i = 1:1:50
+    sub = SubjectCON( ...
+        'ID', ['SUB CON ' int2str(i)], ...
+        'LABEL', ['Subejct CON ' int2str(i)], ...
+        'NOTES', ['Notes on subject CON ' int2str(i)], ...
+        'BA', ba, ...
+        'CON', rand(ba.get('BR_DICT').get('LENGTH')) ...
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr.get('SUB_DICT').get('ADD', sub)
+end
+
+a = AnalyzeGroup_CON_GA_WU('GR', gr);
+
+gui = GUIElement('PE', a, 'CLOSEREQ', false);
+gui.get('DRAW')
+gui.get('SHOW')
+
+gui.get('CLOSE')
+
+%%% ¡test!
+%%%% ¡name!
+GUI - Comparison
+%%%% ¡probability!
+.01
+%%%% ¡parallel!
+false
+%%%% ¡code!
+im_ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx');
+ba = im_ba.get('BA');
+
+gr1 = Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON'));
+for i = 1:1:50
+    sub = SubjectCON( ...
+        'ID', ['SUB CON ' int2str(i)], ...
+        'LABEL', ['Subejct CON ' int2str(i)], ...
+        'NOTES', ['Notes on subject CON ' int2str(i)], ...
+        'BA', ba, ...
+        'CON', rand(ba.get('BR_DICT').get('LENGTH')) ...
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr1.get('SUB_DICT').get('ADD', sub)
+end
+
+gr2 = Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON'));
+for i = 1:1:50
+    sub = SubjectCON( ...
+        'ID', ['SUB CON ' int2str(i)], ...
+        'LABEL', ['Subejct CON ' int2str(i)], ...
+        'NOTES', ['Notes on subject CON ' int2str(i)], ...
+        'BA', ba, ...
+        'CON', rand(ba.get('BR_DICT').get('LENGTH')) ...
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr2.get('SUB_DICT').get('ADD', sub)
+end
+
+a1 = AnalyzeGroup_CON_GA_WU('GR', gr1);
+a2 = AnalyzeGroup_CON_GA_WU('GR', gr2, 'TEMPLATE', a1);
+
+c = CompareGroup( ...
+    'P', 10, ...
+    'A1', a1, ...
+    'A2', a2, ...
+    'WAITBAR', true, ...
+    'VERBOSE', false, ...
+    'MEMORIZE', true ...
+    );
+
+gui = GUIElement('PE', c, 'CLOSEREQ', false);
+gui.get('DRAW')
+gui.get('SHOW')
+
+gui.get('CLOSE')
