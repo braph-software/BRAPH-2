@@ -86,7 +86,7 @@ end
 
 % % % ba = BrainAtlas();
 % % % if ~isempty(gr) && ~isa(gr, 'NoValue') && subjects_number > 0
-% % %     ba = gr.get('SUB_DICT').getItem(1).get('BA');
+% % %     ba = gr.get('SUB_DICT').get('IT', 1).get('BA');
 % % % end
 
 L = length(A_fun);
