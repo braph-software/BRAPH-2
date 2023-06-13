@@ -313,7 +313,7 @@ for i = 1:1:50
 end
 
 a1 = AnalyzeGroup_CON_FUN_MP_GA_BUD('GR', gr1);
-a1 = AnalyzeGroup_CON_FUN_MP_GA_BUD('GR', gr2, 'TEMPLATE', a1);
+a2 = AnalyzeGroup_CON_FUN_MP_GA_BUD('GR', gr2, 'TEMPLATE', a1);
 
 c = CompareGroup( ...
     'P', 10, ...
