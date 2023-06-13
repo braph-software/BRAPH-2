@@ -170,11 +170,11 @@ BR_DICT (data, idict) contains the brain regions of the brain atlas.
 % cb_tab_edit_code = {
 %     'switch col'
 %         'case BrainRegion.ID'
-%             'if ~dict.containsKey(newdata)'
+%             'if ~dict.get('CONTAINS_KEY', newdata)'
 %                 '' % change brain region id
-%                 'dict.getItem(i).set(''ID'', newdata)'
+%                 'dict.get('IT', i).set(''ID'', newdata)'
 %                 '' % change brain region key in idict
-%                 'dict.replaceKey(dict.getKey(i), newdata);' % oldkey = dict.getKey(i)
+%                 'dict.get('REPLACE_KEY', dict.get('KEY', i), newdata);' % oldkey = dict.get('KEY', i)
 %             'end'
 %     'otherwise'
 %         'cb_table_edit_default()'

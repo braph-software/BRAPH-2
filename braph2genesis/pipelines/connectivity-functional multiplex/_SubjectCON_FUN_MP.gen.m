@@ -136,7 +136,7 @@ false
 im_ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx');
 ba = im_ba.get('BA');
 
-gr_FUN = Group('SUB_CLASS', 'SubjectCON_FUN_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON_FUN_MP'));
+gr = Group('SUB_CLASS', 'SubjectCON_FUN_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON_FUN_MP'));
 for i = 1:1:50
     sub = SubjectCON_FUN_MP( ...
         'ID', ['SUB CON ' int2str(i)], ...
@@ -148,14 +148,14 @@ for i = 1:1:50
         );
     sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
     sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
-    gr_FUN.get('SUB_DICT').get('ADD', sub)
+    gr.get('SUB_DICT').get('ADD', sub)
 end
 
-gui_FUN = GUIElement('PE', gr_FUN, 'CLOSEREQ', false);
-gui_FUN.get('DRAW')
-gui_FUN.get('SHOW')
+gui = GUIElement('PE', gr, 'CLOSEREQ', false);
+gui.get('DRAW')
+gui.get('SHOW')
 
-gui_FUN.get('CLOSE')
+gui.get('CLOSE')
 
 %%% ¡test!
 %%%% ¡name!
