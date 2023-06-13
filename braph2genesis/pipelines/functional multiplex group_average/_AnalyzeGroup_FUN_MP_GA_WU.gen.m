@@ -7,7 +7,7 @@ binary undirected multigraphs with fixed thresholds,
 or binary undirected multigraphs with fixed densities.
 
 %%% ¡seealso!
-SubjectFUN_MP, MultiplexWU.
+SubjectFUN_MP, MultiplexWU
 
 %% ¡props_update!
 

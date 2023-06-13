@@ -6,7 +6,7 @@ This graph analysis uses structural multiplex data of fixed threshold and
 analyzes them using binary undirected graphs.
 
 %%% ¡seealso!
-SubjectST_MP, MultiplexBUT.
+SubjectST_MP, MultiplexBUT
 
 %% ¡props_update!
 

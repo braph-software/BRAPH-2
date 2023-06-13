@@ -6,7 +6,7 @@ This graph analysis uses connectivity ordinal multiplex data and
 analyzes them using weighted undirected graphs.
 
 %%% ¡seealso!
-SubjectCON_MP, OrderedMultiplexWU.
+SubjectCON_MP, OrderedMultiplexWU
 
 %% ¡props_update!
 

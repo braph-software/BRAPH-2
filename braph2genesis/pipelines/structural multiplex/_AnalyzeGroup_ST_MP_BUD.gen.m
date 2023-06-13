@@ -6,7 +6,7 @@ This graph analysis uses structural multiplex data of fixed density and
 analyzes them using binary undirected graphs.
 
 %%% ¡seealso!
-SubjectST_MP, MultiplexBUD.
+SubjectST_MP, MultiplexBUD
 
 %% ¡props_update!
 

@@ -6,7 +6,7 @@ This graph analysis uses connectivity and functional multiplex data of
 fixed density and analyzes them using binary undirected graphs.
 
 %%% ¡seealso!
-SubjectCON_FUN_MP, MultiplexBUD.
+SubjectCON_FUN_MP, MultiplexBUD
 
 %% ¡props_update!
 

@@ -7,7 +7,57 @@ weighted undirected multiplexes, binary undirected multiplexes with fixed thresh
 or binary undirected multiplexes with fixed densities.
 
 %%% ¡seealso!
-SubjectST_MP, MultiplexWU.
+SubjectST_MP, MultiplexWU
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_MP_WU.ID
+%%%% ¡title!
+Analysis ID
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_MP_WU.LABEL
+%%%% ¡title!
+Analysis NAME
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_MP_WU.WAITBAR
+%%%% ¡title!
+WAITBAR ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_MP_WU.GR
+%%%% ¡title!
+SUBJECT GROUP
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_MP_WU.CORRELATION_RULE
+%%%% ¡title!
+CORRELATION RULE
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_MP_WU.NEGATIVE_WEIGHT_RULE
+%%%% ¡title!
+NEGATIVE WEIGHTS RULE
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_MP_WU.G
+%%%% ¡title!
+GRAPH & MEASURES
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_MP_WU.NOTES
+%%%% ¡title!
+Analysis NOTES
 
 %% ¡props_update!
 

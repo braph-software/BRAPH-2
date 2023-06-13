@@ -41,12 +41,12 @@ a_WU2 = AnalyzeGroup_ST_MP_WU( ...
 
 % measure calculation
 g_WU1 = a_WU1.get('G');
-ovstrength_WU1 = g_WU1.getMeasure('OverlappingStrength').get('M');
-ovstrength_av_WU1 = g_WU1.getMeasure('OverlappingStrengthAv').get('M');
+% % % ovstrength_WU1 = g_WU1.getMeasure('OverlappingStrength').get('M');
+% % % ovstrength_av_WU1 = g_WU1.getMeasure('OverlappingStrengthAv').get('M');
 
 g_WU2 = a_WU2.get('G');
-ovstrength_WU2 = g_WU2.getMeasure('OverlappingStrength').get('M');
-ovstrength_av_WU2 = g_WU2.getMeasure('OverlappingStrengthAv').get('M');
+% % % ovstrength_WU2 = g_WU2.getMeasure('OverlappingStrength').get('M');
+% % % ovstrength_av_WU2 = g_WU2.getMeasure('OverlappingStrengthAv').get('M');
 
 % comparison
 c_WU = CompareGroup( ...
@@ -58,14 +58,14 @@ c_WU = CompareGroup( ...
     'MEMORIZE', true ...
     );
 
-ovstrength_WU_diff = c_WU.getComparison('OverlappingStrength').get('DIFF');
-ovstrength_WU_p1 = c_WU.getComparison('OverlappingStrength').get('P1');
-ovstrength_WU_p2 = c_WU.getComparison('OverlappingStrength').get('P2');
-ovstrength_WU_cil = c_WU.getComparison('OverlappingStrength').get('CIL');
-ovstrength_WU_ciu = c_WU.getComparison('OverlappingStrength').get('CIU');
+% % % ovstrength_WU_diff = c_WU.getComparison('OverlappingStrength').get('DIFF');
+% % % ovstrength_WU_p1 = c_WU.getComparison('OverlappingStrength').get('P1');
+% % % ovstrength_WU_p2 = c_WU.getComparison('OverlappingStrength').get('P2');
+% % % ovstrength_WU_cil = c_WU.getComparison('OverlappingStrength').get('CIL');
+% % % ovstrength_WU_ciu = c_WU.getComparison('OverlappingStrength').get('CIU');
 
-ovstrength_av_WU_diff = c_WU.getComparison('OverlappingStrengthAv').get('DIFF');
-ovstrength_av_WU_p1 = c_WU.getComparison('OverlappingStrengthAv').get('P1');
-ovstrength_av_WU_p2 = c_WU.getComparison('OverlappingStrengthAv').get('P2');
-ovstrength_av_WU_cil = c_WU.getComparison('OverlappingStrengthAv').get('CIL');
-ovstrength_av_WU_ciu = c_WU.getComparison('OverlappingStrengthAv').get('CIU');
+% % % ovstrength_av_WU_diff = c_WU.getComparison('OverlappingStrengthAv').get('DIFF');
+% % % ovstrength_av_WU_p1 = c_WU.getComparison('OverlappingStrengthAv').get('P1');
+% % % ovstrength_av_WU_p2 = c_WU.getComparison('OverlappingStrengthAv').get('P2');
+% % % ovstrength_av_WU_cil = c_WU.getComparison('OverlappingStrengthAv').get('CIL');
+% % % ovstrength_av_WU_ciu = c_WU.getComparison('OverlappingStrengthAv').get('CIU');
