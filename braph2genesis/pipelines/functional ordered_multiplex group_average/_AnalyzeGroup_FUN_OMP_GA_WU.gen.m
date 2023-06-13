@@ -204,8 +204,8 @@ Example
 %%%% ¡probability!
 .01
 %%%% ¡code!
-if ~isfile([fileparts(which('example_ST_MP_WU')) filesep 'Example data ST_MP XLS' filesep 'atlas.xlsx'])
-    test_ImporterGroupSubjectST_MP_XLS % create example files
+if ~isfile([fileparts(which('test_ImporterGroupSubjectFUN_MP_XLS')) filesep 'Example data FUN_MP XLS' filesep 'atlas.xlsx'])
+    test_ImporterGroupSubjectFUN_MP_XLS % create example files
 end
 
 example_FUN_OMP_GA_WU
