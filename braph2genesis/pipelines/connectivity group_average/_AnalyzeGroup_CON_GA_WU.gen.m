@@ -97,7 +97,7 @@ for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
         A = A + sub.get('CON');
     end
 end
-A = A / gr.get('SUB_DICT').get('LENGTH')
+A = A / gr.get('SUB_DICT').get('LENGTH');
 
 % % % ba = BrainAtlas();
 % % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
