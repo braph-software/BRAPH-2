@@ -2,7 +2,7 @@
 Clustering < Triangles (m, clustering) is the graph clustering.
 
 %%% ¡description!
-The clustering coefficient of a node is the fraction of triangles present 
+The clustering coefficient (Clustering) of a node is the fraction of triangles present 
 around a node. The clustering coefficient is calculated as the ratio between 
 the number of triangles present around a node and the maximum number of 
 triangles that could possibly be formed around that node.
@@ -17,7 +17,7 @@ NAME (constant, string) is the name of the clustering.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the clustering.
 %%%% ¡default!
-'The clustering coefficient of a node is the fraction of triangles present around a node. The clustering coefficient is calculated as the ratio between the number of triangles present around a node and the maximum number of triangles that could possibly be formed around that node.'
+'The clustering coefficient (Clustering) of a node is the fraction of triangles present around a node. The clustering coefficient is calculated as the ratio between the number of triangles present around a node and the maximum number of triangles that could possibly be formed around that node.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the clustering.
@@ -98,7 +98,6 @@ end
 
 value = clustering;
 
-
 %% ¡tests!
 
 %%% ¡excluded_props!
@@ -148,7 +147,6 @@ assert(isequal(round(cell2mat(m_outside_g.get('M')),4), clustering_WD), ...
 		assert(isequal(round(cell2mat(m_inside_g.get('M')),4), clustering_WD), ...
 		    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
 		    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
-
 
 %%% ¡test!
 %%%% ¡name!
@@ -427,8 +425,6 @@ m_inside_g = g.get('MEASURE', 'Clustering');
 assert(isequal(m_inside_g.get('M'), known_clustering), ...
     [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
-
-
 
 %%% ¡test!
 %%%% ¡name!

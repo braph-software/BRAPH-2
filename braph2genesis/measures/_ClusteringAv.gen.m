@@ -1,37 +1,37 @@
 %% ¡header!
-ClusteringAv < Clustering (m, clusteringav) is the graph clusteringav.
+ClusteringAv < Clustering (m, average clustering) is the graph average clustering.
 
 %%% ¡description!
-The average clustering of a graph is the average of the clustering 
+The average clustering (ClusteringAv) of a graph is the average of the clustering 
 coefficients of all nodes. Connection weights are ignored in calculations.
 
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the clusteringav.
+NAME (constant, string) is the name of the average clustering.
 %%%% ¡default!
 'ClusteringAv'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the clusteringav.
+DESCRIPTION (constant, string) is the description of the average clustering.
 %%%% ¡default!
-'The average clustering of a graph is the average of the clustering coefficients of all nodes. Connection weights are ignored in calculations.'
+'The average clustering (ClusteringAv) of a graph is the average of the clustering coefficients of all nodes. Connection weights are ignored in calculations.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the clusteringav.
+TEMPLATE (parameter, item) is the template of the average clustering.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the clusteringav.
+ID (data, string) is a few-letter code of the average clustering.
 %%%% ¡default!
 'ClusteringAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the clusteringav.
+LABEL (metadata, string) is an extended label of the average clustering.
 %%%% ¡default!
 'ClusteringAv label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the clusteringav.
+NOTES (metadata, string) are some specific notes about the average clustering.
 %%%% ¡default!
 'ClusteringAv notes'
 
@@ -56,7 +56,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'MultiplexBD'}
 
 %%% ¡prop!
-M (result, cell) is the cell containing the clusteringav.
+M (result, cell) is the cell containing the average clustering.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 clustering  = calculateValue@Clustering(m, prop);
@@ -395,8 +395,6 @@ m_inside_g = g.get('MEASURE', 'ClusteringAv');
 assert(isequal(m_inside_g.get('M'), known_clustering), ...
     [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
-
-
 
 %%% ¡test!
 %%%% ¡name!
