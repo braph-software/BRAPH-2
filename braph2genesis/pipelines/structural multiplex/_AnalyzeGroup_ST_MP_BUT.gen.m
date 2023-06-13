@@ -8,6 +8,62 @@ analyzes them using binary undirected graphs.
 %%% ¡seealso!
 SubjectST_MP, MultiplexBUT
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_MP_BUT.ID
+%%%% ¡title!
+Analysis ID
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_MP_BUT.LABEL
+%%%% ¡title!
+Analysis NAME
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_MP_BUT.WAITBAR
+%%%% ¡title!
+WAITBAR ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_MP_BUT.GR
+%%%% ¡title!
+SUBJECT GROUP
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_MP_BUT.CORRELATION_RULE
+%%%% ¡title!
+CORRELATION RULE
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_MP_BUT.NEGATIVE_WEIGHT_RULE
+%%%% ¡title!
+NEGATIVE WEIGHTS RULE
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_MP_BUT.THRESHOLDS
+%%%% ¡title!
+THRESHOLDS [-1 ... 1]
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_MP_BUT.G
+%%%% ¡title!
+GRAPH & MEASURES
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_ST_MP_BUT.NOTES
+%%%% ¡title!
+Analysis NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!
