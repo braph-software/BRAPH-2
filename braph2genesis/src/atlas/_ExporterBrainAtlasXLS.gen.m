@@ -20,7 +20,7 @@ DESCRIPTION (constant, string) is the description of the brain atlas exporter in
 'ExporterBrainAtlasXLS exports a brain atlas to an XLS/XLSX file.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the brain surface.
+TEMPLATE (parameter, item) is the template of the brain atlas exporter in XLS.
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the brain atlas exporter in XLS.
@@ -93,7 +93,7 @@ if isfolder(fileparts(file))
     br_y = cell(br_dict.get('LENGTH'), 1);
     br_z = cell(br_dict.get('LENGTH'), 1);
     for i = 1:1:br_dict.get('LENGTH')
-    braph2waitbar(wb, .25 + .75 * i / br_dict.get('LENGTH'), ['Saving brain region ' num2str(i) ' of ' num2str(br_dict.get('LENGTH'))])
+        braph2waitbar(wb, .25 + .75 * i / br_dict.get('LENGTH'), ['Saving brain region ' num2str(i) ' of ' num2str(br_dict.get('LENGTH'))])
         
         br = br_dict.get('IT', i);
         br_ids{i} = br.get('ID');
@@ -124,7 +124,7 @@ if isfolder(fileparts(file))
     % save
     braph2waitbar(wb, 1, 'Finalizing ...')
     
-    writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', 0);
+    writetable(tab, file, 'Sheet', 1, 'WriteVariableNames', false);
 
     braph2waitbar(wb, 'close')
 end
@@ -197,7 +197,7 @@ ba = BrainAtlas( ...
     'ID', 'TestToSaveCoolID', ...
     'LABEL', 'Brain Atlas', ...
     'NOTES', 'Brain atlas notes', ...
-    'BR_DICT', IndexedDictionary('IT_CLASS', 'BrainRegion', 'IT_KEY', 1, 'IT_LIST', {br1, br2, br3, br4, br5}) ...
+    'BR_DICT', IndexedDictionary('IT_CLASS', 'BrainRegion', 'IT_LIST', {br1, br2, br3, br4, br5}) ...
     );
 
 file = [fileparts(which('test_braph2')) filesep 'trial_atlas_to_be_erased.xlsx'];

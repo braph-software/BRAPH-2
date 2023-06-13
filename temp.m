@@ -97,7 +97,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 % isequal(gui_copy, gui)
 
 %% GUI
-% el_class_list = {'SettingsPosition'}; % 'PanelPropIDictTable' 'PanelPropItemList' 'PanelPropStringTextArea'
+% el_class_list = {'PanelPropCell'}; % 'PanelPropIDictTable' 'PanelPropItemList' 'PanelPropStringTextArea' 'SettingsPosition' 'PanelPropCell'
 % for i = 1:1:length(el_class_list)
 %     el_class = el_class_list{i};
 %     el_path = '/src/gui';
@@ -187,16 +187,16 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
 %     eval(['test_' el_class])
 % end
-el_class_list = {'PanelPropClassList'} % 'SettingsLine' 'SettingsArea' 'SettingsLinePP' 'SettingsAreaPP' 'SettingsTextPP' 'PanelPropStringList' 'PanelPropIDictTable'
-for i = 1:1:length(el_class_list)
-    el_class = el_class_list{i};
-    el_path = '/src/gui';
-    delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
-    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    eval(['test_' el_class])
-end
+% el_class_list = {'SettingsTextPP'} % 'SettingsLine' 'SettingsArea' 'SettingsLinePP' 'SettingsAreaPP' 'PanelPropStringList' 'PanelPropIDictTable'
+% for i = 1:1:length(el_class_list)
+%     el_class = el_class_list{i};
+%     el_path = '/src/gui';
+%     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     eval(['test_' el_class])
+% end
 % el_class_list = {'GraphPP_MDict'} % 'Graph' 'GraphAdjPF' 'GraphHistPF' 'LayersPP' 'GraphPP_MDict'
 % for i = 1:1:length(el_class_list)
 %     el_class = el_class_list{i};
@@ -423,31 +423,31 @@ gui1.get('SHOW')
 % gui2.get('DRAW')
 % gui2.get('SHOW')
 
-br1 = BrainRegion('ID', 'id1', 'LABEL', 'label1', 'NOTES', 'notes1', 'X', 1, 'Y', 1, 'Z', 1);
-br2 = BrainRegion('ID', 'id2', 'LABEL', 'label2', 'NOTES', 'notes2', 'X', 2, 'Y', 2, 'Z', 2);
-br3 = BrainRegion('ID', 'id3', 'LABEL', 'label3', 'NOTES', 'notes3', 'X', 3, 'Y', 3, 'Z', 3);
-br4 = BrainRegion('ID', 'id4', 'LABEL', 'label4', 'NOTES', 'notes4', 'X', 4, 'Y', 4, 'Z', 4);
-br5 = BrainRegion('ID', 'id5', 'LABEL', 'label5', 'NOTES', 'notes5', 'X', 5, 'Y', 5, 'Z', 5);
-items = {br1, br2, br3, br4, br5};
-idict_1 = IndexedDictionary( ...
-    'ID', 'idict', ...
-    'IT_CLASS', 'BrainRegion', ...
-    'IT_KEY', IndexedDictionary.getPropDefault(IndexedDictionary.IT_KEY), ...
-    'IT_LIST', items ...
-    );
-ba = BrainAtlas('ID', 'BA1', 'LABEL', 'brain atlas', 'NOTES', 'Notes on brain atlas.', 'BR_DICT', idict_1);
-g3 = MultiplexBUT( ...
-    'THRESHOLDS', [-1:.5:1], ...
-    'NODELABELS', ba, ...
-    'B', {randn(5) randn(5) randn(5)} ... % , ... 'LAYERLABELS', {'A' 'B' 'C'} ...
-    );
-gui3 = GUIElement( ...
-    'PE', g3, ...
-    'WAITBAR', true, ...
-    'CLOSEREQ', false ...
-    );
-gui3.get('DRAW')
-gui3.get('SHOW')
+% br1 = BrainRegion('ID', 'id1', 'LABEL', 'label1', 'NOTES', 'notes1', 'X', 1, 'Y', 1, 'Z', 1);
+% br2 = BrainRegion('ID', 'id2', 'LABEL', 'label2', 'NOTES', 'notes2', 'X', 2, 'Y', 2, 'Z', 2);
+% br3 = BrainRegion('ID', 'id3', 'LABEL', 'label3', 'NOTES', 'notes3', 'X', 3, 'Y', 3, 'Z', 3);
+% br4 = BrainRegion('ID', 'id4', 'LABEL', 'label4', 'NOTES', 'notes4', 'X', 4, 'Y', 4, 'Z', 4);
+% br5 = BrainRegion('ID', 'id5', 'LABEL', 'label5', 'NOTES', 'notes5', 'X', 5, 'Y', 5, 'Z', 5);
+% items = {br1, br2, br3, br4, br5};
+% idict_1 = IndexedDictionary( ...
+%     'ID', 'idict', ...
+%     'IT_CLASS', 'BrainRegion', ...
+%     'IT_KEY', IndexedDictionary.getPropDefault(IndexedDictionary.IT_KEY), ...
+%     'IT_LIST', items ...
+%     );
+% ba = BrainAtlas('ID', 'BA1', 'LABEL', 'brain atlas', 'NOTES', 'Notes on brain atlas.', 'BR_DICT', idict_1);
+% g3 = MultiplexBUT( ...
+%     'THRESHOLDS', [-1:.5:1], ...
+%     'NODELABELS', ba, ...
+%     'B', {randn(5) randn(5) randn(5)} ... % , ... 'LAYERLABELS', {'A' 'B' 'C'} ...
+%     );
+% gui3 = GUIElement( ...
+%     'PE', g3, ...
+%     'WAITBAR', true, ...
+%     'CLOSEREQ', false ...
+%     );
+% gui3.get('DRAW')
+% gui3.get('SHOW')
 
 % g1 = MultiplexBUD( ...
 %     'DENSITIES', [0 20 30 100] ...
@@ -584,6 +584,24 @@ gui3.get('SHOW')
 %     'IT_LIST', items ...
 %     );
 % ba0 = BrainAtlas('ID', 'BA1', 'LABEL', 'brain atlas', 'NOTES', 'Notes on brain atlas.', 'BR_DICT', idict);
+% gui = GUIElement('PE', ba0, 'CLOSEREQ', false);
+% gui.get('DRAW')
+% gui.get('SHOW')
+
+% br1 = BrainRegion('ID', 'id1', 'LABEL', 'label1', 'NOTES', 'notes1', 'X', 1, 'Y', 1, 'Z', 1);
+% br2 = BrainRegion('ID', 'id2', 'LABEL', 'label2', 'NOTES', 'notes2', 'X', 2, 'Y', 2, 'Z', 2);
+% br3 = BrainRegion('ID', 'id3', 'LABEL', 'label3', 'NOTES', 'notes3', 'X', 3, 'Y', 3, 'Z', 3);
+% br4 = BrainRegion('ID', 'id4', 'LABEL', 'label4', 'NOTES', 'notes4', 'X', 4, 'Y', 4, 'Z', 4);
+% br5 = BrainRegion('ID', 'id5', 'LABEL', 'label5', 'NOTES', 'notes5', 'X', 5, 'Y', 5, 'Z', 5);
+% br6 = BrainRegion('ID', 'id6', 'LABEL', 'label6', 'NOTES', 'notes6', 'X', 6, 'Y', 6, 'Z', 6);
+% items = {br1, br2, br3, br4, br5, br6};
+% idict = IndexedDictionary( ...
+%     'ID', 'idict', ...
+%     'IT_CLASS', 'BrainRegion', ...
+%     'IT_KEY', IndexedDictionary.getPropDefault(IndexedDictionary.IT_KEY), ...
+%     'IT_LIST', items ...
+%     );
+% ba0 = BrainAtlas('ID', 'BA1', 'LABEL', 'brain atlas', 'NOTES', 'Notes on brain atlas.', 'BR_DICT', idict);
 % pf0 = BrainAtlasPF(...
 %     'SURF', ImporterBrainSurfaceNV('FILE', 'human_ICBM152.nv').get('SURF'), ...
 %     'BA', ba0 ...
@@ -591,7 +609,7 @@ gui3.get('SHOW')
 % gui0 = GUIFig('PF', pf0, 'FILE', 'xxx sss', 'POSITION', [.1 .1 .4 .8], 'CLOSEREQ', false); % % % gui0 = GUIFig('PF', pf0, 'FILE', 'xxx sss', 'WAITBAR', true, 'CLOSEREQ', false); %TODO add waitbar
 % gui0.get('DRAW')
 % gui0.get('SHOW')
-% 
+
 % gui0_settings = gui0.memorize('GUI_SETTINGS');
 % gui0_settings.set('POSITION', [0 0 .3 .5])
 % gui0_settings.get('DRAW')
@@ -866,20 +884,275 @@ gui3.get('SHOW')
 % assert(~check_graphics(f_layout, 'figure'))
 
 %% GUILayout
-% % el_class = 'GUILayout';
-% % el_path = '/src/gui/';
-% % delete([fileparts(which('braph2')) el_path el_class '.m'])
-% % create_Element([fileparts(which('braph2genesis')) el_path '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-% % create_Element([fileparts(which('braph2genesis')) el_path '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-% % create_test_Element([fileparts(which('braph2genesis')) el_path '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-% % eval(['test_' el_class])
+% el_class = 'GUILayout';
+% el_path = '/src/gui/';
+% delete([fileparts(which('braph2')) el_path el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) el_path '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+% create_Element([fileparts(which('braph2genesis')) el_path '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+% create_test_Element([fileparts(which('braph2genesis')) el_path '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+% eval(['test_' el_class])
+
+% gui = GUILayout( ...
+%     'EL_CLASS', IndexedDictionary(), ...
+%     'POSITION', [.3 .3 .4 .4], ...
+%     'BKGCOLOR', [1 0 0] ...
+%     );
+% assert(strcmp(gui.get('EL_CLASS'), 'IndexedDictionary'))
 % 
-% % gui = GUILayout( ...
-% %     'EL_CLASS', IndexedDictionary(), ...
-% %     'POSITION', [.3 .3 .4 .4], ...
-% %     'BKGCOLOR', [1 0 0] ...
-% %     );
-% % assert(strcmp(gui.get('EL_CLASS'), 'IndexedDictionary'))
-% % 
-% % gui.get('DRAW')
-% % gui.get('SHOW')
+% gui.get('DRAW')
+% gui.get('SHOW')
+
+%% create_layout
+% el_class = 'BrainAtlas';
+% el_path = '/src/atlas/';
+% delete([fileparts(which('braph2')) el_path el_class '.m'])
+% create_Element([fileparts(which('braph2genesis')) el_path '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+% create_Element([fileparts(which('braph2genesis')) el_path '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+% create_test_Element([fileparts(which('braph2genesis')) el_path '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+% create_layout([fileparts(which('braph2genesis')) el_path '_' el_class '.gen.m'], [fileparts(which('braph2')) filesep() 'src' filesep() 'gui' filesep() 'layouts' filesep()])
+% eval(['test_' el_class])
+% 
+% br1 = BrainRegion('ID', 'id1', 'LABEL', 'label1', 'NOTES', 'notes1', 'X', 1, 'Y', 1, 'Z', 1);
+% br2 = BrainRegion('ID', 'id2', 'LABEL', 'label2', 'NOTES', 'notes2', 'X', 2, 'Y', 2, 'Z', 2);
+% br3 = BrainRegion('ID', 'id3', 'LABEL', 'label3', 'NOTES', 'notes3', 'X', 3, 'Y', 3, 'Z', 3);
+% br4 = BrainRegion('ID', 'id4', 'LABEL', 'label4', 'NOTES', 'notes4', 'X', 4, 'Y', 4, 'Z', 4);
+% br5 = BrainRegion('ID', 'id5', 'LABEL', 'label5', 'NOTES', 'notes5', 'X', 5, 'Y', 5, 'Z', 5);
+% items = {br1, br2, br3, br4, br5};
+% idict_1 = IndexedDictionary( ...
+%     'ID', 'idict', ...
+%     'IT_CLASS', 'BrainRegion', ...
+%     'IT_KEY', IndexedDictionary.getPropDefault(IndexedDictionary.IT_KEY), ...
+%     'IT_LIST', items ...
+%     );
+% ba = BrainAtlas('ID', 'BA1', 'LABEL', 'brain atlas', 'NOTES', 'Notes on brain atlas.', 'BR_DICT', idict_1);
+% 
+% gui = GUIElement( ...
+%     'PE', ba, ...
+%     'WAITBAR', true, ...
+%     'CLOSEREQ', false ...
+%     );
+% gui.get('DRAW')
+% gui.get('SHOW')
+
+%% Subjects
+% el_class_list = {'Subject'} 
+% for i = 1:1:length(el_class_list)
+%     el_class = el_class_list{i};
+%     el_path = '/src/cohort';
+%     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     eval(['test_' el_class])
+% end
+
+% el_class_list = {'ImporterGroupSubjectCON_XLS' 'ExporterGroupSubjectCON_XLS' 'ImporterGroupSubjectCON_TXT' 'ExporterGroupSubjectCON_TXT'} % {'SubjectCON' 'ImporterGroupSubjectCON_XLS' 'ExporterGroupSubjectCON_XLS' 'ImporterGroupSubjectCON_TXT' 'ExporterGroupSubjectCON_TXT'}
+% for i = 1:1:length(el_class_list)
+%     el_class = el_class_list{i};
+%     el_path = '/pipelines/connectivity';
+%     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     eval(['test_' el_class])
+% end
+
+% ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx');
+% ba = ba.get('BA');
+% 
+% gr = Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON'));
+% for i = 1:1:50
+%     sub = SubjectCON( ...
+%         'ID', ['SUB CON ' int2str(i)], ...
+%         'LABEL', ['Subejct CON ' int2str(i)], ...
+%         'NOTES', ['Notes on subject CON ' int2str(i)], ...
+%         'BA', ba, ...
+%         'CON', rand(ba.get('BR_DICT').get('LENGTH')) ...
+%         );
+%     sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+%     sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+%     gr.get('SUB_DICT').get('ADD', sub)
+% end
+% 
+% gui = GUIElement('PE', gr, 'CLOSEREQ', false);
+% gui.get('DRAW')
+% gui.get('SHOW')
+
+% % % % % data_dir = [fileparts(which('SubjectCON')) filesep 'Example data CON XLS'];
+% % % % % mkdir(data_dir);
+% % % % % 
+% % % % % % Brain Atlas
+% % % % % im_ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx');
+% % % % % ba = im_ba.get('BA');
+% % % % % ex_ba = ExporterBrainAtlasXLS( ...
+% % % % %     'BA', ba, ...
+% % % % %     'FILE', [data_dir filesep() 'desikan_atlas.xlsx'] ...
+% % % % %     );
+% % % % % ex_ba.get('SAVE')
+% % % % % N = ba.get('BR_DICT').get('LENGTH');
+% % % % % 
+% % % % % % saves RNG
+% % % % % rng_settings_ = rng(); rng('default')
+% % % % % 
+% % % % % sex_options = {'Female' 'Male'};
+% % % % % 
+% % % % % % Group 1
+% % % % % K1 = 2; % degree (mean node degree is 2K) - group 1
+% % % % % beta1 = 0.3; % Rewiring probability - group 1
+% % % % % gr1_name = 'CON_Group_1_XLS';
+% % % % % gr1_dir = [data_dir filesep() gr1_name];
+% % % % % mkdir(gr1_dir);
+% % % % % vois1 = [
+% % % % %     {{'Subject ID'} {'Age'} {'Sex'}}
+% % % % %     {{} {} cell2str(sex_options)}
+% % % % %     ];
+% % % % % for i = 1:1:50 % subject number
+% % % % %     sub_id = ['SubjectCON_' num2str(i)];
+% % % % %     
+% % % % %     h1 = WattsStrogatz(N, K1, beta1); % create two WS graph
+% % % % %     % figure(1) % Plot the two graphs to double-check
+% % % % %     % plot(h1, 'NodeColor',[1 0 0], 'EdgeColor',[0 0 0], 'EdgeAlpha',0.1, 'Layout','circle');
+% % % % %     % title(['Group 1: Graph with $N = $ ' num2str(N_nodes) ...
+% % % % %     %     ' nodes, $K = $ ' num2str(K1) ', and $\beta = $ ' num2str(beta1)], ...
+% % % % %     %     'Interpreter','latex')
+% % % % %     % axis equal
+% % % % % 
+% % % % %     A1 = full(adjacency(h1)); A1(1:length(A1)+1:numel(A1)) = 0; % extract the adjacency matrix
+% % % % %     r = 0 + (0.5 - 0)*rand(size(A1)); diffA = A1 - r; A1(A1 ~= 0) = diffA(A1 ~= 0); % make the adjacency matrix weighted
+% % % % %     A1 = max(A1, transpose(A1)); % make the adjacency matrix symmetric
+% % % % % 
+% % % % %     writetable(array2table(A1), [gr1_dir filesep() sub_id '.xlsx'], 'WriteRowNames', false, 'WriteVariableNames', false)
+% % % % %     
+% % % % %     % variables of interest
+% % % % %     vois1 = [vois1; {sub_id, randi(90), sex_options(randi(2))}];
+% % % % % end
+% % % % % writetable(table(vois1), [data_dir filesep() gr1_name '_vois.xlsx'], 'WriteRowNames', false, 'WriteVariableNames', false)
+% % % % % 
+% % % % % % Group 2
+% % % % % K2 = 2; % degree (mean node degree is 2K) - group 2
+% % % % % beta2 = 0.85; % Rewiring probability - group 2
+% % % % % gr2_name = 'CON_Group_2_XLS';
+% % % % % gr2_dir = [data_dir filesep() gr2_name];
+% % % % % mkdir(gr2_dir);
+% % % % % vois2 = [
+% % % % %     {{'Subject ID'} {'Age'} {'Sex'}}
+% % % % %     {{} {} cell2str(sex_options)}
+% % % % %     ];
+% % % % % for i = 51:1:100
+% % % % %     sub_id = ['SubjectCON_' num2str(i)];
+% % % % % 
+% % % % %     h2 = WattsStrogatz(N, K2, beta2);
+% % % % %     % figure(2)
+% % % % %     % plot(h2, 'NodeColor',[1 0 0], 'EdgeColor',[0 0 0], 'EdgeAlpha',0.1, 'Layout','circle');
+% % % % %     % title(['Group 2: Graph with $N = $ ' num2str(N_nodes) ...
+% % % % %     %     ' nodes, $K = $ ' num2str(K2) ', and $\beta = $ ' num2str(beta2)], ...
+% % % % %     %     'Interpreter','latex')
+% % % % %     % axis equal
+% % % % % 
+% % % % %     A2 = full(adjacency(h2)); A2(1:length(A2)+1:numel(A2)) = 0;
+% % % % %     r = 0 + (0.5 - 0)*rand(size(A2)); diffA = A2 - r; A2(A2 ~= 0) = diffA(A2 ~= 0);
+% % % % %     A2 = max(A2, transpose(A2));
+% % % % % 
+% % % % %     writetable(array2table(A2), [gr2_dir filesep() 'SubjectCON_' num2str(i) '.xlsx'], 'WriteRowNames', false, 'WriteVariableNames', false)
+% % % % %     
+% % % % %     % variables of interest
+% % % % %     vois2 = [vois2; {sub_id, randi(90), sex_options(randi(2))}];
+% % % % % end
+% % % % % writetable(table(vois2), [data_dir filesep() gr2_name '_vois.xlsx'], 'WriteRowNames', false, 'WriteVariableNames', false)
+% % % % % 
+% % % % % % reset RNG
+% % % % % rng(rng_settings_)
+
+% el_class_list = {'ImporterGroupSubjectFUN_XLS' 'ImporterGroupSubjectFUN_TXT' 'ExporterGroupSubjectFUN_XLS' 'ExporterGroupSubjectFUN_TXT'} % {'SubjectFUN' 'ImporterGroupSubjectFUN_XLS' 'ImporterGroupSubjectFUN_TXT' 'ExporterGroupSubjectFUN_XLS' 'ExporterGroupSubjectFUN_TXT'}
+% for i = 1:1:length(el_class_list)
+%     el_class = el_class_list{i};
+%     el_path = '/pipelines/functional';
+%     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     eval(['test_' el_class])
+% end
+
+% gr = Group(); gui = GUIElement('PE', gr); gui.get('DRAW'), gui.get('SHOW')
+
+% im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectFUN')) filesep 'example data FUN' filesep 'aal90_atlas.xlsx']);
+% ba = im_ba.get('BA');
+% im_gr = ImporterGroupSubjectFUN_XLS( ...
+%     'DIRECTORY', [fileparts(which('SubjectFUN')) filesep 'example data FUN' filesep 'xls' filesep 'FUN_Group_1'], ...
+%     'BA', ba, ...
+%     'WAITBAR', true ...
+%     );
+% gr = im_gr.get('GR');
+% 
+% gui = GUIElement('PE', gr, 'CLOSEREQ', false);
+% gui.get('DRAW')
+% gui.get('SHOW')
+
+% el_class_list = {'ImporterGroupSubjectST_XLS' 'ImporterGroupSubjectST_TXT' 'ExporterGroupSubjectST_XLS' 'ExporterGroupSubjectST_TXT'} % {'SubjectST' 'ImporterGroupSubjectST_XLS' 'ImporterGroupSubjectST_TXT' 'ExporterGroupSubjectST_XLS' 'ExporterGroupSubjectST_TXT'}
+% for i = 1:1:length(el_class_list)
+%     el_class = el_class_list{i};
+%     el_path = '/pipelines/structural';
+%     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     eval(['test_' el_class])
+% end
+
+% im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectST')) filesep 'example data ST' filesep 'destrieux_atlas.xlsx']);
+% ba = im_ba.get('BA');
+% im_gr = ImporterGroupSubjectST_XLS( ...
+%     'FILE', [fileparts(which('SubjectST')) filesep 'example data ST' filesep 'xls' filesep 'ST_Group_1.xlsx'], ...
+%     'BA', ba, ...
+%     'WAITBAR', true ...
+%     );
+% gr = im_gr.get('GR');
+% 
+% gui = GUIElement('PE', gr, 'CLOSEREQ', false);
+% gui.get('DRAW')
+% gui.get('SHOW')
+
+% el_class_list = {'ImporterGroupSubjectCON_MP_XLS' 'ImporterGroupSubjectCON_MP_TXT' 'ExporterGroupSubjectCON_MP_XLS' 'ExporterGroupSubjectCON_MP_TXT'} % {'SubjectCON_MP' 'ImporterGroupSubjectCON_MP_XLS' 'ImporterGroupSubjectCON_MP_TXT' 'ExporterGroupSubjectCON_MP_XLS' 'ExporterGroupSubjectCON_MP_TXT'}
+% for i = 1:1:length(el_class_list)
+%     el_class = el_class_list{i};
+%     el_path = '/pipelines/connectivity multiplex';
+%     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     eval(['test_' el_class])
+% end
+
+% el_class_list = {'ImporterGroupSubjectFUN_MP_XLS' 'ImporterGroupSubjectFUN_MP_TXT' 'ExporterGroupSubjectFUN_MP_XLS' 'ExporterGroupSubjectFUN_MP_TXT'} % {'SubjectFUN_MP' 'ImporterGroupSubjectFUN_MP_XLS' 'ImporterGroupSubjectFUN_MP_TXT' 'ExporterGroupSubjectFUN_MP_XLS' 'ExporterGroupSubjectFUN_MP_TXT'}
+% for i = 1:1:length(el_class_list)
+%     el_class = el_class_list{i};
+%     el_path = '/pipelines/functional multiplex';
+%     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     eval(['test_' el_class])
+% end
+
+% el_class_list = {'ExporterGroupSubjectST_MP_TXT'} % {'SubjectST_MP' 'ImporterGroupSubjectST_MP_XLS' 'ImporterGroupSubjectST_MP_TXT' 'ExporterGroupSubjectST_MP_XLS' 'ExporterGroupSubjectST_MP_TXT'}
+% for i = 1:1:length(el_class_list)
+%     el_class = el_class_list{i};
+%     el_path = '/pipelines/structural multiplex';
+%     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     eval(['test_' el_class])
+% end
+
+el_class_list = {'SeparateGroups_CON_FUN_MP'} % {'SubjectCON_FUN_MP' 'CombineGroups_CON_FUN_MP' 'SeparateGroups_CON_FUN_MP'}
+for i = 1:1:length(el_class_list)
+    el_class = el_class_list{i};
+    el_path = '/pipelines/connectivity-functional multiplex';
+    delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    eval(['test_' el_class])
+end

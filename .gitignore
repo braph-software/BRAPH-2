@@ -1,4 +1,11 @@
-*.asv
 .DS_Store
+
 braph2/
-Tmp/
+
+*.asv
+
+*.synctex*
+*.log
+*.aux
+*.out
+*.toc
