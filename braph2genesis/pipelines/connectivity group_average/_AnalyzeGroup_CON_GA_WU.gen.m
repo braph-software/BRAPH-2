@@ -1,12 +1,50 @@
 %% ¡header!
 AnalyzeGroup_CON_GA_WU < AnalyzeGroup (a, graph analysis with averaged connectivity data) is a graph analysis using connectivity data averaged by group.
 
-%% ¡description!
+%%% ¡description!
 AnalyzeGroup_CON_GA_WU uses connectivity data averaged by group 
 and analyzes them using weighted undirected graphs.
 
-%% ¡seealso!
+%%% ¡seealso!
 SubjectCON, GraphWU
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_CON_GA_WU.ID
+%%%% ¡title!
+Analysis ID
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_CON_GA_WU.LABEL
+%%%% ¡title!
+Analysis NAME
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_CON_GA_WU.WAITBAR
+%%%% ¡title!
+WAITBAR ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_CON_GA_WU.GR
+%%%% ¡title!
+SUBJECT GROUP
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_CON_GA_WU.G
+%%%% ¡title!
+GRAPH & MEASURES
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeGroup_CON_GA_WU.NOTES
+%%%% ¡title!
+Analysis NOTES
 
 %% ¡props_update!
 
