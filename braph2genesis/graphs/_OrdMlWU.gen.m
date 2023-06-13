@@ -182,9 +182,9 @@ Constructor - Full
 B1 = rand(randi(10));
 B2 = rand(randi(10));
 B3 = rand(randi(10));
-B12 = rand(size(B1, 1),size(B2, 2));
-B13 = rand(size(B1, 1),size(B3, 2));
-B23 = rand(size(B2, 1),size(B3, 2));
+B12 = rand(size(B1,1),size(B2,2));
+B13 = rand(size(B1,1),size(B3,2));
+B23 = rand(size(B2,1),size(B3,2));
 B = {
     B1                           B12                            B13
     B12'                         B2                             B23
