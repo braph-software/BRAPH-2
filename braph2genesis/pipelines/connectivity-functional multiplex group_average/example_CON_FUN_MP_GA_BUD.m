@@ -77,13 +77,13 @@ a_BUD2 = AnalyzeGroup_CON_FUN_MP_GA_BUD( ...
 
 % measure calculation
 g_BUD1 = a_BUD1.get('G');
-degree_WU1 = g_WU1.get('MEASURE', 'Degree').get('M');
+degree_WU1 = g_BUD1.get('MEASURE', 'Degree').get('M');
 % % % mpc_BUD1 = g_BUD1.get('MEASURE', 'MultiplexParticipation').get('M');
 % % % mpc_av_BUD1 = g_BUD1.get('MEASURE', 'MultiplexParticipationAv').get('M');
 % % % edgeov_BUD1 = g_BUD1.get('MEASURE', 'EdgeOverlap').get('M');
 
 g_BUD2 = a_BUD2.get('G');
-degree_WU2 = g_WU2.get('MEASURE', 'Degree').get('M');
+degree_WU2 = g_BUD2.get('MEASURE', 'Degree').get('M');
 % % % mpc_BUD2 = g_BUD2.get('MEASURE', 'MultiplexParticipation').get('M');
 % % % mpc_av_BUD2 = g_BUD2.get('MEASURE', 'MultiplexParticipationAv').get('M');
 % % % edgeov_BUD2 = g_BUD2.get('MEASURE', 'EdgeOverlap').get('M');
@@ -98,11 +98,11 @@ c_BUD = CompareGroup( ...
     'MEMORIZE', true ...
     );
 
-degree_WU_diff = c_WU.get('COMPARISON', 'Degree').get('DIFF');
-degree_WU_p1 = c_WU.get('COMPARISON', 'Degree').get('P1');
-degree_WU_p2 = c_WU.get('COMPARISON', 'Degree').get('P2');
-degree_WU_cil = c_WU.get('COMPARISON', 'Degree').get('CIL');
-degree_WU_ciu = c_WU.get('COMPARISON', 'Degree').get('CIU');
+degree_BUD_diff = c_BUD.get('COMPARISON', 'Degree').get('DIFF');
+degree_BUD_p1 = c_BUD.get('COMPARISON', 'Degree').get('P1');
+degree_BUD_p2 = c_BUD.get('COMPARISON', 'Degree').get('P2');
+degree_BUD_cil = c_BUD.get('COMPARISON', 'Degree').get('CIL');
+degree_BUD_ciu = c_BUD.get('COMPARISON', 'Degree').get('CIU');
 
 % % % mpc_BUD_diff = c_BUD.get('COMPARISON', 'MultiplexParticipation').get('DIFF');
 % % % mpc_BUD_p1 = c_BUD.get('COMPARISON', 'MultiplexParticipation').get('P1');
@@ -116,8 +116,8 @@ degree_WU_ciu = c_WU.get('COMPARISON', 'Degree').get('CIU');
 % % % mpc_av_BUD_cil = c_BUD.get('COMPARISON', 'MultiplexParticipationAv').get('CIL');
 % % % mpc_av_BUD_ciu = c_BUD.get('COMPARISON', 'MultiplexParticipationAv').get('CIU');
 
-% % % edgeov_WU_diff = c_WU.get('COMPARISON', 'EdgeOverlap').get('DIFF');
-% % % edgeov_WU_p1 = c_WU.get('COMPARISON', 'EdgeOverlap').get('P1');
-% % % edgeov_WU_p2 = c_WU.get('COMPARISON', 'EdgeOverlap').get('P2');
-% % % edgeov_WU_cil = c_WU.get('COMPARISON', 'EdgeOverlap').get('CIL');
-% % % edgeov_WU_ciu = c_WU.get('COMPARISON', 'EdgeOverlap').get('CIU');
+% % % edgeov_BUD_diff = c_BUD.get('COMPARISON', 'EdgeOverlap').get('DIFF');
+% % % edgeov_BUD_p1 = c_BUD.get('COMPARISON', 'EdgeOverlap').get('P1');
+% % % edgeov_BUD_p2 = c_BUD.get('COMPARISON', 'EdgeOverlap').get('P2');
+% % % edgeov_BUD_cil = c_BUD.get('COMPARISON', 'EdgeOverlap').get('CIL');
+% % % edgeov_BUD_ciu = c_BUD.get('COMPARISON', 'EdgeOverlap').get('CIU');
