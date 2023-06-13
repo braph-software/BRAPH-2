@@ -240,7 +240,7 @@ for i = 1:1:50
 end
 
 a1 = AnalyzeGroup_ST_WU('GR', gr1, 'CORRELATION_RULE', Correlation.PEARSON);
-a2 = AnalyzeGroup_ST_WU('GR', gr2, 'CORRELATION_RULE', Correlation.PEARSON);
+a2 = AnalyzeGroup_ST_WU('GR', gr2, 'TEMPLATE', a1);
 
 c = CompareGroup( ...
     'P', 10, ...

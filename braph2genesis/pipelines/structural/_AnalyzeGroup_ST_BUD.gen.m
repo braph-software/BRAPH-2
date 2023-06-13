@@ -260,7 +260,7 @@ for i = 1:1:50
 end
 
 a1 = AnalyzeGroup_ST_BUD('GR', gr1, 'DENSITIES', 5:10:35);
-a2 = AnalyzeGroup_ST_BUD('GR', gr2, 'DENSITIES', a1.getCallback('DENSITIES'));
+a2 = AnalyzeGroup_ST_BUD('GR', gr2, 'TEMPLATE', a1);
 
 c = CompareGroup( ...
     'P', 10, ...

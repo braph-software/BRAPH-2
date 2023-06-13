@@ -260,7 +260,7 @@ for i = 1:1:50
 end
 
 a1 = AnalyzeGroup_ST_BUT('GR', gr1, 'THRESHOLDS', .4:.2:1);
-a2 = AnalyzeGroup_ST_BUT('GR', gr2, 'THRESHOLDS', a1.getCallback('THRESHOLDS'));
+a2 = AnalyzeGroup_ST_BUT('GR', gr2, 'TEMPLATE', a1);
 
 c = CompareGroup( ...
     'P', 10, ...
