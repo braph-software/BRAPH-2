@@ -6,7 +6,7 @@ This graph analysis uses connectivity ordinal multiplex data and
 analyzes them using weighted undirected graphs.
 
 %%% ¡seealso!
-SubjectCON_MP, OrderedMultiplexWU
+SubjectCON_MP, OrdMxWU
 
 %% ¡props_update!
 
@@ -44,11 +44,11 @@ GR (data, item) is the subject group, which also defines the subject class Subje
 Group('SUB_CLASS', 'SubjectCON_MP')
 
 %%% ¡prop!
-G (result, item) is the average graph (OrderedMultiplexWU) obtained from this analysis.
+G (result, item) is the average graph (OrdMxWU) obtained from this analysis.
 %%%% ¡settings!
-'OrderedMultiplexWU'
+'OrdMxWU'
 %%%% ¡default!
-OrderedMultiplexWU()
+OrdMxWU()
 %%%% ¡calculate!
 gr = a.get('GR');
 subjects_number = gr.get('SUB_DICT').get('LENGTH');
@@ -76,7 +76,7 @@ end
 % % % end
 
 L = length(A_conmp);
-g = OrderedMultiplexWU( ...
+g = OrdMxWU( ...
     'ID', ['Graph ' gr.get('ID')], ...
     'B', cellfun(@(a) a/subjects_number, A_conmp, 'UniformOutput', false) ... % % % 'LAYERTICKS', [1:1:L], ... % % % 'LAYERLABELS', cell2str(cellfun(@(x) ['L' num2str(x)], num2cell([1:1:L]), 'UniformOutput', false)), ... % % % 'BAS', ba ...
     );
