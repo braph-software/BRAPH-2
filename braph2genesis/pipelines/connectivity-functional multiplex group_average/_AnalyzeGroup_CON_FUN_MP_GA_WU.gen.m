@@ -241,7 +241,7 @@ for i = 1:1:50
     gr.get('SUB_DICT').get('ADD', sub)
 end
 
-a = AnalyzeGroup_CON_FUN_MP_WU('GR', gr);
+a = AnalyzeGroup_CON_FUN_MP_GA_WU('GR', gr);
 
 gui = GUIElement('PE', a, 'CLOSEREQ', false);
 gui.get('DRAW')
@@ -290,8 +290,8 @@ for i = 1:1:50
     gr2.get('SUB_DICT').get('ADD', sub)
 end
 
-a1 = AnalyzeGroup_CON_FUN_MP_WU('GR', gr1);
-a1 = AnalyzeGroup_CON_FUN_MP_WU('GR', gr2, 'TEMPLATE', a1);
+a1 = AnalyzeGroup_CON_FUN_MP_GA_WU('GR', gr1);
+a1 = AnalyzeGroup_CON_FUN_MP_GA_WU('GR', gr2, 'TEMPLATE', a1);
 
 c = CompareGroup( ...
     'P', 10, ...
