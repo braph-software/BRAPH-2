@@ -8,6 +8,7 @@ number between 0 and 1 and indicating the strength of the connection.
 The connectivity matrices are symmetric (within layer).
 All node connections are allowed between layers.
 
+
 %% ¡props_update!
 
 %%% ¡prop!
@@ -91,6 +92,7 @@ value = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
 A (result, cell) is the cell containing the within-layer weighted adjacency matrices of the multilayer weighted directed graph and the connections between layers.
+
 %%%% ¡calculate!
 B = g.get('B'); %#ok<PROPLC>
 L = length(B); %#ok<PROPLC> % number of layers
@@ -186,12 +188,12 @@ Constructor - Full
 B1 = rand(randi(10));
 B2 = rand(randi(10));
 B3 = rand(randi(10));
-B12 = rand(size(B1,1),size(B2,2));
-B13 = rand(size(B1,1),size(B3,2));
-B23 = rand(size(B2,1),size(B3,2));
-B21 = rand(size(B2,1),size(B1,2));
-B31 = rand(size(B3,1),size(B1,2));
-B32 = rand(size(B3,1),size(B2,2));
+B12 = rand(size(B1, 1),size(B2, 2));
+B13 = rand(size(B1, 1),size(B3, 2));
+B23 = rand(size(B2, 1),size(B3, 2));
+B21 = rand(size(B2, 1),size(B1, 2));
+B31 = rand(size(B3, 1),size(B1, 2));
+B32 = rand(size(B3, 1),size(B2, 2));
 B = {
     B1                           B12                            B13
     B21                          B2                             B23
