@@ -13,37 +13,37 @@ SubjectCON_MP, MultiplexWU
 
 %%% ¡prop!
 %%%% ¡id!
-AnalyzeGroup_CON_OMP_GA_WU.ID
+AnalyzeGroup_CON_MP_GA_WU.ID
 %%%% ¡title!
 Analysis ID
 
 %%% ¡prop!
 %%%% ¡id!
-AnalyzeGroup_CON_OMP_GA_WU.LABEL
+AnalyzeGroup_CON_MP_GA_WU.LABEL
 %%%% ¡title!
 Analysis NAME
 
 %%% ¡prop!
 %%%% ¡id!
-AnalyzeGroup_CON_OMP_GA_WU.WAITBAR
+AnalyzeGroup_CON_MP_GA_WU.WAITBAR
 %%%% ¡title!
 WAITBAR ON/OFF
 
 %%% ¡prop!
 %%%% ¡id!
-AnalyzeGroup_CON_OMP_GA_WU.GR
+AnalyzeGroup_CON_MP_GA_WU.GR
 %%%% ¡title!
 SUBJECT GROUP
 
 %%% ¡prop!
 %%%% ¡id!
-AnalyzeGroup_CON_OMP_GA_WU.G
+AnalyzeGroup_CON_MP_GA_WU.G
 %%%% ¡title!
 GRAPH & MEASURES
 
 %%% ¡prop!
 %%%% ¡id!
-AnalyzeGroup_CON_OMP_GA_WU.NOTES
+AnalyzeGroup_CON_MP_GA_WU.NOTES
 %%%% ¡title!
 Analysis NOTES
 

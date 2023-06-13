@@ -1231,22 +1231,10 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     eval(['test_' el_class])
 % end
 
-el_class_list = {'AnalyzeGroup_CON_OMP_GA_WU'}
-for i = 1:1:length(el_class_list)
-    el_class = el_class_list{i};
-    el_path = '/pipelines/connectivity ordered_multiplex group_average';
-    delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
-    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    create_layout([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    eval(['test_' el_class])
-end
-
-% el_class_list = {'AnalyzeGroup_FUN_MP_GA_WU'}
+% el_class_list = {'AnalyzeGroup_CON_OMP_GA_WU'}
 % for i = 1:1:length(el_class_list)
 %     el_class = el_class_list{i};
-%     el_path = '/pipelines/functional multiplex group_average';
+%     el_path = '/pipelines/connectivity ordered_multiplex group_average';
 %     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
 %     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
 %     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
@@ -1255,10 +1243,22 @@ end
 %     eval(['test_' el_class])
 % end
 
-% el_class_list = {'AnalyzeGroup_FUN_GA_WU'}
+el_class_list = {'AnalyzeGroup_CON_MP_GA_WU'}
+for i = 1:1:length(el_class_list)
+    el_class = el_class_list{i};
+    el_path = '/pipelines/connectivity multiplex group_average';
+    delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_layout([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    eval(['test_' el_class])
+end
+
+% el_class_list = {'AnalyzeGroup_CON_GA_WU'}
 % for i = 1:1:length(el_class_list)
 %     el_class = el_class_list{i};
-%     el_path = '/pipelines/functional group_average';
+%     el_path = '/pipelines/connectivity group_average';
 %     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
 %     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
 %     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
