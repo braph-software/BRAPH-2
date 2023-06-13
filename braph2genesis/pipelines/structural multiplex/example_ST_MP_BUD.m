@@ -42,14 +42,14 @@ a_BUD2 = AnalyzeGroup_ST_MP_BUD( ...
 
 % measure calculation
 g_BUD1 = a_BUD1.get('G');
-degree_BUD1 = g_BUD1.getMeasure('OverlappingDegree').get('M');
-degree_av_BUD1 = g_BUD1.getMeasure('OverlappingDegreeAv').get('M');
-distance_BUD1 = g_BUD1.getMeasure('EdgeOverlap').get('M');
+degree_BUD1 = g_BUD1.get('MEASURE', 'OverlappingDegree').get('M');
+degree_av_BUD1 = g_BUD1.get('MEASURE', 'OverlappingDegreeAv').get('M');
+distance_BUD1 = g_BUD1.get('MEASURE', 'EdgeOverlap').get('M');
 
 g_BUD2 = a_BUD2.get('G');
-degree_BUD2 = g_BUD2.getMeasure('OverlappingDegree').get('M');
-degree_av_BUD2 = g_BUD2.getMeasure('OverlappingDegreeAv').get('M');
-distance_BUD2 = g_BUD2.getMeasure('EdgeOverlap').get('M');
+degree_BUD2 = g_BUD2.get('MEASURE', 'OverlappingDegree').get('M');
+degree_av_BUD2 = g_BUD2.get('MEASURE', 'OverlappingDegreeAv').get('M');
+distance_BUD2 = g_BUD2.get('MEASURE', 'EdgeOverlap').get('M');
 
 % comparison
 c_BUD = CompareGroup( ...
@@ -61,14 +61,14 @@ c_BUD = CompareGroup( ...
     'MEMORIZE', true ...
     );
 
-ovdegree_BUD_diff = c_BUD.getComparison('OverlappingDegree').get('DIFF');
-ovdegree_BUD_p1 = c_BUD.getComparison('OverlappingDegree').get('P1');
-ovdegree_BUD_p2 = c_BUD.getComparison('OverlappingDegree').get('P2');
-ovdegree_BUD_cil = c_BUD.getComparison('OverlappingDegree').get('CIL');
-ovdegree_BUD_ciu = c_BUD.getComparison('OverlappingDegree').get('CIU');
+ovdegree_BUD_diff = c_BUD.get('COMPARISON', 'OverlappingDegree').get('DIFF');
+ovdegree_BUD_p1 = c_BUD.get('COMPARISON', 'OverlappingDegree').get('P1');
+ovdegree_BUD_p2 = c_BUD.get('COMPARISON', 'OverlappingDegree').get('P2');
+ovdegree_BUD_cil = c_BUD.get('COMPARISON', 'OverlappingDegree').get('CIL');
+ovdegree_BUD_ciu = c_BUD.get('COMPARISON', 'OverlappingDegree').get('CIU');
 
-ovdegree_av_BUD_diff = c_BUD.getComparison('OverlappingDegreeAv').get('DIFF');
-ovdegree_av_BUD_p1 = c_BUD.getComparison('OverlappingDegreeAv').get('P1');
-ovdegree_av_BUD_p2 = c_BUD.getComparison('OverlappingDegreeAv').get('P2');
-ovdegree_av_BUD_cil = c_BUD.getComparison('OverlappingDegreeAv').get('CIL');
-ovdegree_av_BUD_ciu = c_BUD.getComparison('OverlappingDegreeAv').get('CIU');
+ovdegree_av_BUD_diff = c_BUD.get('COMPARISON', 'OverlappingDegreeAv').get('DIFF');
+ovdegree_av_BUD_p1 = c_BUD.get('COMPARISON', 'OverlappingDegreeAv').get('P1');
+ovdegree_av_BUD_p2 = c_BUD.get('COMPARISON', 'OverlappingDegreeAv').get('P2');
+ovdegree_av_BUD_cil = c_BUD.get('COMPARISON', 'OverlappingDegreeAv').get('CIL');
+ovdegree_av_BUD_ciu = c_BUD.get('COMPARISON', 'OverlappingDegreeAv').get('CIU');

@@ -39,12 +39,12 @@ a_WU2 = AnalyzeGroup_FUN_GA_WU( ...
 
 % measure calculation
 g_WU1 = a_WU1.get('G');
-strength_WU1 = g_WU1.getMeasure('Strength').get('M');
-modularity_WU1 = g_WU1.getMeasure('Modularity').get('M');
+strength_WU1 = g_WU1.get('MEASURE', 'Strength').get('M');
+modularity_WU1 = g_WU1.get('MEASURE', 'Modularity').get('M');
 
 g_WU2 = a_WU2.get('G');
-strength_WU2 = g_WU2.getMeasure('Strength').get('M');
-modularity_WU2 = g_WU2.getMeasure('Modularity').get('M');
+strength_WU2 = g_WU2.get('MEASURE', 'Strength').get('M');
+modularity_WU2 = g_WU2.get('MEASURE', 'Modularity').get('M');
 
 % comparison
 c_WU = CompareGroup( ...
@@ -56,13 +56,13 @@ c_WU = CompareGroup( ...
     'MEMORIZE', true ...
     );
 
-strength_WU_diff = c_WU.getComparison('Strength').get('DIFF');
-strength_WU_p1 = c_WU.getComparison('Strength').get('P1');
-strength_WU_p2 = c_WU.getComparison('Strength').get('P2');
-strength_WU_cil = c_WU.getComparison('Strength').get('CIL');
-strength_WU_ciu = c_WU.getComparison('Strength').get('CIU');
+strength_WU_diff = c_WU.get('COMPARISON', 'Strength').get('DIFF');
+strength_WU_p1 = c_WU.get('COMPARISON', 'Strength').get('P1');
+strength_WU_p2 = c_WU.get('COMPARISON', 'Strength').get('P2');
+strength_WU_cil = c_WU.get('COMPARISON', 'Strength').get('CIL');
+strength_WU_ciu = c_WU.get('COMPARISON', 'Strength').get('CIU');
 
-modularity_WU_diff = c_WU.getComparison('Modularity').get('DIFF');
-modularity_WU_p1 = c_WU.getComparison('Modularity').get('P1');
-modularity_WU_p2 = c_WU.getComparison('Modularity').get('P2');
-modularity_WU_ciu = c_WU.getComparison('Modularity').get('CIU');
+modularity_WU_diff = c_WU.get('COMPARISON', 'Modularity').get('DIFF');
+modularity_WU_p1 = c_WU.get('COMPARISON', 'Modularity').get('P1');
+modularity_WU_p2 = c_WU.get('COMPARISON', 'Modularity').get('P2');
+modularity_WU_ciu = c_WU.get('COMPARISON', 'Modularity').get('CIU');

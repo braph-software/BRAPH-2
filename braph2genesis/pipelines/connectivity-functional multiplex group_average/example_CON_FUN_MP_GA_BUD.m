@@ -77,14 +77,14 @@ a_BUD2 = AnalyzeGroup_CON_FUN_MP_GA_BUD( ...
 
 % measure calculation
 g_BUD1 = a_BUD1.get('G');
-mpc_BUD1 = g_BUD1.getMeasure('MultiplexParticipation').get('M');
-mpc_av_BUD1 = g_BUD1.getMeasure('MultiplexParticipationAv').get('M');
-edgeov_BUD1 = g_BUD1.getMeasure('EdgeOverlap').get('M');
+mpc_BUD1 = g_BUD1.get('MEASURE', 'MultiplexParticipation').get('M');
+mpc_av_BUD1 = g_BUD1.get('MEASURE', 'MultiplexParticipationAv').get('M');
+edgeov_BUD1 = g_BUD1.get('MEASURE', 'EdgeOverlap').get('M');
 
 g_BUD2 = a_BUD2.get('G');
-mpc_BUD2 = g_BUD2.getMeasure('MultiplexParticipation').get('M');
-mpc_av_BUD2 = g_BUD2.getMeasure('MultiplexParticipationAv').get('M');
-edgeov_BUD2 = g_BUD2.getMeasure('EdgeOverlap').get('M');
+mpc_BUD2 = g_BUD2.get('MEASURE', 'MultiplexParticipation').get('M');
+mpc_av_BUD2 = g_BUD2.get('MEASURE', 'MultiplexParticipationAv').get('M');
+edgeov_BUD2 = g_BUD2.get('MEASURE', 'EdgeOverlap').get('M');
 
 % comparison
 c_BUD = CompareGroup( ...
@@ -96,14 +96,14 @@ c_BUD = CompareGroup( ...
     'MEMORIZE', true ...
     );
 
-mpc_BUD_diff = c_BUD.getComparison('MultiplexParticipation').get('DIFF');
-mpc_BUD_p1 = c_BUD.getComparison('MultiplexParticipation').get('P1');
-mpc_BUD_p2 = c_BUD.getComparison('MultiplexParticipation').get('P2');
-mpc_BUD_cil = c_BUD.getComparison('MultiplexParticipation').get('CIL');
-mpc_BUD_ciu = c_BUD.getComparison('MultiplexParticipation').get('CIU');
+mpc_BUD_diff = c_BUD.get('COMPARISON', 'MultiplexParticipation').get('DIFF');
+mpc_BUD_p1 = c_BUD.get('COMPARISON', 'MultiplexParticipation').get('P1');
+mpc_BUD_p2 = c_BUD.get('COMPARISON', 'MultiplexParticipation').get('P2');
+mpc_BUD_cil = c_BUD.get('COMPARISON', 'MultiplexParticipation').get('CIL');
+mpc_BUD_ciu = c_BUD.get('COMPARISON', 'MultiplexParticipation').get('CIU');
 
-mpc_av_BUD_diff = c_BUD.getComparison('MultiplexParticipationAv').get('DIFF');
-mpc_av_BUD_p1 = c_BUD.getComparison('MultiplexParticipationAv').get('P1');
-mpc_av_BUD_p2 = c_BUD.getComparison('MultiplexParticipationAv').get('P2');
-mpc_av_BUD_cil = c_BUD.getComparison('MultiplexParticipationAv').get('CIL');
-mpc_av_BUD_ciu = c_BUD.getComparison('MultiplexParticipationAv').get('CIU');
+mpc_av_BUD_diff = c_BUD.get('COMPARISON', 'MultiplexParticipationAv').get('DIFF');
+mpc_av_BUD_p1 = c_BUD.get('COMPARISON', 'MultiplexParticipationAv').get('P1');
+mpc_av_BUD_p2 = c_BUD.get('COMPARISON', 'MultiplexParticipationAv').get('P2');
+mpc_av_BUD_cil = c_BUD.get('COMPARISON', 'MultiplexParticipationAv').get('CIL');
+mpc_av_BUD_ciu = c_BUD.get('COMPARISON', 'MultiplexParticipationAv').get('CIU');
