@@ -152,22 +152,22 @@ for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
        
     % CON data
     if i == 1
-        data(1) = CON_FUN_MP(1);
-        data(2) = {A_fun};
+        data{1} = sub.get('CON');
+        data{2} = A_fun;
     else
-        data(1) = {data{1} + CON_FUN_MP{1}};
-        data(2) = {data{2} + A_fun};
+        data{1} = data{1} + sub.get('CON');
+        data{2} = data{2} + A_fun;
     end
     
-    for i = 1:length(densities)
-        layerlabels = [...
-            layerlabels, ['C ' num2str(densities(i)) '%'], ...
-            ['F ' num2str(densities(i)) '%']];
-    end   
+% % %     for i = 1:length(densities)
+% % %         layerlabels = [...
+% % %             layerlabels, ['C ' num2str(densities(i)) '%'], ...
+% % %             ['F ' num2str(densities(i)) '%']];
+% % %     end   
 end
 
-A(1) = {data{1} / gr.get('SUB_DICT').get('LENGTH')};
-A(2) = {data{2} / gr.get('SUB_DICT').get('LENGTH')};
+A{1} = data{1} / gr.get('SUB_DICT').get('LENGTH');
+A{2} = data{2} / gr.get('SUB_DICT').get('LENGTH');
 
 % % % ba = BrainAtlas();
 % % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
