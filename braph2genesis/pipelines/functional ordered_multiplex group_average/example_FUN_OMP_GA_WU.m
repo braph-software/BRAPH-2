@@ -45,7 +45,7 @@ degree_WU1 = g_WU1.get('MEASURE', 'Degree').get('M');
 % % % weo_WU1 = g_WU1.get('MEASURE', 'WeightedEdgeOverlap').get('M');
 
 g_WU2 = a_WU2.get('G');
-degree_WU1 = g_WU1.get('MEASURE', 'Degree').get('M');
+degree_WU2 = g_WU2.get('MEASURE', 'Degree').get('M');
 % % % wmpc_WU2 = g_WU2.get('MEASURE', 'WeightedMultiplexParticipation').get('M');
 % % % wmpc_av_WU2 = g_WU2.get('MEASURE', 'WeightedMultiplexParticipationAv').get('M');
 % % % weo_WU2 = g_WU2.get('MEASURE', 'WeightedEdgeOverlap').get('M');
