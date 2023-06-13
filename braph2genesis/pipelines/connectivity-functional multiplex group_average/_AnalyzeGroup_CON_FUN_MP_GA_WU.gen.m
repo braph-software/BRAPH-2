@@ -226,7 +226,7 @@ false
 im_ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx');
 ba = im_ba.get('BA');
 
-gr_CON_FUN_MP = Group('SUB_CLASS', 'SubjectCON_FUN_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON_FUN_MP'));
+gr= Group('SUB_CLASS', 'SubjectCON_FUN_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON_FUN_MP'));
 for i = 1:1:50
     sub = SubjectCON_FUN_MP( ...
         'ID', ['SUB CON ' int2str(i)], ...
@@ -238,7 +238,7 @@ for i = 1:1:50
         );
     sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
     sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
-    gr_CON_FUN_MP.get('SUB_DICT').get('ADD', sub)
+    gr.get('SUB_DICT').get('ADD', sub)
 end
 
 a = AnalyzeGroup_CON_FUN_MP_WU('GR', gr);
