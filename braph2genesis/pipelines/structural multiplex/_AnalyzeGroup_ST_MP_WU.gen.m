@@ -184,4 +184,8 @@ Example
 %%%% ¡probability!
 .01
 %%%% ¡code!
+if ~isfile([fileparts(which('example_ST_MP_WU')) filesep 'Example data ST_MP XLS' filesep 'atlas.xlsx'])
+    test_ImporterGroupSubjectST_MP_XLS % create example files
+end
+
 example_ST_MP_WU
