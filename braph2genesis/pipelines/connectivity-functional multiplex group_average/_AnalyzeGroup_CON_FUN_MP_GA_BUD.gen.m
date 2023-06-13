@@ -135,10 +135,9 @@ layerlabels = {};
 
 for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
     sub = gr.get('SUB_DICT').get('IT', i);
-    CON_FUN_MP = sub.getr('CON_FUN_MP');
     
     % FUN data
-    data_fun = CON_FUN_MP{2};
+    data_fun = sub.get('FUN');
     fs = 1 / T;
     
     if fmax > fmin && T > 0

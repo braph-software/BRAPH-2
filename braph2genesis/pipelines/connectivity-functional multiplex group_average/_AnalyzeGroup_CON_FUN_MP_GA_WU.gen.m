@@ -129,10 +129,9 @@ data = cell(1, 2);
 
 for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
     sub = gr.get('SUB_DICT').get('IT', i);
-    CON_FUN_MP = sub.getr('CON_FUN_MP');
     
     % FUN data
-    data_fun = CON_FUN_MP{2};
+    data_fun = sub.get('FUN');
     fs = 1 / T;
     
     if fmax > fmin && T > 0
@@ -147,17 +146,17 @@ for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
     
     % CON data
     if i == 1
-        data(1) = CON_FUN_MP(1);
-        data(2) = {A_fun};
+        data{1} = sub.get('CON');
+        data{2} = A_fun;
     else
-        data(1) = {data{1} + CON_FUN_MP{1}};
-        data(2) = {data{2} + A_fun};
+        data{1} = data{1} + sub.get('CON');
+        data{2} = data{2} + A_fun;
     end
     
 end
 
-A(1) = {data{1} / gr.get('SUB_DICT').get('LENGTH')};
-A(2) = {data{2} / gr.get('SUB_DICT').get('LENGTH')};
+A{1} = data{1} / gr.get('SUB_DICT').get('LENGTH');
+A{2} = data{2} / gr.get('SUB_DICT').get('LENGTH');
 
 % % % ba = BrainAtlas();
 % % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
