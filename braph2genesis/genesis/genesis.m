@@ -57,7 +57,7 @@ mkdir([target_dir fp 'src' fp 'ds' fp 'examples'])
 mkdir([target_dir fp 'src' fp 'atlas'])
 mkdir([target_dir fp 'src' fp 'gt'])
 mkdir([target_dir fp 'src' fp 'cohort'])
-% % % mkdir([target_dir fp 'src' fp 'analysis'])
+mkdir([target_dir fp 'src' fp 'analysis'])
 % % % mkdir([target_dir fp 'src' fp 'nn'])
 mkdir([target_dir fp 'src' fp 'gui'])
 mkdir([target_dir fp 'src' fp 'gui' fp 'layouts'])
@@ -122,8 +122,8 @@ copydir([source_dir fp 'src' fp 'gt'], [target_dir fp 'src' fp 'gt'])
 disp('¡! copied ready files - src/gt')
 copydir([source_dir fp 'src' fp 'cohort'], [target_dir fp 'src' fp 'cohort'])
 disp('¡! copied ready files - src/cohort')
-% % % copydir([source_dir fp 'src' fp 'analysis'], [target_dir fp 'src' fp 'analysis'])
-% % % disp('¡! copied ready files - src/analysis')
+copydir([source_dir fp 'src' fp 'analysis'], [target_dir fp 'src' fp 'analysis'])
+disp('¡! copied ready files - src/analysis')
 % % % copydir([source_dir fp 'src' fp 'nn'], [target_dir fp 'src' fp 'nn'])
 % % % disp('¡! copied ready files - src/nn')
 copydir([source_dir fp 'src' fp 'gui'], [target_dir fp 'src' fp 'gui'])
@@ -211,10 +211,10 @@ for run = 1:1:run_number
         create_Element([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'cohort'])
 	end
 
-% % %     analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
-% % %     for i = 1:numel(analysis_gen_list)
-% % %         create_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
-% % %     end
+    analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
+    for i = 1:numel(analysis_gen_list)
+        create_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
+    end
     
     % nn
 % % %     nn_gen_list = getGenerators([source_dir fp 'src' fp 'nn']);
@@ -310,10 +310,10 @@ parfor i = 1:numel(cohort_gen_list)
     create_layout([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'gui' fp 'layouts'])
 end
 
-% % % analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
-% % % parfor i = 1:numel(analysis_gen_list)
-% % %     create_layout([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'gui' fp 'layouts'])
-% % % end
+analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
+parfor i = 1:numel(analysis_gen_list)
+    create_layout([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'gui' fp 'layouts'])
+end
 
 % % % % nn
 % % % nn_gen_list = getGenerators([source_dir fp 'src' fp 'nn']);
@@ -398,10 +398,10 @@ parfor i = 1:numel(cohort_gen_list)
     create_test_Element([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'cohort'])
 end
 
-% % % analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
-% % % parfor i = 1:numel(analysis_gen_list)
-% % %     create_test_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
-% % % end
+analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
+parfor i = 1:numel(analysis_gen_list)
+    create_test_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
+end
 
 % % % % nn
 % % % nn_gen_list = getGenerators([source_dir fp 'src' fp 'nn']);
