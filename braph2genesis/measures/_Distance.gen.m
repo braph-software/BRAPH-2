@@ -55,7 +55,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'GraphBD' 'GraphBU' 'GraphWD' 'GraphWU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexBD' 'MultiplexBU' 'MultiplexWD' 'MultiplexWU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxBD' 'OrdMxBUD' 'OrdMxBU' 'OrdMxWD' 'OrdMxWU' 'OrdMxBUT' 'MultilayerWD' 'MultilayerBD' 'MultilayerWU' 'OrdMlWD' 'OrdMlWU' 'OrdMlBD'} ;%TBE % % % add tests for 'MultilayerWD' 'MultilayerBD'
+{'GraphBD' 'GraphBU' 'GraphWD' 'GraphWU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexBD' 'MultiplexBU' 'MultiplexWD' 'MultiplexWU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxBD' 'OrdMxBUD' 'OrdMxBU' 'OrdMxWD' 'OrdMxWU' 'OrdMxBUT' 'MultilayerWD' 'MultilayerBD' 'MultilayerWU' 'OrdMlWD' 'OrdMlWU' 'OrdMlBD' 'MultilayerBUT'} ;%TBE % % % add tests for 'MultilayerWD' 'MultilayerBD'
 
 %%% ¡prop!
 M (result, cell) is the distance.
@@ -1278,6 +1278,101 @@ assert(isequal(m_inside_g.get('M'), known_distance), ...
 
 %%% ¡test!
 %%%% ¡name!
+MultilayerBUT
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B11 = [
+    0    0.6
+    0.6  0
+    ];
+B22 = [
+    0   .2   .7
+    .2   0   0
+    .7   0   0
+    ];
+B33 = [
+    0   1   0  .2
+    1   0   .3  .1
+    0  .3   0   0
+   .2  .1   0   0
+    ];
+
+thresholds = [0 .5 1];
+
+known_distance = {
+    [
+    0   1
+    1   0
+    ]
+    [
+    0   1   1
+    1   0   2
+    1   2   0
+    ]
+    [
+    0   1   2  1
+    1   0   1  1
+    2   1   0  2
+    1   1   2  0
+    ]
+    [
+    0   1
+    1   0
+    ]
+    [
+    0   Inf 1
+    Inf 0   Inf
+    1 Inf 0
+    ]
+    [
+    0   1   Inf  Inf
+    1   0   Inf  Inf
+    Inf Inf 0    Inf
+    Inf Inf Inf 0
+    ]
+    [
+    0   Inf
+    Inf 0
+    ]
+    [
+    0   Inf Inf
+    Inf 0   Inf
+    Inf Inf 0
+    ]
+    [
+    0   Inf Inf Inf
+    Inf 0   Inf Inf
+    Inf Inf 0   Inf
+    Inf Inf Inf 0
+    ]
+    };
+
+B12 = rand(size(B11,1),size(B22,2));
+B13 = rand(size(B11,1),size(B33,2));
+B23 = rand(size(B22,1),size(B33,2));
+B21 = B12';
+B32 = B23';
+B31 = B13';
+
+B= {B11 B12 B13;
+    B21 B22 B23;
+    B31 B32 B33};
+
+g = MultilayerBUT('B', B, 'THRESHOLDS', thresholds);
+
+m_outside_g = Distance('G', g);
+assert(isequal(m_outside_g.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Distance');
+assert(isequal(m_inside_g.get('M'), known_distance), ...
+    [BRAPH2.STR ':Distance:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
 OrdMlBD
 %%%% ¡probability!
 .01
@@ -1328,4 +1423,3 @@ m_inside_g = g.get('MEASURE', 'Distance');
 assert(isequal(m_inside_g.get('M'), known_distance), ...
     [BRAPH2.STR ':Distance:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
-
