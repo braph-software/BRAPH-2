@@ -10,7 +10,7 @@ the path lengths within each layer.
 %%% ¡prop!
 NAME (constant, string) is the name of the average path length.
 %%%% ¡default!
-'DegreeAv'
+'PathLengthAv'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the average path length.
@@ -23,17 +23,17 @@ TEMPLATE (parameter, item) is the template of the average path length.
 %%% ¡prop!
 ID (data, string) is a few-letter code of the average path length.
 %%%% ¡default!
-'DegreeAv ID'
+'PathLengthAv ID'
 
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the average path length.
 %%%% ¡default!
-'DegreeAv label'
+'PathLengthAv label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the average path length.
 %%%% ¡default!
-'DegreeAv notes'
+'PathLengthAv notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.
