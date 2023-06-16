@@ -218,7 +218,7 @@ B{2, 3} = A23;
 B{2, 1} = A21;
 B{3, 1} = A31;
 B{3, 2} = A32;
-A = B
+A = B;
 assert(isequal(g.get('A'), A), ...
     [BRAPH2.STR ':OrdMlWD:' BRAPH2.FAIL_TEST], ...
     'OrdMlWD is not constructing well.')
