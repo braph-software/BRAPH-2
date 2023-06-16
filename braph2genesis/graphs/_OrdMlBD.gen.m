@@ -1,63 +1,61 @@
 %% ¡header!
-MultilayerWD < Graph (g, multilayer weighted directed graph) is a multilayer weighted directed graph.
+OrdMlBD < Graph (g, ordinal multilayer binary directed graph) is a ordinal multilayer binary directed graph.
 
 %%% ¡description!
-In a multilayer weighted directed (WD) graph, layers could have different number 
-of nodes with within-layer weighted directed edges, associated with a real
-number between 0 and 1 and indicating the strength of the connection.
-The connectivity matrices are symmetric (within layer).
+In an ordinal multilayer binary directed (BD) graph, layers could have different number 
+ of nodes with within-layer directed edges. Edges can be either 0 (absence of connection) 
+or 1 (existence of connection).
 All node connections are allowed between layers.
-
+The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.
 
 %% ¡props_update!
 
 %%% ¡prop!
-
-NAME (constant, string) is the name of the multilayer weighted directed graph.
+NAME (constant, string) is the name of the ordinal multilayer binary directed graph.
 %%%% ¡default!
-'MultilayerWD'
+'OrdMlBD'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the multilayer weighted directed graph.
+DESCRIPTION (constant, string) is the description of the ordinal multilayer binary directed graph.
 %%%% ¡default!
-'In a multilayer weighted directed (WD) graph, layers could have different number  of nodes with within-layer weighted directed edges, associated with a real  number between 0 and 1 and indicating the strength of the connection. The connectivity matrices are symmetric (within layer). All node connections are allowed between layers.'
+'In an ordinal multilayer binary directed (BD) graph, layers could have different number  of nodes with within-layer directed edges. Edges can be either 0 (absence of connection)  or 1 (existence of connection). All node connections are allowed between layers. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the multilayer weighted directed graph.
+TEMPLATE (parameter, item) is the template of the ordinal multilayer binary directed graph.
 %%% ¡_prop!
 % % % TEMPLATE (parameter, item) is the graph template to set the graph and measure parameters.
 % % % %%%% ¡_settings!
-% % % 'MultilayerWD'
+% % % 'multilayerBD'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the multilayer weighted directed graph.
+ID (data, string) is a few-letter code for the ordinal multilayer binary directed graph.
 %%%% ¡default!
-'MultilayerWD ID'
+'OrdMlBD ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the multilayer weighted directed graph.
+LABEL (metadata, string) is an extended label of the ordinal multilayer binary directed graph.
 %%%% ¡default!
-'MultilayerWD label'
+'OrdMlBD label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the multilayer weighted directed graph.
+NOTES (metadata, string) are some specific notes about the ordinal multilayer binary directed graph.
 %%%% ¡default!
-'MultilayerWD notes'
+'OrdMlBD notes'
 
 %%% ¡prop!
-GRAPH_TYPE (constant, scalar) returns the graph type __Graph.MULTILAYER__.
+GRAPH_TYPE (constant, scalar) returns the graph type Graph.ORDERED_MULTILAYER__.
 %%%% ¡default!
-Graph.MULTILAYER
+Graph.ORDERED_MULTILAYER
 
 %%% ¡prop!
-CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type __Graph.WEIGHTED__ * ones(layernumber).
+CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type __Graph.BINARY__ * ones(layernumber).
 %%%% ¡calculate!
 if isempty(varargin)
     layernumber = 1;
 else
     layernumber = varargin{1};
 end
-value = Graph.WEIGHTED * ones(layernumber);
+value = Graph.BINARY * ones(layernumber);
 
 %%% ¡prop!
 DIRECTIONALITY_TYPE (query, smatrix) returns the directionality type __Graph.DIRECTED__ * ones(layernumber).
@@ -78,7 +76,7 @@ else
     layernumber = varargin{1};
 end
 value = Graph.SELFCONNECTED * ones(layernumber);
-value(1:layernumber+1:end) = Graph.NONSELFCONNECTED;                
+value(1:layernumber+1:end) = Graph.NONSELFCONNECTED;
 
 %%% ¡prop!
 NEGATIVITY_TYPE (query, smatrix) returns the negativity type __Graph.NONNEGATIVE__ * ones(layernumber).
@@ -91,32 +89,32 @@ end
 value = Graph.NONNEGATIVE * ones(layernumber);
 
 %%% ¡prop!
-A (result, cell) is the cell containing the within-layer weighted adjacency matrices of the multilayer weighted directed graph and the connections between layers.
-
+A (result, cell) is the cell containing the within-layer binary adjacency matrices of the multilayer binary directed graph and the ordinal connections between layers.
 %%%% ¡calculate!
 B = g.get('B'); %#ok<PROPLC>
 L = length(B); %#ok<PROPLC> % number of layers
 A = cell(L, L);
+
 for i = 1:1:L
     M = dediagonalize(B{i,i}); % removes self-connections by removing diagonal from adjacency matrix, equivalent to dediagonalize(M, 'DediagonalizeRule', 0)
     M = semipositivize(M, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
-    M = standardize(M, 'StandardizeRule', g.get('STANDARDIZE_RULE'));  % rescales adjacency matrix
+    M = binarize(M, varargin{:}); % rescales adjacency matrix, equivalent to binarize(M, 'threshold', 0, 'bins', [-1:.001:1])
     A(i, i) = {M};
-    if ~isempty(A{i, i})
+    if ~isempty(A{1, 1})
         for j = i+1:1:L
             M = semipositivize(B{i,j}, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
-            M = standardize(M, 'StandardizeRule', g.get('STANDARDIZE_RULE'));  % rescales adjacency matrix
+            M = binarize(M);  % rescales adjacency matrix
             A(i, j) = {M};
             M = semipositivize(B{j,i}, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
-            M = standardize(M, 'StandardizeRule', g.get('STANDARDIZE_RULE'));  % rescales adjacency matrix
+            M = binarize(M);  % rescales adjacency matrix
             A(j, i) = {M};
         end
     end
 end
-value = A;
 
+value = A;
 %%%% ¡gui!
-pr = PanelPropCell('EL', g, 'PROP', MultilayerWD.A, ...
+pr = PanelPropCell('EL', g, 'PROP', OrdMlBD.A, ...
     'TABLE_HEIGHT', s(40), ...
     'XYSLIDERLOCK', true, ... 
     'XSLIDERSHOW', false, ...
@@ -144,7 +142,7 @@ value = alayerlabels;
 %%% ¡prop!
 COMPATIBLE_MEASURES (constant, stringlist) is the list of compatible measures.
 %%%% ¡default!
-getCompatibleMeasures('MultilayerWD')
+getCompatibleMeasures('OrdMlBD')
 
 %% ¡props!
 
@@ -153,7 +151,7 @@ B (data, cell) is the input cell containing the multilayer adjacency matrices.
 %%%% ¡default!
 {[] []; [] []}
 %%%% ¡gui!
-pr = PanelPropCell('EL', g, 'PROP', MultilayerWD.B, ...
+pr = PanelPropCell('EL', g, 'PROP', OrdMlBD.B, ...
     'TABLE_HEIGHT', s(40), ...
     'XSLIDERSHOW', true, ...
     'XSLIDERLABELS', g.get('LAYERLABELS'), ...
@@ -163,21 +161,15 @@ pr = PanelPropCell('EL', g, 'PROP', MultilayerWD.B, ...
     'COLUMNNAME', g.getCallback('ANODELABELS'), ...
     varargin{:});
 
-
 %%% ¡prop!
 SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.
 %%%% ¡settings!
 {'zero', 'absolute'}
 
-%%% ¡prop!
-STANDARDIZE_RULE (parameter, option) determines how to normalize the weights between 0 and 1.
-%%%% ¡settings!
-{'threshold' 'range'}
-
 %% ¡tests!
 
 %%% ¡excluded_props!
-[MultilayerWD.PFGA MultilayerWD.PFGH]
+[OrdMlBD.PFGA OrdMlBD.PFGH]
 
 %%% ¡test!
 %%%% ¡name!
@@ -188,28 +180,28 @@ Constructor - Full
 B1 = rand(randi(10));
 B2 = rand(randi(10));
 B3 = rand(randi(10));
-B12 = rand(size(B1, 1),size(B2, 2));
-B13 = rand(size(B1, 1),size(B3, 2));
-B23 = rand(size(B2, 1),size(B3, 2));
-B21 = rand(size(B2, 1),size(B1, 2));
-B31 = rand(size(B3, 1),size(B1, 2));
-B32 = rand(size(B3, 1),size(B2, 2));
+B12 = rand(size(B1,1),size(B2,2));
+B13 = rand(size(B1,1),size(B3,2));
+B23 = rand(size(B2,1),size(B3,2));
+B21 = rand(size(B2,1),size(B1,2));
+B31 = rand(size(B3,1),size(B1,2));
+B32 = rand(size(B3,1),size(B2,2));
 B = {
     B1                           B12                            B13
     B21                          B2                             B23
     B31                          B32                            B3
     };
-g = MultilayerWD('B', B);
+g = OrdMlBD('B', B);
 g.get('A_CHECK')
-A1 = standardize(semipositivize(dediagonalize(B1)));
-A2 = standardize(semipositivize(dediagonalize(B2)));
-A3 = standardize(semipositivize(dediagonalize(B3)));
-A12 = standardize(semipositivize(B12));
-A13 = standardize(semipositivize(B13));
-A23 = standardize(semipositivize(B23));
-A21 = standardize(semipositivize(B21));
-A31 = standardize(semipositivize(B31));
-A32 = standardize(semipositivize(B32));
+A1 = binarize(semipositivize(dediagonalize(B1)));
+A2 = binarize(semipositivize(dediagonalize(B2)));
+A3 = binarize(semipositivize(dediagonalize(B3)));
+A12 = binarize(semipositivize(B12));
+A13 = binarize(semipositivize(B13));
+A23 = binarize(semipositivize(B23));
+A21 = binarize(semipositivize(B21));
+A31 = binarize(semipositivize(B31));
+A32 = binarize(semipositivize(B32));
 B{1,1} = A1;
 B{2,2} = A2;
 B{3,3} = A3;
@@ -219,10 +211,11 @@ B{2,3} = A23;
 B{2,1} = A21;
 B{3,1} = A31;
 B{3,2} = A32;
-A = B;
+A = B
 assert(isequal(g.get('A'), A), ...
-    [BRAPH2.STR ':MultilayerWD:' BRAPH2.FAIL_TEST], ...
-    'MultilayerWD is not constructing well.')
+    [BRAPH2.STR ':OrdMlBD:' BRAPH2.FAIL_TEST], ...
+    'OrdMlBD is not constructing well.')
+
 
 % %%% ¡test!
 % %%%% ¡name!
@@ -261,7 +254,6 @@ function random_g = randomize(g)
     % See also GraphBD
 
     % get rules
-    number_of_weights = g.get('NUMBEROFWEIGHTS');
     attempts_per_edge = g.get('ATTEMPTSPEREDGE');
 
     if nargin<2
@@ -275,8 +267,8 @@ function random_g = randomize(g)
 
     for li = 1:1:L
         Aii = A{li, li};
-        random_A = GraphWD.randomize_A(Aii, attempts_per_edge, number_of_weights);
+        random_A = GraphBD.randomize_A(Aii, attempts_per_edge);
         random_multi_A(li) = {random_A};
     end
-    random_g = MultilayerWD('B', random_multi_A);
+    random_g = OrdMlBD('B', random_multi_A);
 end
