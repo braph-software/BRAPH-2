@@ -55,7 +55,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'GraphBD' 'GraphBU' 'GraphWD' 'GraphWU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexBD' 'MultiplexBU' 'MultiplexWD' 'MultiplexWU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxBD' 'OrdMxBU' 'OrdMxWD' 'OrdMxWU' 'OrdMxBUT' 'MultilayerWD' 'MultilayerBD'} ;%TBE % % % add tests for 'MultilayerWD' 'MultilayerBD'
+{'GraphBD' 'GraphBU' 'GraphWD' 'GraphWU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexBD' 'MultiplexBU' 'MultiplexWD' 'MultiplexWU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxBD' 'OrdMxBUD' 'OrdMxBU' 'OrdMxWD' 'OrdMxWU' 'OrdMxBUT' 'MultilayerWD' 'MultilayerBD' 'MultilayerWU' 'OrdMlWD' 'OrxMlWU'} ;%TBE % % % add tests for 'MultilayerWD' 'MultilayerBD'
 
 %%% ¡prop!
 M (result, cell) is the distance.

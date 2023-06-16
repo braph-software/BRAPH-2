@@ -197,7 +197,7 @@ A3 = symmetrize(standardize(semipositivize(dediagonalize(B3))));
 B{1,1} = A1;
 B{2,2} = A2;
 B{3,3} = A3;
-A = B
+A = B;
 assert(isequal(g.get('A'), A), ...
     [BRAPH2.STR ':MultilayerWU:' BRAPH2.FAIL_TEST], ...
     'MultilayerWU is not constructing well.')
