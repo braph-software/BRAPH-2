@@ -1,4 +1,4 @@
-% ¡header!
+%% ¡header!
 MultilayerBU < Graph (g, multilayer binary undirected graph) is a multilayer binary undirected graph.
 
 %%% ¡description!
