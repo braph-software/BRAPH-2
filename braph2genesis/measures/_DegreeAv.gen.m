@@ -54,7 +54,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%% ¡default!
-{'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU' 'OrdMxBUT' 'OrdMxBUD' 'MultilayerWU' 'OrdMlWU' 'MultilayerBUT'} ;%TBE % % % add any missing tests
+{'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU' 'OrdMxBUT' 'OrdMxBUD' 'MultilayerWU' 'OrdMlWU' 'MultilayerBUT' 'MultilayerBU' 'MultilayerBUD' 'OrdMlBU' 'OrdMlBUD' 'OrdMlBUT'} ;%TBE % % % add any missing tests
 
 %%% ¡prop!
 M (result, cell) is the average degree.
@@ -616,6 +616,228 @@ B= {B11 B12 B13;
     B31 B32 B33};
 
 g = MultilayerBUT('B', B, 'THRESHOLDS', thresholds);
+
+m_outside_g = DegreeAv('G', g);
+assert(isequal(m_outside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'DegreeAv');
+assert(isequal(m_inside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+MultilayerBU
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B11 = [
+    0   1   1
+    1   0   0
+    1   0   0
+    ];
+B22 = [
+    0   1   0	1
+    1   0   1	1
+    0   1   0	0
+    1   1   0	0
+    ];
+B12 = rand(size(B11,1),size(B22,2));
+B21 = B12';
+B= {B11 B12;
+    B21 B22};
+
+known_degree = {
+    mean([2 1 1])
+    mean([2 3 1 2])
+    };
+
+
+g = MultilayerBU('B', B);
+
+m_outside_g = DegreeAv('G', g);
+assert(isequal(m_outside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'DegreeAv');
+assert(isequal(m_inside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+MultilayerBUD
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B11 = [
+    0   .2   .7
+    .2   0   .1
+    .7  .1   0
+    ];
+
+B22 = [    
+    0   .2   .7 .5
+    .2   0   .1 .5
+    .7  .1   0  .5
+    .5  .5  .5  0
+    ];
+B12 = rand(size(B11,1),size(B22,2));
+B21 = B12';
+B= {B11 B12;
+    B21 B22};
+
+densities = [0 33 67 100];
+
+known_degree = { ...
+    mean([0 0 0])
+    mean([0 0 0 0])
+    mean([1 0 1])
+    mean([1 0 1 0])
+    mean([2 1 1])
+    mean([2 1 2 3])
+    mean([2 2 2])
+    mean([3 3 3 3])
+    };
+
+g = MultilayerBUD('B', B, 'DENSITIES', densities);
+
+m_outside_g = DegreeAv('G', g);
+assert(isequal(m_outside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'DegreeAv');
+assert(isequal(m_inside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+OrdMlBU
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B11 = [
+    0   1   1
+    1   0   0
+    1   0   0
+    ];
+B22 = [
+    0   1   0	1
+    1   0   1   1
+    0   1   0   0
+    1   1   0   0
+    ];
+B12 = rand(size(B11,1),size(B22,2));
+B21 = B12';
+B= {B11 B12;
+    B21 B22};
+
+known_degree = {
+    mean([2 1 1])
+    mean([2 3 1 2])
+    };
+
+
+g = OrdMlBU('B', B);
+
+m_outside_g = DegreeAv('G', g);
+assert(isequal(m_outside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'DegreeAv');
+assert(isequal(m_inside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+OrdMlBUD
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B11 = [
+    0   .2   .7
+    .2   0   .1
+    .7  .1   0
+    ];
+
+B22 = [    
+    0   .2   .7 .5
+    .2   0   .1 .5
+    .7  .1   0  .5
+    .5  .5  .5  0
+    ];
+B12 = rand(size(B11,1),size(B22,2));
+B21 = B12';
+B= {B11 B12;
+    B21 B22};
+
+densities = [0 33 67 100];
+
+known_degree = { ...
+    mean([0 0 0])
+    mean([0 0 0 0])
+    mean([1 0 1])
+    mean([1 0 1 0])
+    mean([2 1 1])
+    mean([2 1 2 3])
+    mean([2 2 2])
+    mean([3 3 3 3])
+    };
+
+g = OrdMlBUD('B', B, 'DENSITIES', densities);
+
+m_outside_g = DegreeAv('G', g);
+assert(isequal(m_outside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'DegreeAv');
+assert(isequal(m_inside_g.get('M'), known_degree), ...
+    [BRAPH2.STR ':DegreeAv:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+OrdMlBUT
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B11 = [
+    0   .2   .7
+    .2   0   .1
+    .7  .1   0
+    ];
+
+B22 = [    
+    0   .2   .7 .5
+    .2   0   .1 .5
+    .7  .1   0  .5
+    .5  .5  .5  0
+    ];
+B12 = rand(size(B11,1),size(B22,2));
+B21 = B12';
+B= {B11 B12;
+    B21 B22};
+
+thresholds = [0 .5 1];
+
+known_degree = { ...
+    mean([2 2 2])
+    mean([3 3 3 3])
+    mean([1 0 1])
+    mean([1 0 1 0])
+    mean([0 0 0])
+    mean([0 0 0 0])
+    };
+
+g = OrdMlBUT('B', B, 'THRESHOLDS', thresholds);
 
 m_outside_g = DegreeAv('G', g);
 assert(isequal(m_outside_g.get('M'), known_degree), ...
