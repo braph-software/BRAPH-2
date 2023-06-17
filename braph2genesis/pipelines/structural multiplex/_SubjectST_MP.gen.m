@@ -101,6 +101,56 @@ function cb_exporter_XLS(~, ~)
     end
 end
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+SubjectST_MP.ID
+%%%% ¡title!
+Subject ID
+
+%%% ¡prop!
+%%%% ¡id!
+SubjectST_MP.LABEL
+%%%% ¡title!
+Subject LABEL
+
+%%% ¡prop!
+%%%% ¡id!
+SubjectST_MP.BA
+%%%% ¡title!
+Brain Atlas
+
+%%% ¡prop!
+%%%% ¡id!
+SubjectST_MP.VOI_DICT
+%%%% ¡title!
+Variables of Interest
+
+%%% ¡prop!
+%%%% ¡id!
+SubjectST_MP.L
+%%%% ¡title!
+Layer Number
+
+%%% ¡prop!
+%%%% ¡id!
+SubjectST_MP.LAYERLABELS
+%%%% ¡title!
+Layer Labels
+
+%%% ¡prop!
+%%%% ¡id!
+SubjectST_MP.ST_MP
+%%%% ¡title!
+Structural DATA LAYERS
+
+%%% ¡prop!
+%%%% ¡id!
+SubjectST_MP.NOTES
+%%%% ¡title!
+Subject NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!

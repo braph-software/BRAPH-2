@@ -338,7 +338,7 @@ function checkA(graph_type, A)
                     [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT '\\n' ...
                     'Sub-diagonal submatrices in the same row must have the same number of rows.'])
             end
-            if any(cellfun(@(a) size(a, 2), A(2:length(A)+1:end)) == cellfun(@(a) size(a, 2), A(1:length(A)+1:length(A)*2-1)))
+            if any(cellfun(@(a) size(a, 2), A(2:length(A)+1:end)) ~= cellfun(@(a) size(a, 2), A(1:length(A)+1:length(A)*2-1)))
                 error([BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
                     [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT '\\n' ...
                     'Sub-diagonal submatrices in the same column must have the same number of columns.'])
@@ -572,7 +572,7 @@ MEASURE (query, item) returns a measure.
 %%%% ¡settings!
 'Measure'
 %%%% ¡calculate!
-% M = GETMEASURE(G, MEASURE_CLASS) checks whether the measure exists in the
+% M = G.GET(''MEASURE'', MEASURE_CLASS) checks whether the measure exists in the
 %  property M_DICT. If not, it creates a new measure M of class MEASURE_CLASS
 %  with properties defined by the graph settings. The user must call
 %  getValue() for the new measure M to retrieve the value of measure M.
@@ -594,8 +594,9 @@ m_list = g.get('COMPATIBLE_MEASURES');
 assert( ...
     contains(measure_class, m_list), ...
     [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-    [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT ' '], ...
-    [measure_class ' is not a compatible Measure with ' g.getClass() '. Please use Graph function getCompatibleMeasures for more information.'])
+    [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT ' \\n' ...
+     measure_class ' is not a compatible Measure with ' g.getClass() '. \\n' ...
+    'Use ' g.getClass() '.get(''COMPATIBLE_MEASURES'') for a list of compatible measures.'])
 
 m_dict = g.memorize('M_DICT');
 if m_dict.get('CONTAINS_KEY', measure_class)

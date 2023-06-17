@@ -101,6 +101,44 @@ function cb_exporter_XLS(~, ~)
     end
 end
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+SubjectCON.ID
+%%%% ¡title!
+Subject ID
+
+%%% ¡prop!
+%%%% ¡id!
+SubjectCON.LABEL
+%%%% ¡title!
+Subject LABEL
+
+%%% ¡prop!
+%%%% ¡id!
+SubjectCON.BA
+%%%% ¡title!
+Brain Atlas
+
+%%% ¡prop!
+%%%% ¡id!
+SubjectCON.VOI_DICT
+%%%% ¡title!
+Variables of Interest
+
+%%% ¡prop!
+%%%% ¡id!
+SubjectCON.CON
+%%%% ¡title!
+Connectivity DATA
+
+%%% ¡prop!
+%%%% ¡id!
+SubjectCON.NOTES
+%%%% ¡title!
+Subject NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!

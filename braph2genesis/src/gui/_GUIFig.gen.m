@@ -418,13 +418,13 @@ function cb_open(~, ~)
         filename = fullfile(path, file);
         tmp_el = Element.load(filename);
         % % % %TODO: add checks for BRAPH2 version
-        if strcmp(tmp_el.getClass(), pf.getClass())
-            gui = GUIFig('PF', tmp_el, 'FILE', filename);
+        if isa(tmp_el, 'PanelFig')
+            tmp_gui = GUIFig('PF', tmp_el, 'FILE', filename, 'WAITBAR', gui.get('WAITBAR'));
         else
-            gui = GUIElement('PE', tmp_el, 'FILE', filename);
+            tmp_gui = GUIElement('PE', tmp_el, 'FILE', filename, 'WAITBAR', gui.get('WAITBAR'));
         end
-        gui.get('DRAW')
-        gui.get('SHOW')
+        tmp_gui.get('DRAW')
+        tmp_gui.get('SHOW')
     end
 end
 function cb_save(~, ~)
