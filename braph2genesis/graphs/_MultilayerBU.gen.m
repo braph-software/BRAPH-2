@@ -188,7 +188,7 @@ A3 = symmetrize(binarize(semipositivize(dediagonalize(B3))));
 B{1, 1} = A1;
 B{2, 2} = A2;
 B{3, 3} = A3;
-A = B
+A = B;
 assert(isequal(g.get('A'), A), ...
     [BRAPH2.STR ':MultilayerBU:' BRAPH2.FAIL_TEST], ...
     'MultilayerBU is not constructing well.')
