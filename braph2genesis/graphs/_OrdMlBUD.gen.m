@@ -24,10 +24,6 @@ DESCRIPTION (constant, string) is the description of the ordinal binary undirect
 'In an ordinal binary undirected multilayer with fixed densities (BUD) graph, layers consist of binary undirected (BU) multilayer graphs derived from the same weighted supra-connectivity matrices binarized at different densities. Layers within the binary undirected (BU) multilayer graphs could have different number of nodes with within-layer binary undirected edges. Edges can be either 0 (absence of connection) or 1 (existence of connection). The supra-connectivity matrix has a number of partitions equal to the number of densities. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.'
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ordinal binary undirected multilayer with fixed densities.
-%%% ¡_prop!
-% % % TEMPLATE (parameter, item) is the graph template to set the graph and measure parameters.
-% % % %%%% ¡_settings!
-% % % 'MultilayerBUD'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the ordinal binary undirected multilayer with fixed densities.
