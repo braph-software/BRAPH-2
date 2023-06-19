@@ -55,8 +55,8 @@ g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
 gr = a.get('GR');
 
 T = a.get('REPETITION');
-fmin = a.get('FREQUENCYRULEMIN');
-fmax = a.get('FREQUENCYRULEMAX');
+fmin = a.get('F_MIN');
+fmax = a.get('F_MAX');
 
 ba = BrainAtlas();
 if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
@@ -89,16 +89,19 @@ end
 value = g_dict;
 
 %% ¡props!
+
 %%% ¡prop!
-REPETITION(parameter, scalar) is the number of repetitions
+REPETITION (parameter, scalar) is the number of repetitions
 %%%% ¡default!
 1
+
 %%% ¡prop!
-FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value
+F_MIN (parameter, scalar) is the minimum frequency value
 %%%% ¡default!
 0
+
 %%% ¡prop!
-FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value
+F_MAX (parameter, scalar) is the maximum frequency value
 %%%% ¡default!
 Inf
 

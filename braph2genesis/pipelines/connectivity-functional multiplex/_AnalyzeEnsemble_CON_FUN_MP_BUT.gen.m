@@ -73,8 +73,8 @@ if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
 end
 
 T = a.get('REPETITION');
-fmin = a.get('FREQUENCYRULEMIN');
-fmax = a.get('FREQUENCYRULEMAX');
+fmin = a.get('F_MIN');
+fmax = a.get('F_MAX');
 thresholds = a.get('THRESHOLDS'); % this is a vector
 for i = 1:1:gr.get('SUB_DICT').length()
     A = cell(1, 2);
@@ -116,16 +116,19 @@ end
 value = g_dict;
 
 %% ¡props!
+
 %%% ¡prop!
-REPETITION(parameter, scalar) is the number of repetitions for functional data
+REPETITION (parameter, scalar) is the number of repetitions for functional data
 %%%% ¡default!
 1
+
 %%% ¡prop!
-FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value for functional data
+F_MIN (parameter, scalar) is the minimum frequency value for functional data
 %%%% ¡default!
 0
+
 %%% ¡prop!
-FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value for functional data
+F_MAX (parameter, scalar) is the maximum frequency value for functional data
 %%%% ¡default!
 Inf
 

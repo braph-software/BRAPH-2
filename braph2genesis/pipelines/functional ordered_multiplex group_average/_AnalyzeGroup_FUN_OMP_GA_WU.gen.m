@@ -173,12 +173,12 @@ REPETITION (parameter, scalar) is the number of repetitions
 1
 
 %%% ¡prop!
-F_MIN (parameter, scalar)is the minimum frequency value
+F_MIN (parameter, scalar) is the minimum frequency value
 %%%% ¡default!
 0
 
 %%% ¡prop!
-F_MAX (parameter, scalar)is the maximum frequency value
+F_MAX (parameter, scalar) is the maximum frequency value
 %%%% ¡default!
 Inf
 
