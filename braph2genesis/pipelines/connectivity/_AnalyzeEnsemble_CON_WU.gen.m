@@ -80,17 +80,6 @@ G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analys
 % % % end
 % % % 
 % % % value = g_dict;
-% % % % % % %% ¡methods!
-% % % % % % function pr = getPPCompareEnsemble_CPDict(a, varargin) 
-% % % % % %     %GETPPCOMPAREENSEMBLE_CPDICT returns the comparison ensemble plot panel compatible with the analysis.
-% % % % % %     %
-% % % % % %     % PR = GETPPCOMPAREENSEMBLE_CPDICT(A) returns the comparison ensemble plot panel
-% % % % % %     %  that is compatible with the analyze ensemble.
-% % % % % %     %
-% % % % % %     % See also CompareEnsemble.
-% % % % % %     
-% % % % % %     pr = PPCompareEnsemble_CPDict_WU(varargin{:});
-% % % % % % end
 
 %% ¡tests!
 

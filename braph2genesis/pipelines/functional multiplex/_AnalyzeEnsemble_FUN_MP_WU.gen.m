@@ -12,34 +12,6 @@ SubjectFUN_MP, MultiplexWU.
 
 
 
-%% ¡props!
-%%% ¡prop!
-REPETITION(parameter, scalar) is the number of repetitions
-%%%% ¡default!
-1
-%%% ¡prop!
-FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value
-%%%% ¡default!
-0
-%%% ¡prop!
-FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value
-%%%% ¡default!
-Inf
-
-%%% ¡prop!
-CORRELATION_RULE (parameter, option) is the correlation type.
-%%%% ¡settings!
-Correlation.CORRELATION_RULE_LIST(1:3)
-%%%% ¡default!
-Correlation.CORRELATION_RULE_LIST{1}
-
-%%% ¡prop!
-NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
-%%%% ¡settings!
-Correlation.NEGATIVE_WEIGHT_RULE_LIST
-%%%% ¡default!
-Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
-
 %% ¡props_update!
 
 %%% ¡prop!
@@ -127,22 +99,44 @@ end
 
 value = g_dict;
 
-% % % %% ¡methods!
-% % % function pr = getPPCompareEnsemble_CPDict(a, varargin) 
-% % %     %GETPPCOMPAREENSEMBLE_CPDICT returns the comparison ensemble plot panel compatible with the analysis.
-% % %     %
-% % %     % PR = GETPPCOMPAREENSEMBLE_CPDICT(A) returns the comparison ensemble plot panel
-% % %     %  that is compatible with the analyze ensemble.
-% % %     %
-% % %     % See also CompareEnsemble.
-% % %     
-% % %     pr = PPCompareEnsembleMP_FUN_CPDict_WU(varargin{:});
-% % % end
+%% ¡props!
+%%% ¡prop!
+REPETITION(parameter, scalar) is the number of repetitions
+%%%% ¡default!
+1
+%%% ¡prop!
+FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value
+%%%% ¡default!
+0
+%%% ¡prop!
+FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value
+%%%% ¡default!
+Inf
+
+%%% ¡prop!
+CORRELATION_RULE (parameter, option) is the correlation type.
+%%%% ¡settings!
+Correlation.CORRELATION_RULE_LIST(1:3)
+%%%% ¡default!
+Correlation.CORRELATION_RULE_LIST{1}
+
+%%% ¡prop!
+NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
+%%%% ¡settings!
+Correlation.NEGATIVE_WEIGHT_RULE_LIST
+%%%% ¡default!
+Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 
 %% ¡tests!
 
-% % % %%% ¡test!
-% % % %%%% ¡name!
-% % % Example
-% % % %%%% ¡code!
-% % % example_FUN_MP_WU
+%%% ¡test!
+%%%% ¡name!
+Example
+%%%% ¡probability!
+.01
+%%%% ¡code!
+if ~isfile([fileparts(which('SubjectFUN_MP')) filesep 'Example data FUN_MP XLS' filesep 'atlas.xlsx'])
+    test_ImporterGroupSubjectFUN_MP_XLS % create example files
+end
+
+example_FUN_MP_WU

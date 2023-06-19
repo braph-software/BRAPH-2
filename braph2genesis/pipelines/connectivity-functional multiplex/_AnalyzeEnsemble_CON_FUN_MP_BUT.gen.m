@@ -15,44 +15,6 @@ SubjectCON_FUN_MP, MultiplexBUT
 
 
 
-%% ¡props!
-%%% ¡prop!
-REPETITION(parameter, scalar) is the number of repetitions for functional data
-%%%% ¡default!
-1
-%%% ¡prop!
-FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value for functional data
-%%%% ¡default!
-0
-%%% ¡prop!
-FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value for functional data
-%%%% ¡default!
-Inf
-
-%%% ¡prop!
-CORRELATION_RULE (parameter, option) is the correlation type for functional data.
-%%%% ¡settings!
-Correlation.CORRELATION_RULE_LIST(1:3)
-%%%% ¡default!
-Correlation.CORRELATION_RULE_LIST{1}
-
-%%% ¡prop!
-NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights of functional data.
-%%%% ¡settings!
-Correlation.NEGATIVE_WEIGHT_RULE_LIST
-%%%% ¡default!
-Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
-
-%%% ¡prop!
-THRESHOLDS (parameter, rvector) is the vector of thresholds.
-%%%% ¡default!
-[-1:.5:1]
-%%%% ¡gui!
-pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeEnsemble_CON_FUN_MP_BUT.THRESHOLDS, ...
-    'MIN', -1, 'MAX', 1, ...
-    'DEFAULT', AnalyzeEnsemble_CON_FUN_MP_BUT.getPropDefault('THRESHOLDS'), ...
-    varargin{:});
-
 %% ¡props_update!
 
 %%% ¡prop!
@@ -153,22 +115,54 @@ end
 
 value = g_dict;
 
-% % % %% ¡methods!
-% % % function pr = getPPCompareEnsemble_CPDict(a, varargin) 
-% % %     %GETPPCOMPAREENSEMBLE_CPDICT returns the comparison ensemble plot panel compatible with the analysis.
-% % %     %
-% % %     % PR = GETPPCOMPAREENSEMBLE_CPDICT(A) returns the comparison ensemble plot panel
-% % %     %  that is compatible with the analyze ensemble.
-% % %     %
-% % %     % See also CompareEnsemble.
-% % %     
-% % %     pr = PPCompareEnsembleMP_CON_FUN_CPDict_BUT(varargin{:});
-% % % end
+%% ¡props!
+%%% ¡prop!
+REPETITION(parameter, scalar) is the number of repetitions for functional data
+%%%% ¡default!
+1
+%%% ¡prop!
+FREQUENCYRULEMIN(parameter, scalar)is the minimum frequency value for functional data
+%%%% ¡default!
+0
+%%% ¡prop!
+FREQUENCYRULEMAX(parameter, scalar)is the maximum frequency value for functional data
+%%%% ¡default!
+Inf
+
+%%% ¡prop!
+CORRELATION_RULE (parameter, option) is the correlation type for functional data.
+%%%% ¡settings!
+Correlation.CORRELATION_RULE_LIST(1:3)
+%%%% ¡default!
+Correlation.CORRELATION_RULE_LIST{1}
+
+%%% ¡prop!
+NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights of functional data.
+%%%% ¡settings!
+Correlation.NEGATIVE_WEIGHT_RULE_LIST
+%%%% ¡default!
+Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
+
+%%% ¡prop!
+THRESHOLDS (parameter, rvector) is the vector of thresholds.
+%%%% ¡default!
+[-1:.5:1]
+%%%% ¡gui!
+pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeEnsemble_CON_FUN_MP_BUT.THRESHOLDS, ...
+    'MIN', -1, 'MAX', 1, ...
+    'DEFAULT', AnalyzeEnsemble_CON_FUN_MP_BUT.getPropDefault('THRESHOLDS'), ...
+    varargin{:});
 
 %% ¡tests!
 
 %%% ¡test!
 %%%% ¡name!
 Example
+%%%% ¡probability!
+.01
 %%%% ¡code!
-% % % example_CON_FUN_MP_BUT
+if ~isfile([fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_MP XLS' filesep 'atlas.xlsx'])
+    test_ImporterGroupSubjectCON_FUN_MP_XLS % create example files
+end
+
+example_CON_FUN_MP_BUT

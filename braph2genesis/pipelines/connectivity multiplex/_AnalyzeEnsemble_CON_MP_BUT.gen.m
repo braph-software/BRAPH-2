@@ -12,18 +12,6 @@ SubjectCON_MP, MultiplexBUT
 
 
 
-%% ¡props!
-
-%%% ¡prop!
-THRESHOLDS (parameter, rvector) is the vector of thresholds.
-%%%% ¡default!
-[-1:.5:1]
-%%%% ¡gui!
-pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeEnsemble_CON_MP_BUT.THRESHOLDS, ...
-    'MIN', -1, 'MAX', 1, ...
-    'DEFAULT', AnalyzeEnsemble_CON_MP_BUT.getPropDefault('THRESHOLDS'), ...
-    varargin{:});
-
 %% ¡props_update!
 
 %%% ¡prop!
@@ -103,3 +91,29 @@ for i = 1:1:gr.get('SUB_DICT').length()
 end
 
 value = g_dict;
+
+%% ¡props!
+
+%%% ¡prop!
+THRESHOLDS (parameter, rvector) is the vector of thresholds.
+%%%% ¡default!
+[-1:.5:1]
+%%%% ¡gui!
+pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeEnsemble_CON_MP_BUT.THRESHOLDS, ...
+    'MIN', -1, 'MAX', 1, ...
+    'DEFAULT', AnalyzeEnsemble_CON_MP_BUT.getPropDefault('THRESHOLDS'), ...
+    varargin{:});
+
+%% ¡tests!
+
+%%% ¡test!
+%%%% ¡name!
+Example
+%%%% ¡probability!
+.01
+%%%% ¡code!
+if ~isfile([fileparts(which('SubjectCON_MP')) filesep 'Example data CON_MP XLS' filesep 'atlas.xlsx'])
+    test_ImporterGroupSubjectCON_MP_XLS % create example files
+end
+
+example_CON_MP_BUT

@@ -11,18 +11,6 @@ SubjectCON_MP, MultiplexBUD
 
 
 
-%% ¡props!
-
-%%% ¡prop!
-DENSITIES (parameter, rvector) is the vector of densities.
-%%%% ¡default!
-[1:1:10]
-%%%% ¡gui!
-pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeEnsemble_CON_MP_BUD.DENSITIES, ...
-    'MIN', 0, 'MAX', 100, ...
-    'DEFAULT', AnalyzeEnsemble_CON_MP_BUD.getPropDefault('DENSITIES'), ...
-    varargin{:});
-
 %% ¡props_update!
 
 %%% ¡prop!
@@ -103,3 +91,29 @@ for i = 1:1:gr.get('SUB_DICT').length()
 end
 
 value = g_dict;
+
+%% ¡props!
+
+%%% ¡prop!
+DENSITIES (parameter, rvector) is the vector of densities.
+%%%% ¡default!
+[1:1:10]
+%%%% ¡gui!
+pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeEnsemble_CON_MP_BUD.DENSITIES, ...
+    'MIN', 0, 'MAX', 100, ...
+    'DEFAULT', AnalyzeEnsemble_CON_MP_BUD.getPropDefault('DENSITIES'), ...
+    varargin{:});
+
+%% ¡tests!
+
+%%% ¡test!
+%%%% ¡name!
+Example
+%%%% ¡probability!
+.01
+%%%% ¡code!
+if ~isfile([fileparts(which('SubjectCON_MP')) filesep 'Example data CON_MP XLS' filesep 'atlas.xlsx'])
+    test_ImporterGroupSubjectCON_MP_XLS % create example files
+end
+
+example_CON_MP_BUD
