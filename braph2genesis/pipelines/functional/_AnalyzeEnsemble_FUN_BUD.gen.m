@@ -9,48 +9,6 @@ SubjectFUN, MultigraphBUD
 
 
 
-
-%% ¡props!
-
-%%% ¡prop!
-REPETITION (parameter, scalar) is the number of repetitions
-%%%% ¡default!
-1
-
-%%% ¡prop!
-F_MIN (parameter, scalar) is the minimum frequency value
-%%%% ¡default!
-0
-
-%%% ¡prop!
-F_MAX (parameter, scalar) is the maximum frequency value
-%%%% ¡default!
-Inf
-
-%%% ¡prop!
-CORRELATION_RULE (parameter, option) is the correlation type.
-%%%% ¡settings!
-Correlation.CORRELATION_RULE_LIST(1:3)
-%%%% ¡default!
-Correlation.CORRELATION_RULE_LIST{1}
-
-%%% ¡prop!
-NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
-%%%% ¡settings!
-Correlation.NEGATIVE_WEIGHT_RULE_LIST
-%%%% ¡default!
-Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
-
-%%% ¡prop!
-DENSITIES (parameter, rvector) is the vector of densities.
-%%%% ¡default!
-[1:1:10]
-%%%% ¡gui!
-pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeEnsemble_FUN_BUD.DENSITIES, ...
-    'MIN', 0, 'MAX', 100, ...
-    'DEFAULT', AnalyzeEnsemble_FUN_BUD.getPropDefault('DENSITIES'), ...
-    varargin{:});
-
 %% ¡props_update!
 
 %%% ¡prop!
@@ -141,22 +99,57 @@ end
 
 value = g_dict;
 
-% % % %% ¡methods!
-% % % function pr = getPPCompareEnsemble_CPDict(a, varargin) 
-% % %     %GETPPCOMPAREENSEMBLE_CPDICT returns the comparison ensemble plot panel compatible with the analysis.
-% % %     %
-% % %     % PR = GETPPCOMPAREENSEMBLE_CPDICT(A) returns the comparison ensemble plot panel
-% % %     %  that is compatible with the analyze ensemble.
-% % %     %
-% % %     % See also CompareEnsemble.
-% % %     
-% % %     pr = PPCompareEnsemble_FUN_CPDict_BUD(varargin{:});
-% % % end
+%% ¡props!
+
+%%% ¡prop!
+REPETITION (parameter, scalar) is the number of repetitions
+%%%% ¡default!
+1
+
+%%% ¡prop!
+F_MIN (parameter, scalar) is the minimum frequency value
+%%%% ¡default!
+0
+
+%%% ¡prop!
+F_MAX (parameter, scalar) is the maximum frequency value
+%%%% ¡default!
+Inf
+
+%%% ¡prop!
+CORRELATION_RULE (parameter, option) is the correlation type.
+%%%% ¡settings!
+Correlation.CORRELATION_RULE_LIST(1:3)
+%%%% ¡default!
+Correlation.CORRELATION_RULE_LIST{1}
+
+%%% ¡prop!
+NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
+%%%% ¡settings!
+Correlation.NEGATIVE_WEIGHT_RULE_LIST
+%%%% ¡default!
+Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
+
+%%% ¡prop!
+DENSITIES (parameter, rvector) is the vector of densities.
+%%%% ¡default!
+[1:1:10]
+%%%% ¡gui!
+pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeEnsemble_FUN_BUD.DENSITIES, ...
+    'MIN', 0, 'MAX', 100, ...
+    'DEFAULT', AnalyzeEnsemble_FUN_BUD.getPropDefault('DENSITIES'), ...
+    varargin{:});
 
 %% ¡tests!
 
 %%% ¡test!
 %%%% ¡name!
 Example
+%%%% ¡probability!
+.01
 %%%% ¡code!
+if ~isfile([fileparts(which('SubjectFUN')) filesep 'Example data FUN XLS' filesep 'atlas.xlsx'])
+    test_ImporterGroupSubjectFUN_XLS % create example files
+end
+
 example_FUN_BUD

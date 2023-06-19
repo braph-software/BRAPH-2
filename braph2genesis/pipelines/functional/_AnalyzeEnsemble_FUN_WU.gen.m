@@ -1,7 +1,7 @@
 %% ¡header!
 AnalyzeEnsemble_FUN_WU < AnalyzeEnsemble (a, graph analysis with functional data) is a graph analysis using functional data.
 
-%% ¡description!
+%%% ¡description!
 This graph analysis uses functional data and analyzes them using weighted undirected graphs,
 binary undirected multigraphs with fixed thresholds,
 or binary undirected multigraphs with fixed densities.
@@ -10,38 +10,6 @@ or binary undirected multigraphs with fixed densities.
 SubjectFUN, GraphWU
 
 
-
-
-%% ¡props!
-
-%%% ¡prop!
-REPETITION (parameter, scalar) is the number of repetitions
-%%%% ¡default!
-1
-
-%%% ¡prop!
-F_MIN (parameter, scalar)is the minimum frequency value
-%%%% ¡default!
-0
-
-%%% ¡prop!
-F_MAX (parameter, scalar)is the maximum frequency value
-%%%% ¡default!
-Inf
-
-%%% ¡prop!
-CORRELATION_RULE (parameter, option) is the correlation type.
-%%%% ¡settings!
-Correlation.CORRELATION_RULE_LIST(1:3)
-%%%% ¡default!
-Correlation.CORRELATION_RULE_LIST{1}
-
-%%% ¡prop!
-NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
-%%%% ¡settings!
-Correlation.NEGATIVE_WEIGHT_RULE_LIST
-%%%% ¡default!
-Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 
 %% ¡props_update!
 
@@ -119,22 +87,47 @@ end
 
 value = g_dict;
 
-% % % %% ¡methods!
-% % % function pr = getPPCompareEnsemble_CPDict(a, varargin) 
-% % %     %GETPPCOMPAREENSEMBLE_CPDICT returns the comparison ensemble plot panel compatible with the analysis.
-% % %     %
-% % %     % PR = GETPPCOMPAREENSEMBLE_CPDICT(A) returns the comparison ensemble plot panel
-% % %     %  that is compatible with the analyze ensemble.
-% % %     %
-% % %     % See also CompareEnsemble.
-% % %     
-% % %     pr = PPCompareEnsemble_FUN_CPDict_WU(varargin{:});
-% % % end
+%% ¡props!
+
+%%% ¡prop!
+REPETITION (parameter, scalar) is the number of repetitions
+%%%% ¡default!
+1
+
+%%% ¡prop!
+F_MIN (parameter, scalar)is the minimum frequency value
+%%%% ¡default!
+0
+
+%%% ¡prop!
+F_MAX (parameter, scalar)is the maximum frequency value
+%%%% ¡default!
+Inf
+
+%%% ¡prop!
+CORRELATION_RULE (parameter, option) is the correlation type.
+%%%% ¡settings!
+Correlation.CORRELATION_RULE_LIST(1:3)
+%%%% ¡default!
+Correlation.CORRELATION_RULE_LIST{1}
+
+%%% ¡prop!
+NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
+%%%% ¡settings!
+Correlation.NEGATIVE_WEIGHT_RULE_LIST
+%%%% ¡default!
+Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 
 %% ¡tests!
 
 %%% ¡test!
 %%%% ¡name!
 Example
+%%%% ¡probability!
+.01
 %%%% ¡code!
+if ~isfile([fileparts(which('SubjectFUN')) filesep 'Example data FUN XLS' filesep 'atlas.xlsx'])
+    test_ImporterGroupSubjectFUN_XLS % create example files
+end
+
 example_FUN_WU
