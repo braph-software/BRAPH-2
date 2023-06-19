@@ -1,0 +1,16 @@
+%% Pipeline Connectivity-Functional Multiplex Analysis BUT
+
+% This is the pipeline script to analyze a group of subjects using connectivity-functional multiplex data and binary undirected graphs at fixed thresholds.
+% 1. It loads a brain atlas from an XLS file (e.g., aal90_atlas.xlsx).
+% 2.1 It loads the connectivity data of one group of subjects from two directories (e.g., GroupName1 and GroupName2) containing XLS files of each subject.
+% 2.2 It loads the functional data of one group of subjects from two directories (e.g., GroupName1 and GroupName2) containing XLS files of each subject.
+% 3. It analyzes the data using connectivity-functional multiplex analysis (CON_FUN_MP) based on binary undirected graphs at fixed thresholds (BUT).
+
+%% Brain Atlas
+ba = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load Brain Atlas XLS % Brain Atlas
+
+%% Group
+gr = ImporterGroupSubjectCON_FUN_MP_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group CON_FUN MP XLS % Group CON_FUN MP
+
+%% Analysis
+a_BUT = AnalyzeEnsemble_CON_FUN_MP_BUT('GR', gr, 'THRESHOLDS', [-1:.25:1]); % Analyze Group % Analyzed Group
