@@ -1,4 +1,4 @@
-Desikan_Freesurfer_v5.1					
+Desikan_Freesurfer				
 Desikan Label					
 Desikan Notes					
 					
