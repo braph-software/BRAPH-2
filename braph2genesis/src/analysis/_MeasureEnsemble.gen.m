@@ -2,42 +2,53 @@
 MeasureEnsemble < ConcreteElement (me, graph ensemble measure) is a graph ensemble measure.
 
 %%% ¡description!
-Measure provides the methods necessary for a graph ensemble measure.
+MeasureEnsemble provides the methods necessary for a graph ensemble measure.
 
 %%% ¡seealso!
 AnalyzeEnsemble, CompareEnsemble
 
+%% ¡props_update!
 
+%%% ¡prop!
+NAME (constant, string) is the name of the graph ensemble measure.
+%%%% ¡default!
+'MeasureEnsemble'
 
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the graph ensemble measure.
+%%%% ¡default!
+'MeasureEnsemble provides the methods necessary for a graph ensemble measure.'
 
-% % % %% ¡props!
-% % % 
-% % % %%% ¡prop!
-% % % ID (data, string) is a few-letter code for the graph ensemble measure.
-% % % 
-% % % %%% ¡prop!
-% % % LABEL (metadata, string) is an extended label of the graph ensemble measure.
-% % % 
-% % % %%% ¡prop!
-% % % NOTES (metadata, string) are some specific notes about the graph ensemble measure.
-% % % %%%% ¡gui!
-% % % pr = PanelPropStringTextArea('EL', me, 'PROP', MeasureEnsemble.NOTES, varargin{:});
-% % % 
-% % % %%% ¡prop!
-% % % MEASURE (data, string) is the measure class.
-% % % 
-% % % %%% ¡prop!
-% % % MEASURE_TEMPLATE (data, item) provides the measure parameters. 
-% % % %%%% ¡settings!
-% % % 'Measure'
-% % % 
-% % % %%% ¡prop!
-% % % A (data, item) is the ensemble-based graph analysis.
-% % % %%%% ¡settings!
-% % % 'AnalyzeEnsemble'
-% % % 
-% % % %%% ¡prop!
-% % % M (result, cell) is the measure result.
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the graph ensemble measure.
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the graph ensemble measure.
+%%%% ¡default!
+'MeasureEnsemble ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the graph ensemble measure.
+%%%% ¡default!
+'MeasureEnsemble label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the brain atlas.
+%%%% ¡default!
+'MeasureEnsemble notes'
+
+%% ¡props!
+
+%%% ¡prop!
+MEASURE (data, string) is the measure class.
+
+%%% ¡prop!
+A (data, item) is the ensemble-based graph analysis.
+%%%% ¡settings!
+'AnalyzeEnsemble'
+
+%%% ¡prop!
+M (result, cell) is the measure result.
 % % % %%%% ¡calculate!
 % % % core_measure = me.get('MEASURE_TEMPLATE');
 % % % % get parameters from core measure
@@ -178,9 +189,9 @@ AnalyzeEnsemble, CompareEnsemble
 % % %             )
 % % %     end
 % % % end
-% % % 
-% % % %%% ¡prop!
-% % % PFME (gui, item) contains the panel figure of the measure.
+
+%%% ¡prop!
+PFME (gui, item) contains the panel figure of the measure.
 % % % %%%% ¡settings!
 % % % 'PFMeasureEnsemble'
 % % % %%%% ¡postprocessing!
@@ -220,9 +231,9 @@ AnalyzeEnsemble, CompareEnsemble
 % % % pr = PanelPropItem('EL', me, 'PROP', MeasureEnsemble.PFME, ...
 % % %     'GUICLASS', 'GUIFig', ...
 % % %     varargin{:});
-% % % 
-% % % %%% ¡prop!
-% % % PFBG (gui, item) contains the panel figure of the brain graph.
+
+%%% ¡prop!
+PFBG (gui, item) contains the panel figure of the brain graph.
 % % % %%%% ¡settings!
 % % % 'PFBrainGraph'
 % % % %%%% ¡postprocessing!
