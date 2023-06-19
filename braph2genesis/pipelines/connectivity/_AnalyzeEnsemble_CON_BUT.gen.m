@@ -107,4 +107,8 @@ Example
 %%%% ¡probability!
 .01
 %%%% ¡code!
-% % % example_CON_BUT
+if ~isfile([fileparts(which('SubjectCON')) filesep 'Example data CON XLS' filesep 'atlas.xlsx'])
+    test_ImporterGroupSubjectCON_XLS % create example files
+end
+
+example_CON_BUT

@@ -102,4 +102,8 @@ pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeEnsemble_CON_BUD.DENSITIES, .
 %%%% ¡name!
 Example
 %%%% ¡code!
-% % % example_CON_BUD
+if ~isfile([fileparts(which('SubjectCON')) filesep 'Example data CON XLS' filesep 'atlas.xlsx'])
+    test_ImporterGroupSubjectCON_XLS % create example files
+end
+
+example_CON_BUD
