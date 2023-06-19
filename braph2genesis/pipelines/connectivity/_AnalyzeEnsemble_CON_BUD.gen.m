@@ -1,12 +1,12 @@
 %% ¡header!
 AnalyzeEnsemble_CON_BUD < AnalyzeEnsemble (a, graph analysis with connectivity data of fixed density) is an ensemble-based graph analysis using connectivity data of fixed density.
 
-%% ¡description!
+%%% ¡description!
 This ensemble-based graph analysis (AnalyzeEnsemble_CON_BUD) analyzes 
 connectivity data using binary undirected multigraphs with fixed densities.
 
 %%% ¡seealso!
-Subject_CON, MultigraphBUD
+SubjectCON, MultigraphBUD
 
 %% ¡props_update!
 

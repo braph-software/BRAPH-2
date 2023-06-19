@@ -6,6 +6,12 @@ This graph analysis uses functional data and analyzes them using weighted undire
 binary undirected multigraphs with fixed thresholds,
 or binary undirected multigraphs with fixed densities.
 
+%%% ¡seealso!
+SubjectFUN, GraphWU
+
+
+
+
 %% ¡props!
 %%% ¡prop!
 REPETITION(parameter, scalar) is the number of repetitions

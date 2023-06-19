@@ -1,12 +1,19 @@
 %% ¡header!
 AnalyzeEnsemble_CON_FUN_MP_BUT < AnalyzeEnsemble (a, graph analysis with connectivity and functional multiplex data of fixed threshold) is a graph analysis using connectivity and functional multiplex data of fixed threshold.
 
-%% ¡description!
+%%% ¡description!
 This graph analysis uses connectivity and functional multiplex data of 
 fixed threshold and analyzes them using binary undirected graphs.
 
 %%% ¡seealso!
-AnalyzeEnsemble_CON_FUN_MP_WU, AnalyzeEnsemble_CON_FUN_MP_BUD, SubjectCON_FUN_MP, MultiplexBUT.
+SubjectCON_FUN_MP, MultiplexBUT
+
+
+
+
+
+
+
 
 %% ¡props!
 %%% ¡prop!

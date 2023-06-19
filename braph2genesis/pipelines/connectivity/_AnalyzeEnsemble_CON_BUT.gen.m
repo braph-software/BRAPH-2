@@ -1,12 +1,12 @@
 %% ¡header!
 AnalyzeEnsemble_CON_BUT < AnalyzeEnsemble (a, graph analysis with connectivity data of fixed threshold) is an ensemble-based graph analysis using connectivity data of fixed threshold.
 
-%% ¡description!
+%%% ¡description!
 This ensemble-based graph analysis (AnalyzeEnsemble_CON_BUT) analyzes 
 connectivity data using binary undirected multigraphs with fixed thresholds.
 
 %%% ¡seealso!
-Subject_CON, MultigraphBUT
+SubjectCON, MultigraphBUT
 
 %% ¡props_update!
 

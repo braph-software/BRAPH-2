@@ -1,11 +1,20 @@
 %% ¡header!
 AnalyzeEnsemble_CON_FUN_MP_WU < AnalyzeEnsemble (a, graph analysis with connectivity and functional multiplex data) is a graph analysis using connectivity and functional multiplex data.
 
-%% ¡description!
+%%% ¡description!
 This graph analysis uses connectivity and functional multiplex data and analyzes 
 them using weighted undirected graphs,
 binary undirected multigraphs with fixed thresholds,
 or binary undirected multigraphs with fixed densities.
+
+%%% ¡seealso!
+SubjectCON_FUN_MP, MultiplexWU
+
+
+
+
+
+
 
 %% ¡props!
 %%% ¡prop!

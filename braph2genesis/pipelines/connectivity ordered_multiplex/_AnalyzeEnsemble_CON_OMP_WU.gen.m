@@ -1,12 +1,16 @@
 %% ¡header!
 AnalyzeEnsemble_CON_OMP_WU < AnalyzeEnsemble (a, graph analysis with connectivity ordinal multiplex data) is a graph analysis using connectivity ordinal multiplex data.
 
-%% ¡description!
+%%% ¡description!
 This graph analysis uses connectivity ordinal multiplex data and 
 analyzes them using weighted undirected graphs.
 
 %%% ¡seealso!
-SubjectCON_MP, OrderedMultiplexWU, AnalyzeEnsemble_CON_MP_WU.
+SubjectCON_MP, OrderedMultiplexWU
+
+
+
+
 
 %% ¡props_update!
 
