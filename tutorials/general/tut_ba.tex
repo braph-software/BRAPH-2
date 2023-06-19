@@ -13,7 +13,7 @@
 \fig{marginfigure}
 	{fig:01}
 	{\includegraphics{tut_ba/fig01.png}}
-	{Brain atlas figure created with BRAPH 2.0}
+	{Brain atlas figure created with BRAPH~2.0}
 	{
 	Example of a brain surface image with some nodes representing brain regions.
 	}
@@ -21,8 +21,8 @@
 \begin{abstract}
 \noindent
 This Tutorial explains how to work with the Graphical User Interface (GUI) to manage brain atlases.
-This is typically the first step required to perform a graph analysis in BRAPH 2.0. 
-In this Tutorial, we will explain you how to upload a brain atlas and how to visualize it.
+This is typically the first step required to perform a graph analysis in BRAPH~2.0. 
+In this Tutorial, we will explain you how to upload a brain atlas, how to visualize it, and how to export publication-ready brain figures.
 \end{abstract}
 
 \tableofcontents
@@ -32,13 +32,13 @@ In this Tutorial, we will explain you how to upload a brain atlas and how to vis
 	{\includegraphics[height=10cm]{tut_ba/fig02.png}}
 	{Brain Atlas GUI}
 	{
-	Full graphical user interface to work with a brain atlas in BRAPH 2.0. 
+	Full graphical user interface to work with a brain atlas in BRAPH~2.0. 
 	}
 
 \clearpage
 \section{Open the GUI}
 
-The brain atlas GUI is typically the first step in the BRAPH 2.0 pipelines. You can open it by typing braph2 in the MatLab's terminal, which allows you to select a pipeline containing the steps that you want to apply in your analysis. Once a pipeline has been selected, the first window will allow you to upload the brain atlas, as shown in \Figref{fig03}a.
+The brain atlas GUI is the first step in most BRAPH~2.0 pipelines. You can open it by typing \code{braph2} in the MatLab's terminal, which allows you to select a pipeline containing the steps required to preform your analysis. The initial step is typically to upload the brain atlas, as shown in \Figref{fig:03}a.
 
 \fig{figure*}
 	{fig:03}
@@ -48,16 +48,20 @@ The brain atlas GUI is typically the first step in the BRAPH 2.0 pipelines. You 
 	}
 	{Upload a brain atlas}
 	{
-	The different steps you need to follow to open a brain atlas using the GUI. 
+	The different steps you need to follow to open a brain atlas using the GUI: 
+	{\bf a} Open the brain atlas GUI.
+	{\bf b} Import a brain atlas from an XLS or TXT file.
+	{\bf c} Navigate to the BRAPH~2.0 folder \fn{atlases}.
+	{\bf d} Select the desidered atlas.
 	}
 
-To open the GUI and upload the brain atlas, you can also do it from the command line by typing the commands in \Coderef{cd:launch}.
+To open the GUI and upload the brain atlas, you can also do it from the command line (i.e., without opening an analysis pipeline) by typing the commands in \Coderef{cd:launch}.
 %
 \begin{lstlisting}[
 	label=cd:launch,
 	caption={
 		{\bf Code to launch the Brain Atlas GUI.}
-		This code can be used in the MatLab command line to launch the  Brain Atlas GUI.
+		This code can be used in the MatLab command line to launch the  Brain Atlas GUI without having to open a pipeline.
 	}
 ]
 ba = BrainAtlas(); ¥\circled{1}\circlednote{1}{creates a new object \code{BrainAtlas}.}¥
@@ -67,9 +71,12 @@ gui.get('DRAW') ¥\circled{3}\circlednote{3}{draws the GUI.}¥
 gui.get('SHOW') ¥\circled{4}\circlednote{4}{shows the GUI.}¥
 \end{lstlisting}
 
+\clearpage
 \section{Upload the Brain Atlas}
 
-In this window opened in the previous step (a) you have a menu that you can use to import a brain atlas (b) that you created or has already been prepared for you to use from the atlases folder of BRAPH 2.0 (c). In this example, we are uploading the Desikan atlas (4) \Figref{fig3} . 
+In the GUI launched in the previous step, you have a menu that can be used to import a brain atlas (\Figref{fig:03}b) either by loading one of the already-available atlases in the BRAPH~2.0 folder \fn{atlases} (\Figref{fig:03}c) or by loading a file you have created. In this example, we are uploading the Desikan atlas (\Figref{fig:03}d).
+
+You can change the ID, name, and notes of the brain atlas (as shown in \Figref{fig:04}a) as well as the IDs, labels, coordinates, and notes of the brain regions (\Figref{fig:04}b).
 	
 \fig{figure*}
 	{fig:04}
@@ -77,25 +84,24 @@ In this window opened in the previous step (a) you have a menu that you can use 
 	[h!]
 	\includegraphics{tut_ba/fig04.png}
 	}
-	{Edit the atlas information}
+	{Edit the brain atlas information}
 	{
-	A few examples of information that can be changed in the brain atlas GUI. 
+	Information that can be changed in the brain atlas GUI: 
+	{\bf a} The ID, name, and notes of the brain atlas.
+	{\bf b} The IDs, labels, coordinates, and notes of the brain regions.
 	}
 
-Note that you can change information in this GUI \Figref{fig4}a such as the brain atlas ID, the brain atlas name, the brain atlas description (2) as well as the IDs, labels, coordinates and notes of the brain regions \Figref{fig4}b .
-
-\clearpage
 \section{Ready Brain Atlases}
 
 \fig{figure}
 	{fig:05}
 	{
 	[b!]
-	\includegraphics[height=15cm]{tut_ba/fig05.png}
+	\includegraphics{tut_ba/fig05.png}
 	}
 	{Brain Atlases}
 	{
-	Different brain atlases provided by BRAPH 2.0: \\
+	Some brain atlases provided by BRAPH~2.0: \\
 	{\bf AAL90} Automated Anatomical Labelling atlas with 90 cortical and subcortical regions.\\
 	{\bf AAL116} Automated Anatomical Labelling atlas with 116 cortical and subcortical regions, including cerebellar areas.\\
 	{\bf BNA} Brainnetome atlas with 246 cortical and subcortical regions.\\
@@ -106,26 +112,28 @@ Note that you can change information in this GUI \Figref{fig4}a such as the brai
 	{\bf Subcortical FreeSurfer} Anatomical atlas with 14 subcortical gray matter regions from the FreeSurfer software.
 	}
 
-Currently, we provide several brain atlases that are commonly used in the field of brain connectomics, which can be downloaded from our website (\url{http://braph.org/software/brain-atlases/}) \Figref{fig5}.
+Currently, we provide several brain atlases that are commonly used in the field of brain connectomics, some of which are shown in \Figref{fig:05}). 
+They are available in the BRAPH~2.0 folder \fn{atlases} in XLS and TXT formats, and they can also can be downloaded from our website (\url{http://braph.org/software/brain-atlases/}).
 
 \clearpage
 \section{Create a New Brain Atlas}
 
-To prepare a Brain Atlas in BRAPH 2.0 format, you should create a new excel file (.xls or .xlsx), as shown in \Figref{fig6}. 
+To create a new brain Atlas in BRAPH~2.0 format, you should create a new XLS file (\fn{*.xls} or \fn{*.xlsx}), as shown in \Figref{fig:06}. 
+(It is also possible to create it in TXT format (\fn{*.txt}), for which we refer to the examples available in the BRAPH~2.0 folder \fn{atlases}.)
 
-\fig{figure}
+\fig{figure*}
 	{fig:06}
 	{\includegraphics[height=10cm]{tut_ba/fig06.png}}
-	{Preparing your own atlas}
+	{Create your own brain atlas}
 	{
-	Overview of how the excel file containing your atlas information should look like.  
+	Overview of how the XLS file containing your atlas information should look like.
 	}
 
 Start by writing the following information in the first 4 rows:
 \begin{itemize}
 
 \item Brain Atlas ID (row 1, column 1). 
-For example: Desikan FreeSurfer v5.1
+For example: Desikan FreeSurfer
 
 \item Brain Atlas LABEL (row 2, column 1). 
 For example: Desikan Labels
@@ -137,71 +145,73 @@ For example: Desikan Nodes
 For example: BrainMeshICBM152.nv
 
 \end{itemize}
-Then, from row 5, you should include the IDs of the regions of your atlas (1st column), the Labels of the regions of your atlas (2nd column), the X, Y and Z coordinates (3rd, 4th and 5th columns) and the brain hemisphere or any notes you would like to add (6th column).	
+Then, from row 5, you should include the IDs of the regions of your atlas ($1^{\rm st}$ column), the labels of the regions of your atlas ($2^{\rm nd}$ column), the X, Y and Z coordinates ($3^{\rm rd}$, $4^{\rm th}$, and $5^{\rm th}$ columns), and any relevant notes (in this case, the brain hemisphere, $6^{\rm th}$ column).	
 
 \clearpage
 \section{Plot the Brain Atlas}
 
-Once you are satisfied you can plot your brain atlas (a), which will open a brain surface that contains the nodes corresponding to brain regions (b) \Figref{fig7}.
+Once you are satisfied with the brain atlas, you can plot it by pushing the button ``Plot Brain Atlas'' (\Figref{fig:07}a). 
+This will open an image with a brain surface and nodes corresponding to the brain regions (\Figref{fig:07}b).
 
 \fig{figure*}
 	{fig:07}
 	{\includegraphics[height=10cm]{tut_ba/fig07.png}}
-	{Brain atlas visualization.}
+	{Brain atlas visualization}
 	{
 	Plotting the nodes of a brain atlas on a 3D brain surface. 
 	}
 	
-This new window has a large menu that allows you to change the visualization of the atlas. We suggest you try the different options to understand how they change the figure. Importantly, within this menu there is one option called Settings Brain Surface (a) which, when selected, will open another window, as can be seen below \Figref{fig8}.
+This new window has a large toolbar that allows you to change the visualization of the atlas. We suggest you try the different options to understand how they change the figure. Importantly, within this menu, there is one option called ``Settings Brain Surface'' (highlights in \Figref{fig:08}a), which opens the settings window shown in \Figsref{fig:08}b-c.
 
 \fig{figure*}
 	{fig:08}
 	{\includegraphics[height=10cm]{tut_ba/fig08.png}}
-	{Visualization of brain atlas}
+	{Visualize the brain atlas}
 	{
-	Changing the visualization of the brain atlas. 
+	{\bf a} The ``Settings Brain Surface'' button in the toolbar opens {\bf b}-{\bf c} a window with the settings available for this brain figure.
 	}
 
-This window allows you to change different options (b, c), which are important to create a final figure with all the nodes included in your analysis, which is often included within the 1st figure of a manuscript.
+The settings window allows you to optimize how the brain regions included in your analysis are visualized. This is often included as a first figure in a manuscript.
 
-Most things in this panel are intuitive and again we suggest that you try different options until you achieve the visualization you want.
-Some things that might not be intuitive is the difference between spheres and symbols (the first one is the geometrical structure of a node, whereas the second is just a dot inside the sphere that denotes the presence of a region). 
+Most things in the settings window are intuitive. So we encourage you to try different them out until you achieve the visualization you want. There are many possibilities for visualization. \Figref{fig:09} shows just one example.
 
-If you wish to change the size of the spheres of all nodes, you need to right click and "select all" nodes in the first column, change the size of one node and right click to select "apply to selection".
+Each brain region can be represented with spheres, symbols, IDs, and labels.
+Spheres are objects that are rendered in 3D --- often prettier, but also more computationally expensive.
+Symbols are objects rendered in 2D --- more stylized and less computationally expensive.
+IDs and lables are the texts associated to the brain region.
 
-The same applies if you want to change the colour of all nodes in the FACECOLOR column. Here the colors correspond to the hexadecimal form of RGB colors, which can be found online.
+If you wish to apply some properties to a set of brain regions, you can select multiple regions with the selectors on the right, and then right-click and select ``apply to selection'' before applying some property.
 
-There are many possibilities for visualization. Here is just one example:
-
-\fig{figure*}
+\fig{figure}
 	{fig:09}
 	{\includegraphics[height=10cm]{tut_ba/fig09.png}}
 	{Example of a visualization of the brain atlas}
 	{
-	A final figure created with BRAPH 2.0 by changing different options in the menu.
+	A final figure created with BRAPH~2.0 by changing different options in the menu.
 	}
 
-Importantly, BRAPH 2.0 provides different brain surfaces as shown in \Figref{fig10} for the human brain and cerebellum in addition to animals such as the ferret, macaque, mouse or rat.
+Importantly, BRAPH~2.0 provides different brain surfaces, as shown in \Figref{fig:10}, for the human brain and cerebellum in addition to animals such as the ferret, macaque, mouse, and rat.
+It is also possible to add additional brain surfaces by added the required NV files in the BRAPH~2.0 folder \fn{brainsurfs}.
 
-\fig{figure*}
+\fig{figure}
 	{fig:10}
-	{\includegraphics[height=10cm]{tut_ba/fig10.png}}
-	{Brain surfaces in BRAPH 2.0}
+	{\includegraphics{tut_ba/fig10.png}}
+	{Brain surfaces in BRAPH~2.0}
 	{
-	Different brain surfaces that are available in BRAPH 2.0 to plot the brain atlas.
+	Some brain surfaces available in BRAPH~2.0 to plot the brain atlas.
 	}
 
 \clearpage
 \section{Export the Figure}
 
-To export and save a figure, you can select print from the brain atlas GUI and select one of the various options we provide \Figref{fig11}.
+To export and save a (publication-ready) figure, you can select ``Print'' from the brain atlas GUI and select one of the various provided options \Figref{fig:11}.
 
 \fig{figure*}
 	{fig:11}
 	{\includegraphics[height=10cm]{tut_ba/fig11.png}}
-	{Saving a brain atlas figure}
+	{Save a brain atlas figure}
 	{
-	We provide different options that allow saving a figure with different resolutions and colour modes. 
+	BRAPH~2.0 provides different options that allow saving a figure with different resolutions and color modes, adequate to any requirement for presentations and publicaitons.
 	}
 
 \end{document}
