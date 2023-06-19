@@ -190,12 +190,12 @@ REPETITION (parameter, scalar) is the number of repetitions for functional data
 1
 
 %%% ¡prop!
-F_MIN (parameter, scalar)is the minimum frequency value for functional data
+F_MIN (parameter, scalar) is the minimum frequency value for functional data
 %%%% ¡default!
 0
 
 %%% ¡prop!
-F_MAX (parameter, scalar)is the maximum frequency value for functional data
+F_MAX (parameter, scalar) is the maximum frequency value for functional data
 %%%% ¡default!
 Inf
 
