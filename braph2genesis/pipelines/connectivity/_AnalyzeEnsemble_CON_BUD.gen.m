@@ -45,16 +45,16 @@ Group('SUB_CLASS', 'SubjectCON')
 
 %%% ¡prop!
 ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-% % % %%%% ¡gui!
+%%%% ¡_gui!
 % % % pr = PPAnalyzeEnsemble_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_CON_BUD.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %%% ¡prop!
 G_DICT (result, idict) is the graph (MultigraphBUD) ensemble obtained from this analysis.
 %%%% ¡settings!
 'MultigraphBUD'
-% % % %%%% ¡default!
+%%%% ¡_default!
 % % % IndexedDictionary('IT_CLASS', 'MultigraphBUD')
-% % % %%%% ¡calculate!
+%%%% ¡_calculate!
 % % % g_dict = IndexedDictionary('IT_CLASS', 'MultigraphBUD');
 % % % gr = a.get('GR');
 % % % densities = a.get('DENSITIES');

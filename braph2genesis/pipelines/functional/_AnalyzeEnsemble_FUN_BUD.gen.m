@@ -38,18 +38,6 @@ NOTES (metadata, string) are some specific notes about the ensemble-based graph 
 %%%% ¡default!
 'AnalyzeEnsemble_FUN_BUD notes'
 
-
-
-
-
-
-
-
-
-
-
-
-
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectFUN.
 %%%% ¡default!
@@ -57,75 +45,75 @@ Group('SUB_CLASS', 'SubjectFUN')
 
 %%% ¡prop!
 ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-%%%% ¡gui_!
+%%%% ¡_gui!
 % % % pr = PPAnalyzeEnsemble_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_FUN_BUD.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %%% ¡prop!
 G_DICT (result, idict) is the graph (MultigraphBUD) ensemble obtained from this analysis.
 %%%% ¡settings!
 'MultigraphBUD'
-%%%% ¡default!
-IndexedDictionary('IT_CLASS', 'MultigraphBUD')
-%%%% ¡calculate!
-g_dict = IndexedDictionary('IT_CLASS', 'MultigraphBUD');
-gr = a.get('GR');
-
-ba = BrainAtlas();
-if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-    ba = gr.get('SUB_DICT').getItem(1).get('BA');
-end
-
-T = a.get('REPETITION');
-fmin = a.get('F_MIN');
-fmax = a.get('F_MAX');
-densities = a.get('DENSITIES'); % this is a vector
-for i = 1:1:gr.get('SUB_DICT').length()
-	sub = gr.get('SUB_DICT').getItem(i);
-    data = sub.getr('FUN');
-    fs = 1 / T;
-    
-    if fmax > fmin && T > 0
-        NFFT = 2 * ceil(size(data, 1) / 2);
-        ft = fft(data, NFFT);  % Fourier transform
-        f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
-        ft(f < fmin | f > fmax, :) = 0;
-        data = ifft(ft, NFFT);
-    end
-    
-    A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));      
-    
-    g = MultigraphBUD( ...
-        'ID', ['g ' sub.get('ID')], ...
-        'B', A, ...
-        'DENSITIES', densities, ...
-        'LAYERTICKS', densities, ...
-        'BAS', ba ...
-        );
-    g_dict.add(g)
-
-    if isa(a.getr('TEMPLATE'), 'NoValue')
-        g.set('TEMPLATE', a.memorize('GRAPH_TEMPLATE'))        
-    else
-        g.set('TEMPLATE', a.get('TEMPLATE').memorize('GRAPH_TEMPLATE'))
-    end
-end
-
-value = g_dict;
+%%%% ¡_default!
+% % % IndexedDictionary('IT_CLASS', 'MultigraphBUD')
+%%%% ¡_calculate!
+% % % % g_dict = IndexedDictionary('IT_CLASS', 'MultigraphBUD');
+% % % % gr = a.get('GR');
+% % % % 
+% % % % ba = BrainAtlas();
+% % % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
+% % % %     ba = gr.get('SUB_DICT').getItem(1).get('BA');
+% % % % end
+% % % % 
+% % % % T = a.get('REPETITION');
+% % % % fmin = a.get('F_MIN');
+% % % % fmax = a.get('F_MAX');
+% % % % densities = a.get('DENSITIES'); % this is a vector
+% % % % for i = 1:1:gr.get('SUB_DICT').length()
+% % % % 	sub = gr.get('SUB_DICT').getItem(i);
+% % % %     data = sub.getr('FUN');
+% % % %     fs = 1 / T;
+% % % %     
+% % % %     if fmax > fmin && T > 0
+% % % %         NFFT = 2 * ceil(size(data, 1) / 2);
+% % % %         ft = fft(data, NFFT);  % Fourier transform
+% % % %         f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
+% % % %         ft(f < fmin | f > fmax, :) = 0;
+% % % %         data = ifft(ft, NFFT);
+% % % %     end
+% % % %     
+% % % %     A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));      
+% % % %     
+% % % %     g = MultigraphBUD( ...
+% % % %         'ID', ['g ' sub.get('ID')], ...
+% % % %         'B', A, ...
+% % % %         'DENSITIES', densities, ...
+% % % %         'LAYERTICKS', densities, ...
+% % % %         'BAS', ba ...
+% % % %         );
+% % % %     g_dict.add(g)
+% % % % 
+% % % %     if isa(a.getr('TEMPLATE'), 'NoValue')
+% % % %         g.set('TEMPLATE', a.memorize('GRAPH_TEMPLATE'))        
+% % % %     else
+% % % %         g.set('TEMPLATE', a.get('TEMPLATE').memorize('GRAPH_TEMPLATE'))
+% % % %     end
+% % % % end
+% % % % 
+% % % % value = g_dict;
 
 %% ¡props!
 
 %%% ¡prop!
-REPETITION (parameter, scalar) is the number of repetitions
+REPETITION (parameter, scalar) is the number of repetitions.
 %%%% ¡default!
 1
 
 %%% ¡prop!
-F_MIN (parameter, scalar) is the minimum frequency value
+F_MIN (parameter, scalar) is the minimum frequency value.
 %%%% ¡default!
 0
 
 %%% ¡prop!
-F_MAX (parameter, scalar) is the maximum frequency value
+F_MAX (parameter, scalar) is the maximum frequency value.
 %%%% ¡default!
 Inf
 

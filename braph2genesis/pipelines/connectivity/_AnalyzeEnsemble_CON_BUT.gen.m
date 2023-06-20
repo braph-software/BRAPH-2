@@ -38,9 +38,6 @@ NOTES (metadata, string) are some specific notes about the ensenmble-based graph
 %%%% ¡default!
 'AnalyzeEnsemble_CON_BUT notes'
 
-
-of fixed threshold
-
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectCON.
 %%%% ¡default!
@@ -48,16 +45,16 @@ Group('SUB_CLASS', 'SubjectCON')
 
 %%% ¡prop!
 ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-% % % %%%% ¡gui!
+%%%% ¡_gui!
 % % % pr = PPAnalyzeEnsemble_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_CON_BUT.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %%% ¡prop!
 G_DICT (result, idict) is the graph (MultigraphBUT) ensemble obtained from this analysis.
 %%%% ¡settings!
 'MultigraphBUT'
-%%%% ¡default!
-IndexedDictionary('IT_CLASS', 'MultigraphBUT')
-% % % %%%% ¡calculate!
+%%%% ¡_default!
+% % % IndexedDictionary('IT_CLASS', 'MultigraphBUT')
+%%%% ¡_calculate!
 % % % g_dict = IndexedDictionary('IT_CLASS', 'MultigraphBUT');
 % % % node_labels = '';
 % % % gr = a.get('GR');

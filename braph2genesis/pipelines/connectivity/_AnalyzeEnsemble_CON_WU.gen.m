@@ -44,16 +44,16 @@ Group('SUB_CLASS', 'SubjectCON')
 
 %%% ¡prop!
 ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-% % % %%%% ¡gui!
-% % % % % % pr = PPAnalyzeEnsemble_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_CON_WU.ME_DICT, 'WAITBAR', true, varargin{:});
+%%%% ¡_gui!
+% % % pr = PPAnalyzeEnsemble_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_CON_WU.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %%% ¡prop!
 G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analysis.
 %%%% ¡settings!
 'GraphWU'
-% % % %%%% ¡default!
+%%%% ¡_default!
 % % % IndexedDictionary('IT_CLASS', 'GraphWU')
-% % % %%%% ¡calculate!
+%%%% ¡_calculate!
 % % % g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
 % % % gr = a.get('GR');
 % % % 

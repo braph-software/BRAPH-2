@@ -38,19 +38,6 @@ NOTES (metadata, string) are some specific notes about the ensemble-based graph 
 %%%% ¡default!
 'AnalyzeEnsemble_CON_OMP_WU notes'
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectCON_MP.
 %%%% ¡default!
@@ -58,43 +45,43 @@ Group('SUB_CLASS', 'SubjectCON_MP')
 
 %%% ¡prop!
 ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-%%%% ¡gui_!
+%%%% ¡_gui!
 % % % pr = PPAnalyzeEnsembleMP_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_CON_MP_WU.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %%% ¡prop!
 G_DICT (result, idict) is the graph (OrderedMultiplexWU) ensemble obtained from this analysis.
 %%%% ¡settings!
 'OrderedMultiplexWU'
-%%%% ¡default!
-IndexedDictionary('IT_CLASS', 'OrderedMultiplexWU')
-%%%% ¡calculate!
-g_dict = IndexedDictionary('IT_CLASS', 'OrderedMultiplexWU');
-gr = a.get('GR');
-
-ba = BrainAtlas();
-if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-    ba = gr.get('SUB_DICT').getItem(1).get('BA');
-end
-
-for i = 1:1:gr.get('SUB_DICT').length()
-	sub = gr.get('SUB_DICT').getItem(i);
-    CON_MP = sub.getr('CON_MP');
-
-    g = OrderedMultiplexWU( ...
-        'ID', ['g ' sub.get('ID')], ...
-        'BAS', ba, ...
-        'B', Callback('EL', sub, 'TAG', 'CON_MP') ...
-        );
-    g_dict.add(g)
-    
-    if isa(a.getr('TEMPLATE'), 'NoValue')
-        g.set('TEMPLATE', a.memorize('GRAPH_TEMPLATE'))
-    else
-        g.set('TEMPLATE', a.get('TEMPLATE').memorize('GRAPH_TEMPLATE'))
-    end
-end
-
-value = g_dict;
+%%%% ¡_default!
+% % % IndexedDictionary('IT_CLASS', 'OrderedMultiplexWU')
+%%%% ¡_calculate!
+% % % g_dict = IndexedDictionary('IT_CLASS', 'OrderedMultiplexWU');
+% % % gr = a.get('GR');
+% % % 
+% % % ba = BrainAtlas();
+% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
+% % %     ba = gr.get('SUB_DICT').getItem(1).get('BA');
+% % % end
+% % % 
+% % % for i = 1:1:gr.get('SUB_DICT').length()
+% % % 	sub = gr.get('SUB_DICT').getItem(i);
+% % %     CON_MP = sub.getr('CON_MP');
+% % % 
+% % %     g = OrderedMultiplexWU( ...
+% % %         'ID', ['g ' sub.get('ID')], ...
+% % %         'BAS', ba, ...
+% % %         'B', Callback('EL', sub, 'TAG', 'CON_MP') ...
+% % %         );
+% % %     g_dict.add(g)
+% % %     
+% % %     if isa(a.getr('TEMPLATE'), 'NoValue')
+% % %         g.set('TEMPLATE', a.memorize('GRAPH_TEMPLATE'))
+% % %     else
+% % %         g.set('TEMPLATE', a.get('TEMPLATE').memorize('GRAPH_TEMPLATE'))
+% % %     end
+% % % end
+% % % 
+% % % value = g_dict;
 
 %% ¡tests!
 
