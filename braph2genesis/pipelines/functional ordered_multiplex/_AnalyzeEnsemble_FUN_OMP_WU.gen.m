@@ -6,7 +6,7 @@ This graph analysis (AnalyzeEnsemble_FUN_OMP_WU) analyzes functional ordinal
 multiplex data using weighted undirected graphs.
 
 %%% ¡seealso!
-SubjectFUN_MP, OrderedMultiplexWU
+SubjectFUN_MP, OrdMxWU
 
 %% ¡props_update!
 
@@ -49,13 +49,13 @@ ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
 % % % pr = PPAnalyzeEnsembleMP_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_FUN_MP_BUD.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %%% ¡prop!
-G_DICT (result, idict) is the graph (OrderedMultiplexWU) ensemble obtained from this analysis.
+G_DICT (result, idict) is the graph (OrdMxWU) ensemble obtained from this analysis.
 %%%% ¡settings!
-'OrderedMultiplexWU'
+'OrdMxWU'
 %%%% ¡_default!
-% % % IndexedDictionary('IT_CLASS', 'OrderedMultiplexWU')
+% % % IndexedDictionary('IT_CLASS', 'OrdMxWU')
 %%%% ¡_calculate!
-% % % g_dict = IndexedDictionary('IT_CLASS', 'OrderedMultiplexWU');
+% % % g_dict = IndexedDictionary('IT_CLASS', 'OrdMxWU');
 % % % gr = a.get('GR');
 % % % 
 % % % ba = BrainAtlas();
@@ -87,7 +87,7 @@ G_DICT (result, idict) is the graph (OrderedMultiplexWU) ensemble obtained from 
 % % %         A(j) = {Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'))};
 % % %     end
 % % %     
-% % %     g = OrderedMultiplexWU( ...
+% % %     g = OrdMxWU( ...
 % % %         'ID', ['g ' sub.get('ID')], ...
 % % %         'B', A, ...
 % % %         'BAS', ba ...

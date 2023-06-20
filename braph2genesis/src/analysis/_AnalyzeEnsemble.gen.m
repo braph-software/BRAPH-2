@@ -54,23 +54,23 @@ GR (data, item) is the subject group, which also defines the subject class.
 G_DICT (result, idict) is the graph ensemble obtained from this analysis.
 %%%% ¡settings!
 'Graph'
-% % % %%%% ¡calculate!
+%%%% ¡_calculate!
 % % % value = IndexedDictionary('IT_CLASS', 'Graph');
 
 %%% ¡prop!
 ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
 %%%% ¡settings!
 'MeasureEnsemble'
-% % % %%%% ¡calculate!
+%%%% ¡_calculate!
 % % % value = IndexedDictionary('IT_CLASS', 'MeasureEnsemble', 'IT_KEY', MeasureEnsemble.MEASURE);
-% % % %%%% ¡gui!
+%%%% ¡_gui!
 % % % pr = PPAnalyzeEnsemble_MeDict('EL', a, 'PROP', AnalyzeEnsemble.ME_DICT, 'WAITBAR', Callback('EL', a, 'TAG', 'WAITBAR'), varargin{:});
 
 %%% ¡prop!
 MEASUREENSEMBLE (query, item) returns an ensemble-based measure.
 %%%% ¡settings!
 'MeasureEnsemble'
-% % % %% ¡methods!
+%%%% ¡_methods!
 % % % function me = getMeasureEnsemble(a, measure_class, varargin)
 % % %     %GETMEASURE returns measure.
 % % %     %
@@ -111,9 +111,9 @@ MEASUREENSEMBLE (query, item) returns an ensemble-based measure.
 
 %%% ¡prop!
 PFGD (gui, item) contains the panel figure of the graph dictionary.
-%%%% ¡settings!
-'PFAnalysisEnsemble'
-% % % %%%% ¡postprocessing!
+%%%% ¡_settings!
+% % % 'PFAnalysisEnsemble'
+%%%% ¡_postprocessing!
 % % % if ~braph2_testing % to avoid problems with isqual when the element is recursive
 % % %     if isa(a.getr('PFGD'), 'NoValue')
 % % %         tmp_g = a.get('graph_template');
@@ -131,7 +131,7 @@ PFGD (gui, item) contains the panel figure of the graph dictionary.
 % % %         end        
 % % %     end
 % % % end
-% % % %%%% ¡gui!
+%%%% ¡_gui!
 % % % pr = PanelPropItem('EL', a, 'PROP', AnalyzeEnsemble.PFGD, ...
 % % %     'GUICLASS', 'GUIFig', ...
 % % %     varargin{:});
