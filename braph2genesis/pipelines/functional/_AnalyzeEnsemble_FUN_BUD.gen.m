@@ -2,7 +2,8 @@
 AnalyzeEnsemble_FUN_BUD < AnalyzeEnsemble (a, graph analysis with functional data of fixed density) is a graph analysis using functional data of fixed density.
 
 %%% ¡description!
-This graph analysis uses functional data of fixed density and analyzes them using binary undirected graphs.
+This graph analysis (AnalyzeEnsemble_FUN_BUD) analyzes functional data 
+using binary undirected multigraphs with fixed densities.
 
 %%% ¡seealso!
 SubjectFUN, MultigraphBUD
@@ -17,7 +18,7 @@ NAME (constant, string) is the name of the .
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the .
 %%%% ¡default!
-''
+'This graph analysis (AnalyzeEnsemble_FUN_BUD) analyzes functional data using binary undirected multigraphs with fixed densities.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the .

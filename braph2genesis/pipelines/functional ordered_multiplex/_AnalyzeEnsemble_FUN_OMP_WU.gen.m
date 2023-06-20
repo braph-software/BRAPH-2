@@ -2,8 +2,8 @@
 AnalyzeEnsemble_FUN_OMP_WU < AnalyzeEnsemble (a, graph analysis with functional ordinal multiplex data) is a graph analysis using functional ordinal multiplex data.
 
 %%% ¡description!
-This graph analysis uses functional ordinal multiplex data and analyzes them 
-using weighted undirected graphs.
+This graph analysis (AnalyzeEnsemble_FUN_OMP_WU) analyzes functional ordinal 
+multiplex data using weighted undirected graphs.
 
 %%% ¡seealso!
 SubjectFUN_MP, OrderedMultiplexWU
@@ -18,7 +18,7 @@ NAME (constant, string) is the name of the .
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the .
 %%%% ¡default!
-''
+'This graph analysis (AnalyzeEnsemble_FUN_OMP_WU) analyzes functional ordinal multiplex data using weighted undirected graphs.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the .

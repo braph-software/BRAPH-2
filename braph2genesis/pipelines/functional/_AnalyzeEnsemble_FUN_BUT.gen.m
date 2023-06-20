@@ -2,7 +2,8 @@
 AnalyzeEnsemble_FUN_BUT < AnalyzeEnsemble (a, graph analysis with functional data of fixed threshold) is a graph analysis using functional data of fixed threshold.
 
 %%% ¡description!
-This graph analysis uses functional data of fixed threshold and analyzes them using binary undirected graphs.
+This graph analysis (AnalyzeEnsemble_FUN_BUT) analyzes functional data 
+using binary undirected multigraphs with fixed thresholds.
 
 %%% ¡seealso!
 SubjectFUN, MultigraphBUT
@@ -17,7 +18,7 @@ NAME (constant, string) is the name of the .
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the .
 %%%% ¡default!
-''
+'This graph analysis (AnalyzeEnsemble_FUN_BUT) analyzes functional data using binary undirected multigraphs with fixed thresholds.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the .
