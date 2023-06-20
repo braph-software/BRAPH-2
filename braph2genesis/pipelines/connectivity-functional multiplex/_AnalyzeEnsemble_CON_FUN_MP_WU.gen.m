@@ -1,5 +1,5 @@
 %% ¡header!
-AnalyzeEnsemble_CON_FUN_MP_WU < AnalyzeEnsemble (a, graph analysis with connectivity and functional multiplex data) is a graph analysis using connectivity and functional multiplex data.
+AnalyzeEnsemble_CON_FUN_MP_WU < AnalyzeEnsemble (a, graph analysis with connectivity and functional multiplex data) is an ensemble-based graph analysis using connectivity and functional multiplex data.
 
 %%% ¡description!
 This graph analysis (AnalyzeEnsemble_CON_FUN_MP_WU) analyzes 
@@ -13,30 +13,30 @@ SubjectCON_FUN_MP, MultiplexWU
 %%% ¡prop!
 NAME (constant, string) is the name of the .
 %%%% ¡default!
-''
+'AnalyzeEnsemble_CON_FUN_MP_WU'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the .
+DESCRIPTION (constant, string) is the description of the ensemble-based graph analysis with connectivity and functional multiplex data.
 %%%% ¡default!
 'This graph analysis (AnalyzeEnsemble_CON_FUN_MP_WU) analyzes connectivity and functional multiplex data using weighted undirected graphs.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the .
+TEMPLATE (parameter, item) is the template of the ensemble-based graph analysis with connectivity and functional multiplex data.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the .
+ID (data, string) is a few-letter code for the ensemble-based graph analysis with connectivity and functional multiplex data.
 %%%% ¡default!
-' ID'
+'AnalyzeEnsemble_CON_FUN_MP_WU ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the .
+LABEL (metadata, string) is an extended label of the ensemble-based graph analysis with connectivity and functional multiplex data.
 %%%% ¡default!
-' label'
+'AnalyzeEnsemble_CON_FUN_MP_WU label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the .
+NOTES (metadata, string) are some specific notes about the ensemble-based graph analysis with connectivity and functional multiplex data.
 %%%% ¡default!
-' notes'
+'AnalyzeEnsemble_CON_FUN_MP_WU notes'
 
 
 

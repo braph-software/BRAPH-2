@@ -1,5 +1,5 @@
 %% ¡header!
-AnalyzeEnsemble_FUN_MP_WU < AnalyzeEnsemble (a, graph analysis with functional multiplex data) is a graph analysis using functional multiplex data.
+AnalyzeEnsemble_FUN_MP_WU < AnalyzeEnsemble (a, graph analysis with functional multiplex data) is an ensemble-based graph analysis using functional multiplex data.
 
 %%% ¡description!
 This graph analysis (AnalyzeEnsemble_FUN_MP_WU) analyzes functional multiplex data 

@@ -1,5 +1,5 @@
 %% ¡header!
-AnalyzeEnsemble_FUN_MP_BUT < AnalyzeEnsemble (a, graph analysis with functional multiplex data of fixed threshold) is a graph analysis using functional multiplex data of fixed threshold.
+AnalyzeEnsemble_FUN_MP_BUT < AnalyzeEnsemble (a, graph analysis with functional multiplex data of fixed threshold) is an ensemble-based graph analysis using functional multiplex data of fixed threshold.
 
 %%% ¡description!
 This graph analysis (AnalyzeEnsemble_FUN_MP_BUT) analyzes functional multiplex data 

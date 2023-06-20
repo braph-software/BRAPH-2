@@ -1,5 +1,5 @@
 %% ¡header!
-AnalyzeEnsemble_FUN_MP_BUD < AnalyzeEnsemble (a, graph analysis with functional multiplex data of fixed density) is a graph analysis using functional multiplex data of fixed density.
+AnalyzeEnsemble_FUN_MP_BUD < AnalyzeEnsemble (a, graph analysis with functional multiplex data of fixed density) is an ensemble-based graph analysis using functional multiplex data of fixed density.
 
 %%% ¡description!
 This graph analysis (AnalyzeEnsemble_FUN_MP_BUD) analyzes functional multiplex data 

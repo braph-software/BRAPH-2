@@ -1,5 +1,5 @@
 %% ¡header!
-AnalyzeEnsemble_CON_MP_BUT < AnalyzeEnsemble (a, graph analysis with connectivity multiplex data of fixed threshold) is a graph analysis using connectivity multiplex data of fixed threshold.
+AnalyzeEnsemble_CON_MP_BUT < AnalyzeEnsemble (a, graph analysis with connectivity multiplex data of fixed threshold) is an ensemble-based graph analysis using connectivity multiplex data of fixed threshold.
 
 %%% ¡description!
 This graph analysis (AnalyzeEnsemble_CON_MP_BUT) analyzes connectivity multiplex data 

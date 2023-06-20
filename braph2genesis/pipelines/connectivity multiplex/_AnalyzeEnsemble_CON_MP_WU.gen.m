@@ -1,5 +1,5 @@
 %% ¡header!
-AnalyzeEnsemble_CON_MP_WU < AnalyzeEnsemble (a, graph analysis with connectivity multiplex data) is a graph analysis using connectivity multiplex data.
+AnalyzeEnsemble_CON_MP_WU < AnalyzeEnsemble (a, graph analysis with connectivity multiplex data) is an ensemble-based graph analysis using connectivity multiplex data.
 
 %%% ¡description!
 This graph analysis (AnalyzeEnsemble_CON_MP_WU) analyzes connectivity multiplex data using weighted undirected graphs.

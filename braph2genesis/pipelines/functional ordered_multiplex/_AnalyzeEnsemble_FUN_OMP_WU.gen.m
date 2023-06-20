@@ -1,5 +1,5 @@
 %% ¡header!
-AnalyzeEnsemble_FUN_OMP_WU < AnalyzeEnsemble (a, graph analysis with functional ordinal multiplex data) is a graph analysis using functional ordinal multiplex data.
+AnalyzeEnsemble_FUN_OMP_WU < AnalyzeEnsemble (a, graph analysis with functional ordinal multiplex data) is an ensemble-based graph analysis using functional ordinal multiplex data.
 
 %%% ¡description!
 This graph analysis (AnalyzeEnsemble_FUN_OMP_WU) analyzes functional ordinal 

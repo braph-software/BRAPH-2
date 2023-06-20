@@ -1,5 +1,5 @@
 %% ¡header!
-AnalyzeEnsemble_FUN_WU < AnalyzeEnsemble (a, graph analysis with functional data) is a graph analysis using functional data.
+AnalyzeEnsemble_FUN_WU < AnalyzeEnsemble (a, graph analysis with functional data) is an ensemble-based graph analysis using functional data.
 
 %%% ¡description!
 This graph analysis (AnalyzeEnsemble_FUN_WU) analyzes functional data 
