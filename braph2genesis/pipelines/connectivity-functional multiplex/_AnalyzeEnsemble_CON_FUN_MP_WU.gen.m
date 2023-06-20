@@ -2,47 +2,53 @@
 AnalyzeEnsemble_CON_FUN_MP_WU < AnalyzeEnsemble (a, graph analysis with connectivity and functional multiplex data) is a graph analysis using connectivity and functional multiplex data.
 
 %%% ¡description!
-This graph analysis uses connectivity and functional multiplex data and analyzes 
-them using weighted undirected graphs,
-binary undirected multigraphs with fixed thresholds,
-or binary undirected multigraphs with fixed densities.
+This graph analysis (AnalyzeEnsemble_CON_FUN_MP_WU) analyzes 
+connectivity and functional multiplex data using weighted undirected graphs.
 
 %%% ¡seealso!
 SubjectCON_FUN_MP, MultiplexWU
 
-
-
-
-
-
-
 %% ¡props_update!
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the analysis template to set the parameters.
-%%%% ¡settings!
-'AnalyzeEnsemble_CON_FUN_MP_WU'
+NAME (constant, string) is the name of the .
+%%%% ¡default!
+''
 
 %%% ¡prop!
-GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
-%%%% ¡settings!
-'MultiplexWU'
-%%%% ¡postprocessing!
-if ~braph2_testing
-    if isa(a.getr('GRAPH_TEMPLATE'), 'NoValue')
+DESCRIPTION (constant, string) is the description of the .
+%%%% ¡default!
+'This graph analysis (AnalyzeEnsemble_CON_FUN_MP_WU) analyzes connectivity and functional multiplex data using weighted undirected graphs.'
 
-        if a.get('GR').get('SUB_DICT').length() > 0
-            a.set('GRAPH_TEMPLATE', MultiplexWU('BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA')));
-        else
-             a.set('GRAPH_TEMPLATE', MultiplexWU());
-        end
-    end
-    if a.get('GR').get('SUB_DICT').length() > 0
-        layerlabels = cell2str({'CON', 'FUN'});
-        
-        a.get('GRAPH_TEMPLATE').set('LAYERLABELS', layerlabels)
-    end
-end
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the .
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the .
+%%%% ¡default!
+' ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the .
+%%%% ¡default!
+' label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the .
+%%%% ¡default!
+' notes'
+
+
+
+
+
+
+
+
+
+
+
+
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectCON_FUN_MP.

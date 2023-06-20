@@ -2,49 +2,55 @@
 AnalyzeEnsemble_CON_FUN_MP_BUT < AnalyzeEnsemble (a, graph analysis with connectivity and functional multiplex data of fixed threshold) is a graph analysis using connectivity and functional multiplex data of fixed threshold.
 
 %%% ¡description!
-This graph analysis uses connectivity and functional multiplex data of 
-fixed threshold and analyzes them using binary undirected graphs.
+This graph analysis (AnalyzeEnsemble_CON_FUN_MP_BUT) analyzes connectivity 
+and functional multiplex data using binary undirected graphs at fixed thresholds.
 
 %%% ¡seealso!
 SubjectCON_FUN_MP, MultiplexBUT
 
-
-
-
-
-
-
-
 %% ¡props_update!
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the analysis template to set the parameters.
-%%%% ¡settings!
-'AnalyzeEnsemble_CON_FUN_MP_BUT'
+NAME (constant, string) is the name of the .
+%%%% ¡default!
+''
 
 %%% ¡prop!
-GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
-%%%% ¡settings!
-'MultiplexBUT'
-%%%% ¡postprocessing!
-if ~braph2_testing
-    if isa(a.getr('GRAPH_TEMPLATE'), 'NoValue')
-        a.set('GRAPH_TEMPLATE', MultiplexBUT('THRESHOLDS',  Callback('EL', a, 'TAG', 'THRESHOLDS')))
+DESCRIPTION (constant, string) is the description of the .
+%%%% ¡default!
+'This graph analysis (AnalyzeEnsemble_CON_FUN_MP_BUT) analyzes connectivity and functional multiplex data using binary undirected graphs at fixed thresholds.'
 
-        if a.get('GR').get('SUB_DICT').length() > 0
-            a.get('GRAPH_TEMPLATE').set('BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA'))
-        end
-    end
-    thresholds = a.get('THRESHOLDS');
-    layerlabels = {};
-    for i = 1:length(thresholds)
-        layerlabels = [...
-            layerlabels, ['C ' num2str(thresholds(i))], ...
-            ['F ' num2str(thresholds(i))]];
-    end
-    a.get('GRAPH_TEMPLATE').set('LAYERLABELS', cell2str(layerlabels))
-    a.get('GRAPH_TEMPLATE').set('LAYERTICKS', thresholds)
-end
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the .
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the .
+%%%% ¡default!
+' ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the .
+%%%% ¡default!
+' label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the .
+%%%% ¡default!
+' notes'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectCON_FUN_MP.

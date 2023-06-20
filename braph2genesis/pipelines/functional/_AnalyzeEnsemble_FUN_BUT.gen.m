@@ -7,37 +7,48 @@ This graph analysis uses functional data of fixed threshold and analyzes them us
 %%% ¡seealso!
 SubjectFUN, MultigraphBUT
 
-
-
-
-
 %% ¡props_update!
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the analysis template to set the parameters.
-%%%% ¡settings!
-'AnalyzeEnsemble_FUN_BUT'
+NAME (constant, string) is the name of the .
+%%%% ¡default!
+''
 
 %%% ¡prop!
-GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
-%%%% ¡settings!
-'MultigraphBUT'
-%%%% ¡postprocessing!
-if ~braph2_testing
-    if isa(a.getr('GRAPH_TEMPLATE'), 'NoValue')
-        if a.get('GR').get('SUB_DICT').length() > 0
-            a.set('GRAPH_TEMPLATE', ...
-                MultigraphBUT('THRESHOLDS',  Callback('EL', a, 'TAG', 'THRESHOLDS'), ...
-                'BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA')));
-        else
-            a.set('GRAPH_TEMPLATE', MultigraphBUT('THRESHOLDS',  Callback('EL', a, 'TAG', 'THRESHOLDS')));
-        end
-    end
-    a.get('GRAPH_TEMPLATE').set( ...
-        'LAYERTICKS', a.get('THRESHOLDS'), ...
-        'LAYERLABELS', cell2str(cellfun(@(x) num2str(x), num2cell(a.get('THRESHOLDS')), 'UniformOutput', false)) ...
-        )
-end
+DESCRIPTION (constant, string) is the description of the .
+%%%% ¡default!
+''
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the .
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the .
+%%%% ¡default!
+' ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the .
+%%%% ¡default!
+' label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the .
+%%%% ¡default!
+' notes'
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectFUN.

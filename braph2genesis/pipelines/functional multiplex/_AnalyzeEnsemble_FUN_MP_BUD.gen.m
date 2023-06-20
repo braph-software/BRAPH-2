@@ -8,43 +8,47 @@ analyzes them using binary undirected graphs.
 %%% ¡seealso!
 SubjectFUN_MP, MultiplexBUD
 
-
-
-
-
 %% ¡props_update!
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the analysis template to set the parameters.
-%%%% ¡settings!
-'AnalyzeEnsemble_FUN_MP_BUD'
+NAME (constant, string) is the name of the .
+%%%% ¡default!
+''
 
 %%% ¡prop!
-GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
-%%%% ¡settings!
-'MultiplexBUD'
-%%%% ¡postprocessing!
-if ~braph2_testing
-    if isa(a.getr('GRAPH_TEMPLATE'), 'NoValue')
-        a.set('GRAPH_TEMPLATE', MultiplexBUD('DENSITIES',  Callback('EL', a, 'TAG', 'DENSITIES')))
+DESCRIPTION (constant, string) is the description of the .
+%%%% ¡default!
+''
 
-        if a.get('GR').get('SUB_DICT').length() > 0
-            a.get('GRAPH_TEMPLATE').set('BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA'))
-        end
-    end
-    if a.get('GR').get('SUB_DICT').length() > 0
-        L = a.get('GR').get('SUB_DICT').getItem(1).get('L');  % number of layers
-        densities = a.get('DENSITIES');
-        layerlabels = {};
-        
-        for i = 1:length(densities)
-            layerlabels = [layerlabels, cellfun(@(x) ['L' num2str(x) ' ' num2str(densities(i)) '%'], num2cell(1:L), 'UniformOutput', false)];
-        end
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the .
 
-        a.get('GRAPH_TEMPLATE').set('LAYERLABELS', cell2str(layerlabels))
-        a.get('GRAPH_TEMPLATE').set('LAYERTICKS', densities)
-    end
-end
+%%% ¡prop!
+ID (data, string) is a few-letter code for the .
+%%%% ¡default!
+' ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the .
+%%%% ¡default!
+' label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the .
+%%%% ¡default!
+' notes'
+
+
+
+
+
+
+
+
+
+
+
+
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectFUN_MP.

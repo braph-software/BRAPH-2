@@ -2,48 +2,54 @@
 AnalyzeEnsemble_CON_MP_BUT < AnalyzeEnsemble (a, graph analysis with connectivity multiplex data of fixed threshold) is a graph analysis using connectivity multiplex data of fixed threshold.
 
 %%% ¡description!
-This graph analysis uses connectivity multiplex data of fixed threshold and 
-analyzes them using binary undirected graphs.
+This graph analysis (AnalyzeEnsemble_CON_MP_BUT) analyzes connectivity multiplex data 
+using binary undirected multigraphs with fixed thresholds.
 
 %%% ¡seealso!
 SubjectCON_MP, MultiplexBUT
 
-
-
-
-
 %% ¡props_update!
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the analysis template to set the parameters.
-%%%% ¡settings!
-'AnalyzeEnsemble_CON_MP_BUT'
+NAME (constant, string) is the name of the .
+%%%% ¡default!
+''
 
 %%% ¡prop!
-GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
-%%%% ¡settings!
-'MultiplexBUT'
-%%%% ¡postprocessing!
-if ~braph2_testing
-    if isa(a.getr('GRAPH_TEMPLATE'), 'NoValue')
-        a.set('GRAPH_TEMPLATE', MultiplexBUT('THRESHOLDS',  Callback('EL', a, 'TAG', 'THRESHOLDS')))
+DESCRIPTION (constant, string) is the description of the .
+%%%% ¡default!
+'This graph analysis (AnalyzeEnsemble_CON_MP_BUT) analyzes connectivity multiplex data using binary undirected multigraphs with fixed thresholds.'
 
-        if a.get('GR').get('SUB_DICT').length() > 0
-            a.get('GRAPH_TEMPLATE').set('BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA'))
-        end
-    end
-    if a.get('GR').get('SUB_DICT').length() > 0
-        L = a.get('GR').get('SUB_DICT').getItem(1).get('L');  % number of layers
-        thresholds = a.get('THRESHOLDS');
-        layerlabels = {};
-        for i = 1:length(thresholds)
-            layerlabels = [layerlabels, cellfun(@(x) ['L' num2str(x) ' ' num2str(thresholds(i))], num2cell(1:L), 'UniformOutput', false)];
-        end
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the .
 
-        a.get('GRAPH_TEMPLATE').set('LAYERLABELS', cell2str(layerlabels))
-        a.get('GRAPH_TEMPLATE').set('LAYERTICKS', thresholds)
-    end
-end
+%%% ¡prop!
+ID (data, string) is a few-letter code for the .
+%%%% ¡default!
+' ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the .
+%%%% ¡default!
+' label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the .
+%%%% ¡default!
+' notes'
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectCON_MP.

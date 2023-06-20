@@ -8,38 +8,46 @@ using weighted undirected graphs.
 %%% ¡seealso!
 SubjectFUN_MP, OrderedMultiplexWU
 
-
-
-
-
-
 %% ¡props_update!
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the analysis template to set the parameters.
-%%%% ¡settings!
-'AnalyzeEnsemble_FUN_OMP_WU'
+NAME (constant, string) is the name of the .
+%%%% ¡default!
+''
 
 %%% ¡prop!
-GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
-%%%% ¡settings!
-'OrderedMultiplexWU'
-%%%% ¡postprocessing!
-if ~braph2_testing
-    if isa(a.getr('GRAPH_TEMPLATE'), 'NoValue')
-        a.set('GRAPH_TEMPLATE', OrderedMultiplexWU())
+DESCRIPTION (constant, string) is the description of the .
+%%%% ¡default!
+''
 
-        if a.get('GR').get('SUB_DICT').length() > 0
-            a.get('GRAPH_TEMPLATE').set('BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA'))
-        end
-    end
-    if a.get('GR').get('SUB_DICT').length() > 0
-        L = a.get('GR').get('SUB_DICT').getItem(1).get('L');  % number of layers
-        layerlabels = cell2str(cellfun(@(x) ['L' num2str(x)], num2cell([1:1:L]), 'UniformOutput', false));
-        
-        a.get('GRAPH_TEMPLATE').set('LAYERLABELS', layerlabels)
-    end
-end
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the .
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the .
+%%%% ¡default!
+' ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the .
+%%%% ¡default!
+' label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the .
+%%%% ¡default!
+' notes'
+
+
+
+
+
+
+
+
+
+
+
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectFUN_MP.

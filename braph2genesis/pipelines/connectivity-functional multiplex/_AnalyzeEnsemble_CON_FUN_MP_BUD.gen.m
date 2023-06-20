@@ -2,46 +2,55 @@
 AnalyzeEnsemble_CON_FUN_MP_BUD < AnalyzeEnsemble (a, graph analysis with connectivity and functional multiplex data of fixed density) is a graph analysis using connectivity and functional multiplex data of fixed density.
 
 %%% ¡description!
-This graph analysis uses connectivity and functional multiplex data of 
-fixed density and analyzes them using binary undirected graphs.
+This graph analysis (AnalyzeEnsemble_CON_FUN_MP_BUD) analyzes connectivity 
+and functional multiplex data using binary undirected graphs at fixed densities.
 
 %%% ¡seealso!
 SubjectCON_FUN_MP, MultiplexBUD
 
-
-
-
-
 %% ¡props_update!
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the analysis template to set the parameters.
-%%%% ¡settings!
-'AnalyzeEnsemble_CON_FUN_MP_BUD'
+NAME (constant, string) is the name of the .
+%%%% ¡default!
+''
 
 %%% ¡prop!
-GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
-%%%% ¡settings!
-'MultiplexBUD'
-%%%% ¡postprocessing!
-if ~braph2_testing
-    if isa(a.getr('GRAPH_TEMPLATE'), 'NoValue')
-        a.set('GRAPH_TEMPLATE', MultiplexBUD('DENSITIES',  Callback('EL', a, 'TAG', 'DENSITIES')))
+DESCRIPTION (constant, string) is the description of the .
+%%%% ¡default!
+'This graph analysis (AnalyzeEnsemble_CON_FUN_MP_BUD) analyzes connectivity and functional multiplex data using binary undirected graphs at fixed densities.'
 
-        if a.get('GR').get('SUB_DICT').length() > 0
-            a.get('GRAPH_TEMPLATE').set('BAS', a.get('GR').get('SUB_DICT').getItem(1).get('BA'))
-        end
-    end
-    densities = a.get('DENSITIES');
-    layerlabels = {};
-    for i = 1:length(densities)
-        layerlabels = [...
-            layerlabels, ['C ' num2str(densities(i)) '%'], ...
-            ['F ' num2str(densities(i)) '%']];
-    end
-    a.get('GRAPH_TEMPLATE').set('LAYERLABELS', cell2str(layerlabels))
-    a.get('GRAPH_TEMPLATE').set('LAYERTICKS', densities)
-end
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the .
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the .
+%%%% ¡default!
+' ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the .
+%%%% ¡default!
+' label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the .
+%%%% ¡default!
+' notes'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectCON_FUN_MP.
