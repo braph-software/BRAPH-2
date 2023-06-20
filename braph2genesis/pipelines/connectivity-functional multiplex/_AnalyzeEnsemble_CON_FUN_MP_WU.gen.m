@@ -11,7 +11,7 @@ SubjectCON_FUN_MP, MultiplexWU
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the .
+NAME (constant, string) is the name of the ensemble-based graph analysis with connectivity and functional multiplex data.
 %%%% ¡default!
 'AnalyzeEnsemble_CON_FUN_MP_WU'
 

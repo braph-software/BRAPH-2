@@ -16,7 +16,7 @@ NAME (constant, string) is the name of the .
 ''
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the .
+DESCRIPTION (constant, string) is the description of the ensemble-based .
 %%%% ¡default!
 'This graph analysis (AnalyzeEnsemble_CON_MP_BUT) analyzes connectivity multiplex data using binary undirected multigraphs with fixed thresholds.'
 

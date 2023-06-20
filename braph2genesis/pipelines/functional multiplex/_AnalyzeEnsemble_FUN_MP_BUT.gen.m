@@ -16,7 +16,7 @@ NAME (constant, string) is the name of the .
 ''
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the .
+DESCRIPTION (constant, string) is the description of the ensemble-based .
 %%%% ¡default!
 'This graph analysis (AnalyzeEnsemble_FUN_MP_BUT) analyzes functional multiplex data using binary undirected multigraphs with fixed thresholds.'
 

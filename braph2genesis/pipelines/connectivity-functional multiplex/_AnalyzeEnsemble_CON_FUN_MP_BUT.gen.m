@@ -11,7 +11,7 @@ SubjectCON_FUN_MP, MultiplexBUT
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the .
+NAME (constant, string) is the name of the ensemble-based .
 %%%% ¡default!
 ''
 

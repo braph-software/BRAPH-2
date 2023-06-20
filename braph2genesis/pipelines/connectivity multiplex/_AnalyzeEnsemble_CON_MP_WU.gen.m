@@ -10,7 +10,7 @@ SubjectCON_MP, MultiplexWU.
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the .
+NAME (constant, string) is the name of the ensemble-based .
 %%%% ¡default!
 ''
 

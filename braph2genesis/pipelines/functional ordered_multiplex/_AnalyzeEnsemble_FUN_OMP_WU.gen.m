@@ -11,32 +11,32 @@ SubjectFUN_MP, OrderedMultiplexWU
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the .
+NAME (constant, string) is the name of the ensemble-based graph analysis with functional ordinal multiplex data.
 %%%% ¡default!
-''
+'AnalyzeEnsemble_FUN_OMP_WU'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the .
+DESCRIPTION (constant, string) is the description of the ensemble-based graph analysis with functional ordinal multiplex data.
 %%%% ¡default!
 'This graph analysis (AnalyzeEnsemble_FUN_OMP_WU) analyzes functional ordinal multiplex data using weighted undirected graphs.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the .
+TEMPLATE (parameter, item) is the template of the ensemble-based graph analysis with functional ordinal multiplex data.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the .
+ID (data, string) is a few-letter code for the ensemble-based graph analysis with functional ordinal multiplex data.
 %%%% ¡default!
-' ID'
+'AnalyzeEnsemble_FUN_OMP_WU ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the .
+LABEL (metadata, string) is an extended label of the ensemble-based graph analysis with functional ordinal multiplex data.
 %%%% ¡default!
-' label'
+'AnalyzeEnsemble_FUN_OMP_WU label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the .
+NOTES (metadata, string) are some specific notes about the ensemble-based graph analysis with functional ordinal multiplex data.
 %%%% ¡default!
-' notes'
+'AnalyzeEnsemble_FUN_OMP_WU notes'
 
 
 
