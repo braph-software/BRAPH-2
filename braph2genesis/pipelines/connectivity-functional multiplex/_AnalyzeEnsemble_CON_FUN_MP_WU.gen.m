@@ -138,7 +138,7 @@ Example
 .01
 %%%% ¡code!
 if ~isfile([fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_MP XLS' filesep 'atlas.xlsx'])
-    test_ImporterGroupSubjectCON_FUN_MP_XLS % create example files
+    test_SubjectCON_FUN_MP % create example files
 end
 
 example_CON_FUN_MP_WU
