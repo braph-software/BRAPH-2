@@ -11,32 +11,32 @@ SubjectCON_FUN_MP, MultiplexBUT
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the ensemble-based .
+NAME (constant, string) is the name of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed threshold.
 %%%% ¡default!
-''
+'AnalyzeEnsemble_CON_FUN_MP_BUT'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the .
+DESCRIPTION (constant, string) is the description of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed threshold.
 %%%% ¡default!
 'This graph analysis (AnalyzeEnsemble_CON_FUN_MP_BUT) analyzes connectivity and functional multiplex data using binary undirected graphs at fixed thresholds.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the .
+TEMPLATE (parameter, item) is the template of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed threshold.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the .
+ID (data, string) is a few-letter code for the ensemble-based graph analysis with connectivity and functional multiplex data of fixed threshold.
 %%%% ¡default!
-' ID'
+'AnalyzeEnsemble_CON_FUN_MP_BUT ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the .
+LABEL (metadata, string) is an extended label of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed threshold.
 %%%% ¡default!
-' label'
+'AnalyzeEnsemble_CON_FUN_MP_BUT label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the .
+NOTES (metadata, string) are some specific notes about the ensemble-based graph analysis with connectivity and functional multiplex data of fixed threshold.
 %%%% ¡default!
-' notes'
+'AnalyzeEnsemble_CON_FUN_MP_BUT notes'
 
 
 

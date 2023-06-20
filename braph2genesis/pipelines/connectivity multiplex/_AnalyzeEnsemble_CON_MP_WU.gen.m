@@ -10,32 +10,32 @@ SubjectCON_MP, MultiplexWU.
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the ensemble-based .
+NAME (constant, string) is the name of the ensemble-based graph analysis with connectivity multiplex data.
 %%%% ¡default!
-''
+'AnalyzeEnsemble_CON_MP_WU'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the .
+DESCRIPTION (constant, string) is the description of the ensemble-based graph analysis with connectivity multiplex data.
 %%%% ¡default!
 'This graph analysis (AnalyzeEnsemble_CON_MP_WU) analyzes connectivity multiplex data using weighted undirected graphs.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the .
+TEMPLATE (parameter, item) is the template of the ensemble-based graph analysis with connectivity multiplex data.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the .
+ID (data, string) is a few-letter code for the ensemble-based graph analysis with connectivity multiplex data.
 %%%% ¡default!
-' ID'
+'AnalyzeEnsemble_CON_MP_WU ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the .
+LABEL (metadata, string) is an extended label of the ensemble-based graph analysis with connectivity multiplex data.
 %%%% ¡default!
-' label'
+'AnalyzeEnsemble_CON_MP_WU label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the .
+NOTES (metadata, string) are some specific notes about the ensemble-based graph analysis with connectivity multiplex data.
 %%%% ¡default!
-' notes'
+'AnalyzeEnsemble_CON_MP_WU notes'
 
 
 

@@ -11,32 +11,32 @@ SubjectFUN, MultigraphBUT
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the .
+NAME (constant, string) is the name of the ensemble-based graph analysis with functional data of fixed threshold.
 %%%% ¡default!
-''
+'AnalyzeEnsemble_FUN_BUT'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the ensemble-based .
+DESCRIPTION (constant, string) is the description of the ensemble-based graph analysis with functional data of fixed threshold.
 %%%% ¡default!
 'This graph analysis (AnalyzeEnsemble_FUN_BUT) analyzes functional data using binary undirected multigraphs with fixed thresholds.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the .
+TEMPLATE (parameter, item) is the template of the ensemble-based graph analysis with functional data of fixed threshold.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the .
+ID (data, string) is a few-letter code for the ensemble-based graph analysis with functional data of fixed threshold.
 %%%% ¡default!
-' ID'
+'AnalyzeEnsemble_FUN_BUT ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the .
+LABEL (metadata, string) is an extended label of the ensemble-based graph analysis with functional data of fixed threshold.
 %%%% ¡default!
-' label'
+'AnalyzeEnsemble_FUN_BUT label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the .
+NOTES (metadata, string) are some specific notes about the ensemble-based graph analysis with functional data of fixed threshold.
 %%%% ¡default!
-' notes'
+'AnalyzeEnsemble_FUN_BUT notes'
 
 
 

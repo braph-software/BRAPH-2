@@ -11,32 +11,32 @@ SubjectCON_FUN_MP, MultiplexBUD
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the ensemble-based .
+NAME (constant, string) is the name of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.
 %%%% ¡default!
-''
+'AnalyzeEnsemble_CON_FUN_MP_BUD'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the .
+DESCRIPTION (constant, string) is the description of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.
 %%%% ¡default!
 'This graph analysis (AnalyzeEnsemble_CON_FUN_MP_BUD) analyzes connectivity and functional multiplex data using binary undirected graphs at fixed densities.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the .
+TEMPLATE (parameter, item) is the template of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the .
+ID (data, string) is a few-letter code for the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.
 %%%% ¡default!
-' ID'
+'AnalyzeEnsemble_CON_FUN_MP_BUD ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the .
+LABEL (metadata, string) is an extended label of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.
 %%%% ¡default!
-' label'
+'AnalyzeEnsemble_CON_FUN_MP_BUD label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the .
+NOTES (metadata, string) are some specific notes about the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.
 %%%% ¡default!
-' notes'
+'AnalyzeEnsemble_CON_FUN_MP_BUD notes'
 
 
 

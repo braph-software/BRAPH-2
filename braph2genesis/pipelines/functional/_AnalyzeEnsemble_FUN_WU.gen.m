@@ -11,32 +11,32 @@ SubjectFUN, GraphWU
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the .
+NAME (constant, string) is the name of the ensemble-based graph analysis with functional data.
 %%%% ¡default!
-''
+'AnalyzeEnsemble_FUN_WU'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the ensemble-based .
+DESCRIPTION (constant, string) is the description of the ensemble-based graph analysis with functional data.
 %%%% ¡default!
 'This graph analysis (AnalyzeEnsemble_FUN_WU) analyzes functional data using weighted undirected graphs.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the .
+TEMPLATE (parameter, item) is the template of the ensemble-based graph analysis with functional data.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the .
+ID (data, string) is a few-letter code for the ensemble-based graph analysis with functional data.
 %%%% ¡default!
-' ID'
+'AnalyzeEnsemble_FUN_WU ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the .
+LABEL (metadata, string) is an extended label of the ensemble-based graph analysis with functional data.
 %%%% ¡default!
-' label'
+'AnalyzeEnsemble_FUN_WU label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the .
+NOTES (metadata, string) are some specific notes about the ensemble-based graph analysis with functional data.
 %%%% ¡default!
-' notes'
+'AnalyzeEnsemble_FUN_WU notes'
 
 
 
