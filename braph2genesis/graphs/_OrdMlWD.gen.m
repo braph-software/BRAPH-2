@@ -7,6 +7,8 @@ In an ordinal multilayer weighted directed (WD) graph, layers could have differe
  number between 0 and 1 and indicating the strength of the connection.
 All nodes are allowed between layers.
 The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.
+On the diagonal of the supra adjacency matrix, matrices are dediagonalized, semipositivized, and standardized.
+On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and standardized.
 
 %% ¡props_update!
 
@@ -19,7 +21,7 @@ NAME (constant, string) is the name of the ordinal multilayer weighted directed 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ordinal multilayer weighted directed graph.
 %%%% ¡default!
-'In an ordinal multilayer weighted directed (BD) graph, layers could have different number of nodes with within-layer weighted directed edges, associated with a real number between 0 and 1 and indicating the strength of the connection. All nodes are allowed between layers. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.'
+'In an ordinal multilayer weighted directed (BD) graph, layers could have different number of nodes with within-layer weighted directed edges, associated with a real number between 0 and 1 and indicating the strength of the connection. All nodes are allowed between layers. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected. On the diagonal of the supra adjacency matrix, matrices are dediagonalized, semipositivized, and standardized. On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and standardized.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ordinal multilayer weighted directed graph.
@@ -95,20 +97,24 @@ A (result, cell) is the cell containing the within-layer weighted adjacency matr
 B = g.get('B'); %#ok<PROPLC>
 L = length(B); %#ok<PROPLC> % number of layers
 A = cell(L, L);
-
 for i = 1:1:L
-    M = dediagonalize(B{i,i}); % removes self-connections by removing diagonal from adjacency matrix, equivalent to dediagonalize(M, 'DediagonalizeRule', 0)
+    M = dediagonalize(B{i, i}); % removes self-connections by removing diagonal from adjacency matrix, equivalent to dediagonalize(M, 'DediagonalizeRule', 0)
     M = semipositivize(M, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
     M = standardize(M, 'StandardizeRule', g.get('STANDARDIZE_RULE'));  % rescales adjacency matrix
     A(i, i) = {M};
     if ~isempty(A{i, i})
         for j = i+1:1:L
-            M = semipositivize(B{i,j}, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
-            M = standardize(M, 'StandardizeRule', g.get('STANDARDIZE_RULE'));  % rescales adjacency matrix
-            A(i, j) = {M};
-            M = semipositivize(B{j,i}, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
-            M = standardize(M, 'StandardizeRule', g.get('STANDARDIZE_RULE'));  % rescales adjacency matrix
-            A(j, i) = {M};
+            if j == i + 1
+                M = semipositivize(B{i, j}, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
+                M = standardize(M, 'StandardizeRule', g.get('STANDARDIZE_RULE')); % rescales adjacency matrix
+                A(i, j) = {M};
+                M = semipositivize(B{j, i}, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
+                M = standardize(M, 'StandardizeRule', g.get('STANDARDIZE_RULE')); % rescales adjacency matrix
+                A(j, i) = {M};
+            else
+                A(i, j) = {zeros(size(B{i, j}))};
+                A(j, i) = {zeros(size(B{j, i}))};
+            end
         end
     end
 end
@@ -204,10 +210,10 @@ A1 = standardize(semipositivize(dediagonalize(B1)));
 A2 = standardize(semipositivize(dediagonalize(B2)));
 A3 = standardize(semipositivize(dediagonalize(B3)));
 A12 = standardize(semipositivize(B12));
-A13 = standardize(semipositivize(B13));
+A13 = zeros(size(B13));
 A23 = standardize(semipositivize(B23));
 A21 = standardize(semipositivize(B21));
-A31 = standardize(semipositivize(B31));
+A31 = zeros(size(B31));
 A32 = standardize(semipositivize(B32));
 B{1, 1} = A1;
 B{2, 2} = A2;

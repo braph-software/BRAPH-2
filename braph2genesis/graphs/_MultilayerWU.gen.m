@@ -7,6 +7,8 @@ In a multilayer weighted undirected (WU) graph, layers could have different numb
  number between 0 and 1 and indicating the strength of the connection.
 The connectivity matrices are symmetric (within layer).
 All node connections are allowed between layers.
+On the diagonal of the supra adjacency matrix, matrices are symmetrized, dediagonalized, semipositivized, and standardized.
+On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and standardized.
 
 %% ¡props_update!
 
@@ -19,7 +21,7 @@ NAME (constant, string) is the name of the multilayer weighted undirected graph.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the multilayer weighted undirected graph.
 %%%% ¡default!
-'In a multilayer weighted undirected (WU) graph, layers could have different number of nodes with within-layer weighted undirected edges, associated with a real number between 0 and 1 and indicating the strength of the connection. The connectivity matrices are symmetric (within layer). All node connections are allowed between layers.'
+'In a multilayer weighted undirected (WU) graph, layers could have different number of nodes with within-layer weighted undirected edges, associated with a real number between 0 and 1 and indicating the strength of the connection. The connectivity matrices are symmetric (within layer). All node connections are allowed between layers. On the diagonal of the supra adjacency matrix, matrices are symmetrized, dediagonalized, semipositivized, and standardized. On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and standardized.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the multilayer weighted undirected graph.
@@ -94,14 +96,24 @@ A (result, cell) is the cell containing the weighted supra-adjacency matrix of t
 %%%% ¡calculate!
 B = g.get('B'); %#ok<PROPLC>
 L = length(B); %#ok<PROPLC> % number of layers
+A = cell(L, L);
 for i = 1:1:L
     M = symmetrize(B{i,i}, 'SymmetrizeRule', g.get('SYMMETRIZE_RULE')); %#ok<PROPLC> % enforces symmetry of adjacency matrix
     M = dediagonalize(M); % removes self-connections by removing diagonal from adjacency matrix, equivalent to dediagonalize(M, 'DediagonalizeRule', 0)
     M = semipositivize(M, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
     M = standardize(M, 'StandardizeRule', g.get('STANDARDIZE_RULE')); % rescales adjacency matrix
-    B(i, i) = {M};
+    A(i, i) = {M};
+    if ~isempty(A{i, i})        
+        for j = i+1:1:L
+            M = semipositivize(B{i, j}, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
+            M = standardize(M, 'StandardizeRule', g.get('STANDARDIZE_RULE')); % rescales adjacency matrix
+            A(i, j) = {M};
+            M = semipositivize(B{j, i}, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
+            M = standardize(M, 'StandardizeRule', g.get('STANDARDIZE_RULE')); % rescales adjacency matrix
+            A(j, i) = {M};
+        end
+    end
 end
-A = B;
 value = A;
 
 %%%% ¡gui!
@@ -194,9 +206,18 @@ g.get('A_CHECK')
 A1 = symmetrize(standardize(semipositivize(dediagonalize(B1))));
 A2 = symmetrize(standardize(semipositivize(dediagonalize(B2))));
 A3 = symmetrize(standardize(semipositivize(dediagonalize(B3))));
-B{1,1} = A1;
-B{2,2} = A2;
-B{3,3} = A3;
+A12 =  standardize(semipositivize(B12));
+A13 =  standardize(semipositivize(B13));
+A23 =  standardize(semipositivize(B23));
+B{1, 1} = A1;
+B{2, 2} = A2;
+B{3, 3} = A3;
+B{1, 2} = A12;
+B{1, 3} = A13;
+B{2, 3} = A23;
+B{2, 1} = A12';
+B{3, 1} = A13';
+B{3, 2} = A23';
 A = B;
 assert(isequal(g.get('A'), A), ...
     [BRAPH2.STR ':MultilayerWU:' BRAPH2.FAIL_TEST], ...
