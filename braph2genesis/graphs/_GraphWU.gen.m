@@ -83,7 +83,7 @@ pr = PanelPropCell('EL', g, 'PROP', GraphWU.A, ...
     varargin{:});
 
 %%% ¡prop!
-COMPATIBLE_MEASURES (constant, stringlist) is the list of compatible measures.
+COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
 %%%% ¡default!
 getCompatibleMeasures('GraphWU')
 
@@ -320,9 +320,9 @@ function random_g = randomize(g)
         tmp_A = cell2mat(tmp_g.get('A'));
         random_B = GraphWU.randomize_A(tmp_A, attempts_per_edge, number_of_weights);
         if isa(g, 'MultigraphBUD')
-            random_g = MultigraphBUD('B', random_B, 'Densities', g.get('Densities'));
+            random_g = MultigraphBUD('B', random_B, 'Densities', g.get('DENSITIES'));
         else
-            random_g = MultigraphBUT('B', random_B, 'Thresholds', g.get('Thresholds'));
+            random_g = MultigraphBUT('B', random_B, 'Thresholds', g.get('THRESHOLDS'));
         end
     else
         A = cell2mat(g.get('A'));

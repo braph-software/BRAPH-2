@@ -81,7 +81,7 @@ pr = PanelPropCell('EL', g, 'PROP', GraphWD.A, ...
     varargin{:});
 
 %%% ¡prop!
-COMPATIBLE_MEASURES (constant, stringlist) is the list of compatible measures.
+COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
 %%%% ¡default!
 getCompatibleMeasures('GraphWD')
 

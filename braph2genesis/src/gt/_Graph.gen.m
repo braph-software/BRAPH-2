@@ -567,7 +567,7 @@ value = IndexedDictionary('IT_CLASS', 'Measure', 'IT_KEY', 1);
 pr = GraphPP_MDict('EL', g, 'PROP', Graph.M_DICT, varargin{:});
 
 %%% ¡prop!
-COMPATIBLE_MEASURES (constant, stringlist) is the list of compatible measures.
+COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
 %%%% ¡settings!
 'Measure'
 
