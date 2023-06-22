@@ -10,6 +10,8 @@ In an ordinal binary undirected multilayer with fixed thresholds (BUT) graph, la
  or 1 (existence of connection).
 The supra-connectivity matrix has a number of partitions equal to the number of thresholds.
 The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.
+On the diagonal of the supra adjacency matrix, matrices are symmetrized, dediagonalized, semipositivized, and binarized.
+On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and binarized.
 
 %% ¡props_update!
 
@@ -21,7 +23,7 @@ NAME (constant, string) is the name of the binary undirected ordinal multilayer 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the binary undirected multilayer with fixed thresholds.
 %%%% ¡default!
-'In an ordinal binary undirected multilayer with fixed thresholds (BUT) graph, layers consist of binary undirected (BU) multilayer graphs derived from the same weighted supra-connectivity matrices binarized at different thresholds. Layers within the binary undirected (BU) multilayer graphs could have different number of nodes with within-layer binary undirected edges. Edges can be either 0 (absence of connection) or 1 (existence of connection). The supra-connectivity matrix has a number of partitions equal to the number of thresholds. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.'
+'In an ordinal binary undirected multilayer with fixed thresholds (BUT) graph, layers consist of binary undirected (BU) multilayer graphs derived from the same weighted supra-connectivity matrices binarized at different thresholds. Layers within the binary undirected (BU) multilayer graphs could have different number of nodes with within-layer binary undirected edges. Edges can be either 0 (absence of connection) or 1 (existence of connection). The supra-connectivity matrix has a number of partitions equal to the number of thresholds. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected. On the diagonal of the supra adjacency matrix, matrices are symmetrized, dediagonalized, semipositivized, and binarized. On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and binarized.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the binary undirected ordinal multilayer with fixed thresholds.
@@ -95,27 +97,42 @@ A_WU = calculateValue@OrdMlWU(g, prop);
 thresholds = g.get('THRESHOLDS');
 L = length(A_WU); % number of layers
 A = cell(length(thresholds)*L);
-
 if L > 0 && ~isempty(cell2mat(A_WU))
-    A(:, :) = {zeros(length(A_WU{1, 1}))};
-    for i = 1:1:length(thresholds)
-        threshold = thresholds(i);
-        layer = 1;
-        for j = (i - 1) * L + 1:1:i * L
-	        for k = (i - 1) * L + 1:1:i * L
-                if j == k
-                    A{j, j} = dediagonalize(binarize(A_WU{layer, layer}, 'threshold', threshold));
-                elseif (j-k)==1 || (k-j)==1
-                    A(j, k) = {eye(length(A{1, 1}))};
-                else
-                    A(j, k) = {zeros(length(A{1, 1}))};
-                end
+    for i = 1:1:length(A)
+        if mod(i, L) == 0
+            i_layer = L;
+            i_threshold = thresholds(fix(i/L));
+        else
+            i_layer = mod(i, L);
+            i_threshold = thresholds(fix(i/L)+1);
+        end
+        M = symmetrize(A_WU{i_layer, i_layer}, 'SymmetrizeRule', g.get('SYMMETRIZE_RULE')); %#ok<PROPLC> % enforces symmetry of adjacency matrix
+        M = dediagonalize(M); % removes self-connections by removing diagonal from adjacency matrix, equivalent to dediagonalize(M, 'DediagonalizeRule', 0)
+        M = semipositivize(M, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
+        M = binarize(M, 'threshold', i_threshold); % enforces binary adjacency matrix, equivalent to binarize(M, 'threshold', 0, 'bins', [-1:.001:1])
+        A(i, i) = {M};
+        for j = i+1:1:length(A)
+            if mod(j, L) == 0
+                j_layer = L;
+                j_threshold = thresholds(fix(j/L));
+            else
+                j_layer = mod(j, L);
+                j_threshold = thresholds(fix(j/L)+1);
             end
-            layer = layer + 1;
+            if i_threshold == j_threshold && j == i + 1
+                    M = semipositivize(A_WU{i_layer, j_layer}, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
+                    M = binarize(M, 'threshold', i_threshold, 'diagonal', 'include');
+                    A(i, j) = {M};
+                    M = semipositivize(A_WU{j_layer, i_layer}, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
+                    M = binarize(M, 'threshold', i_threshold, 'diagonal', 'include');
+                    A(j, i) = {M};
+            else
+                A(i, j) = {zeros(size(A_WU{i_layer, i_layer}, 1), size(A_WU{j_layer, j_layer}, 2))};
+                A(j, i) = {zeros(size(A_WU{j_layer, j_layer}, 2), size(A_WU{i_layer, i_layer}, 1))};
+            end
         end
     end
 end
-
 value = A;
 
 %%%% ¡gui!
@@ -182,40 +199,56 @@ Constructor - Full
 %%%% ¡probability!
 .01
 %%%% ¡code!
-B1 = rand(randi(10));
-B2 = rand(randi(10));
-B3 = rand(randi(10));
+B1 = rand(randi([2, 10]));
+B2 = rand(randi([2, 10]));
+B3 = rand(randi([2, 10]));
 B12 = rand(size(B1, 1),size(B2, 2));
-B13 = zeros(size(B1, 1),size(B3, 2));
+B13 = rand(size(B1, 1),size(B3, 2));
 B23 = rand(size(B2, 1),size(B3, 2));
 B = {
     B1                           B12                            B13
     B12'                         B2                             B23
     B13'                         B23'                           B3
     };
-thresholds = [0 .1 .2 .3 .4];
-g = OrdMlBUT('B', B, 'THRESHOLDS', thresholds);
-
+thresholds = [0 55 100];
+g = OrdMlBUT('B', B, 'THRESHOLDS', thresholds); 
 g.get('A_CHECK')
-
 A = g.get('A');
-for i = 1:1:length(thresholds)
-    threshold = thresholds(i);
-    for j = (i - 1) * length(B) + 1:1:i * length(B)
-        for k = (i - 1) * length(B) + 1:1:i * length(B)
-            if j == k
-                assert(isequal(A{j, j}, binarize(B1, 'threshold', threshold)), ...
-                    [BRAPH2.STR ':OrdMlBUT:' BRAPH2.FAIL_TEST], ...
-                    'OrdMlBUT is not constructing well.')
-            elseif (j-k)==1 || (k-j)==1
-                assert(isequal(A{j, k}, eye(length(B1))), ...
-                    [BRAPH2.STR ':OrdMlBUT:' BRAPH2.FAIL_TEST], ...
-                    'OrdMlBUT is not constructing well.')
-            else 
-                assert(isequal(A{j, k}, zeros(length(B1))), ...
-                    [BRAPH2.STR ':OrdMlBUT:' BRAPH2.FAIL_TEST], ...
-                    'OrdMlBUT is not constructing well.')
-            end
+L = length(B); % number of layers
+
+for i = 1:1:length(A)
+    if mod(i, L) == 0
+        i_layer = L;
+        i_threshold = thresholds(fix(i/L));
+    else
+        i_layer = mod(i, L);
+        i_threshold = thresholds(fix(i/L)+1);
+    end
+    assert(isequal(A{i, i},binarize(symmetrize(dediagonalize(semipositivize(B{i_layer, i_layer}))), 'threshold', i_threshold)), ...
+        [BRAPH2.STR ':OrdMlBUT:' BRAPH2.FAIL_TEST], ...
+        'OrdMlBUT is not constructing well.')
+    for j = i+1:1:length(A)
+        if mod(j, L) == 0
+            j_layer = L;
+            j_threshold = thresholds(fix(j/L));
+        else
+            j_layer = mod(j, L);
+            j_threshold = thresholds(fix(j/L)+1);
+        end
+        if i_threshold == j_threshold && j == i + 1
+            assert(isequal(A{i, j}, binarize(semipositivize(B{i_layer, j_layer}), 'threshold', i_threshold, 'diagonal', 'include')), ...
+                [BRAPH2.STR ':OrdMlBUT:' BRAPH2.FAIL_TEST], ...
+                'OrdMlBUT is not constructing well.')
+            assert(isequal(A{j, i}, binarize(semipositivize(B{j_layer, i_layer}), 'threshold', i_threshold, 'diagonal', 'include')), ...
+                [BRAPH2.STR ':OrdMlBUT:' BRAPH2.FAIL_TEST], ...
+                'OrdMlBUT is not constructing well.')
+        else
+            assert(isequal(A{i, j}, zeros(size(B{i_layer, i_layer}, 1), size(B{j_layer, j_layer}, 2))), ...
+                [BRAPH2.STR ':OrdMlBUT:' BRAPH2.FAIL_TEST], ...
+                'OrdMlBUT is not constructing well.')
+            assert(isequal(A{j, i}, zeros(size(B{j_layer, j_layer}, 1), size(B{i_layer, i_layer}, 2))), ...
+                [BRAPH2.STR ':OrdMlBUT:' BRAPH2.FAIL_TEST], ...
+                'OrdMlBUT is not constructing well.')
         end
     end
 end

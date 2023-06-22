@@ -8,6 +8,8 @@ In an ordinal multilayer binary undirected (BU) graph, layers could have differe
 The connectivity matrices are symmetric (within layer).
 All node connections are allowed between layers.
 The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.
+On the diagonal of the supra adjacency matrix, matrices are symmetrized, dediagonalized, semipositivized, and binarized.
+On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and binarized.
 
 %% ¡props_update!
 
@@ -19,7 +21,7 @@ NAME (constant, string) is the name of the ordinal multilayer binary undirected 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ordinal multilayer binary undirected graph.
 %%%% ¡default!
-'In an ordinal multilayer binary undirected (BU) graph, layers could have different number of nodes with within-layer undirected edges either 0 (absence of connection) or 1 (existence of connection). The connectivity matrices are symmetric (within layer). All node connections are allowed between layers. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.'
+'In an ordinal multilayer binary undirected (BU) graph, layers could have different number of nodes with within-layer undirected edges either 0 (absence of connection) or 1 (existence of connection). The connectivity matrices are symmetric (within layer). All node connections are allowed between layers. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected. On the diagonal of the supra adjacency matrix, matrices are symmetrized, dediagonalized, semipositivized, and binarized. On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and binarized.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ordinal multilayer binary undirected graph.
@@ -91,15 +93,31 @@ A (result, cell) is the cell containing the within-layer binary adjacency matric
 B = g.get('B'); %#ok<PROPLC>
 L = length(B); %#ok<PROPLC> % number of layers
 A = cell(L, L);
-
 for i = 1:1:L
     M = symmetrize(B{i, i}, 'SymmetrizeRule', g.get('SYMMETRIZE_RULE')); %#ok<PROPLC> % enforces symmetry of adjacency matrix
     M = dediagonalize(M); % removes self-connections by removing diagonal from adjacency matrix, equivalent to dediagonalize(M, 'DediagonalizeRule', 0)
     M = semipositivize(M, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
     M = binarize(M); % enforces binary adjacency matrix, equivalent to binarize(M, 'threshold', 0, 'bins', [-1:.001:1])
-    B(i, i) = {M};
+    A(i, i) = {M};
+    if ~isempty(A{i, i})
+        for j = i+1:1:L
+            if j == i + 1
+                M = semipositivize(B{i, j}, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
+                M = binarize(M, varargin{:}, 'diagonal', 'include'); % enforces binary adjacency matrix, equivalent to binarize(M, 'threshold', 0, 'bins', [-1:.001:1])
+                A(i, j) = {M};
+                M = semipositivize(B{j, i}, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); % removes negative weights
+                M = binarize(M, varargin{:}, 'diagonal', 'include'); % enforces binary adjacency matrix, equivalent to binarize(M, 'threshold', 0, 'bins', [-1:.001:1])
+                A(j, i) = {M};
+            else
+                A(i, j) = {zeros(size(B{i, j}))};
+                A(j, i) = {zeros(size(B{j, i}))};
+            end
+        end
+    end
 end
-A = B;
+value = A;
+
+
 value = A;
 %%%% ¡gui!
 
@@ -138,7 +156,7 @@ getCompatibleMeasures('OrdMlBU')
 %%% ¡prop!
 B (data, cell) is the input cell containing the multilayer adjacency matrices on the diagonal.
 %%%% ¡default!
-{[] []}
+{[] []; [] []}
 %%%% ¡gui!
 pr = PanelPropCell('EL', g, 'PROP', OrdMlBU.B, ...
     'TABLE_HEIGHT', s(40), ...
@@ -172,9 +190,9 @@ Constructor - Full
 B1 = rand(randi(10));
 B2 = rand(randi(10));
 B3 = rand(randi(10));
-B12 = rand(size(B1, 1),size(B2, 2));
-B13 = zeros(size(B1, 1),size(B3, 2));
-B23 = rand(size(B2, 1),size(B3, 2));
+B12 = rand(size(B1,1),size(B2,2));
+B13 = rand(size(B1,1),size(B3,2));
+B23 = rand(size(B2,1),size(B3,2));
 B = {
     B1                           B12                            B13
     B12'                         B2                             B23
@@ -182,203 +200,25 @@ B = {
     };
 g = OrdMlBU('B', B);
 g.get('A_CHECK')
-
 A1 = symmetrize(binarize(semipositivize(dediagonalize(B1))));
 A2 = symmetrize(binarize(semipositivize(dediagonalize(B2))));
 A3 = symmetrize(binarize(semipositivize(dediagonalize(B3))));
+A12 =  binarize(semipositivize(B12), 'diagonal', 'include');
+A13 =  zeros(size(B13));
+A23 =  binarize(semipositivize(B23), 'diagonal', 'include');
 B{1, 1} = A1;
 B{2, 2} = A2;
 B{3, 3} = A3;
-A = B
+B{1, 2} = A12;
+B{1, 3} = A13;
+B{2, 3} = A23;
+B{2, 1} = A12';
+B{3, 1} = A13';
+B{3, 2} = A23';
+A = B;
 assert(isequal(g.get('A'), A), ...
     [BRAPH2.STR ':OrdMlBU:' BRAPH2.FAIL_TEST], ...
     'OrdMlBU is not constructing well.')
-
-%%% ¡test!
-%%%% ¡name!
-Symmetrize and Semipositivize Rules
-%%%% ¡probability!
-.01
-%%%% ¡code!
-B1 = 10 * rand(randi(10) + 5) - 5; % random number in U(-5, 5)
-B2 = 10 * rand(randi(10) + 5) - 5; % random number in U(-5, 5)
-B3 = 10 * rand(randi(10) + 5) - 5; % random number in U(-5, 5)
-B = {
-    B1                           rand(size(B1, 1),size(B2, 2))  rand(size(B1, 1),size(B3, 2))
-    rand(size(B1, 1),size(B2, 2))' B2                           rand(size(B2, 1),size(B3, 2))
-    rand(size(B1, 1),size(B3, 2))' rand(size(B2, 1),size(B3, 2))' B3
-    };
-
-g0 = OrdMlBU('B', B); % 'SEMIPOSITIVIZE_RULE', 'zero', 'SYMMETRIZE_RULE', 'max'
-
-A1 = dediagonalize(max(B1, B1') > 0);
-A2 = dediagonalize(max(B2, B2') > 0);
-A3 = dediagonalize(max(B3, B3') > 0);
-A0{1, 1} = A1;
-A0{2, 2} = A2;
-A0{3, 3} = A3;
-assert(isequal(g0.get('A'), A0), ...
-    [BRAPH2.STR ':OrdMlBU:' BRAPH2.FAIL_TEST], ...
-    'OrdMlBU is not constructing well.')
-
-g_max = OrdMlBU('B', B, 'SYMMETRIZE_RULE', 'max'); % 'SEMIPOSITIVIZE_RULE', 'zero'
-A1 = dediagonalize(max(B1, B1') > 0);
-A2 = dediagonalize(max(B2, B2') > 0);
-A3 = dediagonalize(max(B3, B3') > 0);
-A_max{1, 1} = A1;
-A_max{2, 2} = A2;
-A_max{3, 3} = A3;
-assert(isequal(g_max.get('A'), A_max), ...
-    [BRAPH2.STR ':OrdMlBU:' BRAPH2.FAIL_TEST], ...
-    'OrdMlBU is not constructing well.')
-
-g_sum = OrdMlBU('B', B, 'SYMMETRIZE_RULE', 'sum'); % 'SEMIPOSITIVIZE_RULE', 'zero'
-A1 = dediagonalize(B1+ B1' > 0);
-A2 = dediagonalize(B2 + B2' > 0);
-A3 = dediagonalize(B3 + B3' > 0);
-A_sum{1, 1} = A1;
-A_sum{2, 2} = A2;
-A_sum{3, 3} = A3;
-assert(isequal(g_sum.get('A'), A_sum), ...
-    [BRAPH2.STR ':OrdMlBU:' BRAPH2.FAIL_TEST], ...
-    'OrdMlBU is not constructing well.')
-
-g_average = OrdMlBU('B', B, 'SYMMETRIZE_RULE', 'average'); % 'SEMIPOSITIVIZE_RULE', 'zero'
-A1 = dediagonalize((B1+ B1' ) / 2 > 0);
-A2 = dediagonalize((B2 + B2') / 2 > 0);
-A3 = dediagonalize((B3 + B3') / 2 > 0);
-A_sum{1, 1} = A1;
-A_sum{2, 2} = A2;
-A_sum{3, 3} = A3;
-assert(isequal(g_average.get('A'), A_average), ...
-    [BRAPH2.STR ':OrdMlBU:' BRAPH2.FAIL_TEST], ...
-    'OrdMlBU is not constructing well.')
-
-g_min = OrdMlBU('B', B, 'SYMMETRIZE_RULE', 'min'); % 'SEMIPOSITIVIZE_RULE', 'zero'
-A1 = dediagonalize(min(B1, B1') > 0);
-A2 = dediagonalize(min(B2, B2') > 0);
-A3 = dediagonalize(min(B3, B3') > 0);
-A_min{1, 1} = A1;
-A_min{2, 2} = A2;
-A_min{3, 3} = A3;
-assert(isequal(g_min.get('A'), A_min), ...
-    [BRAPH2.STR ':OrdMlBU:' BRAPH2.FAIL_TEST], ...
-    'OrdMlBU is not constructing well.')
-
-g_zero = OrdMlBU('B', B, 'SEMIPOSITIVIZE_RULE', 'zero'); % 'SYMMETRIZE_RULE', 'max'
-A1 = dediagonalize(max(B1, B1') > 0);
-A2 = dediagonalize(max(B2, B2') > 0);
-A3 = dediagonalize(max(B3, B3') > 0);
-A_zero{1, 1} = A1;
-A_zero{2, 2} = A2;
-A_zero{3, 3} = A3;
-assert(isequal(g_zero.get('A'), A_zero), ...
-    [BRAPH2.STR ':OrdMlBU:' BRAPH2.FAIL_TEST], ...
-    'OrdMlBU is not constructing well.')
-
-g_zero_max = OrdMlBU('B', B, 'SEMIPOSITIVIZE_RULE', 'zero', 'SYMMETRIZE_RULE', 'max');
-A1 = dediagonalize(max(B1, B1') > 0);
-A2 = dediagonalize(max(B2, B2') > 0);
-A3 = dediagonalize(max(B3, B3') > 0);
-A_zero_max{1, 1} = A1;
-A_zero_max{2, 2} = A2;
-A_zero_max{3, 3} = A3;
-assert(isequal(g_zero_max.get('A'), A_zero_max), ...
-    [BRAPH2.STR ':OrdMlBU:' BRAPH2.FAIL_TEST], ...
-    'OrdMlBU is not constructing well.')
-
-g_zero_sum = OrdMlBU('B', B, 'SEMIPOSITIVIZE_RULE', 'zero', 'SYMMETRIZE_RULE', 'sum');
-A1 = dediagonalize(B1 + B1' > 0);
-A2 = dediagonalize(B2 + B2' > 0);
-A3 = dediagonalize(B3 + B3' > 0);
-A_zero_sum{1, 1} = A1;
-A_zero_sum{2, 2} = A2;
-A_zero_sum{3, 3} = A3;
-assert(isequal(g_zero_sum.get('A'), A_zero_sum), ...
-    [BRAPH2.STR ':OrdMlBU:' BRAPH2.FAIL_TEST], ...
-    'OrdMlBU is not constructing well.')
-
-g_zero_average = OrdMlBU('B', B, 'SEMIPOSITIVIZE_RULE', 'zero', 'SYMMETRIZE_RULE', 'average');
-A1 = dediagonalize((B1 + B1') / 2 > 0);
-A2 = dediagonalize((B2 + B2') / 2 > 0);
-A3 = dediagonalize((B3 + B3') / 2 > 0);
-A_zero_average{1, 1} = A1;
-A_zero_average{2, 2} = A2;
-A_zero_average{3, 3} = A3;
-assert(isequal(g_zero_average.get('A'), A_zero_average), ...
-    [BRAPH2.STR ':OrdMlBU:' BRAPH2.FAIL_TEST], ...
-    'OrdMlBU is not constructing well.')
-
-g_zero_min = OrdMlBU('B', B, 'SEMIPOSITIVIZE_RULE', 'zero', 'SYMMETRIZE_RULE', 'min');
-A1 = dediagonalize(min(B1, B1') > 0);
-A2 = dediagonalize(min(B2, B2') > 0);
-A3 = dediagonalize(min(B3, B3') > 0);
-A_zero_min{1, 1} = A1;
-A_zero_min{2, 2} = A2;
-A_zero_min{3, 3} = A3;
-assert(isequal(g_zero_min.get('A'), A_zero_min), ...
-    [BRAPH2.STR ':OrdMlBU:' BRAPH2.FAIL_TEST], ...
-    'OrdMlBU is not constructing well.')
-
-g_absolute = OrdMlBU('B', B, 'SEMIPOSITIVIZE_RULE', 'absolute'); % 'SYMMETRIZE_RULE', 'max'
-A1 = dediagonalize(max(B1, B1') ~= 0);
-A2 = dediagonalize(max(B2, B2') ~= 0);
-A3 = dediagonalize(max(B3, B3') ~= 0);
-A_absolute{1, 1} = A1;
-A_absolute{2, 2} = A2;
-A_absolute{3, 3} = A3;
-assert(isequal(g_absolute.get('A'), A_absolute), ...
-    [BRAPH2.STR ':OrdMlBU:' BRAPH2.FAIL_TEST], ...
-    'OrdMlBU is not constructing well.')
-
-g_absolute_max = OrdMlBU('B', B, 'SEMIPOSITIVIZE_RULE', 'absolute', 'SYMMETRIZE_RULE', 'max');
-A1 = dediagonalize(max(B1, B1') ~= 0);
-A2 = dediagonalize(max(B2, B2') ~= 0);
-A3 = dediagonalize(max(B3, B3') ~= 0);
-A_absolute_max{1, 1} = A1;
-A_absolute_max{2, 2} = A2;
-A_absolute_max{3, 3} = A3;
-assert(isequal(g_absolute_max.get('A'), A_absolute_max), ...
-    [BRAPH2.STR ':OrdMlBU:' BRAPH2.FAIL_TEST], ...
-    'OrdMlBU is not constructing well.')
-
-g_absolute_sum = OrdMlBU('B', B, 'SEMIPOSITIVIZE_RULE', 'absolute', 'SYMMETRIZE_RULE', 'sum');
-A1 = dediagonalize(B1 + B1' ~= 0);
-A2 = dediagonalize(B2 + B2' ~= 0);
-A3 = dediagonalize(B3 + B3' ~= 0);
-A_absolute_max{1, 1} = A1;
-A_absolute_max{2, 2} = A2;
-A_absolute_max{3, 3} = A3;
-assert(isequal(g_absolute_sum.get('A'), A_absolute_sum), ...
-    [BRAPH2.STR ':OrdMlBU:' BRAPH2.FAIL_TEST], ...
-    'OrdMlBU is not constructing well.')
-
-g_absolute_average = OrdMlBU('B', B, 'SEMIPOSITIVIZE_RULE', 'absolute', 'SYMMETRIZE_RULE', 'average');
-A1 = dediagonalize((B1 + B1') / 2~= 0);
-A2 = dediagonalize((B2 + B2') / 2~= 0);
-A3 = dediagonalize((B3 + B3') / 2~= 0);
-A_absolute_average{1, 1} = A1;
-A_absolute_average{2, 2} = A2;
-A_absolute_average{3, 3} = A3;
-assert(isequal(g_absolute_average.get('A'), A_absolute_average), ...
-    [BRAPH2.STR ':OrdMlBU:' BRAPH2.FAIL_TEST], ...
-    'OrdMlBU is not constructing well.')
-
-g_absolute_min = OrdMlBU('B', B, 'SEMIPOSITIVIZE_RULE', 'absolute', 'SYMMETRIZE_RULE', 'min');
-A1 = dediagonalize(min(B1, B1') ~= 0);
-A2 = dediagonalize(min(B2, B2') ~= 0);
-A3 = dediagonalize(min(B3, B3') ~= 0);
-A_absolute_min{1, 1} = A1;
-A_absolute_min{2, 2} = A2;
-A_absolute_min{3, 3} = A3;
-assert(isequal(g_absolute_min.get('A'), A_absolute_min), ...
-    [BRAPH2.STR ':OrdMlBU:' BRAPH2.FAIL_TEST], ...
-    'OrdMlBU is not constructing well.')
-
-
-
-
-
 
 
 %% ¡_props!
