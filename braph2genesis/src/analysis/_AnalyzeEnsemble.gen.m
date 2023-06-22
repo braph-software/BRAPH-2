@@ -51,18 +51,23 @@ GR (data, item) is the subject group, which also defines the subject class.
 'Group'
 
 %%% ¡prop!
+COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
+%%%% ¡settings!
+'Measure'
+
+%%% ¡prop!
 G_DICT (result, idict) is the graph ensemble obtained from this analysis.
 %%%% ¡settings!
 'Graph'
-%%%% ¡_calculate!
-% % % value = IndexedDictionary('IT_CLASS', 'Graph');
+%%%% ¡calculate!
+value = IndexedDictionary('IT_CLASS', 'Graph');
 
 %%% ¡prop!
 ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
 %%%% ¡settings!
 'MeasureEnsemble'
-%%%% ¡_calculate!
-% % % value = IndexedDictionary('IT_CLASS', 'MeasureEnsemble', 'IT_KEY', MeasureEnsemble.MEASURE);
+%%%% ¡calculate!
+value = IndexedDictionary('IT_CLASS', 'MeasureEnsemble', 'IT_KEY', MeasureEnsemble.MEASURE);
 %%%% ¡_gui!
 % % % pr = PPAnalyzeEnsemble_MeDict('EL', a, 'PROP', AnalyzeEnsemble.ME_DICT, 'WAITBAR', Callback('EL', a, 'TAG', 'WAITBAR'), varargin{:});
 
@@ -90,11 +95,11 @@ if isempty(varargin)
 end
 measure_class = varargin{1};
 
-% % %     g_dict = a.memorize('G_DICT');
-% % %     for i = 1:1:g_dict.length()
-% % %         g_dict.getItem(i).memorize('A');
-% % %     end
-% % %     
+g_dict = a.memorize('G_DICT');
+for i = 1:1:g_dict.get('LENGTH')
+    g_dict.get('IT', i).memorize('A');
+end
+
 % % %     g = a.get('GRAPH_TEMPLATE');
 % % %     m_list = Graph.getCompatibleMeasureList(g);
 % % %     

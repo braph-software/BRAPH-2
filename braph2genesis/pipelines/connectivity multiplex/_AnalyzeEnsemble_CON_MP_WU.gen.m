@@ -43,9 +43,9 @@ GR (data, item) is the subject group, which also defines the subject class Subje
 Group('SUB_CLASS', 'SubjectCON_MP')
 
 %%% ¡prop!
-ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-%%%% ¡_gui!
-% % % pr = PPAnalyzeEnsembleMP_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_CON_MP_WU.ME_DICT, 'WAITBAR', true, varargin{:});
+COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
+%%%% ¡default!
+getCompatibleMeasures('MultiplexWU')
 
 %%% ¡prop!
 G_DICT (result, idict) is the graph (MultiplexWU) ensemble obtained from this analysis.
@@ -81,6 +81,11 @@ G_DICT (result, idict) is the graph (MultiplexWU) ensemble obtained from this an
 % % % end
 % % % 
 % % % value = g_dict;
+
+%%% ¡prop!
+ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
+%%%% ¡_gui!
+% % % pr = PPAnalyzeEnsembleMP_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_CON_MP_WU.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %% ¡tests!
 

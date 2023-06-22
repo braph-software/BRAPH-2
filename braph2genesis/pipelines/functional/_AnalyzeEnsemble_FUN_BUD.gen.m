@@ -44,9 +44,9 @@ GR (data, item) is the subject group, which also defines the subject class Subje
 Group('SUB_CLASS', 'SubjectFUN')
 
 %%% ¡prop!
-ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-%%%% ¡_gui!
-% % % pr = PPAnalyzeEnsemble_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_FUN_BUD.ME_DICT, 'WAITBAR', true, varargin{:});
+COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
+%%%% ¡default!
+getCompatibleMeasures('MultigraphBUD')
 
 %%% ¡prop!
 G_DICT (result, idict) is the graph (MultigraphBUD) ensemble obtained from this analysis.
@@ -99,6 +99,11 @@ G_DICT (result, idict) is the graph (MultigraphBUD) ensemble obtained from this 
 % % % % end
 % % % % 
 % % % % value = g_dict;
+
+%%% ¡prop!
+ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
+%%%% ¡_gui!
+% % % pr = PPAnalyzeEnsemble_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_FUN_BUD.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %% ¡props!
 
