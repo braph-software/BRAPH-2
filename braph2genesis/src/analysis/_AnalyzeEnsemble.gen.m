@@ -70,15 +70,26 @@ ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
 MEASUREENSEMBLE (query, item) returns an ensemble-based measure.
 %%%% ¡settings!
 'MeasureEnsemble'
-%%%% ¡_methods!
-% % % function me = getMeasureEnsemble(a, measure_class, varargin)
-% % %     %GETMEASURE returns measure.
-% % %     %
-% % %     % ME = GETMEASURE(A, MEASURE_CLASS) checks if the measure ensemble exists in the
-% % %     %  property ME_DICT. If not it creates a new measure M of class MEASURE_CLASS
-% % %     %  with properties defined by the graph settings. The user must call
-% % %     %  getValue() for the new measure M to retrieve the value of measure M.
-% % % 
+%%%% ¡calculate!
+% ME = A.GET(''MEASUREENSEMBLE'', MEASURE_CLASS) checks whether the 
+%  measure ensemble exists in the property ME_DICT. If not it creates a new
+%  measure M of class MEASURE_CLASS with properties defined by the graph
+%  settings. The user must call getValue() for the new measure M to
+%  retrieve the value of measure ensemble ME.
+if isempty(varargin)
+    value = MeasureEnsemble();
+    
+    % % Warning commented because it most likely will lead to an error anyways
+    % warning( ...
+    %     [BRAPH2.STR ':' class(a)], ...
+    %     [BRAPH2.STR ':' class(a) '\\n' ...
+    %     'Missing argument MEASURE_CLASS when using Analysis.get(''MEASUREENSEMBLE'', MEASURE_CLASS).'] ...
+    %     )
+    
+    return
+end
+measure_class = varargin{1};
+
 % % %     g_dict = a.memorize('G_DICT');
 % % %     for i = 1:1:g_dict.length()
 % % %         g_dict.getItem(i).memorize('A');
