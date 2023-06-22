@@ -34,6 +34,8 @@ DESCRIPTION (constant, string) is the description of the ST MP subject group exp
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ST MP subject group exporter in XLSX.
+%%%% ¡settings!
+'ExporterGroupSubjectST_MP_XLS'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the ST MP subject group exporter in XLSX.

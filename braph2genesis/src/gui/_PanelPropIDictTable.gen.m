@@ -41,6 +41,8 @@ DESCRIPTION (constant, string) is the description of the idict property panel.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the idict property panel.
+%%%% ¡settings!
+'PanelPropIDictTable'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the idict property panel.

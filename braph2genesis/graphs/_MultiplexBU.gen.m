@@ -22,6 +22,8 @@ DESCRIPTION (constant, string) is the description of the multiplex binary undire
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the multiplex binary undirected graph.
+%%%% ¡settings!
+'MultiplexBU'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the multiplex binary undirected graph.

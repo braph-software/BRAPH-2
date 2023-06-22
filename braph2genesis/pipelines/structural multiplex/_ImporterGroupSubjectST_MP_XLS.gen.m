@@ -35,6 +35,8 @@ DESCRIPTION (constant, string) is the description of the ST MP subject group imp
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ST MP subject group importer from XLS/XLSX.
+%%%% ¡settings!
+'ImporterGroupSubjectST_MP_XLS'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the ST MP subject group importer from XLS/XLSX.

@@ -23,6 +23,8 @@ DESCRIPTION (constant, string) is the description of the settings area panel.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the settings area panel.
+%%%% ¡settings!
+'SettingsAreaPP'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the settings area panel.

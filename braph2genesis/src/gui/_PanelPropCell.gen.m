@@ -35,6 +35,8 @@ DESCRIPTION (constant, string) is the description of the cell property panel.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the cell property panel.
+%%%% ¡settings!
+'PanelPropCell'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the cell property panel.

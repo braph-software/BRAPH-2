@@ -22,6 +22,8 @@ DESCRIPTION (constant, string) is the description of the panel to select the lay
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel to select the layers of an adjacency matrix.
+%%%% ¡settings!
+'LayersPP'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the panel to select the layers of an adjacency matrix.

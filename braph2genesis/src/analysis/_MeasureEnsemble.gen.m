@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the graph ensemble measure.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the graph ensemble measure.
+%%%% ¡settings!
+'MeasureEnsemble'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the graph ensemble measure.

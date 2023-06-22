@@ -22,6 +22,8 @@ DESCRIPTION (constant, string) is the description of the importer of a pipeline 
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the importer of a pipeline from a BRAPH2 file.
+%%%% ¡settings!
+'ImporterPipelineBRAPH2'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the importer of a pipeline from a BRAPH2 file.

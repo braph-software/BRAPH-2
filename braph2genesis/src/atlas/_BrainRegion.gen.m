@@ -24,6 +24,8 @@ DESCRIPTION (constant, string) is the description of the brain region.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the brain region.
+%%%% ¡settings!
+'BrainRegion'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the brain region.

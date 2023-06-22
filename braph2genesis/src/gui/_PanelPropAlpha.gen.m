@@ -22,6 +22,8 @@ DESCRIPTION (constant, string) is the description of the alpha property panel.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the alpha property panel.
+%%%% ¡settings!
+'PanelPropAlpha'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the alpha property panel.

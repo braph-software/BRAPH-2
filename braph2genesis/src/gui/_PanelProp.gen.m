@@ -61,6 +61,8 @@ DESCRIPTION (constant, string) is the description of the property panel.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the property panel.
+%%%% ¡settings!
+'PanelProp'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the property panel.

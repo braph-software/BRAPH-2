@@ -18,6 +18,8 @@ DESCRIPTION (constant, string) is the description of the average out-degree.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the average out-degree.
+%%%% ¡settings!
+'DegreeOutAv'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the average out-degree.

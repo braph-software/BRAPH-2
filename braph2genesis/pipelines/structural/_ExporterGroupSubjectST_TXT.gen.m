@@ -31,6 +31,8 @@ DESCRIPTION (constant, string) is the description of the ST subject group export
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ST subject group exporter in TXT.
+%%%% ¡settings!
+'ExporterGroupSubjectST_TXT'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the ST subject group exporter in TXT.

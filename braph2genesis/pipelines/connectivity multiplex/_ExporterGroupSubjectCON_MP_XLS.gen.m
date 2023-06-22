@@ -31,6 +31,8 @@ DESCRIPTION (constant, string) is the description of the CON MP subject group ex
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the CON MP subject group exporter in XLSX.
+%%%% ¡settings!
+'ExporterGroupSubjectCON_MP_XLS'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the CON MP subject group exporter in XLSX.

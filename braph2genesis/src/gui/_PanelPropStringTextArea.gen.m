@@ -22,6 +22,8 @@ DESCRIPTION (constant, string) is the description of the string property panel w
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the string property panel with a text area.
+%%%% ¡settings!
+'PanelPropStringTextArea'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the string property panel with a text area.

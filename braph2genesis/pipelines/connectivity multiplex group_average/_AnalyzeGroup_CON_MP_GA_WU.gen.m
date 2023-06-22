@@ -61,6 +61,8 @@ DESCRIPTION (constant, string) is the description of the group-based graph analy
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the group-based graph analysis with connectivity multiplex data.
+%%%% ¡settings!
+'AnalyzeGroup_CON_MP_GA_WU'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the group-based graph analysis with connectivity multiplex data.

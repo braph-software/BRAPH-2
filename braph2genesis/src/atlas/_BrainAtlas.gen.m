@@ -143,6 +143,8 @@ DESCRIPTION (constant, string) is the description of the brain atlas.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the brain atlas.
+%%%% ¡settings!
+'BrainAtlas'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the brain atlas.

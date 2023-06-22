@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the panel figure global bil
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel figure global bilayer measure.
+%%%% ¡settings!
+'MeasurePF_GB'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the panel figure global bilayer measure.

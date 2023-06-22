@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the panel figure graph hist
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel figure graph histogram.
+%%%% ¡settings!
+'GraphHistPF'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the panel figure graph histogram.

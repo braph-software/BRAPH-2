@@ -23,6 +23,8 @@ DESCRIPTION (constant, string) is the description of the text settings.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the text settings.
+%%%% ¡settings!
+'SettingsText'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the text settings.

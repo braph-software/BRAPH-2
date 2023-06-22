@@ -32,6 +32,8 @@ DESCRIPTION (constant, string) is the description of the CON MP subject group im
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the CON MP subject group importer from XLS/XLSX.
+%%%% ¡settings!
+'ImporterGroupSubjectCON_MP_XLS'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the CON MP subject group importer from XLS/XLSX.

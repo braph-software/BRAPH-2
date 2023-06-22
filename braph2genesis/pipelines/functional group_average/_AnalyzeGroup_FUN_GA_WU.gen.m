@@ -90,6 +90,8 @@ DESCRIPTION (constant, string) is the description of the graph analysis with ave
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the graph analysis with averaged functional data.
+%%%% ¡settings!
+'AnalyzeGroup_CON_GA_WU'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the graph analysis with averaged functional data.

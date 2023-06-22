@@ -22,6 +22,8 @@ DESCRIPTION (constant, string) is the description of the string property panel.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the string property panel.
+%%%% ¡settings!
+'PanelPropString'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the string property panel.

@@ -32,6 +32,8 @@ DESCRIPTION (constant, string) is the description of the FUN MP subject group im
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the FUN MP subject group importer from TXT.
+%%%% ¡settings!
+'ImporterGroupSubjectFUN_MP_TXT'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the FUN MP subject group importer from TXT.

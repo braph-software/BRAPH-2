@@ -23,6 +23,8 @@ DESCRIPTION (constant, string) is the description of the variable of interest.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the variable of interest.
+%%%% ¡settings!
+'VOI'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the variable of interest.

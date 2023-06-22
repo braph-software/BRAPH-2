@@ -23,6 +23,8 @@ DESCRIPTION (constant, string) is the description of the settings position panel
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the settings position panel.
+%%%% ¡settings!
+'SettingsPositionPP'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the settings position panel.

@@ -31,6 +31,8 @@ DESCRIPTION (constant, string) is the description of the ST subject group import
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ST subject group importer from XLS/XLSX.
+%%%% ¡settings!
+'ImporterGroupSubjectST_XLS'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the ST subject group importer from XLS/XLSX.

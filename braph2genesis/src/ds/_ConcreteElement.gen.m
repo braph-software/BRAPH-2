@@ -25,6 +25,8 @@ DESCRIPTION (constant, string) is the description of the concrete element.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the concrete element.
+%%%% ¡settings!
+'ConcreteElement'
 %%%% ¡preset!
 if ~isa(el, class(value))
     error( ...

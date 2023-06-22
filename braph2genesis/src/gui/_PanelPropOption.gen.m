@@ -22,6 +22,8 @@ DESCRIPTION (constant, string) is the description of the option property panel.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the option property panel.
+%%%% ¡settings!
+'PanelPropOption'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the option property panel.

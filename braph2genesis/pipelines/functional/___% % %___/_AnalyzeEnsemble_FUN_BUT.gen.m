@@ -22,6 +22,8 @@ DESCRIPTION (constant, string) is the description of the ensemble-based graph an
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ensemble-based graph analysis with functional data of fixed threshold.
+%%% ¡settings!
+'AnalyzeEnsemble_FUN_BUT'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the ensemble-based graph analysis with functional data of fixed threshold.

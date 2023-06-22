@@ -46,6 +46,8 @@ DESCRIPTION (constant, string) is the description of the graphics settings.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the line graphics settings.
+%%%% ¡settings!
+'Settings'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the graphics settings.

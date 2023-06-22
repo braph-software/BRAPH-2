@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the brain atlas exporter in
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the brain atlas exporter in TXT.
+%%%% ¡settings!
+'ExporterBrainAtlasTXT'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the brain atlas exporter in TXT.

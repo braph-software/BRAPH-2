@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the test A prop idict.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the test A prop idict.
+%%%% ¡settings!
+'ETA_DI'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the test A prop idict.

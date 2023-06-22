@@ -22,6 +22,8 @@ DESCRIPTION (constant, string) is the description of the scalar property panel.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the scalar property panel.
+%%%% ¡settings!
+'PanelPropScalar'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the scalar property panel.

@@ -60,6 +60,8 @@ DESCRIPTION (constant, string) is the description of the graph analysis with con
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the graph analysis with connectivity ordinal multiplex data.
+%%%% ¡settings!
+'AnalyzeGroup_CON_OMP_GA_WU'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the graph analysis with connectivity ordinal multiplex data.

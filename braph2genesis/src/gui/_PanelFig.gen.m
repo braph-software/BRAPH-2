@@ -45,6 +45,8 @@ DESCRIPTION (constant, string) is the description of the figure panel.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the figure panel.
+%%%% ¡settings!
+'PanelFig'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the figure panel.

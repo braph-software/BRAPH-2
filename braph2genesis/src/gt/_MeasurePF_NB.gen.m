@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the panel figure nodal bila
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel figure nodal bilayer measure.
+%%%% ¡settings!
+'MeasurePF_NB'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the panel figure nodal bilayer measure.

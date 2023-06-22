@@ -20,6 +20,8 @@ DESCRIPTION (constant, string) is the description of the binary undirected graph
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the binary undirected graph.
+%%%% ¡settings!
+'GraphBU'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the binary undirected graph.

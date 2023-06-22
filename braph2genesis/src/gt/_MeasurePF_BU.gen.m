@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the panel figure binodal un
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel figure binodal unilayer measure.
+%%%% ¡settings!
+'MeasurePF_BU'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the panel figure binodal unilayer measure.

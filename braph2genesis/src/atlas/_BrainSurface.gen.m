@@ -24,6 +24,8 @@ DESCRIPTION (constant, string) is the description of the brain surface.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the brain surface.
+%%%% ¡settings!
+'BrainSurface'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the brain surface.

@@ -45,6 +45,8 @@ DESCRIPTION (constant, string) is the description of the layout GUI.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the layout GUI.
+%%%% ¡settings!
+'GUILayout'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the layout GUI.

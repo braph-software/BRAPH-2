@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the numerical variable of i
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the numerical variable of interest.
+%%%% ¡settings!
+'VOINumeric'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the numerical variable of interest.

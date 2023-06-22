@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the measure dictionary plot
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the measure dictionary plot.
+%%%% ¡settings!
+'GraphPP_MDict'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the measure dictionary plot.

@@ -20,6 +20,8 @@ DESCRIPTION (constant, string) is the description of the weighted undirected gra
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the weighted undirected graph.
+%%%% ¡settings!
+'GraphWU'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the weighted undirected graph.

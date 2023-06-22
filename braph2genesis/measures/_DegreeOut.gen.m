@@ -19,6 +19,8 @@ DESCRIPTION (constant, string) is the description of the out-degree.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the out-degree.
+%%%% ¡settings!
+'DegreeOut'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the out-degree.

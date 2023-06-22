@@ -71,6 +71,8 @@ DESCRIPTION (constant, string) is the description of the group-based graph analy
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the group-based graph analysis with structural data.
+%%%% ¡settings!
+'AnalyzeGroup_ST_WU'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the group-based graph analysis with structural data.

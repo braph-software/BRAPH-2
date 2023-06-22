@@ -23,6 +23,8 @@ DESCRIPTION (constant, string) is the description of the settings ambient panel.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the settings ambient panel.
+%%%% ¡settings!
+'SettingsAmbientPP'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the settings ambient panel.

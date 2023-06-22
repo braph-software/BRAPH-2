@@ -30,6 +30,8 @@ DESCRIPTION (constant, string) is the description of the CON subject group impor
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the CON subject group importer from XLS/XLSX.
+%%%% ¡settings!
+'ImporterGroupSubjectCON_XLS'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the CON subject group importer from XLS/XLSX.

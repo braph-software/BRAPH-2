@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the exporter.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the exporter.
+%%%% ¡settings!
+'Exporter'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the exporter.

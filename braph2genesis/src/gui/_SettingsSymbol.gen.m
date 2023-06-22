@@ -23,6 +23,8 @@ DESCRIPTION (constant, string) is the description of the symbol settings.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the symbol settings.
+%%%% ¡settings!
+'SettingsSymbol'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the symbol settings.

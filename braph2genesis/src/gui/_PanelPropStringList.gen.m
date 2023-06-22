@@ -25,6 +25,8 @@ DESCRIPTION (constant, string) is the description of the string list property pa
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the string list property panel with a text area.
+%%%% ¡settings!
+'PanelPropStringList'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the string list property panel with a text area.

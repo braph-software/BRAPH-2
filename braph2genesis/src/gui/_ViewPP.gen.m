@@ -27,6 +27,8 @@ DESCRIPTION (constant, string) is the description of the panel of a view with az
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel of a view with azimuth and elevation angles.
+%%%% ¡settings!
+'ViewPP'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the panel of a view with azimuth and elevation angles.

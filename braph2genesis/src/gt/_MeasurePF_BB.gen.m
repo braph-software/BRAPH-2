@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the panel figure binodal bi
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel figure binodal bilayer measure.
+%%%% ¡settings!
+'MeasurePF_BB'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the panel figure binodal bilayer measure.

@@ -27,6 +27,8 @@ DESCRIPTION (constant, string) is the description of the binary undirected multi
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the binary undirected ordinal multilayer with fixed thresholds.
+%%%% ¡settings!
+'OrdMlBUT'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the binary undirected ordinal multilayer with fixed thresholds.

@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the pipeline section.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the pipeline section.
+%%%% ¡settings!
+'PipelineSection'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the pipeline section.

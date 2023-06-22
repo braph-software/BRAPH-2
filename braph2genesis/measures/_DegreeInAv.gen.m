@@ -18,6 +18,8 @@ DESCRIPTION (constant, string) is the description of the average in-degree.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the average in-degree.
+%%%% ¡settings!
+'DegreeInAv'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the average in-degree.

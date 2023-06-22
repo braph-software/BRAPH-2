@@ -25,6 +25,8 @@ DESCRIPTION (constant, string) is the description of the multilayer weighted und
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the multilayer weighted undirected graph.
+%%%% ¡settings!
+'MultilayerWU'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the multilayer weighted undirected graph.

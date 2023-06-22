@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the multiplex weighted dire
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the multiplex weighted directed graph.
+%%%% ¡settings!
+'MultiplexWD'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the multiplex weighted directed graph.

@@ -24,6 +24,8 @@ DESCRIPTION (constant, string) is the description of the line settings.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the line settings.
+%%%% ¡settings!
+'SettingsLine'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the line settings.

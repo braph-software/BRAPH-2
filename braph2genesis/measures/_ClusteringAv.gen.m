@@ -19,6 +19,8 @@ DESCRIPTION (constant, string) is the description of the average clustering.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the average clustering.
+%%%% ¡settings!
+'ClusteringAv'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the average clustering.

@@ -24,6 +24,8 @@ DESCRIPTION (constant, string) is the description of the ordinal multiplex weigh
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ordinal multiplex weighted undirected graph.
+%%%% ¡settings!
+'OrdMxWU'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the ordinal multiplex weighted undirected graph.

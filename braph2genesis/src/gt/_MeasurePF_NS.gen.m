@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the panel figure nodal supe
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel figure nodal superglobal measure.
+%%%% ¡settings!
+'MeasurePF_NS'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the panel figure nodal superglobal measure.

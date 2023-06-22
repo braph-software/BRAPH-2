@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the ordinal multiplex binar
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ordinal multiplex binary directed graph.
+%%%% ¡settings!
+'OrdMxBD'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the ordinal multiplex binary directed graph.

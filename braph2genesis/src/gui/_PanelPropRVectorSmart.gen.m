@@ -25,6 +25,8 @@ DESCRIPTION (constant, string) is the description of the smart row vectorpanel.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the smart row vector panel.
+%%%% ¡settings!
+'PanelPropRVectorSmart'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the smart row vector panel.

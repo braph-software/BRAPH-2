@@ -22,6 +22,8 @@ DESCRIPTION (constant, string) is the description of the ordinal multiplex weigh
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ordinal multiplex weighted directed graph.
+%%%% ¡settings!
+'OrdMxWD'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the ordinal multiplex weighted directed graph.

@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the pipeline code line.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the pipeline code line.
+%%%% ¡settings!
+'PipelineCode'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the pipeline code line.

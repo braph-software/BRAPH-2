@@ -30,6 +30,8 @@ DESCRIPTION (constant, string) is the description of the FUN subject group expor
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the FUN subject group exporter in TXT.
+%%% ¡settings!
+'ExporterGroupSubjectFUN_TXT'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the FUN subject group exporter in TXT.

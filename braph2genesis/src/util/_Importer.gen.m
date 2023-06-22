@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the importer.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the importer.
+%%%% ¡settings!
+'Importer'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the importer.

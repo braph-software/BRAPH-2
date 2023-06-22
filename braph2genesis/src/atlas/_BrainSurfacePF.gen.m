@@ -84,6 +84,8 @@ DESCRIPTION (constant, string) is the description of the panel figure brain surf
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel figure brain surface.
+%%%% ¡settings!
+'BrainSurfacePF'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the panel figure brain surface.

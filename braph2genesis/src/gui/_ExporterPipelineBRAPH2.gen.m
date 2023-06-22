@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the exporter of a pipeline 
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the exporter of a pipeline to a BRAPH2 file.
+%%%% ¡settings!
+'ExporterPipelineBRAPH2'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the exporter of a pipeline v a BRAPH2 file.

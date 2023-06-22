@@ -22,6 +22,8 @@ DESCRIPTION (constant, string) is the description of the indexed dictionary.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the indexed dictionary.
+%%%% ¡settings!
+'IndexedDictionary'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the indexed dictionary.

@@ -42,6 +42,8 @@ DESCRIPTION (constant, string) is the description of the graphical user interfac
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the graphical user interface.
+%%%% ¡settings!
+'GUI'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the graphical user interface.

@@ -77,6 +77,8 @@ DESCRIPTION (constant, string) is the description of the group-based comparison.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the group-based comparison.
+%%%% ¡settings!
+'CompareGroup'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the group-based comparison.

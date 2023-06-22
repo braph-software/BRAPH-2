@@ -23,6 +23,8 @@ DESCRIPTION (constant, string) is the description of the sphere settings.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the sphere settings.
+%%%% ¡settings!
+'SettingsSphere'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the sphere settings.

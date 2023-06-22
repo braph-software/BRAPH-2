@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the test A prop itemlist.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the test A prop itemlist.
+%%%% ¡settings!
+'ETA_IL'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the test A prop itemlist.

@@ -24,6 +24,8 @@ DESCRIPTION (constant, string) is the description of the settings text panel.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the settings text panel.
+%%%% ¡settings!
+'SettingsTextPP'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the settings text panel.

@@ -30,6 +30,8 @@ DESCRIPTION (constant, string) is the description of the FUN subject group impor
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the FUN subject group importer from XLS/XLSX.
+%%% ¡settings!
+'ImporterGroupSubjectFUN_XLS'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the FUN subject group importer from XLS/XLSX.

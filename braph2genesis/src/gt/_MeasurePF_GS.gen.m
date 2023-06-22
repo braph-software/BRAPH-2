@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the panel figure global sup
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel figure global superglobal measure.
+%%%% ¡settings!
+'MeasurePF_GS'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the panel figure global superglobal measure.

@@ -31,6 +31,8 @@ DESCRIPTION (constant, string) is the description of the FUN MP subject group ex
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the FUN MP subject group exporter in XLSX.
+%%%% ¡settings!
+'ExporterGroupSubjectFUN_MP_XLS'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the FUN MP subject group exporter in XLSX.

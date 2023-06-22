@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the test A prop empty.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the test A prop empty.
+%%%% ¡settings!
+'ETA_EM'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the test A prop empty.

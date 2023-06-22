@@ -25,6 +25,8 @@ DESCRIPTION (constant, string) is the description of the multilayer binary undir
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the multilayer binary undirected graph.
+%%%% ¡settings!
+'MultilayerBU'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the multilayer binary undirected graph.

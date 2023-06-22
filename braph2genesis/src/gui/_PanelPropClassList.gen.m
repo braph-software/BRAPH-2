@@ -22,6 +22,8 @@ DESCRIPTION (constant, string) is the description of the class list property pan
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the class list property panel.
+%%%% ¡settings!
+'PanelPropClassList'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the class list property panel.

@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the test A prop line.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the test A prop line.
+%%%% ¡settings!
+'ETA_LN'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the test A prop line.

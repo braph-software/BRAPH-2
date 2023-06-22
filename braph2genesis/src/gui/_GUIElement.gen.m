@@ -42,6 +42,8 @@ DESCRIPTION (constant, string) is the description of the element GUI.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the element GUI.
+%%%% ¡settings!
+'GUIElement'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the element GUI.

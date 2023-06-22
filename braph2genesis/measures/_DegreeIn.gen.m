@@ -19,6 +19,8 @@ DESCRIPTION (constant, string) is the description of the in-degree.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the in-degree.
+%%%% ¡settings!
+'DegreeIn'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the in-degree.

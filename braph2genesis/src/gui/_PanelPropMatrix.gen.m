@@ -28,6 +28,8 @@ DESCRIPTION (constant, string) is the description of the matrix-like property pa
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the matrix-like property panel.
+%%%% ¡settings!
+'PanelPropMatrix'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the matrix-like property panel.

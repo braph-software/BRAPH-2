@@ -23,6 +23,8 @@ DESCRIPTION (constant, string) is the description of the axis settings.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the axis settings.
+%%%% ¡settings!
+'SettingsAxis'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the axis settings.

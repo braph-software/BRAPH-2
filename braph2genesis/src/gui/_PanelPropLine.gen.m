@@ -22,6 +22,8 @@ DESCRIPTION (constant, string) is the description of the line property panel.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the line property panel.
+%%%% ¡settings!
+'PanelPropLine'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the line property panel.

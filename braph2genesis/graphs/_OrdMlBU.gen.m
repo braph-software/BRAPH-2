@@ -25,6 +25,8 @@ DESCRIPTION (constant, string) is the description of the ordinal multilayer bina
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ordinal multilayer binary undirected graph.
+%%%% ¡settings!
+'OrdMlBU'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the ordinal multilayer binary undirected graph.

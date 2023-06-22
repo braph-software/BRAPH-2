@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the clustering.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the clustering.
+%%%% ¡settings!
+'Clustering'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the clustering.

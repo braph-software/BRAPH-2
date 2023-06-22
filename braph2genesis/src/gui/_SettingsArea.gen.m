@@ -23,6 +23,8 @@ DESCRIPTION (constant, string) is the description of the area settings.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the area settings.
+%%%% ¡settings!
+'SettingsArea'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the area settings.

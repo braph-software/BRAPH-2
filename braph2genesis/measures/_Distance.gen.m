@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the distance.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the distance.
+%%%% ¡settings!
+'Distance'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the distance.

@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the panel figure nodal unil
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel figure nodal unilayer measure.
+%%%% ¡settings!
+'MeasurePF_NU'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the panel figure nodal unilayer measure.

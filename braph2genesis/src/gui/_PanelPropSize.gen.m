@@ -22,6 +22,8 @@ DESCRIPTION (constant, string) is the description of the size property panel.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the size property panel.
+%%%% ¡settings!
+'PanelPropSize'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the size property panel.

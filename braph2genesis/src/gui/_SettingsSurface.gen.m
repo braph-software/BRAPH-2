@@ -23,6 +23,8 @@ DESCRIPTION (constant, string) is the description of the surface settings.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the surface settings.
+%%%% ¡settings!
+'SettingsSurface'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the surface settings.

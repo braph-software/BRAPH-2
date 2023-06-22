@@ -22,6 +22,8 @@ DESCRIPTION (constant, string) is the description of the ensenmble-based graph a
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ensenmble-based graph analysis using connectivity data of fixed threshold.
+%%%% ¡settings!
+'AnalyzeEnsemble_CON_BUT'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the ensenmble-based graph analysis using connectivity data of fixed threshold.

@@ -41,6 +41,8 @@ DESCRIPTION (constant, string) is the description of the item-list property pane
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the item-list property panel.
+%%%% ¡settings!
+'PanelPropItemList'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the item-list property panel.

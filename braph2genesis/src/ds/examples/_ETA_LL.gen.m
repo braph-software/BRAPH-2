@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the test A prop cell.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the test A prop cell.
+%%%% ¡settings!
+'ETA_LL'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the test A prop cell.

@@ -47,6 +47,8 @@ DESCRIPTION (constant, string) is the description of the element panel.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the line element panel.
+%%%% ¡settings!
+'PanelElement'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the element panel.

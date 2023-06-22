@@ -19,6 +19,8 @@ DESCRIPTION (constant, string) is the description of the degree.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the degree.
+%%%% ¡settings!
+'Degree'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the degree.

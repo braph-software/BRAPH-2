@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the test A prop option.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the test A prop option.
+%%%% ¡settings!
+'ETA_OP'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the test A prop option.

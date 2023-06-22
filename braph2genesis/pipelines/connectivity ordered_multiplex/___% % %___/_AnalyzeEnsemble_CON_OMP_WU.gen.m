@@ -22,6 +22,8 @@ DESCRIPTION (constant, string) is the description of the ensemble-based graph an
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ensemble-based graph analysis with connectivity ordinal multiplex data.
+%%%% ¡settings!
+'AnalyzeEnsemble_CON_OMP_WU'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the ensemble-based graph analysis with connectivity ordinal multiplex data.

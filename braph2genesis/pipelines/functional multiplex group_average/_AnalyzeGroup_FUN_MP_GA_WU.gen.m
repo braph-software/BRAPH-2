@@ -91,6 +91,8 @@ DESCRIPTION (constant, string) is the description of the graph analysis with fun
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the graph analysis with functional multiplex data.
+%%%% ¡settings!
+'AnalyzeGroup_FUN_MP_GA_WU'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the graph analysis with functional multiplex data.

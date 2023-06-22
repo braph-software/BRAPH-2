@@ -78,6 +78,8 @@ DESCRIPTION (constant, string) is the description of the graph analysis with str
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the graph analysis with structural multiplex data of fixed threshold.
+%%%% ¡settings!
+'AnalyzeGroup_ST_MP_BUT'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the graph analysis with structural multiplex data of fixed threshold.

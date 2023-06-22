@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the binary undirected multi
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the binary undirected multiplex with fixed densities.
+%%%% ¡settings!
+'MultiplexBUD'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the binary undirected multiplex with fixed densities.

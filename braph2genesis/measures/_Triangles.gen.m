@@ -20,6 +20,8 @@ DESCRIPTION (constant, string) is the description of the triangles.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the triangles.
+%%%% ¡settings!
+'Triangles'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the triangles.

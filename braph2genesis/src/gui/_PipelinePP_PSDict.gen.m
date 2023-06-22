@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the pipeline plot.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the pipeline plot.
+%%%% ¡settings!
+'PipelinePP_PSDict'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the pipeline plot.

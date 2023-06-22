@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the panel figure measure.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel figure measure.
+%%%% ¡settings!
+'MeasurePF'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the panel figure measure.

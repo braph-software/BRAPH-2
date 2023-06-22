@@ -29,6 +29,8 @@ DESCRIPTION (constant, string) is the description of the CON subject group expor
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the CON subject group exporter in TXT.
+%%%% ¡settings!
+'ExporterGroupSubjectCON_TXT'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the CON subject group exporter in TXT.

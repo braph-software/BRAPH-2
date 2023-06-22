@@ -20,6 +20,8 @@ DESCRIPTION (constant, string) is the description of the average degree.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the average degree.
+%%%% ¡settings!
+'DegreeAv'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the average degree.

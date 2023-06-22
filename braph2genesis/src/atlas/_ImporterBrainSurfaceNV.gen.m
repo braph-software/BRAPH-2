@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the importer of the brain s
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the importe of the brain surface from NVr.
+%%%% ¡settings!
+'ImporterBrainSurfaceNV'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the importer of the brain surface from NV.
