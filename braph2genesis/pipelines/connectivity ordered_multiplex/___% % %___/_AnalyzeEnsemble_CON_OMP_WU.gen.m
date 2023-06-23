@@ -46,9 +46,9 @@ GR (data, item) is the subject group, which also defines the subject class Subje
 Group('SUB_CLASS', 'SubjectCON_MP')
 
 %%% ¡prop!
-COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
-%%%% ¡default!
-getCompatibleMeasures('OrdMxWU')
+GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
+%%%% ¡settings!
+'OrdMxWU'
 
 %%% ¡prop!
 G_DICT (result, idict) is the graph (OrdMxWU) ensemble obtained from this analysis.
