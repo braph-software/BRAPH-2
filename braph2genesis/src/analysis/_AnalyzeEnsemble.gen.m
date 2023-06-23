@@ -97,39 +97,36 @@ if isempty(varargin)
 end
 measure_class = varargin{1};
 
-% m_list = a.getCompatibleMeasureList('COMPATIBLE_MEASURES');
-% if ~contains(measure_class, m_list)
-%     error(...
-%         [BRAPH2.STR ':Analysis:' BRAPH2.WRONG_INPUT], ...
-%         [BRAPH2.STR ':Analysis:' BRAPH2.WRONG_INPUT ' \\n' ...
-%         measure_class ' is not a compatible Measure with ' a.getClass() '. \\n' ...
-%         'Use ' a.getClass() '().get(''COMPATIBLE_MEASURES'') for a list of compatible measures.'])
-% end
-% 
-% g_dict = a.memorize('G_DICT');
-% for i = 1:1:g_dict.get('LENGTH')
-%     g_dict.get('IT', i).memorize('A');
-% end
-% 
-% me_dict = a.memorize('ME_DICT');
-% if me_dict.get('CONTAINS_KEY', measure_class)
-%     me = me_dict.get('IT', measure_class);
-% else
-% % % %     if isa(a.getr('TEMPLATE'), 'NoValue')
-% % % %         me = MeasureEnsemble( ...
-% % % %             'ID', measure_class, ...
-% % % %             'A', a, ...
-% % % %             'MEASURE', measure_class, ...
-% % % %             'MEASURE_TEMPLATE', eval([measure_class '(varargin{:})']) ...
-% % % %             );
-% % % %     else % the analysis has a template
-% % % %         
-% % % %     end
-% % % %     
-% % % %     me_dict.get('ADD', me);
-% end
-% 
-% value = me;
+m_list = a.memorize('GRAPH_TEMPLATE').get('COMPATIBLE_MEASURES');
+if ~contains(measure_class, m_list)
+    error(...
+        [BRAPH2.STR ':Analysis:' BRAPH2.WRONG_INPUT], ...
+        [BRAPH2.STR ':Analysis:' BRAPH2.WRONG_INPUT ' \\n' ...
+        a.getClass() ' utilizes graphs of type ' a.memorize('GRAPH_TEMPLATE').getClass() '. \\n' ...
+        measure_class ' is not a compatible Measure with ' a.memorize('GRAPH_TEMPLATE').getClass() '. \\n' ...
+        'Use ' a.memorize('GRAPH_TEMPLATE').getClass() '().get(''COMPATIBLE_MEASURES'') for a list of compatible measures.'])
+end
+
+g_dict = a.memorize('G_DICT');
+for i = 1:1:g_dict.get('LENGTH')
+    g_dict.get('IT', i).memorize('A');
+end
+
+me_dict = a.memorize('ME_DICT');
+if me_dict.get('CONTAINS_KEY', measure_class)
+    me = me_dict.get('IT', measure_class);
+else
+    me = MeasureEnsemble( ...
+        'ID', measure_class, ...
+        'A', a, ...
+        'MEASURE', measure_class, ...
+        'MEASURE_TEMPLATE', a.memorize('GRAPH_TEMPLATE').get('MEASURE', measure_class) ...
+        );
+    
+    me_dict.get('ADD', me);
+end
+
+value = me;
 
 %%% ¡prop!
 PFGD (gui, item) contains the panel figure of the graph dictionary.

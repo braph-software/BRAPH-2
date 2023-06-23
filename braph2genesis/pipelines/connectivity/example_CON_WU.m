@@ -38,12 +38,12 @@ a_WU2 = AnalyzeEnsemble_CON_WU( ...
     );
 
 % measure calculation
-strength_WU1 = a_WU1.get('MEASUREENSEMBLE', 'Strength').get('M');
-strength_av_WU1 = a_WU1.get('MEASUREENSEMBLE', 'StrengthAv').get('M');
+% % % strength_WU1 = a_WU1.get('MEASUREENSEMBLE', 'Strength').get('M');
+% % % strength_av_WU1 = a_WU1.get('MEASUREENSEMBLE', 'StrengthAv').get('M');
 distance_WU1 = a_WU1.get('MEASUREENSEMBLE', 'Distance').get('M');
 
-strength_WU2 = a_WU2.get('MEASUREENSEMBLE', 'Strength').get('M');
-strength_av_WU2 = a_WU2.get('MEASUREENSEMBLE', 'StrengthAv').get('M');
+% % % strength_WU2 = a_WU2.get('MEASUREENSEMBLE', 'Strength').get('M');
+% % % strength_av_WU2 = a_WU2.get('MEASUREENSEMBLE', 'StrengthAv').get('M');
 distance_WU2 = a_WU2.get('MEASUREENSEMBLE', 'Distance').get('M');
 
 % measure parameter setting

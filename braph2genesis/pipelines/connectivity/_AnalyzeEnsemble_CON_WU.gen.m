@@ -21,7 +21,7 @@ DESCRIPTION (constant, string) is the description of the ensenmble-based graph a
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ensenmble-based graph analysis using connectivity data.
-%%%% ¡default!
+%%%% ¡settings!
 'AnalyzeEnsemble_CON_WU'
 
 %%% ¡prop!
@@ -69,7 +69,7 @@ for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
         'TEMPLATE', a.memorize('GRAPH_TEMPLATE'), ... % % % 'BAS', ba, ...
         'B', sub.getCallback('CON') ...
         );
-    g_dict.add(g)
+    g_dict.get('ADD', g)
 end
 
 value = g_dict;
@@ -92,3 +92,93 @@ if ~isfile([fileparts(which('SubjectCON')) filesep 'Example data CON XLS' filese
 end
 
 example_CON_WU
+
+%%% ¡test!
+%%%% ¡name!
+GUI - Analysis
+%%%% ¡probability!
+.01
+%%%% ¡parallel!
+false
+%%%% ¡code!
+% % % im_ba = ImporterBrainAtlasXLS('FILE', 'destrieux_atlas.xlsx');
+% % % ba = im_ba.get('BA');
+% % % 
+% % % gr = Group('SUB_CLASS', 'SubjectST', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST'));
+% % % for i = 1:1:50
+% % %     sub = SubjectST( ...
+% % %         'ID', ['SUB ST ' int2str(i)], ...
+% % %         'LABEL', ['Subejct ST ' int2str(i)], ...
+% % %         'NOTES', ['Notes on subject ST ' int2str(i)], ...
+% % %         'BA', ba, ...
+% % %         'ST', rand(ba.get('BR_DICT').get('LENGTH'), 1) ...
+% % %         );
+% % %     sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+% % %     sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+% % %     gr.get('SUB_DICT').get('ADD', sub)
+% % % end
+% % % 
+% % % a = AnalyzeGroup_ST_WU('GR', gr, 'CORRELATION_RULE', Correlation.PEARSON);
+% % % 
+% % % gui = GUIElement('PE', a, 'CLOSEREQ', false);
+% % % gui.get('DRAW')
+% % % gui.get('SHOW')
+% % % 
+% % % gui.get('CLOSE')
+
+%%% ¡test!
+%%%% ¡name!
+GUI - Comparison
+%%%% ¡probability!
+.01
+%%%% ¡parallel!
+false
+%%%% ¡code!
+% % % im_ba = ImporterBrainAtlasXLS('FILE', 'destrieux_atlas.xlsx');
+% % % ba = im_ba.get('BA');
+% % % 
+% % % gr1 = Group('SUB_CLASS', 'SubjectST', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST'));
+% % % for i = 1:1:50
+% % %     sub = SubjectST( ...
+% % %         'ID', ['SUB ST ' int2str(i)], ...
+% % %         'LABEL', ['Subejct ST ' int2str(i)], ...
+% % %         'NOTES', ['Notes on subject ST ' int2str(i)], ...
+% % %         'BA', ba, ...
+% % %         'ST', rand(ba.get('BR_DICT').get('LENGTH'), 1) ...
+% % %         );
+% % %     sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+% % %     sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+% % %     gr1.get('SUB_DICT').get('ADD', sub)
+% % % end
+% % % 
+% % % gr2 = Group('SUB_CLASS', 'SubjectST', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST'));
+% % % for i = 1:1:50
+% % %     sub = SubjectST( ...
+% % %         'ID', ['SUB ST ' int2str(i)], ...
+% % %         'LABEL', ['Subejct ST ' int2str(i)], ...
+% % %         'NOTES', ['Notes on subject ST ' int2str(i)], ...
+% % %         'BA', ba, ...
+% % %         'ST', rand(ba.get('BR_DICT').get('LENGTH'), 1) ...
+% % %         );
+% % %     sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+% % %     sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+% % %     gr2.get('SUB_DICT').get('ADD', sub)
+% % % end
+% % % 
+% % % a1 = AnalyzeGroup_ST_WU('GR', gr1, 'CORRELATION_RULE', Correlation.PEARSON);
+% % % a2 = AnalyzeGroup_ST_WU('GR', gr2, 'TEMPLATE', a1);
+% % % 
+% % % c = CompareGroup( ...
+% % %     'P', 10, ...
+% % %     'A1', a1, ...
+% % %     'A2', a2, ...
+% % %     'WAITBAR', true, ...
+% % %     'VERBOSE', false, ...
+% % %     'MEMORIZE', true ...
+% % %     );
+% % % 
+% % % gui = GUIElement('PE', c, 'CLOSEREQ', false);
+% % % gui.get('DRAW')
+% % % gui.get('SHOW')
+% % % 
+% % % gui.get('CLOSE')
