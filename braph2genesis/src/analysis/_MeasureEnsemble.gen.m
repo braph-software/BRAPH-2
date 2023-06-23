@@ -35,14 +35,16 @@ LABEL (metadata, string) is an extended label of the graph ensemble measure.
 'MeasureEnsemble label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the brain atlas.
+NOTES (metadata, string) are some specific notes about the graph ensemble measure.
 %%%% ¡default!
 'MeasureEnsemble notes'
 
 %% ¡props!
 
 %%% ¡prop!
-MEASURE (data, string) is the measure class.
+MEASURE (data, class) is the measure class.
+%%%% ¡settings!
+'Measure'
 
 %%% ¡prop!
 MEASURE_TEMPLATE (parameter, item) provides the measure parameters. 

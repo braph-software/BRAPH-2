@@ -9,43 +9,63 @@ and the 95%% confidence interval.
 %%% ¡seealso!
 CompareEnsemble, AnalyzeEnsemble
 
+%% ¡props_update!
 
+%%% ¡prop!
+NAME (constant, string) is the name of the results of an ensemble-based comparison.
+%%%% ¡default!
+'ComparisonEnsemble'
 
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the results of an ensemble-based comparison.
+%%%% ¡default!
+'ComparisonEnsemble contains the results of an ensemble-based comparison for a given measure. Specifically, it contains the one-tailed and two-tailed p-values and the 95%% confidence interval.'
 
-% % % %% ¡props!
-% % % 
-% % % %%% ¡prop!
-% % % ID (data, string) is a few-letter code for the ensemble-based comparison results.
-% % % 
-% % % %%% ¡prop!
-% % % LABEL (metadata, string) is an extended label of the ensemble-based comparison results.
-% % % 
-% % % %%% ¡prop!
-% % % NOTES (metadata, string) are some specific notes about the ensemble-based comparison results.
-% % % %%%% ¡gui!
-% % % pr = PanelPropStringTextArea('EL', cp, 'PROP', ComparisonEnsemble.NOTES, varargin{:});
-% % % 
-% % % %%% ¡prop!
-% % % MEASURE (data, string) is the measure class.
-% % % 
-% % % %%% ¡prop!
-% % % MEASURE_TEMPLATE (data, item) provides the measure parameters.
-% % % %%%% ¡settings!
-% % % 'Measure'
-% % % 
-% % % %%% ¡prop!
-% % % C (data, item) is the ensemble-based comparison.
-% % % %%%% ¡settings!
-% % % 'CompareEnsemble'
-% % % 
-% % % %%% ¡prop!
-% % % DIFF (result, cell) is the ensemble comparison value.
-% % % %%%% ¡calculate!
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the results of an ensemble-based comparison.
+%%%% ¡settings!
+'ComparisonEnsemble'
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the results of an ensemble-based comparison.
+%%%% ¡default!
+'ComparisonEnsemble ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the results of an ensemble-based comparison.
+%%%% ¡default!
+'ComparisonEnsemble label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the results of an ensemble-based comparison.
+%%%% ¡default!
+'ComparisonEnsemble notes'
+
+%% ¡props!
+
+%%% ¡prop!
+MEASURE (data, string) is the measure class.
+%%%% ¡settings!
+'Measure'
+
+%%% ¡prop!
+MEASURE_TEMPLATE (data, item) provides the measure parameters.
+%%%% ¡settings!
+'Measure'
+
+%%% ¡prop!
+C (data, item) is the ensemble-based comparison.
+%%%% ¡settings!
+'CompareEnsemble'
+
+%%% ¡prop!
+DIFF (result, cell) is the ensemble comparison value.
+%%%% ¡_calculate!
 % % % if isempty(cp.diff)
 % % %     [cp.diff, cp.p1, cp.p2, cp.ci_lower, cp.ci_upper] = calculate_results(cp);
 % % % end
 % % % value = cp.diff;
-% % % %%%% ¡gui!
+%%%% ¡_gui!
 % % % g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
 % % % measure = cp.get('MEASURE');
 % % % 
@@ -151,15 +171,15 @@ CompareEnsemble, AnalyzeEnsemble
 % % %             )
 % % %     end
 % % % end
-% % % 
-% % % %%% ¡prop!
-% % % P1 (result, cell) is the one-tailed p-value.
-% % % %%%% ¡calculate!
+
+%%% ¡prop!
+P1 (result, cell) is the one-tailed p-value.
+%%%% ¡_calculate!
 % % % if isempty(cp.p1)
 % % %     [cp.diff, cp.p1, cp.p2, cp.ci_lower, cp.ci_upper] = calculate_results(cp);
 % % % end
 % % % value = cp.p1;
-% % % %%%% ¡gui!
+%%%% ¡_gui!
 % % % g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
 % % % measure = cp.get('MEASURE');
 % % % 
@@ -265,15 +285,15 @@ CompareEnsemble, AnalyzeEnsemble
 % % %             )
 % % %     end
 % % % end
-% % % 
-% % % %%% ¡prop!
-% % % P2 (result, cell) is the two-tailed p-value.
-% % % %%%% ¡calculate!
+
+%%% ¡prop!
+P2 (result, cell) is the two-tailed p-value.
+%%%% ¡_calculate!
 % % % if isempty(cp.p2)
 % % %     [cp.diff, cp.p1, cp.p2, cp.ci_lower, cp.ci_upper] = calculate_results(cp);
 % % % end
 % % % value = cp.p2;
-% % % %%%% ¡gui!
+%%%% ¡_gui!
 % % % g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
 % % % measure = cp.get('MEASURE');
 % % % 
@@ -379,15 +399,15 @@ CompareEnsemble, AnalyzeEnsemble
 % % %             )
 % % %     end
 % % % end
-% % % 
-% % % %%% ¡prop!
-% % % CIL (result, cell) is the lower value of the 95%% confidence interval.
-% % % %%%% ¡calculate!
+
+%%% ¡prop!
+CIL (result, cell) is the lower value of the 95%% confidence interval.
+%%%% ¡_calculate!
 % % % if isempty(cp.ci_lower)
 % % %     [cp.diff, cp.p1, cp.p2, cp.ci_lower, cp.ci_upper] = calculate_results(cp);
 % % % end
 % % % value = cp.ci_lower;
-% % % %%%% ¡gui!
+%%%% ¡_gui!
 % % % g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
 % % % measure = cp.get('MEASURE');
 % % % 
@@ -493,15 +513,15 @@ CompareEnsemble, AnalyzeEnsemble
 % % %             )
 % % %     end
 % % % end
-% % % 
-% % % %%% ¡prop!
-% % % CIU (result, cell) is the upper value of the 95%% confidence interval.
-% % % %%%% ¡calculate!
+
+%%% ¡prop!
+CIU (result, cell) is the upper value of the 95%% confidence interval.
+%%%% ¡_calculate!
 % % % if isempty(cp.ci_upper)
 % % %     [cp.diff, cp.p1, cp.p2, cp.ci_lower, cp.ci_upper] = calculate_results(cp);
 % % % end
 % % % value = cp.ci_upper;
-% % % %%%% ¡gui!
+%%%% ¡_gui!
 % % % g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
 % % % measure = cp.get('MEASURE');
 % % % 
@@ -607,19 +627,19 @@ CompareEnsemble, AnalyzeEnsemble
 % % %             )
 % % %     end
 % % % end
-% % % 
-% % % %%% ¡prop!
-% % % QVALUE (metadata, scalar) is the selected qvalue threshold.
-% % % %%%% ¡default!
-% % % 0.05
-% % % %%%% ¡gui!
+
+%%% ¡prop!
+QVALUE (metadata, scalar) is the selected qvalue threshold.
+%%%% ¡default!
+0.05
+%%%% ¡_gui!
 % % % pr = PPQValue('EL', cp, 'PROP', ComparisonEnsemble.QVALUE, varargin{:});
-% % % 
-% % % %%% ¡prop!
-% % % PFC (gui, item) contains the panel figure of the comparison.
-% % % %%%% ¡settings!
+
+%%% ¡prop!
+PFC (gui, item) contains the panel figure of the comparison.
+%%%% ¡_settings!
 % % % 'PFComparisonEnsemble'
-% % % %%%% ¡postprocessing!
+%%%% ¡_postprocessing!
 % % % if ~braph2_testing % to avoid problems with isqual when the element is recursive
 % % %     if isa(cp.getr('PFC'), 'NoValue')
 % % %         measure = cp.get('MEASURE');
@@ -657,16 +677,16 @@ CompareEnsemble, AnalyzeEnsemble
 % % %         end
 % % %     end
 % % % end
-% % % %%%% ¡gui!
+%%%% ¡_gui!
 % % % pr = PanelPropItem('EL', cp, 'PROP', ComparisonEnsemble.PFC, ...
 % % %     'GUICLASS', 'GUIFig', ...
 % % %     varargin{:});
-% % % 
-% % % %%% ¡prop!
-% % % PFBG (gui, item) contains the panel figure of the brain graph.
-% % % %%%% ¡settings!
+
+%%% ¡_prop!
+PFBG (gui, item) contains the panel figure of the brain graph.
+%%%% ¡_settings!
 % % % 'PFBrainGraphComparison'
-% % % %%%% ¡postprocessing!
+%%%% ¡_postprocessing!
 % % % if ~braph2_testing % to avoid problems with isqual when the element is recursive
 % % %     if isa(cp.getr('PFBG'), 'NoValue')
 % % %         c = cp.get('C');
@@ -708,19 +728,19 @@ CompareEnsemble, AnalyzeEnsemble
 % % %         end
 % % %     end
 % % % end
-% % % %%%% ¡gui!
+%%%% ¡_gui!
 % % % pr = PanelPropItem('EL', cp, 'PROP', ComparisonEnsemble.PFBG, ...
 % % %     'GUICLASS', 'GUIFig', ...
 % % %     varargin{:});
-% % % 
-% % % %% ¡properties!
+
+%% ¡_properties!
 % % % diff
 % % % p1
 % % % p2
 % % % ci_lower
 % % % ci_upper
-% % % 
-% % % %% ¡methods!
+
+%% ¡_methods!
 % % % function [diff, p1, p2, ci_lower, ci_upper] = calculate_results(cp)
 % % %     %CALCULATE_RESULTS calculates the comparison results.
 % % %     %
