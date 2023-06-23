@@ -53,35 +53,26 @@ getCompatibleMeasures('GraphWU')
 G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analysis.
 %%%% ¡settings!
 'GraphWU'
-%%%% ¡_default!
-% % % IndexedDictionary('IT_CLASS', 'GraphWU')
-%%%% ¡_calculate!
-% % % g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
-% % % gr = a.get('GR');
-% % % 
+%%%% ¡calculate!
+g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
+gr = a.get('GR');
+
 % % % ba = BrainAtlas();
 % % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0 
 % % %     ba = gr.get('SUB_DICT').getItem(1).get('BA');
 % % % end
-% % % 
-% % % gr = a.get('GR');
-% % % for i = 1:1:gr.get('SUB_DICT').length()
-% % % 	sub = gr.get('SUB_DICT').getItem(i);
-% % %     g = GraphWU( ...
-% % %         'ID', ['g ' sub.get('ID')], ...
-% % %         'BAS', ba, ...
-% % %         'B', Callback('EL', sub, 'TAG', 'CON') ...
-% % %         );
-% % %     g_dict.add(g)
-% % %     
-% % %     if isa(a.getr('TEMPLATE'), 'NoValue')
-% % %         g.set('TEMPLATE', a.memorize('GRAPH_TEMPLATE'))
-% % %     else
-% % %         g.set('TEMPLATE', a.get('TEMPLATE').memorize('GRAPH_TEMPLATE'))
-% % %     end
-% % % end
-% % % 
-% % % value = g_dict;
+
+for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
+	sub = gr.get('SUB_DICT').get('IT', i);
+    g = GraphWU( ...
+        'ID', ['graph ' sub.get('ID')], ... 
+        'TEMPLATE', a.memorize('GRAPH_TEMPLATE'), ... % % % 'BAS', ba, ...
+        'B', sub.getCallback('CON') ...
+        );
+    g_dict.add(g)
+end
+
+value = g_dict;
 
 %%% ¡prop!
 ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
