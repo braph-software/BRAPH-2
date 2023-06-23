@@ -128,8 +128,8 @@ end
 
 value = me;
 
-%%% ¡prop!
-PFGD (gui, item) contains the panel figure of the graph dictionary.
+%%% ¡_prop! % % %TBE???
+% % % PFGD (gui, item) contains the panel figure of the graph dictionary.
 %%%% ¡_settings!
 % % % 'PFAnalysisEnsemble'
 %%%% ¡_postprocessing!
