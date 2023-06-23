@@ -101,30 +101,30 @@ GUI - Analysis
 %%%% ¡parallel!
 false
 %%%% ¡code!
-% % % im_ba = ImporterBrainAtlasXLS('FILE', 'destrieux_atlas.xlsx');
-% % % ba = im_ba.get('BA');
-% % % 
-% % % gr = Group('SUB_CLASS', 'SubjectST', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST'));
-% % % for i = 1:1:50
-% % %     sub = SubjectST( ...
-% % %         'ID', ['SUB ST ' int2str(i)], ...
-% % %         'LABEL', ['Subejct ST ' int2str(i)], ...
-% % %         'NOTES', ['Notes on subject ST ' int2str(i)], ...
-% % %         'BA', ba, ...
-% % %         'ST', rand(ba.get('BR_DICT').get('LENGTH'), 1) ...
-% % %         );
-% % %     sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
-% % %     sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
-% % %     gr.get('SUB_DICT').get('ADD', sub)
-% % % end
-% % % 
-% % % a = AnalyzeGroup_ST_WU('GR', gr, 'CORRELATION_RULE', Correlation.PEARSON);
-% % % 
-% % % gui = GUIElement('PE', a, 'CLOSEREQ', false);
-% % % gui.get('DRAW')
-% % % gui.get('SHOW')
-% % % 
-% % % gui.get('CLOSE')
+im_ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx');
+ba = im_ba.get('BA');
+
+gr = Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON'));
+for i = 1:1:50
+    sub = SubjectCON( ...
+        'ID', ['SUB CON ' int2str(i)], ...
+        'LABEL', ['Subejct CON ' int2str(i)], ...
+        'NOTES', ['Notes on subject CON ' int2str(i)], ...
+        'BA', ba, ...
+        'CON', rand(ba.get('BR_DICT').get('LENGTH')) ...
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr.get('SUB_DICT').get('ADD', sub)
+end
+
+a = AnalyzeEnsemble_CON_WU('GR', gr);
+
+gui = GUIElement('PE', a, 'CLOSEREQ', false);
+gui.get('DRAW')
+gui.get('SHOW')
+
+gui.get('CLOSE')
 
 %%% ¡test!
 %%%% ¡name!
