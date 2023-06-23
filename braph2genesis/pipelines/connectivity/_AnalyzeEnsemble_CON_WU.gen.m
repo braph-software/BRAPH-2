@@ -7,6 +7,44 @@ This ensemble-based graph analysis (AnalyzeEnsemble_CON_WU) analyzes connectivit
 %%% ¡seealso!
 SubjectCON, GraphWU
 
+%% ¡_layout!
+
+% % % %%% ¡prop!
+% % % %%%% ¡id!
+% % % AnalyzeEnsemble_CON_WU.ID
+% % % %%%% ¡title!
+% % % Analysis ID
+% % % 
+% % % %%% ¡prop!
+% % % %%%% ¡id!
+% % % AnalyzeEnsemble_CON_WU.LABEL
+% % % %%%% ¡title!
+% % % Analysis NAME
+% % % 
+% % % %%% ¡prop!
+% % % %%%% ¡id!
+% % % AnalyzeEnsemble_CON_WU.WAITBAR
+% % % %%%% ¡title!
+% % % WAITBAR ON/OFF
+% % % 
+% % % %%% ¡prop!
+% % % %%%% ¡id!
+% % % AnalyzeEnsemble_CON_WU.GR
+% % % %%%% ¡title!
+% % % SUBJECT GROUP
+% % % 
+% % % %%% ¡prop!
+% % % %%%% ¡id!
+% % % AnalyzeEnsemble_CON_WU.ME_DICT
+% % % %%%% ¡title!
+% % % MEASURES (group averages)
+% % % 
+% % % %%% ¡prop!
+% % % %%%% ¡id!
+% % % AnalyzeEnsemble_CON_WU.NOTES
+% % % %%%% ¡title!
+% % % Analysis NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!
