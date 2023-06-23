@@ -57,21 +57,6 @@ A (data, item) is the ensemble-based graph analysis.
 %%% ¡prop!
 M (result, cell) is the measure result.
 %%%% ¡calculate!
-% % % core_measure = me.get('MEASURE_TEMPLATE');
-% % % % get parameters from core measure
-% % % j = 1;
-% % % varargin = {};
-% % % if Measure.getPropNumber() ~= core_measure.getPropNumber()
-% % %     for i = Measure.getPropNumber() + 1:core_measure.getPropNumber()
-% % %         if ~isa(core_measure.getr(i), 'NoValue')
-% % %             varargin{j} = core_measure.getPropTag(i);
-% % %             varargin{j + 1} = core_measure.getr(i);
-% % %         end
-% % %         j = j + 2;
-% % %     end
-% % %     varargin = varargin(~cellfun('isempty', varargin));
-% % % end
-
 m_list = cellfun(@(x) x.get('MEASURE', me.get('MEASURE')).get('M'), me.get('A').get('G_DICT').get('IT_LIST'), 'UniformOutput', false);
 
 if isempty(m_list)
