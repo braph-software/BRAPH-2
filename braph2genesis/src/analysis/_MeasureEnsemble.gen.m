@@ -46,10 +46,10 @@ MEASURE (data, class) is the measure class.
 %%%% ¡settings!
 'Measure'
 
-%%% ¡prop!
-MEASURE_TEMPLATE (parameter, item) provides the measure parameters. 
-%%%% ¡settings!
-'Measure'
+%%% ¡_prop!
+% % % MEASURE_TEMPLATE (parameter, item) provides the measure parameters. 
+% % % %%%% ¡settings!
+% % % 'Measure'
 
 %%% ¡prop!
 A (data, item) is the ensemble-based graph analysis.

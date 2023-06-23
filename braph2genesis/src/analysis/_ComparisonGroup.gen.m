@@ -43,7 +43,9 @@ NOTES (metadata, string) are some specific notes about the group-based compariso
 %% ¡props!
 
 %%% ¡prop!
-MEASURE (data, string) is the measure class.
+MEASURE (data, class) is the measure class.
+%%%% ¡settings!
+'Measure'
 
 %%% ¡prop!
 C (data, item) is the group-based comparison.

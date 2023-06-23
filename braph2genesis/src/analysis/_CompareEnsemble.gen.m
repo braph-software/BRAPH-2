@@ -8,92 +8,111 @@ which need to be of the same class.
 %%% ¡seealso!
 AnalyzeEnsemble, ComparisonEnsemble
 
+%% ¡props_update!
 
+%%% ¡prop!
+NAME (constant, string) is the name of the comparison between two ensemble-based analyses.
+%%%% ¡default!
+'CompareEnsemble'
 
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the comparison between two ensemble-based analyses.
+%%%% ¡default!
+'CompareEnsemble compares two ensemble-based analyses, which need to be of the same class.'
 
-% % % %% ¡props!
-% % % 
-% % % %%% ¡prop!
-% % % ID (data, string) is a few-letter code for the comparison.
-% % % 
-% % % %%% ¡prop!
-% % % LABEL (metadata, string) is an extended label of the comparison.
-% % % 
-% % % %%% ¡prop!
-% % % NOTES (metadata, string) are some specific notes about the comparison.
-% % % pr = PanelPropStringTextArea('EL', c, 'PROP', CompareEnsemble.NOTES, varargin{:});
-% % % 
-% % % %%% ¡prop!
-% % % WAITBAR (gui, logical) detemines whether to show the waitbar.
-% % % %%%% ¡default!
-% % % true
-% % % 
-% % % %%% ¡prop!
-% % % VERBOSE (gui, logical) sets whether to write the progress of the comparisons.
-% % % %%%% ¡default!
-% % % false
-% % % 
-% % % %%% ¡prop!
-% % % INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interruptible for multitasking.
-% % % %%%% ¡default!
-% % % .001
-% % % 
-% % % %%% ¡prop!
-% % % MEMORIZE (metadata, logical) sets whether to memorize the permuted analysis.
-% % % 
-% % % %%% ¡prop!
-% % % P (parameter, scalar) is the permutation number.
-% % % %%%% ¡default!
-% % % 1e+3
-% % % %%%% ¡check_prop!
-% % % check = value > 0 && value == round(value);
-% % % 
-% % % %%% ¡prop!
-% % % LONGITUDINAL (parameter, logical) determines whether the comparison is longitudinal.
-% % % 
-% % % %%% ¡prop!
-% % % A1 (data, item) is the first analysis to compare.
-% % % %%%% ¡settings!
-% % % 'AnalyzeEnsemble'
-% % % %%%% ¡check_value!
-% % % check = isa(value, c.get('A2').getClass());
-% % % 
-% % % %%% ¡prop!
-% % % A2 (data, item) is the second analysis to compare.
-% % % %%%% ¡settings!
-% % % 'AnalyzeEnsemble'
-% % % %%%% ¡check_value!
-% % % check = isa(value, c.get('A1').getClass());
-% % % 
-% % % %%% ¡prop!
-% % % PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
-% % % %%%% ¡calculate!
-% % % value = randi(intmax('uint32'), 1, c.get('P'));
-% % % 
-% % % %%% ¡prop!
-% % % A1_PERM_DICT (result, idict) is the list of permuted analyses for the first analysis.
-% % % %%%% ¡settings!
-% % % 'AnalyzeEnsemble'
-% % % %%%% ¡calculate!
-% % % value = IndexedDictionary('IT_CLASS', 'AnalyzeEnsemble', 'IT_KEY', 1);
-% % % 
-% % % %%% ¡prop!
-% % % A2_PERM_DICT (result, idict) is the list of permuted analyses for the second analysis.
-% % % %%%% ¡settings!
-% % % 'AnalyzeEnsemble'
-% % % %%%% ¡calculate!
-% % % value = IndexedDictionary('IT_CLASS', 'AnalyzeEnsemble', 'IT_KEY', 1);
-% % % 
-% % % %%% ¡prop!
-% % % CP_DICT (result, idict) contains the results of the comparison.
-% % % %%%% ¡settings!
-% % % 'ComparisonEnsemble'
-% % % %%%% ¡calculate!
-% % % value = IndexedDictionary('IT_CLASS', 'ComparisonEnsemble', 'IT_KEY', 4);
-% % % %%%% ¡gui!
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the comparison between two ensemble-based analyses.
+%%%% ¡settings!
+'CompareEnsemble'
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the comparison between two ensemble-based analyses.
+%%%% ¡default!
+'CompareEnsemble ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the comparison between two ensemble-based analyses.
+%%%% ¡default!
+'CompareEnsemble label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the comparison between two ensemble-based analyses.
+%%%% ¡default!
+'CompareEnsemble notes'
+
+%% ¡props!
+
+%%% ¡prop!
+WAITBAR (gui, logical) detemines whether to show the waitbar.
+%%%% ¡default!
+true
+
+%%% ¡prop!
+VERBOSE (gui, logical) sets whether to write the progress of the comparisons.
+%%%% ¡default!
+false
+
+%%% ¡prop!
+INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interruptible for multitasking.
+%%%% ¡default!
+.001
+
+%%% ¡prop!
+MEMORIZE (metadata, logical) sets whether to memorize the permuted analysis.
+
+%%% ¡prop!
+P (parameter, scalar) is the permutation number.
+%%%% ¡default!
+1e+4
+%%%% ¡check_prop!
+check = value > 0 && value == round(value);
+
+%%% ¡prop!
+LONGITUDINAL (parameter, logical) determines whether the comparison is longitudinal.
+
+%%% ¡prop!
+A1 (data, item) is the first analysis to compare.
+%%%% ¡settings!
+'AnalyzeEnsemble'
+%%%% ¡check_value!
+check = isa(value, c.get('A2').getClass());
+
+%%% ¡prop!
+A2 (data, item) is the second analysis to compare.
+%%%% ¡settings!
+'AnalyzeEnsemble'
+%%%% ¡check_value!
+check = isa(value, c.get('A1').getClass());
+
+%%% ¡prop!
+PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
+%%%% ¡calculate!
+value = randi(intmax('uint32'), 1, c.get('P'));
+
+%%% ¡prop!
+A1_PERM_DICT (result, idict) is the list of permuted analyses for the first analysis.
+%%%% ¡settings!
+'AnalyzeEnsemble'
+%%%% ¡calculate!
+value = IndexedDictionary('IT_CLASS', 'AnalyzeEnsemble', 'IT_KEY', 1);
+
+%%% ¡prop!
+A2_PERM_DICT (result, idict) is the list of permuted analyses for the second analysis.
+%%%% ¡settings!
+'AnalyzeEnsemble'
+%%%% ¡calculate!
+value = IndexedDictionary('IT_CLASS', 'AnalyzeEnsemble', 'IT_KEY', 1);
+
+%%% ¡prop!
+CP_DICT (result, idict) contains the results of the comparison.
+%%%% ¡settings!
+'ComparisonEnsemble'
+%%%% ¡calculate!
+value = IndexedDictionary('IT_CLASS', 'ComparisonEnsemble', 'IT_KEY', ComparisonEnsemble.MEASURE);
+%%%% ¡_gui!
 % % % pr = PPCompareEnsemble_CpDict('EL', c, 'PROP', CompareEnsemble.CP_DICT, 'WAITBAR', Callback('EL', c, 'TAG', 'WAITBAR'), varargin{:});
-% % % 
-% % % %% ¡methods!
+
+%% ¡_methods!
 % % % function cp = getComparison(c, measure_class, varargin)
 % % %     %GETComparisonE returns comparison.
 % % %     %
