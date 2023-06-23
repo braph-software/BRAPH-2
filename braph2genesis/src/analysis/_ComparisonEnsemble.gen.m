@@ -48,10 +48,10 @@ MEASURE (data, class) is the measure class.
 %%%% ¡settings!
 'Measure'
 
-%%% ¡prop!
-MEASURE_TEMPLATE (data, item) provides the measure parameters.
-%%%% ¡settings!
-'Measure'
+%%% ¡_prop!
+% % % MEASURE_TEMPLATE (data, item) provides the measure parameters.
+% % % %%%% ¡_settings!
+% % % 'Measure'
 
 %%% ¡prop!
 C (data, item) is the ensemble-based comparison.
