@@ -34,20 +34,22 @@ a_WU1 = AnalyzeEnsemble_CON_WU( ...
     );
 
 a_WU2 = AnalyzeEnsemble_CON_WU( ...
+    'TEMPLATE', a_WU1, ...
     'GR', gr2 ...
     );
 
 % measure calculation
 % % % strength_WU1 = a_WU1.get('MEASUREENSEMBLE', 'Strength').get('M');
 % % % strength_av_WU1 = a_WU1.get('MEASUREENSEMBLE', 'StrengthAv').get('M');
+degree_WU1 = a_WU1.get('MEASUREENSEMBLE', 'Degree').get('M');
+degreeav_WU1 = a_WU1.get('MEASUREENSEMBLE', 'DegreeAv').get('M');
 distance_WU1 = a_WU1.get('MEASUREENSEMBLE', 'Distance').get('M');
 
 % % % strength_WU2 = a_WU2.get('MEASUREENSEMBLE', 'Strength').get('M');
 % % % strength_av_WU2 = a_WU2.get('MEASUREENSEMBLE', 'StrengthAv').get('M');
+degree_WU2 = a_WU2.get('MEASUREENSEMBLE', 'Degree').get('M');
+degreeav_WU2 = a_WU2.get('MEASUREENSEMBLE', 'DegreeAv').get('M');
 distance_WU2 = a_WU2.get('MEASUREENSEMBLE', 'Distance').get('M');
-
-% % % % measure parameter setting
-% % % ecc_WU1 = a_WU1.get('MEASUREENSEMBLE', 'Eccentricity').set('MEASURE_TEMPLATE', Eccentricity('rule', 'subgraphs')).get('M');
 
 % % % % comparison
 % % % c_WU = CompareEnsemble( ...
