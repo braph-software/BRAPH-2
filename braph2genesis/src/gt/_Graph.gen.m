@@ -610,7 +610,7 @@ else
     if isa(g.getr('TEMPLATE'), 'NoValue')
         m = eval([measure_class '(''ID'', measure_class, ''G'', g)']);
     else % the graph has a template
-        m_template = g.get('TEMPLATE').get('MEASURE', measure_class);
+        m_template = g.get('TEMPLATE').get('MEASURE', measure_class); %#ok<NASGU>
         
         m = eval([measure_class '(''ID'', measure_class, ''G'', g, ''TEMPLATE'', m_template)']);
     end
