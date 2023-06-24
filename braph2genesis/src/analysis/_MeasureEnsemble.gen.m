@@ -57,7 +57,7 @@ A (data, item) is the ensemble-based graph analysis.
 'AnalyzeEnsemble'
 
 %%% ¡prop!
-M (result, cell) is the measure result.
+M (result, cell) is the measure group-average result.
 %%%% ¡calculate!
 m_list = cellfun(@(x) x.get('MEASURE', me.get('MEASURE')).get('M'), me.get('A').get('G_DICT').get('IT_LIST'), 'UniformOutput', false);
 
