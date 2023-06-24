@@ -135,26 +135,38 @@ if isempty(varargin)
 end
 measure_class = varargin{1};
 
+% % % %TBE
 % % %     [wb, varargin] = get_and_remove_from_varargin([], 'waitbar', varargin{:});
 % % %     
 % % %     if ~isempty(wb)
 % % %         c.set('waitbar', true);
 % % %     end
-% % % 
-% % %     cp_dict = c.memorize('CP_DICT');
-% % %     if cp_dict.containsKey(measure_class)
-% % %         cp = cp_dict.getItem(measure_class);
-% % %     else
-% % %         cp = ComparisonEnsemble( ...
-% % %             'ID', [measure_class ' comparison ' c.get('A1').get('ID') ' vs. ' c.get('A2').get('ID')], ...
-% % %             'MEASURE', measure_class, ...
-% % %             'MEASURE_TEMPLATE', c.memorize('A1').memorize('GRAPH_TEMPLATE').getMeasure(measure_class), ...
-% % %             'C', c, ...
-% % %             varargin{:} ...
-% % %             );
-% % %         cp_dict.add(cp);
-% % %     end
-% % % end
+
+g = c.get('A1').get('GRAPH_TEMPLATE');
+m_list = g.get('COMPATIBLE_MEASURES');
+assert( ...
+    contains(measure_class, m_list), ...
+    [BRAPH2.STR ':CompareEnsemble:' BRAPH2.WRONG_INPUT], ...
+    [BRAPH2.STR ':CompareEnsemble:' BRAPH2.WRONG_INPUT ' \\n' ...
+	 c.get('A1').getClass() ' utilizes graphs of type ' g.getClass() '. \\n' ...
+     measure_class ' is not a compatible Measure with ' g.getClass() '. \\n' ...
+    'Use ' g.getClass() '().get(''COMPATIBLE_MEASURES'') for a list of compatible measures.']);
+
+
+cp_dict = c.memorize('CP_DICT');
+if cp_dict.get('CONTAINS_KEY', measure_class)
+	cp = cp_dict.get('IT', measure_class);
+else
+    cp = ComparisonEnsemble( ...
+        'ID', [measure_class ' comparison ' c.get('A1').get('ID') ' vs. ' c.get('A2').get('ID')], ...
+        'MEASURE', measure_class, ...
+        'C', c ...
+        );
+	cp_dict.get('ADD', cp);
+end
+
+value = cp;
+
 
 %%% ¡prop!
 PERM (query, itemlist) returns the permuted analyses.
@@ -164,55 +176,73 @@ PERM (query, itemlist) returns the permuted analyses.
 %  permutation number P, which is one of the properties of the comparison.
 %
 % {A1P, A2P} = c.get(C, I, true) memorizes the resulting permutations.
+i = 1;
+if length(varargin) >= 1
+    i = varargin{1};
+end 
+memorize = false;
+if length(varargin) >= 2
+    memorize = varargin{2};
+end
 
-% % %     if nargin < 3
-% % %         memorize = false;
-% % %     end
-% % %     
-% % %     a1_perm_dict = c.memorize('A1_PERM_DICT');
-% % %     a2_perm_dict = c.memorize('A2_PERM_DICT');
-% % %     if a1_perm_dict.containsIndex(i) && a2_perm_dict.containsIndex(i)
-% % %         % retrieves if already memorized
-% % %         a1_perm = a1_perm_dict.getItem(i);
-% % %         a2_perm = a2_perm_dict.getItem(i);
-% % %     else    
-% % %         % permutation
-% % %         seeds = c.get('PERM_SEEDS');
-% % %         rng(seeds(i), 'twister')
-% % % 
-% % %         subs1 = c.get('A1').get('GR').get('SUB_DICT').get('IT_LIST');
-% % %         subs2 = c.get('A2').get('GR').get('SUB_DICT').get('IT_LIST');
-% % % 
-% % %         gdict1 = c.get('A1').get('G_DICT').get('IT_LIST');
-% % %         gdict2 = c.get('A2').get('G_DICT').get('IT_LIST');
-% % %         
-% % %         subs1_gdict1 = cellfun(@(x, y) {x, y}, subs1, gdict1, 'UniformOutput', false);
-% % %         subs2_gdict2 = cellfun(@(x, y) {x, y}, subs2, gdict2, 'UniformOutput', false);
-% % % 
-% % %         [subs1_gdict1_perm, subs2_gdict2_perm] = permutation(subs1_gdict1, subs2_gdict2, c.get('LONGITUDINAL'));
-% % % 
-% % %         a1_perm = c.get('A1').clone();
-% % %         a1_perm.set( ...
-% % %             'ID', [c.get('A1').get('ID') ' permutation ' int2str(i)], ...
-% % %             'GR', c.get('A1').get('GR').clone() ...
-% % %             )
-% % %         a1_perm.get('GR').set('SUB_DICT', c.get('A1').get('GR').get('SUB_DICT').clone())
-% % %         a1_perm.get('GR').get('SUB_DICT').set('IT_LIST', cellfun(@(x) x(1), subs1_gdict1_perm))
-% % %         a1_perm.memorize('G_DICT').set('IT_LIST', cellfun(@(x) x(2), subs1_gdict1_perm))
-% % % 
-% % %         a2_perm = c.get('A1').clone(); % a2_perm = c.get('A2').clone();
-% % %         a2_perm.set( ...
-% % %             'ID', [c.get('A2').get('ID') ' permutation ' int2str(i)], ...
-% % %             'GR', c.get('A2').get('GR').clone() ...
-% % %             )
-% % %         a2_perm.get('GR').set('SUB_DICT', c.get('A2').get('GR').get('SUB_DICT').clone())
-% % %         a2_perm.get('GR').get('SUB_DICT').set('IT_LIST', cellfun(@(x) x(1), subs2_gdict2_perm))
-% % %         a2_perm.memorize('G_DICT').set('IT_LIST', cellfun(@(x) x(2), subs2_gdict2_perm))
-% % %         
-% % %         % memorize permutations if required
-% % %         if memorize
-% % %             a1_perm_dict.add(a1_perm)
-% % %             a2_perm_dict.add(a2_perm)
-% % %         end
-% % %     end
-% % % end
+a1 = c.get('A1');
+key1 = [a1.get('ID') ' permutation ' int2str(i)];
+
+a2 = c.get('A2');
+key2 = [a2.get('ID') ' permutation ' int2str(i)];
+
+a1_perm_dict = c.memorize('A1_PERM_DICT');
+a2_perm_dict = c.memorize('A2_PERM_DICT');
+if a1_perm_dict.get('CONTAINS_KEY', key1) && a2_perm_dict.get('CONTAINS_KEY', key2)
+	% retrieves if already memorized
+    a1_perm = a1_perm_dict.get('IT', key1);
+    a2_perm = a2_perm_dict.get('IT', key2);
+else    
+    % permutation
+    seeds = c.get('PERM_SEEDS');
+    rng(seeds(i), 'twister')
+
+    subs1 = a1.get('GR').get('SUB_DICT').get('IT_LIST');
+    subs2 = a2.get('GR').get('SUB_DICT').get('IT_LIST');
+
+    gdict1 = a1.get('G_DICT').get('IT_LIST');
+    gdict2 = a2.get('G_DICT').get('IT_LIST');
+
+    subs1_gdict1 = cellfun(@(x, y) {x, y}, subs1, gdict1, 'UniformOutput', false);
+    subs2_gdict2 = cellfun(@(x, y) {x, y}, subs2, gdict2, 'UniformOutput', false);
+
+    [subs1_gdict1_perm, subs2_gdict2_perm] = permutation(subs1_gdict1, subs2_gdict2, c.get('LONGITUDINAL'));
+
+    gr1 = a1.get('GR');
+    a1_perm = eval([a1.getClass() '(''TEMPLATE'', a1)']); % % % a1_perm = c.get('A1').clone();
+    a1_perm.set( ...
+        'ID', key1, ...
+        'GR', Group('TEMPLATE', gr1) ... % % % c.get('A1').get('GR').clone() ...
+        )
+    a1_perm.get('GR').set('SUB_DICT', IndexedDictionary('TEMPLATE', gr1.get('SUB_DICT'))) % % % a1_perm.get('GR').set('SUB_DICT', c.get('A1').get('GR').get('SUB_DICT').clone())
+	a1_perm.get('GR').get('SUB_DICT').set('IT_LIST', cellfun(@(x) x(1), subs1_gdict1_perm))
+    a1_perm.memorize('G_DICT').set('IT_LIST', cellfun(@(x) x(2), subs1_gdict1_perm))
+
+    gr2 = a2.get('GR');
+    a2_perm = eval([a2.getClass() '(''TEMPLATE'', a2)']); % % % a2_perm = c.get('A1').clone(); % a2_perm = c.get('A2').clone();
+    a2_perm.set( ...
+        'ID', key2, ...
+        'GR', Group('TEMPLATE', gr2) ... % % % c.get('A2').get('GR').clone() ...
+        )
+    a2_perm.get('GR').set('SUB_DICT', IndexedDictionary('TEMPLATE', gr2.get('SUB_DICT'))) % % % a2_perm.get('GR').set('SUB_DICT', c.get('A2').get('GR').get('SUB_DICT').clone())
+	a2_perm.get('GR').get('SUB_DICT').set('IT_LIST', cellfun(@(x) x(1), subs2_gdict2_perm))
+	a2_perm.memorize('G_DICT').set('IT_LIST', cellfun(@(x) x(2), subs2_gdict2_perm))
+         
+    % memorize permutations if required
+    if memorize
+        a1_perm_dict.get('ADD', a1_perm)
+        a2_perm_dict.get('ADD', a2_perm)
+    end
+end
+
+value = {a1_perm, a2_perm};
+
+%% ¡tests!
+
+%%% ¡excluded_props!
+[CompareEnsemble.PERM]
