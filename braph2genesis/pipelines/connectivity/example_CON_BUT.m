@@ -37,6 +37,7 @@ a_BUT1 = AnalyzeEnsemble_CON_BUT( ...
     );
 
 a_BUT2 = AnalyzeEnsemble_CON_BUT( ...
+    'TEMPLATE', a_BUT1, ...
     'GR', gr2 , ...
     'THRESHOLDS', thresholds ...
     );
@@ -50,30 +51,30 @@ degree_BUT2 = a_BUT2.get('MEASUREENSEMBLE', 'Degree').get('M');
 degree_av_BUT2 = a_BUT2.get('MEASUREENSEMBLE', 'DegreeAv').get('M');
 distance_BUT2 = a_BUT2.get('MEASUREENSEMBLE', 'Distance').get('M');
 
-% % % % comparison
-% % % c_BUT = CompareEnsemble( ...
-% % %     'P', 10, ...
-% % %     'A1', a_BUT1, ...
-% % %     'A2', a_BUT2, ...
-% % %     'WAITBAR', true, ...
-% % %     'VERBOSE', false, ...
-% % %     'MEMORIZE', true ...
-% % %     );
-% % % 
-% % % degree_BUT_diff = c_BUT.get('COMPARISON', 'Degree').get('DIFF');
-% % % degree_BUT_p1 = c_BUT.get('COMPARISON', 'Degree').get('P1');
-% % % degree_BUT_p2 = c_BUT.get('COMPARISON', 'Degree').get('P2');
-% % % degree_BUT_cil = c_BUT.get('COMPARISON', 'Degree').get('CIL');
-% % % degree_BUT_ciu = c_BUT.get('COMPARISON', 'Degree').get('CIU');
-% % % 
-% % % degree_av_BUT_diff = c_BUT.get('COMPARISON', 'DegreeAv').get('DIFF');
-% % % degree_av_BUT_p1 = c_BUT.get('COMPARISON', 'DegreeAv').get('P1');
-% % % degree_av_BUT_p2 = c_BUT.get('COMPARISON', 'DegreeAv').get('P2');
-% % % degree_av_BUT_cil = c_BUT.get('COMPARISON', 'DegreeAv').get('CIL');
-% % % degree_av_BUT_ciu = c_BUT.get('COMPARISON', 'DegreeAv').get('CIU');
-% % % 
-% % % distance_BUT_diff = c_BUT.get('COMPARISON', 'Distance').get('DIFF');
-% % % distance_BUT_p1 = c_BUT.get('COMPARISON', 'Distance').get('P1');
-% % % distance_BUT_p2 = c_BUT.get('COMPARISON', 'Distance').get('P2');
-% % % distance_BUT_cil = c_BUT.get('COMPARISON', 'Distance').get('CIL');
-% % % distance_BUT_ciu = c_BUT.get('COMPARISON', 'Distance').get('CIU');
+% comparison
+c_BUT = CompareEnsemble( ...
+    'P', 10, ...
+    'A1', a_BUT1, ...
+    'A2', a_BUT2, ...
+    'WAITBAR', true, ...
+    'VERBOSE', false, ...
+    'MEMORIZE', true ...
+    );
+
+degree_BUT_diff = c_BUT.get('COMPARISON', 'Degree').get('DIFF');
+degree_BUT_p1 = c_BUT.get('COMPARISON', 'Degree').get('P1');
+degree_BUT_p2 = c_BUT.get('COMPARISON', 'Degree').get('P2');
+degree_BUT_cil = c_BUT.get('COMPARISON', 'Degree').get('CIL');
+degree_BUT_ciu = c_BUT.get('COMPARISON', 'Degree').get('CIU');
+
+degree_av_BUT_diff = c_BUT.get('COMPARISON', 'DegreeAv').get('DIFF');
+degree_av_BUT_p1 = c_BUT.get('COMPARISON', 'DegreeAv').get('P1');
+degree_av_BUT_p2 = c_BUT.get('COMPARISON', 'DegreeAv').get('P2');
+degree_av_BUT_cil = c_BUT.get('COMPARISON', 'DegreeAv').get('CIL');
+degree_av_BUT_ciu = c_BUT.get('COMPARISON', 'DegreeAv').get('CIU');
+
+distance_BUT_diff = c_BUT.get('COMPARISON', 'Distance').get('DIFF');
+distance_BUT_p1 = c_BUT.get('COMPARISON', 'Distance').get('P1');
+distance_BUT_p2 = c_BUT.get('COMPARISON', 'Distance').get('P2');
+distance_BUT_cil = c_BUT.get('COMPARISON', 'Distance').get('CIL');
+distance_BUT_ciu = c_BUT.get('COMPARISON', 'Distance').get('CIU');
