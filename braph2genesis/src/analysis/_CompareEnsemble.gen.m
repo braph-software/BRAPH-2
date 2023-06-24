@@ -8,6 +8,62 @@ which need to be of the same class.
 %%% ¡seealso!
 AnalyzeEnsemble, ComparisonEnsemble
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+CompareEnsemble.ID
+%%%% ¡title!
+Comparison ID
+
+%%% ¡prop!
+%%%% ¡id!
+CompareEnsemble.LABEL
+%%%% ¡title!
+Comparison NAME
+
+%%% ¡prop!
+%%%% ¡id!
+CompareEnsemble.WAITBAR
+%%%% ¡title!
+WAITBAR ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+CompareEnsemble.VERBOSE
+%%%% ¡title!
+VERBOSE ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+CompareEnsemble.P
+%%%% ¡title!
+PERMUTATION NUMBER
+
+%%% ¡prop!
+%%%% ¡id!
+CompareEnsemble.LONGITUDINAL
+%%%% ¡title!
+LONGITUDINAL COMPARISON
+
+%%% ¡prop!
+%%%% ¡id!
+CompareEnsemble.CP_DICT
+%%%% ¡title!
+COMPARISONS
+
+%%% ¡prop!
+%%%% ¡id!
+CompareEnsemble.NOTES
+%%%% ¡title!
+Comparison NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+CompareEnsemble.MEMORIZE
+%%%% ¡title!
+Memorize Intermediate Results
+
 %% ¡props_update!
 
 %%% ¡prop!
