@@ -750,7 +750,7 @@ PFBG (gui, item) contains the panel figure of the brain graph.
 % % %     %  Typically, this methos is only called internally.
 % % % 
 % % %     measure_class = cp.get('MEASURE');
-% % %     if isempty(cp.get('MEASURE'))
+% % %     if strcmpi(cp.get('MEASURE'), 'Measure')
 % % %         diff = {};
 % % %         p1 = {};
 % % %         p2 = {};
