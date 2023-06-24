@@ -61,12 +61,12 @@ gr = a.get('GR');
 
 % % % ba = BrainAtlas();
 % % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0    
-% % %     ba = gr.get('SUB_DICT').getItem(1).get('BA');
+% % %     ba = gr.get('SUB_DICT').get('IT', 1).get('BA');
 % % % end
 
 densities = a.get('DENSITIES'); % this is a vector
-for i = 1:1:gr.get('SUB_DICT').length()
-	sub = gr.get('SUB_DICT').getItem(i);
+for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
+	sub = gr.get('SUB_DICT').get('IT', i);
     g = MultiplexBUD( ...
         'ID', ['graph ' sub.get('ID')], ... % % % 'BAS', ba ...
         'B', sub.getCallback('CON_MP'), ...

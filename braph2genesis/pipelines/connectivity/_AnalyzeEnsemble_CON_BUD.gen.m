@@ -112,11 +112,11 @@ densities = a.get('DENSITIES');
 
 % % % ba = BrainAtlas();
 % % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-% % %     ba = gr.get('SUB_DICT').getItem(1).get('BA');
+% % %     ba = gr.get('SUB_DICT').get('IT', 1).get('BA');
 % % % end
 
 for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
-	sub = gr.get('SUB_DICT').getItem(i);
+	sub = gr.get('SUB_DICT').get('IT', i);
     g = MultigraphBUD( ...
         'ID', ['graph ' sub.get('ID')], ... % % % 'BAS', ba ...
         'B', sub.getCallback('CON') ... % % % 'LAYERTICKS', densities, ...

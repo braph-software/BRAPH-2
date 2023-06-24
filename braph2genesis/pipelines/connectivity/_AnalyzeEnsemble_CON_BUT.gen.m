@@ -112,7 +112,7 @@ thresholds = a.get('THRESHOLDS');
 
 % % % ba = BrainAtlas();
 % % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0 
-% % %     ba = gr.get('SUB_DICT').getItem(1).get('BA');
+% % %     ba = gr.get('SUB_DICT').get('IT', 1).get('BA');
 % % % end
 
 for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
