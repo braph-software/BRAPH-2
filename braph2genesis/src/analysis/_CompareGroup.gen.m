@@ -172,7 +172,7 @@ COMPARISON (query, item) returns a comparison.
 %%%% ¡settings!
 'ComparisonGroup'
 %%%% ¡calculate!
-% CP = c.get(''COMPARISON'', MEASURE_CLASS) checks if the comparison exists
+% CP = c.get('COMPARISON', MEASURE_CLASS) checks if the comparison exists
 %  in the comparison dictionary CP_DICT. If not, it creates a new comparison
 %  CP of class MEASURE_CLASS. The user must call getValue() for the new
 %  comparison CP to retrieve the value of the comparison. 
@@ -218,11 +218,11 @@ value = cp;
 %%% ¡prop!
 PERM (query, itemlist) returns the permuted analyses.
 %%%% ¡calculate!
-% {A1P, A2P} = c.get(''PERM'', I) retunrs the I-th permutations for the analysis
+% {A1P, A2P} = c.get('PERM', I) retunrs the I-th permutations for the analysis
 %  A1P and A2P. The number of perutations must be smaller than the
 %  permutation number P, which is one of the properties of the comparison.
 %
-% {A1P, A2P} = c.get(''PERM'', I, true) memorizes the resulting permutations.
+% {A1P, A2P} = c.get('PERM', I, true) memorizes the resulting permutations.
 i = 1;
 if length(varargin) >= 1
     i = varargin{1};
