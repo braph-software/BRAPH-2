@@ -78,7 +78,7 @@ MEASUREENSEMBLE (query, item) returns an ensemble-based measure.
 %%%% ¡settings!
 'MeasureEnsemble'
 %%%% ¡calculate!
-% ME = A.GET(''MEASUREENSEMBLE'', MEASURE_CLASS) checks whether the 
+% ME = a.get('MEASUREENSEMBLE', MEASURE_CLASS) checks whether the 
 %  measure ensemble exists in the property ME_DICT. If not it creates a new
 %  measure M of class MEASURE_CLASS with properties defined by the graph
 %  settings. The user must call getValue() for the new measure M to
