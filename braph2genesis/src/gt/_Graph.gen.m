@@ -576,7 +576,7 @@ MEASURE (query, item) returns a measure.
 %%%% ¡settings!
 'Measure'
 %%%% ¡calculate!
-% M = G.GET(''MEASURE'', MEASURE_CLASS) checks whether the measure exists in the
+% M = g.get('MEASURE', MEASURE_CLASS) checks whether the measure exists in the
 %  property M_DICT. If not, it creates a new measure M of class MEASURE_CLASS
 %  with properties defined by the graph settings. The user must call
 %  getValue() for the new measure M to retrieve the value of measure M.
