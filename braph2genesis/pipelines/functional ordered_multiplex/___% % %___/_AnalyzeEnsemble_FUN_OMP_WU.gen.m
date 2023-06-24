@@ -54,9 +54,7 @@ GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and meas
 G_DICT (result, idict) is the graph (OrdMxWU) ensemble obtained from this analysis.
 %%%% ¡settings!
 'OrdMxWU'
-%%%% ¡_default!
-% % % IndexedDictionary('IT_CLASS', 'OrdMxWU')
-%%%% ¡_calculate!
+%%%% ¡calculate!
 % % % g_dict = IndexedDictionary('IT_CLASS', 'OrdMxWU');
 % % % gr = a.get('GR');
 % % % 

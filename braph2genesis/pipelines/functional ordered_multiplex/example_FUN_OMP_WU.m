@@ -30,6 +30,7 @@ gr2 = im_gr2.get('GR');
 
 %% Analysis FUN_OMP WU
 a_WU1 = AnalyzeEnsemble_FUN_OMP_WU( ...
+    'TEMPLATE', a_WU1, ...
     'GR', gr1 ...
     );
 
@@ -38,13 +39,13 @@ a_WU2 = AnalyzeEnsemble_FUN_OMP_WU( ...
     );
 
 % measure calculation
-wmpc_WU1 = a_WU1.get('MEASUREENSEMBLE', 'WeightedMultiplexParticipation').get('M');
-wmpc_av_WU1 = a_WU1.get('MEASUREENSEMBLE', 'WeightedMultiplexParticipationAv').get('M');
-weo_WU1 = a_WU1.get('MEASUREENSEMBLE', 'WeightedEdgeOverlap').get('M');
+% % % wmpc_WU1 = a_WU1.get('MEASUREENSEMBLE', 'WeightedMultiplexParticipation').get('M');
+% % % wmpc_av_WU1 = a_WU1.get('MEASUREENSEMBLE', 'WeightedMultiplexParticipationAv').get('M');
+% % % weo_WU1 = a_WU1.get('MEASUREENSEMBLE', 'WeightedEdgeOverlap').get('M');
 
-wmpc_WU2 = a_WU2.get('MEASUREENSEMBLE', 'WeightedMultiplexParticipation').get('M');
-wmpc_av_WU2 = a_WU2.get('MEASUREENSEMBLE', 'WeightedMultiplexParticipationAv').get('M');
-weo_WU2 = a_WU2.get('MEASUREENSEMBLE', 'WeightedEdgeOverlap').get('M');
+% % % wmpc_WU2 = a_WU2.get('MEASUREENSEMBLE', 'WeightedMultiplexParticipation').get('M');
+% % % wmpc_av_WU2 = a_WU2.get('MEASUREENSEMBLE', 'WeightedMultiplexParticipationAv').get('M');
+% % % weo_WU2 = a_WU2.get('MEASUREENSEMBLE', 'WeightedEdgeOverlap').get('M');
 
 % % % % comparison
 % % % c_WU = CompareEnsemble( ...

@@ -54,8 +54,6 @@ GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and meas
 G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analysis.
 %%%% ¡settings!
 'GraphWU'
-%%%% ¡_default!
-% % % IndexedDictionary('IT_CLASS', 'GraphWU')
 %%%% ¡_calculate!
 % % % g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
 % % % gr = a.get('GR');

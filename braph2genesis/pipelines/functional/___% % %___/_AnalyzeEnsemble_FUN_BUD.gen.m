@@ -54,8 +54,6 @@ GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and meas
 G_DICT (result, idict) is the graph (MultigraphBUD) ensemble obtained from this analysis.
 %%%% ¡settings!
 'MultigraphBUD'
-%%%% ¡_default!
-% % % IndexedDictionary('IT_CLASS', 'MultigraphBUD')
 %%%% ¡_calculate!
 % % % % g_dict = IndexedDictionary('IT_CLASS', 'MultigraphBUD');
 % % % % gr = a.get('GR');
