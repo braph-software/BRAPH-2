@@ -8,6 +8,56 @@ connectivity data using binary undirected multigraphs with fixed densities.
 %%% ¡seealso!
 SubjectCON, MultigraphBUD
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_BUD.ID
+%%%% ¡title!
+Analysis ID
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_BUD.LABEL
+%%%% ¡title!
+Analysis NAME
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_BUD.WAITBAR
+%%%% ¡title!
+WAITBAR ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_BUD.GR
+%%%% ¡title!
+SUBJECT GROUP
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_BUD.DENSITIES
+%%%% ¡title!
+DENSITIES [0% ... 100%]
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_BUD.ME_DICT
+%%%% ¡title!
+Group-averaged MEASURES
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_BUD.G_DICT
+%%%% ¡title!
+Individual GRAPHS
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_BUD.NOTES
+%%%% ¡title!
+Analysis NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!
@@ -54,37 +104,33 @@ GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and meas
 G_DICT (result, idict) is the graph (MultigraphBUD) ensemble obtained from this analysis.
 %%%% ¡settings!
 'MultigraphBUD'
-%%%% ¡_default!
-% % % IndexedDictionary('IT_CLASS', 'MultigraphBUD')
-%%%% ¡_calculate!
-% % % g_dict = IndexedDictionary('IT_CLASS', 'MultigraphBUD');
-% % % gr = a.get('GR');
-% % % densities = a.get('DENSITIES');
+%%%% ¡calculate!
+g_dict = IndexedDictionary('IT_CLASS', 'MultigraphBUD');
+gr = a.get('GR');
+densities = a.get('DENSITIES');
 % % % node_labels = '';
-% % % 
+
 % % % ba = BrainAtlas();
 % % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
 % % %     ba = gr.get('SUB_DICT').getItem(1).get('BA');
 % % % end
-% % % 
-% % % for i = 1:1:gr.get('SUB_DICT').length()
-% % % 	sub = gr.get('SUB_DICT').getItem(i);
-% % %     g = MultigraphBUD( ...
-% % %         'ID', ['g ' sub.get('ID')], ...
-% % %         'B', Callback('EL', sub, 'TAG', 'CON'), ...
-% % %         'LAYERTICKS', densities, ...
-% % %         'BAS', ba ...
-% % %         );
-% % %     g_dict.add(g)
-% % %     
-% % %     if isa(a.getr('TEMPLATE'), 'NoValue')
-% % %         g.set('TEMPLATE', a.memorize('GRAPH_TEMPLATE'))        
-% % %     else
-% % %         g.set('TEMPLATE', a.get('TEMPLATE').memorize('GRAPH_TEMPLATE'))
-% % %     end
-% % % end
-% % % 
-% % % value = g_dict;
+
+for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
+	sub = gr.get('SUB_DICT').getItem(i);
+    g = MultigraphBUD( ...
+        'ID', ['graph ' sub.get('ID')], ... % % % 'BAS', ba ...
+        'B', sub.getCallback('CON') ... % % % 'LAYERTICKS', densities, ...
+        );
+    g_dict.get('ADD', g)
+end
+
+if ~isa(a.get('GRAPH_TEMPLATE'), 'NoValue')
+    for i = 1:1:g_dict.get('LENGTH')
+        g_dict.get('IT', i).set('TEMPLATE', a.get('GRAPH_TEMPLATE'))
+    end
+end
+
+value = g_dict;
 
 %%% ¡prop!
 ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
@@ -116,3 +162,93 @@ if ~isfile([fileparts(which('SubjectCON')) filesep 'Example data CON XLS' filese
 end
 
 example_CON_BUD
+
+%%% ¡test!
+%%%% ¡name!
+GUI - Analysis
+%%%% ¡probability!
+.01
+%%%% ¡parallel!
+false
+%%%% ¡code!
+im_ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx');
+ba = im_ba.get('BA');
+
+gr = Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON'));
+for i = 1:1:50
+    sub = SubjectCON( ...
+        'ID', ['SUB CON ' int2str(i)], ...
+        'LABEL', ['Subejct CON ' int2str(i)], ...
+        'NOTES', ['Notes on subject CON ' int2str(i)], ...
+        'BA', ba, ...
+        'CON', rand(ba.get('BR_DICT').get('LENGTH')) ...
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr.get('SUB_DICT').get('ADD', sub)
+end
+
+a = AnalyzeEnsemble_CON_BUD('GR', gr);
+
+gui = GUIElement('PE', a, 'CLOSEREQ', false);
+gui.get('DRAW')
+gui.get('SHOW')
+
+gui.get('CLOSE')
+
+%%% ¡test!
+%%%% ¡name!
+GUI - Comparison
+%%%% ¡probability!
+.01
+%%%% ¡parallel!
+false
+%%%% ¡code!
+im_ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx');
+ba = im_ba.get('BA');
+
+gr1 = Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON'));
+for i = 1:1:50
+    sub = SubjectCON( ...
+        'ID', ['SUB CON ' int2str(i)], ...
+        'LABEL', ['Subejct CON ' int2str(i)], ...
+        'NOTES', ['Notes on subject CON ' int2str(i)], ...
+        'BA', ba, ...
+        'CON', rand(ba.get('BR_DICT').get('LENGTH')) ...
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr1.get('SUB_DICT').get('ADD', sub)
+end
+
+gr2 = Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON'));
+for i = 1:1:50
+    sub = SubjectCON( ...
+        'ID', ['SUB CON ' int2str(i)], ...
+        'LABEL', ['Subejct CON ' int2str(i)], ...
+        'NOTES', ['Notes on subject CON ' int2str(i)], ...
+        'BA', ba, ...
+        'CON', rand(ba.get('BR_DICT').get('LENGTH')) ...
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr2.get('SUB_DICT').get('ADD', sub)
+end
+
+a1 = AnalyzeEnsemble_CON_BUD('GR', gr1);
+a2 = AnalyzeEnsemble_CON_BUD('GR', gr2, 'TEMPLATE', a1);
+
+c = CompareEnsemble( ...
+    'P', 10, ...
+    'A1', a1, ...
+    'A2', a2, ...
+    'WAITBAR', true, ...
+    'VERBOSE', false, ...
+    'MEMORIZE', true ...
+    );
+
+gui = GUIElement('PE', c, 'CLOSEREQ', false);
+gui.get('DRAW')
+gui.get('SHOW')
+
+gui.get('CLOSE')
