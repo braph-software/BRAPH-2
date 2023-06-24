@@ -11,7 +11,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %   <strong>conditioning</strong>   - conditions a value before setting a property
     %   <strong>preset</strong>         - presets a value before setting a property
     %   <strong>checkProp</strong>      - checks the property format before setting
-    %   <strong>postset</strong>        - postset a property after it has been set
+    %   <strong>postset</strong>        - postsets a property after it has been set
     %   <strong>postprocessing</strong> - postprocesses the value of a prop 
     %                    AFTER all properties have been set
     %   <strong>calculateValue</strong> - (only for results) calculates the value of a property
