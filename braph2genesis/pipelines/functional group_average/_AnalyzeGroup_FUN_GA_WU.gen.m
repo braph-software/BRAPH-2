@@ -81,7 +81,7 @@ Analysis NOTES
 %%% ¡prop!
 NAME (constant, string) is the name of the graph analysis with averaged functional data.
 %%%% ¡default!
-'AnalyzeGroup_CON_GA_WU'
+'AnalyzeGroup_FUN_GA_WU'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the graph analysis with averaged functional data.
@@ -91,22 +91,22 @@ DESCRIPTION (constant, string) is the description of the graph analysis with ave
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the graph analysis with averaged functional data.
 %%%% ¡settings!
-'AnalyzeGroup_CON_GA_WU'
+'AnalyzeGroup_FUN_GA_WU'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the graph analysis with averaged functional data.
 %%%% ¡default!
-'AnalyzeGroup_CON_GA_WU ID'
+'AnalyzeGroup_FUN_GA_WU ID'
 
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the graph analysis with averaged functional data.
 %%%% ¡default!
-'AnalyzeGroup_CON_GA_WU label'
+'AnalyzeGroup_FUN_GA_WU label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the graph analysis with averaged functional data.
 %%%% ¡default!
-'AnalyzeGroup_CON_GA_WU notes'
+'AnalyzeGroup_FUN_GA_WU notes'
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectFUN.
