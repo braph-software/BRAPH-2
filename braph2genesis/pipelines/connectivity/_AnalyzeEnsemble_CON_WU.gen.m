@@ -109,13 +109,18 @@ gr = a.get('GR');
 for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
 	sub = gr.get('SUB_DICT').get('IT', i);
     g = GraphWU( ...
-        'ID', ['graph ' sub.get('ID')], ... 
-        'TEMPLATE', a.memorize('GRAPH_TEMPLATE'), ... % % % 'BAS', ba, ...
+        'ID', ['graph ' sub.get('ID')], ... % % % 'BAS', ba, ...
         'B', sub.getCallback('CON') ...
         );
     g_dict.get('ADD', g)
 end
 
+if ~isa(a.get('GRAPH_TEMPLATE'), 'NoValue')
+    for i = 1:1:g_dict.get('LENGTH')
+        g_dict.get('IT', i).set('TEMPLATE', a.get('GRAPH_TEMPLATE'))
+    end
+end
+    
 value = g_dict;
 
 %%% ¡prop!
