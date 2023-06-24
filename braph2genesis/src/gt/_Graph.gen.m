@@ -562,7 +562,7 @@ M_DICT (result, idict) contains the calculated measures of the graph.
 %%%% ¡settings!
 'Measure'
 %%%% ¡calculate!
-value = IndexedDictionary('IT_CLASS', 'Measure', 'IT_KEY', 1);
+value = IndexedDictionary('IT_CLASS', 'Measure', 'IT_KEY', Measure.NAME);
 %%%% ¡gui!
 pr = GraphPP_MDict('EL', g, 'PROP', Graph.M_DICT, varargin{:});
 
