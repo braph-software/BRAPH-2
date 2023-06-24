@@ -112,17 +112,29 @@ value = IndexedDictionary('IT_CLASS', 'ComparisonEnsemble', 'IT_KEY', Comparison
 %%%% ¡_gui!
 % % % pr = PPCompareEnsemble_CpDict('EL', c, 'PROP', CompareEnsemble.CP_DICT, 'WAITBAR', Callback('EL', c, 'TAG', 'WAITBAR'), varargin{:});
 
-%% ¡_methods!
-% % % function cp = getComparison(c, measure_class, varargin)
-% % %     %GETComparisonE returns comparison.
-% % %     %
-% % %     % CP = GETCOMPARISON(G, MEASURE_CLASS) checks if the comparison exists in the
-% % %     %  comparison dictionary CP_DICT. If not, it creates a new comparison
-% % %     %  CP of class MEASURE_CLASS. The user must call getValue() for the new
-% % %     %  comparison CP to retrieve the value of the comparison. 
-% % %     %
-% % %     % See also ComparisonEnsemble.
-% % %     
+%%% ¡prop!
+COMPARISON (query, item) returns a comparison.
+%%%% ¡settings!
+'ComparisonEnsemble'
+%%%% ¡calculate!
+% CP = c.get(''COMPARISON'', MEASURE_CLASS) checks if the comparison exists 
+%  in the comparison dictionary CP_DICT. If not, it creates a new comparison
+%  CP of class MEASURE_CLASS. The user must call getValue() for the new
+%  comparison CP to retrieve the value of the comparison. 
+if isempty(varargin)
+    value = ComparisonEnsemble();
+    
+    % % Warning commented because it most likely will lead to an error anyways
+    % warning( ...
+    %     [BRAPH2.STR ':' class(g)], ...
+    %     [BRAPH2.STR ':' class(g) '\\n' ...
+    %     'Missing argument MEASURE_CLASS when using CompareGroup.get(''COMPARISON'', MEASURE_CLASS).'] ...
+    %     )
+    
+    return
+end
+measure_class = varargin{1};
+
 % % %     [wb, varargin] = get_and_remove_from_varargin([], 'waitbar', varargin{:});
 % % %     
 % % %     if ~isempty(wb)
@@ -143,15 +155,16 @@ value = IndexedDictionary('IT_CLASS', 'ComparisonEnsemble', 'IT_KEY', Comparison
 % % %         cp_dict.add(cp);
 % % %     end
 % % % end
-% % % function [a1_perm, a2_perm] = getPerm(c, i, memorize)
-% % %     %GETPERM returns the permuted analyses.
-% % %     %
-% % %     % [A1P, A2P] = GETPERM(C, I) retunrs the I-th permutations for the analysis
-% % %     %  A1P and A2P. The number of perutations must be smaller than the
-% % %     %  permutation number P, which is one of the properties of the comparison.
-% % %     %
-% % %     % [A1P, A2P] = GETPERM(C, I, true) memorizes the resulting permutations.
-% % % 
+
+%%% ¡prop!
+PERM (query, itemlist) returns the permuted analyses.
+%%%% ¡calculate!
+% {A1P, A2P} = c.get(''PERM'', I) retunrs the I-th permutations for the analysis
+%  A1P and A2P. The number of perutations must be smaller than the
+%  permutation number P, which is one of the properties of the comparison.
+%
+% {A1P, A2P} = c.get(C, I, true) memorizes the resulting permutations.
+
 % % %     if nargin < 3
 % % %         memorize = false;
 % % %     end
