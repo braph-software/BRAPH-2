@@ -53,9 +53,9 @@ GR (data, item) is the subject group, which also defines the subject class.
 'Group'
 
 %%% ¡prop!
-COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
+GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
 %%%% ¡settings!
-'Measure'
+'Graph'
 
 %%% ¡prop!
 G_DICT (result, idict) is the graph ensemble obtained from this analysis.
@@ -78,7 +78,7 @@ MEASUREENSEMBLE (query, item) returns an ensemble-based measure.
 %%%% ¡settings!
 'MeasureEnsemble'
 %%%% ¡calculate!
-% ME = A.GET(''MEASUREENSEMBLE'', MEASURE_CLASS) checks whether the 
+% ME = a.get('MEASUREENSEMBLE', MEASURE_CLASS) checks whether the 
 %  measure ensemble exists in the property ME_DICT. If not it creates a new
 %  measure M of class MEASURE_CLASS with properties defined by the graph
 %  settings. The user must call getValue() for the new measure M to
@@ -97,38 +97,38 @@ if isempty(varargin)
 end
 measure_class = varargin{1};
 
+m_list = a.memorize('GRAPH_TEMPLATE').get('COMPATIBLE_MEASURES');
+if ~contains(measure_class, m_list)
+    error(...
+        [BRAPH2.STR ':Analysis:' BRAPH2.WRONG_INPUT], ...
+        [BRAPH2.STR ':Analysis:' BRAPH2.WRONG_INPUT ' \\n' ...
+        a.getClass() ' utilizes graphs of type ' a.memorize('GRAPH_TEMPLATE').getClass() '. \\n' ...
+        measure_class ' is not a compatible Measure with ' a.memorize('GRAPH_TEMPLATE').getClass() '. \\n' ...
+        'Use ' a.memorize('GRAPH_TEMPLATE').getClass() '().get(''COMPATIBLE_MEASURES'') for a list of compatible measures.'])
+end
+
 g_dict = a.memorize('G_DICT');
 for i = 1:1:g_dict.get('LENGTH')
     g_dict.get('IT', i).memorize('A');
 end
 
-% % %     g = a.get('GRAPH_TEMPLATE');
-% % %     m_list = Graph.getCompatibleMeasureList(g);
-% % %     
-% % %     assert( ...
-% % %         contains(measure_class, m_list), ...
-% % %         [BRAPH2.STR ':' a.getClass() ':' BRAPH2.WRONG_INPUT], ...
-% % %         [BRAPH2.STR ':' a.getClass() ':' BRAPH2.WRONG_INPUT ' \\n' ...
-% % %          a.getClass() ' utilizes Graphs of type ' g.getClass() '. \\n' ...
-% % %          measure_class ' is not a compatible Measure with ' g.getClass() '. \\n' ...
-% % %         'Use ' g.getClass() '.get(''COMPATIBLE_MEASURES'') for a list of compatible measures.']);
-% % %     
-% % %     me_dict = a.memorize('ME_DICT');
-% % %     if me_dict.containsKey(measure_class)
-% % %         me = me_dict.getItem(measure_class);
-% % %     else
-% % %         me = MeasureEnsemble( ...
-% % %             'ID', measure_class, ...
-% % %             'A', a, ...
-% % %             'MEASURE', measure_class, ...
-% % %             'MEASURE_TEMPLATE', eval([measure_class '(varargin{:})']) ...
-% % %             );
-% % %         me_dict.add(me);
-% % %     end
-% % % end
+me_dict = a.memorize('ME_DICT');
+if me_dict.get('CONTAINS_KEY', measure_class)
+    me = me_dict.get('IT', measure_class);
+else
+    me = MeasureEnsemble( ...
+        'ID', measure_class, ...
+        'A', a, ...
+        'MEASURE', measure_class ... % % % 'MEASURE_TEMPLATE', a.memorize('GRAPH_TEMPLATE').get('MEASURE', measure_class) ...
+        );
+    
+    me_dict.get('ADD', me);
+end
 
-%%% ¡prop!
-PFGD (gui, item) contains the panel figure of the graph dictionary.
+value = me;
+
+%%% ¡_prop! % % %TBE???
+% % % PFGD (gui, item) contains the panel figure of the graph dictionary.
 %%%% ¡_settings!
 % % % 'PFAnalysisEnsemble'
 %%%% ¡_postprocessing!

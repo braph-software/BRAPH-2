@@ -1,9 +1,9 @@
 %% ¡header!
-AnalyzeGroup_FUN_GA_WU < AnalyzeGroup (a, graph analysis with averaged functional data) is a graph analysis using averaged functional data.
+AnalyzeEnsemble_FUN_WU < AnalyzeEnsemble (a, graph analysis with functional data) is an ensemble-based graph analysis using functional data.
 
 %%% ¡description!
-AnalyzeGroup_FUN_GA_WU uses functional data averaged over a group 
-and analyzes them using weighted undirected graphs.
+This graph analysis (AnalyzeEnsemble_FUN_WU) analyzes functional data 
+using weighted undirected graphs.
 
 %%% ¡seealso!
 SubjectFUN, GraphWU
@@ -12,101 +12,107 @@ SubjectFUN, GraphWU
 
 %%% ¡prop!
 %%%% ¡id!
-AnalyzeGroup_FUN_GA_WU.ID
+AnalyzeEnsemble_FUN_WU.ID
 %%%% ¡title!
 Analysis ID
 
 %%% ¡prop!
 %%%% ¡id!
-AnalyzeGroup_FUN_GA_WU.LABEL
+AnalyzeEnsemble_FUN_WU.LABEL
 %%%% ¡title!
 Analysis NAME
 
 %%% ¡prop!
 %%%% ¡id!
-AnalyzeGroup_FUN_GA_WU.WAITBAR
+AnalyzeEnsemble_FUN_WU.WAITBAR
 %%%% ¡title!
 WAITBAR ON/OFF
 
 %%% ¡prop!
 %%%% ¡id!
-AnalyzeGroup_FUN_GA_WU.GR
+AnalyzeEnsemble_FUN_WU.GR
 %%%% ¡title!
 SUBJECT GROUP
 
 %%% ¡prop!
 %%%% ¡id!
-AnalyzeGroup_FUN_GA_WU.REPETITION
+AnalyzeEnsemble_FUN_WU.REPETITION
 %%%% ¡title!
 REPETITION TIME [s]
 
 %%% ¡prop!
 %%%% ¡id!
-AnalyzeGroup_FUN_GA_WU.F_MIN
+AnalyzeEnsemble_FUN_WU.F_MIN
 %%%% ¡title!
 MIN FREQUENCY [Hz]
 
 %%% ¡prop!
 %%%% ¡id!
-AnalyzeGroup_FUN_GA_WU.F_MAX
+AnalyzeEnsemble_FUN_WU.F_MAX
 %%%% ¡title!
 MAX FREQUENCY [Hz]
 
 %%% ¡prop!
 %%%% ¡id!
-AnalyzeGroup_FUN_GA_WU.CORRELATION_RULE
+AnalyzeEnsemble_FUN_WU.CORRELATION_RULE
 %%%% ¡title!
 CORRELATION RULE
 
 %%% ¡prop!
 %%%% ¡id!
-AnalyzeGroup_FUN_GA_WU.NEGATIVE_WEIGHT_RULE
+AnalyzeEnsemble_FUN_WU.NEGATIVE_WEIGHT_RULE
 %%%% ¡title!
 NEGATIVE WEIGHTS RULE
 
 %%% ¡prop!
 %%%% ¡id!
-AnalyzeGroup_FUN_GA_WU.G
+AnalyzeEnsemble_FUN_WU.ME_DICT
 %%%% ¡title!
-GRAPH & MEASURES
+Group-averaged MEASURES
 
 %%% ¡prop!
 %%%% ¡id!
-AnalyzeGroup_FUN_GA_WU.NOTES
+AnalyzeEnsemble_FUN_WU.G_DICT
+%%%% ¡title!
+Individual GRAPHS
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_WU.NOTES
 %%%% ¡title!
 Analysis NOTES
 
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the graph analysis with averaged functional data.
+NAME (constant, string) is the name of the ensemble-based graph analysis with functional data.
 %%%% ¡default!
-'AnalyzeGroup_FUN_GA_WU'
+'AnalyzeEnsemble_FUN_WU'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the graph analysis with averaged functional data.
+DESCRIPTION (constant, string) is the description of the ensemble-based graph analysis with functional data.
 %%%% ¡default!
-'AnalyzeGroup_FUN_GA_WU uses functional data averaged over a group and analyzes them using weighted undirected graphs.'
+'This graph analysis (AnalyzeEnsemble_FUN_WU) analyzes functional data using weighted undirected graphs.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the graph analysis with averaged functional data.
-%%%% ¡settings!
-'AnalyzeGroup_FUN_GA_WU'
+TEMPLATE (parameter, item) is the template of the ensemble-based graph analysis with functional data.
+%%% ¡settings!
+'AnalyzeEnsemble_FUN_WU'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the graph analysis with averaged functional data.
+ID (data, string) is a few-letter code for the ensemble-based graph analysis with functional data.
 %%%% ¡default!
-'AnalyzeGroup_FUN_GA_WU ID'
+'AnalyzeEnsemble_FUN_WU ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the graph analysis with averaged functional data.
+LABEL (metadata, string) is an extended label of the ensemble-based graph analysis with functional data.
 %%%% ¡default!
-'AnalyzeGroup_FUN_GA_WU label'
+'AnalyzeEnsemble_FUN_WU label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the graph analysis with averaged functional data.
+NOTES (metadata, string) are some specific notes about the ensemble-based graph analysis with functional data.
 %%%% ¡default!
-'AnalyzeGroup_FUN_GA_WU notes'
+'AnalyzeEnsemble_FUN_WU notes'
 
 %%% ¡prop!
 GR (data, item) is the subject group, which also defines the subject class SubjectFUN.
@@ -114,65 +120,76 @@ GR (data, item) is the subject group, which also defines the subject class Subje
 Group('SUB_CLASS', 'SubjectFUN')
 
 %%% ¡prop!
-G (result, item) is the average graph obtained from this analysis.
+GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
 %%%% ¡settings!
 'GraphWU'
-%%%% ¡default!
-GraphWU()
+
+%%% ¡prop!
+G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analysis.
+%%%% ¡settings!
+'GraphWU'
 %%%% ¡calculate!
+g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
 gr = a.get('GR');
+
+% % % ba = BrainAtlas();
+% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').get('LENGTH') > 0
+% % %     ba = gr.get('SUB_DICT').get('IT', 1).get('BA');
+% % % end
+
 T = a.get('REPETITION');
+fs = 1 / T;
 fmin = a.get('F_MIN');
 fmax = a.get('F_MAX');
-A_fun = [];
+
 for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
 	sub = gr.get('SUB_DICT').get('IT', i);
     data = sub.getr('FUN');
-    fs = 1 / T;
-    
+
     if fmax > fmin && T > 0
         NFFT = 2 * ceil(size(data, 1) / 2);
         ft = fft(data, NFFT);  % Fourier transform
         f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
         ft(f < fmin | f > fmax, :) = 0;
         data = ifft(ft, NFFT);
-    end
+    end    
+    
     A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
     
-    if i == 1
-        A_fun = A;
-    else
-        A_fun = A_fun + A;
-    end    
+    g = GraphWU( ...
+        'ID', ['g ' sub.get('ID')], ... % % % 'BAS', ba ...
+        'B', A ... 
+        );
+    g_dict.get('ADD', g)
 end
-A_fun = A_fun / gr.get('SUB_DICT').get('LENGTH');
 
-% % % ba = BrainAtlas();
-% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-% % %     ba = gr.get('SUB_DICT').get('IT', 1).get('BA');
-% % % end
+if ~isa(a.get('GRAPH_TEMPLATE'), 'NoValue')
+    for i = 1:1:g_dict.get('LENGTH')
+        g_dict.get('IT', i).set('TEMPLATE', a.get('GRAPH_TEMPLATE'))
+    end
+end
 
-g = GraphWU( ...
-    'ID', ['Graph ' gr.get('ID')], ...
-    'B', A_fun ... % % % 'BAS', ba ...
-    );
+value = g_dict;
 
-value = g;
+%%% ¡prop!
+ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
+%%%% ¡_gui!
+% % % pr = PPAnalyzeEnsemble_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_FUN_WU.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %% ¡props!
 
 %%% ¡prop!
-REPETITION (parameter, scalar) is the number of repetitions
+REPETITION (parameter, scalar) is the number of repetitions.
 %%%% ¡default!
 1
 
 %%% ¡prop!
-F_MIN (parameter, scalar) is the minimum frequency value
+F_MIN (parameter, scalar) is the minimum frequency value.
 %%%% ¡default!
 0
 
 %%% ¡prop!
-F_MAX (parameter, scalar) is the maximum frequency value
+F_MAX (parameter, scalar) is the maximum frequency value.
 %%%% ¡default!
 Inf
 
@@ -202,7 +219,7 @@ if ~isfile([fileparts(which('SubjectFUN')) filesep 'Example data FUN XLS' filese
     test_ImporterGroupSubjectFUN_XLS % create example files
 end
 
-example_FUN_GA_WU
+example_FUN_WU
 
 %%% ¡test!
 %%%% ¡name!
@@ -229,7 +246,7 @@ for i = 1:1:50
     gr.get('SUB_DICT').get('ADD', sub)
 end
 
-a = AnalyzeGroup_FUN_GA_WU('GR', gr);
+a = AnalyzeEnsemble_FUN_WU('GR', gr);
 
 gui = GUIElement('PE', a, 'CLOSEREQ', false);
 gui.get('DRAW')
@@ -276,10 +293,10 @@ for i = 1:1:50
     gr2.get('SUB_DICT').get('ADD', sub)
 end
 
-a1 = AnalyzeGroup_FUN_GA_WU('GR', gr1);
-a2 = AnalyzeGroup_FUN_GA_WU('GR', gr2, 'TEMPLATE', a1);
+a1 = AnalyzeEnsemble_FUN_WU('GR', gr1);
+a2 = AnalyzeEnsemble_FUN_WU('GR', gr2, 'TEMPLATE', a1);
 
-c = CompareGroup( ...
+c = CompareEnsemble( ...
     'P', 10, ...
     'A1', a1, ...
     'A2', a2, ...

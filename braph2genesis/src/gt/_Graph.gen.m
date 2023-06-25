@@ -562,7 +562,7 @@ M_DICT (result, idict) contains the calculated measures of the graph.
 %%%% ¡settings!
 'Measure'
 %%%% ¡calculate!
-value = IndexedDictionary('IT_CLASS', 'Measure', 'IT_KEY', 1);
+value = IndexedDictionary('IT_CLASS', 'Measure', 'IT_KEY', Measure.NAME);
 %%%% ¡gui!
 pr = GraphPP_MDict('EL', g, 'PROP', Graph.M_DICT, varargin{:});
 
@@ -576,7 +576,7 @@ MEASURE (query, item) returns a measure.
 %%%% ¡settings!
 'Measure'
 %%%% ¡calculate!
-% M = G.GET(''MEASURE'', MEASURE_CLASS) checks whether the measure exists in the
+% M = g.get('MEASURE', MEASURE_CLASS) checks whether the measure exists in the
 %  property M_DICT. If not, it creates a new measure M of class MEASURE_CLASS
 %  with properties defined by the graph settings. The user must call
 %  getValue() for the new measure M to retrieve the value of measure M.
@@ -595,12 +595,13 @@ end
 measure_class = varargin{1};
 
 m_list = g.get('COMPATIBLE_MEASURES');
-assert( ...
-    contains(measure_class, m_list), ...
-    [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
-    [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT ' \\n' ...
-     measure_class ' is not a compatible Measure with ' g.getClass() '. \\n' ...
-    'Use ' g.getClass() '.get(''COMPATIBLE_MEASURES'') for a list of compatible measures.'])
+if ~contains(measure_class, m_list)
+    error(...
+        [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT], ...
+        [BRAPH2.STR ':Graph:' BRAPH2.WRONG_INPUT ' \\n' ...
+        measure_class ' is not a compatible Measure with ' g.getClass() '. \\n' ...
+        'Use ' g.getClass() '().get(''COMPATIBLE_MEASURES'') for a list of compatible measures.'])
+end
 
 m_dict = g.memorize('M_DICT');
 if m_dict.get('CONTAINS_KEY', measure_class)
@@ -609,7 +610,7 @@ else
     if isa(g.getr('TEMPLATE'), 'NoValue')
         m = eval([measure_class '(''ID'', measure_class, ''G'', g)']);
     else % the graph has a template
-        m_template = g.get('TEMPLATE').get('MEASURE', measure_class);
+        m_template = g.get('TEMPLATE').get('MEASURE', measure_class); %#ok<NASGU>
         
         m = eval([measure_class '(''ID'', measure_class, ''G'', g, ''TEMPLATE'', m_template)']);
     end

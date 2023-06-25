@@ -35,14 +35,21 @@ LABEL (metadata, string) is an extended label of the graph ensemble measure.
 'MeasureEnsemble label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the brain atlas.
+NOTES (metadata, string) are some specific notes about the graph ensemble measure.
 %%%% ¡default!
 'MeasureEnsemble notes'
 
 %% ¡props!
 
 %%% ¡prop!
-MEASURE (data, string) is the measure class.
+MEASURE (data, class) is the measure class.
+%%%% ¡settings!
+'Measure'
+
+%%% ¡_prop!
+% % % MEASURE_TEMPLATE (parameter, item) provides the measure parameters. 
+% % % %%%% ¡settings!
+% % % 'Measure'
 
 %%% ¡prop!
 A (data, item) is the ensemble-based graph analysis.
@@ -50,39 +57,24 @@ A (data, item) is the ensemble-based graph analysis.
 'AnalyzeEnsemble'
 
 %%% ¡prop!
-M (result, cell) is the measure result.
-% % % %%%% ¡calculate!
-% % % core_measure = me.get('MEASURE_TEMPLATE');
-% % % % get parameters from core measure
-% % % j = 1;
-% % % varargin = {};
-% % % if Measure.getPropNumber() ~= core_measure.getPropNumber()
-% % %     for i = Measure.getPropNumber() + 1:core_measure.getPropNumber()
-% % %         if ~isa(core_measure.getr(i), 'NoValue')
-% % %             varargin{j} = core_measure.getPropTag(i);
-% % %             varargin{j + 1} = core_measure.getr(i);
-% % %         end
-% % %         j = j + 2;
-% % %     end
-% % %     varargin = varargin(~cellfun('isempty', varargin));
-% % % end
-% % % 
-% % % m_list = cellfun(@(x) x.getMeasure(me.get('MEASURE'), varargin{:}).get('M'), me.get('A').get('G_DICT').getItems, 'UniformOutput', false);
-% % % 
-% % % if isempty(m_list)
-% % %     m_av = {};
-% % % else
-% % %     m_av = cell(size(m_list{1}));
-% % %     for i = 1:1:size(m_list{1}, 1)
-% % %         for j = 1:1:size(m_list{1}, 2)
-% % %             m_ij_list = cellfun(@(x) x{i, j}, m_list, 'UniformOutput', false);
-% % %             m_av{i, j} = mean(cat(ndims(m_ij_list{1}) + 1, m_ij_list{:}), ndims(m_ij_list{1}) + 1);
-% % %         end
-% % %     end
-% % % end
-% % % 
-% % % value = m_av;
-% % % %%%% ¡gui!
+M (result, cell) is the measure group-average result.
+%%%% ¡calculate!
+m_list = cellfun(@(x) x.get('MEASURE', me.get('MEASURE')).get('M'), me.get('A').get('G_DICT').get('IT_LIST'), 'UniformOutput', false);
+
+if isempty(m_list)
+    m_av = {};
+else
+    m_av = cell(size(m_list{1}));
+    for i = 1:1:size(m_list{1}, 1)
+        for j = 1:1:size(m_list{1}, 2)
+            m_ij_list = cellfun(@(x) x{i, j}, m_list, 'UniformOutput', false);
+            m_av{i, j} = mean(cat(ndims(m_ij_list{1}) + 1, m_ij_list{:}), ndims(m_ij_list{1}) + 1);
+        end
+    end
+end
+
+value = m_av;
+%%%% ¡_gui!
 % % % g = me.get('A').get('GRAPH_TEMPLATE');
 % % % 
 % % % pr = PanelPropCell('EL', me, 'PROP', MeasureEnsemble.M, varargin{:});
@@ -194,9 +186,9 @@ M (result, cell) is the measure result.
 
 %%% ¡prop!
 PFME (gui, item) contains the panel figure of the measure.
-% % % %%%% ¡settings!
+%%%% ¡_settings!
 % % % 'PFMeasureEnsemble'
-% % % %%%% ¡postprocessing!
+%%%% ¡_postprocessing!
 % % % if ~braph2_testing % to avoid problems with isqual when the element is recursive
 % % %     if isa(me.getr('PFME'), 'NoValue')
 % % %         g_dict = me.memorize('a').memorize('g_dict');
@@ -229,16 +221,16 @@ PFME (gui, item) contains the panel figure of the measure.
 % % %         end
 % % %     end
 % % % end
-% % % %%%% ¡gui!
+%%%% ¡_gui!
 % % % pr = PanelPropItem('EL', me, 'PROP', MeasureEnsemble.PFME, ...
 % % %     'GUICLASS', 'GUIFig', ...
 % % %     varargin{:});
 
 %%% ¡prop!
 PFBG (gui, item) contains the panel figure of the brain graph.
-% % % %%%% ¡settings!
+%%%% ¡_settings!
 % % % 'PFBrainGraph'
-% % % %%%% ¡postprocessing!
+%%%% ¡_postprocessing!
 % % % if ~braph2_testing % to avoid problems with isqual when the element is recursive
 % % %     if isa(me.getr('PFBG'), 'NoValue')
 % % %         g_dict = me.memorize('a').memorize('g_dict');
@@ -281,7 +273,7 @@ PFBG (gui, item) contains the panel figure of the brain graph.
 % % %         end
 % % %     end
 % % % end
-% % % %%%% ¡gui!
+%%%% ¡_gui!
 % % % pr = PanelPropItem('EL', me, 'PROP', MeasureEnsemble.PFBG, ...
 % % %     'GUICLASS', 'GUIFig', ...
 % % %     varargin{:});

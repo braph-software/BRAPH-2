@@ -47,7 +47,10 @@ for i = 1:1:length(parameter_props)
     varargin{2 * i - 1} = parameter_prop;
     varargin{2 * i} = template.getCallback(parameter_prop);    
 end
+
+warning_backup = warning('off', [BRAPH2.STR ':AnalyzeEnsemble_CON_MP_BUD']);
 el.set(varargin{:});
+warning(warning_backup)
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the concrete element.

@@ -5,8 +5,9 @@ IndexedDictionary < ConcreteElement (idict, indexed dictionary) is an indexed di
 IndexedDictionary provides the methods necessary to handle data in an 
 indexed dictionary. It contains and manages an ordered list of couples 
 {KEY, IT}, where KEY is a unique alphanumeric key (a string) provided 
-by a property of category PARAMETER or DATA and IT is an element of a 
-class defined in the constructor using the property IT_CLASS.
+by a property of format STRING or CLASS and of category PARAMETER or DATA 
+and IT is an element of a class defined in the constructor using the 
+property IT_CLASS.
 
 %% ¡props_update!
 
@@ -18,7 +19,7 @@ NAME (constant, string) is the name of the indexed dictionary.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the indexed dictionary.
 %%%% ¡default!
-'IndexedDictionary provides the methods necessary to handle data in an indexed dictionary. It contains and manages an ordered list of couples {KEY, IT}, where KEY is a unique alphanumeric key (a string) provided by a property of category PARAMETER or DATA and IT is an element of a class defined in the constructor using the property IT_CLASS.'
+'IndexedDictionary provides the methods necessary to handle data in an indexed dictionary. It contains and manages an ordered list of couples {KEY, IT}, where KEY is a unique alphanumeric key (a string) provided by a property of format STRING or CLASS and of category PARAMETER or DATA and IT is an element of a class defined in the constructor using the property IT_CLASS.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the indexed dictionary.
@@ -46,19 +47,19 @@ NOTES (metadata, string) are some specific notes about the indexed dictionary.
 IT_CLASS (parameter, class) is the class of the item elements.
 
 %%% ¡prop!
-IT_KEY (parameter, scalar) is the property of the elements to be used as key (its category must be parameter or data, and its format must be string).
+IT_KEY (parameter, scalar) is the property of the elements to be used as key (its category must be parameter or data, and its format must be string or class).
 %%%% ¡default!
 ConcreteElement.ID
 %%%% ¡preset!
 it_class = idict.get('IT_CLASS');
 category = Element.getPropCategory(it_class, value);
 format = Element.getPropFormat(it_class, value);
-if ~isequal(format, Format.STRING) && any(strcmp(category, {Category.PARAMETER, Category.DATA}))
+if ~(any(format == [Format.STRING Format.CLASS]) && any(category == [Category.CONSTANT Category.PARAMETER Category.DATA]))
     error( ...
         [BRAPH2.STR ':IndexedDictionary:' BRAPH2.WRONG_INPUT], ...
         [BRAPH2.STR ':IndexedDictionary:' BRAPH2.WRONG_INPUT '\\n' ...
-        'The format of property ''IT_KEY'' must be ''' int2str(Format.STRING) ''' (it is ''' format ''').\\n' ...
-        'Its category must be ''' int2str(Category.PARAMETER) ''' or ''' int2str(Category.DATA) ''' (it is ''' category ''').'] ...
+        'The format of property ''IT_KEY'' must be ''' int2str(Format.STRING) ''' or ''' int2str(Format.CLASS) ''' (it is ''' int2str(format) ''').\\n' ...
+        'Its category must be ''' int2str(Category.CONSTANT) ''', ''' int2str(Category.PARAMETER) ''' or ''' int2str(Category.DATA) ''' (it is ''' int2str(category) ''').'] ...
         )
 end
 
