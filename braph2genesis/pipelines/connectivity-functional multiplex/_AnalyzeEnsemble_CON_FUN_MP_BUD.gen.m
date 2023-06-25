@@ -153,15 +153,14 @@ densities = a.get('DENSITIES'); % this is a vector
 
 for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
 	sub = gr.get('SUB_DICT').get('IT', i);
-    CON_FUN_MP = sub.getr('CON_FUN_MP');
     
     A = cell(1, 2);
 
     % CON data
-    A(1) = CON_FUN_MP(1);
+    A{1} = sub.get('CON');
     
     % FUN data
-    data = CON_FUN_MP{2};
+    data = sub.get('FUN');
     
     if fmax > fmin && T > 0
         NFFT = 2 * ceil(size(data, 1) / 2);
@@ -171,7 +170,7 @@ for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
         data = ifft(ft, NFFT);
     end
     
-    A(2) = {Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'))};
+    A{2} = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
     
     g = MultiplexBUD( ...
         'ID', ['g ' sub.get('ID')], ... % % % 'BAS', ba ...
