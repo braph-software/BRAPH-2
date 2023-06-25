@@ -7,6 +7,50 @@ This graph analysis (AnalyzeEnsemble_CON_MP_WU) analyzes connectivity multiplex 
 %%% ¡seealso!
 SubjectCON_MP, MultiplexWU.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_MP_WU.ID
+%%%% ¡title!
+Analysis ID
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_MP_WU.LABEL
+%%%% ¡title!
+Analysis NAME
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_MP_WU.WAITBAR
+%%%% ¡title!
+WAITBAR ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_MP_WU.GR
+%%%% ¡title!
+SUBJECT GROUP
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_MP_WU.ME_DICT
+%%%% ¡title!
+Group-averaged MEASURES
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_MP_WU.G_DICT
+%%%% ¡title!
+Individual GRAPHS
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_MP_WU.NOTES
+%%%% ¡title!
+Analysis NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!
@@ -65,11 +109,10 @@ gr = a.get('GR');
 for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
     sub = gr.get('SUB_DICT').get('IT', i);
     g = MultiplexWU( ...
-        'ID', ['graph ' sub.get('ID')], ...
-        'BAS', ba, ...
+        'ID', ['graph ' sub.get('ID')], ... % % % 'BAS', ba, ...
         'B', sub.getCallback('CON_MP') ...
         );
-    g_dict.add(g)
+    g_dict.get('ADD', g)
 end
 
 if ~isa(a.get('GRAPH_TEMPLATE'), 'NoValue')

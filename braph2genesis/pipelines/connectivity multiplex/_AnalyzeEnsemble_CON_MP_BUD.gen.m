@@ -8,6 +8,50 @@ using binary undirected multigraphs with fixed densities.
 %%% ¡seealso!
 SubjectCON_MP, MultiplexBUD
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_MP_BUD.ID
+%%%% ¡title!
+Analysis ID
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_MP_BUD.LABEL
+%%%% ¡title!
+Analysis NAME
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_MP_BUD.WAITBAR
+%%%% ¡title!
+WAITBAR ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_MP_BUD.GR
+%%%% ¡title!
+SUBJECT GROUP
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_MP_BUD.ME_DICT
+%%%% ¡title!
+Group-averaged MEASURES
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_MP_BUD.G_DICT
+%%%% ¡title!
+Individual GRAPHS
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_MP_BUD.NOTES
+%%%% ¡title!
+Analysis NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!
@@ -72,7 +116,7 @@ for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
         'B', sub.getCallback('CON_MP'), ...
         'DENSITIES', densities ...
         );
-    g_dict.add(g)
+    g_dict.get('ADD', g)
 end
 
 if ~isa(a.get('GRAPH_TEMPLATE'), 'NoValue')
