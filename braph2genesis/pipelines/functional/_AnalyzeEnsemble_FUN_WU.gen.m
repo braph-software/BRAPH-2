@@ -128,43 +128,48 @@ GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and meas
 G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analysis.
 %%%% ¡settings!
 'GraphWU'
-%%%% ¡_calculate!
-% % % g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
-% % % gr = a.get('GR');
-% % % 
-% % % T = a.get('REPETITION');
-% % % fmin = a.get('F_MIN');
-% % % fmax = a.get('F_MAX');
-% % % 
+%%%% ¡calculate!
+g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
+gr = a.get('GR');
+
 % % % ba = BrainAtlas();
-% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-% % %     ba = gr.get('SUB_DICT').getItem(1).get('BA');
+% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').get('LENGTH') > 0
+% % %     ba = gr.get('SUB_DICT').get('IT', 1).get('BA');
 % % % end
-% % % 
-% % % for i = 1:1:gr.get('SUB_DICT').length()
-% % % 	sub = gr.get('SUB_DICT').getItem(i);
-% % %     data = sub.getr('FUN');
-% % %     fs = 1 / T;
-% % %     
-% % %     if fmax > fmin && T > 0
-% % %         NFFT = 2 * ceil(size(data, 1) / 2);
-% % %         ft = fft(data, NFFT);  % Fourier transform
-% % %         f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
-% % %         ft(f < fmin | f > fmax, :) = 0;
-% % %         data = ifft(ft, NFFT);
-% % %     end    
-% % %     
-% % %     A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
-% % %     
-% % %     g = GraphWU( ...
-% % %         'ID', ['g ' sub.get('ID')], ...
-% % %         'B', A, ...
-% % %         'BAS', ba ...
-% % %         );
-% % %     g_dict.add(g)
-% % % end
-% % % 
-% % % value = g_dict;
+
+T = a.get('REPETITION');
+fs = 1 / T;
+fmin = a.get('F_MIN');
+fmax = a.get('F_MAX');
+
+for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
+	sub = gr.get('SUB_DICT').get('IT', i);
+    data = sub.getr('FUN');
+
+    if fmax > fmin && T > 0
+        NFFT = 2 * ceil(size(data, 1) / 2);
+        ft = fft(data, NFFT);  % Fourier transform
+        f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
+        ft(f < fmin | f > fmax, :) = 0;
+        data = ifft(ft, NFFT);
+    end    
+    
+    A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
+    
+    g = GraphWU( ...
+        'ID', ['g ' sub.get('ID')], ... % % % 'BAS', ba ...
+        'B', A, ... 
+        );
+    g_dict.get('ADD', g)
+end
+
+if ~isa(a.get('GRAPH_TEMPLATE'), 'NoValue')
+    for i = 1:1:g_dict.get('LENGTH')
+        g_dict.get('IT', i).set('TEMPLATE', a.get('GRAPH_TEMPLATE'))
+    end
+end
+
+value = g_dict;
 
 %%% ¡prop!
 ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
@@ -215,3 +220,93 @@ if ~isfile([fileparts(which('SubjectFUN')) filesep 'Example data FUN XLS' filese
 end
 
 example_FUN_WU
+
+%%% ¡test!
+%%%% ¡name!
+GUI - Analysis
+%%%% ¡probability!
+.01
+%%%% ¡parallel!
+false
+%%%% ¡code!
+im_ba = ImporterBrainAtlasXLS('FILE', 'aal90_atlas.xlsx');
+ba = im_ba.get('BA');
+
+gr = Group('SUB_CLASS', 'SubjectFUN', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectFUN'));
+for i = 1:1:50
+    sub = SubjectFUN( ...
+        'ID', ['SUB FUN ' int2str(i)], ...
+        'LABEL', ['Subejct FUN ' int2str(i)], ...
+        'NOTES', ['Notes on subject FUN ' int2str(i)], ...
+        'BA', ba, ...
+        'FUN', rand(10, ba.get('BR_DICT').get('LENGTH')) ...
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr.get('SUB_DICT').get('ADD', sub)
+end
+
+a = AnalyzeEnsemble_FUN_WU('GR', gr);
+
+gui = GUIElement('PE', a, 'CLOSEREQ', false);
+gui.get('DRAW')
+gui.get('SHOW')
+
+gui.get('CLOSE')
+
+%%% ¡test!
+%%%% ¡name!
+GUI - Comparison
+%%%% ¡probability!
+.01
+%%%% ¡parallel!
+false
+%%%% ¡code!
+im_ba = ImporterBrainAtlasXLS('FILE', 'aal90_atlas.xlsx');
+ba = im_ba.get('BA');
+
+gr1 = Group('SUB_CLASS', 'SubjectFUN', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectFUN'));
+for i = 1:1:50
+    sub = SubjectFUN( ...
+        'ID', ['SUB FUN ' int2str(i)], ...
+        'LABEL', ['Subejct FUN ' int2str(i)], ...
+        'NOTES', ['Notes on subject FUN ' int2str(i)], ...
+        'BA', ba, ...
+        'FUN', rand(10, ba.get('BR_DICT').get('LENGTH')) ...
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr1.get('SUB_DICT').get('ADD', sub)
+end
+
+gr2 = Group('SUB_CLASS', 'SubjectFUN', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectFUN'));
+for i = 1:1:50
+    sub = SubjectFUN( ...
+        'ID', ['SUB FUN ' int2str(i)], ...
+        'LABEL', ['Subejct FUN ' int2str(i)], ...
+        'NOTES', ['Notes on subject FUN ' int2str(i)], ...
+        'BA', ba, ...
+        'FUN', rand(10, ba.get('BR_DICT').get('LENGTH')) ...
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr2.get('SUB_DICT').get('ADD', sub)
+end
+
+a1 = AnalyzeEnsemble_FUN_WU('GR', gr1);
+a2 = AnalyzeEnsemble_FUN_WU('GR', gr2, 'TEMPLATE', a1);
+
+c = CompareEnsemble( ...
+    'P', 10, ...
+    'A1', a1, ...
+    'A2', a2, ...
+    'WAITBAR', true, ...
+    'VERBOSE', false, ...
+    'MEMORIZE', true ...
+    );
+
+gui = GUIElement('PE', c, 'CLOSEREQ', false);
+gui.get('DRAW')
+gui.get('SHOW')
+
+gui.get('CLOSE')

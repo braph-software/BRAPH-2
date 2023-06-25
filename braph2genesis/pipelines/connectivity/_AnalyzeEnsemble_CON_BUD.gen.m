@@ -188,7 +188,7 @@ for i = 1:1:50
     gr.get('SUB_DICT').get('ADD', sub)
 end
 
-a = AnalyzeEnsemble_CON_BUD('GR', gr);
+a = AnalyzeEnsemble_CON_BUD('GR', gr, 'DENSITIES', 5:5:20);
 
 gui = GUIElement('PE', a, 'CLOSEREQ', false);
 gui.get('DRAW')
@@ -235,7 +235,7 @@ for i = 1:1:50
     gr2.get('SUB_DICT').get('ADD', sub)
 end
 
-a1 = AnalyzeEnsemble_CON_BUD('GR', gr1);
+a1 = AnalyzeEnsemble_CON_BUD('GR', gr1, 'DENSITIES', 5:5:20);
 a2 = AnalyzeEnsemble_CON_BUD('GR', gr2, 'TEMPLATE', a1);
 
 c = CompareEnsemble( ...

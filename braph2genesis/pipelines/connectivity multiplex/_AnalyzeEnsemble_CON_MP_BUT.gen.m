@@ -191,7 +191,7 @@ for i = 1:1:10
     gr.get('SUB_DICT').get('ADD', sub)
 end
 
-a = AnalyzeEnsemble_CON_MP_BUT('GR', gr);
+a = AnalyzeEnsemble_CON_MP_BUT('GR', gr, 'THRESHOLDS', -1:.5:1);
 
 gui = GUIElement('PE', a, 'CLOSEREQ', false);
 gui.get('DRAW')
@@ -242,7 +242,7 @@ for i = 1:1:10
     gr2.get('SUB_DICT').get('ADD', sub)
 end
 
-a1 = AnalyzeEnsemble_CON_MP_BUT('GR', gr1);
+a1 = AnalyzeEnsemble_CON_MP_BUT('GR', gr1, 'THRESHOLDS', -1:.5:1);
 a2 = AnalyzeEnsemble_CON_MP_BUT('GR', gr2, 'TEMPLATE', a1);
 
 c = CompareEnsemble( ...

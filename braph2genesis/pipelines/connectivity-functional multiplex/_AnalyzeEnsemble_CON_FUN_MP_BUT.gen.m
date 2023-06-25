@@ -134,60 +134,60 @@ GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and meas
 G_DICT (result, idict) is the multiplex (MultiplexBUT) ensemble obtained from this analysis.
 %%%% ¡settings!
 'MultiplexBUT'
-%%%% ¡_default!
-% % % IndexedDictionary('IT_CLASS', 'MultiplexBUT')
-%%%% ¡_calculate!
-% % % g_dict = IndexedDictionary('IT_CLASS', 'MultiplexBUT');
-% % % node_labels = '';
-% % % gr = a.get('GR');
-% % % 
+%%%% ¡calculate!
+g_dict = IndexedDictionary('IT_CLASS', 'MultiplexBUT');
+gr = a.get('GR');
+node_labels = '';
+
 % % % ba = BrainAtlas();
-% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0   
-% % %     ba = gr.get('SUB_DICT').getItem(1).get('BA');
+% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').get('LENGTH') > 0   
+% % %     ba = gr.get('SUB_DICT').get('IT', 1).get('BA');
 % % % end
-% % % 
-% % % T = a.get('REPETITION');
-% % % fmin = a.get('F_MIN');
-% % % fmax = a.get('F_MAX');
-% % % thresholds = a.get('THRESHOLDS'); % this is a vector
-% % % for i = 1:1:gr.get('SUB_DICT').length()
-% % %     A = cell(1, 2);
-% % % 	sub = gr.get('SUB_DICT').getItem(i);
-% % %     CON_FUN_MP = sub.getr('CON_FUN_MP');
-% % %     
-% % %     % CON data
-% % %     A(1) = CON_FUN_MP(1);
-% % %     
-% % %     % FUN data
-% % %     data = CON_FUN_MP{2};
-% % %     fs = 1 / T;
-% % %     
-% % %     if fmax > fmin && T > 0
-% % %         NFFT = 2 * ceil(size(data, 1) / 2);
-% % %         ft = fft(data, NFFT);  % Fourier transform
-% % %         f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
-% % %         ft(f < fmin | f > fmax, :) = 0;
-% % %         data = ifft(ft, NFFT);
-% % %     end
-% % %     
-% % %     A(2) = {Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'))};
-% % %     
-% % %     g = MultiplexBUT( ...
-% % %         'ID', ['g ' sub.get('ID')], ...
-% % %         'B', A, ...
-% % %         'THRESHOLDS', thresholds, ...
-% % %         'BAS', ba ...
-% % %         );
-% % %     g_dict.add(g)
-% % %     
-% % %     if isa(a.getr('TEMPLATE'), 'NoValue')
-% % %         g.set('TEMPLATE', a.memorize('GRAPH_TEMPLATE'))
-% % %     else
-% % %         g.set('TEMPLATE', a.get('TEMPLATE').memorize('GRAPH_TEMPLATE'))        
-% % %     end 
-% % % end
-% % % 
-% % % value = g_dict;
+
+T = a.get('REPETITION');
+fs = 1 / T;
+fmin = a.get('F_MIN');
+fmax = a.get('F_MAX');
+
+thresholds = a.get('THRESHOLDS'); % this is a vector
+
+for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
+	sub = gr.get('SUB_DICT').get('IT', i);
+    CON_FUN_MP = sub.getr('CON_FUN_MP');
+    
+    A = cell(1, 2);
+
+    % CON data
+    A(1) = CON_FUN_MP(1);
+    
+    % FUN data
+    data = CON_FUN_MP{2};
+    
+    if fmax > fmin && T > 0
+        NFFT = 2 * ceil(size(data, 1) / 2);
+        ft = fft(data, NFFT);  % Fourier transform
+        f = fftshift(fs * abs(-NFFT / 2:NFFT / 2 - 1) / NFFT);  % absolute frequency
+        ft(f < fmin | f > fmax, :) = 0;
+        data = ifft(ft, NFFT);
+    end
+    
+    A(2) = {Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'))};
+    
+    g = MultiplexBUT( ...
+        'ID', ['g ' sub.get('ID')], ... % % % 'BAS', ba ...
+        'B', A, ...
+        'THRESHOLDS', thresholds ...
+        );
+    g_dict.get('ADD', g)
+end
+
+if ~isa(a.get('GRAPH_TEMPLATE'), 'NoValue')
+    for i = 1:1:g_dict.get('LENGTH')
+        g_dict.get('IT', i).set('TEMPLATE', a.get('GRAPH_TEMPLATE'))
+    end
+end
+
+value = g_dict;
 
 %%% ¡prop!
 ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
@@ -248,3 +248,96 @@ if ~isfile([fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_
 end
 
 example_CON_FUN_MP_BUT
+
+%%% ¡test!
+%%%% ¡name!
+GUI - Analysis
+%%%% ¡probability!
+.01
+%%%% ¡parallel!
+false
+%%%% ¡code!
+im_ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx');
+ba = im_ba.get('BA');
+
+gr = Group('SUB_CLASS', 'SubjectCON_FUN_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON_FUN_MP'));
+for i = 1:1:50
+    sub = SubjectCON_FUN_MP( ...
+        'ID', ['SUB CON ' int2str(i)], ...
+        'LABEL', ['Subejct CON ' int2str(i)], ...
+        'NOTES', ['Notes on subject CON ' int2str(i)], ...
+        'BA', ba, ...
+        'CON', rand(ba.get('BR_DICT').get('LENGTH')), ...
+        'FUN', rand(10, ba.get('BR_DICT').get('LENGTH')) ...
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr.get('SUB_DICT').get('ADD', sub)
+end
+
+a = AnalyzeEnsemble_CON_FUN_MP_BUT('GR', gr, 'THRESHOLDS', -1:.5:1);
+
+gui = GUIElement('PE', a, 'CLOSEREQ', false);
+gui.get('DRAW')
+gui.get('SHOW')
+
+gui.get('CLOSE')
+
+%%% ¡test!
+%%%% ¡name!
+GUI - Comparison
+%%%% ¡probability!
+.01
+%%%% ¡parallel!
+false
+%%%% ¡code!
+im_ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx');
+ba = im_ba.get('BA');
+
+gr1 = Group('SUB_CLASS', 'SubjectCON_FUN_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON_FUN_MP'));
+for i = 1:1:50
+    sub = SubjectCON_FUN_MP( ...
+        'ID', ['SUB CON ' int2str(i)], ...
+        'LABEL', ['Subejct CON ' int2str(i)], ...
+        'NOTES', ['Notes on subject CON ' int2str(i)], ...
+        'BA', ba, ...
+        'CON', rand(ba.get('BR_DICT').get('LENGTH')), ...
+        'FUN', rand(10, ba.get('BR_DICT').get('LENGTH')) ...
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr1.get('SUB_DICT').get('ADD', sub)
+end
+
+gr2 = Group('SUB_CLASS', 'SubjectCON_FUN_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON_FUN_MP'));
+for i = 1:1:50
+    sub = SubjectCON_FUN_MP( ...
+        'ID', ['SUB CON ' int2str(i)], ...
+        'LABEL', ['Subejct CON ' int2str(i)], ...
+        'NOTES', ['Notes on subject CON ' int2str(i)], ...
+        'BA', ba, ...
+        'CON', rand(ba.get('BR_DICT').get('LENGTH')), ...
+        'FUN', rand(10, ba.get('BR_DICT').get('LENGTH')) ...
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr2.get('SUB_DICT').get('ADD', sub)
+end
+
+a1 = AnalyzeEnsemble_CON_FUN_MP_BUT('GR', gr1, 'THRESHOLDS', -1:.5:1);
+a2 = AnalyzeEnsemble_CON_FUN_MP_BUT('GR', gr2, 'TEMPLATE', a1);
+
+c = CompareEnsemble( ...
+    'P', 10, ...
+    'A1', a1, ...
+    'A2', a2, ...
+    'WAITBAR', true, ...
+    'VERBOSE', false, ...
+    'MEMORIZE', true ...
+    );
+
+gui = GUIElement('PE', c, 'CLOSEREQ', false);
+gui.get('DRAW')
+gui.get('SHOW')
+
+gui.get('CLOSE')
