@@ -8,6 +8,80 @@ multiplex data using weighted undirected graphs.
 %%% ¡seealso!
 SubjectFUN_MP, OrdMxWU
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_OMP_WU.ID
+%%%% ¡title!
+Analysis ID
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_OMP_WU.LABEL
+%%%% ¡title!
+Analysis NAME
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_OMP_WU.WAITBAR
+%%%% ¡title!
+WAITBAR ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_OMP_WU.GR
+%%%% ¡title!
+SUBJECT GROUP
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_OMP_WU.REPETITION
+%%%% ¡title!
+REPETITION TIME [s]
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_OMP_WU.F_MIN
+%%%% ¡title!
+MIN FREQUENCY [Hz]
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_OMP_WU.F_MAX
+%%%% ¡title!
+MAX FREQUENCY [Hz]
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_OMP_WU.CORRELATION_RULE
+%%%% ¡title!
+CORRELATION RULE
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_OMP_WU.NEGATIVE_WEIGHT_RULE
+%%%% ¡title!
+NEGATIVE WEIGHTS RULE
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_OMP_WU.ME_DICT
+%%%% ¡title!
+Group-averaged MEASURES
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_OMP_WU.G_DICT
+%%%% ¡title!
+Individual GRAPHS
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_OMP_WU.NOTES
+%%%% ¡title!
+Analysis NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!

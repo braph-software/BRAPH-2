@@ -8,6 +8,86 @@ using binary undirected multigraphs with fixed thresholds.
 %%% ¡seealso!
 SubjectFUN, MultigraphBUT
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_BUT.ID
+%%%% ¡title!
+Analysis ID
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_BUT.LABEL
+%%%% ¡title!
+Analysis NAME
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_BUT.WAITBAR
+%%%% ¡title!
+WAITBAR ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_BUT.GR
+%%%% ¡title!
+SUBJECT GROUP
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_BUT.THRESHOLDS
+%%%% ¡title!
+THRESHOLDS [-1 ... 1]
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_BUT.REPETITION
+%%%% ¡title!
+REPETITION TIME [s]
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_BUT.F_MIN
+%%%% ¡title!
+MIN FREQUENCY [Hz]
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_BUT.F_MAX
+%%%% ¡title!
+MAX FREQUENCY [Hz]
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_BUT.CORRELATION_RULE
+%%%% ¡title!
+CORRELATION RULE
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_BUT.NEGATIVE_WEIGHT_RULE
+%%%% ¡title!
+NEGATIVE WEIGHTS RULE
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_BUT.ME_DICT
+%%%% ¡title!
+Group-averaged MEASURES
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_BUT.G_DICT
+%%%% ¡title!
+Individual GRAPHS
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_FUN_BUT.NOTES
+%%%% ¡title!
+Analysis NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!

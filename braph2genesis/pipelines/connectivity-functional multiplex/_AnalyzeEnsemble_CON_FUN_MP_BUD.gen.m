@@ -8,6 +8,86 @@ and functional multiplex data using binary undirected graphs at fixed densities.
 %%% ¡seealso!
 SubjectCON_FUN_MP, MultiplexBUD
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_FUN_MP_BUD.ID
+%%%% ¡title!
+Analysis ID
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_FUN_MP_BUD.LABEL
+%%%% ¡title!
+Analysis NAME
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_FUN_MP_BUD.WAITBAR
+%%%% ¡title!
+WAITBAR ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_FUN_MP_BUD.GR
+%%%% ¡title!
+SUBJECT GROUP
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES
+%%%% ¡title!
+DENSITIES [0% ... 100%]
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_FUN_MP_BUD.REPETITION
+%%%% ¡title!
+REPETITION TIME [s]
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_FUN_MP_BUD.F_MIN
+%%%% ¡title!
+MIN FREQUENCY [Hz]
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_FUN_MP_BUD.F_MAX
+%%%% ¡title!
+MAX FREQUENCY [Hz]
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_FUN_MP_BUD.CORRELATION_RULE
+%%%% ¡title!
+CORRELATION RULE
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_FUN_MP_BUD.NEGATIVE_WEIGHT_RULE
+%%%% ¡title!
+NEGATIVE WEIGHTS RULE
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_FUN_MP_BUD.ME_DICT
+%%%% ¡title!
+Group-averaged MEASURES
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_FUN_MP_BUD.G_DICT
+%%%% ¡title!
+Individual GRAPHS
+
+%%% ¡prop!
+%%%% ¡id!
+AnalyzeEnsemble_CON_FUN_MP_BUD.NOTES
+%%%% ¡title!
+Analysis NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!

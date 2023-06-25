@@ -36,6 +36,12 @@ SUBJECT GROUP
 
 %%% ¡prop!
 %%%% ¡id!
+AnalyzeEnsemble_CON_MP_BUD.DENSITIES
+%%%% ¡title!
+DENSITIES [0% ... 100%]
+
+%%% ¡prop!
+%%%% ¡id!
 AnalyzeEnsemble_CON_MP_BUD.ME_DICT
 %%%% ¡title!
 Group-averaged MEASURES

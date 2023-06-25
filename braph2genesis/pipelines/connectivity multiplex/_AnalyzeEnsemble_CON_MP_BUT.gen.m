@@ -36,6 +36,12 @@ SUBJECT GROUP
 
 %%% ¡prop!
 %%%% ¡id!
+AnalyzeEnsemble_CON_MP_BUT.THRESHOLDS
+%%%% ¡title!
+THRESHOLDS [-1 ... 1]
+
+%%% ¡prop!
+%%%% ¡id!
 AnalyzeEnsemble_CON_MP_BUT.ME_DICT
 %%%% ¡title!
 Group-averaged MEASURES

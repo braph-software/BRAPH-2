@@ -1,11 +1,11 @@
 %% ¡header!
 AnalyzeGroup_FUN_GA_WU < AnalyzeGroup (a, graph analysis with averaged functional data) is a graph analysis using averaged functional data.
 
-%% ¡description!
+%%% ¡description!
 AnalyzeGroup_FUN_GA_WU uses functional data averaged over a group 
 and analyzes them using weighted undirected graphs.
 
-%% ¡seealso!
+%%% ¡seealso!
 SubjectFUN, GraphWU
 
 %% ¡layout!
