@@ -1,4 +1,4 @@
-<img src="https://danielegrattarola.github.io/spektral/img/logo_dark.svg" style="max-width: 400px; width: 100%;"/>
+<img src="http://braph.org/wp-content/uploads/2022/10/braph2_headmain_web-4.png" style="max-width: 400px; width: 100%;"/>
 
 # BRAPH 2.0 — Multimodal and AI-powered Brain Connectivity Analysis
 
