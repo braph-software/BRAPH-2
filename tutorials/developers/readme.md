@@ -1,4 +1,4 @@
-# BRAPH 2.0 - For Developers
+# BRAPH 2.0 — For Developers
 
 Welcome to the BRAPH 2.0 development guide! 
 
