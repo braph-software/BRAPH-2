@@ -87,6 +87,8 @@ We appreciate your support and look forward to your contributions!
 
 If you use BRAPH 2.0 in your research work, please consider citing the following publication:
 
+```
 Mite Mijalkov, Ehsan Kakaei, Joana B Pereira, Eric Westman, Giovanni Volpe. (2017). BRAPH: A graph theory software for the analysis of brain connectivity. PLOS ONE, 12, e0178798. doi: https://doi.org/10.1371/journal.pone.0178798
+```
 
 We appreciate your acknowledgment of BRAPH 2.0 in your research!
