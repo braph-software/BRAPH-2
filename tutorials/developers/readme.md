@@ -6,6 +6,17 @@ This section provides instructions and examples for developers who want to exten
 
 The software architecture of BRAPH 2.0 provides a clear structure for developers to understand and extend the functionality of the software. All objects in BRAPH 2.0 are derived from a base object called <code>Element</code>. The core code includes the compiler (<code>genesis</code>), the essential source code (<code>src</code>), and the GUI functionalities (<code>gui</code>). Developers can easily add new elements such as brain surfaces, atlases, example scripts, GUI pipelines, graphs, measures, data types, data importers, data exporters, and analyses. By writing new elements and recompiling the code, the new elements and their functionalities are immediately integrated into the GUI.
 
+![BRAPH 2.0 software architecture](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/figures/braph2genesis.png)
+
+**BRAPH 2.0 software architecture.**
+Directory structure of BRAPH 2.0 GENESIS (left) and BRAPH 2.0 (right).
+All objects are derived from a base object called `Element` and written in a simplified pseudocode (files *.gen.m) that is compiled into the actual elements (files *.m) by the command `braph2genesis` (some examples of these elements are shown).
+The compiled code can be launched by the command `braph2`.
+The core of BRAPH 2.0 (gray shaded area) includes the compiler (`genesis`), the essential source code (`src`), and the essential functionalities for the GUI (`gui`, yellow-shaded area).
+The users can easily add new brain surfaces (`brainsurfs`), atlases (`atlases`), example scripts and GUI pipelines (in the corresponding folder under `pipelines`).
+Furthermore, the users can add new elements such as new graphs (e.g., `GraphWU` in `graphs`), measures (e.g., `Strength` in `measures`), data types (e.g., `SubjectCON` in `pipelines/connectivity`), data importers (e.g., `ImporterGroupSubjectCON_XLS` in `pipelines/connectivity`), data exporters (e.g., `ExporterGroupSubjectCON_XLS` in `pipelines/connectivity`), and analyses (e.g., `AnalyzeEnsemble_CON_WU` in `pipelines/connectivity`) by writing new elements and recompiling the whole code: the new elements and their functionalities will be immediately available also in the GUI.
+Finally, BRAPH 2.0 is provided with a set of unit tests (executable by the command `test_braph2`) that ensure the formal correctness of the code, including that of any newly added elements.
+
 ## Adapting a Pipeline Script
 
 The simplest way to customize BRAPH 2.0 is by modifying a <code>.braph2</code> pipeline script. This allows users to define parameters and adjust the analysis steps according to their specific requirements. The developer tutorial <a href="[http://braph.org/tutorials/for-developers/new-pipeline](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/tutorials/developers/devdoc_pipeline.pdf)">Adapting a Pipeline Script</a> provides guidance on adapting pipeline scripts.
