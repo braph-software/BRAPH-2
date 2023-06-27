@@ -20,7 +20,7 @@ BRAPH 2.0 is designed to facilitate the analysis of brain connectivity using var
 
 To install BRAPH 2.0, follow these steps:
 <ol>
-  <li>Ensure that you have MATLAB R2021a or a later version installed on your system.</li>
+  <li>Ensure that you have MATLAB R2021a or a later version installed on your system. BRAPH 2.0 is compatible with the versions of MATLAB for Microsoft Windows, macOS, and Linux operating systems.</li>
   
   <li>Make sure you have the following toolboxes installed in MATLAB:
     <ul>
@@ -36,12 +36,10 @@ To install BRAPH 2.0, follow these steps:
   
   <li>Launch MATLAB and change the current folder to the "braph2genesis" folder located in the directory where you unzipped BRAPH 2.0. You may need to add the folder to the MATLAB path.</li>
   
-  <li>Run the script <code>braph2genesis</code> in MATLAB. This installation process may take around 5 minutes to complete. You only need to run this script once or whenever there is an update to BRAPH 2.0.</li>
+  <li>Run the script <code>braph2genesis</code> in MATLAB. This installation process may take up to one hour to complete. You only need to run this script once or whenever there is an update to BRAPH 2.0.</li>
   
   <li>After the installation is complete, you can run BRAPH 2.0 by navigating to the "braph2" folder in MATLAB and running the script <code>braph2</code>. This will launch the graphical user interface (GUI) from which you can choose an analysis pipeline to start your analysis.</li>
 </ol>
-
-<p>Please note that BRAPH 2.0 is compatible with Microsoft Windows, macOS, and Linux operating systems.</p>
 
 <p>For more detailed instructions and troubleshooting tips, you can refer to the <a href="http://braph.org/software/braph-2/#installation">Installation</a> section on our website.</p>
 
