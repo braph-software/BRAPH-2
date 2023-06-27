@@ -32,8 +32,7 @@ To install BRAPH 2.0, follow these steps:
     <li>Unzip the downloaded file into the desired directory on your system.</li>
     <li>Launch MATLAB and change the current folder to the "braph2genesis" folder located in the directory where you unzipped BRAPH 2.0. You may need to add the folder to the MATLAB path.</li>
     <li>Run the script <code>braph2genesis</code> in MATLAB. This installation process may take up to one hour to complete. You only need to run this script once or whenever there is an update to BRAPH 2.0.</li>
-    <li>After the installation is complete, you can run BRAPH 2.0 by navigating to the "braph2" folder in MATLAB and running the script <code>braph2</code>. This will launch the graphical user interface (GUI) from which you can choose an analysis pipeline to start your analysis.</li>![Figure4](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/assets/46021832/20f119cb-fab3-4fb4-a849-194e5db9f3c4)
-
+    <li>After the installation is complete, you can run BRAPH 2.0 by navigating to the "braph2" folder in MATLAB and running the script <code>braph2</code>. This will launch the graphical user interface (GUI) from which you can choose an analysis pipeline to start your analysis.</li>
 </ol>  
 
 For more detailed instructions and troubleshooting tips, you can refer to the <a href="http://braph.org/software/braph-2/#installation">Installation</a> section on the BRAPH 2.0 website.
@@ -44,7 +43,7 @@ For more detailed instructions and troubleshooting tips, you can refer to the <a
 
 BRAPH 2.0 is designed to be an open community-driven project, and the code is freely available on GitHub at <a href="https://github.com/softmatterlab/BRAPH-2-Matlab">https://github.com/softmatterlab/BRAPH-2-Matlab</a>. Developers can contribute to BRAPH 2.0 at various levels of complexity, ranging from editing existing pipelines and adapting example scripts to implementing entirely new features.
 
-The software architecture of BRAPH 2.0, as shown in <a href="Figure4.png">Figure 4</a>, provides a clear structure for developers to understand and extend the functionality of the software. All objects in BRAPH 2.0 are derived from a base object called <code>Element</code>. The core code includes the compiler (<code>genesis</code>), the essential source code (<code>src</code>), and the GUI functionalities (<code>gui</code>). Developers can easily add new elements such as brain surfaces, atlases, example scripts, GUI pipelines, graphs, measures, data types, data importers, data exporters, and analyses. By writing new elements and recompiling the code, the new elements and their functionalities are immediately integrated into the GUI.
+The software architecture of BRAPH 2.0 provides a clear structure for developers to understand and extend the functionality of the software. All objects in BRAPH 2.0 are derived from a base object called <code>Element</code>. The core code includes the compiler (<code>genesis</code>), the essential source code (<code>src</code>), and the GUI functionalities (<code>gui</code>). Developers can easily add new elements such as brain surfaces, atlases, example scripts, GUI pipelines, graphs, measures, data types, data importers, data exporters, and analyses. By writing new elements and recompiling the code, the new elements and their functionalities are immediately integrated into the GUI.
 
 Developers can take advantage of the flexibility of BRAPH 2.0 in several ways:
 <ol>
