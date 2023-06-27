@@ -1,8 +1,10 @@
-![BRAPH~2.0](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/figures/banner.png)
+![BRAPH 2.0](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/figures/banner.png)
 
 # BRAPH 2.0 — Multimodal and AI-powered Brain Connectivity Analysis
 
-#### <a href="https://twitter.com/braph2software" alt="tweeter"><img src="https://img.shields.io/twitter/url?label=BRAPH%202&style=social&url=https%3A%2F%2Ftwitter.com%2Fbraph2software"></a><a href="http://braph.org/" alt="website"><img src="https://img.shields.io/website?up_message=braph.org&url=http%3A%2F%2Fbraph.org%2F"></a><a href="https://doi.org/10.1371/journal.pone.0178798" alt="DOI"><img src="https://img.shields.io/badge/DOI-10.1371%2Fjournal.pone.0178798-blue">
+[![BRAPH 2](https://img.shields.io/twitter/url?label=BRAPH%202&style=social&url=https%3A%2F%2Ftwitter.com%2Fbraph2software)](https://twitter.com/braph2software)
+[![Website](https://img.shields.io/website?up_message=braph.org&url=http%3A%2F%2Fbraph.org%2F)](http://braph.org/)
+[![DOI](https://img.shields.io/badge/DOI-10.1371%2Fjournal.pone.0178798-blue)](https://doi.org/10.1371/journal.pone.0178798)
 
 <br />
 
