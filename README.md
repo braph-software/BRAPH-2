@@ -19,6 +19,7 @@ BRAPH 2.0 is designed to facilitate the analysis of brain connectivity using var
 ### Installation
 
 To install BRAPH 2.0, follow these steps:
+
 <ol>
     <li>Ensure that you have MATLAB R2021a or a later version installed on your system. BRAPH 2.0 is compatible with the versions of MATLAB for Microsoft Windows, macOS, and Linux operating systems.</li>
   
