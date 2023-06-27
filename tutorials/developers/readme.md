@@ -1,6 +1,10 @@
 # BRAPH 2.0 - For Developers
 
-Welcome to the BRAPH 2.0 development guide! This section provides instructions and examples for developers who want to extend and enhance BRAPH 2.0 with new functionalities. Whether you want to adapt existing pipelines, modify example scripts, or implement completely new features, this guide will walk you through the different levels of complexity in BRAPH 2.0 development.
+Welcome to the BRAPH 2.0 development guide! 
+
+This section provides instructions and examples for developers who want to extend and enhance BRAPH 2.0 with new functionalities. Whether you want to adapt existing pipelines, modify example scripts, or implement completely new features, this guide will walk you through the different levels of complexity in BRAPH 2.0 development.
+
+The software architecture of BRAPH 2.0 provides a clear structure for developers to understand and extend the functionality of the software. All objects in BRAPH 2.0 are derived from a base object called <code>Element</code>. The core code includes the compiler (<code>genesis</code>), the essential source code (<code>src</code>), and the GUI functionalities (<code>gui</code>). Developers can easily add new elements such as brain surfaces, atlases, example scripts, GUI pipelines, graphs, measures, data types, data importers, data exporters, and analyses. By writing new elements and recompiling the code, the new elements and their functionalities are immediately integrated into the GUI.
 
 ## Adapting a Pipeline Script
 
