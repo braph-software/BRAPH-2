@@ -51,26 +51,11 @@ For detailed information about each analysis pipeline, including their functiona
 
 ### For developers
 
-BRAPH 2.0 is designed to be an open community-driven project, and the code is freely available on GitHub at <a href="https://github.com/softmatterlab/BRAPH-2-Matlab">https://github.com/softmatterlab/BRAPH-2-Matlab</a>. Developers can contribute to BRAPH 2.0 at various levels of complexity, ranging from editing existing pipelines and adapting example scripts to implementing entirely new features. For all details on how to do this, refer to the BRAPH 2.0 [developer tutorials](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/developers).
+BRAPH 2.0 is designed to be an open community-driven project, and the code is freely available on GitHub at <a href="https://github.com/softmatterlab/BRAPH-2-Matlab">https://github.com/softmatterlab/BRAPH-2-Matlab</a>. Developers can contribute to BRAPH 2.0 at various levels of complexity, ranging from editing existing pipelines and adapting example scripts to implementing entirely new features.
 
 The software architecture of BRAPH 2.0 provides a clear structure for developers to understand and extend the functionality of the software. All objects in BRAPH 2.0 are derived from a base object called <code>Element</code>. The core code includes the compiler (<code>genesis</code>), the essential source code (<code>src</code>), and the GUI functionalities (<code>gui</code>). Developers can easily add new elements such as brain surfaces, atlases, example scripts, GUI pipelines, graphs, measures, data types, data importers, data exporters, and analyses. By writing new elements and recompiling the code, the new elements and their functionalities are immediately integrated into the GUI.
 
-Developers can take advantage of the flexibility of BRAPH 2.0 in several ways:
-
-# BRAPH 2.0 - For Developers
-
-Welcome to the BRAPH 2.0 development guide! This guide provides developers with various ways to enhance and extend the functionality of BRAPH 2.0. Here's how you can get involved:
-
-1. **Adapting a Pipeline Script**: Customize BRAPH 2.0 by modifying a pipeline script to define parameters and adjust the analysis steps according to your requirements. Follow the tutorial [Adapting a Pipeline Script](http://braph.org/tutorials/for-developers/new-pipeline) for detailed guidance.
-
-2. **Editing Example Scripts**: Gain more control over the analysis workflow by editing example scripts. These scripts can be modified to calculate different measures and leverage parallel computing for faster calculations. Refer to the tutorial [Calculating Different Measures](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/tutorials/developers/devdoc_script_measure.pdf) for step-by-step instructions.
-
-3. **Expanding BRAPH 2.0 with New Functionalities**: Utilize BRAPH 2.0's object-oriented programming to introduce additional features:
-   - **Graphs**: Implement new graph types by extending the `Graph` element. Follow the tutorial [Implement a new Graph](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/tutorials/developers/devdoc_graph.pdf) for a comprehensive guide.
-   - **Measures**: Add new measures by extending the `Measure` element. Refer to the tutorial [Implement a new Measure](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/tutorials/developers/devdoc_measure.pdf) for the implementation process.
-   - **Subjects**: Introduce new data types by extending the `Subject` element. The tutorial [Implement a new Subject](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/tutorials/developers/devdoc_subject.pdf) provides guidance on creating new data types.
-   - **Group-based and Ensemble-based Analyses**: Add new analysis pipelines by extending the `AnalysisGroup` or `AnalysisEnsemble` elements. The tutorials [Implement a new Group Analysis](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/tutorials/developers/devdoc_analysis_group.pdf) and [Implement a new Ensemble Analysis](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/tutorials/developers/devdoc_analysis_ensemble.pdf) demonstrate the process.
-   - **Deep-learning Functionalities**: Swiftly integrate deep-learning functionalities by extending the `NNBase` element for new neural network architectures. Check out the tutorials [Implement a new Neural Network Classifier](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/tutorials/developers/devdoc_nn_classifier.pdf) and [Implement a new Neural Network Regressor](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/tutorials/developers/devdoc_nn_regressor.pdf). You can also introduce new metrics using the `NNClassifierEvaluator` and `NNRegressorEvaluator` elements, as shown in the tutorials [Implement a new Neural Network Evaluator for Classification](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/tutorials/developers/devdoc_nn_classifier_evaluator.pdf) and [Implement a new Neural Network Evaluator for Regression](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/tutorials/developers/devdoc_nn_regressor_evaluator.pdf), respectively.
+For all details on how to do this, refer to the BRAPH 2.0 [developer tutorials](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/developers).
 
 ## Contribute to BRAPH 2.0
 
