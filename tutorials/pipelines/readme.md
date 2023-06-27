@@ -9,6 +9,17 @@ These tutorials walk you through the analysis and comparison steps included in t
 - Pipeline Functional Comparison BUD: Tutorial on functional comparison using the binary undirected (BUD) connectivity measure. [Tutorial Link](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines/single_layer_connectivity/pipeline_functional_comparison_BUD)
 - Pipeline Structural Comparison BUT: Tutorial on structural comparison using the binary undirected (BUT) connectivity measure. [Tutorial Link](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines/single_layer_connectivity/pipeline_structural_comparison_BUT)
 
+<img src="https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/figures/pipeline-graph.png" width=100% alt="Advances in brain connectivity analysis" />
+
+**BRAPH~2.0 graph analysis pipeline.**
+**a** Main graphical user interface (GUI) for BRAPH~2.0, which is launched by the command <code>braph2</code>, where an analysis pipeline can be selected.
+**b** GUI of the *pipeline comparison connectivity WU, which allows the user to import weighted undirected (WU) adjacency matrices corresponding to two subject groups and compare the distributions of the subjects' graph measures. This pipeline consists of sequential steps: 
+**c** Load the brain atlas.
+**d** Load the two groups of subject data.
+**e** Analyze the first group.
+**f** Analyze the second group.
+**g** Compare the two groups to identify statistically significant differences.
+
 ## Multiplex Connectivity Pipelines
 
 These tutorials guide you through the analysis and comparison steps of multiplex connectivity pipelines. Explore the following pipelines to analyze and compare multiplex connectivity measures:
@@ -21,4 +32,16 @@ These tutorials guide you through the analysis and comparison steps of multiplex
 Explore the deep learning pipelines in BRAPH 2.0. These tutorials demonstrate the usage of neural networks for regression and classification tasks on different types of data:
 - Pipeline Neural Networks Regression Structural Data: Tutorial on using neural networks for regression on structural data. [Tutorial Link](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines/deep_learning/pipeline_neural_networks_regression_structural_data)
 - Pipeline Neural Networks Classification Connectivity WU: Tutorial on using neural networks for classification on weighted undirected (WU) connectivity data. [Tutorial Link](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines/deep_learning/pipeline_neural_networks_classification_connectivity_WU)
-- Pipeline Neural Networks Classification Cross Validation Functional WU: Tutorial on using neural networks for classification with cross-validation on weighted undirected (WU) functional connectivity data. [Tutorial Link](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines/de
+- Pipeline Neural Networks Classification Cross Validation Functional WU: Tutorial on using neural networks for classification with cross-validation on weighted undirected (WU) functional connectivity data. [Tutorial Link](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines/deep_learning/pipeline_neural_networks_classification_connectivity_WU)
+
+<img src="https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/figures/pipeline-nn.png" width=100% alt="Advances in brain connectivity analysis" />
+
+**BRAPH~2.0 deep-learning analysis pipeline.**
+**a** Main graphical user interface (GUI) for BRAPH~2.0, which is launched by the command `braph2`, where an analysis pipeline can be selected.
+**b** GUI of the *pipeline neural networks classification connectivity WU*, which permits the user to import weighted undirected (WU) adjacency matrices corresponding to two subject groups and perform classification using either the subjects' graph measures or their adjacency matrices. This pipeline consists of sequential steps:
+**c** Load the brain atlas.
+**d** Load the two groups of subject data.
+**e** Construct the dataset.
+**f** Split the dataset.
+**g** Train the neural network model.
+**h** Evaluate the performance of the model using confusion matrices, the area under the receiver operating characteristic curve, and a feature importance analysis.
