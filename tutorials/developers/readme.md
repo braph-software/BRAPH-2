@@ -8,11 +8,11 @@ The software architecture of BRAPH 2.0 provides a clear structure for developers
 
 ## Adapting a Pipeline Script
 
-If you need to increase the number of groups in a pipeline script, you can follow the steps outlined in the tutorial [Adapting a Pipeline Script to Increase the Number of Groups](link-to-tutorial). This tutorial will guide you through the process of modifying the pipeline script to accommodate your specific requirements.
+The simplest way to customize BRAPH 2.0 is by modifying a <code>.braph2</code> pipeline script. This allows users to define parameters and adjust the analysis steps according to their specific requirements. The developer tutorial <a href="[http://braph.org/tutorials/for-developers/new-pipeline](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/tutorials/developers/devdoc_pipeline.pdf)">Adapting a Pipeline Script</a> provides guidance on adapting pipeline scripts.
 
 ## Editing an Example Script
 
-To calculate different measures using an example script, you can refer to the tutorial [Editing an Example Script to Calculate Different Measures](link-to-tutorial). This tutorial provides detailed instructions on how to modify the example script to compute the measures of interest.
+Developers can also edit the example scripts provided with the software to have more control over the analysis workflow and leverage parallel computing for faster calculations. For example, these scripts can be used to run calculations on a cluster. The developer tutorial <a href="https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/tutorials/developers/devdoc_script_measure.pdf">Calculating Different Measures</a> demonstrates how to modify example scripts.
 
 ## Expanding BRAPH 2.0 with New Functionalities
 
