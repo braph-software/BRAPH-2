@@ -19,28 +19,21 @@ BRAPH 2.0 is designed to facilitate the analysis of brain connectivity using var
 ### Installation
 
 To install BRAPH 2.0, follow these steps:
-
 <ol>
     <li>Ensure that you have MATLAB R2021a or a later version installed on your system. BRAPH 2.0 is compatible with the versions of MATLAB for Microsoft Windows, macOS, and Linux operating systems.</li>
-  
     <li>Make sure you have the following toolboxes installed in MATLAB:
-        <ul>
-            <li>Statistics and Machine Learning Toolbox (required)</li>
-            <li>Parallel Computing Toolbox (optional)</li>
-            <li>Deep Learning Toolbox (optional, for deep learning analysis)</li>
-        </ul>
+    <ul>
+        <li>Statistics and Machine Learning Toolbox (required)</li>
+        <li>Parallel Computing Toolbox (optional)</li>
+        <li>Deep Learning Toolbox (optional, for deep learning analysis)</li>
+    </ul>
     </li>
-  
     <li>Download the latest stable version of BRAPH 2.0 from our <a href="https://github.com/softmatterlab/BRAPH-2-Matlab/releases">GitHub repository</a> or from our <a href="http://braph.org/software/braph-2/">website</a>.</li>
-  
     <li>Unzip the downloaded file into the desired directory on your system.</li>
-  
     <li>Launch MATLAB and change the current folder to the "braph2genesis" folder located in the directory where you unzipped BRAPH 2.0. You may need to add the folder to the MATLAB path.</li>
-  
     <li>Run the script <code>braph2genesis</code> in MATLAB. This installation process may take up to one hour to complete. You only need to run this script once or whenever there is an update to BRAPH 2.0.</li>
-  
     <li>After the installation is complete, you can run BRAPH 2.0 by navigating to the "braph2" folder in MATLAB and running the script <code>braph2</code>. This will launch the graphical user interface (GUI) from which you can choose an analysis pipeline to start your analysis.</li>
-</ol>
+</ol>  
 
 For more detailed instructions and troubleshooting tips, you can refer to the <a href="http://braph.org/software/braph-2/#installation">Installation</a> section on the BRAPH 2.0 website.
 
@@ -55,9 +48,7 @@ The software architecture of BRAPH 2.0, as shown in <a href="Figure4.png">Figure
 Developers can take advantage of the flexibility of BRAPH 2.0 in several ways:
 <ol>
     <li><strong>Adapting a Pipeline Script</strong>: The simplest way to customize BRAPH 2.0 is by modifying a <code>.braph2</code> pipeline script. This allows users to define parameters and adjust the analysis steps according to their specific requirements. The developer tutorial <a href="http://braph.org/tutorials/for-developers/new-pipeline">Adapting a Pipeline Script</a> provides guidance on adapting pipeline scripts.</li>
-    
     <li><strong>Editing Example Scripts</strong>: Developers can also edit the example scripts provided with the software to have more control over the analysis workflow and leverage parallel computing for faster calculations. For example, these scripts can be used to run calculations on a cluster. The developer tutorial <a href="http://braph.org/tutorials/for-developers/adapt-a-script-for-graph-measure-calculation">Calculating Different Measures</a> demonstrates how to modify example scripts.</li>
-
     <li><strong>Expanding BRAPH 2.0 with New Functionalities</strong>: BRAPH 2.0's object-oriented programming makes it easy to update, debug, and maintain the code. Developers can extend existing elements or create new ones to introduce additional features. The tutorials <a href="http://braph.org/tutorials/for-developers/new-graph">Implement a new Graph</a>, <a href="http://braph.org/tutorials/for-developers/new-measure">Implement a new Measure</a>, and <a href="http://braph.org/tutorials/for-developers/new-subject">Implement a new Subject</a> demonstrate how to create new graphs, measures, and data types, respectively. Developers can also add new analyses by extending the elements <code>AnalysisGroup</code> or <code>AnalysisEnsemble</code>, as shown in the tutorials <a href="http://braph.org/tutorials/for-developers/new-analysis-group">Implement a new Group Analysis</a> and <a href="http://braph.org/tutorials/for-developers/new-analysis-ensemble">Implement a new Ensemble Analysis</a>.</li>
 </ol>
 
