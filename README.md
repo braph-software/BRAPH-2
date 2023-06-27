@@ -32,7 +32,8 @@ To install BRAPH 2.0, follow these steps:
     <li>Unzip the downloaded file into the desired directory on your system.</li>
     <li>Launch MATLAB and change the current folder to the "braph2genesis" folder located in the directory where you unzipped BRAPH 2.0. You may need to add the folder to the MATLAB path.</li>
     <li>Run the script <code>braph2genesis</code> in MATLAB. This installation process may take up to one hour to complete. You only need to run this script once or whenever there is an update to BRAPH 2.0.</li>
-    <li>After the installation is complete, you can run BRAPH 2.0 by navigating to the "braph2" folder in MATLAB and running the script <code>braph2</code>. This will launch the graphical user interface (GUI) from which you can choose an analysis pipeline to start your analysis.</li>
+    <li>After the installation is complete, you can run BRAPH 2.0 by navigating to the "braph2" folder in MATLAB and running the script <code>braph2</code>. This will launch the graphical user interface (GUI) from which you can choose an analysis pipeline to start your analysis.</li>![Figure4](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/assets/46021832/20f119cb-fab3-4fb4-a849-194e5db9f3c4)
+
 </ol>  
 
 For more detailed instructions and troubleshooting tips, you can refer to the <a href="http://braph.org/software/braph-2/#installation">Installation</a> section on the BRAPH 2.0 website.
@@ -54,4 +55,41 @@ Developers can take advantage of the flexibility of BRAPH 2.0 in several ways:
 
 ## Contribute to BRAPH 2.0
 
+BRAPH 2.0 is an open-source project, and contributions from the community are highly encouraged. Whether you want to report a bug, suggest a new feature, or contribute code improvements, your contributions are valuable and help make BRAPH 2.0 even better.
+
+### Bug Reports and Feature Requests
+
+If you encounter any issues or have ideas for new features, please submit a bug report or feature request on the <a href="https://github.com/softmatterlab/BRAPH-2-Matlab/issues">GitHub Issues</a> page. Provide detailed information for bug reports and clear descriptions for feature requests.
+
+### Code Contributions
+
+If you're interested in contributing code, follow these steps:
+<ol>
+  <li>Fork the BRAPH 2.0 repository on GitHub.</li>
+  <li>Create a new branch for your changes.</li>
+  <li>Make your modifications and commit them.</li>
+  <li>Push your branch to your forked repository.</li>
+  <li>Open a pull request against the <code>develop</code> branch of the main repository.</li>
+</ol>
+
+### Documentation Contributions
+
+Improvements to the documentation are welcome. Submit a pull request with your proposed changes for errors, outdated information, or suggestions for improvement.
+
+### Community Support
+
+Join discussions on the <a href="https://github.com/softmatterlab/BRAPH-2-Matlab/issues">GitHub Issues</a> page or the <a href="http://www.braph.org/forum/">BRAPH 2.0 forum</a> to provide support, answer questions, and share your expertise.
+
+By contributing to BRAPH 2.0, you play a crucial role in its growth and improvement. Your contributions shape the future development of the software and advance brain connectivity analysis.
+
+We appreciate your support and look forward to your contributions!
+
 ## Cite BRAPH 2.0
+
+## Cite BRAPH 2.0
+
+If you use BRAPH 2.0 in your research work, please consider citing the following publication:
+
+Mite Mijalkov, Ehsan Kakaei, Joana B Pereira, Eric Westman, Giovanni Volpe. (2017). BRAPH: A graph theory software for the analysis of brain connectivity. PLOS ONE, 12, e0178798. doi: https://doi.org/10.1371/journal.pone.0178798
+
+We appreciate your acknowledgment of BRAPH 2.0 in your research!
