@@ -2,7 +2,7 @@
 
 This section provides a series of tutorials that cover core concepts and general analyses using BRAPH 2.0. Whether you are new to BRAPH or looking to expand your knowledge, these tutorials will guide you through the essential functionalities and workflows of the software.
 
-## General
+## Getting started
 Learn the basics of using BRAPH 2.0, including installation instructions and an overview of the user interface. [Getting Started](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/general)
 
 ## Pipelines
