@@ -9,7 +9,7 @@ These tutorials walk you through the analysis and comparison steps included in t
 - Pipeline Functional Comparison BUD: Tutorial on functional comparison using the binary undirected (BUD) connectivity measure. [Tutorial Link](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines/single_layer_connectivity/pipeline_functional_comparison_BUD)
 - Pipeline Structural Comparison BUT: Tutorial on structural comparison using the binary undirected (BUT) connectivity measure. [Tutorial Link](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines/single_layer_connectivity/pipeline_structural_comparison_BUT)
 
-<img src="https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/figures/pipeline-graph.png" width=100% alt="Advances in brain connectivity analysis" />
+![Advances in brain connectivity analysis](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/figures/pipeline-graph.png)
 
 **BRAPH~2.0 graph analysis pipeline.**
 **a** Main graphical user interface (GUI) for BRAPH~2.0, which is launched by the command <code>braph2</code>, where an analysis pipeline can be selected.
@@ -34,7 +34,7 @@ Explore the deep learning pipelines in BRAPH 2.0. These tutorials demonstrate th
 - Pipeline Neural Networks Classification Connectivity WU: Tutorial on using neural networks for classification on weighted undirected (WU) connectivity data. [Tutorial Link](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines/deep_learning/pipeline_neural_networks_classification_connectivity_WU)
 - Pipeline Neural Networks Classification Cross Validation Functional WU: Tutorial on using neural networks for classification with cross-validation on weighted undirected (WU) functional connectivity data. [Tutorial Link](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines/deep_learning/pipeline_neural_networks_classification_connectivity_WU)
 
-<img src="https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/figures/pipeline-nn.png" width=100% alt="Advances in brain connectivity analysis" />
+![Advances in brain connectivity analysis](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/figures/pipeline-nn.png)
 
 **BRAPH~2.0 deep-learning analysis pipeline.**
 **a** Main graphical user interface (GUI) for BRAPH~2.0, which is launched by the command `braph2`, where an analysis pipeline can be selected.
