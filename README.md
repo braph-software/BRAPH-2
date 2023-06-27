@@ -1,4 +1,4 @@
-<img src="http://braph.org/wp-content/uploads/2022/10/braph2_headmain_web-4.png" width=100% />
+![BRAPH~2.0](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/figures/banner.png)
 
 # BRAPH 2.0 — Multimodal and AI-powered Brain Connectivity Analysis
 
@@ -8,7 +8,7 @@
 
 BRAPH 2.0 is an open-source MATLAB-based software that provides advanced capabilities for brain connectivity analysis. It offers a comprehensive range of features, including conventional graph theory, multilayer graphs, and deep learning techniques. With its user-friendly interface and extensive analysis pipelines, researchers can explore the complex organization of the human brain using multimodal neuroimaging data, going beyond the limitations of traditional approaches.
 
-<img src="https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/figures/intro.png" width=100% alt="Advances in brain connectivity analysis" />
+![Advances in brain connectivity analysis](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/figures/intro.png)
 
 **Advances in brain connectivity analysis.** Brain connectivity analysis is rapidly evolving thanks to the widespread availability of increasing computational power and large-scale, high-resolution, multimodal neuroimaging datasets. BRAPH 2.0 provides a complete set of tools to analyze these data with conventional graph theory (single-layer graphs), multilayer graphs (multiplex and multi-layer graphs), and deep learning (from artificial neural networks to graph convolutional neural networks), as well as a flexible, easily expandable software architecture. BRAPH 2.0 uses parallel computing to allow users to run scripts on servers or clusters using both central processing units (CPUs) and graphical processing units (GPUs).
 
