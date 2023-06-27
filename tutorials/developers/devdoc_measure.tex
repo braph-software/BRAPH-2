@@ -80,22 +80,25 @@ NOTES (metadata, string) are some specific notes about the degree.
 %%%% ¡default!
 'Degree notes'
 
-%%% ¡prop! ¥\circled{1}\circlednote{1}{Measures have a \emph{shape}: \code{Measure.GLOBAL} (a value for the whole brain graph, e.g., average degree), \code{Measure.NODAL} (a value for each brain region, e.g., degree, or \code{Measure.BINODAL} (a value for each couple of brain regions, e.g., distance between couples of nodes).}¥
+%%% ¡prop! ¥\circled{1}\circlednote{1}{Measures have a \emph{shape}: \code{Measure.GLOBAL} (a value for the whole brain graph, e.g., average degree), \code{Measure.NODAL} (a value for each brain region, e.g., degree, or \code{Measure.BINODAL} (a value for each couple of brain regions, e.g., distance between couples of nodes).}
+\circlednote{2}{Measures have a \emph{scope}: \code{Measure.SUPERGLOBAL} (a result for the whole multi-layer graph, e.g., overlapping strength), \code{Measure.UNILAYER} (a result for each layer, e.g., average strength), or \code{Measure.BILAYER} (a result for each couple of layers).}
+\circlednote{3}{Measures are either \code{Measure.NONPARAMETRIC} (the usual case) or \code{Measure.PARAMETRIC} (depending on some parameter).}
+\circlednote{4}{Each measure has a list of compatible graphs for which the measure can be used.}¥
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
 %%%% ¡default!
 Measure.NODAL
 
-%%% ¡prop! ¥\circled{2}\circlednote{2}{Measures have a \emph{scope}: \code{Measure.SUPERGLOBAL} (a result for the whole multi-layer graph, e.g., overlapping strength), \code{Measure.UNILAYER} (a result for each layer, e.g., average strength), or \code{Measure.BILAYER} (a result for each couple of layers).}¥
+%%% ¡prop! ¥\circled{2}¥
 SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.
 %%%% ¡default!
 Measure.UNILAYER
 
-%%% ¡prop! ¥\circled{3}\circlednote{3}{Measures are either \code{Measure.NONPARAMETRIC} (the usual case) or \code{Measure.PARAMETRIC} (depending on some parameter).}¥
+%%% ¡prop! ¥\circled{3}¥
 PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.
 %%%% ¡default!
 Measure.NONPARAMETRIC
 
-%%% ¡prop! ¥\circled{4}\circlednote{4}{Each measure has a list of compatible graphs for which the measure can be used.}¥
+%%% ¡prop! ¥\circled{4}¥
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
 {'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU'}
