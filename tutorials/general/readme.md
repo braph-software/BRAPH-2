@@ -25,6 +25,10 @@ These tutorials explain how to organize and format the multilayer data types cur
 - [Multilayer Structural Data](tutorials/general/tut_gr_ST_MP.pdf): Multilayer structural data involves multiple layers of structural measurements. Each layer represents a different modality or imaging technique, such as multiple types of MRI scans or a combination of MRI and PET data. This data type allows for the examination of structural variations across different imaging modalities.
 - [Connectivity-Functional Data](tutorials/general/tut_gr_CON_FUN_MP.pdf): Connectivity-functional data combines connectivity and functional information across multiple layers. It integrates the connectivity patterns between brain regions with the corresponding functional activity. This type of data facilitates the investigation of the relationship between brain structure and function, offering insights into the underlying mechanisms of brain connectivity and its functional implications.
 
+### New Data Types
+
+Additionally, BRAPH 2.0 allows users to incorporate new data types by following the provided guidelines, expanding the range of analyses and insights that can be achieved.
+
 ## Tutorials for Using the BRAPH 2 Graphical User Interfaces (GUI)
 
 Learn how to use the graphical user interfaces (GUIs) in BRAPH 2. These tutorials demonstrate how to open the GUIs, load an atlas, and navigate the general interfaces of BRAPH 2.
