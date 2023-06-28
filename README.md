@@ -70,7 +70,7 @@ BRAPH 2.0 is an open-source project, and contributions from the community are hi
 
 ### Bug Reports and Feature Requests
 
-If you encounter any issues or have ideas for new features, please submit provide detailed information for bug reports using the [Bug report](./issues/new?template=bug_report.md) template and clear descriptions for feature requests using the [Feature request](../issues/new?template=feature_request.md) template. Your contributions help us improve BRAPH 2.0 and make it even better.
+If you encounter any issues or have ideas for new features, please submit provide detailed information for bug reports using the [Bug report](../../issues/new?template=bug_report.md) template and clear descriptions for feature requests using the [Feature request](../../issues/new?template=feature_request.md) template. Your contributions help us improve BRAPH 2.0 and make it even better.
 
 ### Code Contributions
 
