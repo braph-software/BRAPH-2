@@ -1,9 +1,13 @@
 # Brain Atlas
 
+> ![Brain atlas figure created with BRAPH 2.0](fig01.png)
+> **Brain atlas figure created with BRAPH 2.0.**
+> Example of a brain surface image with some nodes representing brain regions.
+
 This Tutorial explains how to work with the Graphical User Interface (GUI) to manage brain atlases. This is typically the first step required to perform a graph analysis in BRAPH 2.0. In this Tutorial, we will explain how to upload a brain atlas, how to visualize it, and how to export publication-ready brain figures.
 
 > ![Brain Atlas GUI](fig02.png)
-> **Brain Atlas GUI.** Full graphical user interface to work with a brain atlas in BRAPH~2.0.
+> **Brain Atlas GUI.** Full graphical user interface to work with a brain atlas in BRAPH 2.0.
 
 ## Open the GUI
 
@@ -101,7 +105,7 @@ Most things in the settings window are intuitive. So we encourage you to try dif
 
 > ![Example of a visualization of the brain atlas](tut_ba/fig09.png)
 > **Example of a visualization of the brain atlas.**
-> A final figure created with BRAPH~2.0 by changing different options in the menu.
+> A final figure created with BRAPH 2.0 by changing different options in the menu.
  
 Each brain region can be represented with spheres, symbols, IDs, and labels. Spheres are objects that are rendered in 3D — often prettier, but also more computationally expensive. Symbols are objects rendered in 2D — more stylized and less computationally expensive. IDs and labels are the texts associated with the brain region.
 
@@ -111,7 +115,7 @@ BRAPH 2.0 provides different brain surfaces, as shown in Figure 10, for the huma
 
 > ![Brain surfaces in BRAPH 2.0](tut_ba/fig10.png)
 > **Brain surfaces in BRAPH 2.0.**
-> Some brain surfaces available in BRAPH~2.0 to plot the brain atlas.
+> Some brain surfaces available in BRAPH 2.0 to plot the brain atlas.
 
 ## Export the Figure
 
