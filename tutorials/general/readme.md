@@ -1,10 +1,14 @@
-# BRAPH 2.0 — Getting started
+# BRAPH 2.0 — General Tutorials
 
 This section provides a comprehensive introduction to get started with BRAPH 2.0, including preparing your data and using the graphical user interfaces (GUIs).
 
+## Getting Started
+
+The [Getting Started Tutorial](tutorials/general/tut_braph2.pdf) provides a comprehensive introduction to help you get started with BRAPH 2.0. This tutorial covers the essential steps and features of the software, guiding you through the process of installing BRAPH 2.0 and familiarizing yourself with its functionalities. Whether you are new to BRAPH or upgrading from a previous version, this tutorial will provide you with the necessary knowledge to begin your analyses.
+
 ## Tutorials to Prepare Your Data in BRAPH 2
 
-Follow these tutorials to organize your data in the correct format for use with BRAPH 2. These tutorials cover various types of data, including atlas, single-layer data, and multiplex data.
+To get started with BRAPH 2.0, it is important to organize and format your data correctly. Follow these tutorials to organize your data in the correct format for use with BRAPH 2. These tutorials cover various types of data, including atlas, single-layer data, and multiplex data.
 
 ### Atlas
 
@@ -36,4 +40,4 @@ Learn how to use the graphical user interfaces (GUIs) in BRAPH 2. These tutorial
 
 Each tutorial provides detailed instructions and examples to help you prepare your data and utilize the GUIs effectively in BRAPH 2.0. Start with the tutorial that matches your data type and proceed at your own pace. If you have any questions or need further assistance, feel free to reach out to the BRAPH community through the [BRAPH forum](http://braph.org/forums).
 
-Enjoy exploring and analyzing your data
+Enjoy exploring and analyzing your data!
