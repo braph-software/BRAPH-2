@@ -13,7 +13,6 @@ BRAPH 2.0 is an open-source MATLAB-based software that provides advanced capabil
 > ![Advances in brain connectivity analysis](figures/intro.png)
 > **Advances in brain connectivity analysis.** Brain connectivity analysis is rapidly evolving thanks to the widespread availability of increasing computational power and large-scale, high-resolution, multimodal neuroimaging datasets. BRAPH 2.0 provides a complete set of tools to analyze these data with conventional graph theory (single-layer graphs), multilayer graphs (multiplex and multi-layer graphs), and deep learning (from artificial neural networks to graph convolutional neural networks), as well as a flexible, easily expandable software architecture. BRAPH 2.0 uses parallel computing to allow users to run scripts on servers or clusters using both central processing units (CPUs) and graphical processing units (GPUs).
 
-
 ## Welcome to BRAPH 2.0
 
 BRAPH 2.0 is designed to facilitate the analysis of brain connectivity using various neuroimaging modalities and cutting-edge techniques. It enables researchers to assess the intricate nature of brain organization by leveraging multimodal data and incorporating advanced tools such as deep learning. The software provides an extensive set of analysis pipelines accessible through a graphical user interface (GUI) and sample scripts, allowing users to perform ready-to-use analyses or develop customized pipelines for their specific research needs.
@@ -29,29 +28,25 @@ To install BRAPH 2.0, follow these steps:
     * **Parallel Computing Toolbox** (optional)
     * **Deep Learning Toolbox** (optional, for deep learning analysis)
 
-3. Download the latest stable version of BRAPH 2.0 from the [BRAPH 2.0 GitHub repository](../../releases).
+3. Download the latest stable version of BRAPH 2.0 from the [BRAPH 2.0 Releases](../../releases).
 
 4. Unzip the downloaded file into the desired directory on your system.
 
 5. Launch MATLAB and change the current folder to the "braph2genesis" folder located in the directory where you unzipped BRAPH 2.0. You may need to add the folder to the MATLAB path.
 
-6. Run the script ´braph2genesis´ in MATLAB. This installation process may take up to one hour to complete. You only need to run this script once or whenever there is an update to BRAPH 2.0.
+6. Run the script `braph2genesis` in MATLAB. This installation process may take up to one hour to complete. You only need to run this script once or whenever there is an update to BRAPH 2.0.
 
-7. After the installation is complete, you can run BRAPH 2.0 by navigating to the "braph2" folder in MATLAB and running the script ´braph2´. This will launch the graphical user interface (GUI) from which you can choose an analysis pipeline to start your analysis.
+7. After the installation is complete, you can run BRAPH 2.0 by navigating to the "braph2" folder in MATLAB and running the script `braph2`. This will launch the graphical user interface (GUI) from which you can choose an analysis pipeline to start your analysis.
 
 ### Use Cases & Analysis Pipelines
 
-BRAPH 2.0 provides a range of analysis pipelines that can be used for various use cases in brain connectivity analysis. Here are some possible use cases of BRAPH 2.0:
+BRAPH 2.0 provides a range of analysis pipelines that can be used for various use cases in brain connectivity analysis. For detailed information about these analysis pipelines, including their functionalities and step-by-step instructions, refer to the [BRAPH 2.0 Pipeline Tutorials](tutorials/pipelines). Here are some possible use cases of BRAPH 2.0:
 
-1. **Conventional Single-Layer Analyses**: BRAPH 2.0 offers pipelines for analyzing single-layer graphs derived from different kinds of neuroimaging data. These pipelines involve loading the brain atlas, loading the subject data, constructing the graph, calculating graph measures of interest, and comparing groups. Single-layer analyses can be performed on connectivity data, functional data, and structural data.
+1. **Conventional Single-Layer Analyses**: BRAPH 2.0 offers pipelines to analyze single-layer graphs derived from different kinds of neuroimaging data. These pipelines involve loading the brain atlas, loading the subject data, constructing the graph, calculating graph measures of interest, and comparing groups. Single-layer analyses can be performed on connectivity data, functional data, and structural data.
 
 2. **Multilayer Analyses**: BRAPH 2.0 supports the analysis of multilayer graphs, which capture the connectivity patterns across multiple layers or modalities. The multilayer analysis pipelines involve similar steps as single-layer analyses but operate on multilayer graphs. This allows researchers to explore the relationships between different layers or modalities of brain connectivity.
 
 3. **Deep Learning Analyses**: BRAPH 2.0 enables the analysis of brain connectivity data using deep learning techniques. The deep learning pipelines involve loading the brain atlas, loading the subject data, constructing the input for deep learning models, splitting the dataset, training the models, and evaluating the model performance. Deep learning analyses can be applied to connectivity data, functional data, and structural data.
-
-These are just a few examples of the use cases supported by BRAPH 2.0. The software offers a wide range of analysis pipelines and measures, allowing researchers to investigate various aspects of brain connectivity in different research domains.
-
-For detailed information about each analysis pipeline, including their functionalities and step-by-step instructions, refer to the BRAPH 2.0 [pipeline tutorials](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines).
 
 ### For developers
 
