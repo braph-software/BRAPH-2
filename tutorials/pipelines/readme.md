@@ -62,7 +62,7 @@ In addition to the existing analysis pipelines, BRAPH 2.0 allows users to develo
 
 If the specific analysis you wish to perform is not currently supported by BRAPH 2.0, you have two options:
 
-1. **Further Development**: You can develop the necessary functionalities to implement your custom analysis pipeline by following the [Tutorial to Implement a New Analysis Pipeline](tutorials/general/devdoc_new_pipeline.pdf). This tutorial provides guidance on extending BRAPH 2.0 to accommodate new analysis techniques, enabling you to seamlessly integrate your pipeline into the BRAPH framework.
+1. **Further Development**: You can develop the necessary functionalities to implement your custom analysis pipeline by following the [Tutorial to Implement a New Analysis Pipeline](tutorials/developers/devdoc_new_pipeline.pdf). This tutorial provides guidance on extending BRAPH 2.0 to accommodate new analysis techniques, enabling you to seamlessly integrate your pipeline into the BRAPH framework.
 
 2. **Feature Request**: If you prefer not to develop the functionalities yourself, you can consider opening an issue on the BRAPH GitHub repository. Use the [Feature Request](../../issues/new?template=feature_request.md) template to describe your specific analysis requirements and the desired functionality. The BRAPH development team and community can review your request and potentially incorporate it into future updates of BRAPH.
 
