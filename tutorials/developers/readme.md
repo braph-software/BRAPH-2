@@ -6,7 +6,7 @@ This section provides instructions and examples for developers who want to exten
 
 The software architecture of BRAPH 2.0 provides a clear structure for developers to understand and extend the functionalities of the software. All objects in BRAPH 2.0 are derived from a base object called `Element`. The core code includes the compiler (`genesis`), the essential source code (`src`), and the GUI functionalities (`gui`). Developers can easily add new elements such as brain surfaces, atlases, example scripts, GUI pipelines, graphs, measures, data types, data importers, data exporters, and analyses. By writing new elements and recompiling the code, the new elements and their functionalities are immediately integrated into the GUI.
 
-> ![BRAPH 2.0 software architecture](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/figures/braph2genesis.png)
+> ![BRAPH 2.0 software architecture](figures/braph2genesis.png)
 > **BRAPH 2.0 software architecture.**
 Directory structure of BRAPH 2.0 GENESIS (left) and BRAPH 2.0 (right).
 All objects are derived from a base object called `Element` and written in a simplified pseudocode (files *.gen.m) that is compiled into the actual elements (files *.m) by the command `braph2genesis` (some examples of these elements are shown).
@@ -28,21 +28,21 @@ Developers can also edit the example scripts provided with the software to have 
 
 BRAPH 2.0's object-oriented programming architecture makes it easy to expand its capabilities by introducing new elements and features. Here are some of the ways you can extend BRAPH 2.0:
 
-- **Graphs**: Developers can implement new graph types by extending the `Graph` element. The tutorial [Implement a new Graph](link-to-tutorial) provides a step-by-step guide on how to create new graph types.
+- **Graphs**: Developers can implement new graph types by extending the `Graph` element. The [Developer Tutorial to Implement a New Graph](tutorials/developers/devdoc_graph.pdf) provides a step-by-step guide on how to create new graph types.
 
-- **Measures**: New measures can be added to BRAPH 2.0 by extending the `Measure` element. The tutorial [Implement a new Measure](link-to-tutorial) explains the process of implementing custom measures.
+- **Measures**: New measures can be added to BRAPH 2.0 by extending the `Measure` element. The [Developer Tutorial to Implement a New Measure](tutorials/developers/devdoc_measure.pdf) explains the process of implementing custom measures.
 
-- **Subjects**: Developers can introduce new data types by extending the `Subject` element. The tutorial [Implement a new Subject](link-to-tutorial) provides guidance on creating new data types for subjects.
+- **Subjects**: Developers can introduce new data types by extending the `Subject` element. The tutorial [Developer Tutorial to Implement a New Subject](tutorials/developers/devdoc_subject.pdf) provides guidance on creating new data types for subjects.
 
 - **Group-based and Ensemble-based Analyses**: New analysis pipelines can be added to BRAPH 2.0 by extending the `AnalysisGroup` or `AnalysisEnsemble` elements. The tutorials in this category demonstrate the process of implementing new analysis pipelines:
-  - [Implement a new Group Analysis](link-to-tutorial)
-  - [Implement a new Ensemble Analysis](link-to-tutorial)
+  - [Developer Tutorial to Implement a New Group Analysis](tutorials/developers/devdoc_analysis_group.pdf)
+  - [Developer Tutorial to Implement a New Ensemble Analysis](tutorials/developers/devdoc_analysis_ensemble.pdf)
 
 - **Deep-learning Functionalities**: New functionalities for deep-learning analyses can be swiftly integrated into BRAPH 2.0 as well. Here are the tutorials for expanding BRAPH 2.0 with deep-learning features:
-  - [Implement a new Neural Network Classifier](link-to-tutorial)
-  - [Implement a new Neural Network Regressor](link-to-tutorial)
-  - [Implement a new Neural Network Evaluator for Classification](link-to-tutorial)
-  - [Implement a new Neural Network Evaluator for Regression](link-to-tutorial)
+  - [Developer Tutorial to Implement a New Neural Network Classifier](tutorials/developers/devdoc_nn_clas.pdf)
+  - [Developer Tutorial to Implement a New Neural Network Regressor](tutorials/developers/devdoc_nn_reg.pdf)
+  - [Developer Tutorial to Implement a New Neural Network Evaluator for Classification](tutorials/developers/devdoc_nn_clas_eval.pdf)
+  - [Developer Tutorial to Implement a New Neural Network Evaluator for Regression](tutorials/developers/devdoc_nn_reg_eval.pdf)
 
 These tutorials provide step-by-step instructions and examples to guide developers in expanding BRAPH 2.0 with new functionalities. We encourage developers to contribute to the growth and improvement of BRAPH 2.0 by introducing new elements, measures, and analyses. Feel free to share your implementations, ask questions, and engage with the BRAPH community through the [BRAPH forum](http://braph.org/forums) and [GitHub page](https://github.com/softmatterlab/BRAPH-2-Matlab).
 
