@@ -3,14 +3,19 @@
 This section provides a series of tutorials that cover core concepts and general analyses using BRAPH 2.0. Whether you are new to BRAPH or looking to expand your knowledge, these tutorials will guide you through the essential functionalities and workflows of the software.
 
 ## Getting started
-Learn the basics of using BRAPH 2.0, including installation instructions and an overview of the user interface. [Getting Started](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/general)
+
+Learn the basics of using BRAPH 2.0, including installation instructions and an overview of the user interface using the [BRAPH 2.0 General Tutorials](/tutorials/general)
 
 ## Pipelines
-Dive into the world of graph theory analysis with BRAPH 2.0. This tutorial will walk you through the steps of constructing a brain graph, calculating various graph measures, and visualizing the results. [Graph Theory Analysis Pipelines](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines)
 
-Explore the integration of deep learning techniques with BRAPH 2.0. This tutorial demonstrates how to build and train neural networks for brain data classification and regression tasks. [Deep Learning Analysis Pipelines](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines)
+Dive into the world of graph theory analysis with BRAPH 2.0. The [Tutorials for Graph Theory Analysis Pipelines](tutorials/pipelines#single-layer-connectivity-pipelines) will walk you through the steps of constructing a brain graph, calculating various graph measures, and visualizing the results in the context of single-layer connectivity.
+
+Then, discover the versatility of BRAPH 2.0 with its multilayer connectivity analysis. The [Tutotials for Multilayer Connectivity Analysis Pipelines](tutorials/pipelines#multiplex-connectivity-pipelines) show how to create multiplex and multi-layer graphs, and delve into the intricate interplay between different layers of brain connectivity.
+
+Finally, immerse yourself in the cutting-edge field of deep learning with BRAPH 2.0. The [Tutorials for Deep Learning Analysis Pipelines](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines#deep-learning-pipelines) unleash the power of neural networks for brain data classification and regression tasks.
 
 ## For Developers
+
 Customize BRAPH 2.0 by adapting pipeline scripts to suit your specific requirements. This tutorial provides guidance on modifying pipeline scripts and adjusting analysis steps. [Adapting a Pipeline Script](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/developers)
 
 Gain more control over the analysis workflow by editing the example scripts provided with BRAPH 2.0. Learn how to leverage parallel computing and run calculations on a cluster. [Editing Example Scripts](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/developers)
