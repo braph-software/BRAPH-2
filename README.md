@@ -50,11 +50,7 @@ BRAPH 2.0 provides a range of analysis pipelines that can be used for various us
 
 ### For developers
 
-BRAPH 2.0 is designed to be an open community-driven project, and the code is freely available on GitHub at <a href="https://github.com/softmatterlab/BRAPH-2-Matlab">https://github.com/softmatterlab/BRAPH-2-Matlab</a>. Developers can contribute to BRAPH 2.0 at various levels of complexity, ranging from editing existing pipelines and adapting example scripts to implementing entirely new features.
-
-The software architecture of BRAPH 2.0 provides a clear structure for developers to understand and extend the functionality of the software. All objects in BRAPH 2.0 are derived from a base object called <code>Element</code>. The core code includes the compiler (<code>genesis</code>), the essential source code (<code>src</code>), and the GUI functionalities (<code>gui</code>). Developers can easily add new elements such as brain surfaces, atlases, example scripts, GUI pipelines, graphs, measures, data types, data importers, data exporters, and analyses. By writing new elements and recompiling the code, the new elements and their functionalities are immediately integrated into the GUI.
-
-For all details on how to do this, refer to the BRAPH 2.0 [developer tutorials](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/developers).
+BRAPH 2.0 is designed to be an open community-driven project, and the code is freely available on this GitHub repository at [BRAPH 2.0 Releases](../../releases). Developers can contribute to BRAPH 2.0 at various levels of complexity, ranging from editing existing pipelines and adapting example scripts to implementing entirely new features. For the details on how to do this, refer to the [BRAPH 2.0 Developer Tutorials](tutorials/developers).
 
 ## Contribute to BRAPH 2.0
 
