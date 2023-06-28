@@ -1,13 +1,25 @@
 # BRAPH 2.0 - Pipelines
 
-Welcome to the Pipelines tutorials section of BRAPH 2.0! This section provides detailed instructions on using the provided pipelines in BRAPH 2.0 using Graphical User Interfaces (GUIs).
+Welcome to the pipelines tutorials of BRAPH 2.0! This section provides detailed instructions on using the available pipelines in BRAPH 2.0 using Graphical User Interfaces (GUIs).
 
 ## Single Layer Connectivity Pipelines
 
-These tutorials walk you through the analysis and comparison steps included in the different single layer connectivity pipelines. Learn how to perform various analyses and compare connectivity measures using the following pipelines:
-- Pipeline Connectivity Comparison WU: Tutorial on connectivity comparison using the weighted undirected (WU) connectivity measure. [Tutorial Link](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines/single_layer_connectivity/pipeline_connectivity_comparison_WU)
-- Pipeline Functional Comparison BUD: Tutorial on functional comparison using the binary undirected (BUD) connectivity measure. [Tutorial Link](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines/single_layer_connectivity/pipeline_functional_comparison_BUD)
-- Pipeline Structural Comparison BUT: Tutorial on structural comparison using the binary undirected (BUT) connectivity measure. [Tutorial Link](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines/single_layer_connectivity/pipeline_structural_comparison_BUT)
+These tutorials provide step-by-step instructions for analyzing and comparing connectivity measures using different single layer connectivity pipelines:
+
+- Pipelines analyzing connectivity data.
+  - [ ] [Pipeline Connectivity Comparison WU](tutotials/pipelines/tut_CON_WU.pdf): Tutorial to compare two groups of subjects using connectivity data and weighted undirected graphs.
+  - [ ] [Pipeline Connectivity Comparison BUD](tutotials/pipelines/tut_CON_BUT.pdf): Pipeline Connectivity Comparison BUD: Tutorial to compare two groups of subjects using connectivity data and binary undirected graphs at fixed densities (BUD).
+  - [ ] [Pipeline Connectivity Comparison BUT](tutotials/pipelines/tut_CON_BUT.pdf): Tutorial to compare two groups of subjects using connectivity data and binary undirected graphs at fixed thresholds (BUT).
+
+- Pipelines analyzing functional data.
+  - [ ] [Pipeline Connectivity Comparison WU](tutotials/pipelines/tut_CON_WU.pdf): Tutorial to compare two groups of subjects using connectivity data and weighted undirected graphs.
+  - [ ] [Pipeline Connectivity Comparison BUD](tutotials/pipelines/tut_CON_BUT.pdf): Pipeline Connectivity Comparison BUD: Tutorial to compare two groups of subjects using connectivity data and binary undirected graphs at fixed densities (BUD).
+  - [ ] [Pipeline Connectivity Comparison BUT](tutotials/pipelines/tut_CON_BUT.pdf): Tutorial to compare two groups of subjects using connectivity data and binary undirected graphs at fixed thresholds (BUT).
+
+- Pipelines analyzing structural data.
+  - [ ] [Pipeline Connectivity Comparison WU](tutotials/pipelines/tut_CON_WU.pdf): Tutorial to compare two groups of subjects using connectivity data and weighted undirected graphs.
+  - [ ] [Pipeline Connectivity Comparison BUD](tutotials/pipelines/tut_CON_BUT.pdf): Pipeline Connectivity Comparison BUD: Tutorial to compare two groups of subjects using connectivity data and binary undirected graphs at fixed densities (BUD).
+  - [ ] [Pipeline Connectivity Comparison BUT](tutotials/pipelines/tut_CON_BUT.pdf): Tutorial to compare two groups of subjects using connectivity data and binary undirected graphs at fixed thresholds (BUT).
 
 ![Advances in brain connectivity analysis](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/figures/pipeline-graph.png)
 
