@@ -38,6 +38,8 @@ To install BRAPH 2.0, follow these steps:
 
 7. After the installation is complete, you can run BRAPH 2.0 by navigating to the "braph2" folder in MATLAB and running the script `braph2`. This will launch the graphical user interface (GUI) from which you can choose an analysis pipeline to start your analysis.
 
+8. Explore the [BRAPH 2.0 Tutorials](tutorials).
+
 ### Use Cases & Analysis Pipelines
 
 BRAPH 2.0 provides a range of analysis pipelines that can be used for various use cases in brain connectivity analysis. For detailed information about these analysis pipelines, including their functionalities and step-by-step instructions, refer to the [BRAPH 2.0 Pipeline Tutorials](tutorials/pipelines). Here are some possible use cases of BRAPH 2.0:
