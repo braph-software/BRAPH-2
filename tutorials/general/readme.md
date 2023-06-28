@@ -27,7 +27,7 @@ These tutorials explain how to organize and format the multilayer data types cur
 
 ### New Data Types
 
-Additionally, BRAPH 2.0 allows users to incorporate new data types by following the provided guidelines, expanding the range of analyses and insights that can be achieved.
+Additionally, BRAPH 2.0 allows users to incorporate new data types by following the provided guidelines, expanding the range of analyses and insights that can be achieved. This can be done by following the [Tutorial to Implement a new Subject](link-to-tutorial).
 
 ## Tutorials for Using the BRAPH 2 Graphical User Interfaces (GUI)
 
