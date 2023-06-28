@@ -12,7 +12,7 @@ These tutorials provide step-by-step instructions for analyzing and comparing co
   - [Pipeline Connectivity Comparison BUT](tutotials/pipelines/tut_CON_BUT.pdf): Tutorial to compare two groups of subjects with connectivity data (CON) using binary undirected graphs at fixed thresholds (BUT).
 
 - **Pipelines analyzing functional data (FUN).** In functional data, a time series representing brain function over time is available for each brain region of each subject. For example, these time series could be brain activation signals in fMRI or electrophysiological signals in electroencephalography (EEG) or magnetoencephalography (MEG). 
-  -  [Pipeline Functional Comparison WU](tutotials/pipelines/tut_FUN_WU.pdf): Tutorial to compare two groups of subjects with functional data (FUN) using weighted undirected graphs.
+  - [Pipeline Functional Comparison WU](tutotials/pipelines/tut_FUN_WU.pdf): Tutorial to compare two groups of subjects with functional data (FUN) using weighted undirected graphs.
   - [Pipeline Functional Comparison BUD](tutotials/pipelines/tut_FUN_BUT.pdf): Tutorial to compare two groups of subjects with functional data (FUN) using binary undirected graphs at fixed densities (BUD).
   - [Pipeline Functional Comparison BUT](tutotials/pipelines/tut_FUN_BUT.pdf): Tutorial to compare two groups of subjects with functional data (FUN) using binary undirected graphs at fixed thresholds (BUT).
 
@@ -34,9 +34,21 @@ These tutorials provide step-by-step instructions for analyzing and comparing co
 ## Multiplex Connectivity Pipelines
 
 These tutorials guide you through the analysis and comparison steps of multiplex connectivity pipelines. Explore the following pipelines to analyze and compare multiplex connectivity measures:
-- Pipeline Connectivity-Functional Multiplex Comparison WU: Tutorial on connectivity-functional multiplex comparison using the weighted undirected (WU) connectivity measure. [Tutorial Link](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines/multiplex_connectivity/pipeline_connectivity_functional_multiplex_comparison_WU)
-- Pipeline Functional Multiplex Comparison BUD: Tutorial on functional multiplex comparison using the binary undirected (BUD) connectivity measure. [Tutorial Link](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines/multiplex_connectivity/pipeline_functional_multiplex_comparison_BUD)
-- Pipeline Structural Multiplex Comparison BUT: Tutorial on structural multiplex comparison using the binary undirected (BUT) connectivity measure. [Tutorial Link](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines/multiplex_connectivity/pipeline_structural_multiplex_comparison_BUT)
+
+- **Pipelines analyzing connectivity multiplex data (CON).** "Multilayer connectivity data comprises multiple layers of connectivity information, where each layer represents a distinct aspect of connectivity, such as different frequency bands or connectivity at different time points. This data type enables the investigation of time-varying or multiplex brain networks, and it can be sourced from various connectivity matrices per subject, such as white matter tracts obtained from dMRI or pre-calculated coactivation maps derived from fMRI data.
+  - [Pipeline Connectivity Multiplex Comparison WU](tutotials/pipelines/tut_CON_WU.pdf): Tutorial to compare two groups of subjects with connectivity multiplex data (CON MP) using weighted undirected graphs.
+  - [Pipeline Connectivity Multiplex Comparison BUD](tutotials/pipelines/tut_CON_BUT.pdf): Tutorial to compare two groups of subjects with connectivity multiplex data (CON MP) using binary undirected graphs at fixed densities (BUD).
+  - [Pipeline Connectivity Multiplex Comparison BUT](tutotials/pipelines/tut_CON_BUT.pdf): Tutorial to compare two groups of subjects with connectivity multiplex data (CON MP) using binary undirected graphs at fixed thresholds (BUT).
+
+- **Pipelines analyzing functional multiplex data (FUN).** Functional multiplex data encompasses time series representing brain function over time for each brain region of each subject. This data type includes brain activation signals obtained from fMRI or electrophysiological signals from techniques such as electroencephalography (EEG) or magnetoencephalography (MEG). These time series capture the dynamics of brain activity and facilitate the investigation of functional connectivity patterns across multiple layers.
+  - [Pipeline Functional Comparison WU](tutotials/pipelines/tut_FUN_WU.pdf): Tutorial to compare two groups of subjects with functional multiplex data (FUN MP) using weighted undirected graphs.
+  - [Pipeline Functional Comparison BUD](tutotials/pipelines/tut_FUN_BUT.pdf): Tutorial to compare two groups of subjects with functional multiplex data (FUN MP) using binary undirected graphs at fixed densities (BUD).
+  - [Pipeline Functional Comparison BUT](tutotials/pipelines/tut_FUN_BUT.pdf): Tutorial to compare two groups of subjects with functional multiplex data (FUN MP) using binary undirected graphs at fixed thresholds (BUT).
+
+- **Pipelines analyzing structural multiplex data (ST).** Structural multiplex data provides a scalar value for each brain region of each subject, offering insights into the anatomical characteristics of the brain. This data type includes measurements such as gray matter volume or thickness obtained from T1-weighted MRI, brain perfusion from arterial spin labeling (ASL) imaging, or abnormal protein deposition from static positron emission tomography (PET) data. Structural multiplex data enables the exploration of anatomical variations across multiple layers and their potential correlations with brain function.
+  - [Pipeline Structural Comparison WU](tutotials/pipelines/tut_ST_WU.pdf): Tutorial to compare two groups of subjects with structural multiplex data (ST MP) using weighted undirected graphs.
+  - [Pipeline Structural Comparison BUD](tutotials/pipelines/tut_ST_BUT.pdf): Tutorial to compare two groups of subjects with structural multiplex data (ST MP) using binary undirected graphs at fixed densities (BUD).
+  - [Pipeline Structural Comparison BUT](tutotials/pipelines/tut_ST_BUT.pdf): Tutorial to compare two groups of subjects with structural multiplex data (ST MP) using binary undirected graphs at fixed thresholds (BUT).
 
 ## Deep Learning Pipelines
 
