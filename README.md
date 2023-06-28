@@ -1,4 +1,4 @@
-![BRAPH 2.0](figures/braph2_banner_github.png)
+![BRAPH 2.0](figures/banner.png)
 
 # BRAPH 2.0 — Multimodal and AI-powered Brain Connectivity Analysis
 
