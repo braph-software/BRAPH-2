@@ -10,7 +10,7 @@ Learn the basics of using BRAPH 2.0, including installation instructions and an 
 
 Dive into the world of graph theory analysis with BRAPH 2.0. The [Tutorials for Graph Theory Analysis Pipelines](pipelines#single-layer-connectivity-pipelines) will walk you through the steps of constructing a brain graph, calculating various graph measures, and visualizing the results in the context of single-layer connectivity.
 
-Then, discover the versatility of BRAPH 2.0 with its multilayer connectivity analysis. The [Tutotials for Multilayer Connectivity Analysis Pipelines](pipelines#multiplex-connectivity-pipelines) show how to create multiplex and multi-layer graphs, and delve into the intricate interplay between different layers of brain connectivity.
+Then, discover the versatility of BRAPH 2.0 with its multilayer connectivity analysis. The [Tutorials for Multilayer Connectivity Analysis Pipelines](pipelines#multiplex-connectivity-pipelines) show how to create multiplex and multi-layer graphs, and delve into the intricate interplay between different layers of brain connectivity.
 
 Finally, immerse yourself in the cutting-edge field of deep learning with BRAPH 2.0. The [Tutorials for Deep Learning Analysis Pipelines](pipelines#deep-learning-pipelines) unleash the power of neural networks for brain data classification and regression tasks.
 
