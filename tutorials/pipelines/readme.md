@@ -6,17 +6,17 @@ Welcome to the pipelines tutorials of BRAPH 2.0! This section provides detailed 
 
 These tutorials provide step-by-step instructions for analyzing and comparing connectivity measures using different single layer connectivity pipelines:
 
-- Pipelines analyzing connectivity data (CON).
+- **Pipelines analyzing connectivity data (CON).** For connectivity data, a connectivity matrix per subject is already available and can be directly imported into the relative analysis pipeline. For example, the connectivity matrix could correspond to white matter tracts obtained from dMRI or pre-calculated coactivations maps obtained from fMRI data.
   - [Pipeline Connectivity Comparison WU](tutotials/pipelines/tut_CON_WU.pdf): Tutorial to compare two groups of subjects with connectivity data (CON) using weighted undirected graphs.
   - [Pipeline Connectivity Comparison BUD](tutotials/pipelines/tut_CON_BUT.pdf): Tutorial to compare two groups of subjects with connectivity data (CON) using binary undirected graphs at fixed densities (BUD).
   - [Pipeline Connectivity Comparison BUT](tutotials/pipelines/tut_CON_BUT.pdf): Tutorial to compare two groups of subjects with connectivity data (CON) using binary undirected graphs at fixed thresholds (BUT).
 
-- Pipelines analyzing functional data (FUN).
+- **Pipelines analyzing functional data (FUN).** In functional data, a time series representing brain function over time is available for each brain region of each subject. For example, these time series could be brain activation signals in fMRI or electrophysiological signals in electroencephalography (EEG) or magnetoencephalography (MEG). 
   -  [Pipeline Functional Comparison WU](tutotials/pipelines/tut_FUN_WU.pdf): Tutorial to compare two groups of subjects with functional data (FUN) using weighted undirected graphs.
   - [Pipeline Functional Comparison BUD](tutotials/pipelines/tut_FUN_BUT.pdf): Tutorial to compare two groups of subjects with functional data (FUN) using binary undirected graphs at fixed densities (BUD).
   - [Pipeline Functional Comparison BUT](tutotials/pipelines/tut_FUN_BUT.pdf): Tutorial to compare two groups of subjects with functional data (FUN) using binary undirected graphs at fixed thresholds (BUT).
 
-- Pipelines analyzing structural data (ST).
+- **Pipelines analyzing structural data (ST).** In structural data, a scalar value is available for each brain region of each subject. For example, these could correspond to gray matter volume or thickness in T1-weighted MRI, brain perfusion in ASL or abnormal protein deposition in static PET data.
   - [Pipeline Structural Comparison WU](tutotials/pipelines/tut_ST_WU.pdf): Tutorial to compare two groups of subjects with structural data (ST) using weighted undirected graphs.
   - [Pipeline Structural Comparison BUD](tutotials/pipelines/tut_ST_BUT.pdf): Tutorial to compare two groups of subjects with structural data (ST) using binary undirected graphs at fixed densities (BUD).
   - [Pipeline Structural Comparison BUT](tutotials/pipelines/tut_ST_BUT.pdf): Tutorial to compare two groups of subjects with structural data (ST) using binary undirected graphs at fixed thresholds (BUT).
