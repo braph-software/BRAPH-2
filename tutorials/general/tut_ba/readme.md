@@ -9,7 +9,7 @@ This Tutorial explains how to work with the Graphical User Interface (GUI) to ma
 
 The brain atlas GUI is the first step in most BRAPH 2.0 pipelines. You can open it by typing `braph2` in the MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis. The initial step is typically to upload the brain atlas, as shown in the figure below.
 
-> ![Upload a brain atlas](tut_ba/fig03.png)
+> ![Upload a brain atlas](fig03.png)
 > **The different steps you need to follow to open a brain atlas using the GUI:**
 > **a** Open the brain atlas GUI.
 > **b** Import a brain atlas from an XLS or TXT file.
@@ -29,14 +29,6 @@ gui.get('SHOW');  % shows the GUI.
 ## Upload the Brain Atlas
 
 In the GUI launched in the previous step, you have a menu that can be used to import a brain atlas (see figure below) either by loading one of the already-available atlases in the BRAPH 2.0 folder `atlases` (Figure 3c) or by loading a file you have created. In this example, we are uploading the Desikan atlas (Figure 3d).
-
-> ![Upload a brain atlas](tut_ba/fig03.png)
-> **Edit the brain atlas information.**
-> The different steps you need to follow to open a brain atlas using the GUI: 
-> **a** Open the brain atlas GUI.
-> **b** Import a brain atlas from an XLS or TXT file.
-> **c** Navigate to the BRAPH 2.0 folder `atlases`.
-> **d** Select the desired atlas.
 
 You can change the ID, name, and notes of the brain atlas (as shown in Figure 4a) as well as the IDs, labels, coordinates, and notes of the brain regions (Figure 4b).
 
