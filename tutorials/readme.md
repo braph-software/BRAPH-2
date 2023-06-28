@@ -12,15 +12,15 @@ Dive into the world of graph theory analysis with BRAPH 2.0. The [Tutorials for 
 
 Then, discover the versatility of BRAPH 2.0 with its multilayer connectivity analysis. The [Tutotials for Multilayer Connectivity Analysis Pipelines](tutorials/pipelines#multiplex-connectivity-pipelines) show how to create multiplex and multi-layer graphs, and delve into the intricate interplay between different layers of brain connectivity.
 
-Finally, immerse yourself in the cutting-edge field of deep learning with BRAPH 2.0. The [Tutorials for Deep Learning Analysis Pipelines](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines#deep-learning-pipelines) unleash the power of neural networks for brain data classification and regression tasks.
+Finally, immerse yourself in the cutting-edge field of deep learning with BRAPH 2.0. The [Tutorials for Deep Learning Analysis Pipelines](tutorials/pipelines#deep-learning-pipelines) unleash the power of neural networks for brain data classification and regression tasks.
 
 ## For Developers
 
-Customize BRAPH 2.0 by adapting pipeline scripts to suit your specific requirements. This tutorial provides guidance on modifying pipeline scripts and adjusting analysis steps. [Adapting a Pipeline Script](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/developers)
+Customize BRAPH 2.0 by adapting pipeline scripts to suit your specific requirements. This [Tutorial to Adapt a Pipeline Script](tutorials/developers#adapting-a-pipeline-script) provides guidance on modifying pipeline scripts and adjusting analysis steps.
 
-Gain more control over the analysis workflow by editing the example scripts provided with BRAPH 2.0. Learn how to leverage parallel computing and run calculations on a cluster. [Editing Example Scripts](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/developers)
+Gain more control over the analysis workflow by editing the example scripts provided with BRAPH 2.0 through the [Tutorial to Edit Example Scripts](developers#editing-an-example-script).
 
-Take advantage of BRAPH 2.0's object-oriented programming to extend its capabilities. This tutorial series covers the implementation of new graphs, measures, subjects, group-based and ensemble-based analyses, as well as deep learning functionalities. [Expanding BRAPH 2.0 with New Functionalities](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/developers)
+Take full advantage of BRAPH 2.0's object-oriented programming to extend its capabilities. The [Tutorials to Expand BRAPH 2.0 Functionalities](tutorials/developers#expanding-braph-20-with-new-functionalities) cover the implementation of new graphs, measures, subjects, group-based and ensemble-based analyses, as well as deep learning functionalities.
 
 Each tutorial provides step-by-step instructions, code examples, and relevant documentation to help you learn and apply BRAPH 2.0 effectively. Start with the "Getting Started" tutorial and progress at your own pace. If you have any questions or need further assistance, feel free to reach out to the BRAPH community through the [BRAPH forum](http://braph.org/forums).
 
