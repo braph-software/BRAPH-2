@@ -1,4 +1,4 @@
-![BRAPH 2.0](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/figures/banner.png)
+![BRAPH 2.0](figures/banner.png)
 
 # BRAPH 2.0 — Multimodal and AI-powered Brain Connectivity Analysis
 
