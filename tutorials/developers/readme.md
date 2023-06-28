@@ -44,6 +44,8 @@ BRAPH 2.0's object-oriented programming architecture makes it easy to expand its
   - [Developer Tutorial to Implement a New Neural Network Evaluator for Classification](tutorials/developers/devdoc_nn_clas_eval.pdf)
   - [Developer Tutorial to Implement a New Neural Network Evaluator for Regression](tutorials/developers/devdoc_nn_reg_eval.pdf)
 
+- **Analysis Pipelines**: Developers can also contribute to the evolution of BRAPH 2.0 by introducing new analysis pipelines tailored to specific research requirements. The [Developer Tutorial to Implement a New Analysis Pipeline](tutorials/developers/devdoc_new_pipeline.pdf) provides a comprehensive guide on creating custom analysis pipelines within the BRAPH framework. This tutorial covers the entire pipeline development process, including data handling, calculation of measures, statistical analysis, and result visualization. By developing new analysis pipelines, users can enhance the capabilities of BRAPH 2.0 and enable the exploration of novel analytical approaches.
+
 These tutorials provide step-by-step instructions and examples to guide developers in expanding BRAPH 2.0 with new functionalities. We encourage developers to contribute to the growth and improvement of BRAPH 2.0 by introducing new elements, measures, and analyses. Feel free to share your implementations, ask questions, and engage with the BRAPH community through the [BRAPH forum](http://braph.org/forums) and [GitHub page](https://github.com/softmatterlab/BRAPH-2-Matlab).
 
 Happy developing!
