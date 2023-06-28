@@ -7,9 +7,9 @@ Welcome to the pipelines tutorials of BRAPH 2.0! This section provides detailed 
 These tutorials provide step-by-step instructions for analyzing and comparing connectivity measures using different single layer connectivity pipelines:
 
 - Pipelines analyzing connectivity data (CON).
-  - [Pipeline Connectivity Comparison WU](tutotials/pipelines/tut_CON_WU.pdf): Tutorial to compare two groups of subjects with connectivity data (CON) using weighted undirected graphs.
-  - [Pipeline Connectivity Comparison BUD](tutotials/pipelines/tut_CON_BUT.pdf): Tutorial to compare two groups of subjects with connectivity data (CON) using binary undirected graphs at fixed densities (BUD).
-  - [Pipeline Connectivity Comparison BUT](tutotials/pipelines/tut_CON_BUT.pdf): Tutorial to compare two groups of subjects with connectivity data (CON) using binary undirected graphs at fixed thresholds (BUT).
+  - [Pipeline Connectivity Comparison WU](tutotials/pipelines/tut_CON_WU.pdf): Tutorial to compare two groups of subjects with connectivity data (CON) using weighted undirected graphs.
+  - [Pipeline Connectivity Comparison BUD](tutotials/pipelines/tut_CON_BUT.pdf): Tutorial to compare two groups of subjects with connectivity data (CON) using binary undirected graphs at fixed densities (BUD).
+  - [Pipeline Connectivity Comparison BUT](tutotials/pipelines/tut_CON_BUT.pdf): Tutorial to compare two groups of subjects with connectivity data (CON) using binary undirected graphs at fixed thresholds (BUT).
 
 - Pipelines analyzing functional data (FUN).
   -  [Pipeline Functional Comparison WU](tutotials/pipelines/tut_FUN_WU.pdf): Tutorial to compare two groups of subjects with functional data (FUN) using weighted undirected graphs.
@@ -17,20 +17,19 @@ These tutorials provide step-by-step instructions for analyzing and comparing co
   - [Pipeline Functional Comparison BUT](tutotials/pipelines/tut_FUN_BUT.pdf): Tutorial to compare two groups of subjects with functional data (FUN) using binary undirected graphs at fixed thresholds (BUT).
 
 - Pipelines analyzing structural data (ST).
-  - [Pipeline Connectivity Comparison WU](tutotials/pipelines/tut_CON_WU.pdf): Tutorial to compare two groups of subjects with structural data (ST) using weighted undirected graphs.
-  - [Pipeline Connectivity Comparison BUD](tutotials/pipelines/tut_CON_BUT.pdf): Tutorial to compare two groups of subjects with structural data (ST) using binary undirected graphs at fixed densities (BUD).
-  - [Pipeline Connectivity Comparison BUT](tutotials/pipelines/tut_CON_BUT.pdf): Tutorial to compare two groups of subjects with structural data (ST) using binary undirected graphs at fixed thresholds (BUT).
+  - [Pipeline Structural Comparison WU](tutotials/pipelines/tut_ST_WU.pdf): Tutorial to compare two groups of subjects with structural data (ST) using weighted undirected graphs.
+  - [Pipeline Structural Comparison BUD](tutotials/pipelines/tut_ST_BUT.pdf): Tutorial to compare two groups of subjects with structural data (ST) using binary undirected graphs at fixed densities (BUD).
+  - [Pipeline Structural Comparison BUT](tutotials/pipelines/tut_ST_BUT.pdf): Tutorial to compare two groups of subjects with structural data (ST) using binary undirected graphs at fixed thresholds (BUT).
 
-![Advances in brain connectivity analysis](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/figures/pipeline-graph.png)
-
-**BRAPH~2.0 graph analysis pipeline.**
-**a** Main graphical user interface (GUI) for BRAPH~2.0, which is launched by the command <code>braph2</code>, where an analysis pipeline can be selected.
-**b** GUI of the *pipeline comparison connectivity WU, which allows the user to import weighted undirected (WU) adjacency matrices corresponding to two subject groups and compare the distributions of the subjects' graph measures. This pipeline consists of sequential steps: 
-**c** Load the brain atlas.
-**d** Load the two groups of subject data.
-**e** Analyze the first group.
-**f** Analyze the second group.
-**g** Compare the two groups to identify statistically significant differences.
+> ![Advances in brain connectivity analysis](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/figures/pipeline-graph.png)
+> **BRAPH~2.0 graph analysis pipeline.**
+> **a** Main graphical user interface (GUI) for BRAPH~2.0, which is launched by the command <code>braph2</code>, where an analysis pipeline can be selected.
+> **b** GUI of the *pipeline comparison connectivity WU, which allows the user to import weighted undirected (WU) adjacency matrices corresponding to two subject groups and compare the distributions of the subjects' graph measures. This pipeline consists of sequential steps: 
+> **c** Load the brain atlas.
+> **d** Load the two groups of subject data.
+> **e** Analyze the first group.
+> **f** Analyze the second group.
+> **g** Compare the two groups to identify statistically significant differences.
 
 ## Multiplex Connectivity Pipelines
 
