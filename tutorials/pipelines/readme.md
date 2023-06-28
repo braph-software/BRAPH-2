@@ -23,8 +23,8 @@ These tutorials provide step-by-step instructions for analyzing and comparing co
 
 > ![Advances in brain connectivity analysis](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/figures/pipeline-graph.png)
 > **BRAPH~2.0 graph analysis pipeline.**
-> **a** Main graphical user interface (GUI) for BRAPH~2.0, which is launched by the command <code>braph2</code>, where an analysis pipeline can be selected.
-> **b** GUI of the *pipeline comparison connectivity WU, which allows the user to import weighted undirected (WU) adjacency matrices corresponding to two subject groups and compare the distributions of the subjects' graph measures. This pipeline consists of sequential steps: 
+> **a** Main graphical user interface (GUI) for BRAPH 2.0, which is launched by the command `braph2`, where an analysis pipeline can be selected.
+> **b** GUI of the Pipeline Comparison Connectivity WU, which allows the user to import weighted undirected (WU) adjacency matrices corresponding to two subject groups and compare the distributions of the subjects' graph measures. This pipeline consists of sequential steps: 
 > **c** Load the brain atlas.
 > **d** Load the two groups of subject data.
 > **e** Analyze the first group.
