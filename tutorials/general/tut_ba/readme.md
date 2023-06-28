@@ -104,7 +104,7 @@ Once you are satisfied with the brain atlas, you can plot it by pushing the butt
 
 This new window has a large toolbar that allows you to change the visualization of the atlas. We suggest you try the different options to understand how they change the figure. Importantly, within this menu, there is one option called "Settings Brain Surface" (highlighted in Figure 8a), which opens the settings window shown in Figure 8b-c.
 
-> ![Visualize the brain atlas](tut_ba/fig08.png)
+> ![Visualize the brain atlas](fig08.png)
 > 
 > **Figure 8. Visualize the brain atlas.**
 > **a** The ``Settings Brain Surface'' button in the toolbar opens **b**-**c** a window with the settings available for this brain figure.
