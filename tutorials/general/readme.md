@@ -1,6 +1,6 @@
 # BRAPH 2.0 — Getting started
 
-Welcome to the General tutorials section of BRAPH 2.0! This section provides a comprehensive introduction to getting started with BRAPH 2.0, including preparing your data and using the graphical user interfaces (GUIs).
+This section provides a comprehensive introduction to get started with BRAPH 2.0, including preparing your data and using the graphical user interfaces (GUIs).
 
 ## Tutorials to Prepare Your Data in BRAPH 2
 
@@ -8,22 +8,22 @@ Follow these tutorials to organize your data in the correct format for use with 
 
 ### Atlas
 
-Learn how to prepare your atlas in BRAPH 2 format, which is essential for brain connectivity analysis. This tutorial guides you through the process of organizing and formatting your atlas data. [Atlas Tutorial](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/general/atlas)
+Learn how to prepare your atlas in BRAPH 2 format, which is essential for brain connectivity analysis. The [Brain Atlas Tutorial](tutorials/general/tut_ba.pdf) guides you through the process of organizing and formatting your atlas data.
 
 ### Single-layer Data
 
-Prepare your structural, functional, and connectivity data in BRAPH 2 format. These tutorials provide step-by-step instructions for organizing and formatting single-layer data types. 
-- Structural Data: [Structural Data Tutorial](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/general/single_layer_data/structural_data)
-- Functional Data: [Functional Data Tutorial](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/general/single_layer_data/functional_data)
-- Connectivity Data: [Connectivity Data Tutorial](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/general/single_layer_data/connectivity_data)
+These tutorials provide step-by-step instructions for organizing and formatting single-layer data types. 
+- [Connectivity Data](tutorials/general/tut_gr_CON.pdf): For connectivity data, a connectivity matrix per subject is already available and can be directly imported into the relative analysis pipeline. This type of data represents the connections between brain regions, such as white matter tracts obtained from diffusion magnetic resonance imaging (dMRI) or pre-calculated coactivation maps obtained from functional magnetic resonance imaging (fMRI) data.
+- [Functional Data](tutorials/general/tut_gr_FUN.pdf): Functional data consists of a time series representing brain function over time for each brain region of each subject. This data can include brain activation signals from fMRI or electrophysiological signals from electroencephalography (EEG) or magnetoencephalography (MEG). The time series capture the dynamics of brain activity and can be used to investigate functional connectivity patterns.
+- [Structural Data](tutorials/general/tut_gr_ST.pdf): Structural data provides a scalar value for each brain region of each subject. This type of data can include measurements such as gray matter volume or thickness obtained from T1-weighted MRI, brain perfusion from arterial spin labeling (ASL) imaging, or abnormal protein deposition from static positron emission tomography (PET) data. Structural data allows for the exploration of anatomical characteristics and their potential correlations with brain function.
 
-### Multiplex Data
+### Multilayer Data
 
-Prepare different types of multiplex data in BRAPH 2 format, including structural multiplex, functional multiplex, connectivity multiplex, and connectivity-functional multiplex data. These tutorials explain how to organize and format multiplex data types.
-- Structural Multiplex Data: [Structural Multiplex Data Tutorial](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/general/multiplex_data/structural_multiplex_data)
-- Functional Multiplex Data: [Functional Multiplex Data Tutorial](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/general/multiplex_data/functional_multiplex_data)
-- Connectivity Multiplex Data: [Connectivity Multiplex Data Tutorial](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/general/multiplex_data/connectivity_multiplex_data)
-- Connectivity-Functional Multiplex Data: [Connectivity-Functional Multiplex Data Tutorial](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/general/multiplex_data/connectivity_functional_multiplex_data)
+These tutorials explain how to organize and format the multilayer data types currently available in BRAPH 2.0.
+- [Multilayer Connectivity Data](tutorials/general/tut_gr_CON_MP.pdf): Multilayer connectivity data involves multiple layers of connectivity information. Each layer represents a distinct aspect of connectivity, such as different frequency bands or connectivity at different time points. This type of data allows for the investigation of time-varying or multiplex brain networks.
+- [Multilayer Functional Data](tutorials/general/tut_gr_FUN_MP.pdf): Multilayer functional data captures functional connectivity patterns across multiple layers. Each layer represents functional activity at different conditions, tasks, or time intervals. This type of data enables the study of dynamic functional connectivity and the exploration of how functional networks change under different circumstances.
+- [Multilayer Structural Data](tutorials/general/tut_gr_ST_MP.pdf): Multilayer structural data involves multiple layers of structural measurements. Each layer represents a different modality or imaging technique, such as multiple types of MRI scans or a combination of MRI and PET data. This data type allows for the examination of structural variations across different imaging modalities.
+- [Connectivity-Functional Data](tutorials/general/tut_gr_CON_FUN_MP.pdf): Connectivity-functional data combines connectivity and functional information across multiple layers. It integrates the connectivity patterns between brain regions with the corresponding functional activity. This type of data facilitates the investigation of the relationship between brain structure and function, offering insights into the underlying mechanisms of brain connectivity and its functional implications.
 
 ## Tutorials for Using the BRAPH 2 Graphical User Interfaces (GUI)
 
