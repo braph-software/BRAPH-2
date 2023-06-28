@@ -12,7 +12,7 @@ To get started with BRAPH 2.0, it is important to organize and format your data 
 
 ### Brain Atlas
 
-Learn how to prepare your atlas in BRAPH 2 format, which is essential for brain connectivity analysis. The [Brain Atlas Tutorial](tutorials/general/tut_ba.pdf) guides you through the process of organizing and formatting your atlas data.
+Learn how to prepare your atlas in BRAPH 2 format, which is essential for brain connectivity analysis. The [Brain Atlas Tutorial](tutorials/general/tut_ba) guides you through the process of organizing and formatting your atlas data.
 
 ### Single-layer Data
 
