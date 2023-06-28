@@ -32,17 +32,15 @@ In the GUI launched in the previous step, you have a menu that can be used to im
 
 You can change the ID, name, and notes of the brain atlas (as shown in Figure 4a) as well as the IDs, labels, coordinates, and notes of the brain regions (Figure 4b).
 
-> ![Edit the brain atlas information](tut_ba/fig04.png)
-Information that can be changed in the brain atlas GUI: 
-**a** The ID, name, and notes of the brain atlas.
-**b** The IDs, labels, coordinates, and notes of the brain regions.
+> ![Edit the brain atlas information](fig04.png)
+> **Edit the brain atlas information**
+> Information that can be changed in the brain atlas GUI: 
+> **a** The ID, name, and notes of the brain atlas.
+> **b** The IDs, labels, coordinates, and notes of the brain regions.
 
 ## Ready Brain Atlases
 
-![Brain Atlases](tut_ba/fig05.png)
-
 Some brain atlases provided by BRAPH 2.0:
-
 - AAL90: Automated Anatomical Labelling atlas with 90 cortical and subcortical regions.
 - AAL116: Automated Anatomical Labelling atlas with 116 cortical and subcortical regions, including cerebellar areas.
 - BNA: Brainnetome atlas with 246 cortical and subcortical regions.
@@ -52,6 +50,17 @@ Some brain atlases provided by BRAPH 2.0:
 - Schaefer: Functional brain atlas with 200 cortical regions that belong to 7 different resting-state fMRI networks.
 - Subcortical FreeSurfer: Anatomical atlas with 14 subcortical gray matter regions from the FreeSurfer software.
 
-Currently, we provide several brain atlases that are commonly used in the field of brain connectomics, some of which are shown in the figure above. They are available in the BRAPH 2.0 folder `atlases` in XLS and TXT formats, and they can also be downloaded from our website [here](http://braph.org/software/brain-atlases/).
+Currently, we provide several brain atlases that are commonly used in the field of brain connectomics, some of which are shown in the figure above. They are available in the BRAPH 2.0 folder `atlases` in XLS and TXT formats.
 
+> ![Brain Atlases](tut_ba/fig05.png)
+> **Brain Atlases.**
+> Some brain atlases provided by BRAPH 2.0:
+> **AAL90:** Automated Anatomical Labelling atlas with 90 cortical and subcortical regions.
+> **AAL116:** Automated Anatomical Labelling atlas with 116 cortical and subcortical regions, including cerebellar areas.
+> **BNA:** Brainnetome atlas with 246 cortical and subcortical regions.
+> **Craddock:** Functional atlas with 200 cortical and subcortical regions, including cerebellar areas.
+> **Desikan:** Anatomical atlas with 68 cortical regions from the FreeSurfer software.
+> **Destrieux:** Anatomical atlas with 148 cortical regions from the FreeSurfer software.
+> **Schaefer:** Functional brain atlas with 200 cortical regions that belong to 7 different resting-state fMRI networks.
+> **Subcortical FreeSurfer:** Anatomical atlas with 14 subcortical gray matter regions from the FreeSurfer software.
 
