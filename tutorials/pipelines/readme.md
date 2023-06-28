@@ -6,20 +6,20 @@ Welcome to the pipelines tutorials of BRAPH 2.0! This section provides detailed 
 
 These tutorials provide step-by-step instructions for analyzing and comparing connectivity measures using different single layer connectivity pipelines:
 
-- Pipelines analyzing connectivity data.
-  - [ ] [Pipeline Connectivity Comparison WU](tutotials/pipelines/tut_CON_WU.pdf): Tutorial to compare two groups of subjects using connectivity data and weighted undirected graphs.
-  - [ ] [Pipeline Connectivity Comparison BUD](tutotials/pipelines/tut_CON_BUT.pdf): Pipeline Connectivity Comparison BUD: Tutorial to compare two groups of subjects using connectivity data and binary undirected graphs at fixed densities (BUD).
-  - [ ] [Pipeline Connectivity Comparison BUT](tutotials/pipelines/tut_CON_BUT.pdf): Tutorial to compare two groups of subjects using connectivity data and binary undirected graphs at fixed thresholds (BUT).
+- Pipelines analyzing connectivity data (CON).
+  - [Pipeline Connectivity Comparison WU](tutotials/pipelines/tut_CON_WU.pdf): Tutorial to compare two groups of subjects with connectivity data (CON) using weighted undirected graphs.
+  - [Pipeline Connectivity Comparison BUD](tutotials/pipelines/tut_CON_BUT.pdf): Tutorial to compare two groups of subjects with connectivity data (CON) using binary undirected graphs at fixed densities (BUD).
+  - [Pipeline Connectivity Comparison BUT](tutotials/pipelines/tut_CON_BUT.pdf): Tutorial to compare two groups of subjects with connectivity data (CON) using binary undirected graphs at fixed thresholds (BUT).
 
-- Pipelines analyzing functional data.
-  - [ ] [Pipeline Connectivity Comparison WU](tutotials/pipelines/tut_CON_WU.pdf): Tutorial to compare two groups of subjects using connectivity data and weighted undirected graphs.
-  - [ ] [Pipeline Connectivity Comparison BUD](tutotials/pipelines/tut_CON_BUT.pdf): Pipeline Connectivity Comparison BUD: Tutorial to compare two groups of subjects using connectivity data and binary undirected graphs at fixed densities (BUD).
-  - [ ] [Pipeline Connectivity Comparison BUT](tutotials/pipelines/tut_CON_BUT.pdf): Tutorial to compare two groups of subjects using connectivity data and binary undirected graphs at fixed thresholds (BUT).
+- Pipelines analyzing functional data (FUN).
+  -  [Pipeline Functional Comparison WU](tutotials/pipelines/tut_FUN_WU.pdf): Tutorial to compare two groups of subjects with functional data (FUN) using weighted undirected graphs.
+  - [Pipeline Functional Comparison BUD](tutotials/pipelines/tut_FUN_BUT.pdf): Tutorial to compare two groups of subjects with functional data (FUN) using binary undirected graphs at fixed densities (BUD).
+  - [Pipeline Functional Comparison BUT](tutotials/pipelines/tut_FUN_BUT.pdf): Tutorial to compare two groups of subjects with functional data (FUN) using binary undirected graphs at fixed thresholds (BUT).
 
-- Pipelines analyzing structural data.
-  - [ ] [Pipeline Connectivity Comparison WU](tutotials/pipelines/tut_CON_WU.pdf): Tutorial to compare two groups of subjects using connectivity data and weighted undirected graphs.
-  - [ ] [Pipeline Connectivity Comparison BUD](tutotials/pipelines/tut_CON_BUT.pdf): Pipeline Connectivity Comparison BUD: Tutorial to compare two groups of subjects using connectivity data and binary undirected graphs at fixed densities (BUD).
-  - [ ] [Pipeline Connectivity Comparison BUT](tutotials/pipelines/tut_CON_BUT.pdf): Tutorial to compare two groups of subjects using connectivity data and binary undirected graphs at fixed thresholds (BUT).
+- Pipelines analyzing structural data (ST).
+  - [Pipeline Connectivity Comparison WU](tutotials/pipelines/tut_CON_WU.pdf): Tutorial to compare two groups of subjects with structural data (ST) using weighted undirected graphs.
+  - [Pipeline Connectivity Comparison BUD](tutotials/pipelines/tut_CON_BUT.pdf): Tutorial to compare two groups of subjects with structural data (ST) using binary undirected graphs at fixed densities (BUD).
+  - [Pipeline Connectivity Comparison BUT](tutotials/pipelines/tut_CON_BUT.pdf): Tutorial to compare two groups of subjects with structural data (ST) using binary undirected graphs at fixed thresholds (BUT).
 
 ![Advances in brain connectivity analysis](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/figures/pipeline-graph.png)
 
