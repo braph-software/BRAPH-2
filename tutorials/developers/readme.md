@@ -4,11 +4,10 @@ Welcome to the BRAPH 2.0 development guide!
 
 This section provides instructions and examples for developers who want to extend and enhance BRAPH 2.0 with new functionalities. Whether you want to adapt existing pipelines, modify example scripts, or implement completely new features, this guide will walk you through the different levels of complexity in BRAPH 2.0 development.
 
-The software architecture of BRAPH 2.0 provides a clear structure for developers to understand and extend the functionality of the software. All objects in BRAPH 2.0 are derived from a base object called <code>Element</code>. The core code includes the compiler (<code>genesis</code>), the essential source code (<code>src</code>), and the GUI functionalities (<code>gui</code>). Developers can easily add new elements such as brain surfaces, atlases, example scripts, GUI pipelines, graphs, measures, data types, data importers, data exporters, and analyses. By writing new elements and recompiling the code, the new elements and their functionalities are immediately integrated into the GUI.
+The software architecture of BRAPH 2.0 provides a clear structure for developers to understand and extend the functionalities of the software. All objects in BRAPH 2.0 are derived from a base object called `Element`. The core code includes the compiler (`genesis`), the essential source code (`src`), and the GUI functionalities (`gui`). Developers can easily add new elements such as brain surfaces, atlases, example scripts, GUI pipelines, graphs, measures, data types, data importers, data exporters, and analyses. By writing new elements and recompiling the code, the new elements and their functionalities are immediately integrated into the GUI.
 
-![BRAPH 2.0 software architecture](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/figures/braph2genesis.png)
-
-**BRAPH 2.0 software architecture.**
+> ![BRAPH 2.0 software architecture](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/figures/braph2genesis.png)
+> **BRAPH 2.0 software architecture.**
 Directory structure of BRAPH 2.0 GENESIS (left) and BRAPH 2.0 (right).
 All objects are derived from a base object called `Element` and written in a simplified pseudocode (files *.gen.m) that is compiled into the actual elements (files *.m) by the command `braph2genesis` (some examples of these elements are shown).
 The compiled code can be launched by the command `braph2`.
