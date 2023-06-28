@@ -10,9 +10,8 @@
 
 BRAPH 2.0 is an open-source MATLAB-based software that provides advanced capabilities for brain connectivity analysis. It offers a comprehensive range of features, including conventional graph theory, multilayer graphs, and deep learning techniques. With its user-friendly interface and extensive analysis pipelines, researchers can explore the complex organization of the human brain using multimodal neuroimaging data, going beyond the limitations of traditional approaches.
 
-![Advances in brain connectivity analysis](figures/intro.png)
-
-**Advances in brain connectivity analysis.** Brain connectivity analysis is rapidly evolving thanks to the widespread availability of increasing computational power and large-scale, high-resolution, multimodal neuroimaging datasets. BRAPH 2.0 provides a complete set of tools to analyze these data with conventional graph theory (single-layer graphs), multilayer graphs (multiplex and multi-layer graphs), and deep learning (from artificial neural networks to graph convolutional neural networks), as well as a flexible, easily expandable software architecture. BRAPH 2.0 uses parallel computing to allow users to run scripts on servers or clusters using both central processing units (CPUs) and graphical processing units (GPUs).
+> ![Advances in brain connectivity analysis](figures/intro.png)
+> **Advances in brain connectivity analysis.** Brain connectivity analysis is rapidly evolving thanks to the widespread availability of increasing computational power and large-scale, high-resolution, multimodal neuroimaging datasets. BRAPH 2.0 provides a complete set of tools to analyze these data with conventional graph theory (single-layer graphs), multilayer graphs (multiplex and multi-layer graphs), and deep learning (from artificial neural networks to graph convolutional neural networks), as well as a flexible, easily expandable software architecture. BRAPH 2.0 uses parallel computing to allow users to run scripts on servers or clusters using both central processing units (CPUs) and graphical processing units (GPUs).
 
 
 ## Welcome to BRAPH 2.0
@@ -23,24 +22,22 @@ BRAPH 2.0 is designed to facilitate the analysis of brain connectivity using var
 
 To install BRAPH 2.0, follow these steps:
 
-1. Ensure that you have MATLAB R2021a or a later version installed on your system. BRAPH 2.0 is compatible with the versions of MATLAB for Microsoft Windows, macOS, and Linux operating systems.
+1. Ensure that you have **MATLAB R2021a or a later version** installed on your system. BRAPH 2.0 is compatible with the versions of MATLAB for Microsoft Windows, macOS, and Linux operating systems.
 
 2. Make sure you have the following toolboxes installed in MATLAB:
-    * Statistics and Machine Learning Toolbox (required
-    * Parallel Computing Toolbox (optional)
-    * Deep Learning Toolbox (optional, for deep learning analysis)
+    * **Statistics and Machine Learning Toolbox** (required)
+    * **Parallel Computing Toolbox** (optional)
+    * **Deep Learning Toolbox** (optional, for deep learning analysis)
 
-3. Download the latest stable version of BRAPH 2.0 from our <a href="https://github.com/softmatterlab/BRAPH-2-Matlab/releases">GitHub repository</a> or from our <a href="http://braph.org/software/braph-2/">website</a>.
+3. Download the latest stable version of BRAPH 2.0 from the [BRAPH 2.0 GitHub repository](../../releases).
 
 4. Unzip the downloaded file into the desired directory on your system.
 
 5. Launch MATLAB and change the current folder to the "braph2genesis" folder located in the directory where you unzipped BRAPH 2.0. You may need to add the folder to the MATLAB path.
 
-6. Run the script <code>braph2genesis</code> in MATLAB. This installation process may take up to one hour to complete. You only need to run this script once or whenever there is an update to BRAPH 2.0.
+6. Run the script ´braph2genesis´ in MATLAB. This installation process may take up to one hour to complete. You only need to run this script once or whenever there is an update to BRAPH 2.0.
 
-7. After the installation is complete, you can run BRAPH 2.0 by navigating to the "braph2" folder in MATLAB and running the script <code>braph2</code>. This will launch the graphical user interface (GUI) from which you can choose an analysis pipeline to start your analysis.
-
-For more detailed instructions and troubleshooting tips, you can refer to the <a href="http://braph.org/software/braph-2/#installation">Installation</a> section on the BRAPH 2.0 website.
+7. After the installation is complete, you can run BRAPH 2.0 by navigating to the "braph2" folder in MATLAB and running the script ´braph2´. This will launch the graphical user interface (GUI) from which you can choose an analysis pipeline to start your analysis.
 
 ### Use Cases & Analysis Pipelines
 
