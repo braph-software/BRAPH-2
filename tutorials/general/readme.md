@@ -1,16 +1,16 @@
 # BRAPH 2.0 — General Tutorials
 
-This section provides a comprehensive introduction to get started with BRAPH 2.0, including preparing your data and using the graphical user interfaces (GUIs).
+This section provides a comprehensive introduction to get started with BRAPH 2.0, including preparing your data and using the graphical user interfaces (GUIs). If you have any questions or need further assistance, feel free to reach out to the BRAPH community through the [BRAPH forum](http://braph.org/forums).
 
 ## Getting Started
 
-The [Getting Started Tutorial](tutorials/general/tut_braph2.pdf) provides a comprehensive introduction to help you get started with BRAPH 2.0. This tutorial covers the essential steps and features of the software, guiding you through the process of installing BRAPH 2.0 and familiarizing yourself with its functionalities. Whether you are new to BRAPH or upgrading from a previous version, this tutorial will provide you with the necessary knowledge to begin your analyses.
+The [Getting Started Tutorial](tutorials/general/tut_braph2.pdf) provides a comprehensive introduction to help you get started with BRAPH 2.0. This tutorial covers the essential steps and features of the software, guiding you through the process of installing BRAPH 2.0 and familiarizing yourself with its functionalities and analysis pipelines. Whether you are new to BRAPH or upgrading from a previous version, this tutorial will provide you with the necessary knowledge to begin your analyses.
 
 ## Tutorials to Prepare Your Data in BRAPH 2
 
 To get started with BRAPH 2.0, it is important to organize and format your data correctly. Follow these tutorials to organize your data in the correct format for use with BRAPH 2. These tutorials cover various types of data, including atlas, single-layer data, and multiplex data.
 
-### Atlas
+### Brain Atlas
 
 Learn how to prepare your atlas in BRAPH 2 format, which is essential for brain connectivity analysis. The [Brain Atlas Tutorial](tutorials/general/tut_ba.pdf) guides you through the process of organizing and formatting your atlas data.
 
@@ -32,12 +32,3 @@ These tutorials explain how to organize and format the multilayer data types cur
 ### New Data Types
 
 Additionally, BRAPH 2.0 allows users to incorporate new data types by following the provided guidelines, expanding the range of analyses and insights that can be achieved. However, note that if your specific data format is not currently supported by BRAPH 2.0, you may need to further develop the necessary functionalities (following the [Tutorial to Implement a new Subject](link-to-tutorial)) or consider opening an issue asking for the new functinality at [Feature Request](../../issues/new?template=feature_request.md).
-
-## Tutorials for Using the BRAPH 2 Graphical User Interfaces (GUI)
-
-Learn how to use the graphical user interfaces (GUIs) in BRAPH 2. These tutorials demonstrate how to open the GUIs, load an atlas, and navigate the general interfaces of BRAPH 2.
-- Load Brain Atlas: [Load Brain Atlas Tutorial](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/general/load_brain_atlas)
-
-Each tutorial provides detailed instructions and examples to help you prepare your data and utilize the GUIs effectively in BRAPH 2.0. Start with the tutorial that matches your data type and proceed at your own pace. If you have any questions or need further assistance, feel free to reach out to the BRAPH community through the [BRAPH forum](http://braph.org/forums).
-
-Enjoy exploring and analyzing your data!
