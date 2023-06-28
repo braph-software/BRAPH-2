@@ -1,5 +1,7 @@
 # Brain Atlas
 
+[![Tutorial Brain Atlas](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](tut_ba.pdf)
+
 > <img src="fig01.png" alt="Brain atlas figure created with BRAPH 2.0" height="200px">
 >
 > **Figure 1. Brain atlas figure created with BRAPH 2.0.**
