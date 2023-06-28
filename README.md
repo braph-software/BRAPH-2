@@ -72,15 +72,15 @@ If you're interested in contributing code, follow these steps:
 
 4. Push your branch to your forked repository.
 
-5. Open a pull request against the <code>develop</code> branch of the main repository.
+5. Open a pull request against the `develop` branch of the main repository.
 
 ### Documentation Contributions
 
-Improvements to the documentation are welcome. Submit a pull request with your proposed changes for errors, outdated information, or suggestions for improvement.
+Improvements to the documentation are welcome. Submit a pull request as indicated above with your proposed changes for errors, outdated information, or suggestions for improvement.
 
 ### Community Support
 
-Join discussions on the <a href="https://github.com/softmatterlab/BRAPH-2-Matlab/issues">GitHub Issues</a> page or the <a href="http://www.braph.org/forum/">BRAPH 2.0 forum</a> to provide support, answer questions, and share your expertise.
+Join discussions on the [BRAPH 2.0 forum](http://www.braph.org/forum/) to provide support, answer questions, and share your expertise.
 
 By contributing to BRAPH 2.0, you play a crucial role in its growth and improvement. Your contributions shape the future development of the software and advance brain connectivity analysis.
 
