@@ -28,17 +28,16 @@ This Tutorial explains how to prepare and work with brain connectivity data, whe
 \clearpage
 \section{Open the GUI}
 
-The group GUI is the second step after you have selected a brain atlas. You can open it by typing \code{braph2} in the MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis and upload a brain atlas. After these steps have been completed you can upload your group's data, as shown in \Figref{fig:02}a.
+The group GUI is the second step in an analysis after you have selected a brain atlas. You can open it by typing \code{braph2} in the MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis and upload a brain atlas. After these steps have been completed you can upload your group's data, as shown in \Figref{fig:02}a.
 
 \fig{figure*}
 	{fig:02}
 	{
-	[h!]
 	\includegraphics[height=10cm]{fig02.png}
 	}
 	{Upload a brain atlas}
 	{
-	The different steps you need to follow to open brain connectivity data using the GUI: 
+	The different steps you need to follow to open brain connectivity data using the GUI and an example dataset: 
 	{\bf a} Open the group GUI.
 	{\bf b} Import a folder containing the connectivity matrices in XLS or TXT format.
 	{\bf c} Navigate to the BRAPH~2.0 folder \fn{pipelines}.
@@ -66,13 +65,12 @@ gui.get('SHOW') ¥\circled{4}\circlednote{4}{shows the GUI.}¥
 \clearpage
 \section{Visualize the Brain Connectivity Group data}
 
-After launching the previous steps (\Figref{fig:02}) you can visualize the data (Figref{fig:03}a), change the Group ID, name and notes (Figref{fig:03}b). 
+After launching the previous steps (\Figref{fig:02}), you can visualize the data (\Figref{fig:03}a), change the Group ID, name and notes (\Figref{fig:03}b). 
 
 \fig{figure*}
-	{fig:04}
+	{fig:03}
 	{
-	[h!]
-	\includegraphics{fig04.png}
+	\includegraphics{fig03.png}
 	}
 	{Edit the Brain Connectivity Group data}
 	{
@@ -81,12 +79,21 @@ After launching the previous steps (\Figref{fig:02}) you can visualize the data 
 	{\bf b} The values of the connectivity matrix.
 	}
 
-Finally you can open a subject's connectivity matrix by selecting the subject, right click and select "Open selection" (Figref{fig:04}a), which will show the matrix values (Figref{fig:04}b). You can also change the ID, label, age, sex and even the values of your connectivity matrix.
-	
+Finally you can open a subject's connectivity matrix by selecting the subject, right click and select "Open selection" (\Figref{fig:04}a), which will show the matrix values (\Figref{fig:04}b). You can also change the ID, label, age, sex and even the values of your connectivity matrix.
+
+\fig{figure*}
+	{fig:04}
+	{\includegraphics{fig04.png}
+	}
+	{Individual Brain Connectivity Data GUI}
+	{
+	Visualising and editing a brain connectivity matrix of a single subject. 
+	}
+
 
 \section{Adding covariates}
 
-It is very common to have covariates in an analysis. In BRAPH~2.0, these covariates should be included in a separate excel file outside the group's folder, have the same name as the folder in addition to ".vois" as shown in \Figref{fig:05}a), where "vois" stand for variables of interest. This covariates file should have a specific format, where the first two rows have the following information:
+It is very common to have covariates in an analysis. In BRAPH~2.0 these covariates should be included in a separate excel file placed outside the group's folder and have the same name as the folder in addition to ".vois" as shown in \Figref{fig:05}a), where "vois" stand for variables of interest. This covariates file should have a specific format, where the first two rows have the following information:
 
 \begin{itemize}
 
@@ -106,11 +113,11 @@ For example: Female and Male (Sex) or Low and High (Education).
 	{
 	Information that can be changed in the Covariates file: 
 	{\bf a} The names of the variables of interest (vois).
-	{\bf b} The categories these vois have in case they are not continuous.
+	{\bf b} In case the vois are categorical, you can state which categories they have.
 	}
 
 
 \end{itemize}
-Then, from row 3, you should include the IDs of your subjects ($1^{\rm st}$ column) and the values for the different covariates: the age ($2^{\rm nd}$ column), the sex ($3^{\rm rd}$, $4^{\rm th}$, and $5^{\rm th}$ columns), and educational level ($6^{\rm th}$ column) \Figref{fig:05}b).	
+Then, from row 3, you should include the IDs of your subjects ($1^{\rm st}$ column) and the values for the different covariates: age ($2^{\rm nd}$ column), sex ($3^{\rm rd}$, $4^{\rm th}$, and $5^{\rm th}$ columns), and educational level ($6^{\rm th}$ column) \Figref{fig:05}b).	
 
 \end{document}
