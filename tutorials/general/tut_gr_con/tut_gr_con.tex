@@ -12,14 +12,15 @@
 
 \begin{abstract}
 \noindent
-This Tutorial explains how to prepare and work with brain connectivity data, where we have one connectivity matrix per subject such as in the case of diffusion weighted imaging tractography. 
+For \emph{connectivity data}, a connectivity matrix per subject is already available and can be directly imported into the relative analysis pipeline. For example, the connectivity matrix could correspond to white matter tracts obtained from dMRI or pre-calculated coactivations maps obtained from fMRI data.
+This Tutorial explains how to prepare and work with this kind of data.
 \end{abstract}
 
 \tableofcontents
 
 \fig{figure*}
 	{fig:01}
-	{\includegraphics[height=10cm]{fig01.png}}
+	{\includegraphics{fig01.png}}
 	{Brain Connectivity Group GUI}
 	{
 	Full graphical user interface to work with brain connectivity group data in BRAPH~2.0. 
@@ -30,10 +31,10 @@ This Tutorial explains how to prepare and work with brain connectivity data, whe
 
 The group GUI is the second step in an analysis after you have selected a brain atlas. You can open it by typing \code{braph2} in the MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis and upload a brain atlas. After these steps have been completed you can upload your group's data, as shown in \Figref{fig:02}a.
 
-\fig{figure*}
+\fig{figure}
 	{fig:02}
 	{
-	\includegraphics[height=10cm]{fig02.png}
+	\includegraphics{fig02.png}
 	}
 	{Upload a brain atlas}
 	{
@@ -62,12 +63,11 @@ gui.get('DRAW')¥\circled{3}\circlednote{3}{draws the GUI.}¥
 gui.get('SHOW') ¥\circled{4}\circlednote{4}{shows the GUI.}¥
 \end{lstlisting}
 
-\clearpage
-\section{Visualize the Brain Connectivity Group data}
+\section{Visualize the Brain Connectivity Group Data}
 
 After launching the previous steps (\Figref{fig:02}), you can visualize the data (\Figref{fig:03}a), change the Group ID, name and notes (\Figref{fig:03}b). 
 
-\fig{figure*}
+\fig{figure}
 	{fig:03}
 	{
 	\includegraphics{fig03.png}
@@ -79,9 +79,9 @@ After launching the previous steps (\Figref{fig:02}), you can visualize the data
 	{\bf b} The values of the connectivity matrix.
 	}
 
-Finally you can open a subject's connectivity matrix by selecting the subject, right click and select "Open selection" (\Figref{fig:04}a), which will show the matrix values (\Figref{fig:04}b). You can also change the ID, label, age, sex and even the values of your connectivity matrix.
+Finally, you can open a subject's connectivity matrix by selecting the subject, right click and select "Open selection" (\Figref{fig:04}a), which will show the matrix values (\Figref{fig:04}b). You can also change the ID, label, age, sex and even the values of your connectivity matrix.
 
-\fig{figure*}
+\fig{figure}
 	{fig:04}
 	{\includegraphics{fig04.png}
 	}
@@ -90,8 +90,11 @@ Finally you can open a subject's connectivity matrix by selecting the subject, r
 	Visualising and editing a brain connectivity matrix of a single subject. 
 	}
 
+\section{Preparation of the Data to be Imported}
 
-\section{Adding covariates}
+...
+
+\section{Adding Covariates}
 
 It is very common to have covariates in an analysis. In BRAPH~2.0 these covariates should be included in a separate excel file placed outside the group's folder and have the same name as the folder in addition to ".vois" as shown in \Figref{fig:05}a), where "vois" stand for variables of interest. This covariates file should have a specific format, where the first two rows have the following information:
 
