@@ -361,7 +361,13 @@ if isa(value.getr('PE'), 'NoValue') % i.e., default initialization
     pe = PanelElement('EL', pf);
     
     pr_visible = int8(pe.get('PR_VISIBLE') & ismember(1:1:pf.getPropNumber(), pf.getProps(Category.FIGURE))); % __Category.FIGURE__
-    pr_order = cumsum(pr_visible) .* pr_visible;
+
+    pr_order = pe.get('PR_ORDER');
+    pr_order(pr_visible == 0) = NaN;
+    for i = 1:1:sum(pr_visible)
+        pr_order(pr_order = min(pr_order)) = i;
+    end
+    
     pe.set( ...
         'PR_VISIBLE', pr_visible, ...
         'PR_ORDER', pr_order ...
