@@ -81,46 +81,6 @@ MeasurePF_GS.ST_YLABEL
 %%%% ¡title!
 Y-LABEL
 
-%%% ¡prop!
-%%%% ¡id!
-MeasurePF_GS.
-%%%% ¡title!
-
-%%% ¡prop!
-%%%% ¡id!
-MeasurePF_GS.
-%%%% ¡title!
-
-%%% ¡prop!
-%%%% ¡id!
-MeasurePF_GS.
-%%%% ¡title!
-
-%%% ¡prop!
-%%%% ¡id!
-MeasurePF_GS.
-%%%% ¡title!
-
-%%% ¡prop!
-%%%% ¡id!
-MeasurePF_GS.
-%%%% ¡title!
-
-%%% ¡prop!
-%%%% ¡id!
-MeasurePF_GS.
-%%%% ¡title!
-
-%%% ¡prop!
-%%%% ¡id!
-MeasurePF_GS.
-%%%% ¡title!
-
-%%% ¡prop!
-%%%% ¡id!
-MeasurePF_GS.
-%%%% ¡title!
-
 %% ¡props_update!
 
 %%% ¡prop!
