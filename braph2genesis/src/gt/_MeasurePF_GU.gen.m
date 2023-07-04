@@ -7,6 +7,80 @@ MeasurePF_GU manages the basic functionalities to plot of a global unilayer meas
 %%% ¡seealso!
 Measure
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_GU.ID
+%%%% ¡title!
+Brain Atlas Figure ID
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_GU.LABEL
+%%%% ¡title!
+Brain Atlas Figure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_GU.WAITBAR
+%%%% ¡title!
+WAITBAR ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_GU.NOTES
+%%%% ¡title!
+Brain Atlas NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_GU.BKGCOLOR
+%%%% ¡title!
+BACKGROUND COLOR
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_GU.ST_POSITION
+%%%% ¡title!
+PANEL POSITION
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_GU.ST_AXIS
+%%%% ¡title!
+AXIS
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_GU.ST_AREA
+%%%% ¡title!
+FILLED AREA
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_GU.ST_LINE
+%%%% ¡title!
+MEASURE LINE
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_GU.ST_TITLE
+%%%% ¡title!
+TITLE
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_GU.ST_XLABEL
+%%%% ¡title!
+X-LABEL
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_GU.ST_YLABEL
+%%%% ¡title!
+Y-LABEL
+
 %% ¡props_update!
 
 %%% ¡prop!
