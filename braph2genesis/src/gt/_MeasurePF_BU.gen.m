@@ -7,6 +7,86 @@ MeasurePF_BU manages the basic functionalities to plot of a binodal unilayer mea
 %%% ¡seealso!
 Measure
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_BU.ID
+%%%% ¡title!
+Brain Atlas Figure ID
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_BU.LABEL
+%%%% ¡title!
+Brain Atlas Figure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_BU.WAITBAR
+%%%% ¡title!
+WAITBAR ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_BU.NOTES
+%%%% ¡title!
+Brain Atlas NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_BU.BKGCOLOR
+%%%% ¡title!
+BACKGROUND COLOR
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_BU.ST_POSITION
+%%%% ¡title!
+PANEL POSITION
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_BU.ST_AXIS
+%%%% ¡title!
+AXIS
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_BU.ST_AREA
+%%%% ¡title!
+FILLED AREA
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_BU.ST_LINE
+%%%% ¡title!
+MEASURE LINE
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_BU.ST_TITLE
+%%%% ¡title!
+TITLE
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_BU.ST_XLABEL
+%%%% ¡title!
+X-LABEL
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_BU.ST_YLABEL
+%%%% ¡title!
+Y-LABEL
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_BU.NODES
+%%%% ¡title!
+NODES SELECTION
+
 %% ¡props_update!
 
 %%% ¡prop!
