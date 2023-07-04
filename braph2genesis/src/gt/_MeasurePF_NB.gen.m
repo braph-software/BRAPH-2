@@ -7,6 +7,86 @@ MeasurePF_NB manages the basic functionalities to plot of a nodal bilayer measur
 %%% ¡seealso!
 Measure
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_NB.ID
+%%%% ¡title!
+Brain Atlas Figure ID
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_NB.LABEL
+%%%% ¡title!
+Brain Atlas Figure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_NB.WAITBAR
+%%%% ¡title!
+WAITBAR ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_NB.NOTES
+%%%% ¡title!
+Brain Atlas NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_NB.BKGCOLOR
+%%%% ¡title!
+BACKGROUND COLOR
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_NB.ST_POSITION
+%%%% ¡title!
+PANEL POSITION
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_NB.ST_AXIS
+%%%% ¡title!
+AXIS
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_NB.ST_AREA
+%%%% ¡title!
+FILLED AREA
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_NB.ST_LINE
+%%%% ¡title!
+MEASURE LINE
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_NB.ST_TITLE
+%%%% ¡title!
+TITLE
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_NB.ST_XLABEL
+%%%% ¡title!
+X-LABEL
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_NB.ST_YLABEL
+%%%% ¡title!
+Y-LABEL
+
+%%% ¡prop!
+%%%% ¡id!
+MeasurePF_NB.NODE
+%%%% ¡title!
+NODE SELECTION
+
 %% ¡props_update!
 
 %%% ¡prop!
