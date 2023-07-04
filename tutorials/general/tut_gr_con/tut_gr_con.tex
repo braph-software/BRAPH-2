@@ -92,11 +92,24 @@ Finally, you can open a subject's connectivity matrix by selecting the subject, 
 
 \section{Preparation of the Data to be Imported}
 
-...
+To be able to import connectivity data into BRAPH~2.0 you need to include the connectivity matrices for each subject in excel or text format inside a folder with the name of the group. Below you can see how your group directory should look like as well as an example of a brain connectivity matrix.
+
+\fig{figure*}
+	{fig:05}
+	{
+	[h!]
+	\includegraphics{fig05.png}
+	}
+	{Data preparation}
+	{
+	The data should be organised in the following way:
+	{\bf a} The connectivity matrices from each subject should be included in one folder, for example: CON\_group\_1\_XLS. 
+	{\bf b} Each matrix should contain the connectivity values between each pair of brain regions denoted by the rows and columns. In this 	example, the values in the matrix correspond to the fractional anisotropy (white matter integrity) of anatomical connections derived from 	diffusion weighted imaging.
+	} 
 
 \section{Adding Covariates}
 
-It is very common to have covariates in an analysis. In BRAPH~2.0 these covariates should be included in a separate excel file placed outside the group's folder and have the same name as the folder in addition to ".vois" as shown in \Figref{fig:05}a), where "vois" stand for variables of interest. This covariates file should have a specific format, where the first two rows have the following information:
+It is very common to have covariates in an analysis. In BRAPH~2.0 these covariates should be included in a separate excel file placed outside the group's folder and have the same name as the folder in addition to ".vois" as shown in \Figref{fig:06}a), where "vois" stand for variables of interest. This covariates file should have a specific format, where the first two rows have the following information:
 
 \begin{itemize}
 
@@ -107,10 +120,10 @@ For example: Subject ID, Age and Sex. In this example we have added a new covari
 For example: Female and Male (Sex) or Low and High (Education).
 
 \fig{figure*}
-	{fig:05}
+	{fig:06}
 	{
 	[h!]
-	\includegraphics{fig05.png}
+	\includegraphics{fig06.png}
 	}
 	{Edit the Covariates}
 	{
