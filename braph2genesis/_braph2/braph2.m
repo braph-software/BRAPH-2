@@ -26,7 +26,10 @@ function braph2(gui, ewm)
 %
 % See also BRAPH2GUI.
 
-src_dir = [fileparts(which('braph2')) filesep 'src'];
+braph2_dir = fileparts(which('braph2'));
+addpath(braph2_dir)
+
+src_dir = [braph2_dir filesep 'src'];
 addpath(src_dir)
 addpath([src_dir filesep 'util'])
 addpath([src_dir filesep 'ds'])
@@ -39,25 +42,25 @@ addpath([src_dir filesep 'analysis'])
 addpath([src_dir filesep 'gui'])
 addpath([src_dir filesep 'gui' filesep 'examples'])
 
-brainsurfs_dir = [fileparts(which('braph2')) filesep 'brainsurfs'];
+brainsurfs_dir = [braph2_dir filesep 'brainsurfs'];
 addpath(brainsurfs_dir)
 
-brainsurfs_dir = [fileparts(which('braph2')) filesep 'atlases'];
+brainsurfs_dir = [braph2_dir filesep 'atlases'];
 addpath(brainsurfs_dir)
 
-graphs_dir = [fileparts(which('braph2')) filesep 'graphs'];
+graphs_dir = [braph2_dir filesep 'graphs'];
 addpath(graphs_dir)
 
-measures_dir = [fileparts(which('braph2')) filesep 'measures'];
+measures_dir = [braph2_dir filesep 'measures'];
 addpath(measures_dir)
 
-% % % neuralnetworks_dir = [fileparts(which('braph2')) filesep 'neuralnetworks'];
+% % % neuralnetworks_dir = [braph2_dir filesep 'neuralnetworks'];
 % % % addpath(neuralnetworks_dir)
 
-test_dir = [fileparts(which('braph2')) filesep 'test'];
+test_dir = [braph2_dir filesep 'test'];
 addpath(test_dir)
 
-pipelines_dir = [fileparts(which('braph2')) filesep 'pipelines'];
+pipelines_dir = [braph2_dir filesep 'pipelines'];
 addpath(pipelines_dir)
 pipelines_dir_list = dir(pipelines_dir); % get the folder contents
 pipelines_dir_list = pipelines_dir_list([pipelines_dir_list(:).isdir] == 1); % remove all files (isdir property is 0)
