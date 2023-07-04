@@ -9,6 +9,129 @@ from PFBrainSurface to integrate the regions to a brain surface.
 %%% ¡seealso!
 BrainAtlas, BrainSurface
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+BrainAtlasPF.ID
+%%%% ¡title!
+Brain Atlas Figure ID
+
+%%% ¡prop!
+%%%% ¡id!
+BrainAtlasPF.LABEL
+%%%% ¡title!
+Brain Atlas Figure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+BrainAtlasPF.WAITBAR
+%%%% ¡title!
+WAITBAR ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+BrainAtlasPF.NOTES
+%%%% ¡title!
+Brain Atlas NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+BrainAtlasPF.BKGCOLOR
+%%%% ¡title!
+BACKGROUND COLOR
+
+%%% ¡prop!
+%%%% ¡id!
+BrainAtlasPF.ST_POSITION
+%%%% ¡title!
+PANEL POSITION
+
+%%% ¡prop!
+%%%% ¡id!
+BrainAtlasPF.VIEW
+%%%% ¡title!
+3D VIEW
+
+%%% ¡prop!
+%%%% ¡id!
+BrainAtlasPF.ST_AXIS
+%%%% ¡title!
+AXIS
+
+%%% ¡prop!
+%%%% ¡id!
+BrainAtlasPF.BRAIN
+%%%% ¡title!
+BRAIN ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+BrainAtlasPF.SURFFILE
+%%%% ¡title!
+BRAIN SURFACE
+
+%%% ¡prop!
+%%%% ¡id!
+BrainAtlasPF.ST_SURFACE
+%%%% ¡title!
+BRAIN COLOR
+
+%%% ¡prop!
+%%%% ¡id!
+BrainAtlasPF.ST_AMBIENT
+%%%% ¡title!
+MATERIAL & LIGHTNING
+
+%%% ¡prop!
+%%%% ¡id!
+BrainAtlasPF.SPHS
+%%%% ¡title!
+Brain Region SPHERES ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+BrainAtlasPF.SPH_DICT
+%%%% ¡title!
+Brain Region SPHERES PROPERTIES
+
+%%% ¡prop!
+%%%% ¡id!
+BrainAtlasPF.SYMS
+%%%% ¡title!
+Brain Region SYMBOLS ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+BrainAtlasPF.SYM_DICT
+%%%% ¡title!
+Brain Region SYMBOLS PROPERTIES
+
+%%% ¡prop!
+%%%% ¡id!
+BrainAtlasPF.IDS
+%%%% ¡title!
+Brain Region IDs ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+BrainAtlasPF.ID_DICT
+%%%% ¡title!
+Brain Region IDs PROPERTIES
+
+%%% ¡prop!
+%%%% ¡id!
+BrainAtlasPF.LABS
+%%%% ¡title!
+Brain Region LABELS ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+BrainAtlasPF.LAB_DICT
+%%%% ¡title!
+Brain Region LABELS PROPERTIES
+
+
 %% ¡props_update!
 
 %%% ¡prop!
