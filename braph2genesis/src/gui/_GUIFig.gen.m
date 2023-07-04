@@ -364,9 +364,10 @@ if isa(value.getr('PE'), 'NoValue') % i.e., default initialization
 
     pr_order = pe.get('PR_ORDER');
     pr_order(pr_visible == 0) = NaN;
-    for i = 1:1:sum(pr_visible)
-        pr_order(pr_order = min(pr_order)) = i;
+    for i = sum(pr_visible):-1:1
+        pr_order(pr_order == max(pr_order)) = -i;
     end
+    pr_order = -pr_order;
     
     pe.set( ...
         'PR_VISIBLE', pr_visible, ...
