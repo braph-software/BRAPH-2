@@ -357,7 +357,7 @@ GUI_SETTINGS (data, item) is the handle to the figure to manage the figure setti
 if isa(value.getr('PE'), 'NoValue') % i.e., default initialization
     pf = gui.memorize('PF');
     f = gui.get('H');
-    pr_visible = int8(ismember(1:1:pf.getPropNumber(), pf.getProps(Category.FIGURE)));
+    pr_visible = int8(ismember(1:1:pf.getPropNumber(), pf.getProps(Category.FIGURE))); % __Category.FIGURE__
     pr_order = cumsum(pr_visible) .* pr_visible;
     pe = PanelElement( ...
         'EL', pf, ...
