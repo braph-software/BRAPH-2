@@ -7,6 +7,74 @@ GraphAdjPF manages the plot of an adjacency matrix.
 %%% ¡seealso!
 Graph, GraphAdjPF
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+GraphAdjPF.ID
+%%%% ¡title!
+Brain Atlas Figure ID
+
+%%% ¡prop!
+%%%% ¡id!
+GraphAdjPF.LABEL
+%%%% ¡title!
+Brain Atlas Figure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+GraphAdjPF.WAITBAR
+%%%% ¡title!
+WAITBAR ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+GraphAdjPF.NOTES
+%%%% ¡title!
+Brain Atlas NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+GraphAdjPF.BKGCOLOR
+%%%% ¡title!
+BACKGROUND COLOR
+
+%%% ¡prop!
+%%%% ¡id!
+GraphAdjPF.ST_POSITION
+%%%% ¡title!
+PANEL POSITION
+
+%%% ¡prop!
+%%%% ¡id!
+GraphAdjPF.ST_AXIS
+%%%% ¡title!
+AXIS
+
+%%% ¡prop!
+%%%% ¡id!
+GraphAdjPF.LAYERS
+%%%% ¡title!
+LAYERS
+
+%%% ¡prop!
+%%%% ¡id!
+GraphAdjPF.WEIGHTED
+%%%% ¡title!
+WEIGHTED ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+GraphAdjPF.COLORBAR
+%%%% ¡title!
+COLORBAR ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+GraphAdjPF.ST_AMBIENT
+%%%% ¡title!
+MATERIAL & LIGHTNING
+
 %% ¡props_update!
 
 %%% ¡prop!
