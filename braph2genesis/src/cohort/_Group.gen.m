@@ -98,7 +98,19 @@ SUB_DICT (data, idict) is an indexed dictionary containing the subjects of the g
 %%%% ¡settings!
 'Subject'
 %%%% ¡gui!
+[order, title] = load_layout(gr.get(Group.SUB_CLASS));
+cols(1) = PanelPropIDictTable.SELECTOR;
+columnname = {''};
+for i = 1:1:length(order)
+    if isfinite(order(i))
+        cols(order(i) + 1) = i;
+        columnname{order(i) + 1} = title{i};
+    end
+end
 pr = PanelPropIDictTable('EL', gr, 'PROP', Group.SUB_DICT, ... 
+    'ROWNAME', 'numbered', ...
+    'COLS', cols, ...
+    'COLUMNNAME', columnname, ...
     'MENU_OPEN_ITEMS', true, ...
     varargin{:});
 
