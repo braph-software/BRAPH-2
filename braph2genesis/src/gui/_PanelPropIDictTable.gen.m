@@ -7,7 +7,7 @@ It works for all categories.
 
 It can be personalized with the following props:
   COLS - Numerical array with the columns to be visualized. It can include 
-         PanelPropIDictTable.SELECTOR and/or prop numbers of the item class.
+         __PanelPropIDictTable.SELECTOR__ (PanelPropIDictTable.SELECTOR) and/or prop numbers of the item class.
   ROWNAME - String list with the row names as per uitable format.
          It can be a string list or 'numbered' or {} (to reset it).
   COLUMNAME - String list with the column names as per uitable format.
