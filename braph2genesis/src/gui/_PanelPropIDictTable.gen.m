@@ -10,7 +10,7 @@ It can be personalized with the following props:
          __PanelPropIDictTable.SELECTOR__ (PanelPropIDictTable.SELECTOR) and/or prop numbers of the item class.
   ROWNAME - String list with the row names as per uitable format.
          It can be a string list or 'numbered' or {} (to reset it).
-  COLUMNAME - String list with the column names as per uitable format.
+  COLUMNNAME - String list with the column names as per uitable format.
          It can be a string list or 'numbered'.
   COLUMNWIDTH - String list with the cloumn width as per uitable format.
          It can be a string list (e.g. {'1x' '2x'}) or 'auto'.
@@ -37,7 +37,7 @@ NAME (constant, string) is the name of the idict property panel.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the idict property panel.
 %%%% ¡default!
-'PanelPropIDictTable plots the panel of an IDICT property with a table. It works for all categories. It can be personalized with the following props: COLS, ROWNAME, COLUMNAME, COLUMNWIDTH, COLUMNEDITABLE, COLUMNFORMAT, CB_TAB_EDIT.'
+'PanelPropIDictTable plots the panel of an IDICT property with a table. It works for all categories. It can be personalized with the following props: COLS, ROWNAME, COLUMNNAME, COLUMNWIDTH, COLUMNEDITABLE, COLUMNFORMAT, CB_TAB_EDIT.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the idict property panel.
