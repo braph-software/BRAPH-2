@@ -97,7 +97,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 % isequal(gui_copy, gui)
 
 %% GUI
-% el_class_list = {'PanelPropCell'}; % 'PanelPropIDictTable' 'PanelPropItemList' 'PanelPropStringTextArea' 'SettingsPosition' 'PanelPropCell'
+% el_class_list = {'PanelPropIDictTable'}; % 'PanelPropIDictTable' 'PanelPropItemList' 'PanelPropStringTextArea' 'SettingsPosition' 'PanelPropCell'
 % for i = 1:1:length(el_class_list)
 %     el_class = el_class_list{i};
 %     el_path = '/src/gui';
@@ -1389,7 +1389,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 % end
 
 %% Settings Layout
-% el_class_list = {'BrainAtlasPF'}
+% el_class_list = {'BrainSurfacePF'} % {'BrainAtlasPF' 'BrainSurfacePF'}
 % for i = 1:1:length(el_class_list)
 %     el_class = el_class_list{i};
 %     el_path = '/src/atlas';
@@ -1413,18 +1413,62 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     eval(['test_' el_class])
 % end
 
-ba = BrainAtlas();
-pf = BrainAtlasPF('BA', ba);
+% el_class_list = {'GraphAdjPF'} % {'GraphAdjPF' 'GraphHistPF' 'MeasurePF' 'MeasurePF_GS' 'MeasurePF_GU' 'MeasurePF_GB' 'MeasurePF_NS' 'MeasurePF_NU' 'MeasurePF_NB' 'MeasurePF_BS' 'MeasurePF_BU' 'MeasurePF_BB'}
+% for i = 1:1:length(el_class_list)
+%     el_class = el_class_list{i};
+%     el_path = '/src/atlas';
+%     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_layout([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     eval(['test_' el_class])
+% end
+
+% ba = BrainAtlas();
+% pf = BrainAtlasPF('BA', ba);
 
 % gui_pf = GUIElement('PE', pf);
 % gui_pf.get('DRAW')
 % gui_pf.get('SHOW')
 
-gui = GUIFig('PF', pf);
+% gui = GUIFig('PF', pf);
+% gui.get('DRAW')
+% gui.get('SHOW')
+
+% gui_settings = gui.memorize('GUI_SETTINGS');
+% gui_settings.get('DRAW')
+% gui_settings.get('SHOW')
+
+%% Group & Subjects interface
+el_class_list = {'Group'} 
+for i = 1:1:length(el_class_list)
+    el_class = el_class_list{i};
+    el_path = '/src/cohort';
+    delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    eval(['test_' el_class])
+end
+
+im_ba = ImporterBrainAtlasXLS('FILE', 'destrieux_atlas.xlsx');
+ba = im_ba.get('BA');
+
+gr = Group('SUB_CLASS', 'SubjectST', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST'));
+for i = 1:1:50
+    sub = SubjectST( ...
+        'ID', ['SUB ST ' int2str(i)], ...
+        'LABEL', ['Subejct ST ' int2str(i)], ...
+        'NOTES', ['Notes on subject ST ' int2str(i)], ...
+        'BA', ba, ...
+        'ST', rand(ba.get('BR_DICT').get('LENGTH'), 1) ...
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr.get('SUB_DICT').get('ADD', sub)
+end
+
+gui = GUIElement('PE', gr, 'CLOSEREQ', false);
 gui.get('DRAW')
 gui.get('SHOW')
-
-gui_settings = gui.memorize('GUI_SETTINGS');
-gui_settings.get('DRAW')
-gui_settings.get('SHOW')
-
