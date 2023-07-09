@@ -4,7 +4,7 @@ This section provides a series of tutorials that cover core concepts and general
 
 ## Getting started
 
-Learn the basics of using BRAPH 2.0, including installation instructions and an overview of the user interface using the [BRAPH 2.0 General Tutorials](general)
+Learn the basics of using BRAPH 2.0, including installation instructions and an overview of the user interface using the [BRAPH 2.0 General Tutorials](general).
 
 ## Pipelines
 
