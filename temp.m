@@ -1441,7 +1441,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 % gui_settings.get('SHOW')
 
 %% Group & Subjects interface
-el_class_list = {'Subject'} % {'Group' 'SubjectPP_VOIDict' 'Subject'} 
+el_class_list = {'SubjectPP_VOIDict'} % {'Group' 'SubjectPP_VOIDict' 'Subject'} 
 for i = 1:1:length(el_class_list)
     el_class = el_class_list{i};
     el_path = '/src/cohort';
