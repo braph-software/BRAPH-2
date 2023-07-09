@@ -68,7 +68,7 @@ if value
 
     height = pr.get('HEIGHT_MIN');
 
-    voi_dict = sub.get('VOI_DICT')
+    voi_dict = sub.get('VOI_DICT');
     handles = pr.get('HANDLES');
     for i = 1:1:voi_dict.get('LENGTH')
         voi = voi_dict.get('IT', i);
@@ -109,23 +109,29 @@ REDRAW (query, logical) resizes the property panel and repositions its graphical
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 if value
-% % %     w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
+	w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
     
     sub = pr.get('EL');
 
-    voi_dict = sub.get('VOI_DICT')
+    h = 0;
+    
+    voi_dict = sub.get('VOI_DICT');
     handles = pr.get('HANDLES');
-    for i = 1:1:voi_dict.get('LENGTH')
+    for i = voi_dict.get('LENGTH'):-1:1
         voi = voi_dict.get('IT', i);
         
         if isa(voi, 'VOICategoric')
             dropdown = handles{i};
             
-% % %             set(pr.get('DROPDOWN'), 'Position', [s(.3) s(.3) .70*w_p s(1.75)])
+            set(dropdown, 'Position', [s(.3) h+s(.3) .70*w_p s(1.75)])
+
+            h = h + pr.get('HEIGHT_VOI_DROPDOWN');
         else % isa(voi, 'VOINumeric')
             editfield = handles{i};
             
-% % %             set(pr.get('EDITFIELD'), 'Position', [s(.3) s(.3) .25*w_p s(1.75)])
+            set(editfield, 'Position', [s(.3) h+s(.3) .25*w_p s(1.75)])
+            
+            h = h + pr.get('HEIGHT_VOI_EDITFIELD');
         end
     end
 end
@@ -165,7 +171,7 @@ HANDLES (evanescent, handlelist) is the list of VOI numeric editfields and drop-
 %%%% ¡calculate!
 sub = pr.get('EL');
 
-voi_dict = sub.get('VOI_DICT')
+voi_dict = sub.get('VOI_DICT');
 handles = cell(1, voi_dict.get('LENGTH'));
 for i = 1:1:voi_dict.get('LENGTH')
     voi = voi_dict.get('IT', i);
