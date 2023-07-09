@@ -1441,7 +1441,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 % gui_settings.get('SHOW')
 
 %% Group & Subjects interface
-el_class_list = {'Group'} 
+el_class_list = {'Subject'} % {'Group' 'SubjectPP_VOIDict' 'Subject'} 
 for i = 1:1:length(el_class_list)
     el_class = el_class_list{i};
     el_path = '/src/cohort';
@@ -1449,26 +1449,31 @@ for i = 1:1:length(el_class_list)
     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    eval(['test_' el_class])
+%     eval(['test_' el_class])
 end
 
-im_ba = ImporterBrainAtlasXLS('FILE', 'destrieux_atlas.xlsx');
-ba = im_ba.get('BA');
+% im_ba = ImporterBrainAtlasXLS('FILE', 'destrieux_atlas.xlsx');
+% ba = im_ba.get('BA');
+% 
+% gr = Group('SUB_CLASS', 'SubjectST', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST'));
+% for i = 1:1:50
+%     sub = SubjectST( ...
+%         'ID', ['SUB ST ' int2str(i)], ...
+%         'LABEL', ['Subejct ST ' int2str(i)], ...
+%         'NOTES', ['Notes on subject ST ' int2str(i)], ...
+%         'BA', ba, ...
+%         'ST', rand(ba.get('BR_DICT').get('LENGTH'), 1) ...
+%         );
+%     sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+%     sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+%     gr.get('SUB_DICT').get('ADD', sub)
+% end
+% 
+% gui = GUIElement('PE', gr, 'CLOSEREQ', false);
+% gui.get('DRAW')
+% gui.get('SHOW')
 
-gr = Group('SUB_CLASS', 'SubjectST', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST'));
-for i = 1:1:50
-    sub = SubjectST( ...
-        'ID', ['SUB ST ' int2str(i)], ...
-        'LABEL', ['Subejct ST ' int2str(i)], ...
-        'NOTES', ['Notes on subject ST ' int2str(i)], ...
-        'BA', ba, ...
-        'ST', rand(ba.get('BR_DICT').get('LENGTH'), 1) ...
-        );
-    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
-    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
-    gr.get('SUB_DICT').get('ADD', sub)
-end
-
-gui = GUIElement('PE', gr, 'CLOSEREQ', false);
+sub = Subject();
+gui = GUIElement('PE', sub, 'CLOSEREQ', false);
 gui.get('DRAW')
 gui.get('SHOW')
