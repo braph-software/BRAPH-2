@@ -56,7 +56,8 @@ X_DRAW (query, logical) draws the property panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value
-    pr.memorize('HANDLES')
+    pr.memorize('HANDLES_VOI')
+    pr.memorize('LABELS_VOI')
 end
 
 %%% ¡prop!
@@ -69,14 +70,15 @@ if value
     height = pr.get('HEIGHT_MIN');
 
     voi_dict = sub.get('VOI_DICT');
-    handles = pr.get('HANDLES');
+    handles_voi = pr.get('HANDLES_VOI');
+% % %     labels_voi = pr.get('LABELS_VOI');
     for i = 1:1:voi_dict.get('LENGTH')
         voi = voi_dict.get('IT', i);
         
         if isa(voi, 'VOICategoric')
             height = height + pr.get('HEIGHT_VOI_DROPDOWN');
 
-            dropdown = handles{i};
+            dropdown = handles_voi{i};
             
 % % %             set(pr.get('DROPDOWN'), 'Value', el.get(prop))
 % % % 
@@ -87,7 +89,7 @@ if value
         else % isa(voi, 'VOINumeric')
             height = height + pr.get('HEIGHT_VOI_EDITFIELD');
             
-            editfield = handles{i};
+            editfield = handles_voi{i};
             
 % % %             set(pr.get('EDITFIELD'), 'Value', el.get(prop))
 % % % 
@@ -116,20 +118,21 @@ if value
     h = 0;
     
     voi_dict = sub.get('VOI_DICT');
-    handles = pr.get('HANDLES');
+    handles_voi = pr.get('HANDLES_VOI');
+% % %     labels_voi = pr.get('LABELS_VOI');
     for i = voi_dict.get('LENGTH'):-1:1
         voi = voi_dict.get('IT', i);
         
         if isa(voi, 'VOICategoric')
-            dropdown = handles{i};
+            dropdown = handles_voi{i};
             
-            set(dropdown, 'Position', [s(.3) h+s(.3) .70*w_p s(1.75)])
+            set(dropdown, 'Position', [.30*w_p h+s(.3) .65*w_p s(1.75)])
 
             h = h + pr.get('HEIGHT_VOI_DROPDOWN');
         else % isa(voi, 'VOINumeric')
-            editfield = handles{i};
+            editfield = handles_voi{i};
             
-            set(editfield, 'Position', [s(.3) h+s(.3) .25*w_p s(1.75)])
+            set(editfield, 'Position', [.30*w_p h+s(.3) .45*w_p s(1.75)])
             
             h = h + pr.get('HEIGHT_VOI_EDITFIELD');
         end
@@ -141,7 +144,8 @@ DELETE (query, logical) resets the handles when the panel is deleted.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.DELETE, varargin{:}); % also warning
 if value
-    pr.set('HANDLES', Element.getNoValue())
+    pr.set('HANDLES_VOI', Element.getNoValue())
+    pr.set('LABELS_VOI', Element.getNoValue())
 end
 
 %% ¡props!
@@ -167,12 +171,12 @@ ENABLE (gui, logical) switches the editfields between active and inactive appear
 true
 
 %%% ¡prop!
-HANDLES (evanescent, handlelist) is the list of VOI numeric editfields and drop-down lists.
+HANDLES_VOI (evanescent, handlelist) is the list of VOI numeric editfields and drop-down lists.
 %%%% ¡calculate!
 sub = pr.get('EL');
 
 voi_dict = sub.get('VOI_DICT');
-handles = cell(1, voi_dict.get('LENGTH'));
+handles_voi = cell(1, voi_dict.get('LENGTH'));
 for i = 1:1:voi_dict.get('LENGTH')
     voi = voi_dict.get('IT', i);
     
@@ -184,7 +188,7 @@ for i = 1:1:voi_dict.get('LENGTH')
                 'ValueChangedFcn', {@cb_voi} ...
                 );
 
-        handles{i} = dropdown;
+        handles_voi{i} = dropdown;
     else % isa(voi, 'VOINumeric')
         editfield = uieditfield('numeric', ...
             'Parent', pr.memorize('H'), ... % H = p for Panel
@@ -193,20 +197,43 @@ for i = 1:1:voi_dict.get('LENGTH')
             'ValueChangedFcn', {@cb_voi} ...
             );
 
-        handles{i} = editfield;
+        handles_voi{i} = editfield;
     end
 end
 
-value = handles;
+value = handles_voi;
 %%%% ¡calculate_callbacks!
 function cb_voi(~, ~)
 % % %     pr.get('EL').set(pr.get('PROP'), get(pr.get('DROPDOWN'), 'Value'))
 end
 
+%%% ¡prop!
+LABELS_VOI (evanescent, handlelist) is the list of VOI labels.
+%%%% ¡calculate!
+sub = pr.get('EL');
+
+voi_dict = sub.get('VOI_DICT');
+labels_voi = cell(1, voi_dict.get('LENGTH'));
+for i = 1:1:voi_dict.get('LENGTH')
+    voi = voi_dict.get('IT', i);
+    
+    labels_voi{i} = uilabel( ...
+        'Parent', pr.memorize('H'), ...
+        'Tag', ['LABEL ' int2str(i)], ...
+        'Text', voi.get('ID'), ...
+        'Interpreter', 'html', ...
+        'FontSize', BRAPH2.FONTSIZE, ...
+        'HorizontalAlignment', 'right', ... % % % 'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('MATERIAL')) ' ' el.get(prop).getPropDescription('MATERIAL')], ...
+        'BackgroundColor', pr.get('BKGCOLOR') ...
+        );
+end
+
+value = handles_voi;
+
 %% ¡tests!
 
 %%% ¡excluded_props!
-[SubjectPP_VOIDict.PARENT SubjectPP_VOIDict.H SubjectPP_VOIDict.HANDLES]
+[SubjectPP_VOIDict.PARENT SubjectPP_VOIDict.H SubjectPP_VOIDict.HANDLES_VOI SubjectPP_VOIDict.LABELS_VOI]
 
 %%% ¡warning_off!
 true
