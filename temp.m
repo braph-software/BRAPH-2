@@ -1473,7 +1473,7 @@ end
 % gui.get('DRAW')
 % gui.get('SHOW')
 
-sub = Subject();
+sub = SubjectST();
 gui = GUIElement('PE', sub, 'CLOSEREQ', false);
 gui.get('DRAW')
 gui.get('SHOW')
