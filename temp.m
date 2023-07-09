@@ -1474,6 +1474,8 @@ end
 % gui.get('SHOW')
 
 sub = SubjectST();
+sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
 gui = GUIElement('PE', sub, 'CLOSEREQ', false);
 gui.get('DRAW')
 gui.get('SHOW')
