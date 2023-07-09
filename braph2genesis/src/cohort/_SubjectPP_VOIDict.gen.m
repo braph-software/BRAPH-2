@@ -193,6 +193,8 @@ for i = 1:1:voi_dict.get('LENGTH')
         handles{i} = editfield;
     end
 end
+
+value = handles;
 %%%% ¡calculate_callbacks!
 function cb_voi(~, ~)
 % % %     pr.get('EL').set(pr.get('PROP'), get(pr.get('DROPDOWN'), 'Value'))
