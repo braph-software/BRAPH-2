@@ -1474,8 +1474,11 @@ end
 % gui.get('SHOW')
 
 sub = SubjectST();
-sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 25))
-sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', 2))
+voi_dict = sub.memorize('VOI_DICT');
+voi_dict.get('ADD', VOINumeric('ID', 'Age', 'V', 25))
+voi_age = voi_dict.get('IT', 1);
+voi_dict.get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', 2))
+voi_sex = voi_dict.get('IT', 2);
 gui = GUIElement('PE', sub, 'CLOSEREQ', false);
 gui.get('DRAW')
 gui.get('SHOW')
