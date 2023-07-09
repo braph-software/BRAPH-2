@@ -109,8 +109,6 @@ REDRAW (query, logical) resizes the property panel and repositions its graphical
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 if value
-value = calculateValue@PanelProp(pr, PanelProp.UPDATE, varargin{:}); % also warning
-if value
 % % %     w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
     
     sub = pr.get('EL');
