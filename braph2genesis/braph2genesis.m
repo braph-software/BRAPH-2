@@ -12,6 +12,11 @@
 %  <a href="matlab:help pipelines   ">pipelines</a>     - BRAPH2 pipelines
 %  <a href="matlab:help test        ">test</a>          - BRAPH2 test
 
+delete(findall(0, 'type', 'figure'))
+close all
+clear all %#ok<CLALL>
+clc
+
 fprintf([ ...
 	' ████   ████    ███   ████   █   █     ▓▓▓▓   ▓▓▓▓\n' ...
 	' █   █  █   █  █   █  █   █  █   █        ▓   ▓  ▓\n' ...
@@ -24,13 +29,6 @@ fprintf([ ...
     ' ' BRAPH2.COPYRIGHT '\n' ...
     '\n'
     ]);
-
-delete(findall(0, 'type', 'figure'))
-close all
-clear all %#ok<CLALL>
-clc
-
-time_start = tic;
 
 addpath(fileparts(which('braph2genesis')))
 addpath([fileparts(which('braph2genesis')) filesep 'genesis'])
@@ -52,6 +50,8 @@ if exist(target_dir, 'dir')
     end
 end
 if ~exist(target_dir, 'dir') 
+    time_start = tic;
+
     [target_dir, source_dir] = genesis(target_dir, [], 2, false);
 
     addpath(target_dir)
