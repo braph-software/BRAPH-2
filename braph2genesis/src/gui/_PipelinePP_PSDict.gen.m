@@ -5,7 +5,7 @@ PipelinePP_PSDict < PanelProp (pr, pipeline plot) plots the panel for a pipeline
 PipelinePP_PSDict plots a pipeline allowing the user to execute it in the correct order.
 
 %%% ¡seealso!
-Pipeline, PanelProp
+Pipeline
 
 %% ¡props_update!
 
