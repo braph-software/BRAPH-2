@@ -70,36 +70,40 @@ if value
     height = pr.get('HEIGHT_MIN');
 
     voi_dict = sub.get('VOI_DICT');
+	labels_voi = pr.get('LABELS_VOI');
     handles_voi = pr.get('HANDLES_VOI');
-% % %     labels_voi = pr.get('LABELS_VOI');
     for i = 1:1:voi_dict.get('LENGTH')
         voi = voi_dict.get('IT', i);
+        
+        label = labels_voi{i};
+        set(label, 'Text', voi.get('ID'))
         
         if isa(voi, 'VOICategoric')
             height = height + pr.get('HEIGHT_VOI_DROPDOWN');
 
             dropdown = handles_voi{i};
             
-% % %             set(pr.get('DROPDOWN'), 'Value', el.get(prop))
-% % % 
-% % %             prop_value = el.getr(prop);
-% % %             if el.isLocked(prop) || isa(prop_value, 'Callback')
-% % %                 set(pr.get('DROPDOWN'), 'Enable', 'off')
-% % %             end
+            voi_categories = voi.get('CATEGORIES')
+            set(dropdown, 'Value', voi_categories{voi.get('V')})
+
+            prop_value = voi.getr('V');
+            if voi.isLocked('V') || isa(prop_value, 'Callback')
+                set(dropdown, 'Enable', 'off')
+            end
         else % isa(voi, 'VOINumeric')
             height = height + pr.get('HEIGHT_VOI_EDITFIELD');
             
             editfield = handles_voi{i};
             
-% % %             set(pr.get('EDITFIELD'), 'Value', el.get(prop))
-% % % 
-% % %             prop_value = el.getr(prop);
-% % %             if el.isLocked(prop) || isa(prop_value, 'Callback')
-% % %                 set(pr.get('EDITFIELD'), ...
-% % %                     'Editable', 'off', ...
-% % %                     'Enable', pr.get('ENABLE') ...
-% % %                     )
-% % %             end
+            set(editfield, 'Value', voi.get('V'))
+
+            prop_value = voi.getr('V');
+            if voi.isLocked('V') || isa(prop_value, 'Callback')
+                set(editfield, ...
+                    'Editable', 'off', ...
+                    'Enable', pr.get('ENABLE') ...
+                    )
+            end
         end
     end
     
@@ -118,10 +122,13 @@ if value
     h = 0;
     
     voi_dict = sub.get('VOI_DICT');
+    labels_voi = pr.get('LABELS_VOI');
     handles_voi = pr.get('HANDLES_VOI');
-% % %     labels_voi = pr.get('LABELS_VOI');
     for i = voi_dict.get('LENGTH'):-1:1
         voi = voi_dict.get('IT', i);
+        
+        label = labels_voi{i};
+        set(label, 'Position', [s(.3) h+s(.3) .30*w_p-s(.6) s(1.75)])
         
         if isa(voi, 'VOICategoric')
             dropdown = handles_voi{i};
@@ -174,6 +181,7 @@ true
 HANDLES_VOI (evanescent, handlelist) is the list of VOI numeric editfields and drop-down lists.
 %%%% ¡calculate!
 sub = pr.get('EL');
+prop = pr.get('PROP');
 
 voi_dict = sub.get('VOI_DICT');
 handles_voi = cell(1, voi_dict.get('LENGTH'));
@@ -181,20 +189,23 @@ for i = 1:1:voi_dict.get('LENGTH')
     voi = voi_dict.get('IT', i);
     
     if isa(voi, 'VOICategoric')
-            dropdown = uidropdown( ...
-                'Parent', pr.memorize('H'), ... % H = p for Panel
-                'Tag', ['DROPDOWN ' int2str(i)], ... % % % 'Items', el.getPropSettings(prop), ...
-                'FontSize', BRAPH2.FONTSIZE, ... % % % 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-                'ValueChangedFcn', {@cb_voi} ...
-                );
+        dropdown = uidropdown( ...
+            'Parent', pr.memorize('H'), ... % H = p for Panel
+            'Tag', ['DROPDOWN ' int2str(i)], ... 
+            'Items', voi.get('CATEGORIES'), ...
+            'FontSize', BRAPH2.FONTSIZE, ...
+            'Tooltip', [num2str(sub.getPropProp(prop)) ' ' sub.getPropDescription(prop)], ...
+            'ValueChangedFcn', {@cb_voi_dropdown} ...
+            );
 
         handles_voi{i} = dropdown;
     else % isa(voi, 'VOINumeric')
         editfield = uieditfield('numeric', ...
             'Parent', pr.memorize('H'), ... % H = p for Panel
             'Tag', ['EDITFIELD ' int2str(i)], ...
-            'FontSize', BRAPH2.FONTSIZE, ... % % % 'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-            'ValueChangedFcn', {@cb_voi} ...
+            'FontSize', BRAPH2.FONTSIZE, ... 
+            'Tooltip', [num2str(sub.getPropProp(prop)) ' ' sub.getPropDescription(prop)], ...
+            'ValueChangedFcn', {@cb_voi_editfield} ...
             );
 
         handles_voi{i} = editfield;
@@ -203,7 +214,11 @@ end
 
 value = handles_voi;
 %%%% ¡calculate_callbacks!
-function cb_voi(~, ~)
+function cb_voi_editfield(src, ~)
+    
+% % %     pr.get('EL').set(pr.get('PROP'), get(pr.get('DROPDOWN'), 'Value'))
+end
+function cb_voi_dropdown(src, ~)
 % % %     pr.get('EL').set(pr.get('PROP'), get(pr.get('DROPDOWN'), 'Value'))
 end
 
@@ -211,6 +226,7 @@ end
 LABELS_VOI (evanescent, handlelist) is the list of VOI labels.
 %%%% ¡calculate!
 sub = pr.get('EL');
+prop = pr.get('PROP');
 
 voi_dict = sub.get('VOI_DICT');
 labels_voi = cell(1, voi_dict.get('LENGTH'));
@@ -220,15 +236,15 @@ for i = 1:1:voi_dict.get('LENGTH')
     labels_voi{i} = uilabel( ...
         'Parent', pr.memorize('H'), ...
         'Tag', ['LABEL ' int2str(i)], ...
-        'Text', voi.get('ID'), ...
         'Interpreter', 'html', ...
         'FontSize', BRAPH2.FONTSIZE, ...
-        'HorizontalAlignment', 'right', ... % % % 'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('MATERIAL')) ' ' el.get(prop).getPropDescription('MATERIAL')], ...
+        'HorizontalAlignment', 'right', ... 
+        'Tooltip', [num2str(sub.getPropProp(prop)) ' ' sub.getPropDescription(prop)], ...
         'BackgroundColor', pr.get('BKGCOLOR') ...
         );
 end
 
-value = handles_voi;
+value = labels_voi;
 
 %% ¡tests!
 
