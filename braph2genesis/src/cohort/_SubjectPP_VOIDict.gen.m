@@ -83,7 +83,7 @@ if value
 
             dropdown = handles_voi{i};
             
-            voi_categories = voi.get('CATEGORIES')
+            voi_categories = voi.get('CATEGORIES');
             set(dropdown, 'Value', voi_categories{voi.get('V')})
 
             prop_value = voi.getr('V');
@@ -195,7 +195,8 @@ for i = 1:1:voi_dict.get('LENGTH')
             'Items', voi.get('CATEGORIES'), ...
             'FontSize', BRAPH2.FONTSIZE, ...
             'Tooltip', [num2str(sub.getPropProp(prop)) ' ' sub.getPropDescription(prop)], ...
-            'ValueChangedFcn', {@cb_voi_dropdown} ...
+            'ValueChangedFcn', {@cb_voi_dropdown}, ...
+            'UserData', i ...
             );
 
         handles_voi{i} = dropdown;
@@ -205,7 +206,8 @@ for i = 1:1:voi_dict.get('LENGTH')
             'Tag', ['EDITFIELD ' int2str(i)], ...
             'FontSize', BRAPH2.FONTSIZE, ... 
             'Tooltip', [num2str(sub.getPropProp(prop)) ' ' sub.getPropDescription(prop)], ...
-            'ValueChangedFcn', {@cb_voi_editfield} ...
+            'ValueChangedFcn', {@cb_voi_editfield}, ...
+            'UserData', i ...
             );
 
         handles_voi{i} = editfield;
@@ -215,11 +217,26 @@ end
 value = handles_voi;
 %%%% ¡calculate_callbacks!
 function cb_voi_editfield(src, ~)
+    i = get(src, 'UserData');
+
+    handles_voi = pr.get('HANDLES_VOI');
+    editfield = handles_voi{i};
     
-% % %     pr.get('EL').set(pr.get('PROP'), get(pr.get('DROPDOWN'), 'Value'))
+    voi_dict = pr.get('EL').get(pr.get('PROP'));
+    voi = voi_dict.get('IT', i);
+    
+    voi.set('V', get(editfield, 'Value'))
 end
 function cb_voi_dropdown(src, ~)
-% % %     pr.get('EL').set(pr.get('PROP'), get(pr.get('DROPDOWN'), 'Value'))
+    i = get(src, 'UserData');
+
+    handles_voi = pr.get('HANDLES_VOI');
+    dropdown = handles_voi{i};
+    
+    voi_dict = pr.get('EL').get(pr.get('PROP'));
+    voi = voi_dict.get('IT', i);
+    
+    voi.set('V', find(strcmp(get(dropdown, 'Value'), voi.get('CATEGORIES'))))
 end
 
 %%% ¡prop!
