@@ -1,6 +1,6 @@
 # BRAPH 2.0 - Pipelines
 
-Welcome to the pipelines tutorials of BRAPH 2.0! This section provides detailed instructions on using the available pipelines in BRAPH 2.0 using Graphical User Interfaces (GUIs).
+Welcome to the pipelines tutorials of BRAPH 2.0! This section provides detailed instructions on how to use the available pipelines in BRAPH 2.0 using Graphical User Interfaces (GUIs).
 
 ## Single Layer Connectivity Pipelines
 
@@ -54,9 +54,9 @@ These tutorials guide you through the analysis and comparison steps of multiplex
 ## Deep Learning Pipelines
 
 Explore the deep learning pipelines in BRAPH 2.0. These tutorials demonstrate the usage of neural networks for regression and classification tasks on different types of data:
-- Pipeline Neural Networks Regression Structural Data: Tutorial on using neural networks for regression on structural data. [Tutorial Link](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines/deep_learning/pipeline_neural_networks_regression_structural_data)
-- Pipeline Neural Networks Classification Connectivity WU: Tutorial on using neural networks for classification on weighted undirected (WU) connectivity data. [Tutorial Link](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines/deep_learning/pipeline_neural_networks_classification_connectivity_WU)
-- Pipeline Neural Networks Classification Cross Validation Functional WU: Tutorial on using neural networks for classification with cross-validation on weighted undirected (WU) functional connectivity data. [Tutorial Link](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines/deep_learning/pipeline_neural_networks_classification_connectivity_WU)
+- Pipeline Neural Networks Regression Structural Data: Tutorial that applies neural networks for regression using structural data. [Tutorial Link](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines/deep_learning/pipeline_neural_networks_regression_structural_data)
+- Pipeline Neural Networks Classification Connectivity WU: Tutorial that applies neural networks for classification using weighted undirected (WU) connectivity data. [Tutorial Link](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines/deep_learning/pipeline_neural_networks_classification_connectivity_WU)
+- Pipeline Neural Networks Classification Cross Validation Functional WU: Tutorial that applies neural networks for classification with cross-validation using weighted undirected (WU) functional connectivity data. [Tutorial Link](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/tree/develop/tutorials/pipelines/deep_learning/pipeline_neural_networks_classification_connectivity_WU)
 
 > ![Advances in brain connectivity analysis](https://github.com/giovannivolpe/BRAPH-2-Matlab-beta/blob/develop/figures/pipeline-nn.png)
 > 

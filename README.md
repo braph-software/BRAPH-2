@@ -61,11 +61,11 @@ BRAPH 2.0 is an open-source project, and contributions from the community are hi
 
 ### Bug Reports and Feature Requests
 
-If you encounter any issues or have ideas for new features, please submit provide detailed information for bug reports using the [Bug Report](../../issues/new?template=bug_report.md) template and clear descriptions for feature requests using the [Feature Request](../../issues/new?template=feature_request.md) template. Your contributions help us improve BRAPH 2.0 and make it even better.
+If you encounter any issues or have ideas for new features, please submit detailed information for bug reports using the [Bug Report](../../issues/new?template=bug_report.md) template and clear descriptions for feature requests using the [Feature Request](../../issues/new?template=feature_request.md) template. Your contributions help us improve BRAPH 2.0 and make it even better.
 
 ### Code Contributions
 
-If you're interested in contributing code, follow these steps:
+If you're interested in contributing with code, follow these steps:
 
 1. Fork the BRAPH 2.0 repository on GitHub.
 
@@ -91,7 +91,7 @@ We appreciate your support and look forward to your contributions!
 
 ## Cite BRAPH 2.0
 
-If you use BRAPH 2.0 in your research work, please consider citing the following publication:
+If you use BRAPH 2.0 in your research work, please cite the following publication:
 
 ```
 Mite Mijalkov, Ehsan Kakaei, Joana B Pereira, Eric Westman & Giovanni Volpe (2017).
