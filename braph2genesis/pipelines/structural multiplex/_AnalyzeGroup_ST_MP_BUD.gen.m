@@ -155,6 +155,10 @@ g = MultiplexBUD( ...
     'DENSITIES', densities ...  % % % 'LAYERTICKS', densities, ... % % % 'LAYERLABELS', cell2str(layerlabels), ... % % % 'BAS', ba ...
     );
 
+if ~isa(a.getr('TEMPLATE'), 'NoValue')
+    g.set('TEMPLATE', a.get('TEMPLATE').memorize('G'))
+end
+
 value = g;
 %%%% ¡gui_!
 % % % pr = PPAnalyzeGroupMP_G('EL', a, 'PROP', AnalyzeGroup_ST_MP_BUD.G, 'WAITBAR', true, varargin{:});

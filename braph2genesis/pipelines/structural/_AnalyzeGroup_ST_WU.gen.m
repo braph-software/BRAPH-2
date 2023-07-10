@@ -119,9 +119,9 @@ g = GraphWU( ...
     'B', A ... % % %     'BAS', ba ...
     );
 
-% % % if ~isa(a.getr('TEMPLATE'), 'NoValue')
-% % %     g.set('TEMPLATE', a.get('TEMPLATE').memorize('G'))
-% % % end    
+if ~isa(a.getr('TEMPLATE'), 'NoValue')
+    g.set('TEMPLATE', a.get('TEMPLATE').memorize('G'))
+end
 
 value = g;
 

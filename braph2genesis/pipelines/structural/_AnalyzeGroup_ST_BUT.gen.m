@@ -129,9 +129,9 @@ g = MultigraphBUT( ...
 	'THRESHOLDS', thresholds ... % % %     'LAYERTICKS', thresholds, ... % % %     'LAYERLABELS', cell2str(cellfun(@(x) num2str(x), num2cell(thresholds), 'UniformOutput', false)), ... % % %     'BAS', atlas ...
     );
 
-% % % if ~isa(a.getr('TEMPLATE'), 'NoValue')
-% % %     g.set('TEMPLATE', a.get('TEMPLATE').memorize('G'))
-% % % end
+if ~isa(a.getr('TEMPLATE'), 'NoValue')
+    g.set('TEMPLATE', a.get('TEMPLATE').memorize('G'))
+end
 
 value = g;
 
