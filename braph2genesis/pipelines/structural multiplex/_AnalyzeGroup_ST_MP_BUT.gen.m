@@ -116,24 +116,6 @@ data_list = cellfun(@(x) x.get('ST_MP'), gr.get('SUB_DICT').get('IT_LIST'), 'Uni
 % % %     atlas = gr.get('SUB_DICT').get('IT', 1).get('BA');
 % % % end
 
-% % % if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
-% % %     age_list = cellfun(@(x) x.get('age'), gr.get('SUB_DICT').get('IT_LIST'), 'UniformOutput', false);
-% % %     age = cat(2, age_list{:})';
-% % %     sex_list = cellfun(@(x) x.get('sex'), gr.get('SUB_DICT').get('IT_LIST'), 'UniformOutput', false);
-% % %     sex = zeros(size(age));
-% % %     for i=1:length(sex_list)
-% % %         switch lower(sex_list{i})
-% % %             case 'female'
-% % %                 sex(i) = 1;
-% % %             case 'male'
-% % %                 sex(i) = -1;
-% % %             otherwise
-% % %                 sex(i) = 0;
-% % %         end
-% % %     end
-% % %     covariates = [age, sex];
-% % % end
-
 if isempty(data_list)
     layerlabels = {'', ''};
     A ={[], []};
@@ -158,11 +140,11 @@ else
     end
     
     for i = 1:1:L
-% % %         if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
-% % %             A(i) = {Correlation.getAdjacencyMatrix(data{i}, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'), covariates)};
-% % %         else
+        if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
+            A(i) = {Correlation.getAdjacencyMatrix(data{i}, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'), gr.get('COVARIATES'))};
+        else
             A(i) = {Correlation.getAdjacencyMatrix(data{i}, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'))};
-% % %         end
+        end
     end
 end
 thresholds = a.get('THRESHOLDS'); % this is a vector
@@ -172,6 +154,10 @@ g = MultiplexBUT( ...
     'B', A, ...
     'THRESHOLDS', thresholds ...  % % % 'LAYERTICKS', thresholds, ... % % % 'LAYERLABELS', cell2str(layerlabels), ... % % % 'BAS', atlas ...
     );
+
+if ~isa(a.getr('TEMPLATE'), 'NoValue')
+    g.set('TEMPLATE', a.get('TEMPLATE').memorize('G'))
+end
 
 value = g;
 %%%% ¡gui_!

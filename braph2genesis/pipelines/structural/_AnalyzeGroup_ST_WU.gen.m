@@ -108,34 +108,20 @@ data = cat(2, data_list{:})'; % correlation is a column based operation
 % % %     ba = gr.get('SUB_DICT').getItem(1).get('BA');
 % % % end
 
-% % % if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
-% % %     age_list = cellfun(@(x) x.get('age'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
-% % %     age = cat(2, age_list{:})';
-% % %     sex_list = cellfun(@(x) x.get('sex'), gr.get('SUB_DICT').getItems, 'UniformOutput', false);
-% % %     sex = zeros(size(age));
-% % %     for i=1:length(sex_list)
-% % %         switch lower(sex_list{i})
-% % %             case 'female'
-% % %                 sex(i) = 1;
-% % %             case 'male'
-% % %                 sex(i) = -1;
-% % %             otherwise
-% % %                 sex(i) = 0;
-% % %         end
-% % %     end
-% % %     A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'), [age, sex]);
-% % % else
+if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
+    A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'), gr.get('COVARIATES'));
+else
     A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
-% % % end
+end
 
 g = GraphWU( ...
     'ID', ['Graph ' gr.get('ID')], ...
     'B', A ... % % %     'BAS', ba ...
     );
 
-% % % if ~isa(a.getr('TEMPLATE'), 'NoValue')
-% % %     g.set('TEMPLATE', a.get('TEMPLATE').memorize('G'))
-% % % end    
+if ~isa(a.getr('TEMPLATE'), 'NoValue')
+    g.set('TEMPLATE', a.get('TEMPLATE').memorize('G'))
+end
 
 value = g;
 

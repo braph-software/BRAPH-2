@@ -114,6 +114,59 @@ pr = PanelPropIDictTable('EL', gr, 'PROP', Group.SUB_DICT, ...
     'MENU_OPEN_ITEMS', true, ...
     varargin{:});
 
+%%% ¡prop!
+VOIS (result, cell) contains the variables of interest, including {kind, categories, values}.
+%%%% ¡calculate!
+sub_dict = gr.get('SUB_DICT');
+
+if sub_dict.get('LENGTH') ~= 0
+    sub = sub_dict.get('IT', 1);
+    voi_dict = sub.get('VOI_DICT');
+    
+    value = cell(voi_dict.get('LENGTH'), 3);
+    for v = 1:1:voi_dict.get('LENGTH')
+        voi = voi_dict.get('IT', v);
+        
+        value{v, 1} = voi.getClass();
+        
+        if isa(voi, 'VOICategoric')
+            value{v, 2} = voi.get('CATEGORIES');
+        end
+        
+        value{v, 3} = voi.get('V');
+    end
+    
+    for s = 2:1:sub_dict.get('LENGTH')
+        sub = sub_dict.get('IT', s);
+        voi_dict = sub.get('VOI_DICT');
+        
+        for v = 1:1:voi_dict.get('LENGTH')
+            voi = voi_dict.get('IT', v);
+            
+            % % % Add error/warning if voi kind or categories are different from first subject
+            
+            value{v, 3} = [value{v, 3}; voi.get('V')];
+        end
+    end
+else
+    value = {};
+end
+
+%%% ¡prop!
+COVARIATES (result, matrix) contains the values of the covariates with the categorical ones one-hot encoded.
+%%%% ¡calculate!
+vois = gr.get('VOIS');
+
+value = zeros(gr.get('SUB_DICT').get('LENGTH'), 0);
+for v = 1:1:size(vois, 1)
+    if strcmp(vois{v, 1}, 'VOICategoric')
+        one_hot_encoding = dummyvar(vois{v, 3});
+        value = [value, one_hot_encoding(:, 2:end)];
+    else % 'VOINumeric'
+        value = [value, vois{v, 3}];
+    end
+end
+
 %% ¡tests!
 
 %%% ¡test!
