@@ -153,7 +153,7 @@ else
 end
 
 %%% ¡prop!
-COVARIATES (result, matrix) contains the values of the variables of interest.
+COVARIATES (result, matrix) contains the values of the covariates with the categorical ones one-hot encoded.
 %%%% ¡calculate!
 vois = gr.get('VOIS');
 
