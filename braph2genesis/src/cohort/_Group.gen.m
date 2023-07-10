@@ -153,7 +153,7 @@ else
 end
 
 %%% ¡prop!
-VOI_VALUES (result, matrix) contains the values of the variables of interest.
+COVARIATES (result, matrix) contains the values of the variables of interest.
 %%%% ¡calculate!
 vois = gr.get('VOIS');
 
