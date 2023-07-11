@@ -47,21 +47,9 @@ Input ADJACENCY MATRIX
 
 %%% ¡prop!
 %%%% ¡id!
-OrdMxBD.SYMMETRIZE_RULE
-%%%% ¡title!
-SYMMETRIZATION RULE
-
-%%% ¡prop!
-%%%% ¡id!
 OrdMxBD.SEMIPOSITIVIZE_RULE
 %%%% ¡title!
 NEGATIVE EDGE RULE
-
-%%% ¡prop!
-%%%% ¡id!
-OrdMxBD.STANDARDIZE_RULE
-%%%% ¡title!
-NORMALIZATION RULE
 
 %%% ¡prop!
 %%%% ¡id!

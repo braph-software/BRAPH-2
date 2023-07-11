@@ -60,12 +60,6 @@ NEGATIVE EDGE RULE
 
 %%% ¡prop!
 %%%% ¡id!
-MultiplexBU.STANDARDIZE_RULE
-%%%% ¡title!
-NORMALIZATION RULE
-
-%%% ¡prop!
-%%%% ¡id!
 MultiplexBU.A
 %%%% ¡title!
 Binary Undirected ADJACENCY MATRICES

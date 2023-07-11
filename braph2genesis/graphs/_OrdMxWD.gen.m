@@ -48,12 +48,6 @@ Input ADJACENCY MATRIX
 
 %%% ¡prop!
 %%%% ¡id!
-OrdMxWD.SYMMETRIZE_RULE
-%%%% ¡title!
-SYMMETRIZATION RULE
-
-%%% ¡prop!
-%%%% ¡id!
 OrdMxWD.SEMIPOSITIVIZE_RULE
 %%%% ¡title!
 NEGATIVE EDGE RULE

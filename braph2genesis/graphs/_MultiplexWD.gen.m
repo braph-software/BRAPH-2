@@ -47,12 +47,6 @@ Input ADJACENCY MATRIX
 
 %%% ¡prop!
 %%%% ¡id!
-MultiplexWD.SYMMETRIZE_RULE
-%%%% ¡title!
-SYMMETRIZATION RULE
-
-%%% ¡prop!
-%%%% ¡id!
 MultiplexWD.SEMIPOSITIVIZE_RULE
 %%%% ¡title!
 NEGATIVE EDGE RULE
