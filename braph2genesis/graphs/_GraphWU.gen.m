@@ -42,7 +42,7 @@ SYMMETRIZATION RULE
 %%%% ¡id!
 GraphWU.SEMIPOSITIVIZE_RULE
 %%%% ¡title!
-NEGATIVE EDGE RULE
+NEGATIVE WEIGHTS RULE
 
 %%% ¡prop!
 %%%% ¡id!

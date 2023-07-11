@@ -35,7 +35,7 @@ Input ADJACENCY MATRIX
 %%%% ¡id!
 GraphWD.SEMIPOSITIVIZE_RULE
 %%%% ¡title!
-NEGATIVE EDGE RULE
+NEGATIVE WEIGHTS RULE
 
 %%% ¡prop!
 %%%% ¡id!
