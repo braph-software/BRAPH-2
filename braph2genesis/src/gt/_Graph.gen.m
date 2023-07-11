@@ -159,6 +159,86 @@ NEGATIVITY_TYPE_DESCRIPTION = {
     Graph.NEGATIVE_DESCRIPTION
     }
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+Graph.ID
+%%%% ¡title!
+Graph ID
+
+%%% ¡prop!
+%%%% ¡id!
+Graph.LABEL
+%%%% ¡title!
+Graph NAME
+
+%%% ¡prop!
+%%%% ¡id!
+Graph.LAYERNUMBER
+%%%% ¡title!
+LAYERS number
+
+%%% ¡prop!
+%%%% ¡id!
+Graph.PARTITIONS
+%%%% ¡title!
+LAYERS partitions
+
+%%% ¡prop!
+%%%% ¡id!
+Graph.LAYERTICKS
+%%%% ¡title!
+LAYERS ticks
+
+%%% ¡prop!
+%%%% ¡id!
+Graph.LAYERLABELS
+%%%% ¡title!
+LAYERS labels
+
+%%% ¡prop!
+%%%% ¡id!
+Graph.NODENUMBER
+%%%% ¡title!
+NODES number
+
+%%% ¡prop!
+%%%% ¡id!
+Graph.NODELABELS
+%%%% ¡title!
+NODES labels
+
+%%% ¡prop!
+%%%% ¡id!
+Graph.A
+%%%% ¡title!
+ADJACENCY MATRIX
+
+%%% ¡prop!
+%%%% ¡id!
+Graph.PFGA
+%%%% ¡title!
+Adjacency Matrix Plot
+
+%%% ¡prop!
+%%%% ¡id!
+Graph.PFGH
+%%%% ¡title!
+Graph Histogram
+
+%%% ¡prop!
+%%%% ¡id!
+Graph.M_DICT
+%%%% ¡title!
+Graph MEASURES
+
+%%% ¡prop!
+%%%% ¡id!
+Graph.NOTES
+%%%% ¡title!
+Graph NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!
