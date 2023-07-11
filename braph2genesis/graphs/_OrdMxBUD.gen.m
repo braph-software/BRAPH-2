@@ -7,6 +7,99 @@ In an ordinal binary undirected multiplex with fixed densities (BUD), the layers
  weighted supra-adjacency matrices binarized at different densities.
 The supra-adjacency matrix has a number of partitions equal to the number of densities.
 The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxBUD.ID
+%%%% ¡title!
+Graph ID
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxBUD.LABEL
+%%%% ¡title!
+Graph NAME
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxBUD.LAYERTICKS
+%%%% ¡title!
+LAYERS ticks
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxBUD.LAYERLABELS
+%%%% ¡title!
+LAYERS labels
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxBUD.NODELABELS
+%%%% ¡title!
+NODES labels
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxBUD.B
+%%%% ¡title!
+Input ADJACENCY MATRIX
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxBUD.SYMMETRIZE_RULE
+%%%% ¡title!
+SYMMETRIZATION RULE
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxBUD.SEMIPOSITIVIZE_RULE
+%%%% ¡title!
+NEGATIVE EDGE RULE
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxBUD.STANDARDIZE_RULE
+%%%% ¡title!
+NORMALIZATION RULE
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxBUD.DENSITIES
+%%%% ¡title!
+DENSITIES [0% ... 100%]
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxBUD.A
+%%%% ¡title!
+Binary Undirected ADJACENCY MATRICES at fixed Densities
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxBUD.PFGA
+%%%% ¡title!
+Adjacency Matrix Plot
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxBUD.PFGH
+%%%% ¡title!
+Graph Histogram
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxBUD.M_DICT
+%%%% ¡title!
+Graph MEASURES
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxBUD.NOTES
+%%%% ¡title!
+Graph NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!

@@ -10,6 +10,92 @@ The connectivity matrices are symmetric.
 There are connections between layers connecting the corresponding nodes.
 The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxWU.ID
+%%%% ¡title!
+Graph ID
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxWU.LABEL
+%%%% ¡title!
+Graph NAME
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxWU.LAYERTICKS
+%%%% ¡title!
+LAYERS ticks
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxWU.LAYERLABELS
+%%%% ¡title!
+LAYERS labels
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxWU.NODELABELS
+%%%% ¡title!
+NODES labels
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxWU.B
+%%%% ¡title!
+Input ADJACENCY MATRIX
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxWU.SYMMETRIZE_RULE
+%%%% ¡title!
+SYMMETRIZATION RULE
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxWU.SEMIPOSITIVIZE_RULE
+%%%% ¡title!
+NEGATIVE EDGE RULE
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxWU.STANDARDIZE_RULE
+%%%% ¡title!
+NORMALIZATION RULE
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxWU.A
+%%%% ¡title!
+Weighted Undirected ADJACENCY MATRICES
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxWU.PFGA
+%%%% ¡title!
+Adjacency Matrix Plot
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxWU.PFGH
+%%%% ¡title!
+Graph Histogram
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxWU.M_DICT
+%%%% ¡title!
+Graph MEASURES
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMxWU.NOTES
+%%%% ¡title!
+Graph NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!

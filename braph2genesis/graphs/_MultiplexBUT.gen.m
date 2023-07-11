@@ -7,6 +7,98 @@ In a binary undirected multiplex with fixed thresholds (BUT), the layers are
  weighted supra-connectivity matrices binarized at different thresholds.
 The supra-connectivity matrix has a number of partitions equal to the number of thresholds.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUT.ID
+%%%% ¡title!
+Graph ID
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUT.LABEL
+%%%% ¡title!
+Graph NAME
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUT.LAYERTICKS
+%%%% ¡title!
+LAYERS ticks
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUT.LAYERLABELS
+%%%% ¡title!
+LAYERS labels
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUT.NODELABELS
+%%%% ¡title!
+NODES labels
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUT.B
+%%%% ¡title!
+Input ADJACENCY MATRIX
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUT.SYMMETRIZE_RULE
+%%%% ¡title!
+SYMMETRIZATION RULE
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUT.SEMIPOSITIVIZE_RULE
+%%%% ¡title!
+NEGATIVE EDGE RULE
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUT.STANDARDIZE_RULE
+%%%% ¡title!
+NORMALIZATION RULE
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUT.THRESHOLDS
+%%%% ¡title!
+THRESHOLDS [-1 ... 1]
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUT.A
+%%%% ¡title!
+Binary Undirected ADJACENCY MATRICES at fixed Thresholds
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUT.PFGA
+%%%% ¡title!
+Adjacency Matrix Plot
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUT.PFGH
+%%%% ¡title!
+Graph Histogram
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUT.M_DICT
+%%%% ¡title!
+Graph MEASURES
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUT.NOTES
+%%%% ¡title!
+Graph NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!

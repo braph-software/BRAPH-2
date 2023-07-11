@@ -7,6 +7,98 @@ In a binary undirected multiplex with fixed densities (BUD), the layers are
  weighted supra-connectivity matrices binarized at different densities.
 The supra-connectivity matrix has a number of partitions equal to the number of densities.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUD.ID
+%%%% ¡title!
+Graph ID
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUD.LABEL
+%%%% ¡title!
+Graph NAME
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUD.LAYERTICKS
+%%%% ¡title!
+LAYERS ticks
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUD.LAYERLABELS
+%%%% ¡title!
+LAYERS labels
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUD.NODELABELS
+%%%% ¡title!
+NODES labels
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUD.B
+%%%% ¡title!
+Input ADJACENCY MATRIX
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUD.SYMMETRIZE_RULE
+%%%% ¡title!
+SYMMETRIZATION RULE
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUD.SEMIPOSITIVIZE_RULE
+%%%% ¡title!
+NEGATIVE EDGE RULE
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUD.STANDARDIZE_RULE
+%%%% ¡title!
+NORMALIZATION RULE
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUD.DENSITIES
+%%%% ¡title!
+DENSITIES [0% ... 100%]
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUD.A
+%%%% ¡title!
+Binary Undirected ADJACENCY MATRICES at fixed Densities
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUD.PFGA
+%%%% ¡title!
+Adjacency Matrix Plot
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUD.PFGH
+%%%% ¡title!
+Graph Histogram
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUD.M_DICT
+%%%% ¡title!
+Graph MEASURES
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBUD.NOTES
+%%%% ¡title!
+Graph NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!

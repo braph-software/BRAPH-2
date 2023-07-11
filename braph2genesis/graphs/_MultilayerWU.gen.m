@@ -10,6 +10,92 @@ All node connections are allowed between layers.
 On the diagonal of the supra adjacency matrix, matrices are symmetrized, dediagonalized, semipositivized, and standardized.
 On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and standardized.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+MultilayerWU.ID
+%%%% ¡title!
+Graph ID
+
+%%% ¡prop!
+%%%% ¡id!
+MultilayerWU.LABEL
+%%%% ¡title!
+Graph NAME
+
+%%% ¡prop!
+%%%% ¡id!
+MultilayerWU.LAYERTICKS
+%%%% ¡title!
+LAYERS ticks
+
+%%% ¡prop!
+%%%% ¡id!
+MultilayerWU.LAYERLABELS
+%%%% ¡title!
+LAYERS labels
+
+%%% ¡prop!
+%%%% ¡id!
+MultilayerWU.NODELABELS
+%%%% ¡title!
+NODES labels
+
+%%% ¡prop!
+%%%% ¡id!
+MultilayerWU.B
+%%%% ¡title!
+Input ADJACENCY MATRIX
+
+%%% ¡prop!
+%%%% ¡id!
+MultilayerWU.SYMMETRIZE_RULE
+%%%% ¡title!
+SYMMETRIZATION RULE
+
+%%% ¡prop!
+%%%% ¡id!
+MultilayerWU.SEMIPOSITIVIZE_RULE
+%%%% ¡title!
+NEGATIVE EDGE RULE
+
+%%% ¡prop!
+%%%% ¡id!
+MultilayerWU.STANDARDIZE_RULE
+%%%% ¡title!
+NORMALIZATION RULE
+
+%%% ¡prop!
+%%%% ¡id!
+MultilayerWU.A
+%%%% ¡title!
+Weighted Undirected ADJACENCY MATRICES
+
+%%% ¡prop!
+%%%% ¡id!
+MultilayerWU.PFGA
+%%%% ¡title!
+Adjacency Matrix Plot
+
+%%% ¡prop!
+%%%% ¡id!
+MultilayerWU.PFGH
+%%%% ¡title!
+Graph Histogram
+
+%%% ¡prop!
+%%%% ¡id!
+MultilayerWU.M_DICT
+%%%% ¡title!
+Graph MEASURES
+
+%%% ¡prop!
+%%%% ¡id!
+MultilayerWU.NOTES
+%%%% ¡title!
+Graph NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!
