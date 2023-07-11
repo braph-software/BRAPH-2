@@ -7,6 +7,98 @@ In a binary undirected multigraph with fixed thresholds, all the layers
  weighted connectivity matrix binarized at different thresholds.
 There are no connections between layers.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+MultigraphBUT.ID
+%%%% ¡title!
+Graph ID
+
+%%% ¡prop!
+%%%% ¡id!
+MultigraphBUT.LABEL
+%%%% ¡title!
+Graph NAME
+
+%%% ¡prop!
+%%%% ¡id!
+MultigraphBUT.LAYERTICKS
+%%%% ¡title!
+LAYERS ticks
+
+%%% ¡prop!
+%%%% ¡id!
+MultigraphBUT.LAYERLABELS
+%%%% ¡title!
+LAYERS labels
+
+%%% ¡prop!
+%%%% ¡id!
+MultigraphBUT.NODELABELS
+%%%% ¡title!
+NODES labels
+
+%%% ¡prop!
+%%%% ¡id!
+MultigraphBUT.B
+%%%% ¡title!
+Input ADJACENCY MATRIX
+
+%%% ¡prop!
+%%%% ¡id!
+MultigraphBUT.SYMMETRIZE_RULE
+%%%% ¡title!
+SYMMETRIZATION RULE
+
+%%% ¡prop!
+%%%% ¡id!
+MultigraphBUT.SEMIPOSITIVIZE_RULE
+%%%% ¡title!
+NEGATIVE EDGE RULE
+
+%%% ¡prop!
+%%%% ¡id!
+MultigraphBUT.STANDARDIZE_RULE
+%%%% ¡title!
+NORMALIZATION RULE
+
+%%% ¡prop!
+%%%% ¡id!
+MultigraphBUT.THRESHOLDS
+%%%% ¡title!
+THRESHOLDS [-1 ... 1]
+
+%%% ¡prop!
+%%%% ¡id!
+MultigraphBUT.A
+%%%% ¡title!
+Binary Undirected ADJACENCY MATRICES at fixed Thresholds
+
+%%% ¡prop!
+%%%% ¡id!
+MultigraphBUT.PFGA
+%%%% ¡title!
+Adjacency Matrix Plot
+
+%%% ¡prop!
+%%%% ¡id!
+MultigraphBUT.PFGH
+%%%% ¡title!
+Graph Histogram
+
+%%% ¡prop!
+%%%% ¡id!
+MultigraphBUT.M_DICT
+%%%% ¡title!
+Graph MEASURES
+
+%%% ¡prop!
+%%%% ¡id!
+MultigraphBUT.NOTES
+%%%% ¡title!
+Graph NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!

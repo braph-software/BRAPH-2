@@ -6,6 +6,74 @@ In a binary undirected (BU) graph, the edges are undirected and can be
  either 0 (absence of connection) or 1 (existence of connection).
 The connectivity matrix is symmetric.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+GraphBU.ID
+%%%% ¡title!
+Graph ID
+
+%%% ¡prop!
+%%%% ¡id!
+GraphBU.LABEL
+%%%% ¡title!
+Graph NAME
+
+%%% ¡prop!
+%%%% ¡id!
+GraphBU.NODELABELS
+%%%% ¡title!
+NODES labels
+
+%%% ¡prop!
+%%%% ¡id!
+GraphBU.B
+%%%% ¡title!
+Input ADJACENCY MATRIX
+
+%%% ¡prop!
+%%%% ¡id!
+GraphBU.SYMMETRIZE_RULE
+%%%% ¡title!
+SYMMETRIZATION RULE
+
+%%% ¡prop!
+%%%% ¡id!
+GraphBU.SEMIPOSITIVIZE_RULE
+%%%% ¡title!
+NEGATIVE WEIGHTS RULE
+
+%%% ¡prop!
+%%%% ¡id!
+GraphBU.A
+%%%% ¡title!
+Binary Undirected ADJACENCY MATRIX
+
+%%% ¡prop!
+%%%% ¡id!
+GraphBU.PFGA
+%%%% ¡title!
+Adjacency Matrix Plot
+
+%%% ¡prop!
+%%%% ¡id!
+GraphBU.PFGH
+%%%% ¡title!
+Graph Histogram
+
+%%% ¡prop!
+%%%% ¡id!
+GraphBU.M_DICT
+%%%% ¡title!
+Graph MEASURES
+
+%%% ¡prop!
+%%%% ¡id!
+GraphBU.NOTES
+%%%% ¡title!
+Graph NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!

@@ -5,6 +5,74 @@ GraphWD < Graph (g, weighted directed graph) is a weighted directed graph.
 In a weighted directed (WD) graph, the edges are directed and associated 
  with a real number between 0 and 1 indicating the strength of the connection.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+GraphWD.ID
+%%%% ¡title!
+Graph ID
+
+%%% ¡prop!
+%%%% ¡id!
+GraphWD.LABEL
+%%%% ¡title!
+Graph NAME
+
+%%% ¡prop!
+%%%% ¡id!
+GraphWD.NODELABELS
+%%%% ¡title!
+NODES labels
+
+%%% ¡prop!
+%%%% ¡id!
+GraphWD.B
+%%%% ¡title!
+Input ADJACENCY MATRIX
+
+%%% ¡prop!
+%%%% ¡id!
+GraphWD.SEMIPOSITIVIZE_RULE
+%%%% ¡title!
+NEGATIVE WEIGHTS RULE
+
+%%% ¡prop!
+%%%% ¡id!
+GraphWD.STANDARDIZE_RULE
+%%%% ¡title!
+NORMALIZATION RULE
+
+%%% ¡prop!
+%%%% ¡id!
+GraphWD.A
+%%%% ¡title!
+Weighted Directed ADJACENCY MATRIX
+
+%%% ¡prop!
+%%%% ¡id!
+GraphWD.PFGA
+%%%% ¡title!
+Adjacency Matrix Plot
+
+%%% ¡prop!
+%%%% ¡id!
+GraphWD.PFGH
+%%%% ¡title!
+Graph Histogram
+
+%%% ¡prop!
+%%%% ¡id!
+GraphWD.M_DICT
+%%%% ¡title!
+Graph MEASURES
+
+%%% ¡prop!
+%%%% ¡id!
+GraphWD.NOTES
+%%%% ¡title!
+Graph NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!

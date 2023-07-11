@@ -5,6 +5,68 @@ GraphBD < Graph (g, binary directed graph) is a binary directed graph.
 In a binary directed (BD) graph, the edges are directed and they can be 
  either 0 (absence of connection) or 1 (existence of connection).
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+GraphBD.ID
+%%%% ¡title!
+Graph ID
+
+%%% ¡prop!
+%%%% ¡id!
+GraphBD.LABEL
+%%%% ¡title!
+Graph NAME
+
+%%% ¡prop!
+%%%% ¡id!
+GraphBD.NODELABELS
+%%%% ¡title!
+NODES labels
+
+%%% ¡prop!
+%%%% ¡id!
+GraphBD.B
+%%%% ¡title!
+Input ADJACENCY MATRIX
+
+%%% ¡prop!
+%%%% ¡id!
+GraphBD.SEMIPOSITIVIZE_RULE
+%%%% ¡title!
+NEGATIVE WEIGHTS RULE
+
+%%% ¡prop!
+%%%% ¡id!
+GraphBD.A
+%%%% ¡title!
+Binary Directed ADJACENCY MATRIX
+
+%%% ¡prop!
+%%%% ¡id!
+GraphBD.PFGA
+%%%% ¡title!
+Adjacency Matrix Plot
+
+%%% ¡prop!
+%%%% ¡id!
+GraphBD.PFGH
+%%%% ¡title!
+Graph Histogram
+
+%%% ¡prop!
+%%%% ¡id!
+GraphBD.M_DICT
+%%%% ¡title!
+Graph MEASURES
+
+%%% ¡prop!
+%%%% ¡id!
+GraphBD.NOTES
+%%%% ¡title!
+Graph NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!

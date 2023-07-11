@@ -184,6 +184,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
 %     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
 %     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_layout([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
 %     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
 %     eval(['test_' el_class])
 % end
@@ -194,6 +195,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
 %     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
 %     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_layout([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
 %     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
 %     eval(['test_' el_class])
 % end
@@ -204,16 +206,18 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
 %     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
 %     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_layout([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
 %     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
 %     eval(['test_' el_class])
 % end
-% el_class_list = {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexBD' 'MultiplexBU' 'MultiplexWD' 'MultiplexWU' 'OrdMultiWU' 'MultiplexBUD' 'MultiplexBUT'};
+% el_class_list = {'MultiplexBUT'} % {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexBD' 'MultiplexBU' 'MultiplexWD' 'MultiplexWU' 'OrdMultiWU' 'MultiplexBUD' 'MultiplexBUT'};
 % for i = 1:1:length(el_class_list)
 %     el_class = el_class_list{i};
 %     el_path = '/graphs';
 %     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
 %     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
 %     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_layout([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
 %     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
 %     eval(['test_' el_class])
 % end
@@ -229,7 +233,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 % gui.get('SHOW')
 
 % GraphBD GraphBU GraphWD GraphWU
-% g1 = GraphWU();
+% g1 = GraphBD();
 % gui1 = GUIElement( ...
 %     'PE', g1, ...
 %     'WAITBAR', true, ...
@@ -237,9 +241,9 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     );
 % gui1.get('DRAW')
 % gui1.get('SHOW')
-
-% g2 = GraphWU( ...
-%     'B', randn(5) ...
+% 
+% g2 = GraphBD( ...
+%     'B', randn(50) ...
 %     );
 % gui2 = GUIElement( ...
 %     'PE', g2, ...
@@ -249,6 +253,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 % gui2.get('DRAW')
 % gui2.get('SHOW')
  
+
 % g1 = MultigraphBUD( ...
 %     'DENSITIES', [0 55 100] ...
 %     );
@@ -258,7 +263,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     );
 % gui1.get('DRAW')
 % gui1.get('SHOW')
-
+% 
 % g2 = MultigraphBUD( ...
 %     'DENSITIES', [0 55 100], ...
 %     'B', randn(5) ...
@@ -270,7 +275,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     );
 % gui2.get('DRAW')
 % gui2.get('SHOW')
-
+% 
 % br1 = BrainRegion('ID', 'id1', 'LABEL', 'label1', 'NOTES', 'notes1', 'X', 1, 'Y', 1, 'Z', 1);
 % br2 = BrainRegion('ID', 'id2', 'LABEL', 'label2', 'NOTES', 'notes2', 'X', 2, 'Y', 2, 'Z', 2);
 % br3 = BrainRegion('ID', 'id3', 'LABEL', 'label3', 'NOTES', 'notes3', 'X', 3, 'Y', 3, 'Z', 3);
@@ -307,7 +312,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     );
 % gui1.get('DRAW')
 % gui1.get('SHOW')
-
+% 
 % g2 = MultigraphBUT( ...
 %     'THRESHOLDS', [-1:.5:1], ...
 %     'B', randn(5) ...
@@ -318,7 +323,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     );
 % gui2.get('DRAW')
 % gui2.get('SHOW')
-
+% 
 % br1 = BrainRegion('ID', 'id1', 'LABEL', 'label1', 'NOTES', 'notes1', 'X', 1, 'Y', 1, 'Z', 1);
 % br2 = BrainRegion('ID', 'id2', 'LABEL', 'label2', 'NOTES', 'notes2', 'X', 2, 'Y', 2, 'Z', 2);
 % br3 = BrainRegion('ID', 'id3', 'LABEL', 'label3', 'NOTES', 'notes3', 'X', 3, 'Y', 3, 'Z', 3);
@@ -345,6 +350,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     );
 % gui3.get('DRAW')
 % gui3.get('SHOW')
+
 
 % % 'MultiplexBD' 'MultiplexBU' 'MultiplexWD' 'MultiplexWU' 'OrdMultiWU'
 % g1 = OrdMultiWU();
@@ -411,7 +417,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     );
 % gui2.get('DRAW')
 % gui2.get('SHOW')
-
+% 
 % br1 = BrainRegion('ID', 'id1', 'LABEL', 'label1', 'NOTES', 'notes1', 'X', 1, 'Y', 1, 'Z', 1);
 % br2 = BrainRegion('ID', 'id2', 'LABEL', 'label2', 'NOTES', 'notes2', 'X', 2, 'Y', 2, 'Z', 2);
 % br3 = BrainRegion('ID', 'id3', 'LABEL', 'label3', 'NOTES', 'notes3', 'X', 3, 'Y', 3, 'Z', 3);
@@ -437,6 +443,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     );
 % gui3.get('DRAW')
 % gui3.get('SHOW')
+
 
 % g1 = MultiplexBUD( ...
 %     'DENSITIES', [0 20 30 100] ...
@@ -1171,17 +1178,40 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     eval(['test_' el_class])
 % end
 
-% el_class_list = {'AnalyzeGroup_ST_BUT'} % {'AnalyzeGroup_ST_WU' 'AnalyzeGroup_ST_BUD' 'AnalyzeGroup_ST_BUT'}
-% for i = 1:1:length(el_class_list)
-%     el_class = el_class_list{i};
-%     el_path = '/pipelines/structural';
-%     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
-%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-%     create_layout([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-%     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-%     eval(['test_' el_class])
-% end
+el_class_list = {'AnalyzeGroup_ST_WU'} % {'AnalyzeGroup_ST_WU' 'AnalyzeGroup_ST_BUD' 'AnalyzeGroup_ST_BUT'}
+for i = 1:1:length(el_class_list)
+    el_class = el_class_list{i};
+    el_path = '/pipelines/structural';
+    delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_layout([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    eval(['test_' el_class])
+end
+
+im_ba = ImporterBrainAtlasXLS('FILE', 'destrieux_atlas.xlsx');
+ba = im_ba.get('BA');
+
+gr = Group('SUB_CLASS', 'SubjectST', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST'));
+for i = 1:1:50
+    sub = SubjectST( ...
+        'ID', ['SUB ST ' int2str(i)], ...
+        'LABEL', ['Subejct ST ' int2str(i)], ...
+        'NOTES', ['Notes on subject ST ' int2str(i)], ...
+        'BA', ba, ...
+        'ST', rand(ba.get('BR_DICT').get('LENGTH'), 1) ...
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr.get('SUB_DICT').get('ADD', sub)
+end
+
+a = AnalyzeGroup_ST_WU('GR', gr, 'CORRELATION_RULE', Correlation.PEARSON);
+
+gui = GUIElement('PE', a, 'CLOSEREQ', false);
+gui.get('DRAW')
+gui.get('SHOW')
 
 % el_class_list = {'AnalyzeGroup_ST_MP_BUT'} % {'AnalyzeGroup_ST_MP_WU' 'AnalyzeGroup_ST_MP_BUD' 'AnalyzeGroup_ST_MP_BUT'}
 % for i = 1:1:length(el_class_list)
@@ -1441,16 +1471,16 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 % gui_settings.get('SHOW')
 
 %% Group & Subjects interface
-el_class_list = {'SubjectPP_VOIDict'} % {'Group' 'SubjectPP_VOIDict' 'Subject'} 
-for i = 1:1:length(el_class_list)
-    el_class = el_class_list{i};
-    el_path = '/src/cohort';
-    delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
-    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+% el_class_list = {'SubjectPP_VOIDict'} % {'Group' 'SubjectPP_VOIDict' 'Subject'} 
+% for i = 1:1:length(el_class_list)
+%     el_class = el_class_list{i};
+%     el_path = '/src/cohort';
+%     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
 %     eval(['test_' el_class])
-end
+% end
 
 % im_ba = ImporterBrainAtlasXLS('FILE', 'destrieux_atlas.xlsx');
 % ba = im_ba.get('BA');
@@ -1473,12 +1503,12 @@ end
 % gui.get('DRAW')
 % gui.get('SHOW')
 
-sub = SubjectST();
-voi_dict = sub.memorize('VOI_DICT');
-voi_dict.get('ADD', VOINumeric('ID', 'Age', 'V', 25))
-voi_age = voi_dict.get('IT', 1);
-voi_dict.get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', 2))
-voi_sex = voi_dict.get('IT', 2);
-gui = GUIElement('PE', sub, 'CLOSEREQ', false);
-gui.get('DRAW')
-gui.get('SHOW')
+% sub = SubjectST();
+% voi_dict = sub.memorize('VOI_DICT');
+% voi_dict.get('ADD', VOINumeric('ID', 'Age', 'V', 25))
+% voi_age = voi_dict.get('IT', 1);
+% voi_dict.get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', 2))
+% voi_sex = voi_dict.get('IT', 2);
+% gui = GUIElement('PE', sub, 'CLOSEREQ', false);
+% gui.get('DRAW')
+% gui.get('SHOW')
