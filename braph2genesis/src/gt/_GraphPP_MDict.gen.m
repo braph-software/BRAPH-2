@@ -2,7 +2,7 @@
 GraphPP_MDict < PanelProp (pr, measure dictionary plot) plots the measure dictionary property of a graph.
 
 %%% ¡description!
-GraphPP_MDict plors the panel of the M_DICT property of Graph.
+GraphPP_MDict plots the panel of the M_DICT property of Graph.
 It is intended to be used only with the property M_DICT of Graph.
 
 %%% ¡seealso!
@@ -17,7 +17,7 @@ NAME (constant, string) is the name of the measure dictionary plot.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the measure dictionary plot.
 %%%% ¡default!
-'GraphPP_MDict plors the panel of the M_DICT property of Graph.'
+'GraphPP_MDict plots the panel of the M_DICT property of Graph.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the measure dictionary plot.
@@ -32,7 +32,7 @@ ID (data, string) is a few-letter code for the measure dictionary plot.
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the measure dictionary plot.
 %%%% ¡default!
-'PanelPropIDictTable label'
+'GraphPP_MDict label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the measure dictionary plot.
@@ -63,8 +63,8 @@ UPDATE (query, logical) updates the content and permissions of the table.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.UPDATE, varargin{:}); % also warning
 if value
-    el = pr.get('EL');
-    prop = pr.get('PROP');
+	el = pr.get('EL');
+	prop = pr.get('PROP');
         
 	if isa(el.getr(prop), 'NoValue')
         % don't plot anything for a result not yet calculated
