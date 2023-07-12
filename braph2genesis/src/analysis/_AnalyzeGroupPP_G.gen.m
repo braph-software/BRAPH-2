@@ -1,54 +1,54 @@
 %% ¡header!
-GraphPP_MDict < PanelProp (pr, measure dictionary plot) plots the measure dictionary property of a graph.
+AnalyzeGroupPP_G < PanelProp (pr, graph and measure plot) plots the panel to manage the graph and measure of a group analysis.
 
 %%% ¡description!
-GraphPP_MDict plots the panel of the M_DICT property of Graph.
-It is intended to be used only with the property M_DICT of Graph.
+AnalyzeGroupPP_G plots the panel to manage the graph and measure of a group analysis.
+It is intended to be used only with the property G of AnalyzeGroup.
 
 %%% ¡seealso!
-uitable, Graph
+uitable, AnalyzeGroup, Graph, Measure
 
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the measure dictionary plot.
+NAME (constant, string) is the name of the graph and measure plot.
 %%%% ¡default!
-'GraphPP_MDict'
+'AnalyzeGroupPP_G'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the measure dictionary plot.
+DESCRIPTION (constant, string) is the description of the graph and measure plot.
 %%%% ¡default!
-'GraphPP_MDict plots the panel of the M_DICT property of Graph.'
+'AnalyzeGroupPP_G plots the panel to manage the graph and measure of a group analysis.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the measure dictionary plot.
+TEMPLATE (parameter, item) is the template of the graph and measure plot.
 %%%% ¡settings!
-'GraphPP_MDict'
+'AnalyzeGroupPP_G'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the measure dictionary plot.
+ID (data, string) is a few-letter code for the graph and measure plot.
 %%%% ¡default!
-'GraphPP_MDict'
+'AnalyzeGroupPP_G'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the measure dictionary plot.
+LABEL (metadata, string) is an extended label of the graph and measure plot.
 %%%% ¡default!
-'GraphPP_MDict label'
+'AnalyzeGroupPP_G label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the measure dictionary plot.
+NOTES (metadata, string) are some specific notes about the graph and measure plot.
 %%%% ¡default!
-'GraphPP_MDict'
+'AnalyzeGroupPP_G'
 
 %%% ¡prop!
 EL (data, item) is the element.
 %%%% ¡default!
-Graph()
+AnalyzeGroup()
 
 %%% ¡prop!
 PROP (data, scalar) is the property number.
 %%%% ¡default!
-Graph.M_DICT
+AnalyzeGroup.G
 
 %%% ¡prop!
 X_DRAW (query, logical) draws the property panel.
@@ -79,7 +79,7 @@ if value
 end
 %%%% ¡calculate_callbacks!
 function set_table()
-    g = pr.get('EL');
+    g = pr.get('EL').getPropDefaultConditioned(pr.get('PROP')); % default graph
 
     mlist = g.get('COMPATIBLE_MEASURES');
     mlist_already_calculated = cellfun(@(x) x.get('ID'), g.get('M_DICT').get('IT_LIST'), 'UniformOutput', false);
@@ -149,6 +149,16 @@ SHOW (query, logical) shows the figure containing the panel and, possibly, the i
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.SHOW, varargin{:}); % also warning
 if value
+    % figure for graph plot
+    if isa(pr.getr('GUI_G_PL'), 'GUIElement') && pr.get('GUI_G_PL').get('DRAWN')
+        pr.get('GUI_G_PL').get('SHOW')
+    end
+
+    % figure for graph data
+    if isa(pr.getr('GUI_G_EL'), 'GUIElement') && pr.get('GUI_G_EL').get('DRAWN')
+        pr.get('GUI_G_EL').get('SHOW')
+    end
+    
     % figures for measure figures
     gui_f_dict = pr.get('GUI_F_DICT');
     for i = 1:1:gui_f_dict.get('LENGTH')
@@ -173,6 +183,16 @@ HIDE (query, logical) hides the figure containing the panel and, possibly, the i
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.HIDE, varargin{:}); % also warning
 if value
+    % figure for graph plot
+    if isa(pr.getr('GUI_G_PL'), 'GUI') && pr.get('GUI_G_PL').get('DRAWN')
+        pr.get('GUI_G_PL').get('HIDE')
+    end
+
+    % figure for graph data
+    if isa(pr.getr('GUI_G_EL'), 'GUI') && pr.get('GUI_G_EL').get('DRAWN')
+        pr.get('GUI_G_EL').get('HIDE')
+    end
+
     % figures for measure figures
     gui_f_dict = pr.get('GUI_F_DICT');
     for i = 1:1:gui_f_dict.get('LENGTH')
@@ -206,6 +226,12 @@ CLOSE (query, logical) closes the figure containing the panel and, possibly, the
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.CLOSE, varargin{:}); % also warning
 if value
+    % figure for graph plot
+% % % %TODO
+
+    % figure for graph data
+% % % %TODO
+
     % figures for measure figures
     gui_f_dict = pr.get('GUI_F_DICT');
     for i = 1:1:gui_f_dict.get('LENGTH')
@@ -277,7 +303,34 @@ contextmenu = uicontextmenu( ...
     'Parent', ancestor(pr.get('H'), 'figure'), ...
     'Tag', 'CONTEXTMENU' ...
     );
+menu_open_g_pl = uimenu( ...
+	'Parent', contextmenu, ...
+	'Tag', 'MENU_OPEN_G_PL', ...
+	'Text', 'Plot Graph Plot ...', ...
+	'MenuSelectedFcn', {@cb_open_g_pl} ...
+	);
+
+menu_hide_g_pl = uimenu( ...
+    'Parent', contextmenu, ...
+    'Tag', 'MENU_HIDE_G_PL', ...
+    'Text', 'Hide Graph Plot', ...
+    'MenuSelectedFcn', {@cb_hide_g_pl} ...
+	);
+menu_open_g_el = uimenu( ...
+	'Separator', 'on', ...
+    'Parent', contextmenu, ...
+    'Tag', 'MENU_OPEN_G_EL', ...
+    'Text', 'Data Graph ...', ...
+    'MenuSelectedFcn', {@cb_open_g_el} ...
+    );
+menu_hide_g_el = uimenu( ...
+    'Parent', contextmenu, ...
+    'Tag', 'MENU_HIDE_G_EL', ...
+    'Text', 'Hide Graph Data', ...
+	'MenuSelectedFcn', {@cb_hide_g_el} ...
+    );
 menu_select_all = uimenu( ...
+	'Separator', 'on', ...
     'Parent', contextmenu, ...
     'Tag', 'MENU_SELECT_ALL', ...
     'Text', 'Select All Measures', ...
@@ -333,8 +386,49 @@ set(pr.get('TABLE'), 'ContextMenu', contextmenu)
 
 value = contextmenu;
 %%%% ¡calculate_callbacks!
+function cb_open_g_pl(~, ~)
+ % % %
+end
+function cb_hide_g_pl(~, ~)
+ % % %
+end
+function cb_open_g_el(~, ~)
+    if isa(pr.getr('GUI_G_EL'), 'NoValue')
+        f = ancestor(pr.get('H'), 'figure');
+
+        el = pr.get('EL'); % AnalyzeGroup
+        prop = pr.get('PROP'); % G
+
+        gui = GUIElement( ...
+            'PE', el.memorize(prop), ... % ensure that the property is stored -- this is the graph G
+            'POSITION', [ ...
+                x0(f, 'normalized')+w(f, 'normalized') ...
+                y0(f, 'normalized') ...
+                w(f, 'normalized') ...
+                h(f, 'normalized') ...
+                ], ...
+            'WAITBAR', pr.getCallback('WAITBAR'), ...
+            'CLOSEREQ', false ...
+            );
+        
+        pr.set('GUI_G_EL', gui)
+    else
+        gui = pr.get('GUI_G_EL');
+    end
+
+    if ~gui.get('DRAWN')
+        gui.get('DRAW')
+    end
+    gui.get('SHOW')
+end
+function cb_hide_g_el(~, ~)
+    gui = pr.get('GUI_G_EL');
+    if isa(gui, 'GUIElement') && gui.get('DRAWN')
+        gui.get('HIDE')
+    end
+end
 function cb_select_all(~, ~) 
-    g = pr.get('EL');
+    g = pr.get('EL').getPropDefaultConditioned(pr.get('PROP'));
     mlist = g.get('COMPATIBLE_MEASURES');
 
     pr.set('SELECTED', [1:1:length(mlist)])
@@ -347,7 +441,7 @@ function cb_clear_selection(~, ~)
     pr.get('UPDATE')
 end
 function cb_invert_selection(~, ~) 
-    g = pr.get('EL');
+    g = pr.get('EL').getPropDefaultConditioned(pr.get('PROP')); % default graph
     mlist = g.get('COMPATIBLE_MEASURES');
 
     selected_tmp = [1:1:length(mlist)];
@@ -357,7 +451,7 @@ function cb_invert_selection(~, ~)
     pr.get('UPDATE')
 end
 function cb_calculate(~, ~) 
-    g = pr.get('EL');
+    g = pr.get('EL').getProp(pr.get('PROP')); % actual graph
     mlist = g.get('COMPATIBLE_MEASURES');
     selected = pr.get('SELECTED');
     
@@ -380,7 +474,7 @@ function cb_calculate(~, ~)
 	pr.get('UPDATE');
 end
 function cb_open_plots(~, ~)
-    g = pr.get('EL');
+    g = pr.get('EL').getProp(pr.get('PROP')); % actual graph
     mlist = g.get('COMPATIBLE_MEASURES');
     
     f = ancestor(pr.get('H'), 'figure'); % parent GUI 
@@ -420,7 +514,7 @@ function cb_open_plots(~, ~)
     end
 end
 function cb_hide_plots(~, ~)
-    g = pr.get('EL');
+    g = pr.get('EL').getPropDefaultConditioned(pr.get('PROP')); % default graph
     mlist = g.get('COMPATIBLE_MEASURES');
     
     gui_f_dict = pr.memorize('GUI_F_DICT');
@@ -440,7 +534,7 @@ function cb_hide_plots(~, ~)
     end
 end
 function cb_open_elements(~, ~)
-    g = pr.get('EL');
+    g = pr.get('EL').getProp(pr.get('PROP')); % actual graph
     mlist = g.get('COMPATIBLE_MEASURES');
     
     f = ancestor(pr.get('H'), 'figure'); % parent GUI 
@@ -480,7 +574,7 @@ function cb_open_elements(~, ~)
 	end
 end
 function cb_hide_elements(~, ~)
-    g = pr.get('EL');
+    g = pr.get('EL').getPropDefaultConditioned(pr.get('PROP')); % default graph
     mlist = g.get('COMPATIBLE_MEASURES');
     
     gui_m_dict = pr.memorize('GUI_M_DICT');
@@ -499,6 +593,16 @@ function cb_hide_elements(~, ~)
         end
     end
 end
+
+%%% ¡prop!
+GUI_G_PL (gui, item) contains the GUI for the graph figure.
+%%%% ¡settings!
+'GUIFig'
+
+%%% ¡prop!
+GUI_G_EL (gui, item) contains the GUI for the graph.
+%%%% ¡settings!
+'GUIElement'
 
 %%% ¡prop!
 GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.
@@ -524,7 +628,7 @@ Remove Figures
 %%%% ¡parallel!
 false
 %%%% ¡code!
-warning('off', [BRAPH2.STR ':GraphPP_MDict'])
+warning('off', [BRAPH2.STR ':AnalyzeGroupPP_G'])
 assert(length(findall(0, 'type', 'figure')) == 1)
 delete(findall(0, 'type', 'figure'))
-warning('on', [BRAPH2.STR ':GraphPP_MDict'])
+warning('on', [BRAPH2.STR ':AnalyzeGroupPP_G'])
