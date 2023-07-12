@@ -51,6 +51,10 @@ true
 GR (data, item) is the subject group, which also defines the subject class.
 %%%% ¡settings!
 'Group'
+%%%% ¡gui!
+pr = PanelPropItem('EL', a, 'PROP', AnalyzeGroup.GR, ...
+    'BUTTON_TEXT', a.get('GR').get('ID'), ...
+    varargin{:});
 
 %%% ¡prop!
 G (result, item) is the graph obtained from this analysis.
