@@ -227,10 +227,14 @@ CLOSE (query, logical) closes the figure containing the panel and, possibly, the
 value = calculateValue@PanelProp(pr, PanelProp.CLOSE, varargin{:}); % also warning
 if value
     % figure for graph plot
-% % % %TODO
+    if isa(pr.getr('GUI_G_PL'), 'GUIFig') && pr.get('GUI_G_PL').get('DRAWN')
+        pr.get('GUI_G_PL').get('CLOSE')
+    end
 
     % figure for graph data
-% % % %TODO
+    if isa(pr.getr('GUI_G_EL'), 'GUIElement') && pr.get('GUI_G_EL').get('DRAWN')
+        pr.get('GUI_G_EL').get('CLOSE')
+    end
 
     % figures for measure figures
     gui_f_dict = pr.get('GUI_F_DICT');
@@ -387,10 +391,39 @@ set(pr.get('TABLE'), 'ContextMenu', contextmenu)
 value = contextmenu;
 %%%% ¡calculate_callbacks!
 function cb_open_g_pl(~, ~)
- % % %
+    if isa(pr.getr('GUI_G_PL'), 'NoValue')
+        f = ancestor(pr.get('H'), 'figure');
+
+        el = pr.get('EL'); % AnalyzeGroup
+        prop = pr.get('PROP'); % G
+
+        gui = GUIFig( ...
+            'PF', el.memorize(prop).get('PFGA'), ... % ensure that the property is stored -- this is the graph G
+            'POSITION', [ ...
+                x0(f, 'normalized')+w(f, 'normalized') ...
+                y0(f, 'normalized') ...
+                w(0,'normalized')-x0(f, 'normalized')-w(f, 'normalized') ...
+                h(f, 'normalized') ...
+                ], ...
+            'WAITBAR', pr.getCallback('WAITBAR'), ...
+            'CLOSEREQ', false ...
+            );
+        
+        pr.set('GUI_G_PL', gui)
+    else
+        gui = pr.get('GUI_G_PL');
+    end
+
+    if ~gui.get('DRAWN')
+        gui.get('DRAW')
+    end
+    gui.get('SHOW')
 end
 function cb_hide_g_pl(~, ~)
- % % %
+    gui = pr.getr('GUI_G_PL');
+    if isa(gui, 'GUIFig') && gui.get('DRAWN')
+        gui.get('HIDE')
+    end
 end
 function cb_open_g_el(~, ~)
     if isa(pr.getr('GUI_G_EL'), 'NoValue')
@@ -422,7 +455,7 @@ function cb_open_g_el(~, ~)
     gui.get('SHOW')
 end
 function cb_hide_g_el(~, ~)
-    gui = pr.get('GUI_G_EL');
+    gui = pr.getr('GUI_G_EL');
     if isa(gui, 'GUIElement') && gui.get('DRAWN')
         gui.get('HIDE')
     end
