@@ -385,7 +385,7 @@ function cb_hide_g_pl(~, ~)
  % % %
 end
 function cb_open_g_el(~, ~)
-    if isa(pr.get('GUI_G_PLOT'), 'NoValue')
+    if isa(pr.get('GUI_G_EL'), 'NoValue')
         f = ancestor(pr.get('H'), 'figure');
 
         el = pr.get('EL'); % AnalyzeGroup
@@ -403,9 +403,9 @@ function cb_open_g_el(~, ~)
             'CLOSEREQ', false ...
             );
         
-        pr.set('GUI_G_PLOT', gui)
+        pr.set('GUI_G_EL', gui)
     else
-        gui = pr.get('GUI_G_PLOT');
+        gui = pr.get('GUI_G_EL');
     end
 
     if ~gui.get('DRAWN')
@@ -414,7 +414,7 @@ function cb_open_g_el(~, ~)
     gui.get('SHOW')
 end
 function cb_hide_g_el(~, ~)
-    gui = pr.get('GUI_G_PLOT');
+    gui = pr.get('GUI_G_EL');
     if isa(gui, 'GUIElement') && gui.get('DRAWN')
         gui.get('HIDE')
     end
@@ -594,7 +594,7 @@ GUI_G_PLOT (gui, item) contains the GUI for the graph figure.
 %%% ¡prop!
 GUI_G_EL (gui, item) contains the GUI for the graph.
 %%%% ¡settings!
-'GUIFig'
+'GUIElement'
 
 %%% ¡prop!
 GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.
