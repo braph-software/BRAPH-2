@@ -379,6 +379,12 @@ set(pr.get('TABLE'), 'ContextMenu', contextmenu)
 value = contextmenu;
 %%%% ¡calculate_callbacks!
 function cb_open_g_pl(~, ~)
+ % % %
+end
+function cb_hide_g_pl(~, ~)
+ % % %
+end
+function cb_open_g_el(~, ~)
     if isa(pr.get('GUI_G_PLOT'), 'NoValue')
         f = ancestor(pr.get('H'), 'figure');
 
@@ -407,82 +413,11 @@ function cb_open_g_pl(~, ~)
     end
     gui.get('SHOW')
 end
-function cb_hide_g_pl(~, ~)
+function cb_hide_g_el(~, ~)
     gui = pr.get('GUI_G_PLOT');
     if isa(gui, 'GUIElement') && gui.get('DRAWN')
         gui.get('HIDE')
     end
-end
-function cb_open_g_el(~, ~)
-    % % %
-    disp('OPEN G EL')
-% % % if isequal(value.getClass(), 'GUI') % i.e., default initialization
-% % %     switch pr.get('GUICLASS')
-% % %         case 'GUIElement'
-% % %             f = ancestor(pr.get('H'), 'figure');
-% % %             
-% % %             el = pr.get('EL');
-% % %             prop = pr.get('PROP');
-% % % 
-% % %             value = GUIElement( ...
-% % %                 'PE', el.memorize(prop), ... % ensure that the property is stored
-% % %                 'POSITION', [ ...
-% % %                     x0(f, 'normalized')+w(f, 'normalized') ...
-% % %                     y0(f, 'normalized') ...
-% % %                     w(f, 'normalized') ...
-% % %                     h(f, 'normalized') ...
-% % %                     ], ...
-% % %                 'WAITBAR', pr.getCallback('WAITBAR'), ...
-% % %                 'CLOSEREQ', false ...
-% % %                 );
-% % %         case 'GUIFig'
-% % %             f = ancestor(pr.get('H'), 'figure');
-% % % 
-% % %             el = pr.get('EL');
-% % %             prop = pr.get('PROP');
-% % % 
-% % %             value = GUIFig( ...
-% % %                 'PF', el.memorize(prop), ... % ensure that the property is stored
-% % %                 'POSITION', [ ...
-% % %                     x0(f, 'normalized')+w(f, 'normalized') ...
-% % %                     y0(f, 'normalized') ...
-% % %                     w(0,'normalized')-x0(f, 'normalized')-w(f, 'normalized') ...
-% % %                     h(f, 'normalized') ...
-% % %                     ], ...
-% % %                 'WAITBAR', pr.getCallback('WAITBAR'), ...
-% % %                 'CLOSEREQ', false ...
-% % %                 );
-% % %     end
-% % % end
-
-% % %     gui_item = pr.memorize('GUI_ITEM');
-% % % 
-% % %     if ~gui_item.get('DRAWN')
-% % %         gui_item.get('DRAW')
-% % %         gui_item.get('SHOW')
-% % %     else
-% % %         if get(gui_item.get('H'), 'Visible')
-% % %             gui_item.get('HIDE')
-% % %         else
-% % %             gui_item.get('SHOW')
-% % %         end
-% % %     end
-end
-function cb_hide_g_el(~, ~)
-    % % %
-    disp('HIDE G EL')
-% % %     gui_item = pr.memorize('GUI_ITEM');
-% % % 
-% % %     if ~gui_item.get('DRAWN')
-% % %         gui_item.get('DRAW')
-% % %         gui_item.get('SHOW')
-% % %     else
-% % %         if get(gui_item.get('H'), 'Visible')
-% % %             gui_item.get('HIDE')
-% % %         else
-% % %             gui_item.get('SHOW')
-% % %         end
-% % %     end
 end
 function cb_select_all(~, ~) 
     g = pr.get('EL').get(pr.get('PROP'));
