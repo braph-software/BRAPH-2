@@ -9,6 +9,7 @@ It is intended to be used only with the property G of AnalyzeGroup.
 uitable, AnalyzeGroup, Graph, Measure
 
 %% ¡props_update!
+
 %%% ¡prop!
 NAME (constant, string) is the name of the graph and measure plot.
 %%%% ¡default!
@@ -203,339 +204,357 @@ if value
     end
 end
 
-% % % %%% ¡prop!
-% % % DELETE (query, logical) resets the handles when the panel is deleted.
-% % % %%%% ¡calculate!
-% % % value = calculateValue@PanelProp(pr, PanelProp.DELETE, varargin{:}); % also warning
-% % % if value
-% % %     pr.set('TABLE', Element.getNoValue())
-% % %     pr.set('CONTEXTMENU', Element.getNoValue())
-% % % end
-% % % 
-% % % %%% ¡prop!
-% % % CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.
-% % % %%%% ¡calculate!
-% % % value = calculateValue@PanelProp(pr, PanelProp.CLOSE, varargin{:}); % also warning
-% % % if value
-% % %     % figures for measure figures
-% % %     gui_f_dict = pr.get('GUI_F_DICT');
-% % %     for i = 1:1:gui_f_dict.get('LENGTH')
-% % %         gui = gui_f_dict.get('IT', i);
-% % %         if gui.get('DRAWN')
-% % %             gui.get('CLOSE')
-% % %         end
-% % %     end
-% % %     
-% % %     % figures for measure data
-% % %     gui_m_dict = pr.get('GUI_M_DICT');
-% % %     for i = 1:1:gui_m_dict.get('LENGTH')
-% % %         gui = gui_m_dict.get('IT', i);
-% % %         if gui.get('DRAWN')
-% % %             gui.get('CLOSE')
-% % %         end
-% % %     end
-% % % end
-% % % 
-% % % %% ¡props!
-% % % 
-% % % %%% ¡prop!
-% % % TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.
-% % % %%%% ¡default!
-% % % s(30)
-% % % 
-% % % %%% ¡prop!
-% % % SELECTED (gui, cvector) is the list of selected items.
-% % % %%%% ¡conditioning!
-% % % if isrow(value)
-% % %     value = value';
-% % % end
-% % % 
-% % % %%% ¡prop!
-% % % TABLE (evanescent, handle) is the table.
-% % % %%%% ¡calculate!
-% % % table = uitable( ...
-% % %     'Parent', pr.memorize('H'), ... % H = p for Panel
-% % %     'Tag', 'table', ...
-% % %     'FontSize', BRAPH2.FONTSIZE, ...
-% % %     'ColumnSortable', true, ...
-% % %     'ColumnName', {'', 'Measure', 'Shape', 'Scope', 'Notes'}, ...
-% % %     'ColumnFormat', {'logical',  'char', 'char', 'char', 'char'}, ...
-% % %     'ColumnWidth', {30, 'auto', 'auto', 'auto', 'auto'}, ...
-% % %     'ColumnEditable', [true false false false false], ...
-% % %     'CellEditCallback', {@cb_table} ...
-% % %     );
-% % % value = table;
-% % % %%%% ¡calculate_callbacks!
-% % % function cb_table(~, event) % (src, event)
-% % %     % only needs to update the selector
-% % % 
-% % %         i = event.Indices(1);
-% % %         
-% % %         selected = pr.get('SELECTED');
-% % %         if event.NewData == 1
-% % %             pr.set('SELECTED', sort(unique([selected; i])));
-% % %         else
-% % %             pr.set('SELECTED', selected(selected ~= i));
-% % %         end
-% % %         
-% % %         pr.get('UPDATE')    
-% % % end
-% % % 
-% % % %%% ¡prop!
-% % % CONTEXTMENU (evanescent, handle) is the context menu.
-% % % %%%% ¡calculate!
-% % % contextmenu = uicontextmenu( ...
-% % %     'Parent', ancestor(pr.get('H'), 'figure'), ...
-% % %     'Tag', 'CONTEXTMENU' ...
-% % %     );
-% % % menu_select_all = uimenu( ...
-% % %     'Parent', contextmenu, ...
-% % %     'Tag', 'MENU_SELECT_ALL', ...
-% % %     'Text', 'Select All', ...
-% % %     'MenuSelectedFcn', {@cb_select_all} ...
-% % %     );
-% % % menu_clear_selection = uimenu( ...
-% % %     'Parent', contextmenu, ...
-% % %     'Tag', 'MENU_CLEAR_SELECTION', ...
-% % %     'Text', 'Clear Selection', ...
-% % %     'MenuSelectedFcn', {@cb_clear_selection} ...
-% % %     );
-% % % menu_invert_selection = uimenu( ...
-% % %     'Parent', contextmenu, ...
-% % %     'Tag', 'MENU_INVERT_SELECTION', ...
-% % %     'Text', 'Invert Selection', ...
-% % %     'MenuSelectedFcn', {@cb_invert_selection} ...
-% % %     );
-% % % menu_calculate = uimenu( ...
-% % % 	'Separator', 'on', ...
-% % % 	'Parent', contextmenu, ...
-% % % 	'Tag', 'MENU_CALCULATE', ...
-% % %     'Text', 'Calculate selected measures', ...
-% % % 	'MenuSelectedFcn', {@cb_calculate} ...
-% % %     );
-% % % menu_open_plots = uimenu( ...
-% % % 	'Separator', 'on', ...
-% % % 	'Parent', contextmenu, ...
-% % % 	'Tag', 'MENU_OPEN_PLOTS', ...
-% % % 	'Text', 'Plot selected measures ...', ...
-% % % 	'MenuSelectedFcn', {@cb_open_plots} ...
-% % % 	);
-% % % menu_hide_plots = uimenu( ...
-% % %     'Parent', contextmenu, ...
-% % %     'Tag', 'MENU_HIDE_PLOTS', ...
-% % %     'Text', 'Hide selected plots', ...
-% % %     'MenuSelectedFcn', {@cb_hide_plots} ...
-% % % 	);
-% % % menu_open_elements = uimenu( ...
-% % % 	'Separator', 'on', ...
-% % %     'Parent', contextmenu, ...
-% % %     'Tag', 'MENU_OPEN_ELEMENTS', ...
-% % %     'Text', 'Data selected measures ...', ...
-% % %     'MenuSelectedFcn', {@cb_open_elements} ...
-% % %     );
-% % % menu_hide_elements = uimenu( ...
-% % %     'Parent', contextmenu, ...
-% % %     'Tag', 'MENU_HIDE_ELEMENTS', ...
-% % %     'Text', 'Hide selected data', ...
-% % % 	'MenuSelectedFcn', {@cb_hide_elements} ...
-% % %     );
-% % % 
-% % % set(pr.get('TABLE'), 'ContextMenu', contextmenu)
-% % % 
-% % % value = contextmenu;
-% % % %%%% ¡calculate_callbacks!
-% % % function cb_select_all(~, ~) 
-% % %     g = pr.get('EL');
-% % %     mlist = g.get('COMPATIBLE_MEASURES');
-% % % 
-% % %     pr.set('SELECTED', [1:1:length(mlist)])
-% % % 
-% % %     pr.get('UPDATE')
-% % % end
-% % % function cb_clear_selection(~, ~) 
-% % %     pr.set('SELECTED', [])
-% % % 
-% % %     pr.get('UPDATE')
-% % % end
-% % % function cb_invert_selection(~, ~) 
-% % %     g = pr.get('EL');
-% % %     mlist = g.get('COMPATIBLE_MEASURES');
-% % % 
-% % %     selected_tmp = [1:1:length(mlist)];
-% % %     selected_tmp(pr.get('SELECTED')) = [];
-% % %     pr.set('SELECTED', selected_tmp);
-% % % 
-% % %     pr.get('UPDATE')
-% % % end
-% % % function cb_calculate(~, ~) 
-% % %     g = pr.get('EL');
-% % %     mlist = g.get('COMPATIBLE_MEASURES');
-% % %     selected = pr.get('SELECTED');
-% % %     
-% % %     wb = braph2waitbar(pr.get('WAITBAR'), 0, ['Calculating ' num2str(length(selected))  ' measures ...']);
-% % % 
-% % %     for i = 1:1:length(mlist)
-% % %         if ismember(i, selected)
-% % %             measure = mlist{i};
-% % % 
-% % %             braph2waitbar(wb, .1 + .9 * i / length(selected), ['Calculating measure ' int2str(i) ' (' measure ') of ' int2str(length(selected)) ' ...'])
-% % % 
-% % %             if isa(g.get('MEASURE', measure).getr('M'), 'NoValue')
-% % %                 g.get('MEASURE', measure).memorize('M');
-% % %             end
-% % %         end
-% % %     end
-% % %     
-% % % 	braph2waitbar(wb, 'close')
-% % % 
-% % % 	pr.get('UPDATE');
-% % % end
-% % % function cb_open_plots(~, ~)
-% % %     g = pr.get('EL');
-% % %     mlist = g.get('COMPATIBLE_MEASURES');
-% % %     
-% % %     f = ancestor(pr.get('H'), 'figure'); % parent GUI 
-% % %     N = ceil(sqrt(length(mlist))); % number of row and columns of figures
-% % % 
-% % %     gui_f_dict = pr.memorize('GUI_F_DICT');
-% % %     
-% % %     selected = pr.get('SELECTED');
-% % % 	for s = 1:1:length(selected)
-% % %         i = selected(s);
-% % %         
-% % %         measure = mlist{i}; % also key
-% % % 
-% % %         m = g.get('MEASURE', measure);
-% % %         
-% % %         if ~gui_f_dict.get('CONTAINS_KEY', measure)
-% % %             gui = GUIFig( ...
-% % %                 'ID', measure, ... % this is the dictionary key
-% % %                 'PF', m.get('PFM'), ...
-% % %                 'POSITION', [ ...
-% % %                     x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ...
-% % %                     y0(f, 'normalized') ...
-% % %                     w(f, 'normalized') * 3 ...
-% % %                     .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ...
-% % %                     ], ...
-% % %                 'WAITBAR', pr.getCallback('WAITBAR'), ...
-% % %                 'CLOSEREQ', false ...
-% % %                 );
-% % %             gui_f_dict.get('ADD', gui)
-% % %         end
-% % %         
-% % %         gui = gui_f_dict.get('IT', measure);
-% % %         if ~gui.get('DRAWN')
-% % %             gui.get('DRAW')
-% % %         end
-% % %         gui.get('SHOW')
-% % %     end
-% % % end
-% % % function cb_hide_plots(~, ~)
-% % %     g = pr.get('EL');
-% % %     mlist = g.get('COMPATIBLE_MEASURES');
-% % %     
-% % %     gui_f_dict = pr.memorize('GUI_F_DICT');
-% % % 
-% % %     selected = pr.get('SELECTED');
-% % %     for s = 1:1:length(selected)
-% % %         i = selected(s);
-% % %         
-% % %         measure = mlist{i}; % also key
-% % %         
-% % %         if gui_f_dict.get('CONTAINS_KEY', measure)
-% % %             gui = gui_f_dict.get('IT', measure);
-% % %             if gui.get('DRAWN')
-% % %                 gui.get('HIDE')
-% % %             end
-% % %         end
-% % %     end
-% % % end
-% % % function cb_open_elements(~, ~)
-% % %     g = pr.get('EL');
-% % %     mlist = g.get('COMPATIBLE_MEASURES');
-% % %     
-% % %     f = ancestor(pr.get('H'), 'figure'); % parent GUI 
-% % %     N = ceil(sqrt(length(mlist))); % number of row and columns of figures
-% % % 
-% % %     gui_m_dict = pr.memorize('GUI_M_DICT');
-% % %     
-% % %     selected = pr.get('SELECTED');
-% % % 	for s = 1:1:length(selected)
-% % %         i = selected(s);
-% % %         
-% % %         measure = mlist{i}; % also key
-% % % 
-% % %         m = g.get('MEASURE', measure);
-% % %         
-% % %         if ~gui_m_dict.get('CONTAINS_KEY', measure)
-% % %             gui = GUIElement( ...
-% % %                 'ID', measure, ... % this is the dictionary key
-% % %                 'PE', m, ... 
-% % %                 'POSITION', [ ...
-% % %                     x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ... % x = (f_gr_x + f_gr_w) / screen_w + mod(selected_it - 1, N) * (screen_w - f_gr_x - 2 * f_gr_w) / N / screen_w;
-% % %                     y0(f, 'normalized') ... % y = f_gr_y / screen_h;
-% % %                     w(f, 'normalized') ... % w = f_gr_w / screen_w;
-% % %                     .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ... % h = .5 * f_gr_h / screen_h + .5 * f_gr_h * (N - floor((selected_it - .5) / N)) / N / screen_h;
-% % %                     ], ...
-% % %                 'WAITBAR', pr.getCallback('WAITBAR'), ...
-% % %                 'CLOSEREQ', false ...
-% % %                 );
-% % %             gui_m_dict.get('ADD', gui)
-% % %         end
-% % %         
-% % %         gui = gui_m_dict.get('IT', measure);
-% % %         if ~gui.get('DRAWN')
-% % %             gui.get('DRAW')
-% % %         end
-% % %         gui.get('SHOW')
-% % % 	end
-% % % end
-% % % function cb_hide_elements(~, ~)
-% % %     g = pr.get('EL');
-% % %     mlist = g.get('COMPATIBLE_MEASURES');
-% % %     
-% % %     gui_m_dict = pr.memorize('GUI_M_DICT');
-% % % 
-% % %     selected = pr.get('SELECTED');
-% % %     for s = 1:1:length(selected)
-% % %         i = selected(s);
-% % %         
-% % %         measure = mlist{i}; % also key
-% % %         
-% % %         if gui_m_dict.get('CONTAINS_KEY', measure)
-% % %             gui = gui_m_dict.get('IT', measure);
-% % %             if gui.get('DRAWN')
-% % %                 gui.get('HIDE')
-% % %             end
-% % %         end
-% % %     end
-% % % end
-% % % 
-% % % %%% ¡prop!
-% % % GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.
-% % % %%%% ¡settings!
-% % % 'GUIFig'
-% % % 
-% % % %%% ¡prop!
-% % % GUI_M_DICT (gui, idict) contains the GUIs for the measures.
-% % % %%%% ¡settings!
-% % % 'GUIElement'
-% % %  
-% % % %% ¡tests!
-% % % 
-% % % %%% ¡excluded_props!
-% % % [GraphPP_MDict.PARENT GraphPP_MDict.H GraphPP_MDict.EL GraphPP_MDict.LISTENER_CB GraphPP_MDict.HEIGHT GraphPP_MDict.TABLE GraphPP_MDict.CONTEXTMENU]
-% % % 
-% % % %%% ¡warning_off!
-% % % true
-% % % 
-% % % %%% ¡test!
-% % % %%%% ¡name!
-% % % Remove Figures
-% % % %%%% ¡parallel!
-% % % false
-% % % %%%% ¡code!
-% % % warning('off', [BRAPH2.STR ':GraphPP_MDict'])
-% % % assert(length(findall(0, 'type', 'figure')) == 1)
-% % % delete(findall(0, 'type', 'figure'))
-% % % warning('on', [BRAPH2.STR ':GraphPP_MDict'])
+%%% ¡prop!
+DELETE (query, logical) resets the handles when the panel is deleted.
+%%%% ¡calculate!
+value = calculateValue@PanelProp(pr, PanelProp.DELETE, varargin{:}); % also warning
+if value
+    pr.set('TABLE', Element.getNoValue())
+    pr.set('CONTEXTMENU', Element.getNoValue())
+end
+
+%%% ¡prop!
+CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.
+%%%% ¡calculate!
+value = calculateValue@PanelProp(pr, PanelProp.CLOSE, varargin{:}); % also warning
+if value
+    % figure for graph plot
+% % % %TODO
+
+    % figure for graph data
+% % % %TODO
+
+    % figures for measure figures
+    gui_f_dict = pr.get('GUI_F_DICT');
+    for i = 1:1:gui_f_dict.get('LENGTH')
+        gui = gui_f_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('CLOSE')
+        end
+    end
+    
+    % figures for measure data
+    gui_m_dict = pr.get('GUI_M_DICT');
+    for i = 1:1:gui_m_dict.get('LENGTH')
+        gui = gui_m_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('CLOSE')
+        end
+    end
+end
+
+%% ¡props!
+
+%%% ¡prop!
+TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.
+%%%% ¡default!
+s(30)
+
+%%% ¡prop!
+SELECTED (gui, cvector) is the list of selected items.
+%%%% ¡conditioning!
+if isrow(value)
+    value = value';
+end
+
+%%% ¡prop!
+TABLE (evanescent, handle) is the table.
+%%%% ¡calculate!
+table = uitable( ...
+    'Parent', pr.memorize('H'), ... % H = p for Panel
+    'Tag', 'table', ...
+    'FontSize', BRAPH2.FONTSIZE, ...
+    'ColumnSortable', true, ...
+    'ColumnName', {'', 'Measure', 'Shape', 'Scope', 'Notes'}, ...
+    'ColumnFormat', {'logical',  'char', 'char', 'char', 'char'}, ...
+    'ColumnWidth', {30, 'auto', 'auto', 'auto', 'auto'}, ...
+    'ColumnEditable', [true false false false false], ...
+    'CellEditCallback', {@cb_table} ...
+    );
+value = table;
+%%%% ¡calculate_callbacks!
+function cb_table(~, event) % (src, event)
+    % only needs to update the selector
+
+        i = event.Indices(1);
+        
+        selected = pr.get('SELECTED');
+        if event.NewData == 1
+            pr.set('SELECTED', sort(unique([selected; i])));
+        else
+            pr.set('SELECTED', selected(selected ~= i));
+        end
+        
+        pr.get('UPDATE')    
+end
+
+%%% ¡prop!
+CONTEXTMENU (evanescent, handle) is the context menu.
+%%%% ¡calculate!
+% % % %TODO: add context menu for graph data/plot
+contextmenu = uicontextmenu( ...
+    'Parent', ancestor(pr.get('H'), 'figure'), ...
+    'Tag', 'CONTEXTMENU' ...
+    );
+menu_select_all = uimenu( ...
+    'Parent', contextmenu, ...
+    'Tag', 'MENU_SELECT_ALL', ...
+    'Text', 'Select All', ...
+    'MenuSelectedFcn', {@cb_select_all} ...
+    );
+menu_clear_selection = uimenu( ...
+    'Parent', contextmenu, ...
+    'Tag', 'MENU_CLEAR_SELECTION', ...
+    'Text', 'Clear Selection', ...
+    'MenuSelectedFcn', {@cb_clear_selection} ...
+    );
+menu_invert_selection = uimenu( ...
+    'Parent', contextmenu, ...
+    'Tag', 'MENU_INVERT_SELECTION', ...
+    'Text', 'Invert Selection', ...
+    'MenuSelectedFcn', {@cb_invert_selection} ...
+    );
+menu_calculate = uimenu( ...
+	'Separator', 'on', ...
+	'Parent', contextmenu, ...
+	'Tag', 'MENU_CALCULATE', ...
+    'Text', 'Calculate selected measures', ...
+	'MenuSelectedFcn', {@cb_calculate} ...
+    );
+menu_open_plots = uimenu( ...
+	'Separator', 'on', ...
+	'Parent', contextmenu, ...
+	'Tag', 'MENU_OPEN_PLOTS', ...
+	'Text', 'Plot selected measures ...', ...
+	'MenuSelectedFcn', {@cb_open_plots} ...
+	);
+menu_hide_plots = uimenu( ...
+    'Parent', contextmenu, ...
+    'Tag', 'MENU_HIDE_PLOTS', ...
+    'Text', 'Hide selected plots', ...
+    'MenuSelectedFcn', {@cb_hide_plots} ...
+	);
+menu_open_elements = uimenu( ...
+	'Separator', 'on', ...
+    'Parent', contextmenu, ...
+    'Tag', 'MENU_OPEN_ELEMENTS', ...
+    'Text', 'Data selected measures ...', ...
+    'MenuSelectedFcn', {@cb_open_elements} ...
+    );
+menu_hide_elements = uimenu( ...
+    'Parent', contextmenu, ...
+    'Tag', 'MENU_HIDE_ELEMENTS', ...
+    'Text', 'Hide selected data', ...
+	'MenuSelectedFcn', {@cb_hide_elements} ...
+    );
+
+set(pr.get('TABLE'), 'ContextMenu', contextmenu)
+
+value = contextmenu;
+%%%% ¡calculate_callbacks!
+% % % %TODO: add callbacks for graph data/plot
+function cb_select_all(~, ~) 
+    g = pr.get('EL');
+    mlist = g.get('COMPATIBLE_MEASURES');
+
+    pr.set('SELECTED', [1:1:length(mlist)])
+
+    pr.get('UPDATE')
+end
+function cb_clear_selection(~, ~) 
+    pr.set('SELECTED', [])
+
+    pr.get('UPDATE')
+end
+function cb_invert_selection(~, ~) 
+    g = pr.get('EL');
+    mlist = g.get('COMPATIBLE_MEASURES');
+
+    selected_tmp = [1:1:length(mlist)];
+    selected_tmp(pr.get('SELECTED')) = [];
+    pr.set('SELECTED', selected_tmp);
+
+    pr.get('UPDATE')
+end
+function cb_calculate(~, ~) 
+    g = pr.get('EL');
+    mlist = g.get('COMPATIBLE_MEASURES');
+    selected = pr.get('SELECTED');
+    
+    wb = braph2waitbar(pr.get('WAITBAR'), 0, ['Calculating ' num2str(length(selected))  ' measures ...']);
+
+    for i = 1:1:length(mlist)
+        if ismember(i, selected)
+            measure = mlist{i};
+
+            braph2waitbar(wb, .1 + .9 * i / length(selected), ['Calculating measure ' int2str(i) ' (' measure ') of ' int2str(length(selected)) ' ...'])
+
+            if isa(g.get('MEASURE', measure).getr('M'), 'NoValue')
+                g.get('MEASURE', measure).memorize('M');
+            end
+        end
+    end
+    
+	braph2waitbar(wb, 'close')
+
+	pr.get('UPDATE');
+end
+function cb_open_plots(~, ~)
+    g = pr.get('EL').get('G');
+    mlist = g.get('COMPATIBLE_MEASURES');
+    
+    f = ancestor(pr.get('H'), 'figure'); % parent GUI 
+    N = ceil(sqrt(length(mlist))); % number of row and columns of figures
+
+    gui_f_dict = pr.memorize('GUI_F_DICT');
+    
+    selected = pr.get('SELECTED');
+	for s = 1:1:length(selected)
+        i = selected(s);
+        
+        measure = mlist{i}; % also key
+
+        m = g.get('MEASURE', measure);
+        
+        if ~gui_f_dict.get('CONTAINS_KEY', measure)
+            gui = GUIFig( ...
+                'ID', measure, ... % this is the dictionary key
+                'PF', m.get('PFM'), ...
+                'POSITION', [ ...
+                    x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ...
+                    y0(f, 'normalized') ...
+                    w(f, 'normalized') * 3 ...
+                    .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ...
+                    ], ...
+                'WAITBAR', pr.getCallback('WAITBAR'), ...
+                'CLOSEREQ', false ...
+                );
+            gui_f_dict.get('ADD', gui)
+        end
+        
+        gui = gui_f_dict.get('IT', measure);
+        if ~gui.get('DRAWN')
+            gui.get('DRAW')
+        end
+        gui.get('SHOW')
+    end
+end
+function cb_hide_plots(~, ~)
+    g = pr.get('EL');
+    mlist = g.get('COMPATIBLE_MEASURES');
+    
+    gui_f_dict = pr.memorize('GUI_F_DICT');
+
+    selected = pr.get('SELECTED');
+    for s = 1:1:length(selected)
+        i = selected(s);
+        
+        measure = mlist{i}; % also key
+        
+        if gui_f_dict.get('CONTAINS_KEY', measure)
+            gui = gui_f_dict.get('IT', measure);
+            if gui.get('DRAWN')
+                gui.get('HIDE')
+            end
+        end
+    end
+end
+function cb_open_elements(~, ~)
+    g = pr.get('EL');
+    mlist = g.get('COMPATIBLE_MEASURES');
+    
+    f = ancestor(pr.get('H'), 'figure'); % parent GUI 
+    N = ceil(sqrt(length(mlist))); % number of row and columns of figures
+
+    gui_m_dict = pr.memorize('GUI_M_DICT');
+    
+    selected = pr.get('SELECTED');
+	for s = 1:1:length(selected)
+        i = selected(s);
+        
+        measure = mlist{i}; % also key
+
+        m = g.get('MEASURE', measure);
+        
+        if ~gui_m_dict.get('CONTAINS_KEY', measure)
+            gui = GUIElement( ...
+                'ID', measure, ... % this is the dictionary key
+                'PE', m, ... 
+                'POSITION', [ ...
+                    x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ... % x = (f_gr_x + f_gr_w) / screen_w + mod(selected_it - 1, N) * (screen_w - f_gr_x - 2 * f_gr_w) / N / screen_w;
+                    y0(f, 'normalized') ... % y = f_gr_y / screen_h;
+                    w(f, 'normalized') ... % w = f_gr_w / screen_w;
+                    .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ... % h = .5 * f_gr_h / screen_h + .5 * f_gr_h * (N - floor((selected_it - .5) / N)) / N / screen_h;
+                    ], ...
+                'WAITBAR', pr.getCallback('WAITBAR'), ...
+                'CLOSEREQ', false ...
+                );
+            gui_m_dict.get('ADD', gui)
+        end
+        
+        gui = gui_m_dict.get('IT', measure);
+        if ~gui.get('DRAWN')
+            gui.get('DRAW')
+        end
+        gui.get('SHOW')
+	end
+end
+function cb_hide_elements(~, ~)
+    g = pr.get('EL');
+    mlist = g.get('COMPATIBLE_MEASURES');
+    
+    gui_m_dict = pr.memorize('GUI_M_DICT');
+
+    selected = pr.get('SELECTED');
+    for s = 1:1:length(selected)
+        i = selected(s);
+        
+        measure = mlist{i}; % also key
+        
+        if gui_m_dict.get('CONTAINS_KEY', measure)
+            gui = gui_m_dict.get('IT', measure);
+            if gui.get('DRAWN')
+                gui.get('HIDE')
+            end
+        end
+    end
+end
+
+%%% ¡prop!
+GUI_G_PLOT (gui, item) contains the GUI for the graph figure.
+%%%% ¡settings!
+'GUIFig'
+
+%%% ¡prop!
+GUI_G_EL (gui, item) contains the GUI for the graph.
+%%%% ¡settings!
+'GUIFig'
+
+%%% ¡prop!
+GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.
+%%%% ¡settings!
+'GUIFig'
+
+%%% ¡prop!
+GUI_M_DICT (gui, idict) contains the GUIs for the measures.
+%%%% ¡settings!
+'GUIElement'
+ 
+%% ¡tests!
+
+%%% ¡excluded_props!
+[GraphPP_MDict.PARENT GraphPP_MDict.H GraphPP_MDict.EL GraphPP_MDict.LISTENER_CB GraphPP_MDict.HEIGHT GraphPP_MDict.TABLE GraphPP_MDict.CONTEXTMENU]
+
+%%% ¡warning_off!
+true
+
+%%% ¡test!
+%%%% ¡name!
+Remove Figures
+%%%% ¡parallel!
+false
+%%%% ¡code!
+warning('off', [BRAPH2.STR ':AnalyzeGroupPP_G'])
+assert(length(findall(0, 'type', 'figure')) == 1)
+delete(findall(0, 'type', 'figure'))
+warning('on', [BRAPH2.STR ':AnalyzeGroupPP_G'])
