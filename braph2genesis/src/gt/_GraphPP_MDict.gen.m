@@ -9,6 +9,7 @@ It is intended to be used only with the property M_DICT of Graph.
 uitable, Graph
 
 %% ¡props_update!
+
 %%% ¡prop!
 NAME (constant, string) is the name of the measure dictionary plot.
 %%%% ¡default!
