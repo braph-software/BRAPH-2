@@ -79,7 +79,7 @@ if value
 end
 %%%% ¡calculate_callbacks!
 function set_table()
-    g = pr.get('EL').get('G');
+    g = pr.get('EL').get(pr.get('PROP'));
 
     mlist = g.get('COMPATIBLE_MEASURES');
     mlist_already_calculated = cellfun(@(x) x.get('ID'), g.get('M_DICT').get('IT_LIST'), 'UniformOutput', false);
@@ -395,7 +395,7 @@ function cb_hide_g_el(~, ~)
     disp('HIDE G EL')
 end
 function cb_select_all(~, ~) 
-    g = pr.get('EL');
+    g = pr.get('EL').get(pr.get('PROP'));
     mlist = g.get('COMPATIBLE_MEASURES');
 
     pr.set('SELECTED', [1:1:length(mlist)])
@@ -408,7 +408,7 @@ function cb_clear_selection(~, ~)
     pr.get('UPDATE')
 end
 function cb_invert_selection(~, ~) 
-    g = pr.get('EL');
+    g = pr.get('EL').get(pr.get('PROP'));
     mlist = g.get('COMPATIBLE_MEASURES');
 
     selected_tmp = [1:1:length(mlist)];
@@ -418,7 +418,7 @@ function cb_invert_selection(~, ~)
     pr.get('UPDATE')
 end
 function cb_calculate(~, ~) 
-    g = pr.get('EL');
+    g = pr.get('EL').get(pr.get('PROP'));
     mlist = g.get('COMPATIBLE_MEASURES');
     selected = pr.get('SELECTED');
     
@@ -441,7 +441,7 @@ function cb_calculate(~, ~)
 	pr.get('UPDATE');
 end
 function cb_open_plots(~, ~)
-    g = pr.get('EL').get('G');
+    g = pr.get('EL').get(pr.get('PROP'));
     mlist = g.get('COMPATIBLE_MEASURES');
     
     f = ancestor(pr.get('H'), 'figure'); % parent GUI 
@@ -481,7 +481,7 @@ function cb_open_plots(~, ~)
     end
 end
 function cb_hide_plots(~, ~)
-    g = pr.get('EL');
+    g = pr.get('EL').get(pr.get('PROP'));
     mlist = g.get('COMPATIBLE_MEASURES');
     
     gui_f_dict = pr.memorize('GUI_F_DICT');
@@ -501,7 +501,7 @@ function cb_hide_plots(~, ~)
     end
 end
 function cb_open_elements(~, ~)
-    g = pr.get('EL');
+    g = pr.get('EL').get(pr.get('PROP'));
     mlist = g.get('COMPATIBLE_MEASURES');
     
     f = ancestor(pr.get('H'), 'figure'); % parent GUI 
@@ -541,7 +541,7 @@ function cb_open_elements(~, ~)
 	end
 end
 function cb_hide_elements(~, ~)
-    g = pr.get('EL');
+    g = pr.get('EL').get(pr.get('PROP'));
     mlist = g.get('COMPATIBLE_MEASURES');
     
     gui_m_dict = pr.memorize('GUI_M_DICT');
