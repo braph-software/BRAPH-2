@@ -4,7 +4,7 @@ PanelPropItem < PanelProp (pr, panel property item) plots the panel of a propert
 %%% ¡description!
 PanelPropItem plots the panel for a ITEM property with a button.
  It works for all categories. The prop GUICLASS determines whether the item 
- figure is a 'GUIElement' or 'GUIFigure'.
+ figure is a 'GUIElement' or 'GUIFig'.
 
 %%% ¡seealso!
 uibutton, GUI, PanelElement, PanelProp, GUIElement, GUIFig
