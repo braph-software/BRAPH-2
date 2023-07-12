@@ -79,7 +79,7 @@ if value
 end
 %%%% ¡calculate_callbacks!
 function set_table()
-    g = pr.get('EL').get(pr.get('PROP'));
+    g = pr.get('EL').getPropDefaultConditioned(pr.get('PROP')); % default graph
 
     mlist = g.get('COMPATIBLE_MEASURES');
     mlist_already_calculated = cellfun(@(x) x.get('ID'), g.get('M_DICT').get('IT_LIST'), 'UniformOutput', false);
@@ -150,10 +150,14 @@ SHOW (query, logical) shows the figure containing the panel and, possibly, the i
 value = calculateValue@PanelProp(pr, PanelProp.SHOW, varargin{:}); % also warning
 if value
     % figure for graph plot
-% % % %TODO
+    if isa(pr.getr('GUI_G_PL'), 'GUIElement') && pr.get('GUI_G_PL').get('DRAWN')
+        pr.get('GUI_G_PL').get('SHOW')
+    end
 
     % figure for graph data
-% % % %TODO
+    if isa(pr.getr('GUI_G_EL'), 'GUIElement') && pr.get('GUI_G_EL').get('DRAWN')
+        pr.get('GUI_G_EL').get('SHOW')
+    end
     
     % figures for measure figures
     gui_f_dict = pr.get('GUI_F_DICT');
@@ -180,10 +184,14 @@ HIDE (query, logical) hides the figure containing the panel and, possibly, the i
 value = calculateValue@PanelProp(pr, PanelProp.HIDE, varargin{:}); % also warning
 if value
     % figure for graph plot
-% % % %TODO
+    if isa(pr.getr('GUI_G_PL'), 'GUI') && pr.get('GUI_G_PL').get('DRAWN')
+        pr.get('GUI_G_PL').get('HIDE')
+    end
 
     % figure for graph data
-% % % %TODO
+    if isa(pr.getr('GUI_G_EL'), 'GUI') && pr.get('GUI_G_EL').get('DRAWN')
+        pr.get('GUI_G_EL').get('HIDE')
+    end
 
     % figures for measure figures
     gui_f_dict = pr.get('GUI_F_DICT');
@@ -385,7 +393,7 @@ function cb_hide_g_pl(~, ~)
  % % %
 end
 function cb_open_g_el(~, ~)
-    if isa(pr.get('GUI_G_EL'), 'NoValue')
+    if isa(pr.getr('GUI_G_EL'), 'NoValue')
         f = ancestor(pr.get('H'), 'figure');
 
         el = pr.get('EL'); % AnalyzeGroup
@@ -420,7 +428,7 @@ function cb_hide_g_el(~, ~)
     end
 end
 function cb_select_all(~, ~) 
-    g = pr.get('EL').get(pr.get('PROP'));
+    g = pr.get('EL').getPropDefaultConditioned(pr.get('PROP'));
     mlist = g.get('COMPATIBLE_MEASURES');
 
     pr.set('SELECTED', [1:1:length(mlist)])
@@ -433,7 +441,7 @@ function cb_clear_selection(~, ~)
     pr.get('UPDATE')
 end
 function cb_invert_selection(~, ~) 
-    g = pr.get('EL').get(pr.get('PROP'));
+    g = pr.get('EL').getPropDefaultConditioned(pr.get('PROP')); % default graph
     mlist = g.get('COMPATIBLE_MEASURES');
 
     selected_tmp = [1:1:length(mlist)];
@@ -443,7 +451,7 @@ function cb_invert_selection(~, ~)
     pr.get('UPDATE')
 end
 function cb_calculate(~, ~) 
-    g = pr.get('EL').get(pr.get('PROP'));
+    g = pr.get('EL').getProp(pr.get('PROP')); % actual graph
     mlist = g.get('COMPATIBLE_MEASURES');
     selected = pr.get('SELECTED');
     
@@ -466,7 +474,7 @@ function cb_calculate(~, ~)
 	pr.get('UPDATE');
 end
 function cb_open_plots(~, ~)
-    g = pr.get('EL').get(pr.get('PROP'));
+    g = pr.get('EL').getProp(pr.get('PROP')); % actual graph
     mlist = g.get('COMPATIBLE_MEASURES');
     
     f = ancestor(pr.get('H'), 'figure'); % parent GUI 
@@ -506,7 +514,7 @@ function cb_open_plots(~, ~)
     end
 end
 function cb_hide_plots(~, ~)
-    g = pr.get('EL').get(pr.get('PROP'));
+    g = pr.get('EL').getPropDefaultConditioned(pr.get('PROP')); % default graph
     mlist = g.get('COMPATIBLE_MEASURES');
     
     gui_f_dict = pr.memorize('GUI_F_DICT');
@@ -526,7 +534,7 @@ function cb_hide_plots(~, ~)
     end
 end
 function cb_open_elements(~, ~)
-    g = pr.get('EL').get(pr.get('PROP'));
+    g = pr.get('EL').getProp(pr.get('PROP')); % actual graph
     mlist = g.get('COMPATIBLE_MEASURES');
     
     f = ancestor(pr.get('H'), 'figure'); % parent GUI 
@@ -566,7 +574,7 @@ function cb_open_elements(~, ~)
 	end
 end
 function cb_hide_elements(~, ~)
-    g = pr.get('EL').get(pr.get('PROP'));
+    g = pr.get('EL').getPropDefaultConditioned(pr.get('PROP')); % default graph
     mlist = g.get('COMPATIBLE_MEASURES');
     
     gui_m_dict = pr.memorize('GUI_M_DICT');
@@ -587,7 +595,7 @@ function cb_hide_elements(~, ~)
 end
 
 %%% ¡prop!
-GUI_G_PLOT (gui, item) contains the GUI for the graph figure.
+GUI_G_PL (gui, item) contains the GUI for the graph figure.
 %%%% ¡settings!
 'GUIFig'
 
