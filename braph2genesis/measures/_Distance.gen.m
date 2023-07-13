@@ -13,31 +13,25 @@ For weighted graphs, the distance is calculated with the Dijkstra algorithm
 %%%% ¡id!
 Distance.ID
 %%%% ¡title!
-Brain Atlas ID
+Measure ID
 
 %%% ¡prop!
 %%%% ¡id!
 Distance.LABEL
 %%%% ¡title!
-Brain Atlas NAME
+Measure NAME
 
 %%% ¡prop!
 %%%% ¡id!
-Distance.BR_DICT
+Distance.PFM
 %%%% ¡title!
-Brain Regions
-
-%%% ¡prop!
-%%%% ¡id!
-Distance.PFBA
-%%%% ¡title!
-Brain Plot
+Measure Plot
 
 %%% ¡prop!
 %%%% ¡id!
 Distance.NOTES
 %%%% ¡title!
-Brain Atlas NOTES
+Measure NOTES
 
 %% ¡props_update!
 

@@ -10,31 +10,25 @@ The average in-degree (DegreeInAv) of a graph is the average of all number of in
 %%%% ¡id!
 DegreeInAv.ID
 %%%% ¡title!
-Brain Atlas ID
+Measure ID
 
 %%% ¡prop!
 %%%% ¡id!
 DegreeInAv.LABEL
 %%%% ¡title!
-Brain Atlas NAME
+Measure NAME
 
 %%% ¡prop!
 %%%% ¡id!
-DegreeInAv.BR_DICT
+DegreeInAv.PFM
 %%%% ¡title!
-Brain Regions
-
-%%% ¡prop!
-%%%% ¡id!
-DegreeInAv.PFBA
-%%%% ¡title!
-Brain Plot
+Measure Plot
 
 %%% ¡prop!
 %%%% ¡id!
 DegreeInAv.NOTES
 %%%% ¡title!
-Brain Atlas NOTES
+Measure NOTES
 
 %% ¡props_update!
 

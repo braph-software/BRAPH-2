@@ -10,31 +10,25 @@ The average out-degree (DegreeOutAv) of a graph is the average of all number of 
 %%%% ¡id!
 DegreeOutAv.ID
 %%%% ¡title!
-Brain Atlas ID
+Measure ID
 
 %%% ¡prop!
 %%%% ¡id!
 DegreeOutAv.LABEL
 %%%% ¡title!
-Brain Atlas NAME
+Measure NAME
 
 %%% ¡prop!
 %%%% ¡id!
-DegreeOutAv.BR_DICT
+DegreeOutAv.PFM
 %%%% ¡title!
-Brain Regions
-
-%%% ¡prop!
-%%%% ¡id!
-DegreeOutAv.PFBA
-%%%% ¡title!
-Brain Plot
+Measure Plot
 
 %%% ¡prop!
 %%%% ¡id!
 DegreeOutAv.NOTES
 %%%% ¡title!
-Brain Atlas NOTES
+Measure NOTES
 
 %% ¡props_update!
 

@@ -11,31 +11,25 @@ coefficients of all nodes. Connection weights are ignored in calculations.
 %%%% ¡id!
 ClusteringAv.ID
 %%%% ¡title!
-Brain Atlas ID
+Measure ID
 
 %%% ¡prop!
 %%%% ¡id!
 ClusteringAv.LABEL
 %%%% ¡title!
-Brain Atlas NAME
+Measure NAME
 
 %%% ¡prop!
 %%%% ¡id!
-ClusteringAv.BR_DICT
+ClusteringAv.PFM
 %%%% ¡title!
-Brain Regions
-
-%%% ¡prop!
-%%%% ¡id!
-ClusteringAv.PFBA
-%%%% ¡title!
-Brain Plot
+Measure Plot
 
 %%% ¡prop!
 %%%% ¡id!
 ClusteringAv.NOTES
 %%%% ¡title!
-Brain Atlas NOTES
+Measure NOTES
 
 %% ¡props_update!
 

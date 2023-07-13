@@ -13,7 +13,7 @@ triangles that could possibly be formed around that node.
 %%%% ¡id!
 Clustering.ID
 %%%% ¡title!
-Brain Atlas ID
+Measure ID
 
 %%% ¡prop!
 %%%% ¡id!
@@ -23,21 +23,15 @@ Brain Atlas NAME
 
 %%% ¡prop!
 %%%% ¡id!
-Clustering.BR_DICT
+Clustering.PFM
 %%%% ¡title!
-Brain Regions
-
-%%% ¡prop!
-%%%% ¡id!
-Clustering.PFBA
-%%%% ¡title!
-Brain Plot
+Measure Plot
 
 %%% ¡prop!
 %%%% ¡id!
 Clustering.NOTES
 %%%% ¡title!
-Brain Atlas NOTES
+Measure NOTES
 
 %% ¡props_update!
 

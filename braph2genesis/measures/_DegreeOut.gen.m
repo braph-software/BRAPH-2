@@ -11,31 +11,25 @@ Connection weights are ignored in calculations.
 %%%% ¡id!
 DegreeOut.ID
 %%%% ¡title!
-Brain Atlas ID
+Measure ID
 
 %%% ¡prop!
 %%%% ¡id!
 DegreeOut.LABEL
 %%%% ¡title!
-Brain Atlas NAME
-
-%%% ¡prop!
-%%%% ¡id!
-DegreeOut.BR_DICT
-%%%% ¡title!
-Brain Regions
+Measure NAME
 
 %%% ¡prop!
 %%%% ¡id!
 DegreeOut.PFBA
 %%%% ¡title!
-Brain Plot
+Measure Plot
 
 %%% ¡prop!
 %%%% ¡id!
 DegreeOut.NOTES
 %%%% ¡title!
-Brain Atlas NOTES
+Measure NOTES
 
 %% ¡props_update!
 

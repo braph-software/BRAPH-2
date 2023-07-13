@@ -12,31 +12,25 @@ The triangles are calculated as the number of neighbors of a node that are
 %%%% ¡id!
 Triangles.ID
 %%%% ¡title!
-Brain Atlas ID
+Measure ID
 
 %%% ¡prop!
 %%%% ¡id!
 Triangles.LABEL
 %%%% ¡title!
-Brain Atlas NAME
+Measure NAME
 
 %%% ¡prop!
 %%%% ¡id!
-Triangles.BR_DICT
+Triangles.PFM
 %%%% ¡title!
-Brain Regions
-
-%%% ¡prop!
-%%%% ¡id!
-Triangles.PFBA
-%%%% ¡title!
-Brain Plot
+Measure Plot
 
 %%% ¡prop!
 %%%% ¡id!
 Triangles.NOTES
 %%%% ¡title!
-Brain Atlas NOTES
+Measure NOTES
 
 %% ¡props_update!
 
