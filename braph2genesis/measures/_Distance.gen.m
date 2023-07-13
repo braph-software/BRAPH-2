@@ -7,6 +7,38 @@ The distance of a graph is the shortest path between all pairs of nodes
 For weighted graphs, the distance is calculated with the Dijkstra algorithm
  using the inverse weight as the distance associated to the edge.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+Distance.ID
+%%%% ¡title!
+Brain Atlas ID
+
+%%% ¡prop!
+%%%% ¡id!
+Distance.LABEL
+%%%% ¡title!
+Brain Atlas NAME
+
+%%% ¡prop!
+%%%% ¡id!
+Distance.BR_DICT
+%%%% ¡title!
+Brain Regions
+
+%%% ¡prop!
+%%%% ¡id!
+Distance.PFBA
+%%%% ¡title!
+Brain Plot
+
+%%% ¡prop!
+%%%% ¡id!
+Distance.NOTES
+%%%% ¡title!
+Brain Atlas NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!

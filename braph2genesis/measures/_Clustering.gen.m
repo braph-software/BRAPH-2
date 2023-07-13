@@ -7,6 +7,38 @@ around a node. The clustering coefficient is calculated as the ratio between
 the number of triangles present around a node and the maximum number of 
 triangles that could possibly be formed around that node.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+Clustering.ID
+%%%% ¡title!
+Brain Atlas ID
+
+%%% ¡prop!
+%%%% ¡id!
+Clustering.LABEL
+%%%% ¡title!
+Brain Atlas NAME
+
+%%% ¡prop!
+%%%% ¡id!
+Clustering.BR_DICT
+%%%% ¡title!
+Brain Regions
+
+%%% ¡prop!
+%%%% ¡id!
+Clustering.PFBA
+%%%% ¡title!
+Brain Plot
+
+%%% ¡prop!
+%%%% ¡id!
+Clustering.NOTES
+%%%% ¡title!
+Brain Atlas NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!

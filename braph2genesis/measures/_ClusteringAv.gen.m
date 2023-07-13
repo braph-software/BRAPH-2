@@ -5,6 +5,38 @@ ClusteringAv < Clustering (m, average clustering) is the graph average clusterin
 The average clustering (ClusteringAv) of a graph is the average of the clustering 
 coefficients of all nodes. Connection weights are ignored in calculations.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+ClusteringAv.ID
+%%%% ¡title!
+Brain Atlas ID
+
+%%% ¡prop!
+%%%% ¡id!
+ClusteringAv.LABEL
+%%%% ¡title!
+Brain Atlas NAME
+
+%%% ¡prop!
+%%%% ¡id!
+ClusteringAv.BR_DICT
+%%%% ¡title!
+Brain Regions
+
+%%% ¡prop!
+%%%% ¡id!
+ClusteringAv.PFBA
+%%%% ¡title!
+Brain Plot
+
+%%% ¡prop!
+%%%% ¡id!
+ClusteringAv.NOTES
+%%%% ¡title!
+Brain Atlas NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!

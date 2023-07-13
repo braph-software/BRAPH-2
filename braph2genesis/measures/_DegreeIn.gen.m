@@ -5,6 +5,38 @@ DegreeIn < Measure (m, in-degree) is the graph in-degree.
 The in-degree (DegreeIn) of a node is the number of inward edges connected to a node within a layer. 
 Connection weights are ignored in calculations.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeIn.ID
+%%%% ¡title!
+Brain Atlas ID
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeIn.LABEL
+%%%% ¡title!
+Brain Atlas NAME
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeIn.BR_DICT
+%%%% ¡title!
+Brain Regions
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeIn.PFBA
+%%%% ¡title!
+Brain Plot
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeIn.NOTES
+%%%% ¡title!
+Brain Atlas NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!

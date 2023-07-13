@@ -5,6 +5,38 @@ Degree < Measure (m, degree) is the graph degree.
 The degree of a node is the number of edges connected to the node within a layer. 
 Connection weights are ignored in calculations.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+Degree.ID
+%%%% ¡title!
+Brain Atlas ID
+
+%%% ¡prop!
+%%%% ¡id!
+Degree.LABEL
+%%%% ¡title!
+Brain Atlas NAME
+
+%%% ¡prop!
+%%%% ¡id!
+Degree.BR_DICT
+%%%% ¡title!
+Brain Regions
+
+%%% ¡prop!
+%%%% ¡id!
+Degree.PFBA
+%%%% ¡title!
+Brain Plot
+
+%%% ¡prop!
+%%%% ¡id!
+Degree.NOTES
+%%%% ¡title!
+Brain Atlas NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!

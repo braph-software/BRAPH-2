@@ -5,6 +5,38 @@ DegreeOut < Measure (m, out-degree) is the graph out-degree.
 The out-degree (DegreeOut) of a node is the number of outward edges connected to a node within a layer. 
 Connection weights are ignored in calculations.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeOut.ID
+%%%% ¡title!
+Brain Atlas ID
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeOut.LABEL
+%%%% ¡title!
+Brain Atlas NAME
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeOut.BR_DICT
+%%%% ¡title!
+Brain Regions
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeOut.PFBA
+%%%% ¡title!
+Brain Plot
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeOut.NOTES
+%%%% ¡title!
+Brain Atlas NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!

@@ -4,6 +4,38 @@ DegreeOutAv < DegreeOut (m, average out-degree) is the graph average out-degree.
 %%% ¡description!
 The average out-degree (DegreeOutAv) of a graph is the average of all number of outward edges connected to a node within a layer. 
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeOutAv.ID
+%%%% ¡title!
+Brain Atlas ID
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeOutAv.LABEL
+%%%% ¡title!
+Brain Atlas NAME
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeOutAv.BR_DICT
+%%%% ¡title!
+Brain Regions
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeOutAv.PFBA
+%%%% ¡title!
+Brain Plot
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeOutAv.NOTES
+%%%% ¡title!
+Brain Atlas NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!

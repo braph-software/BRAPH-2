@@ -6,6 +6,38 @@ The average degree of a graph is the average of all number of edges
 connected to a node within a layer. 
 Connection weights are ignored in calculations.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeAv.ID
+%%%% ¡title!
+Brain Atlas ID
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeAv.LABEL
+%%%% ¡title!
+Brain Atlas NAME
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeAv.BR_DICT
+%%%% ¡title!
+Brain Regions
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeAv.PFBA
+%%%% ¡title!
+Brain Plot
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeAv.NOTES
+%%%% ¡title!
+Brain Atlas NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!

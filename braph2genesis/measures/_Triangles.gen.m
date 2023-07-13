@@ -6,6 +6,38 @@ The triangles are calculated as the number of neighbors of a node that are
  also neighbors of each other within a layer. In weighted graphs, the triangles are 
  calculated as the geometric mean of the weights of the edges forming the triangle.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+Triangles.ID
+%%%% ¡title!
+Brain Atlas ID
+
+%%% ¡prop!
+%%%% ¡id!
+Triangles.LABEL
+%%%% ¡title!
+Brain Atlas NAME
+
+%%% ¡prop!
+%%%% ¡id!
+Triangles.BR_DICT
+%%%% ¡title!
+Brain Regions
+
+%%% ¡prop!
+%%%% ¡id!
+Triangles.PFBA
+%%%% ¡title!
+Brain Plot
+
+%%% ¡prop!
+%%%% ¡id!
+Triangles.NOTES
+%%%% ¡title!
+Brain Atlas NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!
