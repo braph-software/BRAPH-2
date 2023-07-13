@@ -30,6 +30,12 @@ DegreeInAv.NOTES
 %%%% ¡title!
 Measure NOTES
 
+%%% ¡prop!
+%%%% ¡id!
+Degree.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
+
 %% ¡props_update!
 
 %%% ¡prop!
