@@ -20,6 +20,18 @@ Measure NAME
 
 %%% ¡prop!
 %%%% ¡id!
+DegreeInAv.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeInAv.M
+%%%% ¡title!
+Average In-Degree
+
+%%% ¡prop!
+%%%% ¡id!
 DegreeInAv.PFM
 %%%% ¡title!
 Measure Plot

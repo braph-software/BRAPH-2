@@ -21,7 +21,19 @@ Measure NAME
 
 %%% ¡prop!
 %%%% ¡id!
-DegreeIn.PFBA
+DegreeIn.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeIn.M
+%%%% ¡title!
+In-Degree
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeIn.PFM
 %%%% ¡title!
 Measure Plot
 

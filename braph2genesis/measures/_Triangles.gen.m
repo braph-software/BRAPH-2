@@ -22,6 +22,18 @@ Measure NAME
 
 %%% ¡prop!
 %%%% ¡id!
+Triangles.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+Triangles.M
+%%%% ¡title!
+Triangles
+
+%%% ¡prop!
+%%%% ¡id!
 Triangles.PFM
 %%%% ¡title!
 Measure Plot

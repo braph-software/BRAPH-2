@@ -20,6 +20,18 @@ Measure NAME
 
 %%% ¡prop!
 %%%% ¡id!
+DegreeOutAv.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeOutAv.M
+%%%% ¡title!
+Average Out-Degree
+
+%%% ¡prop!
+%%%% ¡id!
 DegreeOutAv.PFM
 %%%% ¡title!
 Measure Plot

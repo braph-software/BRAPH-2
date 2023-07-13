@@ -22,7 +22,19 @@ Measure NAME
 
 %%% ¡prop!
 %%%% ¡id!
-DegreeAv.PFBA
+DegreeAv.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeAv.M
+%%%% ¡title!
+Average Degree
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeAv.PFM
 %%%% ¡title!
 Measure Plot
 

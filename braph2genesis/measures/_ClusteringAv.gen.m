@@ -21,6 +21,18 @@ Measure NAME
 
 %%% ¡prop!
 %%%% ¡id!
+ClusteringAv.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+ClusteringAv.M
+%%%% ¡title!
+Average Distance
+
+%%% ¡prop!
+%%%% ¡id!
 ClusteringAv.PFM
 %%%% ¡title!
 Measure Plot

@@ -23,6 +23,18 @@ Brain Atlas NAME
 
 %%% ¡prop!
 %%%% ¡id!
+Clustering.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+Clustering.M
+%%%% ¡title!
+Clustering
+
+%%% ¡prop!
+%%%% ¡id!
 Clustering.PFM
 %%%% ¡title!
 Measure Plot

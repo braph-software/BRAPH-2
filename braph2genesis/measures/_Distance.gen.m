@@ -23,6 +23,18 @@ Measure NAME
 
 %%% ¡prop!
 %%%% ¡id!
+Distance.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+Distance.M
+%%%% ¡title!
+Distance
+
+%%% ¡prop!
+%%%% ¡id!
 Distance.PFM
 %%%% ¡title!
 Measure Plot
