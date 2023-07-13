@@ -32,7 +32,7 @@ Measure NOTES
 
 %%% ¡prop!
 %%%% ¡id!
-Degree.COMPATIBLE_GRAPHS
+DegreeOutAv.COMPATIBLE_GRAPHS
 %%%% ¡title!
 Compatible Graphs
 

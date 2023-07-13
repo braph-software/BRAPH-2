@@ -34,7 +34,7 @@ Measure NOTES
 
 %%% ¡prop!
 %%%% ¡id!
-Degree.COMPATIBLE_GRAPHS
+Triangles.COMPATIBLE_GRAPHS
 %%%% ¡title!
 Compatible Graphs
 
