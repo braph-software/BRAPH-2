@@ -484,7 +484,7 @@ function cb_invert_selection(~, ~)
     pr.get('UPDATE')
 end
 function cb_calculate(~, ~) 
-    g = pr.get('EL').getProp(pr.get('PROP')); % actual graph
+    g = pr.get('EL').get(pr.get('PROP')); % actual graph
     mlist = g.get('COMPATIBLE_MEASURES');
     selected = pr.get('SELECTED');
     
@@ -507,7 +507,7 @@ function cb_calculate(~, ~)
 	pr.get('UPDATE');
 end
 function cb_open_plots(~, ~)
-    g = pr.get('EL').getProp(pr.get('PROP')); % actual graph
+    g = pr.get('EL').get(pr.get('PROP')); % actual graph
     mlist = g.get('COMPATIBLE_MEASURES');
     
     f = ancestor(pr.get('H'), 'figure'); % parent GUI 
@@ -567,7 +567,7 @@ function cb_hide_plots(~, ~)
     end
 end
 function cb_open_elements(~, ~)
-    g = pr.get('EL').getProp(pr.get('PROP')); % actual graph
+    g = pr.get('EL').get(pr.get('PROP')); % actual graph
     mlist = g.get('COMPATIBLE_MEASURES');
     
     f = ancestor(pr.get('H'), 'figure'); % parent GUI 
