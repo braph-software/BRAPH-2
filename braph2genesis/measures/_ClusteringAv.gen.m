@@ -21,6 +21,12 @@ Measure NAME
 
 %%% ¡prop!
 %%%% ¡id!
+ClusteringAv.RULE
+%%%% ¡title!
+Triangle rule for directed graphs
+
+%%% ¡prop!
+%%%% ¡id!
 ClusteringAv.G
 %%%% ¡title!
 Graph

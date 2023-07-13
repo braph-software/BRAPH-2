@@ -22,6 +22,12 @@ Measure NAME
 
 %%% ¡prop!
 %%%% ¡id!
+Triangles.RULE
+%%%% ¡title!
+Triangle rule for directed graphs
+
+%%% ¡prop!
+%%%% ¡id!
 Triangles.G
 %%%% ¡title!
 Graph

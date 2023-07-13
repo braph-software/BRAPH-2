@@ -23,6 +23,12 @@ Brain Atlas NAME
 
 %%% ¡prop!
 %%%% ¡id!
+Clustering.RULE
+%%%% ¡title!
+Triangle rule for directed graphs
+
+%%% ¡prop!
+%%%% ¡id!
 Clustering.G
 %%%% ¡title!
 Graph
