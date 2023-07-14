@@ -79,7 +79,7 @@ if value
 end
 %%%% ¡calculate_callbacks!
 function set_table()
-    c = pr.get('EL').getProp(pr.get('PROP'))
+    c = pr.get('EL').get(pr.get('PROP'))
     g = c.get('G');
 
     mlist = g.get('COMPATIBLE_MEASURES');
@@ -376,7 +376,7 @@ set(pr.get('TABLE'), 'ContextMenu', contextmenu)
 value = contextmenu;
 %%%% ¡calculate_callbacks!
 function cb_select_all(~, ~) 
-    c = pr.get('EL').getProp(pr.get('PROP'));
+    c = pr.get('EL').get(pr.get('PROP'));
     g = c.get('G');
     mlist = g.get('COMPATIBLE_MEASURES');
 
@@ -390,7 +390,7 @@ function cb_clear_selection(~, ~)
     pr.get('UPDATE')
 end
 function cb_invert_selection(~, ~) 
-    c = pr.get('EL').getProp(pr.get('PROP'));
+    c = pr.get('EL').get(pr.get('PROP'));
     g = c.get('G');
     mlist = g.get('COMPATIBLE_MEASURES');
 
@@ -429,7 +429,7 @@ function cb_calculate(~, ~)
 	pr.get('UPDATE');
 end
 function cb_open_plots(~, ~)
-    c = pr.get('EL').getProp(pr.get('PROP'))
+    c = pr.get('EL').get(pr.get('PROP'))
     g = c.get('G');
     mlist = g.get('COMPATIBLE_MEASURES');
     
@@ -470,7 +470,7 @@ function cb_open_plots(~, ~)
     end
 end
 function cb_hide_plots(~, ~)
-    c = pr.get('EL').getProp(pr.get('PROP'))
+    c = pr.get('EL').get(pr.get('PROP'))
     g = c.get('G');
     mlist = g.get('COMPATIBLE_MEASURES');
     
@@ -491,7 +491,7 @@ function cb_hide_plots(~, ~)
     end
 end
 function cb_open_elements(~, ~)
-    c = pr.get('EL').getProp(pr.get('PROP'))
+    c = pr.get('EL').get(pr.get('PROP'))
     g = c.get('G');
     mlist = g.get('COMPATIBLE_MEASURES');
     
@@ -532,7 +532,7 @@ function cb_open_elements(~, ~)
 	end
 end
 function cb_hide_elements(~, ~)
-    c = pr.get('EL').getProp(pr.get('PROP'))
+    c = pr.get('EL').get(pr.get('PROP'))
     g = c.get('G');
     mlist = g.get('COMPATIBLE_MEASURES');
     
@@ -553,7 +553,7 @@ function cb_hide_elements(~, ~)
     end
 end
 function cb_open_brains(~, ~)
-    c = pr.get('EL').getProp(pr.get('PROP'))
+    c = pr.get('EL').get(pr.get('PROP'))
     g = c.get('G');
     mlist = g.get('COMPATIBLE_MEASURES');
     
@@ -594,7 +594,7 @@ function cb_open_brains(~, ~)
     end
 end
 function cb_hide_brains(~, ~)
-    c = pr.get('EL').getProp(pr.get('PROP'))
+    c = pr.get('EL').get(pr.get('PROP'))
     g = c.get('G');
     mlist = g.get('COMPATIBLE_MEASURES');
     
