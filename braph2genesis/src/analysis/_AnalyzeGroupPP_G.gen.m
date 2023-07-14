@@ -650,7 +650,7 @@ GUI_M_DICT (gui, idict) contains the GUIs for the measures.
 %% ¡tests!
 
 %%% ¡excluded_props!
-[GraphPP_MDict.PARENT GraphPP_MDict.H GraphPP_MDict.EL GraphPP_MDict.LISTENER_CB GraphPP_MDict.HEIGHT GraphPP_MDict.TABLE GraphPP_MDict.CONTEXTMENU]
+[AnalyzeGroupPP_G.PARENT AnalyzeGroupPP_G.H AnalyzeGroupPP_G.EL AnalyzeGroupPP_G.LISTENER_CB AnalyzeGroupPP_G.HEIGHT AnalyzeGroupPP_G.TABLE AnalyzeGroupPP_G.CONTEXTMENU]
 
 %%% ¡warning_off!
 true
