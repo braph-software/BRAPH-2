@@ -60,6 +60,18 @@ Upper value of 95% confidence interval
 
 %%% ¡prop!
 %%%% ¡id!
+ComparisonGroup.PFC
+%%%% ¡title!
+Measure Comparison Plot
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroup.PFBG
+%%%% ¡title!
+Measure Comparison Brain Graph
+
+%%% ¡prop!
+%%%% ¡id!
 ComparisonGroup.NOTES
 %%%% ¡title!
 Comparison NOTES
