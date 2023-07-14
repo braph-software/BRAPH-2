@@ -8,6 +8,62 @@ Specifically, it contains the one-tailed and two-tailed p-values and the 95%% co
 %%% ¡seealso!
 AnalyzeGroup, CompareGroup
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroup.ID
+%%%% ¡title!
+Measure Comparison ID
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroup.LABEL
+%%%% ¡title!
+Measure Comparison NAME
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroup.MEASURE
+%%%% ¡title!
+Measure
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroup.DIFF
+%%%% ¡title!
+DIFFERENCE
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroup.P1
+%%%% ¡title!
+P1
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroup.P2
+%%%% ¡title!
+P2
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroup.CIL
+%%%% ¡title!
+Lower value of 95% confidence interval
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroup.CIU
+%%%% ¡title!
+Upper value of 95% confidence interval
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroup.NOTES
+%%%% ¡title!
+Comparison NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!
