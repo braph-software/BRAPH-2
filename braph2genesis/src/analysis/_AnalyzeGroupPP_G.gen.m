@@ -1,8 +1,8 @@
 %% ¡header!
-AnalyzeGroupPP_G < PanelProp (pr, graph and measure plot) plots the panel to manage the graph and measure of a group analysis.
+AnalyzeGroupPP_G < PanelProp (pr, graph and measure plot) plots the panel to manage the graph and measures of a group analysis.
 
 %%% ¡description!
-AnalyzeGroupPP_G plots the panel to manage the graph and measure of a group analysis.
+AnalyzeGroupPP_G plots the panel to manage the graph and measures of a group analysis.
 It is intended to be used only with the property G of AnalyzeGroup.
 
 %%% ¡seealso!
@@ -11,32 +11,32 @@ uitable, AnalyzeGroup, Graph, Measure
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the graph and measure plot.
+NAME (constant, string) is the name of the graph and measure panel.
 %%%% ¡default!
 'AnalyzeGroupPP_G'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the graph and measure plot.
+DESCRIPTION (constant, string) is the description of the graph and measure panel.
 %%%% ¡default!
-'AnalyzeGroupPP_G plots the panel to manage the graph and measure of a group analysis.'
+'AnalyzeGroupPP_G plots the panel to manage the graph and measures of a group analysis.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the graph and measure plot.
+TEMPLATE (parameter, item) is the template of the graph and measure panel.
 %%%% ¡settings!
 'AnalyzeGroupPP_G'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the graph and measure plot.
+ID (data, string) is a few-letter code for the graph and measure panel.
 %%%% ¡default!
 'AnalyzeGroupPP_G'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the graph and measure plot.
+LABEL (metadata, string) is an extended label of the graph and measure panel.
 %%%% ¡default!
 'AnalyzeGroupPP_G label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the graph and measure plot.
+NOTES (metadata, string) are some specific notes about the graph and measure panel.
 %%%% ¡default!
 'AnalyzeGroupPP_G'
 
