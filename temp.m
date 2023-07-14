@@ -1166,7 +1166,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     eval(['test_' el_class])
 % end
 
-el_class_list = {'ComparisonGroup'} % {'AnalyzeGroup' 'CompareGroup' 'ComparisonGroup' 'AnalyzeGroupPP_G' 'CompareGroupPP_CP_DICT'}
+el_class_list = {'CompareGroup'} % {'AnalyzeGroup' 'CompareGroup' 'ComparisonGroup' 'AnalyzeGroupPP_G' 'CompareGroupPP_CpDict'}
 for i = 1:1:length(el_class_list)
     el_class = el_class_list{i};
     el_path = '/src/analysis';
@@ -1190,6 +1190,7 @@ end
 %     eval(['test_' el_class])
 % end
 
+
 % im_ba = ImporterBrainAtlasXLS('FILE', 'destrieux_atlas.xlsx');
 % ba = im_ba.get('BA');
 % 
@@ -1212,6 +1213,55 @@ end
 % gui = GUIElement('PE', a, 'CLOSEREQ', false);
 % gui.get('DRAW')
 % gui.get('SHOW')
+
+
+im_ba = ImporterBrainAtlasXLS('FILE', 'destrieux_atlas.xlsx');
+ba = im_ba.get('BA');
+
+gr1 = Group('SUB_CLASS', 'SubjectST', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST'));
+for i = 1:1:50
+    sub = SubjectST( ...
+        'ID', ['SUB ST ' int2str(i)], ...
+        'LABEL', ['Subejct ST ' int2str(i)], ...
+        'NOTES', ['Notes on subject ST ' int2str(i)], ...
+        'BA', ba, ...
+        'ST', rand(ba.get('BR_DICT').get('LENGTH'), 1) ...
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr1.get('SUB_DICT').get('ADD', sub)
+end
+
+gr2 = Group('SUB_CLASS', 'SubjectST', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST'));
+for i = 1:1:50
+    sub = SubjectST( ...
+        'ID', ['SUB ST ' int2str(i)], ...
+        'LABEL', ['Subejct ST ' int2str(i)], ...
+        'NOTES', ['Notes on subject ST ' int2str(i)], ...
+        'BA', ba, ...
+        'ST', rand(ba.get('BR_DICT').get('LENGTH'), 1) ...
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr2.get('SUB_DICT').get('ADD', sub)
+end
+
+a1 = AnalyzeGroup_ST_WU('GR', gr1, 'CORRELATION_RULE', Correlation.PEARSON);
+a2 = AnalyzeGroup_ST_WU('GR', gr2, 'TEMPLATE', a1);
+
+c = CompareGroup( ...
+    'P', 10, ...
+    'A1', a1, ...
+    'A2', a2, ...
+    'WAITBAR', true, ...
+    'VERBOSE', false, ...
+    'MEMORIZE', true ...
+    );
+
+gui = GUIElement('PE', c, 'CLOSEREQ', false);
+gui.get('DRAW')
+gui.get('SHOW')
+
 
 % el_class_list = {'AnalyzeGroup_ST_MP_BUT'} % {'AnalyzeGroup_ST_MP_WU' 'AnalyzeGroup_ST_MP_BUD' 'AnalyzeGroup_ST_MP_BUT'}
 % for i = 1:1:length(el_class_list)
