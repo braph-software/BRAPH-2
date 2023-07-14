@@ -50,15 +50,15 @@ PROP (data, scalar) is the property number.
 %%%% ¡default!
 CompareGroup.CP_DICT
 
-% % % %%% ¡prop!
-% % % X_DRAW (query, logical) draws the property panel.
-% % % %%%% ¡calculate!
-% % % value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
-% % % if value
-% % %     pr.memorize('TABLE')
-% % %     pr.memorize('CONTEXTMENU')
-% % % end
-% % % 
+%%% ¡prop!
+X_DRAW (query, logical) draws the property panel.
+%%%% ¡calculate!
+value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
+if value
+    pr.memorize('TABLE')
+    pr.memorize('CONTEXTMENU')
+end
+
 % % % %%% ¡prop!
 % % % UPDATE (query, logical) updates the content and permissions of the table.
 % % % %%%% ¡calculate!
