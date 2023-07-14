@@ -164,8 +164,10 @@ CP_DICT (result, idict) contains the results of the comparison.
 'ComparisonGroup'
 %%%% ¡calculate!
 value = IndexedDictionary('IT_CLASS', 'ComparisonGroup', 'IT_KEY', ComparisonGroup.MEASURE);
-%%%% ¡_gui!
-% % % pr = PPCompareGroup_CpDict('EL', c, 'PROP', CompareGroup.CP_DICT, 'WAITBAR', Callback('EL', c, 'TAG', 'WAITBAR'), varargin{:});
+%%%% ¡gui!
+pr = CompareGroupPP_CpDict('EL', c, 'PROP', CompareGroup.CP_DICT, ...
+    'WAITBAR', c.getCallback('WAITBAR'), ...
+    varargin{:});
 
 %%% ¡prop!
 COMPARISON (query, item) returns a comparison.
