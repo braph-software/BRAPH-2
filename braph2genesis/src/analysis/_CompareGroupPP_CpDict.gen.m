@@ -1,55 +1,55 @@
-% % % %% ¡header!
-% % % AnalyzeGroupPP_G < PanelProp (pr, graph and measure plot) plots the panel to manage the graph and measure of a group analysis.
-% % % 
-% % % %%% ¡description!
-% % % AnalyzeGroupPP_G plots the panel to manage the graph and measure of a group analysis.
-% % % It is intended to be used only with the property G of AnalyzeGroup.
-% % % 
-% % % %%% ¡seealso!
-% % % uitable, AnalyzeGroup, Graph, Measure
-% % % 
-% % % %% ¡props_update!
-% % % 
-% % % %%% ¡prop!
-% % % NAME (constant, string) is the name of the graph and measure plot.
-% % % %%%% ¡default!
-% % % 'AnalyzeGroupPP_G'
-% % % 
-% % % %%% ¡prop!
-% % % DESCRIPTION (constant, string) is the description of the graph and measure plot.
-% % % %%%% ¡default!
-% % % 'AnalyzeGroupPP_G plots the panel to manage the graph and measure of a group analysis.'
-% % % 
-% % % %%% ¡prop!
-% % % TEMPLATE (parameter, item) is the template of the graph and measure plot.
-% % % %%%% ¡settings!
-% % % 'AnalyzeGroupPP_G'
-% % % 
-% % % %%% ¡prop!
-% % % ID (data, string) is a few-letter code for the graph and measure plot.
-% % % %%%% ¡default!
-% % % 'AnalyzeGroupPP_G'
-% % % 
-% % % %%% ¡prop!
-% % % LABEL (metadata, string) is an extended label of the graph and measure plot.
-% % % %%%% ¡default!
-% % % 'AnalyzeGroupPP_G label'
-% % % 
-% % % %%% ¡prop!
-% % % NOTES (metadata, string) are some specific notes about the graph and measure plot.
-% % % %%%% ¡default!
-% % % 'AnalyzeGroupPP_G'
-% % % 
-% % % %%% ¡prop!
-% % % EL (data, item) is the element.
-% % % %%%% ¡default!
-% % % AnalyzeGroup()
-% % % 
-% % % %%% ¡prop!
-% % % PROP (data, scalar) is the property number.
-% % % %%%% ¡default!
-% % % AnalyzeGroup.G
-% % % 
+%% ¡header!
+CompareGroupPP_CpDict < PanelProp (pr, comparison plot) plots the panel to manage the comparisons of a group analysis.
+
+%%% ¡description!
+CompareGroupPP_CpDict plots the panel to manage the comparisons of a group analysis.
+It is intended to be used only with the property CP_DICT of CompareGroup.
+
+%%% ¡seealso!
+uitable, CompareGroup, ComparisonGroup
+
+%% ¡props_update!
+
+%%% ¡prop!
+NAME (constant, string) is the name of the comparison panel.
+%%%% ¡default!
+'CompareGroupPP_CpDict'
+
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the comparison panel.
+%%%% ¡default!
+'CompareGroupPP_CpDict plots the panel to manage the comparisons of a group analysis.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the comparison panel.
+%%%% ¡settings!
+'CompareGroupPP_CpDict'
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the comparison panel.
+%%%% ¡default!
+'CompareGroupPP_CpDict'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the comparison panel.
+%%%% ¡default!
+'CompareGroupPP_CpDict label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the comparison panel.
+%%%% ¡default!
+'CompareGroupPP_CpDict'
+
+%%% ¡prop!
+EL (data, item) is the element.
+%%%% ¡default!
+CompareGroup()
+
+%%% ¡prop!
+PROP (data, scalar) is the property number.
+%%%% ¡default!
+CompareGroup.CP_DICT
+
 % % % %%% ¡prop!
 % % % X_DRAW (query, logical) draws the property panel.
 % % % %%%% ¡calculate!
