@@ -552,7 +552,7 @@ function cb_hide_elements(~, ~)
         end
     end
 end
-function cb_open_plots(~, ~)
+function cb_open_brains(~, ~)
     c = pr.get('EL').getProp(pr.get('PROP'))
     g = c.get('G');
     mlist = g.get('COMPATIBLE_MEASURES');
@@ -593,7 +593,7 @@ function cb_open_plots(~, ~)
         gui.get('SHOW')
     end
 end
-function cb_hide_plots(~, ~)
+function cb_hide_brains(~, ~)
     c = pr.get('EL').getProp(pr.get('PROP'))
     g = c.get('G');
     mlist = g.get('COMPATIBLE_MEASURES');
