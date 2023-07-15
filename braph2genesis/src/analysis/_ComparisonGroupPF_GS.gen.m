@@ -1,11 +1,11 @@
 %% ¡header!
-ComparisonGroupPF_GS < ComparisonGroupPF (pf, panel figure global superglobal measure) is the base element to plot a global superglobal measure.
+ComparisonGroupPF_GS < ComparisonGroupPF (pf, panel global superglobal group comparison figure) is the base element to plot a global superglobal group comparison figure.
 
 %%% ¡description!
-ComparisonGroupPF_GS manages the basic functionalities to plot of a global superglobal measure.
+ComparisonGroupPF_GS manages the basic functionalities to plot of a global superglobal group comparison figure.
 
 %%% ¡seealso!
-Measure
+ComparisonGroup
 
 %% ¡_layout!
 
@@ -84,37 +84,37 @@ Measure
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the panel figure global superglobal measure.
+NAME (constant, string) is the name of the panel figure global superglobal group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_GS'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the panel figure global superglobal measure.
+DESCRIPTION (constant, string) is the description of the panel figure global superglobal group comparison figure.
 %%%% ¡default!
-'ComparisonGroupPF_GS manages the basic functionalities to plot of a global superglobal measure.'
+'ComparisonGroupPF_GS manages the basic functionalities to plot of a global superglobal group comparison figure.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the panel figure global superglobal measure.
+TEMPLATE (parameter, item) is the template of the panel figure global superglobal group comparison figure.
 %%%% ¡settings!
 'ComparisonGroupPF_GS'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the panel figure global superglobal measure.
+ID (data, string) is a few-letter code for the panel figure global superglobal group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_GS ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the panel figure global superglobal measure.
+LABEL (metadata, string) is an extended label of the panel figure global superglobal group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_GS label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the panel figure global superglobal measure.
+NOTES (metadata, string) are some specific notes about the panel figure global superglobal group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_GS notes'
 
 %%% ¡prop!
-SETUP (query, empty) calculates the measure value and stores it.
+SETUP (query, empty) calculates the group comparison figure value and stores it.
 %%%% ¡calculate!
 %%%__WARN_TBI__
 value = [];

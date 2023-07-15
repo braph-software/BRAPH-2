@@ -1,11 +1,11 @@
 %% ¡header!
-ComparisonGroupPF_GU < ComparisonGroupPF (pf, panel figure global unilayer measure) is the base element to plot a global unilayer measure.
+ComparisonGroupPF_GU < ComparisonGroupPF (pf, panel global unilayer group comparison figure) is the base element to plot a global unilayer group comparison figure.
 
 %%% ¡description!
-ComparisonGroupPF_GU manages the basic functionalities to plot of a global unilayer measure.
+ComparisonGroupPF_GU manages the basic functionalities to plot of a global unilayer group comparison figure.
 
 %%% ¡seealso!
-Measure
+ComparisonGroup
 
 %% ¡_layout!
 
@@ -84,37 +84,37 @@ Measure
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the panel figure global unilayer measure.
+NAME (constant, string) is the name of the panel figure global unilayer group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_GU'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the panel figure global unilayer measure.
+DESCRIPTION (constant, string) is the description of the panel figure global unilayer group comparison figure.
 %%%% ¡default!
-'ComparisonGroupPF_GU manages the basic functionalities to plot of a global unilayer measure.'
+'ComparisonGroupPF_GU manages the basic functionalities to plot of a global unilayer group comparison figure.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the panel figure global unilayer measure.
+TEMPLATE (parameter, item) is the template of the panel figure global unilayer group comparison figure.
 %%%% ¡settings!
 'ComparisonGroupPF_GU'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the panel figure global unilayer measure.
+ID (data, string) is a few-letter code for the panel figure global unilayer group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_GU ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the panel figure global unilayer measure.
+LABEL (metadata, string) is an extended label of the panel figure global unilayer group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_GU label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the panel figure global unilayer measure.
+NOTES (metadata, string) are some specific notes about the panel figure global unilayer group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_GU notes'
 
 %%% ¡prop!
-SETUP (query, empty) calculates the measure value and stores it.
+SETUP (query, empty) calculates the group comparison figure value and stores it.
 %%%% ¡calculate!
 x = pf.get('M').get('G').get('ALAYERTICKS');
 

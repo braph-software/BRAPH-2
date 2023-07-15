@@ -1,11 +1,11 @@
 %% ¡header!
-ComparisonGroupPF_BU < ComparisonGroupPF (pf, panel figure binodal unilayer measure) is the base element to plot a binodal unilayer measure.
+ComparisonGroupPF_BU < ComparisonGroupPF (pf, panel binodal unilayer group comparison figure) is the base element to plot a binodal unilayer group comparison figure.
 
 %%% ¡description!
-ComparisonGroupPF_BU manages the basic functionalities to plot of a binodal unilayer measure.
+ComparisonGroupPF_BU manages the basic functionalities to plot of a binodal unilayer group comparison figure.
 
 %%% ¡seealso!
-Measure
+ComparisonGroup
 
 %% ¡_layout!
 
@@ -90,37 +90,37 @@ Measure
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the panel figure binodal unilayer measure.
+NAME (constant, string) is the name of the panel figure binodal unilayer group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_BU'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the panel figure binodal unilayer measure.
+DESCRIPTION (constant, string) is the description of the panel figure binodal unilayer group comparison figure.
 %%%% ¡default!
-'ComparisonGroupPF_BU manages the basic functionalities to plot of a binodal unilayer measure.'
+'ComparisonGroupPF_BU manages the basic functionalities to plot of a binodal unilayer group comparison figure.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the panel figure binodal unilayer measure.
+TEMPLATE (parameter, item) is the template of the panel figure binodal unilayer group comparison figure.
 %%%% ¡settings!
 'ComparisonGroupPF_BU'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the panel figure binodal unilayer measure.
+ID (data, string) is a few-letter code for the panel figure binodal unilayer group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_BU ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the panel figure binodal unilayer measure.
+LABEL (metadata, string) is an extended label of the panel figure binodal unilayer group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_BU label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the panel figure binodal unilayer measure.
+NOTES (metadata, string) are some specific notes about the panel figure binodal unilayer group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_BU notes'
 
 %%% ¡prop!
-SETUP (query, empty) calculates the measure value and stores it.
+SETUP (query, empty) calculates the group comparison figure value and stores it.
 %%%% ¡calculate!
 x = pf.get('M').get('G').get('ALAYERTICKS');
 
@@ -164,7 +164,7 @@ value = [];
 %% ¡props!
 
 %%% ¡prop!
-NODES (figure, rvector) are the node numbers of the binodal measure.
+NODES (figure, rvector) are the node numbers of the binodal group comparison figure.
 %%%% ¡default!
 [1 1]
 %%%% ¡postset!

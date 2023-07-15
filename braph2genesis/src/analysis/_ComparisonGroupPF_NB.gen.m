@@ -1,11 +1,11 @@
 %% ¡header!
-ComparisonGroupPF_NB < ComparisonGroupPF (pf, panel figure nodal bilayer measure) is the base element to plot a nodal bilayer measure.
+ComparisonGroupPF_NB < ComparisonGroupPF (pf, panel nodal bilayer group comparison figure) is the base element to plot a nodal bilayer group comparison figure.
 
 %%% ¡description!
-ComparisonGroupPF_NB manages the basic functionalities to plot of a nodal bilayer measure.
+ComparisonGroupPF_NB manages the basic functionalities to plot of a nodal bilayer group comparison figure.
 
 %%% ¡seealso!
-Measure
+ComparisonGroup
 
 %% ¡_layout!
 
@@ -90,37 +90,37 @@ Measure
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the panel figure nodal bilayer measure.
+NAME (constant, string) is the name of the panel figure nodal bilayer group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_NB'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the panel figure nodal bilayer measure.
+DESCRIPTION (constant, string) is the description of the panel figure nodal bilayer group comparison figure.
 %%%% ¡default!
-'ComparisonGroupPF_NB manages the basic functionalities to plot of a nodal bilayer measure.'
+'ComparisonGroupPF_NB manages the basic functionalities to plot of a nodal bilayer group comparison figure.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the panel figure nodal bilayer measure.
+TEMPLATE (parameter, item) is the template of the panel figure nodal bilayer group comparison figure.
 %%%% ¡settings!
 'ComparisonGroupPF_NB'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the panel figure nodal bilayer measure.
+ID (data, string) is a few-letter code for the panel figure nodal bilayer group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_NB ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the panel figure nodal bilayer measure.
+LABEL (metadata, string) is an extended label of the panel figure nodal bilayer group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_NB label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the panel figure nodal bilayer measure.
+NOTES (metadata, string) are some specific notes about the panel figure nodal bilayer group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_NB notes'
 
 %%% ¡prop!
-SETUP (query, empty) calculates the measure value and stores it.
+SETUP (query, empty) calculates the group comparison figure value and stores it.
 %%%% ¡calculate!
 %%%__WARN_TBI__
 value = [];
@@ -128,7 +128,7 @@ value = [];
 %% ¡props!
 
 %%% ¡prop!
-NODE (figure, scalar) is the node number of the nodal measure.
+NODE (figure, scalar) is the node number of the nodal group comparison figure.
 %%%% ¡_gui!
 % % % bas = pf.get('M').get('G').get('BAS');
 % % % ba = bas{1};

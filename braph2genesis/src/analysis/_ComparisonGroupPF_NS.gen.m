@@ -1,11 +1,11 @@
 %% ¡header!
-ComparisonGroupPF_NS < ComparisonGroupPF (pf, panel figure nodal superglobal measure) is the base element to plot a nodal superglobal measure.
+ComparisonGroupPF_NS < ComparisonGroupPF (pf, panel nodal superglobal group comparison figure) is the base element to plot a nodal superglobal group comparison figure.
 
 %%% ¡description!
-ComparisonGroupPF_NS manages the basic functionalities to plot of a nodal superglobal measure.
+ComparisonGroupPF_NS manages the basic functionalities to plot of a nodal superglobal group comparison figure.
 
 %%% ¡seealso!
-Measure
+ComparisonGroup
 
 %% ¡_layout!
 
@@ -90,37 +90,37 @@ Measure
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the panel figure nodal superglobal measure.
+NAME (constant, string) is the name of the panel figure nodal superglobal group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_NS'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the panel figure nodal superglobal measure.
+DESCRIPTION (constant, string) is the description of the panel figure nodal superglobal group comparison figure.
 %%%% ¡default!
-'ComparisonGroupPF_NS manages the basic functionalities to plot of a nodal superglobal measure.'
+'ComparisonGroupPF_NS manages the basic functionalities to plot of a nodal superglobal group comparison figure.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the panel figure nodal superglobal measure.
+TEMPLATE (parameter, item) is the template of the panel figure nodal superglobal group comparison figure.
 %%%% ¡settings!
 'ComparisonGroupPF_NS'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the panel figure nodal superglobal measure.
+ID (data, string) is a few-letter code for the panel figure nodal superglobal group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_NS ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the panel figure nodal superglobal measure.
+LABEL (metadata, string) is an extended label of the panel figure nodal superglobal group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_NS label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the panel figure nodal superglobal measure.
+NOTES (metadata, string) are some specific notes about the panel figure nodal superglobal group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_NS notes'
 
 %%% ¡prop!
-SETUP (query, empty) calculates the measure value and stores it.
+SETUP (query, empty) calculates the group comparison figure value and stores it.
 %%%% ¡calculate!
 %%%__WARN_TBI__
 value = [];
@@ -128,7 +128,7 @@ value = [];
 %% ¡props!
 
 %%% ¡prop!
-NODE (figure, scalar) is the node number of the nodal measure.
+NODE (figure, scalar) is the node number of the nodal group comparison figure.
 %%%% ¡_gui!
 % % % bas = pf.get('M').get('G').get('BAS');
 % % % ba = bas{1};

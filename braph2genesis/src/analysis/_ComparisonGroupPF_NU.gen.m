@@ -1,11 +1,11 @@
 %% ¡header!
-ComparisonGroupPF_NU < ComparisonGroupPF (pf, panel figure nodal unilayer measure) is the base element to plot a nodal unilayer measure.
+ComparisonGroupPF_NU < ComparisonGroupPF (pf, panel nodal unilayer group comparison figure) is the base element to plot a nodal unilayer group comparison figure.
 
 %%% ¡description!
-ComparisonGroupPF_NU manages the basic functionalities to plot of a nodal unilayer measure.
+ComparisonGroupPF_NU manages the basic functionalities to plot of a nodal unilayer group comparison figure.
 
 %%% ¡seealso!
-Measure
+ComparisonGroup
 
 %% ¡_layout!
 
@@ -90,37 +90,37 @@ Measure
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the panel figure nodal unilayer measure.
+NAME (constant, string) is the name of the panel figure nodal unilayer group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_NU'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the panel figure nodal unilayer measure.
+DESCRIPTION (constant, string) is the description of the panel figure nodal unilayer group comparison figure.
 %%%% ¡default!
-'ComparisonGroupPF_NU manages the basic functionalities to plot of a nodal unilayer measure.'
+'ComparisonGroupPF_NU manages the basic functionalities to plot of a nodal unilayer group comparison figure.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the panel figure nodal unilayer measure.
+TEMPLATE (parameter, item) is the template of the panel figure nodal unilayer group comparison figure.
 %%%% ¡settings!
 'ComparisonGroupPF_NU'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the panel figure nodal unilayer measure.
+ID (data, string) is a few-letter code for the panel figure nodal unilayer group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_NU ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the panel figure nodal unilayer measure.
+LABEL (metadata, string) is an extended label of the panel figure nodal unilayer group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_NU label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the panel figure nodal unilayer measure.
+NOTES (metadata, string) are some specific notes about the panel figure nodal unilayer group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_NU notes'
 
 %%% ¡prop!
-SETUP (query, empty) calculates the measure value and stores it.
+SETUP (query, empty) calculates the group comparison figure value and stores it.
 %%%% ¡calculate!
 x = pf.get('M').get('G').get('ALAYERTICKS');
 
@@ -164,7 +164,7 @@ value = [];
 %% ¡props!
 
 %%% ¡prop!
-NODE (figure, scalar) is the node number of the nodal measure.
+NODE (figure, scalar) is the node number of the nodal group comparison figure.
 %%%% ¡default!
 1
 %%%% ¡postset!
