@@ -59,9 +59,9 @@ NODE SELECTION
 
 %%% ¡prop!
 %%%% ¡id!
-ComparisonGroupPF_NB.ST_LINE
+ComparisonGroupPF_NB.ST_LINE_DIFF
 %%%% ¡title!
-MEASURE LINE
+DIFFERENCE
 
 %%% ¡prop!
 %%%% ¡id!
@@ -152,7 +152,7 @@ NODE (figure, scalar) is the node number of the nodal group comparison figure.
 %% ¡tests!
 
 %%% ¡excluded_props!
-[ComparisonGroupPF_NB.PARENT ComparisonGroupPF_NB.H ComparisonGroupPF_NB.ST_POSITION ComparisonGroupPF_NB.ST_AXIS ComparisonGroupPF_NB.ST_AREA ComparisonGroupPF_NB.ST_LINE ComparisonGroupPF_NB.ST_LINE_CIL ComparisonGroupPF_NB.ST_LINE_CIU ComparisonGroupPF_NB.ST_TITLE ComparisonGroupPF_NB.ST_XLABEL ComparisonGroupPF_NB.ST_YLABEL] 
+[ComparisonGroupPF_NB.PARENT ComparisonGroupPF_NB.H ComparisonGroupPF_NB.ST_POSITION ComparisonGroupPF_NB.ST_AXIS ComparisonGroupPF_NB.ST_AREA ComparisonGroupPF_NB.ST_LINE_DIFF ComparisonGroupPF_NB.ST_LINE_CIL ComparisonGroupPF_NB.ST_LINE_CIU ComparisonGroupPF_NB.ST_TITLE ComparisonGroupPF_NB.ST_XLABEL ComparisonGroupPF_NB.ST_YLABEL] 
 
 %%% ¡warning_off!
 true

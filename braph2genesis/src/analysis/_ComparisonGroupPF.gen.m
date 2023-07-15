@@ -53,9 +53,9 @@ AXIS
 
 %%% ¡prop!
 %%%% ¡id!
-ComparisonGroupPF.ST_LINE
+ComparisonGroupPF.ST_LINE_DIFF
 %%%% ¡title!
-MEASURE LINE
+DIFFERENCE
 
 %%% ¡prop!
 %%%% ¡id!
@@ -130,29 +130,37 @@ DRAW (query, logical) draws the figure comparison figure.
 %%%% ¡calculate!
 value = calculateValue@PanelFig(pf, PanelFig.DRAW, varargin{:}); % also warning
 if value
-% % %     pf.memorize('H_AXES')
-% % %     
-% % %     pf.memorize('ST_AXIS').set('PANEL', pf, 'PROP', ComparisonGroupPF.H_AXES).get('SETUP')
-% % %     pf.memorize('LISTENER_ST_AXIS');
-% % %     
-% % %     pf.memorize('H_AREA')
-% % %     pf.memorize('ST_AREA').set('PANEL', pf, 'PROP', ComparisonGroupPF.H_AREA).get('SETUP')
-% % %     pf.memorize('LISTENER_ST_AREA');
-% % % 
-% % %     pf.memorize('H_LINE')
-% % %     pf.memorize('ST_LINE').set('PANEL', pf, 'PROP', ComparisonGroupPF.H_LINE).get('SETUP')
-% % % 	pf.memorize('LISTENER_ST_LINE');
-% % %     
-% % %     pf.memorize('H_TITLE')
-% % %     pf.memorize('ST_TITLE').set('PANEL', pf, 'PROP', ComparisonGroupPF.H_TITLE).get('SETUP')
-% % % 
-% % %     pf.memorize('H_XLABEL')
-% % %     pf.memorize('ST_XLABEL').set('PANEL', pf, 'PROP', ComparisonGroupPF.H_XLABEL).get('SETUP')
-% % %     
-% % %     pf.memorize('H_YLABEL')
-% % %     pf.memorize('ST_YLABEL').set('PANEL', pf, 'PROP', ComparisonGroupPF.H_YLABEL).get('SETUP')
-% % % 
-% % %     pf.get('SETUP')
+    pf.memorize('H_AXES')
+    
+    pf.memorize('ST_AXIS').set('PANEL', pf, 'PROP', ComparisonGroupPF.H_AXES).get('SETUP')
+    pf.memorize('LISTENER_ST_AXIS');
+    
+    pf.memorize('H_AREA')
+    pf.memorize('ST_AREA').set('PANEL', pf, 'PROP', ComparisonGroupPF.H_AREA).get('SETUP')
+    pf.memorize('LISTENER_ST_AREA');
+
+    pf.memorize('H_LINE_DIFF')
+    pf.memorize('ST_LINE_DIFF').set('PANEL', pf, 'PROP', ComparisonGroupPF.H_LINE_DIFF).get('SETUP')
+	pf.memorize('LISTENER_ST_LINE_DIFF');
+    
+    pf.memorize('H_LINE_CIL')
+    pf.memorize('ST_LINE_CIL').set('PANEL', pf, 'PROP', ComparisonGroupPF.H_LINE_CIL).get('SETUP')
+	pf.memorize('LISTENER_ST_LINE_CIL');
+
+    pf.memorize('H_LINE_CIU')
+    pf.memorize('ST_LINE_CIU').set('PANEL', pf, 'PROP', ComparisonGroupPF.H_LINE_CIU).get('SETUP')
+	pf.memorize('LISTENER_ST_LINE_CIU');
+
+    pf.memorize('H_TITLE')
+    pf.memorize('ST_TITLE').set('PANEL', pf, 'PROP', ComparisonGroupPF.H_TITLE).get('SETUP')
+
+    pf.memorize('H_XLABEL')
+    pf.memorize('ST_XLABEL').set('PANEL', pf, 'PROP', ComparisonGroupPF.H_XLABEL).get('SETUP')
+    
+    pf.memorize('H_YLABEL')
+    pf.memorize('ST_YLABEL').set('PANEL', pf, 'PROP', ComparisonGroupPF.H_YLABEL).get('SETUP')
+
+    pf.get('SETUP')
 end
 
 %%% ¡prop!
@@ -160,21 +168,27 @@ DELETE (query, logical) resets the handles when the panel figure graph is delete
 %%%% ¡calculate!
 value = calculateValue@PanelFig(pf, PanelFig.DELETE, varargin{:}); % also warning
 if value
-% % %     pf.set('H_AXES', Element.getNoValue())
-% % % 
-% % %     pf.set('LISTENER_ST_AXIS', Element.getNoValue())
-% % %     
-% % %     pf.set('H_AREA', Element.getNoValue())
-% % %     pf.set('LISTENER_ST_AREA', Element.getNoValue())
-% % %  
-% % %     pf.set('H_LINE', Element.getNoValue())
-% % %     pf.set('LISTENER_ST_LINE', Element.getNoValue())
-% % % 
-% % %     pf.set('H_TITLE', Element.getNoValue())
-% % % 
-% % %     pf.set('H_XLABEL', Element.getNoValue())
-% % %     
-% % %     pf.set('H_YLABEL', Element.getNoValue())
+    pf.set('H_AXES', Element.getNoValue())
+
+    pf.set('LISTENER_ST_AXIS', Element.getNoValue())
+    
+    pf.set('H_AREA', Element.getNoValue())
+    pf.set('LISTENER_ST_AREA', Element.getNoValue())
+ 
+    pf.set('H_LINE_DIFF', Element.getNoValue())
+    pf.set('LISTENER_ST_LINE_DIFF', Element.getNoValue())
+
+    pf.set('H_LINE_CIL', Element.getNoValue())
+    pf.set('LISTENER_ST_LINE_CIL', Element.getNoValue())
+
+    pf.set('H_LINE_CIU', Element.getNoValue())
+    pf.set('LISTENER_ST_LINE_CIU', Element.getNoValue())
+
+    pf.set('H_TITLE', Element.getNoValue())
+
+    pf.set('H_XLABEL', Element.getNoValue())
+    
+    pf.set('H_YLABEL', Element.getNoValue())
 end
 
 %%% ¡prop!
@@ -219,7 +233,7 @@ if check_graphics(toolbar, 'uitoolbar')
 % % %     % Measure Line
 % % %     tool_line = uitoggletool(toolbar, ...
 % % %         'Tag', 'TOOL.Line', ...
-% % %         'State', pf.get('ST_LINE').get('VISIBLE'), ...
+% % %         'State', pf.get('ST_LINE_DIFF').get('VISIBLE'), ...
 % % %         'Tooltip', 'Show measure line', ...
 % % %         'CData', imread('icon_line.png'), ...
 % % %         'OnCallback', {@cb_line, true}, ...
@@ -254,10 +268,10 @@ end
 % % %     pf.set('ST_AREA', pf.get('ST_AREA'))
 % % % end
 % % % function cb_line(~, ~, visible) % (src, event)
-% % % 	pf.get('ST_LINE').set('VISIBLE', visible)
+% % % 	pf.get('ST_LINE_DIFF').set('VISIBLE', visible)
 % % % 
-% % %     % triggers the update of ST_LINE
-% % %     pf.set('ST_LINE', pf.get('ST_LINE'))
+% % %     % triggers the update of ST_LINE_DIFF
+% % %     pf.set('ST_LINE_DIFF', pf.get('ST_LINE_DIFF'))
 % % % end
 
 %% ¡props!
@@ -346,27 +360,27 @@ value = listener(pf.get('ST_AREA'), 'PropSet', @cb_listener_st_area);
 % % % end
 
 %%% ¡prop!
-H_LINE (evanescent, handle) is the handle for the group comparison line.
+H_LINE_DIFF (evanescent, handle) is the handle for the group comparison line.
 %%%% ¡calculate!
 value = plot(pf.get('H_AXES'), [0], [0], 'b', 'LineWidth', 2);
 
 %%% ¡prop!
-ST_LINE (figure, item) determines the line settings.
+ST_LINE_DIFF (figure, item) determines the line settings.
 %%%% ¡settings!
 'SettingsLine'
 %%%% ¡gui!
-pr = SettingsLinePP('EL', pf, 'PROP', ComparisonGroupPF.ST_LINE, varargin{:});
+pr = SettingsLinePP('EL', pf, 'PROP', ComparisonGroupPF.ST_LINE_DIFF, varargin{:});
 
 %%% ¡prop!
-LISTENER_ST_LINE (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.
+LISTENER_ST_LINE_DIFF (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.
 %%%% ¡calculate!
-value = listener(pf.get('ST_LINE'), 'PropSet', @cb_listener_st_line); 
+value = listener(pf.get('ST_LINE_DIFF'), 'PropSet', @cb_listener_st_line); 
 %%%% ¡calculate_callbacks!
 % % % function cb_listener_st_line(~, ~)
 % % %     if pf.get('DRAWN')
 % % %         toolbar = pf.get('H_TOOLBAR');
 % % %         if check_graphics(toolbar, 'uitoolbar')
-% % %             set(findobj(toolbar, 'Tag', 'TOOL.Line'), 'State', pf.get('ST_LINE').get('VISIBLE'))
+% % %             set(findobj(toolbar, 'Tag', 'TOOL.Line'), 'State', pf.get('ST_LINE_DIFF').get('VISIBLE'))
 % % %         end
 % % %     end
 % % % end
@@ -504,7 +518,7 @@ pr = SettingsTextPP('EL', pf, 'PROP', ComparisonGroupPF.ST_YLABEL, varargin{:});
 %% ¡tests!
 
 %%% ¡excluded_props!
-[ComparisonGroupPF.PARENT ComparisonGroupPF.H ComparisonGroupPF.ST_POSITION ComparisonGroupPF.ST_AXIS ComparisonGroupPF.ST_AREA ComparisonGroupPF.ST_LINE ComparisonGroupPF.ST_LINE_CIL ComparisonGroupPF.ST_LINE_CIU ComparisonGroupPF.ST_TITLE ComparisonGroupPF.ST_XLABEL ComparisonGroupPF.ST_YLABEL] 
+[ComparisonGroupPF.PARENT ComparisonGroupPF.H ComparisonGroupPF.ST_POSITION ComparisonGroupPF.ST_AXIS ComparisonGroupPF.ST_AREA ComparisonGroupPF.ST_LINE_DIFF ComparisonGroupPF.ST_LINE_CIL ComparisonGroupPF.ST_LINE_CIU ComparisonGroupPF.ST_TITLE ComparisonGroupPF.ST_XLABEL ComparisonGroupPF.ST_YLABEL] 
 
 %%% ¡warning_off!
 true

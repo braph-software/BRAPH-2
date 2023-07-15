@@ -59,9 +59,9 @@ NODES SELECTION
 
 %%% ¡prop!
 %%%% ¡id!
-ComparisonGroupPF_BU.ST_LINE
+ComparisonGroupPF_BU.ST_LINE_DIFF
 %%%% ¡title!
-MEASURE LINE
+DIFFERENCE
 
 %%% ¡prop!
 %%%% ¡id!
@@ -139,7 +139,7 @@ x = pf.get('M').get('G').get('ALAYERTICKS');
 nodes = pf.get('NODES');
 y = cellfun(@(x) x(nodes(1), nodes(2)), pf.get('M').get('M'))';
 
-pf.memorize('ST_LINE').set('X', x, 'Y', y)
+pf.memorize('ST_LINE_DIFF').set('X', x, 'Y', y)
 
 if ~isempty(y)
     if isempty(x) 
@@ -192,7 +192,7 @@ pf.get('SETUP')
 %% ¡tests!
 
 %%% ¡excluded_props!
-[ComparisonGroupPF_BU.PARENT ComparisonGroupPF_BU.H ComparisonGroupPF_BU.ST_POSITION ComparisonGroupPF_BU.ST_AXIS ComparisonGroupPF_BU.M ComparisonGroupPF_BU.ST_AREA ComparisonGroupPF_BU.ST_LINE ComparisonGroupPF_BU.ST_LINE_CIL ComparisonGroupPF_BU.ST_LINE_CIU ComparisonGroupPF_BU.ST_TITLE ComparisonGroupPF_BU.ST_XLABEL ComparisonGroupPF_BU.ST_YLABEL] 
+[ComparisonGroupPF_BU.PARENT ComparisonGroupPF_BU.H ComparisonGroupPF_BU.ST_POSITION ComparisonGroupPF_BU.ST_AXIS ComparisonGroupPF_BU.M ComparisonGroupPF_BU.ST_AREA ComparisonGroupPF_BU.ST_LINE_DIFF ComparisonGroupPF_BU.ST_LINE_CIL ComparisonGroupPF_BU.ST_LINE_CIU ComparisonGroupPF_BU.ST_TITLE ComparisonGroupPF_BU.ST_XLABEL ComparisonGroupPF_BU.ST_YLABEL] 
 
 %%% ¡warning_off!
 true

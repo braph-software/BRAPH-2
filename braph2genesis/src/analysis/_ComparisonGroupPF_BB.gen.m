@@ -59,9 +59,9 @@ NODES SELECTION
 
 %%% ¡prop!
 %%%% ¡id!
-ComparisonGroupPF_BB.ST_LINE
+ComparisonGroupPF_BB.ST_LINE_DIFF
 %%%% ¡title!
-MEASURE LINE
+DIFFERENCE
 
 %%% ¡prop!
 %%%% ¡id!
@@ -152,7 +152,7 @@ NODES (figure, rvector) are the node numbers of the binodal group comparison fig
 %% ¡tests!
 
 %%% ¡excluded_props!
-[ComparisonGroupPF_BB.PARENT ComparisonGroupPF_BB.H ComparisonGroupPF_BB.ST_POSITION ComparisonGroupPF_BB.ST_AXIS ComparisonGroupPF_BB.ST_AREA ComparisonGroupPF_BB.ST_LINE ComparisonGroupPF_BB.ST_LINE_CIL ComparisonGroupPF_BB.ST_LINE_CIU ComparisonGroupPF_BB.ST_TITLE ComparisonGroupPF_BB.ST_XLABEL ComparisonGroupPF_BB.ST_YLABEL] 
+[ComparisonGroupPF_BB.PARENT ComparisonGroupPF_BB.H ComparisonGroupPF_BB.ST_POSITION ComparisonGroupPF_BB.ST_AXIS ComparisonGroupPF_BB.ST_AREA ComparisonGroupPF_BB.ST_LINE_DIFF ComparisonGroupPF_BB.ST_LINE_CIL ComparisonGroupPF_BB.ST_LINE_CIU ComparisonGroupPF_BB.ST_TITLE ComparisonGroupPF_BB.ST_XLABEL ComparisonGroupPF_BB.ST_YLABEL] 
 
 %%% ¡warning_off!
 true
