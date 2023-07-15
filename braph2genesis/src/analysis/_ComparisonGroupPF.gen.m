@@ -313,7 +313,7 @@ LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings
 %%%% ¡calculate!
 value = listener(pf.get('ST_AXIS'), 'PropSet', @cb_listener_st_axis); 
 %%%% ¡calculate_callbacks!
-% % % function cb_listener_st_axis(~, ~)
+function cb_listener_st_axis(~, ~)
 % % %     if pf.get('DRAWN')
 % % %         toolbar = pf.get('H_TOOLBAR');
 % % %         if check_graphics(toolbar, 'uitoolbar')
@@ -321,7 +321,7 @@ value = listener(pf.get('ST_AXIS'), 'PropSet', @cb_listener_st_axis);
 % % %             set(findobj(toolbar, 'Tag', 'TOOL.Axis'), 'State', pf.get('ST_AXIS').get('AXIS'))
 % % %         end
 % % %     end
-% % % end
+end
 
 %%% ¡prop!
 CP (metadata, item) is the group comparison.
@@ -350,14 +350,14 @@ LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area 
 %%%% ¡calculate!
 value = listener(pf.get('ST_AREA'), 'PropSet', @cb_listener_st_area); 
 %%%% ¡calculate_callbacks!
-% % % function cb_listener_st_area(~, ~)
+function cb_listener_st_area(~, ~)
 % % %     if pf.get('DRAWN')
 % % %         toolbar = pf.get('H_TOOLBAR');
 % % %         if check_graphics(toolbar, 'uitoolbar')
 % % %             set(findobj(toolbar, 'Tag', 'TOOL.Area'), 'State', pf.get('ST_AREA').get('VISIBLE'))
 % % %         end
 % % %     end
-% % % end
+end
 
 %%% ¡prop!
 H_LINE_DIFF (evanescent, handle) is the handle for the group comparison line.
@@ -374,16 +374,16 @@ pr = SettingsLinePP('EL', pf, 'PROP', ComparisonGroupPF.ST_LINE_DIFF, varargin{:
 %%% ¡prop!
 LISTENER_ST_LINE_DIFF (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.
 %%%% ¡calculate!
-value = listener(pf.get('ST_LINE_DIFF'), 'PropSet', @cb_listener_st_line); 
+value = listener(pf.get('ST_LINE_DIFF'), 'PropSet', @cb_listener_st_line_diff); 
 %%%% ¡calculate_callbacks!
-% % % function cb_listener_st_line(~, ~)
+function cb_listener_st_line_diff(~, ~)
 % % %     if pf.get('DRAWN')
 % % %         toolbar = pf.get('H_TOOLBAR');
 % % %         if check_graphics(toolbar, 'uitoolbar')
 % % %             set(findobj(toolbar, 'Tag', 'TOOL.Line'), 'State', pf.get('ST_LINE_DIFF').get('VISIBLE'))
 % % %         end
 % % %     end
-% % % end
+end
 
 %%% ¡prop!
 H_LINE_CIL (evanescent, handle) is the handle for the lower confidence interval of the group comparison line.
@@ -402,14 +402,14 @@ LISTENER_ST_LINE_CIL (evanescent, handle) contains the listener to the measure l
 %%%% ¡calculate!
 value = listener(pf.get('ST_LINE_DIFF'), 'PropSet', @cb_listener_st_line_cil); 
 %%%% ¡calculate_callbacks!
-% % % function cb_listener_st_line(~, ~)
+function cb_listener_st_line_cil(~, ~)
 % % %     if pf.get('DRAWN')
 % % %         toolbar = pf.get('H_TOOLBAR');
 % % %         if check_graphics(toolbar, 'uitoolbar')
 % % %             set(findobj(toolbar, 'Tag', 'TOOL.Line'), 'State', pf.get('ST_LINE_CIL').get('VISIBLE'))
 % % %         end
 % % %     end
-% % % end
+end
 
 %%% ¡prop!
 H_LINE_CIU (evanescent, handle) is the handle for the upper confidence interval of the group comparison line.
@@ -428,14 +428,14 @@ LISTENER_ST_LINE_CIU (evanescent, handle) contains the listener to the measure l
 %%%% ¡calculate!
 value = listener(pf.get('ST_LINE_CIU'), 'PropSet', @cb_listener_st_line_ciu); 
 %%%% ¡calculate_callbacks!
-% % % function cb_listener_st_line_ciu(~, ~)
+function cb_listener_st_line_ciu(~, ~)
 % % %     if pf.get('DRAWN')
 % % %         toolbar = pf.get('H_TOOLBAR');
 % % %         if check_graphics(toolbar, 'uitoolbar')
 % % %             set(findobj(toolbar, 'Tag', 'TOOL.Line'), 'State', pf.get('ST_LINE_CIU').get('VISIBLE'))
 % % %         end
 % % %     end
-% % % end
+end
 
 %%% ¡prop!
 H_TITLE (evanescent, handle) is the axis title.
