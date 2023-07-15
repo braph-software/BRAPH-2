@@ -408,6 +408,10 @@ function cb_calculate(~, ~)
     selected = pr.get('SELECTED');
     
     wb = braph2waitbar(pr.get('WAITBAR'), 0, ['Calculating ' num2str(length(selected))  ' comparisons ...']);
+    if check_graphics(wb, 'figure')
+        wb_position = get(wb, 'Position');
+        set(wb, 'Position', wb_position + [0 wb_position(4) 0 0])
+    end
 
     for i = 1:1:length(mlist)
         if ismember(i, selected)
