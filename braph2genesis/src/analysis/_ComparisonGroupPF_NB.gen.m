@@ -7,85 +7,85 @@ ComparisonGroupPF_NB manages the basic functionalities to plot of a nodal bilaye
 %%% ¡seealso!
 Measure
 
-%% ¡layout!
+%% ¡_layout!
 
-%%% ¡prop!
-%%%% ¡id!
-ComparisonGroupPF_NB.ID
-%%%% ¡title!
-Brain Atlas Figure ID
-
-%%% ¡prop!
-%%%% ¡id!
-ComparisonGroupPF_NB.LABEL
-%%%% ¡title!
-Brain Atlas Figure NAME
-
-%%% ¡prop!
-%%%% ¡id!
-ComparisonGroupPF_NB.WAITBAR
-%%%% ¡title!
-WAITBAR ON/OFF
-
-%%% ¡prop!
-%%%% ¡id!
-ComparisonGroupPF_NB.NOTES
-%%%% ¡title!
-Brain Atlas NOTES
-
-%%% ¡prop!
-%%%% ¡id!
-ComparisonGroupPF_NB.BKGCOLOR
-%%%% ¡title!
-BACKGROUND COLOR
-
-%%% ¡prop!
-%%%% ¡id!
-ComparisonGroupPF_NB.ST_POSITION
-%%%% ¡title!
-PANEL POSITION
-
-%%% ¡prop!
-%%%% ¡id!
-ComparisonGroupPF_NB.ST_AXIS
-%%%% ¡title!
-AXIS
-
-%%% ¡prop!
-%%%% ¡id!
-ComparisonGroupPF_NB.ST_AREA
-%%%% ¡title!
-FILLED AREA
-
-%%% ¡prop!
-%%%% ¡id!
-ComparisonGroupPF_NB.ST_LINE
-%%%% ¡title!
-MEASURE LINE
-
-%%% ¡prop!
-%%%% ¡id!
-ComparisonGroupPF_NB.ST_TITLE
-%%%% ¡title!
-TITLE
-
-%%% ¡prop!
-%%%% ¡id!
-ComparisonGroupPF_NB.ST_XLABEL
-%%%% ¡title!
-X-LABEL
-
-%%% ¡prop!
-%%%% ¡id!
-ComparisonGroupPF_NB.ST_YLABEL
-%%%% ¡title!
-Y-LABEL
-
-%%% ¡prop!
-%%%% ¡id!
-ComparisonGroupPF_NB.NODE
-%%%% ¡title!
-NODE SELECTION
+% % % %%% ¡prop!
+% % % %%%% ¡id!
+% % % ComparisonGroupPF_NB.ID
+% % % %%%% ¡title!
+% % % Brain Atlas Figure ID
+% % % 
+% % % %%% ¡prop!
+% % % %%%% ¡id!
+% % % ComparisonGroupPF_NB.LABEL
+% % % %%%% ¡title!
+% % % Brain Atlas Figure NAME
+% % % 
+% % % %%% ¡prop!
+% % % %%%% ¡id!
+% % % ComparisonGroupPF_NB.WAITBAR
+% % % %%%% ¡title!
+% % % WAITBAR ON/OFF
+% % % 
+% % % %%% ¡prop!
+% % % %%%% ¡id!
+% % % ComparisonGroupPF_NB.NOTES
+% % % %%%% ¡title!
+% % % Brain Atlas NOTES
+% % % 
+% % % %%% ¡prop!
+% % % %%%% ¡id!
+% % % ComparisonGroupPF_NB.BKGCOLOR
+% % % %%%% ¡title!
+% % % BACKGROUND COLOR
+% % % 
+% % % %%% ¡prop!
+% % % %%%% ¡id!
+% % % ComparisonGroupPF_NB.ST_POSITION
+% % % %%%% ¡title!
+% % % PANEL POSITION
+% % % 
+% % % %%% ¡prop!
+% % % %%%% ¡id!
+% % % ComparisonGroupPF_NB.ST_AXIS
+% % % %%%% ¡title!
+% % % AXIS
+% % % 
+% % % %%% ¡prop!
+% % % %%%% ¡id!
+% % % ComparisonGroupPF_NB.ST_AREA
+% % % %%%% ¡title!
+% % % FILLED AREA
+% % % 
+% % % %%% ¡prop!
+% % % %%%% ¡id!
+% % % ComparisonGroupPF_NB.ST_LINE
+% % % %%%% ¡title!
+% % % MEASURE LINE
+% % % 
+% % % %%% ¡prop!
+% % % %%%% ¡id!
+% % % ComparisonGroupPF_NB.ST_TITLE
+% % % %%%% ¡title!
+% % % TITLE
+% % % 
+% % % %%% ¡prop!
+% % % %%%% ¡id!
+% % % ComparisonGroupPF_NB.ST_XLABEL
+% % % %%%% ¡title!
+% % % X-LABEL
+% % % 
+% % % %%% ¡prop!
+% % % %%%% ¡id!
+% % % ComparisonGroupPF_NB.ST_YLABEL
+% % % %%%% ¡title!
+% % % Y-LABEL
+% % % 
+% % % %%% ¡prop!
+% % % %%%% ¡id!
+% % % ComparisonGroupPF_NB.NODE
+% % % %%%% ¡title!
+% % % NODE SELECTION
 
 %% ¡props_update!
 
