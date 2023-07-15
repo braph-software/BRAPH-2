@@ -79,10 +79,16 @@ if value
 end
 %%%% ¡calculate_callbacks!
 function set_table()
-    g = pr.get('EL').getPropDefaultConditioned(pr.get('PROP')); % default graph
+    a = pr.get('EL');
+    prop = pr.get('PROP');
+    if isa(a.getr(prop), 'NoValue')
+        g = a.getPropDefaultConditioned(prop); % default graph
+    else
+        g = a.get(prop); % actual graph
+    end
 
     mlist = g.get('COMPATIBLE_MEASURES');
-    mlist_already_calculated = cellfun(@(x) x.get('ID'), g.get('M_DICT').get('IT_LIST'), 'UniformOutput', false);
+    mlist_already_calculated = cellfun(@(x) x.get('NAME'), g.get('M_DICT').get('IT_LIST'), 'UniformOutput', false);
 
     rowname = cell(length(mlist), 1);
     data = cell(length(mlist), 5);
