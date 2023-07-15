@@ -459,44 +459,48 @@ QVALUE (metadata, scalar) is the selected qvalue threshold.
 
 %%% ¡prop!
 PFC (gui, item) contains the panel figure of the comparison.
-%%%% ¡_settings!
-% % % 'PFComparisonGroup'
-%%%% ¡_postprocessing!
-% % % if ~braph2_testing % to avoid problems with isqual when the element is recursive
-% % %     if isa(cp.getr('PFC'), 'NoValue')
-% % %         measure = cp.get('MEASURE');
-% % %         g = cp.get('C').get('A1').get('G');
-% % %         
-% % %         if ~isempty(measure) && Measure.is_global(measure) && ...
-% % %                 (Measure.is_unilayer(measure) || Measure.is_superglobal(measure))
-% % %             if (Graph.is_multiplex(g) || Graph.is_ordered_multiplex(g)) && Measure.is_unilayer(measure)
-% % %                 cp.set('PFC', PFComparisonGroupMultiplexGU('CP', cp))
-% % %             else
-% % %                 cp.set('PFC', PFComparisonGroupGU('CP', cp))
-% % %             end
-% % %         elseif ~isempty(measure) && Measure.is_nodal(measure) && ...
-% % %                 (Measure.is_unilayer(measure) || Measure.is_superglobal(measure))
-% % %             if (Graph.is_multiplex(g) || Graph.is_ordered_multiplex(g)) && Measure.is_unilayer(measure)
-% % %                 cp.set('PFC', PFComparisonGroupMultiplexNU('CP', cp))
-% % %             else
-% % %                 cp.set('PFC', PFComparisonGroupNU('CP', cp))
-% % %             end
-% % %         elseif ~isempty(measure) && Measure.is_binodal(measure) && ...
-% % %                 (Measure.is_unilayer(measure) || Measure.is_superglobal(measure))
-% % %             if (Graph.is_multiplex(g) || Graph.is_ordered_multiplex(g)) && Measure.is_unilayer(measure)
-% % %                 cp.set('PFC', PFComparisonGroupMultiplexBU('CP', cp))
-% % %             else
-% % %                 cp.set('PFC', PFComparisonGroupBU('CP', cp))
-% % %             end
-% % %         else
-% % %             cp.memorize('PFC').set('CP', cp)
-% % %         end
-% % %     end
-% % % end
-%%%% ¡_gui!
-% % % pr = PanelPropItem('EL', cp, 'PROP', ComparisonGroup.PFC, ...
-% % %     'GUICLASS', 'GUIFig', ...
-% % %     varargin{:});
+%%%% ¡settings!
+'ComparisonGroupPF'
+%%%% ¡postprocessing!
+if isa(m.getr('PFC'), 'NoValue')
+    
+    measure = cp.get('MEASURE');
+
+    switch Element.getPropDefault(measure, 'SHAPE')
+        case Measure.GLOBAL % __Measure.GLOBAL__
+            switch Element.getPropDefault(measure, 'SCOPE')
+                case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                    cp.set('PFC', ComparisonGroupPF_GS('M', m))
+                case Measure.UNILAYER % __Measure.UNILAYER__
+                    cp.set('PFC', ComparisonGroupPF_GU('M', m))
+                case Measure.BILAYER % __Measure.BILAYER__
+                    cp.set('PFC', ComparisonGroupPF_GB('M', m))
+            end
+        case Measure.NODAL % __Measure.NODAL__
+            switch Element.getPropDefault(measure, 'SCOPE')
+                case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                    cp.set('PFC', ComparisonGroupPF_NS('M', m))
+                case Measure.UNILAYER % __Measure.UNILAYER__
+                    cp.set('PFC', ComparisonGroupPF_NU('M', m))
+                case Measure.BILAYER % __Measure.BILAYER__
+                    cp.set('PFC', ComparisonGroupPF_NB('M', m))
+            end
+        case Measure.BINODAL % __Measure.BINODAL__
+            switch Element.getPropDefault(measure, 'SCOPE')
+                case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                    cp.set('PFC', ComparisonGroupPF_BS('M', m))
+                case Measure.UNILAYER % __Measure.UNILAYER__
+                    cp.set('PFC', ComparisonGroupPF_BU('M', m))
+                case Measure.BILAYER % __Measure.BILAYER__
+                    cp.set('PFC', ComparisonGroupPF_BB('M', m))
+            end
+    end
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', cp, 'PROP', ComparisonGroup.PFC, ...
+    'GUICLASS', 'GUIFig', ...
+	'BUTTON_TEXT', ['Plot ' cp.get('LABEL')], ...
+    varargin{:});
 
 %%% ¡prop!
 PFBG (gui, item) contains the panel figure of the brain graph.
