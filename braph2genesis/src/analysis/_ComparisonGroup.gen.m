@@ -466,35 +466,37 @@ if isa(m.getr('PFC'), 'NoValue')
     
     measure = cp.get('MEASURE');
 
-    switch Element.getPropDefault(measure, 'SHAPE')
-        case Measure.GLOBAL % __Measure.GLOBAL__
-            switch Element.getPropDefault(measure, 'SCOPE')
-                case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
-                    cp.set('PFC', ComparisonGroupPF_GS('M', m))
-                case Measure.UNILAYER % __Measure.UNILAYER__
-                    cp.set('PFC', ComparisonGroupPF_GU('M', m))
-                case Measure.BILAYER % __Measure.BILAYER__
-                    cp.set('PFC', ComparisonGroupPF_GB('M', m))
-            end
-        case Measure.NODAL % __Measure.NODAL__
-            switch Element.getPropDefault(measure, 'SCOPE')
-                case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
-                    cp.set('PFC', ComparisonGroupPF_NS('M', m))
-                case Measure.UNILAYER % __Measure.UNILAYER__
-                    cp.set('PFC', ComparisonGroupPF_NU('M', m))
-                case Measure.BILAYER % __Measure.BILAYER__
-                    cp.set('PFC', ComparisonGroupPF_NB('M', m))
-            end
-        case Measure.BINODAL % __Measure.BINODAL__
-            switch Element.getPropDefault(measure, 'SCOPE')
-                case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
-                    cp.set('PFC', ComparisonGroupPF_BS('M', m))
-                case Measure.UNILAYER % __Measure.UNILAYER__
-                    cp.set('PFC', ComparisonGroupPF_BU('M', m))
-                case Measure.BILAYER % __Measure.BILAYER__
-                    cp.set('PFC', ComparisonGroupPF_BB('M', m))
-            end
-    end
+cp.set('PFC', ComparisonGroupPF('M', m)) % % % %TBE
+    
+% % %     switch Element.getPropDefault(measure, 'SHAPE')
+% % %         case Measure.GLOBAL % __Measure.GLOBAL__
+% % %             switch Element.getPropDefault(measure, 'SCOPE')
+% % %                 case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+% % %                     cp.set('PFC', ComparisonGroupPF_GS('M', m))
+% % %                 case Measure.UNILAYER % __Measure.UNILAYER__
+% % %                     cp.set('PFC', ComparisonGroupPF_GU('M', m))
+% % %                 case Measure.BILAYER % __Measure.BILAYER__
+% % %                     cp.set('PFC', ComparisonGroupPF_GB('M', m))
+% % %             end
+% % %         case Measure.NODAL % __Measure.NODAL__
+% % %             switch Element.getPropDefault(measure, 'SCOPE')
+% % %                 case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+% % %                     cp.set('PFC', ComparisonGroupPF_NS('M', m))
+% % %                 case Measure.UNILAYER % __Measure.UNILAYER__
+% % %                     cp.set('PFC', ComparisonGroupPF_NU('M', m))
+% % %                 case Measure.BILAYER % __Measure.BILAYER__
+% % %                     cp.set('PFC', ComparisonGroupPF_NB('M', m))
+% % %             end
+% % %         case Measure.BINODAL % __Measure.BINODAL__
+% % %             switch Element.getPropDefault(measure, 'SCOPE')
+% % %                 case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+% % %                     cp.set('PFC', ComparisonGroupPF_BS('M', m))
+% % %                 case Measure.UNILAYER % __Measure.UNILAYER__
+% % %                     cp.set('PFC', ComparisonGroupPF_BU('M', m))
+% % %                 case Measure.BILAYER % __Measure.BILAYER__
+% % %                     cp.set('PFC', ComparisonGroupPF_BB('M', m))
+% % %             end
+% % %     end
 end
 %%%% ¡gui!
 pr = PanelPropItem('EL', cp, 'PROP', ComparisonGroup.PFC, ...
