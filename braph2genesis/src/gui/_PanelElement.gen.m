@@ -285,7 +285,7 @@ for prop = 1:1:el.getPropNumber()
             pr.set('PARENT', pe)
         end
         
-        if isa(pr.getr('TITLE'), 'NoValue')
+        if strcmp(pr.get('TITLE'), pr.get('ID'))
             pr.set('TITLE', title{prop})
         end
         
