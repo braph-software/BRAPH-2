@@ -400,7 +400,7 @@ pr = SettingsLinePP('EL', pf, 'PROP', ComparisonGroupPF.ST_LINE_CIL, varargin{:}
 %%% ¡prop!
 LISTENER_ST_LINE_CIL (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.
 %%%% ¡calculate!
-value = listener(pf.get('ST_LINE'), 'PropSet', @cb_listener_st_line_cil); 
+value = listener(pf.get('ST_LINE_DIFF'), 'PropSet', @cb_listener_st_line_cil); 
 %%%% ¡calculate_callbacks!
 % % % function cb_listener_st_line(~, ~)
 % % %     if pf.get('DRAWN')
