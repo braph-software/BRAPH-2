@@ -7,85 +7,97 @@ ComparisonGroupPF_BS manages the basic functionalities to plot of a binodal supe
 %%% ¡seealso!
 ComparisonGroup
 
-%% ¡_layout!
+%% ¡layout!
 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_BS.ID
-% % % %%%% ¡title!
-% % % Brain Atlas Figure ID
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_BS.LABEL
-% % % %%%% ¡title!
-% % % Brain Atlas Figure NAME
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_BS.WAITBAR
-% % % %%%% ¡title!
-% % % WAITBAR ON/OFF
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_BS.NOTES
-% % % %%%% ¡title!
-% % % Brain Atlas NOTES
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_BS.BKGCOLOR
-% % % %%%% ¡title!
-% % % BACKGROUND COLOR
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_BS.ST_POSITION
-% % % %%%% ¡title!
-% % % PANEL POSITION
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_BS.ST_AXIS
-% % % %%%% ¡title!
-% % % AXIS
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_BS.ST_AREA
-% % % %%%% ¡title!
-% % % FILLED AREA
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_BS.ST_LINE
-% % % %%%% ¡title!
-% % % MEASURE LINE
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_BS.ST_TITLE
-% % % %%%% ¡title!
-% % % TITLE
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_BS.ST_XLABEL
-% % % %%%% ¡title!
-% % % X-LABEL
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_BS.ST_YLABEL
-% % % %%%% ¡title!
-% % % Y-LABEL
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_BS.NODES
-% % % %%%% ¡title!
-% % % NODES SELECTION
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_BS.ID
+%%%% ¡title!
+Brain Atlas Figure ID
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_BS.LABEL
+%%%% ¡title!
+Brain Atlas Figure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_BS.WAITBAR
+%%%% ¡title!
+WAITBAR ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_BS.NOTES
+%%%% ¡title!
+Brain Atlas NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_BS.BKGCOLOR
+%%%% ¡title!
+BACKGROUND COLOR
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_BS.ST_POSITION
+%%%% ¡title!
+PANEL POSITION
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_BS.ST_AXIS
+%%%% ¡title!
+AXIS
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_BS.NODES
+%%%% ¡title!
+NODES SELECTION
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_BS.ST_LINE
+%%%% ¡title!
+MEASURE LINE
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_BS.ST_AREA
+%%%% ¡title!
+CONFIDENCE AREA (95%)
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_BS.ST_LINE_CIL
+%%%% ¡title!
+LOWER CONFIDENCE LINE
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_BS.ST_LINE_CIU
+%%%% ¡title!
+UPPER CONFIDENCE LINE
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_BS.ST_TITLE
+%%%% ¡title!
+TITLE
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_BS.ST_XLABEL
+%%%% ¡title!
+X-LABEL
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_BS.ST_YLABEL
+%%%% ¡title!
+Y-LABEL
 
 %% ¡props_update!
 

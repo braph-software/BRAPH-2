@@ -7,79 +7,91 @@ ComparisonGroupPF_GB manages the basic functionalities to plot of a global bilay
 %%% ¡seealso!
 ComparisonGroup
 
-%% ¡_layout!
+%% ¡layout!
 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_GB.ID
-% % % %%%% ¡title!
-% % % Brain Atlas Figure ID
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_GB.LABEL
-% % % %%%% ¡title!
-% % % Brain Atlas Figure NAME
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_GB.WAITBAR
-% % % %%%% ¡title!
-% % % WAITBAR ON/OFF
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_GB.NOTES
-% % % %%%% ¡title!
-% % % Brain Atlas NOTES
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_GB.BKGCOLOR
-% % % %%%% ¡title!
-% % % BACKGROUND COLOR
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_GB.ST_POSITION
-% % % %%%% ¡title!
-% % % PANEL POSITION
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_GB.ST_AXIS
-% % % %%%% ¡title!
-% % % AXIS
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_GB.ST_AREA
-% % % %%%% ¡title!
-% % % FILLED AREA
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_GB.ST_LINE
-% % % %%%% ¡title!
-% % % MEASURE LINE
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_GB.ST_TITLE
-% % % %%%% ¡title!
-% % % TITLE
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_GB.ST_XLABEL
-% % % %%%% ¡title!
-% % % X-LABEL
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF_GB.ST_YLABEL
-% % % %%%% ¡title!
-% % % Y-LABEL
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_GB.ID
+%%%% ¡title!
+Brain Atlas Figure ID
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_GB.LABEL
+%%%% ¡title!
+Brain Atlas Figure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_GB.WAITBAR
+%%%% ¡title!
+WAITBAR ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_GB.NOTES
+%%%% ¡title!
+Brain Atlas NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_GB.BKGCOLOR
+%%%% ¡title!
+BACKGROUND COLOR
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_GB.ST_POSITION
+%%%% ¡title!
+PANEL POSITION
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_GB.ST_AXIS
+%%%% ¡title!
+AXIS
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_GB.ST_LINE
+%%%% ¡title!
+MEASURE LINE
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_GB.ST_AREA
+%%%% ¡title!
+CONFIDENCE AREA (95%)
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_GB.ST_LINE_CIL
+%%%% ¡title!
+LOWER CONFIDENCE LINE
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_GB.ST_LINE_CIU
+%%%% ¡title!
+UPPER CONFIDENCE LINE
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_GB.ST_TITLE
+%%%% ¡title!
+TITLE
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_GB.ST_XLABEL
+%%%% ¡title!
+X-LABEL
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF_GB.ST_YLABEL
+%%%% ¡title!
+Y-LABEL
 
 %% ¡props_update!
 

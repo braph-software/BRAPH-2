@@ -7,79 +7,91 @@ ComparisonGroupPF manages the basic functionalities to plot of a group compariso
 %%% ¡seealso!
 ComparisonGroup
 
-%% ¡_layout!
+%% ¡layout!
 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF.ID
-% % % %%%% ¡title!
-% % % Brain Atlas Figure ID
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF.LABEL
-% % % %%%% ¡title!
-% % % Brain Atlas Figure NAME
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF.WAITBAR
-% % % %%%% ¡title!
-% % % WAITBAR ON/OFF
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF.NOTES
-% % % %%%% ¡title!
-% % % Brain Atlas NOTES
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF.BKGCOLOR
-% % % %%%% ¡title!
-% % % BACKGROUND COLOR
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF.ST_POSITION
-% % % %%%% ¡title!
-% % % PANEL POSITION
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF.ST_AXIS
-% % % %%%% ¡title!
-% % % AXIS
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF.ST_AREA
-% % % %%%% ¡title!
-% % % FILLED AREA
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF.ST_LINE
-% % % %%%% ¡title!
-% % % MEASURE LINE
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF.ST_TITLE
-% % % %%%% ¡title!
-% % % TITLE
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF.ST_XLABEL
-% % % %%%% ¡title!
-% % % X-LABEL
-% % % 
-% % % %%% ¡prop!
-% % % %%%% ¡id!
-% % % ComparisonGroupPF.ST_YLABEL
-% % % %%%% ¡title!
-% % % Y-LABEL
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF.ID
+%%%% ¡title!
+Brain Atlas Figure ID
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF.LABEL
+%%%% ¡title!
+Brain Atlas Figure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF.WAITBAR
+%%%% ¡title!
+WAITBAR ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF.NOTES
+%%%% ¡title!
+Brain Atlas NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF.BKGCOLOR
+%%%% ¡title!
+BACKGROUND COLOR
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF.ST_POSITION
+%%%% ¡title!
+PANEL POSITION
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF.ST_AXIS
+%%%% ¡title!
+AXIS
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF.ST_LINE
+%%%% ¡title!
+MEASURE LINE
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF.ST_AREA
+%%%% ¡title!
+CONFIDENCE AREA (95%)
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF.ST_LINE_CIL
+%%%% ¡title!
+LOWER CONFIDENCE LINE
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF.ST_LINE_CIU
+%%%% ¡title!
+UPPER CONFIDENCE LINE
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF.ST_TITLE
+%%%% ¡title!
+TITLE
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF.ST_XLABEL
+%%%% ¡title!
+X-LABEL
+
+%%% ¡prop!
+%%%% ¡id!
+ComparisonGroupPF.ST_YLABEL
+%%%% ¡title!
+Y-LABEL
 
 %% ¡props_update!
 
