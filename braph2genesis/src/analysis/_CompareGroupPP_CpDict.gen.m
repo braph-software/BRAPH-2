@@ -117,8 +117,9 @@ function set_table()
         elseif Element.getPropDefault(mlist{mi}, 'SCOPE') == Measure.BILAYER
             data{mi, 4} = 'BILAYER';
         end
-            data{mi, 5} = eval([mlist{mi} '.getPropDefault(''DESCRIPTION'')']);
-        end
+        
+        data{mi, 5} = eval([mlist{mi} '.getPropDefault(''DESCRIPTION'')']);
+    end
 
     set(pr.get('TABLE'), ...
         'RowName', rowname, ...
