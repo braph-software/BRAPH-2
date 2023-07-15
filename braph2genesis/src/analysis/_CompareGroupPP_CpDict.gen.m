@@ -83,7 +83,7 @@ function set_table()
     g = c.get('A1').get('G');
 
     mlist = g.get('COMPATIBLE_MEASURES');
-    cplist_already_calculated = cellfun(@(x) x.get('ID'), c.get('CP_DICT').get('IT_LIST'), 'UniformOutput', false);
+    cplist_already_calculated = cellfun(@(x) x.get('MEASURE'), c.get('CP_DICT').get('IT_LIST'), 'UniformOutput', false);
 
     rowname = cell(length(mlist), 1);
     data = cell(length(mlist), 5);
