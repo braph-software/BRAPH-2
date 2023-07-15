@@ -122,7 +122,7 @@ value = [];
 %% ¡tests!
 
 %%% ¡excluded_props!
-[ComparisonGroupPF_GB.PARENT ComparisonGroupPF_GB.H ComparisonGroupPF_GB.ST_POSITION ComparisonGroupPF_GB.ST_AXIS ComparisonGroupPF_GB.ST_AREA ComparisonGroupPF_GB.ST_LINE ComparisonGroupPF_GB.ST_TITLE ComparisonGroupPF_GB.ST_XLABEL ComparisonGroupPF_GB.ST_YLABEL] 
+[ComparisonGroupPF_GB.PARENT ComparisonGroupPF_GB.H ComparisonGroupPF_GB.ST_POSITION ComparisonGroupPF_GB.ST_AXIS ComparisonGroupPF_GB.ST_AREA ComparisonGroupPF_GB.ST_LINE ComparisonGroupPF_GB.ST_LINE_CIL ComparisonGroupPF_GB.ST_LINE_CIU ComparisonGroupPF_GB.ST_TITLE ComparisonGroupPF_GB.ST_XLABEL ComparisonGroupPF_GB.ST_YLABEL] 
 
 %%% ¡warning_off!
 true

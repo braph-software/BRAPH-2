@@ -180,7 +180,7 @@ pf.get('SETUP')
 %% ¡tests!
 
 %%% ¡excluded_props!
-[ComparisonGroupPF_BU.PARENT ComparisonGroupPF_BU.H ComparisonGroupPF_BU.ST_POSITION ComparisonGroupPF_BU.ST_AXIS ComparisonGroupPF_BU.M ComparisonGroupPF_BU.ST_AREA ComparisonGroupPF_BU.ST_LINE ComparisonGroupPF_BU.ST_TITLE ComparisonGroupPF_BU.ST_XLABEL ComparisonGroupPF_BU.ST_YLABEL] 
+[ComparisonGroupPF_BU.PARENT ComparisonGroupPF_BU.H ComparisonGroupPF_BU.ST_POSITION ComparisonGroupPF_BU.ST_AXIS ComparisonGroupPF_BU.M ComparisonGroupPF_BU.ST_AREA ComparisonGroupPF_BU.ST_LINE ComparisonGroupPF_BU.ST_LINE_CIL ComparisonGroupPF_BU.ST_LINE_CIU ComparisonGroupPF_BU.ST_TITLE ComparisonGroupPF_BU.ST_XLABEL ComparisonGroupPF_BU.ST_YLABEL] 
 
 %%% ¡warning_off!
 true
