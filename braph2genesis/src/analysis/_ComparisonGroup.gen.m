@@ -237,7 +237,7 @@ P1 (result, cell) is the one-tailed p-value.
 %%%% ¡calculate!
 results = cp.memorize('CALCULATE_RESULTS');
 value = results{2}; % p1
-%%%% ¡gui!
+%%%% ¡_gui!
 % % % g = cp.get('C').get('A1').get('G');
 % % % measure = cp.get('MEASURE');
 % % % 
