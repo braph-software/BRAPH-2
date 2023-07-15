@@ -462,7 +462,7 @@ PFC (gui, item) contains the panel figure of the comparison.
 %%%% ¡settings!
 'ComparisonGroupPF'
 %%%% ¡postprocessing!
-if isa(m.getr('PFC'), 'NoValue')
+if isa(cp.getr('PFC'), 'NoValue')
     
     measure = cp.get('MEASURE');
 
@@ -470,29 +470,29 @@ if isa(m.getr('PFC'), 'NoValue')
         case Measure.GLOBAL % __Measure.GLOBAL__
             switch Element.getPropDefault(measure, 'SCOPE')
                 case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
-                    cp.set('PFC', ComparisonGroupPF_GS('M', m))
+                    cp.set('PFC', ComparisonGroupPF_GS('CP', cp))
                 case Measure.UNILAYER % __Measure.UNILAYER__
-                    cp.set('PFC', ComparisonGroupPF_GU('M', m))
+                    cp.set('PFC', ComparisonGroupPF_GU('CP', cp))
                 case Measure.BILAYER % __Measure.BILAYER__
-                    cp.set('PFC', ComparisonGroupPF_GB('M', m))
+                    cp.set('PFC', ComparisonGroupPF_GB('CP', cp))
             end
         case Measure.NODAL % __Measure.NODAL__
             switch Element.getPropDefault(measure, 'SCOPE')
                 case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
-                    cp.set('PFC', ComparisonGroupPF_NS('M', m))
+                    cp.set('PFC', ComparisonGroupPF_NS('CP', cp))
                 case Measure.UNILAYER % __Measure.UNILAYER__
-                    cp.set('PFC', ComparisonGroupPF_NU('M', m))
+                    cp.set('PFC', ComparisonGroupPF_NU('CP', cp))
                 case Measure.BILAYER % __Measure.BILAYER__
-                    cp.set('PFC', ComparisonGroupPF_NB('M', m))
+                    cp.set('PFC', ComparisonGroupPF_NB('CP', cp))
             end
         case Measure.BINODAL % __Measure.BINODAL__
             switch Element.getPropDefault(measure, 'SCOPE')
                 case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
-                    cp.set('PFC', ComparisonGroupPF_BS('M', m))
+                    cp.set('PFC', ComparisonGroupPF_BS('CP', cp))
                 case Measure.UNILAYER % __Measure.UNILAYER__
-                    cp.set('PFC', ComparisonGroupPF_BU('M', m))
+                    cp.set('PFC', ComparisonGroupPF_BU('CP', cp))
                 case Measure.BILAYER % __Measure.BILAYER__
-                    cp.set('PFC', ComparisonGroupPF_BB('M', m))
+                    cp.set('PFC', ComparisonGroupPF_BB('CP', cp))
             end
     end
 end
@@ -632,4 +632,4 @@ value = {diff, p1, p2, ci_lower, ci_upper};
 %% ¡tests!
 
 %%% ¡excluded_props!
-[ComparisonGroup.CALCULATE_RESULTS]
+[ComparisonGroup.PFC ComparisonGroup.PFBG ComparisonGroup.CALCULATE_RESULTS]
