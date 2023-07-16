@@ -411,6 +411,8 @@ value = plot(pf.get('H_AXES'), [0], [0], 'b', 'LineWidth', 2);
 ST_LINE_CIL (figure, item) determines the line settings.
 %%%% ¡settings!
 'SettingsLine'
+%%%% ¡default!
+SettingsLine('SYMBOLSIZE', 6, 'FACECOLOR', [.5 .5 .5])
 %%%% ¡gui!
 pr = SettingsLinePP('EL', pf, 'PROP', ComparisonGroupPF.ST_LINE_CIL, varargin{:});
 
@@ -437,6 +439,8 @@ value = plot(pf.get('H_AXES'), [0], [0], 'b', 'LineWidth', 2);
 ST_LINE_CIU (figure, item) determines the line settings.
 %%%% ¡settings!
 'SettingsLine'
+%%%% ¡default!
+SettingsLine('SYMBOLSIZE', 6, 'FACECOLOR', [.5 .5 .5])
 %%%% ¡gui!
 pr = SettingsLinePP('EL', pf, 'PROP', ComparisonGroupPF.ST_LINE_CIU, varargin{:});
 

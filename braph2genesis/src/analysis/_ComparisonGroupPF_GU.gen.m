@@ -141,13 +141,13 @@ pf.memorize('ST_LINE_DIFF').set('X', x, 'Y', diff)
 pf.memorize('ST_LINE_CIL').set('X', x, 'Y', cil)
 pf.memorize('ST_LINE_CIU').set('X', x, 'Y', ciu)
 
-% % % if ~isempty(y)
-% % %     if isempty(x) 
-% % %         pf.memorize('ST_AREA').set('X', [1 1:1:length(y) length(y)], 'Y', [0 y 0])
-% % %     else
-% % %         pf.memorize('ST_AREA').set('X', [x(1) x x(end)], 'Y', [0 y 0])
-% % %     end
-% % % end
+if ~isempty(cil) && ~isempty(ciu)
+    if isempty(x) 
+        pf.memorize('ST_AREA').set('X', [1:1:length(diff) length(diff):-1:1], 'Y', [cil ciu(end:-1:1)])
+    else
+        pf.memorize('ST_AREA').set('X', [x x(end:-1:1)], 'Y', [cil ciu(end:-1:1)])
+    end
+end
 
 xlim = pf.get('H_AXES').get('XLim');
 ylim = pf.get('H_AXES').get('YLim');
