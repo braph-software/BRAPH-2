@@ -145,8 +145,8 @@ cil = cellfun(@(x) x(nodes(1), nodes(2)), cp.get('CIL'))';
 ciu = cellfun(@(x) x(nodes(1), nodes(2)), cp.get('CIU'))';
 
 pf.memorize('ST_LINE_DIFF').set('X', x, 'Y', diff)
-pf.memorize('ST_LINE_DIFF').set('X', x, 'Y', cil)
-pf.memorize('ST_LINE_DIFF').set('X', x, 'Y', ciu)
+pf.memorize('ST_LINE_CIL').set('X', x, 'Y', cil)
+pf.memorize('ST_LINE_CIU').set('X', x, 'Y', ciu)
 
 if ~isempty(cil) && ~isempty(ciu)
     if isempty(x) 
@@ -159,8 +159,13 @@ end
 xlim = pf.get('H_AXES').get('XLim');
 ylim = pf.get('H_AXES').get('YLim');
 anodelabels = g.get('ANODELABELS');
+if isequal(anodelabels, {'numbered'})
+    title = [cp.get('LABEL') ' ' int2str(nodes(1)) ' ' int2str(nodes(2))];
+else
+    title = [cp.get('LABEL') ' ' anodelabels{nodes(1)} ' ' anodelabels{nodes(2)}];
+end
 pf.get('ST_TITLE').set( ...
-    'TXT', [cp.get('LABEL') ' ' anodelabels{nodes(1)} ' ' anodelabels{nodes(2)}], ...
+    'TXT', title, ...
     'X', .5 * (xlim(2) + xlim(1)), ...
     'Y', ylim(2) + .07 * (ylim(2) - ylim(1)), ...
     'Z', 0 ...
