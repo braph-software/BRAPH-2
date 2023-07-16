@@ -6,10 +6,10 @@
 % 3. It analyzes the data using connectivity multiplex analysis (CON_MP) based on a binary undirected graph at fixed thresholds (BUT).
 
 %% Brain Atlas
-ba = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load Brain Atlas XLS % Brain Atlas
+ba = ImporterBrainAtlasXLS('WAITBAR', true).get('GET_FILE').get('BA'); % Load Brain Atlas XLS % Brain Atlas
 
 %% Group
-gr = ImporterGroupSubjectCON_MP_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group CON MP XLS % Group CON MP
+gr = ImporterGroupSubjectCON_MP_XLS('BA', ba, 'WAITBAR', true).get('GET_DIR').get('GR'); % Load Group CON MP XLS % Group CON MP
 
 %% Analysis
 a_BUT = AnalyzeEnsemble_CON_MP_BUT('GR', gr, 'THRESHOLDS', [-1:.25:1]); % Analyze Group % Analyzed Group
