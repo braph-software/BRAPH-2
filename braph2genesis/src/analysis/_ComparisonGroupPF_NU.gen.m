@@ -140,15 +140,15 @@ g = cp.get('C').get('A1').get('G');
 x = g.get('ALAYERTICKS');
 
 node = pf.get('NODE');
-diff = cellfun(@(x) x(node), c.get('DIFF'))';
-cil = cellfun(@(x) x(node), c.get('CIL'))';
-ciu = cellfun(@(x) x(node), c.get('CIU'))';
+diff = cellfun(@(x) x(node), cp.get('DIFF'))';
+cil = cellfun(@(x) x(node), cp.get('CIL'))';
+ciu = cellfun(@(x) x(node), cp.get('CIU'))';
 
 pf.memorize('ST_LINE_DIFF').set('X', x, 'Y', diff)
 pf.memorize('ST_LINE_CIL').set('X', x, 'Y', cil)
 pf.memorize('ST_LINE_CIU').set('X', x, 'Y', ciu)
 
-if ~isempty(y)
+if ~isempty(cil) && ~isempty(ciu)
     if isempty(x) 
         pf.memorize('ST_AREA').set('X', [1:1:length(diff) length(diff):-1:1], 'Y', [cil ciu(end:-1:1)])
     else
