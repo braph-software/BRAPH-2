@@ -1,54 +1,54 @@
 %% ¡header!
-GraphPP_MDict < PanelProp (pr, measure dictionary plot) plots the measure dictionary property of a graph.
+CompareGroupPP_CpDict < PanelProp (pr, comparison plot) plots the panel to manage the comparisons of a group analysis.
 
 %%% ¡description!
-GraphPP_MDict plots the panel of the M_DICT property of Graph.
-It is intended to be used only with the property M_DICT of Graph.
+CompareGroupPP_CpDict plots the panel to manage the comparisons of a group analysis.
+It is intended to be used only with the property CP_DICT of CompareGroup.
 
 %%% ¡seealso!
-uitable, Graph
+uitable, CompareGroup, ComparisonGroup
 
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the measure dictionary plot.
+NAME (constant, string) is the name of the comparison panel.
 %%%% ¡default!
-'GraphPP_MDict'
+'CompareGroupPP_CpDict'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the measure dictionary plot.
+DESCRIPTION (constant, string) is the description of the comparison panel.
 %%%% ¡default!
-'GraphPP_MDict plots the panel of the M_DICT property of Graph.'
+'CompareGroupPP_CpDict plots the panel to manage the comparisons of a group analysis.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the measure dictionary plot.
+TEMPLATE (parameter, item) is the template of the comparison panel.
 %%%% ¡settings!
-'GraphPP_MDict'
+'CompareGroupPP_CpDict'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the measure dictionary plot.
+ID (data, string) is a few-letter code for the comparison panel.
 %%%% ¡default!
-'GraphPP_MDict'
+'CompareGroupPP_CpDict'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the measure dictionary plot.
+LABEL (metadata, string) is an extended label of the comparison panel.
 %%%% ¡default!
-'GraphPP_MDict label'
+'CompareGroupPP_CpDict label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the measure dictionary plot.
+NOTES (metadata, string) are some specific notes about the comparison panel.
 %%%% ¡default!
-'GraphPP_MDict'
+'CompareGroupPP_CpDict'
 
 %%% ¡prop!
 EL (data, item) is the element.
 %%%% ¡default!
-Graph()
+CompareGroup()
 
 %%% ¡prop!
 PROP (data, scalar) is the property number.
 %%%% ¡default!
-Graph.M_DICT
+CompareGroup.CP_DICT
 
 %%% ¡prop!
 X_DRAW (query, logical) draws the property panel.
@@ -79,15 +79,16 @@ if value
 end
 %%%% ¡calculate_callbacks!
 function set_table()
-    g = pr.get('EL');
+    c = pr.get('EL');
+    g = c.get('A1').get('G');
 
     mlist = g.get('COMPATIBLE_MEASURES');
-    mlist_already_calculated = cellfun(@(x) x.get('ID'), g.get('M_DICT').get('IT_LIST'), 'UniformOutput', false);
+    cplist_already_calculated = cellfun(@(x) x.get('MEASURE'), c.get('CP_DICT').get('IT_LIST'), 'UniformOutput', false);
 
     rowname = cell(length(mlist), 1);
     data = cell(length(mlist), 5);
     for mi = 1:1:length(mlist)
-        if any(cellfun(@(y) isequal(mlist{mi}, y), mlist_already_calculated)) && ~isa(g.get('MEASURE', mlist{mi}).getr('M'), 'NoValue')
+        if any(cellfun(@(y) isequal(mlist{mi}, y), cplist_already_calculated)) && ~isa(c.get('COMPARISON', mlist{mi}).getr('DIFF'), 'NoValue')
             rowname{mi} = 'C';
         else
             rowname{mi} = '';
@@ -149,8 +150,8 @@ end
 SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.SHOW, varargin{:}); % also warning
-if value
-    % figures for measure figures
+if value    
+    % figures for comparison figures
     gui_f_dict = pr.get('GUI_F_DICT');
     for i = 1:1:gui_f_dict.get('LENGTH')
         gui = gui_f_dict.get('IT', i);
@@ -159,10 +160,19 @@ if value
         end
     end
     
-    % figures for measure data
-    gui_m_dict = pr.get('GUI_M_DICT');
-    for i = 1:1:gui_m_dict.get('LENGTH')
-        gui = gui_m_dict.get('IT', i);
+    % figures for comparison data
+    gui_cp_dict = pr.get('GUI_CP_DICT');
+    for i = 1:1:gui_cp_dict.get('LENGTH')
+        gui = gui_cp_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('SHOW')
+        end
+    end
+    
+    % figures for brain graph comparison figures
+    gui_bg_dict = pr.get('GUI_BG_DICT');
+    for i = 1:1:gui_bg_dict.get('LENGTH')
+        gui = gui_bg_dict.get('IT', i);
         if gui.get('DRAWN')
             gui.get('SHOW')
         end
@@ -184,9 +194,18 @@ if value
     end
     
     % figures for measure data
-    gui_m_dict = pr.get('GUI_M_DICT');
-    for i = 1:1:gui_m_dict.get('LENGTH')
-        gui = gui_m_dict.get('IT', i);
+    gui_cp_dict = pr.get('GUI_CP_DICT');
+    for i = 1:1:gui_cp_dict.get('LENGTH')
+        gui = gui_cp_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('HIDE')
+        end
+    end
+    
+    % figures for measure figures
+    gui_bg_dict = pr.get('GUI_BG_DICT');
+    for i = 1:1:gui_bg_dict.get('LENGTH')
+        gui = gui_bg_dict.get('IT', i);
         if gui.get('DRAWN')
             gui.get('HIDE')
         end
@@ -217,9 +236,18 @@ if value
     end
     
     % figures for measure data
-    gui_m_dict = pr.get('GUI_M_DICT');
-    for i = 1:1:gui_m_dict.get('LENGTH')
-        gui = gui_m_dict.get('IT', i);
+    gui_cp_dict = pr.get('GUI_CP_DICT');
+    for i = 1:1:gui_cp_dict.get('LENGTH')
+        gui = gui_cp_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('CLOSE')
+        end
+    end
+    
+    % figures for measure figures
+    gui_bg_dict = pr.get('GUI_BG_DICT');
+    for i = 1:1:gui_bg_dict.get('LENGTH')
+        gui = gui_bg_dict.get('IT', i);
         if gui.get('DRAWN')
             gui.get('CLOSE')
         end
@@ -279,9 +307,10 @@ contextmenu = uicontextmenu( ...
     'Tag', 'CONTEXTMENU' ...
     );
 menu_select_all = uimenu( ...
+	'Separator', 'on', ...
     'Parent', contextmenu, ...
     'Tag', 'MENU_SELECT_ALL', ...
-    'Text', 'Select All Measures', ...
+    'Text', 'Select All Comparisons', ...
     'MenuSelectedFcn', {@cb_select_all} ...
     );
 menu_clear_selection = uimenu( ...
@@ -300,14 +329,14 @@ menu_calculate = uimenu( ...
 	'Separator', 'on', ...
 	'Parent', contextmenu, ...
 	'Tag', 'MENU_CALCULATE', ...
-    'Text', 'Calculate Selected Measures', ...
+    'Text', 'Calculate Selected Comparisons', ...
 	'MenuSelectedFcn', {@cb_calculate} ...
     );
 menu_open_plots = uimenu( ...
 	'Separator', 'on', ...
 	'Parent', contextmenu, ...
 	'Tag', 'MENU_OPEN_PLOTS', ...
-	'Text', 'Plot Selected Measures ...', ...
+	'Text', 'Plot Selected Comparisons ...', ...
 	'MenuSelectedFcn', {@cb_open_plots} ...
 	);
 menu_hide_plots = uimenu( ...
@@ -320,7 +349,7 @@ menu_open_elements = uimenu( ...
 	'Separator', 'on', ...
     'Parent', contextmenu, ...
     'Tag', 'MENU_OPEN_ELEMENTS', ...
-    'Text', 'Data Selected Measures ...', ...
+    'Text', 'Data Selected Comparisons ...', ...
     'MenuSelectedFcn', {@cb_open_elements} ...
     );
 menu_hide_elements = uimenu( ...
@@ -329,13 +358,27 @@ menu_hide_elements = uimenu( ...
     'Text', 'Hide Selected Data', ...
 	'MenuSelectedFcn', {@cb_hide_elements} ...
     );
+menu_open_brains = uimenu( ...
+	'Separator', 'on', ...
+    'Parent', contextmenu, ...
+    'Tag', 'MENU_OPEN_BRAINS', ...
+    'Text', 'Brain Graphs Selected Comparisons ...', ...
+    'MenuSelectedFcn', {@cb_open_brains} ...
+    );
+menu_hide_brains = uimenu( ...
+    'Parent', contextmenu, ...
+    'Tag', 'MENU_HIDE_BRAINS', ...
+    'Text', 'Hide Selected Brain Graphs', ...
+	'MenuSelectedFcn', {@cb_hide_brains} ...
+    );
 
 set(pr.get('TABLE'), 'ContextMenu', contextmenu)
 
 value = contextmenu;
 %%%% ¡calculate_callbacks!
 function cb_select_all(~, ~) 
-    g = pr.get('EL');
+    c = pr.get('EL');
+    g = c.get('A1').get('G');
     mlist = g.get('COMPATIBLE_MEASURES');
 
     pr.set('SELECTED', [1:1:length(mlist)])
@@ -348,7 +391,8 @@ function cb_clear_selection(~, ~)
     pr.get('UPDATE')
 end
 function cb_invert_selection(~, ~) 
-    g = pr.get('EL');
+    c = pr.get('EL');
+    g = c.get('A1').get('G');
     mlist = g.get('COMPATIBLE_MEASURES');
 
     selected_tmp = [1:1:length(mlist)];
@@ -358,20 +402,28 @@ function cb_invert_selection(~, ~)
     pr.get('UPDATE')
 end
 function cb_calculate(~, ~) 
-    g = pr.get('EL');
+    c = pr.get('EL');
+    g = c.get('A1').get('G');
     mlist = g.get('COMPATIBLE_MEASURES');
     selected = pr.get('SELECTED');
     
-    wb = braph2waitbar(pr.get('WAITBAR'), 0, ['Calculating ' num2str(length(selected))  ' measures ...']);
+    wb = braph2waitbar(pr.get('WAITBAR'), 0, ['Calculating ' num2str(length(selected))  ' comparisons ...']);
+    if check_graphics(wb, 'figure')
+        set(wb, 'Position', [x0(wb) y0(wb)+h(wb) w(wb) h(wb)])
+    end
 
     for i = 1:1:length(mlist)
         if ismember(i, selected)
             measure = mlist{i};
 
-            braph2waitbar(wb, .1 + .9 * i / length(selected), ['Calculating measure ' int2str(i) ' (' measure ') of ' int2str(length(selected)) ' ...'])
+            braph2waitbar(wb, .1 + .9 * i / length(selected), ['Calculating comparison ' int2str(sum(selected <= i)) ' (' measure ') of ' int2str(length(selected)) ' ...'])
 
-            if isa(g.get('MEASURE', measure).getr('M'), 'NoValue')
-                g.get('MEASURE', measure).memorize('M');
+            if isa(c.get('COMPARISON', measure).getr('DIFF'), 'NoValue')
+                c.get('COMPARISON', measure).memorize('DIFF');
+                c.get('COMPARISON', measure).memorize('P1');
+                c.get('COMPARISON', measure).memorize('P2');
+                c.get('COMPARISON', measure).memorize('CIL');
+                c.get('COMPARISON', measure).memorize('CIU');
             end
         end
     end
@@ -381,7 +433,8 @@ function cb_calculate(~, ~)
 	pr.get('UPDATE');
 end
 function cb_open_plots(~, ~)
-    g = pr.get('EL');
+    c = pr.get('EL');
+    g = c.get('A1').get('G');
     mlist = g.get('COMPATIBLE_MEASURES');
     
     f = ancestor(pr.get('H'), 'figure'); % parent GUI 
@@ -395,12 +448,12 @@ function cb_open_plots(~, ~)
         
         measure = mlist{i}; % also key
 
-        m = g.get('MEASURE', measure);
+        cp = c.get('COMPARISON', measure);
         
         if ~gui_f_dict.get('CONTAINS_KEY', measure)
             gui = GUIFig( ...
                 'ID', measure, ... % this is the dictionary key
-                'PF', m.get('PFM'), ...
+                'PF', cp.get('PFC'), ...
                 'POSITION', [ ...
                     x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ...
                     y0(f, 'normalized') ...
@@ -421,7 +474,8 @@ function cb_open_plots(~, ~)
     end
 end
 function cb_hide_plots(~, ~)
-    g = pr.get('EL');
+    c = pr.get('EL');
+    g = c.get('A1').get('G');
     mlist = g.get('COMPATIBLE_MEASURES');
     
     gui_f_dict = pr.memorize('GUI_F_DICT');
@@ -441,13 +495,14 @@ function cb_hide_plots(~, ~)
     end
 end
 function cb_open_elements(~, ~)
-    g = pr.get('EL');
+    c = pr.get('EL');
+    g = c.get('A1').get('G');
     mlist = g.get('COMPATIBLE_MEASURES');
     
     f = ancestor(pr.get('H'), 'figure'); % parent GUI 
     N = ceil(sqrt(length(mlist))); % number of row and columns of figures
 
-    gui_m_dict = pr.memorize('GUI_M_DICT');
+    gui_cp_dict = pr.memorize('GUI_CP_DICT');
     
     selected = pr.get('SELECTED');
 	for s = 1:1:length(selected)
@@ -455,12 +510,12 @@ function cb_open_elements(~, ~)
         
         measure = mlist{i}; % also key
 
-        m = g.get('MEASURE', measure);
+        cp = c.get('COMPARISON', measure);
         
-        if ~gui_m_dict.get('CONTAINS_KEY', measure)
+        if ~gui_cp_dict.get('CONTAINS_KEY', measure)
             gui = GUIElement( ...
                 'ID', measure, ... % this is the dictionary key
-                'PE', m, ... 
+                'PE', cp, ... 
                 'POSITION', [ ...
                     x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ... % x = (f_gr_x + f_gr_w) / screen_w + mod(selected_it - 1, N) * (screen_w - f_gr_x - 2 * f_gr_w) / N / screen_w;
                     y0(f, 'normalized') ... % y = f_gr_y / screen_h;
@@ -470,10 +525,10 @@ function cb_open_elements(~, ~)
                 'WAITBAR', pr.getCallback('WAITBAR'), ...
                 'CLOSEREQ', false ...
                 );
-            gui_m_dict.get('ADD', gui)
+            gui_cp_dict.get('ADD', gui)
         end
         
-        gui = gui_m_dict.get('IT', measure);
+        gui = gui_cp_dict.get('IT', measure);
         if ~gui.get('DRAWN')
             gui.get('DRAW')
         end
@@ -481,10 +536,11 @@ function cb_open_elements(~, ~)
 	end
 end
 function cb_hide_elements(~, ~)
-    g = pr.get('EL');
+    c = pr.get('EL');
+    g = c.get('A1').get('G');
     mlist = g.get('COMPATIBLE_MEASURES');
     
-    gui_m_dict = pr.memorize('GUI_M_DICT');
+    gui_m_dict = pr.memorize('GUI_CP_DICT');
 
     selected = pr.get('SELECTED');
     for s = 1:1:length(selected)
@@ -500,21 +556,88 @@ function cb_hide_elements(~, ~)
         end
     end
 end
+function cb_open_brains(~, ~)
+    c = pr.get('EL');
+    g = c.get('A1').get('G');
+    mlist = g.get('COMPATIBLE_MEASURES');
+    
+    f = ancestor(pr.get('H'), 'figure'); % parent GUI 
+    N = ceil(sqrt(length(mlist))); % number of row and columns of figures
+
+    gui_bg_dict = pr.memorize('GUI_BG_DICT');
+    
+    selected = pr.get('SELECTED');
+	for s = 1:1:length(selected)
+        i = selected(s);
+        
+        measure = mlist{i}; % also key
+
+        cp = c.get('COMPARISON', measure);
+        
+        if ~gui_bg_dict.get('CONTAINS_KEY', measure)
+            gui = GUIFig( ...
+                'ID', measure, ... % this is the dictionary key
+                'PF', cp.get('PFBG'), ...
+                'POSITION', [ ...
+                    x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ...
+                    y0(f, 'normalized') ...
+                    w(f, 'normalized') * 3 ...
+                    .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ...
+                    ], ...
+                'WAITBAR', pr.getCallback('WAITBAR'), ...
+                'CLOSEREQ', false ...
+                );
+            gui_bg_dict.get('ADD', gui)
+        end
+        
+        gui = gui_bg_dict.get('IT', measure);
+        if ~gui.get('DRAWN')
+            gui.get('DRAW')
+        end
+        gui.get('SHOW')
+    end
+end
+function cb_hide_brains(~, ~)
+    c = pr.get('EL');
+    g = c.get('A1').get('G');
+    mlist = g.get('COMPATIBLE_MEASURES');
+    
+    gui_f_dict = pr.memorize('GUI_F_DICT');
+
+    selected = pr.get('SELECTED');
+    for s = 1:1:length(selected)
+        i = selected(s);
+        
+        measure = mlist{i}; % also key
+        
+        if gui_f_dict.get('CONTAINS_KEY', measure)
+            gui = gui_f_dict.get('IT', measure);
+            if gui.get('DRAWN')
+                gui.get('HIDE')
+            end
+        end
+    end
+end
 
 %%% ¡prop!
-GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.
+GUI_F_DICT (gui, idict) contains the GUIs for the comparison figures.
 %%%% ¡settings!
 'GUIFig'
 
 %%% ¡prop!
-GUI_M_DICT (gui, idict) contains the GUIs for the measures.
+GUI_CP_DICT (gui, idict) contains the GUIs for the comparison.
 %%%% ¡settings!
 'GUIElement'
- 
+
+%%% ¡prop!
+GUI_BG_DICT (gui, idict) contains the GUIs for the brain graph comparison figures.
+%%%% ¡settings!
+'GUIFig'
+
 %% ¡tests!
 
 %%% ¡excluded_props!
-[GraphPP_MDict.PARENT GraphPP_MDict.H GraphPP_MDict.EL GraphPP_MDict.LISTENER_CB GraphPP_MDict.HEIGHT GraphPP_MDict.TABLE GraphPP_MDict.CONTEXTMENU]
+[CompareGroupPP_CpDict.PARENT CompareGroupPP_CpDict.H CompareGroupPP_CpDict.EL CompareGroupPP_CpDict.LISTENER_CB CompareGroupPP_CpDict.HEIGHT CompareGroupPP_CpDict.TABLE CompareGroupPP_CpDict.CONTEXTMENU]
 
 %%% ¡warning_off!
 true

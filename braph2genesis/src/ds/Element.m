@@ -1898,7 +1898,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %ENCODEJSON returns a JSON string encoding the element.
             %
             % JSON = ENCODEJSON(EL) returns a JSON string encoding the element EL.
-            %  Properties of format HANDLE and NET are not saved.
+            %  Properties of category EVANESCENT and 
+            %  of formats HANDLE and NET are not saved.
             %
             % See also decodeJSON.
             
@@ -1924,47 +1925,51 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     elseif isa(value, 'Callback')
                         struct{i}.props{prop}.value = find(cellfun(@(x) value == x, el_list));
                     else
-                        switch el.getPropFormat(prop)
-                            case Format.EMPTY % __Format.EMPTY__
-                                struct{i}.props{prop}.value = regexprep(tostring(value), '''', '''''');
-                            case {Format.STRING Format.OPTION Format.CLASS Format.MARKER Format.LINE} % {__Format.STRING__ __Format.OPTION__ __Format.CLASS__ __Format.MARKER__ __Format.LINE__}
-                                struct{i}.props{prop}.value = regexprep(tostring(value), '''', '''''');
-                            case {Format.LOGICAL Format.SCALAR Format.RVECTOR Format.CVECTOR Format.MATRIX Format.SMATRIX Format.COLOR Format.ALPHA Format.SIZE} % {__Format.LOGICAL__ __Format.SCALAR__ __Format.RVECTOR__ __Format.CVECTOR__ __Format.MATRIX__ __Format.SMATRIX__ __Format.COLOR__ __Format.ALPHA__ __Format.SIZE__}
-                                struct{i}.props{prop}.value = mat2str(value);
-                            case {Format.CLASSLIST Format.STRINGLIST} % {__Format.CLASSLIST__ __Format.STRINGLIST__}
-                                json_str = '{';
-                                for j = 1:1:length(value)
-                                    json_str = [json_str ' ''' value{j} ''' ']; %#ok<AGROW>
-                                end
-                                json_str = [json_str '}']; %#ok<AGROW>
-                                struct{i}.props{prop}.value = json_str;
-                            case {Format.ITEM Format.IDICT} % {__Format.ITEM__ __Format.IDICT__}
-                                struct{i}.props{prop}.value = find(cellfun(@(x) value == x, el_list));
-                            case Format.ITEMLIST % __Format.ITEMLIST__
-                                indices = zeros(1, length(value));
-                                for j = 1:1:length(value)
-                                    indices(j) = find(cellfun(@(x) value{j} == x, el_list));
-                                end
-                                struct{i}.props{prop}.value = indices;
-                            case Format.CELL % __Format.CELL__
-                                json_str = '{';
-                                for j = 1:1:size(value, 1)
-                                    for k = 1:1:size(value, 2)
-                                        if k < size(value, 2)
-                                            json_str = [json_str mat2str(value{j, k}) ', ']; %#ok<AGROW>
-                                        elseif j < size(value, 1)
-                                            json_str = [json_str mat2str(value{j, k}) '; ']; %#ok<AGROW>
-                                        else
-                                            json_str = [json_str mat2str(value{j, k})]; %#ok<AGROW>
+                        if el.getPropCategory(prop) == Category.EVANESCENT % __Category.EVANESCENT__ % set to NoValue
+                            struct{i}.props{prop}.value = find(cellfun(@(x) Element.getNoValue() == x, el_list));
+                        else
+                            switch el.getPropFormat(prop)
+                                case Format.EMPTY % __Format.EMPTY__
+                                    struct{i}.props{prop}.value = regexprep(tostring(value), '''', '''''');
+                                case {Format.STRING Format.OPTION Format.CLASS Format.MARKER Format.LINE} % {__Format.STRING__ __Format.OPTION__ __Format.CLASS__ __Format.MARKER__ __Format.LINE__}
+                                    struct{i}.props{prop}.value = regexprep(tostring(value), '''', '''''');
+                                case {Format.LOGICAL Format.SCALAR Format.RVECTOR Format.CVECTOR Format.MATRIX Format.SMATRIX Format.COLOR Format.ALPHA Format.SIZE} % {__Format.LOGICAL__ __Format.SCALAR__ __Format.RVECTOR__ __Format.CVECTOR__ __Format.MATRIX__ __Format.SMATRIX__ __Format.COLOR__ __Format.ALPHA__ __Format.SIZE__}
+                                    struct{i}.props{prop}.value = mat2str(value);
+                                case {Format.CLASSLIST Format.STRINGLIST} % {__Format.CLASSLIST__ __Format.STRINGLIST__}
+                                    json_str = '{';
+                                    for j = 1:1:length(value)
+                                        json_str = [json_str ' ''' value{j} ''' ']; %#ok<AGROW>
+                                    end
+                                    json_str = [json_str '}']; %#ok<AGROW>
+                                    struct{i}.props{prop}.value = json_str;
+                                case {Format.ITEM Format.IDICT} % {__Format.ITEM__ __Format.IDICT__}
+                                    struct{i}.props{prop}.value = find(cellfun(@(x) value == x, el_list));
+                                case Format.ITEMLIST % __Format.ITEMLIST__
+                                    indices = zeros(1, length(value));
+                                    for j = 1:1:length(value)
+                                        indices(j) = find(cellfun(@(x) value{j} == x, el_list));
+                                    end
+                                    struct{i}.props{prop}.value = indices;
+                                case Format.CELL % __Format.CELL__
+                                    json_str = '{';
+                                    for j = 1:1:size(value, 1)
+                                        for k = 1:1:size(value, 2)
+                                            if k < size(value, 2)
+                                                json_str = [json_str mat2str(value{j, k}) ', ']; %#ok<AGROW>
+                                            elseif j < size(value, 1)
+                                                json_str = [json_str mat2str(value{j, k}) '; ']; %#ok<AGROW>
+                                            else
+                                                json_str = [json_str mat2str(value{j, k})]; %#ok<AGROW>
+                                            end
                                         end
                                     end
-                                end
-                                json_str = [json_str '}']; %#ok<AGROW>
-                                struct{i}.props{prop}.value = json_str;
-                            case Format.NET % __Format.NET__ % set to NoValue
-                                struct{i}.props{prop}.value = find(cellfun(@(x) Element.getNoValue() == x, el_list));
-                            case {Format.HANDLE Format.HANDLELIST} % {__Format.HANDLE__ __Format.HANDLELIST__} % set to NoValue
-                                struct{i}.props{prop}.value = find(cellfun(@(x) Element.getNoValue() == x, el_list));                                
+                                    json_str = [json_str '}']; %#ok<AGROW>
+                                    struct{i}.props{prop}.value = json_str;
+                                case Format.NET % __Format.NET__ % set to NoValue
+                                    struct{i}.props{prop}.value = find(cellfun(@(x) Element.getNoValue() == x, el_list));
+                                case {Format.HANDLE Format.HANDLELIST} % {__Format.HANDLE__ __Format.HANDLELIST__} % set to NoValue
+                                    struct{i}.props{prop}.value = find(cellfun(@(x) Element.getNoValue() == x, el_list));
+                            end
                         end
                     end
                     struct{i}.props{prop}.seed = el.getPropSeed(prop);
@@ -1981,7 +1986,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %DECODEJSON returns the element corresponding to a JSON string.
             %
             % EL = DECODEJSON(JSON) returns the element EL decoding the a JSON string.
-            %  Note that properties of formats HANDLE and NET are not saved.
+            %  Note that properties of category EVANESCENT and 
+            %  of formats HANDLE and NET are not saved.
             %
             % See also encodeJSON.
             
@@ -2094,7 +2100,6 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         varargin{:});
                 case Format.OPTION % __Format.OPTION__
                     pr = PanelPropOption( ...
-                        'ID', el.getPropTag(prop), ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});

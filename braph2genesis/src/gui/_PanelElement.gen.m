@@ -279,11 +279,21 @@ for prop = 1:1:el.getPropNumber()
     braph2waitbar(wb, 0 + .5 * (prop - 1) / el.getPropNumber(), ['Analyzing prop ' int2str(prop) ' of ' int2str(el.getPropNumber())])
 
     if visible(prop)
-        pr_list{order(prop)} = el.getPanelProp(prop, ...
-            'PARENT', pe, ...
-            'TITLE', title{prop}, ...
-            'WAITBAR', pe.getCallback(PanelElement.WAITBAR) ...
-            );
+        pr = el.getPanelProp(prop);
+        
+        if isa(pr.getr('PARENT'), 'NoValue')
+            pr.set('PARENT', pe)
+        end
+        
+        if strcmp(pr.get('TITLE'), pr.get('ID'))
+            pr.set('TITLE', title{prop})
+        end
+        
+        if isa(pr.getr('WAITBAR'), 'NoValue')
+            pr.set('WAITBAR', pe.getCallback(PanelElement.WAITBAR))
+        end
+        
+        pr_list{order(prop)} = pr;
     end
 end
 

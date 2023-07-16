@@ -1,8 +1,8 @@
 %% ¡header!
-AnalyzeGroupPP_G < PanelProp (pr, graph and measure plot) plots the panel to manage the graph and measure of a group analysis.
+AnalyzeGroupPP_G < PanelProp (pr, graph and measure plot) plots the panel to manage the graph and measures of a group analysis.
 
 %%% ¡description!
-AnalyzeGroupPP_G plots the panel to manage the graph and measure of a group analysis.
+AnalyzeGroupPP_G plots the panel to manage the graph and measures of a group analysis.
 It is intended to be used only with the property G of AnalyzeGroup.
 
 %%% ¡seealso!
@@ -11,32 +11,32 @@ uitable, AnalyzeGroup, Graph, Measure
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the graph and measure plot.
+NAME (constant, string) is the name of the graph and measure panel.
 %%%% ¡default!
 'AnalyzeGroupPP_G'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the graph and measure plot.
+DESCRIPTION (constant, string) is the description of the graph and measure panel.
 %%%% ¡default!
-'AnalyzeGroupPP_G plots the panel to manage the graph and measure of a group analysis.'
+'AnalyzeGroupPP_G plots the panel to manage the graph and measures of a group analysis.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the graph and measure plot.
+TEMPLATE (parameter, item) is the template of the graph and measure panel.
 %%%% ¡settings!
 'AnalyzeGroupPP_G'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the graph and measure plot.
+ID (data, string) is a few-letter code for the graph and measure panel.
 %%%% ¡default!
 'AnalyzeGroupPP_G'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the graph and measure plot.
+LABEL (metadata, string) is an extended label of the graph and measure panel.
 %%%% ¡default!
 'AnalyzeGroupPP_G label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the graph and measure plot.
+NOTES (metadata, string) are some specific notes about the graph and measure panel.
 %%%% ¡default!
 'AnalyzeGroupPP_G'
 
@@ -79,10 +79,16 @@ if value
 end
 %%%% ¡calculate_callbacks!
 function set_table()
-    g = pr.get('EL').getPropDefaultConditioned(pr.get('PROP')); % default graph
+    a = pr.get('EL');
+    prop = pr.get('PROP');
+    if isa(a.getr(prop), 'NoValue')
+        g = a.getPropDefaultConditioned(prop); % default graph
+    else
+        g = a.get(prop); % actual graph
+    end
 
     mlist = g.get('COMPATIBLE_MEASURES');
-    mlist_already_calculated = cellfun(@(x) x.get('ID'), g.get('M_DICT').get('IT_LIST'), 'UniformOutput', false);
+    mlist_already_calculated = cellfun(@(x) x.get('NAME'), g.get('M_DICT').get('IT_LIST'), 'UniformOutput', false);
 
     rowname = cell(length(mlist), 1);
     data = cell(length(mlist), 5);
@@ -116,8 +122,9 @@ function set_table()
         elseif Element.getPropDefault(mlist{mi}, 'SCOPE') == Measure.BILAYER
             data{mi, 4} = 'BILAYER';
         end
-            data{mi, 5} = eval([mlist{mi} '.getPropDefault(''DESCRIPTION'')']);
-        end
+        
+        data{mi, 5} = eval([mlist{mi} '.getPropDefault(''DESCRIPTION'')']);
+    end
 
     set(pr.get('TABLE'), ...
         'RowName', rowname, ...
@@ -650,7 +657,7 @@ GUI_M_DICT (gui, idict) contains the GUIs for the measures.
 %% ¡tests!
 
 %%% ¡excluded_props!
-[GraphPP_MDict.PARENT GraphPP_MDict.H GraphPP_MDict.EL GraphPP_MDict.LISTENER_CB GraphPP_MDict.HEIGHT GraphPP_MDict.TABLE GraphPP_MDict.CONTEXTMENU]
+[AnalyzeGroupPP_G.PARENT AnalyzeGroupPP_G.H AnalyzeGroupPP_G.EL AnalyzeGroupPP_G.LISTENER_CB AnalyzeGroupPP_G.HEIGHT AnalyzeGroupPP_G.TABLE AnalyzeGroupPP_G.CONTEXTMENU]
 
 %%% ¡warning_off!
 true

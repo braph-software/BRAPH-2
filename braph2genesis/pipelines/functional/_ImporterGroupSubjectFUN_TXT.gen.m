@@ -1,5 +1,5 @@
 %% ¡header!
-ImporterGroupSubjectFUN_TXT < Importer (im, importer of FUN subject group from TXT) imports a group of subjects with connectivity data from a series of TXT file.
+ImporterGroupSubjectFUN_TXT < Importer (im, importer of FUN subject group from TXT) imports a group of subjects with connectivity data from a series of TXT files.
 
 %%% ¡description!
 ImporterGroupSubjectFUN_TXT imports a group of subjects with functional 

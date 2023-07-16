@@ -63,8 +63,8 @@ classdef BRAPH2
     %  installed        - returns whether an addon is installed/error
     
     properties (Constant) % BRAPH2 ID Card
-        NAME = 'BRAPH 2' % BRAPH2 full name
-        VERSION = '2.0.0' % BRAPH2 version
+        NAME = 'BRAPH 2.0' % BRAPH2 full name
+        VERSION = '2.0.0.0' % BRAPH2 version
         STR = 'BRAPH2' % BRAPH2 short string
         BUILD = 5 % BRAPH2 build number % % % ON RELEASE: Ensure correct BUILD
         AUTHORS = 'Giovanni Volpe, Emiliano Gomez Ruiz, Anna Canal Garcia, Yu-Wei Chang, Mite Mijalkov, Joana Braga Pereira, Ehsan Kakaei, Eric Westman, et al.'
