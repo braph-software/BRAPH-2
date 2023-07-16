@@ -219,29 +219,40 @@ if check_graphics(toolbar, 'uitoolbar')
         'OnCallback', {@cb_grid, true}, ...
         'OffCallback', {@cb_grid, false});
 
-% % %     tool_separator_2 = uipushtool(toolbar, 'Separator', 'on', 'Visible', 'off');
-% % % 
-% % %     % Measure Area
-% % %     tool_area = uitoggletool(toolbar, ...
-% % %         'Tag', 'TOOL.Area', ...
-% % %         'State', pf.get('ST_AREA').get('VISIBLE'), ...
-% % %         'Tooltip', 'Show measure area', ...
-% % %         'CData', imread('icon_area.png'), ...
-% % %         'OnCallback', {@cb_area, true}, ...
-% % %         'OffCallback', {@cb_area, false});
-% % %     
-% % %     % Measure Line
-% % %     tool_line = uitoggletool(toolbar, ...
-% % %         'Tag', 'TOOL.Line', ...
-% % %         'State', pf.get('ST_LINE_DIFF').get('VISIBLE'), ...
-% % %         'Tooltip', 'Show measure line', ...
-% % %         'CData', imread('icon_line.png'), ...
-% % %         'OnCallback', {@cb_line, true}, ...
-% % %         'OffCallback', {@cb_line, false});
+    tool_separator_2 = uipushtool(toolbar, 'Separator', 'on', 'Visible', 'off');
+    
+    % Difference Line
+    tool_line = uitoggletool(toolbar, ...
+        'Tag', 'TOOL.Line_Diff', ...
+        'State', pf.get('ST_LINE_DIFF').get('VISIBLE'), ...
+        'Tooltip', 'Show difference line', ...
+        'CData', imread('icon_line.png'), ...
+        'OnCallback', {@cb_line_diff, true}, ...
+        'OffCallback', {@cb_line_diff, false});
+
+    % Difference Line
+    tool_line = uitoggletool(toolbar, ...
+        'Tag', 'TOOL.Line_CI', ...
+        'State', pf.get('ST_LINE_DIFF').get('VISIBLE'), ...
+        'Tooltip', 'Show confidence lines (95%)', ...
+        'CData', imread('icon_line.png'), ... % % % imread('icon_lines_two.png'), ...
+        'OnCallback', {@cb_line_ci, true}, ...
+        'OffCallback', {@cb_line_ci, false});
+    
+    % Confidence Area
+    tool_area = uitoggletool(toolbar, ...
+        'Tag', 'TOOL.Area', ...
+        'State', pf.get('ST_AREA').get('VISIBLE'), ...
+        'Tooltip', 'Show confidence area (95%)', ...
+        'CData', imread('icon_area.png'), ...
+        'OnCallback', {@cb_area, true}, ...
+        'OffCallback', {@cb_area, false});
 
     value = {value{:}, ...
         tool_separator_1, ...
-        tool_axis, tool_grid ... % % % tool_separator_2, ... % % % tool_area, tool_line ...
+        tool_axis, tool_grid, ... 
+        tool_separator_2, ... 
+        tool_line_diff, tool_line_ci, tool_area ...
         };
 else
     value = {};
@@ -259,18 +270,26 @@ function cb_grid(~, ~, grid) % (src, event)
     % triggers the update of ST_AXIS
     pf.set('ST_AXIS', pf.get('ST_AXIS'))
 end
-% % % function cb_area(~, ~, visible) % (src, event)
-% % %     pf.get('ST_AREA').set('VISIBLE', visible)
-% % % 
-% % %     % triggers the update of ST_AREA
-% % %     pf.set('ST_AREA', pf.get('ST_AREA'))
-% % % end
-% % % function cb_line(~, ~, visible) % (src, event)
-% % % 	pf.get('ST_LINE_DIFF').set('VISIBLE', visible)
-% % % 
-% % %     % triggers the update of ST_LINE_DIFF
-% % %     pf.set('ST_LINE_DIFF', pf.get('ST_LINE_DIFF'))
-% % % end
+function cb_line_diff(~, ~, visible) % (src, event)
+	pf.get('ST_LINE_DIFF').set('VISIBLE', visible)
+
+    % triggers the update of ST_LINE_DIFF
+    pf.set('ST_LINE_DIFF', pf.get('ST_LINE_DIFF'))
+end
+function cb_line_ci(~, ~, visible) % (src, event)
+	pf.get('ST_LINE_CIL').set('VISIBLE', visible)
+	pf.get('ST_LINE_CIU').set('VISIBLE', visible)
+
+    % triggers the update of ST_LINE_CIL and ST_LINE_CIU
+    pf.set('ST_LINE_CIL', pf.get('ST_LINE_CIL'))
+    pf.set('ST_LINE_CIU', pf.get('ST_LINE_CIU'))
+end
+function cb_area(~, ~, visible) % (src, event)
+    pf.get('ST_AREA').set('VISIBLE', visible)
+
+    % triggers the update of ST_AREA
+    pf.set('ST_AREA', pf.get('ST_AREA'))
+end
 
 %% ¡props!
 
@@ -349,12 +368,12 @@ LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area 
 value = listener(pf.get('ST_AREA'), 'PropSet', @cb_listener_st_area); 
 %%%% ¡calculate_callbacks!
 function cb_listener_st_area(~, ~)
-% % %     if pf.get('DRAWN')
-% % %         toolbar = pf.get('H_TOOLBAR');
-% % %         if check_graphics(toolbar, 'uitoolbar')
-% % %             set(findobj(toolbar, 'Tag', 'TOOL.Area'), 'State', pf.get('ST_AREA').get('VISIBLE'))
-% % %         end
-% % %     end
+    if pf.get('DRAWN')
+        toolbar = pf.get('H_TOOLBAR');
+        if check_graphics(toolbar, 'uitoolbar')
+            set(findobj(toolbar, 'Tag', 'TOOL.Area'), 'State', pf.get('ST_AREA').get('VISIBLE'))
+        end
+    end
 end
 
 %%% ¡prop!
@@ -375,12 +394,12 @@ LISTENER_ST_LINE_DIFF (evanescent, handle) contains the listener to the measure 
 value = listener(pf.get('ST_LINE_DIFF'), 'PropSet', @cb_listener_st_line_diff); 
 %%%% ¡calculate_callbacks!
 function cb_listener_st_line_diff(~, ~)
-% % %     if pf.get('DRAWN')
-% % %         toolbar = pf.get('H_TOOLBAR');
-% % %         if check_graphics(toolbar, 'uitoolbar')
-% % %             set(findobj(toolbar, 'Tag', 'TOOL.Line'), 'State', pf.get('ST_LINE_DIFF').get('VISIBLE'))
-% % %         end
-% % %     end
+    if pf.get('DRAWN')
+        toolbar = pf.get('H_TOOLBAR');
+        if check_graphics(toolbar, 'uitoolbar')
+            set(findobj(toolbar, 'Tag', 'TOOL.Line_DIff'), 'State', pf.get('ST_LINE_DIFF').get('VISIBLE'))
+        end
+    end
 end
 
 %%% ¡prop!
@@ -401,12 +420,12 @@ LISTENER_ST_LINE_CIL (evanescent, handle) contains the listener to the measure l
 value = listener(pf.get('ST_LINE_DIFF'), 'PropSet', @cb_listener_st_line_cil); 
 %%%% ¡calculate_callbacks!
 function cb_listener_st_line_cil(~, ~)
-% % %     if pf.get('DRAWN')
-% % %         toolbar = pf.get('H_TOOLBAR');
-% % %         if check_graphics(toolbar, 'uitoolbar')
-% % %             set(findobj(toolbar, 'Tag', 'TOOL.Line'), 'State', pf.get('ST_LINE_CIL').get('VISIBLE'))
-% % %         end
-% % %     end
+    if pf.get('DRAWN')
+        toolbar = pf.get('H_TOOLBAR');
+        if check_graphics(toolbar, 'uitoolbar')
+            set(findobj(toolbar, 'Tag', 'TOOL.Line_CI'), 'State', pf.get('ST_LINE_CIL').get('VISIBLE'))
+        end
+    end
 end
 
 %%% ¡prop!
@@ -427,12 +446,12 @@ LISTENER_ST_LINE_CIU (evanescent, handle) contains the listener to the measure l
 value = listener(pf.get('ST_LINE_CIU'), 'PropSet', @cb_listener_st_line_ciu); 
 %%%% ¡calculate_callbacks!
 function cb_listener_st_line_ciu(~, ~)
-% % %     if pf.get('DRAWN')
-% % %         toolbar = pf.get('H_TOOLBAR');
-% % %         if check_graphics(toolbar, 'uitoolbar')
-% % %             set(findobj(toolbar, 'Tag', 'TOOL.Line'), 'State', pf.get('ST_LINE_CIU').get('VISIBLE'))
-% % %         end
-% % %     end
+    if pf.get('DRAWN')
+        toolbar = pf.get('H_TOOLBAR');
+        if check_graphics(toolbar, 'uitoolbar')
+            set(findobj(toolbar, 'Tag', 'TOOL.Line_CI'), 'State', pf.get('ST_LINE_CIU').get('VISIBLE'))
+        end
+    end
 end
 
 %%% ¡prop!
