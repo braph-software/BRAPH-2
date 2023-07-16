@@ -52,6 +52,26 @@ function cb_exporter_BRAPH2(~, ~)
     end
 end
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+Pipeline.LABEL
+%%%% ¡title!
+PIPELINE NAME
+
+%%% ¡prop!
+%%%% ¡id!
+Pipeline.NOTES
+%%%% ¡title!
+PIPELINE DESCRIPTION
+
+%%% ¡prop!
+%%%% ¡id!
+Pipeline.PS_DICT
+%%%% ¡title!
+PIPELINE WORKFLOW
+
 %% ¡props_update!
 
 %%% ¡prop!

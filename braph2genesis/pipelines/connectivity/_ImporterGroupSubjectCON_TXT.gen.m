@@ -1,5 +1,5 @@
 %% ¡header!
-ImporterGroupSubjectCON_TXT < Importer (im, importer of CON subject group from TXT) imports a group of subjects with connectivity data from a series of TXT file.
+ImporterGroupSubjectCON_TXT < Importer (im, importer of CON subject group from TXT) imports a group of subjects with connectivity data from a series of TXT files.
 
 %%% ¡description!
 ImporterGroupSubjectCON_TXT imports a group of subjects with connectivity 
@@ -180,7 +180,7 @@ if isfolder(directory)
     end
     
 	braph2waitbar(wb, 'close')
-elseif ~braph2_testing()
+else
     error([BRAPH2.STR ':ImporterGroupSubjectCON_TXT:' BRAPH2.ERR_IO], ...
         [BRAPH2.STR ':ImporterGroupSubjectCON_TXT:' BRAPH2.ERR_IO '\\n' ...
         'The prop DIRECTORY must be an existing directory, but it is ''' directory '''.'] ...
