@@ -1638,7 +1638,7 @@ tests = [basic_tests tests no_figure_test delete_figures];
     function test = no_figure_test()
         test.name = 'No Figures Left';
         test.probability = '1';
-        test.parallel = 'true';
+        test.parallel = 'false';
         
         test.code = {
              'assert(isempty(findall(0, ''type'', ''figure'')), ...'
@@ -1651,7 +1651,7 @@ tests = [basic_tests tests no_figure_test delete_figures];
     function test = delete_figures()
         test.name = 'Delete Figures';
         test.probability = '1';
-        test.parallel = 'true';
+        test.parallel = 'false';
         
         test.code = {
              'delete(findall(0, ''type'', ''figure''))'
