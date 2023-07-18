@@ -373,8 +373,6 @@ true
 %%% ¡test!
 %%%% ¡name!
 Remove Figures
-%%%% ¡parallel!
-false
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':PanelElement'])
 assert(length(findall(0, 'type', 'figure')) == 2)
@@ -386,8 +384,6 @@ warning('on', [BRAPH2.STR ':PanelElement'])
 Example 1
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 gui = GUI('MENUBAR', true, 'MENU_ABOUT', true, 'TOOLBAR', true, 'TOOL_ABOUT', true, 'CLOSEREQ', false);
 pe = PanelElement('PARENT', gui);
@@ -419,8 +415,6 @@ pe.get('CLOSE')
 Example 2
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 if exist('ETA_LN', 'class') == 8
     

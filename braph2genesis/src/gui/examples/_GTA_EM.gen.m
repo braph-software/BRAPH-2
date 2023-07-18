@@ -43,8 +43,6 @@ EM_G (gui, empty) is a prop gui empty.
 Example
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 gt = GTA_EM();
 gui = GUI('POSITION', [0 0 1 1], 'CLOSEREQ', false);

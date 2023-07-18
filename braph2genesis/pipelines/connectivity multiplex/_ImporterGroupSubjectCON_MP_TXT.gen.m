@@ -409,8 +409,6 @@ end
 GUI
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 im_ba = ImporterBrainAtlasTXT('FILE', [fileparts(which('SubjectCON_MP')) filesep 'Example data CON_MP TXT' filesep 'atlas.txt']);
 ba = im_ba.get('BA');

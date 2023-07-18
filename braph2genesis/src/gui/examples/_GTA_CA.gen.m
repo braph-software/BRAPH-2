@@ -43,8 +43,6 @@ CA_G (gui, class) is a prop gui class.
 Example
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 gt = GTA_CA();
 gui = GUI('POSITION', [0 0 1 1], 'CLOSEREQ', false);

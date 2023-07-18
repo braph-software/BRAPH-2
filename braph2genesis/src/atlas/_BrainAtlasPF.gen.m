@@ -571,8 +571,6 @@ true
 %%% ¡test!
 %%%% ¡name!
 Remove Figures
-%%%% ¡parallel!
-false
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':BrainAtlasPF'])
 assert(length(findall(0, 'type', 'figure')) == 5)
@@ -584,8 +582,6 @@ warning('on', [BRAPH2.STR ':BrainAtlasPF'])
 Basics 1
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 br1 = BrainRegion('ID', 'id1', 'LABEL', 'label1', 'NOTES', 'notes1', 'X', 1, 'Y', 1, 'Z', 1);
 br2 = BrainRegion('ID', 'id2', 'LABEL', 'label2', 'NOTES', 'notes2', 'X', 2, 'Y', 2, 'Z', 2);
@@ -621,8 +617,6 @@ gui0.get('CLOSE')
 Basics 2
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 ba1 = ImporterBrainAtlasXLS('FILE', [fileparts(which('braph2')) filesep() 'atlases' filesep() 'aal90_atlas.xlsx']).get('BA');
 pf1 = BrainAtlasPF(...

@@ -43,8 +43,6 @@ CO_G (gui, color) is a prop gui color.
 Example
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 gt = GTA_CO();
 gui = GUI('POSITION', [0 0 1 1], 'CLOSEREQ', false);

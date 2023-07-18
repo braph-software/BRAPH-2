@@ -617,8 +617,6 @@ true
 %%% ¡test!
 %%%% ¡name!
 Remove Figures
-%%%% ¡parallel!
-false
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':PanelProp'])
 assert(length(findall(0, 'type', 'figure')) == 1)
@@ -630,8 +628,6 @@ warning('on', [BRAPH2.STR ':PanelProp'])
 Example
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 gui = GUI('CLOSEREQ', false);
 pr = PanelProp(...

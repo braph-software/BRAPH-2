@@ -131,8 +131,6 @@ braph2waitbar(wb, 'close')
 Basic functioning
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 % im_ba = ImporterBrainAtlasTXT('FILE', [fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_MP TXT' filesep 'atlas.txt']);
 % ba = im_ba.get('BA');

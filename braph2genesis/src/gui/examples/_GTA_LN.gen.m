@@ -43,8 +43,6 @@ LN_G (gui, line) is a prop gui line.
 Example
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 gt = GTA_LN();
 gui = GUI('POSITION', [0 0 1 1], 'CLOSEREQ', false);

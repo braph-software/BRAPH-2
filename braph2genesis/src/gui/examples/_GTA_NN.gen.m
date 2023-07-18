@@ -41,8 +41,6 @@ NN_G (gui, scalar) is a prop gui scalar.
 PanelPropScalar
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 gt = GTA_NN();
 gui = GUI('POSITION', [0 0 1 1], 'CLOSEREQ', false);

@@ -53,8 +53,6 @@ LL_G (gui, cell) is a prop gui cell.
 PanelPropCell
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 gt = GTA_LL();
 gui = GUI('POSITION', [0 0 1 1], 'CLOSEREQ', false);

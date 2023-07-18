@@ -501,8 +501,6 @@ true
 %%% ¡test!
 %%%% ¡name!
 Remove Figures
-%%%% ¡parallel!
-false
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':BrainSurfacePF'])
 assert(length(findall(0, 'type', 'figure')) == 1)
@@ -514,8 +512,6 @@ warning('on', [BRAPH2.STR ':BrainSurfacePF'])
 Basics 1
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 pf = BrainSurfacePF('SURF', ImporterBrainSurfaceNV('FILE', 'other_macaque.nv').get('SURF'));
 gui = GUIFig('PF', pf, 'POSITION', [0 .5 .5 .5], 'FILE', 'xxx sss', 'WAITBAR', true, 'CLOSEREQ', false);
@@ -530,8 +526,6 @@ gui.get('CLOSE')
 Basics 2
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 pf = BrainSurfacePF('SURFFILE', 'other_macaque.nv');
 gui = GUIFig('PF', pf, 'POSITION', [0 .5 .5 .5], 'FILE', 'xxx sss', 'WAITBAR', false, 'CLOSEREQ', false);
