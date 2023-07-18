@@ -55,8 +55,10 @@ prop_number = Element.getPropNumber(class_name);
             end
             
             tests{i}.parallel = getToken(tests{i}.token, 'parallel');
-            if isempty(tests{i}.parallel)
-                tests{i}.parallel = 'true';
+            if ~isempty(tests{i}.parallel) && strcmp(tests{i}.parallel, 'false')
+                tests{i}.parallel = false;
+            else
+                tests{i}.parallel = true;
             end
             
             tests{i}.code = splitlines(getToken(tests{i}.token, 'code'));
