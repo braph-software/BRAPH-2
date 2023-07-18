@@ -1638,7 +1638,7 @@ tests = [basic_tests tests no_figure_test delete_figures];
     function test = no_figure_test()
         test.name = 'No Figures Left';
         test.probability = '1';
-        test.parallel = 'false';
+        test.parallel = false;
         
         test.code = {
              'assert(isempty(findall(0, ''type'', ''figure'')), ...'
@@ -1651,7 +1651,7 @@ tests = [basic_tests tests no_figure_test delete_figures];
     function test = delete_figures()
         test.name = 'Delete Figures';
         test.probability = '1';
-        test.parallel = 'false';
+        test.parallel = false;
         
         test.code = {
              'delete(findall(0, ''type'', ''figure''))'
@@ -1679,30 +1679,32 @@ generate_tests()
                 g(0, ['if rand() >= (1 - ' tests{i}.probability ') * BRAPH2TEST.RANDOM'])
             else
                 % NOT tested if parallel on
-                g(0, ['if ~BRAPH2TEST.PARALLEL && rand() >= (1 - ' tests{i}.probability ') * BRAPH2TEST.RANDOM'])
+                g(0, ['if isempty(gcp(''nocreate'')) && rand() >= (1 - ' tests{i}.probability ') * BRAPH2TEST.RANDOM'])
             end
             
-                g(1, 'try')
+% % % %TBE
+% % %                 g(1, 'try')
                 
                     if warning_off
-                        gs(2, {['warning(''off'', [BRAPH2.STR '':' class_name '''])'], ''})
+                        gs(1, {['warning(''off'', [BRAPH2.STR '':' class_name '''])'], ''})
                     end
                 
-                    gs(2, tests{i}.code)
+                    gs(1, tests{i}.code)
 
                     if warning_off
-                        gs(2, {'', ['warning(''on'', [BRAPH2.STR '':' class_name '''])']})
+                        gs(1, {'', ['warning(''on'', [BRAPH2.STR '':' class_name '''])']})
                     end
                     
-                gs(1, {
-                     'catch e'
-                        ['\t' 'if BRAPH2TEST.PARALLEL && strcmp(e.identifier, ''MATLAB:Java:InvalidInput'')']
-                            ['\t\t' 'disp(''' class_name ' Test ' int2str(i) ' - MATLAB:Java:InvalidInput probably due to parallel testing.'')']
-                        ['\t' 'else']
-                            ['\t\t' 'rethrow(e)']
-                        ['\t' 'end']
-                     'end'
-                    })
+% % % %TBE
+% % %                 gs(1, {
+% % %                      'catch e'
+% % %                         ['\t' 'if BRAPH2TEST.PARALLEL && strcmp(e.identifier, ''MATLAB:Java:InvalidInput'')']
+% % %                             ['\t\t' 'disp(''' class_name ' Test ' int2str(i) ' - MATLAB:Java:InvalidInput probably due to parallel testing.'')']
+% % %                         ['\t' 'else']
+% % %                             ['\t\t' 'rethrow(e)']
+% % %                         ['\t' 'end']
+% % %                      'end'
+% % %                     })
 
             gs(0, {
                 'end'
