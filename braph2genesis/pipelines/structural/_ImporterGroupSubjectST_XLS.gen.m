@@ -370,8 +370,6 @@ end
 GUI
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectST')) filesep 'Example data ST XLS' filesep 'atlas.xlsx']);
 ba = im_ba.get('BA');

@@ -137,8 +137,6 @@ function create_Element(generator_file, target_dir)
 %  Name of the text on a single line.
 %  <strong>%%%% ¡probability!</strong>
 %  Probability with which this test is performed. By default it is 1.
-%  <strong>%%%% ¡parallel!</strong>
-%  If false, excludes this test when parallel testing is active. By default it is true.
 %  <strong>%%%% ¡code!</strong>
 %  Code of the test.
 %  Can be on multiple lines.

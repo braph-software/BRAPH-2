@@ -43,8 +43,6 @@ ST_G (gui, string) is a prop gui string.
 Buttons & Listener Graphics
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 gt = GTA_PanelProp();
 gui = GUI('POSITION', [0 0 1 1], 'CLOSEREQ', false);
@@ -260,8 +258,6 @@ assert(isa(pr_G.getr('LISTENER_LOCKED'), 'NoValue'))
 Button & Listener Dynamics
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 gt = GTA_PanelProp();
 gui = GUI('POSITION', [0 0 1 1], 'CLOSEREQ', false);

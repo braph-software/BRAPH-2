@@ -231,8 +231,6 @@ pr = PanelPropCell('EL', sub, 'PROP', SubjectST_MP.ST_MP, ...
 GUI
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 im_ba = ImporterBrainAtlasXLS('FILE', 'destrieux_atlas.xlsx');
 ba = im_ba.get('BA');

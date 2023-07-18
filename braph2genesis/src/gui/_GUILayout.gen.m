@@ -282,8 +282,6 @@ true
 %%% ¡test!
 %%%% ¡name!
 Remove Figures
-%%%% ¡parallel!
-false
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':GUILayout'])
 assert(length(findall(0, 'type', 'figure')) == 3)
@@ -295,8 +293,6 @@ warning('on', [BRAPH2.STR ':GUILayout'])
 Basics
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 gui = GUILayout( ...
     'EL_CLASS', IndexedDictionary(), ...

@@ -43,8 +43,6 @@ IT_G (gui, item) is a prop gui item.
 PanelPropItem
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 gt = GTA_IT();
 gui = GUI('POSITION', [0 0 1 1], 'CLOSEREQ', false);

@@ -61,8 +61,6 @@ NC_G (gui, cvector) is a prop gui cvector.
 PanelPropMatrix
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 gt = GTA_NC();
 gui = GUI('POSITION', [0 0 1 1], 'CLOSEREQ', false);

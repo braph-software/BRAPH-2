@@ -622,8 +622,6 @@ true
 %%% ¡test!
 %%%% ¡name!
 Remove Figures
-%%%% ¡parallel!
-false
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':GUIFig'])
 assert(length(findall(0, 'type', 'figure')) == 17)
@@ -635,8 +633,6 @@ warning('on', [BRAPH2.STR ':GUIFig'])
 Basics
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 pf = PanelFig();
 gui = GUIFig('PF', pf, 'POSITION', [0 .5 .1 .5], 'CLOSEREQ', false);

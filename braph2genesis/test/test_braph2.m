@@ -61,7 +61,7 @@ clear braph2_dir pipelines_dir pipelines_dir_list i
 
 %% Runs tests
 warning_backup = warning();
-results = runtests(directories_to_test, 'UseParallel', BRAPH2TEST.PARALLEL);
+results = runtests(directories_to_test, 'UseParallel', false, 'Strict', true);
 warning(warning_backup)
 
 %% Shows test results
