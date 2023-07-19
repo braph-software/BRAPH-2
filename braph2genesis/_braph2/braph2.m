@@ -16,13 +16,14 @@ function braph2(gui, ewm)
 %  - NN: "Deep Learning Toolbox"
 %
 % BRAPH2 packages:
-%  <a href="matlab:help src         ">src</a>           - software core
-%  <a href="matlab:help brainsurfs  ">brainsurfs</a>    - brain surfaces
-%  <a href="matlab:help atlases     ">atlases</a>       - brain atlases
-%  <a href="matlab:help graphs      ">graphs</a>        - graphs
-%  <a href="matlab:help measures    ">measures</a>      - measures
-%  <a href="matlab:help pipelines   ">pipelines</a>     - pipelines
-%  <a href="matlab:help test        ">test</a>          - unit testing
+%  <a href="matlab:help src             ">src</a>            - software core
+%  <a href="matlab:help brainsurfs      ">brainsurfs</a>     - brain surfaces
+%  <a href="matlab:help atlases         ">atlases</a>        - brain atlases
+%  <a href="matlab:help graphs          ">graphs</a>         - graphs
+%  <a href="matlab:help measures        ">measures</a>       - measures
+%  <a href="matlab:help neuralnetworks  ">neuralnetworks</a> - neural networks
+%  <a href="matlab:help pipelines       ">pipelines</a>      - pipelines
+%  <a href="matlab:help test            ">test</a>           - unit testing
 %
 % See also BRAPH2GUI.
 
@@ -38,7 +39,7 @@ addpath([src_dir filesep 'atlas'])
 addpath([src_dir filesep 'gt'])
 addpath([src_dir filesep 'cohort'])
 addpath([src_dir filesep 'analysis'])
-% % % addpath([src_dir filesep 'nn'])
+addpath([src_dir filesep 'nn'])
 addpath([src_dir filesep 'gui'])
 addpath([src_dir filesep 'gui' filesep 'examples'])
 
@@ -54,8 +55,8 @@ addpath(graphs_dir)
 measures_dir = [braph2_dir filesep 'measures'];
 addpath(measures_dir)
 
-% % % neuralnetworks_dir = [braph2_dir filesep 'neuralnetworks'];
-% % % addpath(neuralnetworks_dir)
+neuralnetworks_dir = [braph2_dir filesep 'neuralnetworks'];
+addpath(neuralnetworks_dir)
 
 test_dir = [braph2_dir filesep 'test'];
 addpath(test_dir)
