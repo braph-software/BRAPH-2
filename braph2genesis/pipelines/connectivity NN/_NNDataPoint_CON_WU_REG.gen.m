@@ -37,31 +37,38 @@ NOTES (metadata, string) are some specific notes about the datapoint for neural 
 %%%% ¡default!
 'NNDataPoint_CON_WU_REG notes'
 
-%%% ¡prop!
-INPUT (result, cell) is the input value for this data point.
-%%%% ¡calculate!
-value = {};
-    
-%%% ¡prop!
-TARGET (result, cell) is the target value for this data point.
-%%%% ¡calculate!
-value = {};
-
 %% ¡props!
 
 %%% ¡prop!
 SUB (data, item) is a subject with connectivity data.
+%%%% ¡settings!
+'SubjectCON'
 
 %%% ¡prop!
 DEPENDANT_VARIABLES (parameter, stringlist) is a list of dependant variables to be used as regression targets.
 
+%%% ¡prop!
+INPUT (result, cell) is the input value for this data point.
+%%%% ¡calculate!
+g = GraphWU( ...
+    'ID', ['g ' dp.get('SUB').get('ID')], ...
+    'B', Callback('EL', dp.get('SUB'), 'TAG', 'CON') ...
+    );
+
+value = g.get('A');
+    
+%%% ¡prop!
+TARGET (result, cell) is the target value for this data point.
+%%%% ¡calculate!
+value = cellfun(@(x) dp.get('SUB').get('VOI_DICT').get('IT', x).get('V'), dp.get('DEPENDANT_VARIABLES'), 'UniformOutput', false);
+					
 %% ¡tests!
 
 %%% ¡test!
 %%%% ¡name!
 Create example files for regression
 %%%% ¡code!
-data_dir = [fileparts(which('NNData_CON_WU')) filesep 'Example data NN REGRESSION CON XLS'];
+data_dir = [fileparts(which('NNDataPoint_CON_WU_REG')) filesep 'Example data NN REGRESSION CON XLS'];
 if ~isdir(data_dir)
     mkdir(data_dir);
 
@@ -150,18 +157,42 @@ end
 Create a NNData containg NNDataPoint_CON_WU_REG 
 
 % %%% !test!
-% gr = import data using Group of SubjectCON
-% 
+% Load BrainAtlas
+im_ba = ImporterBrainAtlasXLS( ...
+    'FILE', [fileparts(which('NNDataPoint_CON_WU_REG')) filesep 'Example data NN REGRESSION CON XLS' filesep 'atlas.xlsx'], ...
+    'WAITBAR', true ...
+    );
+
+ba = im_ba.get('BA');
+
+% Load Groups of SubjectCON
+im_gr = ImporterGroupSubjectCON_XLS( ...
+    'DIRECTORY', [fileparts(which('NNDataPoint_CON_WU_REG')) filesep 'Example data NN REGRESSION CON XLS' filesep 'CON_Group_XLS'], ...
+    'BA', ba, ...
+    'WAITBAR', true ...
+    );
+
+gr = im_gr.get('GR');
+
 % create a NNData
-% d = NNData( ...
-%     'DP_CLASS', 'NNDataPoint_CON_WU', ...
-%     'DP_DICT', IndexedDictionary(...
-%         'IT_CLASS', 'NNDataPoint_CON_WU', ...
-%         'IT_LIST', {@(x) NNDataPoint_CON_WU('ID', x.get('ID'), 'SUB', x, 'XXXX', x.get('VOI_DICT').get('KEYS')), gr.get('SUB_DICT').get('IT_LIST'), ... )} ...
-%         ) ...
-%     )
-% 
-% verify that input and target work
-% ...
+it_list = cellfun(@(x) NNDataPoint_CON_WU_REG( ...
+    'ID', x.get('ID'), ...
+    'SUB', x, ...
+    'DEPENDANT_VARIABLES', x.get('VOI_DICT').get('KEYS')), ...
+    gr.get('SUB_DICT').get('IT_LIST'), ...
+    'UniformOutput', false);
 
+dp_list = IndexedDictionary(...
+        'IT_CLASS', 'NNDataPoint_CON_WU_REG', ...
+        'IT_LIST', it_list ...
+        );
 
+d = NNData( ...
+    'DP_CLASS', 'NNDataPoint_CON_WU_REG', ...
+    'DP_DICT', dp_list ...
+    );
+
+a = it_list{1}.get('TARGET')
+a = it_list{1}.get('INPUT')
+a = d.get('INPUTS')
+a = d.get('TARGETS')

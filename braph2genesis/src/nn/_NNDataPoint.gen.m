@@ -36,11 +36,3 @@ LABEL (metadata, string) is an extended label of the datapoint for neural networ
 NOTES (metadata, string) are some specific notes about the datapoint for neural network analysis.
 %%%% ¡default!
 'NNDataPoint notes'
-    
-%% ¡props!
-
-%%% ¡prop!
-INPUT (result, cell) is the input value for this data point.
-    
-%%% ¡prop!
-TARGET (result, cell) is the target value for this data point.
