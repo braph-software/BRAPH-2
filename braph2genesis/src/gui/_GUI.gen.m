@@ -109,7 +109,7 @@ end
 %%% ¡prop!
 POSITION (gui, rvector) is the normalized position of the GUI on the screen.
 %%%% ¡default!
-[.00 .00 .20 1.00]
+[.00 .00 (PanelElement.getPropDefault('MIN_WIDTH')+20)/w(0, 'pixels') 1.00]
 %%%% ¡check_prop!
 check = (length(value) == 4) && all(value(3:4) >= 0);
 %%%% ¡postset!
