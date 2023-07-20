@@ -55,9 +55,9 @@ DP_DICT (data, idict) is an indexed dictionary containing the data points.
 %%% ¡prop!
 INPUTS (result, cell) is a collection of the inputs from all data points.
 %%%% ¡calculate!
-value = cellfun(@(x) x.get('INPUT'), d.get('DP_DICT').get('IT_LIST'), 'UniformOutput', false);
+value = cellfun(@(dp) dp.get('INPUT'), d.get('DP_DICT').get('IT_LIST'), 'UniformOutput', false);
 
 %%% ¡prop!
 TARGETS (result, cell) is a collection of the targets from all data points.
 %%%% ¡calculate!
-value = cellfun(@(x) x.get('TARGET'), d.get('DP_DICT').get('IT_LIST'), 'UniformOutput', false);
+value = cellfun(@(dp) dp.get('TARGET'), d.get('DP_DICT').get('IT_LIST'), 'UniformOutput', false);

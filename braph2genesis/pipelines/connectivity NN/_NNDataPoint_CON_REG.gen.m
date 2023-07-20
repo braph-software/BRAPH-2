@@ -1,41 +1,50 @@
 %% ¡header!
-NNDataPoint_CON_WU_REG < NNDataPoint (dp, neural network data point) is a datapoint for neural network analysis.
+NNDataPoint_CON_REG < NNDataPoint (dp, neural network data point) is a datapoint for neural network analysis.
 
 %%% ¡description!
-NNDataPoint_CON_WU_REG contains the input and target for neural network analysis.
-The input is derived from the adjacency matrice of Graph WU, which corresponds the subject with the connectivity data.
-The target is obtained from the covariate list to be the dependnt variables for regrssion task.
+NNDataPoint_CON_REG contains the input and target for neural network analysis.
+The input is the connectivity data from a subject.
+The target is obtained from the covariate list for regrssion task.
 
 %% ¡props_update!
 %%% ¡prop!
 NAME (constant, string) is the name of the datapoint for neural network analysis.
 %%%% ¡default!
-'NNDataPoint_CON_WU_REG'
+'NNDataPoint_CON_REG'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the datapoint for neural network analysis.
 %%%% ¡default!
-'NNDataPoint_CON_WU_REG contains the input and target for neural network analysis. The input is obtained from the adjacency matrice of Graph WU which take in the connectivity data. The target is obtained from the covariate list to be the dependnt variable.'
-
+'NNDataPoint_CON_REG contains the input and target for neural network analysis. The input is the connectivity data from a subject. The target is obtained from the covariate list for regrssion task.'
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the datapoint for neural network analysis.
 %%%% ¡settings!
-'NNDataPoint_CON_WU_REG'
+'NNDataPoint_CON_REG'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the datapoint for neural network analysis.
 %%%% ¡default!
-'NNDataPoint_CON_WU_REG ID'
+'NNDataPoint_CON_REG ID'
 
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the datapoint for neural network analysis.
 %%%% ¡default!
-'NNDataPoint_CON_WU_REG label'
+'NNDataPoint_CON_REG label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the datapoint for neural network analysis.
 %%%% ¡default!
-'NNDataPoint_CON_WU_REG notes'
+'NNDataPoint_CON_REG notes'
+
+%%% ¡prop!
+INPUT (result, cell) is the input value for this data point.
+%%%% ¡calculate!
+value = {dp.get('SUB').get('CON')};
+    
+%%% ¡prop!
+TARGET (result, cell) is the target value for this data point.
+%%%% ¡calculate!
+value = cellfun(@(x) dp.get('SUB').get('VOI_DICT').get('IT', x).get('V'), dp.get('TARGET_IDS'), 'UniformOutput', false);
 
 %% ¡props!
 
@@ -45,30 +54,18 @@ SUB (data, item) is a subject with connectivity data.
 'SubjectCON'
 
 %%% ¡prop!
-DEPENDANT_VARIABLES (parameter, stringlist) is a list of dependant variables to be used as regression targets.
-
-%%% ¡prop!
-INPUT (result, cell) is the input value for this data point.
-%%%% ¡calculate!
-g = GraphWU( ...
-    'ID', ['g ' dp.get('SUB').get('ID')], ...
-    'B', Callback('EL', dp.get('SUB'), 'TAG', 'CON') ...
-    );
-
-value = g.get('A');
-    
-%%% ¡prop!
-TARGET (result, cell) is the target value for this data point.
-%%%% ¡calculate!
-value = cellfun(@(x) dp.get('SUB').get('VOI_DICT').get('IT', x).get('V'), dp.get('DEPENDANT_VARIABLES'), 'UniformOutput', false);
+TARGET_IDS (parameter, stringlist) is a list of target IDs to be used as regression targets.
 					
 %% ¡tests!
+
+%%% ¡excluded_props!
+[NNDataPoint_CON_REG.SUB]
 
 %%% ¡test!
 %%%% ¡name!
 Create example files for regression
 %%%% ¡code!
-data_dir = [fileparts(which('NNDataPoint_CON_WU_REG')) filesep 'Example data NN REGRESSION CON XLS'];
+data_dir = [fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS'];
 if ~isdir(data_dir)
     mkdir(data_dir);
 
@@ -110,13 +107,16 @@ if ~isdir(data_dir)
         % axis equal
 
         A = full(adjacency(h)); A(1:length(A)+1:numel(A)) = 0; % extract the adjacency matrix
-        r = 0 + (0.5 - 0)*rand(size(A)); diffA = A - r; A(A ~= 0) = diffA(A ~= 0); % make the adjacency matrix weighted
+        r = 0 + (0.5 - 0) * rand(size(A)); diffA = A - r; A(A ~= 0) = diffA(A ~= 0); % make the adjacency matrix weighted
         A = max(A, transpose(A)); % make the adjacency matrix symmetric
 
         writetable(array2table(A), [gr_dir filesep() sub_id '.xlsx'], 'WriteVariableNames', false)
 
         % variables of interest
-        vois = [vois; {sub_id, randi(90), sex_options(randi(2))}];
+        age_upperBound = 80;
+        age_lowerBound = 50;
+        age = age_lowerBound + beta(i)*(age_upperBound - age_lowerBound);
+        vois = [vois; {sub_id, age, sex_options(randi(2))}];
     end
     writetable(table(vois), [data_dir filesep() gr_name '.vois.xlsx'], 'WriteVariableNames', false)
 
@@ -154,12 +154,12 @@ end
 
 %%% ¡test! 
 %%%% ¡name!
-Create a NNData containg NNDataPoint_CON_WU_REG with simulated data
+Create a NNData containg NNDataPoint_CON_REG with simulated data
 
 % %%% !test!
 % Load BrainAtlas
 im_ba = ImporterBrainAtlasXLS( ...
-    'FILE', [fileparts(which('NNDataPoint_CON_WU_REG')) filesep 'Example data NN REGRESSION CON XLS' filesep 'atlas.xlsx'], ...
+    'FILE', [fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS' filesep 'atlas.xlsx'], ...
     'WAITBAR', true ...
     );
 
@@ -167,54 +167,52 @@ ba = im_ba.get('BA');
 
 % Load Groups of SubjectCON
 im_gr = ImporterGroupSubjectCON_XLS( ...
-    'DIRECTORY', [fileparts(which('NNDataPoint_CON_WU_REG')) filesep 'Example data NN REGRESSION CON XLS' filesep 'CON_Group_XLS'], ...
+    'DIRECTORY', [fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS' filesep 'CON_Group_XLS'], ...
     'BA', ba, ...
     'WAITBAR', true ...
     );
 
 gr = im_gr.get('GR');
 
-% create a item list of NNDataPoint_CON_WU_REG
-it_list = cellfun(@(x) NNDataPoint_CON_WU_REG( ...
+% create a item list of NNDataPoint_CON_REG
+it_list = cellfun(@(x) NNDataPoint_CON_REG( ...
     'ID', x.get('ID'), ...
     'SUB', x, ...
-    'DEPENDANT_VARIABLES', x.get('VOI_DICT').get('KEYS')), ...
+    'TARGET_IDS', x.get('VOI_DICT').get('KEYS')), ...
     gr.get('SUB_DICT').get('IT_LIST'), ...
     'UniformOutput', false);
 
-% create a NNDataPoint_CON_WU_REG DICT
+% create a NNDataPoint_CON_REG DICT
 dp_list = IndexedDictionary(...
-        'IT_CLASS', 'NNDataPoint_CON_WU_REG', ...
+        'IT_CLASS', 'NNDataPoint_CON_REG', ...
         'IT_LIST', it_list ...
         );
 
-% create a NNData containing the NNDataPoint_CON_WU_REG DICT
+% create a NNData containing the NNDataPoint_CON_REG DICT
 d = NNData( ...
-    'DP_CLASS', 'NNDataPoint_CON_WU_REG', ...
+    'DP_CLASS', 'NNDataPoint_CON_REG', ...
     'DP_DICT', dp_list ...
     );
 
 % Check whether the number of inputs matches
 assert(length(d.get('INPUTS')) == gr.get('SUB_DICT').get('LENGTH'), ...
-		[BRAPH2.STR ':NNDataPoint_CON_WU_REG:' BRAPH2.FAIL_TEST], ...
-		'NNDataPoint_CON_WU_REG does not construct the dataset correctly. The number of the inputs should be same as the number of imported subjects.' ...
+		[BRAPH2.STR ':NNDataPoint_CON_REG:' BRAPH2.FAIL_TEST], ...
+		'NNDataPoint_CON_REG does not construct the dataset correctly. The number of the inputs should be same as the number of imported subjects.' ...
 		)
 
 % Check whether the number of targets matches
 assert(length(d.get('TARGETS')) == gr.get('SUB_DICT').get('LENGTH'), ...
-		[BRAPH2.STR ':NNDataPoint_CON_WU_REG:' BRAPH2.FAIL_TEST], ...
-		'NNDataPoint_CON_WU_REG does not construct the dataset correctly. The number of the targets should be same as the number of imported subjects.' ...
+		[BRAPH2.STR ':NNDataPoint_CON_REG:' BRAPH2.FAIL_TEST], ...
+		'NNDataPoint_CON_REG does not construct the dataset correctly. The number of the targets should be same as the number of imported subjects.' ...
 		)
 
 % Check whether the content of input for a single datapoint matches
-index = randi([1 gr.get('SUB_DICT').get('LENGTH')]);
-individual_input = d.get('DP_DICT').get('IT', index);
-known_input = GraphWU( ...
-    'ID', ['g ' gr.get('SUB_DICT').get('IT', index).get('ID')], ...
-    'B', Callback('EL', gr.get('SUB_DICT').get('IT', 1), 'TAG', 'CON') ...
-    ).get('A');
-
-assert(length(d.get('TARGETS')) == gr.get('SUB_DICT').get('LENGTH'), ...
-		[BRAPH2.STR ':NNDataPoint_CON_WU_REG:' BRAPH2.FAIL_TEST], ...
-		'NNDataPoint_CON_WU_REG does not construct the dataset correctly. The input value is not derived correctly.' ...
-		)
+for index = 1:1:gr.get('SUB_DICT').get('LENGTH')
+    individual_input = d.get('DP_DICT').get('IT', index);
+    known_input = {gr.get('SUB_DICT').get('IT', index).get('CON')};
+    
+    assert(length(d.get('TARGETS')) == gr.get('SUB_DICT').get('LENGTH'), ...
+		    [BRAPH2.STR ':NNDataPoint_CON_REG:' BRAPH2.FAIL_TEST], ...
+		    'NNDataPoint_CON_REG does not construct the dataset correctly. The input value is not derived correctly.' ...
+		    )
+end
