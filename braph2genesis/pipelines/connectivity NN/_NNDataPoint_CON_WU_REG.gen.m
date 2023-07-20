@@ -154,7 +154,7 @@ end
 
 %%% ¡test! 
 %%%% ¡name!
-Create a NNData containg NNDataPoint_CON_WU_REG 
+Create a NNData containg NNDataPoint_CON_WU_REG with simulated data
 
 % %%% !test!
 % Load BrainAtlas
