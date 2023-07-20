@@ -7,8 +7,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %
     % Each element is essentially a container for a series of properties.
     %  Each propery has a category (see <a href="matlab:help Category">Category</a>) and a format (see <a href="matlab:help Format">Format</a>).
-    %  Each subelement can implement the following protected methods:
-    %   <strong>conditioning</strong>   - conditions a value before setting a property
+    %  Each subelement can implement the following protected methods (see <a href="matlab:help Element.set">Element.set</a>):
+    %   <strong>conditioning</strong>   - conditions a value before setting a property (static function)
     %   <strong>preset</strong>         - presets a value before setting a property
     %   <strong>checkProp</strong>      - checks the property format before setting
     %   <strong>postset</strong>        - postsets a property after it has been set
