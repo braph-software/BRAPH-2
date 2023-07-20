@@ -1,5 +1,5 @@
 %% ¡header!
-SettingsTextPP < PanelProp (pr, settings text panel) is the panel with text settings.
+SettingsTextPP < SettingsPP (pr, settings text panel) is the panel with text settings.
 
 %%% ¡description!
 SettingsTextPP plots the panel for text settings

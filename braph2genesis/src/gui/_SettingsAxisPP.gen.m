@@ -1,5 +1,5 @@
 %% ¡header!
-SettingsAxisPP < PanelProp (pr, settings axis panel) is the panel with axis settings.
+SettingsAxisPP < SettingsPP (pr, settings axis panel) is the panel with axis settings.
 
 %%% ¡description!
 SettingsAxisPP plots the panel for axis settings including 
