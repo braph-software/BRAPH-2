@@ -16,6 +16,7 @@ NAME (constant, string) is the name of the datapoint for neural network analysis
 DESCRIPTION (constant, string) is the description of the datapoint for neural network analysis.
 %%%% ¡default!
 'NNDataPoint_CON_REG contains the input and target for neural network analysis. The input is the connectivity data from a subject. The target is obtained from the covariate list for regrssion task.'
+
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the datapoint for neural network analysis.
 %%%% ¡settings!
