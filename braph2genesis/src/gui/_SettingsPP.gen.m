@@ -42,6 +42,16 @@ NOTES (metadata, string) are some specific notes about the settings panel.
 'SettingsPP notes'
 
 %%% ¡prop!
+EL (data, item) is the element.
+%%%% ¡default!
+BrainSurfacePF()
+
+%%% ¡prop!
+PROP (data, scalar) is the property number.
+%%%% ¡default!
+BrainSurfacePF.ST_AXIS
+
+%%% ¡prop!
 LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
 %%%% ¡calculate!
 value = {listener(pr.get('EL').get(pr.get('PROP')), 'PropSet', @cb_listener_set)}; 
@@ -83,7 +93,7 @@ end
 %% ¡tests!
 
 %%% ¡excluded_props!
-[SettingsPP.PARENT SettingsPP.H SettingsPP.LISTENER_CB SettingsPP.BUTTON_AXISCOLOR SettingsPP.CHECKBOX_AXIS SettingsPP.CHECKBOX_GRID SettingsPP.CHECKBOX_EQUAL SettingsPP.CHECKBOX_TIGHT SettingsPP.CHECKBOX_BOX]
+[SettingsPP.PARENT SettingsPP.H SettingsPP.LISTENER_CB]
 
 %%% ¡warning_off!
 true
