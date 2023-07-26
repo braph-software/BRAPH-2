@@ -54,19 +54,19 @@ SPLIT (data, cell) is an cell containing the ratio numbers or the vectors statin
 check = all(cellfun(@(x) all(round(x) == x & all(x <= dsp.get('D').get('DP_DICT').get('LENGTH'))), dsp.get('SPLIT')));
 %%%% ¡postset!
 value = dsp.get('SPLIT');
-if all(cellfun(@isscalar, value) & sum(cell2mat(value)) <= 1) % Check if the sum of elements is equal to 1
+if all(cellfun(@isscalar, value)) & sum(cell2mat(value)) <= 1 & sum(cell2mat(value)) > 0% Check if the sum of elements is equal to 1
     num_sub = dsp.get('D').get('DP_DICT').get('LENGTH');
     % Calculate the lengths of the arrays based on the portions
     lengths = round(cell2mat(value) * num_sub);
 
     % Generate random arrays of the specified lengths
-    indices = randperm(totalLength);
+    indices = randperm(num_sub);
     startIndex = 1;
-    resultCell = cell(numel(lengths), 1);
+    value = cell(numel(lengths), 1);
 
     for i = 1:numel(lengths)
         endIndex = startIndex + lengths(i) - 1;
-        resultCell{i} = sort(indices(startIndex:endIndex));
+        value{i} = sort(indices(startIndex:endIndex));
         startIndex = endIndex + 1;
     end
     dsp.set('SPLIT', value);
