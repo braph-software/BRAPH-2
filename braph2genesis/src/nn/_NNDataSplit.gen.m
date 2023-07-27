@@ -87,7 +87,7 @@ value = cellfun(@(x) NNData('DP_DICT', IndexedDictionary(...
 
 %%% ¡test!
 %%%% ¡name!
-Splitting test with assigned indexes
+Splitting dataset with assigned indexes
 %%%% ¡code!
 
 % create a NNDataPoint itemlist
@@ -122,7 +122,7 @@ assert(all(check), ...
 
 %%% ¡test!
 %%%% ¡name!
-Splitting test with random indexes
+Splitting dataset with random indexes
 %%%% ¡code!
 
 % create a NNDataPoint itemlist
