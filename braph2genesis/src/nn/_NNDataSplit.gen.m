@@ -1,8 +1,10 @@
 %% ¡header!
-NNDataSplit < ConcreteElement (dsp, splitter of a neural network data) splites a neural network data.
+NNDataSplit < ConcreteElement (dsp, splitter of a neural network data) splits a dataset into several partitioned datasets based on specified indices or proportions.
 
 %%% ¡description!
-NNDataSplit splits a dataset.
+NNDataSplit allows users to split a given dataset into multiple smaller datasets, each forming a partition. The splitting can be achieved by providing either specific indices or proportions for the datapoints in each partitioned dataset.
+For example usage, to split the dataset into two partitions, one containing datapoints 1 and 2, and the other containing datapoints 3, 4, and 5, the SPLIT property should be set as {[1 2], [3 4 5]}.
+Alternatively, using the SPLIT property as {0.2, 0.8}, NNDataSplit will randomly assign datapoints to two datasets, with the first dataset containing approximately 20 percent of the total datapoints (datapoints 1 and 3, for instance), and the second dataset containing the remaining 80 percent of the datapoints (datapoints 2, 4, and 5).
 
 %%% ¡seealso!
 NNData
@@ -17,7 +19,7 @@ NAME (constant, string) is the name of the splitter of a neural network data.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the splitter of a neural network data.
 %%%% ¡default!
-'NNDataSplit represents a dataset wherein each datapoint, the corresponding class defined as DP_CLASS property. NNData encloses all the necessary inputs and targets, readily available for integration into neural network analysis procedures.'
+'NNDataSplit allows users to split a given dataset into multiple smaller datasets, each forming a partition. The splitting can be achieved by providing either specific indices or proportions for the datapoints in each partitioned dataset. For example usage, to split the dataset into two partitions, one containing datapoints 1 and 2, and the other containing datapoints 3, 4, and 5, the SPLIT property should be set as {[1 2], [3 4 5]}. Alternatively, using the SPLIT property as {0.2, 0.8}, NNDataSplit will randomly assign datapoints to two datasets, with the first dataset containing approximately 20 percent of the total datapoints (datapoints 1 and 3, for instance), and the second dataset containing the remaining 80 percent of the datapoints (datapoints 2, 4, and 5).'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the splitter of a neural network data.
@@ -54,21 +56,19 @@ SPLIT (data, cell) is an cell containing the ratio numbers or the vectors statin
 check = all(cellfun(@(x) all(round(x) == x & all(x <= dsp.get('D').get('DP_DICT').get('LENGTH'))), dsp.get('SPLIT')));
 %%%% ¡postset!
 value = dsp.get('SPLIT');
-if all(cellfun(@isscalar, value)) & sum(cell2mat(value)) <= 1 & sum(cell2mat(value)) > 0% Check if the sum of elements is equal to 1
+if all(cellfun(@isscalar, value)) & sum(cell2mat(value)) <= 1 & sum(cell2mat(value)) > 0 
     num_sub = dsp.get('D').get('DP_DICT').get('LENGTH');
-    % Calculate the lengths of the arrays based on the portions
     lengths = round(cell2mat(value) * num_sub);
-
-    % Generate random arrays of the specified lengths
     indices = randperm(num_sub);
+    
     startIndex = 1;
     value = cell(numel(lengths), 1);
-
     for i = 1:numel(lengths)
         endIndex = startIndex + lengths(i) - 1;
         value{i} = sort(indices(startIndex:endIndex));
         startIndex = endIndex + 1;
     end
+    
     dsp.set('SPLIT', value);
 end
 
@@ -87,7 +87,7 @@ value = cellfun(@(x) NNData('DP_DICT', IndexedDictionary(...
 
 %%% ¡test!
 %%%% ¡name!
-splitting test with assigned indexes
+Splitting test with assigned indexes
 %%%% ¡code!
 
 % create a NNDataPoint itemlist
@@ -122,7 +122,7 @@ assert(all(check), ...
 
 %%% ¡test!
 %%%% ¡name!
-splitting test with random indexes
+Splitting test with random indexes
 %%%% ¡code!
 
 % create a NNDataPoint itemlist
