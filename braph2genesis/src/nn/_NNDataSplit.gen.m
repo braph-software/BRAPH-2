@@ -51,7 +51,7 @@ D (data, item) is a dataset for neural network analysis.
 NNData('DP_CLASS', 'NNDataPoint', 'DP_DICT', IndexedDictionary('IT_CLASS', 'NNDataPoint'))
 
 %%% ¡prop!
-SPLIT (data, cell) is an cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
+SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
 %%%% ¡check_value!
 check = all(cellfun(@(x) all(round(x) == x & all(x <= dsp.get('D').get('DP_DICT').get('LENGTH'))), dsp.get('SPLIT')));
 %%%% ¡postset!
