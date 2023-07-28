@@ -1,5 +1,5 @@
 %% ¡header!
-SettingsLinePP < PanelProp (pr, settings line panel) is the panel with line settings.
+SettingsLinePP < SettingsPP (pr, settings line panel) is the panel with line settings.
 
 %%% ¡description!
 SettingsLinePP plots the panel for line settings,

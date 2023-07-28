@@ -1,5 +1,5 @@
 %% ¡header!
-SettingsPositionPP < PanelProp (pr, settings position panel) is the panel with position settings.
+SettingsPositionPP < SettingsPP (pr, settings position panel) is the panel with position settings.
 
 %%% ¡description!
 SettingsPositionPP plots the panel for position settings including 

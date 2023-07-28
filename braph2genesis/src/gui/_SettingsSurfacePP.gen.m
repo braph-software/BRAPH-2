@@ -1,5 +1,5 @@
 %% ¡header!
-SettingsSurfacePP < PanelProp (pr, settings surface panel) is the panel with surface settings.
+SettingsSurfacePP < SettingsPP (pr, settings surface panel) is the panel with surface settings.
 
 %%% ¡description!
 SettingsSurfacePP plots the panel for surface settings

@@ -1,5 +1,5 @@
 %% ¡header!
-SettingsAreaPP < PanelProp (pr, settings area panel) is the panel with area settings.
+SettingsAreaPP < SettingsPP (pr, settings area panel) is the panel with area settings.
 
 %%% ¡description!
 SettingsAreaPP plots the panel for area settings,

@@ -1,5 +1,5 @@
 %% ¡header!
-SettingsAmbientPP < PanelProp (pr, settings ambient panel) is the panel with ambient settings.
+SettingsAmbientPP < SettingsPP (pr, settings ambient panel) is the panel with ambient settings.
 
 %%% ¡description!
 SettingsAmbientPP plots the panel for ambient settings including 
