@@ -1,5 +1,5 @@
 %% ¡header!
-NNBase < ConcreteElement (nnt, neural network trainor) trains a neural network model.
+NNBase < ConcreteElement (nn, neural network trainor) trains a neural network model.
 
 %%% ¡description!
 
