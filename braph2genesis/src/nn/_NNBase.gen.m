@@ -64,16 +64,22 @@ false
 SOLVER (parameter, option) is an option for the solver.
 
 %%% ¡prop!
+PLOT_TRAINING (parameter, logical) is an option for the plot of training-progress.
+%%%% ¡default!
+false
+
+%%% ¡prop!
 D (data, item) is the data to be used to train the NN.
 %%%% ¡settings!
 'NNData'
 
 %%% ¡prop!
-NNArchitecture (data, net) is the neural network architectre.
-%%%% ¡settings!
-'NNArchitecture'
+DATA_FORMAT (parameter, string) specifies the format of the data that flows through the network.
+%%%% ¡default!
+'BCSS'
+
+%%% ¡prop!
+DATA_CONSTRUCT (query, cell) constructs the data based on specified data_format that flows through the network.
 
 %%% ¡prop!
 MODEL (result, net) is a trained neural network model.
-%%%% ¡calculate!
-%value = trainNetwork(inputs, targets, layers, options);
