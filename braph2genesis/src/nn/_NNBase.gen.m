@@ -75,8 +75,6 @@ D (data, item) is the data to be used to train the NN.
 
 %%% ¡prop!
 DATA_FORMAT (parameter, string) specifies the format of the data that flows through the network.
-%%%% ¡default!
-'BCSS'
 
 %%% ¡prop!
 DATA_CONSTRUCT (query, cell) constructs the data based on specified data_format that flows through the network.

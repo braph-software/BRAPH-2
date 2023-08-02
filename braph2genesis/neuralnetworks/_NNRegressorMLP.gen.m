@@ -39,9 +39,22 @@ NOTES (metadata, string) are some specific notes about the trainor for neural ne
 'NNRegressor notes'
     
 %%% ¡prop!
-INPUT_FORMAT (data, string) is the data format of neural network inputs.
+DATA_FORMAT (data, string) is the data format of neural network inputs.
 %%%% ¡default!
 'BCSS'
+
+%%% ¡prop!
+DATA_CONSTRUCT (query, cell) constructs the data based on specified data_format that flows through the network.
+%%%% ¡calculate!
+targets = nn.get('D').get('TARGETS');
+inputs = nn.get('D').get('INPUTS');
+value = [];
+for i = 1:1:length(inputs)
+    input = inputs{i};
+    value = [value input];
+end
+num_features = length(inputs_nn_format(:, 1));
+value = reshape(value, [1, 1, num_features, nn.get('D').get('DP_DICT').get('LENGTH')]);
 
 %%% ¡prop!
 MODEL (result, net) is a user defined neural network layers.
@@ -83,19 +96,6 @@ options = trainingOptions(nn.get('SOLVER'), ...
 
 % train the neural network
 value = trainNetwork(inputs, targets, net, options);
-
-%%% ¡prop!
-DATA_CONSTRUCT (query, cell) constructs the data based on specified data_format that flows through the network.
-%%%% ¡calculate!
-targets = nn.get('D').get('TARGETS');
-inputs = nn.get('D').get('INPUTS');
-value = [];
-for i = 1:1:length(inputs)
-    input = inputs{i};
-    value = [value input];
-end
-num_features = length(inputs_nn_format(:, 1));
-value = reshape(value, [1, 1, num_features, nn.get('D').get('DP_DICT').get('LENGTH')]);
 
 %% ¡props!
 
