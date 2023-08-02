@@ -62,6 +62,8 @@ false
 
 %%% ¡prop!
 SOLVER (parameter, option) is an option for the solver.
+%%%% ¡settings!
+{'adam' 'sgdm' 'rmsprop'}
 
 %%% ¡prop!
 PLOT_TRAINING (parameter, logical) is an option for the plot of training-progress.
@@ -77,7 +79,10 @@ D (data, item) is the data to be used to train the NN.
 DATA_FORMAT (parameter, string) specifies the format of the data that flows through the network.
 
 %%% ¡prop!
-DATA_CONSTRUCT (query, cell) constructs the data based on specified data_format that flows through the network.
+DATA_CONSTRUCT (query, cell) constructs the data based on specified data format that flows through the network.
+
+%%% ¡prop!
+RESPONSE_CONSTRUCT (query, cell) constructs the response based on specified data_format that flows through the network.
 
 %%% ¡prop!
 MODEL (result, net) is a trained neural network model.
