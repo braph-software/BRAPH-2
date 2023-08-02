@@ -11,7 +11,7 @@ The regressor trains on NN groups which contain the inputs and targets.
 LAYERS (parameter, rvector) is a vector representing the number of neurons in each layer.
 %%%% ¡default!
 []
-%%%% ¡postprocessing!c
+%%%% ¡postprocessing!
 if isempty(nn.get('LAYERS'))
     if nn.get('GR').get('SUB_DICT').length() > 0
         [inputs, num_features] = nn.reconstruct_inputs(nn.get('GR'));
@@ -47,7 +47,7 @@ FEATURE_SELECTION_RATIO (parameter, scalar) is the ratio of selected features.
 %%%% ¡default!
 1
 
-%%% ¡prop!INPUT_FORMAT
+%%% ¡prop!
 VERBOSE (parameter, logical) is an indicator to display training progress information.
 %%%% ¡default!
 false
