@@ -1,56 +1,5 @@
 close all; delete(findall(0, 'type', 'figure')); clear all
 
-
-%% NNDatta
-el_class_list = {'NNArchitecture' 'NNBase'}; % 'NNDataSplit' 'PanelElement' 'ImporterPipelineBRAPH2' 'ExporterPipelineBRAPH2'
-for i = 1:1:length(el_class_list)
-    el_class = el_class_list{i};
-    el_path = '/src/nn';
-    delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
-    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    ['test_' el_class]
-    eval(['test_' el_class])
-end
-
-%%
-el_class_list = {'NNRegressor'}; % 'PanelElement' 'ImporterPipelineBRAPH2' 'ExporterPipelineBRAPH2'
-for i = 1:1:length(el_class_list)
-    el_class = el_class_list{i};
-    el_path = '/neuralnetworks';
-    delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
-    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    eval(['test_' el_class])
-end
-
-
-%%
-el_class_list = {'NNDataPoint_CON_REG'}; % 'PanelElement' 'ImporterPipelineBRAPH2' 'ExporterPipelineBRAPH2'
-for i = 1:1:length(el_class_list)
-    el_class = el_class_list{i};
-    el_path = '/pipelines/connectivity NN';
-    delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
-    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-    eval(['test_' el_class])
-end
-%%
-source_dir = fileparts(which('braph2genesis'))
-target_dir = [fileparts(fileparts(which('braph2genesis'))) filesep 'braph2'];
-fp = filesep();
-% nn
-nn_gen_list = getGenerators([source_dir fp 'src' fp 'nn']);
-for i = 1:numel(nn_gen_list)
-    create_Element([source_dir fp 'src' fp 'nn' fp nn_gen_list{i}], [target_dir fp 'src' fp 'nn'])
-    create_Element([source_dir fp 'src' fp 'nn' fp nn_gen_list{i}], [target_dir fp 'src' fp 'nn'])
-end
-
-
-
 %% PanelProp Callback
 % el_class_list = {'ViewPP'} % 'PanelProp'
 % for i = 1:1:length(el_class_list)
