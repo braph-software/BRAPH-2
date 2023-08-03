@@ -2,11 +2,11 @@
 NNData < ConcreteElement (d, neural network data) is a dataset for neural network analysis.
 
 %%% ¡description!
-NNData represents a dataset wherein each datapoint, the corresponding class defined as DP_CLASS property.
-NNData encloses all the necessary inputs and targets, readily available for integration into neural network analysis procedures.
+NNData represents a dataset containing datapoints whose class is defined by the DP_CLASS property.
+NNData can contain all the necessary inputs and targets.
 
 %%% ¡seealso!
-NNDataPoint
+NNDataPoint, NNDataCombine, NNDataSplit
 
 %% ¡props_update!
 
@@ -18,7 +18,7 @@ NAME (constant, string) is the name of the dataset for neural network analysis.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the dataset for neural network analysis.
 %%%% ¡default!
-'NNData represents a dataset wherein each datapoint, the corresponding class defined as DP_CLASS property. NNData encloses all the necessary inputs and targets, readily available for integration into neural network analysis procedures.'
+'NNData represents a dataset containing datapoints whose class is defined by the DP_CLASS property. NNData can contain all the necessary inputs and targets.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the dataset for neural network analysis.
