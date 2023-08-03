@@ -1,39 +1,43 @@
 %% ¡header!
-NNDataPoint_CON_REG < NNDataPoint (dp, neural network data point) is a datapoint for neural network analysis.
+NNDataPoint_CON_REG < NNDataPoint (dp, connectivity regression data point) is a data point for regression with connectivity data.
 
 %%% ¡description!
-NNDataPoint_CON_REG contains the input and target for neural network analysis.
-The input is the connectivity data from a subject.
-The target is obtained from the covariate list for regrssion task.
+A data point for regression with connectivity data (NNDataPoint_CON_REG) 
+contains the input and target for neural network analysis with a subject with connectivity data (SubjectCON).
+The input is the connectivity data of the subject.
+The target is obtained from the variables of interest of the subject.
+
+%%% ¡seealso!
+SubjectCON
 
 %% ¡props_update!
 %%% ¡prop!
-NAME (constant, string) is the name of the datapoint for neural network analysis.
+NAME (constant, string) is the name of a data point for regression with connectivity data.
 %%%% ¡default!
 'NNDataPoint_CON_REG'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the datapoint for neural network analysis.
+DESCRIPTION (constant, string) is the description of a data point for regression with connectivity data.
 %%%% ¡default!
-'NNDataPoint_CON_REG contains the input and target for neural network analysis. The input is the connectivity data from a subject. The target is obtained from the covariate list for regrssion task.'
+'A data point for regression with connectivity data (NNDataPoint_CON_REG) contains the input and target for neural network analysis with a subject with connectivity data (SubjectCON). The input is the connectivity data of the subject. The target is obtained from the variables of interest of the subject.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the datapoint for neural network analysis.
+TEMPLATE (parameter, item) is the template of a data point for regression with connectivity data.
 %%%% ¡settings!
 'NNDataPoint_CON_REG'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the datapoint for neural network analysis.
+ID (data, string) is a few-letter code for a data point for regression with connectivity data.
 %%%% ¡default!
 'NNDataPoint_CON_REG ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the datapoint for neural network analysis.
+LABEL (metadata, string) is an extended label of a data point for regression with connectivity data.
 %%%% ¡default!
 'NNDataPoint_CON_REG label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the datapoint for neural network analysis.
+NOTES (metadata, string) are some specific notes about a data point for regression with connectivity data.
 %%%% ¡default!
 'NNDataPoint_CON_REG notes'
 
@@ -55,7 +59,7 @@ SUB (data, item) is a subject with connectivity data.
 'SubjectCON'
 
 %%% ¡prop!
-TARGET_IDS (parameter, stringlist) is a list of target IDs to be used as regression targets.
+TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as regression targets.
 					
 %% ¡tests!
 
@@ -155,7 +159,7 @@ end
 
 %%% ¡test! 
 %%%% ¡name!
-Create a NNData containg NNDataPoint_CON_REG with simulated data
+Create a NNDataset containg NNDataPoint_CON_REG with simulated data
 %%%% ¡code!
 % Load BrainAtlas
 im_ba = ImporterBrainAtlasXLS( ...
@@ -188,8 +192,8 @@ dp_list = IndexedDictionary(...
         'IT_LIST', it_list ...
         );
 
-% create a NNData containing the NNDataPoint_CON_REG DICT
-d = NNData( ...
+% create a NNDataset containing the NNDataPoint_CON_REG DICT
+d = NNDataset( ...
     'DP_CLASS', 'NNDataPoint_CON_REG', ...
     'DP_DICT', dp_list ...
     );

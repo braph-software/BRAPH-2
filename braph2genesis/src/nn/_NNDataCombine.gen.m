@@ -1,59 +1,59 @@
 %% ¡header!
-NNDataCombine < ConcreteElement (dco, splitter of a neural network data) combines neural network datasets.
+NNDatasetCombine < ConcreteElement (dco, splitter of a neural network data) combines neural network datasets.
 
 %%% ¡description!
-NNDataCombinen takes a itemlist of neural network datasets and combines them into a single dataset. 
+A dataset combiner (NNDatasetCombine) takes a list of neural network datasets and combines them into a single dataset. 
 The resulting combined dataset contains all the unique datapoints from the input datasets, 
 and any overlapping datapoints are excluded to ensure data consistency.
 
 %%% ¡seealso!
-NNData
+NNDataset, NNDatasetSplit
 
 %% ¡props_update!
 
 %%% ¡prop!
 NAME (constant, string) is the name of the combier of a neural network data.
 %%%% ¡default!
-'NNDataCombine'
+'NNDatasetCombine'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the combier of a neural network data.
 %%%% ¡default!
-'NNDataCombinen takes a itemlist of neural network datasets and combines them into a single dataset. The resulting combined dataset contains all the unique datapoints from the input datasets, and any overlapping datapoints are excluded to ensure data consistency.'
+'A dataset combiner (NNDatasetCombine) takes a list of neural network datasets and combines them into a single dataset. The resulting combined dataset contains all the unique datapoints from the input datasets, and any overlapping datapoints are excluded to ensure data consistency.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the combier of a neural network data.
 %%%% ¡settings!
-'NNDataCombine'
+'NNDatasetCombine'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the combier of a neural network data.
 %%%% ¡default!
-'NNDataCombine ID'
+'NNDatasetCombine ID'
 
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the combier of a neural network data.
 %%%% ¡default!
-'NNDataCombine label'
+'NNDatasetCombine label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the combier of a neural network data.
 %%%% ¡default!
-'NNDataCombine notes'
+'NNDatasetCombine notes'
     
 %% ¡props!
 
 %%% ¡prop!
-D_SPLIT (data, itemlist) is a items of datasets to be combined.
+D_LIST (data, itemlist) is a items of datasets to be combined.
 %%%% ¡settings!
-'NNData'
+'NNDataset'
 
 %%% ¡prop!
 D (result, item) is the combined neural network dataset.
 %%%% ¡settings!
-'NNData'
+'NNDataset'
 %%%% ¡calculate!
-dp_list = cellfun(@(x) x.get('DP_DICT').get('IT_LIST'), dco.get('D_SPLIT'), 'UniformOutput', false);
+dp_list = cellfun(@(x) x.get('DP_DICT').get('IT_LIST'), dco.get('D_LIST'), 'UniformOutput', false);
 
 % concatenate all subjectID
 dp_list = horzcat(dp_list{:});
@@ -67,13 +67,13 @@ else
     unique_dp_list = dp_list(sort(i_dp_ids));
 end
 
-% create the combined NNData
+% create the combined NNDataset
 combined_dp_dict = IndexedDictionary(...
     'IT_CLASS', 'NNDataPoint', ...
     'IT_LIST',  unique_dp_list ...
     );
 
-value = NNData('DP_DICT', combined_dp_dict);
+value = NNDataset('DP_DICT', combined_dp_dict);
 
 %% ¡tests!
 
@@ -103,14 +103,14 @@ dp_dict2 = IndexedDictionary(...
 
 dp_dict = {dp_dict1, dp_dict2};
 
-% create NNData itemlist containing two NNDatas
-d_list = cellfun(@(x) NNData('DP_DICT', x), dp_dict, 'UniformOutput', false);
+% create NNDataset itemlist containing two NNDataset
+d_list = cellfun(@(x) NNDataset('DP_DICT', x), dp_dict, 'UniformOutput', false);
 
-% create NNDataCombine to combine the two NNDatas
-d_combined = NNDataCombine('D_SPLIT', d_list).get('D');
+% create NNDatasetCombine to combine the two NNDataset
+d_combined = NNDatasetCombine('D_LIST', d_list).get('D');
 
 % Check whether the number of dp matches
 assert(d_combined.get('DP_DICT').get('LENGTH') == num_dp_all, ...
-    [BRAPH2.STR ':NNDataCombine:' BRAPH2.FAIL_TEST], ...
-    'NNDataCombine does not combine the datasets correctly. The number of the datapoint should be same as the sum of all input datasets.' ...
+    [BRAPH2.STR ':NNDatasetCombine:' BRAPH2.FAIL_TEST], ...
+    'NNDatasetCombine does not combine the datasets correctly. The number of the datapoint should be same as the sum of all input datasets.' ...
     )
