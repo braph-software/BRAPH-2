@@ -156,8 +156,7 @@ end
 %%% ¡test! 
 %%%% ¡name!
 Create a NNData containg NNDataPoint_CON_REG with simulated data
-
-% %%% !test!
+%%%% ¡code!
 % Load BrainAtlas
 im_ba = ImporterBrainAtlasXLS( ...
     'FILE', [fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS' filesep 'atlas.xlsx'], ...
@@ -217,3 +216,14 @@ for index = 1:1:gr.get('SUB_DICT').get('LENGTH')
 		    'NNDataPoint_CON_REG does not construct the dataset correctly. The input value is not derived correctly.' ...
 		    )
 end
+
+%%% ¡test! 
+%%%% ¡name!
+Example
+%%%% ¡code!
+% ensure the example data is generated
+if ~isfile([fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS' filesep 'atlas.xlsx'])
+    test_NNDataPoint_CON_REG % create example files
+end
+
+example_NN_CON_Regression
