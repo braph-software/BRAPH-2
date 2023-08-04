@@ -110,15 +110,15 @@ d = NNDataset('DP_DICT', dp_dict);
 
 % create NNDatasetCombine to combine the two NNDataset
 split = {[1 3 5 7 9], [2 4 6 8 10]};
-d_split = NNDatasetSplit('SPLIT', split, 'D', d).get('D_LIST');
+d_list = NNDatasetSplit('SPLIT', split, 'D', d).get('D_LIST');
 
 % Check whether the number of dp matches
 for i = 1:length(split)
-    check(i) = d_split{i}.get('DP_DICT').get('LENGTH') == length(split{i});
+    check(i) = d_list{i}.get('DP_DICT').get('LENGTH') == length(split{i});
 end
 assert(all(check), ...
     [BRAPH2.STR ':NNDatasetSplit:' BRAPH2.FAIL_TEST], ...
-    'NNDatasetSplit does not split the datasets correctly. The number of the datapoint should be same as the vector length in th specified property SPLIT.' ...
+    'NNDatasetSplit does not split the datasets correctly. The number of the datapoint should be the same as the vector length in the specified property SPLIT.' ...
     )
 
 %%% ¡test!
@@ -146,14 +146,14 @@ d = NNDataset('DP_DICT', dp_dict);
 % create NNDatasetCombine to combine the two NNDataset
 split = {0.3, 0.7};
 dsp = NNDatasetSplit('D', d, 'SPLIT', split);
-d_split = dsp.get('D_LIST');
+d_list = dsp.get('D_LIST');
 
 % Check whether the number of dp matches
 split = dsp.get('SPLIT');
 for i = 1:length(split)
-    check(i) = d_split{i}.get('DP_DICT').get('LENGTH') == length(split{i});
+    check(i) = d_list{i}.get('DP_DICT').get('LENGTH') == length(split{i});
 end
 assert(all(check), ...
     [BRAPH2.STR ':NNDatasetSplit:' BRAPH2.FAIL_TEST], ...
-    'NNDatasetSplit does not split the datasets correctly. The number of the datapoint should be same as the vector length in th specified property SPLIT.' ...
+    'NNDatasetSplit does not split the datasets correctly. The number of the datapoint should be the same as the vector length in the specified property SPLIT.' ...
     )
