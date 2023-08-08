@@ -181,9 +181,9 @@ for run = 1:1:run_number
         create_Element([source_dir fp 'src' fp 'util' fp util_gen_list{i}], [target_dir fp 'src' fp 'util'])
     end
 
-    if exist('Category', 'class') == 8, hard_code_constants([target_dir fp 'src' fp 'ds' fp 'Category.m']), end
-    if exist('Format', 'class') == 8, hard_code_constants([target_dir fp 'src' fp 'ds' fp 'Format.m']), end
-	if exist('Element', 'class') == 8, hard_code_constants([target_dir fp 'src' fp 'ds' fp 'Element.m']), end
+    if exist('Category', 'class') == 8 && run_number == 1, hard_code_constants([target_dir fp 'src' fp 'ds' fp 'Category.m']), end
+    if exist('Format', 'class') == 8 && run_number == 1, hard_code_constants([target_dir fp 'src' fp 'ds' fp 'Format.m']), end
+	if exist('Element', 'class') == 8 && run_number == 1, hard_code_constants([target_dir fp 'src' fp 'ds' fp 'Element.m']), end
 	ds_gen_list = getGenerators([source_dir fp 'src' fp 'ds']);
     for i = 1:numel(ds_gen_list)
         create_Element([source_dir fp 'src' fp 'ds' fp ds_gen_list{i}], [target_dir fp 'src' fp 'ds'])
