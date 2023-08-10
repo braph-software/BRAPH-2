@@ -93,8 +93,6 @@ pr = PanelPropStringTextArea('EL', gt, 'PROP', GTA_ST_TA.ST_G, varargin{:});
 PanelPropStringTextArea
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 gt = GTA_ST_TA();
 gui = GUI('POSITION', [0 0 1 1], 'CLOSEREQ', false);

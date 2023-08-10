@@ -61,8 +61,6 @@ NR_G (gui, rvector) is a prop gui rvector.
 PanelPropMatrix
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 gt = GTA_NR();
 gui = GUI('POSITION', [0 0 1 1], 'CLOSEREQ', false);

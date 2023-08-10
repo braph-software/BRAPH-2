@@ -116,8 +116,9 @@ function set_table()
         elseif Element.getPropDefault(mlist{mi}, 'SCOPE') == Measure.BILAYER
             data{mi, 4} = 'BILAYER';
         end
-            data{mi, 5} = eval([mlist{mi} '.getPropDefault(''DESCRIPTION'')']);
-        end
+        
+        data{mi, 5} = eval([mlist{mi} '.getPropDefault(''DESCRIPTION'')']);
+    end
 
     set(pr.get('TABLE'), ...
         'RowName', rowname, ...
@@ -521,8 +522,6 @@ true
 %%% ¡test!
 %%%% ¡name!
 Remove Figures
-%%%% ¡parallel!
-false
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':GraphPP_MDict'])
 assert(length(findall(0, 'type', 'figure')) == 1)

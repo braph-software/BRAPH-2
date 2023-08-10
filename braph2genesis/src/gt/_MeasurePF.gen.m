@@ -119,24 +119,24 @@ DRAW (query, logical) draws the figure measure.
 value = calculateValue@PanelFig(pf, PanelFig.DRAW, varargin{:}); % also warning
 if value
     pf.memorize('H_AXES')
-    
+
     pf.memorize('ST_AXIS').set('PANEL', pf, 'PROP', MeasurePF.H_AXES).get('SETUP')
     pf.memorize('LISTENER_ST_AXIS');
-    
+
     pf.memorize('H_AREA')
     pf.memorize('ST_AREA').set('PANEL', pf, 'PROP', MeasurePF.H_AREA).get('SETUP')
     pf.memorize('LISTENER_ST_AREA');
 
     pf.memorize('H_LINE')
     pf.memorize('ST_LINE').set('PANEL', pf, 'PROP', MeasurePF.H_LINE).get('SETUP')
-	pf.memorize('LISTENER_ST_LINE');
-    
+    pf.memorize('LISTENER_ST_LINE');
+
     pf.memorize('H_TITLE')
     pf.memorize('ST_TITLE').set('PANEL', pf, 'PROP', MeasurePF.H_TITLE).get('SETUP')
 
     pf.memorize('H_XLABEL')
     pf.memorize('ST_XLABEL').set('PANEL', pf, 'PROP', MeasurePF.H_XLABEL).get('SETUP')
-    
+
     pf.memorize('H_YLABEL')
     pf.memorize('ST_YLABEL').set('PANEL', pf, 'PROP', MeasurePF.H_YLABEL).get('SETUP')
 
@@ -448,8 +448,6 @@ true
 %%% ¡test!
 %%%% ¡name!
 Remove Figures
-%%%% ¡parallel!
-false
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':MeasurePF'])
 assert(length(findall(0, 'type', 'figure')) == 1)

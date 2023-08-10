@@ -7,6 +7,50 @@ The distance of a graph is the shortest path between all pairs of nodes
 For weighted graphs, the distance is calculated with the Dijkstra algorithm
  using the inverse weight as the distance associated to the edge.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+Distance.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+Distance.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+Distance.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+Distance.M
+%%%% ¡title!
+Distance
+
+%%% ¡prop!
+%%%% ¡id!
+Distance.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+Distance.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+Distance.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
+
 %% ¡props_update!
 
 %%% ¡prop!

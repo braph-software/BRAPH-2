@@ -1,5 +1,5 @@
 %% ¡header!
-SettingsAmbientPP < PanelProp (pr, settings ambient panel) is the panel with ambient settings.
+SettingsAmbientPP < SettingsPP (pr, settings ambient panel) is the panel with ambient settings.
 
 %%% ¡description!
 SettingsAmbientPP plots the panel for ambient settings including 
@@ -423,8 +423,6 @@ true
 %%% ¡test!
 %%%% ¡name!
 Remove Figures
-%%%% ¡parallel!
-false
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':SettingsAmbientPP'])
 assert(length(findall(0, 'type', 'figure')) == 1)

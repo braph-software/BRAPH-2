@@ -1,5 +1,5 @@
 %% ¡header!
-ImporterGroupSubjectFUN_TXT < Importer (im, importer of FUN subject group from TXT) imports a group of subjects with connectivity data from a series of TXT file.
+ImporterGroupSubjectFUN_TXT < Importer (im, importer of FUN subject group from TXT) imports a group of subjects with connectivity data from a series of TXT files.
 
 %%% ¡description!
 ImporterGroupSubjectFUN_TXT imports a group of subjects with functional 
@@ -368,8 +368,6 @@ end
 GUI
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 im_ba = ImporterBrainAtlasTXT('FILE', [fileparts(which('SubjectFUN')) filesep 'Example data FUN TXT' filesep 'atlas.txt']);
 ba = im_ba.get('BA');

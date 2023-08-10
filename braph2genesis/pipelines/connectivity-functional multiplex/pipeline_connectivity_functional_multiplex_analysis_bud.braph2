@@ -7,10 +7,16 @@
 % 3. It analyzes the data using connectivity-functional multiplex analysis (CON_FUN_MP) based on binary undirected graphs at fixed densities (BUD).
 
 %% Brain Atlas
-ba = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load Brain Atlas XLS % Brain Atlas
+ba = ImporterBrainAtlasXLS('WAITBAR', true).get('GET_FILE').get('BA'); % Load a Brain Atlas XLS % Brain Atlas
 
-%% Group
-gr = ImporterGroupSubjectCON_FUN_MP_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group CON_FUN MP XLS % Group CON_FUN MP
+%% Conenctivity Group
+gr_CON = ImporterGroupSubjectCON_XLS('BA', ba, 'WAITBAR', true).get('GET_DIR').get('GR'); % Load Group CON from XLS % Group CON
+
+%% Functional Groups
+gr_FUN = ImporterGroupSubjectFUN_XLS('BA', ba, 'WAITBAR', true).get('GET_DIR').get('GR'); % Load Group FUN from XLS % Group FUN
+
+%% Group Combination
+gr = CombineGroups_CON_FUN_MP('GR_CON', gr_CON, 'GR_FUN', gr_FUN, 'WAITBAR', true).get('GR_CON_FUN_MP'); % Combine Groups % Group CON-FUN
 
 %% Analysis
 a_BUD = AnalyzeEnsemble_CON_FUN_MP_BUD('GR', gr, 'DENSITIES', [10 15 20 25 30]); % Analyze Group % Analyzed Group

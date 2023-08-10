@@ -1,5 +1,5 @@
 %% ¡header!
-SettingsAxisPP < PanelProp (pr, settings axis panel) is the panel with axis settings.
+SettingsAxisPP < SettingsPP (pr, settings axis panel) is the panel with axis settings.
 
 %%% ¡description!
 SettingsAxisPP plots the panel for axis settings including 
@@ -345,8 +345,6 @@ true
 %%% ¡test!
 %%%% ¡name!
 Remove Figures
-%%%% ¡parallel!
-false
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':SettingsAxisPP'])
 assert(length(findall(0, 'type', 'figure')) == 1)

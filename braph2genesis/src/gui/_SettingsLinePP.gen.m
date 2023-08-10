@@ -1,5 +1,5 @@
 %% ¡header!
-SettingsLinePP < PanelProp (pr, settings line panel) is the panel with line settings.
+SettingsLinePP < SettingsPP (pr, settings line panel) is the panel with line settings.
 
 %%% ¡description!
 SettingsLinePP plots the panel for line settings,
@@ -494,8 +494,6 @@ true
 %%% ¡test!
 %%%% ¡name!
 Remove Figures
-%%%% ¡parallel!
-false
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':SettingsLinePP'])
 assert(length(findall(0, 'type', 'figure')) == 1)

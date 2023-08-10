@@ -6,10 +6,10 @@
 % 3. It analyzes the data using connectivity ordered-multiplex analysis (CON_OMP) based on weighted undirected graphs (WU) with group averaging (GA).
 
 %% Brain Atlas
-ba = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load Brain Atlas XLS % Brain Atlas
+ba = ImporterBrainAtlasXLS('WAITBAR', true).get('GET_FILE').get('BA'); % Load Brain Atlas XLS % Brain Atlas
 
 %% Group
-gr = ImporterGroupSubjectCON_MP_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group CON OMP XLS % Group CON OMP
+gr = ImporterGroupSubjectCON_MP_XLS('BA', ba, 'WAITBAR', true).get('GET_DIR').get('GR'); % Load Group CON OMP XLS % Group CON OMP
 
 %% Analysis
 a_WU = AnalyzeGroup_CON_OMP_GA_WU('GR', gr); % Analyze Group % Group Analysis

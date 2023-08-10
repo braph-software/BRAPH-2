@@ -4,6 +4,50 @@ DegreeInAv < DegreeIn (m, average in-degree) is the graph average in-degree.
 %%% ¡description!
 The average in-degree (DegreeInAv) of a graph is the average of all number of inward edges connected to a node within a layer. 
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeInAv.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeInAv.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeInAv.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeInAv.M
+%%%% ¡title!
+Average In-Degree
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeInAv.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeInAv.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+DegreeInAv.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
+
 %% ¡props_update!
 
 %%% ¡prop!

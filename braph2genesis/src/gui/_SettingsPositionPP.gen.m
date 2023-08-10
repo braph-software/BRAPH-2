@@ -1,5 +1,5 @@
 %% ¡header!
-SettingsPositionPP < PanelProp (pr, settings position panel) is the panel with position settings.
+SettingsPositionPP < SettingsPP (pr, settings position panel) is the panel with position settings.
 
 %%% ¡description!
 SettingsPositionPP plots the panel for position settings including 
@@ -425,8 +425,6 @@ true
 %%% ¡test!
 %%%% ¡name!
 Remove Figures
-%%%% ¡parallel!
-false
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':SettingsPositionPP'])
 assert(length(findall(0, 'type', 'figure')) == 1)

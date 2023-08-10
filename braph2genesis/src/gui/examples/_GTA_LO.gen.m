@@ -43,8 +43,6 @@ LO_G (gui, logical) is a prop gui logical.
 Example
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 gt = GTA_LO();
 gui = GUI('POSITION', [0 0 1 1], 'CLOSEREQ', false);

@@ -43,8 +43,6 @@ ST_G (gui, string) is a prop gui string.
 PanelPropSring
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 gt = GTA_ST();
 gui = GUI('POSITION', [0 0 1 1], 'CLOSEREQ', false);

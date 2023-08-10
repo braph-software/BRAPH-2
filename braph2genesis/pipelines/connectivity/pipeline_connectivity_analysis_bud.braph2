@@ -6,10 +6,10 @@
 % 3. It analyzes these data using a connectivity analysis (CON) based on binary undirected graphs at fixed densities (BUD).
 
 %% Brain Atlas
-ba = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load Brain Atlas from XLS % Brain Atlas
+ba = ImporterBrainAtlasXLS('WAITBAR', true).get('GET_FILE').get('BA'); % Load Brain Atlas from XLS % Brain Atlas
 
 %% Group
-gr = ImporterGroupSubjectCON_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group CON from XLS % Group CON
+gr = ImporterGroupSubjectCON_XLS('BA', ba, 'WAITBAR', true).get('GET_DIR').get('GR'); % Load Group CON from XLS % Group CON
 
 %% Analysis
 a_BUD = AnalyzeEnsemble_CON_BUD('GR', gr, 'DENSITIES', [5 10 15 20]); % Analyze Group % Group Analysis

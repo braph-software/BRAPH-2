@@ -172,8 +172,6 @@ true
 %%% ¡test!
 %%%% ¡name!
 Remove Figures
-%%%% ¡parallel!
-false
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':PanelPropScalar'])
 assert(length(findall(0, 'type', 'figure')) == 1)

@@ -43,8 +43,6 @@ SZ_G (gui, size) is a prop gui size.
 Example
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 gt = GTA_SZ();
 gui = GUI('POSITION', [0 0 1 1], 'CLOSEREQ', false);

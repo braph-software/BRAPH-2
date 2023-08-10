@@ -54,11 +54,6 @@ prop_number = Element.getPropNumber(class_name);
                 tests{i}.probability = '1';
             end
             
-            tests{i}.parallel = getToken(tests{i}.token, 'parallel');
-            if isempty(tests{i}.parallel)
-                tests{i}.parallel = 'true';
-            end
-            
             tests{i}.code = splitlines(getToken(tests{i}.token, 'code'));
         end
         
@@ -70,7 +65,6 @@ basic_tests{1} = test_inspection_methods();
     function basic_test = test_inspection_methods()
         basic_test.name = 'Inspection Methods';
         basic_test.probability = '.01';
-        basic_test.parallel = 'true';
         basic_test.code = {
              'categories = num2cell(Category.getCategories());'
             [moniker ' = ' class_name '();']
@@ -506,7 +500,6 @@ basic_tests{end+1} = test_instantation_defaults();
     function basic_test = test_instantation_defaults()
         basic_test.name = 'Instantiation - defaults';
         basic_test.probability = '.01';
-        basic_test.parallel = 'true';
         
         if strcmp(class_name, 'Callback') || strcmp(class_name, 'NoValue')
             basic_test.code = {'% this test is not implemented for Callback and NoValue'};
@@ -636,7 +629,6 @@ basic_tests{end+1} = test_memorize();
     function basic_test = test_memorize()
         basic_test.name = 'Memorize';
         basic_test.probability = '.01';
-        basic_test.parallel = 'true';  
 
         if strcmp(class_name, 'Callback') || strcmp(class_name, 'NoValue')
             basic_test.code = {'% this test is not implemented for Callback and NoValue'};
@@ -798,7 +790,6 @@ basic_tests{end+1} = test_lock_1();
     function basic_test = test_lock_1()
         basic_test.name = 'Lock 1';
         basic_test.probability = '.01';
-        basic_test.parallel = 'true';
         basic_test.code = {
             [moniker ' = ' class_name '();']
              ' '
@@ -841,7 +832,6 @@ basic_tests{end+1} = test_lock_2();
     function basic_test = test_lock_2()
         basic_test.name = 'Lock 2';
         basic_test.probability = '.01';
-        basic_test.parallel = 'true';
         basic_test.code = {
             [moniker ' = ' class_name '();']
              ' '
@@ -871,7 +861,6 @@ basic_tests{end+1} = test_check();
     function basic_test = test_check()
         basic_test.name = 'Check';
         basic_test.probability = '.01';
-        basic_test.parallel = 'true';
         basic_test.code = {
             [moniker ' = ' class_name '();']
              ' '
@@ -915,7 +904,6 @@ basic_tests{end+1} = test_callbacks();
     function basic_test = test_callbacks()
         basic_test.name = 'Callbacks';
         basic_test.probability = '.01';
-        basic_test.parallel = 'true';
 
         if strcmp(class_name, 'Callback') || strcmp(class_name, 'NoValue')
             basic_test.code = {'% this test is not implemented for Callback and NoValue'};
@@ -1124,7 +1112,6 @@ basic_tests{end+1} = test_copy();
     function basic_test = test_copy()
         basic_test.name = 'Copy';
         basic_test.probability = '.01';
-        basic_test.parallel = 'true';
         
         if strcmp(class_name, 'Callback') || strcmp(class_name, 'NoValue')
             basic_test.code = {'% this test is not implemented for Callback and NoValue'};
@@ -1468,7 +1455,6 @@ basic_tests{end+1} = test_template();
     function basic_test = test_template()
         basic_test.name = 'Template';
         basic_test.probability = '.01';
-        basic_test.parallel = 'true';
         
         if strcmp(class_name, 'Callback') || strcmp(class_name, 'NoValue')
             basic_test.code = {'% this test is not implemented for Callback and NoValue'};
@@ -1537,7 +1523,6 @@ basic_tests{end+1} = test_saveload();
     function basic_test = test_saveload()
         basic_test.name = 'Save Load';
         basic_test.probability = '.01';
-        basic_test.parallel = 'true';
         
         if strcmp(class_name, 'Callback') || strcmp(class_name, 'NoValue')
             basic_test.code = {'% this test is not implemented for Callback and NoValue'};
@@ -1586,7 +1571,6 @@ basic_tests{end+1} = test_json(); % basic_tests{end+1} = test_json();
     function basic_test = test_json()
         basic_test.name = 'JSON';
         basic_test.probability = '.01';
-        basic_test.parallel = 'true';
         
         if strcmp(class_name, 'Callback') || strcmp(class_name, 'NoValue')
             basic_test.code = {'% this test is not implemented for Callback and NoValue'};
@@ -1636,7 +1620,6 @@ tests = [basic_tests tests no_figure_test delete_figures];
     function test = no_figure_test()
         test.name = 'No Figures Left';
         test.probability = '1';
-        test.parallel = 'true';
         
         test.code = {
              'assert(isempty(findall(0, ''type'', ''figure'')), ...'
@@ -1649,7 +1632,6 @@ tests = [basic_tests tests no_figure_test delete_figures];
     function test = delete_figures()
         test.name = 'Delete Figures';
         test.probability = '1';
-        test.parallel = 'true';
         
         test.code = {
              'delete(findall(0, ''type'', ''figure''))'
@@ -1672,36 +1654,18 @@ generate_tests()
         for i = 1:1:numel(tests)
             g(0, ['%% Test ' int2str(i) ': ' tests{i}.name])
             
-            if tests{i}.parallel
-                % tested ALSO if parallel on
-                g(0, ['if rand() >= (1 - ' tests{i}.probability ') * BRAPH2TEST.RANDOM'])
-            else
-                % NOT tested if parallel on
-                g(0, ['if ~BRAPH2TEST.PARALLEL && rand() >= (1 - ' tests{i}.probability ') * BRAPH2TEST.RANDOM'])
-            end
-            
-                g(1, 'try')
+            g(0, ['if rand() >= (1 - ' tests{i}.probability ') * BRAPH2TEST.RANDOM'])
                 
-                    if warning_off
-                        gs(2, {['warning(''off'', [BRAPH2.STR '':' class_name '''])'], ''})
-                    end
-                
-                    gs(2, tests{i}.code)
+                if warning_off
+                    gs(1, {['warning(''off'', [BRAPH2.STR '':' class_name '''])'], ''})
+                end
 
-                    if warning_off
-                        gs(2, {'', ['warning(''on'', [BRAPH2.STR '':' class_name '''])']})
-                    end
+                gs(1, tests{i}.code)
+
+                if warning_off
+                    gs(1, {'', ['warning(''on'', [BRAPH2.STR '':' class_name '''])']})
+                end
                     
-                gs(1, {
-                     'catch e'
-                        ['\t' 'if BRAPH2TEST.PARALLEL && strcmp(e.identifier, ''MATLAB:Java:InvalidInput'')']
-                            ['\t\t' 'disp(''' class_name ' Test ' int2str(i) ' - MATLAB:Java:InvalidInput probably due to parallel testing.'')']
-                        ['\t' 'else']
-                            ['\t\t' 'rethrow(e)']
-                        ['\t' 'end']
-                     'end'
-                    })
-
             gs(0, {
                 'end'
                 ''

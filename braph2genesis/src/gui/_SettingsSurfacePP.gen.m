@@ -1,5 +1,5 @@
 %% ¡header!
-SettingsSurfacePP < PanelProp (pr, settings surface panel) is the panel with surface settings.
+SettingsSurfacePP < SettingsPP (pr, settings surface panel) is the panel with surface settings.
 
 %%% ¡description!
 SettingsSurfacePP plots the panel for surface settings
@@ -404,8 +404,6 @@ true
 %%% ¡test!
 %%%% ¡name!
 Remove Figures
-%%%% ¡parallel!
-false
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':SettingsSurfacePP'])
 assert(length(findall(0, 'type', 'figure')) == 1)

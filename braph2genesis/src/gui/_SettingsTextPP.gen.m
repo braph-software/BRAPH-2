@@ -1,5 +1,5 @@
 %% ¡header!
-SettingsTextPP < PanelProp (pr, settings text panel) is the panel with text settings.
+SettingsTextPP < SettingsPP (pr, settings text panel) is the panel with text settings.
 
 %%% ¡description!
 SettingsTextPP plots the panel for text settings
@@ -373,10 +373,10 @@ value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warn
 if value
 	w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 
-    set(pr.get('EDITFIELD_X'),   'Position', [s(.3)           s(6.4)   .10*w_p     s(1.75)])
-    set(pr.get('EDITFIELD_Y'),   'Position', [s(.6)+.10*w_p   s(6.4)   .10*w_p     s(1.75)])
-    set(pr.get('EDITFIELD_Z'),   'Position', [s(.9)+.20*w_p   s(6.4)   .10*w_p     s(1.75)])
-    set(pr.get('EDITFIELD_TXT'), 'Position', [s(1.2)+.30*w_p  s(6.4)  .60*w_p     s(1.75)])
+    set(pr.get('EDITFIELD_X'),   'Position', [s(.3)           s(6.1)   .10*w_p     s(1.75)])
+    set(pr.get('EDITFIELD_Y'),   'Position', [s(.6)+.10*w_p   s(6.1)   .10*w_p     s(1.75)])
+    set(pr.get('EDITFIELD_Z'),   'Position', [s(.9)+.20*w_p   s(6.1)   .10*w_p     s(1.75)])
+    set(pr.get('EDITFIELD_TXT'), 'Position', [s(1.2)+.30*w_p  s(6.1)  .60*w_p     s(1.75)])
     
     set(pr.get('BUTTON_FONTCOLOR'),   'Position', [s(.3)            s(3.2)  .20*w_p   s(1.7)])
     set(pr.get('EDITFIELD_FONTSIZE'), 'Position', [s(.6)+.20*w_p	s(3.2)  .15*w_p   s(1.7)])
@@ -774,8 +774,6 @@ true
 %%% ¡test!
 %%%% ¡name!
 Remove Figures
-%%%% ¡parallel!
-false
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':SettingsTextPP'])
 assert(length(findall(0, 'type', 'figure')) == 1)

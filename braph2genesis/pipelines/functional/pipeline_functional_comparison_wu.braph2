@@ -8,11 +8,11 @@
 % 5. It compares the results of the two analyses.
 
 %% Brain Atlas
-ba = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load a Brain Atlas XLS % Brain Atlas
+ba = ImporterBrainAtlasXLS('WAITBAR', true).get('GET_FILE').get('BA'); % Load a Brain Atlas XLS % Brain Atlas
 
 %% Groups
-gr1 = ImporterGroupSubjectFUN_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group FUN 1 from XLS % Group FUN 1
-gr2 = ImporterGroupSubjectFUN_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group FUN 2 from XLS % Group FUN 2
+gr1 = ImporterGroupSubjectFUN_XLS('BA', ba, 'WAITBAR', true).get('GET_DIR').get('GR'); % Load Group FUN 1 from XLS % Group FUN 1
+gr2 = ImporterGroupSubjectFUN_XLS('BA', ba, 'WAITBAR', true).get('GET_DIR').get('GR'); % Load Group FUN 2 from XLS % Group FUN 2
 
 %% Analysis 1
 a_WU1 = AnalyzeEnsemble_FUN_WU('GR', gr1); % Analyze Group 1 % Group 1 Analysis

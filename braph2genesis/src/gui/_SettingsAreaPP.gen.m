@@ -1,5 +1,5 @@
 %% ¡header!
-SettingsAreaPP < PanelProp (pr, settings area panel) is the panel with area settings.
+SettingsAreaPP < SettingsPP (pr, settings area panel) is the panel with area settings.
 
 %%% ¡description!
 SettingsAreaPP plots the panel for area settings,
@@ -451,8 +451,6 @@ true
 %%% ¡test!
 %%%% ¡name!
 Remove Figures
-%%%% ¡parallel!
-false
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':SettingsAreaPP'])
 assert(length(findall(0, 'type', 'figure')) == 1)

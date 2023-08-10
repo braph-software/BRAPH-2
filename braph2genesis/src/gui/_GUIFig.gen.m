@@ -378,9 +378,9 @@ if isa(value.getr('PE'), 'NoValue') % i.e., default initialization
         'PE', pe, ...
         'TITLE', ['Settings - ' gui.get('TITLE')], ...
         'POSITION', [ ...
-            min(x0(f, 'normalized')+w(f, 'normalized'), .8) ... % min to ensure that figure within screen
+            min(x0(f, 'normalized') + w(f, 'normalized'), 1 - (pe.get('MIN_WIDTH') + 20) / w(0, 'pixels')) ... % min to ensure that figure within screen
             y0(f, 'normalized') ...
-            .2 ...
+            (pe.get('MIN_WIDTH') + 20) / w(0, 'pixels') ...
             h(f, 'normalized') ...
             ], ...
         'MENUBAR', false, ...
@@ -622,8 +622,6 @@ true
 %%% ¡test!
 %%%% ¡name!
 Remove Figures
-%%%% ¡parallel!
-false
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':GUIFig'])
 assert(length(findall(0, 'type', 'figure')) == 17)
@@ -635,8 +633,6 @@ warning('on', [BRAPH2.STR ':GUIFig'])
 Basics
 %%%% ¡probability!
 .01
-%%%% ¡parallel!
-false
 %%%% ¡code!
 pf = PanelFig();
 gui = GUIFig('PF', pf, 'POSITION', [0 .5 .1 .5], 'CLOSEREQ', false);

@@ -6,6 +6,56 @@ The triangles are calculated as the number of neighbors of a node that are
  also neighbors of each other within a layer. In weighted graphs, the triangles are 
  calculated as the geometric mean of the weights of the edges forming the triangle.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+Triangles.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+Triangles.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+Triangles.RULE
+%%%% ¡title!
+Triangle rule for directed graphs
+
+%%% ¡prop!
+%%%% ¡id!
+Triangles.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+Triangles.M
+%%%% ¡title!
+Triangles
+
+%%% ¡prop!
+%%%% ¡id!
+Triangles.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+Triangles.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+Triangles.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
+
 %% ¡props_update!
 
 %%% ¡prop!

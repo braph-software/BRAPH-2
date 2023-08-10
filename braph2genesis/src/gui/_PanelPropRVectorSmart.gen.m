@@ -46,12 +46,12 @@ NOTES (metadata, string) are some specific notes about the smart row vector pane
 %%% ¡prop!
 EL (data, item) is the element.
 %%%% ¡default!
-MultigraphBUD()
+Graph()
 
 %%% ¡prop!
 PROP (data, scalar) is the property number.
 %%%% ¡default!
-MultigraphBUD.DENSITIES
+Graph.LAYERTICKS
 
 %%% ¡prop!
 UPDATE (query, logical) updates the content and permissions of the editfield.
@@ -165,8 +165,6 @@ true
 %%% ¡test!
 %%%% ¡name!
 Remove Figures
-%%%% ¡parallel!
-false
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':PanelPropRVectorSmart'])
 assert(length(findall(0, 'type', 'figure')) == 1)

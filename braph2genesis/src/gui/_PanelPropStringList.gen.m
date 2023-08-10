@@ -193,8 +193,6 @@ true
 %%% ¡test!PanelPropList.LISTENER_CB
 %%%% ¡name!
 Remove Figures
-%%%% ¡parallel!
-false
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':PanelPropStringList'])
 assert(length(findall(0, 'type', 'figure')) == 1)

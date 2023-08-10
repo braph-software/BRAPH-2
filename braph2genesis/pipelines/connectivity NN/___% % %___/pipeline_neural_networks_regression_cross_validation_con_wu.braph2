@@ -1,0 +1,20 @@
+%% Pipeline Neural Networks Regression Cross Validation Connectivity WU
+%
+% This is the pipeline script to perform cross validation on regression with age by neural networks for one group of subjects with connectivity data and weighted undirected graphs.
+% 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
+% 2. It loads the data of one group of subjects from directories (e.g., GroupName) containing XLS files of each subject.
+% 3. It constructs the dataset using with connectivity matrices (CON) based on graphs (WU).
+% 4. It performs the cross validation.
+
+%% Brain Atlas
+ba = ImporterBrainAtlasXLS('WAITBAR', true).get('BA'); % Load a Brain Atlas XLS % Brain Atlas
+
+%% Groups
+gr = ImporterGroupSubjectCON_XLS('BA', ba, 'WAITBAR', true).get('GR'); % Load Group CON from XLS % Group CON
+
+%% Dataset Construction
+nnd = NNData_CON_WU('GR', gr, 'TARGET_NAME', 'age'); % NN Dataset for Group FUN % NN Group CON
+
+%% Cross Validation Setup
+nnds = NNRegressorCrossValidation('GR', nnd.get('GR_NN')); % Set up the cross validation % Cross Validation
+
