@@ -44,9 +44,9 @@ You can change the ID, name, and notes of the brain atlas (as shown in Figure 4a
 > ![Edit the brain atlas information](fig04.png)
 > 
 > **Figure 4. Edit the brain atlas information**
-> Information that can be changed in the brain atlas GUI: 
-> **a** The ID, name, and notes of the brain atlas.
-> **b** The IDs, labels, coordinates, and notes of the brain regions.
+> In the brain atlas GUI: 
+> **a** We can see the ID, name, brain regions and notes of the brain atlas.
+> **b** All of this information can be changed, in this example we have renamed the ID, name and notes of the brain atlas but you can also edit the IDs, labels, coordinates, and notes of the brain regions.
 
 ## Ready Brain Atlases
 
@@ -111,7 +111,7 @@ This new window has a large toolbar that allows you to change the visualization 
 
 The settings window allows you to optimize how the brain regions included in your analysis are visualized. This is often included as a first figure in a manuscript.
 
-Most things in the settings window are intuitive. So we encourage you to try different them out until you achieve the visualization you want. There are many possibilities for visualization. Figure 9 shows just one example.
+Most things in the settings window are intuitive. So we encourage you to try them out until you achieve the visualization you want. There are many possibilities for visualization. Figure 9 shows just one example.
 
 > ![Example of a visualization of the brain atlas](fig09.png)
 > 
@@ -120,7 +120,7 @@ Most things in the settings window are intuitive. So we encourage you to try dif
  
 Each brain region can be represented with spheres, symbols, IDs, and labels. Spheres are objects that are rendered in 3D — often prettier, but also more computationally expensive. Symbols are objects rendered in 2D — more stylized and less computationally expensive. IDs and labels are the texts associated with the brain region.
 
-If you wish to apply some properties to a set of brain regions, you can select multiple regions with the selectors on the right, and then right-click and select "apply to selection" before applying some property.
+If you wish to apply some properties to a set of brain regions, you can select multiple regions by clicking on the checkboxes on the right, and then right-click and select "apply to selection" before applying some property.
 
 BRAPH 2.0 provides different brain surfaces, as shown in Figure 10, for the human brain and cerebellum in addition to animals such as the ferret, macaque, mouse, and rat. It is also possible to add additional brain surfaces by adding the required NV files in the BRAPH 2.0 folder *brainsurfs*.
 
