@@ -1,8 +1,8 @@
 %% ¡header!
-ViewPP < PanelProp (pr, view panel) plots the panel of a view with azimuth and elevation angles.
+PanelPropRVectorView < PanelProp (pr, view panel) plots the panel of a view with azimuth and elevation angles.
 
 %%% ¡description!
-ViewPP plots the panel for the azimuth and elevation angles of the camera''s line of sight.
+PanelPropRVectorView plots the panel for the azimuth and elevation angles of the camera''s line of sight.
  Azimuth — The angle of rotation around the z-axis, as measured from the negative y-axis. 
   Increasing this angle corresponds to counterclockwise rotation about the z-axis 
   when viewing the xy plane from above.
@@ -11,39 +11,39 @@ ViewPP plots the panel for the azimuth and elevation angles of the camera''s lin
 It works for all categories.
 
 %%% ¡seealso!
-GUI, PanelElement, PanelProp, view, uieditfield, uislider
+GUI, PanelElement, view, uieditfield, uislider
 
 %% ¡props_update!
 
 %%% ¡prop!
 NAME (constant, string) is the name of the panel of a view with azimuth and elevation angles.
 %%%% ¡default!
-'ViewPP'
+'PanelPropRVectorView'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel of a view with azimuth and elevation angles.
 %%%% ¡default!
-'ViewPP plots the panel for the azimuth and elevation angles of the camera''s line of sight. Azimuth — The angle of rotation around the z-axis, as measured from the negative y-axis. Increasing this angle corresponds to counterclockwise rotation about the z-axis when viewing the xy plane from above. Elevation — The minimum angle between the line of sight and the xy plane. Increasing the elevation from -90 to 90 degrees corresponds to a rotation from the negative z-axis to the positive z-axis.It works for all categories.'
+'PanelPropRVectorView plots the panel for the azimuth and elevation angles of the camera''s line of sight. Azimuth — The angle of rotation around the z-axis, as measured from the negative y-axis. Increasing this angle corresponds to counterclockwise rotation about the z-axis when viewing the xy plane from above. Elevation — The minimum angle between the line of sight and the xy plane. Increasing the elevation from -90 to 90 degrees corresponds to a rotation from the negative z-axis to the positive z-axis.It works for all categories.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel of a view with azimuth and elevation angles.
 %%%% ¡settings!
-'ViewPP'
+'PanelPropRVectorView'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the panel of a view with azimuth and elevation angles.
 %%%% ¡default!
-'ViewPP ID'
+'PanelPropRVectorView ID'
 
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the panel of a view with azimuth and elevation angles.
 %%%% ¡default!
-'ViewPP label'
+'PanelPropRVectorView label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the panel of a view with azimuth and elevation angles.
 %%%% ¡default!
-'ViewPP notes'
+'PanelPropRVectorView notes'
 
 %%% ¡prop!
 EL (data, item) is the element.
@@ -354,7 +354,7 @@ end
 %% ¡tests!
 
 %%% ¡excluded_props!
-[ViewPP.PARENT ViewPP.H ViewPP.LISTENER_CB ViewPP.LABEL_AZ ViewPP.EDITFIELD_AZ ViewPP.SLIDER_AZ ViewPP.LABEL_EL ViewPP.EDITFIELD_EL ViewPP.SLIDER_EL]
+[PanelPropRVectorView.PARENT PanelPropRVectorView.H PanelPropRVectorView.LISTENER_CB PanelPropRVectorView.LABEL_AZ PanelPropRVectorView.EDITFIELD_AZ PanelPropRVectorView.SLIDER_AZ PanelPropRVectorView.LABEL_EL PanelPropRVectorView.EDITFIELD_EL PanelPropRVectorView.SLIDER_EL]
 
 %%% ¡warning_off!
 true
@@ -363,7 +363,7 @@ true
 %%%% ¡name!
 Remove Figures
 %%%% ¡code!
-warning('off', [BRAPH2.STR ':ViewPP'])
+warning('off', [BRAPH2.STR ':PanelPropRVectorView'])
 assert(length(findall(0, 'type', 'figure')) == 1)
 delete(findall(0, 'type', 'figure'))
-warning('on', [BRAPH2.STR ':ViewPP'])
+warning('on', [BRAPH2.STR ':PanelPropRVectorView'])

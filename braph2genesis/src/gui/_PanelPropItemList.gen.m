@@ -25,7 +25,7 @@ It can be personalized with the following props:
           cb_table_edit_default()
  
 %%% ¡seealso!
-uitable, GUI, PanelElement, PanelProp, GUIElement
+uitable, GUI, PanelElement, GUIElement
 
 %% ¡props_update!
 

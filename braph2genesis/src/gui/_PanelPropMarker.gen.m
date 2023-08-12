@@ -6,7 +6,7 @@ PanelPropMarker plots the panel for an MARKER property with a drop-down list.
 It works for all categories.
 
 %%% ¡seealso!
-uidropdown, uiaxes, line, GUI, PanelElement, PanelProp
+uidropdown, uiaxes, line, GUI, PanelElement
 
 %% ¡props_update!
 

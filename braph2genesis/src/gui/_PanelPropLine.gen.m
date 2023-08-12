@@ -6,7 +6,7 @@ PanelPropLine plots the panel for an LINE property with a drop-down list.
 It works for all categories.
 
 %%% ¡seealso!
-uidropdown, uiaxes, line, GUI, PanelElement, PanelProp
+uidropdown, uiaxes, line, GUI, PanelElement
 
 %% ¡props_update!
 

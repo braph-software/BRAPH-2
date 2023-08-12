@@ -6,7 +6,7 @@ PP_THRESHOLD plots the panel for a STRING property with an edit field.
 It works for all categories.
 
 %%% ¡seealso!
-GUI, PanelElement, PanelProp, uieditfield
+GUI, PanelElement, uieditfield
 
 %% ¡properties!
 p

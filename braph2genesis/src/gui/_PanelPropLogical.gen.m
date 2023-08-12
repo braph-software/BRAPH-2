@@ -6,7 +6,7 @@ PanelPropLogical plots the panel for a LOGICAL property with a checkbox.
 It works for all categories.
 
 %%% ¡seealso!
-uicheckbox, GUI, PanelElement, PanelProp
+uicheckbox, GUI, PanelElement
 
 %% ¡props_update!
 

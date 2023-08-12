@@ -6,7 +6,7 @@ PanelPropSize plots the panel for a SIZE property with a numeric edit field.
 It works for all categories.
 
 %%% ¡seealso!
-uieditfield, uiaxes, line, GUI, PanelElement, PanelProp
+uieditfield, uiaxes, line, GUI, PanelElement
 
 %% ¡props_update!
 

@@ -6,7 +6,7 @@ PanelPropStringTextArea plots the panel for a STRING property with a text area.
 It works for all categories.
 
 %%% ¡seealso!
-uitextarea, GUI, PanelElement, PanelProp
+uitextarea, GUI, PanelElement
 
 %% ¡props_update!
 

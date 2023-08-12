@@ -10,7 +10,7 @@ It works for all categories.
 % % %  COLUMNAME - Code to generate the column names as per uitable format.
 
 %%% ¡seealso!
-GUI, PanelElement, PanelProp, uitable, uislider
+GUI, PanelElement, uitable, uislider
 
 %% ¡properties!
 p

@@ -7,7 +7,7 @@ PanelPropItem plots the panel for a ITEM property with a button.
  figure is a 'GUIElement' or 'GUIFig'.
 
 %%% ¡seealso!
-uibutton, GUI, PanelElement, PanelProp, GUIElement, GUIFig
+uibutton, GUI, PanelElement, GUIElement, GUIFig
 
 %% ¡props_update!
 

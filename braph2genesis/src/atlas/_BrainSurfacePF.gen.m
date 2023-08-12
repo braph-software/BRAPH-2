@@ -374,7 +374,7 @@ if pf.get('DRAWN')
     end
 end
 %%%% ¡gui!
-pr = ViewPP('EL', pf, 'PROP', BrainSurfacePF.VIEW, varargin{:});
+pr = PanelPropRVectorView('EL', pf, 'PROP', BrainSurfacePF.VIEW, varargin{:});
 
 %%% ¡prop!
 ST_AXIS (figure, item) determines the axis settings.

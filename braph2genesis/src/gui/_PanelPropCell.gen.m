@@ -19,7 +19,7 @@ It can be personalized with the following props:
  MENU_EXPORT - Whether to show the export menu. To be defined before drawing.
 
 %%% ¡seealso!
-uitable, uislider, GUI, PanelElement, PanelProp
+uitable, uislider, GUI, PanelElement
 
 %% ¡props_update!
 
@@ -374,7 +374,7 @@ ENABLE (gui, option) switches table between on and off.
 'on'
 
 %%% ¡prop!
-ROWNAME (gui, stringlist) determines the table row names (to be evaluated).
+ROWNAME (gui, stringlist) determines the table row names.
 %%%% ¡default!
 {'numbered'}
 %%%% ¡postset!
@@ -383,7 +383,7 @@ if pr.get('DRAWN')
 end
 
 %%% ¡prop!
-COLUMNNAME (gui, stringlist) determines the table column names (to be evaluated).
+COLUMNNAME (gui, stringlist) determines the table column names.
 %%%% ¡default!
 {'numbered'}
 %%%% ¡postset!

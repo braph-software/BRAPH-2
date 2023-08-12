@@ -6,7 +6,7 @@ PanelPropString plots the panel for a STRING property with an edit field.
 It works for all categories.
 
 %%% ¡seealso!
-uieditfield, GUI, PanelElement, PanelProp
+uieditfield, GUI, PanelElement
 
 %% ¡props_update!
 

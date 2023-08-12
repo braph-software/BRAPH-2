@@ -6,7 +6,7 @@ PanelPropIDict plots the panel for a IDICT property with a button.
  It works for all categories.
 
 %%% ¡seealso!
-uibutton, GUI, PanelElement, PanelProp, GUIElement
+uibutton, GUI, PanelElement, GUIElement
 
 %% ¡props_update!
 

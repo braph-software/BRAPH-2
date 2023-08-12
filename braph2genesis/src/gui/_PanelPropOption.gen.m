@@ -6,7 +6,7 @@ PanelPropOption plots the panel for an OPTION property with a drop-down list.
 It works for all categories.
 
 %%% ¡seealso!
-uidropdown, GUI, PanelElement, PanelProp
+uidropdown, GUI, PanelElement
 
 %% ¡props_update!
 

@@ -6,7 +6,7 @@ PanelPropScalar plots the panel for a SCALAR property with a numeric edit field.
 It works for all categories.
 
 %%% ¡seealso!
-uieditfield, GUI, PanelElement, PanelProp
+uieditfield, GUI, PanelElement
 
 %% ¡props_update!
 

@@ -9,7 +9,7 @@ It can be personalized with the following prop:
  TA_HEIGHT - Text area height in pixels when the table is shown.
 
 %%% ¡seealso!
-uitextarea, GUI, PanelElement, PanelProp
+uitextarea, GUI, PanelElement
 
 %% ¡props_update!
 

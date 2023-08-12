@@ -9,7 +9,7 @@ Also, the value of the vector can be limited between some MIN and MAX.
 It works for all categories, exept for __Category.RESULT__, __Category.QUERY__, or __Category.EVANESCENT__.
 
 %%% ¡seealso!
-uieditfield, GUI, PanelElement, PanelProp
+uieditfield, GUI, PanelElement
 
 %% ¡props_update!
 

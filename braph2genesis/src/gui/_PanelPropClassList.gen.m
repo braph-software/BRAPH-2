@@ -6,7 +6,7 @@ PanelPropClassList plots the panel for a CLASSLIST property with a listbox.
 It works for all categories.
 
 %%% ¡seealso!
-uilistbox, GUI, PanelElement, PanelProp
+uilistbox, GUI, PanelElement
 
 %% ¡props_update!
 

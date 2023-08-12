@@ -6,7 +6,7 @@ PanelPropAlpha plots the panel for a ALPHA property with a numeric edit field an
 It works for all categories.
 
 %%% ¡seealso!
-uieditfield, uislider, GUI, PanelElement, PanelProp
+uieditfield, uislider, GUI, PanelElement
 
 %% ¡props_update!
 

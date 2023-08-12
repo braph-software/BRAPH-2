@@ -6,7 +6,7 @@ PanelPropColor plots the panel for a COLOR property with a button.
 It works for all categories.
 
 %%% ¡seealso!
-uibutton, GUI, PanelElement, PanelProp
+uibutton, GUI, PanelElement
 
 %% ¡props_update!
 

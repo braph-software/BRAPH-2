@@ -5,7 +5,7 @@ PPQValue < PanelProp (pr, panel property scalar) plots the panel of a property s
 PPQValue plots the panel for a qvalue
 
 %%% ¡seealso!
-GUI, PanelElement, PanelProp, uieditfield
+GUI, PanelElement, uieditfield
 
 %% ¡properties!
 p
