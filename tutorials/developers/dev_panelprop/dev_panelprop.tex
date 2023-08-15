@@ -188,7 +188,7 @@ end
 
 \section{Example Property Panels for Various UI Objects}
 
-The implementation of \code{PanelPropLogical} shown in the previous section can be extended to all other user interface (UI) objects. There are several examples already available in the core code of BRAPH~2.0, each coupled with its corresponding property panel as an example, as shown int he table below. These can be used to guide the realization of new property panels.
+The implementation of \code{PanelPropLogical} shown in the previous section can be extended to all other user interface (UI) objects. There are several examples already available in the core code of BRAPH~2.0, each coupled with its corresponding property panel as an example, as shown in the table below. These can be used to guide the realization of new property panels.
 
 \newcommand{\addpicbutton}{\includegraphics[width=6em]{fig01.png}}
 \newcommand{\addpiccheckbox}{\includegraphics[width=6em]{fig02.png}}
@@ -199,6 +199,10 @@ The implementation of \code{PanelPropLogical} shown in the previous section can 
 \newcommand{\addpictextarea}{\includegraphics[width=6em]{fig07.png}}
 \newcommand{\addpiccontextmenu}{\includegraphics[width=6em]{fig08.png}}
 \newcommand{\addpictable}{\includegraphics[width=6em]{fig09.png}}
+\newcommand{\addpicgauge}{\includegraphics[width=6em]{fig10.png}}
+\newcommand{\addpicradiobutton}{\includegraphics[width=6em]{fig11.png}}
+\newcommand{\addpicspinner}{\includegraphics[width=6em]{fig12.png}}
+\newcommand{\addpictogglebutton}{\includegraphics[width=6em]{fig13.png}}
 \newcolumntype{C}{>{\centering\arraybackslash}m{12em}}
 \begin{table}\sffamily
 	\begin{tabular}{l*4{C}@{}}
@@ -206,7 +210,7 @@ The implementation of \code{PanelPropLogical} shown in the previous section can 
 		UI Object & Example & Exemple PanelProp \\ 
 		\midrule
 		uibutton & \addpicbutton & PanelPropItem \\ 
-		checkbox & \addpiccheckbox & PanelPropLogical \\ 
+		uicheckbox & \addpiccheckbox & PanelPropLogical \\ 
 		uitextarea  & \addpictextarea & PanelPropStringList \\
 		uieditfield & \addpiceditfield & PanelPropString \\
 		uidropdown & \addpicdropdown & PanelPropOption \\
@@ -214,6 +218,10 @@ The implementation of \code{PanelPropLogical} shown in the previous section can 
 		uitable & \addpictable & PanelPropMatrix \\
 		uilistbox & \addpiclistbox & PanelPropClassList \\
 		uislider & \addpicslider & PanelPropCell \\
+		uigauge & \addpicgauge & Not yet implemented \\
+		uiradiobutton & \addpicradiobutton & Not yet implemented \\
+		uispinner & \addpicspinner & Not yet implemented \\
+		uitogglebutton & \addpictogglebutton & Not yet implemented \\
 		\bottomrule \\
 	\end{tabular}
 \end{table} 
