@@ -2,9 +2,14 @@
 NNBase < ConcreteElement (nn, neural network) comprises a neural network model with a dataset.
 
 %%% ¡description!
-A neural network base (NNBase) comprises a neural network model with a specific dataset, along with the required options for training the model.
-Instances of this class should not be created. Use one of its subclasses instead.
-Its subclasses shall be specifically designed to cater to different use cases such as a classifier, a regressor, or a generative model.
+A neural network base (NNBase) comprises a neural network model with a specific dataset.
+ Instances of this class should not be created. Use one of its subclasses instead.
+
+Its subclasses need to implement the props MODEL, INPUTS and TARGETS.
+ Each subclass is typically optimized to work with the subclasses of NNDataPoint in the prop DP_CLASSES.
+
+To train a neural network nn use: nn.get('TRAIN')
+To obtain the prediction on a dataset D use: predictions = nn.get('PREDICT', D)
 
 %%% ¡seealso!
 NNDataPoint, NNDataset, NNEvaluator
@@ -19,7 +24,7 @@ NAME (constant, string) is the name of the nerual network base.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the nerual network base.
 %%%% ¡default!
-'A neural network base (NNBase) comprises a neural network model with a specific dataset, along with the required options for training the model. Instances of this class should not be created. Use one of its subclasses instead. Its subclasses shall be specifically designed to cater to different use cases such as a classifier, a regressor, or a generative model.'
+'A neural network base (NNBase) comprises a neural network model with a specific dataset. Instances of this class should not be created. Use one of its subclasses instead. Its subclasses need to implement the props MODEL, INPUTS and TARGETS.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the nerual network base.
@@ -47,6 +52,13 @@ NOTES (metadata, string) are some specific notes about the nerual network base.
 D (data, item) is the dataset to train the neural network model.
 %%%% ¡settings!
 'NNDataset'
+%%%% ¡check_prop!
+check = ismember(value.get('DP_CLASS'), nn.get('DP_CLASSES'));
+
+%%% ¡prop!
+DP_CLASSES (parameter, classlist) is the list of compatible data points.
+%%%% ¡default!
+{'NNDataPoint'}
 
 %%% ¡prop!
 EPOCHS (parameter, scalar) is the maximum number of epochs.
@@ -78,10 +90,6 @@ INPUTS (query, cell) constructs the cell array of the data.
 %%%% ¡calculate!
 % inputs = nn.get('inputs', D) returns a cell array with the
 %  inputs for all data points in dataset D.
-if isempty(varargin)
-    value = {};
-    return
-end
 value = {};
 
 %%% ¡prop!
@@ -89,10 +97,6 @@ TARGETS (query, cell) constructs the cell array of the targets.
 %%%% ¡calculate!
 % targets = nn.get('PREDICT', D) returns a cell array with the
 %  targets for all data points in dataset D.
-if isempty(varargin)
-    value = {};
-    return
-end
 value = {};
 
 %%% ¡prop!
