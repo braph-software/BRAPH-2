@@ -52,7 +52,9 @@ NOTES (metadata, string) are some specific notes about the nerual network base.
 D (data, item) is the dataset to train the neural network model.
 %%%% ¡settings!
 'NNDataset'
-%%%% ¡check_prop!
+%%%% ¡default!
+NNDataset('DP_CLASS', 'NNDataPoint')
+%%%% ¡check_value!
 check = ismember(value.get('DP_CLASS'), nn.get('DP_CLASSES'));
 
 %%% ¡prop!
