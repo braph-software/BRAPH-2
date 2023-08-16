@@ -41,6 +41,18 @@ NOTES (metadata, string) are some specific notes about the neural network multi-
 'NNClassifierMLP notes'
 
 %%% ¡prop!
+D (data, item) is the dataset to train the neural network model, and its data point class DP_CLASS defaults to one of the compatible classes within the set of DP_CLASSES.
+%%%% ¡settings!
+'NNDataset'
+%%%% ¡default!
+NNDataset('DP_CLASS', 'NNDataPoint_CON_CLA')
+
+%%% ¡prop!
+DP_CLASSES (parameter, classlist) is the list of compatible data points.
+%%%% ¡default!
+{'NNDataPoint_CON_CLA'}
+
+%%% ¡prop!
 INPUTS (query, cell) constructs the data in the CB (channel-batch) format.
 %%%% ¡calculate!
 % inputs = nn.get('inputs', D) returns a cell array with the
@@ -126,7 +138,6 @@ else
     end
     value = nn_targets;
 end
-
 
 %%% ¡prop!
 LAYERS (data, rvector) defines the number of layers and their neurons.

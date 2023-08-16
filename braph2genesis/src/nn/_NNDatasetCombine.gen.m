@@ -47,6 +47,11 @@ NOTES (metadata, string) are some specific notes about the combier of a neural n
 D_LIST (data, itemlist) is a items of datasets to be combined.
 %%%% ¡settings!
 'NNDataset'
+%%%% ¡check_prop!
+if ~isempty(value)
+    dp_classes = cellfun(@(x) x.get('DP_CLASS'), value, 'uniformoutput', false);
+    check = all(isequal(dp_classes{:}));
+end
 
 %%% ¡prop!
 D (result, item) is the combined neural network dataset.
@@ -54,17 +59,20 @@ D (result, item) is the combined neural network dataset.
 'NNDataset'
 %%%% ¡calculate!
 dp_list = cellfun(@(x) x.get('DP_DICT').get('IT_LIST'), dco.get('D_LIST'), 'UniformOutput', false);
+dp_classes = cellfun(@(x) x.get('DP_CLASS'), dco.get('D_LIST'), 'UniformOutput', false);
 
 % concatenate all subjectID
 dp_list = horzcat(dp_list{:});
 
 % inspect whether there are overlapping datapoints
-if isempty(dp_list)
+if isempty(dp_list) | isempty(dp_classes)
     unique_dp_list = {};
+    dp_class = 'NNDataPoint';
 else
     dp_ids = cellfun(@(x) x.get('ID'), dp_list, 'UniformOutput', false);
     [C, i_dp_ids] = unique(dp_ids);
     unique_dp_list = dp_list(sort(i_dp_ids));
+    dp_class = dp_classes{1};
 end
 
 % create the combined NNDataset
@@ -73,7 +81,10 @@ combined_dp_dict = IndexedDictionary(...
     'IT_LIST',  unique_dp_list ...
     );
 
-value = NNDataset('DP_DICT', combined_dp_dict);
+value = NNDataset( ...
+    'DP_CLASS', dp_class, ...
+    'DP_DICT', combined_dp_dict ...
+    );
 
 %% ¡tests!
 
