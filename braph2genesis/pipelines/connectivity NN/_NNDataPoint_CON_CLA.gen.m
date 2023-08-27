@@ -1,8 +1,8 @@
 %% ¡header!
-NNDataPoint_CON_CLA < NNDataPoint (dp, connectivity regression data point) is a data point for regression with connectivity data.
+NNDataPoint_CON_CLA < NNDataPoint (dp, connectivity classification data point) is a data point for classification with connectivity data.
 
 %%% ¡description!
-A data point for regression with connectivity data (NNDataPoint_CON_CLA) 
+A data point for classification with connectivity data (NNDataPoint_CON_CLA) 
 contains the input and target for neural network analysis with a subject with connectivity data (SubjectCON).
 The input is the connectivity data of the subject.
 The target is obtained from the variables of interest of the subject.
@@ -12,32 +12,32 @@ SubjectCON
 
 %% ¡props_update!
 %%% ¡prop!
-NAME (constant, string) is the name of a data point for regression with connectivity data.
+NAME (constant, string) is the name of a data point for classification with connectivity data.
 %%%% ¡default!
 'NNDataPoint_CON_CLA'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of a data point for regression with connectivity data.
+DESCRIPTION (constant, string) is the description of a data point for classification with connectivity data.
 %%%% ¡default!
-'A data point for regression with connectivity data (NNDataPoint_CON_CLA) contains the input and target for neural network analysis with a subject with connectivity data (SubjectCON). The input is the connectivity data of the subject. The target is obtained from the variables of interest of the subject.'
+'A data point for classification with connectivity data (NNDataPoint_CON_CLA) contains the input and target for neural network analysis with a subject with connectivity data (SubjectCON). The input is the connectivity data of the subject. The target is obtained from the variables of interest of the subject.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of a data point for regression with connectivity data.
+TEMPLATE (parameter, item) is the template of a data point for classification with connectivity data.
 %%%% ¡settings!
 'NNDataPoint_CON_CLA'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for a data point for regression with connectivity data.
+ID (data, string) is a few-letter code for a data point for classification with connectivity data.
 %%%% ¡default!
 'NNDataPoint_CON_CLA ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of a data point for regression with connectivity data.
+LABEL (metadata, string) is an extended label of a data point for classification with connectivity data.
 %%%% ¡default!
 'NNDataPoint_CON_CLA label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about a data point for regression with connectivity data.
+NOTES (metadata, string) are some specific notes about a data point for classification with connectivity data.
 %%%% ¡default!
 'NNDataPoint_CON_CLA notes'
 
@@ -334,7 +334,7 @@ end
 Example
 %%%% ¡code!
 % ensure the example data is generated
-if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN REG CON XLS' filesep 'atlas.xlsx'])
+if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
     test_NNDataPoint_CON_CLA % create example files
 end
 
