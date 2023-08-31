@@ -28,31 +28,31 @@ Developers can also edit the example scripts provided with the software to have 
 
 BRAPH 2.0's object-oriented programming architecture makes it easy to expand its capabilities by introducing new elements and features. Here are some of the ways you can extend BRAPH 2.0:
 
-- **Graphs**: Developers can implement new graph types by extending the `Graph` element. The [Developer Tutorial to Implement a New Graph](tutorials/developers/dev_graph/dev_graph.pdf) provides a step-by-step guide on how to create new graph types.
+- **Graphs**: Developers can implement new graph types by extending the `Graph` element. The [Developer Tutorial to Implement a New Graph](dev_graph/dev_graph.pdf) provides a step-by-step guide on how to create new graph types.
 
 - **Measures**: New measures can be added to BRAPH 2.0 by extending the `Measure` element. The [Developer Tutorial to Implement a New Measure](dev_measure/dev_measure.pdf) explains the process of implementing custom measures.
 
-- **Subjects**: Developers can introduce new data types by extending the `Subject` element. The tutorial [Developer Tutorial to Implement a New Subject](tutorials/developers/dev_subject.pdf) provides guidance on creating new data types for subjects.
+- **Subjects**: Developers can introduce new data types by extending the `Subject` element. The tutorial [Developer Tutorial to Implement a New Subject](dev_subject/dev_subject.pdf) provides guidance on creating new data types for subjects.
 
 - **Group-based and Ensemble-based Analyses**: New analysis pipelines can be added to BRAPH 2.0 by extending the `AnalysisGroup` or `AnalysisEnsemble` elements. The tutorials in this category demonstrate the process of implementing new analysis pipelines:
-  - [Developer Tutorial to Implement a New Group Analysis](tutorials/developers/dev_analysis_group.pdf)
-  - [Developer Tutorial to Implement a New Ensemble Analysis](tutorials/developers/dev_analysis_ensemble.pdf)
+  - [Developer Tutorial to Implement a New Group Analysis](dev_analysis_group/dev_analysis_group.pdf)
+  - [Developer Tutorial to Implement a New Ensemble Analysis](dev_analysis_ensemble/dev_analysis_ensemble.pdf)
 
 - **Deep-learning Functionalities**: New functionalities for deep-learning analyses can be swiftly integrated into BRAPH 2.0 as well. Here are the tutorials for expanding BRAPH 2.0 with deep-learning features:
-  - [Developer Tutorial to Implement a New Neural Network Classifier](tutorials/developers/dev_nn_clas.pdf)
-  - [Developer Tutorial to Implement a New Neural Network Regressor](tutorials/developers/dev_nn_reg.pdf)
-  - [Developer Tutorial to Implement a New Neural Network Evaluator for Classification](tutorials/developers/dev_nn_clas_eval.pdf)
-  - [Developer Tutorial to Implement a New Neural Network Evaluator for Regression](tutorials/developers/dev_nn_reg_eval.pdf)
+  - [Developer Tutorial to Implement a New Neural Network Classifier](dev_nn_clas/dev_nn_clas.pdf)
+  - [Developer Tutorial to Implement a New Neural Network Regressor](dev_nn_reg/dev_nn_reg.pdf)
+  - [Developer Tutorial to Implement a New Neural Network Evaluator for Classification](dev_nn_clas_eval/dev_nn_clas_eval.pdf)
+  - [Developer Tutorial to Implement a New Neural Network Evaluator for Regression](dev_nn_reg_eval/dev_nn_reg_eval.pdf)
 
-- **Analysis Pipelines**: Developers can also contribute to the evolution of BRAPH 2.0 by introducing new analysis pipelines tailored to specific research requirements. The [Developer Tutorial to Implement a New Analysis Pipeline](tutorials/developers/dev_new_pipeline.pdf) provides a comprehensive guide on creating custom analysis pipelines within the BRAPH framework. This tutorial covers the entire pipeline development process, including data handling, calculation of measures, statistical analysis, and results visualization. By developing new analysis pipelines, users can enhance the capabilities of BRAPH 2.0 and enable the exploration of novel analytical approaches.
+- **Analysis Pipelines**: Developers can also contribute to the evolution of BRAPH 2.0 by introducing new analysis pipelines tailored to specific research requirements. The [Developer Tutorial to Implement a New Analysis Pipeline](dev_new_pipeline/dev_new_pipeline.pdf) provides a comprehensive guide on creating custom analysis pipelines within the BRAPH framework. This tutorial covers the entire pipeline development process, including data handling, calculation of measures, statistical analysis, and results visualization. By developing new analysis pipelines, users can enhance the capabilities of BRAPH 2.0 and enable the exploration of novel analytical approaches.
 
 ## Expanding BRAPH 2.0 with New Graphical Elements
 
 BRAPH 2.0's object-oriented programming architecture also simplifies the process of designing your own panels to visualize new properties and figures. Here are some ways by which you can expand the graphical capabilities of BRAPH 2.0:
 
-- **Property Panels**: New property panels can be implemented by extending the `PanelProp` element. The [Developer Tutorial to Implement a New Property Panel](tutorials/developers/dev_panelprop.pdf) provides a step-by-step guide on creating new property panel.
+- **Property Panels**: New property panels can be implemented by extending the `PanelProp` element. The [Developer Tutorial to Implement a New Property Panel](dev_panelprop/dev_panelprop.pdf) provides a step-by-step guide on creating new property panel.
 
-- **Figure Panels**: New figure panels can be added to BRAPH 2.0 by extending the `GUIFig` element. The [Developer Tutorial to Implement a New Figure Panel](tutorials/developers/dev_guifig.pdf) explains the process of implementing custom figures.
+- **Figure Panels**: New figure panels can be added to BRAPH 2.0 by extending the `GUIFig` element. The [Developer Tutorial to Implement a New Figure Panel](dev_guifig/dev_guifig.pdf) explains the process of implementing custom figures.
 
 These tutorials provide step-by-step instructions and examples to guide developers in expanding BRAPH 2.0 with new functionalities and graphical elements. We encourage developers to contribute to the growth and improvement of BRAPH 2.0 by introducing new elements, measures, and analyses. Feel free to share your implementations, ask questions, and engage with the BRAPH community through the [BRAPH forum](http://braph.org/forums) and [GitHub page](https://github.com/softmatterlab/BRAPH-2-Matlab).
 

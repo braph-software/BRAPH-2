@@ -11,7 +11,7 @@
 \begin{abstract}
 \noindent
 This is the developer tutorial for implementing a new measure. 
-In this Tutorial, we will explain how to create the generator file \fn{*.gen.m} for a new measure which can the be compiled by \code{braph2genesis}, using the measures \code{Degree}, \code{DegreeAv}, \code{Distance}, and \code{Triangles} as examples.
+In this Tutorial, we will explain how to create the generator file \fn{*.gen.m} for a new measure, which can the be compiled by \code{braph2genesis}. All measures are (direct or indirect) extensions of the element \code{Measure}. Here, we will use as examples the measures \code{Degree}, \code{DegreeAv}, \code{Distance}, and \code{Triangles}.
 \end{abstract}
 
 \tableofcontents
@@ -28,7 +28,7 @@ We will start by implementing in detail the measure \code{Degree}, which applies
 	label=cd:m:degree:header,
 	caption={
 		{\bf Degree element header.}
-		The \code{header} section of generator code for \fn{\_Degree.gen.m} provides the general information about the \code{Degree} element.
+		The \code{header} section of the generator code for \fn{\_Degree.gen.m} provides the general information about the \code{Degree} element.
 	}
 ]
 %% ¡header!
@@ -43,7 +43,7 @@ Connection weights are ignored in calculations.
 	label=cd:m:degree:prop_update,
 	caption={
 		{\bf Degree element prop update.}
-		The \code{props\_update} section of generator code for \fn{\_Degree.gen.m} updates the properties of the \code{Measure} element. This defines the core properties of the measure.
+		The \code{props\_update} section of the generator code for \fn{\_Degree.gen.m} updates the properties of the \code{Measure} element. This defines the core properties of the measure.
 	}
 ]
 %% ¡props_update!
@@ -171,7 +171,7 @@ The parts of the code that are modified are highlighted.
 	label=cd:m:degreeav:header,
 	caption={
 		{\bf DegreeAv element header.}
-		The \code{header} section of generator code for \fn{\_DegreeAv.gen.m} provides the general information about the \code{DegreeAv} element.
+		The \code{header} section of the generator code for \fn{\_DegreeAv.gen.m} provides the general information about the \code{DegreeAv} element.
 		\expand{cd:m:degree:header}
 	}
 ]
@@ -187,7 +187,7 @@ Connection weights are ignored in calculations.
 	label=cd:m:degreeav:prop_update,
 	caption={
 		{\bf DegreeAv element prop update.}
-		The \code{props\_update} section of generator code for \fn{\_DegreeAv.gen.m} updates the properties of the \code{Degree} element.
+		The \code{props\_update} section of the generator code for \fn{\_DegreeAv.gen.m} updates the properties of the \code{Degree} element.
 		\expand{cd:m:degree:prop_update}
 	}
 ]
@@ -310,7 +310,7 @@ Now we implement the binodal measure \code{Distance}, again highlighting the dif
 	label=cd:m:distance:header,
 	caption={
 		{\bf Distance element header.}
-		The \code{header} section of generator code for \fn{\_Distance.gen.m} provides the general information about the \code{Distance} element.
+		The \code{header} section of the generator code for \fn{\_Distance.gen.m} provides the general information about the \code{Distance} element.
 		\expand{cd:m:degree:header}
 	}
 ]
@@ -326,7 +326,7 @@ For weighted graphs, the distance is calculated with the Dijkstra algorithm usin
 	label=cd:m:distance:prop_update,
 	caption={
 		{\bf Distance element prop update.}
-		The \code{props\_update} section of generator code for \fn{\_Distance.gen.m} updates the properties of the \code{Measure} element.
+		The \code{props\_update} section of the generator code for \fn{\_Distance.gen.m} updates the properties of the \code{Measure} element.
 		\expand{cd:m:degree:prop_update}
 	}
 ]
@@ -477,7 +477,7 @@ The parts of the code that are modified are highlighted.
 	label=cd:m:triangles:header,
 	caption={
 		{\bf Triangles element header.}
-		The \code{header} section of generator code for \fn{\_Triangles.gen.m} provides the general information about the \code{Triangles} element.
+		The \code{header} section of the generator code for \fn{\_Triangles.gen.m} provides the general information about the \code{Triangles} element.
 		\expand{cd:m:triangles:header}
 	}
 ]
