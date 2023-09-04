@@ -7,7 +7,7 @@
    width="177.8mm"
    height="104mm"
    viewBox="0 0 672.00002 393.07086"
-   sodipodi:docname="fig01_7inchess.svg"
+   sodipodi:docname="fig01_big.svg"
    inkscape:version="1.1.1 (c3084ef, 2021-09-22)"
    inkscape:export-filename="/Users/anna.canal.garcia/Documents/PhD/BRAPH 2.0/Tutorials/New/fig01_7inchess.jpg"
    inkscape:export-xdpi="300"
@@ -52,7 +52,7 @@
      showgrid="false"
      units="mm"
      inkscape:zoom="1.1599671"
-     inkscape:cx="25.862803"
+     inkscape:cx="663.81193"
      inkscape:cy="261.64535"
      inkscape:window-width="1488"
      inkscape:window-height="945"
@@ -75,7 +75,7 @@
        y="-291"
        transform="scale(1,-1)"
        ry="0"
-       inkscape:export-filename="/Users/anna.canal.garcia/Documents/PhD/BRAPH 2.0/Tutorials/New/fig01_7inchess.png"
+       inkscape:export-filename="/Users/anna.canal.garcia/Documents/GitHub/BRAPH-2-Matlab-beta/tutorials/general/tut_gr_con/fig01.png"
        inkscape:export-xdpi="300"
        inkscape:export-ydpi="300" />
     <image
@@ -88,7 +88,7 @@
        y="-0.50999999"
        transform="matrix(0.97715724,0,0,-0.97715724,2.1263977,298.63275)"
        clip-path="url(#clipPath19841)"
-       inkscape:export-filename="/Users/anna.canal.garcia/Documents/PhD/BRAPH 2.0/Tutorials/New/fig01_7inchess.png"
+       inkscape:export-filename="/Users/anna.canal.garcia/Documents/GitHub/BRAPH-2-Matlab-beta/tutorials/general/tut_gr_con/fig01.png"
        inkscape:export-xdpi="300"
        inkscape:export-ydpi="300" />
   </g>
