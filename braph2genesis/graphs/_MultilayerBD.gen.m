@@ -6,6 +6,8 @@ In a multilayer binary directed (BD) graph, layers could have different number
 of nodes with within-layer directed edges. Edges can be either 0 (absence of connection) 
 or 1 (existence of connection).
 All node connections are allowed between layers.
+On the diagonal of the supra adjacency matrix, matrices are dediagonalized, semipositivized, and binarized.
+On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and binarized.
 
 %% ¡layout!
 
@@ -92,7 +94,7 @@ NAME (constant, string) is the name of the multilayer weighted undirected graph.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the multilayer weighted undirected graph.
 %%%% ¡default!
-'In a multilayer binary directed (BD) graph, layers could have different number of nodes with within-layer directed edges. Edges can be either 0 (absence of connection) or 1 (existence of connection). All node connections are allowed between layers.'
+'In a multilayer binary directed (BD) graph, layers could have different number of nodes with within-layer directed edges. Edges can be either 0 (absence of connection) or 1 (existence of connection). All node connections are allowed between layers.On the diagonal of the supra adjacency matrix, matrices are dediagonalized, semipositivized, and binarized. On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and binarized.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the multilayer binary directed graph.
