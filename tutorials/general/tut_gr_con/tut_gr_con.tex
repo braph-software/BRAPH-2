@@ -18,7 +18,7 @@ This Tutorial explains how to prepare and work with this kind of data.
 
 \fig{figure*}
 	{fig:01}
-	{\includegraphics{fig01.png}}
+	{\includegraphics{fig01.jpg}}
 	{GUI for a group of subjects with connectivity data}
 	{
 	Full graphical user interface to upload a group of subjects with connectivity data in BRAPH~2.0. 
@@ -32,7 +32,7 @@ In most analyses, the group GUI is the second step after you have selected a bra
 \fig{figure}
 	{fig:02}
 	{
-	\includegraphics{fig02.png}
+	\includegraphics{fig02.jpg}
 	}
 	{Upload the data of a group of subjects}
 	{
@@ -43,7 +43,7 @@ In most analyses, the group GUI is the second step after you have selected a bra
 	{\bf c}-{\bf f} navigate to the BRAPH~2.0 folder \fn{pipelines}, {\bf d} \fn{connectivity},  {\bf e} \fn{Example data CON XLS}, and {\bf f} select the folder containing the connectivity matrices of one group \fn{CON\_Group\_1\_XLS}.
 	}
 
-To open the GUI and upload the brain connectivity data, you can also do it from the command line (i.e., without opening an analysis pipeline) by typing the commands in \Coderef{cd:launch}.
+To open the GUI and upload the brain connectivity data, you can also do it from the command line (i.e., without opening an analysis pipeline) by typing the commands in \Coderef{cd:launch}. 
 %
 \begin{lstlisting}[
 	label=cd:launch,
@@ -59,6 +59,19 @@ gui.get('DRAW')¥\circled{3}\circlednote{3}{draws the GUI.}¥
 gui.get('SHOW') ¥\circled{4}\circlednote{4}{shows the GUI.}¥
 \end{lstlisting}
 
+Moreover, if you don't have the \fn{Example data CON XLS} folder inside \fn{connectivity}, then you can generate it by running the commands in \Coderef{cd:exampledata}.
+
+\begin{lstlisting}[
+	label=cd:exampledata,
+	caption={
+		{\bf Code to generate the example data folder.}
+		This code can be used in the MatLab command line to generate the \fn{Example data CON XLS} folder to the \fn{connectivity} pipeline folder.
+	}
+]
+test_ImporterGroupSubjectCON_XLS ¥\circled{1}\circlednote{1}{generates the example connectivity XLS data folder.}¥
+test_ImporterGroupSubjectCON_TXT ¥\circled{2}\circlednote{2}{generates the example connectivity TXT data folder.}¥
+\end{lstlisting}
+
 \section{Visualize the Group Data}
 
 After completing the steps described in \Figref{fig:02}, you can see the data (\Figref{fig:03}a), and change the Group ID, name, and notes (\Figref{fig:03}b). 
@@ -66,7 +79,7 @@ After completing the steps described in \Figref{fig:02}, you can see the data (\
 \fig{figure}
 	{fig:03}
 	{
-	\includegraphics{fig03.png}
+	\includegraphics{fig03.jpg}
 	}
 	{Edit the group metadata}
 	{ 
@@ -80,7 +93,7 @@ Finally, you can open each subject's connectivity matrix by selecting the subjec
 
 \fig{figure}
 	{fig:04}
-	{\includegraphics{fig04.png}
+	{\includegraphics{fig04.jpg}
 	}
 	{Edit the individual subject data}
 	{
@@ -97,7 +110,7 @@ To be able to import connectivity data into BRAPH~2.0, you need to include the c
 	{fig:05}
 	{
 	[h!]
-	\includegraphics{fig05.png}
+	\includegraphics{fig05.jpg}
 	}
 	{Data preparation}
 	{
@@ -112,7 +125,7 @@ To be able to import connectivity data into BRAPH~2.0, you need to include the c
 	{fig:06}
 	{
 	[h!]
-	\includegraphics{fig06.png}
+	\includegraphics{fig06.jpg}
 	}
 	{Edit the Covariates}
 	{
