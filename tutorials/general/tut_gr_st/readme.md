@@ -22,10 +22,10 @@ In most analyses, the group GUI is the second step after you have selected a bra
 >	To upload the test structural data:
 > **c-f** navigate to the BRAPH 2.0 folder `pipelines`, **d** `structural`, **e** `Example data ST XLS`, and **f** select the structural values of one group `ST_Group_1_XLS`.
 
-To open the GUI and upload the brain functional data, you can also do it from the command line (i.e., without opening an analysis pipeline) by typing the commands referenced below.
+To open the GUI and upload the brain structural data, you can also do it from the command line (i.e., without opening an analysis pipeline) by typing the commands referenced below.
 
 ```matlab
-gr = Group('SUB_CLASS', 'SubjectST');  % creates a new object Group to use functional values for assessing connectivity i.e., SubjectST.
+gr = Group('SUB_CLASS', 'SubjectST');  % creates a new object Group to use structural values for assessing connectivity i.e., SubjectST.
 
 gui = GUIElement('PE', gr);  % creates a GUI to upload the group data.
 gui.get('DRAW');  % draws the GUI.
