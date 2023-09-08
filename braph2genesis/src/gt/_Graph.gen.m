@@ -211,6 +211,18 @@ NODES labels
 
 %%% ¡prop!
 %%%% ¡id!
+Graph.RANDOMIZE
+%%%% ¡title!
+RANDOMIZE ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+Graph.RANDOM_SEED
+%%%% ¡title!
+RANDOMIZATION SEED
+
+%%% ¡prop!
+%%%% ¡id!
 Graph.A
 %%%% ¡title!
 ADJACENCY MATRIX
@@ -333,6 +345,12 @@ end
 ANODELABELS (query, stringlist) returns the nodel labels for each layer.
 %%%% ¡calculate!
 value = g.get('NODELABELS');
+
+%%% ¡prop!
+RANDOMIZE (parameter, logical) determines whether to randomize the graph.
+
+%%% ¡prop!
+RANDOM_SEED (parameter, scalar) is the randomization seed.
 
 %%% ¡prop!
 A (result, cell) is the graph adjacency matrix. 

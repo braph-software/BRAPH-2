@@ -62,6 +62,30 @@ NORMALIZATION RULE
 
 %%% ¡prop!
 %%%% ¡id!
+OrdMlWD.RANDOMIZE
+%%%% ¡title!
+RANDOMIZATION ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMlWD.RANDOM_SEED
+%%%% ¡title!
+RANDOMIZATION SEED
+
+%%% ¡prop!
+%%%% ¡id!
+OrdMlWD.ATTEMPTSPEREDGE
+%%%% ¡title!
+RANDOMIZATION ATTEMPTS PER EDGE
+
+%%% ¡prop!
+%%%% ¡id!
+MultilayerWD.NUMBEROFWEIGHTS
+%%%% ¡title!
+RANDOMIZATION NUMBER OF WEIGHTS
+
+%%% ¡prop!
+%%%% ¡id!
 OrdMlWD.A
 %%%% ¡title!
 Weighted Directed ADJACENCY MATRICES
@@ -196,6 +220,9 @@ for i = 1:1:L
         end
     end
 end
+if g.get('RANDOMIZE')
+    A = g.get('RANDOMIZATION', A);
+end
 value = A;
 
 %%%% ¡gui!
@@ -257,6 +284,40 @@ STANDARDIZE_RULE (parameter, option) determines how to normalize the weights bet
 %%%% ¡settings!
 {'threshold' 'range'}
 
+%%% ¡prop!
+ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
+%%%% ¡default!
+5
+
+%%% ¡prop!
+NUMBEROFWEIGHTS (parameter, scalar) specifies the number of weights sorted at the same time.
+%%%% ¡default!
+10
+
+%%% ¡prop!
+RANDOMIZATION (query, cell) is the attempts to rewire each edge.
+%%%% ¡calculate!
+rng(g.get('RANDOM_SEED'), 'twister')
+
+if isempty(varargin)
+    value = {};
+    return
+end
+
+A = varargin{1};
+attempts_per_edge = g.get('ATTEMPTSPEREDGE');
+
+for i = 1:length(A)
+    tmp_a = A{i,i};
+
+    tmp_g = GraphWD();
+    tmp_g.set('ATTEMPTSPEREDGE', g.get('ATTEMPTSPEREDGE'));
+    tmp_g.set('NUMBEROFWEIGHTS', g.get('NUMBEROFWEIGHTS'));
+    random_A = tmp_g.get('RANDOMIZATION', {tmp_a});
+    A{i, i} = random_A;
+end
+value = A;
+
 %% ¡tests!
 
 %%% ¡excluded_props!
@@ -314,13 +375,63 @@ assert(isequal(g.get('A'), A), ...
 % .01
 % %%%% ¡code!
 
+%%% ¡test!
+%%%% ¡name!
+Randomize Rules
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B1 = rand(randi(10));
+B2 = rand(randi(10));
+B3 = rand(randi(10));
+B12 = rand(size(B1, 1),size(B2, 2));
+B13 = rand(size(B1, 1),size(B3, 2));
+B23 = rand(size(B2, 1),size(B3, 2));
+B21 = rand(size(B2, 1),size(B1, 2));
+B31 = rand(size(B3, 1),size(B1, 2));
+B32 = rand(size(B3, 1),size(B2, 2));
+B = {
+    B1                           B12                            B13
+    B21                          B2                             B23
+    B31                          B32                            B3
+    };
+g = OrdMlWD('B', B);
+g.set('RANDOMIZE', true);
+g.set('ATTEMPTSPEREDGE', 4);
+g.get('A_CHECK')
 
-%% ¡_props!
+A = g.get('A');
 
-%%% ¡_prop!
-ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
-%%%% ¡_default!
-5
+assert(isequal(size(A{1}), size(B{1})), ...
+    [BRAPH2.STR ':OrdMlWD:' BRAPH2.FAIL_TEST], ...
+    'OrdMlWD Randomize is not functioning well.')
+
+g2 = OrdMlWD('B', B);
+g2.set('RANDOMIZE', true);
+g2.set('ATTEMPTSPEREDGE', 4);
+g2.get('A_CHECK')
+A2 = g2.get('A');
+random_A = g2.get('RANDOMIZATION', A2);
+
+for i = 1:length(A2)
+    if all(A2{i, i}==0, "all") %if all nodes are zero, the random matrix is also all zeros
+        assert(isequal(A2{i, i}, random_A{i, i}), ...
+            [BRAPH2.STR ':OrdMlWD:' BRAPH2.FAIL_TEST], ...
+            'OrdMlWD Randomize is not functioning well.')
+    elseif isequal((length(A2{i, i}).^2)- length(A2{i, i}), sum(A2{i, i}==1, "all")) %if all nodes (except diagonal) are one, the random matrix is the same as original
+        assert(isequal(A2{i, i}, random_A{i, i}), ...
+            [BRAPH2.STR ':OrdMlWD:' BRAPH2.FAIL_TEST], ...
+            'OrdMlWD Randomize is not functioning well.')
+    else
+        assert(~isequal(A2{i, i}, random_A{i, i}), ...
+            [BRAPH2.STR ':OrdMlWD:' BRAPH2.FAIL_TEST], ...
+            'OrdMlWD Randomize is not functioning well.')
+    end
+
+    assert(isequal(numel(find(A2{i, i})), numel(find(random_A{i, i}))), ... % check same number of nodes
+        [BRAPH2.STR ':OrdMlWD:' BRAPH2.FAIL_TEST], ...
+        'OrdMlWD Randomize is not functioning well.')
+end
 
 %% ¡_methods!
 function random_g = randomize(g)

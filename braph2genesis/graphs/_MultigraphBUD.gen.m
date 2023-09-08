@@ -71,6 +71,24 @@ DENSITIES [0% ... 100%]
 
 %%% ¡prop!
 %%%% ¡id!
+MultigraphBUD.RANDOMIZE
+%%%% ¡title!
+RANDOMIZATION ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+MultigraphBUD.RANDOM_SEED
+%%%% ¡title!
+RANDOMIZATION SEED
+
+%%% ¡prop!
+%%%% ¡id!
+MultigraphBUD.ATTEMPTSPEREDGE
+%%%% ¡title!
+RANDOMIZATION ATTEMPTS PER EDGE
+
+%%% ¡prop!
+%%%% ¡id!
 MultigraphBUD.A
 %%%% ¡title!
 Binary Undirected ADJACENCY MATRICES at fixed Densities
@@ -190,7 +208,9 @@ if ~isempty(cell2mat(A_WU))
         A{i, i} = dediagonalize(binarize(cell2mat(A_WU), 'density', density));
     end
 end
-
+if g.get('RANDOMIZE')
+    A = g.get('RANDOMIZATION', A);
+end
 value = A;
 %%%% ¡gui!
 pr = PanelPropCell('EL', g, 'PROP', MultigraphBUD.A, ...
@@ -223,12 +243,41 @@ COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
 %%%% ¡default!
 getCompatibleMeasures('MultigraphBUD')
 
+%%% ¡prop!
+ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
+%%%% ¡default!
+5
+
+%%% ¡prop!
+RANDOMIZATION (query, cell) is the attempts to rewire each edge.
+%%%% ¡calculate!
+rng(g.get('RANDOM_SEED'), 'twister')
+
+if isempty(varargin)
+    value = {};
+    return
+end
+
+A = varargin{1};
+attempts_per_edge = g.get('ATTEMPTSPEREDGE');
+
+for i = 1:length(A)
+    tmp_a = A{i,i};
+
+    random_g = GraphBU();
+    random_g.set('ATTEMPTSPEREDGE', g.get('ATTEMPTSPEREDGE'));
+    random_A = random_g.get('RANDOMIZATION', {tmp_a});
+    A{i, i} = random_A;
+end
+value = A;
+
 %% ¡props!
 
 %%% ¡prop!
 DENSITIES (parameter, rvector) is the vector of densities.
 %%%% ¡gui!
 pr = PanelPropRVectorSmart('EL', g, 'PROP', MultigraphBUD.DENSITIES, 'MAX', 100, 'MIN', 0, varargin{:});
+
 
 %% ¡tests!
 
@@ -329,3 +378,54 @@ assert(isequal( ...
     ]), ...
     [BRAPH2.STR ':MultigraphBUD:' BRAPH2.FAIL_TEST], ...
     'MultigraphBUD is not constructing well.')
+
+%%% ¡test!
+%%%% ¡name!
+Randomize Rules
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B = randn(10);
+g = MultigraphBUD('B', B, 'DENSITIES', [0 55 100]);
+
+g.set('RANDOMIZE', true);
+g.set('ATTEMPTSPEREDGE', 4);
+g.get('A_CHECK')
+
+A = g.get('A');
+
+assert(isequal(size(A{1}), size(B)), ...
+    [BRAPH2.STR ':MultigraphBUD:' BRAPH2.FAIL_TEST], ...
+    'MultigraphBUD Randomize is not functioning well.')
+
+g2 = MultigraphBUD('B', B, 'DENSITIES', [0 55 100]);
+g2.set('RANDOMIZE', false);
+g2.set('ATTEMPTSPEREDGE', 4);
+g2.get('A_CHECK')
+
+A2 = g2.get('A');
+random_A = g2.get('RANDOMIZATION', A2);
+
+for i = 1:length(A2)
+    if all(A2{i, i}==0, "all") %if all nodes are zero, the random matrix is also all zeros
+        assert(isequal(A2{i, i}, random_A{i, i}), ...
+            [BRAPH2.STR ':MultigraphBUD:' BRAPH2.FAIL_TEST], ...
+            'MultigraphBUD Randomize is not functioning well.')
+    elseif isequal((length(A2{i, i}).^2)- length(A2{i, i}), sum(A2{i, i}==1, "all")) %if all nodes (except diagonal) are one, the random matrix is the same as original
+        assert(isequal(A2{i, i}, random_A{i, i}), ...
+            [BRAPH2.STR ':MultigraphBUD:' BRAPH2.FAIL_TEST], ...
+            'MultigraphBUD Randomize is not functioning well.')
+    else
+        assert(~isequal(A2{i, i}, random_A{i, i}), ...
+            [BRAPH2.STR ':MultigraphBUD:' BRAPH2.FAIL_TEST], ...
+            'MultigraphBUD Randomize is not functioning well.')
+    end
+
+    assert(isequal(numel(find(A2{i, i})), numel(find(random_A{i, i}))), ... % check same number of nodes
+        [BRAPH2.STR ':MultigraphBUD:' BRAPH2.FAIL_TEST], ...
+        'MultigraphBUD Randomize is not functioning well.')
+        
+    assert(issymmetric(random_A{i, i}), ... % check symmetry 
+    [BRAPH2.STR ':MultigraphBUD:' BRAPH2.FAIL_TEST], ...
+    'MultigraphBUD Randomize is not functioning well.')
+end

@@ -66,6 +66,30 @@ NORMALIZATION RULE
 
 %%% ¡prop!
 %%%% ¡id!
+MultiplexWU.RANDOMIZE
+%%%% ¡title!
+RANDOMIZATION ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexWU.RANDOM_SEED
+%%%% ¡title!
+RANDOMIZATION SEED
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexWU.ATTEMPTSPEREDGE
+%%%% ¡title!
+RANDOMIZATION ATTEMPTS PER EDGE
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexWU.NUMBEROFWEIGHTS
+%%%% ¡title!
+RANDOMIZATION NUMBER OF WEIGHTS
+
+%%% ¡prop!
+%%%% ¡id!
 MultiplexWU.A
 %%%% ¡title!
 Weighted Undirected ADJACENCY MATRICES
@@ -193,6 +217,13 @@ for i = 1:1:L
     end
 end
 
+if g.get('GRAPH_TYPE') ~= 4
+
+else
+    if g.get('RANDOMIZE')
+        A = g.get('RANDOMIZATION', A);
+    end
+end
 value = A;
 %%%% ¡gui!
 pr = PanelPropCell('EL', g, 'PROP', MultiplexWU.A, ...
@@ -256,6 +287,39 @@ SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative ed
 STANDARDIZE_RULE (parameter, option) determines how to normalize the weights between 0 and 1.
 %%%% ¡settings!
 {'threshold' 'range'}
+
+%%% ¡prop!
+ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
+%%%% ¡default!
+5
+
+%%% ¡prop!
+NUMBEROFWEIGHTS (parameter, scalar) specifies the number of weights sorted at the same time.
+%%%% ¡default!
+10
+
+%%% ¡prop!
+RANDOMIZATION (query, cell) is the attempts to rewire each edge.
+%%%% ¡calculate!
+rng(g.get('RANDOM_SEED'), 'twister')
+
+if isempty(varargin)
+    value = {};
+    return
+end
+
+A = varargin{1};
+
+for i = 1:length(A)
+    tmp_a = A{i,i};
+
+    tmp_g = GraphWU();
+    tmp_g.set('ATTEMPTSPEREDGE', g.get('ATTEMPTSPEREDGE'));
+    tmp_g.set('NUMBEROFWEIGHTS', g.get('NUMBEROFWEIGHTS'));
+    random_A = tmp_g.get('RANDOMIZATION', {tmp_a});
+    A{i, i} = random_A;
+end
+value = A;
 
 %% ¡tests!
 
@@ -321,83 +385,53 @@ for i = 1:1:length(symmetrize_rules)
     end
 end
 
+%%% ¡test!
+%%%% ¡name!
+Randomize Rules
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B1 = rand(randi(10));
+B = {B1, B1, B1};
+g = MultiplexWU('B', B);
 
+g.set('RANDOMIZE', true);
+g.set('ATTEMPTSPEREDGE', 4);
+g.get('A_CHECK')
 
+A = g.get('A');
 
+assert(isequal(size(A{1}), size(B{1})), ...
+    [BRAPH2.STR ':MultiplexWU:' BRAPH2.FAIL_TEST], ...
+    'MultiplexWU Randomize is not functioning well.')
 
+g2 = MultiplexWU('B', B);
+g2.set('RANDOMIZE', false);
+g2.set('ATTEMPTSPEREDGE', 4);
+g2.get('A_CHECK')
+A2 = g2.get('A');
+random_A = g2.get('RANDOMIZATION', A2);
 
-
-
-
-%% ¡_props!
-
-%%% ¡_prop!
-ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
-%%%% ¡_default!
-5
-
-%%% ¡_prop!
-NUMBEROFWEIGHTS (parameter, scalar) specifies the number of weights sorted at the same time.
-%%%% ¡_default!
-10
-
-%% ¡_methods!
-function random_g = randomize(g)
-    % RANDOMIZE returns a randomized graph
-    %
-    % RANDOMIZED_G = RANDOMIZE(G) returns the randomized
-    % graph RANDOM_G obtained with a randomized correlation
-    % matrix via the static function randomize_A while preserving
-    % degree distributions. The randomization it is done layer by
-    % layer and then integrated in the 2-D supra-adjacency matrix
-    % cell array.
-    %
-    % RANDOMIZED_G = RANDOMIZE(G, 'AttemptsPerEdge', VALUE)
-    % returns the randomized graph RANDOM_G obtained with a
-    % randomized correlation matrix via the static function
-    % randomize_A while preserving  degree distributions.
-    % The multiplex is randomized layer by layer where randomized
-    % adjacency matrix of each layer are then integrated in the
-    % 2-D supra-adjacency matrix cell array.
-    %
-    % See also GraphBD
-
-    % get rules
-    number_of_weights = g.get('NUMBEROFWEIGHTS');
-    attempts_per_edge = g.get('ATTEMPTSPEREDGE');
-
-    if nargin<2
-        attempts_per_edge = 5;
+for i = 1:length(A2)
+    if all(A2{i, i}==0, "all") %if all nodes are zero, the random matrix is also all zeros
+        assert(isequal(A2{i, i}, random_A{i, i}), ...
+            [BRAPH2.STR ':MultiplexWU:' BRAPH2.FAIL_TEST], ...
+            'MultiplexWU Randomize is not functioning well.')
+    elseif isequal((length(A2{i, i}).^2)- length(A2{i, i}), sum(A2{i, i}==1, "all")) %if all nodes (except diagonal) are one, the random matrix is the same as original
+        assert(isequal(A2{i, i}, random_A{i, i}), ...
+            [BRAPH2.STR ':MultiplexWU:' BRAPH2.FAIL_TEST], ...
+            'MultiplexWU Randomize is not functioning well.')
+    else
+        assert(~isequal(A2{i, i}, random_A{i, i}), ...
+            [BRAPH2.STR ':MultiplexWU:' BRAPH2.FAIL_TEST], ...
+            'MultiplexWU Randomize is not functioning well.')
     end
 
-            % get A
-            A = g.get('A');
-            [l, ls] = g.layernumber();
-              
-            % special case for multiplexBUD and multiplexBUT
-            if Graph.is_binary(g)
-                tmp_b = g.get('B');
-                tmp_g = MultiplexWU('B', tmp_b);
-                tmp_A = tmp_g.get('A');
-                random_multi_A = cell(1, ls(1));
-                for li = 1:1:ls(1)
-                    Aii = tmp_A{li, li};
-                    random_A = GraphWU.randomize_A(Aii, attempts_per_edge, number_of_weights);
-                    random_multi_A(li) = {random_A};
-                end
-                if isa(g, 'MultiplexBUD')
-                    random_g = MultiplexBUD('B', random_multi_A, 'DENSITIES', g.get('Densities'));
-                else
-                    random_g = MultiplexBUT('B', random_multi_A, 'THRESHOLDS', g.get('Thresholds'));
-                end
-                
-            else % multiplexWU
-                random_multi_A = cell(1, l);
-                for li = 1:1:l
-                    Aii = A{li, li};
-                    random_A = GraphWU.randomize_A(Aii, attempts_per_edge, number_of_weights);
-                    random_multi_A(li) = {random_A};
-                end
-                random_g = MultiplexWU('B', random_multi_A);
-            end
+    assert(isequal(numel(find(A2{i, i})), numel(find(random_A{i, i}))), ... % check same number of nodes
+        [BRAPH2.STR ':MultiplexWU:' BRAPH2.FAIL_TEST], ...
+        'MultiplexWU Randomize is not functioning well.')
+
+    assert(issymmetric(random_A{i, i}), ... % check symmetry 
+    [BRAPH2.STR ':MultiplexWU:' BRAPH2.FAIL_TEST], ...
+    'MultiplexWU Randomize is not functioning well.')
 end

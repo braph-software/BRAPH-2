@@ -60,6 +60,24 @@ NEGATIVE EDGE RULE
 
 %%% ¡prop!
 %%%% ¡id!
+MultiplexBU.RANDOMIZE
+%%%% ¡title!
+RANDOMIZATION ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBU.RANDOM_SEED
+%%%% ¡title!
+RANDOMIZATION SEED
+
+%%% ¡prop!
+%%%% ¡id!
+MultiplexBU.ATTEMPTSPEREDGE
+%%%% ¡title!
+RANDOMIZATION ATTEMPTS PER EDGE
+
+%%% ¡prop!
+%%%% ¡id!
 MultiplexBU.A
 %%%% ¡title!
 Binary Undirected ADJACENCY MATRICES
@@ -186,7 +204,9 @@ for i = 1:1:L
         end
     end
 end
-
+if g.get('RANDOMIZE')
+    A = g.get('RANDOMIZATION', A);
+end
 value = A;
 %%%% ¡gui!
 pr = PanelPropCell('EL', g, 'PROP', MultiplexBU.A, ...
@@ -245,6 +265,34 @@ SYMMETRIZE_RULE (parameter, option) determines how to symmetrize the matrix.
 SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.
 %%%% ¡settings!
 {'zero', 'absolute'}
+
+%%% ¡prop!
+ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
+%%%% ¡default!
+5
+
+%%% ¡prop!
+RANDOMIZATION (query, cell) is the attempts to rewire each edge.
+%%%% ¡calculate!
+rng(g.get('RANDOM_SEED'), 'twister')
+
+if isempty(varargin)
+    value = {};
+    return
+end
+
+A = varargin{1};
+attempts_per_edge = g.get('ATTEMPTSPEREDGE');
+
+for i = 1:length(A)
+    tmp_a = A{i,i};
+
+    tmp_g = GraphBU();
+    tmp_g.set('ATTEMPTSPEREDGE', g.get('ATTEMPTSPEREDGE'));
+    random_A = tmp_g.get('RANDOMIZATION', {tmp_a});
+    A{i, i} = random_A;
+end
+value = A;
 
 %% ¡tests!
 
@@ -447,17 +495,57 @@ assert(isequal(g_absolute_min.get('A'), A_absolute_min), ...
     'MultiplexBU is not constructing well.')
 
 
+%%% ¡test!
+%%%% ¡name!
+Randomize Rules
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B1 = randn(10);
+B = {B1, B1, B1};
 
+g = MultiplexBU('B', B);
+g.set('RANDOMIZE', true);
+g.set('ATTEMPTSPEREDGE', 4);
+g.get('A_CHECK')
 
+A = g.get('A');
 
+assert(isequal(size(A{1}), size(B{1})), ...
+    [BRAPH2.STR ':MultiplexBU:' BRAPH2.FAIL_TEST], ...
+    'MultiplexBU Randomize is not functioning well.')
 
+g2 = MultiplexBU('B', B);
+g2.set('RANDOMIZE', false);
+g2.set('ATTEMPTSPEREDGE', 4);
+g2.get('A_CHECK')
 
-%% ¡_props!
+A2 = g2.get('A');
+random_A = g2.get('RANDOMIZATION', A2);
 
-%%% ¡_prop!
-ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
-%%%% ¡_default!
-5
+for i = 1:length(A2)
+    if all(A2{i, i}==0, "all") %if all nodes are zero, the random matrix is also all zeros
+        assert(isequal(A2{i, i}, random_A{i, i}), ...
+            [BRAPH2.STR ':MultiplexBU:' BRAPH2.FAIL_TEST], ...
+            'MultiplexBU Randomize is not functioning well.')
+    elseif isequal((length(A2{i, i}).^2)- length(A2{i, i}), sum(A2{i, i}==1, "all")) %if all nodes (except diagonal) are one, the random matrix is the same as original
+        assert(isequal(A2{i, i}, random_A{i, i}), ...
+            [BRAPH2.STR ':MultiplexBU:' BRAPH2.FAIL_TEST], ...
+            'MultiplexBU Randomize is not functioning well.')
+    else
+        assert(~isequal(A2{i, i}, random_A{i, i}), ...
+            [BRAPH2.STR ':MultiplexBU:' BRAPH2.FAIL_TEST], ...
+            'MultiplexBU Randomize is not functioning well.')
+    end
+
+    assert(isequal(numel(find(A2{i, i})), numel(find(random_A{i, i}))), ... % check same number of nodes
+        [BRAPH2.STR ':MultiplexBU:' BRAPH2.FAIL_TEST], ...
+        'MultiplexBU Randomize is not functioning well.')
+        
+    assert(issymmetric(random_A{i, i}), ... % check symmetry 
+    [BRAPH2.STR ':MultiplexBU:' BRAPH2.FAIL_TEST], ...
+    'MultiplexBU Randomize is not functioning well.')
+end
 
 %% ¡_methods!
 function random_g = randomize(g)
