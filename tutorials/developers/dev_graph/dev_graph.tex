@@ -79,7 +79,7 @@ NOTES (metadata, string) are some specific notes about the binary directed graph
 %%%% ¡default!
 'GraphBD notes'
 
-%%% ¡prop! ¥\circled{1}\circlednote{1}{defines the \emph{graph type}: \code{Graph.GRAPH} (single layer), \code{Graph.MULTIGRAPH} (multiple unconnected layers), \code{Graph.MULTILAYER} (multiple layers), \code{Graph.ORDERED\_MULTILAYER} (multiple layers with subsequent layers) \code{Graph.MULTIPLEX} (multilayer with connections between corresponding nodes), and \code{Graph.ORDERED\_MULTIPLEX} (multilayer with connections between corresponding nodes in subsequent layers).}\circlednote{2}{defines the \emph{graph connectivity}: \code{Graph.BINARY} (0 or 1) or \code{Graph.WEIGHTED}.}\circlednote{3}{defines the \emph{edge directionality}: \code{Graph.DIRECTED} or \code{Graph.UNDIRECTED}.}\circlednote{4}{defines the \emph{graph self-connectivity}: \code{Graph.NONSELFCONNECTED} or \code{Graph.SELFCONNECTED}.}\circlednote{5}{defines the \emph{graph negativity}: \code{Graph.NONNEGATIVE} or \code{Graph.NEGATIVE}.}\circlednote{6}{The property \code{A} contains the supra-adjacency matrix of the graph, which is calculated by the code under \code{¡calculate!}.}\circlednote{7}{retrieves the adjacency matrix of the graph \code{B}, defined in the new properties below.}\threecirclednotes{8}{9}{10}{condition the adjaciency matrix removing the diagonal elements, making it semidefinte positive, and binarizing it. A list of useful functions is: \code{diagonalize} (removes the off-diagonal), \code{dediagonalize} (removes the diagonal), \code{binarize} (binarizes with threshold=0), \code{semipositivize} (removes negative weights), \code{standardize} (normalizes between 0 and 1) or \code{symmetrize} (symmetrizes the matrix). Use the MatLab help to see additional functionalities.}\circlednote{11}{preallocates the adjacency matrix to be calcualted.}\circlednote{12}{returns the calculated graph \code{A} assigning it to the output variable \code{value}.}\circlednote{13}{employes the property panel \code{PanelPropCell} to be employed to visualize \code{A}, setting also its properties.}\circlednote{14}{determines the list of compatible figures.}¥
+%%% ¡prop! ¥\circled{1}\circlednote{1}{defines the \emph{graph type}: \code{Graph.GRAPH} (single layer), \code{Graph.MULTIGRAPH} (multiple unconnected layers), \code{Graph.MULTILAYER} (multiple layers), \code{Graph.ORDERED\_MULTILAYER} (multiple layers with subsequent layers) \code{Graph.MULTIPLEX} (multilayer with connections between corresponding nodes), and \code{Graph.ORDERED\_MULTIPLEX} (multilayer with connections between corresponding nodes in subsequent layers).}\circlednote{2}{defines the \emph{graph connectivity}: \code{Graph.BINARY} (0 or 1) or \code{Graph.WEIGHTED}.}\circlednote{3}{defines the \emph{edge directionality}: \code{Graph.DIRECTED} or \code{Graph.UNDIRECTED}.}\circlednote{4}{defines the \emph{graph self-connectivity}: \code{Graph.NONSELFCONNECTED} or \code{Graph.SELFCONNECTED}.}\circlednote{5}{defines the \emph{graph negativity}: \code{Graph.NONNEGATIVE} or \code{Graph.NEGATIVE}.}\circlednote{6}{The property \code{A} contains the supra-adjacency matrix of the graph, which is calculated by the code under \code{¡calculate!}.}\circlednote{7}{retrieves the adjacency matrix of the graph \code{B}, defined in the new properties below.}\threecirclednotes{8}{9}{10}{condition the adjaciency matrix removing the diagonal elements, making it semidefinte positive, and binarizing it. A list of useful functions is: \code{diagonalize} (removes the off-diagonal), \code{dediagonalize} (removes the diagonal), \code{binarize} (binarizes with threshold=0), \code{semipositivize} (removes negative weights), \code{standardize} (normalizes between 0 and 1) or \code{symmetrize} (symmetrizes the matrix). Use the MatLab help to see additional functionalities.}\circlednote{11}{preallocates the adjacency matrix to be calcualted.}\circlednote{12}{randomizes adjacency matrix when \code{'RANDOMIZE'} is \code{true} by calling the function of the graph named \code{RANDOMIZATION}}\circlednote{13}{returns the calculated graph \code{A} assigning it to the output variable \code{value}.}\circlednote{14}{employes the property panel \code{PanelPropCell} to be employed to visualize \code{A}, setting also its properties.}¥
 GRAPH_TYPE (constant, scalar) returns the graph type __Graph.GRAPH__.
 %%%% ¡default!
 Graph.GRAPH
@@ -114,9 +114,13 @@ B = semipositivize(B, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); ¥\ci
 B = binarize(B); ¥\circled{10}¥
 
 A = {B}; ¥\circled{11}¥
-value = A; ¥\circled{12}¥
+if g.get('RANDOMIZE') ¥\circled{12}¥
+	random_A = g.get('RANDOMIZATION', A);
+	A = {random_A};
+end
+value = A; ¥\circled{13}¥
 
-%%%% ¡gui! ¥\circled{13}¥
+%%%% ¡gui! ¥\circled{14}¥
 pr = PanelPropCell('EL', g, 'PROP', GraphBD.A, ... 
 	'TABLE_HEIGHT', s(40), ... 
 	'XSLIDERSHOW', false, ... 
@@ -124,7 +128,8 @@ pr = PanelPropCell('EL', g, 'PROP', GraphBD.A, ...
 	'ROWNAME' , g.getCallback('ANODELABELS'), ... 
 	'COLUMNNAME', g.getCallback('ANODELABELS'));
 
-%%% ¡prop! ¥\circled{14}¥
+
+%%% ¡prop! ¥\circled{15}\circlednote{15}{determines the list of compatible figures.}¥
 COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
 %%%% ¡default!
 getCompatibleMeasures('GraphBD')
@@ -146,12 +151,89 @@ pr = PanelPropMatrix('EL', g, 'PROP', GraphBD.B, ...
 	'TABLE_HEIGHT' , s(40), ...
 	'ROWNAME' , g.getCallback('ANODELABELS'), ... 
 	'COLUMNNAME', g.getCallback('ANODELABELS'), ...
-	varargin{:});
+	varargin{:});¥\circlednote{3}{defines the semi-positivation rule (i.e., how to remove the negative edges) to be used when generating the adjacency matrix \code{A} from the intput property \code{B}. The admissible options are: 'zero' (default, convert negative values to zeros) or 'absolute' (convert negative values to absolute value). }¥
 
-%%% ¡prop! ¥\circled{3}\circlednote{3}{defines the semi-positivation rule (i.e., how to remove the negative edges) to be used when generating the adjacency matrix \code{A} from the intput property \code{B}. The admissible options are: 'zero' (default, convert negative values to zeros) or 'absolute' (convert negative values to absolute value). }¥
+%%% ¡prop! ¥\circled{3}¥
 SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.
 %%%% ¡settings!
 {'zero', 'absolute'}
+
+%%% ¡prop!¥\circled{4}\circlednote{4}{defines the number of attempts that will be used for each edge when calling \code{RANDOMIZATION}}¥
+ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
+%%%% ¡default!
+5
+
+%%% ¡prop!¥\circled{5}\circlednote{5}{randomizes the adjacency matrix contained in \code{cell}}¥
+RANDOMIZATION (query, cell) randomizes matrix contained in the cell
+%%%% ¡calculate!
+rng(g.get('RANDOM_SEED'), 'twister')
+
+if isempty(varargin) ¥\circled{6}\circlednote{6}{returns empty cell is the input is an empty cell}¥
+	value = {};
+	return
+end
+
+A = cell2mat(varargin{1});
+attempts_per_edge = g.get('ATTEMPTSPEREDGE');
+% remove self connections
+A(1:length(A)+1:numel(A)) = 0;
+[I_edges, J_edges] = find(A);  ¥\circled{7}\circlednote{7}{finds number of edges in the matrix (different from zero)}¥
+E = length(I_edges); ¥\circled{8}\circlednote{8}{returns number of edges in the matrix (different from zero)}¥
+
+if E == 0 ¥\circled{9}\circlednote{9}{returns same input matrix if it is all zeros}¥
+	value = A;
+	swaps = 0;
+	return
+end
+
+if E == 1 ¥\circled{10}\circlednote{10}{randomizes the edge when there is only one edge in the input matrix}¥
+	r_ab = A(I_edges(1), J_edges(1));
+	A(I_edges(1), J_edges(1)) = 0;
+	selected_nodes = randperm(size(A, 1), 2);
+	A(selected_nodes(1), selected_nodes(2)) = r_ab;
+	value = A;
+	swaps = 1;
+	return
+end
+
+random_A = A;
+swaps = 0; % number of successful edge swaps
+for attempt = 1:1:attempts_per_edge*E ¥\circled{11}\circlednote{11}{randomizes edges in the matrix when more than one edge (non-zero) were found in the input matrix}¥
+
+	selected_edges = randperm(E,2); ¥\circled{12}\circlednote{12}{takes two random edges}¥
+	node_start_1 = I_edges(selected_edges(1));
+	node_end_1 = J_edges(selected_edges(1));
+	node_start_2 = I_edges(selected_edges(2));
+	node_end_2 = J_edges(selected_edges(2));
+
+	r_1 = random_A(node_start_1, node_end_1); ¥\circled{13}\circlednote{13}{saves the values of the selected random edges (this is important when the property \code{RANDOMIZATION} is used by weighted graphs)}¥
+	r_2 = random_A(node_start_2, node_end_2);
+
+	if ~random_A(node_start_1, node_end_2) && ...
+	~random_A(node_start_2, node_end_1) && ...
+	node_start_1~=node_start_2 && ...
+	node_end_1~=node_end_2 && ...
+	node_start_1~=node_end_2 && ...
+	node_start_2~=node_end_1
+	
+		% erase old edges ¥\circled{14}\circlednote{14}{deletes edges in the old positions}¥
+		random_A(node_start_1, node_end_1) = 0;
+		random_A(node_start_2, node_end_2) = 0;
+
+		% write new edges ¥\circled{15}\circlednote{15}{sets values of edges in the new random positions}¥
+		random_A(node_start_1, node_end_2) = r_1;
+		random_A(node_start_2, node_end_1) = r_2;
+		
+		% update edge list
+		J_edges(selected_edges(1)) = node_end_2;
+		J_edges(selected_edges(2)) = node_end_1;
+
+		swaps = swaps+1;
+	end
+end
+value = random_A;
+
+
 \end{lstlisting}
 
 \clearpage
@@ -250,7 +332,57 @@ A_absolute = {[
 assert(isequal(g_absolute.get('A'), A_absolute), ...
 	[BRAPH2.STR ':GraphBD:' BRAPH2.FAIL_TEST], ...
 	'GraphBD is not constructing well.')
-¤...¤
+	
+%%% ¡test!
+%%%% ¡name!
+Randomize Rules ¥\circled{17}\circlednote{17}{tests that \code{RANZOMIZATION} works properly.}¥
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B = randn(10);
+
+g = GraphBD('B', B);
+g.set('RANDOMIZE', true);
+g.set('ATTEMPTSPEREDGE', 4);
+
+A = g.get('A');
+
+assert(isequal(size(A{1}), size(B)), ... ¥\circled{18}\circlednote{18}{tests that \code{RANZOMIZATION} returns a matrix with same size.}¥
+[BRAPH2.STR ':GraphBD:' BRAPH2.FAIL_TEST], ...
+'GraphBD Randomize is not functioning well.')
+
+g2 = GraphBD('B', B);
+g2.set('RANDOMIZE', false);
+g2.set('ATTEMPTSPEREDGE', 4);
+A2 = g2.get('A');
+random_A = g2.get('RANDOMIZATION', A2);
+
+if all(A2{1}==0, "all")¥\circled{19}\circlednote{19}{tests that \code{RANZOMIZATION} returns a matrix of zeros when input matrix is all zeros.}¥
+	assert(isequal(A2{1}, random_A), ...
+	[BRAPH2.STR ':GraphBD:' BRAPH2.FAIL_TEST], ...
+	'GraphBD Randomize is not functioning well.')
+elseif isequal((length(A2{1}).^2)- length(A2{1}), sum(A2{1}==1, "all"))¥\circled{20}\circlednote{20}{tests that \code{RANZOMIZATION} returns a matrix of ones when input matrix is all ones (except diagonal).}¥
+	assert(isequal(A2{1}, random_A), ...
+	[BRAPH2.STR ':GraphBD:' BRAPH2.FAIL_TEST], ...
+	'GraphBD Randomize is not functioning well.')
+else ¥\circled{21}\circlednote{21}{tests that new random matrix is different from original one.}¥
+	assert(~isequal(A2{1}, random_A), ...
+	[BRAPH2.STR ':GraphBD:' BRAPH2.FAIL_TEST], ...
+	'GraphBD Randomize is not functioning well.')
+end
+
+assert(isequal(numel(find(A2{1})), numel(find(random_A))), ... ¥\circled{22}\circlednote{22}{tests that new random matrix has the same number of nodes as the original one}¥
+[BRAPH2.STR ':GraphBD:' BRAPH2.FAIL_TEST], ...
+'GraphBD Randomize is not functioning well.')
+
+deg_A = sum(A2{1}, 2);
+deg_B = sum(random_A, 2);
+[h, p, ks2stat] = kstest2(deg_A, deg_B);
+
+assert(isequal(0, h), ... % ¥\circled{23}\circlednote{23}{tests that new random matrix has the same degree distribution as the original one}¥
+[BRAPH2.STR ':GraphBD:' BRAPH2.FAIL_TEST], ...
+'GraphBD Randomize is not functioning well.')
+
 \end{lstlisting}
 
 %%%%% %%%%% %%%%% %%%%% %%%%%
@@ -386,7 +518,10 @@ for i = 1:1:L ¥\circled{1}\circlednote{1}{For each layer in \fn{MultilayerWD} g
 		end
 	end
 end
-¤value = A;¤
+¤if g.get('RANDOMIZE')
+	A = g.get('RANDOMIZATION', A);
+end
+value = A;¤
 ¤%%%% ¡gui!¤¥\circlednote{2}{These are some properties of graph adjacency matrix \code{A} that can be used in the gui to make the visualization user friendly. The list of properties that can be used are: \code{ALAYERTICKS} (to set ticks for each layer according to the layer number), \code{ALAYERLABELS} (to set labels for each layer), and \code{ANODELABELS} (to set the nodel labels for each layer)).}¥
 pr = PanelPropCell('EL', g, 'PROP', ¤MultilayerWD.A, ...
 	¤'TABLE_HEIGHT', s(40), ...¤
@@ -456,6 +591,41 @@ SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative ed
 STANDARDIZE_RULE (parameter, option) determines how to normalize the weights between 0 and 1.
 %%%% ¡settings!
 {'threshold' 'range'}
+
+¤%%% ¡prop!
+ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
+%%%% ¡default!
+5¤
+
+%%% ¡prop!
+NUMBEROFWEIGHTS (parameter, scalar) specifies the number of weights sorted at the same time.  ¥\circled{3}\circlednote{3}{defines the number of weights that will be sorted at the same time when using \code{RANDOMIZATION}.}¥
+%%%% ¡default!
+10
+
+¤%%% ¡prop!
+RANDOMIZATION (query, cell) is the attempts to rewire each edge.
+%%%% ¡calculate!
+rng(g.get('RANDOM_SEED'), 'twister')
+
+if isempty(varargin)
+	value = {};
+	return
+end
+
+A = varargin{1};
+attempts_per_edge = g.get('ATTEMPTSPEREDGE');¤
+
+for i = 1:length(A) ¥\circled{4}\circlednote{4}{iterates over each layer in \code{MultilayerWD} to randomize it.}¥
+	tmp_a = A{i,i};
+
+	tmp_g = GraphWD(); ¥\circled{5}\circlednote{5}{initizalizes empty \code{GraphWD} to get \code{RANDOMIZATION} property from it.}¥
+	tmp_g.set('ATTEMPTSPEREDGE', g.get('ATTEMPTSPEREDGE'));
+	tmp_g.set('NUMBEROFWEIGHTS', g.get('NUMBEROFWEIGHTS'));
+	random_A = tmp_g.get('RANDOMIZATION', {tmp_a});
+	A{i, i} = random_A;
+end
+value = A;
+
 \end{lstlisting}
 
 \begin{lstlisting}[
@@ -515,6 +685,62 @@ A = B;
 ¤assert(isequal(g.get('A'), A), ...¤
 	¤[BRAPH2.STR ':¤ MultilayerWD:¤ ' BRAPH2.FAIL_TEST], ...¤
 	'MultilayerWD  is not constructing well.')
+	
+¤%%% ¡test!
+%%%% ¡name!
+Randomize Rules
+%%%% ¡probability!
+.01
+%%%% ¡code!¤
+B1 = rand(randi(10));
+B2 = rand(randi(10));
+B3 = rand(randi(10));
+B12 = rand(size(B1, 1),size(B2, 2));
+B13 = rand(size(B1, 1),size(B3, 2));
+B23 = rand(size(B2, 1),size(B3, 2));
+B21 = rand(size(B2, 1),size(B1, 2));
+B31 = rand(size(B3, 1),size(B1, 2));
+B32 = rand(size(B3, 1),size(B2, 2));
+B = {
+	B1                           B12                            B13
+	B21                          B2                             B23
+	B31                          B32                            B3
+};
+g = MultilayerWD('B', B);
+¤g.set('RANDOMIZE', true);
+g.set('ATTEMPTSPEREDGE', 4);
+g.get('A_CHECK')
+
+A = g.get('A')¤
+
+¤assert(isequal(size(A{1}), size(B{1})), ...
+[BRAPH2.STR ¤'MultilayerWD:' ¤BRAPH2.FAIL_TEST], ... 'MultilayerWD Randomize is not functioning well.')¤
+
+g2 = MultilayerWD('B', B);
+¤g2.set('RANDOMIZE', true);
+g2.set('ATTEMPTSPEREDGE', 4);
+g2.get('A_CHECK')
+A2 = g2.get('A');
+random_A = g2.get('RANDOMIZATION', A2);¤
+
+for i = 1:length(A2) ¥\circled{1}\circlednote{1}{tests \code{RANDOMIZATION} as in \Coderef{cd:m:GraphBD:tests} for each layer in \code{A2}.}¥
+	¤if all(A2{i, i}==0, "all") %if all edges are zero, the new random matrix is all zeros
+		assert(isequal(A2{i, i}, random_A{i, i}), ...
+		[BRAPH2.STR ':MultilayerWD:' BRAPH2.FAIL_TEST], ...
+		'MultilayerWD Randomize is not functioning well.')
+	elseif isequal((length(A2{i, i}).^2)- length(A2{i, i}), sum(A2{i, i}==1, "all")) %if all nodes (except diagonal) are one, the random matrix is the same as original
+		assert(isequal(A2{i, i}, random_A{i, i}), ...
+		[BRAPH2.STR ':MultilayerWD:' BRAPH2.FAIL_TEST], ...
+		'MultilayerWD Randomize is not functioning well.')
+	else
+		assert(~isequal(A2{i, i}, random_A{i, i}), ...
+		[BRAPH2.STR ':MultilayerWD:' BRAPH2.FAIL_TEST], ...
+		'MultilayerWD Randomize is not functioning well.')
+	end
+assert(isequal(numel(find(A2{i, i})), numel(find(random_A{i, i}))), ... % check same number of nodes
+[BRAPH2.STR ':MultilayerWD:' BRAPH2.FAIL_TEST], ...
+'MultilayerWD Randomize is not functioning well.')¤
+end
 \end{lstlisting}
 
 \clearpage
@@ -644,8 +870,10 @@ if L > 0 && ~isempty(cell2mat(A_WU))
 		end
 	end
 end
-	
-¤value = A;¤
+¤if g.get('RANDOMIZE')
+	A = g.get('RANDOMIZATION', A);
+end
+value = A;¤
 
 ¤%%%% ¡gui! ¥\circled{8}\circlednote{8}{Same as in note \circled{2} of \Coderef{cd:m:GraphBD:prop_update}.}¥
 pr = PanelPropCell('EL', g, 'PROP', MultiplexBUT.A, ...
@@ -691,7 +919,36 @@ value = alayerlabels;
 ¤%%% ¡prop! 
 COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
 %%%% ¡default!
-getCompatibleMeasures('MultiplexBUT')¤
+getCompatibleMeasures('MultiplexBUT')
+
+%%% ¡prop!
+ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
+%%%% ¡default!
+5¤
+
+¤%%% ¡prop!
+RANDOMIZATION (query, cell) is the attempts to rewire each edge.
+%%%% ¡calculate!
+rng(g.get('RANDOM_SEED'), 'twister')
+
+if isempty(varargin)
+	value = {};
+	return
+end
+
+A = varargin{1};
+attempts_per_edge = g.get('ATTEMPTSPEREDGE');
+
+for i = 1:length(A)
+	tmp_a = A{i,i};
+
+	¤random_g = GraphBU();¤  ¥\circled{10}\circlednote{10}{Same as in  \Coderef{cd:m:MultilayerWD:prop_update} but using \code{GraphBU}}¥
+	random_g.set('ATTEMPTSPEREDGE', g.get('ATTEMPTSPEREDGE'));
+	random_A = random_g.get('RANDOMIZATION', {tmp_a});
+	A{i, i} = random_A;
+end
+value = A;¤
+
 \end{lstlisting}
 
 \begin{lstlisting}[
@@ -757,6 +1014,63 @@ for i = 1:1:length(B) * length(thresholds)
 		end
 	end
 end
+
+¤%%% ¡test!
+%%%% ¡name!
+Randomize Rules
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B11 = randn(10);
+
+B12 = rand(size(B11,1),size(B11,2));
+
+B= {B11 B12 B12;
+	B12 B11 B12;
+	B12 B12 B11};
+thresholds = [0 .5 1];¤
+g = MultilayerBUT('B', B, 'THRESHOLDS', thresholds); 
+
+¤g.set('RANDOMIZE', true);
+g.set('ATTEMPTSPEREDGE', 4);
+g.get('A_CHECK')
+
+A = g.get('A');¤
+
+¤assert(isequal(size(A{1}), size(B{1})), ...
+[BRAPH2.STR ¤ ':MultilayerBUT:' ¤ BRAPH2.FAIL_TEST], ... ¤ 'MultilayerBUT Randomize is not functioning well.')¤
+
+¤g2 = MultilayerBUT('B', B, 'THRESHOLDS', thresholds); 
+¤g2.set('RANDOMIZE', false);
+g2.set('ATTEMPTSPEREDGE', 4);
+A2 = g2.get('A');
+random_A = g2.get('RANDOMIZATION', A2);
+
+for i = 1:length(A2)¤
+	¤ if all(A2{i, i}==0, "all") %if all edges are zero, the new random matrix is all zeros
+		assert(isequal(A2{i, i}, random_A{i, i}), ...
+		[BRAPH2.STR ':MultilayerBUT:' BRAPH2.FAIL_TEST], ...
+		'MultilayerBUT Randomize is not functioning well.')
+	elseif isequal((length(A2{i, i}).^2)- length(A2{i, i}), sum(A2{i, i}==1, "all")) %if all nodes (except diagonal) are one, the random matrix is the same as original
+		assert(isequal(A2{i, i}, random_A{i, i}), ...
+		[BRAPH2.STR ':MultilayerBUT:' BRAPH2.FAIL_TEST], ...
+		'MultilayerBUT Randomize is not functioning well.')
+	else
+		assert(~isequal(A2{i, i}, random_A{i, i}), ...
+		[BRAPH2.STR ':MultilayerBUT:' BRAPH2.FAIL_TEST], ...
+		'MultilayerBUT Randomize is not functioning well.')
+	end
+
+assert(isequal(numel(find(A2{i, i})), numel(find(random_A{i, i}))), ... % check same number of nodes
+[BRAPH2.STR ':MultilayerBUT:' BRAPH2.FAIL_TEST], ...
+'MultilayerBUT Randomize is not functioning well.')¤
+
+assert(issymmetric(random_A{i, i}), ... % check symmetry ¥\circled{3}\circlednote{3}{checks symmetry of each layer in the new random graph \code{random\_A} since they are undirected}¥
+[BRAPH2.STR ':MultilayerBUT:' BRAPH2.FAIL_TEST], ...
+'MultilayerBUT Randomize is not functioning well.')
+
+end
+
 \end{lstlisting}
 
 \clearpage
@@ -894,8 +1208,10 @@ if L > 0 && ~isempty(cell2mat(A_WU))
 		end
 	end
 end
-
-¤value = A;¤
+¤if g.get('RANDOMIZE')
+	A = g.get('RANDOMIZATION', A);
+end
+value = A;¤
 	
 ¤%%%% ¡gui!
 pr = PanelPropCell('EL', g, 'PROP', OrdMxBUT.A, ...
@@ -942,6 +1258,35 @@ value = alayerlabels;¤
 COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
 %%%% ¡default!
 getCompatibleMeasures¤('OrdMxBUT')
+
+¤%%% ¡prop!
+ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
+%%%% ¡default!
+5
+
+%%% ¡prop!
+RANDOMIZATION (query, cell) is the attempts to rewire each edge. ¥\circled{8}\circlednote{8}{same as in \Coderef{cd:m:MultiplexBUT:prop_update}}¥
+%%%% ¡calculate!
+rng(g.get('RANDOM_SEED'), 'twister')
+
+if isempty(varargin)
+	value = {};
+	return
+end
+
+A = varargin{1};
+attempts_per_edge = g.get('ATTEMPTSPEREDGE');
+
+for i = 1:length(A)
+	tmp_a = A{i,i};
+
+	random_g = GraphBU();
+	random_g.set('ATTEMPTSPEREDGE', g.get('ATTEMPTSPEREDGE'));
+	random_A = random_g.get('RANDOMIZATION', {tmp_a});
+	A{i, i} = random_A;
+end
+value = A;¤
+
 \end{lstlisting}
 
 
@@ -1018,6 +1363,59 @@ for i = 1:1:length(thresholds)
 		end
 	end
 end
+
+¤%%% ¡test!
+%%%% ¡name!
+Randomize Rules  ¥\circled{1}\circlednote{1}{same as in \Coderef{cd:m:MultiplexBUT:tests}}¥
+%%%% ¡probability!
+.01
+%%%% ¡code!
+B1 = randn(10);
+B = {B1, B1, B1};
+thresholds = [0 .1 .2 .3 .4];
+g = OrdMxBUT('B', B, 'THRESHOLDS', thresholds);
+
+g.set('RANDOMIZE', true);
+g.set('ATTEMPTSPEREDGE', 4);
+g.get('A_CHECK')
+
+A = g.get('A');
+
+assert(isequal(size(A{1}), size(B{1})), ...
+[BRAPH2.STR ':OrdMxBUT:' BRAPH2.FAIL_TEST], ...
+'OrdMxBUT Randomize is not functioning well.')
+
+g2 = OrdMxBUT('B', B, 'THRESHOLDS', thresholds);
+g2.set('RANDOMIZE', false);
+g2.set('ATTEMPTSPEREDGE', 4);
+A2 = g2.get('A');
+random_A = g2.get('RANDOMIZATION', A2);
+
+for i = 1:length(A2)
+	if all(A2{i, i}==0, "all") %if all edges are zero, the new random matrix is all zeros
+		assert(isequal(A2{i, i}, random_A{i, i}), ...
+		[BRAPH2.STR ':OrdMxBUT:' BRAPH2.FAIL_TEST], ...
+		'OrdMxBUT Randomize is not functioning well.')
+		elseif isequal((length(A2{i, i}).^2)- length(A2{i, i}), sum(A2{i, i}==1, "all")) %if all nodes (except diagonal) are one, the random matrix is the same as original
+		assert(isequal(A2{i, i}, random_A{i, i}), ...
+		[BRAPH2.STR ':OrdMxBUT:' BRAPH2.FAIL_TEST], ...
+		'OrdMxBUT Randomize is not functioning well.')
+	else
+		assert(~isequal(A2{i, i}, random_A{i, i}), ...
+		[BRAPH2.STR ':OrdMxBUT:' BRAPH2.FAIL_TEST], ...
+		'OrdMxBUT Randomize is not functioning well.')
+	end
+
+assert(isequal(numel(find(A2{i, i})), numel(find(random_A{i, i}))), ... % check same number of nodes
+[BRAPH2.STR ':OrdMxBUT:' BRAPH2.FAIL_TEST], ...
+'OrdMxBUT Randomize is not functioning well.')
+
+assert(issymmetric(random_A{i, i}), ... % check symmetry 
+[BRAPH2.STR ':OrdMxBUT:' BRAPH2.FAIL_TEST], ...
+'OrdMxBUT Randomize is not functioning well.')
+
+end¤
+
 \end{lstlisting}
 
 %\bibliography{biblio}
