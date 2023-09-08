@@ -59,7 +59,12 @@ check = all(cellfun(@(x) all(round(x) == x & all(x <= dsp.get('D').get('DP_DICT'
 value = dsp.get('SPLIT');
 if all(cellfun(@isscalar, value)) & sum(cell2mat(value)) <= 1 & sum(cell2mat(value)) > 0 
     num_sub = dsp.get('D').get('DP_DICT').get('LENGTH');
-    lengths = round(cell2mat(value) * num_sub);
+    
+    lengths = floor(cell2mat(value) * num_sub);
+    for i = 1:1:num_sub - sum(lengths)
+        lengths(i) = lengths(i) + 1;
+    end
+    
     indices = randperm(num_sub);
     
     startIndex = 1;

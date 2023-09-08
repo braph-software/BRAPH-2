@@ -60,7 +60,7 @@ else
 end
 
 %%% ¡prop!
-CORRELATION_COEFF (result, rvector) provides the metric of the correlation of coefficients.
+CORR (result, rvector) provides the metric of the correlation of coefficients.
 %%%% ¡calculate!
 predictions = nne.get('NN').get('PREDICT', nne.get('D'));
 if isempty(predictions)
@@ -77,7 +77,7 @@ else
 end
 
 %%% ¡prop!
-COEFF_OF_DETERMINATION (result, rvector) provides a measure of how well the predictions are replicated by the model.
+DET (result, rvector) provides the coefficient of determination, a measure showing how well the predictions are replicated by the model.
 %%%% ¡calculate!
 predictions = nne.get('NN').get('PREDICT', nne.get('D'));
 if isempty(predictions)
@@ -94,7 +94,7 @@ else
 end
 
 %%% ¡prop!
-MEAN_ABSOLUTE_ERROR (result, rvector) provides the metric of the mean absolute error.
+MAE (result, rvector) provides the metric of the mean absolute error.
 %%%% ¡calculate!
 predictions = nne.get('NN').get('PREDICT', nne.get('D'));
 if isempty(predictions)
@@ -110,7 +110,7 @@ else
 end
 
 %%% ¡prop!
-MEAN_SQUARED_ERROR (result, rvector) provides the metric of the mean squared error.
+MSE (result, rvector) provides the metric of the mean squared error.
 %%%% ¡calculate!
 predictions = nne.get('NN').get('PREDICT', nne.get('D'));
 if isempty(predictions)
@@ -126,7 +126,7 @@ else
 end
 
 %%% ¡prop!
-ROOT_MEAN_SQUARED_ERROR (result, rvector) provides the metric of the root mean squared error.
+RMSE (result, rvector) provides the metric of the root mean squared error.
 %%%% ¡calculate!
 predictions = nne.get('NN').get('PREDICT', nne.get('D'));
 if isempty(predictions)
@@ -142,7 +142,7 @@ else
 end
 
 %%% ¡prop!
-PERMUTATION_FEATURE_IMPORTANCE (result, cell) assess the significance of each feature by randomly shuffling its values and measuring how much the performance of the model decreases.
+PERM_FEATURE_IMPORTANCE (result, cell) assess the significance of each feature by randomly shuffling its values and measuring how much the performance of the model decreases.
 %%%% ¡calculate!
 value = {};
 
@@ -213,7 +213,7 @@ assert(all(check), ...
     )
 
 % Check whether the correlation coefficients are calculated as expected
-calculated_value = nne.get('CORRELATION_COEFF');
+calculated_value = nne.get('CORR');
 for i = 1:size(ground_truth, 2)
     corr_matrix = corrcoef(predictions(:, i), ground_truth(:, i));
     known_value(i) = corr_matrix(1, 2);
@@ -223,8 +223,8 @@ assert(isequal(calculated_value, known_value), ...
     'NNRegressor_Evaluator does not calculate the correlation coefficients correctly.' ...
     )
 
-% Check whether the correlation coefficients are calculated as expected
-calculated_value = nne.get('COEFF_OF_DETERMINATION');
+% Check whether the correlation of determination are calculated as expected
+calculated_value = nne.get('DET');
 for i = 1:size(ground_truth, 2)
     corr_matrix = corrcoef(predictions(:, i), ground_truth(:, i));
     known_value(i) = corr_matrix(1, 2)^2;
@@ -235,7 +235,7 @@ assert(isequal(calculated_value, known_value), ...
     )
 
 % Check whether the mean absolute errors are calculated as expected
-calculated_value = nne.get('MEAN_ABSOLUTE_ERROR');
+calculated_value = nne.get('MAE');
 for i = 1:size(ground_truth, 2)
     known_value(i) = mean(abs(predictions(:, i) - ground_truth(:, i)));
 end
@@ -245,7 +245,7 @@ assert(isequal(calculated_value, known_value), ...
     )
 
 % Check whether the mean squared errors are calculated as expected
-calculated_value = nne.get('MEAN_SQUARED_ERROR');
+calculated_value = nne.get('MSE');
 for i = 1:size(ground_truth, 2)
     known_value(i) = mean((predictions(:, i) - ground_truth(:, i)).^2);
 end
@@ -255,7 +255,7 @@ assert(isequal(calculated_value, known_value), ...
     )
 
 % Check whether the mean squared errors are calculated as expected
-calculated_value = nne.get('ROOT_MEAN_SQUARED_ERROR');
+calculated_value = nne.get('RMSE');
 for i = 1:size(ground_truth, 2)
     known_value(i) = sqrt(mean((predictions(:, i) - ground_truth(:, i)).^2));
 end

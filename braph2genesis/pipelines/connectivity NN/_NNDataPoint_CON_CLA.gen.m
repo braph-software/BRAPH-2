@@ -331,11 +331,22 @@ end
 
 %%% ¡test! 
 %%%% ¡name!
-Example
+Example training-test classification
 %%%% ¡code!
 % ensure the example data is generated
 if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
     test_NNDataPoint_CON_CLA % create example files
 end
 
-example_NN_CON_Classification
+example_NN_CON_CLA
+
+%%% ¡test! 
+%%%% ¡name!
+Example cross-validation classification
+%%%% ¡code!
+% ensure the example data is generated
+if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
+    test_NNDataPoint_CON_CLA % create example files
+end
+
+example_NNCV_CON_CLA

@@ -73,7 +73,7 @@ else
 end
 
 %%% ¡prop!
-AVG_AUC (result, scalar) provides the metric of the average AUC value.
+MACRO_AUC (result, scalar) provides the metric of the average AUC value.
 %%%% ¡calculate!
 auc = nne.get('AUC');
 if isempty(auc)
@@ -99,7 +99,7 @@ else
 end
 
 %%% ¡prop!
-PERMUTATION_FEATURE_IMPORTANCE (result, cell) assess the significance of each feature by randomly shuffling its values and measuring how much the performance of the model decreases.
+PERM_FEATURE_IMPORTANCE (result, cell) assess the significance of each feature by randomly shuffling its values and measuring how much the performance of the model decreases.
 %%%% ¡calculate!
 value = {};
 

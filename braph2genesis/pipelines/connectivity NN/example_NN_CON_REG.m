@@ -52,9 +52,9 @@ nn.get('TRAIN');
 
 %% Evaluate the regressor with the test set
 nne_test = NNRegressor_Evaluator('D', d_test, 'NN', nn);
-corr_coeff = nne_test.get('CORRELATION_COEFF');
-coeff_determination = nne_test.get('COEFF_OF_DETERMINATION');
-mae = nne_test.get('MEAN_ABSOLUTE_ERROR');
-mse = nne_test.get('MEAN_SQUARED_ERROR');
-rmse = nne_test.get('ROOT_MEAN_SQUARED_ERROR');
-feature_importance = nne_test.get('PERMUTATION_FEATURE_IMPORTANCE');
+corr_coeff = nne_test.get('CORR');
+coeff_determination = nne_test.get('DET');
+mae = nne_test.get('MAE');
+mse = nne_test.get('MSE');
+rmse = nne_test.get('RMSE');
+feature_importance = nne_test.get('PERM_FEATURE_IMPORTANCE');

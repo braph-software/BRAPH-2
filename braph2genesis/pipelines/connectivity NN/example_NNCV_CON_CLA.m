@@ -1,5 +1,5 @@
-%% EXAMPLE_NN_CON_CLASSIFICATION
-% Script example pipeline for NN classification with the input of SubjectCON 
+%% EXAMPLE_NNCV_CON_CLASSIFICATION
+% Script example pipeline for NN classification cross-validation with the input of SubjectCON 
 
 clear variables %#ok<*NASGU>
 
@@ -36,7 +36,7 @@ im_gr3 = ImporterGroupSubjectCON_XLS( ...
 
 gr3 = im_gr3.get('GR');
 
-%% Training-test split
+%% Create NNData composed of corresponding NNDataPoints
 % create item lists of NNDataPoint_CON_CLA
 it_list1 = cellfun(@(x) NNDataPoint_CON_CLA( ...
     'ID', x.get('ID'), ...
@@ -91,20 +91,13 @@ d3 = NNDataset( ...
     'DP_DICT', dp_list3 ...
     );
 
-% Split the NNData into training set and test set
-d_split1 = NNDatasetSplit('D', d1, 'SPLIT', {0.7, 0.3}).get('D_LIST');
-d_split2 = NNDatasetSplit('D', d2, 'SPLIT', {0.7, 0.3}).get('D_LIST');
-d_split3 = NNDatasetSplit('D', d3, 'SPLIT', {0.7, 0.3}).get('D_LIST');
+d = NNDatasetCombine('D_LIST', {d1, d2, d3}).get('D');
 
-d_training = NNDatasetCombine('D_LIST', {d_split1.get('D_LIST_IT', 1), d_split2.get('D_LIST_IT', 1), d_split3.get('D_LIST_IT', 1)}).get('D');
-d_test = NNDatasetCombine('D_LIST', {d_split1.get('D_LIST_IT', 2), d_split2.get('D_LIST_IT', 2), d_split3.get('D_LIST_IT', 2)}).get('D');
+%% Create a classifier cross-validation
+nncv = NNClassifier_CrossValidation('D', d, 'KFOLDS', 5);
+nncv.get('TRAIN');
 
-%% Create a MLP classifier with training set
-nn = NNClassifierMLP('D', d_training, 'LAYERS', [20 20]);
-nn.get('TRAIN');
-
-%% Evaluate the classifier with the test set
-nne_test = NNClassifier_Evaluator('D', d_test, 'NN', nn);
-confusion_matrix = nne_test.get('C_MATRIX');
-auc = nne_test.get('AUC');
-avg_auc = nne_test.get('AVG_AUC');
+%% Evaluate the performance
+confusion_matrix = nncv.get('C_MATRIX');
+av_auc = nncv.get('AV_AUC');
+av_macro_auc = nncv.get('AV_MACRO_AUC');
