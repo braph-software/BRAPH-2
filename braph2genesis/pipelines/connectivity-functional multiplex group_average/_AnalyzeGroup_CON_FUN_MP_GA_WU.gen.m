@@ -170,6 +170,10 @@ g = MultiplexWU( ...
     'B', A ... % % % 'LAYERTICKS', [1:1:L], ... % % % 'LAYERLABELS', cell2str({'CON', 'FUN'}), ... % % % 'BAS', ba ...
     );
 
+if ~isa(a.getr('TEMPLATE'), 'NoValue') % the analysis has a template
+    g.set('TEMPLATE', a.get('TEMPLATE').memorize('G'))
+end
+
 value = g;
 
 %% ¡props!

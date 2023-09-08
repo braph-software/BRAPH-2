@@ -121,6 +121,10 @@ g = OrdMxWU( ...
     'B', cellfun(@(a) a/subjects_number, A_conmp, 'UniformOutput', false) ... % % % 'LAYERTICKS', [1:1:L], ... % % % 'LAYERLABELS', cell2str(cellfun(@(x) ['L' num2str(x)], num2cell([1:1:L]), 'UniformOutput', false)), ... % % % 'BAS', ba ...
     );
 
+if ~isa(a.getr('TEMPLATE'), 'NoValue') % the analysis has a template
+    g.set('TEMPLATE', a.get('TEMPLATE').memorize('G'))
+end
+
 value = g;
 
 %% ¡tests!
