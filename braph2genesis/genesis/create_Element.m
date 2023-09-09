@@ -1647,7 +1647,7 @@ generate_checkProp()
                         gs(5, {
                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.WRONG_INPUT], ...']
                             ['[BRAPH2.STR '':' class_name ':'' BRAPH2.WRONG_INPUT ''\\n'' ...']
-                            ['''The value '' tostring(value, 100, '' ...'') '' is not a valid property '' ' class_name '.getPropTag(prop) '' ('' ' class_name '.getPropFormat(prop) '').''] ...']
+                            ['''The value '' tostring(value, 100, '' ...'') '' is not a valid property '' ' class_name '.getPropTag(prop) '' ('' ' class_name '.getFormatTag(' class_name '.getPropFormat(prop)) '').''] ...']
                             ')'
                             })
                 g(3, 'end')
