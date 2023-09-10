@@ -114,7 +114,7 @@ INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interrupt
 .001
 
 %%% ¡prop!
-MEMORIZE (metadata, logical) sets whether to memorize the permuted analysis.
+MEMORIZE (metadata, logical) sets whether to memorize the permuted analyses.
 
 %%% ¡prop!
 P (parameter, scalar) is the permutation number.

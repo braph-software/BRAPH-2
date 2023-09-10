@@ -96,7 +96,7 @@ DESCRIPTION (constant, string) is the description of the graph analysis with con
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the graph analysis with connectivity and functional multiplex data of fixed density.
-%%% ¡settings!
+%%%% ¡settings!
 'AnalyzeGroup_CON_FUN_MP_GA_BUD'
 
 %%% ¡prop!
@@ -181,6 +181,10 @@ g = MultiplexBUD( ...
     'B', A, ...
     'DENSITIES', densities ... % % % 'LAYERTICKS', densities, ... % % % 'LAYERLABELS', cell2str(layerlabels), ... % % % 'BAS', ba ...
     );
+
+if ~isa(a.getr('TEMPLATE'), 'NoValue') % the analysis has a template
+    g.set('TEMPLATE', a.get('TEMPLATE').memorize('G')) % overwrites densities
+end
 
 value = g;
 

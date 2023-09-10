@@ -129,7 +129,7 @@ g = MultigraphBUT( ...
 	'THRESHOLDS', thresholds ... % % %     'LAYERTICKS', thresholds, ... % % %     'LAYERLABELS', cell2str(cellfun(@(x) num2str(x), num2cell(thresholds), 'UniformOutput', false)), ... % % %     'BAS', atlas ...
     );
 
-if ~isa(a.getr('TEMPLATE'), 'NoValue')
+if ~isa(a.getr('TEMPLATE'), 'NoValue') % the analysis has a template
     g.set('TEMPLATE', a.get('TEMPLATE').memorize('G'))
 end
 
