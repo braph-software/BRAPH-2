@@ -50,7 +50,7 @@ NNDataset('DP_CLASS', 'NNDataPoint_CON_CLA')
 %%% ¡prop!
 DP_CLASSES (parameter, classlist) is the list of compatible data points.
 %%%% ¡default!
-{'NNDataPoint_CON_CLA'}
+{'NNDataPoint_CON_CLA' 'NNDataPoint_Graph_CLA' 'NNDataPoint_Measure_CLA'}
 
 %%% ¡prop!
 INPUTS (query, cell) constructs the data in the CB (channel-batch) format.
@@ -62,16 +62,29 @@ if isempty(varargin)
     return
 end
 d = varargin{1};
-inputs = d.get('INPUTS');
-if isempty(inputs)
+inputs_group = d.get('INPUTS');
+if isempty(inputs_group)
     value = {};
 else
-    nn_inputs = [];
-    for i = 1:1:length(inputs)
-        input = cell2mat(inputs{i});
-        nn_inputs = [nn_inputs; input(:)'];
+    flattened_inputs_group = [];
+    for i = 1:1:length(inputs_group)
+        inputs_individual = inputs_group{i};
+        flattened_inputs_individual = [];
+        while ~isempty(inputs_individual)
+            currentData = inputs_individual{end};  % Get the last element from the stack
+            inputs_individual = inputs_individual(1:end-1);   % Remove the last element
+
+            if iscell(currentData)
+                % If it's a cell array, add its contents to the stack
+                inputs_individual = [inputs_individual currentData{:}];
+            else
+                % If it's numeric or other data, append it to the vector
+                flattened_inputs_individual = [currentData(:); flattened_inputs_individual];
+            end
+        end
+        flattened_inputs_group = [flattened_inputs_group; flattened_inputs_individual'];
     end
-    value = {nn_inputs};
+    value = {flattened_inputs_group};
 end
 
 %%% ¡prop!

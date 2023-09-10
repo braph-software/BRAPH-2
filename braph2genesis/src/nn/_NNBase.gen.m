@@ -129,7 +129,7 @@ end
 
 d = varargin{1};
 inputs = nn.get('INPUTS', d);
-if isempty(inputs)
+if isempty(cell2mat(inputs))
     predictions = {};
 else
     net = nn.get('MODEL');

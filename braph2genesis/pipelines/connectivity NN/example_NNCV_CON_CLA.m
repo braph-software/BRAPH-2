@@ -1,4 +1,4 @@
-%% EXAMPLE_NNCV_CON_CLASSIFICATION
+%% EXAMPLE_NNCV_CON_CLA
 % Script example pipeline for NN classification cross-validation with the input of SubjectCON 
 
 clear variables %#ok<*NASGU>

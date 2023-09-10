@@ -1,4 +1,4 @@
-%% EXAMPLE_NN_CON_REGRESSION
+%% EXAMPLE_NN_CON_REG
 % Script example pipeline for NN regression with the input of SubjectCON 
 
 clear variables %#ok<*NASGU>
