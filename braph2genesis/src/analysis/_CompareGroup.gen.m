@@ -220,7 +220,7 @@ value = cp;
 %%% ¡prop!
 PERM (query, itemlist) returns the permuted analyses.
 %%%% ¡calculate!
-% {A1P, A2P} = c.get('PERM', I) retunrs the I-th permutations for the analysis
+% {A1P, A2P} = c.get('PERM', I) returns the I-th permutations for the analysis
 %  A1P and A2P. The number of perutations must be smaller than the
 %  permutation number P, which is one of the properties of the comparison.
 %
