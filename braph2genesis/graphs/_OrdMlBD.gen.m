@@ -185,7 +185,6 @@ for i = 1:1:L
         end
     end
 end
-
 value = A;
 %%%% ¡gui!
 pr = PanelPropCell('EL', g, 'PROP', OrdMlBD.A, ...
@@ -370,11 +369,7 @@ for i = 1:length(A2)
             [BRAPH2.STR ':OrdMlBD:' BRAPH2.FAIL_TEST], ...
             'OrdMlBD Randomize is not functioning well.')
     end
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> 9f717a39 (Added random tests when matrix is all zeros or is binary fully connected)
     assert(isequal(numel(find(A2{i, i})), numel(find(random_A{i, i}))), ... % check same number of nodes
         [BRAPH2.STR ':OrdMlBD:' BRAPH2.FAIL_TEST], ...
         'OrdMlBD Randomize is not functioning well.')

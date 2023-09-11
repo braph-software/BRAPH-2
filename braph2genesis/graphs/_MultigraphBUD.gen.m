@@ -278,7 +278,6 @@ DENSITIES (parameter, rvector) is the vector of densities.
 %%%% ¡gui!
 pr = PanelPropRVectorSmart('EL', g, 'PROP', MultigraphBUD.DENSITIES, 'MAX', 100, 'MIN', 0, varargin{:});
 
-
 %% ¡tests!
 
 %%% ¡excluded_props!

@@ -293,7 +293,6 @@ rpos_out = corrcoef(sum(W,2), sum(random_A,2));
 correlation_coefficients = [rpos_in(2) rpos_out(2)];
 value = random_A;
 
-
 %% ¡tests!
 
 %%% ¡excluded_props!

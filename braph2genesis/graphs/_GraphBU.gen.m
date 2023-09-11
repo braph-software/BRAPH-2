@@ -464,7 +464,6 @@ g2.set('ATTEMPTSPEREDGE', 4);
 A2 = g2.get('A');
 random_A = g2.get('RANDOMIZATION', A2);
 
-
 if all(A2{1}==0, "all") %if all nodes are zero, the random matrix is also all zeros
     assert(isequal(A2{1}, random_A), ...
         [BRAPH2.STR ':GraphBU:' BRAPH2.FAIL_TEST], ...
@@ -486,43 +485,6 @@ assert(isequal(d1.get('M'), d2.get('M')), ...
     [BRAPH2.STR ':GraphBU:' BRAPH2.FAIL_TEST], ...
     'GraphBU Randomize is not functioning well.')
     
-assert(isequal(numel(find(A2{1})), numel(find(random_A))), ... % check same number of nodes
-    [BRAPH2.STR ':GraphBU:' BRAPH2.FAIL_TEST], ...
-    'GraphBU Randomize is not functioning well.')
-
-assert(issymmetric(random_A), ... % check symmetry 
-[BRAPH2.STR ':GraphBU:' BRAPH2.FAIL_TEST], ...
-'GraphBU Randomize is not functioning well.')
-
-deg_A = sum(A2{1});
-deg_B = sum(random_A);
-[h, p, ks2stat] = kstest2(deg_A, deg_B);
-
-assert(isequal(0, h), ... % check same degree distribution
-    [BRAPH2.STR ':GraphBU:' BRAPH2.FAIL_TEST], ...
-    'GraphBU Randomize is not functioning well.')
-
-assert(isequal(size(A{1}), size(B)), ...
-    [BRAPH2.STR ':GraphBU:' BRAPH2.FAIL_TEST], ...
-    'GraphBU Randomize is not functioning well.')
-
-g2 = GraphBU('B', B);
-g2.set('RANDOMIZE', false);
-g2.set('ATTEMPTSPEREDGE', 4);
-A2 = g2.get('A');
-random_A = g2.get('RANDOMIZATION', A2);
-
-assert(~isequal(A2, random_A), ...
-    [BRAPH2.STR ':GraphBU:' BRAPH2.FAIL_TEST], ...
-    'GraphBU Randomize is not functioning well.')
-
-d1 = g.get('MEASURE', 'Degree');
-d2 = g2.get('MEASURE', 'Degree');
-
-assert(isequal(d1.get('M'), d2.get('M')), ...
-    [BRAPH2.STR ':GraphBU:' BRAPH2.FAIL_TEST], ...
-    'GraphBU Randomize is not functioning well.')
-
 assert(isequal(numel(find(A2{1})), numel(find(random_A))), ... % check same number of nodes
     [BRAPH2.STR ':GraphBU:' BRAPH2.FAIL_TEST], ...
     'GraphBU Randomize is not functioning well.')

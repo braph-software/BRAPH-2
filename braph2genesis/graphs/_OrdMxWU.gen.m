@@ -404,7 +404,6 @@ g.set('RANDOMIZE', true);
 g.set('ATTEMPTSPEREDGE', 4);
 g.get('A_CHECK')
 
-
 A = g.get('A');
 
 assert(isequal(size(A{1}), size(B{1})), ...

@@ -132,6 +132,7 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+
 NAME (constant, string) is the name of the multilayer undirected with fixed thresholds graph.
 %%%% ¡default!
 'MultilayerBUT'
@@ -253,7 +254,6 @@ if g.get('RANDOMIZE')
     A = g.get('RANDOMIZATION', A);
 end
 value = A;
-
 %%%% ¡gui!
 pr = PanelPropCell('EL', g, 'PROP', MultilayerBUT.A, ...
     'TABLE_HEIGHT', s(40), ...

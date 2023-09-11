@@ -231,7 +231,6 @@ else
     end
 end
 value = A;
-
 %%%% ¡gui!
 pr = PanelPropCell('EL', g, 'PROP', MultilayerWU.A, ...
     'TABLE_HEIGHT', s(40), ...

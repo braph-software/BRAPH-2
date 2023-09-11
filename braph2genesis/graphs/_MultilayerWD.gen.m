@@ -219,7 +219,6 @@ if g.get('RANDOMIZE')
     A = g.get('RANDOMIZATION', A);
 end
 value = A;
-
 %%%% ¡gui!
 pr = PanelPropCell('EL', g, 'PROP', MultilayerWD.A, ...
     'TABLE_HEIGHT', s(40), ...
@@ -395,7 +394,7 @@ g.set('RANDOMIZE', true);
 g.set('ATTEMPTSPEREDGE', 4);
 g.get('A_CHECK')
 
-A = g.get('A')
+A = g.get('A');
 
 assert(isequal(size(A{1}), size(B{1})), ...
     [BRAPH2.STR ':MultilayerWD:' BRAPH2.FAIL_TEST], ...
