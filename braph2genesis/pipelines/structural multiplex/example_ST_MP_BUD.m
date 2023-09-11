@@ -41,7 +41,7 @@ a_BUD2 = AnalyzeGroup_ST_MP_BUD( ...
     );
 
 % measure calculation
-g_BUD1 = a_BUD1.get('G');
+g_BUD1 = a_BUD1.memorize('G'); % essential to memorize in case there are measures with non-default rules
 degree_BUD1 = g_BUD1.get('MEASURE', 'Degree').get('M');
 % % % ovdegree_BUD1 = g_BUD1.get('MEASURE', 'OverlappingDegree').get('M');
 % % % ovdegree_av_BUD1 = g_BUD1.get('MEASURE', 'OverlappingDegreeAv').get('M');

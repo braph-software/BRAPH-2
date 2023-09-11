@@ -41,7 +41,7 @@ a_BUT2 = AnalyzeGroup_ST_MP_BUT( ...
     );
 
 % measure calculation
-g_BUT1 = a_BUT1.get('G');
+g_BUT1 = a_BUT1.memorize('G'); % essential to memorize in case there are measures with non-default rules
 degree_BUT1 = g_BUT1.get('MEASURE', 'Degree').get('M');
 % % % ovdegree_BUT1 = g_BUT1.get('MEASURE', 'OverlappingDegree').get('M');
 % % % ovdegree_av_BUT1 = g_BUT1.get('MEASURE', 'OverlappingDegreeAv').get('M');

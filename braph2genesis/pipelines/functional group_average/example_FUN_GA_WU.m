@@ -39,7 +39,7 @@ a_WU2 = AnalyzeGroup_FUN_GA_WU( ...
     );
 
 % measure calculation
-g_WU1 = a_WU1.get('G');
+g_WU1 = a_WU1.memorize('G'); % essential to memorize in case there are measures with non-default rules
 degree_WU1 = g_WU1.get('MEASURE', 'Degree').get('M');
 % % % strength_WU1 = g_WU1.get('MEASURE', 'Strength').get('M');
 % % % modularity_WU1 = g_WU1.get('MEASURE', 'Modularity').get('M');

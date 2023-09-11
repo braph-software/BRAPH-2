@@ -42,7 +42,7 @@ a_BUD2 = AnalyzeGroup_ST_BUD(...
     );
 
 % measure calculation
-g_BUD1 = a_BUD1.get('G');
+g_BUD1 = a_BUD1.memorize('G'); % essential to memorize in case there are measures with non-default rules
 degree_BUD_1 = g_BUD1.get('MEASURE', 'Degree').get('M');
 degree_av_BUD_1 = g_BUD1.get('MEASURE', 'DegreeAv').get('M');
 distance_BUD_1 = g_BUD1.get('MEASURE', 'Distance').get('M');

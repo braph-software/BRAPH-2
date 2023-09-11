@@ -77,7 +77,7 @@ a_BUD2 = AnalyzeGroup_CON_FUN_MP_GA_BUD( ...
     );
 
 % measure calculation
-g_BUD1 = a_BUD1.get('G');
+g_BUD1 = a_BUD1.memorize('G'); % essential to memorize in case there are measures with non-default rules
 degree_WU1 = g_BUD1.get('MEASURE', 'Degree').get('M');
 % % % mpc_BUD1 = g_BUD1.get('MEASURE', 'MultiplexParticipation').get('M');
 % % % mpc_av_BUD1 = g_BUD1.get('MEASURE', 'MultiplexParticipationAv').get('M');

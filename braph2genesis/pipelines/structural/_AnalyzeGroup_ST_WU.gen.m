@@ -120,7 +120,7 @@ g = GraphWU( ...
     );
 
 if ~isa(a.getr('TEMPLATE'), 'NoValue') % the analysis has a template
-    g.set('TEMPLATE', a.get('TEMPLATE').memorize('G'))
+    g.set('TEMPLATE', a.get('TEMPLATE').memorize('G')) % the template is memorized
 end
 
 value = g;
@@ -154,6 +154,97 @@ if ~isfile([fileparts(which('SubjectST')) filesep 'Example data ST XLS' filesep 
 end
 
 example_ST_WU
+
+%%% ¡test!
+%%%% ¡name!
+Template for Graphs and Measures
+%%%% ¡probability!
+.01
+%%%% ¡code!
+if ~isfile([fileparts(which('SubjectST')) filesep 'Example data ST TXT' filesep 'atlas.txt'])
+    test_ImporterGroupSubjectST_TXT % create example files
+end
+
+ba = ImporterBrainAtlasTXT('FILE', [fileparts(which('SubjectST')) filesep 'Example data ST TXT' filesep 'atlas.txt']).get('BA');
+gr1 = ImporterGroupSubjectST_TXT('FILE', [fileparts(which('SubjectST')) filesep 'Example data ST txt' filesep 'ST_Group_1.txt'], 'BA', ba).get('GR');
+gr2 = ImporterGroupSubjectST_TXT('FILE', [fileparts(which('SubjectST')) filesep 'Example data ST txt' filesep 'ST_Group_2.txt'], 'BA', ba).get('GR');
+
+% check that analysis parameters are correclty templated between analysis 1 and 2
+negative_weight_rule = Correlation.ABS;
+correlation_rule = Correlation.SPEARMAN;
+a_WU1 = AnalyzeGroup_ST_WU('GR', gr1, 'NEGATIVE_WEIGHT_RULE', negative_weight_rule, 'CORRELATION_RULE', correlation_rule);
+a_WU2 = AnalyzeGroup_ST_WU('TEMPLATE', a_WU1, 'GR', gr2);
+assert(isequal(a_WU2.get('NEGATIVE_WEIGHT_RULE'), negative_weight_rule))
+assert(isequal(a_WU2.get('CORRELATION_RULE'), correlation_rule))
+
+% check that graph parameters are correclty templated between analysis 1 and 2
+randomize = true;
+random_seed = 42;
+symmetrize_rule = 'min';
+semipositivize_rule = 'absolute';
+standardize_rule = 'range';
+attemptsperedge = 1000;
+numberofweights = 25;
+g_WU2 = a_WU2.get('G');
+g_WU1 = a_WU1.get('G'); % it has been memorized in the previous line (!) when calculating the templated graph.
+g_WU1.set( ...
+    'RANDOMIZE', randomize, ...
+    'RANDOM_SEED', random_seed, ...
+    'SYMMETRIZE_RULE', symmetrize_rule, ...
+    'SEMIPOSITIVIZE_RULE', semipositivize_rule, ...
+    'STANDARDIZE_RULE', standardize_rule, ...
+    'ATTEMPTSPEREDGE', attemptsperedge, ...
+    'NUMBEROFWEIGHTS', numberofweights ...
+    )
+assert(isequal(g_WU2.get('RANDOMIZE'), randomize))
+assert(isequal(g_WU2.get('RANDOM_SEED'), random_seed))
+assert(isequal(g_WU2.get('SYMMETRIZE_RULE'), symmetrize_rule))
+assert(isequal(g_WU2.get('SEMIPOSITIVIZE_RULE'), semipositivize_rule))
+assert(isequal(g_WU2.get('STANDARDIZE_RULE'), standardize_rule))
+assert(isequal(g_WU2.get('ATTEMPTSPEREDGE'), attemptsperedge))
+assert(isequal(g_WU2.get('NUMBEROFWEIGHTS'), numberofweights))
+
+% check that measure parameters are correclty templated between analysis 1 and 2
+triangles_rule = 'middleman';
+m_triangles_WU1 = g_WU1.get('MEASURE', 'Triangles');
+m_triangles_WU1.set('RULE', triangles_rule)
+m_triangles_WU2 = g_WU2.get('MEASURE', 'Triangles');
+assert(isequal(m_triangles_WU2.get('RULE'), triangles_rule))
+
+% check that analysis parameters are correclty templated to permutation analyses
+permutations = 10;
+c_WU = CompareGroup('P', permutations, 'A1', a_WU1, 'A2', a_WU2);
+a_WU_perms = c_WU.get('PERM', randi(permutations));
+a_WU1_perm = a_WU_perms{1};
+assert(isequal(a_WU1_perm.get('NEGATIVE_WEIGHT_RULE'), negative_weight_rule))
+assert(isequal(a_WU1_perm.get('CORRELATION_RULE'), correlation_rule))
+a_WU2_perm = a_WU_perms{2};
+assert(isequal(a_WU2_perm.get('NEGATIVE_WEIGHT_RULE'), negative_weight_rule))
+assert(isequal(a_WU2_perm.get('CORRELATION_RULE'), correlation_rule))
+
+% check that graph parameters are correclty templated to permutation analyses
+g_WU1_perm = a_WU1_perm.get('G');
+g_WU2_perm = a_WU2_perm.get('G');
+assert(isequal(g_WU1_perm.get('RANDOMIZE'), randomize))
+assert(isequal(g_WU1_perm.get('RANDOM_SEED'), random_seed))
+assert(isequal(g_WU1_perm.get('SYMMETRIZE_RULE'), symmetrize_rule))
+assert(isequal(g_WU1_perm.get('SEMIPOSITIVIZE_RULE'), semipositivize_rule))
+assert(isequal(g_WU1_perm.get('STANDARDIZE_RULE'), standardize_rule))
+assert(isequal(g_WU1_perm.get('ATTEMPTSPEREDGE'), attemptsperedge))
+assert(isequal(g_WU1_perm.get('NUMBEROFWEIGHTS'), numberofweights))
+assert(isequal(g_WU2_perm.get('RANDOMIZE'), randomize))
+assert(isequal(g_WU2_perm.get('RANDOM_SEED'), random_seed))
+assert(isequal(g_WU2_perm.get('SYMMETRIZE_RULE'), symmetrize_rule))
+assert(isequal(g_WU2_perm.get('SEMIPOSITIVIZE_RULE'), semipositivize_rule))
+assert(isequal(g_WU2_perm.get('STANDARDIZE_RULE'), standardize_rule))
+assert(isequal(g_WU2_perm.get('ATTEMPTSPEREDGE'), attemptsperedge))
+assert(isequal(g_WU2_perm.get('NUMBEROFWEIGHTS'), numberofweights))
+
+% check that measure parameters are correclty templated to permutation analyses
+m_triangles_WU1_perm = g_WU1_perm.get('MEASURE', 'Triangles');
+m_triangles_WU1_perm.set('RULE', triangles_rule)
+m_triangles_WU2_perm = g_WU2_perm.get('MEASURE', 'Triangles');
+assert(isequal(m_triangles_WU2_perm.get('RULE'), triangles_rule))
 
 %%% ¡test!
 %%%% ¡name!

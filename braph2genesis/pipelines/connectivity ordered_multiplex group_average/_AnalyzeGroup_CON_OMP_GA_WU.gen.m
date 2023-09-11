@@ -122,7 +122,7 @@ g = OrdMxWU( ...
     );
 
 if ~isa(a.getr('TEMPLATE'), 'NoValue') % the analysis has a template
-    g.set('TEMPLATE', a.get('TEMPLATE').memorize('G'))
+    g.set('TEMPLATE', a.get('TEMPLATE').memorize('G')) % the template is memorized
 end
 
 value = g;
