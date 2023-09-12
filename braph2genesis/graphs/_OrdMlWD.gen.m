@@ -1,5 +1,5 @@
 %% ¡header!
-OrdMlWD < Graph (g, multilayer weighted directed graph) is an ordinal multilayer weighted directed graph.
+OrdMlWD < Graph (g, ordinal multilayer weighted directed graph) is an ordinal multilayer weighted directed graph.
 
 %%% ¡description!
 In an ordinal multilayer weighted directed (WD) graph, layers could have different number 
