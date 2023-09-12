@@ -1166,8 +1166,8 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     eval(['test_' el_class])
 % end
 
-% el_class_list = {'CompareGroupPP_CpDict'} % {'AnalyzeGroup' 'CompareGroup' 'ComparisonGroup' 'AnalyzeGroupPP_G' 'CompareGroupPP_CpDict'}
-% el_class_list = {'ComparisonGroupPF_NU'} % {'ComparisonGroupPF' 'ComparisonGroupPF_BB' 'ComparisonGroupPF_BS' 'ComparisonGroupPF_BU' 'ComparisonGroupPF_GB' 'ComparisonGroupPF_GS' 'ComparisonGroupPF_GU' 'ComparisonGroupPF_NB' 'ComparisonGroupPF_NS' 'ComparisonGroupPF_NU' }
+% el_class_list = {'ComparisonGroup'} % {'AnalyzeGroup' 'CompareGroup' 'ComparisonGroup' 'AnalyzeGroupPP_G' 'CompareGroupPP_CpDict'}
+% % el_class_list = {'ComparisonGroupPF_NU'} % {'ComparisonGroupPF' 'ComparisonGroupPF_BB' 'ComparisonGroupPF_BS' 'ComparisonGroupPF_BU' 'ComparisonGroupPF_GB' 'ComparisonGroupPF_GS' 'ComparisonGroupPF_GU' 'ComparisonGroupPF_NB' 'ComparisonGroupPF_NS' 'ComparisonGroupPF_NU' }
 % for i = 1:1:length(el_class_list)
 %     el_class = el_class_list{i};
 %     el_path = '/src/analysis';
@@ -1571,7 +1571,8 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     ); 
 % pip = im.get('PIP');
 
-pip = Element.load('ST_WU.b2');
+% pip = Element.load('ST_WU.b2');
+pip = Element.load('ST_WU_a1_a2.b2');
 
 gui = GUIElement( ...
     'PE', pip, ...
