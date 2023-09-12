@@ -47,7 +47,7 @@ d_training = d_split.get('D_LIST_IT', 1);
 d_test = d_split.get('D_LIST_IT', 2);
 
 %% Create a MLP regressor with training set
-nn = NNRegressorMLP('D', d_training, 'LAYERS', [20 20]);
+nn = NNRegressorMLP('D', d_training, 'LAYERS', [20 20], 'P', 5);
 nn.get('TRAIN');
 
 %% Evaluate the regressor with the test set
@@ -57,4 +57,4 @@ coeff_determination = nne_test.get('DET');
 mae = nne_test.get('MAE');
 mse = nne_test.get('MSE');
 rmse = nne_test.get('RMSE');
-feature_importance = nne_test.get('PERM_FEATURE_IMPORTANCE');
+fi = nne_test.get('FEATURE_IMPORTANCE');

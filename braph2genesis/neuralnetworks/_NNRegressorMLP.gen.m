@@ -156,6 +156,81 @@ LAYERS (data, rvector) defines the number of layers and their neurons.
 %%%% ¡default!
 [32 32]
 
+%%% ¡prop!
+WAITBAR (gui, logical) detemines whether to show the waitbar.
+%%%% ¡default!
+true
+
+%%% ¡prop!
+P (parameter, scalar) is the permutation number.
+%%%% ¡default!
+1e+2
+%%%% ¡check_prop!
+check = value > 0 && value == round(value);
+
+%%% ¡prop!
+PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
+%%%% ¡calculate!
+value = randi(intmax('uint32'), 1, nn.get('P'));
+
+%%% ¡prop!
+INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interruptible for multitasking.
+%%%% ¡default!
+.001
+
+%%% ¡prop!
+FEATURE_IMPORTANCE (query, cell) evaluates the average significance of each feature by iteratively shuffling its values P times and measuring the resulting average decrease in model performance.
+%%%% ¡calculate!
+% fi = nn.get('FEATURE_IMPORTANCE', D) retrieves a cell array containing
+%  the feature importance values for the trained model, as assessed by
+%  evaluating it on the input dataset D.
+if isempty(varargin)
+    value = {};
+    return
+end
+d = varargin{1};
+
+inputs = cell2mat(nn.get('INPUTS', d));
+if isempty(inputs)
+    value = {};
+    return
+end
+targets = cell2mat(nn.get('TARGETS', d));
+P = nn.get('P');
+seeds = nn.get('PERM_SEEDS');
+net = nn.get('MODEL');
+
+number_features = size(inputs, 2);
+original_loss = crossentropy(net.predict(inputs), targets);
+
+wb = braph2waitbar(nn.get('WAITBAR'), 0, ['Feature importance permutation ...']);
+
+start = tic;
+for i = 1:1:P
+    rng(seeds(i), 'twister')
+    parfor j = 1:1:number_features
+        scrambled_inputs = inputs;
+        permuted_value = squeeze(normrnd(mean(inputs(:, j)), std(inputs(:, j)), squeeze(size(inputs(:, j))))) + squeeze(randn(size(inputs(:, j)))) + mean(inputs(:, j));
+        scrambled_inputs(:, j) = permuted_value;
+        scrambled_loss = crossentropy(net.predict(scrambled_inputs), targets);
+        feature_importance(j) = scrambled_loss;
+    end
+
+    feature_importance_all_permutations{i} = feature_importance / original_loss;
+
+    braph2waitbar(wb, i / P, ['Feature importance permutation ' num2str(i) ' of ' num2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's ...'])
+    if nn.get('VERBOSE')
+        disp(['** PERMUTATION FEATURE IMPORTANCE - sampling #' int2str(i) '/' int2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's'])
+    end
+    if nn.get('INTERRUPTIBLE')
+        pause(nn.get('INTERRUPTIBLE'))
+    end
+end
+
+braph2waitbar(wb, 'close')
+
+value = feature_importance_all_permutations;
+
 %% ¡tests!
 
 %%% ¡test!

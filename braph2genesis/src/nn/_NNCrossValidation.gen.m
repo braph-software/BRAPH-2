@@ -54,16 +54,21 @@ KFOLDS (data, scalar) is the number of folds.
 SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
 %%%% ¡postprocessing!
 split = nncv.get('SPLIT');
-kfold = nncv.get('KFOLDS');
+kfolds = nncv.get('KFOLDS');
 d = nncv.get('D');
-if isempty(split) && d.get('DP_DICT').get('LENGTH') > kfold
-    nncv.set('SPLIT', repmat({1 / kfold}, 1, kfold));
+if isempty(split) && d.get('DP_DICT').get('LENGTH') > kfolds
+    nncv.set('SPLIT', repmat({1 / kfolds}, 1, kfolds));
 end
 
 %%% ¡prop!
 D (data, item) is the dataset to be cross-validated.
 %%%% ¡settings!
 'NNDataset'
+
+%%% ¡prop!
+NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.
+%%%% ¡settings!
+'NNBase'
 
 %%% ¡prop!
 DSP (result, item) is a dataset splitter.

@@ -58,15 +58,19 @@ else
     end
     
     d_training_set = d_training_set';
-
-    nn_template = NNClassifierMLP( ...
-        'EPOCHS', nncv.get('EPOCHS'), ...
-        'BATCH', nncv.get('BATCH'), ...
-        'SHUFFLE', nncv.get('SHUFFLE'), ...
-        'SOLVER', nncv.get('SOLVER'), ...
-        'VERBOSE', nncv.get('VERBOSE'), ...
-        'PLOT_TRAINING', nncv.get('PLOT_TRAINING'));
-
+    
+    if ~isa(nncv.getr('NN_TEMPLATE'), 'NoValue')
+        nn_template = nncv.get('NN_TEMPLATE');
+    else
+        nn_template = NNClassifierMLP( ...
+            'EPOCHS', nncv.get('EPOCHS'), ...
+            'BATCH', nncv.get('BATCH'), ...
+            'SHUFFLE', nncv.get('SHUFFLE'), ...
+            'SOLVER', nncv.get('SOLVER'), ...
+            'VERBOSE', nncv.get('VERBOSE'), ...
+            'PLOT_TRAINING', nncv.get('PLOT_TRAINING'));
+    end
+    
     value = cellfun(@(d) NNClassifierMLP( ...
         'TEMPLATE', nn_template, 'D', d), ...
         d_training_set, 'UniformOutput', false);
@@ -122,9 +126,24 @@ combined_c_matrix = cellfun(@(x) double(x), c_matrices, 'UniformOutput', false);
 value = sum(cat(3, combined_c_matrix{:}), 3);
 
 %%% ¡prop!
-AV_PERM_FEATURE_IMPORTANCE (result, cell) averages the permutation feature importances across k folds.
+AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds.
 %%%% ¡calculate!
-value = {};
+e_list = nncv.get('EVALUATOR_LIST');
+
+all_fi = cellfun(@(e) cell2mat(e.get('FEATURE_IMPORTANCE')), ...
+    e_list, 'UniformOutput', false);
+
+if isempty(cell2mat(all_fi))
+    value = {};
+else
+    average_fi = zeros(size(all_fi{1}));
+    for i = 1:numel(all_fi)
+        % Add the current cell contents to the averageCell
+        average_fi = average_fi + all_fi{i};
+    end
+    average_fi = average_fi / numel(all_fi);
+    value = {average_fi};
+end
 
 %% ¡tests!
 
