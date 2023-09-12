@@ -111,7 +111,7 @@ NOTES (metadata, string) are some specific notes about the group-based compariso
 %% ¡props!
 
 %%% ¡prop!
-MEASURE (data, class) is the measure class.
+MEASURE (parameter, class) is the measure class.
 %%%% ¡settings!
 'Measure'
 
