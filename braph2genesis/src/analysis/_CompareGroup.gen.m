@@ -211,6 +211,7 @@ else
         'MEASURE', measure_class, ...
         'C', c ...
         );
+    cp.lock('MEASURE')
     
     cp_dict.get('ADD', cp);
 end
