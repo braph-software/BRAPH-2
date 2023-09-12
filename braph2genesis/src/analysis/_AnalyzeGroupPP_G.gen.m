@@ -88,8 +88,13 @@ function set_table()
     end
 
     mlist = g.get('COMPATIBLE_MEASURES');
-    mlist_already_calculated = cellfun(@(x) x.get('NAME'), g.get('M_DICT').get('IT_LIST'), 'UniformOutput', false);
 
+    if isa(g.getr('M_DICT'), 'NoValue')
+        mlist_already_calculated = {};
+    else
+        mlist_already_calculated = cellfun(@(x) x.get('NAME'), g.get('M_DICT').get('IT_LIST'), 'UniformOutput', false);
+    end
+    
     rowname = cell(length(mlist), 1);
     data = cell(length(mlist), 5);
     for mi = 1:1:length(mlist)
