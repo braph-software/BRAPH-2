@@ -1580,3 +1580,6 @@ gui = GUIElement( ...
     );
 gui.get('DRAW')
 gui.get('SHOW')
+
+% a1 = pip.get('PS_DICT').get('IT', 3).get('PC_DICT').get('IT', 1).get('EL')
+% a1g = pip.get('PS_DICT').get('IT', 3).get('PC_DICT').get('IT', 1).get('EL').get('G')
