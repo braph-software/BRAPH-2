@@ -1,0 +1,847 @@
+\documentclass{tufte-handout}
+\usepackage{../braph2_dev}
+%\geometry{showframe} % display margins for debugging page layout
+
+\title{Implement a new Subject}
+
+\author[The BRAPH~2 Developers]{The BRAPH~2 Developers}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\noindent
+This is the developer tutorial for implementing a new Subject. 
+In this Tutorial, we will explain how to create the generator file \fn{*.gen.m} for a new subject, which can then be compiled by \code{braph2genesis}. All types of subjects are extensions of the base element \code{Subject}. Here, we will use as examples the subjects \code{SubjectCon} (subject with connectivity data), \code{SubjectCON\_MP} (subject with connectivity multiplex data), \code{SubjectFUN} (subject with functional data), \code{SubjectFUN\_MP} (subject with functional multiplex data), \code{SubjectST} (subject with structural data), and \code{SubjectST\_MP} (subject with structural multiplex data).
+\end{abstract}
+
+\tableofcontents
+
+%%%%% %%%%% %%%%% %%%%% %%%%%
+\clearpage
+\section{Implementation of a subject with connectivity matrix}
+
+\subsection{subject with connectivity data (SubjectCON)}
+
+We will start by implementing in detail \code{SubjectCON}. The connectivity matrix can be obtained from DTI data.
+
+\begin{lstlisting}[
+	label=cd:m:SubjectCON:header,
+	caption={
+		{\bf SubjectCON element header.}
+		The \code{header} section of the generator code for \fn{\_SubjectCON.gen.m} provides the general information about the \code{SubjectCON} element.
+		}
+]
+%% ¡header!
+SubjectCON < Subject (sub, subject with connectivity matrix) is a subject with connectivity matrix (e.g. DTI). ¥\circled{1}\circlednote{1}{The element \code{SubjectCON} is defined as a subclass of \code{Subject}. The moniker will be \code{sub}.}¥
+
+%%% ¡description!
+Subject with a connectivity matrix (e.g. obtained from DTI).
+
+%%% ¡seealso! ¥\circled{2}\circlednote{2}{allows menu to import and export text and Excel spreadsheet files.}¥
+ImporterGroupSubjectFUN_TXT, ExporterGroupSubjectFUN_TXT, ImporterGroupSubjectFUN_XLS, ExporterGroupSubjectFUN_XLS
+\end{lstlisting}
+
+
+\begin{lstlisting}[
+	label={cd:m:SubjectCON:prop_update},
+	caption={
+		{\bf SubjectCON element prop update.}
+		The \code{props\_update} section of the generator code for \fn{\_SubjectCON.gen.m} updates the properties of the \code{Subject} element. This defines the core properties of the subject.
+	}
+]
+%% ¡props_update!
+
+%%% ¡prop!
+NAME (constant, string) is the name of the subject.
+%%%% ¡default!
+'SubjectCON'
+
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the subject.
+%%%% ¡default!
+'SubjectCON with a connectivity matrix (e.g. obtained from DTI).'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the subject.
+%%% ¡settings!
+'SubjectCON'
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the subject.
+%%%% ¡default!
+'SubjectCON ID'
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the subject.
+%%%% ¡default!
+'SubjectCON label'
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the subject.
+%%%% ¡default!
+'SubjectCON notes'
+
+%% ¡props!
+
+%%% ¡prop! 
+BA (data, item) is a brain atlas.
+%%%% ¡settings!
+'BrainAtlas'
+
+
+%%% ¡prop! 
+CON (data, smatrix) is an adjacency matrix.
+%%%% ¡check_value!
+br_number = sub.get('BA').get('BR_DICT').get('LENGTH'); ¥\circled{1}\circlednote{1}{defines the number of brain regions from the Brain Atlas.}\circlednote{2}{The \code{value} is the data matrix. Checking the size of \code{value} is equal to the number of brain regions.}\circlednote{3}{returns the check information \code{msg} according to the variable \code{check}.}\circlednote{4}{plots the panel of a property matrix-like with element \code{sub} and the property number \code{SubjectCon.Con}. \code{ROWNAME} and \code{COLUMNNAME} are the name of regions from brain atlas.}¥
+check = isequal(size(value), [br_number, br_number]); ¥ \circled{2}¥
+if check ¥ \circled{3}¥
+    msg = 'All ok!';
+else   
+    msg = ['CON must be a square matrix with the dimension equal to the number of brain regions (' int2str(br_number) ').'];
+end
+
+%%%% ¡gui! ¥\circled{4}¥
+pr = PanelPropMatrix('EL', sub, 'PROP', SubjectCON.CON, ...
+    'ROWNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
+    'COLUMNNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
+    varargin{:});
+\end{lstlisting}
+
+\clearpage
+
+\begin{lstlisting}[
+	label=cd:m:SubjectCON:tests,
+	caption={
+		{\bf SubjectCON element tests.}
+		The \code{tests} section from the element generator \fn{\_SubjectCON.gen.m}.
+		A general test should be prepared to test the properties of the Subject when it is empty and full. Furthermore, additional tests should be prepared for the rules defined.
+	}
+]			
+%% ¡tests!
+
+%%% ¡test!
+%%%% ¡name!
+GUI ¥\circled{1}\circlednote{1}{checks that GUI is constructing well.}¥
+%%%% ¡probability! ¥\circled{2}\circlednote{2}{assigns a low test execution probability.}¥
+.01
+%%%% ¡code!
+im_ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx'); ¥\circled{3}\circlednote{3}{imports the brain atlas \code{desikan} from the file \fn{'desikan\_atlas.xlsx'}.There are also other atlases in Braph2 folder \fn{atlases}, including \fn{aal90\_atlas.xlsx}, \fn{aal116\_atlas.xlsx}, \fn{bna\_atlas.xlsx}, \fn{craddock\_atlas.xlsx}, \fn{desikan\_subcortical\_atlas.xlsx}, \fn{destrieux\_atlas.xlsx}, \fn{destrieux\_subcortical\_atlas.xlsx},  \fn{schaefer200\_atlas.xlsx} and \fn{subcortical\_atlas.xlsx}.}¥
+ba = im_ba.get('BA');  ¥\circled{4}\circlednote{4}{returns the brain atlas.}¥
+
+gr = Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON'));  ¥\circled{5}\circlednote{5}{represents a group of subjects whose class is defined in the property \code{'SUB\_CLASS'}. \code{'SUB\_DICT'} manages the subjects as an indexed dictionary of subjects.}¥
+for i = 1:1:50 ¥\circled{6}\circlednote{6}{construts 50 subjects.}¥
+    sub = SubjectCON( ... ¥\circled{7}\circlednote{7}{defines the \code{'ID'}, \code{'LABEL'}, \code{'NOTES'}, \code{'BA'} (Brain Atlas) and \code{'CON'} (a random adjacency matrix) for a subject.}¥
+        'ID', ['SUB CON ' int2str(i)], ...
+        'LABEL', ['Subejct CON ' int2str(i)], ...
+        'NOTES', ['Notes on subject CON ' int2str(i)], ...
+        'BA', ba, ...
+        'CON', rand(ba.get('BR_DICT').get('LENGTH')) ...
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand())) ¥\circled{8}\circlednote{8}{adds a random \code{Numeric} \code{'Age'} as the variable of interest of the subject.}¥
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1))) ¥\circled{9}\circlednote{8}{adds a random \code{Categoric} \code{'Sex'} as the variable of interest of the subject.}¥
+    gr.get('SUB_DICT').get('ADD', sub) ¥\circled{10}\circlednote{10}{adds \code{'sub'} into group.}¥
+end
+
+gui = GUIElement('PE', gr, 'CLOSEREQ', false); ¥\circled{11}\circlednote{11}{constructs the GUI panel from \code{gr}. Setting the \code{'CLOSEREQ'} to \code{false} means doesn't confirm whether the GUI is close.}¥
+gui.get('DRAW') ¥\circled{12}\circlednote{12}{draws the contents of a GUI before showing it.}¥
+gui.get('SHOW') ¥\circled{13}\circlednote{13}{shows the figure and its dependent figures.}¥
+
+gui.get('CLOSE') ¥\circled{14}\circlednote{14}{closes the figure and its dependent figures.}¥
+\end{lstlisting}
+
+%%%%% %%%%% %%%%% %%%%% %%%%%
+\clearpage
+\subsection{subject with connectivity multiplex data (SubjectCON\_MP)}
+
+We can now use \code{SubjectCON} as the basis to implement the \code{SubjectCON\_MP}. The parts of the code that are modified are highlighted.
+The multilayer data allows connections between any nodes across the multiple layers. The \code{SubjectCON\_MP} can also be used on ordinal multilayer data.
+\begin{lstlisting}[
+	label=cd:m:SubjectCON_MP:header,
+	caption={
+		{\bf SubjectCON\_MP element header.}
+		The \code{header} section of the generator code for \fn{\_SubjectCON\_MP.gen.m} provides the general information about the \code{SubjectCON\_MP} element. \expand{cd:m:SubjectCON:header}
+		}
+]
+
+¤%% ¡header!
+¤SubjectCON_MP¤ < Subject (sub, ¤subject with connectivity multiplex data) is a subject with connectivity multiplex data¤.
+
+%%% ¡description!
+¤Subject with L connectivity matrices¤ (e.g. obtained from DTI).
+
+%%% ¡seealso!
+¤ImporterGroupSubjectCON_MP_TXT, ExporterGroupSubjectCON_MP_TXT, ImporterGroupSubjectCON_MP_XLS, ExporterGroupSubjectCON_MP_XLS¤
+\end{lstlisting}
+
+\begin{lstlisting}[
+	label={cd:m:SubjectCON_MP:prop_update},
+	caption={
+		{\bf SubjectCON\_MP element prop update.}
+		The \code{props\_update} section of the generator code for \fn{\_SubjectCON\_MP.gen.m} updates the properties of the \code{Subject} element. \expand{cd:m:SubjectCON:prop_update}
+	}
+]
+¤%% ¡props_update!
+
+%%% ¡prop!
+NAME (constant, string) is the name of the subject.
+%%%% ¡default!
+¤'SubjectCON_MP'¤
+
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the subject.
+%%%% ¡default!
+'Subject with ¤L connectivity matrices¤ (e.g. obtained from DTI).'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the subject.
+%%% ¡settings!
+¤'SubjectCON_MP'¤
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the subject.
+%%%% ¡default!
+¤'SubjectCON_MP ID'¤
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the subject.
+%%%% ¡default!
+¤'SubjectCON_MP label'¤
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the subject.
+%%%% ¡default!
+¤'SubjectCON_MP notes'¤
+
+%% ¡props!
+
+%%% ¡prop!
+BA (data, item) is a brain atlas.
+%%%% ¡settings!
+'BrainAtlas'
+
+¤%%% ¡prop! 
+L (data, scalar) is the number of layers of subject data. ¥\circled{1}\circlednote{1}{defines a parameter to determine the number of layers of subject data. This property must be of a scalar parameter.}¥
+%%%% ¡default!
+2¤ ¥\circled{2}\circlednote{2}{defines the default option, in this case \code{'2'}.}¥
+
+¤%%% ¡prop! 
+LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.¤ ¥\circled{3}\circlednote{3}{defines a parameter to determine the labels for each layer. This property must be of string list parameter.}¥
+
+¤%%% ¡prop!
+ALAYERLABELS (query, stringlist) returns the processed layer labels.¤ ¥\circled{4}\circlednote{4}{defines a parameter to determine the processed labels for each layer. This property must be of string list parameter.}¥
+%%%% ¡calculate!
+value = sub.get('LAYERLABELS'); ¥\circled{5}\circlednote{5}{defines the \code{value} from the property \code{'LAYERLABELS'} of SubjectCON\_MP.}¥
+
+%%% ¡prop!
+¤CON_MP (data, cell) is a cell containing L matrices corresponding connectivity matrices of each layer.¤
+%%%% ¡check_value!
+br_number = sub.get('BA').get('BR_DICT').get('LENGTH');
+¤num_layers = sub.get('L'); ¥\circled{6}\circlednote{6}{defines the number of layers.}¥
+check = (iscell(value) && isequal(length(value), num_layers)  && isequal( cellfun(@(v) size(v, 1), value), ones(1, num_layers) * br_number)  && isequal( cellfun(@(v) size(v, 2), value), ones(1, num_layers) * br_number)) || (isempty(value) && br_number == 0);¤ ¥\circled{6}\circlednote{6}{checks the size of each layer is equal to the number of brain regions.}¥
+if check
+    msg = 'All ok!';
+else   
+    ¤msg = ['CON_MP must be a cell with L square matrices with the dimension equal to the number of brain regions (' int2str(br_number) ').'];¤
+end
+%%%% ¡gui! 
+pr = PanelPropCell('EL', sub, 'PROP', ¤SubjectCON_MP.CON_M¤P, ...
+    ¤'TABLE_HEIGHT', s(40), ... ¥\circled{7}\circlednote{7}{defines the height of table.}¥
+    'XSLIDERSHOW', true, ... ¥\circled{8}\circlednote{8}{defines the option of showing in X-axis slider.}¥
+    'XSLIDERLABELS', sub.getCallback('ALAYERLABELS'), ... ¥\circled{9}\circlednote{9}{defines the X-axis sliders' labels.}¥
+    'YSLIDERSHOW', false, ...¤ ¥\circled{10}\circlednote{10}{defines the option of not showing in Y-axis slider.}¥
+    'ROWNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
+    'COLUMNNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
+    varargin{:});¤
+
+\end{lstlisting}
+
+\begin{lstlisting}[
+	label=cd:m:SubjectCON_MP:tests,
+	caption={
+		{\bf SubjectCON\_MP element tests.}
+		The \code{tests} section from the element generator \fn{\_SubjectCON\_MP.gen.m}. \expand{cd:m:SubjectCON:tests}
+	}
+ ]
+¤%% ¡tests!
+
+%%% ¡test!
+%%%% ¡name!
+GUI
+%%%% ¡probability!
+.01
+%%%% ¡code!
+im_ba = ImporterBrainAtlasXLS('FILE', ¤'aal90_atlas.xlsx'¤);
+ba = im_ba.get('BA');
+
+gr = Group('SUB_CLASS', ¤'SubjectCON_MP'¤, 'SUB_DICT', IndexedDictionary('IT_CLASS', ¤'SubjectCON_MP'¤));
+for i = 1:1:10 
+    sub = SubjectCON_MP( ...
+        'ID', [¤'SUB CON_MP '¤ int2str(i)], ...
+        'LABEL', [¤'Subejct CON_MP '¤ int2str(i)], ...
+        'NOTES', [¤'Notes on subject CON_MP '¤ int2str(i)], ...
+        'BA', ba, ...
+        ¤'L', 3, ... ¥\circled{1}\circlednote{1}{defines the number of layers.}¥
+        'LAYERLABELS', {'L1' 'L2' 'L3'}, ... ¥\circled{2}\circlednote{2}{defines the label of each layer.}¥
+        'CON_MP', {rand(ba.get('BR_DICT').get('LENGTH')), rand(ba.get('BR_DICT').get('LENGTH')), rand(ba.get('BR_DICT').get('LENGTH'))} ...¤
+        ); ¥\circled{3}\circlednote{3}{constructs 3 layers randomly with size of brain regions by brain regions.}¥
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr.get('SUB_DICT').get('ADD', sub)
+end
+
+gui = GUIElement('PE', gr, 'CLOSEREQ', false);
+gui.get('DRAW')
+gui.get('SHOW')
+
+gui.get('CLOSE')
+\end{lstlisting}
+
+%%%%% %%%%% %%%%% %%%%% %%%%%
+\clearpage
+\section{Implementation of a subject with functional data}
+\subsection{subject with functional data (SubjectFUN)}
+
+We will start by implementing in detail \code{SubjectFUN}. The connectivity matrix can be obtained from fMRI data.
+
+\begin{lstlisting}[
+	label=cd:m:SubjectFUN:header,
+	caption={
+		{\bf SubjectFUN element header.}
+		The \code{header} section of the generator code for \fn{\_SubjectFUN.gen.m} provides the general information about the \code{SubjectFUN} element.\expand{cd:m:SubjectCON:header}
+		}
+]
+
+¤%% ¡header!¤
+SubjectFUN ¤< Subject (sub, ¤subject with functional matrix) is a subject with functional matrix (e.g. fMRI).¤
+
+%%% ¡description!
+¤Subject with a functional matrix (e.g. obtained from fMRI).¤
+
+%%% ¡seealso!
+¤ImporterGroupSubjectFUN_TXT, ExporterGroupSubjectFUN_TXT, ImporterGroupSubjectFUN_XLS, ExporterGroupSubjectFUN_XLS
+\end{lstlisting}
+\begin{lstlisting}[
+	label={cd:m:SubjectFUN:prop_update},
+	caption={
+		{\bf SubjectFUN element prop update.}
+		The \code{props\_update} section of the generator code for \fn{\_SubjectFUN.gen.m} updates the properties of the \code{Subject} element. \expand{cd:m:SubjectCON:prop_update}
+	}
+]
+¤%% ¡props_update!
+
+%%% ¡prop!
+NAME (constant, string) is the name of the subject.
+%%%% ¡default!
+¤'SubjectFUN'¤
+
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the subject.
+%%%% ¡default!
+¤'Subject with a functional matrix (e.g. obtained from fMRI).'¤
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the subject.
+%%% ¡settings!
+¤'SubjectFUN'¤
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the subject.
+%%%% ¡default!
+¤'SubjectFUN ID'¤
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the subject.
+%%%% ¡default!
+¤'SubjectFUN label'¤
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the subject.
+%%%% ¡default!
+¤'SubjectFUN notes'¤
+
+%% ¡props!
+
+%%% ¡prop!
+BA (data, item) is a brain atlas.
+%%%% ¡settings!
+'BrainAtlas'
+
+%%% ¡prop!
+¤FUN¤ (data, ¤matrix¤) is an adjacency matrix.
+%%%% ¡check_value!
+br_number = sub.get('BA').get('BR_DICT').get('LENGTH');
+¤check = size(value, 2) == br_number; ¥\circled{1}\circlednote{1}{checks the size of the column of \code{value} is equal to the number of brain regions. The rows of \code{value} represent the time series.}¥¤
+if check
+    msg = 'All ok!';
+else   
+    ¤msg = ['FUN must be a matrix with the same number of columns as the brain regions (' int2str(br_number) ').'];¤
+end
+%%%% ¡gui! ¥\circled{2}\circlednote{2}{Same as in note \circled{4} of \Coderef{cd:m:SubjectCON:prop_update}.}¥
+pr = PanelPropMatrix('EL', sub, 'PROP', ¤SubjectFUN.FUN¤, ...
+    ¤'ROWNAME', {'numbered'}, ...¤
+    'COLUMNNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
+    varargin{:});
+\end{lstlisting}
+\clearpage
+\begin{lstlisting}[
+	label=cd:m:SubjectFUN:tests,
+	caption={
+		{\bf SubjectFUN element tests.}
+		The \code{tests} section from the element generator \fn{\_SubjectFUN.gen.m}. \expand{cd:m:SubjectCON:tests}
+	}
+]
+¤%% ¡tests!
+
+%%% ¡test!
+%%%% ¡name!
+GUI
+%%%% ¡probability!
+.01
+%%%% ¡code!
+im_ba = ImporterBrainAtlasXLS('FILE', ¤'aal90_atlas.xlsx'¤);
+ba = im_ba.get('BA');
+
+gr = Group('SUB_CLASS', ¤'SubjectFUN'¤, 'SUB_DICT', IndexedDictionary('IT_CLASS', ¤'SubjectFUN'¤));
+for i = 1:1:50
+    sub = ¤SubjectFUN¤( ...
+        'ID', [¤'SUB FUN '¤ int2str(i)], ...
+        'LABEL', [¤'Subejct FUN '¤ int2str(i)], ...
+        'NOTES', [¤'Notes on subject FUN '¤ int2str(i)], ...
+        'BA', ba, ...
+        ¤'FUN', rand(10, ba.get('BR_DICT').get('LENGTH')) ...¥\circled{1}\circlednote{1}{constructs the random adjacency matrix with the size of 10 timepoints by the number of brain regions.}¥¤
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr.get('SUB_DICT').get('ADD', sub)
+end
+
+gui = GUIElement('PE', gr, 'CLOSEREQ', false);
+gui.get('DRAW')
+gui.get('SHOW')
+
+gui.get('CLOSE')
+\end{lstlisting}
+
+%%%%% %%%%% %%%%% %%%%% %%%%%
+\clearpage
+\subsection{subject with functional multiplex data (SubjectFUN\_MP)}
+
+We will start by implementing in detail \code{SubjectFUN\_MP}. The functional matrix can be obtained from fMRI data.
+
+\begin{lstlisting}[
+	label=cd:m:SubjectFUN_MP:header,
+	caption={
+		{\bf SubjectFUN\_MP element header.}
+		The \code{header} section of the generator code for \fn{\_SubjectFUN\_MP.gen.m} provides the general information about the \code{SubjectFUN\_MP} element. \expand{cd:m:SubjectCON_MP:header}
+		}
+]
+
+¤%% ¡header!
+¤SubjectFUN_MP¤ < Subject (sub, ¤subject with functional multiplex data) is a subject with functional multiplex data (e.g. multiplex fMRI)¤.
+
+%%% ¡description!
+¤Subject with data for each brain region corresponding to L functional layers (e.g. activation timeseries obtaiend from fMRI or EEG).¤
+
+%%% ¡seealso!
+¤ImporterGroupSubjectFUN_MP_TXT, ExporterGroupSubjectFUN_MP_TXT, ImporterGroupSubjectFUN_MP_XLS, ExporterGroupSubjectFUN_MP_XLS
+\end{lstlisting}
+\begin{lstlisting}[
+	label={cd:m:SubjectFUN_MP:prop_update},
+	caption={
+		{\bf SubjectFUN\_MP element prop update.}
+		The \code{props\_update} section of the generator code for \fn{\_SubjectFUN\_MP.gen.m} updates the properties of the \code{Subject} element. This defines the core properties of the Subject. \expand{cd:m:SubjectCON_MP:prop_update}
+	}
+]
+¤%% ¡props_update!
+
+%%% ¡prop!
+NAME (constant, string) is the name of the subject.
+%%%% ¡default!
+¤'SubjectFUN_MP'¤
+
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the subject.
+%%%% ¡default!
+¤'Subject with data for each brain region corresponding to L functional layers (e.g. activation timeseries obtaiend from fMRI or EEG).'¤
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the subject.
+%%% ¡settings!
+¤'SubjectFUN_MP'¤
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the subject.
+%%%% ¡default!
+¤'SubjectFUN_MP ID'¤
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the subject.
+%%%% ¡default!
+¤'SubjectFUN_MP label'¤
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the subject.
+%%%% ¡default!
+¤'SubjectFUN_MP notes'¤
+
+%% ¡props!
+
+%%% ¡prop!
+BA (data, item) is a brain atlas.
+%%%% ¡settings!
+'BrainAtlas'
+
+%%% ¡prop!
+L (data, scalar) is the number of layers of subject data. ¥\circled{1}\circlednote{1}{Same as in note \circled{1} of \Coderef{cd:m:SubjectCON_MP:prop_update}.}¥
+%%%% ¡default!
+2
+
+%%% ¡prop!
+LAYERLABELS (metadata, stringlist) are the layer labels provided by the user. ¥\circled{2}\circlednote{2}{Same as in note \circled{2} of \Coderef{cd:m:SubjectCON_MP:prop_update}.}¥
+
+%%% ¡prop!
+ALAYERLABELS (query, stringlist) returns the processed layer labels. ¥\circled{3}\circlednote{3}{Same as in note \circled{3} of \Coderef{cd:m:SubjectCON_MP:prop_update}.}¥
+%%%% ¡calculate!
+value = sub.get('LAYERLABELS');
+
+%%% ¡prop!
+¤FUN_MP (data, cell) is a cell containing L matrices with each column corresponding to the time series of a brain region.¤
+%%%% ¡check_value!
+br_number = sub.get('BA').get('BR_DICT').get('LENGTH');
+¤num_layers = sub.get('L');
+check = (iscell(value) && isequal(length(value), num_layers)  && isequal( cellfun(@(v) size(v, 2), value), ones(1, num_layers) * br_number)) || (isempty(value) && br_number == 0); ¤ ¥\circled{4}\circlednote{4}{checks the size of each layer are equal to the number of brain regions. The size of each layer is the length of time series by the number of regions.}¥
+if check
+    msg = 'All ok!';
+else   
+    ¤msg = ['FUN_MP must be a cell with L matrices with the same number of columns as the number of brain regions (' int2str(br_number) ').'];¤
+end
+%%%% ¡gui! ¥\circled{5}\circlednote{5}{Same as in note \circled{7} \circled{8} \circled{9} \circled{10} of \Coderef{cd:m:SubjectCON_MP:prop_update}.}¥
+pr = PanelPropCell('EL', sub, 'PROP', SubjectFUN_MP.FUN_MP, ...
+    'TABLE_HEIGHT', s(40), ...
+    'XSLIDERSHOW', true, ...
+    'XSLIDERLABELS', sub.getCallback('ALAYERLABELS'), ...
+    'YSLIDERSHOW', false, ...
+    'ROWNAME', {'numbered'}, ...
+    'COLUMNNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
+    varargin{:});¤
+
+\end{lstlisting}
+
+\begin{lstlisting}[
+	label=cd:m:SubjectFUN_MP:tests,
+	caption={
+		{\bf SubjectFUN\_MP element tests.}
+		The \code{tests} section from the element generator \fn{\_SubjectFUN\_MP.gen.m}. \expand{cd:m:SubjectCON_MP:tests}
+	}
+]
+¤%% ¡tests!
+
+%%% ¡test!
+%%%% ¡name!
+GUI
+%%%% ¡probability!
+.01
+%%%% ¡code!
+im_ba = ImporterBrainAtlasXLS('FILE', ¤'aal90_atlas.xlsx'¤);
+ba = im_ba.get('BA');
+
+gr = Group('SUB_CLASS', ¤'SubjectFUN_MP'¤, 'SUB_DICT', IndexedDictionary('IT_CLASS', ¤'SubjectFUN_MP'¤));
+for i = 1:1:10 ¥\circled{1}\circlednote{1}{Same as in note \circled{1} \circled{2} \circled{3} of \Coderef{cd:m:SubjectCON_MP:tests}.}¥
+    sub = ¤SubjectFUN_MP¤( ...
+        'ID', [¤'SUB FUN_MP '¤ int2str(i)], ...
+        'LABEL', [¤'Subejct FUN_MP '¤ int2str(i)], ...
+        'NOTES', [¤'Notes on subject FUN_MP '¤ int2str(i)], ...
+        'BA', ba, ...
+        'L', 3, ...
+        'LAYERLABELS', {'L1' 'L2' 'L3'}, ...
+        ¤'FUN_MP', {rand(10, ba.get('BR_DICT').get('LENGTH')), rand(10, ba.get('BR_DICT').get('LENGTH')), rand(10, ba.get('BR_DICT').get('LENGTH'))} ...¤
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr.get('SUB_DICT').get('ADD', sub)
+end
+
+gui = GUIElement('PE', gr, 'CLOSEREQ', false);
+gui.get('DRAW')
+gui.get('SHOW')
+
+gui.get('CLOSE')¤
+\end{lstlisting}
+
+%%%%% %%%%% %%%%% %%%%% %%%%%
+\clearpage
+\section{Implementation of a subject with structural data}
+
+\subsection{subject with structural data (SubjectST)}
+
+We will start by implementing in detail \code{SubjectST}. The structural matrix can be obtained from sMRI data.
+
+\begin{lstlisting}[
+	label=cd:m:SubjectST:header,
+	caption={
+		{\bf SubjectST element header.}
+		The \code{header} section of the generator code for \fn{\_SubjectST.gen.m} provides the general information about the \code{SubjectST} element. \expand{cd:m:SubjectCON:header}
+		}
+]
+
+¤%% ¡header!
+¤SubjectST¤ < Subject (sub, ¤subject with structural data) is a subject with structural data (e.g. sMRI).¤
+
+%%% ¡description!
+¤Subject with structural data (e.g. cortical thickness obtaibed from strcutural MRI) for each brain region.¤
+
+%%% ¡seealso!
+¤ImporterGroupSubjectST_TXT, ExporterGroupSubjectST_TXT, ImporterGroupSubjectST_XLS, ExporterGroupSubjectST_XLS¤
+\end{lstlisting}
+
+\begin{lstlisting}[
+	label={cd:m:SubjectST:prop_update},
+	caption={
+		{\bf SubjectST element prop update.}
+		The \code{props\_update} section of the generator code for \fn{\_SubjectST.gen.m} updates the properties of the \code{Subject} element. \expand{cd:m:SubjectCON:prop_update}
+	}
+]
+¤%% ¡props_update!
+
+%%% ¡prop!
+NAME (constant, string) is the name of the subject.
+%%%% ¡default!
+¤'SubjectST'¤
+
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the subject.
+%%%% ¡default!
+¤'SubjectST with structural data (e.g. cortical thickness obtaibed from strcutural MRI) for each brain region.'¤
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the subject.
+%%% ¡settings!
+¤'SubjectST'¤
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the subject.
+%%%% ¡default!
+¤'SubjectST ID'¤
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the subject.
+%%%% ¡default!
+¤'SubjectST label'¤
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the subject.
+%%%% ¡default!
+¤'SubjectST notes'¤
+
+%% ¡props!
+
+%%% ¡prop!
+BA (data, item) is a brain atlas.
+%%%% ¡settings!
+'BrainAtlas'
+
+%%% ¡prop!
+¤ST (data, cvector) is a column vector with data for each brain region.¤
+%%%% ¡check_value!
+br_number = sub.get('BA').get('BR_DICT').get('LENGTH');
+¤check = (iscolumn(value) && isequal(size(value), [br_number, 1])) || (isempty(value) && br_number == 0);¤ ¥\circled{1}\circlednote{1}{checks the size of the row of \code{value} is equal to the number of brain regions. The number of column is 1.}¥¤
+if check
+    msg = 'All ok!';
+else   
+    ¤msg = ['ST must be a column vector with the same number of element as the brain regions (' int2str(br_number) ').'];¤
+end
+%%%% ¡gui! ¥\circled{2}\circlednote{2}{Same as in note \circled{4} of \Coderef{cd:m:SubjectCON:prop_update}.}¥
+pr = PanelPropMatrix('EL', sub, 'PROP', SubjectST.ST, ...
+    'ROWNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
+    ¤'COLUMNNAME', {}, ...¤
+    varargin{:});
+\end{lstlisting}
+\clearpage
+\begin{lstlisting}[
+	label=cd:m:SubjectST:tests,
+	caption={
+		{\bf SubjectST element tests.}
+		The \code{tests} section from the element generator \fn{\_SubjectST.gen.m}. \expand{cd:m:SubjectCON:tests}
+	}
+]
+¤%% ¡tests!
+
+%%% ¡test!
+%%%% ¡name!
+GUI
+%%%% ¡probability!
+.01
+%%%% ¡code!
+im_ba = ImporterBrainAtlasXLS('FILE', ¤'destrieux_atlas.xlsx'¤);
+ba = im_ba.get('BA');
+
+gr = Group('SUB_CLASS', ¤'SubjectST'¤, 'SUB_DICT', IndexedDictionary('IT_CLASS', ¤'SubjectST'¤));
+for i = 1:1:50
+    sub = SubjectST( ...
+        'ID', [¤'SUB ST '¤ int2str(i)], ...
+        'LABEL', [¤'Subejct ST '¤ int2str(i)], ...
+        'NOTES', [¤'Notes on subject ST '¤ int2str(i)], ...
+        'BA', ba, ...
+        ¤'ST', rand(ba.get('BR_DICT').get('LENGTH'), 1) ...¤ ¥\circled{1}\circlednote{1}{constructs the random adjacency matrix with size of the number of brain regions by 1.}¥¤
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr.get('SUB_DICT').get('ADD', sub)
+end
+
+gui = GUIElement('PE', gr, 'CLOSEREQ', false);
+gui.get('DRAW')
+gui.get('SHOW')
+
+gui.get('CLOSE')¤
+\end{lstlisting}
+
+%%%%% %%%%% %%%%% %%%%% %%%%%
+\clearpage
+\subsection{subject with structural multiplex data (SubjectST\_MP)}
+
+We will start by implementing in detail \code{SubjectST\_MP}. The structural matrix can be obtained from sMRI data.
+
+\begin{lstlisting}[
+	label=cd:m:SubjectST_MP:header,
+	caption={
+		{\bf SubjectST\_MP element header.}
+		The \code{header} section of the generator code for \fn{\_SubjectST\_MP.gen.m} provides the general information about the \code{SubjectST\_MP} element.\expand{cd:m:SubjectCON_MP:header}
+		}
+]
+
+¤%% ¡header!
+¤SubjectST_MP¤ < Subject (sub,¤ subject with structural multiplex data) is a subject with structural multiplex data (e.g. multiplex sMRI)¤.
+
+%%% ¡description!
+¤Subject with data for each brain region corresponding to L structural layers (e.g. cortical thickness obtained from structural MRI).¤
+
+%%% ¡seealso!
+¤ImporterGroupSubjectST_MP_TXT, ExporterGroupSubjectST_MP_TXT, ImporterGroupSubjectST_MP_XLS, ExporterGroupSubjectST_MP_XLS
+\end{lstlisting}
+\begin{lstlisting}[
+	label={cd:m:SubjectST_MP:prop_update},
+	caption={
+		{\bf SubjectST\_MP element prop update.}
+		The \code{props\_update} section of the generator code for \fn{\_SubjectST_MP.gen.m} updates the properties of the \code{Subject} element. \expand{cd:m:SubjectCON_MP:prop_update}
+	}
+]
+¤%% ¡props_update!
+
+%%% ¡prop!
+NAME (constant, string) is the name of the subject.
+%%%% ¡default!
+¤'SubjectST_MP'¤
+
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the subject.
+%%%% ¡default!
+¤'Subject with data for each brain region correspponding to L structural layers (e.g. cortical thickness obtained from structural MRI).'¤
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the subject.
+%%% ¡settings!
+¤'SubjectST_MP'¤
+
+%%% ¡prop!
+ID (data, string) is a few-letter code for the subject.
+%%%% ¡default!
+¤'SubjectST_MP ID'¤
+
+%%% ¡prop!
+LABEL (metadata, string) is an extended label of the subject.
+%%%% ¡default!
+¤'SubjectST_MP label'¤
+
+%%% ¡prop!
+NOTES (metadata, string) are some specific notes about the subject.
+%%%% ¡default!
+¤'SubjectST_MP notes'¤
+
+%% ¡props!
+
+%%% ¡prop!
+BA (data, item) is a brain atlas.
+%%%% ¡settings!
+'BrainAtlas'
+
+%%% ¡prop!
+L (data, scalar) is the number of layers of subject data. ¥\circled{1}\circlednote{1}{Same as in note \circled{1} of \Coderef{cd:m:SubjectCON_MP:prop_update}.}¥
+%%%% ¡default!
+2
+
+%%% ¡prop!
+LAYERLABELS (metadata, stringlist) are the layer labels provided by the user. ¥\circled{2}\circlednote{2}{Same as in note \circled{2} of \Coderef{cd:m:SubjectCON_MP:prop_update}.}¥
+
+%%% ¡prop!
+ALAYERLABELS (query, stringlist) returns the processed layer labels. ¥\circled{3}\circlednote{3}{Same as in note \circled{3} of \Coderef{cd:m:SubjectCON_MP:prop_update}.}¥
+%%%% ¡calculate!
+value = sub.get('LAYERLABELS');
+
+%%% ¡prop!
+¤ST_MP (data, cell) is a cell containing L vectors, each with data for each brain region.¤
+%%%% ¡check_value!
+br_number = sub.get('BA').get('BR_DICT').get('LENGTH');
+num_layers = sub.get('L');
+¤check = (iscell(value) && isequal(length(value), num_layers)  && isequal( cellfun(@(v) size(v, 1), value), ones(1, num_layers) * br_number)) || (isempty(value) && br_number == 0); ¤ ¥\circled{4}\circlednote{4}{checks the size of each layer are equal to the number of brain regions. The size of each layer is the number of regions by 1.}¥
+if check
+    msg = 'All ok!';
+else   
+    ¤msg = ['ST_MP must be a column vector with the same number of element as the brain regions (' int2str(br_number) ').'];¤
+end
+%%%% ¡gui! ¥\circled{5}\circlednote{5}{Same as in note \circled{7} \circled{8} \circled{9} \circled{10} of \Coderef{cd:m:SubjectCON_MP:prop_update}.}¥
+pr = PanelPropCell('EL', sub, 'PROP', ¤SubjectST_MP.ST_MP¤, ...
+    'TABLE_HEIGHT', s(40), ...
+    'XSLIDERSHOW', true, ...
+    'XSLIDERLABELS', sub.getCallback('ALAYERLABELS'), ...
+    'YSLIDERSHOW', false, ...
+    ¤'ROWNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
+    'COLUMNNAME', {}, ...¤
+    varargin{:});
+
+\end{lstlisting}
+
+\begin{lstlisting}[
+	label=cd:m:SubjectST_MP:tests,
+	caption={
+		{\bf SubjectST\_MP element tests.}
+		The \code{tests} section from the element generator \fn{\_SubjectST\_MP.gen.m}. \expand{cd:m:SubjectCON_MP:tests}
+	}
+]
+
+¤%% ¡tests!
+
+%%% ¡test!
+%%%% ¡name!
+GUI
+%%%% ¡probability!
+.01
+%%%% ¡code!
+im_ba = ImporterBrainAtlasXLS('FILE', ¤'destrieux_atlas.xlsx'¤);
+ba = im_ba.get('BA');
+
+gr = Group('SUB_CLASS', ¤'SubjectST_MP'¤, 'SUB_DICT', IndexedDictionary('IT_CLASS', ¤'SubjectST_MP'¤));
+for i = 1:1:10 ¥\circled{1}\circlednote{1}{Same as in note \circled{1} \circled{2} \circled{3} of \Coderef{cd:m:SubjectCON_MP:tests}.}¥
+    sub = SubjectST_MP( ...
+        'ID', [¤'SUB ST_MP '¤ int2str(i)], ...
+        'LABEL', [¤'Subejct ST_MP '¤ int2str(i)], ...
+        'NOTES', [¤'Notes on subject ST_MP '¤ int2str(i)], ...
+        'BA', ba, ...
+        'L', 3, ...
+        'LAYERLABELS', {'L1' 'L2' 'L3'}, ...
+        ¤'ST_MP', {rand(ba.get('BR_DICT').get('LENGTH'), 1), rand(ba.get('BR_DICT').get('LENGTH'), 1), rand(ba.get('BR_DICT').get('LENGTH'), 1)} ...¤
+        );
+    sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
+    sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
+    gr.get('SUB_DICT').get('ADD', sub)
+end
+
+gui = GUIElement('PE', gr, 'CLOSEREQ', false);
+gui.get('DRAW')
+gui.get('SHOW')
+
+gui.get('CLOSE')
+\end{lstlisting}
+\end{document}
