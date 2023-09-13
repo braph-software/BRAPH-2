@@ -103,11 +103,6 @@ gr = a.get('GR');
 data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').get('IT_LIST'), 'UniformOutput', false);
 data = cat(2, data_list{:})'; % correlation is a column based operation
 
-% % % ba = BrainAtlas();
-% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-% % %     ba = gr.get('SUB_DICT').getItem(1).get('BA');
-% % % end
-
 if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
     A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'), gr.get('COVARIATES'));
 else
@@ -116,11 +111,15 @@ end
 
 g = GraphWU( ...
     'ID', ['Graph ' gr.get('ID')], ...
-    'B', A ... % % %     'BAS', ba ...
+    'B', A ...
     );
 
 if ~isa(a.getr('TEMPLATE'), 'NoValue') % the analysis has a template
     g.set('TEMPLATE', a.get('TEMPLATE').memorize('G')) % the template is memorized
+end
+
+if a.get('GR').get('SUB_DICT').get('LENGTH')
+    g.set('NODELABELS', a.get('GR').get('SUB_DICT').get('IT', 1).get('BA').get('BR_DICT').get('KEYS'))
 end
 
 value = g;
