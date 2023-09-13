@@ -226,7 +226,9 @@ pr = PanelPropCell('EL', g, 'PROP', MultigraphBUT.A, ...
 %%% ¡prop!
 PARTITIONS (result, rvector) returns the number of layers in the partitions of the graph.
 %%%% ¡calculate!
-value = ones(1, g.get('LAYERNUMBER'));
+l = g.get('LAYERNUMBER');
+thresholds = g.get('THRESHOLDS');
+value = ones(1, length(thresholds)) * l / length(thresholds);
 
 %%% ¡prop!
 ALAYERLABELS (query, stringlist) returns the layer labels for A.
