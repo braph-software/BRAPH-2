@@ -1817,19 +1817,25 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         end
     end
     methods (Static) % BRAPH2 save/load elements
-        function saved_out = save(el, filename)
+        function saved_out = save(el, filename, waitbar)
             %SAVE saves BRAPH2 element as b2 file.
             %
             % SAVED = SAVE(EL, FILEMANE) saves the element EL in the file FILENAME.
             %
             % SAVED = SAVE(EL) opens a dialog box to select the file.
             %
+            % SAVED = SAVE(EL, [], TRUE) shows the waitbar during the saving process.
+            %
             % It saves a deep copy of EL to reinitialize evanescent properties (e.g.,
             %  handles of figures). 
             %
             % See also load, uiputfile.
             
-            if nargin < 2
+            if nargin < 3
+                waitbar = false;
+            end
+            
+            if nargin < 2 || isempty(filename)
                 % select file
                 [file, path, filterindex] = uiputfile(BRAPH2.EXT_ELEMENT, ['Select the ' el.get('NAME') ' file.']);
                 % save file
@@ -1841,6 +1847,10 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             end
             
             if ~isempty(filename)
+                
+                wb = braph2waitbar(waitbar, .5, 'Saving file (this might take a while) ...'); 
+                drawnow()
+
                 el = el.copy();
                 build = BRAPH2.BUILD;
                 matlab_release = ver('MATLAB').Version;
@@ -1848,6 +1858,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 save(filename, 'el', 'build', 'matlab_release', 'matlab_release_details');
                 
                 saved = true;
+                
+                braph2waitbar(wb, 'close')
             else
                 saved = false;
             end
@@ -1856,7 +1868,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 saved_out = saved;
             end
         end
-        function [el, build, matlab_release, matlab_release_details] = load(filename)
+        function [el, build, matlab_release, matlab_release_details] = load(filename, waitbar)
             %LOAD loads a BRAPH2 element from a b2 file.
             %
             % EL = LOAD(FILENAME) loads the element EL from the file b2 FILENAME. 
@@ -1864,12 +1876,18 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %
             % EL = LOAD() opens a dialog box to select the file to be loaded. 
             %
+            % EL = LOAD([], TRUE) determines whether to show the waitbar.
+            %
             % [EL, BUILD, R, RD] = LOAD() returns also the BRAPH2 BUILD, the MatLab
             %  release number, and the details of the MatLab release RD.
             %
             % See also save, uigetfile.
             
-            if nargin < 1
+            if nargin < 2
+                waitbar = false;
+            end
+            
+            if nargin < 1 || isempty(filename)
                 % select file
                 [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, 'Select the element file.');
                 if filterindex
@@ -1880,11 +1898,17 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             end
             
             if isfile(filename)
+
+                wb = braph2waitbar(waitbar, .5, 'Loading file (this might take a while) ...'); 
+                drawnow()
+                
                 tmp = load(filename, '-mat', 'el', 'build', 'matlab_release', 'matlab_release_details');
                 el = tmp.el;
                 build  = tmp.build;
                 matlab_release = tmp.matlab_release;
                 matlab_release_details = tmp.matlab_release_details;
+                
+                braph2waitbar(wb, 'close')                
             else
                 el = false;
                 build  = [];

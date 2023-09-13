@@ -428,7 +428,7 @@ function cb_open(~, ~)
     [file, path, filterindex] = uigetfile(BRAPH2.EXT_ELEMENT, ['Select the ' pf.get('NAME') ' file.']);
     if filterindex
         filename = fullfile(path, file);
-        tmp_el = Element.load(filename);
+        tmp_el = Element.load(filename, gui.get('WAITBAR'));
         % % % %TODO: add checks for BRAPH2 version
         if isa(tmp_el, 'PanelFig')
             tmp_gui = GUIFig('PF', tmp_el, 'FILE', filename, 'WAITBAR', gui.get('WAITBAR'));
@@ -443,7 +443,7 @@ function cb_save(~, ~)
     filename = gui.get('FILE');
     if isfile(filename)
         pf = gui.get('PF');
-        Element.save(pf, filename)
+        Element.save(pf, filename, gui.get('WAITBAR'))
     else
         cb_saveas();
     end
@@ -455,7 +455,7 @@ function cb_saveas(~, ~)
     % save file
     if filterindex
         filename = fullfile(path, file);
-        Element.save(pf, filename)
+        Element.save(pf, filename, gui.get('WAITBAR'))
         gui.set('FILE', filename)
     end
 end
