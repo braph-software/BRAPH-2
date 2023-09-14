@@ -93,7 +93,7 @@ OrdMxWU()
 gr = a.get('GR');
 subjects_number = gr.get('SUB_DICT').get('LENGTH');
 
-A_conmp = cell(1, 2);
+A_con_omp = cell(1, 2);
 for i = 1:1:subjects_number
     sub = gr.get('SUB_DICT').get('IT', i);
     CON_MP = sub.getr('CON_MP');
@@ -103,26 +103,26 @@ for i = 1:1:subjects_number
         data = CON_MP{j};
         
         if i == 1
-            A_conmp(j) = {data};
+            A_con_omp(j) = {data};
         else
-            A_conmp(j) = {A_conmp{j} + data};
+            A_con_omp(j) = {A_con_omp{j} + data};
         end
     end
 end
 
-% % % ba = BrainAtlas();
-% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && subjects_number > 0
-% % %     ba = gr.get('SUB_DICT').get('IT', 1).get('BA');
-% % % end
-
-L = length(A_conmp);
+L = length(A_con_omp);
 g = OrdMxWU( ...
     'ID', ['Graph ' gr.get('ID')], ...
-    'B', cellfun(@(a) a/subjects_number, A_conmp, 'UniformOutput', false) ... % % % 'LAYERTICKS', [1:1:L], ... % % % 'LAYERLABELS', cell2str(cellfun(@(x) ['L' num2str(x)], num2cell([1:1:L]), 'UniformOutput', false)), ... % % % 'BAS', ba ...
+    'B', cellfun(@(a) a / subjects_number, A_con_omp, 'UniformOutput', false), ... % % % 'LAYERTICKS', [1:1:L]
+    'LAYERLABELS', cellfun(@(x) ['L' num2str(x)], num2cell([1:1:L]), 'UniformOutput', false) ...
     );
 
 if ~isa(a.getr('TEMPLATE'), 'NoValue') % the analysis has a template
     g.set('TEMPLATE', a.get('TEMPLATE').memorize('G')) % the template is memorized
+end
+
+if a.get('GR').get('SUB_DICT').get('LENGTH')
+    g.set('NODELABELS', a.get('GR').get('SUB_DICT').get('IT', 1).get('BA').get('BR_DICT').get('KEYS'))
 end
 
 value = g;
