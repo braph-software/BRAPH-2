@@ -160,18 +160,18 @@ end
 A{1} = data{1} / gr.get('SUB_DICT').get('LENGTH');
 A{2} = data{2} / gr.get('SUB_DICT').get('LENGTH');
 
-% % % ba = BrainAtlas();
-% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-% % %     ba = gr.get('SUB_DICT').get('IT', 1).get('BA');
-% % % end
-
 g = MultiplexWU( ...
     'ID', ['Graph ' gr.get('ID')], ...
-    'B', A ... % % % 'LAYERTICKS', [1:1:L], ... % % % 'LAYERLABELS', cell2str({'CON', 'FUN'}), ... % % % 'BAS', ba ...
+    'B', A, ...
+    'LAYERLABELS', {'CON', 'FUN'} ...
     );
 
 if ~isa(a.getr('TEMPLATE'), 'NoValue') % the analysis has a template
     g.set('TEMPLATE', a.get('TEMPLATE').memorize('G')) % the template is memorized
+end
+
+if a.get('GR').get('SUB_DICT').get('LENGTH')
+    g.set('NODELABELS', a.get('GR').get('SUB_DICT').get('IT', 1).get('BA').get('BR_DICT').get('KEYS'))
 end
 
 value = g;
