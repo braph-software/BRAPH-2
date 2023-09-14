@@ -160,30 +160,24 @@ for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
         data{1} = data{1} + sub.get('CON');
         data{2} = data{2} + A_fun;
     end
-    
-% % %     for i = 1:length(densities)
-% % %         layerlabels = [...
-% % %             layerlabels, ['C ' num2str(densities(i)) '%'], ...
-% % %             ['F ' num2str(densities(i)) '%']];
-% % %     end   
 end
 
 A{1} = data{1} / gr.get('SUB_DICT').get('LENGTH');
 A{2} = data{2} / gr.get('SUB_DICT').get('LENGTH');
-
-% % % ba = BrainAtlas();
-% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-% % %     ba = gr.get('SUB_DICT').get('IT', 1).get('BA');
-% % % end
                     
 g = MultiplexBUD( ...
     'ID', ['Graph ' gr.get('ID')], ...
     'B', A, ...
-    'DENSITIES', densities ... % % % 'LAYERTICKS', densities, ... % % % 'LAYERLABELS', cell2str(layerlabels), ... % % % 'BAS', ba ...
+    'DENSITIES', densities, ... % % % 'LAYERTICKS', densities
+    'LAYERLABELS', {'CON', 'FUN'} ...
     );
 
 if ~isa(a.getr('TEMPLATE'), 'NoValue') % the analysis has a template
     g.set('TEMPLATE', a.get('TEMPLATE').memorize('G'))  % the template is memorized - overwrite densities
+end
+
+if a.get('GR').get('SUB_DICT').get('LENGTH')
+    g.set('NODELABELS', a.get('GR').get('SUB_DICT').get('IT', 1).get('BA').get('BR_DICT').get('KEYS'))
 end
 
 value = g;
