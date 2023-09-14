@@ -111,14 +111,9 @@ MultiplexBUT()
 gr = a.get('GR');
 data_list = cellfun(@(x) x.get('ST_MP'), gr.get('SUB_DICT').get('IT_LIST'), 'UniformOutput', false);
 
-% % % atlas = BrainAtlas();
-% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-% % %     atlas = gr.get('SUB_DICT').get('IT', 1).get('BA');
-% % % end
-
 if isempty(data_list)
-    layerlabels = {'', ''};
     A ={[], []};
+    L = 2;
 else
     L = gr.get('SUB_DICT').get('IT', 1).get('L');  % number of layers
     br_number = gr.get('SUB_DICT').get('IT', 1).get('BA').get('BR_DICT').get('LENGTH');  % number of regions
@@ -152,16 +147,19 @@ thresholds = a.get('THRESHOLDS'); % this is a vector
 g = MultiplexBUT( ...
     'ID', ['Graph ' gr.get('ID')], ...
     'B', A, ...
-    'THRESHOLDS', thresholds ...  % % % 'LAYERTICKS', thresholds, ... % % % 'LAYERLABELS', cell2str(layerlabels), ... % % % 'BAS', atlas ...
+    'THRESHOLDS', thresholds, ...  % % % 'LAYERTICKS', thresholds, ... 
+    'LAYERLABELS', cellfun(@(x) ['L' num2str(x)], num2cell([1:1:L]), 'UniformOutput', false) ...
     );
 
 if ~isa(a.getr('TEMPLATE'), 'NoValue') % the analysis has a template
     g.set('TEMPLATE', a.get('TEMPLATE').memorize('G')) % the template is memorized - overwrite thresholds
 end
 
+if a.get('GR').get('SUB_DICT').get('LENGTH')
+    g.set('NODELABELS', a.get('GR').get('SUB_DICT').get('IT', 1).get('BA').get('BR_DICT').get('KEYS'))
+end
+
 value = g;
-%%%% ¡gui_!
-% % % pr = PPAnalyzeGroupMP_G('EL', a, 'PROP', AnalyzeGroup_ST_MP_BUT.G, 'WAITBAR', true, varargin{:});
 
 %% ¡props!
 
