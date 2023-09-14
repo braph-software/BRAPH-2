@@ -112,8 +112,8 @@ gr = a.get('GR');
 data_list = cellfun(@(x) x.get('ST_MP'), gr.get('SUB_DICT').get('IT_LIST'), 'UniformOutput', false);
 
 if isempty(data_list)
-    layerlabels = {'', ''};
     A ={[], []};
+    L = 2;
 else
     L = gr.get('SUB_DICT').get('IT', 1).get('L');  % number of layers
     br_number = gr.get('SUB_DICT').get('IT', 1).get('BA').get('BR_DICT').get('LENGTH');  % number of regions
@@ -127,13 +127,6 @@ else
         data(i) = {data_layer};
     end
     
-    layerlabels = {};
-    A = cell(1, L);
-    densities = a.get('DENSITIES'); 
-    for i = 1:1:length(densities)
-        layerlabels = [layerlabels, cellfun(@(x) ['L' num2str(x) ' ' num2str(densities(i)) '%'], num2cell(1:L), 'UniformOutput', false)];
-    end
-    
     for i = 1:1:L
         if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
             A(i) = {Correlation.getAdjacencyMatrix(data{i}, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'), gr.get('COVARIATES'))};
@@ -144,24 +137,22 @@ else
 end
 densities = a.get('DENSITIES'); % this is a vector
 
-% % % ba = BrainAtlas();
-% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-% % %     ba = gr.get('SUB_DICT').get('IT', 1).get('BA');
-% % % end
-
 g = MultiplexBUD( ...
     'ID', ['Graph ' gr.get('ID')], ...
     'B', A, ...
-    'DENSITIES', densities ...  % % % 'LAYERTICKS', densities, ... % % % 'LAYERLABELS', cell2str(layerlabels), ... % % % 'BAS', ba ...
+    'DENSITIES', densities, ...  % % % 'LAYERTICKS', densities, ... 
+    'LAYERLABELS', cellfun(@(x) ['L' num2str(x)], num2cell([1:1:L]), 'UniformOutput', false) ...
     );
 
 if ~isa(a.getr('TEMPLATE'), 'NoValue') % the analysis has a template
     g.set('TEMPLATE', a.get('TEMPLATE').memorize('G')) % the template is memorized - overwrite densities
 end
 
+if a.get('GR').get('SUB_DICT').get('LENGTH')
+    g.set('NODELABELS', a.get('GR').get('SUB_DICT').get('IT', 1).get('BA').get('BR_DICT').get('KEYS'))
+end
+
 value = g;
-%%%% ¡gui_!
-% % % pr = PPAnalyzeGroupMP_G('EL', a, 'PROP', AnalyzeGroup_ST_MP_BUD.G, 'WAITBAR', true, varargin{:});
 
 %% ¡props!
 
