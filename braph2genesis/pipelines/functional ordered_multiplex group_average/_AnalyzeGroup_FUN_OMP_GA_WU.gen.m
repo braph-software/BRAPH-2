@@ -126,7 +126,7 @@ subjects_number = gr.get('SUB_DICT').get('LENGTH');
 T = a.get('REPETITION');
 fmin = a.get('F_MIN');
 fmax = a.get('F_MAX');
-A_fun = cell(1, 2);
+A_fun_omp = cell(1, 2);
 for i = 1:1:subjects_number
 	sub = gr.get('SUB_DICT').get('IT', i);
     FUN_MP = sub.getr('FUN_MP');
@@ -147,26 +147,26 @@ for i = 1:1:subjects_number
         A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
         
         if i == 1
-            A_fun(j) = {A};
+            A_fun_omp(j) = {A};
         else
-            A_fun(j) = {A_fun{j} + A};
+            A_fun_omp(j) = {A_fun_omp{j} + A};
         end
     end
 end
 
-% % % ba = BrainAtlas();
-% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && subjects_number > 0
-% % %     ba = gr.get('SUB_DICT').get('IT', 1).get('BA');
-% % % end
-
-L = length(A_fun);
+L = length(A_fun_omp);
 g = OrdMxWU( ...
     'ID', ['Graph ' gr.get('ID')], ...
-    'B', cellfun(@(a) a/subjects_number, A_fun, 'UniformOutput', false) ... % % % 'LAYERTICKS', [1:1:L], ... % % % 'LAYERLABELS', cell2str(cellfun(@(x) ['L' num2str(x)], num2cell([1:1:L]), 'UniformOutput', false)), ... % % % 'BAS', ba ...
+    'B', cellfun(@(a) a / subjects_number, A_fun_omp, 'UniformOutput', false), ... % % % 'LAYERTICKS', [1:1:L]
+    'LAYERLABELS', cellfun(@(x) ['L' num2str(x)], num2cell([1:1:L]), 'UniformOutput', false) ...
     );
 
 if ~isa(a.getr('TEMPLATE'), 'NoValue') % the analysis has a template
     g.set('TEMPLATE', a.get('TEMPLATE').memorize('G')) % the template is memorized
+end
+
+if a.get('GR').get('SUB_DICT').get('LENGTH')
+    g.set('NODELABELS', a.get('GR').get('SUB_DICT').get('IT', 1).get('BA').get('BR_DICT').get('KEYS'))
 end
 
 value = g;
