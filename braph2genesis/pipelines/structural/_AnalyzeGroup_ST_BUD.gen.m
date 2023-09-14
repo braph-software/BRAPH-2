@@ -106,14 +106,8 @@ G (result, item) is the graph obtained from this analysis.
 'MultigraphBUD'
 %%%% ¡calculate!
 gr = a.get('GR');
-% % % node_labels = '';
 data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').get('IT_LIST'), 'UniformOutput', false);
 data = cat(2, data_list{:})'; % correlation is a column based operation
-
-% % % atlas = BrainAtlas();
-% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0
-% % %     atlas = gr.get('SUB_DICT').getItem(1).get('BA');
-% % % end
 
 if any(strcmp(a.get('CORRELATION_RULE'), {Correlation.PEARSON_CV, Correlation.SPEARMAN_CV}))
 	A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'), gr.get('COVARIATES'));
@@ -126,11 +120,16 @@ densities = a.get('DENSITIES'); % this is a vector
 g = MultigraphBUD( ...
     'ID', ['Graph ' gr.get('ID')], ...
     'B', A, ...
-    'DENSITIES', densities ... % % %     'LAYERTICKS', densities, ... % % %     'LAYERLABELS', cell2str(cellfun(@(x) [num2str(x) '%'], num2cell(densities), 'UniformOutput', false)), ... % % %     'BAS', atlas ...
+    'DENSITIES', densities, ... 
+    'LAYERLABELS', cellfun(@(x) [num2str(x) '%'], num2cell(densities), 'UniformOutput', false) ...
     );
 
 if ~isa(a.getr('TEMPLATE'), 'NoValue') % the analysis has a template
     g.set('TEMPLATE', a.get('TEMPLATE').memorize('G')) % the template is memorized - overwrite densities
+end
+
+if a.get('GR').get('SUB_DICT').get('LENGTH')
+    g.set('NODELABELS', a.get('GR').get('SUB_DICT').get('IT', 1).get('BA').get('BR_DICT').get('KEYS'))
 end
 
 value = g;
