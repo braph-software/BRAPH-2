@@ -225,7 +225,7 @@ pr = PanelPropCell('EL', g, 'PROP', MultigraphBUD.A, ...
     varargin{:});
 
 %%% ¡prop!
-PARTITIONS (result, rvector) returns the number of layers in the partitions of the graph.
+PARTITIONS (result, rvector) returns the number of layers (1) for each partition (density) of the graph.
 %%%% ¡calculate!
 l = g.get('LAYERNUMBER');
 densities = g.get('DENSITIES');

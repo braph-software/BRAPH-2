@@ -267,7 +267,7 @@ pr = PanelPropCell('EL', g, 'PROP', MultilayerBUT.A, ...
     varargin{:});
 
 %%% ¡prop!
-PARTITIONS (result, rvector) returns the number of layers in the partitions of the graph.
+PARTITIONS (result, rvector) returns the number of layers for each partition (threshold) of the graph.
 %%%% ¡calculate!
 l = g.get('LAYERNUMBER');
 thresholds = g.get('THRESHOLDS');

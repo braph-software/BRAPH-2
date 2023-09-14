@@ -244,11 +244,6 @@ pr = PanelPropCell('EL', g, 'PROP', MultilayerWU.A, ...
     varargin{:});
 
 %%% ¡prop!
-PARTITIONS (result, rvector) returns the number of layers in the partitions of the graph.
-%%%% ¡calculate!
-value = ones(1, g.get('LAYERNUMBER'));
-
-%%% ¡prop!
 ALAYERLABELS (query, stringlist) returns the layer labels to be used by the slider.
 %%%% ¡calculate!
 alayerlabels = g.get('LAYERLABELS');
