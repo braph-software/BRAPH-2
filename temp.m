@@ -699,7 +699,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 % assert(check_graphics(f_settings, 'figure'))
 
 %% GUIFig, PanelFig, Settings, SettingsPosition, PanelPropItem, SettingsPositionPP, ViewPP, SettingsAxis, SettingsAxisPP, SettingsAmbient, SettingsAmbientPP, SettingsSurface, SettingsSurfacePP
-% el_class_list = {'PanelPropIDictTable'}; % {'Settings' 'SettingsPosition' 'PanelFig' 'GUIFig' 'GTA_IT' 'PanelPropItem' 'SettingsPositionPP' 'ViewPP'};
+% el_class_list = {'GUIElement'}; % {'Settings' 'SettingsPosition' 'PanelFig' 'GUIFig' 'GTA_IT' 'PanelPropItem' 'SettingsPositionPP' 'ViewPP'};
 % for i = 1:1:length(el_class_list)
 %     el_class = el_class_list{i};
 %     el_path = '/src/gui/';
@@ -1179,7 +1179,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     eval(['test_' el_class])
 % end
 
-% el_class_list = {'AnalyzeGroup_ST_WU'} % {'AnalyzeGroup_ST_WU' 'AnalyzeGroup_ST_BUD' 'AnalyzeGroup_ST_BUT'}
+% el_class_list = {'AnalyzeGroup_ST_BUD'} % {'AnalyzeGroup_ST_WU' 'AnalyzeGroup_ST_BUD' 'AnalyzeGroup_ST_BUT'}
 % for i = 1:1:length(el_class_list)
 %     el_class = el_class_list{i};
 %     el_path = '/pipelines/structural';
@@ -1209,7 +1209,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     gr.get('SUB_DICT').get('ADD', sub)
 % end
 % 
-% a = AnalyzeGroup_ST_WU('GR', gr, 'CORRELATION_RULE', Correlation.PEARSON);
+% a = AnalyzeGroup_ST_BUD('GR', gr, 'CORRELATION_RULE', Correlation.PEARSON);
 % 
 % gui = GUIElement('PE', a, 'CLOSEREQ', false);
 % gui.get('DRAW')
@@ -1348,17 +1348,17 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     eval(['test_' el_class])
 % end
 
-% el_class_list = {'AnalyzeGroup_CON_FUN_MP_GA_BUD'} % {'AnalyzeGroup_CON_FUN_MP_GA_WU' 'AnalyzeGroup_CON_FUN_MP_GA_BUD'}
-% for i = 1:1:length(el_class_list)
-%     el_class = el_class_list{i};
-%     el_path = '/pipelines/connectivity-functional multiplex group_average';
-%     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
-%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-%     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-%     create_layout([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-%     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
-%     eval(['test_' el_class])
-% end
+el_class_list = {'AnalyzeGroup_CON_FUN_MP_GA_BUD'} % {'AnalyzeGroup_CON_FUN_MP_GA_WU' 'AnalyzeGroup_CON_FUN_MP_GA_BUD'}
+for i = 1:1:length(el_class_list)
+    el_class = el_class_list{i};
+    el_path = '/pipelines/connectivity-functional multiplex group_average';
+    delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_layout([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    eval(['test_' el_class])
+end
 
 %% AnalyzeEnsemble
 
@@ -1565,22 +1565,22 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 % gui.get('SHOW')
 
 %% Pipelines Analysis Group
-% im = ImporterPipelineBRAPH2(...
-%     'FILE', [fileparts(which('braph2')) filesep 'pipelines' filesep 'structural' filesep 'pipeline_structural_comparison_wu.braph2'], ...
-%     'WAITBAR', true ...
-%     ); 
-% pip = im.get('PIP');
-
+% % im = ImporterPipelineBRAPH2(...
+% %     'FILE', [fileparts(which('braph2')) filesep 'pipelines' filesep 'structural' filesep 'pipeline_structural_comparison_wu.braph2'], ...
+% %     'WAITBAR', true ...
+% %     ); 
+% % pip = im.get('PIP');
+% 
 % pip = Element.load('ST_WU.b2');
-pip = Element.load('ST_WU_a1_a2.b2');
-
-gui = GUIElement( ...
-    'PE', pip, ...
-    'WAITBAR', true, ...
-    'CLOSEREQ', false ...
-    );
-gui.get('DRAW')
-gui.get('SHOW')
-
-% a1 = pip.get('PS_DICT').get('IT', 3).get('PC_DICT').get('IT', 1).get('EL')
-% a1g = pip.get('PS_DICT').get('IT', 3).get('PC_DICT').get('IT', 1).get('EL').get('G')
+% % pip = Element.load('ST_WU_a1_a2.b2');
+% 
+% gui = GUIElement( ...
+%     'PE', pip, ...
+%     'WAITBAR', true, ...
+%     'CLOSEREQ', false ...
+%     );
+% gui.get('DRAW')
+% gui.get('SHOW')
+% 
+% % a1 = pip.get('PS_DICT').get('IT', 3).get('PC_DICT').get('IT', 1).get('EL')
+% % a1g = pip.get('PS_DICT').get('IT', 3).get('PC_DICT').get('IT', 1).get('EL').get('G')
