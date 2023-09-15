@@ -1,4 +1,4 @@
-%% Pipeline Connectivity Classification
+%% Pipeline Classification Training-Test Split Connectivity Data
 
 % This is the pipeline script to train a multi-layer perceptron classifier using connectivity data.
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
@@ -24,5 +24,5 @@ d_split3 = NNDatasetSplit('D', NNDataset('DP_CLASS', 'NNDataPoint_CON_CLA', 'DP_
 nn = NNClassifierMLP('D', NNDatasetCombine('D_LIST', {d_split1.get('D_LIST_IT', 1), d_split2.get('D_LIST_IT', 1), d_split3.get('D_LIST_IT', 1)}).get('D'), 'LAYERS', [20 20]); % Train Neural Network % Trained Neural Network
 
 %% NN Evaluator
-nne_training = NNClassifier_Evaluator('D', NNDatasetCombine('D_LIST', {d_split1.get('D_LIST_IT', 1), d_split2.get('D_LIST_IT', 1), d_split3.get('D_LIST_IT', 1)}).get('D'), 'NN', nn); % Evaluate on Training Dataset % Training Dataset Evaluation
-nne_test = NNClassifier_Evaluator('D', NNDatasetCombine('D_LIST', {d_split1.get('D_LIST_IT', 2), d_split2.get('D_LIST_IT', 2), d_split3.get('D_LIST_IT', 2)}).get('D'), 'NN', nn); % Evaluate on Test Dataset % Test Dataset Evaluation
+nne_training = NNClassifierMLP_Evaluator('D', NNDatasetCombine('D_LIST', {d_split1.get('D_LIST_IT', 1), d_split2.get('D_LIST_IT', 1), d_split3.get('D_LIST_IT', 1)}).get('D'), 'NN', nn); % Evaluate on Training Dataset % Training Dataset Evaluation
+nne_test = NNClassifierMLP_Evaluator('D', NNDatasetCombine('D_LIST', {d_split1.get('D_LIST_IT', 2), d_split2.get('D_LIST_IT', 2), d_split3.get('D_LIST_IT', 2)}).get('D'), 'NN', nn); % Evaluate on Test Dataset % Test Dataset Evaluation

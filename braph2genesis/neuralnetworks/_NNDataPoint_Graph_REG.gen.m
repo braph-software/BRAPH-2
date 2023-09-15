@@ -286,3 +286,12 @@ for index = 1:1:gr.get('SUB_DICT').get('LENGTH')
         'NNDataPoint_Graph_REG does not construct the dataset correctly. The input value is not derived correctly.' ...
         )
 end
+
+%%% ¡test!
+%%%% ¡name!
+Example script for binary undirected graph (GraphBUT) using connectivity data
+%%%% ¡code!
+if ~isfile([fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS' filesep 'atlas.xlsx'])
+    test_NNDataPoint_CON_REG % create example files
+end
+example_NNCV_CON_BUT_REG

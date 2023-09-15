@@ -71,6 +71,11 @@ NN_TEMPLATE (parameter, item) is the neural network template to set all neural n
 'NNBase'
 
 %%% ¡prop!
+NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.
+%%%% ¡settings!
+'NNEvaluator'
+
+%%% ¡prop!
 DSP (result, item) is a dataset splitter.
 %%%% ¡settings!
 'NNDatasetSplit'
@@ -115,12 +120,12 @@ SOLVER (parameter, option) is an option for the solver.
 {'adam' 'sgdm' 'rmsprop'}
 
 %%% ¡prop!
-VERBOSE (parameter, logical) is an indicator to display training progress information.
+VERBOSE (metadata, logical) is an indicator to display training progress information.
 %%%% ¡default!
 false
 
 %%% ¡prop!
-PLOT_TRAINING (parameter, option) determines whether to plot the training progress.
+PLOT_TRAINING (metadata, option) determines whether to plot the training progress.
 %%%% ¡settings!
 {'none' 'training-progress'}
 

@@ -47,11 +47,11 @@ d_training = d_split.get('D_LIST_IT', 1);
 d_test = d_split.get('D_LIST_IT', 2);
 
 %% Create a MLP regressor with training set
-nn = NNRegressorMLP('D', d_training, 'LAYERS', [20 20], 'P', 5);
+nn = NNRegressorMLP('D', d_training, 'LAYERS', [20 20]);
 nn.get('TRAIN');
 
 %% Evaluate the regressor with the test set
-nne_test = NNRegressor_Evaluator('D', d_test, 'NN', nn);
+nne_test = NNRegressorMLP_Evaluator('D', d_test, 'NN', nn, 'P', 2);
 corr_coeff = nne_test.get('CORR');
 coeff_determination = nne_test.get('DET');
 mae = nne_test.get('MAE');

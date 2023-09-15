@@ -1,9 +1,9 @@
 %% ¡header!
-NNClassifier_Evaluator < NNEvaluator (nne, neural network evaluator for classification) evaluates the performance of a neural network classifier with a given dataset.
+NNClassifierMLP_Evaluator < NNEvaluator (nne, neural network evaluator for classification) evaluates the performance of a multi-layer perceptron classifier with a given dataset.
 
 %%% ¡description!
-A neural network evaluator for classifier (NNClassifier_Evaluator) evaluates the performance of a neural network classifier with a given dataset.
-NNClassifier_Evaluator evaluates the performance of the trained classifier with a given dataset in terms of various classification metrics (e.g., confusion matrix, area under the receiver operating characteristic curve).
+A neural network evaluator for multi-layer perceptron classifier (NNClassifierMLP_Evaluator) evaluates the performance of a multi-layer perceptron classifier with a given dataset.
+NNClassifierMLP_Evaluator evaluates the performance of the trained classifier with a given dataset in terms of various classification metrics (e.g., confusion matrix, area under the receiver operating characteristic curve).
 
 %%% ¡seealso!
 NNDataPoint_CON_CLA, NNClassifierMLP
@@ -13,32 +13,32 @@ NNDataPoint_CON_CLA, NNClassifierMLP
 %%% ¡prop!
 NAME (constant, string) is the name of the neural network evaluator for the classification task.
 %%%% ¡default!
-'NNClassifier_Evaluator'
+'NNClassifierMLP_Evaluator'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the neural network evaluator for the classification task.
 %%%% ¡default!
-'A neural network evaluator for classifier (NNClassifier_Evaluator) evaluates the performance of a neural network classifier with a given dataset. NNClassifier_Evaluator evaluates the performance of the trained classifier with a given dataset in terms of various classification metrics (e.g., confusion matrix, area under the receiver operating characteristic curve).'
+'A neural network evaluator for multi-layer perceptron classifier (NNClassifierMLP_Evaluator) evaluates the performance of a multi-layer perceptron classifier with a given dataset. NNClassifierMLP_Evaluator evaluates the performance of the trained classifier with a given dataset in terms of various classification metrics (e.g., confusion matrix, area under the receiver operating characteristic curve).'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the neural network evaluator for the classification task.
 %%%% ¡settings!
-'NNClassifier_Evaluator'
+'NNClassifierMLP_Evaluator'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the neural network evaluator for the classification task.
 %%%% ¡default!
-'NNClassifier_Evaluator ID'
+'NNClassifierMLP_Evaluator ID'
 
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the neural network evaluator for the classification task.
 %%%% ¡default!
-'NNClassifier_Evaluator label'
+'NNClassifierMLP_Evaluator label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the neural network evaluator for the classification task.
 %%%% ¡default!
-'NNClassifier_Evaluator notes'
+'NNClassifierMLP_Evaluator notes'
     
 %%% ¡prop!
 NN (data, item) contains a trained neural network classifier.
@@ -99,9 +99,21 @@ else
 end
 
 %%% ¡prop!
+P (parameter, scalar) is the permutation number.
+%%%% ¡default!
+1e+2
+%%%% ¡check_prop!
+check = value > 0 && value == round(value);
+
+%%% ¡prop!
+PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
+%%%% ¡calculate!
+value = randi(intmax('uint32'), 1, nne.get('P'));
+
+%%% ¡prop!
 FEATURE_IMPORTANCE (result, cell) quantifies the average significance and impact of individual input features within neural network models. Various techniques, such as permutation feature importance for MLPs and gradient-based analysis for CNNs, can be applied to quantify this aspect.
 %%%% ¡calculate!
-all_fi = nne.get('NN').get('FEATURE_IMPORTANCE', nne.get('D'));
+all_fi = nne.get('NN').get('FEATURE_IMPORTANCE', nne.get('D'), nne.get('P'), nne.get('PERM_SEEDS'));
 if isempty(cell2mat(all_fi))
     value = {};
 else
@@ -118,7 +130,7 @@ end
 
 %%% ¡test!
 %%%% ¡name!
-evaluate a classifier with the example data
+Evaluate a classifier with the example data
 %%%% ¡code!
 
 % ensure the example data is generated
@@ -195,7 +207,7 @@ d = NNDatasetCombine('D_LIST', {d1, d2}).get('D');
 
 nn = NNClassifierMLP('D', d, 'LAYERS', [10 10 10]);
 nn.get('TRAIN');
-nne = NNClassifier_Evaluator('NN', nn, 'D', d);
+nne = NNClassifierMLP_Evaluator('NN', nn, 'D', d);
 
 % Check whether the ground truth are derived as expected
 ground_truth = nne.get('GROUND_TRUTH');

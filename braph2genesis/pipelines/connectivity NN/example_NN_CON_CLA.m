@@ -100,11 +100,11 @@ d_training = NNDatasetCombine('D_LIST', {d_split1.get('D_LIST_IT', 1), d_split2.
 d_test = NNDatasetCombine('D_LIST', {d_split1.get('D_LIST_IT', 2), d_split2.get('D_LIST_IT', 2), d_split3.get('D_LIST_IT', 2)}).get('D');
 
 %% Create a MLP classifier with training set
-nn = NNClassifierMLP('D', d_training, 'LAYERS', [20 20], 'P', 5);
+nn = NNClassifierMLP('D', d_training, 'LAYERS', [20 20]);
 nn.get('TRAIN');
 
 %% Evaluate the classifier with the test set
-nne_test = NNClassifier_Evaluator('D', d_test, 'NN', nn);
+nne_test = NNClassifierMLP_Evaluator('D', d_test, 'NN', nn, 'P', 2);
 confusion_matrix = nne_test.get('C_MATRIX');
 auc = nne_test.get('AUC');
 av_auc = nne_test.get('MACRO_AUC');

@@ -10,6 +10,45 @@ Alternatively, using the SPLIT property as {0.2, 0.8}, NNDatasetSplit will rando
 %%% ¡seealso!
 NNDataset, NNDatasetCombine
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+NNDatasetSplit.ID
+%%%% ¡title!
+Dataset Splitter ID
+
+%%% ¡prop!
+%%%% ¡id!
+NNDatasetSplit.LABEL
+%%%% ¡title!
+Dataset Splitter LABEL
+
+%%% ¡prop!
+%%%% ¡id!
+NNDatasetSplit.D
+%%%% ¡title!
+Dataset
+
+%%% ¡prop!
+%%%% ¡id!
+NNDatasetSplit.SPLIT
+%%%% ¡title!
+SPLIT
+
+%%% ¡prop!
+%%%% ¡id!
+NNDatasetSplit.D_LIST
+%%%% ¡title!
+Splitted Datasets
+
+%%% ¡prop!
+%%%% ¡id!
+NNDatasetSplit.NOTES
+%%%% ¡title!
+Dataset Splitter NOTES
+
+
 %% ¡props_update!
 
 %%% ¡prop!

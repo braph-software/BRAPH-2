@@ -449,3 +449,22 @@ for index = 1:1:gr2.get('SUB_DICT').get('LENGTH')
         'NNDataPoint_Measure_CLA does not construct the dataset correctly. The input value is not derived correctly.' ...
         )
 end
+
+%%% ¡test!
+%%%% ¡name!
+Example script for binary undirected graph at fixed densities (GraphBUD) using connectivity data
+%%%% ¡code!
+if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
+    test_NNDataPoint_CON_CLA % create example files
+end
+example_NNCV_CON_BUD_M_CLA
+
+%%% ¡test!
+%%%% ¡name!
+Example script for various types of graphs using connectivity data
+%%%% ¡code!
+if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
+    test_NNDataPoint_CON_CLA % create example files
+end
+example_NNCV_CON_BUT_M_CLA
+example_NNCV_CON_BUD_M_CLA

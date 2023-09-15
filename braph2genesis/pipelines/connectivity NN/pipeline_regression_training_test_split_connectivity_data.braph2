@@ -1,4 +1,4 @@
-%% Pipeline Connectivity Regression 
+%% Pipeline Regression Training-test Split Connectivity Data
 
 % This is the pipeline script to train a multi-layer perceptron regressor using connectivity data.
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
@@ -20,5 +20,5 @@ d_split = NNDatasetSplit('D', NNDataset('DP_CLASS', 'NNDataPoint_CON_REG', 'DP_D
 nn = NNRegressorMLP('D', d_split.get('D_LIST_IT', 1), 'LAYERS', [20 20]); % Train Neural Network % Trained Neural Network
 
 %% Evaluation
-nne_training = NNRegressor_Evaluator('D', d_split.get('D_LIST_IT', 1), 'NN', nn); % Evaluate on Training Dataset % Training Dataset Evaluation
-nne_test = NNRegressor_Evaluator('D', d_split.get('D_LIST_IT', 2), 'NN', nn); % Evaluate on Test Dataset % Test Dataset Evaluation
+nne_training = NNRegressorMLP_Evaluator('D', d_split.get('D_LIST_IT', 1), 'NN', nn); % Evaluate on Training Dataset % Training Dataset Evaluation
+nne_test = NNRegressorMLP_Evaluator('D', d_split.get('D_LIST_IT', 2), 'NN', nn); % Evaluate on Test Dataset % Test Dataset Evaluation

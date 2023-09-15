@@ -426,7 +426,7 @@ end
 
 %%% ¡test!
 %%%% ¡name!
-Example script for weighted undirected graph (GraphWU) using connectivity data
+Example script for various types of graph using connectivity data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
     test_NNDataPoint_CON_CLA % create example files

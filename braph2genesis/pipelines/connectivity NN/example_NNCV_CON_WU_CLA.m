@@ -1,5 +1,5 @@
 %% EXAMPLE_NNCV_CON_WU_CLA
-% Script example pipeline for NN classification cross-validation with the input of GraphWU derived from SubjectCON 
+% Script example pipeline for NN classification cross-validation with the input of adjacency marix from GraphWU with SubjectCON 
 
 clear variables %#ok<*NASGU>
 
@@ -114,8 +114,8 @@ d3 = NNDataset( ...
 d = NNDatasetCombine('D_LIST', {d1, d2, d3}).get('D');
 
 %% Create a classifier cross-validation
-nn_template = NNClassifierMLP('P', 5);
-nncv = NNClassifier_CrossValidation('D', d, 'KFOLDS', 5, 'NN_TEMPLATE', nn_template);
+nne_template = NNClassifierMLP_Evaluator('P', 2);
+nncv = NNClassifierMLP_CrossValidation('D', d, 'KFOLDS', 5, 'NNEVALUATOR_TEMPLATE', nne_template);
 nncv.get('TRAIN');
 
 %% Evaluate the performance

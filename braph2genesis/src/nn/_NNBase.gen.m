@@ -108,12 +108,12 @@ nn.memorize('MODEL');
 value = [];
 
 %%% ¡prop!
-VERBOSE (parameter, logical) is an indicator to display training progress information.
+VERBOSE (metadata, logical) is an indicator to display training progress information.
 %%%% ¡default!
 false
 
 %%% ¡prop!
-PLOT_TRAINING (parameter, option) determines whether to plot the training progress.
+PLOT_TRAINING (metadata, option) determines whether to plot the training progress.
 %%%% ¡settings!
 {'none' 'training-progress'}
 

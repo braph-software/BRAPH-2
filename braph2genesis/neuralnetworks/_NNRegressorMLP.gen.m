@@ -8,6 +8,86 @@ NNRegressorMLP trains the multi-layer perceptron regressor with a formatted inpu
 %%% ¡seealso!
 NNDataPoint_CON_REG, NNRegressor_Evaluator
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP.ID
+%%%% ¡title!
+Neural Networks ID
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP.LABEL
+%%%% ¡title!
+Neural Networks LABEL
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP.WAITBAR
+%%%% ¡title!
+WAITBAR ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP.VERBOSE
+%%%% ¡title!
+VERBOSE ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP.PLOT_TRAINING
+%%%% ¡title!
+PLOT TRAINING PROGRESS
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP.EPOCHS
+%%%% ¡title!
+Training EPOCHS
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP.BATCH
+%%%% ¡title!
+Training BATCH
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP.SHUFFLE
+%%%% ¡title!
+Training SHUFFLE
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP.SOLVER
+%%%% ¡title!
+Training SOLVER
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP.D
+%%%% ¡title!
+DATASET
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP.LAYERS
+%%%% ¡title!
+Number of Neurons per Layer
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP.MODEL
+%%%% ¡title!
+Neural Network REGRESSOR
+
+E%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP.NOTES
+%%%% ¡title!
+Neural Networks NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!
@@ -155,23 +235,16 @@ end
 LAYERS (data, rvector) defines the number of layers and their neurons.
 %%%% ¡default!
 [32 32]
+%%%% ¡gui!
+pr = PanelPropRVectorSmart('EL', nn, 'PROP', NNRegressorMLP.LAYERS, ...
+    'MIN', 0, 'MAX', 2000, ...
+    'DEFAULT', NNRegressorMLP.getPropDefault('LAYERS'), ...
+    varargin{:});
 
 %%% ¡prop!
 WAITBAR (gui, logical) detemines whether to show the waitbar.
 %%%% ¡default!
 true
-
-%%% ¡prop!
-P (parameter, scalar) is the permutation number.
-%%%% ¡default!
-1e+2
-%%%% ¡check_prop!
-check = value > 0 && value == round(value);
-
-%%% ¡prop!
-PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
-%%%% ¡calculate!
-value = randi(intmax('uint32'), 1, nn.get('P'));
 
 %%% ¡prop!
 INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interruptible for multitasking.
@@ -189,6 +262,8 @@ if isempty(varargin)
     return
 end
 d = varargin{1};
+P = varargin{2};
+seeds = varargin{3};
 
 inputs = cell2mat(nn.get('INPUTS', d));
 if isempty(inputs)
@@ -196,8 +271,6 @@ if isempty(inputs)
     return
 end
 targets = cell2mat(nn.get('TARGETS', d));
-P = nn.get('P');
-seeds = nn.get('PERM_SEEDS');
 net = nn.get('MODEL');
 
 number_features = size(inputs, 2);
