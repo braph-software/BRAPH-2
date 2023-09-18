@@ -36,6 +36,12 @@ SUBJECT GROUP
 
 %%% ¡prop!
 %%%% ¡id!
+AnalyzeEnsemble_CON_OMP_WU.GRAPH_TEMPLATE
+%%%% ¡title!
+GRAPH & MEASURE PARAMETERS
+
+%%% ¡prop!
+%%%% ¡id!
 AnalyzeEnsemble_CON_OMP_WU.ME_DICT
 %%%% ¡title!
 Group-averaged MEASURES
@@ -126,10 +132,11 @@ value = g_dict;
 
 %%% ¡prop!
 ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-%%%% ¡_gui!
-% % % pr = PPAnalyzeEnsembleMP_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_CON_MP_WU.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %% ¡tests!
+
+%%% ¡excluded_props!
+[AnalyzeEnsemble_CON_OMP_WU.TEMPLATE AnalyzeEnsemble_CON_OMP_WU.GRAPH_TEMPLATE]
 
 %%% ¡test!
 %%%% ¡name!

@@ -36,6 +36,12 @@ SUBJECT GROUP
 
 %%% ¡prop!
 %%%% ¡id!
+AnalyzeEnsemble_CON_FUN_MP_WU.GRAPH_TEMPLATE
+%%%% ¡title!
+GRAPH & MEASURE PARAMETERS
+
+%%% ¡prop!
+%%%% ¡id!
 AnalyzeEnsemble_CON_FUN_MP_WU.REPETITION
 %%%% ¡title!
 REPETITION TIME [s]
@@ -180,8 +186,6 @@ value = g_dict;
 
 %%% ¡prop!
 ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-%%%% ¡_gui!
-% % % pr = PPAnalyzeEnsembleMP_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_CON_FUN_MP_WU.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %% ¡props!
 
@@ -215,6 +219,9 @@ Correlation.NEGATIVE_WEIGHT_RULE_LIST
 Correlation.NEGATIVE_WEIGHT_RULE_LIST{1}
 
 %% ¡tests!
+
+%%% ¡excluded_props!
+[AnalyzeEnsemble_CON_FUN_MP_WU.TEMPLATE AnalyzeEnsemble_CON_FUN_MP_WU.GRAPH_TEMPLATE]
 
 %%% ¡test!
 %%%% ¡name!

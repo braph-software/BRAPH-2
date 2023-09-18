@@ -36,6 +36,12 @@ SUBJECT GROUP
 
 %%% ¡prop!
 %%%% ¡id!
+AnalyzeEnsemble_FUN_MP_BUD.GRAPH_TEMPLATE
+%%%% ¡title!
+GRAPH & MEASURE PARAMETERS
+
+%%% ¡prop!
+%%%% ¡id!
 AnalyzeEnsemble_FUN_MP_BUD.DENSITIES
 %%%% ¡title!
 DENSITIES [0% ... 100%]
@@ -190,8 +196,6 @@ value = g_dict;
 
 %%% ¡prop!
 ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-%%%% ¡_gui!
-% % % pr = PPAnalyzeEnsembleMP_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_FUN_MP_BUD.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %% ¡props!
 
@@ -235,6 +239,9 @@ pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeEnsemble_FUN_MP_BUD.DENSITIES
     varargin{:});
 
 %% ¡tests!
+
+%%% ¡excluded_props!
+[AnalyzeEnsemble_FUN_MP_BUD.TEMPLATE AnalyzeEnsemble_FUN_MP_BUD.GRAPH_TEMPLATE]
 
 %%% ¡test!
 %%%% ¡name!

@@ -36,6 +36,12 @@ SUBJECT GROUP
 
 %%% ¡prop!
 %%%% ¡id!
+AnalyzeEnsemble_FUN_BUT.GRAPH_TEMPLATE
+%%%% ¡title!
+GRAPH & MEASURE PARAMETERS
+
+%%% ¡prop!
+%%%% ¡id!
 AnalyzeEnsemble_FUN_BUT.THRESHOLDS
 %%%% ¡title!
 THRESHOLDS [-1 ... 1]
@@ -182,8 +188,6 @@ value = g_dict;
 
 %%% ¡prop!
 ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-%%%% ¡_gui!
-% % % pr = PPAnalyzeEnsemble_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_FUN_BUT.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %% ¡props!
 
@@ -227,6 +231,9 @@ pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeEnsemble_FUN_BUT.THRESHOLDS, 
     varargin{:});
 
 %% ¡tests!
+
+%%% ¡excluded_props!
+[AnalyzeEnsemble_FUN_BUT.TEMPLATE AnalyzeEnsemble_FUN_BUT.GRAPH_TEMPLATE]
 
 %%% ¡test!
 %%%% ¡name!

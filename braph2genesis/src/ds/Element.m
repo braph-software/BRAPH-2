@@ -8,15 +8,15 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     % Each element is essentially a container for a series of properties.
     %  Each propery has a category (see <a href="matlab:help Category">Category</a>) and a format (see <a href="matlab:help Format">Format</a>).
     %  Each subelement can implement the following protected methods (see <a href="matlab:help Element.set">Element.set</a>):
-    %   <strong>conditioning</strong>   - conditions a value before setting a property (static function)
-    %   <strong>preset</strong>         - presets a value before setting a property
-    %   <strong>checkProp</strong>      - checks the property format before setting
-    %   <strong>postset</strong>        - postsets a property after it has been set
+    %   <strong>conditioning</strong>   - conditions a value before setting a property (static function) <a href="matlab:help Element.conditioning">read more</a> 
+    %   <strong>preset</strong>         - presets a value before setting a property <a href="matlab:help Element.preset">read more</a> 
+    %   <strong>checkProp</strong>      - checks the property format before setting <a href="matlab:help Element.checkProp">read more</a> 
+    %   <strong>postset</strong>        - postsets a property after it has been set <a href="matlab:help Element.postset">read more</a> 
     %   <strong>postprocessing</strong> - postprocesses the value of a prop 
-    %                    AFTER all properties have been set
-    %   <strong>calculateValue</strong> - (only for results) calculates the value of a property
+    %                    AFTER all properties have been set <a href="matlab:help Element.postprocessing">read more</a> 
+    %   <strong>calculateValue</strong> - (only for results) calculates the value of a property <a href="matlab:help Element.calculateValue">read more</a> 
     %   <strong>checkValue</strong>     - checks the value of a property 
-    %                    (for a result, after it is calculated)
+    %                    (for a result, after it is calculated) <a href="matlab:help Element.checkValue">read more</a>
     %
     % An element notifies the following <a href="matlab:help event">events</a>:
     %  <strong>PropSet</strong>         - when a property is successfully set 

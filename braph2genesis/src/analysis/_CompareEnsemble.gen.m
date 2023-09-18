@@ -166,7 +166,9 @@ CP_DICT (result, idict) contains the results of the comparison.
 %%%% ¡calculate!
 value = IndexedDictionary('IT_CLASS', 'ComparisonEnsemble', 'IT_KEY', ComparisonEnsemble.MEASURE);
 %%%% ¡_gui!
-% % % pr = PPCompareEnsemble_CpDict('EL', c, 'PROP', CompareEnsemble.CP_DICT, 'WAITBAR', Callback('EL', c, 'TAG', 'WAITBAR'), varargin{:});
+% % % pr = CompareEnsemblePP_CpDict('EL', c, 'PROP', CompareEnsemble.CP_DICT, ...
+% % %     'WAITBAR', c.getCallback('WAITBAR'), ...
+% % %     varargin{:});
 
 %%% ¡prop!
 COMPARISON (query, item) returns a comparison.
@@ -190,13 +192,6 @@ if isempty(varargin)
     return
 end
 measure_class = varargin{1};
-
-% % % %TBE
-% % %     [wb, varargin] = get_and_remove_from_varargin([], 'waitbar', varargin{:});
-% % %     
-% % %     if ~isempty(wb)
-% % %         c.set('waitbar', true);
-% % %     end
 
 g = c.get('A1').get('GRAPH_TEMPLATE');
 m_list = g.get('COMPATIBLE_MEASURES');

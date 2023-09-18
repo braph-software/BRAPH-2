@@ -35,6 +35,12 @@ SUBJECT GROUP
 
 %%% ¡prop!
 %%%% ¡id!
+AnalyzeEnsemble_CON_WU.GRAPH_TEMPLATE
+%%%% ¡title!
+GRAPH & MEASURE PARAMETERS
+
+%%% ¡prop!
+%%%% ¡id!
 AnalyzeEnsemble_CON_WU.ME_DICT
 %%%% ¡title!
 Group-averaged MEASURES
@@ -125,10 +131,11 @@ value = g_dict;
 
 %%% ¡prop!
 ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-%%%% ¡_gui!
-% % % pr = PPAnalyzeEnsemble_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_CON_WU.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %% ¡tests!
+
+%%% ¡excluded_props!
+[AnalyzeEnsemble_CON_WU.TEMPLATE AnalyzeEnsemble_CON_WU.GRAPH_TEMPLATE]
 
 %%% ¡test!
 %%%% ¡name!
@@ -141,6 +148,132 @@ if ~isfile([fileparts(which('SubjectCON')) filesep 'Example data CON XLS' filese
 end
 
 example_CON_WU
+
+%%% ¡test!
+%%%% ¡name!
+Template for Graphs and Measures
+%%%% ¡probability!
+.01
+%%%% ¡code!
+if ~isfile([fileparts(which('SubjectCON')) filesep 'Example data CON TXT' filesep 'atlas.txt'])
+    test_ImporterGroupSubjectCON_TXT % create example files
+end
+
+ba = ImporterBrainAtlasTXT('FILE', [fileparts(which('SubjectCON')) filesep 'Example data CON TXT' filesep 'atlas.txt']).get('BA');
+gr1 = ImporterGroupSubjectCON_TXT('DIRECTORY', [fileparts(which('SubjectCON')) filesep 'Example data CON TXT' filesep 'CON_Group_1_TXT'], 'BA', ba).get('GR');
+gr2 = ImporterGroupSubjectCON_TXT('DIRECTORY', [fileparts(which('SubjectCON')) filesep 'Example data CON TXT' filesep 'CON_Group_2_TXT'], 'BA', ba).get('GR');
+
+% check that analysis parameters are correclty templated between analysis 1 and 2
+a_WU1 = AnalyzeEnsemble_CON_WU('GR', gr1);
+a_WU2 = AnalyzeEnsemble_CON_WU('TEMPLATE', a_WU1, 'GR', gr2); % also memorizes the graph in a_WU1 (!)
+
+% check that graph parameters are correclty templated between analysis 1 and 2
+randomize = true;
+random_seed = 42;
+symmetrize_rule = 'min';
+semipositivize_rule = 'absolute';
+standardize_rule = 'range';
+attemptsperedge = 1000;
+numberofweights = 25;
+g_template_WU1 = a_WU1.get('GRAPH_TEMPLATE'); 
+g_template_WU1.set( ...
+    'RANDOMIZE', randomize, ...
+    'RANDOM_SEED', random_seed, ...
+    'SYMMETRIZE_RULE', symmetrize_rule, ...
+    'SEMIPOSITIVIZE_RULE', semipositivize_rule, ...
+    'STANDARDIZE_RULE', standardize_rule, ...
+    'ATTEMPTSPEREDGE', attemptsperedge, ...
+    'NUMBEROFWEIGHTS', numberofweights ...
+    )
+g_template_WU2 = a_WU2.get('GRAPH_TEMPLATE'); 
+assert(isequal(g_template_WU2.get('RANDOMIZE'), randomize))
+assert(isequal(g_template_WU2.get('RANDOM_SEED'), random_seed))
+assert(isequal(g_template_WU2.get('SYMMETRIZE_RULE'), symmetrize_rule))
+assert(isequal(g_template_WU2.get('SEMIPOSITIVIZE_RULE'), semipositivize_rule))
+assert(isequal(g_template_WU2.get('STANDARDIZE_RULE'), standardize_rule))
+assert(isequal(g_template_WU2.get('ATTEMPTSPEREDGE'), attemptsperedge))
+assert(isequal(g_template_WU2.get('NUMBEROFWEIGHTS'), numberofweights))
+
+% check that measure parameters are correclty templated between analysis 1 and 2
+triangles_rule = 'middleman';
+m_triangles_WU1 = g_template_WU1.get('MEASURE', 'Triangles');
+m_triangles_WU1.set('RULE', triangles_rule)
+m_triangles_WU2 = g_template_WU2.get('MEASURE', 'Triangles');
+assert(isequal(m_triangles_WU2.get('RULE'), triangles_rule))
+
+% check that graph and measure parameters are correctly propagated to graph and measure dictionaries
+me_triangles_WU1 = a_WU1.get('MEASUREENSEMBLE', 'Triangles'); % calculates G_DICT and Triangles for each graph
+me_triangles_WU2 = a_WU2.get('MEASUREENSEMBLE', 'Triangles'); % calculates G_DICT and Triangles for each graph
+
+i = randi(a_WU1.get('G_DICT').get('LENGTH'));
+
+g_WU1_i = a_WU1.get('G_DICT').get('IT', i);
+assert(isequal(g_WU1_i.get('RANDOMIZE'), randomize))
+assert(isequal(g_WU1_i.get('RANDOM_SEED'), random_seed))
+assert(isequal(g_WU1_i.get('SYMMETRIZE_RULE'), symmetrize_rule))
+assert(isequal(g_WU1_i.get('SEMIPOSITIVIZE_RULE'), semipositivize_rule))
+assert(isequal(g_WU1_i.get('STANDARDIZE_RULE'), standardize_rule))
+assert(isequal(g_WU1_i.get('ATTEMPTSPEREDGE'), attemptsperedge))
+assert(isequal(g_WU1_i.get('NUMBEROFWEIGHTS'), numberofweights))
+
+assert(isequal(g_WU1_i.get('MEASURE', 'Triangles').get('RULE'), triangles_rule))
+
+g_WU2_i = a_WU2.get('G_DICT').get('IT', i);
+assert(isequal(g_WU2_i.get('RANDOMIZE'), randomize))
+assert(isequal(g_WU2_i.get('RANDOM_SEED'), random_seed))
+assert(isequal(g_WU2_i.get('SYMMETRIZE_RULE'), symmetrize_rule))
+assert(isequal(g_WU2_i.get('SEMIPOSITIVIZE_RULE'), semipositivize_rule))
+assert(isequal(g_WU2_i.get('STANDARDIZE_RULE'), standardize_rule))
+assert(isequal(g_WU2_i.get('ATTEMPTSPEREDGE'), attemptsperedge))
+assert(isequal(g_WU2_i.get('NUMBEROFWEIGHTS'), numberofweights))
+
+assert(isequal(g_WU2_i.get('MEASURE', 'Triangles').get('RULE'), triangles_rule))
+
+% check that analysis parameters are correclty templated to permutation analyses
+permutations = 10;
+c_WU = CompareEnsemble('P', permutations, 'A1', a_WU1, 'A2', a_WU2);
+a_WU_perms = c_WU.get('PERM', randi(permutations));
+a_WU1_perm = a_WU_perms{1};
+a_WU2_perm = a_WU_perms{2};
+
+% check that graph parameters are correclty templated to permutation analyses
+g_template_WU1_perm = a_WU1_perm.get('GRAPH_TEMPLATE');
+g_template_WU2_perm = a_WU2_perm.get('GRAPH_TEMPLATE');
+assert(isequal(g_template_WU1_perm.get('RANDOMIZE'), randomize))
+assert(isequal(g_template_WU1_perm.get('RANDOM_SEED'), random_seed))
+assert(isequal(g_template_WU1_perm.get('SYMMETRIZE_RULE'), symmetrize_rule))
+assert(isequal(g_template_WU1_perm.get('SEMIPOSITIVIZE_RULE'), semipositivize_rule))
+assert(isequal(g_template_WU1_perm.get('STANDARDIZE_RULE'), standardize_rule))
+assert(isequal(g_template_WU1_perm.get('ATTEMPTSPEREDGE'), attemptsperedge))
+assert(isequal(g_template_WU1_perm.get('NUMBEROFWEIGHTS'), numberofweights))
+assert(isequal(g_template_WU2_perm.get('RANDOMIZE'), randomize))
+assert(isequal(g_template_WU2_perm.get('RANDOM_SEED'), random_seed))
+assert(isequal(g_template_WU2_perm.get('SYMMETRIZE_RULE'), symmetrize_rule))
+assert(isequal(g_template_WU2_perm.get('SEMIPOSITIVIZE_RULE'), semipositivize_rule))
+assert(isequal(g_template_WU2_perm.get('STANDARDIZE_RULE'), standardize_rule))
+assert(isequal(g_template_WU2_perm.get('ATTEMPTSPEREDGE'), attemptsperedge))
+assert(isequal(g_template_WU2_perm.get('NUMBEROFWEIGHTS'), numberofweights))
+
+g_WU1_perm_i = a_WU1_perm.get('G_DICT').get('IT', i);
+g_WU2_perm_i = a_WU2_perm.get('G_DICT').get('IT', i);
+assert(isequal(g_WU1_perm_i.get('RANDOMIZE'), randomize))
+assert(isequal(g_WU1_perm_i.get('RANDOM_SEED'), random_seed))
+assert(isequal(g_WU1_perm_i.get('SYMMETRIZE_RULE'), symmetrize_rule))
+assert(isequal(g_WU1_perm_i.get('SEMIPOSITIVIZE_RULE'), semipositivize_rule))
+assert(isequal(g_WU1_perm_i.get('STANDARDIZE_RULE'), standardize_rule))
+assert(isequal(g_WU1_perm_i.get('ATTEMPTSPEREDGE'), attemptsperedge))
+assert(isequal(g_WU1_perm_i.get('NUMBEROFWEIGHTS'), numberofweights))
+assert(isequal(g_WU2_perm_i.get('RANDOMIZE'), randomize))
+assert(isequal(g_WU2_perm_i.get('RANDOM_SEED'), random_seed))
+assert(isequal(g_WU2_perm_i.get('SYMMETRIZE_RULE'), symmetrize_rule))
+assert(isequal(g_WU2_perm_i.get('SEMIPOSITIVIZE_RULE'), semipositivize_rule))
+assert(isequal(g_WU2_perm_i.get('STANDARDIZE_RULE'), standardize_rule))
+assert(isequal(g_WU2_perm_i.get('ATTEMPTSPEREDGE'), attemptsperedge))
+assert(isequal(g_WU2_perm_i.get('NUMBEROFWEIGHTS'), numberofweights))
+ 
+% check that measure parameters are correclty templated to permutation analyses
+assert(isequal(g_WU1_perm_i.get('MEASURE', 'Triangles').get('RULE'), triangles_rule))
+assert(isequal(g_WU2_perm_i.get('MEASURE', 'Triangles').get('RULE'), triangles_rule))
 
 %%% ¡test!
 %%%% ¡name!
