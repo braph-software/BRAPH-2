@@ -461,10 +461,36 @@ example_NNCV_CON_BUD_M_CLA
 
 %%% ¡test!
 %%%% ¡name!
-Example script for various types of graphs using connectivity data
+Example script for binary undirected graph at fixed thresholds (MultigraphBUT) using connectivity data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
     test_NNDataPoint_CON_CLA % create example files
 end
 example_NNCV_CON_BUT_M_CLA
+
+%%% ¡test!
+%%%% ¡name!
+Example script for binary undirected graph at fixed densities (MultigraphBUD) using connectivity data
+%%%% ¡code!
+if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
+    test_NNDataPoint_CON_CLA % create example files
+end
 example_NNCV_CON_BUD_M_CLA
+
+%%% ¡test!
+%%%% ¡name!
+Example script for binary undirected multiplex at fixed densities (MultiplexBUD) using connectivity data and functional data
+%%%% ¡code!
+if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_CLA')) filesep 'Example data NN CLA CON_FUN_MP XLS' filesep 'atlas.xlsx'])
+    test_NNDataPoint_CON_FUN_MP_CLA % create example files
+end
+example_NNCV_CON_FUN_MP_BUD_M_CLA
+
+%%% ¡test!
+%%%% ¡name!
+Example script for binary undirected multiplex at fixed thresholds (MultiplexBUT) using connectivity data and functional data
+%%%% ¡code!
+if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_CLA')) filesep 'Example data NN CLA CON_FUN_MP XLS' filesep 'atlas.xlsx'])
+    test_NNDataPoint_CON_FUN_MP_CLA % create example files
+end
+example_NNCV_CON_FUN_MP_BUT_M_CLA

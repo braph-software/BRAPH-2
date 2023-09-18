@@ -426,10 +426,27 @@ end
 
 %%% ¡test!
 %%%% ¡name!
-Example script for various types of graph using connectivity data
+Example script for weighted undirected graph (GraphWU) using connectivity data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
     test_NNDataPoint_CON_CLA % create example files
 end
 example_NNCV_CON_WU_CLA
+
+%%% ¡test!
+%%%% ¡name!
+Example script for binary undirected graph at fixed densities (MultigraphBUD) using connectivity data
+%%%% ¡code!
+if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
+    test_NNDataPoint_CON_CLA % create example files
+end
 example_NNCV_CON_BUD_CLA
+
+%%% ¡test!
+%%%% ¡name!
+Example script for weighted undirected multiplex (MultiplexWU) using connectivity data and functional data
+%%%% ¡code!
+if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_CLA')) filesep 'Example data NN CLA CON_FUN_MP XLS' filesep 'atlas.xlsx'])
+    test_NNDataPoint_CON_FUN_MP_CLA % create example files
+end
+example_NNCV_CON_FUN_MP_WU_CLA

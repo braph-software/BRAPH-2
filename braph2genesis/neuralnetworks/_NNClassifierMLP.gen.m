@@ -130,7 +130,7 @@ NNDataset('DP_CLASS', 'NNDataPoint_CON_CLA')
 %%% ¡prop!
 DP_CLASSES (parameter, classlist) is the list of compatible data points.
 %%%% ¡default!
-{'NNDataPoint_CON_CLA' 'NNDataPoint_Graph_CLA' 'NNDataPoint_Measure_CLA'}
+{'NNDataPoint_CON_CLA' 'NNDataPoint_CON_FUN_MP_CLA' 'NNDataPoint_Graph_CLA' 'NNDataPoint_Measure_CLA'}
 
 %%% ¡prop!
 INPUTS (query, cell) constructs the data in the CB (channel-batch) format.
