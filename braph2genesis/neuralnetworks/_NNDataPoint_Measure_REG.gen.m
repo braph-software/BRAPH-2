@@ -318,3 +318,12 @@ if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_REG')) filesep 'Example data
     test_NNDataPoint_CON_FUN_MP_REG % create example files
 end
 example_NNCV_CON_FUN_MP_WU_M_REG
+
+%%% ¡test!
+%%%% ¡name!
+Example script for weighted undirected graph (GraphWU) using functional data
+%%%% ¡code!
+if ~isfile([fileparts(which('NNDataPoint_FUN_REG')) filesep 'Example data NN REG FUN XLS' filesep 'atlas.xlsx'])
+    test_NNDataPoint_FUN_REG % create example files
+end
+example_NNCV_FUN_WU_M_REG
