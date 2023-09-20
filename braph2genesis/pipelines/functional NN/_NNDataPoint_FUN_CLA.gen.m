@@ -3,7 +3,7 @@ NNDataPoint_FUN_CLA < NNDataPoint (dp, functional classification data point) is 
 
 %%% ¡description!
 A data point for classification with functional data (NNDataPoint_FUN_CLA) 
-contains the input and target for neural network analysis with a subject with functional data (SubjectFUN).
+ contains the input and target for neural network analysis with a subject with functional data (SubjectFUN).
 The input is the functional data of the subject.
 The target is obtained from the variables of interest of the subject.
 

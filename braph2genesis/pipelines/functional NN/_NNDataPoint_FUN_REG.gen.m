@@ -3,7 +3,7 @@ NNDataPoint_FUN_REG < NNDataPoint (dp, functional regression data point) is a da
 
 %%% ¡description!
 A data point for regression with functional data (NNDataPoint_FUN_REG) 
-contains the input and target for neural network analysis with a subject with functional data (SubjectFUN).
+ contains the input and target for neural network analysis with a subject with functional data (SubjectFUN).
 The input is the functional data of the subject.
 The target is obtained from the variables of interest of the subject.
 
