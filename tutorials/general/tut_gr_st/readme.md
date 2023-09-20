@@ -11,7 +11,9 @@ For *structural data*, we will upload a file containing the structural values fo
 
 ## Open the GUI
 
-In most analyses, the group GUI is the second step after you have selected a brain atlas. You can open it by typing `braph2` in MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis and upload a brain atlas. After these steps have been completed you can upload your group's data, as shown in Figure 1.
+In most analyses, the group GUI is the second step after you have selected a brain atlas. You can open it by typing `braph2` in MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis and upload a brain atlas. After these steps have been completed you can upload your group's data directly (Figure 2c-f) after clicking "Load Group". 
+
+You can also open the GUI and upload the brain structural data using the command line (i.e., without opening an analysis pipeline) by typing the commands referenced below. In that case, you can upload the data as shown in Figure 2a-f.
 
 > ![Upload the data of a group of subjects](fig02.jpg)
 > 
@@ -22,7 +24,7 @@ In most analyses, the group GUI is the second step after you have selected a bra
 >	To upload the test structural data:
 > **c-f** navigate to the BRAPH 2.0 folder `pipelines`, **d** `structural`, **e** `Example data ST XLS`, and **f** select the structural values of one group `ST_Group_1_XLS`.
 
-To open the GUI and upload the brain structural data, you can also do it from the command line (i.e., without opening an analysis pipeline) by typing the commands referenced below.
+Commands to open the GUI and upload the brain structural data:
 
 ```matlab
 gr = Group('SUB_CLASS', 'SubjectST');  % creates a new object Group to use structural values for assessing connectivity i.e., SubjectST.

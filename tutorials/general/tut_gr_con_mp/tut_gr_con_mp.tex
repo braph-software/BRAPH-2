@@ -27,7 +27,9 @@ This Tutorial explains how to prepare and work with this kind of data.
 \clearpage
 \section{Open the GUI}
 
-In most analyses, the group GUI is the second step after you have selected a brain atlas. You can open it by typing \code{braph2} in the MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis and upload a brain atlas. After these steps have been completed you can upload your group's data, as shown in \Figref{fig:02}.
+In most analyses, the group GUI is the second step after you have selected a brain atlas. You can open it by typing \code{braph2} in MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis and upload a brain atlas. After these steps have been completed you can upload your group's data directly (\Figref{fig:02}c-f) after clicking ``Load Group''.
+
+You can also open the GUI and upload the brain connectivity multiplex data using the command line (i.e., without opening an analysis pipeline) by typing the commands in \Coderef{cd:launch}. In that case, you can upload the data as shown in \Figref{fig:02}a-f.
 
 \fig{figure}
 	{fig:02}
@@ -42,8 +44,7 @@ In most analyses, the group GUI is the second step after you have selected a bra
 	To upload the test connectivity multiplex data:
 	{\bf c}-{\bf f} navigate to the BRAPH~2.0 folder \fn{pipelines}, {\bf d} \fn{connectivity multiplex},  {\bf e} \fn{Example data CON\_MP XLS}, and {\bf f} select the folder containing the connectivity matrices of one group \fn{CON\_MP\_Group\_1\_XLS}.
 	}
- 
-To open the GUI and upload the brain connectivity multiplex data, you can also do it from the command line (i.e., without opening an analysis pipeline) by typing the commands in \Coderef{cd:launch}. 
+
 %
 \begin{lstlisting}[
 	label=cd:launch,

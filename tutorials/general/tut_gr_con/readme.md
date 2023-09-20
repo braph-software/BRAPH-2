@@ -12,7 +12,9 @@ This Tutorial explains how to prepare and work with this kind of data.
 
 ## Open the GUI
 
-In most analyses, the group GUI is the second step after you have selected a brain atlas. You can open it by typing `braph2` in the MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis and upload a brain atlas. After these steps have been completed you can upload your group's data, as shown in Figure 1.
+In most analyses, the group GUI is the second step after you have selected a brain atlas. You can open it by typing `braph2` in MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis and upload a brain atlas. After these steps have been completed you can upload your group's data directly (Figure 2c-f) after clicking "Load Group". 
+
+You can also open the GUI and upload the brain connectivity data using the command line (i.e., without opening an analysis pipeline) by typing the commands referenced below. In that case, you can upload the data as shown in Figure 2a-f.
 
 > ![Upload the data of a group of subjects](fig02.jpg)
 > 
@@ -23,7 +25,7 @@ In most analyses, the group GUI is the second step after you have selected a bra
 > To upload the test connectivity data:
 > **c-f** navigate to the BRAPH 2.0 folder `pipelines`, **d** `connectivity`, **e** `Example data CON XLS`, and **f** select the folder containing the connectivity matrices of one group `CON_Group_1_XLS`.
 
-To open the GUI and upload the brain connectivity data, you can also do it from the command line (i.e., without opening an analysis pipeline) by typing the commands referenced below.
+Commands to open the GUI and upload the brain connectivity data:
 
 ```matlab
 gr = Group('SUB_CLASS', 'SubjectCON');  % creates a new object Group with subjects with connectivity data, i.e., SubjectCON.
