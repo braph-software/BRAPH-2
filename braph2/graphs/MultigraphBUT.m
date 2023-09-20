@@ -594,7 +594,7 @@ classdef MultigraphBUT < GraphWU
 				case 7 % MultigraphBUT.GRAPH_TYPE
 					prop_default = 2;
 				case 26 % MultigraphBUT.COMPATIBLE_MEASURES
-					prop_default = { 'Clustering'  'ClusteringAv'  'Degree'  'DegreeAv'  'Distance'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'Triangles' };
+					prop_default = { 'Assortativity'  'BetweennessCentrality'  'Clustering'  'ClusteringAv'  'CorePeriphery'  'Degree'  'DegreeAv'  'Diameter'  'Distance'  'Eccentricity'  'EccentricityAv'  'EdgeBetwCentr'  'EigenVectorCentrality'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'KCore'  'KCorenessCentrality'  'LocalEfficiency'  'LocalEfficiencyAv'  'Modularity'  'Participation'  'PathLength'  'PathLengthAv'  'RCDeg'  'Radius'  'RichClub'  'Richness'  'SmallWorldness'  'Transitivity'  'Triangles' };
 				case 34 % MultigraphBUT.ATTEMPTSPEREDGE
 					prop_default = 5;
 				otherwise

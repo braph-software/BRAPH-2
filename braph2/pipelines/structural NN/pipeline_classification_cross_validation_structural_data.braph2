@@ -1,0 +1,17 @@
+%% Pipeline Classificatoin Cross-Validation Structural Data 
+
+% This is the pipeline script to execute cross-validation with multi-layer perceptron classifier using structural data.
+% 1. It loads a brain atlas from an XLS file (e.g., destrieux_atlas.xlsx).
+% 2. It loads data for three groups of subjects from the directories (e.g., ST_Group_1_XLS, ST_Group_2_XLS, and ST_Group_3_XLS) containing XLS files for each subject.
+% 3. It executes the cross-validation process.
+
+%% Brain Atlas
+ba = ImporterBrainAtlasXLS('WAITBAR', true).get('GET_FILE').get('BA'); % Load a Brain Atlas XLS % Brain Atlas
+
+%% Groups
+gr1 = ImporterGroupSubjectST_XLS('BA', ba, 'WAITBAR', true).get('GET_FILE').get('GR'); % Load Group ST 1 from XLS % Group ST 1
+gr2 = ImporterGroupSubjectST_XLS('BA', ba, 'WAITBAR', true).get('GET_FILE').get('GR'); % Load Group ST 2 from XLS % Group ST 2
+gr3 = ImporterGroupSubjectST_XLS('BA', ba, 'WAITBAR', true).get('GET_FILE').get('GR'); % Load Group ST 3 from XLS % Group ST 3
+
+%% Cross-Validation
+nncv = NNClassifierMLP_CrossValidation('D', NNDatasetCombine('D_LIST', {NNDataset('DP_CLASS', 'NNDataPoint_ST_CLA', 'DP_DICT', IndexedDictionary('IT_CLASS', 'NNDataPoint_ST_CLA', 'IT_LIST', cellfun(@(x) NNDataPoint_ST_CLA('ID', x.get('ID'), 'SUB', x, 'TARGET_IDS', {gr1.get('ID')}), gr1.get('SUB_DICT').get('IT_LIST'), 'UniformOutput', false))), NNDataset('DP_CLASS', 'NNDataPoint_ST_CLA', 'DP_DICT', IndexedDictionary('IT_CLASS', 'NNDataPoint_ST_CLA', 'IT_LIST', cellfun(@(x) NNDataPoint_ST_CLA('ID', x.get('ID'), 'SUB', x, 'TARGET_IDS', {gr2.get('ID')}), gr2.get('SUB_DICT').get('IT_LIST'), 'UniformOutput', false))), NNDataset('DP_CLASS', 'NNDataPoint_ST_CLA', 'DP_DICT', IndexedDictionary('IT_CLASS', 'NNDataPoint_ST_CLA', 'IT_LIST', cellfun(@(x) NNDataPoint_ST_CLA('ID', x.get('ID'), 'SUB', x, 'TARGET_IDS', {gr3.get('ID')}), gr3.get('SUB_DICT').get('IT_LIST'), 'UniformOutput', false)))}).get('D')); % Cross-Validation % Cross-Validation Proces

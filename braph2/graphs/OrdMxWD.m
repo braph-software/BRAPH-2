@@ -636,7 +636,7 @@ classdef OrdMxWD < Graph
 				case 7 % OrdMxWD.GRAPH_TYPE
 					prop_default = 3;
 				case 26 % OrdMxWD.COMPATIBLE_MEASURES
-					prop_default = { 'DegreeIn'  'DegreeInAv'  'DegreeOut'  'DegreeOutAv'  'Distance'  'GlobalEfficiencyIn'  'GlobalEfficiencyInAv'  'GlobalEfficiencyOut'  'GlobalEfficiencyOutAv'  'Triangles' };
+					prop_default = { 'DegreeIn'  'DegreeInAv'  'DegreeOut'  'DegreeOutAv'  'Distance'  'EccentricityIn'  'EccentricityInAv'  'EccentricityOut'  'Flexibility'  'FlexibilityAv'  'GlobalEfficiencyIn'  'GlobalEfficiencyInAv'  'GlobalEfficiencyOut'  'GlobalEfficiencyOutAv'  'OverlappingSIn'  'StrengthIn'  'StrengthInAv'  'StrengthOut'  'StrengthOutAv'  'Triangles'  'WeightedMxPIn'  'WeightedMxPOut' };
 				otherwise
 					prop_default = getPropDefault@Graph(prop);
 			end

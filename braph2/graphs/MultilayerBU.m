@@ -627,7 +627,7 @@ classdef MultilayerBU < Graph
 				case 7 % MultilayerBU.GRAPH_TYPE
 					prop_default = 6;
 				case 26 % MultilayerBU.COMPATIBLE_MEASURES
-					prop_default = { 'Degree'  'DegreeAv'  'Distance'  'GlobalEfficiency'  'GlobalEfficiencyAv' };
+					prop_default = { 'Degree'  'DegreeAv'  'DegreeOverlap'  'DegreeOverlapAv'  'Distance'  'Flexibility'  'FlexibilityAv'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'MultilayerCommunity' };
 				otherwise
 					prop_default = getPropDefault@Graph(prop);
 			end

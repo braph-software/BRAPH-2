@@ -168,7 +168,7 @@ classdef DegreeOut < Measure
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'DegreeOut'  'DegreeOutAv' }; %CET: Computational Efficiency Trick
+			subclass_list = { 'DegreeOut'  'DegreeOutAv'  'OverlappingDegOut'  'OverlappingDegOutAv' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of out-degree.

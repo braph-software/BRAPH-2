@@ -157,7 +157,7 @@ A21 = A12';
 A = {A11 A12;
      A21 A22};
  
-known_flexibility = {0};  
+known_flexibility_av = {0};  
 
 g = MultilayerWD('B', A);
 
@@ -192,7 +192,7 @@ A21 = A12';
 A = {A11 A12;
      A21 A22};
  
-known_flexibility = {0};  
+known_flexibility_av = {0};  
 
 g = OrdMlWD('B', A);
 

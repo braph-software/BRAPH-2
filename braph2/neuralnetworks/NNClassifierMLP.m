@@ -606,7 +606,7 @@ classdef NNClassifierMLP < NNBase
 				case 7 % NNClassifierMLP.D
 					prop_default = NNDataset('DP_CLASS', 'NNDataPoint_CON_CLA');
 				case 8 % NNClassifierMLP.DP_CLASSES
-					prop_default = {'NNDataPoint_CON_CLA' 'NNDataPoint_CON_FUN_MP_CLA' 'NNDataPoint_Graph_CLA' 'NNDataPoint_Measure_CLA'};
+					prop_default = {'NNDataPoint_CON_CLA' 'NNDataPoint_CON_FUN_MP_CLA' 'NNDataPoint_FUN_CLA' 'NNDataPoint_ST_CLA' 'NNDataPoint_ST_MM_CLA' 'NNDataPoint_Graph_CLA' 'NNDataPoint_Measure_CLA'};
 				otherwise
 					prop_default = getPropDefault@NNBase(prop);
 			end

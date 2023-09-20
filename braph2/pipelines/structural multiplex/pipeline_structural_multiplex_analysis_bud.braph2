@@ -2,7 +2,7 @@
 
 % This is the pipeline script to analyze a group of subjects using structural multiplex data and a binary undirected graph using densities.
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
-% 2. It loads the data of a group of subjects from a directory containing XLS files (e.g., FUN_group1.xlsx and FUN_group2.xlsx).
+% 2. It loads the data of a group of subjects from a directory containing XLS files (e.g., FUN_group1.1.xlsx and FUN_group1.2.xlsx).
 % 3. It analyzes the data using structural multiplex analysis (ST_MP) based on a binary undirected graph using densities.
 
 %% Brain Atlas

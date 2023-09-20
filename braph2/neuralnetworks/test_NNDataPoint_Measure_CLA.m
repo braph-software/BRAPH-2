@@ -1760,7 +1760,23 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	example_NNCV_CON_FUN_MP_BUT_M_CLA
 end
 
-%% Test 20: No Figures Left
+%% Test 20: Example script for binary undirected multigraph at fixed densities (MultiplexBUD) using functional data
+if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
+	if ~isfile([fileparts(which('NNDataPoint_FUN_CLA')) filesep 'Example data NN CLA FUN XLS' filesep 'atlas.xlsx'])
+	    test_NNDataPoint_FUN_CLA % create example files
+	end
+	example_NNCV_FUN_BUD_M_CLA
+end
+
+%% Test 21: Example script for binary undirected multigraph at fixed thresholds (MultiplexBUT) using functional data
+if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
+	if ~isfile([fileparts(which('NNDataPoint_FUN_CLA')) filesep 'Example data NN CLA FUN XLS' filesep 'atlas.xlsx'])
+	    test_NNDataPoint_FUN_CLA % create example files
+	end
+	example_NNCV_FUN_BUT_M_CLA
+end
+
+%% Test 22: No Figures Left
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	assert(isempty(findall(0, 'type', 'figure')), ...
 		[BRAPH2.STR ':NNDataPoint_Measure_CLA:' BRAPH2.FAIL_TEST], ...
@@ -1769,7 +1785,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 		)
 end
 
-%% Test 21: Delete Figures
+%% Test 23: Delete Figures
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	delete(findall(0, 'type', 'figure'))
 end

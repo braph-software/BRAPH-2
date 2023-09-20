@@ -647,7 +647,7 @@ classdef MultiplexWU < Graph
 				case 7 % MultiplexWU.GRAPH_TYPE
 					prop_default = 4;
 				case 26 % MultiplexWU.COMPATIBLE_MEASURES
-					prop_default = { 'Clustering'  'ClusteringAv'  'Degree'  'DegreeAv'  'Distance'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'Triangles' };
+					prop_default = { 'Assortativity'  'BetweennessCentrality'  'Clustering'  'ClusteringAv'  'CorePeriphery'  'Degree'  'DegreeAv'  'DegreeOverlap'  'DegreeOverlapAv'  'Diameter'  'Distance'  'Eccentricity'  'EccentricityAv'  'EdgeBetwCentr'  'EdgeNumDist'  'EdgeOverlap'  'EigenVectorCentrality'  'Flexibility'  'FlexibilityAv'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'KCore'  'KCorenessCentrality'  'LocalEfficiency'  'LocalEfficiencyAv'  'MultiRC'  'MultiplexCP'  'MultiplexCl'  'MultiplexClAv'  'MultiplexKCor'  'MultiplexKCorC'  'MultiplexP'  'MultiplexPAv'  'MultiplexRCDeg'  'MultiplexRCS'  'MultiplexT'  'OverlappingDeg'  'OverlappingDegAv'  'OverlappingS'  'OverlappingSAv'  'PathLength'  'PathLengthAv'  'RCDeg'  'RCS'  'Radius'  'RichClub'  'Richness'  'SCore'  'SmallWorldness'  'Strength'  'StrengthAv'  'Transitivity'  'Triangles'  'WeightedEdgeOvlp'  'WeightedMxP'  'WeightedMxPAv'  'WeightedRC' };
 				otherwise
 					prop_default = getPropDefault@Graph(prop);
 			end

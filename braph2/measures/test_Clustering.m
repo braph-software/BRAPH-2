@@ -1400,26 +1400,43 @@ end
 
 %% Test 13: GraphWD
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
-	B_WD = [
-	    0 .1 .2 .1; 
-	    1 0 .3 0; 
-	    .2 .4 0 .3; 
-	    1 0 .4 0
-	    ];
-	clustering_WD = [.1375 .1621 .1381 .1565]';
+	B_WD = [0 0.1 0.1;
+	        0.2 0 0.2;
+	        0.2 0.3 0];
+	clustering_WD = [0.1158 0.1166 0.1166]';
 	g = GraphWD('B', B_WD);
-	m_outside_g = Clustering('G', g);
+	m_outside_g = Clustering('G', g, 'RULE', 'all');
 	assert(isequal(round(cell2mat(m_outside_g.get('M')),4), clustering_WD), ...
 			    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
 			    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
-			
-			m_inside_g = g.get('MEASURE', 'Clustering');
-			assert(isequal(round(cell2mat(m_inside_g.get('M')),4), clustering_WD), ...
-			    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
-			    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+	
+	m_inside_g = g.get('MEASURE', 'Clustering');
+	m_inside_g.set('RULE', 'all');
+	assert(isequal(round(cell2mat(m_inside_g.get('M')),4), clustering_WD), ...
+	    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
+	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
 
-%% Test 14: GraphBU
+%% Test 14: GraphWD
+if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
+	B_WD = [0 0.1 0.1;
+	        0.2 0 0.2;
+	        0.2 0.3 0];
+	clustering_WD = [0.0860 0.0905 0.0878]';
+	g = GraphWD('B', B_WD);
+	m_outside_g = Clustering('G', g, 'RULE', 'middleman');
+	assert(isequal(round(cell2mat(m_outside_g.get('M')),4), clustering_WD), ...
+			    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
+			    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+	
+	m_inside_g = g.get('MEASURE', 'Clustering');
+	m_inside_g.set('RULE', 'middleman');
+	assert(isequal(round(cell2mat(m_inside_g.get('M')),4), clustering_WD), ...
+	    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
+	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+end
+
+%% Test 15: GraphBU
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	B_BU = [
 	    0 1 1 1; 
@@ -1440,7 +1457,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
 
-%% Test 15: GraphBD
+%% Test 16: GraphBD
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	B_BD = [
 	    0 0 1; 
@@ -1462,7 +1479,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
 
-%% Test 16: MultigraphBUD
+%% Test 17: MultigraphBUD
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	B = [
 	    0 1 1 1; 
@@ -1492,7 +1509,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
 
-%% Test 17: MultigraphBUT
+%% Test 18: MultigraphBUT
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	B = [
 	    0 1 1 1; 
@@ -1521,7 +1538,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
 
-%% Test 18: MultiplexWU
+%% Test 19: MultiplexWU
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	B11 = [
 	    0 .1 .2 .1;
@@ -1554,7 +1571,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 			    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
 
-%% Test 19: MultiplexWD
+%% Test 20: MultiplexWD
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	B11 = [
 	    0 .1 .2 .1;
@@ -1584,7 +1601,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 			    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
 
-%% Test 20: MultiplexBU
+%% Test 21: MultiplexBU
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	B11 = [
 	      0 1 1 1;
@@ -1617,7 +1634,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
 
-%% Test 21: MultiplexBD
+%% Test 22: MultiplexBD
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	B11 = [
 	      0 0 1; 
@@ -1650,7 +1667,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
 
-%% Test 22: MultiplexBUD
+%% Test 23: MultiplexBUD
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	B11 = [
 	      0 1 1 1;
@@ -1688,7 +1705,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
 
-%% Test 23: MultiplexBUT
+%% Test 24: MultiplexBUT
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	B11 = [
 	      0 1 1 1;
@@ -1724,7 +1741,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
 
-%% Test 24: No Figures Left
+%% Test 25: No Figures Left
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	assert(isempty(findall(0, 'type', 'figure')), ...
 		[BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
@@ -1733,7 +1750,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 		)
 end
 
-%% Test 25: Delete Figures
+%% Test 26: Delete Figures
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	delete(findall(0, 'type', 'figure'))
 end

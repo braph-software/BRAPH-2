@@ -594,7 +594,7 @@ classdef MultiplexBUT < MultiplexWU
 				case 7 % MultiplexBUT.GRAPH_TYPE
 					prop_default = 4;
 				case 26 % MultiplexBUT.COMPATIBLE_MEASURES
-					prop_default = { 'Clustering'  'ClusteringAv'  'Degree'  'DegreeAv'  'Distance'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'Triangles' };
+					prop_default = { 'Assortativity'  'BetweennessCentrality'  'Clustering'  'ClusteringAv'  'CorePeriphery'  'Degree'  'DegreeAv'  'DegreeOverlap'  'DegreeOverlapAv'  'Diameter'  'Distance'  'Eccentricity'  'EccentricityAv'  'EdgeBetwCentr'  'EdgeOverlap'  'EigenVectorCentrality'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'KCore'  'KCorenessCentrality'  'LocalEfficiency'  'LocalEfficiencyAv'  'MultiRC'  'MultilayerCommunity'  'MultiplexCP'  'MultiplexCl'  'MultiplexClAv'  'MultiplexP'  'MultiplexPAv'  'MultiplexRCDeg'  'MultiplexT'  'OverlappingDeg'  'OverlappingDegAv'  'PathLength'  'PathLengthAv'  'RCDeg'  'Radius'  'RichClub'  'Richness'  'SmallWorldness'  'Transitivity'  'Triangles' };
 				case 34 % MultiplexBUT.ATTEMPTSPEREDGE
 					prop_default = 5;
 				otherwise
