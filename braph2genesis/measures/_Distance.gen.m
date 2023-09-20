@@ -302,21 +302,13 @@ GraphWU
 %%%% ¡probability!
 .01
 %%%% ¡code!
-B = [
-    0     .1    .2  .25  0
-    .125  0     0   0    0
-    .2    .5    0   .25  0
-    .125  10    0   0    0
-    0     0     0   0    0
-    ];
+B = [0 0.1 0;
+     0.1 0 0.2;
+     0 0.2 0];
 
-known_distance = {[
-    0   5   5   4   Inf
-    5   0   2   1   Inf
-    5   2   0   3   Inf
-    4   1   3   0   Inf
-    Inf Inf Inf Inf 0
-    ]};
+known_distance = {[0	10	15
+                  10     0 	5
+                  15	 5	0]};
 
 g = GraphWU('B', B);
 

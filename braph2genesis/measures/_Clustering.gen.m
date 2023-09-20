@@ -182,23 +182,41 @@ assert(isequal(round(cell2mat(m_inside_g.get('M')), 4), clustering_WU), ...
 %%%% ¡name!
 GraphWD
 %%%% ¡code!
-B_WD = [
-    0 .1 .2 .1; 
-    1 0 .3 0; 
-    .2 .4 0 .3; 
-    1 0 .4 0
-    ];
-clustering_WD = [.1375 .1621 .1381 .1565]';
+B_WD = [0 0.1 0.1;
+        0.2 0 0.2;
+        0.2 0.3 0];
+clustering_WD = [0.1158 0.1166 0.1166]';
 g = GraphWD('B', B_WD);
-m_outside_g = Clustering('G', g);
+m_outside_g = Clustering('G', g, 'RULE', 'all');
 assert(isequal(round(cell2mat(m_outside_g.get('M')),4), clustering_WD), ...
 		    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
 		    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
-		
-		m_inside_g = g.get('MEASURE', 'Clustering');
-		assert(isequal(round(cell2mat(m_inside_g.get('M')),4), clustering_WD), ...
+
+m_inside_g = g.get('MEASURE', 'Clustering');
+m_inside_g.set('RULE', 'all');
+assert(isequal(round(cell2mat(m_inside_g.get('M')),4), clustering_WD), ...
+    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+%%% ¡test!
+%%%% ¡name!
+GraphWD
+%%%% ¡code!
+B_WD = [0 0.1 0.1;
+        0.2 0 0.2;
+        0.2 0.3 0];
+clustering_WD = [0.0860 0.0905 0.0878]';
+g = GraphWD('B', B_WD);
+m_outside_g = Clustering('G', g, 'RULE', 'middleman');
+assert(isequal(round(cell2mat(m_outside_g.get('M')),4), clustering_WD), ...
 		    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
-		    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+		    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+m_inside_g = g.get('MEASURE', 'Clustering');
+m_inside_g.set('RULE', 'middleman');
+assert(isequal(round(cell2mat(m_inside_g.get('M')),4), clustering_WD), ...
+    [BRAPH2.STR ':Clustering:' BRAPH2.FAIL_TEST], ...
+    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 
 %%% ¡test!
 %%%% ¡name!
