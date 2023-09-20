@@ -15,7 +15,9 @@ This Tutorial explains how to work with the Graphical User Interface (GUI) to ma
 
 ## Open the GUI
 
-The brain atlas GUI is the first step in most BRAPH 2.0 pipelines. You can open it by typing `braph2` in the MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis. The initial step is typically to upload the brain atlas, as shown in the figure below.
+The brain atlas GUI is the first step in most BRAPH 2.0 pipelines. You can open it by typing `braph2` in MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis. The initial step is typically to upload the brain atlas directly Figure 3c-d after clicking "Load Atlas". 
+
+You can also open the GUI and upload the brain atlas using the command line (i.e., without opening an analysis pipeline) by typing the commands referenced below. In that case, you can upload the atlas as shown in Figure 3a-d.
 
 > ![Upload a brain atlas](fig03.jpg)
 > 
@@ -25,7 +27,7 @@ The brain atlas GUI is the first step in most BRAPH 2.0 pipelines. You can open 
 > **c** Navigate to the BRAPH 2.0 folder `atlases`.
 > **d** Select the desired atlas.
 
-To open the GUI and upload the brain atlas, you can also do it from the command line (i.e., without opening an analysis pipeline) by typing the following commands:
+Commands to open the GUI and upload the brain atlas:
 
 ```matlab
 ba = BrainAtlas();  % creates a new object `BrainAtlas`.
@@ -116,7 +118,7 @@ Most things in the settings window are intuitive. So we encourage you to try the
 > ![Example of a visualization of the brain atlas](fig09.jpg)
 > 
 > **Figure 9. Example of a visualization of the brain atlas.**
-> A final figure created with BRAPH 2.0 by changing different options in the menu.
+> A final figure was created with BRAPH 2.0 by changing different options in the menu.
  
 Each brain region can be represented with spheres, symbols, IDs, and labels. Spheres are objects that are rendered in 3D — often prettier, but also more computationally expensive. Symbols are objects rendered in 2D — more stylized and less computationally expensive. IDs and labels are the texts associated with the brain region.
 
@@ -127,7 +129,7 @@ BRAPH 2.0 provides different brain surfaces, as shown in Figure 10, for the huma
 > ![Brain surfaces in BRAPH 2.0](fig10.png)
 > 
 > **Figure 10. Brain surfaces in BRAPH 2.0.**
-> Some brain surfaces available in BRAPH 2.0 to plot the brain atlas.
+> Some of the brain surfaces available in BRAPH 2.0 to plot the brain atlas.
 
 ## Export the Figure
 
@@ -136,4 +138,4 @@ To export and save a (publication-ready) figure, you can select "Print" from the
 > ![Save a brain atlas figure](fig11.jpg)
 > 
 > **Figure 11. Save a brain atlas figure.**
-> BRAPH 2.0 provides different options that allow saving a figure with different resolutions and color modes, adequate to any requirement for presentations and publicaitons.
+> BRAPH 2.0 provides different options that allow saving a figure with different resolutions and color modes, adequate to any requirement for presentations and publications.
