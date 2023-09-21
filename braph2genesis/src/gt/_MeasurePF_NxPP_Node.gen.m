@@ -106,7 +106,7 @@ end
 %% ¡props!
 
 %%% ¡prop!
-DROPDOWN (evanescent, handle) is the logical value dropdown.
+DROPDOWN (evanescent, handle) is the dropdown of the node.
 %%%% ¡calculate!
 el = pr.get('EL');
 prop = pr.get('PROP');
