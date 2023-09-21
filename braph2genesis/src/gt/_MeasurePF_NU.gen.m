@@ -35,6 +35,12 @@ Brain Atlas NOTES
 
 %%% ¡prop!
 %%%% ¡id!
+MeasurePF_NU.NODE
+%%%% ¡title!
+NODE SELECTION
+
+%%% ¡prop!
+%%%% ¡id!
 MeasurePF_NU.BKGCOLOR
 %%%% ¡title!
 BACKGROUND COLOR
@@ -80,12 +86,6 @@ X-LABEL
 MeasurePF_NU.ST_YLABEL
 %%%% ¡title!
 Y-LABEL
-
-%%% ¡prop!
-%%%% ¡id!
-MeasurePF_NU.NODE
-%%%% ¡title!
-NODE SELECTION
 
 %% ¡props_update!
 

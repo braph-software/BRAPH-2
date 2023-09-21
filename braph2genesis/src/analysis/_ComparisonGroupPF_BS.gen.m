@@ -35,6 +35,12 @@ Brain Atlas NOTES
 
 %%% ¡prop!
 %%%% ¡id!
+ComparisonGroupPF_BS.NODES
+%%%% ¡title!
+NODES SELECTION
+
+%%% ¡prop!
+%%%% ¡id!
 ComparisonGroupPF_BS.BKGCOLOR
 %%%% ¡title!
 BACKGROUND COLOR
@@ -50,12 +56,6 @@ PANEL POSITION
 ComparisonGroupPF_BS.ST_AXIS
 %%%% ¡title!
 AXIS
-
-%%% ¡prop!
-%%%% ¡id!
-ComparisonGroupPF_BS.NODES
-%%%% ¡title!
-NODES SELECTION
 
 %%% ¡prop!
 %%%% ¡id!
