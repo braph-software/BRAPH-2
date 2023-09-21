@@ -277,7 +277,7 @@ end
 	label=cd:pf:brainsurfacepf:tests,
 	caption={
 		{\bf BrainSurfacePF element tests.}
-		The \code{tests} section of the generator code for \fn{\_BrainSurfacePF.gen.m} determines how the unit tests are performd.
+		The \code{tests} section of the generator code for \fn{\_BrainSurfacePF.gen.m} determines how the unit tests are performed.
 	}
 ]
 %% ¡tests!
@@ -303,10 +303,11 @@ warning('on', [BRAPH2.STR ':BrainSurfacePF'])
 We will now see how to add the pushbuttons in the toolbar of the figure, opportunely altering the code so far implemented.
 
 \begin{lstlisting}[
-	label=cd:pf:brainsurfacepf:props_update,
+	label=cd:pf:brainsurfacepf:props_update_tools,
 	caption={
 		{\bf BrainSurfacePF element props update.}
-		The \code{props\_update} section of the generator code for \fn{\_BrainSurfacePF.gen.m} updates the properties of the \code{PanelFig} element. This defines the core properties of the property panel.
+		The \code{props\_update} section of the generator code for \fn{\_BrainSurfacePF.gen.m} with the additions needed to have the toolbar pushbuttons.
+		\expand{cd:pf:brainsurfacepf:props_update}
 	}
 ]
 ¤%% ¡props_update!
@@ -556,6 +557,21 @@ if pf.get('DRAWN')
         set(findobj(toolbar, 'Tag', 'TOOL.Brain'), 'State', pf.get('BRAIN'))
     end
 ¤end
+...¤
+\end{lstlisting}
+
+\begin{lstlisting}[
+	label=cd:pf:brainsurfacepf:tests_tools,
+	caption={
+		{\bf BrainSurfacePF element tests with toolbar pushbuttons.}
+		The \code{tests} section of the generator code for \fn{\_BrainSurfacePF.gen.m} with the additions needed to have the tool- bar pushbuttons for the brain surface.
+		\expand{cd:pf:brainsurfacepf:tests}
+	}
+]
+¤%% ¡tests!
+
+%%% ¡excluded_props! 
+[BrainSurfacePF.PARENT BrainSurfacePF.H BrainSurfacePF.ST_POSITION BrainSurfacePF.ST_AXIS BrainSurfacePF.ST_SURFACE BrainSurfacePF.ST_AMBIENT¤ BrainSurfacePF.LISTENER_ST_AXIS¤] ¥\circled{1}\circlednote{1}{excludes from testing also \code{LISTENER\_ST\_AXIS}.}¥
 ...¤
 \end{lstlisting}
 
