@@ -141,13 +141,8 @@ value = [];
 
 %%% ¡prop!
 NODE (figure, scalar) is the node number of the nodal group comparison figure.
-%%%% ¡_gui!
-% % % bas = pf.get('M').get('G').get('BAS');
-% % % ba = bas{1};
-% % % 
-% % % pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureNU.BR1_ID, ...
-% % %     'BA', ba, ...
-% % %     varargin{:});
+%%%% ¡gui!
+pr = ComparisonGroupPF_NxPP_Node('EL', pf, 'PROP', ComparisonGroupPF_NS.NODE);
 
 %% ¡tests!
 
