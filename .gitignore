@@ -7,4 +7,5 @@
 *.aux
 *.out
 *.toc
+
 braph2/pipelines/*/Example*
