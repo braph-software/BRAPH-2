@@ -1593,7 +1593,15 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	example_NNCV_CON_FUN_MP_WU_M_REG
 end
 
-%% Test 17: No Figures Left
+%% Test 17: Example script for weighted undirected graph (GraphWU) using functional data
+if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
+	if ~isfile([fileparts(which('NNDataPoint_FUN_REG')) filesep 'Example data NN REG FUN XLS' filesep 'atlas.xlsx'])
+	    test_NNDataPoint_FUN_REG % create example files
+	end
+	example_NNCV_FUN_WU_M_REG
+end
+
+%% Test 18: No Figures Left
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	assert(isempty(findall(0, 'type', 'figure')), ...
 		[BRAPH2.STR ':NNDataPoint_Measure_REG:' BRAPH2.FAIL_TEST], ...
@@ -1602,7 +1610,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 		)
 end
 
-%% Test 18: Delete Figures
+%% Test 19: Delete Figures
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	delete(findall(0, 'type', 'figure'))
 end

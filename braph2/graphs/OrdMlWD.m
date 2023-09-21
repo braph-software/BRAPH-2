@@ -638,7 +638,7 @@ classdef OrdMlWD < Graph
 				case 7 % OrdMlWD.GRAPH_TYPE
 					prop_default = 5;
 				case 26 % OrdMlWD.COMPATIBLE_MEASURES
-					prop_default = { 'DegreeIn'  'DegreeInAv'  'DegreeOut'  'DegreeOutAv'  'Distance' };
+					prop_default = { 'AssortInIn'  'AssortInOut'  'CorePeriphery'  'DegreeIn'  'DegreeInAv'  'DegreeOut'  'DegreeOutAv'  'Distance'  'Flexibility'  'FlexibilityAv'  'KCore'  'MultiplexPIn'  'OverlappingSIn'  'OverlappingSInAv'  'OverlappingSOut'  'OverlappingSOutAv'  'StrengthIn'  'StrengthInAv'  'StrengthOut'  'StrengthOutAv' };
 				otherwise
 					prop_default = getPropDefault@Graph(prop);
 			end

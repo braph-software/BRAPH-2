@@ -1457,7 +1457,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	       ];
 	B = {B11 B22};
 	
-	known_in_degree = { 
+	known_out_degreeAv = { 
 	                  mean([2 0 1]')
 	                  mean([1 2 2]')
 	                  };
@@ -1465,17 +1465,132 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	g = MultiplexBD('B', B);
 	
 	m_outside_g = DegreeOutAv('G', g);
-	assert(isequal(m_outside_g.get('M'), known_in_degree), ...
+	assert(isequal(m_outside_g.get('M'), known_out_degreeAv), ...
 	   [BRAPH2.STR ':DegreeOutAv:' BRAPH2.FAIL_TEST], ...
 	    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 	
 	m_inside_g = g.get('MEASURE', 'DegreeOutAv');
-	assert(isequal(m_inside_g.get('M'), known_in_degree), ...
+	assert(isequal(m_inside_g.get('M'), known_out_degreeAv), ...
 	    [BRAPH2.STR ':DegreeOutAv:' BRAPH2.FAIL_TEST], ...
 	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
 
-%% Test 16: No Figures Left
+%% Test 16: OrdMxWD
+if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
+	B11 = [
+	      0  1  1
+	      0  0  0
+	      1  0  0
+	      ];
+	B22 = [
+	       0  1  0
+	       1  0  1
+	       1  1  0
+	       ];
+	B = {B11 B22};
+	
+	known_out_degreeAv = { 
+	                  mean([2 0 1])'
+	                  mean([1 2 2])'
+	                  };
+	
+	g = OrdMxWD('B', B);
+	
+	m_outside_g = DegreeOutAv('G', g);
+	assert(isequal(m_outside_g.get('M'), known_out_degreeAv), ...
+	   [BRAPH2.STR ':DegreeOutAv:' BRAPH2.FAIL_TEST], ...
+	    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+	
+	m_inside_g = g.get('MEASURE', 'DegreeOutAv');
+	assert(isequal(m_inside_g.get('M'), known_out_degreeAv), ...
+	    [BRAPH2.STR ':DegreeOutAv:' BRAPH2.FAIL_TEST], ...
+	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+end
+
+%% Test 17: OrdMxBD
+if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
+	B11 = [
+	      0   .2  1
+	      0   0   .8
+	      1   0   0
+	      ];
+	B22 = [
+	      0  1   .6
+	      1  0   .4
+	      0  .4  0
+	      ];
+	B = {B11 B22};
+	
+	known_out_degreeAv = {
+	                  mean([2 1 1])'
+	                  mean([2 2 1])'
+	                  };
+	
+	
+	g = OrdMxBD('B', B);
+	
+	m_outside_g = DegreeOutAv('G', g);
+	assert(isequal(m_outside_g.get('M'), known_out_degreeAv), ...
+	   [BRAPH2.STR ':DegreeOutAv:' BRAPH2.FAIL_TEST], ...
+	    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+	
+	m_inside_g = g.get('MEASURE', 'DegreeOutAv');
+	assert(isequal(m_inside_g.get('M'), known_out_degreeAv), ...
+	    [BRAPH2.STR ':DegreeOutAv:' BRAPH2.FAIL_TEST], ...
+	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+end
+
+%% Test 18: OrdMlWD
+if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
+	B11 = [
+	    0   .2   .4
+	    .2   0   .1
+	    .7  .1   0
+	    ];
+	
+	B22 = [    
+	    0   .2   .4 .5
+	    .2   0   .1 .5
+	    .7  .1   0  .5
+	    .5  .5  .5  0
+	    ];
+	B33 = [    
+	    0   .2   .4 .5
+	    .2   0   .1 .5
+	    .9  .1   0  .2
+	    .5  .5  .2  0
+	    ];
+	B12 = rand(size(B11,1),size(B22,2));
+	B13 = rand(size(B11,1),size(B33,2));
+	B23 = rand(size(B22,1),size(B33,2));
+	B21 = B12';
+	B31 = B13';
+	B32 = B23';
+	B= {B11 B12 B13;
+	    B21 B22 B23;
+	    B31 B32 B33};
+	
+	g = OrdMlWD('B', B);
+	
+	BUT_graph = g.get('A');
+	
+	known_out_degreeAv = {
+	                  mean([2 2 2])'
+	                  mean([3 3 3 3])'
+	                  mean([3 3 3 3])'};
+	
+	m_outside_g = DegreeOutAv('G', g);
+	assert(isequal(m_outside_g.get('M'), known_out_degreeAv), ...
+	   [BRAPH2.STR ':DegreeOutAv:' BRAPH2.FAIL_TEST], ...
+	    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+	
+	m_inside_g = g.get('MEASURE', 'DegreeOutAv');
+	assert(isequal(m_inside_g.get('M'), known_out_degreeAv), ...
+	    [BRAPH2.STR ':DegreeOutAv:' BRAPH2.FAIL_TEST], ...
+	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
+end
+
+%% Test 19: No Figures Left
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	assert(isempty(findall(0, 'type', 'figure')), ...
 		[BRAPH2.STR ':DegreeOutAv:' BRAPH2.FAIL_TEST], ...
@@ -1484,7 +1599,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 		)
 end
 
-%% Test 17: Delete Figures
+%% Test 20: Delete Figures
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	delete(findall(0, 'type', 'figure'))
 end

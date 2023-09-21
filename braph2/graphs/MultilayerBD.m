@@ -615,7 +615,7 @@ classdef MultilayerBD < Graph
 				case 7 % MultilayerBD.GRAPH_TYPE
 					prop_default = 6;
 				case 26 % MultilayerBD.COMPATIBLE_MEASURES
-					prop_default = { 'Distance'  'Triangles' };
+					prop_default = { 'Distance'  'Flexibility'  'FlexibilityAv'  'KCore'  'OverlappingDegIn'  'OverlappingDegInAv'  'OverlappingDegOut'  'OverlappingDegOutAv'  'PathLengthIn'  'PathLengthInAv'  'PathLengthOut'  'PathLengthOutAv'  'Triangles' };
 				otherwise
 					prop_default = getPropDefault@Graph(prop);
 			end

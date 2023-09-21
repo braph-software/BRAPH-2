@@ -594,7 +594,7 @@ classdef MultigraphBUD < GraphWU
 				case 7 % MultigraphBUD.GRAPH_TYPE
 					prop_default = 2;
 				case 26 % MultigraphBUD.COMPATIBLE_MEASURES
-					prop_default = { 'Clustering'  'ClusteringAv'  'Degree'  'DegreeAv'  'Distance'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'Triangles' };
+					prop_default = { 'Assortativity'  'BetweennessCentrality'  'Clustering'  'ClusteringAv'  'CorePeriphery'  'Degree'  'DegreeAv'  'Diameter'  'Distance'  'Eccentricity'  'EccentricityAv'  'EdgeBetwCentr'  'EigenVectorCentrality'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'KCore'  'KCorenessCentrality'  'LocalEfficiency'  'LocalEfficiencyAv'  'PathLength'  'PathLengthAv'  'RCDeg'  'Radius'  'RichClub'  'Richness'  'SmallWorldness'  'Transitivity'  'Triangles' };
 				case 34 % MultigraphBUD.ATTEMPTSPEREDGE
 					prop_default = 5;
 				otherwise

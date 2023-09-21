@@ -623,7 +623,7 @@ classdef GraphBU < Graph
 				case 7 % GraphBU.GRAPH_TYPE
 					prop_default = 1;
 				case 26 % GraphBU.COMPATIBLE_MEASURES
-					prop_default = { 'Clustering'  'ClusteringAv'  'Degree'  'DegreeAv'  'Distance'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'Triangles' };
+					prop_default = { 'Assortativity'  'BetweennessCentrality'  'Clustering'  'ClusteringAv'  'CommunityStructure'  'CorePeriphery'  'Degree'  'DegreeAv'  'Diameter'  'Distance'  'Eccentricity'  'EccentricityAv'  'EdgeBetwCentr'  'EigenVectorCentrality'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'KCore'  'KCorenessCentrality'  'LocalEfficiency'  'LocalEfficiencyAv'  'Modularity'  'Participation'  'PathLength'  'PathLengthAv'  'RCDeg'  'Radius'  'RichClub'  'Richness'  'SmallWorldness'  'Transitivity'  'Triangles' };
 				otherwise
 					prop_default = getPropDefault@Graph(prop);
 			end

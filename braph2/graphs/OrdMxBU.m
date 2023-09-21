@@ -625,7 +625,7 @@ classdef OrdMxBU < Graph
 				case 7 % OrdMxBU.GRAPH_TYPE
 					prop_default = 3;
 				case 26 % OrdMxBU.COMPATIBLE_MEASURES
-					prop_default = { 'Degree'  'DegreeAv'  'Distance'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'Triangles' };
+					prop_default = { 'Degree'  'DegreeAv'  'Distance'  'Flexibility'  'FlexibilityAv'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'Triangles' };
 				otherwise
 					prop_default = getPropDefault@Graph(prop);
 			end

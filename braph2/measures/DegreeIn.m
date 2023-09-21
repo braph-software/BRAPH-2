@@ -168,7 +168,7 @@ classdef DegreeIn < Measure
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'DegreeIn'  'DegreeInAv' }; %CET: Computational Efficiency Trick
+			subclass_list = { 'DegreeIn'  'DegreeInAv'  'OverlappingDegIn'  'OverlappingDegInAv' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of in-degree.

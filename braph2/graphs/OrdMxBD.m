@@ -613,7 +613,7 @@ classdef OrdMxBD < Graph
 				case 7 % OrdMxBD.GRAPH_TYPE
 					prop_default = 3;
 				case 26 % OrdMxBD.COMPATIBLE_MEASURES
-					prop_default = { 'DegreeIn'  'DegreeInAv'  'DegreeOut'  'DegreeOutAv'  'Distance'  'GlobalEfficiencyIn'  'GlobalEfficiencyInAv'  'GlobalEfficiencyOut'  'GlobalEfficiencyOutAv'  'Triangles' };
+					prop_default = { 'DegreeIn'  'DegreeInAv'  'DegreeOut'  'DegreeOutAv'  'Distance'  'Flexibility'  'FlexibilityAv'  'GlobalEfficiencyIn'  'GlobalEfficiencyInAv'  'GlobalEfficiencyOut'  'GlobalEfficiencyOutAv'  'PathLengthOut'  'Triangles' };
 				otherwise
 					prop_default = getPropDefault@Graph(prop);
 			end

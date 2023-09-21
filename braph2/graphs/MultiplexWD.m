@@ -635,7 +635,7 @@ classdef MultiplexWD < Graph
 				case 7 % MultiplexWD.GRAPH_TYPE
 					prop_default = 4;
 				case 26 % MultiplexWD.COMPATIBLE_MEASURES
-					prop_default = { 'Clustering'  'ClusteringAv'  'DegreeIn'  'DegreeInAv'  'DegreeOut'  'DegreeOutAv'  'Distance'  'GlobalEfficiencyIn'  'GlobalEfficiencyInAv'  'GlobalEfficiencyOut'  'GlobalEfficiencyOutAv'  'Triangles' };
+					prop_default = { 'AssortInIn'  'AssortInOut'  'AssortOutIn'  'AssortOutOut'  'BetweennessCentrality'  'Clustering'  'ClusteringAv'  'CorePeriphery'  'DegreeIn'  'DegreeInAv'  'DegreeOut'  'DegreeOutAv'  'Distance'  'EccentricityIn'  'EccentricityInAv'  'EccentricityOut'  'EccentricityOutAv'  'EdgeBetwCentr'  'EdgeNumDist'  'EdgeOverlap'  'Flexibility'  'FlexibilityAv'  'GlobalEfficiencyIn'  'GlobalEfficiencyInAv'  'GlobalEfficiencyOut'  'GlobalEfficiencyOutAv'  'KCore'  'KCorenessCentrality'  'MultiRC'  'MultiplexCP'  'MultiplexKCor'  'MultiplexKCorC'  'MultiplexPIn'  'MultiplexPOut'  'MultiplexRCDeg'  'MultiplexRCS'  'OverlappingDegIn'  'OverlappingDegInAv'  'OverlappingDegOut'  'OverlappingDegOutAv'  'OverlappingSIn'  'OverlappingSInAv'  'OverlappingSOut'  'OverlappingSOutAv'  'PathLengthIn'  'PathLengthInAv'  'PathLengthOut'  'PathLengthOutAv'  'Persistence'  'RCDeg'  'RCS'  'RichClub'  'Richness'  'SCore'  'StrengthIn'  'StrengthInAv'  'StrengthOut'  'StrengthOutAv'  'Transitivity'  'Triangles'  'WeightedEdgeOvlp'  'WeightedMxPIn'  'WeightedMxPOut' };
 				otherwise
 					prop_default = getPropDefault@Graph(prop);
 			end

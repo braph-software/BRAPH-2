@@ -613,7 +613,7 @@ classdef MultiplexBD < Graph
 				case 7 % MultiplexBD.GRAPH_TYPE
 					prop_default = 4;
 				case 26 % MultiplexBD.COMPATIBLE_MEASURES
-					prop_default = { 'Clustering'  'ClusteringAv'  'DegreeIn'  'DegreeInAv'  'DegreeOut'  'DegreeOutAv'  'Distance'  'GlobalEfficiencyIn'  'GlobalEfficiencyInAv'  'GlobalEfficiencyOut'  'GlobalEfficiencyOutAv'  'Triangles' };
+					prop_default = { 'AssortInIn'  'AssortInOut'  'AssortOutIn'  'AssortOutOut'  'BetweennessCentrality'  'Clustering'  'ClusteringAv'  'CorePeriphery'  'DegreeIn'  'DegreeInAv'  'DegreeOut'  'DegreeOutAv'  'Distance'  'EccentricityIn'  'EccentricityInAv'  'EccentricityOut'  'EccentricityOutAv'  'EdgeBetwCentr'  'EdgeOverlap'  'Flexibility'  'FlexibilityAv'  'GlobalEfficiencyIn'  'GlobalEfficiencyInAv'  'GlobalEfficiencyOut'  'GlobalEfficiencyOutAv'  'KCore'  'KCorenessCentrality'  'MultiRC'  'MultiplexCP'  'MultiplexKCor'  'MultiplexKCorC'  'MultiplexPIn'  'MultiplexPOut'  'MultiplexRCDeg'  'OverlappingDegIn'  'OverlappingDegInAv'  'OverlappingDegOut'  'OverlappingDegOutAv'  'PathLengthIn'  'PathLengthInAv'  'PathLengthOut'  'PathLengthOutAv'  'RCDeg'  'RichClub'  'Richness'  'Transitivity'  'Triangles' };
 				otherwise
 					prop_default = getPropDefault@Graph(prop);
 			end
