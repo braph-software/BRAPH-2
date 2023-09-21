@@ -1,54 +1,54 @@
 %% ¡header!
-MeasurePF_BxPP_Nodes < PanelProp (pr, panel property node) plots the panel to select a couple of nodes.
+ComparisonGroupPF_BxPP_Nodes < PanelProp (pr, panel property node) plots the panel to select a couple of nodes.
 
 %%% ¡description!
-MeasurePF_BxPP_Nodes plots the panel to select the nodes from two drop-down lists.
-It is supposed to be used with the property NODES of MeasurePF_BU, MeasurePF_BS, or MeasurePF_BB.
+ComparisonGroupPF_BxPP_Nodes plots the panel to select the nodes from two drop-down lists.
+It is supposed to be used with the property NODES of ComparisonGroupPF_BU, ComparisonGroupPF_BS, or ComparisonGroupPF_BB.
 
 %%% ¡seealso!
-uidropdown, GUI, MeasurePF_BU, MeasurePF_BS, MeasurePF_BB
+uidropdown, GUI, ComparisonGroupPF_BU, ComparisonGroupPF_BS, ComparisonGroupPF_BB
 
 %% ¡props_update!
 
 %%% ¡prop!
 NAME (constant, string) is the name of the panel property node.
 %%%% ¡default!
-'MeasurePF_BxPP_Nodes'
+'ComparisonGroupPF_BxPP_Nodes'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel property node.
 %%%% ¡default!
-'MeasurePF_BxPP_Nodes plots the panel to select the nodes from two drop-down lists. It is supposed to be used with the property NODES of MeasurePF_BU, MeasurePF_BS, or MeasurePF_BB.'
+'ComparisonGroupPF_BxPP_Nodes plots the panel to select the nodes from two drop-down lists. It is supposed to be used with the property NODES of ComparisonGroupPF_BU, ComparisonGroupPF_BS, or ComparisonGroupPF_BB.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel property node.
 %%%% ¡settings!
-'MeasurePF_BxPP_Nodes'
+'ComparisonGroupPF_BxPP_Nodes'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the panel property node.
 %%%% ¡default!
-'MeasurePF_BxPP_Nodes ID'
+'ComparisonGroupPF_BxPP_Nodes ID'
 
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the panel property node.
 %%%% ¡default!
-'MeasurePF_BxPP_Nodes label'
+'ComparisonGroupPF_BxPP_Nodes label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the panel property node.
 %%%% ¡default!
-'MeasurePF_BxPP_Nodes notes'
+'ComparisonGroupPF_BxPP_Nodes notes'
 
 %%% ¡prop!
 EL (data, item) is the element.
 %%%% ¡default!
-MeasurePF_BU()
+ComparisonGroupPF_BU()
 
 %%% ¡prop!
 PROP (data, scalar) is the property number.
 %%%% ¡default!
-MeasurePF_BU.NODES
+ComparisonGroupPF_BU.NODES
 
 %%% ¡prop!
 HEIGHT (gui, size) is the pixel height of the property panel.
@@ -158,7 +158,7 @@ end
 %% ¡tests!
 
 %%% ¡excluded_props!
-[MeasurePF_BxPP_Nodes.DRAW MeasurePF_BxPP_Nodes.PARENT MeasurePF_BxPP_Nodes.H MeasurePF_BxPP_Nodes.UPDATE MeasurePF_BxPP_Nodes.LISTENER_CB MeasurePF_BxPP_Nodes.DROPDOWN_NODE1 MeasurePF_BxPP_Nodes.DROPDOWN_NODE2]
+[ComparisonGroupPF_BxPP_Nodes.DRAW ComparisonGroupPF_BxPP_Nodes.PARENT ComparisonGroupPF_BxPP_Nodes.H ComparisonGroupPF_BxPP_Nodes.UPDATE ComparisonGroupPF_BxPP_Nodes.LISTENER_CB ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE1 ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE2]
 
 %%% ¡warning_off!
 true
@@ -167,7 +167,7 @@ true
 %%%% ¡name!
 Remove Figures
 %%%% ¡code!
-warning('off', [BRAPH2.STR ':MeasurePF_BxPP_Nodes'])
+warning('off', [BRAPH2.STR ':ComparisonGroupPF_BxPP_Nodes'])
 assert(length(findall(0, 'type', 'figure')) == 1)
 delete(findall(0, 'type', 'figure'))
-warning('on', [BRAPH2.STR ':MeasurePF_BxPP_Nodes'])
+warning('on', [BRAPH2.STR ':ComparisonGroupPF_BxPP_Nodes'])
