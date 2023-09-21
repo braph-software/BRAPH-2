@@ -138,11 +138,6 @@ G_DICT (result, idict) is the multiplex (MultiplexWU) ensemble obtained from thi
 g_dict = IndexedDictionary('IT_CLASS', 'MultiplexWU');
 gr = a.get('GR');
 
-% % % ba = BrainAtlas();
-% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').get('LENGTH') > 0
-% % %     ba = gr.get('SUB_DICT').get('IT', 1).get('BA');
-% % % end
-
 T = a.get('REPETITION');
 fs = 1 / T;
 fmin = a.get('F_MIN');
@@ -170,8 +165,10 @@ for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
     A{2} = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
     
     g = MultiplexWU( ...
-        'ID', ['g ' sub.get('ID')], ... % % % 'BAS', ba ...
-        'B', A ...
+        'ID', ['g ' sub.get('ID')], ...
+        'B', A, ...
+        'LAYERLABELS', cellfun(@(x) ['L' num2str(x)], num2cell([1:1:L]), 'UniformOutput', false), ...
+        'NODELABELS', a.get('GR').get('SUB_DICT').get('IT', 1).get('BA').get('BR_DICT').get('KEYS') ...
         );
     g_dict.get('ADD', g)
 end

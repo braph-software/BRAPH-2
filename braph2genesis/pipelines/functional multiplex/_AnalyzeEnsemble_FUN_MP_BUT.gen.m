@@ -143,12 +143,6 @@ G_DICT (result, idict) is the graph (MultiplexBUT) ensemble obtained from this a
 %%%% ¡calculate!
 g_dict = IndexedDictionary('IT_CLASS', 'MultiplexBUT');
 gr = a.get('GR');
-% % % node_labels = '';
-
-% % % ba = BrainAtlas();
-% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').get('LENGTH') > 0 
-% % %     ba = gr.get('SUB_DICT').get('IT', 1).get('BA');
-% % % end
 
 T = a.get('REPETITION');
 fs = 1 / T;
@@ -179,9 +173,11 @@ for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
     end
     
     g = MultiplexBUT( ...
-        'ID', ['g ' sub.get('ID')], ... % % % 'BAS', ba ...
+        'ID', ['g ' sub.get('ID')], ...
         'B', A, ...
-        'THRESHOLDS', thresholds ...
+        'THRESHOLDS', thresholds, ...
+        'LAYERLABELS', cellfun(@(x) ['L' num2str(x)], num2cell([1:1:L]), 'UniformOutput', false), ...
+        'NODELABELS', a.get('GR').get('SUB_DICT').get('IT', 1).get('BA').get('BR_DICT').get('KEYS') ...
         );
     g_dict.get('ADD', g)
 end

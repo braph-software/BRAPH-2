@@ -138,11 +138,6 @@ G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analys
 g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
 gr = a.get('GR');
 
-% % % ba = BrainAtlas();
-% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').get('LENGTH') > 0
-% % %     ba = gr.get('SUB_DICT').get('IT', 1).get('BA');
-% % % end
-
 T = a.get('REPETITION');
 fs = 1 / T;
 fmin = a.get('F_MIN');
@@ -163,10 +158,11 @@ for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
     A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));
     
     g = GraphWU( ...
-        'ID', ['g ' sub.get('ID')], ... % % % 'BAS', ba ...
-        'B', A ... 
+        'ID', ['g ' sub.get('ID')], ...
+        'B', A, ... 
+        'NODELABELS', a.get('GR').get('SUB_DICT').get('IT', 1).get('BA').get('BR_DICT').get('KEYS') ...
         );
-    g_dict.get('ADD', g)
+    g_dict.get('ADD', g)    
 end
 
 if ~isa(a.get('GRAPH_TEMPLATE'), 'NoValue')

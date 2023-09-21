@@ -151,7 +151,7 @@ dropdown = uidropdown( ...
 
 value = dropdown;
 %%%% ¡calculate_callbacks!
-function cb_dropdown_node1(~, ~)
+function cb_dropdown_node2(~, ~)
     pr.get('EL').set(pr.get('PROP'), [get(pr.get('DROPDOWN_NODE1'), 'Value') get(pr.get('DROPDOWN_NODE2'), 'Value')])
 end
 
