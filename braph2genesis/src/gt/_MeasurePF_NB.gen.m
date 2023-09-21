@@ -129,13 +129,8 @@ value = [];
 
 %%% ¡prop!
 NODE (figure, scalar) is the node number of the nodal measure.
-%%%% ¡_gui!
-% % % bas = pf.get('M').get('G').get('BAS');
-% % % ba = bas{1};
-% % % 
-% % % pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureNU.BR1_ID, ...
-% % %     'BA', ba, ...
-% % %     varargin{:});
+%%%% ¡gui!
+pr = MeasurePF_NxPP_Node('EL', pf, 'PROP', MeasurePF_NB.NODE);
 
 %% ¡tests!
 
