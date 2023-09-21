@@ -98,7 +98,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'GraphBU' 'MultigraphBUT' 'MultiplexBU'} ;%TBE % % % add any missing tests
+{'GraphBU' 'MultigraphBUT' 'MultiplexBU'};
 
 %%% ¡prop!
 M (result, cell) is the modularity.

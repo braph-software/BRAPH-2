@@ -100,7 +100,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'GraphBU'} ;%TBE % % % add any missing tests
+{'GraphBU'};
 
 %%% ¡prop!
 M (result, cell) is the triangles.

@@ -179,13 +179,13 @@ function set_table()
                         %%%__WARN_TBI__
                         
                     case Format.ITEM % __Format.ITEM__
-                        data{i, c} = it_list{i}.get(col).tostring(); % % % %TODO Add property STRING to ContreteElement and here use get('STRING')?
+                        data{i, c} = it_list{i}.get(col).get('TOSTRING');
                         
                     case Format.ITEMLIST % __Format.ITEMLIST__
                         %%%__WARN_TBI__
 
                     case Format.IDICT % __Format.IDICT__
-                        data{i, c} = it_list{i}.get(col).tostring(); % % % %TODO Add property STRING to ContreteElement and here use get('STRING')?
+                        data{i, c} = it_list{i}.get(col).get('TOSTRING');
                         
                     case Format.SCALAR % __Format.SCALAR__
                         data{i, c} = it_list{i}.get(col);

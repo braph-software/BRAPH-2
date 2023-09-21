@@ -86,10 +86,10 @@ ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
 'MeasureEnsemble'
 %%%% ¡calculate!
 value = IndexedDictionary('IT_CLASS', 'MeasureEnsemble', 'IT_KEY', MeasureEnsemble.MEASURE);
-%%%% ¡_gui!
-% % % pr = AnalyzeEnsemblePP_MeDict('EL', a, 'PROP', AnalyzeEnsemble.ME_DICT, ...
-% % %     'WAITBAR', a.getCallback('WAITBAR'), ...
-% % %     varargin{:});
+%%%% ¡gui!
+pr = AnalyzeEnsemblePP_MeDict('EL', a, 'PROP', AnalyzeEnsemble.ME_DICT, ...
+    'WAITBAR', a.getCallback('WAITBAR'), ...
+    varargin{:});
 
 %%% ¡prop!
 MEASUREENSEMBLE (query, item) returns an ensemble-based measure.

@@ -33,8 +33,6 @@ Group('SUB_CLASS', 'SubjectCON')
 
 %%% ¡prop!
 ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-%%%% ¡gui_!
-% % % pr = PPAnalyzeEnsembleMP_ME_DICT('EL', a, 'PROP', AnalyzeEnsemble_CON_WD.ME_DICT, 'WAITBAR', true, varargin{:});
 
 %%% ¡prop!
 G_DICT (result, idict) is the graph (GraphWD) ensemble obtained from this analysis.

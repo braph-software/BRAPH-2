@@ -179,13 +179,13 @@ function set_table()
                         data{i, c} = cell2str(dict.get('IT', i).get(col));
                         
                     case Format.ITEM % __Format.ITEM__
-                        data{i, c} = dict.get('IT', i).get(col).tostring(); % % % %TODO Add property STRING to ContreteElement and here use get('STRING')?
+                        data{i, c} = dict.get('IT', i).get(col).get('TOSTRING');
                         
                     case Format.ITEMLIST % __Format.ITEMLIST__
                         %%%__WARN_TBI__
 
                     case Format.IDICT % __Format.IDICT__
-                        data{i, c} = dict.get('IT', i).get(col).tostring(); % % % %TODO Add property STRING to ContreteElement and here use get('STRING')?
+                        data{i, c} = dict.get('IT', i).get(col).get('TOSTRING');
                         
                     case Format.SCALAR % __Format.SCALAR__
                         data{i, c} = dict.get('IT', i).get(col);

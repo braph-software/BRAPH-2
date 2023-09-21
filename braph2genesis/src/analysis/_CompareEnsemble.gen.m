@@ -165,10 +165,10 @@ CP_DICT (result, idict) contains the results of the comparison.
 'ComparisonEnsemble'
 %%%% ¡calculate!
 value = IndexedDictionary('IT_CLASS', 'ComparisonEnsemble', 'IT_KEY', ComparisonEnsemble.MEASURE);
-%%%% ¡_gui!
-% % % pr = CompareEnsemblePP_CpDict('EL', c, 'PROP', CompareEnsemble.CP_DICT, ...
-% % %     'WAITBAR', c.getCallback('WAITBAR'), ...
-% % %     varargin{:});
+%%%% ¡gui!
+pr = CompareEnsemblePP_CpDict('EL', c, 'PROP', CompareEnsemble.CP_DICT, ...
+    'WAITBAR', c.getCallback('WAITBAR'), ...
+    varargin{:});
 
 %%% ¡prop!
 COMPARISON (query, item) returns a comparison.

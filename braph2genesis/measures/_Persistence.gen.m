@@ -104,7 +104,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'MultiplexBU' 'MultiplexWD'} ;%TBE % % % add any missing tests
+{'MultiplexBU' 'MultiplexWD'};
 
 %%% ¡prop!
 M (result, cell) is the categorical persistence.

@@ -75,9 +75,9 @@ if value
         button_text = pr.get('BUTTON_TEXT');
     else % isa(pr.getr('BUTTON_TEXT'), 'NoValue')
         if isa(el.getr(prop), 'NoValue')
-            button_text = el.getPropDefault(prop).tostring();
+            button_text = el.getPropDefault(prop).get('TOSTRING');
         else
-            button_text = el.get(prop).tostring();
+            button_text = el.get(prop).get('TOSTRING');
         end
     end
     

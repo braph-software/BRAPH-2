@@ -99,7 +99,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'MultiplexBD' 'MultiplexWD' 'OrdMlWD'} ;%TBE % % % add any missing tests
+{'MultiplexBD' 'MultiplexWD' 'OrdMlWD'};
 
 %%% ¡prop!
 M (result, cell) is the multiplex in-participation.

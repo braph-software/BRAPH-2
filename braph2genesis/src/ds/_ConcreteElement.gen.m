@@ -69,6 +69,11 @@ NOTES (metadata, string) are some specific notes about the concrete element.
 %%%% ¡gui!
 pr = PanelPropStringTextArea('EL', el, 'PROP', ConcreteElement.NOTES, varargin{:});
 
+%%% ¡prop!
+TOSTRING (query, string) returns a string that represents the object.
+%%%% ¡calculate!
+value = el.tostring();
+
 %% ¡tests!
 
 %%% ¡test!

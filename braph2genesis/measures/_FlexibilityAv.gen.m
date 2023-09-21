@@ -53,7 +53,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'MultiplexBU' 'MultiplexWD' 'MultiplexBD' 'MultiplexWU' 'MultilayerBD' 'MultilayerBU' 'MultilayerWD' 'MultilayerWU' 'OrdMlWD' 'OrdMlWU' 'OrdMlBU' 'OrdMlBD' 'OrdMxWD' 'OrdMxWU' 'OrdMxBD' 'OrdMxBU'} ;%TBE % % % add any missing tests
+{'MultiplexBU' 'MultiplexWD' 'MultiplexBD' 'MultiplexWU' 'MultilayerBD' 'MultilayerBU' 'MultilayerWD' 'MultilayerWU' 'OrdMlWD' 'OrdMlWU' 'OrdMlBU' 'OrdMlBD' 'OrdMxWD' 'OrdMxWU' 'OrdMxBD' 'OrdMxBU'};
 
 %%% ¡prop!
 M (result, cell) is the average flexibility.

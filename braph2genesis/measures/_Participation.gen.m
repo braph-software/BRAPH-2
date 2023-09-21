@@ -99,7 +99,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'GraphBD' 'GraphBU' 'MultigraphBUT' 'MultiplexBU'} ;%TBE % % % add any missing tests
+{'GraphBD' 'GraphBU' 'MultigraphBUT' 'MultiplexBU'};
 
 %%% ¡prop!
 M (result, cell) is the participation.

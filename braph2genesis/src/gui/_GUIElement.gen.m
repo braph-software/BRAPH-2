@@ -312,7 +312,7 @@ PE (data, item) is the panel element.
 if ~isa(value, 'PanelElement')
     value = PanelElement( ...
         'EL', value, ...
-        'ID', ['Panel of ' value.tostring()] ...
+        'ID', ['Panel of ' value.get('TOSTRING')] ...
         );
 end
 %%%% ¡postset!
@@ -570,10 +570,12 @@ assert(~check_graphics(f, 'figure'))
 assert(isa(gui_layout.getr('H'), 'NoValue'))
 assert(~check_graphics(f_layout, 'figure'))
 
-% % % % %%% ¡test! 
-% % % % %%%% ¡name!
-% % % % Callbacks
-% % % % %%%% ¡code!
+%%% ¡test! 
+%%%% ¡name!
+Callbacks
+%%%% ¡probability!
+.01
+%%%% ¡code!
 % % % % % % % complete with CELL and NET
 % % % % et1 = ETA( ...
 % % % %     'PROP_STRING_P', 'prova', ...
