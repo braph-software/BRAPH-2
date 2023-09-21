@@ -142,7 +142,7 @@ value = [];
 %%% ¡prop!
 NODES (figure, rvector) are the node numbers of the binodal group comparison figure.
 %%%% ¡gui!
-pr = ComparisonGroupPF_BxPP_Node('EL', pf, 'PROP', ComparisonGroupPF_BS.NODE);
+pr = ComparisonGroupPF_BxPP_Node('EL', pf, 'PROP', ComparisonGroupPF_BS.NODES);
 
 %% ¡tests!
 

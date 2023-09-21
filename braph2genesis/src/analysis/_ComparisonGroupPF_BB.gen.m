@@ -1,4 +1,4 @@
- %% ¡header!
+%% ¡header!
 ComparisonGroupPF_BB < ComparisonGroupPF (pf, panel binodal bilayer group comparison figure) is the base element to plot a binodal bilayer group comparison figure.
 
 %%% ¡description!
@@ -142,7 +142,7 @@ value = [];
 %%% ¡prop!
 NODES (figure, rvector) are the node numbers of the binodal group comparison figure.
 %%%% ¡gui!
-pr = ComparisonGroupPF_BxPP_Node('EL', pf, 'PROP', ComparisonGroupPF_BB.NODE);
+pr = ComparisonGroupPF_BxPP_Node('EL', pf, 'PROP', ComparisonGroupPF_BB.NODES);
 
 %% ¡tests!
 
