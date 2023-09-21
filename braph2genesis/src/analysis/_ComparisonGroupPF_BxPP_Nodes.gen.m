@@ -72,7 +72,7 @@ if value
     pf = pr.get('EL');
     NODES = pr.get('PROP');
     
-    keys = pf.get('M').get('G').get('ANODELABELS');
+    keys = pf.get('CP').get('C').get('A1').get('G').get('ANODELABELS');
     
     set(pr.get('DROPDOWN_NODE1'), ...
         'Items', keys, ...
