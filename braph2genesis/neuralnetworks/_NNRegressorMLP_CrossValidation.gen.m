@@ -387,7 +387,7 @@ d = NNDataset( ...
     );
 
 kfolds = 3;
-nncv = NNRegressorMLP_CrossValidation('KFOLDS', kfolds, 'D', d);
+nncv = NNRegressorMLP_CrossValidation('KFOLDS', kfolds, 'D', {d});
 
 nn_list = nncv.get('NN_LIST');
 assert(length(nn_list) == kfolds, ...

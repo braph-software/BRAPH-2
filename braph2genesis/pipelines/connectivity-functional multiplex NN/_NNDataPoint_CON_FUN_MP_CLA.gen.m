@@ -92,9 +92,9 @@ if ~isdir(data_dir)
     rng_settings_ = rng(); rng('default')
 
     sex_options = {'Female' 'Male'};
-    N_subjects_group1 = 25;
-    N_subjects_group2 = 25;
-    N_subjects_group3 = 25;
+    N_subjects_group1 = 10;
+    N_subjects_group2 = 10;
+    N_subjects_group3 = 10;
     N_tslength = 200;
     
     % Group 1

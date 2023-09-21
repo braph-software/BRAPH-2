@@ -96,7 +96,7 @@ if ~isdir(data_dir)
     N_tslength = 200;
     
     %% Specify number of subjects
-    N_groups = 30;
+    N_groups = 10;
     
     %% Group 1
     gr1_ts = cell(1, N_groups);
@@ -107,7 +107,7 @@ if ~isdir(data_dir)
     {{'Subject ID'} {'Age'} {'Sex'}}
     {{} {} cell2str(sex_options)}
     ];
-    for i_gr = 1:1:50 % subject number
+    for i_gr = 1:1:10 % subject number
         sub_id = ['SubjectFUN_' num2str(i_gr)];
         % create WS graphs with random beta
             % initialize values for the WS model
@@ -172,7 +172,7 @@ if ~isdir(data_dir)
     {{'Subject ID'} {'Age'} {'Sex'}}
     {{} {} cell2str(sex_options)}
     ];
-    for i_gr = 51:1:100 % subject number
+    for i_gr = 11:1:20 % subject number
         sub_id = ['SubjectFUN_' num2str(i_gr)];
         % create WS graphs with random beta
             % initialize values for the WS model
@@ -237,7 +237,7 @@ if ~isdir(data_dir)
     {{'Subject ID'} {'Age'} {'Sex'}}
     {{} {} cell2str(sex_options)}
     ];
-    for i_gr = 101:1:150  % subject number
+    for i_gr = 21:1:30  % subject number
         sub_id = ['SubjectFUN_' num2str(i_gr)];
         % create WS graphs with random beta
             % initialize values for the WS model

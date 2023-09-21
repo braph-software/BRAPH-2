@@ -56,12 +56,12 @@ SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating
 split = nncv.get('SPLIT');
 kfolds = nncv.get('KFOLDS');
 d = nncv.get('D');
-if isempty(split) && d.get('DP_DICT').get('LENGTH') > kfolds
+if isempty(split) && length(d) > 0 && d{1}.get('DP_DICT').get('LENGTH') > kfolds
     nncv.set('SPLIT', repmat({1 / kfolds}, 1, kfolds));
 end
 
 %%% ¡prop!
-D (data, item) is the dataset to be cross-validated.
+D (data, itemlist) is the datasets from groups to be cross-validated.
 %%%% ¡settings!
 'NNDataset'
 
@@ -76,21 +76,42 @@ NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template 
 'NNEvaluator'
 
 %%% ¡prop!
-DSP (result, item) is a dataset splitter.
+DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.
 %%%% ¡settings!
 'NNDatasetSplit'
 %%%% ¡calculate!
-d = nncv.get('D');
-value = NNDatasetSplit('D', d, 'SPLIT', nncv.get('SPLIT'));
+d_list = nncv.get('D');
+value = cellfun(@(d) NNDatasetSplit('D', d, 'SPLIT', nncv.get('SPLIT')), d_list, 'UniformOutput', false);
+
+%%% ¡prop!
+DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.
+%%%% ¡settings!
+'NNDatasetCombine'
+%%%% ¡calculate!
+dsp_list = nncv.get('DSP');
+if length(dsp_list) == 0
+    value = {};
+else
+    kfolds = nncv.get('KFOLDS');
+    for i = 1:1:kfolds
+        d_splitted_list = cellfun(@(dsp) dsp.get('D_LIST_IT', i), dsp_list, 'UniformOutput', false);
+        dp_dict = IndexedDictionary(...
+            'IT_CLASS', d_splitted_list{1}.get('DP_CLASS'), ...
+            'IT_LIST',  d_splitted_list ...
+            );
+        value{i} = NNDatasetCombine('D_LIST', d_splitted_list);
+    end
+    value = value';
+end
 
 %%% ¡prop!
 D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.
 %%%% ¡calculate!
-d = nncv.get('D');
-if d.get('DP_DICT').get('LENGTH') == 0
+dco_list = nncv.get('DCO');
+if length(dco_list) == 0
     value = {};
 else
-    value = nncv.get('DSP').get('D_LIST');
+    value = cellfun(@(dco) dco.get('D'), dco_list, 'UniformOutput', false);
 end
 
 %%% ¡prop!
@@ -159,7 +180,7 @@ d = NNDataset('DP_DICT', IndexedDictionary(...
     ));
 
 % create the cross-validation process
-nncv = NNCrossValidation('D', d, 'KFOLDS', 5);
+nncv = NNCrossValidation('D', {d}, 'KFOLDS', 5);
 
 % Check whether the number of datapoint from all d_list matches
 d_list = nncv.get('D_LIST');
@@ -174,7 +195,7 @@ assert(num_dp_from_nncv == num_dp, ...
 
 % create the cross-validation process with specifying the datapoints in each
 % fold
-nncv = NNCrossValidation('D', d, 'KFOLDS', 5, 'SPLIT', {[1 2], [3 4], [5 6], [7 8], [9]});
+nncv = NNCrossValidation('D', {d}, 'KFOLDS', 5, 'SPLIT', {[1 2], [3 4], [5 6], [7 8], [9]});
 
 % Check whether the number of datapoint in each fold matches
 split = nncv.get('SPLIT');

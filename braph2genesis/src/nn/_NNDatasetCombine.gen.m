@@ -50,7 +50,11 @@ D_LIST (data, itemlist) is a items of datasets to be combined.
 %%%% ¡check_prop!
 if ~isempty(value)
     dp_classes = cellfun(@(x) x.get('DP_CLASS'), value, 'uniformoutput', false);
-    check = all(isequal(dp_classes{:}));
+    if length(unique(dp_classes)) == 1
+        check = true;
+    else
+        check = all(isequal(dp_classes{:}));
+    end
 end
 
 %%% ¡prop!
