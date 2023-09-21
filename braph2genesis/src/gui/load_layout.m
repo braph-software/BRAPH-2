@@ -14,8 +14,11 @@ function [order, title, visible] = load_layout(el)
 layout_filename = [fileparts(which('braph2.m')) filesep 'src' filesep 'gui' filesep 'layouts' filesep Element.getClass(el) '.layout'];
 
 if isfile(layout_filename)
-    load(layout_filename, '-mat', 'order', 'title')
-
+    % % % load(layout_filename, '-mat', 'order', 'title') %TBE
+    data = readcell(layout_filename, 'FileType', 'text', 'Delimiter', 'tab');
+    title = data(1:2:end)';
+    order = cell2mat(data(2:2:end)');
+    
     assert( ...
         length(order) == Element.getPropNumber(el) && length(title) == Element.getPropNumber(el), ...
         [BRAPH2.STR ':load_layout:' BRAPH2.ERR_IOLAYOUT], ...
