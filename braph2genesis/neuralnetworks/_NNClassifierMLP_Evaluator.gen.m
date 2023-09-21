@@ -86,7 +86,8 @@ end
 C_MATRIX (result, matrix) provides the confusion matrix.
 %%%% ¡calculate!
 predictions = cell2mat(nne.get('NN').get('PREDICT', nne.get('D')));
-predictions = bsxfun(@eq, predictions, max(predictions, [], 2));
+[~, maxIndices] = max(predictions, [], 2);
+predictions = logical(full(sparse(1:numel(maxIndices), maxIndices, 1, size(predictions, 1), size(predictions, 2))));
 if isempty(predictions)
     value = [];
 else
