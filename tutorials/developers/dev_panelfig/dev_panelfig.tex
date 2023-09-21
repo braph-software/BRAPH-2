@@ -147,18 +147,6 @@ if pf.get('DRAWN')
     
     % reset the ambient lighting
     pf.memorize('ST_AMBIENT').set('PANEL', pf, 'PROP', pf.H_AXES).get('SETUP')
-            %%%    
-            %%%    % update state of toggle tools
-            %%%    toolbar = pf.get('H_TOOLBAR');
-            %%%    if check_graphics(toolbar, 'uitoolbar')
-            %%%        set(findobj(toolbar, 'Tag', 'TOOL.View3D'), 'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_3D_AZEL))
-            %%%        set(findobj(toolbar, 'Tag', 'TOOL.ViewSL'), 'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_SL_AZEL))
-            %%%        set(findobj(toolbar, 'Tag', 'TOOL.ViewSR'), 'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_SR_AZEL))
-            %%%        set(findobj(toolbar, 'Tag', 'TOOL.ViewAD'), 'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_AD_AZEL))
-            %%%        set(findobj(toolbar, 'Tag', 'TOOL.ViewAV'), 'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_AV_AZEL))
-            %%%        set(findobj(toolbar, 'Tag', 'TOOL.ViewCA'), 'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_CA_AZEL))
-            %%%        set(findobj(toolbar, 'Tag', 'TOOL.ViewCP'), 'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_CP_AZEL))
-            %%%    end
 end
 %%%% ¡gui!
 pr = PanelPropRVectorView('EL', pf, 'PROP', BrainSurfacePF.VIEW, varargin{:});
@@ -169,31 +157,8 @@ ST_AXIS (figure, item) determines the axis settings. ¥\circled{5}\circlednote{5
 'SettingsAxis'
 %%%% ¡default!
 SettingsAxis('GRID', false, 'AXIS', false) ¥\circled{6}\circlednote{6}{defines the default values by instantiating a default instance of \code{SettingsAxis}.}¥
-            %%%%%%% ¡postset!
-            %%%if pf.get('DRAWN')
-            %%%    toolbar = pf.get('H_TOOLBAR');
-            %%%    if check_graphics(toolbar, 'uitoolbar')
-            %%%        set(findobj(toolbar, 'Tag', 'TOOL.Grid'), 'State', pf.get('ST_AXIS').get('GRID'))
-            %%%        set(findobj(toolbar, 'Tag', 'TOOL.Axis'), 'State', pf.get('ST_AXIS').get('AXIS'))
-            %%%    end
-            %%%end
 %%%% ¡gui! ¥\circled{7}\circlednote{7}{employs the property panel \code{SettingsAxisPP}, which is specialized for \code{SettingsAxis} and derives from \code{SettingsPP}.}¥
 pr = SettingsAxisPP('EL', pf, 'PROP', BrainSurfacePF.ST_AXIS, varargin{:});
-
-            %%%%%% ¡prop!
-            %%%LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
-            %%%%%%% ¡calculate!
-            %%%value = listener(pf.get('ST_AXIS'), 'PropSet', @cb_listener_st_axis); 
-            %%%%%%% ¡calculate_callbacks!
-            %%%function cb_listener_st_axis(~, ~)
-            %%%    if pf.get('DRAWN')
-            %%%        toolbar = pf.get('H_TOOLBAR');
-            %%%        if check_graphics(toolbar, 'uitoolbar')
-            %%%            set(findobj(toolbar, 'Tag', 'TOOL.Grid'), 'State', pf.get('ST_AXIS').get('GRID'))
-            %%%            set(findobj(toolbar, 'Tag', 'TOOL.Axis'), 'State', pf.get('ST_AXIS').get('AXIS'))
-            %%%        end
-            %%%    end
-            %%%end
 
 %%% ¡prop!
 SURFFILE (figure, option) is the name of the file of the brain surface to be plotted. ¥\circled{8}\circlednote{8}{contains the file from which the brain surface is plotted.}¥
@@ -254,11 +219,6 @@ if pf.get('DRAWN')
     else % ~pf.get('BRAIN') 
         set(pf.get('H_BRAIN'), 'Visible', 'off')
     end
-            %%%
-            %%%    toolbar = pf.get('H_TOOLBAR');
-            %%%    if check_graphics(toolbar, 'uitoolbar')
-            %%%        set(findobj(toolbar, 'Tag', 'TOOL.Brain'), 'State', pf.get('BRAIN'))
-            %%%    end
 end
 
 %%% ¡prop!
@@ -293,15 +253,10 @@ DRAW (query, logical) draws the figure brain surface. ¥\circled{1}\circlednote{
 value = calculateValue@PanelFig(pf, PanelFig.DRAW, varargin{:}); ¥\circled{2}\circlednote{2}{calls the constructor of the parent. It returns \code{value = true} if the panel is drawn correctly. It gives a warning if the panel is not drawn correctly.}¥
 if value
     pf.memorize('H_AXES') ¥\circled{3}\circlednote{3}{ensures that the axes are memorized.}¥
-            %%%        
-            %%%    pf.set('VIEW', pf.get('VIEW'))
 
     pf.memorize('ST_AXIS').set('PANEL', pf, 'PROP', BrainSurfacePF.H_AXES).get('SETUP') ¥\circled{4}\circlednote{4}{creates, memorizes, and sets up the property \code{H\_AXES}.}¥
-            %%%    pf.memorize('LISTENER_ST_AXIS');
     
     pf.memorize('H_BRAIN') ¥\circled{5}\circlednote{5}{memorizes the property \code{H\_BRAIN}.}¥
-            %%%    
-            %%%    pf.set('BRAIN', pf.get('BRAIN'))
 
     pf.memorize('ST_SURFACE').set('PANEL', pf, 'PROP', BrainSurfacePF.H_BRAIN).get('SETUP') ¥\circled{6}\circlednote{6}{creates, memorizes, and sets up the property \code{ST\_SURFACE}.}¥
     
@@ -315,134 +270,7 @@ value = calculateValue@PanelFig(pf, PanelFig.DELETE, varargin{:}); % also warnin
 if value
     pf.set('H_AXES', Element.getNoValue())
     pf.set('H_BRAIN', Element.getNoValue())
-            %%%    
-            %%%    pf.set('LISTENER_ST_AXIS', Element.getNoValue())
 end
-
-            %%%%%% ¡prop!
-            %%%H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
-            %%%%%%% ¡calculate!
-            %%%toolbar = pf.memorize('H_TOOLBAR');
-            %%%if check_graphics(toolbar, 'uitoolbar')
-            %%%    value = calculateValue@PanelFig(pf, PanelFig.H_TOOLS);
-            %%%    
-            %%%    tool_separator_1 = uipushtool(toolbar, 'Separator', 'on', 'Visible', 'off');
-            %%%
-            %%%    % Brain
-            %%%    tool_brain = uitoggletool(toolbar, ...
-            %%%        'Tag', 'TOOL.Brain', ...
-            %%%        'Separator', 'on', ...
-            %%%        'State', pf.get('BRAIN'), ...
-            %%%        'Tooltip', 'Show Brain', ...
-            %%%        'CData', imread('icon_brain.png'), ...
-            %%%        'OnCallback', {@cb_brain, true}, ...
-            %%%        'OffCallback', {@cb_brain, false});
-            %%%
-            %%%    % Axis
-            %%%    tool_axis = uitoggletool(toolbar, ...
-            %%%        'Tag', 'TOOL.Axis', ...
-            %%%        'State', pf.get('ST_AXIS').get('AXIS'), ...
-            %%%        'Tooltip', 'Show axis', ...
-            %%%        'CData', imread('icon_axis.png'), ...
-            %%%        'OnCallback', {@cb_axis, true}, ...
-            %%%        'OffCallback', {@cb_axis, false});
-            %%%
-            %%%    % Grid
-            %%%    tool_grid = uitoggletool(toolbar, ...
-            %%%        'Tag', 'TOOL.Grid', ...
-            %%%        'State', pf.get('ST_AXIS').get('GRID'), ...
-            %%%        'Tooltip', 'Show grid', ...
-            %%%        'CData', imread('icon_grid.png'), ...
-            %%%        'OnCallback', {@cb_grid, true}, ...
-            %%%        'OffCallback', {@cb_grid, false});
-            %%%        
-            %%%    tool_separator_2 = uipushtool(toolbar, 'Separator', 'on', 'Visible', 'off');
-            %%%
-            %%%    % View 3D
-            %%%    tool_view3D = uitoggletool(toolbar, ...
-            %%%        'Tag', 'TOOL.View3D', ...
-            %%%        'Separator', 'on', ... 
-            %%%        'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_3D_AZEL), ...
-            %%%        'Tooltip', BrainSurfacePF.VIEW_3D_CMD, ...
-            %%%        'CData', imread('icon_view_3d.png'), ...
-            %%%        'ClickedCallback', {@cb_view, BrainSurfacePF.VIEW_3D_AZEL});
-            %%%
-            %%%    % View SL
-            %%%    tool_viewSL = uitoggletool(toolbar, ...
-            %%%        'Tag', 'TOOL.ViewSL', ...
-            %%%        'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_SL_AZEL), ...
-            %%%        'Tooltip', BrainSurfacePF.VIEW_SL_CMD, ...
-            %%%        'CData', imread('icon_view_sl.png'), ...
-            %%%        'ClickedCallback', {@cb_view, BrainSurfacePF.VIEW_SL_AZEL});
-            %%%
-            %%%    % View SR
-            %%%    tool_viewSR = uitoggletool(toolbar, ...
-            %%%        'Tag', 'TOOL.ViewSR', ...
-            %%%        'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_SR_AZEL), ...
-            %%%        'Tooltip', BrainSurfacePF.VIEW_SR_CMD, ...
-            %%%        'CData', imread('icon_view_sr.png'), ...
-            %%%        'ClickedCallback', {@cb_view, BrainSurfacePF.VIEW_SR_AZEL});
-            %%%
-            %%%    % View AD
-            %%%    tool_viewAD = uitoggletool(toolbar, ...
-            %%%        'Tag', 'TOOL.ViewAD', ...
-            %%%        'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_AD_AZEL), ...
-            %%%        'Tooltip', BrainSurfacePF.VIEW_AD_CMD, ...
-            %%%        'CData', imread('icon_view_ad.png'), ...
-            %%%        'ClickedCallback', {@cb_view, BrainSurfacePF.VIEW_AD_AZEL});
-            %%%
-            %%%    % View AV
-            %%%    tool_viewAV = uitoggletool(toolbar, ...
-            %%%        'Tag', 'TOOL.ViewAV', ...
-            %%%        'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_AV_AZEL), ...
-            %%%        'Tooltip', BrainSurfacePF.VIEW_AV_CMD, ...
-            %%%        'CData', imread('icon_view_av.png'), ...
-            %%%        'ClickedCallback', {@cb_view, BrainSurfacePF.VIEW_AV_AZEL});
-            %%%
-            %%%    % View CA
-            %%%    tool_viewCA = uitoggletool(toolbar, ...
-            %%%        'Tag', 'TOOL.ViewCA', ...
-            %%%        'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_CA_AZEL), ...
-            %%%        'Tooltip', BrainSurfacePF.VIEW_CA_CMD, ...
-            %%%        'CData', imread('icon_view_ca.png'), ...
-            %%%        'ClickedCallback', {@cb_view, BrainSurfacePF.VIEW_CA_AZEL});
-            %%%
-            %%%    % View CP
-            %%%    tool_viewCP = uitoggletool(toolbar, ...
-            %%%        'Tag', 'TOOL.ViewCP', ...
-            %%%        'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_CP_AZEL), ...
-            %%%        'Tooltip', BrainSurfacePF.VIEW_CP_CMD, ...
-            %%%        'CData', imread('icon_view_cp.png'), ...
-            %%%        'ClickedCallback', {@cb_view, BrainSurfacePF.VIEW_CP_AZEL});
-            %%%    
-            %%%    value = {value{:}, ...
-            %%%        tool_separator_1, ...
-            %%%        tool_brain, tool_axis, tool_grid, ...
-            %%%        tool_separator_2, ...
-            %%%        tool_view3D, tool_viewSL, tool_viewSL, tool_viewSR, tool_viewAD, tool_viewAV, tool_viewCA, tool_viewCP ...
-            %%%        };
-            %%%else
-            %%%    value = {};
-            %%%end
-            %%%%%%% ¡calculate_callbacks!
-            %%%function cb_brain(~, ~, brain) % (src, event)
-            %%%    pf.set('BRAIN', brain)
-            %%%end
-            %%%function cb_axis(~, ~, axis) % (src, event)
-            %%%    pf.get('ST_AXIS').set('AXIS', axis);
-            %%%    
-            %%%    % triggers the update of ST_AXIS
-            %%%    pf.set('ST_AXIS', pf.get('ST_AXIS'))
-            %%%end
-            %%%function cb_grid(~, ~, grid) % (src, event)
-            %%%    pf.get('ST_AXIS').set('GRID', grid);
-            %%%
-            %%%    % triggers the update of ST_AXIS
-            %%%    pf.set('ST_AXIS', pf.get('ST_AXIS'))
-            %%%end
-            %%%function cb_view(~, ~, azel) % (src, event)
-            %%%    pf.set('VIEW', azel)
-            %%%end
 \end{lstlisting}
 
 \begin{lstlisting}[
@@ -456,7 +284,6 @@ end
 
 %%% ¡excluded_props! ¥\circled{1}\circlednote{1}{some properties need to be excluded from the tests, mainly because they are initialized by other proprties and therefore could give some spurious errors.}¥
 [BrainSurfacePF.PARENT BrainSurfacePF.H BrainSurfacePF.ST_POSITION BrainSurfacePF.ST_AXIS BrainSurfacePF.ST_SURFACE BrainSurfacePF.ST_AMBIENT]
-            %%%[BrainSurfacePF.PARENT BrainSurfacePF.H BrainSurfacePF.ST_POSITION BrainSurfacePF.ST_AXIS BrainSurfacePF.ST_SURFACE BrainSurfacePF.ST_AMBIENT BrainSurfacePF.LISTENER_ST_AXIS] 
 
 %%% ¡warning_off!
 true
