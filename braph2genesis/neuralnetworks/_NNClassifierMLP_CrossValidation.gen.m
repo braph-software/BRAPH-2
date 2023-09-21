@@ -362,11 +362,8 @@ d2 = NNDataset( ...
     'DP_DICT', dp_list2 ...
     );
 
-% combine the two datasets
-d = NNDatasetCombine('D_LIST', {d1, d2}).get('D');
-
 kfolds = 7;
-nncv = NNClassifierMLP_CrossValidation('KFOLDS', kfolds, 'D', d);
+nncv = NNClassifierMLP_CrossValidation('KFOLDS', kfolds, 'D', {d1, d2});
 
 nn_list = nncv.get('NN_LIST');
 assert(length(nn_list) == kfolds, ...

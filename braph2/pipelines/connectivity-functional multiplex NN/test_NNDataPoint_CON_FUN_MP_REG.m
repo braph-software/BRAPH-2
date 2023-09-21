@@ -1354,7 +1354,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	    sex_options = {'Female' 'Male'};
 	
 	    % Group 
-	    N_subjects = 50;
+	    N_subjects = 20;
 	    N_tslength = 200;
 	    % initialize values for the WS model
 	    K1 = [3 4 5 6 7];

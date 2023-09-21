@@ -1363,7 +1363,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	        {{'Subject ID'} {'Age'} {'Sex'}}
 	        {{} {} cell2str(sex_options)}
 	        ];
-	    for i = 1:1:50 % subject number
+	    for i = 1:1:10 % subject number
 	        sub_id = ['SubjectCON_' num2str(i)];
 	
 	        h1 = WattsStrogatz(N, K1, beta1); % create two WS graph
@@ -1395,7 +1395,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	        {{'Subject ID'} {'Age'} {'Sex'}}
 	        {{} {} cell2str(sex_options)}
 	        ];
-	    for i = 51:1:100
+	    for i = 11:1:20
 	        sub_id = ['SubjectCON_' num2str(i)];
 	
 	        h2 = WattsStrogatz(N, K2, beta2);
@@ -1427,7 +1427,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	        {{'Subject ID'} {'Age'} {'Sex'}}
 	        {{} {} cell2str(sex_options)}
 	        ];
-	    for i = 101:1:150
+	    for i = 21:1:30
 	        sub_id = ['SubjectCON_' num2str(i)];
 	
 	        h3 = WattsStrogatz(N, K3, beta3);

@@ -1363,7 +1363,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	        {{'Subject ID'} {'Age'} {'Sex'}}
 	        {{} {} cell2str(sex_options)}
 	        ];
-	    for i = 1:1:100 % subject number
+	    for i = 1:1:20 % subject number
 	        sub_id = ['SubjectCON_' num2str(i)];
 	        % create WS graphs with random beta
 	        beta(i) = rand(1);

@@ -604,7 +604,11 @@ classdef NNDatasetCombine < ConcreteElement
 					if check
 						if ~isempty(value)
 						    dp_classes = cellfun(@(x) x.get('DP_CLASS'), value, 'uniformoutput', false);
-						    check = all(isequal(dp_classes{:}));
+						    if length(unique(dp_classes)) == 1
+						        check = true;
+						    else
+						        check = all(isequal(dp_classes{:}));
+						    end
 						end
 					end
 				case 8 % NNDatasetCombine.D
