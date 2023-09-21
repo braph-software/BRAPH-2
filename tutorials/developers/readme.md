@@ -52,7 +52,7 @@ BRAPH 2.0's object-oriented programming architecture also simplifies the process
 
 - **Property Panels**: New property panels can be implemented by extending the `PanelProp` element. The [Developer Tutorial to Implement a New Property Panel](dev_panelprop/dev_panelprop.pdf) provides a step-by-step guide on creating new property panel.
 
-- **Figure Panels**: New figure panels can be added to BRAPH 2.0 by extending the `GUIFig` element. The [Developer Tutorial to Implement a New Figure Panel](dev_guifig/dev_guifig.pdf) explains the process of implementing custom figures.
+- **Figure Panels**: New figure panels can be added to BRAPH 2.0 by extending the `GUIFig` element. The [Developer Tutorial to Implement a New Figure Panel](dev_panelfig/dev_panelfig.pdf) explains the process of implementing custom figures.
 
 These tutorials provide step-by-step instructions and examples to guide developers in expanding BRAPH 2.0 with new functionalities and graphical elements. We encourage developers to contribute to the growth and improvement of BRAPH 2.0 by introducing new elements, measures, and analyses. Feel free to share your implementations, ask questions, and engage with the BRAPH community through the [BRAPH forum](http://braph.org/forums) and [GitHub page](https://github.com/softmatterlab/BRAPH-2-Matlab).
 
