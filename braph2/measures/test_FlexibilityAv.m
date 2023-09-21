@@ -1535,7 +1535,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	A = {A11 A12;
 	     A21 A22};
 	 
-	known_flexibility = {0};  
+	known_flexibility_av = {0};  
 	
 	g = MultilayerWD('B', A);
 	
@@ -1569,7 +1569,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	A = {A11 A12;
 	     A21 A22};
 	 
-	known_flexibility = {0};  
+	known_flexibility_av = {0};  
 	
 	g = OrdMlWD('B', A);
 	
