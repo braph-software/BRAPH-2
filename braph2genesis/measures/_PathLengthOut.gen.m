@@ -7,30 +7,30 @@ The out-path length is the average shortest out-path lengths of one node to all 
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the PathLengthOut.
+NAME (constant, string) is the name of the out-path length.
 %%%% ¡default!
 'PathLengthOut'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the PathLengthOut.
+DESCRIPTION (constant, string) is the description of the out-path length.
 %%%% ¡default!
-'The PathLengthOut is the average shortest PathLengthOut of one node to all other nodes within a layer.'
+'The out-path length is the average shortest out-path length of one node to all other nodes within a layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the PathLengthOut.
+TEMPLATE (parameter, item) is the template of the out-path length.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the PathLengthOut.
+ID (data, string) is a few-letter code of the out-path length.
 %%%% ¡default!
 'PathLengthOut ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the PathLengthOut.
+LABEL (metadata, string) is an extended label of the out-path length.
 %%%% ¡default!
 'PathLengthOut label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the PathLengthOut.
+NOTES (metadata, string) are some specific notes about the out-path length.
 %%%% ¡default!
 'PathLengthOut notes'
 
@@ -55,7 +55,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphBD' 'GraphWD' 'MultiplexBD' 'MultiplexWD' 'MultilayerBD' 'OrdMxBD'}
 
 %%% ¡prop!
-M (result, cell) is the cell containing the PathLengthOut.
+M (result, cell) is the cell containing the out-path length.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

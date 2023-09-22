@@ -1,5 +1,5 @@
 %% ¡header!
-WeightedMxPOut < Measure (m, weighted mxpart-out) is the graph weighted multiplex out-participation.
+WeightedMxPOut < Measure (m, weighted out-participation) is the graph weighted multiplex out-participation.
 
 %%% ¡description!
 The weighted multiplex out-participation of a graph is the nodal homogeneity 
@@ -99,7 +99,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'MultiplexWD' 'OrdMxWD'}
+{'MultiplexWD' 'OrdMxWD' 'MultilayerWD' 'OrdMlWD'}
 
 %%% ¡prop!
 M (result, cell) is the weighted multiplex out-particiption.
@@ -107,7 +107,6 @@ M (result, cell) is the weighted multiplex out-particiption.
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 l = g.get('LAYERNUMBER');
-ls = g.get('PARTITIONS');
 
 if l == 0
     value = {};

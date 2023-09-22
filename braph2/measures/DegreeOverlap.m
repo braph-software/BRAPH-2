@@ -540,7 +540,7 @@ classdef DegreeOverlap < EdgeOverlap
 				case 10 % DegreeOverlap.PARAMETRICITY
 					prop_default = 2;
 				case 11 % DegreeOverlap.COMPATIBLE_GRAPHS
-					prop_default = {'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'MultilayerBU' 'OrdMlBU'};;
+					prop_default = {'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU' 'MultilayerWU' 'MultilayerBU' 'MultilayerBUD' 'MultilayerBUT' 'OrdMlBU' 'OrdMlWU'};;
 				otherwise
 					prop_default = getPropDefault@EdgeOverlap(prop);
 			end

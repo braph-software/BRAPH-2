@@ -1496,25 +1496,28 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
 
-%% Test 13: MultiplexWD
-if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
-	B11 = [
+%% Test 13: OrdMlWU
+if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
+	A11 = [
 	      0  1 1 .5;
 	      1  0 1 0;
 	      1  1 0 1;
 	      .1 0 1 0
 	      ];
-	B22 = [
+	A22 = [
 	      0  1 1 .5;
 	      1  0 1 0;
 	      1  1 0 1;
 	      .1 0 1 0
 	      ];
-	B = {B11 B22};
-	
+	A12 = rand(size(A11,1),size(A22,2));
+	A21 = A12';
+	A = {A11 A12;
+	     A21 A22};
+	 
 	known_persistence = {1};  
 	
-	g = MultiplexWD('B', B);
+	g = OrdMlWU('B', A);
 	
 	m_outside_g = Persistence('G', g);
 	assert(isequal(m_outside_g.get('M'), known_persistence), ...

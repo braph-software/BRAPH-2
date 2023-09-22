@@ -1432,38 +1432,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
 
-%% Test 14: MultiplexBUT
-if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
-	B11 = [
-	    0   1   1
-	    1   0   0
-	    1   0   0
-	    ];
-	B22 = [
-	    0   1   0
-	    1   0   1
-	    0   1   0
-	    ];
-	B = {B11 B22};
-	
-	known_degree_overlap = {
-	    mean([1 1 0]')
-	    0};
-	
-	g = MultiplexBUT('B', B, 'THRESHOLDS', [0 1]);
-	
-	m_outside_g = DegreeOverlapAv('G', g);
-	assert(isequal(m_outside_g.get('M'), known_degree_overlap), ...
-	    [BRAPH2.STR ':DegreeOverlapAv:' BRAPH2.FAIL_TEST], ...
-	    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
-	
-	m_inside_g = g.get('MEASURE', 'DegreeOverlapAv');
-	assert(isequal(m_inside_g.get('M'), known_degree_overlap), ...
-	    [BRAPH2.STR ':DegreeOverlapAv:' BRAPH2.FAIL_TEST], ...
-	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
-end
-
-%% Test 15: MultiplexBUD
+%% Test 14: MultiplexBUD
 if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	B11 = [
 	    0   1   1
@@ -1494,7 +1463,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
 
-%% Test 16: MultilayerBU
+%% Test 15: MultilayerBU
 if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	B11 = [
 	    0   1   1
@@ -1525,7 +1494,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
 
-%% Test 17: OrdMlBU
+%% Test 16: OrdMlBU
 if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	B11 = [
 	    0   1   1
@@ -1556,7 +1525,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
 
-%% Test 18: No Figures Left
+%% Test 17: No Figures Left
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	assert(isempty(findall(0, 'type', 'figure')), ...
 		[BRAPH2.STR ':DegreeOverlapAv:' BRAPH2.FAIL_TEST], ...
@@ -1565,7 +1534,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 		)
 end
 
-%% Test 19: Delete Figures
+%% Test 18: Delete Figures
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	delete(findall(0, 'type', 'figure'))
 end

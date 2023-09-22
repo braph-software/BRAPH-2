@@ -12,7 +12,7 @@ The corresponding coefficient for directed and weighted networks is calculated b
 %%% ¡prop!
 NAME (constant, string) is the name of the out-out-assortativity.
 %%%% ¡default!
-'AssortOutOut'
+'OutOutAssortativity'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the out-out-assortativity.
@@ -22,17 +22,17 @@ DESCRIPTION (constant, string) is the description of the out-out-assortativity.
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the out-out-assortativity.
 %%%% ¡settings!
-'AssortOutOut'
+'OutOutAssortativity'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the out-out-assortativity.
 %%%% ¡default!
-'AssortOutOut ID'
+'OutOutAssortativity ID'
 
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the out-out-assortativity.
 %%%% ¡default!
-'AssortOutOut label'
+'OutOutAssortativity label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the out-out-assortativity.

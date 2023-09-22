@@ -561,7 +561,7 @@ classdef Persistence < MultilayerCommunity
 				case 10 % Persistence.PARAMETRICITY
 					prop_default = 2;
 				case 11 % Persistence.COMPATIBLE_GRAPHS
-					prop_default = {'MultiplexBU' 'MultiplexWD'};;
+					prop_default = {'MultiplexWU' 'OrdMxWU' 'MultiplexBU' 'MultiplexBUT' 'MultiplexBUD' 'MultilayerBU' 'MultilayerWU' 'OrdMlWU'};;
 				otherwise
 					prop_default = getPropDefault@MultilayerCommunity(prop);
 			end

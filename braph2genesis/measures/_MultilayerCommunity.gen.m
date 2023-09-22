@@ -55,7 +55,7 @@ Compatible Graphs
 %%% ¡prop!
 NAME (constant, string) is the name of the multilayer community structure.
 %%%% ¡default!
-'MultilayerCommunity'
+'MultilayerCommunityStructure'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the multilayer community structure.
@@ -75,12 +75,12 @@ ID (data, string) is a few-letter code of the multilayer community structure.
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the multilayer community structure.
 %%%% ¡default!
-'MultilayerCommunity label'
+'MultilayerCommunityStructure label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the multilayer community structure.
 %%%% ¡default!
-'MultilayerCommunity notes'
+'MultilayerCommunityStructure notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -100,7 +100,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'MultiplexBU' 'MultiplexBUT' 'MultilayerBU'};
+{'MultiplexWU' 'OrdMxWU' 'MultiplexBU' 'MultiplexBUT' 'MultiplexBUD' 'MultilayerBU' 'MultilayerWU' 'OrdMlWU'};
 
 %%% ¡prop!
 M (result, cell) is the triangles.

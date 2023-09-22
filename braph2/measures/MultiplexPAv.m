@@ -6,19 +6,19 @@ classdef MultiplexPAv < MultiplexP
 	%    of its number of neighbours across the layers.
 	%
 	% The list of MultiplexPAv properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex participation.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex participation.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex participation.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex participation.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex participation.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex participation.
+	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average multiplex participation.
+	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average multiplex participation.
+	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average multiplex participation.
+	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average multiplex participation.
+	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average multiplex participation.
+	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average multiplex participation.
 	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the multiplex participation.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the average multiplex participation.
 	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% MultiplexPAv methods (constructor):
@@ -39,33 +39,33 @@ classdef MultiplexPAv < MultiplexP
 	%  unchecked - sets a property to NOT checked
 	%
 	% MultiplexPAv methods (display):
-	%  tostring - string with information about the average mxpart
-	%  disp - displays information about the average mxpart
-	%  tree - displays the tree of the average mxpart
+	%  tostring - string with information about the average multiplex participation
+	%  disp - displays information about the average multiplex participation
+	%  tree - displays the tree of the average multiplex participation
 	%
 	% MultiplexPAv methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two average mxpart are equal (values, locked)
+	%  isequal - determines whether two average multiplex participation are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the average mxpart
+	%  copy - copies the average multiplex participation
 	%
 	% MultiplexPAv methods (save/load, Static):
-	%  save - saves BRAPH2 average mxpart as b2 file
-	%  load - loads a BRAPH2 average mxpart from a b2 file
+	%  save - saves BRAPH2 average multiplex participation as b2 file
+	%  load - loads a BRAPH2 average multiplex participation from a b2 file
 	%
 	% MultiplexPAv method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the average mxpart
+	%  encodeJSON - returns a JSON string encoding the average multiplex participation
 	%
 	% MultiplexPAv method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the average mxpart
+	%   decodeJSON - returns a JSON string encoding the average multiplex participation
 	%
 	% MultiplexPAv methods (inspection, Static):
-	%  getClass - returns the class of the average mxpart
+	%  getClass - returns the class of the average multiplex participation
 	%  getSubclasses - returns all subclasses of MultiplexPAv
-	%  getProps - returns the property list of the average mxpart
-	%  getPropNumber - returns the property number of the average mxpart
+	%  getProps - returns the property list of the average multiplex participation
+	%  getPropNumber - returns the property number of the average multiplex participation
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -109,7 +109,7 @@ classdef MultiplexPAv < MultiplexP
 	
 	methods % constructor
 		function m = MultiplexPAv(varargin)
-			%MultiplexPAv() creates a average mxpart.
+			%MultiplexPAv() creates a average multiplex participation.
 			%
 			% MultiplexPAv(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -119,19 +119,19 @@ classdef MultiplexPAv < MultiplexP
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of MultiplexPAv properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex participation.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex participation.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex participation.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex participation.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex participation.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex participation.
+			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average multiplex participation.
+			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average multiplex participation.
+			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average multiplex participation.
+			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average multiplex participation.
+			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average multiplex participation.
+			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average multiplex participation.
 			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the multiplex participation.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the average multiplex participation.
 			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -141,12 +141,12 @@ classdef MultiplexPAv < MultiplexP
 	end
 	methods (Static) % inspection
 		function m_class = getClass()
-			%GETCLASS returns the class of the average mxpart.
+			%GETCLASS returns the class of the average multiplex participation.
 			%
 			% CLASS = MultiplexPAv.GETCLASS() returns the class 'MultiplexPAv'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = M.GETCLASS() returns the class of the average mxpart M.
+			%  CLASS = M.GETCLASS() returns the class of the average multiplex participation M.
 			%  CLASS = Element.GETCLASS(M) returns the class of 'M'.
 			%  CLASS = Element.GETCLASS('MultiplexPAv') returns 'MultiplexPAv'.
 			%
@@ -156,12 +156,12 @@ classdef MultiplexPAv < MultiplexP
 			m_class = 'MultiplexPAv';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the average mxpart.
+			%GETSUBCLASSES returns all subclasses of the average multiplex participation.
 			%
 			% LIST = MultiplexPAv.GETSUBCLASSES() returns all subclasses of 'MultiplexPAv'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = M.GETSUBCLASSES() returns all subclasses of the average mxpart M.
+			%  LIST = M.GETSUBCLASSES() returns all subclasses of the average multiplex participation M.
 			%  LIST = Element.GETSUBCLASSES(M) returns all subclasses of 'M'.
 			%  LIST = Element.GETSUBCLASSES('MultiplexPAv') returns all subclasses of 'MultiplexPAv'.
 			%
@@ -173,16 +173,16 @@ classdef MultiplexPAv < MultiplexP
 			subclass_list = { 'MultiplexPAv' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of average mxpart.
+			%GETPROPS returns the property list of average multiplex participation.
 			%
-			% PROPS = MultiplexPAv.GETPROPS() returns the property list of average mxpart
+			% PROPS = MultiplexPAv.GETPROPS() returns the property list of average multiplex participation
 			%  as a row vector.
 			%
 			% PROPS = MultiplexPAv.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the average mxpart M.
+			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the average multiplex participation M.
 			%  PROPS = Element.GETPROPS(M[, CATEGORY]) returns the property list of 'M'.
 			%  PROPS = Element.GETPROPS('MultiplexPAv'[, CATEGORY]) returns the property list of 'MultiplexPAv'.
 			%
@@ -218,15 +218,15 @@ classdef MultiplexPAv < MultiplexP
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of average mxpart.
+			%GETPROPNUMBER returns the property number of average multiplex participation.
 			%
-			% N = MultiplexPAv.GETPROPNUMBER() returns the property number of average mxpart.
+			% N = MultiplexPAv.GETPROPNUMBER() returns the property number of average multiplex participation.
 			%
-			% N = MultiplexPAv.GETPROPNUMBER(CATEGORY) returns the property number of average mxpart
+			% N = MultiplexPAv.GETPROPNUMBER(CATEGORY) returns the property number of average multiplex participation
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the average mxpart M.
+			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the average multiplex participation M.
 			%  N = Element.GETPROPNUMBER(M) returns the property number of 'M'.
 			%  N = Element.GETPROPNUMBER('MultiplexPAv') returns the property number of 'MultiplexPAv'.
 			%
@@ -262,7 +262,7 @@ classdef MultiplexPAv < MultiplexP
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in average mxpart/error.
+			%EXISTSPROP checks whether property exists in average multiplex participation/error.
 			%
 			% CHECK = MultiplexPAv.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -300,7 +300,7 @@ classdef MultiplexPAv < MultiplexP
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in average mxpart/error.
+			%EXISTSTAG checks whether tag exists in average multiplex participation/error.
 			%
 			% CHECK = MultiplexPAv.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -466,7 +466,7 @@ classdef MultiplexPAv < MultiplexP
 			prop = MultiplexPAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multiplexpav_description_list = { 'NAME (constant, string) is the name of the multiplex participation.'  'DESCRIPTION (constant, string) is the description of the multiplex participation.'  'TEMPLATE (parameter, item) is the template of the multiplex participation.'  'ID (data, string) is a few-letter code of the multiplex participation.'  'LABEL (metadata, string) is an extended label of the multiplex participation.'  'NOTES (metadata, string) are some specific notes about the multiplex participation.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the multiplex participation.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			multiplexpav_description_list = { 'NAME (constant, string) is the name of the average multiplex participation.'  'DESCRIPTION (constant, string) is the description of the average multiplex participation.'  'TEMPLATE (parameter, item) is the template of the average multiplex participation.'  'ID (data, string) is a few-letter code of the average multiplex participation.'  'LABEL (metadata, string) is an extended label of the average multiplex participation.'  'NOTES (metadata, string) are some specific notes about the average multiplex participation.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the average multiplex participation.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = multiplexpav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

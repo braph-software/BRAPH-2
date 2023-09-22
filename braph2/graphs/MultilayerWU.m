@@ -651,7 +651,7 @@ classdef MultilayerWU < Graph
 				case 8 % MultilayerWU.GRAPH_TYPE
 					prop_default = 6;
 				case 27 % MultilayerWU.COMPATIBLE_MEASURES
-					prop_default = { 'Assortativity'  'BetweennessCentrality'  'Degree'  'DegreeAv'  'Distance'  'Flexibility'  'FlexibilityAv'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'OverlappingDeg'  'OverlappingDegAv'  'OverlappingS'  'OverlappingSAv'  'PathLength'  'PathLengthAv'  'SmallWorldness'  'Strength'  'StrengthAv'  'Transitivity'  'WeightedEdgeOvlp' };
+					prop_default = { 'Assortativity'  'BetweennessCentrality'  'Degree'  'DegreeAv'  'DegreeOverlap'  'DegreeOverlapAv'  'Distance'  'Flexibility'  'FlexibilityAv'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'MultilayerCommunity'  'MultilayerM'  'OverlappingDeg'  'OverlappingDegAv'  'OverlappingS'  'OverlappingSAv'  'PathLength'  'PathLengthAv'  'Persistence'  'SmallWorldness'  'Strength'  'StrengthAv'  'Transitivity'  'WeightedEdgeOvlp'  'WeightedMxP'  'WeightedMxPAv' };
 				otherwise
 					prop_default = getPropDefault@Graph(prop);
 			end

@@ -540,7 +540,7 @@ classdef EdgeOverlap < Measure
 				case 10 % EdgeOverlap.PARAMETRICITY
 					prop_default = 2;
 				case 11 % EdgeOverlap.COMPATIBLE_GRAPHS
-					prop_default = {'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT'};;
+					prop_default = {'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'OrdMxWU' 'OrdMxBU' 'OrdMxBUD' 'OrdMxBUT' 'MultiplexBUD' 'MultiplexBUT' 'OrdMlWU' 'OrdMlBU' 'OrdMlBUT' 'OrdMlBUD'};;
 				otherwise
 					prop_default = getPropDefault@Measure(prop);
 			end

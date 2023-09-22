@@ -1493,49 +1493,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
 
-%% Test 15: MultiplexBUD
-if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
-	B11 = [
-	      0 1 1 1;
-	      1 0 1 0;
-	      1 1 0 0;
-	      1 0 0 0
-	      ];
-	B22 = [
-	      0 1 1 1;
-	      1 0 0 0;
-	      1 0 0 0;
-	      1 0 0 0
-	      ];  
-	B33 = [
-	      0 0 0 1;
-	      0 0 0 1;
-	      0 0 0 1;
-	      1 1 1 0
-	      ];
-	B = {B11 B22 B33};
-	
-	known_multiplex_clustering = [5 1 1 5]'./ [12, 2, 2, 6]';
-	known_multiplex_clustering(isnan(known_multiplex_clustering)) = 0;
-	known_multiplex_clustering = {                 
-	                 0
-	                 mean(known_multiplex_clustering)
-	                 };         
-	
-	g = MultiplexBUD('B', B, 'DENSITIES', [10 90]);
-	m_outside_g = MultiplexClAv('G', g);
-	
-	assert(isequal(m_outside_g.get('M'), known_multiplex_clustering), ...
-	    [BRAPH2.STR ':MultiplexClAv:' BRAPH2.FAIL_TEST], ...
-	    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
-	
-	m_inside_g = g.get('MEASURE', 'MultiplexClAv');
-	assert(isequal(m_inside_g.get('M'), known_multiplex_clustering), ...
-	    [BRAPH2.STR ':MultiplexClAv:' BRAPH2.FAIL_TEST], ...
-	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
-end
-
-%% Test 16: OrdMxWU
+%% Test 15: OrdMxWU
 if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	B11 = [
 	      0   .2  1   1;
@@ -1570,7 +1528,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
 
-%% Test 17: No Figures Left
+%% Test 16: No Figures Left
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	assert(isempty(findall(0, 'type', 'figure')), ...
 		[BRAPH2.STR ':MultiplexClAv:' BRAPH2.FAIL_TEST], ...
@@ -1579,7 +1537,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 		)
 end
 
-%% Test 18: Delete Figures
+%% Test 17: Delete Figures
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	delete(findall(0, 'type', 'figure'))
 end

@@ -25,8 +25,8 @@ a_WU = AnalyzeEnsemble_FUN_WU( ...
     'GR', gr ...
     );
 
-a_WU.get('MEASUREENSEMBLE', 'Degree').get('M');
-a_WU.get('MEASUREENSEMBLE', 'DegreeAv').get('M');
+a_WU.get('MEASUREENSEMBLE', 'Strength').get('M');
+a_WU.get('MEASUREENSEMBLE', 'StrengthAv').get('M');
 a_WU.get('MEASUREENSEMBLE', 'Distance').get('M');
 
 %% Create NNData composed of corresponding NNDataPoints

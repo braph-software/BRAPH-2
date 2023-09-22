@@ -538,7 +538,7 @@ classdef MultilayerM < MultilayerCommunity
 			
 			switch prop %CET: Computational Efficiency Trick
 				case 1 % MultilayerM.NAME
-					prop_default = 'MultilayerM';
+					prop_default = 'MultilayerModularity';
 				case 2 % MultilayerM.DESCRIPTION
 					prop_default = 'The multilayer modularity is the homogeneity of the number of inward neighbours of a node across the layers.';
 				case 3 % MultilayerM.TEMPLATE
@@ -546,9 +546,9 @@ classdef MultilayerM < MultilayerCommunity
 				case 4 % MultilayerM.ID
 					prop_default = 'MultilayerM ID';
 				case 5 % MultilayerM.LABEL
-					prop_default = 'MultilayerM label';
+					prop_default = 'MultilayerModularity label';
 				case 6 % MultilayerM.NOTES
-					prop_default = 'MultilayerM notes';
+					prop_default = 'MultilayerModularity notes';
 				case 8 % MultilayerM.SHAPE
 					prop_default = 1;
 				case 9 % MultilayerM.SCOPE
@@ -556,7 +556,7 @@ classdef MultilayerM < MultilayerCommunity
 				case 10 % MultilayerM.PARAMETRICITY
 					prop_default = 2;
 				case 11 % MultilayerM.COMPATIBLE_GRAPHS
-					prop_default = {'MultiplexBU'};;
+					prop_default = {'MultiplexWU' 'OrdMxWU' 'MultiplexBU' 'MultiplexBUT' 'MultiplexBUD' 'MultilayerBU' 'MultilayerWU' 'OrdMlWU'};;
 				otherwise
 					prop_default = getPropDefault@MultilayerCommunity(prop);
 			end

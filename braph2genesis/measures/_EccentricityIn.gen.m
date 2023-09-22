@@ -1,5 +1,5 @@
 %% ¡header!
-EccentricityIn < Measure (m, eccentricityIn) is the graph eccentricityIn.
+EccentricityIn < Measure (m, in-eccentricity) is the graph in-eccentricity.
 
 %%% ¡description!
 The in-eccentricity of a node is the maximal shortest in-path length 
@@ -8,30 +8,30 @@ between a node and any other node within a layer.
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the eccentricityIn.
+NAME (constant, string) is the name of the in-eccentricity.
 %%%% ¡default!
 'EccentricityIn'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the eccentricityIn.
+DESCRIPTION (constant, string) is the description of the in-eccentricity.
 %%%% ¡default!
 'The in-eccentricity of a node is the maximal shortest in-path length between a node and any other node within a layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the eccentricityIn.
+TEMPLATE (parameter, item) is the template of the in-eccentricity.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the eccentricityIn.
+ID (data, string) is a few-letter code of the in-eccentricity.
 %%%% ¡default!
 'EccentricityIn ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the eccentricityIn.
+LABEL (metadata, string) is an extended label of the in-eccentricity.
 %%%% ¡default!
 'EccentricityIn label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the eccentricityIn.
+NOTES (metadata, string) are some specific notes about the in-eccentricity.
 %%%% ¡default!
 'EccentricityIn notes'
 
@@ -56,7 +56,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD' 'OrdMxWD'} ;
 
 %%% ¡prop!
-M (result, cell) is the eccentricityIn.
+M (result, cell) is the in-eccentricity.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

@@ -1,5 +1,5 @@
 classdef RCDeg < Degree
-	%RCDeg is the graph richclubdegree.
+	%RCDeg is the graph rich-club degree.
 	% It is a subclass of <a href="matlab:help Degree">Degree</a>.
 	%
 	% The rich-club degree of a node at level k is the sum of 
@@ -7,19 +7,19 @@ classdef RCDeg < Degree
 	%  k is set by the user; the default value is equal to 1.
 	%
 	% The list of RCDeg properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the richclubdegree.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the richclubdegree.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the richclubdegree.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the richclubdegree.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the richclubdegree.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the richclubdegree.
+	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the rich-club degree.
+	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the rich-club degree.
+	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the rich-club degree.
+	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the rich-club degree.
+	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the rich-club degree.
+	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the rich-club degree.
 	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the richclubdegree.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the rich-club degree.
 	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>15</strong> <strong>PARAMETRIC_VALUE</strong> 	PARAMETRIC_VALUE (parameter, SCALAR) 
 	%
@@ -41,33 +41,33 @@ classdef RCDeg < Degree
 	%  unchecked - sets a property to NOT checked
 	%
 	% RCDeg methods (display):
-	%  tostring - string with information about the richclubdegree
-	%  disp - displays information about the richclubdegree
-	%  tree - displays the tree of the richclubdegree
+	%  tostring - string with information about the rich-club degree
+	%  disp - displays information about the rich-club degree
+	%  tree - displays the tree of the rich-club degree
 	%
 	% RCDeg methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two richclubdegree are equal (values, locked)
+	%  isequal - determines whether two rich-club degree are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the richclubdegree
+	%  copy - copies the rich-club degree
 	%
 	% RCDeg methods (save/load, Static):
-	%  save - saves BRAPH2 richclubdegree as b2 file
-	%  load - loads a BRAPH2 richclubdegree from a b2 file
+	%  save - saves BRAPH2 rich-club degree as b2 file
+	%  load - loads a BRAPH2 rich-club degree from a b2 file
 	%
 	% RCDeg method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the richclubdegree
+	%  encodeJSON - returns a JSON string encoding the rich-club degree
 	%
 	% RCDeg method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the richclubdegree
+	%   decodeJSON - returns a JSON string encoding the rich-club degree
 	%
 	% RCDeg methods (inspection, Static):
-	%  getClass - returns the class of the richclubdegree
+	%  getClass - returns the class of the rich-club degree
 	%  getSubclasses - returns all subclasses of RCDeg
-	%  getProps - returns the property list of the richclubdegree
-	%  getPropNumber - returns the property number of the richclubdegree
+	%  getProps - returns the property list of the rich-club degree
+	%  getPropNumber - returns the property number of the rich-club degree
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -117,7 +117,7 @@ classdef RCDeg < Degree
 	end
 	methods % constructor
 		function m = RCDeg(varargin)
-			%RCDeg() creates a richclubdegree.
+			%RCDeg() creates a rich-club degree.
 			%
 			% RCDeg(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -127,19 +127,19 @@ classdef RCDeg < Degree
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of RCDeg properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the richclubdegree.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the richclubdegree.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the richclubdegree.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the richclubdegree.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the richclubdegree.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the richclubdegree.
+			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the rich-club degree.
+			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the rich-club degree.
+			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the rich-club degree.
+			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the rich-club degree.
+			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the rich-club degree.
+			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the rich-club degree.
 			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the richclubdegree.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the rich-club degree.
 			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>15</strong> <strong>PARAMETRIC_VALUE</strong> 	PARAMETRIC_VALUE (parameter, SCALAR) 
 			%
@@ -150,12 +150,12 @@ classdef RCDeg < Degree
 	end
 	methods (Static) % inspection
 		function m_class = getClass()
-			%GETCLASS returns the class of the richclubdegree.
+			%GETCLASS returns the class of the rich-club degree.
 			%
 			% CLASS = RCDeg.GETCLASS() returns the class 'RCDeg'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = M.GETCLASS() returns the class of the richclubdegree M.
+			%  CLASS = M.GETCLASS() returns the class of the rich-club degree M.
 			%  CLASS = Element.GETCLASS(M) returns the class of 'M'.
 			%  CLASS = Element.GETCLASS('RCDeg') returns 'RCDeg'.
 			%
@@ -165,12 +165,12 @@ classdef RCDeg < Degree
 			m_class = 'RCDeg';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the richclubdegree.
+			%GETSUBCLASSES returns all subclasses of the rich-club degree.
 			%
 			% LIST = RCDeg.GETSUBCLASSES() returns all subclasses of 'RCDeg'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = M.GETSUBCLASSES() returns all subclasses of the richclubdegree M.
+			%  LIST = M.GETSUBCLASSES() returns all subclasses of the rich-club degree M.
 			%  LIST = Element.GETSUBCLASSES(M) returns all subclasses of 'M'.
 			%  LIST = Element.GETSUBCLASSES('RCDeg') returns all subclasses of 'RCDeg'.
 			%
@@ -182,16 +182,16 @@ classdef RCDeg < Degree
 			subclass_list = { 'RCDeg'  'MultiplexRCDeg' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of richclubdegree.
+			%GETPROPS returns the property list of rich-club degree.
 			%
-			% PROPS = RCDeg.GETPROPS() returns the property list of richclubdegree
+			% PROPS = RCDeg.GETPROPS() returns the property list of rich-club degree
 			%  as a row vector.
 			%
 			% PROPS = RCDeg.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the richclubdegree M.
+			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the rich-club degree M.
 			%  PROPS = Element.GETPROPS(M[, CATEGORY]) returns the property list of 'M'.
 			%  PROPS = Element.GETPROPS('RCDeg'[, CATEGORY]) returns the property list of 'RCDeg'.
 			%
@@ -227,15 +227,15 @@ classdef RCDeg < Degree
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of richclubdegree.
+			%GETPROPNUMBER returns the property number of rich-club degree.
 			%
-			% N = RCDeg.GETPROPNUMBER() returns the property number of richclubdegree.
+			% N = RCDeg.GETPROPNUMBER() returns the property number of rich-club degree.
 			%
-			% N = RCDeg.GETPROPNUMBER(CATEGORY) returns the property number of richclubdegree
+			% N = RCDeg.GETPROPNUMBER(CATEGORY) returns the property number of rich-club degree
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the richclubdegree M.
+			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the rich-club degree M.
 			%  N = Element.GETPROPNUMBER(M) returns the property number of 'M'.
 			%  N = Element.GETPROPNUMBER('RCDeg') returns the property number of 'RCDeg'.
 			%
@@ -271,7 +271,7 @@ classdef RCDeg < Degree
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in richclubdegree/error.
+			%EXISTSPROP checks whether property exists in rich-club degree/error.
 			%
 			% CHECK = RCDeg.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -309,7 +309,7 @@ classdef RCDeg < Degree
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in richclubdegree/error.
+			%EXISTSTAG checks whether tag exists in rich-club degree/error.
 			%
 			% CHECK = RCDeg.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -475,7 +475,7 @@ classdef RCDeg < Degree
 			prop = RCDeg.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			rcdeg_description_list = { 'NAME (constant, string) is the name of the richclubdegree.'  'DESCRIPTION (constant, string) is the description of the richclubdegree.'  'TEMPLATE (parameter, item) is the template of the richclubdegree.'  'ID (data, string) is a few-letter code of the richclubdegree.'  'LABEL (metadata, string) is an extended label of the richclubdegree.'  'NOTES (metadata, string) are some specific notes about the richclubdegree.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the richclubdegree.'  'PFM (gui, item) contains the panel figure of the measure.'  'PARAMETRIC_VALUE (parameter, SCALAR) ' };
+			rcdeg_description_list = { 'NAME (constant, string) is the name of the rich-club degree.'  'DESCRIPTION (constant, string) is the description of the rich-club degree.'  'TEMPLATE (parameter, item) is the template of the rich-club degree.'  'ID (data, string) is a few-letter code of the rich-club degree.'  'LABEL (metadata, string) is an extended label of the rich-club degree.'  'NOTES (metadata, string) are some specific notes about the rich-club degree.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the rich-club degree.'  'PFM (gui, item) contains the panel figure of the measure.'  'PARAMETRIC_VALUE (parameter, SCALAR) ' };
 			prop_description = rcdeg_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

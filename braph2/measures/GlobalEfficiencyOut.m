@@ -6,12 +6,12 @@ classdef GlobalEfficiencyOut < Distance
 	% It is inversely related to the characteristic in-path length.
 	%
 	% The list of GlobalEfficiencyOut properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the GlobalEfficiencyOut.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the GlobalEfficiencyOut.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the GlobalEfficiencyOut.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the GlobalEfficiencyOut.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the GlobalEfficiencyOut.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the GlobalEfficiencyOut.
+	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the out-global efficiency.
+	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the out-global efficiency.
+	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the out-global efficiency.
+	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the out-global efficiency.
+	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the out-global efficiency.
+	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the out-global efficiency.
 	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
@@ -119,12 +119,12 @@ classdef GlobalEfficiencyOut < Distance
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of GlobalEfficiencyOut properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the GlobalEfficiencyOut.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the GlobalEfficiencyOut.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the GlobalEfficiencyOut.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the GlobalEfficiencyOut.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the GlobalEfficiencyOut.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the GlobalEfficiencyOut.
+			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the out-global efficiency.
+			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the out-global efficiency.
+			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the out-global efficiency.
+			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the out-global efficiency.
+			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the out-global efficiency.
+			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the out-global efficiency.
 			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
@@ -466,7 +466,7 @@ classdef GlobalEfficiencyOut < Distance
 			prop = GlobalEfficiencyOut.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			globalefficiencyout_description_list = { 'NAME (constant, string) is the name of the GlobalEfficiencyOut.'  'DESCRIPTION (constant, string) is the description of the GlobalEfficiencyOut.'  'TEMPLATE (parameter, item) is the template of the GlobalEfficiencyOut.'  'ID (data, string) is a few-letter code of the GlobalEfficiencyOut.'  'LABEL (metadata, string) is an extended label of the GlobalEfficiencyOut.'  'NOTES (metadata, string) are some specific notes about the GlobalEfficiencyOut.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the out-global efficiency.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			globalefficiencyout_description_list = { 'NAME (constant, string) is the name of the out-global efficiency.'  'DESCRIPTION (constant, string) is the description of the out-global efficiency.'  'TEMPLATE (parameter, item) is the template of the out-global efficiency.'  'ID (data, string) is a few-letter code of the out-global efficiency.'  'LABEL (metadata, string) is an extended label of the out-global efficiency.'  'NOTES (metadata, string) are some specific notes about the out-global efficiency.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the out-global efficiency.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = globalefficiencyout_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -524,7 +524,7 @@ classdef GlobalEfficiencyOut < Distance
 				case 1 % GlobalEfficiencyOut.NAME
 					prop_default = 'GlobalEfficiencyOut';
 				case 2 % GlobalEfficiencyOut.DESCRIPTION
-					prop_default = 'The out-global efficiency is the average inverse shortest in-path length within each layer. It is inversely related to the characteristic in-path length.';
+					prop_default = 'The out-global efficiency is the average inverse shortest out-path length within each layer. It is inversely related to the characteristic out-path length.';
 				case 3 % GlobalEfficiencyOut.TEMPLATE
 					prop_default = Format.getFormatDefault(8, GlobalEfficiencyOut.getPropSettings(prop));
 				case 4 % GlobalEfficiencyOut.ID

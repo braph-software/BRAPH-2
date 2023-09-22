@@ -76,19 +76,13 @@ a_BUD2 = AnalyzeEnsemble_CON_FUN_MP_BUD( ...
     );
 
 % measure calculation
-degree_BUD1 = a_BUD1.get('MEASUREENSEMBLE', 'Degree').get('M');
-degreeav_BUD1 = a_BUD1.get('MEASUREENSEMBLE', 'DegreeAv').get('M');
-distance_BUD1 = a_BUD1.get('MEASUREENSEMBLE', 'Distance').get('M');
-% % % multiplexparticipation_BUD1 = a_BUD1.get('MEASUREENSEMBLE', 'MultiplexParticipation').get('M');
-% % % ovdegree_av_BUD1 = a_BUD1.get('MEASUREENSEMBLE', 'OverlappingDegreeAv').get('M');
-% % % edgeov_BUD1 = a_BUD1.get('MEASUREENSEMBLE', 'EdgeOverlap').get('M');
+multiplexparticipation_BUD1 = a_BUD1.get('MEASUREENSEMBLE', 'MultiplexP').get('M');
+ovdegree_av_BUD1 = a_BUD1.get('MEASUREENSEMBLE', 'OverlappingDegAv').get('M');
+edgeov_BUD1 = a_BUD1.get('MEASUREENSEMBLE', 'EdgeOverlap').get('M');
 
-degree_BUD2 = a_BUD2.get('MEASUREENSEMBLE', 'Degree').get('M');
-degreeav_BUD2 = a_BUD2.get('MEASUREENSEMBLE', 'DegreeAv').get('M');
-distance_BUD2 = a_BUD2.get('MEASUREENSEMBLE', 'Distance').get('M');
-% % % multiplexparticipation_BUD2 = a_BUD2.get('MEASUREENSEMBLE', 'MultiplexParticipation').get('M');
-% % % ovdegree_av_BUD2 = a_BUD2.get('MEASUREENSEMBLE', 'DegreeAv').get('M');
-% % % edgeov_BUD2 = a_BUD2.get('MEASUREENSEMBLE', 'EdgeOverlap').get('M');
+multiplexparticipation_BUD2 = a_BUD2.get('MEASUREENSEMBLE', 'MultiplexP').get('M');
+ovdegree_av_BUD2 = a_BUD2.get('MEASUREENSEMBLE', 'OverlappingDegAv').get('M');
+edgeov_BUD2 = a_BUD2.get('MEASUREENSEMBLE', 'EdgeOverlap').get('M');
 
 % comparison
 c_BUD = CompareEnsemble( ...
@@ -100,39 +94,20 @@ c_BUD = CompareEnsemble( ...
     'MEMORIZE', true ...
     );
 
-degree_BUD_diff = c_BUD.get('COMPARISON', 'Degree').get('DIFF');
-degree_BUD_p1 = c_BUD.get('COMPARISON', 'Degree').get('P1');
-degree_BUD_p2 = c_BUD.get('COMPARISON', 'Degree').get('P2');
-degree_BUD_cil = c_BUD.get('COMPARISON', 'Degree').get('CIL');
-degree_BUD_ciu = c_BUD.get('COMPARISON', 'Degree').get('CIU');
+multiplexparticipation_BUD_diff = c_BUD.get('COMPARISON', 'MultiplexP').get('DIFF');
+multiplexparticipation_BUD_p1 = c_BUD.get('COMPARISON', 'MultiplexP').get('P1');
+multiplexparticipation_BUD_p2 = c_BUD.get('COMPARISON', 'MultiplexP').get('P2');
+multiplexparticipation_BUD_cil = c_BUD.get('COMPARISON', 'MultiplexP').get('CIL');
+multiplexparticipation_BUD_ciu = c_BUD.get('COMPARISON', 'MultiplexP').get('CIU');
 
-degreeav_BUD_diff = c_BUD.get('COMPARISON', 'DegreeAv').get('DIFF');
-degreeav_BUD_p1 = c_BUD.get('COMPARISON', 'DegreeAv').get('P1');
-degreeav_BUD_p2 = c_BUD.get('COMPARISON', 'DegreeAv').get('P2');
-degreeav_BUD_cil = c_BUD.get('COMPARISON', 'DegreeAv').get('CIL');
-degreeav_BUD_ciu = c_BUD.get('COMPARISON', 'DegreeAv').get('CIU');
+ovdegree_av_BUD_diff = c_BUD.get('COMPARISON', 'OverlappingDegAv').get('DIFF');
+ovdegree_av_BUD_p1 = c_BUD.get('COMPARISON', 'OverlappingDegAv').get('P1');
+ovdegree_av_BUD_p2 = c_BUD.get('COMPARISON', 'OverlappingDegAv').get('P2');
+ovdegree_av_BUD_cil = c_BUD.get('COMPARISON', 'OverlappingDegAv').get('CIL');
+ovdegree_av_BUD_ciu = c_BUD.get('COMPARISON', 'OverlappingDegAv').get('CIU');
 
-distance_BUD_diff = c_BUD.get('COMPARISON', 'Distance').get('DIFF');
-distance_BUD_p1 = c_BUD.get('COMPARISON', 'Distance').get('P1');
-distance_BUD_p2 = c_BUD.get('COMPARISON', 'Distance').get('P2');
-distance_BUD_cil = c_BUD.get('COMPARISON', 'Distance').get('CIL');
-distance_BUD_ciu = c_BUD.get('COMPARISON', 'Distance').get('CIU');
-
-% % % multiplexparticipation_BUD_diff = c_BUD.get('COMPARISON', 'MultiplexParticipation').get('DIFF');
-% % % multiplexparticipation_BUD_p1 = c_BUD.get('COMPARISON', 'MultiplexParticipation').get('P1');
-% % % multiplexparticipation_BUD_p2 = c_BUD.get('COMPARISON', 'MultiplexParticipation').get('P2');
-% % % multiplexparticipation_BUD_cil = c_BUD.get('COMPARISON', 'MultiplexParticipation').get('CIL');
-% % % multiplexparticipation_BUD_ciu = c_BUD.get('COMPARISON', 'MultiplexParticipation').get('CIU');
-
-% % % ovdegree_av_BUD_diff = c_BUD.get('COMPARISON', 'OverlappingDegreeAv').get('DIFF');
-% % % ovdegree_av_BUD_p1 = c_BUD.get('COMPARISON', 'OverlappingDegreeAv').get('P1');
-% % % ovdegree_av_BUD_p2 = c_BUD.get('COMPARISON', 'OverlappingDegreeAv').get('P2');
-% % % ovdegree_av_BUD_cil = c_BUD.get('COMPARISON', 'OverlappingDegreeAv').get('CIL');
-% % % ovdegree_av_BUD_ciu = c_BUD.get('COMPARISON', 'OverlappingDegreeAv').get('CIU');
-
-% % % edgeov_BUD_diff = c_BUD.get('COMPARISON', 'EdgeOverlap').get('DIFF');
-% % % edgeov_BUD_p1 = c_BUD.get('COMPARISON', 'EdgeOverlap').get('P1');
-% % % edgeov_BUD_p2 = c_BUD.get('COMPARISON', 'EdgeOverlap').get('P2');
-% % % edgeov_BUD_cil = c_BUD.get('COMPARISON', 'EdgeOverlap').get('CIL');
-% % % edgeov_BUD_ciu = c_BUD.get('COMPARISON', 'EdgeOverlap').get('CIU');
-% % % mpc_av_BUD_ciu = c_BUD.get('COMPARISON', 'MultiplexParticipationAv').get('CIU');
+edgeov_BUD_diff = c_BUD.get('COMPARISON', 'EdgeOverlap').get('DIFF');
+edgeov_BUD_p1 = c_BUD.get('COMPARISON', 'EdgeOverlap').get('P1');
+edgeov_BUD_p2 = c_BUD.get('COMPARISON', 'EdgeOverlap').get('P2');
+edgeov_BUD_cil = c_BUD.get('COMPARISON', 'EdgeOverlap').get('CIL');
+edgeov_BUD_ciu = c_BUD.get('COMPARISON', 'EdgeOverlap').get('CIU');

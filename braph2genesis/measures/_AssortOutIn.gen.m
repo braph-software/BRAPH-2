@@ -12,7 +12,7 @@ The corresponding coefficient for directed and weighted networks is calculated b
 %%% ¡prop!
 NAME (constant, string) is the name of the out-in-assortativity.
 %%%% ¡default!
-'AssortOutIn'
+'OutInAssortativity'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the out-in-assortativity.
@@ -22,7 +22,7 @@ DESCRIPTION (constant, string) is the description of the out-in-assortativity.
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the out-in-assortativity.
 %%%% ¡settings!
-'AssortOutIn'
+'OutInAssortativity'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the out-in-assortativity.
@@ -32,12 +32,12 @@ ID (data, string) is a few-letter code of the out-in-assortativity.
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the out-in-assortativity.
 %%%% ¡default!
-'AssortOutIn label'
+'OutInAssortativity label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the out-in-assortativity.
 %%%% ¡default!
-'AssortOutIn notes'
+'OutInAssortativity notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.

@@ -1,5 +1,5 @@
 %% ¡header!
-OverlappingSOut < StrengthOut (m, ovrlapstrout) is the graph overlapping strength.
+OverlappingSOut < StrengthOut (m, overlapping out-strength) is the graph overlapping out-strength.
 
 %%% ¡description!
 The overlapping out-strength of a graph is the sum of the out-strengths of a 
@@ -51,32 +51,32 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the overlapping strength.
+NAME (constant, string) is the name of the overlapping out-strength.
 %%%% ¡default!
 'OverlappingSOut'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the overlapping strength.
+DESCRIPTION (constant, string) is the description of the overlapping out-strength.
 %%%% ¡default!
 'The overlapping out-strength of a graph is the sum of the out-strengths of a node in all layers.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the overlapping strength.
+TEMPLATE (parameter, item) is the template of the overlapping out-strength.
 %%%% ¡settings!
 'OverlappingSOut'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the overlapping strength.
+ID (data, string) is a few-letter code of the overlapping out-strength.
 %%%% ¡default!
 'OverlappingSOut ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the overlapping strength.
+LABEL (metadata, string) is an extended label of the overlapping out-strength.
 %%%% ¡default!
 'OverlappingSOut label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the overlapping strength.
+NOTES (metadata, string) are some specific notes about the overlapping out-strength.
 %%%% ¡default!
 'OverlappingSOut notes'
 
@@ -98,10 +98,10 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'MultiplexWD' 'MultilayerWD' 'OrdMlWD'};
+{'MultiplexWD' 'MultilayerWD' 'OrdMxWD' 'OrdMlWD'};
 
 %%% ¡prop!
-M (result, cell) is the overlapping strength.
+M (result, cell) is the overlapping out-strength.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

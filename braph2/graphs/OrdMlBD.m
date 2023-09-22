@@ -618,7 +618,7 @@ classdef OrdMlBD < Graph
 				case 8 % OrdMlBD.GRAPH_TYPE
 					prop_default = 5;
 				case 27 % OrdMlBD.COMPATIBLE_MEASURES
-					prop_default = { 'Distance'  'Flexibility'  'FlexibilityAv'  'OverlappingDegIn'  'OverlappingDegInAv'  'OverlappingDegOut'  'OverlappingDegOutAv'  'PathLengthIn'  'PathLengthInAv'  'PathLengthOutAv' };
+					prop_default = { 'Distance'  'OverlappingDegIn'  'OverlappingDegInAv'  'OverlappingDegOut'  'OverlappingDegOutAv'  'PathLengthIn'  'PathLengthInAv'  'PathLengthOutAv' };
 				otherwise
 					prop_default = getPropDefault@Graph(prop);
 			end

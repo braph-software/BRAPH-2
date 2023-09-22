@@ -1,24 +1,24 @@
 classdef EccentricityOut < Measure
-	%EccentricityOut is the graph eccentricityOut.
+	%EccentricityOut is the graph out-eccentricity.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
 	% The in-eccentricity of a node is the maximal shortest out-path length 
 	% between a node and any other node within a layer.
 	%
 	% The list of EccentricityOut properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the eccentricityOut.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the eccentricityOut.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the eccentricityOut.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the eccentricityOut.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the eccentricityOut.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the eccentricityOut.
+	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the out-eccentricity.
+	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the out-eccentricity.
+	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the out-eccentricity.
+	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the out-eccentricity.
+	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the out-eccentricity.
+	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the out-eccentricity.
 	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the eccentricityOut.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the out-eccentricity.
 	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>15</strong> <strong>RULE</strong> 	RULE (parameter, OPTION)  % calculation in a graph or its subgraph
 	%
@@ -40,33 +40,33 @@ classdef EccentricityOut < Measure
 	%  unchecked - sets a property to NOT checked
 	%
 	% EccentricityOut methods (display):
-	%  tostring - string with information about the eccentricityOut
-	%  disp - displays information about the eccentricityOut
-	%  tree - displays the tree of the eccentricityOut
+	%  tostring - string with information about the out-eccentricity
+	%  disp - displays information about the out-eccentricity
+	%  tree - displays the tree of the out-eccentricity
 	%
 	% EccentricityOut methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two eccentricityOut are equal (values, locked)
+	%  isequal - determines whether two out-eccentricity are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the eccentricityOut
+	%  copy - copies the out-eccentricity
 	%
 	% EccentricityOut methods (save/load, Static):
-	%  save - saves BRAPH2 eccentricityOut as b2 file
-	%  load - loads a BRAPH2 eccentricityOut from a b2 file
+	%  save - saves BRAPH2 out-eccentricity as b2 file
+	%  load - loads a BRAPH2 out-eccentricity from a b2 file
 	%
 	% EccentricityOut method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the eccentricityOut
+	%  encodeJSON - returns a JSON string encoding the out-eccentricity
 	%
 	% EccentricityOut method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the eccentricityOut
+	%   decodeJSON - returns a JSON string encoding the out-eccentricity
 	%
 	% EccentricityOut methods (inspection, Static):
-	%  getClass - returns the class of the eccentricityOut
+	%  getClass - returns the class of the out-eccentricity
 	%  getSubclasses - returns all subclasses of EccentricityOut
-	%  getProps - returns the property list of the eccentricityOut
-	%  getPropNumber - returns the property number of the eccentricityOut
+	%  getProps - returns the property list of the out-eccentricity
+	%  getPropNumber - returns the property number of the out-eccentricity
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -116,7 +116,7 @@ classdef EccentricityOut < Measure
 	end
 	methods % constructor
 		function m = EccentricityOut(varargin)
-			%EccentricityOut() creates a eccentricityOut.
+			%EccentricityOut() creates a out-eccentricity.
 			%
 			% EccentricityOut(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -126,19 +126,19 @@ classdef EccentricityOut < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of EccentricityOut properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the eccentricityOut.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the eccentricityOut.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the eccentricityOut.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the eccentricityOut.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the eccentricityOut.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the eccentricityOut.
+			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the out-eccentricity.
+			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the out-eccentricity.
+			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the out-eccentricity.
+			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the out-eccentricity.
+			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the out-eccentricity.
+			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the out-eccentricity.
 			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the eccentricityOut.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the out-eccentricity.
 			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>15</strong> <strong>RULE</strong> 	RULE (parameter, OPTION)  % calculation in a graph or its subgraph
 			%
@@ -149,12 +149,12 @@ classdef EccentricityOut < Measure
 	end
 	methods (Static) % inspection
 		function m_class = getClass()
-			%GETCLASS returns the class of the eccentricityOut.
+			%GETCLASS returns the class of the out-eccentricity.
 			%
 			% CLASS = EccentricityOut.GETCLASS() returns the class 'EccentricityOut'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = M.GETCLASS() returns the class of the eccentricityOut M.
+			%  CLASS = M.GETCLASS() returns the class of the out-eccentricity M.
 			%  CLASS = Element.GETCLASS(M) returns the class of 'M'.
 			%  CLASS = Element.GETCLASS('EccentricityOut') returns 'EccentricityOut'.
 			%
@@ -164,12 +164,12 @@ classdef EccentricityOut < Measure
 			m_class = 'EccentricityOut';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the eccentricityOut.
+			%GETSUBCLASSES returns all subclasses of the out-eccentricity.
 			%
 			% LIST = EccentricityOut.GETSUBCLASSES() returns all subclasses of 'EccentricityOut'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = M.GETSUBCLASSES() returns all subclasses of the eccentricityOut M.
+			%  LIST = M.GETSUBCLASSES() returns all subclasses of the out-eccentricity M.
 			%  LIST = Element.GETSUBCLASSES(M) returns all subclasses of 'M'.
 			%  LIST = Element.GETSUBCLASSES('EccentricityOut') returns all subclasses of 'EccentricityOut'.
 			%
@@ -181,16 +181,16 @@ classdef EccentricityOut < Measure
 			subclass_list = { 'EccentricityOut'  'EccentricityOutAv' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of eccentricityOut.
+			%GETPROPS returns the property list of out-eccentricity.
 			%
-			% PROPS = EccentricityOut.GETPROPS() returns the property list of eccentricityOut
+			% PROPS = EccentricityOut.GETPROPS() returns the property list of out-eccentricity
 			%  as a row vector.
 			%
 			% PROPS = EccentricityOut.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the eccentricityOut M.
+			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the out-eccentricity M.
 			%  PROPS = Element.GETPROPS(M[, CATEGORY]) returns the property list of 'M'.
 			%  PROPS = Element.GETPROPS('EccentricityOut'[, CATEGORY]) returns the property list of 'EccentricityOut'.
 			%
@@ -226,15 +226,15 @@ classdef EccentricityOut < Measure
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of eccentricityOut.
+			%GETPROPNUMBER returns the property number of out-eccentricity.
 			%
-			% N = EccentricityOut.GETPROPNUMBER() returns the property number of eccentricityOut.
+			% N = EccentricityOut.GETPROPNUMBER() returns the property number of out-eccentricity.
 			%
-			% N = EccentricityOut.GETPROPNUMBER(CATEGORY) returns the property number of eccentricityOut
+			% N = EccentricityOut.GETPROPNUMBER(CATEGORY) returns the property number of out-eccentricity
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the eccentricityOut M.
+			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the out-eccentricity M.
 			%  N = Element.GETPROPNUMBER(M) returns the property number of 'M'.
 			%  N = Element.GETPROPNUMBER('EccentricityOut') returns the property number of 'EccentricityOut'.
 			%
@@ -270,7 +270,7 @@ classdef EccentricityOut < Measure
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in eccentricityOut/error.
+			%EXISTSPROP checks whether property exists in out-eccentricity/error.
 			%
 			% CHECK = EccentricityOut.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -308,7 +308,7 @@ classdef EccentricityOut < Measure
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in eccentricityOut/error.
+			%EXISTSTAG checks whether tag exists in out-eccentricity/error.
 			%
 			% CHECK = EccentricityOut.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -474,7 +474,7 @@ classdef EccentricityOut < Measure
 			prop = EccentricityOut.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			eccentricityout_description_list = { 'NAME (constant, string) is the name of the eccentricityOut.'  'DESCRIPTION (constant, string) is the description of the eccentricityOut.'  'TEMPLATE (parameter, item) is the template of the eccentricityOut.'  'ID (data, string) is a few-letter code of the eccentricityOut.'  'LABEL (metadata, string) is an extended label of the eccentricityOut.'  'NOTES (metadata, string) are some specific notes about the eccentricityOut.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the eccentricityOut.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, OPTION)  % calculation in a graph or its subgraph' };
+			eccentricityout_description_list = { 'NAME (constant, string) is the name of the out-eccentricity.'  'DESCRIPTION (constant, string) is the description of the out-eccentricity.'  'TEMPLATE (parameter, item) is the template of the out-eccentricity.'  'ID (data, string) is a few-letter code of the out-eccentricity.'  'LABEL (metadata, string) is an extended label of the out-eccentricity.'  'NOTES (metadata, string) are some specific notes about the out-eccentricity.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the out-eccentricity.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, OPTION)  % calculation in a graph or its subgraph' };
 			prop_description = eccentricityout_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

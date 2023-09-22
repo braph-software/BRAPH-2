@@ -1,24 +1,24 @@
 classdef OverlappingSOutAv < OverlappingSOut
-	%OverlappingSOutAv is the graph average overlapping strength.
+	%OverlappingSOutAv is the graph average overlapping out-strength.
 	% It is a subclass of <a href="matlab:help OverlappingSOut">OverlappingSOut</a>.
 	%
 	% The average overlapping out-strength of a graph is the average of the sum of the out-strengths of a 
 	% node in all layers.
 	%
 	% The list of OverlappingSOutAv properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the overlapping strength.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the overlapping strength.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the overlapping strength.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the overlapping strength.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the overlapping strength.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the overlapping strength.
+	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average overlapping out-strength.
+	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average overlapping out-strength.
+	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average overlapping out-strength.
+	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average overlapping out-strength.
+	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average overlapping out-strength.
+	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average overlapping out-strength.
 	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the overlapping strength.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the average overlapping out-strength.
 	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% OverlappingSOutAv methods (constructor):
@@ -39,33 +39,33 @@ classdef OverlappingSOutAv < OverlappingSOut
 	%  unchecked - sets a property to NOT checked
 	%
 	% OverlappingSOutAv methods (display):
-	%  tostring - string with information about the average ovrlapstrout
-	%  disp - displays information about the average ovrlapstrout
-	%  tree - displays the tree of the average ovrlapstrout
+	%  tostring - string with information about the average overlapping out-strength
+	%  disp - displays information about the average overlapping out-strength
+	%  tree - displays the tree of the average overlapping out-strength
 	%
 	% OverlappingSOutAv methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two average ovrlapstrout are equal (values, locked)
+	%  isequal - determines whether two average overlapping out-strength are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the average ovrlapstrout
+	%  copy - copies the average overlapping out-strength
 	%
 	% OverlappingSOutAv methods (save/load, Static):
-	%  save - saves BRAPH2 average ovrlapstrout as b2 file
-	%  load - loads a BRAPH2 average ovrlapstrout from a b2 file
+	%  save - saves BRAPH2 average overlapping out-strength as b2 file
+	%  load - loads a BRAPH2 average overlapping out-strength from a b2 file
 	%
 	% OverlappingSOutAv method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the average ovrlapstrout
+	%  encodeJSON - returns a JSON string encoding the average overlapping out-strength
 	%
 	% OverlappingSOutAv method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the average ovrlapstrout
+	%   decodeJSON - returns a JSON string encoding the average overlapping out-strength
 	%
 	% OverlappingSOutAv methods (inspection, Static):
-	%  getClass - returns the class of the average ovrlapstrout
+	%  getClass - returns the class of the average overlapping out-strength
 	%  getSubclasses - returns all subclasses of OverlappingSOutAv
-	%  getProps - returns the property list of the average ovrlapstrout
-	%  getPropNumber - returns the property number of the average ovrlapstrout
+	%  getProps - returns the property list of the average overlapping out-strength
+	%  getPropNumber - returns the property number of the average overlapping out-strength
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -109,7 +109,7 @@ classdef OverlappingSOutAv < OverlappingSOut
 	
 	methods % constructor
 		function m = OverlappingSOutAv(varargin)
-			%OverlappingSOutAv() creates a average ovrlapstrout.
+			%OverlappingSOutAv() creates a average overlapping out-strength.
 			%
 			% OverlappingSOutAv(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -119,19 +119,19 @@ classdef OverlappingSOutAv < OverlappingSOut
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of OverlappingSOutAv properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the overlapping strength.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the overlapping strength.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the overlapping strength.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the overlapping strength.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the overlapping strength.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the overlapping strength.
+			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average overlapping out-strength.
+			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average overlapping out-strength.
+			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average overlapping out-strength.
+			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average overlapping out-strength.
+			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average overlapping out-strength.
+			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average overlapping out-strength.
 			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the overlapping strength.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the average overlapping out-strength.
 			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -141,12 +141,12 @@ classdef OverlappingSOutAv < OverlappingSOut
 	end
 	methods (Static) % inspection
 		function m_class = getClass()
-			%GETCLASS returns the class of the average ovrlapstrout.
+			%GETCLASS returns the class of the average overlapping out-strength.
 			%
 			% CLASS = OverlappingSOutAv.GETCLASS() returns the class 'OverlappingSOutAv'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = M.GETCLASS() returns the class of the average ovrlapstrout M.
+			%  CLASS = M.GETCLASS() returns the class of the average overlapping out-strength M.
 			%  CLASS = Element.GETCLASS(M) returns the class of 'M'.
 			%  CLASS = Element.GETCLASS('OverlappingSOutAv') returns 'OverlappingSOutAv'.
 			%
@@ -156,12 +156,12 @@ classdef OverlappingSOutAv < OverlappingSOut
 			m_class = 'OverlappingSOutAv';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the average ovrlapstrout.
+			%GETSUBCLASSES returns all subclasses of the average overlapping out-strength.
 			%
 			% LIST = OverlappingSOutAv.GETSUBCLASSES() returns all subclasses of 'OverlappingSOutAv'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = M.GETSUBCLASSES() returns all subclasses of the average ovrlapstrout M.
+			%  LIST = M.GETSUBCLASSES() returns all subclasses of the average overlapping out-strength M.
 			%  LIST = Element.GETSUBCLASSES(M) returns all subclasses of 'M'.
 			%  LIST = Element.GETSUBCLASSES('OverlappingSOutAv') returns all subclasses of 'OverlappingSOutAv'.
 			%
@@ -173,16 +173,16 @@ classdef OverlappingSOutAv < OverlappingSOut
 			subclass_list = { 'OverlappingSOutAv' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of average ovrlapstrout.
+			%GETPROPS returns the property list of average overlapping out-strength.
 			%
-			% PROPS = OverlappingSOutAv.GETPROPS() returns the property list of average ovrlapstrout
+			% PROPS = OverlappingSOutAv.GETPROPS() returns the property list of average overlapping out-strength
 			%  as a row vector.
 			%
 			% PROPS = OverlappingSOutAv.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the average ovrlapstrout M.
+			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the average overlapping out-strength M.
 			%  PROPS = Element.GETPROPS(M[, CATEGORY]) returns the property list of 'M'.
 			%  PROPS = Element.GETPROPS('OverlappingSOutAv'[, CATEGORY]) returns the property list of 'OverlappingSOutAv'.
 			%
@@ -218,15 +218,15 @@ classdef OverlappingSOutAv < OverlappingSOut
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of average ovrlapstrout.
+			%GETPROPNUMBER returns the property number of average overlapping out-strength.
 			%
-			% N = OverlappingSOutAv.GETPROPNUMBER() returns the property number of average ovrlapstrout.
+			% N = OverlappingSOutAv.GETPROPNUMBER() returns the property number of average overlapping out-strength.
 			%
-			% N = OverlappingSOutAv.GETPROPNUMBER(CATEGORY) returns the property number of average ovrlapstrout
+			% N = OverlappingSOutAv.GETPROPNUMBER(CATEGORY) returns the property number of average overlapping out-strength
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the average ovrlapstrout M.
+			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the average overlapping out-strength M.
 			%  N = Element.GETPROPNUMBER(M) returns the property number of 'M'.
 			%  N = Element.GETPROPNUMBER('OverlappingSOutAv') returns the property number of 'OverlappingSOutAv'.
 			%
@@ -262,7 +262,7 @@ classdef OverlappingSOutAv < OverlappingSOut
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in average ovrlapstrout/error.
+			%EXISTSPROP checks whether property exists in average overlapping out-strength/error.
 			%
 			% CHECK = OverlappingSOutAv.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -300,7 +300,7 @@ classdef OverlappingSOutAv < OverlappingSOut
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in average ovrlapstrout/error.
+			%EXISTSTAG checks whether tag exists in average overlapping out-strength/error.
 			%
 			% CHECK = OverlappingSOutAv.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -466,7 +466,7 @@ classdef OverlappingSOutAv < OverlappingSOut
 			prop = OverlappingSOutAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			overlappingsoutav_description_list = { 'NAME (constant, string) is the name of the overlapping strength.'  'DESCRIPTION (constant, string) is the description of the overlapping strength.'  'TEMPLATE (parameter, item) is the template of the overlapping strength.'  'ID (data, string) is a few-letter code of the overlapping strength.'  'LABEL (metadata, string) is an extended label of the overlapping strength.'  'NOTES (metadata, string) are some specific notes about the overlapping strength.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the overlapping strength.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			overlappingsoutav_description_list = { 'NAME (constant, string) is the name of the average overlapping out-strength.'  'DESCRIPTION (constant, string) is the description of the average overlapping out-strength.'  'TEMPLATE (parameter, item) is the template of the average overlapping out-strength.'  'ID (data, string) is a few-letter code of the average overlapping out-strength.'  'LABEL (metadata, string) is an extended label of the average overlapping out-strength.'  'NOTES (metadata, string) are some specific notes about the average overlapping out-strength.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the average overlapping out-strength.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = overlappingsoutav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -540,7 +540,7 @@ classdef OverlappingSOutAv < OverlappingSOut
 				case 10 % OverlappingSOutAv.PARAMETRICITY
 					prop_default = 2;
 				case 11 % OverlappingSOutAv.COMPATIBLE_GRAPHS
-					prop_default = {'MultiplexWD' 'MultilayerWD' 'OrdMlWD'};;
+					prop_default = {'MultiplexWD' 'MultilayerWD' 'OrdMxWD' 'OrdMlWD'};;
 				otherwise
 					prop_default = getPropDefault@OverlappingSOut(prop);
 			end

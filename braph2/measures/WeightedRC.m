@@ -9,19 +9,19 @@ classdef WeightedRC < Strength
 	%  strength thresholds; the default value is equal to 1.
 	%
 	% The list of WeightedRC properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex rich-club strength.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex rich-club strength.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex rich-club strength.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex rich-club strength.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex rich-club strength.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex rich-club strength.
+	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the weighted rich-club.
+	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the weighted rich-club.
+	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the weighted rich-club.
+	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the weighted rich-club.
+	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the weighted rich-club.
+	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the weighted rich-club.
 	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the multiplex rich-club strength.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the weighted rich-club.
 	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>15</strong> <strong>WRC_PARAMETER</strong> 	WRC_PARAMETER (parameter, RVECTOR) is the threshold
 	%
@@ -129,19 +129,19 @@ classdef WeightedRC < Strength
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of WeightedRC properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex rich-club strength.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex rich-club strength.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex rich-club strength.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex rich-club strength.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex rich-club strength.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex rich-club strength.
+			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the weighted rich-club.
+			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the weighted rich-club.
+			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the weighted rich-club.
+			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the weighted rich-club.
+			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the weighted rich-club.
+			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the weighted rich-club.
 			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the multiplex rich-club strength.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the weighted rich-club.
 			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>15</strong> <strong>WRC_PARAMETER</strong> 	WRC_PARAMETER (parameter, RVECTOR) is the threshold
 			%
@@ -477,7 +477,7 @@ classdef WeightedRC < Strength
 			prop = WeightedRC.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			weightedrc_description_list = { 'NAME (constant, string) is the name of the multiplex rich-club strength.'  'DESCRIPTION (constant, string) is the description of the multiplex rich-club strength.'  'TEMPLATE (parameter, item) is the template of the multiplex rich-club strength.'  'ID (data, string) is a few-letter code of the multiplex rich-club strength.'  'LABEL (metadata, string) is an extended label of the multiplex rich-club strength.'  'NOTES (metadata, string) are some specific notes about the multiplex rich-club strength.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the multiplex rich-club strength.'  'PFM (gui, item) contains the panel figure of the measure.'  'WRC_PARAMETER (parameter, RVECTOR) is the threshold' };
+			weightedrc_description_list = { 'NAME (constant, string) is the name of the weighted rich-club.'  'DESCRIPTION (constant, string) is the description of the weighted rich-club.'  'TEMPLATE (parameter, item) is the template of the weighted rich-club.'  'ID (data, string) is a few-letter code of the weighted rich-club.'  'LABEL (metadata, string) is an extended label of the weighted rich-club.'  'NOTES (metadata, string) are some specific notes about the weighted rich-club.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the weighted rich-club.'  'PFM (gui, item) contains the panel figure of the measure.'  'WRC_PARAMETER (parameter, RVECTOR) is the threshold' };
 			prop_description = weightedrc_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -664,8 +664,6 @@ classdef WeightedRC < Strength
 					g = m.get('G'); % graph from measure class
 					A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 					l = g.get('LAYERNUMBER');
-					ls = g.get('PARTITIONS');  
-					
 					
 					weighted_rich_club = cell(l, 1);
 					directionality_layer = g.get('DIRECTIONALITY_TYPE', l);

@@ -7,32 +7,32 @@ The average out-global efficiency is the average inverse shortest in-path length
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the GlobalEfficiencyOutAv.
+NAME (constant, string) is the name of the average out-global efficiency.
 %%%% ¡default!
 'GlobalEfficiencyOutAv'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the GlobalEfficiencyOutAv.
+DESCRIPTION (constant, string) is the description of the average out-global efficiency.
 %%%% ¡default!
-'The average out-global efficiency is the average inverse shortest in-path length within each layer.'
+'The average out-global efficiency is the average inverse shortest out-path length within each layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the GlobalEfficiencyOutAv.
+TEMPLATE (parameter, item) is the template of the average out-global efficiency.
 %%%% ¡settings!
 'GlobalEfficiencyOutAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the GlobalEfficiencyOutAv.
+ID (data, string) is a few-letter code of the average out-global efficiency.
 %%%% ¡default!
 'GlobalEfficiencyOutAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the GlobalEfficiencyOutAv.
+LABEL (metadata, string) is an extended label of the average out-global efficiency.
 %%%% ¡default!
 'GlobalEfficiencyOutAv label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the GlobalEfficiencyOutAv.
+NOTES (metadata, string) are some specific notes about the average out-global efficiency.
 %%%% ¡default!
 'GlobalEfficiencyOutAv notes'
 

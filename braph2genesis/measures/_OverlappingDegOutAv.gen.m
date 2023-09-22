@@ -52,32 +52,32 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the overlapping in-degree.
+NAME (constant, string) is the name of the average overlapping out-degree.
 %%%% ¡default!
 'OverlappingDegOutAv'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the overlapping in-degree.
+DESCRIPTION (constant, string) is the description of the average overlapping out-degree.
 %%%% ¡default!
 'The average overlapping out-degree of a graph is the average of the sum of the out-degrees of a node in all layers.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the overlapping in-degree.
+TEMPLATE (parameter, item) is the template of the average overlapping out-degree.
 %%%% ¡settings!
 'OverlappingDegOutAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the overlapping in-degree.
+ID (data, string) is a few-letter code of the average overlapping out-degree.
 %%%% ¡default!
 'OverlappingDegOutAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the overlapping in-degree.
+LABEL (metadata, string) is an extended label of the average overlapping out-degree.
 %%%% ¡default!
 'OverlappingDegOutAv label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the overlapping in-degree.
+NOTES (metadata, string) are some specific notes about the average overlapping out-degree.
 %%%% ¡default!
 'OverlappingDegOutAv notes'
 
@@ -99,13 +99,13 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'MultiplexWD' 'MultiplexBD' 'MultilayerBD' 'OrdMlBD'};
+{'MultiplexWD' 'MultiplexBD' 'MultilayerWD' 'MultilayerBD' 'OrdMxBD' 'OrdMxWD' 'OrdMlBD' 'OrdMlWD'};
 
 %%% ¡prop!
-M (result, cell) is the overlapping in-degree.
+M (result, cell) is the average overlapping out-degree.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
-overlapping_in_degree_av = calculateValue@OverlappingDegOut(m, prop);
+overlapping_out_degree_av = calculateValue@OverlappingDegOut(m, prop);
 l = g.get('LAYERNUMBER');
 
 if l == 0
@@ -113,7 +113,7 @@ if l == 0
     return;
 end
 
-value = {mean(cell2mat(overlapping_in_degree_av))};
+value = {mean(cell2mat(overlapping_out_degree_av))};
 
 %% ¡tests!
 

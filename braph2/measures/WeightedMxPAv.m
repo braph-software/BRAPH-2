@@ -6,19 +6,19 @@ classdef WeightedMxPAv < WeightedMxP
 	% of its number of neighbours across the layers.
 	%
 	% The list of WeightedMxPAv properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the weighted multiplex particiption.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the weighted multiplex particiption.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the weighted multiplex particiption.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the weighted multiplex particiption.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the weighted multiplex particiption.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the weighted multiplex particiption.
+	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average weighted multiplex participation.
+	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average weighted multiplex particiption.
+	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average weighted multiplex particiption.
+	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average weighted multiplex particiption.
+	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average weighted multiplex particiption.
+	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average weighted multiplex particiption.
 	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the weighted multiplex particiption.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the average weighted multiplex particiption.
 	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% WeightedMxPAv methods (constructor):
@@ -39,33 +39,33 @@ classdef WeightedMxPAv < WeightedMxP
 	%  unchecked - sets a property to NOT checked
 	%
 	% WeightedMxPAv methods (display):
-	%  tostring - string with information about the average weighted mxpart
-	%  disp - displays information about the average weighted mxpart
-	%  tree - displays the tree of the average weighted mxpart
+	%  tostring - string with information about the average weighted multiplex participation
+	%  disp - displays information about the average weighted multiplex participation
+	%  tree - displays the tree of the average weighted multiplex participation
 	%
 	% WeightedMxPAv methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two average weighted mxpart are equal (values, locked)
+	%  isequal - determines whether two average weighted multiplex participation are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the average weighted mxpart
+	%  copy - copies the average weighted multiplex participation
 	%
 	% WeightedMxPAv methods (save/load, Static):
-	%  save - saves BRAPH2 average weighted mxpart as b2 file
-	%  load - loads a BRAPH2 average weighted mxpart from a b2 file
+	%  save - saves BRAPH2 average weighted multiplex participation as b2 file
+	%  load - loads a BRAPH2 average weighted multiplex participation from a b2 file
 	%
 	% WeightedMxPAv method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the average weighted mxpart
+	%  encodeJSON - returns a JSON string encoding the average weighted multiplex participation
 	%
 	% WeightedMxPAv method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the average weighted mxpart
+	%   decodeJSON - returns a JSON string encoding the average weighted multiplex participation
 	%
 	% WeightedMxPAv methods (inspection, Static):
-	%  getClass - returns the class of the average weighted mxpart
+	%  getClass - returns the class of the average weighted multiplex participation
 	%  getSubclasses - returns all subclasses of WeightedMxPAv
-	%  getProps - returns the property list of the average weighted mxpart
-	%  getPropNumber - returns the property number of the average weighted mxpart
+	%  getProps - returns the property list of the average weighted multiplex participation
+	%  getPropNumber - returns the property number of the average weighted multiplex participation
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -109,7 +109,7 @@ classdef WeightedMxPAv < WeightedMxP
 	
 	methods % constructor
 		function m = WeightedMxPAv(varargin)
-			%WeightedMxPAv() creates a average weighted mxpart.
+			%WeightedMxPAv() creates a average weighted multiplex participation.
 			%
 			% WeightedMxPAv(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -119,19 +119,19 @@ classdef WeightedMxPAv < WeightedMxP
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of WeightedMxPAv properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the weighted multiplex particiption.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the weighted multiplex particiption.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the weighted multiplex particiption.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the weighted multiplex particiption.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the weighted multiplex particiption.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the weighted multiplex particiption.
+			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average weighted multiplex participation.
+			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average weighted multiplex particiption.
+			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average weighted multiplex particiption.
+			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average weighted multiplex particiption.
+			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average weighted multiplex particiption.
+			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average weighted multiplex particiption.
 			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the weighted multiplex particiption.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the average weighted multiplex particiption.
 			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -141,12 +141,12 @@ classdef WeightedMxPAv < WeightedMxP
 	end
 	methods (Static) % inspection
 		function m_class = getClass()
-			%GETCLASS returns the class of the average weighted mxpart.
+			%GETCLASS returns the class of the average weighted multiplex participation.
 			%
 			% CLASS = WeightedMxPAv.GETCLASS() returns the class 'WeightedMxPAv'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = M.GETCLASS() returns the class of the average weighted mxpart M.
+			%  CLASS = M.GETCLASS() returns the class of the average weighted multiplex participation M.
 			%  CLASS = Element.GETCLASS(M) returns the class of 'M'.
 			%  CLASS = Element.GETCLASS('WeightedMxPAv') returns 'WeightedMxPAv'.
 			%
@@ -156,12 +156,12 @@ classdef WeightedMxPAv < WeightedMxP
 			m_class = 'WeightedMxPAv';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the average weighted mxpart.
+			%GETSUBCLASSES returns all subclasses of the average weighted multiplex participation.
 			%
 			% LIST = WeightedMxPAv.GETSUBCLASSES() returns all subclasses of 'WeightedMxPAv'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = M.GETSUBCLASSES() returns all subclasses of the average weighted mxpart M.
+			%  LIST = M.GETSUBCLASSES() returns all subclasses of the average weighted multiplex participation M.
 			%  LIST = Element.GETSUBCLASSES(M) returns all subclasses of 'M'.
 			%  LIST = Element.GETSUBCLASSES('WeightedMxPAv') returns all subclasses of 'WeightedMxPAv'.
 			%
@@ -173,16 +173,16 @@ classdef WeightedMxPAv < WeightedMxP
 			subclass_list = { 'WeightedMxPAv' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of average weighted mxpart.
+			%GETPROPS returns the property list of average weighted multiplex participation.
 			%
-			% PROPS = WeightedMxPAv.GETPROPS() returns the property list of average weighted mxpart
+			% PROPS = WeightedMxPAv.GETPROPS() returns the property list of average weighted multiplex participation
 			%  as a row vector.
 			%
 			% PROPS = WeightedMxPAv.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the average weighted mxpart M.
+			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the average weighted multiplex participation M.
 			%  PROPS = Element.GETPROPS(M[, CATEGORY]) returns the property list of 'M'.
 			%  PROPS = Element.GETPROPS('WeightedMxPAv'[, CATEGORY]) returns the property list of 'WeightedMxPAv'.
 			%
@@ -218,15 +218,15 @@ classdef WeightedMxPAv < WeightedMxP
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of average weighted mxpart.
+			%GETPROPNUMBER returns the property number of average weighted multiplex participation.
 			%
-			% N = WeightedMxPAv.GETPROPNUMBER() returns the property number of average weighted mxpart.
+			% N = WeightedMxPAv.GETPROPNUMBER() returns the property number of average weighted multiplex participation.
 			%
-			% N = WeightedMxPAv.GETPROPNUMBER(CATEGORY) returns the property number of average weighted mxpart
+			% N = WeightedMxPAv.GETPROPNUMBER(CATEGORY) returns the property number of average weighted multiplex participation
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the average weighted mxpart M.
+			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the average weighted multiplex participation M.
 			%  N = Element.GETPROPNUMBER(M) returns the property number of 'M'.
 			%  N = Element.GETPROPNUMBER('WeightedMxPAv') returns the property number of 'WeightedMxPAv'.
 			%
@@ -262,7 +262,7 @@ classdef WeightedMxPAv < WeightedMxP
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in average weighted mxpart/error.
+			%EXISTSPROP checks whether property exists in average weighted multiplex participation/error.
 			%
 			% CHECK = WeightedMxPAv.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -300,7 +300,7 @@ classdef WeightedMxPAv < WeightedMxP
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in average weighted mxpart/error.
+			%EXISTSTAG checks whether tag exists in average weighted multiplex participation/error.
 			%
 			% CHECK = WeightedMxPAv.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -466,7 +466,7 @@ classdef WeightedMxPAv < WeightedMxP
 			prop = WeightedMxPAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			weightedmxpav_description_list = { 'NAME (constant, string) is the name of the weighted multiplex particiption.'  'DESCRIPTION (constant, string) is the description of the weighted multiplex particiption.'  'TEMPLATE (parameter, item) is the template of the weighted multiplex particiption.'  'ID (data, string) is a few-letter code of the weighted multiplex particiption.'  'LABEL (metadata, string) is an extended label of the weighted multiplex particiption.'  'NOTES (metadata, string) are some specific notes about the weighted multiplex particiption.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the weighted multiplex particiption.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			weightedmxpav_description_list = { 'NAME (constant, string) is the name of the average weighted multiplex participation.'  'DESCRIPTION (constant, string) is the description of the average weighted multiplex particiption.'  'TEMPLATE (parameter, item) is the template of the average weighted multiplex particiption.'  'ID (data, string) is a few-letter code of the average weighted multiplex particiption.'  'LABEL (metadata, string) is an extended label of the average weighted multiplex particiption.'  'NOTES (metadata, string) are some specific notes about the average weighted multiplex particiption.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the average weighted multiplex particiption.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = weightedmxpav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -540,7 +540,7 @@ classdef WeightedMxPAv < WeightedMxP
 				case 10 % WeightedMxPAv.PARAMETRICITY
 					prop_default = 2;
 				case 11 % WeightedMxPAv.COMPATIBLE_GRAPHS
-					prop_default = {'MultiplexWU' 'OrdMxWU'};;
+					prop_default = {'MultiplexWU' 'OrdMxWU' 'MultilayerWU' 'OrdMlWU'};;
 				otherwise
 					prop_default = getPropDefault@WeightedMxP(prop);
 			end

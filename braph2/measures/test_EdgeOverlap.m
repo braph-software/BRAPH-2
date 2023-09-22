@@ -1551,7 +1551,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
 
-%% Test 17: MultiplexBUD
+%% Test 17: MultilayerBUD
 if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	B11 = [
 	    0   1   1
@@ -1568,7 +1568,16 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	    1   0   0
 	    0   0   0
 	    ];
-	B = {B11 B22 B33};
+	B12 = rand(size(B11,1),size(B22,2));
+	B21 = B12';
+	B13 = rand(size(B11,1),size(B33,2));
+	B31 = B13';
+	B23 = rand(size(B22,1),size(B33,2));
+	B32 = B23';
+	
+	B = {B11 B12 B13;
+	     B21 B22 B23;
+	     B31 B32 B33};
 	
 	known_edge_overlap_1 = [
 	    0    1    1/3
@@ -1580,7 +1589,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	                      zeros(3)
 	                      };
 	
-	g = MultiplexBUD('B', B, 'DENSITIES', [90 10]);
+	g = MultilayerBUD('B', B, 'DENSITIES', [90 10]);
 	
 	m_outside_g = EdgeOverlap('G', g);
 	assert(isequal(m_outside_g.get('M'), known_edge_overlap), ...

@@ -1,24 +1,24 @@
 classdef MultiplexClAv < MultiplexCl
-	%MultiplexClAv is the graph average weighted multiplex clustering.
+	%MultiplexClAv is the graph average multiplex clustering.
 	% It is a subclass of <a href="matlab:help MultiplexCl">MultiplexCl</a>.
 	%
 	% The average multiplex clustering coefficient of a multilayer graph is 
 	%   the average of the two-multiplex clustering coefficients of all nodes.
 	%
 	% The list of MultiplexClAv properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the weighted multiplex particiption.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the weighted multiplex particiption.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the weighted multiplex particiption.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the weighted multiplex particiption.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the weighted multiplex particiption.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the weighted multiplex particiption.
+	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average multiplex clustering.
+	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average multiplex clustering.
+	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average multiplex clustering.
+	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average multiplex clustering.
+	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average multiplex clustering.
+	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average multiplex clustering.
 	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the weighted multiplex particiption.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the average multiplex clustering.
 	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% MultiplexClAv methods (constructor):
@@ -39,33 +39,33 @@ classdef MultiplexClAv < MultiplexCl
 	%  unchecked - sets a property to NOT checked
 	%
 	% MultiplexClAv methods (display):
-	%  tostring - string with information about the average weighted clustering
-	%  disp - displays information about the average weighted clustering
-	%  tree - displays the tree of the average weighted clustering
+	%  tostring - string with information about the average multiplex clustering
+	%  disp - displays information about the average multiplex clustering
+	%  tree - displays the tree of the average multiplex clustering
 	%
 	% MultiplexClAv methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two average weighted clustering are equal (values, locked)
+	%  isequal - determines whether two average multiplex clustering are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the average weighted clustering
+	%  copy - copies the average multiplex clustering
 	%
 	% MultiplexClAv methods (save/load, Static):
-	%  save - saves BRAPH2 average weighted clustering as b2 file
-	%  load - loads a BRAPH2 average weighted clustering from a b2 file
+	%  save - saves BRAPH2 average multiplex clustering as b2 file
+	%  load - loads a BRAPH2 average multiplex clustering from a b2 file
 	%
 	% MultiplexClAv method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the average weighted clustering
+	%  encodeJSON - returns a JSON string encoding the average multiplex clustering
 	%
 	% MultiplexClAv method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the average weighted clustering
+	%   decodeJSON - returns a JSON string encoding the average multiplex clustering
 	%
 	% MultiplexClAv methods (inspection, Static):
-	%  getClass - returns the class of the average weighted clustering
+	%  getClass - returns the class of the average multiplex clustering
 	%  getSubclasses - returns all subclasses of MultiplexClAv
-	%  getProps - returns the property list of the average weighted clustering
-	%  getPropNumber - returns the property number of the average weighted clustering
+	%  getProps - returns the property list of the average multiplex clustering
+	%  getPropNumber - returns the property number of the average multiplex clustering
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -109,7 +109,7 @@ classdef MultiplexClAv < MultiplexCl
 	
 	methods % constructor
 		function m = MultiplexClAv(varargin)
-			%MultiplexClAv() creates a average weighted clustering.
+			%MultiplexClAv() creates a average multiplex clustering.
 			%
 			% MultiplexClAv(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -119,19 +119,19 @@ classdef MultiplexClAv < MultiplexCl
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of MultiplexClAv properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the weighted multiplex particiption.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the weighted multiplex particiption.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the weighted multiplex particiption.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the weighted multiplex particiption.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the weighted multiplex particiption.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the weighted multiplex particiption.
+			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average multiplex clustering.
+			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average multiplex clustering.
+			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average multiplex clustering.
+			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average multiplex clustering.
+			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average multiplex clustering.
+			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average multiplex clustering.
 			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the weighted multiplex particiption.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the average multiplex clustering.
 			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -141,12 +141,12 @@ classdef MultiplexClAv < MultiplexCl
 	end
 	methods (Static) % inspection
 		function m_class = getClass()
-			%GETCLASS returns the class of the average weighted clustering.
+			%GETCLASS returns the class of the average multiplex clustering.
 			%
 			% CLASS = MultiplexClAv.GETCLASS() returns the class 'MultiplexClAv'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = M.GETCLASS() returns the class of the average weighted clustering M.
+			%  CLASS = M.GETCLASS() returns the class of the average multiplex clustering M.
 			%  CLASS = Element.GETCLASS(M) returns the class of 'M'.
 			%  CLASS = Element.GETCLASS('MultiplexClAv') returns 'MultiplexClAv'.
 			%
@@ -156,12 +156,12 @@ classdef MultiplexClAv < MultiplexCl
 			m_class = 'MultiplexClAv';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the average weighted clustering.
+			%GETSUBCLASSES returns all subclasses of the average multiplex clustering.
 			%
 			% LIST = MultiplexClAv.GETSUBCLASSES() returns all subclasses of 'MultiplexClAv'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = M.GETSUBCLASSES() returns all subclasses of the average weighted clustering M.
+			%  LIST = M.GETSUBCLASSES() returns all subclasses of the average multiplex clustering M.
 			%  LIST = Element.GETSUBCLASSES(M) returns all subclasses of 'M'.
 			%  LIST = Element.GETSUBCLASSES('MultiplexClAv') returns all subclasses of 'MultiplexClAv'.
 			%
@@ -173,16 +173,16 @@ classdef MultiplexClAv < MultiplexCl
 			subclass_list = { 'MultiplexClAv' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of average weighted clustering.
+			%GETPROPS returns the property list of average multiplex clustering.
 			%
-			% PROPS = MultiplexClAv.GETPROPS() returns the property list of average weighted clustering
+			% PROPS = MultiplexClAv.GETPROPS() returns the property list of average multiplex clustering
 			%  as a row vector.
 			%
 			% PROPS = MultiplexClAv.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the average weighted clustering M.
+			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the average multiplex clustering M.
 			%  PROPS = Element.GETPROPS(M[, CATEGORY]) returns the property list of 'M'.
 			%  PROPS = Element.GETPROPS('MultiplexClAv'[, CATEGORY]) returns the property list of 'MultiplexClAv'.
 			%
@@ -218,15 +218,15 @@ classdef MultiplexClAv < MultiplexCl
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of average weighted clustering.
+			%GETPROPNUMBER returns the property number of average multiplex clustering.
 			%
-			% N = MultiplexClAv.GETPROPNUMBER() returns the property number of average weighted clustering.
+			% N = MultiplexClAv.GETPROPNUMBER() returns the property number of average multiplex clustering.
 			%
-			% N = MultiplexClAv.GETPROPNUMBER(CATEGORY) returns the property number of average weighted clustering
+			% N = MultiplexClAv.GETPROPNUMBER(CATEGORY) returns the property number of average multiplex clustering
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the average weighted clustering M.
+			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the average multiplex clustering M.
 			%  N = Element.GETPROPNUMBER(M) returns the property number of 'M'.
 			%  N = Element.GETPROPNUMBER('MultiplexClAv') returns the property number of 'MultiplexClAv'.
 			%
@@ -262,7 +262,7 @@ classdef MultiplexClAv < MultiplexCl
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in average weighted clustering/error.
+			%EXISTSPROP checks whether property exists in average multiplex clustering/error.
 			%
 			% CHECK = MultiplexClAv.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -300,7 +300,7 @@ classdef MultiplexClAv < MultiplexCl
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in average weighted clustering/error.
+			%EXISTSTAG checks whether tag exists in average multiplex clustering/error.
 			%
 			% CHECK = MultiplexClAv.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -466,7 +466,7 @@ classdef MultiplexClAv < MultiplexCl
 			prop = MultiplexClAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multiplexclav_description_list = { 'NAME (constant, string) is the name of the weighted multiplex particiption.'  'DESCRIPTION (constant, string) is the description of the weighted multiplex particiption.'  'TEMPLATE (parameter, item) is the template of the weighted multiplex particiption.'  'ID (data, string) is a few-letter code of the weighted multiplex particiption.'  'LABEL (metadata, string) is an extended label of the weighted multiplex particiption.'  'NOTES (metadata, string) are some specific notes about the weighted multiplex particiption.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the weighted multiplex particiption.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			multiplexclav_description_list = { 'NAME (constant, string) is the name of the average multiplex clustering.'  'DESCRIPTION (constant, string) is the description of the average multiplex clustering.'  'TEMPLATE (parameter, item) is the template of the average multiplex clustering.'  'ID (data, string) is a few-letter code of the average multiplex clustering.'  'LABEL (metadata, string) is an extended label of the average multiplex clustering.'  'NOTES (metadata, string) are some specific notes about the average multiplex clustering.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the average multiplex clustering.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = multiplexclav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

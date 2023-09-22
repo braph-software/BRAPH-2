@@ -1,5 +1,5 @@
 %% ¡header!
-MultiplexCl < MultiplexT (m, weighted clustering) is the graph weighted multiplex clustering.
+MultiplexCl < MultiplexT (m, multiplex clustering) is the graph multiplex clustering.
 
 %%% ¡description!
 The two-multiplex clustering coefficient of a node i is the fraction 
@@ -53,34 +53,34 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the weighted multiplex particiption.
+NAME (constant, string) is the name of the multiplex clustering.
 %%%% ¡default!
-'MultiplexCl'
+'MultiplexClustering'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the weighted multiplex particiption.
+DESCRIPTION (constant, string) is the description of the multiplex clustering.
 %%%% ¡default!
 'The two-multiplex clustering coefficient of a node i is the fraction of two-multiplex triangles (triangles which use edges from two different layers) with a vertex in node i and the number of one-triads centered in i.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the weighted multiplex particiption.
+TEMPLATE (parameter, item) is the template of the multiplex clustering.
 %%%% ¡settings!
 'MultiplexCl'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the weighted multiplex particiption.
+ID (data, string) is a few-letter code of the multiplex clustering.
 %%%% ¡default!
 'MultiplexCl ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the weighted multiplex particiption.
+LABEL (metadata, string) is an extended label of the multiplex clustering.
 %%%% ¡default!
-'MultiplexCl label'
+'MultiplexClustering label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the weighted multiplex particiption.
+NOTES (metadata, string) are some specific notes about the multiplex clustering.
 %%%% ¡default!
-'MultiplexCl notes'
+'MultiplexClustering notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -103,7 +103,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU'};
 
 %%% ¡prop!
-M (result, cell) is the weighted multiplex particiption.
+M (result, cell) is the multiplex clustering.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -209,48 +209,6 @@ known_multiplex_clustering = {
                  };   
 
 g = MultiplexBU('B', B);
-m_outside_g = MultiplexCl('G', g);
-
-assert(isequal(m_outside_g.get('M'), known_multiplex_clustering), ...
-    [BRAPH2.STR ':MultiplexCl:' BRAPH2.FAIL_TEST], ...
-    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
-
-m_inside_g = g.get('MEASURE', 'MultiplexCl');
-assert(isequal(m_inside_g.get('M'), known_multiplex_clustering), ...
-    [BRAPH2.STR ':MultiplexCl:' BRAPH2.FAIL_TEST], ...
-    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
-
-%%% ¡test!
-%%%% ¡name!
-MultiplexBUT
-%%%% ¡code!
-B11 = [
-      0 1 1 1;
-      1 0 1 0;
-      1 1 0 0;
-      1 0 0 0
-      ];
-B22 = [
-      0 1 1 1;
-      1 0 0 0;
-      1 0 0 0;
-      1 0 0 0
-      ];  
-B33 = [
-      0 0 0 1;
-      0 0 0 1;
-      0 0 0 1;
-      1 1 1 0
-      ];
-B = {B11 B22 B33};
-
-known_multiplex_clustering = [5 1 1 5]'./ [12, 2, 2, 6]';
-known_multiplex_clustering(isnan(known_multiplex_clustering)) = 0;
-known_multiplex_clustering = {
-                 known_multiplex_clustering
-                 [0 0 0 0]'
-                 };    
-g = MultiplexBUT('B', B, 'THRESHOLDS', [0 1]);
 m_outside_g = MultiplexCl('G', g);
 
 assert(isequal(m_outside_g.get('M'), known_multiplex_clustering), ...

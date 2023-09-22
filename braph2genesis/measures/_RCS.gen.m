@@ -1,5 +1,5 @@
 %% ¡header!
-RCS < Strength (m, richclubstrength) is the graph richclubstrength.
+RCS < Strength (m, rich-club strength) is the graph rich-club strength.
 
 %%% ¡description!
 The rich-club strength of a node at level s is the sum of the weighted edges 
@@ -9,32 +9,32 @@ The rich-club strength of a node at level s is the sum of the weighted edges
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the richclubstrength.
+NAME (constant, string) is the name of the rich-club strength.
 %%%% ¡default!
 'RCS'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the richclubstrength.
+DESCRIPTION (constant, string) is the description of the rich-club strength.
 %%%% ¡default!
 'The rich-club strength of a node at level s is the sum of the weighted edges that connect nodes of strength s or higher within a layer. s is set by the user and it can be a vector containting all the strength thresholds the default value is equal to 1.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the richclubstrength.
+TEMPLATE (parameter, item) is the template of the rich-club strength.
 %%%% ¡settings!
 'RCS'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the richclubstrength.
+ID (data, string) is a few-letter code of the rich-club strength.
 %%%% ¡default!
 'RCS ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the richclubstrength.
+LABEL (metadata, string) is an extended label of the rich-club strength.
 %%%% ¡default!
 'RCS label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the richclubstrength.
+NOTES (metadata, string) are some specific notes about the rich-club strength.
 %%%% ¡default!
 'RCS notes'
 
@@ -59,7 +59,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphWD' 'MultiplexWU' 'MultiplexWD'};
 
 %%% ¡prop!
-M (result, cell) is the richclubstrength.
+M (result, cell) is the rich-club strength.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

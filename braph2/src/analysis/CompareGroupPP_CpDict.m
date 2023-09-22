@@ -1295,6 +1295,7 @@ classdef CompareGroupPP_CpDict < PanelProp
 			    g = c.get('A1').get('G');
 			
 			    mlist = g.get('COMPATIBLE_MEASURES');
+                mlist2 = getCompatibleMeasures(g); % to have the complete name in the table
 			    cplist_already_calculated = cellfun(@(x) x.get('MEASURE'), c.get('CP_DICT').get('IT_LIST'), 'UniformOutput', false);
 			
 			    rowname = cell(length(mlist), 1);
@@ -1312,8 +1313,8 @@ classdef CompareGroupPP_CpDict < PanelProp
 			            data{mi, 1} = false;
 			        end
 			
-			        data{mi, 2} = mlist{mi};
-			
+			        data{mi, 2} = mlist2{mi};
+                    
 			        if Element.getPropDefault(mlist{mi}, 'SHAPE') == 2
 			            data{mi, 3} = 'NODAL';
 			        elseif Element.getPropDefault(mlist{mi}, 'SHAPE') == 1

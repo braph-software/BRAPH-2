@@ -5,12 +5,12 @@ classdef GlobalEfficiencyOutAv < GlobalEfficiencyOut
 	% The average out-global efficiency is the average inverse shortest in-path length within each layer.
 	%
 	% The list of GlobalEfficiencyOutAv properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the GlobalEfficiencyOutAv.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the GlobalEfficiencyOutAv.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the GlobalEfficiencyOutAv.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the GlobalEfficiencyOutAv.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the GlobalEfficiencyOutAv.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the GlobalEfficiencyOutAv.
+	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average out-global efficiency.
+	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average out-global efficiency.
+	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average out-global efficiency.
+	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average out-global efficiency.
+	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average out-global efficiency.
+	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average out-global efficiency.
 	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
@@ -118,12 +118,12 @@ classdef GlobalEfficiencyOutAv < GlobalEfficiencyOut
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of GlobalEfficiencyOutAv properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the GlobalEfficiencyOutAv.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the GlobalEfficiencyOutAv.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the GlobalEfficiencyOutAv.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the GlobalEfficiencyOutAv.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the GlobalEfficiencyOutAv.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the GlobalEfficiencyOutAv.
+			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average out-global efficiency.
+			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average out-global efficiency.
+			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average out-global efficiency.
+			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average out-global efficiency.
+			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average out-global efficiency.
+			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average out-global efficiency.
 			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
@@ -465,7 +465,7 @@ classdef GlobalEfficiencyOutAv < GlobalEfficiencyOut
 			prop = GlobalEfficiencyOutAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			globalefficiencyoutav_description_list = { 'NAME (constant, string) is the name of the GlobalEfficiencyOutAv.'  'DESCRIPTION (constant, string) is the description of the GlobalEfficiencyOutAv.'  'TEMPLATE (parameter, item) is the template of the GlobalEfficiencyOutAv.'  'ID (data, string) is a few-letter code of the GlobalEfficiencyOutAv.'  'LABEL (metadata, string) is an extended label of the GlobalEfficiencyOutAv.'  'NOTES (metadata, string) are some specific notes about the GlobalEfficiencyOutAv.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the average out-global efficiency.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			globalefficiencyoutav_description_list = { 'NAME (constant, string) is the name of the average out-global efficiency.'  'DESCRIPTION (constant, string) is the description of the average out-global efficiency.'  'TEMPLATE (parameter, item) is the template of the average out-global efficiency.'  'ID (data, string) is a few-letter code of the average out-global efficiency.'  'LABEL (metadata, string) is an extended label of the average out-global efficiency.'  'NOTES (metadata, string) are some specific notes about the average out-global efficiency.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the average out-global efficiency.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = globalefficiencyoutav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -523,7 +523,7 @@ classdef GlobalEfficiencyOutAv < GlobalEfficiencyOut
 				case 1 % GlobalEfficiencyOutAv.NAME
 					prop_default = 'GlobalEfficiencyOutAv';
 				case 2 % GlobalEfficiencyOutAv.DESCRIPTION
-					prop_default = 'The average out-global efficiency is the average inverse shortest in-path length within each layer.';
+					prop_default = 'The average out-global efficiency is the average inverse shortest out-path length within each layer.';
 				case 3 % GlobalEfficiencyOutAv.TEMPLATE
 					prop_default = Format.getFormatDefault(8, GlobalEfficiencyOutAv.getPropSettings(prop));
 				case 4 % GlobalEfficiencyOutAv.ID

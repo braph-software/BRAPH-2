@@ -1,5 +1,5 @@
 %% ¡header!
-OverlappingSOutAv < OverlappingSOut (m, average ovrlapstrout) is the graph average overlapping strength.
+OverlappingSOutAv < OverlappingSOut (m, average overlapping out-strength) is the graph average overlapping out-strength.
 
 %%% ¡description!
 The average overlapping out-strength of a graph is the average of the sum of the out-strengths of a 
@@ -52,32 +52,32 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the overlapping strength.
+NAME (constant, string) is the name of the average overlapping out-strength.
 %%%% ¡default!
 'OverlappingSOutAv'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the overlapping strength.
+DESCRIPTION (constant, string) is the description of the average overlapping out-strength.
 %%%% ¡default!
 'The average overlapping out-strength of a graph is the average of the sum of the out-strengths of a node in all layers.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the overlapping strength.
+TEMPLATE (parameter, item) is the template of the average overlapping out-strength.
 %%%% ¡settings!
 'OverlappingSOutAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the overlapping strength.
+ID (data, string) is a few-letter code of the average overlapping out-strength.
 %%%% ¡default!
 'OverlappingSOutAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the overlapping strength.
+LABEL (metadata, string) is an extended label of the average overlapping out-strength.
 %%%% ¡default!
 'OverlappingSOutAv label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the overlapping strength.
+NOTES (metadata, string) are some specific notes about the average overlapping out-strength.
 %%%% ¡default!
 'OverlappingSOutAv notes'
 
@@ -99,10 +99,10 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'MultiplexWD' 'MultilayerWD' 'OrdMlWD'};
+{'MultiplexWD' 'MultilayerWD' 'OrdMxWD' 'OrdMlWD'};
 
 %%% ¡prop!
-M (result, cell) is the overlapping strength.
+M (result, cell) is the average overlapping out-strength.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 overlapping_out_strength = calculateValue@OverlappingSOut(m, prop);

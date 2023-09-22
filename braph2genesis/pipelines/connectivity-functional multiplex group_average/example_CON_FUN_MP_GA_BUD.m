@@ -78,16 +78,14 @@ a_BUD2 = AnalyzeGroup_CON_FUN_MP_GA_BUD( ...
 
 % measure calculation
 g_BUD1 = a_BUD1.memorize('G'); % essential to memorize in case there are measures with non-default rules
-degree_WU1 = g_BUD1.get('MEASURE', 'Degree').get('M');
-% % % mpc_BUD1 = g_BUD1.get('MEASURE', 'MultiplexParticipation').get('M');
-% % % mpc_av_BUD1 = g_BUD1.get('MEASURE', 'MultiplexParticipationAv').get('M');
-% % % edgeov_BUD1 = g_BUD1.get('MEASURE', 'EdgeOverlap').get('M');
+mpc_BUD1 = g_BUD1.get('MEASURE', 'MultiplexP').get('M');
+mpc_av_BUD1 = g_BUD1.get('MEASURE', 'MultiplexPAv').get('M');
+edgeov_BUD1 = g_BUD1.get('MEASURE', 'EdgeOverlap').get('M');
 
 g_BUD2 = a_BUD2.get('G');
-degree_WU2 = g_BUD2.get('MEASURE', 'Degree').get('M');
-% % % mpc_BUD2 = g_BUD2.get('MEASURE', 'MultiplexParticipation').get('M');
-% % % mpc_av_BUD2 = g_BUD2.get('MEASURE', 'MultiplexParticipationAv').get('M');
-% % % edgeov_BUD2 = g_BUD2.get('MEASURE', 'EdgeOverlap').get('M');
+mpc_BUD2 = g_BUD2.get('MEASURE', 'MultiplexP').get('M');
+mpc_av_BUD2 = g_BUD2.get('MEASURE', 'MultiplexPAv').get('M');
+edgeov_BUD2 = g_BUD2.get('MEASURE', 'EdgeOverlap').get('M');
 
 % comparison
 c_BUD = CompareGroup( ...
@@ -99,26 +97,20 @@ c_BUD = CompareGroup( ...
     'MEMORIZE', true ...
     );
 
-degree_BUD_diff = c_BUD.get('COMPARISON', 'Degree').get('DIFF');
-degree_BUD_p1 = c_BUD.get('COMPARISON', 'Degree').get('P1');
-degree_BUD_p2 = c_BUD.get('COMPARISON', 'Degree').get('P2');
-degree_BUD_cil = c_BUD.get('COMPARISON', 'Degree').get('CIL');
-degree_BUD_ciu = c_BUD.get('COMPARISON', 'Degree').get('CIU');
+mpc_BUD_diff = c_BUD.get('COMPARISON', 'MultiplexP').get('DIFF');
+mpc_BUD_p1 = c_BUD.get('COMPARISON', 'MultiplexP').get('P1');
+mpc_BUD_p2 = c_BUD.get('COMPARISON', 'MultiplexP').get('P2');
+mpc_BUD_cil = c_BUD.get('COMPARISON', 'MultiplexP').get('CIL');
+mpc_BUD_ciu = c_BUD.get('COMPARISON', 'MultiplexP').get('CIU');
 
-% % % mpc_BUD_diff = c_BUD.get('COMPARISON', 'MultiplexParticipation').get('DIFF');
-% % % mpc_BUD_p1 = c_BUD.get('COMPARISON', 'MultiplexParticipation').get('P1');
-% % % mpc_BUD_p2 = c_BUD.get('COMPARISON', 'MultiplexParticipation').get('P2');
-% % % mpc_BUD_cil = c_BUD.get('COMPARISON', 'MultiplexParticipation').get('CIL');
-% % % mpc_BUD_ciu = c_BUD.get('COMPARISON', 'MultiplexParticipation').get('CIU');
+mpc_av_BUD_diff = c_BUD.get('COMPARISON', 'MultiplexPAv').get('DIFF');
+mpc_av_BUD_p1 = c_BUD.get('COMPARISON', 'MultiplexPAv').get('P1');
+mpc_av_BUD_p2 = c_BUD.get('COMPARISON', 'MultiplexPAv').get('P2');
+mpc_av_BUD_cil = c_BUD.get('COMPARISON', 'MultiplexPAv').get('CIL');
+mpc_av_BUD_ciu = c_BUD.get('COMPARISON', 'MultiplexPAv').get('CIU');
 
-% % % mpc_av_BUD_diff = c_BUD.get('COMPARISON', 'MultiplexParticipationAv').get('DIFF');
-% % % mpc_av_BUD_p1 = c_BUD.get('COMPARISON', 'MultiplexParticipationAv').get('P1');
-% % % mpc_av_BUD_p2 = c_BUD.get('COMPARISON', 'MultiplexParticipationAv').get('P2');
-% % % mpc_av_BUD_cil = c_BUD.get('COMPARISON', 'MultiplexParticipationAv').get('CIL');
-% % % mpc_av_BUD_ciu = c_BUD.get('COMPARISON', 'MultiplexParticipationAv').get('CIU');
-
-% % % edgeov_BUD_diff = c_BUD.get('COMPARISON', 'EdgeOverlap').get('DIFF');
-% % % edgeov_BUD_p1 = c_BUD.get('COMPARISON', 'EdgeOverlap').get('P1');
-% % % edgeov_BUD_p2 = c_BUD.get('COMPARISON', 'EdgeOverlap').get('P2');
-% % % edgeov_BUD_cil = c_BUD.get('COMPARISON', 'EdgeOverlap').get('CIL');
-% % % edgeov_BUD_ciu = c_BUD.get('COMPARISON', 'EdgeOverlap').get('CIU');
+edgeov_BUD_diff = c_BUD.get('COMPARISON', 'EdgeOverlap').get('DIFF');
+edgeov_BUD_p1 = c_BUD.get('COMPARISON', 'EdgeOverlap').get('P1');
+edgeov_BUD_p2 = c_BUD.get('COMPARISON', 'EdgeOverlap').get('P2');
+edgeov_BUD_cil = c_BUD.get('COMPARISON', 'EdgeOverlap').get('CIL');
+edgeov_BUD_ciu = c_BUD.get('COMPARISON', 'EdgeOverlap').get('CIU');

@@ -1,5 +1,5 @@
 %% ¡header!
-WeightedMxPAv < WeightedMxP (m, average weighted mxpart) is the graph average weighted multiplex participation.
+WeightedMxPAv < WeightedMxP (m, average weighted multiplex participation) is the graph average weighted multiplex participation.
 
 %%% ¡description!
 The average weighted multiplex participation of a graph is the average homogeneity 
@@ -52,32 +52,32 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the weighted multiplex particiption.
+NAME (constant, string) is the name of the average weighted multiplex participation.
 %%%% ¡default!
 'WeightedMxPAv'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the weighted multiplex particiption.
+DESCRIPTION (constant, string) is the description of the average weighted multiplex particiption.
 %%%% ¡default!
 'The weighted multiplex participation of a graph is the nodal homogeneity of its number of inward neighbours across the layers.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the weighted multiplex particiption.
+TEMPLATE (parameter, item) is the template of the average weighted multiplex particiption.
 %%%% ¡settings!
 'WeightedMxPAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the weighted multiplex particiption.
+ID (data, string) is a few-letter code of the average weighted multiplex particiption.
 %%%% ¡default!
 'WeightedMxPAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the weighted multiplex particiption.
+LABEL (metadata, string) is an extended label of the average weighted multiplex particiption.
 %%%% ¡default!
 'WeightedMxPAv label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the weighted multiplex particiption.
+NOTES (metadata, string) are some specific notes about the average weighted multiplex particiption.
 %%%% ¡default!
 'WeightedMxPAv notes'
 
@@ -99,10 +99,10 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'MultiplexWU' 'OrdMxWU'};
+{'MultiplexWU' 'OrdMxWU' 'MultilayerWU' 'OrdMlWU'};
 
 %%% ¡prop!
-M (result, cell) is the weighted multiplex particiption.
+M (result, cell) is the average weighted multiplex particiption.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 l = g.get('LAYERNUMBER');

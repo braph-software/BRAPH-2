@@ -67,20 +67,14 @@ degree_BUD_p2 = c_BUD.get('COMPARISON', 'Degree').get('P2');
 degree_BUD_cil = c_BUD.get('COMPARISON', 'Degree').get('CIL');
 degree_BUD_ciu = c_BUD.get('COMPARISON', 'Degree').get('CIU');
 
-degreeav_BUD_diff = c_BUD.get('COMPARISON', 'DegreeAv').get('DIFF');
-degreeav_BUD_p1 = c_BUD.get('COMPARISON', 'DegreeAv').get('P1');
-degreeav_BUD_p2 = c_BUD.get('COMPARISON', 'DegreeAv').get('P2');
-degreeav_BUD_cil = c_BUD.get('COMPARISON', 'DegreeAv').get('CIL');
-degreeav_BUD_ciu = c_BUD.get('COMPARISON', 'DegreeAv').get('CIU');
+modularity_BUD_diff = c_BUD.get('COMPARISON', 'Modularity').get('DIFF');
+modularity_av_BUD_p1 = c_BUD.get('COMPARISON', 'Modularity').get('P1');
+modularity_av_BUD_p2 = c_BUD.get('COMPARISON', 'Modularity').get('P2');
+modularity_av_BUD_cil = c_BUD.get('COMPARISON', 'Modularity').get('CIL');
+modularity_av_BUD_ciu = c_BUD.get('COMPARISON', 'Modularity').get('CIU');
 
 distance_BUD_diff = c_BUD.get('COMPARISON', 'Distance').get('DIFF');
 distance_BUD_p1 = c_BUD.get('COMPARISON', 'Distance').get('P1');
 distance_BUD_p2 = c_BUD.get('COMPARISON', 'Distance').get('P2');
 distance_BUD_cil = c_BUD.get('COMPARISON', 'Distance').get('CIL');
 distance_BUD_ciu = c_BUD.get('COMPARISON', 'Distance').get('CIU');
-
-% % % modularity_BUD_diff = c_BUD.get('COMPARISON', 'Modularity').get('DIFF');
-% % % modularity_av_BUD_p1 = c_BUD.get('COMPARISON', 'Modularity').get('P1');
-% % % modularity_av_BUD_p2 = c_BUD.get('COMPARISON', 'Modularity').get('P2');
-% % % modularity_av_BUD_cil = c_BUD.get('COMPARISON', 'Modularity').get('CIL');
-% % % modularity_av_BUD_ciu = c_BUD.get('COMPARISON', 'Modularity').get('CIU');

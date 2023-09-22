@@ -556,7 +556,7 @@ classdef MultiplexRCDeg < RCDeg
 				case 10 % Multiplex10
 					prop_default = 2;
 				case 11 % Multiplex11
-					prop_default = {'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU'};;
+					prop_default = {'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU' 'OrdMxBUD' 'OrdMxBUT'};;
 				otherwise
 					prop_default = getPropDefault@RCDeg(prop);
 			end

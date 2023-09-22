@@ -602,7 +602,7 @@ classdef OrdMlBUT < OrdMlWU
 				case 8 % OrdMlBUT.GRAPH_TYPE
 					prop_default = 5;
 				case 27 % OrdMlBUT.COMPATIBLE_MEASURES
-					prop_default = { 'Degree'  'DegreeAv'  'Distance'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'PathLengthAv'  'SmallWorldness' };
+					prop_default = { 'Degree'  'DegreeAv'  'Distance'  'EdgeOverlap'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'PathLengthAv'  'SmallWorldness' };
 				case 35 % OrdMlBUT.ATTEMPTSPEREDGE
 					prop_default = 5;
 				otherwise

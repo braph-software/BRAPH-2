@@ -1,24 +1,24 @@
 classdef EccentricityInAv < EccentricityIn
-	%EccentricityInAv is the graph average eccentricity.
+	%EccentricityInAv is the graph average in-eccentricity.
 	% It is a subclass of <a href="matlab:help EccentricityIn">EccentricityIn</a>.
 	%
 	% The average in-eccentricity of a node is the sum of the nodal 
 	% in-eccentricities divided by their number within a layer.
 	%
 	% The list of EccentricityInAv properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average eccentricity.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average eccentricity.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average eccentricity.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average eccentricity.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average eccentricity.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average eccentricity.
+	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average in-eccentricity.
+	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average in-eccentricity.
+	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average in-eccentricity.
+	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average in-eccentricity.
+	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average in-eccentricity.
+	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average in-eccentricity.
 	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the average eccentricity.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the average in-eccentricity.
 	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>15</strong> <strong>RULE</strong> 	RULE (parameter, OPTION)  % calculation in a graph or its subgraph
 	%
@@ -40,33 +40,33 @@ classdef EccentricityInAv < EccentricityIn
 	%  unchecked - sets a property to NOT checked
 	%
 	% EccentricityInAv methods (display):
-	%  tostring - string with information about the average eccentricity
-	%  disp - displays information about the average eccentricity
-	%  tree - displays the tree of the average eccentricity
+	%  tostring - string with information about the average in-eccentricity
+	%  disp - displays information about the average in-eccentricity
+	%  tree - displays the tree of the average in-eccentricity
 	%
 	% EccentricityInAv methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two average eccentricity are equal (values, locked)
+	%  isequal - determines whether two average in-eccentricity are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the average eccentricity
+	%  copy - copies the average in-eccentricity
 	%
 	% EccentricityInAv methods (save/load, Static):
-	%  save - saves BRAPH2 average eccentricity as b2 file
-	%  load - loads a BRAPH2 average eccentricity from a b2 file
+	%  save - saves BRAPH2 average in-eccentricity as b2 file
+	%  load - loads a BRAPH2 average in-eccentricity from a b2 file
 	%
 	% EccentricityInAv method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the average eccentricity
+	%  encodeJSON - returns a JSON string encoding the average in-eccentricity
 	%
 	% EccentricityInAv method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the average eccentricity
+	%   decodeJSON - returns a JSON string encoding the average in-eccentricity
 	%
 	% EccentricityInAv methods (inspection, Static):
-	%  getClass - returns the class of the average eccentricity
+	%  getClass - returns the class of the average in-eccentricity
 	%  getSubclasses - returns all subclasses of EccentricityInAv
-	%  getProps - returns the property list of the average eccentricity
-	%  getPropNumber - returns the property number of the average eccentricity
+	%  getProps - returns the property list of the average in-eccentricity
+	%  getPropNumber - returns the property number of the average in-eccentricity
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -110,7 +110,7 @@ classdef EccentricityInAv < EccentricityIn
 	
 	methods % constructor
 		function m = EccentricityInAv(varargin)
-			%EccentricityInAv() creates a average eccentricity.
+			%EccentricityInAv() creates a average in-eccentricity.
 			%
 			% EccentricityInAv(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -120,19 +120,19 @@ classdef EccentricityInAv < EccentricityIn
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of EccentricityInAv properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average eccentricity.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average eccentricity.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average eccentricity.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average eccentricity.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average eccentricity.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average eccentricity.
+			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average in-eccentricity.
+			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average in-eccentricity.
+			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average in-eccentricity.
+			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average in-eccentricity.
+			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average in-eccentricity.
+			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average in-eccentricity.
 			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the average eccentricity.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the average in-eccentricity.
 			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>15</strong> <strong>RULE</strong> 	RULE (parameter, OPTION)  % calculation in a graph or its subgraph
 			%
@@ -143,12 +143,12 @@ classdef EccentricityInAv < EccentricityIn
 	end
 	methods (Static) % inspection
 		function m_class = getClass()
-			%GETCLASS returns the class of the average eccentricity.
+			%GETCLASS returns the class of the average in-eccentricity.
 			%
 			% CLASS = EccentricityInAv.GETCLASS() returns the class 'EccentricityInAv'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = M.GETCLASS() returns the class of the average eccentricity M.
+			%  CLASS = M.GETCLASS() returns the class of the average in-eccentricity M.
 			%  CLASS = Element.GETCLASS(M) returns the class of 'M'.
 			%  CLASS = Element.GETCLASS('EccentricityInAv') returns 'EccentricityInAv'.
 			%
@@ -158,12 +158,12 @@ classdef EccentricityInAv < EccentricityIn
 			m_class = 'EccentricityInAv';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the average eccentricity.
+			%GETSUBCLASSES returns all subclasses of the average in-eccentricity.
 			%
 			% LIST = EccentricityInAv.GETSUBCLASSES() returns all subclasses of 'EccentricityInAv'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = M.GETSUBCLASSES() returns all subclasses of the average eccentricity M.
+			%  LIST = M.GETSUBCLASSES() returns all subclasses of the average in-eccentricity M.
 			%  LIST = Element.GETSUBCLASSES(M) returns all subclasses of 'M'.
 			%  LIST = Element.GETSUBCLASSES('EccentricityInAv') returns all subclasses of 'EccentricityInAv'.
 			%
@@ -175,16 +175,16 @@ classdef EccentricityInAv < EccentricityIn
 			subclass_list = { 'EccentricityInAv' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of average eccentricity.
+			%GETPROPS returns the property list of average in-eccentricity.
 			%
-			% PROPS = EccentricityInAv.GETPROPS() returns the property list of average eccentricity
+			% PROPS = EccentricityInAv.GETPROPS() returns the property list of average in-eccentricity
 			%  as a row vector.
 			%
 			% PROPS = EccentricityInAv.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the average eccentricity M.
+			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the average in-eccentricity M.
 			%  PROPS = Element.GETPROPS(M[, CATEGORY]) returns the property list of 'M'.
 			%  PROPS = Element.GETPROPS('EccentricityInAv'[, CATEGORY]) returns the property list of 'EccentricityInAv'.
 			%
@@ -220,15 +220,15 @@ classdef EccentricityInAv < EccentricityIn
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of average eccentricity.
+			%GETPROPNUMBER returns the property number of average in-eccentricity.
 			%
-			% N = EccentricityInAv.GETPROPNUMBER() returns the property number of average eccentricity.
+			% N = EccentricityInAv.GETPROPNUMBER() returns the property number of average in-eccentricity.
 			%
-			% N = EccentricityInAv.GETPROPNUMBER(CATEGORY) returns the property number of average eccentricity
+			% N = EccentricityInAv.GETPROPNUMBER(CATEGORY) returns the property number of average in-eccentricity
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the average eccentricity M.
+			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the average in-eccentricity M.
 			%  N = Element.GETPROPNUMBER(M) returns the property number of 'M'.
 			%  N = Element.GETPROPNUMBER('EccentricityInAv') returns the property number of 'EccentricityInAv'.
 			%
@@ -264,7 +264,7 @@ classdef EccentricityInAv < EccentricityIn
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in average eccentricity/error.
+			%EXISTSPROP checks whether property exists in average in-eccentricity/error.
 			%
 			% CHECK = EccentricityInAv.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -302,7 +302,7 @@ classdef EccentricityInAv < EccentricityIn
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in average eccentricity/error.
+			%EXISTSTAG checks whether tag exists in average in-eccentricity/error.
 			%
 			% CHECK = EccentricityInAv.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -468,7 +468,7 @@ classdef EccentricityInAv < EccentricityIn
 			prop = EccentricityInAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			eccentricityinav_description_list = { 'NAME (constant, string) is the name of the average eccentricity.'  'DESCRIPTION (constant, string) is the description of the average eccentricity.'  'TEMPLATE (parameter, item) is the template of the average eccentricity.'  'ID (data, string) is a few-letter code of the average eccentricity.'  'LABEL (metadata, string) is an extended label of the average eccentricity.'  'NOTES (metadata, string) are some specific notes about the average eccentricity.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the average eccentricity.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, OPTION)  % calculation in a graph or its subgraph' };
+			eccentricityinav_description_list = { 'NAME (constant, string) is the name of the average in-eccentricity.'  'DESCRIPTION (constant, string) is the description of the average in-eccentricity.'  'TEMPLATE (parameter, item) is the template of the average in-eccentricity.'  'ID (data, string) is a few-letter code of the average in-eccentricity.'  'LABEL (metadata, string) is an extended label of the average in-eccentricity.'  'NOTES (metadata, string) are some specific notes about the average in-eccentricity.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the average in-eccentricity.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, OPTION)  % calculation in a graph or its subgraph' };
 			prop_description = eccentricityinav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

@@ -556,7 +556,7 @@ classdef Flexibility < MultilayerCommunity
 				case 10 % Flexibility.PARAMETRICITY
 					prop_default = 2;
 				case 11 % Flexibility.COMPATIBLE_GRAPHS
-					prop_default = {'MultiplexBU' 'MultiplexWD' 'MultiplexBD' 'MultiplexWU' 'MultilayerBD' 'MultilayerBU' 'MultilayerWD' 'MultilayerWU' 'OrdMlWD' 'OrdMlWU' 'OrdMlBU' 'OrdMlBD' 'OrdMxWD' 'OrdMxWU' 'OrdMxBD' 'OrdMxBU'};;
+					prop_default = {'MultiplexWU' 'OrdMxWU' 'MultiplexBU' 'MultiplexBUT' 'MultiplexBUD' 'MultilayerBU' 'MultilayerWU' 'OrdMlWU'};;
 				otherwise
 					prop_default = getPropDefault@MultilayerCommunity(prop);
 			end

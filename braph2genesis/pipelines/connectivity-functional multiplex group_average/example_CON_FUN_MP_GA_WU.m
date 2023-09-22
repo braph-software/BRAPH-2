@@ -74,16 +74,14 @@ a_WU2 = AnalyzeGroup_CON_FUN_MP_GA_WU( ...
 
 % measure calculation
 g_WU1 = a_WU1.memorize('G'); % essential to memorize in case there are measures with non-default rules
-degree_WU1 = g_WU1.get('MEASURE', 'Degree').get('M');
-% % % wmpc_WU1 = g_WU1.get('MEASURE', 'WeightedMultiplexParticipation').get('M');
-% % % wmpc_av_WU1 = g_WU1.get('MEASURE', 'WeightedMultiplexParticipationAv').get('M');
-% % % wedgeov_WU1 = g_WU1.get('MEASURE', 'WeightedEdgeOverlap').get('M');
+mcommunities_WU1 = g_WU1.get('MEASURE', 'MultilayerCommunity').get('M');
+wmpc_av_WU1 = g_WU1.get('MEASURE', 'WeightedMxPAv').get('M');
+wedgeov_WU1 = g_WU1.get('MEASURE', 'WeightedEdgeOvlp').get('M');
 
 g_WU2 = a_WU2.get('G');
-degree_WU2 = g_WU2.get('MEASURE', 'Degree').get('M');
-% % % wmpc_WU2 = g_WU2.get('MEASURE', 'WeightedMultiplexParticipation').get('M');
-% % % wmpc_av_WU2 = g_WU2.get('MEASURE', 'WeightedMultiplexParticipationAv').get('M');
-% % % wedgeov_WU2 = g_WU2.get('MEASURE', 'WeightedEdgeOverlap').get('M');
+mcommunities_WU2 = g_WU2.get('MEASURE', 'MultilayerCommunity').get('M');
+wmpc_av_WU2 = g_WU2.get('MEASURE', 'WeightedMxPAv').get('M');
+wedgeov_WU2 = g_WU2.get('MEASURE', 'WeightedEdgeOvlp').get('M');
 
 % comparison
 c_WU = CompareGroup( ...
@@ -95,26 +93,20 @@ c_WU = CompareGroup( ...
     'MEMORIZE', true ...
     );
 
-degree_WU_diff = c_WU.get('COMPARISON', 'Degree').get('DIFF');
-degree_WU_p1 = c_WU.get('COMPARISON', 'Degree').get('P1');
-degree_WU_p2 = c_WU.get('COMPARISON', 'Degree').get('P2');
-degree_WU_cil = c_WU.get('COMPARISON', 'Degree').get('CIL');
-degree_WU_ciu = c_WU.get('COMPARISON', 'Degree').get('CIU');
+wmpc_WU_diff = c_WU.get('COMPARISON', 'WeightedMxP').get('DIFF');
+wmpc_WU_p1 = c_WU.get('COMPARISON', 'WeightedMxP').get('P1');
+wmpc_WU_p2 = c_WU.get('COMPARISON', 'WeightedMxP').get('P2');
+wmpc_WU_cil = c_WU.get('COMPARISON', 'WeightedMxP').get('CIL');
+wmpc_WU_ciu = c_WU.get('COMPARISON', 'WeightedMxP').get('CIU');
 
-% % % wmpc_WU_diff = c_WU.get('COMPARISON', 'WeightedMultiplexParticipation').get('DIFF');
-% % % wmpc_WU_p1 = c_WU.get('COMPARISON', 'WeightedMultiplexParticipation').get('P1');
-% % % wmpc_WU_p2 = c_WU.get('COMPARISON', 'WeightedMultiplexParticipation').get('P2');
-% % % wmpc_WU_cil = c_WU.get('COMPARISON', 'WeightedMultiplexParticipation').get('CIL');
-% % % wmpc_WU_ciu = c_WU.get('COMPARISON', 'WeightedMultiplexParticipation').get('CIU');
+wmpc_av_WU_diff = c_WU.get('COMPARISON', 'WeightedMxPAv').get('DIFF');
+wmpc_av_WU_p1 = c_WU.get('COMPARISON', 'WeightedMxPAv').get('P1');
+wmpc_av_WU_p2 = c_WU.get('COMPARISON', 'WeightedMxPAv').get('P2');
+wmpc_av_WU_cil = c_WU.get('COMPARISON', 'WeightedMxPAv').get('CIL');
+wmpc_av_WU_ciu = c_WU.get('COMPARISON', 'WeightedMxPAv').get('CIU');
 
-% % % wmpc_av_WU_diff = c_WU.get('COMPARISON', 'WeightedMultiplexParticipationAv').get('DIFF');
-% % % wmpc_av_WU_p1 = c_WU.get('COMPARISON', 'WeightedMultiplexParticipationAv').get('P1');
-% % % wmpc_av_WU_p2 = c_WU.get('COMPARISON', 'WeightedMultiplexParticipationAv').get('P2');
-% % % wmpc_av_WU_cil = c_WU.get('COMPARISON', 'WeightedMultiplexParticipationAv').get('CIL');
-% % % wmpc_av_WU_ciu = c_WU.get('COMPARISON', 'WeightedMultiplexParticipationAv').get('CIU');
-
-% % % wedgeov_WU_diff = c_WU.get('COMPARISON', 'WeightedEdgeOverlap').get('DIFF');
-% % % wedgeov_WU_p1 = c_WU.get('COMPARISON', 'WeightedEdgeOverlap').get('P1');
-% % % wedgeov_WU_p2 = c_WU.get('COMPARISON', 'WeightedEdgeOverlap').get('P2');
-% % % wedgeov_WU_cil = c_WU.get('COMPARISON', 'WeightedEdgeOverlap').get('CIL');
-% % % wedgeov_WU_ciu = c_WU.get('COMPARISON', 'WeightedEdgeOverlap').get('CIU');
+wedgeov_WU_diff = c_WU.get('COMPARISON', 'WeightedEdgeOvlp').get('DIFF');
+wedgeov_WU_p1 = c_WU.get('COMPARISON', 'WeightedEdgeOvlp').get('P1');
+wedgeov_WU_p2 = c_WU.get('COMPARISON', 'WeightedEdgeOvlp').get('P2');
+wedgeov_WU_cil = c_WU.get('COMPARISON', 'WeightedEdgeOvlp').get('CIL');
+wedgeov_WU_ciu = c_WU.get('COMPARISON', 'WeightedEdgeOvlp').get('CIU');

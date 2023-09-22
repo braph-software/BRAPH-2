@@ -53,7 +53,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'MultiplexBU' 'MultiplexWD' 'MultiplexBD' 'MultiplexWU' 'MultilayerBD' 'MultilayerBU' 'MultilayerWD' 'MultilayerWU' 'OrdMlWD' 'OrdMlWU' 'OrdMlBU' 'OrdMlBD' 'OrdMxWD' 'OrdMxWU' 'OrdMxBD' 'OrdMxBU'};
+{'MultiplexWU' 'OrdMxWU' 'MultiplexBU' 'MultiplexBUT' 'MultiplexBUD' 'MultilayerBU' 'MultilayerWU' 'OrdMlWU'};
 
 %%% ¡prop!
 M (result, cell) is the average flexibility.
@@ -103,42 +103,9 @@ assert(isequal(m_inside_g.get('M'), known_flexibility_av), ...
     [BRAPH2.STR ':FlexibilityAv:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 
-
 %%% ¡test!
 %%%% ¡name!
-MultiplexWD
-%%%% ¡code!
-A11 = [
-      0  1 1 .5;
-      1  0 1 0;
-      1  1 0 1;
-      .1 0 1 0
-      ];
-A22 = [
-      0  1 1 .5;
-      1  0 1 0;
-      1  1 0 1;
-      .1 0 1 0
-      ];
-A = {A11 A22};
- 
-known_flexibility_av = {0};   
- 
-g = MultiplexWD('B', A);
-
-m_outside_g = FlexibilityAv('G', g);
-assert(isequal(m_outside_g.get('M'), known_flexibility_av), ...
-    [BRAPH2.STR ':FlexibilityAv:' BRAPH2.FAIL_TEST], ...
-    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
-
-m_inside_g = g.get('MEASURE', 'FlexibilityAv');
-assert(isequal(m_inside_g.get('M'), known_flexibility_av), ...
-    [BRAPH2.STR ':FlexibilityAv:' BRAPH2.FAIL_TEST], ...
-    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
-
-%%% ¡test!
-%%%% ¡name!
-MultilayerWD
+MultilayerWU
 %%%% ¡code!
 A11 = [
       0  1 1 .5;
@@ -159,7 +126,7 @@ A = {A11 A12;
  
 known_flexibility_av = {0};  
 
-g = MultilayerWD('B', A);
+g = MultilayerWU('B', A);
 
 m_outside_g = FlexibilityAv('G', g);
 assert(isequal(m_outside_g.get('M'), known_flexibility_av), ...
@@ -173,7 +140,7 @@ assert(isequal(m_inside_g.get('M'), known_flexibility_av), ...
 
 %%% ¡test!
 %%%% ¡name!
-OrdMlWD
+OrdMlWU
 %%%% ¡code!
 A11 = [
       0  1 1 .5;
@@ -194,7 +161,7 @@ A = {A11 A12;
  
 known_flexibility_av = {0};  
 
-g = OrdMlWD('B', A);
+g = OrdMlWU('B', A);
 
 m_outside_g = FlexibilityAv('G', g);
 assert(isequal(m_outside_g.get('M'), known_flexibility_av), ...

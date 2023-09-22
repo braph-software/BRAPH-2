@@ -55,32 +55,32 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the multiplex rich-club strength.
+NAME (constant, string) is the name of the weighted rich-club.
 %%%% ¡default!
 'WeightedRC'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the multiplex rich-club strength.
+DESCRIPTION (constant, string) is the description of the weighted rich-club.
 %%%% ¡default!
 'The weighted rich-club coefficient of a node at level s is the fraction of the edges weights that connect nodes of strength s or higher out of the maxium number of edges weights that such nodes might share within a layer. s is set by the user and it can be a vector containting all the strength thresholds; the default value is equal to 1.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the multiplex rich-club strength.
+TEMPLATE (parameter, item) is the template of the weighted rich-club.
 %%%% ¡settings!
 'WeightedRC'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the multiplex rich-club strength.
+ID (data, string) is a few-letter code of the weighted rich-club.
 %%%% ¡default!
 'WeightedRC ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the multiplex rich-club strength.
+LABEL (metadata, string) is an extended label of the weighted rich-club.
 %%%% ¡default!
 'WeightedRC label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the multiplex rich-club strength.
+NOTES (metadata, string) are some specific notes about the weighted rich-club.
 %%%% ¡default!
 'WeightedRC notes'
 
@@ -105,13 +105,11 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'MultiplexWU'};
 
 %%% ¡prop!
-M (result, cell) is the multiplex rich-club strength.
+M (result, cell) is the weighted rich-club.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 l = g.get('LAYERNUMBER');
-ls = g.get('PARTITIONS');  
-
 
 weighted_rich_club = cell(l, 1);
 directionality_layer = g.get('DIRECTIONALITY_TYPE', l);

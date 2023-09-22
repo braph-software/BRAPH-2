@@ -7,30 +7,30 @@ The average in-path length of a graph is the average of the sum of the in-path l
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the PathLengthInAv.
+NAME (constant, string) is the name of the average in-path length.
 %%%% ¡default!
 'PathLengthInAv'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the PathLengthInAv.
+DESCRIPTION (constant, string) is the description of the average in-path length.
 %%%% ¡default!
-'The PathLengthInAv is the average shortest pathlength of one node to all other nodes within a layer.'
+'The average in-path length is the average shortest in-path length of one node to all other nodes within a layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the PathLengthInAv.
+TEMPLATE (parameter, item) is the template of the average in-path length.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the PathLengthInAv.
+ID (data, string) is a few-letter code of the average in-path length.
 %%%% ¡default!
 'PathLengthInAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the PathLengthInAv.
+LABEL (metadata, string) is an extended label of the average in-path length.
 %%%% ¡default!
 'PathLengthInAv label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the PathLengthInAv.
+NOTES (metadata, string) are some specific notes about the average in-path length.
 %%%% ¡default!
 'PathLengthInAv notes'
 
@@ -55,7 +55,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphBD' 'GraphWD' 'MultiplexBD' 'MultiplexWD' 'MultilayerBD' 'OrdMlBD'}
 
 %%% ¡prop!
-M (result, cell) is the cell containing the PathLengthInAv.
+M (result, cell) is the cell containing the average in-path length.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

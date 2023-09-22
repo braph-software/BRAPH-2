@@ -640,7 +640,7 @@ classdef MultilayerWD < Graph
 				case 8 % MultilayerWD.GRAPH_TYPE
 					prop_default = 6;
 				case 27 % MultilayerWD.COMPATIBLE_MEASURES
-					prop_default = { 'AssortInIn'  'AssortInOut'  'CorePeriphery'  'Distance'  'Flexibility'  'FlexibilityAv'  'OverlappingSIn'  'OverlappingSInAv'  'OverlappingSOut'  'OverlappingSOutAv'  'StrengthIn'  'StrengthInAv'  'StrengthOut'  'StrengthOutAv'  'Triangles' };
+					prop_default = { 'AssortInIn'  'AssortInOut'  'CorePeriphery'  'Distance'  'OverlappingDegIn'  'OverlappingDegInAv'  'OverlappingDegOut'  'OverlappingDegOutAv'  'OverlappingSIn'  'OverlappingSInAv'  'OverlappingSOut'  'OverlappingSOutAv'  'StrengthIn'  'StrengthInAv'  'StrengthOut'  'StrengthOutAv'  'Triangles'  'WeightedEdgeOvlp'  'WeightedMxPIn'  'WeightedMxPOut' };
 				otherwise
 					prop_default = getPropDefault@Graph(prop);
 			end

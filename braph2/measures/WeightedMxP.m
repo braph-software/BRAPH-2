@@ -39,33 +39,33 @@ classdef WeightedMxP < Measure
 	%  unchecked - sets a property to NOT checked
 	%
 	% WeightedMxP methods (display):
-	%  tostring - string with information about the weighted mxpart
-	%  disp - displays information about the weighted mxpart
-	%  tree - displays the tree of the weighted mxpart
+	%  tostring - string with information about the weighted multiplex participation
+	%  disp - displays information about the weighted multiplex participation
+	%  tree - displays the tree of the weighted multiplex participation
 	%
 	% WeightedMxP methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two weighted mxpart are equal (values, locked)
+	%  isequal - determines whether two weighted multiplex participation are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the weighted mxpart
+	%  copy - copies the weighted multiplex participation
 	%
 	% WeightedMxP methods (save/load, Static):
-	%  save - saves BRAPH2 weighted mxpart as b2 file
-	%  load - loads a BRAPH2 weighted mxpart from a b2 file
+	%  save - saves BRAPH2 weighted multiplex participation as b2 file
+	%  load - loads a BRAPH2 weighted multiplex participation from a b2 file
 	%
 	% WeightedMxP method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the weighted mxpart
+	%  encodeJSON - returns a JSON string encoding the weighted multiplex participation
 	%
 	% WeightedMxP method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the weighted mxpart
+	%   decodeJSON - returns a JSON string encoding the weighted multiplex participation
 	%
 	% WeightedMxP methods (inspection, Static):
-	%  getClass - returns the class of the weighted mxpart
+	%  getClass - returns the class of the weighted multiplex participation
 	%  getSubclasses - returns all subclasses of WeightedMxP
-	%  getProps - returns the property list of the weighted mxpart
-	%  getPropNumber - returns the property number of the weighted mxpart
+	%  getProps - returns the property list of the weighted multiplex participation
+	%  getPropNumber - returns the property number of the weighted multiplex participation
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -109,7 +109,7 @@ classdef WeightedMxP < Measure
 	
 	methods % constructor
 		function m = WeightedMxP(varargin)
-			%WeightedMxP() creates a weighted mxpart.
+			%WeightedMxP() creates a weighted multiplex participation.
 			%
 			% WeightedMxP(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -141,12 +141,12 @@ classdef WeightedMxP < Measure
 	end
 	methods (Static) % inspection
 		function m_class = getClass()
-			%GETCLASS returns the class of the weighted mxpart.
+			%GETCLASS returns the class of the weighted multiplex participation.
 			%
 			% CLASS = WeightedMxP.GETCLASS() returns the class 'WeightedMxP'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = M.GETCLASS() returns the class of the weighted mxpart M.
+			%  CLASS = M.GETCLASS() returns the class of the weighted multiplex participation M.
 			%  CLASS = Element.GETCLASS(M) returns the class of 'M'.
 			%  CLASS = Element.GETCLASS('WeightedMxP') returns 'WeightedMxP'.
 			%
@@ -156,12 +156,12 @@ classdef WeightedMxP < Measure
 			m_class = 'WeightedMxP';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the weighted mxpart.
+			%GETSUBCLASSES returns all subclasses of the weighted multiplex participation.
 			%
 			% LIST = WeightedMxP.GETSUBCLASSES() returns all subclasses of 'WeightedMxP'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = M.GETSUBCLASSES() returns all subclasses of the weighted mxpart M.
+			%  LIST = M.GETSUBCLASSES() returns all subclasses of the weighted multiplex participation M.
 			%  LIST = Element.GETSUBCLASSES(M) returns all subclasses of 'M'.
 			%  LIST = Element.GETSUBCLASSES('WeightedMxP') returns all subclasses of 'WeightedMxP'.
 			%
@@ -173,16 +173,16 @@ classdef WeightedMxP < Measure
 			subclass_list = { 'WeightedMxP'  'WeightedMxPAv' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of weighted mxpart.
+			%GETPROPS returns the property list of weighted multiplex participation.
 			%
-			% PROPS = WeightedMxP.GETPROPS() returns the property list of weighted mxpart
+			% PROPS = WeightedMxP.GETPROPS() returns the property list of weighted multiplex participation
 			%  as a row vector.
 			%
 			% PROPS = WeightedMxP.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the weighted mxpart M.
+			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the weighted multiplex participation M.
 			%  PROPS = Element.GETPROPS(M[, CATEGORY]) returns the property list of 'M'.
 			%  PROPS = Element.GETPROPS('WeightedMxP'[, CATEGORY]) returns the property list of 'WeightedMxP'.
 			%
@@ -218,15 +218,15 @@ classdef WeightedMxP < Measure
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of weighted mxpart.
+			%GETPROPNUMBER returns the property number of weighted multiplex participation.
 			%
-			% N = WeightedMxP.GETPROPNUMBER() returns the property number of weighted mxpart.
+			% N = WeightedMxP.GETPROPNUMBER() returns the property number of weighted multiplex participation.
 			%
-			% N = WeightedMxP.GETPROPNUMBER(CATEGORY) returns the property number of weighted mxpart
+			% N = WeightedMxP.GETPROPNUMBER(CATEGORY) returns the property number of weighted multiplex participation
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the weighted mxpart M.
+			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the weighted multiplex participation M.
 			%  N = Element.GETPROPNUMBER(M) returns the property number of 'M'.
 			%  N = Element.GETPROPNUMBER('WeightedMxP') returns the property number of 'WeightedMxP'.
 			%
@@ -262,7 +262,7 @@ classdef WeightedMxP < Measure
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in weighted mxpart/error.
+			%EXISTSPROP checks whether property exists in weighted multiplex participation/error.
 			%
 			% CHECK = WeightedMxP.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -300,7 +300,7 @@ classdef WeightedMxP < Measure
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in weighted mxpart/error.
+			%EXISTSTAG checks whether tag exists in weighted multiplex participation/error.
 			%
 			% CHECK = WeightedMxP.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -540,7 +540,7 @@ classdef WeightedMxP < Measure
 				case 10 % WeightedMxP.PARAMETRICITY
 					prop_default = 2;
 				case 11 % WeightedMxP.COMPATIBLE_GRAPHS
-					prop_default = {'MultiplexWU' 'OrdMxWU'};;
+					prop_default = {'MultiplexWU' 'OrdMxWU' 'MultilayerWU' 'OrdMlWU'};;
 				otherwise
 					prop_default = getPropDefault@Measure(prop);
 			end
@@ -647,7 +647,6 @@ classdef WeightedMxP < Measure
 					g = m.get('G'); % graph from measure class
 					A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 					l = g.get('LAYERNUMBER');
-					ls = g.get('PARTITIONS');
 					
 					if l == 0
 					    value = {};

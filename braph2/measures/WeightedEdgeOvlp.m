@@ -540,7 +540,7 @@ classdef WeightedEdgeOvlp < Measure
 				case 10 % WeightedEdgeOvlp.PARAMETRICITY
 					prop_default = 2;
 				case 11 % WeightedEdgeOvlp.COMPATIBLE_GRAPHS
-					prop_default = {'MultiplexWU' 'MultiplexWD' 'OrdMxWU' 'MultilayerWU'};;
+					prop_default = {'MultiplexWU' 'MultiplexWD' 'OrdMxWU' 'OrdMxWD' 'MultilayerWU' 'MultilayerWD' 'OrdMxWU' 'OrdMxWD'};;
 				otherwise
 					prop_default = getPropDefault@Measure(prop);
 			end
@@ -647,7 +647,6 @@ classdef WeightedEdgeOvlp < Measure
 					g = m.get('G'); % graph from measure class
 					A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 					l = g.get('LAYERNUMBER');
-					ls = g.get('PARTITIONS');
 					
 					if l == 0
 					    value = {};

@@ -1,5 +1,5 @@
 %% ¡header!
-MultiRC < Richness (m, multirichness) is the graph wmultirichness.
+MultiRC < Richness (m, multirichness) is the graph multirichness.
 
 %%% ¡description!
 The multirichness of a node is the sum of the edges that connect nodes 
@@ -54,34 +54,34 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the weighted multiplex particiption.
+NAME (constant, string) is the name of the multirichness.
 %%%% ¡default!
-'MultiRC'
+'Multirichness'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the weighted multiplex particiption.
+DESCRIPTION (constant, string) is the description of the multirichness.
 %%%% ¡default!
 'The multirichness of a node is the sum of the edges that connect nodes of degree k or higher in all layers. The relevance of each layer is controlled by the coefficients c that are between 0 and 1; the default coefficients are (1/layernumber).'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the weighted multiplex particiption.
+TEMPLATE (parameter, item) is the template of the multirichness.
 %%%% ¡settings!
 'MultiRC'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the weighted multiplex particiption.
+ID (data, string) is a few-letter code of the multirichness.
 %%%% ¡default!
 'MultiRC ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the weighted multiplex particiption.
+LABEL (metadata, string) is an extended label of the multirichness.
 %%%% ¡default!
-'MultiRC label'
+'Multirichness label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the weighted multiplex particiption.
+NOTES (metadata, string) are some specific notes about the multirichness.
 %%%% ¡default!
-'MultiRC notes'
+'Multirichness notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -104,7 +104,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU'};
 
 %%% ¡prop!
-M (result, cell) is the weighted multiplex particiption.
+M (result, cell) is the multirichness.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -119,14 +119,14 @@ else
     N = g.get('NODENUMBER');
     multirichness_coefficients = m.get('MULTIRICHNESS_COEFFICIENTS');
     assert(length(multirichness_coefficients) == ls(1) || all(multirichness_coefficients == 0), ...
-        [BRAPH2.STR ':MultiRCness:' BRAPH2.WRONG_INPUT], ...
-        ['MultiRCness coefficients must have the same length than the ' ...
+        [BRAPH2.STR ':Multirichness:' BRAPH2.WRONG_INPUT], ...
+        ['Multirichness coefficients must have the same length than the ' ...
         'number of layers (' tostring(ls(1)) ') while its length is ' tostring(length(multirichness_coefficients))])
 
     if length(multirichness_coefficients) == ls(1)
         assert(all(multirichness_coefficients <= 1) && all(multirichness_coefficients >= 0), ...
-            [BRAPH2.STR ':MultiRCness:' BRAPH2.WRONG_INPUT], ...
-            ['MultiRCness coefficients must be between 0 and 1 ' ...
+            [BRAPH2.STR ':Multirichness:' BRAPH2.WRONG_INPUT], ...
+            ['Multirichness coefficients must be between 0 and 1 ' ...
             'while they are ' tostring(multirichness_coefficients)])
         c = multirichness_coefficients;
 

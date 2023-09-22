@@ -598,7 +598,7 @@ classdef OrdMxBUT < OrdMxWU
 				case 8 % OrdMxBUT.GRAPH_TYPE
 					prop_default = 3;
 				case 27 % OrdMxBUT.COMPATIBLE_MEASURES
-					prop_default = { 'Degree'  'DegreeAv'  'Distance'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'Triangles' };
+					prop_default = { 'Degree'  'DegreeAv'  'Distance'  'EdgeOverlap'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'MultiplexRCDeg'  'MultiplexT'  'Triangles' };
 				case 35 % OrdMxBUT.ATTEMPTSPEREDGE
 					prop_default = 5;
 				otherwise

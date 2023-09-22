@@ -13,27 +13,27 @@ NAME (constant, string) is the name of the in-global efficiency.
 'GlobalEfficiencyIn'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the GlobalEfficiencyIn.
+DESCRIPTION (constant, string) is the description of the in-global efficiency.
 %%%% ¡default!
 'The in-global efficiency is the average inverse shortest in-path length within each layer. It is inversely related to the characteristic in-path length.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the GlobalEfficiencyIn.
+TEMPLATE (parameter, item) is the template of the in-global efficiency.
 %%%% ¡settings!
 'GlobalEfficiencyIn'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the GlobalEfficiencyIn.
+ID (data, string) is a few-letter code of the in-global efficiency.
 %%%% ¡default!
 'GlobalEfficiencyIn ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the GlobalEfficiencyIn.
+LABEL (metadata, string) is an extended label of the in-global efficiency.
 %%%% ¡default!
 'GlobalEfficiencyIn label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the GlobalEfficiencyIn.
+NOTES (metadata, string) are some specific notes about the in-global efficiency.
 %%%% ¡default!
 'GlobalEfficiencyIn notes'
 

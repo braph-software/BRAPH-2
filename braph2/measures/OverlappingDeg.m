@@ -540,7 +540,7 @@ classdef OverlappingDeg < Degree
 				case 10 % OverlappingDeg.PARAMETRICITY
 					prop_default = 2;
 				case 11 % OverlappingDeg.COMPATIBLE_GRAPHS
-					prop_default = {'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'MultilayerWU' 'OrdMlWU'};;
+					prop_default = {'MultiplexWU' 'OrdMxWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'MultilayerWU' 'OrdMlWU' 'MultilayerBU'};;
 				otherwise
 					prop_default = getPropDefault@Degree(prop);
 			end

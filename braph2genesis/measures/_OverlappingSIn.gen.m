@@ -1,5 +1,5 @@
 %% ¡header!
-OverlappingSIn < StrengthIn (m, ovrlapstrin) is the graph overlapping strength.
+OverlappingSIn < StrengthIn (m, overlapping in-strength) is the graph overlapping in-strength.
 
 %%% ¡description!
 The overlapping in-strength of a graph is the sum of the in-strengths of a 
@@ -52,32 +52,32 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the overlapping strength.
+NAME (constant, string) is the name of the overlapping in-strength.
 %%%% ¡default!
 'OverlappingSIn'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the overlapping strength.
+DESCRIPTION (constant, string) is the description of the overlapping in-strength.
 %%%% ¡default!
 'The overlapping in-strength of a graph is the sum of the in-strengths of a node in all layers.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the overlapping strength.
+TEMPLATE (parameter, item) is the template of the overlapping in-strength.
 %%%% ¡settings!
 'OverlappingSIn'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the overlapping strength.
+ID (data, string) is a few-letter code of the overlapping in-strength.
 %%%% ¡default!
 'OverlappingSIn ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the overlapping strength.
+LABEL (metadata, string) is an extended label of the overlapping in-strength.
 %%%% ¡default!
 'OverlappingSIn label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the overlapping strength.
+NOTES (metadata, string) are some specific notes about the overlapping in-strength.
 %%%% ¡default!
 'OverlappingSIn notes'
 
@@ -102,7 +102,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWD' 'OrdMxWD' 'MultilayerWD' 'OrdMlWD'};
 
 %%% ¡prop!
-M (result, cell) is the overlapping strength.
+M (result, cell) is the overlapping in-strength.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

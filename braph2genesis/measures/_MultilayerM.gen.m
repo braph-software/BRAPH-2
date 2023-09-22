@@ -54,7 +54,7 @@ Compatible Graphs
 %%% ¡prop!
 NAME (constant, string) is the name of the multilayer modularity.
 %%%% ¡default!
-'MultilayerM'
+'MultilayerModularity'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the multilayer modularity.
@@ -74,12 +74,12 @@ ID (data, string) is a few-letter code of the multilayer modularity.
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the multilayer modularity.
 %%%% ¡default!
-'MultilayerM label'
+'MultilayerModularity label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the multilayer modularity.
 %%%% ¡default!
-'MultilayerM notes'
+'MultilayerModularity notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -99,7 +99,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'MultiplexBU'};
+{'MultiplexWU' 'OrdMxWU' 'MultiplexBU' 'MultiplexBUT' 'MultiplexBUD' 'MultilayerBU' 'MultilayerWU' 'OrdMlWU'};
 
 %%% ¡prop!
 M (result, cell) is the multilayer modularity.

@@ -39,33 +39,33 @@ classdef OverlappingS < Strength
 	%  unchecked - sets a property to NOT checked
 	%
 	% OverlappingS methods (display):
-	%  tostring - string with information about the ovrlapstr
-	%  disp - displays information about the ovrlapstr
-	%  tree - displays the tree of the ovrlapstr
+	%  tostring - string with information about the overlapping strength
+	%  disp - displays information about the overlapping strength
+	%  tree - displays the tree of the overlapping strength
 	%
 	% OverlappingS methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two ovrlapstr are equal (values, locked)
+	%  isequal - determines whether two overlapping strength are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the ovrlapstr
+	%  copy - copies the overlapping strength
 	%
 	% OverlappingS methods (save/load, Static):
-	%  save - saves BRAPH2 ovrlapstr as b2 file
-	%  load - loads a BRAPH2 ovrlapstr from a b2 file
+	%  save - saves BRAPH2 overlapping strength as b2 file
+	%  load - loads a BRAPH2 overlapping strength from a b2 file
 	%
 	% OverlappingS method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the ovrlapstr
+	%  encodeJSON - returns a JSON string encoding the overlapping strength
 	%
 	% OverlappingS method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the ovrlapstr
+	%   decodeJSON - returns a JSON string encoding the overlapping strength
 	%
 	% OverlappingS methods (inspection, Static):
-	%  getClass - returns the class of the ovrlapstr
+	%  getClass - returns the class of the overlapping strength
 	%  getSubclasses - returns all subclasses of OverlappingS
-	%  getProps - returns the property list of the ovrlapstr
-	%  getPropNumber - returns the property number of the ovrlapstr
+	%  getProps - returns the property list of the overlapping strength
+	%  getPropNumber - returns the property number of the overlapping strength
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -109,7 +109,7 @@ classdef OverlappingS < Strength
 	
 	methods % constructor
 		function m = OverlappingS(varargin)
-			%OverlappingS() creates a ovrlapstr.
+			%OverlappingS() creates a overlapping strength.
 			%
 			% OverlappingS(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -141,12 +141,12 @@ classdef OverlappingS < Strength
 	end
 	methods (Static) % inspection
 		function m_class = getClass()
-			%GETCLASS returns the class of the ovrlapstr.
+			%GETCLASS returns the class of the overlapping strength.
 			%
 			% CLASS = OverlappingS.GETCLASS() returns the class 'OverlappingS'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = M.GETCLASS() returns the class of the ovrlapstr M.
+			%  CLASS = M.GETCLASS() returns the class of the overlapping strength M.
 			%  CLASS = Element.GETCLASS(M) returns the class of 'M'.
 			%  CLASS = Element.GETCLASS('OverlappingS') returns 'OverlappingS'.
 			%
@@ -156,12 +156,12 @@ classdef OverlappingS < Strength
 			m_class = 'OverlappingS';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the ovrlapstr.
+			%GETSUBCLASSES returns all subclasses of the overlapping strength.
 			%
 			% LIST = OverlappingS.GETSUBCLASSES() returns all subclasses of 'OverlappingS'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = M.GETSUBCLASSES() returns all subclasses of the ovrlapstr M.
+			%  LIST = M.GETSUBCLASSES() returns all subclasses of the overlapping strength M.
 			%  LIST = Element.GETSUBCLASSES(M) returns all subclasses of 'M'.
 			%  LIST = Element.GETSUBCLASSES('OverlappingS') returns all subclasses of 'OverlappingS'.
 			%
@@ -173,16 +173,16 @@ classdef OverlappingS < Strength
 			subclass_list = { 'OverlappingS'  'OverlappingSAv' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of ovrlapstr.
+			%GETPROPS returns the property list of overlapping strength.
 			%
-			% PROPS = OverlappingS.GETPROPS() returns the property list of ovrlapstr
+			% PROPS = OverlappingS.GETPROPS() returns the property list of overlapping strength
 			%  as a row vector.
 			%
 			% PROPS = OverlappingS.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the ovrlapstr M.
+			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the overlapping strength M.
 			%  PROPS = Element.GETPROPS(M[, CATEGORY]) returns the property list of 'M'.
 			%  PROPS = Element.GETPROPS('OverlappingS'[, CATEGORY]) returns the property list of 'OverlappingS'.
 			%
@@ -218,15 +218,15 @@ classdef OverlappingS < Strength
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of ovrlapstr.
+			%GETPROPNUMBER returns the property number of overlapping strength.
 			%
-			% N = OverlappingS.GETPROPNUMBER() returns the property number of ovrlapstr.
+			% N = OverlappingS.GETPROPNUMBER() returns the property number of overlapping strength.
 			%
-			% N = OverlappingS.GETPROPNUMBER(CATEGORY) returns the property number of ovrlapstr
+			% N = OverlappingS.GETPROPNUMBER(CATEGORY) returns the property number of overlapping strength
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the ovrlapstr M.
+			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the overlapping strength M.
 			%  N = Element.GETPROPNUMBER(M) returns the property number of 'M'.
 			%  N = Element.GETPROPNUMBER('OverlappingS') returns the property number of 'OverlappingS'.
 			%
@@ -262,7 +262,7 @@ classdef OverlappingS < Strength
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in ovrlapstr/error.
+			%EXISTSPROP checks whether property exists in overlapping strength/error.
 			%
 			% CHECK = OverlappingS.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -300,7 +300,7 @@ classdef OverlappingS < Strength
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in ovrlapstr/error.
+			%EXISTSTAG checks whether tag exists in overlapping strength/error.
 			%
 			% CHECK = OverlappingS.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%

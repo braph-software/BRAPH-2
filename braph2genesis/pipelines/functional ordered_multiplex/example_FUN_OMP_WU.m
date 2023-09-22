@@ -39,19 +39,13 @@ a_WU2 = AnalyzeEnsemble_FUN_OMP_WU( ...
     );
 
 % measure calculation
-degree_WU1 = a_WU1.get('MEASUREENSEMBLE', 'Degree').get('M');
-degreeav_WU1 = a_WU1.get('MEASUREENSEMBLE', 'DegreeAv').get('M');
-distance_WU1 = a_WU1.get('MEASUREENSEMBLE', 'Distance').get('M');
-% % % wmpc_WU1 = a_WU1.get('MEASUREENSEMBLE', 'WeightedMultiplexParticipation').get('M');
-% % % wmpc_av_WU1 = a_WU1.get('MEASUREENSEMBLE', 'WeightedMultiplexParticipationAv').get('M');
-% % % weo_WU1 = a_WU1.get('MEASUREENSEMBLE', 'WeightedEdgeOverlap').get('M');
+wmpc_WU1 = a_WU1.get('MEASUREENSEMBLE', 'WeightedMxP').get('M');
+wmpc_av_WU1 = a_WU1.get('MEASUREENSEMBLE', 'WeightedMxPAv').get('M');
+weo_WU1 = a_WU1.get('MEASUREENSEMBLE', 'WeightedEdgeOvlp').get('M');
 
-degree_WU2 = a_WU2.get('MEASUREENSEMBLE', 'Degree').get('M');
-degreeav_WU2 = a_WU2.get('MEASUREENSEMBLE', 'DegreeAv').get('M');
-distance_WU2 = a_WU2.get('MEASUREENSEMBLE', 'Distance').get('M');
-% % % wmpc_WU2 = a_WU2.get('MEASUREENSEMBLE', 'WeightedMultiplexParticipation').get('M');
-% % % wmpc_av_WU2 = a_WU2.get('MEASUREENSEMBLE', 'WeightedMultiplexParticipationAv').get('M');
-% % % weo_WU2 = a_WU2.get('MEASUREENSEMBLE', 'WeightedEdgeOverlap').get('M');
+wmpc_WU2 = a_WU2.get('MEASUREENSEMBLE', 'WeightedMxP').get('M');
+wmpc_av_WU2 = a_WU2.get('MEASUREENSEMBLE', 'WeightedMxPAv').get('M');
+weo_WU2 = a_WU2.get('MEASUREENSEMBLE', 'WeightedEdgeOvlp').get('M');
 
 % comparison
 c_WU = CompareEnsemble( ...
@@ -63,38 +57,20 @@ c_WU = CompareEnsemble( ...
     'MEMORIZE', true ...
     );
 
-degree_WU_diff = c_WU.get('COMPARISON', 'Degree').get('DIFF');
-degree_WU_p1 = c_WU.get('COMPARISON', 'Degree').get('P1');
-degree_WU_p2 = c_WU.get('COMPARISON', 'Degree').get('P2');
-degree_WU_cil = c_WU.get('COMPARISON', 'Degree').get('CIL');
-degree_WU_ciu = c_WU.get('COMPARISON', 'Degree').get('CIU');
+wmpc_WU_diff = c_WU.get('COMPARISON', 'WeightedMxP').get('DIFF');
+wmpc_WU_p1 = c_WU.get('COMPARISON', 'WeightedMxP').get('P1');
+wmpc_WU_p2 = c_WU.get('COMPARISON', 'WeightedMxP').get('P2');
+wmpc_WU_cil = c_WU.get('COMPARISON', 'WeightedMxP').get('CIL');
+wmpc_WU_ciu = c_WU.get('COMPARISON', 'WeightedMxP').get('CIU');
 
-degreeav_WU_diff = c_WU.get('COMPARISON', 'DegreeAv').get('DIFF');
-degreeav_WU_p1 = c_WU.get('COMPARISON', 'DegreeAv').get('P1');
-degreeav_WU_p2 = c_WU.get('COMPARISON', 'DegreeAv').get('P2');
-degreeav_WU_cil = c_WU.get('COMPARISON', 'DegreeAv').get('CIL');
-degreeav_WU_ciu = c_WU.get('COMPARISON', 'DegreeAv').get('CIU');
+wmpc_av_WU_diff = c_WU.get('COMPARISON', 'WeightedMxPAv').get('DIFF');
+wmpc_av_WU_p1 = c_WU.get('COMPARISON', 'WeightedMxPAv').get('P1');
+wmpc_av_WU_p2 = c_WU.get('COMPARISON', 'WeightedMxPAv').get('P2');
+wmpc_av_WU_cil = c_WU.get('COMPARISON', 'WeightedMxPAv').get('CIL');
+wmpc_av_WU_ciu = c_WU.get('COMPARISON', 'WeightedMxPAv').get('CIU');
 
-distance_WU_diff = c_WU.get('COMPARISON', 'Distance').get('DIFF');
-distance_WU_p1 = c_WU.get('COMPARISON', 'Distance').get('P1');
-distance_WU_p2 = c_WU.get('COMPARISON', 'Distance').get('P2');
-distance_WU_cil = c_WU.get('COMPARISON', 'Distance').get('CIL');
-distance_WU_ciu = c_WU.get('COMPARISON', 'Distance').get('CIU');
-
-% % % wmpc_WU_diff = c_WU.get('COMPARISON', 'WeightedMultiplexParticipation').get('DIFF');
-% % % wmpc_WU_p1 = c_WU.get('COMPARISON', 'WeightedMultiplexParticipation').get('P1');
-% % % wmpc_WU_p2 = c_WU.get('COMPARISON', 'WeightedMultiplexParticipation').get('P2');
-% % % wmpc_WU_cil = c_WU.get('COMPARISON', 'WeightedMultiplexParticipation').get('CIL');
-% % % wmpc_WU_ciu = c_WU.get('COMPARISON', 'WeightedMultiplexParticipation').get('CIU');
-
-% % % wmpc_av_WU_diff = c_WU.get('COMPARISON', 'WeightedMultiplexParticipationAv').get('DIFF');
-% % % wmpc_av_WU_p1 = c_WU.get('COMPARISON', 'WeightedMultiplexParticipationAv').get('P1');
-% % % wmpc_av_WU_p2 = c_WU.get('COMPARISON', 'WeightedMultiplexParticipationAv').get('P2');
-% % % wmpc_av_WU_cil = c_WU.get('COMPARISON', 'WeightedMultiplexParticipationAv').get('CIL');
-% % % wmpc_av_WU_ciu = c_WU.get('COMPARISON', 'WeightedMultiplexParticipationAv').get('CIU');
-
-% % % weo_WU_diff = c_WU.get('COMPARISON', 'WeightedEdgeOverlap').get('DIFF');
-% % % weo_WU_p1 = c_WU.get('COMPARISON', 'WeightedEdgeOverlap').get('P1');
-% % % weo_WU_p2 = c_WU.get('COMPARISON', 'WeightedEdgeOverlap').get('P2');
-% % % weo_WU_cil = c_WU.get('COMPARISON', 'WeightedEdgeOverlap').get('CIL');
-% % % weo_WU_ciu = c_WU.get('COMPARISON', 'WeightedEdgeOverlap').get('CIU');
+weo_WU_diff = c_WU.get('COMPARISON', 'WeightedEdgeOvlp').get('DIFF');
+weo_WU_p1 = c_WU.get('COMPARISON', 'WeightedEdgeOvlp').get('P1');
+weo_WU_p2 = c_WU.get('COMPARISON', 'WeightedEdgeOvlp').get('P2');
+weo_WU_cil = c_WU.get('COMPARISON', 'WeightedEdgeOvlp').get('CIL');
+weo_WU_ciu = c_WU.get('COMPARISON', 'WeightedEdgeOvlp').get('CIU');

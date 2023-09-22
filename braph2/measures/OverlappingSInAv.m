@@ -1,24 +1,24 @@
 classdef OverlappingSInAv < OverlappingSIn
-	%OverlappingSInAv is the graph average overlapping strength.
+	%OverlappingSInAv is the graph average overlapping in-strength.
 	% It is a subclass of <a href="matlab:help OverlappingSIn">OverlappingSIn</a>.
 	%
 	% The average overlapping in-strength of a graph is the average of the sum of the 
 	% in-strengths of a node in all layers.
 	%
 	% The list of OverlappingSInAv properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the overlapping strength.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the overlapping strength.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the overlapping strength.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the overlapping strength.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the overlapping strength.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the overlapping strength.
+	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average overlapping in-strength.
+	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average overlapping in-strength.
+	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average overlapping in-strength.
+	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average overlapping in-strength.
+	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average overlapping in-strength.
+	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average overlapping in-strength.
 	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the overlapping strength.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the average overlapping in-strength.
 	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% OverlappingSInAv methods (constructor):
@@ -39,33 +39,33 @@ classdef OverlappingSInAv < OverlappingSIn
 	%  unchecked - sets a property to NOT checked
 	%
 	% OverlappingSInAv methods (display):
-	%  tostring - string with information about the average ovrlapstrin
-	%  disp - displays information about the average ovrlapstrin
-	%  tree - displays the tree of the average ovrlapstrin
+	%  tostring - string with information about the average overlapping in-strength
+	%  disp - displays information about the average overlapping in-strength
+	%  tree - displays the tree of the average overlapping in-strength
 	%
 	% OverlappingSInAv methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two average ovrlapstrin are equal (values, locked)
+	%  isequal - determines whether two average overlapping in-strength are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the average ovrlapstrin
+	%  copy - copies the average overlapping in-strength
 	%
 	% OverlappingSInAv methods (save/load, Static):
-	%  save - saves BRAPH2 average ovrlapstrin as b2 file
-	%  load - loads a BRAPH2 average ovrlapstrin from a b2 file
+	%  save - saves BRAPH2 average overlapping in-strength as b2 file
+	%  load - loads a BRAPH2 average overlapping in-strength from a b2 file
 	%
 	% OverlappingSInAv method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the average ovrlapstrin
+	%  encodeJSON - returns a JSON string encoding the average overlapping in-strength
 	%
 	% OverlappingSInAv method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the average ovrlapstrin
+	%   decodeJSON - returns a JSON string encoding the average overlapping in-strength
 	%
 	% OverlappingSInAv methods (inspection, Static):
-	%  getClass - returns the class of the average ovrlapstrin
+	%  getClass - returns the class of the average overlapping in-strength
 	%  getSubclasses - returns all subclasses of OverlappingSInAv
-	%  getProps - returns the property list of the average ovrlapstrin
-	%  getPropNumber - returns the property number of the average ovrlapstrin
+	%  getProps - returns the property list of the average overlapping in-strength
+	%  getPropNumber - returns the property number of the average overlapping in-strength
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -109,7 +109,7 @@ classdef OverlappingSInAv < OverlappingSIn
 	
 	methods % constructor
 		function m = OverlappingSInAv(varargin)
-			%OverlappingSInAv() creates a average ovrlapstrin.
+			%OverlappingSInAv() creates a average overlapping in-strength.
 			%
 			% OverlappingSInAv(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -119,19 +119,19 @@ classdef OverlappingSInAv < OverlappingSIn
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of OverlappingSInAv properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the overlapping strength.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the overlapping strength.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the overlapping strength.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the overlapping strength.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the overlapping strength.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the overlapping strength.
+			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average overlapping in-strength.
+			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average overlapping in-strength.
+			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average overlapping in-strength.
+			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average overlapping in-strength.
+			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average overlapping in-strength.
+			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average overlapping in-strength.
 			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the overlapping strength.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the average overlapping in-strength.
 			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -141,12 +141,12 @@ classdef OverlappingSInAv < OverlappingSIn
 	end
 	methods (Static) % inspection
 		function m_class = getClass()
-			%GETCLASS returns the class of the average ovrlapstrin.
+			%GETCLASS returns the class of the average overlapping in-strength.
 			%
 			% CLASS = OverlappingSInAv.GETCLASS() returns the class 'OverlappingSInAv'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = M.GETCLASS() returns the class of the average ovrlapstrin M.
+			%  CLASS = M.GETCLASS() returns the class of the average overlapping in-strength M.
 			%  CLASS = Element.GETCLASS(M) returns the class of 'M'.
 			%  CLASS = Element.GETCLASS('OverlappingSInAv') returns 'OverlappingSInAv'.
 			%
@@ -156,12 +156,12 @@ classdef OverlappingSInAv < OverlappingSIn
 			m_class = 'OverlappingSInAv';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the average ovrlapstrin.
+			%GETSUBCLASSES returns all subclasses of the average overlapping in-strength.
 			%
 			% LIST = OverlappingSInAv.GETSUBCLASSES() returns all subclasses of 'OverlappingSInAv'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = M.GETSUBCLASSES() returns all subclasses of the average ovrlapstrin M.
+			%  LIST = M.GETSUBCLASSES() returns all subclasses of the average overlapping in-strength M.
 			%  LIST = Element.GETSUBCLASSES(M) returns all subclasses of 'M'.
 			%  LIST = Element.GETSUBCLASSES('OverlappingSInAv') returns all subclasses of 'OverlappingSInAv'.
 			%
@@ -173,16 +173,16 @@ classdef OverlappingSInAv < OverlappingSIn
 			subclass_list = { 'OverlappingSInAv' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of average ovrlapstrin.
+			%GETPROPS returns the property list of average overlapping in-strength.
 			%
-			% PROPS = OverlappingSInAv.GETPROPS() returns the property list of average ovrlapstrin
+			% PROPS = OverlappingSInAv.GETPROPS() returns the property list of average overlapping in-strength
 			%  as a row vector.
 			%
 			% PROPS = OverlappingSInAv.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the average ovrlapstrin M.
+			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the average overlapping in-strength M.
 			%  PROPS = Element.GETPROPS(M[, CATEGORY]) returns the property list of 'M'.
 			%  PROPS = Element.GETPROPS('OverlappingSInAv'[, CATEGORY]) returns the property list of 'OverlappingSInAv'.
 			%
@@ -218,15 +218,15 @@ classdef OverlappingSInAv < OverlappingSIn
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of average ovrlapstrin.
+			%GETPROPNUMBER returns the property number of average overlapping in-strength.
 			%
-			% N = OverlappingSInAv.GETPROPNUMBER() returns the property number of average ovrlapstrin.
+			% N = OverlappingSInAv.GETPROPNUMBER() returns the property number of average overlapping in-strength.
 			%
-			% N = OverlappingSInAv.GETPROPNUMBER(CATEGORY) returns the property number of average ovrlapstrin
+			% N = OverlappingSInAv.GETPROPNUMBER(CATEGORY) returns the property number of average overlapping in-strength
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the average ovrlapstrin M.
+			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the average overlapping in-strength M.
 			%  N = Element.GETPROPNUMBER(M) returns the property number of 'M'.
 			%  N = Element.GETPROPNUMBER('OverlappingSInAv') returns the property number of 'OverlappingSInAv'.
 			%
@@ -262,7 +262,7 @@ classdef OverlappingSInAv < OverlappingSIn
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in average ovrlapstrin/error.
+			%EXISTSPROP checks whether property exists in average overlapping in-strength/error.
 			%
 			% CHECK = OverlappingSInAv.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -300,7 +300,7 @@ classdef OverlappingSInAv < OverlappingSIn
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in average ovrlapstrin/error.
+			%EXISTSTAG checks whether tag exists in average overlapping in-strength/error.
 			%
 			% CHECK = OverlappingSInAv.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -466,7 +466,7 @@ classdef OverlappingSInAv < OverlappingSIn
 			prop = OverlappingSInAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			overlappingsinav_description_list = { 'NAME (constant, string) is the name of the overlapping strength.'  'DESCRIPTION (constant, string) is the description of the overlapping strength.'  'TEMPLATE (parameter, item) is the template of the overlapping strength.'  'ID (data, string) is a few-letter code of the overlapping strength.'  'LABEL (metadata, string) is an extended label of the overlapping strength.'  'NOTES (metadata, string) are some specific notes about the overlapping strength.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the overlapping strength.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			overlappingsinav_description_list = { 'NAME (constant, string) is the name of the average overlapping in-strength.'  'DESCRIPTION (constant, string) is the description of the average overlapping in-strength.'  'TEMPLATE (parameter, item) is the template of the average overlapping in-strength.'  'ID (data, string) is a few-letter code of the average overlapping in-strength.'  'LABEL (metadata, string) is an extended label of the average overlapping in-strength.'  'NOTES (metadata, string) are some specific notes about the average overlapping in-strength.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the average overlapping in-strength.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = overlappingsinav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -540,7 +540,7 @@ classdef OverlappingSInAv < OverlappingSIn
 				case 10 % OverlappingSInAv.PARAMETRICITY
 					prop_default = 2;
 				case 11 % OverlappingSInAv.COMPATIBLE_GRAPHS
-					prop_default = {'MultiplexWD' 'MultilayerWD' 'OrdMlWD'};;
+					prop_default = {'MultiplexWD' 'MultilayerWD' 'OrdMlWD' 'OrdMxWD'};;
 				otherwise
 					prop_default = getPropDefault@OverlappingSIn(prop);
 			end

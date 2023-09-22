@@ -1,5 +1,5 @@
 %% ¡header!
-OverlappingS < Strength (m, ovrlapstr) is the graph overlapping strength.
+OverlappingS < Strength (m, overlapping strength) is the graph overlapping strength.
 
 %%% ¡description!
 The overlapping strength of a graph is the sum of the strengths of a node in 

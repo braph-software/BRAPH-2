@@ -52,34 +52,34 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the multiplex rich-club strength.
+NAME (constant, string) is the name of the multiplex k-coreness centrality.
 %%%% ¡default!
-'MultiplexKCorC'
+'MultiplexKCorenessCentrality'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the multiplex rich-club strength.
+DESCRIPTION (constant, string) is the description of the multiplex k-coreness centrality.
 %%%% ¡default!
 'The multiplex k-coreness centrality of a node is k if the node belongs to the k-core but not to the (k+1)-core.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the multiplex rich-club strength.
+TEMPLATE (parameter, item) is the template of the multiplex k-coreness centrality.
 %%%% ¡settings!
 'MultiplexKCorC'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the multiplex rich-club strength.
+ID (data, string) is a few-letter code of the multiplex k-coreness centrality.
 %%%% ¡default!
 'MultiplexKCorC ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the multiplex rich-club strength.
+LABEL (metadata, string) is an extended label of the multiplex k-coreness centrality.
 %%%% ¡default!
-'MultiplexKCorC label'
+'MultiplexKCorenessCentrality label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the multiplex rich-club strength.
+NOTES (metadata, string) are some specific notes about the multiplex k-coreness centrality.
 %%%% ¡default!
-'MultiplexKCorC notes'
+'MultiplexKCorenessCentrality notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -102,7 +102,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'OrdMxWU'};
 
 %%% ¡prop!
-M (result, cell) is the multiplex rich-club strength.
+M (result, cell) is the multiplex k-coreness centrality.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

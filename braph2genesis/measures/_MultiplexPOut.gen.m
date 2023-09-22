@@ -54,7 +54,7 @@ Compatible Graphs
 %%% ¡prop!
 NAME (constant, string) is the name of the multiplex out-participation.
 %%%% ¡default!
-'MultiplexPOut'
+'MultiplexOutParticipation'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the multiplex out-participation.
@@ -74,12 +74,12 @@ ID (data, string) is a few-letter code of the multiplex out-participation.
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the multiplex out-participation.
 %%%% ¡default!
-'MultiplexPOut label'
+'MultiplexOutParticipation label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the multiplex out-participation.
 %%%% ¡default!
-'MultiplexPOut notes'
+'MultiplexOutParticipation notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.

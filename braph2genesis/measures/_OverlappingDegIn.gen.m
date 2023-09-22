@@ -54,7 +54,7 @@ Compatible Graphs
 %%% ¡prop!
 NAME (constant, string) is the name of the overlapping in-degree.
 %%%% ¡default!
-'OverlappingDegIn'
+'OverlappingInDegree'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the overlapping in-degree.
@@ -74,12 +74,12 @@ ID (data, string) is a few-letter code of the overlapping in-degree.
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the overlapping in-degree.
 %%%% ¡default!
-'OverlappingDegIn label'
+'OverlappingInDegree label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the overlapping in-degree.
 %%%% ¡default!
-'OverlappingDegIn notes'
+'OverlappingInDegree notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -99,7 +99,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'MultiplexWD' 'MultiplexBD' 'MultilayerBD' 'OrdMlBD'};
+{'MultiplexWD' 'MultiplexBD' 'MultilayerWD' 'MultilayerBD' 'OrdMxBD' 'OrdMxWD' 'OrdMlBD' 'OrdMlWD'};
 
 %%% ¡prop!
 M (result, cell) is the overlapping in-degree.

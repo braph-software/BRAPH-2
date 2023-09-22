@@ -1,5 +1,5 @@
 classdef OverlappingDegAv < OverlappingDeg
-	%OverlappingDegAv is the graph averge overlapping degree.
+	%OverlappingDegAv is the graph average overlapping degree.
 	% It is a subclass of <a href="matlab:help OverlappingDeg">OverlappingDeg</a>.
 	%
 	% The average overlapping degree of a graph is the average of the sum of the 
@@ -7,18 +7,18 @@ classdef OverlappingDegAv < OverlappingDeg
 	%
 	% The list of OverlappingDegAv properties is:
 	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the averge overlapping degree.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the averge overlapping degree.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the averge overlapping degree.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the averge overlapping degree.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the averge overlapping degree.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the averge overlapping degree.
+	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average overlapping degree.
+	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average overlapping degree.
+	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average overlapping degree.
+	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average overlapping degree.
+	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average overlapping degree.
 	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.SUPERGLOBAL.
 	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the averge overlapping degree.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the average overlapping degree.
 	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% OverlappingDegAv methods (constructor):
@@ -39,33 +39,33 @@ classdef OverlappingDegAv < OverlappingDeg
 	%  unchecked - sets a property to NOT checked
 	%
 	% OverlappingDegAv methods (display):
-	%  tostring - string with information about the averge overlapping-degree
-	%  disp - displays information about the averge overlapping-degree
-	%  tree - displays the tree of the averge overlapping-degree
+	%  tostring - string with information about the average overlapping-degree
+	%  disp - displays information about the average overlapping-degree
+	%  tree - displays the tree of the average overlapping-degree
 	%
 	% OverlappingDegAv methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two averge overlapping-degree are equal (values, locked)
+	%  isequal - determines whether two average overlapping-degree are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the averge overlapping-degree
+	%  copy - copies the average overlapping-degree
 	%
 	% OverlappingDegAv methods (save/load, Static):
-	%  save - saves BRAPH2 averge overlapping-degree as b2 file
-	%  load - loads a BRAPH2 averge overlapping-degree from a b2 file
+	%  save - saves BRAPH2 average overlapping-degree as b2 file
+	%  load - loads a BRAPH2 average overlapping-degree from a b2 file
 	%
 	% OverlappingDegAv method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the averge overlapping-degree
+	%  encodeJSON - returns a JSON string encoding the average overlapping-degree
 	%
 	% OverlappingDegAv method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the averge overlapping-degree
+	%   decodeJSON - returns a JSON string encoding the average overlapping-degree
 	%
 	% OverlappingDegAv methods (inspection, Static):
-	%  getClass - returns the class of the averge overlapping-degree
+	%  getClass - returns the class of the average overlapping-degree
 	%  getSubclasses - returns all subclasses of OverlappingDegAv
-	%  getProps - returns the property list of the averge overlapping-degree
-	%  getPropNumber - returns the property number of the averge overlapping-degree
+	%  getProps - returns the property list of the average overlapping-degree
+	%  getPropNumber - returns the property number of the average overlapping-degree
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -109,7 +109,7 @@ classdef OverlappingDegAv < OverlappingDeg
 	
 	methods % constructor
 		function m = OverlappingDegAv(varargin)
-			%OverlappingDegAv() creates a averge overlapping-degree.
+			%OverlappingDegAv() creates a average overlapping-degree.
 			%
 			% OverlappingDegAv(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -120,18 +120,18 @@ classdef OverlappingDegAv < OverlappingDeg
 			%
 			% The list of OverlappingDegAv properties is:
 			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the averge overlapping degree.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the averge overlapping degree.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the averge overlapping degree.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the averge overlapping degree.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the averge overlapping degree.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the averge overlapping degree.
+			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average overlapping degree.
+			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average overlapping degree.
+			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average overlapping degree.
+			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average overlapping degree.
+			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average overlapping degree.
 			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.SUPERGLOBAL.
 			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the averge overlapping degree.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the average overlapping degree.
 			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -141,12 +141,12 @@ classdef OverlappingDegAv < OverlappingDeg
 	end
 	methods (Static) % inspection
 		function m_class = getClass()
-			%GETCLASS returns the class of the averge overlapping-degree.
+			%GETCLASS returns the class of the average overlapping-degree.
 			%
 			% CLASS = OverlappingDegAv.GETCLASS() returns the class 'OverlappingDegAv'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = M.GETCLASS() returns the class of the averge overlapping-degree M.
+			%  CLASS = M.GETCLASS() returns the class of the average overlapping-degree M.
 			%  CLASS = Element.GETCLASS(M) returns the class of 'M'.
 			%  CLASS = Element.GETCLASS('OverlappingDegAv') returns 'OverlappingDegAv'.
 			%
@@ -156,12 +156,12 @@ classdef OverlappingDegAv < OverlappingDeg
 			m_class = 'OverlappingDegAv';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the averge overlapping-degree.
+			%GETSUBCLASSES returns all subclasses of the average overlapping-degree.
 			%
 			% LIST = OverlappingDegAv.GETSUBCLASSES() returns all subclasses of 'OverlappingDegAv'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = M.GETSUBCLASSES() returns all subclasses of the averge overlapping-degree M.
+			%  LIST = M.GETSUBCLASSES() returns all subclasses of the average overlapping-degree M.
 			%  LIST = Element.GETSUBCLASSES(M) returns all subclasses of 'M'.
 			%  LIST = Element.GETSUBCLASSES('OverlappingDegAv') returns all subclasses of 'OverlappingDegAv'.
 			%
@@ -173,16 +173,16 @@ classdef OverlappingDegAv < OverlappingDeg
 			subclass_list = { 'OverlappingDegAv' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of averge overlapping-degree.
+			%GETPROPS returns the property list of average overlapping-degree.
 			%
-			% PROPS = OverlappingDegAv.GETPROPS() returns the property list of averge overlapping-degree
+			% PROPS = OverlappingDegAv.GETPROPS() returns the property list of average overlapping-degree
 			%  as a row vector.
 			%
 			% PROPS = OverlappingDegAv.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the averge overlapping-degree M.
+			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the average overlapping-degree M.
 			%  PROPS = Element.GETPROPS(M[, CATEGORY]) returns the property list of 'M'.
 			%  PROPS = Element.GETPROPS('OverlappingDegAv'[, CATEGORY]) returns the property list of 'OverlappingDegAv'.
 			%
@@ -218,15 +218,15 @@ classdef OverlappingDegAv < OverlappingDeg
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of averge overlapping-degree.
+			%GETPROPNUMBER returns the property number of average overlapping-degree.
 			%
-			% N = OverlappingDegAv.GETPROPNUMBER() returns the property number of averge overlapping-degree.
+			% N = OverlappingDegAv.GETPROPNUMBER() returns the property number of average overlapping-degree.
 			%
-			% N = OverlappingDegAv.GETPROPNUMBER(CATEGORY) returns the property number of averge overlapping-degree
+			% N = OverlappingDegAv.GETPROPNUMBER(CATEGORY) returns the property number of average overlapping-degree
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the averge overlapping-degree M.
+			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the average overlapping-degree M.
 			%  N = Element.GETPROPNUMBER(M) returns the property number of 'M'.
 			%  N = Element.GETPROPNUMBER('OverlappingDegAv') returns the property number of 'OverlappingDegAv'.
 			%
@@ -262,7 +262,7 @@ classdef OverlappingDegAv < OverlappingDeg
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in averge overlapping-degree/error.
+			%EXISTSPROP checks whether property exists in average overlapping-degree/error.
 			%
 			% CHECK = OverlappingDegAv.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -300,7 +300,7 @@ classdef OverlappingDegAv < OverlappingDeg
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in averge overlapping-degree/error.
+			%EXISTSTAG checks whether tag exists in average overlapping-degree/error.
 			%
 			% CHECK = OverlappingDegAv.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -466,7 +466,7 @@ classdef OverlappingDegAv < OverlappingDeg
 			prop = OverlappingDegAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			overlappingdegav_description_list = { 'NAME (constant, string) is the name of the averge overlapping degree.'  'DESCRIPTION (constant, string) is the description of the averge overlapping degree.'  'TEMPLATE (parameter, item) is the template of the averge overlapping degree.'  'ID (data, string) is a few-letter code of the averge overlapping degree.'  'LABEL (metadata, string) is an extended label of the averge overlapping degree.'  'NOTES (metadata, string) are some specific notes about the averge overlapping degree.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.SUPERGLOBAL.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the averge overlapping degree.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			overlappingdegav_description_list = { 'NAME (constant, string) is the name of the averge overlapping degree.'  'DESCRIPTION (constant, string) is the description of the average overlapping degree.'  'TEMPLATE (parameter, item) is the template of the average overlapping degree.'  'ID (data, string) is a few-letter code of the average overlapping degree.'  'LABEL (metadata, string) is an extended label of the average overlapping degree.'  'NOTES (metadata, string) are some specific notes about the average overlapping degree.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.SUPERGLOBAL.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the average overlapping degree.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = overlappingdegav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -524,7 +524,7 @@ classdef OverlappingDegAv < OverlappingDeg
 				case 1 % OverlappingDegAv.NAME
 					prop_default = 'OverlappingDegAv';
 				case 2 % OverlappingDegAv.DESCRIPTION
-					prop_default = 'The averge overlapping degree of a graph is the sum of the degrees of a node in all layers.';
+					prop_default = 'The average overlapping degree of a graph is the sum of the degrees of a node in all layers.';
 				case 3 % OverlappingDegAv.TEMPLATE
 					prop_default = Format.getFormatDefault(8, OverlappingDegAv.getPropSettings(prop));
 				case 4 % OverlappingDegAv.ID
@@ -540,7 +540,7 @@ classdef OverlappingDegAv < OverlappingDeg
 				case 10 % OverlappingDegAv.PARAMETRICITY
 					prop_default = 2;
 				case 11 % OverlappingDegAv.COMPATIBLE_GRAPHS
-					prop_default = {'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'MultilayerWU' 'OrdMlWU'};;
+					prop_default = {'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'MultilayerWU' 'OrdMlWU' 'MultilayerBU'};;
 				otherwise
 					prop_default = getPropDefault@OverlappingDeg(prop);
 			end

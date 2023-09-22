@@ -5,19 +5,19 @@ classdef PathLengthInAv < PathLengthIn
 	% The average in-path length of a graph is the average of the sum of the in-path lengths within each layer.
 	%
 	% The list of PathLengthInAv properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the PathLengthInAv.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the PathLengthInAv.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the PathLengthInAv.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the PathLengthInAv.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the PathLengthInAv.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the PathLengthInAv.
+	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average in-path length.
+	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average in-path length.
+	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average in-path length.
+	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average in-path length.
+	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average in-path length.
+	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average in-path length.
 	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the cell containing the PathLengthInAv.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the cell containing the average in-path length.
 	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>15</strong> <strong>RULE</strong> 	RULE (parameter, option) is the PathLengthIn algorithm
 	%
@@ -119,19 +119,19 @@ classdef PathLengthInAv < PathLengthIn
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of PathLengthInAv properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the PathLengthInAv.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the PathLengthInAv.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the PathLengthInAv.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the PathLengthInAv.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the PathLengthInAv.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the PathLengthInAv.
+			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average in-path length.
+			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average in-path length.
+			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average in-path length.
+			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average in-path length.
+			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average in-path length.
+			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average in-path length.
 			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the cell containing the PathLengthInAv.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the cell containing the average in-path length.
 			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>15</strong> <strong>RULE</strong> 	RULE (parameter, option) is the PathLengthIn algorithm
 			%
@@ -467,7 +467,7 @@ classdef PathLengthInAv < PathLengthIn
 			prop = PathLengthInAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pathlengthinav_description_list = { 'NAME (constant, string) is the name of the PathLengthInAv.'  'DESCRIPTION (constant, string) is the description of the PathLengthInAv.'  'TEMPLATE (parameter, item) is the template of the PathLengthInAv.'  'ID (data, string) is a few-letter code of the PathLengthInAv.'  'LABEL (metadata, string) is an extended label of the PathLengthInAv.'  'NOTES (metadata, string) are some specific notes about the PathLengthInAv.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the PathLengthInAv.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the PathLengthIn algorithm' };
+			pathlengthinav_description_list = { 'NAME (constant, string) is the name of the average in-path length.'  'DESCRIPTION (constant, string) is the description of the average in-path length.'  'TEMPLATE (parameter, item) is the template of the average in-path length.'  'ID (data, string) is a few-letter code of the average in-path length.'  'LABEL (metadata, string) is an extended label of the average in-path length.'  'NOTES (metadata, string) are some specific notes about the average in-path length.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the average in-path length.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the PathLengthIn algorithm' };
 			prop_description = pathlengthinav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -523,7 +523,7 @@ classdef PathLengthInAv < PathLengthIn
 				case 1 % PathLengthInAv.NAME
 					prop_default = 'PathLengthInAv';
 				case 2 % PathLengthInAv.DESCRIPTION
-					prop_default = 'The PathLengthInAv is the average shortest pathlength of one node to all other nodes within a layer.';
+					prop_default = 'The average in-path length is the average shortest in-path length of one node to all other nodes within a layer.';
 				case 4 % PathLengthInAv.ID
 					prop_default = 'PathLengthInAv ID';
 				case 5 % PathLengthInAv.LABEL

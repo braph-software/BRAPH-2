@@ -1,5 +1,5 @@
 %% ¡header!
-EccentricityOutAv < EccentricityOut (m, average eccentricity) is the graph average eccentricity.
+EccentricityOutAv < EccentricityOut (m, average eccentricity) is the graph average out-eccentricity.
 
 %%% ¡description!
 The average out-eccentricity of a node is the sum of the nodal 
@@ -8,30 +8,30 @@ out-eccentricities divided by their number within a layer.
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the average eccentricity.
+NAME (constant, string) is the name of the average out-eccentricity.
 %%%% ¡default!
 'EccentricityOutAv'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the average eccentricity.
+DESCRIPTION (constant, string) is the description of the average out-eccentricity.
 %%%% ¡default!
 'The average out-eccentricity of a node is the sum of the nodal out-eccentricities divided by their number within a layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the average eccentricity.
+TEMPLATE (parameter, item) is the template of the average out-eccentricity.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the average eccentricity.
+ID (data, string) is a few-letter code of the average out-eccentricity.
 %%%% ¡default!
 'EccentricityOutAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the average eccentricity.
+LABEL (metadata, string) is an extended label of the average out-eccentricity.
 %%%% ¡default!
 'EccentricityOutAv label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the average eccentricity.
+NOTES (metadata, string) are some specific notes about the average out-eccentricity.
 %%%% ¡default!
 'EccentricityOutAv notes'
 
@@ -56,7 +56,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD'};
 
 %%% ¡prop!
-M (result, cell) is the average eccentricity.
+M (result, cell) is the average out-eccentricity.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

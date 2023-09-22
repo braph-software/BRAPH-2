@@ -652,7 +652,7 @@ classdef OrdMlWU < Graph
 				case 8 % OrdMlWU.GRAPH_TYPE
 					prop_default = 5;
 				case 27 % OrdMlWU.COMPATIBLE_MEASURES
-					prop_default = { 'BetweennessCentrality'  'Degree'  'DegreeAv'  'Distance'  'Flexibility'  'FlexibilityAv'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'OverlappingDeg'  'OverlappingDegAv'  'OverlappingS'  'OverlappingSAv'  'PathLength'  'Strength'  'StrengthAv'  'Transitivity' };
+					prop_default = { 'BetweennessCentrality'  'Degree'  'DegreeAv'  'DegreeOverlap'  'DegreeOverlapAv'  'Distance'  'EdgeOverlap'  'Flexibility'  'FlexibilityAv'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'MultilayerCommunity'  'MultilayerM'  'OverlappingDeg'  'OverlappingDegAv'  'OverlappingS'  'OverlappingSAv'  'PathLength'  'Persistence'  'Strength'  'StrengthAv'  'Transitivity'  'WeightedMxP'  'WeightedMxPAv' };
 				otherwise
 					prop_default = getPropDefault@Graph(prop);
 			end

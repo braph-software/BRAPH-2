@@ -39,33 +39,33 @@ classdef WeightedMxPOut < Measure
 	%  unchecked - sets a property to NOT checked
 	%
 	% WeightedMxPOut methods (display):
-	%  tostring - string with information about the weighted mxpart-out
-	%  disp - displays information about the weighted mxpart-out
-	%  tree - displays the tree of the weighted mxpart-out
+	%  tostring - string with information about the weighted out-participation
+	%  disp - displays information about the weighted out-participation
+	%  tree - displays the tree of the weighted out-participation
 	%
 	% WeightedMxPOut methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two weighted mxpart-out are equal (values, locked)
+	%  isequal - determines whether two weighted out-participation are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the weighted mxpart-out
+	%  copy - copies the weighted out-participation
 	%
 	% WeightedMxPOut methods (save/load, Static):
-	%  save - saves BRAPH2 weighted mxpart-out as b2 file
-	%  load - loads a BRAPH2 weighted mxpart-out from a b2 file
+	%  save - saves BRAPH2 weighted out-participation as b2 file
+	%  load - loads a BRAPH2 weighted out-participation from a b2 file
 	%
 	% WeightedMxPOut method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the weighted mxpart-out
+	%  encodeJSON - returns a JSON string encoding the weighted out-participation
 	%
 	% WeightedMxPOut method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the weighted mxpart-out
+	%   decodeJSON - returns a JSON string encoding the weighted out-participation
 	%
 	% WeightedMxPOut methods (inspection, Static):
-	%  getClass - returns the class of the weighted mxpart-out
+	%  getClass - returns the class of the weighted out-participation
 	%  getSubclasses - returns all subclasses of WeightedMxPOut
-	%  getProps - returns the property list of the weighted mxpart-out
-	%  getPropNumber - returns the property number of the weighted mxpart-out
+	%  getProps - returns the property list of the weighted out-participation
+	%  getPropNumber - returns the property number of the weighted out-participation
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -109,7 +109,7 @@ classdef WeightedMxPOut < Measure
 	
 	methods % constructor
 		function m = WeightedMxPOut(varargin)
-			%WeightedMxPOut() creates a weighted mxpart-out.
+			%WeightedMxPOut() creates a weighted out-participation.
 			%
 			% WeightedMxPOut(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -141,12 +141,12 @@ classdef WeightedMxPOut < Measure
 	end
 	methods (Static) % inspection
 		function m_class = getClass()
-			%GETCLASS returns the class of the weighted mxpart-out.
+			%GETCLASS returns the class of the weighted out-participation.
 			%
 			% CLASS = WeightedMxPOut.GETCLASS() returns the class 'WeightedMxPOut'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = M.GETCLASS() returns the class of the weighted mxpart-out M.
+			%  CLASS = M.GETCLASS() returns the class of the weighted out-participation M.
 			%  CLASS = Element.GETCLASS(M) returns the class of 'M'.
 			%  CLASS = Element.GETCLASS('WeightedMxPOut') returns 'WeightedMxPOut'.
 			%
@@ -156,12 +156,12 @@ classdef WeightedMxPOut < Measure
 			m_class = 'WeightedMxPOut';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the weighted mxpart-out.
+			%GETSUBCLASSES returns all subclasses of the weighted out-participation.
 			%
 			% LIST = WeightedMxPOut.GETSUBCLASSES() returns all subclasses of 'WeightedMxPOut'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = M.GETSUBCLASSES() returns all subclasses of the weighted mxpart-out M.
+			%  LIST = M.GETSUBCLASSES() returns all subclasses of the weighted out-participation M.
 			%  LIST = Element.GETSUBCLASSES(M) returns all subclasses of 'M'.
 			%  LIST = Element.GETSUBCLASSES('WeightedMxPOut') returns all subclasses of 'WeightedMxPOut'.
 			%
@@ -173,16 +173,16 @@ classdef WeightedMxPOut < Measure
 			subclass_list = { 'WeightedMxPOut' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of weighted mxpart-out.
+			%GETPROPS returns the property list of weighted out-participation.
 			%
-			% PROPS = WeightedMxPOut.GETPROPS() returns the property list of weighted mxpart-out
+			% PROPS = WeightedMxPOut.GETPROPS() returns the property list of weighted out-participation
 			%  as a row vector.
 			%
 			% PROPS = WeightedMxPOut.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the weighted mxpart-out M.
+			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the weighted out-participation M.
 			%  PROPS = Element.GETPROPS(M[, CATEGORY]) returns the property list of 'M'.
 			%  PROPS = Element.GETPROPS('WeightedMxPOut'[, CATEGORY]) returns the property list of 'WeightedMxPOut'.
 			%
@@ -218,15 +218,15 @@ classdef WeightedMxPOut < Measure
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of weighted mxpart-out.
+			%GETPROPNUMBER returns the property number of weighted out-participation.
 			%
-			% N = WeightedMxPOut.GETPROPNUMBER() returns the property number of weighted mxpart-out.
+			% N = WeightedMxPOut.GETPROPNUMBER() returns the property number of weighted out-participation.
 			%
-			% N = WeightedMxPOut.GETPROPNUMBER(CATEGORY) returns the property number of weighted mxpart-out
+			% N = WeightedMxPOut.GETPROPNUMBER(CATEGORY) returns the property number of weighted out-participation
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the weighted mxpart-out M.
+			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the weighted out-participation M.
 			%  N = Element.GETPROPNUMBER(M) returns the property number of 'M'.
 			%  N = Element.GETPROPNUMBER('WeightedMxPOut') returns the property number of 'WeightedMxPOut'.
 			%
@@ -262,7 +262,7 @@ classdef WeightedMxPOut < Measure
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in weighted mxpart-out/error.
+			%EXISTSPROP checks whether property exists in weighted out-participation/error.
 			%
 			% CHECK = WeightedMxPOut.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -300,7 +300,7 @@ classdef WeightedMxPOut < Measure
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in weighted mxpart-out/error.
+			%EXISTSTAG checks whether tag exists in weighted out-participation/error.
 			%
 			% CHECK = WeightedMxPOut.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -540,7 +540,7 @@ classdef WeightedMxPOut < Measure
 				case 10 % WeightedMxPOut.PARAMETRICITY
 					prop_default = 2;
 				case 11 % WeightedMxPOut.COMPATIBLE_GRAPHS
-					prop_default = {'MultiplexWD' 'OrdMxWD'};
+					prop_default = {'MultiplexWD' 'OrdMxWD' 'MultilayerWD' 'OrdMlWD'};
 				otherwise
 					prop_default = getPropDefault@Measure(prop);
 			end
@@ -647,7 +647,6 @@ classdef WeightedMxPOut < Measure
 					g = m.get('G'); % graph from measure class
 					A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 					l = g.get('LAYERNUMBER');
-					ls = g.get('PARTITIONS');
 					
 					if l == 0
 					    value = {};

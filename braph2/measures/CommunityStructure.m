@@ -608,7 +608,7 @@ classdef CommunityStructure < Measure
 				case 10 % CommunityStructure.PARAMETRICITY
 					prop_default = 2;
 				case 11 % CommunityStructure.COMPATIBLE_GRAPHS
-					prop_default = {'GraphBU'};;
+					prop_default = {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT'} ;;
 				otherwise
 					prop_default = getPropDefault@Measure(prop);
 			end

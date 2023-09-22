@@ -1,5 +1,5 @@
 %% ¡header!
-EccentricityOut < Measure (m, eccentricityOut) is the graph eccentricityOut.
+EccentricityOut < Measure (m, out-eccentricity) is the graph out-eccentricity.
 
 %%% ¡description!
 The in-eccentricity of a node is the maximal shortest out-path length 
@@ -8,30 +8,30 @@ between a node and any other node within a layer.
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the eccentricityOut.
+NAME (constant, string) is the name of the out-eccentricity.
 %%%% ¡default!
 'EccentricityOut'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the eccentricityOut.
+DESCRIPTION (constant, string) is the description of the out-eccentricity.
 %%%% ¡default!
 'The in-eccentricity of a node is the maximal shortest out-path length between a node and any other node within a layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the eccentricityOut.
+TEMPLATE (parameter, item) is the template of the out-eccentricity.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the eccentricityOut.
+ID (data, string) is a few-letter code of the out-eccentricity.
 %%%% ¡default!
 'EccentricityOut ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the eccentricityOut.
+LABEL (metadata, string) is an extended label of the out-eccentricity.
 %%%% ¡default!
 'EccentricityOut label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the eccentricityOut.
+NOTES (metadata, string) are some specific notes about the out-eccentricity.
 %%%% ¡default!
 'EccentricityOut notes'
 
@@ -56,7 +56,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD' 'OrdMxWD'} ;
 
 %%% ¡prop!
-M (result, cell) is the eccentricityOut.
+M (result, cell) is the out-eccentricity.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

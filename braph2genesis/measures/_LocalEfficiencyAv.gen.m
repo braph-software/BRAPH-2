@@ -1,5 +1,5 @@
 %% ¡header!
-LocalEfficiencyAv < LocalEfficiency (m,average local efficiency) is the graphaverage local efficiency.
+LocalEfficiencyAv < LocalEfficiency (m, average local efficiency) is the graph average local efficiency.
 
 %%% ¡description!
 The average local efficiency is the average of all the local efficiencies 
@@ -13,12 +13,12 @@ NAME (constant, string) is the name of theaverage local efficiency.
 'LocalEfficiencyAv'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of theaverage local efficiency.
+DESCRIPTION (constant, string) is the description of th eaverage local efficiency.
 %%%% ¡default!
 'The average local efficiency is the average of all the local efficiencies within each layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of theaverage local efficiency.
+TEMPLATE (parameter, item) is the template of the average local efficiency.
 %%%% ¡settings!
 'LocalEfficiencyAv'
 
@@ -28,12 +28,12 @@ ID (data, string) is a few-letter code of theaverage local efficiency.
 'LocalEfficiencyAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of theaverage local efficiency.
+LABEL (metadata, string) is an extended label of the average local efficiency.
 %%%% ¡default!
 'LocalEfficiencyAv label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about theaverage local efficiency.
+NOTES (metadata, string) are some specific notes about the average local efficiency.
 %%%% ¡default!
 'LocalEfficiencyAv notes'
 
@@ -58,7 +58,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT'};
 
 %%% ¡prop!
-M (result, cell) is theaverage local efficiency.
+M (result, cell) is the average local efficiency.
 %%%% ¡calculate!
 local_efficiency = calculateValue@LocalEfficiency(m, prop);
 g = m.get('G');  % graph from measure class

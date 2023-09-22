@@ -77,19 +77,13 @@ a_BUT2 = AnalyzeEnsemble_CON_FUN_MP_BUT( ...
     );
 
 % measure calculation
-degree_BUT1 = a_BUT1.get('MEASUREENSEMBLE', 'Degree').get('M');
-degreeav_BUT1 = a_BUT1.get('MEASUREENSEMBLE', 'DegreeAv').get('M');
-distance_BUT1 = a_BUT1.get('MEASUREENSEMBLE', 'Distance').get('M');
-% % % multiplexparticipation_BUT1 = a_BUT1.get('MEASUREENSEMBLE', 'MultiplexParticipation').get('M');
-% % % ovdegree_av_BUT1 = a_BUT1.get('MEASUREENSEMBLE', 'OverlappingDegreeAv').get('M');
-% % % edgeov_BUT1 = a_BUT1.get('MEASUREENSEMBLE', 'EdgeOverlap').get('M');
+multiplexparticipation_BUT1 = a_BUT1.get('MEASUREENSEMBLE', 'MultiplexP').get('M');
+ovdegree_av_BUT1 = a_BUT1.get('MEASUREENSEMBLE', 'OverlappingDegAv').get('M');
+edgeov_BUT1 = a_BUT1.get('MEASUREENSEMBLE', 'EdgeOverlap').get('M');
 
-degree_BUT2 = a_BUT2.get('MEASUREENSEMBLE', 'Degree').get('M');
-degreeav_BUT2 = a_BUT2.get('MEASUREENSEMBLE', 'DegreeAv').get('M');
-distance_BUT2 = a_BUT2.get('MEASUREENSEMBLE', 'Distance').get('M');
-% % % multiplexparticipation_BUT2 = a_BUT2.get('MEASUREENSEMBLE', 'MultiplexParticipation').get('M');
-% % % ovdegree_av_BUT2 = a_BUT2.get('MEASUREENSEMBLE', 'OverlappingDegreeAv').get('M');
-% % % edgeov_BUT2 = a_BUT2.get('MEASUREENSEMBLE', 'EdgeOverlap').get('M');
+multiplexparticipation_BUT2 = a_BUT2.get('MEASUREENSEMBLE', 'MultiplexP').get('M');
+ovdegree_av_BUT2 = a_BUT2.get('MEASUREENSEMBLE', 'OverlappingDegAv').get('M');
+edgeov_BUT2 = a_BUT2.get('MEASUREENSEMBLE', 'EdgeOverlap').get('M');
 
 % comparison
 c_BUT = CompareEnsemble( ...
@@ -101,39 +95,20 @@ c_BUT = CompareEnsemble( ...
     'MEMORIZE', true ...
     );
 
-degree_BUT_diff = c_BUT.get('COMPARISON', 'Degree').get('DIFF');
-degree_BUT_p1 = c_BUT.get('COMPARISON', 'Degree').get('P1');
-degree_BUT_p2 = c_BUT.get('COMPARISON', 'Degree').get('P2');
-degree_BUT_cil = c_BUT.get('COMPARISON', 'Degree').get('CIL');
-degree_BUT_ciu = c_BUT.get('COMPARISON', 'Degree').get('CIU');
+multiplexparticipation_BUT_diff = c_BUT.get('COMPARISON', 'MultiplexP').get('DIFF');
+multiplexparticipation_BUT_p1 = c_BUT.get('COMPARISON', 'MultiplexP').get('P1');
+multiplexparticipation_BUT_p2 = c_BUT.get('COMPARISON', 'MultiplexP').get('P2');
+multiplexparticipation_BUT_cil = c_BUT.get('COMPARISON', 'MultiplexP').get('CIL');
+multiplexparticipation_BUT_ciu = c_BUT.get('COMPARISON', 'MultiplexP').get('CIU');
 
-degreeav_BUT_diff = c_BUT.get('COMPARISON', 'DegreeAv').get('DIFF');
-degreeav_BUT_p1 = c_BUT.get('COMPARISON', 'DegreeAv').get('P1');
-degreeav_BUT_p2 = c_BUT.get('COMPARISON', 'DegreeAv').get('P2');
-degreeav_BUT_cil = c_BUT.get('COMPARISON', 'DegreeAv').get('CIL');
-degreeav_BUT_ciu = c_BUT.get('COMPARISON', 'DegreeAv').get('CIU');
+ovdegree_av_BUT_diff = c_BUT.get('COMPARISON', 'OverlappingDegAv').get('DIFF');
+ovdegree_av_BUT_p1 = c_BUT.get('COMPARISON', 'OverlappingDegAv').get('P1');
+ovdegree_av_BUT_p2 = c_BUT.get('COMPARISON', 'OverlappingDegAv').get('P2');
+ovdegree_av_BUT_cil = c_BUT.get('COMPARISON', 'OverlappingDegAv').get('CIL');
+ovdegree_av_BUT_ciu = c_BUT.get('COMPARISON', 'OverlappingDegAv').get('CIU');
 
-distance_BUT_diff = c_BUT.get('COMPARISON', 'Distance').get('DIFF');
-distance_BUT_p1 = c_BUT.get('COMPARISON', 'Distance').get('P1');
-distance_BUT_p2 = c_BUT.get('COMPARISON', 'Distance').get('P2');
-distance_BUT_cil = c_BUT.get('COMPARISON', 'Distance').get('CIL');
-distance_BUT_ciu = c_BUT.get('COMPARISON', 'Distance').get('CIU');
-
-% % % multiplexparticipation_BUT_diff = c_BUT.get('COMPARISON', 'MultiplexParticipation').get('DIFF');
-% % % multiplexparticipation_BUT_p1 = c_BUT.get('COMPARISON', 'MultiplexParticipation').get('P1');
-% % % multiplexparticipation_BUT_p2 = c_BUT.get('COMPARISON', 'MultiplexParticipation').get('P2');
-% % % multiplexparticipation_BUT_cil = c_BUT.get('COMPARISON', 'MultiplexParticipation').get('CIL');
-% % % multiplexparticipation_BUT_ciu = c_BUT.get('COMPARISON', 'MultiplexParticipation').get('CIU');
-
-% % % ovdegree_av_BUT_diff = c_BUT.get('COMPARISON', 'OverlappingDegreeAv').get('DIFF');
-% % % ovdegree_av_BUT_p1 = c_BUT.get('COMPARISON', 'OverlappingDegreeAv').get('P1');
-% % % ovdegree_av_BUT_p2 = c_BUT.get('COMPARISON', 'OverlappingDegreeAv').get('P2');
-% % % ovdegree_av_BUT_cil = c_BUT.get('COMPARISON', 'OverlappingDegreeAv').get('CIL');
-% % % ovdegree_av_BUT_ciu = c_BUT.get('COMPARISON', 'OverlappingDegreeAv').get('CIU');
-
-% % % edgeov_BUT_diff = c_BUT.get('COMPARISON', 'EdgeOverlap').get('DIFF');
-% % % edgeov_BUT_p1 = c_BUT.get('COMPARISON', 'EdgeOverlap').get('P1');
-% % % edgeov_BUT_p2 = c_BUT.get('COMPARISON', 'EdgeOverlap').get('P2');
-% % % edgeov_BUT_cil = c_BUT.get('COMPARISON', 'EdgeOverlap').get('CIL');
-% % % edgeov_BUT_ciu = c_BUT.get('COMPARISON', 'EdgeOverlap').get('CIU');
-% % % mpc_av_BUT_ciu = c_BUT.get('COMPARISON', 'MultiplexParticipationAv').get('CIU');
+edgeov_BUT_diff = c_BUT.get('COMPARISON', 'EdgeOverlap').get('DIFF');
+edgeov_BUT_p1 = c_BUT.get('COMPARISON', 'EdgeOverlap').get('P1');
+edgeov_BUT_p2 = c_BUT.get('COMPARISON', 'EdgeOverlap').get('P2');
+edgeov_BUT_cil = c_BUT.get('COMPARISON', 'EdgeOverlap').get('CIL');
+edgeov_BUT_ciu = c_BUT.get('COMPARISON', 'EdgeOverlap').get('CIU');

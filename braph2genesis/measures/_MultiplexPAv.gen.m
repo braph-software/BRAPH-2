@@ -1,5 +1,5 @@
 %% ¡header!
-MultiplexPAv < MultiplexP (m, average mxpart) is the graph average multiplex participation.
+MultiplexPAv < MultiplexP (m, average multiplex participation) is the graph average multiplex participation.
 
 %%% ¡description!
 The average multiplex participation of a graph is the average homogeneity 
@@ -52,34 +52,34 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the multiplex participation.
+NAME (constant, string) is the name of the average multiplex participation.
 %%%% ¡default!
-'MultiplexPAv'
+'MultiplexParticipationAv'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the multiplex participation.
+DESCRIPTION (constant, string) is the description of the average multiplex participation.
 %%%% ¡default!
 'The average multiplex participation of a graph is the average homogeneity of its number of neighbours across the layers.' 
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the multiplex participation.
+TEMPLATE (parameter, item) is the template of the average multiplex participation.
 %%%% ¡settings!
 'MultiplexPAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the multiplex participation.
+ID (data, string) is a few-letter code of the average multiplex participation.
 %%%% ¡default!
 'MultiplexPAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the multiplex participation.
+LABEL (metadata, string) is an extended label of the average multiplex participation.
 %%%% ¡default!
-'MultiplexPAv label'
+'MultiplexParticipationAv label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the multiplex participation.
+NOTES (metadata, string) are some specific notes about the average multiplex participation.
 %%%% ¡default!
-'MultiplexPAv notes'
+'MultiplexParticipationAv notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -102,7 +102,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU'};
 
 %%% ¡prop!
-M (result, cell) is the multiplex participation.
+M (result, cell) is the average multiplex participation.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

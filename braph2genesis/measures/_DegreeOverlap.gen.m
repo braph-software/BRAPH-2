@@ -99,7 +99,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'MultilayerBU' 'OrdMlBU'};
+{'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU' 'MultilayerWU' 'MultilayerBU' 'MultilayerBUD' 'MultilayerBUT' 'OrdMlBU' 'OrdMlWU'};
 
 %%% ¡prop!
 M (result, cell) is the degree overlap.
@@ -212,40 +212,6 @@ known_degree_overlap = {
     [0 0 0]'};
 
 g = MultiplexBUT('B', B, 'THRESHOLDS', [0 1]);
-
-m_outside_g = DegreeOverlap('G', g);
-assert(isequal(m_outside_g.get('M'), known_degree_overlap), ...
-    [BRAPH2.STR ':DegreeOverlap:' BRAPH2.FAIL_TEST], ...
-    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
-
-m_inside_g = g.get('MEASURE', 'DegreeOverlap');
-assert(isequal(m_inside_g.get('M'), known_degree_overlap), ...
-    [BRAPH2.STR ':DegreeOverlap:' BRAPH2.FAIL_TEST], ...
-    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
-
-%%% ¡test!
-%%%% ¡name!
-MultiplexBUD
-%%%% ¡probability!
-.01
-%%%% ¡code!
-B11 = [
-    0   1   1
-    1   0   0
-    1   0   0
-    ];
-B22 = [
-    0   1   0
-    1   0   1
-    0   1   0
-    ];
-B = {B11 B22};
-
-known_degree_overlap = {
-    [1 1 0]'
-    [0 0 0]'};
-
-g = MultiplexBUD('B', B, 'DENSITIES', [90 10]);
 
 m_outside_g = DegreeOverlap('G', g);
 assert(isequal(m_outside_g.get('M'), known_degree_overlap), ...

@@ -56,7 +56,7 @@ Compatible Graphs
 %%% ¡prop!
 NAME (constant, string) is the name of the multiplex rich-club strength.
 %%%% ¡default!
-'MultiplexRCS'
+'MultiplexRichClubStrength'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the multiplex rich-club strength.
@@ -76,12 +76,12 @@ ID (data, string) is a few-letter code of the multiplex rich-club strength.
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the multiplex rich-club strength.
 %%%% ¡default!
-'MultiplexRCS label'
+'MultiplexRichClubStrength label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the multiplex rich-club strength.
 %%%% ¡default!
-'MultiplexRCS notes'
+'MultiplexRichClubStrength notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.

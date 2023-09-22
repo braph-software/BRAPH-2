@@ -630,7 +630,7 @@ classdef OrdMlBU < Graph
 				case 8 % OrdMlBU.GRAPH_TYPE
 					prop_default = 5;
 				case 27 % OrdMlBU.COMPATIBLE_MEASURES
-					prop_default = { 'Degree'  'DegreeAv'  'DegreeOverlap'  'DegreeOverlapAv'  'Distance'  'Flexibility'  'FlexibilityAv'  'GlobalEfficiency'  'GlobalEfficiencyAv' };
+					prop_default = { 'Degree'  'DegreeAv'  'DegreeOverlap'  'DegreeOverlapAv'  'Distance'  'EdgeOverlap'  'GlobalEfficiency'  'GlobalEfficiencyAv' };
 				otherwise
 					prop_default = getPropDefault@Graph(prop);
 			end

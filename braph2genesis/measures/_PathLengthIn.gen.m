@@ -7,30 +7,30 @@ The in-path length is the average shortest in-path length of one node to all oth
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the PathLengthIn.
+NAME (constant, string) is the name of the in-path length.
 %%%% ¡default!
 'PathLengthIn'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the PathLengthIn.
+DESCRIPTION (constant, string) is the description of the in-path length.
 %%%% ¡default!
-'The PathLengthIn is the average shortest pathlength of one node to all other nodes within a layer.'
+'The in-path length is the average shortest in-path length of one node to all other nodes within a layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the PathLengthIn.
+TEMPLATE (parameter, item) is the template of the in-path length.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the PathLengthIn.
+ID (data, string) is a few-letter code of the in-path length.
 %%%% ¡default!
 'PathLengthIn ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the PathLengthIn.
+LABEL (metadata, string) is an extended label of the in-path length.
 %%%% ¡default!
 'PathLengthIn label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the PathLengthIn.
+NOTES (metadata, string) are some specific notes about the in-path length.
 %%%% ¡default!
 'PathLengthIn notes'
 
@@ -55,7 +55,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphBD' 'GraphWD' 'MultiplexBD' 'MultiplexWD' 'MultilayerBD' 'OrdMlBD'}
 
 %%% ¡prop!
-M (result, cell) is the cell containing the PathLengthIn.
+M (result, cell) is the cell containing the in-path length.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

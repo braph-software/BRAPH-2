@@ -1,5 +1,5 @@
 classdef MultiRC < Richness
-	%MultiRC is the graph wmultirichness.
+	%MultiRC is the graph multirichness.
 	% It is a subclass of <a href="matlab:help Richness">Richness</a>.
 	%
 	% The multirichness of a node is the sum of the edges that connect nodes 
@@ -8,19 +8,19 @@ classdef MultiRC < Richness
 	%  the default coefficients are (1/layernumber).
 	%
 	% The list of MultiRC properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the weighted multiplex particiption.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the weighted multiplex particiption.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the weighted multiplex particiption.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the weighted multiplex particiption.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the weighted multiplex particiption.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the weighted multiplex particiption.
+	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multirichness.
+	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multirichness.
+	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multirichness.
+	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multirichness.
+	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multirichness.
+	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multirichness.
 	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the weighted multiplex particiption.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the multirichness.
 	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>15</strong> <strong>MULTIRICHNESS_COEFFICIENTS</strong> 	MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR)
 	%
@@ -128,19 +128,19 @@ classdef MultiRC < Richness
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of MultiRC properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the weighted multiplex particiption.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the weighted multiplex particiption.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the weighted multiplex particiption.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the weighted multiplex particiption.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the weighted multiplex particiption.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the weighted multiplex particiption.
+			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multirichness.
+			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multirichness.
+			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multirichness.
+			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multirichness.
+			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multirichness.
+			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multirichness.
 			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the weighted multiplex particiption.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the multirichness.
 			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>15</strong> <strong>MULTIRICHNESS_COEFFICIENTS</strong> 	MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR)
 			%
@@ -476,7 +476,7 @@ classdef MultiRC < Richness
 			prop = MultiRC.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multirc_description_list = { 'NAME (constant, string) is the name of the weighted multiplex particiption.'  'DESCRIPTION (constant, string) is the description of the weighted multiplex particiption.'  'TEMPLATE (parameter, item) is the template of the weighted multiplex particiption.'  'ID (data, string) is a few-letter code of the weighted multiplex particiption.'  'LABEL (metadata, string) is an extended label of the weighted multiplex particiption.'  'NOTES (metadata, string) are some specific notes about the weighted multiplex particiption.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the weighted multiplex particiption.'  'PFM (gui, item) contains the panel figure of the measure.'  'MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR)' };
+			multirc_description_list = { 'NAME (constant, string) is the name of the multirichness.'  'DESCRIPTION (constant, string) is the description of the multirichness.'  'TEMPLATE (parameter, item) is the template of the multirichness.'  'ID (data, string) is a few-letter code of the multirichness.'  'LABEL (metadata, string) is an extended label of the multirichness.'  'NOTES (metadata, string) are some specific notes about the multirichness.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the multirichness.'  'PFM (gui, item) contains the panel figure of the measure.'  'MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR)' };
 			prop_description = multirc_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -673,14 +673,14 @@ classdef MultiRC < Richness
 					    N = g.get('NODENUMBER');
 					    multirichness_coefficients = m.get('MULTIRICHNESS_COEFFICIENTS');
 					    assert(length(multirichness_coefficients) == ls(1) || all(multirichness_coefficients == 0), ...
-					        ['BRAPH2' ':MultiRCness:' 'WrongInput'], ...
-					        ['MultiRCness coefficients must have the same length than the ' ...
+					        ['BRAPH2' ':Multirichness:' 'WrongInput'], ...
+					        ['Multirichness coefficients must have the same length than the ' ...
 					        'number of layers (' tostring(ls(1)) ') while its length is ' tostring(length(multirichness_coefficients))])
 					
 					    if length(multirichness_coefficients) == ls(1)
 					        assert(all(multirichness_coefficients <= 1) && all(multirichness_coefficients >= 0), ...
-					            ['BRAPH2' ':MultiRCness:' 'WrongInput'], ...
-					            ['MultiRCness coefficients must be between 0 and 1 ' ...
+					            ['BRAPH2' ':Multirichness:' 'WrongInput'], ...
+					            ['Multirichness coefficients must be between 0 and 1 ' ...
 					            'while they are ' tostring(multirichness_coefficients)])
 					        c = multirichness_coefficients;
 					

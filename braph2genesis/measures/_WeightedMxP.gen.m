@@ -1,5 +1,5 @@
 %% ¡header!
-WeightedMxP < Measure (m, weighted mxpart) is the graph weighted multiplex participation.
+WeightedMxP < Measure (m, weighted multiplex participation) is the graph weighted multiplex participation.
 
 %%% ¡description!
 The weighted multiplex participation of a graph is the nodal homogeneity 
@@ -99,7 +99,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'MultiplexWU' 'OrdMxWU'};
+{'MultiplexWU' 'OrdMxWU' 'MultilayerWU' 'OrdMlWU'};
 
 %%% ¡prop!
 M (result, cell) is the weighted multiplex particiption.
@@ -107,7 +107,6 @@ M (result, cell) is the weighted multiplex particiption.
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
 l = g.get('LAYERNUMBER');
-ls = g.get('PARTITIONS');
 
 if l == 0
     value = {};

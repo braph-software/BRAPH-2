@@ -1,24 +1,24 @@
 classdef OverlappingSAv < OverlappingS
-	%OverlappingSAv is the graph averge overlapping degree.
+	%OverlappingSAv is the graph averge overlapping strength.
 	% It is a subclass of <a href="matlab:help OverlappingS">OverlappingS</a>.
 	%
 	% The average overlapping strength of a graph is the average of the sum of the 
 	% strengths of a node in all layers.
 	%
 	% The list of OverlappingSAv properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the averge overlapping degree.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the averge overlapping degree.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the averge overlapping degree.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the averge overlapping degree.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the averge overlapping degree.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the averge overlapping degree.
+	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the averge overlapping strength.
+	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the averge overlapping strength.
+	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the averge overlapping strength.
+	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the averge overlapping strength.
+	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the averge overlapping strength.
+	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the averge overlapping strength.
 	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the averge overlapping degree.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the averge overlapping strength.
 	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% OverlappingSAv methods (constructor):
@@ -119,19 +119,19 @@ classdef OverlappingSAv < OverlappingS
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of OverlappingSAv properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the averge overlapping degree.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the averge overlapping degree.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the averge overlapping degree.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the averge overlapping degree.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the averge overlapping degree.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the averge overlapping degree.
+			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the averge overlapping strength.
+			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the averge overlapping strength.
+			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the averge overlapping strength.
+			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the averge overlapping strength.
+			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the averge overlapping strength.
+			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the averge overlapping strength.
 			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the averge overlapping degree.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the averge overlapping strength.
 			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -466,7 +466,7 @@ classdef OverlappingSAv < OverlappingS
 			prop = OverlappingSAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			overlappingsav_description_list = { 'NAME (constant, string) is the name of the averge overlapping degree.'  'DESCRIPTION (constant, string) is the description of the averge overlapping degree.'  'TEMPLATE (parameter, item) is the template of the averge overlapping degree.'  'ID (data, string) is a few-letter code of the averge overlapping degree.'  'LABEL (metadata, string) is an extended label of the averge overlapping degree.'  'NOTES (metadata, string) are some specific notes about the averge overlapping degree.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the averge overlapping degree.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			overlappingsav_description_list = { 'NAME (constant, string) is the name of the averge overlapping strength.'  'DESCRIPTION (constant, string) is the description of the averge overlapping strength.'  'TEMPLATE (parameter, item) is the template of the averge overlapping strength.'  'ID (data, string) is a few-letter code of the averge overlapping strength.'  'LABEL (metadata, string) is an extended label of the averge overlapping strength.'  'NOTES (metadata, string) are some specific notes about the averge overlapping strength.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the averge overlapping strength.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = overlappingsav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

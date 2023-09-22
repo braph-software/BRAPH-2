@@ -540,7 +540,7 @@ classdef DegreeOverlapAv < DegreeOverlap
 				case 10 % DegreeOverlapAv.PARAMETRICITY
 					prop_default = 2;
 				case 11 % DegreeOverlapAv.COMPATIBLE_GRAPHS
-					prop_default = {'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'MultilayerBU' 'OrdMlBU'};;
+					prop_default = {'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU' 'MultilayerWU' 'MultilayerBU' 'MultilayerBUD' 'MultilayerBUT' 'OrdMlBU' 'OrdMlWU'};;
 				otherwise
 					prop_default = getPropDefault@DegreeOverlap(prop);
 			end

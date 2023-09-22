@@ -1,5 +1,5 @@
 %% ¡header!
-EigenVectorCentrality < Measure (m, eigenvectorcentrality) is the graph eigenvectorcentrality.
+EigenVectorCentrality < Measure (m, eigenvector centrality) is the graph eigenvector centrality.
 
 %%% ¡description!
 The eigen vector centrality of a node is the ith element in the eigenvector corresponding 
@@ -8,30 +8,30 @@ to the largest eigenvalue of the largest eigenvalue of the graphs adjacency matr
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the eigenvectorcentrality.
+NAME (constant, string) is the name of the eigenvector centrality.
 %%%% ¡default!
 'EigenVectorCentrality'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the eigenvectorcentrality.
+DESCRIPTION (constant, string) is the description of the eigenvector centrality.
 %%%% ¡default!
 'The eigen vector centrality of a node is the ith element in the eigenvector corresponding to the largest eigenvalue of the largest eigenvalue of the graphs adjacency matrix.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the eigenvectorcentrality.
+TEMPLATE (parameter, item) is the template of the eigenvector centrality.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the eigenvectorcentrality.
+ID (data, string) is a few-letter code of the eigenvector centrality.
 %%%% ¡default!
 'EigenVectorCentrality ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the eigenvectorcentrality.
+LABEL (metadata, string) is an extended label of the eigenvector centrality.
 %%%% ¡default!
 'EigenVectorCentrality label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the eigenvectorcentrality.
+NOTES (metadata, string) are some specific notes about the eigenvector centrality.
 %%%% ¡default!
 'EigenVectorCentrality notes'
 
@@ -56,7 +56,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT'} ;
 
 %%% ¡prop!
-M (result, cell) is the eigenvectorcentrality.
+M (result, cell) is the eigenvector centrality.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

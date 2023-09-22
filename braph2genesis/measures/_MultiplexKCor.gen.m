@@ -1,5 +1,5 @@
 %% ¡header!
-MultiplexKCor < Measure (m,  multiplex k-core) is the graph  multiplex k-core.
+MultiplexKCor < Measure (m,  multiplex k-core) is the graph multiplex k-core.
 
 %%% ¡description!
 The multiplex k-core of a graph is the largest subnetwork comprising nodes of overlapping degree k or higher. 
@@ -52,34 +52,34 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the multiplex rich-club strength.
+NAME (constant, string) is the name of the multiplex k-core.
 %%%% ¡default!
-'MultiplexKCor'
+'MultiplexKCore'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the multiplex rich-club strength.
+DESCRIPTION (constant, string) is the description of the multiplex k-core.
 %%%% ¡default!
 'The multiplex k-core of a graph is the largest subnetwork comprising nodes of overlapping degree k or higher. k is set by the user; the default value is equal to 1.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the multiplex rich-club strength.
+TEMPLATE (parameter, item) is the template of the multiplex k-core.
 %%%% ¡settings!
 'MultiplexKCor'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the multiplex rich-club strength.
+ID (data, string) is a few-letter code of the multiplex k-core.
 %%%% ¡default!
 'MultiplexKCor ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the multiplex rich-club strength.
+LABEL (metadata, string) is an extended label of the multiplex k-core.
 %%%% ¡default!
-'MultiplexKCor label'
+'MultiplexKCore label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the multiplex rich-club strength.
+NOTES (metadata, string) are some specific notes about the multiplex k-core.
 %%%% ¡default!
-'MultiplexKCor notes'
+'MultiplexKCore notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -99,10 +99,10 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'OrdMxWU'};
+{'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'OrdMxWU' 'OrdMxBU'};
 
 %%% ¡prop!
-M (result, cell) is the multiplex rich-club strength.
+M (result, cell) is the multiplex k-core.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

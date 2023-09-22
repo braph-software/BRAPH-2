@@ -52,34 +52,34 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the overlapping in-degree.
+NAME (constant, string) is the name of the average overlapping in-degree.
 %%%% ¡default!
-'OverlappingDegInAv'
+'OverlappingInDegreeAv'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the overlapping in-degree.
+DESCRIPTION (constant, string) is the description of the average overlapping in-degree.
 %%%% ¡default!
 'The average overlapping in-degree of a graph is the average of the sum of the in-degrees of a node in all layers.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the overlapping in-degree.
+TEMPLATE (parameter, item) is the template of the average overlapping in-degree.
 %%%% ¡settings!
 'OverlappingDegInAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the overlapping in-degree.
+ID (data, string) is a few-letter code of the average overlapping in-degree.
 %%%% ¡default!
 'OverlappingDegInAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the overlapping in-degree.
+LABEL (metadata, string) is an extended label of the average overlapping in-degree.
 %%%% ¡default!
-'OverlappingDegInAv label'
+'OverlappingInDegreeAv label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the overlapping in-degree.
+NOTES (metadata, string) are some specific notes about the average overlapping in-degree.
 %%%% ¡default!
-'OverlappingDegInAv notes'
+'OverlappingInDegreeAv notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -99,7 +99,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'MultiplexWD' 'MultiplexBD' 'MultilayerBD' 'OrdMlBD'};
+{'MultiplexWD' 'MultiplexBD' 'MultilayerWD' 'MultilayerBD' 'OrdMxBD' 'OrdMxWD' 'OrdMlBD' 'OrdMlWD'};
 
 %%% ¡prop!
 M (result, cell) is the overlapping in-degree.

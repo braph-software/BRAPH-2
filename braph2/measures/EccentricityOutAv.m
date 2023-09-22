@@ -1,24 +1,24 @@
 classdef EccentricityOutAv < EccentricityOut
-	%EccentricityOutAv is the graph average eccentricity.
+	%EccentricityOutAv is the graph average out-eccentricity.
 	% It is a subclass of <a href="matlab:help EccentricityOut">EccentricityOut</a>.
 	%
 	% The average out-eccentricity of a node is the sum of the nodal 
 	% out-eccentricities divided by their number within a layer.
 	%
 	% The list of EccentricityOutAv properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average eccentricity.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average eccentricity.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average eccentricity.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average eccentricity.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average eccentricity.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average eccentricity.
+	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average out-eccentricity.
+	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average out-eccentricity.
+	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average out-eccentricity.
+	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average out-eccentricity.
+	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average out-eccentricity.
+	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average out-eccentricity.
 	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the average eccentricity.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the average out-eccentricity.
 	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>15</strong> <strong>RULE</strong> 	RULE (parameter, OPTION)  % calculation in a graph or its subgraph
 	%
@@ -120,19 +120,19 @@ classdef EccentricityOutAv < EccentricityOut
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of EccentricityOutAv properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average eccentricity.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average eccentricity.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average eccentricity.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average eccentricity.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average eccentricity.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average eccentricity.
+			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average out-eccentricity.
+			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average out-eccentricity.
+			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average out-eccentricity.
+			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average out-eccentricity.
+			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average out-eccentricity.
+			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average out-eccentricity.
 			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the average eccentricity.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the average out-eccentricity.
 			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>15</strong> <strong>RULE</strong> 	RULE (parameter, OPTION)  % calculation in a graph or its subgraph
 			%
@@ -468,7 +468,7 @@ classdef EccentricityOutAv < EccentricityOut
 			prop = EccentricityOutAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			eccentricityoutav_description_list = { 'NAME (constant, string) is the name of the average eccentricity.'  'DESCRIPTION (constant, string) is the description of the average eccentricity.'  'TEMPLATE (parameter, item) is the template of the average eccentricity.'  'ID (data, string) is a few-letter code of the average eccentricity.'  'LABEL (metadata, string) is an extended label of the average eccentricity.'  'NOTES (metadata, string) are some specific notes about the average eccentricity.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the average eccentricity.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, OPTION)  % calculation in a graph or its subgraph' };
+			eccentricityoutav_description_list = { 'NAME (constant, string) is the name of the average out-eccentricity.'  'DESCRIPTION (constant, string) is the description of the average out-eccentricity.'  'TEMPLATE (parameter, item) is the template of the average out-eccentricity.'  'ID (data, string) is a few-letter code of the average out-eccentricity.'  'LABEL (metadata, string) is an extended label of the average out-eccentricity.'  'NOTES (metadata, string) are some specific notes about the average out-eccentricity.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the average out-eccentricity.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, OPTION)  % calculation in a graph or its subgraph' };
 			prop_description = eccentricityoutav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

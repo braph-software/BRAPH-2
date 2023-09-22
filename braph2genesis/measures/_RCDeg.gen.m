@@ -1,5 +1,5 @@
 %% ¡header!
-RCDeg < Degree (m, richclubdegree) is the graph richclubdegree.
+RCDeg < Degree (m, rich-club degree) is the graph rich-club degree.
 
 %%% ¡description!
 The rich-club degree of a node at level k is the sum of 
@@ -9,32 +9,32 @@ The rich-club degree of a node at level k is the sum of
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the richclubdegree.
+NAME (constant, string) is the name of the rich-club degree.
 %%%% ¡default!
 'RCDeg'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the richclubdegree.
+DESCRIPTION (constant, string) is the description of the rich-club degree.
 %%%% ¡default!
 'The rich-club degree of a node at level k is the sum of the edges that connect nodes of degree k or higher within a layer. k is set by the user; the default value is equal to 1.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the richclubdegree.
+TEMPLATE (parameter, item) is the template of the rich-club degree.
 %%%% ¡settings!
 'RCDeg'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the richclubdegree.
+ID (data, string) is a few-letter code of the rich-club degree.
 %%%% ¡default!
 'RCDeg ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the richclubdegree.
+LABEL (metadata, string) is an extended label of the rich-club degree.
 %%%% ¡default!
 'RCDeg label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the richclubdegree.
+NOTES (metadata, string) are some specific notes about the rich-club degree.
 %%%% ¡default!
 'RCDeg notes'
 
@@ -59,7 +59,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU'};
 
 %%% ¡prop!
-M (result, cell) is the richclubdegree.
+M (result, cell) is the rich-club degree.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

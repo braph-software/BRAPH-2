@@ -1496,38 +1496,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
 
-%% Test 13: MultiplexWD
-if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
-	A11 = [
-	      0  1 1 .5;
-	      1  0 1 0;
-	      1  1 0 1;
-	      .1 0 1 0
-	      ];
-	A22 = [
-	      0  1 1 .5;
-	      1  0 1 0;
-	      1  1 0 1;
-	      .1 0 1 0
-	      ];
-	A = {A11 A22};
-	 
-	known_flexibility_av = {0};   
-	 
-	g = MultiplexWD('B', A);
-	
-	m_outside_g = FlexibilityAv('G', g);
-	assert(isequal(m_outside_g.get('M'), known_flexibility_av), ...
-	    [BRAPH2.STR ':FlexibilityAv:' BRAPH2.FAIL_TEST], ...
-	    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
-	
-	m_inside_g = g.get('MEASURE', 'FlexibilityAv');
-	assert(isequal(m_inside_g.get('M'), known_flexibility_av), ...
-	    [BRAPH2.STR ':FlexibilityAv:' BRAPH2.FAIL_TEST], ...
-	    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
-end
-
-%% Test 14: MultilayerWD
+%% Test 13: MultilayerWU
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	A11 = [
 	      0  1 1 .5;
@@ -1548,7 +1517,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	 
 	known_flexibility_av = {0};  
 	
-	g = MultilayerWD('B', A);
+	g = MultilayerWU('B', A);
 	
 	m_outside_g = FlexibilityAv('G', g);
 	assert(isequal(m_outside_g.get('M'), known_flexibility_av), ...
@@ -1561,7 +1530,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
 
-%% Test 15: OrdMlWD
+%% Test 14: OrdMlWU
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	A11 = [
 	      0  1 1 .5;
@@ -1582,7 +1551,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	 
 	known_flexibility_av = {0};  
 	
-	g = OrdMlWD('B', A);
+	g = OrdMlWU('B', A);
 	
 	m_outside_g = FlexibilityAv('G', g);
 	assert(isequal(m_outside_g.get('M'), known_flexibility_av), ...
@@ -1595,7 +1564,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
 
-%% Test 16: No Figures Left
+%% Test 15: No Figures Left
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	assert(isempty(findall(0, 'type', 'figure')), ...
 		[BRAPH2.STR ':FlexibilityAv:' BRAPH2.FAIL_TEST], ...
@@ -1604,7 +1573,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 		)
 end
 
-%% Test 17: Delete Figures
+%% Test 16: Delete Figures
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	delete(findall(0, 'type', 'figure'))
 end

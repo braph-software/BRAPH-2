@@ -5,19 +5,19 @@ classdef PathLengthIn < Measure
 	% The in-path length is the average shortest in-path length of one node to all other nodes within a layer.
 	%
 	% The list of PathLengthIn properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the PathLengthIn.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the PathLengthIn.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the PathLengthIn.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the PathLengthIn.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the PathLengthIn.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the PathLengthIn.
+	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the in-path length.
+	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the in-path length.
+	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the in-path length.
+	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the in-path length.
+	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the in-path length.
+	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the in-path length.
 	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the cell containing the PathLengthIn.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the cell containing the in-path length.
 	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>15</strong> <strong>RULE</strong> 	RULE (parameter, option) is the PathLengthIn algorithm
 	%
@@ -125,19 +125,19 @@ classdef PathLengthIn < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of PathLengthIn properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the PathLengthIn.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the PathLengthIn.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the PathLengthIn.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the PathLengthIn.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the PathLengthIn.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the PathLengthIn.
+			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the in-path length.
+			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the in-path length.
+			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the in-path length.
+			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the in-path length.
+			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the in-path length.
+			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the in-path length.
 			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the cell containing the PathLengthIn.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the cell containing the in-path length.
 			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>15</strong> <strong>RULE</strong> 	RULE (parameter, option) is the PathLengthIn algorithm
 			%
@@ -473,7 +473,7 @@ classdef PathLengthIn < Measure
 			prop = PathLengthIn.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pathlengthin_description_list = { 'NAME (constant, string) is the name of the PathLengthIn.'  'DESCRIPTION (constant, string) is the description of the PathLengthIn.'  'TEMPLATE (parameter, item) is the template of the PathLengthIn.'  'ID (data, string) is a few-letter code of the PathLengthIn.'  'LABEL (metadata, string) is an extended label of the PathLengthIn.'  'NOTES (metadata, string) are some specific notes about the PathLengthIn.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the PathLengthIn.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the PathLengthIn algorithm' };
+			pathlengthin_description_list = { 'NAME (constant, string) is the name of the in-path length.'  'DESCRIPTION (constant, string) is the description of the in-path length.'  'TEMPLATE (parameter, item) is the template of the in-path length.'  'ID (data, string) is a few-letter code of the in-path length.'  'LABEL (metadata, string) is an extended label of the in-path length.'  'NOTES (metadata, string) are some specific notes about the in-path length.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the in-path length.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the PathLengthIn algorithm' };
 			prop_description = pathlengthin_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -533,7 +533,7 @@ classdef PathLengthIn < Measure
 				case 1 % PathLengthIn.NAME
 					prop_default = 'PathLengthIn';
 				case 2 % PathLengthIn.DESCRIPTION
-					prop_default = 'The PathLengthIn is the average shortest pathlength of one node to all other nodes within a layer.';
+					prop_default = 'The in-path length is the average shortest in-path length of one node to all other nodes within a layer.';
 				case 4 % PathLengthIn.ID
 					prop_default = 'PathLengthIn ID';
 				case 5 % PathLengthIn.LABEL

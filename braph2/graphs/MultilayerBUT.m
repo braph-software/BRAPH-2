@@ -602,7 +602,7 @@ classdef MultilayerBUT < MultilayerWU
 				case 8 % MultilayerBUT.GRAPH_TYPE
 					prop_default = 6;
 				case 27 % MultilayerBUT.COMPATIBLE_MEASURES
-					prop_default = { 'Degree'  'DegreeAv'  'Distance'  'GlobalEfficiency'  'GlobalEfficiencyAv' };
+					prop_default = { 'Degree'  'DegreeAv'  'DegreeOverlap'  'DegreeOverlapAv'  'Distance'  'GlobalEfficiency'  'GlobalEfficiencyAv' };
 				case 35 % MultilayerBUT.ATTEMPTSPEREDGE
 					prop_default = 5;
 				otherwise

@@ -1,24 +1,24 @@
 classdef MultiplexKCor < Measure
-	%MultiplexKCor is the graph  multiplex k-core.
+	%MultiplexKCor is the graph multiplex k-core.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
 	% The multiplex k-core of a graph is the largest subnetwork comprising nodes of overlapping degree k or higher. 
 	% k is set by the user; the default value is equal to 1.
 	%
 	% The list of MultiplexKCor properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex rich-club strength.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex rich-club strength.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex rich-club strength.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex rich-club strength.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex rich-club strength.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex rich-club strength.
+	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex k-core.
+	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex k-core.
+	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex k-core.
+	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex k-core.
+	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex k-core.
+	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex k-core.
 	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the multiplex rich-club strength.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the multiplex k-core.
 	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>15</strong> <strong>MULTIPLEXKCORETHRESHOLD</strong> 	MULTIPLEXKCORETHRESHOLD (parameter, scalar) is the multiplex k-core threshold
 	%
@@ -126,19 +126,19 @@ classdef MultiplexKCor < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of MultiplexKCor properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex rich-club strength.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex rich-club strength.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex rich-club strength.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex rich-club strength.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex rich-club strength.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex rich-club strength.
+			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex k-core.
+			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex k-core.
+			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex k-core.
+			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex k-core.
+			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex k-core.
+			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex k-core.
 			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the multiplex rich-club strength.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the multiplex k-core.
 			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>15</strong> <strong>MULTIPLEXKCORETHRESHOLD</strong> 	MULTIPLEXKCORETHRESHOLD (parameter, scalar) is the multiplex k-core threshold
 			%
@@ -474,7 +474,7 @@ classdef MultiplexKCor < Measure
 			prop = MultiplexKCor.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multiplexkcor_description_list = { 'NAME (constant, string) is the name of the multiplex rich-club strength.'  'DESCRIPTION (constant, string) is the description of the multiplex rich-club strength.'  'TEMPLATE (parameter, item) is the template of the multiplex rich-club strength.'  'ID (data, string) is a few-letter code of the multiplex rich-club strength.'  'LABEL (metadata, string) is an extended label of the multiplex rich-club strength.'  'NOTES (metadata, string) are some specific notes about the multiplex rich-club strength.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the multiplex rich-club strength.'  'PFM (gui, item) contains the panel figure of the measure.'  'MULTIPLEXKCORETHRESHOLD (parameter, scalar) is the multiplex k-core threshold' };
+			multiplexkcor_description_list = { 'NAME (constant, string) is the name of the multiplex k-core.'  'DESCRIPTION (constant, string) is the description of the multiplex k-core.'  'TEMPLATE (parameter, item) is the template of the multiplex k-core.'  'ID (data, string) is a few-letter code of the multiplex k-core.'  'LABEL (metadata, string) is an extended label of the multiplex k-core.'  'NOTES (metadata, string) are some specific notes about the multiplex k-core.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the multiplex k-core.'  'PFM (gui, item) contains the panel figure of the measure.'  'MULTIPLEXKCORETHRESHOLD (parameter, scalar) is the multiplex k-core threshold' };
 			prop_description = multiplexkcor_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -552,7 +552,7 @@ classdef MultiplexKCor < Measure
 				case 10 % MultiplexKCor.PARAMETRICITY
 					prop_default = 2;
 				case 11 % MultiplexKCor.COMPATIBLE_GRAPHS
-					prop_default = {'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'OrdMxWU'};;
+					prop_default = {'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'OrdMxWU' 'OrdMxBU'};;
 				otherwise
 					prop_default = getPropDefault@Measure(prop);
 			end

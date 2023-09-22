@@ -1,5 +1,5 @@
 %% ¡header!
-EdgeNumDist < Measure (m, edgenumberdistance) is the edgenumberdistance.
+EdgeNumDist < Measure (m, edge number distance) is the edge number distance.
 
 %%% ¡description!
 The edge distance number of a graph is the number of edges in the shortest 
@@ -7,32 +7,32 @@ weighted path between two nodes within a layer.
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the edgenumberdistance.
+NAME (constant, string) is the name of the edge number distance.
 %%%% ¡default!
-'EdgeNumDist'
+'EdgeNumberDistance'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the edgenumberdistance.
+DESCRIPTION (constant, string) is the description of the edge number distance.
 %%%% ¡default!
 'The edge distance number of a graph is the number of edges in the shortest weighted path between two nodes within a layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the edgenumberdistance.
+TEMPLATE (parameter, item) is the template of the edge number distance.
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the edgenumberdistance.
+ID (data, string) is a few-letter code of the edge number distance.
 %%%% ¡default!
 'EdgeNumDist ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the edgenumberdistance.
+LABEL (metadata, string) is an extended label of the edge number distance.
 %%%% ¡default!
-'EdgeNumDist label'
+'EdgeNumberDistance label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the edgenumberdistance.
+NOTES (metadata, string) are some specific notes about the edge number distance.
 %%%% ¡default!
-'EdgeNumDist notes'
+'EdgeNumberDistance notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.BINODAL__.
@@ -55,7 +55,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWD' 'GraphWU' 'MultiplexWD' 'MultiplexWU'};
 
 %%% ¡prop!
-M (result, cell) is the edgenumberdistance.
+M (result, cell) is the edge number distance.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

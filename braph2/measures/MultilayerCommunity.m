@@ -612,7 +612,7 @@ classdef MultilayerCommunity < Measure
 				case 22 % MultilayerCommunity.QUALITY_FUNCTION
 					prop_default = [];
 				case 1 % MultilayerCommunity.NAME
-					prop_default = 'MultilayerCommunity';
+					prop_default = 'MultilayerCommunityStructure';
 				case 2 % MultilayerCommunity.DESCRIPTION
 					prop_default = 'The multilayer community structure of a multilayer graph is a subdivision of the network into non-overlapping groups of nodes which maximizes the number of within group edges, and minimizes the number of between group edges.';
 				case 3 % MultilayerCommunity.TEMPLATE
@@ -620,9 +620,9 @@ classdef MultilayerCommunity < Measure
 				case 4 % MultilayerCommunity.ID
 					prop_default = 'MultilayerCommunity ID';
 				case 5 % MultilayerCommunity.LABEL
-					prop_default = 'MultilayerCommunity label';
+					prop_default = 'MultilayerCommunityStructure label';
 				case 6 % MultilayerCommunity.NOTES
-					prop_default = 'MultilayerCommunity notes';
+					prop_default = 'MultilayerCommunityStructure notes';
 				case 8 % MultilayerCommunity.SHAPE
 					prop_default = 2;
 				case 9 % MultilayerCommunity.SCOPE
@@ -630,7 +630,7 @@ classdef MultilayerCommunity < Measure
 				case 10 % MultilayerCommunity.PARAMETRICITY
 					prop_default = 2;
 				case 11 % MultilayerCommunity.COMPATIBLE_GRAPHS
-					prop_default = {'MultiplexBU' 'MultiplexBUT' 'MultilayerBU'};;
+					prop_default = {'MultiplexWU' 'OrdMxWU' 'MultiplexBU' 'MultiplexBUT' 'MultiplexBUD' 'MultilayerBU' 'MultilayerWU' 'OrdMlWU'};;
 				otherwise
 					prop_default = getPropDefault@Measure(prop);
 			end

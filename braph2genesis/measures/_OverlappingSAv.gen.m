@@ -1,5 +1,5 @@
 %% ¡header!
-OverlappingSAv < OverlappingS (m, averge overlapping strength) is the graph averge overlapping degree.
+OverlappingSAv < OverlappingS (m, averge overlapping strength) is the graph averge overlapping strength.
 
 %%% ¡description!
 The average overlapping strength of a graph is the average of the sum of the 
@@ -52,32 +52,32 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the averge overlapping degree.
+NAME (constant, string) is the name of the averge overlapping strength.
 %%%% ¡default!
 'OverlappingSAv'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the averge overlapping degree.
+DESCRIPTION (constant, string) is the description of the averge overlapping strength.
 %%%% ¡default!
 'The average overlapping strength of a graph is the average of the sum of the strengths of a node in all layers.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the averge overlapping degree.
+TEMPLATE (parameter, item) is the template of the averge overlapping strength.
 %%%% ¡settings!
 'OverlappingSAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the averge overlapping degree.
+ID (data, string) is a few-letter code of the averge overlapping strength.
 %%%% ¡default!
 'OverlappingSAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the averge overlapping degree.
+LABEL (metadata, string) is an extended label of the averge overlapping strength.
 %%%% ¡default!
 'OverlappingSAv label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the averge overlapping degree.
+NOTES (metadata, string) are some specific notes about the averge overlapping strength.
 %%%% ¡default!
 'OverlappingSAv notes'
 
@@ -102,7 +102,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'OrdMxWU' 'MultilayerWU' 'OrdMlWU'};
 
 %%% ¡prop!
-M (result, cell) is the averge overlapping degree.
+M (result, cell) is the averge overlapping strength.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 overlapping_strength = calculateValue@OverlappingS(m, prop);

@@ -6,19 +6,19 @@ classdef OverlappingDegOutAv < OverlappingDegOut
 	% out-degrees of a node in all layers.
 	%
 	% The list of OverlappingDegOutAv properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the overlapping in-degree.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the overlapping in-degree.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the overlapping in-degree.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the overlapping in-degree.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the overlapping in-degree.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the overlapping in-degree.
+	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average overlapping out-degree.
+	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average overlapping out-degree.
+	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average overlapping out-degree.
+	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average overlapping out-degree.
+	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average overlapping out-degree.
+	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average overlapping out-degree.
 	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the overlapping in-degree.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the average overlapping out-degree.
 	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% OverlappingDegOutAv methods (constructor):
@@ -119,19 +119,19 @@ classdef OverlappingDegOutAv < OverlappingDegOut
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of OverlappingDegOutAv properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the overlapping in-degree.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the overlapping in-degree.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the overlapping in-degree.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the overlapping in-degree.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the overlapping in-degree.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the overlapping in-degree.
+			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average overlapping out-degree.
+			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average overlapping out-degree.
+			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average overlapping out-degree.
+			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average overlapping out-degree.
+			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average overlapping out-degree.
+			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average overlapping out-degree.
 			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the overlapping in-degree.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the average overlapping out-degree.
 			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -466,7 +466,7 @@ classdef OverlappingDegOutAv < OverlappingDegOut
 			prop = OverlappingDegOutAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			overlappingdegoutav_description_list = { 'NAME (constant, string) is the name of the overlapping in-degree.'  'DESCRIPTION (constant, string) is the description of the overlapping in-degree.'  'TEMPLATE (parameter, item) is the template of the overlapping in-degree.'  'ID (data, string) is a few-letter code of the overlapping in-degree.'  'LABEL (metadata, string) is an extended label of the overlapping in-degree.'  'NOTES (metadata, string) are some specific notes about the overlapping in-degree.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the overlapping in-degree.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			overlappingdegoutav_description_list = { 'NAME (constant, string) is the name of the average overlapping out-degree.'  'DESCRIPTION (constant, string) is the description of the average overlapping out-degree.'  'TEMPLATE (parameter, item) is the template of the average overlapping out-degree.'  'ID (data, string) is a few-letter code of the average overlapping out-degree.'  'LABEL (metadata, string) is an extended label of the average overlapping out-degree.'  'NOTES (metadata, string) are some specific notes about the average overlapping out-degree.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the average overlapping out-degree.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = overlappingdegoutav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -540,7 +540,7 @@ classdef OverlappingDegOutAv < OverlappingDegOut
 				case 10 % OverlappingDegOutAv.PARAMETRICITY
 					prop_default = 2;
 				case 11 % OverlappingDegOutAv.COMPATIBLE_GRAPHS
-					prop_default = {'MultiplexWD' 'MultiplexBD' 'MultilayerBD' 'OrdMlBD'};;
+					prop_default = {'MultiplexWD' 'MultiplexBD' 'MultilayerWD' 'MultilayerBD' 'OrdMxBD' 'OrdMxWD' 'OrdMlBD' 'OrdMlWD'};;
 				otherwise
 					prop_default = getPropDefault@OverlappingDegOut(prop);
 			end
@@ -645,7 +645,7 @@ classdef OverlappingDegOutAv < OverlappingDegOut
 					rng_settings_ = rng(); rng(m.getPropSeed(13), 'twister')
 					
 					g = m.get('G');  % graph from measure class
-					overlapping_in_degree_av = calculateValue@OverlappingDegOut(m, prop);
+					overlapping_out_degree_av = calculateValue@OverlappingDegOut(m, prop);
 					l = g.get('LAYERNUMBER');
 					
 					if l == 0
@@ -653,7 +653,7 @@ classdef OverlappingDegOutAv < OverlappingDegOut
 					    return;
 					end
 					
-					value = {mean(cell2mat(overlapping_in_degree_av))};
+					value = {mean(cell2mat(overlapping_out_degree_av))};
 					
 					rng(rng_settings_)
 					

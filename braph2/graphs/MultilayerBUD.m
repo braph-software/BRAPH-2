@@ -602,7 +602,7 @@ classdef MultilayerBUD < MultilayerWU
 				case 8 % MultilayerBUD.GRAPH_TYPE
 					prop_default = 6;
 				case 27 % MultilayerBUD.COMPATIBLE_MEASURES
-					prop_default = { 'Degree'  'DegreeAv'  'Distance'  'GlobalEfficiency'  'GlobalEfficiencyAv' };
+					prop_default = { 'Degree'  'DegreeAv'  'DegreeOverlap'  'DegreeOverlapAv'  'Distance'  'GlobalEfficiency'  'GlobalEfficiencyAv' };
 				case 35 % MultilayerBUD.ATTEMPTSPEREDGE
 					prop_default = 5;
 				otherwise

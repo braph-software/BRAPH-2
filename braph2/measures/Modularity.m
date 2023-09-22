@@ -551,7 +551,7 @@ classdef Modularity < CommunityStructure
 				case 10 % Modularity.PARAMETRICITY
 					prop_default = 2;
 				case 11 % Modularity.COMPATIBLE_GRAPHS
-					prop_default = {'GraphBU' 'MultigraphBUT' 'MultiplexBU'};;
+					prop_default = {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUT' 'MultigraphBUD'};;
 				otherwise
 					prop_default = getPropDefault@CommunityStructure(prop);
 			end

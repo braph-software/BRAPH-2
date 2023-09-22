@@ -1,24 +1,24 @@
 classdef EdgeNumDist < Measure
-	%EdgeNumDist is the edgenumberdistance.
+	%EdgeNumDist is the edge number distance.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
 	% The edge distance number of a graph is the number of edges in the shortest 
 	% weighted path between two nodes within a layer.
 	%
 	% The list of EdgeNumDist properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the edgenumberdistance.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the edgenumberdistance.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the edgenumberdistance.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the edgenumberdistance.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the edgenumberdistance.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the edgenumberdistance.
+	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the edge number distance.
+	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the edge number distance.
+	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the edge number distance.
+	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the edge number distance.
+	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the edge number distance.
+	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the edge number distance.
 	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.BINODAL.
 	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the edgenumberdistance.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the edge number distance.
 	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% EdgeNumDist methods (constructor):
@@ -39,33 +39,33 @@ classdef EdgeNumDist < Measure
 	%  unchecked - sets a property to NOT checked
 	%
 	% EdgeNumDist methods (display):
-	%  tostring - string with information about the edgenumberdistance
-	%  disp - displays information about the edgenumberdistance
-	%  tree - displays the tree of the edgenumberdistance
+	%  tostring - string with information about the edge number distance
+	%  disp - displays information about the edge number distance
+	%  tree - displays the tree of the edge number distance
 	%
 	% EdgeNumDist methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two edgenumberdistance are equal (values, locked)
+	%  isequal - determines whether two edge number distance are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the edgenumberdistance
+	%  copy - copies the edge number distance
 	%
 	% EdgeNumDist methods (save/load, Static):
-	%  save - saves BRAPH2 edgenumberdistance as b2 file
-	%  load - loads a BRAPH2 edgenumberdistance from a b2 file
+	%  save - saves BRAPH2 edge number distance as b2 file
+	%  load - loads a BRAPH2 edge number distance from a b2 file
 	%
 	% EdgeNumDist method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the edgenumberdistance
+	%  encodeJSON - returns a JSON string encoding the edge number distance
 	%
 	% EdgeNumDist method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the edgenumberdistance
+	%   decodeJSON - returns a JSON string encoding the edge number distance
 	%
 	% EdgeNumDist methods (inspection, Static):
-	%  getClass - returns the class of the edgenumberdistance
+	%  getClass - returns the class of the edge number distance
 	%  getSubclasses - returns all subclasses of EdgeNumDist
-	%  getProps - returns the property list of the edgenumberdistance
-	%  getPropNumber - returns the property number of the edgenumberdistance
+	%  getProps - returns the property list of the edge number distance
+	%  getPropNumber - returns the property number of the edge number distance
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -109,7 +109,7 @@ classdef EdgeNumDist < Measure
 	
 	methods % constructor
 		function m = EdgeNumDist(varargin)
-			%EdgeNumDist() creates a edgenumberdistance.
+			%EdgeNumDist() creates a edge number distance.
 			%
 			% EdgeNumDist(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -119,19 +119,19 @@ classdef EdgeNumDist < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of EdgeNumDist properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the edgenumberdistance.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the edgenumberdistance.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the edgenumberdistance.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the edgenumberdistance.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the edgenumberdistance.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the edgenumberdistance.
+			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the edge number distance.
+			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the edge number distance.
+			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the edge number distance.
+			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the edge number distance.
+			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the edge number distance.
+			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the edge number distance.
 			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.BINODAL.
 			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the edgenumberdistance.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the edge number distance.
 			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -141,12 +141,12 @@ classdef EdgeNumDist < Measure
 	end
 	methods (Static) % inspection
 		function m_class = getClass()
-			%GETCLASS returns the class of the edgenumberdistance.
+			%GETCLASS returns the class of the edge number distance.
 			%
 			% CLASS = EdgeNumDist.GETCLASS() returns the class 'EdgeNumDist'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = M.GETCLASS() returns the class of the edgenumberdistance M.
+			%  CLASS = M.GETCLASS() returns the class of the edge number distance M.
 			%  CLASS = Element.GETCLASS(M) returns the class of 'M'.
 			%  CLASS = Element.GETCLASS('EdgeNumDist') returns 'EdgeNumDist'.
 			%
@@ -156,12 +156,12 @@ classdef EdgeNumDist < Measure
 			m_class = 'EdgeNumDist';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the edgenumberdistance.
+			%GETSUBCLASSES returns all subclasses of the edge number distance.
 			%
 			% LIST = EdgeNumDist.GETSUBCLASSES() returns all subclasses of 'EdgeNumDist'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = M.GETSUBCLASSES() returns all subclasses of the edgenumberdistance M.
+			%  LIST = M.GETSUBCLASSES() returns all subclasses of the edge number distance M.
 			%  LIST = Element.GETSUBCLASSES(M) returns all subclasses of 'M'.
 			%  LIST = Element.GETSUBCLASSES('EdgeNumDist') returns all subclasses of 'EdgeNumDist'.
 			%
@@ -173,16 +173,16 @@ classdef EdgeNumDist < Measure
 			subclass_list = { 'EdgeNumDist' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of edgenumberdistance.
+			%GETPROPS returns the property list of edge number distance.
 			%
-			% PROPS = EdgeNumDist.GETPROPS() returns the property list of edgenumberdistance
+			% PROPS = EdgeNumDist.GETPROPS() returns the property list of edge number distance
 			%  as a row vector.
 			%
 			% PROPS = EdgeNumDist.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the edgenumberdistance M.
+			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the edge number distance M.
 			%  PROPS = Element.GETPROPS(M[, CATEGORY]) returns the property list of 'M'.
 			%  PROPS = Element.GETPROPS('EdgeNumDist'[, CATEGORY]) returns the property list of 'EdgeNumDist'.
 			%
@@ -218,15 +218,15 @@ classdef EdgeNumDist < Measure
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of edgenumberdistance.
+			%GETPROPNUMBER returns the property number of edge number distance.
 			%
-			% N = EdgeNumDist.GETPROPNUMBER() returns the property number of edgenumberdistance.
+			% N = EdgeNumDist.GETPROPNUMBER() returns the property number of edge number distance.
 			%
-			% N = EdgeNumDist.GETPROPNUMBER(CATEGORY) returns the property number of edgenumberdistance
+			% N = EdgeNumDist.GETPROPNUMBER(CATEGORY) returns the property number of edge number distance
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the edgenumberdistance M.
+			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the edge number distance M.
 			%  N = Element.GETPROPNUMBER(M) returns the property number of 'M'.
 			%  N = Element.GETPROPNUMBER('EdgeNumDist') returns the property number of 'EdgeNumDist'.
 			%
@@ -262,7 +262,7 @@ classdef EdgeNumDist < Measure
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in edgenumberdistance/error.
+			%EXISTSPROP checks whether property exists in edge number distance/error.
 			%
 			% CHECK = EdgeNumDist.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -300,7 +300,7 @@ classdef EdgeNumDist < Measure
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in edgenumberdistance/error.
+			%EXISTSTAG checks whether tag exists in edge number distance/error.
 			%
 			% CHECK = EdgeNumDist.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -466,7 +466,7 @@ classdef EdgeNumDist < Measure
 			prop = EdgeNumDist.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			edgenumdist_description_list = { 'NAME (constant, string) is the name of the edgenumberdistance.'  'DESCRIPTION (constant, string) is the description of the edgenumberdistance.'  'TEMPLATE (parameter, item) is the template of the edgenumberdistance.'  'ID (data, string) is a few-letter code of the edgenumberdistance.'  'LABEL (metadata, string) is an extended label of the edgenumberdistance.'  'NOTES (metadata, string) are some specific notes about the edgenumberdistance.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.BINODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the edgenumberdistance.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			edgenumdist_description_list = { 'NAME (constant, string) is the name of the edge number distance.'  'DESCRIPTION (constant, string) is the description of the edge number distance.'  'TEMPLATE (parameter, item) is the template of the edge number distance.'  'ID (data, string) is a few-letter code of the edge number distance.'  'LABEL (metadata, string) is an extended label of the edge number distance.'  'NOTES (metadata, string) are some specific notes about the edge number distance.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.BINODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the edge number distance.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = edgenumdist_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -520,15 +520,15 @@ classdef EdgeNumDist < Measure
 			
 			switch prop %CET: Computational Efficiency Trick
 				case 1 % EdgeNumDist.NAME
-					prop_default = 'EdgeNumDist';
+					prop_default = 'EdgeNumberDistance';
 				case 2 % EdgeNumDist.DESCRIPTION
 					prop_default = 'The edge distance number of a graph is the number of edges in the shortest weighted path between two nodes within a layer.';
 				case 4 % EdgeNumDist.ID
 					prop_default = 'EdgeNumDist ID';
 				case 5 % EdgeNumDist.LABEL
-					prop_default = 'EdgeNumDist label';
+					prop_default = 'EdgeNumberDistance label';
 				case 6 % EdgeNumDist.NOTES
-					prop_default = 'EdgeNumDist notes';
+					prop_default = 'EdgeNumberDistance notes';
 				case 8 % EdgeNumDist.SHAPE
 					prop_default = 3;
 				case 9 % EdgeNumDist.SCOPE
