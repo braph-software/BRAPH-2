@@ -201,7 +201,7 @@ classdef AnalyzeEnsemble < ConcreteElement
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'AnalyzeEnsemble'  'AnalyzeEnsemble_CON_BUD'  'AnalyzeEnsemble_CON_BUT'  'AnalyzeEnsemble_CON_WU'  'AnalyzeEnsemble_CON_MP_BUD'  'AnalyzeEnsemble_CON_MP_BUT'  'AnalyzeEnsemble_CON_MP_WU'  'AnalyzeEnsemble_CON_OMP_WU'  'AnalyzeEnsemble_CON_FUN_MP_BUD'  'AnalyzeEnsemble_CON_FUN_MP_BUT'  'AnalyzeEnsemble_CON_FUN_MP_WU'  'AnalyzeEnsemble_FUN_BUD'  'AnalyzeEnsemble_FUN_BUT'  'AnalyzeEnsemble_FUN_WU'  'AnalyzeEnsemble_FUN_MP_BUD'  'AnalyzeEnsemble_FUN_MP_BUT'  'AnalyzeEnsemble_FUN_MP_WU'  'AnalyzeEnsemble_FUN_OMP_WU' }; %CET: Computational Efficiency Trick
+			subclass_list = { 'AnalyzeEnsemble'  'AnalyzeEnsemble_CON_BUD'  'AnalyzeEnsemble_CON_BUT'  'AnalyzeEnsemble_CON_WU'  'AnalyzeEnsemble_CON_WD'  'AnalyzeEnsemble_CON_MP_BUD'  'AnalyzeEnsemble_CON_MP_BUT'  'AnalyzeEnsemble_CON_MP_WU'  'AnalyzeEnsemble_CON_OMP_WU'  'AnalyzeEnsemble_CON_FUN_MP_BUD'  'AnalyzeEnsemble_CON_FUN_MP_BUT'  'AnalyzeEnsemble_CON_FUN_MP_WU'  'AnalyzeEnsemble_FUN_BUD'  'AnalyzeEnsemble_FUN_BUT'  'AnalyzeEnsemble_FUN_WU'  'AnalyzeEnsemble_FUN_MP_BUD'  'AnalyzeEnsemble_FUN_MP_BUT'  'AnalyzeEnsemble_FUN_MP_WU'  'AnalyzeEnsemble_FUN_OMP_WU' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of ensemble-based graph analysis.

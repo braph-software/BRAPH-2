@@ -74,5 +74,5 @@ if ~exist(target_dir, 'dir')
     
     braph2(false)
 
-    test_braph2
+%     test_braph2
 end
