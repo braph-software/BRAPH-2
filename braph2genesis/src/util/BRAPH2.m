@@ -11,7 +11,7 @@ classdef BRAPH2
     %  COPYRIGHT        - BRAPH2 copyright
     %  WEB              - BRAPH2 website
     %  TWITTER          - BRAPH2 twitter handle
-    %  MATLAB_RELEASE   - Minimal MatLab version (2020b)
+    %  MATLAB_RELEASE   - Minimal MatLab version (2022a)
     %
     % Properties (Constant) - BRAPH2 extensions
     %  EXT_ELEMENT      - BRAPH2 element extension (*.b2)
@@ -71,7 +71,7 @@ classdef BRAPH2
         COPYRIGHT = ['Copyright 2014-' datestr(now,'yyyy')]
         WEB = 'braph.org' % BRAPH2 website
         TWITTER = 'braph2software' % BRAPH2 twitter handle
-        MATLAB_RELEASE = '9.10'; % Minimal MatLab release (2021a)
+        MATLAB_RELEASE = '9.12'; % Minimal MatLab release (2022a)
     end
     properties (Constant) % BRAPH2 extensions
         EXT_ELEMENT = {'*.b2'} % BRAPH2 element extension
