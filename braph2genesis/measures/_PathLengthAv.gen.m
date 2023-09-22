@@ -19,6 +19,8 @@ DESCRIPTION (constant, string) is the description of the average path length.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the average path length.
+%%%% ¡settings!
+'PathLengthAv'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the average path length.

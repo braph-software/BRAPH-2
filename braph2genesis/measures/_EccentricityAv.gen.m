@@ -18,6 +18,8 @@ DESCRIPTION (constant, string) is the description of the average eccentricity.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the average eccentricity.
+%%%% ¡settings!
+'EccentricityAv'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the average eccentricity.

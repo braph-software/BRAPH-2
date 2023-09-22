@@ -492,6 +492,8 @@ classdef KCorenessCentrality < Measure
 			prop = KCorenessCentrality.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % KCorenessCentrality.TEMPLATE
+					prop_settings = 'KCorenessCentrality';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
 			end
@@ -523,6 +525,8 @@ classdef KCorenessCentrality < Measure
 					prop_default = 'KCorenessCentrality';
 				case 2 % KCorenessCentrality.DESCRIPTION
 					prop_default = 'The k-coreness centrality of a node is k if the node belongs to the k-core but not to the (k+1)-core.';
+				case 3 % KCorenessCentrality.TEMPLATE
+					prop_default = Format.getFormatDefault(8, KCorenessCentrality.getPropSettings(prop));
 				case 4 % KCorenessCentrality.ID
 					prop_default = 'KCorenessCentrality ID';
 				case 5 % KCorenessCentrality.LABEL
@@ -601,6 +605,8 @@ classdef KCorenessCentrality < Measure
 			prop = KCorenessCentrality.getPropProp(pointer);
 			
 			switch prop
+				case 3 % KCorenessCentrality.TEMPLATE
+					check = Format.checkFormat(8, value, KCorenessCentrality.getPropSettings(prop));
 				otherwise
 					if prop <= 14
 						check = checkProp@Measure(prop, value);

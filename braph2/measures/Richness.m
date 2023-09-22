@@ -492,6 +492,8 @@ classdef Richness < Degree
 			prop = Richness.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % Richness.TEMPLATE
+					prop_settings = 'Richness';
 				otherwise
 					prop_settings = getPropSettings@Degree(prop);
 			end
@@ -523,6 +525,8 @@ classdef Richness < Degree
 					prop_default = 'Richness';
 				case 2 % Richness.DESCRIPTION
 					prop_default = 'The richness of a node is the sum of the edges that connect nodes of higher degree within a layer.';
+				case 3 % Richness.TEMPLATE
+					prop_default = Format.getFormatDefault(8, Richness.getPropSettings(prop));
 				case 4 % Richness.ID
 					prop_default = 'Richness ID';
 				case 5 % Richness.LABEL
@@ -601,6 +605,8 @@ classdef Richness < Degree
 			prop = Richness.getPropProp(pointer);
 			
 			switch prop
+				case 3 % Richness.TEMPLATE
+					check = Format.checkFormat(8, value, Richness.getPropSettings(prop));
 				otherwise
 					if prop <= 14
 						check = checkProp@Degree(prop, value);

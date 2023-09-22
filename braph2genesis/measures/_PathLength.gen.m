@@ -19,6 +19,8 @@ DESCRIPTION (constant, string) is the description of the pathlength.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the pathlength.
+%%%% ¡settings!
+'PathLength'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the pathlength.

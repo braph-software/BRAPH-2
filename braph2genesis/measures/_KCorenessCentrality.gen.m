@@ -19,6 +19,8 @@ DESCRIPTION (constant, string) is the description of the kcorenesscentrality.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the kcorenesscentrality.
+%%%% ¡settings!
+'KCorenessCentrality'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the kcorenesscentrality.

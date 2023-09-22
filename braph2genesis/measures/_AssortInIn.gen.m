@@ -22,7 +22,7 @@ DESCRIPTION (constant, string) is the description of the in-in-assortativity.
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the in-in-assortativity.
 %%%% ¡settings!
-'InInAssortativity'
+'AssortInIn'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the in-in-assortativity.

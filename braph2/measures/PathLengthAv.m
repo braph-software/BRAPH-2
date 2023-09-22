@@ -494,6 +494,8 @@ classdef PathLengthAv < PathLength
 			prop = PathLengthAv.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % PathLengthAv.TEMPLATE
+					prop_settings = 'PathLengthAv';
 				otherwise
 					prop_settings = getPropSettings@PathLength(prop);
 			end
@@ -525,6 +527,8 @@ classdef PathLengthAv < PathLength
 					prop_default = 'PathLengthAv';
 				case 2 % PathLengthAv.DESCRIPTION
 					prop_default = 'The average path length of a graph is the average of the sum of the path lengths within each layer.';
+				case 3 % PathLengthAv.TEMPLATE
+					prop_default = Format.getFormatDefault(8, PathLengthAv.getPropSettings(prop));
 				case 4 % PathLengthAv.ID
 					prop_default = 'PathLengthAv ID';
 				case 5 % PathLengthAv.LABEL
@@ -603,6 +607,8 @@ classdef PathLengthAv < PathLength
 			prop = PathLengthAv.getPropProp(pointer);
 			
 			switch prop
+				case 3 % PathLengthAv.TEMPLATE
+					check = Format.checkFormat(8, value, PathLengthAv.getPropSettings(prop));
 				otherwise
 					if prop <= 15
 						check = checkProp@PathLength(prop, value);

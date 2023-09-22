@@ -508,6 +508,8 @@ classdef FlexibilityAv < Flexibility
 			prop = FlexibilityAv.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % FlexibilityAv.TEMPLATE
+					prop_settings = 'FlexibilityAv';
 				otherwise
 					prop_settings = getPropSettings@Flexibility(prop);
 			end
@@ -539,6 +541,8 @@ classdef FlexibilityAv < Flexibility
 					prop_default = 'FlexibilityAv ';
 				case 2 % FlexibilityAv.DESCRIPTION
 					prop_default = 'The average flexibility of a multilayer graph is the average of the flexibility of all nodes.';
+				case 3 % FlexibilityAv.TEMPLATE
+					prop_default = Format.getFormatDefault(8, FlexibilityAv.getPropSettings(prop));
 				case 4 % FlexibilityAv.ID
 					prop_default = 'FlexibilityAv ID';
 				case 5 % FlexibilityAv.LABEL
@@ -617,6 +621,8 @@ classdef FlexibilityAv < Flexibility
 			prop = FlexibilityAv.getPropProp(pointer);
 			
 			switch prop
+				case 3 % FlexibilityAv.TEMPLATE
+					check = Format.checkFormat(8, value, FlexibilityAv.getPropSettings(prop));
 				otherwise
 					if prop <= 22
 						check = checkProp@Flexibility(prop, value);

@@ -493,6 +493,8 @@ classdef PathLengthInAv < PathLengthIn
 			prop = PathLengthInAv.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % PathLengthInAv.TEMPLATE
+					prop_settings = 'PathLengthInAv';
 				otherwise
 					prop_settings = getPropSettings@PathLengthIn(prop);
 			end
@@ -524,6 +526,8 @@ classdef PathLengthInAv < PathLengthIn
 					prop_default = 'PathLengthInAv';
 				case 2 % PathLengthInAv.DESCRIPTION
 					prop_default = 'The average in-path length is the average shortest in-path length of one node to all other nodes within a layer.';
+				case 3 % PathLengthInAv.TEMPLATE
+					prop_default = Format.getFormatDefault(8, PathLengthInAv.getPropSettings(prop));
 				case 4 % PathLengthInAv.ID
 					prop_default = 'PathLengthInAv ID';
 				case 5 % PathLengthInAv.LABEL
@@ -602,6 +606,8 @@ classdef PathLengthInAv < PathLengthIn
 			prop = PathLengthInAv.getPropProp(pointer);
 			
 			switch prop
+				case 3 % PathLengthInAv.TEMPLATE
+					check = Format.checkFormat(8, value, PathLengthInAv.getPropSettings(prop));
 				otherwise
 					if prop <= 15
 						check = checkProp@PathLengthIn(prop, value);

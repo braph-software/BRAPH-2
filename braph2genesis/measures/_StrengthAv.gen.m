@@ -19,6 +19,8 @@ DESCRIPTION (constant, string) is the description of the average strength.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the average strength.
+%%%% ¡settings!
+'StrengthAv'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the average strength.

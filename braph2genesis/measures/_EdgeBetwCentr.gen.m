@@ -20,6 +20,8 @@ DESCRIPTION (constant, string) is the description of the edge betweenness centra
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the edge betweenness centrality.
+%%%% ¡settings!
+'EdgeBetwCentr'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the edge betweenness centrality.

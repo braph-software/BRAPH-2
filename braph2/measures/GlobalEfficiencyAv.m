@@ -492,6 +492,8 @@ classdef GlobalEfficiencyAv < GlobalEfficiency
 			prop = GlobalEfficiencyAv.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % GlobalEfficiencyAv.TEMPLATE
+					prop_settings = 'GlobalEfficiencyAv';
 				otherwise
 					prop_settings = getPropSettings@GlobalEfficiency(prop);
 			end
@@ -523,6 +525,8 @@ classdef GlobalEfficiencyAv < GlobalEfficiency
 					prop_default = 'GlobalEfficiencyAv';
 				case 2 % GlobalEfficiencyAv.DESCRIPTION
 					prop_default = 'The average global efficiency (GlobalEfficiencyAv) is the average of the global efficiency within each layer.';
+				case 3 % GlobalEfficiencyAv.TEMPLATE
+					prop_default = Format.getFormatDefault(8, GlobalEfficiencyAv.getPropSettings(prop));
 				case 4 % GlobalEfficiencyAv.ID
 					prop_default = 'GlobalEfficiencyAv ID';
 				case 5 % GlobalEfficiencyAv.LABEL
@@ -601,6 +605,8 @@ classdef GlobalEfficiencyAv < GlobalEfficiency
 			prop = GlobalEfficiencyAv.getPropProp(pointer);
 			
 			switch prop
+				case 3 % GlobalEfficiencyAv.TEMPLATE
+					check = Format.checkFormat(8, value, GlobalEfficiencyAv.getPropSettings(prop));
 				otherwise
 					if prop <= 14
 						check = checkProp@GlobalEfficiency(prop, value);

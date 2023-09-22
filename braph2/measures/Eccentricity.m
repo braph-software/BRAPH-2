@@ -501,6 +501,8 @@ classdef Eccentricity < Measure
 			switch prop %CET: Computational Efficiency Trick
 				case 15 % Eccentricity.RULE
 					prop_settings = {'all', 'subgraphs'};
+				case 3 % Eccentricity.TEMPLATE
+					prop_settings = 'Eccentricity';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
 			end
@@ -534,6 +536,8 @@ classdef Eccentricity < Measure
 					prop_default = 'Eccentricity';
 				case 2 % Eccentricity.DESCRIPTION
 					prop_default = 'The eccentricity of a node is the number of edges connected to the node within a layer. Connection weights are ignored in calculations.';
+				case 3 % Eccentricity.TEMPLATE
+					prop_default = Format.getFormatDefault(8, Eccentricity.getPropSettings(prop));
 				case 4 % Eccentricity.ID
 					prop_default = 'Eccentricity ID';
 				case 5 % Eccentricity.LABEL
@@ -614,6 +618,8 @@ classdef Eccentricity < Measure
 			switch prop
 				case 15 % Eccentricity.RULE
 					check = Format.checkFormat(5, value, Eccentricity.getPropSettings(prop));
+				case 3 % Eccentricity.TEMPLATE
+					check = Format.checkFormat(8, value, Eccentricity.getPropSettings(prop));
 				otherwise
 					if prop <= 14
 						check = checkProp@Measure(prop, value);

@@ -493,6 +493,8 @@ classdef StrengthInAv < StrengthIn
 			prop = StrengthInAv.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % StrengthInAv.TEMPLATE
+					prop_settings = 'StrengthInAv';
 				otherwise
 					prop_settings = getPropSettings@StrengthIn(prop);
 			end
@@ -524,6 +526,8 @@ classdef StrengthInAv < StrengthIn
 					prop_default = 'StrengthInAv';
 				case 2 % StrengthInAv.DESCRIPTION
 					prop_default = 'The average in-strength of a graph is the mean of the sum of all weights of the inward edges connected to a node within a layer, i.e., it is the sum of the columns of the adjacency matrix.';
+				case 3 % StrengthInAv.TEMPLATE
+					prop_default = Format.getFormatDefault(8, StrengthInAv.getPropSettings(prop));
 				case 4 % StrengthInAv.ID
 					prop_default = 'StrengthInAv ID';
 				case 5 % StrengthInAv.LABEL
@@ -602,6 +606,8 @@ classdef StrengthInAv < StrengthIn
 			prop = StrengthInAv.getPropProp(pointer);
 			
 			switch prop
+				case 3 % StrengthInAv.TEMPLATE
+					check = Format.checkFormat(8, value, StrengthInAv.getPropSettings(prop));
 				otherwise
 					if prop <= 14
 						check = checkProp@StrengthIn(prop, value);

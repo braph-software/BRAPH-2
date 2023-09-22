@@ -494,6 +494,8 @@ classdef Assortativity < Measure
 			prop = Assortativity.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % Assortativity.TEMPLATE
+					prop_settings = 'Assortativity';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
 			end
@@ -525,6 +527,8 @@ classdef Assortativity < Measure
 					prop_default = 'Assortativity';
 				case 2 % Assortativity.DESCRIPTION
 					prop_default = 'The assortativity of a graph is the shortest path between all pairs of nodes within a layer of the graph. For weighted graphs, the assortativity is calculated with the Dijkstra algorithm using the inverse weight as the assortativity associated to the edge.';
+				case 3 % Assortativity.TEMPLATE
+					prop_default = Format.getFormatDefault(8, Assortativity.getPropSettings(prop));
 				case 4 % Assortativity.ID
 					prop_default = 'Assortativity ID';
 				case 5 % Assortativity.LABEL
@@ -603,6 +607,8 @@ classdef Assortativity < Measure
 			prop = Assortativity.getPropProp(pointer);
 			
 			switch prop
+				case 3 % Assortativity.TEMPLATE
+					check = Format.checkFormat(8, value, Assortativity.getPropSettings(prop));
 				otherwise
 					if prop <= 14
 						check = checkProp@Measure(prop, value);

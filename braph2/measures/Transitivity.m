@@ -494,6 +494,8 @@ classdef Transitivity < Triangles
 			prop = Transitivity.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % Transitivity.TEMPLATE
+					prop_settings = 'Transitivity';
 				otherwise
 					prop_settings = getPropSettings@Triangles(prop);
 			end
@@ -525,6 +527,8 @@ classdef Transitivity < Triangles
 					prop_default = 'Transitivity';
 				case 2 % Transitivity.DESCRIPTION
 					prop_default = 'The transitivity of a graph is the fraction of triangles to the number of (unordered) triplets within a layer.';
+				case 3 % Transitivity.TEMPLATE
+					prop_default = Format.getFormatDefault(8, Transitivity.getPropSettings(prop));
 				case 4 % Transitivity.ID
 					prop_default = 'Transitivity ID';
 				case 5 % Transitivity.LABEL
@@ -603,6 +607,8 @@ classdef Transitivity < Triangles
 			prop = Transitivity.getPropProp(pointer);
 			
 			switch prop
+				case 3 % Transitivity.TEMPLATE
+					check = Format.checkFormat(8, value, Transitivity.getPropSettings(prop));
 				otherwise
 					if prop <= 15
 						check = checkProp@Triangles(prop, value);

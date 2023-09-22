@@ -492,6 +492,8 @@ classdef StrengthAv < Strength
 			prop = StrengthAv.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % StrengthAv.TEMPLATE
+					prop_settings = 'StrengthAv';
 				otherwise
 					prop_settings = getPropSettings@Strength(prop);
 			end
@@ -523,6 +525,8 @@ classdef StrengthAv < Strength
 					prop_default = 'StrengthAv';
 				case 2 % StrengthAv.DESCRIPTION
 					prop_default = 'The average strength of a graph is the average of the sum of all weights of the edges connected to a node within a layer.';
+				case 3 % StrengthAv.TEMPLATE
+					prop_default = Format.getFormatDefault(8, StrengthAv.getPropSettings(prop));
 				case 4 % StrengthAv.ID
 					prop_default = 'StrengthAv ID';
 				case 5 % StrengthAv.LABEL
@@ -601,6 +605,8 @@ classdef StrengthAv < Strength
 			prop = StrengthAv.getPropProp(pointer);
 			
 			switch prop
+				case 3 % StrengthAv.TEMPLATE
+					check = Format.checkFormat(8, value, StrengthAv.getPropSettings(prop));
 				otherwise
 					if prop <= 14
 						check = checkProp@Strength(prop, value);

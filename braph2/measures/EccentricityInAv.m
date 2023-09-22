@@ -494,6 +494,8 @@ classdef EccentricityInAv < EccentricityIn
 			prop = EccentricityInAv.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % EccentricityInAv.TEMPLATE
+					prop_settings = 'EccentricityInAv';
 				otherwise
 					prop_settings = getPropSettings@EccentricityIn(prop);
 			end
@@ -525,6 +527,8 @@ classdef EccentricityInAv < EccentricityIn
 					prop_default = 'EccentricityInAv';
 				case 2 % EccentricityInAv.DESCRIPTION
 					prop_default = 'The average in-eccentricity of a node is the sum of the nodal in-eccentricities divided by their number within a layer.';
+				case 3 % EccentricityInAv.TEMPLATE
+					prop_default = Format.getFormatDefault(8, EccentricityInAv.getPropSettings(prop));
 				case 4 % EccentricityInAv.ID
 					prop_default = 'EccentricityInAv ID';
 				case 5 % EccentricityInAv.LABEL
@@ -603,6 +607,8 @@ classdef EccentricityInAv < EccentricityIn
 			prop = EccentricityInAv.getPropProp(pointer);
 			
 			switch prop
+				case 3 % EccentricityInAv.TEMPLATE
+					check = Format.checkFormat(8, value, EccentricityInAv.getPropSettings(prop));
 				otherwise
 					if prop <= 15
 						check = checkProp@EccentricityIn(prop, value);

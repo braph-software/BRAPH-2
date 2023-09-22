@@ -19,6 +19,8 @@ DESCRIPTION (constant, string) is the description of the richness.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the richness.
+%%%% ¡settings!
+'Richness'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the richness.

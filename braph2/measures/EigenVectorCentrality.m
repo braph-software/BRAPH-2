@@ -492,6 +492,8 @@ classdef EigenVectorCentrality < Measure
 			prop = EigenVectorCentrality.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % EigenVectorCentrality.TEMPLATE
+					prop_settings = 'EigenVectorCentrality';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
 			end
@@ -523,6 +525,8 @@ classdef EigenVectorCentrality < Measure
 					prop_default = 'EigenVectorCentrality';
 				case 2 % EigenVectorCentrality.DESCRIPTION
 					prop_default = 'The eigen vector centrality of a node is the ith element in the eigenvector corresponding to the largest eigenvalue of the largest eigenvalue of the graphs adjacency matrix.';
+				case 3 % EigenVectorCentrality.TEMPLATE
+					prop_default = Format.getFormatDefault(8, EigenVectorCentrality.getPropSettings(prop));
 				case 4 % EigenVectorCentrality.ID
 					prop_default = 'EigenVectorCentrality ID';
 				case 5 % EigenVectorCentrality.LABEL
@@ -601,6 +605,8 @@ classdef EigenVectorCentrality < Measure
 			prop = EigenVectorCentrality.getPropProp(pointer);
 			
 			switch prop
+				case 3 % EigenVectorCentrality.TEMPLATE
+					check = Format.checkFormat(8, value, EigenVectorCentrality.getPropSettings(prop));
 				otherwise
 					if prop <= 14
 						check = checkProp@Measure(prop, value);

@@ -19,6 +19,8 @@ DESCRIPTION (constant, string) is the description of the strength.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the strength.
+%%%% ¡settings!
+'Strength'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the strength.

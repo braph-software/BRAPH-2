@@ -493,6 +493,8 @@ classdef StrengthOut < Measure
 			prop = StrengthOut.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % StrengthOut.TEMPLATE
+					prop_settings = 'StrengthOut';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
 			end
@@ -524,6 +526,8 @@ classdef StrengthOut < Measure
 					prop_default = 'StrengthOut';
 				case 2 % StrengthOut.DESCRIPTION
 					prop_default = 'The out-strength of a graph is the sum of all weights of the outward edges connected to a node within a layer, i.e., it is the sum of the rows of the adjacency matrix.';
+				case 3 % StrengthOut.TEMPLATE
+					prop_default = Format.getFormatDefault(8, StrengthOut.getPropSettings(prop));
 				case 4 % StrengthOut.ID
 					prop_default = 'StrengthOut ID';
 				case 5 % StrengthOut.LABEL
@@ -602,6 +606,8 @@ classdef StrengthOut < Measure
 			prop = StrengthOut.getPropProp(pointer);
 			
 			switch prop
+				case 3 % StrengthOut.TEMPLATE
+					check = Format.checkFormat(8, value, StrengthOut.getPropSettings(prop));
 				otherwise
 					if prop <= 14
 						check = checkProp@Measure(prop, value);

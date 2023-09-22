@@ -22,7 +22,7 @@ DESCRIPTION (constant, string) is the description of the out-in-assortativity.
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the out-in-assortativity.
 %%%% ¡settings!
-'OutInAssortativity'
+'AssortOutIn'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the out-in-assortativity.

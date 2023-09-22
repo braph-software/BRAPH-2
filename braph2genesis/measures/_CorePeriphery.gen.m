@@ -17,8 +17,11 @@ NAME (constant, string) is the name of the core-periphery.
 DESCRIPTION (constant, string) is the description of the core-periphery.
 %%%% ¡default!
 'The core-periphery of a node is the value of the rank corresponding to the maximum richness nodes. It returns 1 for a node belonging to the core and zero otherwise.'
+
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the core-periphery.
+%%%% ¡settings!
+'CorePeriphery'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the core-periphery.

@@ -19,6 +19,8 @@ DESCRIPTION (constant, string) is the description of the eigenvector centrality.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the eigenvector centrality.
+%%%% ¡settings!
+'EigenVectorCentrality'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the eigenvector centrality.

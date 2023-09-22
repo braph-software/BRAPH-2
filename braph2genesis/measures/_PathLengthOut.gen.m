@@ -18,6 +18,8 @@ DESCRIPTION (constant, string) is the description of the out-path length.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the out-path length.
+%%%% ¡settings!
+'PathLengthOut'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the out-path length.

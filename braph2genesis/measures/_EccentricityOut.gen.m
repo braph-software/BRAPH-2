@@ -19,6 +19,8 @@ DESCRIPTION (constant, string) is the description of the out-eccentricity.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the out-eccentricity.
+%%%% ¡settings!
+'EccentricityOut'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the out-eccentricity.

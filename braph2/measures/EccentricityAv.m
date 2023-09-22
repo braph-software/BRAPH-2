@@ -493,6 +493,8 @@ classdef EccentricityAv < Eccentricity
 			prop = EccentricityAv.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % EccentricityAv.TEMPLATE
+					prop_settings = 'EccentricityAv';
 				otherwise
 					prop_settings = getPropSettings@Eccentricity(prop);
 			end
@@ -524,6 +526,8 @@ classdef EccentricityAv < Eccentricity
 					prop_default = 'EccentricityAv';
 				case 2 % EccentricityAv.DESCRIPTION
 					prop_default = 'The average eccentricity of a graph is the sum of the nodal eccentricities divided by their number within a layer.';
+				case 3 % EccentricityAv.TEMPLATE
+					prop_default = Format.getFormatDefault(8, EccentricityAv.getPropSettings(prop));
 				case 4 % EccentricityAv.ID
 					prop_default = 'EccentricityAv ID';
 				case 5 % EccentricityAv.LABEL
@@ -602,6 +606,8 @@ classdef EccentricityAv < Eccentricity
 			prop = EccentricityAv.getPropProp(pointer);
 			
 			switch prop
+				case 3 % EccentricityAv.TEMPLATE
+					check = Format.checkFormat(8, value, EccentricityAv.getPropSettings(prop));
 				otherwise
 					if prop <= 15
 						check = checkProp@Eccentricity(prop, value);

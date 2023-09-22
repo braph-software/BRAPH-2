@@ -19,6 +19,8 @@ DESCRIPTION (constant, string) is the description of the global efficiency.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the global efficiency.
+%%%% ¡settings!
+'GlobalEfficiency'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the degree.

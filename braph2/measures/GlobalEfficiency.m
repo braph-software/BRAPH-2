@@ -492,6 +492,8 @@ classdef GlobalEfficiency < Distance
 			prop = GlobalEfficiency.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % GlobalEfficiency.TEMPLATE
+					prop_settings = 'GlobalEfficiency';
 				otherwise
 					prop_settings = getPropSettings@Distance(prop);
 			end
@@ -523,6 +525,8 @@ classdef GlobalEfficiency < Distance
 					prop_default = 'GlobalEfficiency';
 				case 2 % GlobalEfficiency.DESCRIPTION
 					prop_default = 'The global efficiency is the average inverse shortest path length within each layer. It is inversely related to the characteristic path length.';
+				case 3 % GlobalEfficiency.TEMPLATE
+					prop_default = Format.getFormatDefault(8, GlobalEfficiency.getPropSettings(prop));
 				case 4 % GlobalEfficiency.ID
 					prop_default = 'GlobalEfficiency ID';
 				case 5 % GlobalEfficiency.LABEL
@@ -601,6 +605,8 @@ classdef GlobalEfficiency < Distance
 			prop = GlobalEfficiency.getPropProp(pointer);
 			
 			switch prop
+				case 3 % GlobalEfficiency.TEMPLATE
+					check = Format.checkFormat(8, value, GlobalEfficiency.getPropSettings(prop));
 				otherwise
 					if prop <= 14
 						check = checkProp@Distance(prop, value);

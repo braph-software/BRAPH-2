@@ -493,6 +493,8 @@ classdef CorePeriphery < Richness
 			prop = CorePeriphery.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % CorePeriphery.TEMPLATE
+					prop_settings = 'CorePeriphery';
 				otherwise
 					prop_settings = getPropSettings@Richness(prop);
 			end
@@ -524,6 +526,8 @@ classdef CorePeriphery < Richness
 					prop_default = 'CorePeriphery';
 				case 2 % CorePeriphery.DESCRIPTION
 					prop_default = 'The core-periphery of a node is the value of the rank corresponding to the maximum richness nodes. It returns 1 for a node belonging to the core and zero otherwise.';
+				case 3 % CorePeriphery.TEMPLATE
+					prop_default = Format.getFormatDefault(8, CorePeriphery.getPropSettings(prop));
 				case 4 % CorePeriphery.ID
 					prop_default = 'CorePeriphery ID';
 				case 5 % CorePeriphery.LABEL
@@ -602,6 +606,8 @@ classdef CorePeriphery < Richness
 			prop = CorePeriphery.getPropProp(pointer);
 			
 			switch prop
+				case 3 % CorePeriphery.TEMPLATE
+					check = Format.checkFormat(8, value, CorePeriphery.getPropSettings(prop));
 				otherwise
 					if prop <= 14
 						check = checkProp@Richness(prop, value);

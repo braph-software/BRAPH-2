@@ -495,7 +495,7 @@ classdef AssortInIn < Measure
 			
 			switch prop %CET: Computational Efficiency Trick
 				case 3 % AssortInIn.TEMPLATE
-					prop_settings = 'InInAssortativity';
+					prop_settings = 'AssortInIn';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
 			end

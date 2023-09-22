@@ -502,6 +502,8 @@ classdef PathLength < Measure
 			switch prop %CET: Computational Efficiency Trick
 				case 15 % PathLength.RULE
 					prop_settings = {'subgraphs' 'harmonic' 'mean'};
+				case 3 % PathLength.TEMPLATE
+					prop_settings = 'PathLength';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
 			end
@@ -535,6 +537,8 @@ classdef PathLength < Measure
 					prop_default = 'PathLength';
 				case 2 % PathLength.DESCRIPTION
 					prop_default = 'The pathlength is the average shortest pathlength of one node to all other nodes within a layer.';
+				case 3 % PathLength.TEMPLATE
+					prop_default = Format.getFormatDefault(8, PathLength.getPropSettings(prop));
 				case 4 % PathLength.ID
 					prop_default = 'PathLength ID';
 				case 5 % PathLength.LABEL
@@ -615,6 +619,8 @@ classdef PathLength < Measure
 			switch prop
 				case 15 % PathLength.RULE
 					check = Format.checkFormat(5, value, PathLength.getPropSettings(prop));
+				case 3 % PathLength.TEMPLATE
+					check = Format.checkFormat(8, value, PathLength.getPropSettings(prop));
 				otherwise
 					if prop <= 14
 						check = checkProp@Measure(prop, value);

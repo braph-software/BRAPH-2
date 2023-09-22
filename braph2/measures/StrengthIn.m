@@ -493,6 +493,8 @@ classdef StrengthIn < Measure
 			prop = StrengthIn.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % StrengthIn.TEMPLATE
+					prop_settings = 'StrengthIn';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
 			end
@@ -524,6 +526,8 @@ classdef StrengthIn < Measure
 					prop_default = 'StrengthIn';
 				case 2 % StrengthIn.DESCRIPTION
 					prop_default = 'The in-strength of a graph is the sum of all weights of the inward edges connected to a node within a layer, i.e., it is the sum of the columns of the adjacency matrix.';
+				case 3 % StrengthIn.TEMPLATE
+					prop_default = Format.getFormatDefault(8, StrengthIn.getPropSettings(prop));
 				case 4 % StrengthIn.ID
 					prop_default = 'StrengthIn ID';
 				case 5 % StrengthIn.LABEL
@@ -602,6 +606,8 @@ classdef StrengthIn < Measure
 			prop = StrengthIn.getPropProp(pointer);
 			
 			switch prop
+				case 3 % StrengthIn.TEMPLATE
+					check = Format.checkFormat(8, value, StrengthIn.getPropSettings(prop));
 				otherwise
 					if prop <= 14
 						check = checkProp@Measure(prop, value);

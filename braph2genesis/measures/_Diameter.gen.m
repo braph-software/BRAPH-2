@@ -18,6 +18,8 @@ DESCRIPTION (constant, string) is the description of the diameter.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the diameter.
+%%%% !settings!
+'Diameter'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the diameter.

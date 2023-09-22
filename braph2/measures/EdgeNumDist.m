@@ -492,6 +492,8 @@ classdef EdgeNumDist < Measure
 			prop = EdgeNumDist.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % EdgeNumDist.TEMPLATE
+					prop_settings = 'EdgeNumDist';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
 			end
@@ -523,6 +525,8 @@ classdef EdgeNumDist < Measure
 					prop_default = 'EdgeNumberDistance';
 				case 2 % EdgeNumDist.DESCRIPTION
 					prop_default = 'The edge distance number of a graph is the number of edges in the shortest weighted path between two nodes within a layer.';
+				case 3 % EdgeNumDist.TEMPLATE
+					prop_default = Format.getFormatDefault(8, EdgeNumDist.getPropSettings(prop));
 				case 4 % EdgeNumDist.ID
 					prop_default = 'EdgeNumDist ID';
 				case 5 % EdgeNumDist.LABEL
@@ -601,6 +605,8 @@ classdef EdgeNumDist < Measure
 			prop = EdgeNumDist.getPropProp(pointer);
 			
 			switch prop
+				case 3 % EdgeNumDist.TEMPLATE
+					check = Format.checkFormat(8, value, EdgeNumDist.getPropSettings(prop));
 				otherwise
 					if prop <= 14
 						check = checkProp@Measure(prop, value);

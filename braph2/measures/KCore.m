@@ -502,6 +502,8 @@ classdef KCore < Measure
 			switch prop %CET: Computational Efficiency Trick
 				case 15 % KCore.KCORETHRESHOLD
 					prop_settings = Format.getFormatSettings(11);
+				case 3 % KCore.TEMPLATE
+					prop_settings = 'KCore';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
 			end
@@ -535,6 +537,8 @@ classdef KCore < Measure
 					prop_default = 'KCore';
 				case 2 % KCore.DESCRIPTION
 					prop_default = 'The k-core of a graph is the largest subnetwork comprising nodes of degree k or higher. k is set by the user; the default value is equal to 1.';
+				case 3 % KCore.TEMPLATE
+					prop_default = Format.getFormatDefault(8, KCore.getPropSettings(prop));
 				case 4 % KCore.ID
 					prop_default = 'KCore ID';
 				case 5 % KCore.LABEL
@@ -615,6 +619,8 @@ classdef KCore < Measure
 			switch prop
 				case 15 % KCore.KCORETHRESHOLD
 					check = Format.checkFormat(11, value, KCore.getPropSettings(prop));
+				case 3 % KCore.TEMPLATE
+					check = Format.checkFormat(8, value, KCore.getPropSettings(prop));
 				otherwise
 					if prop <= 14
 						check = checkProp@Measure(prop, value);

@@ -494,6 +494,8 @@ classdef EccentricityOutAv < EccentricityOut
 			prop = EccentricityOutAv.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % EccentricityOutAv.TEMPLATE
+					prop_settings = 'EccentricityOutAv';
 				otherwise
 					prop_settings = getPropSettings@EccentricityOut(prop);
 			end
@@ -525,6 +527,8 @@ classdef EccentricityOutAv < EccentricityOut
 					prop_default = 'EccentricityOutAv';
 				case 2 % EccentricityOutAv.DESCRIPTION
 					prop_default = 'The average out-eccentricity of a node is the sum of the nodal out-eccentricities divided by their number within a layer.';
+				case 3 % EccentricityOutAv.TEMPLATE
+					prop_default = Format.getFormatDefault(8, EccentricityOutAv.getPropSettings(prop));
 				case 4 % EccentricityOutAv.ID
 					prop_default = 'EccentricityOutAv ID';
 				case 5 % EccentricityOutAv.LABEL
@@ -603,6 +607,8 @@ classdef EccentricityOutAv < EccentricityOut
 			prop = EccentricityOutAv.getPropProp(pointer);
 			
 			switch prop
+				case 3 % EccentricityOutAv.TEMPLATE
+					check = Format.checkFormat(8, value, EccentricityOutAv.getPropSettings(prop));
 				otherwise
 					if prop <= 15
 						check = checkProp@EccentricityOut(prop, value);

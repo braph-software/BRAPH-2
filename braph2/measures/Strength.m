@@ -492,6 +492,8 @@ classdef Strength < Measure
 			prop = Strength.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % Strength.TEMPLATE
+					prop_settings = 'Strength';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
 			end
@@ -523,6 +525,8 @@ classdef Strength < Measure
 					prop_default = 'Strength';
 				case 2 % Strength.DESCRIPTION
 					prop_default = 'The strength of a node is the number of edges connected to the node within a layer. Connection weights are ignored in calculations.';
+				case 3 % Strength.TEMPLATE
+					prop_default = Format.getFormatDefault(8, Strength.getPropSettings(prop));
 				case 4 % Strength.ID
 					prop_default = 'Strength ID';
 				case 5 % Strength.LABEL
@@ -601,6 +605,8 @@ classdef Strength < Measure
 			prop = Strength.getPropProp(pointer);
 			
 			switch prop
+				case 3 % Strength.TEMPLATE
+					check = Format.checkFormat(8, value, Strength.getPropSettings(prop));
 				otherwise
 					if prop <= 14
 						check = checkProp@Measure(prop, value);

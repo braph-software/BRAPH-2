@@ -19,6 +19,8 @@ DESCRIPTION (constant, string) is the description of the kcore.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the kcore.
+%%%% ¡settings!
+'KCore'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the kcore.

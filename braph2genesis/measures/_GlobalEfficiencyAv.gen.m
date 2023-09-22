@@ -19,6 +19,8 @@ DESCRIPTION (constant, string) is the description of the average global efficien
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the average global efficiency.
+%%%% ¡settings!
+'GlobalEfficiencyAv'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the average global efficiency.

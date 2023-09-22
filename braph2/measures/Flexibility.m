@@ -512,6 +512,8 @@ classdef Flexibility < MultilayerCommunity
 			prop = Flexibility.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % Flexibility.TEMPLATE
+					prop_settings = 'Flexibility';
 				otherwise
 					prop_settings = getPropSettings@MultilayerCommunity(prop);
 			end
@@ -543,6 +545,8 @@ classdef Flexibility < MultilayerCommunity
 					prop_default = 'Flexibility ';
 				case 2 % Flexibility.DESCRIPTION
 					prop_default = 'The flexibility of each node in a multilayer network is calculated  as the number of times that it changes community assignment, normalized by the total possible number of changes. In ordered multilayer networks (e.g. temporal, changes are possible only between adjacent layers, whereas in categorical multilayer networks, community assignment changes are possible between any pairs of layers.';
+				case 3 % Flexibility.TEMPLATE
+					prop_default = Format.getFormatDefault(8, Flexibility.getPropSettings(prop));
 				case 4 % Flexibility.ID
 					prop_default = 'Flexibility ID';
 				case 5 % Flexibility.LABEL
@@ -621,6 +625,8 @@ classdef Flexibility < MultilayerCommunity
 			prop = Flexibility.getPropProp(pointer);
 			
 			switch prop
+				case 3 % Flexibility.TEMPLATE
+					check = Format.checkFormat(8, value, Flexibility.getPropSettings(prop));
 				otherwise
 					if prop <= 22
 						check = checkProp@MultilayerCommunity(prop, value);

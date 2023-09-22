@@ -493,6 +493,8 @@ classdef EdgeBetwCentr < Measure
 			prop = EdgeBetwCentr.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % EdgeBetwCentr.TEMPLATE
+					prop_settings = 'EdgeBetwCentr';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
 			end
@@ -524,6 +526,8 @@ classdef EdgeBetwCentr < Measure
 					prop_default = 'EdgeBetweennessCentrality';
 				case 2 % EdgeBetwCentr.DESCRIPTION
 					prop_default = 'The edge betweenness centrality of a graph is the fraction of all shortest paths in the graph that pass through a given edge within a layer. Edges with high values of betweenness centrality participate in a large number of shortest paths.';
+				case 3 % EdgeBetwCentr.TEMPLATE
+					prop_default = Format.getFormatDefault(8, EdgeBetwCentr.getPropSettings(prop));
 				case 4 % EdgeBetwCentr.ID
 					prop_default = 'EdgeBetwCentr ID';
 				case 5 % EdgeBetwCentr.LABEL
@@ -602,6 +606,8 @@ classdef EdgeBetwCentr < Measure
 			prop = EdgeBetwCentr.getPropProp(pointer);
 			
 			switch prop
+				case 3 % EdgeBetwCentr.TEMPLATE
+					check = Format.checkFormat(8, value, EdgeBetwCentr.getPropSettings(prop));
 				otherwise
 					if prop <= 14
 						check = checkProp@Measure(prop, value);

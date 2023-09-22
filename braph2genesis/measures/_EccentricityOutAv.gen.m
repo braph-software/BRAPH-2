@@ -19,6 +19,8 @@ DESCRIPTION (constant, string) is the description of the average out-eccentricit
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the average out-eccentricity.
+%%%% ¡settings!
+'EccentricityOutAv'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the average out-eccentricity.

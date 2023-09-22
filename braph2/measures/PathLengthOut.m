@@ -501,6 +501,8 @@ classdef PathLengthOut < Measure
 			switch prop %CET: Computational Efficiency Trick
 				case 15 % PathLengthOut.RULE
 					prop_settings = {'subgraphs' 'harmonic' 'mean'};
+				case 3 % PathLengthOut.TEMPLATE
+					prop_settings = 'PathLengthOut';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
 			end
@@ -534,6 +536,8 @@ classdef PathLengthOut < Measure
 					prop_default = 'PathLengthOut';
 				case 2 % PathLengthOut.DESCRIPTION
 					prop_default = 'The out-path length is the average shortest out-path length of one node to all other nodes within a layer.';
+				case 3 % PathLengthOut.TEMPLATE
+					prop_default = Format.getFormatDefault(8, PathLengthOut.getPropSettings(prop));
 				case 4 % PathLengthOut.ID
 					prop_default = 'PathLengthOut ID';
 				case 5 % PathLengthOut.LABEL
@@ -614,6 +618,8 @@ classdef PathLengthOut < Measure
 			switch prop
 				case 15 % PathLengthOut.RULE
 					check = Format.checkFormat(5, value, PathLengthOut.getPropSettings(prop));
+				case 3 % PathLengthOut.TEMPLATE
+					check = Format.checkFormat(8, value, PathLengthOut.getPropSettings(prop));
 				otherwise
 					if prop <= 14
 						check = checkProp@Measure(prop, value);

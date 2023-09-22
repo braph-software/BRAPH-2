@@ -502,6 +502,8 @@ classdef EccentricityIn < Measure
 			switch prop %CET: Computational Efficiency Trick
 				case 15 % EccentricityIn.RULE
 					prop_settings = {'all', 'subgraphs'};
+				case 3 % EccentricityIn.TEMPLATE
+					prop_settings = 'EccentricityIn';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
 			end
@@ -535,6 +537,8 @@ classdef EccentricityIn < Measure
 					prop_default = 'EccentricityIn';
 				case 2 % EccentricityIn.DESCRIPTION
 					prop_default = 'The in-eccentricity of a node is the maximal shortest in-path length between a node and any other node within a layer.';
+				case 3 % EccentricityIn.TEMPLATE
+					prop_default = Format.getFormatDefault(8, EccentricityIn.getPropSettings(prop));
 				case 4 % EccentricityIn.ID
 					prop_default = 'EccentricityIn ID';
 				case 5 % EccentricityIn.LABEL
@@ -615,6 +619,8 @@ classdef EccentricityIn < Measure
 			switch prop
 				case 15 % EccentricityIn.RULE
 					check = Format.checkFormat(5, value, EccentricityIn.getPropSettings(prop));
+				case 3 % EccentricityIn.TEMPLATE
+					check = Format.checkFormat(8, value, EccentricityIn.getPropSettings(prop));
 				otherwise
 					if prop <= 14
 						check = checkProp@Measure(prop, value);

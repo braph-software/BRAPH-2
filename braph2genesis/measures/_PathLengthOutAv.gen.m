@@ -18,6 +18,8 @@ DESCRIPTION (constant, string) is the description of the PathLengthOutAv.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the PathLengthOutAv.
+%%%% ¡settings!
+'PathLengthOutAv'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the PathLengthOutAv.

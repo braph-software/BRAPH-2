@@ -20,6 +20,8 @@ DESCRIPTION (constant, string) is the description of the betweenness centrality.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the betweenness centrality.
+%%%% ¡settings!
+'BetweennessCentrality'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the betweenness centrality.

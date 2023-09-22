@@ -493,6 +493,8 @@ classdef BetweennessCentrality < Measure
 			prop = BetweennessCentrality.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % BetweennessCentrality.TEMPLATE
+					prop_settings = 'BetweennessCentrality';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
 			end
@@ -524,6 +526,8 @@ classdef BetweennessCentrality < Measure
 					prop_default = 'BetweennessCentrality';
 				case 2 % BetweennessCentrality.DESCRIPTION
 					prop_default = 'The betweenness centrality of a graph is the fraction of all shortest paths in the graph that pass through a given node. Nodes with high values of betweenness centrality participate in a large number of shortest paths.';
+				case 3 % BetweennessCentrality.TEMPLATE
+					prop_default = Format.getFormatDefault(8, BetweennessCentrality.getPropSettings(prop));
 				case 4 % BetweennessCentrality.ID
 					prop_default = 'BetweennessCentrality ID';
 				case 5 % BetweennessCentrality.LABEL
@@ -602,6 +606,8 @@ classdef BetweennessCentrality < Measure
 			prop = BetweennessCentrality.getPropProp(pointer);
 			
 			switch prop
+				case 3 % BetweennessCentrality.TEMPLATE
+					check = Format.checkFormat(8, value, BetweennessCentrality.getPropSettings(prop));
 				otherwise
 					if prop <= 14
 						check = checkProp@Measure(prop, value);

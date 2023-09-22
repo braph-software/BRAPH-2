@@ -493,6 +493,8 @@ classdef PathLengthOutAv < PathLengthOut
 			prop = PathLengthOutAv.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % PathLengthOutAv.TEMPLATE
+					prop_settings = 'PathLengthOutAv';
 				otherwise
 					prop_settings = getPropSettings@PathLengthOut(prop);
 			end
@@ -524,6 +526,8 @@ classdef PathLengthOutAv < PathLengthOut
 					prop_default = 'PathLengthOutAv';
 				case 2 % PathLengthOutAv.DESCRIPTION
 					prop_default = 'The PathLengthOutAv is the average shortest PathLengthOutAv of one node to all other nodes within a layer.';
+				case 3 % PathLengthOutAv.TEMPLATE
+					prop_default = Format.getFormatDefault(8, PathLengthOutAv.getPropSettings(prop));
 				case 4 % PathLengthOutAv.ID
 					prop_default = 'PathLengthOutAv ID';
 				case 5 % PathLengthOutAv.LABEL
@@ -602,6 +606,8 @@ classdef PathLengthOutAv < PathLengthOut
 			prop = PathLengthOutAv.getPropProp(pointer);
 			
 			switch prop
+				case 3 % PathLengthOutAv.TEMPLATE
+					check = Format.checkFormat(8, value, PathLengthOutAv.getPropSettings(prop));
 				otherwise
 					if prop <= 15
 						check = checkProp@PathLengthOut(prop, value);

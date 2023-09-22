@@ -19,6 +19,8 @@ DESCRIPTION (constant, string) is the description of the average in-eccentricity
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the average in-eccentricity.
+%%%% ¡settings!
+'EccentricityInAv'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the average in-eccentricity.

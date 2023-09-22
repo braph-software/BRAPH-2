@@ -21,6 +21,8 @@ DESCRIPTION (constant, string) is the description of the assortativity.
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the assortativity.
+%%%% ¡settings!
+'Assortativity'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the assortativity.

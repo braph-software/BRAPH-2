@@ -493,6 +493,8 @@ classdef StrengthOutAv < StrengthOut
 			prop = StrengthOutAv.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 3 % StrengthOutAv.TEMPLATE
+					prop_settings = 'StrengthOutAv';
 				otherwise
 					prop_settings = getPropSettings@StrengthOut(prop);
 			end
@@ -524,6 +526,8 @@ classdef StrengthOutAv < StrengthOut
 					prop_default = 'StrengthOutAv';
 				case 2 % StrengthOutAv.DESCRIPTION
 					prop_default = 'The average out-strength of a graph is the mean of the sum of all weights of the outward edges connected to a node within a layer, i.e., it is the sum of the rows of the adjacency matrix.';
+				case 3 % StrengthOutAv.TEMPLATE
+					prop_default = Format.getFormatDefault(8, StrengthOutAv.getPropSettings(prop));
 				case 4 % StrengthOutAv.ID
 					prop_default = 'StrengthOutAv ID';
 				case 5 % StrengthOutAv.LABEL
@@ -602,6 +606,8 @@ classdef StrengthOutAv < StrengthOut
 			prop = StrengthOutAv.getPropProp(pointer);
 			
 			switch prop
+				case 3 % StrengthOutAv.TEMPLATE
+					check = Format.checkFormat(8, value, StrengthOutAv.getPropSettings(prop));
 				otherwise
 					if prop <= 14
 						check = checkProp@StrengthOut(prop, value);
