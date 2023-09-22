@@ -12,9 +12,10 @@ classdef AnalyzeGroup < ConcreteElement
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the group-based graph analysis.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the group-based graph analysis.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the group-based graph analysis.
-	%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>8</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class.
-	%  <strong>9</strong> <strong>G</strong> 	G (result, item) is the graph obtained from this analysis.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>9</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class.
+	%  <strong>10</strong> <strong>G</strong> 	G (result, item) is the graph obtained from this analysis.
 	%
 	% AnalyzeGroup methods (constructor):
 	%  AnalyzeGroup - constructor
@@ -105,17 +106,17 @@ classdef AnalyzeGroup < ConcreteElement
 	% See also CompareGroup.
 	
 	properties (Constant) % properties
-		WAITBAR = 7; %CET: Computational Efficiency Trick
+		WAITBAR = 8; %CET: Computational Efficiency Trick
 		WAITBAR_TAG = 'WAITBAR';
 		WAITBAR_CATEGORY = 9;
 		WAITBAR_FORMAT = 4;
 		
-		GR = 8; %CET: Computational Efficiency Trick
+		GR = 9; %CET: Computational Efficiency Trick
 		GR_TAG = 'GR';
 		GR_CATEGORY = 4;
 		GR_FORMAT = 8;
 		
-		G = 9; %CET: Computational Efficiency Trick
+		G = 10; %CET: Computational Efficiency Trick
 		G_TAG = 'G';
 		G_CATEGORY = 5;
 		G_FORMAT = 8;
@@ -138,9 +139,10 @@ classdef AnalyzeGroup < ConcreteElement
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the group-based graph analysis.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the group-based graph analysis.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the group-based graph analysis.
-			%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>8</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class.
-			%  <strong>9</strong> <strong>G</strong> 	G (result, item) is the graph obtained from this analysis.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>9</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class.
+			%  <strong>10</strong> <strong>G</strong> 	G (result, item) is the graph obtained from this analysis.
 			%
 			% See also Category, Format.
 			
@@ -202,7 +204,7 @@ classdef AnalyzeGroup < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9];
+				prop_list = [1 2 3 4 5 6 7 8 9 10];
 				return
 			end
 			
@@ -214,11 +216,13 @@ classdef AnalyzeGroup < ConcreteElement
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 8];
+					prop_list = [4 9];
 				case 5 % Category.RESULT
-					prop_list = 9;
-				case 9 % Category.GUI
+					prop_list = 10;
+				case 6 % Category.QUERY
 					prop_list = 7;
+				case 9 % Category.GUI
+					prop_list = 8;
 				otherwise
 					prop_list = [];
 			end
@@ -244,7 +248,7 @@ classdef AnalyzeGroup < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 9;
+				prop_number = 10;
 				return
 			end
 			
@@ -258,6 +262,8 @@ classdef AnalyzeGroup < ConcreteElement
 				case 4 % Category.DATA
 					prop_number = 2;
 				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
 					prop_number = 1;
 				case 9 % Category.GUI
 					prop_number = 1;
@@ -291,7 +297,7 @@ classdef AnalyzeGroup < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 9 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 10 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -329,7 +335,7 @@ classdef AnalyzeGroup < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'G' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'G' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -362,7 +368,7 @@ classdef AnalyzeGroup < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'G' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'G' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -391,7 +397,7 @@ classdef AnalyzeGroup < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				analyzegroup_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'G' };
+				analyzegroup_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'G' };
 				tag = analyzegroup_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -418,7 +424,7 @@ classdef AnalyzeGroup < ConcreteElement
 			prop = AnalyzeGroup.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzegroup_category_list = { 1  1  3  4  2  2  9  4  5 };
+			analyzegroup_category_list = { 1  1  3  4  2  2  6  9  4  5 };
 			prop_category = analyzegroup_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -444,7 +450,7 @@ classdef AnalyzeGroup < ConcreteElement
 			prop = AnalyzeGroup.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzegroup_format_list = { 2  2  8  2  2  2  4  8  8 };
+			analyzegroup_format_list = { 2  2  8  2  2  2  2  4  8  8 };
 			prop_format = analyzegroup_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -470,7 +476,7 @@ classdef AnalyzeGroup < ConcreteElement
 			prop = AnalyzeGroup.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzegroup_description_list = { 'NAME (constant, string) is the name of the group-based graph analysis.'  'DESCRIPTION (constant, string) is the description of the group-based graph analysis.'  'TEMPLATE (parameter, item) is the template of the group-based graph analysis.'  'ID (data, string) is a few-letter code for the group-based graph analysis.'  'LABEL (metadata, string) is an extended label of the group-based graph analysis.'  'NOTES (metadata, string) are some specific notes about the group-based graph analysis.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class.'  'G (result, item) is the graph obtained from this analysis.' };
+			analyzegroup_description_list = { 'NAME (constant, string) is the name of the group-based graph analysis.'  'DESCRIPTION (constant, string) is the description of the group-based graph analysis.'  'TEMPLATE (parameter, item) is the template of the group-based graph analysis.'  'ID (data, string) is a few-letter code for the group-based graph analysis.'  'LABEL (metadata, string) is an extended label of the group-based graph analysis.'  'NOTES (metadata, string) are some specific notes about the group-based graph analysis.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class.'  'G (result, item) is the graph obtained from this analysis.' };
 			prop_description = analyzegroup_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -496,11 +502,11 @@ classdef AnalyzeGroup < ConcreteElement
 			prop = AnalyzeGroup.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % AnalyzeGroup.WAITBAR
+				case 8 % AnalyzeGroup.WAITBAR
 					prop_settings = Format.getFormatSettings(4);
-				case 8 % AnalyzeGroup.GR
+				case 9 % AnalyzeGroup.GR
 					prop_settings = 'Group';
-				case 9 % AnalyzeGroup.G
+				case 10 % AnalyzeGroup.G
 					prop_settings = 'Graph';
 				case 3 % Analyze3
 					prop_settings = 'AnalyzeGroup';
@@ -531,11 +537,11 @@ classdef AnalyzeGroup < ConcreteElement
 			prop = AnalyzeGroup.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % AnalyzeGroup.WAITBAR
+				case 8 % AnalyzeGroup.WAITBAR
 					prop_default = true;
-				case 8 % AnalyzeGroup.GR
+				case 9 % AnalyzeGroup.GR
 					prop_default = Format.getFormatDefault(8, AnalyzeGroup.getPropSettings(prop));
-				case 9 % AnalyzeGroup.G
+				case 10 % AnalyzeGroup.G
 					prop_default = Format.getFormatDefault(8, AnalyzeGroup.getPropSettings(prop));
 				case 1 % Analyze1
 					prop_default = 'AnalyzeGroup';
@@ -613,16 +619,16 @@ classdef AnalyzeGroup < ConcreteElement
 			prop = AnalyzeGroup.getPropProp(pointer);
 			
 			switch prop
-				case 7 % AnalyzeGroup.WAITBAR
+				case 8 % AnalyzeGroup.WAITBAR
 					check = Format.checkFormat(4, value, AnalyzeGroup.getPropSettings(prop));
-				case 8 % AnalyzeGroup.GR
+				case 9 % AnalyzeGroup.GR
 					check = Format.checkFormat(8, value, AnalyzeGroup.getPropSettings(prop));
-				case 9 % AnalyzeGroup.G
+				case 10 % AnalyzeGroup.G
 					check = Format.checkFormat(8, value, AnalyzeGroup.getPropSettings(prop));
 				case 3 % Analyze3
 					check = Format.checkFormat(8, value, AnalyzeGroup.getPropSettings(prop));
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -655,15 +661,15 @@ classdef AnalyzeGroup < ConcreteElement
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 9 % AnalyzeGroup.G
-					rng_settings_ = rng(); rng(a.getPropSeed(9), 'twister')
+				case 10 % AnalyzeGroup.G
+					rng_settings_ = rng(); rng(a.getPropSeed(10), 'twister')
 					
 					value = Graph();
 					
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						value = calculateValue@ConcreteElement(a, prop, varargin{:});
 					else
 						value = calculateValue@Element(a, prop, varargin{:});
@@ -689,17 +695,17 @@ classdef AnalyzeGroup < ConcreteElement
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 8 % AnalyzeGroup.GR
-					pr = PanelPropItem('EL', a, 'PROP', 8, ...
+				case 9 % AnalyzeGroup.GR
+					pr = PanelPropItem('EL', a, 'PROP', 9, ...
 					    'BUTTON_TEXT', a.get('GR').get('ID'), ...
 					    varargin{:});
 					
-				case 9 % AnalyzeGroup.G
-					% pr = PanelPropItem('EL', a, 'PROP', 9, ...
+				case 10 % AnalyzeGroup.G
+					% pr = PanelPropItem('EL', a, 'PROP', 10, ...
 					%     'GUICLASS', 'GUIElement', ...
 					%     'BUTTON_TEXT', 'Graph & Measures', ...
 					%     varargin{:});
-					pr = AnalyzeGroupPP_G('EL', a, 'PROP', 9, ...
+					pr = AnalyzeGroupPP_G('EL', a, 'PROP', 10, ...
 					    'WAITBAR', a.getCallback('WAITBAR'), ...
 					    varargin{:});
 					

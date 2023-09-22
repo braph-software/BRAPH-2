@@ -11,7 +11,8 @@ classdef Exporter < ConcreteElement
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the exporter.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the exporter.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the exporter.
-	%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 	%
 	% Exporter methods (constructor):
 	%  Exporter - constructor
@@ -102,7 +103,7 @@ classdef Exporter < ConcreteElement
 	% See also ConcreteElement, Importer.
 	
 	properties (Constant) % properties
-		WAITBAR = 7; %CET: Computational Efficiency Trick
+		WAITBAR = 8; %CET: Computational Efficiency Trick
 		WAITBAR_TAG = 'WAITBAR';
 		WAITBAR_CATEGORY = 9;
 		WAITBAR_FORMAT = 4;
@@ -125,7 +126,8 @@ classdef Exporter < ConcreteElement
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the exporter.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the exporter.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the exporter.
-			%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 			%
 			% See also Category, Format.
 			
@@ -187,7 +189,7 @@ classdef Exporter < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7];
+				prop_list = [1 2 3 4 5 6 7 8];
 				return
 			end
 			
@@ -200,8 +202,10 @@ classdef Exporter < ConcreteElement
 					prop_list = 3;
 				case 4 % Category.DATA
 					prop_list = 4;
-				case 9 % Category.GUI
+				case 6 % Category.QUERY
 					prop_list = 7;
+				case 9 % Category.GUI
+					prop_list = 8;
 				otherwise
 					prop_list = [];
 			end
@@ -227,7 +231,7 @@ classdef Exporter < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 7;
+				prop_number = 8;
 				return
 			end
 			
@@ -239,6 +243,8 @@ classdef Exporter < ConcreteElement
 				case 3 % Category.PARAMETER
 					prop_number = 1;
 				case 4 % Category.DATA
+					prop_number = 1;
+				case 6 % Category.QUERY
 					prop_number = 1;
 				case 9 % Category.GUI
 					prop_number = 1;
@@ -272,7 +278,7 @@ classdef Exporter < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 7 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 8 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -310,7 +316,7 @@ classdef Exporter < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -343,7 +349,7 @@ classdef Exporter < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -372,7 +378,7 @@ classdef Exporter < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				exporter_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR' };
+				exporter_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR' };
 				tag = exporter_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -399,7 +405,7 @@ classdef Exporter < ConcreteElement
 			prop = Exporter.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exporter_category_list = { 1  1  3  4  2  2  9 };
+			exporter_category_list = { 1  1  3  4  2  2  6  9 };
 			prop_category = exporter_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -425,7 +431,7 @@ classdef Exporter < ConcreteElement
 			prop = Exporter.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exporter_format_list = { 2  2  8  2  2  2  4 };
+			exporter_format_list = { 2  2  8  2  2  2  2  4 };
 			prop_format = exporter_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -451,7 +457,7 @@ classdef Exporter < ConcreteElement
 			prop = Exporter.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exporter_description_list = { 'NAME (constant, string) is the name of the exporter.'  'DESCRIPTION (constant, string) is the description of the exporter.'  'TEMPLATE (parameter, item) is the template of the exporter.'  'ID (data, string) is a few-letter code for the exporter.'  'LABEL (metadata, string) is an extended label of the exporter.'  'NOTES (metadata, string) are some specific notes about the exporter.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.' };
+			exporter_description_list = { 'NAME (constant, string) is the name of the exporter.'  'DESCRIPTION (constant, string) is the description of the exporter.'  'TEMPLATE (parameter, item) is the template of the exporter.'  'ID (data, string) is a few-letter code for the exporter.'  'LABEL (metadata, string) is an extended label of the exporter.'  'NOTES (metadata, string) are some specific notes about the exporter.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.' };
 			prop_description = exporter_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -477,7 +483,7 @@ classdef Exporter < ConcreteElement
 			prop = Exporter.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % Exporter.WAITBAR
+				case 8 % Exporter.WAITBAR
 					prop_settings = Format.getFormatSettings(4);
 				case 3 % Exporter.TEMPLATE
 					prop_settings = 'Exporter';
@@ -508,7 +514,7 @@ classdef Exporter < ConcreteElement
 			prop = Exporter.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % Exporter.WAITBAR
+				case 8 % Exporter.WAITBAR
 					prop_default = Format.getFormatDefault(4, Exporter.getPropSettings(prop));
 				case 1 % Exporter.NAME
 					prop_default = 'Exporter';
@@ -586,12 +592,12 @@ classdef Exporter < ConcreteElement
 			prop = Exporter.getPropProp(pointer);
 			
 			switch prop
-				case 7 % Exporter.WAITBAR
+				case 8 % Exporter.WAITBAR
 					check = Format.checkFormat(4, value, Exporter.getPropSettings(prop));
 				case 3 % Exporter.TEMPLATE
 					check = Format.checkFormat(8, value, Exporter.getPropSettings(prop));
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end

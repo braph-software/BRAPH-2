@@ -11,11 +11,12 @@ classdef PipelineCode < ConcreteElement
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the pipeline code line.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the pipeline code line.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the pipeline code line.
-	%  <strong>7</strong> <strong>TEXT_BEFORE_EXEC</strong> 	TEXT_BEFORE_EXEC (metadata, string) is the text before the code line execution.
-	%  <strong>8</strong> <strong>TEXT_AFTER_EXEC</strong> 	TEXT_AFTER_EXEC (metadata, string) is the text after the code line execution.
-	%  <strong>9</strong> <strong>MONIKER</strong> 	MONIKER (data, string) is the moniker of the calculated element.
-	%  <strong>10</strong> <strong>CODE</strong> 	CODE (data, string) is the code line to calculate the element.
-	%  <strong>11</strong> <strong>EL</strong> 	EL (data, item) is the calculated element.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TEXT_BEFORE_EXEC</strong> 	TEXT_BEFORE_EXEC (metadata, string) is the text before the code line execution.
+	%  <strong>9</strong> <strong>TEXT_AFTER_EXEC</strong> 	TEXT_AFTER_EXEC (metadata, string) is the text after the code line execution.
+	%  <strong>10</strong> <strong>MONIKER</strong> 	MONIKER (data, string) is the moniker of the calculated element.
+	%  <strong>11</strong> <strong>CODE</strong> 	CODE (data, string) is the code line to calculate the element.
+	%  <strong>12</strong> <strong>EL</strong> 	EL (data, item) is the calculated element.
 	%
 	% PipelineCode methods (constructor):
 	%  PipelineCode - constructor
@@ -106,27 +107,27 @@ classdef PipelineCode < ConcreteElement
 	% See also PipelinePP_PSDict, Pipeline, PipelineSection.
 	
 	properties (Constant) % properties
-		TEXT_BEFORE_EXEC = 7; %CET: Computational Efficiency Trick
+		TEXT_BEFORE_EXEC = 8; %CET: Computational Efficiency Trick
 		TEXT_BEFORE_EXEC_TAG = 'TEXT_BEFORE_EXEC';
 		TEXT_BEFORE_EXEC_CATEGORY = 2;
 		TEXT_BEFORE_EXEC_FORMAT = 2;
 		
-		TEXT_AFTER_EXEC = 8; %CET: Computational Efficiency Trick
+		TEXT_AFTER_EXEC = 9; %CET: Computational Efficiency Trick
 		TEXT_AFTER_EXEC_TAG = 'TEXT_AFTER_EXEC';
 		TEXT_AFTER_EXEC_CATEGORY = 2;
 		TEXT_AFTER_EXEC_FORMAT = 2;
 		
-		MONIKER = 9; %CET: Computational Efficiency Trick
+		MONIKER = 10; %CET: Computational Efficiency Trick
 		MONIKER_TAG = 'MONIKER';
 		MONIKER_CATEGORY = 4;
 		MONIKER_FORMAT = 2;
 		
-		CODE = 10; %CET: Computational Efficiency Trick
+		CODE = 11; %CET: Computational Efficiency Trick
 		CODE_TAG = 'CODE';
 		CODE_CATEGORY = 4;
 		CODE_FORMAT = 2;
 		
-		EL = 11; %CET: Computational Efficiency Trick
+		EL = 12; %CET: Computational Efficiency Trick
 		EL_TAG = 'EL';
 		EL_CATEGORY = 4;
 		EL_FORMAT = 8;
@@ -149,11 +150,12 @@ classdef PipelineCode < ConcreteElement
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the pipeline code line.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the pipeline code line.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the pipeline code line.
-			%  <strong>7</strong> <strong>TEXT_BEFORE_EXEC</strong> 	TEXT_BEFORE_EXEC (metadata, string) is the text before the code line execution.
-			%  <strong>8</strong> <strong>TEXT_AFTER_EXEC</strong> 	TEXT_AFTER_EXEC (metadata, string) is the text after the code line execution.
-			%  <strong>9</strong> <strong>MONIKER</strong> 	MONIKER (data, string) is the moniker of the calculated element.
-			%  <strong>10</strong> <strong>CODE</strong> 	CODE (data, string) is the code line to calculate the element.
-			%  <strong>11</strong> <strong>EL</strong> 	EL (data, item) is the calculated element.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TEXT_BEFORE_EXEC</strong> 	TEXT_BEFORE_EXEC (metadata, string) is the text before the code line execution.
+			%  <strong>9</strong> <strong>TEXT_AFTER_EXEC</strong> 	TEXT_AFTER_EXEC (metadata, string) is the text after the code line execution.
+			%  <strong>10</strong> <strong>MONIKER</strong> 	MONIKER (data, string) is the moniker of the calculated element.
+			%  <strong>11</strong> <strong>CODE</strong> 	CODE (data, string) is the code line to calculate the element.
+			%  <strong>12</strong> <strong>EL</strong> 	EL (data, item) is the calculated element.
 			%
 			% See also Category, Format.
 			
@@ -215,7 +217,7 @@ classdef PipelineCode < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12];
 				return
 			end
 			
@@ -223,11 +225,13 @@ classdef PipelineCode < ConcreteElement
 				case 1 % Category.CONSTANT
 					prop_list = [1 2];
 				case 2 % Category.METADATA
-					prop_list = [5 6 7 8];
+					prop_list = [5 6 8 9];
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 9 10 11];
+					prop_list = [4 10 11 12];
+				case 6 % Category.QUERY
+					prop_list = 7;
 				otherwise
 					prop_list = [];
 			end
@@ -253,7 +257,7 @@ classdef PipelineCode < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 11;
+				prop_number = 12;
 				return
 			end
 			
@@ -266,6 +270,8 @@ classdef PipelineCode < ConcreteElement
 					prop_number = 1;
 				case 4 % Category.DATA
 					prop_number = 4;
+				case 6 % Category.QUERY
+					prop_number = 1;
 				otherwise
 					prop_number = 0;
 			end
@@ -296,7 +302,7 @@ classdef PipelineCode < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 11 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 12 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -334,7 +340,7 @@ classdef PipelineCode < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TEXT_BEFORE_EXEC'  'TEXT_AFTER_EXEC'  'MONIKER'  'CODE'  'EL' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'TEXT_BEFORE_EXEC'  'TEXT_AFTER_EXEC'  'MONIKER'  'CODE'  'EL' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -367,7 +373,7 @@ classdef PipelineCode < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TEXT_BEFORE_EXEC'  'TEXT_AFTER_EXEC'  'MONIKER'  'CODE'  'EL' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'TEXT_BEFORE_EXEC'  'TEXT_AFTER_EXEC'  'MONIKER'  'CODE'  'EL' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -396,7 +402,7 @@ classdef PipelineCode < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				pipelinecode_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TEXT_BEFORE_EXEC'  'TEXT_AFTER_EXEC'  'MONIKER'  'CODE'  'EL' };
+				pipelinecode_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'TEXT_BEFORE_EXEC'  'TEXT_AFTER_EXEC'  'MONIKER'  'CODE'  'EL' };
 				tag = pipelinecode_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -423,7 +429,7 @@ classdef PipelineCode < ConcreteElement
 			prop = PipelineCode.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pipelinecode_category_list = { 1  1  3  4  2  2  2  2  4  4  4 };
+			pipelinecode_category_list = { 1  1  3  4  2  2  6  2  2  4  4  4 };
 			prop_category = pipelinecode_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -449,7 +455,7 @@ classdef PipelineCode < ConcreteElement
 			prop = PipelineCode.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pipelinecode_format_list = { 2  2  8  2  2  2  2  2  2  2  8 };
+			pipelinecode_format_list = { 2  2  8  2  2  2  2  2  2  2  2  8 };
 			prop_format = pipelinecode_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -475,7 +481,7 @@ classdef PipelineCode < ConcreteElement
 			prop = PipelineCode.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pipelinecode_description_list = { 'NAME (constant, string) is the name of the pipeline code line.'  'DESCRIPTION (constant, string) is the description of the pipeline code line.'  'TEMPLATE (parameter, item) is the template of the pipeline code line.'  'ID (data, string) is a few-letter code for the pipeline code line.'  'LABEL (metadata, string) is an extended label of the pipeline code line.'  'NOTES (metadata, string) are some specific notes about the pipeline code line.'  'TEXT_BEFORE_EXEC (metadata, string) is the text before the code line execution.'  'TEXT_AFTER_EXEC (metadata, string) is the text after the code line execution.'  'MONIKER (data, string) is the moniker of the calculated element.'  'CODE (data, string) is the code line to calculate the element.'  'EL (data, item) is the calculated element.' };
+			pipelinecode_description_list = { 'NAME (constant, string) is the name of the pipeline code line.'  'DESCRIPTION (constant, string) is the description of the pipeline code line.'  'TEMPLATE (parameter, item) is the template of the pipeline code line.'  'ID (data, string) is a few-letter code for the pipeline code line.'  'LABEL (metadata, string) is an extended label of the pipeline code line.'  'NOTES (metadata, string) are some specific notes about the pipeline code line.'  'TOSTRING (query, string) returns a string that represents the object.'  'TEXT_BEFORE_EXEC (metadata, string) is the text before the code line execution.'  'TEXT_AFTER_EXEC (metadata, string) is the text after the code line execution.'  'MONIKER (data, string) is the moniker of the calculated element.'  'CODE (data, string) is the code line to calculate the element.'  'EL (data, item) is the calculated element.' };
 			prop_description = pipelinecode_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -501,15 +507,15 @@ classdef PipelineCode < ConcreteElement
 			prop = PipelineCode.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % PipelineCode.TEXT_BEFORE_EXEC
+				case 8 % PipelineCode.TEXT_BEFORE_EXEC
 					prop_settings = Format.getFormatSettings(2);
-				case 8 % PipelineCode.TEXT_AFTER_EXEC
+				case 9 % PipelineCode.TEXT_AFTER_EXEC
 					prop_settings = Format.getFormatSettings(2);
-				case 9 % PipelineCode.MONIKER
+				case 10 % PipelineCode.MONIKER
 					prop_settings = Format.getFormatSettings(2);
-				case 10 % PipelineCode.CODE
+				case 11 % PipelineCode.CODE
 					prop_settings = Format.getFormatSettings(2);
-				case 11 % PipelineCode.EL
+				case 12 % PipelineCode.EL
 					prop_settings = Format.getFormatSettings(8);
 				case 3 % PipelineCode.TEMPLATE
 					prop_settings = 'PipelineCode';
@@ -540,15 +546,15 @@ classdef PipelineCode < ConcreteElement
 			prop = PipelineCode.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % PipelineCode.TEXT_BEFORE_EXEC
+				case 8 % PipelineCode.TEXT_BEFORE_EXEC
 					prop_default = Format.getFormatDefault(2, PipelineCode.getPropSettings(prop));
-				case 8 % PipelineCode.TEXT_AFTER_EXEC
+				case 9 % PipelineCode.TEXT_AFTER_EXEC
 					prop_default = Format.getFormatDefault(2, PipelineCode.getPropSettings(prop));
-				case 9 % PipelineCode.MONIKER
+				case 10 % PipelineCode.MONIKER
 					prop_default = Format.getFormatDefault(2, PipelineCode.getPropSettings(prop));
-				case 10 % PipelineCode.CODE
+				case 11 % PipelineCode.CODE
 					prop_default = Format.getFormatDefault(2, PipelineCode.getPropSettings(prop));
-				case 11 % PipelineCode.EL
+				case 12 % PipelineCode.EL
 					prop_default = Format.getFormatDefault(8, PipelineCode.getPropSettings(prop));
 				case 1 % PipelineCode.NAME
 					prop_default = 'PipelineCode';
@@ -626,20 +632,20 @@ classdef PipelineCode < ConcreteElement
 			prop = PipelineCode.getPropProp(pointer);
 			
 			switch prop
-				case 7 % PipelineCode.TEXT_BEFORE_EXEC
+				case 8 % PipelineCode.TEXT_BEFORE_EXEC
 					check = Format.checkFormat(2, value, PipelineCode.getPropSettings(prop));
-				case 8 % PipelineCode.TEXT_AFTER_EXEC
+				case 9 % PipelineCode.TEXT_AFTER_EXEC
 					check = Format.checkFormat(2, value, PipelineCode.getPropSettings(prop));
-				case 9 % PipelineCode.MONIKER
+				case 10 % PipelineCode.MONIKER
 					check = Format.checkFormat(2, value, PipelineCode.getPropSettings(prop));
-				case 10 % PipelineCode.CODE
+				case 11 % PipelineCode.CODE
 					check = Format.checkFormat(2, value, PipelineCode.getPropSettings(prop));
-				case 11 % PipelineCode.EL
+				case 12 % PipelineCode.EL
 					check = Format.checkFormat(8, value, PipelineCode.getPropSettings(prop));
 				case 3 % PipelineCode.TEMPLATE
 					check = Format.checkFormat(8, value, PipelineCode.getPropSettings(prop));
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -671,7 +677,7 @@ classdef PipelineCode < ConcreteElement
 			msg = ['Error while checking ' tostring(pc) ' ' pc.getPropTag(prop) '.'];
 			
 			switch prop
-				case 9 % PipelineCode.MONIKER
+				case 10 % PipelineCode.MONIKER
 					check = ~iskeyword(value) && ~strcmp(value, 'varargin');
 					if check 
 					    msg = 'All ok!';
@@ -682,7 +688,7 @@ classdef PipelineCode < ConcreteElement
 					end
 					
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						[check, msg] = checkValue@ConcreteElement(pc, prop, value);
 					end
 			end

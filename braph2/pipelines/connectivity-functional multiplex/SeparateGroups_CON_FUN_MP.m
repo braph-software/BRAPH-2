@@ -13,10 +13,11 @@ classdef SeparateGroups_CON_FUN_MP < ConcreteElement
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the separator of a CON_FUN_MP subject group.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the separator of a CON_FUN_MP subject group.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the separator of a CON_FUN_MP subject group.
-	%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (metadata, logical) determines whether to show the waitbar.
-	%  <strong>8</strong> <strong>GR_CON_FUN_MP</strong> 	GR_CON_FUN_MP (data, item) is a group of subjects with functional and connectivity data.
-	%  <strong>9</strong> <strong>GR_CON</strong> 	GR_CON (result, item) is a group of subjects with connectivity data.
-	%  <strong>10</strong> <strong>GR_FUN</strong> 	GR_FUN (result, item) is a group of subjects with functional data.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (metadata, logical) determines whether to show the waitbar.
+	%  <strong>9</strong> <strong>GR_CON_FUN_MP</strong> 	GR_CON_FUN_MP (data, item) is a group of subjects with functional and connectivity data.
+	%  <strong>10</strong> <strong>GR_CON</strong> 	GR_CON (result, item) is a group of subjects with connectivity data.
+	%  <strong>11</strong> <strong>GR_FUN</strong> 	GR_FUN (result, item) is a group of subjects with functional data.
 	%
 	% SeparateGroups_CON_FUN_MP methods (constructor):
 	%  SeparateGroups_CON_FUN_MP - constructor
@@ -107,22 +108,22 @@ classdef SeparateGroups_CON_FUN_MP < ConcreteElement
 	% See also SubjectCON_FUN_MP, SubjectCON, SubjectFUN, CombineGroups_CON_FUN.
 	
 	properties (Constant) % properties
-		WAITBAR = 7; %CET: Computational Efficiency Trick
+		WAITBAR = 8; %CET: Computational Efficiency Trick
 		WAITBAR_TAG = 'WAITBAR';
 		WAITBAR_CATEGORY = 2;
 		WAITBAR_FORMAT = 4;
 		
-		GR_CON_FUN_MP = 8; %CET: Computational Efficiency Trick
+		GR_CON_FUN_MP = 9; %CET: Computational Efficiency Trick
 		GR_CON_FUN_MP_TAG = 'GR_CON_FUN_MP';
 		GR_CON_FUN_MP_CATEGORY = 4;
 		GR_CON_FUN_MP_FORMAT = 8;
 		
-		GR_CON = 9; %CET: Computational Efficiency Trick
+		GR_CON = 10; %CET: Computational Efficiency Trick
 		GR_CON_TAG = 'GR_CON';
 		GR_CON_CATEGORY = 5;
 		GR_CON_FORMAT = 8;
 		
-		GR_FUN = 10; %CET: Computational Efficiency Trick
+		GR_FUN = 11; %CET: Computational Efficiency Trick
 		GR_FUN_TAG = 'GR_FUN';
 		GR_FUN_CATEGORY = 5;
 		GR_FUN_FORMAT = 8;
@@ -145,10 +146,11 @@ classdef SeparateGroups_CON_FUN_MP < ConcreteElement
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the separator of a CON_FUN_MP subject group.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the separator of a CON_FUN_MP subject group.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the separator of a CON_FUN_MP subject group.
-			%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (metadata, logical) determines whether to show the waitbar.
-			%  <strong>8</strong> <strong>GR_CON_FUN_MP</strong> 	GR_CON_FUN_MP (data, item) is a group of subjects with functional and connectivity data.
-			%  <strong>9</strong> <strong>GR_CON</strong> 	GR_CON (result, item) is a group of subjects with connectivity data.
-			%  <strong>10</strong> <strong>GR_FUN</strong> 	GR_FUN (result, item) is a group of subjects with functional data.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (metadata, logical) determines whether to show the waitbar.
+			%  <strong>9</strong> <strong>GR_CON_FUN_MP</strong> 	GR_CON_FUN_MP (data, item) is a group of subjects with functional and connectivity data.
+			%  <strong>10</strong> <strong>GR_CON</strong> 	GR_CON (result, item) is a group of subjects with connectivity data.
+			%  <strong>11</strong> <strong>GR_FUN</strong> 	GR_FUN (result, item) is a group of subjects with functional data.
 			%
 			% See also Category, Format.
 			
@@ -210,7 +212,7 @@ classdef SeparateGroups_CON_FUN_MP < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11];
 				return
 			end
 			
@@ -218,13 +220,15 @@ classdef SeparateGroups_CON_FUN_MP < ConcreteElement
 				case 1 % Category.CONSTANT
 					prop_list = [1 2];
 				case 2 % Category.METADATA
-					prop_list = [5 6 7];
+					prop_list = [5 6 8];
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 8];
+					prop_list = [4 9];
 				case 5 % Category.RESULT
-					prop_list = [9 10];
+					prop_list = [10 11];
+				case 6 % Category.QUERY
+					prop_list = 7;
 				otherwise
 					prop_list = [];
 			end
@@ -250,7 +254,7 @@ classdef SeparateGroups_CON_FUN_MP < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 10;
+				prop_number = 11;
 				return
 			end
 			
@@ -265,6 +269,8 @@ classdef SeparateGroups_CON_FUN_MP < ConcreteElement
 					prop_number = 2;
 				case 5 % Category.RESULT
 					prop_number = 2;
+				case 6 % Category.QUERY
+					prop_number = 1;
 				otherwise
 					prop_number = 0;
 			end
@@ -295,7 +301,7 @@ classdef SeparateGroups_CON_FUN_MP < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 10 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 11 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -333,7 +339,7 @@ classdef SeparateGroups_CON_FUN_MP < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR_CON_FUN_MP'  'GR_CON'  'GR_FUN' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR_CON_FUN_MP'  'GR_CON'  'GR_FUN' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -366,7 +372,7 @@ classdef SeparateGroups_CON_FUN_MP < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR_CON_FUN_MP'  'GR_CON'  'GR_FUN' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR_CON_FUN_MP'  'GR_CON'  'GR_FUN' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -395,7 +401,7 @@ classdef SeparateGroups_CON_FUN_MP < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				separategroups_con_fun_mp_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR_CON_FUN_MP'  'GR_CON'  'GR_FUN' };
+				separategroups_con_fun_mp_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR_CON_FUN_MP'  'GR_CON'  'GR_FUN' };
 				tag = separategroups_con_fun_mp_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -422,7 +428,7 @@ classdef SeparateGroups_CON_FUN_MP < ConcreteElement
 			prop = SeparateGroups_CON_FUN_MP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			separategroups_con_fun_mp_category_list = { 1  1  3  4  2  2  2  4  5  5 };
+			separategroups_con_fun_mp_category_list = { 1  1  3  4  2  2  6  2  4  5  5 };
 			prop_category = separategroups_con_fun_mp_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -448,7 +454,7 @@ classdef SeparateGroups_CON_FUN_MP < ConcreteElement
 			prop = SeparateGroups_CON_FUN_MP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			separategroups_con_fun_mp_format_list = { 2  2  8  2  2  2  4  8  8  8 };
+			separategroups_con_fun_mp_format_list = { 2  2  8  2  2  2  2  4  8  8  8 };
 			prop_format = separategroups_con_fun_mp_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -474,7 +480,7 @@ classdef SeparateGroups_CON_FUN_MP < ConcreteElement
 			prop = SeparateGroups_CON_FUN_MP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			separategroups_con_fun_mp_description_list = { 'NAME (constant, string) is the name of the separator of a CON_FUN_MP subject group.'  'DESCRIPTION (constant, string) is the description of the separator of a CON_FUN_MP subject group.'  'TEMPLATE (parameter, item) is the template of the separator of a CON_FUN_MP subject group.'  'ID (data, string) is a few-letter code for the separator of a CON_FUN_MP subject group.'  'LABEL (metadata, string) is an extended label of the separator of a CON_FUN_MP subject group.'  'NOTES (metadata, string) are some specific notes about the separator of a CON_FUN_MP subject group.'  'WAITBAR (metadata, logical) determines whether to show the waitbar.'  'GR_CON_FUN_MP (data, item) is a group of subjects with functional and connectivity data.'  'GR_CON (result, item) is a group of subjects with connectivity data.'  'GR_FUN (result, item) is a group of subjects with functional data.' };
+			separategroups_con_fun_mp_description_list = { 'NAME (constant, string) is the name of the separator of a CON_FUN_MP subject group.'  'DESCRIPTION (constant, string) is the description of the separator of a CON_FUN_MP subject group.'  'TEMPLATE (parameter, item) is the template of the separator of a CON_FUN_MP subject group.'  'ID (data, string) is a few-letter code for the separator of a CON_FUN_MP subject group.'  'LABEL (metadata, string) is an extended label of the separator of a CON_FUN_MP subject group.'  'NOTES (metadata, string) are some specific notes about the separator of a CON_FUN_MP subject group.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (metadata, logical) determines whether to show the waitbar.'  'GR_CON_FUN_MP (data, item) is a group of subjects with functional and connectivity data.'  'GR_CON (result, item) is a group of subjects with connectivity data.'  'GR_FUN (result, item) is a group of subjects with functional data.' };
 			prop_description = separategroups_con_fun_mp_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -500,13 +506,13 @@ classdef SeparateGroups_CON_FUN_MP < ConcreteElement
 			prop = SeparateGroups_CON_FUN_MP.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % SeparateGroups_CON_FUN_MP.WAITBAR
+				case 8 % SeparateGroups_CON_FUN_MP.WAITBAR
 					prop_settings = Format.getFormatSettings(4);
-				case 8 % SeparateGroups_CON_FUN_MP.GR_CON_FUN_MP
+				case 9 % SeparateGroups_CON_FUN_MP.GR_CON_FUN_MP
 					prop_settings = 'Group';
-				case 9 % SeparateGroups_CON_FUN_MP.GR_CON
+				case 10 % SeparateGroups_CON_FUN_MP.GR_CON
 					prop_settings = 'Group';
-				case 10 % SeparateGroups_CON_FUN_MP.GR_FUN
+				case 11 % SeparateGroups_CON_FUN_MP.GR_FUN
 					prop_settings = 'Group';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -535,13 +541,13 @@ classdef SeparateGroups_CON_FUN_MP < ConcreteElement
 			prop = SeparateGroups_CON_FUN_MP.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % SeparateGroups_CON_FUN_MP.WAITBAR
+				case 8 % SeparateGroups_CON_FUN_MP.WAITBAR
 					prop_default = Format.getFormatDefault(4, SeparateGroups_CON_FUN_MP.getPropSettings(prop));
-				case 8 % SeparateGroups_CON_FUN_MP.GR_CON_FUN_MP
+				case 9 % SeparateGroups_CON_FUN_MP.GR_CON_FUN_MP
 					prop_default = Group('SUB_CLASS', 'SubjectCON_FUN_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON_FUN_MP'));
-				case 9 % SeparateGroups_CON_FUN_MP.GR_CON
+				case 10 % SeparateGroups_CON_FUN_MP.GR_CON
 					prop_default = Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON'));
-				case 10 % SeparateGroups_CON_FUN_MP.GR_FUN
+				case 11 % SeparateGroups_CON_FUN_MP.GR_FUN
 					prop_default = Group('SUB_CLASS', 'SubjectFUN', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectFUN'));
 				case 1 % SeparateGroups_CON_FUN_MP.NAME
 					prop_default = 'SeparateGroups_CON_FUN_MP';
@@ -617,19 +623,19 @@ classdef SeparateGroups_CON_FUN_MP < ConcreteElement
 			prop = SeparateGroups_CON_FUN_MP.getPropProp(pointer);
 			
 			switch prop
-				case 7 % SeparateGroups_CON_FUN_MP.WAITBAR
+				case 8 % SeparateGroups_CON_FUN_MP.WAITBAR
 					check = Format.checkFormat(4, value, SeparateGroups_CON_FUN_MP.getPropSettings(prop));
-				case 8 % SeparateGroups_CON_FUN_MP.GR_CON_FUN_MP
+				case 9 % SeparateGroups_CON_FUN_MP.GR_CON_FUN_MP
 					check = Format.checkFormat(8, value, SeparateGroups_CON_FUN_MP.getPropSettings(prop));
 					if check
 						check = any(strcmp(value.get('SUB_CLASS'), SubjectCON_FUN_MP.getSubclasses()));
 					end
-				case 9 % SeparateGroups_CON_FUN_MP.GR_CON
+				case 10 % SeparateGroups_CON_FUN_MP.GR_CON
 					check = Format.checkFormat(8, value, SeparateGroups_CON_FUN_MP.getPropSettings(prop));
-				case 10 % SeparateGroups_CON_FUN_MP.GR_FUN
+				case 11 % SeparateGroups_CON_FUN_MP.GR_FUN
 					check = Format.checkFormat(8, value, SeparateGroups_CON_FUN_MP.getPropSettings(prop));
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -662,8 +668,8 @@ classdef SeparateGroups_CON_FUN_MP < ConcreteElement
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 9 % SeparateGroups_CON_FUN_MP.GR_CON
-					rng_settings_ = rng(); rng(se.getPropSeed(9), 'twister')
+				case 10 % SeparateGroups_CON_FUN_MP.GR_CON
+					rng_settings_ = rng(); rng(se.getPropSeed(10), 'twister')
 					
 					wb = braph2waitbar(se.get('WAITBAR'), 0, 'Extracting the connectivity group ...');
 					
@@ -695,8 +701,8 @@ classdef SeparateGroups_CON_FUN_MP < ConcreteElement
 					
 					rng(rng_settings_)
 					
-				case 10 % SeparateGroups_CON_FUN_MP.GR_FUN
-					rng_settings_ = rng(); rng(se.getPropSeed(10), 'twister')
+				case 11 % SeparateGroups_CON_FUN_MP.GR_FUN
+					rng_settings_ = rng(); rng(se.getPropSeed(11), 'twister')
 					
 					wb = braph2waitbar(se.get('WAITBAR'), 0, 'Extracting the functional group ...');
 					
@@ -729,7 +735,7 @@ classdef SeparateGroups_CON_FUN_MP < ConcreteElement
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						value = calculateValue@ConcreteElement(se, prop, varargin{:});
 					else
 						value = calculateValue@Element(se, prop, varargin{:});
@@ -754,14 +760,14 @@ classdef SeparateGroups_CON_FUN_MP < ConcreteElement
 			msg = ['Error while checking ' tostring(se) ' ' se.getPropTag(prop) '.'];
 			
 			switch prop
-				case 9 % SeparateGroups_CON_FUN_MP.GR_CON
+				case 10 % SeparateGroups_CON_FUN_MP.GR_CON
 					check = any(strcmp(value.get('SUB_CLASS'), SubjectCON.getSubclasses()));
 					
-				case 10 % SeparateGroups_CON_FUN_MP.GR_FUN
+				case 11 % SeparateGroups_CON_FUN_MP.GR_FUN
 					check = any(strcmp(value.get('SUB_CLASS'), SubjectFUN.getSubclasses()));
 					
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						[check, msg] = checkValue@ConcreteElement(se, prop, value);
 					end
 			end

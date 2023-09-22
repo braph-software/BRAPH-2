@@ -13,13 +13,14 @@ classdef CorePeriphery < Richness
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the core-periphery.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the core-periphery.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the core-periphery.
-	%  <strong>7</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-	%  <strong>8</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>9</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-	%  <strong>10</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-	%  <strong>11</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>12</strong> <strong>M</strong> 	M (result, cell) is the core-periphery.
-	%  <strong>13</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the core-periphery.
+	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% CorePeriphery methods (constructor):
 	%  CorePeriphery - constructor
@@ -125,13 +126,14 @@ classdef CorePeriphery < Richness
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the core-periphery.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the core-periphery.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the core-periphery.
-			%  <strong>7</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-			%  <strong>8</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>9</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-			%  <strong>10</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-			%  <strong>11</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>12</strong> <strong>M</strong> 	M (result, cell) is the core-periphery.
-			%  <strong>13</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the core-periphery.
+			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
 			
@@ -193,23 +195,25 @@ classdef CorePeriphery < Richness
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2 7 8 9 10];
+					prop_list = [1 2 8 9 10 11];
 				case 2 % Category.METADATA
 					prop_list = [5 6];
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 11];
+					prop_list = [4 12];
 				case 5 % Category.RESULT
-					prop_list = 12;
-				case 9 % Category.GUI
 					prop_list = 13;
+				case 6 % Category.QUERY
+					prop_list = 7;
+				case 9 % Category.GUI
+					prop_list = 14;
 				otherwise
 					prop_list = [];
 			end
@@ -235,7 +239,7 @@ classdef CorePeriphery < Richness
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 13;
+				prop_number = 14;
 				return
 			end
 			
@@ -249,6 +253,8 @@ classdef CorePeriphery < Richness
 				case 4 % Category.DATA
 					prop_number = 2;
 				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
 					prop_number = 1;
 				case 9 % Category.GUI
 					prop_number = 1;
@@ -282,7 +288,7 @@ classdef CorePeriphery < Richness
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 13 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 14 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -320,7 +326,7 @@ classdef CorePeriphery < Richness
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -353,7 +359,7 @@ classdef CorePeriphery < Richness
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -382,7 +388,7 @@ classdef CorePeriphery < Richness
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				coreperiphery_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' };
+				coreperiphery_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' };
 				tag = coreperiphery_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -409,7 +415,7 @@ classdef CorePeriphery < Richness
 			prop = CorePeriphery.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			coreperiphery_category_list = { 1  1  3  4  2  2  1  1  1  1  4  5  9 };
+			coreperiphery_category_list = { 1  1  3  4  2  2  6  1  1  1  1  4  5  9 };
 			prop_category = coreperiphery_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -435,7 +441,7 @@ classdef CorePeriphery < Richness
 			prop = CorePeriphery.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			coreperiphery_format_list = { 2  2  8  2  2  2  11  11  11  7  8  16  8 };
+			coreperiphery_format_list = { 2  2  8  2  2  2  2  11  11  11  7  8  16  8 };
 			prop_format = coreperiphery_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -461,7 +467,7 @@ classdef CorePeriphery < Richness
 			prop = CorePeriphery.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			coreperiphery_description_list = { 'NAME (constant, string) is the name of the core-periphery.'  'DESCRIPTION (constant, string) is the description of the core-periphery.'  'TEMPLATE (parameter, item) is the template of the core-periphery.'  'ID (data, string) is a few-letter code of the core-periphery.'  'LABEL (metadata, string) is an extended label of the core-periphery.'  'NOTES (metadata, string) are some specific notes about the core-periphery.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the core-periphery.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			coreperiphery_description_list = { 'NAME (constant, string) is the name of the core-periphery.'  'DESCRIPTION (constant, string) is the description of the core-periphery.'  'TEMPLATE (parameter, item) is the template of the core-periphery.'  'ID (data, string) is a few-letter code of the core-periphery.'  'LABEL (metadata, string) is an extended label of the core-periphery.'  'NOTES (metadata, string) are some specific notes about the core-periphery.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the core-periphery.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = coreperiphery_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -524,13 +530,13 @@ classdef CorePeriphery < Richness
 					prop_default = 'CorePeriphery label';
 				case 6 % CorePeriphery.NOTES
 					prop_default = 'CorePeriphery notes';
-				case 7 % CorePeriphery.SHAPE
+				case 8 % CorePeriphery.SHAPE
 					prop_default = 2;
-				case 8 % CorePeriphery.SCOPE
+				case 9 % CorePeriphery.SCOPE
 					prop_default = 2;
-				case 9 % CorePeriphery.PARAMETRICITY
+				case 10 % CorePeriphery.PARAMETRICITY
 					prop_default = 2;
-				case 10 % CorePeriphery.COMPATIBLE_GRAPHS
+				case 11 % CorePeriphery.COMPATIBLE_GRAPHS
 					prop_default = {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT' 'MultilayerWD' 'OrdMlWD'} ;;
 				otherwise
 					prop_default = getPropDefault@Richness(prop);
@@ -597,7 +603,7 @@ classdef CorePeriphery < Richness
 			
 			switch prop
 				otherwise
-					if prop <= 13
+					if prop <= 14
 						check = checkProp@Richness(prop, value);
 					end
 			end
@@ -630,8 +636,8 @@ classdef CorePeriphery < Richness
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 12 % CorePeriphery.M
-					rng_settings_ = rng(); rng(m.getPropSeed(12), 'twister')
+				case 13 % CorePeriphery.M
+					rng_settings_ = rng(); rng(m.getPropSeed(13), 'twister')
 					
 					g = m.get('G'); % graph from measure class
 					A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -688,7 +694,7 @@ classdef CorePeriphery < Richness
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 13
+					if prop <= 14
 						value = calculateValue@Richness(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

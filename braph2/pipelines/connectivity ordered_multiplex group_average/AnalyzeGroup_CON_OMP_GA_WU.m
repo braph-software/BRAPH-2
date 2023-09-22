@@ -12,9 +12,10 @@ classdef AnalyzeGroup_CON_OMP_GA_WU < AnalyzeGroup
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph analysis with connectivity ordinal multiplex data.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph analysis with connectivity ordinal multiplex data.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph analysis with connectivity ordinal multiplex data.
-	%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>8</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectCON_MP.
-	%  <strong>9</strong> <strong>G</strong> 	G (result, item) is the average graph (OrdMxWU) obtained from this analysis.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>9</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectCON_MP.
+	%  <strong>10</strong> <strong>G</strong> 	G (result, item) is the average graph (OrdMxWU) obtained from this analysis.
 	%
 	% AnalyzeGroup_CON_OMP_GA_WU methods (constructor):
 	%  AnalyzeGroup_CON_OMP_GA_WU - constructor
@@ -122,9 +123,10 @@ classdef AnalyzeGroup_CON_OMP_GA_WU < AnalyzeGroup
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph analysis with connectivity ordinal multiplex data.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph analysis with connectivity ordinal multiplex data.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph analysis with connectivity ordinal multiplex data.
-			%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>8</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectCON_MP.
-			%  <strong>9</strong> <strong>G</strong> 	G (result, item) is the average graph (OrdMxWU) obtained from this analysis.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>9</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectCON_MP.
+			%  <strong>10</strong> <strong>G</strong> 	G (result, item) is the average graph (OrdMxWU) obtained from this analysis.
 			%
 			% See also Category, Format.
 			
@@ -186,7 +188,7 @@ classdef AnalyzeGroup_CON_OMP_GA_WU < AnalyzeGroup
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9];
+				prop_list = [1 2 3 4 5 6 7 8 9 10];
 				return
 			end
 			
@@ -198,11 +200,13 @@ classdef AnalyzeGroup_CON_OMP_GA_WU < AnalyzeGroup
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 8];
+					prop_list = [4 9];
 				case 5 % Category.RESULT
-					prop_list = 9;
-				case 9 % Category.GUI
+					prop_list = 10;
+				case 6 % Category.QUERY
 					prop_list = 7;
+				case 9 % Category.GUI
+					prop_list = 8;
 				otherwise
 					prop_list = [];
 			end
@@ -228,7 +232,7 @@ classdef AnalyzeGroup_CON_OMP_GA_WU < AnalyzeGroup
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 9;
+				prop_number = 10;
 				return
 			end
 			
@@ -242,6 +246,8 @@ classdef AnalyzeGroup_CON_OMP_GA_WU < AnalyzeGroup
 				case 4 % Category.DATA
 					prop_number = 2;
 				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
 					prop_number = 1;
 				case 9 % Category.GUI
 					prop_number = 1;
@@ -275,7 +281,7 @@ classdef AnalyzeGroup_CON_OMP_GA_WU < AnalyzeGroup
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 9 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 10 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -313,7 +319,7 @@ classdef AnalyzeGroup_CON_OMP_GA_WU < AnalyzeGroup
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'G' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'G' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -346,7 +352,7 @@ classdef AnalyzeGroup_CON_OMP_GA_WU < AnalyzeGroup
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'G' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'G' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -375,7 +381,7 @@ classdef AnalyzeGroup_CON_OMP_GA_WU < AnalyzeGroup
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				analyzegroup_con_omp_ga_wu_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'G' };
+				analyzegroup_con_omp_ga_wu_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'G' };
 				tag = analyzegroup_con_omp_ga_wu_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -402,7 +408,7 @@ classdef AnalyzeGroup_CON_OMP_GA_WU < AnalyzeGroup
 			prop = AnalyzeGroup_CON_OMP_GA_WU.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzegroup_con_omp_ga_wu_category_list = { 1  1  3  4  2  2  9  4  5 };
+			analyzegroup_con_omp_ga_wu_category_list = { 1  1  3  4  2  2  6  9  4  5 };
 			prop_category = analyzegroup_con_omp_ga_wu_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -428,7 +434,7 @@ classdef AnalyzeGroup_CON_OMP_GA_WU < AnalyzeGroup
 			prop = AnalyzeGroup_CON_OMP_GA_WU.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzegroup_con_omp_ga_wu_format_list = { 2  2  8  2  2  2  4  8  8 };
+			analyzegroup_con_omp_ga_wu_format_list = { 2  2  8  2  2  2  2  4  8  8 };
 			prop_format = analyzegroup_con_omp_ga_wu_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -454,7 +460,7 @@ classdef AnalyzeGroup_CON_OMP_GA_WU < AnalyzeGroup
 			prop = AnalyzeGroup_CON_OMP_GA_WU.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzegroup_con_omp_ga_wu_description_list = { 'NAME (constant, string) is the name of the graph analysis with connectivity ordinal multiplex data.'  'DESCRIPTION (constant, string) is the description of the graph analysis with connectivity ordinal multiplex data.'  'TEMPLATE (parameter, item) is the template of the graph analysis with connectivity ordinal multiplex data.'  'ID (data, string) is a few-letter code for the graph analysis with connectivity ordinal multiplex data.'  'LABEL (metadata, string) is an extended label of the graph analysis with connectivity ordinal multiplex data.'  'NOTES (metadata, string) are some specific notes about the graph analysis with connectivity ordinal multiplex data.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class SubjectCON_MP.'  'G (result, item) is the average graph (OrdMxWU) obtained from this analysis.' };
+			analyzegroup_con_omp_ga_wu_description_list = { 'NAME (constant, string) is the name of the graph analysis with connectivity ordinal multiplex data.'  'DESCRIPTION (constant, string) is the description of the graph analysis with connectivity ordinal multiplex data.'  'TEMPLATE (parameter, item) is the template of the graph analysis with connectivity ordinal multiplex data.'  'ID (data, string) is a few-letter code for the graph analysis with connectivity ordinal multiplex data.'  'LABEL (metadata, string) is an extended label of the graph analysis with connectivity ordinal multiplex data.'  'NOTES (metadata, string) are some specific notes about the graph analysis with connectivity ordinal multiplex data.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class SubjectCON_MP.'  'G (result, item) is the average graph (OrdMxWU) obtained from this analysis.' };
 			prop_description = analyzegroup_con_omp_ga_wu_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -482,7 +488,7 @@ classdef AnalyzeGroup_CON_OMP_GA_WU < AnalyzeGroup
 			switch prop %CET: Computational Efficiency Trick
 				case 3 % AnalyzeGroup_CON_OMP_GA_WU.TEMPLATE
 					prop_settings = 'AnalyzeGroup_CON_OMP_GA_WU';
-				case 9 % AnalyzeGroup_CON_OMP_GA_WU.G
+				case 10 % AnalyzeGroup_CON_OMP_GA_WU.G
 					prop_settings = 'OrdMxWU';
 				otherwise
 					prop_settings = getPropSettings@AnalyzeGroup(prop);
@@ -523,9 +529,9 @@ classdef AnalyzeGroup_CON_OMP_GA_WU < AnalyzeGroup
 					prop_default = 'AnalyzeGroup_CON_OMP_GA_WU label';
 				case 6 % AnalyzeGroup_CON_OMP_GA_WU.NOTES
 					prop_default = 'AnalyzeGroup_CON_OMP_GA_WU notes';
-				case 8 % AnalyzeGroup_CON_OMP_GA_WU.GR
+				case 9 % AnalyzeGroup_CON_OMP_GA_WU.GR
 					prop_default = Group('SUB_CLASS', 'SubjectCON_MP');
-				case 9 % AnalyzeGroup_CON_OMP_GA_WU.G
+				case 10 % AnalyzeGroup_CON_OMP_GA_WU.G
 					prop_default = OrdMxWU();
 				otherwise
 					prop_default = getPropDefault@AnalyzeGroup(prop);
@@ -593,10 +599,10 @@ classdef AnalyzeGroup_CON_OMP_GA_WU < AnalyzeGroup
 			switch prop
 				case 3 % AnalyzeGroup_CON_OMP_GA_WU.TEMPLATE
 					check = Format.checkFormat(8, value, AnalyzeGroup_CON_OMP_GA_WU.getPropSettings(prop));
-				case 9 % AnalyzeGroup_CON_OMP_GA_WU.G
+				case 10 % AnalyzeGroup_CON_OMP_GA_WU.G
 					check = Format.checkFormat(8, value, AnalyzeGroup_CON_OMP_GA_WU.getPropSettings(prop));
 				otherwise
-					if prop <= 9
+					if prop <= 10
 						check = checkProp@AnalyzeGroup(prop, value);
 					end
 			end
@@ -629,8 +635,8 @@ classdef AnalyzeGroup_CON_OMP_GA_WU < AnalyzeGroup
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 9 % AnalyzeGroup_CON_OMP_GA_WU.G
-					rng_settings_ = rng(); rng(a.getPropSeed(9), 'twister')
+				case 10 % AnalyzeGroup_CON_OMP_GA_WU.G
+					rng_settings_ = rng(); rng(a.getPropSeed(10), 'twister')
 					
 					gr = a.get('GR');
 					subjects_number = gr.get('SUB_DICT').get('LENGTH');
@@ -655,7 +661,7 @@ classdef AnalyzeGroup_CON_OMP_GA_WU < AnalyzeGroup
 					L = length(A_con_omp);
 					g = OrdMxWU( ...
 					    'ID', ['Graph ' gr.get('ID')], ...
-					    'B', cellfun(@(a) a / subjects_number, A_con_omp, 'UniformOutput', false), ... % % % 'LAYERTICKS', [1:1:L]
+					    'B', cellfun(@(a) a / subjects_number, A_con_omp, 'UniformOutput', false), ...
 					    'LAYERLABELS', cellfun(@(x) ['L' num2str(x)], num2cell([1:1:L]), 'UniformOutput', false) ...
 					    );
 					
@@ -672,7 +678,7 @@ classdef AnalyzeGroup_CON_OMP_GA_WU < AnalyzeGroup
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 9
+					if prop <= 10
 						value = calculateValue@AnalyzeGroup(a, prop, varargin{:});
 					else
 						value = calculateValue@Element(a, prop, varargin{:});

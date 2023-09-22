@@ -11,12 +11,13 @@ classdef SubjectST_MP < Subject
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the subject.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the subject.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the subject.
-	%  <strong>7</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
-	%  <strong>8</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
-	%  <strong>9</strong> <strong>L</strong> 	L (data, scalar) is the number of layers of subject data.
-	%  <strong>10</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
-	%  <strong>11</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the processed layer labels.
-	%  <strong>12</strong> <strong>ST_MP</strong> 	ST_MP (data, cell) is a cell containing L vectors, each with data for each brain region.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
+	%  <strong>9</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
+	%  <strong>10</strong> <strong>L</strong> 	L (data, scalar) is the number of layers of subject data.
+	%  <strong>11</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
+	%  <strong>12</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the processed layer labels.
+	%  <strong>13</strong> <strong>ST_MP</strong> 	ST_MP (data, cell) is a cell containing L vectors, each with data for each brain region.
 	%
 	% SubjectST_MP methods (constructor):
 	%  SubjectST_MP - constructor
@@ -107,27 +108,27 @@ classdef SubjectST_MP < Subject
 	% See also ImporterGroupSubjectST_MP_TXT, ExporterGroupSubjectST_MP_TXT, ImporterGroupSubjectST_MP_XLS, ExporterGroupSubjectST_MP_XLS.
 	
 	properties (Constant) % properties
-		BA = 8; %CET: Computational Efficiency Trick
+		BA = 9; %CET: Computational Efficiency Trick
 		BA_TAG = 'BA';
 		BA_CATEGORY = 4;
 		BA_FORMAT = 8;
 		
-		L = 9; %CET: Computational Efficiency Trick
+		L = 10; %CET: Computational Efficiency Trick
 		L_TAG = 'L';
 		L_CATEGORY = 4;
 		L_FORMAT = 11;
 		
-		LAYERLABELS = 10; %CET: Computational Efficiency Trick
+		LAYERLABELS = 11; %CET: Computational Efficiency Trick
 		LAYERLABELS_TAG = 'LAYERLABELS';
 		LAYERLABELS_CATEGORY = 2;
 		LAYERLABELS_FORMAT = 3;
 		
-		ALAYERLABELS = 11; %CET: Computational Efficiency Trick
+		ALAYERLABELS = 12; %CET: Computational Efficiency Trick
 		ALAYERLABELS_TAG = 'ALAYERLABELS';
 		ALAYERLABELS_CATEGORY = 6;
 		ALAYERLABELS_FORMAT = 3;
 		
-		ST_MP = 12; %CET: Computational Efficiency Trick
+		ST_MP = 13; %CET: Computational Efficiency Trick
 		ST_MP_TAG = 'ST_MP';
 		ST_MP_CATEGORY = 4;
 		ST_MP_FORMAT = 16;
@@ -150,12 +151,13 @@ classdef SubjectST_MP < Subject
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the subject.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the subject.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the subject.
-			%  <strong>7</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
-			%  <strong>8</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
-			%  <strong>9</strong> <strong>L</strong> 	L (data, scalar) is the number of layers of subject data.
-			%  <strong>10</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
-			%  <strong>11</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the processed layer labels.
-			%  <strong>12</strong> <strong>ST_MP</strong> 	ST_MP (data, cell) is a cell containing L vectors, each with data for each brain region.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
+			%  <strong>9</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
+			%  <strong>10</strong> <strong>L</strong> 	L (data, scalar) is the number of layers of subject data.
+			%  <strong>11</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
+			%  <strong>12</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the processed layer labels.
+			%  <strong>13</strong> <strong>ST_MP</strong> 	ST_MP (data, cell) is a cell containing L vectors, each with data for each brain region.
 			%
 			% See also Category, Format.
 			
@@ -217,7 +219,7 @@ classdef SubjectST_MP < Subject
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13];
 				return
 			end
 			
@@ -225,13 +227,13 @@ classdef SubjectST_MP < Subject
 				case 1 % Category.CONSTANT
 					prop_list = [1 2];
 				case 2 % Category.METADATA
-					prop_list = [5 6 10];
+					prop_list = [5 6 11];
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 7 8 9 12];
+					prop_list = [4 8 9 10 13];
 				case 6 % Category.QUERY
-					prop_list = 11;
+					prop_list = [7 12];
 				otherwise
 					prop_list = [];
 			end
@@ -257,7 +259,7 @@ classdef SubjectST_MP < Subject
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 12;
+				prop_number = 13;
 				return
 			end
 			
@@ -271,7 +273,7 @@ classdef SubjectST_MP < Subject
 				case 4 % Category.DATA
 					prop_number = 5;
 				case 6 % Category.QUERY
-					prop_number = 1;
+					prop_number = 2;
 				otherwise
 					prop_number = 0;
 			end
@@ -302,7 +304,7 @@ classdef SubjectST_MP < Subject
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 12 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 13 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -340,7 +342,7 @@ classdef SubjectST_MP < Subject
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'VOI_DICT'  'BA'  'L'  'LAYERLABELS'  'ALAYERLABELS'  'ST_MP' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'L'  'LAYERLABELS'  'ALAYERLABELS'  'ST_MP' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -373,7 +375,7 @@ classdef SubjectST_MP < Subject
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'VOI_DICT'  'BA'  'L'  'LAYERLABELS'  'ALAYERLABELS'  'ST_MP' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'L'  'LAYERLABELS'  'ALAYERLABELS'  'ST_MP' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -402,7 +404,7 @@ classdef SubjectST_MP < Subject
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				subjectst_mp_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'VOI_DICT'  'BA'  'L'  'LAYERLABELS'  'ALAYERLABELS'  'ST_MP' };
+				subjectst_mp_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'L'  'LAYERLABELS'  'ALAYERLABELS'  'ST_MP' };
 				tag = subjectst_mp_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -429,7 +431,7 @@ classdef SubjectST_MP < Subject
 			prop = SubjectST_MP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			subjectst_mp_category_list = { 1  1  3  4  2  2  4  4  4  2  6  4 };
+			subjectst_mp_category_list = { 1  1  3  4  2  2  6  4  4  4  2  6  4 };
 			prop_category = subjectst_mp_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -455,7 +457,7 @@ classdef SubjectST_MP < Subject
 			prop = SubjectST_MP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			subjectst_mp_format_list = { 2  2  8  2  2  2  10  8  11  3  3  16 };
+			subjectst_mp_format_list = { 2  2  8  2  2  2  2  10  8  11  3  3  16 };
 			prop_format = subjectst_mp_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -481,7 +483,7 @@ classdef SubjectST_MP < Subject
 			prop = SubjectST_MP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			subjectst_mp_description_list = { 'NAME (constant, string) is the name of the subject.'  'DESCRIPTION (constant, string) is the description of the subject.'  'TEMPLATE (parameter, item) is the template of the subject.'  'ID (data, string) is a few-letter code for the subject.'  'LABEL (metadata, string) is an extended label of the subject.'  'NOTES (metadata, string) are some specific notes about the subject.'  'VOI_DICT (data, idict) contains the variables of interest of the subject.'  'BA (data, item) is a brain atlas.'  'L (data, scalar) is the number of layers of subject data.'  'LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.'  'ALAYERLABELS (query, stringlist) returns the processed layer labels.'  'ST_MP (data, cell) is a cell containing L vectors, each with data for each brain region.' };
+			subjectst_mp_description_list = { 'NAME (constant, string) is the name of the subject.'  'DESCRIPTION (constant, string) is the description of the subject.'  'TEMPLATE (parameter, item) is the template of the subject.'  'ID (data, string) is a few-letter code for the subject.'  'LABEL (metadata, string) is an extended label of the subject.'  'NOTES (metadata, string) are some specific notes about the subject.'  'TOSTRING (query, string) returns a string that represents the object.'  'VOI_DICT (data, idict) contains the variables of interest of the subject.'  'BA (data, item) is a brain atlas.'  'L (data, scalar) is the number of layers of subject data.'  'LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.'  'ALAYERLABELS (query, stringlist) returns the processed layer labels.'  'ST_MP (data, cell) is a cell containing L vectors, each with data for each brain region.' };
 			prop_description = subjectst_mp_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -507,15 +509,15 @@ classdef SubjectST_MP < Subject
 			prop = SubjectST_MP.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % SubjectST_MP.BA
+				case 9 % SubjectST_MP.BA
 					prop_settings = 'BrainAtlas';
-				case 9 % SubjectST_MP.L
+				case 10 % SubjectST_MP.L
 					prop_settings = Format.getFormatSettings(11);
-				case 10 % SubjectST_MP.LAYERLABELS
+				case 11 % SubjectST_MP.LAYERLABELS
 					prop_settings = Format.getFormatSettings(3);
-				case 11 % SubjectST_MP.ALAYERLABELS
+				case 12 % SubjectST_MP.ALAYERLABELS
 					prop_settings = Format.getFormatSettings(3);
-				case 12 % SubjectST_MP.ST_MP
+				case 13 % SubjectST_MP.ST_MP
 					prop_settings = Format.getFormatSettings(16);
 				otherwise
 					prop_settings = getPropSettings@Subject(prop);
@@ -544,15 +546,15 @@ classdef SubjectST_MP < Subject
 			prop = SubjectST_MP.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % SubjectST_MP.BA
+				case 9 % SubjectST_MP.BA
 					prop_default = Format.getFormatDefault(8, SubjectST_MP.getPropSettings(prop));
-				case 9 % SubjectST_MP.L
+				case 10 % SubjectST_MP.L
 					prop_default = 2;
-				case 10 % SubjectST_MP.LAYERLABELS
+				case 11 % SubjectST_MP.LAYERLABELS
 					prop_default = Format.getFormatDefault(3, SubjectST_MP.getPropSettings(prop));
-				case 11 % SubjectST_MP.ALAYERLABELS
+				case 12 % SubjectST_MP.ALAYERLABELS
 					prop_default = Format.getFormatDefault(3, SubjectST_MP.getPropSettings(prop));
-				case 12 % SubjectST_MP.ST_MP
+				case 13 % SubjectST_MP.ST_MP
 					prop_default = Format.getFormatDefault(16, SubjectST_MP.getPropSettings(prop));
 				case 1 % SubjectST_MP.NAME
 					prop_default = 'SubjectST_MP';
@@ -628,18 +630,18 @@ classdef SubjectST_MP < Subject
 			prop = SubjectST_MP.getPropProp(pointer);
 			
 			switch prop
-				case 8 % SubjectST_MP.BA
+				case 9 % SubjectST_MP.BA
 					check = Format.checkFormat(8, value, SubjectST_MP.getPropSettings(prop));
-				case 9 % SubjectST_MP.L
+				case 10 % SubjectST_MP.L
 					check = Format.checkFormat(11, value, SubjectST_MP.getPropSettings(prop));
-				case 10 % SubjectST_MP.LAYERLABELS
+				case 11 % SubjectST_MP.LAYERLABELS
 					check = Format.checkFormat(3, value, SubjectST_MP.getPropSettings(prop));
-				case 11 % SubjectST_MP.ALAYERLABELS
+				case 12 % SubjectST_MP.ALAYERLABELS
 					check = Format.checkFormat(3, value, SubjectST_MP.getPropSettings(prop));
-				case 12 % SubjectST_MP.ST_MP
+				case 13 % SubjectST_MP.ST_MP
 					check = Format.checkFormat(16, value, SubjectST_MP.getPropSettings(prop));
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						check = checkProp@Subject(prop, value);
 					end
 			end
@@ -672,11 +674,11 @@ classdef SubjectST_MP < Subject
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 11 % SubjectST_MP.ALAYERLABELS
+				case 12 % SubjectST_MP.ALAYERLABELS
 					value = sub.get('LAYERLABELS');
 					
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						value = calculateValue@Subject(sub, prop, varargin{:});
 					else
 						value = calculateValue@Element(sub, prop, varargin{:});
@@ -701,7 +703,7 @@ classdef SubjectST_MP < Subject
 			msg = ['Error while checking ' tostring(sub) ' ' sub.getPropTag(prop) '.'];
 			
 			switch prop
-				case 12 % SubjectST_MP.ST_MP
+				case 13 % SubjectST_MP.ST_MP
 					br_number = sub.get('BA').get('BR_DICT').get('LENGTH');
 					num_layers = sub.get('L');
 					check = (iscell(value) && isequal(length(value), num_layers)  && isequal( cellfun(@(v) size(v, 1), value), ones(1, num_layers) * br_number)) || (isempty(value) && br_number == 0); 
@@ -712,7 +714,7 @@ classdef SubjectST_MP < Subject
 					end
 					
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						[check, msg] = checkValue@Subject(sub, prop, value);
 					end
 			end
@@ -735,8 +737,8 @@ classdef SubjectST_MP < Subject
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 12 % SubjectST_MP.ST_MP
-					pr = PanelPropCell('EL', sub, 'PROP', 12, ...
+				case 13 % SubjectST_MP.ST_MP
+					pr = PanelPropCell('EL', sub, 'PROP', 13, ...
 					    'TABLE_HEIGHT', 480, ...
 					    'XSLIDERSHOW', true, ...
 					    'XSLIDERLABELS', sub.getCallback('ALAYERLABELS'), ...

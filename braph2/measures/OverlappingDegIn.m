@@ -12,13 +12,14 @@ classdef OverlappingDegIn < DegreeIn
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the overlapping in-degree.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the overlapping in-degree.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the overlapping in-degree.
-	%  <strong>7</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-	%  <strong>8</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>9</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-	%  <strong>10</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-	%  <strong>11</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>12</strong> <strong>M</strong> 	M (result, cell) is the overlapping in-degree.
-	%  <strong>13</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the overlapping in-degree.
+	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% OverlappingDegIn methods (constructor):
 	%  OverlappingDegIn - constructor
@@ -124,13 +125,14 @@ classdef OverlappingDegIn < DegreeIn
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the overlapping in-degree.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the overlapping in-degree.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the overlapping in-degree.
-			%  <strong>7</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-			%  <strong>8</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>9</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-			%  <strong>10</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-			%  <strong>11</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>12</strong> <strong>M</strong> 	M (result, cell) is the overlapping in-degree.
-			%  <strong>13</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the overlapping in-degree.
+			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
 			
@@ -192,23 +194,25 @@ classdef OverlappingDegIn < DegreeIn
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2 7 8 9 10];
+					prop_list = [1 2 8 9 10 11];
 				case 2 % Category.METADATA
 					prop_list = [5 6];
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 11];
+					prop_list = [4 12];
 				case 5 % Category.RESULT
-					prop_list = 12;
-				case 9 % Category.GUI
 					prop_list = 13;
+				case 6 % Category.QUERY
+					prop_list = 7;
+				case 9 % Category.GUI
+					prop_list = 14;
 				otherwise
 					prop_list = [];
 			end
@@ -234,7 +238,7 @@ classdef OverlappingDegIn < DegreeIn
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 13;
+				prop_number = 14;
 				return
 			end
 			
@@ -248,6 +252,8 @@ classdef OverlappingDegIn < DegreeIn
 				case 4 % Category.DATA
 					prop_number = 2;
 				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
 					prop_number = 1;
 				case 9 % Category.GUI
 					prop_number = 1;
@@ -281,7 +287,7 @@ classdef OverlappingDegIn < DegreeIn
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 13 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 14 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -319,7 +325,7 @@ classdef OverlappingDegIn < DegreeIn
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -352,7 +358,7 @@ classdef OverlappingDegIn < DegreeIn
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -381,7 +387,7 @@ classdef OverlappingDegIn < DegreeIn
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				overlappingdegin_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' };
+				overlappingdegin_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' };
 				tag = overlappingdegin_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -408,7 +414,7 @@ classdef OverlappingDegIn < DegreeIn
 			prop = OverlappingDegIn.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			overlappingdegin_category_list = { 1  1  3  4  2  2  1  1  1  1  4  5  9 };
+			overlappingdegin_category_list = { 1  1  3  4  2  2  6  1  1  1  1  4  5  9 };
 			prop_category = overlappingdegin_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -434,7 +440,7 @@ classdef OverlappingDegIn < DegreeIn
 			prop = OverlappingDegIn.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			overlappingdegin_format_list = { 2  2  8  2  2  2  11  11  11  7  8  16  8 };
+			overlappingdegin_format_list = { 2  2  8  2  2  2  2  11  11  11  7  8  16  8 };
 			prop_format = overlappingdegin_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -460,7 +466,7 @@ classdef OverlappingDegIn < DegreeIn
 			prop = OverlappingDegIn.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			overlappingdegin_description_list = { 'NAME (constant, string) is the name of the overlapping in-degree.'  'DESCRIPTION (constant, string) is the description of the overlapping in-degree.'  'TEMPLATE (parameter, item) is the template of the overlapping in-degree.'  'ID (data, string) is a few-letter code of the overlapping in-degree.'  'LABEL (metadata, string) is an extended label of the overlapping in-degree.'  'NOTES (metadata, string) are some specific notes about the overlapping in-degree.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the overlapping in-degree.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			overlappingdegin_description_list = { 'NAME (constant, string) is the name of the overlapping in-degree.'  'DESCRIPTION (constant, string) is the description of the overlapping in-degree.'  'TEMPLATE (parameter, item) is the template of the overlapping in-degree.'  'ID (data, string) is a few-letter code of the overlapping in-degree.'  'LABEL (metadata, string) is an extended label of the overlapping in-degree.'  'NOTES (metadata, string) are some specific notes about the overlapping in-degree.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the overlapping in-degree.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = overlappingdegin_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -527,13 +533,13 @@ classdef OverlappingDegIn < DegreeIn
 					prop_default = 'OverlappingDegIn label';
 				case 6 % OverlappingDegIn.NOTES
 					prop_default = 'OverlappingDegIn notes';
-				case 7 % OverlappingDegIn.SHAPE
+				case 8 % OverlappingDegIn.SHAPE
 					prop_default = 2;
-				case 8 % OverlappingDegIn.SCOPE
+				case 9 % OverlappingDegIn.SCOPE
 					prop_default = 1;
-				case 9 % OverlappingDegIn.PARAMETRICITY
+				case 10 % OverlappingDegIn.PARAMETRICITY
 					prop_default = 2;
-				case 10 % OverlappingDegIn.COMPATIBLE_GRAPHS
+				case 11 % OverlappingDegIn.COMPATIBLE_GRAPHS
 					prop_default = {'MultiplexWD' 'MultiplexBD' 'MultilayerBD' 'OrdMlBD'};;
 				otherwise
 					prop_default = getPropDefault@DegreeIn(prop);
@@ -602,7 +608,7 @@ classdef OverlappingDegIn < DegreeIn
 				case 3 % OverlappingDegIn.TEMPLATE
 					check = Format.checkFormat(8, value, OverlappingDegIn.getPropSettings(prop));
 				otherwise
-					if prop <= 13
+					if prop <= 14
 						check = checkProp@DegreeIn(prop, value);
 					end
 			end
@@ -635,8 +641,8 @@ classdef OverlappingDegIn < DegreeIn
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 12 % OverlappingDegIn.M
-					rng_settings_ = rng(); rng(m.getPropSeed(12), 'twister')
+				case 13 % OverlappingDegIn.M
+					rng_settings_ = rng(); rng(m.getPropSeed(13), 'twister')
 					
 					g = m.get('G'); % graph from measure class
 					A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -659,7 +665,7 @@ classdef OverlappingDegIn < DegreeIn
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 13
+					if prop <= 14
 						value = calculateValue@DegreeIn(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

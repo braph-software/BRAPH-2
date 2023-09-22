@@ -16,21 +16,22 @@ classdef Flexibility < MultilayerCommunity
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the flexibility.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the flexibility.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the flexibility.
-	%  <strong>7</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-	%  <strong>8</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.SUPERGLOBAL.
-	%  <strong>9</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-	%  <strong>10</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-	%  <strong>11</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>12</strong> <strong>M</strong> 	M (result, cell) is the flexibility.
-	%  <strong>13</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-	%  <strong>14</strong> <strong>LIMIT</strong> 	LIMIT (parameter, SCALAR) is the maximum size of multilayer modularity matrix.
-	%  <strong>15</strong> <strong>RANDORD</strong> 	RANDORD (parameter, LOGICAL) is used to set randperm.
-	%  <strong>16</strong> <strong>RANDMOVE</strong> 	RANDMOVE (parameter, LOGICAL) is the move function.
-	%  <strong>17</strong> <strong>GAMMA</strong> 	GAMMA (parameter, SCALAR) is the resolution parameter.
-	%  <strong>18</strong> <strong>OMEGA</strong> 	OMEGA (parameter, SCALAR) is the inter-layer coupling parameter.
-	%  <strong>19</strong> <strong>S0</strong> 	S0 (data, cvector) is the initial partition size of the multilayer modularity matrix.
-	%  <strong>20</strong> <strong>OM</strong> 	OM (data, MATRIX) is the multilayer modularity matrix.
-	%  <strong>21</strong> <strong>QUALITY_FUNCTION</strong> 	QUALITY_FUNCTION (data, MATRIX) is the multilayer modularity quality function.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.SUPERGLOBAL.
+	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the flexibility.
+	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%  <strong>15</strong> <strong>LIMIT</strong> 	LIMIT (parameter, SCALAR) is the maximum size of multilayer modularity matrix.
+	%  <strong>16</strong> <strong>RANDORD</strong> 	RANDORD (parameter, LOGICAL) is used to set randperm.
+	%  <strong>17</strong> <strong>RANDMOVE</strong> 	RANDMOVE (parameter, LOGICAL) is the move function.
+	%  <strong>18</strong> <strong>GAMMA</strong> 	GAMMA (parameter, SCALAR) is the resolution parameter.
+	%  <strong>19</strong> <strong>OMEGA</strong> 	OMEGA (parameter, SCALAR) is the inter-layer coupling parameter.
+	%  <strong>20</strong> <strong>S0</strong> 	S0 (data, cvector) is the initial partition size of the multilayer modularity matrix.
+	%  <strong>21</strong> <strong>OM</strong> 	OM (data, MATRIX) is the multilayer modularity matrix.
+	%  <strong>22</strong> <strong>QUALITY_FUNCTION</strong> 	QUALITY_FUNCTION (data, MATRIX) is the multilayer modularity quality function.
 	%
 	% Flexibility methods (constructor):
 	%  Flexibility - constructor
@@ -136,21 +137,22 @@ classdef Flexibility < MultilayerCommunity
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the flexibility.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the flexibility.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the flexibility.
-			%  <strong>7</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-			%  <strong>8</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.SUPERGLOBAL.
-			%  <strong>9</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-			%  <strong>10</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-			%  <strong>11</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>12</strong> <strong>M</strong> 	M (result, cell) is the flexibility.
-			%  <strong>13</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-			%  <strong>14</strong> <strong>LIMIT</strong> 	LIMIT (parameter, SCALAR) is the maximum size of multilayer modularity matrix.
-			%  <strong>15</strong> <strong>RANDORD</strong> 	RANDORD (parameter, LOGICAL) is used to set randperm.
-			%  <strong>16</strong> <strong>RANDMOVE</strong> 	RANDMOVE (parameter, LOGICAL) is the move function.
-			%  <strong>17</strong> <strong>GAMMA</strong> 	GAMMA (parameter, SCALAR) is the resolution parameter.
-			%  <strong>18</strong> <strong>OMEGA</strong> 	OMEGA (parameter, SCALAR) is the inter-layer coupling parameter.
-			%  <strong>19</strong> <strong>S0</strong> 	S0 (data, cvector) is the initial partition size of the multilayer modularity matrix.
-			%  <strong>20</strong> <strong>OM</strong> 	OM (data, MATRIX) is the multilayer modularity matrix.
-			%  <strong>21</strong> <strong>QUALITY_FUNCTION</strong> 	QUALITY_FUNCTION (data, MATRIX) is the multilayer modularity quality function.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.SUPERGLOBAL.
+			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the flexibility.
+			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+			%  <strong>15</strong> <strong>LIMIT</strong> 	LIMIT (parameter, SCALAR) is the maximum size of multilayer modularity matrix.
+			%  <strong>16</strong> <strong>RANDORD</strong> 	RANDORD (parameter, LOGICAL) is used to set randperm.
+			%  <strong>17</strong> <strong>RANDMOVE</strong> 	RANDMOVE (parameter, LOGICAL) is the move function.
+			%  <strong>18</strong> <strong>GAMMA</strong> 	GAMMA (parameter, SCALAR) is the resolution parameter.
+			%  <strong>19</strong> <strong>OMEGA</strong> 	OMEGA (parameter, SCALAR) is the inter-layer coupling parameter.
+			%  <strong>20</strong> <strong>S0</strong> 	S0 (data, cvector) is the initial partition size of the multilayer modularity matrix.
+			%  <strong>21</strong> <strong>OM</strong> 	OM (data, MATRIX) is the multilayer modularity matrix.
+			%  <strong>22</strong> <strong>QUALITY_FUNCTION</strong> 	QUALITY_FUNCTION (data, MATRIX) is the multilayer modularity quality function.
 			%
 			% See also Category, Format.
 			
@@ -212,23 +214,25 @@ classdef Flexibility < MultilayerCommunity
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2 7 8 9 10];
+					prop_list = [1 2 8 9 10 11];
 				case 2 % Category.METADATA
 					prop_list = [5 6];
 				case 3 % Category.PARAMETER
-					prop_list = [3 14 15 16 17 18];
+					prop_list = [3 15 16 17 18 19];
 				case 4 % Category.DATA
-					prop_list = [4 11 19 20 21];
+					prop_list = [4 12 20 21 22];
 				case 5 % Category.RESULT
-					prop_list = 12;
-				case 9 % Category.GUI
 					prop_list = 13;
+				case 6 % Category.QUERY
+					prop_list = 7;
+				case 9 % Category.GUI
+					prop_list = 14;
 				otherwise
 					prop_list = [];
 			end
@@ -254,7 +258,7 @@ classdef Flexibility < MultilayerCommunity
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 21;
+				prop_number = 22;
 				return
 			end
 			
@@ -268,6 +272,8 @@ classdef Flexibility < MultilayerCommunity
 				case 4 % Category.DATA
 					prop_number = 5;
 				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
 					prop_number = 1;
 				case 9 % Category.GUI
 					prop_number = 1;
@@ -301,7 +307,7 @@ classdef Flexibility < MultilayerCommunity
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 21 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 22 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -339,7 +345,7 @@ classdef Flexibility < MultilayerCommunity
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'LIMIT'  'RANDORD'  'RANDMOVE'  'GAMMA'  'OMEGA'  'S0'  'OM'  'QUALITY_FUNCTION' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'LIMIT'  'RANDORD'  'RANDMOVE'  'GAMMA'  'OMEGA'  'S0'  'OM'  'QUALITY_FUNCTION' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -372,7 +378,7 @@ classdef Flexibility < MultilayerCommunity
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'LIMIT'  'RANDORD'  'RANDMOVE'  'GAMMA'  'OMEGA'  'S0'  'OM'  'QUALITY_FUNCTION' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'LIMIT'  'RANDORD'  'RANDMOVE'  'GAMMA'  'OMEGA'  'S0'  'OM'  'QUALITY_FUNCTION' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -401,7 +407,7 @@ classdef Flexibility < MultilayerCommunity
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				flexibility_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'LIMIT'  'RANDORD'  'RANDMOVE'  'GAMMA'  'OMEGA'  'S0'  'OM'  'QUALITY_FUNCTION' };
+				flexibility_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'LIMIT'  'RANDORD'  'RANDMOVE'  'GAMMA'  'OMEGA'  'S0'  'OM'  'QUALITY_FUNCTION' };
 				tag = flexibility_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -428,7 +434,7 @@ classdef Flexibility < MultilayerCommunity
 			prop = Flexibility.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			flexibility_category_list = { 1  1  3  4  2  2  1  1  1  1  4  5  9  3  3  3  3  3  4  4  4 };
+			flexibility_category_list = { 1  1  3  4  2  2  6  1  1  1  1  4  5  9  3  3  3  3  3  4  4  4 };
 			prop_category = flexibility_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -454,7 +460,7 @@ classdef Flexibility < MultilayerCommunity
 			prop = Flexibility.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			flexibility_format_list = { 2  2  8  2  2  2  11  11  11  7  8  16  8  11  4  4  11  11  13  14  14 };
+			flexibility_format_list = { 2  2  8  2  2  2  2  11  11  11  7  8  16  8  11  4  4  11  11  13  14  14 };
 			prop_format = flexibility_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -480,7 +486,7 @@ classdef Flexibility < MultilayerCommunity
 			prop = Flexibility.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			flexibility_description_list = { 'NAME (constant, string) is the name of the flexibility.'  'DESCRIPTION (constant, string) is the description of the flexibility.'  'TEMPLATE (parameter, item) is the template of the flexibility.'  'ID (data, string) is a few-letter code of the flexibility.'  'LABEL (metadata, string) is an extended label of the flexibility.'  'NOTES (metadata, string) are some specific notes about the flexibility.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.SUPERGLOBAL.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the flexibility.'  'PFM (gui, item) contains the panel figure of the measure.'  'LIMIT (parameter, SCALAR) is the maximum size of multilayer modularity matrix.'  'RANDORD (parameter, LOGICAL) is used to set randperm.'  'RANDMOVE (parameter, LOGICAL) is the move function.'  'GAMMA (parameter, SCALAR) is the resolution parameter.'  'OMEGA (parameter, SCALAR) is the inter-layer coupling parameter.'  'S0 (data, cvector) is the initial partition size of the multilayer modularity matrix.'  'OM (data, MATRIX) is the multilayer modularity matrix.'  'QUALITY_FUNCTION (data, MATRIX) is the multilayer modularity quality function.' };
+			flexibility_description_list = { 'NAME (constant, string) is the name of the flexibility.'  'DESCRIPTION (constant, string) is the description of the flexibility.'  'TEMPLATE (parameter, item) is the template of the flexibility.'  'ID (data, string) is a few-letter code of the flexibility.'  'LABEL (metadata, string) is an extended label of the flexibility.'  'NOTES (metadata, string) are some specific notes about the flexibility.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.SUPERGLOBAL.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the flexibility.'  'PFM (gui, item) contains the panel figure of the measure.'  'LIMIT (parameter, SCALAR) is the maximum size of multilayer modularity matrix.'  'RANDORD (parameter, LOGICAL) is used to set randperm.'  'RANDMOVE (parameter, LOGICAL) is the move function.'  'GAMMA (parameter, SCALAR) is the resolution parameter.'  'OMEGA (parameter, SCALAR) is the inter-layer coupling parameter.'  'S0 (data, cvector) is the initial partition size of the multilayer modularity matrix.'  'OM (data, MATRIX) is the multilayer modularity matrix.'  'QUALITY_FUNCTION (data, MATRIX) is the multilayer modularity quality function.' };
 			prop_description = flexibility_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -543,14 +549,14 @@ classdef Flexibility < MultilayerCommunity
 					prop_default = 'Flexibility label';
 				case 6 % Flexibility.NOTES
 					prop_default = 'Flexibility notes';
-				case 7 % Flexibility.SHAPE
+				case 8 % Flexibility.SHAPE
 					prop_default = 2;
-				case 8 % Flexibility.SCOPE
+				case 9 % Flexibility.SCOPE
 					prop_default = 1;
-				case 9 % Flexibility.PARAMETRICITY
+				case 10 % Flexibility.PARAMETRICITY
 					prop_default = 2;
-				case 10 % Flexibility.COMPATIBLE_GRAPHS
-					prop_default = {'MultiplexBU' 'MultiplexWD' 'MultiplexBD' 'MultiplexWU' 'MultilayerBD' 'MultilayerBU' 'MultilayerWD' 'MultilayerWU' 'OrdMlWD' 'OrdMlWU' 'OrdMlBU' 'OrdMlBD' 'OrdMxWD' 'OrdMxWU' 'OrdMxBD' 'OrdMxBU'} ;%TBE % % % add any missing tests;
+				case 11 % Flexibility.COMPATIBLE_GRAPHS
+					prop_default = {'MultiplexBU' 'MultiplexWD' 'MultiplexBD' 'MultiplexWU' 'MultilayerBD' 'MultilayerBU' 'MultilayerWD' 'MultilayerWU' 'OrdMlWD' 'OrdMlWU' 'OrdMlBU' 'OrdMlBD' 'OrdMxWD' 'OrdMxWU' 'OrdMxBD' 'OrdMxBU'};;
 				otherwise
 					prop_default = getPropDefault@MultilayerCommunity(prop);
 			end
@@ -616,7 +622,7 @@ classdef Flexibility < MultilayerCommunity
 			
 			switch prop
 				otherwise
-					if prop <= 21
+					if prop <= 22
 						check = checkProp@MultilayerCommunity(prop, value);
 					end
 			end
@@ -649,8 +655,8 @@ classdef Flexibility < MultilayerCommunity
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 12 % Flexibility.M
-					rng_settings_ = rng(); rng(m.getPropSeed(12), 'twister')
+				case 13 % Flexibility.M
+					rng_settings_ = rng(); rng(m.getPropSeed(13), 'twister')
 					
 					g = m.get('G'); % graph from measure class
 					A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -685,7 +691,7 @@ classdef Flexibility < MultilayerCommunity
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 21
+					if prop <= 22
 						value = calculateValue@MultilayerCommunity(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

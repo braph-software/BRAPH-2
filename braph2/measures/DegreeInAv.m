@@ -11,13 +11,14 @@ classdef DegreeInAv < DegreeIn
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average in-degree.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average in-degree.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average in-degree.
-	%  <strong>7</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
-	%  <strong>8</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>9</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-	%  <strong>10</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-	%  <strong>11</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>12</strong> <strong>M</strong> 	M (result, cell) is the cell containing the degree-inav value.
-	%  <strong>13</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
+	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the cell containing the degree-inav value.
+	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% DegreeInAv methods (constructor):
 	%  DegreeInAv - constructor
@@ -123,13 +124,14 @@ classdef DegreeInAv < DegreeIn
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average in-degree.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average in-degree.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average in-degree.
-			%  <strong>7</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
-			%  <strong>8</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>9</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-			%  <strong>10</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-			%  <strong>11</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>12</strong> <strong>M</strong> 	M (result, cell) is the cell containing the degree-inav value.
-			%  <strong>13</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
+			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the cell containing the degree-inav value.
+			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
 			
@@ -191,23 +193,25 @@ classdef DegreeInAv < DegreeIn
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2 7 8 9 10];
+					prop_list = [1 2 8 9 10 11];
 				case 2 % Category.METADATA
 					prop_list = [5 6];
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 11];
+					prop_list = [4 12];
 				case 5 % Category.RESULT
-					prop_list = 12;
-				case 9 % Category.GUI
 					prop_list = 13;
+				case 6 % Category.QUERY
+					prop_list = 7;
+				case 9 % Category.GUI
+					prop_list = 14;
 				otherwise
 					prop_list = [];
 			end
@@ -233,7 +237,7 @@ classdef DegreeInAv < DegreeIn
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 13;
+				prop_number = 14;
 				return
 			end
 			
@@ -247,6 +251,8 @@ classdef DegreeInAv < DegreeIn
 				case 4 % Category.DATA
 					prop_number = 2;
 				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
 					prop_number = 1;
 				case 9 % Category.GUI
 					prop_number = 1;
@@ -280,7 +286,7 @@ classdef DegreeInAv < DegreeIn
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 13 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 14 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -318,7 +324,7 @@ classdef DegreeInAv < DegreeIn
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -351,7 +357,7 @@ classdef DegreeInAv < DegreeIn
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -380,7 +386,7 @@ classdef DegreeInAv < DegreeIn
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				degreeinav_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' };
+				degreeinav_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' };
 				tag = degreeinav_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -407,7 +413,7 @@ classdef DegreeInAv < DegreeIn
 			prop = DegreeInAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			degreeinav_category_list = { 1  1  3  4  2  2  1  1  1  1  4  5  9 };
+			degreeinav_category_list = { 1  1  3  4  2  2  6  1  1  1  1  4  5  9 };
 			prop_category = degreeinav_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -433,7 +439,7 @@ classdef DegreeInAv < DegreeIn
 			prop = DegreeInAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			degreeinav_format_list = { 2  2  8  2  2  2  11  11  11  7  8  16  8 };
+			degreeinav_format_list = { 2  2  8  2  2  2  2  11  11  11  7  8  16  8 };
 			prop_format = degreeinav_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -459,7 +465,7 @@ classdef DegreeInAv < DegreeIn
 			prop = DegreeInAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			degreeinav_description_list = { 'NAME (constant, string) is the name of the average in-degree.'  'DESCRIPTION (constant, string) is the description of the average in-degree.'  'TEMPLATE (parameter, item) is the template of the average in-degree.'  'ID (data, string) is a few-letter code of the average in-degree.'  'LABEL (metadata, string) is an extended label of the average in-degree.'  'NOTES (metadata, string) are some specific notes about the average in-degree.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the degree-inav value.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			degreeinav_description_list = { 'NAME (constant, string) is the name of the average in-degree.'  'DESCRIPTION (constant, string) is the description of the average in-degree.'  'TEMPLATE (parameter, item) is the template of the average in-degree.'  'ID (data, string) is a few-letter code of the average in-degree.'  'LABEL (metadata, string) is an extended label of the average in-degree.'  'NOTES (metadata, string) are some specific notes about the average in-degree.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the degree-inav value.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = degreeinav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -526,14 +532,14 @@ classdef DegreeInAv < DegreeIn
 					prop_default = 'DegreeInAv label';
 				case 6 % DegreeInAv.NOTES
 					prop_default = 'DegreeInAv notes';
-				case 7 % DegreeInAv.SHAPE
+				case 8 % DegreeInAv.SHAPE
 					prop_default = 1;
-				case 8 % DegreeInAv.SCOPE
+				case 9 % DegreeInAv.SCOPE
 					prop_default = 2;
-				case 9 % DegreeInAv.PARAMETRICITY
+				case 10 % DegreeInAv.PARAMETRICITY
 					prop_default = 2;
-				case 10 % DegreeInAv.COMPATIBLE_GRAPHS
-					prop_default = {'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD' 'OrdMxWD' 'OrdMxBD' 'OrdMlWD'} ;%TBE % % % add any missing tests;
+				case 11 % DegreeInAv.COMPATIBLE_GRAPHS
+					prop_default = {'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD' 'OrdMxWD' 'OrdMxBD' 'OrdMlWD'};;
 				otherwise
 					prop_default = getPropDefault@DegreeIn(prop);
 			end
@@ -601,7 +607,7 @@ classdef DegreeInAv < DegreeIn
 				case 3 % DegreeInAv.TEMPLATE
 					check = Format.checkFormat(8, value, DegreeInAv.getPropSettings(prop));
 				otherwise
-					if prop <= 13
+					if prop <= 14
 						check = checkProp@DegreeIn(prop, value);
 					end
 			end
@@ -634,8 +640,8 @@ classdef DegreeInAv < DegreeIn
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 12 % DegreeInAv.M
-					rng_settings_ = rng(); rng(m.getPropSeed(12), 'twister')
+				case 13 % DegreeInAv.M
+					rng_settings_ = rng(); rng(m.getPropSeed(13), 'twister')
 					
 					in_degree = calculateValue@DegreeIn(m, prop);	
 					g = m.get('G'); % graph from measure class
@@ -651,7 +657,7 @@ classdef DegreeInAv < DegreeIn
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 13
+					if prop <= 14
 						value = calculateValue@DegreeIn(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

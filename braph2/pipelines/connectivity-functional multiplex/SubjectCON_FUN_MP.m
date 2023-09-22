@@ -12,10 +12,11 @@ classdef SubjectCON_FUN_MP < Subject
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the subject.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the subject.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the subject.
-	%  <strong>7</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
-	%  <strong>8</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
-	%  <strong>9</strong> <strong>CON</strong> 	CON (data, smatrix) is an adjacency matrix.
-	%  <strong>10</strong> <strong>FUN</strong> 	FUN (data, matrix) is an adjacency matrix.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
+	%  <strong>9</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
+	%  <strong>10</strong> <strong>CON</strong> 	CON (data, smatrix) is an adjacency matrix.
+	%  <strong>11</strong> <strong>FUN</strong> 	FUN (data, matrix) is an adjacency matrix.
 	%
 	% SubjectCON_FUN_MP methods (constructor):
 	%  SubjectCON_FUN_MP - constructor
@@ -106,17 +107,17 @@ classdef SubjectCON_FUN_MP < Subject
 	% See also CombineGroups_CON_FUN_MP, SeparateGroups_CON_FUN_MP.
 	
 	properties (Constant) % properties
-		BA = 8; %CET: Computational Efficiency Trick
+		BA = 9; %CET: Computational Efficiency Trick
 		BA_TAG = 'BA';
 		BA_CATEGORY = 4;
 		BA_FORMAT = 8;
 		
-		CON = 9; %CET: Computational Efficiency Trick
+		CON = 10; %CET: Computational Efficiency Trick
 		CON_TAG = 'CON';
 		CON_CATEGORY = 4;
 		CON_FORMAT = 15;
 		
-		FUN = 10; %CET: Computational Efficiency Trick
+		FUN = 11; %CET: Computational Efficiency Trick
 		FUN_TAG = 'FUN';
 		FUN_CATEGORY = 4;
 		FUN_FORMAT = 14;
@@ -139,10 +140,11 @@ classdef SubjectCON_FUN_MP < Subject
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the subject.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the subject.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the subject.
-			%  <strong>7</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
-			%  <strong>8</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
-			%  <strong>9</strong> <strong>CON</strong> 	CON (data, smatrix) is an adjacency matrix.
-			%  <strong>10</strong> <strong>FUN</strong> 	FUN (data, matrix) is an adjacency matrix.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
+			%  <strong>9</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
+			%  <strong>10</strong> <strong>CON</strong> 	CON (data, smatrix) is an adjacency matrix.
+			%  <strong>11</strong> <strong>FUN</strong> 	FUN (data, matrix) is an adjacency matrix.
 			%
 			% See also Category, Format.
 			
@@ -204,7 +206,7 @@ classdef SubjectCON_FUN_MP < Subject
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11];
 				return
 			end
 			
@@ -216,7 +218,9 @@ classdef SubjectCON_FUN_MP < Subject
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 7 8 9 10];
+					prop_list = [4 8 9 10 11];
+				case 6 % Category.QUERY
+					prop_list = 7;
 				otherwise
 					prop_list = [];
 			end
@@ -242,7 +246,7 @@ classdef SubjectCON_FUN_MP < Subject
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 10;
+				prop_number = 11;
 				return
 			end
 			
@@ -255,6 +259,8 @@ classdef SubjectCON_FUN_MP < Subject
 					prop_number = 1;
 				case 4 % Category.DATA
 					prop_number = 5;
+				case 6 % Category.QUERY
+					prop_number = 1;
 				otherwise
 					prop_number = 0;
 			end
@@ -285,7 +291,7 @@ classdef SubjectCON_FUN_MP < Subject
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 10 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 11 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -323,7 +329,7 @@ classdef SubjectCON_FUN_MP < Subject
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'VOI_DICT'  'BA'  'CON'  'FUN' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'CON'  'FUN' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -356,7 +362,7 @@ classdef SubjectCON_FUN_MP < Subject
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'VOI_DICT'  'BA'  'CON'  'FUN' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'CON'  'FUN' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -385,7 +391,7 @@ classdef SubjectCON_FUN_MP < Subject
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				subjectcon_fun_mp_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'VOI_DICT'  'BA'  'CON'  'FUN' };
+				subjectcon_fun_mp_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'CON'  'FUN' };
 				tag = subjectcon_fun_mp_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -412,7 +418,7 @@ classdef SubjectCON_FUN_MP < Subject
 			prop = SubjectCON_FUN_MP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			subjectcon_fun_mp_category_list = { 1  1  3  4  2  2  4  4  4  4 };
+			subjectcon_fun_mp_category_list = { 1  1  3  4  2  2  6  4  4  4  4 };
 			prop_category = subjectcon_fun_mp_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -438,7 +444,7 @@ classdef SubjectCON_FUN_MP < Subject
 			prop = SubjectCON_FUN_MP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			subjectcon_fun_mp_format_list = { 2  2  8  2  2  2  10  8  15  14 };
+			subjectcon_fun_mp_format_list = { 2  2  8  2  2  2  2  10  8  15  14 };
 			prop_format = subjectcon_fun_mp_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -464,7 +470,7 @@ classdef SubjectCON_FUN_MP < Subject
 			prop = SubjectCON_FUN_MP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			subjectcon_fun_mp_description_list = { 'NAME (constant, string) is the name of the subject.'  'DESCRIPTION (constant, string) is the description of the subject.'  'TEMPLATE (parameter, item) is the template of the subject.'  'ID (data, string) is a few-letter code for the subject.'  'LABEL (metadata, string) is an extended label of the subject.'  'NOTES (metadata, string) are some specific notes about the subject.'  'VOI_DICT (data, idict) contains the variables of interest of the subject.'  'BA (data, item) is a brain atlas.'  'CON (data, smatrix) is an adjacency matrix.'  'FUN (data, matrix) is an adjacency matrix.' };
+			subjectcon_fun_mp_description_list = { 'NAME (constant, string) is the name of the subject.'  'DESCRIPTION (constant, string) is the description of the subject.'  'TEMPLATE (parameter, item) is the template of the subject.'  'ID (data, string) is a few-letter code for the subject.'  'LABEL (metadata, string) is an extended label of the subject.'  'NOTES (metadata, string) are some specific notes about the subject.'  'TOSTRING (query, string) returns a string that represents the object.'  'VOI_DICT (data, idict) contains the variables of interest of the subject.'  'BA (data, item) is a brain atlas.'  'CON (data, smatrix) is an adjacency matrix.'  'FUN (data, matrix) is an adjacency matrix.' };
 			prop_description = subjectcon_fun_mp_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -490,11 +496,11 @@ classdef SubjectCON_FUN_MP < Subject
 			prop = SubjectCON_FUN_MP.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % SubjectCON_FUN_MP.BA
+				case 9 % SubjectCON_FUN_MP.BA
 					prop_settings = 'BrainAtlas';
-				case 9 % SubjectCON_FUN_MP.CON
+				case 10 % SubjectCON_FUN_MP.CON
 					prop_settings = Format.getFormatSettings(15);
-				case 10 % SubjectCON_FUN_MP.FUN
+				case 11 % SubjectCON_FUN_MP.FUN
 					prop_settings = Format.getFormatSettings(14);
 				otherwise
 					prop_settings = getPropSettings@Subject(prop);
@@ -523,11 +529,11 @@ classdef SubjectCON_FUN_MP < Subject
 			prop = SubjectCON_FUN_MP.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % SubjectCON_FUN_MP.BA
+				case 9 % SubjectCON_FUN_MP.BA
 					prop_default = Format.getFormatDefault(8, SubjectCON_FUN_MP.getPropSettings(prop));
-				case 9 % SubjectCON_FUN_MP.CON
+				case 10 % SubjectCON_FUN_MP.CON
 					prop_default = Format.getFormatDefault(15, SubjectCON_FUN_MP.getPropSettings(prop));
-				case 10 % SubjectCON_FUN_MP.FUN
+				case 11 % SubjectCON_FUN_MP.FUN
 					prop_default = Format.getFormatDefault(14, SubjectCON_FUN_MP.getPropSettings(prop));
 				case 1 % SubjectCON_FUN_MP.NAME
 					prop_default = 'SubjectCON_FUN_MP';
@@ -603,14 +609,14 @@ classdef SubjectCON_FUN_MP < Subject
 			prop = SubjectCON_FUN_MP.getPropProp(pointer);
 			
 			switch prop
-				case 8 % SubjectCON_FUN_MP.BA
+				case 9 % SubjectCON_FUN_MP.BA
 					check = Format.checkFormat(8, value, SubjectCON_FUN_MP.getPropSettings(prop));
-				case 9 % SubjectCON_FUN_MP.CON
+				case 10 % SubjectCON_FUN_MP.CON
 					check = Format.checkFormat(15, value, SubjectCON_FUN_MP.getPropSettings(prop));
-				case 10 % SubjectCON_FUN_MP.FUN
+				case 11 % SubjectCON_FUN_MP.FUN
 					check = Format.checkFormat(14, value, SubjectCON_FUN_MP.getPropSettings(prop));
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						check = checkProp@Subject(prop, value);
 					end
 			end
@@ -642,7 +648,7 @@ classdef SubjectCON_FUN_MP < Subject
 			msg = ['Error while checking ' tostring(sub) ' ' sub.getPropTag(prop) '.'];
 			
 			switch prop
-				case 9 % SubjectCON_FUN_MP.CON
+				case 10 % SubjectCON_FUN_MP.CON
 					br_number = sub.get('BA').get('BR_DICT').get('LENGTH');
 					check = isequal(size(value), [br_number, br_number]); % Format.checkFormat(15, value) already checked
 					if check
@@ -651,7 +657,7 @@ classdef SubjectCON_FUN_MP < Subject
 					    msg = ['CON must be a square matrix with the dimensiton equal to the number of brain regions (' int2str(br_number) ').'];
 					end
 					
-				case 10 % SubjectCON_FUN_MP.FUN
+				case 11 % SubjectCON_FUN_MP.FUN
 					br_number = sub.get('BA').get('BR_DICT').get('LENGTH');
 					check = size(value, 2) == br_number; % Format.checkFormat(14, value) already checked
 					if check
@@ -661,7 +667,7 @@ classdef SubjectCON_FUN_MP < Subject
 					end
 					
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						[check, msg] = checkValue@Subject(sub, prop, value);
 					end
 			end
@@ -684,14 +690,14 @@ classdef SubjectCON_FUN_MP < Subject
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 9 % SubjectCON_FUN_MP.CON
-					pr = PanelPropMatrix('EL', sub, 'PROP', 9, ...
+				case 10 % SubjectCON_FUN_MP.CON
+					pr = PanelPropMatrix('EL', sub, 'PROP', 10, ...
 					    'ROWNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
 					    'COLUMNNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
 					    varargin{:});
 					
-				case 10 % SubjectCON_FUN_MP.FUN
-					pr = PanelPropMatrix('EL', sub, 'PROP', 9, ...
+				case 11 % SubjectCON_FUN_MP.FUN
+					pr = PanelPropMatrix('EL', sub, 'PROP', 10, ...
 					    'ROWNAME', {'numbered'}, ...
 					    'COLUMNNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
 					    varargin{:});

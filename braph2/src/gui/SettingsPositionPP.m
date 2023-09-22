@@ -13,43 +13,44 @@ classdef SettingsPositionPP < SettingsPP
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the settings position panel.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the settings position panel.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the settings position panel.
-	%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>8</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>9</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
-	%  <strong>10</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>11</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>12</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>13</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>14</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-	%  <strong>15</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-	%  <strong>16</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-	%  <strong>17</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-	%  <strong>18</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-	%  <strong>19</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.
-	%  <strong>20</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-	%  <strong>21</strong> <strong>EL</strong> 	EL (data, item) is the element.
-	%  <strong>22</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-	%  <strong>23</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the settings position panel.
-	%  <strong>24</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-	%  <strong>25</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-	%  <strong>26</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-	%  <strong>27</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-	%  <strong>28</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-	%  <strong>29</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>30</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>31</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-	%  <strong>32</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-	%  <strong>33</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-	%  <strong>34</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
-	%  <strong>35</strong> <strong>CHECKBOX_AUTOPOS</strong> 	CHECKBOX_AUTOPOS (evanescent, handle) is the autopositioning checkbox.
-	%  <strong>36</strong> <strong>LABEL_X0</strong> 	LABEL_X0 (evanescent, handle) is the label of the x0 edit field.
-	%  <strong>37</strong> <strong>EDITFIELD_X0</strong> 	EDITFIELD_X0 (evanescent, handle) is the x0 edit field.
-	%  <strong>38</strong> <strong>LABEL_Y0</strong> 	LABEL_Y0 (evanescent, handle) is the label of the y0 edit field.
-	%  <strong>39</strong> <strong>EDITFIELD_Y0</strong> 	EDITFIELD_Y0 (evanescent, handle) is the y0 edit field.
-	%  <strong>40</strong> <strong>LABEL_W</strong> 	LABEL_W (evanescent, handle) is the label of the witdth edit field.
-	%  <strong>41</strong> <strong>EDITFIELD_W</strong> 	EDITFIELD_W (evanescent, handle) is the width edit field.
-	%  <strong>42</strong> <strong>LABEL_H</strong> 	LABEL_H (evanescent, handle) is the label of the height edit field.
-	%  <strong>43</strong> <strong>EDITFIELD_H</strong> 	EDITFIELD_H (evanescent, handle) is the height edit field.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
+	%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+	%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
+	%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
+	%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+	%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
+	%  <strong>19</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
+	%  <strong>20</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.
+	%  <strong>21</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+	%  <strong>22</strong> <strong>EL</strong> 	EL (data, item) is the element.
+	%  <strong>23</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
+	%  <strong>24</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the settings position panel.
+	%  <strong>25</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
+	%  <strong>26</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
+	%  <strong>27</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
+	%  <strong>28</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
+	%  <strong>29</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
+	%  <strong>30</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
+	%  <strong>31</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
+	%  <strong>32</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
+	%  <strong>33</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
+	%  <strong>34</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
+	%  <strong>35</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
+	%  <strong>36</strong> <strong>CHECKBOX_AUTOPOS</strong> 	CHECKBOX_AUTOPOS (evanescent, handle) is the autopositioning checkbox.
+	%  <strong>37</strong> <strong>LABEL_X0</strong> 	LABEL_X0 (evanescent, handle) is the label of the x0 edit field.
+	%  <strong>38</strong> <strong>EDITFIELD_X0</strong> 	EDITFIELD_X0 (evanescent, handle) is the x0 edit field.
+	%  <strong>39</strong> <strong>LABEL_Y0</strong> 	LABEL_Y0 (evanescent, handle) is the label of the y0 edit field.
+	%  <strong>40</strong> <strong>EDITFIELD_Y0</strong> 	EDITFIELD_Y0 (evanescent, handle) is the y0 edit field.
+	%  <strong>41</strong> <strong>LABEL_W</strong> 	LABEL_W (evanescent, handle) is the label of the witdth edit field.
+	%  <strong>42</strong> <strong>EDITFIELD_W</strong> 	EDITFIELD_W (evanescent, handle) is the width edit field.
+	%  <strong>43</strong> <strong>LABEL_H</strong> 	LABEL_H (evanescent, handle) is the label of the height edit field.
+	%  <strong>44</strong> <strong>EDITFIELD_H</strong> 	EDITFIELD_H (evanescent, handle) is the height edit field.
 	%
 	% SettingsPositionPP methods (constructor):
 	%  SettingsPositionPP - constructor
@@ -140,52 +141,52 @@ classdef SettingsPositionPP < SettingsPP
 	% See also SettingsPosition, uicheckbox, uieditfield.
 	
 	properties (Constant) % properties
-		ENABLE = 34; %CET: Computational Efficiency Trick
+		ENABLE = 35; %CET: Computational Efficiency Trick
 		ENABLE_TAG = 'ENABLE';
 		ENABLE_CATEGORY = 9;
 		ENABLE_FORMAT = 4;
 		
-		CHECKBOX_AUTOPOS = 35; %CET: Computational Efficiency Trick
+		CHECKBOX_AUTOPOS = 36; %CET: Computational Efficiency Trick
 		CHECKBOX_AUTOPOS_TAG = 'CHECKBOX_AUTOPOS';
 		CHECKBOX_AUTOPOS_CATEGORY = 7;
 		CHECKBOX_AUTOPOS_FORMAT = 18;
 		
-		LABEL_X0 = 36; %CET: Computational Efficiency Trick
+		LABEL_X0 = 37; %CET: Computational Efficiency Trick
 		LABEL_X0_TAG = 'LABEL_X0';
 		LABEL_X0_CATEGORY = 7;
 		LABEL_X0_FORMAT = 18;
 		
-		EDITFIELD_X0 = 37; %CET: Computational Efficiency Trick
+		EDITFIELD_X0 = 38; %CET: Computational Efficiency Trick
 		EDITFIELD_X0_TAG = 'EDITFIELD_X0';
 		EDITFIELD_X0_CATEGORY = 7;
 		EDITFIELD_X0_FORMAT = 18;
 		
-		LABEL_Y0 = 38; %CET: Computational Efficiency Trick
+		LABEL_Y0 = 39; %CET: Computational Efficiency Trick
 		LABEL_Y0_TAG = 'LABEL_Y0';
 		LABEL_Y0_CATEGORY = 7;
 		LABEL_Y0_FORMAT = 18;
 		
-		EDITFIELD_Y0 = 39; %CET: Computational Efficiency Trick
+		EDITFIELD_Y0 = 40; %CET: Computational Efficiency Trick
 		EDITFIELD_Y0_TAG = 'EDITFIELD_Y0';
 		EDITFIELD_Y0_CATEGORY = 7;
 		EDITFIELD_Y0_FORMAT = 18;
 		
-		LABEL_W = 40; %CET: Computational Efficiency Trick
+		LABEL_W = 41; %CET: Computational Efficiency Trick
 		LABEL_W_TAG = 'LABEL_W';
 		LABEL_W_CATEGORY = 7;
 		LABEL_W_FORMAT = 18;
 		
-		EDITFIELD_W = 41; %CET: Computational Efficiency Trick
+		EDITFIELD_W = 42; %CET: Computational Efficiency Trick
 		EDITFIELD_W_TAG = 'EDITFIELD_W';
 		EDITFIELD_W_CATEGORY = 7;
 		EDITFIELD_W_FORMAT = 18;
 		
-		LABEL_H = 42; %CET: Computational Efficiency Trick
+		LABEL_H = 43; %CET: Computational Efficiency Trick
 		LABEL_H_TAG = 'LABEL_H';
 		LABEL_H_CATEGORY = 7;
 		LABEL_H_FORMAT = 18;
 		
-		EDITFIELD_H = 43; %CET: Computational Efficiency Trick
+		EDITFIELD_H = 44; %CET: Computational Efficiency Trick
 		EDITFIELD_H_TAG = 'EDITFIELD_H';
 		EDITFIELD_H_CATEGORY = 7;
 		EDITFIELD_H_FORMAT = 18;
@@ -208,43 +209,44 @@ classdef SettingsPositionPP < SettingsPP
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the settings position panel.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the settings position panel.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the settings position panel.
-			%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>8</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>9</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
-			%  <strong>10</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>11</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>12</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>13</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>14</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-			%  <strong>15</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-			%  <strong>16</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-			%  <strong>17</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-			%  <strong>18</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-			%  <strong>19</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.
-			%  <strong>20</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-			%  <strong>21</strong> <strong>EL</strong> 	EL (data, item) is the element.
-			%  <strong>22</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-			%  <strong>23</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the settings position panel.
-			%  <strong>24</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-			%  <strong>25</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-			%  <strong>26</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-			%  <strong>27</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-			%  <strong>28</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-			%  <strong>29</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>30</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>31</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-			%  <strong>32</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-			%  <strong>33</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-			%  <strong>34</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
-			%  <strong>35</strong> <strong>CHECKBOX_AUTOPOS</strong> 	CHECKBOX_AUTOPOS (evanescent, handle) is the autopositioning checkbox.
-			%  <strong>36</strong> <strong>LABEL_X0</strong> 	LABEL_X0 (evanescent, handle) is the label of the x0 edit field.
-			%  <strong>37</strong> <strong>EDITFIELD_X0</strong> 	EDITFIELD_X0 (evanescent, handle) is the x0 edit field.
-			%  <strong>38</strong> <strong>LABEL_Y0</strong> 	LABEL_Y0 (evanescent, handle) is the label of the y0 edit field.
-			%  <strong>39</strong> <strong>EDITFIELD_Y0</strong> 	EDITFIELD_Y0 (evanescent, handle) is the y0 edit field.
-			%  <strong>40</strong> <strong>LABEL_W</strong> 	LABEL_W (evanescent, handle) is the label of the witdth edit field.
-			%  <strong>41</strong> <strong>EDITFIELD_W</strong> 	EDITFIELD_W (evanescent, handle) is the width edit field.
-			%  <strong>42</strong> <strong>LABEL_H</strong> 	LABEL_H (evanescent, handle) is the label of the height edit field.
-			%  <strong>43</strong> <strong>EDITFIELD_H</strong> 	EDITFIELD_H (evanescent, handle) is the height edit field.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
+			%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+			%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
+			%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
+			%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+			%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
+			%  <strong>19</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
+			%  <strong>20</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.
+			%  <strong>21</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+			%  <strong>22</strong> <strong>EL</strong> 	EL (data, item) is the element.
+			%  <strong>23</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
+			%  <strong>24</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the settings position panel.
+			%  <strong>25</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
+			%  <strong>26</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
+			%  <strong>27</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
+			%  <strong>28</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
+			%  <strong>29</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
+			%  <strong>30</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
+			%  <strong>31</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
+			%  <strong>32</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
+			%  <strong>33</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
+			%  <strong>34</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
+			%  <strong>35</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
+			%  <strong>36</strong> <strong>CHECKBOX_AUTOPOS</strong> 	CHECKBOX_AUTOPOS (evanescent, handle) is the autopositioning checkbox.
+			%  <strong>37</strong> <strong>LABEL_X0</strong> 	LABEL_X0 (evanescent, handle) is the label of the x0 edit field.
+			%  <strong>38</strong> <strong>EDITFIELD_X0</strong> 	EDITFIELD_X0 (evanescent, handle) is the x0 edit field.
+			%  <strong>39</strong> <strong>LABEL_Y0</strong> 	LABEL_Y0 (evanescent, handle) is the label of the y0 edit field.
+			%  <strong>40</strong> <strong>EDITFIELD_Y0</strong> 	EDITFIELD_Y0 (evanescent, handle) is the y0 edit field.
+			%  <strong>41</strong> <strong>LABEL_W</strong> 	LABEL_W (evanescent, handle) is the label of the witdth edit field.
+			%  <strong>42</strong> <strong>EDITFIELD_W</strong> 	EDITFIELD_W (evanescent, handle) is the width edit field.
+			%  <strong>43</strong> <strong>LABEL_H</strong> 	LABEL_H (evanescent, handle) is the label of the height edit field.
+			%  <strong>44</strong> <strong>EDITFIELD_H</strong> 	EDITFIELD_H (evanescent, handle) is the height edit field.
 			%
 			% See also Category, Format.
 			
@@ -306,7 +308,7 @@ classdef SettingsPositionPP < SettingsPP
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44];
 				return
 			end
 			
@@ -318,15 +320,15 @@ classdef SettingsPositionPP < SettingsPP
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 21 22 27];
+					prop_list = [4 22 23 28];
 				case 6 % Category.QUERY
-					prop_list = [9 10 14 15 16 17 18 19 20];
+					prop_list = [7 10 11 15 16 17 18 19 20 21];
 				case 7 % Category.EVANESCENT
-					prop_list = [8 13 25 26 28 29 30 31 32 33 35 36 37 38 39 40 41 42 43];
+					prop_list = [9 14 26 27 29 30 31 32 33 34 36 37 38 39 40 41 42 43 44];
 				case 8 % Category.FIGURE
-					prop_list = 12;
+					prop_list = 13;
 				case 9 % Category.GUI
-					prop_list = [7 11 23 24 34];
+					prop_list = [8 12 24 25 35];
 				otherwise
 					prop_list = [];
 			end
@@ -352,7 +354,7 @@ classdef SettingsPositionPP < SettingsPP
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 43;
+				prop_number = 44;
 				return
 			end
 			
@@ -366,7 +368,7 @@ classdef SettingsPositionPP < SettingsPP
 				case 4 % Category.DATA
 					prop_number = 4;
 				case 6 % Category.QUERY
-					prop_number = 9;
+					prop_number = 10;
 				case 7 % Category.EVANESCENT
 					prop_number = 19;
 				case 8 % Category.FIGURE
@@ -403,7 +405,7 @@ classdef SettingsPositionPP < SettingsPP
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 43 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 44 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -441,7 +443,7 @@ classdef SettingsPositionPP < SettingsPP
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'CHECKBOX_AUTOPOS'  'LABEL_X0'  'EDITFIELD_X0'  'LABEL_Y0'  'EDITFIELD_Y0'  'LABEL_W'  'EDITFIELD_W'  'LABEL_H'  'EDITFIELD_H' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'CHECKBOX_AUTOPOS'  'LABEL_X0'  'EDITFIELD_X0'  'LABEL_Y0'  'EDITFIELD_Y0'  'LABEL_W'  'EDITFIELD_W'  'LABEL_H'  'EDITFIELD_H' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -474,7 +476,7 @@ classdef SettingsPositionPP < SettingsPP
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'CHECKBOX_AUTOPOS'  'LABEL_X0'  'EDITFIELD_X0'  'LABEL_Y0'  'EDITFIELD_Y0'  'LABEL_W'  'EDITFIELD_W'  'LABEL_H'  'EDITFIELD_H' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'CHECKBOX_AUTOPOS'  'LABEL_X0'  'EDITFIELD_X0'  'LABEL_Y0'  'EDITFIELD_Y0'  'LABEL_W'  'EDITFIELD_W'  'LABEL_H'  'EDITFIELD_H' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -503,7 +505,7 @@ classdef SettingsPositionPP < SettingsPP
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				settingspositionpp_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'CHECKBOX_AUTOPOS'  'LABEL_X0'  'EDITFIELD_X0'  'LABEL_Y0'  'EDITFIELD_Y0'  'LABEL_W'  'EDITFIELD_W'  'LABEL_H'  'EDITFIELD_H' };
+				settingspositionpp_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'CHECKBOX_AUTOPOS'  'LABEL_X0'  'EDITFIELD_X0'  'LABEL_Y0'  'EDITFIELD_Y0'  'LABEL_W'  'EDITFIELD_W'  'LABEL_H'  'EDITFIELD_H' };
 				tag = settingspositionpp_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -530,7 +532,7 @@ classdef SettingsPositionPP < SettingsPP
 			prop = SettingsPositionPP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			settingspositionpp_category_list = { 1  1  3  4  2  2  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  7  7  7  7  7  7  7  7  7 };
+			settingspositionpp_category_list = { 1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  7  7  7  7  7  7  7  7  7 };
 			prop_category = settingspositionpp_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -556,7 +558,7 @@ classdef SettingsPositionPP < SettingsPP
 			prop = SettingsPositionPP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			settingspositionpp_format_list = { 2  2  8  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  4  18  18  18  18  18  18  18  18  18 };
+			settingspositionpp_format_list = { 2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  4  18  18  18  18  18  18  18  18  18 };
 			prop_format = settingspositionpp_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -582,7 +584,7 @@ classdef SettingsPositionPP < SettingsPP
 			prop = SettingsPositionPP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			settingspositionpp_description_list = { 'NAME (constant, string) is the name of the settings position panel.'  'DESCRIPTION (constant, string) is the description of the settings position panel.'  'TEMPLATE (parameter, item) is the template of the settings position panel.'  'ID (data, string) is a few-letter code for the settings position panel.'  'LABEL (metadata, string) is an extended label of the settings position panel.'  'NOTES (metadata, string) are some specific notes about the settings position panel.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the property panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the settings position panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.'  'CHECKBOX_AUTOPOS (evanescent, handle) is the autopositioning checkbox.'  'LABEL_X0 (evanescent, handle) is the label of the x0 edit field.'  'EDITFIELD_X0 (evanescent, handle) is the x0 edit field.'  'LABEL_Y0 (evanescent, handle) is the label of the y0 edit field.'  'EDITFIELD_Y0 (evanescent, handle) is the y0 edit field.'  'LABEL_W (evanescent, handle) is the label of the witdth edit field.'  'EDITFIELD_W (evanescent, handle) is the width edit field.'  'LABEL_H (evanescent, handle) is the label of the height edit field.'  'EDITFIELD_H (evanescent, handle) is the height edit field.' };
+			settingspositionpp_description_list = { 'NAME (constant, string) is the name of the settings position panel.'  'DESCRIPTION (constant, string) is the description of the settings position panel.'  'TEMPLATE (parameter, item) is the template of the settings position panel.'  'ID (data, string) is a few-letter code for the settings position panel.'  'LABEL (metadata, string) is an extended label of the settings position panel.'  'NOTES (metadata, string) are some specific notes about the settings position panel.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the property panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the settings position panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.'  'CHECKBOX_AUTOPOS (evanescent, handle) is the autopositioning checkbox.'  'LABEL_X0 (evanescent, handle) is the label of the x0 edit field.'  'EDITFIELD_X0 (evanescent, handle) is the x0 edit field.'  'LABEL_Y0 (evanescent, handle) is the label of the y0 edit field.'  'EDITFIELD_Y0 (evanescent, handle) is the y0 edit field.'  'LABEL_W (evanescent, handle) is the label of the witdth edit field.'  'EDITFIELD_W (evanescent, handle) is the width edit field.'  'LABEL_H (evanescent, handle) is the label of the height edit field.'  'EDITFIELD_H (evanescent, handle) is the height edit field.' };
 			prop_description = settingspositionpp_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -608,25 +610,25 @@ classdef SettingsPositionPP < SettingsPP
 			prop = SettingsPositionPP.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 34 % SettingsPositionPP.ENABLE
+				case 35 % SettingsPositionPP.ENABLE
 					prop_settings = Format.getFormatSettings(4);
-				case 35 % SettingsPositionPP.CHECKBOX_AUTOPOS
+				case 36 % SettingsPositionPP.CHECKBOX_AUTOPOS
 					prop_settings = Format.getFormatSettings(18);
-				case 36 % SettingsPositionPP.LABEL_X0
+				case 37 % SettingsPositionPP.LABEL_X0
 					prop_settings = Format.getFormatSettings(18);
-				case 37 % SettingsPositionPP.EDITFIELD_X0
+				case 38 % SettingsPositionPP.EDITFIELD_X0
 					prop_settings = Format.getFormatSettings(18);
-				case 38 % SettingsPositionPP.LABEL_Y0
+				case 39 % SettingsPositionPP.LABEL_Y0
 					prop_settings = Format.getFormatSettings(18);
-				case 39 % SettingsPositionPP.EDITFIELD_Y0
+				case 40 % SettingsPositionPP.EDITFIELD_Y0
 					prop_settings = Format.getFormatSettings(18);
-				case 40 % SettingsPositionPP.LABEL_W
+				case 41 % SettingsPositionPP.LABEL_W
 					prop_settings = Format.getFormatSettings(18);
-				case 41 % SettingsPositionPP.EDITFIELD_W
+				case 42 % SettingsPositionPP.EDITFIELD_W
 					prop_settings = Format.getFormatSettings(18);
-				case 42 % SettingsPositionPP.LABEL_H
+				case 43 % SettingsPositionPP.LABEL_H
 					prop_settings = Format.getFormatSettings(18);
-				case 43 % SettingsPositionPP.EDITFIELD_H
+				case 44 % SettingsPositionPP.EDITFIELD_H
 					prop_settings = Format.getFormatSettings(18);
 				case 3 % SettingsPositionPP.TEMPLATE
 					prop_settings = 'SettingsPositionPP';
@@ -657,25 +659,25 @@ classdef SettingsPositionPP < SettingsPP
 			prop = SettingsPositionPP.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 34 % SettingsPositionPP.ENABLE
+				case 35 % SettingsPositionPP.ENABLE
 					prop_default = true;
-				case 35 % SettingsPositionPP.CHECKBOX_AUTOPOS
+				case 36 % SettingsPositionPP.CHECKBOX_AUTOPOS
 					prop_default = Format.getFormatDefault(18, SettingsPositionPP.getPropSettings(prop));
-				case 36 % SettingsPositionPP.LABEL_X0
+				case 37 % SettingsPositionPP.LABEL_X0
 					prop_default = Format.getFormatDefault(18, SettingsPositionPP.getPropSettings(prop));
-				case 37 % SettingsPositionPP.EDITFIELD_X0
+				case 38 % SettingsPositionPP.EDITFIELD_X0
 					prop_default = Format.getFormatDefault(18, SettingsPositionPP.getPropSettings(prop));
-				case 38 % SettingsPositionPP.LABEL_Y0
+				case 39 % SettingsPositionPP.LABEL_Y0
 					prop_default = Format.getFormatDefault(18, SettingsPositionPP.getPropSettings(prop));
-				case 39 % SettingsPositionPP.EDITFIELD_Y0
+				case 40 % SettingsPositionPP.EDITFIELD_Y0
 					prop_default = Format.getFormatDefault(18, SettingsPositionPP.getPropSettings(prop));
-				case 40 % SettingsPositionPP.LABEL_W
+				case 41 % SettingsPositionPP.LABEL_W
 					prop_default = Format.getFormatDefault(18, SettingsPositionPP.getPropSettings(prop));
-				case 41 % SettingsPositionPP.EDITFIELD_W
+				case 42 % SettingsPositionPP.EDITFIELD_W
 					prop_default = Format.getFormatDefault(18, SettingsPositionPP.getPropSettings(prop));
-				case 42 % SettingsPositionPP.LABEL_H
+				case 43 % SettingsPositionPP.LABEL_H
 					prop_default = Format.getFormatDefault(18, SettingsPositionPP.getPropSettings(prop));
-				case 43 % SettingsPositionPP.EDITFIELD_H
+				case 44 % SettingsPositionPP.EDITFIELD_H
 					prop_default = Format.getFormatDefault(18, SettingsPositionPP.getPropSettings(prop));
 				case 1 % SettingsPositionPP.NAME
 					prop_default = 'SettingsPositionPP';
@@ -689,11 +691,11 @@ classdef SettingsPositionPP < SettingsPP
 					prop_default = 'SettingsPositionPP label';
 				case 6 % SettingsPositionPP.NOTES
 					prop_default = 'SettingsPositionPP notes';
-				case 21 % SettingsPositionPP.EL
+				case 22 % SettingsPositionPP.EL
 					prop_default = PanelFig();
-				case 22 % SettingsPositionPP.PROP
-					prop_default = 18;
-				case 23 % SettingsPositionPP.HEIGHT
+				case 23 % SettingsPositionPP.PROP
+					prop_default = 19;
+				case 24 % SettingsPositionPP.HEIGHT
 					prop_default = 48;
 				otherwise
 					prop_default = getPropDefault@SettingsPP(prop);
@@ -759,30 +761,30 @@ classdef SettingsPositionPP < SettingsPP
 			prop = SettingsPositionPP.getPropProp(pointer);
 			
 			switch prop
-				case 34 % SettingsPositionPP.ENABLE
+				case 35 % SettingsPositionPP.ENABLE
 					check = Format.checkFormat(4, value, SettingsPositionPP.getPropSettings(prop));
-				case 35 % SettingsPositionPP.CHECKBOX_AUTOPOS
+				case 36 % SettingsPositionPP.CHECKBOX_AUTOPOS
 					check = Format.checkFormat(18, value, SettingsPositionPP.getPropSettings(prop));
-				case 36 % SettingsPositionPP.LABEL_X0
+				case 37 % SettingsPositionPP.LABEL_X0
 					check = Format.checkFormat(18, value, SettingsPositionPP.getPropSettings(prop));
-				case 37 % SettingsPositionPP.EDITFIELD_X0
+				case 38 % SettingsPositionPP.EDITFIELD_X0
 					check = Format.checkFormat(18, value, SettingsPositionPP.getPropSettings(prop));
-				case 38 % SettingsPositionPP.LABEL_Y0
+				case 39 % SettingsPositionPP.LABEL_Y0
 					check = Format.checkFormat(18, value, SettingsPositionPP.getPropSettings(prop));
-				case 39 % SettingsPositionPP.EDITFIELD_Y0
+				case 40 % SettingsPositionPP.EDITFIELD_Y0
 					check = Format.checkFormat(18, value, SettingsPositionPP.getPropSettings(prop));
-				case 40 % SettingsPositionPP.LABEL_W
+				case 41 % SettingsPositionPP.LABEL_W
 					check = Format.checkFormat(18, value, SettingsPositionPP.getPropSettings(prop));
-				case 41 % SettingsPositionPP.EDITFIELD_W
+				case 42 % SettingsPositionPP.EDITFIELD_W
 					check = Format.checkFormat(18, value, SettingsPositionPP.getPropSettings(prop));
-				case 42 % SettingsPositionPP.LABEL_H
+				case 43 % SettingsPositionPP.LABEL_H
 					check = Format.checkFormat(18, value, SettingsPositionPP.getPropSettings(prop));
-				case 43 % SettingsPositionPP.EDITFIELD_H
+				case 44 % SettingsPositionPP.EDITFIELD_H
 					check = Format.checkFormat(18, value, SettingsPositionPP.getPropSettings(prop));
 				case 3 % SettingsPositionPP.TEMPLATE
 					check = Format.checkFormat(8, value, SettingsPositionPP.getPropSettings(prop));
 				otherwise
-					if prop <= 33
+					if prop <= 34
 						check = checkProp@SettingsPP(prop, value);
 					end
 			end
@@ -815,7 +817,7 @@ classdef SettingsPositionPP < SettingsPP
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 35 % SettingsPositionPP.CHECKBOX_AUTOPOS
+				case 36 % SettingsPositionPP.CHECKBOX_AUTOPOS
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					checkbox_autopos = uicheckbox( ...
@@ -828,7 +830,7 @@ classdef SettingsPositionPP < SettingsPP
 					    );
 					value = checkbox_autopos;
 					
-				case 36 % SettingsPositionPP.LABEL_X0
+				case 37 % SettingsPositionPP.LABEL_X0
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					label_x0 =  uilabel( ...
@@ -843,7 +845,7 @@ classdef SettingsPositionPP < SettingsPP
 					    );
 					value = label_x0;
 					
-				case 37 % SettingsPositionPP.EDITFIELD_X0
+				case 38 % SettingsPositionPP.EDITFIELD_X0
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					editfield_x0 = uieditfield('numeric', ...
@@ -855,7 +857,7 @@ classdef SettingsPositionPP < SettingsPP
 					    );
 					value = editfield_x0;
 					
-				case 38 % SettingsPositionPP.LABEL_Y0
+				case 39 % SettingsPositionPP.LABEL_Y0
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					label_y0 =  uilabel( ...
@@ -870,7 +872,7 @@ classdef SettingsPositionPP < SettingsPP
 						);
 					value = label_y0;
 					
-				case 39 % SettingsPositionPP.EDITFIELD_Y0
+				case 40 % SettingsPositionPP.EDITFIELD_Y0
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					editfield_y0 = uieditfield('numeric', ...
@@ -882,7 +884,7 @@ classdef SettingsPositionPP < SettingsPP
 						);
 					value = editfield_y0;
 					
-				case 40 % SettingsPositionPP.LABEL_W
+				case 41 % SettingsPositionPP.LABEL_W
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					label_w =  uilabel( ...
@@ -897,7 +899,7 @@ classdef SettingsPositionPP < SettingsPP
 						);
 					value = label_w;
 					
-				case 41 % SettingsPositionPP.EDITFIELD_W
+				case 42 % SettingsPositionPP.EDITFIELD_W
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					editfield_w = uieditfield('numeric', ...
@@ -910,7 +912,7 @@ classdef SettingsPositionPP < SettingsPP
 						);
 					value = editfield_w;
 					
-				case 42 % SettingsPositionPP.LABEL_H
+				case 43 % SettingsPositionPP.LABEL_H
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					label_h =  uilabel( ...
@@ -925,7 +927,7 @@ classdef SettingsPositionPP < SettingsPP
 						);
 					value = label_h;
 					
-				case 43 % SettingsPositionPP.EDITFIELD_H
+				case 44 % SettingsPositionPP.EDITFIELD_H
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					editfield_h = uieditfield('numeric', ...
@@ -938,8 +940,8 @@ classdef SettingsPositionPP < SettingsPP
 					    );
 					value = editfield_h;
 					
-				case 18 % SettingsPositionPP.X_DRAW
-					value = calculateValue@PanelProp(pr, 18, varargin{:}); % also warning
+				case 19 % SettingsPositionPP.X_DRAW
+					value = calculateValue@PanelProp(pr, 19, varargin{:}); % also warning
 					if value
 					    pr.memorize('CHECKBOX_AUTOPOS')
 					    
@@ -956,8 +958,8 @@ classdef SettingsPositionPP < SettingsPP
 					    pr.memorize('EDITFIELD_H')
 					end
 					
-				case 19 % SettingsPositionPP.UPDATE
-					value = calculateValue@PanelProp(pr, 19, varargin{:}); % also warning
+				case 20 % SettingsPositionPP.UPDATE
+					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
 					if value
 					    el = pr.get('EL');
 					    prop = pr.get('PROP');
@@ -1089,8 +1091,8 @@ classdef SettingsPositionPP < SettingsPP
 						end
 					end
 					
-				case 20 % SettingsPositionPP.REDRAW
-					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
+				case 21 % SettingsPositionPP.REDRAW
+					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
 					if value
 					    w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 					    
@@ -1109,8 +1111,8 @@ classdef SettingsPositionPP < SettingsPP
 					    set(pr.get('EDITFIELD_H'), 'Position', [.85*w_p 4 .12*w_p 21])
 					end
 					
-				case 16 % SettingsPositionPP.DELETE
-					value = calculateValue@PanelProp(pr, 16, varargin{:}); % also warning
+				case 17 % SettingsPositionPP.DELETE
+					value = calculateValue@PanelProp(pr, 17, varargin{:}); % also warning
 					if value
 					    pr.set('CHECKBOX_AUTOPOS', Element.getNoValue())
 					    
@@ -1128,7 +1130,7 @@ classdef SettingsPositionPP < SettingsPP
 					end
 					
 				otherwise
-					if prop <= 33
+					if prop <= 34
 						value = calculateValue@SettingsPP(pr, prop, varargin{:});
 					else
 						value = calculateValue@Element(pr, prop, varargin{:});

@@ -14,48 +14,49 @@ classdef SettingsTextPP < SettingsPP
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the settings text panel.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the settings text panel.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the settings text panel.
-	%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>8</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>9</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
-	%  <strong>10</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>11</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>12</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>13</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>14</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-	%  <strong>15</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-	%  <strong>16</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-	%  <strong>17</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-	%  <strong>18</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-	%  <strong>19</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the property panel.
-	%  <strong>20</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-	%  <strong>21</strong> <strong>EL</strong> 	EL (data, item) is the element.
-	%  <strong>22</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-	%  <strong>23</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the settings text panel.
-	%  <strong>24</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-	%  <strong>25</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-	%  <strong>26</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-	%  <strong>27</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-	%  <strong>28</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-	%  <strong>29</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>30</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>31</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-	%  <strong>32</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-	%  <strong>33</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-	%  <strong>34</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
-	%  <strong>35</strong> <strong>EDITFIELD_X</strong> 	EDITFIELD_X (evanescent, handle) is the text value edit field for the X property.
-	%  <strong>36</strong> <strong>EDITFIELD_Y</strong> 	EDITFIELD_Y (evanescent, handle) is the text value edit field for the Y property.
-	%  <strong>37</strong> <strong>EDITFIELD_Z</strong> 	EDITFIELD_Z (evanescent, handle) is the text value edit field for the Z property.
-	%  <strong>38</strong> <strong>EDITFIELD_TXT</strong> 	EDITFIELD_TXT (evanescent, handle) is the text value edit field for the TXT property.
-	%  <strong>39</strong> <strong>BUTTON_FONTCOLOR</strong> 	BUTTON_FONTCOLOR (evanescent, handle) is the text color button.
-	%  <strong>40</strong> <strong>EDITFIELD_FONTSIZE</strong> 	EDITFIELD_FONTSIZE (evanescent, handle) is the font size edit field.
-	%  <strong>41</strong> <strong>SLIDER_FONTSIZE</strong> 	SLIDER_FONTSIZE (evanescent, handle) is the font size slider.
-	%  <strong>42</strong> <strong>EDITFIELD_ROTATION</strong> 	EDITFIELD_ROTATION (evanescent, handle) is the rotation edit field.
-	%  <strong>43</strong> <strong>SLIDER_ROTATION</strong> 	SLIDER_ROTATION (evanescent, handle) is the rotation slider.
-	%  <strong>44</strong> <strong>EDITFIELD_FONTNAME</strong> 	EDITFIELD_FONTNAME (evanescent, handle) is the text value edit field for the FONTNAME property.
-	%  <strong>45</strong> <strong>DROPDOWN_FONTWEIGHT</strong> 	DROPDOWN_FONTWEIGHT (evanescent, handle) is the font weight dropdown.
-	%  <strong>46</strong> <strong>DROPDOWN_INTERPRETER</strong> 	DROPDOWN_INTERPRETER (evanescent, handle) is the interpreter dropdown.
-	%  <strong>47</strong> <strong>DROPDOWN_HALIGN</strong> 	DROPDOWN_HALIGN (evanescent, handle) is the horizontal alignment dropdown.
-	%  <strong>48</strong> <strong>DROPDOWN_VALIGN</strong> 	DROPDOWN_VALIGN (evanescent, handle) is the vertical alignment dropdown.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
+	%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+	%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
+	%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
+	%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+	%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
+	%  <strong>19</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
+	%  <strong>20</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the property panel.
+	%  <strong>21</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+	%  <strong>22</strong> <strong>EL</strong> 	EL (data, item) is the element.
+	%  <strong>23</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
+	%  <strong>24</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the settings text panel.
+	%  <strong>25</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
+	%  <strong>26</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
+	%  <strong>27</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
+	%  <strong>28</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
+	%  <strong>29</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
+	%  <strong>30</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
+	%  <strong>31</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
+	%  <strong>32</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
+	%  <strong>33</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
+	%  <strong>34</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
+	%  <strong>35</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
+	%  <strong>36</strong> <strong>EDITFIELD_X</strong> 	EDITFIELD_X (evanescent, handle) is the text value edit field for the X property.
+	%  <strong>37</strong> <strong>EDITFIELD_Y</strong> 	EDITFIELD_Y (evanescent, handle) is the text value edit field for the Y property.
+	%  <strong>38</strong> <strong>EDITFIELD_Z</strong> 	EDITFIELD_Z (evanescent, handle) is the text value edit field for the Z property.
+	%  <strong>39</strong> <strong>EDITFIELD_TXT</strong> 	EDITFIELD_TXT (evanescent, handle) is the text value edit field for the TXT property.
+	%  <strong>40</strong> <strong>BUTTON_FONTCOLOR</strong> 	BUTTON_FONTCOLOR (evanescent, handle) is the text color button.
+	%  <strong>41</strong> <strong>EDITFIELD_FONTSIZE</strong> 	EDITFIELD_FONTSIZE (evanescent, handle) is the font size edit field.
+	%  <strong>42</strong> <strong>SLIDER_FONTSIZE</strong> 	SLIDER_FONTSIZE (evanescent, handle) is the font size slider.
+	%  <strong>43</strong> <strong>EDITFIELD_ROTATION</strong> 	EDITFIELD_ROTATION (evanescent, handle) is the rotation edit field.
+	%  <strong>44</strong> <strong>SLIDER_ROTATION</strong> 	SLIDER_ROTATION (evanescent, handle) is the rotation slider.
+	%  <strong>45</strong> <strong>EDITFIELD_FONTNAME</strong> 	EDITFIELD_FONTNAME (evanescent, handle) is the text value edit field for the FONTNAME property.
+	%  <strong>46</strong> <strong>DROPDOWN_FONTWEIGHT</strong> 	DROPDOWN_FONTWEIGHT (evanescent, handle) is the font weight dropdown.
+	%  <strong>47</strong> <strong>DROPDOWN_INTERPRETER</strong> 	DROPDOWN_INTERPRETER (evanescent, handle) is the interpreter dropdown.
+	%  <strong>48</strong> <strong>DROPDOWN_HALIGN</strong> 	DROPDOWN_HALIGN (evanescent, handle) is the horizontal alignment dropdown.
+	%  <strong>49</strong> <strong>DROPDOWN_VALIGN</strong> 	DROPDOWN_VALIGN (evanescent, handle) is the vertical alignment dropdown.
 	%
 	% SettingsTextPP methods (constructor):
 	%  SettingsTextPP - constructor
@@ -146,77 +147,77 @@ classdef SettingsTextPP < SettingsPP
 	% See also SettingsText, uieditfield, uipushbutton, uislider.
 	
 	properties (Constant) % properties
-		ENABLE = 34; %CET: Computational Efficiency Trick
+		ENABLE = 35; %CET: Computational Efficiency Trick
 		ENABLE_TAG = 'ENABLE';
 		ENABLE_CATEGORY = 9;
 		ENABLE_FORMAT = 4;
 		
-		EDITFIELD_X = 35; %CET: Computational Efficiency Trick
+		EDITFIELD_X = 36; %CET: Computational Efficiency Trick
 		EDITFIELD_X_TAG = 'EDITFIELD_X';
 		EDITFIELD_X_CATEGORY = 7;
 		EDITFIELD_X_FORMAT = 18;
 		
-		EDITFIELD_Y = 36; %CET: Computational Efficiency Trick
+		EDITFIELD_Y = 37; %CET: Computational Efficiency Trick
 		EDITFIELD_Y_TAG = 'EDITFIELD_Y';
 		EDITFIELD_Y_CATEGORY = 7;
 		EDITFIELD_Y_FORMAT = 18;
 		
-		EDITFIELD_Z = 37; %CET: Computational Efficiency Trick
+		EDITFIELD_Z = 38; %CET: Computational Efficiency Trick
 		EDITFIELD_Z_TAG = 'EDITFIELD_Z';
 		EDITFIELD_Z_CATEGORY = 7;
 		EDITFIELD_Z_FORMAT = 18;
 		
-		EDITFIELD_TXT = 38; %CET: Computational Efficiency Trick
+		EDITFIELD_TXT = 39; %CET: Computational Efficiency Trick
 		EDITFIELD_TXT_TAG = 'EDITFIELD_TXT';
 		EDITFIELD_TXT_CATEGORY = 7;
 		EDITFIELD_TXT_FORMAT = 18;
 		
-		BUTTON_FONTCOLOR = 39; %CET: Computational Efficiency Trick
+		BUTTON_FONTCOLOR = 40; %CET: Computational Efficiency Trick
 		BUTTON_FONTCOLOR_TAG = 'BUTTON_FONTCOLOR';
 		BUTTON_FONTCOLOR_CATEGORY = 7;
 		BUTTON_FONTCOLOR_FORMAT = 18;
 		
-		EDITFIELD_FONTSIZE = 40; %CET: Computational Efficiency Trick
+		EDITFIELD_FONTSIZE = 41; %CET: Computational Efficiency Trick
 		EDITFIELD_FONTSIZE_TAG = 'EDITFIELD_FONTSIZE';
 		EDITFIELD_FONTSIZE_CATEGORY = 7;
 		EDITFIELD_FONTSIZE_FORMAT = 18;
 		
-		SLIDER_FONTSIZE = 41; %CET: Computational Efficiency Trick
+		SLIDER_FONTSIZE = 42; %CET: Computational Efficiency Trick
 		SLIDER_FONTSIZE_TAG = 'SLIDER_FONTSIZE';
 		SLIDER_FONTSIZE_CATEGORY = 7;
 		SLIDER_FONTSIZE_FORMAT = 18;
 		
-		EDITFIELD_ROTATION = 42; %CET: Computational Efficiency Trick
+		EDITFIELD_ROTATION = 43; %CET: Computational Efficiency Trick
 		EDITFIELD_ROTATION_TAG = 'EDITFIELD_ROTATION';
 		EDITFIELD_ROTATION_CATEGORY = 7;
 		EDITFIELD_ROTATION_FORMAT = 18;
 		
-		SLIDER_ROTATION = 43; %CET: Computational Efficiency Trick
+		SLIDER_ROTATION = 44; %CET: Computational Efficiency Trick
 		SLIDER_ROTATION_TAG = 'SLIDER_ROTATION';
 		SLIDER_ROTATION_CATEGORY = 7;
 		SLIDER_ROTATION_FORMAT = 18;
 		
-		EDITFIELD_FONTNAME = 44; %CET: Computational Efficiency Trick
+		EDITFIELD_FONTNAME = 45; %CET: Computational Efficiency Trick
 		EDITFIELD_FONTNAME_TAG = 'EDITFIELD_FONTNAME';
 		EDITFIELD_FONTNAME_CATEGORY = 7;
 		EDITFIELD_FONTNAME_FORMAT = 18;
 		
-		DROPDOWN_FONTWEIGHT = 45; %CET: Computational Efficiency Trick
+		DROPDOWN_FONTWEIGHT = 46; %CET: Computational Efficiency Trick
 		DROPDOWN_FONTWEIGHT_TAG = 'DROPDOWN_FONTWEIGHT';
 		DROPDOWN_FONTWEIGHT_CATEGORY = 7;
 		DROPDOWN_FONTWEIGHT_FORMAT = 18;
 		
-		DROPDOWN_INTERPRETER = 46; %CET: Computational Efficiency Trick
+		DROPDOWN_INTERPRETER = 47; %CET: Computational Efficiency Trick
 		DROPDOWN_INTERPRETER_TAG = 'DROPDOWN_INTERPRETER';
 		DROPDOWN_INTERPRETER_CATEGORY = 7;
 		DROPDOWN_INTERPRETER_FORMAT = 18;
 		
-		DROPDOWN_HALIGN = 47; %CET: Computational Efficiency Trick
+		DROPDOWN_HALIGN = 48; %CET: Computational Efficiency Trick
 		DROPDOWN_HALIGN_TAG = 'DROPDOWN_HALIGN';
 		DROPDOWN_HALIGN_CATEGORY = 7;
 		DROPDOWN_HALIGN_FORMAT = 18;
 		
-		DROPDOWN_VALIGN = 48; %CET: Computational Efficiency Trick
+		DROPDOWN_VALIGN = 49; %CET: Computational Efficiency Trick
 		DROPDOWN_VALIGN_TAG = 'DROPDOWN_VALIGN';
 		DROPDOWN_VALIGN_CATEGORY = 7;
 		DROPDOWN_VALIGN_FORMAT = 18;
@@ -239,48 +240,49 @@ classdef SettingsTextPP < SettingsPP
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the settings text panel.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the settings text panel.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the settings text panel.
-			%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>8</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>9</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
-			%  <strong>10</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>11</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>12</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>13</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>14</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-			%  <strong>15</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-			%  <strong>16</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-			%  <strong>17</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-			%  <strong>18</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-			%  <strong>19</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the property panel.
-			%  <strong>20</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-			%  <strong>21</strong> <strong>EL</strong> 	EL (data, item) is the element.
-			%  <strong>22</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-			%  <strong>23</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the settings text panel.
-			%  <strong>24</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-			%  <strong>25</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-			%  <strong>26</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-			%  <strong>27</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-			%  <strong>28</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-			%  <strong>29</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>30</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>31</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-			%  <strong>32</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-			%  <strong>33</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-			%  <strong>34</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
-			%  <strong>35</strong> <strong>EDITFIELD_X</strong> 	EDITFIELD_X (evanescent, handle) is the text value edit field for the X property.
-			%  <strong>36</strong> <strong>EDITFIELD_Y</strong> 	EDITFIELD_Y (evanescent, handle) is the text value edit field for the Y property.
-			%  <strong>37</strong> <strong>EDITFIELD_Z</strong> 	EDITFIELD_Z (evanescent, handle) is the text value edit field for the Z property.
-			%  <strong>38</strong> <strong>EDITFIELD_TXT</strong> 	EDITFIELD_TXT (evanescent, handle) is the text value edit field for the TXT property.
-			%  <strong>39</strong> <strong>BUTTON_FONTCOLOR</strong> 	BUTTON_FONTCOLOR (evanescent, handle) is the text color button.
-			%  <strong>40</strong> <strong>EDITFIELD_FONTSIZE</strong> 	EDITFIELD_FONTSIZE (evanescent, handle) is the font size edit field.
-			%  <strong>41</strong> <strong>SLIDER_FONTSIZE</strong> 	SLIDER_FONTSIZE (evanescent, handle) is the font size slider.
-			%  <strong>42</strong> <strong>EDITFIELD_ROTATION</strong> 	EDITFIELD_ROTATION (evanescent, handle) is the rotation edit field.
-			%  <strong>43</strong> <strong>SLIDER_ROTATION</strong> 	SLIDER_ROTATION (evanescent, handle) is the rotation slider.
-			%  <strong>44</strong> <strong>EDITFIELD_FONTNAME</strong> 	EDITFIELD_FONTNAME (evanescent, handle) is the text value edit field for the FONTNAME property.
-			%  <strong>45</strong> <strong>DROPDOWN_FONTWEIGHT</strong> 	DROPDOWN_FONTWEIGHT (evanescent, handle) is the font weight dropdown.
-			%  <strong>46</strong> <strong>DROPDOWN_INTERPRETER</strong> 	DROPDOWN_INTERPRETER (evanescent, handle) is the interpreter dropdown.
-			%  <strong>47</strong> <strong>DROPDOWN_HALIGN</strong> 	DROPDOWN_HALIGN (evanescent, handle) is the horizontal alignment dropdown.
-			%  <strong>48</strong> <strong>DROPDOWN_VALIGN</strong> 	DROPDOWN_VALIGN (evanescent, handle) is the vertical alignment dropdown.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
+			%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+			%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
+			%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
+			%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+			%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
+			%  <strong>19</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
+			%  <strong>20</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the property panel.
+			%  <strong>21</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+			%  <strong>22</strong> <strong>EL</strong> 	EL (data, item) is the element.
+			%  <strong>23</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
+			%  <strong>24</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the settings text panel.
+			%  <strong>25</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
+			%  <strong>26</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
+			%  <strong>27</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
+			%  <strong>28</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
+			%  <strong>29</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
+			%  <strong>30</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
+			%  <strong>31</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
+			%  <strong>32</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
+			%  <strong>33</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
+			%  <strong>34</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
+			%  <strong>35</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
+			%  <strong>36</strong> <strong>EDITFIELD_X</strong> 	EDITFIELD_X (evanescent, handle) is the text value edit field for the X property.
+			%  <strong>37</strong> <strong>EDITFIELD_Y</strong> 	EDITFIELD_Y (evanescent, handle) is the text value edit field for the Y property.
+			%  <strong>38</strong> <strong>EDITFIELD_Z</strong> 	EDITFIELD_Z (evanescent, handle) is the text value edit field for the Z property.
+			%  <strong>39</strong> <strong>EDITFIELD_TXT</strong> 	EDITFIELD_TXT (evanescent, handle) is the text value edit field for the TXT property.
+			%  <strong>40</strong> <strong>BUTTON_FONTCOLOR</strong> 	BUTTON_FONTCOLOR (evanescent, handle) is the text color button.
+			%  <strong>41</strong> <strong>EDITFIELD_FONTSIZE</strong> 	EDITFIELD_FONTSIZE (evanescent, handle) is the font size edit field.
+			%  <strong>42</strong> <strong>SLIDER_FONTSIZE</strong> 	SLIDER_FONTSIZE (evanescent, handle) is the font size slider.
+			%  <strong>43</strong> <strong>EDITFIELD_ROTATION</strong> 	EDITFIELD_ROTATION (evanescent, handle) is the rotation edit field.
+			%  <strong>44</strong> <strong>SLIDER_ROTATION</strong> 	SLIDER_ROTATION (evanescent, handle) is the rotation slider.
+			%  <strong>45</strong> <strong>EDITFIELD_FONTNAME</strong> 	EDITFIELD_FONTNAME (evanescent, handle) is the text value edit field for the FONTNAME property.
+			%  <strong>46</strong> <strong>DROPDOWN_FONTWEIGHT</strong> 	DROPDOWN_FONTWEIGHT (evanescent, handle) is the font weight dropdown.
+			%  <strong>47</strong> <strong>DROPDOWN_INTERPRETER</strong> 	DROPDOWN_INTERPRETER (evanescent, handle) is the interpreter dropdown.
+			%  <strong>48</strong> <strong>DROPDOWN_HALIGN</strong> 	DROPDOWN_HALIGN (evanescent, handle) is the horizontal alignment dropdown.
+			%  <strong>49</strong> <strong>DROPDOWN_VALIGN</strong> 	DROPDOWN_VALIGN (evanescent, handle) is the vertical alignment dropdown.
 			%
 			% See also Category, Format.
 			
@@ -342,7 +344,7 @@ classdef SettingsTextPP < SettingsPP
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49];
 				return
 			end
 			
@@ -354,15 +356,15 @@ classdef SettingsTextPP < SettingsPP
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 21 22 27];
+					prop_list = [4 22 23 28];
 				case 6 % Category.QUERY
-					prop_list = [9 10 14 15 16 17 18 19 20];
+					prop_list = [7 10 11 15 16 17 18 19 20 21];
 				case 7 % Category.EVANESCENT
-					prop_list = [8 13 25 26 28 29 30 31 32 33 35 36 37 38 39 40 41 42 43 44 45 46 47 48];
+					prop_list = [9 14 26 27 29 30 31 32 33 34 36 37 38 39 40 41 42 43 44 45 46 47 48 49];
 				case 8 % Category.FIGURE
-					prop_list = 12;
+					prop_list = 13;
 				case 9 % Category.GUI
-					prop_list = [7 11 23 24 34];
+					prop_list = [8 12 24 25 35];
 				otherwise
 					prop_list = [];
 			end
@@ -388,7 +390,7 @@ classdef SettingsTextPP < SettingsPP
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 48;
+				prop_number = 49;
 				return
 			end
 			
@@ -402,7 +404,7 @@ classdef SettingsTextPP < SettingsPP
 				case 4 % Category.DATA
 					prop_number = 4;
 				case 6 % Category.QUERY
-					prop_number = 9;
+					prop_number = 10;
 				case 7 % Category.EVANESCENT
 					prop_number = 24;
 				case 8 % Category.FIGURE
@@ -439,7 +441,7 @@ classdef SettingsTextPP < SettingsPP
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 48 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 49 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -477,7 +479,7 @@ classdef SettingsTextPP < SettingsPP
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'EDITFIELD_X'  'EDITFIELD_Y'  'EDITFIELD_Z'  'EDITFIELD_TXT'  'BUTTON_FONTCOLOR'  'EDITFIELD_FONTSIZE'  'SLIDER_FONTSIZE'  'EDITFIELD_ROTATION'  'SLIDER_ROTATION'  'EDITFIELD_FONTNAME'  'DROPDOWN_FONTWEIGHT'  'DROPDOWN_INTERPRETER'  'DROPDOWN_HALIGN'  'DROPDOWN_VALIGN' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'EDITFIELD_X'  'EDITFIELD_Y'  'EDITFIELD_Z'  'EDITFIELD_TXT'  'BUTTON_FONTCOLOR'  'EDITFIELD_FONTSIZE'  'SLIDER_FONTSIZE'  'EDITFIELD_ROTATION'  'SLIDER_ROTATION'  'EDITFIELD_FONTNAME'  'DROPDOWN_FONTWEIGHT'  'DROPDOWN_INTERPRETER'  'DROPDOWN_HALIGN'  'DROPDOWN_VALIGN' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -510,7 +512,7 @@ classdef SettingsTextPP < SettingsPP
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'EDITFIELD_X'  'EDITFIELD_Y'  'EDITFIELD_Z'  'EDITFIELD_TXT'  'BUTTON_FONTCOLOR'  'EDITFIELD_FONTSIZE'  'SLIDER_FONTSIZE'  'EDITFIELD_ROTATION'  'SLIDER_ROTATION'  'EDITFIELD_FONTNAME'  'DROPDOWN_FONTWEIGHT'  'DROPDOWN_INTERPRETER'  'DROPDOWN_HALIGN'  'DROPDOWN_VALIGN' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'EDITFIELD_X'  'EDITFIELD_Y'  'EDITFIELD_Z'  'EDITFIELD_TXT'  'BUTTON_FONTCOLOR'  'EDITFIELD_FONTSIZE'  'SLIDER_FONTSIZE'  'EDITFIELD_ROTATION'  'SLIDER_ROTATION'  'EDITFIELD_FONTNAME'  'DROPDOWN_FONTWEIGHT'  'DROPDOWN_INTERPRETER'  'DROPDOWN_HALIGN'  'DROPDOWN_VALIGN' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -539,7 +541,7 @@ classdef SettingsTextPP < SettingsPP
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				settingstextpp_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'EDITFIELD_X'  'EDITFIELD_Y'  'EDITFIELD_Z'  'EDITFIELD_TXT'  'BUTTON_FONTCOLOR'  'EDITFIELD_FONTSIZE'  'SLIDER_FONTSIZE'  'EDITFIELD_ROTATION'  'SLIDER_ROTATION'  'EDITFIELD_FONTNAME'  'DROPDOWN_FONTWEIGHT'  'DROPDOWN_INTERPRETER'  'DROPDOWN_HALIGN'  'DROPDOWN_VALIGN' };
+				settingstextpp_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'EDITFIELD_X'  'EDITFIELD_Y'  'EDITFIELD_Z'  'EDITFIELD_TXT'  'BUTTON_FONTCOLOR'  'EDITFIELD_FONTSIZE'  'SLIDER_FONTSIZE'  'EDITFIELD_ROTATION'  'SLIDER_ROTATION'  'EDITFIELD_FONTNAME'  'DROPDOWN_FONTWEIGHT'  'DROPDOWN_INTERPRETER'  'DROPDOWN_HALIGN'  'DROPDOWN_VALIGN' };
 				tag = settingstextpp_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -566,7 +568,7 @@ classdef SettingsTextPP < SettingsPP
 			prop = SettingsTextPP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			settingstextpp_category_list = { 1  1  3  4  2  2  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  7  7  7  7  7  7  7  7  7  7  7  7  7  7 };
+			settingstextpp_category_list = { 1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  7  7  7  7  7  7  7  7  7  7  7  7  7  7 };
 			prop_category = settingstextpp_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -592,7 +594,7 @@ classdef SettingsTextPP < SettingsPP
 			prop = SettingsTextPP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			settingstextpp_format_list = { 2  2  8  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  4  18  18  18  18  18  18  18  18  18  18  18  18  18  18 };
+			settingstextpp_format_list = { 2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  4  18  18  18  18  18  18  18  18  18  18  18  18  18  18 };
 			prop_format = settingstextpp_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -618,7 +620,7 @@ classdef SettingsTextPP < SettingsPP
 			prop = SettingsTextPP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			settingstextpp_description_list = { 'NAME (constant, string) is the name of the settings text panel.'  'DESCRIPTION (constant, string) is the description of the settings text panel.'  'TEMPLATE (parameter, item) is the template of the settings text panel.'  'ID (data, string) is a few-letter code for the settings text panel.'  'LABEL (metadata, string) is an extended label of the settings text panel.'  'NOTES (metadata, string) are some specific notes about the settings text panel.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the property panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the property panel.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the settings text panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.'  'EDITFIELD_X (evanescent, handle) is the text value edit field for the X property.'  'EDITFIELD_Y (evanescent, handle) is the text value edit field for the Y property.'  'EDITFIELD_Z (evanescent, handle) is the text value edit field for the Z property.'  'EDITFIELD_TXT (evanescent, handle) is the text value edit field for the TXT property.'  'BUTTON_FONTCOLOR (evanescent, handle) is the text color button.'  'EDITFIELD_FONTSIZE (evanescent, handle) is the font size edit field.'  'SLIDER_FONTSIZE (evanescent, handle) is the font size slider.'  'EDITFIELD_ROTATION (evanescent, handle) is the rotation edit field.'  'SLIDER_ROTATION (evanescent, handle) is the rotation slider.'  'EDITFIELD_FONTNAME (evanescent, handle) is the text value edit field for the FONTNAME property.'  'DROPDOWN_FONTWEIGHT (evanescent, handle) is the font weight dropdown.'  'DROPDOWN_INTERPRETER (evanescent, handle) is the interpreter dropdown.'  'DROPDOWN_HALIGN (evanescent, handle) is the horizontal alignment dropdown.'  'DROPDOWN_VALIGN (evanescent, handle) is the vertical alignment dropdown.' };
+			settingstextpp_description_list = { 'NAME (constant, string) is the name of the settings text panel.'  'DESCRIPTION (constant, string) is the description of the settings text panel.'  'TEMPLATE (parameter, item) is the template of the settings text panel.'  'ID (data, string) is a few-letter code for the settings text panel.'  'LABEL (metadata, string) is an extended label of the settings text panel.'  'NOTES (metadata, string) are some specific notes about the settings text panel.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the property panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the property panel.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the settings text panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.'  'EDITFIELD_X (evanescent, handle) is the text value edit field for the X property.'  'EDITFIELD_Y (evanescent, handle) is the text value edit field for the Y property.'  'EDITFIELD_Z (evanescent, handle) is the text value edit field for the Z property.'  'EDITFIELD_TXT (evanescent, handle) is the text value edit field for the TXT property.'  'BUTTON_FONTCOLOR (evanescent, handle) is the text color button.'  'EDITFIELD_FONTSIZE (evanescent, handle) is the font size edit field.'  'SLIDER_FONTSIZE (evanescent, handle) is the font size slider.'  'EDITFIELD_ROTATION (evanescent, handle) is the rotation edit field.'  'SLIDER_ROTATION (evanescent, handle) is the rotation slider.'  'EDITFIELD_FONTNAME (evanescent, handle) is the text value edit field for the FONTNAME property.'  'DROPDOWN_FONTWEIGHT (evanescent, handle) is the font weight dropdown.'  'DROPDOWN_INTERPRETER (evanescent, handle) is the interpreter dropdown.'  'DROPDOWN_HALIGN (evanescent, handle) is the horizontal alignment dropdown.'  'DROPDOWN_VALIGN (evanescent, handle) is the vertical alignment dropdown.' };
 			prop_description = settingstextpp_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -644,35 +646,35 @@ classdef SettingsTextPP < SettingsPP
 			prop = SettingsTextPP.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 34 % SettingsTextPP.ENABLE
+				case 35 % SettingsTextPP.ENABLE
 					prop_settings = Format.getFormatSettings(4);
-				case 35 % SettingsTextPP.EDITFIELD_X
+				case 36 % SettingsTextPP.EDITFIELD_X
 					prop_settings = Format.getFormatSettings(18);
-				case 36 % SettingsTextPP.EDITFIELD_Y
+				case 37 % SettingsTextPP.EDITFIELD_Y
 					prop_settings = Format.getFormatSettings(18);
-				case 37 % SettingsTextPP.EDITFIELD_Z
+				case 38 % SettingsTextPP.EDITFIELD_Z
 					prop_settings = Format.getFormatSettings(18);
-				case 38 % SettingsTextPP.EDITFIELD_TXT
+				case 39 % SettingsTextPP.EDITFIELD_TXT
 					prop_settings = Format.getFormatSettings(18);
-				case 39 % SettingsTextPP.BUTTON_FONTCOLOR
+				case 40 % SettingsTextPP.BUTTON_FONTCOLOR
 					prop_settings = Format.getFormatSettings(18);
-				case 40 % SettingsTextPP.EDITFIELD_FONTSIZE
+				case 41 % SettingsTextPP.EDITFIELD_FONTSIZE
 					prop_settings = Format.getFormatSettings(18);
-				case 41 % SettingsTextPP.SLIDER_FONTSIZE
+				case 42 % SettingsTextPP.SLIDER_FONTSIZE
 					prop_settings = Format.getFormatSettings(18);
-				case 42 % SettingsTextPP.EDITFIELD_ROTATION
+				case 43 % SettingsTextPP.EDITFIELD_ROTATION
 					prop_settings = Format.getFormatSettings(18);
-				case 43 % SettingsTextPP.SLIDER_ROTATION
+				case 44 % SettingsTextPP.SLIDER_ROTATION
 					prop_settings = Format.getFormatSettings(18);
-				case 44 % SettingsTextPP.EDITFIELD_FONTNAME
+				case 45 % SettingsTextPP.EDITFIELD_FONTNAME
 					prop_settings = Format.getFormatSettings(18);
-				case 45 % SettingsTextPP.DROPDOWN_FONTWEIGHT
+				case 46 % SettingsTextPP.DROPDOWN_FONTWEIGHT
 					prop_settings = Format.getFormatSettings(18);
-				case 46 % SettingsTextPP.DROPDOWN_INTERPRETER
+				case 47 % SettingsTextPP.DROPDOWN_INTERPRETER
 					prop_settings = Format.getFormatSettings(18);
-				case 47 % SettingsTextPP.DROPDOWN_HALIGN
+				case 48 % SettingsTextPP.DROPDOWN_HALIGN
 					prop_settings = Format.getFormatSettings(18);
-				case 48 % SettingsTextPP.DROPDOWN_VALIGN
+				case 49 % SettingsTextPP.DROPDOWN_VALIGN
 					prop_settings = Format.getFormatSettings(18);
 				case 3 % SettingsTextPP.TEMPLATE
 					prop_settings = 'SettingsTextPP';
@@ -703,35 +705,35 @@ classdef SettingsTextPP < SettingsPP
 			prop = SettingsTextPP.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 34 % SettingsTextPP.ENABLE
+				case 35 % SettingsTextPP.ENABLE
 					prop_default = true;
-				case 35 % SettingsTextPP.EDITFIELD_X
+				case 36 % SettingsTextPP.EDITFIELD_X
 					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 36 % SettingsTextPP.EDITFIELD_Y
+				case 37 % SettingsTextPP.EDITFIELD_Y
 					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 37 % SettingsTextPP.EDITFIELD_Z
+				case 38 % SettingsTextPP.EDITFIELD_Z
 					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 38 % SettingsTextPP.EDITFIELD_TXT
+				case 39 % SettingsTextPP.EDITFIELD_TXT
 					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 39 % SettingsTextPP.BUTTON_FONTCOLOR
+				case 40 % SettingsTextPP.BUTTON_FONTCOLOR
 					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 40 % SettingsTextPP.EDITFIELD_FONTSIZE
+				case 41 % SettingsTextPP.EDITFIELD_FONTSIZE
 					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 41 % SettingsTextPP.SLIDER_FONTSIZE
+				case 42 % SettingsTextPP.SLIDER_FONTSIZE
 					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 42 % SettingsTextPP.EDITFIELD_ROTATION
+				case 43 % SettingsTextPP.EDITFIELD_ROTATION
 					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 43 % SettingsTextPP.SLIDER_ROTATION
+				case 44 % SettingsTextPP.SLIDER_ROTATION
 					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 44 % SettingsTextPP.EDITFIELD_FONTNAME
+				case 45 % SettingsTextPP.EDITFIELD_FONTNAME
 					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 45 % SettingsTextPP.DROPDOWN_FONTWEIGHT
+				case 46 % SettingsTextPP.DROPDOWN_FONTWEIGHT
 					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 46 % SettingsTextPP.DROPDOWN_INTERPRETER
+				case 47 % SettingsTextPP.DROPDOWN_INTERPRETER
 					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 47 % SettingsTextPP.DROPDOWN_HALIGN
+				case 48 % SettingsTextPP.DROPDOWN_HALIGN
 					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 48 % SettingsTextPP.DROPDOWN_VALIGN
+				case 49 % SettingsTextPP.DROPDOWN_VALIGN
 					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
 				case 1 % SettingsTextPP.NAME
 					prop_default = 'SettingsTextPP';
@@ -745,11 +747,11 @@ classdef SettingsTextPP < SettingsPP
 					prop_default = 'SettingsTextPP label';
 				case 6 % SettingsTextPP.NOTES
 					prop_default = 'SettingsTextPP notes';
-				case 21 % SettingsTextPP.EL
+				case 22 % SettingsTextPP.EL
 					prop_default = MeasurePF();
-				case 22 % SettingsTextPP.PROP
-					prop_default = 33;
-				case 23 % SettingsTextPP.HEIGHT
+				case 23 % SettingsTextPP.PROP
+					prop_default = 34;
+				case 24 % SettingsTextPP.HEIGHT
 					prop_default = 111;
 				otherwise
 					prop_default = getPropDefault@SettingsPP(prop);
@@ -815,40 +817,40 @@ classdef SettingsTextPP < SettingsPP
 			prop = SettingsTextPP.getPropProp(pointer);
 			
 			switch prop
-				case 34 % SettingsTextPP.ENABLE
+				case 35 % SettingsTextPP.ENABLE
 					check = Format.checkFormat(4, value, SettingsTextPP.getPropSettings(prop));
-				case 35 % SettingsTextPP.EDITFIELD_X
+				case 36 % SettingsTextPP.EDITFIELD_X
 					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 36 % SettingsTextPP.EDITFIELD_Y
+				case 37 % SettingsTextPP.EDITFIELD_Y
 					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 37 % SettingsTextPP.EDITFIELD_Z
+				case 38 % SettingsTextPP.EDITFIELD_Z
 					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 38 % SettingsTextPP.EDITFIELD_TXT
+				case 39 % SettingsTextPP.EDITFIELD_TXT
 					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 39 % SettingsTextPP.BUTTON_FONTCOLOR
+				case 40 % SettingsTextPP.BUTTON_FONTCOLOR
 					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 40 % SettingsTextPP.EDITFIELD_FONTSIZE
+				case 41 % SettingsTextPP.EDITFIELD_FONTSIZE
 					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 41 % SettingsTextPP.SLIDER_FONTSIZE
+				case 42 % SettingsTextPP.SLIDER_FONTSIZE
 					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 42 % SettingsTextPP.EDITFIELD_ROTATION
+				case 43 % SettingsTextPP.EDITFIELD_ROTATION
 					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 43 % SettingsTextPP.SLIDER_ROTATION
+				case 44 % SettingsTextPP.SLIDER_ROTATION
 					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 44 % SettingsTextPP.EDITFIELD_FONTNAME
+				case 45 % SettingsTextPP.EDITFIELD_FONTNAME
 					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 45 % SettingsTextPP.DROPDOWN_FONTWEIGHT
+				case 46 % SettingsTextPP.DROPDOWN_FONTWEIGHT
 					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 46 % SettingsTextPP.DROPDOWN_INTERPRETER
+				case 47 % SettingsTextPP.DROPDOWN_INTERPRETER
 					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 47 % SettingsTextPP.DROPDOWN_HALIGN
+				case 48 % SettingsTextPP.DROPDOWN_HALIGN
 					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 48 % SettingsTextPP.DROPDOWN_VALIGN
+				case 49 % SettingsTextPP.DROPDOWN_VALIGN
 					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
 				case 3 % SettingsTextPP.TEMPLATE
 					check = Format.checkFormat(8, value, SettingsTextPP.getPropSettings(prop));
 				otherwise
-					if prop <= 33
+					if prop <= 34
 						check = checkProp@SettingsPP(prop, value);
 					end
 			end
@@ -881,7 +883,7 @@ classdef SettingsTextPP < SettingsPP
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 35 % SettingsTextPP.EDITFIELD_X
+				case 36 % SettingsTextPP.EDITFIELD_X
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -895,7 +897,7 @@ classdef SettingsTextPP < SettingsPP
 					
 					value = editfield;
 					
-				case 36 % SettingsTextPP.EDITFIELD_Y
+				case 37 % SettingsTextPP.EDITFIELD_Y
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -909,7 +911,7 @@ classdef SettingsTextPP < SettingsPP
 					
 					value = editfield;
 					
-				case 37 % SettingsTextPP.EDITFIELD_Z
+				case 38 % SettingsTextPP.EDITFIELD_Z
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -923,7 +925,7 @@ classdef SettingsTextPP < SettingsPP
 					
 					value = editfield;
 					
-				case 38 % SettingsTextPP.EDITFIELD_TXT
+				case 39 % SettingsTextPP.EDITFIELD_TXT
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -937,7 +939,7 @@ classdef SettingsTextPP < SettingsPP
 					
 					value = editfield;
 					
-				case 39 % SettingsTextPP.BUTTON_FONTCOLOR
+				case 40 % SettingsTextPP.BUTTON_FONTCOLOR
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					button_fontcolor = uibutton( ...
@@ -951,7 +953,7 @@ classdef SettingsTextPP < SettingsPP
 					    );
 					value = button_fontcolor;
 					
-				case 40 % SettingsTextPP.EDITFIELD_FONTSIZE
+				case 41 % SettingsTextPP.EDITFIELD_FONTSIZE
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					editfield_fontsize = uieditfield('numeric', ...
@@ -965,7 +967,7 @@ classdef SettingsTextPP < SettingsPP
 					    );
 					value = editfield_fontsize;
 					
-				case 41 % SettingsTextPP.SLIDER_FONTSIZE
+				case 42 % SettingsTextPP.SLIDER_FONTSIZE
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					slider_fontsize = uislider( ...
@@ -978,7 +980,7 @@ classdef SettingsTextPP < SettingsPP
 					    );
 					value = slider_fontsize;
 					
-				case 42 % SettingsTextPP.EDITFIELD_ROTATION
+				case 43 % SettingsTextPP.EDITFIELD_ROTATION
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					editfield_rotation = uieditfield('numeric', ...
@@ -992,7 +994,7 @@ classdef SettingsTextPP < SettingsPP
 					    );
 					value = editfield_rotation;
 					
-				case 43 % SettingsTextPP.SLIDER_ROTATION
+				case 44 % SettingsTextPP.SLIDER_ROTATION
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					slider_rotation = uislider( ...
@@ -1005,7 +1007,7 @@ classdef SettingsTextPP < SettingsPP
 					    );
 					value = slider_rotation;
 					
-				case 44 % SettingsTextPP.EDITFIELD_FONTNAME
+				case 45 % SettingsTextPP.EDITFIELD_FONTNAME
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -1019,7 +1021,7 @@ classdef SettingsTextPP < SettingsPP
 					
 					value = editfield_fontname;
 					
-				case 45 % SettingsTextPP.DROPDOWN_FONTWEIGHT
+				case 46 % SettingsTextPP.DROPDOWN_FONTWEIGHT
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -1034,7 +1036,7 @@ classdef SettingsTextPP < SettingsPP
 					
 					value = dropdown_fontweight;
 					
-				case 46 % SettingsTextPP.DROPDOWN_INTERPRETER
+				case 47 % SettingsTextPP.DROPDOWN_INTERPRETER
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -1049,7 +1051,7 @@ classdef SettingsTextPP < SettingsPP
 					
 					value = dropdown_interpreter;
 					
-				case 47 % SettingsTextPP.DROPDOWN_HALIGN
+				case 48 % SettingsTextPP.DROPDOWN_HALIGN
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -1064,7 +1066,7 @@ classdef SettingsTextPP < SettingsPP
 					
 					value = dropdown_halign;
 					
-				case 48 % SettingsTextPP.DROPDOWN_VALIGN
+				case 49 % SettingsTextPP.DROPDOWN_VALIGN
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -1079,8 +1081,8 @@ classdef SettingsTextPP < SettingsPP
 					
 					value = dropdown_valign;
 					
-				case 18 % SettingsTextPP.X_DRAW
-					value = calculateValue@PanelProp(pr, 18, varargin{:}); % also warning
+				case 19 % SettingsTextPP.X_DRAW
+					value = calculateValue@PanelProp(pr, 19, varargin{:}); % also warning
 					if value
 					    pr.memorize('EDITFIELD_X')
 					    pr.memorize('EDITFIELD_Y')
@@ -1100,8 +1102,8 @@ classdef SettingsTextPP < SettingsPP
 					    pr.memorize('DROPDOWN_VALIGN')
 					end
 					
-				case 19 % SettingsTextPP.UPDATE
-					value = calculateValue@PanelProp(pr, 19, varargin{:}); % also warning
+				case 20 % SettingsTextPP.UPDATE
+					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
 					if value
 					    el = pr.get('EL');
 					    prop = pr.get('PROP');
@@ -1384,8 +1386,8 @@ classdef SettingsTextPP < SettingsPP
 					    end
 					end
 					
-				case 20 % SettingsTextPP.REDRAW
-					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
+				case 21 % SettingsTextPP.REDRAW
+					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
 					if value
 						w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 					
@@ -1407,8 +1409,8 @@ classdef SettingsTextPP < SettingsPP
 					    set(pr.get('DROPDOWN_VALIGN'),      'Position', [18+.74*w_p	4   .18*w_p     21])    
 					end
 					
-				case 16 % SettingsTextPP.DELETE
-					value = calculateValue@PanelProp(pr, 16, varargin{:}); % also warning
+				case 17 % SettingsTextPP.DELETE
+					value = calculateValue@PanelProp(pr, 17, varargin{:}); % also warning
 					if value
 					    pr.set('EDITFIELD_X', Element.getNoValue())
 					    pr.set('EDITFIELD_Y', Element.getNoValue())
@@ -1429,7 +1431,7 @@ classdef SettingsTextPP < SettingsPP
 					end
 					
 				otherwise
-					if prop <= 33
+					if prop <= 34
 						value = calculateValue@SettingsPP(pr, prop, varargin{:});
 					else
 						value = calculateValue@Element(pr, prop, varargin{:});

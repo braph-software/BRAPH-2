@@ -13,7 +13,8 @@ classdef Subject < ConcreteElement
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the subject.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the subject.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the subject.
-	%  <strong>7</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
 	%
 	% Subject methods (constructor):
 	%  Subject - constructor
@@ -104,7 +105,7 @@ classdef Subject < ConcreteElement
 	% See also Group.
 	
 	properties (Constant) % properties
-		VOI_DICT = 7; %CET: Computational Efficiency Trick
+		VOI_DICT = 8; %CET: Computational Efficiency Trick
 		VOI_DICT_TAG = 'VOI_DICT';
 		VOI_DICT_CATEGORY = 4;
 		VOI_DICT_FORMAT = 10;
@@ -127,7 +128,8 @@ classdef Subject < ConcreteElement
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the subject.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the subject.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the subject.
-			%  <strong>7</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
 			%
 			% See also Category, Format.
 			
@@ -189,7 +191,7 @@ classdef Subject < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7];
+				prop_list = [1 2 3 4 5 6 7 8];
 				return
 			end
 			
@@ -201,7 +203,9 @@ classdef Subject < ConcreteElement
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 7];
+					prop_list = [4 8];
+				case 6 % Category.QUERY
+					prop_list = 7;
 				otherwise
 					prop_list = [];
 			end
@@ -227,7 +231,7 @@ classdef Subject < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 7;
+				prop_number = 8;
 				return
 			end
 			
@@ -240,6 +244,8 @@ classdef Subject < ConcreteElement
 					prop_number = 1;
 				case 4 % Category.DATA
 					prop_number = 2;
+				case 6 % Category.QUERY
+					prop_number = 1;
 				otherwise
 					prop_number = 0;
 			end
@@ -270,7 +276,7 @@ classdef Subject < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 7 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 8 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -308,7 +314,7 @@ classdef Subject < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'VOI_DICT' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -341,7 +347,7 @@ classdef Subject < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'VOI_DICT' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -370,7 +376,7 @@ classdef Subject < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				subject_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'VOI_DICT' };
+				subject_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT' };
 				tag = subject_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -397,7 +403,7 @@ classdef Subject < ConcreteElement
 			prop = Subject.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			subject_category_list = { 1  1  3  4  2  2  4 };
+			subject_category_list = { 1  1  3  4  2  2  6  4 };
 			prop_category = subject_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -423,7 +429,7 @@ classdef Subject < ConcreteElement
 			prop = Subject.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			subject_format_list = { 2  2  8  2  2  2  10 };
+			subject_format_list = { 2  2  8  2  2  2  2  10 };
 			prop_format = subject_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -449,7 +455,7 @@ classdef Subject < ConcreteElement
 			prop = Subject.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			subject_description_list = { 'NAME (constant, string) is the name of the subject.'  'DESCRIPTION (constant, string) is the description of the subject.'  'TEMPLATE (parameter, item) is the template of the subject.'  'ID (data, string) is a few-letter code for the subject.'  'LABEL (metadata, string) is an extended label of the subject.'  'NOTES (metadata, string) are some specific notes about the subject.'  'VOI_DICT (data, idict) contains the variables of interest of the subject.' };
+			subject_description_list = { 'NAME (constant, string) is the name of the subject.'  'DESCRIPTION (constant, string) is the description of the subject.'  'TEMPLATE (parameter, item) is the template of the subject.'  'ID (data, string) is a few-letter code for the subject.'  'LABEL (metadata, string) is an extended label of the subject.'  'NOTES (metadata, string) are some specific notes about the subject.'  'TOSTRING (query, string) returns a string that represents the object.'  'VOI_DICT (data, idict) contains the variables of interest of the subject.' };
 			prop_description = subject_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -475,7 +481,7 @@ classdef Subject < ConcreteElement
 			prop = Subject.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % Subject.VOI_DICT
+				case 8 % Subject.VOI_DICT
 					prop_settings = 'VOI';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -504,7 +510,7 @@ classdef Subject < ConcreteElement
 			prop = Subject.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % Subject.VOI_DICT
+				case 8 % Subject.VOI_DICT
 					prop_default = Format.getFormatDefault(10, Subject.getPropSettings(prop));
 				case 1 % Subject.NAME
 					prop_default = 'Subject';
@@ -580,10 +586,10 @@ classdef Subject < ConcreteElement
 			prop = Subject.getPropProp(pointer);
 			
 			switch prop
-				case 7 % Subject.VOI_DICT
+				case 8 % Subject.VOI_DICT
 					check = Format.checkFormat(10, value, Subject.getPropSettings(prop));
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -616,13 +622,8 @@ classdef Subject < ConcreteElement
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 7 % Subject.VOI_DICT
-					pr = SubjectPP_VOIDict('EL', sub, 'PROP', 7, varargin{:});
-					% % % TBE
-					% % % pr = PanelPropIDictTable('EL', sub, 'PROP', 7, ... 
-					% % %     'COLS', [4 7], ...
-					% % %     'ROWNAME', 'numbered', ...
-					% % %     varargin{:});
+				case 8 % Subject.VOI_DICT
+					pr = SubjectPP_VOIDict('EL', sub, 'PROP', 8, varargin{:});
 					
 				otherwise
 					pr = getPanelProp@ConcreteElement(sub, prop, varargin{:});

@@ -13,44 +13,45 @@ classdef SettingsAmbientPP < SettingsPP
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the settings ambient panel.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the settings ambient panel.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the settings ambient panel.
-	%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>8</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>9</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
-	%  <strong>10</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>11</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>12</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>13</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>14</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-	%  <strong>15</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-	%  <strong>16</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-	%  <strong>17</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-	%  <strong>18</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-	%  <strong>19</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.
-	%  <strong>20</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-	%  <strong>21</strong> <strong>EL</strong> 	EL (data, item) is the element.
-	%  <strong>22</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-	%  <strong>23</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the settings position panel.
-	%  <strong>24</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-	%  <strong>25</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-	%  <strong>26</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-	%  <strong>27</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-	%  <strong>28</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-	%  <strong>29</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>30</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>31</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-	%  <strong>32</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-	%  <strong>33</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-	%  <strong>34</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
-	%  <strong>35</strong> <strong>LABEL_LIGHTING</strong> 	LABEL_LIGHTING (evanescent, handle) is the label of the lighting dropdown menu.
-	%  <strong>36</strong> <strong>DROPDOWN_LIGHTING</strong> 	DROPDOWN_LIGHTING (evanescent, handle) is the lighting dropdown menu.
-	%  <strong>37</strong> <strong>LABEL_MATERIAL</strong> 	LABEL_MATERIAL (evanescent, handle) is the label of the of the material dropdown menu.
-	%  <strong>38</strong> <strong>DROPDOWN_MATERIAL</strong> 	DROPDOWN_MATERIAL (evanescent, handle) is the material dropdown menu.
-	%  <strong>39</strong> <strong>LABEL_CAMLIGHT</strong> 	LABEL_CAMLIGHT (evanescent, handle) is the label of the camlight dropdown menu.
-	%  <strong>40</strong> <strong>DROPDOWN_CAMLIGHT</strong> 	DROPDOWN_CAMLIGHT (evanescent, handle) is the camlight dropdown menu.
-	%  <strong>41</strong> <strong>LABEL_SHADING</strong> 	LABEL_SHADING (evanescent, handle) is the label of the shading dropdown menu.
-	%  <strong>42</strong> <strong>DROPDOWN_SHADING</strong> 	DROPDOWN_SHADING (evanescent, handle) is the shading dropdown menu.
-	%  <strong>43</strong> <strong>LABEL_COLORMAP</strong> 	LABEL_COLORMAP (evanescent, handle) is the label of the colormap dropdown menu.
-	%  <strong>44</strong> <strong>DROPDOWN_COLORMAP</strong> 	DROPDOWN_COLORMAP (evanescent, handle) is the colormap dropdown menu.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
+	%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+	%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
+	%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
+	%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+	%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
+	%  <strong>19</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
+	%  <strong>20</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.
+	%  <strong>21</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+	%  <strong>22</strong> <strong>EL</strong> 	EL (data, item) is the element.
+	%  <strong>23</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
+	%  <strong>24</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the settings position panel.
+	%  <strong>25</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
+	%  <strong>26</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
+	%  <strong>27</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
+	%  <strong>28</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
+	%  <strong>29</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
+	%  <strong>30</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
+	%  <strong>31</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
+	%  <strong>32</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
+	%  <strong>33</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
+	%  <strong>34</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
+	%  <strong>35</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
+	%  <strong>36</strong> <strong>LABEL_LIGHTING</strong> 	LABEL_LIGHTING (evanescent, handle) is the label of the lighting dropdown menu.
+	%  <strong>37</strong> <strong>DROPDOWN_LIGHTING</strong> 	DROPDOWN_LIGHTING (evanescent, handle) is the lighting dropdown menu.
+	%  <strong>38</strong> <strong>LABEL_MATERIAL</strong> 	LABEL_MATERIAL (evanescent, handle) is the label of the of the material dropdown menu.
+	%  <strong>39</strong> <strong>DROPDOWN_MATERIAL</strong> 	DROPDOWN_MATERIAL (evanescent, handle) is the material dropdown menu.
+	%  <strong>40</strong> <strong>LABEL_CAMLIGHT</strong> 	LABEL_CAMLIGHT (evanescent, handle) is the label of the camlight dropdown menu.
+	%  <strong>41</strong> <strong>DROPDOWN_CAMLIGHT</strong> 	DROPDOWN_CAMLIGHT (evanescent, handle) is the camlight dropdown menu.
+	%  <strong>42</strong> <strong>LABEL_SHADING</strong> 	LABEL_SHADING (evanescent, handle) is the label of the shading dropdown menu.
+	%  <strong>43</strong> <strong>DROPDOWN_SHADING</strong> 	DROPDOWN_SHADING (evanescent, handle) is the shading dropdown menu.
+	%  <strong>44</strong> <strong>LABEL_COLORMAP</strong> 	LABEL_COLORMAP (evanescent, handle) is the label of the colormap dropdown menu.
+	%  <strong>45</strong> <strong>DROPDOWN_COLORMAP</strong> 	DROPDOWN_COLORMAP (evanescent, handle) is the colormap dropdown menu.
 	%
 	% SettingsAmbientPP methods (constructor):
 	%  SettingsAmbientPP - constructor
@@ -141,57 +142,57 @@ classdef SettingsAmbientPP < SettingsPP
 	% See also SettingsAmbient, uidropdown.
 	
 	properties (Constant) % properties
-		ENABLE = 34; %CET: Computational Efficiency Trick
+		ENABLE = 35; %CET: Computational Efficiency Trick
 		ENABLE_TAG = 'ENABLE';
 		ENABLE_CATEGORY = 9;
 		ENABLE_FORMAT = 4;
 		
-		LABEL_LIGHTING = 35; %CET: Computational Efficiency Trick
+		LABEL_LIGHTING = 36; %CET: Computational Efficiency Trick
 		LABEL_LIGHTING_TAG = 'LABEL_LIGHTING';
 		LABEL_LIGHTING_CATEGORY = 7;
 		LABEL_LIGHTING_FORMAT = 18;
 		
-		DROPDOWN_LIGHTING = 36; %CET: Computational Efficiency Trick
+		DROPDOWN_LIGHTING = 37; %CET: Computational Efficiency Trick
 		DROPDOWN_LIGHTING_TAG = 'DROPDOWN_LIGHTING';
 		DROPDOWN_LIGHTING_CATEGORY = 7;
 		DROPDOWN_LIGHTING_FORMAT = 18;
 		
-		LABEL_MATERIAL = 37; %CET: Computational Efficiency Trick
+		LABEL_MATERIAL = 38; %CET: Computational Efficiency Trick
 		LABEL_MATERIAL_TAG = 'LABEL_MATERIAL';
 		LABEL_MATERIAL_CATEGORY = 7;
 		LABEL_MATERIAL_FORMAT = 18;
 		
-		DROPDOWN_MATERIAL = 38; %CET: Computational Efficiency Trick
+		DROPDOWN_MATERIAL = 39; %CET: Computational Efficiency Trick
 		DROPDOWN_MATERIAL_TAG = 'DROPDOWN_MATERIAL';
 		DROPDOWN_MATERIAL_CATEGORY = 7;
 		DROPDOWN_MATERIAL_FORMAT = 18;
 		
-		LABEL_CAMLIGHT = 39; %CET: Computational Efficiency Trick
+		LABEL_CAMLIGHT = 40; %CET: Computational Efficiency Trick
 		LABEL_CAMLIGHT_TAG = 'LABEL_CAMLIGHT';
 		LABEL_CAMLIGHT_CATEGORY = 7;
 		LABEL_CAMLIGHT_FORMAT = 18;
 		
-		DROPDOWN_CAMLIGHT = 40; %CET: Computational Efficiency Trick
+		DROPDOWN_CAMLIGHT = 41; %CET: Computational Efficiency Trick
 		DROPDOWN_CAMLIGHT_TAG = 'DROPDOWN_CAMLIGHT';
 		DROPDOWN_CAMLIGHT_CATEGORY = 7;
 		DROPDOWN_CAMLIGHT_FORMAT = 18;
 		
-		LABEL_SHADING = 41; %CET: Computational Efficiency Trick
+		LABEL_SHADING = 42; %CET: Computational Efficiency Trick
 		LABEL_SHADING_TAG = 'LABEL_SHADING';
 		LABEL_SHADING_CATEGORY = 7;
 		LABEL_SHADING_FORMAT = 18;
 		
-		DROPDOWN_SHADING = 42; %CET: Computational Efficiency Trick
+		DROPDOWN_SHADING = 43; %CET: Computational Efficiency Trick
 		DROPDOWN_SHADING_TAG = 'DROPDOWN_SHADING';
 		DROPDOWN_SHADING_CATEGORY = 7;
 		DROPDOWN_SHADING_FORMAT = 18;
 		
-		LABEL_COLORMAP = 43; %CET: Computational Efficiency Trick
+		LABEL_COLORMAP = 44; %CET: Computational Efficiency Trick
 		LABEL_COLORMAP_TAG = 'LABEL_COLORMAP';
 		LABEL_COLORMAP_CATEGORY = 7;
 		LABEL_COLORMAP_FORMAT = 18;
 		
-		DROPDOWN_COLORMAP = 44; %CET: Computational Efficiency Trick
+		DROPDOWN_COLORMAP = 45; %CET: Computational Efficiency Trick
 		DROPDOWN_COLORMAP_TAG = 'DROPDOWN_COLORMAP';
 		DROPDOWN_COLORMAP_CATEGORY = 7;
 		DROPDOWN_COLORMAP_FORMAT = 18;
@@ -214,44 +215,45 @@ classdef SettingsAmbientPP < SettingsPP
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the settings ambient panel.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the settings ambient panel.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the settings ambient panel.
-			%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>8</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>9</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
-			%  <strong>10</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>11</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>12</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>13</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>14</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-			%  <strong>15</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-			%  <strong>16</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-			%  <strong>17</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-			%  <strong>18</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-			%  <strong>19</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.
-			%  <strong>20</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-			%  <strong>21</strong> <strong>EL</strong> 	EL (data, item) is the element.
-			%  <strong>22</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-			%  <strong>23</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the settings position panel.
-			%  <strong>24</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-			%  <strong>25</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-			%  <strong>26</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-			%  <strong>27</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-			%  <strong>28</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-			%  <strong>29</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>30</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>31</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-			%  <strong>32</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-			%  <strong>33</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-			%  <strong>34</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
-			%  <strong>35</strong> <strong>LABEL_LIGHTING</strong> 	LABEL_LIGHTING (evanescent, handle) is the label of the lighting dropdown menu.
-			%  <strong>36</strong> <strong>DROPDOWN_LIGHTING</strong> 	DROPDOWN_LIGHTING (evanescent, handle) is the lighting dropdown menu.
-			%  <strong>37</strong> <strong>LABEL_MATERIAL</strong> 	LABEL_MATERIAL (evanescent, handle) is the label of the of the material dropdown menu.
-			%  <strong>38</strong> <strong>DROPDOWN_MATERIAL</strong> 	DROPDOWN_MATERIAL (evanescent, handle) is the material dropdown menu.
-			%  <strong>39</strong> <strong>LABEL_CAMLIGHT</strong> 	LABEL_CAMLIGHT (evanescent, handle) is the label of the camlight dropdown menu.
-			%  <strong>40</strong> <strong>DROPDOWN_CAMLIGHT</strong> 	DROPDOWN_CAMLIGHT (evanescent, handle) is the camlight dropdown menu.
-			%  <strong>41</strong> <strong>LABEL_SHADING</strong> 	LABEL_SHADING (evanescent, handle) is the label of the shading dropdown menu.
-			%  <strong>42</strong> <strong>DROPDOWN_SHADING</strong> 	DROPDOWN_SHADING (evanescent, handle) is the shading dropdown menu.
-			%  <strong>43</strong> <strong>LABEL_COLORMAP</strong> 	LABEL_COLORMAP (evanescent, handle) is the label of the colormap dropdown menu.
-			%  <strong>44</strong> <strong>DROPDOWN_COLORMAP</strong> 	DROPDOWN_COLORMAP (evanescent, handle) is the colormap dropdown menu.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
+			%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+			%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
+			%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
+			%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+			%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
+			%  <strong>19</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
+			%  <strong>20</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.
+			%  <strong>21</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+			%  <strong>22</strong> <strong>EL</strong> 	EL (data, item) is the element.
+			%  <strong>23</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
+			%  <strong>24</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the settings position panel.
+			%  <strong>25</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
+			%  <strong>26</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
+			%  <strong>27</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
+			%  <strong>28</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
+			%  <strong>29</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
+			%  <strong>30</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
+			%  <strong>31</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
+			%  <strong>32</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
+			%  <strong>33</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
+			%  <strong>34</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
+			%  <strong>35</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
+			%  <strong>36</strong> <strong>LABEL_LIGHTING</strong> 	LABEL_LIGHTING (evanescent, handle) is the label of the lighting dropdown menu.
+			%  <strong>37</strong> <strong>DROPDOWN_LIGHTING</strong> 	DROPDOWN_LIGHTING (evanescent, handle) is the lighting dropdown menu.
+			%  <strong>38</strong> <strong>LABEL_MATERIAL</strong> 	LABEL_MATERIAL (evanescent, handle) is the label of the of the material dropdown menu.
+			%  <strong>39</strong> <strong>DROPDOWN_MATERIAL</strong> 	DROPDOWN_MATERIAL (evanescent, handle) is the material dropdown menu.
+			%  <strong>40</strong> <strong>LABEL_CAMLIGHT</strong> 	LABEL_CAMLIGHT (evanescent, handle) is the label of the camlight dropdown menu.
+			%  <strong>41</strong> <strong>DROPDOWN_CAMLIGHT</strong> 	DROPDOWN_CAMLIGHT (evanescent, handle) is the camlight dropdown menu.
+			%  <strong>42</strong> <strong>LABEL_SHADING</strong> 	LABEL_SHADING (evanescent, handle) is the label of the shading dropdown menu.
+			%  <strong>43</strong> <strong>DROPDOWN_SHADING</strong> 	DROPDOWN_SHADING (evanescent, handle) is the shading dropdown menu.
+			%  <strong>44</strong> <strong>LABEL_COLORMAP</strong> 	LABEL_COLORMAP (evanescent, handle) is the label of the colormap dropdown menu.
+			%  <strong>45</strong> <strong>DROPDOWN_COLORMAP</strong> 	DROPDOWN_COLORMAP (evanescent, handle) is the colormap dropdown menu.
 			%
 			% See also Category, Format.
 			
@@ -313,7 +315,7 @@ classdef SettingsAmbientPP < SettingsPP
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45];
 				return
 			end
 			
@@ -325,15 +327,15 @@ classdef SettingsAmbientPP < SettingsPP
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 21 22 27];
+					prop_list = [4 22 23 28];
 				case 6 % Category.QUERY
-					prop_list = [9 10 14 15 16 17 18 19 20];
+					prop_list = [7 10 11 15 16 17 18 19 20 21];
 				case 7 % Category.EVANESCENT
-					prop_list = [8 13 25 26 28 29 30 31 32 33 35 36 37 38 39 40 41 42 43 44];
+					prop_list = [9 14 26 27 29 30 31 32 33 34 36 37 38 39 40 41 42 43 44 45];
 				case 8 % Category.FIGURE
-					prop_list = 12;
+					prop_list = 13;
 				case 9 % Category.GUI
-					prop_list = [7 11 23 24 34];
+					prop_list = [8 12 24 25 35];
 				otherwise
 					prop_list = [];
 			end
@@ -359,7 +361,7 @@ classdef SettingsAmbientPP < SettingsPP
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 44;
+				prop_number = 45;
 				return
 			end
 			
@@ -373,7 +375,7 @@ classdef SettingsAmbientPP < SettingsPP
 				case 4 % Category.DATA
 					prop_number = 4;
 				case 6 % Category.QUERY
-					prop_number = 9;
+					prop_number = 10;
 				case 7 % Category.EVANESCENT
 					prop_number = 20;
 				case 8 % Category.FIGURE
@@ -410,7 +412,7 @@ classdef SettingsAmbientPP < SettingsPP
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 44 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 45 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -448,7 +450,7 @@ classdef SettingsAmbientPP < SettingsPP
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'LABEL_LIGHTING'  'DROPDOWN_LIGHTING'  'LABEL_MATERIAL'  'DROPDOWN_MATERIAL'  'LABEL_CAMLIGHT'  'DROPDOWN_CAMLIGHT'  'LABEL_SHADING'  'DROPDOWN_SHADING'  'LABEL_COLORMAP'  'DROPDOWN_COLORMAP' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'LABEL_LIGHTING'  'DROPDOWN_LIGHTING'  'LABEL_MATERIAL'  'DROPDOWN_MATERIAL'  'LABEL_CAMLIGHT'  'DROPDOWN_CAMLIGHT'  'LABEL_SHADING'  'DROPDOWN_SHADING'  'LABEL_COLORMAP'  'DROPDOWN_COLORMAP' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -481,7 +483,7 @@ classdef SettingsAmbientPP < SettingsPP
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'LABEL_LIGHTING'  'DROPDOWN_LIGHTING'  'LABEL_MATERIAL'  'DROPDOWN_MATERIAL'  'LABEL_CAMLIGHT'  'DROPDOWN_CAMLIGHT'  'LABEL_SHADING'  'DROPDOWN_SHADING'  'LABEL_COLORMAP'  'DROPDOWN_COLORMAP' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'LABEL_LIGHTING'  'DROPDOWN_LIGHTING'  'LABEL_MATERIAL'  'DROPDOWN_MATERIAL'  'LABEL_CAMLIGHT'  'DROPDOWN_CAMLIGHT'  'LABEL_SHADING'  'DROPDOWN_SHADING'  'LABEL_COLORMAP'  'DROPDOWN_COLORMAP' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -510,7 +512,7 @@ classdef SettingsAmbientPP < SettingsPP
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				settingsambientpp_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'LABEL_LIGHTING'  'DROPDOWN_LIGHTING'  'LABEL_MATERIAL'  'DROPDOWN_MATERIAL'  'LABEL_CAMLIGHT'  'DROPDOWN_CAMLIGHT'  'LABEL_SHADING'  'DROPDOWN_SHADING'  'LABEL_COLORMAP'  'DROPDOWN_COLORMAP' };
+				settingsambientpp_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'LABEL_LIGHTING'  'DROPDOWN_LIGHTING'  'LABEL_MATERIAL'  'DROPDOWN_MATERIAL'  'LABEL_CAMLIGHT'  'DROPDOWN_CAMLIGHT'  'LABEL_SHADING'  'DROPDOWN_SHADING'  'LABEL_COLORMAP'  'DROPDOWN_COLORMAP' };
 				tag = settingsambientpp_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -537,7 +539,7 @@ classdef SettingsAmbientPP < SettingsPP
 			prop = SettingsAmbientPP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			settingsambientpp_category_list = { 1  1  3  4  2  2  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  7  7  7  7  7  7  7  7  7  7 };
+			settingsambientpp_category_list = { 1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  7  7  7  7  7  7  7  7  7  7 };
 			prop_category = settingsambientpp_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -563,7 +565,7 @@ classdef SettingsAmbientPP < SettingsPP
 			prop = SettingsAmbientPP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			settingsambientpp_format_list = { 2  2  8  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  4  18  18  18  18  18  18  18  18  18  18 };
+			settingsambientpp_format_list = { 2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  4  18  18  18  18  18  18  18  18  18  18 };
 			prop_format = settingsambientpp_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -589,7 +591,7 @@ classdef SettingsAmbientPP < SettingsPP
 			prop = SettingsAmbientPP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			settingsambientpp_description_list = { 'NAME (constant, string) is the name of the settings ambient panel.'  'DESCRIPTION (constant, string) is the description of the settings ambient panel.'  'TEMPLATE (parameter, item) is the template of the settings ambient panel.'  'ID (data, string) is a few-letter code for the settings ambient panel.'  'LABEL (metadata, string) is an extended label of the settings ambient panel.'  'NOTES (metadata, string) are some specific notes about the settings ambient panel.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the property panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the settings position panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.'  'LABEL_LIGHTING (evanescent, handle) is the label of the lighting dropdown menu.'  'DROPDOWN_LIGHTING (evanescent, handle) is the lighting dropdown menu.'  'LABEL_MATERIAL (evanescent, handle) is the label of the of the material dropdown menu.'  'DROPDOWN_MATERIAL (evanescent, handle) is the material dropdown menu.'  'LABEL_CAMLIGHT (evanescent, handle) is the label of the camlight dropdown menu.'  'DROPDOWN_CAMLIGHT (evanescent, handle) is the camlight dropdown menu.'  'LABEL_SHADING (evanescent, handle) is the label of the shading dropdown menu.'  'DROPDOWN_SHADING (evanescent, handle) is the shading dropdown menu.'  'LABEL_COLORMAP (evanescent, handle) is the label of the colormap dropdown menu.'  'DROPDOWN_COLORMAP (evanescent, handle) is the colormap dropdown menu.' };
+			settingsambientpp_description_list = { 'NAME (constant, string) is the name of the settings ambient panel.'  'DESCRIPTION (constant, string) is the description of the settings ambient panel.'  'TEMPLATE (parameter, item) is the template of the settings ambient panel.'  'ID (data, string) is a few-letter code for the settings ambient panel.'  'LABEL (metadata, string) is an extended label of the settings ambient panel.'  'NOTES (metadata, string) are some specific notes about the settings ambient panel.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the property panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the settings position panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.'  'LABEL_LIGHTING (evanescent, handle) is the label of the lighting dropdown menu.'  'DROPDOWN_LIGHTING (evanescent, handle) is the lighting dropdown menu.'  'LABEL_MATERIAL (evanescent, handle) is the label of the of the material dropdown menu.'  'DROPDOWN_MATERIAL (evanescent, handle) is the material dropdown menu.'  'LABEL_CAMLIGHT (evanescent, handle) is the label of the camlight dropdown menu.'  'DROPDOWN_CAMLIGHT (evanescent, handle) is the camlight dropdown menu.'  'LABEL_SHADING (evanescent, handle) is the label of the shading dropdown menu.'  'DROPDOWN_SHADING (evanescent, handle) is the shading dropdown menu.'  'LABEL_COLORMAP (evanescent, handle) is the label of the colormap dropdown menu.'  'DROPDOWN_COLORMAP (evanescent, handle) is the colormap dropdown menu.' };
 			prop_description = settingsambientpp_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -615,27 +617,27 @@ classdef SettingsAmbientPP < SettingsPP
 			prop = SettingsAmbientPP.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 34 % SettingsAmbientPP.ENABLE
+				case 35 % SettingsAmbientPP.ENABLE
 					prop_settings = Format.getFormatSettings(4);
-				case 35 % SettingsAmbientPP.LABEL_LIGHTING
+				case 36 % SettingsAmbientPP.LABEL_LIGHTING
 					prop_settings = Format.getFormatSettings(18);
-				case 36 % SettingsAmbientPP.DROPDOWN_LIGHTING
+				case 37 % SettingsAmbientPP.DROPDOWN_LIGHTING
 					prop_settings = Format.getFormatSettings(18);
-				case 37 % SettingsAmbientPP.LABEL_MATERIAL
+				case 38 % SettingsAmbientPP.LABEL_MATERIAL
 					prop_settings = Format.getFormatSettings(18);
-				case 38 % SettingsAmbientPP.DROPDOWN_MATERIAL
+				case 39 % SettingsAmbientPP.DROPDOWN_MATERIAL
 					prop_settings = Format.getFormatSettings(18);
-				case 39 % SettingsAmbientPP.LABEL_CAMLIGHT
+				case 40 % SettingsAmbientPP.LABEL_CAMLIGHT
 					prop_settings = Format.getFormatSettings(18);
-				case 40 % SettingsAmbientPP.DROPDOWN_CAMLIGHT
+				case 41 % SettingsAmbientPP.DROPDOWN_CAMLIGHT
 					prop_settings = Format.getFormatSettings(18);
-				case 41 % SettingsAmbientPP.LABEL_SHADING
+				case 42 % SettingsAmbientPP.LABEL_SHADING
 					prop_settings = Format.getFormatSettings(18);
-				case 42 % SettingsAmbientPP.DROPDOWN_SHADING
+				case 43 % SettingsAmbientPP.DROPDOWN_SHADING
 					prop_settings = Format.getFormatSettings(18);
-				case 43 % SettingsAmbientPP.LABEL_COLORMAP
+				case 44 % SettingsAmbientPP.LABEL_COLORMAP
 					prop_settings = Format.getFormatSettings(18);
-				case 44 % SettingsAmbientPP.DROPDOWN_COLORMAP
+				case 45 % SettingsAmbientPP.DROPDOWN_COLORMAP
 					prop_settings = Format.getFormatSettings(18);
 				case 3 % SettingsAmbientPP.TEMPLATE
 					prop_settings = 'SettingsAmbientPP';
@@ -666,27 +668,27 @@ classdef SettingsAmbientPP < SettingsPP
 			prop = SettingsAmbientPP.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 34 % SettingsAmbientPP.ENABLE
+				case 35 % SettingsAmbientPP.ENABLE
 					prop_default = true;
-				case 35 % SettingsAmbientPP.LABEL_LIGHTING
+				case 36 % SettingsAmbientPP.LABEL_LIGHTING
 					prop_default = Format.getFormatDefault(18, SettingsAmbientPP.getPropSettings(prop));
-				case 36 % SettingsAmbientPP.DROPDOWN_LIGHTING
+				case 37 % SettingsAmbientPP.DROPDOWN_LIGHTING
 					prop_default = Format.getFormatDefault(18, SettingsAmbientPP.getPropSettings(prop));
-				case 37 % SettingsAmbientPP.LABEL_MATERIAL
+				case 38 % SettingsAmbientPP.LABEL_MATERIAL
 					prop_default = Format.getFormatDefault(18, SettingsAmbientPP.getPropSettings(prop));
-				case 38 % SettingsAmbientPP.DROPDOWN_MATERIAL
+				case 39 % SettingsAmbientPP.DROPDOWN_MATERIAL
 					prop_default = Format.getFormatDefault(18, SettingsAmbientPP.getPropSettings(prop));
-				case 39 % SettingsAmbientPP.LABEL_CAMLIGHT
+				case 40 % SettingsAmbientPP.LABEL_CAMLIGHT
 					prop_default = Format.getFormatDefault(18, SettingsAmbientPP.getPropSettings(prop));
-				case 40 % SettingsAmbientPP.DROPDOWN_CAMLIGHT
+				case 41 % SettingsAmbientPP.DROPDOWN_CAMLIGHT
 					prop_default = Format.getFormatDefault(18, SettingsAmbientPP.getPropSettings(prop));
-				case 41 % SettingsAmbientPP.LABEL_SHADING
+				case 42 % SettingsAmbientPP.LABEL_SHADING
 					prop_default = Format.getFormatDefault(18, SettingsAmbientPP.getPropSettings(prop));
-				case 42 % SettingsAmbientPP.DROPDOWN_SHADING
+				case 43 % SettingsAmbientPP.DROPDOWN_SHADING
 					prop_default = Format.getFormatDefault(18, SettingsAmbientPP.getPropSettings(prop));
-				case 43 % SettingsAmbientPP.LABEL_COLORMAP
+				case 44 % SettingsAmbientPP.LABEL_COLORMAP
 					prop_default = Format.getFormatDefault(18, SettingsAmbientPP.getPropSettings(prop));
-				case 44 % SettingsAmbientPP.DROPDOWN_COLORMAP
+				case 45 % SettingsAmbientPP.DROPDOWN_COLORMAP
 					prop_default = Format.getFormatDefault(18, SettingsAmbientPP.getPropSettings(prop));
 				case 1 % SettingsAmbientPP.NAME
 					prop_default = 'SettingsAmbientPP';
@@ -700,11 +702,11 @@ classdef SettingsAmbientPP < SettingsPP
 					prop_default = 'SettingsAmbientPP label';
 				case 6 % SettingsAmbientPP.NOTES
 					prop_default = 'SettingsAmbientPP notes';
-				case 21 % SettingsAmbientPP.EL
+				case 22 % SettingsAmbientPP.EL
 					prop_default = BrainSurfacePF();
-				case 22 % SettingsAmbientPP.PROP
-					prop_default = 30;
-				case 23 % SettingsAmbientPP.HEIGHT
+				case 23 % SettingsAmbientPP.PROP
+					prop_default = 31;
+				case 24 % SettingsAmbientPP.HEIGHT
 					prop_default = 150;
 				otherwise
 					prop_default = getPropDefault@SettingsPP(prop);
@@ -770,32 +772,32 @@ classdef SettingsAmbientPP < SettingsPP
 			prop = SettingsAmbientPP.getPropProp(pointer);
 			
 			switch prop
-				case 34 % SettingsAmbientPP.ENABLE
+				case 35 % SettingsAmbientPP.ENABLE
 					check = Format.checkFormat(4, value, SettingsAmbientPP.getPropSettings(prop));
-				case 35 % SettingsAmbientPP.LABEL_LIGHTING
+				case 36 % SettingsAmbientPP.LABEL_LIGHTING
 					check = Format.checkFormat(18, value, SettingsAmbientPP.getPropSettings(prop));
-				case 36 % SettingsAmbientPP.DROPDOWN_LIGHTING
+				case 37 % SettingsAmbientPP.DROPDOWN_LIGHTING
 					check = Format.checkFormat(18, value, SettingsAmbientPP.getPropSettings(prop));
-				case 37 % SettingsAmbientPP.LABEL_MATERIAL
+				case 38 % SettingsAmbientPP.LABEL_MATERIAL
 					check = Format.checkFormat(18, value, SettingsAmbientPP.getPropSettings(prop));
-				case 38 % SettingsAmbientPP.DROPDOWN_MATERIAL
+				case 39 % SettingsAmbientPP.DROPDOWN_MATERIAL
 					check = Format.checkFormat(18, value, SettingsAmbientPP.getPropSettings(prop));
-				case 39 % SettingsAmbientPP.LABEL_CAMLIGHT
+				case 40 % SettingsAmbientPP.LABEL_CAMLIGHT
 					check = Format.checkFormat(18, value, SettingsAmbientPP.getPropSettings(prop));
-				case 40 % SettingsAmbientPP.DROPDOWN_CAMLIGHT
+				case 41 % SettingsAmbientPP.DROPDOWN_CAMLIGHT
 					check = Format.checkFormat(18, value, SettingsAmbientPP.getPropSettings(prop));
-				case 41 % SettingsAmbientPP.LABEL_SHADING
+				case 42 % SettingsAmbientPP.LABEL_SHADING
 					check = Format.checkFormat(18, value, SettingsAmbientPP.getPropSettings(prop));
-				case 42 % SettingsAmbientPP.DROPDOWN_SHADING
+				case 43 % SettingsAmbientPP.DROPDOWN_SHADING
 					check = Format.checkFormat(18, value, SettingsAmbientPP.getPropSettings(prop));
-				case 43 % SettingsAmbientPP.LABEL_COLORMAP
+				case 44 % SettingsAmbientPP.LABEL_COLORMAP
 					check = Format.checkFormat(18, value, SettingsAmbientPP.getPropSettings(prop));
-				case 44 % SettingsAmbientPP.DROPDOWN_COLORMAP
+				case 45 % SettingsAmbientPP.DROPDOWN_COLORMAP
 					check = Format.checkFormat(18, value, SettingsAmbientPP.getPropSettings(prop));
 				case 3 % SettingsAmbientPP.TEMPLATE
 					check = Format.checkFormat(8, value, SettingsAmbientPP.getPropSettings(prop));
 				otherwise
-					if prop <= 33
+					if prop <= 34
 						check = checkProp@SettingsPP(prop, value);
 					end
 			end
@@ -828,7 +830,7 @@ classdef SettingsAmbientPP < SettingsPP
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 35 % SettingsAmbientPP.LABEL_LIGHTING
+				case 36 % SettingsAmbientPP.LABEL_LIGHTING
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					label_lighting =  uilabel( ...
@@ -843,7 +845,7 @@ classdef SettingsAmbientPP < SettingsPP
 						);
 					value = label_lighting;
 					
-				case 36 % SettingsAmbientPP.DROPDOWN_LIGHTING
+				case 37 % SettingsAmbientPP.DROPDOWN_LIGHTING
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					dropdown_lighting = uidropdown( ...
@@ -856,7 +858,7 @@ classdef SettingsAmbientPP < SettingsPP
 					    );
 					value = dropdown_lighting;
 					
-				case 37 % SettingsAmbientPP.LABEL_MATERIAL
+				case 38 % SettingsAmbientPP.LABEL_MATERIAL
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					label_material =  uilabel( ...
@@ -871,7 +873,7 @@ classdef SettingsAmbientPP < SettingsPP
 					    );
 					value = label_material;
 					
-				case 38 % SettingsAmbientPP.DROPDOWN_MATERIAL
+				case 39 % SettingsAmbientPP.DROPDOWN_MATERIAL
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					dropdown_material = uidropdown( ...
@@ -884,7 +886,7 @@ classdef SettingsAmbientPP < SettingsPP
 					        );
 					value = dropdown_material;
 					
-				case 39 % SettingsAmbientPP.LABEL_CAMLIGHT
+				case 40 % SettingsAmbientPP.LABEL_CAMLIGHT
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					label_camlight =  uilabel( ...
@@ -899,7 +901,7 @@ classdef SettingsAmbientPP < SettingsPP
 					    );
 					value = label_camlight;
 					
-				case 40 % SettingsAmbientPP.DROPDOWN_CAMLIGHT
+				case 41 % SettingsAmbientPP.DROPDOWN_CAMLIGHT
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					dropdown_camlight = uidropdown( ...
@@ -912,7 +914,7 @@ classdef SettingsAmbientPP < SettingsPP
 					    );
 					value = dropdown_camlight;
 					
-				case 41 % SettingsAmbientPP.LABEL_SHADING
+				case 42 % SettingsAmbientPP.LABEL_SHADING
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					label_shading =  uilabel( ...
@@ -927,7 +929,7 @@ classdef SettingsAmbientPP < SettingsPP
 					    );
 					value = label_shading;
 					
-				case 42 % SettingsAmbientPP.DROPDOWN_SHADING
+				case 43 % SettingsAmbientPP.DROPDOWN_SHADING
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					dropdown_shading = uidropdown( ...
@@ -940,7 +942,7 @@ classdef SettingsAmbientPP < SettingsPP
 					    );
 					value = dropdown_shading;
 					
-				case 43 % SettingsAmbientPP.LABEL_COLORMAP
+				case 44 % SettingsAmbientPP.LABEL_COLORMAP
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					label_colormap =  uilabel( ...
@@ -955,7 +957,7 @@ classdef SettingsAmbientPP < SettingsPP
 					    );
 					value = label_colormap;
 					
-				case 44 % SettingsAmbientPP.DROPDOWN_COLORMAP
+				case 45 % SettingsAmbientPP.DROPDOWN_COLORMAP
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					dropdown_colormap = uidropdown( ...
@@ -968,8 +970,8 @@ classdef SettingsAmbientPP < SettingsPP
 					    );
 					value = dropdown_colormap;
 					
-				case 18 % SettingsAmbientPP.X_DRAW
-					value = calculateValue@PanelProp(pr, 18, varargin{:}); % also warning
+				case 19 % SettingsAmbientPP.X_DRAW
+					value = calculateValue@PanelProp(pr, 19, varargin{:}); % also warning
 					if value
 					    pr.memorize('LABEL_LIGHTING')
 					    pr.memorize('DROPDOWN_LIGHTING')
@@ -987,8 +989,8 @@ classdef SettingsAmbientPP < SettingsPP
 					    pr.memorize('DROPDOWN_COLORMAP')
 					end
 					
-				case 19 % SettingsAmbientPP.UPDATE
-					value = calculateValue@PanelProp(pr, 19, varargin{:}); % also warning
+				case 20 % SettingsAmbientPP.UPDATE
+					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
 					if value
 					
 						el = pr.get('EL');
@@ -1097,8 +1099,8 @@ classdef SettingsAmbientPP < SettingsPP
 					    end
 					end
 					
-				case 20 % SettingsAmbientPP.REDRAW
-					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
+				case 21 % SettingsAmbientPP.REDRAW
+					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
 					if value
 					    w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 					    
@@ -1118,8 +1120,8 @@ classdef SettingsAmbientPP < SettingsPP
 					    set(pr.get('DROPDOWN_COLORMAP'), 'Position', [104 4 w_p-120 21])
 					end
 					
-				case 16 % SettingsAmbientPP.DELETE
-					value = calculateValue@PanelProp(pr, 16, varargin{:}); % also warning
+				case 17 % SettingsAmbientPP.DELETE
+					value = calculateValue@PanelProp(pr, 17, varargin{:}); % also warning
 					if value
 					    pr.set('LABEL_LIGHTING', Element.getNoValue())
 					    pr.set('DROPDOWN_LIGHTING', Element.getNoValue())
@@ -1138,7 +1140,7 @@ classdef SettingsAmbientPP < SettingsPP
 					end
 					
 				otherwise
-					if prop <= 33
+					if prop <= 34
 						value = calculateValue@SettingsPP(pr, prop, varargin{:});
 					else
 						value = calculateValue@Element(pr, prop, varargin{:});

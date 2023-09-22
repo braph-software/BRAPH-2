@@ -13,43 +13,44 @@ classdef BrainAtlasPF < BrainSurfacePF
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel figure brain atlas.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel figure brain atlas.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel figure brain atlas.
-	%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>8</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>9</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure brain atlas.
-	%  <strong>10</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>11</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>12</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>13</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>14</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
-	%  <strong>15</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
-	%  <strong>16</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure brain surface is deleted.
-	%  <strong>17</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
-	%  <strong>18</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
-	%  <strong>19</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
-	%  <strong>20</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
-	%  <strong>21</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
-	%  <strong>22</strong> <strong>VIEW</strong> 	VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.
-	%  <strong>23</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
-	%  <strong>24</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
-	%  <strong>25</strong> <strong>SURFFILE</strong> 	SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.
-	%  <strong>26</strong> <strong>SURF</strong> 	SURF (metadata, item) is the brain surface to be plotted.
-	%  <strong>27</strong> <strong>H_BRAIN</strong> 	H_BRAIN (evanescent, handle) is the handle for brain surface.
-	%  <strong>28</strong> <strong>BRAIN</strong> 	BRAIN (figure, logical) determines whether the brain surface is shown.
-	%  <strong>29</strong> <strong>ST_SURFACE</strong> 	ST_SURFACE (figure, item) determines the surface settings.
-	%  <strong>30</strong> <strong>ST_AMBIENT</strong> 	ST_AMBIENT (figure, item) determines the ambient settings.
-	%  <strong>31</strong> <strong>BA</strong> 	BA (metadata, item) is the brain atlas with the brain regions.
-	%  <strong>32</strong> <strong>H_SPHS</strong> 	H_SPHS (evanescent, handlelist) is the set of handles for the spheres.
-	%  <strong>33</strong> <strong>SPHS</strong> 	SPHS (figure, logical) determines whether the spheres are shown.
-	%  <strong>34</strong> <strong>SPH_DICT</strong> 	SPH_DICT (figure, idict) contains the spheres of the brain regions.
-	%  <strong>35</strong> <strong>H_SYMS</strong> 	H_SYMS (evanescent, handlelist) is the set of handles for the symbols.
-	%  <strong>36</strong> <strong>SYMS</strong> 	SYMS (figure, logical) determines whether the symbols are shown.
-	%  <strong>37</strong> <strong>SYM_DICT</strong> 	SYM_DICT (figure, idict) contains the symbols of the brain regions.
-	%  <strong>38</strong> <strong>H_IDS</strong> 	H_IDS (evanescent, handlelist) is the set of handles for the ids.
-	%  <strong>39</strong> <strong>IDS</strong> 	IDS (figure, logical) determines whether the ids are shown.
-	%  <strong>40</strong> <strong>ID_DICT</strong> 	ID_DICT (figure, idict) contains the ids of the brain regions.
-	%  <strong>41</strong> <strong>H_LABS</strong> 	H_LABS (evanescent, handlelist) is the set of handles for the labels.
-	%  <strong>42</strong> <strong>LABS</strong> 	LABS (figure, logical) determines whether the labels are shown.
-	%  <strong>43</strong> <strong>LAB_DICT</strong> 	LAB_DICT (figure, idict) contains the labels of the brain regions.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure brain atlas.
+	%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+	%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
+	%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
+	%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure brain surface is deleted.
+	%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
+	%  <strong>19</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
+	%  <strong>20</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
+	%  <strong>21</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
+	%  <strong>22</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
+	%  <strong>23</strong> <strong>VIEW</strong> 	VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.
+	%  <strong>24</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
+	%  <strong>25</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
+	%  <strong>26</strong> <strong>SURFFILE</strong> 	SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.
+	%  <strong>27</strong> <strong>SURF</strong> 	SURF (metadata, item) is the brain surface to be plotted.
+	%  <strong>28</strong> <strong>H_BRAIN</strong> 	H_BRAIN (evanescent, handle) is the handle for brain surface.
+	%  <strong>29</strong> <strong>BRAIN</strong> 	BRAIN (figure, logical) determines whether the brain surface is shown.
+	%  <strong>30</strong> <strong>ST_SURFACE</strong> 	ST_SURFACE (figure, item) determines the surface settings.
+	%  <strong>31</strong> <strong>ST_AMBIENT</strong> 	ST_AMBIENT (figure, item) determines the ambient settings.
+	%  <strong>32</strong> <strong>BA</strong> 	BA (metadata, item) is the brain atlas with the brain regions.
+	%  <strong>33</strong> <strong>H_SPHS</strong> 	H_SPHS (evanescent, handlelist) is the set of handles for the spheres.
+	%  <strong>34</strong> <strong>SPHS</strong> 	SPHS (figure, logical) determines whether the spheres are shown.
+	%  <strong>35</strong> <strong>SPH_DICT</strong> 	SPH_DICT (figure, idict) contains the spheres of the brain regions.
+	%  <strong>36</strong> <strong>H_SYMS</strong> 	H_SYMS (evanescent, handlelist) is the set of handles for the symbols.
+	%  <strong>37</strong> <strong>SYMS</strong> 	SYMS (figure, logical) determines whether the symbols are shown.
+	%  <strong>38</strong> <strong>SYM_DICT</strong> 	SYM_DICT (figure, idict) contains the symbols of the brain regions.
+	%  <strong>39</strong> <strong>H_IDS</strong> 	H_IDS (evanescent, handlelist) is the set of handles for the ids.
+	%  <strong>40</strong> <strong>IDS</strong> 	IDS (figure, logical) determines whether the ids are shown.
+	%  <strong>41</strong> <strong>ID_DICT</strong> 	ID_DICT (figure, idict) contains the ids of the brain regions.
+	%  <strong>42</strong> <strong>H_LABS</strong> 	H_LABS (evanescent, handlelist) is the set of handles for the labels.
+	%  <strong>43</strong> <strong>LABS</strong> 	LABS (figure, logical) determines whether the labels are shown.
+	%  <strong>44</strong> <strong>LAB_DICT</strong> 	LAB_DICT (figure, idict) contains the labels of the brain regions.
 	%
 	% BrainAtlasPF methods (constructor):
 	%  BrainAtlasPF - constructor
@@ -140,67 +141,67 @@ classdef BrainAtlasPF < BrainSurfacePF
 	% See also BrainAtlas, BrainSurface.
 	
 	properties (Constant) % properties
-		BA = 31; %CET: Computational Efficiency Trick
+		BA = 32; %CET: Computational Efficiency Trick
 		BA_TAG = 'BA';
 		BA_CATEGORY = 2;
 		BA_FORMAT = 8;
 		
-		H_SPHS = 32; %CET: Computational Efficiency Trick
+		H_SPHS = 33; %CET: Computational Efficiency Trick
 		H_SPHS_TAG = 'H_SPHS';
 		H_SPHS_CATEGORY = 7;
 		H_SPHS_FORMAT = 19;
 		
-		SPHS = 33; %CET: Computational Efficiency Trick
+		SPHS = 34; %CET: Computational Efficiency Trick
 		SPHS_TAG = 'SPHS';
 		SPHS_CATEGORY = 8;
 		SPHS_FORMAT = 4;
 		
-		SPH_DICT = 34; %CET: Computational Efficiency Trick
+		SPH_DICT = 35; %CET: Computational Efficiency Trick
 		SPH_DICT_TAG = 'SPH_DICT';
 		SPH_DICT_CATEGORY = 8;
 		SPH_DICT_FORMAT = 10;
 		
-		H_SYMS = 35; %CET: Computational Efficiency Trick
+		H_SYMS = 36; %CET: Computational Efficiency Trick
 		H_SYMS_TAG = 'H_SYMS';
 		H_SYMS_CATEGORY = 7;
 		H_SYMS_FORMAT = 19;
 		
-		SYMS = 36; %CET: Computational Efficiency Trick
+		SYMS = 37; %CET: Computational Efficiency Trick
 		SYMS_TAG = 'SYMS';
 		SYMS_CATEGORY = 8;
 		SYMS_FORMAT = 4;
 		
-		SYM_DICT = 37; %CET: Computational Efficiency Trick
+		SYM_DICT = 38; %CET: Computational Efficiency Trick
 		SYM_DICT_TAG = 'SYM_DICT';
 		SYM_DICT_CATEGORY = 8;
 		SYM_DICT_FORMAT = 10;
 		
-		H_IDS = 38; %CET: Computational Efficiency Trick
+		H_IDS = 39; %CET: Computational Efficiency Trick
 		H_IDS_TAG = 'H_IDS';
 		H_IDS_CATEGORY = 7;
 		H_IDS_FORMAT = 19;
 		
-		IDS = 39; %CET: Computational Efficiency Trick
+		IDS = 40; %CET: Computational Efficiency Trick
 		IDS_TAG = 'IDS';
 		IDS_CATEGORY = 8;
 		IDS_FORMAT = 4;
 		
-		ID_DICT = 40; %CET: Computational Efficiency Trick
+		ID_DICT = 41; %CET: Computational Efficiency Trick
 		ID_DICT_TAG = 'ID_DICT';
 		ID_DICT_CATEGORY = 8;
 		ID_DICT_FORMAT = 10;
 		
-		H_LABS = 41; %CET: Computational Efficiency Trick
+		H_LABS = 42; %CET: Computational Efficiency Trick
 		H_LABS_TAG = 'H_LABS';
 		H_LABS_CATEGORY = 7;
 		H_LABS_FORMAT = 19;
 		
-		LABS = 42; %CET: Computational Efficiency Trick
+		LABS = 43; %CET: Computational Efficiency Trick
 		LABS_TAG = 'LABS';
 		LABS_CATEGORY = 8;
 		LABS_FORMAT = 4;
 		
-		LAB_DICT = 43; %CET: Computational Efficiency Trick
+		LAB_DICT = 44; %CET: Computational Efficiency Trick
 		LAB_DICT_TAG = 'LAB_DICT';
 		LAB_DICT_CATEGORY = 8;
 		LAB_DICT_FORMAT = 10;
@@ -223,43 +224,44 @@ classdef BrainAtlasPF < BrainSurfacePF
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel figure brain atlas.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel figure brain atlas.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel figure brain atlas.
-			%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>8</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>9</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure brain atlas.
-			%  <strong>10</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>11</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>12</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>13</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>14</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
-			%  <strong>15</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
-			%  <strong>16</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure brain surface is deleted.
-			%  <strong>17</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
-			%  <strong>18</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
-			%  <strong>19</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
-			%  <strong>20</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
-			%  <strong>21</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
-			%  <strong>22</strong> <strong>VIEW</strong> 	VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.
-			%  <strong>23</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
-			%  <strong>24</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
-			%  <strong>25</strong> <strong>SURFFILE</strong> 	SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.
-			%  <strong>26</strong> <strong>SURF</strong> 	SURF (metadata, item) is the brain surface to be plotted.
-			%  <strong>27</strong> <strong>H_BRAIN</strong> 	H_BRAIN (evanescent, handle) is the handle for brain surface.
-			%  <strong>28</strong> <strong>BRAIN</strong> 	BRAIN (figure, logical) determines whether the brain surface is shown.
-			%  <strong>29</strong> <strong>ST_SURFACE</strong> 	ST_SURFACE (figure, item) determines the surface settings.
-			%  <strong>30</strong> <strong>ST_AMBIENT</strong> 	ST_AMBIENT (figure, item) determines the ambient settings.
-			%  <strong>31</strong> <strong>BA</strong> 	BA (metadata, item) is the brain atlas with the brain regions.
-			%  <strong>32</strong> <strong>H_SPHS</strong> 	H_SPHS (evanescent, handlelist) is the set of handles for the spheres.
-			%  <strong>33</strong> <strong>SPHS</strong> 	SPHS (figure, logical) determines whether the spheres are shown.
-			%  <strong>34</strong> <strong>SPH_DICT</strong> 	SPH_DICT (figure, idict) contains the spheres of the brain regions.
-			%  <strong>35</strong> <strong>H_SYMS</strong> 	H_SYMS (evanescent, handlelist) is the set of handles for the symbols.
-			%  <strong>36</strong> <strong>SYMS</strong> 	SYMS (figure, logical) determines whether the symbols are shown.
-			%  <strong>37</strong> <strong>SYM_DICT</strong> 	SYM_DICT (figure, idict) contains the symbols of the brain regions.
-			%  <strong>38</strong> <strong>H_IDS</strong> 	H_IDS (evanescent, handlelist) is the set of handles for the ids.
-			%  <strong>39</strong> <strong>IDS</strong> 	IDS (figure, logical) determines whether the ids are shown.
-			%  <strong>40</strong> <strong>ID_DICT</strong> 	ID_DICT (figure, idict) contains the ids of the brain regions.
-			%  <strong>41</strong> <strong>H_LABS</strong> 	H_LABS (evanescent, handlelist) is the set of handles for the labels.
-			%  <strong>42</strong> <strong>LABS</strong> 	LABS (figure, logical) determines whether the labels are shown.
-			%  <strong>43</strong> <strong>LAB_DICT</strong> 	LAB_DICT (figure, idict) contains the labels of the brain regions.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure brain atlas.
+			%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+			%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
+			%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
+			%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure brain surface is deleted.
+			%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
+			%  <strong>19</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
+			%  <strong>20</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
+			%  <strong>21</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
+			%  <strong>22</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
+			%  <strong>23</strong> <strong>VIEW</strong> 	VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.
+			%  <strong>24</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
+			%  <strong>25</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
+			%  <strong>26</strong> <strong>SURFFILE</strong> 	SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.
+			%  <strong>27</strong> <strong>SURF</strong> 	SURF (metadata, item) is the brain surface to be plotted.
+			%  <strong>28</strong> <strong>H_BRAIN</strong> 	H_BRAIN (evanescent, handle) is the handle for brain surface.
+			%  <strong>29</strong> <strong>BRAIN</strong> 	BRAIN (figure, logical) determines whether the brain surface is shown.
+			%  <strong>30</strong> <strong>ST_SURFACE</strong> 	ST_SURFACE (figure, item) determines the surface settings.
+			%  <strong>31</strong> <strong>ST_AMBIENT</strong> 	ST_AMBIENT (figure, item) determines the ambient settings.
+			%  <strong>32</strong> <strong>BA</strong> 	BA (metadata, item) is the brain atlas with the brain regions.
+			%  <strong>33</strong> <strong>H_SPHS</strong> 	H_SPHS (evanescent, handlelist) is the set of handles for the spheres.
+			%  <strong>34</strong> <strong>SPHS</strong> 	SPHS (figure, logical) determines whether the spheres are shown.
+			%  <strong>35</strong> <strong>SPH_DICT</strong> 	SPH_DICT (figure, idict) contains the spheres of the brain regions.
+			%  <strong>36</strong> <strong>H_SYMS</strong> 	H_SYMS (evanescent, handlelist) is the set of handles for the symbols.
+			%  <strong>37</strong> <strong>SYMS</strong> 	SYMS (figure, logical) determines whether the symbols are shown.
+			%  <strong>38</strong> <strong>SYM_DICT</strong> 	SYM_DICT (figure, idict) contains the symbols of the brain regions.
+			%  <strong>39</strong> <strong>H_IDS</strong> 	H_IDS (evanescent, handlelist) is the set of handles for the ids.
+			%  <strong>40</strong> <strong>IDS</strong> 	IDS (figure, logical) determines whether the ids are shown.
+			%  <strong>41</strong> <strong>ID_DICT</strong> 	ID_DICT (figure, idict) contains the ids of the brain regions.
+			%  <strong>42</strong> <strong>H_LABS</strong> 	H_LABS (evanescent, handlelist) is the set of handles for the labels.
+			%  <strong>43</strong> <strong>LABS</strong> 	LABS (figure, logical) determines whether the labels are shown.
+			%  <strong>44</strong> <strong>LAB_DICT</strong> 	LAB_DICT (figure, idict) contains the labels of the brain regions.
 			%
 			% See also Category, Format.
 			
@@ -321,7 +323,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44];
 				return
 			end
 			
@@ -329,19 +331,19 @@ classdef BrainAtlasPF < BrainSurfacePF
 				case 1 % Category.CONSTANT
 					prop_list = [1 2];
 				case 2 % Category.METADATA
-					prop_list = [5 6 26 31];
+					prop_list = [5 6 27 32];
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
 					prop_list = 4;
 				case 6 % Category.QUERY
-					prop_list = [9 10 14 15 16 17];
+					prop_list = [7 10 11 15 16 17 18];
 				case 7 % Category.EVANESCENT
-					prop_list = [8 13 19 20 21 24 27 32 35 38 41];
+					prop_list = [9 14 20 21 22 25 28 33 36 39 42];
 				case 8 % Category.FIGURE
-					prop_list = [12 18 22 23 25 28 29 30 33 34 36 37 39 40 42 43];
+					prop_list = [13 19 23 24 26 29 30 31 34 35 37 38 40 41 43 44];
 				case 9 % Category.GUI
-					prop_list = [7 11];
+					prop_list = [8 12];
 				otherwise
 					prop_list = [];
 			end
@@ -367,7 +369,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 43;
+				prop_number = 44;
 				return
 			end
 			
@@ -381,7 +383,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 				case 4 % Category.DATA
 					prop_number = 1;
 				case 6 % Category.QUERY
-					prop_number = 6;
+					prop_number = 7;
 				case 7 % Category.EVANESCENT
 					prop_number = 11;
 				case 8 % Category.FIGURE
@@ -418,7 +420,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 43 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 44 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -456,7 +458,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'VIEW'  'ST_AXIS'  'LISTENER_ST_AXIS'  'SURFFILE'  'SURF'  'H_BRAIN'  'BRAIN'  'ST_SURFACE'  'ST_AMBIENT'  'BA'  'H_SPHS'  'SPHS'  'SPH_DICT'  'H_SYMS'  'SYMS'  'SYM_DICT'  'H_IDS'  'IDS'  'ID_DICT'  'H_LABS'  'LABS'  'LAB_DICT' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'VIEW'  'ST_AXIS'  'LISTENER_ST_AXIS'  'SURFFILE'  'SURF'  'H_BRAIN'  'BRAIN'  'ST_SURFACE'  'ST_AMBIENT'  'BA'  'H_SPHS'  'SPHS'  'SPH_DICT'  'H_SYMS'  'SYMS'  'SYM_DICT'  'H_IDS'  'IDS'  'ID_DICT'  'H_LABS'  'LABS'  'LAB_DICT' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -489,7 +491,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'VIEW'  'ST_AXIS'  'LISTENER_ST_AXIS'  'SURFFILE'  'SURF'  'H_BRAIN'  'BRAIN'  'ST_SURFACE'  'ST_AMBIENT'  'BA'  'H_SPHS'  'SPHS'  'SPH_DICT'  'H_SYMS'  'SYMS'  'SYM_DICT'  'H_IDS'  'IDS'  'ID_DICT'  'H_LABS'  'LABS'  'LAB_DICT' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'VIEW'  'ST_AXIS'  'LISTENER_ST_AXIS'  'SURFFILE'  'SURF'  'H_BRAIN'  'BRAIN'  'ST_SURFACE'  'ST_AMBIENT'  'BA'  'H_SPHS'  'SPHS'  'SPH_DICT'  'H_SYMS'  'SYMS'  'SYM_DICT'  'H_IDS'  'IDS'  'ID_DICT'  'H_LABS'  'LABS'  'LAB_DICT' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -518,7 +520,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				brainatlaspf_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'VIEW'  'ST_AXIS'  'LISTENER_ST_AXIS'  'SURFFILE'  'SURF'  'H_BRAIN'  'BRAIN'  'ST_SURFACE'  'ST_AMBIENT'  'BA'  'H_SPHS'  'SPHS'  'SPH_DICT'  'H_SYMS'  'SYMS'  'SYM_DICT'  'H_IDS'  'IDS'  'ID_DICT'  'H_LABS'  'LABS'  'LAB_DICT' };
+				brainatlaspf_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'VIEW'  'ST_AXIS'  'LISTENER_ST_AXIS'  'SURFFILE'  'SURF'  'H_BRAIN'  'BRAIN'  'ST_SURFACE'  'ST_AMBIENT'  'BA'  'H_SPHS'  'SPHS'  'SPH_DICT'  'H_SYMS'  'SYMS'  'SYM_DICT'  'H_IDS'  'IDS'  'ID_DICT'  'H_LABS'  'LABS'  'LAB_DICT' };
 				tag = brainatlaspf_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -545,7 +547,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 			prop = BrainAtlasPF.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			brainatlaspf_category_list = { 1  1  3  4  2  2  9  7  6  6  9  8  7  6  6  6  6  8  7  7  7  8  8  7  8  2  7  8  8  8  2  7  8  8  7  8  8  7  8  8  7  8  8 };
+			brainatlaspf_category_list = { 1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  8  7  7  7  8  8  7  8  2  7  8  8  8  2  7  8  8  7  8  8  7  8  8  7  8  8 };
 			prop_category = brainatlaspf_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -571,7 +573,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 			prop = BrainAtlasPF.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			brainatlaspf_format_list = { 2  2  8  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19  18  12  8  18  5  8  18  4  8  8  8  19  4  10  19  4  10  19  4  10  19  4  10 };
+			brainatlaspf_format_list = { 2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19  18  12  8  18  5  8  18  4  8  8  8  19  4  10  19  4  10  19  4  10  19  4  10 };
 			prop_format = brainatlaspf_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -597,7 +599,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 			prop = BrainAtlasPF.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			brainatlaspf_description_list = { 'NAME (constant, string) is the name of the panel figure brain surface.'  'DESCRIPTION (constant, string) is the description of the panel figure brain atlas.'  'TEMPLATE (parameter, item) is the template of the panel figure brain atlas.'  'ID (data, string) is a few-letter code for the panel figure brain atlas.'  'LABEL (metadata, string) is an extended label of the panel figure brain atlas.'  'NOTES (metadata, string) are some specific notes about the panel figure brain atlas.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure brain atlas.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure brain surface is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.'  'SURF (metadata, item) is the brain surface to be plotted.'  'H_BRAIN (evanescent, handle) is the handle for brain surface.'  'BRAIN (figure, logical) determines whether the brain surface is shown.'  'ST_SURFACE (figure, item) determines the surface settings.'  'ST_AMBIENT (figure, item) determines the ambient settings.'  'BA (metadata, item) is the brain atlas with the brain regions.'  'H_SPHS (evanescent, handlelist) is the set of handles for the spheres.'  'SPHS (figure, logical) determines whether the spheres are shown.'  'SPH_DICT (figure, idict) contains the spheres of the brain regions.'  'H_SYMS (evanescent, handlelist) is the set of handles for the symbols.'  'SYMS (figure, logical) determines whether the symbols are shown.'  'SYM_DICT (figure, idict) contains the symbols of the brain regions.'  'H_IDS (evanescent, handlelist) is the set of handles for the ids.'  'IDS (figure, logical) determines whether the ids are shown.'  'ID_DICT (figure, idict) contains the ids of the brain regions.'  'H_LABS (evanescent, handlelist) is the set of handles for the labels.'  'LABS (figure, logical) determines whether the labels are shown.'  'LAB_DICT (figure, idict) contains the labels of the brain regions.' };
+			brainatlaspf_description_list = { 'NAME (constant, string) is the name of the panel figure brain surface.'  'DESCRIPTION (constant, string) is the description of the panel figure brain atlas.'  'TEMPLATE (parameter, item) is the template of the panel figure brain atlas.'  'ID (data, string) is a few-letter code for the panel figure brain atlas.'  'LABEL (metadata, string) is an extended label of the panel figure brain atlas.'  'NOTES (metadata, string) are some specific notes about the panel figure brain atlas.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure brain atlas.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure brain surface is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.'  'SURF (metadata, item) is the brain surface to be plotted.'  'H_BRAIN (evanescent, handle) is the handle for brain surface.'  'BRAIN (figure, logical) determines whether the brain surface is shown.'  'ST_SURFACE (figure, item) determines the surface settings.'  'ST_AMBIENT (figure, item) determines the ambient settings.'  'BA (metadata, item) is the brain atlas with the brain regions.'  'H_SPHS (evanescent, handlelist) is the set of handles for the spheres.'  'SPHS (figure, logical) determines whether the spheres are shown.'  'SPH_DICT (figure, idict) contains the spheres of the brain regions.'  'H_SYMS (evanescent, handlelist) is the set of handles for the symbols.'  'SYMS (figure, logical) determines whether the symbols are shown.'  'SYM_DICT (figure, idict) contains the symbols of the brain regions.'  'H_IDS (evanescent, handlelist) is the set of handles for the ids.'  'IDS (figure, logical) determines whether the ids are shown.'  'ID_DICT (figure, idict) contains the ids of the brain regions.'  'H_LABS (evanescent, handlelist) is the set of handles for the labels.'  'LABS (figure, logical) determines whether the labels are shown.'  'LAB_DICT (figure, idict) contains the labels of the brain regions.' };
 			prop_description = brainatlaspf_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -623,31 +625,31 @@ classdef BrainAtlasPF < BrainSurfacePF
 			prop = BrainAtlasPF.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 31 % BrainAtlasPF.BA
+				case 32 % BrainAtlasPF.BA
 					prop_settings = 'BrainAtlas';
-				case 32 % BrainAtlasPF.H_SPHS
+				case 33 % BrainAtlasPF.H_SPHS
 					prop_settings = Format.getFormatSettings(19);
-				case 33 % BrainAtlasPF.SPHS
+				case 34 % BrainAtlasPF.SPHS
 					prop_settings = Format.getFormatSettings(4);
-				case 34 % BrainAtlasPF.SPH_DICT
+				case 35 % BrainAtlasPF.SPH_DICT
 					prop_settings = 'SettingsSphere';
-				case 35 % BrainAtlasPF.H_SYMS
+				case 36 % BrainAtlasPF.H_SYMS
 					prop_settings = Format.getFormatSettings(19);
-				case 36 % BrainAtlasPF.SYMS
+				case 37 % BrainAtlasPF.SYMS
 					prop_settings = Format.getFormatSettings(4);
-				case 37 % BrainAtlasPF.SYM_DICT
+				case 38 % BrainAtlasPF.SYM_DICT
 					prop_settings = 'SettingsSymbol';
-				case 38 % BrainAtlasPF.H_IDS
+				case 39 % BrainAtlasPF.H_IDS
 					prop_settings = Format.getFormatSettings(19);
-				case 39 % BrainAtlasPF.IDS
+				case 40 % BrainAtlasPF.IDS
 					prop_settings = Format.getFormatSettings(4);
-				case 40 % BrainAtlasPF.ID_DICT
+				case 41 % BrainAtlasPF.ID_DICT
 					prop_settings = 'SettingsText';
-				case 41 % BrainAtlasPF.H_LABS
+				case 42 % BrainAtlasPF.H_LABS
 					prop_settings = Format.getFormatSettings(19);
-				case 42 % BrainAtlasPF.LABS
+				case 43 % BrainAtlasPF.LABS
 					prop_settings = Format.getFormatSettings(4);
-				case 43 % BrainAtlasPF.LAB_DICT
+				case 44 % BrainAtlasPF.LAB_DICT
 					prop_settings = 'SettingsText';
 				case 3 % BrainAtlasPF.TEMPLATE
 					prop_settings = 'BrainAtlasPF';
@@ -678,31 +680,31 @@ classdef BrainAtlasPF < BrainSurfacePF
 			prop = BrainAtlasPF.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 31 % BrainAtlasPF.BA
+				case 32 % BrainAtlasPF.BA
 					prop_default = Format.getFormatDefault(8, BrainAtlasPF.getPropSettings(prop));
-				case 32 % BrainAtlasPF.H_SPHS
+				case 33 % BrainAtlasPF.H_SPHS
 					prop_default = Format.getFormatDefault(19, BrainAtlasPF.getPropSettings(prop));
-				case 33 % BrainAtlasPF.SPHS
+				case 34 % BrainAtlasPF.SPHS
 					prop_default = true;
-				case 34 % BrainAtlasPF.SPH_DICT
+				case 35 % BrainAtlasPF.SPH_DICT
 					prop_default = Format.getFormatDefault(10, BrainAtlasPF.getPropSettings(prop));
-				case 35 % BrainAtlasPF.H_SYMS
+				case 36 % BrainAtlasPF.H_SYMS
 					prop_default = Format.getFormatDefault(19, BrainAtlasPF.getPropSettings(prop));
-				case 36 % BrainAtlasPF.SYMS
+				case 37 % BrainAtlasPF.SYMS
 					prop_default = false;
-				case 37 % BrainAtlasPF.SYM_DICT
+				case 38 % BrainAtlasPF.SYM_DICT
 					prop_default = Format.getFormatDefault(10, BrainAtlasPF.getPropSettings(prop));
-				case 38 % BrainAtlasPF.H_IDS
+				case 39 % BrainAtlasPF.H_IDS
 					prop_default = Format.getFormatDefault(19, BrainAtlasPF.getPropSettings(prop));
-				case 39 % BrainAtlasPF.IDS
+				case 40 % BrainAtlasPF.IDS
 					prop_default = false;
-				case 40 % BrainAtlasPF.ID_DICT
+				case 41 % BrainAtlasPF.ID_DICT
 					prop_default = Format.getFormatDefault(10, BrainAtlasPF.getPropSettings(prop));
-				case 41 % BrainAtlasPF.H_LABS
+				case 42 % BrainAtlasPF.H_LABS
 					prop_default = Format.getFormatDefault(19, BrainAtlasPF.getPropSettings(prop));
-				case 42 % BrainAtlasPF.LABS
+				case 43 % BrainAtlasPF.LABS
 					prop_default = false;
-				case 43 % BrainAtlasPF.LAB_DICT
+				case 44 % BrainAtlasPF.LAB_DICT
 					prop_default = Format.getFormatDefault(10, BrainAtlasPF.getPropSettings(prop));
 				case 1 % BrainAtlasPF.NAME
 					prop_default = 'BrainSurfacePF';
@@ -780,36 +782,36 @@ classdef BrainAtlasPF < BrainSurfacePF
 			prop = BrainAtlasPF.getPropProp(pointer);
 			
 			switch prop
-				case 31 % BrainAtlasPF.BA
+				case 32 % BrainAtlasPF.BA
 					check = Format.checkFormat(8, value, BrainAtlasPF.getPropSettings(prop));
-				case 32 % BrainAtlasPF.H_SPHS
+				case 33 % BrainAtlasPF.H_SPHS
 					check = Format.checkFormat(19, value, BrainAtlasPF.getPropSettings(prop));
-				case 33 % BrainAtlasPF.SPHS
+				case 34 % BrainAtlasPF.SPHS
 					check = Format.checkFormat(4, value, BrainAtlasPF.getPropSettings(prop));
-				case 34 % BrainAtlasPF.SPH_DICT
+				case 35 % BrainAtlasPF.SPH_DICT
 					check = Format.checkFormat(10, value, BrainAtlasPF.getPropSettings(prop));
-				case 35 % BrainAtlasPF.H_SYMS
+				case 36 % BrainAtlasPF.H_SYMS
 					check = Format.checkFormat(19, value, BrainAtlasPF.getPropSettings(prop));
-				case 36 % BrainAtlasPF.SYMS
+				case 37 % BrainAtlasPF.SYMS
 					check = Format.checkFormat(4, value, BrainAtlasPF.getPropSettings(prop));
-				case 37 % BrainAtlasPF.SYM_DICT
+				case 38 % BrainAtlasPF.SYM_DICT
 					check = Format.checkFormat(10, value, BrainAtlasPF.getPropSettings(prop));
-				case 38 % BrainAtlasPF.H_IDS
+				case 39 % BrainAtlasPF.H_IDS
 					check = Format.checkFormat(19, value, BrainAtlasPF.getPropSettings(prop));
-				case 39 % BrainAtlasPF.IDS
+				case 40 % BrainAtlasPF.IDS
 					check = Format.checkFormat(4, value, BrainAtlasPF.getPropSettings(prop));
-				case 40 % BrainAtlasPF.ID_DICT
+				case 41 % BrainAtlasPF.ID_DICT
 					check = Format.checkFormat(10, value, BrainAtlasPF.getPropSettings(prop));
-				case 41 % BrainAtlasPF.H_LABS
+				case 42 % BrainAtlasPF.H_LABS
 					check = Format.checkFormat(19, value, BrainAtlasPF.getPropSettings(prop));
-				case 42 % BrainAtlasPF.LABS
+				case 43 % BrainAtlasPF.LABS
 					check = Format.checkFormat(4, value, BrainAtlasPF.getPropSettings(prop));
-				case 43 % BrainAtlasPF.LAB_DICT
+				case 44 % BrainAtlasPF.LAB_DICT
 					check = Format.checkFormat(10, value, BrainAtlasPF.getPropSettings(prop));
 				case 3 % BrainAtlasPF.TEMPLATE
 					check = Format.checkFormat(8, value, BrainAtlasPF.getPropSettings(prop));
 				otherwise
-					if prop <= 30
+					if prop <= 31
 						check = checkProp@BrainSurfacePF(prop, value);
 					end
 			end
@@ -839,7 +841,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 			%  checkValue.
 			
 			switch prop
-				case 33 % BrainAtlasPF.SPHS
+				case 34 % BrainAtlasPF.SPHS
 					if ~pf.get('SPHS') % false
 					    h_sphs = pf.get('H_SPHS');
 					    for i = 1:1:length(h_sphs)
@@ -856,7 +858,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 					    set(findobj(toolbar, 'Tag', 'TOOL.Sphs'), 'State', pf.get('SPHS'))
 					end
 					
-				case 34 % BrainAtlasPF.SPH_DICT
+				case 35 % BrainAtlasPF.SPH_DICT
 					if pf.get('SPHS') && ~isa(pf.getr('BA'), 'NoValue')
 					    
 					    br_dict = pf.get('BA').get('BR_DICT');
@@ -866,7 +868,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 					            br = br_dict.get('IT', i);
 					            sphs{i} = SettingsSphere( ...
 					                'PANEL', pf, ...
-					                'PROP', 32, ...
+					                'PROP', 33, ...
 					                'I', i, ...
 					                'VISIBLE', true, ...
 					                'ID', br.get('ID'), ... % Callback('EL', br, 'TAG', 'ID'), ...
@@ -888,7 +890,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 					    pf.get('ST_AMBIENT').get('SETUP')
 					end
 					
-				case 36 % BrainAtlasPF.SYMS
+				case 37 % BrainAtlasPF.SYMS
 					if ~pf.get('SYMS') % false
 					    h_syms = pf.get('H_SYMS');
 					    for i = 1:1:length(h_syms)
@@ -905,7 +907,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 					    set(findobj(toolbar, 'Tag', 'TOOL.Syms'), 'State', pf.get('SYMS'))
 					end
 					
-				case 37 % BrainAtlasPF.SYM_DICT
+				case 38 % BrainAtlasPF.SYM_DICT
 					if pf.get('SYMS') && ~isa(pf.getr('BA'), 'NoValue')
 					    
 					    br_dict = pf.get('BA').get('BR_DICT');
@@ -915,7 +917,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 					            br = br_dict.get('IT', i);
 					            syms{i} = SettingsSymbol( ...
 					                'PANEL', pf, ...
-					                'PROP', 35, ...
+					                'PROP', 36, ...
 					                'I', i, ...
 					                'VISIBLE', true, ...
 					                'ID', br.get('ID'), ... % Callback('EL', br, 'TAG', 'ID'), ...
@@ -932,7 +934,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 					    end
 					end
 					
-				case 39 % BrainAtlasPF.IDS
+				case 40 % BrainAtlasPF.IDS
 					if ~pf.get('IDS') % false
 					    h_ids = pf.get('H_IDS');
 					    for i = 1:1:length(h_ids)
@@ -949,7 +951,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 					    set(findobj(toolbar, 'Tag', 'TOOL.Ids'), 'State', pf.get('IDS'))
 					end
 					
-				case 40 % BrainAtlasPF.ID_DICT
+				case 41 % BrainAtlasPF.ID_DICT
 					if pf.get('IDS') && ~isa(pf.getr('BA'), 'NoValue')
 					
 					    br_dict = pf.get('BA').get('BR_DICT');
@@ -959,7 +961,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 					            br = br_dict.get('IT', i);
 					            ids{i} = SettingsText( ...
 					                'PANEL', pf, ...
-					                'PROP', 38, ...
+					                'PROP', 39, ...
 					                'I', i, ...
 					                'VISIBLE', true, ...
 					                'ID', br.get('ID'), ... % Callback('EL', br, 'TAG', 'ID'), ...
@@ -977,7 +979,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 					    end
 					end
 					
-				case 42 % BrainAtlasPF.LABS
+				case 43 % BrainAtlasPF.LABS
 					if ~pf.get('LABS') % false
 					    h_labs = pf.get('H_LABS');
 					    for i = 1:1:length(h_labs)
@@ -994,7 +996,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 					    set(findobj(toolbar, 'Tag', 'TOOL.Labs'), 'State', pf.get('LABS'))
 					end
 					
-				case 43 % BrainAtlasPF.LAB_DICT
+				case 44 % BrainAtlasPF.LAB_DICT
 					if pf.get('LABS') && ~isa(pf.getr('BA'), 'NoValue')
 					
 					    br_dict = pf.get('BA').get('BR_DICT');
@@ -1004,7 +1006,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 					            br = br_dict.get('IT', i);
 					            labs{i} = SettingsText( ...
 					                'PANEL', pf, ...
-					                'PROP', 41, ...
+					                'PROP', 42, ...
 					                'I', i, ...
 					                'VISIBLE', true, ...
 					                'ID', br.get('ID'), ... % Callback('EL', br, 'TAG', 'ID'), ...
@@ -1023,7 +1025,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 					end
 					
 				otherwise
-					if prop <= 30
+					if prop <= 31
 						postset@BrainSurfacePF(pf, prop);
 					end
 			end
@@ -1046,7 +1048,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 32 % BrainAtlasPF.H_SPHS
+				case 33 % BrainAtlasPF.H_SPHS
 					L = pf.memorize('BA').get('BR_DICT').get('LENGTH');
 					h_sphs = cell(1, L);
 					for i = 1:1:L
@@ -1058,7 +1060,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 					end
 					value = h_sphs;
 					
-				case 35 % BrainAtlasPF.H_SYMS
+				case 36 % BrainAtlasPF.H_SYMS
 					L = pf.memorize('BA').get('BR_DICT').get('LENGTH');
 					h_syms = cell(1, L);
 					for i = 1:1:L
@@ -1070,7 +1072,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 					end
 					value = h_syms;
 					
-				case 38 % BrainAtlasPF.H_IDS
+				case 39 % BrainAtlasPF.H_IDS
 					L = pf.memorize('BA').get('BR_DICT').get('LENGTH');
 					h_ids = cell(1, L);
 					for i = 1:1:L
@@ -1082,7 +1084,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 					end
 					value = h_ids;
 					
-				case 41 % BrainAtlasPF.H_LABS
+				case 42 % BrainAtlasPF.H_LABS
 					L = pf.memorize('BA').get('BR_DICT').get('LENGTH');
 					h_labs = cell(1, L);
 					for i = 1:1:L
@@ -1094,8 +1096,8 @@ classdef BrainAtlasPF < BrainSurfacePF
 					end
 					value = h_labs;
 					
-				case 9 % BrainAtlasPF.DRAW
-					value = calculateValue@BrainSurfacePF(pf, 9, varargin{:}); % also warning
+				case 10 % BrainAtlasPF.DRAW
+					value = calculateValue@BrainSurfacePF(pf, 10, varargin{:}); % also warning
 					if value
 					    pf.memorize('H_SPHS')
 					    pf.set('SPHS', pf.get('SPHS')) % sets also   SPH_DICT  
@@ -1113,8 +1115,8 @@ classdef BrainAtlasPF < BrainSurfacePF
 					    pf.get('ST_AMBIENT').get('SETUP')
 					end
 					
-				case 16 % BrainAtlasPF.DELETE
-					value = calculateValue@BrainSurfacePF(pf, 16, varargin{:}); % also warning
+				case 17 % BrainAtlasPF.DELETE
+					value = calculateValue@BrainSurfacePF(pf, 17, varargin{:}); % also warning
 					if value
 					    pf.set('H_SPHS', Element.getNoValue())
 					    pf.set('H_SYMS', Element.getNoValue())
@@ -1122,10 +1124,10 @@ classdef BrainAtlasPF < BrainSurfacePF
 					    pf.set('H_LABS', Element.getNoValue())
 					end
 					
-				case 20 % BrainAtlasPF.H_TOOLS
-					toolbar = pf.memorize(19);
+				case 21 % BrainAtlasPF.H_TOOLS
+					toolbar = pf.memorize(20);
 					if check_graphics(toolbar, 'uitoolbar')
-						value = calculateValue@BrainSurfacePF(pf, 20);
+						value = calculateValue@BrainSurfacePF(pf, 21);
 					    
 					    tool_separator_1 = uipushtool(toolbar, 'Separator', 'on', 'Visible', 'off');
 					
@@ -1178,7 +1180,7 @@ classdef BrainAtlasPF < BrainSurfacePF
 					end
 					
 				otherwise
-					if prop <= 30
+					if prop <= 31
 						value = calculateValue@BrainSurfacePF(pf, prop, varargin{:});
 					else
 						value = calculateValue@Element(pf, prop, varargin{:});
@@ -1216,24 +1218,24 @@ classdef BrainAtlasPF < BrainSurfacePF
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 34 % BrainAtlasPF.SPH_DICT
-					pr = PanelPropIDictTable('EL', pf, 'PROP', 34, ...
-					    'COLS', [-1 17 18 19 20 21 15 16 13 14], ...
+				case 35 % BrainAtlasPF.SPH_DICT
+					pr = PanelPropIDictTable('EL', pf, 'PROP', 35, ...
+					    'COLS', [-1 18 19 20 21 22 16 17 14 15], ...
 					    varargin{:});
 					
-				case 37 % BrainAtlasPF.SYM_DICT
-					pr = PanelPropIDictTable('EL', pf, 'PROP', 37, ...
-					    'COLS', [-1 13 14 15 16 17 18 19 20], ...
+				case 38 % BrainAtlasPF.SYM_DICT
+					pr = PanelPropIDictTable('EL', pf, 'PROP', 38, ...
+					    'COLS', [-1 14 15 16 17 18 19 20 21], ...
 					    varargin{:});
 					
-				case 40 % BrainAtlasPF.ID_DICT
-					pr = PanelPropIDictTable('EL', pf, 'PROP', 40, ...
-					    'COLS', [-1 13 14 15 16 25 17 19 18 20 22], ...
+				case 41 % BrainAtlasPF.ID_DICT
+					pr = PanelPropIDictTable('EL', pf, 'PROP', 41, ...
+					    'COLS', [-1 14 15 16 17 26 18 20 19 21 23], ...
 					    varargin{:});
 					
-				case 43 % BrainAtlasPF.LAB_DICT
-					pr = PanelPropIDictTable('EL', pf, 'PROP', 43, ...
-					    'COLS', [-1 13 14 15 16 25 17 19 18 20 22], ...
+				case 44 % BrainAtlasPF.LAB_DICT
+					pr = PanelPropIDictTable('EL', pf, 'PROP', 44, ...
+					    'COLS', [-1 14 15 16 17 26 18 20 19 21 23], ...
 					    varargin{:});
 					
 				otherwise

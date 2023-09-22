@@ -32,43 +32,44 @@ classdef GUIFig < GUI
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the figure GUI.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the figure GUI.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the figure GUI.
-	%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>8</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the contents of a GUI before showing it.
-	%  <strong>9</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the GUI has been drawn.
-	%  <strong>10</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the name of the GUI.
-	%  <strong>11</strong> <strong>POSITION</strong> 	POSITION (gui, rvector) is the normalized position of the GUI on the screen.
-	%  <strong>12</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (gui, color) is the GUI background color.
-	%  <strong>13</strong> <strong>H_MENUBAR</strong> 	H_MENUBAR (evanescent, handlelist) is the list of handles for the menus.
-	%  <strong>14</strong> <strong>MENUBAR</strong> 	MENUBAR (gui, logical) determines whether to show the menubar.
-	%  <strong>15</strong> <strong>H_MENU_ABOUT</strong> 	H_MENU_ABOUT (evanescent, handle) is the handle of the menu about.
-	%  <strong>16</strong> <strong>MENU_ABOUT</strong> 	MENU_ABOUT (gui, logical) determines whether to show the menu about.
-	%  <strong>17</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) is the handle list of the toolbar.
-	%  <strong>18</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the handle list of the toolbar followed by the tools from the first.
-	%  <strong>19</strong> <strong>TOOLBAR</strong> 	TOOLBAR (gui, logical) determines whether to show the toolbar.
-	%  <strong>20</strong> <strong>TOOL_ABOUT</strong> 	TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons.
-	%  <strong>21</strong> <strong>CLOSEREQ</strong> 	CLOSEREQ (gui, logical) determines whether to confirm close.
-	%  <strong>22</strong> <strong>H</strong> 	H (evanescent, handle) is the figure handle.
-	%  <strong>23</strong> <strong>RESIZE</strong> 	RESIZE (query, logical) updates POSITION when figure size is changed.
-	%  <strong>24</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure and its dependent figures.
-	%  <strong>25</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure and its dependent figures.
-	%  <strong>26</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles and closes the dependent figures when the figure is deleted.
-	%  <strong>27</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure and its dependent figures.
-	%  <strong>28</strong> <strong>PF</strong> 	PF (data, item) is the panel figure.
-	%  <strong>29</strong> <strong>FILE</strong> 	FILE (metadata, string) is the B2 file where the element is saved.
-	%  <strong>30</strong> <strong>TEXT_FILE</strong> 	TEXT_FILE (evanescent, handle) is the label where the file name is shown.
-	%  <strong>31</strong> <strong>GUI_LAYOUT</strong> 	GUI_LAYOUT (data, item) is the handle to the figure to manage the layout.
-	%  <strong>32</strong> <strong>GUI_SETTINGS</strong> 	GUI_SETTINGS (data, item) is the handle to the figure to manage the figure settings.
-	%  <strong>33</strong> <strong>H_MENU_FILE</strong> 	H_MENU_FILE (evanescent, handle) is the handle of the menu file.
-	%  <strong>34</strong> <strong>MENU_FILE</strong> 	MENU_FILE (gui, logical) determines whether to show the menu file.
-	%  <strong>35</strong> <strong>H_MENU_PRINT</strong> 	H_MENU_PRINT (evanescent, handle) is the handle of the menu to print to image file.
-	%  <strong>36</strong> <strong>MENU_PRINT</strong> 	MENU_PRINT (gui, logical) determines whether to show the menu to print to image file.
-	%  <strong>37</strong> <strong>H_MENU_GUI_SETTINGS</strong> 	H_MENU_GUI_SETTINGS (evanescent, handle) is the handle of the menu settings.
-	%  <strong>38</strong> <strong>MENU_GUI_SETTINGS</strong> 	MENU_GUI_SETTINGS (gui, logical) determines whether to show the menu settings.
-	%  <strong>39</strong> <strong>H_MENU_PERSONALIZE</strong> 	H_MENU_PERSONALIZE (evanescent, handle) is the handle of the menu personalize.
-	%  <strong>40</strong> <strong>MENU_PERSONALIZE</strong> 	MENU_PERSONALIZE (gui, logical) determines whether to show the menu personalize.
-	%  <strong>41</strong> <strong>TOOL_FILE</strong> 	TOOL_FILE (gui, logical) determines whether to show the toolbar file buttons.
-	%  <strong>42</strong> <strong>TOOL_PRINT</strong> 	TOOL_PRINT (gui, logical) determines whether to show the toolbar print button.
-	%  <strong>43</strong> <strong>TOOL_GUI_SETTINGS</strong> 	TOOL_GUI_SETTINGS (gui, logical) determines whether to show the toolbar settings buttons.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>9</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the contents of a GUI before showing it.
+	%  <strong>10</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the GUI has been drawn.
+	%  <strong>11</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the name of the GUI.
+	%  <strong>12</strong> <strong>POSITION</strong> 	POSITION (gui, rvector) is the normalized position of the GUI on the screen.
+	%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (gui, color) is the GUI background color.
+	%  <strong>14</strong> <strong>H_MENUBAR</strong> 	H_MENUBAR (evanescent, handlelist) is the list of handles for the menus.
+	%  <strong>15</strong> <strong>MENUBAR</strong> 	MENUBAR (gui, logical) determines whether to show the menubar.
+	%  <strong>16</strong> <strong>H_MENU_ABOUT</strong> 	H_MENU_ABOUT (evanescent, handle) is the handle of the menu about.
+	%  <strong>17</strong> <strong>MENU_ABOUT</strong> 	MENU_ABOUT (gui, logical) determines whether to show the menu about.
+	%  <strong>18</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) is the handle list of the toolbar.
+	%  <strong>19</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the handle list of the toolbar followed by the tools from the first.
+	%  <strong>20</strong> <strong>TOOLBAR</strong> 	TOOLBAR (gui, logical) determines whether to show the toolbar.
+	%  <strong>21</strong> <strong>TOOL_ABOUT</strong> 	TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons.
+	%  <strong>22</strong> <strong>CLOSEREQ</strong> 	CLOSEREQ (gui, logical) determines whether to confirm close.
+	%  <strong>23</strong> <strong>H</strong> 	H (evanescent, handle) is the figure handle.
+	%  <strong>24</strong> <strong>RESIZE</strong> 	RESIZE (query, logical) updates POSITION when figure size is changed.
+	%  <strong>25</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure and its dependent figures.
+	%  <strong>26</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure and its dependent figures.
+	%  <strong>27</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles and closes the dependent figures when the figure is deleted.
+	%  <strong>28</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure and its dependent figures.
+	%  <strong>29</strong> <strong>PF</strong> 	PF (data, item) is the panel figure.
+	%  <strong>30</strong> <strong>FILE</strong> 	FILE (metadata, string) is the B2 file where the element is saved.
+	%  <strong>31</strong> <strong>TEXT_FILE</strong> 	TEXT_FILE (evanescent, handle) is the label where the file name is shown.
+	%  <strong>32</strong> <strong>GUI_LAYOUT</strong> 	GUI_LAYOUT (data, item) is the handle to the figure to manage the layout.
+	%  <strong>33</strong> <strong>GUI_SETTINGS</strong> 	GUI_SETTINGS (data, item) is the handle to the figure to manage the figure settings.
+	%  <strong>34</strong> <strong>H_MENU_FILE</strong> 	H_MENU_FILE (evanescent, handle) is the handle of the menu file.
+	%  <strong>35</strong> <strong>MENU_FILE</strong> 	MENU_FILE (gui, logical) determines whether to show the menu file.
+	%  <strong>36</strong> <strong>H_MENU_PRINT</strong> 	H_MENU_PRINT (evanescent, handle) is the handle of the menu to print to image file.
+	%  <strong>37</strong> <strong>MENU_PRINT</strong> 	MENU_PRINT (gui, logical) determines whether to show the menu to print to image file.
+	%  <strong>38</strong> <strong>H_MENU_GUI_SETTINGS</strong> 	H_MENU_GUI_SETTINGS (evanescent, handle) is the handle of the menu settings.
+	%  <strong>39</strong> <strong>MENU_GUI_SETTINGS</strong> 	MENU_GUI_SETTINGS (gui, logical) determines whether to show the menu settings.
+	%  <strong>40</strong> <strong>H_MENU_PERSONALIZE</strong> 	H_MENU_PERSONALIZE (evanescent, handle) is the handle of the menu personalize.
+	%  <strong>41</strong> <strong>MENU_PERSONALIZE</strong> 	MENU_PERSONALIZE (gui, logical) determines whether to show the menu personalize.
+	%  <strong>42</strong> <strong>TOOL_FILE</strong> 	TOOL_FILE (gui, logical) determines whether to show the toolbar file buttons.
+	%  <strong>43</strong> <strong>TOOL_PRINT</strong> 	TOOL_PRINT (gui, logical) determines whether to show the toolbar print button.
+	%  <strong>44</strong> <strong>TOOL_GUI_SETTINGS</strong> 	TOOL_GUI_SETTINGS (gui, logical) determines whether to show the toolbar settings buttons.
 	%
 	% GUIFig methods (constructor):
 	%  GUIFig - constructor
@@ -159,82 +160,82 @@ classdef GUIFig < GUI
 	% See also uifigure, PanelFig.
 	
 	properties (Constant) % properties
-		PF = 28; %CET: Computational Efficiency Trick
+		PF = 29; %CET: Computational Efficiency Trick
 		PF_TAG = 'PF';
 		PF_CATEGORY = 4;
 		PF_FORMAT = 8;
 		
-		FILE = 29; %CET: Computational Efficiency Trick
+		FILE = 30; %CET: Computational Efficiency Trick
 		FILE_TAG = 'FILE';
 		FILE_CATEGORY = 2;
 		FILE_FORMAT = 2;
 		
-		TEXT_FILE = 30; %CET: Computational Efficiency Trick
+		TEXT_FILE = 31; %CET: Computational Efficiency Trick
 		TEXT_FILE_TAG = 'TEXT_FILE';
 		TEXT_FILE_CATEGORY = 7;
 		TEXT_FILE_FORMAT = 18;
 		
-		GUI_LAYOUT = 31; %CET: Computational Efficiency Trick
+		GUI_LAYOUT = 32; %CET: Computational Efficiency Trick
 		GUI_LAYOUT_TAG = 'GUI_LAYOUT';
 		GUI_LAYOUT_CATEGORY = 4;
 		GUI_LAYOUT_FORMAT = 8;
 		
-		GUI_SETTINGS = 32; %CET: Computational Efficiency Trick
+		GUI_SETTINGS = 33; %CET: Computational Efficiency Trick
 		GUI_SETTINGS_TAG = 'GUI_SETTINGS';
 		GUI_SETTINGS_CATEGORY = 4;
 		GUI_SETTINGS_FORMAT = 8;
 		
-		H_MENU_FILE = 33; %CET: Computational Efficiency Trick
+		H_MENU_FILE = 34; %CET: Computational Efficiency Trick
 		H_MENU_FILE_TAG = 'H_MENU_FILE';
 		H_MENU_FILE_CATEGORY = 7;
 		H_MENU_FILE_FORMAT = 18;
 		
-		MENU_FILE = 34; %CET: Computational Efficiency Trick
+		MENU_FILE = 35; %CET: Computational Efficiency Trick
 		MENU_FILE_TAG = 'MENU_FILE';
 		MENU_FILE_CATEGORY = 9;
 		MENU_FILE_FORMAT = 4;
 		
-		H_MENU_PRINT = 35; %CET: Computational Efficiency Trick
+		H_MENU_PRINT = 36; %CET: Computational Efficiency Trick
 		H_MENU_PRINT_TAG = 'H_MENU_PRINT';
 		H_MENU_PRINT_CATEGORY = 7;
 		H_MENU_PRINT_FORMAT = 18;
 		
-		MENU_PRINT = 36; %CET: Computational Efficiency Trick
+		MENU_PRINT = 37; %CET: Computational Efficiency Trick
 		MENU_PRINT_TAG = 'MENU_PRINT';
 		MENU_PRINT_CATEGORY = 9;
 		MENU_PRINT_FORMAT = 4;
 		
-		H_MENU_GUI_SETTINGS = 37; %CET: Computational Efficiency Trick
+		H_MENU_GUI_SETTINGS = 38; %CET: Computational Efficiency Trick
 		H_MENU_GUI_SETTINGS_TAG = 'H_MENU_GUI_SETTINGS';
 		H_MENU_GUI_SETTINGS_CATEGORY = 7;
 		H_MENU_GUI_SETTINGS_FORMAT = 18;
 		
-		MENU_GUI_SETTINGS = 38; %CET: Computational Efficiency Trick
+		MENU_GUI_SETTINGS = 39; %CET: Computational Efficiency Trick
 		MENU_GUI_SETTINGS_TAG = 'MENU_GUI_SETTINGS';
 		MENU_GUI_SETTINGS_CATEGORY = 9;
 		MENU_GUI_SETTINGS_FORMAT = 4;
 		
-		H_MENU_PERSONALIZE = 39; %CET: Computational Efficiency Trick
+		H_MENU_PERSONALIZE = 40; %CET: Computational Efficiency Trick
 		H_MENU_PERSONALIZE_TAG = 'H_MENU_PERSONALIZE';
 		H_MENU_PERSONALIZE_CATEGORY = 7;
 		H_MENU_PERSONALIZE_FORMAT = 18;
 		
-		MENU_PERSONALIZE = 40; %CET: Computational Efficiency Trick
+		MENU_PERSONALIZE = 41; %CET: Computational Efficiency Trick
 		MENU_PERSONALIZE_TAG = 'MENU_PERSONALIZE';
 		MENU_PERSONALIZE_CATEGORY = 9;
 		MENU_PERSONALIZE_FORMAT = 4;
 		
-		TOOL_FILE = 41; %CET: Computational Efficiency Trick
+		TOOL_FILE = 42; %CET: Computational Efficiency Trick
 		TOOL_FILE_TAG = 'TOOL_FILE';
 		TOOL_FILE_CATEGORY = 9;
 		TOOL_FILE_FORMAT = 4;
 		
-		TOOL_PRINT = 42; %CET: Computational Efficiency Trick
+		TOOL_PRINT = 43; %CET: Computational Efficiency Trick
 		TOOL_PRINT_TAG = 'TOOL_PRINT';
 		TOOL_PRINT_CATEGORY = 9;
 		TOOL_PRINT_FORMAT = 4;
 		
-		TOOL_GUI_SETTINGS = 43; %CET: Computational Efficiency Trick
+		TOOL_GUI_SETTINGS = 44; %CET: Computational Efficiency Trick
 		TOOL_GUI_SETTINGS_TAG = 'TOOL_GUI_SETTINGS';
 		TOOL_GUI_SETTINGS_CATEGORY = 9;
 		TOOL_GUI_SETTINGS_FORMAT = 4;
@@ -257,43 +258,44 @@ classdef GUIFig < GUI
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the figure GUI.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the figure GUI.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the figure GUI.
-			%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>8</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the contents of a GUI before showing it.
-			%  <strong>9</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the GUI has been drawn.
-			%  <strong>10</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the name of the GUI.
-			%  <strong>11</strong> <strong>POSITION</strong> 	POSITION (gui, rvector) is the normalized position of the GUI on the screen.
-			%  <strong>12</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (gui, color) is the GUI background color.
-			%  <strong>13</strong> <strong>H_MENUBAR</strong> 	H_MENUBAR (evanescent, handlelist) is the list of handles for the menus.
-			%  <strong>14</strong> <strong>MENUBAR</strong> 	MENUBAR (gui, logical) determines whether to show the menubar.
-			%  <strong>15</strong> <strong>H_MENU_ABOUT</strong> 	H_MENU_ABOUT (evanescent, handle) is the handle of the menu about.
-			%  <strong>16</strong> <strong>MENU_ABOUT</strong> 	MENU_ABOUT (gui, logical) determines whether to show the menu about.
-			%  <strong>17</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) is the handle list of the toolbar.
-			%  <strong>18</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the handle list of the toolbar followed by the tools from the first.
-			%  <strong>19</strong> <strong>TOOLBAR</strong> 	TOOLBAR (gui, logical) determines whether to show the toolbar.
-			%  <strong>20</strong> <strong>TOOL_ABOUT</strong> 	TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons.
-			%  <strong>21</strong> <strong>CLOSEREQ</strong> 	CLOSEREQ (gui, logical) determines whether to confirm close.
-			%  <strong>22</strong> <strong>H</strong> 	H (evanescent, handle) is the figure handle.
-			%  <strong>23</strong> <strong>RESIZE</strong> 	RESIZE (query, logical) updates POSITION when figure size is changed.
-			%  <strong>24</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure and its dependent figures.
-			%  <strong>25</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure and its dependent figures.
-			%  <strong>26</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles and closes the dependent figures when the figure is deleted.
-			%  <strong>27</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure and its dependent figures.
-			%  <strong>28</strong> <strong>PF</strong> 	PF (data, item) is the panel figure.
-			%  <strong>29</strong> <strong>FILE</strong> 	FILE (metadata, string) is the B2 file where the element is saved.
-			%  <strong>30</strong> <strong>TEXT_FILE</strong> 	TEXT_FILE (evanescent, handle) is the label where the file name is shown.
-			%  <strong>31</strong> <strong>GUI_LAYOUT</strong> 	GUI_LAYOUT (data, item) is the handle to the figure to manage the layout.
-			%  <strong>32</strong> <strong>GUI_SETTINGS</strong> 	GUI_SETTINGS (data, item) is the handle to the figure to manage the figure settings.
-			%  <strong>33</strong> <strong>H_MENU_FILE</strong> 	H_MENU_FILE (evanescent, handle) is the handle of the menu file.
-			%  <strong>34</strong> <strong>MENU_FILE</strong> 	MENU_FILE (gui, logical) determines whether to show the menu file.
-			%  <strong>35</strong> <strong>H_MENU_PRINT</strong> 	H_MENU_PRINT (evanescent, handle) is the handle of the menu to print to image file.
-			%  <strong>36</strong> <strong>MENU_PRINT</strong> 	MENU_PRINT (gui, logical) determines whether to show the menu to print to image file.
-			%  <strong>37</strong> <strong>H_MENU_GUI_SETTINGS</strong> 	H_MENU_GUI_SETTINGS (evanescent, handle) is the handle of the menu settings.
-			%  <strong>38</strong> <strong>MENU_GUI_SETTINGS</strong> 	MENU_GUI_SETTINGS (gui, logical) determines whether to show the menu settings.
-			%  <strong>39</strong> <strong>H_MENU_PERSONALIZE</strong> 	H_MENU_PERSONALIZE (evanescent, handle) is the handle of the menu personalize.
-			%  <strong>40</strong> <strong>MENU_PERSONALIZE</strong> 	MENU_PERSONALIZE (gui, logical) determines whether to show the menu personalize.
-			%  <strong>41</strong> <strong>TOOL_FILE</strong> 	TOOL_FILE (gui, logical) determines whether to show the toolbar file buttons.
-			%  <strong>42</strong> <strong>TOOL_PRINT</strong> 	TOOL_PRINT (gui, logical) determines whether to show the toolbar print button.
-			%  <strong>43</strong> <strong>TOOL_GUI_SETTINGS</strong> 	TOOL_GUI_SETTINGS (gui, logical) determines whether to show the toolbar settings buttons.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>9</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the contents of a GUI before showing it.
+			%  <strong>10</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the GUI has been drawn.
+			%  <strong>11</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the name of the GUI.
+			%  <strong>12</strong> <strong>POSITION</strong> 	POSITION (gui, rvector) is the normalized position of the GUI on the screen.
+			%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (gui, color) is the GUI background color.
+			%  <strong>14</strong> <strong>H_MENUBAR</strong> 	H_MENUBAR (evanescent, handlelist) is the list of handles for the menus.
+			%  <strong>15</strong> <strong>MENUBAR</strong> 	MENUBAR (gui, logical) determines whether to show the menubar.
+			%  <strong>16</strong> <strong>H_MENU_ABOUT</strong> 	H_MENU_ABOUT (evanescent, handle) is the handle of the menu about.
+			%  <strong>17</strong> <strong>MENU_ABOUT</strong> 	MENU_ABOUT (gui, logical) determines whether to show the menu about.
+			%  <strong>18</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) is the handle list of the toolbar.
+			%  <strong>19</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the handle list of the toolbar followed by the tools from the first.
+			%  <strong>20</strong> <strong>TOOLBAR</strong> 	TOOLBAR (gui, logical) determines whether to show the toolbar.
+			%  <strong>21</strong> <strong>TOOL_ABOUT</strong> 	TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons.
+			%  <strong>22</strong> <strong>CLOSEREQ</strong> 	CLOSEREQ (gui, logical) determines whether to confirm close.
+			%  <strong>23</strong> <strong>H</strong> 	H (evanescent, handle) is the figure handle.
+			%  <strong>24</strong> <strong>RESIZE</strong> 	RESIZE (query, logical) updates POSITION when figure size is changed.
+			%  <strong>25</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure and its dependent figures.
+			%  <strong>26</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure and its dependent figures.
+			%  <strong>27</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles and closes the dependent figures when the figure is deleted.
+			%  <strong>28</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure and its dependent figures.
+			%  <strong>29</strong> <strong>PF</strong> 	PF (data, item) is the panel figure.
+			%  <strong>30</strong> <strong>FILE</strong> 	FILE (metadata, string) is the B2 file where the element is saved.
+			%  <strong>31</strong> <strong>TEXT_FILE</strong> 	TEXT_FILE (evanescent, handle) is the label where the file name is shown.
+			%  <strong>32</strong> <strong>GUI_LAYOUT</strong> 	GUI_LAYOUT (data, item) is the handle to the figure to manage the layout.
+			%  <strong>33</strong> <strong>GUI_SETTINGS</strong> 	GUI_SETTINGS (data, item) is the handle to the figure to manage the figure settings.
+			%  <strong>34</strong> <strong>H_MENU_FILE</strong> 	H_MENU_FILE (evanescent, handle) is the handle of the menu file.
+			%  <strong>35</strong> <strong>MENU_FILE</strong> 	MENU_FILE (gui, logical) determines whether to show the menu file.
+			%  <strong>36</strong> <strong>H_MENU_PRINT</strong> 	H_MENU_PRINT (evanescent, handle) is the handle of the menu to print to image file.
+			%  <strong>37</strong> <strong>MENU_PRINT</strong> 	MENU_PRINT (gui, logical) determines whether to show the menu to print to image file.
+			%  <strong>38</strong> <strong>H_MENU_GUI_SETTINGS</strong> 	H_MENU_GUI_SETTINGS (evanescent, handle) is the handle of the menu settings.
+			%  <strong>39</strong> <strong>MENU_GUI_SETTINGS</strong> 	MENU_GUI_SETTINGS (gui, logical) determines whether to show the menu settings.
+			%  <strong>40</strong> <strong>H_MENU_PERSONALIZE</strong> 	H_MENU_PERSONALIZE (evanescent, handle) is the handle of the menu personalize.
+			%  <strong>41</strong> <strong>MENU_PERSONALIZE</strong> 	MENU_PERSONALIZE (gui, logical) determines whether to show the menu personalize.
+			%  <strong>42</strong> <strong>TOOL_FILE</strong> 	TOOL_FILE (gui, logical) determines whether to show the toolbar file buttons.
+			%  <strong>43</strong> <strong>TOOL_PRINT</strong> 	TOOL_PRINT (gui, logical) determines whether to show the toolbar print button.
+			%  <strong>44</strong> <strong>TOOL_GUI_SETTINGS</strong> 	TOOL_GUI_SETTINGS (gui, logical) determines whether to show the toolbar settings buttons.
 			%
 			% See also Category, Format.
 			
@@ -355,7 +357,7 @@ classdef GUIFig < GUI
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44];
 				return
 			end
 			
@@ -363,17 +365,17 @@ classdef GUIFig < GUI
 				case 1 % Category.CONSTANT
 					prop_list = [1 2];
 				case 2 % Category.METADATA
-					prop_list = [5 6 29];
+					prop_list = [5 6 30];
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 28 31 32];
+					prop_list = [4 29 32 33];
 				case 6 % Category.QUERY
-					prop_list = [8 9 23 24 25 26 27];
+					prop_list = [7 9 10 24 25 26 27 28];
 				case 7 % Category.EVANESCENT
-					prop_list = [13 15 17 18 22 30 33 35 37 39];
+					prop_list = [14 16 18 19 23 31 34 36 38 40];
 				case 9 % Category.GUI
-					prop_list = [7 10 11 12 14 16 19 20 21 34 36 38 40 41 42 43];
+					prop_list = [8 11 12 13 15 17 20 21 22 35 37 39 41 42 43 44];
 				otherwise
 					prop_list = [];
 			end
@@ -399,7 +401,7 @@ classdef GUIFig < GUI
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 43;
+				prop_number = 44;
 				return
 			end
 			
@@ -413,7 +415,7 @@ classdef GUIFig < GUI
 				case 4 % Category.DATA
 					prop_number = 4;
 				case 6 % Category.QUERY
-					prop_number = 7;
+					prop_number = 8;
 				case 7 % Category.EVANESCENT
 					prop_number = 10;
 				case 9 % Category.GUI
@@ -448,7 +450,7 @@ classdef GUIFig < GUI
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 43 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 44 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -486,7 +488,7 @@ classdef GUIFig < GUI
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'DRAW'  'DRAWN'  'TITLE'  'POSITION'  'BKGCOLOR'  'H_MENUBAR'  'MENUBAR'  'H_MENU_ABOUT'  'MENU_ABOUT'  'H_TOOLBAR'  'H_TOOLS'  'TOOLBAR'  'TOOL_ABOUT'  'CLOSEREQ'  'H'  'RESIZE'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'PF'  'FILE'  'TEXT_FILE'  'GUI_LAYOUT'  'GUI_SETTINGS'  'H_MENU_FILE'  'MENU_FILE'  'H_MENU_PRINT'  'MENU_PRINT'  'H_MENU_GUI_SETTINGS'  'MENU_GUI_SETTINGS'  'H_MENU_PERSONALIZE'  'MENU_PERSONALIZE'  'TOOL_FILE'  'TOOL_PRINT'  'TOOL_GUI_SETTINGS' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DRAW'  'DRAWN'  'TITLE'  'POSITION'  'BKGCOLOR'  'H_MENUBAR'  'MENUBAR'  'H_MENU_ABOUT'  'MENU_ABOUT'  'H_TOOLBAR'  'H_TOOLS'  'TOOLBAR'  'TOOL_ABOUT'  'CLOSEREQ'  'H'  'RESIZE'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'PF'  'FILE'  'TEXT_FILE'  'GUI_LAYOUT'  'GUI_SETTINGS'  'H_MENU_FILE'  'MENU_FILE'  'H_MENU_PRINT'  'MENU_PRINT'  'H_MENU_GUI_SETTINGS'  'MENU_GUI_SETTINGS'  'H_MENU_PERSONALIZE'  'MENU_PERSONALIZE'  'TOOL_FILE'  'TOOL_PRINT'  'TOOL_GUI_SETTINGS' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -519,7 +521,7 @@ classdef GUIFig < GUI
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'DRAW'  'DRAWN'  'TITLE'  'POSITION'  'BKGCOLOR'  'H_MENUBAR'  'MENUBAR'  'H_MENU_ABOUT'  'MENU_ABOUT'  'H_TOOLBAR'  'H_TOOLS'  'TOOLBAR'  'TOOL_ABOUT'  'CLOSEREQ'  'H'  'RESIZE'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'PF'  'FILE'  'TEXT_FILE'  'GUI_LAYOUT'  'GUI_SETTINGS'  'H_MENU_FILE'  'MENU_FILE'  'H_MENU_PRINT'  'MENU_PRINT'  'H_MENU_GUI_SETTINGS'  'MENU_GUI_SETTINGS'  'H_MENU_PERSONALIZE'  'MENU_PERSONALIZE'  'TOOL_FILE'  'TOOL_PRINT'  'TOOL_GUI_SETTINGS' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DRAW'  'DRAWN'  'TITLE'  'POSITION'  'BKGCOLOR'  'H_MENUBAR'  'MENUBAR'  'H_MENU_ABOUT'  'MENU_ABOUT'  'H_TOOLBAR'  'H_TOOLS'  'TOOLBAR'  'TOOL_ABOUT'  'CLOSEREQ'  'H'  'RESIZE'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'PF'  'FILE'  'TEXT_FILE'  'GUI_LAYOUT'  'GUI_SETTINGS'  'H_MENU_FILE'  'MENU_FILE'  'H_MENU_PRINT'  'MENU_PRINT'  'H_MENU_GUI_SETTINGS'  'MENU_GUI_SETTINGS'  'H_MENU_PERSONALIZE'  'MENU_PERSONALIZE'  'TOOL_FILE'  'TOOL_PRINT'  'TOOL_GUI_SETTINGS' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -548,7 +550,7 @@ classdef GUIFig < GUI
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				guifig_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'DRAW'  'DRAWN'  'TITLE'  'POSITION'  'BKGCOLOR'  'H_MENUBAR'  'MENUBAR'  'H_MENU_ABOUT'  'MENU_ABOUT'  'H_TOOLBAR'  'H_TOOLS'  'TOOLBAR'  'TOOL_ABOUT'  'CLOSEREQ'  'H'  'RESIZE'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'PF'  'FILE'  'TEXT_FILE'  'GUI_LAYOUT'  'GUI_SETTINGS'  'H_MENU_FILE'  'MENU_FILE'  'H_MENU_PRINT'  'MENU_PRINT'  'H_MENU_GUI_SETTINGS'  'MENU_GUI_SETTINGS'  'H_MENU_PERSONALIZE'  'MENU_PERSONALIZE'  'TOOL_FILE'  'TOOL_PRINT'  'TOOL_GUI_SETTINGS' };
+				guifig_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DRAW'  'DRAWN'  'TITLE'  'POSITION'  'BKGCOLOR'  'H_MENUBAR'  'MENUBAR'  'H_MENU_ABOUT'  'MENU_ABOUT'  'H_TOOLBAR'  'H_TOOLS'  'TOOLBAR'  'TOOL_ABOUT'  'CLOSEREQ'  'H'  'RESIZE'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'PF'  'FILE'  'TEXT_FILE'  'GUI_LAYOUT'  'GUI_SETTINGS'  'H_MENU_FILE'  'MENU_FILE'  'H_MENU_PRINT'  'MENU_PRINT'  'H_MENU_GUI_SETTINGS'  'MENU_GUI_SETTINGS'  'H_MENU_PERSONALIZE'  'MENU_PERSONALIZE'  'TOOL_FILE'  'TOOL_PRINT'  'TOOL_GUI_SETTINGS' };
 				tag = guifig_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -575,7 +577,7 @@ classdef GUIFig < GUI
 			prop = GUIFig.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			guifig_category_list = { 1  1  3  4  2  2  9  6  6  9  9  9  7  9  7  9  7  7  9  9  9  7  6  6  6  6  6  4  2  7  4  4  7  9  7  9  7  9  7  9  9  9  9 };
+			guifig_category_list = { 1  1  3  4  2  2  6  9  6  6  9  9  9  7  9  7  9  7  7  9  9  9  7  6  6  6  6  6  4  2  7  4  4  7  9  7  9  7  9  7  9  9  9  9 };
 			prop_category = guifig_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -601,7 +603,7 @@ classdef GUIFig < GUI
 			prop = GUIFig.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			guifig_format_list = { 2  2  8  2  2  2  4  4  4  2  12  20  19  4  18  4  18  19  4  4  4  18  4  4  4  4  4  8  2  18  8  8  18  4  18  4  18  4  18  4  4  4  4 };
+			guifig_format_list = { 2  2  8  2  2  2  2  4  4  4  2  12  20  19  4  18  4  18  19  4  4  4  18  4  4  4  4  4  8  2  18  8  8  18  4  18  4  18  4  18  4  4  4  4 };
 			prop_format = guifig_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -627,7 +629,7 @@ classdef GUIFig < GUI
 			prop = GUIFig.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			guifig_description_list = { 'NAME (constant, string) is the name of the figure GUI.'  'DESCRIPTION (constant, string) is the description of the figure GUI.'  'TEMPLATE (parameter, item) is the template of the figure GUI.'  'ID (data, string) is a few-letter code for the figure GUI.'  'LABEL (metadata, string) is an extended label of the figure GUI.'  'NOTES (metadata, string) are some specific notes about the figure GUI.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'DRAW (query, logical) draws the contents of a GUI before showing it.'  'DRAWN (query, logical) returns whether the GUI has been drawn.'  'TITLE (gui, string) is the name of the GUI.'  'POSITION (gui, rvector) is the normalized position of the GUI on the screen.'  'BKGCOLOR (gui, color) is the GUI background color.'  'H_MENUBAR (evanescent, handlelist) is the list of handles for the menus.'  'MENUBAR (gui, logical) determines whether to show the menubar.'  'H_MENU_ABOUT (evanescent, handle) is the handle of the menu about.'  'MENU_ABOUT (gui, logical) determines whether to show the menu about.'  'H_TOOLBAR (evanescent, handle) is the handle list of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the handle list of the toolbar followed by the tools from the first.'  'TOOLBAR (gui, logical) determines whether to show the toolbar.'  'TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons.'  'CLOSEREQ (gui, logical) determines whether to confirm close.'  'H (evanescent, handle) is the figure handle.'  'RESIZE (query, logical) updates POSITION when figure size is changed.'  'SHOW (query, logical) shows the figure and its dependent figures.'  'HIDE (query, logical) hides the figure and its dependent figures.'  'DELETE (query, logical) resets the handles and closes the dependent figures when the figure is deleted.'  'CLOSE (query, logical) closes the figure and its dependent figures.'  'PF (data, item) is the panel figure.'  'FILE (metadata, string) is the B2 file where the element is saved.'  'TEXT_FILE (evanescent, handle) is the label where the file name is shown.'  'GUI_LAYOUT (data, item) is the handle to the figure to manage the layout.'  'GUI_SETTINGS (data, item) is the handle to the figure to manage the figure settings.'  'H_MENU_FILE (evanescent, handle) is the handle of the menu file.'  'MENU_FILE (gui, logical) determines whether to show the menu file.'  'H_MENU_PRINT (evanescent, handle) is the handle of the menu to print to image file.'  'MENU_PRINT (gui, logical) determines whether to show the menu to print to image file.'  'H_MENU_GUI_SETTINGS (evanescent, handle) is the handle of the menu settings.'  'MENU_GUI_SETTINGS (gui, logical) determines whether to show the menu settings.'  'H_MENU_PERSONALIZE (evanescent, handle) is the handle of the menu personalize.'  'MENU_PERSONALIZE (gui, logical) determines whether to show the menu personalize.'  'TOOL_FILE (gui, logical) determines whether to show the toolbar file buttons.'  'TOOL_PRINT (gui, logical) determines whether to show the toolbar print button.'  'TOOL_GUI_SETTINGS (gui, logical) determines whether to show the toolbar settings buttons.' };
+			guifig_description_list = { 'NAME (constant, string) is the name of the figure GUI.'  'DESCRIPTION (constant, string) is the description of the figure GUI.'  'TEMPLATE (parameter, item) is the template of the figure GUI.'  'ID (data, string) is a few-letter code for the figure GUI.'  'LABEL (metadata, string) is an extended label of the figure GUI.'  'NOTES (metadata, string) are some specific notes about the figure GUI.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'DRAW (query, logical) draws the contents of a GUI before showing it.'  'DRAWN (query, logical) returns whether the GUI has been drawn.'  'TITLE (gui, string) is the name of the GUI.'  'POSITION (gui, rvector) is the normalized position of the GUI on the screen.'  'BKGCOLOR (gui, color) is the GUI background color.'  'H_MENUBAR (evanescent, handlelist) is the list of handles for the menus.'  'MENUBAR (gui, logical) determines whether to show the menubar.'  'H_MENU_ABOUT (evanescent, handle) is the handle of the menu about.'  'MENU_ABOUT (gui, logical) determines whether to show the menu about.'  'H_TOOLBAR (evanescent, handle) is the handle list of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the handle list of the toolbar followed by the tools from the first.'  'TOOLBAR (gui, logical) determines whether to show the toolbar.'  'TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons.'  'CLOSEREQ (gui, logical) determines whether to confirm close.'  'H (evanescent, handle) is the figure handle.'  'RESIZE (query, logical) updates POSITION when figure size is changed.'  'SHOW (query, logical) shows the figure and its dependent figures.'  'HIDE (query, logical) hides the figure and its dependent figures.'  'DELETE (query, logical) resets the handles and closes the dependent figures when the figure is deleted.'  'CLOSE (query, logical) closes the figure and its dependent figures.'  'PF (data, item) is the panel figure.'  'FILE (metadata, string) is the B2 file where the element is saved.'  'TEXT_FILE (evanescent, handle) is the label where the file name is shown.'  'GUI_LAYOUT (data, item) is the handle to the figure to manage the layout.'  'GUI_SETTINGS (data, item) is the handle to the figure to manage the figure settings.'  'H_MENU_FILE (evanescent, handle) is the handle of the menu file.'  'MENU_FILE (gui, logical) determines whether to show the menu file.'  'H_MENU_PRINT (evanescent, handle) is the handle of the menu to print to image file.'  'MENU_PRINT (gui, logical) determines whether to show the menu to print to image file.'  'H_MENU_GUI_SETTINGS (evanescent, handle) is the handle of the menu settings.'  'MENU_GUI_SETTINGS (gui, logical) determines whether to show the menu settings.'  'H_MENU_PERSONALIZE (evanescent, handle) is the handle of the menu personalize.'  'MENU_PERSONALIZE (gui, logical) determines whether to show the menu personalize.'  'TOOL_FILE (gui, logical) determines whether to show the toolbar file buttons.'  'TOOL_PRINT (gui, logical) determines whether to show the toolbar print button.'  'TOOL_GUI_SETTINGS (gui, logical) determines whether to show the toolbar settings buttons.' };
 			prop_description = guifig_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -653,37 +655,37 @@ classdef GUIFig < GUI
 			prop = GUIFig.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 28 % GUIFig.PF
+				case 29 % GUIFig.PF
 					prop_settings = 'PanelFig';
-				case 29 % GUIFig.FILE
+				case 30 % GUIFig.FILE
 					prop_settings = Format.getFormatSettings(2);
-				case 30 % GUIFig.TEXT_FILE
+				case 31 % GUIFig.TEXT_FILE
 					prop_settings = Format.getFormatSettings(18);
-				case 31 % GUIFig.GUI_LAYOUT
+				case 32 % GUIFig.GUI_LAYOUT
 					prop_settings = 'GUILayout';
-				case 32 % GUIFig.GUI_SETTINGS
+				case 33 % GUIFig.GUI_SETTINGS
 					prop_settings = 'GUIElement';
-				case 33 % GUIFig.H_MENU_FILE
+				case 34 % GUIFig.H_MENU_FILE
 					prop_settings = Format.getFormatSettings(18);
-				case 34 % GUIFig.MENU_FILE
+				case 35 % GUIFig.MENU_FILE
 					prop_settings = Format.getFormatSettings(4);
-				case 35 % GUIFig.H_MENU_PRINT
+				case 36 % GUIFig.H_MENU_PRINT
 					prop_settings = Format.getFormatSettings(18);
-				case 36 % GUIFig.MENU_PRINT
+				case 37 % GUIFig.MENU_PRINT
 					prop_settings = Format.getFormatSettings(4);
-				case 37 % GUIFig.H_MENU_GUI_SETTINGS
+				case 38 % GUIFig.H_MENU_GUI_SETTINGS
 					prop_settings = Format.getFormatSettings(18);
-				case 38 % GUIFig.MENU_GUI_SETTINGS
+				case 39 % GUIFig.MENU_GUI_SETTINGS
 					prop_settings = Format.getFormatSettings(4);
-				case 39 % GUIFig.H_MENU_PERSONALIZE
+				case 40 % GUIFig.H_MENU_PERSONALIZE
 					prop_settings = Format.getFormatSettings(18);
-				case 40 % GUIFig.MENU_PERSONALIZE
+				case 41 % GUIFig.MENU_PERSONALIZE
 					prop_settings = Format.getFormatSettings(4);
-				case 41 % GUIFig.TOOL_FILE
+				case 42 % GUIFig.TOOL_FILE
 					prop_settings = Format.getFormatSettings(4);
-				case 42 % GUIFig.TOOL_PRINT
+				case 43 % GUIFig.TOOL_PRINT
 					prop_settings = Format.getFormatSettings(4);
-				case 43 % GUIFig.TOOL_GUI_SETTINGS
+				case 44 % GUIFig.TOOL_GUI_SETTINGS
 					prop_settings = Format.getFormatSettings(4);
 				case 3 % GUIFig.TEMPLATE
 					prop_settings = 'GUIFig';
@@ -714,37 +716,37 @@ classdef GUIFig < GUI
 			prop = GUIFig.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 28 % GUIFig.PF
+				case 29 % GUIFig.PF
 					prop_default = Format.getFormatDefault(8, GUIFig.getPropSettings(prop));
-				case 29 % GUIFig.FILE
+				case 30 % GUIFig.FILE
 					prop_default = Format.getFormatDefault(2, GUIFig.getPropSettings(prop));
-				case 30 % GUIFig.TEXT_FILE
+				case 31 % GUIFig.TEXT_FILE
 					prop_default = Format.getFormatDefault(18, GUIFig.getPropSettings(prop));
-				case 31 % GUIFig.GUI_LAYOUT
+				case 32 % GUIFig.GUI_LAYOUT
 					prop_default = Format.getFormatDefault(8, GUIFig.getPropSettings(prop));
-				case 32 % GUIFig.GUI_SETTINGS
+				case 33 % GUIFig.GUI_SETTINGS
 					prop_default = Format.getFormatDefault(8, GUIFig.getPropSettings(prop));
-				case 33 % GUIFig.H_MENU_FILE
+				case 34 % GUIFig.H_MENU_FILE
 					prop_default = Format.getFormatDefault(18, GUIFig.getPropSettings(prop));
-				case 34 % GUIFig.MENU_FILE
+				case 35 % GUIFig.MENU_FILE
 					prop_default = true;
-				case 35 % GUIFig.H_MENU_PRINT
+				case 36 % GUIFig.H_MENU_PRINT
 					prop_default = Format.getFormatDefault(18, GUIFig.getPropSettings(prop));
-				case 36 % GUIFig.MENU_PRINT
+				case 37 % GUIFig.MENU_PRINT
 					prop_default = true;
-				case 37 % GUIFig.H_MENU_GUI_SETTINGS
+				case 38 % GUIFig.H_MENU_GUI_SETTINGS
 					prop_default = Format.getFormatDefault(18, GUIFig.getPropSettings(prop));
-				case 38 % GUIFig.MENU_GUI_SETTINGS
+				case 39 % GUIFig.MENU_GUI_SETTINGS
 					prop_default = true;
-				case 39 % GUIFig.H_MENU_PERSONALIZE
+				case 40 % GUIFig.H_MENU_PERSONALIZE
 					prop_default = Format.getFormatDefault(18, GUIFig.getPropSettings(prop));
-				case 40 % GUIFig.MENU_PERSONALIZE
+				case 41 % GUIFig.MENU_PERSONALIZE
 					prop_default = true;
-				case 41 % GUIFig.TOOL_FILE
+				case 42 % GUIFig.TOOL_FILE
 					prop_default = true;
-				case 42 % GUIFig.TOOL_PRINT
+				case 43 % GUIFig.TOOL_PRINT
 					prop_default = true;
-				case 43 % GUIFig.TOOL_GUI_SETTINGS
+				case 44 % GUIFig.TOOL_GUI_SETTINGS
 					prop_default = true;
 				case 1 % GUIFig.NAME
 					prop_default = 'GUIFig';
@@ -758,17 +760,17 @@ classdef GUIFig < GUI
 					prop_default = 'GUIFIG label';
 				case 6 % GUIFig.NOTES
 					prop_default = 'GUIFIG notes';
-				case 11 % GUIFig.POSITION
+				case 12 % GUIFig.POSITION
 					prop_default = [.30 .40 .39 .47];
-				case 12 % GUIFig.BKGCOLOR
+				case 13 % GUIFig.BKGCOLOR
 					prop_default = [0.7 0.7 0.7];
-				case 14 % GUIFig.MENUBAR
+				case 15 % GUIFig.MENUBAR
 					prop_default = true;
-				case 16 % GUIFig.MENU_ABOUT
+				case 17 % GUIFig.MENU_ABOUT
 					prop_default = true;
-				case 19 % GUIFig.TOOLBAR
+				case 20 % GUIFig.TOOLBAR
 					prop_default = true;
-				case 20 % GUIFig.TOOL_ABOUT
+				case 21 % GUIFig.TOOL_ABOUT
 					prop_default = true;
 				otherwise
 					prop_default = getPropDefault@GUI(prop);
@@ -814,7 +816,7 @@ classdef GUIFig < GUI
 			%  calculateValue, checkValue.
 			
 			switch prop
-				case 31 % GUIFig.GUI_LAYOUT
+				case 32 % GUIFig.GUI_LAYOUT
 					if isa(value.getr('EL_CLASS'), 'NoValue')
 					    f = gui.get('H');
 					    value.set( ...
@@ -824,7 +826,7 @@ classdef GUIFig < GUI
 					        )
 					end
 					
-				case 32 % GUIFig.GUI_SETTINGS
+				case 33 % GUIFig.GUI_SETTINGS
 					if isa(value.getr('PE'), 'NoValue') % i.e., default initialization
 					    pf = gui.memorize('PF');
 					    f = gui.get('H');
@@ -862,7 +864,7 @@ classdef GUIFig < GUI
 					end
 					
 				otherwise
-					if prop <= 27
+					if prop <= 28
 						value = preset@GUI(gui, prop, value);
 					end
 			end
@@ -902,42 +904,42 @@ classdef GUIFig < GUI
 			prop = GUIFig.getPropProp(pointer);
 			
 			switch prop
-				case 28 % GUIFig.PF
+				case 29 % GUIFig.PF
 					check = Format.checkFormat(8, value, GUIFig.getPropSettings(prop));
-				case 29 % GUIFig.FILE
+				case 30 % GUIFig.FILE
 					check = Format.checkFormat(2, value, GUIFig.getPropSettings(prop));
-				case 30 % GUIFig.TEXT_FILE
+				case 31 % GUIFig.TEXT_FILE
 					check = Format.checkFormat(18, value, GUIFig.getPropSettings(prop));
-				case 31 % GUIFig.GUI_LAYOUT
+				case 32 % GUIFig.GUI_LAYOUT
 					check = Format.checkFormat(8, value, GUIFig.getPropSettings(prop));
-				case 32 % GUIFig.GUI_SETTINGS
+				case 33 % GUIFig.GUI_SETTINGS
 					check = Format.checkFormat(8, value, GUIFig.getPropSettings(prop));
-				case 33 % GUIFig.H_MENU_FILE
+				case 34 % GUIFig.H_MENU_FILE
 					check = Format.checkFormat(18, value, GUIFig.getPropSettings(prop));
-				case 34 % GUIFig.MENU_FILE
+				case 35 % GUIFig.MENU_FILE
 					check = Format.checkFormat(4, value, GUIFig.getPropSettings(prop));
-				case 35 % GUIFig.H_MENU_PRINT
+				case 36 % GUIFig.H_MENU_PRINT
 					check = Format.checkFormat(18, value, GUIFig.getPropSettings(prop));
-				case 36 % GUIFig.MENU_PRINT
+				case 37 % GUIFig.MENU_PRINT
 					check = Format.checkFormat(4, value, GUIFig.getPropSettings(prop));
-				case 37 % GUIFig.H_MENU_GUI_SETTINGS
+				case 38 % GUIFig.H_MENU_GUI_SETTINGS
 					check = Format.checkFormat(18, value, GUIFig.getPropSettings(prop));
-				case 38 % GUIFig.MENU_GUI_SETTINGS
+				case 39 % GUIFig.MENU_GUI_SETTINGS
 					check = Format.checkFormat(4, value, GUIFig.getPropSettings(prop));
-				case 39 % GUIFig.H_MENU_PERSONALIZE
+				case 40 % GUIFig.H_MENU_PERSONALIZE
 					check = Format.checkFormat(18, value, GUIFig.getPropSettings(prop));
-				case 40 % GUIFig.MENU_PERSONALIZE
+				case 41 % GUIFig.MENU_PERSONALIZE
 					check = Format.checkFormat(4, value, GUIFig.getPropSettings(prop));
-				case 41 % GUIFig.TOOL_FILE
+				case 42 % GUIFig.TOOL_FILE
 					check = Format.checkFormat(4, value, GUIFig.getPropSettings(prop));
-				case 42 % GUIFig.TOOL_PRINT
+				case 43 % GUIFig.TOOL_PRINT
 					check = Format.checkFormat(4, value, GUIFig.getPropSettings(prop));
-				case 43 % GUIFig.TOOL_GUI_SETTINGS
+				case 44 % GUIFig.TOOL_GUI_SETTINGS
 					check = Format.checkFormat(4, value, GUIFig.getPropSettings(prop));
 				case 3 % GUIFig.TEMPLATE
 					check = Format.checkFormat(8, value, GUIFig.getPropSettings(prop));
 				otherwise
-					if prop <= 27
+					if prop <= 28
 						check = checkProp@GUI(prop, value);
 					end
 			end
@@ -967,7 +969,7 @@ classdef GUIFig < GUI
 			%  checkValue.
 			
 			switch prop
-				case 28 % GUIFig.PF
+				case 29 % GUIFig.PF
 					pf = gui.get('PF');
 					pf.set('PARENT', gui)
 					if isa(gui.getr('TITLE'), 'NoValue')
@@ -975,7 +977,7 @@ classdef GUIFig < GUI
 					end
 					gui.lock('PF', 'Iterative', false)
 					
-				case 29 % GUIFig.FILE
+				case 30 % GUIFig.FILE
 					if gui.get('DRAWN')
 					    set(gui.get('TEXT_FILE'), ...
 					        'Text', gui.get('FILE'), ...
@@ -984,7 +986,7 @@ classdef GUIFig < GUI
 					end
 					
 				otherwise
-					if prop <= 27
+					if prop <= 28
 						postset@GUI(gui, prop);
 					end
 			end
@@ -1007,7 +1009,7 @@ classdef GUIFig < GUI
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 30 % GUIFig.TEXT_FILE
+				case 31 % GUIFig.TEXT_FILE
 					text_file = uilabel( ...
 					    'Parent', gui.memorize('H'), ... % H = p for Panel
 					    'Tag', 'TEXT_FILE', ...    
@@ -1019,7 +1021,7 @@ classdef GUIFig < GUI
 					    );
 					value = text_file;
 					
-				case 33 % GUIFig.H_MENU_FILE
+				case 34 % GUIFig.H_MENU_FILE
 					menu_file = uimenu(gui.memorize('H'), ... % f for figure
 					    'Tag', 'MENU.File', ...
 					    'Label', 'File' ...
@@ -1049,7 +1051,7 @@ classdef GUIFig < GUI
 					
 					value = menu_file;
 					
-				case 35 % GUIFig.H_MENU_PRINT
+				case 36 % GUIFig.H_MENU_PRINT
 					menu_print = uimenu(gui.memorize('H'), ... % f for figure
 					    'Tag', 'MENU.Print', ...
 					    'Label', 'Print' ...
@@ -1098,7 +1100,7 @@ classdef GUIFig < GUI
 					
 					value = menu_print;
 					
-				case 37 % GUIFig.H_MENU_GUI_SETTINGS
+				case 38 % GUIFig.H_MENU_GUI_SETTINGS
 					menu_settings = uimenu(gui.memorize('H'), ... % f for figure
 					    'Tag', 'MENU.Settings', ...
 					    'Label', 'Settings' ...
@@ -1111,7 +1113,7 @@ classdef GUIFig < GUI
 					
 					value = menu_settings;
 					
-				case 39 % GUIFig.H_MENU_PERSONALIZE
+				case 40 % GUIFig.H_MENU_PERSONALIZE
 					menu_personalize = uimenu(gui.memorize('H'), ... % f for figure
 					    'Tag', 'MENU.Personalize', ...
 					    'Label', 'Personalize' ...
@@ -1124,7 +1126,7 @@ classdef GUIFig < GUI
 					
 					value = menu_personalize;
 					
-				case 13 % GUIFig.H_MENUBAR
+				case 14 % GUIFig.H_MENUBAR
 					value = {};
 					if gui.get('MENU_FILE')
 					    value = [value, gui.memorize('H_MENU_FILE')];
@@ -1142,10 +1144,10 @@ classdef GUIFig < GUI
 					    value = [value, gui.memorize('H_MENU_ABOUT')];
 					end
 					
-				case 18 % GUIFig.H_TOOLS
+				case 19 % GUIFig.H_TOOLS
 					toolbar = gui.memorize('H_TOOLBAR');
 					
-					children = calculateValue@GUI(gui, 18);
+					children = calculateValue@GUI(gui, 19);
 					
 					pf = gui.memorize('PF');
 					
@@ -1197,7 +1199,7 @@ classdef GUIFig < GUI
 					% reorder tools
 					toolbar.Children = [value{end:-1:1}];
 					
-				case 8 % GUIFig.DRAW
+				case 9 % GUIFig.DRAW
 					if check_graphics(gui.memorize('H'), 'figure')
 					
 					    if gui.get('MENUBAR')
@@ -1227,13 +1229,13 @@ classdef GUIFig < GUI
 					    value = false;
 					end
 					
-				case 22 % GUIFig.H
-					f = calculateValue@GUI(gui, 22);
+				case 23 % GUIFig.H
+					f = calculateValue@GUI(gui, 23);
 					pf = gui.memorize('PF');
 					value = f;
 					
-				case 24 % GUIFig.SHOW
-					value = calculateValue@GUI(gui, 24, varargin{:}); % also warning
+				case 25 % GUIFig.SHOW
+					value = calculateValue@GUI(gui, 25, varargin{:}); % also warning
 					if value
 					    % figure layout editor
 					    if isa(gui.getr('GUI_LAYOUT'), 'GUILayout') && gui.get('GUI_LAYOUT').get('DRAWN')
@@ -1246,8 +1248,8 @@ classdef GUIFig < GUI
 					    end
 					end
 					
-				case 25 % GUIFig.HIDE
-					value = calculateValue@GUI(gui, 25, varargin{:}); % also warning
+				case 26 % GUIFig.HIDE
+					value = calculateValue@GUI(gui, 26, varargin{:}); % also warning
 					if value
 					    % figure layout editor
 					    if isa(gui.getr('GUI_LAYOUT'), 'GUILayout') && gui.get('GUI_LAYOUT').get('DRAWN')
@@ -1260,8 +1262,8 @@ classdef GUIFig < GUI
 					    end
 					end
 					
-				case 26 % GUIFig.DELETE
-					value = calculateValue@GUI(gui, 26, varargin{:}); % also warning
+				case 27 % GUIFig.DELETE
+					value = calculateValue@GUI(gui, 27, varargin{:}); % also warning
 					if value
 						gui.set('TEXT_FILE', Element.getNoValue())
 					
@@ -1271,7 +1273,7 @@ classdef GUIFig < GUI
 					 	gui.set('H_MENU_PERSONALIZE', Element.getNoValue())
 					end
 					
-				case 27 % GUIFig.CLOSE
+				case 28 % GUIFig.CLOSE
 					if gui.get('DRAWN')
 					
 					    title = gui.get('TITLE');
@@ -1316,7 +1318,7 @@ classdef GUIFig < GUI
 					end
 					
 				otherwise
-					if prop <= 27
+					if prop <= 28
 						value = calculateValue@GUI(gui, prop, varargin{:});
 					else
 						value = calculateValue@Element(gui, prop, varargin{:});

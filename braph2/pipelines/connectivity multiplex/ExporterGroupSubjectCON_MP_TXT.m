@@ -21,11 +21,12 @@ classdef ExporterGroupSubjectCON_MP_TXT < Exporter
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the CON MP subject group exporter in TXT.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the CON MP subject group exporter in TXT.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the CON MP subject group exporter in TXT.
-	%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>8</strong> <strong>GR</strong> 	GR (data, item) is a group of subjects with connectivity multiplex data.
-	%  <strong>9</strong> <strong>DIRECTORY</strong> 	DIRECTORY (data, string) is the directory name where to save the group of subjects with connectivity multiplex data.
-	%  <strong>10</strong> <strong>PUT_DIR</strong> 	PUT_DIR (query, item) opens a dialog box to set the directory where to save the group of subjects with connectivity multiplex data.
-	%  <strong>11</strong> <strong>SAVE</strong> 	SAVE (result, empty) saves the group of subjects with connectivity multiplex data in TXT files in the selected directory.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>9</strong> <strong>GR</strong> 	GR (data, item) is a group of subjects with connectivity multiplex data.
+	%  <strong>10</strong> <strong>DIRECTORY</strong> 	DIRECTORY (data, string) is the directory name where to save the group of subjects with connectivity multiplex data.
+	%  <strong>11</strong> <strong>PUT_DIR</strong> 	PUT_DIR (query, item) opens a dialog box to set the directory where to save the group of subjects with connectivity multiplex data.
+	%  <strong>12</strong> <strong>SAVE</strong> 	SAVE (result, empty) saves the group of subjects with connectivity multiplex data in TXT files in the selected directory.
 	%
 	% ExporterGroupSubjectCON_MP_TXT methods (constructor):
 	%  ExporterGroupSubjectCON_MP_TXT - constructor
@@ -116,22 +117,22 @@ classdef ExporterGroupSubjectCON_MP_TXT < Exporter
 	% See also Group, SunbjectCON_MP, ImporterGroupSubjectCON_MP_TXT.
 	
 	properties (Constant) % properties
-		GR = 8; %CET: Computational Efficiency Trick
+		GR = 9; %CET: Computational Efficiency Trick
 		GR_TAG = 'GR';
 		GR_CATEGORY = 4;
 		GR_FORMAT = 8;
 		
-		DIRECTORY = 9; %CET: Computational Efficiency Trick
+		DIRECTORY = 10; %CET: Computational Efficiency Trick
 		DIRECTORY_TAG = 'DIRECTORY';
 		DIRECTORY_CATEGORY = 4;
 		DIRECTORY_FORMAT = 2;
 		
-		PUT_DIR = 10; %CET: Computational Efficiency Trick
+		PUT_DIR = 11; %CET: Computational Efficiency Trick
 		PUT_DIR_TAG = 'PUT_DIR';
 		PUT_DIR_CATEGORY = 6;
 		PUT_DIR_FORMAT = 8;
 		
-		SAVE = 11; %CET: Computational Efficiency Trick
+		SAVE = 12; %CET: Computational Efficiency Trick
 		SAVE_TAG = 'SAVE';
 		SAVE_CATEGORY = 5;
 		SAVE_FORMAT = 1;
@@ -154,11 +155,12 @@ classdef ExporterGroupSubjectCON_MP_TXT < Exporter
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the CON MP subject group exporter in TXT.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the CON MP subject group exporter in TXT.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the CON MP subject group exporter in TXT.
-			%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>8</strong> <strong>GR</strong> 	GR (data, item) is a group of subjects with connectivity multiplex data.
-			%  <strong>9</strong> <strong>DIRECTORY</strong> 	DIRECTORY (data, string) is the directory name where to save the group of subjects with connectivity multiplex data.
-			%  <strong>10</strong> <strong>PUT_DIR</strong> 	PUT_DIR (query, item) opens a dialog box to set the directory where to save the group of subjects with connectivity multiplex data.
-			%  <strong>11</strong> <strong>SAVE</strong> 	SAVE (result, empty) saves the group of subjects with connectivity multiplex data in TXT files in the selected directory.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>9</strong> <strong>GR</strong> 	GR (data, item) is a group of subjects with connectivity multiplex data.
+			%  <strong>10</strong> <strong>DIRECTORY</strong> 	DIRECTORY (data, string) is the directory name where to save the group of subjects with connectivity multiplex data.
+			%  <strong>11</strong> <strong>PUT_DIR</strong> 	PUT_DIR (query, item) opens a dialog box to set the directory where to save the group of subjects with connectivity multiplex data.
+			%  <strong>12</strong> <strong>SAVE</strong> 	SAVE (result, empty) saves the group of subjects with connectivity multiplex data in TXT files in the selected directory.
 			%
 			% See also Category, Format.
 			
@@ -220,7 +222,7 @@ classdef ExporterGroupSubjectCON_MP_TXT < Exporter
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12];
 				return
 			end
 			
@@ -232,13 +234,13 @@ classdef ExporterGroupSubjectCON_MP_TXT < Exporter
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 8 9];
+					prop_list = [4 9 10];
 				case 5 % Category.RESULT
-					prop_list = 11;
+					prop_list = 12;
 				case 6 % Category.QUERY
-					prop_list = 10;
+					prop_list = [7 11];
 				case 9 % Category.GUI
-					prop_list = 7;
+					prop_list = 8;
 				otherwise
 					prop_list = [];
 			end
@@ -264,7 +266,7 @@ classdef ExporterGroupSubjectCON_MP_TXT < Exporter
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 11;
+				prop_number = 12;
 				return
 			end
 			
@@ -280,7 +282,7 @@ classdef ExporterGroupSubjectCON_MP_TXT < Exporter
 				case 5 % Category.RESULT
 					prop_number = 1;
 				case 6 % Category.QUERY
-					prop_number = 1;
+					prop_number = 2;
 				case 9 % Category.GUI
 					prop_number = 1;
 				otherwise
@@ -313,7 +315,7 @@ classdef ExporterGroupSubjectCON_MP_TXT < Exporter
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 11 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 12 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -351,7 +353,7 @@ classdef ExporterGroupSubjectCON_MP_TXT < Exporter
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'DIRECTORY'  'PUT_DIR'  'SAVE' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'DIRECTORY'  'PUT_DIR'  'SAVE' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -384,7 +386,7 @@ classdef ExporterGroupSubjectCON_MP_TXT < Exporter
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'DIRECTORY'  'PUT_DIR'  'SAVE' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'DIRECTORY'  'PUT_DIR'  'SAVE' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -413,7 +415,7 @@ classdef ExporterGroupSubjectCON_MP_TXT < Exporter
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				exportergroupsubjectcon_mp_txt_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'DIRECTORY'  'PUT_DIR'  'SAVE' };
+				exportergroupsubjectcon_mp_txt_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'DIRECTORY'  'PUT_DIR'  'SAVE' };
 				tag = exportergroupsubjectcon_mp_txt_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -440,7 +442,7 @@ classdef ExporterGroupSubjectCON_MP_TXT < Exporter
 			prop = ExporterGroupSubjectCON_MP_TXT.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exportergroupsubjectcon_mp_txt_category_list = { 1  1  3  4  2  2  9  4  4  6  5 };
+			exportergroupsubjectcon_mp_txt_category_list = { 1  1  3  4  2  2  6  9  4  4  6  5 };
 			prop_category = exportergroupsubjectcon_mp_txt_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -466,7 +468,7 @@ classdef ExporterGroupSubjectCON_MP_TXT < Exporter
 			prop = ExporterGroupSubjectCON_MP_TXT.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exportergroupsubjectcon_mp_txt_format_list = { 2  2  8  2  2  2  4  8  2  8  1 };
+			exportergroupsubjectcon_mp_txt_format_list = { 2  2  8  2  2  2  2  4  8  2  8  1 };
 			prop_format = exportergroupsubjectcon_mp_txt_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -492,7 +494,7 @@ classdef ExporterGroupSubjectCON_MP_TXT < Exporter
 			prop = ExporterGroupSubjectCON_MP_TXT.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exportergroupsubjectcon_mp_txt_description_list = { 'NAME (constant, string) is the name of the CON MP subject group exporter in TXT.'  'DESCRIPTION (constant, string) is the description of the CON MP subject group exporter in TXT.'  'TEMPLATE (parameter, item) is the template of the CON MP subject group exporter in TXT.'  'ID (data, string) is a few-letter code for the CON MP subject group exporter in TXT.'  'LABEL (metadata, string) is an extended label of the CON MP subject group exporter in TXT.'  'NOTES (metadata, string) are some specific notes about the CON MP subject group exporter in TXT.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is a group of subjects with connectivity multiplex data.'  'DIRECTORY (data, string) is the directory name where to save the group of subjects with connectivity multiplex data.'  'PUT_DIR (query, item) opens a dialog box to set the directory where to save the group of subjects with connectivity multiplex data.'  'SAVE (result, empty) saves the group of subjects with connectivity multiplex data in TXT files in the selected directory.' };
+			exportergroupsubjectcon_mp_txt_description_list = { 'NAME (constant, string) is the name of the CON MP subject group exporter in TXT.'  'DESCRIPTION (constant, string) is the description of the CON MP subject group exporter in TXT.'  'TEMPLATE (parameter, item) is the template of the CON MP subject group exporter in TXT.'  'ID (data, string) is a few-letter code for the CON MP subject group exporter in TXT.'  'LABEL (metadata, string) is an extended label of the CON MP subject group exporter in TXT.'  'NOTES (metadata, string) are some specific notes about the CON MP subject group exporter in TXT.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is a group of subjects with connectivity multiplex data.'  'DIRECTORY (data, string) is the directory name where to save the group of subjects with connectivity multiplex data.'  'PUT_DIR (query, item) opens a dialog box to set the directory where to save the group of subjects with connectivity multiplex data.'  'SAVE (result, empty) saves the group of subjects with connectivity multiplex data in TXT files in the selected directory.' };
 			prop_description = exportergroupsubjectcon_mp_txt_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -518,13 +520,13 @@ classdef ExporterGroupSubjectCON_MP_TXT < Exporter
 			prop = ExporterGroupSubjectCON_MP_TXT.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % ExporterGroupSubjectCON_MP_TXT.GR
+				case 9 % ExporterGroupSubjectCON_MP_TXT.GR
 					prop_settings = 'Group';
-				case 9 % ExporterGroupSubjectCON_MP_TXT.DIRECTORY
+				case 10 % ExporterGroupSubjectCON_MP_TXT.DIRECTORY
 					prop_settings = Format.getFormatSettings(2);
-				case 10 % ExporterGroupSubjectCON_MP_TXT.PUT_DIR
+				case 11 % ExporterGroupSubjectCON_MP_TXT.PUT_DIR
 					prop_settings = 'ExporterGroupSubjectCON_MP_TXT';
-				case 11 % ExporterGroupSubjectCON_MP_TXT.SAVE
+				case 12 % ExporterGroupSubjectCON_MP_TXT.SAVE
 					prop_settings = Format.getFormatSettings(1);
 				case 3 % ExporterGroupSubjectCON_MP_TXT.TEMPLATE
 					prop_settings = 'ExporterGroupSubjectCON_MP_TXT';
@@ -555,13 +557,13 @@ classdef ExporterGroupSubjectCON_MP_TXT < Exporter
 			prop = ExporterGroupSubjectCON_MP_TXT.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % ExporterGroupSubjectCON_MP_TXT.GR
+				case 9 % ExporterGroupSubjectCON_MP_TXT.GR
 					prop_default = Group('SUB_CLASS', 'SubjectCON_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON_MP'));
-				case 9 % ExporterGroupSubjectCON_MP_TXT.DIRECTORY
+				case 10 % ExporterGroupSubjectCON_MP_TXT.DIRECTORY
 					prop_default = [fileparts(which('test_braph2')) filesep 'default_group_subjects_CON_MP_most_likely_to_be_erased'];
-				case 10 % ExporterGroupSubjectCON_MP_TXT.PUT_DIR
+				case 11 % ExporterGroupSubjectCON_MP_TXT.PUT_DIR
 					prop_default = Format.getFormatDefault(8, ExporterGroupSubjectCON_MP_TXT.getPropSettings(prop));
-				case 11 % ExporterGroupSubjectCON_MP_TXT.SAVE
+				case 12 % ExporterGroupSubjectCON_MP_TXT.SAVE
 					prop_default = Format.getFormatDefault(1, ExporterGroupSubjectCON_MP_TXT.getPropSettings(prop));
 				case 1 % ExporterGroupSubjectCON_MP_TXT.NAME
 					prop_default = 'ExporterGroupSubjectCON_MP_TXT';
@@ -639,21 +641,21 @@ classdef ExporterGroupSubjectCON_MP_TXT < Exporter
 			prop = ExporterGroupSubjectCON_MP_TXT.getPropProp(pointer);
 			
 			switch prop
-				case 8 % ExporterGroupSubjectCON_MP_TXT.GR
+				case 9 % ExporterGroupSubjectCON_MP_TXT.GR
 					check = Format.checkFormat(8, value, ExporterGroupSubjectCON_MP_TXT.getPropSettings(prop));
 					if check
 						check = any(strcmp(value.get('SUB_CLASS'), subclasses('SubjectCON_MP', [], [], true)));
 					end
-				case 9 % ExporterGroupSubjectCON_MP_TXT.DIRECTORY
+				case 10 % ExporterGroupSubjectCON_MP_TXT.DIRECTORY
 					check = Format.checkFormat(2, value, ExporterGroupSubjectCON_MP_TXT.getPropSettings(prop));
-				case 10 % ExporterGroupSubjectCON_MP_TXT.PUT_DIR
+				case 11 % ExporterGroupSubjectCON_MP_TXT.PUT_DIR
 					check = Format.checkFormat(8, value, ExporterGroupSubjectCON_MP_TXT.getPropSettings(prop));
-				case 11 % ExporterGroupSubjectCON_MP_TXT.SAVE
+				case 12 % ExporterGroupSubjectCON_MP_TXT.SAVE
 					check = Format.checkFormat(1, value, ExporterGroupSubjectCON_MP_TXT.getPropSettings(prop));
 				case 3 % ExporterGroupSubjectCON_MP_TXT.TEMPLATE
 					check = Format.checkFormat(8, value, ExporterGroupSubjectCON_MP_TXT.getPropSettings(prop));
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						check = checkProp@Exporter(prop, value);
 					end
 			end
@@ -686,15 +688,15 @@ classdef ExporterGroupSubjectCON_MP_TXT < Exporter
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 10 % ExporterGroupSubjectCON_MP_TXT.PUT_DIR
+				case 11 % ExporterGroupSubjectCON_MP_TXT.PUT_DIR
 					directory = uigetdir('Select directory');
 					if ischar(directory) && isfolder(directory)
 					    ex.set('DIRECTORY', directory);
 					end
 					value = ex;
 					
-				case 11 % ExporterGroupSubjectCON_MP_TXT.SAVE
-					rng_settings_ = rng(); rng(ex.getPropSeed(11), 'twister')
+				case 12 % ExporterGroupSubjectCON_MP_TXT.SAVE
+					rng_settings_ = rng(); rng(ex.getPropSeed(12), 'twister')
 					
 					directory = ex.get('DIRECTORY');
 					
@@ -771,7 +773,7 @@ classdef ExporterGroupSubjectCON_MP_TXT < Exporter
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						value = calculateValue@Exporter(ex, prop, varargin{:});
 					else
 						value = calculateValue@Element(ex, prop, varargin{:});

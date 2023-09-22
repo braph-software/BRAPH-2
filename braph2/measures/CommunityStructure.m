@@ -13,19 +13,20 @@ classdef CommunityStructure < Measure
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the community structure.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the community structure.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the community structure.
-	%  <strong>7</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-	%  <strong>8</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>9</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-	%  <strong>10</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-	%  <strong>11</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>12</strong> <strong>M</strong> 	M (result, cell) is the triangles.
-	%  <strong>13</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-	%  <strong>14</strong> <strong>RULE</strong> 	RULE (parameter, option)
-	%  <strong>15</strong> <strong>GAMMA</strong> 	GAMMA (parameter, SCALAR) is the resolution parameter.
-	%  <strong>16</strong> <strong>M0</strong> 	M0 (data, rvector) is the initial community affiliation vector.
-	%  <strong>17</strong> <strong>LOUVAIN_OM</strong> 	LOUVAIN_OM (data, MATRIX) is the custom objective matrix (Louvain).
-	%  <strong>18</strong> <strong>OM_TYPE</strong> 	OM_TYPE (data, OPTION) is the objective-function type algorithm (Louvain).
-	%  <strong>19</strong> <strong>QUALITY_FUNCTION</strong> 	QUALITY_FUNCTION (metadata, CELL)
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the triangles.
+	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%  <strong>15</strong> <strong>RULE</strong> 	RULE (parameter, option)
+	%  <strong>16</strong> <strong>GAMMA</strong> 	GAMMA (parameter, SCALAR) is the resolution parameter.
+	%  <strong>17</strong> <strong>M0</strong> 	M0 (data, rvector) is the initial community affiliation vector.
+	%  <strong>18</strong> <strong>LOUVAIN_OM</strong> 	LOUVAIN_OM (data, MATRIX) is the custom objective matrix (Louvain).
+	%  <strong>19</strong> <strong>OM_TYPE</strong> 	OM_TYPE (data, OPTION) is the objective-function type algorithm (Louvain).
+	%  <strong>20</strong> <strong>QUALITY_FUNCTION</strong> 	QUALITY_FUNCTION (metadata, CELL)
 	%
 	% CommunityStructure methods (constructor):
 	%  CommunityStructure - constructor
@@ -114,32 +115,32 @@ classdef CommunityStructure < Measure
 	%
 	
 	properties (Constant) % properties
-		RULE = 14; %CET: Computational Efficiency Trick
+		RULE = 15; %CET: Computational Efficiency Trick
 		RULE_TAG = 'RULE';
 		RULE_CATEGORY = 3;
 		RULE_FORMAT = 5;
 		
-		GAMMA = 15; %CET: Computational Efficiency Trick
+		GAMMA = 16; %CET: Computational Efficiency Trick
 		GAMMA_TAG = 'GAMMA';
 		GAMMA_CATEGORY = 3;
 		GAMMA_FORMAT = 11;
 		
-		M0 = 16; %CET: Computational Efficiency Trick
+		M0 = 17; %CET: Computational Efficiency Trick
 		M0_TAG = 'M0';
 		M0_CATEGORY = 4;
 		M0_FORMAT = 12;
 		
-		LOUVAIN_OM = 17; %CET: Computational Efficiency Trick
+		LOUVAIN_OM = 18; %CET: Computational Efficiency Trick
 		LOUVAIN_OM_TAG = 'LOUVAIN_OM';
 		LOUVAIN_OM_CATEGORY = 4;
 		LOUVAIN_OM_FORMAT = 14;
 		
-		OM_TYPE = 18; %CET: Computational Efficiency Trick
+		OM_TYPE = 19; %CET: Computational Efficiency Trick
 		OM_TYPE_TAG = 'OM_TYPE';
 		OM_TYPE_CATEGORY = 4;
 		OM_TYPE_FORMAT = 5;
 		
-		QUALITY_FUNCTION = 19; %CET: Computational Efficiency Trick
+		QUALITY_FUNCTION = 20; %CET: Computational Efficiency Trick
 		QUALITY_FUNCTION_TAG = 'QUALITY_FUNCTION';
 		QUALITY_FUNCTION_CATEGORY = 2;
 		QUALITY_FUNCTION_FORMAT = 16;
@@ -162,19 +163,20 @@ classdef CommunityStructure < Measure
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the community structure.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the community structure.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the community structure.
-			%  <strong>7</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-			%  <strong>8</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>9</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-			%  <strong>10</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-			%  <strong>11</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>12</strong> <strong>M</strong> 	M (result, cell) is the triangles.
-			%  <strong>13</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-			%  <strong>14</strong> <strong>RULE</strong> 	RULE (parameter, option)
-			%  <strong>15</strong> <strong>GAMMA</strong> 	GAMMA (parameter, SCALAR) is the resolution parameter.
-			%  <strong>16</strong> <strong>M0</strong> 	M0 (data, rvector) is the initial community affiliation vector.
-			%  <strong>17</strong> <strong>LOUVAIN_OM</strong> 	LOUVAIN_OM (data, MATRIX) is the custom objective matrix (Louvain).
-			%  <strong>18</strong> <strong>OM_TYPE</strong> 	OM_TYPE (data, OPTION) is the objective-function type algorithm (Louvain).
-			%  <strong>19</strong> <strong>QUALITY_FUNCTION</strong> 	QUALITY_FUNCTION (metadata, CELL)
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the triangles.
+			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+			%  <strong>15</strong> <strong>RULE</strong> 	RULE (parameter, option)
+			%  <strong>16</strong> <strong>GAMMA</strong> 	GAMMA (parameter, SCALAR) is the resolution parameter.
+			%  <strong>17</strong> <strong>M0</strong> 	M0 (data, rvector) is the initial community affiliation vector.
+			%  <strong>18</strong> <strong>LOUVAIN_OM</strong> 	LOUVAIN_OM (data, MATRIX) is the custom objective matrix (Louvain).
+			%  <strong>19</strong> <strong>OM_TYPE</strong> 	OM_TYPE (data, OPTION) is the objective-function type algorithm (Louvain).
+			%  <strong>20</strong> <strong>QUALITY_FUNCTION</strong> 	QUALITY_FUNCTION (metadata, CELL)
 			%
 			% See also Category, Format.
 			
@@ -236,23 +238,25 @@ classdef CommunityStructure < Measure
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2 7 8 9 10];
+					prop_list = [1 2 8 9 10 11];
 				case 2 % Category.METADATA
-					prop_list = [5 6 19];
+					prop_list = [5 6 20];
 				case 3 % Category.PARAMETER
-					prop_list = [3 14 15];
+					prop_list = [3 15 16];
 				case 4 % Category.DATA
-					prop_list = [4 11 16 17 18];
+					prop_list = [4 12 17 18 19];
 				case 5 % Category.RESULT
-					prop_list = 12;
-				case 9 % Category.GUI
 					prop_list = 13;
+				case 6 % Category.QUERY
+					prop_list = 7;
+				case 9 % Category.GUI
+					prop_list = 14;
 				otherwise
 					prop_list = [];
 			end
@@ -278,7 +282,7 @@ classdef CommunityStructure < Measure
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 19;
+				prop_number = 20;
 				return
 			end
 			
@@ -292,6 +296,8 @@ classdef CommunityStructure < Measure
 				case 4 % Category.DATA
 					prop_number = 5;
 				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
 					prop_number = 1;
 				case 9 % Category.GUI
 					prop_number = 1;
@@ -325,7 +331,7 @@ classdef CommunityStructure < Measure
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 19 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 20 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -363,7 +369,7 @@ classdef CommunityStructure < Measure
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE'  'GAMMA'  'M0'  'LOUVAIN_OM'  'OM_TYPE'  'QUALITY_FUNCTION' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE'  'GAMMA'  'M0'  'LOUVAIN_OM'  'OM_TYPE'  'QUALITY_FUNCTION' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -396,7 +402,7 @@ classdef CommunityStructure < Measure
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE'  'GAMMA'  'M0'  'LOUVAIN_OM'  'OM_TYPE'  'QUALITY_FUNCTION' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE'  'GAMMA'  'M0'  'LOUVAIN_OM'  'OM_TYPE'  'QUALITY_FUNCTION' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -425,7 +431,7 @@ classdef CommunityStructure < Measure
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				communitystructure_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE'  'GAMMA'  'M0'  'LOUVAIN_OM'  'OM_TYPE'  'QUALITY_FUNCTION' };
+				communitystructure_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE'  'GAMMA'  'M0'  'LOUVAIN_OM'  'OM_TYPE'  'QUALITY_FUNCTION' };
 				tag = communitystructure_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -452,7 +458,7 @@ classdef CommunityStructure < Measure
 			prop = CommunityStructure.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			communitystructure_category_list = { 1  1  3  4  2  2  1  1  1  1  4  5  9  3  3  4  4  4  2 };
+			communitystructure_category_list = { 1  1  3  4  2  2  6  1  1  1  1  4  5  9  3  3  4  4  4  2 };
 			prop_category = communitystructure_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -478,7 +484,7 @@ classdef CommunityStructure < Measure
 			prop = CommunityStructure.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			communitystructure_format_list = { 2  2  8  2  2  2  11  11  11  7  8  16  8  5  11  12  14  5  16 };
+			communitystructure_format_list = { 2  2  8  2  2  2  2  11  11  11  7  8  16  8  5  11  12  14  5  16 };
 			prop_format = communitystructure_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -504,7 +510,7 @@ classdef CommunityStructure < Measure
 			prop = CommunityStructure.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			communitystructure_description_list = { 'NAME (constant, string) is the name of the community structure.'  'DESCRIPTION (constant, string) is the description of the community structure.'  'TEMPLATE (parameter, item) is the template of the community structure.'  'ID (data, string) is a few-letter code of the community structure.'  'LABEL (metadata, string) is an extended label of the community structure.'  'NOTES (metadata, string) are some specific notes about the community structure.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the triangles.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option)'  'GAMMA (parameter, SCALAR) is the resolution parameter.'  'M0 (data, rvector) is the initial community affiliation vector.'  'LOUVAIN_OM (data, MATRIX) is the custom objective matrix (Louvain).'  'OM_TYPE (data, OPTION) is the objective-function type algorithm (Louvain).'  'QUALITY_FUNCTION (metadata, CELL)' };
+			communitystructure_description_list = { 'NAME (constant, string) is the name of the community structure.'  'DESCRIPTION (constant, string) is the description of the community structure.'  'TEMPLATE (parameter, item) is the template of the community structure.'  'ID (data, string) is a few-letter code of the community structure.'  'LABEL (metadata, string) is an extended label of the community structure.'  'NOTES (metadata, string) are some specific notes about the community structure.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the triangles.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option)'  'GAMMA (parameter, SCALAR) is the resolution parameter.'  'M0 (data, rvector) is the initial community affiliation vector.'  'LOUVAIN_OM (data, MATRIX) is the custom objective matrix (Louvain).'  'OM_TYPE (data, OPTION) is the objective-function type algorithm (Louvain).'  'QUALITY_FUNCTION (metadata, CELL)' };
 			prop_description = communitystructure_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -530,17 +536,17 @@ classdef CommunityStructure < Measure
 			prop = CommunityStructure.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 14 % CommunityStructure.RULE
+				case 15 % CommunityStructure.RULE
 					prop_settings = { 'louvain' 'newman' 'fixed'};
-				case 15 % CommunityStructure.GAMMA
+				case 16 % CommunityStructure.GAMMA
 					prop_settings = Format.getFormatSettings(11);
-				case 16 % CommunityStructure.M0
+				case 17 % CommunityStructure.M0
 					prop_settings = Format.getFormatSettings(12);
-				case 17 % CommunityStructure.LOUVAIN_OM
+				case 18 % CommunityStructure.LOUVAIN_OM
 					prop_settings = Format.getFormatSettings(14);
-				case 18 % CommunityStructure.OM_TYPE
+				case 19 % CommunityStructure.OM_TYPE
 					prop_settings = {'modularity' 'potts' 'negative_sym' 'negative_asym'};
-				case 19 % CommunityStructure.QUALITY_FUNCTION
+				case 20 % CommunityStructure.QUALITY_FUNCTION
 					prop_settings = Format.getFormatSettings(16);
 				case 3 % CommunityStructure.TEMPLATE
 					prop_settings = 'CommunityStructure';
@@ -571,17 +577,17 @@ classdef CommunityStructure < Measure
 			prop = CommunityStructure.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 14 % CommunityStructure.RULE
+				case 15 % CommunityStructure.RULE
 					prop_default = 'louvain';
-				case 15 % CommunityStructure.GAMMA
+				case 16 % CommunityStructure.GAMMA
 					prop_default = 1;
-				case 16 % CommunityStructure.M0
+				case 17 % CommunityStructure.M0
 					prop_default = [];
-				case 17 % CommunityStructure.LOUVAIN_OM
+				case 18 % CommunityStructure.LOUVAIN_OM
 					prop_default = [];
-				case 18 % CommunityStructure.OM_TYPE
+				case 19 % CommunityStructure.OM_TYPE
 					prop_default = 'modularity';
-				case 19 % CommunityStructure.QUALITY_FUNCTION
+				case 20 % CommunityStructure.QUALITY_FUNCTION
 					prop_default = Format.getFormatDefault(16, CommunityStructure.getPropSettings(prop));
 				case 1 % CommunityStructure.NAME
 					prop_default = 'CommunityStructure';
@@ -595,14 +601,14 @@ classdef CommunityStructure < Measure
 					prop_default = 'CommunityStructure label';
 				case 6 % CommunityStructure.NOTES
 					prop_default = 'CommunityStructure notes';
-				case 7 % CommunityStructure.SHAPE
+				case 8 % CommunityStructure.SHAPE
 					prop_default = 2;
-				case 8 % CommunityStructure.SCOPE
+				case 9 % CommunityStructure.SCOPE
 					prop_default = 2;
-				case 9 % CommunityStructure.PARAMETRICITY
+				case 10 % CommunityStructure.PARAMETRICITY
 					prop_default = 2;
-				case 10 % CommunityStructure.COMPATIBLE_GRAPHS
-					prop_default = {'GraphBU'} ;%TBE % % % add any missing tests;
+				case 11 % CommunityStructure.COMPATIBLE_GRAPHS
+					prop_default = {'GraphBU'};;
 				otherwise
 					prop_default = getPropDefault@Measure(prop);
 			end
@@ -667,22 +673,22 @@ classdef CommunityStructure < Measure
 			prop = CommunityStructure.getPropProp(pointer);
 			
 			switch prop
-				case 14 % CommunityStructure.RULE
+				case 15 % CommunityStructure.RULE
 					check = Format.checkFormat(5, value, CommunityStructure.getPropSettings(prop));
-				case 15 % CommunityStructure.GAMMA
+				case 16 % CommunityStructure.GAMMA
 					check = Format.checkFormat(11, value, CommunityStructure.getPropSettings(prop));
-				case 16 % CommunityStructure.M0
+				case 17 % CommunityStructure.M0
 					check = Format.checkFormat(12, value, CommunityStructure.getPropSettings(prop));
-				case 17 % CommunityStructure.LOUVAIN_OM
+				case 18 % CommunityStructure.LOUVAIN_OM
 					check = Format.checkFormat(14, value, CommunityStructure.getPropSettings(prop));
-				case 18 % CommunityStructure.OM_TYPE
+				case 19 % CommunityStructure.OM_TYPE
 					check = Format.checkFormat(5, value, CommunityStructure.getPropSettings(prop));
-				case 19 % CommunityStructure.QUALITY_FUNCTION
+				case 20 % CommunityStructure.QUALITY_FUNCTION
 					check = Format.checkFormat(16, value, CommunityStructure.getPropSettings(prop));
 				case 3 % CommunityStructure.TEMPLATE
 					check = Format.checkFormat(8, value, CommunityStructure.getPropSettings(prop));
 				otherwise
-					if prop <= 13
+					if prop <= 14
 						check = checkProp@Measure(prop, value);
 					end
 			end
@@ -715,8 +721,8 @@ classdef CommunityStructure < Measure
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 12 % CommunityStructure.M
-					rng_settings_ = rng(); rng(m.getPropSeed(12), 'twister')
+				case 13 % CommunityStructure.M
+					rng_settings_ = rng(); rng(m.getPropSeed(13), 'twister')
 					
 					g = m.get('G');  % graph from measure class
 					A = g.get('A');
@@ -737,7 +743,7 @@ classdef CommunityStructure < Measure
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 13
+					if prop <= 14
 						value = calculateValue@Measure(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

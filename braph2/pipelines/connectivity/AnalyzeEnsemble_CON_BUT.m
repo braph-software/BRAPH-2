@@ -12,13 +12,14 @@ classdef AnalyzeEnsemble_CON_BUT < AnalyzeEnsemble
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ensenmble-based graph analysis using connectivity data of fixed threshold.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ensenmble-based graph analysis using connectivity data of fixed threshold.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ensenmble-based graph analysis using connectivity data of fixed threshold.
-	%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>8</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectCON.
-	%  <strong>9</strong> <strong>GRAPH_TEMPLATE</strong> 	GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
-	%  <strong>10</strong> <strong>G_DICT</strong> 	G_DICT (result, idict) is the graph (MultigraphBUT) ensemble obtained from this analysis.
-	%  <strong>11</strong> <strong>ME_DICT</strong> 	ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-	%  <strong>12</strong> <strong>MEASUREENSEMBLE</strong> 	MEASUREENSEMBLE (query, item) returns an ensemble-based measure.
-	%  <strong>13</strong> <strong>THRESHOLDS</strong> 	THRESHOLDS (parameter, rvector) is the vector of thresholds.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>9</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectCON.
+	%  <strong>10</strong> <strong>GRAPH_TEMPLATE</strong> 	GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
+	%  <strong>11</strong> <strong>G_DICT</strong> 	G_DICT (result, idict) is the graph (MultigraphBUT) ensemble obtained from this analysis.
+	%  <strong>12</strong> <strong>ME_DICT</strong> 	ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
+	%  <strong>13</strong> <strong>MEASUREENSEMBLE</strong> 	MEASUREENSEMBLE (query, item) returns an ensemble-based measure.
+	%  <strong>14</strong> <strong>THRESHOLDS</strong> 	THRESHOLDS (parameter, rvector) is the vector of thresholds.
 	%
 	% AnalyzeEnsemble_CON_BUT methods (constructor):
 	%  AnalyzeEnsemble_CON_BUT - constructor
@@ -109,7 +110,7 @@ classdef AnalyzeEnsemble_CON_BUT < AnalyzeEnsemble
 	% See also SubjectCON, MultigraphBUT.
 	
 	properties (Constant) % properties
-		THRESHOLDS = 13; %CET: Computational Efficiency Trick
+		THRESHOLDS = 14; %CET: Computational Efficiency Trick
 		THRESHOLDS_TAG = 'THRESHOLDS';
 		THRESHOLDS_CATEGORY = 3;
 		THRESHOLDS_FORMAT = 12;
@@ -132,13 +133,14 @@ classdef AnalyzeEnsemble_CON_BUT < AnalyzeEnsemble
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ensenmble-based graph analysis using connectivity data of fixed threshold.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ensenmble-based graph analysis using connectivity data of fixed threshold.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ensenmble-based graph analysis using connectivity data of fixed threshold.
-			%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>8</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectCON.
-			%  <strong>9</strong> <strong>GRAPH_TEMPLATE</strong> 	GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
-			%  <strong>10</strong> <strong>G_DICT</strong> 	G_DICT (result, idict) is the graph (MultigraphBUT) ensemble obtained from this analysis.
-			%  <strong>11</strong> <strong>ME_DICT</strong> 	ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-			%  <strong>12</strong> <strong>MEASUREENSEMBLE</strong> 	MEASUREENSEMBLE (query, item) returns an ensemble-based measure.
-			%  <strong>13</strong> <strong>THRESHOLDS</strong> 	THRESHOLDS (parameter, rvector) is the vector of thresholds.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>9</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectCON.
+			%  <strong>10</strong> <strong>GRAPH_TEMPLATE</strong> 	GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
+			%  <strong>11</strong> <strong>G_DICT</strong> 	G_DICT (result, idict) is the graph (MultigraphBUT) ensemble obtained from this analysis.
+			%  <strong>12</strong> <strong>ME_DICT</strong> 	ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
+			%  <strong>13</strong> <strong>MEASUREENSEMBLE</strong> 	MEASUREENSEMBLE (query, item) returns an ensemble-based measure.
+			%  <strong>14</strong> <strong>THRESHOLDS</strong> 	THRESHOLDS (parameter, rvector) is the vector of thresholds.
 			%
 			% See also Category, Format.
 			
@@ -200,7 +202,7 @@ classdef AnalyzeEnsemble_CON_BUT < AnalyzeEnsemble
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14];
 				return
 			end
 			
@@ -210,15 +212,15 @@ classdef AnalyzeEnsemble_CON_BUT < AnalyzeEnsemble
 				case 2 % Category.METADATA
 					prop_list = [5 6];
 				case 3 % Category.PARAMETER
-					prop_list = [3 9 13];
+					prop_list = [3 10 14];
 				case 4 % Category.DATA
-					prop_list = [4 8];
+					prop_list = [4 9];
 				case 5 % Category.RESULT
-					prop_list = [10 11];
+					prop_list = [11 12];
 				case 6 % Category.QUERY
-					prop_list = 12;
+					prop_list = [7 13];
 				case 9 % Category.GUI
-					prop_list = 7;
+					prop_list = 8;
 				otherwise
 					prop_list = [];
 			end
@@ -244,7 +246,7 @@ classdef AnalyzeEnsemble_CON_BUT < AnalyzeEnsemble
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 13;
+				prop_number = 14;
 				return
 			end
 			
@@ -260,7 +262,7 @@ classdef AnalyzeEnsemble_CON_BUT < AnalyzeEnsemble
 				case 5 % Category.RESULT
 					prop_number = 2;
 				case 6 % Category.QUERY
-					prop_number = 1;
+					prop_number = 2;
 				case 9 % Category.GUI
 					prop_number = 1;
 				otherwise
@@ -293,7 +295,7 @@ classdef AnalyzeEnsemble_CON_BUT < AnalyzeEnsemble
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 13 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 14 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -331,7 +333,7 @@ classdef AnalyzeEnsemble_CON_BUT < AnalyzeEnsemble
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE'  'THRESHOLDS' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE'  'THRESHOLDS' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -364,7 +366,7 @@ classdef AnalyzeEnsemble_CON_BUT < AnalyzeEnsemble
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE'  'THRESHOLDS' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE'  'THRESHOLDS' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -393,7 +395,7 @@ classdef AnalyzeEnsemble_CON_BUT < AnalyzeEnsemble
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				analyzeensemble_con_but_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE'  'THRESHOLDS' };
+				analyzeensemble_con_but_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE'  'THRESHOLDS' };
 				tag = analyzeensemble_con_but_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -420,7 +422,7 @@ classdef AnalyzeEnsemble_CON_BUT < AnalyzeEnsemble
 			prop = AnalyzeEnsemble_CON_BUT.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzeensemble_con_but_category_list = { 1  1  3  4  2  2  9  4  3  5  5  6  3 };
+			analyzeensemble_con_but_category_list = { 1  1  3  4  2  2  6  9  4  3  5  5  6  3 };
 			prop_category = analyzeensemble_con_but_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -446,7 +448,7 @@ classdef AnalyzeEnsemble_CON_BUT < AnalyzeEnsemble
 			prop = AnalyzeEnsemble_CON_BUT.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzeensemble_con_but_format_list = { 2  2  8  2  2  2  4  8  8  10  10  8  12 };
+			analyzeensemble_con_but_format_list = { 2  2  8  2  2  2  2  4  8  8  10  10  8  12 };
 			prop_format = analyzeensemble_con_but_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -472,7 +474,7 @@ classdef AnalyzeEnsemble_CON_BUT < AnalyzeEnsemble
 			prop = AnalyzeEnsemble_CON_BUT.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzeensemble_con_but_description_list = { 'NAME (constant, string) is the name of the ensenmble-based graph analysis using connectivity data of fixed threshold.'  'DESCRIPTION (constant, string) is the description of the ensenmble-based graph analysis using connectivity data of fixed threshold.'  'TEMPLATE (parameter, item) is the template of the ensenmble-based graph analysis using connectivity data of fixed threshold.'  'ID (data, string) is a few-letter code for the ensenmble-based graph analysis using connectivity data of fixed threshold.'  'LABEL (metadata, string) is an extended label of the ensenmble-based graph analysis using connectivity data of fixed threshold.'  'NOTES (metadata, string) are some specific notes about the ensenmble-based graph analysis using connectivity data of fixed threshold.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class SubjectCON.'  'GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.'  'G_DICT (result, idict) is the graph (MultigraphBUT) ensemble obtained from this analysis.'  'ME_DICT (result, idict) contains the calculated measures of the graph ensemble.'  'MEASUREENSEMBLE (query, item) returns an ensemble-based measure.'  'THRESHOLDS (parameter, rvector) is the vector of thresholds.' };
+			analyzeensemble_con_but_description_list = { 'NAME (constant, string) is the name of the ensenmble-based graph analysis using connectivity data of fixed threshold.'  'DESCRIPTION (constant, string) is the description of the ensenmble-based graph analysis using connectivity data of fixed threshold.'  'TEMPLATE (parameter, item) is the template of the ensenmble-based graph analysis using connectivity data of fixed threshold.'  'ID (data, string) is a few-letter code for the ensenmble-based graph analysis using connectivity data of fixed threshold.'  'LABEL (metadata, string) is an extended label of the ensenmble-based graph analysis using connectivity data of fixed threshold.'  'NOTES (metadata, string) are some specific notes about the ensenmble-based graph analysis using connectivity data of fixed threshold.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class SubjectCON.'  'GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.'  'G_DICT (result, idict) is the graph (MultigraphBUT) ensemble obtained from this analysis.'  'ME_DICT (result, idict) contains the calculated measures of the graph ensemble.'  'MEASUREENSEMBLE (query, item) returns an ensemble-based measure.'  'THRESHOLDS (parameter, rvector) is the vector of thresholds.' };
 			prop_description = analyzeensemble_con_but_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -498,13 +500,13 @@ classdef AnalyzeEnsemble_CON_BUT < AnalyzeEnsemble
 			prop = AnalyzeEnsemble_CON_BUT.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 13 % AnalyzeEnsemble_CON_BUT.THRESHOLDS
+				case 14 % AnalyzeEnsemble_CON_BUT.THRESHOLDS
 					prop_settings = Format.getFormatSettings(12);
 				case 3 % AnalyzeEnsemble_CON_BUT.TEMPLATE
 					prop_settings = 'AnalyzeEnsemble_CON_BUT';
-				case 9 % AnalyzeEnsemble_CON_BUT.GRAPH_TEMPLATE
+				case 10 % AnalyzeEnsemble_CON_BUT.GRAPH_TEMPLATE
 					prop_settings = 'MultigraphBUT';
-				case 10 % AnalyzeEnsemble_CON_BUT.G_DICT
+				case 11 % AnalyzeEnsemble_CON_BUT.G_DICT
 					prop_settings = 'MultigraphBUT';
 				otherwise
 					prop_settings = getPropSettings@AnalyzeEnsemble(prop);
@@ -533,7 +535,7 @@ classdef AnalyzeEnsemble_CON_BUT < AnalyzeEnsemble
 			prop = AnalyzeEnsemble_CON_BUT.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 13 % AnalyzeEnsemble_CON_BUT.THRESHOLDS
+				case 14 % AnalyzeEnsemble_CON_BUT.THRESHOLDS
 					prop_default = [-1:.5:1];
 				case 1 % AnalyzeEnsemble_CON_BUT.NAME
 					prop_default = 'AnalyzeEnsemble_CON_BUT';
@@ -547,11 +549,11 @@ classdef AnalyzeEnsemble_CON_BUT < AnalyzeEnsemble
 					prop_default = 'AnalyzeEnsemble_CON_BUT label';
 				case 6 % AnalyzeEnsemble_CON_BUT.NOTES
 					prop_default = 'AnalyzeEnsemble_CON_BUT notes';
-				case 8 % AnalyzeEnsemble_CON_BUT.GR
+				case 9 % AnalyzeEnsemble_CON_BUT.GR
 					prop_default = Group('SUB_CLASS', 'SubjectCON');
-				case 9 % AnalyzeEnsemble_CON_BUT.GRAPH_TEMPLATE
+				case 10 % AnalyzeEnsemble_CON_BUT.GRAPH_TEMPLATE
 					prop_default = Format.getFormatDefault(8, AnalyzeEnsemble_CON_BUT.getPropSettings(prop));
-				case 10 % AnalyzeEnsemble_CON_BUT.G_DICT
+				case 11 % AnalyzeEnsemble_CON_BUT.G_DICT
 					prop_default = Format.getFormatDefault(10, AnalyzeEnsemble_CON_BUT.getPropSettings(prop));
 				otherwise
 					prop_default = getPropDefault@AnalyzeEnsemble(prop);
@@ -617,16 +619,16 @@ classdef AnalyzeEnsemble_CON_BUT < AnalyzeEnsemble
 			prop = AnalyzeEnsemble_CON_BUT.getPropProp(pointer);
 			
 			switch prop
-				case 13 % AnalyzeEnsemble_CON_BUT.THRESHOLDS
+				case 14 % AnalyzeEnsemble_CON_BUT.THRESHOLDS
 					check = Format.checkFormat(12, value, AnalyzeEnsemble_CON_BUT.getPropSettings(prop));
 				case 3 % AnalyzeEnsemble_CON_BUT.TEMPLATE
 					check = Format.checkFormat(8, value, AnalyzeEnsemble_CON_BUT.getPropSettings(prop));
-				case 9 % AnalyzeEnsemble_CON_BUT.GRAPH_TEMPLATE
+				case 10 % AnalyzeEnsemble_CON_BUT.GRAPH_TEMPLATE
 					check = Format.checkFormat(8, value, AnalyzeEnsemble_CON_BUT.getPropSettings(prop));
-				case 10 % AnalyzeEnsemble_CON_BUT.G_DICT
+				case 11 % AnalyzeEnsemble_CON_BUT.G_DICT
 					check = Format.checkFormat(10, value, AnalyzeEnsemble_CON_BUT.getPropSettings(prop));
 				otherwise
-					if prop <= 12
+					if prop <= 13
 						check = checkProp@AnalyzeEnsemble(prop, value);
 					end
 			end
@@ -659,25 +661,21 @@ classdef AnalyzeEnsemble_CON_BUT < AnalyzeEnsemble
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 10 % AnalyzeEnsemble_CON_BUT.G_DICT
-					rng_settings_ = rng(); rng(a.getPropSeed(10), 'twister')
+				case 11 % AnalyzeEnsemble_CON_BUT.G_DICT
+					rng_settings_ = rng(); rng(a.getPropSeed(11), 'twister')
 					
 					g_dict = IndexedDictionary('IT_CLASS', 'MultigraphBUT');
 					gr = a.get('GR');
 					thresholds = a.get('THRESHOLDS');
-					% % % node_labels = '';
-					
-					% % % ba = BrainAtlas();
-					% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0 
-					% % %     ba = gr.get('SUB_DICT').get('IT', 1).get('BA');
-					% % % end
 					
 					for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
 					    sub = gr.get('SUB_DICT').get('IT', i);
 					    g = MultigraphBUT( ...
-					        'ID', ['graph ' sub.get('ID')], ... % % % 'BAS', ba ...
+					        'ID', ['graph ' sub.get('ID')], ...
 					        'B', sub.getCallback('CON'), ...
-					        'THRESHOLDS', thresholds ... % % % 'LAYERTICKS', thresholds, ... 
+					        'THRESHOLDS', thresholds, ...
+					        'LAYERLABELS', cellfun(@(x) num2str(x), num2cell(thresholds), 'UniformOutput', false), ...
+					        'NODELABELS', a.get('GR').get('SUB_DICT').get('IT', 1).get('BA').get('BR_DICT').get('KEYS') ...
 					        );
 					    g_dict.get('ADD', g)
 					end
@@ -693,7 +691,7 @@ classdef AnalyzeEnsemble_CON_BUT < AnalyzeEnsemble
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 12
+					if prop <= 13
 						value = calculateValue@AnalyzeEnsemble(a, prop, varargin{:});
 					else
 						value = calculateValue@Element(a, prop, varargin{:});
@@ -719,8 +717,8 @@ classdef AnalyzeEnsemble_CON_BUT < AnalyzeEnsemble
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 13 % AnalyzeEnsemble_CON_BUT.THRESHOLDS
-					pr = PanelPropRVectorSmart('EL', a, 'PROP', 13, ...
+				case 14 % AnalyzeEnsemble_CON_BUT.THRESHOLDS
+					pr = PanelPropRVectorSmart('EL', a, 'PROP', 14, ...
 					    'MIN', -1, 'MAX', 1, ...
 					    'DEFAULT', AnalyzeEnsemble_CON_BUT.getPropDefault('THRESHOLDS'), ...
 					    varargin{:});

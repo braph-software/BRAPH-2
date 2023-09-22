@@ -14,10 +14,11 @@ classdef Group < ConcreteElement
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the group of subjects.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the group of subjects.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the group of subjects.
-	%  <strong>7</strong> <strong>SUB_CLASS</strong> 	SUB_CLASS (parameter, class) is the class of the subjects of the group.
-	%  <strong>8</strong> <strong>SUB_DICT</strong> 	SUB_DICT (data, idict) is an indexed dictionary containing the subjects of the group.
-	%  <strong>9</strong> <strong>VOIS</strong> 	VOIS (result, cell) contains the variables of interest, including {kind, categories, values}.
-	%  <strong>10</strong> <strong>COVARIATES</strong> 	COVARIATES (result, matrix) contains the values of the covariates with the categorical ones one-hot encoded.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>SUB_CLASS</strong> 	SUB_CLASS (parameter, class) is the class of the subjects of the group.
+	%  <strong>9</strong> <strong>SUB_DICT</strong> 	SUB_DICT (data, idict) is an indexed dictionary containing the subjects of the group.
+	%  <strong>10</strong> <strong>VOIS</strong> 	VOIS (result, cell) contains the variables of interest, including {kind, categories, values}.
+	%  <strong>11</strong> <strong>COVARIATES</strong> 	COVARIATES (result, matrix) contains the values of the covariates with the categorical ones one-hot encoded.
 	%
 	% Group methods (constructor):
 	%  Group - constructor
@@ -108,22 +109,22 @@ classdef Group < ConcreteElement
 	% See also Subject, IndexedDictionary.
 	
 	properties (Constant) % properties
-		SUB_CLASS = 7; %CET: Computational Efficiency Trick
+		SUB_CLASS = 8; %CET: Computational Efficiency Trick
 		SUB_CLASS_TAG = 'SUB_CLASS';
 		SUB_CLASS_CATEGORY = 3;
 		SUB_CLASS_FORMAT = 6;
 		
-		SUB_DICT = 8; %CET: Computational Efficiency Trick
+		SUB_DICT = 9; %CET: Computational Efficiency Trick
 		SUB_DICT_TAG = 'SUB_DICT';
 		SUB_DICT_CATEGORY = 4;
 		SUB_DICT_FORMAT = 10;
 		
-		VOIS = 9; %CET: Computational Efficiency Trick
+		VOIS = 10; %CET: Computational Efficiency Trick
 		VOIS_TAG = 'VOIS';
 		VOIS_CATEGORY = 5;
 		VOIS_FORMAT = 16;
 		
-		COVARIATES = 10; %CET: Computational Efficiency Trick
+		COVARIATES = 11; %CET: Computational Efficiency Trick
 		COVARIATES_TAG = 'COVARIATES';
 		COVARIATES_CATEGORY = 5;
 		COVARIATES_FORMAT = 14;
@@ -146,10 +147,11 @@ classdef Group < ConcreteElement
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the group of subjects.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the group of subjects.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the group of subjects.
-			%  <strong>7</strong> <strong>SUB_CLASS</strong> 	SUB_CLASS (parameter, class) is the class of the subjects of the group.
-			%  <strong>8</strong> <strong>SUB_DICT</strong> 	SUB_DICT (data, idict) is an indexed dictionary containing the subjects of the group.
-			%  <strong>9</strong> <strong>VOIS</strong> 	VOIS (result, cell) contains the variables of interest, including {kind, categories, values}.
-			%  <strong>10</strong> <strong>COVARIATES</strong> 	COVARIATES (result, matrix) contains the values of the covariates with the categorical ones one-hot encoded.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>SUB_CLASS</strong> 	SUB_CLASS (parameter, class) is the class of the subjects of the group.
+			%  <strong>9</strong> <strong>SUB_DICT</strong> 	SUB_DICT (data, idict) is an indexed dictionary containing the subjects of the group.
+			%  <strong>10</strong> <strong>VOIS</strong> 	VOIS (result, cell) contains the variables of interest, including {kind, categories, values}.
+			%  <strong>11</strong> <strong>COVARIATES</strong> 	COVARIATES (result, matrix) contains the values of the covariates with the categorical ones one-hot encoded.
 			%
 			% See also Category, Format.
 			
@@ -211,7 +213,7 @@ classdef Group < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11];
 				return
 			end
 			
@@ -221,11 +223,13 @@ classdef Group < ConcreteElement
 				case 2 % Category.METADATA
 					prop_list = [5 6];
 				case 3 % Category.PARAMETER
-					prop_list = [3 7];
+					prop_list = [3 8];
 				case 4 % Category.DATA
-					prop_list = [4 8];
+					prop_list = [4 9];
 				case 5 % Category.RESULT
-					prop_list = [9 10];
+					prop_list = [10 11];
+				case 6 % Category.QUERY
+					prop_list = 7;
 				otherwise
 					prop_list = [];
 			end
@@ -251,7 +255,7 @@ classdef Group < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 10;
+				prop_number = 11;
 				return
 			end
 			
@@ -266,6 +270,8 @@ classdef Group < ConcreteElement
 					prop_number = 2;
 				case 5 % Category.RESULT
 					prop_number = 2;
+				case 6 % Category.QUERY
+					prop_number = 1;
 				otherwise
 					prop_number = 0;
 			end
@@ -296,7 +302,7 @@ classdef Group < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 10 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 11 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -334,7 +340,7 @@ classdef Group < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SUB_CLASS'  'SUB_DICT'  'VOIS'  'COVARIATES' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SUB_CLASS'  'SUB_DICT'  'VOIS'  'COVARIATES' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -367,7 +373,7 @@ classdef Group < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SUB_CLASS'  'SUB_DICT'  'VOIS'  'COVARIATES' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SUB_CLASS'  'SUB_DICT'  'VOIS'  'COVARIATES' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -396,7 +402,7 @@ classdef Group < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				group_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SUB_CLASS'  'SUB_DICT'  'VOIS'  'COVARIATES' };
+				group_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SUB_CLASS'  'SUB_DICT'  'VOIS'  'COVARIATES' };
 				tag = group_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -423,7 +429,7 @@ classdef Group < ConcreteElement
 			prop = Group.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			group_category_list = { 1  1  3  4  2  2  3  4  5  5 };
+			group_category_list = { 1  1  3  4  2  2  6  3  4  5  5 };
 			prop_category = group_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -449,7 +455,7 @@ classdef Group < ConcreteElement
 			prop = Group.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			group_format_list = { 2  2  8  2  2  2  6  10  16  14 };
+			group_format_list = { 2  2  8  2  2  2  2  6  10  16  14 };
 			prop_format = group_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -475,7 +481,7 @@ classdef Group < ConcreteElement
 			prop = Group.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			group_description_list = { 'NAME (constant, string) is the name of the group of subjects.'  'DESCRIPTION (constant, string) is the description of the group of subjects.'  'TEMPLATE (parameter, item) is the template of the group of subjects.'  'ID (data, string) is a few-letter code for the group of subjects.'  'LABEL (metadata, string) is an extended label of the group of subjects.'  'NOTES (metadata, string) are some specific notes about the group of subjects.'  'SUB_CLASS (parameter, class) is the class of the subjects of the group.'  'SUB_DICT (data, idict) is an indexed dictionary containing the subjects of the group.'  'VOIS (result, cell) contains the variables of interest, including {kind, categories, values}.'  'COVARIATES (result, matrix) contains the values of the covariates with the categorical ones one-hot encoded.' };
+			group_description_list = { 'NAME (constant, string) is the name of the group of subjects.'  'DESCRIPTION (constant, string) is the description of the group of subjects.'  'TEMPLATE (parameter, item) is the template of the group of subjects.'  'ID (data, string) is a few-letter code for the group of subjects.'  'LABEL (metadata, string) is an extended label of the group of subjects.'  'NOTES (metadata, string) are some specific notes about the group of subjects.'  'TOSTRING (query, string) returns a string that represents the object.'  'SUB_CLASS (parameter, class) is the class of the subjects of the group.'  'SUB_DICT (data, idict) is an indexed dictionary containing the subjects of the group.'  'VOIS (result, cell) contains the variables of interest, including {kind, categories, values}.'  'COVARIATES (result, matrix) contains the values of the covariates with the categorical ones one-hot encoded.' };
 			prop_description = group_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -501,13 +507,13 @@ classdef Group < ConcreteElement
 			prop = Group.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % Group.SUB_CLASS
+				case 8 % Group.SUB_CLASS
 					prop_settings = 'Subject';
-				case 8 % Group.SUB_DICT
+				case 9 % Group.SUB_DICT
 					prop_settings = 'Subject';
-				case 9 % Group.VOIS
+				case 10 % Group.VOIS
 					prop_settings = Format.getFormatSettings(16);
-				case 10 % Group.COVARIATES
+				case 11 % Group.COVARIATES
 					prop_settings = Format.getFormatSettings(14);
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -536,13 +542,13 @@ classdef Group < ConcreteElement
 			prop = Group.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % Group.SUB_CLASS
+				case 8 % Group.SUB_CLASS
 					prop_default = Format.getFormatDefault(6, Group.getPropSettings(prop));
-				case 8 % Group.SUB_DICT
+				case 9 % Group.SUB_DICT
 					prop_default = Format.getFormatDefault(10, Group.getPropSettings(prop));
-				case 9 % Group.VOIS
+				case 10 % Group.VOIS
 					prop_default = Format.getFormatDefault(16, Group.getPropSettings(prop));
-				case 10 % Group.COVARIATES
+				case 11 % Group.COVARIATES
 					prop_default = Format.getFormatDefault(14, Group.getPropSettings(prop));
 				case 1 % Group.NAME
 					prop_default = 'Group';
@@ -618,16 +624,16 @@ classdef Group < ConcreteElement
 			prop = Group.getPropProp(pointer);
 			
 			switch prop
-				case 7 % Group.SUB_CLASS
+				case 8 % Group.SUB_CLASS
 					check = Format.checkFormat(6, value, Group.getPropSettings(prop));
-				case 8 % Group.SUB_DICT
+				case 9 % Group.SUB_DICT
 					check = Format.checkFormat(10, value, Group.getPropSettings(prop));
-				case 9 % Group.VOIS
+				case 10 % Group.VOIS
 					check = Format.checkFormat(16, value, Group.getPropSettings(prop));
-				case 10 % Group.COVARIATES
+				case 11 % Group.COVARIATES
 					check = Format.checkFormat(14, value, Group.getPropSettings(prop));
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -660,8 +666,8 @@ classdef Group < ConcreteElement
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 9 % Group.VOIS
-					rng_settings_ = rng(); rng(gr.getPropSeed(9), 'twister')
+				case 10 % Group.VOIS
+					rng_settings_ = rng(); rng(gr.getPropSeed(10), 'twister')
 					
 					sub_dict = gr.get('SUB_DICT');
 					
@@ -700,8 +706,8 @@ classdef Group < ConcreteElement
 					
 					rng(rng_settings_)
 					
-				case 10 % Group.COVARIATES
-					rng_settings_ = rng(); rng(gr.getPropSeed(10), 'twister')
+				case 11 % Group.COVARIATES
+					rng_settings_ = rng(); rng(gr.getPropSeed(11), 'twister')
 					
 					vois = gr.get('VOIS');
 					
@@ -718,7 +724,7 @@ classdef Group < ConcreteElement
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						value = calculateValue@ConcreteElement(gr, prop, varargin{:});
 					else
 						value = calculateValue@Element(gr, prop, varargin{:});
@@ -744,8 +750,8 @@ classdef Group < ConcreteElement
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 8 % Group.SUB_DICT
-					[order, title] = load_layout(gr.get(8).get(7));
+				case 9 % Group.SUB_DICT
+					[order, title] = load_layout(gr.get(9).get(8));
 					cols(1) = -1;
 					columnname = {''};
 					for i = 1:1:length(order)
@@ -754,7 +760,7 @@ classdef Group < ConcreteElement
 					        columnname{order(i) + 1} = title{i};
 					    end
 					end
-					pr = PanelPropIDictTable('EL', gr, 'PROP', 8, ... 
+					pr = PanelPropIDictTable('EL', gr, 'PROP', 9, ... 
 					    'ROWNAME', 'numbered', ...
 					    'COLS', cols, ...
 					    'COLUMNNAME', columnname, ...

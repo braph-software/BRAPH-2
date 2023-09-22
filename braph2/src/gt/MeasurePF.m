@@ -11,37 +11,38 @@ classdef MeasurePF < PanelFig
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel figure measure.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel figure measure.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel figure measure.
-	%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>8</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>9</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure measure.
-	%  <strong>10</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>11</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>12</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>13</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>14</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
-	%  <strong>15</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
-	%  <strong>16</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure graph is deleted.
-	%  <strong>17</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
-	%  <strong>18</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
-	%  <strong>19</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
-	%  <strong>20</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
-	%  <strong>21</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
-	%  <strong>22</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
-	%  <strong>23</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
-	%  <strong>24</strong> <strong>M</strong> 	M (metadata, item) is the measure.
-	%  <strong>25</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the measure value and stores it to be implemented in the subelements.
-	%  <strong>26</strong> <strong>H_AREA</strong> 	H_AREA (evanescent, handle) is the handle for the measure area.
-	%  <strong>27</strong> <strong>ST_AREA</strong> 	ST_AREA (figure, item) determines the area settings.
-	%  <strong>28</strong> <strong>LISTENER_ST_AREA</strong> 	LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.
-	%  <strong>29</strong> <strong>H_LINE</strong> 	H_LINE (evanescent, handle) is the handle for the measure line.
-	%  <strong>30</strong> <strong>ST_LINE</strong> 	ST_LINE (figure, item) determines the line settings.
-	%  <strong>31</strong> <strong>LISTENER_ST_LINE</strong> 	LISTENER_ST_LINE (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.
-	%  <strong>32</strong> <strong>H_TITLE</strong> 	H_TITLE (evanescent, handle) is the axis title.
-	%  <strong>33</strong> <strong>ST_TITLE</strong> 	ST_TITLE (figure, item) determines the title settings.
-	%  <strong>34</strong> <strong>H_XLABEL</strong> 	H_XLABEL (evanescent, handle) is the axis x-label.
-	%  <strong>35</strong> <strong>ST_XLABEL</strong> 	ST_XLABEL (figure, item) determines the x-label settings.
-	%  <strong>36</strong> <strong>H_YLABEL</strong> 	H_YLABEL (evanescent, handle) is the axis y-label.
-	%  <strong>37</strong> <strong>ST_YLABEL</strong> 	ST_YLABEL (figure, item) determines the y-label settings.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure measure.
+	%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+	%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
+	%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
+	%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure graph is deleted.
+	%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
+	%  <strong>19</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
+	%  <strong>20</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
+	%  <strong>21</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
+	%  <strong>22</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
+	%  <strong>23</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
+	%  <strong>24</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
+	%  <strong>25</strong> <strong>M</strong> 	M (metadata, item) is the measure.
+	%  <strong>26</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the measure value and stores it to be implemented in the subelements.
+	%  <strong>27</strong> <strong>H_AREA</strong> 	H_AREA (evanescent, handle) is the handle for the measure area.
+	%  <strong>28</strong> <strong>ST_AREA</strong> 	ST_AREA (figure, item) determines the area settings.
+	%  <strong>29</strong> <strong>LISTENER_ST_AREA</strong> 	LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.
+	%  <strong>30</strong> <strong>H_LINE</strong> 	H_LINE (evanescent, handle) is the handle for the measure line.
+	%  <strong>31</strong> <strong>ST_LINE</strong> 	ST_LINE (figure, item) determines the line settings.
+	%  <strong>32</strong> <strong>LISTENER_ST_LINE</strong> 	LISTENER_ST_LINE (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.
+	%  <strong>33</strong> <strong>H_TITLE</strong> 	H_TITLE (evanescent, handle) is the axis title.
+	%  <strong>34</strong> <strong>ST_TITLE</strong> 	ST_TITLE (figure, item) determines the title settings.
+	%  <strong>35</strong> <strong>H_XLABEL</strong> 	H_XLABEL (evanescent, handle) is the axis x-label.
+	%  <strong>36</strong> <strong>ST_XLABEL</strong> 	ST_XLABEL (figure, item) determines the x-label settings.
+	%  <strong>37</strong> <strong>H_YLABEL</strong> 	H_YLABEL (evanescent, handle) is the axis y-label.
+	%  <strong>38</strong> <strong>ST_YLABEL</strong> 	ST_YLABEL (figure, item) determines the y-label settings.
 	%
 	% MeasurePF methods (constructor):
 	%  MeasurePF - constructor
@@ -132,87 +133,87 @@ classdef MeasurePF < PanelFig
 	% See also Measure.
 	
 	properties (Constant) % properties
-		H_AXES = 21; %CET: Computational Efficiency Trick
+		H_AXES = 22; %CET: Computational Efficiency Trick
 		H_AXES_TAG = 'H_AXES';
 		H_AXES_CATEGORY = 7;
 		H_AXES_FORMAT = 18;
 		
-		ST_AXIS = 22; %CET: Computational Efficiency Trick
+		ST_AXIS = 23; %CET: Computational Efficiency Trick
 		ST_AXIS_TAG = 'ST_AXIS';
 		ST_AXIS_CATEGORY = 8;
 		ST_AXIS_FORMAT = 8;
 		
-		LISTENER_ST_AXIS = 23; %CET: Computational Efficiency Trick
+		LISTENER_ST_AXIS = 24; %CET: Computational Efficiency Trick
 		LISTENER_ST_AXIS_TAG = 'LISTENER_ST_AXIS';
 		LISTENER_ST_AXIS_CATEGORY = 7;
 		LISTENER_ST_AXIS_FORMAT = 18;
 		
-		M = 24; %CET: Computational Efficiency Trick
+		M = 25; %CET: Computational Efficiency Trick
 		M_TAG = 'M';
 		M_CATEGORY = 2;
 		M_FORMAT = 8;
 		
-		SETUP = 25; %CET: Computational Efficiency Trick
+		SETUP = 26; %CET: Computational Efficiency Trick
 		SETUP_TAG = 'SETUP';
 		SETUP_CATEGORY = 6;
 		SETUP_FORMAT = 1;
 		
-		H_AREA = 26; %CET: Computational Efficiency Trick
+		H_AREA = 27; %CET: Computational Efficiency Trick
 		H_AREA_TAG = 'H_AREA';
 		H_AREA_CATEGORY = 7;
 		H_AREA_FORMAT = 18;
 		
-		ST_AREA = 27; %CET: Computational Efficiency Trick
+		ST_AREA = 28; %CET: Computational Efficiency Trick
 		ST_AREA_TAG = 'ST_AREA';
 		ST_AREA_CATEGORY = 8;
 		ST_AREA_FORMAT = 8;
 		
-		LISTENER_ST_AREA = 28; %CET: Computational Efficiency Trick
+		LISTENER_ST_AREA = 29; %CET: Computational Efficiency Trick
 		LISTENER_ST_AREA_TAG = 'LISTENER_ST_AREA';
 		LISTENER_ST_AREA_CATEGORY = 7;
 		LISTENER_ST_AREA_FORMAT = 18;
 		
-		H_LINE = 29; %CET: Computational Efficiency Trick
+		H_LINE = 30; %CET: Computational Efficiency Trick
 		H_LINE_TAG = 'H_LINE';
 		H_LINE_CATEGORY = 7;
 		H_LINE_FORMAT = 18;
 		
-		ST_LINE = 30; %CET: Computational Efficiency Trick
+		ST_LINE = 31; %CET: Computational Efficiency Trick
 		ST_LINE_TAG = 'ST_LINE';
 		ST_LINE_CATEGORY = 8;
 		ST_LINE_FORMAT = 8;
 		
-		LISTENER_ST_LINE = 31; %CET: Computational Efficiency Trick
+		LISTENER_ST_LINE = 32; %CET: Computational Efficiency Trick
 		LISTENER_ST_LINE_TAG = 'LISTENER_ST_LINE';
 		LISTENER_ST_LINE_CATEGORY = 7;
 		LISTENER_ST_LINE_FORMAT = 18;
 		
-		H_TITLE = 32; %CET: Computational Efficiency Trick
+		H_TITLE = 33; %CET: Computational Efficiency Trick
 		H_TITLE_TAG = 'H_TITLE';
 		H_TITLE_CATEGORY = 7;
 		H_TITLE_FORMAT = 18;
 		
-		ST_TITLE = 33; %CET: Computational Efficiency Trick
+		ST_TITLE = 34; %CET: Computational Efficiency Trick
 		ST_TITLE_TAG = 'ST_TITLE';
 		ST_TITLE_CATEGORY = 8;
 		ST_TITLE_FORMAT = 8;
 		
-		H_XLABEL = 34; %CET: Computational Efficiency Trick
+		H_XLABEL = 35; %CET: Computational Efficiency Trick
 		H_XLABEL_TAG = 'H_XLABEL';
 		H_XLABEL_CATEGORY = 7;
 		H_XLABEL_FORMAT = 18;
 		
-		ST_XLABEL = 35; %CET: Computational Efficiency Trick
+		ST_XLABEL = 36; %CET: Computational Efficiency Trick
 		ST_XLABEL_TAG = 'ST_XLABEL';
 		ST_XLABEL_CATEGORY = 8;
 		ST_XLABEL_FORMAT = 8;
 		
-		H_YLABEL = 36; %CET: Computational Efficiency Trick
+		H_YLABEL = 37; %CET: Computational Efficiency Trick
 		H_YLABEL_TAG = 'H_YLABEL';
 		H_YLABEL_CATEGORY = 7;
 		H_YLABEL_FORMAT = 18;
 		
-		ST_YLABEL = 37; %CET: Computational Efficiency Trick
+		ST_YLABEL = 38; %CET: Computational Efficiency Trick
 		ST_YLABEL_TAG = 'ST_YLABEL';
 		ST_YLABEL_CATEGORY = 8;
 		ST_YLABEL_FORMAT = 8;
@@ -235,37 +236,38 @@ classdef MeasurePF < PanelFig
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel figure measure.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel figure measure.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel figure measure.
-			%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>8</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>9</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure measure.
-			%  <strong>10</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>11</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>12</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>13</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>14</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
-			%  <strong>15</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
-			%  <strong>16</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure graph is deleted.
-			%  <strong>17</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
-			%  <strong>18</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
-			%  <strong>19</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
-			%  <strong>20</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
-			%  <strong>21</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
-			%  <strong>22</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
-			%  <strong>23</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
-			%  <strong>24</strong> <strong>M</strong> 	M (metadata, item) is the measure.
-			%  <strong>25</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the measure value and stores it to be implemented in the subelements.
-			%  <strong>26</strong> <strong>H_AREA</strong> 	H_AREA (evanescent, handle) is the handle for the measure area.
-			%  <strong>27</strong> <strong>ST_AREA</strong> 	ST_AREA (figure, item) determines the area settings.
-			%  <strong>28</strong> <strong>LISTENER_ST_AREA</strong> 	LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.
-			%  <strong>29</strong> <strong>H_LINE</strong> 	H_LINE (evanescent, handle) is the handle for the measure line.
-			%  <strong>30</strong> <strong>ST_LINE</strong> 	ST_LINE (figure, item) determines the line settings.
-			%  <strong>31</strong> <strong>LISTENER_ST_LINE</strong> 	LISTENER_ST_LINE (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.
-			%  <strong>32</strong> <strong>H_TITLE</strong> 	H_TITLE (evanescent, handle) is the axis title.
-			%  <strong>33</strong> <strong>ST_TITLE</strong> 	ST_TITLE (figure, item) determines the title settings.
-			%  <strong>34</strong> <strong>H_XLABEL</strong> 	H_XLABEL (evanescent, handle) is the axis x-label.
-			%  <strong>35</strong> <strong>ST_XLABEL</strong> 	ST_XLABEL (figure, item) determines the x-label settings.
-			%  <strong>36</strong> <strong>H_YLABEL</strong> 	H_YLABEL (evanescent, handle) is the axis y-label.
-			%  <strong>37</strong> <strong>ST_YLABEL</strong> 	ST_YLABEL (figure, item) determines the y-label settings.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure measure.
+			%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+			%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
+			%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
+			%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure graph is deleted.
+			%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
+			%  <strong>19</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
+			%  <strong>20</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
+			%  <strong>21</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
+			%  <strong>22</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
+			%  <strong>23</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
+			%  <strong>24</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
+			%  <strong>25</strong> <strong>M</strong> 	M (metadata, item) is the measure.
+			%  <strong>26</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the measure value and stores it to be implemented in the subelements.
+			%  <strong>27</strong> <strong>H_AREA</strong> 	H_AREA (evanescent, handle) is the handle for the measure area.
+			%  <strong>28</strong> <strong>ST_AREA</strong> 	ST_AREA (figure, item) determines the area settings.
+			%  <strong>29</strong> <strong>LISTENER_ST_AREA</strong> 	LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.
+			%  <strong>30</strong> <strong>H_LINE</strong> 	H_LINE (evanescent, handle) is the handle for the measure line.
+			%  <strong>31</strong> <strong>ST_LINE</strong> 	ST_LINE (figure, item) determines the line settings.
+			%  <strong>32</strong> <strong>LISTENER_ST_LINE</strong> 	LISTENER_ST_LINE (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.
+			%  <strong>33</strong> <strong>H_TITLE</strong> 	H_TITLE (evanescent, handle) is the axis title.
+			%  <strong>34</strong> <strong>ST_TITLE</strong> 	ST_TITLE (figure, item) determines the title settings.
+			%  <strong>35</strong> <strong>H_XLABEL</strong> 	H_XLABEL (evanescent, handle) is the axis x-label.
+			%  <strong>36</strong> <strong>ST_XLABEL</strong> 	ST_XLABEL (figure, item) determines the x-label settings.
+			%  <strong>37</strong> <strong>H_YLABEL</strong> 	H_YLABEL (evanescent, handle) is the axis y-label.
+			%  <strong>38</strong> <strong>ST_YLABEL</strong> 	ST_YLABEL (figure, item) determines the y-label settings.
 			%
 			% See also Category, Format.
 			
@@ -327,7 +329,7 @@ classdef MeasurePF < PanelFig
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38];
 				return
 			end
 			
@@ -335,19 +337,19 @@ classdef MeasurePF < PanelFig
 				case 1 % Category.CONSTANT
 					prop_list = [1 2];
 				case 2 % Category.METADATA
-					prop_list = [5 6 24];
+					prop_list = [5 6 25];
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
 					prop_list = 4;
 				case 6 % Category.QUERY
-					prop_list = [9 10 14 15 16 17 25];
+					prop_list = [7 10 11 15 16 17 18 26];
 				case 7 % Category.EVANESCENT
-					prop_list = [8 13 19 20 21 23 26 28 29 31 32 34 36];
+					prop_list = [9 14 20 21 22 24 27 29 30 32 33 35 37];
 				case 8 % Category.FIGURE
-					prop_list = [12 18 22 27 30 33 35 37];
+					prop_list = [13 19 23 28 31 34 36 38];
 				case 9 % Category.GUI
-					prop_list = [7 11];
+					prop_list = [8 12];
 				otherwise
 					prop_list = [];
 			end
@@ -373,7 +375,7 @@ classdef MeasurePF < PanelFig
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 37;
+				prop_number = 38;
 				return
 			end
 			
@@ -387,7 +389,7 @@ classdef MeasurePF < PanelFig
 				case 4 % Category.DATA
 					prop_number = 1;
 				case 6 % Category.QUERY
-					prop_number = 7;
+					prop_number = 8;
 				case 7 % Category.EVANESCENT
 					prop_number = 13;
 				case 8 % Category.FIGURE
@@ -424,7 +426,7 @@ classdef MeasurePF < PanelFig
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 37 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 38 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -462,7 +464,7 @@ classdef MeasurePF < PanelFig
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'M'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE'  'ST_LINE'  'LISTENER_ST_LINE'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'M'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE'  'ST_LINE'  'LISTENER_ST_LINE'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -495,7 +497,7 @@ classdef MeasurePF < PanelFig
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'M'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE'  'ST_LINE'  'LISTENER_ST_LINE'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'M'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE'  'ST_LINE'  'LISTENER_ST_LINE'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -524,7 +526,7 @@ classdef MeasurePF < PanelFig
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				measurepf_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'M'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE'  'ST_LINE'  'LISTENER_ST_LINE'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL' };
+				measurepf_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'M'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE'  'ST_LINE'  'LISTENER_ST_LINE'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL' };
 				tag = measurepf_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -551,7 +553,7 @@ classdef MeasurePF < PanelFig
 			prop = MeasurePF.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measurepf_category_list = { 1  1  3  4  2  2  9  7  6  6  9  8  7  6  6  6  6  8  7  7  7  8  7  2  6  7  8  7  7  8  7  7  8  7  8  7  8 };
+			measurepf_category_list = { 1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  8  7  7  7  8  7  2  6  7  8  7  7  8  7  7  8  7  8  7  8 };
 			prop_category = measurepf_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -577,7 +579,7 @@ classdef MeasurePF < PanelFig
 			prop = MeasurePF.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measurepf_format_list = { 2  2  8  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19  18  8  18  8  1  18  8  18  18  8  18  18  8  18  8  18  8 };
+			measurepf_format_list = { 2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19  18  8  18  8  1  18  8  18  18  8  18  18  8  18  8  18  8 };
 			prop_format = measurepf_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -603,7 +605,7 @@ classdef MeasurePF < PanelFig
 			prop = MeasurePF.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measurepf_description_list = { 'NAME (constant, string) is the name of the panel figure measure.'  'DESCRIPTION (constant, string) is the description of the panel figure measure.'  'TEMPLATE (parameter, item) is the template of the panel figure measure.'  'ID (data, string) is a few-letter code for the panel figure measure.'  'LABEL (metadata, string) is an extended label of the panel figure measure.'  'NOTES (metadata, string) are some specific notes about the panel figure measure.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure measure.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure graph is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'M (metadata, item) is the measure.'  'SETUP (query, empty) calculates the measure value and stores it to be implemented in the subelements.'  'H_AREA (evanescent, handle) is the handle for the measure area.'  'ST_AREA (figure, item) determines the area settings.'  'LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.'  'H_LINE (evanescent, handle) is the handle for the measure line.'  'ST_LINE (figure, item) determines the line settings.'  'LISTENER_ST_LINE (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.'  'H_TITLE (evanescent, handle) is the axis title.'  'ST_TITLE (figure, item) determines the title settings.'  'H_XLABEL (evanescent, handle) is the axis x-label.'  'ST_XLABEL (figure, item) determines the x-label settings.'  'H_YLABEL (evanescent, handle) is the axis y-label.'  'ST_YLABEL (figure, item) determines the y-label settings.' };
+			measurepf_description_list = { 'NAME (constant, string) is the name of the panel figure measure.'  'DESCRIPTION (constant, string) is the description of the panel figure measure.'  'TEMPLATE (parameter, item) is the template of the panel figure measure.'  'ID (data, string) is a few-letter code for the panel figure measure.'  'LABEL (metadata, string) is an extended label of the panel figure measure.'  'NOTES (metadata, string) are some specific notes about the panel figure measure.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure measure.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure graph is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'M (metadata, item) is the measure.'  'SETUP (query, empty) calculates the measure value and stores it to be implemented in the subelements.'  'H_AREA (evanescent, handle) is the handle for the measure area.'  'ST_AREA (figure, item) determines the area settings.'  'LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.'  'H_LINE (evanescent, handle) is the handle for the measure line.'  'ST_LINE (figure, item) determines the line settings.'  'LISTENER_ST_LINE (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.'  'H_TITLE (evanescent, handle) is the axis title.'  'ST_TITLE (figure, item) determines the title settings.'  'H_XLABEL (evanescent, handle) is the axis x-label.'  'ST_XLABEL (figure, item) determines the x-label settings.'  'H_YLABEL (evanescent, handle) is the axis y-label.'  'ST_YLABEL (figure, item) determines the y-label settings.' };
 			prop_description = measurepf_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -629,39 +631,39 @@ classdef MeasurePF < PanelFig
 			prop = MeasurePF.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 21 % MeasurePF.H_AXES
+				case 22 % MeasurePF.H_AXES
 					prop_settings = Format.getFormatSettings(18);
-				case 22 % MeasurePF.ST_AXIS
+				case 23 % MeasurePF.ST_AXIS
 					prop_settings = 'SettingsAxis';
-				case 23 % MeasurePF.LISTENER_ST_AXIS
+				case 24 % MeasurePF.LISTENER_ST_AXIS
 					prop_settings = Format.getFormatSettings(18);
-				case 24 % MeasurePF.M
+				case 25 % MeasurePF.M
 					prop_settings = 'Measure';
-				case 25 % MeasurePF.SETUP
+				case 26 % MeasurePF.SETUP
 					prop_settings = Format.getFormatSettings(1);
-				case 26 % MeasurePF.H_AREA
+				case 27 % MeasurePF.H_AREA
 					prop_settings = Format.getFormatSettings(18);
-				case 27 % MeasurePF.ST_AREA
+				case 28 % MeasurePF.ST_AREA
 					prop_settings = 'SettingsArea';
-				case 28 % MeasurePF.LISTENER_ST_AREA
+				case 29 % MeasurePF.LISTENER_ST_AREA
 					prop_settings = Format.getFormatSettings(18);
-				case 29 % MeasurePF.H_LINE
+				case 30 % MeasurePF.H_LINE
 					prop_settings = Format.getFormatSettings(18);
-				case 30 % MeasurePF.ST_LINE
+				case 31 % MeasurePF.ST_LINE
 					prop_settings = 'SettingsLine';
-				case 31 % MeasurePF.LISTENER_ST_LINE
+				case 32 % MeasurePF.LISTENER_ST_LINE
 					prop_settings = Format.getFormatSettings(18);
-				case 32 % MeasurePF.H_TITLE
+				case 33 % MeasurePF.H_TITLE
 					prop_settings = Format.getFormatSettings(18);
-				case 33 % MeasurePF.ST_TITLE
+				case 34 % MeasurePF.ST_TITLE
 					prop_settings = 'SettingsText';
-				case 34 % MeasurePF.H_XLABEL
+				case 35 % MeasurePF.H_XLABEL
 					prop_settings = Format.getFormatSettings(18);
-				case 35 % MeasurePF.ST_XLABEL
+				case 36 % MeasurePF.ST_XLABEL
 					prop_settings = 'SettingsText';
-				case 36 % MeasurePF.H_YLABEL
+				case 37 % MeasurePF.H_YLABEL
 					prop_settings = Format.getFormatSettings(18);
-				case 37 % MeasurePF.ST_YLABEL
+				case 38 % MeasurePF.ST_YLABEL
 					prop_settings = 'SettingsText';
 				case 3 % MeasurePF.TEMPLATE
 					prop_settings = 'MeasurePF';
@@ -692,39 +694,39 @@ classdef MeasurePF < PanelFig
 			prop = MeasurePF.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 21 % MeasurePF.H_AXES
+				case 22 % MeasurePF.H_AXES
 					prop_default = Format.getFormatDefault(18, MeasurePF.getPropSettings(prop));
-				case 22 % MeasurePF.ST_AXIS
+				case 23 % MeasurePF.ST_AXIS
 					prop_default = SettingsAxis('AXIS', true, 'GRID', false, 'EQUAL', false);
-				case 23 % MeasurePF.LISTENER_ST_AXIS
+				case 24 % MeasurePF.LISTENER_ST_AXIS
 					prop_default = Format.getFormatDefault(18, MeasurePF.getPropSettings(prop));
-				case 24 % MeasurePF.M
+				case 25 % MeasurePF.M
 					prop_default = Format.getFormatDefault(8, MeasurePF.getPropSettings(prop));
-				case 25 % MeasurePF.SETUP
+				case 26 % MeasurePF.SETUP
 					prop_default = Format.getFormatDefault(1, MeasurePF.getPropSettings(prop));
-				case 26 % MeasurePF.H_AREA
+				case 27 % MeasurePF.H_AREA
 					prop_default = Format.getFormatDefault(18, MeasurePF.getPropSettings(prop));
-				case 27 % MeasurePF.ST_AREA
+				case 28 % MeasurePF.ST_AREA
 					prop_default = Format.getFormatDefault(8, MeasurePF.getPropSettings(prop));
-				case 28 % MeasurePF.LISTENER_ST_AREA
+				case 29 % MeasurePF.LISTENER_ST_AREA
 					prop_default = Format.getFormatDefault(18, MeasurePF.getPropSettings(prop));
-				case 29 % MeasurePF.H_LINE
+				case 30 % MeasurePF.H_LINE
 					prop_default = Format.getFormatDefault(18, MeasurePF.getPropSettings(prop));
-				case 30 % MeasurePF.ST_LINE
+				case 31 % MeasurePF.ST_LINE
 					prop_default = Format.getFormatDefault(8, MeasurePF.getPropSettings(prop));
-				case 31 % MeasurePF.LISTENER_ST_LINE
+				case 32 % MeasurePF.LISTENER_ST_LINE
 					prop_default = Format.getFormatDefault(18, MeasurePF.getPropSettings(prop));
-				case 32 % MeasurePF.H_TITLE
+				case 33 % MeasurePF.H_TITLE
 					prop_default = Format.getFormatDefault(18, MeasurePF.getPropSettings(prop));
-				case 33 % MeasurePF.ST_TITLE
+				case 34 % MeasurePF.ST_TITLE
 					prop_default = SettingsText('VISIBLE', true, 'FONTSIZE', 24, 'HALIGN', 'center', 'VALIGN', 'middle');
-				case 34 % MeasurePF.H_XLABEL
+				case 35 % MeasurePF.H_XLABEL
 					prop_default = Format.getFormatDefault(18, MeasurePF.getPropSettings(prop));
-				case 35 % MeasurePF.ST_XLABEL
+				case 36 % MeasurePF.ST_XLABEL
 					prop_default = SettingsText('VISIBLE', true, 'FONTSIZE', 24, 'HALIGN', 'center', 'VALIGN', 'middle');
-				case 36 % MeasurePF.H_YLABEL
+				case 37 % MeasurePF.H_YLABEL
 					prop_default = Format.getFormatDefault(18, MeasurePF.getPropSettings(prop));
-				case 37 % MeasurePF.ST_YLABEL
+				case 38 % MeasurePF.ST_YLABEL
 					prop_default = SettingsText('VISIBLE', true, 'FONTSIZE', 24, 'HALIGN', 'center', 'VALIGN', 'middle', 'ROTATION', 90);
 				case 1 % MeasurePF.NAME
 					prop_default = 'MeasurePF';
@@ -802,44 +804,44 @@ classdef MeasurePF < PanelFig
 			prop = MeasurePF.getPropProp(pointer);
 			
 			switch prop
-				case 21 % MeasurePF.H_AXES
+				case 22 % MeasurePF.H_AXES
 					check = Format.checkFormat(18, value, MeasurePF.getPropSettings(prop));
-				case 22 % MeasurePF.ST_AXIS
+				case 23 % MeasurePF.ST_AXIS
 					check = Format.checkFormat(8, value, MeasurePF.getPropSettings(prop));
-				case 23 % MeasurePF.LISTENER_ST_AXIS
+				case 24 % MeasurePF.LISTENER_ST_AXIS
 					check = Format.checkFormat(18, value, MeasurePF.getPropSettings(prop));
-				case 24 % MeasurePF.M
+				case 25 % MeasurePF.M
 					check = Format.checkFormat(8, value, MeasurePF.getPropSettings(prop));
-				case 25 % MeasurePF.SETUP
+				case 26 % MeasurePF.SETUP
 					check = Format.checkFormat(1, value, MeasurePF.getPropSettings(prop));
-				case 26 % MeasurePF.H_AREA
+				case 27 % MeasurePF.H_AREA
 					check = Format.checkFormat(18, value, MeasurePF.getPropSettings(prop));
-				case 27 % MeasurePF.ST_AREA
+				case 28 % MeasurePF.ST_AREA
 					check = Format.checkFormat(8, value, MeasurePF.getPropSettings(prop));
-				case 28 % MeasurePF.LISTENER_ST_AREA
+				case 29 % MeasurePF.LISTENER_ST_AREA
 					check = Format.checkFormat(18, value, MeasurePF.getPropSettings(prop));
-				case 29 % MeasurePF.H_LINE
+				case 30 % MeasurePF.H_LINE
 					check = Format.checkFormat(18, value, MeasurePF.getPropSettings(prop));
-				case 30 % MeasurePF.ST_LINE
+				case 31 % MeasurePF.ST_LINE
 					check = Format.checkFormat(8, value, MeasurePF.getPropSettings(prop));
-				case 31 % MeasurePF.LISTENER_ST_LINE
+				case 32 % MeasurePF.LISTENER_ST_LINE
 					check = Format.checkFormat(18, value, MeasurePF.getPropSettings(prop));
-				case 32 % MeasurePF.H_TITLE
+				case 33 % MeasurePF.H_TITLE
 					check = Format.checkFormat(18, value, MeasurePF.getPropSettings(prop));
-				case 33 % MeasurePF.ST_TITLE
+				case 34 % MeasurePF.ST_TITLE
 					check = Format.checkFormat(8, value, MeasurePF.getPropSettings(prop));
-				case 34 % MeasurePF.H_XLABEL
+				case 35 % MeasurePF.H_XLABEL
 					check = Format.checkFormat(18, value, MeasurePF.getPropSettings(prop));
-				case 35 % MeasurePF.ST_XLABEL
+				case 36 % MeasurePF.ST_XLABEL
 					check = Format.checkFormat(8, value, MeasurePF.getPropSettings(prop));
-				case 36 % MeasurePF.H_YLABEL
+				case 37 % MeasurePF.H_YLABEL
 					check = Format.checkFormat(18, value, MeasurePF.getPropSettings(prop));
-				case 37 % MeasurePF.ST_YLABEL
+				case 38 % MeasurePF.ST_YLABEL
 					check = Format.checkFormat(8, value, MeasurePF.getPropSettings(prop));
 				case 3 % MeasurePF.TEMPLATE
 					check = Format.checkFormat(8, value, MeasurePF.getPropSettings(prop));
 				otherwise
-					if prop <= 20
+					if prop <= 21
 						check = checkProp@PanelFig(prop, value);
 					end
 			end
@@ -869,7 +871,7 @@ classdef MeasurePF < PanelFig
 			%  checkValue.
 			
 			switch prop
-				case 22 % MeasurePF.ST_AXIS
+				case 23 % MeasurePF.ST_AXIS
 					if pf.get('DRAWN')
 					    toolbar = pf.get('H_TOOLBAR');
 					    if check_graphics(toolbar, 'uitoolbar')
@@ -879,7 +881,7 @@ classdef MeasurePF < PanelFig
 					end
 					
 				otherwise
-					if prop <= 20
+					if prop <= 21
 						postset@PanelFig(pf, prop);
 					end
 			end
@@ -902,7 +904,7 @@ classdef MeasurePF < PanelFig
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 21 % MeasurePF.H_AXES
+				case 22 % MeasurePF.H_AXES
 					h_axes = uiaxes( ...
 					    'Parent', pf.memorize('H'), ...
 					    'Tag', 'H_AXES', ...
@@ -915,25 +917,25 @@ classdef MeasurePF < PanelFig
 					hold(h_axes, 'on')
 					value = h_axes;
 					
-				case 23 % MeasurePF.LISTENER_ST_AXIS
+				case 24 % MeasurePF.LISTENER_ST_AXIS
 					value = listener(pf.get('ST_AXIS'), 'PropSet', @cb_listener_st_axis);
 					
-				case 25 % MeasurePF.SETUP
+				case 26 % MeasurePF.SETUP
 					value = [];
 					
-				case 26 % MeasurePF.H_AREA
+				case 27 % MeasurePF.H_AREA
 					value = fill(pf.get('H_AXES'), [0], [0], 'k');
 					
-				case 28 % MeasurePF.LISTENER_ST_AREA
+				case 29 % MeasurePF.LISTENER_ST_AREA
 					value = listener(pf.get('ST_AREA'), 'PropSet', @cb_listener_st_area);
 					
-				case 29 % MeasurePF.H_LINE
+				case 30 % MeasurePF.H_LINE
 					value = plot(pf.get('H_AXES'), [0], [0], 'b', 'LineWidth', 2);
 					
-				case 31 % MeasurePF.LISTENER_ST_LINE
+				case 32 % MeasurePF.LISTENER_ST_LINE
 					value = listener(pf.get('ST_LINE'), 'PropSet', @cb_listener_st_line);
 					
-				case 32 % MeasurePF.H_TITLE
+				case 33 % MeasurePF.H_TITLE
 					value = title(pf.get('H_AXES'), '');
 					
 					if isa(pf.getr('ST_TITLE'), 'NoValue')
@@ -948,7 +950,7 @@ classdef MeasurePF < PanelFig
 					        )
 					end
 					
-				case 34 % MeasurePF.H_XLABEL
+				case 35 % MeasurePF.H_XLABEL
 					value = xlabel(pf.get('H_AXES'), '');
 					
 					if isa(pf.getr('ST_XLABEL'), 'NoValue')
@@ -963,7 +965,7 @@ classdef MeasurePF < PanelFig
 					        )
 					end
 					
-				case 36 % MeasurePF.H_YLABEL
+				case 37 % MeasurePF.H_YLABEL
 					value = ylabel(pf.get('H_AXES'), '');
 					
 					if isa(pf.getr('ST_YLABEL'), 'NoValue')
@@ -978,36 +980,36 @@ classdef MeasurePF < PanelFig
 					        )
 					end
 					
-				case 9 % MeasurePF.DRAW
-					value = calculateValue@PanelFig(pf, 9, varargin{:}); % also warning
+				case 10 % MeasurePF.DRAW
+					value = calculateValue@PanelFig(pf, 10, varargin{:}); % also warning
 					if value
 					    pf.memorize('H_AXES')
 					
-					    pf.memorize('ST_AXIS').set('PANEL', pf, 'PROP', 21).get('SETUP')
+					    pf.memorize('ST_AXIS').set('PANEL', pf, 'PROP', 22).get('SETUP')
 					    pf.memorize('LISTENER_ST_AXIS');
 					
 					    pf.memorize('H_AREA')
-					    pf.memorize('ST_AREA').set('PANEL', pf, 'PROP', 26).get('SETUP')
+					    pf.memorize('ST_AREA').set('PANEL', pf, 'PROP', 27).get('SETUP')
 					    pf.memorize('LISTENER_ST_AREA');
 					
 					    pf.memorize('H_LINE')
-					    pf.memorize('ST_LINE').set('PANEL', pf, 'PROP', 29).get('SETUP')
+					    pf.memorize('ST_LINE').set('PANEL', pf, 'PROP', 30).get('SETUP')
 					    pf.memorize('LISTENER_ST_LINE');
 					
 					    pf.memorize('H_TITLE')
-					    pf.memorize('ST_TITLE').set('PANEL', pf, 'PROP', 32).get('SETUP')
+					    pf.memorize('ST_TITLE').set('PANEL', pf, 'PROP', 33).get('SETUP')
 					
 					    pf.memorize('H_XLABEL')
-					    pf.memorize('ST_XLABEL').set('PANEL', pf, 'PROP', 34).get('SETUP')
+					    pf.memorize('ST_XLABEL').set('PANEL', pf, 'PROP', 35).get('SETUP')
 					
 					    pf.memorize('H_YLABEL')
-					    pf.memorize('ST_YLABEL').set('PANEL', pf, 'PROP', 36).get('SETUP')
+					    pf.memorize('ST_YLABEL').set('PANEL', pf, 'PROP', 37).get('SETUP')
 					
 					    pf.get('SETUP')
 					end
 					
-				case 16 % MeasurePF.DELETE
-					value = calculateValue@PanelFig(pf, 16, varargin{:}); % also warning
+				case 17 % MeasurePF.DELETE
+					value = calculateValue@PanelFig(pf, 17, varargin{:}); % also warning
 					if value
 					    pf.set('H_AXES', Element.getNoValue())
 					
@@ -1026,10 +1028,10 @@ classdef MeasurePF < PanelFig
 					    pf.set('H_YLABEL', Element.getNoValue())
 					end
 					
-				case 20 % MeasurePF.H_TOOLS
+				case 21 % MeasurePF.H_TOOLS
 					toolbar = pf.memorize('H_TOOLBAR');
 					if check_graphics(toolbar, 'uitoolbar')
-					    value = calculateValue@PanelFig(pf, 20);
+					    value = calculateValue@PanelFig(pf, 21);
 					    
 					    tool_separator_1 = uipushtool(toolbar, 'Separator', 'on', 'Visible', 'off');
 					
@@ -1083,7 +1085,7 @@ classdef MeasurePF < PanelFig
 					end
 					
 				otherwise
-					if prop <= 20
+					if prop <= 21
 						value = calculateValue@PanelFig(pf, prop, varargin{:});
 					else
 						value = calculateValue@Element(pf, prop, varargin{:});
@@ -1158,23 +1160,23 @@ classdef MeasurePF < PanelFig
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 22 % MeasurePF.ST_AXIS
-					pr = SettingsAxisPP('EL', pf, 'PROP', 22, varargin{:});
+				case 23 % MeasurePF.ST_AXIS
+					pr = SettingsAxisPP('EL', pf, 'PROP', 23, varargin{:});
 					
-				case 27 % MeasurePF.ST_AREA
-					pr = SettingsAreaPP('EL', pf, 'PROP', 27, varargin{:});
+				case 28 % MeasurePF.ST_AREA
+					pr = SettingsAreaPP('EL', pf, 'PROP', 28, varargin{:});
 					
-				case 30 % MeasurePF.ST_LINE
-					pr = SettingsLinePP('EL', pf, 'PROP', 30, varargin{:});
+				case 31 % MeasurePF.ST_LINE
+					pr = SettingsLinePP('EL', pf, 'PROP', 31, varargin{:});
 					
-				case 33 % MeasurePF.ST_TITLE
-					pr = SettingsTextPP('EL', pf, 'PROP', 33, varargin{:});
+				case 34 % MeasurePF.ST_TITLE
+					pr = SettingsTextPP('EL', pf, 'PROP', 34, varargin{:});
 					
-				case 35 % MeasurePF.ST_XLABEL
-					pr = SettingsTextPP('EL', pf, 'PROP', 35, varargin{:});
+				case 36 % MeasurePF.ST_XLABEL
+					pr = SettingsTextPP('EL', pf, 'PROP', 36, varargin{:});
 					
-				case 37 % MeasurePF.ST_YLABEL
-					pr = SettingsTextPP('EL', pf, 'PROP', 37, varargin{:});
+				case 38 % MeasurePF.ST_YLABEL
+					pr = SettingsTextPP('EL', pf, 'PROP', 38, varargin{:});
 					
 				otherwise
 					pr = getPanelProp@PanelFig(pf, prop, varargin{:});

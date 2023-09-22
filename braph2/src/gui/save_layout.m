@@ -20,4 +20,8 @@ assert( ...
 
 layout_filename = [fileparts(which('braph2.m')) filesep 'src' filesep 'gui' filesep 'layouts' filesep Element.getClass(el) '.layout'];
 
-save(layout_filename, '-mat', 'order', 'title')
+% % % save(layout_filename, '-mat', 'order', 'title') %TBE
+data = cell(length(title) * 2, 1);
+data(1:2:end) = title;
+data(2:2:end) = num2cell(order);
+writecell(data, layout_filename, 'FileType', 'text', 'Delimiter', 'tab')

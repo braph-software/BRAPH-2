@@ -11,7 +11,8 @@ classdef PipelineSection < ConcreteElement
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the pipeline section.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the pipeline section.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the pipeline section.
-	%  <strong>7</strong> <strong>PC_DICT</strong> 	PC_DICT (data, idict) is an indexed dictionary with the executable code lines.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>PC_DICT</strong> 	PC_DICT (data, idict) is an indexed dictionary with the executable code lines.
 	%
 	% PipelineSection methods (constructor):
 	%  PipelineSection - constructor
@@ -102,7 +103,7 @@ classdef PipelineSection < ConcreteElement
 	% See also PipelinePP_PSDict, Pipeline, PipelineSection.
 	
 	properties (Constant) % properties
-		PC_DICT = 7; %CET: Computational Efficiency Trick
+		PC_DICT = 8; %CET: Computational Efficiency Trick
 		PC_DICT_TAG = 'PC_DICT';
 		PC_DICT_CATEGORY = 4;
 		PC_DICT_FORMAT = 10;
@@ -125,7 +126,8 @@ classdef PipelineSection < ConcreteElement
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the pipeline section.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the pipeline section.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the pipeline section.
-			%  <strong>7</strong> <strong>PC_DICT</strong> 	PC_DICT (data, idict) is an indexed dictionary with the executable code lines.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>PC_DICT</strong> 	PC_DICT (data, idict) is an indexed dictionary with the executable code lines.
 			%
 			% See also Category, Format.
 			
@@ -187,7 +189,7 @@ classdef PipelineSection < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7];
+				prop_list = [1 2 3 4 5 6 7 8];
 				return
 			end
 			
@@ -199,7 +201,9 @@ classdef PipelineSection < ConcreteElement
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 7];
+					prop_list = [4 8];
+				case 6 % Category.QUERY
+					prop_list = 7;
 				otherwise
 					prop_list = [];
 			end
@@ -225,7 +229,7 @@ classdef PipelineSection < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 7;
+				prop_number = 8;
 				return
 			end
 			
@@ -238,6 +242,8 @@ classdef PipelineSection < ConcreteElement
 					prop_number = 1;
 				case 4 % Category.DATA
 					prop_number = 2;
+				case 6 % Category.QUERY
+					prop_number = 1;
 				otherwise
 					prop_number = 0;
 			end
@@ -268,7 +274,7 @@ classdef PipelineSection < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 7 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 8 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -306,7 +312,7 @@ classdef PipelineSection < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'PC_DICT' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PC_DICT' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -339,7 +345,7 @@ classdef PipelineSection < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'PC_DICT' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PC_DICT' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -368,7 +374,7 @@ classdef PipelineSection < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				pipelinesection_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'PC_DICT' };
+				pipelinesection_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PC_DICT' };
 				tag = pipelinesection_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -395,7 +401,7 @@ classdef PipelineSection < ConcreteElement
 			prop = PipelineSection.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pipelinesection_category_list = { 1  1  3  4  2  2  4 };
+			pipelinesection_category_list = { 1  1  3  4  2  2  6  4 };
 			prop_category = pipelinesection_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -421,7 +427,7 @@ classdef PipelineSection < ConcreteElement
 			prop = PipelineSection.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pipelinesection_format_list = { 2  2  8  2  2  2  10 };
+			pipelinesection_format_list = { 2  2  8  2  2  2  2  10 };
 			prop_format = pipelinesection_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -447,7 +453,7 @@ classdef PipelineSection < ConcreteElement
 			prop = PipelineSection.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pipelinesection_description_list = { 'NAME (constant, string) is the name of the pipeline section.'  'DESCRIPTION (constant, string) is the description of the pipeline section.'  'TEMPLATE (parameter, item) is the template of the pipeline section.'  'ID (data, string) is a few-letter code for the pipeline section.'  'LABEL (metadata, string) is an extended label of the pipeline section.'  'NOTES (metadata, string) are some specific notes about the pipeline section.'  'PC_DICT (data, idict) is an indexed dictionary with the executable code lines.' };
+			pipelinesection_description_list = { 'NAME (constant, string) is the name of the pipeline section.'  'DESCRIPTION (constant, string) is the description of the pipeline section.'  'TEMPLATE (parameter, item) is the template of the pipeline section.'  'ID (data, string) is a few-letter code for the pipeline section.'  'LABEL (metadata, string) is an extended label of the pipeline section.'  'NOTES (metadata, string) are some specific notes about the pipeline section.'  'TOSTRING (query, string) returns a string that represents the object.'  'PC_DICT (data, idict) is an indexed dictionary with the executable code lines.' };
 			prop_description = pipelinesection_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -473,7 +479,7 @@ classdef PipelineSection < ConcreteElement
 			prop = PipelineSection.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % PipelineSection.PC_DICT
+				case 8 % PipelineSection.PC_DICT
 					prop_settings = 'PipelineCode';
 				case 3 % PipelineSection.TEMPLATE
 					prop_settings = 'PipelineSection';
@@ -504,7 +510,7 @@ classdef PipelineSection < ConcreteElement
 			prop = PipelineSection.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % PipelineSection.PC_DICT
+				case 8 % PipelineSection.PC_DICT
 					prop_default = Format.getFormatDefault(10, PipelineSection.getPropSettings(prop));
 				case 1 % PipelineSection.NAME
 					prop_default = 'PipelineSection';
@@ -582,12 +588,12 @@ classdef PipelineSection < ConcreteElement
 			prop = PipelineSection.getPropProp(pointer);
 			
 			switch prop
-				case 7 % PipelineSection.PC_DICT
+				case 8 % PipelineSection.PC_DICT
 					check = Format.checkFormat(10, value, PipelineSection.getPropSettings(prop));
 				case 3 % PipelineSection.TEMPLATE
 					check = Format.checkFormat(8, value, PipelineSection.getPropSettings(prop));
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end

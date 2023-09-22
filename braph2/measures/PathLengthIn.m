@@ -11,14 +11,15 @@ classdef PathLengthIn < Measure
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the PathLengthIn.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the PathLengthIn.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the PathLengthIn.
-	%  <strong>7</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-	%  <strong>8</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>9</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-	%  <strong>10</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-	%  <strong>11</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>12</strong> <strong>M</strong> 	M (result, cell) is the cell containing the PathLengthIn.
-	%  <strong>13</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-	%  <strong>14</strong> <strong>RULE</strong> 	RULE (parameter, option) is the PathLengthIn algorithm
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the cell containing the PathLengthIn.
+	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%  <strong>15</strong> <strong>RULE</strong> 	RULE (parameter, option) is the PathLengthIn algorithm
 	%
 	% PathLengthIn methods (constructor):
 	%  PathLengthIn - constructor
@@ -107,7 +108,7 @@ classdef PathLengthIn < Measure
 	%
 	
 	properties (Constant) % properties
-		RULE = 14; %CET: Computational Efficiency Trick
+		RULE = 15; %CET: Computational Efficiency Trick
 		RULE_TAG = 'RULE';
 		RULE_CATEGORY = 3;
 		RULE_FORMAT = 5;
@@ -130,14 +131,15 @@ classdef PathLengthIn < Measure
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the PathLengthIn.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the PathLengthIn.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the PathLengthIn.
-			%  <strong>7</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-			%  <strong>8</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>9</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-			%  <strong>10</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-			%  <strong>11</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>12</strong> <strong>M</strong> 	M (result, cell) is the cell containing the PathLengthIn.
-			%  <strong>13</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-			%  <strong>14</strong> <strong>RULE</strong> 	RULE (parameter, option) is the PathLengthIn algorithm
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the cell containing the PathLengthIn.
+			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+			%  <strong>15</strong> <strong>RULE</strong> 	RULE (parameter, option) is the PathLengthIn algorithm
 			%
 			% See also Category, Format.
 			
@@ -199,23 +201,25 @@ classdef PathLengthIn < Measure
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2 7 8 9 10];
+					prop_list = [1 2 8 9 10 11];
 				case 2 % Category.METADATA
 					prop_list = [5 6];
 				case 3 % Category.PARAMETER
-					prop_list = [3 14];
+					prop_list = [3 15];
 				case 4 % Category.DATA
-					prop_list = [4 11];
+					prop_list = [4 12];
 				case 5 % Category.RESULT
-					prop_list = 12;
-				case 9 % Category.GUI
 					prop_list = 13;
+				case 6 % Category.QUERY
+					prop_list = 7;
+				case 9 % Category.GUI
+					prop_list = 14;
 				otherwise
 					prop_list = [];
 			end
@@ -241,7 +245,7 @@ classdef PathLengthIn < Measure
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 14;
+				prop_number = 15;
 				return
 			end
 			
@@ -255,6 +259,8 @@ classdef PathLengthIn < Measure
 				case 4 % Category.DATA
 					prop_number = 2;
 				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
 					prop_number = 1;
 				case 9 % Category.GUI
 					prop_number = 1;
@@ -288,7 +294,7 @@ classdef PathLengthIn < Measure
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 14 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 15 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -326,7 +332,7 @@ classdef PathLengthIn < Measure
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -359,7 +365,7 @@ classdef PathLengthIn < Measure
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -388,7 +394,7 @@ classdef PathLengthIn < Measure
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				pathlengthin_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' };
+				pathlengthin_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' };
 				tag = pathlengthin_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -415,7 +421,7 @@ classdef PathLengthIn < Measure
 			prop = PathLengthIn.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pathlengthin_category_list = { 1  1  3  4  2  2  1  1  1  1  4  5  9  3 };
+			pathlengthin_category_list = { 1  1  3  4  2  2  6  1  1  1  1  4  5  9  3 };
 			prop_category = pathlengthin_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -441,7 +447,7 @@ classdef PathLengthIn < Measure
 			prop = PathLengthIn.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pathlengthin_format_list = { 2  2  8  2  2  2  11  11  11  7  8  16  8  5 };
+			pathlengthin_format_list = { 2  2  8  2  2  2  2  11  11  11  7  8  16  8  5 };
 			prop_format = pathlengthin_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -467,7 +473,7 @@ classdef PathLengthIn < Measure
 			prop = PathLengthIn.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pathlengthin_description_list = { 'NAME (constant, string) is the name of the PathLengthIn.'  'DESCRIPTION (constant, string) is the description of the PathLengthIn.'  'TEMPLATE (parameter, item) is the template of the PathLengthIn.'  'ID (data, string) is a few-letter code of the PathLengthIn.'  'LABEL (metadata, string) is an extended label of the PathLengthIn.'  'NOTES (metadata, string) are some specific notes about the PathLengthIn.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the PathLengthIn.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the PathLengthIn algorithm' };
+			pathlengthin_description_list = { 'NAME (constant, string) is the name of the PathLengthIn.'  'DESCRIPTION (constant, string) is the description of the PathLengthIn.'  'TEMPLATE (parameter, item) is the template of the PathLengthIn.'  'ID (data, string) is a few-letter code of the PathLengthIn.'  'LABEL (metadata, string) is an extended label of the PathLengthIn.'  'NOTES (metadata, string) are some specific notes about the PathLengthIn.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the PathLengthIn.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the PathLengthIn algorithm' };
 			prop_description = pathlengthin_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -493,7 +499,7 @@ classdef PathLengthIn < Measure
 			prop = PathLengthIn.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 14 % PathLengthIn.RULE
+				case 15 % PathLengthIn.RULE
 					prop_settings = {'subgraphs' 'harmonic' 'mean'};
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
@@ -522,7 +528,7 @@ classdef PathLengthIn < Measure
 			prop = PathLengthIn.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 14 % PathLengthIn.RULE
+				case 15 % PathLengthIn.RULE
 					prop_default = 'harmonic';
 				case 1 % PathLengthIn.NAME
 					prop_default = 'PathLengthIn';
@@ -534,13 +540,13 @@ classdef PathLengthIn < Measure
 					prop_default = 'PathLengthIn label';
 				case 6 % PathLengthIn.NOTES
 					prop_default = 'PathLengthIn notes';
-				case 7 % PathLengthIn.SHAPE
+				case 8 % PathLengthIn.SHAPE
 					prop_default = 2;
-				case 8 % PathLengthIn.SCOPE
+				case 9 % PathLengthIn.SCOPE
 					prop_default = 2;
-				case 9 % PathLengthIn.PARAMETRICITY
+				case 10 % PathLengthIn.PARAMETRICITY
 					prop_default = 2;
-				case 10 % PathLengthIn.COMPATIBLE_GRAPHS
+				case 11 % PathLengthIn.COMPATIBLE_GRAPHS
 					prop_default = {'GraphBD' 'GraphWD' 'MultiplexBD' 'MultiplexWD' 'MultilayerBD' 'OrdMlBD'};
 				otherwise
 					prop_default = getPropDefault@Measure(prop);
@@ -606,10 +612,10 @@ classdef PathLengthIn < Measure
 			prop = PathLengthIn.getPropProp(pointer);
 			
 			switch prop
-				case 14 % PathLengthIn.RULE
+				case 15 % PathLengthIn.RULE
 					check = Format.checkFormat(5, value, PathLengthIn.getPropSettings(prop));
 				otherwise
-					if prop <= 13
+					if prop <= 14
 						check = checkProp@Measure(prop, value);
 					end
 			end
@@ -642,8 +648,8 @@ classdef PathLengthIn < Measure
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 12 % PathLengthIn.M
-					rng_settings_ = rng(); rng(m.getPropSeed(12), 'twister')
+				case 13 % PathLengthIn.M
+					rng_settings_ = rng(); rng(m.getPropSeed(13), 'twister')
 					
 					g = m.get('G');  % graph from measure class
 					A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -684,7 +690,7 @@ classdef PathLengthIn < Measure
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 13
+					if prop <= 14
 						value = calculateValue@Measure(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

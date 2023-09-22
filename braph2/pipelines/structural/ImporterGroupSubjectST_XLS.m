@@ -21,11 +21,12 @@ classdef ImporterGroupSubjectST_XLS < Importer
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ST subject group importer from XLS/XLSX.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ST subject group importer from XLS/XLSX.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ST subject group importer from XLS/XLSX.
-	%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>8</strong> <strong>FILE</strong> 	FILE (data, string) is the XLS/XLSX file from where to load the ST subject group.
-	%  <strong>9</strong> <strong>GET_FILE</strong> 	GET_FILE (query, item) opens a dialog box to set the XLS/XLSX file from where to load the ST subject group.
-	%  <strong>10</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
-	%  <strong>11</strong> <strong>GR</strong> 	GR (result, item) is a group of subjects with structural data.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>9</strong> <strong>FILE</strong> 	FILE (data, string) is the XLS/XLSX file from where to load the ST subject group.
+	%  <strong>10</strong> <strong>GET_FILE</strong> 	GET_FILE (query, item) opens a dialog box to set the XLS/XLSX file from where to load the ST subject group.
+	%  <strong>11</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
+	%  <strong>12</strong> <strong>GR</strong> 	GR (result, item) is a group of subjects with structural data.
 	%
 	% ImporterGroupSubjectST_XLS methods (constructor):
 	%  ImporterGroupSubjectST_XLS - constructor
@@ -116,22 +117,22 @@ classdef ImporterGroupSubjectST_XLS < Importer
 	% See also Group, SubjectST, ExporterGroupSubjectST_XLS.
 	
 	properties (Constant) % properties
-		FILE = 8; %CET: Computational Efficiency Trick
+		FILE = 9; %CET: Computational Efficiency Trick
 		FILE_TAG = 'FILE';
 		FILE_CATEGORY = 4;
 		FILE_FORMAT = 2;
 		
-		GET_FILE = 9; %CET: Computational Efficiency Trick
+		GET_FILE = 10; %CET: Computational Efficiency Trick
 		GET_FILE_TAG = 'GET_FILE';
 		GET_FILE_CATEGORY = 6;
 		GET_FILE_FORMAT = 8;
 		
-		BA = 10; %CET: Computational Efficiency Trick
+		BA = 11; %CET: Computational Efficiency Trick
 		BA_TAG = 'BA';
 		BA_CATEGORY = 4;
 		BA_FORMAT = 8;
 		
-		GR = 11; %CET: Computational Efficiency Trick
+		GR = 12; %CET: Computational Efficiency Trick
 		GR_TAG = 'GR';
 		GR_CATEGORY = 5;
 		GR_FORMAT = 8;
@@ -154,11 +155,12 @@ classdef ImporterGroupSubjectST_XLS < Importer
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ST subject group importer from XLS/XLSX.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ST subject group importer from XLS/XLSX.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ST subject group importer from XLS/XLSX.
-			%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>8</strong> <strong>FILE</strong> 	FILE (data, string) is the XLS/XLSX file from where to load the ST subject group.
-			%  <strong>9</strong> <strong>GET_FILE</strong> 	GET_FILE (query, item) opens a dialog box to set the XLS/XLSX file from where to load the ST subject group.
-			%  <strong>10</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
-			%  <strong>11</strong> <strong>GR</strong> 	GR (result, item) is a group of subjects with structural data.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>9</strong> <strong>FILE</strong> 	FILE (data, string) is the XLS/XLSX file from where to load the ST subject group.
+			%  <strong>10</strong> <strong>GET_FILE</strong> 	GET_FILE (query, item) opens a dialog box to set the XLS/XLSX file from where to load the ST subject group.
+			%  <strong>11</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
+			%  <strong>12</strong> <strong>GR</strong> 	GR (result, item) is a group of subjects with structural data.
 			%
 			% See also Category, Format.
 			
@@ -220,7 +222,7 @@ classdef ImporterGroupSubjectST_XLS < Importer
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12];
 				return
 			end
 			
@@ -232,13 +234,13 @@ classdef ImporterGroupSubjectST_XLS < Importer
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 8 10];
+					prop_list = [4 9 11];
 				case 5 % Category.RESULT
-					prop_list = 11;
+					prop_list = 12;
 				case 6 % Category.QUERY
-					prop_list = 9;
+					prop_list = [7 10];
 				case 9 % Category.GUI
-					prop_list = 7;
+					prop_list = 8;
 				otherwise
 					prop_list = [];
 			end
@@ -264,7 +266,7 @@ classdef ImporterGroupSubjectST_XLS < Importer
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 11;
+				prop_number = 12;
 				return
 			end
 			
@@ -280,7 +282,7 @@ classdef ImporterGroupSubjectST_XLS < Importer
 				case 5 % Category.RESULT
 					prop_number = 1;
 				case 6 % Category.QUERY
-					prop_number = 1;
+					prop_number = 2;
 				case 9 % Category.GUI
 					prop_number = 1;
 				otherwise
@@ -313,7 +315,7 @@ classdef ImporterGroupSubjectST_XLS < Importer
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 11 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 12 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -351,7 +353,7 @@ classdef ImporterGroupSubjectST_XLS < Importer
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'FILE'  'GET_FILE'  'BA'  'GR' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'FILE'  'GET_FILE'  'BA'  'GR' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -384,7 +386,7 @@ classdef ImporterGroupSubjectST_XLS < Importer
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'FILE'  'GET_FILE'  'BA'  'GR' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'FILE'  'GET_FILE'  'BA'  'GR' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -413,7 +415,7 @@ classdef ImporterGroupSubjectST_XLS < Importer
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				importergroupsubjectst_xls_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'FILE'  'GET_FILE'  'BA'  'GR' };
+				importergroupsubjectst_xls_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'FILE'  'GET_FILE'  'BA'  'GR' };
 				tag = importergroupsubjectst_xls_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -440,7 +442,7 @@ classdef ImporterGroupSubjectST_XLS < Importer
 			prop = ImporterGroupSubjectST_XLS.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			importergroupsubjectst_xls_category_list = { 1  1  3  4  2  2  9  4  6  4  5 };
+			importergroupsubjectst_xls_category_list = { 1  1  3  4  2  2  6  9  4  6  4  5 };
 			prop_category = importergroupsubjectst_xls_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -466,7 +468,7 @@ classdef ImporterGroupSubjectST_XLS < Importer
 			prop = ImporterGroupSubjectST_XLS.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			importergroupsubjectst_xls_format_list = { 2  2  8  2  2  2  4  2  8  8  8 };
+			importergroupsubjectst_xls_format_list = { 2  2  8  2  2  2  2  4  2  8  8  8 };
 			prop_format = importergroupsubjectst_xls_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -492,7 +494,7 @@ classdef ImporterGroupSubjectST_XLS < Importer
 			prop = ImporterGroupSubjectST_XLS.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			importergroupsubjectst_xls_description_list = { 'NAME (constant, string) is the name of the ST subject group importer from XLS/XLSX.'  'DESCRIPTION (constant, string) is the description of the ST subject group importer from XLS/XLSX.'  'TEMPLATE (parameter, item) is the template of the ST subject group importer from XLS/XLSX.'  'ID (data, string) is a few-letter code for the ST subject group importer from XLS/XLSX.'  'LABEL (metadata, string) is an extended label of the ST subject group importer from XLS/XLSX.'  'NOTES (metadata, string) are some specific notes about the ST subject group importer from XLS/XLSX.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'FILE (data, string) is the XLS/XLSX file from where to load the ST subject group.'  'GET_FILE (query, item) opens a dialog box to set the XLS/XLSX file from where to load the ST subject group.'  'BA (data, item) is a brain atlas.'  'GR (result, item) is a group of subjects with structural data.' };
+			importergroupsubjectst_xls_description_list = { 'NAME (constant, string) is the name of the ST subject group importer from XLS/XLSX.'  'DESCRIPTION (constant, string) is the description of the ST subject group importer from XLS/XLSX.'  'TEMPLATE (parameter, item) is the template of the ST subject group importer from XLS/XLSX.'  'ID (data, string) is a few-letter code for the ST subject group importer from XLS/XLSX.'  'LABEL (metadata, string) is an extended label of the ST subject group importer from XLS/XLSX.'  'NOTES (metadata, string) are some specific notes about the ST subject group importer from XLS/XLSX.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'FILE (data, string) is the XLS/XLSX file from where to load the ST subject group.'  'GET_FILE (query, item) opens a dialog box to set the XLS/XLSX file from where to load the ST subject group.'  'BA (data, item) is a brain atlas.'  'GR (result, item) is a group of subjects with structural data.' };
 			prop_description = importergroupsubjectst_xls_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -518,13 +520,13 @@ classdef ImporterGroupSubjectST_XLS < Importer
 			prop = ImporterGroupSubjectST_XLS.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % ImporterGroupSubjectST_XLS.FILE
+				case 9 % ImporterGroupSubjectST_XLS.FILE
 					prop_settings = Format.getFormatSettings(2);
-				case 9 % ImporterGroupSubjectST_XLS.GET_FILE
+				case 10 % ImporterGroupSubjectST_XLS.GET_FILE
 					prop_settings = 'ImporterGroupSubjectST_XLS';
-				case 10 % ImporterGroupSubjectST_XLS.BA
+				case 11 % ImporterGroupSubjectST_XLS.BA
 					prop_settings = 'BrainAtlas';
-				case 11 % ImporterGroupSubjectST_XLS.GR
+				case 12 % ImporterGroupSubjectST_XLS.GR
 					prop_settings = 'Group';
 				case 3 % ImporterGroupSubjectST_XLS.TEMPLATE
 					prop_settings = 'ImporterGroupSubjectST_XLS';
@@ -555,13 +557,13 @@ classdef ImporterGroupSubjectST_XLS < Importer
 			prop = ImporterGroupSubjectST_XLS.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % ImporterGroupSubjectST_XLS.FILE
+				case 9 % ImporterGroupSubjectST_XLS.FILE
 					prop_default = '';
-				case 9 % ImporterGroupSubjectST_XLS.GET_FILE
+				case 10 % ImporterGroupSubjectST_XLS.GET_FILE
 					prop_default = Format.getFormatDefault(8, ImporterGroupSubjectST_XLS.getPropSettings(prop));
-				case 10 % ImporterGroupSubjectST_XLS.BA
+				case 11 % ImporterGroupSubjectST_XLS.BA
 					prop_default = Format.getFormatDefault(8, ImporterGroupSubjectST_XLS.getPropSettings(prop));
-				case 11 % ImporterGroupSubjectST_XLS.GR
+				case 12 % ImporterGroupSubjectST_XLS.GR
 					prop_default = Group('SUB_CLASS', 'SubjectST', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST'));
 				case 1 % ImporterGroupSubjectST_XLS.NAME
 					prop_default = 'ImporterGroupSubjectST_XLS';
@@ -639,18 +641,18 @@ classdef ImporterGroupSubjectST_XLS < Importer
 			prop = ImporterGroupSubjectST_XLS.getPropProp(pointer);
 			
 			switch prop
-				case 8 % ImporterGroupSubjectST_XLS.FILE
+				case 9 % ImporterGroupSubjectST_XLS.FILE
 					check = Format.checkFormat(2, value, ImporterGroupSubjectST_XLS.getPropSettings(prop));
-				case 9 % ImporterGroupSubjectST_XLS.GET_FILE
+				case 10 % ImporterGroupSubjectST_XLS.GET_FILE
 					check = Format.checkFormat(8, value, ImporterGroupSubjectST_XLS.getPropSettings(prop));
-				case 10 % ImporterGroupSubjectST_XLS.BA
+				case 11 % ImporterGroupSubjectST_XLS.BA
 					check = Format.checkFormat(8, value, ImporterGroupSubjectST_XLS.getPropSettings(prop));
-				case 11 % ImporterGroupSubjectST_XLS.GR
+				case 12 % ImporterGroupSubjectST_XLS.GR
 					check = Format.checkFormat(8, value, ImporterGroupSubjectST_XLS.getPropSettings(prop));
 				case 3 % ImporterGroupSubjectST_XLS.TEMPLATE
 					check = Format.checkFormat(8, value, ImporterGroupSubjectST_XLS.getPropSettings(prop));
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						check = checkProp@Importer(prop, value);
 					end
 			end
@@ -683,7 +685,7 @@ classdef ImporterGroupSubjectST_XLS < Importer
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 9 % ImporterGroupSubjectST_XLS.GET_FILE
+				case 10 % ImporterGroupSubjectST_XLS.GET_FILE
 					[filename, filepath, filterindex] = uigetfile({'*.xlsx';'*.xls'}, 'Select Excel file');
 					if filterindex
 					    file = [filepath filename];
@@ -691,8 +693,8 @@ classdef ImporterGroupSubjectST_XLS < Importer
 					end
 					value = im;
 					
-				case 11 % ImporterGroupSubjectST_XLS.GR
-					rng_settings_ = rng(); rng(im.getPropSeed(11), 'twister')
+				case 12 % ImporterGroupSubjectST_XLS.GR
+					rng_settings_ = rng(); rng(im.getPropSeed(12), 'twister')
 					
 					% creates empty Group
 					gr = Group( ...
@@ -812,7 +814,7 @@ classdef ImporterGroupSubjectST_XLS < Importer
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						value = calculateValue@Importer(im, prop, varargin{:});
 					else
 						value = calculateValue@Element(im, prop, varargin{:});
@@ -837,11 +839,11 @@ classdef ImporterGroupSubjectST_XLS < Importer
 			msg = ['Error while checking ' tostring(im) ' ' im.getPropTag(prop) '.'];
 			
 			switch prop
-				case 11 % ImporterGroupSubjectST_XLS.GR
+				case 12 % ImporterGroupSubjectST_XLS.GR
 					check = any(strcmp(value.get('SUB_CLASS'), subclasses('SubjectST', [], [], true))); % Format.checkFormat(8, value, 'Group') already checked
 					
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						[check, msg] = checkValue@Importer(im, prop, value);
 					end
 			end

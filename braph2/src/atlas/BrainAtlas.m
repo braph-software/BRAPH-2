@@ -15,8 +15,9 @@ classdef BrainAtlas < ConcreteElement
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain atlas.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain atlas.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain atlas.
-	%  <strong>7</strong> <strong>BR_DICT</strong> 	BR_DICT (data, idict) contains the brain regions of the brain atlas.
-	%  <strong>8</strong> <strong>PFBA</strong> 	PFBA (gui, item) contains the panel figure of the brain atlas.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>BR_DICT</strong> 	BR_DICT (data, idict) contains the brain regions of the brain atlas.
+	%  <strong>9</strong> <strong>PFBA</strong> 	PFBA (gui, item) contains the panel figure of the brain atlas.
 	%
 	% BrainAtlas methods (constructor):
 	%  BrainAtlas - constructor
@@ -107,12 +108,12 @@ classdef BrainAtlas < ConcreteElement
 	% See also BrainRegion, BrainSurface, ImporterBrainAtlasXLS, ImporterBrainAtlasTXT, ExporterBrainAtlasXLS, ExporterBrainAtlasTXT.
 	
 	properties (Constant) % properties
-		BR_DICT = 7; %CET: Computational Efficiency Trick
+		BR_DICT = 8; %CET: Computational Efficiency Trick
 		BR_DICT_TAG = 'BR_DICT';
 		BR_DICT_CATEGORY = 4;
 		BR_DICT_FORMAT = 10;
 		
-		PFBA = 8; %CET: Computational Efficiency Trick
+		PFBA = 9; %CET: Computational Efficiency Trick
 		PFBA_TAG = 'PFBA';
 		PFBA_CATEGORY = 9;
 		PFBA_FORMAT = 8;
@@ -135,8 +136,9 @@ classdef BrainAtlas < ConcreteElement
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain atlas.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain atlas.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain atlas.
-			%  <strong>7</strong> <strong>BR_DICT</strong> 	BR_DICT (data, idict) contains the brain regions of the brain atlas.
-			%  <strong>8</strong> <strong>PFBA</strong> 	PFBA (gui, item) contains the panel figure of the brain atlas.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>BR_DICT</strong> 	BR_DICT (data, idict) contains the brain regions of the brain atlas.
+			%  <strong>9</strong> <strong>PFBA</strong> 	PFBA (gui, item) contains the panel figure of the brain atlas.
 			%
 			% See also Category, Format.
 			
@@ -198,7 +200,7 @@ classdef BrainAtlas < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8];
+				prop_list = [1 2 3 4 5 6 7 8 9];
 				return
 			end
 			
@@ -210,9 +212,11 @@ classdef BrainAtlas < ConcreteElement
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 7];
+					prop_list = [4 8];
+				case 6 % Category.QUERY
+					prop_list = 7;
 				case 9 % Category.GUI
-					prop_list = 8;
+					prop_list = 9;
 				otherwise
 					prop_list = [];
 			end
@@ -238,7 +242,7 @@ classdef BrainAtlas < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 8;
+				prop_number = 9;
 				return
 			end
 			
@@ -251,6 +255,8 @@ classdef BrainAtlas < ConcreteElement
 					prop_number = 1;
 				case 4 % Category.DATA
 					prop_number = 2;
+				case 6 % Category.QUERY
+					prop_number = 1;
 				case 9 % Category.GUI
 					prop_number = 1;
 				otherwise
@@ -283,7 +289,7 @@ classdef BrainAtlas < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 8 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 9 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -321,7 +327,7 @@ classdef BrainAtlas < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'BR_DICT'  'PFBA' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'BR_DICT'  'PFBA' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -354,7 +360,7 @@ classdef BrainAtlas < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'BR_DICT'  'PFBA' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'BR_DICT'  'PFBA' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -383,7 +389,7 @@ classdef BrainAtlas < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				brainatlas_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'BR_DICT'  'PFBA' };
+				brainatlas_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'BR_DICT'  'PFBA' };
 				tag = brainatlas_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -410,7 +416,7 @@ classdef BrainAtlas < ConcreteElement
 			prop = BrainAtlas.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			brainatlas_category_list = { 1  1  3  4  2  2  4  9 };
+			brainatlas_category_list = { 1  1  3  4  2  2  6  4  9 };
 			prop_category = brainatlas_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -436,7 +442,7 @@ classdef BrainAtlas < ConcreteElement
 			prop = BrainAtlas.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			brainatlas_format_list = { 2  2  8  2  2  2  10  8 };
+			brainatlas_format_list = { 2  2  8  2  2  2  2  10  8 };
 			prop_format = brainatlas_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -462,7 +468,7 @@ classdef BrainAtlas < ConcreteElement
 			prop = BrainAtlas.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			brainatlas_description_list = { 'NAME (constant, string) is the name of the brain atlas.'  'DESCRIPTION (constant, string) is the description of the brain atlas.'  'TEMPLATE (parameter, item) is the template of the brain atlas.'  'ID (data, string) is a few-letter code for the brain atlas.'  'LABEL (metadata, string) is an extended label of the brain atlas.'  'NOTES (metadata, string) are some specific notes about the brain atlas.'  'BR_DICT (data, idict) contains the brain regions of the brain atlas.'  'PFBA (gui, item) contains the panel figure of the brain atlas.' };
+			brainatlas_description_list = { 'NAME (constant, string) is the name of the brain atlas.'  'DESCRIPTION (constant, string) is the description of the brain atlas.'  'TEMPLATE (parameter, item) is the template of the brain atlas.'  'ID (data, string) is a few-letter code for the brain atlas.'  'LABEL (metadata, string) is an extended label of the brain atlas.'  'NOTES (metadata, string) are some specific notes about the brain atlas.'  'TOSTRING (query, string) returns a string that represents the object.'  'BR_DICT (data, idict) contains the brain regions of the brain atlas.'  'PFBA (gui, item) contains the panel figure of the brain atlas.' };
 			prop_description = brainatlas_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -488,9 +494,9 @@ classdef BrainAtlas < ConcreteElement
 			prop = BrainAtlas.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % BrainAtlas.BR_DICT
+				case 8 % BrainAtlas.BR_DICT
 					prop_settings = 'BrainRegion';
-				case 8 % BrainAtlas.PFBA
+				case 9 % BrainAtlas.PFBA
 					prop_settings = 'BrainAtlasPF';
 				case 3 % BrainAtlas.TEMPLATE
 					prop_settings = 'BrainAtlas';
@@ -521,9 +527,9 @@ classdef BrainAtlas < ConcreteElement
 			prop = BrainAtlas.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % BrainAtlas.BR_DICT
+				case 8 % BrainAtlas.BR_DICT
 					prop_default = Format.getFormatDefault(10, BrainAtlas.getPropSettings(prop));
-				case 8 % BrainAtlas.PFBA
+				case 9 % BrainAtlas.PFBA
 					prop_default = Format.getFormatDefault(8, BrainAtlas.getPropSettings(prop));
 				case 1 % BrainAtlas.NAME
 					prop_default = 'BrainAtlas';
@@ -601,14 +607,14 @@ classdef BrainAtlas < ConcreteElement
 			prop = BrainAtlas.getPropProp(pointer);
 			
 			switch prop
-				case 7 % BrainAtlas.BR_DICT
+				case 8 % BrainAtlas.BR_DICT
 					check = Format.checkFormat(10, value, BrainAtlas.getPropSettings(prop));
-				case 8 % BrainAtlas.PFBA
+				case 9 % BrainAtlas.PFBA
 					check = Format.checkFormat(8, value, BrainAtlas.getPropSettings(prop));
 				case 3 % BrainAtlas.TEMPLATE
 					check = Format.checkFormat(8, value, BrainAtlas.getPropSettings(prop));
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -638,13 +644,13 @@ classdef BrainAtlas < ConcreteElement
 			%  checkValue.
 			
 			switch prop
-				case 8 % BrainAtlas.PFBA
+				case 9 % BrainAtlas.PFBA
 					if isa(ba.getr('PFBA'), 'NoValue')
 					    ba.memorize('PFBA').set('BA', ba)
 					end
 					
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						postprocessing@ConcreteElement(ba, prop);
 					end
 			end
@@ -667,7 +673,7 @@ classdef BrainAtlas < ConcreteElement
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 7 % BrainAtlas.BR_DICT
+				case 8 % BrainAtlas.BR_DICT
 					% % example code to use CB_TAB_EDIT
 					% cb_tab_edit_code = {
 					%     'switch col'
@@ -682,13 +688,13 @@ classdef BrainAtlas < ConcreteElement
 					%         'cb_table_edit_default()'
 					%     'end'
 					%     };
-					pr = PanelPropIDictTable('EL', ba, 'PROP', 7, ... 
-						'COLS', [-1 4 5 7 8 9 6], ...
+					pr = PanelPropIDictTable('EL', ba, 'PROP', 8, ... 
+						'COLS', [-1 4 5 8 9 10 6], ...
 						'ROWNAME', 'numbered', ... % 'CB_TAB_EDIT', cb_tab_edit_code, ... % example code to use CB_TAB_EDIT
 						varargin{:});
 					
-				case 8 % BrainAtlas.PFBA
-					pr = PanelPropItem('EL', ba, 'PROP', 8, ...
+				case 9 % BrainAtlas.PFBA
+					pr = PanelPropItem('EL', ba, 'PROP', 9, ...
 					    'GUICLASS', 'GUIFig', ...
 					    'BUTTON_TEXT', 'Plot Brain Atlas', ...
 					    varargin{:});

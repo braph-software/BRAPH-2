@@ -15,6 +15,7 @@ classdef ConcreteElement < Element
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the concrete element.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the concrete element.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the concrete element.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%
 	% ConcreteElement methods (constructor):
 	%  ConcreteElement - constructor
@@ -134,6 +135,11 @@ classdef ConcreteElement < Element
 		NOTES_TAG = 'NOTES';
 		NOTES_CATEGORY = 2;
 		NOTES_FORMAT = 2;
+		
+		TOSTRING = 7; %CET: Computational Efficiency Trick
+		TOSTRING_TAG = 'TOSTRING';
+		TOSTRING_CATEGORY = 6;
+		TOSTRING_FORMAT = 2;
 	end
 	methods % constructor
 		function el = ConcreteElement(varargin)
@@ -153,6 +159,7 @@ classdef ConcreteElement < Element
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the concrete element.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the concrete element.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the concrete element.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%
 			% See also Category, Format.
 			
@@ -190,7 +197,7 @@ classdef ConcreteElement < Element
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'ConcreteElement'  'GraphBD'  'GraphBU'  'GraphWD'  'GraphWU'  'MultigraphBUD'  'MultigraphBUT'  'MultilayerBD'  'MultilayerBU'  'MultilayerBUD'  'MultilayerBUT'  'MultilayerWD'  'MultilayerWU'  'MultiplexBD'  'MultiplexBU'  'MultiplexBUD'  'MultiplexBUT'  'MultiplexWD'  'MultiplexWU'  'OrdMlBD'  'OrdMlBU'  'OrdMlBUD'  'OrdMlBUT'  'OrdMlWD'  'OrdMlWU'  'OrdMxBD'  'OrdMxBU'  'OrdMxBUD'  'OrdMxBUT'  'OrdMxWD'  'OrdMxWU'  'AssortInIn'  'AssortInOut'  'AssortOutIn'  'AssortOutOut'  'Assortativity'  'BetweennessCentrality'  'Clustering'  'ClusteringAv'  'CommunityStructure'  'CorePeriphery'  'Degree'  'DegreeAv'  'DegreeIn'  'DegreeInAv'  'DegreeOut'  'DegreeOutAv'  'DegreeOverlap'  'DegreeOverlapAv'  'Diameter'  'Distance'  'Eccentricity'  'EccentricityAv'  'EccentricityIn'  'EccentricityInAv'  'EccentricityOut'  'EccentricityOutAv'  'EdgeBetwCentr'  'EdgeNumDist'  'EdgeOverlap'  'EigenVectorCentrality'  'Flexibility'  'FlexibilityAv'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'GlobalEfficiencyIn'  'GlobalEfficiencyInAv'  'GlobalEfficiencyOut'  'GlobalEfficiencyOutAv'  'KCore'  'KCorenessCentrality'  'LocalEfficiency'  'LocalEfficiencyAv'  'Modularity'  'MultiRC'  'MultilayerCommunity'  'MultilayerM'  'MultiplexCP'  'MultiplexCl'  'MultiplexClAv'  'MultiplexKCor'  'MultiplexKCorC'  'MultiplexP'  'MultiplexPAv'  'MultiplexPIn'  'MultiplexPOut'  'MultiplexRCDeg'  'MultiplexRCS'  'MultiplexT'  'OverlappingDeg'  'OverlappingDegAv'  'OverlappingDegIn'  'OverlappingDegInAv'  'OverlappingDegOut'  'OverlappingDegOutAv'  'OverlappingS'  'OverlappingSAv'  'OverlappingSIn'  'OverlappingSInAv'  'OverlappingSOut'  'OverlappingSOutAv'  'Participation'  'PathLength'  'PathLengthAv'  'PathLengthIn'  'PathLengthInAv'  'PathLengthOut'  'PathLengthOutAv'  'Persistence'  'RCDeg'  'RCS'  'Radius'  'RichClub'  'Richness'  'SCore'  'SmallWorldness'  'Strength'  'StrengthAv'  'StrengthIn'  'StrengthInAv'  'StrengthOut'  'StrengthOutAv'  'Transitivity'  'Triangles'  'WeightedEdgeOvlp'  'WeightedMxP'  'WeightedMxPAv'  'WeightedMxPIn'  'WeightedMxPOut'  'WeightedRC'  'NNClassifierMLP'  'NNClassifierMLP_CrossValidation'  'NNClassifierMLP_Evaluator'  'NNDataPoint_Graph_CLA'  'NNDataPoint_Graph_REG'  'NNDataPoint_Measure_CLA'  'NNDataPoint_Measure_REG'  'NNRegressorMLP'  'NNRegressorMLP_CrossValidation'  'NNRegressorMLP_Evaluator'  'AnalyzeEnsemble_CON_BUD'  'AnalyzeEnsemble_CON_BUT'  'AnalyzeEnsemble_CON_WU'  'ExporterGroupSubjectCON_TXT'  'ExporterGroupSubjectCON_XLS'  'ImporterGroupSubjectCON_TXT'  'ImporterGroupSubjectCON_XLS'  'SubjectCON'  'NNDataPoint_CON_CLA'  'NNDataPoint_CON_REG'  'AnalyzeGroup_CON_GA_WU'  'AnalyzeEnsemble_CON_MP_BUD'  'AnalyzeEnsemble_CON_MP_BUT'  'AnalyzeEnsemble_CON_MP_WU'  'ExporterGroupSubjectCON_MP_TXT'  'ExporterGroupSubjectCON_MP_XLS'  'ImporterGroupSubjectCON_MP_TXT'  'ImporterGroupSubjectCON_MP_XLS'  'SubjectCON_MP'  'AnalyzeGroup_CON_MP_GA_WU'  'AnalyzeEnsemble_CON_OMP_WU'  'AnalyzeGroup_CON_OMP_GA_WU'  'AnalyzeEnsemble_CON_FUN_MP_BUD'  'AnalyzeEnsemble_CON_FUN_MP_BUT'  'AnalyzeEnsemble_CON_FUN_MP_WU'  'CombineGroups_CON_FUN_MP'  'SeparateGroups_CON_FUN_MP'  'SubjectCON_FUN_MP'  'NNDataPoint_CON_FUN_MP_CLA'  'NNDataPoint_CON_FUN_MP_REG'  'AnalyzeGroup_CON_FUN_MP_GA_BUD'  'AnalyzeGroup_CON_FUN_MP_GA_WU'  'AnalyzeEnsemble_FUN_BUD'  'AnalyzeEnsemble_FUN_BUT'  'AnalyzeEnsemble_FUN_WU'  'ExporterGroupSubjectFUN_TXT'  'ExporterGroupSubjectFUN_XLS'  'ImporterGroupSubjectFUN_TXT'  'ImporterGroupSubjectFUN_XLS'  'SubjectFUN'  'NNDataPoint_FUN_CLA'  'NNDataPoint_FUN_REG'  'AnalyzeGroup_FUN_GA_WU'  'AnalyzeEnsemble_FUN_MP_BUD'  'AnalyzeEnsemble_FUN_MP_BUT'  'AnalyzeEnsemble_FUN_MP_WU'  'ExporterGroupSubjectFUN_MP_TXT'  'ExporterGroupSubjectFUN_MP_XLS'  'ImporterGroupSubjectFUN_MP_TXT'  'ImporterGroupSubjectFUN_MP_XLS'  'SubjectFUN_MP'  'AnalyzeGroup_FUN_MP_GA_WU'  'AnalyzeEnsemble_FUN_OMP_WU'  'AnalyzeGroup_FUN_OMP_GA_WU'  'AnalyzeGroup_ST_BUD'  'AnalyzeGroup_ST_BUT'  'AnalyzeGroup_ST_WU'  'ExporterGroupSubjectST_TXT'  'ExporterGroupSubjectST_XLS'  'ImporterGroupSubjectST_TXT'  'ImporterGroupSubjectST_XLS'  'SubjectST'  'NNDataPoint_ST_CLA'  'NNDataPoint_ST_REG'  'NNDataPoint_ST_MM_CLA'  'NNDataPoint_ST_MM_REG'  'AnalyzeGroup_ST_MP_BUD'  'AnalyzeGroup_ST_MP_BUT'  'AnalyzeGroup_ST_MP_WU'  'ExporterGroupSubjectST_MP_TXT'  'ExporterGroupSubjectST_MP_XLS'  'ImporterGroupSubjectST_MP_TXT'  'ImporterGroupSubjectST_MP_XLS'  'SubjectST_MP'  'AnalyzeEnsemble'  'AnalyzeEnsemblePP_MeDict'  'AnalyzeGroup'  'AnalyzeGroupPP_G'  'CompareEnsemble'  'CompareEnsemblePP_CpDict'  'CompareGroup'  'CompareGroupPP_CpDict'  'ComparisonEnsemble'  'ComparisonGroup'  'ComparisonGroupPF'  'ComparisonGroupPF_BB'  'ComparisonGroupPF_BS'  'ComparisonGroupPF_BU'  'ComparisonGroupPF_GB'  'ComparisonGroupPF_GS'  'ComparisonGroupPF_GU'  'ComparisonGroupPF_NB'  'ComparisonGroupPF_NS'  'ComparisonGroupPF_NU'  'MeasureEnsemble'  'BrainAtlas'  'BrainAtlasPF'  'BrainRegion'  'BrainSurface'  'BrainSurfacePF'  'ExporterBrainAtlasTXT'  'ExporterBrainAtlasXLS'  'ImporterBrainAtlasTXT'  'ImporterBrainAtlasXLS'  'ImporterBrainSurfaceNV'  'Group'  'Subject'  'SubjectPP_VOIDict'  'VOI'  'VOICategoric'  'VOINumeric'  'IndexedDictionary'  'Graph'  'GraphAdjPF'  'GraphHistPF'  'GraphPP_MDict'  'LayersPP'  'Measure'  'MeasurePF'  'MeasurePF_BB'  'MeasurePF_BS'  'MeasurePF_BU'  'MeasurePF_GB'  'MeasurePF_GS'  'MeasurePF_GU'  'MeasurePF_NB'  'MeasurePF_NS'  'MeasurePF_NU'  'ExporterPipelineBRAPH2'  'GUI'  'GUIElement'  'GUIFig'  'GUILayout'  'ImporterPipelineBRAPH2'  'Panel'  'PanelElement'  'PanelFig'  'PanelProp'  'PanelPropAlpha'  'PanelPropCell'  'PanelPropClass'  'PanelPropClassList'  'PanelPropColor'  'PanelPropIDict'  'PanelPropIDictTable'  'PanelPropItem'  'PanelPropItemList'  'PanelPropLine'  'PanelPropLogical'  'PanelPropMarker'  'PanelPropMatrix'  'PanelPropNet'  'PanelPropOption'  'PanelPropRVectorSmart'  'PanelPropRVectorView'  'PanelPropScalar'  'PanelPropSize'  'PanelPropString'  'PanelPropStringList'  'PanelPropStringTextArea'  'Pipeline'  'PipelineCode'  'PipelinePP_PSDict'  'PipelineSection'  'Settings'  'SettingsAmbient'  'SettingsAmbientPP'  'SettingsArea'  'SettingsAreaPP'  'SettingsAxis'  'SettingsAxisPP'  'SettingsLine'  'SettingsLinePP'  'SettingsPP'  'SettingsPosition'  'SettingsPositionPP'  'SettingsSphere'  'SettingsSurface'  'SettingsSurfacePP'  'SettingsSymbol'  'SettingsText'  'SettingsTextPP'  'NNBase'  'NNCrossValidation'  'NNDataPoint'  'NNDataset'  'NNDatasetCombine'  'NNDatasetSplit'  'NNEvaluator'  'Exporter'  'Importer' }; %CET: Computational Efficiency Trick
+			subclass_list = { 'ConcreteElement'  'GraphBD'  'GraphBU'  'GraphWD'  'GraphWU'  'MultigraphBUD'  'MultigraphBUT'  'MultilayerBD'  'MultilayerBU'  'MultilayerBUD'  'MultilayerBUT'  'MultilayerWD'  'MultilayerWU'  'MultiplexBD'  'MultiplexBU'  'MultiplexBUD'  'MultiplexBUT'  'MultiplexWD'  'MultiplexWU'  'OrdMlBD'  'OrdMlBU'  'OrdMlBUD'  'OrdMlBUT'  'OrdMlWD'  'OrdMlWU'  'OrdMxBD'  'OrdMxBU'  'OrdMxBUD'  'OrdMxBUT'  'OrdMxWD'  'OrdMxWU'  'AssortInIn'  'AssortInOut'  'AssortOutIn'  'AssortOutOut'  'Assortativity'  'BetweennessCentrality'  'Clustering'  'ClusteringAv'  'CommunityStructure'  'CorePeriphery'  'Degree'  'DegreeAv'  'DegreeIn'  'DegreeInAv'  'DegreeOut'  'DegreeOutAv'  'DegreeOverlap'  'DegreeOverlapAv'  'Diameter'  'Distance'  'Eccentricity'  'EccentricityAv'  'EccentricityIn'  'EccentricityInAv'  'EccentricityOut'  'EccentricityOutAv'  'EdgeBetwCentr'  'EdgeNumDist'  'EdgeOverlap'  'EigenVectorCentrality'  'Flexibility'  'FlexibilityAv'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'GlobalEfficiencyIn'  'GlobalEfficiencyInAv'  'GlobalEfficiencyOut'  'GlobalEfficiencyOutAv'  'KCore'  'KCorenessCentrality'  'LocalEfficiency'  'LocalEfficiencyAv'  'Modularity'  'MultiRC'  'MultilayerCommunity'  'MultilayerM'  'MultiplexCP'  'MultiplexCl'  'MultiplexClAv'  'MultiplexKCor'  'MultiplexKCorC'  'MultiplexP'  'MultiplexPAv'  'MultiplexPIn'  'MultiplexPOut'  'MultiplexRCDeg'  'MultiplexRCS'  'MultiplexT'  'OverlappingDeg'  'OverlappingDegAv'  'OverlappingDegIn'  'OverlappingDegInAv'  'OverlappingDegOut'  'OverlappingDegOutAv'  'OverlappingS'  'OverlappingSAv'  'OverlappingSIn'  'OverlappingSInAv'  'OverlappingSOut'  'OverlappingSOutAv'  'Participation'  'PathLength'  'PathLengthAv'  'PathLengthIn'  'PathLengthInAv'  'PathLengthOut'  'PathLengthOutAv'  'Persistence'  'RCDeg'  'RCS'  'Radius'  'RichClub'  'Richness'  'SCore'  'SmallWorldness'  'Strength'  'StrengthAv'  'StrengthIn'  'StrengthInAv'  'StrengthOut'  'StrengthOutAv'  'Transitivity'  'Triangles'  'WeightedEdgeOvlp'  'WeightedMxP'  'WeightedMxPAv'  'WeightedMxPIn'  'WeightedMxPOut'  'WeightedRC'  'NNClassifierMLP'  'NNClassifierMLP_CrossValidation'  'NNClassifierMLP_Evaluator'  'NNDataPoint_Graph_CLA'  'NNDataPoint_Graph_REG'  'NNDataPoint_Measure_CLA'  'NNDataPoint_Measure_REG'  'NNRegressorMLP'  'NNRegressorMLP_CrossValidation'  'NNRegressorMLP_Evaluator'  'AnalyzeEnsemble_CON_BUD'  'AnalyzeEnsemble_CON_BUT'  'AnalyzeEnsemble_CON_WU'  'ExporterGroupSubjectCON_TXT'  'ExporterGroupSubjectCON_XLS'  'ImporterGroupSubjectCON_TXT'  'ImporterGroupSubjectCON_XLS'  'SubjectCON'  'NNDataPoint_CON_CLA'  'NNDataPoint_CON_REG'  'AnalyzeGroup_CON_GA_WU'  'AnalyzeEnsemble_CON_MP_BUD'  'AnalyzeEnsemble_CON_MP_BUT'  'AnalyzeEnsemble_CON_MP_WU'  'ExporterGroupSubjectCON_MP_TXT'  'ExporterGroupSubjectCON_MP_XLS'  'ImporterGroupSubjectCON_MP_TXT'  'ImporterGroupSubjectCON_MP_XLS'  'SubjectCON_MP'  'AnalyzeGroup_CON_MP_GA_WU'  'AnalyzeEnsemble_CON_OMP_WU'  'AnalyzeGroup_CON_OMP_GA_WU'  'AnalyzeEnsemble_CON_FUN_MP_BUD'  'AnalyzeEnsemble_CON_FUN_MP_BUT'  'AnalyzeEnsemble_CON_FUN_MP_WU'  'CombineGroups_CON_FUN_MP'  'SeparateGroups_CON_FUN_MP'  'SubjectCON_FUN_MP'  'NNDataPoint_CON_FUN_MP_CLA'  'NNDataPoint_CON_FUN_MP_REG'  'AnalyzeGroup_CON_FUN_MP_GA_BUD'  'AnalyzeGroup_CON_FUN_MP_GA_WU'  'AnalyzeEnsemble_FUN_BUD'  'AnalyzeEnsemble_FUN_BUT'  'AnalyzeEnsemble_FUN_WU'  'ExporterGroupSubjectFUN_TXT'  'ExporterGroupSubjectFUN_XLS'  'ImporterGroupSubjectFUN_TXT'  'ImporterGroupSubjectFUN_XLS'  'SubjectFUN'  'NNDataPoint_FUN_CLA'  'NNDataPoint_FUN_REG'  'AnalyzeGroup_FUN_GA_WU'  'AnalyzeEnsemble_FUN_MP_BUD'  'AnalyzeEnsemble_FUN_MP_BUT'  'AnalyzeEnsemble_FUN_MP_WU'  'ExporterGroupSubjectFUN_MP_TXT'  'ExporterGroupSubjectFUN_MP_XLS'  'ImporterGroupSubjectFUN_MP_TXT'  'ImporterGroupSubjectFUN_MP_XLS'  'SubjectFUN_MP'  'AnalyzeGroup_FUN_MP_GA_WU'  'AnalyzeEnsemble_FUN_OMP_WU'  'AnalyzeGroup_FUN_OMP_GA_WU'  'AnalyzeGroup_ST_BUD'  'AnalyzeGroup_ST_BUT'  'AnalyzeGroup_ST_WU'  'ExporterGroupSubjectST_TXT'  'ExporterGroupSubjectST_XLS'  'ImporterGroupSubjectST_TXT'  'ImporterGroupSubjectST_XLS'  'SubjectST'  'NNDataPoint_ST_CLA'  'NNDataPoint_ST_REG'  'NNDataPoint_ST_MM_CLA'  'NNDataPoint_ST_MM_REG'  'AnalyzeGroup_ST_MP_BUD'  'AnalyzeGroup_ST_MP_BUT'  'AnalyzeGroup_ST_MP_WU'  'ExporterGroupSubjectST_MP_TXT'  'ExporterGroupSubjectST_MP_XLS'  'ImporterGroupSubjectST_MP_TXT'  'ImporterGroupSubjectST_MP_XLS'  'SubjectST_MP'  'AnalyzeEnsemble'  'AnalyzeEnsemblePP_MeDict'  'AnalyzeGroup'  'AnalyzeGroupPP_G'  'CompareEnsemble'  'CompareEnsemblePP_CpDict'  'CompareGroup'  'CompareGroupPP_CpDict'  'ComparisonEnsemble'  'ComparisonGroup'  'ComparisonGroupPF'  'ComparisonGroupPF_BB'  'ComparisonGroupPF_BS'  'ComparisonGroupPF_BU'  'ComparisonGroupPF_BxPP_Nodes'  'ComparisonGroupPF_GB'  'ComparisonGroupPF_GS'  'ComparisonGroupPF_GU'  'ComparisonGroupPF_NB'  'ComparisonGroupPF_NS'  'ComparisonGroupPF_NU'  'ComparisonGroupPF_NxPP_Node'  'MeasureEnsemble'  'BrainAtlas'  'BrainAtlasPF'  'BrainRegion'  'BrainSurface'  'BrainSurfacePF'  'ExporterBrainAtlasTXT'  'ExporterBrainAtlasXLS'  'ImporterBrainAtlasTXT'  'ImporterBrainAtlasXLS'  'ImporterBrainSurfaceNV'  'Group'  'Subject'  'SubjectPP_VOIDict'  'VOI'  'VOICategoric'  'VOINumeric'  'IndexedDictionary'  'Graph'  'GraphAdjPF'  'GraphHistPF'  'GraphPP_MDict'  'LayersPP'  'Measure'  'MeasurePF'  'MeasurePF_BB'  'MeasurePF_BS'  'MeasurePF_BU'  'MeasurePF_BxPP_Nodes'  'MeasurePF_GB'  'MeasurePF_GS'  'MeasurePF_GU'  'MeasurePF_NB'  'MeasurePF_NS'  'MeasurePF_NU'  'MeasurePF_NxPP_Node'  'ExporterPipelineBRAPH2'  'GUI'  'GUIElement'  'GUIFig'  'GUILayout'  'ImporterPipelineBRAPH2'  'Panel'  'PanelElement'  'PanelFig'  'PanelProp'  'PanelPropAlpha'  'PanelPropCell'  'PanelPropClass'  'PanelPropClassList'  'PanelPropColor'  'PanelPropIDict'  'PanelPropIDictTable'  'PanelPropItem'  'PanelPropItemList'  'PanelPropLine'  'PanelPropLogical'  'PanelPropMarker'  'PanelPropMatrix'  'PanelPropNet'  'PanelPropOption'  'PanelPropRVectorSmart'  'PanelPropRVectorView'  'PanelPropScalar'  'PanelPropSize'  'PanelPropString'  'PanelPropStringList'  'PanelPropStringTextArea'  'Pipeline'  'PipelineCode'  'PipelinePP_PSDict'  'PipelineSection'  'Settings'  'SettingsAmbient'  'SettingsAmbientPP'  'SettingsArea'  'SettingsAreaPP'  'SettingsAxis'  'SettingsAxisPP'  'SettingsLine'  'SettingsLinePP'  'SettingsPP'  'SettingsPosition'  'SettingsPositionPP'  'SettingsSphere'  'SettingsSurface'  'SettingsSurfacePP'  'SettingsSymbol'  'SettingsText'  'SettingsTextPP'  'NNBase'  'NNCrossValidation'  'NNDataPoint'  'NNDataset'  'NNDatasetCombine'  'NNDatasetSplit'  'NNEvaluator'  'Exporter'  'Importer' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of concrete element.
@@ -214,7 +221,7 @@ classdef ConcreteElement < Element
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6];
+				prop_list = [1 2 3 4 5 6 7];
 				return
 			end
 			
@@ -227,6 +234,8 @@ classdef ConcreteElement < Element
 					prop_list = 3;
 				case 4 % Category.DATA
 					prop_list = 4;
+				case 6 % Category.QUERY
+					prop_list = 7;
 				otherwise
 					prop_list = [];
 			end
@@ -252,7 +261,7 @@ classdef ConcreteElement < Element
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 6;
+				prop_number = 7;
 				return
 			end
 			
@@ -264,6 +273,8 @@ classdef ConcreteElement < Element
 				case 3 % Category.PARAMETER
 					prop_number = 1;
 				case 4 % Category.DATA
+					prop_number = 1;
+				case 6 % Category.QUERY
 					prop_number = 1;
 				otherwise
 					prop_number = 0;
@@ -295,7 +306,7 @@ classdef ConcreteElement < Element
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 6 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 7 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -333,7 +344,7 @@ classdef ConcreteElement < Element
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -366,7 +377,7 @@ classdef ConcreteElement < Element
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -395,7 +406,7 @@ classdef ConcreteElement < Element
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				concreteelement_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES' };
+				concreteelement_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING' };
 				tag = concreteelement_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -422,7 +433,7 @@ classdef ConcreteElement < Element
 			prop = ConcreteElement.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			concreteelement_category_list = { 1  1  3  4  2  2 };
+			concreteelement_category_list = { 1  1  3  4  2  2  6 };
 			prop_category = concreteelement_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -448,7 +459,7 @@ classdef ConcreteElement < Element
 			prop = ConcreteElement.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			concreteelement_format_list = { 2  2  8  2  2  2 };
+			concreteelement_format_list = { 2  2  8  2  2  2  2 };
 			prop_format = concreteelement_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -474,7 +485,7 @@ classdef ConcreteElement < Element
 			prop = ConcreteElement.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			concreteelement_description_list = { 'NAME (constant, string) is the name of the concrete element.'  'DESCRIPTION (constant, string) is the description of the concrete element.'  'TEMPLATE (parameter, item) is the template of the concrete element.'  'ID (data, string) is a few-letter code for the concrete element.'  'LABEL (metadata, string) is an extended label of the concrete element.'  'NOTES (metadata, string) are some specific notes about the concrete element.' };
+			concreteelement_description_list = { 'NAME (constant, string) is the name of the concrete element.'  'DESCRIPTION (constant, string) is the description of the concrete element.'  'TEMPLATE (parameter, item) is the template of the concrete element.'  'ID (data, string) is a few-letter code for the concrete element.'  'LABEL (metadata, string) is an extended label of the concrete element.'  'NOTES (metadata, string) are some specific notes about the concrete element.'  'TOSTRING (query, string) returns a string that represents the object.' };
 			prop_description = concreteelement_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -511,6 +522,8 @@ classdef ConcreteElement < Element
 				case 5 % ConcreteElement.LABEL
 					prop_settings = Format.getFormatSettings(2);
 				case 6 % ConcreteElement.NOTES
+					prop_settings = Format.getFormatSettings(2);
+				case 7 % ConcreteElement.TOSTRING
 					prop_settings = Format.getFormatSettings(2);
 			end
 		end
@@ -549,6 +562,8 @@ classdef ConcreteElement < Element
 					prop_default = 'ConcreteElement label';
 				case 6 % ConcreteElement.NOTES
 					prop_default = 'ConcreteElement notes';
+				case 7 % ConcreteElement.TOSTRING
+					prop_default = Format.getFormatDefault(2, ConcreteElement.getPropSettings(prop));
 			end
 		end
 		function prop_default = getPropDefaultConditioned(pointer)
@@ -666,6 +681,8 @@ classdef ConcreteElement < Element
 					check = Format.checkFormat(2, value, ConcreteElement.getPropSettings(prop));
 				case 6 % ConcreteElement.NOTES
 					check = Format.checkFormat(2, value, ConcreteElement.getPropSettings(prop));
+				case 7 % ConcreteElement.TOSTRING
+					check = Format.checkFormat(2, value, ConcreteElement.getPropSettings(prop));
 			end
 			
 			if nargout == 1
@@ -711,6 +728,36 @@ classdef ConcreteElement < Element
 					warning(warning_backup)
 					
 			end
+		end
+	end
+	methods (Access=protected) % calculate value
+		function value = calculateValue(el, prop, varargin)
+			%CALCULATEVALUE calculates the value of a property.
+			%
+			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
+			%  returns the default value for the prop and should be implemented in the
+			%  subclasses of Element when needed.
+			%
+			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
+			%  6.
+			%
+			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
+			%  postset, postprocessing, checkValue.
+			
+			switch prop
+				case 7 % ConcreteElement.TOSTRING
+					value = el.tostring();
+					
+				otherwise
+					if prop <= Element.getPropNumber()
+						value = calculateValue@Element(el, prop, varargin{:});
+					else
+						value = calculateValue@Element(el, prop, varargin{:});
+					end
+			end
+			
 		end
 	end
 	methods % GUI

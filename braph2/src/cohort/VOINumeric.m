@@ -11,7 +11,8 @@ classdef VOINumeric < VOI
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the concrete element.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the concrete element.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the concrete element.
-	%  <strong>7</strong> <strong>V</strong> 	V (data, scalar) is the value of the variable of interest.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>V</strong> 	V (data, scalar) is the value of the variable of interest.
 	%
 	% VOINumeric methods (constructor):
 	%  VOINumeric - constructor
@@ -121,7 +122,8 @@ classdef VOINumeric < VOI
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the concrete element.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the concrete element.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the concrete element.
-			%  <strong>7</strong> <strong>V</strong> 	V (data, scalar) is the value of the variable of interest.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>V</strong> 	V (data, scalar) is the value of the variable of interest.
 			%
 			% See also Category, Format.
 			
@@ -183,7 +185,7 @@ classdef VOINumeric < VOI
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7];
+				prop_list = [1 2 3 4 5 6 7 8];
 				return
 			end
 			
@@ -195,7 +197,9 @@ classdef VOINumeric < VOI
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 7];
+					prop_list = [4 8];
+				case 6 % Category.QUERY
+					prop_list = 7;
 				otherwise
 					prop_list = [];
 			end
@@ -221,7 +225,7 @@ classdef VOINumeric < VOI
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 7;
+				prop_number = 8;
 				return
 			end
 			
@@ -234,6 +238,8 @@ classdef VOINumeric < VOI
 					prop_number = 1;
 				case 4 % Category.DATA
 					prop_number = 2;
+				case 6 % Category.QUERY
+					prop_number = 1;
 				otherwise
 					prop_number = 0;
 			end
@@ -264,7 +270,7 @@ classdef VOINumeric < VOI
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 7 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 8 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -302,7 +308,7 @@ classdef VOINumeric < VOI
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'V' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'V' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -335,7 +341,7 @@ classdef VOINumeric < VOI
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'V' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'V' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -364,7 +370,7 @@ classdef VOINumeric < VOI
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				voinumeric_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'V' };
+				voinumeric_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'V' };
 				tag = voinumeric_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -391,7 +397,7 @@ classdef VOINumeric < VOI
 			prop = VOINumeric.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			voinumeric_category_list = { 1  1  3  4  2  2  4 };
+			voinumeric_category_list = { 1  1  3  4  2  2  6  4 };
 			prop_category = voinumeric_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -417,7 +423,7 @@ classdef VOINumeric < VOI
 			prop = VOINumeric.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			voinumeric_format_list = { 2  2  8  2  2  2  11 };
+			voinumeric_format_list = { 2  2  8  2  2  2  2  11 };
 			prop_format = voinumeric_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -443,7 +449,7 @@ classdef VOINumeric < VOI
 			prop = VOINumeric.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			voinumeric_description_list = { 'NAME (constant, string) is the name of the concrete element.'  'DESCRIPTION (constant, string) is the description of the concrete element.'  'TEMPLATE (parameter, item) is the template of the concrete element.'  'ID (data, string) is a few-letter code for the concrete element.'  'LABEL (metadata, string) is an extended label of the concrete element.'  'NOTES (metadata, string) are some specific notes about the concrete element.'  'V (data, scalar) is the value of the variable of interest.' };
+			voinumeric_description_list = { 'NAME (constant, string) is the name of the concrete element.'  'DESCRIPTION (constant, string) is the description of the concrete element.'  'TEMPLATE (parameter, item) is the template of the concrete element.'  'ID (data, string) is a few-letter code for the concrete element.'  'LABEL (metadata, string) is an extended label of the concrete element.'  'NOTES (metadata, string) are some specific notes about the concrete element.'  'TOSTRING (query, string) returns a string that represents the object.'  'V (data, scalar) is the value of the variable of interest.' };
 			prop_description = voinumeric_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -561,7 +567,7 @@ classdef VOINumeric < VOI
 			
 			switch prop
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						check = checkProp@VOI(prop, value);
 					end
 			end

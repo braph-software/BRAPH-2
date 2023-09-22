@@ -12,20 +12,21 @@ classdef CompareEnsemble < ConcreteElement
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the comparison between two ensemble-based analyses.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the comparison between two ensemble-based analyses.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the comparison between two ensemble-based analyses.
-	%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>8</strong> <strong>VERBOSE</strong> 	VERBOSE (gui, logical) sets whether to write the progress of the comparisons.
-	%  <strong>9</strong> <strong>INTERRUPTIBLE</strong> 	INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interruptible for multitasking.
-	%  <strong>10</strong> <strong>MEMORIZE</strong> 	MEMORIZE (metadata, logical) sets whether to memorize the permuted analyses.
-	%  <strong>11</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number.
-	%  <strong>12</strong> <strong>LONGITUDINAL</strong> 	LONGITUDINAL (parameter, logical) determines whether the comparison is longitudinal.
-	%  <strong>13</strong> <strong>A1</strong> 	A1 (data, item) is the first analysis to compare.
-	%  <strong>14</strong> <strong>A2</strong> 	A2 (data, item) is the second analysis to compare.
-	%  <strong>15</strong> <strong>PERM_SEEDS</strong> 	PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
-	%  <strong>16</strong> <strong>A1_PERM_DICT</strong> 	A1_PERM_DICT (result, idict) is the list of permuted analyses for the first analysis.
-	%  <strong>17</strong> <strong>A2_PERM_DICT</strong> 	A2_PERM_DICT (result, idict) is the list of permuted analyses for the second analysis.
-	%  <strong>18</strong> <strong>CP_DICT</strong> 	CP_DICT (result, idict) contains the results of the comparison.
-	%  <strong>19</strong> <strong>COMPARISON</strong> 	COMPARISON (query, item) returns a comparison.
-	%  <strong>20</strong> <strong>PERM</strong> 	PERM (query, itemlist) returns the permuted analyses.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>9</strong> <strong>VERBOSE</strong> 	VERBOSE (gui, logical) sets whether to write the progress of the comparisons.
+	%  <strong>10</strong> <strong>INTERRUPTIBLE</strong> 	INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interruptible for multitasking.
+	%  <strong>11</strong> <strong>MEMORIZE</strong> 	MEMORIZE (metadata, logical) sets whether to memorize the permuted analyses.
+	%  <strong>12</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number.
+	%  <strong>13</strong> <strong>LONGITUDINAL</strong> 	LONGITUDINAL (parameter, logical) determines whether the comparison is longitudinal.
+	%  <strong>14</strong> <strong>A1</strong> 	A1 (data, item) is the first analysis to compare.
+	%  <strong>15</strong> <strong>A2</strong> 	A2 (data, item) is the second analysis to compare.
+	%  <strong>16</strong> <strong>PERM_SEEDS</strong> 	PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
+	%  <strong>17</strong> <strong>A1_PERM_DICT</strong> 	A1_PERM_DICT (result, idict) is the list of permuted analyses for the first analysis.
+	%  <strong>18</strong> <strong>A2_PERM_DICT</strong> 	A2_PERM_DICT (result, idict) is the list of permuted analyses for the second analysis.
+	%  <strong>19</strong> <strong>CP_DICT</strong> 	CP_DICT (result, idict) contains the results of the comparison.
+	%  <strong>20</strong> <strong>COMPARISON</strong> 	COMPARISON (query, item) returns a comparison.
+	%  <strong>21</strong> <strong>PERM</strong> 	PERM (query, itemlist) returns the permuted analyses.
 	%
 	% CompareEnsemble methods (constructor):
 	%  CompareEnsemble - constructor
@@ -116,72 +117,72 @@ classdef CompareEnsemble < ConcreteElement
 	% See also AnalyzeEnsemble, ComparisonEnsemble.
 	
 	properties (Constant) % properties
-		WAITBAR = 7; %CET: Computational Efficiency Trick
+		WAITBAR = 8; %CET: Computational Efficiency Trick
 		WAITBAR_TAG = 'WAITBAR';
 		WAITBAR_CATEGORY = 9;
 		WAITBAR_FORMAT = 4;
 		
-		VERBOSE = 8; %CET: Computational Efficiency Trick
+		VERBOSE = 9; %CET: Computational Efficiency Trick
 		VERBOSE_TAG = 'VERBOSE';
 		VERBOSE_CATEGORY = 9;
 		VERBOSE_FORMAT = 4;
 		
-		INTERRUPTIBLE = 9; %CET: Computational Efficiency Trick
+		INTERRUPTIBLE = 10; %CET: Computational Efficiency Trick
 		INTERRUPTIBLE_TAG = 'INTERRUPTIBLE';
 		INTERRUPTIBLE_CATEGORY = 9;
 		INTERRUPTIBLE_FORMAT = 11;
 		
-		MEMORIZE = 10; %CET: Computational Efficiency Trick
+		MEMORIZE = 11; %CET: Computational Efficiency Trick
 		MEMORIZE_TAG = 'MEMORIZE';
 		MEMORIZE_CATEGORY = 2;
 		MEMORIZE_FORMAT = 4;
 		
-		P = 11; %CET: Computational Efficiency Trick
+		P = 12; %CET: Computational Efficiency Trick
 		P_TAG = 'P';
 		P_CATEGORY = 3;
 		P_FORMAT = 11;
 		
-		LONGITUDINAL = 12; %CET: Computational Efficiency Trick
+		LONGITUDINAL = 13; %CET: Computational Efficiency Trick
 		LONGITUDINAL_TAG = 'LONGITUDINAL';
 		LONGITUDINAL_CATEGORY = 3;
 		LONGITUDINAL_FORMAT = 4;
 		
-		A1 = 13; %CET: Computational Efficiency Trick
+		A1 = 14; %CET: Computational Efficiency Trick
 		A1_TAG = 'A1';
 		A1_CATEGORY = 4;
 		A1_FORMAT = 8;
 		
-		A2 = 14; %CET: Computational Efficiency Trick
+		A2 = 15; %CET: Computational Efficiency Trick
 		A2_TAG = 'A2';
 		A2_CATEGORY = 4;
 		A2_FORMAT = 8;
 		
-		PERM_SEEDS = 15; %CET: Computational Efficiency Trick
+		PERM_SEEDS = 16; %CET: Computational Efficiency Trick
 		PERM_SEEDS_TAG = 'PERM_SEEDS';
 		PERM_SEEDS_CATEGORY = 5;
 		PERM_SEEDS_FORMAT = 12;
 		
-		A1_PERM_DICT = 16; %CET: Computational Efficiency Trick
+		A1_PERM_DICT = 17; %CET: Computational Efficiency Trick
 		A1_PERM_DICT_TAG = 'A1_PERM_DICT';
 		A1_PERM_DICT_CATEGORY = 5;
 		A1_PERM_DICT_FORMAT = 10;
 		
-		A2_PERM_DICT = 17; %CET: Computational Efficiency Trick
+		A2_PERM_DICT = 18; %CET: Computational Efficiency Trick
 		A2_PERM_DICT_TAG = 'A2_PERM_DICT';
 		A2_PERM_DICT_CATEGORY = 5;
 		A2_PERM_DICT_FORMAT = 10;
 		
-		CP_DICT = 18; %CET: Computational Efficiency Trick
+		CP_DICT = 19; %CET: Computational Efficiency Trick
 		CP_DICT_TAG = 'CP_DICT';
 		CP_DICT_CATEGORY = 5;
 		CP_DICT_FORMAT = 10;
 		
-		COMPARISON = 19; %CET: Computational Efficiency Trick
+		COMPARISON = 20; %CET: Computational Efficiency Trick
 		COMPARISON_TAG = 'COMPARISON';
 		COMPARISON_CATEGORY = 6;
 		COMPARISON_FORMAT = 8;
 		
-		PERM = 20; %CET: Computational Efficiency Trick
+		PERM = 21; %CET: Computational Efficiency Trick
 		PERM_TAG = 'PERM';
 		PERM_CATEGORY = 6;
 		PERM_FORMAT = 9;
@@ -204,20 +205,21 @@ classdef CompareEnsemble < ConcreteElement
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the comparison between two ensemble-based analyses.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the comparison between two ensemble-based analyses.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the comparison between two ensemble-based analyses.
-			%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>8</strong> <strong>VERBOSE</strong> 	VERBOSE (gui, logical) sets whether to write the progress of the comparisons.
-			%  <strong>9</strong> <strong>INTERRUPTIBLE</strong> 	INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interruptible for multitasking.
-			%  <strong>10</strong> <strong>MEMORIZE</strong> 	MEMORIZE (metadata, logical) sets whether to memorize the permuted analyses.
-			%  <strong>11</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number.
-			%  <strong>12</strong> <strong>LONGITUDINAL</strong> 	LONGITUDINAL (parameter, logical) determines whether the comparison is longitudinal.
-			%  <strong>13</strong> <strong>A1</strong> 	A1 (data, item) is the first analysis to compare.
-			%  <strong>14</strong> <strong>A2</strong> 	A2 (data, item) is the second analysis to compare.
-			%  <strong>15</strong> <strong>PERM_SEEDS</strong> 	PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
-			%  <strong>16</strong> <strong>A1_PERM_DICT</strong> 	A1_PERM_DICT (result, idict) is the list of permuted analyses for the first analysis.
-			%  <strong>17</strong> <strong>A2_PERM_DICT</strong> 	A2_PERM_DICT (result, idict) is the list of permuted analyses for the second analysis.
-			%  <strong>18</strong> <strong>CP_DICT</strong> 	CP_DICT (result, idict) contains the results of the comparison.
-			%  <strong>19</strong> <strong>COMPARISON</strong> 	COMPARISON (query, item) returns a comparison.
-			%  <strong>20</strong> <strong>PERM</strong> 	PERM (query, itemlist) returns the permuted analyses.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>9</strong> <strong>VERBOSE</strong> 	VERBOSE (gui, logical) sets whether to write the progress of the comparisons.
+			%  <strong>10</strong> <strong>INTERRUPTIBLE</strong> 	INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interruptible for multitasking.
+			%  <strong>11</strong> <strong>MEMORIZE</strong> 	MEMORIZE (metadata, logical) sets whether to memorize the permuted analyses.
+			%  <strong>12</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number.
+			%  <strong>13</strong> <strong>LONGITUDINAL</strong> 	LONGITUDINAL (parameter, logical) determines whether the comparison is longitudinal.
+			%  <strong>14</strong> <strong>A1</strong> 	A1 (data, item) is the first analysis to compare.
+			%  <strong>15</strong> <strong>A2</strong> 	A2 (data, item) is the second analysis to compare.
+			%  <strong>16</strong> <strong>PERM_SEEDS</strong> 	PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
+			%  <strong>17</strong> <strong>A1_PERM_DICT</strong> 	A1_PERM_DICT (result, idict) is the list of permuted analyses for the first analysis.
+			%  <strong>18</strong> <strong>A2_PERM_DICT</strong> 	A2_PERM_DICT (result, idict) is the list of permuted analyses for the second analysis.
+			%  <strong>19</strong> <strong>CP_DICT</strong> 	CP_DICT (result, idict) contains the results of the comparison.
+			%  <strong>20</strong> <strong>COMPARISON</strong> 	COMPARISON (query, item) returns a comparison.
+			%  <strong>21</strong> <strong>PERM</strong> 	PERM (query, itemlist) returns the permuted analyses.
 			%
 			% See also Category, Format.
 			
@@ -279,7 +281,7 @@ classdef CompareEnsemble < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21];
 				return
 			end
 			
@@ -287,17 +289,17 @@ classdef CompareEnsemble < ConcreteElement
 				case 1 % Category.CONSTANT
 					prop_list = [1 2];
 				case 2 % Category.METADATA
-					prop_list = [5 6 10];
+					prop_list = [5 6 11];
 				case 3 % Category.PARAMETER
-					prop_list = [3 11 12];
+					prop_list = [3 12 13];
 				case 4 % Category.DATA
-					prop_list = [4 13 14];
+					prop_list = [4 14 15];
 				case 5 % Category.RESULT
-					prop_list = [15 16 17 18];
+					prop_list = [16 17 18 19];
 				case 6 % Category.QUERY
-					prop_list = [19 20];
+					prop_list = [7 20 21];
 				case 9 % Category.GUI
-					prop_list = [7 8 9];
+					prop_list = [8 9 10];
 				otherwise
 					prop_list = [];
 			end
@@ -323,7 +325,7 @@ classdef CompareEnsemble < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 20;
+				prop_number = 21;
 				return
 			end
 			
@@ -339,7 +341,7 @@ classdef CompareEnsemble < ConcreteElement
 				case 5 % Category.RESULT
 					prop_number = 4;
 				case 6 % Category.QUERY
-					prop_number = 2;
+					prop_number = 3;
 				case 9 % Category.GUI
 					prop_number = 3;
 				otherwise
@@ -372,7 +374,7 @@ classdef CompareEnsemble < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 20 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 21 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -410,7 +412,7 @@ classdef CompareEnsemble < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'VERBOSE'  'INTERRUPTIBLE'  'MEMORIZE'  'P'  'LONGITUDINAL'  'A1'  'A2'  'PERM_SEEDS'  'A1_PERM_DICT'  'A2_PERM_DICT'  'CP_DICT'  'COMPARISON'  'PERM' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'VERBOSE'  'INTERRUPTIBLE'  'MEMORIZE'  'P'  'LONGITUDINAL'  'A1'  'A2'  'PERM_SEEDS'  'A1_PERM_DICT'  'A2_PERM_DICT'  'CP_DICT'  'COMPARISON'  'PERM' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -443,7 +445,7 @@ classdef CompareEnsemble < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'VERBOSE'  'INTERRUPTIBLE'  'MEMORIZE'  'P'  'LONGITUDINAL'  'A1'  'A2'  'PERM_SEEDS'  'A1_PERM_DICT'  'A2_PERM_DICT'  'CP_DICT'  'COMPARISON'  'PERM' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'VERBOSE'  'INTERRUPTIBLE'  'MEMORIZE'  'P'  'LONGITUDINAL'  'A1'  'A2'  'PERM_SEEDS'  'A1_PERM_DICT'  'A2_PERM_DICT'  'CP_DICT'  'COMPARISON'  'PERM' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -472,7 +474,7 @@ classdef CompareEnsemble < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				compareensemble_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'VERBOSE'  'INTERRUPTIBLE'  'MEMORIZE'  'P'  'LONGITUDINAL'  'A1'  'A2'  'PERM_SEEDS'  'A1_PERM_DICT'  'A2_PERM_DICT'  'CP_DICT'  'COMPARISON'  'PERM' };
+				compareensemble_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'VERBOSE'  'INTERRUPTIBLE'  'MEMORIZE'  'P'  'LONGITUDINAL'  'A1'  'A2'  'PERM_SEEDS'  'A1_PERM_DICT'  'A2_PERM_DICT'  'CP_DICT'  'COMPARISON'  'PERM' };
 				tag = compareensemble_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -499,7 +501,7 @@ classdef CompareEnsemble < ConcreteElement
 			prop = CompareEnsemble.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			compareensemble_category_list = { 1  1  3  4  2  2  9  9  9  2  3  3  4  4  5  5  5  5  6  6 };
+			compareensemble_category_list = { 1  1  3  4  2  2  6  9  9  9  2  3  3  4  4  5  5  5  5  6  6 };
 			prop_category = compareensemble_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -525,7 +527,7 @@ classdef CompareEnsemble < ConcreteElement
 			prop = CompareEnsemble.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			compareensemble_format_list = { 2  2  8  2  2  2  4  4  11  4  11  4  8  8  12  10  10  10  8  9 };
+			compareensemble_format_list = { 2  2  8  2  2  2  2  4  4  11  4  11  4  8  8  12  10  10  10  8  9 };
 			prop_format = compareensemble_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -551,7 +553,7 @@ classdef CompareEnsemble < ConcreteElement
 			prop = CompareEnsemble.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			compareensemble_description_list = { 'NAME (constant, string) is the name of the comparison between two ensemble-based analyses.'  'DESCRIPTION (constant, string) is the description of the comparison between two ensemble-based analyses.'  'TEMPLATE (parameter, item) is the template of the comparison between two ensemble-based analyses.'  'ID (data, string) is a few-letter code for the comparison between two ensemble-based analyses.'  'LABEL (metadata, string) is an extended label of the comparison between two ensemble-based analyses.'  'NOTES (metadata, string) are some specific notes about the comparison between two ensemble-based analyses.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'VERBOSE (gui, logical) sets whether to write the progress of the comparisons.'  'INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interruptible for multitasking.'  'MEMORIZE (metadata, logical) sets whether to memorize the permuted analyses.'  'P (parameter, scalar) is the permutation number.'  'LONGITUDINAL (parameter, logical) determines whether the comparison is longitudinal.'  'A1 (data, item) is the first analysis to compare.'  'A2 (data, item) is the second analysis to compare.'  'PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.'  'A1_PERM_DICT (result, idict) is the list of permuted analyses for the first analysis.'  'A2_PERM_DICT (result, idict) is the list of permuted analyses for the second analysis.'  'CP_DICT (result, idict) contains the results of the comparison.'  'COMPARISON (query, item) returns a comparison.'  'PERM (query, itemlist) returns the permuted analyses.' };
+			compareensemble_description_list = { 'NAME (constant, string) is the name of the comparison between two ensemble-based analyses.'  'DESCRIPTION (constant, string) is the description of the comparison between two ensemble-based analyses.'  'TEMPLATE (parameter, item) is the template of the comparison between two ensemble-based analyses.'  'ID (data, string) is a few-letter code for the comparison between two ensemble-based analyses.'  'LABEL (metadata, string) is an extended label of the comparison between two ensemble-based analyses.'  'NOTES (metadata, string) are some specific notes about the comparison between two ensemble-based analyses.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'VERBOSE (gui, logical) sets whether to write the progress of the comparisons.'  'INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interruptible for multitasking.'  'MEMORIZE (metadata, logical) sets whether to memorize the permuted analyses.'  'P (parameter, scalar) is the permutation number.'  'LONGITUDINAL (parameter, logical) determines whether the comparison is longitudinal.'  'A1 (data, item) is the first analysis to compare.'  'A2 (data, item) is the second analysis to compare.'  'PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.'  'A1_PERM_DICT (result, idict) is the list of permuted analyses for the first analysis.'  'A2_PERM_DICT (result, idict) is the list of permuted analyses for the second analysis.'  'CP_DICT (result, idict) contains the results of the comparison.'  'COMPARISON (query, item) returns a comparison.'  'PERM (query, itemlist) returns the permuted analyses.' };
 			prop_description = compareensemble_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -577,33 +579,33 @@ classdef CompareEnsemble < ConcreteElement
 			prop = CompareEnsemble.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % CompareEnsemble.WAITBAR
+				case 8 % CompareEnsemble.WAITBAR
 					prop_settings = Format.getFormatSettings(4);
-				case 8 % CompareEnsemble.VERBOSE
+				case 9 % CompareEnsemble.VERBOSE
 					prop_settings = Format.getFormatSettings(4);
-				case 9 % CompareEnsemble.INTERRUPTIBLE
+				case 10 % CompareEnsemble.INTERRUPTIBLE
 					prop_settings = Format.getFormatSettings(11);
-				case 10 % CompareEnsemble.MEMORIZE
+				case 11 % CompareEnsemble.MEMORIZE
 					prop_settings = Format.getFormatSettings(4);
-				case 11 % CompareEnsemble.P
+				case 12 % CompareEnsemble.P
 					prop_settings = Format.getFormatSettings(11);
-				case 12 % CompareEnsemble.LONGITUDINAL
+				case 13 % CompareEnsemble.LONGITUDINAL
 					prop_settings = Format.getFormatSettings(4);
-				case 13 % CompareEnsemble.A1
+				case 14 % CompareEnsemble.A1
 					prop_settings = 'AnalyzeEnsemble';
-				case 14 % CompareEnsemble.A2
+				case 15 % CompareEnsemble.A2
 					prop_settings = 'AnalyzeEnsemble';
-				case 15 % CompareEnsemble.PERM_SEEDS
+				case 16 % CompareEnsemble.PERM_SEEDS
 					prop_settings = Format.getFormatSettings(12);
-				case 16 % CompareEnsemble.A1_PERM_DICT
+				case 17 % CompareEnsemble.A1_PERM_DICT
 					prop_settings = 'AnalyzeEnsemble';
-				case 17 % CompareEnsemble.A2_PERM_DICT
+				case 18 % CompareEnsemble.A2_PERM_DICT
 					prop_settings = 'AnalyzeEnsemble';
-				case 18 % CompareEnsemble.CP_DICT
+				case 19 % CompareEnsemble.CP_DICT
 					prop_settings = 'ComparisonEnsemble';
-				case 19 % CompareEnsemble.COMPARISON
+				case 20 % CompareEnsemble.COMPARISON
 					prop_settings = 'ComparisonEnsemble';
-				case 20 % CompareEnsemble.PERM
+				case 21 % CompareEnsemble.PERM
 					prop_settings = Format.getFormatSettings(9);
 				case 3 % CompareEnsemble.TEMPLATE
 					prop_settings = 'CompareEnsemble';
@@ -634,33 +636,33 @@ classdef CompareEnsemble < ConcreteElement
 			prop = CompareEnsemble.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % CompareEnsemble.WAITBAR
+				case 8 % CompareEnsemble.WAITBAR
 					prop_default = true;
-				case 8 % CompareEnsemble.VERBOSE
+				case 9 % CompareEnsemble.VERBOSE
 					prop_default = false;
-				case 9 % CompareEnsemble.INTERRUPTIBLE
+				case 10 % CompareEnsemble.INTERRUPTIBLE
 					prop_default = .001;
-				case 10 % CompareEnsemble.MEMORIZE
+				case 11 % CompareEnsemble.MEMORIZE
 					prop_default = Format.getFormatDefault(4, CompareEnsemble.getPropSettings(prop));
-				case 11 % CompareEnsemble.P
+				case 12 % CompareEnsemble.P
 					prop_default = 1e+4;
-				case 12 % CompareEnsemble.LONGITUDINAL
+				case 13 % CompareEnsemble.LONGITUDINAL
 					prop_default = Format.getFormatDefault(4, CompareEnsemble.getPropSettings(prop));
-				case 13 % CompareEnsemble.A1
+				case 14 % CompareEnsemble.A1
 					prop_default = Format.getFormatDefault(8, CompareEnsemble.getPropSettings(prop));
-				case 14 % CompareEnsemble.A2
+				case 15 % CompareEnsemble.A2
 					prop_default = Format.getFormatDefault(8, CompareEnsemble.getPropSettings(prop));
-				case 15 % CompareEnsemble.PERM_SEEDS
+				case 16 % CompareEnsemble.PERM_SEEDS
 					prop_default = Format.getFormatDefault(12, CompareEnsemble.getPropSettings(prop));
-				case 16 % CompareEnsemble.A1_PERM_DICT
+				case 17 % CompareEnsemble.A1_PERM_DICT
 					prop_default = Format.getFormatDefault(10, CompareEnsemble.getPropSettings(prop));
-				case 17 % CompareEnsemble.A2_PERM_DICT
+				case 18 % CompareEnsemble.A2_PERM_DICT
 					prop_default = Format.getFormatDefault(10, CompareEnsemble.getPropSettings(prop));
-				case 18 % CompareEnsemble.CP_DICT
+				case 19 % CompareEnsemble.CP_DICT
 					prop_default = Format.getFormatDefault(10, CompareEnsemble.getPropSettings(prop));
-				case 19 % CompareEnsemble.COMPARISON
+				case 20 % CompareEnsemble.COMPARISON
 					prop_default = Format.getFormatDefault(8, CompareEnsemble.getPropSettings(prop));
-				case 20 % CompareEnsemble.PERM
+				case 21 % CompareEnsemble.PERM
 					prop_default = Format.getFormatDefault(9, CompareEnsemble.getPropSettings(prop));
 				case 1 % CompareEnsemble.NAME
 					prop_default = 'CompareEnsemble';
@@ -738,41 +740,41 @@ classdef CompareEnsemble < ConcreteElement
 			prop = CompareEnsemble.getPropProp(pointer);
 			
 			switch prop
-				case 7 % CompareEnsemble.WAITBAR
+				case 8 % CompareEnsemble.WAITBAR
 					check = Format.checkFormat(4, value, CompareEnsemble.getPropSettings(prop));
-				case 8 % CompareEnsemble.VERBOSE
+				case 9 % CompareEnsemble.VERBOSE
 					check = Format.checkFormat(4, value, CompareEnsemble.getPropSettings(prop));
-				case 9 % CompareEnsemble.INTERRUPTIBLE
+				case 10 % CompareEnsemble.INTERRUPTIBLE
 					check = Format.checkFormat(11, value, CompareEnsemble.getPropSettings(prop));
-				case 10 % CompareEnsemble.MEMORIZE
+				case 11 % CompareEnsemble.MEMORIZE
 					check = Format.checkFormat(4, value, CompareEnsemble.getPropSettings(prop));
-				case 11 % CompareEnsemble.P
+				case 12 % CompareEnsemble.P
 					check = Format.checkFormat(11, value, CompareEnsemble.getPropSettings(prop));
 					if check
 						check = value > 0 && value == round(value);
 					end
-				case 12 % CompareEnsemble.LONGITUDINAL
+				case 13 % CompareEnsemble.LONGITUDINAL
 					check = Format.checkFormat(4, value, CompareEnsemble.getPropSettings(prop));
-				case 13 % CompareEnsemble.A1
+				case 14 % CompareEnsemble.A1
 					check = Format.checkFormat(8, value, CompareEnsemble.getPropSettings(prop));
-				case 14 % CompareEnsemble.A2
+				case 15 % CompareEnsemble.A2
 					check = Format.checkFormat(8, value, CompareEnsemble.getPropSettings(prop));
-				case 15 % CompareEnsemble.PERM_SEEDS
+				case 16 % CompareEnsemble.PERM_SEEDS
 					check = Format.checkFormat(12, value, CompareEnsemble.getPropSettings(prop));
-				case 16 % CompareEnsemble.A1_PERM_DICT
+				case 17 % CompareEnsemble.A1_PERM_DICT
 					check = Format.checkFormat(10, value, CompareEnsemble.getPropSettings(prop));
-				case 17 % CompareEnsemble.A2_PERM_DICT
+				case 18 % CompareEnsemble.A2_PERM_DICT
 					check = Format.checkFormat(10, value, CompareEnsemble.getPropSettings(prop));
-				case 18 % CompareEnsemble.CP_DICT
+				case 19 % CompareEnsemble.CP_DICT
 					check = Format.checkFormat(10, value, CompareEnsemble.getPropSettings(prop));
-				case 19 % CompareEnsemble.COMPARISON
+				case 20 % CompareEnsemble.COMPARISON
 					check = Format.checkFormat(8, value, CompareEnsemble.getPropSettings(prop));
-				case 20 % CompareEnsemble.PERM
+				case 21 % CompareEnsemble.PERM
 					check = Format.checkFormat(9, value, CompareEnsemble.getPropSettings(prop));
 				case 3 % CompareEnsemble.TEMPLATE
 					check = Format.checkFormat(8, value, CompareEnsemble.getPropSettings(prop));
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -805,35 +807,35 @@ classdef CompareEnsemble < ConcreteElement
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 15 % CompareEnsemble.PERM_SEEDS
-					rng_settings_ = rng(); rng(c.getPropSeed(15), 'twister')
+				case 16 % CompareEnsemble.PERM_SEEDS
+					rng_settings_ = rng(); rng(c.getPropSeed(16), 'twister')
 					
 					value = randi(intmax('uint32'), 1, c.get('P'));
 					
 					rng(rng_settings_)
 					
-				case 16 % CompareEnsemble.A1_PERM_DICT
-					rng_settings_ = rng(); rng(c.getPropSeed(16), 'twister')
-					
-					value = IndexedDictionary('IT_CLASS', 'AnalyzeEnsemble', 'IT_KEY', 1);
-					
-					rng(rng_settings_)
-					
-				case 17 % CompareEnsemble.A2_PERM_DICT
+				case 17 % CompareEnsemble.A1_PERM_DICT
 					rng_settings_ = rng(); rng(c.getPropSeed(17), 'twister')
 					
 					value = IndexedDictionary('IT_CLASS', 'AnalyzeEnsemble', 'IT_KEY', 1);
 					
 					rng(rng_settings_)
 					
-				case 18 % CompareEnsemble.CP_DICT
+				case 18 % CompareEnsemble.A2_PERM_DICT
 					rng_settings_ = rng(); rng(c.getPropSeed(18), 'twister')
 					
-					value = IndexedDictionary('IT_CLASS', 'ComparisonEnsemble', 'IT_KEY', 7);
+					value = IndexedDictionary('IT_CLASS', 'AnalyzeEnsemble', 'IT_KEY', 1);
 					
 					rng(rng_settings_)
 					
-				case 19 % CompareEnsemble.COMPARISON
+				case 19 % CompareEnsemble.CP_DICT
+					rng_settings_ = rng(); rng(c.getPropSeed(19), 'twister')
+					
+					value = IndexedDictionary('IT_CLASS', 'ComparisonEnsemble', 'IT_KEY', 8);
+					
+					rng(rng_settings_)
+					
+				case 20 % CompareEnsemble.COMPARISON
 					% CP = c.get('COMPARISON', MEASURE_CLASS) checks if the comparison exists 
 					%  in the comparison dictionary CP_DICT. If not, it creates a new comparison
 					%  CP of class MEASURE_CLASS. The user must call getValue() for the new
@@ -877,7 +879,7 @@ classdef CompareEnsemble < ConcreteElement
 					
 					value = cp;
 					
-				case 20 % CompareEnsemble.PERM
+				case 21 % CompareEnsemble.PERM
 					% {A1P, A2P} = c.get('PERM', I) retunrs the I-th permutations for the analysis
 					%  A1P and A2P. The number of perutations must be smaller than the
 					%  permutation number P, which is one of the properties of the comparison.
@@ -950,7 +952,7 @@ classdef CompareEnsemble < ConcreteElement
 					value = {a1_perm, a2_perm};
 					
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						value = calculateValue@ConcreteElement(c, prop, varargin{:});
 					else
 						value = calculateValue@Element(c, prop, varargin{:});
@@ -975,16 +977,44 @@ classdef CompareEnsemble < ConcreteElement
 			msg = ['Error while checking ' tostring(c) ' ' c.getPropTag(prop) '.'];
 			
 			switch prop
-				case 13 % CompareEnsemble.A1
+				case 14 % CompareEnsemble.A1
 					check = isa(value, c.get('A2').getClass());
 					
-				case 14 % CompareEnsemble.A2
+				case 15 % CompareEnsemble.A2
 					check = isa(value, c.get('A1').getClass());
 					
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						[check, msg] = checkValue@ConcreteElement(c, prop, value);
 					end
+			end
+		end
+	end
+	methods % GUI
+		function pr = getPanelProp(c, prop, varargin)
+			%GETPANELPROP returns a prop panel.
+			%
+			% PR = GETPANELPROP(EL, PROP) returns the panel of prop PROP.
+			%
+			% PR = GETPANELPROP(EL, PROP, 'Name', Value, ...) sets the properties 
+			%  of the panel prop.
+			%
+			% See also PanelProp, PanelPropAlpha, PanelPropCell, PanelPropClass,
+			%  PanelPropClassList, PanelPropColor, PanelPropHandle,
+			%  PanelPropHandleList, PanelPropIDict, PanelPropItem, PanelPropLine,
+			%  PanelPropItemList, PanelPropLogical, PanelPropMarker, PanelPropMatrix,
+			%  PanelPropNet, PanelPropOption, PanelPropScalar, PanelPropSize,
+			%  PanelPropString, PanelPropStringList.
+			
+			switch prop
+				case 19 % CompareEnsemble.CP_DICT
+					pr = CompareEnsemblePP_CpDict('EL', c, 'PROP', 19, ...
+					    'WAITBAR', c.getCallback('WAITBAR'), ...
+					    varargin{:});
+					
+				otherwise
+					pr = getPanelProp@ConcreteElement(c, prop, varargin{:});
+					
 			end
 		end
 	end

@@ -12,14 +12,15 @@ classdef PathLengthAv < PathLength
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average path length.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average path length.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average path length.
-	%  <strong>7</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
-	%  <strong>8</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>9</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-	%  <strong>10</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-	%  <strong>11</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>12</strong> <strong>M</strong> 	M (result, cell) is the cell containing the average path length.
-	%  <strong>13</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-	%  <strong>14</strong> <strong>RULE</strong> 	RULE (parameter, option) is the pathlength algorithm
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
+	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the cell containing the average path length.
+	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%  <strong>15</strong> <strong>RULE</strong> 	RULE (parameter, option) is the pathlength algorithm
 	%
 	% PathLengthAv methods (constructor):
 	%  PathLengthAv - constructor
@@ -125,14 +126,15 @@ classdef PathLengthAv < PathLength
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average path length.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average path length.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average path length.
-			%  <strong>7</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
-			%  <strong>8</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>9</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-			%  <strong>10</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-			%  <strong>11</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>12</strong> <strong>M</strong> 	M (result, cell) is the cell containing the average path length.
-			%  <strong>13</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-			%  <strong>14</strong> <strong>RULE</strong> 	RULE (parameter, option) is the pathlength algorithm
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
+			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the cell containing the average path length.
+			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+			%  <strong>15</strong> <strong>RULE</strong> 	RULE (parameter, option) is the pathlength algorithm
 			%
 			% See also Category, Format.
 			
@@ -194,23 +196,25 @@ classdef PathLengthAv < PathLength
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2 7 8 9 10];
+					prop_list = [1 2 8 9 10 11];
 				case 2 % Category.METADATA
 					prop_list = [5 6];
 				case 3 % Category.PARAMETER
-					prop_list = [3 14];
+					prop_list = [3 15];
 				case 4 % Category.DATA
-					prop_list = [4 11];
+					prop_list = [4 12];
 				case 5 % Category.RESULT
-					prop_list = 12;
-				case 9 % Category.GUI
 					prop_list = 13;
+				case 6 % Category.QUERY
+					prop_list = 7;
+				case 9 % Category.GUI
+					prop_list = 14;
 				otherwise
 					prop_list = [];
 			end
@@ -236,7 +240,7 @@ classdef PathLengthAv < PathLength
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 14;
+				prop_number = 15;
 				return
 			end
 			
@@ -250,6 +254,8 @@ classdef PathLengthAv < PathLength
 				case 4 % Category.DATA
 					prop_number = 2;
 				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
 					prop_number = 1;
 				case 9 % Category.GUI
 					prop_number = 1;
@@ -283,7 +289,7 @@ classdef PathLengthAv < PathLength
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 14 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 15 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -321,7 +327,7 @@ classdef PathLengthAv < PathLength
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -354,7 +360,7 @@ classdef PathLengthAv < PathLength
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -383,7 +389,7 @@ classdef PathLengthAv < PathLength
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				pathlengthav_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' };
+				pathlengthav_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' };
 				tag = pathlengthav_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -410,7 +416,7 @@ classdef PathLengthAv < PathLength
 			prop = PathLengthAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pathlengthav_category_list = { 1  1  3  4  2  2  1  1  1  1  4  5  9  3 };
+			pathlengthav_category_list = { 1  1  3  4  2  2  6  1  1  1  1  4  5  9  3 };
 			prop_category = pathlengthav_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -436,7 +442,7 @@ classdef PathLengthAv < PathLength
 			prop = PathLengthAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pathlengthav_format_list = { 2  2  8  2  2  2  11  11  11  7  8  16  8  5 };
+			pathlengthav_format_list = { 2  2  8  2  2  2  2  11  11  11  7  8  16  8  5 };
 			prop_format = pathlengthav_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -462,7 +468,7 @@ classdef PathLengthAv < PathLength
 			prop = PathLengthAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pathlengthav_description_list = { 'NAME (constant, string) is the name of the average path length.'  'DESCRIPTION (constant, string) is the description of the average path length.'  'TEMPLATE (parameter, item) is the template of the average path length.'  'ID (data, string) is a few-letter code of the average path length.'  'LABEL (metadata, string) is an extended label of the average path length.'  'NOTES (metadata, string) are some specific notes about the average path length.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the average path length.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the pathlength algorithm' };
+			pathlengthav_description_list = { 'NAME (constant, string) is the name of the average path length.'  'DESCRIPTION (constant, string) is the description of the average path length.'  'TEMPLATE (parameter, item) is the template of the average path length.'  'ID (data, string) is a few-letter code of the average path length.'  'LABEL (metadata, string) is an extended label of the average path length.'  'NOTES (metadata, string) are some specific notes about the average path length.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the average path length.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the pathlength algorithm' };
 			prop_description = pathlengthav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -525,13 +531,13 @@ classdef PathLengthAv < PathLength
 					prop_default = 'PathLengthAv label';
 				case 6 % PathLengthAv.NOTES
 					prop_default = 'PathLengthAv notes';
-				case 7 % PathLengthAv.SHAPE
+				case 8 % PathLengthAv.SHAPE
 					prop_default = 1;
-				case 8 % PathLengthAv.SCOPE
+				case 9 % PathLengthAv.SCOPE
 					prop_default = 2;
-				case 9 % PathLengthAv.PARAMETRICITY
+				case 10 % PathLengthAv.PARAMETRICITY
 					prop_default = 2;
-				case 10 % PathLengthAv.COMPATIBLE_GRAPHS
+				case 11 % PathLengthAv.COMPATIBLE_GRAPHS
 					prop_default = {'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMlBUT' 'MultilayerWU'};
 				otherwise
 					prop_default = getPropDefault@PathLength(prop);
@@ -598,7 +604,7 @@ classdef PathLengthAv < PathLength
 			
 			switch prop
 				otherwise
-					if prop <= 14
+					if prop <= 15
 						check = checkProp@PathLength(prop, value);
 					end
 			end
@@ -631,8 +637,8 @@ classdef PathLengthAv < PathLength
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 12 % PathLengthAv.M
-					rng_settings_ = rng(); rng(m.getPropSeed(12), 'twister')
+				case 13 % PathLengthAv.M
+					rng_settings_ = rng(); rng(m.getPropSeed(13), 'twister')
 					
 					g = m.get('G');  % graph from measure class
 					
@@ -656,7 +662,7 @@ classdef PathLengthAv < PathLength
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 14
+					if prop <= 15
 						value = calculateValue@PathLength(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

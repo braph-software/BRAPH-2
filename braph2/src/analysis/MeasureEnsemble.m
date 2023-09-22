@@ -11,11 +11,12 @@ classdef MeasureEnsemble < ConcreteElement
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph ensemble measure.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph ensemble measure.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph ensemble measure.
-	%  <strong>7</strong> <strong>MEASURE</strong> 	MEASURE (data, class) is the measure class.
-	%  <strong>8</strong> <strong>A</strong> 	A (data, item) is the ensemble-based graph analysis.
-	%  <strong>9</strong> <strong>M</strong> 	M (result, cell) is the measure group-average result.
-	%  <strong>10</strong> <strong>PFME</strong> 	PFME (gui, item) contains the panel figure of the measure.
-	%  <strong>11</strong> <strong>PFBG</strong> 	PFBG (gui, item) contains the panel figure of the brain graph.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>MEASURE</strong> 	MEASURE (data, class) is the measure class.
+	%  <strong>9</strong> <strong>A</strong> 	A (data, item) is the ensemble-based graph analysis.
+	%  <strong>10</strong> <strong>M</strong> 	M (result, cell) is the measure group-average result.
+	%  <strong>11</strong> <strong>PFME</strong> 	PFME (gui, item) contains the panel figure of the measure.
+	%  <strong>12</strong> <strong>PFBG</strong> 	PFBG (gui, item) contains the panel figure of the brain graph.
 	%
 	% MeasureEnsemble methods (constructor):
 	%  MeasureEnsemble - constructor
@@ -106,27 +107,27 @@ classdef MeasureEnsemble < ConcreteElement
 	% See also AnalyzeEnsemble, CompareEnsemble.
 	
 	properties (Constant) % properties
-		MEASURE = 7; %CET: Computational Efficiency Trick
+		MEASURE = 8; %CET: Computational Efficiency Trick
 		MEASURE_TAG = 'MEASURE';
 		MEASURE_CATEGORY = 4;
 		MEASURE_FORMAT = 6;
 		
-		A = 8; %CET: Computational Efficiency Trick
+		A = 9; %CET: Computational Efficiency Trick
 		A_TAG = 'A';
 		A_CATEGORY = 4;
 		A_FORMAT = 8;
 		
-		M = 9; %CET: Computational Efficiency Trick
+		M = 10; %CET: Computational Efficiency Trick
 		M_TAG = 'M';
 		M_CATEGORY = 5;
 		M_FORMAT = 16;
 		
-		PFME = 10; %CET: Computational Efficiency Trick
+		PFME = 11; %CET: Computational Efficiency Trick
 		PFME_TAG = 'PFME';
 		PFME_CATEGORY = 9;
 		PFME_FORMAT = 8;
 		
-		PFBG = 11; %CET: Computational Efficiency Trick
+		PFBG = 12; %CET: Computational Efficiency Trick
 		PFBG_TAG = 'PFBG';
 		PFBG_CATEGORY = 9;
 		PFBG_FORMAT = 8;
@@ -149,11 +150,12 @@ classdef MeasureEnsemble < ConcreteElement
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph ensemble measure.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph ensemble measure.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph ensemble measure.
-			%  <strong>7</strong> <strong>MEASURE</strong> 	MEASURE (data, class) is the measure class.
-			%  <strong>8</strong> <strong>A</strong> 	A (data, item) is the ensemble-based graph analysis.
-			%  <strong>9</strong> <strong>M</strong> 	M (result, cell) is the measure group-average result.
-			%  <strong>10</strong> <strong>PFME</strong> 	PFME (gui, item) contains the panel figure of the measure.
-			%  <strong>11</strong> <strong>PFBG</strong> 	PFBG (gui, item) contains the panel figure of the brain graph.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>MEASURE</strong> 	MEASURE (data, class) is the measure class.
+			%  <strong>9</strong> <strong>A</strong> 	A (data, item) is the ensemble-based graph analysis.
+			%  <strong>10</strong> <strong>M</strong> 	M (result, cell) is the measure group-average result.
+			%  <strong>11</strong> <strong>PFME</strong> 	PFME (gui, item) contains the panel figure of the measure.
+			%  <strong>12</strong> <strong>PFBG</strong> 	PFBG (gui, item) contains the panel figure of the brain graph.
 			%
 			% See also Category, Format.
 			
@@ -215,7 +217,7 @@ classdef MeasureEnsemble < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12];
 				return
 			end
 			
@@ -227,11 +229,13 @@ classdef MeasureEnsemble < ConcreteElement
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 7 8];
+					prop_list = [4 8 9];
 				case 5 % Category.RESULT
-					prop_list = 9;
+					prop_list = 10;
+				case 6 % Category.QUERY
+					prop_list = 7;
 				case 9 % Category.GUI
-					prop_list = [10 11];
+					prop_list = [11 12];
 				otherwise
 					prop_list = [];
 			end
@@ -257,7 +261,7 @@ classdef MeasureEnsemble < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 11;
+				prop_number = 12;
 				return
 			end
 			
@@ -271,6 +275,8 @@ classdef MeasureEnsemble < ConcreteElement
 				case 4 % Category.DATA
 					prop_number = 3;
 				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
 					prop_number = 1;
 				case 9 % Category.GUI
 					prop_number = 2;
@@ -304,7 +310,7 @@ classdef MeasureEnsemble < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 11 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 12 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -342,7 +348,7 @@ classdef MeasureEnsemble < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'MEASURE'  'A'  'M'  'PFME'  'PFBG' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'MEASURE'  'A'  'M'  'PFME'  'PFBG' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -375,7 +381,7 @@ classdef MeasureEnsemble < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'MEASURE'  'A'  'M'  'PFME'  'PFBG' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'MEASURE'  'A'  'M'  'PFME'  'PFBG' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -404,7 +410,7 @@ classdef MeasureEnsemble < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				measureensemble_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'MEASURE'  'A'  'M'  'PFME'  'PFBG' };
+				measureensemble_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'MEASURE'  'A'  'M'  'PFME'  'PFBG' };
 				tag = measureensemble_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -431,7 +437,7 @@ classdef MeasureEnsemble < ConcreteElement
 			prop = MeasureEnsemble.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measureensemble_category_list = { 1  1  3  4  2  2  4  4  5  9  9 };
+			measureensemble_category_list = { 1  1  3  4  2  2  6  4  4  5  9  9 };
 			prop_category = measureensemble_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -457,7 +463,7 @@ classdef MeasureEnsemble < ConcreteElement
 			prop = MeasureEnsemble.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measureensemble_format_list = { 2  2  8  2  2  2  6  8  16  8  8 };
+			measureensemble_format_list = { 2  2  8  2  2  2  2  6  8  16  8  8 };
 			prop_format = measureensemble_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -483,7 +489,7 @@ classdef MeasureEnsemble < ConcreteElement
 			prop = MeasureEnsemble.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measureensemble_description_list = { 'NAME (constant, string) is the name of the graph ensemble measure.'  'DESCRIPTION (constant, string) is the description of the graph ensemble measure.'  'TEMPLATE (parameter, item) is the template of the graph ensemble measure.'  'ID (data, string) is a few-letter code for the graph ensemble measure.'  'LABEL (metadata, string) is an extended label of the graph ensemble measure.'  'NOTES (metadata, string) are some specific notes about the graph ensemble measure.'  'MEASURE (data, class) is the measure class.'  'A (data, item) is the ensemble-based graph analysis.'  'M (result, cell) is the measure group-average result.'  'PFME (gui, item) contains the panel figure of the measure.'  'PFBG (gui, item) contains the panel figure of the brain graph.' };
+			measureensemble_description_list = { 'NAME (constant, string) is the name of the graph ensemble measure.'  'DESCRIPTION (constant, string) is the description of the graph ensemble measure.'  'TEMPLATE (parameter, item) is the template of the graph ensemble measure.'  'ID (data, string) is a few-letter code for the graph ensemble measure.'  'LABEL (metadata, string) is an extended label of the graph ensemble measure.'  'NOTES (metadata, string) are some specific notes about the graph ensemble measure.'  'TOSTRING (query, string) returns a string that represents the object.'  'MEASURE (data, class) is the measure class.'  'A (data, item) is the ensemble-based graph analysis.'  'M (result, cell) is the measure group-average result.'  'PFME (gui, item) contains the panel figure of the measure.'  'PFBG (gui, item) contains the panel figure of the brain graph.' };
 			prop_description = measureensemble_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -509,15 +515,15 @@ classdef MeasureEnsemble < ConcreteElement
 			prop = MeasureEnsemble.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % MeasureEnsemble.MEASURE
+				case 8 % MeasureEnsemble.MEASURE
 					prop_settings = 'Measure';
-				case 8 % MeasureEnsemble.A
+				case 9 % MeasureEnsemble.A
 					prop_settings = 'AnalyzeEnsemble';
-				case 9 % MeasureEnsemble.M
+				case 10 % MeasureEnsemble.M
 					prop_settings = Format.getFormatSettings(16);
-				case 10 % MeasureEnsemble.PFME
+				case 11 % MeasureEnsemble.PFME
 					prop_settings = Format.getFormatSettings(8);
-				case 11 % MeasureEnsemble.PFBG
+				case 12 % MeasureEnsemble.PFBG
 					prop_settings = Format.getFormatSettings(8);
 				case 3 % MeasureEnsemble.TEMPLATE
 					prop_settings = 'MeasureEnsemble';
@@ -548,15 +554,15 @@ classdef MeasureEnsemble < ConcreteElement
 			prop = MeasureEnsemble.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % MeasureEnsemble.MEASURE
+				case 8 % MeasureEnsemble.MEASURE
 					prop_default = Format.getFormatDefault(6, MeasureEnsemble.getPropSettings(prop));
-				case 8 % MeasureEnsemble.A
+				case 9 % MeasureEnsemble.A
 					prop_default = Format.getFormatDefault(8, MeasureEnsemble.getPropSettings(prop));
-				case 9 % MeasureEnsemble.M
+				case 10 % MeasureEnsemble.M
 					prop_default = Format.getFormatDefault(16, MeasureEnsemble.getPropSettings(prop));
-				case 10 % MeasureEnsemble.PFME
+				case 11 % MeasureEnsemble.PFME
 					prop_default = Format.getFormatDefault(8, MeasureEnsemble.getPropSettings(prop));
-				case 11 % MeasureEnsemble.PFBG
+				case 12 % MeasureEnsemble.PFBG
 					prop_default = Format.getFormatDefault(8, MeasureEnsemble.getPropSettings(prop));
 				case 1 % MeasureEnsemble.NAME
 					prop_default = 'MeasureEnsemble';
@@ -634,20 +640,20 @@ classdef MeasureEnsemble < ConcreteElement
 			prop = MeasureEnsemble.getPropProp(pointer);
 			
 			switch prop
-				case 7 % MeasureEnsemble.MEASURE
+				case 8 % MeasureEnsemble.MEASURE
 					check = Format.checkFormat(6, value, MeasureEnsemble.getPropSettings(prop));
-				case 8 % MeasureEnsemble.A
+				case 9 % MeasureEnsemble.A
 					check = Format.checkFormat(8, value, MeasureEnsemble.getPropSettings(prop));
-				case 9 % MeasureEnsemble.M
+				case 10 % MeasureEnsemble.M
 					check = Format.checkFormat(16, value, MeasureEnsemble.getPropSettings(prop));
-				case 10 % MeasureEnsemble.PFME
+				case 11 % MeasureEnsemble.PFME
 					check = Format.checkFormat(8, value, MeasureEnsemble.getPropSettings(prop));
-				case 11 % MeasureEnsemble.PFBG
+				case 12 % MeasureEnsemble.PFBG
 					check = Format.checkFormat(8, value, MeasureEnsemble.getPropSettings(prop));
 				case 3 % MeasureEnsemble.TEMPLATE
 					check = Format.checkFormat(8, value, MeasureEnsemble.getPropSettings(prop));
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -680,8 +686,8 @@ classdef MeasureEnsemble < ConcreteElement
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 9 % MeasureEnsemble.M
-					rng_settings_ = rng(); rng(me.getPropSeed(9), 'twister')
+				case 10 % MeasureEnsemble.M
+					rng_settings_ = rng(); rng(me.getPropSeed(10), 'twister')
 					
 					m_list = cellfun(@(x) x.get('MEASURE', me.get('MEASURE')).get('M'), me.get('A').get('G_DICT').get('IT_LIST'), 'UniformOutput', false);
 					
@@ -702,7 +708,7 @@ classdef MeasureEnsemble < ConcreteElement
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						value = calculateValue@ConcreteElement(me, prop, varargin{:});
 					else
 						value = calculateValue@Element(me, prop, varargin{:});

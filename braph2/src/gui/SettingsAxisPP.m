@@ -13,40 +13,41 @@ classdef SettingsAxisPP < SettingsPP
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the settings axis panel.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the settings axis panel.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the settings axis panel.
-	%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>8</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>9</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
-	%  <strong>10</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>11</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>12</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>13</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>14</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-	%  <strong>15</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-	%  <strong>16</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-	%  <strong>17</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-	%  <strong>18</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-	%  <strong>19</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.
-	%  <strong>20</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-	%  <strong>21</strong> <strong>EL</strong> 	EL (data, item) is the element.
-	%  <strong>22</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-	%  <strong>23</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the settings position panel.
-	%  <strong>24</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-	%  <strong>25</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-	%  <strong>26</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-	%  <strong>27</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-	%  <strong>28</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-	%  <strong>29</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>30</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>31</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-	%  <strong>32</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-	%  <strong>33</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-	%  <strong>34</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
-	%  <strong>35</strong> <strong>BUTTON_AXISCOLOR</strong> 	BUTTON_AXISCOLOR (evanescent, handle) is the axis color button.
-	%  <strong>36</strong> <strong>CHECKBOX_AXIS</strong> 	CHECKBOX_AXIS (evanescent, handle) is the axis checkbox.
-	%  <strong>37</strong> <strong>CHECKBOX_GRID</strong> 	CHECKBOX_GRID (evanescent, handle) is the grid checkbox.
-	%  <strong>38</strong> <strong>CHECKBOX_EQUAL</strong> 	CHECKBOX_EQUAL (evanescent, handle) is the equal checkbox.
-	%  <strong>39</strong> <strong>CHECKBOX_TIGHT</strong> 	CHECKBOX_TIGHT (evanescent, handle) is the tight checkbox.
-	%  <strong>40</strong> <strong>CHECKBOX_BOX</strong> 	CHECKBOX_BOX (evanescent, handle) is the box checkbox.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
+	%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+	%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
+	%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
+	%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+	%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
+	%  <strong>19</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
+	%  <strong>20</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.
+	%  <strong>21</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+	%  <strong>22</strong> <strong>EL</strong> 	EL (data, item) is the element.
+	%  <strong>23</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
+	%  <strong>24</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the settings position panel.
+	%  <strong>25</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
+	%  <strong>26</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
+	%  <strong>27</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
+	%  <strong>28</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
+	%  <strong>29</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
+	%  <strong>30</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
+	%  <strong>31</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
+	%  <strong>32</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
+	%  <strong>33</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
+	%  <strong>34</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
+	%  <strong>35</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
+	%  <strong>36</strong> <strong>BUTTON_AXISCOLOR</strong> 	BUTTON_AXISCOLOR (evanescent, handle) is the axis color button.
+	%  <strong>37</strong> <strong>CHECKBOX_AXIS</strong> 	CHECKBOX_AXIS (evanescent, handle) is the axis checkbox.
+	%  <strong>38</strong> <strong>CHECKBOX_GRID</strong> 	CHECKBOX_GRID (evanescent, handle) is the grid checkbox.
+	%  <strong>39</strong> <strong>CHECKBOX_EQUAL</strong> 	CHECKBOX_EQUAL (evanescent, handle) is the equal checkbox.
+	%  <strong>40</strong> <strong>CHECKBOX_TIGHT</strong> 	CHECKBOX_TIGHT (evanescent, handle) is the tight checkbox.
+	%  <strong>41</strong> <strong>CHECKBOX_BOX</strong> 	CHECKBOX_BOX (evanescent, handle) is the box checkbox.
 	%
 	% SettingsAxisPP methods (constructor):
 	%  SettingsAxisPP - constructor
@@ -137,37 +138,37 @@ classdef SettingsAxisPP < SettingsPP
 	% See also SettingsPosition, uicheckbox, uipushbutton.
 	
 	properties (Constant) % properties
-		ENABLE = 34; %CET: Computational Efficiency Trick
+		ENABLE = 35; %CET: Computational Efficiency Trick
 		ENABLE_TAG = 'ENABLE';
 		ENABLE_CATEGORY = 9;
 		ENABLE_FORMAT = 4;
 		
-		BUTTON_AXISCOLOR = 35; %CET: Computational Efficiency Trick
+		BUTTON_AXISCOLOR = 36; %CET: Computational Efficiency Trick
 		BUTTON_AXISCOLOR_TAG = 'BUTTON_AXISCOLOR';
 		BUTTON_AXISCOLOR_CATEGORY = 7;
 		BUTTON_AXISCOLOR_FORMAT = 18;
 		
-		CHECKBOX_AXIS = 36; %CET: Computational Efficiency Trick
+		CHECKBOX_AXIS = 37; %CET: Computational Efficiency Trick
 		CHECKBOX_AXIS_TAG = 'CHECKBOX_AXIS';
 		CHECKBOX_AXIS_CATEGORY = 7;
 		CHECKBOX_AXIS_FORMAT = 18;
 		
-		CHECKBOX_GRID = 37; %CET: Computational Efficiency Trick
+		CHECKBOX_GRID = 38; %CET: Computational Efficiency Trick
 		CHECKBOX_GRID_TAG = 'CHECKBOX_GRID';
 		CHECKBOX_GRID_CATEGORY = 7;
 		CHECKBOX_GRID_FORMAT = 18;
 		
-		CHECKBOX_EQUAL = 38; %CET: Computational Efficiency Trick
+		CHECKBOX_EQUAL = 39; %CET: Computational Efficiency Trick
 		CHECKBOX_EQUAL_TAG = 'CHECKBOX_EQUAL';
 		CHECKBOX_EQUAL_CATEGORY = 7;
 		CHECKBOX_EQUAL_FORMAT = 18;
 		
-		CHECKBOX_TIGHT = 39; %CET: Computational Efficiency Trick
+		CHECKBOX_TIGHT = 40; %CET: Computational Efficiency Trick
 		CHECKBOX_TIGHT_TAG = 'CHECKBOX_TIGHT';
 		CHECKBOX_TIGHT_CATEGORY = 7;
 		CHECKBOX_TIGHT_FORMAT = 18;
 		
-		CHECKBOX_BOX = 40; %CET: Computational Efficiency Trick
+		CHECKBOX_BOX = 41; %CET: Computational Efficiency Trick
 		CHECKBOX_BOX_TAG = 'CHECKBOX_BOX';
 		CHECKBOX_BOX_CATEGORY = 7;
 		CHECKBOX_BOX_FORMAT = 18;
@@ -190,40 +191,41 @@ classdef SettingsAxisPP < SettingsPP
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the settings axis panel.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the settings axis panel.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the settings axis panel.
-			%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>8</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>9</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
-			%  <strong>10</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>11</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>12</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>13</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>14</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-			%  <strong>15</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-			%  <strong>16</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-			%  <strong>17</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-			%  <strong>18</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-			%  <strong>19</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.
-			%  <strong>20</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-			%  <strong>21</strong> <strong>EL</strong> 	EL (data, item) is the element.
-			%  <strong>22</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-			%  <strong>23</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the settings position panel.
-			%  <strong>24</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-			%  <strong>25</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-			%  <strong>26</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-			%  <strong>27</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-			%  <strong>28</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-			%  <strong>29</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>30</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>31</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-			%  <strong>32</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-			%  <strong>33</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-			%  <strong>34</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
-			%  <strong>35</strong> <strong>BUTTON_AXISCOLOR</strong> 	BUTTON_AXISCOLOR (evanescent, handle) is the axis color button.
-			%  <strong>36</strong> <strong>CHECKBOX_AXIS</strong> 	CHECKBOX_AXIS (evanescent, handle) is the axis checkbox.
-			%  <strong>37</strong> <strong>CHECKBOX_GRID</strong> 	CHECKBOX_GRID (evanescent, handle) is the grid checkbox.
-			%  <strong>38</strong> <strong>CHECKBOX_EQUAL</strong> 	CHECKBOX_EQUAL (evanescent, handle) is the equal checkbox.
-			%  <strong>39</strong> <strong>CHECKBOX_TIGHT</strong> 	CHECKBOX_TIGHT (evanescent, handle) is the tight checkbox.
-			%  <strong>40</strong> <strong>CHECKBOX_BOX</strong> 	CHECKBOX_BOX (evanescent, handle) is the box checkbox.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
+			%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+			%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
+			%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
+			%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+			%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
+			%  <strong>19</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
+			%  <strong>20</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.
+			%  <strong>21</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+			%  <strong>22</strong> <strong>EL</strong> 	EL (data, item) is the element.
+			%  <strong>23</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
+			%  <strong>24</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the settings position panel.
+			%  <strong>25</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
+			%  <strong>26</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
+			%  <strong>27</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
+			%  <strong>28</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
+			%  <strong>29</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
+			%  <strong>30</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
+			%  <strong>31</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
+			%  <strong>32</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
+			%  <strong>33</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
+			%  <strong>34</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
+			%  <strong>35</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
+			%  <strong>36</strong> <strong>BUTTON_AXISCOLOR</strong> 	BUTTON_AXISCOLOR (evanescent, handle) is the axis color button.
+			%  <strong>37</strong> <strong>CHECKBOX_AXIS</strong> 	CHECKBOX_AXIS (evanescent, handle) is the axis checkbox.
+			%  <strong>38</strong> <strong>CHECKBOX_GRID</strong> 	CHECKBOX_GRID (evanescent, handle) is the grid checkbox.
+			%  <strong>39</strong> <strong>CHECKBOX_EQUAL</strong> 	CHECKBOX_EQUAL (evanescent, handle) is the equal checkbox.
+			%  <strong>40</strong> <strong>CHECKBOX_TIGHT</strong> 	CHECKBOX_TIGHT (evanescent, handle) is the tight checkbox.
+			%  <strong>41</strong> <strong>CHECKBOX_BOX</strong> 	CHECKBOX_BOX (evanescent, handle) is the box checkbox.
 			%
 			% See also Category, Format.
 			
@@ -285,7 +287,7 @@ classdef SettingsAxisPP < SettingsPP
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41];
 				return
 			end
 			
@@ -297,15 +299,15 @@ classdef SettingsAxisPP < SettingsPP
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 21 22 27];
+					prop_list = [4 22 23 28];
 				case 6 % Category.QUERY
-					prop_list = [9 10 14 15 16 17 18 19 20];
+					prop_list = [7 10 11 15 16 17 18 19 20 21];
 				case 7 % Category.EVANESCENT
-					prop_list = [8 13 25 26 28 29 30 31 32 33 35 36 37 38 39 40];
+					prop_list = [9 14 26 27 29 30 31 32 33 34 36 37 38 39 40 41];
 				case 8 % Category.FIGURE
-					prop_list = 12;
+					prop_list = 13;
 				case 9 % Category.GUI
-					prop_list = [7 11 23 24 34];
+					prop_list = [8 12 24 25 35];
 				otherwise
 					prop_list = [];
 			end
@@ -331,7 +333,7 @@ classdef SettingsAxisPP < SettingsPP
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 40;
+				prop_number = 41;
 				return
 			end
 			
@@ -345,7 +347,7 @@ classdef SettingsAxisPP < SettingsPP
 				case 4 % Category.DATA
 					prop_number = 4;
 				case 6 % Category.QUERY
-					prop_number = 9;
+					prop_number = 10;
 				case 7 % Category.EVANESCENT
 					prop_number = 16;
 				case 8 % Category.FIGURE
@@ -382,7 +384,7 @@ classdef SettingsAxisPP < SettingsPP
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 40 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 41 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -420,7 +422,7 @@ classdef SettingsAxisPP < SettingsPP
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'BUTTON_AXISCOLOR'  'CHECKBOX_AXIS'  'CHECKBOX_GRID'  'CHECKBOX_EQUAL'  'CHECKBOX_TIGHT'  'CHECKBOX_BOX' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'BUTTON_AXISCOLOR'  'CHECKBOX_AXIS'  'CHECKBOX_GRID'  'CHECKBOX_EQUAL'  'CHECKBOX_TIGHT'  'CHECKBOX_BOX' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -453,7 +455,7 @@ classdef SettingsAxisPP < SettingsPP
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'BUTTON_AXISCOLOR'  'CHECKBOX_AXIS'  'CHECKBOX_GRID'  'CHECKBOX_EQUAL'  'CHECKBOX_TIGHT'  'CHECKBOX_BOX' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'BUTTON_AXISCOLOR'  'CHECKBOX_AXIS'  'CHECKBOX_GRID'  'CHECKBOX_EQUAL'  'CHECKBOX_TIGHT'  'CHECKBOX_BOX' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -482,7 +484,7 @@ classdef SettingsAxisPP < SettingsPP
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				settingsaxispp_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'BUTTON_AXISCOLOR'  'CHECKBOX_AXIS'  'CHECKBOX_GRID'  'CHECKBOX_EQUAL'  'CHECKBOX_TIGHT'  'CHECKBOX_BOX' };
+				settingsaxispp_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'BUTTON_AXISCOLOR'  'CHECKBOX_AXIS'  'CHECKBOX_GRID'  'CHECKBOX_EQUAL'  'CHECKBOX_TIGHT'  'CHECKBOX_BOX' };
 				tag = settingsaxispp_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -509,7 +511,7 @@ classdef SettingsAxisPP < SettingsPP
 			prop = SettingsAxisPP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			settingsaxispp_category_list = { 1  1  3  4  2  2  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  7  7  7  7  7  7 };
+			settingsaxispp_category_list = { 1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  7  7  7  7  7  7 };
 			prop_category = settingsaxispp_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -535,7 +537,7 @@ classdef SettingsAxisPP < SettingsPP
 			prop = SettingsAxisPP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			settingsaxispp_format_list = { 2  2  8  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  4  18  18  18  18  18  18 };
+			settingsaxispp_format_list = { 2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  4  18  18  18  18  18  18 };
 			prop_format = settingsaxispp_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -561,7 +563,7 @@ classdef SettingsAxisPP < SettingsPP
 			prop = SettingsAxisPP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			settingsaxispp_description_list = { 'NAME (constant, string) is the name of the settings axis panel.'  'DESCRIPTION (constant, string) is the description of the settings axis panel.'  'TEMPLATE (parameter, item) is the template of the settings axis panel.'  'ID (data, string) is a few-letter code for the settings axis panel.'  'LABEL (metadata, string) is an extended label of the settings axis panel.'  'NOTES (metadata, string) are some specific notes about the settings axis panel.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the property panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the settings position panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.'  'BUTTON_AXISCOLOR (evanescent, handle) is the axis color button.'  'CHECKBOX_AXIS (evanescent, handle) is the axis checkbox.'  'CHECKBOX_GRID (evanescent, handle) is the grid checkbox.'  'CHECKBOX_EQUAL (evanescent, handle) is the equal checkbox.'  'CHECKBOX_TIGHT (evanescent, handle) is the tight checkbox.'  'CHECKBOX_BOX (evanescent, handle) is the box checkbox.' };
+			settingsaxispp_description_list = { 'NAME (constant, string) is the name of the settings axis panel.'  'DESCRIPTION (constant, string) is the description of the settings axis panel.'  'TEMPLATE (parameter, item) is the template of the settings axis panel.'  'ID (data, string) is a few-letter code for the settings axis panel.'  'LABEL (metadata, string) is an extended label of the settings axis panel.'  'NOTES (metadata, string) are some specific notes about the settings axis panel.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the property panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the settings position panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.'  'BUTTON_AXISCOLOR (evanescent, handle) is the axis color button.'  'CHECKBOX_AXIS (evanescent, handle) is the axis checkbox.'  'CHECKBOX_GRID (evanescent, handle) is the grid checkbox.'  'CHECKBOX_EQUAL (evanescent, handle) is the equal checkbox.'  'CHECKBOX_TIGHT (evanescent, handle) is the tight checkbox.'  'CHECKBOX_BOX (evanescent, handle) is the box checkbox.' };
 			prop_description = settingsaxispp_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -587,19 +589,19 @@ classdef SettingsAxisPP < SettingsPP
 			prop = SettingsAxisPP.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 34 % SettingsAxisPP.ENABLE
+				case 35 % SettingsAxisPP.ENABLE
 					prop_settings = Format.getFormatSettings(4);
-				case 35 % SettingsAxisPP.BUTTON_AXISCOLOR
+				case 36 % SettingsAxisPP.BUTTON_AXISCOLOR
 					prop_settings = Format.getFormatSettings(18);
-				case 36 % SettingsAxisPP.CHECKBOX_AXIS
+				case 37 % SettingsAxisPP.CHECKBOX_AXIS
 					prop_settings = Format.getFormatSettings(18);
-				case 37 % SettingsAxisPP.CHECKBOX_GRID
+				case 38 % SettingsAxisPP.CHECKBOX_GRID
 					prop_settings = Format.getFormatSettings(18);
-				case 38 % SettingsAxisPP.CHECKBOX_EQUAL
+				case 39 % SettingsAxisPP.CHECKBOX_EQUAL
 					prop_settings = Format.getFormatSettings(18);
-				case 39 % SettingsAxisPP.CHECKBOX_TIGHT
+				case 40 % SettingsAxisPP.CHECKBOX_TIGHT
 					prop_settings = Format.getFormatSettings(18);
-				case 40 % SettingsAxisPP.CHECKBOX_BOX
+				case 41 % SettingsAxisPP.CHECKBOX_BOX
 					prop_settings = Format.getFormatSettings(18);
 				case 3 % SettingsAxisPP.TEMPLATE
 					prop_settings = 'SettingsAxisPP';
@@ -630,19 +632,19 @@ classdef SettingsAxisPP < SettingsPP
 			prop = SettingsAxisPP.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 34 % SettingsAxisPP.ENABLE
+				case 35 % SettingsAxisPP.ENABLE
 					prop_default = true;
-				case 35 % SettingsAxisPP.BUTTON_AXISCOLOR
+				case 36 % SettingsAxisPP.BUTTON_AXISCOLOR
 					prop_default = Format.getFormatDefault(18, SettingsAxisPP.getPropSettings(prop));
-				case 36 % SettingsAxisPP.CHECKBOX_AXIS
+				case 37 % SettingsAxisPP.CHECKBOX_AXIS
 					prop_default = Format.getFormatDefault(18, SettingsAxisPP.getPropSettings(prop));
-				case 37 % SettingsAxisPP.CHECKBOX_GRID
+				case 38 % SettingsAxisPP.CHECKBOX_GRID
 					prop_default = Format.getFormatDefault(18, SettingsAxisPP.getPropSettings(prop));
-				case 38 % SettingsAxisPP.CHECKBOX_EQUAL
+				case 39 % SettingsAxisPP.CHECKBOX_EQUAL
 					prop_default = Format.getFormatDefault(18, SettingsAxisPP.getPropSettings(prop));
-				case 39 % SettingsAxisPP.CHECKBOX_TIGHT
+				case 40 % SettingsAxisPP.CHECKBOX_TIGHT
 					prop_default = Format.getFormatDefault(18, SettingsAxisPP.getPropSettings(prop));
-				case 40 % SettingsAxisPP.CHECKBOX_BOX
+				case 41 % SettingsAxisPP.CHECKBOX_BOX
 					prop_default = Format.getFormatDefault(18, SettingsAxisPP.getPropSettings(prop));
 				case 1 % SettingsAxisPP.NAME
 					prop_default = 'SettingsAxisPP';
@@ -656,11 +658,11 @@ classdef SettingsAxisPP < SettingsPP
 					prop_default = 'SettingsAxisPP label';
 				case 6 % SettingsAxisPP.NOTES
 					prop_default = 'SettingsAxisPP notes';
-				case 21 % SettingsAxisPP.EL
+				case 22 % SettingsAxisPP.EL
 					prop_default = BrainSurfacePF();
-				case 22 % SettingsAxisPP.PROP
-					prop_default = 23;
-				case 23 % SettingsAxisPP.HEIGHT
+				case 23 % SettingsAxisPP.PROP
+					prop_default = 24;
+				case 24 % SettingsAxisPP.HEIGHT
 					prop_default = 66;
 				otherwise
 					prop_default = getPropDefault@SettingsPP(prop);
@@ -726,24 +728,24 @@ classdef SettingsAxisPP < SettingsPP
 			prop = SettingsAxisPP.getPropProp(pointer);
 			
 			switch prop
-				case 34 % SettingsAxisPP.ENABLE
+				case 35 % SettingsAxisPP.ENABLE
 					check = Format.checkFormat(4, value, SettingsAxisPP.getPropSettings(prop));
-				case 35 % SettingsAxisPP.BUTTON_AXISCOLOR
+				case 36 % SettingsAxisPP.BUTTON_AXISCOLOR
 					check = Format.checkFormat(18, value, SettingsAxisPP.getPropSettings(prop));
-				case 36 % SettingsAxisPP.CHECKBOX_AXIS
+				case 37 % SettingsAxisPP.CHECKBOX_AXIS
 					check = Format.checkFormat(18, value, SettingsAxisPP.getPropSettings(prop));
-				case 37 % SettingsAxisPP.CHECKBOX_GRID
+				case 38 % SettingsAxisPP.CHECKBOX_GRID
 					check = Format.checkFormat(18, value, SettingsAxisPP.getPropSettings(prop));
-				case 38 % SettingsAxisPP.CHECKBOX_EQUAL
+				case 39 % SettingsAxisPP.CHECKBOX_EQUAL
 					check = Format.checkFormat(18, value, SettingsAxisPP.getPropSettings(prop));
-				case 39 % SettingsAxisPP.CHECKBOX_TIGHT
+				case 40 % SettingsAxisPP.CHECKBOX_TIGHT
 					check = Format.checkFormat(18, value, SettingsAxisPP.getPropSettings(prop));
-				case 40 % SettingsAxisPP.CHECKBOX_BOX
+				case 41 % SettingsAxisPP.CHECKBOX_BOX
 					check = Format.checkFormat(18, value, SettingsAxisPP.getPropSettings(prop));
 				case 3 % SettingsAxisPP.TEMPLATE
 					check = Format.checkFormat(8, value, SettingsAxisPP.getPropSettings(prop));
 				otherwise
-					if prop <= 33
+					if prop <= 34
 						check = checkProp@SettingsPP(prop, value);
 					end
 			end
@@ -776,7 +778,7 @@ classdef SettingsAxisPP < SettingsPP
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 35 % SettingsAxisPP.BUTTON_AXISCOLOR
+				case 36 % SettingsAxisPP.BUTTON_AXISCOLOR
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					button_axiscolor = uibutton( ...
@@ -790,7 +792,7 @@ classdef SettingsAxisPP < SettingsPP
 						);
 					value = button_axiscolor;
 					
-				case 36 % SettingsAxisPP.CHECKBOX_AXIS
+				case 37 % SettingsAxisPP.CHECKBOX_AXIS
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					checkbox_axis = uicheckbox( ...
@@ -803,7 +805,7 @@ classdef SettingsAxisPP < SettingsPP
 					    );
 					value = checkbox_axis;
 					
-				case 37 % SettingsAxisPP.CHECKBOX_GRID
+				case 38 % SettingsAxisPP.CHECKBOX_GRID
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					checkbox_grid = uicheckbox( ...
@@ -816,7 +818,7 @@ classdef SettingsAxisPP < SettingsPP
 					    );
 					value = checkbox_grid;
 					
-				case 38 % SettingsAxisPP.CHECKBOX_EQUAL
+				case 39 % SettingsAxisPP.CHECKBOX_EQUAL
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					checkbox_equal = uicheckbox( ...
@@ -829,7 +831,7 @@ classdef SettingsAxisPP < SettingsPP
 					    );
 					value = checkbox_equal;
 					
-				case 39 % SettingsAxisPP.CHECKBOX_TIGHT
+				case 40 % SettingsAxisPP.CHECKBOX_TIGHT
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					checkbox_tight = uicheckbox( ...
@@ -842,7 +844,7 @@ classdef SettingsAxisPP < SettingsPP
 					    );
 					value = checkbox_tight;
 					
-				case 40 % SettingsAxisPP.CHECKBOX_BOX
+				case 41 % SettingsAxisPP.CHECKBOX_BOX
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					checkbox_box = uicheckbox( ...
@@ -855,8 +857,8 @@ classdef SettingsAxisPP < SettingsPP
 					    );
 					value = checkbox_box;
 					
-				case 18 % SettingsAxisPP.X_DRAW
-					value = calculateValue@PanelProp(pr, 18, varargin{:}); % also warning
+				case 19 % SettingsAxisPP.X_DRAW
+					value = calculateValue@PanelProp(pr, 19, varargin{:}); % also warning
 					if value
 					    pr.memorize('BUTTON_AXISCOLOR')
 					    pr.memorize('CHECKBOX_AXIS')
@@ -866,8 +868,8 @@ classdef SettingsAxisPP < SettingsPP
 					    pr.memorize('CHECKBOX_BOX')
 					end
 					
-				case 19 % SettingsAxisPP.UPDATE
-					value = calculateValue@PanelProp(pr, 19, varargin{:}); % also warning
+				case 20 % SettingsAxisPP.UPDATE
+					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
 					if value
 					
 					    el = pr.get('EL');
@@ -975,8 +977,8 @@ classdef SettingsAxisPP < SettingsPP
 					    end
 					end
 					
-				case 20 % SettingsAxisPP.REDRAW
-					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
+				case 21 % SettingsAxisPP.REDRAW
+					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
 					if value
 					    w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 					    
@@ -988,8 +990,8 @@ classdef SettingsAxisPP < SettingsPP
 					    set(pr.get('CHECKBOX_BOX'), 'Position', [8+.60*w_p 4 .30*w_p 21])
 					end
 					
-				case 16 % SettingsAxisPP.DELETE
-					value = calculateValue@PanelProp(pr, 16, varargin{:}); % also warning
+				case 17 % SettingsAxisPP.DELETE
+					value = calculateValue@PanelProp(pr, 17, varargin{:}); % also warning
 					if value
 					    pr.set('BUTTON_AXISCOLOR', Element.getNoValue())
 					    pr.set('CHECKBOX_AXIS', Element.getNoValue())
@@ -1000,7 +1002,7 @@ classdef SettingsAxisPP < SettingsPP
 					end
 					
 				otherwise
-					if prop <= 33
+					if prop <= 34
 						value = calculateValue@SettingsPP(pr, prop, varargin{:});
 					else
 						value = calculateValue@Element(pr, prop, varargin{:});

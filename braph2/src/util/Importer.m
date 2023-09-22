@@ -11,7 +11,8 @@ classdef Importer < ConcreteElement
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the importer.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the importer.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the importer.
-	%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 	%
 	% Importer methods (constructor):
 	%  Importer - constructor
@@ -102,7 +103,7 @@ classdef Importer < ConcreteElement
 	% See also ConcreteElement, Exporter.
 	
 	properties (Constant) % properties
-		WAITBAR = 7; %CET: Computational Efficiency Trick
+		WAITBAR = 8; %CET: Computational Efficiency Trick
 		WAITBAR_TAG = 'WAITBAR';
 		WAITBAR_CATEGORY = 9;
 		WAITBAR_FORMAT = 4;
@@ -125,7 +126,8 @@ classdef Importer < ConcreteElement
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the importer.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the importer.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the importer.
-			%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 			%
 			% See also Category, Format.
 			
@@ -187,7 +189,7 @@ classdef Importer < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7];
+				prop_list = [1 2 3 4 5 6 7 8];
 				return
 			end
 			
@@ -200,8 +202,10 @@ classdef Importer < ConcreteElement
 					prop_list = 3;
 				case 4 % Category.DATA
 					prop_list = 4;
-				case 9 % Category.GUI
+				case 6 % Category.QUERY
 					prop_list = 7;
+				case 9 % Category.GUI
+					prop_list = 8;
 				otherwise
 					prop_list = [];
 			end
@@ -227,7 +231,7 @@ classdef Importer < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 7;
+				prop_number = 8;
 				return
 			end
 			
@@ -239,6 +243,8 @@ classdef Importer < ConcreteElement
 				case 3 % Category.PARAMETER
 					prop_number = 1;
 				case 4 % Category.DATA
+					prop_number = 1;
+				case 6 % Category.QUERY
 					prop_number = 1;
 				case 9 % Category.GUI
 					prop_number = 1;
@@ -272,7 +278,7 @@ classdef Importer < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 7 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 8 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -310,7 +316,7 @@ classdef Importer < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -343,7 +349,7 @@ classdef Importer < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -372,7 +378,7 @@ classdef Importer < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				importer_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR' };
+				importer_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR' };
 				tag = importer_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -399,7 +405,7 @@ classdef Importer < ConcreteElement
 			prop = Importer.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			importer_category_list = { 1  1  3  4  2  2  9 };
+			importer_category_list = { 1  1  3  4  2  2  6  9 };
 			prop_category = importer_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -425,7 +431,7 @@ classdef Importer < ConcreteElement
 			prop = Importer.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			importer_format_list = { 2  2  8  2  2  2  4 };
+			importer_format_list = { 2  2  8  2  2  2  2  4 };
 			prop_format = importer_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -451,7 +457,7 @@ classdef Importer < ConcreteElement
 			prop = Importer.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			importer_description_list = { 'NAME (constant, string) is the name of the importer.'  'DESCRIPTION (constant, string) is the description of the importer.'  'TEMPLATE (parameter, item) is the template of the importer.'  'ID (data, string) is a few-letter code for the importer.'  'LABEL (metadata, string) is an extended label of the importer.'  'NOTES (metadata, string) are some specific notes about the importer.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.' };
+			importer_description_list = { 'NAME (constant, string) is the name of the importer.'  'DESCRIPTION (constant, string) is the description of the importer.'  'TEMPLATE (parameter, item) is the template of the importer.'  'ID (data, string) is a few-letter code for the importer.'  'LABEL (metadata, string) is an extended label of the importer.'  'NOTES (metadata, string) are some specific notes about the importer.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.' };
 			prop_description = importer_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -477,7 +483,7 @@ classdef Importer < ConcreteElement
 			prop = Importer.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % Importer.WAITBAR
+				case 8 % Importer.WAITBAR
 					prop_settings = Format.getFormatSettings(4);
 				case 3 % Importer.TEMPLATE
 					prop_settings = 'Importer';
@@ -508,7 +514,7 @@ classdef Importer < ConcreteElement
 			prop = Importer.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % Importer.WAITBAR
+				case 8 % Importer.WAITBAR
 					prop_default = Format.getFormatDefault(4, Importer.getPropSettings(prop));
 				case 1 % Importer.NAME
 					prop_default = 'Importer';
@@ -586,12 +592,12 @@ classdef Importer < ConcreteElement
 			prop = Importer.getPropProp(pointer);
 			
 			switch prop
-				case 7 % Importer.WAITBAR
+				case 8 % Importer.WAITBAR
 					check = Format.checkFormat(4, value, Importer.getPropSettings(prop));
 				case 3 % Importer.TEMPLATE
 					check = Format.checkFormat(8, value, Importer.getPropSettings(prop));
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end

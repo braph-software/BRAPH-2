@@ -14,15 +14,16 @@ classdef MultiplexRCDeg < RCDeg
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex rich-club degree.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex rich-club degree.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex rich-club degree.
-	%  <strong>7</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-	%  <strong>8</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>9</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-	%  <strong>10</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-	%  <strong>11</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>12</strong> <strong>M</strong> 	M (result, cell) is the multiplex rich-club degree.
-	%  <strong>13</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-	%  <strong>14</strong> <strong>PARAMETRIC_VALUE</strong> 	PARAMETRIC_VALUE (parameter, SCALAR) 
-	%  <strong>15</strong> <strong>MULTIRICHCLUB_COEFFICIENTS</strong> 	MULTIRICHCLUB_COEFFICIENTS (parameter, RVECTOR) is the multi rich-club degree coefficients
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the multiplex rich-club degree.
+	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%  <strong>15</strong> <strong>PARAMETRIC_VALUE</strong> 	PARAMETRIC_VALUE (parameter, SCALAR) 
+	%  <strong>16</strong> <strong>MULTIRICHCLUB_COEFFICIENTS</strong> 	MULTIRICHCLUB_COEFFICIENTS (parameter, RVECTOR) is the multi rich-club degree coefficients
 	%
 	% MultiplexRCDeg methods (constructor):
 	%  MultiplexRCDeg - constructor
@@ -111,7 +112,7 @@ classdef MultiplexRCDeg < RCDeg
 	%
 	
 	properties (Constant) % properties
-		MULTIRICHCLUB_COEFFICIENTS = 15; %CET: Computational Efficiency Trick
+		MULTIRICHCLUB_COEFFICIENTS = 16; %CET: Computational Efficiency Trick
 		MULTIRICHCLUB_COEFFICIENTS_TAG = 'MULTIRICHCLUB_COEFFICIENTS';
 		MULTIRICHCLUB_COEFFICIENTS_CATEGORY = 3;
 		MULTIRICHCLUB_COEFFICIENTS_FORMAT = 12;
@@ -134,15 +135,16 @@ classdef MultiplexRCDeg < RCDeg
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex rich-club degree.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex rich-club degree.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex rich-club degree.
-			%  <strong>7</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-			%  <strong>8</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>9</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-			%  <strong>10</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-			%  <strong>11</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>12</strong> <strong>M</strong> 	M (result, cell) is the multiplex rich-club degree.
-			%  <strong>13</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-			%  <strong>14</strong> <strong>PARAMETRIC_VALUE</strong> 	PARAMETRIC_VALUE (parameter, SCALAR) 
-			%  <strong>15</strong> <strong>MULTIRICHCLUB_COEFFICIENTS</strong> 	MULTIRICHCLUB_COEFFICIENTS (parameter, RVECTOR) is the multi rich-club degree coefficients
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the multiplex rich-club degree.
+			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+			%  <strong>15</strong> <strong>PARAMETRIC_VALUE</strong> 	PARAMETRIC_VALUE (parameter, SCALAR) 
+			%  <strong>16</strong> <strong>MULTIRICHCLUB_COEFFICIENTS</strong> 	MULTIRICHCLUB_COEFFICIENTS (parameter, RVECTOR) is the multi rich-club degree coefficients
 			%
 			% See also Category, Format.
 			
@@ -204,23 +206,25 @@ classdef MultiplexRCDeg < RCDeg
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2 7 8 9 10];
+					prop_list = [1 2 8 9 10 11];
 				case 2 % Category.METADATA
 					prop_list = [5 6];
 				case 3 % Category.PARAMETER
-					prop_list = [3 14 15];
+					prop_list = [3 15 16];
 				case 4 % Category.DATA
-					prop_list = [4 11];
+					prop_list = [4 12];
 				case 5 % Category.RESULT
-					prop_list = 12;
-				case 9 % Category.GUI
 					prop_list = 13;
+				case 6 % Category.QUERY
+					prop_list = 7;
+				case 9 % Category.GUI
+					prop_list = 14;
 				otherwise
 					prop_list = [];
 			end
@@ -246,7 +250,7 @@ classdef MultiplexRCDeg < RCDeg
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 15;
+				prop_number = 16;
 				return
 			end
 			
@@ -260,6 +264,8 @@ classdef MultiplexRCDeg < RCDeg
 				case 4 % Category.DATA
 					prop_number = 2;
 				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
 					prop_number = 1;
 				case 9 % Category.GUI
 					prop_number = 1;
@@ -293,7 +299,7 @@ classdef MultiplexRCDeg < RCDeg
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 15 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 16 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -331,7 +337,7 @@ classdef MultiplexRCDeg < RCDeg
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'PARAMETRIC_VALUE'  'MULTIRICHCLUB_COEFFICIENTS' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'PARAMETRIC_VALUE'  'MULTIRICHCLUB_COEFFICIENTS' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -364,7 +370,7 @@ classdef MultiplexRCDeg < RCDeg
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'PARAMETRIC_VALUE'  'MULTIRICHCLUB_COEFFICIENTS' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'PARAMETRIC_VALUE'  'MULTIRICHCLUB_COEFFICIENTS' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -393,7 +399,7 @@ classdef MultiplexRCDeg < RCDeg
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				multiplexrcdeg_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'PARAMETRIC_VALUE'  'MULTIRICHCLUB_COEFFICIENTS' };
+				multiplexrcdeg_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'PARAMETRIC_VALUE'  'MULTIRICHCLUB_COEFFICIENTS' };
 				tag = multiplexrcdeg_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -420,7 +426,7 @@ classdef MultiplexRCDeg < RCDeg
 			prop = MultiplexRCDeg.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multiplexrcdeg_category_list = { 1  1  3  4  2  2  1  1  1  1  4  5  9  3  3 };
+			multiplexrcdeg_category_list = { 1  1  3  4  2  2  6  1  1  1  1  4  5  9  3  3 };
 			prop_category = multiplexrcdeg_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -446,7 +452,7 @@ classdef MultiplexRCDeg < RCDeg
 			prop = MultiplexRCDeg.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multiplexrcdeg_format_list = { 2  2  8  2  2  2  11  11  11  7  8  16  8  11  12 };
+			multiplexrcdeg_format_list = { 2  2  8  2  2  2  2  11  11  11  7  8  16  8  11  12 };
 			prop_format = multiplexrcdeg_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -472,7 +478,7 @@ classdef MultiplexRCDeg < RCDeg
 			prop = MultiplexRCDeg.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multiplexrcdeg_description_list = { 'NAME (constant, string) is the name of the multiplex rich-club degree.'  'DESCRIPTION (constant, string) is the description of the multiplex rich-club degree.'  'TEMPLATE (parameter, item) is the template of the multiplex rich-club degree.'  'ID (data, string) is a few-letter code of the multiplex rich-club degree.'  'LABEL (metadata, string) is an extended label of the multiplex rich-club degree.'  'NOTES (metadata, string) are some specific notes about the multiplex rich-club degree.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the multiplex rich-club degree.'  'PFM (gui, item) contains the panel figure of the measure.'  'PARAMETRIC_VALUE (parameter, SCALAR) '  'MULTIRICHCLUB_COEFFICIENTS (parameter, RVECTOR) is the multi rich-club degree coefficients' };
+			multiplexrcdeg_description_list = { 'NAME (constant, string) is the name of the multiplex rich-club degree.'  'DESCRIPTION (constant, string) is the description of the multiplex rich-club degree.'  'TEMPLATE (parameter, item) is the template of the multiplex rich-club degree.'  'ID (data, string) is a few-letter code of the multiplex rich-club degree.'  'LABEL (metadata, string) is an extended label of the multiplex rich-club degree.'  'NOTES (metadata, string) are some specific notes about the multiplex rich-club degree.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the multiplex rich-club degree.'  'PFM (gui, item) contains the panel figure of the measure.'  'PARAMETRIC_VALUE (parameter, SCALAR) '  'MULTIRICHCLUB_COEFFICIENTS (parameter, RVECTOR) is the multi rich-club degree coefficients' };
 			prop_description = multiplexrcdeg_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -498,7 +504,7 @@ classdef MultiplexRCDeg < RCDeg
 			prop = MultiplexRCDeg.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 15 % MultiplexRCDeg.MULTIRICHCLUB_COEFFICIENTS
+				case 16 % MultiplexRCDeg.MULTIRICHCLUB_COEFFICIENTS
 					prop_settings = Format.getFormatSettings(12);
 				case 3 % Multiplex3
 					prop_settings = 'MultiplexRCDeg';
@@ -529,7 +535,7 @@ classdef MultiplexRCDeg < RCDeg
 			prop = MultiplexRCDeg.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 15 % MultiplexRCDeg.MULTIRICHCLUB_COEFFICIENTS
+				case 16 % MultiplexRCDeg.MULTIRICHCLUB_COEFFICIENTS
 					prop_default = [0];
 				case 1 % Multiplex1
 					prop_default = 'MultiplexRCDeg';
@@ -543,13 +549,13 @@ classdef MultiplexRCDeg < RCDeg
 					prop_default = 'MultiplexRCDeg label';
 				case 6 % Multiplex6
 					prop_default = 'MultiplexRCDeg notes';
-				case 7 % Multiplex7
-					prop_default = 2;
 				case 8 % Multiplex8
-					prop_default = 1;
-				case 9 % Multiplex9
 					prop_default = 2;
+				case 9 % Multiplex9
+					prop_default = 1;
 				case 10 % Multiplex10
+					prop_default = 2;
+				case 11 % Multiplex11
 					prop_default = {'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU'};;
 				otherwise
 					prop_default = getPropDefault@RCDeg(prop);
@@ -615,12 +621,12 @@ classdef MultiplexRCDeg < RCDeg
 			prop = MultiplexRCDeg.getPropProp(pointer);
 			
 			switch prop
-				case 15 % MultiplexRCDeg.MULTIRICHCLUB_COEFFICIENTS
+				case 16 % MultiplexRCDeg.MULTIRICHCLUB_COEFFICIENTS
 					check = Format.checkFormat(12, value, MultiplexRCDeg.getPropSettings(prop));
 				case 3 % Multiplex3
 					check = Format.checkFormat(8, value, MultiplexRCDeg.getPropSettings(prop));
 				otherwise
-					if prop <= 14
+					if prop <= 15
 						check = checkProp@RCDeg(prop, value);
 					end
 			end
@@ -653,8 +659,8 @@ classdef MultiplexRCDeg < RCDeg
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 12 % Multiplex12
-					rng_settings_ = rng(); rng(m.getPropSeed(12), 'twister')
+				case 13 % Multiplex13
+					rng_settings_ = rng(); rng(m.getPropSeed(13), 'twister')
 					
 					g = m.get('G'); % graph from measure class
 					A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -701,7 +707,7 @@ classdef MultiplexRCDeg < RCDeg
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 14
+					if prop <= 15
 						value = calculateValue@RCDeg(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

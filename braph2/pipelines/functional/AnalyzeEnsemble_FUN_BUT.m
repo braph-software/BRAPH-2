@@ -12,18 +12,19 @@ classdef AnalyzeEnsemble_FUN_BUT < AnalyzeEnsemble
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ensemble-based graph analysis with functional data of fixed threshold.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ensemble-based graph analysis with functional data of fixed threshold.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ensemble-based graph analysis with functional data of fixed threshold.
-	%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>8</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectFUN.
-	%  <strong>9</strong> <strong>GRAPH_TEMPLATE</strong> 	GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
-	%  <strong>10</strong> <strong>G_DICT</strong> 	G_DICT (result, idict) is the graph (MultigraphBUT) ensemble obtained from this analysis.
-	%  <strong>11</strong> <strong>ME_DICT</strong> 	ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-	%  <strong>12</strong> <strong>MEASUREENSEMBLE</strong> 	MEASUREENSEMBLE (query, item) returns an ensemble-based measure.
-	%  <strong>13</strong> <strong>REPETITION</strong> 	REPETITION (parameter, scalar) is the number of repetitions.
-	%  <strong>14</strong> <strong>F_MIN</strong> 	F_MIN (parameter, scalar) is the minimum frequency value.
-	%  <strong>15</strong> <strong>F_MAX</strong> 	F_MAX (parameter, scalar) is the maximum frequency value.
-	%  <strong>16</strong> <strong>CORRELATION_RULE</strong> 	CORRELATION_RULE (parameter, option) is the correlation type.
-	%  <strong>17</strong> <strong>NEGATIVE_WEIGHT_RULE</strong> 	NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
-	%  <strong>18</strong> <strong>THRESHOLDS</strong> 	THRESHOLDS (parameter, rvector) is the vector of thresholds.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>9</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectFUN.
+	%  <strong>10</strong> <strong>GRAPH_TEMPLATE</strong> 	GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
+	%  <strong>11</strong> <strong>G_DICT</strong> 	G_DICT (result, idict) is the graph (MultigraphBUT) ensemble obtained from this analysis.
+	%  <strong>12</strong> <strong>ME_DICT</strong> 	ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
+	%  <strong>13</strong> <strong>MEASUREENSEMBLE</strong> 	MEASUREENSEMBLE (query, item) returns an ensemble-based measure.
+	%  <strong>14</strong> <strong>REPETITION</strong> 	REPETITION (parameter, scalar) is the number of repetitions.
+	%  <strong>15</strong> <strong>F_MIN</strong> 	F_MIN (parameter, scalar) is the minimum frequency value.
+	%  <strong>16</strong> <strong>F_MAX</strong> 	F_MAX (parameter, scalar) is the maximum frequency value.
+	%  <strong>17</strong> <strong>CORRELATION_RULE</strong> 	CORRELATION_RULE (parameter, option) is the correlation type.
+	%  <strong>18</strong> <strong>NEGATIVE_WEIGHT_RULE</strong> 	NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
+	%  <strong>19</strong> <strong>THRESHOLDS</strong> 	THRESHOLDS (parameter, rvector) is the vector of thresholds.
 	%
 	% AnalyzeEnsemble_FUN_BUT methods (constructor):
 	%  AnalyzeEnsemble_FUN_BUT - constructor
@@ -114,32 +115,32 @@ classdef AnalyzeEnsemble_FUN_BUT < AnalyzeEnsemble
 	% See also SubjectFUN, MultigraphBUT.
 	
 	properties (Constant) % properties
-		REPETITION = 13; %CET: Computational Efficiency Trick
+		REPETITION = 14; %CET: Computational Efficiency Trick
 		REPETITION_TAG = 'REPETITION';
 		REPETITION_CATEGORY = 3;
 		REPETITION_FORMAT = 11;
 		
-		F_MIN = 14; %CET: Computational Efficiency Trick
+		F_MIN = 15; %CET: Computational Efficiency Trick
 		F_MIN_TAG = 'F_MIN';
 		F_MIN_CATEGORY = 3;
 		F_MIN_FORMAT = 11;
 		
-		F_MAX = 15; %CET: Computational Efficiency Trick
+		F_MAX = 16; %CET: Computational Efficiency Trick
 		F_MAX_TAG = 'F_MAX';
 		F_MAX_CATEGORY = 3;
 		F_MAX_FORMAT = 11;
 		
-		CORRELATION_RULE = 16; %CET: Computational Efficiency Trick
+		CORRELATION_RULE = 17; %CET: Computational Efficiency Trick
 		CORRELATION_RULE_TAG = 'CORRELATION_RULE';
 		CORRELATION_RULE_CATEGORY = 3;
 		CORRELATION_RULE_FORMAT = 5;
 		
-		NEGATIVE_WEIGHT_RULE = 17; %CET: Computational Efficiency Trick
+		NEGATIVE_WEIGHT_RULE = 18; %CET: Computational Efficiency Trick
 		NEGATIVE_WEIGHT_RULE_TAG = 'NEGATIVE_WEIGHT_RULE';
 		NEGATIVE_WEIGHT_RULE_CATEGORY = 3;
 		NEGATIVE_WEIGHT_RULE_FORMAT = 5;
 		
-		THRESHOLDS = 18; %CET: Computational Efficiency Trick
+		THRESHOLDS = 19; %CET: Computational Efficiency Trick
 		THRESHOLDS_TAG = 'THRESHOLDS';
 		THRESHOLDS_CATEGORY = 3;
 		THRESHOLDS_FORMAT = 12;
@@ -162,18 +163,19 @@ classdef AnalyzeEnsemble_FUN_BUT < AnalyzeEnsemble
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ensemble-based graph analysis with functional data of fixed threshold.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ensemble-based graph analysis with functional data of fixed threshold.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ensemble-based graph analysis with functional data of fixed threshold.
-			%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>8</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectFUN.
-			%  <strong>9</strong> <strong>GRAPH_TEMPLATE</strong> 	GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
-			%  <strong>10</strong> <strong>G_DICT</strong> 	G_DICT (result, idict) is the graph (MultigraphBUT) ensemble obtained from this analysis.
-			%  <strong>11</strong> <strong>ME_DICT</strong> 	ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-			%  <strong>12</strong> <strong>MEASUREENSEMBLE</strong> 	MEASUREENSEMBLE (query, item) returns an ensemble-based measure.
-			%  <strong>13</strong> <strong>REPETITION</strong> 	REPETITION (parameter, scalar) is the number of repetitions.
-			%  <strong>14</strong> <strong>F_MIN</strong> 	F_MIN (parameter, scalar) is the minimum frequency value.
-			%  <strong>15</strong> <strong>F_MAX</strong> 	F_MAX (parameter, scalar) is the maximum frequency value.
-			%  <strong>16</strong> <strong>CORRELATION_RULE</strong> 	CORRELATION_RULE (parameter, option) is the correlation type.
-			%  <strong>17</strong> <strong>NEGATIVE_WEIGHT_RULE</strong> 	NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
-			%  <strong>18</strong> <strong>THRESHOLDS</strong> 	THRESHOLDS (parameter, rvector) is the vector of thresholds.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>9</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectFUN.
+			%  <strong>10</strong> <strong>GRAPH_TEMPLATE</strong> 	GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
+			%  <strong>11</strong> <strong>G_DICT</strong> 	G_DICT (result, idict) is the graph (MultigraphBUT) ensemble obtained from this analysis.
+			%  <strong>12</strong> <strong>ME_DICT</strong> 	ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
+			%  <strong>13</strong> <strong>MEASUREENSEMBLE</strong> 	MEASUREENSEMBLE (query, item) returns an ensemble-based measure.
+			%  <strong>14</strong> <strong>REPETITION</strong> 	REPETITION (parameter, scalar) is the number of repetitions.
+			%  <strong>15</strong> <strong>F_MIN</strong> 	F_MIN (parameter, scalar) is the minimum frequency value.
+			%  <strong>16</strong> <strong>F_MAX</strong> 	F_MAX (parameter, scalar) is the maximum frequency value.
+			%  <strong>17</strong> <strong>CORRELATION_RULE</strong> 	CORRELATION_RULE (parameter, option) is the correlation type.
+			%  <strong>18</strong> <strong>NEGATIVE_WEIGHT_RULE</strong> 	NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
+			%  <strong>19</strong> <strong>THRESHOLDS</strong> 	THRESHOLDS (parameter, rvector) is the vector of thresholds.
 			%
 			% See also Category, Format.
 			
@@ -235,7 +237,7 @@ classdef AnalyzeEnsemble_FUN_BUT < AnalyzeEnsemble
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19];
 				return
 			end
 			
@@ -245,15 +247,15 @@ classdef AnalyzeEnsemble_FUN_BUT < AnalyzeEnsemble
 				case 2 % Category.METADATA
 					prop_list = [5 6];
 				case 3 % Category.PARAMETER
-					prop_list = [3 9 13 14 15 16 17 18];
+					prop_list = [3 10 14 15 16 17 18 19];
 				case 4 % Category.DATA
-					prop_list = [4 8];
+					prop_list = [4 9];
 				case 5 % Category.RESULT
-					prop_list = [10 11];
+					prop_list = [11 12];
 				case 6 % Category.QUERY
-					prop_list = 12;
+					prop_list = [7 13];
 				case 9 % Category.GUI
-					prop_list = 7;
+					prop_list = 8;
 				otherwise
 					prop_list = [];
 			end
@@ -279,7 +281,7 @@ classdef AnalyzeEnsemble_FUN_BUT < AnalyzeEnsemble
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 18;
+				prop_number = 19;
 				return
 			end
 			
@@ -295,7 +297,7 @@ classdef AnalyzeEnsemble_FUN_BUT < AnalyzeEnsemble
 				case 5 % Category.RESULT
 					prop_number = 2;
 				case 6 % Category.QUERY
-					prop_number = 1;
+					prop_number = 2;
 				case 9 % Category.GUI
 					prop_number = 1;
 				otherwise
@@ -328,7 +330,7 @@ classdef AnalyzeEnsemble_FUN_BUT < AnalyzeEnsemble
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 18 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 19 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -366,7 +368,7 @@ classdef AnalyzeEnsemble_FUN_BUT < AnalyzeEnsemble
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE'  'REPETITION'  'F_MIN'  'F_MAX'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE'  'THRESHOLDS' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE'  'REPETITION'  'F_MIN'  'F_MAX'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE'  'THRESHOLDS' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -399,7 +401,7 @@ classdef AnalyzeEnsemble_FUN_BUT < AnalyzeEnsemble
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE'  'REPETITION'  'F_MIN'  'F_MAX'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE'  'THRESHOLDS' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE'  'REPETITION'  'F_MIN'  'F_MAX'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE'  'THRESHOLDS' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -428,7 +430,7 @@ classdef AnalyzeEnsemble_FUN_BUT < AnalyzeEnsemble
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				analyzeensemble_fun_but_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE'  'REPETITION'  'F_MIN'  'F_MAX'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE'  'THRESHOLDS' };
+				analyzeensemble_fun_but_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE'  'REPETITION'  'F_MIN'  'F_MAX'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE'  'THRESHOLDS' };
 				tag = analyzeensemble_fun_but_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -455,7 +457,7 @@ classdef AnalyzeEnsemble_FUN_BUT < AnalyzeEnsemble
 			prop = AnalyzeEnsemble_FUN_BUT.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzeensemble_fun_but_category_list = { 1  1  3  4  2  2  9  4  3  5  5  6  3  3  3  3  3  3 };
+			analyzeensemble_fun_but_category_list = { 1  1  3  4  2  2  6  9  4  3  5  5  6  3  3  3  3  3  3 };
 			prop_category = analyzeensemble_fun_but_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -481,7 +483,7 @@ classdef AnalyzeEnsemble_FUN_BUT < AnalyzeEnsemble
 			prop = AnalyzeEnsemble_FUN_BUT.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzeensemble_fun_but_format_list = { 2  2  8  2  2  2  4  8  8  10  10  8  11  11  11  5  5  12 };
+			analyzeensemble_fun_but_format_list = { 2  2  8  2  2  2  2  4  8  8  10  10  8  11  11  11  5  5  12 };
 			prop_format = analyzeensemble_fun_but_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -507,7 +509,7 @@ classdef AnalyzeEnsemble_FUN_BUT < AnalyzeEnsemble
 			prop = AnalyzeEnsemble_FUN_BUT.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzeensemble_fun_but_description_list = { 'NAME (constant, string) is the name of the ensemble-based graph analysis with functional data of fixed threshold.'  'DESCRIPTION (constant, string) is the description of the ensemble-based graph analysis with functional data of fixed threshold.'  'TEMPLATE (parameter, item) is the template of the ensemble-based graph analysis with functional data of fixed threshold.'  'ID (data, string) is a few-letter code for the ensemble-based graph analysis with functional data of fixed threshold.'  'LABEL (metadata, string) is an extended label of the ensemble-based graph analysis with functional data of fixed threshold.'  'NOTES (metadata, string) are some specific notes about the ensemble-based graph analysis with functional data of fixed threshold.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class SubjectFUN.'  'GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.'  'G_DICT (result, idict) is the graph (MultigraphBUT) ensemble obtained from this analysis.'  'ME_DICT (result, idict) contains the calculated measures of the graph ensemble.'  'MEASUREENSEMBLE (query, item) returns an ensemble-based measure.'  'REPETITION (parameter, scalar) is the number of repetitions.'  'F_MIN (parameter, scalar) is the minimum frequency value.'  'F_MAX (parameter, scalar) is the maximum frequency value.'  'CORRELATION_RULE (parameter, option) is the correlation type.'  'NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.'  'THRESHOLDS (parameter, rvector) is the vector of thresholds.' };
+			analyzeensemble_fun_but_description_list = { 'NAME (constant, string) is the name of the ensemble-based graph analysis with functional data of fixed threshold.'  'DESCRIPTION (constant, string) is the description of the ensemble-based graph analysis with functional data of fixed threshold.'  'TEMPLATE (parameter, item) is the template of the ensemble-based graph analysis with functional data of fixed threshold.'  'ID (data, string) is a few-letter code for the ensemble-based graph analysis with functional data of fixed threshold.'  'LABEL (metadata, string) is an extended label of the ensemble-based graph analysis with functional data of fixed threshold.'  'NOTES (metadata, string) are some specific notes about the ensemble-based graph analysis with functional data of fixed threshold.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class SubjectFUN.'  'GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.'  'G_DICT (result, idict) is the graph (MultigraphBUT) ensemble obtained from this analysis.'  'ME_DICT (result, idict) contains the calculated measures of the graph ensemble.'  'MEASUREENSEMBLE (query, item) returns an ensemble-based measure.'  'REPETITION (parameter, scalar) is the number of repetitions.'  'F_MIN (parameter, scalar) is the minimum frequency value.'  'F_MAX (parameter, scalar) is the maximum frequency value.'  'CORRELATION_RULE (parameter, option) is the correlation type.'  'NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.'  'THRESHOLDS (parameter, rvector) is the vector of thresholds.' };
 			prop_description = analyzeensemble_fun_but_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -533,21 +535,21 @@ classdef AnalyzeEnsemble_FUN_BUT < AnalyzeEnsemble
 			prop = AnalyzeEnsemble_FUN_BUT.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 13 % AnalyzeEnsemble_FUN_BUT.REPETITION
+				case 14 % AnalyzeEnsemble_FUN_BUT.REPETITION
 					prop_settings = Format.getFormatSettings(11);
-				case 14 % AnalyzeEnsemble_FUN_BUT.F_MIN
+				case 15 % AnalyzeEnsemble_FUN_BUT.F_MIN
 					prop_settings = Format.getFormatSettings(11);
-				case 15 % AnalyzeEnsemble_FUN_BUT.F_MAX
+				case 16 % AnalyzeEnsemble_FUN_BUT.F_MAX
 					prop_settings = Format.getFormatSettings(11);
-				case 16 % AnalyzeEnsemble_FUN_BUT.CORRELATION_RULE
+				case 17 % AnalyzeEnsemble_FUN_BUT.CORRELATION_RULE
 					prop_settings = Correlation.CORRELATION_RULE_LIST(1:3);
-				case 17 % AnalyzeEnsemble_FUN_BUT.NEGATIVE_WEIGHT_RULE
+				case 18 % AnalyzeEnsemble_FUN_BUT.NEGATIVE_WEIGHT_RULE
 					prop_settings = Correlation.NEGATIVE_WEIGHT_RULE_LIST;
-				case 18 % AnalyzeEnsemble_FUN_BUT.THRESHOLDS
+				case 19 % AnalyzeEnsemble_FUN_BUT.THRESHOLDS
 					prop_settings = Format.getFormatSettings(12);
-				case 9 % AnalyzeEnsemble_FUN_BUT.GRAPH_TEMPLATE
+				case 10 % AnalyzeEnsemble_FUN_BUT.GRAPH_TEMPLATE
 					prop_settings = 'MultigraphBUT';
-				case 10 % AnalyzeEnsemble_FUN_BUT.G_DICT
+				case 11 % AnalyzeEnsemble_FUN_BUT.G_DICT
 					prop_settings = 'MultigraphBUT';
 				otherwise
 					prop_settings = getPropSettings@AnalyzeEnsemble(prop);
@@ -576,17 +578,17 @@ classdef AnalyzeEnsemble_FUN_BUT < AnalyzeEnsemble
 			prop = AnalyzeEnsemble_FUN_BUT.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 13 % AnalyzeEnsemble_FUN_BUT.REPETITION
+				case 14 % AnalyzeEnsemble_FUN_BUT.REPETITION
 					prop_default = 1;
-				case 14 % AnalyzeEnsemble_FUN_BUT.F_MIN
+				case 15 % AnalyzeEnsemble_FUN_BUT.F_MIN
 					prop_default = 0;
-				case 15 % AnalyzeEnsemble_FUN_BUT.F_MAX
+				case 16 % AnalyzeEnsemble_FUN_BUT.F_MAX
 					prop_default = Inf;
-				case 16 % AnalyzeEnsemble_FUN_BUT.CORRELATION_RULE
+				case 17 % AnalyzeEnsemble_FUN_BUT.CORRELATION_RULE
 					prop_default = Correlation.CORRELATION_RULE_LIST{1};
-				case 17 % AnalyzeEnsemble_FUN_BUT.NEGATIVE_WEIGHT_RULE
+				case 18 % AnalyzeEnsemble_FUN_BUT.NEGATIVE_WEIGHT_RULE
 					prop_default = Correlation.NEGATIVE_WEIGHT_RULE_LIST{1};
-				case 18 % AnalyzeEnsemble_FUN_BUT.THRESHOLDS
+				case 19 % AnalyzeEnsemble_FUN_BUT.THRESHOLDS
 					prop_default = [-1:.5:1];
 				case 1 % AnalyzeEnsemble_FUN_BUT.NAME
 					prop_default = 'AnalyzeEnsemble_FUN_BUT';
@@ -598,11 +600,11 @@ classdef AnalyzeEnsemble_FUN_BUT < AnalyzeEnsemble
 					prop_default = 'AnalyzeEnsemble_FUN_BUT label';
 				case 6 % AnalyzeEnsemble_FUN_BUT.NOTES
 					prop_default = 'AnalyzeEnsemble_FUN_BUT notes';
-				case 8 % AnalyzeEnsemble_FUN_BUT.GR
+				case 9 % AnalyzeEnsemble_FUN_BUT.GR
 					prop_default = Group('SUB_CLASS', 'SubjectFUN');
-				case 9 % AnalyzeEnsemble_FUN_BUT.GRAPH_TEMPLATE
+				case 10 % AnalyzeEnsemble_FUN_BUT.GRAPH_TEMPLATE
 					prop_default = Format.getFormatDefault(8, AnalyzeEnsemble_FUN_BUT.getPropSettings(prop));
-				case 10 % AnalyzeEnsemble_FUN_BUT.G_DICT
+				case 11 % AnalyzeEnsemble_FUN_BUT.G_DICT
 					prop_default = Format.getFormatDefault(10, AnalyzeEnsemble_FUN_BUT.getPropSettings(prop));
 				otherwise
 					prop_default = getPropDefault@AnalyzeEnsemble(prop);
@@ -668,24 +670,24 @@ classdef AnalyzeEnsemble_FUN_BUT < AnalyzeEnsemble
 			prop = AnalyzeEnsemble_FUN_BUT.getPropProp(pointer);
 			
 			switch prop
-				case 13 % AnalyzeEnsemble_FUN_BUT.REPETITION
+				case 14 % AnalyzeEnsemble_FUN_BUT.REPETITION
 					check = Format.checkFormat(11, value, AnalyzeEnsemble_FUN_BUT.getPropSettings(prop));
-				case 14 % AnalyzeEnsemble_FUN_BUT.F_MIN
+				case 15 % AnalyzeEnsemble_FUN_BUT.F_MIN
 					check = Format.checkFormat(11, value, AnalyzeEnsemble_FUN_BUT.getPropSettings(prop));
-				case 15 % AnalyzeEnsemble_FUN_BUT.F_MAX
+				case 16 % AnalyzeEnsemble_FUN_BUT.F_MAX
 					check = Format.checkFormat(11, value, AnalyzeEnsemble_FUN_BUT.getPropSettings(prop));
-				case 16 % AnalyzeEnsemble_FUN_BUT.CORRELATION_RULE
+				case 17 % AnalyzeEnsemble_FUN_BUT.CORRELATION_RULE
 					check = Format.checkFormat(5, value, AnalyzeEnsemble_FUN_BUT.getPropSettings(prop));
-				case 17 % AnalyzeEnsemble_FUN_BUT.NEGATIVE_WEIGHT_RULE
+				case 18 % AnalyzeEnsemble_FUN_BUT.NEGATIVE_WEIGHT_RULE
 					check = Format.checkFormat(5, value, AnalyzeEnsemble_FUN_BUT.getPropSettings(prop));
-				case 18 % AnalyzeEnsemble_FUN_BUT.THRESHOLDS
+				case 19 % AnalyzeEnsemble_FUN_BUT.THRESHOLDS
 					check = Format.checkFormat(12, value, AnalyzeEnsemble_FUN_BUT.getPropSettings(prop));
-				case 9 % AnalyzeEnsemble_FUN_BUT.GRAPH_TEMPLATE
+				case 10 % AnalyzeEnsemble_FUN_BUT.GRAPH_TEMPLATE
 					check = Format.checkFormat(8, value, AnalyzeEnsemble_FUN_BUT.getPropSettings(prop));
-				case 10 % AnalyzeEnsemble_FUN_BUT.G_DICT
+				case 11 % AnalyzeEnsemble_FUN_BUT.G_DICT
 					check = Format.checkFormat(10, value, AnalyzeEnsemble_FUN_BUT.getPropSettings(prop));
 				otherwise
-					if prop <= 12
+					if prop <= 13
 						check = checkProp@AnalyzeEnsemble(prop, value);
 					end
 			end
@@ -718,16 +720,11 @@ classdef AnalyzeEnsemble_FUN_BUT < AnalyzeEnsemble
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 10 % AnalyzeEnsemble_FUN_BUT.G_DICT
-					rng_settings_ = rng(); rng(a.getPropSeed(10), 'twister')
+				case 11 % AnalyzeEnsemble_FUN_BUT.G_DICT
+					rng_settings_ = rng(); rng(a.getPropSeed(11), 'twister')
 					
 					g_dict = IndexedDictionary('IT_CLASS', 'MultigraphBUT');
 					gr = a.get('GR');
-					
-					% % % ba = BrainAtlas();
-					% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').get('LENGTH') > 0
-					% % %     ba = gr.get('SUB_DICT').get('IT', 1).get('BA');
-					% % % end
 					
 					T = a.get('REPETITION');
 					fs = 1 / T;
@@ -751,9 +748,11 @@ classdef AnalyzeEnsemble_FUN_BUT < AnalyzeEnsemble
 					    A = Correlation.getAdjacencyMatrix(data, a.get('CORRELATION_RULE'), a.get('NEGATIVE_WEIGHT_RULE'));      
 					    
 					    g = MultigraphBUT( ...
-					        'ID', ['g ' sub.get('ID')], ... % % % 'BAS', ba ...
+					        'ID', ['g ' sub.get('ID')], ...
 					        'B', A, ...
-					        'THRESHOLDS', thresholds ... % % % 'LAYERTICKS', thresholds, ...
+					        'THRESHOLDS', thresholds, ...
+					        'LAYERLABELS', cellfun(@(x) num2str(x), num2cell(thresholds), 'UniformOutput', false), ...
+					        'NODELABELS', a.get('GR').get('SUB_DICT').get('IT', 1).get('BA').get('BR_DICT').get('KEYS') ...
 					        );
 					    g_dict.get('ADD', g)
 					end
@@ -769,7 +768,7 @@ classdef AnalyzeEnsemble_FUN_BUT < AnalyzeEnsemble
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 12
+					if prop <= 13
 						value = calculateValue@AnalyzeEnsemble(a, prop, varargin{:});
 					else
 						value = calculateValue@Element(a, prop, varargin{:});
@@ -795,8 +794,8 @@ classdef AnalyzeEnsemble_FUN_BUT < AnalyzeEnsemble
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 18 % AnalyzeEnsemble_FUN_BUT.THRESHOLDS
-					pr = PanelPropRVectorSmart('EL', a, 'PROP', 18, ...
+				case 19 % AnalyzeEnsemble_FUN_BUT.THRESHOLDS
+					pr = PanelPropRVectorSmart('EL', a, 'PROP', 19, ...
 					    'MIN', -1, 'MAX', 1, ...
 					    'DEFAULT', AnalyzeEnsemble_FUN_BUT.getPropDefault('THRESHOLDS'), ...
 					    varargin{:});

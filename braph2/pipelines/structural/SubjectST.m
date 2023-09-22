@@ -11,9 +11,10 @@ classdef SubjectST < Subject
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the subject.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the subject.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the subject.
-	%  <strong>7</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
-	%  <strong>8</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
-	%  <strong>9</strong> <strong>ST</strong> 	ST (data, cvector) is a column vector with data for each brain region.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
+	%  <strong>9</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
+	%  <strong>10</strong> <strong>ST</strong> 	ST (data, cvector) is a column vector with data for each brain region.
 	%
 	% SubjectST methods (constructor):
 	%  SubjectST - constructor
@@ -104,12 +105,12 @@ classdef SubjectST < Subject
 	% See also ImporterGroupSubjectST_TXT, ExporterGroupSubjectST_TXT, ImporterGroupSubjectST_XLS, ExporterGroupSubjectST_XLS.
 	
 	properties (Constant) % properties
-		BA = 8; %CET: Computational Efficiency Trick
+		BA = 9; %CET: Computational Efficiency Trick
 		BA_TAG = 'BA';
 		BA_CATEGORY = 4;
 		BA_FORMAT = 8;
 		
-		ST = 9; %CET: Computational Efficiency Trick
+		ST = 10; %CET: Computational Efficiency Trick
 		ST_TAG = 'ST';
 		ST_CATEGORY = 4;
 		ST_FORMAT = 13;
@@ -132,9 +133,10 @@ classdef SubjectST < Subject
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the subject.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the subject.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the subject.
-			%  <strong>7</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
-			%  <strong>8</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
-			%  <strong>9</strong> <strong>ST</strong> 	ST (data, cvector) is a column vector with data for each brain region.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
+			%  <strong>9</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
+			%  <strong>10</strong> <strong>ST</strong> 	ST (data, cvector) is a column vector with data for each brain region.
 			%
 			% See also Category, Format.
 			
@@ -196,7 +198,7 @@ classdef SubjectST < Subject
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9];
+				prop_list = [1 2 3 4 5 6 7 8 9 10];
 				return
 			end
 			
@@ -208,7 +210,9 @@ classdef SubjectST < Subject
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 7 8 9];
+					prop_list = [4 8 9 10];
+				case 6 % Category.QUERY
+					prop_list = 7;
 				otherwise
 					prop_list = [];
 			end
@@ -234,7 +238,7 @@ classdef SubjectST < Subject
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 9;
+				prop_number = 10;
 				return
 			end
 			
@@ -247,6 +251,8 @@ classdef SubjectST < Subject
 					prop_number = 1;
 				case 4 % Category.DATA
 					prop_number = 4;
+				case 6 % Category.QUERY
+					prop_number = 1;
 				otherwise
 					prop_number = 0;
 			end
@@ -277,7 +283,7 @@ classdef SubjectST < Subject
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 9 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 10 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -315,7 +321,7 @@ classdef SubjectST < Subject
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'VOI_DICT'  'BA'  'ST' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'ST' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -348,7 +354,7 @@ classdef SubjectST < Subject
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'VOI_DICT'  'BA'  'ST' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'ST' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -377,7 +383,7 @@ classdef SubjectST < Subject
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				subjectst_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'VOI_DICT'  'BA'  'ST' };
+				subjectst_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'ST' };
 				tag = subjectst_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -404,7 +410,7 @@ classdef SubjectST < Subject
 			prop = SubjectST.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			subjectst_category_list = { 1  1  3  4  2  2  4  4  4 };
+			subjectst_category_list = { 1  1  3  4  2  2  6  4  4  4 };
 			prop_category = subjectst_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -430,7 +436,7 @@ classdef SubjectST < Subject
 			prop = SubjectST.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			subjectst_format_list = { 2  2  8  2  2  2  10  8  13 };
+			subjectst_format_list = { 2  2  8  2  2  2  2  10  8  13 };
 			prop_format = subjectst_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -456,7 +462,7 @@ classdef SubjectST < Subject
 			prop = SubjectST.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			subjectst_description_list = { 'NAME (constant, string) is the name of the subject.'  'DESCRIPTION (constant, string) is the description of the subject.'  'TEMPLATE (parameter, item) is the template of the subject.'  'ID (data, string) is a few-letter code for the subject.'  'LABEL (metadata, string) is an extended label of the subject.'  'NOTES (metadata, string) are some specific notes about the subject.'  'VOI_DICT (data, idict) contains the variables of interest of the subject.'  'BA (data, item) is a brain atlas.'  'ST (data, cvector) is a column vector with data for each brain region.' };
+			subjectst_description_list = { 'NAME (constant, string) is the name of the subject.'  'DESCRIPTION (constant, string) is the description of the subject.'  'TEMPLATE (parameter, item) is the template of the subject.'  'ID (data, string) is a few-letter code for the subject.'  'LABEL (metadata, string) is an extended label of the subject.'  'NOTES (metadata, string) are some specific notes about the subject.'  'TOSTRING (query, string) returns a string that represents the object.'  'VOI_DICT (data, idict) contains the variables of interest of the subject.'  'BA (data, item) is a brain atlas.'  'ST (data, cvector) is a column vector with data for each brain region.' };
 			prop_description = subjectst_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -482,9 +488,9 @@ classdef SubjectST < Subject
 			prop = SubjectST.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % SubjectST.BA
+				case 9 % SubjectST.BA
 					prop_settings = 'BrainAtlas';
-				case 9 % SubjectST.ST
+				case 10 % SubjectST.ST
 					prop_settings = Format.getFormatSettings(13);
 				otherwise
 					prop_settings = getPropSettings@Subject(prop);
@@ -513,9 +519,9 @@ classdef SubjectST < Subject
 			prop = SubjectST.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % SubjectST.BA
+				case 9 % SubjectST.BA
 					prop_default = Format.getFormatDefault(8, SubjectST.getPropSettings(prop));
-				case 9 % SubjectST.ST
+				case 10 % SubjectST.ST
 					prop_default = Format.getFormatDefault(13, SubjectST.getPropSettings(prop));
 				case 1 % SubjectST.NAME
 					prop_default = 'SubjectST';
@@ -591,12 +597,12 @@ classdef SubjectST < Subject
 			prop = SubjectST.getPropProp(pointer);
 			
 			switch prop
-				case 8 % SubjectST.BA
+				case 9 % SubjectST.BA
 					check = Format.checkFormat(8, value, SubjectST.getPropSettings(prop));
-				case 9 % SubjectST.ST
+				case 10 % SubjectST.ST
 					check = Format.checkFormat(13, value, SubjectST.getPropSettings(prop));
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						check = checkProp@Subject(prop, value);
 					end
 			end
@@ -628,7 +634,7 @@ classdef SubjectST < Subject
 			msg = ['Error while checking ' tostring(sub) ' ' sub.getPropTag(prop) '.'];
 			
 			switch prop
-				case 9 % SubjectST.ST
+				case 10 % SubjectST.ST
 					br_number = sub.get('BA').get('BR_DICT').get('LENGTH');
 					check = (iscolumn(value) && isequal(size(value), [br_number, 1])) || (isempty(value) && br_number == 0); % Format.checkFormat(13, value) already checked
 					if check
@@ -638,7 +644,7 @@ classdef SubjectST < Subject
 					end
 					
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						[check, msg] = checkValue@Subject(sub, prop, value);
 					end
 			end
@@ -661,8 +667,8 @@ classdef SubjectST < Subject
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 9 % SubjectST.ST
-					pr = PanelPropMatrix('EL', sub, 'PROP', 9, ...
+				case 10 % SubjectST.ST
+					pr = PanelPropMatrix('EL', sub, 'PROP', 10, ...
 					    'ROWNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
 					    'COLUMNNAME', {}, ...
 					    varargin{:});

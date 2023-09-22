@@ -12,10 +12,11 @@ classdef NNDataset < ConcreteElement
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the dataset for neural network analysis.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the dataset for neural network analysis.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the dataset for neural network analysis.
-	%  <strong>7</strong> <strong>DP_CLASS</strong> 	DP_CLASS (parameter, class) is the class of the data points
-	%  <strong>8</strong> <strong>DP_DICT</strong> 	DP_DICT (data, idict) is an indexed dictionary containing the data points.
-	%  <strong>9</strong> <strong>INPUTS</strong> 	INPUTS (result, cell) is a collection of the inputs from all data points.
-	%  <strong>10</strong> <strong>TARGETS</strong> 	TARGETS (result, cell) is a collection of the targets from all data points.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>DP_CLASS</strong> 	DP_CLASS (parameter, class) is the class of the data points
+	%  <strong>9</strong> <strong>DP_DICT</strong> 	DP_DICT (data, idict) is an indexed dictionary containing the data points.
+	%  <strong>10</strong> <strong>INPUTS</strong> 	INPUTS (result, cell) is a collection of the inputs from all data points.
+	%  <strong>11</strong> <strong>TARGETS</strong> 	TARGETS (result, cell) is a collection of the targets from all data points.
 	%
 	% NNDataset methods (constructor):
 	%  NNDataset - constructor
@@ -106,22 +107,22 @@ classdef NNDataset < ConcreteElement
 	% See also NNDataPoint, NNDatasetCombine, NNDatasetSplit.
 	
 	properties (Constant) % properties
-		DP_CLASS = 7; %CET: Computational Efficiency Trick
+		DP_CLASS = 8; %CET: Computational Efficiency Trick
 		DP_CLASS_TAG = 'DP_CLASS';
 		DP_CLASS_CATEGORY = 3;
 		DP_CLASS_FORMAT = 6;
 		
-		DP_DICT = 8; %CET: Computational Efficiency Trick
+		DP_DICT = 9; %CET: Computational Efficiency Trick
 		DP_DICT_TAG = 'DP_DICT';
 		DP_DICT_CATEGORY = 4;
 		DP_DICT_FORMAT = 10;
 		
-		INPUTS = 9; %CET: Computational Efficiency Trick
+		INPUTS = 10; %CET: Computational Efficiency Trick
 		INPUTS_TAG = 'INPUTS';
 		INPUTS_CATEGORY = 5;
 		INPUTS_FORMAT = 16;
 		
-		TARGETS = 10; %CET: Computational Efficiency Trick
+		TARGETS = 11; %CET: Computational Efficiency Trick
 		TARGETS_TAG = 'TARGETS';
 		TARGETS_CATEGORY = 5;
 		TARGETS_FORMAT = 16;
@@ -144,10 +145,11 @@ classdef NNDataset < ConcreteElement
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the dataset for neural network analysis.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the dataset for neural network analysis.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the dataset for neural network analysis.
-			%  <strong>7</strong> <strong>DP_CLASS</strong> 	DP_CLASS (parameter, class) is the class of the data points
-			%  <strong>8</strong> <strong>DP_DICT</strong> 	DP_DICT (data, idict) is an indexed dictionary containing the data points.
-			%  <strong>9</strong> <strong>INPUTS</strong> 	INPUTS (result, cell) is a collection of the inputs from all data points.
-			%  <strong>10</strong> <strong>TARGETS</strong> 	TARGETS (result, cell) is a collection of the targets from all data points.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>DP_CLASS</strong> 	DP_CLASS (parameter, class) is the class of the data points
+			%  <strong>9</strong> <strong>DP_DICT</strong> 	DP_DICT (data, idict) is an indexed dictionary containing the data points.
+			%  <strong>10</strong> <strong>INPUTS</strong> 	INPUTS (result, cell) is a collection of the inputs from all data points.
+			%  <strong>11</strong> <strong>TARGETS</strong> 	TARGETS (result, cell) is a collection of the targets from all data points.
 			%
 			% See also Category, Format.
 			
@@ -209,7 +211,7 @@ classdef NNDataset < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11];
 				return
 			end
 			
@@ -219,11 +221,13 @@ classdef NNDataset < ConcreteElement
 				case 2 % Category.METADATA
 					prop_list = [5 6];
 				case 3 % Category.PARAMETER
-					prop_list = [3 7];
+					prop_list = [3 8];
 				case 4 % Category.DATA
-					prop_list = [4 8];
+					prop_list = [4 9];
 				case 5 % Category.RESULT
-					prop_list = [9 10];
+					prop_list = [10 11];
+				case 6 % Category.QUERY
+					prop_list = 7;
 				otherwise
 					prop_list = [];
 			end
@@ -249,7 +253,7 @@ classdef NNDataset < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 10;
+				prop_number = 11;
 				return
 			end
 			
@@ -264,6 +268,8 @@ classdef NNDataset < ConcreteElement
 					prop_number = 2;
 				case 5 % Category.RESULT
 					prop_number = 2;
+				case 6 % Category.QUERY
+					prop_number = 1;
 				otherwise
 					prop_number = 0;
 			end
@@ -294,7 +300,7 @@ classdef NNDataset < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 10 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 11 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -332,7 +338,7 @@ classdef NNDataset < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'DP_CLASS'  'DP_DICT'  'INPUTS'  'TARGETS' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'DP_CLASS'  'DP_DICT'  'INPUTS'  'TARGETS' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -365,7 +371,7 @@ classdef NNDataset < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'DP_CLASS'  'DP_DICT'  'INPUTS'  'TARGETS' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'DP_CLASS'  'DP_DICT'  'INPUTS'  'TARGETS' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -394,7 +400,7 @@ classdef NNDataset < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				nndataset_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'DP_CLASS'  'DP_DICT'  'INPUTS'  'TARGETS' };
+				nndataset_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'DP_CLASS'  'DP_DICT'  'INPUTS'  'TARGETS' };
 				tag = nndataset_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -421,7 +427,7 @@ classdef NNDataset < ConcreteElement
 			prop = NNDataset.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nndataset_category_list = { 1  1  3  4  2  2  3  4  5  5 };
+			nndataset_category_list = { 1  1  3  4  2  2  6  3  4  5  5 };
 			prop_category = nndataset_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -447,7 +453,7 @@ classdef NNDataset < ConcreteElement
 			prop = NNDataset.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nndataset_format_list = { 2  2  8  2  2  2  6  10  16  16 };
+			nndataset_format_list = { 2  2  8  2  2  2  2  6  10  16  16 };
 			prop_format = nndataset_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -473,7 +479,7 @@ classdef NNDataset < ConcreteElement
 			prop = NNDataset.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nndataset_description_list = { 'NAME (constant, string) is the name of the dataset for neural network analysis.'  'DESCRIPTION (constant, string) is the description of the dataset for neural network analysis.'  'TEMPLATE (parameter, item) is the template of the dataset for neural network analysis.'  'ID (data, string) is a few-letter code for the dataset for neural network analysis.'  'LABEL (metadata, string) is an extended label of the dataset for neural network analysis.'  'NOTES (metadata, string) are some specific notes about the dataset for neural network analysis.'  'DP_CLASS (parameter, class) is the class of the data points'  'DP_DICT (data, idict) is an indexed dictionary containing the data points.'  'INPUTS (result, cell) is a collection of the inputs from all data points.'  'TARGETS (result, cell) is a collection of the targets from all data points.' };
+			nndataset_description_list = { 'NAME (constant, string) is the name of the dataset for neural network analysis.'  'DESCRIPTION (constant, string) is the description of the dataset for neural network analysis.'  'TEMPLATE (parameter, item) is the template of the dataset for neural network analysis.'  'ID (data, string) is a few-letter code for the dataset for neural network analysis.'  'LABEL (metadata, string) is an extended label of the dataset for neural network analysis.'  'NOTES (metadata, string) are some specific notes about the dataset for neural network analysis.'  'TOSTRING (query, string) returns a string that represents the object.'  'DP_CLASS (parameter, class) is the class of the data points'  'DP_DICT (data, idict) is an indexed dictionary containing the data points.'  'INPUTS (result, cell) is a collection of the inputs from all data points.'  'TARGETS (result, cell) is a collection of the targets from all data points.' };
 			prop_description = nndataset_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -499,13 +505,13 @@ classdef NNDataset < ConcreteElement
 			prop = NNDataset.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % NNDataset.DP_CLASS
+				case 8 % NNDataset.DP_CLASS
 					prop_settings = 'NNDataPoint';
-				case 8 % NNDataset.DP_DICT
+				case 9 % NNDataset.DP_DICT
 					prop_settings = 'NNDataPoint';
-				case 9 % NNDataset.INPUTS
+				case 10 % NNDataset.INPUTS
 					prop_settings = Format.getFormatSettings(16);
-				case 10 % NNDataset.TARGETS
+				case 11 % NNDataset.TARGETS
 					prop_settings = Format.getFormatSettings(16);
 				case 3 % NNDataset.TEMPLATE
 					prop_settings = 'NNDataset';
@@ -536,13 +542,13 @@ classdef NNDataset < ConcreteElement
 			prop = NNDataset.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % NNDataset.DP_CLASS
+				case 8 % NNDataset.DP_CLASS
 					prop_default = Format.getFormatDefault(6, NNDataset.getPropSettings(prop));
-				case 8 % NNDataset.DP_DICT
+				case 9 % NNDataset.DP_DICT
 					prop_default = Format.getFormatDefault(10, NNDataset.getPropSettings(prop));
-				case 9 % NNDataset.INPUTS
+				case 10 % NNDataset.INPUTS
 					prop_default = Format.getFormatDefault(16, NNDataset.getPropSettings(prop));
-				case 10 % NNDataset.TARGETS
+				case 11 % NNDataset.TARGETS
 					prop_default = Format.getFormatDefault(16, NNDataset.getPropSettings(prop));
 				case 1 % NNDataset.NAME
 					prop_default = 'NNDataset';
@@ -620,18 +626,18 @@ classdef NNDataset < ConcreteElement
 			prop = NNDataset.getPropProp(pointer);
 			
 			switch prop
-				case 7 % NNDataset.DP_CLASS
+				case 8 % NNDataset.DP_CLASS
 					check = Format.checkFormat(6, value, NNDataset.getPropSettings(prop));
-				case 8 % NNDataset.DP_DICT
+				case 9 % NNDataset.DP_DICT
 					check = Format.checkFormat(10, value, NNDataset.getPropSettings(prop));
-				case 9 % NNDataset.INPUTS
+				case 10 % NNDataset.INPUTS
 					check = Format.checkFormat(16, value, NNDataset.getPropSettings(prop));
-				case 10 % NNDataset.TARGETS
+				case 11 % NNDataset.TARGETS
 					check = Format.checkFormat(16, value, NNDataset.getPropSettings(prop));
 				case 3 % NNDataset.TEMPLATE
 					check = Format.checkFormat(8, value, NNDataset.getPropSettings(prop));
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -664,22 +670,22 @@ classdef NNDataset < ConcreteElement
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 9 % NNDataset.INPUTS
-					rng_settings_ = rng(); rng(d.getPropSeed(9), 'twister')
+				case 10 % NNDataset.INPUTS
+					rng_settings_ = rng(); rng(d.getPropSeed(10), 'twister')
 					
 					value = cellfun(@(dp) dp.get('INPUT'), d.get('DP_DICT').get('IT_LIST'), 'UniformOutput', false);
 					
 					rng(rng_settings_)
 					
-				case 10 % NNDataset.TARGETS
-					rng_settings_ = rng(); rng(d.getPropSeed(10), 'twister')
+				case 11 % NNDataset.TARGETS
+					rng_settings_ = rng(); rng(d.getPropSeed(11), 'twister')
 					
 					value = cellfun(@(dp) dp.get('TARGET'), d.get('DP_DICT').get('IT_LIST'), 'UniformOutput', false);
 					
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						value = calculateValue@ConcreteElement(d, prop, varargin{:});
 					else
 						value = calculateValue@Element(d, prop, varargin{:});

@@ -27,29 +27,30 @@ classdef Graph < ConcreteElement
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph.
-	%  <strong>7</strong> <strong>GRAPH_TYPE</strong> 	GRAPH_TYPE (constant, scalar) is the graph type.
-	%  <strong>8</strong> <strong>CONNECTIVITY_TYPE</strong> 	CONNECTIVITY_TYPE (query, smatrix) is the connectivity type of the graph.
-	%  <strong>9</strong> <strong>DIRECTIONALITY_TYPE</strong> 	DIRECTIONALITY_TYPE (query, smatrix) is the directionality type of the graph.
-	%  <strong>10</strong> <strong>SELFCONNECTIVITY_TYPE</strong> 	SELFCONNECTIVITY_TYPE (query, smatrix) is the self-connectivity type of the graph.
-	%  <strong>11</strong> <strong>NEGATIVITY_TYPE</strong> 	NEGATIVITY_TYPE (query, scalar) is the negativity type of the graph.
-	%  <strong>12</strong> <strong>LAYERTICKS</strong> 	LAYERTICKS (metadata, rvector) are the layer tick values.
-	%  <strong>13</strong> <strong>ALAYERTICKS</strong> 	ALAYERTICKS (query, rvector) returns the layer tick values.
-	%  <strong>14</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
-	%  <strong>15</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the layer labels for A.
-	%  <strong>16</strong> <strong>NODELABELS</strong> 	NODELABELS (metadata, stringlist) are the node labels provided by the user.
-	%  <strong>17</strong> <strong>ANODELABELS</strong> 	ANODELABELS (query, stringlist) returns the nodel labels for each layer.
-	%  <strong>18</strong> <strong>RANDOMIZE</strong> 	RANDOMIZE (parameter, logical) determines whether to randomize the graph.
-	%  <strong>19</strong> <strong>RANDOM_SEED</strong> 	RANDOM_SEED (parameter, scalar) is the randomization seed.
-	%  <strong>20</strong> <strong>A</strong> 	A (result, cell) is the graph adjacency matrix. 
-	%  <strong>21</strong> <strong>A_CHECK</strong> 	A_CHECK (query, logical) checks the format of the adjacency matrix.
-	%  <strong>22</strong> <strong>NODENUMBER</strong> 	NODENUMBER (result, rvector) returns the number of nodes in the graph; for non single layer graphs it returns an array with the number of nodes in each layer.
-	%  <strong>23</strong> <strong>LAYERNUMBER</strong> 	LAYERNUMBER (result, scalar) returns the number of layers in the graph.
-	%  <strong>24</strong> <strong>PARTITIONS</strong> 	PARTITIONS (result, rvector) returns the number of layers in the partitions of the graph.
-	%  <strong>25</strong> <strong>M_DICT</strong> 	M_DICT (result, idict) contains the calculated measures of the graph.
-	%  <strong>26</strong> <strong>COMPATIBLE_MEASURES</strong> 	COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
-	%  <strong>27</strong> <strong>MEASURE</strong> 	MEASURE (query, item) returns a measure.
-	%  <strong>28</strong> <strong>PFGA</strong> 	PFGA (gui, item) contains the panel figure of the graph adjacency matrix.
-	%  <strong>29</strong> <strong>PFGH</strong> 	PFGH (gui, item) contains the panel figure of the graph histogram.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>GRAPH_TYPE</strong> 	GRAPH_TYPE (constant, scalar) is the graph type.
+	%  <strong>9</strong> <strong>CONNECTIVITY_TYPE</strong> 	CONNECTIVITY_TYPE (query, smatrix) is the connectivity type of the graph.
+	%  <strong>10</strong> <strong>DIRECTIONALITY_TYPE</strong> 	DIRECTIONALITY_TYPE (query, smatrix) is the directionality type of the graph.
+	%  <strong>11</strong> <strong>SELFCONNECTIVITY_TYPE</strong> 	SELFCONNECTIVITY_TYPE (query, smatrix) is the self-connectivity type of the graph.
+	%  <strong>12</strong> <strong>NEGATIVITY_TYPE</strong> 	NEGATIVITY_TYPE (query, scalar) is the negativity type of the graph.
+	%  <strong>13</strong> <strong>LAYERTICKS</strong> 	LAYERTICKS (metadata, rvector) are the layer tick values.
+	%  <strong>14</strong> <strong>ALAYERTICKS</strong> 	ALAYERTICKS (query, rvector) returns the layer tick values.
+	%  <strong>15</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
+	%  <strong>16</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the layer labels for A.
+	%  <strong>17</strong> <strong>NODELABELS</strong> 	NODELABELS (metadata, stringlist) are the node labels provided by the user.
+	%  <strong>18</strong> <strong>ANODELABELS</strong> 	ANODELABELS (query, stringlist) returns the nodel labels for each layer.
+	%  <strong>19</strong> <strong>RANDOMIZE</strong> 	RANDOMIZE (parameter, logical) determines whether to randomize the graph.
+	%  <strong>20</strong> <strong>RANDOM_SEED</strong> 	RANDOM_SEED (parameter, scalar) is the randomization seed.
+	%  <strong>21</strong> <strong>A</strong> 	A (result, cell) is the graph adjacency matrix. 
+	%  <strong>22</strong> <strong>A_CHECK</strong> 	A_CHECK (query, logical) checks the format of the adjacency matrix.
+	%  <strong>23</strong> <strong>NODENUMBER</strong> 	NODENUMBER (result, rvector) returns the number of nodes in the graph; for non single layer graphs it returns an array with the number of nodes in each layer.
+	%  <strong>24</strong> <strong>LAYERNUMBER</strong> 	LAYERNUMBER (result, scalar) returns the number of layers in the graph.
+	%  <strong>25</strong> <strong>PARTITIONS</strong> 	PARTITIONS (result, rvector) returns the number of layers in the partitions of the graph.
+	%  <strong>26</strong> <strong>M_DICT</strong> 	M_DICT (result, idict) contains the calculated measures of the graph.
+	%  <strong>27</strong> <strong>COMPATIBLE_MEASURES</strong> 	COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
+	%  <strong>28</strong> <strong>MEASURE</strong> 	MEASURE (query, item) returns a measure.
+	%  <strong>29</strong> <strong>PFGA</strong> 	PFGA (gui, item) contains the panel figure of the graph adjacency matrix.
+	%  <strong>30</strong> <strong>PFGH</strong> 	PFGH (gui, item) contains the panel figure of the graph histogram.
 	%
 	% Graph methods (constructor):
 	%  Graph - constructor
@@ -276,117 +277,117 @@ classdef Graph < ConcreteElement
 		    }
 	end
 	properties (Constant) % properties
-		GRAPH_TYPE = 7; %CET: Computational Efficiency Trick
+		GRAPH_TYPE = 8; %CET: Computational Efficiency Trick
 		GRAPH_TYPE_TAG = 'GRAPH_TYPE';
 		GRAPH_TYPE_CATEGORY = 1;
 		GRAPH_TYPE_FORMAT = 11;
 		
-		CONNECTIVITY_TYPE = 8; %CET: Computational Efficiency Trick
+		CONNECTIVITY_TYPE = 9; %CET: Computational Efficiency Trick
 		CONNECTIVITY_TYPE_TAG = 'CONNECTIVITY_TYPE';
 		CONNECTIVITY_TYPE_CATEGORY = 6;
 		CONNECTIVITY_TYPE_FORMAT = 15;
 		
-		DIRECTIONALITY_TYPE = 9; %CET: Computational Efficiency Trick
+		DIRECTIONALITY_TYPE = 10; %CET: Computational Efficiency Trick
 		DIRECTIONALITY_TYPE_TAG = 'DIRECTIONALITY_TYPE';
 		DIRECTIONALITY_TYPE_CATEGORY = 6;
 		DIRECTIONALITY_TYPE_FORMAT = 15;
 		
-		SELFCONNECTIVITY_TYPE = 10; %CET: Computational Efficiency Trick
+		SELFCONNECTIVITY_TYPE = 11; %CET: Computational Efficiency Trick
 		SELFCONNECTIVITY_TYPE_TAG = 'SELFCONNECTIVITY_TYPE';
 		SELFCONNECTIVITY_TYPE_CATEGORY = 6;
 		SELFCONNECTIVITY_TYPE_FORMAT = 15;
 		
-		NEGATIVITY_TYPE = 11; %CET: Computational Efficiency Trick
+		NEGATIVITY_TYPE = 12; %CET: Computational Efficiency Trick
 		NEGATIVITY_TYPE_TAG = 'NEGATIVITY_TYPE';
 		NEGATIVITY_TYPE_CATEGORY = 6;
 		NEGATIVITY_TYPE_FORMAT = 11;
 		
-		LAYERTICKS = 12; %CET: Computational Efficiency Trick
+		LAYERTICKS = 13; %CET: Computational Efficiency Trick
 		LAYERTICKS_TAG = 'LAYERTICKS';
 		LAYERTICKS_CATEGORY = 2;
 		LAYERTICKS_FORMAT = 12;
 		
-		ALAYERTICKS = 13; %CET: Computational Efficiency Trick
+		ALAYERTICKS = 14; %CET: Computational Efficiency Trick
 		ALAYERTICKS_TAG = 'ALAYERTICKS';
 		ALAYERTICKS_CATEGORY = 6;
 		ALAYERTICKS_FORMAT = 12;
 		
-		LAYERLABELS = 14; %CET: Computational Efficiency Trick
+		LAYERLABELS = 15; %CET: Computational Efficiency Trick
 		LAYERLABELS_TAG = 'LAYERLABELS';
 		LAYERLABELS_CATEGORY = 2;
 		LAYERLABELS_FORMAT = 3;
 		
-		ALAYERLABELS = 15; %CET: Computational Efficiency Trick
+		ALAYERLABELS = 16; %CET: Computational Efficiency Trick
 		ALAYERLABELS_TAG = 'ALAYERLABELS';
 		ALAYERLABELS_CATEGORY = 6;
 		ALAYERLABELS_FORMAT = 3;
 		
-		NODELABELS = 16; %CET: Computational Efficiency Trick
+		NODELABELS = 17; %CET: Computational Efficiency Trick
 		NODELABELS_TAG = 'NODELABELS';
 		NODELABELS_CATEGORY = 2;
 		NODELABELS_FORMAT = 3;
 		
-		ANODELABELS = 17; %CET: Computational Efficiency Trick
+		ANODELABELS = 18; %CET: Computational Efficiency Trick
 		ANODELABELS_TAG = 'ANODELABELS';
 		ANODELABELS_CATEGORY = 6;
 		ANODELABELS_FORMAT = 3;
 		
-		RANDOMIZE = 18; %CET: Computational Efficiency Trick
+		RANDOMIZE = 19; %CET: Computational Efficiency Trick
 		RANDOMIZE_TAG = 'RANDOMIZE';
 		RANDOMIZE_CATEGORY = 3;
 		RANDOMIZE_FORMAT = 4;
 		
-		RANDOM_SEED = 19; %CET: Computational Efficiency Trick
+		RANDOM_SEED = 20; %CET: Computational Efficiency Trick
 		RANDOM_SEED_TAG = 'RANDOM_SEED';
 		RANDOM_SEED_CATEGORY = 3;
 		RANDOM_SEED_FORMAT = 11;
 		
-		A = 20; %CET: Computational Efficiency Trick
+		A = 21; %CET: Computational Efficiency Trick
 		A_TAG = 'A';
 		A_CATEGORY = 5;
 		A_FORMAT = 16;
 		
-		A_CHECK = 21; %CET: Computational Efficiency Trick
+		A_CHECK = 22; %CET: Computational Efficiency Trick
 		A_CHECK_TAG = 'A_CHECK';
 		A_CHECK_CATEGORY = 6;
 		A_CHECK_FORMAT = 4;
 		
-		NODENUMBER = 22; %CET: Computational Efficiency Trick
+		NODENUMBER = 23; %CET: Computational Efficiency Trick
 		NODENUMBER_TAG = 'NODENUMBER';
 		NODENUMBER_CATEGORY = 5;
 		NODENUMBER_FORMAT = 12;
 		
-		LAYERNUMBER = 23; %CET: Computational Efficiency Trick
+		LAYERNUMBER = 24; %CET: Computational Efficiency Trick
 		LAYERNUMBER_TAG = 'LAYERNUMBER';
 		LAYERNUMBER_CATEGORY = 5;
 		LAYERNUMBER_FORMAT = 11;
 		
-		PARTITIONS = 24; %CET: Computational Efficiency Trick
+		PARTITIONS = 25; %CET: Computational Efficiency Trick
 		PARTITIONS_TAG = 'PARTITIONS';
 		PARTITIONS_CATEGORY = 5;
 		PARTITIONS_FORMAT = 12;
 		
-		M_DICT = 25; %CET: Computational Efficiency Trick
+		M_DICT = 26; %CET: Computational Efficiency Trick
 		M_DICT_TAG = 'M_DICT';
 		M_DICT_CATEGORY = 5;
 		M_DICT_FORMAT = 10;
 		
-		COMPATIBLE_MEASURES = 26; %CET: Computational Efficiency Trick
+		COMPATIBLE_MEASURES = 27; %CET: Computational Efficiency Trick
 		COMPATIBLE_MEASURES_TAG = 'COMPATIBLE_MEASURES';
 		COMPATIBLE_MEASURES_CATEGORY = 1;
 		COMPATIBLE_MEASURES_FORMAT = 7;
 		
-		MEASURE = 27; %CET: Computational Efficiency Trick
+		MEASURE = 28; %CET: Computational Efficiency Trick
 		MEASURE_TAG = 'MEASURE';
 		MEASURE_CATEGORY = 6;
 		MEASURE_FORMAT = 8;
 		
-		PFGA = 28; %CET: Computational Efficiency Trick
+		PFGA = 29; %CET: Computational Efficiency Trick
 		PFGA_TAG = 'PFGA';
 		PFGA_CATEGORY = 9;
 		PFGA_FORMAT = 8;
 		
-		PFGH = 29; %CET: Computational Efficiency Trick
+		PFGH = 30; %CET: Computational Efficiency Trick
 		PFGH_TAG = 'PFGH';
 		PFGH_CATEGORY = 9;
 		PFGH_FORMAT = 8;
@@ -409,29 +410,30 @@ classdef Graph < ConcreteElement
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph.
-			%  <strong>7</strong> <strong>GRAPH_TYPE</strong> 	GRAPH_TYPE (constant, scalar) is the graph type.
-			%  <strong>8</strong> <strong>CONNECTIVITY_TYPE</strong> 	CONNECTIVITY_TYPE (query, smatrix) is the connectivity type of the graph.
-			%  <strong>9</strong> <strong>DIRECTIONALITY_TYPE</strong> 	DIRECTIONALITY_TYPE (query, smatrix) is the directionality type of the graph.
-			%  <strong>10</strong> <strong>SELFCONNECTIVITY_TYPE</strong> 	SELFCONNECTIVITY_TYPE (query, smatrix) is the self-connectivity type of the graph.
-			%  <strong>11</strong> <strong>NEGATIVITY_TYPE</strong> 	NEGATIVITY_TYPE (query, scalar) is the negativity type of the graph.
-			%  <strong>12</strong> <strong>LAYERTICKS</strong> 	LAYERTICKS (metadata, rvector) are the layer tick values.
-			%  <strong>13</strong> <strong>ALAYERTICKS</strong> 	ALAYERTICKS (query, rvector) returns the layer tick values.
-			%  <strong>14</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
-			%  <strong>15</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the layer labels for A.
-			%  <strong>16</strong> <strong>NODELABELS</strong> 	NODELABELS (metadata, stringlist) are the node labels provided by the user.
-			%  <strong>17</strong> <strong>ANODELABELS</strong> 	ANODELABELS (query, stringlist) returns the nodel labels for each layer.
-			%  <strong>18</strong> <strong>RANDOMIZE</strong> 	RANDOMIZE (parameter, logical) determines whether to randomize the graph.
-			%  <strong>19</strong> <strong>RANDOM_SEED</strong> 	RANDOM_SEED (parameter, scalar) is the randomization seed.
-			%  <strong>20</strong> <strong>A</strong> 	A (result, cell) is the graph adjacency matrix. 
-			%  <strong>21</strong> <strong>A_CHECK</strong> 	A_CHECK (query, logical) checks the format of the adjacency matrix.
-			%  <strong>22</strong> <strong>NODENUMBER</strong> 	NODENUMBER (result, rvector) returns the number of nodes in the graph; for non single layer graphs it returns an array with the number of nodes in each layer.
-			%  <strong>23</strong> <strong>LAYERNUMBER</strong> 	LAYERNUMBER (result, scalar) returns the number of layers in the graph.
-			%  <strong>24</strong> <strong>PARTITIONS</strong> 	PARTITIONS (result, rvector) returns the number of layers in the partitions of the graph.
-			%  <strong>25</strong> <strong>M_DICT</strong> 	M_DICT (result, idict) contains the calculated measures of the graph.
-			%  <strong>26</strong> <strong>COMPATIBLE_MEASURES</strong> 	COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
-			%  <strong>27</strong> <strong>MEASURE</strong> 	MEASURE (query, item) returns a measure.
-			%  <strong>28</strong> <strong>PFGA</strong> 	PFGA (gui, item) contains the panel figure of the graph adjacency matrix.
-			%  <strong>29</strong> <strong>PFGH</strong> 	PFGH (gui, item) contains the panel figure of the graph histogram.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>GRAPH_TYPE</strong> 	GRAPH_TYPE (constant, scalar) is the graph type.
+			%  <strong>9</strong> <strong>CONNECTIVITY_TYPE</strong> 	CONNECTIVITY_TYPE (query, smatrix) is the connectivity type of the graph.
+			%  <strong>10</strong> <strong>DIRECTIONALITY_TYPE</strong> 	DIRECTIONALITY_TYPE (query, smatrix) is the directionality type of the graph.
+			%  <strong>11</strong> <strong>SELFCONNECTIVITY_TYPE</strong> 	SELFCONNECTIVITY_TYPE (query, smatrix) is the self-connectivity type of the graph.
+			%  <strong>12</strong> <strong>NEGATIVITY_TYPE</strong> 	NEGATIVITY_TYPE (query, scalar) is the negativity type of the graph.
+			%  <strong>13</strong> <strong>LAYERTICKS</strong> 	LAYERTICKS (metadata, rvector) are the layer tick values.
+			%  <strong>14</strong> <strong>ALAYERTICKS</strong> 	ALAYERTICKS (query, rvector) returns the layer tick values.
+			%  <strong>15</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
+			%  <strong>16</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the layer labels for A.
+			%  <strong>17</strong> <strong>NODELABELS</strong> 	NODELABELS (metadata, stringlist) are the node labels provided by the user.
+			%  <strong>18</strong> <strong>ANODELABELS</strong> 	ANODELABELS (query, stringlist) returns the nodel labels for each layer.
+			%  <strong>19</strong> <strong>RANDOMIZE</strong> 	RANDOMIZE (parameter, logical) determines whether to randomize the graph.
+			%  <strong>20</strong> <strong>RANDOM_SEED</strong> 	RANDOM_SEED (parameter, scalar) is the randomization seed.
+			%  <strong>21</strong> <strong>A</strong> 	A (result, cell) is the graph adjacency matrix. 
+			%  <strong>22</strong> <strong>A_CHECK</strong> 	A_CHECK (query, logical) checks the format of the adjacency matrix.
+			%  <strong>23</strong> <strong>NODENUMBER</strong> 	NODENUMBER (result, rvector) returns the number of nodes in the graph; for non single layer graphs it returns an array with the number of nodes in each layer.
+			%  <strong>24</strong> <strong>LAYERNUMBER</strong> 	LAYERNUMBER (result, scalar) returns the number of layers in the graph.
+			%  <strong>25</strong> <strong>PARTITIONS</strong> 	PARTITIONS (result, rvector) returns the number of layers in the partitions of the graph.
+			%  <strong>26</strong> <strong>M_DICT</strong> 	M_DICT (result, idict) contains the calculated measures of the graph.
+			%  <strong>27</strong> <strong>COMPATIBLE_MEASURES</strong> 	COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
+			%  <strong>28</strong> <strong>MEASURE</strong> 	MEASURE (query, item) returns a measure.
+			%  <strong>29</strong> <strong>PFGA</strong> 	PFGA (gui, item) contains the panel figure of the graph adjacency matrix.
+			%  <strong>30</strong> <strong>PFGH</strong> 	PFGH (gui, item) contains the panel figure of the graph histogram.
 			%
 			% See also Category, Format.
 			
@@ -493,25 +495,25 @@ classdef Graph < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2 7 26];
+					prop_list = [1 2 8 27];
 				case 2 % Category.METADATA
-					prop_list = [5 6 12 14 16];
+					prop_list = [5 6 13 15 17];
 				case 3 % Category.PARAMETER
-					prop_list = [3 18 19];
+					prop_list = [3 19 20];
 				case 4 % Category.DATA
 					prop_list = 4;
 				case 5 % Category.RESULT
-					prop_list = [20 22 23 24 25];
+					prop_list = [21 23 24 25 26];
 				case 6 % Category.QUERY
-					prop_list = [8 9 10 11 13 15 17 21 27];
+					prop_list = [7 9 10 11 12 14 16 18 22 28];
 				case 9 % Category.GUI
-					prop_list = [28 29];
+					prop_list = [29 30];
 				otherwise
 					prop_list = [];
 			end
@@ -537,7 +539,7 @@ classdef Graph < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 29;
+				prop_number = 30;
 				return
 			end
 			
@@ -553,7 +555,7 @@ classdef Graph < ConcreteElement
 				case 5 % Category.RESULT
 					prop_number = 5;
 				case 6 % Category.QUERY
-					prop_number = 9;
+					prop_number = 10;
 				case 9 % Category.GUI
 					prop_number = 2;
 				otherwise
@@ -586,7 +588,7 @@ classdef Graph < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 29 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 30 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -624,7 +626,7 @@ classdef Graph < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'GRAPH_TYPE'  'CONNECTIVITY_TYPE'  'DIRECTIONALITY_TYPE'  'SELFCONNECTIVITY_TYPE'  'NEGATIVITY_TYPE'  'LAYERTICKS'  'ALAYERTICKS'  'LAYERLABELS'  'ALAYERLABELS'  'NODELABELS'  'ANODELABELS'  'RANDOMIZE'  'RANDOM_SEED'  'A'  'A_CHECK'  'NODENUMBER'  'LAYERNUMBER'  'PARTITIONS'  'M_DICT'  'COMPATIBLE_MEASURES'  'MEASURE'  'PFGA'  'PFGH' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'GRAPH_TYPE'  'CONNECTIVITY_TYPE'  'DIRECTIONALITY_TYPE'  'SELFCONNECTIVITY_TYPE'  'NEGATIVITY_TYPE'  'LAYERTICKS'  'ALAYERTICKS'  'LAYERLABELS'  'ALAYERLABELS'  'NODELABELS'  'ANODELABELS'  'RANDOMIZE'  'RANDOM_SEED'  'A'  'A_CHECK'  'NODENUMBER'  'LAYERNUMBER'  'PARTITIONS'  'M_DICT'  'COMPATIBLE_MEASURES'  'MEASURE'  'PFGA'  'PFGH' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -657,7 +659,7 @@ classdef Graph < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'GRAPH_TYPE'  'CONNECTIVITY_TYPE'  'DIRECTIONALITY_TYPE'  'SELFCONNECTIVITY_TYPE'  'NEGATIVITY_TYPE'  'LAYERTICKS'  'ALAYERTICKS'  'LAYERLABELS'  'ALAYERLABELS'  'NODELABELS'  'ANODELABELS'  'RANDOMIZE'  'RANDOM_SEED'  'A'  'A_CHECK'  'NODENUMBER'  'LAYERNUMBER'  'PARTITIONS'  'M_DICT'  'COMPATIBLE_MEASURES'  'MEASURE'  'PFGA'  'PFGH' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'GRAPH_TYPE'  'CONNECTIVITY_TYPE'  'DIRECTIONALITY_TYPE'  'SELFCONNECTIVITY_TYPE'  'NEGATIVITY_TYPE'  'LAYERTICKS'  'ALAYERTICKS'  'LAYERLABELS'  'ALAYERLABELS'  'NODELABELS'  'ANODELABELS'  'RANDOMIZE'  'RANDOM_SEED'  'A'  'A_CHECK'  'NODENUMBER'  'LAYERNUMBER'  'PARTITIONS'  'M_DICT'  'COMPATIBLE_MEASURES'  'MEASURE'  'PFGA'  'PFGH' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -686,7 +688,7 @@ classdef Graph < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				graph_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'GRAPH_TYPE'  'CONNECTIVITY_TYPE'  'DIRECTIONALITY_TYPE'  'SELFCONNECTIVITY_TYPE'  'NEGATIVITY_TYPE'  'LAYERTICKS'  'ALAYERTICKS'  'LAYERLABELS'  'ALAYERLABELS'  'NODELABELS'  'ANODELABELS'  'RANDOMIZE'  'RANDOM_SEED'  'A'  'A_CHECK'  'NODENUMBER'  'LAYERNUMBER'  'PARTITIONS'  'M_DICT'  'COMPATIBLE_MEASURES'  'MEASURE'  'PFGA'  'PFGH' };
+				graph_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'GRAPH_TYPE'  'CONNECTIVITY_TYPE'  'DIRECTIONALITY_TYPE'  'SELFCONNECTIVITY_TYPE'  'NEGATIVITY_TYPE'  'LAYERTICKS'  'ALAYERTICKS'  'LAYERLABELS'  'ALAYERLABELS'  'NODELABELS'  'ANODELABELS'  'RANDOMIZE'  'RANDOM_SEED'  'A'  'A_CHECK'  'NODENUMBER'  'LAYERNUMBER'  'PARTITIONS'  'M_DICT'  'COMPATIBLE_MEASURES'  'MEASURE'  'PFGA'  'PFGH' };
 				tag = graph_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -713,7 +715,7 @@ classdef Graph < ConcreteElement
 			prop = Graph.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			graph_category_list = { 1  1  3  4  2  2  1  6  6  6  6  2  6  2  6  2  6  3  3  5  6  5  5  5  5  1  6  9  9 };
+			graph_category_list = { 1  1  3  4  2  2  6  1  6  6  6  6  2  6  2  6  2  6  3  3  5  6  5  5  5  5  1  6  9  9 };
 			prop_category = graph_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -739,7 +741,7 @@ classdef Graph < ConcreteElement
 			prop = Graph.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			graph_format_list = { 2  2  8  2  2  2  11  15  15  15  11  12  12  3  3  3  3  4  11  16  4  12  11  12  10  7  8  8  8 };
+			graph_format_list = { 2  2  8  2  2  2  2  11  15  15  15  11  12  12  3  3  3  3  4  11  16  4  12  11  12  10  7  8  8  8 };
 			prop_format = graph_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -765,7 +767,7 @@ classdef Graph < ConcreteElement
 			prop = Graph.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			graph_description_list = { 'NAME (constant, string) is the name of the graph.'  'DESCRIPTION (constant, string) is the description of the graph.'  'TEMPLATE (parameter, item) is the template of the graph.'  'ID (data, string) is a few-letter code for the graph.'  'LABEL (metadata, string) is an extended label of the graph.'  'NOTES (metadata, string) are some specific notes about the graph.'  'GRAPH_TYPE (constant, scalar) is the graph type.'  'CONNECTIVITY_TYPE (query, smatrix) is the connectivity type of the graph.'  'DIRECTIONALITY_TYPE (query, smatrix) is the directionality type of the graph.'  'SELFCONNECTIVITY_TYPE (query, smatrix) is the self-connectivity type of the graph.'  'NEGATIVITY_TYPE (query, scalar) is the negativity type of the graph.'  'LAYERTICKS (metadata, rvector) are the layer tick values.'  'ALAYERTICKS (query, rvector) returns the layer tick values.'  'LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.'  'ALAYERLABELS (query, stringlist) returns the layer labels for A.'  'NODELABELS (metadata, stringlist) are the node labels provided by the user.'  'ANODELABELS (query, stringlist) returns the nodel labels for each layer.'  'RANDOMIZE (parameter, logical) determines whether to randomize the graph.'  'RANDOM_SEED (parameter, scalar) is the randomization seed.'  'A (result, cell) is the graph adjacency matrix. '  'A_CHECK (query, logical) checks the format of the adjacency matrix.'  'NODENUMBER (result, rvector) returns the number of nodes in the graph; for non single layer graphs it returns an array with the number of nodes in each layer.'  'LAYERNUMBER (result, scalar) returns the number of layers in the graph.'  'PARTITIONS (result, rvector) returns the number of layers in the partitions of the graph.'  'M_DICT (result, idict) contains the calculated measures of the graph.'  'COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.'  'MEASURE (query, item) returns a measure.'  'PFGA (gui, item) contains the panel figure of the graph adjacency matrix.'  'PFGH (gui, item) contains the panel figure of the graph histogram.' };
+			graph_description_list = { 'NAME (constant, string) is the name of the graph.'  'DESCRIPTION (constant, string) is the description of the graph.'  'TEMPLATE (parameter, item) is the template of the graph.'  'ID (data, string) is a few-letter code for the graph.'  'LABEL (metadata, string) is an extended label of the graph.'  'NOTES (metadata, string) are some specific notes about the graph.'  'TOSTRING (query, string) returns a string that represents the object.'  'GRAPH_TYPE (constant, scalar) is the graph type.'  'CONNECTIVITY_TYPE (query, smatrix) is the connectivity type of the graph.'  'DIRECTIONALITY_TYPE (query, smatrix) is the directionality type of the graph.'  'SELFCONNECTIVITY_TYPE (query, smatrix) is the self-connectivity type of the graph.'  'NEGATIVITY_TYPE (query, scalar) is the negativity type of the graph.'  'LAYERTICKS (metadata, rvector) are the layer tick values.'  'ALAYERTICKS (query, rvector) returns the layer tick values.'  'LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.'  'ALAYERLABELS (query, stringlist) returns the layer labels for A.'  'NODELABELS (metadata, stringlist) are the node labels provided by the user.'  'ANODELABELS (query, stringlist) returns the nodel labels for each layer.'  'RANDOMIZE (parameter, logical) determines whether to randomize the graph.'  'RANDOM_SEED (parameter, scalar) is the randomization seed.'  'A (result, cell) is the graph adjacency matrix. '  'A_CHECK (query, logical) checks the format of the adjacency matrix.'  'NODENUMBER (result, rvector) returns the number of nodes in the graph; for non single layer graphs it returns an array with the number of nodes in each layer.'  'LAYERNUMBER (result, scalar) returns the number of layers in the graph.'  'PARTITIONS (result, rvector) returns the number of layers in the partitions of the graph.'  'M_DICT (result, idict) contains the calculated measures of the graph.'  'COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.'  'MEASURE (query, item) returns a measure.'  'PFGA (gui, item) contains the panel figure of the graph adjacency matrix.'  'PFGH (gui, item) contains the panel figure of the graph histogram.' };
 			prop_description = graph_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -791,51 +793,51 @@ classdef Graph < ConcreteElement
 			prop = Graph.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % Graph.GRAPH_TYPE
+				case 8 % Graph.GRAPH_TYPE
 					prop_settings = Format.getFormatSettings(11);
-				case 8 % Graph.CONNECTIVITY_TYPE
+				case 9 % Graph.CONNECTIVITY_TYPE
 					prop_settings = Format.getFormatSettings(15);
-				case 9 % Graph.DIRECTIONALITY_TYPE
+				case 10 % Graph.DIRECTIONALITY_TYPE
 					prop_settings = Format.getFormatSettings(15);
-				case 10 % Graph.SELFCONNECTIVITY_TYPE
+				case 11 % Graph.SELFCONNECTIVITY_TYPE
 					prop_settings = Format.getFormatSettings(15);
-				case 11 % Graph.NEGATIVITY_TYPE
+				case 12 % Graph.NEGATIVITY_TYPE
 					prop_settings = Format.getFormatSettings(11);
-				case 12 % Graph.LAYERTICKS
+				case 13 % Graph.LAYERTICKS
 					prop_settings = Format.getFormatSettings(12);
-				case 13 % Graph.ALAYERTICKS
+				case 14 % Graph.ALAYERTICKS
 					prop_settings = Format.getFormatSettings(12);
-				case 14 % Graph.LAYERLABELS
+				case 15 % Graph.LAYERLABELS
 					prop_settings = Format.getFormatSettings(3);
-				case 15 % Graph.ALAYERLABELS
+				case 16 % Graph.ALAYERLABELS
 					prop_settings = Format.getFormatSettings(3);
-				case 16 % Graph.NODELABELS
+				case 17 % Graph.NODELABELS
 					prop_settings = Format.getFormatSettings(3);
-				case 17 % Graph.ANODELABELS
+				case 18 % Graph.ANODELABELS
 					prop_settings = Format.getFormatSettings(3);
-				case 18 % Graph.RANDOMIZE
+				case 19 % Graph.RANDOMIZE
 					prop_settings = Format.getFormatSettings(4);
-				case 19 % Graph.RANDOM_SEED
+				case 20 % Graph.RANDOM_SEED
 					prop_settings = Format.getFormatSettings(11);
-				case 20 % Graph.A
+				case 21 % Graph.A
 					prop_settings = Format.getFormatSettings(16);
-				case 21 % Graph.A_CHECK
+				case 22 % Graph.A_CHECK
 					prop_settings = Format.getFormatSettings(4);
-				case 22 % Graph.NODENUMBER
+				case 23 % Graph.NODENUMBER
 					prop_settings = Format.getFormatSettings(12);
-				case 23 % Graph.LAYERNUMBER
+				case 24 % Graph.LAYERNUMBER
 					prop_settings = Format.getFormatSettings(11);
-				case 24 % Graph.PARTITIONS
+				case 25 % Graph.PARTITIONS
 					prop_settings = Format.getFormatSettings(12);
-				case 25 % Graph.M_DICT
+				case 26 % Graph.M_DICT
 					prop_settings = 'Measure';
-				case 26 % Graph.COMPATIBLE_MEASURES
+				case 27 % Graph.COMPATIBLE_MEASURES
 					prop_settings = 'Measure';
-				case 27 % Graph.MEASURE
+				case 28 % Graph.MEASURE
 					prop_settings = 'Measure';
-				case 28 % Graph.PFGA
+				case 29 % Graph.PFGA
 					prop_settings = 'GraphAdjPF';
-				case 29 % Graph.PFGH
+				case 30 % Graph.PFGH
 					prop_settings = 'GraphHistPF';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -864,51 +866,51 @@ classdef Graph < ConcreteElement
 			prop = Graph.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % Graph.GRAPH_TYPE
+				case 8 % Graph.GRAPH_TYPE
 					prop_default = 1;
-				case 8 % Graph.CONNECTIVITY_TYPE
+				case 9 % Graph.CONNECTIVITY_TYPE
 					prop_default = Format.getFormatDefault(15, Graph.getPropSettings(prop));
-				case 9 % Graph.DIRECTIONALITY_TYPE
+				case 10 % Graph.DIRECTIONALITY_TYPE
 					prop_default = Format.getFormatDefault(15, Graph.getPropSettings(prop));
-				case 10 % Graph.SELFCONNECTIVITY_TYPE
+				case 11 % Graph.SELFCONNECTIVITY_TYPE
 					prop_default = Format.getFormatDefault(15, Graph.getPropSettings(prop));
-				case 11 % Graph.NEGATIVITY_TYPE
+				case 12 % Graph.NEGATIVITY_TYPE
 					prop_default = Format.getFormatDefault(11, Graph.getPropSettings(prop));
-				case 12 % Graph.LAYERTICKS
+				case 13 % Graph.LAYERTICKS
 					prop_default = Format.getFormatDefault(12, Graph.getPropSettings(prop));
-				case 13 % Graph.ALAYERTICKS
+				case 14 % Graph.ALAYERTICKS
 					prop_default = Format.getFormatDefault(12, Graph.getPropSettings(prop));
-				case 14 % Graph.LAYERLABELS
+				case 15 % Graph.LAYERLABELS
 					prop_default = Format.getFormatDefault(3, Graph.getPropSettings(prop));
-				case 15 % Graph.ALAYERLABELS
+				case 16 % Graph.ALAYERLABELS
 					prop_default = Format.getFormatDefault(3, Graph.getPropSettings(prop));
-				case 16 % Graph.NODELABELS
+				case 17 % Graph.NODELABELS
 					prop_default = {'numbered'};
-				case 17 % Graph.ANODELABELS
+				case 18 % Graph.ANODELABELS
 					prop_default = Format.getFormatDefault(3, Graph.getPropSettings(prop));
-				case 18 % Graph.RANDOMIZE
+				case 19 % Graph.RANDOMIZE
 					prop_default = Format.getFormatDefault(4, Graph.getPropSettings(prop));
-				case 19 % Graph.RANDOM_SEED
+				case 20 % Graph.RANDOM_SEED
 					prop_default = Format.getFormatDefault(11, Graph.getPropSettings(prop));
-				case 20 % Graph.A
+				case 21 % Graph.A
 					prop_default = Format.getFormatDefault(16, Graph.getPropSettings(prop));
-				case 21 % Graph.A_CHECK
+				case 22 % Graph.A_CHECK
 					prop_default = Format.getFormatDefault(4, Graph.getPropSettings(prop));
-				case 22 % Graph.NODENUMBER
+				case 23 % Graph.NODENUMBER
 					prop_default = Format.getFormatDefault(12, Graph.getPropSettings(prop));
-				case 23 % Graph.LAYERNUMBER
+				case 24 % Graph.LAYERNUMBER
 					prop_default = Format.getFormatDefault(11, Graph.getPropSettings(prop));
-				case 24 % Graph.PARTITIONS
+				case 25 % Graph.PARTITIONS
 					prop_default = Format.getFormatDefault(12, Graph.getPropSettings(prop));
-				case 25 % Graph.M_DICT
+				case 26 % Graph.M_DICT
 					prop_default = Format.getFormatDefault(10, Graph.getPropSettings(prop));
-				case 26 % Graph.COMPATIBLE_MEASURES
+				case 27 % Graph.COMPATIBLE_MEASURES
 					prop_default = Format.getFormatDefault(7, Graph.getPropSettings(prop));
-				case 27 % Graph.MEASURE
+				case 28 % Graph.MEASURE
 					prop_default = Format.getFormatDefault(8, Graph.getPropSettings(prop));
-				case 28 % Graph.PFGA
+				case 29 % Graph.PFGA
 					prop_default = Format.getFormatDefault(8, Graph.getPropSettings(prop));
-				case 29 % Graph.PFGH
+				case 30 % Graph.PFGH
 					prop_default = Format.getFormatDefault(8, Graph.getPropSettings(prop));
 				case 1 % Graph.NAME
 					prop_default = 'Graph';
@@ -968,13 +970,13 @@ classdef Graph < ConcreteElement
 			prop = Graph.getPropProp(pointer);
 			
 			switch prop
-				case 16 % Graph.NODELABELS
+				case 17 % Graph.NODELABELS
 					if isa(value, 'BrainAtlas')
 					    value = value.get('BR_DICT').get('KEYS');
 					end
 					
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						value = conditioning@ConcreteElement(pointer, value);
 					end
 			end
@@ -1014,54 +1016,54 @@ classdef Graph < ConcreteElement
 			prop = Graph.getPropProp(pointer);
 			
 			switch prop
-				case 7 % Graph.GRAPH_TYPE
+				case 8 % Graph.GRAPH_TYPE
 					check = Format.checkFormat(11, value, Graph.getPropSettings(prop));
-				case 8 % Graph.CONNECTIVITY_TYPE
+				case 9 % Graph.CONNECTIVITY_TYPE
 					check = Format.checkFormat(15, value, Graph.getPropSettings(prop));
-				case 9 % Graph.DIRECTIONALITY_TYPE
+				case 10 % Graph.DIRECTIONALITY_TYPE
 					check = Format.checkFormat(15, value, Graph.getPropSettings(prop));
-				case 10 % Graph.SELFCONNECTIVITY_TYPE
+				case 11 % Graph.SELFCONNECTIVITY_TYPE
 					check = Format.checkFormat(15, value, Graph.getPropSettings(prop));
-				case 11 % Graph.NEGATIVITY_TYPE
+				case 12 % Graph.NEGATIVITY_TYPE
 					check = Format.checkFormat(11, value, Graph.getPropSettings(prop));
-				case 12 % Graph.LAYERTICKS
+				case 13 % Graph.LAYERTICKS
 					check = Format.checkFormat(12, value, Graph.getPropSettings(prop));
-				case 13 % Graph.ALAYERTICKS
+				case 14 % Graph.ALAYERTICKS
 					check = Format.checkFormat(12, value, Graph.getPropSettings(prop));
-				case 14 % Graph.LAYERLABELS
+				case 15 % Graph.LAYERLABELS
 					check = Format.checkFormat(3, value, Graph.getPropSettings(prop));
-				case 15 % Graph.ALAYERLABELS
+				case 16 % Graph.ALAYERLABELS
 					check = Format.checkFormat(3, value, Graph.getPropSettings(prop));
-				case 16 % Graph.NODELABELS
+				case 17 % Graph.NODELABELS
 					check = Format.checkFormat(3, value, Graph.getPropSettings(prop));
-				case 17 % Graph.ANODELABELS
+				case 18 % Graph.ANODELABELS
 					check = Format.checkFormat(3, value, Graph.getPropSettings(prop));
-				case 18 % Graph.RANDOMIZE
+				case 19 % Graph.RANDOMIZE
 					check = Format.checkFormat(4, value, Graph.getPropSettings(prop));
-				case 19 % Graph.RANDOM_SEED
+				case 20 % Graph.RANDOM_SEED
 					check = Format.checkFormat(11, value, Graph.getPropSettings(prop));
-				case 20 % Graph.A
+				case 21 % Graph.A
 					check = Format.checkFormat(16, value, Graph.getPropSettings(prop));
-				case 21 % Graph.A_CHECK
+				case 22 % Graph.A_CHECK
 					check = Format.checkFormat(4, value, Graph.getPropSettings(prop));
-				case 22 % Graph.NODENUMBER
+				case 23 % Graph.NODENUMBER
 					check = Format.checkFormat(12, value, Graph.getPropSettings(prop));
-				case 23 % Graph.LAYERNUMBER
+				case 24 % Graph.LAYERNUMBER
 					check = Format.checkFormat(11, value, Graph.getPropSettings(prop));
-				case 24 % Graph.PARTITIONS
+				case 25 % Graph.PARTITIONS
 					check = Format.checkFormat(12, value, Graph.getPropSettings(prop));
-				case 25 % Graph.M_DICT
+				case 26 % Graph.M_DICT
 					check = Format.checkFormat(10, value, Graph.getPropSettings(prop));
-				case 26 % Graph.COMPATIBLE_MEASURES
+				case 27 % Graph.COMPATIBLE_MEASURES
 					check = Format.checkFormat(7, value, Graph.getPropSettings(prop));
-				case 27 % Graph.MEASURE
+				case 28 % Graph.MEASURE
 					check = Format.checkFormat(8, value, Graph.getPropSettings(prop));
-				case 28 % Graph.PFGA
+				case 29 % Graph.PFGA
 					check = Format.checkFormat(8, value, Graph.getPropSettings(prop));
-				case 29 % Graph.PFGH
+				case 30 % Graph.PFGH
 					check = Format.checkFormat(8, value, Graph.getPropSettings(prop));
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -1091,18 +1093,18 @@ classdef Graph < ConcreteElement
 			%  checkValue.
 			
 			switch prop
-				case 28 % Graph.PFGA
+				case 29 % Graph.PFGA
 					if isa(g.getr('PFGA'), 'NoValue')
 					    g.memorize('PFGA').set('G', g)
 					end
 					
-				case 29 % Graph.PFGH
+				case 30 % Graph.PFGH
 					if isa(g.getr('PFGH'), 'NoValue')
 					    g.memorize('PFGH').set('G', g)
 					end
 					
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						postprocessing@ConcreteElement(g, prop);
 					end
 			end
@@ -1125,39 +1127,39 @@ classdef Graph < ConcreteElement
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 8 % Graph.CONNECTIVITY_TYPE
+				case 9 % Graph.CONNECTIVITY_TYPE
 					value = 1;
 					
-				case 9 % Graph.DIRECTIONALITY_TYPE
+				case 10 % Graph.DIRECTIONALITY_TYPE
 					value = 1;
 					
-				case 10 % Graph.SELFCONNECTIVITY_TYPE
+				case 11 % Graph.SELFCONNECTIVITY_TYPE
 					value = 2;
 					
-				case 11 % Graph.NEGATIVITY_TYPE
+				case 12 % Graph.NEGATIVITY_TYPE
 					value = 2;
 					
-				case 13 % Graph.ALAYERTICKS
+				case 14 % Graph.ALAYERTICKS
 					alayerticks = g.get('LAYERTICKS');
 					if isempty(alayerticks) && ~isa(g.getr('A'), 'NoValue') % ensures that it's not unecessarily calculated
 					    alayerticks = [1:1:g.get('LAYERNUMBER')];
 					end
 					value = alayerticks;
 					
-				case 15 % Graph.ALAYERLABELS
+				case 16 % Graph.ALAYERLABELS
 					value = g.get('LAYERLABELS');
 					
-				case 17 % Graph.ANODELABELS
+				case 18 % Graph.ANODELABELS
 					value = g.get('NODELABELS');
 					
-				case 20 % Graph.A
-					rng_settings_ = rng(); rng(g.getPropSeed(20), 'twister')
+				case 21 % Graph.A
+					rng_settings_ = rng(); rng(g.getPropSeed(21), 'twister')
 					
 					value = {};
 					
 					rng(rng_settings_)
 					
-				case 21 % Graph.A_CHECK
+				case 22 % Graph.A_CHECK
 					A = g.get('A');
 					checkA(g.get('GRAPH_TYPE'), A);  % performs all necessary checks on A
 					checkConnectivity(g.get('CONNECTIVITY_TYPE', length(A)), A);
@@ -1166,36 +1168,36 @@ classdef Graph < ConcreteElement
 					checkNegativity(g.get('NEGATIVITY_TYPE', length(A)), A);
 					value = true; % only if no error is thrown by the previous code!
 					
-				case 22 % Graph.NODENUMBER
-					rng_settings_ = rng(); rng(g.getPropSeed(22), 'twister')
+				case 23 % Graph.NODENUMBER
+					rng_settings_ = rng(); rng(g.getPropSeed(23), 'twister')
 					
 					A = g.get('A');
 					value = cellfun(@(a) length(a), A(1:length(A)+1:end)); % vector with number of nodes per layer
 					
 					rng(rng_settings_)
 					
-				case 23 % Graph.LAYERNUMBER
-					rng_settings_ = rng(); rng(g.getPropSeed(23), 'twister')
+				case 24 % Graph.LAYERNUMBER
+					rng_settings_ = rng(); rng(g.getPropSeed(24), 'twister')
 					
 					value = length(g.get('A')); % number of layers
 					
 					rng(rng_settings_)
 					
-				case 24 % Graph.PARTITIONS
-					rng_settings_ = rng(); rng(g.getPropSeed(24), 'twister')
+				case 25 % Graph.PARTITIONS
+					rng_settings_ = rng(); rng(g.getPropSeed(25), 'twister')
 					
 					value = g.get('LAYERNUMBER'); % by default, there is a single partition
 					
 					rng(rng_settings_)
 					
-				case 25 % Graph.M_DICT
-					rng_settings_ = rng(); rng(g.getPropSeed(25), 'twister')
+				case 26 % Graph.M_DICT
+					rng_settings_ = rng(); rng(g.getPropSeed(26), 'twister')
 					
 					value = IndexedDictionary('IT_CLASS', 'Measure', 'IT_KEY', 1);
 					
 					rng(rng_settings_)
 					
-				case 27 % Graph.MEASURE
+				case 28 % Graph.MEASURE
 					% M = g.get('MEASURE', MEASURE_CLASS) checks whether the measure exists in the
 					%  property M_DICT. If not, it creates a new measure M of class MEASURE_CLASS
 					%  with properties defined by the graph settings. The user must call
@@ -1241,7 +1243,7 @@ classdef Graph < ConcreteElement
 					value = m;
 					
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						value = calculateValue@ConcreteElement(g, prop, varargin{:});
 					else
 						value = calculateValue@Element(g, prop, varargin{:});
@@ -1537,20 +1539,20 @@ classdef Graph < ConcreteElement
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 12 % Graph.LAYERTICKS
-					pr = PanelPropRVectorSmart('EL', g, 'PROP', 12, varargin{:});
+				case 13 % Graph.LAYERTICKS
+					pr = PanelPropRVectorSmart('EL', g, 'PROP', 13, varargin{:});
 					
-				case 25 % Graph.M_DICT
-					pr = GraphPP_MDict('EL', g, 'PROP', 25, varargin{:});
+				case 26 % Graph.M_DICT
+					pr = GraphPP_MDict('EL', g, 'PROP', 26, varargin{:});
 					
-				case 28 % Graph.PFGA
-					pr = PanelPropItem('EL', g, 'PROP', 28, ...
+				case 29 % Graph.PFGA
+					pr = PanelPropItem('EL', g, 'PROP', 29, ...
 					    'GUICLASS', 'GUIFig', ...
 					    'BUTTON_TEXT', 'Plot Adjacency Matrix', ...
 					    varargin{:});
 					
-				case 29 % Graph.PFGH
-					pr = PanelPropItem('EL', g, 'PROP', 29, ...
+				case 30 % Graph.PFGH
+					pr = PanelPropItem('EL', g, 'PROP', 30, ...
 					    'GUICLASS', 'GUIFig', ...
 					    'BUTTON_TEXT', 'Plot Histogram', ...
 					    varargin{:});

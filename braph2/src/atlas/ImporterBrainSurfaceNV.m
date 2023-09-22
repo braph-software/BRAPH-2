@@ -11,10 +11,11 @@ classdef ImporterBrainSurfaceNV < Importer
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the importer of the brain surface from NV.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the importer of the brain surface from NV.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the importer of the brain surface from NV.
-	%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>8</strong> <strong>FILE</strong> 	FILE (data, string) is the NV file from where to load the brain atlas.
-	%  <strong>9</strong> <strong>GET_FILE</strong> 	GET_FILE (query, item) opens a dialog box to set the NV file where to save the brain atlas.
-	%  <strong>10</strong> <strong>SURF</strong> 	SURF (result, item) is a brain surface.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>9</strong> <strong>FILE</strong> 	FILE (data, string) is the NV file from where to load the brain atlas.
+	%  <strong>10</strong> <strong>GET_FILE</strong> 	GET_FILE (query, item) opens a dialog box to set the NV file where to save the brain atlas.
+	%  <strong>11</strong> <strong>SURF</strong> 	SURF (result, item) is a brain surface.
 	%
 	% ImporterBrainSurfaceNV methods (constructor):
 	%  ImporterBrainSurfaceNV - constructor
@@ -105,17 +106,17 @@ classdef ImporterBrainSurfaceNV < Importer
 	% See also BrainSurface.
 	
 	properties (Constant) % properties
-		FILE = 8; %CET: Computational Efficiency Trick
+		FILE = 9; %CET: Computational Efficiency Trick
 		FILE_TAG = 'FILE';
 		FILE_CATEGORY = 4;
 		FILE_FORMAT = 2;
 		
-		GET_FILE = 9; %CET: Computational Efficiency Trick
+		GET_FILE = 10; %CET: Computational Efficiency Trick
 		GET_FILE_TAG = 'GET_FILE';
 		GET_FILE_CATEGORY = 6;
 		GET_FILE_FORMAT = 8;
 		
-		SURF = 10; %CET: Computational Efficiency Trick
+		SURF = 11; %CET: Computational Efficiency Trick
 		SURF_TAG = 'SURF';
 		SURF_CATEGORY = 5;
 		SURF_FORMAT = 8;
@@ -138,10 +139,11 @@ classdef ImporterBrainSurfaceNV < Importer
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the importer of the brain surface from NV.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the importer of the brain surface from NV.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the importer of the brain surface from NV.
-			%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>8</strong> <strong>FILE</strong> 	FILE (data, string) is the NV file from where to load the brain atlas.
-			%  <strong>9</strong> <strong>GET_FILE</strong> 	GET_FILE (query, item) opens a dialog box to set the NV file where to save the brain atlas.
-			%  <strong>10</strong> <strong>SURF</strong> 	SURF (result, item) is a brain surface.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>9</strong> <strong>FILE</strong> 	FILE (data, string) is the NV file from where to load the brain atlas.
+			%  <strong>10</strong> <strong>GET_FILE</strong> 	GET_FILE (query, item) opens a dialog box to set the NV file where to save the brain atlas.
+			%  <strong>11</strong> <strong>SURF</strong> 	SURF (result, item) is a brain surface.
 			%
 			% See also Category, Format.
 			
@@ -203,7 +205,7 @@ classdef ImporterBrainSurfaceNV < Importer
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11];
 				return
 			end
 			
@@ -215,13 +217,13 @@ classdef ImporterBrainSurfaceNV < Importer
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 8];
+					prop_list = [4 9];
 				case 5 % Category.RESULT
-					prop_list = 10;
+					prop_list = 11;
 				case 6 % Category.QUERY
-					prop_list = 9;
+					prop_list = [7 10];
 				case 9 % Category.GUI
-					prop_list = 7;
+					prop_list = 8;
 				otherwise
 					prop_list = [];
 			end
@@ -247,7 +249,7 @@ classdef ImporterBrainSurfaceNV < Importer
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 10;
+				prop_number = 11;
 				return
 			end
 			
@@ -263,7 +265,7 @@ classdef ImporterBrainSurfaceNV < Importer
 				case 5 % Category.RESULT
 					prop_number = 1;
 				case 6 % Category.QUERY
-					prop_number = 1;
+					prop_number = 2;
 				case 9 % Category.GUI
 					prop_number = 1;
 				otherwise
@@ -296,7 +298,7 @@ classdef ImporterBrainSurfaceNV < Importer
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 10 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 11 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -334,7 +336,7 @@ classdef ImporterBrainSurfaceNV < Importer
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'FILE'  'GET_FILE'  'SURF' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'FILE'  'GET_FILE'  'SURF' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -367,7 +369,7 @@ classdef ImporterBrainSurfaceNV < Importer
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'FILE'  'GET_FILE'  'SURF' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'FILE'  'GET_FILE'  'SURF' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -396,7 +398,7 @@ classdef ImporterBrainSurfaceNV < Importer
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				importerbrainsurfacenv_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'FILE'  'GET_FILE'  'SURF' };
+				importerbrainsurfacenv_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'FILE'  'GET_FILE'  'SURF' };
 				tag = importerbrainsurfacenv_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -423,7 +425,7 @@ classdef ImporterBrainSurfaceNV < Importer
 			prop = ImporterBrainSurfaceNV.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			importerbrainsurfacenv_category_list = { 1  1  3  4  2  2  9  4  6  5 };
+			importerbrainsurfacenv_category_list = { 1  1  3  4  2  2  6  9  4  6  5 };
 			prop_category = importerbrainsurfacenv_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -449,7 +451,7 @@ classdef ImporterBrainSurfaceNV < Importer
 			prop = ImporterBrainSurfaceNV.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			importerbrainsurfacenv_format_list = { 2  2  8  2  2  2  4  2  8  8 };
+			importerbrainsurfacenv_format_list = { 2  2  8  2  2  2  2  4  2  8  8 };
 			prop_format = importerbrainsurfacenv_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -475,7 +477,7 @@ classdef ImporterBrainSurfaceNV < Importer
 			prop = ImporterBrainSurfaceNV.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			importerbrainsurfacenv_description_list = { 'NAME (constant, string) is the name of the importer of the brain surface from NV.'  'DESCRIPTION (constant, string) is the description of the importer of the brain surface from NV.'  'TEMPLATE (parameter, item) is the template of the importe of the brain surface from NVr.'  'ID (data, string) is a few-letter code for the importer of the brain surface from NV.'  'LABEL (metadata, string) is an extended label of the importer of the brain surface from NV.'  'NOTES (metadata, string) are some specific notes about the importer of the brain surface from NV.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'FILE (data, string) is the NV file from where to load the brain atlas.'  'GET_FILE (query, item) opens a dialog box to set the NV file where to save the brain atlas.'  'SURF (result, item) is a brain surface.' };
+			importerbrainsurfacenv_description_list = { 'NAME (constant, string) is the name of the importer of the brain surface from NV.'  'DESCRIPTION (constant, string) is the description of the importer of the brain surface from NV.'  'TEMPLATE (parameter, item) is the template of the importe of the brain surface from NVr.'  'ID (data, string) is a few-letter code for the importer of the brain surface from NV.'  'LABEL (metadata, string) is an extended label of the importer of the brain surface from NV.'  'NOTES (metadata, string) are some specific notes about the importer of the brain surface from NV.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'FILE (data, string) is the NV file from where to load the brain atlas.'  'GET_FILE (query, item) opens a dialog box to set the NV file where to save the brain atlas.'  'SURF (result, item) is a brain surface.' };
 			prop_description = importerbrainsurfacenv_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -501,11 +503,11 @@ classdef ImporterBrainSurfaceNV < Importer
 			prop = ImporterBrainSurfaceNV.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % ImporterBrainSurfaceNV.FILE
+				case 9 % ImporterBrainSurfaceNV.FILE
 					prop_settings = Format.getFormatSettings(2);
-				case 9 % ImporterBrainSurfaceNV.GET_FILE
+				case 10 % ImporterBrainSurfaceNV.GET_FILE
 					prop_settings = 'ImporterBrainSurfaceNV';
-				case 10 % ImporterBrainSurfaceNV.SURF
+				case 11 % ImporterBrainSurfaceNV.SURF
 					prop_settings = 'BrainSurface';
 				case 3 % ImporterBrainSurfaceNV.TEMPLATE
 					prop_settings = 'ImporterBrainSurfaceNV';
@@ -536,11 +538,11 @@ classdef ImporterBrainSurfaceNV < Importer
 			prop = ImporterBrainSurfaceNV.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % ImporterBrainSurfaceNV.FILE
+				case 9 % ImporterBrainSurfaceNV.FILE
 					prop_default = 'human_ICBM152.nv';
-				case 9 % ImporterBrainSurfaceNV.GET_FILE
+				case 10 % ImporterBrainSurfaceNV.GET_FILE
 					prop_default = Format.getFormatDefault(8, ImporterBrainSurfaceNV.getPropSettings(prop));
-				case 10 % ImporterBrainSurfaceNV.SURF
+				case 11 % ImporterBrainSurfaceNV.SURF
 					prop_default = Format.getFormatDefault(8, ImporterBrainSurfaceNV.getPropSettings(prop));
 				case 1 % ImporterBrainSurfaceNV.NAME
 					prop_default = 'ImporterBrainSurfaceNV';
@@ -618,16 +620,16 @@ classdef ImporterBrainSurfaceNV < Importer
 			prop = ImporterBrainSurfaceNV.getPropProp(pointer);
 			
 			switch prop
-				case 8 % ImporterBrainSurfaceNV.FILE
+				case 9 % ImporterBrainSurfaceNV.FILE
 					check = Format.checkFormat(2, value, ImporterBrainSurfaceNV.getPropSettings(prop));
-				case 9 % ImporterBrainSurfaceNV.GET_FILE
+				case 10 % ImporterBrainSurfaceNV.GET_FILE
 					check = Format.checkFormat(8, value, ImporterBrainSurfaceNV.getPropSettings(prop));
-				case 10 % ImporterBrainSurfaceNV.SURF
+				case 11 % ImporterBrainSurfaceNV.SURF
 					check = Format.checkFormat(8, value, ImporterBrainSurfaceNV.getPropSettings(prop));
 				case 3 % ImporterBrainSurfaceNV.TEMPLATE
 					check = Format.checkFormat(8, value, ImporterBrainSurfaceNV.getPropSettings(prop));
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						check = checkProp@Importer(prop, value);
 					end
 			end
@@ -660,7 +662,7 @@ classdef ImporterBrainSurfaceNV < Importer
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 9 % ImporterBrainSurfaceNV.GET_FILE
+				case 10 % ImporterBrainSurfaceNV.GET_FILE
 					[filename, filepath, filterindex] = uigetfile('*.nv', 'Select NV file');
 					if filterindex
 					    file = [filepath filename];
@@ -668,8 +670,8 @@ classdef ImporterBrainSurfaceNV < Importer
 					end
 					value = im;
 					
-				case 10 % ImporterBrainSurfaceNV.SURF
-					rng_settings_ = rng(); rng(im.getPropSeed(10), 'twister')
+				case 11 % ImporterBrainSurfaceNV.SURF
+					rng_settings_ = rng(); rng(im.getPropSeed(11), 'twister')
 					
 					% creates empty BrainSurface
 					bs = BrainSurface();
@@ -712,7 +714,7 @@ classdef ImporterBrainSurfaceNV < Importer
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						value = calculateValue@Importer(im, prop, varargin{:});
 					else
 						value = calculateValue@Element(im, prop, varargin{:});

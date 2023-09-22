@@ -11,12 +11,13 @@ classdef AnalyzeGroup_ST_BUD < AnalyzeGroup
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the group-based graph analysis with structural data at fixed density.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the group-based graph analysis with structural data at fixed density.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the group-based graph analysis with structural data at fixed density.
-	%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>8</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectST.
-	%  <strong>9</strong> <strong>G</strong> 	G (result, item) is the graph obtained from this analysis.
-	%  <strong>10</strong> <strong>CORRELATION_RULE</strong> 	CORRELATION_RULE (parameter, option) is the correlation type.
-	%  <strong>11</strong> <strong>NEGATIVE_WEIGHT_RULE</strong> 	NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
-	%  <strong>12</strong> <strong>DENSITIES</strong> 	DENSITIES (parameter, rvector) is the vector of densities.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>9</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectST.
+	%  <strong>10</strong> <strong>G</strong> 	G (result, item) is the graph obtained from this analysis.
+	%  <strong>11</strong> <strong>CORRELATION_RULE</strong> 	CORRELATION_RULE (parameter, option) is the correlation type.
+	%  <strong>12</strong> <strong>NEGATIVE_WEIGHT_RULE</strong> 	NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
+	%  <strong>13</strong> <strong>DENSITIES</strong> 	DENSITIES (parameter, rvector) is the vector of densities.
 	%
 	% AnalyzeGroup_ST_BUD methods (constructor):
 	%  AnalyzeGroup_ST_BUD - constructor
@@ -107,17 +108,17 @@ classdef AnalyzeGroup_ST_BUD < AnalyzeGroup
 	% See also SubjectST, MultigraphBUD.
 	
 	properties (Constant) % properties
-		CORRELATION_RULE = 10; %CET: Computational Efficiency Trick
+		CORRELATION_RULE = 11; %CET: Computational Efficiency Trick
 		CORRELATION_RULE_TAG = 'CORRELATION_RULE';
 		CORRELATION_RULE_CATEGORY = 3;
 		CORRELATION_RULE_FORMAT = 5;
 		
-		NEGATIVE_WEIGHT_RULE = 11; %CET: Computational Efficiency Trick
+		NEGATIVE_WEIGHT_RULE = 12; %CET: Computational Efficiency Trick
 		NEGATIVE_WEIGHT_RULE_TAG = 'NEGATIVE_WEIGHT_RULE';
 		NEGATIVE_WEIGHT_RULE_CATEGORY = 3;
 		NEGATIVE_WEIGHT_RULE_FORMAT = 5;
 		
-		DENSITIES = 12; %CET: Computational Efficiency Trick
+		DENSITIES = 13; %CET: Computational Efficiency Trick
 		DENSITIES_TAG = 'DENSITIES';
 		DENSITIES_CATEGORY = 3;
 		DENSITIES_FORMAT = 12;
@@ -140,12 +141,13 @@ classdef AnalyzeGroup_ST_BUD < AnalyzeGroup
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the group-based graph analysis with structural data at fixed density.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the group-based graph analysis with structural data at fixed density.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the group-based graph analysis with structural data at fixed density.
-			%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>8</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectST.
-			%  <strong>9</strong> <strong>G</strong> 	G (result, item) is the graph obtained from this analysis.
-			%  <strong>10</strong> <strong>CORRELATION_RULE</strong> 	CORRELATION_RULE (parameter, option) is the correlation type.
-			%  <strong>11</strong> <strong>NEGATIVE_WEIGHT_RULE</strong> 	NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
-			%  <strong>12</strong> <strong>DENSITIES</strong> 	DENSITIES (parameter, rvector) is the vector of densities.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>9</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectST.
+			%  <strong>10</strong> <strong>G</strong> 	G (result, item) is the graph obtained from this analysis.
+			%  <strong>11</strong> <strong>CORRELATION_RULE</strong> 	CORRELATION_RULE (parameter, option) is the correlation type.
+			%  <strong>12</strong> <strong>NEGATIVE_WEIGHT_RULE</strong> 	NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
+			%  <strong>13</strong> <strong>DENSITIES</strong> 	DENSITIES (parameter, rvector) is the vector of densities.
 			%
 			% See also Category, Format.
 			
@@ -207,7 +209,7 @@ classdef AnalyzeGroup_ST_BUD < AnalyzeGroup
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13];
 				return
 			end
 			
@@ -217,13 +219,15 @@ classdef AnalyzeGroup_ST_BUD < AnalyzeGroup
 				case 2 % Category.METADATA
 					prop_list = [5 6];
 				case 3 % Category.PARAMETER
-					prop_list = [3 10 11 12];
+					prop_list = [3 11 12 13];
 				case 4 % Category.DATA
-					prop_list = [4 8];
+					prop_list = [4 9];
 				case 5 % Category.RESULT
-					prop_list = 9;
-				case 9 % Category.GUI
+					prop_list = 10;
+				case 6 % Category.QUERY
 					prop_list = 7;
+				case 9 % Category.GUI
+					prop_list = 8;
 				otherwise
 					prop_list = [];
 			end
@@ -249,7 +253,7 @@ classdef AnalyzeGroup_ST_BUD < AnalyzeGroup
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 12;
+				prop_number = 13;
 				return
 			end
 			
@@ -263,6 +267,8 @@ classdef AnalyzeGroup_ST_BUD < AnalyzeGroup
 				case 4 % Category.DATA
 					prop_number = 2;
 				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
 					prop_number = 1;
 				case 9 % Category.GUI
 					prop_number = 1;
@@ -296,7 +302,7 @@ classdef AnalyzeGroup_ST_BUD < AnalyzeGroup
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 12 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 13 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -334,7 +340,7 @@ classdef AnalyzeGroup_ST_BUD < AnalyzeGroup
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'G'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE'  'DENSITIES' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'G'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE'  'DENSITIES' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -367,7 +373,7 @@ classdef AnalyzeGroup_ST_BUD < AnalyzeGroup
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'G'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE'  'DENSITIES' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'G'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE'  'DENSITIES' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -396,7 +402,7 @@ classdef AnalyzeGroup_ST_BUD < AnalyzeGroup
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				analyzegroup_st_bud_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'G'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE'  'DENSITIES' };
+				analyzegroup_st_bud_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'G'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE'  'DENSITIES' };
 				tag = analyzegroup_st_bud_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -423,7 +429,7 @@ classdef AnalyzeGroup_ST_BUD < AnalyzeGroup
 			prop = AnalyzeGroup_ST_BUD.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzegroup_st_bud_category_list = { 1  1  3  4  2  2  9  4  5  3  3  3 };
+			analyzegroup_st_bud_category_list = { 1  1  3  4  2  2  6  9  4  5  3  3  3 };
 			prop_category = analyzegroup_st_bud_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -449,7 +455,7 @@ classdef AnalyzeGroup_ST_BUD < AnalyzeGroup
 			prop = AnalyzeGroup_ST_BUD.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzegroup_st_bud_format_list = { 2  2  8  2  2  2  4  8  8  5  5  12 };
+			analyzegroup_st_bud_format_list = { 2  2  8  2  2  2  2  4  8  8  5  5  12 };
 			prop_format = analyzegroup_st_bud_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -475,7 +481,7 @@ classdef AnalyzeGroup_ST_BUD < AnalyzeGroup
 			prop = AnalyzeGroup_ST_BUD.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzegroup_st_bud_description_list = { 'NAME (constant, string) is the name of the group-based graph analysis with structural data at fixed density.'  'DESCRIPTION (constant, string) is the description of the group-based graph analysis with structural data at fixed density.'  'TEMPLATE (parameter, item) is the template of the group-based graph analysis with structural data at fixed density.'  'ID (data, string) is a few-letter code for the group-based graph analysis with structural data at fixed density.'  'LABEL (metadata, string) is an extended label of the group-based graph analysis with structural data at fixed density.'  'NOTES (metadata, string) are some specific notes about the group-based graph analysis with structural data at fixed density.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class SubjectST.'  'G (result, item) is the graph obtained from this analysis.'  'CORRELATION_RULE (parameter, option) is the correlation type.'  'NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.'  'DENSITIES (parameter, rvector) is the vector of densities.' };
+			analyzegroup_st_bud_description_list = { 'NAME (constant, string) is the name of the group-based graph analysis with structural data at fixed density.'  'DESCRIPTION (constant, string) is the description of the group-based graph analysis with structural data at fixed density.'  'TEMPLATE (parameter, item) is the template of the group-based graph analysis with structural data at fixed density.'  'ID (data, string) is a few-letter code for the group-based graph analysis with structural data at fixed density.'  'LABEL (metadata, string) is an extended label of the group-based graph analysis with structural data at fixed density.'  'NOTES (metadata, string) are some specific notes about the group-based graph analysis with structural data at fixed density.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class SubjectST.'  'G (result, item) is the graph obtained from this analysis.'  'CORRELATION_RULE (parameter, option) is the correlation type.'  'NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.'  'DENSITIES (parameter, rvector) is the vector of densities.' };
 			prop_description = analyzegroup_st_bud_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -501,15 +507,15 @@ classdef AnalyzeGroup_ST_BUD < AnalyzeGroup
 			prop = AnalyzeGroup_ST_BUD.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 10 % AnalyzeGroup_ST_BUD.CORRELATION_RULE
+				case 11 % AnalyzeGroup_ST_BUD.CORRELATION_RULE
 					prop_settings = Correlation.CORRELATION_RULE_LIST;
-				case 11 % AnalyzeGroup_ST_BUD.NEGATIVE_WEIGHT_RULE
+				case 12 % AnalyzeGroup_ST_BUD.NEGATIVE_WEIGHT_RULE
 					prop_settings = Correlation.NEGATIVE_WEIGHT_RULE_LIST;
-				case 12 % AnalyzeGroup_ST_BUD.DENSITIES
+				case 13 % AnalyzeGroup_ST_BUD.DENSITIES
 					prop_settings = Format.getFormatSettings(12);
 				case 3 % AnalyzeGroup_ST_BUD.TEMPLATE
 					prop_settings = 'AnalyzeGroup_ST_BUD';
-				case 9 % AnalyzeGroup_ST_BUD.G
+				case 10 % AnalyzeGroup_ST_BUD.G
 					prop_settings = 'MultigraphBUD';
 				otherwise
 					prop_settings = getPropSettings@AnalyzeGroup(prop);
@@ -538,11 +544,11 @@ classdef AnalyzeGroup_ST_BUD < AnalyzeGroup
 			prop = AnalyzeGroup_ST_BUD.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 10 % AnalyzeGroup_ST_BUD.CORRELATION_RULE
+				case 11 % AnalyzeGroup_ST_BUD.CORRELATION_RULE
 					prop_default = Correlation.PEARSON;
-				case 11 % AnalyzeGroup_ST_BUD.NEGATIVE_WEIGHT_RULE
+				case 12 % AnalyzeGroup_ST_BUD.NEGATIVE_WEIGHT_RULE
 					prop_default = Correlation.ZERO;
-				case 12 % AnalyzeGroup_ST_BUD.DENSITIES
+				case 13 % AnalyzeGroup_ST_BUD.DENSITIES
 					prop_default = [1:1:10];
 				case 1 % AnalyzeGroup_ST_BUD.NAME
 					prop_default = 'AnalyzeGroup_ST_BUD';
@@ -556,9 +562,9 @@ classdef AnalyzeGroup_ST_BUD < AnalyzeGroup
 					prop_default = 'AnalyzeGroup_ST_BUD label';
 				case 6 % AnalyzeGroup_ST_BUD.NOTES
 					prop_default = 'AnalyzeGroup_ST_BUD notes';
-				case 8 % AnalyzeGroup_ST_BUD.GR
+				case 9 % AnalyzeGroup_ST_BUD.GR
 					prop_default = Group('SUB_CLASS', 'SubjectST');
-				case 9 % AnalyzeGroup_ST_BUD.G
+				case 10 % AnalyzeGroup_ST_BUD.G
 					prop_default = Format.getFormatDefault(8, AnalyzeGroup_ST_BUD.getPropSettings(prop));
 				otherwise
 					prop_default = getPropDefault@AnalyzeGroup(prop);
@@ -624,18 +630,18 @@ classdef AnalyzeGroup_ST_BUD < AnalyzeGroup
 			prop = AnalyzeGroup_ST_BUD.getPropProp(pointer);
 			
 			switch prop
-				case 10 % AnalyzeGroup_ST_BUD.CORRELATION_RULE
+				case 11 % AnalyzeGroup_ST_BUD.CORRELATION_RULE
 					check = Format.checkFormat(5, value, AnalyzeGroup_ST_BUD.getPropSettings(prop));
-				case 11 % AnalyzeGroup_ST_BUD.NEGATIVE_WEIGHT_RULE
+				case 12 % AnalyzeGroup_ST_BUD.NEGATIVE_WEIGHT_RULE
 					check = Format.checkFormat(5, value, AnalyzeGroup_ST_BUD.getPropSettings(prop));
-				case 12 % AnalyzeGroup_ST_BUD.DENSITIES
+				case 13 % AnalyzeGroup_ST_BUD.DENSITIES
 					check = Format.checkFormat(12, value, AnalyzeGroup_ST_BUD.getPropSettings(prop));
 				case 3 % AnalyzeGroup_ST_BUD.TEMPLATE
 					check = Format.checkFormat(8, value, AnalyzeGroup_ST_BUD.getPropSettings(prop));
-				case 9 % AnalyzeGroup_ST_BUD.G
+				case 10 % AnalyzeGroup_ST_BUD.G
 					check = Format.checkFormat(8, value, AnalyzeGroup_ST_BUD.getPropSettings(prop));
 				otherwise
-					if prop <= 9
+					if prop <= 10
 						check = checkProp@AnalyzeGroup(prop, value);
 					end
 			end
@@ -668,8 +674,8 @@ classdef AnalyzeGroup_ST_BUD < AnalyzeGroup
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 9 % AnalyzeGroup_ST_BUD.G
-					rng_settings_ = rng(); rng(a.getPropSeed(9), 'twister')
+				case 10 % AnalyzeGroup_ST_BUD.G
+					rng_settings_ = rng(); rng(a.getPropSeed(10), 'twister')
 					
 					gr = a.get('GR');
 					data_list = cellfun(@(x) x.get('ST'), gr.get('SUB_DICT').get('IT_LIST'), 'UniformOutput', false);
@@ -703,7 +709,7 @@ classdef AnalyzeGroup_ST_BUD < AnalyzeGroup
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 9
+					if prop <= 10
 						value = calculateValue@AnalyzeGroup(a, prop, varargin{:});
 					else
 						value = calculateValue@Element(a, prop, varargin{:});
@@ -729,8 +735,8 @@ classdef AnalyzeGroup_ST_BUD < AnalyzeGroup
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 12 % AnalyzeGroup_ST_BUD.DENSITIES
-					pr = PanelPropRVectorSmart('EL', a, 'PROP', 12, ...
+				case 13 % AnalyzeGroup_ST_BUD.DENSITIES
+					pr = PanelPropRVectorSmart('EL', a, 'PROP', 13, ...
 					    'MIN', 0, 'MAX', 100, ...
 					    'DEFAULT', AnalyzeGroup_ST_BUD.getPropDefault('DENSITIES'), ...
 					    varargin{:});

@@ -11,12 +11,13 @@ classdef AnalyzeEnsemble_CON_WU < AnalyzeEnsemble
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ensenmble-based graph analysis using connectivity data.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ensenmble-based graph analysis using connectivity data.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ensenmble-based graph analysis using connectivity data.
-	%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>8</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectCON.
-	%  <strong>9</strong> <strong>GRAPH_TEMPLATE</strong> 	GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
-	%  <strong>10</strong> <strong>G_DICT</strong> 	G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analysis.
-	%  <strong>11</strong> <strong>ME_DICT</strong> 	ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-	%  <strong>12</strong> <strong>MEASUREENSEMBLE</strong> 	MEASUREENSEMBLE (query, item) returns an ensemble-based measure.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>9</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectCON.
+	%  <strong>10</strong> <strong>GRAPH_TEMPLATE</strong> 	GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
+	%  <strong>11</strong> <strong>G_DICT</strong> 	G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analysis.
+	%  <strong>12</strong> <strong>ME_DICT</strong> 	ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
+	%  <strong>13</strong> <strong>MEASUREENSEMBLE</strong> 	MEASUREENSEMBLE (query, item) returns an ensemble-based measure.
 	%
 	% AnalyzeEnsemble_CON_WU methods (constructor):
 	%  AnalyzeEnsemble_CON_WU - constructor
@@ -124,12 +125,13 @@ classdef AnalyzeEnsemble_CON_WU < AnalyzeEnsemble
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ensenmble-based graph analysis using connectivity data.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ensenmble-based graph analysis using connectivity data.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ensenmble-based graph analysis using connectivity data.
-			%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>8</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectCON.
-			%  <strong>9</strong> <strong>GRAPH_TEMPLATE</strong> 	GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
-			%  <strong>10</strong> <strong>G_DICT</strong> 	G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analysis.
-			%  <strong>11</strong> <strong>ME_DICT</strong> 	ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-			%  <strong>12</strong> <strong>MEASUREENSEMBLE</strong> 	MEASUREENSEMBLE (query, item) returns an ensemble-based measure.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>9</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectCON.
+			%  <strong>10</strong> <strong>GRAPH_TEMPLATE</strong> 	GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
+			%  <strong>11</strong> <strong>G_DICT</strong> 	G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analysis.
+			%  <strong>12</strong> <strong>ME_DICT</strong> 	ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
+			%  <strong>13</strong> <strong>MEASUREENSEMBLE</strong> 	MEASUREENSEMBLE (query, item) returns an ensemble-based measure.
 			%
 			% See also Category, Format.
 			
@@ -191,7 +193,7 @@ classdef AnalyzeEnsemble_CON_WU < AnalyzeEnsemble
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13];
 				return
 			end
 			
@@ -201,15 +203,15 @@ classdef AnalyzeEnsemble_CON_WU < AnalyzeEnsemble
 				case 2 % Category.METADATA
 					prop_list = [5 6];
 				case 3 % Category.PARAMETER
-					prop_list = [3 9];
+					prop_list = [3 10];
 				case 4 % Category.DATA
-					prop_list = [4 8];
+					prop_list = [4 9];
 				case 5 % Category.RESULT
-					prop_list = [10 11];
+					prop_list = [11 12];
 				case 6 % Category.QUERY
-					prop_list = 12;
+					prop_list = [7 13];
 				case 9 % Category.GUI
-					prop_list = 7;
+					prop_list = 8;
 				otherwise
 					prop_list = [];
 			end
@@ -235,7 +237,7 @@ classdef AnalyzeEnsemble_CON_WU < AnalyzeEnsemble
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 12;
+				prop_number = 13;
 				return
 			end
 			
@@ -251,7 +253,7 @@ classdef AnalyzeEnsemble_CON_WU < AnalyzeEnsemble
 				case 5 % Category.RESULT
 					prop_number = 2;
 				case 6 % Category.QUERY
-					prop_number = 1;
+					prop_number = 2;
 				case 9 % Category.GUI
 					prop_number = 1;
 				otherwise
@@ -284,7 +286,7 @@ classdef AnalyzeEnsemble_CON_WU < AnalyzeEnsemble
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 12 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 13 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -322,7 +324,7 @@ classdef AnalyzeEnsemble_CON_WU < AnalyzeEnsemble
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -355,7 +357,7 @@ classdef AnalyzeEnsemble_CON_WU < AnalyzeEnsemble
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -384,7 +386,7 @@ classdef AnalyzeEnsemble_CON_WU < AnalyzeEnsemble
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				analyzeensemble_con_wu_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE' };
+				analyzeensemble_con_wu_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE' };
 				tag = analyzeensemble_con_wu_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -411,7 +413,7 @@ classdef AnalyzeEnsemble_CON_WU < AnalyzeEnsemble
 			prop = AnalyzeEnsemble_CON_WU.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzeensemble_con_wu_category_list = { 1  1  3  4  2  2  9  4  3  5  5  6 };
+			analyzeensemble_con_wu_category_list = { 1  1  3  4  2  2  6  9  4  3  5  5  6 };
 			prop_category = analyzeensemble_con_wu_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -437,7 +439,7 @@ classdef AnalyzeEnsemble_CON_WU < AnalyzeEnsemble
 			prop = AnalyzeEnsemble_CON_WU.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzeensemble_con_wu_format_list = { 2  2  8  2  2  2  4  8  8  10  10  8 };
+			analyzeensemble_con_wu_format_list = { 2  2  8  2  2  2  2  4  8  8  10  10  8 };
 			prop_format = analyzeensemble_con_wu_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -463,7 +465,7 @@ classdef AnalyzeEnsemble_CON_WU < AnalyzeEnsemble
 			prop = AnalyzeEnsemble_CON_WU.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzeensemble_con_wu_description_list = { 'NAME (constant, string) is the name of the ensenmble-based graph analysis using connectivity data.'  'DESCRIPTION (constant, string) is the description of the ensenmble-based graph analysis using connectivity data.'  'TEMPLATE (parameter, item) is the template of the ensenmble-based graph analysis using connectivity data.'  'ID (data, string) is a few-letter code for the ensenmble-based graph analysis using connectivity data.'  'LABEL (metadata, string) is an extended label of the ensenmble-based graph analysis using connectivity data.'  'NOTES (metadata, string) are some specific notes about the ensenmble-based graph analysis using connectivity data.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class SubjectCON.'  'GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.'  'G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analysis.'  'ME_DICT (result, idict) contains the calculated measures of the graph ensemble.'  'MEASUREENSEMBLE (query, item) returns an ensemble-based measure.' };
+			analyzeensemble_con_wu_description_list = { 'NAME (constant, string) is the name of the ensenmble-based graph analysis using connectivity data.'  'DESCRIPTION (constant, string) is the description of the ensenmble-based graph analysis using connectivity data.'  'TEMPLATE (parameter, item) is the template of the ensenmble-based graph analysis using connectivity data.'  'ID (data, string) is a few-letter code for the ensenmble-based graph analysis using connectivity data.'  'LABEL (metadata, string) is an extended label of the ensenmble-based graph analysis using connectivity data.'  'NOTES (metadata, string) are some specific notes about the ensenmble-based graph analysis using connectivity data.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class SubjectCON.'  'GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.'  'G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analysis.'  'ME_DICT (result, idict) contains the calculated measures of the graph ensemble.'  'MEASUREENSEMBLE (query, item) returns an ensemble-based measure.' };
 			prop_description = analyzeensemble_con_wu_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -491,9 +493,9 @@ classdef AnalyzeEnsemble_CON_WU < AnalyzeEnsemble
 			switch prop %CET: Computational Efficiency Trick
 				case 3 % AnalyzeEnsemble_CON_WU.TEMPLATE
 					prop_settings = 'AnalyzeEnsemble_CON_WU';
-				case 9 % AnalyzeEnsemble_CON_WU.GRAPH_TEMPLATE
+				case 10 % AnalyzeEnsemble_CON_WU.GRAPH_TEMPLATE
 					prop_settings = 'GraphWU';
-				case 10 % AnalyzeEnsemble_CON_WU.G_DICT
+				case 11 % AnalyzeEnsemble_CON_WU.G_DICT
 					prop_settings = 'GraphWU';
 				otherwise
 					prop_settings = getPropSettings@AnalyzeEnsemble(prop);
@@ -534,11 +536,11 @@ classdef AnalyzeEnsemble_CON_WU < AnalyzeEnsemble
 					prop_default = 'AnalyzeEnsemble_CON_WU label';
 				case 6 % AnalyzeEnsemble_CON_WU.NOTES
 					prop_default = 'AnalyzeEnsemble_CON_WU notes';
-				case 8 % AnalyzeEnsemble_CON_WU.GR
+				case 9 % AnalyzeEnsemble_CON_WU.GR
 					prop_default = Group('SUB_CLASS', 'SubjectCON');
-				case 9 % AnalyzeEnsemble_CON_WU.GRAPH_TEMPLATE
+				case 10 % AnalyzeEnsemble_CON_WU.GRAPH_TEMPLATE
 					prop_default = Format.getFormatDefault(8, AnalyzeEnsemble_CON_WU.getPropSettings(prop));
-				case 10 % AnalyzeEnsemble_CON_WU.G_DICT
+				case 11 % AnalyzeEnsemble_CON_WU.G_DICT
 					prop_default = Format.getFormatDefault(10, AnalyzeEnsemble_CON_WU.getPropSettings(prop));
 				otherwise
 					prop_default = getPropDefault@AnalyzeEnsemble(prop);
@@ -606,12 +608,12 @@ classdef AnalyzeEnsemble_CON_WU < AnalyzeEnsemble
 			switch prop
 				case 3 % AnalyzeEnsemble_CON_WU.TEMPLATE
 					check = Format.checkFormat(8, value, AnalyzeEnsemble_CON_WU.getPropSettings(prop));
-				case 9 % AnalyzeEnsemble_CON_WU.GRAPH_TEMPLATE
+				case 10 % AnalyzeEnsemble_CON_WU.GRAPH_TEMPLATE
 					check = Format.checkFormat(8, value, AnalyzeEnsemble_CON_WU.getPropSettings(prop));
-				case 10 % AnalyzeEnsemble_CON_WU.G_DICT
+				case 11 % AnalyzeEnsemble_CON_WU.G_DICT
 					check = Format.checkFormat(10, value, AnalyzeEnsemble_CON_WU.getPropSettings(prop));
 				otherwise
-					if prop <= 12
+					if prop <= 13
 						check = checkProp@AnalyzeEnsemble(prop, value);
 					end
 			end
@@ -644,22 +646,18 @@ classdef AnalyzeEnsemble_CON_WU < AnalyzeEnsemble
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 10 % AnalyzeEnsemble_CON_WU.G_DICT
-					rng_settings_ = rng(); rng(a.getPropSeed(10), 'twister')
+				case 11 % AnalyzeEnsemble_CON_WU.G_DICT
+					rng_settings_ = rng(); rng(a.getPropSeed(11), 'twister')
 					
 					g_dict = IndexedDictionary('IT_CLASS', 'GraphWU');
 					gr = a.get('GR');
 					
-					% % % ba = BrainAtlas();
-					% % % if ~isempty(gr) && ~isa(gr, 'NoValue') && gr.get('SUB_DICT').length > 0 
-					% % %     ba = gr.get('SUB_DICT').getItem(1).get('BA');
-					% % % end
-					
 					for i = 1:1:gr.get('SUB_DICT').get('LENGTH')
 						sub = gr.get('SUB_DICT').get('IT', i);
 					    g = GraphWU( ...
-					        'ID', ['graph ' sub.get('ID')], ... % % % 'BAS', ba, ...
-					        'B', sub.getCallback('CON') ...
+					        'ID', ['graph ' sub.get('ID')], ...
+					        'B', sub.getCallback('CON'), ...
+					        'NODELABELS', a.get('GR').get('SUB_DICT').get('IT', 1).get('BA').get('BR_DICT').get('KEYS') ...
 					        );
 					    g_dict.get('ADD', g)
 					end
@@ -675,7 +673,7 @@ classdef AnalyzeEnsemble_CON_WU < AnalyzeEnsemble
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 12
+					if prop <= 13
 						value = calculateValue@AnalyzeEnsemble(a, prop, varargin{:});
 					else
 						value = calculateValue@Element(a, prop, varargin{:});

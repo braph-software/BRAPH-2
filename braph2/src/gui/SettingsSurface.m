@@ -13,16 +13,17 @@ classdef SettingsSurface < Settings
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the surface settings.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the surface settings.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the surface settings.
-	%  <strong>7</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
-	%  <strong>8</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
-	%  <strong>9</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
-	%  <strong>10</strong> <strong>I</strong> 	I (gui, scalar) is the index of the handle, used only by handlelists.
-	%  <strong>11</strong> <strong>H</strong> 	H (query, handle) is the graphics object handle.
-	%  <strong>12</strong> <strong>SETUP</strong> 	SETUP (query, scalar) sets all figure props.
-	%  <strong>13</strong> <strong>EDGECOLOR</strong> 	EDGECOLOR (figure, color) is the RGB edge color.
-	%  <strong>14</strong> <strong>EDGEALPHA</strong> 	EDGEALPHA (figure, alpha) is the edge transparency.
-	%  <strong>15</strong> <strong>FACECOLOR</strong> 	FACECOLOR (figure, color) is the RGB face color.
-	%  <strong>16</strong> <strong>FACEALPHA</strong> 	FACEALPHA (figure, alpha) is the face transparency.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
+	%  <strong>9</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
+	%  <strong>10</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
+	%  <strong>11</strong> <strong>I</strong> 	I (gui, scalar) is the index of the handle, used only by handlelists.
+	%  <strong>12</strong> <strong>H</strong> 	H (query, handle) is the graphics object handle.
+	%  <strong>13</strong> <strong>SETUP</strong> 	SETUP (query, scalar) sets all figure props.
+	%  <strong>14</strong> <strong>EDGECOLOR</strong> 	EDGECOLOR (figure, color) is the RGB edge color.
+	%  <strong>15</strong> <strong>EDGEALPHA</strong> 	EDGEALPHA (figure, alpha) is the edge transparency.
+	%  <strong>16</strong> <strong>FACECOLOR</strong> 	FACECOLOR (figure, color) is the RGB face color.
+	%  <strong>17</strong> <strong>FACEALPHA</strong> 	FACEALPHA (figure, alpha) is the face transparency.
 	%
 	% SettingsSurface methods (constructor):
 	%  SettingsSurface - constructor
@@ -113,22 +114,22 @@ classdef SettingsSurface < Settings
 	% See also patch, surface, SettingsSurfacePP, PanelFig, GUIFig, check_graphics.
 	
 	properties (Constant) % properties
-		EDGECOLOR = 13; %CET: Computational Efficiency Trick
+		EDGECOLOR = 14; %CET: Computational Efficiency Trick
 		EDGECOLOR_TAG = 'EDGECOLOR';
 		EDGECOLOR_CATEGORY = 8;
 		EDGECOLOR_FORMAT = 20;
 		
-		EDGEALPHA = 14; %CET: Computational Efficiency Trick
+		EDGEALPHA = 15; %CET: Computational Efficiency Trick
 		EDGEALPHA_TAG = 'EDGEALPHA';
 		EDGEALPHA_CATEGORY = 8;
 		EDGEALPHA_FORMAT = 21;
 		
-		FACECOLOR = 15; %CET: Computational Efficiency Trick
+		FACECOLOR = 16; %CET: Computational Efficiency Trick
 		FACECOLOR_TAG = 'FACECOLOR';
 		FACECOLOR_CATEGORY = 8;
 		FACECOLOR_FORMAT = 20;
 		
-		FACEALPHA = 16; %CET: Computational Efficiency Trick
+		FACEALPHA = 17; %CET: Computational Efficiency Trick
 		FACEALPHA_TAG = 'FACEALPHA';
 		FACEALPHA_CATEGORY = 8;
 		FACEALPHA_FORMAT = 21;
@@ -151,16 +152,17 @@ classdef SettingsSurface < Settings
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the surface settings.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the surface settings.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the surface settings.
-			%  <strong>7</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
-			%  <strong>8</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
-			%  <strong>9</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
-			%  <strong>10</strong> <strong>I</strong> 	I (gui, scalar) is the index of the handle, used only by handlelists.
-			%  <strong>11</strong> <strong>H</strong> 	H (query, handle) is the graphics object handle.
-			%  <strong>12</strong> <strong>SETUP</strong> 	SETUP (query, scalar) sets all figure props.
-			%  <strong>13</strong> <strong>EDGECOLOR</strong> 	EDGECOLOR (figure, color) is the RGB edge color.
-			%  <strong>14</strong> <strong>EDGEALPHA</strong> 	EDGEALPHA (figure, alpha) is the edge transparency.
-			%  <strong>15</strong> <strong>FACECOLOR</strong> 	FACECOLOR (figure, color) is the RGB face color.
-			%  <strong>16</strong> <strong>FACEALPHA</strong> 	FACEALPHA (figure, alpha) is the face transparency.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
+			%  <strong>9</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
+			%  <strong>10</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
+			%  <strong>11</strong> <strong>I</strong> 	I (gui, scalar) is the index of the handle, used only by handlelists.
+			%  <strong>12</strong> <strong>H</strong> 	H (query, handle) is the graphics object handle.
+			%  <strong>13</strong> <strong>SETUP</strong> 	SETUP (query, scalar) sets all figure props.
+			%  <strong>14</strong> <strong>EDGECOLOR</strong> 	EDGECOLOR (figure, color) is the RGB edge color.
+			%  <strong>15</strong> <strong>EDGEALPHA</strong> 	EDGEALPHA (figure, alpha) is the edge transparency.
+			%  <strong>16</strong> <strong>FACECOLOR</strong> 	FACECOLOR (figure, color) is the RGB face color.
+			%  <strong>17</strong> <strong>FACEALPHA</strong> 	FACEALPHA (figure, alpha) is the face transparency.
 			%
 			% See also Category, Format.
 			
@@ -222,7 +224,7 @@ classdef SettingsSurface < Settings
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17];
 				return
 			end
 			
@@ -236,11 +238,11 @@ classdef SettingsSurface < Settings
 				case 4 % Category.DATA
 					prop_list = 4;
 				case 6 % Category.QUERY
-					prop_list = [11 12];
+					prop_list = [7 12 13];
 				case 8 % Category.FIGURE
-					prop_list = [13 14 15 16];
+					prop_list = [14 15 16 17];
 				case 9 % Category.GUI
-					prop_list = [7 8 9 10];
+					prop_list = [8 9 10 11];
 				otherwise
 					prop_list = [];
 			end
@@ -266,7 +268,7 @@ classdef SettingsSurface < Settings
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 16;
+				prop_number = 17;
 				return
 			end
 			
@@ -280,7 +282,7 @@ classdef SettingsSurface < Settings
 				case 4 % Category.DATA
 					prop_number = 1;
 				case 6 % Category.QUERY
-					prop_number = 2;
+					prop_number = 3;
 				case 8 % Category.FIGURE
 					prop_number = 4;
 				case 9 % Category.GUI
@@ -315,7 +317,7 @@ classdef SettingsSurface < Settings
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 16 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 17 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -353,7 +355,7 @@ classdef SettingsSurface < Settings
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'EDGECOLOR'  'EDGEALPHA'  'FACECOLOR'  'FACEALPHA' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'EDGECOLOR'  'EDGEALPHA'  'FACECOLOR'  'FACEALPHA' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -386,7 +388,7 @@ classdef SettingsSurface < Settings
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'EDGECOLOR'  'EDGEALPHA'  'FACECOLOR'  'FACEALPHA' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'EDGECOLOR'  'EDGEALPHA'  'FACECOLOR'  'FACEALPHA' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -415,7 +417,7 @@ classdef SettingsSurface < Settings
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				settingssurface_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'EDGECOLOR'  'EDGEALPHA'  'FACECOLOR'  'FACEALPHA' };
+				settingssurface_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'EDGECOLOR'  'EDGEALPHA'  'FACECOLOR'  'FACEALPHA' };
 				tag = settingssurface_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -442,7 +444,7 @@ classdef SettingsSurface < Settings
 			prop = SettingsSurface.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			settingssurface_category_list = { 1  1  3  4  2  2  9  9  9  9  6  6  8  8  8  8 };
+			settingssurface_category_list = { 1  1  3  4  2  2  6  9  9  9  9  6  6  8  8  8  8 };
 			prop_category = settingssurface_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -468,7 +470,7 @@ classdef SettingsSurface < Settings
 			prop = SettingsSurface.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			settingssurface_format_list = { 2  2  8  2  2  2  8  11  2  11  18  11  20  21  20  21 };
+			settingssurface_format_list = { 2  2  8  2  2  2  2  8  11  2  11  18  11  20  21  20  21 };
 			prop_format = settingssurface_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -494,7 +496,7 @@ classdef SettingsSurface < Settings
 			prop = SettingsSurface.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			settingssurface_description_list = { 'NAME (constant, string) is the name of the surface settings.'  'DESCRIPTION (constant, string) is the description of the surface settings.'  'TEMPLATE (parameter, item) is the template of the surface settings.'  'ID (data, string) is a few-letter code for the surface settings.'  'LABEL (metadata, string) is an extended label of the surface settings.'  'NOTES (metadata, string) are some specific notes about the surface settings.'  'PANEL (gui, item) is the panel to which the graphics object belongs.'  'PROP (gui, scalar) is the prop of the graphics handle(list).'  'TAG (gui, string) is the tag of the graphics handle(s).'  'I (gui, scalar) is the index of the handle, used only by handlelists.'  'H (query, handle) is the graphics object handle.'  'SETUP (query, scalar) sets all figure props.'  'EDGECOLOR (figure, color) is the RGB edge color.'  'EDGEALPHA (figure, alpha) is the edge transparency.'  'FACECOLOR (figure, color) is the RGB face color.'  'FACEALPHA (figure, alpha) is the face transparency.' };
+			settingssurface_description_list = { 'NAME (constant, string) is the name of the surface settings.'  'DESCRIPTION (constant, string) is the description of the surface settings.'  'TEMPLATE (parameter, item) is the template of the surface settings.'  'ID (data, string) is a few-letter code for the surface settings.'  'LABEL (metadata, string) is an extended label of the surface settings.'  'NOTES (metadata, string) are some specific notes about the surface settings.'  'TOSTRING (query, string) returns a string that represents the object.'  'PANEL (gui, item) is the panel to which the graphics object belongs.'  'PROP (gui, scalar) is the prop of the graphics handle(list).'  'TAG (gui, string) is the tag of the graphics handle(s).'  'I (gui, scalar) is the index of the handle, used only by handlelists.'  'H (query, handle) is the graphics object handle.'  'SETUP (query, scalar) sets all figure props.'  'EDGECOLOR (figure, color) is the RGB edge color.'  'EDGEALPHA (figure, alpha) is the edge transparency.'  'FACECOLOR (figure, color) is the RGB face color.'  'FACEALPHA (figure, alpha) is the face transparency.' };
 			prop_description = settingssurface_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -520,13 +522,13 @@ classdef SettingsSurface < Settings
 			prop = SettingsSurface.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 13 % SettingsSurface.EDGECOLOR
+				case 14 % SettingsSurface.EDGECOLOR
 					prop_settings = Format.getFormatSettings(20);
-				case 14 % SettingsSurface.EDGEALPHA
+				case 15 % SettingsSurface.EDGEALPHA
 					prop_settings = Format.getFormatSettings(21);
-				case 15 % SettingsSurface.FACECOLOR
+				case 16 % SettingsSurface.FACECOLOR
 					prop_settings = Format.getFormatSettings(20);
-				case 16 % SettingsSurface.FACEALPHA
+				case 17 % SettingsSurface.FACEALPHA
 					prop_settings = Format.getFormatSettings(21);
 				case 3 % SettingsSurface.TEMPLATE
 					prop_settings = 'SettingsSurface';
@@ -557,13 +559,13 @@ classdef SettingsSurface < Settings
 			prop = SettingsSurface.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 13 % SettingsSurface.EDGECOLOR
+				case 14 % SettingsSurface.EDGECOLOR
 					prop_default = [0 0 0];
-				case 14 % SettingsSurface.EDGEALPHA
+				case 15 % SettingsSurface.EDGEALPHA
 					prop_default = 0;
-				case 15 % SettingsSurface.FACECOLOR
+				case 16 % SettingsSurface.FACECOLOR
 					prop_default = [.5 .5 .5];
-				case 16 % SettingsSurface.FACEALPHA
+				case 17 % SettingsSurface.FACEALPHA
 					prop_default = .5;
 				case 1 % SettingsSurface.NAME
 					prop_default = 'SettingsSurface';
@@ -641,18 +643,18 @@ classdef SettingsSurface < Settings
 			prop = SettingsSurface.getPropProp(pointer);
 			
 			switch prop
-				case 13 % SettingsSurface.EDGECOLOR
+				case 14 % SettingsSurface.EDGECOLOR
 					check = Format.checkFormat(20, value, SettingsSurface.getPropSettings(prop));
-				case 14 % SettingsSurface.EDGEALPHA
+				case 15 % SettingsSurface.EDGEALPHA
 					check = Format.checkFormat(21, value, SettingsSurface.getPropSettings(prop));
-				case 15 % SettingsSurface.FACECOLOR
+				case 16 % SettingsSurface.FACECOLOR
 					check = Format.checkFormat(20, value, SettingsSurface.getPropSettings(prop));
-				case 16 % SettingsSurface.FACEALPHA
+				case 17 % SettingsSurface.FACEALPHA
 					check = Format.checkFormat(21, value, SettingsSurface.getPropSettings(prop));
 				case 3 % SettingsSurface.TEMPLATE
 					check = Format.checkFormat(8, value, SettingsSurface.getPropSettings(prop));
 				otherwise
-					if prop <= 12
+					if prop <= 13
 						check = checkProp@Settings(prop, value);
 					end
 			end
@@ -682,32 +684,32 @@ classdef SettingsSurface < Settings
 			%  checkValue.
 			
 			switch prop
-				case 13 % SettingsSurface.EDGECOLOR
+				case 14 % SettingsSurface.EDGECOLOR
 					h = st.get('H');
 					if check_graphics(h, 'patch') || check_graphics(h, 'surface')
 					    set(h, 'EdgeColor', st.get('EDGECOLOR'))
 					end
 					
-				case 14 % SettingsSurface.EDGEALPHA
+				case 15 % SettingsSurface.EDGEALPHA
 					h = st.get('H');
 					if check_graphics(h, 'patch') || check_graphics(h, 'surface')
 					    set(h, 'EdgeAlpha', st.get('EDGEALPHA'))
 					end
 					
-				case 15 % SettingsSurface.FACECOLOR
+				case 16 % SettingsSurface.FACECOLOR
 					h = st.get('H');
 					if check_graphics(h, 'patch') || check_graphics(h, 'surface')
 					    set(h, 'FaceColor', st.get('FACECOLOR'))
 					end
 					
-				case 16 % SettingsSurface.FACEALPHA
+				case 17 % SettingsSurface.FACEALPHA
 					h = st.get('H');
 					if check_graphics(h, 'patch') || check_graphics(h, 'surface')
 					    set(h, 'FaceAlpha', st.get('FACEALPHA'))
 					end
 					
 				otherwise
-					if prop <= 12
+					if prop <= 13
 						postset@Settings(st, prop);
 					end
 			end

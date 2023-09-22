@@ -14,10 +14,11 @@ classdef BrainSurface < ConcreteElement
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain surface.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain surface.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain surface.
-	%  <strong>7</strong> <strong>VERTEX_NUMBER</strong> 	VERTEX_NUMBER (data, scalar) is the number of triangle vertices.
-	%  <strong>8</strong> <strong>COORDINATES</strong> 	COORDINATES (data, matrix) are the coordinates of the triangle vertices.
-	%  <strong>9</strong> <strong>TRIANGLES_NUMBER</strong> 	TRIANGLES_NUMBER (data, scalar) is the number of triangles.
-	%  <strong>10</strong> <strong>TRIANGLES</strong> 	TRIANGLES (data, matrix) are the triads of coordinates of the triangles.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>VERTEX_NUMBER</strong> 	VERTEX_NUMBER (data, scalar) is the number of triangle vertices.
+	%  <strong>9</strong> <strong>COORDINATES</strong> 	COORDINATES (data, matrix) are the coordinates of the triangle vertices.
+	%  <strong>10</strong> <strong>TRIANGLES_NUMBER</strong> 	TRIANGLES_NUMBER (data, scalar) is the number of triangles.
+	%  <strong>11</strong> <strong>TRIANGLES</strong> 	TRIANGLES (data, matrix) are the triads of coordinates of the triangles.
 	%
 	% BrainSurface methods (constructor):
 	%  BrainSurface - constructor
@@ -108,22 +109,22 @@ classdef BrainSurface < ConcreteElement
 	% See also BrainAtlas, BrainRegion, BrainSurfacePF.
 	
 	properties (Constant) % properties
-		VERTEX_NUMBER = 7; %CET: Computational Efficiency Trick
+		VERTEX_NUMBER = 8; %CET: Computational Efficiency Trick
 		VERTEX_NUMBER_TAG = 'VERTEX_NUMBER';
 		VERTEX_NUMBER_CATEGORY = 4;
 		VERTEX_NUMBER_FORMAT = 11;
 		
-		COORDINATES = 8; %CET: Computational Efficiency Trick
+		COORDINATES = 9; %CET: Computational Efficiency Trick
 		COORDINATES_TAG = 'COORDINATES';
 		COORDINATES_CATEGORY = 4;
 		COORDINATES_FORMAT = 14;
 		
-		TRIANGLES_NUMBER = 9; %CET: Computational Efficiency Trick
+		TRIANGLES_NUMBER = 10; %CET: Computational Efficiency Trick
 		TRIANGLES_NUMBER_TAG = 'TRIANGLES_NUMBER';
 		TRIANGLES_NUMBER_CATEGORY = 4;
 		TRIANGLES_NUMBER_FORMAT = 11;
 		
-		TRIANGLES = 10; %CET: Computational Efficiency Trick
+		TRIANGLES = 11; %CET: Computational Efficiency Trick
 		TRIANGLES_TAG = 'TRIANGLES';
 		TRIANGLES_CATEGORY = 4;
 		TRIANGLES_FORMAT = 14;
@@ -146,10 +147,11 @@ classdef BrainSurface < ConcreteElement
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain surface.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain surface.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain surface.
-			%  <strong>7</strong> <strong>VERTEX_NUMBER</strong> 	VERTEX_NUMBER (data, scalar) is the number of triangle vertices.
-			%  <strong>8</strong> <strong>COORDINATES</strong> 	COORDINATES (data, matrix) are the coordinates of the triangle vertices.
-			%  <strong>9</strong> <strong>TRIANGLES_NUMBER</strong> 	TRIANGLES_NUMBER (data, scalar) is the number of triangles.
-			%  <strong>10</strong> <strong>TRIANGLES</strong> 	TRIANGLES (data, matrix) are the triads of coordinates of the triangles.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>VERTEX_NUMBER</strong> 	VERTEX_NUMBER (data, scalar) is the number of triangle vertices.
+			%  <strong>9</strong> <strong>COORDINATES</strong> 	COORDINATES (data, matrix) are the coordinates of the triangle vertices.
+			%  <strong>10</strong> <strong>TRIANGLES_NUMBER</strong> 	TRIANGLES_NUMBER (data, scalar) is the number of triangles.
+			%  <strong>11</strong> <strong>TRIANGLES</strong> 	TRIANGLES (data, matrix) are the triads of coordinates of the triangles.
 			%
 			% See also Category, Format.
 			
@@ -211,7 +213,7 @@ classdef BrainSurface < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11];
 				return
 			end
 			
@@ -223,7 +225,9 @@ classdef BrainSurface < ConcreteElement
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 7 8 9 10];
+					prop_list = [4 8 9 10 11];
+				case 6 % Category.QUERY
+					prop_list = 7;
 				otherwise
 					prop_list = [];
 			end
@@ -249,7 +253,7 @@ classdef BrainSurface < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 10;
+				prop_number = 11;
 				return
 			end
 			
@@ -262,6 +266,8 @@ classdef BrainSurface < ConcreteElement
 					prop_number = 1;
 				case 4 % Category.DATA
 					prop_number = 5;
+				case 6 % Category.QUERY
+					prop_number = 1;
 				otherwise
 					prop_number = 0;
 			end
@@ -292,7 +298,7 @@ classdef BrainSurface < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 10 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 11 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -330,7 +336,7 @@ classdef BrainSurface < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'VERTEX_NUMBER'  'COORDINATES'  'TRIANGLES_NUMBER'  'TRIANGLES' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VERTEX_NUMBER'  'COORDINATES'  'TRIANGLES_NUMBER'  'TRIANGLES' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -363,7 +369,7 @@ classdef BrainSurface < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'VERTEX_NUMBER'  'COORDINATES'  'TRIANGLES_NUMBER'  'TRIANGLES' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VERTEX_NUMBER'  'COORDINATES'  'TRIANGLES_NUMBER'  'TRIANGLES' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -392,7 +398,7 @@ classdef BrainSurface < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				brainsurface_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'VERTEX_NUMBER'  'COORDINATES'  'TRIANGLES_NUMBER'  'TRIANGLES' };
+				brainsurface_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VERTEX_NUMBER'  'COORDINATES'  'TRIANGLES_NUMBER'  'TRIANGLES' };
 				tag = brainsurface_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -419,7 +425,7 @@ classdef BrainSurface < ConcreteElement
 			prop = BrainSurface.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			brainsurface_category_list = { 1  1  3  4  2  2  4  4  4  4 };
+			brainsurface_category_list = { 1  1  3  4  2  2  6  4  4  4  4 };
 			prop_category = brainsurface_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -445,7 +451,7 @@ classdef BrainSurface < ConcreteElement
 			prop = BrainSurface.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			brainsurface_format_list = { 2  2  8  2  2  2  11  14  11  14 };
+			brainsurface_format_list = { 2  2  8  2  2  2  2  11  14  11  14 };
 			prop_format = brainsurface_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -471,7 +477,7 @@ classdef BrainSurface < ConcreteElement
 			prop = BrainSurface.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			brainsurface_description_list = { 'NAME (constant, string) is the name of the brain surface.'  'DESCRIPTION (constant, string) is the description of the brain surface.'  'TEMPLATE (parameter, item) is the template of the brain surface.'  'ID (data, string) is a few-letter code for the brain surface.'  'LABEL (metadata, string) is an extended label of the brain surface.'  'NOTES (metadata, string) are some specific notes about the brain surface.'  'VERTEX_NUMBER (data, scalar) is the number of triangle vertices.'  'COORDINATES (data, matrix) are the coordinates of the triangle vertices.'  'TRIANGLES_NUMBER (data, scalar) is the number of triangles.'  'TRIANGLES (data, matrix) are the triads of coordinates of the triangles.' };
+			brainsurface_description_list = { 'NAME (constant, string) is the name of the brain surface.'  'DESCRIPTION (constant, string) is the description of the brain surface.'  'TEMPLATE (parameter, item) is the template of the brain surface.'  'ID (data, string) is a few-letter code for the brain surface.'  'LABEL (metadata, string) is an extended label of the brain surface.'  'NOTES (metadata, string) are some specific notes about the brain surface.'  'TOSTRING (query, string) returns a string that represents the object.'  'VERTEX_NUMBER (data, scalar) is the number of triangle vertices.'  'COORDINATES (data, matrix) are the coordinates of the triangle vertices.'  'TRIANGLES_NUMBER (data, scalar) is the number of triangles.'  'TRIANGLES (data, matrix) are the triads of coordinates of the triangles.' };
 			prop_description = brainsurface_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -497,13 +503,13 @@ classdef BrainSurface < ConcreteElement
 			prop = BrainSurface.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % BrainSurface.VERTEX_NUMBER
+				case 8 % BrainSurface.VERTEX_NUMBER
 					prop_settings = Format.getFormatSettings(11);
-				case 8 % BrainSurface.COORDINATES
+				case 9 % BrainSurface.COORDINATES
 					prop_settings = Format.getFormatSettings(14);
-				case 9 % BrainSurface.TRIANGLES_NUMBER
+				case 10 % BrainSurface.TRIANGLES_NUMBER
 					prop_settings = Format.getFormatSettings(11);
-				case 10 % BrainSurface.TRIANGLES
+				case 11 % BrainSurface.TRIANGLES
 					prop_settings = Format.getFormatSettings(14);
 				case 3 % BrainSurface.TEMPLATE
 					prop_settings = 'BrainSurface';
@@ -534,13 +540,13 @@ classdef BrainSurface < ConcreteElement
 			prop = BrainSurface.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % BrainSurface.VERTEX_NUMBER
+				case 8 % BrainSurface.VERTEX_NUMBER
 					prop_default = Format.getFormatDefault(11, BrainSurface.getPropSettings(prop));
-				case 8 % BrainSurface.COORDINATES
+				case 9 % BrainSurface.COORDINATES
 					prop_default = Format.getFormatDefault(14, BrainSurface.getPropSettings(prop));
-				case 9 % BrainSurface.TRIANGLES_NUMBER
+				case 10 % BrainSurface.TRIANGLES_NUMBER
 					prop_default = Format.getFormatDefault(11, BrainSurface.getPropSettings(prop));
-				case 10 % BrainSurface.TRIANGLES
+				case 11 % BrainSurface.TRIANGLES
 					prop_default = Format.getFormatDefault(14, BrainSurface.getPropSettings(prop));
 				case 1 % BrainSurface.NAME
 					prop_default = 'BrainSurface';
@@ -618,22 +624,22 @@ classdef BrainSurface < ConcreteElement
 			prop = BrainSurface.getPropProp(pointer);
 			
 			switch prop
-				case 7 % BrainSurface.VERTEX_NUMBER
+				case 8 % BrainSurface.VERTEX_NUMBER
 					check = Format.checkFormat(11, value, BrainSurface.getPropSettings(prop));
 					if check
 						check = value >= 0;
 					end
-				case 8 % BrainSurface.COORDINATES
+				case 9 % BrainSurface.COORDINATES
 					check = Format.checkFormat(14, value, BrainSurface.getPropSettings(prop));
 					if check
 						check = isempty(value) || size(value, 2) == 3;
 					end
-				case 9 % BrainSurface.TRIANGLES_NUMBER
+				case 10 % BrainSurface.TRIANGLES_NUMBER
 					check = Format.checkFormat(11, value, BrainSurface.getPropSettings(prop));
 					if check
 						check = value >= 0;
 					end
-				case 10 % BrainSurface.TRIANGLES
+				case 11 % BrainSurface.TRIANGLES
 					check = Format.checkFormat(14, value, BrainSurface.getPropSettings(prop));
 					if check
 						check = isempty(value) || size(value, 2) == 3;
@@ -641,7 +647,7 @@ classdef BrainSurface < ConcreteElement
 				case 3 % BrainSurface.TEMPLATE
 					check = Format.checkFormat(8, value, BrainSurface.getPropSettings(prop));
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -673,7 +679,7 @@ classdef BrainSurface < ConcreteElement
 			msg = ['Error while checking ' tostring(bs) ' ' bs.getPropTag(prop) '.'];
 			
 			switch prop
-				case 8 % BrainSurface.COORDINATES
+				case 9 % BrainSurface.COORDINATES
 					check = isequal(bs.get('VERTEX_NUMBER'), size(value, 1));
 					if check 
 					    msg = 'All ok!';
@@ -681,7 +687,7 @@ classdef BrainSurface < ConcreteElement
 					    msg = ['COORDINATES must have VERTEX_NUMBER (' num2str(bs.get('VERTEX_NUMBER')) ') columns while it has ' num2str(size(value, 2)) '.'];
 					end
 					
-				case 10 % BrainSurface.TRIANGLES
+				case 11 % BrainSurface.TRIANGLES
 					check = isequal(bs.get('TRIANGLES_NUMBER'), size(value, 1)) && all(all(value > 0)) && all(all(value <= bs.get('VERTEX_NUMBER')));
 					if check 
 					    msg = 'All ok!';
@@ -694,7 +700,7 @@ classdef BrainSurface < ConcreteElement
 					end
 					
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						[check, msg] = checkValue@ConcreteElement(bs, prop, value);
 					end
 			end

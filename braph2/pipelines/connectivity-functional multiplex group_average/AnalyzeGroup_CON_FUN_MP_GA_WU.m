@@ -14,14 +14,15 @@ classdef AnalyzeGroup_CON_FUN_MP_GA_WU < AnalyzeGroup
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph analysis with connectivity and functional multiplex data.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph analysis with connectivity and functional multiplex data.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph analysis with connectivity and functional multiplex data.
-	%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>8</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectCON_FUN_MP.
-	%  <strong>9</strong> <strong>G</strong> 	G (result, item) is the average multiplex graph obtained from this analysis.
-	%  <strong>10</strong> <strong>REPETITION</strong> 	REPETITION (parameter, scalar) is the number of repetitions for functional data
-	%  <strong>11</strong> <strong>F_MIN</strong> 	F_MIN (parameter, scalar) is the minimum frequency value for functional data
-	%  <strong>12</strong> <strong>F_MAX</strong> 	F_MAX (parameter, scalar) is the maximum frequency value for functional data
-	%  <strong>13</strong> <strong>CORRELATION_RULE</strong> 	CORRELATION_RULE (parameter, option) is the correlation type for functional data.
-	%  <strong>14</strong> <strong>NEGATIVE_WEIGHT_RULE</strong> 	NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights of functional data.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>9</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectCON_FUN_MP.
+	%  <strong>10</strong> <strong>G</strong> 	G (result, item) is the average multiplex graph obtained from this analysis.
+	%  <strong>11</strong> <strong>REPETITION</strong> 	REPETITION (parameter, scalar) is the number of repetitions for functional data
+	%  <strong>12</strong> <strong>F_MIN</strong> 	F_MIN (parameter, scalar) is the minimum frequency value for functional data
+	%  <strong>13</strong> <strong>F_MAX</strong> 	F_MAX (parameter, scalar) is the maximum frequency value for functional data
+	%  <strong>14</strong> <strong>CORRELATION_RULE</strong> 	CORRELATION_RULE (parameter, option) is the correlation type for functional data.
+	%  <strong>15</strong> <strong>NEGATIVE_WEIGHT_RULE</strong> 	NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights of functional data.
 	%
 	% AnalyzeGroup_CON_FUN_MP_GA_WU methods (constructor):
 	%  AnalyzeGroup_CON_FUN_MP_GA_WU - constructor
@@ -112,27 +113,27 @@ classdef AnalyzeGroup_CON_FUN_MP_GA_WU < AnalyzeGroup
 	% See also SubjectCON_FUN_MP, MultiplexWU.
 	
 	properties (Constant) % properties
-		REPETITION = 10; %CET: Computational Efficiency Trick
+		REPETITION = 11; %CET: Computational Efficiency Trick
 		REPETITION_TAG = 'REPETITION';
 		REPETITION_CATEGORY = 3;
 		REPETITION_FORMAT = 11;
 		
-		F_MIN = 11; %CET: Computational Efficiency Trick
+		F_MIN = 12; %CET: Computational Efficiency Trick
 		F_MIN_TAG = 'F_MIN';
 		F_MIN_CATEGORY = 3;
 		F_MIN_FORMAT = 11;
 		
-		F_MAX = 12; %CET: Computational Efficiency Trick
+		F_MAX = 13; %CET: Computational Efficiency Trick
 		F_MAX_TAG = 'F_MAX';
 		F_MAX_CATEGORY = 3;
 		F_MAX_FORMAT = 11;
 		
-		CORRELATION_RULE = 13; %CET: Computational Efficiency Trick
+		CORRELATION_RULE = 14; %CET: Computational Efficiency Trick
 		CORRELATION_RULE_TAG = 'CORRELATION_RULE';
 		CORRELATION_RULE_CATEGORY = 3;
 		CORRELATION_RULE_FORMAT = 5;
 		
-		NEGATIVE_WEIGHT_RULE = 14; %CET: Computational Efficiency Trick
+		NEGATIVE_WEIGHT_RULE = 15; %CET: Computational Efficiency Trick
 		NEGATIVE_WEIGHT_RULE_TAG = 'NEGATIVE_WEIGHT_RULE';
 		NEGATIVE_WEIGHT_RULE_CATEGORY = 3;
 		NEGATIVE_WEIGHT_RULE_FORMAT = 5;
@@ -155,14 +156,15 @@ classdef AnalyzeGroup_CON_FUN_MP_GA_WU < AnalyzeGroup
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph analysis with connectivity and functional multiplex data.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph analysis with connectivity and functional multiplex data.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph analysis with connectivity and functional multiplex data.
-			%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>8</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectCON_FUN_MP.
-			%  <strong>9</strong> <strong>G</strong> 	G (result, item) is the average multiplex graph obtained from this analysis.
-			%  <strong>10</strong> <strong>REPETITION</strong> 	REPETITION (parameter, scalar) is the number of repetitions for functional data
-			%  <strong>11</strong> <strong>F_MIN</strong> 	F_MIN (parameter, scalar) is the minimum frequency value for functional data
-			%  <strong>12</strong> <strong>F_MAX</strong> 	F_MAX (parameter, scalar) is the maximum frequency value for functional data
-			%  <strong>13</strong> <strong>CORRELATION_RULE</strong> 	CORRELATION_RULE (parameter, option) is the correlation type for functional data.
-			%  <strong>14</strong> <strong>NEGATIVE_WEIGHT_RULE</strong> 	NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights of functional data.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>9</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectCON_FUN_MP.
+			%  <strong>10</strong> <strong>G</strong> 	G (result, item) is the average multiplex graph obtained from this analysis.
+			%  <strong>11</strong> <strong>REPETITION</strong> 	REPETITION (parameter, scalar) is the number of repetitions for functional data
+			%  <strong>12</strong> <strong>F_MIN</strong> 	F_MIN (parameter, scalar) is the minimum frequency value for functional data
+			%  <strong>13</strong> <strong>F_MAX</strong> 	F_MAX (parameter, scalar) is the maximum frequency value for functional data
+			%  <strong>14</strong> <strong>CORRELATION_RULE</strong> 	CORRELATION_RULE (parameter, option) is the correlation type for functional data.
+			%  <strong>15</strong> <strong>NEGATIVE_WEIGHT_RULE</strong> 	NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights of functional data.
 			%
 			% See also Category, Format.
 			
@@ -224,7 +226,7 @@ classdef AnalyzeGroup_CON_FUN_MP_GA_WU < AnalyzeGroup
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15];
 				return
 			end
 			
@@ -234,13 +236,15 @@ classdef AnalyzeGroup_CON_FUN_MP_GA_WU < AnalyzeGroup
 				case 2 % Category.METADATA
 					prop_list = [5 6];
 				case 3 % Category.PARAMETER
-					prop_list = [3 10 11 12 13 14];
+					prop_list = [3 11 12 13 14 15];
 				case 4 % Category.DATA
-					prop_list = [4 8];
+					prop_list = [4 9];
 				case 5 % Category.RESULT
-					prop_list = 9;
-				case 9 % Category.GUI
+					prop_list = 10;
+				case 6 % Category.QUERY
 					prop_list = 7;
+				case 9 % Category.GUI
+					prop_list = 8;
 				otherwise
 					prop_list = [];
 			end
@@ -266,7 +270,7 @@ classdef AnalyzeGroup_CON_FUN_MP_GA_WU < AnalyzeGroup
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 14;
+				prop_number = 15;
 				return
 			end
 			
@@ -280,6 +284,8 @@ classdef AnalyzeGroup_CON_FUN_MP_GA_WU < AnalyzeGroup
 				case 4 % Category.DATA
 					prop_number = 2;
 				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
 					prop_number = 1;
 				case 9 % Category.GUI
 					prop_number = 1;
@@ -313,7 +319,7 @@ classdef AnalyzeGroup_CON_FUN_MP_GA_WU < AnalyzeGroup
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 14 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 15 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -351,7 +357,7 @@ classdef AnalyzeGroup_CON_FUN_MP_GA_WU < AnalyzeGroup
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'G'  'REPETITION'  'F_MIN'  'F_MAX'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'G'  'REPETITION'  'F_MIN'  'F_MAX'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -384,7 +390,7 @@ classdef AnalyzeGroup_CON_FUN_MP_GA_WU < AnalyzeGroup
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'G'  'REPETITION'  'F_MIN'  'F_MAX'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'G'  'REPETITION'  'F_MIN'  'F_MAX'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -413,7 +419,7 @@ classdef AnalyzeGroup_CON_FUN_MP_GA_WU < AnalyzeGroup
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				analyzegroup_con_fun_mp_ga_wu_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'G'  'REPETITION'  'F_MIN'  'F_MAX'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE' };
+				analyzegroup_con_fun_mp_ga_wu_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'G'  'REPETITION'  'F_MIN'  'F_MAX'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE' };
 				tag = analyzegroup_con_fun_mp_ga_wu_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -440,7 +446,7 @@ classdef AnalyzeGroup_CON_FUN_MP_GA_WU < AnalyzeGroup
 			prop = AnalyzeGroup_CON_FUN_MP_GA_WU.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzegroup_con_fun_mp_ga_wu_category_list = { 1  1  3  4  2  2  9  4  5  3  3  3  3  3 };
+			analyzegroup_con_fun_mp_ga_wu_category_list = { 1  1  3  4  2  2  6  9  4  5  3  3  3  3  3 };
 			prop_category = analyzegroup_con_fun_mp_ga_wu_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -466,7 +472,7 @@ classdef AnalyzeGroup_CON_FUN_MP_GA_WU < AnalyzeGroup
 			prop = AnalyzeGroup_CON_FUN_MP_GA_WU.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzegroup_con_fun_mp_ga_wu_format_list = { 2  2  8  2  2  2  4  8  8  11  11  11  5  5 };
+			analyzegroup_con_fun_mp_ga_wu_format_list = { 2  2  8  2  2  2  2  4  8  8  11  11  11  5  5 };
 			prop_format = analyzegroup_con_fun_mp_ga_wu_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -492,7 +498,7 @@ classdef AnalyzeGroup_CON_FUN_MP_GA_WU < AnalyzeGroup
 			prop = AnalyzeGroup_CON_FUN_MP_GA_WU.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzegroup_con_fun_mp_ga_wu_description_list = { 'NAME (constant, string) is the name of the graph analysis with connectivity and functional multiplex data.'  'DESCRIPTION (constant, string) is the description of the graph analysis with connectivity and functional multiplex data.'  'TEMPLATE (parameter, item) is the template of the graph analysis with connectivity and functional multiplex data.'  'ID (data, string) is a few-letter code for the graph analysis with connectivity and functional multiplex data.'  'LABEL (metadata, string) is an extended label of the graph analysis with connectivity and functional multiplex data.'  'NOTES (metadata, string) are some specific notes about the graph analysis with connectivity and functional multiplex data.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class SubjectCON_FUN_MP.'  'G (result, item) is the average multiplex graph obtained from this analysis.'  'REPETITION (parameter, scalar) is the number of repetitions for functional data'  'F_MIN (parameter, scalar) is the minimum frequency value for functional data'  'F_MAX (parameter, scalar) is the maximum frequency value for functional data'  'CORRELATION_RULE (parameter, option) is the correlation type for functional data.'  'NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights of functional data.' };
+			analyzegroup_con_fun_mp_ga_wu_description_list = { 'NAME (constant, string) is the name of the graph analysis with connectivity and functional multiplex data.'  'DESCRIPTION (constant, string) is the description of the graph analysis with connectivity and functional multiplex data.'  'TEMPLATE (parameter, item) is the template of the graph analysis with connectivity and functional multiplex data.'  'ID (data, string) is a few-letter code for the graph analysis with connectivity and functional multiplex data.'  'LABEL (metadata, string) is an extended label of the graph analysis with connectivity and functional multiplex data.'  'NOTES (metadata, string) are some specific notes about the graph analysis with connectivity and functional multiplex data.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class SubjectCON_FUN_MP.'  'G (result, item) is the average multiplex graph obtained from this analysis.'  'REPETITION (parameter, scalar) is the number of repetitions for functional data'  'F_MIN (parameter, scalar) is the minimum frequency value for functional data'  'F_MAX (parameter, scalar) is the maximum frequency value for functional data'  'CORRELATION_RULE (parameter, option) is the correlation type for functional data.'  'NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights of functional data.' };
 			prop_description = analyzegroup_con_fun_mp_ga_wu_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -518,19 +524,19 @@ classdef AnalyzeGroup_CON_FUN_MP_GA_WU < AnalyzeGroup
 			prop = AnalyzeGroup_CON_FUN_MP_GA_WU.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 10 % AnalyzeGroup_CON_FUN_MP_GA_WU.REPETITION
+				case 11 % AnalyzeGroup_CON_FUN_MP_GA_WU.REPETITION
 					prop_settings = Format.getFormatSettings(11);
-				case 11 % AnalyzeGroup_CON_FUN_MP_GA_WU.F_MIN
+				case 12 % AnalyzeGroup_CON_FUN_MP_GA_WU.F_MIN
 					prop_settings = Format.getFormatSettings(11);
-				case 12 % AnalyzeGroup_CON_FUN_MP_GA_WU.F_MAX
+				case 13 % AnalyzeGroup_CON_FUN_MP_GA_WU.F_MAX
 					prop_settings = Format.getFormatSettings(11);
-				case 13 % AnalyzeGroup_CON_FUN_MP_GA_WU.CORRELATION_RULE
+				case 14 % AnalyzeGroup_CON_FUN_MP_GA_WU.CORRELATION_RULE
 					prop_settings = Correlation.CORRELATION_RULE_LIST(1:3);
-				case 14 % AnalyzeGroup_CON_FUN_MP_GA_WU.NEGATIVE_WEIGHT_RULE
+				case 15 % AnalyzeGroup_CON_FUN_MP_GA_WU.NEGATIVE_WEIGHT_RULE
 					prop_settings = Correlation.NEGATIVE_WEIGHT_RULE_LIST;
 				case 3 % AnalyzeGroup_CON_FUN_MP_GA_WU.TEMPLATE
 					prop_settings = 'AnalyzeGroup_CON_FUN_MP_GA_WU';
-				case 9 % AnalyzeGroup_CON_FUN_MP_GA_WU.G
+				case 10 % AnalyzeGroup_CON_FUN_MP_GA_WU.G
 					prop_settings = 'MultiplexWU';
 				otherwise
 					prop_settings = getPropSettings@AnalyzeGroup(prop);
@@ -559,15 +565,15 @@ classdef AnalyzeGroup_CON_FUN_MP_GA_WU < AnalyzeGroup
 			prop = AnalyzeGroup_CON_FUN_MP_GA_WU.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 10 % AnalyzeGroup_CON_FUN_MP_GA_WU.REPETITION
+				case 11 % AnalyzeGroup_CON_FUN_MP_GA_WU.REPETITION
 					prop_default = 1;
-				case 11 % AnalyzeGroup_CON_FUN_MP_GA_WU.F_MIN
+				case 12 % AnalyzeGroup_CON_FUN_MP_GA_WU.F_MIN
 					prop_default = 0;
-				case 12 % AnalyzeGroup_CON_FUN_MP_GA_WU.F_MAX
+				case 13 % AnalyzeGroup_CON_FUN_MP_GA_WU.F_MAX
 					prop_default = Inf;
-				case 13 % AnalyzeGroup_CON_FUN_MP_GA_WU.CORRELATION_RULE
+				case 14 % AnalyzeGroup_CON_FUN_MP_GA_WU.CORRELATION_RULE
 					prop_default = Correlation.CORRELATION_RULE_LIST{1};
-				case 14 % AnalyzeGroup_CON_FUN_MP_GA_WU.NEGATIVE_WEIGHT_RULE
+				case 15 % AnalyzeGroup_CON_FUN_MP_GA_WU.NEGATIVE_WEIGHT_RULE
 					prop_default = Correlation.NEGATIVE_WEIGHT_RULE_LIST{1};
 				case 1 % AnalyzeGroup_CON_FUN_MP_GA_WU.NAME
 					prop_default = 'AnalyzeGroup_CON_FUN_MP_GA_WU';
@@ -581,9 +587,9 @@ classdef AnalyzeGroup_CON_FUN_MP_GA_WU < AnalyzeGroup
 					prop_default = 'AnalyzeGroup_CON_FUN_MP_GA_WU label';
 				case 6 % AnalyzeGroup_CON_FUN_MP_GA_WU.NOTES
 					prop_default = 'AnalyzeGroup_CON_FUN_MP_GA_WU notes';
-				case 8 % AnalyzeGroup_CON_FUN_MP_GA_WU.GR
+				case 9 % AnalyzeGroup_CON_FUN_MP_GA_WU.GR
 					prop_default = Group('SUB_CLASS', 'SubjectCON_FUN_MP');
-				case 9 % AnalyzeGroup_CON_FUN_MP_GA_WU.G
+				case 10 % AnalyzeGroup_CON_FUN_MP_GA_WU.G
 					prop_default = MultiplexWU();
 				otherwise
 					prop_default = getPropDefault@AnalyzeGroup(prop);
@@ -649,22 +655,22 @@ classdef AnalyzeGroup_CON_FUN_MP_GA_WU < AnalyzeGroup
 			prop = AnalyzeGroup_CON_FUN_MP_GA_WU.getPropProp(pointer);
 			
 			switch prop
-				case 10 % AnalyzeGroup_CON_FUN_MP_GA_WU.REPETITION
+				case 11 % AnalyzeGroup_CON_FUN_MP_GA_WU.REPETITION
 					check = Format.checkFormat(11, value, AnalyzeGroup_CON_FUN_MP_GA_WU.getPropSettings(prop));
-				case 11 % AnalyzeGroup_CON_FUN_MP_GA_WU.F_MIN
+				case 12 % AnalyzeGroup_CON_FUN_MP_GA_WU.F_MIN
 					check = Format.checkFormat(11, value, AnalyzeGroup_CON_FUN_MP_GA_WU.getPropSettings(prop));
-				case 12 % AnalyzeGroup_CON_FUN_MP_GA_WU.F_MAX
+				case 13 % AnalyzeGroup_CON_FUN_MP_GA_WU.F_MAX
 					check = Format.checkFormat(11, value, AnalyzeGroup_CON_FUN_MP_GA_WU.getPropSettings(prop));
-				case 13 % AnalyzeGroup_CON_FUN_MP_GA_WU.CORRELATION_RULE
+				case 14 % AnalyzeGroup_CON_FUN_MP_GA_WU.CORRELATION_RULE
 					check = Format.checkFormat(5, value, AnalyzeGroup_CON_FUN_MP_GA_WU.getPropSettings(prop));
-				case 14 % AnalyzeGroup_CON_FUN_MP_GA_WU.NEGATIVE_WEIGHT_RULE
+				case 15 % AnalyzeGroup_CON_FUN_MP_GA_WU.NEGATIVE_WEIGHT_RULE
 					check = Format.checkFormat(5, value, AnalyzeGroup_CON_FUN_MP_GA_WU.getPropSettings(prop));
 				case 3 % AnalyzeGroup_CON_FUN_MP_GA_WU.TEMPLATE
 					check = Format.checkFormat(8, value, AnalyzeGroup_CON_FUN_MP_GA_WU.getPropSettings(prop));
-				case 9 % AnalyzeGroup_CON_FUN_MP_GA_WU.G
+				case 10 % AnalyzeGroup_CON_FUN_MP_GA_WU.G
 					check = Format.checkFormat(8, value, AnalyzeGroup_CON_FUN_MP_GA_WU.getPropSettings(prop));
 				otherwise
-					if prop <= 9
+					if prop <= 10
 						check = checkProp@AnalyzeGroup(prop, value);
 					end
 			end
@@ -697,8 +703,8 @@ classdef AnalyzeGroup_CON_FUN_MP_GA_WU < AnalyzeGroup
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 9 % AnalyzeGroup_CON_FUN_MP_GA_WU.G
-					rng_settings_ = rng(); rng(a.getPropSeed(9), 'twister')
+				case 10 % AnalyzeGroup_CON_FUN_MP_GA_WU.G
+					rng_settings_ = rng(); rng(a.getPropSeed(10), 'twister')
 					
 					gr = a.get('GR');
 					T = a.get('REPETITION');
@@ -757,7 +763,7 @@ classdef AnalyzeGroup_CON_FUN_MP_GA_WU < AnalyzeGroup
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 9
+					if prop <= 10
 						value = calculateValue@AnalyzeGroup(a, prop, varargin{:});
 					else
 						value = calculateValue@Element(a, prop, varargin{:});

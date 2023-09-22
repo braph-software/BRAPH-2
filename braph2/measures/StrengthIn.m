@@ -13,13 +13,14 @@ classdef StrengthIn < Measure
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the in-strength.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the in-strength.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the in-strength.
-	%  <strong>7</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-	%  <strong>8</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>9</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-	%  <strong>10</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-	%  <strong>11</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>12</strong> <strong>M</strong> 	M (result, cell) is the in-strength.
-	%  <strong>13</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the in-strength.
+	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% StrengthIn methods (constructor):
 	%  StrengthIn - constructor
@@ -125,13 +126,14 @@ classdef StrengthIn < Measure
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the in-strength.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the in-strength.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the in-strength.
-			%  <strong>7</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-			%  <strong>8</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>9</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-			%  <strong>10</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-			%  <strong>11</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>12</strong> <strong>M</strong> 	M (result, cell) is the in-strength.
-			%  <strong>13</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the in-strength.
+			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
 			
@@ -193,23 +195,25 @@ classdef StrengthIn < Measure
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2 7 8 9 10];
+					prop_list = [1 2 8 9 10 11];
 				case 2 % Category.METADATA
 					prop_list = [5 6];
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 11];
+					prop_list = [4 12];
 				case 5 % Category.RESULT
-					prop_list = 12;
-				case 9 % Category.GUI
 					prop_list = 13;
+				case 6 % Category.QUERY
+					prop_list = 7;
+				case 9 % Category.GUI
+					prop_list = 14;
 				otherwise
 					prop_list = [];
 			end
@@ -235,7 +239,7 @@ classdef StrengthIn < Measure
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 13;
+				prop_number = 14;
 				return
 			end
 			
@@ -249,6 +253,8 @@ classdef StrengthIn < Measure
 				case 4 % Category.DATA
 					prop_number = 2;
 				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
 					prop_number = 1;
 				case 9 % Category.GUI
 					prop_number = 1;
@@ -282,7 +288,7 @@ classdef StrengthIn < Measure
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 13 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 14 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -320,7 +326,7 @@ classdef StrengthIn < Measure
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -353,7 +359,7 @@ classdef StrengthIn < Measure
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -382,7 +388,7 @@ classdef StrengthIn < Measure
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				strengthin_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' };
+				strengthin_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' };
 				tag = strengthin_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -409,7 +415,7 @@ classdef StrengthIn < Measure
 			prop = StrengthIn.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			strengthin_category_list = { 1  1  3  4  2  2  1  1  1  1  4  5  9 };
+			strengthin_category_list = { 1  1  3  4  2  2  6  1  1  1  1  4  5  9 };
 			prop_category = strengthin_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -435,7 +441,7 @@ classdef StrengthIn < Measure
 			prop = StrengthIn.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			strengthin_format_list = { 2  2  8  2  2  2  11  11  11  7  8  16  8 };
+			strengthin_format_list = { 2  2  8  2  2  2  2  11  11  11  7  8  16  8 };
 			prop_format = strengthin_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -461,7 +467,7 @@ classdef StrengthIn < Measure
 			prop = StrengthIn.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			strengthin_description_list = { 'NAME (constant, string) is the name of the in-strength.'  'DESCRIPTION (constant, string) is the description of the in-strength.'  'TEMPLATE (parameter, item) is the template of the in-strength.'  'ID (data, string) is a few-letter code of the in-strength.'  'LABEL (metadata, string) is an extended label of the in-strength.'  'NOTES (metadata, string) are some specific notes about the in-strength.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the in-strength.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			strengthin_description_list = { 'NAME (constant, string) is the name of the in-strength.'  'DESCRIPTION (constant, string) is the description of the in-strength.'  'TEMPLATE (parameter, item) is the template of the in-strength.'  'ID (data, string) is a few-letter code of the in-strength.'  'LABEL (metadata, string) is an extended label of the in-strength.'  'NOTES (metadata, string) are some specific notes about the in-strength.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the in-strength.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = strengthin_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -524,13 +530,13 @@ classdef StrengthIn < Measure
 					prop_default = 'StrengthIn label';
 				case 6 % StrengthIn.NOTES
 					prop_default = 'StrengthIn notes';
-				case 7 % StrengthIn.SHAPE
+				case 8 % StrengthIn.SHAPE
 					prop_default = 2;
-				case 8 % StrengthIn.SCOPE
+				case 9 % StrengthIn.SCOPE
 					prop_default = 2;
-				case 9 % StrengthIn.PARAMETRICITY
+				case 10 % StrengthIn.PARAMETRICITY
 					prop_default = 2;
-				case 10 % StrengthIn.COMPATIBLE_GRAPHS
+				case 11 % StrengthIn.COMPATIBLE_GRAPHS
 					prop_default = {'GraphWD' 'MultiplexWD' 'OrdMxWD' 'MultilayerWD' 'OrdMlWD'};
 				otherwise
 					prop_default = getPropDefault@Measure(prop);
@@ -597,7 +603,7 @@ classdef StrengthIn < Measure
 			
 			switch prop
 				otherwise
-					if prop <= 13
+					if prop <= 14
 						check = checkProp@Measure(prop, value);
 					end
 			end
@@ -630,8 +636,8 @@ classdef StrengthIn < Measure
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 12 % StrengthIn.M
-					rng_settings_ = rng(); rng(m.getPropSeed(12), 'twister')
+				case 13 % StrengthIn.M
+					rng_settings_ = rng(); rng(m.getPropSeed(13), 'twister')
 					
 					g = m.get('G'); % graph from measure class
 					A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -648,7 +654,7 @@ classdef StrengthIn < Measure
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 13
+					if prop <= 14
 						value = calculateValue@Measure(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

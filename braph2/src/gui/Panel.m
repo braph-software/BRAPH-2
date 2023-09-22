@@ -38,17 +38,18 @@ classdef Panel < ConcreteElement
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel.
-	%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>8</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>9</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the panel [accepts uipanel Name-Value pairs].
-	%  <strong>10</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>11</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>12</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>13</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>14</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
-	%  <strong>15</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
-	%  <strong>16</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-	%  <strong>17</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the panel [accepts uipanel Name-Value pairs].
+	%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+	%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
+	%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
+	%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+	%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
 	%
 	% Panel methods (constructor):
 	%  Panel - constructor
@@ -139,57 +140,57 @@ classdef Panel < ConcreteElement
 	% See also uipanel, PanelElement, PanelProp, PanelFig, GUI, GUIElement, GUIFig.
 	
 	properties (Constant) % properties
-		WAITBAR = 7; %CET: Computational Efficiency Trick
+		WAITBAR = 8; %CET: Computational Efficiency Trick
 		WAITBAR_TAG = 'WAITBAR';
 		WAITBAR_CATEGORY = 9;
 		WAITBAR_FORMAT = 4;
 		
-		H_WAITBAR = 8; %CET: Computational Efficiency Trick
+		H_WAITBAR = 9; %CET: Computational Efficiency Trick
 		H_WAITBAR_TAG = 'H_WAITBAR';
 		H_WAITBAR_CATEGORY = 7;
 		H_WAITBAR_FORMAT = 18;
 		
-		DRAW = 9; %CET: Computational Efficiency Trick
+		DRAW = 10; %CET: Computational Efficiency Trick
 		DRAW_TAG = 'DRAW';
 		DRAW_CATEGORY = 6;
 		DRAW_FORMAT = 4;
 		
-		DRAWN = 10; %CET: Computational Efficiency Trick
+		DRAWN = 11; %CET: Computational Efficiency Trick
 		DRAWN_TAG = 'DRAWN';
 		DRAWN_CATEGORY = 6;
 		DRAWN_FORMAT = 4;
 		
-		PARENT = 11; %CET: Computational Efficiency Trick
+		PARENT = 12; %CET: Computational Efficiency Trick
 		PARENT_TAG = 'PARENT';
 		PARENT_CATEGORY = 9;
 		PARENT_FORMAT = 8;
 		
-		BKGCOLOR = 12; %CET: Computational Efficiency Trick
+		BKGCOLOR = 13; %CET: Computational Efficiency Trick
 		BKGCOLOR_TAG = 'BKGCOLOR';
 		BKGCOLOR_CATEGORY = 8;
 		BKGCOLOR_FORMAT = 20;
 		
-		H = 13; %CET: Computational Efficiency Trick
+		H = 14; %CET: Computational Efficiency Trick
 		H_TAG = 'H';
 		H_CATEGORY = 7;
 		H_FORMAT = 18;
 		
-		SHOW = 14; %CET: Computational Efficiency Trick
+		SHOW = 15; %CET: Computational Efficiency Trick
 		SHOW_TAG = 'SHOW';
 		SHOW_CATEGORY = 6;
 		SHOW_FORMAT = 4;
 		
-		HIDE = 15; %CET: Computational Efficiency Trick
+		HIDE = 16; %CET: Computational Efficiency Trick
 		HIDE_TAG = 'HIDE';
 		HIDE_CATEGORY = 6;
 		HIDE_FORMAT = 4;
 		
-		DELETE = 16; %CET: Computational Efficiency Trick
+		DELETE = 17; %CET: Computational Efficiency Trick
 		DELETE_TAG = 'DELETE';
 		DELETE_CATEGORY = 6;
 		DELETE_FORMAT = 4;
 		
-		CLOSE = 17; %CET: Computational Efficiency Trick
+		CLOSE = 18; %CET: Computational Efficiency Trick
 		CLOSE_TAG = 'CLOSE';
 		CLOSE_CATEGORY = 6;
 		CLOSE_FORMAT = 4;
@@ -212,17 +213,18 @@ classdef Panel < ConcreteElement
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel.
-			%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>8</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>9</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the panel [accepts uipanel Name-Value pairs].
-			%  <strong>10</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>11</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>12</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>13</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>14</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
-			%  <strong>15</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
-			%  <strong>16</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-			%  <strong>17</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the panel [accepts uipanel Name-Value pairs].
+			%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+			%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
+			%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
+			%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+			%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
 			%
 			% See also Category, Format.
 			
@@ -260,7 +262,7 @@ classdef Panel < ConcreteElement
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'Panel'  'AnalyzeEnsemblePP_MeDict'  'AnalyzeGroupPP_G'  'CompareEnsemblePP_CpDict'  'CompareGroupPP_CpDict'  'ComparisonGroupPF'  'ComparisonGroupPF_BB'  'ComparisonGroupPF_BS'  'ComparisonGroupPF_BU'  'ComparisonGroupPF_GB'  'ComparisonGroupPF_GS'  'ComparisonGroupPF_GU'  'ComparisonGroupPF_NB'  'ComparisonGroupPF_NS'  'ComparisonGroupPF_NU'  'BrainAtlasPF'  'BrainSurfacePF'  'SubjectPP_VOIDict'  'GraphAdjPF'  'GraphHistPF'  'GraphPP_MDict'  'LayersPP'  'MeasurePF'  'MeasurePF_BB'  'MeasurePF_BS'  'MeasurePF_BU'  'MeasurePF_GB'  'MeasurePF_GS'  'MeasurePF_GU'  'MeasurePF_NB'  'MeasurePF_NS'  'MeasurePF_NU'  'PanelElement'  'PanelFig'  'PanelProp'  'PanelPropAlpha'  'PanelPropCell'  'PanelPropClass'  'PanelPropClassList'  'PanelPropColor'  'PanelPropIDict'  'PanelPropIDictTable'  'PanelPropItem'  'PanelPropItemList'  'PanelPropLine'  'PanelPropLogical'  'PanelPropMarker'  'PanelPropMatrix'  'PanelPropNet'  'PanelPropOption'  'PanelPropRVectorSmart'  'PanelPropRVectorView'  'PanelPropScalar'  'PanelPropSize'  'PanelPropString'  'PanelPropStringList'  'PanelPropStringTextArea'  'PipelinePP_PSDict'  'SettingsAmbientPP'  'SettingsAreaPP'  'SettingsAxisPP'  'SettingsLinePP'  'SettingsPP'  'SettingsPositionPP'  'SettingsSurfacePP'  'SettingsTextPP' }; %CET: Computational Efficiency Trick
+			subclass_list = { 'Panel'  'AnalyzeEnsemblePP_MeDict'  'AnalyzeGroupPP_G'  'CompareEnsemblePP_CpDict'  'CompareGroupPP_CpDict'  'ComparisonGroupPF'  'ComparisonGroupPF_BB'  'ComparisonGroupPF_BS'  'ComparisonGroupPF_BU'  'ComparisonGroupPF_BxPP_Nodes'  'ComparisonGroupPF_GB'  'ComparisonGroupPF_GS'  'ComparisonGroupPF_GU'  'ComparisonGroupPF_NB'  'ComparisonGroupPF_NS'  'ComparisonGroupPF_NU'  'ComparisonGroupPF_NxPP_Node'  'BrainAtlasPF'  'BrainSurfacePF'  'SubjectPP_VOIDict'  'GraphAdjPF'  'GraphHistPF'  'GraphPP_MDict'  'LayersPP'  'MeasurePF'  'MeasurePF_BB'  'MeasurePF_BS'  'MeasurePF_BU'  'MeasurePF_BxPP_Nodes'  'MeasurePF_GB'  'MeasurePF_GS'  'MeasurePF_GU'  'MeasurePF_NB'  'MeasurePF_NS'  'MeasurePF_NU'  'MeasurePF_NxPP_Node'  'PanelElement'  'PanelFig'  'PanelProp'  'PanelPropAlpha'  'PanelPropCell'  'PanelPropClass'  'PanelPropClassList'  'PanelPropColor'  'PanelPropIDict'  'PanelPropIDictTable'  'PanelPropItem'  'PanelPropItemList'  'PanelPropLine'  'PanelPropLogical'  'PanelPropMarker'  'PanelPropMatrix'  'PanelPropNet'  'PanelPropOption'  'PanelPropRVectorSmart'  'PanelPropRVectorView'  'PanelPropScalar'  'PanelPropSize'  'PanelPropString'  'PanelPropStringList'  'PanelPropStringTextArea'  'PipelinePP_PSDict'  'SettingsAmbientPP'  'SettingsAreaPP'  'SettingsAxisPP'  'SettingsLinePP'  'SettingsPP'  'SettingsPositionPP'  'SettingsSurfacePP'  'SettingsTextPP' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of panel.
@@ -284,7 +286,7 @@ classdef Panel < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18];
 				return
 			end
 			
@@ -298,13 +300,13 @@ classdef Panel < ConcreteElement
 				case 4 % Category.DATA
 					prop_list = 4;
 				case 6 % Category.QUERY
-					prop_list = [9 10 14 15 16 17];
+					prop_list = [7 10 11 15 16 17 18];
 				case 7 % Category.EVANESCENT
-					prop_list = [8 13];
+					prop_list = [9 14];
 				case 8 % Category.FIGURE
-					prop_list = 12;
+					prop_list = 13;
 				case 9 % Category.GUI
-					prop_list = [7 11];
+					prop_list = [8 12];
 				otherwise
 					prop_list = [];
 			end
@@ -330,7 +332,7 @@ classdef Panel < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 17;
+				prop_number = 18;
 				return
 			end
 			
@@ -344,7 +346,7 @@ classdef Panel < ConcreteElement
 				case 4 % Category.DATA
 					prop_number = 1;
 				case 6 % Category.QUERY
-					prop_number = 6;
+					prop_number = 7;
 				case 7 % Category.EVANESCENT
 					prop_number = 2;
 				case 8 % Category.FIGURE
@@ -381,7 +383,7 @@ classdef Panel < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 17 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 18 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -419,7 +421,7 @@ classdef Panel < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -452,7 +454,7 @@ classdef Panel < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -481,7 +483,7 @@ classdef Panel < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				panel_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE' };
+				panel_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE' };
 				tag = panel_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -508,7 +510,7 @@ classdef Panel < ConcreteElement
 			prop = Panel.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			panel_category_list = { 1  1  3  4  2  2  9  7  6  6  9  8  7  6  6  6  6 };
+			panel_category_list = { 1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6 };
 			prop_category = panel_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -534,7 +536,7 @@ classdef Panel < ConcreteElement
 			prop = Panel.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			panel_format_list = { 2  2  8  2  2  2  4  18  4  4  8  20  18  4  4  4  4 };
+			panel_format_list = { 2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4 };
 			prop_format = panel_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -560,7 +562,7 @@ classdef Panel < ConcreteElement
 			prop = Panel.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			panel_description_list = { 'NAME (constant, string) is the name of the panel.'  'DESCRIPTION (constant, string) is the description of the panel.'  'TEMPLATE (parameter, item) is the template of the panel.'  'ID (data, string) is a few-letter code for the panel.'  'LABEL (metadata, string) is an extended label of the panel.'  'NOTES (metadata, string) are some specific notes about the panel.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the panel [accepts uipanel Name-Value pairs].'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.' };
+			panel_description_list = { 'NAME (constant, string) is the name of the panel.'  'DESCRIPTION (constant, string) is the description of the panel.'  'TEMPLATE (parameter, item) is the template of the panel.'  'ID (data, string) is a few-letter code for the panel.'  'LABEL (metadata, string) is an extended label of the panel.'  'NOTES (metadata, string) are some specific notes about the panel.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the panel [accepts uipanel Name-Value pairs].'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.' };
 			prop_description = panel_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -586,27 +588,27 @@ classdef Panel < ConcreteElement
 			prop = Panel.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % Panel.WAITBAR
+				case 8 % Panel.WAITBAR
 					prop_settings = Format.getFormatSettings(4);
-				case 8 % Panel.H_WAITBAR
+				case 9 % Panel.H_WAITBAR
 					prop_settings = Format.getFormatSettings(18);
-				case 9 % Panel.DRAW
+				case 10 % Panel.DRAW
 					prop_settings = Format.getFormatSettings(4);
-				case 10 % Panel.DRAWN
+				case 11 % Panel.DRAWN
 					prop_settings = Format.getFormatSettings(4);
-				case 11 % Panel.PARENT
+				case 12 % Panel.PARENT
 					prop_settings = Format.getFormatSettings(8);
-				case 12 % Panel.BKGCOLOR
+				case 13 % Panel.BKGCOLOR
 					prop_settings = Format.getFormatSettings(20);
-				case 13 % Panel.H
+				case 14 % Panel.H
 					prop_settings = Format.getFormatSettings(18);
-				case 14 % Panel.SHOW
+				case 15 % Panel.SHOW
 					prop_settings = Format.getFormatSettings(4);
-				case 15 % Panel.HIDE
+				case 16 % Panel.HIDE
 					prop_settings = Format.getFormatSettings(4);
-				case 16 % Panel.DELETE
+				case 17 % Panel.DELETE
 					prop_settings = Format.getFormatSettings(4);
-				case 17 % Panel.CLOSE
+				case 18 % Panel.CLOSE
 					prop_settings = Format.getFormatSettings(4);
 				case 3 % Panel.TEMPLATE
 					prop_settings = 'Panel';
@@ -637,27 +639,27 @@ classdef Panel < ConcreteElement
 			prop = Panel.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % Panel.WAITBAR
+				case 8 % Panel.WAITBAR
 					prop_default = Format.getFormatDefault(4, Panel.getPropSettings(prop));
-				case 8 % Panel.H_WAITBAR
+				case 9 % Panel.H_WAITBAR
 					prop_default = Format.getFormatDefault(18, Panel.getPropSettings(prop));
-				case 9 % Panel.DRAW
+				case 10 % Panel.DRAW
 					prop_default = Format.getFormatDefault(4, Panel.getPropSettings(prop));
-				case 10 % Panel.DRAWN
+				case 11 % Panel.DRAWN
 					prop_default = Format.getFormatDefault(4, Panel.getPropSettings(prop));
-				case 11 % Panel.PARENT
+				case 12 % Panel.PARENT
 					prop_default = GUI();
-				case 12 % Panel.BKGCOLOR
+				case 13 % Panel.BKGCOLOR
 					prop_default = [1 0.9725 0.929];
-				case 13 % Panel.H
+				case 14 % Panel.H
 					prop_default = Format.getFormatDefault(18, Panel.getPropSettings(prop));
-				case 14 % Panel.SHOW
+				case 15 % Panel.SHOW
 					prop_default = Format.getFormatDefault(4, Panel.getPropSettings(prop));
-				case 15 % Panel.HIDE
+				case 16 % Panel.HIDE
 					prop_default = Format.getFormatDefault(4, Panel.getPropSettings(prop));
-				case 16 % Panel.DELETE
+				case 17 % Panel.DELETE
 					prop_default = Format.getFormatDefault(4, Panel.getPropSettings(prop));
-				case 17 % Panel.CLOSE
+				case 18 % Panel.CLOSE
 					prop_default = Format.getFormatDefault(4, Panel.getPropSettings(prop));
 				case 1 % Panel.NAME
 					prop_default = 'Panel';
@@ -735,35 +737,35 @@ classdef Panel < ConcreteElement
 			prop = Panel.getPropProp(pointer);
 			
 			switch prop
-				case 7 % Panel.WAITBAR
+				case 8 % Panel.WAITBAR
 					check = Format.checkFormat(4, value, Panel.getPropSettings(prop));
-				case 8 % Panel.H_WAITBAR
+				case 9 % Panel.H_WAITBAR
 					check = Format.checkFormat(18, value, Panel.getPropSettings(prop));
-				case 9 % Panel.DRAW
+				case 10 % Panel.DRAW
 					check = Format.checkFormat(4, value, Panel.getPropSettings(prop));
-				case 10 % Panel.DRAWN
+				case 11 % Panel.DRAWN
 					check = Format.checkFormat(4, value, Panel.getPropSettings(prop));
-				case 11 % Panel.PARENT
+				case 12 % Panel.PARENT
 					check = Format.checkFormat(8, value, Panel.getPropSettings(prop));
 					if check
 						check = isa(value, 'GUI') || isa(value, 'Panel');
 					end
-				case 12 % Panel.BKGCOLOR
+				case 13 % Panel.BKGCOLOR
 					check = Format.checkFormat(20, value, Panel.getPropSettings(prop));
-				case 13 % Panel.H
+				case 14 % Panel.H
 					check = Format.checkFormat(18, value, Panel.getPropSettings(prop));
-				case 14 % Panel.SHOW
+				case 15 % Panel.SHOW
 					check = Format.checkFormat(4, value, Panel.getPropSettings(prop));
-				case 15 % Panel.HIDE
+				case 16 % Panel.HIDE
 					check = Format.checkFormat(4, value, Panel.getPropSettings(prop));
-				case 16 % Panel.DELETE
+				case 17 % Panel.DELETE
 					check = Format.checkFormat(4, value, Panel.getPropSettings(prop));
-				case 17 % Panel.CLOSE
+				case 18 % Panel.CLOSE
 					check = Format.checkFormat(4, value, Panel.getPropSettings(prop));
 				case 3 % Panel.TEMPLATE
 					check = Format.checkFormat(8, value, Panel.getPropSettings(prop));
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -793,18 +795,18 @@ classdef Panel < ConcreteElement
 			%  checkValue.
 			
 			switch prop
-				case 11 % Panel.PARENT
+				case 12 % Panel.PARENT
 					if check_graphics(pn.getr('H'), 'uipanel') % H = p for panel
 					    set(pn.get('H'), 'Parent', pn.get('PARENT').get('H')) % H = f for GUI and H = p for Panel
 					end
 					
-				case 12 % Panel.BKGCOLOR
+				case 13 % Panel.BKGCOLOR
 					if pn.get('DRAWN') && ~isequal(get(pn.get('H'), 'BackgroundColor'), pn.get('BKGCOLOR'))
 					    set(pn.get('H'), 'BackgroundColor', pn.get('BKGCOLOR'))
 					end
 					
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						postset@ConcreteElement(pn, prop);
 					end
 			end
@@ -827,7 +829,7 @@ classdef Panel < ConcreteElement
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 9 % Panel.DRAW
+				case 10 % Panel.DRAW
 					if check_graphics(pn.memorize('H'), 'uipanel') % H = p for panel
 					    p = pn.get('H');
 					    
@@ -846,10 +848,10 @@ classdef Panel < ConcreteElement
 					    value = false;
 					end
 					
-				case 10 % Panel.DRAWN
+				case 11 % Panel.DRAWN
 					value = check_graphics(pn.getr('H'), 'uipanel'); % H = p for panel
 					
-				case 13 % Panel.H
+				case 14 % Panel.H
 					p = uipanel( ...
 					    'Parent', pn.memorize('PARENT').memorize('H'), ... % H = f for GUI and H = p for Panel
 					    'Tag', 'H', ...
@@ -860,7 +862,7 @@ classdef Panel < ConcreteElement
 					    );
 					value = p;
 					
-				case 14 % Panel.SHOW
+				case 15 % Panel.SHOW
 					if pn.get('DRAWN')
 					    if get_from_varargin(true, 'ShowParentFigure', varargin)
 					        pn.get('PARENT').get('SHOW')
@@ -878,7 +880,7 @@ classdef Panel < ConcreteElement
 					    value = false;
 					end
 					
-				case 15 % Panel.HIDE
+				case 16 % Panel.HIDE
 					if pn.get('DRAWN')
 					    if get_from_varargin(true, 'HideParentFigure', varargin)
 					        pn.get('PARENT').get('HIDE')
@@ -896,7 +898,7 @@ classdef Panel < ConcreteElement
 					    value = false;
 					end
 					
-				case 16 % Panel.DELETE
+				case 17 % Panel.DELETE
 					if pn.get('DRAWN')
 					    pn.set('H', Element.getNoValue())
 					
@@ -914,7 +916,7 @@ classdef Panel < ConcreteElement
 					    value = false;
 					end
 					
-				case 17 % Panel.CLOSE
+				case 18 % Panel.CLOSE
 					if pn.get('DRAWN')
 					    if get_from_varargin(true, 'CloseParentFigure', varargin)
 					        pn.get('PARENT').get('CLOSE')
@@ -933,7 +935,7 @@ classdef Panel < ConcreteElement
 					end
 					
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						value = calculateValue@ConcreteElement(pn, prop, varargin{:});
 					else
 						value = calculateValue@Element(pn, prop, varargin{:});

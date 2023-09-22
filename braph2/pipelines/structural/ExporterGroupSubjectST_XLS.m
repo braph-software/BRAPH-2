@@ -21,11 +21,12 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ST subject group exporter in XLSX.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ST subject group exporter in XLSX.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ST subject group exporter in XLSX.
-	%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>8</strong> <strong>GR</strong> 	GR (data, item) is a group of subjects with structural data.
-	%  <strong>9</strong> <strong>FILE</strong> 	FILE (data, string) is the XLSX file name where to save the group of subjects with structural data.
-	%  <strong>10</strong> <strong>PUT_FILE</strong> 	PUT_FILE (query, item) opens a dialog box to set the XLSX file where to save the group of subjects with structural data.
-	%  <strong>11</strong> <strong>SAVE</strong> 	SAVE (result, empty) saves the group of subjects with structural data in the selected XLSX file.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>9</strong> <strong>GR</strong> 	GR (data, item) is a group of subjects with structural data.
+	%  <strong>10</strong> <strong>FILE</strong> 	FILE (data, string) is the XLSX file name where to save the group of subjects with structural data.
+	%  <strong>11</strong> <strong>PUT_FILE</strong> 	PUT_FILE (query, item) opens a dialog box to set the XLSX file where to save the group of subjects with structural data.
+	%  <strong>12</strong> <strong>SAVE</strong> 	SAVE (result, empty) saves the group of subjects with structural data in the selected XLSX file.
 	%
 	% ExporterGroupSubjectST_XLS methods (constructor):
 	%  ExporterGroupSubjectST_XLS - constructor
@@ -116,22 +117,22 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 	% See also Group, SubjectST, ImporterGroupSubjectST_XLS.
 	
 	properties (Constant) % properties
-		GR = 8; %CET: Computational Efficiency Trick
+		GR = 9; %CET: Computational Efficiency Trick
 		GR_TAG = 'GR';
 		GR_CATEGORY = 4;
 		GR_FORMAT = 8;
 		
-		FILE = 9; %CET: Computational Efficiency Trick
+		FILE = 10; %CET: Computational Efficiency Trick
 		FILE_TAG = 'FILE';
 		FILE_CATEGORY = 4;
 		FILE_FORMAT = 2;
 		
-		PUT_FILE = 10; %CET: Computational Efficiency Trick
+		PUT_FILE = 11; %CET: Computational Efficiency Trick
 		PUT_FILE_TAG = 'PUT_FILE';
 		PUT_FILE_CATEGORY = 6;
 		PUT_FILE_FORMAT = 8;
 		
-		SAVE = 11; %CET: Computational Efficiency Trick
+		SAVE = 12; %CET: Computational Efficiency Trick
 		SAVE_TAG = 'SAVE';
 		SAVE_CATEGORY = 5;
 		SAVE_FORMAT = 1;
@@ -154,11 +155,12 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ST subject group exporter in XLSX.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ST subject group exporter in XLSX.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ST subject group exporter in XLSX.
-			%  <strong>7</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>8</strong> <strong>GR</strong> 	GR (data, item) is a group of subjects with structural data.
-			%  <strong>9</strong> <strong>FILE</strong> 	FILE (data, string) is the XLSX file name where to save the group of subjects with structural data.
-			%  <strong>10</strong> <strong>PUT_FILE</strong> 	PUT_FILE (query, item) opens a dialog box to set the XLSX file where to save the group of subjects with structural data.
-			%  <strong>11</strong> <strong>SAVE</strong> 	SAVE (result, empty) saves the group of subjects with structural data in the selected XLSX file.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>9</strong> <strong>GR</strong> 	GR (data, item) is a group of subjects with structural data.
+			%  <strong>10</strong> <strong>FILE</strong> 	FILE (data, string) is the XLSX file name where to save the group of subjects with structural data.
+			%  <strong>11</strong> <strong>PUT_FILE</strong> 	PUT_FILE (query, item) opens a dialog box to set the XLSX file where to save the group of subjects with structural data.
+			%  <strong>12</strong> <strong>SAVE</strong> 	SAVE (result, empty) saves the group of subjects with structural data in the selected XLSX file.
 			%
 			% See also Category, Format.
 			
@@ -220,7 +222,7 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12];
 				return
 			end
 			
@@ -232,13 +234,13 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 				case 3 % Category.PARAMETER
 					prop_list = 3;
 				case 4 % Category.DATA
-					prop_list = [4 8 9];
+					prop_list = [4 9 10];
 				case 5 % Category.RESULT
-					prop_list = 11;
+					prop_list = 12;
 				case 6 % Category.QUERY
-					prop_list = 10;
+					prop_list = [7 11];
 				case 9 % Category.GUI
-					prop_list = 7;
+					prop_list = 8;
 				otherwise
 					prop_list = [];
 			end
@@ -264,7 +266,7 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 11;
+				prop_number = 12;
 				return
 			end
 			
@@ -280,7 +282,7 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 				case 5 % Category.RESULT
 					prop_number = 1;
 				case 6 % Category.QUERY
-					prop_number = 1;
+					prop_number = 2;
 				case 9 % Category.GUI
 					prop_number = 1;
 				otherwise
@@ -313,7 +315,7 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 11 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 12 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -351,7 +353,7 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'FILE'  'PUT_FILE'  'SAVE' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'FILE'  'PUT_FILE'  'SAVE' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -384,7 +386,7 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'FILE'  'PUT_FILE'  'SAVE' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'FILE'  'PUT_FILE'  'SAVE' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -413,7 +415,7 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				exportergroupsubjectst_xls_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'WAITBAR'  'GR'  'FILE'  'PUT_FILE'  'SAVE' };
+				exportergroupsubjectst_xls_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'FILE'  'PUT_FILE'  'SAVE' };
 				tag = exportergroupsubjectst_xls_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -440,7 +442,7 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 			prop = ExporterGroupSubjectST_XLS.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exportergroupsubjectst_xls_category_list = { 1  1  3  4  2  2  9  4  4  6  5 };
+			exportergroupsubjectst_xls_category_list = { 1  1  3  4  2  2  6  9  4  4  6  5 };
 			prop_category = exportergroupsubjectst_xls_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -466,7 +468,7 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 			prop = ExporterGroupSubjectST_XLS.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exportergroupsubjectst_xls_format_list = { 2  2  8  2  2  2  4  8  2  8  1 };
+			exportergroupsubjectst_xls_format_list = { 2  2  8  2  2  2  2  4  8  2  8  1 };
 			prop_format = exportergroupsubjectst_xls_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -492,7 +494,7 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 			prop = ExporterGroupSubjectST_XLS.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exportergroupsubjectst_xls_description_list = { 'NAME (constant, string) is the name of the ST subject group exporter in XLSX.'  'DESCRIPTION (constant, string) is the description of the ST subject group exporter in XLSX.'  'TEMPLATE (parameter, item) is the template of the ST subject group exporter in XLSX.'  'ID (data, string) is a few-letter code for the ST subject group exporter in XLSX.'  'LABEL (metadata, string) is an extended label of the ST subject group exporter in XLSX.'  'NOTES (metadata, string) are some specific notes about the ST subject group exporter in XLSX.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is a group of subjects with structural data.'  'FILE (data, string) is the XLSX file name where to save the group of subjects with structural data.'  'PUT_FILE (query, item) opens a dialog box to set the XLSX file where to save the group of subjects with structural data.'  'SAVE (result, empty) saves the group of subjects with structural data in the selected XLSX file.' };
+			exportergroupsubjectst_xls_description_list = { 'NAME (constant, string) is the name of the ST subject group exporter in XLSX.'  'DESCRIPTION (constant, string) is the description of the ST subject group exporter in XLSX.'  'TEMPLATE (parameter, item) is the template of the ST subject group exporter in XLSX.'  'ID (data, string) is a few-letter code for the ST subject group exporter in XLSX.'  'LABEL (metadata, string) is an extended label of the ST subject group exporter in XLSX.'  'NOTES (metadata, string) are some specific notes about the ST subject group exporter in XLSX.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is a group of subjects with structural data.'  'FILE (data, string) is the XLSX file name where to save the group of subjects with structural data.'  'PUT_FILE (query, item) opens a dialog box to set the XLSX file where to save the group of subjects with structural data.'  'SAVE (result, empty) saves the group of subjects with structural data in the selected XLSX file.' };
 			prop_description = exportergroupsubjectst_xls_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -518,13 +520,13 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 			prop = ExporterGroupSubjectST_XLS.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % ExporterGroupSubjectST_XLS.GR
+				case 9 % ExporterGroupSubjectST_XLS.GR
 					prop_settings = 'Group';
-				case 9 % ExporterGroupSubjectST_XLS.FILE
+				case 10 % ExporterGroupSubjectST_XLS.FILE
 					prop_settings = Format.getFormatSettings(2);
-				case 10 % ExporterGroupSubjectST_XLS.PUT_FILE
+				case 11 % ExporterGroupSubjectST_XLS.PUT_FILE
 					prop_settings = 'ExporterGroupSubjectST_XLS';
-				case 11 % ExporterGroupSubjectST_XLS.SAVE
+				case 12 % ExporterGroupSubjectST_XLS.SAVE
 					prop_settings = Format.getFormatSettings(1);
 				case 3 % ExporterGroupSubjectST_XLS.TEMPLATE
 					prop_settings = 'ExporterGroupSubjectST_XLS';
@@ -555,13 +557,13 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 			prop = ExporterGroupSubjectST_XLS.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % ExporterGroupSubjectST_XLS.GR
+				case 9 % ExporterGroupSubjectST_XLS.GR
 					prop_default = Group('SUB_CLASS', 'SubjectST', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST'));
-				case 9 % ExporterGroupSubjectST_XLS.FILE
+				case 10 % ExporterGroupSubjectST_XLS.FILE
 					prop_default = [fileparts(which('test_braph2')) filesep 'default_xls_file_to_save_group_ST_most_likely_to_be_erased.xlsx'];
-				case 10 % ExporterGroupSubjectST_XLS.PUT_FILE
+				case 11 % ExporterGroupSubjectST_XLS.PUT_FILE
 					prop_default = Format.getFormatDefault(8, ExporterGroupSubjectST_XLS.getPropSettings(prop));
-				case 11 % ExporterGroupSubjectST_XLS.SAVE
+				case 12 % ExporterGroupSubjectST_XLS.SAVE
 					prop_default = Format.getFormatDefault(1, ExporterGroupSubjectST_XLS.getPropSettings(prop));
 				case 1 % ExporterGroupSubjectST_XLS.NAME
 					prop_default = 'ExporterGroupSubjectST_XLS';
@@ -639,18 +641,18 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 			prop = ExporterGroupSubjectST_XLS.getPropProp(pointer);
 			
 			switch prop
-				case 8 % ExporterGroupSubjectST_XLS.GR
+				case 9 % ExporterGroupSubjectST_XLS.GR
 					check = Format.checkFormat(8, value, ExporterGroupSubjectST_XLS.getPropSettings(prop));
-				case 9 % ExporterGroupSubjectST_XLS.FILE
+				case 10 % ExporterGroupSubjectST_XLS.FILE
 					check = Format.checkFormat(2, value, ExporterGroupSubjectST_XLS.getPropSettings(prop));
-				case 10 % ExporterGroupSubjectST_XLS.PUT_FILE
+				case 11 % ExporterGroupSubjectST_XLS.PUT_FILE
 					check = Format.checkFormat(8, value, ExporterGroupSubjectST_XLS.getPropSettings(prop));
-				case 11 % ExporterGroupSubjectST_XLS.SAVE
+				case 12 % ExporterGroupSubjectST_XLS.SAVE
 					check = Format.checkFormat(1, value, ExporterGroupSubjectST_XLS.getPropSettings(prop));
 				case 3 % ExporterGroupSubjectST_XLS.TEMPLATE
 					check = Format.checkFormat(8, value, ExporterGroupSubjectST_XLS.getPropSettings(prop));
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						check = checkProp@Exporter(prop, value);
 					end
 			end
@@ -683,7 +685,7 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 10 % ExporterGroupSubjectST_XLS.PUT_FILE
+				case 11 % ExporterGroupSubjectST_XLS.PUT_FILE
 					[filename, filepath, filterindex] = uiputfile({'*.xlsx';'*.xls'}, 'Select Excel file');
 					if filterindex
 					    file = [filepath filename];
@@ -691,8 +693,8 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 					end
 					value = ex;
 					
-				case 11 % ExporterGroupSubjectST_XLS.SAVE
-					rng_settings_ = rng(); rng(ex.getPropSeed(11), 'twister')
+				case 12 % ExporterGroupSubjectST_XLS.SAVE
+					rng_settings_ = rng(); rng(ex.getPropSeed(12), 'twister')
 					
 					file = ex.get('FILE');
 					
@@ -781,7 +783,7 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						value = calculateValue@Exporter(ex, prop, varargin{:});
 					else
 						value = calculateValue@Element(ex, prop, varargin{:});
@@ -806,11 +808,11 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 			msg = ['Error while checking ' tostring(ex) ' ' ex.getPropTag(prop) '.'];
 			
 			switch prop
-				case 8 % ExporterGroupSubjectST_XLS.GR
+				case 9 % ExporterGroupSubjectST_XLS.GR
 					check = any(strcmp(value.get('SUB_CLASS'), subclasses('SubjectST', [], [], true))); % Format.checkFormat(8, value, 'Group') already checked
 					
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						[check, msg] = checkValue@Exporter(ex, prop, value);
 					end
 			end

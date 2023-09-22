@@ -13,20 +13,21 @@ classdef SettingsArea < Settings
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the area settings.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the area settings.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the area settings.
-	%  <strong>7</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
-	%  <strong>8</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
-	%  <strong>9</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
-	%  <strong>10</strong> <strong>I</strong> 	I (gui, scalar) is the index of the handle, used only by handlelists.
-	%  <strong>11</strong> <strong>H</strong> 	H (query, handle) is the graphics object handle.
-	%  <strong>12</strong> <strong>SETUP</strong> 	SETUP (query, scalar) sets all figure props.
-	%  <strong>13</strong> <strong>VISIBLE</strong> 	VISIBLE (figure, logical) determines whether the symbol is visible.
-	%  <strong>14</strong> <strong>X</strong> 	X (figure, rvector) is the vector of the x-coordinates.
-	%  <strong>15</strong> <strong>Y</strong> 	Y (figure, rvector) is the vector of y-coordinates.
-	%  <strong>16</strong> <strong>Z</strong> 	Z (figure, rvector) is the vector of the z-coordinates.
-	%  <strong>17</strong> <strong>FACECOLOR</strong> 	FACECOLOR (figure, color) is the symbol RGB face color.
-	%  <strong>18</strong> <strong>FACEALPHA</strong> 	FACEALPHA (figure, scalar) is the symbol RGB face color.
-	%  <strong>19</strong> <strong>EDGECOLOR</strong> 	EDGECOLOR (figure, color) is the symbol RGB edge color.
-	%  <strong>20</strong> <strong>EDGEALPHA</strong> 	EDGEALPHA (figure, scalar) is the symbol RGB edge color.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
+	%  <strong>9</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
+	%  <strong>10</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
+	%  <strong>11</strong> <strong>I</strong> 	I (gui, scalar) is the index of the handle, used only by handlelists.
+	%  <strong>12</strong> <strong>H</strong> 	H (query, handle) is the graphics object handle.
+	%  <strong>13</strong> <strong>SETUP</strong> 	SETUP (query, scalar) sets all figure props.
+	%  <strong>14</strong> <strong>VISIBLE</strong> 	VISIBLE (figure, logical) determines whether the symbol is visible.
+	%  <strong>15</strong> <strong>X</strong> 	X (figure, rvector) is the vector of the x-coordinates.
+	%  <strong>16</strong> <strong>Y</strong> 	Y (figure, rvector) is the vector of y-coordinates.
+	%  <strong>17</strong> <strong>Z</strong> 	Z (figure, rvector) is the vector of the z-coordinates.
+	%  <strong>18</strong> <strong>FACECOLOR</strong> 	FACECOLOR (figure, color) is the symbol RGB face color.
+	%  <strong>19</strong> <strong>FACEALPHA</strong> 	FACEALPHA (figure, scalar) is the symbol RGB face color.
+	%  <strong>20</strong> <strong>EDGECOLOR</strong> 	EDGECOLOR (figure, color) is the symbol RGB edge color.
+	%  <strong>21</strong> <strong>EDGEALPHA</strong> 	EDGEALPHA (figure, scalar) is the symbol RGB edge color.
 	%
 	% SettingsArea methods (constructor):
 	%  SettingsArea - constructor
@@ -117,42 +118,42 @@ classdef SettingsArea < Settings
 	% See also patch, PanelFig, GUIFig.
 	
 	properties (Constant) % properties
-		VISIBLE = 13; %CET: Computational Efficiency Trick
+		VISIBLE = 14; %CET: Computational Efficiency Trick
 		VISIBLE_TAG = 'VISIBLE';
 		VISIBLE_CATEGORY = 8;
 		VISIBLE_FORMAT = 4;
 		
-		X = 14; %CET: Computational Efficiency Trick
+		X = 15; %CET: Computational Efficiency Trick
 		X_TAG = 'X';
 		X_CATEGORY = 8;
 		X_FORMAT = 12;
 		
-		Y = 15; %CET: Computational Efficiency Trick
+		Y = 16; %CET: Computational Efficiency Trick
 		Y_TAG = 'Y';
 		Y_CATEGORY = 8;
 		Y_FORMAT = 12;
 		
-		Z = 16; %CET: Computational Efficiency Trick
+		Z = 17; %CET: Computational Efficiency Trick
 		Z_TAG = 'Z';
 		Z_CATEGORY = 8;
 		Z_FORMAT = 12;
 		
-		FACECOLOR = 17; %CET: Computational Efficiency Trick
+		FACECOLOR = 18; %CET: Computational Efficiency Trick
 		FACECOLOR_TAG = 'FACECOLOR';
 		FACECOLOR_CATEGORY = 8;
 		FACECOLOR_FORMAT = 20;
 		
-		FACEALPHA = 18; %CET: Computational Efficiency Trick
+		FACEALPHA = 19; %CET: Computational Efficiency Trick
 		FACEALPHA_TAG = 'FACEALPHA';
 		FACEALPHA_CATEGORY = 8;
 		FACEALPHA_FORMAT = 11;
 		
-		EDGECOLOR = 19; %CET: Computational Efficiency Trick
+		EDGECOLOR = 20; %CET: Computational Efficiency Trick
 		EDGECOLOR_TAG = 'EDGECOLOR';
 		EDGECOLOR_CATEGORY = 8;
 		EDGECOLOR_FORMAT = 20;
 		
-		EDGEALPHA = 20; %CET: Computational Efficiency Trick
+		EDGEALPHA = 21; %CET: Computational Efficiency Trick
 		EDGEALPHA_TAG = 'EDGEALPHA';
 		EDGEALPHA_CATEGORY = 8;
 		EDGEALPHA_FORMAT = 11;
@@ -175,20 +176,21 @@ classdef SettingsArea < Settings
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the area settings.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the area settings.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the area settings.
-			%  <strong>7</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
-			%  <strong>8</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
-			%  <strong>9</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
-			%  <strong>10</strong> <strong>I</strong> 	I (gui, scalar) is the index of the handle, used only by handlelists.
-			%  <strong>11</strong> <strong>H</strong> 	H (query, handle) is the graphics object handle.
-			%  <strong>12</strong> <strong>SETUP</strong> 	SETUP (query, scalar) sets all figure props.
-			%  <strong>13</strong> <strong>VISIBLE</strong> 	VISIBLE (figure, logical) determines whether the symbol is visible.
-			%  <strong>14</strong> <strong>X</strong> 	X (figure, rvector) is the vector of the x-coordinates.
-			%  <strong>15</strong> <strong>Y</strong> 	Y (figure, rvector) is the vector of y-coordinates.
-			%  <strong>16</strong> <strong>Z</strong> 	Z (figure, rvector) is the vector of the z-coordinates.
-			%  <strong>17</strong> <strong>FACECOLOR</strong> 	FACECOLOR (figure, color) is the symbol RGB face color.
-			%  <strong>18</strong> <strong>FACEALPHA</strong> 	FACEALPHA (figure, scalar) is the symbol RGB face color.
-			%  <strong>19</strong> <strong>EDGECOLOR</strong> 	EDGECOLOR (figure, color) is the symbol RGB edge color.
-			%  <strong>20</strong> <strong>EDGEALPHA</strong> 	EDGEALPHA (figure, scalar) is the symbol RGB edge color.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
+			%  <strong>9</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
+			%  <strong>10</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
+			%  <strong>11</strong> <strong>I</strong> 	I (gui, scalar) is the index of the handle, used only by handlelists.
+			%  <strong>12</strong> <strong>H</strong> 	H (query, handle) is the graphics object handle.
+			%  <strong>13</strong> <strong>SETUP</strong> 	SETUP (query, scalar) sets all figure props.
+			%  <strong>14</strong> <strong>VISIBLE</strong> 	VISIBLE (figure, logical) determines whether the symbol is visible.
+			%  <strong>15</strong> <strong>X</strong> 	X (figure, rvector) is the vector of the x-coordinates.
+			%  <strong>16</strong> <strong>Y</strong> 	Y (figure, rvector) is the vector of y-coordinates.
+			%  <strong>17</strong> <strong>Z</strong> 	Z (figure, rvector) is the vector of the z-coordinates.
+			%  <strong>18</strong> <strong>FACECOLOR</strong> 	FACECOLOR (figure, color) is the symbol RGB face color.
+			%  <strong>19</strong> <strong>FACEALPHA</strong> 	FACEALPHA (figure, scalar) is the symbol RGB face color.
+			%  <strong>20</strong> <strong>EDGECOLOR</strong> 	EDGECOLOR (figure, color) is the symbol RGB edge color.
+			%  <strong>21</strong> <strong>EDGEALPHA</strong> 	EDGEALPHA (figure, scalar) is the symbol RGB edge color.
 			%
 			% See also Category, Format.
 			
@@ -250,7 +252,7 @@ classdef SettingsArea < Settings
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21];
 				return
 			end
 			
@@ -264,11 +266,11 @@ classdef SettingsArea < Settings
 				case 4 % Category.DATA
 					prop_list = 4;
 				case 6 % Category.QUERY
-					prop_list = [11 12];
+					prop_list = [7 12 13];
 				case 8 % Category.FIGURE
-					prop_list = [13 14 15 16 17 18 19 20];
+					prop_list = [14 15 16 17 18 19 20 21];
 				case 9 % Category.GUI
-					prop_list = [7 8 9 10];
+					prop_list = [8 9 10 11];
 				otherwise
 					prop_list = [];
 			end
@@ -294,7 +296,7 @@ classdef SettingsArea < Settings
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 20;
+				prop_number = 21;
 				return
 			end
 			
@@ -308,7 +310,7 @@ classdef SettingsArea < Settings
 				case 4 % Category.DATA
 					prop_number = 1;
 				case 6 % Category.QUERY
-					prop_number = 2;
+					prop_number = 3;
 				case 8 % Category.FIGURE
 					prop_number = 8;
 				case 9 % Category.GUI
@@ -343,7 +345,7 @@ classdef SettingsArea < Settings
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 20 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 21 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -381,7 +383,7 @@ classdef SettingsArea < Settings
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'VISIBLE'  'X'  'Y'  'Z'  'FACECOLOR'  'FACEALPHA'  'EDGECOLOR'  'EDGEALPHA' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'VISIBLE'  'X'  'Y'  'Z'  'FACECOLOR'  'FACEALPHA'  'EDGECOLOR'  'EDGEALPHA' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -414,7 +416,7 @@ classdef SettingsArea < Settings
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'VISIBLE'  'X'  'Y'  'Z'  'FACECOLOR'  'FACEALPHA'  'EDGECOLOR'  'EDGEALPHA' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'VISIBLE'  'X'  'Y'  'Z'  'FACECOLOR'  'FACEALPHA'  'EDGECOLOR'  'EDGEALPHA' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -443,7 +445,7 @@ classdef SettingsArea < Settings
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				settingsarea_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'VISIBLE'  'X'  'Y'  'Z'  'FACECOLOR'  'FACEALPHA'  'EDGECOLOR'  'EDGEALPHA' };
+				settingsarea_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'VISIBLE'  'X'  'Y'  'Z'  'FACECOLOR'  'FACEALPHA'  'EDGECOLOR'  'EDGEALPHA' };
 				tag = settingsarea_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -470,7 +472,7 @@ classdef SettingsArea < Settings
 			prop = SettingsArea.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			settingsarea_category_list = { 1  1  3  4  2  2  9  9  9  9  6  6  8  8  8  8  8  8  8  8 };
+			settingsarea_category_list = { 1  1  3  4  2  2  6  9  9  9  9  6  6  8  8  8  8  8  8  8  8 };
 			prop_category = settingsarea_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -496,7 +498,7 @@ classdef SettingsArea < Settings
 			prop = SettingsArea.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			settingsarea_format_list = { 2  2  8  2  2  2  8  11  2  11  18  11  4  12  12  12  20  11  20  11 };
+			settingsarea_format_list = { 2  2  8  2  2  2  2  8  11  2  11  18  11  4  12  12  12  20  11  20  11 };
 			prop_format = settingsarea_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -522,7 +524,7 @@ classdef SettingsArea < Settings
 			prop = SettingsArea.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			settingsarea_description_list = { 'NAME (constant, string) is the name of the area settings.'  'DESCRIPTION (constant, string) is the description of the area settings.'  'TEMPLATE (parameter, item) is the template of the area settings.'  'ID (data, string) is a few-letter code for the area settings.'  'LABEL (metadata, string) is an extended label of the area settings.'  'NOTES (metadata, string) are some specific notes about the area settings.'  'PANEL (gui, item) is the panel to which the graphics object belongs.'  'PROP (gui, scalar) is the prop of the graphics handle(list).'  'TAG (gui, string) is the tag of the graphics handle(s).'  'I (gui, scalar) is the index of the handle, used only by handlelists.'  'H (query, handle) is the graphics object handle.'  'SETUP (query, scalar) sets all figure props.'  'VISIBLE (figure, logical) determines whether the symbol is visible.'  'X (figure, rvector) is the vector of the x-coordinates.'  'Y (figure, rvector) is the vector of y-coordinates.'  'Z (figure, rvector) is the vector of the z-coordinates.'  'FACECOLOR (figure, color) is the symbol RGB face color.'  'FACEALPHA (figure, scalar) is the symbol RGB face color.'  'EDGECOLOR (figure, color) is the symbol RGB edge color.'  'EDGEALPHA (figure, scalar) is the symbol RGB edge color.' };
+			settingsarea_description_list = { 'NAME (constant, string) is the name of the area settings.'  'DESCRIPTION (constant, string) is the description of the area settings.'  'TEMPLATE (parameter, item) is the template of the area settings.'  'ID (data, string) is a few-letter code for the area settings.'  'LABEL (metadata, string) is an extended label of the area settings.'  'NOTES (metadata, string) are some specific notes about the area settings.'  'TOSTRING (query, string) returns a string that represents the object.'  'PANEL (gui, item) is the panel to which the graphics object belongs.'  'PROP (gui, scalar) is the prop of the graphics handle(list).'  'TAG (gui, string) is the tag of the graphics handle(s).'  'I (gui, scalar) is the index of the handle, used only by handlelists.'  'H (query, handle) is the graphics object handle.'  'SETUP (query, scalar) sets all figure props.'  'VISIBLE (figure, logical) determines whether the symbol is visible.'  'X (figure, rvector) is the vector of the x-coordinates.'  'Y (figure, rvector) is the vector of y-coordinates.'  'Z (figure, rvector) is the vector of the z-coordinates.'  'FACECOLOR (figure, color) is the symbol RGB face color.'  'FACEALPHA (figure, scalar) is the symbol RGB face color.'  'EDGECOLOR (figure, color) is the symbol RGB edge color.'  'EDGEALPHA (figure, scalar) is the symbol RGB edge color.' };
 			prop_description = settingsarea_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -548,21 +550,21 @@ classdef SettingsArea < Settings
 			prop = SettingsArea.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 13 % SettingsArea.VISIBLE
+				case 14 % SettingsArea.VISIBLE
 					prop_settings = Format.getFormatSettings(4);
-				case 14 % SettingsArea.X
+				case 15 % SettingsArea.X
 					prop_settings = Format.getFormatSettings(12);
-				case 15 % SettingsArea.Y
+				case 16 % SettingsArea.Y
 					prop_settings = Format.getFormatSettings(12);
-				case 16 % SettingsArea.Z
+				case 17 % SettingsArea.Z
 					prop_settings = Format.getFormatSettings(12);
-				case 17 % SettingsArea.FACECOLOR
+				case 18 % SettingsArea.FACECOLOR
 					prop_settings = Format.getFormatSettings(20);
-				case 18 % SettingsArea.FACEALPHA
+				case 19 % SettingsArea.FACEALPHA
 					prop_settings = Format.getFormatSettings(11);
-				case 19 % SettingsArea.EDGECOLOR
+				case 20 % SettingsArea.EDGECOLOR
 					prop_settings = Format.getFormatSettings(20);
-				case 20 % SettingsArea.EDGEALPHA
+				case 21 % SettingsArea.EDGEALPHA
 					prop_settings = Format.getFormatSettings(11);
 				case 3 % SettingsArea.TEMPLATE
 					prop_settings = 'SettingsArea';
@@ -593,21 +595,21 @@ classdef SettingsArea < Settings
 			prop = SettingsArea.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 13 % SettingsArea.VISIBLE
+				case 14 % SettingsArea.VISIBLE
 					prop_default = true;
-				case 14 % SettingsArea.X
+				case 15 % SettingsArea.X
 					prop_default = Format.getFormatDefault(12, SettingsArea.getPropSettings(prop));
-				case 15 % SettingsArea.Y
+				case 16 % SettingsArea.Y
 					prop_default = Format.getFormatDefault(12, SettingsArea.getPropSettings(prop));
-				case 16 % SettingsArea.Z
+				case 17 % SettingsArea.Z
 					prop_default = Format.getFormatDefault(12, SettingsArea.getPropSettings(prop));
-				case 17 % SettingsArea.FACECOLOR
+				case 18 % SettingsArea.FACECOLOR
 					prop_default = [0.9 0.4 0.1];
-				case 18 % SettingsArea.FACEALPHA
+				case 19 % SettingsArea.FACEALPHA
 					prop_default = 0.5;
-				case 19 % SettingsArea.EDGECOLOR
+				case 20 % SettingsArea.EDGECOLOR
 					prop_default = [0 0 0];
-				case 20 % SettingsArea.EDGEALPHA
+				case 21 % SettingsArea.EDGEALPHA
 					prop_default = 0;
 				case 1 % SettingsArea.NAME
 					prop_default = 'SettingsArea';
@@ -669,17 +671,17 @@ classdef SettingsArea < Settings
 			prop = SettingsArea.getPropProp(pointer);
 			
 			switch prop
-				case 14 % SettingsArea.X
+				case 15 % SettingsArea.X
 					value = value(:)';
 					
-				case 15 % SettingsArea.Y
+				case 16 % SettingsArea.Y
 					value = value(:)';
 					
-				case 16 % SettingsArea.Z
+				case 17 % SettingsArea.Z
 					value = value(:)';
 					
 				otherwise
-					if prop <= 12
+					if prop <= 13
 						value = conditioning@Settings(pointer, value);
 					end
 			end
@@ -719,26 +721,26 @@ classdef SettingsArea < Settings
 			prop = SettingsArea.getPropProp(pointer);
 			
 			switch prop
-				case 13 % SettingsArea.VISIBLE
+				case 14 % SettingsArea.VISIBLE
 					check = Format.checkFormat(4, value, SettingsArea.getPropSettings(prop));
-				case 14 % SettingsArea.X
+				case 15 % SettingsArea.X
 					check = Format.checkFormat(12, value, SettingsArea.getPropSettings(prop));
-				case 15 % SettingsArea.Y
+				case 16 % SettingsArea.Y
 					check = Format.checkFormat(12, value, SettingsArea.getPropSettings(prop));
-				case 16 % SettingsArea.Z
+				case 17 % SettingsArea.Z
 					check = Format.checkFormat(12, value, SettingsArea.getPropSettings(prop));
-				case 17 % SettingsArea.FACECOLOR
+				case 18 % SettingsArea.FACECOLOR
 					check = Format.checkFormat(20, value, SettingsArea.getPropSettings(prop));
-				case 18 % SettingsArea.FACEALPHA
+				case 19 % SettingsArea.FACEALPHA
 					check = Format.checkFormat(11, value, SettingsArea.getPropSettings(prop));
-				case 19 % SettingsArea.EDGECOLOR
+				case 20 % SettingsArea.EDGECOLOR
 					check = Format.checkFormat(20, value, SettingsArea.getPropSettings(prop));
-				case 20 % SettingsArea.EDGEALPHA
+				case 21 % SettingsArea.EDGEALPHA
 					check = Format.checkFormat(11, value, SettingsArea.getPropSettings(prop));
 				case 3 % SettingsArea.TEMPLATE
 					check = Format.checkFormat(8, value, SettingsArea.getPropSettings(prop));
 				otherwise
-					if prop <= 12
+					if prop <= 13
 						check = checkProp@Settings(prop, value);
 					end
 			end
@@ -768,7 +770,7 @@ classdef SettingsArea < Settings
 			%  checkValue.
 			
 			switch prop
-				case 13 % SettingsArea.VISIBLE
+				case 14 % SettingsArea.VISIBLE
 					h = st.get('H');
 					if check_graphics(h, 'patch') && ( ...
 					        get(h, 'Visible') ~= st.get('VISIBLE') || ...
@@ -797,7 +799,7 @@ classdef SettingsArea < Settings
 					end
 					
 				otherwise
-					if prop <= 12
+					if prop <= 13
 						postprocessing@Settings(st, prop);
 					end
 			end

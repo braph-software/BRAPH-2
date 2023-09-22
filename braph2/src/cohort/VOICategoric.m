@@ -11,8 +11,9 @@ classdef VOICategoric < VOI
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the categorical variable of interest.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the categorical variable of interest.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the categorical variable of interest.
-	%  <strong>7</strong> <strong>V</strong> 	V (data, scalar) is the value of the categorical variable of interest.
-	%  <strong>8</strong> <strong>CATEGORIES</strong> 	CATEGORIES (parameter, stringlist) is the list of categories.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>V</strong> 	V (data, scalar) is the value of the categorical variable of interest.
+	%  <strong>9</strong> <strong>CATEGORIES</strong> 	CATEGORIES (parameter, stringlist) is the list of categories.
 	%
 	% VOICategoric methods (constructor):
 	%  VOICategoric - constructor
@@ -103,7 +104,7 @@ classdef VOICategoric < VOI
 	% See also VOINumeric.
 	
 	properties (Constant) % properties
-		CATEGORIES = 8; %CET: Computational Efficiency Trick
+		CATEGORIES = 9; %CET: Computational Efficiency Trick
 		CATEGORIES_TAG = 'CATEGORIES';
 		CATEGORIES_CATEGORY = 3;
 		CATEGORIES_FORMAT = 3;
@@ -126,8 +127,9 @@ classdef VOICategoric < VOI
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the categorical variable of interest.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the categorical variable of interest.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the categorical variable of interest.
-			%  <strong>7</strong> <strong>V</strong> 	V (data, scalar) is the value of the categorical variable of interest.
-			%  <strong>8</strong> <strong>CATEGORIES</strong> 	CATEGORIES (parameter, stringlist) is the list of categories.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>V</strong> 	V (data, scalar) is the value of the categorical variable of interest.
+			%  <strong>9</strong> <strong>CATEGORIES</strong> 	CATEGORIES (parameter, stringlist) is the list of categories.
 			%
 			% See also Category, Format.
 			
@@ -189,7 +191,7 @@ classdef VOICategoric < VOI
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8];
+				prop_list = [1 2 3 4 5 6 7 8 9];
 				return
 			end
 			
@@ -199,9 +201,11 @@ classdef VOICategoric < VOI
 				case 2 % Category.METADATA
 					prop_list = [5 6];
 				case 3 % Category.PARAMETER
-					prop_list = [3 8];
+					prop_list = [3 9];
 				case 4 % Category.DATA
-					prop_list = [4 7];
+					prop_list = [4 8];
+				case 6 % Category.QUERY
+					prop_list = 7;
 				otherwise
 					prop_list = [];
 			end
@@ -227,7 +231,7 @@ classdef VOICategoric < VOI
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 8;
+				prop_number = 9;
 				return
 			end
 			
@@ -240,6 +244,8 @@ classdef VOICategoric < VOI
 					prop_number = 2;
 				case 4 % Category.DATA
 					prop_number = 2;
+				case 6 % Category.QUERY
+					prop_number = 1;
 				otherwise
 					prop_number = 0;
 			end
@@ -270,7 +276,7 @@ classdef VOICategoric < VOI
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 8 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 9 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -308,7 +314,7 @@ classdef VOICategoric < VOI
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'V'  'CATEGORIES' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'V'  'CATEGORIES' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -341,7 +347,7 @@ classdef VOICategoric < VOI
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'V'  'CATEGORIES' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'V'  'CATEGORIES' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -370,7 +376,7 @@ classdef VOICategoric < VOI
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				voicategoric_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'V'  'CATEGORIES' };
+				voicategoric_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'V'  'CATEGORIES' };
 				tag = voicategoric_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -397,7 +403,7 @@ classdef VOICategoric < VOI
 			prop = VOICategoric.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			voicategoric_category_list = { 1  1  3  4  2  2  4  3 };
+			voicategoric_category_list = { 1  1  3  4  2  2  6  4  3 };
 			prop_category = voicategoric_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -423,7 +429,7 @@ classdef VOICategoric < VOI
 			prop = VOICategoric.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			voicategoric_format_list = { 2  2  8  2  2  2  11  3 };
+			voicategoric_format_list = { 2  2  8  2  2  2  2  11  3 };
 			prop_format = voicategoric_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -449,7 +455,7 @@ classdef VOICategoric < VOI
 			prop = VOICategoric.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			voicategoric_description_list = { 'NAME (constant, string) is the name of the categorical variable of interest.'  'DESCRIPTION (constant, string) is the description of the categorical variable of interest.'  'TEMPLATE (parameter, item) is the template of the categorical variable of interest.'  'ID (data, string) is a few-letter code for the categorical variable of interest.'  'LABEL (metadata, string) is an extended label of the categorical variable of interest.'  'NOTES (metadata, string) are some specific notes about the categorical variable of interest.'  'V (data, scalar) is the value of the categorical variable of interest.'  'CATEGORIES (parameter, stringlist) is the list of categories.' };
+			voicategoric_description_list = { 'NAME (constant, string) is the name of the categorical variable of interest.'  'DESCRIPTION (constant, string) is the description of the categorical variable of interest.'  'TEMPLATE (parameter, item) is the template of the categorical variable of interest.'  'ID (data, string) is a few-letter code for the categorical variable of interest.'  'LABEL (metadata, string) is an extended label of the categorical variable of interest.'  'NOTES (metadata, string) are some specific notes about the categorical variable of interest.'  'TOSTRING (query, string) returns a string that represents the object.'  'V (data, scalar) is the value of the categorical variable of interest.'  'CATEGORIES (parameter, stringlist) is the list of categories.' };
 			prop_description = voicategoric_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -475,7 +481,7 @@ classdef VOICategoric < VOI
 			prop = VOICategoric.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % VOICategoric.CATEGORIES
+				case 9 % VOICategoric.CATEGORIES
 					prop_settings = Format.getFormatSettings(3);
 				case 3 % VOICategoric.TEMPLATE
 					prop_settings = 'VOICategoric';
@@ -506,7 +512,7 @@ classdef VOICategoric < VOI
 			prop = VOICategoric.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % VOICategoric.CATEGORIES
+				case 9 % VOICategoric.CATEGORIES
 					prop_default = {'Male', 'Female'};
 				case 1 % VOICategoric.NAME
 					prop_default = 'VOICategoric';
@@ -520,7 +526,7 @@ classdef VOICategoric < VOI
 					prop_default = 'VOICategoric label';
 				case 6 % VOICategoric.NOTES
 					prop_default = 'VOICategoric notes';
-				case 7 % VOICategoric.V
+				case 8 % VOICategoric.V
 					prop_default = 1;
 				otherwise
 					prop_default = getPropDefault@VOI(prop);
@@ -586,12 +592,12 @@ classdef VOICategoric < VOI
 			prop = VOICategoric.getPropProp(pointer);
 			
 			switch prop
-				case 8 % VOICategoric.CATEGORIES
+				case 9 % VOICategoric.CATEGORIES
 					check = Format.checkFormat(3, value, VOICategoric.getPropSettings(prop));
 				case 3 % VOICategoric.TEMPLATE
 					check = Format.checkFormat(8, value, VOICategoric.getPropSettings(prop));
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						check = checkProp@VOI(prop, value);
 					end
 			end
@@ -623,7 +629,7 @@ classdef VOICategoric < VOI
 			msg = ['Error while checking ' tostring(voi) ' ' voi.getPropTag(prop) '.'];
 			
 			switch prop
-				case 7 % VOICategoric.V
+				case 8 % VOICategoric.V
 					check = ismember(voi.get('V'), [1:1:length(voi.get('CATEGORIES'))]);
 					if check 
 					    msg = 'All ok!';
@@ -632,7 +638,7 @@ classdef VOICategoric < VOI
 					end
 					
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						[check, msg] = checkValue@VOI(voi, prop, value);
 					end
 			end

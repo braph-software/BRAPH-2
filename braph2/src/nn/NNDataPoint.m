@@ -13,8 +13,9 @@ classdef NNDataPoint < ConcreteElement
 	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the data point for neural network analysis.
 	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the data point for neural network analysis.
 	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the data point for neural network analysis.
-	%  <strong>7</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point.
-	%  <strong>8</strong> <strong>TARGET</strong> 	TARGET (result, cell) is the target value for this data point.
+	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point.
+	%  <strong>9</strong> <strong>TARGET</strong> 	TARGET (result, cell) is the target value for this data point.
 	%
 	% NNDataPoint methods (constructor):
 	%  NNDataPoint - constructor
@@ -105,12 +106,12 @@ classdef NNDataPoint < ConcreteElement
 	% See also NNData.
 	
 	properties (Constant) % properties
-		INPUT = 7; %CET: Computational Efficiency Trick
+		INPUT = 8; %CET: Computational Efficiency Trick
 		INPUT_TAG = 'INPUT';
 		INPUT_CATEGORY = 5;
 		INPUT_FORMAT = 16;
 		
-		TARGET = 8; %CET: Computational Efficiency Trick
+		TARGET = 9; %CET: Computational Efficiency Trick
 		TARGET_TAG = 'TARGET';
 		TARGET_CATEGORY = 5;
 		TARGET_FORMAT = 16;
@@ -133,8 +134,9 @@ classdef NNDataPoint < ConcreteElement
 			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the data point for neural network analysis.
 			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the data point for neural network analysis.
 			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the data point for neural network analysis.
-			%  <strong>7</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point.
-			%  <strong>8</strong> <strong>TARGET</strong> 	TARGET (result, cell) is the target value for this data point.
+			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point.
+			%  <strong>9</strong> <strong>TARGET</strong> 	TARGET (result, cell) is the target value for this data point.
 			%
 			% See also Category, Format.
 			
@@ -196,7 +198,7 @@ classdef NNDataPoint < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8];
+				prop_list = [1 2 3 4 5 6 7 8 9];
 				return
 			end
 			
@@ -210,7 +212,9 @@ classdef NNDataPoint < ConcreteElement
 				case 4 % Category.DATA
 					prop_list = 4;
 				case 5 % Category.RESULT
-					prop_list = [7 8];
+					prop_list = [8 9];
+				case 6 % Category.QUERY
+					prop_list = 7;
 				otherwise
 					prop_list = [];
 			end
@@ -236,7 +240,7 @@ classdef NNDataPoint < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 8;
+				prop_number = 9;
 				return
 			end
 			
@@ -251,6 +255,8 @@ classdef NNDataPoint < ConcreteElement
 					prop_number = 1;
 				case 5 % Category.RESULT
 					prop_number = 2;
+				case 6 % Category.QUERY
+					prop_number = 1;
 				otherwise
 					prop_number = 0;
 			end
@@ -281,7 +287,7 @@ classdef NNDataPoint < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 8 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 9 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -319,7 +325,7 @@ classdef NNDataPoint < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'INPUT'  'TARGET' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -352,7 +358,7 @@ classdef NNDataPoint < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'INPUT'  'TARGET' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -381,7 +387,7 @@ classdef NNDataPoint < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				nndatapoint_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'INPUT'  'TARGET' };
+				nndatapoint_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET' };
 				tag = nndatapoint_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -408,7 +414,7 @@ classdef NNDataPoint < ConcreteElement
 			prop = NNDataPoint.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nndatapoint_category_list = { 1  1  3  4  2  2  5  5 };
+			nndatapoint_category_list = { 1  1  3  4  2  2  6  5  5 };
 			prop_category = nndatapoint_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -434,7 +440,7 @@ classdef NNDataPoint < ConcreteElement
 			prop = NNDataPoint.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nndatapoint_format_list = { 2  2  8  2  2  2  16  16 };
+			nndatapoint_format_list = { 2  2  8  2  2  2  2  16  16 };
 			prop_format = nndatapoint_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -460,7 +466,7 @@ classdef NNDataPoint < ConcreteElement
 			prop = NNDataPoint.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nndatapoint_description_list = { 'NAME (constant, string) is the name of the data point for neural network analysis.'  'DESCRIPTION (constant, string) is the description of the data point for neural network analysis.'  'TEMPLATE (parameter, item) is the template of the data point for neural network analysis.'  'ID (data, string) is a few-letter code for the data point for neural network analysis.'  'LABEL (metadata, string) is an extended label of the data point for neural network analysis.'  'NOTES (metadata, string) are some specific notes about the data point for neural network analysis.'  'INPUT (result, cell) is the input value for this data point.'  'TARGET (result, cell) is the target value for this data point.' };
+			nndatapoint_description_list = { 'NAME (constant, string) is the name of the data point for neural network analysis.'  'DESCRIPTION (constant, string) is the description of the data point for neural network analysis.'  'TEMPLATE (parameter, item) is the template of the data point for neural network analysis.'  'ID (data, string) is a few-letter code for the data point for neural network analysis.'  'LABEL (metadata, string) is an extended label of the data point for neural network analysis.'  'NOTES (metadata, string) are some specific notes about the data point for neural network analysis.'  'TOSTRING (query, string) returns a string that represents the object.'  'INPUT (result, cell) is the input value for this data point.'  'TARGET (result, cell) is the target value for this data point.' };
 			prop_description = nndatapoint_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -486,9 +492,9 @@ classdef NNDataPoint < ConcreteElement
 			prop = NNDataPoint.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % NNDataPoint.INPUT
+				case 8 % NNDataPoint.INPUT
 					prop_settings = Format.getFormatSettings(16);
-				case 8 % NNDataPoint.TARGET
+				case 9 % NNDataPoint.TARGET
 					prop_settings = Format.getFormatSettings(16);
 				case 3 % NNDataPoint.TEMPLATE
 					prop_settings = 'NNDataPoint';
@@ -519,9 +525,9 @@ classdef NNDataPoint < ConcreteElement
 			prop = NNDataPoint.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 7 % NNDataPoint.INPUT
+				case 8 % NNDataPoint.INPUT
 					prop_default = Format.getFormatDefault(16, NNDataPoint.getPropSettings(prop));
-				case 8 % NNDataPoint.TARGET
+				case 9 % NNDataPoint.TARGET
 					prop_default = Format.getFormatDefault(16, NNDataPoint.getPropSettings(prop));
 				case 1 % NNDataPoint.NAME
 					prop_default = 'NNDataPoint';
@@ -599,14 +605,14 @@ classdef NNDataPoint < ConcreteElement
 			prop = NNDataPoint.getPropProp(pointer);
 			
 			switch prop
-				case 7 % NNDataPoint.INPUT
+				case 8 % NNDataPoint.INPUT
 					check = Format.checkFormat(16, value, NNDataPoint.getPropSettings(prop));
-				case 8 % NNDataPoint.TARGET
+				case 9 % NNDataPoint.TARGET
 					check = Format.checkFormat(16, value, NNDataPoint.getPropSettings(prop));
 				case 3 % NNDataPoint.TEMPLATE
 					check = Format.checkFormat(8, value, NNDataPoint.getPropSettings(prop));
 				otherwise
-					if prop <= 6
+					if prop <= 7
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
