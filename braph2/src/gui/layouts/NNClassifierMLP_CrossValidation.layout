@@ -1,0 +1,58 @@
+NAME
+NaN
+DESCRIPTION
+NaN
+TEMPLATE
+NaN
+Cross Validation ID
+1
+Cross Validation LABEL
+2
+NOTES
+NaN
+TOSTRING
+NaN
+KFOLDS
+NaN
+SPLIT
+NaN
+DATASET
+11
+Template for Neural Network Classifier
+9
+Template for Neural Network Evaluator
+10
+DSP
+NaN
+DCO
+NaN
+Dataset List
+12
+Neural Network Regressor List
+13
+Neural Network Evaluator List
+14
+Training EPOCHS
+5
+Training BATCH SIZE
+6
+Training SHUFFLE
+7
+Training SOLVER
+8
+VERBOSE ON/OFF
+3
+PLOT TRAINING PROGRESS
+4
+TRAIN
+NaN
+Permutation Times for Feature Importance
+18
+Average of Area Under Receiver Operating Characteristic Curve
+15
+Average of Macro Area Under Receiver Operating Characteristic Curve
+16
+Confusion Matrix
+17
+Average of Feature Importance
+19

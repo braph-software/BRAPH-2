@@ -1,0 +1,22 @@
+%% Pipeline Connectivity-Functional Multiplex Analysis BUD
+
+% This is the pipeline script to analyze a group of subjects using connectivity-functional multiplex data and binary undirected graphs at fixed densities.
+% 1. It loads a brain atlas from an XLS file (e.g., aal90_atlas.xlsx).
+% 2.1 It loads the connectivity data of one group of subjects from two directories (e.g., GroupName1 and GroupName2) containing XLS files of each subject.
+% 2.2 It loads the functional data of one group of subjects from two directories (e.g., GroupName1 and GroupName2) containing XLS files of each subject.
+% 3. It analyzes the data using connectivity-functional multiplex analysis (CON_FUN_MP) based on binary undirected graphs at fixed densities (BUD).
+
+%% Brain Atlas
+ba = ImporterBrainAtlasXLS('WAITBAR', true).get('GET_FILE').get('BA'); % Load a Brain Atlas XLS % Brain Atlas
+
+%% Conenctivity Group
+gr_CON = ImporterGroupSubjectCON_XLS('BA', ba, 'WAITBAR', true).get('GET_DIR').get('GR'); % Load Group CON from XLS % Group CON
+
+%% Functional Groups
+gr_FUN = ImporterGroupSubjectFUN_XLS('BA', ba, 'WAITBAR', true).get('GET_DIR').get('GR'); % Load Group FUN from XLS % Group FUN
+
+%% Group Combination
+gr = CombineGroups_CON_FUN_MP('GR_CON', gr_CON, 'GR_FUN', gr_FUN, 'WAITBAR', true).get('GR_CON_FUN_MP'); % Combine Groups % Group CON-FUN
+
+%% Analysis
+a_BUD = AnalyzeEnsemble_CON_FUN_MP_BUD('GR', gr, 'DENSITIES', [10 15 20 25 30]); % Analyze Group % Analyzed Group
