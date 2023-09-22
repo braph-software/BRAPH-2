@@ -18,11 +18,11 @@ Finally, BRAPH 2.0 is provided with a set of unit tests (executable by the comma
 
 ## Adapting a Pipeline Script
 
-The simplest way to customize BRAPH 2.0 is by modifying a .braph2 pipeline script. This permits one to define parameters and adjust the analysis steps according to their specific requirements. The [Developer Tutorial to Adapt a Pipeline Script](tutorials/developers/dev_pipeline.pdf) provides guidance on adapting pipeline scripts.
+The simplest way to customize BRAPH 2.0 is by modifying a .braph2 pipeline script. This permits one to define parameters and adjust the analysis steps according to their specific requirements. The [Developer Tutorial to Adapt a Pipeline Script](dev_pipeline.pdf) provides guidance on adapting pipeline scripts.
 
 ## Editing an Example Script
 
-Developers can also edit the example scripts provided with the software to have more control over the analysis workflow and leverage parallel computing for faster calculations. For example, these scripts can be used to run calculations on a cluster. The developer tutorial [Developer Tutorial to Calculate Different Measures](tutorials/developers/dev_script_measures.pdf) demonstrates how to modify example scripts.
+Developers can also edit the example scripts provided with the software to have more control over the analysis workflow and leverage parallel computing for faster calculations. For example, these scripts can be used to run calculations on a cluster. The developer tutorial [Developer Tutorial to Calculate Different Measures](dev_script_measures.pdf) demonstrates how to modify example scripts.
 
 ## Expanding BRAPH 2.0 with New Functionalities
 

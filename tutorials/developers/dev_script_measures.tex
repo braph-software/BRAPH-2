@@ -1,0 +1,123 @@
+\documentclass{tufte-handout}
+\usepackage{braph2_dev}
+%\geometry{showframe} % display margins for debugging page layout
+
+\title{Calculating Different Measures}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\noindent
+This is the developer tutorial for adapting a script for calculating different graph measures. In this tutorial, we will explain how to edit an example script to calculate different graph measures in braph2genesis. Here, we use. \fn{EXAMPLE\_ST\_MP\_WU} as an example to show how to edit this script to calculate different graph measures for structural data using a multiplex weighted undirected graph.
+\end{abstract}
+
+\tableofcontents
+
+%%%%% %%%%% %%%%% %%%%% %%%%%
+\clearpage
+\section{Atlas Loading}
+We started with implementing the ImporterBrainAtlasXLS. The function allows users to import the atlas. 
+\begin{lstlisting}[
+	label=cd:m:degree:header,
+	caption={
+		{\bf Brain Atlas Importer.}
+		The \code{header} section of the pipeline \fn{EXAMPLE\_ST\_MP\_WU}. It defines the importer for Atlas loading.
+	}
+]
+%% ¡header!
+% EXAMPLE_ST_MP_WU
+% Script example pipeline ST MP WU
+
+clear variables %#ok<*NASGU>
+
+%% Load BrainAtlas
+im_ba = ImporterBrainAtlasXLS( ... ¥\circled{1}\circlednote{1}{First, the script loads the brain atlas from the excel file atlas.xlsx}¥
+    'FILE', [fileparts(which('example_ST_MP_WU')) filesep 'Example data ST_MP XLS' filesep 'atlas.xlsx'], ...
+    'WAITBAR', true ...
+    );
+
+ba = im_ba.get('BA');
+\end{lstlisting}
+
+
+
+
+
+%%%%% %%%%% %%%%% %%%%% %%%%%
+%\clearpage
+\section{Data Loading}
+The next step is to load the data of two groups.
+\begin{lstlisting}[
+	label=cd:m:degreeav:header,
+	caption={
+		{\bf Group Subject Data Importer.}
+		The group data importer section provides the code for loading group subject data.
+	}
+]
+im_gr1 = ImporterGroupSubjectST_MP_XLS( ...¥\circled{1}\circlednote{1}{ImporterGroupSubjectST\_MP\_XLS imports a group of subjects with structural data and their covariates (optional) from another XLS/XLSX file.}¥
+    'DIRECTORY', [fileparts(which('SubjectST_MP')) filesep 'Example data ST_MP XLS' filesep 'ST_MP_Group_1_XLS'], ...
+    'BA', ba, ...
+    'WAITBAR', true ...
+    );
+
+gr1 = im_gr1.get('GR');
+
+im_gr2 = ImporterGroupSubjectST_MP_XLS( ...¥\circled{2}\circlednote{2}{imports a second group of subjects with structural data and their covariates (optional) from another XLS/XLSX file.}¥
+    'DIRECTORY', [fileparts(which('SubjectST_MP')) filesep 'Example data ST_MP XLS' filesep 'ST_MP_Group_2_XLS'], ...
+    'BA', ba, ...
+    'WAITBAR', true ...
+    );
+
+gr2 = im_gr2.get('GR');
+
+\end{lstlisting}
+\clearpage
+
+\section{Group Analysis}
+This section is to initialize the group data analysis.
+\begin{lstlisting}[
+	label=cd:m:degreeav:header,
+	caption={
+		{\bf Group Subject Data Analysis.}
+		The group data analysis provides code for initialization of group data analysis.
+	}
+]
+a_WU1 = AnalyzeGroup_ST_MP_WU( ...¥\circled{1}\circlednote{1}{creation of the group analysis with the loaded atlas and groups data.}¥
+    'GR', gr1, ...
+    'CORRELATION_RULE', Correlation.PEARSON ...
+    );
+
+a_WU2 = AnalyzeGroup_ST_MP_WU( ...¥\circled{1}¥
+    'TEMPLATE', a_WU1, ...
+    'GR', gr2 ...
+    );
+
+\end{lstlisting}
+%\clearpage
+\section{Measure Calculation}
+The last step is to calculate graph measures with data loaded in previous step. Here we use \fn{degree} as an example.
+\begin{lstlisting}[
+	label=cd:m:degreeav:header,
+	caption={
+		{\bf Group Subject Data Analysis.}
+		The group data analysis provides code for initialization of group data analysis.
+	}
+]
+
+g_WU1 = a_WU1.memorize('G');¥\circled{1}\circlednote{1}{memorize in case there are measures with non-default rules.}¥
+degree_WU1 = g_WU1.get('MEASURE', 'Degree').get('M');¥\circled{2}\circlednote{2}{The function calculates graph measure. In this case, \fn{degree} is calculated. \\
+Other measures can also be calculated by changing the measure name}¥
+
+g_WU2 = a_WU2.get('G');
+degree_WU2 = g_WU2.get('MEASURE', 'Degree').get('M');¥\circled{2}¥
+\end{lstlisting}
+
+
+
+%%%%% %%%%% %%%%% %%%%% %%%%%
+%\clearpage
+
+
+\end{document}
