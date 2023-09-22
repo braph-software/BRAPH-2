@@ -22,7 +22,7 @@ The simplest way to customize BRAPH 2.0 is by modifying a .braph2 pipeline scrip
 
 ## Editing an Example Script
 
-Developers can also edit the example scripts provided with the software to have more control over the analysis workflow and leverage parallel computing for faster calculations. For example, these scripts can be used to run calculations on a cluster. The developer tutorial [Developer Tutorial to Calculate Different Measures](dev_script/dev_script.pdf) demonstrates how to modify example scripts.
+Developers can also edit the example scripts provided with the software to have more control over the analysis workflow and leverage parallel computing for faster calculations. For example, these scripts can be used to run calculations on a cluster. The developer tutorial [Developer Tutorial to Adapt an Example Script](dev_script/dev_script.pdf) demonstrates how to modify example scripts.
 
 ## Expanding BRAPH 2.0 with New Functionalities
 
