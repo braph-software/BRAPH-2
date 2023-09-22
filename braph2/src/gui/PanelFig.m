@@ -225,7 +225,7 @@ classdef PanelFig < Panel
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'PanelFig'  'ComparisonGroupPF'  'ComparisonGroupPF_BB'  'ComparisonGroupPF_BS'  'ComparisonGroupPF_BU'  'ComparisonGroupPF_GB'  'ComparisonGroupPF_GS'  'ComparisonGroupPF_GU'  'ComparisonGroupPF_NB'  'ComparisonGroupPF_NS'  'ComparisonGroupPF_NU'  'BrainAtlasPF'  'BrainSurfacePF'  'GraphAdjPF'  'GraphHistPF'  'MeasurePF'  'MeasurePF_BB'  'MeasurePF_BS'  'MeasurePF_BU'  'MeasurePF_GB'  'MeasurePF_GS'  'MeasurePF_GU'  'MeasurePF_NB'  'MeasurePF_NS'  'MeasurePF_NU' }; %CET: Computational Efficiency Trick
+			subclass_list = { 'PanelFig'  'ComparisonEnsemblePF'  'ComparisonEnsemblePF_BB'  'ComparisonEnsemblePF_BS'  'ComparisonEnsemblePF_BU'  'ComparisonEnsemblePF_GB'  'ComparisonEnsemblePF_GS'  'ComparisonEnsemblePF_GU'  'ComparisonEnsemblePF_NB'  'ComparisonEnsemblePF_NS'  'ComparisonEnsemblePF_NU'  'ComparisonGroupPF'  'ComparisonGroupPF_BB'  'ComparisonGroupPF_BS'  'ComparisonGroupPF_BU'  'ComparisonGroupPF_GB'  'ComparisonGroupPF_GS'  'ComparisonGroupPF_GU'  'ComparisonGroupPF_NB'  'ComparisonGroupPF_NS'  'ComparisonGroupPF_NU'  'BrainAtlasPF'  'BrainSurfacePF'  'GraphAdjPF'  'GraphHistPF'  'MeasurePF'  'MeasurePF_BB'  'MeasurePF_BS'  'MeasurePF_BU'  'MeasurePF_GB'  'MeasurePF_GS'  'MeasurePF_GU'  'MeasurePF_NB'  'MeasurePF_NS'  'MeasurePF_NU' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of figure panel.

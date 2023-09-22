@@ -837,6 +837,11 @@ classdef AnalyzeEnsemble < ConcreteElement
 					    'WAITBAR', a.getCallback('WAITBAR'), ...
 					    varargin{:});
 					
+				case 11 % AnalyzeEnsemble.ME_DICT
+					pr = AnalyzeEnsemblePP_MeDict('EL', a, 'PROP', 11, ...
+					    'WAITBAR', a.getCallback('WAITBAR'), ...
+					    varargin{:});
+					
 				otherwise
 					pr = getPanelProp@ConcreteElement(a, prop, varargin{:});
 					

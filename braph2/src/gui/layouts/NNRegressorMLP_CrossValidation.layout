@@ -10,8 +10,6 @@ Cross Validation LABEL
 2
 Cross Validation NOTES
 22
-TOSTRING
-NaN
 KFOLDS
 NaN
 SPLIT

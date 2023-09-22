@@ -80,7 +80,7 @@ end
 %%%% ¡calculate_callbacks!
 function set_table()
     c = pr.get('EL');
-    g = c.get('A1').get('G');
+    g = c.get('A1').get('GRAPH_TEMPLATE');
 
     mlist = g.get('COMPATIBLE_MEASURES');
     cplist_already_calculated = cellfun(@(x) x.get('MEASURE'), c.get('CP_DICT').get('IT_LIST'), 'UniformOutput', false);
@@ -378,7 +378,7 @@ value = contextmenu;
 %%%% ¡calculate_callbacks!
 function cb_select_all(~, ~) 
     c = pr.get('EL');
-    g = c.get('A1').get('G');
+    g = c.get('A1').get('GRAPH_TEMPLATE');
     mlist = g.get('COMPATIBLE_MEASURES');
 
     pr.set('SELECTED', [1:1:length(mlist)])
@@ -392,7 +392,7 @@ function cb_clear_selection(~, ~)
 end
 function cb_invert_selection(~, ~) 
     c = pr.get('EL');
-    g = c.get('A1').get('G');
+    g = c.get('A1').get('GRAPH_TEMPLATE');
     mlist = g.get('COMPATIBLE_MEASURES');
 
     selected_tmp = [1:1:length(mlist)];
@@ -403,7 +403,7 @@ function cb_invert_selection(~, ~)
 end
 function cb_calculate(~, ~) 
     c = pr.get('EL');
-    g = c.get('A1').get('G');
+    g = c.get('A1').get('GRAPH_TEMPLATE');
     mlist = g.get('COMPATIBLE_MEASURES');
     selected = pr.get('SELECTED');
     
@@ -434,7 +434,7 @@ function cb_calculate(~, ~)
 end
 function cb_open_plots(~, ~)
     c = pr.get('EL');
-    g = c.get('A1').get('G');
+    g = c.get('A1').get('GRAPH_TEMPLATE');
     mlist = g.get('COMPATIBLE_MEASURES');
     
     f = ancestor(pr.get('H'), 'figure'); % parent GUI 
@@ -475,7 +475,7 @@ function cb_open_plots(~, ~)
 end
 function cb_hide_plots(~, ~)
     c = pr.get('EL');
-    g = c.get('A1').get('G');
+    g = c.get('A1').get('GRAPH_TEMPLATE');
     mlist = g.get('COMPATIBLE_MEASURES');
     
     gui_f_dict = pr.memorize('GUI_F_DICT');
@@ -496,7 +496,7 @@ function cb_hide_plots(~, ~)
 end
 function cb_open_elements(~, ~)
     c = pr.get('EL');
-    g = c.get('A1').get('G');
+    g = c.get('A1').get('GRAPH_TEMPLATE');
     mlist = g.get('COMPATIBLE_MEASURES');
     
     f = ancestor(pr.get('H'), 'figure'); % parent GUI 
@@ -537,7 +537,7 @@ function cb_open_elements(~, ~)
 end
 function cb_hide_elements(~, ~)
     c = pr.get('EL');
-    g = c.get('A1').get('G');
+    g = c.get('A1').get('GRAPH_TEMPLATE');
     mlist = g.get('COMPATIBLE_MEASURES');
     
     gui_m_dict = pr.memorize('GUI_CP_DICT');
@@ -558,7 +558,7 @@ function cb_hide_elements(~, ~)
 end
 function cb_open_brains(~, ~)
     c = pr.get('EL');
-    g = c.get('A1').get('G');
+    g = c.get('A1').get('GRAPH_TEMPLATE');
     mlist = g.get('COMPATIBLE_MEASURES');
     
     f = ancestor(pr.get('H'), 'figure'); % parent GUI 
@@ -599,7 +599,7 @@ function cb_open_brains(~, ~)
 end
 function cb_hide_brains(~, ~)
     c = pr.get('EL');
-    g = c.get('A1').get('G');
+    g = c.get('A1').get('GRAPH_TEMPLATE');
     mlist = g.get('COMPATIBLE_MEASURES');
     
     gui_f_dict = pr.memorize('GUI_F_DICT');

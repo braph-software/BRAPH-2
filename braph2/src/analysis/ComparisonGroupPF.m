@@ -347,7 +347,7 @@ classdef ComparisonGroupPF < PanelFig
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'ComparisonGroupPF'  'ComparisonGroupPF_BB'  'ComparisonGroupPF_BS'  'ComparisonGroupPF_BU'  'ComparisonGroupPF_GB'  'ComparisonGroupPF_GS'  'ComparisonGroupPF_GU'  'ComparisonGroupPF_NB'  'ComparisonGroupPF_NS'  'ComparisonGroupPF_NU' }; %CET: Computational Efficiency Trick
+			subclass_list = { 'ComparisonGroupPF'  'ComparisonEnsemblePF_BB'  'ComparisonEnsemblePF_BS'  'ComparisonEnsemblePF_BU'  'ComparisonEnsemblePF_GB'  'ComparisonEnsemblePF_GS'  'ComparisonEnsemblePF_GU'  'ComparisonEnsemblePF_NB'  'ComparisonEnsemblePF_NS'  'ComparisonEnsemblePF_NU'  'ComparisonGroupPF_BB'  'ComparisonGroupPF_BS'  'ComparisonGroupPF_BU'  'ComparisonGroupPF_GB'  'ComparisonGroupPF_GS'  'ComparisonGroupPF_GU'  'ComparisonGroupPF_NB'  'ComparisonGroupPF_NS'  'ComparisonGroupPF_NU' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of panel group comparison figure.
