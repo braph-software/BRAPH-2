@@ -2,7 +2,7 @@
 GUI < ConcreteElement (gui, graphical user interface) renders a GUI figure.
 
 %%% ¡description!
-GUI renders a figure with its basic functionalities.
+A GUI renders a figure with its basic functionalities.
 
 CONSTRUCTOR - To construct a GUI use, e.g.:
 
@@ -31,6 +31,11 @@ uifigure, GUIElement, GUIFig
 %% ¡props_update!
 
 %%% ¡prop!
+CLASS (constant, string) is the class of the graphical user interface.
+%%%% ¡default!
+'GUI'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the graphical user interface.
 %%%% ¡default!
 'GUI'
@@ -38,7 +43,7 @@ NAME (constant, string) is the name of the graphical user interface.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the graphical user interface.
 %%%% ¡default!
-'GUI renders a figure with its basic functionalities.'
+'A GUI renders a figure with its basic functionalities.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the graphical user interface.

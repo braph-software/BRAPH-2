@@ -1,8 +1,8 @@
 %% ¡header!
-GUIFig < GUI (gui, figure gui) is a GUI for a figure.
+GUIFig < GUI (gui, figure GUI) is a GUI for a figure.
 
 %%% ¡description!
-GUIFIG renders a figure.
+A Figure GUI (GUIFIG) renders a figure.
 
 CONSTRUCTOR - To construct a GUI use, e.g.:
 
@@ -31,14 +31,19 @@ uifigure, PanelFig
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the figure GUI.
+CLASS (constant, string) is the class of the figure GUI.
 %%%% ¡default!
 'GUIFig'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the figure GUI.
+%%%% ¡default!
+'Figure GUI'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the figure GUI.
 %%%% ¡default!
-'GUIFIG renders a figure.'
+'A Figure GUI (GUIFIG) renders a figure.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the figure GUI.

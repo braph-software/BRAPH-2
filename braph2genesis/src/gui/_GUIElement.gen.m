@@ -2,7 +2,7 @@
 GUIElement < GUI (gui, element GUI) is a GUI for an element.
 
 %%% ¡description!
-GUIElement renders an element in a figure.
+An Element GUI (GUIElement) renders an element in a figure.
 
 CONSTRUCTOR - To construct a GUI use, e.g.:
 
@@ -31,14 +31,19 @@ uifigure, ConcreteElement, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the element GUI.
+CLASS (constant, string) is the class of the element GUI.
 %%%% ¡default!
 'GUIElement'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the element GUI.
+%%%% ¡default!
+'Element GUI'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the element GUI.
 %%%% ¡default!
-'GUIElement renders an element in a figure.'
+'An Element GUI (GUIElement) renders an element in a figure.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the element GUI.

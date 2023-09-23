@@ -1,8 +1,8 @@
 %% ¡header!
-GUILayout < GUI (gui, layout GUI) is a layout editor.
+GUILayout < GUI (gui, GUI layout) is a layout editor.
 
 %%% ¡description!
-GUILayout renders a layout editor.
+A GUI Layout (GUILayout) renders a layout editor.
 
 CONSTRUCTOR - To construct a GUILayout use, e.g.:
 
@@ -34,37 +34,42 @@ uifigure, GUI, Element
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the layout GUI.
+CLASS (constant, string) is the class of the GUI layout.
 %%%% ¡default!
 'GUILayout'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the layout GUI.
+NAME (constant, string) is the name of the GUI layout.
 %%%% ¡default!
-'GUILayout renders a layout editor.'
+'GUI Layout'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the layout GUI.
+DESCRIPTION (constant, string) is the description of the GUI layout.
+%%%% ¡default!
+'A GUI Layout (GUILayout) renders a layout editor.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the GUI layout.
 %%%% ¡settings!
 'GUILayout'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the layout GUI.
+ID (data, string) is a few-letter code for the GUI layout.
 %%%% ¡default!
 'GUILayout ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the layout GUI.
+LABEL (metadata, string) is an extended label of the GUI layout.
 %%%% ¡default!
 'GUILayout label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the layout GUI.
+NOTES (metadata, string) are some specific notes about the GUI layout.
 %%%% ¡default!
 'GUILayout notes'
 
 %%% ¡prop!
-TITLE (gui, string) is the name of the layout GUI.
+TITLE (gui, string) is the name of the GUI layout.
 %%%% ¡default!
 ['Layout Editor - ' BRAPH2.STR]
 
