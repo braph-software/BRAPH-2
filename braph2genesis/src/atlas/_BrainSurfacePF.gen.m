@@ -1,14 +1,15 @@
 %% ¡header!
-BrainSurfacePF < PanelFig (pf, panel figure brain surface) is a plot of a brain surfce.
+BrainSurfacePF < PanelFig (pf, panel figure for brain surface) is a plot of a brain surfce.
 
 %%% ¡description!
-BrainSurfacePF manages the plot of the brain surface choosen by the user. 
+A Panel Figure for Brain Surface (BrainSurfacePF) manages the plot of the 
+ brain surface choosen by the user. 
+BrainSurfacePF provides the common methods needed to manage the plot of 
+ the surface. In particular, the user can change lighting, material, 
+ camlight, shadning, colormap, facecolor, brain color, face color, 
+ edge color, and background color. 
 A collection of brain surfaces in NV format can be found in the folder 
-./braph2/brainsurfs/.
-This class provides the common methods needed to manage the plot of 
-the surface. In particular, the user can change lighting, material, 
-camlight, shadning, colormap, facecolor, brain color, face color, 
-edge color, and background color. 
+ ./braph2/brainsurfs/.
 
 %%% ¡seealso!
 BrainSurface
@@ -147,32 +148,37 @@ MATERIAL & LIGHTNING
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the panel figure brain surface.
+CLASS (constant, string) is the class of the panel figure for brain surface.
 %%%% ¡default!
 'BrainSurfacePF'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the panel figure brain surface.
+NAME (constant, string) is the name of the panel figure for brain surface.
 %%%% ¡default!
-'BrainSurfacePF manages the plot of the brain surface choosen by the user.'
+'Panel Figure for Brain Surface'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the panel figure brain surface.
+DESCRIPTION (constant, string) is the description of the panel figure for brain surface.
+%%%% ¡default!
+'A Panel Figure for Brain Surface (BrainSurfacePF) manages the plot of the brain surface choosen by the user. BrainSurfacePF provides the common methods needed to manage the plot of the surface. In particular, the user can change lighting, material, camlight, shadning, colormap, facecolor, brain color, face color, edge color, and background color. A collection of brain surfaces in NV format can be found in the folder ./braph2/brainsurfs/.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the panel figure for brain surface.
 %%%% ¡settings!
 'BrainSurfacePF'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the panel figure brain surface.
+ID (data, string) is a few-letter code for the panel figure for brain surface.
 %%%% ¡default!
 'BrainSurfacePF ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the panel figure brain surface.
+LABEL (metadata, string) is an extended label of the panel figure for brain surface.
 %%%% ¡default!
 'BrainSurfacePF label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the panel figure brain surface.
+NOTES (metadata, string) are some specific notes about the panel figure for brain surface.
 %%%% ¡default!
 'BrainSurfacePF notes'
 
@@ -198,7 +204,7 @@ if value
 end
 
 %%% ¡prop!
-DELETE (query, logical) resets the handles when the panel figure brain surface is deleted.
+DELETE (query, logical) resets the handles when the panel figure for brain surface is deleted.
 %%%% ¡calculate!
 value = calculateValue@PanelFig(pf, PanelFig.DELETE, varargin{:}); % also warning
 if value

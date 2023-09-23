@@ -1,10 +1,11 @@
 %% ¡header!
-BrainAtlasPF < BrainSurfacePF (pf, panel figure brain atlas) is a plot of a brain atlas.
+BrainAtlasPF < BrainSurfacePF (pf, panel figure for brain atlas) is a plot of a brain atlas.
 
 %%% ¡description!
-BrainAtlasPF manages the plot of the brain regions symbols,
-spheres, ids and labels. BrainAtlasPF utilizes the surface created
-from PFBrainSurface to integrate the regions to a brain surface.
+A Panel Figure for Brain Atlas (BrainAtlasPF) manages the plot of the brain 
+ regions symbols, spheres, ids and labels. 
+BrainAtlasPF utilizes the surface created from PFBrainSurface to integrate 
+ the regions to a brain surface.
 
 %%% ¡seealso!
 BrainAtlas, BrainSurface
@@ -131,36 +132,40 @@ BrainAtlasPF.LAB_DICT
 %%%% ¡title!
 Brain Region LABELS PROPERTIES
 
-
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the panel figure brain surface.
+CLASS (constant, string) is the class of the panel figure for brain atlas.
 %%%% ¡default!
 'BrainSurfacePF'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the panel figure brain atlas.
+NAME (constant, string) is the name of the panel figure for brain atlas.
 %%%% ¡default!
-'BrainAtlasPF manages the plot of the brain regions symbols, spheres, ids and labels. BrainAtlasPF utilizes the surface created from PFBrainSurface to integrate the regions to a brain surface.'
+'Panel Figure for Brain Surface'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the panel figure brain atlas.
+DESCRIPTION (constant, string) is the description of the panel figure for brain atlas.
+%%%% ¡default!
+'A Panel Figure for Brain Atlas (BrainAtlasPF) manages the plot of the brain regions symbols, spheres, ids and labels. BrainAtlasPF utilizes the surface created from PFBrainSurface to integrate the regions to a brain surface.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the panel figure for brain atlas.
 %%%% ¡settings!
 'BrainAtlasPF'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the panel figure brain atlas.
+ID (data, string) is a few-letter code for the panel figure for brain atlas.
 %%%% ¡default!
 'BrainSurfacePF ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the panel figure brain atlas.
+LABEL (metadata, string) is an extended label of the panel figure for brain atlas.
 %%%% ¡default!
 'BrainSurfacePF label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the panel figure brain atlas.
+NOTES (metadata, string) are some specific notes about the panel figure for brain atlas.
 %%%% ¡default!
 'BrainSurfacePF notes'
 

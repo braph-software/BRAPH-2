@@ -1,8 +1,8 @@
 %% ¡header!
-ImporterBrainSurfaceNV < Importer (im, importer of brain surface from NV) imports a brain surface from a NV file.
+ImporterBrainSurfaceNV < Importer (im, brain surface importer from NV) imports a brain surface from a NV file.
 
 %%% ¡description!
-ImporterBrainSurfaceNV imports a brain surface from a NV file.
+A Brain Surface Importer from NV Files (ImporterBrainSurfaceNV) imports a brain surface from a NV file.
 
 %%% ¡seealso!
 BrainSurface
@@ -10,14 +10,19 @@ BrainSurface
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the importer of the brain surface from NV.
+CLASS (constant, string) is the class of the brain surface importer from NV.
 %%%% ¡default!
 'ImporterBrainSurfaceNV'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the importer of the brain surface from NV.
+NAME (constant, string) is the name of the brain surface importer from NV.
 %%%% ¡default!
-'ImporterBrainSurfaceNV imports a brain surface from a NV file.'
+'Brain Surface Importer from NV Files'
+
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the brain surface importer from NV.
+%%%% ¡default!
+'A Brain Surface Importer from NV Files (ImporterBrainSurfaceNV) imports a brain surface from a NV file.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the importe of the brain surface from NVr.
@@ -25,17 +30,17 @@ TEMPLATE (parameter, item) is the template of the importe of the brain surface f
 'ImporterBrainSurfaceNV'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the importer of the brain surface from NV.
+ID (data, string) is a few-letter code for the brain surface importer from NV.
 %%%% ¡default!
 'ImporterBrainSurfaceNV ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the importer of the brain surface from NV.
+LABEL (metadata, string) is an extended label of the brain surface importer from NV.
 %%%% ¡default!
 'ImporterBrainSurfaceNV label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the importer of the brain surface from NV.
+NOTES (metadata, string) are some specific notes about the brain surface importer from NV.
 %%%% ¡default!
 'ImporterBrainSurfaceNV notes'
 

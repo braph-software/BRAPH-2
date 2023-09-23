@@ -2,10 +2,10 @@
 BrainAtlas < ConcreteElement (ba, brain atlas) is a brain atlas.
 
 %%% ¡description!
-BrainAtlas represents a brain atlas,
-constituted by a collection of brain regions.  
-BrainAtlas contains and manages brain regions inside an IndexedDictionary;
-thus, it has access to all IndexedDictionary methods.
+A Brain Atlas (BrainAtlas) represents a brain atlas, constituted 
+ by a collection of brain regions.
+BrainAtlas contains and manages brain regions inside an IndexedDictionary; 
+ thus, it has access to all IndexedDictionary methods.
 BrainAtlas can be imported/exported to .txt, .xls and .json files.
 
 %%% ¡seealso!
@@ -132,14 +132,19 @@ Brain Atlas NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the brain atlas.
+CLASS (constant, string) is the class of the concrete element.
 %%%% ¡default!
 'BrainAtlas'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the brain atlas.
+%%%% ¡default!
+'Brain Atlas'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the brain atlas.
 %%%% ¡default!
-'BrainAtlas represents a brain atlas, constituted by a collection of brain regions. BrainAtlas contains and manages brain regions inside an IndexedDictionary; thus, it has access to all IndexedDictionary methods.'
+'A Brain Atlas (BrainAtlas) represents a brain atlas, constituted by a collection of brain regions. BrainAtlas contains and manages brain regions inside an IndexedDictionary; thus, it has access to all IndexedDictionary methods. BrainAtlas can be imported/exported to .txt, .xls and .json files.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the brain atlas.

@@ -2,10 +2,10 @@
 BrainRegion < ConcreteElement (br, brain region) is a brain region.
 
 %%% ¡description!
-BrainRegion contains the information of a brain region.
-It provides the methods necessary to handle the brain regions data.
-BrainRegion contains and manages the id, label, x coordinate, y 
-coordinate, and z coordinate of a brain region. 
+A Brain Region (BrainRegion) contains the information of a brain region.
+ It provides the methods necessary to handle the brain regions data.
+ BrainRegion contains and manages the id, label, x coordinate, y 
+ coordinate, and z coordinate of a brain region. 
     
 %%% ¡seealso!
 BrainAtlas, BrainSurface
@@ -13,14 +13,19 @@ BrainAtlas, BrainSurface
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the brain region.
+CLASS (constant, string) is the class of the brain region.
 %%%% ¡default!
 'BrainRegion'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the brain region.
+%%%% ¡default!
+'Brain Region'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the brain region.
 %%%% ¡default!
-'BrainRegion contains the information of a brain region. It provides the methods necessary to handle the brain regions data. BrainRegion contains and manages the id, label, x coordinate, y coordinate, and z coordinate of a brain region.'
+'A Brain Region (BrainRegion) contains the information of a brain region. It provides the methods necessary to handle the brain regions data. BrainRegion contains and manages the id, label, x coordinate, y coordinate, and z coordinate of a brain region.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the brain region.

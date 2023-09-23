@@ -2,10 +2,10 @@
 BrainSurface < ConcreteElement (bs, brain surface) is a brain surface.
 
 %%% ¡description!
-BrainSurface contains the information of a brain surface.
-It provides the methods necessary to handle the brain surface data.
+A Brain Surface (BrainSurface) contains the information of a brain surface.
+ It provides the methods necessary to handle the brain surface data.
 BrainSurface contains and manages the vertex_number, coordinates, 
-triangles_number, and triangles of a brain surface. 
+ triangles_number, and triangles of a brain surface. 
     
 %%% ¡seealso!
 BrainAtlas, BrainRegion, BrainSurfacePF
@@ -13,14 +13,19 @@ BrainAtlas, BrainRegion, BrainSurfacePF
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the brain surface.
+CLASS (constant, string) is the class of the brain surface.
 %%%% ¡default!
 'BrainSurface'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the brain surface.
+%%%% ¡default!
+'Brain Surface'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the brain surface.
 %%%% ¡default!
-'BrainSurface contains the information of a brain surface. It provides the methods necessary to handle the brain surface data. BrainSurface contains and manages the vertex_number, coordinates, triangles_number, and triangles of a brain surface.'
+'A Brain Surface (BrainSurface) contains the information of a brain surface. It provides the methods necessary to handle the brain surface data. BrainSurface contains and manages the vertex_number, coordinates, triangles_number, and triangles of a brain surface.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the brain surface.

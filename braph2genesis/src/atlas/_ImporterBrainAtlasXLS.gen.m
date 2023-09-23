@@ -1,15 +1,15 @@
 %% ¡header!
-ImporterBrainAtlasXLS < Importer (im, importer of brain atlas from XLS/XLSX) imports a brain atlas from an XLS/XLSX file.
+ImporterBrainAtlasXLS < Importer (im, brain atlas importer from XLS/XLSX) imports a brain atlas from an XLS/XLSX file.
 
 %%% ¡description!
-ImporterBrainAtlasXLS imports a brain atlas from an XLS/XLSX file.
-The XLS file consists of 6 columns and many rows.
-The first 4 rows: BrainAtlas ID (row 1, column 1), BrainAtlas LABEL 
-(row 2, column 1), BrainAtlas NOTES (row 3, column 1), BrainSurface Name 
-(row 4, column 1).
-And from row 5 to the end, the following columns: BrainRegion ID (column 1),
-BrainRegion LABEL (column 2), BrainRegions (column 3 to column 5; 
-coordinates x, y, z, one per column), and BrainRegion NOTES (column 6).
+A Brain Atlas Importer from XLS/XLSX Files (ImporterBrainAtlasXLS) imports a 
+ brain atlas from an XLS/XLSX file.
+The XLS file consists of 6 columns and many rows. The first 4 rows: 
+ BrainAtlas ID (row 1, column 1), BrainAtlas LABEL (row 2, column 1), 
+ BrainAtlas NOTES (row 3, column 1), BrainSurface Name (row 4, column 1).
+ And from row 5 to the end, the following columns: BrainRegion ID (column 1),
+ BrainRegion LABEL (column 2), BrainRegions (column 3 to column 5; 
+ coordinates x, y, z, one per column), and BrainRegion NOTES (column 6).
 
 %%% ¡seealso!
 BrainAtlas, ExporterBrainAtlasXLS
@@ -17,19 +17,24 @@ BrainAtlas, ExporterBrainAtlasXLS
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the brain atlas importer from XLS/XLSX.
+CLASS (constant, string) is the class of the brain atlas importer from XLS/XLSX.
 %%%% ¡default!
 'ImporterBrainAtlasXLS'
+
+%%% ¡prop!
+NAME (constant, string) is the name of the brain atlas importer from XLS/XLSX.
+%%%% ¡default!
+'Brain Atlas Importer from XLS/XLSX Files'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the brain atlas importer from XLS/XLSX.
 %%%% ¡default!
-'ImporterBrainAtlasXLS imports a brain atlas from an XLS/XLSX file. The XLS file consists of 6 columns and many rows. The first 4 rows: BrainAtlas ID (row 1, column 1), BrainAtlas LABEL (row 2, column 1), BrainAtlas NOTES (row 3, column 1), BrainSurface Name (row 4, column 1). And from row 5 to the end, the following columns: BrainRegion ID (column 1), BrainRegion LABEL (column 2), BrainRegions (column 3 to column 5; coordinates x, y, z, one per column), and BrainRegion NOTES (column 6).'
+'A Brain Atlas Importer from XLS/XLSX Files (ImporterBrainAtlasXLS) imports a brain atlas from an XLS/XLSX file. The XLS file consists of 6 columns and many rows. The first 4 rows: BrainAtlas ID (row 1, column 1), BrainAtlas LABEL (row 2, column 1), BrainAtlas NOTES (row 3, column 1), BrainSurface Name (row 4, column 1). And from row 5 to the end, the following columns: BrainRegion ID (column 1), BrainRegion LABEL (column 2), BrainRegions (column 3 to column 5; coordinates x, y, z, one per column), and BrainRegion NOTES (column 6).'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the brain atlas importer from XLS/XLSX.
 %%%% ¡settings!
-'ImporterBrainAtlasXLS'
+'Brain Atlas Importer from '
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the brain atlas importer from XLS/XLSX.

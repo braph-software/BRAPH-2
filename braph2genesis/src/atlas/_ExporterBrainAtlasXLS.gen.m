@@ -1,8 +1,8 @@
 %% ¡header!
-ExporterBrainAtlasXLS < Exporter (ex, exporter of brain atlas in XLS) exports a brain atlas to an XLS/XLSX file.
+ExporterBrainAtlasXLS < Exporter (ex, brain atlas exporter in XLS) exports a brain atlas to an XLS/XLSX file.
 
 %%% ¡description!
-ExporterBrainAtlasXLS exports a brain atlas to an XLS/XLSX file.
+A Brain Atlas Exporter in XLS Files (ExporterBrainAtlasXLS) exports a brain atlas to an XLS/XLSX file.
 
 %%% ¡seealso!
 BrainAtlas, ImporterBrainAtlasXLS
@@ -10,14 +10,19 @@ BrainAtlas, ImporterBrainAtlasXLS
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the brain atlas exporter in XLS.
+CLASS (constant, string) is the class of the brain atlas exporter in XLS.
 %%%% ¡default!
 'ExporterBrainAtlasXLS'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the brain atlas exporter in XLS.
+%%%% ¡default!
+'Brain Atlas Exporter in XLS Files'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the brain atlas exporter in XLS.
 %%%% ¡default!
-'ExporterBrainAtlasXLS exports a brain atlas to an XLS/XLSX file.'
+'A Brain Atlas Exporter in XLS Files (ExporterBrainAtlasXLS) exports a brain atlas to an XLS/XLSX file.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the brain atlas exporter in XLS.

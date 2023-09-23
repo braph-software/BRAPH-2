@@ -1,8 +1,8 @@
 %% ¡header!
-ExporterBrainAtlasTXT < Exporter (ex, exporter of brain atlas in TXT) exports a brain atlas to a TXT file.
+ExporterBrainAtlasTXT < Exporter (ex, brain atlas exporter in TXT) exports a brain atlas to a TXT file.
 
 %%% ¡description!
-ExporterBrainAtlasTXT exports a brain atlas to a TXT file.
+A Brain Atlas Exporter in TXT Files (ExporterBrainAtlasTXT) exports a brain atlas to a TXT file.
 
 %%% ¡seealso!
 BrainAtlas, ImporterBrainAtlasTXT
@@ -10,14 +10,19 @@ BrainAtlas, ImporterBrainAtlasTXT
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the brain atlas exporter in TXT.
+CLASS (constant, string) is the class of the brain atlas exporter in TXT.
 %%%% ¡default!
 'ExporterBrainAtlasTXT'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the brain atlas exporter in TXT.
+%%%% ¡default!
+'Brain Atlas Exporter in TXT Files'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the brain atlas exporter in TXT.
 %%%% ¡default!
-'ExporterBrainAtlasTXT exports a brain atlas to a TXT file.'
+'A Brain Atlas Exporter in TXT Files (ExporterBrainAtlasTXT) exports a brain atlas to a TXT file.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the brain atlas exporter in TXT.

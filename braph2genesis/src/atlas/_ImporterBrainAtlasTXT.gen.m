@@ -1,15 +1,15 @@
 %% ¡header!
-ImporterBrainAtlasTXT < Importer (im, importer of brain atlas from TXT) imports a brain atlas from a TXT file.
+ImporterBrainAtlasTXT < Importer (im, brain atlas importer from TXT) imports a brain atlas from a TXT file.
 
 %%% ¡description!
-ImporterBrainAtlasTXT imports a brain atlas from a TXT file.
-The TXT file consists of 6 columns and many rows.
-The first 4 rows: BrainAtlas ID (row 1, column 1), BrainAtlas LABEL 
-(row 2, column 1), BrainAtlas NOTES (row 3, column 1), BrainSurface Name 
-(row 4, column 1).
-And from row 5 to the end, the following columns: BrainRegion ID (column 1),
-BrainRegion LABEL (column 2), BrainRegions (column 3 to column 5; 
-coordinates x, y, z, one per column), and BrainRegion NOTES (column 6).
+A Brain Atlas Importer from TXT Files (ImporterBrainAtlasTXT) imports a 
+ brain atlas from a TXT file.
+The TXT file consists of 6 columns and many rows. The first 4 rows: 
+ BrainAtlas ID (row 1, column 1), BrainAtlas LABEL (row 2, column 1), 
+ BrainAtlas NOTES (row 3, column 1), BrainSurface Name (row 4, column 1).
+ And from row 5 to the end, the following columns: BrainRegion ID (column 1),
+ BrainRegion LABEL (column 2), BrainRegions (column 3 to column 5; 
+ coordinates x, y, z, one per column), and BrainRegion NOTES (column 6).
 
 %%% ¡seealso!
 BrainAtlas, ExporterBrainAtlasTXT
@@ -17,14 +17,19 @@ BrainAtlas, ExporterBrainAtlasTXT
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the brain atlas importer from TXT.
+CLASS (constant, string) is the class of the brain atlas importer from TXT.
 %%%% ¡default!
 'ImporterBrainAtlasTXT'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the brain atlas importer from TXT.
+%%%% ¡default!
+'Brain Atlas Importer from TXT Files'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the brain atlas importer from TXT.
 %%%% ¡default!
-'ImporterBrainAtlasTXT imports a brain atlas from a TXT file. The TXT file consists of 6 columns and many rows. The first 4 rows: BrainAtlas ID (row 1, column 1), BrainAtlas LABEL (row 2, column 1), BrainAtlas NOTES (row 3, column 1), BrainSurface Name (row 4, column 1). And from row 5 to the end, the following columns: BrainRegion ID (column 1), BrainRegion LABEL (column 2), BrainRegions (column 3 to column 5; coordinates x, y, z, one per column), and BrainRegion NOTES (column 6).'
+'A Brain Atlas Importer from TXT Files (ImporterBrainAtlasTXT) imports a brain atlas from a TXT file. The TXT file consists of 6 columns and many rows. The first 4 rows: BrainAtlas ID (row 1, column 1), BrainAtlas LABEL (row 2, column 1), BrainAtlas NOTES (row 3, column 1), BrainSurface Name (row 4, column 1). And from row 5 to the end, the following columns: BrainRegion ID (column 1), BrainRegion LABEL (column 2), BrainRegions (column 3 to column 5; coordinates x, y, z, one per column), and BrainRegion NOTES (column 6).'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the brain atlas importer from TXT.
