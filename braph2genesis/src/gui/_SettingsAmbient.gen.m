@@ -2,8 +2,9 @@
 SettingsAmbient < Settings (st, ambient settings) contains the ambient settings.
 
 %%% ¡description!
-SettingsAmbient provides the settings for the ambient lightning and material, 
- including lighting, material, camlight, shading, and colormap.
+An Ambient Settings (SettingsAmbient) provides the settings 
+ for the ambient lightning and material, including lighting, material, 
+ camlight, shading, and colormap.
 The handle can be an axes (uiaxes).
 
 %%% ¡seealso!
@@ -12,14 +13,19 @@ uiaxes, SettingsAmbientPP, PanelFig, GUIFig, check_graphics
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the ambient settings.
+CLASS (constant, string) is the class of the ambient settings.
 %%%% ¡default!
 'SettingsAmbient'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the ambient settings.
+%%%% ¡default!
+'Ambient Settings'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ambient settings.
 %%%% ¡default!
-'SettingsAmbient provides the settings for the ambient lightning and material, including lighting, material, camlight, shading, and colormap.'
+'An Ambient Settings (SettingsAmbient) provides the settings for the ambient lightning and material, including lighting, material, camlight, shading, and colormap. The handle can be an axes (uiaxes).'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ambient settings.

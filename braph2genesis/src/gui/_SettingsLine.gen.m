@@ -2,7 +2,7 @@
 SettingsLine < Settings (st, line settings) contains the line settings.
 
 %%% ¡description!
-SettingsSymbol provides the settings for a line, 
+A Line Settings (SettingsSymbol) provides the settings for a line, 
  including visibility, x, y, z, line color, line width, line style, 
  symbol marker, symbol size, symbol face color, and symbol edge color.
 The handle must be a line.
@@ -13,14 +13,19 @@ line, PanelFig, GUIFig, check_graphics
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the line settings.
+CLASS (constant, string) is the class of the line settings.
 %%%% ¡default!
 'SettingsLine'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the line settings.
+%%%% ¡default!
+'Line Settings'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the line settings.
 %%%% ¡default!
-'SettingsSymbol provides the settings for a line, including visibility, x, y, z, line color, line width, line style, symbol marker, symbol size, symbol face color, and symbol edge color.'
+'A Line Settings (SettingsSymbol) provides the settings for a line, including visibility, x, y, z, line color, line width, line style, symbol marker, symbol size, symbol face color, and symbol edge color. The handle must be a line.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the line settings.

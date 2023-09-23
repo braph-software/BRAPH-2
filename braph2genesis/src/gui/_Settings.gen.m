@@ -2,7 +2,7 @@
 Settings < ConcreteElement (st, graphics settings) contains some graphics settings.
 
 %%% ¡description!
-Settings provides the base element for all graphics settings.
+A Graphics Settings (Settings) provides the base element for all graphics settings.
  Typically, only its subclasses are employed.
 
  The graphics objects is identified by its handle(list), which can be retrieved as:
@@ -35,14 +35,19 @@ Panel, listener
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the graphics settings.
+CLASS (constant, string) is the class of the graphics settings.
 %%%% ¡default!
 'Settings'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the graphics settings.
+%%%% ¡default!
+'Graphics Settings'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the graphics settings.
 %%%% ¡default!
-'Settings provides the base element for all graphics settings. Typically, only its subclasses are employed.'
+'A Graphics Settings (Settings) provides the base element for all graphics settings. Typically, only its subclasses are employed.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the line graphics settings.
@@ -60,7 +65,7 @@ LABEL (metadata, string) is an extended label of the graphics settings.
 'Settings label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the element panel.
+NOTES (metadata, string) are some specific notes about the graphics settings.
 %%%% ¡default!
 'Settings notes'
 

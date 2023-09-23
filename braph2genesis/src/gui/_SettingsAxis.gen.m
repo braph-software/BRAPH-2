@@ -2,8 +2,9 @@
 SettingsAxis < Settings (st, axis settings) contains the axis settings.
 
 %%% ¡description!
-SettingsAxis provides the settings for an axis, 
- including axis color, hold on/off, axis on/off, grid on/off, equal on/off, box on/off, and tight on/off.
+An Axis Settings (SettingsAxis) provides the settings for an axis, 
+ including axis color, hold on/off, axis on/off, grid on/off, equal on/off, 
+ box on/off, and tight on/off.
 The handle can be an axes (uiaxes).
 
 %%% ¡seealso!
@@ -12,14 +13,19 @@ uiaxes, SettingsAxisPP, PanelFig, GUIFig, check_graphics
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the axis settings.
+CLASS (constant, string) is the class of the axis settings.
 %%%% ¡default!
 'SettingsAxis'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the axis settings.
+%%%% ¡default!
+'Axis Settings'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the axis settings.
 %%%% ¡default!
-'SettingsAxis provides the settings for an axis, including axis color, hold on/off, axis on/off, grid on/off, equal on/off, and tight on/off.'
+'An Axis Settings (SettingsAxis) provides the settings for an axis, including axis color, hold on/off, axis on/off, grid on/off, equal on/off, box on/off, and tight on/off. The handle can be an axes (uiaxes).'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the axis settings.

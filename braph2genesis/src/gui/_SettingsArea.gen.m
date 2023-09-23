@@ -2,7 +2,7 @@
 SettingsArea < Settings (st, area settings) contains the area settings.
 
 %%% ¡description!
-SettingsArea provides the settings for a filled area plot,
+An Area Settings (SettingsArea) provides the settings for a filled area plot,
  including visibility, x, y, z, face color, and face alpha.
 The handle must be a patch.
 
@@ -12,14 +12,19 @@ patch, PanelFig, GUIFig
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the area settings.
+CLASS (constant, string) is the class of the concrete element.
 %%%% ¡default!
 'SettingsArea'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the area settings.
+%%%% ¡default!
+'Area Settings'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the area settings.
 %%%% ¡default!
-'SettingsArea provides the settings for a filled area plot, including visibility, x, y, z, face color, and face alpha.'
+'An Area Settings (SettingsArea) provides the settings for a filled area plot, including visibility, x, y, z, face color, and face alpha. The handle must be a patch.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the area settings.

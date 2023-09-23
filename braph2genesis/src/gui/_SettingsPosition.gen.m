@@ -2,8 +2,9 @@
 SettingsPosition < Settings (st, position settings) contains the figure panel settings.
 
 %%% ¡description!
-SettingsPosition provides the settings for a posistion settings panel, 
- including autopositioning, x0, y0, height and width.
+A Position Settings (SettingsPosition) provides the settings 
+ for a posistion settings panel, including autopositioning, x0, y0, height 
+ and width.
 The handle can be an uipanel.
 
 %%% ¡seealso!
@@ -12,14 +13,19 @@ uipanel, SettingsPositionPP, PanelFig, GUIFig, check_graphics
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the position settings.
+CLASS (constant, string) is the class of the position settings.
 %%%% ¡default!
 'SettingsPosition'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the position settings.
+%%%% ¡default!
+'Posiiton Settings'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the position settings.
 %%%% ¡default!
-'SettingsPosition provides the settings for a panel, including autopositioning, x0, y0, height and width.'
+'A Position Settings (SettingsPosition) provides the settings for a posistion settings panel, including autopositioning, x0, y0, height and width. The handle can be an uipanel.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the position settings.
