@@ -1,8 +1,8 @@
 %% ¡header!
-ExporterPipelineBRAPH2 < Exporter (ex, exporter of pipeline in BRAPH2) exports a pipeline in a BRAPH2 file.
+ExporterPipelineBRAPH2 < Exporter (ex, pipeline exporter in BRAPH2) exports a pipeline in a BRAPH2 file.
 
 %%% ¡description!
-ExporterPipelineBRAPH2 exports a pipeline to a BRAPH2 file.
+A Pipeline Exporter in BRAPH2 File (ExporterPipelineBRAPH2) exports a pipeline to a BRAPH2 file.
 
 %%% ¡seealso!
 Exporter, Pipeline, ImporterPipelineBRAPH2
@@ -10,14 +10,19 @@ Exporter, Pipeline, ImporterPipelineBRAPH2
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the exporter of a pipeline to a BRAPH2 file.
+CLASS (constant, string) is the class of the exporter of a pipeline to a BRAPH2 file.
 %%%% ¡default!
 'ExporterPipelineBRAPH2'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the exporter of a pipeline to a BRAPH2 file.
+%%%% ¡default!
+'Pipeline Exporter in BRAPH2 File'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the exporter of a pipeline to a BRAPH2 file.
 %%%% ¡default!
-'ExporterPipelineBRAPH2 exports a pipeline to a BRAPH2 file.'
+'A Pipeline Exporter in BRAPH2 File (ExporterPipelineBRAPH2) exports a pipeline to a BRAPH2 file.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the exporter of a pipeline to a BRAPH2 file.

@@ -2,7 +2,7 @@
 ImporterPipelineBRAPH2 < Importer (im, importer of pipeline from BRAPH2) imports a brain atlas from a braph2 file.
 
 %%% ¡description!
-ImporterPipelineBRAPH2 imports a pipeline from a BRAPH2 file.
+A Pipeline Importer from BRAPH2 File (ImporterPipelineBRAPH2) imports a pipeline from a BRAPH2 file.
 The format of the BRAPH2 file should include the label, description and at least one code section.
 
 %%% ¡seealso!
@@ -11,14 +11,19 @@ Importer, Pipeline, ExporterPipelineBRAPH2
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the importer of a pipeline from a BRAPH2 file.
+CLASS (constant, string) is the class of the importer of a pipeline from a BRAPH2 file.
 %%%% ¡default!
 'ImporterPipelineBRAPH2'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the importer of a pipeline from a BRAPH2 file.
+%%%% ¡default!
+'Pipeline Importer from BRAPH2 File'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the importer of a pipeline from a BRAPH2 file.
 %%%% ¡default!
-'ImporterPipelineBRAPH2 imports a pipeline from a BRAPH2 file. The format of the BRAPH2 file should include the label, description and at least one code section.'
+'A Pipeline Importer from BRAPH2 File (ImporterPipelineBRAPH2) imports a pipeline from a BRAPH2 file. The format of the BRAPH2 file should include the label, description and at least one code section.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the importer of a pipeline from a BRAPH2 file.
