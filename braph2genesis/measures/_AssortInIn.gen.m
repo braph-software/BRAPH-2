@@ -10,6 +10,11 @@ The corresponding coefficient for directed and weighted networks is calculated b
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'AssortInIn'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the in-in-assortativity.
 %%%% ¡default!
 'InInAssortativity'
