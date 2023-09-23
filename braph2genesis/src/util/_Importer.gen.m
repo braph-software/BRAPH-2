@@ -2,12 +2,17 @@
 Importer < ConcreteElement (im, importer from a file) imports an element from a file.
 
 %%% ¡description!
-Importer is the base class for the importer of an element (ConcreteElement) from a file.
+An Importer is the base class for the importer of an element (ConcreteElement) from a file.
 
 %%% ¡seealso!
 ConcreteElement, Exporter
 
 %% ¡props_update!
+
+%%% ¡prop!
+ELCLASS (constant, string) is the class of the importer.
+%%%% ¡default!
+'Importer'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the importer.
