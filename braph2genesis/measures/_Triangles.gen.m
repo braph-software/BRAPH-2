@@ -59,6 +59,11 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'Triangles'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the triangles.
 %%%% ¡default!
 'Triangles'

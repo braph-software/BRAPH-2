@@ -52,6 +52,11 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'WeightedMxPOut'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the weighted multiplex out-particiption.
 %%%% ¡default!
 'WeightedMxPOut '

@@ -9,6 +9,11 @@ The small-worldness coefficient is the fraction of the clustering coefficient
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'SmallWorldness'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the small-worldness.
 %%%% ¡default!
 'SmallWorldness'

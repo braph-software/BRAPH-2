@@ -8,6 +8,11 @@ of (unordered) triplets within a layer.
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'Transitivity'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the transitivity.
 %%%% ¡default!
 'Transitivity'

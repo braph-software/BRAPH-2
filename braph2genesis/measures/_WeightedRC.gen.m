@@ -55,6 +55,11 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'WeightedRC'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the weighted rich-club.
 %%%% ¡default!
 'WeightedRC'

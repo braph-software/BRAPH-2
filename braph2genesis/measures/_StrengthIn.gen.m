@@ -9,6 +9,11 @@ the adjacency matrix.
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'StrengthIn'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the in-strength.
 %%%% ¡default!
 'StrengthIn'

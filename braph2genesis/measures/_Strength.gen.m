@@ -8,6 +8,11 @@ a node within a layer.
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'Strength'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the strength.
 %%%% ¡default!
 'Strength'
