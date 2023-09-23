@@ -53,6 +53,11 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'MultiplexCl'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the multiplex clustering.
 %%%% ¡default!
 'MultiplexClustering'

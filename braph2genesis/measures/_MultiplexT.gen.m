@@ -54,6 +54,11 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'MultiplexT'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the multiplex triangles.
 %%%% ¡default!
 'MultiplexTriangles'

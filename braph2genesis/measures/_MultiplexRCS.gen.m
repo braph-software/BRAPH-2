@@ -54,6 +54,11 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'MultiplexRCS'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the multiplex rich-club strength.
 %%%% ¡default!
 'MultiplexRichClubStrength'

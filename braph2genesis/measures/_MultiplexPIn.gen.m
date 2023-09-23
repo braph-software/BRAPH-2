@@ -52,6 +52,11 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'MultiplexPIn'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the multiplex in-participation.
 %%%% ¡default!
 'MultiplexInParticipation'
