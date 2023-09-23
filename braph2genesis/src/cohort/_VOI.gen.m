@@ -2,24 +2,29 @@
 VOI < ConcreteElement (voi, variable of interest) is the base element for the variables of interest.
 
 %%% ¡description!
-VOI is the base element for a variable of interest.
+A Variable Of Interest (VOI) is the base element for a variable of interest.
  Instances of this class should not be created. 
  Use one of its subclasses instead.
 
- %%% ¡seealso!
- VOINumeric, VOICategoric
+%%% ¡seealso!
+VOINumeric, VOICategoric
  
- %% ¡props_update!
+%% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the variable of interest.
+CLASS (constant, string) is the class of the variable of interest.
 %%%% ¡default!
 'VOI'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the variable of interest.
+%%%% ¡default!
+'Variable Of Interest'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the variable of interest.
 %%%% ¡default!
-'VOI is the base element for a variable of interest. Instances of this class should not be created. Use one of its subclasses instead.'
+'A Variable Of Interest (VOI) is the base element for a variable of interest. Instances of this class should not be created. Use one of its subclasses instead.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the variable of interest.

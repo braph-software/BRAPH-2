@@ -2,22 +2,27 @@
 VOINumeric < VOI (voi, numerical variable of interest) is a numerical variable of interest.
 
 %%% ¡description!
-VOINumeric is a numerical variable of interest.
+A Numerical Variable Of Interest (VOINumeric) is a numerical variable of interest.
 
 %%% ¡seealso!
 VOICategoric
  
- %% ¡props_update!
+%% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the numerical variable of interest.
+CLASS (constant, string) is the class of the numerical variable of interest.
 %%%% ¡default!
 'VOINumeric'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the numerical variable of interest.
+%%%% ¡default!
+'Numerical Variable Of Interest'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the numerical variable of interest.
 %%%% ¡default!
-'VOINumeric is a numerical variable of interest.'
+'A Numerical Variable Of Interest (VOINumeric) is a numerical variable of interest.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the numerical variable of interest.

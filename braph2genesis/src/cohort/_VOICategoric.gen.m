@@ -2,7 +2,7 @@
 VOICategoric < VOI (voi, categorical variable of interest) is a categorical variable of interest.
 
 %%% ¡description!
-VOICategoric is a categorical variable of interest.
+A Categorical Variable Of Interest (VOICategoric) is a categorical variable of interest.
 
 %%% ¡seealso!
 VOINumeric
@@ -10,14 +10,19 @@ VOINumeric
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the categorical variable of interest.
+CLASS (constant, string) is the class of the categorical variable of interest.
 %%%% ¡default!
 'VOICategoric'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the categorical variable of interest.
+%%%% ¡default!
+'Categorical Variable Of Interest'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the categorical variable of interest.
 %%%% ¡default!
-'VOICategoric is a categorical variable of interest.'
+'A Categorical Variable Of Interest (VOICategoric) is a categorical variable of interest.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the categorical variable of interest.

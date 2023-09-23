@@ -2,7 +2,7 @@
 Subject < ConcreteElement (sub, subject) is a subject.
 
 %%% ¡description!
-Subject provides the methods necessary for all subjects. 
+A Subject provides the methods necessary for all subjects. 
  Instances of this element should not be created. 
  Use one of its subelements instead.
 
@@ -12,6 +12,11 @@ Group
 %% ¡props_update!
 
 %%% ¡prop!
+CLASS (constant, string) is the class of the subject.
+%%%% ¡default!
+'Subject'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the subject.
 %%%% ¡default!
 'Subject'
@@ -19,7 +24,7 @@ NAME (constant, string) is the name of the subject.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the subject.
 %%%% ¡default!
-'Subject provides the methods necessary for all subjects. Instances of this element should not be created. Use one of its subelements instead.'
+'A Subject provides the methods necessary for all subjects. Instances of this element should not be created. Use one of its subelements instead.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the subject.

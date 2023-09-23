@@ -2,10 +2,10 @@
 Group < ConcreteElement (gr, group of subjects) is a group of subjects.
 
 %%% ¡description!
-Group represents a group of subjects whose class is defined in the property SUB_CLASS.
-Group provides the methods necessary to handle groups of subjects. 
-It manages the subjects as an indexed dictionary of subjects SUB_DICT, 
-whose methods can be used to inspect, add or remove subjects.
+A Group represents a group of subjects whose class is defined in the property SUB_CLASS.
+ Group provides the methods necessary to handle groups of subjects. 
+ It manages the subjects as an indexed dictionary of subjects SUB_DICT, 
+ whose methods can be used to inspect, add or remove subjects.
 
 %%% ¡seealso!
 Subject, IndexedDictionary
@@ -57,6 +57,11 @@ Group NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+CLASS (constant, string) is the class of the group of subjects.
+%%%% ¡default!
+'Group'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the group of subjects.
 %%%% ¡default!
 'Group'
@@ -64,7 +69,7 @@ NAME (constant, string) is the name of the group of subjects.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the group of subjects.
 %%%% ¡default!
-'Group represents a group of subjects whose class is defined in the property SUB_CLASS. Group provides the methods necessary to handle groups of subjects. It manages the subjects as an indexed dictionary of subjects SUB_DICT, whose methods can be used to inspect, add or remove subjects.'
+'A Group represents a group of subjects whose class is defined in the property SUB_CLASS. Group provides the methods necessary to handle groups of subjects. It manages the subjects as an indexed dictionary of subjects SUB_DICT, whose methods can be used to inspect, add or remove subjects.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the group of subjects.

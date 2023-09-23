@@ -1,9 +1,9 @@
 %% ¡header!
-SubjectPP_VOIDict < PanelProp (pr, VOI plot) plots the panel for a VOI dictionary.
+SubjectPP_VOIDict < PanelProp (pr, VOI prop panel) plots the panel for a VOI dictionary.
 
 %%% ¡description!
-SubjectPP_VOIDict plots a VOI (variables of interest) dictionary using 
-numeric editfields and drop-down lists.
+A VOI Prop Panel (SubjectPP_VOIDict) plots a VOI (variables of interest) dictionary using 
+ numeric editfields and drop-down lists.
 It is intended to be used with the property VOI_DICT of Subject.
 
 %%% ¡seealso!
@@ -12,32 +12,37 @@ Subject, uieditfield, uidropdown
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the VOI plot.
+CLASS (constant, string) is the class of the VOI prop panel.
 %%%% ¡default!
 'SubjectPP_VOIDict'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the VOI plot.
+NAME (constant, string) is the name of the VOI prop panel.
 %%%% ¡default!
-'SubjectPP_VOIDict plots a VOI (variables of interest) dictionary using numeric editfields and drop-down lists.'
+'VOI Prop Panel'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the VOI plot.
+DESCRIPTION (constant, string) is the description of the VOI prop panel.
+%%%% ¡default!
+'A VOI Prop Panel (SubjectPP_VOIDict) plots a VOI (variables of interest) dictionary using numeric editfields and drop-down lists. It is intended to be used with the property VOI_DICT of Subject.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the VOI prop panel.
 %%%% ¡settings!
 'SubjectPP_VOIDict'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the VOI plot.
+ID (data, string) is a few-letter code for the VOI prop panel.
 %%%% ¡default!
 'SubjectPP_VOIDict ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the VOI plot.
+LABEL (metadata, string) is an extended label of the VOI prop panel.
 %%%% ¡default!
 'SubjectPP_VOIDict label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the VOI plot.
+NOTES (metadata, string) are some specific notes about the VOI prop panel.
 %%%% ¡default!
 'SubjectPP_VOIDict notes'
 
