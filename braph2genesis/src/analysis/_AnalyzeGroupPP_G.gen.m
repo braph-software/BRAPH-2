@@ -92,7 +92,7 @@ function set_table()
     if isa(g.getr('M_DICT'), 'NoValue')
         mlist_already_calculated = {};
     else
-        mlist_already_calculated = cellfun(@(x) x.get('NAME'), g.get('M_DICT').get('IT_LIST'), 'UniformOutput', false);
+        mlist_already_calculated = cellfun(@(x) x.get('ELCLASS'), g.get('M_DICT').get('IT_LIST'), 'UniformOutput', false);
     end
     
     rowname = cell(length(mlist), 1);
