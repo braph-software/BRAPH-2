@@ -9,6 +9,11 @@ of betweenness centrality participate in a large number of shortest paths.
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'EdgeBetwCentr'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the edge betweenness centrality.
 %%%% ¡default!
 'EdgeBetweennessCentrality'

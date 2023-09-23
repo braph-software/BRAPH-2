@@ -8,6 +8,11 @@ but not to the (k+1)-core.
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'KCorenessCentrality'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the kcorenesscentrality.
 %%%% ¡default!
 'KCorenessCentrality'

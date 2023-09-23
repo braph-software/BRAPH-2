@@ -8,6 +8,11 @@ The local efficiency is the average inverse shortest path length with
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'LocalEfficiency'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the local efficiency.
 %%%% ¡default!
 'LocalEfficiency'

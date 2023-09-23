@@ -7,6 +7,11 @@ The average eccentricity of a graph is the sum of the nodal eccentricities divid
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'EccentricityAv'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the average eccentricity.
 %%%% ¡default!
 'EccentricityAv'

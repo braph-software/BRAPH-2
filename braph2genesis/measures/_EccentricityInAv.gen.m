@@ -8,6 +8,11 @@ in-eccentricities divided by their number within a layer.
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'EccentricityInAv'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the average in-eccentricity.
 %%%% ¡default!
 'EccentricityInAv'

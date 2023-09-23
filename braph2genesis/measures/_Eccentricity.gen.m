@@ -7,6 +7,11 @@ The eccentricity of a node is the maximal shortest path length between a node an
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'Eccentricity'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the eccentricity.
 %%%% ¡default!
 'Eccentricity'

@@ -8,6 +8,11 @@ The average local efficiency is the average of all the local efficiencies
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'LocalEfficiencyAv'
+
+%%% ¡prop!
 NAME (constant, string) is the name of theaverage local efficiency.
 %%%% ¡default!
 'LocalEfficiencyAv'

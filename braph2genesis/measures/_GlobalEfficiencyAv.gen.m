@@ -8,6 +8,11 @@ global efficiency within each layer.
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'GlobalEfficiencyAv'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the average global efficiency.
 %%%% ¡default!
 'GlobalEfficiencyAv'

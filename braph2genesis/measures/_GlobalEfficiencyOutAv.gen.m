@@ -7,6 +7,11 @@ The average out-global efficiency is the average inverse shortest in-path length
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'GlobalEfficiencyOutAv'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the average out-global efficiency.
 %%%% ¡default!
 'GlobalEfficiencyOutAv'

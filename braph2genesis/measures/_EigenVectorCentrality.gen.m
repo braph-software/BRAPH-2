@@ -8,6 +8,11 @@ to the largest eigenvalue of the largest eigenvalue of the graphs adjacency matr
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'EigenVectorCentrality'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the eigenvector centrality.
 %%%% ¡default!
 'EigenVectorCentrality'
