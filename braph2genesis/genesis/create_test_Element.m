@@ -69,6 +69,13 @@ basic_tests{1} = test_inspection_methods();
              'categories = num2cell(Category.getCategories());'
             [moniker ' = ' class_name '();']
              ' '
+             '% get(''ELCLASS'')'
+            ['if isa(' class_name ', ''ConcreteElement'')']
+                ['\t' 'assert(strcmp(' class_name '().get(''ELCLASS''), ''' class_name '''), ...']
+                    ['\t\t' '[BRAPH2.STR '':' class_name ':'' BRAPH2.FAIL_TEST], ...']
+                    ['\t\t' '''' class_name '().get(''''ELCLASS'''') should return ''''' class_name '''''.'')']
+             'end'
+             ' '
              '% getClass'
             ['assert(strcmp(' class_name '.getClass(), ''' class_name '''), ...']
                 ['\t' '[BRAPH2.STR '':' class_name ':'' BRAPH2.FAIL_TEST], ...']
