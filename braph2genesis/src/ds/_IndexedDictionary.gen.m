@@ -2,24 +2,29 @@
 IndexedDictionary < ConcreteElement (idict, indexed dictionary) is an indexed dictionary.
 
 %%% ¡description!
-IndexedDictionary provides the methods necessary to handle data in an 
-indexed dictionary. It contains and manages an ordered list of couples 
-{KEY, IT}, where KEY is a unique alphanumeric key (a string) provided 
-by a property of format STRING or CLASS and of category PARAMETER or DATA 
-and IT is an element of a class defined in the constructor using the 
-property IT_CLASS.
+An Indexed Dictionary (IndexedDictionary) provides the methods necessary 
+ to handle data in an indexed dictionary. It contains and manages an 
+ ordered list of couples {KEY, IT}, where KEY is a unique alphanumeric key 
+ (a string) provided by a property of format STRING or CLASS and of 
+ category PARAMETER or DATA, and IT is an element of a class defined in the 
+ constructor using the property IT_CLASS.
 
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the indexed dictionary.
+CLASS (constant, string) is the class of the indexed dictionary.
 %%%% ¡default!
 'IndexedDictionary'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the indexed dictionary.
+%%%% ¡default!
+'Indexed Dictionary'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the indexed dictionary.
 %%%% ¡default!
-'IndexedDictionary provides the methods necessary to handle data in an indexed dictionary. It contains and manages an ordered list of couples {KEY, IT}, where KEY is a unique alphanumeric key (a string) provided by a property of format STRING or CLASS and of category PARAMETER or DATA and IT is an element of a class defined in the constructor using the property IT_CLASS.'
+'An Indexed Dictionary (IndexedDictionary) provides the methods necessary to handle data in an indexed dictionary. It contains and manages an ordered list of couples {KEY, IT}, where KEY is a unique alphanumeric key (a string) provided by a property of format STRING or CLASS and of category PARAMETER or DATA, and IT is an element of a class defined in the constructor using the property IT_CLASS.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the indexed dictionary.
