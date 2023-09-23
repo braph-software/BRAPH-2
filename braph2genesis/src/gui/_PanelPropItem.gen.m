@@ -13,7 +13,7 @@ uibutton, GUI, PanelElement, GUIElement, GUIFig
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the item prop panel.
+ELCLASS (constant, string) is the class of the item prop panel.
 %%%% ¡default!
 'PanelPropItem'
 

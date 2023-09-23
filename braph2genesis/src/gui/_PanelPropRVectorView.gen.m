@@ -16,7 +16,7 @@ GUI, PanelElement, view, uieditfield, uislider
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the panel of a view with azimuth and elevation angles.
+ELCLASS (constant, string) is the class of the panel of a view with azimuth and elevation angles.
 %%%% ¡default!
 'PanelPropRVectorView'
 

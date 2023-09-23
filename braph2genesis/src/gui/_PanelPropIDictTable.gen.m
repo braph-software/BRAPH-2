@@ -30,7 +30,7 @@ uitable, GUI, PanelPropIDict, PanelElement, GUIElement
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the idict prop panel with table.
+ELCLASS (constant, string) is the class of the idict prop panel with table.
 %%%% ¡default!
 'PanelPropIDictTable'
 

@@ -10,7 +10,7 @@ BrainSurface
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the brain surface importer from NV.
+ELCLASS (constant, string) is the class of the brain surface importer from NV.
 %%%% ¡default!
 'ImporterBrainSurfaceNV'
 

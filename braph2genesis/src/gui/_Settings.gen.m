@@ -35,7 +35,7 @@ Panel, listener
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the graphics settings.
+ELCLASS (constant, string) is the class of the graphics settings.
 %%%% ¡default!
 'Settings'
 

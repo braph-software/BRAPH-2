@@ -11,7 +11,7 @@ uieditfield, uiaxes, line, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the size prop panel.
+ELCLASS (constant, string) is the class of the size prop panel.
 %%%% ¡default!
 'PanelPropSize'
 

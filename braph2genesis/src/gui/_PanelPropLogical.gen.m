@@ -11,7 +11,7 @@ uicheckbox, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the logical prop panel.
+ELCLASS (constant, string) is the class of the logical prop panel.
 %%%% ¡default!
 'PanelPropLogical'
 

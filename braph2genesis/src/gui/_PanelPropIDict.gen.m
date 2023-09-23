@@ -11,7 +11,7 @@ uibutton, GUI, PanelElement, GUIElement
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the idict prop panel.
+ELCLASS (constant, string) is the class of the idict prop panel.
 %%%% ¡default!
 'PanelPropIDict'
 

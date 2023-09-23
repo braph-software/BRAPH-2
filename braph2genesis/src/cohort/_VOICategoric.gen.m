@@ -10,7 +10,7 @@ VOINumeric
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the categorical variable of interest.
+ELCLASS (constant, string) is the class of the categorical variable of interest.
 %%%% ¡default!
 'VOICategoric'
 

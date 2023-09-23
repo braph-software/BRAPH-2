@@ -34,7 +34,7 @@ uifigure, GUI, Element
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the GUI layout.
+ELCLASS (constant, string) is the class of the GUI layout.
 %%%% ¡default!
 'GUILayout'
 

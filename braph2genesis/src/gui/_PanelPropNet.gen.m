@@ -11,7 +11,7 @@ uibutton, GUI, PanelElement, PanelProp
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the neural network prop panel.
+ELCLASS (constant, string) is the class of the neural network prop panel.
 %%%% ¡default!
 'PanelPropNet'
 

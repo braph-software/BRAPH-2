@@ -34,7 +34,7 @@ uipanel, GUIFig, Settings
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the figure panel.
+ELCLASS (constant, string) is the class of the figure panel.
 %%%% ¡default!
 'PanelFig'
 

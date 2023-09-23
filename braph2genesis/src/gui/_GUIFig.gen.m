@@ -31,7 +31,7 @@ uifigure, PanelFig
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the figure GUI.
+ELCLASS (constant, string) is the class of the figure GUI.
 %%%% ¡default!
 'GUIFig'
 

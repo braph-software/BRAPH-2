@@ -14,7 +14,7 @@ SettingsText, uieditfield, uipushbutton, uislider
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the prop panel for text settings.
+ELCLASS (constant, string) is the class of the prop panel for text settings.
 %%%% ¡default!
 'SettingsTextPP'
 

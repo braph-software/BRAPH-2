@@ -14,7 +14,7 @@ uitextarea, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the string-list prop panel.
+ELCLASS (constant, string) is the class of the string-list prop panel.
 %%%% ¡default!
 'PanelPropStringList'
 

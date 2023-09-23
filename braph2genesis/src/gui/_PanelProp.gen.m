@@ -50,7 +50,7 @@ uipanel, uilabel, uibutton, GUI, GUIElement, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the prop panel.
+ELCLASS (constant, string) is the class of the prop panel.
 %%%% ¡default!
 'PanelProp'
 

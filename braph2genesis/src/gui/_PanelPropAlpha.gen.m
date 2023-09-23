@@ -12,7 +12,7 @@ uieditfield, uislider, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the alpha prop panel.
+ELCLASS (constant, string) is the class of the alpha prop panel.
 %%%% ¡default!
 'PanelPropAlpha'
 

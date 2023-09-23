@@ -13,7 +13,7 @@ line, PanelFig, GUIFig, check_graphics
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the line settings.
+ELCLASS (constant, string) is the class of the line settings.
 %%%% ¡default!
 'SettingsLine'
 

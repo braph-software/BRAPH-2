@@ -10,7 +10,7 @@ Exporter, Pipeline, ImporterPipelineBRAPH2
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the exporter of a pipeline to a BRAPH2 file.
+ELCLASS (constant, string) is the class of the exporter of a pipeline to a BRAPH2 file.
 %%%% ¡default!
 'ExporterPipelineBRAPH2'
 

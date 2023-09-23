@@ -135,7 +135,7 @@ Brain Region LABELS PROPERTIES
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the panel figure for brain atlas.
+ELCLASS (constant, string) is the class of the panel figure for brain atlas.
 %%%% ¡default!
 'BrainSurfacePF'
 

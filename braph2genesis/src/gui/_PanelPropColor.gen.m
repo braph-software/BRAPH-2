@@ -11,7 +11,7 @@ uibutton, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the color prop panel.
+ELCLASS (constant, string) is the class of the color prop panel.
 %%%% ¡default!
 'PanelPropColor'
 

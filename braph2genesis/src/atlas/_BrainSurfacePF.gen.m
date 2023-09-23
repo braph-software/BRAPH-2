@@ -148,7 +148,7 @@ MATERIAL & LIGHTNING
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the panel figure for brain surface.
+ELCLASS (constant, string) is the class of the panel figure for brain surface.
 %%%% ¡default!
 'BrainSurfacePF'
 

@@ -10,7 +10,7 @@ BrainAtlas, ImporterBrainAtlasTXT
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the brain atlas exporter in TXT.
+ELCLASS (constant, string) is the class of the brain atlas exporter in TXT.
 %%%% ¡default!
 'ExporterBrainAtlasTXT'
 

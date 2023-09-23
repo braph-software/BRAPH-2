@@ -13,7 +13,7 @@ SettingsPosition, uicheckbox, uieditfield
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the prop panel for position settings.
+ELCLASS (constant, string) is the class of the prop panel for position settings.
 %%%% ¡default!
 'SettingsPositionPP'
 

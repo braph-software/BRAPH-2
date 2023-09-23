@@ -31,7 +31,7 @@ uifigure, GUIElement, GUIFig
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the graphical user interface.
+ELCLASS (constant, string) is the class of the graphical user interface.
 %%%% ¡default!
 'GUI'
 

@@ -13,7 +13,7 @@ BrainAtlas, BrainRegion, BrainSurfacePF
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the brain surface.
+ELCLASS (constant, string) is the class of the brain surface.
 %%%% ¡default!
 'BrainSurface'
 

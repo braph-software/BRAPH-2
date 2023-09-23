@@ -13,7 +13,7 @@ uiaxes, SettingsAmbientPP, PanelFig, GUIFig, check_graphics
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the ambient settings.
+ELCLASS (constant, string) is the class of the ambient settings.
 %%%% ¡default!
 'SettingsAmbient'
 

@@ -24,7 +24,7 @@ uitable, uislider, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the cell prop panel.
+ELCLASS (constant, string) is the class of the cell prop panel.
 %%%% ¡default!
 'PanelPropCell'
 

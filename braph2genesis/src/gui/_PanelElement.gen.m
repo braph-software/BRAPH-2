@@ -36,7 +36,7 @@ uigridlayout, GUI, GUIElement, PanelProp
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the element panel.
+ELCLASS (constant, string) is the class of the element panel.
 %%%% ¡default!
 'PanelElement'
 

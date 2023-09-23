@@ -11,7 +11,7 @@ uidropdown, uiaxes, line, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the line prop panel.
+ELCLASS (constant, string) is the class of the line prop panel.
 %%%% ¡default!
 'PanelPropLine'
 

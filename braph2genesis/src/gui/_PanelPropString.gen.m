@@ -11,7 +11,7 @@ uieditfield, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the string prop panel.
+ELCLASS (constant, string) is the class of the string prop panel.
 %%%% ¡default!
 'PanelPropString'
 

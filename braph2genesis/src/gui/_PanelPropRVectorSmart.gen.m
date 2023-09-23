@@ -14,7 +14,7 @@ uieditfield, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the smart row-vector prop panel.
+ELCLASS (constant, string) is the class of the smart row-vector prop panel.
 %%%% ¡default!
 'PanelPropRVectorSmart'
 

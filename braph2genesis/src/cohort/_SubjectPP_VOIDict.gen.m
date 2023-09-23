@@ -12,7 +12,7 @@ Subject, uieditfield, uidropdown
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the VOI prop panel.
+ELCLASS (constant, string) is the class of the VOI prop panel.
 %%%% ¡default!
 'SubjectPP_VOIDict'
 

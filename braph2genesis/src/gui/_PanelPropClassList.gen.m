@@ -11,7 +11,7 @@ uilistbox, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the class-list prop panel.
+ELCLASS (constant, string) is the class of the class-list prop panel.
 %%%% ¡default!
 'PanelPropClassList'
 

@@ -11,7 +11,7 @@ uitextarea, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the string prop panel with a text-area.
+ELCLASS (constant, string) is the class of the string prop panel with a text-area.
 %%%% ¡default!
 'PanelPropStringTextArea'
 

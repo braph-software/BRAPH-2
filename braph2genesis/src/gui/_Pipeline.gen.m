@@ -75,7 +75,7 @@ PIPELINE WORKFLOW
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the pipeline.
+ELCLASS (constant, string) is the class of the pipeline.
 %%%% ¡default!
 'Pipeline'
 

@@ -12,7 +12,7 @@ Group
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the subject.
+ELCLASS (constant, string) is the class of the subject.
 %%%% ¡default!
 'Subject'
 

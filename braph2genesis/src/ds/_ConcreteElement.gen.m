@@ -2,11 +2,10 @@
 ConcreteElement < Element (el, concrete element) is the base class for all concrete elements.
 
 %%% ¡description!
-ConcreteElement provides the infrastructure necessary for all concrete elements. 
-In particular, it has the constant properties NAME (string) and DESCRIPTION (string), 
-the property TEMPLATE (item), and the indexing properties ID (string), LABEL (string), and NOTES (string).
-Even though it is possible to create instances of ConcreteElement, 
-typically one uses its subclasses.
+A Concrete Element (ConcreteElement) provides the infrastructure necessary for all concrete elements. 
+ In particular, it has the constant properties NAME (string) and DESCRIPTION (string), 
+ the property TEMPLATE (item), and the indexing properties ID (string), LABEL (string), and NOTES (string).
+Even though it is possible to create instances of ConcreteElement, typically one uses its subclasses.
 
 %%% ¡seealso!
 NoValue, Callback
@@ -14,14 +13,19 @@ NoValue, Callback
 %% ¡props!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the concrete element.
+ELCLASS (constant, string) is the class of the concrete element.
 %%%% ¡default!
 'ConcreteElement'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the concrete element.
+%%%% ¡default!
+'Concrete Element'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the concrete element.
 %%%% ¡default!
-'ConcreteElement provides the infrastructure necessary for all concrete elements. In particular, it has the constant properties NAME (string) and DESCRIPTION (string), the property TEMPLATE (item), and the indexing properties ID (string), LABEL (string), and NOTES (string). Even though it is possible to create instances of ConcreteElement, typically one uses its subclasses.'
+'A Concrete Element (ConcreteElement) provides the infrastructure necessary for all concrete elements. In particular, it has the constant properties NAME (string) and DESCRIPTION (string), the property TEMPLATE (item), and the indexing properties ID (string), LABEL (string), and NOTES (string). Even though it is possible to create instances of ConcreteElement, typically one uses its subclasses.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the concrete element.

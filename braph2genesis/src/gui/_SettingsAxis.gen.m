@@ -13,7 +13,7 @@ uiaxes, SettingsAxisPP, PanelFig, GUIFig, check_graphics
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the axis settings.
+ELCLASS (constant, string) is the class of the axis settings.
 %%%% ¡default!
 'SettingsAxis'
 

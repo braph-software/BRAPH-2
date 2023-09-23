@@ -2,53 +2,11 @@ classdef PanelPropRVectorSmart < PanelPropString
 	%PanelPropRVectorSmart plots the panel of a smart row vector.
 	% It is a subclass of <a href="matlab:help PanelPropString">PanelPropString</a>.
 	%
-	% PanelPropRVEctorSmart plots the panel for a row vector with an edit field.
-	% Smart means that (almost) any MatLab expression leading to a correct row 
-	% vector can be introduced in the edit field.
-	% Also, the value of the vector can be limited between some MIN and MAX.
-	% It works for all categories, exept for Category.RESULT, Category.QUERY, or Category.EVANESCENT.
-	%
-	% The list of PanelPropRVectorSmart properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the smart row vector panel.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the smart row vectorpanel.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the smart row vector panel.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the smart row vector panel.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the smart row vector panel.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the smart row vector panel.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
-	%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-	%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-	%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-	%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-	%  <strong>19</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-	%  <strong>20</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the editfield.
-	%  <strong>21</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-	%  <strong>22</strong> <strong>EL</strong> 	EL (data, item) is the element.
-	%  <strong>23</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-	%  <strong>24</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the property panel.
-	%  <strong>25</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-	%  <strong>26</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-	%  <strong>27</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-	%  <strong>28</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-	%  <strong>29</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-	%  <strong>30</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>31</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>32</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-	%  <strong>33</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-	%  <strong>34</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-	%  <strong>35</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the editfield between active and inactive appearance when not editable.
-	%  <strong>36</strong> <strong>EDITFIELD</strong> 	EDITFIELD (evanescent, handle) is the string value edit field with a smart row vector.
-	%  <strong>37</strong> <strong>MAX</strong> 	MAX (parameter, scalar) is the max value acceptable as input.
-	%  <strong>38</strong> <strong>MIN</strong> 	MIN (parameter, scalar) is the min value acceptable as input.
-	%  <strong>39</strong> <strong>UNIQUE_VALUE</strong> 	UNIQUE_VALUE (parameter, logical) determines if sorting the data with no repetitions.
-	%  <strong>40</strong> <strong>DEFAULT</strong> 	DEFAULT (parameter, rvector) is the default value.
+	% A Smart Row-Vector Prop Panel (PanelPropRVEctorSmart) plots the panel 
+	%  for a row vector with an edit field. Smart means that (almost) any MatLab 
+	%  expression leading to a correct row vector can be introduced in the edit field.
+	%  Also, the value of the vector can be limited between some MIN and MAX.
+	% It works for all categories, exept for __Category.RESULT__, __Category.QUERY__, or __Category.EVANESCENT__.
 	%
 	% PanelPropRVectorSmart methods (constructor):
 	%  PanelPropRVectorSmart - constructor
@@ -68,33 +26,33 @@ classdef PanelPropRVectorSmart < PanelPropString
 	%  unchecked - sets a property to NOT checked
 	%
 	% PanelPropRVectorSmart methods (display):
-	%  tostring - string with information about the panel property string
-	%  disp - displays information about the panel property string
-	%  tree - displays the tree of the panel property string
+	%  tostring - string with information about the smart row-vector prop panel
+	%  disp - displays information about the smart row-vector prop panel
+	%  tree - displays the tree of the smart row-vector prop panel
 	%
 	% PanelPropRVectorSmart methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two panel property string are equal (values, locked)
+	%  isequal - determines whether two smart row-vector prop panel are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the panel property string
+	%  copy - copies the smart row-vector prop panel
 	%
 	% PanelPropRVectorSmart methods (save/load, Static):
-	%  save - saves BRAPH2 panel property string as b2 file
-	%  load - loads a BRAPH2 panel property string from a b2 file
+	%  save - saves BRAPH2 smart row-vector prop panel as b2 file
+	%  load - loads a BRAPH2 smart row-vector prop panel from a b2 file
 	%
 	% PanelPropRVectorSmart method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the panel property string
+	%  encodeJSON - returns a JSON string encoding the smart row-vector prop panel
 	%
 	% PanelPropRVectorSmart method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the panel property string
+	%   decodeJSON - returns a JSON string encoding the smart row-vector prop panel
 	%
 	% PanelPropRVectorSmart methods (inspection, Static):
-	%  getClass - returns the class of the panel property string
+	%  getClass - returns the class of the smart row-vector prop panel
 	%  getSubclasses - returns all subclasses of PanelPropRVectorSmart
-	%  getProps - returns the property list of the panel property string
-	%  getPropNumber - returns the property number of the panel property string
+	%  getProps - returns the property list of the smart row-vector prop panel
+	%  getPropNumber - returns the property number of the smart row-vector prop panel
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -139,29 +97,29 @@ classdef PanelPropRVectorSmart < PanelPropString
 	% See also uieditfield, GUI, PanelElement.
 	
 	properties (Constant) % properties
-		MAX = 37; %CET: Computational Efficiency Trick
+		MAX = PanelPropString.getPropNumber() + 1;
 		MAX_TAG = 'MAX';
-		MAX_CATEGORY = 3;
-		MAX_FORMAT = 11;
+		MAX_CATEGORY = Category.PARAMETER;
+		MAX_FORMAT = Format.SCALAR;
 		
-		MIN = 38; %CET: Computational Efficiency Trick
+		MIN = PanelPropString.getPropNumber() + 2;
 		MIN_TAG = 'MIN';
-		MIN_CATEGORY = 3;
-		MIN_FORMAT = 11;
+		MIN_CATEGORY = Category.PARAMETER;
+		MIN_FORMAT = Format.SCALAR;
 		
-		UNIQUE_VALUE = 39; %CET: Computational Efficiency Trick
+		UNIQUE_VALUE = PanelPropString.getPropNumber() + 3;
 		UNIQUE_VALUE_TAG = 'UNIQUE_VALUE';
-		UNIQUE_VALUE_CATEGORY = 3;
-		UNIQUE_VALUE_FORMAT = 4;
+		UNIQUE_VALUE_CATEGORY = Category.PARAMETER;
+		UNIQUE_VALUE_FORMAT = Format.LOGICAL;
 		
-		DEFAULT = 40; %CET: Computational Efficiency Trick
+		DEFAULT = PanelPropString.getPropNumber() + 4;
 		DEFAULT_TAG = 'DEFAULT';
-		DEFAULT_CATEGORY = 3;
-		DEFAULT_FORMAT = 12;
+		DEFAULT_CATEGORY = Category.PARAMETER;
+		DEFAULT_FORMAT = Format.RVECTOR;
 	end
 	methods % constructor
 		function pr = PanelPropRVectorSmart(varargin)
-			%PanelPropRVectorSmart() creates a panel property string.
+			%PanelPropRVectorSmart() creates a smart row-vector prop panel.
 			%
 			% PanelPropRVectorSmart(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -170,47 +128,6 @@ classdef PanelPropRVectorSmart < PanelPropString
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of PanelPropRVectorSmart properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the smart row vector panel.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the smart row vectorpanel.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the smart row vector panel.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the smart row vector panel.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the smart row vector panel.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the smart row vector panel.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
-			%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-			%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-			%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-			%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-			%  <strong>19</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-			%  <strong>20</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the editfield.
-			%  <strong>21</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-			%  <strong>22</strong> <strong>EL</strong> 	EL (data, item) is the element.
-			%  <strong>23</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-			%  <strong>24</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the property panel.
-			%  <strong>25</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-			%  <strong>26</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-			%  <strong>27</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-			%  <strong>28</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-			%  <strong>29</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-			%  <strong>30</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>31</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>32</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-			%  <strong>33</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-			%  <strong>34</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-			%  <strong>35</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the editfield between active and inactive appearance when not editable.
-			%  <strong>36</strong> <strong>EDITFIELD</strong> 	EDITFIELD (evanescent, handle) is the string value edit field with a smart row vector.
-			%  <strong>37</strong> <strong>MAX</strong> 	MAX (parameter, scalar) is the max value acceptable as input.
-			%  <strong>38</strong> <strong>MIN</strong> 	MIN (parameter, scalar) is the min value acceptable as input.
-			%  <strong>39</strong> <strong>UNIQUE_VALUE</strong> 	UNIQUE_VALUE (parameter, logical) determines if sorting the data with no repetitions.
-			%  <strong>40</strong> <strong>DEFAULT</strong> 	DEFAULT (parameter, rvector) is the default value.
 			%
 			% See also Category, Format.
 			
@@ -219,12 +136,12 @@ classdef PanelPropRVectorSmart < PanelPropString
 	end
 	methods (Static) % inspection
 		function pr_class = getClass()
-			%GETCLASS returns the class of the panel property string.
+			%GETCLASS returns the class of the smart row-vector prop panel.
 			%
 			% CLASS = PanelPropRVectorSmart.GETCLASS() returns the class 'PanelPropRVectorSmart'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = PR.GETCLASS() returns the class of the panel property string PR.
+			%  CLASS = PR.GETCLASS() returns the class of the smart row-vector prop panel PR.
 			%  CLASS = Element.GETCLASS(PR) returns the class of 'PR'.
 			%  CLASS = Element.GETCLASS('PanelPropRVectorSmart') returns 'PanelPropRVectorSmart'.
 			%
@@ -234,12 +151,12 @@ classdef PanelPropRVectorSmart < PanelPropString
 			pr_class = 'PanelPropRVectorSmart';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the panel property string.
+			%GETSUBCLASSES returns all subclasses of the smart row-vector prop panel.
 			%
 			% LIST = PanelPropRVectorSmart.GETSUBCLASSES() returns all subclasses of 'PanelPropRVectorSmart'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = PR.GETSUBCLASSES() returns all subclasses of the panel property string PR.
+			%  LIST = PR.GETSUBCLASSES() returns all subclasses of the smart row-vector prop panel PR.
 			%  LIST = Element.GETSUBCLASSES(PR) returns all subclasses of 'PR'.
 			%  LIST = Element.GETSUBCLASSES('PanelPropRVectorSmart') returns all subclasses of 'PanelPropRVectorSmart'.
 			%
@@ -248,19 +165,19 @@ classdef PanelPropRVectorSmart < PanelPropString
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'PanelPropRVectorSmart' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('PanelPropRVectorSmart', [], [], true);
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of panel property string.
+			%GETPROPS returns the property list of smart row-vector prop panel.
 			%
-			% PROPS = PanelPropRVectorSmart.GETPROPS() returns the property list of panel property string
+			% PROPS = PanelPropRVectorSmart.GETPROPS() returns the property list of smart row-vector prop panel
 			%  as a row vector.
 			%
 			% PROPS = PanelPropRVectorSmart.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = PR.GETPROPS([CATEGORY]) returns the property list of the panel property string PR.
+			%  PROPS = PR.GETPROPS([CATEGORY]) returns the property list of the smart row-vector prop panel PR.
 			%  PROPS = Element.GETPROPS(PR[, CATEGORY]) returns the property list of 'PR'.
 			%  PROPS = Element.GETPROPS('PanelPropRVectorSmart'[, CATEGORY]) returns the property list of 'PanelPropRVectorSmart'.
 			%
@@ -269,44 +186,70 @@ classdef PanelPropRVectorSmart < PanelPropString
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40];
+				prop_list = [ ...
+					PanelPropString.getProps() ...
+						PanelPropRVectorSmart.MAX ...
+						PanelPropRVectorSmart.MIN ...
+						PanelPropRVectorSmart.UNIQUE_VALUE ...
+						PanelPropRVectorSmart.DEFAULT ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2];
-				case 2 % Category.METADATA
-					prop_list = [5 6];
-				case 3 % Category.PARAMETER
-					prop_list = [3 37 38 39 40];
-				case 4 % Category.DATA
-					prop_list = [4 22 23 28];
-				case 6 % Category.QUERY
-					prop_list = [7 10 11 15 16 17 18 19 20 21];
-				case 7 % Category.EVANESCENT
-					prop_list = [9 14 26 27 29 30 31 32 33 34 36];
-				case 8 % Category.FIGURE
-					prop_list = 13;
-				case 9 % Category.GUI
-					prop_list = [8 12 24 25 35];
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						PanelPropString.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						PanelPropString.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						PanelPropString.getProps(Category.PARAMETER) ...
+						PanelPropRVectorSmart.MAX ...
+						PanelPropRVectorSmart.MIN ...
+						PanelPropRVectorSmart.UNIQUE_VALUE ...
+						PanelPropRVectorSmart.DEFAULT ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						PanelPropString.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						PanelPropString.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						PanelPropString.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						PanelPropString.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						PanelPropString.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						PanelPropString.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of panel property string.
+			%GETPROPNUMBER returns the property number of smart row-vector prop panel.
 			%
-			% N = PanelPropRVectorSmart.GETPROPNUMBER() returns the property number of panel property string.
+			% N = PanelPropRVectorSmart.GETPROPNUMBER() returns the property number of smart row-vector prop panel.
 			%
-			% N = PanelPropRVectorSmart.GETPROPNUMBER(CATEGORY) returns the property number of panel property string
+			% N = PanelPropRVectorSmart.GETPROPNUMBER(CATEGORY) returns the property number of smart row-vector prop panel
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = PR.GETPROPNUMBER([CATEGORY]) returns the property number of the panel property string PR.
+			%  N = PR.GETPROPNUMBER([CATEGORY]) returns the property number of the smart row-vector prop panel PR.
 			%  N = Element.GETPROPNUMBER(PR) returns the property number of 'PR'.
 			%  N = Element.GETPROPNUMBER('PanelPropRVectorSmart') returns the property number of 'PanelPropRVectorSmart'.
 			%
@@ -315,36 +258,10 @@ classdef PanelPropRVectorSmart < PanelPropString
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 40;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 2;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 5;
-				case 4 % Category.DATA
-					prop_number = 4;
-				case 6 % Category.QUERY
-					prop_number = 10;
-				case 7 % Category.EVANESCENT
-					prop_number = 11;
-				case 8 % Category.FIGURE
-					prop_number = 1;
-				case 9 % Category.GUI
-					prop_number = 5;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(PanelPropRVectorSmart.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in panel property string/error.
+			%EXISTSPROP checks whether property exists in smart row-vector prop panel/error.
 			%
 			% CHECK = PanelPropRVectorSmart.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -369,20 +286,20 @@ classdef PanelPropRVectorSmart < PanelPropString
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 40 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == PanelPropRVectorSmart.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':PanelPropRVectorSmart:' 'WrongInput'], ...
-					['BRAPH2' ':PanelPropRVectorSmart:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':PanelPropRVectorSmart:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':PanelPropRVectorSmart:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for PanelPropRVectorSmart.'] ...
 					)
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in panel property string/error.
+			%EXISTSTAG checks whether tag exists in smart row-vector prop panel/error.
 			%
 			% CHECK = PanelPropRVectorSmart.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -407,14 +324,15 @@ classdef PanelPropRVectorSmart < PanelPropString
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'EDITFIELD'  'MAX'  'MIN'  'UNIQUE_VALUE'  'DEFAULT' })); %CET: Computational Efficiency Trick
+			panelproprvectorsmart_tag_list = cellfun(@(x) PanelPropRVectorSmart.getPropTag(x), num2cell(PanelPropRVectorSmart.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, panelproprvectorsmart_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':PanelPropRVectorSmart:' 'WrongInput'], ...
-					['BRAPH2' ':PanelPropRVectorSmart:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':PanelPropRVectorSmart:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':PanelPropRVectorSmart:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for PanelPropRVectorSmart.'] ...
 					)
 			end
@@ -440,7 +358,8 @@ classdef PanelPropRVectorSmart < PanelPropString
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'EDITFIELD'  'MAX'  'MIN'  'UNIQUE_VALUE'  'DEFAULT' })); % tag = pointer %CET: Computational Efficiency Trick
+				panelproprvectorsmart_tag_list = cellfun(@(x) PanelPropRVectorSmart.getPropTag(x), num2cell(PanelPropRVectorSmart.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, panelproprvectorsmart_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -468,9 +387,20 @@ classdef PanelPropRVectorSmart < PanelPropString
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				panelproprvectorsmart_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'EDITFIELD'  'MAX'  'MIN'  'UNIQUE_VALUE'  'DEFAULT' };
-				tag = panelproprvectorsmart_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case PanelPropRVectorSmart.MAX
+						tag = PanelPropRVectorSmart.MAX_TAG;
+					case PanelPropRVectorSmart.MIN
+						tag = PanelPropRVectorSmart.MIN_TAG;
+					case PanelPropRVectorSmart.UNIQUE_VALUE
+						tag = PanelPropRVectorSmart.UNIQUE_VALUE_TAG;
+					case PanelPropRVectorSmart.DEFAULT
+						tag = PanelPropRVectorSmart.DEFAULT_TAG;
+					otherwise
+						tag = getPropTag@PanelPropString(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -495,9 +425,18 @@ classdef PanelPropRVectorSmart < PanelPropString
 			
 			prop = PanelPropRVectorSmart.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			panelproprvectorsmart_category_list = { 1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  7  3  3  3  3 };
-			prop_category = panelproprvectorsmart_category_list{prop};
+			switch prop
+				case PanelPropRVectorSmart.MAX
+					prop_category = PanelPropRVectorSmart.MAX_CATEGORY;
+				case PanelPropRVectorSmart.MIN
+					prop_category = PanelPropRVectorSmart.MIN_CATEGORY;
+				case PanelPropRVectorSmart.UNIQUE_VALUE
+					prop_category = PanelPropRVectorSmart.UNIQUE_VALUE_CATEGORY;
+				case PanelPropRVectorSmart.DEFAULT
+					prop_category = PanelPropRVectorSmart.DEFAULT_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@PanelPropString(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -521,9 +460,18 @@ classdef PanelPropRVectorSmart < PanelPropString
 			
 			prop = PanelPropRVectorSmart.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			panelproprvectorsmart_format_list = { 2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  4  18  11  11  4  12 };
-			prop_format = panelproprvectorsmart_format_list{prop};
+			switch prop
+				case PanelPropRVectorSmart.MAX
+					prop_format = PanelPropRVectorSmart.MAX_FORMAT;
+				case PanelPropRVectorSmart.MIN
+					prop_format = PanelPropRVectorSmart.MIN_FORMAT;
+				case PanelPropRVectorSmart.UNIQUE_VALUE
+					prop_format = PanelPropRVectorSmart.UNIQUE_VALUE_FORMAT;
+				case PanelPropRVectorSmart.DEFAULT
+					prop_format = PanelPropRVectorSmart.DEFAULT_FORMAT;
+				otherwise
+					prop_format = getPropFormat@PanelPropString(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -547,9 +495,40 @@ classdef PanelPropRVectorSmart < PanelPropString
 			
 			prop = PanelPropRVectorSmart.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			panelproprvectorsmart_description_list = { 'NAME (constant, string) is the name of the smart row vector panel.'  'DESCRIPTION (constant, string) is the description of the smart row vectorpanel.'  'TEMPLATE (parameter, item) is the template of the smart row vector panel.'  'ID (data, string) is a few-letter code for the smart row vector panel.'  'LABEL (metadata, string) is an extended label of the smart row vector panel.'  'NOTES (metadata, string) are some specific notes about the smart row vector panel.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the property panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the editfield.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the property panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'ENABLE (gui, logical) switches the editfield between active and inactive appearance when not editable.'  'EDITFIELD (evanescent, handle) is the string value edit field with a smart row vector.'  'MAX (parameter, scalar) is the max value acceptable as input.'  'MIN (parameter, scalar) is the min value acceptable as input.'  'UNIQUE_VALUE (parameter, logical) determines if sorting the data with no repetitions.'  'DEFAULT (parameter, rvector) is the default value.' };
-			prop_description = panelproprvectorsmart_description_list{prop};
+			switch prop
+				case PanelPropRVectorSmart.MAX
+					prop_description = 'MAX (parameter, scalar) is the max value acceptable as input.';
+				case PanelPropRVectorSmart.MIN
+					prop_description = 'MIN (parameter, scalar) is the min value acceptable as input.';
+				case PanelPropRVectorSmart.UNIQUE_VALUE
+					prop_description = 'UNIQUE_VALUE (parameter, logical) determines if sorting the data with no repetitions.';
+				case PanelPropRVectorSmart.DEFAULT
+					prop_description = 'DEFAULT (parameter, rvector) is the default value.';
+				case PanelPropRVectorSmart.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the smart row-vector prop panel.';
+				case PanelPropRVectorSmart.NAME
+					prop_description = 'NAME (constant, string) is the name of the smart row-vector prop panel.';
+				case PanelPropRVectorSmart.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the smart row-vector prop panel.';
+				case PanelPropRVectorSmart.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the smart row-vector prop panel.';
+				case PanelPropRVectorSmart.ID
+					prop_description = 'ID (data, string) is a few-letter code for the smart row-vector prop panel.';
+				case PanelPropRVectorSmart.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the smart row-vector prop panel.';
+				case PanelPropRVectorSmart.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the smart row-vector prop panel.';
+				case PanelPropRVectorSmart.EL
+					prop_description = 'EL (data, item) is the element.';
+				case PanelPropRVectorSmart.PROP
+					prop_description = 'PROP (data, scalar) is the prop number.';
+				case PanelPropRVectorSmart.UPDATE
+					prop_description = 'UPDATE (query, logical) updates the content and permissions of the editfield.';
+				case PanelPropRVectorSmart.EDITFIELD
+					prop_description = 'EDITFIELD (evanescent, handle) is the string value edit field with a smart row vector.';
+				otherwise
+					prop_description = getPropDescription@PanelPropString(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -573,16 +552,16 @@ classdef PanelPropRVectorSmart < PanelPropString
 			
 			prop = PanelPropRVectorSmart.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 37 % PanelPropRVectorSmart.MAX
-					prop_settings = Format.getFormatSettings(11);
-				case 38 % PanelPropRVectorSmart.MIN
-					prop_settings = Format.getFormatSettings(11);
-				case 39 % PanelPropRVectorSmart.UNIQUE_VALUE
-					prop_settings = Format.getFormatSettings(4);
-				case 40 % PanelPropRVectorSmart.DEFAULT
-					prop_settings = Format.getFormatSettings(12);
-				case 3 % PanelPropRVectorSmart.TEMPLATE
+			switch prop
+				case PanelPropRVectorSmart.MAX
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case PanelPropRVectorSmart.MIN
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case PanelPropRVectorSmart.UNIQUE_VALUE
+					prop_settings = Format.getFormatSettings(Format.LOGICAL);
+				case PanelPropRVectorSmart.DEFAULT
+					prop_settings = Format.getFormatSettings(Format.RVECTOR);
+				case PanelPropRVectorSmart.TEMPLATE
 					prop_settings = 'PanelPropRVectorSmart';
 				otherwise
 					prop_settings = getPropSettings@PanelPropString(prop);
@@ -610,31 +589,33 @@ classdef PanelPropRVectorSmart < PanelPropString
 			
 			prop = PanelPropRVectorSmart.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 37 % PanelPropRVectorSmart.MAX
+			switch prop
+				case PanelPropRVectorSmart.MAX
 					prop_default = +Inf;
-				case 38 % PanelPropRVectorSmart.MIN
+				case PanelPropRVectorSmart.MIN
 					prop_default = -Inf;
-				case 39 % PanelPropRVectorSmart.UNIQUE_VALUE
+				case PanelPropRVectorSmart.UNIQUE_VALUE
 					prop_default = true;
-				case 40 % PanelPropRVectorSmart.DEFAULT
-					prop_default = Format.getFormatDefault(12, PanelPropRVectorSmart.getPropSettings(prop));
-				case 1 % PanelPropRVectorSmart.NAME
+				case PanelPropRVectorSmart.DEFAULT
+					prop_default = Format.getFormatDefault(Format.RVECTOR, PanelPropRVectorSmart.getPropSettings(prop));
+				case PanelPropRVectorSmart.ELCLASS
 					prop_default = 'PanelPropRVectorSmart';
-				case 2 % PanelPropRVectorSmart.DESCRIPTION
-					prop_default = 'PanelPropRVectorSmart plots the panel for a row vector with an edit field. Smart means that (almost) any MatLab expression leading to a correct row vector can be introduced in the edit field. Also, the value of the vector can be limited between some MIN and MAX. It works for all categories, exept for Category.RESULT, Category.QUERY, or Category.EVANESCENT.';
-				case 3 % PanelPropRVectorSmart.TEMPLATE
-					prop_default = Format.getFormatDefault(8, PanelPropRVectorSmart.getPropSettings(prop));
-				case 4 % PanelPropRVectorSmart.ID
+				case PanelPropRVectorSmart.NAME
+					prop_default = 'Smart Row-Vector Prop Panel';
+				case PanelPropRVectorSmart.DESCRIPTION
+					prop_default = 'A Smart Row-Vector Prop Panel (PanelPropRVEctorSmart) plots the panel for a row vector with an edit field. Smart means that (almost) any MatLab expression leading to a correct row vector can be introduced in the edit field. Also, the value of the vector can be limited between some MIN and MAX. It works for all categories, exept for __Category.RESULT__, __Category.QUERY__, or __Category.EVANESCENT__.';
+				case PanelPropRVectorSmart.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, PanelPropRVectorSmart.getPropSettings(prop));
+				case PanelPropRVectorSmart.ID
 					prop_default = 'PanelPropRVectorSmart ID';
-				case 5 % PanelPropRVectorSmart.LABEL
+				case PanelPropRVectorSmart.LABEL
 					prop_default = 'PanelPropRVectorSmart label';
-				case 6 % PanelPropRVectorSmart.NOTES
+				case PanelPropRVectorSmart.NOTES
 					prop_default = 'PanelPropRVectorSmart notes';
-				case 22 % PanelPropRVectorSmart.EL
+				case PanelPropRVectorSmart.EL
 					prop_default = Graph();
-				case 23 % PanelPropRVectorSmart.PROP
-					prop_default = 13;
+				case PanelPropRVectorSmart.PROP
+					prop_default = Graph.LAYERTICKS;
 				otherwise
 					prop_default = getPropDefault@PanelPropString(prop);
 			end
@@ -680,15 +661,15 @@ classdef PanelPropRVectorSmart < PanelPropString
 			% 
 			% PR.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:PanelPropRVectorSmart:WrongInput
+			%  Error id: €BRAPH2.STR€:PanelPropRVectorSmart:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PR.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PR.
-			%   Error id: BRAPH2:PanelPropRVectorSmart:WrongInput
+			%   Error id: €BRAPH2.STR€:PanelPropRVectorSmart:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(PanelPropRVectorSmart, PROP, VALUE) throws error if VALUE has not a valid format for PROP of PanelPropRVectorSmart.
-			%   Error id: BRAPH2:PanelPropRVectorSmart:WrongInput
+			%   Error id: €BRAPH2.STR€:PanelPropRVectorSmart:€BRAPH2.WRONG_INPUT€
 			%  PR.CHECKPROP(PanelPropRVectorSmart, PROP, VALUE) throws error if VALUE has not a valid format for PROP of PanelPropRVectorSmart.
-			%   Error id: BRAPH2:PanelPropRVectorSmart:WrongInput]
+			%   Error id: €BRAPH2.STR€:PanelPropRVectorSmart:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(PR) and Element.CHECKPROP('PanelPropRVectorSmart')
 			%  are less computationally efficient.
@@ -699,18 +680,18 @@ classdef PanelPropRVectorSmart < PanelPropString
 			prop = PanelPropRVectorSmart.getPropProp(pointer);
 			
 			switch prop
-				case 37 % PanelPropRVectorSmart.MAX
-					check = Format.checkFormat(11, value, PanelPropRVectorSmart.getPropSettings(prop));
-				case 38 % PanelPropRVectorSmart.MIN
-					check = Format.checkFormat(11, value, PanelPropRVectorSmart.getPropSettings(prop));
-				case 39 % PanelPropRVectorSmart.UNIQUE_VALUE
-					check = Format.checkFormat(4, value, PanelPropRVectorSmart.getPropSettings(prop));
-				case 40 % PanelPropRVectorSmart.DEFAULT
-					check = Format.checkFormat(12, value, PanelPropRVectorSmart.getPropSettings(prop));
-				case 3 % PanelPropRVectorSmart.TEMPLATE
-					check = Format.checkFormat(8, value, PanelPropRVectorSmart.getPropSettings(prop));
+				case PanelPropRVectorSmart.MAX % __PanelPropRVectorSmart.MAX__
+					check = Format.checkFormat(Format.SCALAR, value, PanelPropRVectorSmart.getPropSettings(prop));
+				case PanelPropRVectorSmart.MIN % __PanelPropRVectorSmart.MIN__
+					check = Format.checkFormat(Format.SCALAR, value, PanelPropRVectorSmart.getPropSettings(prop));
+				case PanelPropRVectorSmart.UNIQUE_VALUE % __PanelPropRVectorSmart.UNIQUE_VALUE__
+					check = Format.checkFormat(Format.LOGICAL, value, PanelPropRVectorSmart.getPropSettings(prop));
+				case PanelPropRVectorSmart.DEFAULT % __PanelPropRVectorSmart.DEFAULT__
+					check = Format.checkFormat(Format.RVECTOR, value, PanelPropRVectorSmart.getPropSettings(prop));
+				case PanelPropRVectorSmart.TEMPLATE % __PanelPropRVectorSmart.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, PanelPropRVectorSmart.getPropSettings(prop));
 				otherwise
-					if prop <= 36
+					if prop <= PanelPropString.getPropNumber()
 						check = checkProp@PanelPropString(prop, value);
 					end
 			end
@@ -719,8 +700,8 @@ classdef PanelPropRVectorSmart < PanelPropString
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':PanelPropRVectorSmart:' 'WrongInput'], ...
-					['BRAPH2' ':PanelPropRVectorSmart:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':PanelPropRVectorSmart:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':PanelPropRVectorSmart:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' PanelPropRVectorSmart.getPropTag(prop) ' (' PanelPropRVectorSmart.getFormatTag(PanelPropRVectorSmart.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -731,33 +712,33 @@ classdef PanelPropRVectorSmart < PanelPropString
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 20 % PanelPropRVectorSmart.UPDATE
-					value = calculateValue@PanelProp(pr, 20, varargin{:}); % skips PanelPropString.UPDATE % also warning
+				case PanelPropRVectorSmart.UPDATE % __PanelPropRVectorSmart.UPDATE__
+					value = calculateValue@PanelProp(pr, PanelProp.UPDATE, varargin{:}); % skips __PanelPropString.UPDATE__ % also warning
 					if value
 					    el = pr.get('EL');
 					    prop = pr.get('PROP');
 					    
 					    switch el.getPropCategory(prop)
-					        case 1
+					        case Category.CONSTANT
 					            set(pr.get('EDITFIELD'), ...
 					                'Value', mat2str(el.get(prop)), ...
 					                'Editable', 'off', ...
 					                'Enable', pr.get('ENABLE') ...
 					                )
 					            
-					        case 2
+					        case Category.METADATA
 					            set(pr.get('EDITFIELD'), 'Value', mat2str(el.get(prop)))
 					
 					            if el.isLocked(prop)
@@ -767,7 +748,7 @@ classdef PanelPropRVectorSmart < PanelPropString
 					                    )
 					            end
 					            
-					        case {3, 4, 8, 9}
+					        case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
 					            set(pr.get('EDITFIELD'), 'Value', mat2str(el.get(prop)))
 					
 					            prop_value = el.getr(prop);
@@ -778,20 +759,20 @@ classdef PanelPropRVectorSmart < PanelPropString
 					                    )
 					            end
 					
-					        case {5 6 7}
-					            error(['BRAPH2' ':PanelPropRVectorSmart:' 'ErrorFunc'], ...
-					                'PanelPropRVectorSmart should not be used with Category.RESULT, Category.QUERY, or Category.EVANESCENT.')
+					        case {Category.RESULT Category.QUERY Category.EVANESCENT}
+					            error([BRAPH2.STR ':PanelPropRVectorSmart:' BRAPH2.ERR_FUNC], ...
+					                'PanelPropRVectorSmart should not be used with __Category.RESULT__, __Category.QUERY__, or __Category.EVANESCENT__.')
 					    end
 					end
 					
-				case 36 % PanelPropRVectorSmart.EDITFIELD
+				case PanelPropRVectorSmart.EDITFIELD % __PanelPropRVectorSmart.EDITFIELD__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
 					editfield = uieditfield( ...
 					    'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'EDITFIELD', ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
 					    'ValueChangedFcn', {@cb_editfield} ...
 					    );
@@ -799,7 +780,7 @@ classdef PanelPropRVectorSmart < PanelPropString
 					value = editfield;
 					
 				otherwise
-					if prop <= 36
+					if prop <= PanelPropString.getPropNumber()
 						value = calculateValue@PanelPropString(pr, prop, varargin{:});
 					else
 						value = calculateValue@Element(pr, prop, varargin{:});

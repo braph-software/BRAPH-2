@@ -13,7 +13,7 @@ SettingsPosition, uipushbutton, uieditfield, uislider
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the prop panel for surface settings.
+ELCLASS (constant, string) is the class of the prop panel for surface settings.
 %%%% ¡default!
 'SettingsSurfacePP'
 

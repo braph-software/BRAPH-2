@@ -37,7 +37,7 @@ uipanel, PanelElement, PanelProp, PanelFig, GUI, GUIElement, GUIFig
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the panel.
+ELCLASS (constant, string) is the class of the panel.
 %%%% ¡default!
 'Panel'
 

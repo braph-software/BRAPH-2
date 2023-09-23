@@ -10,7 +10,7 @@ PipelinePP_PSDict, Pipeline, PipelineSection
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the pipeline code line.
+ELCLASS (constant, string) is the class of the pipeline code line.
 %%%% ¡default!
 'PipelineCode'
 

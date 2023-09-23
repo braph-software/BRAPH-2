@@ -13,7 +13,7 @@ SettingsPosition, uicheckbox, uipushbutton
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the prop panel for axis settings.
+ELCLASS (constant, string) is the class of the prop panel for axis settings.
 %%%% ¡default!
 'SettingsAxisPP'
 

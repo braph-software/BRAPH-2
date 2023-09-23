@@ -57,7 +57,7 @@ Group NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the group of subjects.
+ELCLASS (constant, string) is the class of the group of subjects.
 %%%% ¡default!
 'Group'
 

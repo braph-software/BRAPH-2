@@ -11,7 +11,7 @@ Pipeline
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the pipeline plot.
+ELCLASS (constant, string) is the class of the pipeline plot.
 %%%% ¡default!
 'PipelinePP_PSDict'
 

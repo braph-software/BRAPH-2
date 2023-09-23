@@ -31,7 +31,7 @@ uifigure, ConcreteElement, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-CLASS (constant, string) is the class of the element GUI.
+ELCLASS (constant, string) is the class of the element GUI.
 %%%% ¡default!
 'GUIElement'
 
