@@ -97,6 +97,11 @@ Analysis NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'AnalyzeEnsemble_FUN_MP_BUT'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the ensemble-based graph analysis with functional multiplex data of fixed threshold.
 %%%% ¡default!
 'AnalyzeEnsemble_FUN_MP_BUT'

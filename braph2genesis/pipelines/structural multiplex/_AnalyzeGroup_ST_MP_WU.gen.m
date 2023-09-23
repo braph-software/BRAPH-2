@@ -62,6 +62,11 @@ Analysis NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'AnalyzeGroup_ST_MP_WU'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the graph analysis with structural multiplex data.
 %%%% ¡default!
 'AnalyzeGroup_ST_MP_WU'

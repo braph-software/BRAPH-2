@@ -24,6 +24,11 @@ Group, SubjectST_MP, ExporterGroupSubjectST_MP_TXT
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'ImporterGroupSubjectST_MP_TXT'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the ST MP subject group importer from TXT.
 %%%% ¡default!
 'ImporterGroupSubjectST_MP_TXT'

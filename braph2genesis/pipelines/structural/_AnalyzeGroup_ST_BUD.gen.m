@@ -66,6 +66,11 @@ Analysis NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'AnalyzeGroup_ST_BUD'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the group-based graph analysis with structural data at fixed density.
 %%%% ¡default!
 'AnalyzeGroup_ST_BUD'

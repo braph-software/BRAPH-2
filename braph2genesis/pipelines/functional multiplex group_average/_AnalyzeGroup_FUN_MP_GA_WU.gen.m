@@ -80,6 +80,11 @@ Analysis NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'AnalyzeGroup_FUN_MP_GA_WU'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the graph analysis with functional multiplex data.
 %%%% ¡default!
 'AnalyzeGroup_FUN_MP_GA_WU'

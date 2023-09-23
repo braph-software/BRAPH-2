@@ -20,6 +20,11 @@ Group, SubjectFUN_MP, ImporterGroupSubjectFUN_MP_XLS
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'ExporterGroupSubjectFUN_MP_XLS'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the FUN MP subject group exporter in XLSX.
 %%%% ¡default!
 'ExporterGroupSubjectFUN_MP_XLS'

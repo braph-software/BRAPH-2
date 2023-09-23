@@ -12,6 +12,12 @@ The target is obtained from the variables of interest of the subject.
 SubjectST_MP
 
 %% ¡props_update!
+
+%%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'NNDataPoint_ST_MM_CLA'
+
 %%% ¡prop!
 NAME (constant, string) is the name of a data point for classification with structural multimodality data.
 %%%% ¡default!

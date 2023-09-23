@@ -21,6 +21,11 @@ Group, SubjectFUN_MP, ExporterGroupSubjectFUN_MP_TXT
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'ImporterGroupSubjectFUN_MP_TXT'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the FUN MP subject group importer from TXT.
 %%%% ¡default!
 'ImporterGroupSubjectFUN_MP_TXT'
