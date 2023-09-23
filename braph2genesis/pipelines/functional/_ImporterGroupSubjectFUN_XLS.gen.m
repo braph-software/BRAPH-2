@@ -19,6 +19,11 @@ Group, SubjectFUN, ExporterGroupSubjectFUN_XLS
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'ImporterGroupSubjectFUN_XLS'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the FUN subject group importer from XLS/XLSX.
 %%%% ¡default!
 'ImporterGroupSubjectFUN_XLS'

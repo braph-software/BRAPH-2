@@ -91,6 +91,11 @@ Analysis NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'AnalyzeEnsemble_FUN_WU'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the ensemble-based graph analysis with functional data.
 %%%% ¡default!
 'AnalyzeEnsemble_FUN_WU'

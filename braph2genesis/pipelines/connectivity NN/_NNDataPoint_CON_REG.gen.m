@@ -11,6 +11,12 @@ The target is obtained from the variables of interest of the subject.
 SubjectCON
 
 %% ¡props_update!
+
+%%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'NNDataPoint_CON_REG'
+
 %%% ¡prop!
 NAME (constant, string) is the name of a data point for regression with connectivity data.
 %%%% ¡default!

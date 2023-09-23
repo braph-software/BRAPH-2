@@ -19,6 +19,11 @@ Group, SubjectFUN, ExporterGroupSubjectFUN_TXT
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'ImporterGroupSubjectFUN_TXT'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the FUN subject group importer from TXT.
 %%%% ¡default!
 'ImporterGroupSubjectFUN_TXT'

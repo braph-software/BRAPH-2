@@ -21,6 +21,11 @@ Group, SunbjectCON_MP, ExporterGroupSubjectCON_MP_TXT
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'ImporterGroupSubjectCON_MP_TXT'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the CON MP subject group importer from TXT.
 %%%% ¡default!
 'ImporterGroupSubjectCON_MP_TXT'
