@@ -2,12 +2,17 @@
 Exporter < ConcreteElement (ex, exporter to a file) exports a concrete element to a file.
 
 %%% ¡description!
-Exporter is the base class for the exporter of an element (ConcreteElement) to a file.
+An Exporter is the base class for the exporter of an element (ConcreteElement) to a file.
 
 %%% ¡seealso!
 ConcreteElement, Importer
 
 %% ¡props_update!
+
+%%% ¡prop!
+ELCLASS (constant, string) is the class of the exporter.
+%%%% ¡default!
+'Exporter'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the exporter.
@@ -17,7 +22,7 @@ NAME (constant, string) is the name of the exporter.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the exporter.
 %%%% ¡default!
-'Exporter is the base class for the exporter of an element (ConcreteElement) to a file.'
+'An Exporter is the base class for the exporter of an element (ConcreteElement) to a file.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the exporter.
