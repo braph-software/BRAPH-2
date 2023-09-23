@@ -52,6 +52,11 @@ Dataset Splitter NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'NNDatasetSplit'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the splitter of a neural network data.
 %%%% ¡default!
 'NNDatasetSplit'

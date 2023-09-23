@@ -10,6 +10,11 @@ AnalyzeEnsemble, CompareEnsemble
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'MeasureEnsemble'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the graph ensemble measure.
 %%%% ¡default!
 'MeasureEnsemble'

@@ -14,6 +14,11 @@ NNDataset, NNEvaluator, NNBase
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'NNCrossValidation'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the cross-validation.
 %%%% ¡default!
 'NNCrossValidation'

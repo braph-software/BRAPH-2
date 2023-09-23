@@ -11,6 +11,11 @@ uidropdown, GUI, ComparisonGroupPF_BU, ComparisonGroupPF_BS, ComparisonGroupPF_B
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'ComparisonGroupPF_BxPP_Nodes'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the panel property node.
 %%%% ¡default!
 'ComparisonGroupPF_BxPP_Nodes'

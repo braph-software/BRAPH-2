@@ -102,6 +102,11 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'ComparisonGroupPF_NB'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the panel figure nodal bilayer group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_NB'

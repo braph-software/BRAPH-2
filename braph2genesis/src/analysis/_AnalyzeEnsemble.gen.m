@@ -11,6 +11,11 @@ CompareEnsemble
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'AnalyzeEnsemble'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the ensemble-based graph analysis.
 %%%% ¡default!
 'AnalyzeEnsemble'

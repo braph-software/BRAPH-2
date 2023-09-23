@@ -67,6 +67,11 @@ Memorize Intermediate Results
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'CompareEnsemble'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the comparison between two ensemble-based analyses.
 %%%% ¡default!
 'CompareEnsemble'

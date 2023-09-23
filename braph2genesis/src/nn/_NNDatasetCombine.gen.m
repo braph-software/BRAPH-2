@@ -12,6 +12,11 @@ NNDataset, NNDatasetSplit
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'NNDatasetCombine'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the combier of a neural network data.
 %%%% ¡default!
 'NNDatasetCombine'

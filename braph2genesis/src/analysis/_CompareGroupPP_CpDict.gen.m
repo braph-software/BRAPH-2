@@ -11,6 +11,11 @@ uitable, CompareGroup, ComparisonGroup
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'CompareGroupPP_CpDict'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the comparison panel.
 %%%% ¡default!
 'CompareGroupPP_CpDict'

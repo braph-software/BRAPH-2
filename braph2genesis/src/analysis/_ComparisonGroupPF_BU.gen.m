@@ -102,6 +102,11 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'ComparisonGroupPF_BU'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the panel figure binodal unilayer group comparison figure.
 %%%% ¡default!
 'ComparisonGroupPF_BU'

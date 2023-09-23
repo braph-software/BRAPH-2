@@ -11,6 +11,11 @@ uitable, AnalyzeGroup, Graph, Measure
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'AnalyzeGroupPP_G'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the graph and measure panel.
 %%%% ¡default!
 'AnalyzeGroupPP_G'

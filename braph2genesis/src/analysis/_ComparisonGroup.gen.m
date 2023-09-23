@@ -79,6 +79,11 @@ Comparison NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'ComparisonGroup'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the group-based comparison result.
 %%%% ¡default!
 'ComparisonGroup'

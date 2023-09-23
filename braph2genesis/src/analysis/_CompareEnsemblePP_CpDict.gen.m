@@ -11,6 +11,11 @@ uitable, CompareEnsemble, ComparisonEnsemble
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'CompareEnsemblePP_CpDict'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the comparison panel.
 %%%% ¡default!
 'CompareEnsemblePP_CpDict'

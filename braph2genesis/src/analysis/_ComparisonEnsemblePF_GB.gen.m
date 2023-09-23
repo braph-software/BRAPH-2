@@ -96,6 +96,11 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'ComparisonEnsemblePF_GB'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the panel figure global bilayer group comparison figure.
 %%%% ¡default!
 'ComparisonEnsemblePF_GB'

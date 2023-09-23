@@ -96,6 +96,11 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'ComparisonEnsemblePF'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the panel ensemble-based comparison figure.
 %%%% ¡default!
 'ComparisonEnsemblePF'

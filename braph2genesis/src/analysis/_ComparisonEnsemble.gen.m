@@ -74,6 +74,11 @@ Measure Comparison Brain Graph
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'ComparisonEnsemble'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the results of an ensemble-based comparison.
 %%%% ¡default!
 'ComparisonEnsemble'

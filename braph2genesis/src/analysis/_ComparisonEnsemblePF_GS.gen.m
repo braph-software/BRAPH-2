@@ -96,6 +96,11 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'ComparisonEnsemblePF_GS'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the panel figure global superglobal group comparison figure.
 %%%% ¡default!
 'ComparisonEnsemblePF_GS'

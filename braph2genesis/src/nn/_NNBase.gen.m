@@ -17,6 +17,11 @@ NNDataPoint, NNDataset, NNEvaluator
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'NNBase'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the nerual network base.
 %%%% ¡default!
 'NNBase'
