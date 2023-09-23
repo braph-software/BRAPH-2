@@ -120,6 +120,11 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'MultigraphBUD'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the binary undirected multigraph with fixed densities.
 %%%% ¡default!
 'MultigraphBUD'

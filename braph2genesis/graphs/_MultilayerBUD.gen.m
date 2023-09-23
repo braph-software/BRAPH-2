@@ -131,6 +131,11 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'MultilayerBUD'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the binary undirected multilayer with fixed densities.
 %%%% ¡default!
 'MultilayerBUD'

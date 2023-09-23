@@ -120,6 +120,11 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'MultiplexBUD'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the binary undirected multiplex with fixed densities.
 %%%% ¡default!
 'MultiplexBUD'

@@ -114,6 +114,11 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'MultiplexWD'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the multiplex weighted directed graph.
 %%%% ¡default!
 'MultiplexWD'

@@ -95,6 +95,11 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'GraphBU'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the binary undirected graph.
 %%%% ¡default!
 'GraphBU'

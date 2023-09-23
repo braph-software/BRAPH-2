@@ -102,6 +102,11 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'OrdMxBD'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the ordinal multiplex binary directed graph.
 %%%% ¡default!
 'OrdMxBD'

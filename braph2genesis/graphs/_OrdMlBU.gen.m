@@ -113,6 +113,11 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'OrdMlBU'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the ordinal multilayer binary undirected graph.
 %%%% ¡default!
 'OrdMlBU'

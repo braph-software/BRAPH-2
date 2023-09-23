@@ -102,6 +102,11 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'MultiplexBD'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the multiplex binary directed graph.
 %%%% ¡default!
 'MultiplexBD'

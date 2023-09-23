@@ -121,6 +121,11 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'MultiplexWU'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the multiplex weighted undirected graph.
 %%%% ¡default!
 'MultiplexWU'

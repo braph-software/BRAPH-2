@@ -109,6 +109,11 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'MultiplexBU'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the multiplex binary undirected graph.
 %%%% ¡default!
 'MultiplexBU'

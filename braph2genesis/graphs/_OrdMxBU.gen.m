@@ -109,6 +109,11 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'OrdMxBU'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the ordinal multiplex binary undirected graph.
 %%%% ¡default!
 'OrdMxBU'

@@ -132,6 +132,11 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'OrdMlBUD'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the ordinal binary undirected multilayer with fixed densities.
 %%%% ¡default!
 'OrdMlBUD'

@@ -120,6 +120,11 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'MultigraphBUT'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the binary undirected multigraph with fixed thresholds.
 %%%% ¡default!
 'MultigraphBUT'

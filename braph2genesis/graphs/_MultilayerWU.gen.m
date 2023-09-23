@@ -123,7 +123,11 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'MultilayerWU'
 
+%%% ¡prop!
 NAME (constant, string) is the name of the multilayer weighted undirected graph.
 %%%% ¡default!
 'MultilayerWU'

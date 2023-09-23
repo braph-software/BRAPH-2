@@ -126,6 +126,11 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'OrdMlBUT'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the binary undirected ordinal multilayer with fixed thresholds.
 %%%% ¡default!
 'OrdMlBUT'

@@ -124,7 +124,11 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'OrdMlWU'
 
+%%% ¡prop!
 NAME (constant, string) is the name of the ordinal multilayer weighted undirected graph.
 %%%% ¡default!
 'OrdMlWU'

@@ -122,6 +122,11 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'OrdMxBUT'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the binary undirected ordinal multiplex with fixed thresholds.
 %%%% ¡default!
 'OrdMxBUT'
