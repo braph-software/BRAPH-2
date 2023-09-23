@@ -4,7 +4,7 @@ BrainAtlasPF < BrainSurfacePF (pf, panel figure for brain atlas) is a plot of a 
 %%% ¡description!
 A Panel Figure for Brain Atlas (BrainAtlasPF) manages the plot of the brain 
  regions symbols, spheres, ids and labels. 
-BrainAtlasPF utilizes the surface created from PFBrainSurface to integrate 
+BrainAtlasPF utilizes the surface created from BrainSurfacePF to integrate 
  the regions to a brain surface.
 
 %%% ¡seealso!
@@ -137,17 +137,17 @@ Brain Region LABELS PROPERTIES
 %%% ¡prop!
 ELCLASS (constant, string) is the class of the panel figure for brain atlas.
 %%%% ¡default!
-'BrainSurfacePF'
+'BrainAtlasPF'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the panel figure for brain atlas.
 %%%% ¡default!
-'Panel Figure for Brain Surface'
+'Panel Figure for Brain Atlas'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel figure for brain atlas.
 %%%% ¡default!
-'A Panel Figure for Brain Atlas (BrainAtlasPF) manages the plot of the brain regions symbols, spheres, ids and labels. BrainAtlasPF utilizes the surface created from PFBrainSurface to integrate the regions to a brain surface.'
+'A Panel Figure for Brain Atlas (BrainAtlasPF) manages the plot of the brain regions symbols, spheres, ids and labels. BrainAtlasPF utilizes the surface created from BrainSurfacePF to integrate the regions to a brain surface.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel figure for brain atlas.
@@ -157,17 +157,17 @@ TEMPLATE (parameter, item) is the template of the panel figure for brain atlas.
 %%% ¡prop!
 ID (data, string) is a few-letter code for the panel figure for brain atlas.
 %%%% ¡default!
-'BrainSurfacePF ID'
+'BrainAtlasPF ID'
 
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the panel figure for brain atlas.
 %%%% ¡default!
-'BrainSurfacePF label'
+'BrainAtlasPF label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the panel figure for brain atlas.
 %%%% ¡default!
-'BrainSurfacePF notes'
+'BrainAtlasPF notes'
 
 %%% ¡prop!
 DRAW (query, logical) draws the figure brain atlas.
