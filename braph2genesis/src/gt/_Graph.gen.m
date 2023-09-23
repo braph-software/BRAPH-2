@@ -2,7 +2,7 @@
 Graph < ConcreteElement (g, graph) is a graph.
 
 %%% ¡description!
-Graph provides the methods necessary for all graphs.
+A Graph provides the methods necessary for all graphs.
  Instances of this class should not be created. 
  Use one of its subclasses instead.
 
@@ -254,6 +254,11 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the graph.
+%%%% ¡default!
+'Graph'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the graph.
 %%%% ¡default!
 'Graph'
@@ -261,7 +266,7 @@ NAME (constant, string) is the name of the graph.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the graph.
 %%%% ¡default!
-'Graph provides the methods necessary for all graphs. Instances of this class should not be created. Use one of its subclasses instead.'
+'A Graph provides the methods necessary for all graphs. Instances of this class should not be created. Use one of its subclasses instead.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the graph.

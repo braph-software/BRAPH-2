@@ -1,8 +1,8 @@
 %% ¡header!
-MeasurePF_NS < MeasurePF (pf, panel figure nodal superglobal measure) is the base element to plot a nodal superglobal measure.
+MeasurePF_NS < MeasurePF (pf, panel figure for nodal superglobal measure) is the base element to plot a nodal superglobal measure.
 
 %%% ¡description!
-MeasurePF_NS manages the basic functionalities to plot of a nodal superglobal measure.
+A Panel Figure for Nodal Superglobal Measure (MeasurePF_NS) manages the basic functionalities to plot of a nodal superglobal measure.
 
 %%% ¡seealso!
 Measure
@@ -90,32 +90,37 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the panel figure nodal superglobal measure.
+ELCLASS (constant, string) is the class of the panel figure for nodal superglobal measure.
 %%%% ¡default!
 'MeasurePF_NS'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the panel figure nodal superglobal measure.
+NAME (constant, string) is the name of the panel figure for nodal superglobal measure.
 %%%% ¡default!
-'MeasurePF_NS manages the basic functionalities to plot of a nodal superglobal measure.'
+'Panel Figure for Nodal Superglobal Measure'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the panel figure nodal superglobal measure.
+DESCRIPTION (constant, string) is the description of the panel figure for nodal superglobal measure.
+%%%% ¡default!
+'A Panel Figure for Nodal Superglobal Measure (MeasurePF_NS) manages the basic functionalities to plot of a nodal superglobal measure.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the panel figure for nodal superglobal measure.
 %%%% ¡settings!
 'MeasurePF_NS'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the panel figure nodal superglobal measure.
+ID (data, string) is a few-letter code for the panel figure for nodal superglobal measure.
 %%%% ¡default!
 'MeasurePF_NS ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the panel figure nodal superglobal measure.
+LABEL (metadata, string) is an extended label of the panel figure for nodal superglobal measure.
 %%%% ¡default!
 'MeasurePF_NS label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the panel figure nodal superglobal measure.
+NOTES (metadata, string) are some specific notes about the panel figure for nodal superglobal measure.
 %%%% ¡default!
 'MeasurePF_NS notes'
 

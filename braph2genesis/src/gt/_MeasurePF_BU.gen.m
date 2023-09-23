@@ -1,8 +1,8 @@
 %% ¡header!
-MeasurePF_BU < MeasurePF (pf, panel figure binodal unilayer measure) is the base element to plot a binodal unilayer measure.
+MeasurePF_BU < MeasurePF (pf, panel figure for binodal unilayer measure) is the base element to plot a binodal unilayer measure.
 
 %%% ¡description!
-MeasurePF_BU manages the basic functionalities to plot of a binodal unilayer measure.
+A Panel Figure for Binodal Unilayer Measure (MeasurePF_BU) manages the basic functionalities to plot of a binodal unilayer measure.
 
 %%% ¡seealso!
 Measure
@@ -90,32 +90,37 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the panel figure binodal unilayer measure.
+ELCLASS (constant, string) is the class of the panel figure for binodal unilayer measure.
 %%%% ¡default!
 'MeasurePF_BU'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the panel figure binodal unilayer measure.
+NAME (constant, string) is the name of the panel figure for binodal unilayer measure.
 %%%% ¡default!
-'MeasurePF_BU manages the basic functionalities to plot of a binodal unilayer measure.'
+'Panel Figure for Binodal Unilayer Measure'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the panel figure binodal unilayer measure.
+DESCRIPTION (constant, string) is the description of the panel figure for binodal unilayer measure.
+%%%% ¡default!
+'A Panel Figure for Binodal Unilayer Measure (MeasurePF_BU) manages the basic functionalities to plot of a binodal unilayer measure.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the panel figure for binodal unilayer measure.
 %%%% ¡settings!
 'MeasurePF_BU'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the panel figure binodal unilayer measure.
+ID (data, string) is a few-letter code for the panel figure for binodal unilayer measure.
 %%%% ¡default!
 'MeasurePF_BU ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the panel figure binodal unilayer measure.
+LABEL (metadata, string) is an extended label of the panel figure for binodal unilayer measure.
 %%%% ¡default!
 'MeasurePF_BU label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the panel figure binodal unilayer measure.
+NOTES (metadata, string) are some specific notes about the panel figure for binodal unilayer measure.
 %%%% ¡default!
 'MeasurePF_BU notes'
 

@@ -1,8 +1,8 @@
 %% ¡header!
-GraphAdjPF < PanelFig (pf, panel figure graph) is a plot of a graph adjacency matrix.
+GraphAdjPF < PanelFig (pf, panel figure for graph adjacency matrix) is a plot of a graph adjacency matrix.
 
 %%% ¡description!
-GraphAdjPF manages the plot of an adjacency matrix.
+A Panel Figure for Graph Adjacency Matrix (GraphAdjPF) manages the plot of an adjacency matrix.
 
 %%% ¡seealso!
 Graph, GraphAdjPF
@@ -78,32 +78,37 @@ MATERIAL & LIGHTNING
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the panel figure graph adjacency matrix.
+ELCLASS (constant, string) is the class of the panel figure for graph adjacency matrix.
 %%%% ¡default!
 'GraphAdjPF'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the panel figure graph adjacency matrix.
+NAME (constant, string) is the name of the panel figure for graph adjacency matrix.
 %%%% ¡default!
-'GraphAdjPF manages the plot of an adjacency matrix.'
+'Panel Figure for Graph Adjacency Matrix'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the panel figure graph adjacency matrix.
+DESCRIPTION (constant, string) is the description of the panel figure for graph adjacency matrix.
+%%%% ¡default!
+'A Panel Figure for Graph Adjacency Matrix (GraphAdjPF) manages the plot of an adjacency matrix.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the panel figure for graph adjacency matrix.
 %%%% ¡settings!
 'GraphAdjPF'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the panel figure graph adjacency matrix.
+ID (data, string) is a few-letter code for the panel figure for graph adjacency matrix.
 %%%% ¡default!
 'GraphAdjPF ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the panel figure graph adjacency matrix.
+LABEL (metadata, string) is an extended label of the panel figure for graph adjacency matrix.
 %%%% ¡default!
 'GraphAdjPF label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the panel figure graph adjacency matrix.
+NOTES (metadata, string) are some specific notes about the panel figure for graph adjacency matrix.
 %%%% ¡default!
 'GraphAdjPF notes'
 

@@ -1,8 +1,8 @@
 %% ¡header!
-GraphHistPF < PanelFig (pf, panel figure graph) is a plot of a graph histogram.
+GraphHistPF < PanelFig (pf, panel figure for graph histogram) is a plot of a graph histogram.
 
 %%% ¡description!
-GraphHistPF manages the plot of the histogram of an adjaciency matrix.
+A Panel Figure for Graph Histogram (GraphHistPF) manages the plot of the histogram of an adjaciency matrix.
 
 %%% ¡seealso!
 Graph, GraphAdjPF
@@ -84,32 +84,37 @@ DENSITY LINE PROPERTIES
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the panel figure graph histogram.
+ELCLASS (constant, string) is the class of the panel figure for graph histogram.
 %%%% ¡default!
 'GraphHistPF'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the panel figure graph histogram.
+NAME (constant, string) is the name of the panel figure for graph histogram.
 %%%% ¡default!
-'GraphHistPF manages the plot of the histogram of an adjaciency matrix.'
+'Panel Figure for Graph Histogram'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the panel figure graph histogram.
+DESCRIPTION (constant, string) is the description of the panel figure for graph histogram.
+%%%% ¡default!
+'A Panel Figure for Graph Histogram (GraphHistPF) manages the plot of the histogram of an adjaciency matrix.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the panel figure for graph histogram.
 %%%% ¡settings!
 'GraphHistPF'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the panel figure graph histogram.
+ID (data, string) is a few-letter code for the panel figure for graph histogram.
 %%%% ¡default!
 'GraphHistPF ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the panel figure graph histogram.
+LABEL (metadata, string) is an extended label of the panel figure for graph histogram.
 %%%% ¡default!
 'GraphHistPF label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the panel figure graph histogram.
+NOTES (metadata, string) are some specific notes about the panel figure for graph histogram.
 %%%% ¡default!
 'GraphHistPF notes'
 

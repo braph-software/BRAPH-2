@@ -1,8 +1,8 @@
 %% ¡header!
-MeasurePF_BB < MeasurePF (pf, panel figure binodal bilayer measure) is the base element to plot a binodal bilayer measure.
+MeasurePF_BB < MeasurePF (pf, panel figure for binodal bilayer measure) is the base element to plot a binodal bilayer measure.
 
 %%% ¡description!
-MeasurePF_BB manages the basic functionalities to plot of a binodal bilayer measure.
+A Panel Figure for Binodal Bilayer Measure (MeasurePF_BB) manages the basic functionalities to plot of a binodal bilayer measure.
 
 %%% ¡seealso!
 Measure
@@ -90,32 +90,37 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the panel figure binodal bilayer measure.
+ELCLASS (constant, string) is the class of the panel figure for binodal bilayer measure.
 %%%% ¡default!
 'MeasurePF_BB'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the panel figure binodal bilayer measure.
+NAME (constant, string) is the name of the panel figure for binodal bilayer measure.
 %%%% ¡default!
-'MeasurePF_BB manages the basic functionalities to plot of a binodal bilayer measure.'
+'Panel Figure for Binodal Bilayer Measure'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the panel figure binodal bilayer measure.
+DESCRIPTION (constant, string) is the description of the panel figure for binodal bilayer measure.
+%%%% ¡default!
+'A Panel Figure for Binodal Bilayer Measure (MeasurePF_BB) manages the basic functionalities to plot of a binodal bilayer measure.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the panel figure for binodal bilayer measure.
 %%%% ¡settings!
 'MeasurePF_BB'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the panel figure binodal bilayer measure.
+ID (data, string) is a few-letter code for the panel figure for binodal bilayer measure.
 %%%% ¡default!
 'MeasurePF_BB ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the panel figure binodal bilayer measure.
+LABEL (metadata, string) is an extended label of the panel figure for binodal bilayer measure.
 %%%% ¡default!
 'MeasurePF_BB label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the panel figure binodal bilayer measure.
+NOTES (metadata, string) are some specific notes about the panel figure for binodal bilayer measure.
 %%%% ¡default!
 'MeasurePF_BB notes'
 

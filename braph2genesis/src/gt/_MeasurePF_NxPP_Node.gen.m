@@ -1,8 +1,8 @@
 %% ¡header!
-MeasurePF_NxPP_Node < PanelProp (pr, panel property node) plots the panel to select a node.
+MeasurePF_NxPP_Node < PanelProp (pr, node prop panel) plots the panel to select a node.
 
 %%% ¡description!
-MeasurePF_NxPP_Node plots the panel to select a node from a drop-down list.
+A Node Prop Panel (MeasurePF_NxPP_Node) plots the panel to select a node from a drop-down list.
 It is supposed to be used with the property NODE of MeasurePF_NU, MeasurePF_NS, or MeasurePF_NB.
 
 %%% ¡seealso!
@@ -11,32 +11,37 @@ uidropdown, GUI, MeasurePF_NU, MeasurePF_NS, MeasurePF_NB
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the panel property node.
+ELCLASS (constant, string) is the class of the node prop panel.
 %%%% ¡default!
 'MeasurePF_NxPP_Node'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the panel property node.
+NAME (constant, string) is the name of the node prop panel.
 %%%% ¡default!
-'MeasurePF_NxPP_Node plots the panel to select a node from a drop-down list. It is supposed to be used with the property NODE of MeasurePF_NU, MeasurePF_NS, or MeasurePF_NB.'
+'Node Prop Panel'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the panel property node.
+DESCRIPTION (constant, string) is the description of the node prop panel.
+%%%% ¡default!
+'A Node Prop Panel (MeasurePF_NxPP_Node) plots the panel to select a node from a drop-down list. It is supposed to be used with the property NODE of MeasurePF_NU, MeasurePF_NS, or MeasurePF_NB.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the node prop panel.
 %%%% ¡settings!
 'MeasurePF_NxPP_Node'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the panel property node.
+ID (data, string) is a few-letter code for the node prop panel.
 %%%% ¡default!
 'MeasurePF_NxPP_Node ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the panel property node.
+LABEL (metadata, string) is an extended label of the node prop panel.
 %%%% ¡default!
 'MeasurePF_NxPP_Node label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the panel property node.
+NOTES (metadata, string) are some specific notes about the node prop panel.
 %%%% ¡default!
 'MeasurePF_NxPP_Node notes'
 

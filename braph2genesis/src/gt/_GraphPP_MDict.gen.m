@@ -2,7 +2,7 @@
 GraphPP_MDict < PanelProp (pr, measure dictionary plot) plots the measure dictionary property of a graph.
 
 %%% ¡description!
-GraphPP_MDict plots the panel of the M_DICT property of Graph.
+A Measure Dictionary Plot (GraphPP_MDict) plots the panel of the M_DICT property of Graph.
 It is intended to be used only with the property M_DICT of Graph.
 
 %%% ¡seealso!
@@ -11,14 +11,19 @@ uitable, Graph
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the measure dictionary plot.
+ELCLASS (constant, string) is the class of the measure dictionary plot.
 %%%% ¡default!
 'GraphPP_MDict'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the measure dictionary plot.
+%%%% ¡default!
+'Measure Dictionary Plot'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the measure dictionary plot.
 %%%% ¡default!
-'GraphPP_MDict plots the panel of the M_DICT property of Graph.'
+'A Measure Dictionary Plot (GraphPP_MDict) plots the panel of the M_DICT property of Graph. It is intended to be used only with the property M_DICT of Graph.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the measure dictionary plot.

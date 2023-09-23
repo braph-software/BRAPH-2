@@ -2,7 +2,7 @@
 Measure < ConcreteElement (m, graph measure) is a measure.
 
 %%% ¡description!
-Measure provides the methods necessary for all graph measures. 
+A Measure provides the methods necessary for all graph measures. 
  Instances of this class should not be created. 
  Use one of its subclasses instead.
 
@@ -114,6 +114,11 @@ PARAMETRICITY_DESCRIPTION = {
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the graph measure.
+%%%% ¡default!
+'Measure'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the graph measure.
 %%%% ¡default!
 'Measure'
@@ -121,7 +126,7 @@ NAME (constant, string) is the name of the graph measure.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the graph measure.
 %%%% ¡default!
-'Measure provides the methods necessary for all graph measures. Instances of this class should not be created. Use one of its subclasses instead.'
+'A Measure provides the methods necessary for all graph measures. Instances of this class should not be created. Use one of its subclasses instead.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the graph measure.

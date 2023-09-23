@@ -1,8 +1,8 @@
 %% ¡header!
-LayersPP < PanelProp (pr, layers panel) plots the panel to select the layers of an adjacency matrix.
+LayersPP < PanelProp (pr, layers prop panel) plots the panel to select the layers of an adjacency matrix.
 
 %%% ¡description!
-LayersPP plots the panel to select the layers of an adjacency matrix.
+A Layers Prop Panel (LayersPP) plots the panel to select the layers of an adjacency matrix.
 It works for all categories.
 
 %%% ¡seealso!
@@ -11,14 +11,19 @@ uitable, GraphHistPF, GraphAdjPF.
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the panel to select the layers of an adjacency matrix.
+ELCLASS (constant, string) is the class of the panel to select the layers of an adjacency matrix.
 %%%% ¡default!
 'LayersPP'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the panel to select the layers of an adjacency matrix.
+%%%% ¡default!
+'Layers Prop Panel'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel to select the layers of an adjacency matrix.
 %%%% ¡default!
-'LayersPP plots the panel to select the layers of an adjacency matrix.'
+'A Layers Prop Panel (LayersPP) plots the panel to select the layers of an adjacency matrix.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel to select the layers of an adjacency matrix.

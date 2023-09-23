@@ -1,8 +1,8 @@
 %% ¡header!
-MeasurePF_BxPP_Nodes < PanelProp (pr, panel property node) plots the panel to select a couple of nodes.
+MeasurePF_BxPP_Nodes < PanelProp (pr, nodes prop panel) plots the panel to select a couple of nodes.
 
 %%% ¡description!
-MeasurePF_BxPP_Nodes plots the panel to select the nodes from two drop-down lists.
+A Nodes Prop Panel (MeasurePF_BxPP_Nodes) plots the panel to select the nodes from two drop-down lists.
 It is supposed to be used with the property NODES of MeasurePF_BU, MeasurePF_BS, or MeasurePF_BB.
 
 %%% ¡seealso!
@@ -11,32 +11,37 @@ uidropdown, GUI, MeasurePF_BU, MeasurePF_BS, MeasurePF_BB
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the panel property node.
+ELCLASS (constant, string) is the class of the nodes prop panel.
 %%%% ¡default!
 'MeasurePF_BxPP_Nodes'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the panel property node.
+NAME (constant, string) is the name of the nodes prop panel.
 %%%% ¡default!
-'MeasurePF_BxPP_Nodes plots the panel to select the nodes from two drop-down lists. It is supposed to be used with the property NODES of MeasurePF_BU, MeasurePF_BS, or MeasurePF_BB.'
+'Nodes Prop Panel'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the panel property node.
+DESCRIPTION (constant, string) is the description of the nodes prop panel.
+%%%% ¡default!
+'A Nodes Prop Panel (MeasurePF_BxPP_Nodes) plots the panel to select the nodes from two drop-down lists. It is supposed to be used with the property NODES of MeasurePF_BU, MeasurePF_BS, or MeasurePF_BB.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the nodes prop panel.
 %%%% ¡settings!
 'MeasurePF_BxPP_Nodes'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the panel property node.
+ID (data, string) is a few-letter code for the nodes prop panel.
 %%%% ¡default!
 'MeasurePF_BxPP_Nodes ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the panel property node.
+LABEL (metadata, string) is an extended label of the nodes prop panel.
 %%%% ¡default!
 'MeasurePF_BxPP_Nodes label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the panel property node.
+NOTES (metadata, string) are some specific notes about the nodes prop panel.
 %%%% ¡default!
 'MeasurePF_BxPP_Nodes notes'
 

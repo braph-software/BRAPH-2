@@ -1,8 +1,8 @@
 %% ¡header!
-MeasurePF_BS < MeasurePF (pf, panel figure binodal superglobal measure) is the base element to plot a binodal superglobal measure.
+MeasurePF_BS < MeasurePF (pf, panel figure for binodal superglobal measure) is the base element to plot a binodal superglobal measure.
 
 %%% ¡description!
-MeasurePF_BS manages the basic functionalities to plot of a binodal superglobal measure.
+A Panel Figure for Binodal Superglobal Measure (MeasurePF_BS) manages the basic functionalities to plot of a binodal superglobal measure.
 
 %%% ¡seealso!
 Measure
@@ -90,32 +90,37 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the panel figure binodal superglobal measure.
+ELCLASS (constant, string) is the class of the panel figure for binodal superglobal measure.
 %%%% ¡default!
 'MeasurePF_BS'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the panel figure binodal superglobal measure.
+NAME (constant, string) is the name of the panel figure for binodal superglobal measure.
 %%%% ¡default!
-'MeasurePF_BS manages the basic functionalities to plot of a binodal superglobal measure.'
+'Panel Figure for Binodal Superglobal Measure'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the panel figure binodal superglobal measure.
+DESCRIPTION (constant, string) is the description of the panel figure for binodal superglobal measure.
+%%%% ¡default!
+'A Panel Figure for Binodal Superglobal Measure (MeasurePF_BS) manages the basic functionalities to plot of a binodal superglobal measure.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the panel figure for binodal superglobal measure.
 %%%% ¡settings!
 'MeasurePF_BS'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the panel figure binodal superglobal measure.
+ID (data, string) is a few-letter code for the panel figure for binodal superglobal measure.
 %%%% ¡default!
 'MeasurePF_BS ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the panel figure binodal superglobal measure.
+LABEL (metadata, string) is an extended label of the panel figure for binodal superglobal measure.
 %%%% ¡default!
 'MeasurePF_BS label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the panel figure binodal superglobal measure.
+NOTES (metadata, string) are some specific notes about the panel figure for binodal superglobal measure.
 %%%% ¡default!
 'MeasurePF_BS notes'
 

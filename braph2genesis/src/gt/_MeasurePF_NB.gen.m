@@ -1,8 +1,8 @@
 %% ¡header!
-MeasurePF_NB < MeasurePF (pf, panel figure nodal bilayer measure) is the base element to plot a nodal bilayer measure.
+MeasurePF_NB < MeasurePF (pf, panel figure for nodal bilayer measure) is the base element to plot a nodal bilayer measure.
 
 %%% ¡description!
-MeasurePF_NB manages the basic functionalities to plot of a nodal bilayer measure.
+A Panel Figure for Nodal Bilayer Measure (MeasurePF_NB) manages the basic functionalities to plot of a nodal bilayer measure.
 
 %%% ¡seealso!
 Measure
@@ -90,32 +90,37 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the panel figure nodal bilayer measure.
+ELCLASS (constant, string) is the class of the panel figure for nodal bilayer measure.
 %%%% ¡default!
 'MeasurePF_NB'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the panel figure nodal bilayer measure.
+NAME (constant, string) is the name of the panel figure for nodal bilayer measure.
 %%%% ¡default!
-'MeasurePF_NB manages the basic functionalities to plot of a nodal bilayer measure.'
+'Panel Figure for Nodal Bilayer Measure'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the panel figure nodal bilayer measure.
+DESCRIPTION (constant, string) is the description of the panel figure for nodal bilayer measure.
+%%%% ¡default!
+'A Panel Figure for Nodal Bilayer Measure (MeasurePF_NB) manages the basic functionalities to plot of a nodal bilayer measure.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the panel figure for nodal bilayer measure.
 %%%% ¡settings!
 'MeasurePF_NB'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the panel figure nodal bilayer measure.
+ID (data, string) is a few-letter code for the panel figure for nodal bilayer measure.
 %%%% ¡default!
 'MeasurePF_NB ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the panel figure nodal bilayer measure.
+LABEL (metadata, string) is an extended label of the panel figure for nodal bilayer measure.
 %%%% ¡default!
 'MeasurePF_NB label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the panel figure nodal bilayer measure.
+NOTES (metadata, string) are some specific notes about the panel figure for nodal bilayer measure.
 %%%% ¡default!
 'MeasurePF_NB notes'
 

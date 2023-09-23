@@ -1,8 +1,8 @@
 %% ¡header!
-MeasurePF_GU < MeasurePF (pf, panel figure global unilayer measure) is the base element to plot a global unilayer measure.
+MeasurePF_GU < MeasurePF (pf, panel figure for global unilayer measure) is the base element to plot a global unilayer measure.
 
 %%% ¡description!
-MeasurePF_GU manages the basic functionalities to plot of a global unilayer measure.
+A Panel Figure for Global Unilayer Measure (MeasurePF_GU) manages the basic functionalities to plot of a global unilayer measure.
 
 %%% ¡seealso!
 Measure
@@ -84,32 +84,37 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the panel figure global unilayer measure.
+ELCLASS (constant, string) is the class of the panel figure for global unilayer measure.
 %%%% ¡default!
 'MeasurePF_GU'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the panel figure global unilayer measure.
+NAME (constant, string) is the name of the panel figure for global unilayer measure.
 %%%% ¡default!
-'MeasurePF_GU manages the basic functionalities to plot of a global unilayer measure.'
+'Panel Figure for Global Unilayer Measure'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the panel figure global unilayer measure.
+DESCRIPTION (constant, string) is the description of the panel figure for global unilayer measure.
+%%%% ¡default!
+'A Panel Figure for Global Unilayer Measure (MeasurePF_GU) manages the basic functionalities to plot of a global unilayer measure.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the panel figure for global unilayer measure.
 %%%% ¡settings!
 'MeasurePF_GU'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the panel figure global unilayer measure.
+ID (data, string) is a few-letter code for the panel figure for global unilayer measure.
 %%%% ¡default!
 'MeasurePF_GU ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the panel figure global unilayer measure.
+LABEL (metadata, string) is an extended label of the panel figure for global unilayer measure.
 %%%% ¡default!
 'MeasurePF_GU label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the panel figure global unilayer measure.
+NOTES (metadata, string) are some specific notes about the panel figure for global unilayer measure.
 %%%% ¡default!
 'MeasurePF_GU notes'
 
