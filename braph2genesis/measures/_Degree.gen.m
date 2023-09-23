@@ -52,6 +52,11 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'Degree'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the degree.
 %%%% ¡default!
 'Degree'

@@ -9,6 +9,11 @@ core and zero otherwise.
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'CorePeriphery'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the core-periphery.
 %%%% ¡default!
 'CorePeriphery'
