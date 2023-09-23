@@ -2,7 +2,7 @@
 SettingsSymbol < Settings (st, symbol settings) contains the symbol settings.
 
 %%% ¡description!
-SettingsSymbol provides the settings for a symbol, 
+A Symbol Settings (SettingsSymbol) provides the settings for a symbol, 
 including visibility, x, y, z, symbol marker, symbol size, face color, and edge color.
 The handle can be a line.
 
@@ -12,14 +12,19 @@ line, PanelFig, GUIFig, check_graphics
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the symbol settings.
+ELCLASS (constant, string) is the class of the symbol settings.
 %%%% ¡default!
 'SettingsSymbol'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the symbol settings.
+%%%% ¡default!
+'Symbol Settings'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the symbol settings.
 %%%% ¡default!
-'SettingsSymbol provides the settings for a symbol, including visibility, x, y, z, symbol marker, symbol size, face color, and edge color.'
+'A Symbol Settings (SettingsSymbol) provides the settings for a symbol, including visibility, x, y, z, symbol marker, symbol size, face color, and edge color.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the symbol settings.

@@ -2,7 +2,7 @@
 SettingsSurface < Settings (st, surface settings) contains the surface settings.
 
 %%% ¡description!
-SettingsSurface provides the settings for a surface, 
+A Surface Settings (SettingsSurface) provides the settings for a surface, 
  including face color, face alpha, edge color, and edge alpha.
 The handle can be either a patch or a surface.
 
@@ -12,14 +12,19 @@ patch, surface, SettingsSurfacePP, PanelFig, GUIFig, check_graphics
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the surface settings.
+ELCLASS (constant, string) is the class of the surface settings.
 %%%% ¡default!
 'SettingsSurface'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the surface settings.
+%%%% ¡default!
+'Surface Settings'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the surface settings.
 %%%% ¡default!
-'SettingsSurface provides the settings for a surface, including face color, face alpha, edge color, and edge alpha.'
+'A Surface Settings (SettingsSurface) provides the settings for a surface, including face color, face alpha, edge color, and edge alpha.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the surface settings.

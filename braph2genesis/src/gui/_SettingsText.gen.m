@@ -2,7 +2,7 @@
 SettingsText < Settings (st, text settings) contains the text settings.
 
 %%% ¡description!
-SettingsText provides the settings for a text, 
+A Text Settings (SettingsText) provides the settings for a text, 
 including visibility, x, y, z, font color, font size, and interpreter.
 The handle can be a text.
 
@@ -12,14 +12,19 @@ text, PanelFig, GUIFig, check_graphics
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the text settings.
+ELCLASS (constant, string) is the class of the text settings.
 %%%% ¡default!
 'SettingsText'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the text settings.
+%%%% ¡default!
+'Text Settings'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the text settings.
 %%%% ¡default!
-'SettingsText provides the settings for a text, including visibility, x, y, z, font color, font size, and interpreter.'
+'A Text Settings (SettingsText) provides the settings for a text, including visibility, x, y, z, font color, font size, and interpreter.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the text settings.

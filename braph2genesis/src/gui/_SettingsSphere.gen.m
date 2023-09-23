@@ -2,7 +2,7 @@
 SettingsSphere < SettingsSurface (st, sphere settings) contains the sphere settings.
 
 %%% ¡description!
-SettingsSphere provides the settings for a sphere, 
+A Sphere Settings (SettingsSphere) provides the settings for a sphere, 
  including visibility, x, y, z, radius, face color and alpha, edge color and alpha.
 The handle can be either a patch or a surface.
 
@@ -12,14 +12,19 @@ patch, surface, PanelFig, GUIFig, check_graphics
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the sphere settings.
+ELCLASS (constant, string) is the class of the sphere settings.
 %%%% ¡default!
 'SettingsSphere'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the sphere settings.
+%%%% ¡default!
+'Sphere Settings'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the sphere settings.
 %%%% ¡default!
-'SettingsSphere provides the settings for a sphere, including visibility, x, y, z, radius, face color and alpha, edge color and alpha.'
+'A Sphere Settings (SettingsSphere) provides the settings for a sphere, including visibility, x, y, z, radius, face color and alpha, edge color and alpha.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the sphere settings.
