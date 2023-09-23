@@ -67,6 +67,11 @@ Analysis NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'AnalyzeEnsemble_CON_BUD'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the ensenmble-based graph analysis using connectivity data of fixed density.
 %%%% ¡default!
 'AnalyzeEnsemble_CON_BUD'

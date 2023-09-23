@@ -14,6 +14,11 @@ SubjectCON_FUN_MP, SubjectCON, SubjectFUN, SeparateGroups_CON_FUN
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'CombineGroups_CON_FUN_MP'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the combiner of CON and FUN subject groups.
 %%%% ¡default!
 'CombineGroups_CON_FUN_MP'

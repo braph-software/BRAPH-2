@@ -18,6 +18,11 @@ Group, SunbjectCON, ImporterGroupSubjectCON_XLS
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'ExporterGroupSubjectCON_XLS'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the CON subject group exporter in XLSX.
 %%%% ¡default!
 'ExporterGroupSubjectCON_XLS'

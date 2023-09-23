@@ -97,6 +97,11 @@ Analysis NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'AnalyzeEnsemble_CON_FUN_MP_BUD'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.
 %%%% ¡default!
 'AnalyzeEnsemble_CON_FUN_MP_BUD'

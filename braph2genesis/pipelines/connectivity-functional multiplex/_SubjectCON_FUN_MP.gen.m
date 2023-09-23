@@ -55,6 +55,11 @@ Subject NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'SubjectCON_FUN_MP'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the subject.
 %%%% ¡default!
 'SubjectCON_FUN_MP'
