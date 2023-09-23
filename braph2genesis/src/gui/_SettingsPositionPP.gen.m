@@ -1,9 +1,10 @@
 %% ¡header!
-SettingsPositionPP < SettingsPP (pr, settings position panel) is the panel with position settings.
+SettingsPositionPP < SettingsPP (pr, prop panel for position settings) is the panel with position settings.
 
 %%% ¡description!
-SettingsPositionPP plots the panel for position settings including 
-a checkbox for autopositioning and numeric edit fields for x0, y0, height and width.
+A Prop Panel for Position Settings (SettingsPositionPP) plots the panel 
+ for position settings, including a checkbox for autopositioning 
+ and numeric edit fields for x0, y0, height and width.
 It works for all categories.
 
 %%% ¡seealso!
@@ -12,32 +13,37 @@ SettingsPosition, uicheckbox, uieditfield
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the settings position panel.
+CLASS (constant, string) is the class of the prop panel for position settings.
 %%%% ¡default!
 'SettingsPositionPP'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the settings position panel.
+NAME (constant, string) is the name of the prop panel for position settings.
 %%%% ¡default!
-'SettingsPositionPP plots the panel for position settings including a checkbox for autopositioning and numeric edit fields for x0, y0, height and width. It works for all categories.'
+'Prop Panel for Position Settings'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the settings position panel.
+DESCRIPTION (constant, string) is the description of the prop panel for position settings.
+%%%% ¡default!
+'A Prop Panel for Position Settings (SettingsPositionPP) plots the panel for position settings, including a checkbox for autopositioning and numeric edit fields for x0, y0, height and width. It works for all categories.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the prop panel for position settings.
 %%%% ¡settings!
 'SettingsPositionPP'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the settings position panel.
+ID (data, string) is a few-letter code for the prop panel for position settings.
 %%%% ¡default!
 'SettingsPositionPP ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the settings position panel.
+LABEL (metadata, string) is an extended label of the prop panel for position settings.
 %%%% ¡default!
 'SettingsPositionPP label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the settings position panel.
+NOTES (metadata, string) are some specific notes about the prop panel for position settings.
 %%%% ¡default!
 'SettingsPositionPP notes'
 
@@ -52,7 +58,7 @@ PROP (data, scalar) is the property number.
 PanelFig.ST_POSITION
 
 %%% ¡prop!
-HEIGHT (gui, size) is the pixel height of the settings position panel.
+HEIGHT (gui, size) is the pixel height of the prop panel for position settings.
 %%%% ¡default!
 s(4)
 

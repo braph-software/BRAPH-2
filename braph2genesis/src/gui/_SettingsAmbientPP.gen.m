@@ -1,9 +1,10 @@
 %% ¡header!
-SettingsAmbientPP < SettingsPP (pr, settings ambient panel) is the panel with ambient settings.
+SettingsAmbientPP < SettingsPP (pr, prop panel for ambient settings) is the panel with ambient settings.
 
 %%% ¡description!
-SettingsAmbientPP plots the panel for ambient settings including 
-including drop-down lists for lighting, material, camlight, shading, and colormap.
+A Prop Panel for Ambient Settings (SettingsAmbientPP) plots the panel 
+ for ambient settings, including drop-down lists for lighting, material, 
+ camlight, shading, and colormap.
 It works for all categories.
 
 %%% ¡seealso!
@@ -12,32 +13,37 @@ SettingsAmbient, uidropdown
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the settings ambient panel.
+CLASS (constant, string) is the class of the concrete element.
 %%%% ¡default!
 'SettingsAmbientPP'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the settings ambient panel.
+NAME (constant, string) is the name of the prop panel for ambient settings.
 %%%% ¡default!
-'SettingsAmbientPP plots the panel for ambient settings including including drop-down lists for lighting, material, camlight, shading, and colormap. It works for all categories.'
+'Prop Panel for Ambient Settings'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the settings ambient panel.
+DESCRIPTION (constant, string) is the description of the prop panel for ambient settings.
+%%%% ¡default!
+'A Prop Panel for Ambient Settings (SettingsAmbientPP) plots the panel for ambient settings, including drop-down lists for lighting, material, camlight, shading, and colormap. It works for all categories.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the prop panel for ambient settings.
 %%%% ¡settings!
 'SettingsAmbientPP'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the settings ambient panel.
+ID (data, string) is a few-letter code for the prop panel for ambient settings.
 %%%% ¡default!
 'SettingsAmbientPP ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the settings ambient panel.
+LABEL (metadata, string) is an extended label of the prop panel for ambient settings.
 %%%% ¡default!
 'SettingsAmbientPP label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the settings ambient panel.
+NOTES (metadata, string) are some specific notes about the prop panel for ambient settings.
 %%%% ¡default!
 'SettingsAmbientPP notes'
 

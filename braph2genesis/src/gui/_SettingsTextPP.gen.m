@@ -1,10 +1,11 @@
 %% ¡header!
-SettingsTextPP < SettingsPP (pr, settings text panel) is the panel with text settings.
+SettingsTextPP < SettingsPP (pr, prop panel for text settings) is the panel with text settings.
 
 %%% ¡description!
-SettingsTextPP plots the panel for text settings
-including text, x, y, and z position, font color, size, rotation and weight, 
-interpreter, horizontal and vertical alignment.
+A Prop Panel for Text Settings (SettingsTextPP) plots the panel 
+ for text settings, including text, x, y, and z position, 
+ font color, size, rotation and weight, 
+ interpreter, horizontal and vertical alignment.
 It works for all categories.
 
 %%% ¡seealso!
@@ -13,32 +14,37 @@ SettingsText, uieditfield, uipushbutton, uislider
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the settings text panel.
+CLASS (constant, string) is the class of the prop panel for text settings.
 %%%% ¡default!
 'SettingsTextPP'
- 
-%%% ¡prop!
-DESCRIPTION (constant, string) is the description of the settings text panel.
-%%%% ¡default!
-'SettingsTextPP plots the panel for text settings including text, x, y, and z position, font color, size, rotation and weight, interpreter, horizontal and vertical alignment.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the settings text panel.
+NAME (constant, string) is the name of the prop panel for text settings.
+%%%% ¡default!
+'Prop Panel for Text Settings'
+ 
+%%% ¡prop!
+DESCRIPTION (constant, string) is the description of the prop panel for text settings.
+%%%% ¡default!
+'A Prop Panel for Text Settings (SettingsTextPP) plots the panel for text settings, including text, x, y, and z position, font color, size, rotation and weight, interpreter, horizontal and vertical alignment. It works for all categories.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the prop panel for text settings.
 %%%% ¡settings!
 'SettingsTextPP'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the settings text panel.
+ID (data, string) is a few-letter code for the prop panel for text settings.
 %%%% ¡default!
 'SettingsTextPP ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the settings text panel.
+LABEL (metadata, string) is an extended label of the prop panel for text settings.
 %%%% ¡default!
 'SettingsTextPP label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the settings text panel.
+NOTES (metadata, string) are some specific notes about the prop panel for text settings.
 %%%% ¡default!
 'SettingsTextPP notes'
 
@@ -53,7 +59,7 @@ PROP (data, scalar) is the property number.
 MeasurePF.ST_TITLE
 
 %%% ¡prop!
-HEIGHT (gui, size) is the pixel height of the settings text panel.
+HEIGHT (gui, size) is the pixel height of the prop panel for text settings.
 %%%% ¡default!
 s(9.2)
 

@@ -1,9 +1,9 @@
 %% ¡header!
-SettingsPP < PanelProp (pr, settings panel) is the panel for settings.
+SettingsPP < PanelProp (pr, prop panel for settings) is the panel for settings.
 
 %%% ¡description!
-SettingsPP is the base element for the panels of the Settings.
-In particular, it provides the updated PanelProp listeners.
+A Prop Panel for Settings (SettingsPP) is the base element for the panels 
+ of the Settings. In particular, it provides the updated PanelProp listeners.
 It works for all categories.
 
 %%% ¡seealso!
@@ -12,32 +12,37 @@ Settings
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the settings panel.
+CLASS (constant, string) is the class of the prop panel for settings.
 %%%% ¡default!
 'SettingsPP'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the settings panel.
+NAME (constant, string) is the name of the prop panel for settings.
 %%%% ¡default!
-'SettingsPP is the base element for the panels of the Settings. In particular, it provides the updated PanelProp listeners.'
+'Prop Panel for Settings'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the settings panel.
+DESCRIPTION (constant, string) is the description of the prop panel for settings.
+%%%% ¡default!
+'A Prop Panel for Settings (SettingsPP) is the base element for the panels of the Settings. In particular, it provides the updated PanelProp listeners. It works for all categories.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the prop panel for settings.
 %%%% ¡settings!
 'SettingsPP'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the settings panel.
+ID (data, string) is a few-letter code for the prop panel for settings.
 %%%% ¡default!
 'SettingsPP ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the settings panel.
+LABEL (metadata, string) is an extended label of the prop panel for settings.
 %%%% ¡default!
 'SettingsPP label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the settings panel.
+NOTES (metadata, string) are some specific notes about the prop panel for settings.
 %%%% ¡default!
 'SettingsPP notes'
 

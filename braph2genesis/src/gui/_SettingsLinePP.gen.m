@@ -1,9 +1,10 @@
 %% ¡header!
-SettingsLinePP < SettingsPP (pr, settings line panel) is the panel with line settings.
+SettingsLinePP < SettingsPP (pr, prop panel for line settings) is the panel with line settings.
 
 %%% ¡description!
-SettingsLinePP plots the panel for line settings,
-including visibility, line style, size and color, and symbol style, size, edge color, and face color.
+A Prop Panel for Line Settings (SettingsLinePP) plots the panel for 
+ line settings, including visibility, line style, size and color, 
+ and symbol style, size, edge color, and face color.
 It works for all categories.
 
 %%% ¡seealso!
@@ -12,32 +13,37 @@ SettingsLine, uicheckbox, uidropdown, uieditfield, uipushbutton
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the settings line panel.
+CLASS (constant, string) is the class of the prop panel for line settings.
 %%%% ¡default!
 'SettingsLinePP'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the settings line panel.
+NAME (constant, string) is the name of the prop panel for line settings.
 %%%% ¡default!
-'SettingsLinePP plots the panel for line settings, including visibility, line style, size and color, and symbol style, size, edge color, and face color.'
+'Prop Panel for Line Settings'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the settings line panel.
+DESCRIPTION (constant, string) is the description of the prop panel for line settings.
+%%%% ¡default!
+'A Prop Panel for Line Settings (SettingsLinePP) plots the panel for line settings, including visibility, line style, size and color, and symbol style, size, edge color, and face color. It works for all categories.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the prop panel for line settings.
 %%%% ¡settings!
 'SettingsLinePP'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the settings line panel.
+ID (data, string) is a few-letter code for the prop panel for line settings.
 %%%% ¡default!
 'SettingsLinePP ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the settings line panel.
+LABEL (metadata, string) is an extended label of the prop panel for line settings.
 %%%% ¡default!
 'SettingsLinePP label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the settings line panel.
+NOTES (metadata, string) are some specific notes about the prop panel for line settings.
 %%%% ¡default!
 'SettingsLinePP notes'
 

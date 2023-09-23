@@ -1,9 +1,10 @@
 %% ¡header!
-SettingsSurfacePP < SettingsPP (pr, settings surface panel) is the panel with surface settings.
+SettingsSurfacePP < SettingsPP (pr, prop panel for surface settings) is the panel with surface settings.
 
 %%% ¡description!
-SettingsSurfacePP plots the panel for surface settings
-including face color, face alpha, edge color, and edge alpha.
+A Prop Panel for Surface Settings (SettingsSurfacePP) plots the panel 
+ for surface settings, including face color, face alpha, edge color, 
+ and edge alpha.
 It works for all categories.
 
 %%% ¡seealso!
@@ -12,32 +13,37 @@ SettingsPosition, uipushbutton, uieditfield, uislider
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the settings surface panel.
+CLASS (constant, string) is the class of the prop panel for surface settings.
 %%%% ¡default!
 'SettingsSurfacePP'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the settings surface panel.
+NAME (constant, string) is the name of the prop panel for surface settings.
 %%%% ¡default!
-'SettingsSurfacePP plots the panel for surface settings including face color, face alpha, edge color, and edge alpha. It works for all categories.'
+'Prop Panel for Surface Settings'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the settings surface panel.
+DESCRIPTION (constant, string) is the description of the prop panel for surface settings.
+%%%% ¡default!
+'A Prop Panel for Surface Settings (SettingsSurfacePP) plots the panel for surface settings, including face color, face alpha, edge color, and edge alpha. It works for all categories.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the prop panel for surface settings.
 %%%% ¡settings!
 'SettingsSurfacePP'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the settings surface panel.
+ID (data, string) is a few-letter code for the prop panel for surface settings.
 %%%% ¡default!
 'SettingsSurfacePP ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the settings surface panel.
+LABEL (metadata, string) is an extended label of the prop panel for surface settings.
 %%%% ¡default!
 'SettingsSurfacePP label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the settings surface panel.
+NOTES (metadata, string) are some specific notes about the prop panel for surface settings.
 %%%% ¡default!
 'SettingsSurfacePP notes'
 
@@ -52,7 +58,7 @@ PROP (data, scalar) is the property number.
 BrainSurfacePF.ST_SURFACE
 
 %%% ¡prop!
-HEIGHT (gui, size) is the pixel height of the settings surface panel.
+HEIGHT (gui, size) is the pixel height of the prop panel for surface settings.
 %%%% ¡default!
 s(6.7)
 

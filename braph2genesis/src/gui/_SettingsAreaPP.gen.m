@@ -1,9 +1,9 @@
 %% ¡header!
-SettingsAreaPP < SettingsPP (pr, settings area panel) is the panel with area settings.
+SettingsAreaPP < SettingsPP (pr, prop panel for area settings) is the panel with area settings.
 
 %%% ¡description!
-SettingsAreaPP plots the panel for area settings,
-including visibility, face color, face alpha, edge color, and edge alpha.
+A Prop Panel for Area Settings (SettingsAreaPP) plots the panel for area settings,
+ including visibility, face color, face alpha, edge color, and edge alpha.
 It works for all categories.
 
 %%% ¡seealso!
@@ -12,32 +12,37 @@ SettingsArea, uicheckbox, , uipushbutton, uieditfield, uislider
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the settings area panel.
+CLASS (constant, string) is the class of the prop panel for area settings.
 %%%% ¡default!
 'SettingsAreaPP'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the settings area panel.
+NAME (constant, string) is the name of the prop panel for area settings.
 %%%% ¡default!
-'SettingsAreaPP plots the panel for area settings, including visibility, face color, face alpha, edge color, and edge alpha.'
+'Prop Panel for Area Settings'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the settings area panel.
+DESCRIPTION (constant, string) is the description of the prop panel for area settings.
+%%%% ¡default!
+'A Prop Panel for Area Settings (SettingsAreaPP) plots the panel for area settings, including visibility, face color, face alpha, edge color, and edge alpha. It works for all categories.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the prop panel for area settings.
 %%%% ¡settings!
 'SettingsAreaPP'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the settings area panel.
+ID (data, string) is a few-letter code for the prop panel for area settings.
 %%%% ¡default!
 'SettingsAreaPP ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the settings area panel.
+LABEL (metadata, string) is an extended label of the prop panel for area settings.
 %%%% ¡default!
 'SettingsAreaPP label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the settings area panel.
+NOTES (metadata, string) are some specific notes about the prop panel for area settings.
 %%%% ¡default!
 'SettingsAreaPP notes'
 
