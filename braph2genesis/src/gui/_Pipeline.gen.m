@@ -2,7 +2,7 @@
 Pipeline < ConcreteElement (pip, analysis pipeline) is an analysis pipeline.
 
 %%% ¡description!
-Pipeline is an analysis pipeline.
+A Pipeline is an analysis pipeline.
 
 %%% ¡seealso!
 PipelinePP_PSDict, PipelineSection, PipelineCode
@@ -75,6 +75,11 @@ PIPELINE WORKFLOW
 %% ¡props_update!
 
 %%% ¡prop!
+CLASS (constant, string) is the class of the pipeline.
+%%%% ¡default!
+'Pipeline'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the pipeline.
 %%%% ¡default!
 'Pipeline'
@@ -82,7 +87,7 @@ NAME (constant, string) is the name of the pipeline.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the pipeline.
 %%%% ¡default!
-'Pipeline is an analysis pipeline.'
+'A Pipeline is an analysis pipeline.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the pipeline.

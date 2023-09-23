@@ -2,7 +2,7 @@
 PipelineCode < ConcreteElement (pc, pipeline code line) is an executable code line of a pipeline.
 
 %%% ¡description!
-PipelineCode represents a line of executable code in a pipeline.
+A Pipeline Code Line (PipelineCode) represents a line of executable code in a pipeline.
 
 %%% ¡seealso!
 PipelinePP_PSDict, Pipeline, PipelineSection
@@ -10,14 +10,19 @@ PipelinePP_PSDict, Pipeline, PipelineSection
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the pipeline code line.
+CLASS (constant, string) is the class of the pipeline code line.
 %%%% ¡default!
 'PipelineCode'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the pipeline code line.
+%%%% ¡default!
+'Pipeline Code Line'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the pipeline code line.
 %%%% ¡default!
-'PipelineCode represents a line of executable code in a pipeline.'
+'A Pipeline Code Line (PipelineCode) represents a line of executable code in a pipeline.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the pipeline code line.

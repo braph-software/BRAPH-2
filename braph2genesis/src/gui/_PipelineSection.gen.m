@@ -2,7 +2,7 @@
 PipelineSection < ConcreteElement (ps, pipeline section) is a pipeline code section.
 
 %%% ¡description!
-PipelineSection represents a section of executable code in a pipeline.
+A Pipeline Section (PipelineSection) represents a section of executable code in a pipeline.
 
 %%% ¡seealso!
 PipelinePP_PSDict, Pipeline, PipelineSection
@@ -10,14 +10,19 @@ PipelinePP_PSDict, Pipeline, PipelineSection
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the pipeline section.
+CLASS (constant, string) is the class of the pipeline section.
 %%%% ¡default!
 'PipelineSection'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the pipeline section.
+%%%% ¡default!
+'Pipeline Section'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the pipeline section.
 %%%% ¡default!
-'PipelineSection represents a section of executable code in a pipeline.'
+'A Pipeline Section (PipelineSection) represents a section of executable code in a pipeline.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the pipeline section.
