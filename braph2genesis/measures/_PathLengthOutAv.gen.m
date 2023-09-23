@@ -7,6 +7,11 @@ The out-path length is the average shortest out-path lengths of one node to all 
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'PathLengthOutAv'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the PathLengthOutAv.
 %%%% ¡default!
 'PathLengthOutAv'

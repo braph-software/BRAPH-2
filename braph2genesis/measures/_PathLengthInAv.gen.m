@@ -7,6 +7,11 @@ The average in-path length of a graph is the average of the sum of the in-path l
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'PathLengthInAv'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the average in-path length.
 %%%% ¡default!
 'PathLengthInAv'

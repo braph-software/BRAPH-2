@@ -51,6 +51,11 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'OverlappingSOut'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the overlapping out-strength.
 %%%% ¡default!
 'OverlappingSOut'

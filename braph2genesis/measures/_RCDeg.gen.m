@@ -9,6 +9,11 @@ The rich-club degree of a node at level k is the sum of
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'RCDeg'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the rich-club degree.
 %%%% ¡default!
 'RCDeg'

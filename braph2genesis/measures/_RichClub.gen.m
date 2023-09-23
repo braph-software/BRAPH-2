@@ -10,6 +10,11 @@ The rich-club coefficient of a node at level k is the fraction of
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'RichClub'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the richclub.
 %%%% ¡default!
 'RichClub'

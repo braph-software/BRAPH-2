@@ -9,6 +9,11 @@ The rich-club strength of a node at level s is the sum of the weighted edges
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'RCS'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the rich-club strength.
 %%%% ¡default!
 'RCS'
