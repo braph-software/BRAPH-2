@@ -1,8 +1,8 @@
 %% ¡header!
-PanelPropString < PanelProp (pr, panel property string) plots the panel of a property string.
+PanelPropString < PanelProp (pr, string prop panel) plots the panel of a prop string.
 
 %%% ¡description!
-PanelPropString plots the panel for a STRING property with an edit field.
+A String Prop Panel (PanelPropString) plots the panel for a STRING prop with an edit field.
 It works for all categories.
 
 %%% ¡seealso!
@@ -11,32 +11,37 @@ uieditfield, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the string property panel.
+CLASS (constant, string) is the class of the string prop panel.
 %%%% ¡default!
 'PanelPropString'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the string property panel.
+NAME (constant, string) is the name of the string prop panel.
 %%%% ¡default!
-'PanelPropString plots the panel for a STRING property with an edit field. It works for all categories.'
+'String Prop Panel'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the string property panel.
+DESCRIPTION (constant, string) is the description of the string prop panel.
+%%%% ¡default!
+'A String Prop Panel (PanelPropString) plots the panel for a STRING prop with an edit field. It works for all categories.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the string prop panel.
 %%%% ¡settings!
 'PanelPropString'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the string property panel.
+ID (data, string) is a few-letter code for the string prop panel.
 %%%% ¡default!
 'PanelPropString ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the string property panel.
+LABEL (metadata, string) is an extended label of the string prop panel.
 %%%% ¡default!
 'PanelPropString label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the string property panel.
+NOTES (metadata, string) are some specific notes about the string prop panel.
 %%%% ¡default!
 'PanelPropString notes'
 
@@ -46,17 +51,17 @@ EL (data, item) is the element.
 ConcreteElement()
 
 %%% ¡prop!
-PROP (data, scalar) is the property number.
+PROP (data, scalar) is the prop number.
 %%%% ¡default!
 ConcreteElement.ID
 
 %%% ¡prop!
-HEIGHT (gui, size) is the pixel height of the property panel.
+HEIGHT (gui, size) is the pixel height of the prop panel.
 %%%% ¡default!
 s(4)
 
 %%% ¡prop!
-X_DRAW (query, logical) draws the property panel.
+X_DRAW (query, logical) draws the prop panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value
@@ -117,7 +122,7 @@ if value
 end
 
 %%% ¡prop!
-REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 if value

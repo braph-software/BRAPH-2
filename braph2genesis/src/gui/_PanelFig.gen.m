@@ -2,7 +2,7 @@
 PanelFig < Panel (pf, figure panel) plots the panel of a figure.
 
 %%% ¡description!
-PanelFig plots a figure.
+A Figure Panel (PanelFig) plots a figure.
 
 CONSTRUCTOR - To construct a PanelFig use, e.g.:
 
@@ -34,14 +34,19 @@ uipanel, GUIFig, Settings
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the figure panel.
+CLASS (constant, string) is the class of the figure panel.
 %%%% ¡default!
 'PanelFig'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the figure panel.
+%%%% ¡default!
+'Figure Panel'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the figure panel.
 %%%% ¡default!
-'PanelFig plots a figure.'
+'A Figure Panel (PanelFig) plots a figure.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the figure panel.

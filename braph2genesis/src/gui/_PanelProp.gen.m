@@ -1,8 +1,8 @@
 %% ¡header!
-PanelProp < Panel (pr, property panel) is a property panel.
+PanelProp < Panel (pr, prop panel) is a prop panel.
 
 %%% ¡description!
-PanelProp renders a property of an element in a panel. 
+A Prop Panel (PanelProp) renders a property of an element in a panel. 
  It contains a text with the prop tag and a tooltip with the prop description.
  For parameter, data, figure and gui callbacks, it also features a callback button.
  For results, it features calculate and delete buttons.
@@ -21,7 +21,7 @@ CONSTRUCTOR - To construct a PanelProp use, e.g.:
     
  where the <parent element> is most often a PanelElement.
    
-DRAW - To create the initial property panel (title text and buttons), call:
+DRAW - To create the initial prop panel (title text and buttons), call:
 
     pr.get('<strong>DRAW</strong>'[, 'Name', <value>, ...])
     p = pr.get('<strong>H</strong>'); % p is the handle of the generated panel
@@ -50,37 +50,42 @@ uipanel, uilabel, uibutton, GUI, GUIElement, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the property panel.
+CLASS (constant, string) is the class of the prop panel.
 %%%% ¡default!
 'PanelProp'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the property panel.
+NAME (constant, string) is the name of the prop panel.
 %%%% ¡default!
-'PanelProp renders a property of an element in a panel.'
+'Prop Panel'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the property panel.
+DESCRIPTION (constant, string) is the description of the prop panel.
+%%%% ¡default!
+'A Prop Panel (PanelProp) renders a property of an element in a panel.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the prop panel.
 %%%% ¡settings!
 'PanelProp'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the property panel.
+ID (data, string) is a few-letter code for the prop panel.
 %%%% ¡default!
 'PanelProp ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the property panel.
+LABEL (metadata, string) is an extended label of the prop panel.
 %%%% ¡default!
 'PanelProp label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the property panel.
+NOTES (metadata, string) are some specific notes about the prop panel.
 %%%% ¡default!
 'PanelProp notes'
 
 %%% ¡prop!
-DRAW (query, logical) draws the property panel.
+DRAW (query, logical) draws the prop panel.
 %%%% ¡calculate!
 value = calculateValue@Panel(pr, Panel.DRAW, varargin{:}); % also warning
 if value
@@ -208,12 +213,12 @@ end
 %% ¡props!
 
 %%% ¡prop!
-X_DRAW (query, logical) draws the graphical objects of the property panel [to be implemented in subelements].
+X_DRAW (query, logical) draws the graphical objects of the prop panel [to be implemented in subelements].
 %%%% ¡calculate!
 value = true;
 
 %%% ¡prop!
-UPDATE (query, logical) updates the content of the property panel and its graphical objects.
+UPDATE (query, logical) updates the content of the prop panel and its graphical objects.
 %%%% ¡calculate!
 if pr.get('DRAWN')
     switch pr.get('EL').getPropCategory(pr.get('PROP'))
@@ -265,14 +270,14 @@ else
         [BRAPH2.STR ':' class(pr)], ...
         [BRAPH2.STR ':' class(pr) '\\n' ...
         'The call pr.get(''UPDATE'') has NOT been executed.\\n' ...
-        'First, the property panel ' pr.get('ID') ' should be drawn calling pr.get(''DRAW'').\\n' ...
+        'First, the prop panel ' pr.get('ID') ' should be drawn calling pr.get(''DRAW'').\\n' ...
         'Probably, not a big deal, but this shouldn''t happen with well-written code!'] ...
         )
     value = false;
 end
 
 %%% ¡prop!
-REDRAW (query, logical) resizes the property panel and repositions its graphical objects [accept Width-value pair].
+REDRAW (query, logical) resizes the prop panel and repositions its graphical objects [accept Width-value pair].
 %%%% ¡calculate!
 if pr.get('DRAWN')
     w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
@@ -302,7 +307,7 @@ else
         [BRAPH2.STR ':' class(pr)], ...
         [BRAPH2.STR ':' class(pr) '\\n' ...
         'The call pr.get(''REDRAW'') has NOT been executed.\\n' ...
-        'First, the property panel ' pr.get('ID') ' should be drawn calling pr.get(''DRAW'').\\n' ...
+        'First, the prop panel ' pr.get('ID') ' should be drawn calling pr.get(''DRAW'').\\n' ...
         'Probably, not a big deal, but this shouldn''t happen with well-written code!'] ...
         )
     value = false;
@@ -397,7 +402,7 @@ if ~isa(pr.getr('EL'), 'NoValue')
 end
 
 %%% ¡prop!
-HEIGHT (gui, size) is the pixel height of the property panel.
+HEIGHT (gui, size) is the pixel height of the prop panel.
 %%%% ¡default!
 s(2)
 %%%% ¡postset!

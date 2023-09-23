@@ -2,7 +2,7 @@
 Panel < ConcreteElement (pn, panel) is a panel.
 
 %%% ¡description!
-Panel is the basic element to manage graphical representations of elements.
+A Panel is the basic element to manage graphical representations of elements.
  It is an empty graphical panel. It is filled with the graphical content 
  representing an element (PanelElement) or figure (PanelFig) or property 
  (typically, PanelProp and derived classes). It must be placed within 
@@ -37,6 +37,11 @@ uipanel, PanelElement, PanelProp, PanelFig, GUI, GUIElement, GUIFig
 %% ¡props_update!
 
 %%% ¡prop!
+CLASS (constant, string) is the class of the panel.
+%%%% ¡default!
+'Panel'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the panel.
 %%%% ¡default!
 'Panel'
@@ -44,7 +49,7 @@ NAME (constant, string) is the name of the panel.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel.
 %%%% ¡default!
-'Panel is the basic element to manage graphical representations of elements. It is an empty graphical panel. It is filled with the graphical content representing an element (PanelElement) or figure (PanelFig) or property (typically, PanelProp and derived classes). It must be placed within another container; for example, a figure (e.g., PanelElement into GUIElement, or PanelFig into GUIFig) or another panel (e.g., PanelProp into PanelElement).'
+'A Panel is the basic element to manage graphical representations of elements. It is an empty graphical panel. It is filled with the graphical content representing an element (PanelElement) or figure (PanelFig) or property (typically, PanelProp and derived classes). It must be placed within another container; for example, a figure (e.g., PanelElement into GUIElement, or PanelFig into GUIFig) or another panel (e.g., PanelProp into PanelElement).'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel.

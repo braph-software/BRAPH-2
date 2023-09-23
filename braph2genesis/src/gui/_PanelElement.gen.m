@@ -2,7 +2,7 @@
 PanelElement < Panel (pe, element panel) plots the panel of an element.
 
 %%% ¡description!
-PanelElement plots all properties of an element in a panel, 
+An Element Panel (PanelElement) plots all properties of an element in a panel, 
  which contains a series of stacked property panels,
  one for each property of the element EL being plotted.
 
@@ -36,14 +36,19 @@ uigridlayout, GUI, GUIElement, PanelProp
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the element panel.
+CLASS (constant, string) is the class of the element panel.
 %%%% ¡default!
 'PanelElement'
 
 %%% ¡prop!
+NAME (constant, string) is the name of the element panel.
+%%%% ¡default!
+'Element Panel'
+
+%%% ¡prop!
 DESCRIPTION (constant, string) is the description of the element panel.
 %%%% ¡default!
-'PanelElement plots all properties of an element in a panel, which contains a series of stacked property panels, one for each property of the element being plotted.'
+'An Element Panel (PanelElement) plots all properties of an element in a panel, which contains a series of stacked property panels, one for each property of the element being plotted.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the line element panel.

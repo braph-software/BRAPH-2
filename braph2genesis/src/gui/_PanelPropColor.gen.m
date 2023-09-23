@@ -1,8 +1,8 @@
 %% ¡header!
-PanelPropColor < PanelProp (pr, panel property color) plots the panel of a property color.
+PanelPropColor < PanelProp (pr, color prop panel) plots the panel of a prop color.
 
 %%% ¡description!
-PanelPropColor plots the panel for a COLOR property with a button.
+A Color Prop Panel (PanelPropColor) plots the panel for a COLOR prop with a button.
 It works for all categories.
 
 %%% ¡seealso!
@@ -11,32 +11,37 @@ uibutton, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the color property panel.
+CLASS (constant, string) is the class of the color prop panel.
 %%%% ¡default!
 'PanelPropColor'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the color property panel.
+NAME (constant, string) is the name of the color prop panel.
 %%%% ¡default!
-'PanelPropColor plots the panel for a COLOR property with a button. It works for all categories.'
+'Color Prop Panel'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the color property panel.
+DESCRIPTION (constant, string) is the description of the color prop panel.
+%%%% ¡default!
+'A Color Prop Panel (PanelPropColor) plots the panel for a COLOR prop with a button. It works for all categories.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the color prop panel.
 %%%% ¡settings!
 'PanelPropColor'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the color property panel.
+ID (data, string) is a few-letter code for the color prop panel.
 %%%% ¡default!
 'PanelPropColor ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the color property panel.
+LABEL (metadata, string) is an extended label of the color prop panel.
 %%%% ¡default!
 'PanelPropColor label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the color property panel.
+NOTES (metadata, string) are some specific notes about the color prop panel.
 %%%% ¡default!
 'PanelPropColor notes'
 
@@ -46,17 +51,17 @@ EL (data, item) is the element.
 PanelProp()
 
 %%% ¡prop!
-PROP (data, scalar) is the property number.
+PROP (data, scalar) is the prop number.
 %%%% ¡default!
 PanelProp.BKGCOLOR
 
 %%% ¡prop!
-HEIGHT (gui, size) is the pixel height of the property panel.
+HEIGHT (gui, size) is the pixel height of the prop panel.
 %%%% ¡default!
 s(4)
 
 %%% ¡prop!
-X_DRAW (query, logical) draws the property panel.
+X_DRAW (query, logical) draws the prop panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value
@@ -107,7 +112,7 @@ if value
 end
 
 %%% ¡prop!
-REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 if value

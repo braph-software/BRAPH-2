@@ -1,10 +1,11 @@
 %% ¡header!
-PanelPropItem < PanelProp (pr, panel property item) plots the panel of a property item.
+PanelPropItem < PanelProp (pr, item prop panel) plots the panel of a prop item.
 
 %%% ¡description!
-PanelPropItem plots the panel for a ITEM property with a button.
- It works for all categories. The prop GUICLASS determines whether the item 
- figure is a 'GUIElement' or 'GUIFig'.
+An Item Prop Panel (PanelPropItem) plots the panel for a ITEM prop with a button.
+It works for all categories. 
+
+The prop GUICLASS determines whether the item figure is a 'GUIElement' or 'GUIFig'.
 
 %%% ¡seealso!
 uibutton, GUI, PanelElement, GUIElement, GUIFig
@@ -12,32 +13,37 @@ uibutton, GUI, PanelElement, GUIElement, GUIFig
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the item property panel.
+CLASS (constant, string) is the class of the item prop panel.
 %%%% ¡default!
 'PanelPropItem'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the item property panel.
+NAME (constant, string) is the name of the item prop panel.
 %%%% ¡default!
-'PanelPropItem plots the panel for a ITEM property with a button. It works for all categories.'
+'Item Prop Panel'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the item property panel.
+DESCRIPTION (constant, string) is the description of the item prop panel.
+%%%% ¡default!
+'An Item Prop Panel (PanelPropItem) plots the panel for a ITEM prop with a button. It works for all categories. The prop GUICLASS determines whether the item figure is a ''GUIElement'' or ''GUIFig''.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the item prop panel.
 %%%% ¡settings!
 'PanelPropItem'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the item property panel.
+ID (data, string) is a few-letter code for the item prop panel.
 %%%% ¡default!
 'PanelPropItem ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the item property panel.
+LABEL (metadata, string) is an extended label of the item prop panel.
 %%%% ¡default!
 'PanelPropItem label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the item property panel.
+NOTES (metadata, string) are some specific notes about the item prop panel.
 %%%% ¡default!
 'PanelPropItem notes'
 
@@ -47,17 +53,17 @@ EL (data, item) is the element.
 PanelProp()
 
 %%% ¡prop!
-PROP (data, scalar) is the property number.
+PROP (data, scalar) is the prop number.
 %%%% ¡default!
 PanelProp.EL
 
 %%% ¡prop!
-HEIGHT (gui, size) is the pixel height of the property panel.
+HEIGHT (gui, size) is the pixel height of the prop panel.
 %%%% ¡default!
 s(4)
 
 %%% ¡prop!
-X_DRAW (query, logical) draws the property panel.
+X_DRAW (query, logical) draws the prop panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value
@@ -107,7 +113,7 @@ if value
 end
 
 %%% ¡prop!
-REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 if value
@@ -215,7 +221,7 @@ if isequal(value.getClass(), 'GUI') % i.e., default initialization
             prop = pr.get('PROP');
 
             value = GUIElement( ...
-                'PE', el.memorize(prop), ... % ensure that the property is stored
+                'PE', el.memorize(prop), ... % ensure that the prop is stored
                 'POSITION', [ ...
                     x0(f, 'normalized')+w(f, 'normalized') ...
                     y0(f, 'normalized') ...
@@ -232,7 +238,7 @@ if isequal(value.getClass(), 'GUI') % i.e., default initialization
             prop = pr.get('PROP');
 
             value = GUIFig( ...
-                'PF', el.memorize(prop), ... % ensure that the property is stored
+                'PF', el.memorize(prop), ... % ensure that the prop is stored
                 'POSITION', [ ...
                     x0(f, 'normalized')+w(f, 'normalized') ...
                     y0(f, 'normalized') ...

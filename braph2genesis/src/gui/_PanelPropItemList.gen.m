@@ -1,8 +1,8 @@
 %% ¡header!
-PanelPropItemList < PanelProp (pr, panel property item list) plots the panel of a property item-list.
+PanelPropItemList < PanelProp (pr, item-list prop panel) plots the panel of a prop item-list.
 
 %%% ¡description!
-PanelPropItemList plots the panel for a ITEMLIST property with a table.
+An Item-List Prop Panel (PanelPropItemList) plots the panel for a ITEMLIST prop with a table.
  It works for all categories. 
  
 It can be personalized with the following props:
@@ -30,32 +30,37 @@ uitable, GUI, PanelElement, GUIElement
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the item-list property panel.
+CLASS (constant, string) is the class of the item-list prop panel.
 %%%% ¡default!
 'PanelPropItemList'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the item-list property panel.
+NAME (constant, string) is the name of the item-list prop panel.
 %%%% ¡default!
-'PanelPropItemList plots the panel for a ITEMLIST property with a table. It works for all categories. It can be personalized with the following props: COLS, ROWNAME, COLUMNAME, COLUMNWIDTH, COLUMNEDITABLE, COLUMNFORMAT, CB_TAB_EDIT.'
+'Item-List Prop Panel'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the item-list property panel.
+DESCRIPTION (constant, string) is the description of the item-list prop panel.
+%%%% ¡default!
+'An Item-List Prop Panel (PanelPropItemList) plots the panel for a ITEMLIST prop with a table. It works for all categories. It can be personalized with the following props: COLS, ROWNAME, COLUMNAME, COLUMNWIDTH, COLUMNEDITABLE, COLUMNFORMAT, CB_TAB_EDIT.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the item-list prop panel.
 %%%% ¡settings!
 'PanelPropItemList'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the item-list property panel.
+ID (data, string) is a few-letter code for the item-list prop panel.
 %%%% ¡default!
 'PanelPropItemList ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the item-list property panel.
+LABEL (metadata, string) is an extended label of the item-list prop panel.
 %%%% ¡default!
 'PanelPropItemList label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the item-list property panel.
+NOTES (metadata, string) are some specific notes about the item-list prop panel.
 %%%% ¡default!
 'PanelPropItemList notes'
 
@@ -65,12 +70,12 @@ EL (data, item) is the element.
 IndexedDictionary()
 
 %%% ¡prop!
-PROP (data, scalar) is the property number.
+PROP (data, scalar) is the prop number.
 %%%% ¡default!
 IndexedDictionary.IT_LIST
 
 %%% ¡prop!
-X_DRAW (query, logical) draws the property panel.
+X_DRAW (query, logical) draws the prop panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value 
@@ -323,7 +328,7 @@ function set_table()
 end
 
 %%% ¡prop!
-REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 if value
@@ -392,7 +397,7 @@ SELECTOR = -1 % code for the selector column.
 %% ¡props!
 
 %%% ¡prop!
-TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.
+TABLE_HEIGHT (gui, size) is the pixel height of the prop panel when the table is shown.
 %%%% ¡default!
 s(20)
 

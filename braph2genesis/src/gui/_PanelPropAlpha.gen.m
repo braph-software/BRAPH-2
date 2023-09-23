@@ -1,8 +1,9 @@
 %% ¡header!
-PanelPropAlpha < PanelProp (pr, panel property alpha) plots the panel of a property alpha.
+PanelPropAlpha < PanelProp (pr, alpha prop panel) plots the panel of a prop alpha.
 
 %%% ¡description!
-PanelPropAlpha plots the panel for a ALPHA property with a numeric edit field and a slider.
+An Alpha Prop Panel (PanelPropAlpha) plots the panel for a ALPHA prop 
+ with a numeric edit field and a slider.
 It works for all categories.
 
 %%% ¡seealso!
@@ -11,32 +12,37 @@ uieditfield, uislider, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the alpha property panel.
+CLASS (constant, string) is the class of the alpha prop panel.
 %%%% ¡default!
 'PanelPropAlpha'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the alpha property panel.
+NAME (constant, string) is the name of the alpha prop panel.
 %%%% ¡default!
-'PanelPropAlpha plots the panel for a ALPHA property with a numeric edit field and a slider. It works for all categories.'
+'Alpha Prop Panel'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the alpha property panel.
+DESCRIPTION (constant, string) is the description of the alpha prop panel.
+%%%% ¡default!
+'An Alpha Prop Panel (PanelPropAlpha) plots the panel for a ALPHA prop with a numeric edit field and a slider. It works for all categories.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the alpha prop panel.
 %%%% ¡settings!
 'PanelPropAlpha'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the alpha property panel.
+ID (data, string) is a few-letter code for the alpha prop panel.
 %%%% ¡default!
 'PanelPropAlpha ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the alpha property panel.
+LABEL (metadata, string) is an extended label of the alpha prop panel.
 %%%% ¡default!
 'PanelPropAlpha label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the alpha property panel.
+NOTES (metadata, string) are some specific notes about the alpha prop panel.
 %%%% ¡default!
 'PanelPropAlpha notes'
 
@@ -46,17 +52,17 @@ EL (data, item) is the element.
 SettingsSurface()
 
 %%% ¡prop!
-PROP (data, scalar) is the property number.
+PROP (data, scalar) is the prop number.
 %%%% ¡default!
 SettingsSurface.FACEALPHA
 
 %%% ¡prop!
-HEIGHT (gui, size) is the pixel height of the property panel.
+HEIGHT (gui, size) is the pixel height of the prop panel.
 %%%% ¡default!
 s(5)
 
 %%% ¡prop!
-X_DRAW (query, logical) draws the property panel.
+X_DRAW (query, logical) draws the prop panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value
@@ -129,7 +135,7 @@ if value
 end
 
 %%% ¡prop!
-REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 if value

@@ -1,8 +1,8 @@
 %% ¡header!
-PanelPropIDict < PanelProp (pr, panel property idict) plots the panel of a property idict.
+PanelPropIDict < PanelProp (pr, idict prop panel) plots the panel of a prop idict.
 
 %%% ¡description!
-PanelPropIDict plots the panel for a IDICT property with a button.
+An Indexed-Dictionary Prop Panel (PanelPropIDict) plots the panel for a IDICT prop with a button.
  It works for all categories.
 
 %%% ¡seealso!
@@ -11,32 +11,37 @@ uibutton, GUI, PanelElement, GUIElement
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the idict property panel.
+CLASS (constant, string) is the class of the idict prop panel.
 %%%% ¡default!
 'PanelPropIDict'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the idict property panel.
+NAME (constant, string) is the name of the idict prop panel.
 %%%% ¡default!
-'PanelPropIDict plots the panel for a IDICT property with a button. It works for all categories.'
+'Indexed-Dictionary Prop Panel'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the idict property panel.
+DESCRIPTION (constant, string) is the description of the idict prop panel.
+%%%% ¡default!
+'An Indexed-Dictionary Prop Panel (PanelPropIDict) plots the panel for a IDICT prop with a button. It works for all categories.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the idict prop panel.
 %%%% ¡settings!
 'PanelPropIDict'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the idict property panel.
+ID (data, string) is a few-letter code for the idict prop panel.
 %%%% ¡default!
 'PanelPropIDict ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the idict property panel.
+LABEL (metadata, string) is an extended label of the idict prop panel.
 %%%% ¡default!
 'PanelPropIDict label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the idict property panel.
+NOTES (metadata, string) are some specific notes about the idict prop panel.
 %%%% ¡default!
 'PanelPropIDict notes'
 
@@ -46,17 +51,17 @@ EL (data, item) is the element.
 Pipeline()
 
 %%% ¡prop!
-PROP (data, scalar) is the property number.
+PROP (data, scalar) is the prop number.
 %%%% ¡default!
 Pipeline.PS_DICT
 
 %%% ¡prop!
-HEIGHT (gui, size) is the pixel height of the property panel.
+HEIGHT (gui, size) is the pixel height of the prop panel.
 %%%% ¡default!
 s(4)
 
 %%% ¡prop!
-X_DRAW (query, logical) draws the property panel.
+X_DRAW (query, logical) draws the prop panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value
@@ -108,7 +113,7 @@ if value
 end
 
 %%% ¡prop!
-REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 if value
@@ -214,7 +219,7 @@ if isa(value.getr('PE'), 'NoValue') % i.e., default initialization
     prop = pr.get('PROP');
 
     value = GUIElement( ...
-        'PE', el.memorize(prop), ... % ensure that the property is stored
+        'PE', el.memorize(prop), ... % ensure that the prop is stored
         'POSITION', [ ...
             x0(f, 'normalized')+w(f, 'normalized') ...
             y0(f, 'normalized') ...

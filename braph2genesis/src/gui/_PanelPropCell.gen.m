@@ -1,8 +1,8 @@
 %% ¡header!
-PanelPropCell < PanelProp (pr, panel property cell) plots the panel of a property cell.
+PanelPropCell < PanelProp (pr, cell prop panel) plots the panel of a prop cell.
 
 %%% ¡description!
-PanelPropCell plots the panel for a CELL property with a table and two sliders.
+A Cell Prop Panel (PanelPropCell) plots the panel for a CELL prop with a table and two sliders.
 It works for all categories.
 
 It can be personalized with the following props:
@@ -24,32 +24,37 @@ uitable, uislider, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the cell property panel.
+CLASS (constant, string) is the class of the cell prop panel.
 %%%% ¡default!
 'PanelPropCell'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the cell property panel.
+NAME (constant, string) is the name of the cell prop panel.
 %%%% ¡default!
-'PanelPropCell plots the panel for a CELL property with a table and two sliders. It works for all categories. It can be personalized with the following props: TABLE_HEIGHT, XSLIDERSHOW, XSLIDERLABELS, XSLIDERHEIGHT, YSLIDERSHOW, YSLIDERLABELS, YSLIDERHEIGHT, XYSLIDERLOCK, ROWNAME, COLUMNAME, MENU_EXPORT.'
+'Cell Prop Panel'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the cell property panel.
+DESCRIPTION (constant, string) is the description of the cell prop panel.
+%%%% ¡default!
+'A Cell Prop Panel (PanelPropCell) plots the panel for a CELL prop with a table and two sliders. It works for all categories. It can be personalized with the following props: TABLE_HEIGHT, XSLIDERSHOW, XSLIDERLABELS, XSLIDERHEIGHT, YSLIDERSHOW, YSLIDERLABELS, YSLIDERHEIGHT, XYSLIDERLOCK, ROWNAME, COLUMNAME, MENU_EXPORT.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the cell prop panel.
 %%%% ¡settings!
 'PanelPropCell'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the cell property panel.
+ID (data, string) is a few-letter code for the cell prop panel.
 %%%% ¡default!
 'PanelPropCell ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the cell property panel.
+LABEL (metadata, string) is an extended label of the cell prop panel.
 %%%% ¡default!
 'PanelPropCell label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the cell property panel.
+NOTES (metadata, string) are some specific notes about the cell prop panel.
 %%%% ¡default!
 'PanelPropCell notes'
 
@@ -59,12 +64,12 @@ EL (data, item) is the element.
 Graph()
 
 %%% ¡prop!
-PROP (data, scalar) is the property number.
+PROP (data, scalar) is the prop number.
 %%%% ¡default!
 Graph.A
 
 %%% ¡prop!
-X_DRAW (query, logical) draws the property panel.
+X_DRAW (query, logical) draws the prop panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value
@@ -226,7 +231,7 @@ end
 % % %     end
 
 %%% ¡prop!
-REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 if value
@@ -397,7 +402,7 @@ MENU_EXPORT (gui, logical) determines whether to show the context menu to export
 true
 
 %%% ¡prop!
-TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.
+TABLE_HEIGHT (gui, size) is the pixel height of the prop panel when the table is shown.
 %%%% ¡default!
 s(20)
 

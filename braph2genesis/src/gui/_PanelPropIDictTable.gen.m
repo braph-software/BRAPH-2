@@ -1,8 +1,8 @@
 %% ¡header!
-PanelPropIDictTable < PanelProp (pr, panel property idict) plots the panel of a property idict in a table.
+PanelPropIDictTable < PanelProp (pr, idict prop panel with table) plots the panel of a prop idict in a table.
 
 %%% ¡description!
-PanelPropIDictTable plots the panel of an IDICT property with a table.
+An Indexed-Dictionary Prop Panel with Table (PanelPropIDictTable) plots the panel of an IDICT prop with a table.
 It works for all categories.
 
 It can be personalized with the following props:
@@ -30,32 +30,37 @@ uitable, GUI, PanelPropIDict, PanelElement, GUIElement
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the idict property panel.
+CLASS (constant, string) is the class of the idict prop panel with table.
 %%%% ¡default!
 'PanelPropIDictTable'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the idict property panel.
+NAME (constant, string) is the name of the idict prop panel with table.
 %%%% ¡default!
-'PanelPropIDictTable plots the panel of an IDICT property with a table. It works for all categories. It can be personalized with the following props: COLS, ROWNAME, COLUMNNAME, COLUMNWIDTH, COLUMNEDITABLE, COLUMNFORMAT, CB_TAB_EDIT.'
+'Indexed-Dictionary Prop Panel with Table'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the idict property panel.
+DESCRIPTION (constant, string) is the description of the idict prop panel with table.
+%%%% ¡default!
+'An Indexed-Dictionary Prop Panel with Table (PanelPropIDictTable) plots the panel of an IDICT prop with a table. It works for all categories. It can be personalized with the following props: COLS, ROWNAME, COLUMNNAME, COLUMNWIDTH, COLUMNEDITABLE, COLUMNFORMAT, CB_TAB_EDIT.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the idict prop panel with table.
 %%%% ¡settings!
 'PanelPropIDictTable'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the idict property panel.
+ID (data, string) is a few-letter code for the idict prop panel with table.
 %%%% ¡default!
 'PanelPropIDictTable ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the idict property panel.
+LABEL (metadata, string) is an extended label of the idict prop panel with table.
 %%%% ¡default!
 'PanelPropIDictTable label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the idict property panel.
+NOTES (metadata, string) are some specific notes about the idict prop panel with table.
 %%%% ¡default!
 'PanelPropIDictTable notes'
 
@@ -65,12 +70,12 @@ EL (data, item) is the element.
 BrainAtlas()
 
 %%% ¡prop!
-PROP (data, scalar) is the property number.
+PROP (data, scalar) is the prop number.
 %%%% ¡default!
 BrainAtlas.BR_DICT
 
 %%% ¡prop!
-X_DRAW (query, logical) draws the property panel.
+X_DRAW (query, logical) draws the prop panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value
@@ -324,7 +329,7 @@ function set_table()
 end
 
 %%% ¡prop!
-REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 if value
@@ -393,7 +398,7 @@ SELECTOR = -1 % code for the selector column.
 %% ¡props!
 
 %%% ¡prop!
-TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.
+TABLE_HEIGHT (gui, size) is the pixel height of the prop panel when the table is shown.
 %%%% ¡default!
 s(20)
 

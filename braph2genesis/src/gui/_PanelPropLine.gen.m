@@ -1,8 +1,8 @@
 %% ¡header!
-PanelPropLine < PanelProp (pr, panel property line) plots the panel of a property line.
+PanelPropLine < PanelProp (pr, line prop panel) plots the panel of a prop line.
 
 %%% ¡description!
-PanelPropLine plots the panel for an LINE property with a drop-down list.
+A Line Prop Panel (PanelPropLine) plots the panel for an LINE prop with a drop-down list.
 It works for all categories.
 
 %%% ¡seealso!
@@ -11,32 +11,37 @@ uidropdown, uiaxes, line, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-NAME (constant, string) is the name of the line property panel.
+CLASS (constant, string) is the class of the line prop panel.
 %%%% ¡default!
 'PanelPropLine'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the line property panel.
+NAME (constant, string) is the name of the line prop panel.
 %%%% ¡default!
-'PanelPropLine plots the panel for an LINE property with a drop-down list. It works for all categories.'
+'Line Prop Panel'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the line property panel.
+DESCRIPTION (constant, string) is the description of the line prop panel.
+%%%% ¡default!
+'A Line Prop Panel (PanelPropLine) plots the panel for an LINE prop with a drop-down list. It works for all categories.'
+
+%%% ¡prop!
+TEMPLATE (parameter, item) is the template of the line prop panel.
 %%%% ¡settings!
 'PanelPropLine'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the line property panel.
+ID (data, string) is a few-letter code for the line prop panel.
 %%%% ¡default!
 'PanelPropLine ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the line property panel.
+LABEL (metadata, string) is an extended label of the line prop panel.
 %%%% ¡default!
 'PanelPropLine label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the line property panel.
+NOTES (metadata, string) are some specific notes about the line prop panel.
 %%%% ¡default!
 'PanelPropLine notes'
 
@@ -46,17 +51,17 @@ EL (data, item) is the element.
 SettingsLine()
 
 %%% ¡prop!
-PROP (data, scalar) is the property number.
+PROP (data, scalar) is the prop number.
 %%%% ¡default!
 SettingsLine.LINESTYLE
 
 %%% ¡prop!
-HEIGHT (gui, size) is the pixel height of the property panel.
+HEIGHT (gui, size) is the pixel height of the prop panel.
 %%%% ¡default!
 s(4)
 
 %%% ¡prop!
-X_DRAW (query, logical) draws the property panel.
+X_DRAW (query, logical) draws the prop panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value
@@ -114,7 +119,7 @@ if value
 end
 
 %%% ¡prop!
-REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 if value 
