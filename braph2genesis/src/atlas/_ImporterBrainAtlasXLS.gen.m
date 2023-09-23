@@ -34,7 +34,7 @@ DESCRIPTION (constant, string) is the description of the brain atlas importer fr
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the brain atlas importer from XLS/XLSX.
 %%%% ¡settings!
-'Brain Atlas Importer from '
+'ImporterBrainAtlasXLS'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the brain atlas importer from XLS/XLSX.
