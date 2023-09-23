@@ -130,6 +130,11 @@ Average of Feature Importance
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'NNClassifierMLP_CrossValidation'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the cross-validation.
 %%%% ¡default!
 'NNClassifierMLP_CrossValidation'

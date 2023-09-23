@@ -12,6 +12,12 @@ The target is obtained from the variables of interest of the subject.
 NNDataPoint_Graph_REG, NNDataPoint_Graph_REG, NNDataPoint_Measure_CLA
 
 %% ¡props_update!
+
+%%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'NNDataPoint_Measure_REG'
+
 %%% ¡prop!
 NAME (constant, string) is the name of a data point for regression with graph measures.
 %%%% ¡default!

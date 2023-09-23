@@ -11,6 +11,11 @@ NNDataPoint_CON_REG, NNRegressorMLP
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'NNRegressorMLP_Evaluator'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the neural network evaluator for the regression task.
 %%%% ¡default!
 'NNRegressorMLP_Evaluator'

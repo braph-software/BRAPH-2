@@ -148,6 +148,11 @@ Cross Validation NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'NNRegressorMLP_CrossValidation'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the cross-validation.
 %%%% ¡default!
 'NNRegressorMLP_CrossValidation'

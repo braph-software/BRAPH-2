@@ -91,6 +91,11 @@ Neural Networks NOTES
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'NNRegressorMLP'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the neural network multi-layer perceptron regressor.
 %%%% ¡default!
 'NNRegressorMLP'

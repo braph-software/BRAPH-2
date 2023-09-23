@@ -11,6 +11,11 @@ NNDataPoint_CON_CLA, NNClassifierMLP
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'NNClassifierMLP_Evaluator'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the neural network evaluator for the classification task.
 %%%% ¡default!
 'NNClassifierMLP_Evaluator'
